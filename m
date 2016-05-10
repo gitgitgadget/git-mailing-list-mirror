@@ -1,90 +1,89 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: What's cooking in git.git (May 2016, #02; Fri, 6)
-Date: Tue, 10 May 2016 08:27:28 +0200
-Message-ID: <B50A244E-05FE-48FF-9C9B-ED7AE35C5C7C@gmail.com>
-References: <xmqqeg9e24ay.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 10 08:27:37 2016
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 4/6] t1500: avoid setting configuration options outside of tests
+Date: Tue, 10 May 2016 02:34:30 -0400
+Message-ID: <CAPig+cTXOcUfO=EE5xhOjEgzSNtmhrD84PDMvVHX9hEmwuV==g@mail.gmail.com>
+References: <20160510052055.32924-1-sunshine@sunshineco.com>
+	<20160510052055.32924-5-sunshine@sunshineco.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Michael Rappazzo <rappazzo@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 10 08:35:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b018p-000150-Fz
-	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 08:27:35 +0200
+	id 1b01GJ-0001Kk-Ut
+	for gcvg-git-2@plane.gmane.org; Tue, 10 May 2016 08:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750934AbcEJG1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 02:27:31 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:36831 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750907AbcEJG1b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 02:27:31 -0400
-Received: by mail-wm0-f52.google.com with SMTP id n129so163893073wmn.1
-        for <git@vger.kernel.org>; Mon, 09 May 2016 23:27:30 -0700 (PDT)
+	id S1750953AbcEJGeb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 02:34:31 -0400
+Received: from mail-ig0-f194.google.com ([209.85.213.194]:33611 "EHLO
+	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750889AbcEJGeb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 02:34:31 -0400
+Received: by mail-ig0-f194.google.com with SMTP id rc4so507957igc.0
+        for <git@vger.kernel.org>; Mon, 09 May 2016 23:34:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=m5CR5wZ+rCH/bcTNwF0//UPI10LL758V67cgYnCB7e4=;
-        b=uYP4uGFOvK9EyqjPmWCVneXJ2s3v6p0iFLvf0E0kOmPpasADC5Np/ep4pGvjHo6h8t
-         Fcr4BSnykqekB0SCLr3hhBWrxGEcrUCa9ITQpdE09ANWvGnvg7WdZZQgxFqE1kPux2h4
-         7xEhmRqrl2+yIO0ly/QoFTTqUbdqEbFsvevtPz2t7YC3mQDm/xTXQy/ivZOUqSyqiLSU
-         4feRJpQw7aExZPlZn+lpHqyxjL7XSOyXiv0lgaIJik67Fac9fUOVpVFSDmugpCJ/c543
-         fYh1MhLwQkEAhBLf7LlhldDS+y6A/r33cf0PwFZKYPKRevlWbEUXj1eUpoNzR4A9uHPn
-         PKUg==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=9gAm4kL9G8KAnezfZL1a1+Qy9W6EuCQ1nz4YleYfZJY=;
+        b=b2kNScN/tzQ+PielAdPYG9R7UPfKTnaK9JkcHHz1dl6cMo/Ko78tvFpO14bMeMNiMN
+         s9o1aheJJobud4c/FPXxBnWQm/YrC5WTM6GaKWGf0M5V0YJdBrYU2fvAeMCT0QBIL8Am
+         TyttkxrieGBbK3PqI8vfhnq8gX3zR8aNSruVDunJtTrJGwFpR4kQfXFcWPvAt3B2VB27
+         k186lSr+VtYabs9J0qucq5/o/Wo3Ho8qzF9ubK/95zRJLTHzXhYRzLJmL3/joHccfEOD
+         eCt29THBCSDba/7W+kdW0lkd2YGp3xjAsWYGxrkZTYPh0s1AI/vUS5AM9iMow102e7hd
+         mNIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=m5CR5wZ+rCH/bcTNwF0//UPI10LL758V67cgYnCB7e4=;
-        b=Nfs/5Ui4mrf8ymsWDDNPVUSQkI3rCNS42aN1kwPl0ZE9d+/ri93dn1wnTHVZqatcHn
-         Bx5UiEOTBpxbyDMKjgm4cEL2M1na9wmOHV+lxg0LOEnhf0s8fsLoOw6mUCnIppfaN7l5
-         X5kw1M7OzqFFr1m5qhkz5wdBupn2/P9uoQfhe57cICSNgsIn1xgHU/R6fNO4hTKGbVcm
-         Fpmlbkzve0OYHZBPUKQa9zrN1xxYtkRIcL2qSWtEYfZEj6/9mAX9EBCM6qgEdES+qI44
-         StlAPfRnTfmwSw8JivvsscaFKKv6nOKIXBqHVWicLFbyJBelX7Q2j7vcf5Q5wfFsXSAk
-         IHJw==
-X-Gm-Message-State: AOPr4FWoRxAlAdA5QGkeYOWcX7ph3Mq2pyt+I67pcXRXccAAaMr95cwWFkp9kbn/U6Cd4Q==
-X-Received: by 10.28.169.11 with SMTP id s11mr15676317wme.62.1462861649397;
-        Mon, 09 May 2016 23:27:29 -0700 (PDT)
-Received: from [10.32.249.146] (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id xt9sm661509wjb.17.2016.05.09.23.27.28
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 09 May 2016 23:27:28 -0700 (PDT)
-In-Reply-To: <xmqqeg9e24ay.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=9gAm4kL9G8KAnezfZL1a1+Qy9W6EuCQ1nz4YleYfZJY=;
+        b=in3cr12ydtF7vcYdW7ceAH/Wlsd7b79L6Zxj0f2pRwWCYFVnTdXDJbt36COQ5cW4Mu
+         j8FNlApKKHTC/nZ7Uc0/TvRJcHn56mXEpz+vqYlbb4LHPMEHjebqelQK+8Y66SKppg6a
+         +iBDTGCGmHnVY25Zwb0B/qFMvMXQqQXpzafmgWyGIV1Dm2hmE5JxlU/cB/m0jwDQ2MyN
+         RAiYEviRSCHItv01bIQ1tUNuZkEszuk5onHZP66SZvyUUH3gRTGkqWcCusgcovYnqEI6
+         l7aBqtQHeCtuEkrVOzxo84zWZ29EG/QE9GBMlt1km2lxSsYZdKMFFGZ44JVepCP0HttN
+         EunA==
+X-Gm-Message-State: AOPr4FWQMvmFwCafExciTEEbEuCT1rYJX61tk9dHsPFSnExzsoSaH9WcmZON5GeFc+kPEWFdeS3VR2Y1LQo1jw==
+X-Received: by 10.50.36.9 with SMTP id m9mr15899031igj.91.1462862070127; Mon,
+ 09 May 2016 23:34:30 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Mon, 9 May 2016 23:34:30 -0700 (PDT)
+In-Reply-To: <20160510052055.32924-5-sunshine@sunshineco.com>
+X-Google-Sender-Auth: MRLxHflwd7HcBy2c_UD9LRoazSg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294100>
 
+On Tue, May 10, 2016 at 1:20 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> Ideally, each test should be responsible for setting up state it needs
+> rather than relying upon transient global state. Toward this end, teach
+> test_rev_parse() to accept a "-b <value>" option to allow callers to set
+> "core.bare" explicitly or undefine it, and take advantage of this new
+> option to avoid setting "core.bare" outside of tests.
+> [...snip...]
+>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+> diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+> @@ -6,15 +6,25 @@ test_description='test git rev-parse'
+> +       case "$bare" in
+> +       '') ;;
+> +       t*) bare="test_config $dir core.bare true" ;;
+> +       f*) bare="test_config $dir core.bare false" ;;
+> +       u*) bare="test_unconfig $dir core.bare" ;;
+> +       *) error "test_rev_parse: unrecognized core.bare value '$bare'"
 
-> On 07 May 2016, at 00:46, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> [...]
-> 
-> 
-> * jc/doc-lint (2016-05-04) 2 commits
-> - Documentation: fix linkgit references
-> - ci: validate "gitlink:" in documentation
+Oops, this line lost its ;; at some point while refining the code.
 
-The first patch "Documentation: fix linkgit references" seems not
-to be on the jc/doc-lint branch?
-
-A version with at least one section error is here:
-http://article.gmane.org/gmane.comp.version-control.git/293521
-Should I fix and reroll this patch?
-
-The Travis-CI documentation check build step did not make it in:
-http://article.gmane.org/gmane.comp.version-control.git/293523
-Is there something I can improve?
-
-This is how it looks like:
-https://travis-ci.org/larsxschneider/git/jobs/127733001
-
-Thanks,
-Lars
+> +       esac
+> +
