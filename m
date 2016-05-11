@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 08/94] builtin/apply: introduce 'struct apply_state' to start libifying
-Date: Wed, 11 May 2016 15:16:19 +0200
-Message-ID: <20160511131745.2914-9-chriscool@tuxfamily.org>
+Subject: [PATCH v2 10/94] builtin/apply: move 'unidiff_zero' global into 'struct apply_state'
+Date: Wed, 11 May 2016 15:16:21 +0200
+Message-ID: <20160511131745.2914-11-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -15,51 +15,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 15:19:03 2016
+X-From: git-owner@vger.kernel.org Wed May 11 15:18:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U2Z-00021U-4b
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:19:03 +0200
+	id 1b0U2R-0001rb-7w
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:18:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752026AbcEKNSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:18:52 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33315 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751893AbcEKNSt (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751923AbcEKNSt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 11 May 2016 09:18:49 -0400
-Received: by mail-wm0-f65.google.com with SMTP id r12so9404378wme.0
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:18:43 -0700 (PDT)
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36268 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751501AbcEKNSr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:18:47 -0400
+Received: by mail-wm0-f68.google.com with SMTP id w143so9342763wmw.3
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:18:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xg2t35NiZNpzcjA1HZjOdSs8HzcauEaWTmofhiLR1gA=;
-        b=REfGIW2efLsarIH/zoTvLJp9kOfKjadCf36VuoEIt7ABUWDXLHTkz47U//ANRo5/jb
-         fBH52s/Uaf8iM56S0952d75vop2+QxL/m2LoH+0ChYAWLupf821TLoxEfyQKwdmKvdWb
-         CrbOU4LyhQKjx1J9Vfeql2oJrStTXHr9/Bxw/kKKBZ8YaCWIpzTEofpO3JxHrw4echAl
-         gGE3yHfTRGw4/RkMOgkOZUSuaXFdJ1730M1YgaFrDQ+LLCcxBA2RMtGgLSfiJrCD6/cW
-         6Gjz07Ox1VmyM4zWhz59p3Y17S+ENhK63wCwmzHcAxQ/w17Q+u6Av88EuUJKTCpNh7XD
-         G7dA==
+        bh=NC+rBVhVemn0A9Zl9sVOKVtpyKOBZH06NRvjsb9j3ko=;
+        b=RX7VQPBUtonzWtdDAqT/Sw8Co/AS9Ee/a1PFkqEgHHWwgUi4adIPdTn32csWfd2iNr
+         45jK/J0SR2GSNN+i9DNH1mWZJLTN6sysCJ+8vrPDnwKcRsdcXc3LG5fspymtDB5ldUSz
+         EYZTJlrrvPrqjlbaAR4z3Rx8V87TvKQdZAIC/0saSBU/m1FT0ert13bzX1Nmi8UnJ0r/
+         y/K5KsUtstG1s0kZ8omrNsU/7ARzvVmvfUzfRz/AuR8s61Lp81kMEdWVpBNk4jTA9ykg
+         dtGZzcwj7pW8ru5oTOd1XyYjsmPOat8ZIOn6CFYiydSG0aCkFxLsUclt01pp89bnmK5f
+         tTmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=xg2t35NiZNpzcjA1HZjOdSs8HzcauEaWTmofhiLR1gA=;
-        b=Sh+/lPoaxn2IC1vGgZaWDq2HkvVFpgQEFX5vEC1zDpBXiEbvyFqN8nH3MH5OFfU4vA
-         MOQ3tjzdREuTCrTurj2VoaXGeubeJz5WVn84IqbZdoQw+bxYfJ4jdJIGZdSlXiJSmM/8
-         vVMT4y+pGGSqr+EEjJZY6lphFYFJk0wBojlmFTF3UUmNSUbc9LnpyC+WsTNQiyLBlf2H
-         I5QiMa6nTZYPyK8i6mlGxkmGKatBi3j6L61QHdupZNhyfvNH+FEuW7qj2kLsYaO1iMdZ
-         76xyfkOoRtk9PZI+E1KabzQ6GVYsYJlQ5rbkmnIyQt6VlkTws0xXJtTZRyt/9QxcBz3k
-         T2jw==
-X-Gm-Message-State: AOPr4FXca2wUblEf5OokWerNjvgFCiOXNKtQ7VHnZTiv2SCa6Ro9MeGPQ/08m4+wGuHHbA==
-X-Received: by 10.28.153.213 with SMTP id b204mr50064wme.102.1462972722524;
-        Wed, 11 May 2016 06:18:42 -0700 (PDT)
+        bh=NC+rBVhVemn0A9Zl9sVOKVtpyKOBZH06NRvjsb9j3ko=;
+        b=ePfHHDaH/JKTbv6W3FHdM3IduNk9tA9JezA89jfbPYuQfLXSdfP3jirz/9h2d7y4oy
+         J8qkjQvpYbCVkM9XTmvChMEywVyrm/K9R1o/x9O1XM8g5653HJidybvUUGWptSISdYbK
+         TUx3lp9iAuMSJ4nak0FP/Rb7323GKDp8Ok6eI47ppLuTviEjLa31kBC3TmD0fjD1lHvZ
+         h/DPq9DoDZVPfjiY7oawmVbRSRNSiT8y2YlIPVcyrFcZMm/0ZBbQSuW+P0XJiwG5TdlG
+         AtAxCpUkrAul+fnfLpFi39pNREDhZAjFQAkYk6tyohFGKblw+wfOl8katjQ0N0OFpjC9
+         KtwA==
+X-Gm-Message-State: AOPr4FUyrQta4r4viVK5z6RNaXpuj25WazEotkeQ9i56idAhTOuJKuY2biKGmpoZMgARoQ==
+X-Received: by 10.28.35.201 with SMTP id j192mr87638wmj.18.1462972726236;
+        Wed, 11 May 2016 06:18:46 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.18.40
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.18.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:18:41 -0700 (PDT)
+        Wed, 11 May 2016 06:18:45 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -67,289 +67,181 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294255>
 
-Currently commands that want to use the apply functionality have to launch
-a "git apply" process which can be bad for performance.
-
-Let's start libifying the apply functionality and to do that we first need
-to get rid of the global variables in "builtin/apply.c".
-
-This patch introduces "struct apply_state" into which all the previously
-global variables will be moved. A new parameter called "state" that is a
-pointer to the "apply_state" structure will come at the beginning of the
-helper functions that need it and will be passed around the call chain.
-
-To start let's move the "prefix" and "prefix_length" global variables into
-"struct apply_state".
+To libify the apply functionality the 'unidiff_zero' variable should
+not be static and global to the file. Let's move it into
+'struct apply_state'.
 
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 94 ++++++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 56 insertions(+), 38 deletions(-)
+ builtin/apply.c | 42 ++++++++++++++++++++++++------------------
+ 1 file changed, 24 insertions(+), 18 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index c911e4e..ae068e7 100644
+index e133033..44ae95d 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -21,6 +21,11 @@
- #include "ll-merge.h"
- #include "rerere.h"
- 
-+struct apply_state {
-+	const char *prefix;
-+	int prefix_length;
-+};
+@@ -24,6 +24,8 @@
+ struct apply_state {
+ 	const char *prefix;
+ 	int prefix_length;
 +
++	int unidiff_zero;
+ };
+ 
  /*
-  *  --check turns on checking that the working tree matches the
-  *    files that are being modified, but doesn't apply the patch
-@@ -30,8 +35,6 @@
-  *  --index updates the cache as well.
-  *  --cached updates only the cache without ever touching the working tree.
+@@ -37,7 +39,6 @@ struct apply_state {
   */
--static const char *prefix;
--static int prefix_length = -1;
  static int newfd = -1;
  
- static int unidiff_zero;
-@@ -748,7 +751,7 @@ static int count_slashes(const char *cp)
-  * Given the string after "--- " or "+++ ", guess the appropriate
-  * p_value for the given patch.
+-static int unidiff_zero;
+ static int state_p_value = 1;
+ static int p_value_known;
+ static int check_index;
+@@ -2694,7 +2695,8 @@ static void update_image(struct image *img,
+  * postimage) for the hunk.  Find lines that match "preimage" in "img" and
+  * replace the part of "img" with "postimage" text.
   */
--static int guess_p_value(const char *nameline)
-+static int guess_p_value(struct apply_state *state, const char *nameline)
+-static int apply_one_fragment(struct image *img, struct fragment *frag,
++static int apply_one_fragment(struct apply_state *state,
++			      struct image *img, struct fragment *frag,
+ 			      int inaccurate_eof, unsigned ws_rule,
+ 			      int nth_fragment)
  {
- 	char *name, *cp;
- 	int val = -1;
-@@ -761,17 +764,17 @@ static int guess_p_value(const char *nameline)
- 	cp = strchr(name, '/');
- 	if (!cp)
- 		val = 0;
--	else if (prefix) {
-+	else if (state->prefix) {
- 		/*
- 		 * Does it begin with "a/$our-prefix" and such?  Then this is
- 		 * very likely to apply to our directory.
- 		 */
--		if (!strncmp(name, prefix, prefix_length))
--			val = count_slashes(prefix);
-+		if (!strncmp(name, state->prefix, state->prefix_length))
-+			val = count_slashes(state->prefix);
- 		else {
- 			cp++;
--			if (!strncmp(cp, prefix, prefix_length))
--				val = count_slashes(prefix) + 1;
-+			if (!strncmp(cp, state->prefix, state->prefix_length))
-+				val = count_slashes(state->prefix) + 1;
- 		}
+@@ -2836,7 +2838,7 @@ static int apply_one_fragment(struct image *img, struct fragment *frag,
+ 	 * without leading context must match at the beginning.
+ 	 */
+ 	match_beginning = (!frag->oldpos ||
+-			   (frag->oldpos == 1 && !unidiff_zero));
++			   (frag->oldpos == 1 && !state->unidiff_zero));
+ 
+ 	/*
+ 	 * A hunk without trailing lines must match at the end.
+@@ -2844,7 +2846,7 @@ static int apply_one_fragment(struct image *img, struct fragment *frag,
+ 	 * from the lack of trailing lines if the patch was generated
+ 	 * with unidiff without any context.
+ 	 */
+-	match_end = !unidiff_zero && !trailing;
++	match_end = !state->unidiff_zero && !trailing;
+ 
+ 	pos = frag->newpos ? (frag->newpos - 1) : 0;
+ 	preimage.buf = oldlines;
+@@ -3067,7 +3069,7 @@ static int apply_binary(struct image *img, struct patch *patch)
+ 	return 0;
+ }
+ 
+-static int apply_fragments(struct image *img, struct patch *patch)
++static int apply_fragments(struct apply_state *state, struct image *img, struct patch *patch)
+ {
+ 	struct fragment *frag = patch->fragments;
+ 	const char *name = patch->old_name ? patch->old_name : patch->new_name;
+@@ -3080,7 +3082,7 @@ static int apply_fragments(struct image *img, struct patch *patch)
+ 
+ 	while (frag) {
+ 		nth++;
+-		if (apply_one_fragment(img, frag, inaccurate_eof, ws_rule, nth)) {
++		if (apply_one_fragment(state, img, frag, inaccurate_eof, ws_rule, nth)) {
+ 			error(_("patch failed: %s:%ld"), name, frag->oldpos);
+ 			if (!apply_with_reject)
+ 				return -1;
+@@ -3388,8 +3390,11 @@ static int load_current(struct image *image, struct patch *patch)
+ 	return 0;
+ }
+ 
+-static int try_threeway(struct image *image, struct patch *patch,
+-			struct stat *st, const struct cache_entry *ce)
++static int try_threeway(struct apply_state *state,
++			struct image *image,
++			struct patch *patch,
++			struct stat *st,
++			const struct cache_entry *ce)
+ {
+ 	unsigned char pre_sha1[20], post_sha1[20], our_sha1[20];
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -3415,7 +3420,7 @@ static int try_threeway(struct image *image, struct patch *patch,
+ 	img = strbuf_detach(&buf, &len);
+ 	prepare_image(&tmp_image, img, len, 1);
+ 	/* Apply the patch to get the post image */
+-	if (apply_fragments(&tmp_image, patch) < 0) {
++	if (apply_fragments(state, &tmp_image, patch) < 0) {
+ 		clear_image(&tmp_image);
+ 		return -1;
  	}
- 	free(name);
-@@ -858,7 +861,10 @@ static int has_epoch_timestamp(const char *nameline)
-  * files, we can happily check the index for a match, but for creating a
-  * new file we should try to match whatever "patch" does. I have no idea.
+@@ -3459,7 +3464,8 @@ static int try_threeway(struct image *image, struct patch *patch,
+ 	return 0;
+ }
+ 
+-static int apply_data(struct patch *patch, struct stat *st, const struct cache_entry *ce)
++static int apply_data(struct apply_state *state, struct patch *patch,
++		      struct stat *st, const struct cache_entry *ce)
+ {
+ 	struct image image;
+ 
+@@ -3467,9 +3473,9 @@ static int apply_data(struct patch *patch, struct stat *st, const struct cache_e
+ 		return -1;
+ 
+ 	if (patch->direct_to_threeway ||
+-	    apply_fragments(&image, patch) < 0) {
++	    apply_fragments(state, &image, patch) < 0) {
+ 		/* Note: with --reject, apply_fragments() returns 0 */
+-		if (!threeway || try_threeway(&image, patch, st, ce) < 0)
++		if (!threeway || try_threeway(state, &image, patch, st, ce) < 0)
+ 			return -1;
+ 	}
+ 	patch->result = image.buf;
+@@ -3717,7 +3723,7 @@ static void die_on_unsafe_path(struct patch *patch)
+  * Check and apply the patch in-core; leave the result in patch->result
+  * for the caller to write it out to the final destination.
   */
--static void parse_traditional_patch(const char *first, const char *second, struct patch *patch)
-+static void parse_traditional_patch(struct apply_state *state,
-+				    const char *first,
-+				    const char *second,
-+				    struct patch *patch)
+-static int check_patch(struct patch *patch)
++static int check_patch(struct apply_state *state, struct patch *patch)
  {
- 	char *name;
+ 	struct stat st;
+ 	const char *old_name = patch->old_name;
+@@ -3816,13 +3822,13 @@ static int check_patch(struct patch *patch)
+ 		return error(_("affected file '%s' is beyond a symbolic link"),
+ 			     patch->new_name);
  
-@@ -866,8 +872,8 @@ static void parse_traditional_patch(const char *first, const char *second, struc
- 	second += 4;	/* skip "+++ " */
- 	if (!p_value_known) {
- 		int p, q;
--		p = guess_p_value(first);
--		q = guess_p_value(second);
-+		p = guess_p_value(state, first);
-+		q = guess_p_value(state, second);
- 		if (p < 0) p = q;
- 		if (0 <= p && p == q) {
- 			state_p_value = p;
-@@ -1429,7 +1435,11 @@ static int parse_fragment_header(const char *line, int len, struct fragment *fra
- 	return offset;
+-	if (apply_data(patch, &st, ce) < 0)
++	if (apply_data(state, patch, &st, ce) < 0)
+ 		return error(_("%s: patch does not apply"), name);
+ 	patch->rejected = 0;
+ 	return 0;
  }
  
--static int find_header(const char *line, unsigned long size, int *hdrsize, struct patch *patch)
-+static int find_header(struct apply_state *state,
-+		       const char *line,
-+		       unsigned long size,
-+		       int *hdrsize,
-+		       struct patch *patch)
+-static int check_patch_list(struct patch *patch)
++static int check_patch_list(struct apply_state *state, struct patch *patch)
  {
- 	unsigned long offset, len;
+ 	int err = 0;
  
-@@ -1506,7 +1516,7 @@ static int find_header(const char *line, unsigned long size, int *hdrsize, struc
- 			continue;
- 
- 		/* Ok, we'll consider it a patch */
--		parse_traditional_patch(line, line+len, patch);
-+		parse_traditional_patch(state, line, line+len, patch);
- 		*hdrsize = len + nextlen;
- 		state_linenr += 2;
- 		return offset;
-@@ -1913,21 +1923,21 @@ static int parse_binary(char *buffer, unsigned long size, struct patch *patch)
- 	return used;
- }
- 
--static void prefix_one(char **name)
-+static void prefix_one(struct apply_state *state, char **name)
- {
- 	char *old_name = *name;
- 	if (!old_name)
- 		return;
--	*name = xstrdup(prefix_filename(prefix, prefix_length, *name));
-+	*name = xstrdup(prefix_filename(state->prefix, state->prefix_length, *name));
- 	free(old_name);
- }
- 
--static void prefix_patch(struct patch *p)
-+static void prefix_patch(struct apply_state *state, struct patch *p)
- {
--	if (!prefix || p->is_toplevel_relative)
-+	if (!state->prefix || p->is_toplevel_relative)
- 		return;
--	prefix_one(&p->new_name);
--	prefix_one(&p->old_name);
-+	prefix_one(state, &p->new_name);
-+	prefix_one(state, &p->old_name);
- }
- 
- /*
-@@ -1944,16 +1954,16 @@ static void add_name_limit(const char *name, int exclude)
- 	it->util = exclude ? NULL : (void *) 1;
- }
- 
--static int use_patch(struct patch *p)
-+static int use_patch(struct apply_state *state, struct patch *p)
- {
- 	const char *pathname = p->new_name ? p->new_name : p->old_name;
- 	int i;
- 
- 	/* Paths outside are not touched regardless of "--include" */
--	if (0 < prefix_length) {
-+	if (0 < state->prefix_length) {
- 		int pathlen = strlen(pathname);
--		if (pathlen <= prefix_length ||
--		    memcmp(prefix, pathname, prefix_length))
-+		if (pathlen <= state->prefix_length ||
-+		    memcmp(state->prefix, pathname, state->prefix_length))
- 			return 0;
+@@ -3832,7 +3838,7 @@ static int check_patch_list(struct patch *patch)
+ 		if (apply_verbosely)
+ 			say_patch_name(stderr,
+ 				       _("Checking patch %s..."), patch);
+-		err |= check_patch(patch);
++		err |= check_patch(state, patch);
+ 		patch = patch->next;
+ 	}
+ 	return err;
+@@ -4434,7 +4440,7 @@ static int apply_patch(struct apply_state *state,
  	}
  
-@@ -1980,17 +1990,17 @@ static int use_patch(struct patch *p)
-  * Return the number of bytes consumed, so that the caller can call us
-  * again for the next patch.
-  */
--static int parse_chunk(char *buffer, unsigned long size, struct patch *patch)
-+static int parse_chunk(struct apply_state *state, char *buffer, unsigned long size, struct patch *patch)
- {
- 	int hdrsize, patchsize;
--	int offset = find_header(buffer, size, &hdrsize, patch);
-+	int offset = find_header(state, buffer, size, &hdrsize, patch);
+ 	if ((check || apply) &&
+-	    check_patch_list(list) < 0 &&
++	    check_patch_list(state, list) < 0 &&
+ 	    !apply_with_reject)
+ 		exit(1);
  
- 	if (offset < 0)
- 		return offset;
- 
--	prefix_patch(patch);
-+	prefix_patch(state, patch);
- 
--	if (!use_patch(patch))
-+	if (!use_patch(state, patch))
- 		patch->ws_rule = 0;
- 	else
- 		patch->ws_rule = whitespace_rule(patch->new_name
-@@ -4367,7 +4377,10 @@ static struct lock_file lock_file;
- #define INACCURATE_EOF	(1<<0)
- #define RECOUNT		(1<<1)
- 
--static int apply_patch(int fd, const char *filename, int options)
-+static int apply_patch(struct apply_state *state,
-+		       int fd,
-+		       const char *filename,
-+		       int options)
- {
- 	size_t offset;
- 	struct strbuf buf = STRBUF_INIT; /* owns the patch text */
-@@ -4384,14 +4397,14 @@ static int apply_patch(int fd, const char *filename, int options)
- 		patch = xcalloc(1, sizeof(*patch));
- 		patch->inaccurate_eof = !!(options & INACCURATE_EOF);
- 		patch->recount =  !!(options & RECOUNT);
--		nr = parse_chunk(buf.buf + offset, buf.len - offset, patch);
-+		nr = parse_chunk(state, buf.buf + offset, buf.len - offset, patch);
- 		if (nr < 0) {
- 			free_patch(patch);
- 			break;
- 		}
- 		if (apply_in_reverse)
- 			reverse_patches(patch);
--		if (use_patch(patch)) {
-+		if (use_patch(state, patch)) {
- 			patch_stats(patch);
- 			*listp = patch;
- 			listp = &patch->next;
-@@ -4517,6 +4530,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 	int force_apply = 0;
- 	int options = 0;
- 	int read_stdin = 1;
-+	struct apply_state state;
- 
- 	const char *whitespace_option = NULL;
- 
-@@ -4589,15 +4603,17 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 		OPT_END()
- 	};
- 
--	prefix = prefix_;
--	prefix_length = prefix ? strlen(prefix) : 0;
-+	memset(&state, 0, sizeof(state));
-+	state.prefix = prefix_;
-+	state.prefix_length = state.prefix ? strlen(state.prefix) : 0;
-+
- 	git_apply_config();
- 	if (apply_default_whitespace)
- 		parse_whitespace_option(apply_default_whitespace);
- 	if (apply_default_ignorewhitespace)
- 		parse_ignorewhitespace_option(apply_default_ignorewhitespace);
- 
--	argc = parse_options(argc, argv, prefix, builtin_apply_options,
-+	argc = parse_options(argc, argv, state.prefix, builtin_apply_options,
- 			apply_usage, 0);
- 
- 	if (apply_with_reject && threeway)
-@@ -4628,23 +4644,25 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 		int fd;
- 
- 		if (!strcmp(arg, "-")) {
--			errs |= apply_patch(0, "<stdin>", options);
-+			errs |= apply_patch(&state, 0, "<stdin>", options);
- 			read_stdin = 0;
- 			continue;
--		} else if (0 < prefix_length)
--			arg = prefix_filename(prefix, prefix_length, arg);
-+		} else if (0 < state.prefix_length)
-+			arg = prefix_filename(state.prefix,
-+					      state.prefix_length,
-+					      arg);
- 
- 		fd = open(arg, O_RDONLY);
- 		if (fd < 0)
- 			die_errno(_("can't open patch '%s'"), arg);
- 		read_stdin = 0;
- 		set_default_whitespace_mode(whitespace_option);
--		errs |= apply_patch(fd, arg, options);
-+		errs |= apply_patch(&state, fd, arg, options);
- 		close(fd);
- 	}
- 	set_default_whitespace_mode(whitespace_option);
- 	if (read_stdin)
--		errs |= apply_patch(0, "<stdin>", options);
-+		errs |= apply_patch(&state, 0, "<stdin>", options);
- 	if (whitespace_error) {
- 		if (squelch_whitespace_errors &&
- 		    squelch_whitespace_errors < whitespace_error) {
+@@ -4597,7 +4603,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 			PARSE_OPT_NOARG, option_parse_space_change },
+ 		OPT_BOOL('R', "reverse", &apply_in_reverse,
+ 			N_("apply the patch in reverse")),
+-		OPT_BOOL(0, "unidiff-zero", &unidiff_zero,
++		OPT_BOOL(0, "unidiff-zero", &state.unidiff_zero,
+ 			N_("don't expect at least one line of context")),
+ 		OPT_BOOL(0, "reject", &apply_with_reject,
+ 			N_("leave the rejected hunks in corresponding *.rej files")),
 -- 
 2.8.2.490.g3dabe57
