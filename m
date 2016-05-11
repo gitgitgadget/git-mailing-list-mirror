@@ -1,74 +1,96 @@
-From: "EMAIL LOTTERIE" <christianehamann010@gmail.com>
-Subject: ter email =?iso-8859-1?Q?Ben=FCtzer?=
-Date: Tue, 10 May 2016 19:05:42 -0000
-Message-ID: <f8efe1c9bb0fffb5c058ec51ad66488e.squirrel@13.65.96.89>
-Reply-To: christianehamann9@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: undisclosed-recipients:;
-X-From: git-owner@vger.kernel.org Wed May 11 09:17:34 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: What's cooking in git.git (May 2016, #02; Fri, 6)
+Date: Wed, 11 May 2016 09:41:58 +0200
+Message-ID: <D959E215-A37B-4F2E-AE09-FA4055E886CE@gmail.com>
+References: <xmqqeg9e24ay.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1605100751050.4092@virtualbox>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 11 09:42:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0OOk-0004EH-74
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 09:17:34 +0200
+	id 1b0OmX-0006nJ-Dp
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 09:42:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751360AbcEKHR0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 May 2016 03:17:26 -0400
-Received: from [13.65.96.89] ([13.65.96.89]:35223 "EHLO mail.vps.com"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751324AbcEKHR0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 03:17:26 -0400
-X-Greylist: delayed 18181 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 May 2016 03:17:26 EDT
-Received: from [13.65.96.89] (localhost [IPv6:::1])
-	by mail.vps.com (Postfix) with ESMTP id A2499180A9C;
-	Tue, 10 May 2016 19:05:41 +0000 (UTC)
-Received: from 83.44.166.134
-        (SquirrelMail authenticated user admin)
-        by 13.65.96.89 with HTTP;
-        Tue, 10 May 2016 19:05:42 -0000
-User-Agent: SquirrelMail/1.4.22
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1751271AbcEKHmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 03:42:05 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:35583 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751136AbcEKHmD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 May 2016 03:42:03 -0400
+Received: by mail-wm0-f43.google.com with SMTP id e201so206731336wme.0
+        for <git@vger.kernel.org>; Wed, 11 May 2016 00:42:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=tr8N78Hoy6tYOPSoGx19UePZ1Ba01PzkSoeWu4TT1Ro=;
+        b=EYuPC1jgFASmEVv5Y2Wz8OGwemBaZrjpIyfeysjko+HDcKrwStti2Ir1gdwYMXrdYE
+         aibJy8WC0dbaCuHLTLPHXUFmOkf0L7MmXKaBoJtjJd0C5E0wC6ijtWC52g6bjMyWmzSd
+         mCire6VTpPVw+x1ARkyzeLnIOuck4+KW6h/AdwtMryngyDv+s6gEHoDdRcrZ5v3OtBOH
+         JNGSN58Doqb0wYAJZND2yddhfAmJbxj5y+Z09iGbxMDtyfvH/3sr7Clu34Ffamc6NebI
+         RmbGKBWOWifiZwjIxelV17HqqhZ7Q0Hm6p1n48klDwIaVLBiBkMlxAyz3oNF4LO/vODB
+         Uw2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=tr8N78Hoy6tYOPSoGx19UePZ1Ba01PzkSoeWu4TT1Ro=;
+        b=HlCWuzWLQ90OI1jEcejMRPiG16udmVmxcYAnZHh19jLVst+xmuVLvCl/Fdma4tdEyb
+         d+Rk+2yNBn+DMkdLXyOJNqLqQ6BkWUPQZqae46vsbMooWLb1nWUoSM4n3HCNsG27m9DZ
+         QkJypKp1bOqLkYjVKIbV0w8JZnj/DoTf84pZO9qWM1jCNjongjDT+t4mN5o2b9glvpB9
+         H3Olr9OEctPnUs/1xrfy2MLUKjEEPN2BNAWO71H5EZ7JYsIgJRI70cEPVy46/u2rcjQ5
+         pIYPJQ4Gvpu2e8fr4Oy3LbTh5Kx/0foZqIBqDovkIK1a1Sw5Ts5b27pNcUhQYwrwqBFQ
+         d5CQ==
+X-Gm-Message-State: AOPr4FW5qNgdgF8kh+/KEhFCvrTdKpNVfKXGoEbRt3lY3dp6qb2sy1VEJy7WAW6Kr3zKaw==
+X-Received: by 10.28.20.144 with SMTP id 138mr2499748wmu.103.1462952522033;
+        Wed, 11 May 2016 00:42:02 -0700 (PDT)
+Received: from [10.32.249.146] (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id c194sm34439735wme.9.2016.05.11.00.42.00
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 11 May 2016 00:42:00 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1605100751050.4092@virtualbox>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294234>
 
 
+> On 10 May 2016, at 07:52, Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
+> 
+> Hi Junio,
+> 
+> On Fri, 6 May 2016, Junio C Hamano wrote:
+> 
+>> * jk/submodule-c-credential (2016-05-06) 6 commits
+>> - submodule: stop sanitizing config options
+>> - submodule: use prepare_submodule_repo_env consistently
+>> - submodule--helper: move config-sanitizing to submodule.c
+>> - submodule: export sanitized GIT_CONFIG_PARAMETERS
+>> - t5550: break submodule config test into multiple sub-tests
+>> - t5550: fix typo in $HTTPD_URL
+>> 
+>> An earlier addition of "sanitize_submodule_env" with 14111fc4 (git:
+>> submodule honor -c credential.* from command line, 2016-02-29)
+>> turned out to be a convoluted no-op; implement what it wanted to do
+>> correctly.
+>> 
+>> Everybody happy?
+> 
+> I cannot speak for everybody. I am happy, though. In particular with this
+> topic branch ;-)
 
-Sehr geehrte / ter email Ben=FCtzer !
+I want to second both statements :)
+This topic branch solves a Git LFS submodule cloning issue nicely [1].
 
-Ihre email Adresse hat =801.200,000,00(EINEMILLIONZWEIHUNDERTAUSEND EUR=
-O)
-gewonnen . Mit den Gl=FCckszahlen 9-3-8-26-28-4-64 In der EURO MILLIONE=
-N
-EMAIL LOTTERIE.Die Summe ergibt sich aus
-einer Gewinnausschuttung von. =8022.800,000,00
-( ZWEIUNDZWANZIGMILLIONENACHTHUNDERTTOUSEND )
-Die Summe wurde durch 19 Gewinnern aus der gleichen
-Kategorie geteilt. ! Bitte kontaktieren Sie f=FCr Ihren Gewinn zust=E4n=
-dige
-Sachbearbeiterin Frau
-Christiane Hamann per email :christianehamann9@gmail.com
-BITTE AUSFUILLEN DEIN DATAS AUS UNTEN.
-Gl=FCckszahlen:_______________
-NAME: ___________________FAMILIENNAME:_____________________
-ADRESSE:__________________________________________________
-STADT: ________________PLZ: ____________LAND: _______________
-GEB: DATUM: __________________BERUF:________________________
-=46ESTNETZ TEL.NR: ____________________________________________
-MOBILETELEFON NR: ___________________FAX: ___________________
-EMAIL:___________________________ DATE____________________
-SIGNATURE:_________________________
+Thanks,
+Lars
 
-bitte f=FCllen Sie das anschlie=DFende Formular vollst=E4ndig aus und s=
-enden es
-per email zur=FCck !
-Hochachtungsvoll
-Inmaculada Garcia Martinez
-Koordinator.
+[1] https://github.com/github/git-lfs/issues/1172#issuecomment-218384460
