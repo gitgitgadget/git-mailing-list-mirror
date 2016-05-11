@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 34/94] builtin/apply: move 'root' global into 'struct apply_state'
-Date: Wed, 11 May 2016 15:16:45 +0200
-Message-ID: <20160511131745.2914-35-chriscool@tuxfamily.org>
+Subject: [PATCH v2 36/94] builtin/apply: move 'whitespace_option' into 'struct apply_state'
+Date: Wed, 11 May 2016 15:16:47 +0200
+Message-ID: <20160511131745.2914-37-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -15,51 +15,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 15:19:59 2016
+X-From: git-owner@vger.kernel.org Wed May 11 15:19:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U3K-0002jQ-L2
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:19:51 +0200
+	id 1b0U3M-0002jQ-4s
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160AbcEKNTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:19:38 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33024 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752018AbcEKNTg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:19:36 -0400
-Received: by mail-wm0-f66.google.com with SMTP id r12so9409804wme.0
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:19:36 -0700 (PDT)
+	id S932207AbcEKNTn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 09:19:43 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34840 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932203AbcEKNTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:19:41 -0400
+Received: by mail-wm0-f65.google.com with SMTP id e201so9405479wme.2
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:19:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cWkTBIDjS7mOdx3ENBLfxbr8Y68hPW0eNk1TDhz/bEo=;
-        b=ZYexEBJyqi18maPOWEGrHMZFtL7Y4fTecSVKX0rPkCyfhpkshHA1dqNIOEKmCRzVNA
-         kDsNT3Kmc35QSDL04AkDrqGBQjIONr2Qi7kZuuY1qcuLJ1RN91dnHRtohUUgYpF0UOxh
-         ulYhlujA0QsGRIFiU5ZXgLjL4RKPGtEdNCW6pj/jTu7F35J+XTalT9ZdV5o2s9F7y+Hw
-         58PetvRc2qHmJZfClCdl48c+/PYB1nKUKM7vK/qSrQBC90uVgI8m5Bcur+bAEsPd9C27
-         SMkf+uENaikAf9Nh9XiwNo53TA+w26tS6J9gaYUHJZ9n0X6LFbwu9BDefa9UCNIlRAG9
-         ixBw==
+        bh=5+0jMSVRAukbmskC4jjkr/fp8ZmAcqqRpLtoBQ4x9uY=;
+        b=ambBgcwUDtts9FGpgDYQWpi08jSHOkm/UQo4OFfnxfa+8CvZLmv6nGkwcJtUl9OpKM
+         851hpCabvlLvNBJb7o+AqSJGhc2L4Sk1QYWSBv6CKQQ1nbvMvkbCIk959xwxrYM0UK3s
+         11ZX0BzUiqlvCyDKW3luMOdWSEzZ4Km93CdhJlLXV7JevZSfBj5j60aDCVcD2bgS5vZq
+         jpzIRnK/8iQ5lI4rcABhHnKGF/5t83JXMqt/JZsRHdbDskQWyLIWeIK9+UsqHjMPdeCG
+         oY+INM3Mrit863dpScP82GCkl6quVw9qQE/fPOWBdvodnt1bBAdsFGuGx6pqVklI0+d/
+         TNGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=cWkTBIDjS7mOdx3ENBLfxbr8Y68hPW0eNk1TDhz/bEo=;
-        b=R1LuQakc/MvUxqwHAHxt5o3pmSw8HeVTr9xQHaa5tR750LXe5n+J9EGEniJkgt7/mo
-         NmZgSBrFv+80lyWYspWUxkvwI41f7ThOjiwyYIOOQZ2aVXhBUwmrEwIGvRnP5tOc2Krv
-         9ZGNbhsIGIj0gDcIbuiXOI867mUq0/QYK8P2ptp/6yvGsvEUxMsYejmWR5cVsiNEyViY
-         bPZD5lugMCa5FfWAS964aIuQWO1QoWg0Fwk+XZ+N0zl+CpWMto8t9vrYz65pOrdEe7l2
-         QxbkXIy5YcQBXFyn1KhSL2VjlQsf6j9WEV2rPgkZT33HNXKkqqvX3mhXpekbnKat32GW
-         OSHw==
-X-Gm-Message-State: AOPr4FUQEWYrMmK1Z398UDQYM14+94slBNaSmkW548z/gpEaZqcBN2lvwuoBSy8ZIZ1rPQ==
-X-Received: by 10.28.172.132 with SMTP id v126mr4444242wme.28.1462972775607;
-        Wed, 11 May 2016 06:19:35 -0700 (PDT)
+        bh=5+0jMSVRAukbmskC4jjkr/fp8ZmAcqqRpLtoBQ4x9uY=;
+        b=W1akl+udnNVi+Iw7g2ZwhRmXPhvmgFgRc/XhOsKDxazSv/uanB9FVjW8pw1Mezw7mW
+         jyn/xQSkzM6FkA0pz3y/abmbyAAv3S9yOUdhl+jD59dDOGAWoHo7cDi1oxyu+80L/q3t
+         zaxkD1fOqAzri0E0TdoVv6gaONJp3nd6PmKxsJIj2A9JdjMRMK0AlcQsvFlA59Osy8v7
+         IfdJ56LLynopODSB6bQPRS/kC476BlrsJiyH1X9TkhlVokzHV+7AX+jbfs1vw4yTzdfo
+         rSc/6R4N3+1wOY6pquwwbg21AEqtGem9hl+jXbcQoF4MCBzq4NlPQLQ7sJ0j3iUDA83/
+         t6aw==
+X-Gm-Message-State: AOPr4FXldWUYEMhwYTsXTXhZ2tMUn9bE3Fn6ffGi3io3l1BbsQa9nFcXsFB7kZHRUK6oDw==
+X-Received: by 10.28.127.81 with SMTP id a78mr84041wmd.34.1462972779733;
+        Wed, 11 May 2016 06:19:39 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.19.33
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.19.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:19:34 -0700 (PDT)
+        Wed, 11 May 2016 06:19:38 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -67,263 +67,73 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294269>
 
-To libify the apply functionality the 'root' variable should
-not be static and global to the file. Let's move it into
-'struct apply_state'.
+This will enable further refactoring, and it is more coherent and
+simpler if all the option_parse_*() functions are passed a
+'struct apply_state' instance in opt->value.
 
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 81 ++++++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 48 insertions(+), 33 deletions(-)
+ builtin/apply.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 30eea9c..6b3540f 100644
+index 1684f25..4b9a5ff 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -47,6 +47,7 @@ struct apply_state {
- 	const char *patch_input_file;
- 	struct string_list limit_by_name;
- 	int has_include;
-+	struct strbuf root;
+@@ -67,6 +67,7 @@ struct apply_state {
+ 	int p_value_known;
+ 	unsigned int p_context;
  
- 	/*
- 	 *  --check turns on checking that the working tree matches the
-@@ -90,8 +91,6 @@ static enum ws_ignore {
- } ws_ignore_action = ignore_ws_none;
++	const char *whitespace_option;
+ 	int whitespace_error;
+ };
  
- 
--static struct strbuf root = STRBUF_INIT;
--
- static void parse_whitespace_option(const char *option)
+@@ -4625,9 +4626,9 @@ static int option_parse_space_change(const struct option *opt,
+ static int option_parse_whitespace(const struct option *opt,
+ 				   const char *arg, int unset)
  {
- 	if (!option) {
-@@ -481,7 +480,10 @@ static char *squash_slash(char *name)
- 	return name;
- }
- 
--static char *find_name_gnu(const char *line, const char *def, int p_value)
-+static char *find_name_gnu(struct apply_state *state,
-+			   const char *line,
-+			   const char *def,
-+			   int p_value)
- {
- 	struct strbuf name = STRBUF_INIT;
- 	char *cp;
-@@ -505,8 +507,8 @@ static char *find_name_gnu(const char *line, const char *def, int p_value)
- 	}
- 
- 	strbuf_remove(&name, 0, cp - name.buf);
--	if (root.len)
--		strbuf_insert(&name, 0, root.buf, root.len);
-+	if (state->root.len)
-+		strbuf_insert(&name, 0, state->root.buf, state->root.len);
- 	return squash_slash(strbuf_detach(&name, NULL));
- }
- 
-@@ -669,8 +671,12 @@ static size_t diff_timestamp_len(const char *line, size_t len)
- 	return line + len - end;
- }
- 
--static char *find_name_common(const char *line, const char *def,
--			      int p_value, const char *end, int terminate)
-+static char *find_name_common(struct apply_state *state,
-+			      const char *line,
-+			      const char *def,
-+			      int p_value,
-+			      const char *end,
-+			      int terminate)
- {
- 	int len;
- 	const char *start = NULL;
-@@ -708,32 +714,39 @@ static char *find_name_common(const char *line, const char *def,
- 			return squash_slash(xstrdup(def));
- 	}
- 
--	if (root.len) {
--		char *ret = xstrfmt("%s%.*s", root.buf, len, start);
-+	if (state->root.len) {
-+		char *ret = xstrfmt("%s%.*s", state->root.buf, len, start);
- 		return squash_slash(ret);
- 	}
- 
- 	return squash_slash(xmemdupz(start, len));
- }
- 
--static char *find_name(const char *line, char *def, int p_value, int terminate)
-+static char *find_name(struct apply_state *state,
-+		       const char *line,
-+		       char *def,
-+		       int p_value,
-+		       int terminate)
- {
- 	if (*line == '"') {
--		char *name = find_name_gnu(line, def, p_value);
-+		char *name = find_name_gnu(state, line, def, p_value);
- 		if (name)
- 			return name;
- 	}
- 
--	return find_name_common(line, def, p_value, NULL, terminate);
-+	return find_name_common(state, line, def, p_value, NULL, terminate);
- }
- 
--static char *find_name_traditional(const char *line, char *def, int p_value)
-+static char *find_name_traditional(struct apply_state *state,
-+				   const char *line,
-+				   char *def,
-+				   int p_value)
- {
- 	size_t len;
- 	size_t date_len;
- 
- 	if (*line == '"') {
--		char *name = find_name_gnu(line, def, p_value);
-+		char *name = find_name_gnu(state, line, def, p_value);
- 		if (name)
- 			return name;
- 	}
-@@ -741,10 +754,10 @@ static char *find_name_traditional(const char *line, char *def, int p_value)
- 	len = strchrnul(line, '\n') - line;
- 	date_len = diff_timestamp_len(line, len);
- 	if (!date_len)
--		return find_name_common(line, def, p_value, NULL, TERM_TAB);
-+		return find_name_common(state, line, def, p_value, NULL, TERM_TAB);
- 	len -= date_len;
- 
--	return find_name_common(line, def, p_value, line + len, 0);
-+	return find_name_common(state, line, def, p_value, line + len, 0);
- }
- 
- static int count_slashes(const char *cp)
-@@ -769,7 +782,7 @@ static int guess_p_value(struct apply_state *state, const char *nameline)
- 
- 	if (is_dev_null(nameline))
- 		return -1;
--	name = find_name_traditional(nameline, NULL, 0);
-+	name = find_name_traditional(state, nameline, NULL, 0);
- 	if (!name)
- 		return -1;
- 	cp = strchr(name, '/');
-@@ -894,17 +907,17 @@ static void parse_traditional_patch(struct apply_state *state,
- 	if (is_dev_null(first)) {
- 		patch->is_new = 1;
- 		patch->is_delete = 0;
--		name = find_name_traditional(second, NULL, state->p_value);
-+		name = find_name_traditional(state, second, NULL, state->p_value);
- 		patch->new_name = name;
- 	} else if (is_dev_null(second)) {
- 		patch->is_new = 0;
- 		patch->is_delete = 1;
--		name = find_name_traditional(first, NULL, state->p_value);
-+		name = find_name_traditional(state, first, NULL, state->p_value);
- 		patch->old_name = name;
- 	} else {
- 		char *first_name;
--		first_name = find_name_traditional(first, NULL, state->p_value);
--		name = find_name_traditional(second, first_name, state->p_value);
-+		first_name = find_name_traditional(state, first, NULL, state->p_value);
-+		name = find_name_traditional(state, second, first_name, state->p_value);
- 		free(first_name);
- 		if (has_epoch_timestamp(first)) {
- 			patch->is_new = 1;
-@@ -949,7 +962,7 @@ static void gitdiff_verify_name(struct apply_state *state,
- 				int side)
- {
- 	if (!*name && !isnull) {
--		*name = find_name(line, NULL, state->p_value, TERM_TAB);
-+		*name = find_name(state, line, NULL, state->p_value, TERM_TAB);
- 		return;
- 	}
- 
-@@ -959,7 +972,7 @@ static void gitdiff_verify_name(struct apply_state *state,
- 		if (isnull)
- 			die(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
- 			    *name, state_linenr);
--		another = find_name(line, NULL, state->p_value, TERM_TAB);
-+		another = find_name(state, line, NULL, state->p_value, TERM_TAB);
- 		if (!another || memcmp(another, *name, len + 1))
- 			die((side == DIFF_NEW_NAME) ?
- 			    _("git apply: bad git-diff - inconsistent new filename on line %d") :
-@@ -1034,7 +1047,7 @@ static int gitdiff_copysrc(struct apply_state *state,
- {
- 	patch->is_copy = 1;
- 	free(patch->old_name);
--	patch->old_name = find_name(line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
-+	patch->old_name = find_name(state, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
- 	return 0;
- }
- 
-@@ -1044,7 +1057,7 @@ static int gitdiff_copydst(struct apply_state *state,
- {
- 	patch->is_copy = 1;
- 	free(patch->new_name);
--	patch->new_name = find_name(line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
-+	patch->new_name = find_name(state, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
- 	return 0;
- }
- 
-@@ -1054,7 +1067,7 @@ static int gitdiff_renamesrc(struct apply_state *state,
- {
- 	patch->is_rename = 1;
- 	free(patch->old_name);
--	patch->old_name = find_name(line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
-+	patch->old_name = find_name(state, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
- 	return 0;
- }
- 
-@@ -1064,7 +1077,7 @@ static int gitdiff_renamedst(struct apply_state *state,
- {
- 	patch->is_rename = 1;
- 	free(patch->new_name);
--	patch->new_name = find_name(line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
-+	patch->new_name = find_name(state, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
- 	return 0;
- }
- 
-@@ -1323,8 +1336,8 @@ static int parse_git_header(struct apply_state *state,
- 	 * the default name from the header.
- 	 */
- 	patch->def_name = git_header_name(state, line, len);
--	if (patch->def_name && root.len) {
--		char *s = xstrfmt("%s%s", root.buf, patch->def_name);
-+	if (patch->def_name && state->root.len) {
-+		char *s = xstrfmt("%s%s", state->root.buf, patch->def_name);
- 		free(patch->def_name);
- 		patch->def_name = s;
- 	}
-@@ -4621,9 +4634,10 @@ static int option_parse_whitespace(const struct option *opt,
- static int option_parse_directory(const struct option *opt,
- 				  const char *arg, int unset)
- {
--	strbuf_reset(&root);
--	strbuf_addstr(&root, arg);
--	strbuf_complete(&root, '/');
+-	const char **whitespace_option = opt->value;
 +	struct apply_state *state = opt->value;
-+	strbuf_reset(&state->root);
-+	strbuf_addstr(&state->root, arg);
-+	strbuf_complete(&state->root, '/');
+ 
+-	*whitespace_option = arg;
++	state->whitespace_option = arg;
+ 	parse_whitespace_option(arg);
  	return 0;
  }
+@@ -4670,8 +4671,6 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 	int read_stdin = 1;
+ 	struct apply_state state;
  
-@@ -4636,6 +4650,7 @@ static void init_apply_state(struct apply_state *state, const char *prefix)
- 	state->line_termination = '\n';
- 	state->p_value = 1;
- 	state->p_context = UINT_MAX;
-+	strbuf_init(&state->root, 0);
- 
- 	git_apply_config();
- 	if (apply_default_whitespace)
-@@ -4719,7 +4734,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 		OPT_BIT(0, "recount", &options,
- 			N_("do not trust the line counts in the hunk headers"),
- 			RECOUNT),
--		{ OPTION_CALLBACK, 0, "directory", NULL, N_("root"),
-+		{ OPTION_CALLBACK, 0, "directory", &state, N_("root"),
- 			N_("prepend <root> to all filenames"),
- 			0, option_parse_directory },
- 		OPT_END()
+-	const char *whitespace_option = NULL;
+-
+ 	struct option builtin_apply_options[] = {
+ 		{ OPTION_CALLBACK, 0, "exclude", &state, N_("path"),
+ 			N_("don't apply changes matching the given path"),
+@@ -4711,7 +4710,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 			N_("paths are separated with NUL character"), '\0'),
+ 		OPT_INTEGER('C', NULL, &state.p_context,
+ 				N_("ensure at least <n> lines of context match")),
+-		{ OPTION_CALLBACK, 0, "whitespace", &whitespace_option, N_("action"),
++		{ OPTION_CALLBACK, 0, "whitespace", &state, N_("action"),
+ 			N_("detect new or modified lines that have whitespace errors"),
+ 			0, option_parse_whitespace },
+ 		{ OPTION_CALLBACK, 0, "ignore-space-change", NULL, NULL,
+@@ -4786,11 +4785,11 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 		if (fd < 0)
+ 			die_errno(_("can't open patch '%s'"), arg);
+ 		read_stdin = 0;
+-		set_default_whitespace_mode(&state, whitespace_option);
++		set_default_whitespace_mode(&state, state.whitespace_option);
+ 		errs |= apply_patch(&state, fd, arg, options);
+ 		close(fd);
+ 	}
+-	set_default_whitespace_mode(&state, whitespace_option);
++	set_default_whitespace_mode(&state, state.whitespace_option);
+ 	if (read_stdin)
+ 		errs |= apply_patch(&state, 0, "<stdin>", options);
+ 	if (state.whitespace_error) {
 -- 
 2.8.2.490.g3dabe57
