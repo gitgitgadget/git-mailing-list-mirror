@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 46/94] builtin/apply: move 'state' check into check_apply_state()
-Date: Wed, 11 May 2016 15:16:57 +0200
-Message-ID: <20160511131745.2914-47-chriscool@tuxfamily.org>
+Subject: [PATCH v2 44/94] builtin/apply: move 'fn_table' global into 'struct apply_state'
+Date: Wed, 11 May 2016 15:16:55 +0200
+Message-ID: <20160511131745.2914-45-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -21,45 +21,45 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U3e-0003Hd-RD
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:20:11 +0200
+	id 1b0U3d-0003Hd-Ie
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:20:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932250AbcEKNUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:20:05 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33295 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932190AbcEKNUD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:20:03 -0400
-Received: by mail-wm0-f68.google.com with SMTP id r12so9411955wme.0
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:20:02 -0700 (PDT)
+	id S1751824AbcEKNUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 09:20:01 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36142 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751512AbcEKNT7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:19:59 -0400
+Received: by mail-wm0-f66.google.com with SMTP id w143so9349591wmw.3
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:19:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Q3gojvukNWTdTnoQPc/QldGmQVysosznlJyVuVlDS6k=;
-        b=NH+ribZmtEDaD2aYF6d3ij7r65OAw9ZJCON1QRQsA//IYCQ9X9CvcDkUmSS8sC9WgM
-         R6fZCah9hEnKkRft3QlFNDfXt66xXU+8g1M7JnBqbc5DBmqULFFwasMNWO/j1JFtdQJp
-         MPnWJzZzsIL8H2IQBFcMnsFpWqCwmUTvT6VYTrQk1Mvb5qIzzpmeMxtXe+cwc1stbUf/
-         fVdfgOqOcCwIAz0gAIkcFoiRdba/f9joiYGGSyPcZ30ABCepPWKNBlm1ZCqqApei8PN5
-         5saTnr39NfiFKOnzIrDYCOcZ4oVevfnpLUp1IpBYeSbp+47M4tJ8oMh9nwYx3R8G06Qi
-         8v1g==
+        bh=XMkCjg1XwCfOf9nAudS0pw/5efOK0fHOfDYCHLVmO+w=;
+        b=qcq/4tUkouzGNu5khE00kJqFcNAHD+0uWwI+KUpRQNNT1UPDguouNXAQcig/mAPChh
+         knMIKAtLBYAuUXfsrI9jdA/jqby54VJK8t0VQPK0WUIjKta3fzYroHRMcQmMoVj3qzHP
+         +VE9C44voQYQOEKU5ScS0z/pL+ZnxPbuf/6HEuQTOAmoZ8LXZ47mgf5WWFS6fTgJzA6z
+         XHKX0u+6tnDvCfh9PyTOXH9PKY49H3Dqt1LJhksScaT//ng5nFRWlaassAOmCQ7qqHaT
+         4YmJCYaDZR084OXkKeV9+Aez73wsKyqIGFri9EiNYkwxBv4Dsma/JMkXHjDtv6Fe3kJA
+         t8OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Q3gojvukNWTdTnoQPc/QldGmQVysosznlJyVuVlDS6k=;
-        b=N9JV8gT6W2K9BY6A3HfUgiMWAA2hx0wghdG3tWQ9pLk08/RXVWQKpOhL7UvlKbKo+X
-         1NyZ7Etz0JIq3wywX7SoOz6ULs1cqhWZFd7swDWk3SzEgRRv0RDOPD3ruFtwBbAaWj01
-         6CFQFxqZg7KsNZrIyLbrGbigxpLAhDe8dESfG+eczRgiBOnW/O21NfyrzLoWGKVdPhJS
-         RJ4Yv5vgx55g+YrBuZBp1EzBp/yrDuvVcgBWPZrXou1r0377X7oFa29DtjjW4DdqQQUm
-         YabwxTv4I8Gv6qt5eXrrdOpg1ShA5FqSgIkZE5n2Jj8DEz5d0uHSRi26veG+yXIw7n08
-         0QjQ==
-X-Gm-Message-State: AOPr4FVxmacMQqlQ9XX+hIfuH478ap4lcYEyRy4nJ2hnX4iVyhVRqiu3Lk8+Sh1STS2cCQ==
-X-Received: by 10.28.175.83 with SMTP id y80mr4253586wme.8.1462972801899;
-        Wed, 11 May 2016 06:20:01 -0700 (PDT)
+        bh=XMkCjg1XwCfOf9nAudS0pw/5efOK0fHOfDYCHLVmO+w=;
+        b=Yy70sgjODxieLcDiS3w701pCVuv8B1217BxVAqBSq91H0zWbzawb+0Q/Hov02WY/IY
+         VaRCaIqrOnpPT9MSVzxdzBtF5uCeJbOvX8Iva3nte4DkY+KJS8dRmyiCEHLhqH6q0Fx5
+         2o+MI90KNrJXYpFTsMry9gFrPvSDMz7pvwWfxopmOYaU62mTFzT0DeC/zEhcBaZSffvw
+         OQMEHSk/G6PBeVKMP4pWTsIEi1L9L6HCoLzPMiAhkaEB2i2mVtrg2IpbD4t1JGyQQG7V
+         FmTFE3NfmgBB1NnPeqrJEh0Ubcih+5cInsRf45rmaSNiCMQDDJbZnhyHQS/Z75K72MEX
+         os1A==
+X-Gm-Message-State: AOPr4FU7tMSKEC0zcRZaKWGSRwNocgaZHNrywOAr57+sBXVZMaH+gkfyOozZfCZ6FjbBBw==
+X-Received: by 10.194.6.65 with SMTP id y1mr3787600wjy.12.1462972797700;
+        Wed, 11 May 2016 06:19:57 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.19.59
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.19.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:20:00 -0700 (PDT)
+        Wed, 11 May 2016 06:19:56 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -67,92 +67,181 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294276>
 
-To libify the apply functionality we should provide a function
-to check that the values in a 'struct apply_state' instance are
-coherent. Let's move the code to do that into a new
-check_apply_state() function.
+To libify the apply functionality the 'fn_table' variable should
+not be static and global to the file. Let's move it into
+'struct apply_state'.
 
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 52 +++++++++++++++++++++++++++++-----------------------
- 1 file changed, 29 insertions(+), 23 deletions(-)
+ builtin/apply.c | 45 +++++++++++++++++++++++----------------------
+ 1 file changed, 23 insertions(+), 22 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 14286d2..e5f76d8 100644
+index 5c003a1..506e9ec 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -4681,11 +4681,38 @@ static void init_apply_state(struct apply_state *state, const char *prefix)
- 		parse_ignorewhitespace_option(state, apply_default_ignorewhitespace);
+@@ -91,6 +91,12 @@ struct apply_state {
+ 	 */
+ 	int linenr;
+ 
++	/*
++	 * Records filenames that have been touched, in order to handle
++	 * the case where more than one patches touch the same file.
++	 */
++	struct string_list fn_table;
++
+ 	int p_value;
+ 	int p_value_known;
+ 	unsigned int p_context;
+@@ -282,13 +288,6 @@ struct image {
+ 	struct line *line;
+ };
+ 
+-/*
+- * Records filenames that have been touched, in order to handle
+- * the case where more than one patches touch the same file.
+- */
+-
+-static struct string_list fn_table;
+-
+ static uint32_t hash_line(const char *cp, size_t len)
+ {
+ 	size_t i;
+@@ -3218,14 +3217,14 @@ static int read_file_or_gitlink(const struct cache_entry *ce, struct strbuf *buf
+ 	return read_blob_object(buf, ce->sha1, ce->ce_mode);
  }
  
-+static void check_apply_state(struct apply_state *state, int force_apply)
-+{
-+	int is_not_gitdir = !startup_info->have_repository;
-+
-+	if (state->apply_with_reject && state->threeway)
-+		die("--reject and --3way cannot be used together.");
-+	if (state->cached && state->threeway)
-+		die("--cached and --3way cannot be used together.");
-+	if (state->threeway) {
-+		if (is_not_gitdir)
-+			die(_("--3way outside a repository"));
-+		state->check_index = 1;
-+	}
-+	if (state->apply_with_reject)
-+		state->apply = state->apply_verbosely = 1;
-+	if (!force_apply && (state->diffstat || state->numstat || state->summary || state->check || state->fake_ancestor))
-+		state->apply = 0;
-+	if (state->check_index && is_not_gitdir)
-+		die(_("--index outside a repository"));
-+	if (state->cached) {
-+		if (is_not_gitdir)
-+			die(_("--cached outside a repository"));
-+		state->check_index = 1;
-+	}
-+	if (state->check_index)
-+		state->unsafe_paths = 0;
-+}
-+
- int cmd_apply(int argc, const char **argv, const char *prefix_)
+-static struct patch *in_fn_table(const char *name)
++static struct patch *in_fn_table(struct apply_state *state, const char *name)
  {
- 	int i;
- 	int errs = 0;
--	int is_not_gitdir = !startup_info->have_repository;
- 	int force_apply = 0;
- 	int options = 0;
- 	int read_stdin = 1;
-@@ -4765,28 +4792,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 	argc = parse_options(argc, argv, state.prefix, builtin_apply_options,
- 			apply_usage, 0);
+ 	struct string_list_item *item;
  
--	if (state.apply_with_reject && state.threeway)
--		die("--reject and --3way cannot be used together.");
--	if (state.cached && state.threeway)
--		die("--cached and --3way cannot be used together.");
--	if (state.threeway) {
--		if (is_not_gitdir)
--			die(_("--3way outside a repository"));
--		state.check_index = 1;
--	}
--	if (state.apply_with_reject)
--		state.apply = state.apply_verbosely = 1;
--	if (!force_apply && (state.diffstat || state.numstat || state.summary || state.check || state.fake_ancestor))
--		state.apply = 0;
--	if (state.check_index && is_not_gitdir)
--		die(_("--index outside a repository"));
--	if (state.cached) {
--		if (is_not_gitdir)
--			die(_("--cached outside a repository"));
--		state.check_index = 1;
--	}
--	if (state.check_index)
--		state.unsafe_paths = 0;
-+	check_apply_state(&state, force_apply);
+ 	if (name == NULL)
+ 		return NULL;
  
- 	for (i = 0; i < argc; i++) {
- 		const char *arg = argv[i];
+-	item = string_list_lookup(&fn_table, name);
++	item = string_list_lookup(&state->fn_table, name);
+ 	if (item != NULL)
+ 		return (struct patch *)item->util;
+ 
+@@ -3257,7 +3256,7 @@ static int was_deleted(struct patch *patch)
+ 	return patch == PATH_WAS_DELETED;
+ }
+ 
+-static void add_to_fn_table(struct patch *patch)
++static void add_to_fn_table(struct apply_state *state, struct patch *patch)
+ {
+ 	struct string_list_item *item;
+ 
+@@ -3267,7 +3266,7 @@ static void add_to_fn_table(struct patch *patch)
+ 	 * file creations and copies
+ 	 */
+ 	if (patch->new_name != NULL) {
+-		item = string_list_insert(&fn_table, patch->new_name);
++		item = string_list_insert(&state->fn_table, patch->new_name);
+ 		item->util = patch;
+ 	}
+ 
+@@ -3276,12 +3275,12 @@ static void add_to_fn_table(struct patch *patch)
+ 	 * later chunks shouldn't patch old names
+ 	 */
+ 	if ((patch->new_name == NULL) || (patch->is_rename)) {
+-		item = string_list_insert(&fn_table, patch->old_name);
++		item = string_list_insert(&state->fn_table, patch->old_name);
+ 		item->util = PATH_WAS_DELETED;
+ 	}
+ }
+ 
+-static void prepare_fn_table(struct patch *patch)
++static void prepare_fn_table(struct apply_state *state, struct patch *patch)
+ {
+ 	/*
+ 	 * store information about incoming file deletion
+@@ -3289,7 +3288,7 @@ static void prepare_fn_table(struct patch *patch)
+ 	while (patch) {
+ 		if ((patch->new_name == NULL) || (patch->is_rename)) {
+ 			struct string_list_item *item;
+-			item = string_list_insert(&fn_table, patch->old_name);
++			item = string_list_insert(&state->fn_table, patch->old_name);
+ 			item->util = PATH_TO_BE_DELETED;
+ 		}
+ 		patch = patch->next;
+@@ -3310,7 +3309,9 @@ static int checkout_target(struct index_state *istate,
+ 	return 0;
+ }
+ 
+-static struct patch *previous_patch(struct patch *patch, int *gone)
++static struct patch *previous_patch(struct apply_state *state,
++				    struct patch *patch,
++				    int *gone)
+ {
+ 	struct patch *previous;
+ 
+@@ -3318,7 +3319,7 @@ static struct patch *previous_patch(struct patch *patch, int *gone)
+ 	if (patch->is_copy || patch->is_rename)
+ 		return NULL; /* "git" patches do not depend on the order */
+ 
+-	previous = in_fn_table(patch->old_name);
++	previous = in_fn_table(state, patch->old_name);
+ 	if (!previous)
+ 		return NULL;
+ 
+@@ -3387,7 +3388,7 @@ static int load_preimage(struct apply_state *state,
+ 	struct patch *previous;
+ 	int status;
+ 
+-	previous = previous_patch(patch, &status);
++	previous = previous_patch(state, patch, &status);
+ 	if (status)
+ 		return error(_("path %s has been renamed/deleted"),
+ 			     patch->old_name);
+@@ -3583,7 +3584,7 @@ static int apply_data(struct apply_state *state, struct patch *patch,
+ 	}
+ 	patch->result = image.buf;
+ 	patch->resultsize = image.len;
+-	add_to_fn_table(patch);
++	add_to_fn_table(state, patch);
+ 	free(image.line_allocated);
+ 
+ 	if (0 < patch->is_delete && patch->resultsize)
+@@ -3617,7 +3618,7 @@ static int check_preimage(struct apply_state *state,
+ 		return 0;
+ 
+ 	assert(patch->is_new <= 0);
+-	previous = previous_patch(patch, &status);
++	previous = previous_patch(state, patch, &status);
+ 
+ 	if (status)
+ 		return error(_("path %s has been renamed/deleted"), old_name);
+@@ -3863,7 +3864,7 @@ static int check_patch(struct apply_state *state, struct patch *patch)
+ 	 * B and rename from A to B is handled the same way by asking
+ 	 * was_deleted().
+ 	 */
+-	if ((tpatch = in_fn_table(new_name)) &&
++	if ((tpatch = in_fn_table(state, new_name)) &&
+ 	    (was_deleted(tpatch) || to_be_deleted(tpatch)))
+ 		ok_if_exists = 1;
+ 	else
+@@ -3941,7 +3942,7 @@ static int check_patch_list(struct apply_state *state, struct patch *patch)
+ 	int err = 0;
+ 
+ 	prepare_symlink_changes(patch);
+-	prepare_fn_table(patch);
++	prepare_fn_table(state, patch);
+ 	while (patch) {
+ 		if (state->apply_verbosely)
+ 			say_patch_name(stderr,
+@@ -4585,7 +4586,7 @@ static int apply_patch(struct apply_state *state,
+ 
+ 	free_patch_list(list);
+ 	strbuf_release(&buf);
+-	string_list_clear(&fn_table, 0);
++	string_list_clear(&state->fn_table, 0);
+ 	return 0;
+ }
+ 
 -- 
 2.8.2.490.g3dabe57
