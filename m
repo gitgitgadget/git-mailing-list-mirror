@@ -1,125 +1,149 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 3/7] submodule-config: keep labels around
-Date: Tue, 10 May 2016 17:59:53 -0700
-Message-ID: <1462928397-1708-4-git-send-email-sbeller@google.com>
-References: <1462928397-1708-1-git-send-email-sbeller@google.com>
+Subject: [PATCH 0/7] submodule groups
+Date: Tue, 10 May 2016 17:59:50 -0700
+Message-ID: <1462928397-1708-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, pclouds@gmail.com,
 	Stefan Beller <sbeller@google.com>
 To: jrnieder@gmail.com, gitster@pobox.com, Jens.Lehmann@web.de
-X-From: git-owner@vger.kernel.org Wed May 11 03:00:33 2016
+X-From: git-owner@vger.kernel.org Wed May 11 03:00:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0IVt-00028Y-7f
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 03:00:33 +0200
+	id 1b0IVd-0001oS-0J
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 03:00:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751497AbcEKBAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 21:00:17 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:33672 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751446AbcEKBAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 21:00:11 -0400
-Received: by mail-pa0-f49.google.com with SMTP id xk12so11296355pac.0
-        for <git@vger.kernel.org>; Tue, 10 May 2016 18:00:10 -0700 (PDT)
+	id S1751436AbcEKBAI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 21:00:08 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:32889 "EHLO
+	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750959AbcEKBAF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 21:00:05 -0400
+Received: by mail-pf0-f170.google.com with SMTP id 206so11780012pfu.0
+        for <git@vger.kernel.org>; Tue, 10 May 2016 18:00:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=lPMdXIc2F8eEmZaklLK2y5mj9F031vUNP88Dp7jQpFQ=;
-        b=PICvPWNoHmB0yoJLUGwpMK47DlWJ5ovKV6ylWwrssis3QCcOsxk7tFk4lY00qsqU3y
-         r05kWcuzlX2Zy3e2yT1RnD4BRyZidkzndP/d/UXpCxXJzkt0wjgAnGYqtdMyPNoxUHtp
-         dUHnfbSoRHO4WOT1iMyUdBoRpMI7Xa6XK8kZV+Bd6pX8AICSbszovGeQIBOQNwBr4yfD
-         ysh2KRbeY5821cBuHO6/fWmZoft6rcA0XGrZDV6pQ+Qp+D0/GtAv44UKNdy8oGrsqVrK
-         xPn5fMBFLL2LArTxHu5pvojvWBrj3J418CndbL0OorX4+LopQsLb7ZCTqlloZqVAYYay
-         9WtQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=3A0BbyKYhiSJtTKZiS15RNANsvNLzx339EJJ09M7p9A=;
+        b=It7ygPbbcyNBOdimT5lV2FBlep1NU60ZUp6WkTaml7U2x7OxyqfnCAwcMJuoGCYOFz
+         76BOUQLxoLfVRj1O/5jvech7HAtWQI5ASFNKrASx7vxkgqgtiWEp5E6RkKtNfiDdeJM/
+         04uvqjgZkOXIUHL2VTx8MD1r9EmMPYXB4AF4bMP4fYNJ+7WH2rgxI+CcGAgNMudlflif
+         RZVxzBfD9H/plbyJ53SIjkQqAb3FUPP4/BGScN7Y16lMVygPOkdzNBfyUwQ7isx12/ZO
+         H9Q4xChu3EA69HOaU6jUWy7i84nTf9JPFwF97RKXI66hTYMeUqNadLAOl92EHvy1A31/
+         J6Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=lPMdXIc2F8eEmZaklLK2y5mj9F031vUNP88Dp7jQpFQ=;
-        b=PQ03Z1nOJDszoFF8hWdklsixIDFsEnYCjDsdVRIKNg9hJ9nD9aphlDVRrDdXozgrPi
-         77me3Gj9+xk/gB4Q8Y6eUgjiAV4A6JDTAeeW5Fdkd+OSHAUwaPw25hjcGIv5APSI/iH8
-         mfxB6v/RmZuRr0vwSubPddRJTtog22J6yiBiNAnjAENsNKR+uMfAX2WR2cPmfC71RyO6
-         wNy3LtvVx+Uc9kToCggueWCvun0SRXwL4csKoC9KRHtYxJVLa/ykEHNwREzGdvrGOvwq
-         dMUxL++uxciGkpYGAdScEb9IrAeneZxHlbMB9NO3rUYTVbJ+KStLZuR0X9Lma1diYLSr
-         io6g==
-X-Gm-Message-State: AOPr4FUvh1kX2MjujEE2+SyJC/KvPyXj5xCDUO4CQ40GedU1RLxEODPX2FfX7mBRzIKSRpgy
-X-Received: by 10.66.164.165 with SMTP id yr5mr674703pab.133.1462928410151;
-        Tue, 10 May 2016 18:00:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=3A0BbyKYhiSJtTKZiS15RNANsvNLzx339EJJ09M7p9A=;
+        b=k5IxZK2/RVepNPxM6pFyQWR2rsh5nZ+obPMRxO3Ieu+mJwWLwfKm2GwNqrBN8kRNPr
+         +0iEqLzPuF536sO4WxGaRM1epJ0gnYCRvllsGuCxA1D0Hj4WsDp3SzevADIhDPG+kyTY
+         uTsjsuMhD99mXrTzejtuSFMnXHpGY9mEhr1RXaaDcvUxZhUDkO/dnd3VYJZXBcOoVf8X
+         KXWtxHauWRvSKb+uGiLZrinDbt+BO+GTfSsyd0LGHaVICc5O1GW+l5pSdBPNhf5iP6YE
+         u+99aCufmiIcFq7jKcisiI0BcHa3g9B2uDkds3+lzcOgJ1AycuOeo/Bt7LQF9K3RmjfE
+         tIQQ==
+X-Gm-Message-State: AOPr4FXh1mHXJdp0ykaOKVyERTytKwFiwpy+E+Nxv6nXqS3uLAHMTX7ctxvsoAl7z/kLfJuK
+X-Received: by 10.98.76.194 with SMTP id e63mr708281pfj.63.1462928404167;
+        Tue, 10 May 2016 18:00:04 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:69ac:db78:a0d1:60da])
-        by smtp.gmail.com with ESMTPSA id b19sm7240959pfj.41.2016.05.10.18.00.09
+        by smtp.gmail.com with ESMTPSA id n10sm7239429pax.18.2016.05.10.18.00.03
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 10 May 2016 18:00:09 -0700 (PDT)
+        Tue, 10 May 2016 18:00:03 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0.35.g58985d9.dirty
-In-Reply-To: <1462928397-1708-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294212>
 
-We need the submodule labels in a later patch.
+I started from scratch as I think there were some sharp edges in the design.
+My thinking shifted from "submodule groups" towards "actually it's just an
+enhanced pathspec, called submodulespec".
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule-config.c | 16 ++++++++++++++++
- submodule-config.h |  2 ++
- 2 files changed, 18 insertions(+)
+The meat is found in the last 3 patches.
 
-diff --git a/submodule-config.c b/submodule-config.c
-index b82d1fb..0cdb47e 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -60,6 +60,10 @@ static void free_one_config(struct submodule_entry *entry)
- 	free((void *) entry->config->path);
- 	free((void *) entry->config->name);
- 	free((void *) entry->config->update_strategy.command);
-+	if (entry->config->labels) {
-+		string_list_clear(entry->config->labels, 0);
-+		free(entry->config->labels);
-+	}
- 	free(entry->config);
- }
- 
-@@ -199,6 +203,7 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
- 	submodule->update_strategy.command = NULL;
- 	submodule->fetch_recurse = RECURSE_SUBMODULES_NONE;
- 	submodule->ignore = NULL;
-+	submodule->labels = NULL;
- 
- 	hashcpy(submodule->gitmodules_sha1, gitmodules_sha1);
- 
-@@ -353,6 +358,17 @@ static int parse_config(const char *var, const char *value, void *data)
- 		else if (parse_submodule_update_strategy(value,
- 			 &submodule->update_strategy) < 0)
- 				die(_("invalid value for %s"), var);
-+	} else if (!strcmp(item.buf, "label")) {
-+		if (!value)
-+			ret = config_error_nonbool(var);
-+		else {
-+			if (!submodule->labels) {
-+				submodule->labels =
-+					xmalloc(sizeof(*submodule->labels));
-+				string_list_init(submodule->labels, 1);
-+			}
-+			string_list_insert(submodule->labels, value);
-+		}
- 	}
- 
- 	strbuf_release(&name);
-diff --git a/submodule-config.h b/submodule-config.h
-index e4857f5..d57da59 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -18,6 +18,8 @@ struct submodule {
- 	struct submodule_update_strategy update_strategy;
- 	/* the sha1 blob id of the responsible .gitmodules file */
- 	unsigned char gitmodules_sha1[20];
-+	/* sorted, not as on disk */
-+	struct string_list *labels;
- };
- 
- int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
+What is this series about?
+==========================
+
+If you have lots of submodules, you probably don't need all of them at once,
+but you have functional units. Some submodules are absolutely required,
+some are optional and only for very specific purposes.
+
+This patch series adds labels to submodules in the .gitmodules file.
+
+So you could have a .gitmodules file such as:
+
+[submodule "gcc"]
+        path = gcc
+        url = git://...
+        label = default
+        label = devel
+[submodule "linux"]
+        path = linux
+        url = git://...
+        label = default
+[submodule "nethack"]
+        path = nethack
+        url = git://...
+        label = optional
+        label = games
+
+and by this series you can work on an arbitrary group of these submodules
+composed by the labels, names or paths of the submodules.
+
+    git clone --init-submodule=\*<label> --init-submodule=:<name> git://...
+    # will clone the superproject checkout
+    # any submodule being labeled <label> or named <name>
+
+    git submodule add --label <name> git://... ..
+    # record a label while adding a submodule
+
+    git submodule update [--init] \*label2
+    # update only the submodules labeled "label2"
+    
+    git config submodule.updateGroups default
+    git config --add submodule.updateGroups devel
+    # configure which submodules you are interested in....
+    git submodule update [--init-default-group] 
+    # ... and update them    
+
+    git status 
+    git diff
+    git submodule summary
+    # unlike the last series, these are not touched
+    
+    git submodule status \*label2
+    # only show information about "label2" submodules.
+    
+
+Any feedback welcome, specially on the design level!
+
+Thanks,
+Stefan
+
+Prior series found here: http://thread.gmane.org/gmane.comp.version-control.git/292666
+
+Stefan Beller (7):
+  submodule--helper: add valid-label-name
+  submodule add: label submodules if asked to
+  submodule-config: keep labels around
+  submodule-config: check if a submodule is in a group
+  submodule--helper module_list_compute: allow label or name arguments
+  submodule update: learn partial initialization
+  clone: allow specification of submodules to be cloned
+
+ Documentation/config.txt        |   5 ++
+ Documentation/git-clone.txt     |  26 ++++--
+ Documentation/git-submodule.txt |  30 +++++--
+ builtin/clone.c                 |  40 ++++++++-
+ builtin/submodule--helper.c     | 146 +++++++++++++++++++++++++++---
+ git-submodule.sh                |  38 ++++++--
+ submodule-config.c              |  66 ++++++++++++++
+ submodule-config.h              |   5 ++
+ t/t7400-submodule-basic.sh      | 176 ++++++++++++++++++++++++++++++++++++
+ t/t7412-submodule--helper.sh    | 193 ++++++++++++++++++++++++++++++++++++++++
+ 10 files changed, 692 insertions(+), 33 deletions(-)
+ create mode 100755 t/t7412-submodule--helper.sh
+
 -- 
 2.8.0.35.g58985d9.dirty
