@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 90/94] usage: add get_error_routine() and get_warn_routine()
-Date: Wed, 11 May 2016 15:17:41 +0200
-Message-ID: <20160511131745.2914-91-chriscool@tuxfamily.org>
+Subject: [PATCH v2 86/94] apply: add 'be_silent' variable to 'struct apply_state'
+Date: Wed, 11 May 2016 15:17:37 +0200
+Message-ID: <20160511131745.2914-87-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -15,51 +15,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 15:21:45 2016
+X-From: git-owner@vger.kernel.org Wed May 11 15:21:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U58-00052I-Qv
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:21:43 +0200
+	id 1b0U51-0004sl-Ne
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932418AbcEKNVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:21:39 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33348 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932406AbcEKNVe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:21:34 -0400
-Received: by mail-wm0-f65.google.com with SMTP id r12so9420629wme.0
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:21:34 -0700 (PDT)
+	id S932404AbcEKNVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 09:21:32 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34179 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932369AbcEKNV0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:21:26 -0400
+Received: by mail-wm0-f66.google.com with SMTP id n129so9424624wmn.1
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:21:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=V+uzXY38osmlX4lvOzX0MKYMyAKwpk8IWUdg41FIg5g=;
-        b=hVLtWXcQWYKuglOkTtRJMv7UpDq5ATIvmrxud/SauMe4Nrc4nikhkV5IUwxZrA+sUc
-         +l1nZtdmTpeQOT5/nvS3oDHxe6G54Ak5LRDCBpE5FNSPORPO4XTYeS1p4qR7+djsSrbU
-         CvK9ehWcGf/fDvoiluaCSXiQp+P+WjFzkk1TIK7ENJFWHPeGxs6+0xsq6Q4nuqI8nHz4
-         cvoWBm1xT5KxL/L8HQywnL8Uj1ipKTsBlzKkSoUVwr3z19AIL4AnixmnNKpYeNUcH++Z
-         6f43Hm31jBImaFIOoDx8cn4/kgHVdBxIrh++VqEwW66swpy80m2vSO9z62Yv/ZRxzZYX
-         O0SA==
+        bh=7DBc9Md4dcIfJ8fzDbDz0N8hqctCFurEdD8UukAEhp4=;
+        b=rI4SFG69LuuhO4d175hD4I1hRh9+V5TVWVqWuQWZfh67fitAcB0FXufQeKC2fwqiB5
+         MYrF+2OxJnrmIVnIOUoY/YXF11vknLBRZIIxp1U8WMyC3UWy6rezUgNh/aU1wJVcyVGC
+         4PU2kCLIN9NBnM5PhepxM1mScUR3grbHf2oh+Jq1FG9DZw0ULH2zuIctJxFBVzFWOpM9
+         ZPNKdz8dgmpGBp/aP0CnZHuEc6DNLYP+qwDfGX77bvAMSHEwo0PYAefJZuT5pQv2bhvU
+         KBeMwsKjBlwO4FJLGFnlg7aJgKO9qzRsFTpKOpu+yHl4qmbdJ42693RPZbEi+wTmMHXC
+         HacA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=V+uzXY38osmlX4lvOzX0MKYMyAKwpk8IWUdg41FIg5g=;
-        b=UPp2BkGPT8by7PlqsfcmjVrNhsNTeVE9YKhLPYRm4yLh3Tz31e7KDwWwJ8+wYLFnri
-         R0x4zPIU6XhmQmeb3Xf0AlqycqIs3TBnVJuZ+STF5XLhDqGqLu2KXQ4cB2RG5fCSn8Kz
-         0FTMxAts/850ZuvRe8X4bwTxqdlh8h2MwnvViejFvzwRq2rv6Wj0yO8ge6EIusQSmpnX
-         7R5gJvm+xD2V/J9YgrROWdxQkg8Bofpy5QfGnSQ5zi/2AmOuVkUKdjEtjxMjOMv6Dn+4
-         nE1AtW7LxTquEh9VWXleljdb0AisIl7dw1dFRAFmMhBprl0YcwvyDipIZwAVDVeEIutA
-         xNKQ==
-X-Gm-Message-State: AOPr4FWiNSEvUH0ltUkHAB0IRzis7ZVyqzlvtUi32gYGcDbRMT6NvurQVt3Ea68obV/06w==
-X-Received: by 10.28.149.205 with SMTP id x196mr35524wmd.67.1462972893506;
-        Wed, 11 May 2016 06:21:33 -0700 (PDT)
+        bh=7DBc9Md4dcIfJ8fzDbDz0N8hqctCFurEdD8UukAEhp4=;
+        b=gIKrRcSbu/qX0qsi4JXAn77r4buU7udlvw9IUCG6oBRPKKhWbIIPTgVAHLJhkE4Umz
+         7aZr4Rf6kJpINMLirUaepzQKRaxtRhG7SPK8W711IL/ekRy2JrMbPtbarVBJhZY5i+XS
+         LGMN2yQU7CS40BITy1Rce2ILxBROyOHhISMLmSjyqeFZX/K2HbRRhE3TEyJH+fOll79/
+         OsAxUAsq5D8WwdLgcoF0BRWsbLr/2a8DmCTpTmmfBkac42wGdJG9vddvZ0gxn+UH6aap
+         Y1PZZ2LCpm2fbrLh6XVzeGKv/nvJ3pPs2TjBsunw4cG8/OTTBNdQt8gn8y7r1us3Apmv
+         gg0g==
+X-Gm-Message-State: AOPr4FWXA2fH8p6yk4mpqiuk62s1YfsSA17IwDnprkwb5/haWLmoMZO/v0EB9Q6rEMSkIA==
+X-Received: by 10.28.229.68 with SMTP id c65mr29926wmh.77.1462972884958;
+        Wed, 11 May 2016 06:21:24 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.21.31
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.21.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:21:32 -0700 (PDT)
+        Wed, 11 May 2016 06:21:23 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -67,60 +67,144 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294300>
 
-Let's make it possible to get the current error_routine and warn_routine,
-so that we can store them before using set_error_routine() or
-set_warn_routine() to use new ones.
+This variable should prevent anything to be printed on both stderr
+and stdout.
 
-This way we will be able put back the original routines, when we are done
-with using new ones.
+Let's not take care of stdout and apply_verbosely for now though,
+as that will be taken care of in following patches.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- git-compat-util.h |  2 ++
- usage.c           | 10 ++++++++++
- 2 files changed, 12 insertions(+)
+ apply.c | 43 +++++++++++++++++++++++++++++--------------
+ apply.h |  1 +
+ 2 files changed, 30 insertions(+), 14 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 987eb99..73446af 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -438,7 +438,9 @@ static inline int const_error(void)
+diff --git a/apply.c b/apply.c
+index 7480ae8..f69a61a 100644
+--- a/apply.c
++++ b/apply.c
+@@ -1600,8 +1600,9 @@ static void record_ws_error(struct apply_state *state,
+ 		return;
  
- extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
- extern void set_error_routine(void (*routine)(const char *err, va_list params));
-+extern void (*get_error_routine(void))(const char *err, va_list params);
- extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
-+extern void (*get_warn_routine(void))(const char *warn, va_list params);
- extern void set_die_is_recursing_routine(int (*routine)(void));
- extern void set_error_handle(FILE *);
- 
-diff --git a/usage.c b/usage.c
-index 8fbedb3..825bd92 100644
---- a/usage.c
-+++ b/usage.c
-@@ -70,11 +70,21 @@ void set_error_routine(void (*routine)(const char *err, va_list params))
- 	error_routine = routine;
+ 	err = whitespace_error_string(result);
+-	fprintf(stderr, "%s:%d: %s.\n%.*s\n",
+-		state->patch_input_file, linenr, err, len, line);
++	if (!state->be_silent)
++		fprintf(stderr, "%s:%d: %s.\n%.*s\n",
++			state->patch_input_file, linenr, err, len, line);
+ 	free(err);
  }
  
-+void (*get_error_routine(void))(const char *err, va_list params)
-+{
-+	return error_routine;
-+}
-+
- void set_warn_routine(void (*routine)(const char *warn, va_list params))
- {
- 	warn_routine = routine;
- }
+@@ -1796,7 +1797,7 @@ static int parse_single_patch(struct apply_state *state,
+ 		return error(_("new file %s depends on old contents"), patch->new_name);
+ 	if (0 < patch->is_delete && newlines)
+ 		return error(_("deleted file %s still has contents"), patch->old_name);
+-	if (!patch->is_delete && !newlines && context)
++	if (!patch->is_delete && !newlines && context && !state->be_silent)
+ 		fprintf_ln(stderr,
+ 			   _("** warning: "
+ 			     "file %s becomes empty but is not deleted"),
+@@ -3020,8 +3021,8 @@ static int apply_one_fragment(struct apply_state *state,
+ 		 * Warn if it was necessary to reduce the number
+ 		 * of context lines.
+ 		 */
+-		if ((leading != frag->leading) ||
+-		    (trailing != frag->trailing))
++		if ((leading != frag->leading ||
++		     trailing != frag->trailing) && !state->be_silent)
+ 			fprintf_ln(stderr, _("Context reduced to (%ld/%ld)"
+ 					     " to apply fragment at %d"),
+ 				   leading, trailing, applied_pos+1);
+@@ -3518,7 +3519,8 @@ static int try_threeway(struct apply_state *state,
+ 		 read_blob_object(&buf, pre_sha1, patch->old_mode))
+ 		return error("repository lacks the necessary blob to fall back on 3-way merge.");
  
-+void (*get_warn_routine(void))(const char *warn, va_list params)
-+{
-+	return warn_routine;
-+}
-+
- void set_die_is_recursing_routine(int (*routine)(void))
- {
- 	die_is_recursing = routine;
+-	fprintf(stderr, "Falling back to three-way merge...\n");
++	if (!state->be_silent)
++		fprintf(stderr, "Falling back to three-way merge...\n");
+ 
+ 	img = strbuf_detach(&buf, &len);
+ 	prepare_image(&tmp_image, img, len, 1);
+@@ -3548,7 +3550,9 @@ static int try_threeway(struct apply_state *state,
+ 	status = three_way_merge(image, patch->new_name,
+ 				 pre_sha1, our_sha1, post_sha1);
+ 	if (status < 0) {
+-		fprintf(stderr, "Failed to fall back on three-way merge...\n");
++		if (!state->be_silent)
++			fprintf(stderr,
++				"Failed to fall back on three-way merge...\n");
+ 		return status;
+ 	}
+ 
+@@ -3560,9 +3564,15 @@ static int try_threeway(struct apply_state *state,
+ 			hashcpy(patch->threeway_stage[0].hash, pre_sha1);
+ 		hashcpy(patch->threeway_stage[1].hash, our_sha1);
+ 		hashcpy(patch->threeway_stage[2].hash, post_sha1);
+-		fprintf(stderr, "Applied patch to '%s' with conflicts.\n", patch->new_name);
++		if (!state->be_silent)
++			fprintf(stderr,
++				"Applied patch to '%s' with conflicts.\n",
++				patch->new_name);
+ 	} else {
+-		fprintf(stderr, "Applied patch to '%s' cleanly.\n", patch->new_name);
++		if (!state->be_silent)
++			fprintf(stderr,
++				"Applied patch to '%s' cleanly.\n",
++				patch->new_name);
+ 	}
+ 	return 0;
+ }
+@@ -4461,7 +4471,8 @@ static int write_out_one_reject(struct apply_state *state, struct patch *patch)
+ 			    "Applying patch %%s with %d rejects...",
+ 			    cnt),
+ 		    cnt);
+-	say_patch_name(stderr, sb.buf, patch);
++	if (!state->be_silent)
++		say_patch_name(stderr, sb.buf, patch);
+ 	strbuf_release(&sb);
+ 
+ 	cnt = strlen(patch->new_name);
+@@ -4488,10 +4499,12 @@ static int write_out_one_reject(struct apply_state *state, struct patch *patch)
+ 	     frag;
+ 	     cnt++, frag = frag->next) {
+ 		if (!frag->rejected) {
+-			fprintf_ln(stderr, _("Hunk #%d applied cleanly."), cnt);
++			if (!state->be_silent)
++				fprintf_ln(stderr, _("Hunk #%d applied cleanly."), cnt);
+ 			continue;
+ 		}
+-		fprintf_ln(stderr, _("Rejected hunk #%d."), cnt);
++		if (!state->be_silent)
++			fprintf_ln(stderr, _("Rejected hunk #%d."), cnt);
+ 		fprintf(rej, "%.*s", frag->size, frag->patch);
+ 		if (frag->patch[frag->size-1] != '\n')
+ 			fputc('\n', rej);
+@@ -4540,8 +4553,10 @@ static int write_out_results(struct apply_state *state, struct patch *list)
+ 		struct string_list_item *item;
+ 
+ 		string_list_sort(&cpath);
+-		for_each_string_list_item(item, &cpath)
+-			fprintf(stderr, "U %s\n", item->string);
++		if (!state->be_silent) {
++			for_each_string_list_item(item, &cpath)
++				fprintf(stderr, "U %s\n", item->string);
++		}
+ 		string_list_clear(&cpath, 0);
+ 
+ 		rerere(0);
+diff --git a/apply.h b/apply.h
+index 27b26a2..2dd3706 100644
+--- a/apply.h
++++ b/apply.h
+@@ -44,6 +44,7 @@ struct apply_state {
+ 	int apply_in_reverse;
+ 	int apply_with_reject;
+ 	int apply_verbosely;
++	int be_silent;
+ 
+ 	/* --cached updates only the cache without ever touching the working tree. */
+ 	int cached;
 -- 
 2.8.2.490.g3dabe57
