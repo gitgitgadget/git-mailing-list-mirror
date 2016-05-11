@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 45/94] builtin/apply: move 'symlink_changes' global into 'struct apply_state'
-Date: Wed, 11 May 2016 15:16:56 +0200
-Message-ID: <20160511131745.2914-46-chriscool@tuxfamily.org>
+Subject: [PATCH v2 46/94] builtin/apply: move 'state' check into check_apply_state()
+Date: Wed, 11 May 2016 15:16:57 +0200
+Message-ID: <20160511131745.2914-47-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -15,51 +15,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 15:20:11 2016
+X-From: git-owner@vger.kernel.org Wed May 11 15:20:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U3e-0003Hd-9X
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:20:10 +0200
+	id 1b0U3e-0003Hd-RD
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:20:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932246AbcEKNUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S932250AbcEKNUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 09:20:05 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33295 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932190AbcEKNUD (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 11 May 2016 09:20:03 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33271 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751651AbcEKNUB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:20:01 -0400
-Received: by mail-wm0-f65.google.com with SMTP id r12so9411810wme.0
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:20:00 -0700 (PDT)
+Received: by mail-wm0-f68.google.com with SMTP id r12so9411955wme.0
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:20:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=DIvaQiTeJEVLi4LguhpowPqF4gdw3EMyjSC14X+M0sc=;
-        b=ZPRNCb2KvKmvCD5bqNXp2FK4kWWyOdK1Fyzhkp/HVrWwpjVsr2yok2zGI6tUxl91Y7
-         YASfIZt99Nyp6TR8fjikDhVcIbmvLIFJ3GZL5UQy+Qp0ttehB0b2mQkT9Hv/xXaAt757
-         DPQGTYG3No8POxRG0RepRS1C6v3trnB/dCLSgQjcatCkAoOaVea82HseLogdIqqjrWwU
-         NZFiGnYEpNPZnliOZkqX7MCCSWOqvfs/4zRESiABkgVVYUqWhOIhYFVtWL/GOaKUutOm
-         ZckFzgdwcibSGZPfd5HbiPCJLqtmIrXNnREGglJ/4h/X1U1pcLLy3XVmYLewa8fH7Gtr
-         H6BA==
+        bh=Q3gojvukNWTdTnoQPc/QldGmQVysosznlJyVuVlDS6k=;
+        b=NH+ribZmtEDaD2aYF6d3ij7r65OAw9ZJCON1QRQsA//IYCQ9X9CvcDkUmSS8sC9WgM
+         R6fZCah9hEnKkRft3QlFNDfXt66xXU+8g1M7JnBqbc5DBmqULFFwasMNWO/j1JFtdQJp
+         MPnWJzZzsIL8H2IQBFcMnsFpWqCwmUTvT6VYTrQk1Mvb5qIzzpmeMxtXe+cwc1stbUf/
+         fVdfgOqOcCwIAz0gAIkcFoiRdba/f9joiYGGSyPcZ30ABCepPWKNBlm1ZCqqApei8PN5
+         5saTnr39NfiFKOnzIrDYCOcZ4oVevfnpLUp1IpBYeSbp+47M4tJ8oMh9nwYx3R8G06Qi
+         8v1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=DIvaQiTeJEVLi4LguhpowPqF4gdw3EMyjSC14X+M0sc=;
-        b=LlX/r2/dcPcrsgIVfb4Db4LhaIH2EBFFLn4P2vQfPDZFghzAWkgior5awFEjcbIlgV
-         bpK6lvYmSPi9wsetQQoOHmCjnivWabFZ/1fLAmkityX1HXsbKlLoUNy2327O2ESeV1lR
-         FfriHBpQPQNczudLN9YrWN/vBDTxsSb6RAObbiv2tUUQk231MyGntFtjlFbmCiG6zGxP
-         FCB/evtIOPvcwmdPsNkYuI7vI/uSW97pNmGtzWYGox0oITrDHfgx6pZeod5pBk5FJ+D+
-         khYPbDHa+6tJlTHwJGk7vUaxeO5EmsNZiKx+qRUAxI+0Y5i4vEQD7vCRjACMzQZWMQ64
-         nbqw==
-X-Gm-Message-State: AOPr4FVLX0zld+7bgWt15Avi2TyBrZbd28UCDjSf07kHb+DjMbW6JqjXamUbAmYCDGMDHA==
-X-Received: by 10.28.189.138 with SMTP id n132mr4470959wmf.34.1462972799723;
-        Wed, 11 May 2016 06:19:59 -0700 (PDT)
+        bh=Q3gojvukNWTdTnoQPc/QldGmQVysosznlJyVuVlDS6k=;
+        b=N9JV8gT6W2K9BY6A3HfUgiMWAA2hx0wghdG3tWQ9pLk08/RXVWQKpOhL7UvlKbKo+X
+         1NyZ7Etz0JIq3wywX7SoOz6ULs1cqhWZFd7swDWk3SzEgRRv0RDOPD3ruFtwBbAaWj01
+         6CFQFxqZg7KsNZrIyLbrGbigxpLAhDe8dESfG+eczRgiBOnW/O21NfyrzLoWGKVdPhJS
+         RJ4Yv5vgx55g+YrBuZBp1EzBp/yrDuvVcgBWPZrXou1r0377X7oFa29DtjjW4DdqQQUm
+         YabwxTv4I8Gv6qt5eXrrdOpg1ShA5FqSgIkZE5n2Jj8DEz5d0uHSRi26veG+yXIw7n08
+         0QjQ==
+X-Gm-Message-State: AOPr4FVxmacMQqlQ9XX+hIfuH478ap4lcYEyRy4nJ2hnX4iVyhVRqiu3Lk8+Sh1STS2cCQ==
+X-Received: by 10.28.175.83 with SMTP id y80mr4253586wme.8.1462972801899;
+        Wed, 11 May 2016 06:20:01 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.19.57
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.19.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:19:58 -0700 (PDT)
+        Wed, 11 May 2016 06:20:00 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -67,131 +67,92 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294275>
 
-To libify the apply functionality the 'symlink_changes' variable should
-not be static and global to the file. Let's move it into
-'struct apply_state'.
+To libify the apply functionality we should provide a function
+to check that the values in a 'struct apply_state' instance are
+coherent. Let's move the code to do that into a new
+check_apply_state() function.
 
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 49 +++++++++++++++++++++++++++----------------------
- 1 file changed, 27 insertions(+), 22 deletions(-)
+ builtin/apply.c | 52 +++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 29 insertions(+), 23 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 506e9ec..14286d2 100644
+index 14286d2..e5f76d8 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -34,6 +34,20 @@ enum ws_ignore {
- 	ignore_ws_change
- };
+@@ -4681,11 +4681,38 @@ static void init_apply_state(struct apply_state *state, const char *prefix)
+ 		parse_ignorewhitespace_option(state, apply_default_ignorewhitespace);
+ }
  
-+/*
-+ * We need to keep track of how symlinks in the preimage are
-+ * manipulated by the patches.  A patch to add a/b/c where a/b
-+ * is a symlink should not be allowed to affect the directory
-+ * the symlink points at, but if the same patch removes a/b,
-+ * it is perfectly fine, as the patch removes a/b to make room
-+ * to create a directory a/b so that a/b/c can be created.
-+ *
-+ * See also "struct string_list symlink_changes" in "struct
-+ * apply_state".
-+ */
-+#define SYMLINK_GOES_AWAY 01
-+#define SYMLINK_IN_RESULT 02
++static void check_apply_state(struct apply_state *state, int force_apply)
++{
++	int is_not_gitdir = !startup_info->have_repository;
 +
- struct apply_state {
- 	const char *prefix;
- 	int prefix_length;
-@@ -61,6 +75,7 @@ struct apply_state {
- 	struct string_list limit_by_name;
- 	int has_include;
- 	struct strbuf root;
-+	struct string_list symlink_changes;
- 
- 	/*
- 	 *  --check turns on checking that the working tree matches the
-@@ -3713,52 +3728,42 @@ static int check_to_create(struct apply_state *state,
- 	return 0;
- }
- 
--/*
-- * We need to keep track of how symlinks in the preimage are
-- * manipulated by the patches.  A patch to add a/b/c where a/b
-- * is a symlink should not be allowed to affect the directory
-- * the symlink points at, but if the same patch removes a/b,
-- * it is perfectly fine, as the patch removes a/b to make room
-- * to create a directory a/b so that a/b/c can be created.
-- */
--static struct string_list symlink_changes;
--#define SYMLINK_GOES_AWAY 01
--#define SYMLINK_IN_RESULT 02
--
--static uintptr_t register_symlink_changes(const char *path, uintptr_t what)
-+static uintptr_t register_symlink_changes(struct apply_state *state,
-+					  const char *path,
-+					  uintptr_t what)
++	if (state->apply_with_reject && state->threeway)
++		die("--reject and --3way cannot be used together.");
++	if (state->cached && state->threeway)
++		die("--cached and --3way cannot be used together.");
++	if (state->threeway) {
++		if (is_not_gitdir)
++			die(_("--3way outside a repository"));
++		state->check_index = 1;
++	}
++	if (state->apply_with_reject)
++		state->apply = state->apply_verbosely = 1;
++	if (!force_apply && (state->diffstat || state->numstat || state->summary || state->check || state->fake_ancestor))
++		state->apply = 0;
++	if (state->check_index && is_not_gitdir)
++		die(_("--index outside a repository"));
++	if (state->cached) {
++		if (is_not_gitdir)
++			die(_("--cached outside a repository"));
++		state->check_index = 1;
++	}
++	if (state->check_index)
++		state->unsafe_paths = 0;
++}
++
+ int cmd_apply(int argc, const char **argv, const char *prefix_)
  {
- 	struct string_list_item *ent;
+ 	int i;
+ 	int errs = 0;
+-	int is_not_gitdir = !startup_info->have_repository;
+ 	int force_apply = 0;
+ 	int options = 0;
+ 	int read_stdin = 1;
+@@ -4765,28 +4792,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 	argc = parse_options(argc, argv, state.prefix, builtin_apply_options,
+ 			apply_usage, 0);
  
--	ent = string_list_lookup(&symlink_changes, path);
-+	ent = string_list_lookup(&state->symlink_changes, path);
- 	if (!ent) {
--		ent = string_list_insert(&symlink_changes, path);
-+		ent = string_list_insert(&state->symlink_changes, path);
- 		ent->util = (void *)0;
- 	}
- 	ent->util = (void *)(what | ((uintptr_t)ent->util));
- 	return (uintptr_t)ent->util;
- }
+-	if (state.apply_with_reject && state.threeway)
+-		die("--reject and --3way cannot be used together.");
+-	if (state.cached && state.threeway)
+-		die("--cached and --3way cannot be used together.");
+-	if (state.threeway) {
+-		if (is_not_gitdir)
+-			die(_("--3way outside a repository"));
+-		state.check_index = 1;
+-	}
+-	if (state.apply_with_reject)
+-		state.apply = state.apply_verbosely = 1;
+-	if (!force_apply && (state.diffstat || state.numstat || state.summary || state.check || state.fake_ancestor))
+-		state.apply = 0;
+-	if (state.check_index && is_not_gitdir)
+-		die(_("--index outside a repository"));
+-	if (state.cached) {
+-		if (is_not_gitdir)
+-			die(_("--cached outside a repository"));
+-		state.check_index = 1;
+-	}
+-	if (state.check_index)
+-		state.unsafe_paths = 0;
++	check_apply_state(&state, force_apply);
  
--static uintptr_t check_symlink_changes(const char *path)
-+static uintptr_t check_symlink_changes(struct apply_state *state, const char *path)
- {
- 	struct string_list_item *ent;
- 
--	ent = string_list_lookup(&symlink_changes, path);
-+	ent = string_list_lookup(&state->symlink_changes, path);
- 	if (!ent)
- 		return 0;
- 	return (uintptr_t)ent->util;
- }
- 
--static void prepare_symlink_changes(struct patch *patch)
-+static void prepare_symlink_changes(struct apply_state *state, struct patch *patch)
- {
- 	for ( ; patch; patch = patch->next) {
- 		if ((patch->old_name && S_ISLNK(patch->old_mode)) &&
- 		    (patch->is_rename || patch->is_delete))
- 			/* the symlink at patch->old_name is removed */
--			register_symlink_changes(patch->old_name, SYMLINK_GOES_AWAY);
-+			register_symlink_changes(state, patch->old_name, SYMLINK_GOES_AWAY);
- 
- 		if (patch->new_name && S_ISLNK(patch->new_mode))
- 			/* the symlink at patch->new_name is created or remains */
--			register_symlink_changes(patch->new_name, SYMLINK_IN_RESULT);
-+			register_symlink_changes(state, patch->new_name, SYMLINK_IN_RESULT);
- 	}
- }
- 
-@@ -3772,7 +3777,7 @@ static int path_is_beyond_symlink_1(struct apply_state *state, struct strbuf *na
- 		if (!name->len)
- 			break;
- 		name->buf[name->len] = '\0';
--		change = check_symlink_changes(name->buf);
-+		change = check_symlink_changes(state, name->buf);
- 		if (change & SYMLINK_IN_RESULT)
- 			return 1;
- 		if (change & SYMLINK_GOES_AWAY)
-@@ -3941,7 +3946,7 @@ static int check_patch_list(struct apply_state *state, struct patch *patch)
- {
- 	int err = 0;
- 
--	prepare_symlink_changes(patch);
-+	prepare_symlink_changes(state, patch);
- 	prepare_fn_table(state, patch);
- 	while (patch) {
- 		if (state->apply_verbosely)
+ 	for (i = 0; i < argc; i++) {
+ 		const char *arg = argv[i];
 -- 
 2.8.2.490.g3dabe57
