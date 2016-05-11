@@ -1,271 +1,88 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 4/7] submodule-config: check if a submodule is in a group
-Date: Tue, 10 May 2016 17:59:54 -0700
-Message-ID: <1462928397-1708-5-git-send-email-sbeller@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/7] submodule--helper: add valid-label-name
+Date: Tue, 10 May 2016 18:11:19 -0700
+Message-ID: <xmqqr3d9l7pk.fsf@gitster.mtv.corp.google.com>
 References: <1462928397-1708-1-git-send-email-sbeller@google.com>
-Cc: git@vger.kernel.org, pclouds@gmail.com,
-	Stefan Beller <sbeller@google.com>
-To: jrnieder@gmail.com, gitster@pobox.com, Jens.Lehmann@web.de
-X-From: git-owner@vger.kernel.org Wed May 11 03:00:43 2016
+	<1462928397-1708-2-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: jrnieder@gmail.com, Jens.Lehmann@web.de, git@vger.kernel.org,
+	pclouds@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed May 11 03:11:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0IW1-0002HK-Cl
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 03:00:41 +0200
+	id 1b0IgU-0006RJ-EJ
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 03:11:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751481AbcEKBAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2016 21:00:15 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:36046 "EHLO
-	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750959AbcEKBAN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2016 21:00:13 -0400
-Received: by mail-pf0-f181.google.com with SMTP id c189so12150026pfb.3
-        for <git@vger.kernel.org>; Tue, 10 May 2016 18:00:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=O931SFfWa06dqnrv/VdfJzKh2b+l8d95n4Ny9cQqVcE=;
-        b=lBvmZldWJVdJU9OQcUvlAXdzCDcKfhsD+49DKAIV81jNECNNGg3R+kPM33LI4azcxr
-         jRkvXZARWNbKL1JvW97SDp/fcp9PdIAGXiTySpDgroWUh2XpznNCFCyLlGYRZOqfXsUs
-         NRaskoZje4oBL6cr4v2GTOLZTlg3ZGVf9SQn79Qj8QtlyFO9ITBFsmlPX/vGzrgmjCyO
-         mAtWx2qBkgH7ji8wFxBptnpb201g9O3AU63SRfa+Of6FGSs2N+xoqBXJi1/geDw3TI47
-         Jz1B+JuB8Dr+oMnf62fvyW5MEs50dM5LL2++DNQ2Sw/dAq5gQXwn2Rq/CXVyop/QhPzt
-         YGcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=O931SFfWa06dqnrv/VdfJzKh2b+l8d95n4Ny9cQqVcE=;
-        b=jPchjsEBxz/SfAvRaSHpxtbV1UW2Rq2d+zet7DlRVI7JVRlcxL91f+CjvCeXIUoMAL
-         p9fnJHInLXtaoNdJ+PuPRXWqH0W+qX2jQ4SqlybB6trx4isolzAy9duExTw9WOpSPAQY
-         VKdLrAcs9AHuyMd91gOsxUa/ZCtugnf2XG6OaF89hFuG9sAtUE54jhk4YnqMjc3rWLGi
-         RAdy+z4tJ4JKBjIW1/H7uBpLbFCcP7e2XytOoI2QYxYWtlu8yQalrHmfeiBvWyPowrLG
-         qrdAgWVhhsfcanQqROYorvOVlXejNcSI6l3tPRUbBfnL3ULWxZ0+fNPyNPWejNhlnY5n
-         KSjQ==
-X-Gm-Message-State: AOPr4FUGax7JQzHWDnZyxsk7z07kDUbcxJglKACZLRC9HIfHUy+ueU6db/zjixAqw9fAW269
-X-Received: by 10.98.47.66 with SMTP id v63mr700661pfv.67.1462928411990;
-        Tue, 10 May 2016 18:00:11 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:69ac:db78:a0d1:60da])
-        by smtp.gmail.com with ESMTPSA id p80sm7222113pfj.58.2016.05.10.18.00.11
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 10 May 2016 18:00:11 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0.35.g58985d9.dirty
-In-Reply-To: <1462928397-1708-1-git-send-email-sbeller@google.com>
+	id S1751214AbcEKBLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2016 21:11:23 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54803 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751063AbcEKBLW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2016 21:11:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 461871B9C1;
+	Tue, 10 May 2016 21:11:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bibjJkbJA/8GvVRuK63dlMyS3f8=; b=SbZHOk
+	I182k1ERyTKuO7RBs0Ljg9NSsDF4PD8BPTUH/xG2dKihXte0kccIDhCmKGcBMQMr
+	UPZywR4VXFKDfVg+9l2mk9J6SqKtE0oN3rJP1GEcqGs2kvozSsgrGB76bkKpmnFI
+	Eyee91IhrZnolV7b7LwqzoLyLOhb8WFBJEISc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rkbfI+btKNowJPbAU3nhXEMMR6wWYfuv
+	yhq/abxX6DxP/H/4/T0296vDB6k2GBqoyvNfkjZmODTBckVoXSVT6an9patZE4VZ
+	dfuMNPHUQQ/mWl6ma/wGYCeCm+Yb3AteJ+Qw3tUbXRSXcaRRatH1XYxU0uK6SxN9
+	xXtStxrCrME=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3CD741B9C0;
+	Tue, 10 May 2016 21:11:21 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AE14A1B9BF;
+	Tue, 10 May 2016 21:11:20 -0400 (EDT)
+In-Reply-To: <1462928397-1708-2-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 10 May 2016 17:59:51 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 456DEA44-1715-11E6-8C6F-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294218>
 
-In later patches we need to tell if a submodule is in a group,
-so expose a handy test function in both C and shell.
+Stefan Beller <sbeller@google.com> writes:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/submodule--helper.c  | 42 +++++++++++++++++++++++++++++++-
- submodule-config.c           | 50 ++++++++++++++++++++++++++++++++++++++
- submodule-config.h           |  3 +++
- t/t7412-submodule--helper.sh | 58 ++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 152 insertions(+), 1 deletion(-)
+> +static int submodule_valid_label_name(const char *label)
+> +{
+> +	if (!label || !strlen(label))
+> +		return 0;
+> +
+> +	if (!isalnum(*label))
+> +		return 0;
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index d3f4684..6ffd1c1 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -858,6 +858,45 @@ static int valid_label_name(int argc, const char **argv, const char *prefix)
- 	      "and must contain alphanumeric characters or dashes only."));
- }
- 
-+static int in_group(int argc, const char **argv, const char *prefix)
-+{
-+	const struct string_list *list;
-+	struct string_list actual_list = STRING_LIST_INIT_DUP;
-+	const struct submodule *sub;
-+	const char *group = NULL;
-+
-+	struct option default_group_options[] = {
-+		OPT_STRING('g', "group", &group, N_("group"),
-+				N_("comma separated group specifier for submodules")),
-+		OPT_END()
-+	};
-+
-+	const char *const git_submodule_helper_usage[] = {
-+		N_("git submodule--helper in-group <path>"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, default_group_options,
-+			     git_submodule_helper_usage, 0);
-+
-+	gitmodules_config();
-+	git_config(submodule_config, NULL);
-+
-+	if (argc != 1)
-+		usage(git_submodule_helper_usage[0]);
-+
-+	sub = submodule_from_path(null_sha1, argv[0]);
-+
-+	if (!group)
-+		list = git_config_get_value_multi("submodule.updateGroup");
-+	else {
-+		string_list_split(&actual_list, group, ',', -1);
-+		list = &actual_list;
-+	}
-+
-+	return !submodule_in_group(list, sub);
-+}
-+
- struct cmd_struct {
- 	const char *cmd;
- 	int (*fn)(int, const char **, const char *);
-@@ -871,7 +910,8 @@ static struct cmd_struct commands[] = {
- 	{"resolve-relative-url", resolve_relative_url},
- 	{"resolve-relative-url-test", resolve_relative_url_test},
- 	{"init", module_init},
--	{"valid-label-name", valid_label_name}
-+	{"valid-label-name", valid_label_name},
-+	{"in-group", in_group}
- };
- 
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
-diff --git a/submodule-config.c b/submodule-config.c
-index 0cdb47e..7f38ebd 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -522,3 +522,53 @@ void submodule_free(void)
- 	cache_free(&cache);
- 	is_cache_init = 0;
- }
-+
-+int submodule_in_group(const struct string_list *group,
-+		       const struct submodule *sub)
-+{
-+	int matched = 0;
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	if (!group)
-+		/*
-+		 * If no group is specified at all, all submodules match to
-+		 * keep traditional behavior.
-+		 */
-+		return 1;
-+
-+	if (sub->labels) {
-+		struct string_list_item *item;
-+		for_each_string_list_item(item, sub->labels) {
-+			strbuf_reset(&sb);
-+			strbuf_addf(&sb, "*%s", item->string);
-+			if (string_list_has_string(group, sb.buf)) {
-+				matched = 1;
-+				break;
-+			}
-+		}
-+	}
-+	if (sub->path) {
-+		/*
-+		 * NEEDSWORK: This currently works only for
-+		 * exact paths, but we want to enable
-+		 * inexact matches such wildcards.
-+		 */
-+		strbuf_reset(&sb);
-+		strbuf_addf(&sb, "./%s", sub->path);
-+		if (string_list_has_string(group, sb.buf))
-+			matched = 1;
-+	}
-+	if (sub->name) {
-+		/*
-+		 * NEEDSWORK: Same as with path. Do we want to
-+		 * support wildcards or such?
-+		 */
-+		strbuf_reset(&sb);
-+		strbuf_addf(&sb, ":%s", sub->name);
-+		if (string_list_has_string(group, sb.buf))
-+			matched = 1;
-+	}
-+	strbuf_release(&sb);
-+
-+	return matched;
-+}
-diff --git a/submodule-config.h b/submodule-config.h
-index d57da59..4c696cc 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -31,4 +31,7 @@ const struct submodule *submodule_from_path(const unsigned char *commit_sha1,
- 		const char *path);
- void submodule_free(void);
- 
-+int submodule_in_group(const struct string_list *group,
-+		       const struct submodule *sub);
-+
- #endif /* SUBMODULE_CONFIG_H */
-diff --git a/t/t7412-submodule--helper.sh b/t/t7412-submodule--helper.sh
-index 3af315c..042f3f5 100755
---- a/t/t7412-submodule--helper.sh
-+++ b/t/t7412-submodule--helper.sh
-@@ -46,4 +46,62 @@ test_expect_success 'valid-label-name fails with utf8 characters' '
- 	test_i18ngrep alphanumeric actual
- '
- 
-+test_expect_success 'setup superproject with submodules' '
-+
-+	mkdir sub &&
-+	(
-+		cd sub &&
-+		git init &&
-+		test_commit test
-+		test_commit test2
-+	) &&
-+	mkdir super &&
-+	(
-+		cd super &&
-+		git init &&
-+		git submodule add ../sub sub0 &&
-+		git submodule add -l bit1 ../sub sub1 &&
-+		git submodule add -l bit2 ../sub sub2 &&
-+		git submodule add -l bit2 -l bit1 ../sub sub3 &&
-+		git submodule add ../sub sub_name &&
-+		git mv sub_name sub_path &&
-+		git commit -m "add labeled submodules"
-+	)
-+'
-+
-+test_expect_success 'in-group' '
-+	(
-+		cd super &&
-+		# we do not specify a group nor have set a default group,
-+		# any submodule should be in the default group:
-+		git submodule--helper in-group sub0 &&
-+		git submodule--helper in-group sub1 &&
-+		git submodule--helper in-group sub2 &&
-+		git submodule--helper in-group sub3 &&
-+
-+		# test bit1:
-+		test_must_fail git submodule--helper in-group --group=\*bit1 sub0 &&
-+			       git submodule--helper in-group --group=\*bit1 sub1 &&
-+		test_must_fail git submodule--helper in-group --group=\*bit1 sub2 &&
-+			       git submodule--helper in-group --group=\*bit1 sub3 &&
-+		test_must_fail git submodule--helper in-group --group=\*bit1 sub_path &&
-+
-+		# test by path:
-+			       git submodule--helper in-group --group=./sub0 sub0 &&
-+		test_must_fail git submodule--helper in-group --group=./sub0 sub1 &&
-+		test_must_fail git submodule--helper in-group --group=./sub0 sub_path &&
-+
-+		# tests by name:
-+			       git submodule--helper in-group --group=:sub0 sub0 &&
-+		test_must_fail git submodule--helper in-group --group=:sub0 sub1 &&
-+			       git submodule--helper in-group --group=:sub_name sub_path &&
-+
-+		# logical OR of path and labels
-+			       git submodule--helper in-group --group=\*bit1,./sub0 sub0 &&
-+			       git submodule--helper in-group --group=\*bit1,./sub0 sub1 &&
-+		test_must_fail git submodule--helper in-group --group=\*bit1,./sub0 sub2 &&
-+			       git submodule--helper in-group --group=\*bit1,./sub0 sub3
-+	)
-+'
-+
- test_done
--- 
-2.8.0.35.g58985d9.dirty
+I'd limit this one to isalpha() if I were doing this to make the
+restriction similar to identifiers in traditional programming
+language.
+
+> +	while (*label) {
+> +		if (!(isalnum(*label) ||
+> +			*label == '-'))
+
+And throw in '_' to the mix while at it.
+
+> +			return 0;
+> +		label++;
+> +	}
+> +
+> +	return 1;
+> +}
+
+If the convention is "0 is good", then please signal "bad" with a
+negative value, not just "non-zero".
