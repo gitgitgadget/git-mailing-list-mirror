@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 87/94] apply: make 'be_silent' incomatible with 'apply_verbosely'
-Date: Wed, 11 May 2016 15:17:38 +0200
-Message-ID: <20160511131745.2914-88-chriscool@tuxfamily.org>
+Subject: [PATCH v2 81/94] run-command: make dup_devnull() non static
+Date: Wed, 11 May 2016 15:17:32 +0200
+Message-ID: <20160511131745.2914-82-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -15,51 +15,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 15:21:57 2016
+X-From: git-owner@vger.kernel.org Wed May 11 15:22:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U5J-0005C3-MM
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:21:54 +0200
+	id 1b0U5Y-0005UD-7Z
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:22:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932415AbcEKNVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:21:37 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34968 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932357AbcEKNV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:21:28 -0400
-Received: by mail-wm0-f68.google.com with SMTP id e201so9415386wme.2
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:21:27 -0700 (PDT)
+	id S932389AbcEKNVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 09:21:23 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33123 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932370AbcEKNVP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:21:15 -0400
+Received: by mail-wm0-f67.google.com with SMTP id r12so9418670wme.0
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:21:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=lxehMvFwEPBjd4ZW7lDnBRp0jWYzQJicf+9kOil7Sco=;
-        b=L6kTYGR5F3MRFJ+aILcPzdBGJJ+XbWqLPVyOhIvpYiAe0lUD4Xkqts8mzAElE+17bp
-         PYi6oHVuqs09OnzLcDNsjHqqvG0G+/Vg3Y1JYVlFYBpSiuLQKJh26EzekXOOTtMm6ebv
-         A3asOla/pBg+j7Oi4UPXZKLNLoZxmQllVk/Eyp+lL5aHdXGunVNZ4xehUD/EMnbtxI1E
-         3/VJyC9BgrbXmgfp2hj/0rv0AmFEq1K7RWVn4BC58Amyo//w8yGk3CNM0cZtyL4xRjTY
-         Tr9KvStAez2B1JlqiMllrWdoxaE4Apx36dneGFYIeKPPJhjhpq1WX0n+kTOrbMLiSkIg
-         iqIQ==
+        bh=NgK5rRnj2w0z4Bqh+uLXvSeVTm6WgRB/bYqhQ7vD4WQ=;
+        b=TFS7OCoF18NvXDGU8YITgNe34+Hdzb5zJ2F/bxQOpSbiCOJ5ytr92RI0EI2hNKkq0m
+         THE/UvDcYFNsMUzaVwxFiiXyEOYA9ypgQcABLzr1YOkamgAljoC6IN1jI2sIpZQ0L9tN
+         rzmT2gNunlb0agqw/u5wgt3zbTQNG+G3KkL0W7vLca8c41CSJJn+ddO61OhqoXyxQXcU
+         SEAnksBUXEOrKYupXYTPcskF8Hp26l1DWqAwYOPSBjygk/x2Hdx8LGdm8EDO22WlHy2A
+         eHGePlkgJPkMW9sKcFcNdVAoIQjZ3gnuOVxBL4jZwMbDRsKOZUHNKUTIv0cWexVoVxuf
+         HCAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=lxehMvFwEPBjd4ZW7lDnBRp0jWYzQJicf+9kOil7Sco=;
-        b=ma5mFrzNxnuIoG6Oq7PhGA3gZPOTBH3dpCH873vmknCEstFnr0CU+r1bjboE5x2/7O
-         LkZvuBzqxYdYor/QrB3KSifalIzCwMqeG41c0JQYEfm+EpzFH0EOOP+oaXfb/FW6GN8a
-         f5FE/uPy4tzAagS/UMe9Zm3RGtyWDAvCdIBABTeLuS9ktUglPxL3LBcoT2JF841zU6D0
-         6+xgns2wn/Ppvba2QeOe4yLivB4aUCdXDj+prR41kthZLHpKUPG0cUekpJWqMCuzemgW
-         ZGzfwEXY0O4AVSUbY9sgqZYOW2t0i0RtFn86iCrEKI7CtH78+ZqwRkaaY++WlOCAXD2B
-         /Vnw==
-X-Gm-Message-State: AOPr4FU8EAq1PgepTYaNwYzyMdTNMrqMDuL0o/2X0fGFhTmu6siVtc0UJh/Pr3TLrae5AQ==
-X-Received: by 10.194.66.137 with SMTP id f9mr3803604wjt.74.1462972887141;
-        Wed, 11 May 2016 06:21:27 -0700 (PDT)
+        bh=NgK5rRnj2w0z4Bqh+uLXvSeVTm6WgRB/bYqhQ7vD4WQ=;
+        b=d3rQ8QayySuWm2oumQlIcajAgvugXKZDuWRLgPwoxuaWrcv8ouNho5Wk42XSzXl0zy
+         Qv4yY+m0PNFbcJo88CCopAANAU8yihprFCPNV4r+PCcQv7c3u4v7qG02b+Uyieue/UGp
+         QXfXhhS969xh5miW+2JBNLDLS+LRNClLrKe33UZc8mF4+hoqwjNxC81eAyua/GLW1S49
+         74eubsFiDoqU5dn0H4coExLMq/69aNljzlxyN8HNcYIODO5YnYI3yj4Dl0Yr1h6tdrWx
+         PJx2sWLMRbTzsQzy5+nC10BoIj/lRbHXHhsE0yzFL8v6a73OzJMeTXTrkSf/vvLFBcRX
+         orgA==
+X-Gm-Message-State: AOPr4FWb+7lA+fJqYy/kJEy9jtHlQP6KVDQnCuLBP7UVBsdar6IRch1Belz3LJnCodNSvg==
+X-Received: by 10.28.230.69 with SMTP id d66mr28660wmh.73.1462972874484;
+        Wed, 11 May 2016 06:21:14 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.21.25
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.21.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:21:26 -0700 (PDT)
+        Wed, 11 May 2016 06:21:13 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -67,46 +67,46 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294310>
 
-It should be an error to have both be_silent and apply_verbosely set,
-so let's check that in check_apply_state().
+We will need this function in a later commit to redirect stdout
+and stderr to /dev/null.
 
-And by the way let's not automatically set apply_verbosely when
-be_silent is set.
-
+Helped-by: Johannes Sixt <j6t@kdbg.org>
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- apply.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ run-command.c | 2 +-
+ run-command.h | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/apply.c b/apply.c
-index f69a61a..5459ee1 100644
---- a/apply.c
-+++ b/apply.c
-@@ -113,8 +113,11 @@ int check_apply_state(struct apply_state *state, int force_apply)
- 			return error(_("--3way outside a repository"));
- 		state->check_index = 1;
- 	}
--	if (state->apply_with_reject)
--		state->apply = state->apply_verbosely = 1;
-+	if (state->apply_with_reject) {
-+		state->apply = 1;
-+		if (!state->be_silent)
-+			state->apply_verbosely = 1;
-+	}
- 	if (!force_apply && (state->diffstat || state->numstat || state->summary || state->check || state->fake_ancestor))
- 		state->apply = 0;
- 	if (state->check_index && is_not_gitdir)
-@@ -126,6 +129,9 @@ int check_apply_state(struct apply_state *state, int force_apply)
- 	}
- 	if (state->check_index)
- 		state->unsafe_paths = 0;
-+	if (state->be_silent && state->apply_verbosely)
-+		return error(_("incompatible internal 'be_silent' and 'apply_verbosely' flags"));
-+
- 	return 0;
+diff --git a/run-command.c b/run-command.c
+index e4593cd..5d1cedf 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -85,7 +85,7 @@ static inline void close_pair(int fd[2])
  }
  
+ #ifndef GIT_WINDOWS_NATIVE
+-static inline void dup_devnull(int to)
++void dup_devnull(int to)
+ {
+ 	int fd = open("/dev/null", O_RDWR);
+ 	if (fd < 0)
+diff --git a/run-command.h b/run-command.h
+index 11f76b0..e05ce7d 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -201,4 +201,10 @@ int run_processes_parallel(int n,
+ 			   task_finished_fn,
+ 			   void *pp_cb);
+ 
++/**
++ * Misc helper functions
++ */
++
++void dup_devnull(int to);
++
+ #endif
 -- 
 2.8.2.490.g3dabe57
