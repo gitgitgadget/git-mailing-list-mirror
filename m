@@ -1,85 +1,76 @@
-From: Brandon Teska <brandon.teska@gmail.com>
-Subject: Pre-Process Files for Commits and Pulls
-Date: Wed, 11 May 2016 14:45:29 -0600
-Message-ID: <CALo8eZyX+vPMxVzeQgrhn0G+x44myvPot-EqC=DACEo3OwDwQA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Windows: only add a no-op pthread_sigmask() when needed
+Date: Wed, 11 May 2016 14:01:17 -0700
+Message-ID: <xmqqvb2kjoma.fsf@gitster.mtv.corp.google.com>
+References: <26c2fb5560246fc7f980da24a239edc333864527.1462885167.git.johannes.schindelin@gmx.de>
+	<xmqqvb2lpzij.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1605111655350.4092@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 22:45:36 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 11 23:01:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0b0h-00038n-MB
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 22:45:36 +0200
+	id 1b0bG2-0006FC-7E
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 23:01:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751830AbcEKUpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 16:45:31 -0400
-Received: from mail-yw0-f177.google.com ([209.85.161.177]:33499 "EHLO
-	mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751707AbcEKUpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 16:45:30 -0400
-Received: by mail-yw0-f177.google.com with SMTP id t10so61438130ywa.0
-        for <git@vger.kernel.org>; Wed, 11 May 2016 13:45:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=CpJDkxdolVejXyD0HmEUq3PVj7TK7UoJKUOUQOpNjik=;
-        b=jHA+an5Z7q+GT6K14kiJkQDupqoXbsWvT6QiatfO2FgllGyLonoscNlBZlA6a3RAw6
-         T4xhCWjmelb7Cn6EzC2hYGR6gwJoegSiCV7CTUDxmNddyMt6Psz0Bt4tu7/AKsiQSKBc
-         JgxolCiVHJskNAOOJD6Z2l9lo5dbxxIJH4YieCI7ZFCOs0A1IRTwIAPYjV3OrAMKGeuj
-         vV5AS2wyPxEGx8wOEejZSupRq9tngcdCkt2JGmUbTsgVBazyNLh+U74ekBQeB1veF0pZ
-         e5qbbawQBsPeq3K4yRw4APN1BZmMYrIvL3Mb2pqpzAzcbCajaeGAbyb+dK9mehyadu/n
-         E/sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=CpJDkxdolVejXyD0HmEUq3PVj7TK7UoJKUOUQOpNjik=;
-        b=isqd3W9UKIycj9STx6sZ+HFYW+/pZoIfvWnVnAIgay3m2OZj+CGocUKPislERFiblG
-         93iHTueWEnngzYpBcRQ/ULiitkC0VsRiLQBv09swrZYHYVndX2YvtCtDaA+fwItnc/PE
-         WgSubJdYDj8JxUOGMsc/jUsyrbLnVUAvUW3thkZHj/sN+EkgqZlM5KgKisMffv+59F2V
-         C91W926UUQo9De9sL8Bvyd4TYJ8OV+ib9rssCHRHBU0hDLntzqSH1cOIrxaDYMh0nWzU
-         TMt5unJCTkiAhwvXGN1SZt9xo+b6Ow9jA9wOrSBb/uFn8GNWIXJvm8v7uOX2IHtExUBu
-         hQ9A==
-X-Gm-Message-State: AOPr4FUzaG0e2t3jZYZ+/0kGTbC38V6v8R+y39bzwn1PNVL/XuK+fAKQTJtfofm/z5Xo2G30RrAtT+qjCz5N2g==
-X-Received: by 10.129.103.85 with SMTP id b82mr2648413ywc.127.1462999529406;
- Wed, 11 May 2016 13:45:29 -0700 (PDT)
-Received: by 10.129.93.131 with HTTP; Wed, 11 May 2016 13:45:29 -0700 (PDT)
+	id S1751563AbcEKVBW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 17:01:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53396 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751391AbcEKVBV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 17:01:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DC70E19131;
+	Wed, 11 May 2016 17:01:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9QPkmEHa/frvADLtiZzNM3rIqx4=; b=GOcEN8
+	tdVDz4mIYQtmak+/tjhU23TfC9KoKtMD5BMhkilkFaJKLb1tW5eFrW0FHCAWGJcS
+	PGI/3+++1Aoci5+b+zsy5Eovq/hXlKjrvwebe2dnd6GLaglpYugBcALVyIsycfMW
+	X7NyN0eyMDl3jEevIC2vtSufw/eERYx2yrYZI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NDf9gQSWPveVtAL9lYxTRO2uyVb28I9r
+	5kaQPqyzp6iNlZhcJcGnmb+EyPtArOf6FPcYBWPUvl4x1yURvCQ4G05lEfKUpJ9N
+	KEgN5Ce0Cyqd2IrVTMBLJdCA25TuG1sWoSmWqZBxgG28ai6jrYy+5RR2xA+/vURm
+	pf6+D0At1Cc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D2D1D1912D;
+	Wed, 11 May 2016 17:01:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4DA641912C;
+	Wed, 11 May 2016 17:01:19 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1605111655350.4092@virtualbox> (Johannes
+	Schindelin's message of "Wed, 11 May 2016 17:06:26 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8245B32E-17BB-11E6-89F0-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294364>
 
-Hi everyone,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I have an unusual question. I'm curious if git can pre-process files
-before pushing them to a remote repo and then reprocess them on pulls.
-Basically, I'm trying to work collaboratively with a few colleagues on
-a project using another software program. I've decoded the file we've
-been working on, so that we have the "source" that would be well
-managed by git. However, I need this to be accessible to laypeople so
-I need my workflow to look like this:
+> So I guess that you're preferring my 2. above. Going on that assumption, I
+> will send out another iteration.
 
-1. Person A works on (binary) file locally
-2. Person A commits and pushes to the repo
-3. Before the push, a script deconstructs the binary file into several
-text files
-4. Those text files are pushed
+OK.
 
-Similarly, when Person B pulls from the repo, this is what I need to happen:
+>> Also is
+>> https://lists.gnu.org/archive/html/bug-gnulib/2015-04/msg00068.html
+>> relevant?  Does /mingw64/x86_64-w64-mingw32/include/ implement "macro
+>> only without function"?
+>
+> Yes, it has that problem. Do we care, really?
 
-1. Person B pulls
-2. Before sending the pull, git calls a script that repackages the
-text files into a "binary" files that the software can use.
-3. Person B can now update the file as he wishes
-
-So, basically I am curious if git can store a different "form" of the
-file(s) that what are actually worked on. Is this possible? (I'd like
-to avoid running client side scripts if at all possible, but would be
-willing if that's a possibility.)
-
-Thanks!
-
-Brandon
+Not really.  I was curious how actively this area is evolving;
+knowing that would help me judge pros-and-cons between your 1 & 2
+above.
