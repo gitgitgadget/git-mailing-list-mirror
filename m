@@ -1,11 +1,8 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 65/94] builtin/apply: make gitdiff_*() return 1 at end of header
-Date: Wed, 11 May 2016 15:17:16 +0200
-Message-ID: <20160511131745.2914-66-chriscool@tuxfamily.org>
+Subject: [PATCH v2 67/94] builtin/apply: change die_on_unsafe_path() to check_unsafe_path()
+Date: Wed, 11 May 2016 15:17:18 +0200
+Message-ID: <20160511131745.2914-68-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
@@ -24,46 +21,45 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U6C-00069s-RW
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:22:49 +0200
+	id 1b0U6D-00069s-Vj
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:22:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752183AbcEKNUs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 May 2016 09:20:48 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34727 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932310AbcEKNUm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:20:42 -0400
-Received: by mail-wm0-f67.google.com with SMTP id n129so9420827wmn.1
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:20:41 -0700 (PDT)
+	id S932458AbcEKNWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 09:22:47 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:32780 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932315AbcEKNUq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:20:46 -0400
+Received: by mail-wm0-f68.google.com with SMTP id r12so9416039wme.0
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:20:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xVuFvEq7RF44utme1AKOJNJrN0/EcQ8ha0AASyCP4UU=;
-        b=zm2bd6Z4chMhLqmiGOzWQt8Af2LT7ycaCTugeuV7fPWcEof4T6mFZLzbdwRahAUP+o
-         3GVYft+CDsZ+VC0AV/t3BlQkIlmIMI6Oqmv4ktlanuNC7dDs6nPqDQ5sTxRCMSqddprG
-         IhmkUi769IW2pXUmWWjwOLGxOON4ikHAQz+jS+pOIfiQ9djxMdjgAD4GlrGZa5ekzdqh
-         yikFXUBqaaN+NIiuYxeipuqI5/hUNuEdrB5+SPsJJloH/Ph9e2j6i5BpLRAbzAtsX73g
-         9ZoW+6N2Sodj/T4Co+esZgic/Q6eSAXv6L6z4chuuihpeeqQbAgruRlFeMG0iXW8xgs7
-         QYXQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=hNw9QI27cdOseJfL7R3auJqg5BeUe2/jd8hF+ujLBAg=;
+        b=M4Z0cdyH8c5rVmv4ql6eFT7ycqHE4S1ZOfWbnu9y2kU7B3dr+h3iUevKWWKNCsqBv+
+         cUwg+twQedQGnh2Mtsgxrh5QDAgn7cl+myRxawa+/Knd75SSLLC/yqHb0649UxZUOvvZ
+         vIUGG3t6UzUDq2u9OaXBhyXx0m/KKopM2pjw5ugPKVi5AbNfYXKJlJ+eEUOGsmY5I3J3
+         sjui3Hc3Om7ObOBfuokTH0huznV1CCkt9v/EhmOLuLuksgHBfzg0mTSy4ESAG82Y0zdm
+         jbLzexJDRfMlwdah7dY1d3qYKlGsTAxnNBGv8lTg5h+Wf6gk5/bBN4JTlOQPxU/GsEZn
+         Luwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xVuFvEq7RF44utme1AKOJNJrN0/EcQ8ha0AASyCP4UU=;
-        b=FvYAFklxvFyZXVYXcY2io+v3PX/+dPVbqmXWktS/LMlYSSLfNG/MYoop+luHWlVGT1
-         Qa+v2KTJyWADUx3lE3CWWpl7q4y5tO9Efq3wMOYYeWzYgdZ7n6NySpBKqBNO+1hk7Pws
-         2s1FONCYCQKWBbBPprtx9FhU53Wbw3JsnOPOHJkJTIC4EQmKyvDcXmlp+g/a7aPoI58u
-         Qdap/rMupmzxnLqHY7tREvMjzMR5p5ldnuTHC+M5d+oRBxvxwfXYP6KGS99rJ6ThfeWY
-         cUAuHFFIWMjkMQ0MBC3eydkDLo/VHOsmjXQ+rBLB15voAStLdqmxGo6ZsUVQhDDMQyur
-         TB7A==
-X-Gm-Message-State: AOPr4FXipDdVCQCJZpoL163TMTkAb9eC/D5OCNparoLcWlDat/tkr1n6T0350LGrlcPm1Q==
-X-Received: by 10.194.38.67 with SMTP id e3mr3780539wjk.127.1462972841112;
-        Wed, 11 May 2016 06:20:41 -0700 (PDT)
+         :references;
+        bh=hNw9QI27cdOseJfL7R3auJqg5BeUe2/jd8hF+ujLBAg=;
+        b=YBofqHCtpleOxVfyZyCK5oD/RCkUYullFHwOolbrg9CNxWvgrW11Gp+R/ss7NWxdGW
+         y+xFJfJG6hDmwqsDQ5m1RfRiP8lJPzZsHy5YtRz79Ptxhmjcbx+lSX/0pyxF4Lqx96QS
+         ImqZd50hXUiJRWEFwXTyHbP7uPzC/2t7YDUQx/FDOsyYaCrIKQiOLInKnY4TRVW/OZ1u
+         9uss5EB3zojI0PgIVWyKjcM292i0r5HFRACrCvSFEB4xE3cU06dOQHGcJcoPfQRL1MC5
+         iQ+F0sNnaPg1009hWP3t7WajBXGiNWmn3X9R0fmjFtoV/qBjztvhsGPCFYJz9kTmw21A
+         PW/w==
+X-Gm-Message-State: AOPr4FVqtBaxGlYgQCklv5ux12Dy8NwQJlbM38lYIP+3R+apZ0qCxBWJjLpJSXXmYhMiEw==
+X-Received: by 10.28.125.138 with SMTP id y132mr4373881wmc.90.1462972844891;
+        Wed, 11 May 2016 06:20:44 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.20.39
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.20.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:20:40 -0700 (PDT)
+        Wed, 11 May 2016 06:20:43 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -71,75 +67,57 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294318>
 
-The gitdiff_*() functions that are called as p->fn() in parse_git_heade=
-r()
-should return 1 instead of -1 in case of end of header or unrecognized
-input, as these are not real errors. It just instructs the parser to br=
-eak
-out.
+To libify `git apply` functionality we have to signal errors to the
+caller instead of die()ing.
 
-This makes it possible for gitdiff_*() functions to return -1 in case o=
-f a
-real error. This will be done in a following patch.
+To do that in a compatible manner with the rest of the error handling
+in "builtin/apply.c", die_on_unsafe_path() should return -1 using
+error() instead of calling die(), so while doing that let's change
+its name to check_unsafe_path().
 
-Helped-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
->
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ builtin/apply.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 8e82eea..b3a9c2e 100644
+index 42b0a24..06c1c16 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -812,7 +812,7 @@ static int gitdiff_hdrend(struct apply_state *state=
-,
- 			  const char *line,
- 			  struct patch *patch)
- {
--	return -1;
-+	return 1;
+@@ -3698,7 +3698,7 @@ static int path_is_beyond_symlink(struct apply_state *state, const char *name_)
+ 	return ret;
  }
-=20
- /*
-@@ -1016,7 +1016,7 @@ static int gitdiff_unrecognized(struct apply_stat=
-e *state,
- 				const char *line,
- 				struct patch *patch)
+ 
+-static void die_on_unsafe_path(struct patch *patch)
++static int check_unsafe_path(struct patch *patch)
  {
--	return -1;
-+	return 1;
+ 	const char *old_name = NULL;
+ 	const char *new_name = NULL;
+@@ -3710,9 +3710,10 @@ static void die_on_unsafe_path(struct patch *patch)
+ 		new_name = patch->new_name;
+ 
+ 	if (old_name && !verify_path(old_name))
+-		die(_("invalid path '%s'"), old_name);
++		return error(_("invalid path '%s'"), old_name);
+ 	if (new_name && !verify_path(new_name))
+-		die(_("invalid path '%s'"), new_name);
++		return error(_("invalid path '%s'"), new_name);
++	return 0;
  }
-=20
+ 
  /*
-@@ -1248,9 +1248,13 @@ static int parse_git_header(struct apply_state *=
-state,
- 		for (i =3D 0; i < ARRAY_SIZE(optable); i++) {
- 			const struct opentry *p =3D optable + i;
- 			int oplen =3D strlen(p->str);
-+			int res;
- 			if (len < oplen || memcmp(p->str, line, oplen))
- 				continue;
--			if (p->fn(state, line + oplen, patch) < 0)
-+			res =3D p->fn(state, line + oplen, patch);
-+			if (res < 0)
-+				return -1;
-+			if (res > 0)
- 				return offset;
- 			break;
+@@ -3802,8 +3803,8 @@ static int check_patch(struct apply_state *state, struct patch *patch)
  		}
-@@ -1429,6 +1433,8 @@ static int find_header(struct apply_state *state,
- 		 */
- 		if (!memcmp("diff --git ", line, 11)) {
- 			int git_hdr_len =3D parse_git_header(state, line, len, size, patch)=
-;
-+			if (git_hdr_len < 0)
-+				return -1;
- 			if (git_hdr_len <=3D len)
- 				continue;
- 			if (!patch->old_name && !patch->new_name) {
---=20
+ 	}
+ 
+-	if (!state->unsafe_paths)
+-		die_on_unsafe_path(patch);
++	if (!state->unsafe_paths && check_unsafe_path(patch))
++		return -1;
+ 
+ 	/*
+ 	 * An attempt to read from or delete a path that is beyond a
+-- 
 2.8.2.490.g3dabe57
