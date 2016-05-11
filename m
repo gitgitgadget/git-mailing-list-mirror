@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 19/94] builtin/apply: move 'diffstat' global into 'struct apply_state'
-Date: Wed, 11 May 2016 15:16:30 +0200
-Message-ID: <20160511131745.2914-20-chriscool@tuxfamily.org>
+Subject: [PATCH v2 16/94] builtin/apply: move 'update_index' global into 'struct apply_state'
+Date: Wed, 11 May 2016 15:16:27 +0200
+Message-ID: <20160511131745.2914-17-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -15,51 +15,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 15:25:48 2016
+X-From: git-owner@vger.kernel.org Wed May 11 15:26:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U8l-0000t2-3T
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:25:27 +0200
+	id 1b0U9F-0001Vi-TT
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:25:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932468AbcEKNZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:25:22 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35477 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932108AbcEKNTG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:19:06 -0400
-Received: by mail-wm0-f67.google.com with SMTP id e201so9402174wme.2
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:19:05 -0700 (PDT)
+	id S932557AbcEKNZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 09:25:30 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35423 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752058AbcEKNTB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:19:01 -0400
+Received: by mail-wm0-f65.google.com with SMTP id e201so9401740wme.2
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:18:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=I6JfzfWAe4lYLCtUoUTVtaisKLTqGyQop7Zrj0ske4A=;
-        b=wJT4FCq9UZQsrYkwTh5gZD+UJt0U5mHnPguY69KEH3eJhkVco/YCJGBVayH5oIYDkT
-         BU2gkXxt+olqz/zAsS0UTHBY9Bm7S1yT7r7p4AsAaTlnLbA3eVpTjPihOyQpsBRk55F9
-         n3MfFDrQmCnB8zDzjNhTkGmmv7V+Iiywn9x1YHN8+1SS/xElTuigVH/nxuxkjojFae2T
-         zCE/wz44dJHdRmXsn0OCnQOvNtmkUsVnNh7ARzWhcKPoB5VY/gVeMLVq5nxoFhR3P7Qh
-         PY1JhbH0J4PASij2SUMiMbmr1HXrve3iA5C8N6uBfoTN26Bkmx5Kbhg12F+wiAlJ63Id
-         Sc0w==
+        bh=tzXwU1D06dBGewO4rI88re6bWlh76QB+FXrQuHlLZC0=;
+        b=Wsf/BGTnuC331c7nWLtNh/QkXE/H/+3Q+1Misf2cOV2WywFJj1hhujKdALMAkW61iY
+         ckV1UpxAmSCoVPJGhF0El/6sagHOYxOn77LqNBdgi1u8JUqR2KMldGC3cQWmU02uaiVX
+         hhBDIxxwGZAlb+jXKTXkCcYTjkluUYTN0QNCMGsB/uCGIuHtaCTA5Cl1SbuOVOBmqMbc
+         daT8hN7shbI1VITVnESx7Q6IjugcwgATfi83AQmOdnIgww/BP8aZ8lIucTHaV4Cc+YRG
+         UoGGIKU16/a1Gvb+IbduzAaU+QUJTfgnrNBoKjB9iGOR4UaduIgRotbzhG2uYcVfa7A9
+         ic6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=I6JfzfWAe4lYLCtUoUTVtaisKLTqGyQop7Zrj0ske4A=;
-        b=iqdGIMU2/jbXkG55O09TkUtwo7UH8d6YinpWgJW1bbauWGeiCUBCzkrnd7jNuwOeFc
-         4omR5mA0D65UpDwh9Oi5HF0cyAawm6BkEzvicDkTUGTJdZC796fM6ZnRcqK5LSWyzA3b
-         7ijC3C3cYO7UouDLpwWSDg2X8XfxrXfca7fTHQdqHqTwCRw9xi3GalVrKxXf5mlKxkNv
-         mIx1x9lyFSRHsU5xrZuL2Zo05YHZqgymyIYrFwyZH/bGfBBgoURPKDDPhKzBRXj5nX2+
-         HDcl1omcwWiCt8OQPQy8I9wszVVfpvcXzqoeA/HQrwKegZHk2CUpXGYqTd6CRi+8KYzM
-         1pjQ==
-X-Gm-Message-State: AOPr4FUZGaPVNa9Qae9dXCbeME85utx8LmLpZJYfIXpLjNX8q3XhSHe8agok90SeGsPJ4Q==
-X-Received: by 10.28.23.138 with SMTP id 132mr4508621wmx.50.1462972744822;
-        Wed, 11 May 2016 06:19:04 -0700 (PDT)
+        bh=tzXwU1D06dBGewO4rI88re6bWlh76QB+FXrQuHlLZC0=;
+        b=Xtkl6FJLAi50o4W+ZQvqsvRIoYOdUWH8IZg8CZFCcoxF7k5EKkiNX8HOedZAWIUS/y
+         7RafTeJjt0JoDrG2IZQCg0siRTtd50o5/zguJQikdcEEvKS6rDHiHC2jCrfoRZfUVS7W
+         kENGK11Fzlci4P5RBPdUAUv2EOqYcnE0wiL09kjeE4biJWbTonqBM9LMppM5s6Wx74s3
+         HBuGI+S22jPUtoL8GeAhoA6jB4h3C2WBoszyPxX8Mpwvs8vpqzVSU5A2PQIFqjdOO6FP
+         P8Z96S/rh7f75H8qp7d1YEdIUDG8uzWFU0WvYh0n5zKtaLUJShqaO2PP3jYh2CXDhWLD
+         GgJA==
+X-Gm-Message-State: AOPr4FWcg6tQXWrh8Tcd1Hsq5QATUixVBe1CtThFFQo4ZPYB85XzIG8lwL7zmwN3NutBxg==
+X-Received: by 10.28.39.196 with SMTP id n187mr4313487wmn.4.1462972738723;
+        Wed, 11 May 2016 06:18:58 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.19.02
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.18.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:19:03 -0700 (PDT)
+        Wed, 11 May 2016 06:18:57 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -67,74 +67,167 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294338>
 
-To libify the apply functionality the 'diffstat' variable should
+To libify the apply functionality the 'update_index' variable should
 not be static and global to the file. Let's move it into
 'struct apply_state'.
 
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ builtin/apply.c | 45 ++++++++++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 09af5dc..43c7198 100644
+index 97af6ea..635a9ff 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -33,6 +33,9 @@ struct apply_state {
- 	/* --cached updates only the cache without ever touching the working tree. */
- 	int cached;
+@@ -39,6 +39,7 @@ struct apply_state {
+ 	int check_index;
  
-+	/* --stat does just a diffstat, and doesn't actually apply */
-+	int diffstat;
-+
- 	/*
- 	 *  --check turns on checking that the working tree matches the
- 	 *    files that are being modified, but doesn't apply the patch
-@@ -47,7 +50,6 @@ struct apply_state {
+ 	int unidiff_zero;
++	int update_index;
  };
  
  /*
-- *  --stat does just a diffstat, and doesn't actually apply
-  *  --numstat does numeric diffstat, and doesn't actually apply
-  *  --index-info shows the old and new index info for paths if available.
-  */
-@@ -55,7 +57,6 @@ static int newfd = -1;
+@@ -51,7 +52,6 @@ static int newfd = -1;
  
  static int state_p_value = 1;
  static int p_value_known;
--static int diffstat;
+-static int update_index;
+ static int cached;
+ static int diffstat;
  static int numstat;
- static int summary;
- static int apply = 1;
-@@ -4493,7 +4494,7 @@ static int apply_patch(struct apply_state *state,
- 	if (fake_ancestor)
- 		build_fake_ancestor(list, fake_ancestor);
- 
--	if (diffstat)
-+	if (state->diffstat)
- 		stat_patch_list(list);
- 
- 	if (numstat)
-@@ -4604,7 +4605,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 			0, option_parse_p },
- 		OPT_BOOL(0, "no-add", &no_add,
- 			N_("ignore additions made by the patch")),
--		OPT_BOOL(0, "stat", &diffstat,
-+		OPT_BOOL(0, "stat", &state.diffstat,
- 			N_("instead of applying the patch, output diffstat for the input")),
- 		OPT_NOOP_NOARG(0, "allow-binary-replacement"),
- 		OPT_NOOP_NOARG(0, "binary"),
-@@ -4677,7 +4678,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+@@ -4095,9 +4095,9 @@ static void patch_stats(struct patch *patch)
  	}
- 	if (state.apply_with_reject)
- 		apply = state.apply_verbosely = 1;
--	if (!force_apply && (diffstat || numstat || summary || state.check || fake_ancestor))
-+	if (!force_apply && (state.diffstat || numstat || summary || state.check || fake_ancestor))
+ }
+ 
+-static void remove_file(struct patch *patch, int rmdir_empty)
++static void remove_file(struct apply_state *state, struct patch *patch, int rmdir_empty)
+ {
+-	if (update_index) {
++	if (state->update_index) {
+ 		if (remove_file_from_cache(patch->old_name) < 0)
+ 			die(_("unable to remove %s from index"), patch->old_name);
+ 	}
+@@ -4108,14 +4108,18 @@ static void remove_file(struct patch *patch, int rmdir_empty)
+ 	}
+ }
+ 
+-static void add_index_file(const char *path, unsigned mode, void *buf, unsigned long size)
++static void add_index_file(struct apply_state *state,
++			   const char *path,
++			   unsigned mode,
++			   void *buf,
++			   unsigned long size)
+ {
+ 	struct stat st;
+ 	struct cache_entry *ce;
+ 	int namelen = strlen(path);
+ 	unsigned ce_size = cache_entry_size(namelen);
+ 
+-	if (!update_index)
++	if (!state->update_index)
+ 		return;
+ 
+ 	ce = xcalloc(1, ce_size);
+@@ -4225,13 +4229,14 @@ static void create_one_file(char *path, unsigned mode, const char *buf, unsigned
+ 	die_errno(_("unable to write file '%s' mode %o"), path, mode);
+ }
+ 
+-static void add_conflicted_stages_file(struct patch *patch)
++static void add_conflicted_stages_file(struct apply_state *state,
++				       struct patch *patch)
+ {
+ 	int stage, namelen;
+ 	unsigned ce_size, mode;
+ 	struct cache_entry *ce;
+ 
+-	if (!update_index)
++	if (!state->update_index)
+ 		return;
+ 	namelen = strlen(patch->new_name);
+ 	ce_size = cache_entry_size(namelen);
+@@ -4252,7 +4257,7 @@ static void add_conflicted_stages_file(struct patch *patch)
+ 	}
+ }
+ 
+-static void create_file(struct patch *patch)
++static void create_file(struct apply_state *state, struct patch *patch)
+ {
+ 	char *path = patch->new_name;
+ 	unsigned mode = patch->new_mode;
+@@ -4264,22 +4269,24 @@ static void create_file(struct patch *patch)
+ 	create_one_file(path, mode, buf, size);
+ 
+ 	if (patch->conflicted_threeway)
+-		add_conflicted_stages_file(patch);
++		add_conflicted_stages_file(state, patch);
+ 	else
+-		add_index_file(path, mode, buf, size);
++		add_index_file(state, path, mode, buf, size);
+ }
+ 
+ /* phase zero is to remove, phase one is to create */
+-static void write_out_one_result(struct patch *patch, int phase)
++static void write_out_one_result(struct apply_state *state,
++				 struct patch *patch,
++				 int phase)
+ {
+ 	if (patch->is_delete > 0) {
+ 		if (phase == 0)
+-			remove_file(patch, 1);
++			remove_file(state, patch, 1);
+ 		return;
+ 	}
+ 	if (patch->is_new > 0 || patch->is_copy) {
+ 		if (phase == 1)
+-			create_file(patch);
++			create_file(state, patch);
+ 		return;
+ 	}
+ 	/*
+@@ -4287,9 +4294,9 @@ static void write_out_one_result(struct patch *patch, int phase)
+ 	 * thing: remove the old, write the new
+ 	 */
+ 	if (phase == 0)
+-		remove_file(patch, patch->is_rename);
++		remove_file(state, patch, patch->is_rename);
+ 	if (phase == 1)
+-		create_file(patch);
++		create_file(state, patch);
+ }
+ 
+ static int write_out_one_reject(struct apply_state *state, struct patch *patch)
+@@ -4376,7 +4383,7 @@ static int write_out_results(struct apply_state *state, struct patch *list)
+ 			if (l->rejected)
+ 				errs = 1;
+ 			else {
+-				write_out_one_result(l, phase);
++				write_out_one_result(state, l, phase);
+ 				if (phase == 1) {
+ 					if (write_out_one_reject(state, l))
+ 						errs = 1;
+@@ -4456,8 +4463,8 @@ static int apply_patch(struct apply_state *state,
+ 	if (whitespace_error && (ws_error_action == die_on_ws_error))
  		apply = 0;
- 	if (state.check_index && is_not_gitdir)
- 		die(_("--index outside a repository"));
+ 
+-	update_index = state->check_index && apply;
+-	if (update_index && newfd < 0)
++	state->update_index = state->check_index && apply;
++	if (state->update_index && newfd < 0)
+ 		newfd = hold_locked_index(&lock_file, 1);
+ 
+ 	if (state->check_index) {
+@@ -4727,7 +4734,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 				whitespace_error);
+ 	}
+ 
+-	if (update_index) {
++	if (state.update_index) {
+ 		if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 			die(_("Unable to write new index file"));
+ 	}
 -- 
 2.8.2.490.g3dabe57
