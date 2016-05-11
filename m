@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 94/94] builtin/apply: add a cli option for be_silent
-Date: Wed, 11 May 2016 15:17:45 +0200
-Message-ID: <20160511131745.2914-95-chriscool@tuxfamily.org>
+Subject: [PATCH v2 85/94] write_or_die: use warning() instead of fprintf(stderr, ...)
+Date: Wed, 11 May 2016 15:17:36 +0200
+Message-ID: <20160511131745.2914-86-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -15,51 +15,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 15:21:58 2016
+X-From: git-owner@vger.kernel.org Wed May 11 15:22:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U5K-0005C3-8T
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:21:54 +0200
+	id 1b0U5W-0005UD-NA
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:22:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932428AbcEKNVt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:21:49 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34370 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932402AbcEKNVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:21:43 -0400
-Received: by mail-wm0-f65.google.com with SMTP id n129so9425934wmn.1
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:21:42 -0700 (PDT)
+	id S932432AbcEKNWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 09:22:00 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33216 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932391AbcEKNVY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:21:24 -0400
+Received: by mail-wm0-f66.google.com with SMTP id r12so9419662wme.0
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:21:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=97TbJwq2XFdY9oqdTAp07iAj3XMaU+IdqmN/3g5owSw=;
-        b=FdNYoPnRj1x0L9XEdH+AGFHA1vOaitK0Kbay4/T7VzlIU4NRvktIB19/eo+yGA6cwa
-         71XETzouKgwYTrlZdduSG2oGnsBOEJsyQ58ZozAF6fdgO5yQJSMZJBotOgsCvzX8I7O3
-         bD4uPlofTiMBLDdAGFT2KAxFEgSKi6p1ah9uQ3Lc8AQBsJWj4IqP1R1X7eX5Vk71gQis
-         pyVRg3XQDLrqY7B+Su/17M55mbNq54h6IU+KLi7M9elF5s1K7hWd5nIhnubMjLmmOnGT
-         6FP1sr/5CeTIiyb+YCCtyn27fj5XBYPc7NZ6j/BTTNdZi22VzCLeE/B1ggA5vtV2D1W3
-         dkXQ==
+        bh=vb34KU99aQIDdVaSp/aNKNzSJzsg7uVvyyaNvtpMtm0=;
+        b=sMKsJp/LiYxiPiPkunoxUTEKegUSAIonLwBNueS/T7JJgm0r3jUfaUVKF8V+7WJHoW
+         7Wm2zmhx+MlOKrNp/3eHfxk2rnUJjQvGcXpBWMU4ccFeUKUeHw0rWTxJFEbSQkMTWrB/
+         vT8PrfhNyQnU6Q3QsE/U+2Wgvw2iNFOkoYTLk8a708nXtuzbKFUd6CQi8m1mREqJ1sDe
+         E7Ge0anZowz0QS1WmDjIkXTTHgjSF+Q8CkLCt1wiWHZjrxer41FeTDfcfobJ6NkHzND5
+         CVnF1I80hmw/IG5E0t6Ucw/DK0rh8D7zQCpEmfabEgXBb+1FEMdqj+bB8ELG9R6lUlzd
+         Jckg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=97TbJwq2XFdY9oqdTAp07iAj3XMaU+IdqmN/3g5owSw=;
-        b=XshvqoL3LMySvepr6RIAA/0L99GMCGti4UaXVn6L312yxBFd9F+cioaCEhjpw7yk7s
-         oE8orbmcJsG4L9+AHRzOFOyQG1DPqaB4qpYucfT8wS2hueMTd0CxvJ/KkPnvBXnkrRl0
-         35nShT3qowx3rEPr2OME55MZTiP5uVs2KdJ5gOt1SMzmnQ6l3b8FCEppoYYWntx5iMmk
-         FPRZm2eezh0DYIi8TasYSxNPunCu7B6uq0Ni8e433JENMzo0xQ2b56fX60qNSJ5GjnXc
-         PW87KqKURXMFv9+PHxF8GEbNVgE965IXUzZ7iVzwlvKV78qT+x+VE7+bTnLozYO95hN1
-         RZbA==
-X-Gm-Message-State: AOPr4FV/79FJw0ehCSFNZdLHd8bOkiT3Xx6xPFKHXH2yTWWW3+JDyfZ2zBobZKTyGJ984g==
-X-Received: by 10.194.107.6 with SMTP id gy6mr3862199wjb.20.1462972901976;
-        Wed, 11 May 2016 06:21:41 -0700 (PDT)
+        bh=vb34KU99aQIDdVaSp/aNKNzSJzsg7uVvyyaNvtpMtm0=;
+        b=JNPen7QUwHtwawF+DIZG8Kk4OgUVDf2dF8XPd+AbDsH6Q5kAKlkvgIY5WqjnteTZ3k
+         sGYQy2btncNkSxszlF+WwNtohrPCvcVEiK8mXjCfstad03S6gdIG0JyNXc4Rn481BM6a
+         YLOl1WAxg1BIuhNARX/u4oaCDi5VDo4pOb7eUs2wsbjwh/YGz8Ie1M6AxcYWTn2/J9nL
+         iH7e5Q9veLIq8/QwdIwgaISGAvo7sCqZFPSOneSsM0O2iw/b5eBuHr04Z2p8N+7M3EOv
+         gxMjGwzC6qkff7M9nH61cxMED0KFyZC6IQEZ+qSXgOfjsJYawFwvEecgOmVU1/2g1c1N
+         cb/w==
+X-Gm-Message-State: AOPr4FW5Ewux4rkb1wkDiQ9wQ3KDQ+4GLJyf07/WKEinY97F6ruA0MorQ2g66x0MwAh83w==
+X-Received: by 10.194.17.106 with SMTP id n10mr3740844wjd.131.1462972882761;
+        Wed, 11 May 2016 06:21:22 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.21.40
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.21.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:21:41 -0700 (PDT)
+        Wed, 11 May 2016 06:21:21 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -67,28 +67,36 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294307>
-
-Let's make it possible to request a silent operation on the
-command line.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294308>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 2 ++
- 1 file changed, 2 insertions(+)
+ write_or_die.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index ce12769..397ef26 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -70,6 +70,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "allow-overlap", &state.allow_overlap,
- 			N_("allow overlapping hunks")),
- 		OPT__VERBOSE(&state.apply_verbosely, N_("be verbose")),
-+		OPT_BOOL(0, "silent", &state.be_silent,
-+			N_("do not print any output")),
- 		OPT_BIT(0, "inaccurate-eof", &options,
- 			N_("tolerate incorrectly detected missing new-line at the end of file"),
- 			APPLY_OPT_INACCURATE_EOF),
+diff --git a/write_or_die.c b/write_or_die.c
+index 49e80aa..c29f677 100644
+--- a/write_or_die.c
++++ b/write_or_die.c
+@@ -87,8 +87,7 @@ int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg)
+ {
+ 	if (write_in_full(fd, buf, count) < 0) {
+ 		check_pipe(errno);
+-		fprintf(stderr, "%s: write error (%s)\n",
+-			msg, strerror(errno));
++		warning("%s: write error (%s)\n", msg, strerror(errno));
+ 		return 0;
+ 	}
+ 
+@@ -98,8 +97,7 @@ int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg)
+ int write_or_whine(int fd, const void *buf, size_t count, const char *msg)
+ {
+ 	if (write_in_full(fd, buf, count) < 0) {
+-		fprintf(stderr, "%s: write error (%s)\n",
+-			msg, strerror(errno));
++		warning("%s: write error (%s)\n", msg, strerror(errno));
+ 		return 0;
+ 	}
+ 
 -- 
 2.8.2.490.g3dabe57
