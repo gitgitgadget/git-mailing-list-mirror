@@ -1,74 +1,103 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v9 2/6] convert.c: stream and early out
-Date: Wed, 11 May 2016 06:30:51 +0200
-Message-ID: <eaf7b2e2-59d3-7b12-e9dd-d63203b05384@web.de>
-References: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
- <1462601460-23543-1-git-send-email-tboegi@web.de>
- <xmqqtwi7t1of.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 24/25] worktree move: accept destination as directory
+Date: Wed, 11 May 2016 00:43:16 -0400
+Message-ID: <CAPig+cRtajkynLFj5Fknd72QQ=Eqevh1T9i9MvApwXfNmtMAFQ@mail.gmail.com>
+References: <1460553346-12985-1-git-send-email-pclouds@gmail.com>
+	<1460553346-12985-25-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, tboegi@web.de
-X-From: git-owner@vger.kernel.org Wed May 11 06:31:30 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 11 06:47:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0Lnz-00025B-GK
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 06:31:27 +0200
+	id 1b0M3f-00042L-QN
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 06:47:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751542AbcEKEbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 00:31:08 -0400
-Received: from mout.web.de ([212.227.15.3]:63842 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751445AbcEKEbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 00:31:07 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0Lal0y-1bSmmb3efo-00kOcl; Wed, 11 May 2016 06:30:53
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.0
-In-Reply-To: <xmqqtwi7t1of.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:glEeehjGd+W+NI8vbXB5iokQfmjJlhwO0Xg//ZgxIbZc3/rS+sU
- VOUiy+7ixzSbjAfdoRkZ1lDXV3hi4O6/eqtasAaDRZ7QJqneogvmPD+biB04ILZf5JhDsW/
- o4mbE4ZIHQfgZOPtUHo25nK9USbZVq86U1Jan6z6DLGu2JlqTWu//aW5lTFQAcgiM+c0fzX
- M72+OaFD/V5x6oKmufQmg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lAznrMhoDIw=:vpsVBW0a4xB09G/PrFApew
- SbDT7FevCf68OC6fEi3vOwWhSIOB1hdoBJCBHQ2HFChUL7PTRv0LT0bRPpMX5FnDVmyhKJayn
- VvNUbO8sdzkdPFRLqP9KIFwIivaetcXiwDeF3GJ5U3d2HQBhVEH9B74VyT0kd7SOlIxDUT/a7
- 1Jfvwyjwto4tvaNL5Pn4MiBggdBvhkv7jGdtPJRTTRXyAPigetvLqDO+qqtc4k+YBx1KtvNH6
- jf5MjdMcovnP+kiSkSZUHyy36MB1hwKzO0gSTIxxotmj4YSIFqFnCsIAGDj9vwXZIRL/Vg0ff
- 4yR9WSnBaSio6xiLleivcdEVTBbEtFGujLlm6zhTjpcDwpA0/SmxrjlXOfDD/7W2sCrTY01bO
- eVrGg9D60y/L5m/Ubrun57REovdBIDtqQvmghiRjYS8VccqUqiy6GFkL2UZk+dSxDqc/htW/L
- tiL8lI8+KLeikRjzByJgevBO3RZ6RUSedyZl1Ol3fxcdkdtsP9hqmhf2NHiQaQlusRLqW/J7U
- 8+otvoJVclUbrgXq6LPJLukAMJlKi0nWHYtpQiclI9LrpxZg7A+ZHceo9wUfUUZxw2Kr7Q+nj
- r/RcL375nXzrEGapQVFm+JSi1IuHBv3umpobaoGhhiCU26l7Yz/j1Uj3hlTgWirIqC5d9Tk0X
- B74QTU5owP7NAWMOfjr4k4cyhYrDW1JUkjAm5uaRvMlDQb3iqf30n2qSZkEHSo1SqUWO6krqV
- m9zdaiy3PYAxOZUFi2qBKRwQ77V/broQGYG87v/7Jl9RfwiGLDHkdCNVUNDw8mGdJli/xNJ2 
+	id S1751619AbcEKEnR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 May 2016 00:43:17 -0400
+Received: from mail-ig0-f194.google.com ([209.85.213.194]:33669 "EHLO
+	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751419AbcEKEnR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 May 2016 00:43:17 -0400
+Received: by mail-ig0-f194.google.com with SMTP id rc4so3191374igc.0
+        for <git@vger.kernel.org>; Tue, 10 May 2016 21:43:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=iNMHGQVrfVfU/UmyravXeH2VxXq5U6mfAMNoS1nr1p4=;
+        b=FuLgBQEuW/lBHxh7giJPhwrCAdK0kMCOUm4rjz2+OwHiW9BqeACWKNhnzyOLRwFdku
+         wIePEJRljgO4mSD4YaENj5QinkzS7OUH7O4niw41850dN1h8gzM6fT4ByBzbyo/pl7ln
+         y1RJYN0Cd0TKTIwiTh4JX+Qzps7fpCQtHo9p47CWJ9NbMjs8SGfAD8dopH0zmN1U6c0H
+         9zzWGLNyBluKb+Qz2g1zExY8wohbDgom9A5gPl4sNRj4yIBhkqHA7Lv7Qlza+o29tB11
+         S+cVfNXMo4mFB49yGxb3SdvXcYsskAPzpuTQGhJvcG16hkRdY5ccX7An8+QuNC5PHGOp
+         yT0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=iNMHGQVrfVfU/UmyravXeH2VxXq5U6mfAMNoS1nr1p4=;
+        b=I3qgC+lcVIhKFRnL9b7ikY7AmZ1g0MFRuj4WjCkMInOjGE0NIOA4jCkZELeM+4OTiy
+         gVAcWUx7xK+GE0bEpBUIgeGzJhfrKf71b12x1VujCjlHiPFMB5yQHVUn0L9Mt4aCe9xU
+         RWzsKGsnaOJ09Ex/rWOz4insQDl7Ap9P5rZwWJ0rzTgoALtxUKfSz1cYtq8oOP5m3sJl
+         fu0tnixjErGKONPXmgZElBtMfyg4MvZCyrG7nJvUCW3jdI8FK2E70KvNELsyrNNHe7SA
+         LTbe/nai3BmVYepgT34EaMG3JV/eAYKHE6/eXc5CMoJeDJyBqv6O7/Qp8VgSwqNkUOuX
+         aNpA==
+X-Gm-Message-State: AOPr4FWFO8v13nhwwMcanGByQlGcztbQofTOrneY/xZ0SAfc8qM2tFZ6LFXOd0aDyf7BOVd5yZ74sO+WaDhxzw==
+X-Received: by 10.50.205.42 with SMTP id ld10mr20577502igc.17.1462941796102;
+ Tue, 10 May 2016 21:43:16 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Tue, 10 May 2016 21:43:16 -0700 (PDT)
+In-Reply-To: <1460553346-12985-25-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: elspf2b-Xx7GOmKkqOBtuNaMzfM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294226>
 
-On 09.05.16 22:29, Junio C Hamano wrote:
-> tboegi@web.de writes:
-> 
->> +		if (stats->stat_bits & earlyout)
->> +			break; /* We found what we have been searching for */
-> 
-> Are we sure if our callers are only interested in just one bit at a
-> time?  Otherwise, if we want to ensure all of the given bits are
-> set,
-> 
-> 	if ((stats->stat_bits & earlyout) == earlyout)
->         	break;
-> 
-> would be necessary.  Otherwise, the "only one bit" assumption on the
-> "earlyout" parameter somehow needs to be documented in the code.
-Thanks for pointing that out.
-I have changed the code a couple of times, forth and back.
-I want to re-roll the series anyway (probably in the next weeks),
-so something like "search_only_flags" may be a better name.
+On Wed, Apr 13, 2016 at 9:15 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> Similar to "mv a b/", which is actually "mv a b/a", we extract basena=
+me
+> of source worktree and create a directory of the same name at
+> destination if dst path is a directory.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> @@ -538,7 +538,13 @@ static int move_worktree(int ac, const char **av=
+, const char *prefix)
+> -       if (file_exists(dst.buf))
+> +       if (is_directory(dst.buf))
+> +               /*
+> +                * keep going, dst will be appended after we get the
+> +                * source's absolute path
+> +                */
+> +               ;
+> +       else if (file_exists(dst.buf))
+>                 die(_("target '%s' already exists"), av[1]);
+> @@ -558,6 +564,17 @@ static int move_worktree(int ac, const char **av=
+, const char *prefix)
+> +       if (is_directory(dst.buf)) {
+> +               const char *sep =3D strrchr(wt->path, '/');
+
+Does this need to take Windows into account? Perhaps git_find_last_dir_=
+sep()?
+
+> +
+> +               if (!sep)
+> +                       die(_("could not figure out destination name =
+from '%s'"),
+> +                           wt->path);
+> +               strbuf_addstr(&dst, sep);
+> +               if (file_exists(dst.buf))
+> +                       die(_("target '%s' already exists"), dst.buf)=
+;
+> +       }
