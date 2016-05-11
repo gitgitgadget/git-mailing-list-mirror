@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 51/94] builtin/apply: make apply_patch() return -1 instead of die()ing
-Date: Wed, 11 May 2016 15:17:02 +0200
-Message-ID: <20160511131745.2914-52-chriscool@tuxfamily.org>
+Subject: [PATCH v2 43/94] builtin/apply: move 'state_linenr' global into 'struct apply_state'
+Date: Wed, 11 May 2016 15:16:54 +0200
+Message-ID: <20160511131745.2914-44-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -15,51 +15,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 15:23:24 2016
+X-From: git-owner@vger.kernel.org Wed May 11 15:23:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U6l-0006wl-Sc
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:23:24 +0200
+	id 1b0U6y-0007Dw-US
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:23:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932483AbcEKNXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:23:17 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36301 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932262AbcEKNUN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:20:13 -0400
-Received: by mail-wm0-f65.google.com with SMTP id w143so9350976wmw.3
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:20:12 -0700 (PDT)
+	id S932492AbcEKNXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 09:23:33 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33224 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932235AbcEKNT5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:19:57 -0400
+Received: by mail-wm0-f67.google.com with SMTP id r12so9411511wme.0
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:19:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Rbpi9lC8uUJK3AmJT+hBGdlK9t+QmdM/luyUTX7HYnE=;
-        b=a7PWyTko/MOet4zSlzZqf9ALiqxMczafMZVxJhm0sS4H22y9ur6tpbqMXFakmLDLKz
-         JE9TXTFFJMxk1/I9dkCq0SlyqNfq3yyX4oCfsVob+5zYJ9MV92alYHPxDvylRr/VFmwd
-         xpWn0O+nkjwqtSDENVbP6VARoPvnxDb429ZlB5gwMe0br2GCcmV5VFqWmmv/7foI9kIW
-         NDY8yX7a3ttYyZmDZ6m7/y3CbnuzvpBAZbdyQ3EHolywAZpTm5wq01f7tEPUy8VnDk5O
-         1n/NMMNt+wUECHNSfbz+7tGK73giHwpWMQ60J1zv2E8Wp87+0w1GgW/0/7xA4C6H1pXo
-         EiJA==
+        bh=NkbmDeWDq/eaO9OSWQfyucfsTq7UkeduFUJJ3kDzZB4=;
+        b=VhmcGhGyRxJD+mdSBoetgOUMqGPRMF0tG9lHG1seF//14VwAU14BKvvwjKbpyWxgpv
+         gFtjoqDOw70elMHOis4rSxKV9ITniE/IrGdYps5UnD7vtu8YrBjseldJWcGqGcfWg0GD
+         aM86ZD5h7VEq6VOoJlQmELSmdwfNkigsj15mRgK1pOrwxTBLlWWUPuINd+ghYuy7TCqi
+         DyumKasjVz0ty+NbekZPsZ9kMfdTbhQPM/XTrvk1FInnu1ugpbpkweoynMc84HcFnQXW
+         7Lxnd8qfVnZ4KUs6yvXTB1r7l/1Km65ydgnjwCO/U7lKmsSkThwnmhwl1jrBehL5WMR8
+         +/og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Rbpi9lC8uUJK3AmJT+hBGdlK9t+QmdM/luyUTX7HYnE=;
-        b=Lx/xWqR24GEq+WG724wyPksBe9d4bcK/nrFlL4Ki0e2I3ONZNWopcRyigWStv2gDaV
-         yFbCZNymOIAL8Ac21Ys/fyD0Mq28RSbqpNIJBjTLKpVRbTFkgPa5uJ0P033kTSs5kjkj
-         RzlZfZb+DVXZToJj87X2X4eWLZ+vAIPZ9+tg32wgiphku3oYgG5SmhFB9pxDa4CvbTXi
-         gec+EvhuBbMVplcWbZRHZUatx0I6KU8GaC7oLEYIx2+mxRRY5HDIC/KEWk8kCUPl4FPG
-         UM5YxVZlUhLHZ6UveKCq9T8/Nc+c0if4QVobNYL8mQ/LoQJ4LWhSqdK9V729qm4u0CEu
-         VauA==
-X-Gm-Message-State: AOPr4FUmySh//En4gaQK8nm8sgHE8M4XRMZbdxdnNi3T0IvRpArawRgkVANWpSqkq6LIgw==
-X-Received: by 10.28.29.195 with SMTP id d186mr4615181wmd.27.1462972811581;
-        Wed, 11 May 2016 06:20:11 -0700 (PDT)
+        bh=NkbmDeWDq/eaO9OSWQfyucfsTq7UkeduFUJJ3kDzZB4=;
+        b=Efz5A6GTqpiGhni92VBhudNRhv3MnrVv8mP5t1nYdxy721ope0sG/A0eBTPCK0NcO/
+         HjHD0hmlkX2pBI63W0mePVFszz/inooTA7ELJ4lFgDEaF0LW0mPU/BdgoEYl8W5VT11q
+         4qHrNn1feggh+jkTXfRJJFSlP/XI2YUxbxAWOrG4IKlEfcu1WDzq7LdrxAzcoqpyCEQi
+         gLzUjvrqSvW75ExSDsAm0PsRnBD4ul4Jj489LrWnVkzmLcKfFEblQpcOZOulbhl+QmGG
+         T5RaHWdHEtH4emoMRMz8WC5rglz7qTCm94trBV9QpMkPaXYuOoAReiDOQZS7hRP0C00G
+         kSGQ==
+X-Gm-Message-State: AOPr4FUqJmHewRPV345qj0f1kC5MB25IY2/3FuRdT8fmg1uYhC9+6z0NKyt+04M02UqYGw==
+X-Received: by 10.28.140.17 with SMTP id o17mr4221156wmd.18.1462972795628;
+        Wed, 11 May 2016 06:19:55 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.20.09
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.19.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:20:10 -0700 (PDT)
+        Wed, 11 May 2016 06:19:54 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -67,150 +67,272 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294324>
 
-To libify `git apply` functionality we have to signal errors
-to the caller instead of die()ing.
+To libify the apply functionality the 'state_linenr' variable should
+not be static and global to the file. Let's move it into
+'struct apply_state'.
 
-As a first step in this direction, let's make apply_patch() return
--1 in case of errors instead of dying. For now its only caller
-apply_all_patches() will exit(1) when apply_patch() return -1.
-
-In a later patch, apply_all_patches() will return -1 too instead of
-exiting.
-
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 54 +++++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 39 insertions(+), 15 deletions(-)
+ builtin/apply.c | 75 ++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 40 insertions(+), 35 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index ec55768..d95630c 100644
+index deba14c..5c003a1 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -4512,6 +4512,14 @@ static int write_out_results(struct apply_state *state, struct patch *list)
- #define INACCURATE_EOF	(1<<0)
- #define RECOUNT		(1<<1)
+@@ -84,6 +84,13 @@ struct apply_state {
+ 	int max_change;
+ 	int max_len;
  
-+/*
-+ * Try to apply a patch.
-+ *
-+ * Returns:
-+ *  -1 if an error happened
-+ *   0 if the patch applied
-+ *   1 if the patch did not apply
-+ */
- static int apply_patch(struct apply_state *state,
- 		       int fd,
- 		       const char *filename,
-@@ -4521,6 +4529,7 @@ static int apply_patch(struct apply_state *state,
- 	struct strbuf buf = STRBUF_INIT; /* owns the patch text */
- 	struct patch *list = NULL, **listp = &list;
- 	int skipped_patch = 0;
-+	int res = 0;
- 
- 	state->patch_input_file = filename;
- 	read_patch_file(&buf, fd);
-@@ -4553,8 +4562,10 @@ static int apply_patch(struct apply_state *state,
- 		offset += nr;
- 	}
- 
--	if (!list && !skipped_patch)
--		die(_("unrecognized input"));
-+	if (!list && !skipped_patch) {
-+		res = error(_("unrecognized input"));
-+		goto end;
-+	}
- 
- 	if (state->whitespace_error && (state->ws_error_action == die_on_ws_error))
- 		state->apply = 0;
-@@ -4563,21 +4574,22 @@ static int apply_patch(struct apply_state *state,
- 	if (state->update_index && state->newfd < 0)
- 		state->newfd = hold_locked_index(state->lock_file, 1);
- 
--	if (state->check_index) {
--		if (read_cache() < 0)
--			die(_("unable to read index file"));
-+	if (state->check_index && read_cache() < 0) {
-+		res = error(_("unable to read index file"));
-+		goto end;
- 	}
- 
- 	if ((state->check || state->apply) &&
- 	    check_patch_list(state, list) < 0 &&
--	    !state->apply_with_reject)
--		exit(1);
-+	    !state->apply_with_reject) {
-+		res = -1;
-+		goto end;
-+	}
- 
- 	if (state->apply && write_out_results(state, list)) {
--		if (state->apply_with_reject)
--			exit(1);
- 		/* with --3way, we still need to write the index out */
--		return 1;
-+		res = state->apply_with_reject ? -1 : 1;
-+		goto end;
- 	}
- 
- 	if (state->fake_ancestor)
-@@ -4592,10 +4604,11 @@ static int apply_patch(struct apply_state *state,
- 	if (state->summary)
- 		summary_patch_list(list);
- 
-+end:
- 	free_patch_list(list);
- 	strbuf_release(&buf);
- 	string_list_clear(&state->fn_table, 0);
--	return 0;
-+	return res;
++	/*
++	 * Various "current state", notably line numbers and what
++	 * file (and how) we're patching right now.. The "is_xxxx"
++	 * things are flags, where -1 means "don't know yet".
++	 */
++	int linenr;
++
+ 	int p_value;
+ 	int p_value_known;
+ 	unsigned int p_context;
+@@ -156,13 +163,6 @@ static void set_default_whitespace_mode(struct apply_state *state)
+ 		state->ws_error_action = (state->apply ? warn_on_ws_error : nowarn_ws_error);
  }
  
- static void git_apply_config(void)
-@@ -4722,6 +4735,7 @@ static int apply_all_patches(struct apply_state *state,
- 			     int options)
- {
- 	int i;
-+	int res;
- 	int errs = 0;
- 	int read_stdin = 1;
- 
-@@ -4730,7 +4744,10 @@ static int apply_all_patches(struct apply_state *state,
- 		int fd;
- 
- 		if (!strcmp(arg, "-")) {
--			errs |= apply_patch(state, 0, "<stdin>", options);
-+			res = apply_patch(state, 0, "<stdin>", options);
-+			if (res < 0)
-+				exit(1);
-+			errs |= res;
- 			read_stdin = 0;
- 			continue;
- 		} else if (0 < state->prefix_length)
-@@ -4743,12 +4760,19 @@ static int apply_all_patches(struct apply_state *state,
- 			die_errno(_("can't open patch '%s'"), arg);
- 		read_stdin = 0;
- 		set_default_whitespace_mode(state);
--		errs |= apply_patch(state, fd, arg, options);
-+		res = apply_patch(state, fd, arg, options);
-+		if (res < 0)
-+			exit(1);
-+		errs |= res;
- 		close(fd);
+-/*
+- * Various "current state", notably line numbers and what
+- * file (and how) we're patching right now.. The "is_xxxx"
+- * things are flags, where -1 means "don't know yet".
+- */
+-static int state_linenr = 1;
+-
+ /*
+  * This represents one "hunk" from a patch, starting with
+  * "@@ -oldpos,oldlines +newpos,newlines @@" marker.  The
+@@ -939,7 +939,7 @@ static void parse_traditional_patch(struct apply_state *state,
+ 		}
  	}
- 	set_default_whitespace_mode(state);
--	if (read_stdin)
--		errs |= apply_patch(state, 0, "<stdin>", options);
-+	if (read_stdin) {
-+		res = apply_patch(state, 0, "<stdin>", options);
-+		if (res < 0)
-+			exit(1);
-+		errs |= res;
-+	}
+ 	if (!name)
+-		die(_("unable to find filename in patch at line %d"), state_linenr);
++		die(_("unable to find filename in patch at line %d"), state->linenr);
+ }
  
- 	if (state->whitespace_error) {
- 		if (state->squelch_whitespace_errors &&
+ static int gitdiff_hdrend(struct apply_state *state,
+@@ -977,17 +977,17 @@ static void gitdiff_verify_name(struct apply_state *state,
+ 		char *another;
+ 		if (isnull)
+ 			die(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
+-			    *name, state_linenr);
++			    *name, state->linenr);
+ 		another = find_name(state, line, NULL, state->p_value, TERM_TAB);
+ 		if (!another || memcmp(another, *name, len + 1))
+ 			die((side == DIFF_NEW_NAME) ?
+ 			    _("git apply: bad git-diff - inconsistent new filename on line %d") :
+-			    _("git apply: bad git-diff - inconsistent old filename on line %d"), state_linenr);
++			    _("git apply: bad git-diff - inconsistent old filename on line %d"), state->linenr);
+ 		free(another);
+ 	} else {
+ 		/* expect "/dev/null" */
+ 		if (memcmp("/dev/null", line, 9) || line[9] != '\n')
+-			die(_("git apply: bad git-diff - expected /dev/null on line %d"), state_linenr);
++			die(_("git apply: bad git-diff - expected /dev/null on line %d"), state->linenr);
+ 	}
+ }
+ 
+@@ -1350,8 +1350,8 @@ static int parse_git_header(struct apply_state *state,
+ 
+ 	line += len;
+ 	size -= len;
+-	state_linenr++;
+-	for (offset = len ; size > 0 ; offset += len, size -= len, line += len, state_linenr++) {
++	state->linenr++;
++	for (offset = len ; size > 0 ; offset += len, size -= len, line += len, state->linenr++) {
+ 		static const struct opentry {
+ 			const char *str;
+ 			int (*fn)(struct apply_state *, const char *, struct patch *);
+@@ -1522,7 +1522,7 @@ static int find_header(struct apply_state *state,
+ 	patch->is_new = patch->is_delete = -1;
+ 	patch->old_mode = patch->new_mode = 0;
+ 	patch->old_name = patch->new_name = NULL;
+-	for (offset = 0; size > 0; offset += len, size -= len, line += len, state_linenr++) {
++	for (offset = 0; size > 0; offset += len, size -= len, line += len, state->linenr++) {
+ 		unsigned long nextlen;
+ 
+ 		len = linelen(line, size);
+@@ -1543,7 +1543,7 @@ static int find_header(struct apply_state *state,
+ 			if (parse_fragment_header(line, len, &dummy) < 0)
+ 				continue;
+ 			die(_("patch fragment without header at line %d: %.*s"),
+-			    state_linenr, (int)len-1, line);
++			    state->linenr, (int)len-1, line);
+ 		}
+ 
+ 		if (size < len + 6)
+@@ -1564,13 +1564,13 @@ static int find_header(struct apply_state *state,
+ 					       "git diff header lacks filename information when removing "
+ 					       "%d leading pathname components (line %d)",
+ 					       state->p_value),
+-					    state->p_value, state_linenr);
++					    state->p_value, state->linenr);
+ 				patch->old_name = xstrdup(patch->def_name);
+ 				patch->new_name = xstrdup(patch->def_name);
+ 			}
+ 			if (!patch->is_delete && !patch->new_name)
+ 				die("git diff header lacks filename information "
+-				    "(line %d)", state_linenr);
++				    "(line %d)", state->linenr);
+ 			patch->is_toplevel_relative = 1;
+ 			*hdrsize = git_hdr_len;
+ 			return offset;
+@@ -1592,7 +1592,7 @@ static int find_header(struct apply_state *state,
+ 		/* Ok, we'll consider it a patch */
+ 		parse_traditional_patch(state, line, line+len, patch);
+ 		*hdrsize = len + nextlen;
+-		state_linenr += 2;
++		state->linenr += 2;
+ 		return offset;
+ 	}
+ 	return -1;
+@@ -1627,7 +1627,7 @@ static void check_whitespace(struct apply_state *state,
+ {
+ 	unsigned result = ws_check(line + 1, len - 1, ws_rule);
+ 
+-	record_ws_error(state, result, line + 1, len - 2, state_linenr);
++	record_ws_error(state, result, line + 1, len - 2, state->linenr);
+ }
+ 
+ /*
+@@ -1660,11 +1660,11 @@ static int parse_fragment(struct apply_state *state,
+ 	/* Parse the thing.. */
+ 	line += len;
+ 	size -= len;
+-	state_linenr++;
++	state->linenr++;
+ 	added = deleted = 0;
+ 	for (offset = len;
+ 	     0 < size;
+-	     offset += len, size -= len, line += len, state_linenr++) {
++	     offset += len, size -= len, line += len, state->linenr++) {
+ 		if (!oldlines && !newlines)
+ 			break;
+ 		len = linelen(line, size);
+@@ -1763,10 +1763,10 @@ static int parse_single_patch(struct apply_state *state,
+ 		int len;
+ 
+ 		fragment = xcalloc(1, sizeof(*fragment));
+-		fragment->linenr = state_linenr;
++		fragment->linenr = state->linenr;
+ 		len = parse_fragment(state, line, size, patch, fragment);
+ 		if (len <= 0)
+-			die(_("corrupt patch at line %d"), state_linenr);
++			die(_("corrupt patch at line %d"), state->linenr);
+ 		fragment->patch = line;
+ 		fragment->size = len;
+ 		oldlines += fragment->oldlines;
+@@ -1852,7 +1852,8 @@ static char *inflate_it(const void *data, unsigned long size,
+  * points at an allocated memory that the caller must free, so
+  * it is marked as "->free_patch = 1".
+  */
+-static struct fragment *parse_binary_hunk(char **buf_p,
++static struct fragment *parse_binary_hunk(struct apply_state *state,
++					  char **buf_p,
+ 					  unsigned long *sz_p,
+ 					  int *status_p,
+ 					  int *used_p)
+@@ -1894,13 +1895,13 @@ static struct fragment *parse_binary_hunk(char **buf_p,
+ 	else
+ 		return NULL;
+ 
+-	state_linenr++;
++	state->linenr++;
+ 	buffer += llen;
+ 	while (1) {
+ 		int byte_length, max_byte_length, newsize;
+ 		llen = linelen(buffer, size);
+ 		used += llen;
+-		state_linenr++;
++		state->linenr++;
+ 		if (llen == 1) {
+ 			/* consume the blank line */
+ 			buffer++;
+@@ -1954,7 +1955,7 @@ static struct fragment *parse_binary_hunk(char **buf_p,
+ 	free(data);
+ 	*status_p = -1;
+ 	error(_("corrupt binary patch at line %d: %.*s"),
+-	      state_linenr-1, llen-1, buffer);
++	      state->linenr-1, llen-1, buffer);
+ 	return NULL;
+ }
+ 
+@@ -1963,7 +1964,10 @@ static struct fragment *parse_binary_hunk(char **buf_p,
+  *   -1 in case of error,
+  *   the length of the parsed binary patch otherwise
+  */
+-static int parse_binary(char *buffer, unsigned long size, struct patch *patch)
++static int parse_binary(struct apply_state *state,
++			char *buffer,
++			unsigned long size,
++			struct patch *patch)
+ {
+ 	/*
+ 	 * We have read "GIT binary patch\n"; what follows is a line
+@@ -1984,15 +1988,15 @@ static int parse_binary(char *buffer, unsigned long size, struct patch *patch)
+ 	int status;
+ 	int used, used_1;
+ 
+-	forward = parse_binary_hunk(&buffer, &size, &status, &used);
++	forward = parse_binary_hunk(state, &buffer, &size, &status, &used);
+ 	if (!forward && !status)
+ 		/* there has to be one hunk (forward hunk) */
+-		return error(_("unrecognized binary patch at line %d"), state_linenr-1);
++		return error(_("unrecognized binary patch at line %d"), state->linenr-1);
+ 	if (status)
+ 		/* otherwise we already gave an error message */
+ 		return status;
+ 
+-	reverse = parse_binary_hunk(&buffer, &size, &status, &used_1);
++	reverse = parse_binary_hunk(state, &buffer, &size, &status, &used_1);
+ 	if (reverse)
+ 		used += used_1;
+ 	else if (status) {
+@@ -2107,8 +2111,8 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
+ 		if (llen == sizeof(git_binary) - 1 &&
+ 		    !memcmp(git_binary, buffer + hd, llen)) {
+ 			int used;
+-			state_linenr++;
+-			used = parse_binary(buffer + hd + llen,
++			state->linenr++;
++			used = parse_binary(state, buffer + hd + llen,
+ 					    size - hd - llen, patch);
+ 			if (used < 0)
+ 				return -1;
+@@ -2128,7 +2132,7 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
+ 				int len = strlen(binhdr[i]);
+ 				if (len < size - hd &&
+ 				    !memcmp(binhdr[i], buffer + hd, len)) {
+-					state_linenr++;
++					state->linenr++;
+ 					patch->is_binary = 1;
+ 					patchsize = llen;
+ 					break;
+@@ -2142,7 +2146,7 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
+ 		 */
+ 		if ((state->apply || state->check) &&
+ 		    (!patch->is_binary && !metadata_changes(patch)))
+-			die(_("patch with only garbage at line %d"), state_linenr);
++			die(_("patch with only garbage at line %d"), state->linenr);
+ 	}
+ 
+ 	return offset + hdrsize + patchsize;
+@@ -4661,6 +4665,7 @@ static void init_apply_state(struct apply_state *state, const char *prefix)
+ 	state->squelch_whitespace_errors = 5;
+ 	state->ws_error_action = warn_on_ws_error;
+ 	state->ws_ignore_action = ignore_ws_none;
++	state->linenr = 1;
+ 	strbuf_init(&state->root, 0);
+ 
+ 	git_apply_config();
 -- 
 2.8.2.490.g3dabe57
