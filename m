@@ -1,113 +1,85 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 24/25] worktree move: accept destination as directory
-Date: Wed, 11 May 2016 13:32:23 -0400
-Message-ID: <CAPig+cTB8tdPo=wd5UdB84owKJ6c5hj6H9d4_YGDRecBdUE0vA@mail.gmail.com>
-References: <1460553346-12985-1-git-send-email-pclouds@gmail.com>
-	<1460553346-12985-25-git-send-email-pclouds@gmail.com>
-	<CAPig+cRtajkynLFj5Fknd72QQ=Eqevh1T9i9MvApwXfNmtMAFQ@mail.gmail.com>
-	<CACsJy8CCAan9ALxULPFeGSU7wsfwbrywRWFr4Hsjx3=PGwosLA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] perf: make the tests work in worktrees
+Date: Wed, 11 May 2016 13:40:44 -0400
+Message-ID: <CAPig+cR=MeXZXA-Xdr-7A4nxfNvBrOy2ZtmzJOLHq5YGFiuNyA@mail.gmail.com>
+References: <cover.1462894344.git.johannes.schindelin@gmx.de>
+	<cover.1462955446.git.johannes.schindelin@gmx.de>
+	<d783290cabe601ee8623044482b2992fb7936534.1462955446.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 11 19:32:29 2016
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 11 19:40:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0Xzn-0003Rj-Hg
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 19:32:27 +0200
+	id 1b0Y7t-0004Qy-I1
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 19:40:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752249AbcEKRcZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 May 2016 13:32:25 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:35396 "EHLO
-	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752179AbcEKRcY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 May 2016 13:32:24 -0400
-Received: by mail-io0-f194.google.com with SMTP id i75so6507577ioa.2
-        for <git@vger.kernel.org>; Wed, 11 May 2016 10:32:23 -0700 (PDT)
+	id S1752309AbcEKRkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 13:40:46 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:36816 "EHLO
+	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751637AbcEKRkp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 13:40:45 -0400
+Received: by mail-io0-f193.google.com with SMTP id k129so7015015iof.3
+        for <git@vger.kernel.org>; Wed, 11 May 2016 10:40:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=/bdM1NqaydFzDkBemJdxPyOP5AmlzWemc5iTR2nbowM=;
-        b=vNGFbb+b3aPdcgOd4lhZVtahZhCBE+YZi3Zv2l/frpL7Cr6Le4kC+0xNZ5Qm0Bo5kh
-         96P41DVPpixtFU1KOi8qJYZ5Gt9VcvzDs4rpYI6A94cBe5r2mxlteG3R8SlXXIIOspt/
-         dcEIiirWMSZZO0d5YNwNB3Frz71BjCeGTMhNEeo5E/58VHU5wMyaR78zBn6qPUzbFmEE
-         mQdh37k5p31kMq2+ufaTn9LYrnAoJczoEk176g3gDyZNF+JAtrtQvyjvz8sULvMSPZ0H
-         m/eSTj2hrZVvrbh6ijJiIvexjRGc1sxX7W/9wJX59p++gb+MWM6kdALYh4cVy5u8Iufq
-         Aghw==
+         :from:to:cc;
+        bh=0cn5zngTFmzkqwz3P65OhyDJHQrFvfeob//J410v7DQ=;
+        b=lgY4xXWpmmQOhr8YV6oR9h71pDgxTAssL6W71+XHVF+mLhs2LpJeGwOuKn3XsYR1Fi
+         puEza44Gax1Fh0fKafXggj3SNShQ0j4kITI2wgKmVWyG1YRGrfsYhTYP35yX3MJmXMFw
+         LQYekNIpbR2EKiD/vv2Ev43W/r9NcKxlqArE/QBS00FnCG93GkESo5OYZeXrJInTiqlM
+         ZF2zDEBnMQaGj2lh5GhDIo36zTqbtrI84/AIBhjLiazYLM0L8hKIOwRhBZUCvrcdw8Zc
+         lJKTkeiIIVC5lEtRJ+d0nkSVF/YeulYTRPFusXHO4F7b3AeoUjSzQi0ZhKwToh9UtBy9
+         1V+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=/bdM1NqaydFzDkBemJdxPyOP5AmlzWemc5iTR2nbowM=;
-        b=eRUoKxTlJWYNdRJg7yfULHeNWBf/4mfZAShkQylP9puaeu1hkjvepS9mMS5SRIpgli
-         ashE+wTxHQR8dWEJiuV83XoNAO5HEiX/J2nZvlvSHWCGBr+J+XiH8ozQtuUQz2ySFZiM
-         Hr/Fg9ImXIJxk4ZNEy/UFgWb888HEVtHpp06TIv17T9GaiZqAlY0PUrfRmdh68wRi/JM
-         L6/XRNjFUgECzYVla4cjov9e6G8HLNZZsczo6maUPHXuRyXsijF2p3mQR0qzDQbjK9+t
-         S3NwuXlxIpG4ir5ZLktvHeTHM0vqLA/pzLkDI/lP4lK+/gA5ybVyNDYZJkbuWv+nWSQz
-         v1bw==
-X-Gm-Message-State: AOPr4FUjK8Fy5ucQFnIBRuck9Etq+IrCVKYBPhBu4/cSiqEUI0O3X1Lz4M+e3xJrUkGv/iUxrrjAgnPNjKSkBA==
-X-Received: by 10.107.47.37 with SMTP id j37mr4183392ioo.168.1462987943341;
- Wed, 11 May 2016 10:32:23 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Wed, 11 May 2016 10:32:23 -0700 (PDT)
-In-Reply-To: <CACsJy8CCAan9ALxULPFeGSU7wsfwbrywRWFr4Hsjx3=PGwosLA@mail.gmail.com>
-X-Google-Sender-Auth: fyKjXHe7TcfW4G1oCBzGs7t6q3Q
+         :message-id:subject:from:to:cc;
+        bh=0cn5zngTFmzkqwz3P65OhyDJHQrFvfeob//J410v7DQ=;
+        b=X6d0mTYXhYwOklt2sTyk6b1R4PBRMayq/BNNc+8AraFv26WPL4DKKsANGbJh7Bsnid
+         5WmrJSBkUTVSggxDaoY/EFA7EGZ4LLvEo5Ed8+fEifHLDDaDxmwqQxU9ory/0qey1UOi
+         AVuwVGv0wJFDOdyHvtqxKsoqdSLmUsB4rJWzwIkp26KBmnE+NjiND3kwhSpQGpb+UtK6
+         qLW3tPLyMOlAxqxHy4iAmIaZ8xYw4FOK3aD+DcD/jWxRw6JUWAQiGhvgbgiQFy6SlGSd
+         fzztUW920L597rziV1tf1bEObNe5BtBGiMBPoIk/F7v6Y7pJzwQEqlGxPkTINjTGEHTE
+         hzrQ==
+X-Gm-Message-State: AOPr4FXAH9OKVNfadNJWHzynsFB36p7I/gyI8S6EK+DB3ZUv7s4bYL40MQtjTgAVe0iGYsVg8BCI8jII6sACvQ==
+X-Received: by 10.107.132.66 with SMTP id g63mr4729288iod.34.1462988444605;
+ Wed, 11 May 2016 10:40:44 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Wed, 11 May 2016 10:40:44 -0700 (PDT)
+In-Reply-To: <d783290cabe601ee8623044482b2992fb7936534.1462955446.git.johannes.schindelin@gmx.de>
+X-Google-Sender-Auth: N2zidKkGHlPxCM1TbU7k8k4jkN0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294357>
 
-On Wed, May 11, 2016 at 9:34 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, May 11, 2016 at 11:43 AM, Eric Sunshine <sunshine@sunshineco.=
-com> wrote:
->> On Wed, Apr 13, 2016 at 9:15 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
-c Duy <pclouds@gmail.com> wrote:
->>> +       if (is_directory(dst.buf)) {
->>> +               const char *sep =3D strrchr(wt->path, '/');
->>
->> Does this need to take Windows into account?
+On Wed, May 11, 2016 at 4:42 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> This patch makes perf-lib.sh more robust so that it can run correctly
+> even inside a worktree. For example, it assumed that $GIT_DIR/objects is
+> the objects directory (which is not the case for worktrees) and it used
+> the commondir file verbatim, even if it contained a relative path.
 >
-> wt->path comes from $GIT_DIR/worktrees/xxx/gitdir, which normally use=
-s
-> forward slashes, so we should be safe. We already rely on forward
-> slashes in get_linked_worktree()
+> Furthermore, the setup code expected `git rev-parse --git-dir` to spit
+> out a relative path, which is also not true for worktrees. Let's just
+> change the code to accept both relative and absolute paths, by avoiding
+> the `cd` into the copied working directory.
 >
->> Perhaps git_find_last_dir_sep()?
->
-> But this is probably a good thing to do anyway, to be more robust in
-> future. But it could confuse the reader later on why it's necessary
-> when backward slashes can't exist in wt->path. I don't know. Maybe
-> just have a comment that backward slashes can't never appear here?
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+> @@ -80,22 +80,22 @@ test_perf_create_repo_from () {
+> -       source_git=$source/$(cd "$source" && git rev-parse --git-dir)
+> +       source_git="$(cd "$source" && git rev-parse --git-dir)"
+> +       objects_dir="$(cd "$source" && git rev-parse --git-path objects)"
 
-As this path is read from a file git itself creates, and if we know
-that it will always contain forward slashes, then I agree that it
-could be potentially confusing to later readers to see
-git_find_last_dir_sep(). So, keeping it as-is seems correct.
+Would it be out of the scope of this patch to simplify these by using -C?
 
-Not sure if it needs a comment. I reviewed this rather quickly since
-(I think) you plan on re-rolling it and I'm far behind on my reviews.
-Consequently, I didn't check the existing code, and reviewed only
-within the context of the patch itself. If the end result is that it's
-clear from reading the code that it will always contain forward
-slashes, then a comment would be redundant. You could perhaps mention
-in the commit message that the slash will always be forward, which
-should satisfy future reviewers and readers of the code once its in
-the tree.
-
-> There is also a potential problem with find_worktree_by_path(). I was
-> counting on real_path() to normalize paths and could simply do
-> strcmp_icase (or its new name, fspathcmp). But real_path() does not
-> seem to convert unify slashes. I will need to have a closer look at
-> this. Hopefully prefix_filename() already makes sure everything uses
-> forward slashes. Or maybe we could improve fspathcmp to see '/' and
-> '\' the same thing on Windows.
-
-If we look at fspathcmp() as a function which performs whatever magic
-is needed to make comparisons work on a platform/filesystem, then it
-might indeed be reasonable to enhance it to recognize '/' and '\' as
-equivalent (with possible caveats for Windows corner cases).
+    source_git=$(git -C "$source" rev-parse --git-dir)
