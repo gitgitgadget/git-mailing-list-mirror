@@ -1,85 +1,84 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 2/3] perf: make the tests work in worktrees
-Date: Wed, 11 May 2016 13:40:44 -0400
-Message-ID: <CAPig+cR=MeXZXA-Xdr-7A4nxfNvBrOy2ZtmzJOLHq5YGFiuNyA@mail.gmail.com>
-References: <cover.1462894344.git.johannes.schindelin@gmx.de>
-	<cover.1462955446.git.johannes.schindelin@gmx.de>
-	<d783290cabe601ee8623044482b2992fb7936534.1462955446.git.johannes.schindelin@gmx.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 3/7] submodule-config: keep labels around
+Date: Wed, 11 May 2016 10:41:01 -0700
+Message-ID: <CAGZ79kYSxccNLvJ-=UghabQ_MG73jRSabVy5rgfNo-A6Fjz_yQ@mail.gmail.com>
+References: <1462928397-1708-1-git-send-email-sbeller@google.com>
+	<1462928397-1708-4-git-send-email-sbeller@google.com>
+	<xmqqh9e5l7id.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 11 19:40:50 2016
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 11 19:41:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0Y7t-0004Qy-I1
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 19:40:49 +0200
+	id 1b0Y8C-0004oR-Pb
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 19:41:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752309AbcEKRkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 13:40:46 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:36816 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751637AbcEKRkp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 13:40:45 -0400
-Received: by mail-io0-f193.google.com with SMTP id k129so7015015iof.3
-        for <git@vger.kernel.org>; Wed, 11 May 2016 10:40:45 -0700 (PDT)
+	id S1752346AbcEKRlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 13:41:04 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:35812 "EHLO
+	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751651AbcEKRlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 13:41:03 -0400
+Received: by mail-io0-f176.google.com with SMTP id d62so63797131iof.2
+        for <git@vger.kernel.org>; Wed, 11 May 2016 10:41:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=0cn5zngTFmzkqwz3P65OhyDJHQrFvfeob//J410v7DQ=;
-        b=lgY4xXWpmmQOhr8YV6oR9h71pDgxTAssL6W71+XHVF+mLhs2LpJeGwOuKn3XsYR1Fi
-         puEza44Gax1Fh0fKafXggj3SNShQ0j4kITI2wgKmVWyG1YRGrfsYhTYP35yX3MJmXMFw
-         LQYekNIpbR2EKiD/vv2Ev43W/r9NcKxlqArE/QBS00FnCG93GkESo5OYZeXrJInTiqlM
-         ZF2zDEBnMQaGj2lh5GhDIo36zTqbtrI84/AIBhjLiazYLM0L8hKIOwRhBZUCvrcdw8Zc
-         lJKTkeiIIVC5lEtRJ+d0nkSVF/YeulYTRPFusXHO4F7b3AeoUjSzQi0ZhKwToh9UtBy9
-         1V+Q==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=u+vO9tiXibQAyn6WD/+57XrHM27SF6CkuSxC5F45B40=;
+        b=msZSxBGMSFPeYIrnBU/J+ZkA1/RyzDVOYIzA+x+nlOH+Rv/RuiEebWqwYiyOg17dgN
+         umHGz3xrazrscDVdlQZZQVZY8RJ9NuDsbKSYb87NRzlqRbqY5AkvbYTSOotYIGt+RqXZ
+         ZG/Gn96Bwgp8alYBXF5n2JRAFmVf2mEinwDQ2jM5ZI4KQ9fCA2jmxWjce/DLMZ/XjiqE
+         9syGUBxau0X7aIqCN7JiLOcsOgGJsZhg7TxdPeQB0LrOqkX4/An8Z73FqJ7R62Zz6rWV
+         zyR6yJdF+dR7YNYRU5thaJtTL+xoPPi0JEoYXeLjlChjnt4BXCd9K7Ft504lWdcr0NNK
+         Dk9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=0cn5zngTFmzkqwz3P65OhyDJHQrFvfeob//J410v7DQ=;
-        b=X6d0mTYXhYwOklt2sTyk6b1R4PBRMayq/BNNc+8AraFv26WPL4DKKsANGbJh7Bsnid
-         5WmrJSBkUTVSggxDaoY/EFA7EGZ4LLvEo5Ed8+fEifHLDDaDxmwqQxU9ory/0qey1UOi
-         AVuwVGv0wJFDOdyHvtqxKsoqdSLmUsB4rJWzwIkp26KBmnE+NjiND3kwhSpQGpb+UtK6
-         qLW3tPLyMOlAxqxHy4iAmIaZ8xYw4FOK3aD+DcD/jWxRw6JUWAQiGhvgbgiQFy6SlGSd
-         fzztUW920L597rziV1tf1bEObNe5BtBGiMBPoIk/F7v6Y7pJzwQEqlGxPkTINjTGEHTE
-         hzrQ==
-X-Gm-Message-State: AOPr4FXAH9OKVNfadNJWHzynsFB36p7I/gyI8S6EK+DB3ZUv7s4bYL40MQtjTgAVe0iGYsVg8BCI8jII6sACvQ==
-X-Received: by 10.107.132.66 with SMTP id g63mr4729288iod.34.1462988444605;
- Wed, 11 May 2016 10:40:44 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Wed, 11 May 2016 10:40:44 -0700 (PDT)
-In-Reply-To: <d783290cabe601ee8623044482b2992fb7936534.1462955446.git.johannes.schindelin@gmx.de>
-X-Google-Sender-Auth: N2zidKkGHlPxCM1TbU7k8k4jkN0
+        bh=u+vO9tiXibQAyn6WD/+57XrHM27SF6CkuSxC5F45B40=;
+        b=dQBkWUqFnQkgsHQdADI+vEq8THny+MksiAsCxGlh677LyiQWbPLmfz461KzjHvuziU
+         4qEvUveTSvKmQbAIT01nHXxRYuMwoZD7D7n2V45R86HWo4UFRoDmxMT+9iBtbw6iOoqx
+         jZ4rXOma5hao6GvaemhIoxdvPoo524dTIMUksXHuuDoUpKbATkNuGEU6zQcvN3oCals/
+         APRCr1qbhtI9d4Plao+l70mcEOv/jpxauT9z49c1vC6GbXhs11yG8JMmp7Zxsn0pBvt1
+         0cvo9SYYU0FnincCqszElG0hsEdDQ+VCOpMS7lqnI6ZySmyUk+gz6NAeqUAmXJusP37b
+         Wh5A==
+X-Gm-Message-State: AOPr4FWaZrrMWr1tiSriBzL5sxgTamd2ixc896fV7bWqdVhM2RCkwrNTXbohs4y9WPyiogHfYkyUaazqgdgxcF9X
+X-Received: by 10.36.14.71 with SMTP id 68mr5617513ite.98.1462988461774; Wed,
+ 11 May 2016 10:41:01 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Wed, 11 May 2016 10:41:01 -0700 (PDT)
+In-Reply-To: <xmqqh9e5l7id.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294358>
 
-On Wed, May 11, 2016 at 4:42 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> This patch makes perf-lib.sh more robust so that it can run correctly
-> even inside a worktree. For example, it assumed that $GIT_DIR/objects is
-> the objects directory (which is not the case for worktrees) and it used
-> the commondir file verbatim, even if it contained a relative path.
+On Tue, May 10, 2016 at 6:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Furthermore, the setup code expected `git rev-parse --git-dir` to spit
-> out a relative path, which is also not true for worktrees. Let's just
-> change the code to accept both relative and absolute paths, by avoiding
-> the `cd` into the copied working directory.
+>> @@ -199,6 +203,7 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
+>>       submodule->update_strategy.command = NULL;
+>>       submodule->fetch_recurse = RECURSE_SUBMODULES_NONE;
+>>       submodule->ignore = NULL;
+>> +     submodule->labels = NULL;
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-> @@ -80,22 +80,22 @@ test_perf_create_repo_from () {
-> -       source_git=$source/$(cd "$source" && git rev-parse --git-dir)
-> +       source_git="$(cd "$source" && git rev-parse --git-dir)"
-> +       objects_dir="$(cd "$source" && git rev-parse --git-path objects)"
+> Hmph, is there a reason to do this, instead of embedding an instance
+> of "struct string_list" inside submodule structure?
+>
+> I am not yet claiming that embedding is better.  Just wondering if
+> it makes it easier to handle initialization as seen in the hunk
+> below, and also _clear() procedure.
 
-Would it be out of the scope of this patch to simplify these by using -C?
-
-    source_git=$(git -C "$source" rev-parse --git-dir)
+Thanks for pointing out that alternative.  That looks so much
+better in this patch. Let's see how the follow up patches develop.
+As we'd not check != NULL first, but check against the count of the
+string list. (I expect no problems down that road though).
