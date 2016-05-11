@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 58/94] builtin/apply: make parse_ignorewhitespace_option() return -1 instead of die()ing
-Date: Wed, 11 May 2016 15:17:09 +0200
-Message-ID: <20160511131745.2914-59-chriscool@tuxfamily.org>
+Subject: [PATCH v2 62/94] builtin/apply: move check_apply_state() to apply.c
+Date: Wed, 11 May 2016 15:17:13 +0200
+Message-ID: <20160511131745.2914-63-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -15,51 +15,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 15:20:38 2016
+X-From: git-owner@vger.kernel.org Wed May 11 15:20:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U42-0003kW-Ak
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:20:34 +0200
+	id 1b0U4D-00040Q-G2
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:20:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932304AbcEKNU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:20:29 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36444 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932299AbcEKNU1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:20:27 -0400
-Received: by mail-wm0-f68.google.com with SMTP id w143so9352151wmw.3
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:20:26 -0700 (PDT)
+	id S932309AbcEKNUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 09:20:38 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36534 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932299AbcEKNUg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:20:36 -0400
+Received: by mail-wm0-f67.google.com with SMTP id w143so9352887wmw.3
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Z5M9JpRkO8wl+5753/8BKn4/+rPgOlEujw5E9c4XCUo=;
-        b=JkI8X5y7PnWrMuoBl3yRK9HiN6QK6tBDtXZ77t+ru+cH+uV8k8le6LGVfLFzJ8T37u
-         fYq9Dsujmt1pkxcuhmdTBx0nBLBF6VQMOIZAClt4xziOQpWM3fJ4PoEXLFKcaJ3catmY
-         1xn3GVO252ThfJq+e5IXdBtnntg4Oc28agSuc1aQrALy0cxW5cWehY1jv3JHvRVXEJ0e
-         qpG3flEk3VAEQhaf3Yc/jiYcIpQWhVX5ILDQyShxmOnCo/XuLtBnBUrF8gurDMneWvni
-         PJZOqxTx6JMCdLdugpw/1H3dwqi9gYhMPcX9UgWoIa7DB8CB8Y4VKMgwln2tp60KIsk+
-         wjMA==
+        bh=h9gdAK7CBxZjmxG1ZOH4aNf12+JV196ttiqAt3gXjPE=;
+        b=JtVCnTaMW+2wY+9drc6LK8+mqBVlgXSTNSP0oEFTk2qY+Zl68v1T0SIJq7CiuUGxrD
+         eSdpzrvWLqL2iQOgI9OsE2IjHt+wmCJjemXV/adSP0SJCGBTQL12erFoZB3dmX6mPRKh
+         kYDDmfMGmHQm2/dVw23To2Jv+2xtDaLR+2rw6e8jNkzOxCtfxF1Zl7RnlOuvLYUloQ24
+         ME554j74gxa/719Hfii63erT3wWTS0U3gg42kL+CkC+IrpUukxxSNKuzOXN9O/J+s7xR
+         fr87tP2dR0tL/4/f+nSN4IUYGbtKgVohb0NNpbYyREFQHTm8E8q73iTWN7TkHBiNc3oY
+         5yuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Z5M9JpRkO8wl+5753/8BKn4/+rPgOlEujw5E9c4XCUo=;
-        b=jpHXIuRxc1zlqe2VmlyPf2iPNvOr/xGFzgTMahjFiT0ZGiEXIDDiW0AXTZ6IfAvw/k
-         tZkDEKUPnbXaW8pMsdzxjQ3sy4xhdjbO0viehmvVjomu3tBB0VPERwnS9D+cKoaTx4kb
-         TJjmL+oSEXqaciwIXPpbFwA90CzGShiar5Dlk6/ufXCN46cYE7IfRBeO4vS1kpRjZ+8v
-         8xSS4kv3j9p8ww6h/FyfWteIRrK1QeXYsm7Pp55nMc85ZweIEYgomOa3TTmhFJy3muUx
-         UtK5D7IHv2rRVEarGJ1Z6/pUCz/cY/EU1Y46Lte2xGdSLr23iFlNC2KOnZ56beqe8OSs
-         /y5Q==
-X-Gm-Message-State: AOPr4FURDxGYCK4B+oh0W+1FWb5JRzT24eEL0ZBGzfXke0ElpQlDwJ51Q7XtGntOEbIFiQ==
-X-Received: by 10.28.35.201 with SMTP id j192mr96020wmj.18.1462972825736;
-        Wed, 11 May 2016 06:20:25 -0700 (PDT)
+        bh=h9gdAK7CBxZjmxG1ZOH4aNf12+JV196ttiqAt3gXjPE=;
+        b=e3oqugquAFTg/cleHwvg6FmLvv3iSofz8Zk4nduWpuLDnpTHEaYvA7UehWBu9cEX0Y
+         oSNzcDGv1lkbN5W/TECZPAO8hHDWpFKGwvCWu5JMUX/cJ60wQxuGRRUk9AwL5IP7+tFL
+         yLTgD9zp3OzgFeaw1sGcogrtOnBWjRN1e7WVBsuzKupqzK1ofpYOQQxkOLd2OFAt7anR
+         PNS0xtBYn/mMTm2uSS3KZ4OIXHlBQTvDdIkCevCoXsyjvpQWTIHOgKyViVzHE7sVQYzQ
+         KJDPjtUVH362mL16PzfrXdbsbG+ux8a4LFEpBFSsBZZAHMdAzG1q9aJvw5rlHQIo5ycd
+         ogDA==
+X-Gm-Message-State: AOPr4FWQ5RFjvpy/9pPc6btJDLcB8TKQV0CHjwiwb7VMzJpfxtI7bRT8ldeebhWWD/xfpA==
+X-Received: by 10.194.6.164 with SMTP id c4mr4240191wja.133.1462972834837;
+        Wed, 11 May 2016 06:20:34 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.20.23
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.20.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:20:24 -0700 (PDT)
+        Wed, 11 May 2016 06:20:34 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -67,60 +67,107 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294283>
 
-To libify `git apply` functionality we have to signal errors to the
-caller instead of die()ing.
+To libify `git apply` functionality we must make check_apply_state()
+usable outside "builtin/apply.c".
 
-To do that in a compatible manner with the rest of the error handling
-in "builtin/apply.c", parse_ignorewhitespace_option() should return
--1 using error() instead of calling die().
+Let's do that by moving it into "apply.c".
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ apply.c         | 29 +++++++++++++++++++++++++++++
+ apply.h         |  1 +
+ builtin/apply.c | 29 -----------------------------
+ 3 files changed, 30 insertions(+), 29 deletions(-)
 
+diff --git a/apply.c b/apply.c
+index 1e2b802..2128594 100644
+--- a/apply.c
++++ b/apply.c
+@@ -82,3 +82,32 @@ int init_apply_state(struct apply_state *state,
+ 	return 0;
+ }
+ 
++int check_apply_state(struct apply_state *state, int force_apply)
++{
++	int is_not_gitdir = !startup_info->have_repository;
++
++	if (state->apply_with_reject && state->threeway)
++		return error("--reject and --3way cannot be used together.");
++	if (state->cached && state->threeway)
++		return error("--cached and --3way cannot be used together.");
++	if (state->threeway) {
++		if (is_not_gitdir)
++			return error(_("--3way outside a repository"));
++		state->check_index = 1;
++	}
++	if (state->apply_with_reject)
++		state->apply = state->apply_verbosely = 1;
++	if (!force_apply && (state->diffstat || state->numstat || state->summary || state->check || state->fake_ancestor))
++		state->apply = 0;
++	if (state->check_index && is_not_gitdir)
++		return error(_("--index outside a repository"));
++	if (state->cached) {
++		if (is_not_gitdir)
++			return error(_("--cached outside a repository"));
++		state->check_index = 1;
++	}
++	if (state->check_index)
++		state->unsafe_paths = 0;
++	return 0;
++}
++
+diff --git a/apply.h b/apply.h
+index f3b2ae4..5266612 100644
+--- a/apply.h
++++ b/apply.h
+@@ -120,5 +120,6 @@ extern int parse_ignorewhitespace_option(struct apply_state *state,
+ extern int init_apply_state(struct apply_state *state,
+ 			    const char *prefix,
+ 			    struct lock_file *lock_file);
++extern int check_apply_state(struct apply_state *state, int force_apply);
+ 
+ #endif
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 657e986..a7ebbbb 100644
+index 2b3d10b..ae16f99 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -57,20 +57,20 @@ static int parse_whitespace_option(struct apply_state *state, const char *option
- 	return error(_("unrecognized whitespace option '%s'"), option);
+@@ -4540,35 +4540,6 @@ static int option_parse_directory(const struct option *opt,
+ 	return 0;
  }
  
--static void parse_ignorewhitespace_option(struct apply_state *state,
--					  const char *option)
-+static int parse_ignorewhitespace_option(struct apply_state *state,
-+					 const char *option)
- {
- 	if (!option || !strcmp(option, "no") ||
- 	    !strcmp(option, "false") || !strcmp(option, "never") ||
- 	    !strcmp(option, "none")) {
- 		state->ws_ignore_action = ignore_ws_none;
--		return;
-+		return 0;
- 	}
- 	if (!strcmp(option, "change")) {
- 		state->ws_ignore_action = ignore_ws_change;
--		return;
-+		return 0;
- 	}
--	die(_("unrecognized whitespace ignore option '%s'"), option);
-+	return error(_("unrecognized whitespace ignore option '%s'"), option);
- }
- 
- static void set_default_whitespace_mode(struct apply_state *state)
-@@ -4615,8 +4615,8 @@ static void init_apply_state(struct apply_state *state,
- 	git_apply_config();
- 	if (apply_default_whitespace && parse_whitespace_option(state, apply_default_whitespace))
- 		exit(1);
--	if (apply_default_ignorewhitespace)
--		parse_ignorewhitespace_option(state, apply_default_ignorewhitespace);
-+	if (apply_default_ignorewhitespace && parse_ignorewhitespace_option(state, apply_default_ignorewhitespace))
-+		exit(1);
- }
- 
- static void check_apply_state(struct apply_state *state, int force_apply)
+-static int check_apply_state(struct apply_state *state, int force_apply)
+-{
+-	int is_not_gitdir = !startup_info->have_repository;
+-
+-	if (state->apply_with_reject && state->threeway)
+-		return error("--reject and --3way cannot be used together.");
+-	if (state->cached && state->threeway)
+-		return error("--cached and --3way cannot be used together.");
+-	if (state->threeway) {
+-		if (is_not_gitdir)
+-			return error(_("--3way outside a repository"));
+-		state->check_index = 1;
+-	}
+-	if (state->apply_with_reject)
+-		state->apply = state->apply_verbosely = 1;
+-	if (!force_apply && (state->diffstat || state->numstat || state->summary || state->check || state->fake_ancestor))
+-		state->apply = 0;
+-	if (state->check_index && is_not_gitdir)
+-		return error(_("--index outside a repository"));
+-	if (state->cached) {
+-		if (is_not_gitdir)
+-			return error(_("--cached outside a repository"));
+-		state->check_index = 1;
+-	}
+-	if (state->check_index)
+-		state->unsafe_paths = 0;
+-	return 0;
+-}
+-
+ static int apply_all_patches(struct apply_state *state,
+ 			     int argc,
+ 			     const char **argv,
 -- 
 2.8.2.490.g3dabe57
