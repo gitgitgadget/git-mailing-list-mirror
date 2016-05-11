@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 91/94] apply: change error_routine when be_silent is set
-Date: Wed, 11 May 2016 15:17:42 +0200
-Message-ID: <20160511131745.2914-92-chriscool@tuxfamily.org>
+Subject: [PATCH v2 88/94] apply: don't print on stdout when be_silent is set
+Date: Wed, 11 May 2016 15:17:39 +0200
+Message-ID: <20160511131745.2914-89-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -15,51 +15,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 15:21:50 2016
+X-From: git-owner@vger.kernel.org Wed May 11 15:21:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U5C-00056i-Iv
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:21:46 +0200
+	id 1b0U5K-0005C3-Qn
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:21:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932420AbcEKNVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:21:41 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36233 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932402AbcEKNVg (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932412AbcEKNVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 11 May 2016 09:21:36 -0400
-Received: by mail-wm0-f66.google.com with SMTP id w143so9358756wmw.3
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:21:36 -0700 (PDT)
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34992 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932400AbcEKNVa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:21:30 -0400
+Received: by mail-wm0-f66.google.com with SMTP id e201so9415579wme.2
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:21:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zS8A6ngWPolpBP9R6apFCEJ0lHnDC3kaLaCCCDZ7tsM=;
-        b=pMnRrW8Gy5OWKBt2DAEN91/JO0ANuTaJmGyGPc7cF9tdkR/uUwNqXhyHwQlAMzblto
-         uscTqNhw04Gr7FVz8JVEwAbwd1ofQmcrH7PMTKxwkmjTjHCuyHFpti0LdEL9qcEGn3AP
-         j7OjMJGbcI9cqhur5JvPFmsmSVwszqaog7JlP6zVGA65IWCIqEKgvOOWeaCKhvf7vsWE
-         WB5Nnu9UG1CVNn1WpD7ksP02vSXBzUZo1sFfDvnyfcRNNbNTgC0hid01cGQbeHyD+jBd
-         T0MXlV3XqQFGSdalqbZK9kaxihM/PhrGlNHQ+qNiNkPg+dV8z1H4U0n1VtUmH3uV7wUs
-         GOVg==
+        bh=DORYMvybbiDl2HI1TFaUv0RSfE3LmcrmgrSu0gEJFuQ=;
+        b=XFOvGzvLRciUNe4yThdOHNoauouI7h2lD6GG8dcsKDQtooKP4LTwH6SPDhQA2LXvjp
+         1e5lKP0mWUEh9cWHJB8FKkdFwzeJKrKolbB210bWWetrRwHorgv0aVAkFfM6n5adzukz
+         zbmYzMS4z7pLeOlKZRKz8TpcvZktWY/5MrGDVA+0aNNUhude4+oBWb1955qF15zvdl6O
+         DcOCruuElBK9DaqpNICgB2DyqX/QSg5xfAGbieLpvq3qvGHiGFS7gmTH9hxI26SZ4/5J
+         VIUctDD29jPvAppbFc0OKDsEcNi0tkgp0MxsT5FVq7u8ovDBHXYCXBRM/QUNJekkslyW
+         jCKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=zS8A6ngWPolpBP9R6apFCEJ0lHnDC3kaLaCCCDZ7tsM=;
-        b=ORyz7Eea/kUGpCG5F653QhRmbWCh7AHpYGgwW+mFsNsSyYGXybIVbuCn8sDbnE93pK
-         xFzwBX9rzVGRiUqxunmIBeXkfkMP3cHVTra9K8/ZPUaOFjXytIARYnXHvYPE3DSR0lG+
-         6Xx14eIBNa2fKiIcHDqRSIKdlV1iA6FHkmLl3cWrIsLK3OR3mE7Pp/Gm5XPuRrY8PtGB
-         6HSwSdyPygqiwqSYN3BHz+wM+2R+K8W4A4klqMpoyHKTu5uMQTeXCEA7dxirZ4PNrdou
-         iROTJ57ESVzyc0nUdQs4eBPfSlAXVTKFGDUEzRGzYT/VS2v84FSdHrWVbUGkwuksgVVz
-         sEBA==
-X-Gm-Message-State: AOPr4FVutykEZ5vQzSSBZCFsNMaTa0UFA2//tq2yM/yf/yONG+mkDNG5wewX8l2W9L/5gg==
-X-Received: by 10.28.145.73 with SMTP id t70mr19359wmd.97.1462972895615;
-        Wed, 11 May 2016 06:21:35 -0700 (PDT)
+        bh=DORYMvybbiDl2HI1TFaUv0RSfE3LmcrmgrSu0gEJFuQ=;
+        b=DC9VRt186IfVxvSTOVim98RNTIW6+ozaquCKZmdh1c/0OwI3pDQL+1vCfzh5Jejgvj
+         JGAN0ZDiv47u4Xkn21enEe37vwahjnJgFqHpgMkbTfbPeElM9IP6mY3Q4pIbpQrm9rPN
+         UWjxE3//1Izh9hLrLO2s8tlXigjQFWIuDrzEKQroqEoB2qImx+BtRLcmgWU+yy5ZUiBp
+         0e6DOKtNdj2ynM+s8fVAflv7ck0Jsqv41Y6/cVUHxU8Eoo2kcvyPg0lnqlduvsJq/dP/
+         rYqfI0C8DANBaXdKVkerTfpLspp/oHH1/MJ6Snz9BhJiiLp7DSffO+LE/pxqOMLEk4ze
+         e4bw==
+X-Gm-Message-State: AOPr4FVLPOfqdxfK238g85MCJcDTnlI+UBryl5BXwGrzEkYS7CYu/a3ySIBo2ff3crwGAA==
+X-Received: by 10.28.127.81 with SMTP id a78mr94030wmd.34.1462972889228;
+        Wed, 11 May 2016 06:21:29 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.21.33
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.21.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:21:34 -0700 (PDT)
+        Wed, 11 May 2016 06:21:28 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -67,95 +67,33 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294304>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- apply.c | 29 +++++++++++++++++++++++++----
- apply.h |  3 +++
- 2 files changed, 28 insertions(+), 4 deletions(-)
+ apply.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index e0fdd1d..1dafc82 100644
+index 5459ee1..e0fdd1d 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -100,6 +100,11 @@ int init_apply_state(struct apply_state *state,
- 	return 0;
- }
- 
-+static void mute_routine(const char *bla, va_list params)
-+{
-+	/* do nothing */
-+}
-+
- int check_apply_state(struct apply_state *state, int force_apply)
- {
- 	int is_not_gitdir = !startup_info->have_repository;
-@@ -132,6 +137,13 @@ int check_apply_state(struct apply_state *state, int force_apply)
- 	if (state->be_silent && state->apply_verbosely)
- 		return error(_("incompatible internal 'be_silent' and 'apply_verbosely' flags"));
- 
-+	if (state->be_silent) {
-+		state->saved_error_routine = get_error_routine();
-+		state->saved_warn_routine = get_warn_routine();
-+		set_error_routine(mute_routine);
-+		set_warn_routine(mute_routine);
-+	}
-+
- 	return 0;
- }
- 
-@@ -4750,6 +4762,7 @@ int apply_all_patches(struct apply_state *state,
- {
- 	int i;
- 	int res;
-+	int retval = -1;
- 	int errs = 0;
- 	int read_stdin = 1;
- 
-@@ -4822,17 +4835,25 @@ int apply_all_patches(struct apply_state *state,
- 	if (state->update_index) {
- 		res = write_locked_index(&the_index, state->lock_file, COMMIT_LOCK);
- 		state->newfd = -1;
--		if (res)
--			return error(_("Unable to write new index file"));
-+		if (res) {
-+			error(_("Unable to write new index file"));
-+			goto rollback_end;
-+		}
+@@ -4669,13 +4669,13 @@ static int apply_patch(struct apply_state *state,
+ 		goto end;
  	}
  
--	return !!errs;
-+	retval = !!errs;
+-	if (state->diffstat)
++	if (state->diffstat && !state->be_silent)
+ 		stat_patch_list(state, list);
  
- rollback_end:
- 	if (state->newfd >= 0) {
- 		rollback_lock_file(state->lock_file);
- 		state->newfd = -1;
- 	}
--	return -1;
-+
-+	if (state->be_silent) {
-+		set_error_routine(state->saved_error_routine);
-+		set_warn_routine(state->saved_warn_routine);
-+	}
-+
-+	return retval;
- }
+-	if (state->numstat)
++	if (state->numstat && !state->be_silent)
+ 		numstat_patch_list(state, list);
  
-diff --git a/apply.h b/apply.h
-index 2dd3706..029b79f 100644
---- a/apply.h
-+++ b/apply.h
-@@ -46,6 +46,9 @@ struct apply_state {
- 	int apply_verbosely;
- 	int be_silent;
+-	if (state->summary)
++	if (state->summary && !state->be_silent)
+ 		summary_patch_list(list);
  
-+	void (*saved_error_routine)(const char *err, va_list params);
-+	void (*saved_warn_routine)(const char *warn, va_list params);
-+
- 	/* --cached updates only the cache without ever touching the working tree. */
- 	int cached;
- 
+ end:
 -- 
 2.8.2.490.g3dabe57
