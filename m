@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 31/94] builtin/apply: move 'has_include' global into 'struct apply_state'
-Date: Wed, 11 May 2016 15:16:42 +0200
-Message-ID: <20160511131745.2914-32-chriscool@tuxfamily.org>
+Subject: [PATCH v2 35/94] builtin/apply: move 'whitespace_error' global into 'struct apply_state'
+Date: Wed, 11 May 2016 15:16:46 +0200
+Message-ID: <20160511131745.2914-36-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -15,51 +15,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 15:19:45 2016
+X-From: git-owner@vger.kernel.org Wed May 11 15:19:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U3F-0002jQ-2u
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:19:45 +0200
+	id 1b0U3L-0002jQ-Hx
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:19:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752139AbcEKNTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:19:36 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35724 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751889AbcEKNTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:19:30 -0400
-Received: by mail-wm0-f66.google.com with SMTP id e201so9404424wme.2
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:19:29 -0700 (PDT)
+	id S932202AbcEKNTk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 09:19:40 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34825 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751889AbcEKNTj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:19:39 -0400
+Received: by mail-wm0-f65.google.com with SMTP id e201so9405379wme.2
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:19:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=tgo/pp9ENEb1xcu0eLjy8BjywsE7mhLEiHN/Kjp7LcU=;
-        b=UU0FcKz1Bs/S4D9XMiVvW5f/hSv+IZLJU1k12483s5gW1vjF2PCo28dqhIRYZ7qmGe
-         Osrdi1k9ZDfZo3N/fbrL20gOnjzrnju3yY/sOxvc7j1zO43sg2g27b6HIe1PNWzK4LBe
-         bxLDCSUTTFptlq4uyNqYXtP2Zjv6hAmFnL3bvTq8wHVI8eiD+rdk4Y45w80u5TF+BkN3
-         7EEnVqrb7WlkAGE9HEHJC5zJ4Y5+tTcbkFIM4eRT6XoKR5qyTAFMSNvQy5J0bzKxfsDk
-         snERzTPPKM3EGJ35BJCprG9Yq0oc4ii38Hb1tQE4AzEyefKOto5e7o228o8hDH+E89Ki
-         yrXg==
+        bh=Rz/nOFtbOL2RAlWWFBIbiQUebq0qmGh8tmvugra6+BM=;
+        b=HDAmnTpNM9nQfEq9Is3oVFyymQ8HUtj2wuBLB/RWC+4P/D6cN6xFeglTMygzcexGaB
+         HsJCanlvM3SPS9Ya7tJhboibzPGG4+I5ADk1B+Zh+IBAYa2V5Jlm5oawaPd29gsxAc7h
+         4TeCsF1BDfNCzXxi9kHPBF/I5QbvedQiwRnsATepr4VkzjTmp50RdPxWpRRQ0Os22S7L
+         rhKNmHaGZQXkgS6u+i2ZScEzUO8H30i5jtHm15ZlOmw3KizPQI758Jk5Mg+5m34gStyw
+         tQJPQwkS2lKI1SBEwWJ3BDcdok4F7unrLGgn/6DldqbGHD9lNWldfCmFfUDZKbKtayVP
+         yspw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=tgo/pp9ENEb1xcu0eLjy8BjywsE7mhLEiHN/Kjp7LcU=;
-        b=T5L8fv5B6uEFOGGPAKFg8wBLbXn1cLTjTY2zRgKIa2FjopEtTvwZU0bRFlS75THfnq
-         zep6u2k1wMVQfmjjH72YOkPsRMih9qNzmmKhSprVkVsEAjSIC9Yux9cLBTtr9yAcZZto
-         d0tLHoaYbW6EbAp2SsIwijwN4VKtmboI0C/Y3Nr1yn6EkvC4Yw8flrKfhp8WvAmx7FCA
-         Gox12weuG53UohHQPfnF2pRPOk0kxHCP3K5h8xAnsHnZEXjWXWqrzt22Yd06Si193cd1
-         /6AgILtpp5R0iIbsq6E+SmiDtVCMFXI9Ka2iRJugOeTYu/o9HxZF52jmcWnx31fnuXhy
-         4/4Q==
-X-Gm-Message-State: AOPr4FXH9FsvZudTxzGol+eYOxPrRbiAXUUJKDSs3p7zSEmMLy2kg8N3kkxOGTW4HtCkuA==
-X-Received: by 10.28.230.137 with SMTP id e9mr53594wmi.90.1462972769173;
-        Wed, 11 May 2016 06:19:29 -0700 (PDT)
+        bh=Rz/nOFtbOL2RAlWWFBIbiQUebq0qmGh8tmvugra6+BM=;
+        b=mlRd/+ly/cfYp1pT9haDHVTuIpn60wRwwrHsf3rQiYrEPL6NApibtz31qU+Y3BlV6+
+         tQH0tr9GHAAsJSdFXZkE5P/u/uecpJjyYKjbU6DaU2OpmvzysbmcRQPiav7hn18TBi5h
+         0oSJHDGleexpsCPkytNKwL733L+M1BF94FjGm8HgfBNPZp9P3d1RjwCAI6n0shdg8VJs
+         1AauYE4tCVzhEGlaahM41ZJC8XMadKDNbWF4mDCkAiMA89ydtVQfTSWmM6zY0g8Q4nbL
+         7kzvV2m6vQpeJKgq2ZlzibGYN0YtHpwDfL4KgFSww9zGSqWdM0hfQInLNxaAb8yCQgt5
+         XjGw==
+X-Gm-Message-State: AOPr4FX3NPxM9F8rP+MjojBIKIcDYhrwdobdNUPgcSD/CkaTp15Cn80gyzOqVziICbMxXQ==
+X-Received: by 10.28.57.137 with SMTP id g131mr4552895wma.5.1462972777782;
+        Wed, 11 May 2016 06:19:37 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.19.27
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.19.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:19:28 -0700 (PDT)
+        Wed, 11 May 2016 06:19:36 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -67,55 +67,107 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294266>
 
-To libify the apply functionality the 'has_include' variable should
+To libify the apply functionality the 'whitespace_error' variable should
 not be static and global to the file. Let's move it into
 'struct apply_state'.
 
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/apply.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 14bbcc2..f2ee8bf 100644
+index 6b3540f..1684f25 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -46,6 +46,7 @@ struct apply_state {
- 	const char *fake_ancestor;
- 	const char *patch_input_file;
- 	struct string_list limit_by_name;
-+	int has_include;
+@@ -66,6 +66,8 @@ struct apply_state {
+ 	int p_value;
+ 	int p_value_known;
+ 	unsigned int p_context;
++
++	int whitespace_error;
+ };
  
- 	/*
- 	 *  --check turns on checking that the working tree matches the
-@@ -1968,7 +1969,6 @@ static void prefix_patch(struct apply_state *state, struct patch *p)
-  * include/exclude
-  */
+ static int newfd = -1;
+@@ -81,7 +83,6 @@ static enum ws_error_action {
+ 	die_on_ws_error,
+ 	correct_ws_error
+ } ws_error_action = warn_on_ws_error;
+-static int whitespace_error;
+ static int squelch_whitespace_errors = 5;
+ static int applied_after_fixing_ws;
  
--static int has_include;
- static void add_name_limit(struct apply_state *state,
- 			   const char *name,
- 			   int exclude)
-@@ -2004,7 +2004,7 @@ static int use_patch(struct apply_state *state, struct patch *p)
- 	 * not used.  Otherwise, we saw bunch of exclude rules (or none)
- 	 * and such a path is used.
- 	 */
--	return !has_include;
-+	return !state->has_include;
- }
+@@ -1603,9 +1604,9 @@ static void record_ws_error(struct apply_state *state,
+ 	if (!result)
+ 		return;
  
+-	whitespace_error++;
++	state->whitespace_error++;
+ 	if (squelch_whitespace_errors &&
+-	    squelch_whitespace_errors < whitespace_error)
++	    squelch_whitespace_errors < state->whitespace_error)
+ 		return;
  
-@@ -4541,7 +4541,7 @@ static int option_parse_include(const struct option *opt,
- {
- 	struct apply_state *state = opt->value;
- 	add_name_limit(state, arg, 0);
--	has_include = 1;
-+	state->has_include = 1;
- 	return 0;
- }
+ 	err = whitespace_error_string(result);
+@@ -2862,7 +2863,7 @@ static int apply_one_fragment(struct apply_state *state,
  
+ 			start = newlines.len;
+ 			if (first != '+' ||
+-			    !whitespace_error ||
++			    !state->whitespace_error ||
+ 			    ws_error_action != correct_ws_error) {
+ 				strbuf_add(&newlines, patch + 1, plen);
+ 			}
+@@ -4535,7 +4536,7 @@ static int apply_patch(struct apply_state *state,
+ 	if (!list && !skipped_patch)
+ 		die(_("unrecognized input"));
+ 
+-	if (whitespace_error && (ws_error_action == die_on_ws_error))
++	if (state->whitespace_error && (ws_error_action == die_on_ws_error))
+ 		state->apply = 0;
+ 
+ 	state->update_index = state->check_index && state->apply;
+@@ -4792,11 +4793,11 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 	set_default_whitespace_mode(&state, whitespace_option);
+ 	if (read_stdin)
+ 		errs |= apply_patch(&state, 0, "<stdin>", options);
+-	if (whitespace_error) {
++	if (state.whitespace_error) {
+ 		if (squelch_whitespace_errors &&
+-		    squelch_whitespace_errors < whitespace_error) {
++		    squelch_whitespace_errors < state.whitespace_error) {
+ 			int squelched =
+-				whitespace_error - squelch_whitespace_errors;
++				state.whitespace_error - squelch_whitespace_errors;
+ 			warning(Q_("squelched %d whitespace error",
+ 				   "squelched %d whitespace errors",
+ 				   squelched),
+@@ -4805,18 +4806,18 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 		if (ws_error_action == die_on_ws_error)
+ 			die(Q_("%d line adds whitespace errors.",
+ 			       "%d lines add whitespace errors.",
+-			       whitespace_error),
+-			    whitespace_error);
++			       state.whitespace_error),
++			    state.whitespace_error);
+ 		if (applied_after_fixing_ws && state.apply)
+ 			warning("%d line%s applied after"
+ 				" fixing whitespace errors.",
+ 				applied_after_fixing_ws,
+ 				applied_after_fixing_ws == 1 ? "" : "s");
+-		else if (whitespace_error)
++		else if (state.whitespace_error)
+ 			warning(Q_("%d line adds whitespace errors.",
+ 				   "%d lines add whitespace errors.",
+-				   whitespace_error),
+-				whitespace_error);
++				   state.whitespace_error),
++				state.whitespace_error);
+ 	}
+ 
+ 	if (state.update_index) {
 -- 
 2.8.2.490.g3dabe57
