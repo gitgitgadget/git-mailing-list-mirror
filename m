@@ -1,76 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] am: plug FILE * leak in split_mail_conv()
-Date: Wed, 11 May 2016 16:35:46 -0700
-Message-ID: <20160511233546.13090-2-gitster@pobox.com>
-References: <20160511233546.13090-1-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 01:36:01 2016
+Subject: Re: [PATCH 0/7] submodule groups
+Date: Wed, 11 May 2016 16:39:08 -0700
+Message-ID: <xmqqlh3gi2qr.fsf@gitster.mtv.corp.google.com>
+References: <1462928397-1708-1-git-send-email-sbeller@google.com>
+	<xmqq4ma5l526.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kY3S6SmJOMQ7RAKw0yTvicY=Y1VRRGdm5uK9+Eb7W+Ykg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu May 12 01:39:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0dfc-0002C7-23
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 01:36:00 +0200
+	id 1b0dim-00060w-DK
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 01:39:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932123AbcEKXfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 19:35:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65530 "EHLO
+	id S932065AbcEKXjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 19:39:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55684 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932113AbcEKXfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 19:35:51 -0400
+	with ESMTP id S1751830AbcEKXjM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 19:39:12 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DECA81A598;
-	Wed, 11 May 2016 19:35:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=tPRm
-	VXPU8LJ8tiNOJB5QpGwxjP8=; b=irs7I10Kej9b9dHxXSmRCjNrKCx1kw4kA704
-	2Zryc5g17nc6zxzRD3JJFTGrBkqqlcGNK3vgJOson7JU5yiNECxANAjgcUQMgrWq
-	jhyolGrj7NXnxCU7SlfBiwH5DH8if5tsD4ONHsrorgXIom00pKo9LhVmLWvtDgoG
-	ytJEKyM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=UofBsK
-	zITam00TXSbV0/E8v0L/uy84JlRyTdZEzAphNqNkPZETlja20EwaHWW4/pdBSf7R
-	RdovP9zGdV8GZLNokG1cpK800g1U83uJAzwucdTYuWfiPcWLRyhIXkIkD24dKxCv
-	WLHSrwumz/+eTsiFcYBlQmBfObIwNRwtiIn08=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D64291A597;
-	Wed, 11 May 2016 19:35:50 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DB7CD1BEEE;
+	Wed, 11 May 2016 19:39:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gtdkZ1YlblDXGJhr+V+T4WaY7eA=; b=SqEeEg
+	gI9/lvrXTjU2WOPEyt5HNuMlKMkX/GtIfbDjldOxyizetaxmn8AdplU0G3fkc/ST
+	yPT4B6HwM3gLtZHMWEtWOfSikC02uNzmszrNCAlMzAkX3hL9w/fPkKi67yeGCM/z
+	plsQn7F67sVD7z1VbKrphloNjoE0xDht1S2/k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fVhXgEIu+9/cBZboTpV0hBrs1A50L88e
+	wXVFcdz4qqAuVxn/4NX6/tfBIYIqZhWnp7mUo56YieJapj8tWWiB2KJ5C63YRR3y
+	82ZTT22w1bSDx0DrfTwGUnJV3sjs2DAnGKUWPBG5Zp/w9/W3VnHTDtgrncHRTQLm
+	5EWEQN6Vq0k=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D358B1BEEB;
+	Wed, 11 May 2016 19:39:10 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 586801A596;
-	Wed, 11 May 2016 19:35:50 -0400 (EDT)
-X-Mailer: git-send-email 2.8.2-679-g91c6421
-In-Reply-To: <20160511233546.13090-1-gitster@pobox.com>
-X-Pobox-Relay-ID: 183EC23E-17D1-11E6-9C02-D05A70183E34-77302942!pb-smtp2.pobox.com
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4B52E1BEEA;
+	Wed, 11 May 2016 19:39:10 -0400 (EDT)
+In-Reply-To: <CAGZ79kY3S6SmJOMQ7RAKw0yTvicY=Y1VRRGdm5uK9+Eb7W+Ykg@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 11 May 2016 16:07:07 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8F6C06A0-17D1-11E6-A008-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294378>
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/am.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Stefan Beller <sbeller@google.com> writes:
 
-diff --git a/builtin/am.c b/builtin/am.c
-index f1a84c6..a373928 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -761,9 +761,11 @@ static int split_mail_conv(mail_conv_fn fn, struct am_state *state,
- 		mail = mkpath("%s/%0*d", state->dir, state->prec, i + 1);
- 
- 		out = fopen(mail, "w");
--		if (!out)
-+		if (!out) {
-+			fclose(in);
- 			return error(_("could not open '%s' for writing: %s"),
- 					mail, strerror(errno));
-+		}
- 
- 		ret = fn(out, in, keep_cr);
- 
--- 
-2.8.2-679-g91c6421
+> So I wonder if we rather want to extend the pathspec magic to
+> include properties of blobs (i.e. submodules):
+>
+>     git <command> . :(sub-label:label-sub0) :(exclude)*0
+>
+> would look much more powerful too me. Properties of blobs
+> may also be interesting for otherwise. Imagine looking for huge files
+> (in a bare repo, so you have to use Git and not your shell tools):
+>
+>   git ls-files . :(file-size:>1024k)
+
+I somehow do not think this is a way normal people (read: end users)
+would want to interact with Git.  Pathspec is about "paths" and
+various ways to match them.  It is not about contents that happens
+to be currently named by that path.  Don't tie types or sizes to it.
