@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 10/94] builtin/apply: move 'unidiff_zero' global into 'struct apply_state'
-Date: Wed, 11 May 2016 15:16:21 +0200
-Message-ID: <20160511131745.2914-11-chriscool@tuxfamily.org>
+Subject: [PATCH v2 13/94] builtin/apply: move 'apply_in_reverse' global into 'struct apply_state'
+Date: Wed, 11 May 2016 15:16:24 +0200
+Message-ID: <20160511131745.2914-14-chriscool@tuxfamily.org>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -15,51 +15,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 15:18:57 2016
+X-From: git-owner@vger.kernel.org Wed May 11 15:19:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U2R-0001rb-7w
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:18:55 +0200
+	id 1b0U2a-00021U-2C
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:19:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751923AbcEKNSt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:18:49 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36268 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751501AbcEKNSr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:18:47 -0400
-Received: by mail-wm0-f68.google.com with SMTP id w143so9342763wmw.3
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:18:47 -0700 (PDT)
+	id S1752110AbcEKNS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 09:18:57 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35340 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752058AbcEKNSy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:18:54 -0400
+Received: by mail-wm0-f66.google.com with SMTP id e201so9401036wme.2
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:18:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NC+rBVhVemn0A9Zl9sVOKVtpyKOBZH06NRvjsb9j3ko=;
-        b=RX7VQPBUtonzWtdDAqT/Sw8Co/AS9Ee/a1PFkqEgHHWwgUi4adIPdTn32csWfd2iNr
-         45jK/J0SR2GSNN+i9DNH1mWZJLTN6sysCJ+8vrPDnwKcRsdcXc3LG5fspymtDB5ldUSz
-         EYZTJlrrvPrqjlbaAR4z3Rx8V87TvKQdZAIC/0saSBU/m1FT0ert13bzX1Nmi8UnJ0r/
-         y/K5KsUtstG1s0kZ8omrNsU/7ARzvVmvfUzfRz/AuR8s61Lp81kMEdWVpBNk4jTA9ykg
-         dtGZzcwj7pW8ru5oTOd1XyYjsmPOat8ZIOn6CFYiydSG0aCkFxLsUclt01pp89bnmK5f
-         tTmg==
+        bh=3a3cUsC8xZceUoxEfG/+RpNm9Z9UGr8aImth+iUrfPc=;
+        b=amc0NhFx931Pw4hwn0ee7psAbYBYNPiMtaFcD7K9Rl9p5tDNuL/f8vQWS+Bi/Cfqc8
+         bwttIWErxEv24neAG5YOQ2jWn3AY2eJ16DQZl3KAtS7ZMzVYshkFaKjDgrHhRFValeU7
+         2n0nRUfrJ8oCddbD+VasU+cgmrLJP7HVygOeJFgmJPt/KTxATmP+kDL6nLJ5qH+RCtmh
+         R/s4KW/KKOMPZtugmR/hdZYu5cBhn1pyJf5oA4egYXy+1H7pjCVy5vpuGRzBqh/Ihn0z
+         WQd5OrLETWkALuNokZ5gOkufhSNBZ0ajXbZlaLkmodUXFgeT6Yqzemmv7SlQUAkcl09E
+         OuWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=NC+rBVhVemn0A9Zl9sVOKVtpyKOBZH06NRvjsb9j3ko=;
-        b=ePfHHDaH/JKTbv6W3FHdM3IduNk9tA9JezA89jfbPYuQfLXSdfP3jirz/9h2d7y4oy
-         J8qkjQvpYbCVkM9XTmvChMEywVyrm/K9R1o/x9O1XM8g5653HJidybvUUGWptSISdYbK
-         TUx3lp9iAuMSJ4nak0FP/Rb7323GKDp8Ok6eI47ppLuTviEjLa31kBC3TmD0fjD1lHvZ
-         h/DPq9DoDZVPfjiY7oawmVbRSRNSiT8y2YlIPVcyrFcZMm/0ZBbQSuW+P0XJiwG5TdlG
-         AtAxCpUkrAul+fnfLpFi39pNREDhZAjFQAkYk6tyohFGKblw+wfOl8katjQ0N0OFpjC9
-         KtwA==
-X-Gm-Message-State: AOPr4FUyrQta4r4viVK5z6RNaXpuj25WazEotkeQ9i56idAhTOuJKuY2biKGmpoZMgARoQ==
-X-Received: by 10.28.35.201 with SMTP id j192mr87638wmj.18.1462972726236;
-        Wed, 11 May 2016 06:18:46 -0700 (PDT)
+        bh=3a3cUsC8xZceUoxEfG/+RpNm9Z9UGr8aImth+iUrfPc=;
+        b=X/tBykRwB8sCSXIXCY8HeUE6+Oseo+vO3LrbpdtH9KRGcYmKundlWUE3To/cVhF8gb
+         5Yweo4APl2V0D70B5mwGLihHbFcJWTa9eIX7xPKCM8XRKO8mwbCfXMv0udxIB7mAmAv+
+         c0VnoXe4gA0uWWjnoRS7jGd5z13gnrLKp9+litmFOvb8Acrk8zj2Im2GjzQFXOqdV8SR
+         xXXVPhvLcogpPvTPY79L6wthy+8YwVQSAioWgJw+cWhuGWGZamOlm4ZzylgcTSXaMbyf
+         UCqdeFXm5mMrkWgESPoO8dNrWH3PwQWnztreaF1blA2PWbl2qoeWQIcS9cbL8dFA7xlP
+         kcPg==
+X-Gm-Message-State: AOPr4FVfLWErUo3Y6X2IzoK4BjR398TgQvzMqzHbZWe31a2mFZwyE+cc46n5Aym8XaDV0A==
+X-Received: by 10.28.48.203 with SMTP id w194mr4517028wmw.67.1462972732578;
+        Wed, 11 May 2016 06:18:52 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.18.44
+        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.18.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:18:45 -0700 (PDT)
+        Wed, 11 May 2016 06:18:51 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.2.490.g3dabe57
 In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
@@ -67,181 +67,195 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294256>
 
-To libify the apply functionality the 'unidiff_zero' variable should
+To libify the apply functionality the 'apply_in_reverse' variable should
 not be static and global to the file. Let's move it into
 'struct apply_state'.
 
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 42 ++++++++++++++++++++++++------------------
- 1 file changed, 24 insertions(+), 18 deletions(-)
+ builtin/apply.c | 51 ++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 32 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index e133033..44ae95d 100644
+index 5d8f410..73cef9b 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -24,6 +24,8 @@
- struct apply_state {
+@@ -25,6 +25,8 @@ struct apply_state {
  	const char *prefix;
  	int prefix_length;
+ 
++	int apply_in_reverse;
 +
-+	int unidiff_zero;
- };
- 
- /*
-@@ -37,7 +39,6 @@ struct apply_state {
-  */
- static int newfd = -1;
- 
--static int unidiff_zero;
- static int state_p_value = 1;
- static int p_value_known;
- static int check_index;
-@@ -2694,7 +2695,8 @@ static void update_image(struct image *img,
-  * postimage) for the hunk.  Find lines that match "preimage" in "img" and
-  * replace the part of "img" with "postimage" text.
-  */
--static int apply_one_fragment(struct image *img, struct fragment *frag,
-+static int apply_one_fragment(struct apply_state *state,
-+			      struct image *img, struct fragment *frag,
- 			      int inaccurate_eof, unsigned ws_rule,
- 			      int nth_fragment)
- {
-@@ -2836,7 +2838,7 @@ static int apply_one_fragment(struct image *img, struct fragment *frag,
- 	 * without leading context must match at the beginning.
- 	 */
- 	match_beginning = (!frag->oldpos ||
--			   (frag->oldpos == 1 && !unidiff_zero));
-+			   (frag->oldpos == 1 && !state->unidiff_zero));
- 
  	/*
- 	 * A hunk without trailing lines must match at the end.
-@@ -2844,7 +2846,7 @@ static int apply_one_fragment(struct image *img, struct fragment *frag,
- 	 * from the lack of trailing lines if the patch was generated
- 	 * with unidiff without any context.
- 	 */
--	match_end = !unidiff_zero && !trailing;
-+	match_end = !state->unidiff_zero && !trailing;
+ 	 *  --check turns on checking that the working tree matches the
+ 	 *    files that are being modified, but doesn't apply the patch
+@@ -53,7 +55,6 @@ static int diffstat;
+ static int numstat;
+ static int summary;
+ static int apply = 1;
+-static int apply_in_reverse;
+ static int apply_with_reject;
+ static int apply_verbosely;
+ static int allow_overlap;
+@@ -1560,8 +1561,11 @@ static void check_whitespace(const char *line, int len, unsigned ws_rule)
+  * between a "---" that is part of a patch, and a "---" that starts
+  * the next patch is to look at the line counts..
+  */
+-static int parse_fragment(const char *line, unsigned long size,
+-			  struct patch *patch, struct fragment *fragment)
++static int parse_fragment(struct apply_state *state,
++			  const char *line,
++			  unsigned long size,
++			  struct patch *patch,
++			  struct fragment *fragment)
+ {
+ 	int added, deleted;
+ 	int len = linelen(line, size), offset;
+@@ -1601,12 +1605,12 @@ static int parse_fragment(const char *line, unsigned long size,
+ 			if (!deleted && !added)
+ 				leading++;
+ 			trailing++;
+-			if (!apply_in_reverse &&
++			if (!state->apply_in_reverse &&
+ 			    ws_error_action == correct_ws_error)
+ 				check_whitespace(line, len, patch->ws_rule);
+ 			break;
+ 		case '-':
+-			if (apply_in_reverse &&
++			if (state->apply_in_reverse &&
+ 			    ws_error_action != nowarn_ws_error)
+ 				check_whitespace(line, len, patch->ws_rule);
+ 			deleted++;
+@@ -1614,7 +1618,7 @@ static int parse_fragment(const char *line, unsigned long size,
+ 			trailing = 0;
+ 			break;
+ 		case '+':
+-			if (!apply_in_reverse &&
++			if (!state->apply_in_reverse &&
+ 			    ws_error_action != nowarn_ws_error)
+ 				check_whitespace(line, len, patch->ws_rule);
+ 			added++;
+@@ -1670,7 +1674,10 @@ static int parse_fragment(const char *line, unsigned long size,
+  * The (fragment->patch, fragment->size) pair points into the memory given
+  * by the caller, not a copy, when we return.
+  */
+-static int parse_single_patch(const char *line, unsigned long size, struct patch *patch)
++static int parse_single_patch(struct apply_state *state,
++			      const char *line,
++			      unsigned long size,
++			      struct patch *patch)
+ {
+ 	unsigned long offset = 0;
+ 	unsigned long oldlines = 0, newlines = 0, context = 0;
+@@ -1682,7 +1689,7 @@ static int parse_single_patch(const char *line, unsigned long size, struct patch
  
- 	pos = frag->newpos ? (frag->newpos - 1) : 0;
- 	preimage.buf = oldlines;
-@@ -3067,7 +3069,7 @@ static int apply_binary(struct image *img, struct patch *patch)
- 	return 0;
+ 		fragment = xcalloc(1, sizeof(*fragment));
+ 		fragment->linenr = state_linenr;
+-		len = parse_fragment(line, size, patch, fragment);
++		len = parse_fragment(state, line, size, patch, fragment);
+ 		if (len <= 0)
+ 			die(_("corrupt patch at line %d"), state_linenr);
+ 		fragment->patch = line;
+@@ -2012,8 +2019,10 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
+ 						 ? patch->new_name
+ 						 : patch->old_name);
+ 
+-	patchsize = parse_single_patch(buffer + offset + hdrsize,
+-				       size - offset - hdrsize, patch);
++	patchsize = parse_single_patch(state,
++				       buffer + offset + hdrsize,
++				       size - offset - hdrsize,
++				       patch);
+ 
+ 	if (!patchsize) {
+ 		static const char git_binary[] = "GIT binary patch\n";
+@@ -2745,7 +2754,7 @@ static int apply_one_fragment(struct apply_state *state,
+ 		if (len < size && patch[len] == '\\')
+ 			plen--;
+ 		first = *patch;
+-		if (apply_in_reverse) {
++		if (state->apply_in_reverse) {
+ 			if (first == '-')
+ 				first = '+';
+ 			else if (first == '+')
+@@ -2918,7 +2927,7 @@ static int apply_one_fragment(struct apply_state *state,
+ 
+ 		if (apply_verbosely && applied_pos != pos) {
+ 			int offset = applied_pos - pos;
+-			if (apply_in_reverse)
++			if (state->apply_in_reverse)
+ 				offset = 0 - offset;
+ 			fprintf_ln(stderr,
+ 				   Q_("Hunk #%d succeeded at %d (offset %d line).",
+@@ -2952,7 +2961,9 @@ out:
+ 	return (applied_pos < 0);
  }
  
--static int apply_fragments(struct image *img, struct patch *patch)
-+static int apply_fragments(struct apply_state *state, struct image *img, struct patch *patch)
+-static int apply_binary_fragment(struct image *img, struct patch *patch)
++static int apply_binary_fragment(struct apply_state *state,
++				 struct image *img,
++				 struct patch *patch)
  {
- 	struct fragment *frag = patch->fragments;
+ 	struct fragment *fragment = patch->fragments;
+ 	unsigned long len;
+@@ -2965,7 +2976,7 @@ static int apply_binary_fragment(struct image *img, struct patch *patch)
+ 			     patch->old_name);
+ 
+ 	/* Binary patch is irreversible without the optional second hunk */
+-	if (apply_in_reverse) {
++	if (state->apply_in_reverse) {
+ 		if (!fragment->next)
+ 			return error("cannot reverse-apply a binary patch "
+ 				     "without the reverse hunk to '%s'",
+@@ -2998,7 +3009,9 @@ static int apply_binary_fragment(struct image *img, struct patch *patch)
+  * but the preimage prepared by the caller in "img" is freed here
+  * or in the helper function apply_binary_fragment() this calls.
+  */
+-static int apply_binary(struct image *img, struct patch *patch)
++static int apply_binary(struct apply_state *state,
++			struct image *img,
++			struct patch *patch)
+ {
  	const char *name = patch->old_name ? patch->old_name : patch->new_name;
-@@ -3080,7 +3082,7 @@ static int apply_fragments(struct image *img, struct patch *patch)
+ 	unsigned char sha1[20];
+@@ -3059,7 +3072,7 @@ static int apply_binary(struct image *img, struct patch *patch)
+ 		 * apply the patch data to it, which is stored
+ 		 * in the patch->fragments->{patch,size}.
+ 		 */
+-		if (apply_binary_fragment(img, patch))
++		if (apply_binary_fragment(state, img, patch))
+ 			return error(_("binary patch does not apply to '%s'"),
+ 				     name);
+ 
+@@ -3082,7 +3095,7 @@ static int apply_fragments(struct apply_state *state, struct image *img, struct
+ 	int nth = 0;
+ 
+ 	if (patch->is_binary)
+-		return apply_binary(img, patch);
++		return apply_binary(state, img, patch);
  
  	while (frag) {
  		nth++;
--		if (apply_one_fragment(img, frag, inaccurate_eof, ws_rule, nth)) {
-+		if (apply_one_fragment(state, img, frag, inaccurate_eof, ws_rule, nth)) {
- 			error(_("patch failed: %s:%ld"), name, frag->oldpos);
- 			if (!apply_with_reject)
- 				return -1;
-@@ -3388,8 +3390,11 @@ static int load_current(struct image *image, struct patch *patch)
- 	return 0;
- }
- 
--static int try_threeway(struct image *image, struct patch *patch,
--			struct stat *st, const struct cache_entry *ce)
-+static int try_threeway(struct apply_state *state,
-+			struct image *image,
-+			struct patch *patch,
-+			struct stat *st,
-+			const struct cache_entry *ce)
- {
- 	unsigned char pre_sha1[20], post_sha1[20], our_sha1[20];
- 	struct strbuf buf = STRBUF_INIT;
-@@ -3415,7 +3420,7 @@ static int try_threeway(struct image *image, struct patch *patch,
- 	img = strbuf_detach(&buf, &len);
- 	prepare_image(&tmp_image, img, len, 1);
- 	/* Apply the patch to get the post image */
--	if (apply_fragments(&tmp_image, patch) < 0) {
-+	if (apply_fragments(state, &tmp_image, patch) < 0) {
- 		clear_image(&tmp_image);
- 		return -1;
- 	}
-@@ -3459,7 +3464,8 @@ static int try_threeway(struct image *image, struct patch *patch,
- 	return 0;
- }
- 
--static int apply_data(struct patch *patch, struct stat *st, const struct cache_entry *ce)
-+static int apply_data(struct apply_state *state, struct patch *patch,
-+		      struct stat *st, const struct cache_entry *ce)
- {
- 	struct image image;
- 
-@@ -3467,9 +3473,9 @@ static int apply_data(struct patch *patch, struct stat *st, const struct cache_e
- 		return -1;
- 
- 	if (patch->direct_to_threeway ||
--	    apply_fragments(&image, patch) < 0) {
-+	    apply_fragments(state, &image, patch) < 0) {
- 		/* Note: with --reject, apply_fragments() returns 0 */
--		if (!threeway || try_threeway(&image, patch, st, ce) < 0)
-+		if (!threeway || try_threeway(state, &image, patch, st, ce) < 0)
- 			return -1;
- 	}
- 	patch->result = image.buf;
-@@ -3717,7 +3723,7 @@ static void die_on_unsafe_path(struct patch *patch)
-  * Check and apply the patch in-core; leave the result in patch->result
-  * for the caller to write it out to the final destination.
-  */
--static int check_patch(struct patch *patch)
-+static int check_patch(struct apply_state *state, struct patch *patch)
- {
- 	struct stat st;
- 	const char *old_name = patch->old_name;
-@@ -3816,13 +3822,13 @@ static int check_patch(struct patch *patch)
- 		return error(_("affected file '%s' is beyond a symbolic link"),
- 			     patch->new_name);
- 
--	if (apply_data(patch, &st, ce) < 0)
-+	if (apply_data(state, patch, &st, ce) < 0)
- 		return error(_("%s: patch does not apply"), name);
- 	patch->rejected = 0;
- 	return 0;
- }
- 
--static int check_patch_list(struct patch *patch)
-+static int check_patch_list(struct apply_state *state, struct patch *patch)
- {
- 	int err = 0;
- 
-@@ -3832,7 +3838,7 @@ static int check_patch_list(struct patch *patch)
- 		if (apply_verbosely)
- 			say_patch_name(stderr,
- 				       _("Checking patch %s..."), patch);
--		err |= check_patch(patch);
-+		err |= check_patch(state, patch);
- 		patch = patch->next;
- 	}
- 	return err;
-@@ -4434,7 +4440,7 @@ static int apply_patch(struct apply_state *state,
- 	}
- 
- 	if ((check || apply) &&
--	    check_patch_list(list) < 0 &&
-+	    check_patch_list(state, list) < 0 &&
- 	    !apply_with_reject)
- 		exit(1);
- 
-@@ -4597,7 +4603,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+@@ -4421,7 +4434,7 @@ static int apply_patch(struct apply_state *state,
+ 			free_patch(patch);
+ 			break;
+ 		}
+-		if (apply_in_reverse)
++		if (state->apply_in_reverse)
+ 			reverse_patches(patch);
+ 		if (use_patch(state, patch)) {
+ 			patch_stats(patch);
+@@ -4614,7 +4627,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 		{ OPTION_CALLBACK, 0, "ignore-whitespace", NULL, NULL,
+ 			N_("ignore changes in whitespace when finding context"),
  			PARSE_OPT_NOARG, option_parse_space_change },
- 		OPT_BOOL('R', "reverse", &apply_in_reverse,
+-		OPT_BOOL('R', "reverse", &apply_in_reverse,
++		OPT_BOOL('R', "reverse", &state.apply_in_reverse,
  			N_("apply the patch in reverse")),
--		OPT_BOOL(0, "unidiff-zero", &unidiff_zero,
-+		OPT_BOOL(0, "unidiff-zero", &state.unidiff_zero,
+ 		OPT_BOOL(0, "unidiff-zero", &state.unidiff_zero,
  			N_("don't expect at least one line of context")),
- 		OPT_BOOL(0, "reject", &apply_with_reject,
- 			N_("leave the rejected hunks in corresponding *.rej files")),
 -- 
 2.8.2.490.g3dabe57
