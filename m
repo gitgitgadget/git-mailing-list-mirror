@@ -1,77 +1,103 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] perf: let's disable symlinks on Windows
-Date: Wed, 11 May 2016 10:09:14 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605110857510.4092@virtualbox>
-References: <cover.1462894344.git.johannes.schindelin@gmx.de> <alpine.DEB.2.20.1605101738390.4092@virtualbox> <xmqqoa8dofmu.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v2 0/3] Introduce a perf test for interactive rebase
+Date: Wed, 11 May 2016 10:31:17 +0200 (CEST)
+Message-ID: <cover.1462955446.git.johannes.schindelin@gmx.de>
+References: <cover.1462894344.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 11 10:10:37 2016
+X-From: git-owner@vger.kernel.org Wed May 11 10:32:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0PE5-0004n8-5w
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 10:10:37 +0200
+	id 1b0PZW-0003vK-K5
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 10:32:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751512AbcEKIKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 04:10:33 -0400
-Received: from mout.gmx.net ([212.227.17.21]:54820 "EHLO mout.gmx.net"
+	id S932076AbcEKIcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 04:32:35 -0400
+Received: from mout.gmx.net ([212.227.15.15]:54979 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751308AbcEKIKb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 04:10:31 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0McluX-1bIDBp1EP3-00Hxep; Wed, 11 May 2016 10:10:24
+	id S1751397AbcEKIcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 04:32:31 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MId0S-1b2bQI0fI8-002CtO; Wed, 11 May 2016 10:32:26
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqoa8dofmu.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <cover.1462894344.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:UXxlQSAzpnel21lGIbl/kT3q3solAhm4BwhHuEmMwPiJLeaoWID
- PGh74AIATIpz2KdsCiECbgb1VxyV16AgwAFVD6Qw5vr38ODd8TIGRL2GJV9+zFfl/lH7eLt
- rvnyluyYMYSgxbyJ3S4L+WVgtrzk2s8xlYJuJ3tLp0m+uC9fhLPiKO/NSrt9UqGq0yFMzac
- 1AD9WMPyqigSOe8odFw2g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5/JFhuHEYKc=:8dK2vFJwBv38bh+Zoj7QUi
- m4ABb53DtkPLxh9wZxS97O+7xdNOjEcj/OsW3o7LWLAsR1fWRt0t73TZS2w1UCV0E5xbyu02m
- CoUFpedkoL7AISs3RJTT+rHOrEQv8F9tWEqY5o6Qk8qhPR/K2WcTx0vOKU9OAFrynWYqUP1O7
- YvDDgnnBU4LmYulA+O0ILPwsgzybmjPyAFhzrdYbnaDlvTH3yQ/lEVnjg+JdbLB0VKuAxXVrF
- HkbFFRgJv8TCp1qLULWlj2G5Zy4mrN4LAE0kdeSnF/uolD9RLsPw899SrHOjKEs7GGs5bYi2q
- PABZnkSmQfnGYKrFor51R5WQlPYTG9D/hIC6Uog7esorNkPWZf/jcxFXtto5yjLCwlGOZBJQa
- jlO68SeVDUE8t9xfo/Eyta/b6u1LIoHXWTKVbPRUF2ut/I1Rcroo+1IKsAFN5ueXNoCzT47E+
- PPtyWCP+HjCQtO+1wGfuVo4XW9alOkdgMNdVBg6Pxbzlimq7j9dGJ1fQe6vQ4XdvpsPjHkBqx
- oix8T5dBjXjp3TCYOV6IJpqKxJlwr6xi9W8muyppJWWmc6Apfxwt1PDLsdxg4eGjTOrkwsK+q
- YsXJHNVjaS+oLIDvIKHaQzr8YOq2HwUalipr2BmDcPVSZbiw4tmkfAag8tM2pHrfuBJFFc84F
- tDZ7OvIo78F6VN7LAytKXIP7qFjYRjVybGfDh0BCo3M8rxci1n/PuOTFbixCoXTVaB4esxN+r
- d0pre5yamxjHYQsqL+NVQMkmqceLqFjAYuG1yVFuq+rOnwt+J0OQv7KFPQsd7Lrn+7OP6zdX 
+X-Provags-ID: V03:K0:jcTSMQq30gy7o/MsuoTxTbV6/AZ/N5sFl/IxyK3fz4m9xX0pCKL
+ PlTiUrS7wZh8onnBYjIeWVCgzMxIBfqVLRGmKLVh5Q+706J1BQKGxDKZYPUp3HfS2/fK/Xg
+ t+FwxXHsO4pBO/XDv3dHtGxr/CRg4FQoSZhBk2qedJArgKzi7ks03sQQ3zIWfBnVVY8it2l
+ /0YPjNfk1zuHAXvBjcILA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7FGvhdIo9MA=:FAkyY5ooLf1KREjaHxp2J0
+ fVdGizXe7CSN07kXsGoSekMrq4bh1vINTqeyhFzw54MrqnIzgaLX/miHGfsGVyx71PfK1c/ld
+ RdhbUJMUHSpM2Vp7z9YFKeu3x6fNwegJFmBmBqfHLY/2UQajA6tfx+glrsF5uwWwIdrGY1PGn
+ qmp/hb2t+fd3pn0a09aMSkDUYbySut5iDQpMp/ehZbCRBojIzBWbJsWT0fGaqcjvpq9ADbq5Z
+ wEXm+xNw3rEQORLQkUyOTASJ5jCWOvCAxOKUtYqNQPyBx4bdZcoJu9ASEcE5fVFt8HW5d58xC
+ ZizrLxxvgJtv8RJah7pVUW7Jb2hhzmWqdBDYUrGem0SbT+6ucwpqSlR9s3qp71cXyNjvIQGNU
+ xytKWiFhnddBtATfUxa9f3Hwxw1f+gaLIOc3C0OxRtzxaOo1Gb/glbN7yzwHajpDQ1MRSHtsj
+ ano9fxuc2whETmZBKcFEMa2Xm+IOdRFGzRQLrZAomrnuAbFHPa+1vW7E0DNY5N79Tmf1gwcQC
+ beLtIjelSR39qJNN8E01xr7lfXiEEcIjvsp/F5OwYzKoALFe0V/NWS6wvVW1fG8gvx8bbOQko
+ Rx5gg4t9yYinjPM4DDZPlP6GaG3Yv9itzE7VyydvvEx3k2XpbLonwc5pPj1Wi1B3cZCCbHSIp
+ FGvMfXpqxS28Y+gDxLl3YWQRbYQs/K5SiMKlUk4zw1qOjfsQWFTXKONxwSF9SjuNV7BC5t2mT
+ 7KuCgLlHPfRRlI4F8AApOLVk2CO1dUxUr1iuutRPg5Ug1jyvgbokaYQsiUTsHQKQP8lc4IJa 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294237>
 
-Hi Junio,
+This is the second preparatory patch series for my rebase--helper work
+(i.e. moving parts of the interactive rebase into a builtin).
 
-On Tue, 10 May 2016, Junio C Hamano wrote:
+It simply introduces a perf test (and ensures that it runs in my
+environment) so as to better determine how much the performance changes,
+really.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > In Git for Windows' SDK, Git's source code is always checked out
-> > with symlinks disabled. The reason is that POSIX symlinks have no
-> > accurate equivalent on Windows [*1*]. More precisely, though, it is
-> > not just Git's source code but *all* source code that is checked
-> > out with symlinks disabled: core.symlinks is set to false in the
-> > system-wide gitconfig.
-> >
-> > Since the perf tests are run with the system-wide gitconfig *disabled*,
-> > we have to make sure that the Git repository is initialized correctly
-> > by configuring core.symlinks explicitly.
-> 
-> Is MINGW the right prerequisite to use here, or is SIMLINKS more
-> appropriate?
 
-Oh, you're absolutely correct! It has nothing to do with MINGW itself, of
-course.
+Johannes Schindelin (3):
+  perf: let's disable symlinks when they are not available
+  perf: make the tests work in worktrees
+  Add a perf test for rebase -i
 
-Fixed in v2,
-Dscho
+ t/perf/p3404-rebase-interactive.sh | 31 +++++++++++++++++++++++++++++++
+ t/perf/perf-lib.sh                 | 18 +++++++++++-------
+ 2 files changed, 42 insertions(+), 7 deletions(-)
+ create mode 100755 t/perf/p3404-rebase-interactive.sh
+
+Published-As: https://github.com/dscho/git/releases/tag/perf-rebase-i-v2
+Interdiff vs v1:
+
+ diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+ index e5682f7..cb88b08 100644
+ --- a/t/perf/perf-lib.sh
+ +++ b/t/perf/perf-lib.sh
+ @@ -81,7 +81,7 @@ test_perf_create_repo_from () {
+  	repo="$1"
+  	source="$2"
+  	source_git="$(cd "$source" && git rev-parse --git-dir)"
+ -	objects_dir="$(git rev-parse --git-path objects)"
+ +	objects_dir="$(cd "$source" && git rev-parse --git-path objects)"
+  	mkdir -p "$repo/.git"
+  	(
+  		{ cp -Rl "$objects_dir" "$repo/.git/" 2>/dev/null ||
+ @@ -97,10 +97,10 @@ test_perf_create_repo_from () {
+  		done &&
+  		cd "$repo" &&
+  		git init -q &&
+ -		if test_have_prereq MINGW
+ -		then
+ +		git init -q && {
+ +			test_have_prereq SYMLINKS ||
+  			git config core.symlinks false
+ -		fi &&
+ +		} &&
+  		mv .git/hooks .git/hooks-disabled 2>/dev/null
+  	) || error "failed to copy repository '$source' to '$repo'"
+  }
+
+-- 
+2.8.2.465.gb077790
