@@ -1,105 +1,112 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/7] submodule groups
-Date: Wed, 11 May 2016 16:07:07 -0700
-Message-ID: <CAGZ79kY3S6SmJOMQ7RAKw0yTvicY=Y1VRRGdm5uK9+Eb7W+Ykg@mail.gmail.com>
-References: <1462928397-1708-1-git-send-email-sbeller@google.com>
-	<xmqq4ma5l526.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] rerere: plug memory leaks upon "rerere forget" failure
+Date: Wed, 11 May 2016 16:32:34 -0700
+Message-ID: <xmqqpossi31p.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 12 01:07:27 2016
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 01:32:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0dDv-0002C8-7U
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 01:07:23 +0200
+	id 1b0dcR-00074j-EE
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 01:32:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751769AbcEKXHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 19:07:10 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:36564 "EHLO
-	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751475AbcEKXHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 19:07:08 -0400
-Received: by mail-io0-f177.google.com with SMTP id i75so68775123ioa.3
-        for <git@vger.kernel.org>; Wed, 11 May 2016 16:07:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=5LohdUN4hSgQ7PSN4szjObZTUcWrbkqSS98Z2vzD41U=;
-        b=W5k+303iwI7ECrm7WrusJw0NmFCfPXkEy/09mh4wYxTObvRXf/ORe2KJEKiPp1Luin
-         mdKYJp3uRn9rVIO7T0ypQy0Rs29tXqRP+VCXykNTLzIj4kwxa4IBxZGkcY0q4TXZRN+q
-         xKM4n22CEM/elCmlChai0fIdSyMDQ3w1XV2L6mRnMv4i7zOVKpjFnOJSepK8sxcKiR3U
-         tSbtspv7owH67gI+fZillKQyquWI9tuIoqiH4npRBmRMy07xzuh1Iu6QUJ7wqyUL9Zw5
-         eqWX8zH2R/ZGsj51TMbsZtZbFpiMs4NJDLvpCdNly/7JCO21i4v3twB7Ir8WIgydsV4e
-         LgYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=5LohdUN4hSgQ7PSN4szjObZTUcWrbkqSS98Z2vzD41U=;
-        b=GrKuKKC7r0q+PtV2b8d0DQ1bIReqKr1fIamfnd45m7kbkw3ESuMBl3nY0e9O5BuEGj
-         339tlfjiRvc3DFLJIukBshOZ72vqnbRsebgmf8TPut3DWLdNV5QYQ/rCsI75TMpOBXi1
-         Ed5YoC4lBk1kHMS45iZtbGR8+jsuKfx1jLnFgu9LNLaLcYubFnZZrIyOhlw3JpKmnHEG
-         b9LJR/G7td4vCDQxMxg74eSA0CwNjvCCZZp+SVS03P03Z/Tl3RckHppf5cdVIcmPbIWr
-         Ivhv+oSHJJ7FbiXsa7OUKuBFO90dKdVI7/QES46QRom0CvzPUMB8GscH7cQ4OjngN/Hq
-         j0/w==
-X-Gm-Message-State: AOPr4FV9faWVQR3OQbo6Z8802ipTti1gllVIPy/Z3jZ8OyZ04SyTo4D3WKoXTLa/8vDdeAORkAEHUVLDLtPbFFY7
-X-Received: by 10.107.161.68 with SMTP id k65mr5990976ioe.110.1463008027910;
- Wed, 11 May 2016 16:07:07 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Wed, 11 May 2016 16:07:07 -0700 (PDT)
-In-Reply-To: <xmqq4ma5l526.fsf@gitster.mtv.corp.google.com>
+	id S1751611AbcEKXcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 19:32:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62346 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751129AbcEKXci (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 19:32:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1BF551A546;
+	Wed, 11 May 2016 19:32:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=b
+	mxSfFHPbplENa6zG/bQex5v1Nk=; b=k4BrBfXl0+eLS/EDwmE+SAt/u6d+q0d0M
+	5zSZd8MDOvHWWQ0Loi0VY7IhZEqQePeSW4MWRpJiitIXvmroWjs536Yxmnw1X8lR
+	DptF4/kTqIOiFzwPtfqboLB/9F5CydKuoJfLPkmcQzTXjfR4IK0dn5woXQZV1UdY
+	/nnvscLopI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=WJb
+	C8Lhpx/56+Yo6MVZdmyG681D+Rcfvp7uICvU214bGnAMWuPmtt5zpa3WS47jPQWz
+	DLsi9KBoYs8HdhdGp8kJgltkibopVtpCuNUTVV1vlLpUK4lF3rpCc2DNqR9VWFVY
+	A6u3C/TQHmMJr8KwE3Ohlfo/MjH9tXEExDpePZWM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 13A041A545;
+	Wed, 11 May 2016 19:32:37 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 88F741A544;
+	Wed, 11 May 2016 19:32:36 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A4BAEEE6-17D0-11E6-8623-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294375>
 
-On Tue, May 10, 2016 at 7:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> I started from scratch as I think there were some sharp edges in the design.
->> My thinking shifted from "submodule groups" towards "actually it's just an
->> enhanced pathspec, called submodulespec".
->
-> Except for minor things I mentioned separately, overall, this seems
-> quite cleanly done.
 
-I disagree (now).
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ rerere.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-I started documenting the <submodulespec> as an extension of
-the pathspecs. While I thought the logical OR was the right way to go,
-I think it is wrong now. So there is stuff in tests like:
-
-    git submodule--helper matches-submodulespec sub0 ./.
-./:(exclude)*0 *label-sub0
-
-which should test if the first argument (sub0) matches the submodulespec
-which follows. And it matches sub0 by matching the label, although
-we told it to ignore anything ending in 0
-
-So I wonder if we rather want to extend the pathspec magic to
-include properties of blobs (i.e. submodules):
-
-    git <command> . :(sub-label:label-sub0) :(exclude)*0
-
-would look much more powerful too me. Properties of blobs
-may also be interesting for otherwise. Imagine looking for huge files
-(in a bare repo, so you have to use Git and not your shell tools):
-
-  git ls-files . :(file-size:>1024k)
-
->
-> Looks very promising.
->
-
-Thanks for the encouragement!
-
-Thanks,
-Stefan
+diff --git a/rerere.c b/rerere.c
+index 1693866..a804171 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -1052,8 +1052,8 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
+ 		handle_cache(path, sha1, rerere_path(id, "thisimage"));
+ 		if (read_mmfile(&cur, rerere_path(id, "thisimage"))) {
+ 			free(cur.ptr);
+-			return error("Failed to update conflicted state in '%s'",
+-				     path);
++			error("Failed to update conflicted state in '%s'", path);
++			goto fail_exit;
+ 		}
+ 		cleanly_resolved = !try_merge(id, path, &cur, &result);
+ 		free(result.ptr);
+@@ -1062,14 +1062,19 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
+ 			break;
+ 	}
+ 
+-	if (id->collection->status_nr <= id->variant)
+-		return error("no remembered resolution for '%s'", path);
++	if (id->collection->status_nr <= id->variant) {
++		error("no remembered resolution for '%s'", path);
++		goto fail_exit;
++	}
+ 
+ 	filename = rerere_path(id, "postimage");
+-	if (unlink(filename))
+-		return (errno == ENOENT
+-			? error("no remembered resolution for %s", path)
+-			: error("cannot unlink %s: %s", filename, strerror(errno)));
++	if (unlink(filename)) {
++		if (errno == ENOENT)
++			error("no remembered resolution for %s", path);
++		else
++			error("cannot unlink %s: %s", filename, strerror(errno));
++		goto fail_exit;
++	};
+ 
+ 	/*
+ 	 * Update the preimage so that the user can resolve the
+@@ -1088,6 +1093,10 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
+ 	item->util = id;
+ 	fprintf(stderr, "Forgot resolution for %s\n", path);
+ 	return 0;
++
++fail_exit:
++	free(id);
++	return -1;
+ }
+ 
+ int rerere_forget(struct pathspec *pathspec)
+-- 
+2.8.2-679-g91c6421
