@@ -1,211 +1,139 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 15/94] builtin/apply: move 'apply_verbosely' global into 'struct apply_state'
-Date: Wed, 11 May 2016 15:16:26 +0200
-Message-ID: <20160511131745.2914-16-chriscool@tuxfamily.org>
-References: <20160511131745.2914-1-chriscool@tuxfamily.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: syntax error in git-rebase while running t34* tests
+Date: Wed, 11 May 2016 15:28:35 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605111518470.4092@virtualbox>
+References: <CALR6jEiF9Ooi1f0O3KG0wYmN0KRWBQTNarXx79-wBD2E-8q2jA@mail.gmail.com> <xmqq60ulpw1s.fsf@gitster.mtv.corp.google.com> <20160510204758.GB19958@sigill.intra.peff.net> <xmqqy47hmy6z.fsf@gitster.mtv.corp.google.com>
+ <20160510210709.GD19958@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jeff King <peff@peff.net>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 15:26:38 2016
+	Armin Kunaschik <megabreit@googlemail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 11 15:29:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0U9q-00025r-Lc
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:26:35 +0200
+	id 1b0UCD-00055B-M8
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:29:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932085AbcEKNTB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:19:01 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35396 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752084AbcEKNS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:18:57 -0400
-Received: by mail-wm0-f67.google.com with SMTP id e201so9401451wme.2
-        for <git@vger.kernel.org>; Wed, 11 May 2016 06:18:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9/CjSG3u7M+24Jkpy0LTtiTDxLyFo7Qq/AUpsiiXBQg=;
-        b=lTiv5egg3JeV3HIEZIvJCq8GsfghMgYl9IKQzGlqAyK31ORbyY0eaNCDfH+FITSPNn
-         6QW8BLEj77A+ITBHBa1tzTViG2jB1OpFPb2Qk1yM+zIYtV9PnyReRorzaSDvJsOaINLW
-         GpYLp5DzuT7z+JsKr/K7uHg/q9p+amWWackascw8doS3GTxGCc8fNTgQIgdyIKGfp+0m
-         VpTCB3YVmOn6lMxS5THYORPWihGa1ohIxLQJVrwUdrm84np0nQk/ZLOW2XHW4ascZzrr
-         7NeHPMH59m+TPyZBUiLwGtYrRxUWDm/FI4DSwFh/x/rqH1CSAJh0VaR4Fq76sGHS+BCT
-         F3xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=9/CjSG3u7M+24Jkpy0LTtiTDxLyFo7Qq/AUpsiiXBQg=;
-        b=ITFxjoBFdVGv6kzRxuXmKMErLlcgBQq+FDTIHDRqmgmIw+5pm43vTFlMAy+fLG6B9x
-         QFqTRY/ClqFqKySlB50SI1foKAUdBEnA0vIPgnNcdlsmV2AVebIi50mBvHHlInnVkApo
-         P7XJvxjkPiGz2B0X3AVauu/0UpqF+GByLYcR9UcKQwrmGfovOmYFQ3iUl05gPCesC2J+
-         ysqZGPr1KmLA8csHDrEPPH7ApDzilqiq3bzmxMqyIwye60VFRI+apDPcYxEpqdl0R/wv
-         ACK49u7jVXlnpiejVcOAolQ6ASJqAcW/U4ShLC3jySMX+H4HYvpGq3FVi0Wv4X408OoN
-         oDzQ==
-X-Gm-Message-State: AOPr4FWEy6dYw+oz89h8q1JYprc0lFgllORJd0tIDsZ2fGVFyc9eJ7kB79vVcbONNgd7DQ==
-X-Received: by 10.194.17.106 with SMTP id n10mr3728086wjd.131.1462972736520;
-        Wed, 11 May 2016 06:18:56 -0700 (PDT)
-Received: from localhost.localdomain ([80.215.130.96])
-        by smtp.gmail.com with ESMTPSA id pm4sm8060791wjb.35.2016.05.11.06.18.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 06:18:55 -0700 (PDT)
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.8.2.490.g3dabe57
-In-Reply-To: <20160511131745.2914-1-chriscool@tuxfamily.org>
+	id S932090AbcEKN26 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2016 09:28:58 -0400
+Received: from mout.gmx.net ([212.227.17.21]:51275 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751632AbcEKN25 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2016 09:28:57 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0Lkwpt-1baeHp11V7-00ajb9; Wed, 11 May 2016 15:28:36
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <20160510210709.GD19958@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:EAi42JVFSLw4qcnCecHZl6uFHm9nVtLTdiuA5skYDCCfAeayz50
+ KWAin943vcmhJ7uhB3+R4l+ilIyMBPV3veO9QVEsNjdchGMAi6MwCYlYXUOaHu3sCXzrpBf
+ Z2dxz5noUDz91XLoaTBXjZ78TGDi5+zzlPrU5xo+4DhXDkkC9j3EfshaPm5fbJO0THhFEYu
+ 4bLENGuYRKUyOrb4YUrww==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vFqqanFBvCk=:czBHZPbn4JiquXcECzaPDL
+ tuXCuwQNwGxOwNvC0LR56yh9k+PeE8PxYa6WPbkGrRlfHlyP07zRSuK7/gzIK/YUOGLPPF8cU
+ WSlkX7HCIqTgcDEp4gwUEwnW1jaWTluuUXBEzAF/JEDiq/SIarD46llVT16lykw83LKEV8kQz
+ xLCCVuy69KXz4X0ZSfzoHDifa/+prhgqe+qodnKkGTpvSpD31lSML+pgUXJZlXx5jm7NOihar
+ YXBFfBUN9t94+QvsfQI4NWzmmVNwCPYWE7mY3NCQ2DosGgEcEy/WwLVKS8pYkz3DZa/lS7MvU
+ DtwPcFWWbdEgsTAC+Qr8pbrlQEyBXbA3HAI+KPyt6B8bmUvZufA0e2SRC1Cxao//4/avtmtn3
+ IHi9SLOpy/c3/eU0orr7eSgGBQQoTnqj6nZ8hU8Qn1xZ0HjhIG16aNzk3LZHjhc9ugHMTnYy6
+ vncblCxcn6qPbNYX87gBaAASVNOvLi5edbdTCfrsiKr7yRLiETOVpoA+QuEtjekkWYK3ttFe0
+ ZpO7oKipSUTBwK5v5OcSY/DujPqm/t8n/wj7om4jjx+eaNRpuhlZDEkaHoC1xpNDYxgc/Llai
+ 3kJG4QOAW0j8se0f3V9E2fI3lyDiUjE3m490Xt0moKw+oftniu17HwLxcfivYOa7dZdyp+X9V
+ LphoOnkfmDDum/8Plgd3IKsCOi1UGohCDzSIJrR+WIgUgl66H/mvyG3yEcMgOZPHYAlG4QTb5
+ 9KgSTdetP81Ya/Rn1DdUkBKfbaTJDpUAqAypcVIekB0YVFeQzmjyx1f6lh70QWFIPJqpI+k5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294341>
 
-To libify the apply functionality the 'apply_verbosely' variable should
-not be static and global to the file. Let's move it into
-'struct apply_state'.
+Hi,
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/apply.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+On Tue, 10 May 2016, Jeff King wrote:
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 53cc280..97af6ea 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -27,6 +27,7 @@ struct apply_state {
- 
- 	int apply_in_reverse;
- 	int apply_with_reject;
-+	int apply_verbosely;
- 
- 	/*
- 	 *  --check turns on checking that the working tree matches the
-@@ -56,7 +57,6 @@ static int diffstat;
- static int numstat;
- static int summary;
- static int apply = 1;
--static int apply_verbosely;
- static int allow_overlap;
- static int no_add;
- static int threeway;
-@@ -2810,7 +2810,7 @@ static int apply_one_fragment(struct apply_state *state,
- 			/* Ignore it, we already handled it */
- 			break;
- 		default:
--			if (apply_verbosely)
-+			if (state->apply_verbosely)
- 				error(_("invalid start of line: '%c'"), first);
- 			applied_pos = -1;
- 			goto out;
-@@ -2925,7 +2925,7 @@ static int apply_one_fragment(struct apply_state *state,
- 				apply = 0;
- 		}
- 
--		if (apply_verbosely && applied_pos != pos) {
-+		if (state->apply_verbosely && applied_pos != pos) {
- 			int offset = applied_pos - pos;
- 			if (state->apply_in_reverse)
- 				offset = 0 - offset;
-@@ -2947,7 +2947,7 @@ static int apply_one_fragment(struct apply_state *state,
- 				   leading, trailing, applied_pos+1);
- 		update_image(img, applied_pos, &preimage, &postimage);
- 	} else {
--		if (apply_verbosely)
-+		if (state->apply_verbosely)
- 			error(_("while searching for:\n%.*s"),
- 			      (int)(old - oldlines), oldlines);
- 	}
-@@ -3861,7 +3861,7 @@ static int check_patch_list(struct apply_state *state, struct patch *patch)
- 	prepare_symlink_changes(patch);
- 	prepare_fn_table(patch);
- 	while (patch) {
--		if (apply_verbosely)
-+		if (state->apply_verbosely)
- 			say_patch_name(stderr,
- 				       _("Checking patch %s..."), patch);
- 		err |= check_patch(state, patch);
-@@ -4292,7 +4292,7 @@ static void write_out_one_result(struct patch *patch, int phase)
- 		create_file(patch);
- }
- 
--static int write_out_one_reject(struct patch *patch)
-+static int write_out_one_reject(struct apply_state *state, struct patch *patch)
- {
- 	FILE *rej;
- 	char namebuf[PATH_MAX];
-@@ -4307,7 +4307,7 @@ static int write_out_one_reject(struct patch *patch)
- 	}
- 
- 	if (!cnt) {
--		if (apply_verbosely)
-+		if (state->apply_verbosely)
- 			say_patch_name(stderr,
- 				       _("Applied patch %s cleanly."), patch);
- 		return 0;
-@@ -4363,7 +4363,7 @@ static int write_out_one_reject(struct patch *patch)
- 	return -1;
- }
- 
--static int write_out_results(struct patch *list)
-+static int write_out_results(struct apply_state *state, struct patch *list)
- {
- 	int phase;
- 	int errs = 0;
-@@ -4378,7 +4378,7 @@ static int write_out_results(struct patch *list)
- 			else {
- 				write_out_one_result(l, phase);
- 				if (phase == 1) {
--					if (write_out_one_reject(l))
-+					if (write_out_one_reject(state, l))
- 						errs = 1;
- 					if (l->conflicted_threeway) {
- 						string_list_append(&cpath, l->new_name);
-@@ -4442,7 +4442,7 @@ static int apply_patch(struct apply_state *state,
- 			listp = &patch->next;
- 		}
- 		else {
--			if (apply_verbosely)
-+			if (state->apply_verbosely)
- 				say_patch_name(stderr, _("Skipped patch '%s'."), patch);
- 			free_patch(patch);
- 			skipped_patch++;
-@@ -4470,7 +4470,7 @@ static int apply_patch(struct apply_state *state,
- 	    !state->apply_with_reject)
- 		exit(1);
- 
--	if (apply && write_out_results(list)) {
-+	if (apply && write_out_results(state, list)) {
- 		if (state->apply_with_reject)
- 			exit(1);
- 		/* with --3way, we still need to write the index out */
-@@ -4635,7 +4635,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 			N_("leave the rejected hunks in corresponding *.rej files")),
- 		OPT_BOOL(0, "allow-overlap", &allow_overlap,
- 			N_("allow overlapping hunks")),
--		OPT__VERBOSE(&apply_verbosely, N_("be verbose")),
-+		OPT__VERBOSE(&state.apply_verbosely, N_("be verbose")),
- 		OPT_BIT(0, "inaccurate-eof", &options,
- 			N_("tolerate incorrectly detected missing new-line at the end of file"),
- 			INACCURATE_EOF),
-@@ -4663,7 +4663,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 		state.check_index = 1;
- 	}
- 	if (state.apply_with_reject)
--		apply = apply_verbosely = 1;
-+		apply = state.apply_verbosely = 1;
- 	if (!force_apply && (diffstat || numstat || summary || state.check || fake_ancestor))
- 		apply = 0;
- 	if (state.check_index && is_not_gitdir)
--- 
-2.8.2.490.g3dabe57
+> On Tue, May 10, 2016 at 01:53:56PM -0700, Junio C Hamano wrote:
+> 
+> > Jeff King <peff@peff.net> writes:
+> > 
+> > > I think it is clear why it works. If $strategy_opts is empty, then the
+> > > code we generate looks like:
+> > >
+> > >   for strategy_opt in
+> > >   do
+> > >           ...
+> > >   done
+> > 
+> > Ah, of course.  Thanks.
+> 
+> Here it is as a patch and commit message.
+> 
+> -- >8 --
+> Subject: [PATCH] rebase--interactive: avoid empty list in shell for-loop
+> 
+> The $strategy_opts variable contains a space-separated list
+> of strategy options, each individually shell-quoted. To loop
+> over each, we "unwrap" them by doing an eval like:
+> 
+>   eval '
+>     for opt in '"$strategy_opts"'
+>     do
+>        ...
+>     done
+>   '
+> 
+> Note the quoting that means we expand $strategy_opts inline
+> in the code to be evaluated (which is the right thing
+> because we want the IFS-split and de-quoting). If the
+> variable is empty, however, we ask the shell to eval the
+> following code:
+> 
+>   for opt in
+>   do
+>      ...
+>   done
+> 
+> without anything between "in" and "do".  Most modern shells
+> are happy to treat that like a noop, but reportedly ksh88 on
+> AIX considers it a syntax error. So let's catch the case
+> that the variable is empty and skip the eval altogether
+> (since we know the loop would be a noop anyway).
+> 
+> Reported-by: Armin Kunaschik <megabreit@googlemail.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  git-rebase--interactive.sh | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index 9ea3075..1c6dfb6 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -82,6 +82,7 @@ rewritten_pending="$state_dir"/rewritten-pending
+>  cr=$(printf "\015")
+>  
+>  strategy_args=${strategy:+--strategy=$strategy}
+> +test -n "$strategy_opts" &&
+>  eval '
+>  	for strategy_opt in '"$strategy_opts"'
+>  	do
+
+Looks obviously correct to me.
+
+I had a look at our other shell scripts and it looks as if there is only
+one more candidate for this issue: git-bisect.sh has a couple of 'for arg
+in "$@"' constructs. But from a cursory look, it appears that none of
+these "$@" can be empty lists because at least one parameter is passed to
+those functions (check_expected_revs() is only called from bisect_state()
+with 1 or 2 parameters, bisect_skip() makes no sense without parameters,
+and bisect_state() has another for loop if it got 2 parameters).
+
+So I think we're fine.
+
+Ciao,
+Dscho
