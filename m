@@ -1,139 +1,112 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: syntax error in git-rebase while running t34* tests
-Date: Wed, 11 May 2016 15:28:35 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605111518470.4092@virtualbox>
-References: <CALR6jEiF9Ooi1f0O3KG0wYmN0KRWBQTNarXx79-wBD2E-8q2jA@mail.gmail.com> <xmqq60ulpw1s.fsf@gitster.mtv.corp.google.com> <20160510204758.GB19958@sigill.intra.peff.net> <xmqqy47hmy6z.fsf@gitster.mtv.corp.google.com>
- <20160510210709.GD19958@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 24/25] worktree move: accept destination as directory
+Date: Wed, 11 May 2016 20:34:10 +0700
+Message-ID: <CACsJy8CCAan9ALxULPFeGSU7wsfwbrywRWFr4Hsjx3=PGwosLA@mail.gmail.com>
+References: <1460553346-12985-1-git-send-email-pclouds@gmail.com>
+ <1460553346-12985-25-git-send-email-pclouds@gmail.com> <CAPig+cRtajkynLFj5Fknd72QQ=Eqevh1T9i9MvApwXfNmtMAFQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Armin Kunaschik <megabreit@googlemail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 11 15:29:02 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed May 11 15:34:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0UCD-00055B-M8
-	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:29:02 +0200
+	id 1b0UHn-0002wV-5N
+	for gcvg-git-2@plane.gmane.org; Wed, 11 May 2016 15:34:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932090AbcEKN26 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2016 09:28:58 -0400
-Received: from mout.gmx.net ([212.227.17.21]:51275 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751632AbcEKN25 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2016 09:28:57 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0Lkwpt-1baeHp11V7-00ajb9; Wed, 11 May 2016 15:28:36
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160510210709.GD19958@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:EAi42JVFSLw4qcnCecHZl6uFHm9nVtLTdiuA5skYDCCfAeayz50
- KWAin943vcmhJ7uhB3+R4l+ilIyMBPV3veO9QVEsNjdchGMAi6MwCYlYXUOaHu3sCXzrpBf
- Z2dxz5noUDz91XLoaTBXjZ78TGDi5+zzlPrU5xo+4DhXDkkC9j3EfshaPm5fbJO0THhFEYu
- 4bLENGuYRKUyOrb4YUrww==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vFqqanFBvCk=:czBHZPbn4JiquXcECzaPDL
- tuXCuwQNwGxOwNvC0LR56yh9k+PeE8PxYa6WPbkGrRlfHlyP07zRSuK7/gzIK/YUOGLPPF8cU
- WSlkX7HCIqTgcDEp4gwUEwnW1jaWTluuUXBEzAF/JEDiq/SIarD46llVT16lykw83LKEV8kQz
- xLCCVuy69KXz4X0ZSfzoHDifa/+prhgqe+qodnKkGTpvSpD31lSML+pgUXJZlXx5jm7NOihar
- YXBFfBUN9t94+QvsfQI4NWzmmVNwCPYWE7mY3NCQ2DosGgEcEy/WwLVKS8pYkz3DZa/lS7MvU
- DtwPcFWWbdEgsTAC+Qr8pbrlQEyBXbA3HAI+KPyt6B8bmUvZufA0e2SRC1Cxao//4/avtmtn3
- IHi9SLOpy/c3/eU0orr7eSgGBQQoTnqj6nZ8hU8Qn1xZ0HjhIG16aNzk3LZHjhc9ugHMTnYy6
- vncblCxcn6qPbNYX87gBaAASVNOvLi5edbdTCfrsiKr7yRLiETOVpoA+QuEtjekkWYK3ttFe0
- ZpO7oKipSUTBwK5v5OcSY/DujPqm/t8n/wj7om4jjx+eaNRpuhlZDEkaHoC1xpNDYxgc/Llai
- 3kJG4QOAW0j8se0f3V9E2fI3lyDiUjE3m490Xt0moKw+oftniu17HwLxcfivYOa7dZdyp+X9V
- LphoOnkfmDDum/8Plgd3IKsCOi1UGohCDzSIJrR+WIgUgl66H/mvyG3yEcMgOZPHYAlG4QTb5
- 9KgSTdetP81Ya/Rn1DdUkBKfbaTJDpUAqAypcVIekB0YVFeQzmjyx1f6lh70QWFIPJqpI+k5 
+	id S932183AbcEKNen convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 May 2016 09:34:43 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:32975 "EHLO
+	mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932125AbcEKNem convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 May 2016 09:34:42 -0400
+Received: by mail-lf0-f67.google.com with SMTP id j8so5114710lfd.0
+        for <git@vger.kernel.org>; Wed, 11 May 2016 06:34:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=gXlZHRBXSH4JT2GX64Uu/zZn4nxZ8szykPT73kllx3o=;
+        b=B/8MoiDT4ZbngutNxcIjGv1shW34gXDomC8IPbdZ+6TXdN1Ycxj688kdEKgT250k/y
+         Bk0M5LuR/LpUGa3RSRjiRryWChyIVfgsSYr3iedDaMjG4eyv13F4CLwXgden4bAIVIR/
+         36ZvinafaWsK0k42PbEE9FgwxQhsn925i+jrJ5QyL1UatTlwpYZNRJ3a16Cws2iL3ddo
+         Ci4Krbh2ynlUiVtOVwU+sjDJqrXTxfnWwcqhFhpPk4INU5Cw0zLYtCvCGHqCSE1IxKkK
+         Vp0vo1IRFuquuvgxu0jrsxwaQeJJBr9kpRRld9P8zgT3YTSgEHo02azcno5VscFOQ329
+         YoxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=gXlZHRBXSH4JT2GX64Uu/zZn4nxZ8szykPT73kllx3o=;
+        b=DGCWcK5ZhcRCgYmFFgcwwrqqVKnSFPekh/T9NBRq4HRi3KxqdQuI5E3/F1dgkcwA2m
+         SsQoIrK8s/pZEZeow4mWQ8Jxjyx59zkUQHzaXrxV9qPmN1KXUUcFUjKZ0LjvkQ5/6tuE
+         Y7gqyeinx983OG4d2u1ItNV4DUlNOcuV5Z5o5RT1t4GXyhViQbzJ3WWVPwQqjuIvn8Nc
+         IIeYa/sYwAYEzwa7tp2uZrrV+G3CdErSdljZ5g9aRfRDxOcZ1jaNuiJ8QjkZBTqo1I9q
+         U5CejWO9em/Ej9uKhz+eXnvyGky4jRUaPYNejmYvxr/RZAhqyNwSDuMP1TGx+Xw2Lq+o
+         orRg==
+X-Gm-Message-State: AOPr4FUslEutlrLQGjr+0fgWMJApdBTsQtS9pMOTpD/l/G9lExf8wi6ajfBBjDgzPyzgajlYCag4mhf6bPvCbg==
+X-Received: by 10.112.209.99 with SMTP id ml3mr1542037lbc.26.1462973680494;
+ Wed, 11 May 2016 06:34:40 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Wed, 11 May 2016 06:34:10 -0700 (PDT)
+In-Reply-To: <CAPig+cRtajkynLFj5Fknd72QQ=Eqevh1T9i9MvApwXfNmtMAFQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294342>
 
-Hi,
+On Wed, May 11, 2016 at 11:43 AM, Eric Sunshine <sunshine@sunshineco.co=
+m> wrote:
+> On Wed, Apr 13, 2016 at 9:15 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
+c Duy <pclouds@gmail.com> wrote:
+>> Similar to "mv a b/", which is actually "mv a b/a", we extract basen=
+ame
+>> of source worktree and create a directory of the same name at
+>> destination if dst path is a directory.
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>> diff --git a/builtin/worktree.c b/builtin/worktree.c
+>> @@ -538,7 +538,13 @@ static int move_worktree(int ac, const char **a=
+v, const char *prefix)
+>> -       if (file_exists(dst.buf))
+>> +       if (is_directory(dst.buf))
+>> +               /*
+>> +                * keep going, dst will be appended after we get the
+>> +                * source's absolute path
+>> +                */
+>> +               ;
+>> +       else if (file_exists(dst.buf))
+>>                 die(_("target '%s' already exists"), av[1]);
+>> @@ -558,6 +564,17 @@ static int move_worktree(int ac, const char **a=
+v, const char *prefix)
+>> +       if (is_directory(dst.buf)) {
+>> +               const char *sep =3D strrchr(wt->path, '/');
+>
+> Does this need to take Windows into account?
 
-On Tue, 10 May 2016, Jeff King wrote:
+wt->path comes from $GIT_DIR/worktrees/xxx/gitdir, which normally uses
+forward slashes, so we should be safe. We already rely on forward
+slashes in get_linked_worktree()
 
-> On Tue, May 10, 2016 at 01:53:56PM -0700, Junio C Hamano wrote:
-> 
-> > Jeff King <peff@peff.net> writes:
-> > 
-> > > I think it is clear why it works. If $strategy_opts is empty, then the
-> > > code we generate looks like:
-> > >
-> > >   for strategy_opt in
-> > >   do
-> > >           ...
-> > >   done
-> > 
-> > Ah, of course.  Thanks.
-> 
-> Here it is as a patch and commit message.
-> 
-> -- >8 --
-> Subject: [PATCH] rebase--interactive: avoid empty list in shell for-loop
-> 
-> The $strategy_opts variable contains a space-separated list
-> of strategy options, each individually shell-quoted. To loop
-> over each, we "unwrap" them by doing an eval like:
-> 
->   eval '
->     for opt in '"$strategy_opts"'
->     do
->        ...
->     done
->   '
-> 
-> Note the quoting that means we expand $strategy_opts inline
-> in the code to be evaluated (which is the right thing
-> because we want the IFS-split and de-quoting). If the
-> variable is empty, however, we ask the shell to eval the
-> following code:
-> 
->   for opt in
->   do
->      ...
->   done
-> 
-> without anything between "in" and "do".  Most modern shells
-> are happy to treat that like a noop, but reportedly ksh88 on
-> AIX considers it a syntax error. So let's catch the case
-> that the variable is empty and skip the eval altogether
-> (since we know the loop would be a noop anyway).
-> 
-> Reported-by: Armin Kunaschik <megabreit@googlemail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  git-rebase--interactive.sh | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index 9ea3075..1c6dfb6 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -82,6 +82,7 @@ rewritten_pending="$state_dir"/rewritten-pending
->  cr=$(printf "\015")
->  
->  strategy_args=${strategy:+--strategy=$strategy}
-> +test -n "$strategy_opts" &&
->  eval '
->  	for strategy_opt in '"$strategy_opts"'
->  	do
+> Perhaps git_find_last_dir_sep()?
 
-Looks obviously correct to me.
+But this is probably a good thing to do anyway, to be more robust in
+future. But it could confuse the reader later on why it's necessary
+when backward slashes can't exist in wt->path. I don't know. Maybe
+just have a comment that backward slashes can't never appear here?
 
-I had a look at our other shell scripts and it looks as if there is only
-one more candidate for this issue: git-bisect.sh has a couple of 'for arg
-in "$@"' constructs. But from a cursory look, it appears that none of
-these "$@" can be empty lists because at least one parameter is passed to
-those functions (check_expected_revs() is only called from bisect_state()
-with 1 or 2 parameters, bisect_skip() makes no sense without parameters,
-and bisect_state() has another for loop if it got 2 parameters).
-
-So I think we're fine.
-
-Ciao,
-Dscho
+There is also a potential problem with find_worktree_by_path(). I was
+counting on real_path() to normalize paths and could simply do
+strcmp_icase (or its new name, fspathcmp). But real_path() does not
+seem to convert unify slashes. I will need to have a closer look at
+this. Hopefully prefix_filename() already makes sure everything uses
+forward slashes. Or maybe we could improve fspathcmp to see '/' and
+'\' the same thing on Windows.
+--=20
+Duy
