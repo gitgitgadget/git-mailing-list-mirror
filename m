@@ -1,96 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 48/94] builtin/apply: rename 'prefix_' parameter to 'prefix'
-Date: Thu, 12 May 2016 13:43:18 -0700
-Message-ID: <xmqq37pndn2x.fsf@gitster.mtv.corp.google.com>
-References: <20160511131745.2914-1-chriscool@tuxfamily.org>
-	<20160511131745.2914-49-chriscool@tuxfamily.org>
-	<xmqqbn4bdp8f.fsf@gitster.mtv.corp.google.com>
+From: Joey Hess <id@joeyh.name>
+Subject: Re: proposal for extending smudge/clean filters with raw file access
+Date: Thu, 12 May 2016 16:46:34 -0400
+Message-ID: <20160512204634.GA9292@kitenet.net>
+References: <20160512182432.GA27427@kitenet.net>
+ <xmqq7fezdoe7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jeff King <peff@peff.net>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 12 22:43:29 2016
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ZPt4rx8FFjLCG7dd"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 12 22:46:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0xSA-0000iC-V9
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:43:27 +0200
+	id 1b0xVS-000538-De
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:46:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751540AbcELUnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2016 16:43:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61213 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751229AbcELUnX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 16:43:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4312F1B2B5;
-	Thu, 12 May 2016 16:43:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=n+MvqANhE21c0kqYsyhh0uJdBbA=; b=WPkpqe
-	p8LcdPjIjfxx0WYHGE2oM3LUouC8sNrYX15NYxcXVKl4a/bx6Y7eel/j2lONDGZZ
-	X/pumalyXbGqQGAyhCZXUfcSbLGrS5CGmIvBNNhW2PCGJKN6RFEEIXIqeVMPCvms
-	TqcsXGc7use3GRbCGUVgFVlN53b/56i5vn9ew=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YLq4fVntK5c7Hqbdv0l7WsXIi7SCGnYw
-	4vyDrVrB+78TG5iwOoWeEEE8KbEr8sLnz+LU1X7Me1tQWu7Spc2rgn3XVhBAiNQy
-	Mo9NalwpWbQOGPxJ6VTj41yVQb8muRrHLU/oJPKHGAsLusrJaPMUnejhqMP0e1ly
-	gEQZG69/ygI=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 393F21B2AE;
-	Thu, 12 May 2016 16:43:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 999B01B2AD;
-	Thu, 12 May 2016 16:43:20 -0400 (EDT)
-In-Reply-To: <xmqqbn4bdp8f.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 12 May 2016 12:56:48 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 29C718CE-1882-11E6-8AC9-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1751985AbcELUqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 16:46:46 -0400
+Received: from kitenet.net ([66.228.36.95]:45664 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751337AbcELUqp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 16:46:45 -0400
+X-Question: 42
+Authentication-Results: kitenet.net;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=aWxZkN58;
+	dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+	t=1463085994; bh=FQh15uGmIWYKk93vM7gdr+9zg8PxUz8CyD3hZ/JB7sY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=aWxZkN58DHHIC5t3B7o4XycmIimWydXvz7C+nNnNr6rczpg9GYB58UVPB0PbLnYhP
+	 Qm+UfoxFvakT6rY0LOpJr6A7hu8LxFXI9Bp6aAPoRJpVy9rakBIQ0juvWfBqbS/rQX
+	 im9/JclAyfDbaYAw9n/GTQU9Q1hJIZRvtfvgZgJc=
+Content-Disposition: inline
+In-Reply-To: <xmqq7fezdoe7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+X-Spam-Status: No, score=-95.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_PBL,RCVD_IN_SORBS_DUL,
+	RDNS_DYNAMIC,SPF_SOFTFAIL,USER_IN_WHITELIST autolearn=no autolearn_force=no
+	version=3.4.1
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on kite.kitenet.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294474>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Up to this point, the conversion looks quite sensible, even though I
-> think the organization of fields in apply_state do not look logical.
+--ZPt4rx8FFjLCG7dd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'd stop here for now, as everything before this step looks
-uncontroversial.  Anybody whose tasked to move the global state for
-these variables into a structure would reach the samestate after
-applying these 48 patches, modulo minor differences in the way the
-comments would say things, how the patches are split and how the
-fields in apply_state() are organized.
+Junio C Hamano wrote:
+> This side, I do not think we even need a new variant.  We can just
+> update the code to interact with "clean" so that it the writer to
+> the pipe ignores SIGPIPE, detects EPIPE on write(2), says "ah, the
+> other end does not need the full input to produce its output".  The
+> reader from the pipe consumes its output without failing AS LONG AS
+> the "clean" filter exits with zero (we do check its exit status,
+> right?)
 
-One thing that is missing is a counterpart of init_apply_state().
-In the early part of patches where it added only "const char *"
-borrowed from the caller and fields of intregral type, the lack of
-clear_apply_state() did not mattter, but with a few fields with
-"string_list" type, anybody who want to make repeated call into the
-apply machinery would want a way to release the resource the
-structure holds.
+There are two problems with doing that. First, any clean filter that
+relied on that would not work with older versions of git.
 
-Because 49/94 is a step to add an unfreeable resource, this is a
-good place to stop and then add the clean_apply_state() before that
-happens, I would think.  After that, I think both the contributor
-and the reviewers would benefit if these early patches are merged
-early without waiting for the review of the remainder.
+Secondly, and harder to get around, the filename passed to the clean
+filter is not necessarily a path to the actual existing file that is
+being cleaned. For example, git hash-object --stdin --path=3Dwhatever.
+So the current clean filter can't really safely rely on accessing the
+file to short-circuit its cleaning. (Although it seems to mostly work..
+currently..)
 
-Thanks.
+> We cannot do a similar "we can just unconditionally update" like I
+> said on the "clean" side to "smudge", so it would need a new
+> variant.  I do not want to call it anything "raw", as there is
+> nothing "raw" about it.  "smudge-to-fs" would be a better name.
+
+"raw" was just a placeholder. "clean-from-fs" and "smudge-to-fs" are
+pretty descriptive.
+
+--=20
+see shy jo
+
+--ZPt4rx8FFjLCG7dd
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIVAwUBVzTrqMkQ2SIlEuPHAQKRTQ//V/593rnSI/71GRDGVJgrH7HlTK10aXkL
+xFA4wsf8C/9YE5m/CRjp4DPyzfpYtchabNXivp57QMM1Ua7jiE+Nyd2/qy9zoM/S
+ZHUMmZIPwPzI2Ie6rLFFRL105AFXfdfudjHAIvNoEjtJWosGl7TXbnkcGl1EvfgX
+qfAto1dapJQ4sskl7vAUNlKFA2h4jkwAuF5abTOlzTG8ysG0o59xo6ez9hIugkXK
+uL+N4U/7OQdr1uHW6znThZkPFMpwniizXqM9VWX4BGTSsEdWX022Jh8tCeZIhSNb
+LisD0EPe7+nyMhXv6SyY5OMOufJ4RJKd9UfC842i3I8g0GUibPU+VAuJx4yarA2K
+VaVc87+gW9YhUdgC6DGIyMWpyihf81GXcZl6X3g7d6E/ZXLhb1rmafiMZf84kAtX
+8K5kVaRFi+Ywt/PFpmmDEjUaNL2DdNXlETlHRroN2YgTFE7c5n23LMQ7DzB0Uvx6
++F0Z/OHxaGa0CUPoi0n/gesrwyIObitACQQoiimZ3a6EOKhQcsshn7gIGxauDcbe
+uDw7vG+V55umpwntQBgnPlAgBf6vJA6N/dg91KQ8MCrKyLk6jnWFWWa4sKJUV8Ly
+FM0fKWido35vOfhIpq63ZnjBJPIw+BtYVHo2XYPCAOMEkEZ4MraAGpc2BkHGPV3s
+1L2EcUv0dMA=
+=3V4Y
+-----END PGP SIGNATURE-----
+
+--ZPt4rx8FFjLCG7dd--
