@@ -1,15 +1,14 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 22/94] builtin/apply: move 'threeway' global into
- 'struct apply_state'
-Date: Thu, 12 May 2016 22:26:34 +0200
-Message-ID: <CAP8UFD1VYW6+T_oTHJbemUhi8MPrMseaObWgoy0Xou=VCoKt-A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 48/94] builtin/apply: rename 'prefix_' parameter to 'prefix'
+Date: Thu, 12 May 2016 13:43:18 -0700
+Message-ID: <xmqq37pndn2x.fsf@gitster.mtv.corp.google.com>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
-	<20160511131745.2914-23-chriscool@tuxfamily.org>
-	<xmqqoa8bdpym.fsf@gitster.mtv.corp.google.com>
+	<20160511131745.2914-49-chriscool@tuxfamily.org>
+	<xmqqbn4bdp8f.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Stefan Beller <sbeller@google.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -19,107 +18,79 @@ Cc: git <git@vger.kernel.org>,
 	Karsten Blees <karsten.blees@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 12 22:26:41 2016
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 12 22:43:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0xBw-00041u-5H
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:26:40 +0200
+	id 1b0xSA-0000iC-V9
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:43:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751143AbcELU0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2016 16:26:36 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36536 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750889AbcELU0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 16:26:35 -0400
-Received: by mail-wm0-f65.google.com with SMTP id w143so17899398wmw.3
-        for <git@vger.kernel.org>; Thu, 12 May 2016 13:26:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=P0yGI/aTJQOfZmOHtmmxp9BA4uC+4hdn569TMsqrZw4=;
-        b=F1FAmyuJ/t7pSC1TmtcZ402UNBgwL6BXKOD6QYjs1lC69f1E08nO6XuYCz78ujCYUz
-         NjdWRBVPeCJoeP8+Yha0vlKmxkcILP3Me1ygQXyH8QTZBd7Uziq635XFWca+IxDBTlxt
-         6p7K0RlPiwv8JvbiNgMgYvdfnKSD0PXdvceCLhg08Bhy9bYlsVypZYMiSgQDTfqgSrxB
-         G1vR/gJ5DoxrmJlbV5I8QGxg8eGH7SjyeBDPbVkkYaNtRG+lgdnbbEv7DZRJS/J0RD3+
-         w3JZ9F5eWjc0IIEpmyK/HnQcDoExlmlgCJ023skn4foqV5iwof4sa5gHxlGJrcPIU7rf
-         9OBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=P0yGI/aTJQOfZmOHtmmxp9BA4uC+4hdn569TMsqrZw4=;
-        b=eQTrXryio2SvEbosvYAMhEan+zxx/x5hnZnaketg+HyzQ9d7B8IYWg2I4Gn2yuzbXi
-         pG2EDtsOy3KXYdfKscZJp2T3kFydpYRuagCr6rr8xqrcFdk8rQoduc6y5EIb93W4tP9q
-         5AcgSqRJK3dfijXJ1gAMraX6LOnel7HWqcbHrm3GX6qQe/M3qTIiqZmxXbHrUYF5/4N6
-         4VXhBHB64bxFGKZ2hMjpLdd7B/fK0kkARZh0F3IEEMpBl8QUTgOM1VbsnYmMb0Th57VC
-         qKP2nL6HjJnDZ4IrMEksIdJ2I/JnMmk3SvhH1yS2jsabT/NMRkBgVw4eUOAQRSfEWKbF
-         6LUw==
-X-Gm-Message-State: AOPr4FV9+OPs4fu0dY672koZwdrKhfzMsXcfs6DR3fG6I1R6JBJk+QYgGJFmqj8yMGMcBvUDsgAKF5q2vUJQcg==
-X-Received: by 10.194.117.70 with SMTP id kc6mr13015586wjb.94.1463084794190;
- Thu, 12 May 2016 13:26:34 -0700 (PDT)
-Received: by 10.194.246.4 with HTTP; Thu, 12 May 2016 13:26:34 -0700 (PDT)
-In-Reply-To: <xmqqoa8bdpym.fsf@gitster.mtv.corp.google.com>
+	id S1751540AbcELUnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 16:43:23 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61213 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751229AbcELUnX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 16:43:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4312F1B2B5;
+	Thu, 12 May 2016 16:43:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=n+MvqANhE21c0kqYsyhh0uJdBbA=; b=WPkpqe
+	p8LcdPjIjfxx0WYHGE2oM3LUouC8sNrYX15NYxcXVKl4a/bx6Y7eel/j2lONDGZZ
+	X/pumalyXbGqQGAyhCZXUfcSbLGrS5CGmIvBNNhW2PCGJKN6RFEEIXIqeVMPCvms
+	TqcsXGc7use3GRbCGUVgFVlN53b/56i5vn9ew=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YLq4fVntK5c7Hqbdv0l7WsXIi7SCGnYw
+	4vyDrVrB+78TG5iwOoWeEEE8KbEr8sLnz+LU1X7Me1tQWu7Spc2rgn3XVhBAiNQy
+	Mo9NalwpWbQOGPxJ6VTj41yVQb8muRrHLU/oJPKHGAsLusrJaPMUnejhqMP0e1ly
+	gEQZG69/ygI=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 393F21B2AE;
+	Thu, 12 May 2016 16:43:21 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 999B01B2AD;
+	Thu, 12 May 2016 16:43:20 -0400 (EDT)
+In-Reply-To: <xmqqbn4bdp8f.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 12 May 2016 12:56:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 29C718CE-1882-11E6-8AC9-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294473>
 
-On Thu, May 12, 2016 at 9:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> To libify the apply functionality the 'threeway' variable should
->> not be static and global to the file. Let's move it into
->> 'struct apply_state'.
->>
->> Reviewed-by: Stefan Beller <sbeller@google.com>
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> ---
->>  builtin/apply.c | 14 +++++++-------
->>  1 file changed, 7 insertions(+), 7 deletions(-)
->>
->> diff --git a/builtin/apply.c b/builtin/apply.c
->> index 6216723..3650922 100644
->> --- a/builtin/apply.c
->> +++ b/builtin/apply.c
->> @@ -40,6 +40,7 @@ struct apply_state {
->>       int numstat;
->>
->>       int summary;
->> +     int threeway;
->
-> This makes threeway look as if it is one of the cosmetic options
-> like stat/numstat/summary, doesn't it?  If anything, the blank
-> between numstat and summary should be moved below summary.
+Junio C Hamano <gitster@pobox.com> writes:
 
-There is a blank because there is a comment on the line before
-numstat. The result looks like this:
+> Up to this point, the conversion looks quite sensible, even though I
+> think the organization of fields in apply_state do not look logical.
 
-    /* --cached updates only the cache without ever touching the
-working tree. */
-    int cached;
+I'd stop here for now, as everything before this step looks
+uncontroversial.  Anybody whose tasked to move the global state for
+these variables into a structure would reach the samestate after
+applying these 48 patches, modulo minor differences in the way the
+comments would say things, how the patches are split and how the
+fields in apply_state() are organized.
 
-    /* --stat does just a diffstat, and doesn't actually apply */
-    int diffstat;
+One thing that is missing is a counterpart of init_apply_state().
+In the early part of patches where it added only "const char *"
+borrowed from the caller and fields of intregral type, the lack of
+clear_apply_state() did not mattter, but with a few fields with
+"string_list" type, anybody who want to make repeated call into the
+apply machinery would want a way to release the resource the
+structure holds.
 
-    /* --numstat does numeric diffstat, and doesn't actually apply */
-    int numstat;
+Because 49/94 is a step to add an unfreeable resource, this is a
+good place to stop and then add the clean_apply_state() before that
+happens, I would think.  After that, I think both the contributor
+and the reviewers would benefit if these early patches are merged
+early without waiting for the review of the remainder.
 
-    int summary;
-    int threeway;
-    int no_add;
-
-
->  I'd
-> group knobs that affect "what is affected (check, check_index,
-> cached, etc.)", "how the application is done (allow-overlap,
-> threeway, in-reverse, etc.)" and "cosmetics" and place the ones in
-> the same group next to each other.
-
-Ok, I will try to group knobs like that, but the comments tend to
-break the groups.
+Thanks.
