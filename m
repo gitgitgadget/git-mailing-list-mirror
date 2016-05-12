@@ -1,65 +1,145 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] am: plug FILE * leak in split_mail_conv()
-Date: Thu, 12 May 2016 08:59:17 -0700
-Message-ID: <xmqqk2izgtd6.fsf@gitster.mtv.corp.google.com>
-References: <20160511233546.13090-1-gitster@pobox.com>
-	<20160511233546.13090-2-gitster@pobox.com>
-	<20160512044730.GA5436@sigill.intra.peff.net>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v2 2/2] test-lib: set BASH_XTRACEFD automatically
+Date: Thu, 12 May 2016 17:44:12 +0200 (CEST)
+Message-ID: <ffc132a9d6cdb97c49861bd9b6b2c6aca42cec93.1463067811.git.johannes.schindelin@gmx.de>
+References: <cover.1462888768.git.johannes.schindelin@gmx.de> <cover.1463067811.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 12 17:59:31 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 17:59:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0t1N-0005Pr-10
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 17:59:29 +0200
+	id 1b0t1N-0005Pr-Pi
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 17:59:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932260AbcELP7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2016 11:59:22 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65033 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752222AbcELP7V (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 11:59:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D09251A24B;
-	Thu, 12 May 2016 11:59:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DrjQM+SvA//iu50ugwTzEdjx+Mk=; b=ExSaS2
-	KZtap0UCpf68FL1wnodmWLylNJMFQuUr38IJd1rxvEi4m3+fmjwkOS5h7Jy9ek3t
-	CpOxzQGxcjnpZFUgsa2OuXFb7smqI2dkKdeZItDar1zeOrQrSAiIFw5YsE49h+75
-	qEryKw5HFlmzAfhzT8Z/sMxQAhFaTTpgC5WeI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aGt75EwFvkqi2A7fxDcNl/R2VTePCZQy
-	glbCMmpS5TMjPOBAjkDvIlVSTMJnNmn8k7m5TJSK10T7288pgUDXGupkNMnlQGsT
-	YlwgVbZi1s0VHzOg1PTjAq/6FTmwgWZ1ANBAzpCuNky1vGPElsbrfsod5K9mdyyG
-	JEs306bsh4s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C85091A24A;
-	Thu, 12 May 2016 11:59:19 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5F4681A249;
-	Thu, 12 May 2016 11:59:19 -0400 (EDT)
-In-Reply-To: <20160512044730.GA5436@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 12 May 2016 00:47:30 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7C5DF9D6-185A-11E6-8181-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S932360AbcELP71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 11:59:27 -0400
+Received: from mout.gmx.net ([212.227.17.22]:62964 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932291AbcELP70 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 11:59:26 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MU0U9-1b9zp005kf-00QnFl; Thu, 12 May 2016 17:59:19
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <cover.1463067811.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:R/UE2iLy80P5k6yIJ2puH30NxS55TQy1zAo0fuOfd1QZFUnrS69
+ Fs2TBjsvGI7R8VwTgjd6CNq9IoXELGZBNqAhHhYNTXIyqlJz/GgtwXEQvDu9q6ZJTG0dX6r
+ ROmK7mkuOdbfiPt3DEj5LSoMc+mixoWHfFggBqa0wQoCt5pd/SoTdr1XCogFy8hdRXW0gao
+ hZDdSYf+yB6oGbpuFgI4g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LqunEen5yWI=:HQArfFL2d1GQlHrZ9cnaWY
+ 9SA3e5G4zf35w9aHVDwBTrDhTs/Atiw+d+ceWJyRbSOGATz8nsIlLWZl3mb6iC67sDG6fdO2e
+ IW4kP2b818tYznvA8NcfBl+KnHLm8EWrbH/hHnbTxGbqubkMl8xvWr9vR+9YxBJFaS6HdhfTo
+ tn5IUfuIVDwOIvSD0tLg0JTuqWUWewq7ogFbLIUb5shjwJzuGiO2pJRhNGuRBIaYqu0MbxBEE
+ 0M0mF00j0U2CQGT/e24FBdq7xNtfMVkvd8UR2PT+T5zJ2+MpGi6fo05hNW7uSWzc0oPtOL/VF
+ +vIBHCNXlmBo1j9gw1G59isv7+p4pbUHs0mjrRkYCrvy4MjwpSCPaKY9+RrxiIrNwKSr/bTVU
+ hoLX9RHNqdTsw7z3tk2gJFZWyeUwzGzLXpImEz+JKLIJSOVhWm0e2RFTha+obdzrWV9Z2Mc3g
+ bHDJLa5Jez+yrjWhts09S6NWuOrpR2ol9nJsBmGBHonp3qdLLFRLgej4VakXWM+6hyDsyutEB
+ NfJLNlCkHoIYkCAhAGHur/bmbssRaA60MiSuygm7f5nKV9zBWhA4+tdcfc7uarGI/r3/V7ptQ
+ BcpOa/WGq7kP3p0dOdhYiqxfeXPjNMgSUqP/67NGEf4IgYznqm4p/uTro1YB6USIm+GKjESzI
+ moTL0p0ru2MIgjkvcbToMZ08p9cONDZiJNmBvcQw6+dw8lQ6LytENJP8hsbQC8Z1P87/4SBLD
+ d60it/gDI6YjF01o0ffu0hRALIZ8e6wtigxltfz5UqN+oNKK99oHBrSbC+dxuUHp7g30ifRM 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294414>
 
-Jeff King <peff@peff.net> writes:
+From: Jeff King <peff@peff.net>
 
-> Presumably `fclose` doesn't ever overwrite errno in practice, but I
-> guess it could in theory.
+Passing "-x" to a test script enables the shell's "set -x"
+tracing, which can help with tracking down the command that
+is causing a failure. Unfortunately, it can also _cause_
+failures in some tests that redirect the stderr of a shell
+function.  Inside the function the shell continues to
+respect "set -x", and the trace output is collected along
+with whatever stderr is generated normally by the function.
 
-Yeah, these two patches share the same issue.
+You can see an example of this by running:
+
+  ./t0040-parse-options.sh -x -i
+
+which will fail immediately in the first test, as it
+expects:
+
+  test_must_fail some-cmd 2>output.err
+
+to leave output.err empty (but with "-x" it has our trace
+output).
+
+Unfortunately there isn't a portable or scalable solution to
+this. We could teach test_must_fail to disable "set -x", but
+that doesn't help any of the other functions or subshells.
+
+However, we can work around it by pointing the "set -x"
+output to our descriptor 4, which always points to the
+original stderr of the test script. Unfortunately this only
+works for bash, but it's better than nothing (and other
+shells will just ignore the BASH_XTRACEFD variable).
+
+The patch itself is a simple one-liner, but note the caveats
+in the accompanying comments.
+
+Automatic tests for our "-x" option may be a bit too meta
+(and a pain, because they are bash-specific), but I did
+confirm that it works correctly both with regular "-x" and
+with "--verbose-only=1". This works because the latter flips
+"set -x" off and on for particular tests (if it didn't, we
+would get tracing for all tests, as going to descriptor 4
+effectively circumvents the verbose flag).
+
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/README      |  6 +++---
+ t/test-lib.sh | 13 +++++++++++++
+ 2 files changed, 16 insertions(+), 3 deletions(-)
+
+diff --git a/t/README b/t/README
+index 1dc908e..76a0daa 100644
+--- a/t/README
++++ b/t/README
+@@ -84,9 +84,9 @@ appropriately before running "make".
+ 
+ -x::
+ 	Turn on shell tracing (i.e., `set -x`) during the tests
+-	themselves. Implies `--verbose`. Note that this can cause
+-	failures in some tests which redirect and test the
+-	output of shell functions. Use with caution.
++	themselves. Implies `--verbose`. Note that in non-bash shells,
++	this can cause failures in some tests which redirect and test
++	the output of shell functions. Use with caution.
+ 
+ -d::
+ --debug::
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 286c5f3..0055ebb 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -322,6 +322,19 @@ else
+ 	exec 4>/dev/null 3>/dev/null
+ fi
+ 
++# Send any "-x" output directly to stderr to avoid polluting tests
++# which capture stderr. We can do this unconditionally since it
++# has no effect if tracing isn't turned on.
++#
++# Note that this sets up the trace fd as soon as we assign the variable, so it
++# must come after the creation of descriptor 4 above. Likewise, we must never
++# unset this, as it has the side effect of closing descriptor 4, which we
++# use to show verbose tests to the user.
++#
++# Note also that we don't need or want to export it. The tracing is local to
++# this shell, and we would not want to influence any shells we exec.
++BASH_XTRACEFD=4
++
+ test_failure=0
+ test_count=0
+ test_fixed=0
+-- 
+2.8.2.465.gb077790
