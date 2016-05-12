@@ -1,31 +1,31 @@
 From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH v4 2/7] i18n: unpack-trees: mark strings for translation
-Date: Thu, 12 May 2016 19:59:23 +0000
-Message-ID: <1463083168-29213-3-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v4 5/7] i18n: builtin/pull.c: split strings marked for translation
+Date: Thu, 12 May 2016 19:59:26 +0000
+Message-ID: <1463083168-29213-6-git-send-email-vascomalmeida@sapo.pt>
 References: <1463083168-29213-1-git-send-email-vascomalmeida@sapo.pt>
 Cc: Vasco Almeida <vascomalmeida@sapo.pt>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 22:00:36 2016
+X-From: git-owner@vger.kernel.org Thu May 12 22:00:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0wmh-0006J5-H6
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:00:35 +0200
+	id 1b0wmj-0006J5-Eb
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:00:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751039AbcELUA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2016 16:00:27 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:58917 "EHLO sapo.pt"
+	id S1751119AbcELUAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 16:00:34 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:53183 "EHLO sapo.pt"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750979AbcELUA0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 16:00:26 -0400
-Received: (qmail 11861 invoked from network); 12 May 2016 20:00:23 -0000
-Received: (qmail 29983 invoked from network); 12 May 2016 20:00:23 -0000
+	id S1751093AbcELUAe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 16:00:34 -0400
+Received: (qmail 31956 invoked from network); 12 May 2016 20:00:31 -0000
+Received: (qmail 32033 invoked from network); 12 May 2016 20:00:31 -0000
 Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 12 May 2016 20:00:22 -0000
+          for <git@vger.kernel.org>; 12 May 2016 20:00:26 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -37,122 +37,38 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294445>
 
-Mark strings seen by the user inside setup_unpack_trees_porcelain() and
-display_error_msgs() functions for translation.
+Split string "If you wish to set tracking information
+for this branch you can do so with:\n" to match occurring string in
+git-parse-remote.sh. In this case, the translator handles it only once.
+
+On the other hand, the translations of the string that were already made
+are mark as fuzzy and the translator needs to correct it herself.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- unpack-trees.c | 74 ++++++++++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 54 insertions(+), 20 deletions(-)
+ builtin/pull.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 11308e9..673a04e 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -58,40 +58,74 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
- 	int i;
- 	const char **msgs = opts->msgs;
- 	const char *msg;
--	const char *cmd2 = strcmp(cmd, "checkout") ? cmd : "switch branches";
- 
--	if (advice_commit_before_merge)
--		msg = "Your local changes to the following files would be overwritten by %s:\n%%s"
--			"Please, commit your changes or stash them before you can %s.";
-+	if (!strcmp(cmd, "checkout"))
-+		msg = advice_commit_before_merge
-+		      ? _("Your local changes to the following files would be overwritten by checkout:\n%%s"
-+			  "Please, commit your changes or stash them before you can switch branches.")
-+		      : _("Your local changes to the following files would be overwritten by checkout:\n%%s");
-+	else if (!strcmp(cmd, "merge"))
-+		msg = advice_commit_before_merge
-+		      ? _("Your local changes to the following files would be overwritten by merge:\n%%s"
-+			  "Please, commit your changes or stash them before you can merge.")
-+		      : _("Your local changes to the following files would be overwritten by merge:\n%%s");
- 	else
--		msg = "Your local changes to the following files would be overwritten by %s:\n%%s";
-+		msg = advice_commit_before_merge
-+		      ? _("Your local changes to the following files would be overwritten by %s:\n%%s"
-+			  "Please, commit your changes or stash them before you can %s.")
-+		      : _("Your local changes to the following files would be overwritten by %s:\n%%s");
- 	msgs[ERROR_WOULD_OVERWRITE] = msgs[ERROR_NOT_UPTODATE_FILE] =
--		xstrfmt(msg, cmd, cmd2);
-+		xstrfmt(msg, cmd, cmd);
- 
- 	msgs[ERROR_NOT_UPTODATE_DIR] =
--		"Updating the following directories would lose untracked files in it:\n%s";
--
--	if (advice_commit_before_merge)
--		msg = "The following untracked working tree files would be %s by %s:\n%%s"
--			"Please move or remove them before you can %s.";
-+		_("Updating the following directories would lose untracked files in it:\n%s");
-+
-+	if (!strcmp(cmd, "checkout"))
-+		msg = advice_commit_before_merge
-+		      ? _("The following untracked working tree files would be removed by checkout:\n%%s"
-+			  "Please move or remove them before you can switch branches.")
-+		      : _("The following untracked working tree files would be removed by checkout:\n%%s");
-+	else if (!strcmp(cmd, "merge"))
-+		msg = advice_commit_before_merge
-+		      ? _("The following untracked working tree files would be removed by merge:\n%%s"
-+			  "Please move or remove them before you can merge.")
-+		      : _("The following untracked working tree files would be removed by merge:\n%%s");
- 	else
--		msg = "The following untracked working tree files would be %s by %s:\n%%s";
--
--	msgs[ERROR_WOULD_LOSE_UNTRACKED_REMOVED] = xstrfmt(msg, "removed", cmd, cmd2);
--	msgs[ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN] = xstrfmt(msg, "overwritten", cmd, cmd2);
-+		msg = advice_commit_before_merge
-+		      ? _("The following untracked working tree files would be removed by %s:\n%%s"
-+			  "Please move or remove them before you can %s.")
-+		      : _("The following untracked working tree files would be removed by %s:\n%%s");
-+	msgs[ERROR_WOULD_LOSE_UNTRACKED_REMOVED] = xstrfmt(msg, cmd, cmd);
-+
-+	if (!strcmp(cmd, "checkout"))
-+		msg = advice_commit_before_merge
-+		      ? _("The following untracked working tree files would be overwritten by checkout:\n%%s"
-+			  "Please move or remove them before you can switch branches.")
-+		      : _("The following untracked working tree files would be overwritten by checkout:\n%%s");
-+	else if (!strcmp(cmd, "merge"))
-+		msg = advice_commit_before_merge
-+		      ? _("The following untracked working tree files would be overwritten by merge:\n%%s"
-+			  "Please move or remove them before you can merge.")
-+		      : _("The following untracked working tree files would be overwritten by merge:\n%%s");
-+	else
-+		msg = advice_commit_before_merge
-+		      ? _("The following untracked working tree files would be overwritten by %s:\n%%s"
-+			  "Please move or remove them before you can %s.")
-+		      : _("The following untracked working tree files would be overwritten by %s:\n%%s");
-+	msgs[ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN] = xstrfmt(msg, cmd, cmd);
- 
- 	/*
- 	 * Special case: ERROR_BIND_OVERLAP refers to a pair of paths, we
- 	 * cannot easily display it as a list.
- 	 */
--	msgs[ERROR_BIND_OVERLAP] = "Entry '%s' overlaps with '%s'.  Cannot bind.";
-+	msgs[ERROR_BIND_OVERLAP] = _("Entry '%s' overlaps with '%s'.  Cannot bind.");
- 
- 	msgs[ERROR_SPARSE_NOT_UPTODATE_FILE] =
--		"Cannot update sparse checkout: the following entries are not up-to-date:\n%s";
-+		_("Cannot update sparse checkout: the following entries are not up-to-date:\n%s");
- 	msgs[ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN] =
--		"The following Working tree files would be overwritten by sparse checkout update:\n%s";
-+		_("The following Working tree files would be overwritten by sparse checkout update:\n%s");
- 	msgs[ERROR_WOULD_LOSE_ORPHANED_REMOVED] =
--		"The following Working tree files would be removed by sparse checkout update:\n%s";
-+		_("The following Working tree files would be removed by sparse checkout update:\n%s");
- 
- 	opts->show_all_errors = 1;
- 	/* rejected paths may not have a static buffer */
-@@ -168,7 +202,7 @@ static void display_error_msgs(struct unpack_trees_options *o)
- 		string_list_clear(rejects, 0);
- 	}
- 	if (something_displayed)
--		fprintf(stderr, "Aborting\n");
-+		fprintf(stderr, _("Aborting\n"));
- }
- 
- /*
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 96b98ea..1d7333c 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -495,10 +495,10 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
+ 		fprintf(stderr, "\n");
+ 		fprintf_ln(stderr, "    git pull %s %s", _("<remote>"), _("<branch>"));
+ 		fprintf(stderr, "\n");
+-		fprintf_ln(stderr, _("If you wish to set tracking information for this branch you can do so with:\n"
+-				"\n"
+-				"    git branch --set-upstream-to=%s/<branch> %s\n"),
+-				remote_name, curr_branch->name);
++		fprintf_ln(stderr, _("If you wish to set tracking information for this branch you can do so with:"));
++		fprintf(stderr, "\n");
++		fprintf_ln(stderr, "    git branch --set-upstream-to=%s/%s %s\n",
++				remote_name, _("<branch>"), curr_branch->name);
+ 	} else
+ 		fprintf_ln(stderr, _("Your configuration specifies to merge with the ref '%s'\n"
+ 			"from the remote, but no such ref was fetched."),
 -- 
 2.7.3
