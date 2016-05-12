@@ -1,77 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 29/33] refs: resolve symbolic refs first
-Date: Thu, 12 May 2016 04:25:26 -0400
-Message-ID: <20160512082526.GA20817@sigill.intra.peff.net>
-References: <cover.1462550456.git.mhagger@alum.mit.edu>
- <66d33af21bd1e398973414435af43d06f2e2099c.1462550456.git.mhagger@alum.mit.edu>
- <20160512074528.GB10922@sigill.intra.peff.net>
+From: "Mrs. Marilyn Shaw" <dropkshete_jakne@goo.jp>
+Subject: Dearest One Please Be Honest,
+Date: Thu, 12 May 2016 18:08:57 +0900 (JST)
+Message-ID: <1290074314.80959451.1463044137338.JavaMail.root@goo.jp>
+Reply-To: "Mrs. Marilyn Shaw" <mrsmarilynshaw02@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu May 12 10:25:40 2016
+Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 7bit
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Thu May 12 11:22:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0lw9-0003t1-K9
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 10:25:37 +0200
+	id 1b0mpN-00053c-Ma
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 11:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751846AbcELIZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2016 04:25:31 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38453 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752524AbcELIZa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 04:25:30 -0400
-Received: (qmail 5300 invoked by uid 102); 12 May 2016 08:25:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 12 May 2016 04:25:29 -0400
-Received: (qmail 7736 invoked by uid 107); 12 May 2016 08:25:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 12 May 2016 04:25:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 May 2016 04:25:26 -0400
-Content-Disposition: inline
-In-Reply-To: <20160512074528.GB10922@sigill.intra.peff.net>
+	id S1752061AbcELJWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 05:22:33 -0400
+Received: from gfdefer007.mail.goo.jp ([153.149.229.140]:49433 "EHLO
+	gfdefer007.mail.goo.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752010AbcELJWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 05:22:32 -0400
+Received: from gogw0437.mail.goo.jp (gogw0437.mail.goo.jp [153.153.65.38])
+	by gfdefer007.mail.goo.jp (Postfix) with ESMTP id E5CFF72A66A
+	for <git@vger.kernel.org>; Thu, 12 May 2016 18:21:59 +0900 (JST)
+Received: from ntt.pod01.gv-mta-ucb002 (gv-mta-ucb002.mail.goo.jp [180.8.112.201])
+	by gogw0437.mail.goo.jp (Postfix) with ESMTP id 1FDE3110044C;
+	Thu, 12 May 2016 18:08:58 +0900 (JST)
+Received: from gzcstore012.mail.goo.jp ([180.8.112.235])
+	by ntt.pod01.gv-mta-ucb002 with 
+	id tM8x1s00654mytg01M8xFK; Thu, 12 May 2016 09:08:58 +0000
+X-Originating-IP: [197.78.227.160]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294403>
+X-Spam-Report: 5.3 points;
+ *  1.8 MILLION_USD BODY: Talks about millions of dollars
+ *  2.0 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
+ *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294404>
 
-On Thu, May 12, 2016 at 03:45:28AM -0400, Jeff King wrote:
+Dearest One Please Be Honest,
 
-> So I'd expect us to hit that lock_ref_for_update() for each of the new
-> refs. But then we end up in verify_refname_available_dir(), which wants
-> to read all of the loose refs again. So we end up with a quadratic
-> number of calls to read_ref_full().
-> 
-> I haven't found the actual bug yet. It may be something as simple as not
-> clearing REF_INCOMPLETE from the loose-ref cache when we ought to. But
-> that's a wild (optimistic) guess.
+My name is Mrs. Marilyn Shaw; I am a dying woman who had decided to donate what I have to the Charities. I am 75 years old and was diagnosed for cancer about four years ago, immediately after the death of my husband.
 
-Ah, nope, nothing so simple.
+I have been touched to donate from what I have inherited from my late husband for the good work rather than allow his relatives to lavish my husband's hard earned fund.
 
-It looks like we get in a chain of:
+As I lay on my sick bed, I want you to help me in carrying out my last wish on earth which will also be very profitable to you. I want to WILL a total sum of $5.5 million USD to you which I want you to distribute part of it to any charity home for me and the rest for yourself and your family. I will inform you on how to share all, please for further information contact me ASAP.
 
-  1. we want to update a ref, so we end up in
-     verify_refname_available_dir to make sure we can do so.
+Please reply me only with this my private email id: mrsmarilynshaw02@gmail.com
 
-  2. that has to load all of the loose refs in refs/tags, which is
-     expensive.
 
-  3. we actually update the ref, which calls clear_loose_ref_cache().
+Regards,
 
-And repeat. Each ref update does the expensive step 2, and it gets
-larger and larger each time.
-
-I understand why we need to verify_refname_available() on the packed
-refs. But traditionally we would rely on EISDIR or EEXIST to detect
-conflicts with the loose refs, rather than loading using our own cache.
-So I guess that's the new thing that is causing a problem.
-
--Peff
+Mrs.  Marilyn Shaw.
