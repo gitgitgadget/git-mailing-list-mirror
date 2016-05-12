@@ -1,89 +1,125 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v10 01/20] read-cache.c: fix constness of verify_hdr()
-Date: Thu, 12 May 2016 16:19:56 -0400
-Message-ID: <1463084415-19826-2-git-send-email-dturner@twopensource.com>
-References: <1463084415-19826-1-git-send-email-dturner@twopensource.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 22/94] builtin/apply: move 'threeway' global into
+ 'struct apply_state'
+Date: Thu, 12 May 2016 22:26:34 +0200
+Message-ID: <CAP8UFD1VYW6+T_oTHJbemUhi8MPrMseaObWgoy0Xou=VCoKt-A@mail.gmail.com>
+References: <20160511131745.2914-1-chriscool@tuxfamily.org>
+	<20160511131745.2914-23-chriscool@tuxfamily.org>
+	<xmqqoa8bdpym.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Turner <dturner@twopensource.com>
-To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu May 12 22:21:55 2016
+Cc: git <git@vger.kernel.org>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jeff King <peff@peff.net>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 12 22:26:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0x7J-000657-Rn
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:21:54 +0200
+	id 1b0xBw-00041u-5H
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:26:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751368AbcELUVo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 May 2016 16:21:44 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:35302 "EHLO
-	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751489AbcELUUX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 16:20:23 -0400
-Received: by mail-io0-f171.google.com with SMTP id d62so109277690iof.2
-        for <git@vger.kernel.org>; Thu, 12 May 2016 13:20:23 -0700 (PDT)
+	id S1751143AbcELU0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 16:26:36 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36536 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750889AbcELU0f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 16:26:35 -0400
+Received: by mail-wm0-f65.google.com with SMTP id w143so17899398wmw.3
+        for <git@vger.kernel.org>; Thu, 12 May 2016 13:26:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=uewEGQ0wF/3DxfN+baDwQCJkdkBanU90hVkFsq63qvw=;
-        b=DQabWpSZhtK55Kwx+veyDNqnJOnzSY8GItDB8fdnYOhxVjY1XBDNTiVb/lkNJtcAdQ
-         gBuj01CJDG7z+jZLnXGPCNZZXIAETLuOVz/aKZ90XM3fUY2wRRDvpoZ8pAceZFMxAc7g
-         uJn7wftR61jV0W2okXDe53smCBfKEiA2fWCJs3Rsx7uZTddn8JpQFzYDtQGYEGHikCc/
-         +6kr5oj3zet35uEESJgkPJctMQLcd2Dbx4FkGoNFVxHL29471C0HpLYXr+FY8uWVp6wf
-         I43R17yM6sJflih2kx8yreJKgNlYXCXj86RPaEPU14sUC33rzySVxaCv2qDDnwpxNDtB
-         mNAg==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=P0yGI/aTJQOfZmOHtmmxp9BA4uC+4hdn569TMsqrZw4=;
+        b=F1FAmyuJ/t7pSC1TmtcZ402UNBgwL6BXKOD6QYjs1lC69f1E08nO6XuYCz78ujCYUz
+         NjdWRBVPeCJoeP8+Yha0vlKmxkcILP3Me1ygQXyH8QTZBd7Uziq635XFWca+IxDBTlxt
+         6p7K0RlPiwv8JvbiNgMgYvdfnKSD0PXdvceCLhg08Bhy9bYlsVypZYMiSgQDTfqgSrxB
+         G1vR/gJ5DoxrmJlbV5I8QGxg8eGH7SjyeBDPbVkkYaNtRG+lgdnbbEv7DZRJS/J0RD3+
+         w3JZ9F5eWjc0IIEpmyK/HnQcDoExlmlgCJ023skn4foqV5iwof4sa5gHxlGJrcPIU7rf
+         9OBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=uewEGQ0wF/3DxfN+baDwQCJkdkBanU90hVkFsq63qvw=;
-        b=lLi8L2VdNet1rZbZJg0TjPAW7bm+Ze74cJaRP8puhcNq+JjQbTxLgxjIB6SXIhduTM
-         9TmVc0iirGPRVDPApW+9RJIMkr3LTXBgSJ2GGuej+yRWJR6zmvqKxx6OWJtjdygXoNYJ
-         i9DZWThXbhO9AHK03vIEgL8YLfsajXwDw7zqW8oD3TbWnklZSDxicJuwez1CiHNmYY0A
-         wx+rdgTZcAyBJ4lbqQuOAvKL1M6JrO5zRrwh7geV9I0qrfvEHiA+lfjGhD/vzXcIQBCN
-         6oK36xMfiaih8DCGBKBA1n3QEHYIpXrWSIs8vkilqZqb28ZiTUzdOmXvGLcrwfArq9/P
-         i56Q==
-X-Gm-Message-State: AOPr4FVc1HS1yjgbEK3+hKLh+3o+3rz+QlaJrmSFh+n/8VVRepKVgtU+rL+cbMGQP8oMkQ==
-X-Received: by 10.107.151.206 with SMTP id z197mr8982642iod.191.1463084422514;
-        Thu, 12 May 2016 13:20:22 -0700 (PDT)
-Received: from twopensource.com ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id s8sm5055496igg.17.2016.05.12.13.20.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 May 2016 13:20:21 -0700 (PDT)
-X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
-In-Reply-To: <1463084415-19826-1-git-send-email-dturner@twopensource.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=P0yGI/aTJQOfZmOHtmmxp9BA4uC+4hdn569TMsqrZw4=;
+        b=eQTrXryio2SvEbosvYAMhEan+zxx/x5hnZnaketg+HyzQ9d7B8IYWg2I4Gn2yuzbXi
+         pG2EDtsOy3KXYdfKscZJp2T3kFydpYRuagCr6rr8xqrcFdk8rQoduc6y5EIb93W4tP9q
+         5AcgSqRJK3dfijXJ1gAMraX6LOnel7HWqcbHrm3GX6qQe/M3qTIiqZmxXbHrUYF5/4N6
+         4VXhBHB64bxFGKZ2hMjpLdd7B/fK0kkARZh0F3IEEMpBl8QUTgOM1VbsnYmMb0Th57VC
+         qKP2nL6HjJnDZ4IrMEksIdJ2I/JnMmk3SvhH1yS2jsabT/NMRkBgVw4eUOAQRSfEWKbF
+         6LUw==
+X-Gm-Message-State: AOPr4FV9+OPs4fu0dY672koZwdrKhfzMsXcfs6DR3fG6I1R6JBJk+QYgGJFmqj8yMGMcBvUDsgAKF5q2vUJQcg==
+X-Received: by 10.194.117.70 with SMTP id kc6mr13015586wjb.94.1463084794190;
+ Thu, 12 May 2016 13:26:34 -0700 (PDT)
+Received: by 10.194.246.4 with HTTP; Thu, 12 May 2016 13:26:34 -0700 (PDT)
+In-Reply-To: <xmqqoa8bdpym.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294472>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+On Thu, May 12, 2016 at 9:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> To libify the apply functionality the 'threeway' variable should
+>> not be static and global to the file. Let's move it into
+>> 'struct apply_state'.
+>>
+>> Reviewed-by: Stefan Beller <sbeller@google.com>
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>>  builtin/apply.c | 14 +++++++-------
+>>  1 file changed, 7 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/builtin/apply.c b/builtin/apply.c
+>> index 6216723..3650922 100644
+>> --- a/builtin/apply.c
+>> +++ b/builtin/apply.c
+>> @@ -40,6 +40,7 @@ struct apply_state {
+>>       int numstat;
+>>
+>>       int summary;
+>> +     int threeway;
+>
+> This makes threeway look as if it is one of the cosmetic options
+> like stat/numstat/summary, doesn't it?  If anything, the blank
+> between numstat and summary should be moved below summary.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: David Turner <dturner@twopensource.com>
----
- read-cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+There is a blank because there is a comment on the line before
+numstat. The result looks like this:
 
-diff --git a/read-cache.c b/read-cache.c
-index d9fb78b..16cc487 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1345,7 +1345,7 @@ struct ondisk_cache_entry_extended {
- 			    ondisk_cache_entry_extended_size(ce_namelen(ce)) : \
- 			    ondisk_cache_entry_size(ce_namelen(ce)))
-=20
--static int verify_hdr(struct cache_header *hdr, unsigned long size)
-+static int verify_hdr(const struct cache_header *hdr, unsigned long si=
-ze)
- {
- 	git_SHA_CTX c;
- 	unsigned char sha1[20];
---=20
-2.4.2.767.g62658d5-twtrsrc
+    /* --cached updates only the cache without ever touching the
+working tree. */
+    int cached;
+
+    /* --stat does just a diffstat, and doesn't actually apply */
+    int diffstat;
+
+    /* --numstat does numeric diffstat, and doesn't actually apply */
+    int numstat;
+
+    int summary;
+    int threeway;
+    int no_add;
+
+
+>  I'd
+> group knobs that affect "what is affected (check, check_index,
+> cached, etc.)", "how the application is done (allow-overlap,
+> threeway, in-reverse, etc.)" and "cosmetics" and place the ones in
+> the same group next to each other.
+
+Ok, I will try to group knobs like that, but the comments tend to
+break the groups.
