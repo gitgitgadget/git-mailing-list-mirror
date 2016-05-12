@@ -1,83 +1,106 @@
-From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [Bug?] log -p -W showing the whole file for a patch that adds to
- the end?
-Date: Fri, 13 May 2016 00:12:12 +0200
-Message-ID: <5734FFBC.5070505@web.de>
-References: <xmqqh9e5mvjs.fsf@gitster.mtv.corp.google.com>
- <xmqq4ma5msrd.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 2/3] bisect: rewrite `check_term_format` shell function in C
+Date: Thu, 12 May 2016 15:36:55 -0700
+Message-ID: <xmqq37pmdhtk.fsf@gitster.mtv.corp.google.com>
+References: <1462546167-1125-1-git-send-email-pranit.bauva@gmail.com>
+	<1463031127-17718-1-git-send-email-pranit.bauva@gmail.com>
+	<1463031127-17718-3-git-send-email-pranit.bauva@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 13 00:13:07 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com,
+	chriscool@tuxfamily.org, larsxschneider@gmail.com,
+	Johannes.Schindelin@gmx.de, sunshine@sunshineco.com
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 13 00:37:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0yqw-0007FH-IO
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 00:13:06 +0200
+	id 1b0zED-00063h-60
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 00:37:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751990AbcELWNB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 May 2016 18:13:01 -0400
-Received: from mout.web.de ([212.227.15.14]:64323 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751121AbcELWNA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 18:13:00 -0400
-Received: from [192.168.178.36] ([79.213.112.87]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0LjJK3-1bbwtf2UD1-00dUSY; Fri, 13 May 2016 00:12:52
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
-In-Reply-To: <xmqq4ma5msrd.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:FoSjF7vwTY8Tg/13HIUDqL5Dd5gCG3RxGIt+UTBLbqYvUzol80d
- da1JPsffHtpCsy585ia3I2KtLwgb6l1sfPovS9NaJFrqkX5rsTF/DH+xgjanqcNKmwzvwqt
- 7b6ehrCM0Kj8W/Z2QAOsXbvWQAWsC5Jd/zUcdLXYYk8qFBE29GUmuaiHWw80mFjnVcB8f5g
- aSv6SSguvYJevUELz7uNA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hASbzb5mjbY=:XZfHlT5TKL/9FaKdoHlZx5
- kP9Jmqs5wiWp2ep1fRXwb+fB+bgAepLgcre2VV5qTtYK1sA9KxjpJzf9ueJmZCelbpqeJnZKx
- Sxn5H1O/5+8kk7C/Nk1yfNGXvTD+EpvWFrGWl/vIsyBcEeaXRk4ar9tWXhlPbLdniwz7pN2wY
- yiKWqmN2rwynRD+4AyZBud1y/Oor5QEcX3nVX9BxyRNHz5pLb+WkKPfPA79u/BKYQckb4f1hk
- VWImhe2pZNBvHCkT1GTSf8RNUq+yu1UghgLySAbSrq3/ZYezvYwnay7xwEPVAfPVDE8RCI4wi
- hgIjd7q1/nbtevWA0KeyRZIP9IMTi0kw0vOFMUTCGdV/34zQDGsEJBkCsFMgpgKOSC+FOPyqb
- qAxnSqw2Y2BV0Q97YMYeGr37MP/fvsSmS+wqxKJjJJPRPilKxVFOmBu/ANIwJkBeLJckEJ/zR
- 1EloqGrB0e1cbqgGLd5PtPUV1sqL6qTTXSIfPICnSRzM4Lev30/bJR6DzJ3HxQqJEfYGfptN7
- lXGP99Hzbj3euMx3wkjcPY0ar48Bof3iXyKyFEwJ8WHffemYJJCXLyNxTm+iAlbPN77UffhvC
- KMHTkSlnfexYd5iqRfM3sYO/p9HR3tbh2VqKMS5L3WhAAq+jg70Q/vv0ZcyY5k772NfbB02Qy
- Vt3fzn1xWORWny3kpSr5RTW6n/IeHtOS213Zq4VyXGIGYS98RfSwihden+ylSLfFHO2yKy4+o
- iES7DeqOA9oQZxS7If5RQBZL+oJs8pMi6J45nSll9OeQjr06NLGlj3c33XZiQ/29nCnAXBPP 
+	id S1751401AbcELWhA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 18:37:00 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52652 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751121AbcELWg7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 18:36:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 385CA1B4B9;
+	Thu, 12 May 2016 18:36:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZFAkV1WnOJ312ogkZDh2jsAmqyI=; b=A/mz2C
+	h0/9Jut78zRuV+U/ye+mPjmbI82VQMEdQIKevj2QchQGEJdxLfheQxomfzfJCO75
+	/Od8UqohpEgWTbY64IqgID2NhPw7SIZIGTFdCl04rRTNIl8ZDsGdGmYsyeC0Nf6M
+	jjhBy/I1jB/rmyWf+Zakxe/7HnN+blqYmaIN8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pxuSSsb3C7zICwYovZo0m8/qB0x3LFwG
+	aOiibddQmpKSO4QttSpPHKy7jt5G4gqk++g/wFHVLuUlgrXU5JvBom2jqSNjO55J
+	CukptiWZ7VScnd5MRIUDbaEc+sq5JRhO84a9TYM7IenUNr175zXMXVqCnTZZem6o
+	3yGzxoNVliM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 30FC01B4B8;
+	Thu, 12 May 2016 18:36:58 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A77221B4B7;
+	Thu, 12 May 2016 18:36:57 -0400 (EDT)
+In-Reply-To: <1463031127-17718-3-git-send-email-pranit.bauva@gmail.com>
+	(Pranit Bauva's message of "Thu, 12 May 2016 11:02:06 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 090F2F08-1892-11E6-9DC4-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294486>
 
-Am 11.05.2016 um 00:51 schrieb Junio C Hamano:
-> The helper function get_func_line() however gets confused when a
-> hunk adds a new function at the very end, and returns -1 to signal
-> that it did not find a suitable "function header line", i.e. the
-> beginning of previous function.  The caller then takes this signal
-> and shows from the very beginning of the file.  We end up showing
-> the entire file, starting from the very beginning to the end of the
-> newly added lines.
->
-> We can avoid this by using the original hunk boundary when the
-> helper gives up.
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
-It's a more conservative fallback in this case, but it regresses e.g. i=
-f=20
-you have a long list of includes at the top of a C file -- it won't sho=
-w=20
-the full list anymore with -W.
+> +	/*
+> +	 * In theory, nothing prevents swapping completely good and bad,
+> +	 * but this situation could be confusing and hasn't been tested
+> +	 * enough. Forbid it for now.
+> +	 */
+> +
+> +	if ((strcmp(orig_term, "bad") && one_of(term, "bad", "new", NULL)) ||
+> +		 (strcmp(orig_term, "good") && one_of(term, "good", "old", NULL)))
+> +		return error(_("can't change the meaning of the term '%s'"), term);
 
-The problem is that we are trying to access lines in the preimage that=20
-are only actually in the postimage.  Simply switching to useing the=20
-postimage unconditionally is not enough -- we'd have the same problem=20
-with the complementary case of lines at the end being removed.
+The above comes from below
 
-I wonder if using the postimage as a fallback suffices.  Need to look a=
-t=20
-this more closely.
+> -	bad|new)
+> -		if test "$2" != bad
+> -		then
+> -			die "$(eval_gettext "can't change the meaning ...
 
-Ren=E9
+So it is not your fault, but it is quite hard to understand.
+
+The original says "You are trying to use 'bad' (or 'new') for
+something that is not 'bad'--which is confusing; do not do it".
+
+I _think_ the reason I find C version harder to read is the use of
+strcmp(orig_term, "bad") to say "orig_term is not BAD".  The shell
+version visually tells with "!=" that the meaning of the new term is
+*NOT* "bad", and does not ahve such a problem.
+
+Perhaps if we rewrote it to
+
+	if ((!strcmp(orig_term, "good") &&
+             one_of(term, "bad", "new", NULL)) ||
+             (!strcmp(orig_term, "bad") &&
+             one_of(term, "good", "old", NULL)))
+
+i.e. "If you are using "bad" or "new" to mean "good", that is not a
+good idea", as a follow-up change after the dust settles, the result
+might be easier to read.
+
+But this is just commenting for future reference, not suggesting to
+update this patch at all.  If we were to do the change, that must
+come as a separate step.
+
+Thanks.
