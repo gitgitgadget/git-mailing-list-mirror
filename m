@@ -1,9 +1,8 @@
 From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH v6 1/3] bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
-Date: Thu, 12 May 2016 11:02:05 +0530
-Message-ID: <1463031127-17718-2-git-send-email-pranit.bauva@gmail.com>
+Subject: [PATCH v6 0/3] bisect--helper: check_term_format() & write_terms()
+Date: Thu, 12 May 2016 11:02:04 +0530
+Message-ID: <1463031127-17718-1-git-send-email-pranit.bauva@gmail.com>
 References: <1462546167-1125-1-git-send-email-pranit.bauva@gmail.com>
- <1463031127-17718-1-git-send-email-pranit.bauva@gmail.com>
 Cc: Pranit Bauva <pranit.bauva@gmail.com>, christian.couder@gmail.com,
 	chriscool@tuxfamily.org, larsxschneider@gmail.com,
 	Johannes.Schindelin@gmx.de, sunshine@sunshineco.com,
@@ -15,102 +14,80 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0jFJ-0005S3-FT
+	id 1b0jFI-0005S3-S9
 	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 07:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751664AbcELFdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2016 01:33:10 -0400
-Received: from mail-pa0-f68.google.com ([209.85.220.68]:36046 "EHLO
-	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750725AbcELFdJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 01:33:09 -0400
-Received: by mail-pa0-f68.google.com with SMTP id i5so5181599pag.3
-        for <git@vger.kernel.org>; Wed, 11 May 2016 22:33:09 -0700 (PDT)
+	id S1751444AbcELFdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 01:33:08 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36770 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750725AbcELFdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 01:33:06 -0400
+Received: by mail-pf0-f196.google.com with SMTP id g132so5423650pfb.3
+        for <git@vger.kernel.org>; Wed, 11 May 2016 22:33:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=lsPiTNhi6mOxB8d2iBEqMJKi2eKtqi/4SVkHXlaMJDs=;
-        b=X8JZ9EEBq/LRdHsPc4ZqGXHYV0f0ZAUhEQGgfCVRt6lLHHXp1D/8J9L6M4wUCdscyz
-         e/GGVmREqUPHtQIKsrG39a3M6E3dxXR9cX5oxNVH+npSqykHMBqAH517A/V9O3kXI3rG
-         lOiJLewSbuH/FFXvWJKukESyjIXt4vcNh7Hs4PktdDHRxW6Tcvi8ij5M3TKWimy7t43Q
-         Ty8mxUEEsdiDGZlz8Rm81UFbsMMfR3UwFDbvvHfPaP2ZQehJNcDemiGmAyRLh3Fiz8gX
-         BAvFXnON3KFQ3ZUDgUqP1Ixoqb5GtAezLExni+2B9/KBSCr2tYxXBGWEVGym76LpHSew
-         tEig==
+        bh=m52S2z8ps9VU8hQVSAHjBvlZ8vbSvGkqnETo7up9n1M=;
+        b=bwtXQ+J6svQstVfjBX0bPiDUSdZqr7Ok8P3cJGsB65wim/Wyij8Xb1/8kxMeggPCiR
+         4WOYQUzkpGsiIYkziaLC0Ler11SJ+Iz+EObm0qZ//LCygoc1lxSRbkvmSz3JYqateJK5
+         kYQlF+4gkAnNsdKDT1mlqDzFSEcANEEAC6idi32sZ42FzBmZM+8WbzczA5wJOzouEPBN
+         tEmhbiQUbUL3hFqyKi+LGFZsaofxv+Bb5qIgXUn5keGLA+KRpdJLGbgweJiYWemHnG5p
+         bHPdayzxG2uGYL/OXqUannB9rPw5lYj2+OF/jwx/aLxNGYDeXhXKXASB37jgytfBB7+l
+         F+GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=lsPiTNhi6mOxB8d2iBEqMJKi2eKtqi/4SVkHXlaMJDs=;
-        b=hcJlu56z1RJwokQp8NmxinjXegbHbUsWaokJ58rpVxK5jPIydeFJpuWeNOYaiRym4Y
-         mHlAakZ8AmvFtA+JWIbzDtQjHK7mHJphkBTRLM+lddEhiJHcdGhwWxzS3HRWiiFOENFl
-         aElWYF1iIPpn3cWLT7UEVJQ6tIuZ/aL8FOT6FubfJh89d+2q5eMziCZstrbYmJuI2iRs
-         D/FlQAPFfY2KhyBcpz6dGdSjk8R7Dowq2rL2XhwJp8qFtRJDm17dIH0gh0R07aCB6eWp
-         DH7OTy1J8dj7JVZslzD/0XyB0NJXSpkgIo8wBH3VtFuPF88ECSUJHOFa5T+pN0yuTCCY
-         gigg==
-X-Gm-Message-State: AOPr4FUyhQlQ5B3cIyQqsKMiRy2AKa1+GlwGEY2c35PRm6Z0WdNcnZ29WnzYiVzcsMMrLw==
-X-Received: by 10.66.177.16 with SMTP id cm16mr10868109pac.23.1463031189007;
-        Wed, 11 May 2016 22:33:09 -0700 (PDT)
+        bh=m52S2z8ps9VU8hQVSAHjBvlZ8vbSvGkqnETo7up9n1M=;
+        b=E6P55rwGx/t9z7TEu0jJkhKJHjvP0oFfCGK8ERoJF/TwhCX2OoWVNnc6KD9GFI0YM2
+         ouI1JTnnjWAC3qJvwLFfU0i5ZUlrxweNxvQSWAN8atiWXvLlj0AZ4zoUs30/q/fmXLjw
+         TsSIVXnoHZtdgvycmr1FIKPGkFm95fWT3/ZJmW0LJGRV2pCIv5vvaUSJLfiHOnoHJceM
+         yHMjALyqCtvzVD4UNLClO5nSh/NwdLTbCYfDBXp/2/TPrlJHNJC5RhhoH5A3dZ6Fnb6T
+         YwEd0+sKs3AEKWhqujpfxYWNyvdGsSXLVtiisCLpF4Y2RTCCaGLPScqOSDZcbUJs4Yc1
+         LPag==
+X-Gm-Message-State: AOPr4FUmaHLgNer7hrk6nvmcS52RfaM4Xxf0RIOL+Jmz+fonKOzpkoXJ7jSufVXuA69EwQ==
+X-Received: by 10.98.81.195 with SMTP id f186mr10995591pfb.30.1463031185153;
+        Wed, 11 May 2016 22:33:05 -0700 (PDT)
 Received: from localhost.localdomain ([111.119.199.22])
-        by smtp.gmail.com with ESMTPSA id m86sm8585820pfj.77.2016.05.11.22.33.05
+        by smtp.gmail.com with ESMTPSA id m86sm8585820pfj.77.2016.05.11.22.32.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 May 2016 22:33:08 -0700 (PDT)
+        Wed, 11 May 2016 22:33:04 -0700 (PDT)
 X-Mailer: git-send-email 2.8.2
-In-Reply-To: <1463031127-17718-1-git-send-email-pranit.bauva@gmail.com>
+In-Reply-To: <1462546167-1125-1-git-send-email-pranit.bauva@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294388>
 
-`--next-all` is meant to be used as a subcommand to support multiple
-"operation mode" though the current implementation does not contain any
-other subcommand along side with `--next-all` but further commits will
-include some more subcommands.
+To show how I am going to approach conversion of shell function to its C
+implementation by using the subcommand/cmdmode approach, I have first converted
+check_terms_format() to a subcommand then I have converted write_terms() to
+a subcommand and then remove the subcommand for check_terms_format() and
+instead call that function from write_terms().
 
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- builtin/bisect--helper.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+Also I investigated about the test coverage which I mentioned in my previous
+version and there is nothing that could be done to improve it.
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 3324229..8111c91 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -10,11 +10,11 @@ static const char * const git_bisect_helper_usage[] = {
- 
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
--	int next_all = 0;
-+	enum { NEXT_ALL = 1 } cmdmode = 0;
- 	int no_checkout = 0;
- 	struct option options[] = {
--		OPT_BOOL(0, "next-all", &next_all,
--			 N_("perform 'git bisect next'")),
-+		OPT_CMDMODE(0, "next-all", &cmdmode,
-+			 N_("perform 'git bisect next'"), NEXT_ALL),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_END()
-@@ -23,9 +23,14 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options,
- 			     git_bisect_helper_usage, 0);
- 
--	if (!next_all)
-+	if (!cmdmode)
- 		usage_with_options(git_bisect_helper_usage, options);
- 
--	/* next-all */
--	return bisect_next_all(prefix, no_checkout);
-+	switch (cmdmode) {
-+	case NEXT_ALL:
-+		return bisect_next_all(prefix, no_checkout);
-+	default:
-+		die("BUG: unknown subcommand '%d'", cmdmode);
-+	}
-+	return 0;
- }
+Minor changes wrt v5:
+ * Use the term cmdmode instead of subcommand as pointed out by Junio. (I
+   didn't understand his response in v4 then Christian and Johannes pointed
+   it out to me what he meant).
+ * Move the enum cmdmode (for subcommand) to function scope as suggested by
+   Johannes Schindelin.
+ * A few minor nits by Eric Sunshine.
+
+Link for v5: http://thread.gmane.org/gmane.comp.version-control.git/293785
+
+Pranit Bauva (3):
+  bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
+  bisect: rewrite `check_term_format` shell function in C
+  bisect--helper: `write_terms` shell function in C
+
+ builtin/bisect--helper.c | 97 +++++++++++++++++++++++++++++++++++++++++++++---
+ git-bisect.sh            | 49 ++++--------------------
+ 2 files changed, 98 insertions(+), 48 deletions(-)
+
 -- 
 2.8.2
