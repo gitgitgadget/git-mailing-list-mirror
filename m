@@ -1,166 +1,195 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v10 12/20] update-index: enable/disable watchman support
-Date: Thu, 12 May 2016 16:20:07 -0400
-Message-ID: <1463084415-19826-13-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v10 18/20] index-helper: optionally automatically run
+Date: Thu, 12 May 2016 16:20:13 -0400
+Message-ID: <1463084415-19826-19-git-send-email-dturner@twopensource.com>
 References: <1463084415-19826-1-git-send-email-dturner@twopensource.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu May 12 22:21:27 2016
+X-From: git-owner@vger.kernel.org Thu May 12 22:21:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0x6k-0005OJ-Pc
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:21:19 +0200
+	id 1b0x6j-0005OJ-KA
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:21:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832AbcELUVN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 May 2016 16:21:13 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:35021 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751732AbcELUUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 16:20:48 -0400
-Received: by mail-ig0-f179.google.com with SMTP id bi2so185171023igb.0
-        for <git@vger.kernel.org>; Thu, 12 May 2016 13:20:48 -0700 (PDT)
+	id S1751185AbcELUVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 16:21:00 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:33712 "EHLO
+	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751770AbcELUUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 16:20:53 -0400
+Received: by mail-io0-f170.google.com with SMTP id f89so108989271ioi.0
+        for <git@vger.kernel.org>; Thu, 12 May 2016 13:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DSr2DGtyMt6TUopcmYTDQ2btCuOfdB6/kMtI5ERbNfM=;
-        b=kICX6uVPSuGPXAm6qnhezNNtug7izJW5jcKTb3T/iSA0ETeYikjyAoTkP4y76jx1/7
-         BM8hP69jGVacu2YvKuE11DgLIxBZVT04uz+PIEEy6PbySZ6pbwuc7Q2qYC0R3wzNRDq2
-         J4YuqkEU/Ad8LL8BoHEvGzxrc+QLv78oyIEaFy47zrwK+rFnxKW0yNFQoh672wL/KfG3
-         XxkOTC5S3F5wYrpxhA8AJl5ZJAoTBjBUJe05vcIYNI0qcv6gkMGrPxRrAEugorXuRp3q
-         OUqBmSRHUQ+iQWWPclexXvoy3XofGINihtgLiYb3lmcNrqJhJINjDRiHOoQALcuguvD4
-         bH/g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=jfVf1qvhN4Fv7WOEkDH8pNu+ok906hcojFqnjOAsMVs=;
+        b=JHfoeUWhDeZsqUmlPmQoY5+A0L4IMlK3PzE0WGY5/VygluMzZeBKILarI2sEAusWLV
+         wxDYiO4mVBO2wbRdowBH81YkfTvV1mv5jy5d62uA+xS6nKpbPbB6m8Ol0dV2uug80A8v
+         NUnS5Prw1Ft6B/3iVsyLZ2HDPnkgcVSbJdiNFhtUgnTueKMooy/MoZRDEZTfI0UO6y+l
+         rR5VfRPGSWprAbaYsC/Vq1Af5n7xBIqGeO591vADrWYU3Aj6iGh5hH7jA7ri7/M3tzt6
+         mT1Xi6DBt2CqDNuQUcvSVl3Vb3pkxOfP5+p1WjRbpmmUAyv6zuZTdjV63e6106hfzVXL
+         5vGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DSr2DGtyMt6TUopcmYTDQ2btCuOfdB6/kMtI5ERbNfM=;
-        b=GpgT3LkWj7w7H8mv6zTRzgogpzEA+j13hMVMec03W98MakyUPe6WpvxJ6tNgcodcXg
-         DBbKm5iR0580M0z3oTSPWeR+0Q0pCpnOOcMV14Q2fh0stLiSe1Rs9WZpRlgnAd6Lb9Mg
-         pt5IZDFJPa6WUWkT0OEpdTrVUHaDozTWMGRcGRJUEKFBSrM3gmiJpSvlgaMBKPuwSc58
-         Jk7CFuk0DOadn61Ig4xc8uCoXzVafRfv2JTRjyKuKlWFlPThMQg+Xsr4PNAvDIFT9tRk
-         N7zAa68SMbOdXHqYsXWrIa2visHf/jINjMoPiahXM4Mze4OmZ5ufc1t/LO42lyF/b/sU
-         eDlg==
-X-Gm-Message-State: AOPr4FUL0FxBpGAvvKO8g1xPBOFSkTr7mczMEKe0FIusk91TM4MH9X7vZ4eC9IJbG2NfBw==
-X-Received: by 10.50.176.134 with SMTP id ci6mr9802304igc.32.1463084442725;
-        Thu, 12 May 2016 13:20:42 -0700 (PDT)
+         :references;
+        bh=jfVf1qvhN4Fv7WOEkDH8pNu+ok906hcojFqnjOAsMVs=;
+        b=R/6Rv90mmZPg5/YItlrKKKw56V2nIS9zPMpWBhOEAcz0M523T8Y4riXbx3qmh/iL7G
+         oKVcVfK1V03Zora0rnbH+HENxLQajFo8I9gXwGeLSBbvU2aPvpg4hwrbPHxLcwrG3XEl
+         yvgFrzKMo7kvz042kiTEl8lYeaXVy9KSwjPz97P/g2azqiNcniKqEUnT1RyH87PRXzjA
+         pOZ7nHsRit/GcM5kpzS9tL7wl/8qdBTaPnE01cMTsaEDbu6CgUtkXgUKWBXN+ciQ1M6F
+         mS7p2DEDBz5NQgZTp/07OfZCwxJkgG3dB6QFsV1noVXwOhR3FPgNfQuI9khcZhswpknN
+         QdFw==
+X-Gm-Message-State: AOPr4FVofNeRGazactrXzzNQPMaPAdynjtf1mQlzyk4ORsw3LEc6XyQOUZC6OVJECKmHbg==
+X-Received: by 10.107.58.213 with SMTP id h204mr9746154ioa.172.1463084452780;
+        Thu, 12 May 2016 13:20:52 -0700 (PDT)
 Received: from twopensource.com ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id s8sm5055496igg.17.2016.05.12.13.20.40
+        by smtp.gmail.com with ESMTPSA id s8sm5055496igg.17.2016.05.12.13.20.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 May 2016 13:20:41 -0700 (PDT)
+        Thu, 12 May 2016 13:20:51 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1463084415-19826-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294467>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+Introduce a new config option, indexhelper.autorun, to automatically
+run git index-helper before starting up a builtin git command.  This
+enables users to keep index-helper running without manual
+intervention.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Documentation/git-index-helper.txt |  3 +++
- Documentation/git-update-index.txt |  6 ++++++
- builtin/update-index.c             | 16 ++++++++++++++++
- 3 files changed, 25 insertions(+)
+ Documentation/config.txt |  4 ++++
+ read-cache.c             | 37 +++++++++++++++++++++++++++++++++++--
+ t/t7900-index-helper.sh  | 20 ++++++++++++++++++++
+ 3 files changed, 59 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-index-helper.txt b/Documentation/git-ind=
-ex-helper.txt
-index cce00cb..55a8a5a 100644
---- a/Documentation/git-index-helper.txt
-+++ b/Documentation/git-index-helper.txt
-@@ -18,6 +18,9 @@ each with a submodule, you might need four index-help=
-ers.  (In practice,
- this is only worthwhile for large indexes, so only use it if you notic=
-e
- that git status is slow).
-=20
-+If you want the index-helper to accelerate untracked file checking,
-+run git update-index --watchman before using it.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 15001ce..385ea66 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1856,6 +1856,10 @@ index.version::
+ 	Specify the version with which new index files should be
+ 	initialized.  This does not affect existing repositories.
+ 
++indexhelper.autorun::
++	Automatically run git index-helper when any builtin git
++	command is run inside a repository.
 +
- OPTIONS
- -------
-=20
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-upd=
-ate-index.txt
-index c6cbed1..6736487 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -19,6 +19,7 @@ SYNOPSIS
- 	     [--ignore-submodules]
- 	     [--[no-]split-index]
- 	     [--[no-|test-|force-]untracked-cache]
-+	     [--[no-]watchman]
- 	     [--really-refresh] [--unresolve] [--again | -g]
- 	     [--info-only] [--index-info]
- 	     [-z] [--stdin] [--index-version <n>]
-@@ -176,6 +177,11 @@ may not support it yet.
- --no-untracked-cache::
- 	Enable or disable untracked cache feature. Please use
- 	`--test-untracked-cache` before enabling it.
+ init.templateDir::
+ 	Specify the directory from which templates will be copied.
+ 	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
+diff --git a/read-cache.c b/read-cache.c
+index a2107f0..120263c 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -22,6 +22,7 @@
+ #include "pkt-line.h"
+ #include "sigchain.h"
+ #include "ewah/ewok.h"
++#include "run-command.h"
+ 
+ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
+ 					       unsigned int options);
+@@ -1723,6 +1724,33 @@ static void post_read_index_from(struct index_state *istate)
+ 	tweak_untracked_cache(istate);
+ }
+ 
++static int want_auto_index_helper(void)
++{
++	int want = -1;
++	const char *value = NULL;
++	const char *key = "indexhelper.autorun";
 +
-+--watchman::
-+--no-watchman::
-+	Enable or disable watchman support. This is, at present,
-+	only useful with git index-helper.
- +
- These options take effect whatever the value of the `core.untrackedCac=
-he`
- configuration variable (see linkgit:git-config[1]). But a warning is
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 1c94ca5..a3b4b5d 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -914,6 +914,7 @@ int cmd_update_index(int argc, const char **argv, c=
-onst char *prefix)
- {
- 	int newfd, entries, has_errors =3D 0, nul_term_line =3D 0;
- 	enum uc_mode untracked_cache =3D UC_UNSPECIFIED;
-+	int use_watchman =3D -1;
- 	int read_from_stdin =3D 0;
- 	int prefix_length =3D prefix ? strlen(prefix) : 0;
- 	int preferred_index_format =3D 0;
-@@ -1012,6 +1013,8 @@ int cmd_update_index(int argc, const char **argv,=
- const char *prefix)
- 			    N_("test if the filesystem supports untracked cache"), UC_TEST)=
-,
- 		OPT_SET_INT(0, "force-untracked-cache", &untracked_cache,
- 			    N_("enable untracked cache without testing the filesystem"), UC=
-_FORCE),
-+		OPT_BOOL(0, "watchman", &use_watchman,
-+			N_("use or not use watchman to reduce refresh cost")),
- 		OPT_END()
- 	};
-=20
-@@ -1149,6 +1152,19 @@ int cmd_update_index(int argc, const char **argv=
-, const char *prefix)
- 		die("Bug: bad untracked_cache value: %d", untracked_cache);
- 	}
-=20
-+	if (use_watchman > 0) {
-+		the_index.last_update    =3D xstrdup("");
-+		the_index.cache_changed |=3D WATCHMAN_CHANGED;
-+#ifndef USE_WATCHMAN
-+		warning("git was built without watchman support -- I'm "
-+			"adding the extension here, but it probably won't "
-+			"do you any good.");
-+#endif
-+	} else if (!use_watchman) {
-+		the_index.last_update    =3D NULL;
-+		the_index.cache_changed |=3D WATCHMAN_CHANGED;
++	if (git_config_key_is_valid(key) &&
++	    !git_config_get_value(key, &value)) {
++		int b = git_config_maybe_bool(key, value);
++		want = b >= 0 ? b : 0;
 +	}
++	return want;
++}
 +
- 	if (active_cache_changed) {
- 		if (newfd < 0) {
- 			if (refresh_args.flags & REFRESH_QUIET)
---=20
++static void autorun_index_helper(void)
++{
++	const char *argv[] = {"git-index-helper", "--detach", "--autorun", NULL};
++	if (want_auto_index_helper() <= 0)
++		return;
++
++	trace_argv_printf(argv, "trace: auto index-helper:");
++
++	if (run_command_v_opt(argv,
++			      RUN_SILENT_EXEC_FAILURE | RUN_CLEAN_ON_EXIT))
++		warning(_("You specified indexhelper.autorun, but running git-index-helper failed."));
++}
++
+ /* in ms */
+ #define WATCHMAN_TIMEOUT 1000
+ 
+@@ -1798,6 +1826,7 @@ static int poke_daemon(struct index_state *istate,
+ 	if (fd < 0) {
+ 		warning("Failed to connect to index-helper socket");
+ 		unlink(git_path("index-helper.sock"));
++		autorun_index_helper();
+ 		return -1;
+ 	}
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+@@ -1837,9 +1866,13 @@ static int try_shm(struct index_state *istate)
+ 	int fd = -1;
+ 
+ 	if (!is_main_index(istate) ||
+-	    old_size <= 20 ||
+-	    stat(git_path("index-helper.sock"), &st))
++	    old_size <= 20)
+ 		return -1;
++
++	if (stat(git_path("index-helper.sock"), &st)) {
++		autorun_index_helper();
++		return -1;
++	}
+ 	if (poke_daemon(istate, &st, 0))
+ 		return -1;
+ 	sha1 = (unsigned char *)istate->mmap + old_size - 20;
+diff --git a/t/t7900-index-helper.sh b/t/t7900-index-helper.sh
+index aa6e5fc..3cfdf63 100755
+--- a/t/t7900-index-helper.sh
++++ b/t/t7900-index-helper.sh
+@@ -16,6 +16,9 @@ test -n "$NO_MMAP" && {
+ }
+ 
+ test_expect_success 'index-helper smoke test' '
++	# We need an existing commit so that the index exists (otherwise,
++	# the index-helper will not be autostarted)
++	test_commit x &&
+ 	git index-helper --exit-after 1 &&
+ 	test_path_is_missing .git/index-helper.sock
+ '
+@@ -46,4 +49,21 @@ test_expect_success 'index-helper is quiet with --autorun' '
+ 	git index-helper --autorun
+ '
+ 
++test_expect_success 'index-helper autorun works' '
++	test_when_finished "git index-helper --kill" &&
++	rm -f .git/index-helper.sock &&
++	git status &&
++	test_path_is_missing .git/index-helper.sock &&
++	test_config indexhelper.autorun true &&
++	git status &&
++	test -S .git/index-helper.sock &&
++	git status 2>err &&
++	test -S .git/index-helper.sock &&
++	test_must_be_empty err &&
++	git index-helper --kill &&
++	test_config indexhelper.autorun false &&
++	git status &&
++	test_path_is_missing .git/index-helper.sock
++'
++
+ test_done
+-- 
 2.4.2.767.g62658d5-twtrsrc
