@@ -1,64 +1,91 @@
-From: Hin-Tak Leung <htl10@users.sourceforge.net>
-Subject: git svn clone cannot go beyond a specific rev on codeplex
-Date: Thu, 12 May 2016 21:38:05 +0000 (UTC)
-Message-ID: <1755662347.2265534.1463089085574.JavaMail.yahoo@mail.yahoo.com>
-References: <1755662347.2265534.1463089085574.JavaMail.yahoo.ref@mail.yahoo.com>
-Reply-To: Hin-Tak Leung <htl10@users.sourceforge.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: correct typo in example
+Date: Thu, 12 May 2016 14:52:01 -0700
+Message-ID: <xmqq7fezc5by.fsf@gitster.mtv.corp.google.com>
+References: <20160512213001.30822-1-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: <normalperson@yhbt.net>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 12 23:44:30 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu May 12 23:52:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0yPE-0003S2-K0
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 23:44:28 +0200
+	id 1b0yWi-0005M3-Ds
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 23:52:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751047AbcELVoY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2016 17:44:24 -0400
-Received: from nm2-vm3.bullet.mail.ir2.yahoo.com ([212.82.96.83]:56691 "EHLO
-	nm2-vm3.bullet.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750929AbcELVoX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 May 2016 17:44:23 -0400
-X-Greylist: delayed 375 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 May 2016 17:44:23 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1463089086; bh=qVc4Bza8R7VqLBwqA+cW1qEa8FIFyzMQ0wH1Mvj28JM=; h=Date:From:Reply-To:To:Cc:Subject:References:From:Subject; b=Bnp85YodUzieXSYznpuV9LqtxJh7RFDeKmG4KPBq12GVCj51t3BHtEL9DunSf67c//nhrhFg+l4L/uyYKV+vEh7EBNPB6NLCTRnO9FRSA9gQ+m5V8OUuyCcXLFPOu5oRxgk0B39GFc1dL4rB73p+IiIKTMF6+vGCiJCc4fj781vzIJOM/cbt7uafKUMJ45xeqgDnkqirvYBaE1MTTjmLqqYxqKROnoD6ZaQXqs024xcoDzKP2uuM7dJuFPxZgbxyx1khkQkEwRRPSJK8pQKIONUCbJzBN9sScYSDOueOUVDoif058/wnKYnWd3AfxRrqea3Hu3pj49VPfcMg41lMQg==
-Received: from [212.82.98.57] by nm2.bullet.mail.ir2.yahoo.com with NNFMP; 12 May 2016 21:38:06 -0000
-Received: from [212.82.98.94] by tm10.bullet.mail.ir2.yahoo.com with NNFMP; 12 May 2016 21:38:06 -0000
-Received: from [127.0.0.1] by omp1031.mail.ir2.yahoo.com with NNFMP; 12 May 2016 21:38:06 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 440057.48833.bm@omp1031.mail.ir2.yahoo.com
-X-YMail-OSG: Sxi0dz4VM1k_AuLA2l3K.iSTl_NteVlpSFZv6Ei5E2gCeQdHU7w3p_beno46BzS
- RaCjT60SkukmD8bsF6Dunq_oQsw4.xEEnhI0LzRHQx8_OlVY0IIk27IRSpdrBwFXpWTmJQVPcFEl
- Qrg_nhZkiXelkpwzdVoxJbTm5IVGBlZI7FNiINx9DCjydEnqQadGAc0fSHM14C.mbEJ0vtscoawe
- j9FOSi5S6q0YQanylSK27VPPKnCq9SSdAzmnHIOS7tZ2nmuYpQEYmAe1CJ5leC.ghgANIsIHOVZs
- vpj5ro4v5L4Chv1yycyltPu_coslbSAtijYIKdO6FyPSPRQ.NsHa4LyB8ZNI_GvhtEkQ.9owE_2N
- dlh9aY1xQdpaeIjXBwUiFLurYzbwN_T9pprVTInDguLvJ3f.QLHH7.GwEFCLn7KHE4eFoihvZ3iR
- em5il4QkX04Iaa9.aUTaJp7E88pK2C7zOd.S9tVFoLMB88xHd4OhIYm.XOAE9wPx6pTjDHcyiDHo
- xBJ1WuvRMaDz3wv4-
-Received: from jws11188.mail.ir2.yahoo.com by sendmailws164.mail.ir2.yahoo.com; Thu, 12 May 2016 21:38:05 +0000; 1463089085.852
+	id S1751167AbcELVwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 17:52:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58243 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751111AbcELVwG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 17:52:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E62FE1B02E;
+	Thu, 12 May 2016 17:52:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IDeRzHZn9ztzvLeDb6Cn5B5MVsI=; b=p+DonN
+	4NXlErQDSoNc0ziGxEifDMKmajJykY2/xl5I41oHw9lHGMIX5vI2TKvaAIEnPgTn
+	IC0F5U+fTdJZnZkTs/HnMo2ZFqGWoKVyxJ8AqzXR34j5keoCTk+9tQvhaPD+8pvp
+	zoVnWfMAsgBJG2vDfBQJgfvTKP7pVuq3kJ3s4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=w6oAL4q38IcdF8zwTCyjZ/KXsW3OBEGF
+	5BTQNfgtPMIA8SsZgzS+/dwfNUtLO05+1HnteQIBlXgTcTSk7f6Qa5/ahwkN0HcR
+	a1mzukyeq03+YXv71jfBxYpdL9PYT82UeqKZysI6qAWFQ3qKiYd/xccsNxgkHyv3
+	1ZZRpoEofEE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DD7BE1B02D;
+	Thu, 12 May 2016 17:52:03 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 521521B02C;
+	Thu, 12 May 2016 17:52:03 -0400 (EDT)
+In-Reply-To: <20160512213001.30822-1-sbeller@google.com> (Stefan Beller's
+	message of "Thu, 12 May 2016 14:30:01 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C30FFD4E-188B-11E6-ABE6-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294484>
 
-I tried bin-wrappers/ from current git HEAD.
+Stefan Beller <sbeller@google.com> writes:
 
-$ git describe
-v2.8.2-396-g5fe494c
+> The example want's to explain how 'To see how attributes "crlf" and
+> "indent" are set for different paths.'
+>
+> Spell the selected attribute correctly.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  Documentation/technical/api-gitattributes.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
+> index 2602668..0d7e98c 100644
+> --- a/Documentation/technical/api-gitattributes.txt
+> +++ b/Documentation/technical/api-gitattributes.txt
+> @@ -74,7 +74,7 @@ static void setup_check(void)
+>  	if (check[0].attr)
+>  		return; /* already done */
+>  	check[0].attr = git_attr("crlf");
+> -	check[1].attr = git_attr("ident");
+> +	check[1].attr = git_attr("indent");
+>  }
+>  ------------
 
-bin-wrappers/git svn clone https://ironpython.svn.codeplex.com/svn ironpython-old-codeplex
+Technically the text and code after this patch is more "correct".
 
-always fails at this rev:
+Back when I wrote the original, 530e741c (Start preparing the API
+documents., 2007-11-24), however, I did mean to use "ident", iow,
+the introductory text has typo, and the code sample is correct.
+There wasn't any "indent" attribute that is natively recognised by
+Git back then for git_attr("indent") would have made sense, either.
 
-	M	Src/Tests/test_re.py
-r7605 = e581bc66eda2b86bf46681191034844c4ba7d7a5 (refs/remotes/git-svn)
-Connection reset by peer: Error running context: Connection reset by peer at /home/Nobak-Hin-Tak/tmp-git/git/perl/blib/lib/Git/SVN/Ra.pm line 312.
-
-I am sure there are later revs, as the web front end says so, but git svn clone/fetch does not seem to be able to get at it.
-
-(vger.kernel did not seem to like my posts a while ago - I hope situation has improved and this can go through...)
+So perhaps update the introductory text instead?
