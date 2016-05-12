@@ -1,126 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v10 03/20] pkt-line: add gentle version of packet_write
-Date: Thu, 12 May 2016 14:14:26 -0700
-Message-ID: <xmqqlh3fc72l.fsf@gitster.mtv.corp.google.com>
-References: <1463084415-19826-1-git-send-email-dturner@twopensource.com>
-	<1463084415-19826-4-git-send-email-dturner@twopensource.com>
+From: Joey Hess <id@joeyh.name>
+Subject: Re: proposal for extending smudge/clean filters with raw file access
+Date: Thu, 12 May 2016 17:17:52 -0400
+Message-ID: <20160512211752.GB10786@kitenet.net>
+References: <20160512182432.GA27427@kitenet.net>
+ <xmqq7fezdoe7.fsf@gitster.mtv.corp.google.com>
+ <20160512204634.GA9292@kitenet.net>
+ <xmqqy47fc7y7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, pclouds@gmail.com
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu May 12 23:14:35 2016
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="EuxKj2iCbKjpUGkD"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 12 23:18:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0xwI-0007qB-GK
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 23:14:34 +0200
+	id 1b0xzj-0003w9-KN
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 23:18:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751883AbcELVOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2016 17:14:30 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65367 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751330AbcELVOa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 17:14:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B026F1B745;
-	Thu, 12 May 2016 17:14:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gCWEGQ9p4ahJiJDfGMVVD5sb2q4=; b=CtRf0k
-	cJ5NTCMkSY3RUYz1mRPgPkOawx9RCKVw0idbQCdHOLWdfF8JU2c0kNeX0Sax+0PG
-	yYnMG4qkC5GxPwMxPwbrqnvzwOT0OZKBb7Vy3w8otWnCdvnkCWuzLhKxAVPcE54O
-	LLfuEinv/IRjuTEX7GeUulaU0JnnZtPVhm1Lw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mWm2vxZHHIGSJQuvYzOTICn082O+2TyM
-	8UL9BzqBgFqPc/UhEz4028QCcEkUTU5VsaCIjSBdLVvk/5craZJtEYG9Uhk35G/O
-	5cWCu2CzpPNNnrLMQImiQFDbBIi3tcJpslQnPNI19JZAQtipKsTrDvMbd4m7sX5g
-	Beg63MhT/iQ=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A727B1B744;
-	Thu, 12 May 2016 17:14:28 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29A131B743;
-	Thu, 12 May 2016 17:14:28 -0400 (EDT)
-In-Reply-To: <1463084415-19826-4-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Thu, 12 May 2016 16:19:58 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 82E0D838-1886-11E6-8A96-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1751970AbcELVSD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 17:18:03 -0400
+Received: from kitenet.net ([66.228.36.95]:46402 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751330AbcELVSC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 17:18:02 -0400
+X-Question: 42
+Authentication-Results: kitenet.net;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=WN1NcAoX;
+	dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+	t=1463087872; bh=krcQlvumI4Kt+tURjglm000hnzHhjyJfdurO6ic50Ro=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WN1NcAoXFmbSqcLwac7QveXfOb3wvCUdz/ZY7sLZZ4kZL0ddEgepJhpWJ2BVoc63G
+	 K5Qq7/HIIA2BmhSasA+8VHMQkQu7qR+vv2U2iwooEDP451kBj4OuAgiKfjxNG5bxeB
+	 kVSrUVWlQU/+8dGU7ohulQMeZPQPrlXxlPqdYVlM=
+Content-Disposition: inline
+In-Reply-To: <xmqqy47fc7y7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+X-Spam-Status: No, score=-95.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_PBL,RCVD_IN_SORBS_DUL,
+	RDNS_DYNAMIC,SPF_SOFTFAIL,USER_IN_WHITELIST autolearn=no autolearn_force=no
+	version=3.4.1
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on kite.kitenet.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294480>
 
-David Turner <dturner@twopensource.com> writes:
 
-> packet_write calls write_or_die, which dies with a sigpipe even if
-> calling code has explicitly blocked that signal.
->
-> Add packet_write_gently and packet_flush_gently, which don't.  Soon,
-> we will use this for communication with git index-helper, which, being
-> merely an optimization, should be permitted to die without disrupting
-> clients.
->
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
+--EuxKj2iCbKjpUGkD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Looks quite sensible.  Thanks.
+Junio C Hamano wrote:
+> > Secondly, and harder to get around, the filename passed to the clean
+> > filter is not necessarily a path to the actual existing file that is
+> > being cleaned.
+>=20
+> Either one of us is confused.  I was talking about updating the
+> current "clean" implementation without changing its interface,
+> i.e. gets fed via its standard input, expected to respond to its
+> standard output.  There is no filename involved.
 
->  pkt-line.c | 18 ++++++++++++++++++
->  pkt-line.h |  2 ++
->  2 files changed, 20 insertions(+)
->
-> diff --git a/pkt-line.c b/pkt-line.c
-> index 62fdb37..f964446 100644
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -91,6 +91,12 @@ void packet_flush(int fd)
->  	write_or_die(fd, "0000", 4);
->  }
->  
-> +int packet_flush_gently(int fd)
-> +{
-> +	packet_trace("0000", 4, 1);
-> +	return write_in_full(fd, "0000", 4) != 4;
-> +}
-> +
->  void packet_buf_flush(struct strbuf *buf)
->  {
->  	packet_trace("0000", 4, 1);
-> @@ -130,6 +136,18 @@ void packet_write(int fd, const char *fmt, ...)
->  	write_or_die(fd, buf.buf, buf.len);
->  }
->  
-> +int packet_write_gently(int fd, const char *fmt, ...)
-> +{
-> +	static struct strbuf buf = STRBUF_INIT;
-> +	va_list args;
-> +
-> +	strbuf_reset(&buf);
-> +	va_start(args, fmt);
-> +	format_packet(&buf, fmt, args);
-> +	va_end(args);
-> +	return write_in_full(fd, buf.buf, buf.len) != buf.len;
-> +}
-> +
->  void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
->  {
->  	va_list args;
-> diff --git a/pkt-line.h b/pkt-line.h
-> index 3cb9d91..deffcb5 100644
-> --- a/pkt-line.h
-> +++ b/pkt-line.h
-> @@ -20,7 +20,9 @@
->   * side can't, we stay with pure read/write interfaces.
->   */
->  void packet_flush(int fd);
-> +int packet_flush_gently(int fd);
->  void packet_write(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-> +int packet_write_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
->  void packet_buf_flush(struct strbuf *buf);
->  void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+I'm talking about the %f that can be passed to the clean filter.
+The context that I left out is that my clean filter could avoid reading
+all of stdin, and quickly produce the cleaned result, but only if it
+can examine the file that's being cleaned. Which is not currently
+entirely safe to use the %f for.
+
+There may be a way to make a clean filter that can do something useful
+without reading all of stdin, and without examining the file that's
+being cleaned. Maybe. Hard to see how. I don't feel such a hypothetical
+clean filter is worth changing the current EPIPE behavior to support.
+
+So I think it's better to add a separate clean-from-fs and keep the
+current clean filter interface as it stands.
+
+--=20
+see shy jo
+
+--EuxKj2iCbKjpUGkD
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIVAwUBVzTzAMkQ2SIlEuPHAQKZhw/+Kkac811yFDx3POwE3ZfpeV3LejU/t5lY
+Bok4V/zWrL5R1TtSSdK6xyDLvtR1oGIMYjnJYm/fv02qzDzwpQWqpH1LlsS3FdKn
+u+MxPlVRPaS2rNxQGAWY390qOfIa11ybtIZBXWgYw+ih6aJWCDDTKWbuAI3PXRbn
+CgX7ssrcbeUIuk5V1rAHZkRw7Hc7gu8eaMkfFCfbtWvjvZQJpvhrIW+Z+JOn27TM
+4wudsYaS47ktd2p/Pqp+KelGSSbPwYRqy20zdN8N/yHRH8szGMjg1JRLD9lWjQTk
+WPcI5/+m/yTJ0uPzsQ5AEQ81CAl5XlL9n3E0qtxCdi5Fi66RONQffO4gvcXtwK3+
+f1nnRnFnG2UE0QFT6NJfsIlV1FNNI96gKkVGu+zMSmzefmFQ7IGPL8t2uZY1QsX2
+MHF/vlyGn2NI/go1tfmExuNM1DIkzTU7ROuDjDHA2IfNVeuLxf53TmfL3Cw51CAj
+5hIwEU6CEOFTCv4m/NdMBasN3EfRP2E1XSA9jjMIOZihU9O6ccC6CE/ntOJrTzXP
+xgkuOLsYnPsKH92LQXUjD5gUw7+osVobzYCUdMPBL3Cn+nKAZiQgJzNd6lE2t5QK
+XkNwWge/NeQoNNhyPdo1FWky0NG7V+NBFm6fKsHe2fRP7x/050WEfO9FV7HY3k9N
+QvinUaWvOl0=
+=7O3Z
+-----END PGP SIGNATURE-----
+
+--EuxKj2iCbKjpUGkD--
