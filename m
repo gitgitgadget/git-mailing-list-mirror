@@ -1,225 +1,166 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v10 05/20] index-helper: add --strict
-Date: Thu, 12 May 2016 16:20:00 -0400
-Message-ID: <1463084415-19826-6-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v10 12/20] update-index: enable/disable watchman support
+Date: Thu, 12 May 2016 16:20:07 -0400
+Message-ID: <1463084415-19826-13-git-send-email-dturner@twopensource.com>
 References: <1463084415-19826-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu May 12 22:21:29 2016
+X-From: git-owner@vger.kernel.org Thu May 12 22:21:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0x6t-0005ZL-1N
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:21:27 +0200
+	id 1b0x6k-0005OJ-Pc
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:21:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751844AbcELUVX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 May 2016 16:21:23 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:33515 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750933AbcELUUc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 16:20:32 -0400
-Received: by mail-io0-f178.google.com with SMTP id f89so108979439ioi.0
-        for <git@vger.kernel.org>; Thu, 12 May 2016 13:20:31 -0700 (PDT)
+	id S1751832AbcELUVN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 May 2016 16:21:13 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:35021 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751732AbcELUUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 16:20:48 -0400
+Received: by mail-ig0-f179.google.com with SMTP id bi2so185171023igb.0
+        for <git@vger.kernel.org>; Thu, 12 May 2016 13:20:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IPWsgT4qqQsp+HjVTZZ/YrIAkKupfHD37voBg9MywTE=;
-        b=0gzwZ3Nxr4XUpNhXkG9dFIvQcngI/sRugsLKFsa3Vyhtl4Pv5OKyUYLuZriR4TjscR
-         cf4fl0FqmB6+0nXN0T8m1Av4e28li+AHW0SuJ76kw38+gBRDAy6yUY/B9u4CrD8bh/PI
-         ipYGIJe0YhfVQ7bj4TafjLxARUElcXPCw0ramt+MxlwOJIydwVsQBiaXL+DVXv/gntfQ
-         ZwSUj8cTtRcM08rpO5QJN9JwCmb9W1h0tOcp4td7QEyw0Zod3BLrtay4/7OBGonEv0q1
-         6RLokDWWBPf4Q1I6LbnqHpdBGOJYGXh8n6fkqiBoaTqk7SqZcjoEloij1msxD2onmTal
-         1pjg==
+        bh=DSr2DGtyMt6TUopcmYTDQ2btCuOfdB6/kMtI5ERbNfM=;
+        b=kICX6uVPSuGPXAm6qnhezNNtug7izJW5jcKTb3T/iSA0ETeYikjyAoTkP4y76jx1/7
+         BM8hP69jGVacu2YvKuE11DgLIxBZVT04uz+PIEEy6PbySZ6pbwuc7Q2qYC0R3wzNRDq2
+         J4YuqkEU/Ad8LL8BoHEvGzxrc+QLv78oyIEaFy47zrwK+rFnxKW0yNFQoh672wL/KfG3
+         XxkOTC5S3F5wYrpxhA8AJl5ZJAoTBjBUJe05vcIYNI0qcv6gkMGrPxRrAEugorXuRp3q
+         OUqBmSRHUQ+iQWWPclexXvoy3XofGINihtgLiYb3lmcNrqJhJINjDRiHOoQALcuguvD4
+         bH/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IPWsgT4qqQsp+HjVTZZ/YrIAkKupfHD37voBg9MywTE=;
-        b=cmFlHvr9LzyVh8fk3K+Ia6d/GWlds8ycXX3rAlvbrosmpYsZ8QcUXO5FJh2yJP3wfh
-         ZP34ysHAe1Kp6uY02d4EthxDK2OuVtur23cmzUCM7mJQRJRREsNon7TRE5vhQlGCrGYH
-         NNRmRekXGuI0301G4VKztubgsdE0a2Dr+e9eqOXWTWchFB4299dsoqqAzjKkH43sttXn
-         vArbHGIvDTeKRPdafFEfTK+dRxGa+9sZ7zS9WDosIIbKsbTUOa9Lk3n096PPxGNPXhDN
-         3elSXxBpo3+3OCMUHV7ay4rU787ooP7/G+TV27Ywkosh1HExDtvd4s2NK3lQYbgX01BZ
-         hHBA==
-X-Gm-Message-State: AOPr4FUv2MDMoN+m/3p58LgotzOv1lI8OwQ9OCralm1OjtHB4bj2GeUrxYaBLz22LUjpcw==
-X-Received: by 10.107.183.209 with SMTP id h200mr9518120iof.127.1463084430408;
-        Thu, 12 May 2016 13:20:30 -0700 (PDT)
+        bh=DSr2DGtyMt6TUopcmYTDQ2btCuOfdB6/kMtI5ERbNfM=;
+        b=GpgT3LkWj7w7H8mv6zTRzgogpzEA+j13hMVMec03W98MakyUPe6WpvxJ6tNgcodcXg
+         DBbKm5iR0580M0z3oTSPWeR+0Q0pCpnOOcMV14Q2fh0stLiSe1Rs9WZpRlgnAd6Lb9Mg
+         pt5IZDFJPa6WUWkT0OEpdTrVUHaDozTWMGRcGRJUEKFBSrM3gmiJpSvlgaMBKPuwSc58
+         Jk7CFuk0DOadn61Ig4xc8uCoXzVafRfv2JTRjyKuKlWFlPThMQg+Xsr4PNAvDIFT9tRk
+         N7zAa68SMbOdXHqYsXWrIa2visHf/jINjMoPiahXM4Mze4OmZ5ufc1t/LO42lyF/b/sU
+         eDlg==
+X-Gm-Message-State: AOPr4FUL0FxBpGAvvKO8g1xPBOFSkTr7mczMEKe0FIusk91TM4MH9X7vZ4eC9IJbG2NfBw==
+X-Received: by 10.50.176.134 with SMTP id ci6mr9802304igc.32.1463084442725;
+        Thu, 12 May 2016 13:20:42 -0700 (PDT)
 Received: from twopensource.com ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id s8sm5055496igg.17.2016.05.12.13.20.28
+        by smtp.gmail.com with ESMTPSA id s8sm5055496igg.17.2016.05.12.13.20.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 May 2016 13:20:29 -0700 (PDT)
+        Thu, 12 May 2016 13:20:41 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1463084415-19826-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294466>
 
 =46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
-
-There are "holes" in the index-helper approach because the shared
-memory is not verified again by git. If $USER is compromised, shared
-memory could be modified. But anyone who could do this could already
-modify $GIT_DIR/index. A more realistic risk is some bugs in
-index-helper that produce corrupt shared memory. --strict is added to
-avoid that.
-
-Strictly speaking there's still a very small gap where corrupt shared
-memory could still be read by git: after we write the trailing SHA-1 in
-the shared memory (thus signaling "this shm is ready") and before
-verify_shm() detects an error.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Documentation/git-index-helper.txt |  9 +++++++
- cache.h                            |  1 +
- index-helper.c                     | 48 ++++++++++++++++++++++++++++++=
-++++++++
- read-cache.c                       |  9 ++++---
- 4 files changed, 64 insertions(+), 3 deletions(-)
+ Documentation/git-index-helper.txt |  3 +++
+ Documentation/git-update-index.txt |  6 ++++++
+ builtin/update-index.c             | 16 ++++++++++++++++
+ 3 files changed, 25 insertions(+)
 
 diff --git a/Documentation/git-index-helper.txt b/Documentation/git-ind=
 ex-helper.txt
-index f892184..1f92c89 100644
+index cce00cb..55a8a5a 100644
 --- a/Documentation/git-index-helper.txt
 +++ b/Documentation/git-index-helper.txt
-@@ -25,6 +25,15 @@ OPTIONS
- 	Exit if the cached index is not accessed for `<n>`
- 	seconds. Specify 0 to wait forever. Default is 600.
+@@ -18,6 +18,9 @@ each with a submodule, you might need four index-help=
+ers.  (In practice,
+ this is only worthwhile for large indexes, so only use it if you notic=
+e
+ that git status is slow).
 =20
-+--strict::
-+--no-strict::
-+	Strict mode makes index-helper verify the shared memory after
-+	it's created. If the result does not match what's read from
-+	$GIT_DIR/index, the shared memory is destroyed. This makes
-+	index-helper take more than double the amount of time required
-+	for reading an index, but because it will happen in the
-+	background, it's not noticable. `--strict` is enabled by default.
++If you want the index-helper to accelerate untracked file checking,
++run git update-index --watchman before using it.
 +
- NOTES
- -----
+ OPTIONS
+ -------
 =20
-diff --git a/cache.h b/cache.h
-index 2d7af6f..6cb0d02 100644
---- a/cache.h
-+++ b/cache.h
-@@ -345,6 +345,7 @@ struct index_state {
- 		  * on it.
- 		  */
- 		 to_shm : 1,
-+		 always_verify_trailing_sha1 : 1,
- 		 initialized : 1;
- 	struct hashmap name_hash;
- 	struct hashmap dir_hash;
-diff --git a/index-helper.c b/index-helper.c
-index b9443f4..bc7e110 100644
---- a/index-helper.c
-+++ b/index-helper.c
-@@ -17,6 +17,7 @@ struct shm {
-=20
- static struct shm shm_index;
- static struct shm shm_base_index;
-+static int to_verify =3D 1;
-=20
- static void release_index_shm(struct shm *is)
- {
-@@ -114,11 +115,56 @@ static void share_index(struct index_state *istat=
-e, struct shm *is)
- 	hashcpy((unsigned char *)new_mmap + istate->mmap_size - 20, is->sha1)=
-;
- }
-=20
-+static int verify_shm(void)
-+{
-+	int i;
-+	struct index_state istate;
-+	memset(&istate, 0, sizeof(istate));
-+	istate.always_verify_trailing_sha1 =3D 1;
-+	istate.to_shm =3D 1;
-+	i =3D read_index(&istate);
-+	if (i !=3D the_index.cache_nr)
-+		goto done;
-+	for (; i < the_index.cache_nr; i++) {
-+		struct cache_entry *base, *ce;
-+		/* namelen is checked separately */
-+		const unsigned int ondisk_flags =3D
-+			CE_STAGEMASK | CE_VALID | CE_EXTENDED_FLAGS;
-+		unsigned int ce_flags, base_flags, ret;
-+		base =3D the_index.cache[i];
-+		ce =3D istate.cache[i];
-+		if (ce->ce_namelen !=3D base->ce_namelen ||
-+		    strcmp(ce->name, base->name)) {
-+			warning("mismatch at entry %d", i);
-+			break;
-+		}
-+		ce_flags =3D ce->ce_flags;
-+		base_flags =3D base->ce_flags;
-+		/* only on-disk flags matter */
-+		ce->ce_flags   &=3D ondisk_flags;
-+		base->ce_flags &=3D ondisk_flags;
-+		ret =3D memcmp(&ce->ce_stat_data, &base->ce_stat_data,
-+			     offsetof(struct cache_entry, name) -
-+			     offsetof(struct cache_entry, ce_stat_data));
-+		ce->ce_flags =3D ce_flags;
-+		base->ce_flags =3D base_flags;
-+		if (ret) {
-+			warning("mismatch at entry %d", i);
-+			break;
-+		}
-+	}
-+done:
-+	discard_index(&istate);
-+	return i =3D=3D the_index.cache_nr;
-+}
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-upd=
+ate-index.txt
+index c6cbed1..6736487 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -19,6 +19,7 @@ SYNOPSIS
+ 	     [--ignore-submodules]
+ 	     [--[no-]split-index]
+ 	     [--[no-|test-|force-]untracked-cache]
++	     [--[no-]watchman]
+ 	     [--really-refresh] [--unresolve] [--again | -g]
+ 	     [--info-only] [--index-info]
+ 	     [-z] [--stdin] [--index-version <n>]
+@@ -176,6 +177,11 @@ may not support it yet.
+ --no-untracked-cache::
+ 	Enable or disable untracked cache feature. Please use
+ 	`--test-untracked-cache` before enabling it.
 +
- static void share_the_index(void)
++--watchman::
++--no-watchman::
++	Enable or disable watchman support. This is, at present,
++	only useful with git index-helper.
+ +
+ These options take effect whatever the value of the `core.untrackedCac=
+he`
+ configuration variable (see linkgit:git-config[1]). But a warning is
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 1c94ca5..a3b4b5d 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -914,6 +914,7 @@ int cmd_update_index(int argc, const char **argv, c=
+onst char *prefix)
  {
- 	if (the_index.split_index && the_index.split_index->base)
- 		share_index(the_index.split_index->base, &shm_base_index);
- 	share_index(&the_index, &shm_index);
-+	if (to_verify && !verify_shm())
-+		cleanup_shm();
- 	discard_index(&the_index);
- }
-=20
-@@ -247,6 +293,8 @@ int main(int argc, char **argv)
- 	struct option options[] =3D {
- 		OPT_INTEGER(0, "exit-after", &idle_in_seconds,
- 			    N_("exit if not used after some seconds")),
-+		OPT_BOOL(0, "strict", &to_verify,
-+			 "verify shared memory after creating"),
+ 	int newfd, entries, has_errors =3D 0, nul_term_line =3D 0;
+ 	enum uc_mode untracked_cache =3D UC_UNSPECIFIED;
++	int use_watchman =3D -1;
+ 	int read_from_stdin =3D 0;
+ 	int prefix_length =3D prefix ? strlen(prefix) : 0;
+ 	int preferred_index_format =3D 0;
+@@ -1012,6 +1013,8 @@ int cmd_update_index(int argc, const char **argv,=
+ const char *prefix)
+ 			    N_("test if the filesystem supports untracked cache"), UC_TEST)=
+,
+ 		OPT_SET_INT(0, "force-untracked-cache", &untracked_cache,
+ 			    N_("enable untracked cache without testing the filesystem"), UC=
+_FORCE),
++		OPT_BOOL(0, "watchman", &use_watchman,
++			N_("use or not use watchman to reduce refresh cost")),
  		OPT_END()
  	};
 =20
-diff --git a/read-cache.c b/read-cache.c
-index e3c8f3e..41647ea 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1674,9 +1674,12 @@ int do_read_index(struct index_state *istate, co=
-nst char *path, int must_exist)
+@@ -1149,6 +1152,19 @@ int cmd_update_index(int argc, const char **argv=
+, const char *prefix)
+ 		die("Bug: bad untracked_cache value: %d", untracked_cache);
+ 	}
 =20
- 	istate->mmap =3D mmap;
- 	istate->mmap_size =3D mmap_size;
--	if (try_shm(istate) &&
--	    verify_hdr(istate->mmap, istate->mmap_size) < 0)
--		goto unmap;
-+	if (try_shm(istate)) {
-+		if (verify_hdr(istate->mmap, istate->mmap_size) < 0)
-+			goto unmap;
-+	} else if (istate->always_verify_trailing_sha1 &&
-+		   verify_hdr(istate->mmap, istate->mmap_size) < 0)
-+			goto unmap;
- 	hdr =3D mmap =3D istate->mmap;
- 	mmap_size =3D istate->mmap_size;
- 	if (!istate->keep_mmap)
++	if (use_watchman > 0) {
++		the_index.last_update    =3D xstrdup("");
++		the_index.cache_changed |=3D WATCHMAN_CHANGED;
++#ifndef USE_WATCHMAN
++		warning("git was built without watchman support -- I'm "
++			"adding the extension here, but it probably won't "
++			"do you any good.");
++#endif
++	} else if (!use_watchman) {
++		the_index.last_update    =3D NULL;
++		the_index.cache_changed |=3D WATCHMAN_CHANGED;
++	}
++
+ 	if (active_cache_changed) {
+ 		if (newfd < 0) {
+ 			if (refresh_args.flags & REFRESH_QUIET)
 --=20
 2.4.2.767.g62658d5-twtrsrc
