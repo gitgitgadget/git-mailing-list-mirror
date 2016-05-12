@@ -1,63 +1,156 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/2] Work on t3404 in preparation for rebase--helper
-Date: Thu, 12 May 2016 09:21:58 -0700
-Message-ID: <xmqq8tzfgsbd.fsf@gitster.mtv.corp.google.com>
-References: <cover.1462888768.git.johannes.schindelin@gmx.de>
-	<cover.1463067811.git.johannes.schindelin@gmx.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 0/7] submodule groups
+Date: Thu, 12 May 2016 09:35:43 -0700
+Message-ID: <CAGZ79kZHbAiP13rC+VLnFUtoxPZEcyx_wkrxfKb+cGBxQaojZQ@mail.gmail.com>
+References: <1462928397-1708-1-git-send-email-sbeller@google.com>
+	<xmqq37pnj04f.fsf@gitster.mtv.corp.google.com>
+	<xmqqoa8bgten.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 12 18:22:15 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 12 18:35:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0tNJ-0006cB-EV
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 18:22:09 +0200
+	id 1b0taW-000598-NB
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 18:35:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752195AbcELQWF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2016 12:22:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51115 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751614AbcELQWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 12:22:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 669B91A539;
-	Thu, 12 May 2016 12:22:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Puq+32NM487oA3yP4eO/vkQPZfo=; b=Vhpaxp
-	fysqF87xdA1JmQeZO0Tq+aCZ3YAC/6U9Z4usUrjUSdxmR8X4mxB0crPCKa09BZ8i
-	5HwdDEFdViMlSF12KGhzLmbmjp6CaV+m1lym/DvNtF75YxpR0YM+uq007fgHouQo
-	AxoMVbpa3r1KrQcFiSky3TbM2OYFKqVVw4lpA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NH3PYvWGsZfcIJA8g9arI5p4Q0YnhUn+
-	fRMKm6pE9ug7SA1J2v0OZh6hKWb9a49Gl5afBRbBXx0GK7WrqYcbDsorzlw4VVjx
-	mce6wTNmxUj83q0DEXc0WWKiS+a8yHgagid9nonF7r4Dhorlziee68AjBz/9VnK9
-	xneSSF/FQ9A=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5EE571A538;
-	Thu, 12 May 2016 12:22:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4F1D81A536;
-	Thu, 12 May 2016 12:22:01 -0400 (EDT)
-In-Reply-To: <cover.1463067811.git.johannes.schindelin@gmx.de> (Johannes
-	Schindelin's message of "Thu, 12 May 2016 17:43:54 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A833BA2A-185D-11E6-9E89-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1752279AbcELQfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 12:35:45 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:36202 "EHLO
+	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752172AbcELQfo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 12:35:44 -0400
+Received: by mail-io0-f182.google.com with SMTP id i75so96632409ioa.3
+        for <git@vger.kernel.org>; Thu, 12 May 2016 09:35:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=011ByLakQqs+qrx79EtQrqQfrnV5vNYmELOQ8trq/eI=;
+        b=HnZZny1htIvmTrAEJcLa03Oy/IL263JwRFxSDRwxT2ZLjucYOTg6d8GiY4pys0BlTF
+         LfN4hmjsWeRbpuLPHMniJifEctZoSPCPUvG3Ip4cEuxafbhMnVEkqF6ZbjxlzyNK5Nkx
+         sgQSqHOHCLk3mMl1wpbkIWBD3XXLnJZPugn0bmjL5DusDvDyGEcgYHqKfFbM7/QjuB9d
+         pLuxLRiu0o6uOrcXeFolOTyDyREZf7tfrRTP8wEa55blG7JWqXRk9h6nCzdL0MZK3aOh
+         oMbUtOLnuS/17vBg4rmrGfIZPhjxhlPXkbdf/TSapBfz55pfkSBMe1CbMHyu9BCr7HW5
+         orfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=011ByLakQqs+qrx79EtQrqQfrnV5vNYmELOQ8trq/eI=;
+        b=G/HsDioGuBShd5mpc+lfL7RPfPzLfHPgR5EziMaCNwbo49hAgKYz88yWkGUn9KS3if
+         wTXfWlbiqcOwmlUh+Ngmhm1SS2WIydJO/OTjTXeCZiRgMdmIbMmbQSuGwea3keWuF8V7
+         WZY9OXV6jnOeZg074Gi3bwB0TyG45Z7rc6YomwyiIgdJdyAKbDVyqaptQ78zfCcibexE
+         X84vsJvBNvhyqFAihJXJaiB5S3trDhPL9JUcaYa4IPpWJ1u1retBYXYBcYDckI1ViU8W
+         ikU4vjOjAzy2vd3C1Plw2KR10SDlOc+tgTrlK45Dxx3Oyuas9HkQ3EDP1LxERaZh8DBU
+         DJ2Q==
+X-Gm-Message-State: AOPr4FXUNqwxChRZ/qy+YsFxUEmvjA32NX90vxvunsFcjg4Iw59O6zx0sgeOOP96U4rVKNv2wi3GU2IeIOy7RWBN
+X-Received: by 10.36.62.133 with SMTP id s127mr7436643its.98.1463070943553;
+ Thu, 12 May 2016 09:35:43 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Thu, 12 May 2016 09:35:43 -0700 (PDT)
+In-Reply-To: <xmqqoa8bgten.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294417>
 
-I took these separately already, and plan to fast-track them as they
-are both "trivially correct"; I double checked that what I have
-match these two, too.
+On Thu, May 12, 2016 at 8:58 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> The reason why I suspect that this may not work well with submodule
+>> labels is because submodule labels (or any attribute we give via
+>> .gitmodules to a submodule) are keyed by a submodule name, which is
+>> the primary unchanging key (so that people can "mv" a submodule in
+>> the context of the toplevel superproject without losing track of
+>> submodule identity), not by paths to submodules, while the "group"
+>> thing I want is merely a short-hand for pathspec elements and wants
+>> to be keyed by paths.
+>>
+>> But there may be somebody more clever than I who can come up with a
+>> way to unify these two similar concepts without confusing end users.
+>
+> Thinking about this even more, if there is no requirement that
+> labels must be tied to submodule names, we just can scrap the idea
+> of "submodule labels" to group things and instead just use "path
+> labels", i.e. write the full path to the submodule and assign it a
+> label in .gitattributes and use it in place of where we used *label
+> in the patch series.  After all, an easy way to choose some among
+> many submodules logically is a subset of an easy way to choose some
+> among many paths.
+>
+> The only reason why we added the submodule label to .gitmodules is
+> because we viewed it as submodule-specific thing and the "keyed by
+> name, not path" came as a consequence, not because any real "we must
+> key it by name because..." reason, I would think.
+>
+> I know this is a huge departure from the design presented both at
+> the conceptual level and also at the implementation level, and that
+> is one of the reasons why I do not particularly want to like it, but
+> on the other hand, I am not bold enough to say that I will have a
+> good answer when later somebody asks "Why can we group only
+> submodules with labels, but not random group of paths (e.g. 'these
+> directories are about documentation')?"  And then, if we add path
+> labels to allow expressing groups of paths later, the follow-up
+> question would be "When should I use submodule labels and when
+> should I use path labels?  I can use path labels to group submodules
+> and say 'git submodule update -- :(group=docs)' can't I?".
+>
+> And that makes me pause and step back from the "submodule labels"
+> idea.
+>
 
-Thanks.
+It sounds better at first (and I haven't thought further).
+So if we were to go with this idea:
+
+Label paths (or even pathspecs?) in the .gitattributes file.
+
+I think it is important to keep the property of defining the labeling
+in the tree, so you can follow upstream easier.
+
+I tried coming up with an example for labels for generic paths,
+but it looks like most of the time it is a substitution for a pathspec,
+I did not find a convincing example which makes it easier to use.
+
+`:(group=docs)` in the non submodule case could be expressed
+as `Documentation/**`. Well maybe we also want to include README
+and some other files which need to stay outside the Documentation
+directory, so I can see how it may be useful.
+
+We do not need a special labeling command. We do not
+ship with a command which writes the .gitattributes or .gitignore
+for you, and labels don't require this. So I could drop the patch
+for "submodule add --label".
+
+We can still keep the submodule.defaultGroup. (In the WIP I renamed
+it to updateGroup as its only feature is to have it set during clone
+and remebered for `git submodule update`)
+
+When we allow labels to be generic path labels instead of submodule
+labels, the user might be tempted to ask, why the submodules can
+be specified but not the individual paths, i.e.
+
+    git clone --init-submodule="(:group=docs)" ...
+
+may strongly hint at:
+
+    git clone --narrow="(:group=docs)" ...
+
+would only get parts of the repository.
+
+For the submodule case, this may add confusion as the user would
+need to configure some properties in the .gitmodules file and some
+in the .gitattributes file.
+
+I think I'll try implementing a mock and see how much code it is for
+a more fundamental pathspec extension.
+
+Thanks,
+Stefan
