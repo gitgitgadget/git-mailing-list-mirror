@@ -1,81 +1,126 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 0/7] i18n miscellaneous updates
-Date: Thu, 12 May 2016 14:10:39 -0700
-Message-ID: <xmqqposrc78w.fsf@gitster.mtv.corp.google.com>
-References: <1461071964-323-1-git-send-email-vascomalmeida@sapo.pt>
-	<1463083168-29213-1-git-send-email-vascomalmeida@sapo.pt>
+Subject: Re: [PATCH v10 03/20] pkt-line: add gentle version of packet_write
+Date: Thu, 12 May 2016 14:14:26 -0700
+Message-ID: <xmqqlh3fc72l.fsf@gitster.mtv.corp.google.com>
+References: <1463084415-19826-1-git-send-email-dturner@twopensource.com>
+	<1463084415-19826-4-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Vasco Almeida <vascomalmeida@sapo.pt>
-X-From: git-owner@vger.kernel.org Thu May 12 23:10:51 2016
+Cc: git@vger.kernel.org, pclouds@gmail.com
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu May 12 23:14:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0xsh-0002vX-18
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 23:10:51 +0200
+	id 1b0xwI-0007qB-GK
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 23:14:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752167AbcELVKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2016 17:10:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61818 "EHLO
+	id S1751883AbcELVOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 17:14:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65367 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751330AbcELVKo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 17:10:44 -0400
+	with ESMTP id S1751330AbcELVOa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 17:14:30 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4DC361AADB;
-	Thu, 12 May 2016 17:10:43 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B026F1B745;
+	Thu, 12 May 2016 17:14:28 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LPeDrYScrSjFvkjW89l/o9RpkIw=; b=wM22YQ
-	4UaTiuRrH9ClhDJ5/wq4br5udKvNVjY9BloR0FcoM5pbwIXKuRkXXAM2VxDbR4MU
-	HfOe7pZUq0ww7ni86Ifuu0Med1QNPgdsjwBRsaSAXAyf3uOKP+d+Umsa0+ATVHIL
-	pCZpyoSKHYxRsfTR30NPnnNi735/KoOa7zDbg=
+	:content-type; s=sasl; bh=gCWEGQ9p4ahJiJDfGMVVD5sb2q4=; b=CtRf0k
+	cJ5NTCMkSY3RUYz1mRPgPkOawx9RCKVw0idbQCdHOLWdfF8JU2c0kNeX0Sax+0PG
+	yYnMG4qkC5GxPwMxPwbrqnvzwOT0OZKBb7Vy3w8otWnCdvnkCWuzLhKxAVPcE54O
+	LLfuEinv/IRjuTEX7GeUulaU0JnnZtPVhm1Lw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PyvbL6hZ3a5HEpMTEU6eNWR3p/GKhUIJ
-	TQgk3MuRfS2kXyPBeJTXffGrQwlBB7QOFyyEiaSsrvBHTXoACmgn2ybeRX2SRkuq
-	25xjawcQ3fPH92GwAb06PIF3VIHKmuALRuP35Z3ZiTnf9K477PZtKyTqXcHiu246
-	/8bKtoxEOro=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 46ADF1AADA;
-	Thu, 12 May 2016 17:10:43 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=mWm2vxZHHIGSJQuvYzOTICn082O+2TyM
+	8UL9BzqBgFqPc/UhEz4028QCcEkUTU5VsaCIjSBdLVvk/5craZJtEYG9Uhk35G/O
+	5cWCu2CzpPNNnrLMQImiQFDbBIi3tcJpslQnPNI19JZAQtipKsTrDvMbd4m7sX5g
+	Beg63MhT/iQ=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A727B1B744;
+	Thu, 12 May 2016 17:14:28 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BF0131AAD7;
-	Thu, 12 May 2016 17:10:42 -0400 (EDT)
-In-Reply-To: <1463083168-29213-1-git-send-email-vascomalmeida@sapo.pt> (Vasco
-	Almeida's message of "Thu, 12 May 2016 19:59:21 +0000")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29A131B743;
+	Thu, 12 May 2016 17:14:28 -0400 (EDT)
+In-Reply-To: <1463084415-19826-4-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Thu, 12 May 2016 16:19:58 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FC896A48-1885-11E6-B95F-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 82E0D838-1886-11E6-8A96-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294479>
 
-Vasco Almeida <vascomalmeida@sapo.pt> writes:
+David Turner <dturner@twopensource.com> writes:
 
-> This re-roll upadates patch
->   i18n: unpack-trees: mark strings for translation
+> packet_write calls write_or_die, which dies with a sigpipe even if
+> calling code has explicitly blocked that signal.
+>
+> Add packet_write_gently and packet_flush_gently, which don't.  Soon,
+> we will use this for communication with git index-helper, which, being
+> merely an optimization, should be permitted to die without disrupting
+> clients.
+>
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
 
-Sorry, unfortunately you cannot take them back anymore.  These from
-the previous round are already in 'next'.
+Looks quite sensible.  Thanks.
 
-    daf9f64 i18n: builtin/pull.c: split strings marked for translation
-    8a0de58 i18n: builtin/pull.c: mark placeholders for translation
-    045fac5 i18n: git-parse-remote.sh: mark strings for translation
-    60ea78b i18n: branch: move comment for translators
-    2010aab i18n: branch: unmark string for translation
-    8ae51c4 i18n: builtin/rm.c: remove a comma ',' from string
-    ed47fdf i18n: unpack-trees: mark strings for translation
-    ab86885 i18n: builtin/branch.c: mark option for translation
-    71d99b8 i18n: index-pack: use plural string instead of normal one
-
-I think the update to unpack-trees.c (v4 2/7) makes more sense than
-what was in ed47fdf, so perhaps you can send it in as an incremental
-update (and others changes made since the commits listed above)?
-
-Thanks.
+>  pkt-line.c | 18 ++++++++++++++++++
+>  pkt-line.h |  2 ++
+>  2 files changed, 20 insertions(+)
+>
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 62fdb37..f964446 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -91,6 +91,12 @@ void packet_flush(int fd)
+>  	write_or_die(fd, "0000", 4);
+>  }
+>  
+> +int packet_flush_gently(int fd)
+> +{
+> +	packet_trace("0000", 4, 1);
+> +	return write_in_full(fd, "0000", 4) != 4;
+> +}
+> +
+>  void packet_buf_flush(struct strbuf *buf)
+>  {
+>  	packet_trace("0000", 4, 1);
+> @@ -130,6 +136,18 @@ void packet_write(int fd, const char *fmt, ...)
+>  	write_or_die(fd, buf.buf, buf.len);
+>  }
+>  
+> +int packet_write_gently(int fd, const char *fmt, ...)
+> +{
+> +	static struct strbuf buf = STRBUF_INIT;
+> +	va_list args;
+> +
+> +	strbuf_reset(&buf);
+> +	va_start(args, fmt);
+> +	format_packet(&buf, fmt, args);
+> +	va_end(args);
+> +	return write_in_full(fd, buf.buf, buf.len) != buf.len;
+> +}
+> +
+>  void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+>  {
+>  	va_list args;
+> diff --git a/pkt-line.h b/pkt-line.h
+> index 3cb9d91..deffcb5 100644
+> --- a/pkt-line.h
+> +++ b/pkt-line.h
+> @@ -20,7 +20,9 @@
+>   * side can't, we stay with pure read/write interfaces.
+>   */
+>  void packet_flush(int fd);
+> +int packet_flush_gently(int fd);
+>  void packet_write(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+> +int packet_write_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+>  void packet_buf_flush(struct strbuf *buf);
+>  void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
