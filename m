@@ -1,101 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/7] submodule groups
-Date: Thu, 12 May 2016 08:58:24 -0700
-Message-ID: <xmqqoa8bgten.fsf@gitster.mtv.corp.google.com>
-References: <1462928397-1708-1-git-send-email-sbeller@google.com>
-	<xmqq37pnj04f.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v2 1/2] t3404: fix typo
+Date: Thu, 12 May 2016 17:44:01 +0200 (CEST)
+Message-ID: <79ea39ba9583465cdd6e908dcd7ef056591d941e.1463067811.git.johannes.schindelin@gmx.de>
+References: <cover.1462888768.git.johannes.schindelin@gmx.de> <cover.1463067811.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: jrnieder@gmail.com, Jens.Lehmann@web.de, git@vger.kernel.org,
-	pclouds@gmail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu May 12 17:58:33 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 17:59:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0t0S-0004PO-Rq
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 17:58:33 +0200
+	id 1b0t1G-0005Gq-BP
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 17:59:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932140AbcELP63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2016 11:58:29 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59837 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751912AbcELP62 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 11:58:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 50BC0188EB;
-	Thu, 12 May 2016 11:58:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=od9J0HfmJGN+xg45g4IUkNX4svE=; b=KlT0lA
-	0uf4AfEmWPYrCjdJKoQ/iQ7xmKw0Bh+ViMBqn5OC+dVGs88uk+H+SF91tKGcf7ee
-	+Ij3UUqnv1y8/co/7LxdEkcnlbhHNjeTDKuvjU7D9pbM9B2ofehXHwJz3nLuGlJv
-	cym5EczsmFPX8XnaYCI/eYgpw9x7KiWxXEotM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SSrum9jfQrDAQWKrOp+qTHjbwogqCCY3
-	fe0wJym2wZbi4hRCRrDdFFR/bGQL66M8fQs6mX9Q+c5fWMBHOofdN3vvqti7b8HD
-	hqukz3IIXIrZfW1hG92d3gghcByaEJ7SMlofNsz4jYEtMFoVniM77ovr7pEwXI6c
-	zy0iUGVW1m0=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 47CE6188EA;
-	Thu, 12 May 2016 11:58:27 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C05BF188E9;
-	Thu, 12 May 2016 11:58:26 -0400 (EDT)
-In-Reply-To: <xmqq37pnj04f.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 11 May 2016 22:50:24 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5D033E20-185A-11E6-894D-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S932144AbcELP7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 11:59:18 -0400
+Received: from mout.gmx.net ([212.227.15.18]:55917 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751891AbcELP7R (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 11:59:17 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LxgHz-1bhPxn2xsB-017HZC; Thu, 12 May 2016 17:59:08
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <cover.1463067811.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:epIAP9UYiNJk9EAdDwXDZ8blUQbIpK1mlnsMsUtf5PWNTuLZTP8
+ z+rSfR24VMBtZ80W9TOonOvx66YjU/76Lb/NzguJJ/zsmpyjRaCUO/7QuWgNRbao0bVrSX5
+ mwSExClO0uOF9ZRlhS0vx2M+4yUAZ0KBsXUhzW9KGQL1b1IgbDRTnE0RbMjRw7zL9IyJpaX
+ Sg1Vfuuq9DmzsuBHObLLg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:X+7kHkLED4M=:ykyX5FYn1KPWTr3BKjARts
+ 05alvLw5cq6qYIkerYKSNauc8Zn3ucxJ+3l/L+jjpQWsV0uUZyNGdWxzfGjMrfEhG4TITrxVN
+ nQwVU4lcSEP4OmT5fK6XR+lvcTaWIbkDlYcTdOZ4it08K5D9NzWDjPNvvRO81jPStinZ58L6T
+ BrZQBvWkYW66CotazDuK8uGk3ixXPJw9oxG7Vruv2lp/dpkiylEAHSJGLR0w2a+kEH+wVEEA/
+ dP7pw2UvYzn2HXXb+um2GBfZTn9g2dSpTGyg2KjzDGZev2p1sZSC1Zmxx0EhQqQ53mADMyPN0
+ QH9uH/Odluy7CmZn3jbAau4PAkE5igZ7k2k4qAljpaN3op6G8Og3vVzboZ/MPGvF49TvlxUni
+ c7MPl/ivypoK/bSpM00zbB35jGq7MC7oSTAyVjQGsz6eH6ulOa2BcE7dc51Vklh9xEU07QeeJ
+ W1wmg2ISV9HtWuB7Q8nNs690UPuM544ShVn3S9UDNmprTAO6ZjRtKuUGuCfmyc0roiydiwzA1
+ lGStvno2ISH4rivJXAGmzgnyDvaSbL25jzpy9TICvwQVHbEisSRKUuJFaZdLj2ZLVnu0hxlgV
+ ICU2qcNvjfess6FsacN9zxMYNWd72s4+lTuJwNavFv1n38DzvyBxUnAq/+WScLRS17UP9Ik9t
+ tnylfU0v+TaICfXfZ0TX65irxq8TbCOK/w0PzBStkfj7xpelWw1ggWdzEdYI2E6oYFhLS2A5U
+ I77k34T9/YL3wsojxaFh55nZIQz8WhdYNkY9CY3yClZrzj6FtcUyLH2Xlx4aR8eDIc/iivE8 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294411>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t3404-rebase-interactive.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> The reason why I suspect that this may not work well with submodule
-> labels is because submodule labels (or any attribute we give via
-> .gitmodules to a submodule) are keyed by a submodule name, which is
-> the primary unchanging key (so that people can "mv" a submodule in
-> the context of the toplevel superproject without losing track of
-> submodule identity), not by paths to submodules, while the "group"
-> thing I want is merely a short-hand for pathspec elements and wants
-> to be keyed by paths.
->
-> But there may be somebody more clever than I who can come up with a
-> way to unify these two similar concepts without confusing end users.
-
-Thinking about this even more, if there is no requirement that
-labels must be tied to submodule names, we just can scrap the idea
-of "submodule labels" to group things and instead just use "path
-labels", i.e. write the full path to the submodule and assign it a
-label in .gitattributes and use it in place of where we used *label
-in the patch series.  After all, an easy way to choose some among
-many submodules logically is a subset of an easy way to choose some
-among many paths.
-
-The only reason why we added the submodule label to .gitmodules is
-because we viewed it as submodule-specific thing and the "keyed by
-name, not path" came as a consequence, not because any real "we must
-key it by name because..." reason, I would think.
-
-I know this is a huge departure from the design presented both at
-the conceptual level and also at the implementation level, and that
-is one of the reasons why I do not particularly want to like it, but
-on the other hand, I am not bold enough to say that I will have a
-good answer when later somebody asks "Why can we group only
-submodules with labels, but not random group of paths (e.g. 'these
-directories are about documentation')?"  And then, if we add path
-labels to allow expressing groups of paths later, the follow-up
-question would be "When should I use submodule labels and when
-should I use path labels?  I can use path labels to group submodules
-and say 'git submodule update -- :(group=docs)' can't I?".
-
-And that makes me pause and step back from the "submodule labels"
-idea.
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index d96d0e4..66348f1 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -62,7 +62,7 @@ test_expect_success 'setup' '
+ 
+ # "exec" commands are ran with the user shell by default, but this may
+ # be non-POSIX. For example, if SHELL=zsh then ">file" doesn't work
+-# to create a file. Unseting SHELL avoids such non-portable behavior
++# to create a file. Unsetting SHELL avoids such non-portable behavior
+ # in tests. It must be exported for it to take effect where needed.
+ SHELL=
+ export SHELL
+-- 
+2.8.2.465.gb077790
