@@ -1,115 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: t0008 test fails with ksh
-Date: Thu, 12 May 2016 14:20:55 -0400
-Message-ID: <20160512182055.GB13886@sigill.intra.peff.net>
-References: <CALR6jEjWjJA0X2qXsxqObqc_yxrgX87LYf8cmJ0MmJFF6PkmTQ@mail.gmail.com>
+From: Joey Hess <id@joeyh.name>
+Subject: proposal for extending smudge/clean filters with raw file access
+Date: Thu, 12 May 2016 14:24:32 -0400
+Message-ID: <20160512182432.GA27427@kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>
-To: Armin Kunaschik <megabreit@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu May 12 20:21:05 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 20:24:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0vEM-00041L-Hd
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 20:21:02 +0200
+	id 1b0vHy-0000Pt-7q
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 20:24:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752103AbcELSU6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2016 14:20:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38692 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751693AbcELSU6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 14:20:58 -0400
-Received: (qmail 1662 invoked by uid 102); 12 May 2016 18:20:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 12 May 2016 14:20:57 -0400
-Received: (qmail 12110 invoked by uid 107); 12 May 2016 18:20:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 12 May 2016 14:20:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 May 2016 14:20:55 -0400
+	id S1752198AbcELSYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2016 14:24:42 -0400
+Received: from kitenet.net ([66.228.36.95]:41244 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752130AbcELSYm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 May 2016 14:24:42 -0400
+X-Question: 42
+Authentication-Results: kitenet.net;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=dXuNJbg7;
+	dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+	t=1463077472; bh=LoX4NqMGowiRyp3xHGGMPnAKnDD5WNK95LkDAC3nB38=;
+	h=Date:From:To:Subject:From;
+	b=dXuNJbg7vdRMXpgynpbCwHwxaQY6BGIULYyw3Oz90lUm7HZ8tSZERnPqd32cDFPaM
+	 +KiOPk3RjhOM4qbPqToK4rlrk8KLwfRe7JOk/I14JK6bkP6arYjr75SAzLTThWqK3G
+	 NN9sItPcHyaYezqH0fN0SdFMJv9AmtdQ2h3IXVQg=
 Content-Disposition: inline
-In-Reply-To: <CALR6jEjWjJA0X2qXsxqObqc_yxrgX87LYf8cmJ0MmJFF6PkmTQ@mail.gmail.com>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+X-Spam-Status: No, score=-95.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_PBL,
+	RCVD_IN_SORBS_DUL,RDNS_DYNAMIC,SPF_SOFTFAIL,USER_IN_WHITELIST autolearn=no
+	autolearn_force=no version=3.4.1
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on kite.kitenet.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294425>
 
-On Thu, May 12, 2016 at 07:53:28PM +0200, Armin Kunaschik wrote:
+I'm using smudge/clean filters in git-annex now, and it's not been an
+entirely smooth fit between the interface and what git-annex wants
+to do.
 
-> The reason seems that the snippet
-> cat <<-EOF >expected-all
->         .gitignore:1:one        ../one
->         ::      ../not-ignored
->         .gitignore:1:one        one
->         ::      not-ignored
->         a/b/.gitignore:8:!on*   b/on
->         a/b/.gitignore:8:!on*   b/one
->         a/b/.gitignore:8:!on*   b/one one
->         a/b/.gitignore:8:!on*   b/one two
->         a/b/.gitignore:8:!on*   "b/one\"three"
->         a/b/.gitignore:9:!two   b/two
->         ::      b/not-ignored
->         a/.gitignore:1:two*     b/twooo
->         $global_excludes:2:!globaltwo   ../globaltwo
->         $global_excludes:2:!globaltwo   globaltwo
->         $global_excludes:2:!globaltwo   b/globaltwo
->         $global_excludes:2:!globaltwo   ../b/globaltwo
->         ::      c/not-ignored
-> EOF
-> 
-> behaves differently in bash and in ksh.
->         a/b/.gitignore:8:!on*   "b/one\"three" comes out unmodified
-> with bash but with ksh it becomes
->         a/b/.gitignore:8:!on*   "b/one"three"
-> I'm not sure what shell is "wrong" here, but when I modify the line to
->         a/b/.gitignore:8:!on*   "b/one\\"three"
-> both shells generate the "right" output:
->         a/b/.gitignore:8:!on*   "b/one\"three"
-> 
-> From what I've learned I'd expect the double backslash to be the
-> "right" way to escape one
-> backslash. Do you agree or am I wrong?
-> 
-> This snippet appears twice in this test, generates expected-all and
-> expected-verbose.
+The clean filter has to consume the whole file content on stdin;
+not reading it all will make git think the clean filter failed.
+But, git-annex often doesn't need to read the whole content of a
+work-tree file in order to clean it.
 
-I think either is reasonable (there is no need to backslash-escape a
-double-quote inside a here-doc, but one assumes that backslash would
-generally have its usual behavior). I'm not quite sure how to interpret
-POSIX here (see below), but it seems clear that spelling it with two
-backslashes as you suggest is the best bet.
+The smudge filter has to output the whole file content to stdout. But
+git-annex often has the file's content on disk already, and could just
+move it into place in the working tree. This would save CPU and IO and
+often disk space too. But the smudge interface doesn't let git-annex use
+the efficient approach.
 
-For the curious, here's what POSIX says (in the section on
-here-documents; "word" here refers to the EOF word):
+So I propose extending the filter driver with two more optional
+commands. Call them raw-clean and raw-smudge for now.
 
-  If no characters in word are quoted, all lines of the here-document
-  shall be expanded for parameter expansion, command substitution, and
-  arithmetic expansion. In this case, the backslash in the input behaves
-  as the backslash inside double-quotes (see Double-Quotes). However,
-  the double-quote character ( '"' ) shall not be treated specially
-  within a here-document, except when the double-quote appears within
-  "$()", "``", or "${}".
+raw-clean would be like clean, but rather than being fed the whole
+content of a large file on stdin, it would be passed the filename, and
+can access the file itself. Like the clean filter, it outputs the
+cleaned version on stdout.
 
-So OK, that sounds like ksh is doing the right thing. But what's that
-"specially" in the last sentence? Do they just mean it doesn't start a
-quoted section as it would elsewhere? Or do they mean in the section on
-Double-Quotes, when they say:
+raw-smudge would be like smudge, but rather than needing to output the
+whole content of a large file on stdout, it would be passed a filename,
+and can create that file itself.
 
-  \
-      The backslash shall retain its special meaning as an escape
-      character (see Escape Character (Backslash)) only when followed by
-      one of the following characters when considered special:
+To keep this backwards compatible, and to handle the cases where the
+object being filtered is not a file on disk, the smudge and clean
+filters would be required to be configured too, in order for raw-clean
+and raw-smudge to be used.
 
-              $   `   "   \   <newline>
+It seems fairly easy to implement raw-clean. In sha1_file.c, index_path
+would use raw-clean when available, while index_fd etc keep on using
+the clean filter. I have not investigated what would be needed to implement
+raw-smudge yet.
 
-Since the double-quote isn't special here, does that mean that backslash
-shouldn't retain its special meaning in this case?  That would make bash
-right.
-
-Anyway, it doesn't really matter what the standard says. We can spell
-this in a less ambiguous way, and it does not hurt too much to do so.
-
--Peff
+-- 
+see shy jo
