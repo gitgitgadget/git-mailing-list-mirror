@@ -1,359 +1,143 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v10 09/20] read-cache: add watchman 'WAMA' extension
-Date: Thu, 12 May 2016 16:20:04 -0400
-Message-ID: <1463084415-19826-10-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v10 07/20] index-helper: add --detach
+Date: Thu, 12 May 2016 16:20:02 -0400
+Message-ID: <1463084415-19826-8-git-send-email-dturner@twopensource.com>
 References: <1463084415-19826-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu May 12 22:20:50 2016
+X-From: git-owner@vger.kernel.org Thu May 12 22:21:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0x6C-0004k4-O9
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:20:45 +0200
+	id 1b0x6V-0005AB-Qx
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 22:21:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751667AbcELUUk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 May 2016 16:20:40 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:34612 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751645AbcELUUi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 16:20:38 -0400
-Received: by mail-ig0-f171.google.com with SMTP id u5so27441660igk.1
-        for <git@vger.kernel.org>; Thu, 12 May 2016 13:20:37 -0700 (PDT)
+	id S1751720AbcELUUq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 May 2016 16:20:46 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:35871 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751652AbcELUUj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2016 16:20:39 -0400
+Received: by mail-ig0-f176.google.com with SMTP id lr7so62827866igb.1
+        for <git@vger.kernel.org>; Thu, 12 May 2016 13:20:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vwbCYNjNkB0iNxak2rFXOCNhw7JxQKasDF6yTKOGItA=;
-        b=zjcuc9S+qpVxNDIBIxFBgxImEJ9Xc+n7ejWm0JzaiOT7bBDLtHiXkGRky/LqxcerBW
-         gY8YrPyVZ5xdPSXvUhyM2byp6Fyl9f8jh2b3AANvlN1QwmffwSj6u8q79TRFJ8UIFZaR
-         eJEur5AJlvYl2WmLD9A+I9q95Fcc+SvUiMVVU+kCSm7aoIZlRDxj7GgLgTQsAuQHHjmI
-         QZ3cSmcNG5uc5Ptw/DCj1RoFUuHXel3pnucW/uUKhLCQ7FP8YFN4qGF6ScTM/PFFjpg2
-         mL8zES1qvWHxmJWnqqWjuGhsRZC2e2JDSY3kGBxKGp2/8OJQyKrOc0G3lQfd4t0j5/1W
-         Zr4w==
+        bh=iL+1qvclEU9Aea6/XYAw6QGJAyYx/ZYUWflUFiUJUd8=;
+        b=ViGLYT+b66Ka06mjDOs573tVece0pG4TW2R3GI9wT0GV7SYqAgosbIRuPnWaoOEV9Y
+         QS6856WbWEz32I+B2hE2L1J6PBP5KzXgYv2pWOZgS2/MOgcv5a8gyVSiTkuz/cwP0qoG
+         W9SrawsMKgUUBruWa7g4gnw3FnKTQTz7YeHtOoWtRkQ3/MjT8bnafifXwE7GboJ+WZHC
+         Fyx5itb4iW4cqTuK93WksyTxOdMljJP/wVwDmwVRvGl+zTLvlY93EBCcreo2W2TN23hp
+         TwE+oK1IoAqt3KI4EVjnyvWBRKdH+6SFbQTuN/eBcaVGSwPrftH7lG2pL10J1ugca6GQ
+         AnOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vwbCYNjNkB0iNxak2rFXOCNhw7JxQKasDF6yTKOGItA=;
-        b=d9XWLXPkqkd+MgvF+472q0ypQiHDm/DENyzsqM8HneJ9F7Jz+6eXSO3VZ/4OYXppwN
-         lo/obBKLAkTxqViL/l4hzGboWcCdDEIguPylO4lzOWvophr+WTVL/PqC4DypKVHS9Iq3
-         q4OAo/TMCETv4k9dPstnUkGYT/x94OjjG0ggIeTayCjqPdanH31NmYr+On+XZVtMRosa
-         Vy84I2UHkNz9q8RVDBoYPrOzQxFyAG2en+PE31M+NJNqHecRnoyTuCMWLETAUSictsEI
-         East1Om4A7H0O/x8InoH/Dvu2pdOl4y1mW+l0LBEXRlfC1KmyOdNNvjZ7pS1pF7dap17
-         rCMA==
-X-Gm-Message-State: AOPr4FUvC6PHzBtR3OcD72I8GRCaYo3R786L7Bitnp7lLOTLMH5ZMByp//Ete7c6BfrVWQ==
-X-Received: by 10.50.97.5 with SMTP id dw5mr9086707igb.82.1463084436884;
-        Thu, 12 May 2016 13:20:36 -0700 (PDT)
+        bh=iL+1qvclEU9Aea6/XYAw6QGJAyYx/ZYUWflUFiUJUd8=;
+        b=ip19gSCU0VHlcOxNW0dbWtvVmIipsQFNmyho9I4PFMmCWHDU6/XAvwsvWYazz6eHo9
+         c2p27wtxYecZ8J6/LBHfaTZlMlMp37+RVIRHdFoR68wfhgjG/O/9I71F6kTRlaLqPMy7
+         C1GNLL1Q2qu18LjIYpAAO++j9dCxP5FeVHDcf7H+EuzvkvmOm19Ogipwd2yX0DSVzQdZ
+         M2zP/8xca8wIsrsMrmFhue/JGMedqYPvbF+Rm3UGzDwXhC5rbjv+EDujAhG9TGk4jEJ4
+         cFZlnmEmHMECx1gn5GPv7cDBrfGC5ydUwqPcxq+O6QhdP5RHshyJbZwWBPU3Vr8VyDkq
+         2WfQ==
+X-Gm-Message-State: AOPr4FVg7wYnQmvvRe4Rzb/nHe8epR2AfJbuP9zPhu6Mmj3gTefuJiT7n5TSm3RCHzTcFA==
+X-Received: by 10.50.3.73 with SMTP id a9mr27427973iga.22.1463084433616;
+        Thu, 12 May 2016 13:20:33 -0700 (PDT)
 Received: from twopensource.com ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id s8sm5055496igg.17.2016.05.12.13.20.35
+        by smtp.gmail.com with ESMTPSA id s8sm5055496igg.17.2016.05.12.13.20.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 May 2016 13:20:35 -0700 (PDT)
+        Thu, 12 May 2016 13:20:32 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1463084415-19826-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294456>
 
 =46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
-The extension contains a bitmap, one bit for each entry in the
-index. If the n-th bit is zero, the n-th entry is considered
-unchanged, we can ce_mark_uptodate() it without refreshing. If the bit
-is non-zero and we found out the corresponding file is clean after
-refresh, we can clear the bit.
-
-In addition, there's a list of directories in the untracked-cache
-to invalidate (because they have new or modified entries).
-
-The 'skipping refresh' bit is not in this patch yet as we would need
-watchman. More details in later patches.
+We detach after creating and opening the socket, because otherwise
+we might return control to the shell before index-helper is ready to
+accept commands.  This might lead to flaky tests.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Documentation/technical/index-format.txt |  22 ++++++
- cache.h                                  |   4 ++
- dir.h                                    |   3 +
- read-cache.c                             | 117 +++++++++++++++++++++++=
-+++++++-
- 4 files changed, 144 insertions(+), 2 deletions(-)
+ Documentation/git-index-helper.txt | 3 +++
+ index-helper.c                     | 9 +++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/technical/index-format.txt b/Documentation/t=
-echnical/index-format.txt
-index ade0b0c..86ed3a6 100644
---- a/Documentation/technical/index-format.txt
-+++ b/Documentation/technical/index-format.txt
-@@ -295,3 +295,25 @@ The remaining data of each directory block is grou=
-ped by type:
-     in the previous ewah bitmap.
+diff --git a/Documentation/git-index-helper.txt b/Documentation/git-ind=
+ex-helper.txt
+index 1f92c89..f853960 100644
+--- a/Documentation/git-index-helper.txt
++++ b/Documentation/git-index-helper.txt
+@@ -34,6 +34,9 @@ OPTIONS
+ 	for reading an index, but because it will happen in the
+ 	background, it's not noticable. `--strict` is enabled by default.
 =20
-   - One NUL.
++--detach::
++	Detach from the shell.
 +
-+=3D=3D Watchman cache
-+
-+  The watchman cache tracks files for which watchman has told us about
-+  changes.  The signature for this extension is { 'W', 'A', 'M', 'A' }=
-=2E
-+
-+  The extension starts with
-+
-+  - A NUL-terminated string: the watchman vector clock at the last
-+    time we heard from watchman.
-+
-+  - 32-bit bitmap size: the size of the CE_WATCHMAN_DIRTY bitmap
-+
-+  - 32-bit untracked cache entry count: the number of dirty untracked
-+    cache entries
-+
-+  - An ewah bitmap, the n-th bit indicates whether the n-th index entr=
-y
-+    is CE_WATCHMAN_DIRTY.
-+
-+  - a list of N NUL-terminated strings.  Each is a directory that shou=
-ld
-+    be marked dirty in the untracked cache because watchman has told u=
-s
-+    about an update to a file in it.
-diff --git a/cache.h b/cache.h
-index 4c1529a..f10992d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -182,6 +182,8 @@ struct cache_entry {
- #define CE_VALID     (0x8000)
- #define CE_STAGESHIFT 12
+ NOTES
+ -----
 =20
-+#define CE_WATCHMAN_DIRTY  (0x0001)
-+
- /*
-  * Range 0xFFFF0FFF in ce_flags is divided into
-  * two parts: in-memory flags and on-disk ones.
-@@ -320,6 +322,7 @@ static inline unsigned int canon_mode(unsigned int =
-mode)
- #define CACHE_TREE_CHANGED	(1 << 5)
- #define SPLIT_INDEX_ORDERED	(1 << 6)
- #define UNTRACKED_CHANGED	(1 << 7)
-+#define WATCHMAN_CHANGED	(1 << 8)
+diff --git a/index-helper.c b/index-helper.c
+index bc7e110..65abfd0 100644
+--- a/index-helper.c
++++ b/index-helper.c
+@@ -17,7 +17,7 @@ struct shm {
 =20
- struct split_index;
- struct untracked_cache;
-@@ -353,6 +356,7 @@ struct index_state {
- 	struct untracked_cache *untracked;
- 	void *mmap;
- 	size_t mmap_size;
-+	char *last_update;
- };
+ static struct shm shm_index;
+ static struct shm shm_base_index;
+-static int to_verify =3D 1;
++static int daemonized, to_verify =3D 1;
 =20
- extern struct index_state the_index;
-diff --git a/dir.h b/dir.h
-index 3ec3fb0..3d540de 100644
---- a/dir.h
-+++ b/dir.h
-@@ -142,6 +142,9 @@ struct untracked_cache {
- 	int gitignore_invalidated;
- 	int dir_invalidated;
- 	int dir_opened;
-+	/* watchman invalidation data */
-+	unsigned int use_watchman : 1;
-+	struct string_list invalid_untracked;
- };
-=20
- struct dir_struct {
-diff --git a/read-cache.c b/read-cache.c
-index 41647ea..1719f5a 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -21,6 +21,7 @@
- #include "unix-socket.h"
- #include "pkt-line.h"
- #include "sigchain.h"
-+#include "ewah/ewok.h"
-=20
- static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
- 					       unsigned int options);
-@@ -43,11 +44,13 @@ static struct cache_entry *refresh_cache_entry(stru=
-ct cache_entry *ce,
- #define CACHE_EXT_RESOLVE_UNDO 0x52455543 /* "REUC" */
- #define CACHE_EXT_LINK 0x6c696e6b	  /* "link" */
- #define CACHE_EXT_UNTRACKED 0x554E5452	  /* "UNTR" */
-+#define CACHE_EXT_WATCHMAN 0x57414D41	  /* "WAMA" */
-=20
- /* changes that can be kept in $GIT_DIR/index (basically all extension=
-s) */
- #define EXTMASK (RESOLVE_UNDO_CHANGED | CACHE_TREE_CHANGED | \
- 		 CE_ENTRY_ADDED | CE_ENTRY_REMOVED | CE_ENTRY_CHANGED | \
--		 SPLIT_INDEX_ORDERED | UNTRACKED_CHANGED)
-+		 SPLIT_INDEX_ORDERED | UNTRACKED_CHANGED | \
-+		 WATCHMAN_CHANGED)
-=20
- struct index_state the_index;
- static const char *alternate_index_output;
-@@ -1222,8 +1225,13 @@ int refresh_index(struct index_state *istate, un=
-signed int flags,
- 			continue;
-=20
- 		new =3D refresh_cache_ent(istate, ce, options, &cache_errno, &change=
-d);
--		if (new =3D=3D ce)
-+		if (new =3D=3D ce) {
-+			if (ce->ce_flags & CE_WATCHMAN_DIRTY) {
-+				ce->ce_flags          &=3D ~CE_WATCHMAN_DIRTY;
-+				istate->cache_changed |=3D WATCHMAN_CHANGED;
-+			}
- 			continue;
-+		}
- 		if (!new) {
- 			const char *fmt;
-=20
-@@ -1367,6 +1375,94 @@ static int verify_hdr(const struct cache_header =
-*hdr, unsigned long size)
- 	return 0;
- }
-=20
-+static void mark_no_watchman(size_t pos, void *data)
-+{
-+	struct index_state *istate =3D data;
-+	assert(pos < istate->cache_nr);
-+	istate->cache[pos]->ce_flags |=3D CE_WATCHMAN_DIRTY;
-+}
-+
-+static int read_watchman_ext(struct index_state *istate, const void *d=
-ata,
-+			     unsigned long sz)
-+{
-+	struct ewah_bitmap *bitmap;
-+	int ret, len;
-+	uint32_t bitmap_size;
-+	uint32_t untracked_nr;
-+
-+	if (memchr(data, 0, sz) =3D=3D NULL)
-+		return error("invalid extension");
-+
-+	len =3D strlen(data) + 1;
-+	memcpy(&bitmap_size, (const char *)data + len, 4);
-+	memcpy(&untracked_nr, (const char *)data + len + 4, 4);
-+	untracked_nr =3D ntohl(untracked_nr);
-+	bitmap_size =3D ntohl(bitmap_size);
-+
-+	bitmap =3D ewah_new();
-+	ret =3D ewah_read_mmap(bitmap, (const char *)data + len + 8, bitmap_s=
-ize);
-+	if (ret !=3D bitmap_size) {
-+		ewah_free(bitmap);
-+		return error("failed to parse ewah bitmap reading watchman index ext=
-ension");
-+	}
-+	istate->last_update =3D xstrdup(data);
-+	ewah_each_bit(bitmap, mark_no_watchman, istate);
-+	ewah_free(bitmap);
-+
-+	/*
-+	 * TODO: update the untracked cache from the untracked data in this
-+	 * extension.
-+	 */
-+	return 0;
-+}
-+
-+static int untracked_entry_append(struct string_list_item *item, void =
-*sbvoid)
-+{
-+	struct strbuf *sb =3D sbvoid;
-+
-+	strbuf_addstr(sb, item->string);
-+	strbuf_addch(sb, 0);
-+	return 0;
-+}
-+
-+void write_watchman_ext(struct strbuf *sb, struct index_state *istate)
-+{
-+	struct ewah_bitmap *bitmap;
-+	int i;
-+	int ewah_start;
-+	int ewah_size =3D 0;
-+	int fixup =3D 0;
-+
-+	strbuf_add(sb, istate->last_update, strlen(istate->last_update) + 1);
-+	fixup =3D sb->len;
-+	strbuf_add(sb, &ewah_size, 4); /* we'll fix this up later */
-+	if (istate->untracked) {
-+		uint32_t nr =3D istate->untracked->invalid_untracked.nr;
-+		nr =3D htonl(nr);
-+		strbuf_add(sb, &nr, 4);
-+	} else {
-+		/* zero */
-+		strbuf_add(sb, &ewah_size, 4);
-+	}
-+
-+	ewah_start =3D sb->len;
-+	bitmap =3D ewah_new();
-+	for (i =3D 0; i < istate->cache_nr; i++)
-+		if (istate->cache[i]->ce_flags & CE_WATCHMAN_DIRTY)
-+			ewah_set(bitmap, i);
-+	ewah_serialize_strbuf(bitmap, sb);
-+	ewah_free(bitmap);
-+
-+	/* fix up size field */
-+	ewah_size =3D sb->len - ewah_start;
-+	ewah_size =3D htonl(ewah_size);
-+	memcpy(sb->buf + fixup, &ewah_size, 4);
-+
-+	if (istate->untracked)
-+		for_each_string_list(&istate->untracked->invalid_untracked,
-+				     untracked_entry_append, sb);
-+}
-+
- static int read_index_extension(struct index_state *istate,
- 				const char *ext, void *data, unsigned long sz)
+ static void release_index_shm(struct shm *is)
  {
-@@ -1384,6 +1480,11 @@ static int read_index_extension(struct index_sta=
-te *istate,
- 	case CACHE_EXT_UNTRACKED:
- 		istate->untracked =3D read_untracked_extension(data, sz);
- 		break;
-+
-+	case CACHE_EXT_WATCHMAN:
-+		read_watchman_ext(istate, data, sz);
-+		break;
-+
- 	default:
- 		if (*ext < 'A' || 'Z' < *ext)
- 			return error("index uses %.4s extension, which we do not understand=
-",
-@@ -1817,6 +1918,8 @@ int discard_index(struct index_state *istate)
- 	istate->untracked =3D NULL;
- 	istate->from_shm =3D 0;
- 	istate->to_shm   =3D 0;
-+	free(istate->last_update);
-+	istate->last_update =3D NULL;
- 	return 0;
+@@ -36,6 +36,8 @@ static void cleanup_shm(void)
+=20
+ static void cleanup(void)
+ {
++	if (daemonized)
++		return;
+ 	unlink(git_path("index-helper.sock"));
+ 	cleanup_shm();
  }
+@@ -287,7 +289,7 @@ static const char * const usage_text[] =3D {
+ int main(int argc, char **argv)
+ {
+ 	const char *prefix;
+-	int idle_in_seconds =3D 600;
++	int idle_in_seconds =3D 600, detach =3D 0;
+ 	int fd;
+ 	struct strbuf socket_path =3D STRBUF_INIT;
+ 	struct option options[] =3D {
+@@ -295,6 +297,7 @@ int main(int argc, char **argv)
+ 			    N_("exit if not used after some seconds")),
+ 		OPT_BOOL(0, "strict", &to_verify,
+ 			 "verify shared memory after creating"),
++		OPT_BOOL(0, "detach", &detach, "detach the process"),
+ 		OPT_END()
+ 	};
 =20
-@@ -2214,6 +2317,16 @@ static int do_write_index(struct index_state *is=
-tate, int newfd,
- 		if (err)
- 			return -1;
- 	}
-+	if (!strip_extensions && istate->last_update) {
-+		struct strbuf sb =3D STRBUF_INIT;
-+
-+		write_watchman_ext(&sb, istate);
-+		err =3D write_index_ext_header(&c, newfd, CACHE_EXT_WATCHMAN, sb.len=
-) < 0
-+			|| ce_write(&c, newfd, sb.buf, sb.len) < 0;
-+		strbuf_release(&sb);
-+		if (err)
-+			return -1;
-+	}
+@@ -318,6 +321,8 @@ int main(int argc, char **argv)
+ 	if (fd < 0)
+ 		die_errno(_("could not set up index-helper socket"));
 =20
- 	if (ce_flush(&c, newfd, istate->sha1) || fstat(newfd, &st))
- 		return -1;
++	if (detach && daemonize(&daemonized))
++		die_errno(_("unable to detach"));
+ 	loop(fd, idle_in_seconds);
+=20
+ 	close(fd);
 --=20
 2.4.2.767.g62658d5-twtrsrc
