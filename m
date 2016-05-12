@@ -1,58 +1,113 @@
-From: "Mrs. Marilyn Shaw" <dropkshete_jakne@goo.jp>
-Subject: Dearest One Please Be Honest,
-Date: Thu, 12 May 2016 18:08:57 +0900 (JST)
-Message-ID: <1290074314.80959451.1463044137338.JavaMail.root@goo.jp>
-Reply-To: "Mrs. Marilyn Shaw" <mrsmarilynshaw02@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-2022-JP
-Content-Transfer-Encoding: 7bit
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Thu May 12 11:22:42 2016
+From: Alexander Rinass <alex@fournova.com>
+Subject: Re: [PATCH] diff: run arguments through precompose_argv
+Date: Thu, 12 May 2016 13:16:06 +0200
+Message-ID: <D97D1033-70B9-46D5-A672-042DE0283CCA@fournova.com>
+References: <1459802325-22056-1-git-send-email-alex@fournova.com> <1459802325-22056-2-git-send-email-alex@fournova.com> <xmqqzit80yov.fsf@gitster.mtv.corp.google.com> <57040EE0.40503@kdbg.org> <C52E38F0-B0F2-4769-A2C7-798D0CD99B47@fournova.com> <xmqqy47gi6xz.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+	=?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 12 13:16:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b0mpN-00053c-Ma
-	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 11:22:42 +0200
+	id 1b0obH-00012v-Uv
+	for gcvg-git-2@plane.gmane.org; Thu, 12 May 2016 13:16:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752061AbcELJWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2016 05:22:33 -0400
-Received: from gfdefer007.mail.goo.jp ([153.149.229.140]:49433 "EHLO
-	gfdefer007.mail.goo.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752010AbcELJWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2016 05:22:32 -0400
-Received: from gogw0437.mail.goo.jp (gogw0437.mail.goo.jp [153.153.65.38])
-	by gfdefer007.mail.goo.jp (Postfix) with ESMTP id E5CFF72A66A
-	for <git@vger.kernel.org>; Thu, 12 May 2016 18:21:59 +0900 (JST)
-Received: from ntt.pod01.gv-mta-ucb002 (gv-mta-ucb002.mail.goo.jp [180.8.112.201])
-	by gogw0437.mail.goo.jp (Postfix) with ESMTP id 1FDE3110044C;
-	Thu, 12 May 2016 18:08:58 +0900 (JST)
-Received: from gzcstore012.mail.goo.jp ([180.8.112.235])
-	by ntt.pod01.gv-mta-ucb002 with 
-	id tM8x1s00654mytg01M8xFK; Thu, 12 May 2016 09:08:58 +0000
-X-Originating-IP: [197.78.227.160]
+	id S1751937AbcELLQL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 May 2016 07:16:11 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:36449 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751552AbcELLQJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 May 2016 07:16:09 -0400
+Received: by mail-wm0-f43.google.com with SMTP id n129so254859362wmn.1
+        for <git@vger.kernel.org>; Thu, 12 May 2016 04:16:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fournova-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=jvPYyzCceJJz8wE5c93DLSQFe+3dZ5344HdnCjJO0S4=;
+        b=RApPQ8HvBOeWF8qoy4IS869rLE5NtbtG6sliu+2TmV0ntV42AGUi3p3BA6Tn2UHgxr
+         TZdYFFLc5mUhWvOCg9YYH9So8XDq5cNZx911Q7pEFtb+WD4OuTBya4vRA5zB3Y9hzwAN
+         pItR05BpameDTPToSc/L5f7vRTvXANId4/qhtMBCbg7t+kk0aHCmj/JbFbrED1wzq9lX
+         gMrJoHYQ+72QFWc81Mr7l+IxTatFYzrQRoOPbfWAJMtThNI1amTcuAKx2B9Ir95UI5bW
+         qPZkXnThkZU28SZsshSCYFN6BUW476AofUsxcItGh6y6sHvDygAUk1bni7yq0aY1xLk7
+         2G0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=jvPYyzCceJJz8wE5c93DLSQFe+3dZ5344HdnCjJO0S4=;
+        b=Ng1qGh+ym9yS5RNT9EA3gsTA+9ry743bwGnBGJzAGuS753m0N7iPmWW2gIzC4oTA0H
+         4vv79HZp6/R66lm2AbtdP1zqw8R8GrcOEr7Q/NZGo1/O6VIWzohNH+DW4HggltX4rrEq
+         2UC5F7R69PUOTu+pXaB2YTFdltXKtOHB80MY5x7HGRdoZk8oWVG69GSWp2yCAO6r+AFt
+         OANCeu3Fer8c0GGc/YkwsWMf/idXvptkzSOL5D260HbPt1Xqg6l2OSaqEMQqCXGnNG9a
+         lfnWBvDd50olSi1sVEyyL/7a0x727IBQ71UMwx6oySClsolkRStds63pXZLC2lp9fdf4
+         RfIQ==
+X-Gm-Message-State: AOPr4FXbS8k+/6l8j10133BVnpHfeWghO8M/SlJiZXex6DsOeXeX9xaGCWeVFo2DEH0h0w==
+X-Received: by 10.194.6.225 with SMTP id e1mr9759895wja.152.1463051768036;
+        Thu, 12 May 2016 04:16:08 -0700 (PDT)
+Received: from ?IPv6:2a02:908:df40:5780:74f5:89be:d6b1:6ed4? ([2a02:908:df40:5780:74f5:89be:d6b1:6ed4])
+        by smtp.gmail.com with ESMTPSA id ck9sm12920112wjc.22.2016.05.12.04.16.06
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 12 May 2016 04:16:07 -0700 (PDT)
+In-Reply-To: <xmqqy47gi6xz.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.3 points;
- *  1.8 MILLION_USD BODY: Talks about millions of dollars
- *  2.0 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
- *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294405>
 
-Dearest One Please Be Honest,
+> On 12 May 2016, at 00:08, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Alexander Rinass <alex@fournova.com> writes:
+>=20
+>>> On 05 Apr 2016, at 21:15, Johannes Sixt <j6t@kdbg.org> wrote:
+>>>=20
+>>> Am 05.04.2016 um 19:09 schrieb Junio C Hamano:
+>>>>> Thanks-to: Torsten Bo=CC=88gershausen <tboegi@web.de>
+>>>=20
+>>> I sense NFD disease: The combining diaresis should combine with the=
+ o, not the g. Here is a correct line to copy-and-paste if you like:
+>>>=20
+>>> Thanks-to: Torsten B=C3=B6gershausen <tboegi@web.de>
+>>>=20
+>>> -- Hannes
+>>=20
+>> Thanks for reviewing and catching the NFD encoding error.
+>>=20
+>> I will send in a patch v2 with the correct NFC encoding.
+>>=20
+>> Would you also like me to alter the commit message as mentioned by J=
+unio?
+>>=20
+>> I could rewrite the sentence:
+>>=20
+>> =E2=80=9CAs a result, no diff is displayed when feeding such a file =
+path to the
+>> diff command.=E2=80=9D
+>>=20
+>> into simply saying:
+>>=20
+>> =E2=80=9CAs a result, no diff is displayed.=E2=80=9D
+>>=20
+>> However, I don't read the original message as it would imply that on=
+ly
+>> file paths are affected by the precompose_argv call.=20
+>>=20
+>> Are there other suggestions on improving the commit message?
+>=20
+> I think after this message there were a few suggestions, and then we
+> heard nothing.  Should we still be waiting for a response from you?
+>=20
+> Thanks.
 
-My name is Mrs. Marilyn Shaw; I am a dying woman who had decided to donate what I have to the Charities. I am 75 years old and was diagnosed for cancer about four years ago, immediately after the death of my husband.
+Sorry for not replying earlier.=20
 
-I have been touched to donate from what I have inherited from my late husband for the good work rather than allow his relatives to lavish my husband's hard earned fund.
-
-As I lay on my sick bed, I want you to help me in carrying out my last wish on earth which will also be very profitable to you. I want to WILL a total sum of $5.5 million USD to you which I want you to distribute part of it to any charity home for me and the rest for yourself and your family. I will inform you on how to share all, please for further information contact me ASAP.
-
-Please reply me only with this my private email id: mrsmarilynshaw02@gmail.com
-
-
-Regards,
-
-Mrs.  Marilyn Shaw.
+I will create a v2 patch until the weekend and send it to the mailing l=
+ist.
