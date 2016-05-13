@@ -1,81 +1,110 @@
-From: Dmitry Gutov <dgutov@yandex.ru>
-Subject: 'git diff-index' doesn't honor the 'diff.algorithm' variable
-Date: Sat, 14 May 2016 02:45:21 +0300
-Message-ID: <9d15b6c8-ed97-7352-3df1-efab1b4ffadb@yandex.ru>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/6] t9107: use "return 1" instead of "exit 1"
+Date: Fri, 13 May 2016 19:45:42 -0400
+Message-ID: <CAPig+cQKkkP=Go=w65mGcgqZN6ckz21kG2=KCJS8L+0D3mgC+g@mail.gmail.com>
+References: <20160513204654.GA10684@sigill.intra.peff.net>
+	<20160513204721.GC15391@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 14 01:45:39 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Armin Kunaschik <megabreit@googlemail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat May 14 01:45:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1Mlw-00084a-MJ
-	for gcvg-git-2@plane.gmane.org; Sat, 14 May 2016 01:45:33 +0200
+	id 1b1MmC-0008NA-LI
+	for gcvg-git-2@plane.gmane.org; Sat, 14 May 2016 01:45:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932520AbcEMXp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 19:45:27 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:37568 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932116AbcEMXpZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 19:45:25 -0400
-Received: by mail-wm0-f52.google.com with SMTP id a17so52464968wme.0
-        for <git@vger.kernel.org>; Fri, 13 May 2016 16:45:24 -0700 (PDT)
+	id S1753196AbcEMXpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 19:45:44 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:35275 "EHLO
+	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751759AbcEMXpn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 19:45:43 -0400
+Received: by mail-io0-f196.google.com with SMTP id i75so5872761ioa.2
+        for <git@vger.kernel.org>; Fri, 13 May 2016 16:45:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=1uINis1Fr5UY63jfxeKG8PS5P4EGaBPQhABSHFjWRys=;
-        b=Am5/2BzruAr0WNvHgIEhwexFLR0w640LdO0QvfZWUcM0NVkgovDngt03XjYjPtueON
-         rPdFk05CTEuovr4JLSudIfHm0eegp5p/2OeOtlQhFr/NhP1/QVXtLqUn0Wt5sgfIUyf/
-         VgqyzX0sReAwugDqksyxq08T5n56UgwrSTNyxDOs7q0rKoTntDA4j+PYRqAkVRw39Dst
-         OsWTEaQ7v5F0Kice9ZB6hWH69HJUGT7u8DI27TrisYAFCfKsLTpt+HLr7yTopnzICADa
-         omR/OXKsU7V3KfSEpOUi/7hlfLH96+notxzeW0Ii8AFGZdfrkd/Zu7cQYnF5uZgsDrCK
-         2YWw==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=KPfmXn8lWP8ugweeXsHqZwAsqV/RIjbRR78S1zdUs4Q=;
+        b=xf+rU7YeknUraBrk30m/wH3Kjx3gveSTSuQjcOBF2XKtUjvllsg/9ebbW49p4ylaYE
+         wZQ63ejYkTKTsnEsKrEQ5SOxwyc0XQ7wHdZ3mHE8NBK26WiFjDGW37WMi0+V7BNwZ9mL
+         OkMd+pibFYnDqZ+JDoH7HvuHgHln3a6hyre0X7j2+l7CyInsO7X8qMUvF5WhuruuI9ND
+         IDtVsh+jS8XKLGhhskmvRBLs/2B8mepW5pDtfuzZM2LgEbU1rQoYdpaRadubh0TMtCWi
+         ki+Nfv6Eod/Dh4YcA80bVdo4enV1WD0XV/I2BAxZgatmGrBglIL0DFrCRGkE+CW8cQqQ
+         tHxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:to:from:subject:message-id:date
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=1uINis1Fr5UY63jfxeKG8PS5P4EGaBPQhABSHFjWRys=;
-        b=L1OhFXB9rQiRkT23RZcj0HgcG5IMDgCOByvV8H7VwlL16OOaboKG1rtROR8SV/gmsz
-         ihDP/YqTaBCkjjwdNuq/+wVYbywMTNIk3wlNuB/w39bCxZgtkz7TKVHt8L3SLAWF6X/e
-         B3RYapcZA4Qow6lDB5Bd716x2wdwD5FbxigOjBaxv8Wgq1Aas2VadoV9tMeR/DFN5haJ
-         +SAhsWf+ys3K1MzwIYBrbKaIkSFIWBfX/qq8itrGpol8CL1zWj8866jOhi/gNCSbETeg
-         xN91kB9hc6OJkI2v3FxDu3CDhvzc7KHW8gQI/W53wYKHPLAViyqoDSp3AHfrpDi7sUIu
-         687Q==
-X-Gm-Message-State: AOPr4FVGjDoIKIXoa8zDcXKNswn3p25EXYvSC6S/obHCZcb4U2AUgGnND+16ecgvi/Ujmg==
-X-Received: by 10.28.25.69 with SMTP id 66mr5765782wmz.39.1463183123449;
-        Fri, 13 May 2016 16:45:23 -0700 (PDT)
-Received: from [192.168.1.2] ([185.105.175.24])
-        by smtp.googlemail.com with ESMTPSA id y1sm20777766wjy.36.2016.05.13.16.45.22
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 13 May 2016 16:45:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=KPfmXn8lWP8ugweeXsHqZwAsqV/RIjbRR78S1zdUs4Q=;
+        b=HTN00s7UULByt0olAYUr4nIEkPwHcRBv3lDdMmrSvkpPL+nfNRoEPl2dGKnpv2gWmi
+         jtC59meZzYSPZabJRaQWR1byjMCyJi815P+w65FQ4qzA9TzL3Z3YLsdR8NhEGR27cc0K
+         DfhIvnKZ4xyJhyyanwzPS6fzTyn5UpEdH77feBDsdaqqyl1YiPp1zPAFh4tz/+bsRdKf
+         2HyjId9gmHqR8tgPBG5QwJaUUXBkk8zvaW/n6Cs6Um2JLWkcVyAoU45NREOoHTGCLv/o
+         ahG+yK7nnwPBTxdkJFLcgTjQLINGgIyAaf3qWZWWjaYHRy6pFMIJ1skjPs0LpH8YzeSW
+         QlkA==
+X-Gm-Message-State: AOPr4FWoX0rzHG8bi4jZeR/W6A5SHPn7iGMR5WbWR/VVdKQVyp4lPM4afj+zcD8lI8dHO3fsjHdDLIWM0/VbZw==
+X-Received: by 10.36.31.65 with SMTP id d62mr3488216itd.84.1463183142853; Fri,
+ 13 May 2016 16:45:42 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Fri, 13 May 2016 16:45:42 -0700 (PDT)
+In-Reply-To: <20160513204721.GC15391@sigill.intra.peff.net>
+X-Google-Sender-Auth: NSj24eTQ_btRVe59xJsIgMkiN34
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294599>
 
-Hi all,
+On Fri, May 13, 2016 at 4:47 PM, Jeff King <peff@peff.net> wrote:
+> When a test runs a loop, it cannot rely on the usual
+> &&-chaining to propagate a failure inside the loop; it needs
+> to break out with a failure signal. However, unless you are
+> in a subshell, doing so with "exit 1" will exit the entire
+> test script, not just the test snippet we are in (and cause
+> the harness to complain that test_done was never reached).
+> [...snip...]
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> diff --git a/t/t9107-git-svn-migrate.sh b/t/t9107-git-svn-migrate.sh
+> @@ -70,30 +72,38 @@ test_expect_success 'initialize a multi-repository repo' '
+>  # refs should all be different, but the trees should all be the same:
+> -test_expect_success 'multi-fetch works on partial urls + paths' "
+> +test_expect_success 'multi-fetch works on partial urls + paths' '
+> +       refs="trunk a b tags/0.1 tags/0.2 tags/0.3" &&
+>         git svn multi-fetch &&
+> -       for i in trunk a b tags/0.1 tags/0.2 tags/0.3; do
+> -               git rev-parse --verify refs/remotes/origin/\$i^0 >> refs.out || exit 1;
+> -           done &&
+> -       test -z \"\$(sort < refs.out | uniq -d)\" &&
+> -       for i in trunk a b tags/0.1 tags/0.2 tags/0.3; do
+> -         for j in trunk a b tags/0.1 tags/0.2 tags/0.3; do
+> -               if test \$j != \$i; then continue; fi
+> -           test -z \"\$(git diff refs/remotes/origin/\$i \
+> -                                refs/remotes/origin/\$j)\" ||exit 1; done; done
+> -       "
+> +       for i in $refs
+> +       do
+> +               git rev-parse --verify refs/remotes/origin/$i^0 || return 1;
+> +       done >refs.out &&
+> +       test -z "$(sort <refs.out | uniq -d)" &&
+> +       >expect &&
 
-Subj. ...even though it's explicitly mentioned in the subcommand's man 
-page. Git version 2.7.4 here.
+What's this 'expect' file for? Is it leftover gunk from before you
+settled on 'diff --exit-code'?
 
-To elaborate:
-
-- Call 'git config --global diff.algorithm histogram'.
-
-- Try the example from http://stackoverflow.com/a/36551123/615245.
-
-'git diff test.css' gives the expected output using the non-default 
-algorithm.
-
-'git diff-index -p HEAD -- test.css' uses the default one.
-
-Best regards,
-Dmitry.
+> +       for i in $refs
+> +       do
+> +               for j in $refs
+> +               do
+> +                       git diff --exit-code refs/remotes/origin/$i refs/remotes/origin/$j ||
+> +                               return 1
+> +               done
+> +       done
+> +'
