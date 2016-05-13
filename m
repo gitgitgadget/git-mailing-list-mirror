@@ -1,125 +1,107 @@
 From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v6 2/3] bisect: rewrite `check_term_format` shell function
- in C
-Date: Fri, 13 May 2016 12:29:59 +0530
-Message-ID: <CAFZEwPP+w4BOU+jKSRqGLBx-1f9JtZCq5bj-kkg4-Yw_omeswg@mail.gmail.com>
-References: <1462546167-1125-1-git-send-email-pranit.bauva@gmail.com>
-	<1463031127-17718-1-git-send-email-pranit.bauva@gmail.com>
-	<1463031127-17718-3-git-send-email-pranit.bauva@gmail.com>
-	<xmqq37pmdhtk.fsf@gitster.mtv.corp.google.com>
+Subject: Re: bug report
+Date: Fri, 13 May 2016 12:40:39 +0530
+Message-ID: <CAFZEwPMe2W2R2GghMnyQ4BLyvm00oHEweNSZYrqn+=9BhSazvw@mail.gmail.com>
+References: <CABKuJ_SN+Ynsi9-48-iKgC1n9ARZe3ZjQR9Y2q3=tYC=QGgfZQ@mail.gmail.com>
+	<CAFZEwPNCEAU-sexn-dFr8dDg=_w02hLOhfQhKu_yRYtY3LeJHw@mail.gmail.com>
+	<CABKuJ_QZHTRcPWbwv1FSXEijxOpXameo-JJuZREGyA5daLbKLQ@mail.gmail.com>
+	<CAFZEwPP32vWrCA9H+JbFineodDtGx2_bTjGy-nZ9KW2v8bP5vQ@mail.gmail.com>
+	<CABKuJ_SEK-t93sCmj6aFSAbk8muX_ocQx6ZQZV3ZrNmvVmvDQA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 13 09:00:09 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?B?5p2O5pys6LaF?= <libenchao@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 13 09:10:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b174x-0000qf-0c
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 09:00:07 +0200
+	id 1b17FL-00042c-MR
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 09:10:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751194AbcEMHAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 03:00:01 -0400
-Received: from mail-yw0-f174.google.com ([209.85.161.174]:34393 "EHLO
-	mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750933AbcEMHAA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 03:00:00 -0400
-Received: by mail-yw0-f174.google.com with SMTP id j74so94977710ywg.1
-        for <git@vger.kernel.org>; Thu, 12 May 2016 23:59:59 -0700 (PDT)
+	id S1751155AbcEMHKl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 May 2016 03:10:41 -0400
+Received: from mail-yw0-f181.google.com ([209.85.161.181]:34885 "EHLO
+	mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751104AbcEMHKk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 May 2016 03:10:40 -0400
+Received: by mail-yw0-f181.google.com with SMTP id g133so95160343ywb.2
+        for <git@vger.kernel.org>; Fri, 13 May 2016 00:10:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=E45w4XxLUCMoLEDkwDGnx0wSmHCOm8DSANhSJPl2ruU=;
-        b=IdyZkFjS3GJsbO2t0BsPW5I7R38DEhebO8snvAdWJkhvLtZ/iNrqVanDaz/sC3vl4h
-         4sc4C57RwbVxQrtZZPzwuNyfFte4Ivdec5ZNPb4ow/OoZw/9cg/nS+YiVrP/nJSSjc3T
-         yXib56GiYzzlCuoxmRb5UzzoHk8mQsTvX+IK015O7L1pupPTQY09qJo/gIMe1P8b/Guz
-         fLY9mSR8j/O8pCjY8xjSs1rWwXKTM9ea9HHK8xIIIh2VLUUEAVN6Ts/QlEXDecqvrxv8
-         jG7Nxb1vT3CcAeZk3hbW/DekJC+5ifVewEwia5GhVz/wQGbekq+O9WDlafjutIAcVkGh
-         gGnQ==
+         :cc:content-transfer-encoding;
+        bh=BPDf7Ipk5qyXnfnv9Y1213or22L+RhNkYi3lIyP7H3Q=;
+        b=DW8oq/meUuH9yXQ5LK0JwtTb6muTKnVt3wY00ayI/EQBI+8HB3Q26PISBbWgKkgwaA
+         RNBPqsIgUyoGcvOO83emj1Q5yXsoH6Jytqdv9j5YWnaR1VDn0Z1050YCzM77//kPkP7z
+         ZdaMh4fAOu8CWGUrOsJOwlLjkFZ8psHYNEbZS3iIn1xGnpQmO2SnDNlDGcIEOYSTjs4g
+         h3OflG+4j7ggrsES+NcqC0XPhVQov2N+Bkv2oc9AHlXja9olCX5B3YRLP+1qvmIsNhPk
+         7ZDuQGqPHKwCtBPGpeduZQC4jdqRzeV98nXg1bH+zmcj150Tj+Paw+cqzlgv57CgeZ4B
+         iF7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=E45w4XxLUCMoLEDkwDGnx0wSmHCOm8DSANhSJPl2ruU=;
-        b=Zam95t4El2/zslr3jlO8U6LhiAKFqVgiSP/tCFEDuPHYbNk3OQtZv9lX1M0u9YI+Gr
-         n1B4GTnpLhALexK+G/H2lysFTh1czvx+iakrz7JQTWKiFsZT/XmguKWRhiLyzw5l+9Pf
-         /ZERO+gUi/G0c8N1vdpL4MilLj3qKRH4vhTBUh03FzpevpEf48r3RUUD3y2JUjj3MD/I
-         fBte4CNxtMoaOKlej4RpTYzfE2F8c4Bb7DOUrnQtxhT9Hb7ZTiyAbK4ovEKvOXbM4Pxn
-         mOdUYgoGAsWJbWqfiPpRf7rsMC4ViDRHRZjDP4JNTgbQh+941E8xIvxK60F3Zt3x21Eb
-         m5cA==
-X-Gm-Message-State: AOPr4FUyR1Mdr1pp2qOCFZkI3MIJVsuH7Cf4lKN38vhLh9m5gRP5rOHklv2x1A+0uINxYzXKDhFF7ZhZaWiCag==
-X-Received: by 10.13.244.134 with SMTP id d128mr6804830ywf.72.1463122799262;
- Thu, 12 May 2016 23:59:59 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Thu, 12 May 2016 23:59:59 -0700 (PDT)
-In-Reply-To: <xmqq37pmdhtk.fsf@gitster.mtv.corp.google.com>
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=BPDf7Ipk5qyXnfnv9Y1213or22L+RhNkYi3lIyP7H3Q=;
+        b=Wztmzv0LKvV+9UNnIA6u08ALPr7Gcn3H8WW3tP6uocCtJrr4AScZKGtjvQmT2hgIsQ
+         zotcuy01nhIUgGMgA+l+dDvLswxlswmTpYdlV70DHRS9h1fHcKDu7aT+VQ5XwcTHVsVn
+         nKXlWhqOeDuY2cRYlLbfbT5MN4c1zxDQ7R80LDTSBbVRYioHhIJWwCqkMSREkzkhjt2S
+         vRmcFB/GD10NJ7nr4S/0fwPHjtjhQ5fqV11I1bAZXqjkI1iCzL1WYOAvoDSI9LioNg8E
+         9xJLKsr+qbtHzgksiJ6eopSi56kRoVKo7QmVGUJaFl9Y9GnGcbjeIUvR0/K+BtzNfj+8
+         otrQ==
+X-Gm-Message-State: AOPr4FWP1NzsSXJtHQ2SJXqR9cfcR26teNkmZFkCXOZ5YnN+RJN0kSw685lSg0v2dpsvQWofNlaXK7/IfN2ovw==
+X-Received: by 10.37.118.69 with SMTP id r66mr6647939ybc.80.1463123439391;
+ Fri, 13 May 2016 00:10:39 -0700 (PDT)
+Received: by 10.13.219.213 with HTTP; Fri, 13 May 2016 00:10:39 -0700 (PDT)
+In-Reply-To: <CABKuJ_SEK-t93sCmj6aFSAbk8muX_ocQx6ZQZV3ZrNmvVmvDQA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294513>
 
-On Fri, May 13, 2016 at 4:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
+On Fri, May 13, 2016 at 12:27 PM, =E6=9D=8E=E6=9C=AC=E8=B6=85 <libencha=
+o@gmail.com> wrote:
+> Yes, you got the right understanding of my problem.
 >
->> +     /*
->> +      * In theory, nothing prevents swapping completely good and bad,
->> +      * but this situation could be confusing and hasn't been tested
->> +      * enough. Forbid it for now.
->> +      */
->> +
->> +     if ((strcmp(orig_term, "bad") && one_of(term, "bad", "new", NULL)) ||
->> +              (strcmp(orig_term, "good") && one_of(term, "good", "old", NULL)))
->> +             return error(_("can't change the meaning of the term '%s'"), term);
+> You are right, the git behavior is quite correct. But I met this
+> problem in my practical work:
 >
-> The above comes from below
->
->> -     bad|new)
->> -             if test "$2" != bad
->> -             then
->> -                     die "$(eval_gettext "can't change the meaning ...
->
-> So it is not your fault, but it is quite hard to understand.
->
-> The original says "You are trying to use 'bad' (or 'new') for
-> something that is not 'bad'--which is confusing; do not do it".
->
-> I _think_ the reason I find C version harder to read is the use of
-> strcmp(orig_term, "bad") to say "orig_term is not BAD".  The shell
-> version visually tells with "!=" that the meaning of the new term is
-> *NOT* "bad", and does not ahve such a problem.
->
-> Perhaps if we rewrote it to
->
->         if ((!strcmp(orig_term, "good") &&
->              one_of(term, "bad", "new", NULL)) ||
->              (!strcmp(orig_term, "bad") &&
->              one_of(term, "good", "old", NULL)))
->
-> i.e. "If you are using "bad" or "new" to mean "good", that is not a
-> good idea", as a follow-up change after the dust settles, the result
-> might be easier to read.
+> My colleague added a method but I didn't know. I also added the same =
+method.
+> Then I found that I didn't need the method actually, so I deleted it.
+> My colleague merged to the master before me. When I wanted to merge, =
+I found
+> conflicts with master. And I rebased to current master. And That meth=
+od was
+> deleted finally without any warning or information.
 
-Not just that, it would also be fundamentally more correct as there is
-a difference between " !strcmp("good") " and " strcmp("bad") ". Yours
-approach suggests that it should be "good" specifically which is
-technically more correct as then only it would be sensible to check
-whether it is trying to change the meaning of the term.
+I am quite sure that there would be an output to show that there are
+conflicts and it would be suggesting you to first resolve the
+conflicts and there would also be markers in the file like ">>>>>" and
+"=3D=3D=3D=3D=3D=3D" and the file would be marked with "both modified".=
+ After you
+resolve the conflicts, you can add the file by using git-add and then
+"git rebase --continue" to proceed. If you find out that there is some
+problem, then you can always use "git rebase --abort" to abort the
+rebase process and get to the initial state *perfectly* without any
+glitches.
 
-> But this is just commenting for future reference, not suggesting to
-> update this patch at all.  If we were to do the change, that must
-> come as a separate step.
->
+> Do you think Git should output something to warn the user or I just
+> use Git in a wrong way ?
+
+It does warn. I don't know how it got missed in your case. This is
+quite a common problem and even I have faced this quite for quite a
+lot of times now and it always did warn me.
+
 > Thanks.
 
-Will do this change in a separate patch after the dust settles.
+I will recommend you reading this article[1]. I know its a bit of a
+long read but it will help a lot.
+
+[1]: http://tedfelix.com/software/git-conflict-resolution.html
 
 Regards,
 Pranit Bauva
