@@ -1,114 +1,162 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 0/6] test -z/-n quoting fix + misc cleanups
-Date: Fri, 13 May 2016 16:46:54 -0400
-Message-ID: <20160513204654.GA10684@sigill.intra.peff.net>
-References: <CALR6jEiH6oxq=KXfz1pqOue9VKnkp=S8zNqC4OFmbuhRFFxoMw@mail.gmail.com>
- <20160513182325.GB30700@sigill.intra.peff.net>
- <xmqqwpmx91mb.fsf@gitster.mtv.corp.google.com>
- <20160513195911.GE9890@sigill.intra.peff.net>
- <xmqqshxl9142.fsf@gitster.mtv.corp.google.com>
+Subject: [PATCH 2/6] t9100,t3419: enclose all test code in single-quotes
+Date: Fri, 13 May 2016 16:47:18 -0400
+Message-ID: <20160513204717.GB15391@sigill.intra.peff.net>
+References: <20160513204654.GA10684@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Armin Kunaschik <megabreit@googlemail.com>,
 	Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 13 22:47:03 2016
+X-From: git-owner@vger.kernel.org Fri May 13 22:47:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1JzC-0008HP-91
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 22:47:02 +0200
+	id 1b1Jzb-0000Qg-Bg
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 22:47:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753060AbcEMUq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 16:46:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:39355 "HELO cloud.peff.net"
+	id S932089AbcEMUrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 16:47:21 -0400
+Received: from cloud.peff.net ([50.56.180.127]:39365 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751201AbcEMUq6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 16:46:58 -0400
-Received: (qmail 16690 invoked by uid 102); 13 May 2016 20:46:57 -0000
+	id S1751501AbcEMUrV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 16:47:21 -0400
+Received: (qmail 16712 invoked by uid 102); 13 May 2016 20:47:20 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 May 2016 16:46:57 -0400
-Received: (qmail 21550 invoked by uid 107); 13 May 2016 20:46:57 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 May 2016 16:47:20 -0400
+Received: (qmail 21585 invoked by uid 107); 13 May 2016 20:47:20 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 May 2016 16:46:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 May 2016 16:46:54 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 May 2016 16:47:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 May 2016 16:47:18 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqshxl9142.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20160513204654.GA10684@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294578>
 
-On Fri, May 13, 2016 at 01:03:41PM -0700, Junio C Hamano wrote:
+A few tests here use double-quotes around the snippets of
+shell code to run the tests. None of these tests wants to do
+any interpolation at all, and it just leads to an extra
+layer of quoting around all double-quotes and dollar signs
+inside the snippet.  Let's switch to single quotes, like
+most other test scripts.
 
-> > And sadly,
-> >
-> >   git grep 'test -n [^"]'
-> >
-> > is not empty.
-> 
-> Are you doing an audit?  Otherwise I'm interested in taking a brief
-> look.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t3419-rebase-patch-id.sh | 12 ++++++------
+ t/t9100-git-svn-basic.sh   | 28 ++++++++++++++--------------
+ 2 files changed, 20 insertions(+), 20 deletions(-)
 
-There was only one buggy case there (in git-stash). The rest were false
-positives.
-
-I didn't audit for:
-
-  test $foo = bar
-
-which also has problems. You can grep for:
-
-  git grep 'test \$'
-
-and there are a lot of hits. Many of them are probably fine, if they are
-variables that are known to be non-empty and not contain whitespace
-(e.g., $#). But some of them are questionable, like:
-
-  git-request-pull.sh:if test $(git cat-file -t "$head") = tag
-
-I suspect in practice that's fine just because we're likely to see
-either the empty string (in which case test will barf with "unary
-operator expected", which matches what we want), or a single-word
-response (which doesn't need further quoting).
-
-> >> But working around older/broken shells is easy and the resulting
-> >> script it more readable, so let's take this.  It makes the resulting
-> >> code easier to understand even when we know we run it under POSIX
-> >> shell.
-
-Actually, it's not just older shells:
-
-  foo='bar baz'
-  test -z $foo
-
-is "unspecified" according to POSIX, though in practice it will complain
-about "binary operator expected". You can get some weirdness, though,
-like:
-
-  foo='!= bar'
-  test -z $foo
-
-which returns 0. Unlikely, but still clearly wrong for us not to be
-quoting.
-
-Anyway. Here's a series that fixes the -n/-z cases, along with a bunch
-of cleanups that remove the false positives (most of which I sent out
-just a few minutes ago as "minor fixes to some svn tests").
-
-  [1/6]: t/lib-git-svn: drop $remote_git_svn and $git_svn_id
-  [2/6]: t9100,t3419: enclose all test code in single-quotes
-  [3/6]: t9107: use "return 1" instead of "exit 1"
-  [4/6]: t9107: switch inverted single/double quotes in test
-  [5/6]: t9103: modernize test style
-  [6/6]: always quote shell arguments to test -z/-n
-
-You could take just 6/6 as its own series; the rest are just about
-removing the false positives, and fixing other issues. I put it last,
-though, because otherwise the "this grep is now empty" claim in it is
-not true. :)
-
--Peff
+diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
+index 217dd79..49f548c 100755
+--- a/t/t3419-rebase-patch-id.sh
++++ b/t/t3419-rebase-patch-id.sh
+@@ -73,17 +73,17 @@ do_tests () {
+ 		run git format-patch --stdout --ignore-if-in-upstream master
+ 	"
+ 
+-	test_expect_success $pr 'detect upstream patch' "
++	test_expect_success $pr 'detect upstream patch' '
+ 		git checkout -q master &&
+ 		scramble file &&
+ 		git add file &&
+-		git commit -q -m 'change big file again' &&
++		git commit -q -m "change big file again" &&
+ 		git checkout -q other^{} &&
+ 		git rebase master &&
+-		test_must_fail test -n \"\$(git rev-list master...HEAD~)\"
+-	"
++		test_must_fail test -n "$(git rev-list master...HEAD~)"
++	'
+ 
+-	test_expect_success $pr 'do not drop patch' "
++	test_expect_success $pr 'do not drop patch' '
+ 		git branch -f squashed master &&
+ 		git checkout -q -f squashed &&
+ 		git reset -q --soft HEAD~2 &&
+@@ -91,7 +91,7 @@ do_tests () {
+ 		git checkout -q other^{} &&
+ 		test_must_fail git rebase squashed &&
+ 		rm -rf .git/rebase-apply
+-	"
++	'
+ }
+ 
+ do_tests 500
+diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
+index 6ec73ee..28082b1 100755
+--- a/t/t9100-git-svn-basic.sh
++++ b/t/t9100-git-svn-basic.sh
+@@ -217,11 +217,11 @@ EOF
+ 
+ test_expect_success POSIXPERM,SYMLINKS "$name" "test_cmp a expected"
+ 
+-test_expect_success 'exit if remote refs are ambigious' "
++test_expect_success 'exit if remote refs are ambigious' '
+         git config --add svn-remote.svn.fetch \
+ 		bar:refs/remotes/git-svn &&
+ 	test_must_fail git svn migrate
+-"
++'
+ 
+ test_expect_success 'exit if init-ing a would clobber a URL' '
+         svnadmin create "${PWD}/svnrepo2" &&
+@@ -259,26 +259,26 @@ test_expect_success 'dcommit $rev does not clobber current branch' '
+ 	git branch -D my-bar
+ 	'
+ 
+-test_expect_success 'able to dcommit to a subdirectory' "
++test_expect_success 'able to dcommit to a subdirectory' '
+ 	git svn fetch -i bar &&
+ 	git checkout -b my-bar refs/remotes/bar &&
+ 	echo abc > d &&
+ 	git update-index --add d &&
+-	git commit -m '/bar/d should be in the log' &&
++	git commit -m "/bar/d should be in the log" &&
+ 	git svn dcommit -i bar &&
+-	test -z \"\$(git diff refs/heads/my-bar refs/remotes/bar)\" &&
++	test -z "$(git diff refs/heads/my-bar refs/remotes/bar)" &&
+ 	mkdir newdir &&
+ 	echo new > newdir/dir &&
+ 	git update-index --add newdir/dir &&
+-	git commit -m 'add a new directory' &&
++	git commit -m "add a new directory" &&
+ 	git svn dcommit -i bar &&
+-	test -z \"\$(git diff refs/heads/my-bar refs/remotes/bar)\" &&
++	test -z "$(git diff refs/heads/my-bar refs/remotes/bar)" &&
+ 	echo foo >> newdir/dir &&
+ 	git update-index newdir/dir &&
+-	git commit -m 'modify a file in new directory' &&
++	git commit -m "modify a file in new directory" &&
+ 	git svn dcommit -i bar &&
+-	test -z \"\$(git diff refs/heads/my-bar refs/remotes/bar)\"
+-	"
++	test -z "$(git diff refs/heads/my-bar refs/remotes/bar)"
++'
+ 
+ test_expect_success 'dcommit should not fail with a touched file' '
+ 	test_commit "commit-new-file-foo2" foo2 &&
+@@ -291,13 +291,13 @@ test_expect_success 'rebase should not fail with a touched file' '
+ 	git svn rebase
+ '
+ 
+-test_expect_success 'able to set-tree to a subdirectory' "
++test_expect_success 'able to set-tree to a subdirectory' '
+ 	echo cba > d &&
+ 	git update-index d &&
+-	git commit -m 'update /bar/d' &&
++	git commit -m "update /bar/d" &&
+ 	git svn set-tree -i bar HEAD &&
+-	test -z \"\$(git diff refs/heads/my-bar refs/remotes/bar)\"
+-	"
++	test -z "$(git diff refs/heads/my-bar refs/remotes/bar)"
++'
+ 
+ test_expect_success 'git-svn works in a bare repository' '
+ 	mkdir bare-repo &&
+-- 
+2.8.2.825.gea31738
