@@ -1,119 +1,70 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: bug report
-Date: Fri, 13 May 2016 12:07:57 +0530
-Message-ID: <CAFZEwPP32vWrCA9H+JbFineodDtGx2_bTjGy-nZ9KW2v8bP5vQ@mail.gmail.com>
-References: <CABKuJ_SN+Ynsi9-48-iKgC1n9ARZe3ZjQR9Y2q3=tYC=QGgfZQ@mail.gmail.com>
-	<CAFZEwPNCEAU-sexn-dFr8dDg=_w02hLOhfQhKu_yRYtY3LeJHw@mail.gmail.com>
-	<CABKuJ_QZHTRcPWbwv1FSXEijxOpXameo-JJuZREGyA5daLbKLQ@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/2] Work on t3404 in preparation for rebase--helper
+Date: Fri, 13 May 2016 08:37:36 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605130835070.4092@virtualbox>
+References: <cover.1462888768.git.johannes.schindelin@gmx.de> <cover.1463067811.git.johannes.schindelin@gmx.de> <xmqq8tzfgsbd.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?B?5p2O5pys6LaF?= <libenchao@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 13 08:38:06 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 13 08:38:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b16jb-0003S1-PT
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 08:38:04 +0200
+	id 1b16jq-0003jj-BY
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 08:38:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751441AbcEMGh7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 May 2016 02:37:59 -0400
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:36395 "EHLO
-	mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750961AbcEMGh6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 May 2016 02:37:58 -0400
-Received: by mail-yw0-f170.google.com with SMTP id o66so106733174ywc.3
-        for <git@vger.kernel.org>; Thu, 12 May 2016 23:37:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=Lk8bPM7WRVUd88k93eTG79l1PTEtMXmOw1HZGICNP3w=;
-        b=YN1ZvLOJ53DJdgPYaxU8GsFxXThEtqczidqIpR8FW5dGjAC6ll/kuZl2D2c6SZpAdh
-         vhmj71Z6+VorxAIuwP6Q5spswPd0w+Nl9uOubtIjIEPBAdIWBbNxSCz+Ypc0O3ACSPhZ
-         CzScHGeLFJjTi1qGDDpS7RUzVrLUn3iRmfQY3Wn9PhVsugL3Y0an/hxkjhCH8/xxYtPo
-         JBpqo5QvVUpaugLC19Ya7o4khHsZ68v6iJdo+5v4hLd2igBTg2TndRvFXfReEINc1DwI
-         KEM4yWuzQfRvxXnekd4bXsz53dWufc3X0CEGdKK8FNSM21TLbeEpdF/gtmr7eudgVPuU
-         zfNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=Lk8bPM7WRVUd88k93eTG79l1PTEtMXmOw1HZGICNP3w=;
-        b=bsuIK+pEcxAP65PA6qm9Mcccxv3jHZFqvnyf70zfp5JtHumzcDCv3huknF0vmV5jIL
-         1APPn81cirSzJbxnKi7YrE5AJGbfVrg+3859JwZBePZR6osVQlW/kmHjPEZbR+Yqd5Em
-         2yYtXPfzBrdVR7nj1V0FvZHvdlo8sB+LEaKPJ8pmcqQ22oRgw9VebS7PoptAETW/AMju
-         YxxQO51RwOFnMsMGUbG6/THZcMQgG3Qzs25RCLW+QidId/V3Ro8n25FJpqtftOz7qZgv
-         iyiDvBDAbbidKEGrjXQBhyqZxpzvDIWIrWVJ2rYI1k62CDvHIs5uZA7P3pRBIL3pR4oF
-         R0Qg==
-X-Gm-Message-State: AOPr4FXJFgTT9uS31NX6o3w+Jd7RVFJpsjn7KWb+Gbz+3m3duGorsFO+Aywl/Z+HDsmfU8FA1j3zPETZm40lVA==
-X-Received: by 10.37.56.71 with SMTP id f68mr6527093yba.21.1463121477270; Thu,
- 12 May 2016 23:37:57 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Thu, 12 May 2016 23:37:57 -0700 (PDT)
-In-Reply-To: <CABKuJ_QZHTRcPWbwv1FSXEijxOpXameo-JJuZREGyA5daLbKLQ@mail.gmail.com>
+	id S1751487AbcEMGiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 02:38:12 -0400
+Received: from mout.gmx.net ([212.227.15.19]:50050 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750961AbcEMGiL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 02:38:11 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M5Lmp-1bow1h1pnz-00zXs6; Fri, 13 May 2016 08:37:34
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqq8tzfgsbd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:bh/PvPjP/thVYV8C1p9g7iAeh4myJiCLQFyiSf5WfnX2e6/YQa1
+ 4WzANzKwdeU2tYhD7Il0ISWGEh7SXjrVodUJbcceQ371Dz4IYpx7Mfh2v39ZKAiLakxDS61
+ /iO3/P5x+qEASJcyx8u/ch2yRJQMGKc7J8Oa7d4DEw7xgzelgMaFVsT9eT6C7KXBABEMHFV
+ 5xf4xDwo590ZR1OMNP8Kw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:f8e7D4m8jAg=:eFGCBQZqJHwaHivhNipikx
+ U4cQWXayu1ARuvHCMwxI7ISZ/lS9GRnpCnWP6DB5yTFL6XWWyZqEotSsDonh1n83OSEp1nf0r
+ 1cv1LbYPBgiC7hkrJjMs4jNG5Lc66p8yZR8jBYMPt+YRoyfDfo1sTYuaLp60pnztbcZxjAf3V
+ bzt/4rAnfdIGwX1dVkX7HWDWJh8o2FWtBZzzsjrwmWzNhtN/eNbBUPc4q3LWl1GaxfKsWjinV
+ T1GFBtrMTHqGA722HkPQOVbt6mzP/d48dcikblbJwo4zid1j61qVhE4GjnzRWaCi99dr+pZLA
+ VhjcN/pt3NC2mKSKaFSKzXuJ7zzi/u/qVOk7ZZumMHLeJ8s+ih6cDpwadZLv0ZiV4XCfa1/UJ
+ ovvc+7nxZ7je3b6oiuHY1B9/3wKO0XGf3ktymArltRpSazsWoC6RYfw7KXp1pvgwIWd+iN1UZ
+ K16SDeDezgeB0vrF42UNAr7E/D1BDA1A4HeBWupsZANHVJQNG6IjAzsp7SuFGasa6hkNrpP3K
+ WmrPLQ4/y+7a+LDlnRP/NzeTVbwyLWXPrGM8iMXIehcWkywmgxDR6TrdWw0K9BfNBvdqtfZr0
+ MuQRHtBExNRdafdlHzUeKev5SyMs/gcko0QX7WqScpKPg1IQURHKqO5dozCeEI8FCaV+PwJE6
+ aXZoVQkqnILOT055l/D2p+rYduAPf8dtabeeAOeK2ZAPAqY7cRIep58d6R0Ud8Y243KFALvUA
+ Kw2sZKxWwGHtUq7mhE6bqWFSv6Fe6pFvZgTZ9E6+rnvUYy8hS2DsMIM9cvBSZ5dH6JJ0JxRT 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294510>
 
-On Fri, May 13, 2016 at 11:28 AM, =E6=9D=8E=E6=9C=AC=E8=B6=85 <libencha=
-o@gmail.com> wrote:
-> git version 2.6.4 (Apple Git-63)
-> system version: OS X EI Capitan 10.11.4
->
-> below is the steps:
-> $ mkdir test_repo
-> $ cd test_repo
-> $ git init
-> $ echo "hello" > README.md
-> $ git commit -a -m 'Add README.md'
+Hi Junio,
 
-It was my mistake. git-commit -a adds files which are tracked.
-Currently README.md is not tracked. So you will have to first use
-git-add to add them for tracking. Though while trying out your steps I
-used git-add. For further commits one can use -a with git-commit.
+On Thu, 12 May 2016, Junio C Hamano wrote:
 
-> $ git checkout -b A
-> $ echo "world" > README.md
-> $ git commit -a -m 'Add one line'
+> I took these separately already, and plan to fast-track them as they are
+> both "trivially correct"; I double checked that what I have match these
+> two, too.
 
-You are technically not adding a line. You are modifying the previous
-line to the updated line. So the contents of the file will be:
-"world"
-It seems from the further part that you actually wanted to add the
-line rather than modifying it. Better to use ">>" instead of ">". ">>"
-is used for appending.
+Oh, okay. I just wanted to make things easier for you, and now that I have
+a script to prepare patch series, it's really almost as trivial for me to
+send out a new iteration as it would be to update a Pull Request on
+GitHub.
 
-> $ git checkout master
-> $ git checkout -b B
-> $ echo "world" > README.md
-> $ git commit -a -m 'Add one line too'
-> $ [midify 'world' line to other things like 'git' using vi]
+Do you want me to hold off with new iterations in the future until you
+clarified your preferred course of action?
 
-I think you mean modify.
-
-> $ git commit -a -m 'Modify one line'
->
-> $ git checkout master
-> $ git merge A
->
-> $ git checkout B
-> $ git rebase master [problem is here, cat README.rd we will get :
-> hello and git instead of hello world git]
-
-The git behavior is quite correct.
-When you are on the B branch and you choose to rebase it on the
-master, it will apply commits as patches. So it first sees that the
-commit on the A branch which is now merged with master ie. "Add one
-line" and the commit on the B branch "Add one line too" are doing the
-same thing which is removing the line "hello" and adding the line
-"world". Then it applies the commit "modify one line" on top of this
-which removes the line "world" and adds the line "git". So finally,
-README.md will contain only "git".
-
-Regards,
-Pranit Bauva
+Ciao,
+Dscho
