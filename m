@@ -1,116 +1,130 @@
-From: =?UTF-8?B?5p2O5pys6LaF?= <libenchao@gmail.com>
-Subject: Re: bug report
-Date: Fri, 13 May 2016 20:05:16 +0800
-Message-ID: <CABKuJ_SwJhjZCgL3KkHA7p2QfStW-g5oEi8qhNGXoNb721Ynhg@mail.gmail.com>
-References: <CABKuJ_SN+Ynsi9-48-iKgC1n9ARZe3ZjQR9Y2q3=tYC=QGgfZQ@mail.gmail.com>
-	<CAFZEwPNCEAU-sexn-dFr8dDg=_w02hLOhfQhKu_yRYtY3LeJHw@mail.gmail.com>
-	<CABKuJ_QZHTRcPWbwv1FSXEijxOpXameo-JJuZREGyA5daLbKLQ@mail.gmail.com>
-	<CAFZEwPP32vWrCA9H+JbFineodDtGx2_bTjGy-nZ9KW2v8bP5vQ@mail.gmail.com>
-	<CABKuJ_SEK-t93sCmj6aFSAbk8muX_ocQx6ZQZV3ZrNmvVmvDQA@mail.gmail.com>
-	<CAFZEwPMe2W2R2GghMnyQ4BLyvm00oHEweNSZYrqn+=9BhSazvw@mail.gmail.com>
-	<CABKuJ_RrOhT+FVb9PNKhBs1ATJmLWhD757oyx+AvrCGNvT1nFw@mail.gmail.com>
-	<20160513081014.GA18307@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 29/33] refs: resolve symbolic refs first
+Date: Fri, 13 May 2016 14:33:20 +0200
+Message-ID: <5735C990.8080502@alum.mit.edu>
+References: <cover.1462550456.git.mhagger@alum.mit.edu>
+ <66d33af21bd1e398973414435af43d06f2e2099c.1462550456.git.mhagger@alum.mit.edu>
+ <20160512074528.GB10922@sigill.intra.peff.net>
+ <20160512082526.GA20817@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Pranit Bauva <pranit.bauva@gmail.com>,
-	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Turner <dturner@twopensource.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	git@vger.kernel.org, David Turner <dturner@twopensource.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 13 14:05:30 2016
+X-From: git-owner@vger.kernel.org Fri May 13 14:33:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1BqS-0004og-Vi
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 14:05:29 +0200
+	id 1b1CHe-00038h-Rp
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 14:33:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752232AbcEMMFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 08:05:22 -0400
-Received: from mail-oi0-f45.google.com ([209.85.218.45]:34016 "EHLO
-	mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751280AbcEMMFR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 08:05:17 -0400
-Received: by mail-oi0-f45.google.com with SMTP id k142so166940882oib.1
-        for <git@vger.kernel.org>; Fri, 13 May 2016 05:05:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=lT7tka7knO7PEvoLFv8CvlORypi59VuONTmyKXgGhcw=;
-        b=HiZt7fnHby51JCRRey1degPQIhRAIBA4ddvG991ciIXc/cPe72XZPkykw6yEPXkeqJ
-         NbNXSBINpjBtyGeiGfN9Y0kiLhoNFUjB2lLg8snnFvErEWHp2Hs3un0L+FxqRNR0HSm9
-         IeF8+D9d9r5JGXqmHrJ7Ukyotoj60tJvYsnTSIACWImC6HCjf98hclpyXjm2AKbVt90x
-         yiUppLAFWU2Zm1xi4fyDIRQs9rpRBQBDBU55Xqok9wKDaTFCNLEJstlGDa/lF6LhYmDX
-         j0Q7Xq/Flbu/qwEUT4xlNdSed5GeviaZg6PBFOOCq9Z6HaCxYkDWJrHLQPJ/3Gjw2Gnf
-         5tbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=lT7tka7knO7PEvoLFv8CvlORypi59VuONTmyKXgGhcw=;
-        b=Zd6mmGUMxagO0rmD+Wk09nbxZ+OypbvwHJ3rk9NjeAt7cUI8cc9RpPsKvwA2KGbkYX
-         1FhzSZB9EHx5WS29Fp74EcrXt7y3m25/5UvC8nzlFGJESSBGmnAu3cTYA9cqw2p5dVjD
-         q9mHD7nk1Yl8H2E7DWHJGGf+2fgxYR4IRAVtUo/D3ubQRUW7M23xzrTMUMXJrdUqBNtg
-         3NWdqcHby0BHaRy3mAJFREfc4mtAF1XHheJ0CPonhVkg/PTmXI8n0B6E2++vCk8V+c19
-         yCnvzsZ6tJbKHnys1sqrUDdVbCmyEJVCS1pRnBs9ujjzh2FuYSov7kL1XVnkkeDnYAfo
-         ZYBQ==
-X-Gm-Message-State: AOPr4FWpz2Yu1BR2emSOtpRVR7gEDSgaDzjIyFkAa3j9U+25J+1eMF/bJtXyC99ZnJ424JPJLCyPNIY+Fcg4Hg==
-X-Received: by 10.157.7.66 with SMTP id 60mr7998170ote.187.1463141116368; Fri,
- 13 May 2016 05:05:16 -0700 (PDT)
-Received: by 10.202.46.8 with HTTP; Fri, 13 May 2016 05:05:16 -0700 (PDT)
-In-Reply-To: <20160513081014.GA18307@sigill.intra.peff.net>
+	id S1751443AbcEMMda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 08:33:30 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:54087 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751139AbcEMMda (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 May 2016 08:33:30 -0400
+X-AuditID: 1207440e-ef3ff700000008c5-22-5735c9944e00
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 2B.0F.02245.499C5375; Fri, 13 May 2016 08:33:24 -0400 (EDT)
+Received: from [192.168.69.130] (p508EABB6.dip0.t-ipconnect.de [80.142.171.182])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u4DCXKkX022346
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 13 May 2016 08:33:21 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+In-Reply-To: <20160512082526.GA20817@sigill.intra.peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrGKsWRmVeSWpSXmKPExsUixO6iqDvlpGm4wdpNohbzN51gtOi60s1k
+	0dB7hdmie8pbRosfLT3MFjOvWlt0dnxldGD32DnrLrvHs949jB4XLyl77F+6jc1jwfP77B6f
+	N8l53H62jSWAPYrbJimxpCw4Mz1P3y6BO2Pmt/KCyRIV5z6tZG5gnCbcxcjJISFgIvHh4WVm
+	EFtIYCujxIU1LF2MXED2BSaJSSsfsoAkhAXsJRoP/gMrEhGQlfh+eCMjRMMroIYTySANzAKP
+	mST2fVnIBJJgE9CVWNTTDGbzCmhLfN++Dcjm4GARUJVYN4cfJCwqECKxbd03VogSQYmTM5+A
+	7eIUsJb42dcNFmcWUJf4M+8SM4QtL7H97RzmCYz8s5C0zEJSNgtJ2QJG5lWMcok5pbm6uYmZ
+	OcWpybrFyYl5ealFusZ6uZkleqkppZsYIeHOt4Oxfb3MIUYBDkYlHt4EJdNwIdbEsuLK3EOM
+	khxMSqK8E/cDhfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwrjoOlONNSaysSi3Kh0lJc7AoifOq
+	LVH3ExJITyxJzU5NLUgtgsnKcHAoSfAmnQBqFCxKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1K
+	LC3JiAfFY3wxMCJBUjxAezNB2nmLCxJzgaIQracYdTmO7L+3lkmIJS8/L1VKnPcTyHECIEUZ
+	pXlwK2DJ7RWjONDHwryLQEbxABMj3CRgtAI9LsJbfd0IZElJIkJKqoFxnqVD/AmLXV0z63/8
+	NQk8kBjSzv+1S/PsxNfv1TiOq79TfNR4TZZhapbCs3qX53MO/J7QzJEufHfxnfly 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294527>
 
-Thanks for your explanation
+On 05/12/2016 10:25 AM, Jeff King wrote:
+> On Thu, May 12, 2016 at 03:45:28AM -0400, Jeff King wrote:
+> 
+>> So I'd expect us to hit that lock_ref_for_update() for each of the new
+>> refs. But then we end up in verify_refname_available_dir(), which wants
+>> to read all of the loose refs again. So we end up with a quadratic
+>> number of calls to read_ref_full().
+>>
+>> I haven't found the actual bug yet. It may be something as simple as not
+>> clearing REF_INCOMPLETE from the loose-ref cache when we ought to. But
+>> that's a wild (optimistic) guess.
+> 
+> Ah, nope, nothing so simple.
+> 
+> It looks like we get in a chain of:
+> 
+>   1. we want to update a ref, so we end up in
+>      verify_refname_available_dir to make sure we can do so.
+> 
+>   2. that has to load all of the loose refs in refs/tags, which is
+>      expensive.
+> 
+>   3. we actually update the ref, which calls clear_loose_ref_cache().
+> 
+> And repeat. Each ref update does the expensive step 2, and it gets
+> larger and larger each time.
+> 
+> I understand why we need to verify_refname_available() on the packed
+> refs. But traditionally we would rely on EISDIR or EEXIST to detect
+> conflicts with the loose refs, rather than loading using our own cache.
+> So I guess that's the new thing that is causing a problem.
 
->
-> The moment where I think you'd like to be notified is when we skipped
-> doing anything with patch 1. You'd prefer it to say "woah, the other
-> side of the rebase did the same thing as us".
-Actually this is the problem where I want to be notified.
+Torsten, thanks for the report. Peff, thanks for the analysis.
 
-> But rebase does not do that by default, because the intent of rebase is
-> that you are rebasing your work on an upstream which might be accepting
-> part of your work as patches. So it is a feature that rebase says
-> "already applied upstream -- let's ignore this one".
->
-> I don't think there is a way to ask rebase not to ignore such
-> already-applied patches. But I'm not sure if there should be, for two
-> reasons:
->
->   1. You should consider just using "git merge" to merge the two
->      branches. That preserves more information about what actually
->      happened, and would find a conflict in a case like this.
->
->   2. Even with merging, you cannot assume that the end result is sane.
->      In your example, there is a textual conflict. But you can easily
->      come up with other examples where a merge is textually sound, but
->      has some semantic conflict (e.g., you update the signature of a
->      function but a colleague adds another call to it using the old
->      signature).
->
->      You have to examine and test the results of merges for sanity. And
->      likewise with rebases.
->
-> -Peff
->
-> [1] Actually, rebase does not even try to replay the first patch. When
->     it generates the list of commits, it ignores any whose "patch-id" is
->     the same as a commit on the other side. But the end effect is the
->     same.
-Your explanation looks reasonable to me.
+The problem in this case is a misguided call to
+verify_refname_available_dir() in the case that read_raw_ref() fails
+with ENOENT. In that case it is not possible for there to be a conflict
+with another loose reference, because (1) we already hold the lock, so
+the containing directory must exist, and (2) we got ENOENT, so there
+can't be a loose reference in a subdirectory named after the reference
+that we are trying to create.
 
-Thanks a lot for your time and patience. And @Pranit Bauva too.
+As Peff explained, the call of verify_refname_available_dir() was
+forcing the loose tags to be loaded, which is expensive in this test
+because there are 100000 of them being created one at a time. (If they
+were created in a single ref_transaction instead, the "available" tests
+would all be done together, before any changes are committed, so the
+loose ref cache would not have to be invalidated each time.)
 
-By the way, many thanks for maintaining this outstanding software Git.
+So instead of calling verify_refname_available_dir() here, we should
+just consider the reference to be missing but available to be written.
 
+I'll rewrite this patch and submit the new version to the mailing list
+as v3 (also with a fix in the commit message). The rest of the patch
+series is OK as is, so I won't resend it. The entire series is also
+available from my GitHub repo [1] as branch "split-under-lock".
 
--- 
-Benchao Li
-School of Electronics Engineering and Computer Science, Peking University
-Tel:+86-15650713730
-Email: libenchao@gmail.com; libenchao@pku.edu.cn
+Please note that there are still some calls of
+verify_refname_available_dir() against the loose reference cache in this
+function. If we wanted to give up a little bit on the quality of our
+error messages, I think we could make those paths faster, too. But they
+are all in failure paths, so I don't think that they are performance
+critical, so I won't make that change.
+
+Michael
+
+[1] https://github.com/mhagger/git
