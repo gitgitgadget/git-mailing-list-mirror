@@ -1,128 +1,81 @@
-From: Adam Dinwoodie <adam@dinwoodie.org>
-Subject: [PATCH] git-gui: Remove ancient Cygwin compatibility code
-Date: Fri, 13 May 2016 12:11:22 +0100
-Message-ID: <20160513111122.GD2345@dinwoodie.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: possible problem / bug
+Date: Fri, 13 May 2016 13:39:04 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605131338480.4092@virtualbox>
+References: <CAPpP+uW=ReKkUnz4PMEyhchcafd0qtgSZ_Qg0Hq77k4u+aPUyQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 13 13:11:37 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Bryant Bernstein <bryant.bernstein@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 13 13:39:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1B0H-0000OX-1h
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 13:11:33 +0200
+	id 1b1BR2-0007xI-0M
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 13:39:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752588AbcEMLL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 07:11:27 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33746 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751625AbcEMLL1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 07:11:27 -0400
-Received: by mail-wm0-f65.google.com with SMTP id r12so3017067wme.0
-        for <git@vger.kernel.org>; Fri, 13 May 2016 04:11:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=BriZb1EXbYB1KsQpCT3MEvLiEwXwL+DoHPbu/4Frk5Q=;
-        b=uFg4fH9Q49EEsodASuvy6z5sr1jiBqQxU8TO9IIZvM+gu7qxD+KP67GGlf0O5HjhNK
-         ktkS/QPXyipj5KAyq6inSON38fGD0aV6KPVmbrtXYuOicrjpx5GNrszmAPOpTSxQ1at/
-         aN5gbFXMuxv/RhFkTNSyDRasO7OPNgv1Y1WnA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=BriZb1EXbYB1KsQpCT3MEvLiEwXwL+DoHPbu/4Frk5Q=;
-        b=Z72K/Dfazmp3EWXEeAJq2CPPcXL2rqpbs24mC/zTgFThN0+bwA3yZ3Q8z7B1A1/rhk
-         7/xVHmwtn89C7sSYCBfIx8N9boggkjSZRzyWgmI/KTYnzcSmiK5AOTFeou7GxrJ9Uo9L
-         WbwPXWloBMzKLA3QfBUwLWkALzpLJGJsMhRhQXORaVvR0VwjDN13UESMc6P0W+4COqls
-         XcKVPQclB1qTo7TLsR+Th8Q1SKXACqD+CKJ+NvtHk3upfzhhBLGgGiH6c6sCvHXpmxJp
-         pIQYGDPL3dacUFcogroLR1sypdNOP0xQAYz3eIMYNkdhorQfH9Ry/ZX0IvyqWph4sBc+
-         srdQ==
-X-Gm-Message-State: AOPr4FXzpD0dOw9ohQ9zNbrc7drdAeV6Lb3hUgYFfCNI+jJK6ZiT0p6Wq0xR5mVyTqSMJQ==
-X-Received: by 10.194.17.106 with SMTP id n10mr15148522wjd.131.1463137885700;
-        Fri, 13 May 2016 04:11:25 -0700 (PDT)
-Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
-        by smtp.gmail.com with ESMTPSA id x124sm2724159wmg.24.2016.05.13.04.11.24
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 13 May 2016 04:11:24 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751743AbcEMLjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 07:39:08 -0400
+Received: from mout.gmx.net ([212.227.17.22]:63613 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751139AbcEMLjG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 07:39:06 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MQ7sF-1ax2pS3tQ3-005Gg2; Fri, 13 May 2016 13:39:02
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CAPpP+uW=ReKkUnz4PMEyhchcafd0qtgSZ_Qg0Hq77k4u+aPUyQ@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:19Mqi5dW7xL3FGvk8geoIrN/V2m8YuNVpRUNtnzIuRr9U3EEn4s
+ iI1/4eyguflCdpp1l5dUbcCDBQy9bHyYe428gms317hfkyri4TOgyTiMQJlN6G5yLbXuZjv
+ MTcNo1Cov9B3gZdSj1PmlFKhYbCUef0EY4qWKbhAqQuHw/Pm9AaKfscmcSsO9L7bjWDYk6t
+ F4NOi4H9iiLUCFt2PGWnA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tBHbOl6R4/Y=:HpIGhEq0AM+B7B3s0UDlhR
+ qVdPgN6NtbSpu1PsYUhBCEavsMOegwzXNusBkAyvJ8e5a3wL5F2qdrX1LYco8rgvRNHI0sYo6
+ 5jaQ+pxcELAbxhEZKBxsjBYcayzlAaFgGnnUQaCYXIHY9zJyu+F+PCEYfDWmn/OtS1pwmCbwp
+ 206oLH6mj9X7quBKgo+HgGsDYXdHgbjC2iLgUFFHEnb2AiGPHgqN1tKq6XRjgW1EsNIH0xhxg
+ 4K55v0WmaT0f0qTSSogOMxO/8ezhbQ5Sd8cpaRNJOQQbw5ahjJig7PvSauw5mCbukPQQVGQJd
+ 9hLYGas/30ZUN9PyBM/d8laMcvAd3ZPFAfA8hu4InMeeLxfkrgGbIBIBFHFKII1BC3nyaj8t/
+ EZTLi9Rt64Xrw9oPQnw6TYCsehF4l2xLejzsSYxCzcMKIqiOqvUrWmV3cj/0t5pMq7kq1VRz0
+ ZxByFtZfq/3UVXFkfAeHQ44rMzRlYmHDaDO/hsLuCQ/ZyhOa42vNOk002X2oSgzRyE3GTd0x+
+ 745grRgayDvhdbztrmI3khaJH45CQunJ5cFfrF5bJyDLxrZrGROTOO7LqUBEjgxUBq05wNThG
+ 373wc9dF/LXWMVMx/NRni0BQ4xwVlBHrtdrAiQsNmgnw1g+2BThQKZXEqBpJ8YL6GbF/11iRM
+ qt4wBWBmUSwaUQVvJpOvFPWc8XuY7kPFGu1wTz6P20e+GExpTmDSDdJnHbOysy+WsjovZU/Wt
+ FhjsADzW+nYZjKlO+Qgfnbqw/GXJW7uFSIR1Oj2PhVgkhpY7rVvIMjGJPoker4Mv/QnNw1bj 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294524>
 
->From 50c9cbb6ce31529316ba004194f63a24ae59b4b0 Mon Sep 17 00:00:00 2001
-From: Adam Dinwoodie <adam@dinwoodie.org>
-Date: Fri, 13 May 2016 11:52:32 +0100
-Subject: [PATCH] git-gui: Remove unused Cygwin compatibility code
+Hi Bryant,
 
-Cygwin-distributed builds of git-gui have patched out the
-Cygwin-specific compatibility code in the Makefile before compiling
-since at least the start of 2012 (specifically since at least Git
-v1.7.9).  The compatibility code is clearly not necessary, so remove it
-from the official git-gui code as well.
+On Thu, 5 May 2016, Bryant Bernstein wrote:
 
-Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
----
+> Both windows and linux support links but both git and the git bash
+> seem to have a problem with them.
+> 
+> In my source, (originally on Linux) I have a link in my source
+> directory to a config file which I normally import into python.  This
+> allows me to have something.py pointing to config.txt .  config.txt
+> can be opened by an editor and something.py can be imported into a
+> python shell.
+> 
+> This worked in Linux alone and on windows  as both platforms support
+> links.  But if I use git to bring my code from linux to windows I end
+> up with a file that contains the path to the target file.
+> 
+> Then I went to try to see what git bash would do with a link.
+> 
+> I created a file and a link to it using ln -s
+> This created a copy of the file I wanted to link to.
+> 
+> What do you think?
+> Should this work better?
 
-I originally submitted this patch back in December, but it didn't
-generate any more discussion than Junio saying "this looks like a good
-thing to have."  I'm resubmitting to try to generate further discussion
-/ agreement to include the patch.
+See https://github.com/git-for-windows/git/wiki/Symbolic-Links
 
-An equivalent patch has been included in the downstream Cygwin releases
-since v1.7.9, and therefore is clearly stable and not causing any
-notable problems.
-
-I've based this patch off the git-gui tree rather than the main Git tree
-per the SubmittingPatches doc.  Pipe it through `sed
-'s!Makekfile!git-gui/\0!g'` for a version that applies cleanly to the
-main Git source tree.
-
- Makefile | 22 ++++------------------
- 1 file changed, 4 insertions(+), 18 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index fe30be3..a0adf3d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -136,25 +136,11 @@
- GITGUI_RELATIVE :=
- GITGUI_MACOSXAPP :=
- 
--ifeq ($(uname_O),Cygwin)
--	GITGUI_SCRIPT := `cygpath --windows --absolute "$(GITGUI_SCRIPT)"`
--
--	# Is this a Cygwin Tcl/Tk binary?  If so it knows how to do
--	# POSIX path translation just like cygpath does and we must
--	# keep libdir in POSIX format so Cygwin packages of git-gui
--	# work no matter where the user installs them.
--	#
--	ifeq ($(shell echo 'puts [file normalize /]' | '$(TCL_PATH_SQ)'),$(shell cygpath --mixed --absolute /))
--		gg_libdir_sed_in := $(gg_libdir)
--	else
--		gg_libdir_sed_in := $(shell cygpath --windows --absolute "$(gg_libdir)")
--	endif
--else
--	ifeq ($(exedir),$(gg_libdir))
--		GITGUI_RELATIVE := 1
--	endif
--	gg_libdir_sed_in := $(gg_libdir)
--endif
-+ifeq ($(exedir),$(gg_libdir))
-+	GITGUI_RELATIVE := 1
-+endif
-+gg_libdir_sed_in := $(gg_libdir)
-+
- ifeq ($(uname_S),Darwin)
- 	ifeq ($(shell test -d $(TKFRAMEWORK) && echo y),y)
- 		GITGUI_MACOSXAPP := YesPlease
--- 
-2.8.2.692.g8d9a515
+Ciao,
+Johannes
