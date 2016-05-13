@@ -1,106 +1,162 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t3404 static check of bad SHA-1 failure
-Date: Fri, 13 May 2016 13:03:41 -0700
-Message-ID: <xmqqshxl9142.fsf@gitster.mtv.corp.google.com>
-References: <CALR6jEiH6oxq=KXfz1pqOue9VKnkp=S8zNqC4OFmbuhRFFxoMw@mail.gmail.com>
-	<20160513182325.GB30700@sigill.intra.peff.net>
-	<xmqqwpmx91mb.fsf@gitster.mtv.corp.google.com>
-	<20160513195911.GE9890@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Armin Kunaschik <megabreit@googlemail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 13 22:03:51 2016
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [PATCH 1/2] bisect--helper: `bisect_log` shell function in C
+Date: Sat, 14 May 2016 01:32:16 +0530
+Message-ID: <1463169737-12701-1-git-send-email-pranit.bauva@gmail.com>
+Cc: christian.couder@gmail.com, chriscool@tuxfamily.org,
+	larsxschneider@gmail.com, Pranit Bauva <pranit.bauva@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 13 22:04:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1JJN-0001w3-7l
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 22:03:49 +0200
+	id 1b1JKG-00039r-BP
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 22:04:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932252AbcEMUDp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 16:03:45 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61072 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932211AbcEMUDo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 16:03:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 68476195D8;
-	Fri, 13 May 2016 16:03:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VTOpFIhoFau01jEsHbrWeaaCxHI=; b=Wo7cPl
-	emJIYPpOTN5JU7A0Zlf+ZPZTkM5gC03rAwzpA2AdanVAbPnaYDU7feLd4KfkUAS5
-	DcIWV8GWDRSCL2aR7KqLQlKHqqTmffdEz9F2MC9h7TvzGH9HwdSb+uFk8MQyI5TT
-	3yTmNpFuZaFuCRxXMvcf5NCzcQp0WCeg+qA1I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=acCpLEyc5FJ8WIDCOkJHedxuvZ2MfEon
-	N03+urUXvKApmWwmrt5OT9RjZpfhz9LmwPFbuNkUKhog6CA30jjL+PvTXpYF8cpd
-	ruL7yz9chuw1372rE9M+pjHsPg61qnUd6WubiZnlUZatPvDpw8Q9HPDqUHxJ6LNP
-	2qofbNmZWBY=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F0C0195D7;
-	Fri, 13 May 2016 16:03:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D9742195D6;
-	Fri, 13 May 2016 16:03:42 -0400 (EDT)
-In-Reply-To: <20160513195911.GE9890@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 13 May 2016 15:59:11 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CAE8C428-1945-11E6-BC09-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S932343AbcEMUEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 16:04:41 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34278 "EHLO
+	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932211AbcEMUEk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 16:04:40 -0400
+Received: by mail-pf0-f195.google.com with SMTP id 145so10038687pfz.1
+        for <git@vger.kernel.org>; Fri, 13 May 2016 13:04:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=Z2UlqXDxDMDNC9NVyAKlS28gED7/0argpvFmNb8bVhE=;
+        b=hmvLpcLJKA3gbEdP5/3pp+Ujqf3Rrod+mTur4q3o5S6Sp+4YCyw4mdj+iQ+dnRC/d7
+         zCaoKHkdNQGdzWSlkTH122gPe69UNWEnKkbCPl6vf6/UCCMcLdaZSJCchlU8ztaYAl8U
+         cg5GLs0VnjE9nG7NOU0C0ok4cx+Xes/aXoI2LqsPLnMWY9U4wVSlcueZ1h8BlJujYwP3
+         h3az7PIPcl4N3TAPwQmHM6xaFlZwJ3ZOf/xf0mJB4rZmUzJRMj4NeEsHMNvlP9/58zaP
+         +2wxI3q82R8B2luy99bzPNQLOjivWW+8vp7D1vCu/UE+7eyQUX+S4F9F06+0mSg2/WW1
+         s+MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Z2UlqXDxDMDNC9NVyAKlS28gED7/0argpvFmNb8bVhE=;
+        b=NLuutePVk8iwtUSICKYdK14966LE6c7V3iSCpkMp4reJeN9Y4qBxvxfHolVRq5q1qB
+         ffwRe3+Gr/wFuuAGlf9zrghmfUvzCmluP0ehJtJFNmYcHVU67fWFTKlshOBX2HXU9MXy
+         kIoTVFD2+lPUtEGcz8TwEU/2ovCYNDAH74Bd9fIrIc34xwv7zmETfVLN5gHnyC6WXoav
+         0N1QCQrMxDSq7Z8qp4ZL68KRPM7PyxD554Ha0oO052K6F5SGh+nNGrU5OFW5Ciw0SefR
+         bwocSyQ96nsnw/UiCpjR8eA1ZdSbi/1uBHQUAGzV8Ngz1o1CDFhf0lHr+dWi14WeNHv/
+         N7sA==
+X-Gm-Message-State: AOPr4FUU0uQan1KwI0MxOqk483bjtO1mk6DemW1tTNHeB+tr858AYIwEFPMmUjzhvezzBg==
+X-Received: by 10.98.74.218 with SMTP id c87mr25640665pfj.78.1463169879559;
+        Fri, 13 May 2016 13:04:39 -0700 (PDT)
+Received: from localhost.localdomain ([111.119.199.22])
+        by smtp.gmail.com with ESMTPSA id g77sm29308345pfg.78.2016.05.13.13.04.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 13 May 2016 13:04:39 -0700 (PDT)
+X-Mailer: git-send-email 2.8.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294571>
 
-Jeff King <peff@peff.net> writes:
+Reimplement the `bisect_log` shell function in C and add a
+`--bisect-log` subcommand to `git bisect--helper` to call it from
+git-bisect.sh .
 
-> On Fri, May 13, 2016 at 12:52:44PM -0700, Junio C Hamano wrote:
->
->> I _think_ "test -z" should succeed according to POSIX, because
->> 
->>  (1) it is not "test -z string" because it lacks string,
->> 
->>  (2) it is not any of the other "test -<option> thing" because -z,
->>     and
->> 
->>  (3) the only thing it matches in the supported form of "test" is
->>      "test <string>" that tests if the <string> is not the null
->>      string, and "-z" indeed is not the null string.
->> 
->> For the same reason, "test -n" succeeds.
->
-> Yeah, I think you're right; POSIX is pretty clear that this falls under
-> case 3. So that means "test -z" quietly does what we want. But it means
-> that "test -n" does the _opposite_ of what we want.
+Using `--bisect-log` subcommand is a temporary measure to port shell
+function to C so as to use the existing test suite. As more functions
+are ported, this subcommand will be retired and will be called by some
+other method.
 
-;-)
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+This can be applied on the pb/bisect branch
 
-> And sadly,
->
->   git grep 'test -n [^"]'
->
-> is not empty.
+ builtin/bisect--helper.c | 22 +++++++++++++++++++++-
+ git-bisect.sh            |  7 +------
+ 2 files changed, 22 insertions(+), 7 deletions(-)
 
-Are you doing an audit?  Otherwise I'm interested in taking a brief
-look.
-
->> But working around older/broken shells is easy and the resulting
->> script it more readable, so let's take this.  It makes the resulting
->> code easier to understand even when we know we run it under POSIX
->> shell.
->
-> Yep. The POSIX-explanation of what is going on might be worth putting in
-> the commit message for the "-z" case (i.e., it should work, but the
-> "why" is subtle).
-
-Perhaps.
-
-A small consolation for ksh fans around is that ksh93 seems to get
-this case right ;-)
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 2b21c02..87764fe 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -7,6 +7,7 @@
+ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --next-all [--no-checkout]"),
+ 	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
++	N_("git bisect--helper --bisect-log"),
+ 	NULL
+ };
+ 
+@@ -79,11 +80,26 @@ int write_terms(const char *bad, const char *good)
+ 	strbuf_release(&content);
+ 	return (res < 0) ? -1 : 0;
+ }
++
++int bisect_log(void)
++{
++	struct strbuf buf = STRBUF_INIT;
++
++	if (strbuf_read_file(&buf, ".git/BISECT_LOG", 256) < 0)
++		return error(_("We are not bisecting."));
++
++	printf("%s", buf.buf);
++	strbuf_release(&buf);
++
++	return 0;
++}
++
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+ 		NEXT_ALL = 1,
+-		WRITE_TERMS
++		WRITE_TERMS,
++		BISECT_LOG
+ 	} cmdmode = 0;
+ 	int no_checkout = 0;
+ 	struct option options[] = {
+@@ -91,6 +107,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("perform 'git bisect next'"), NEXT_ALL),
+ 		OPT_CMDMODE(0, "write-terms", &cmdmode,
+ 			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
++		OPT_CMDMODE(0, "bisect-log", &cmdmode,
++			 N_("output contents of .git/BISECT_LOG"), BISECT_LOG),
+ 		OPT_BOOL(0, "no-checkout", &no_checkout,
+ 			 N_("update BISECT_HEAD instead of checking out the current commit")),
+ 		OPT_END()
+@@ -109,6 +127,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		if (argc != 2)
+ 			die(_("--write-terms requires two arguments"));
+ 		return write_terms(argv[0], argv[1]);
++	case BISECT_LOG:
++		return bisect_log();
+ 	default:
+ 		die("BUG: unknown subcommand '%d'", cmdmode);
+ 	}
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 2dd7ec5..612a9c5 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -542,11 +542,6 @@ exit code \$res from '\$command' is < 0 or >= 128" >&2
+ 	done
+ }
+ 
+-bisect_log () {
+-	test -s "$GIT_DIR/BISECT_LOG" || die "$(gettext "We are not bisecting.")"
+-	cat "$GIT_DIR/BISECT_LOG"
+-}
+-
+ get_terms () {
+ 	if test -s "$GIT_DIR/BISECT_TERMS"
+ 	then
+@@ -651,7 +646,7 @@ case "$#" in
+ 	replay)
+ 		bisect_replay "$@" ;;
+ 	log)
+-		bisect_log ;;
++		git bisect--helper --bisect-log ;;
+ 	run)
+ 		bisect_run "$@" ;;
+ 	terms)
+-- 
+2.8.2
