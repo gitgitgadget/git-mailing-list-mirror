@@ -1,160 +1,160 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] t9107: use "return 1" instead of "exit 1"
-Date: Fri, 13 May 2016 15:50:21 -0400
-Message-ID: <20160513195021.GC9890@sigill.intra.peff.net>
-References: <20160513194716.GA9806@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t3404 static check of bad SHA-1 failure
+Date: Fri, 13 May 2016 12:52:44 -0700
+Message-ID: <xmqqwpmx91mb.fsf@gitster.mtv.corp.google.com>
+References: <CALR6jEiH6oxq=KXfz1pqOue9VKnkp=S8zNqC4OFmbuhRFFxoMw@mail.gmail.com>
+	<20160513182325.GB30700@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 Cc: Armin Kunaschik <megabreit@googlemail.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 13 21:50:31 2016
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 13 21:52:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1J6S-0001QI-1N
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 21:50:28 +0200
+	id 1b1J8m-0004UX-Er
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 21:52:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932315AbcEMTuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 15:50:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:39308 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932211AbcEMTuY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 15:50:24 -0400
-Received: (qmail 14051 invoked by uid 102); 13 May 2016 19:50:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 May 2016 15:50:23 -0400
-Received: (qmail 21105 invoked by uid 107); 13 May 2016 19:50:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 May 2016 15:50:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 May 2016 15:50:21 -0400
-Content-Disposition: inline
-In-Reply-To: <20160513194716.GA9806@sigill.intra.peff.net>
+	id S932323AbcEMTws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 15:52:48 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63984 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932211AbcEMTws (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 15:52:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 11A231784F;
+	Fri, 13 May 2016 15:52:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5zUqsQUw3/a24Ox85rjmxzsCmas=; b=HeUG5S
+	2KQyqej7/fVv4gQIYoPXeZdA4EfnTQnmU4FFGhuOAxfvvvnj60q7LdZY1ncc767j
+	RBD9ovq6XbZTozjQZS+nwsC6C15xyBmqMf2vkZMFNwxUa5TqbwClcy8Cqc+z6to+
+	WuQv+rFZnk3QfQwzHQoTSNezhpo06kSTbnieA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=usQpm6MP2b126et1mN1Ei4oeHBMBaUGH
+	sODynw85D6wjjXCLeTmoi+0Yl6wUxK+YYBAk3Tenkc9p2z8+33dsr5ozCzclc9BR
+	BE5OjyLcU/sOFIZU+yfjwor75mrovJgvAvXl62CLqA81PiIu5EESWt620i4lbIhm
+	A7VDLTONpm0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 09A5A1784E;
+	Fri, 13 May 2016 15:52:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 82A961784D;
+	Fri, 13 May 2016 15:52:46 -0400 (EDT)
+In-Reply-To: <20160513182325.GB30700@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 13 May 2016 14:23:26 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 43B04B6C-1944-11E6-961A-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294566>
 
-When a test runs a loop, it cannot rely on the usual
-&&-chaining to propagate a failure inside the loop; it needs
-to break out with a failure signal. However, unless you are
-in a subshell, doing so with "exit 1" will exit the entire
-test script, not just the test snippet we are in (and cause
-the harness to complain that test_done was never reached).
+Jeff King <peff@peff.net> writes:
 
-So the fundamental point of this patch is s/exit/return/.
-But while we're there, let's fix a number of style and
-readability issues:
+> On Fri, May 13, 2016 at 06:09:35PM +0200, Armin Kunaschik wrote:
+>
+>> in t3404 test 91 - static check of bad SHA-1 fails (with ksh) with a
+>> syntax error in git-rebase.
+>> git-rebase[6]: test: argument expected
+>
+> Here's a fix that covers these and another I found:
+>
+> -- >8 --
+> Subject: [PATCH] always quote arguments to "test -z" in shell
+>
+> Modern shells are pretty forgiving about us doing:
+>
+>   test -z $foo
+>
+> If $foo is indeed empty, the test command will see only:
+>
+>   test -z
+>
+> and treat the missing argument as "yes, this is empty". But
+> some older shells, reportedly ksh88, complain about the
+> missing argument. We can be more portable by spelling this
+> as:
+>
+>   test -z "$foo"
+>
+> so that "test" sees an empty argument, not a missing one.
+>
+> This covers all cases detected by:
+>
+>   git grep 'test -z [^"]'
+>
+> (though note that has a few false positives for tests which
+> need an extra layer of quoting to do '\"').
+>
+> Reported-by: Armin Kunaschik <megabreit@googlemail.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Actually, this misses the case in t4151 which already has a fix queued
+> on pu. Arguably these should all just be squashed together (and I am
+> happy, Junio, if you want to do so and leave Armin as the author of the
+> new commit).
 
-  - snippets in double-quotes need an extra layer of quoting
-    for their meta-characters; let's avoid that by using
-    single quotes
+I _think_ "test -z" should succeed according to POSIX, because
 
-  - accumulating loop output by appending to a file in each
-    iteration is brittle, as it can be affected by content
-    left in the file by earlier tests. Instead, it's better
-    to redirect stdout for the whole loop, so we know the
-    output only comes from that loop.
+ (1) it is not "test -z string" because it lacks string,
 
-  - using "test -z" to check that diff output is empty is
-    overly verbose; we can just ask diff to use --exit-code.
+ (2) it is not any of the other "test -<option> thing" because -z,
+    and
 
-  - we can factor out long lists of refs to make it more
-    obvious we're using the same ones in each loop
+ (3) the only thing it matches in the supported form of "test" is
+     "test <string>" that tests if the <string> is not the null
+     string, and "-z" indeed is not the null string.
 
-  - subshells are unnecessary when ending an &&-chain with
-    "|| return 1"
+For the same reason, "test -n" succeeds.
 
-  - minor style fixups like space-after-redirection, and
-    "do" and "done" on their own lines
+But working around older/broken shells is easy and the resulting
+script it more readable, so let's take this.  It makes the resulting
+code easier to understand even when we know we run it under POSIX
+shell.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This covers all of the "|| exit 1" cases I could find. If you grep,
-there are a number of them, but they are all inside subshells (where
-it's the correct thing to use).
+Thanks.
 
-This is a bugfix, but it's not _that_ big a deal, in the sense that
-using "exit 1" would definitely signal to the caller that the test
-failed. :) But it disrupts things like the TAP output.
-
- t/t9107-git-svn-migrate.sh | 42 ++++++++++++++++++++++++++----------------
- 1 file changed, 26 insertions(+), 16 deletions(-)
-
-diff --git a/t/t9107-git-svn-migrate.sh b/t/t9107-git-svn-migrate.sh
-index 6efc2ab..2908aef 100755
---- a/t/t9107-git-svn-migrate.sh
-+++ b/t/t9107-git-svn-migrate.sh
-@@ -56,9 +56,11 @@ test_expect_success 'initialize a multi-repository repo' '
- 	                        "^tags/\*:refs/remotes/origin/tags/\*$" &&
- 	git config --add svn-remote.svn.fetch "branches/a:refs/remotes/origin/a" &&
- 	git config --add svn-remote.svn.fetch "branches/b:refs/remotes/origin/b" &&
--	for i in tags/0.1 tags/0.2 tags/0.3; do
-+	for i in tags/0.1 tags/0.2 tags/0.3
-+	do
- 		git config --add svn-remote.svn.fetch \
--		                 $i:refs/remotes/origin/$i || exit 1; done &&
-+			$i:refs/remotes/origin/$i || return 1
-+	done &&
- 	git config --get-all svn-remote.svn.fetch > fetch.out &&
- 	grep "^trunk:refs/remotes/origin/trunk$" fetch.out &&
- 	grep "^branches/a:refs/remotes/origin/a$" fetch.out &&
-@@ -70,30 +72,38 @@ test_expect_success 'initialize a multi-repository repo' '
- 	'
- 
- # refs should all be different, but the trees should all be the same:
--test_expect_success 'multi-fetch works on partial urls + paths' "
-+test_expect_success 'multi-fetch works on partial urls + paths' '
-+	refs="trunk a b tags/0.1 tags/0.2 tags/0.3" &&
- 	git svn multi-fetch &&
--	for i in trunk a b tags/0.1 tags/0.2 tags/0.3; do
--		git rev-parse --verify refs/remotes/origin/\$i^0 >> refs.out || exit 1;
--	    done &&
--	test -z \"\$(sort < refs.out | uniq -d)\" &&
--	for i in trunk a b tags/0.1 tags/0.2 tags/0.3; do
--	  for j in trunk a b tags/0.1 tags/0.2 tags/0.3; do
--		if test \$j != \$i; then continue; fi
--	    test -z \"\$(git diff refs/remotes/origin/\$i \
--				 refs/remotes/origin/\$j)\" ||exit 1; done; done
--	"
-+	for i in $refs
-+	do
-+		git rev-parse --verify refs/remotes/origin/$i^0 || return 1;
-+	done >refs.out &&
-+	test -z "$(sort <refs.out | uniq -d)" &&
-+	>expect &&
-+	for i in $refs
-+	do
-+		for j in $refs
-+		do
-+			git diff --exit-code refs/remotes/origin/$i refs/remotes/origin/$j ||
-+				return 1
-+		done
-+	done
-+'
- 
- test_expect_success 'migrate --minimize on old inited layout' '
- 	git config --unset-all svn-remote.svn.fetch &&
- 	git config --unset-all svn-remote.svn.url &&
- 	rm -rf "$GIT_DIR"/svn &&
--	for i in $(cat fetch.out); do
-+	for i in $(cat fetch.out)
-+	do
- 		path=$(expr $i : "\([^:]*\):.*$")
- 		ref=$(expr $i : "[^:]*:\(refs/remotes/.*\)$")
- 		if test -z "$ref"; then continue; fi
- 		if test -n "$path"; then path="/$path"; fi
--		( mkdir -p "$GIT_DIR"/svn/$ref/info/ &&
--		echo "$svnrepo"$path > "$GIT_DIR"/svn/$ref/info/url ) || exit 1;
-+		mkdir -p "$GIT_DIR"/svn/$ref/info/ &&
-+		echo "$svnrepo"$path >"$GIT_DIR"/svn/$ref/info/url ||
-+		return 1
- 	done &&
- 	git svn migrate --minimize &&
- 	test -z "$(git config -l | grep "^svn-remote\.git-svn\.")" &&
--- 
-2.8.2.825.gea31738
+>  git-rebase--interactive.sh | 4 ++--
+>  git-stash.sh               | 2 +-
+>  2 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index 9ea3075..470413b 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -866,12 +866,12 @@ add_exec_commands () {
+>  # $3: the input filename
+>  check_commit_sha () {
+>  	badsha=0
+> -	if test -z $1
+> +	if test -z "$1"
+>  	then
+>  		badsha=1
+>  	else
+>  		sha1_verif="$(git rev-parse --verify --quiet $1^{commit})"
+> -		if test -z $sha1_verif
+> +		if test -z "$sha1_verif"
+>  		then
+>  			badsha=1
+>  		fi
+> diff --git a/git-stash.sh b/git-stash.sh
+> index c7c65e2..57f9dc1 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -185,7 +185,7 @@ store_stash () {
+>  
+>  	git update-ref --create-reflog -m "$stash_msg" $ref_stash $w_commit
+>  	ret=$?
+> -	test $ret != 0 && test -z $quiet &&
+> +	test $ret != 0 && test -z "$quiet" &&
+>  	die "$(eval_gettext "Cannot update \$ref_stash with \$w_commit")"
+>  	return $ret
+>  }
