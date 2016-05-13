@@ -1,143 +1,124 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 3/5] worktree.c: add is_worktree_locked()
-Date: Fri, 13 May 2016 12:52:06 -0400
-Message-ID: <CAPig+cQR40u4nMEP1wz74ubA=wW5m+KiCZnpZwuWAyYvXsPHrw@mail.gmail.com>
-References: <20160510141416.GA22672@lanh>
-	<20160510141729.23063-1-pclouds@gmail.com>
-	<20160510141729.23063-3-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Reto_Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
-	Mike Rappazzo <rappazzo@gmail.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 13 18:52:15 2016
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] git-multimail: update to release 1.3.1
+Date: Fri, 13 May 2016 19:00:41 +0200
+Message-ID: <20160513170041.18696-1-Matthieu.Moy@imag.fr>
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri May 13 19:00:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1GJx-0001qn-Ln
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 18:52:14 +0200
+	id 1b1GSM-0004wJ-Qr
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 19:00:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752918AbcEMQwJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 May 2016 12:52:09 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:35958 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752336AbcEMQwH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 May 2016 12:52:07 -0400
-Received: by mail-io0-f193.google.com with SMTP id k129so15789161iof.3
-        for <git@vger.kernel.org>; Fri, 13 May 2016 09:52:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=Z0tzg7PR10dJyvnOyymvZODFlldIRz1WTZ0eupvblYU=;
-        b=cUqWuQJ5Qzv5u6Ot8BJiJ3Ga8hunvkWr9EmZknTV/dhp/MtuTLDwHhyq8u/lQe+uwl
-         2lLJPaSuUHwfZPXYqGCXI0ywYXNpgQdusXixlt2c93BOoM58qdQI3TTfEnB2FZN3UHrH
-         2RW6910gRH8Nnz/a7MumV68BQjRjYcXoA/2VTcfaNsxk9F1Ky1mjZNCfx4QeOQ1EcfUe
-         fvFR/gUOQ9F4BTh5JzwE6HG95xTCH1gyYaPjpdCAcT5od5pPFCbHXignBSQVYua6dvYL
-         x5uksQjPUEs1VKQGAJ2slfD4CvGuWv/NDWAO+mNKRLgtPMN5K6uXnKr47v2bZEq6C2sB
-         4abg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=Z0tzg7PR10dJyvnOyymvZODFlldIRz1WTZ0eupvblYU=;
-        b=BQOMuvszTSYF/rG359r7GNYn3c4Fw6cL+ZnF5d+Wbmeh17JXvQ9oCB4wumH2cY9Ild
-         91L7aVYin7Sh3BynTOmriizkPppyegifs54T9O4EoW0a3GWWrq3ypHiV5gkU9mvJthaq
-         iPsVn+TeDoT+wgpvDZpJ8MFlq1XOpBTZw/d9dZt7fHUhkAVUSvj6OilfTU1SoSHEUy1q
-         gwXSdgdZaxq0dHsd8dpBm+E2ATntjJ3H+WNaUuW+KsVPW2Xlxvao0wRvb8KQvSD0iE7x
-         X9DbfWGuNLKJsZGqVcODJFvBLABC55poQjYoby6ALU3Zid+v1Wj92bg2xj8h+dsWir5O
-         wRXQ==
-X-Gm-Message-State: AOPr4FW33NXB/v4MSnuPiUzEmU1odQQtVZOT3QNYMGJIScljnvBdv4+SFnOYt5FIZkyjEfmp9Qbd+JWugTIaaA==
-X-Received: by 10.107.47.37 with SMTP id j37mr11870380ioo.168.1463158326209;
- Fri, 13 May 2016 09:52:06 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Fri, 13 May 2016 09:52:06 -0700 (PDT)
-In-Reply-To: <20160510141729.23063-3-pclouds@gmail.com>
-X-Google-Sender-Auth: auHQqVFQ_4cXoo6TaY456CGvnYI
+	id S1752179AbcEMRAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 13:00:50 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:45533 "EHLO mx1.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751242AbcEMRAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 13:00:49 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u4DH0gZt004754
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 13 May 2016 19:00:42 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4DH0hXN027689;
+	Fri, 13 May 2016 19:00:44 +0200
+X-Mailer: git-send-email 2.8.1.339.g3ad15fd
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Fri, 13 May 2016 19:00:42 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u4DH0gZt004754
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1463763642.96958@9DGPvq0YfGhlRim30EuZhQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294546>
 
-On Tue, May 10, 2016 at 10:17 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
- Duy
-<pclouds@gmail.com> wrote:
-> This provides an API for checking if a worktree is locked. We need to
-> check this to avoid double locking a worktree, or try to unlock one w=
-hen
-> it's not even locked.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
-> diff --git a/worktree.c b/worktree.c
-> @@ -243,6 +243,24 @@ int is_main_worktree(const struct worktree *wt)
-> +const char *is_worktree_locked(const struct worktree *wt)
-> +{
-> +       static struct strbuf sb =3D STRBUF_INIT;
-> +
-> +       if (!file_exists(git_common_path("worktrees/%s/locked", wt->i=
-d)))
-> +               return NULL;
+The changes are described in CHANGES.
 
-The git_common_path(...) invocation is textually lengthy and repeated
-three times in this function. If you instead assign the result to a
-variable (possibly xstrdup'ing it if needed), then the below
-strbuf_read_file() would likely fit on one line, thus be easier to
-read.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ contrib/hooks/multimail/CHANGES          |  8 ++++++++
+ contrib/hooks/multimail/README           |  2 +-
+ contrib/hooks/multimail/README.Git       |  4 ++--
+ contrib/hooks/multimail/git_multimail.py | 10 +++++++++-
+ 4 files changed, 20 insertions(+), 4 deletions(-)
 
-> +
-> +       strbuf_reset(&sb);
-> +       if (strbuf_read_file(&sb,
-> +                            git_common_path("worktrees/%s/locked", w=
-t->id),
-> +                            0) < 0)
-
-It's too bad that strbuf_read_file() doesn't guarantee anything about
-'errno', such as indicating that the file did not exist, in which case
-the !file_exists() check would not be needed, and a bit of raciness
-eliminated, but that's outside the scope of this series.
-
-> +               die_errno(_("failed to read '%s'"),
-> +                         git_common_path("worktrees/%s/locked", wt->=
-id));
-> +
-> +       strbuf_rtrim(&sb);
-
-Since this file is presumably human-editable (historically and at this
-point in the series) in order to specify the lock reason, should this
-be doing a full trim() rather than only rtrim()?
-
-> +       return sb.buf;
-> +}
-> diff --git a/worktree.h b/worktree.h
-> @@ -40,6 +40,12 @@ extern struct worktree *find_worktree_by_path(stru=
-ct worktree **list,
-> +/*
-> + * Return the reason string if the given worktree is locked. Return
-> + * NULL otherwise.
-> + */
-
-Does this need to mention that the returned "locked reason" string is
-only guaranteed valid until the next invocation?
-
-Actually, I recall that when I suggested the idea of 'struct worktree'
-and get_worktrees() to Mike that it would be natural for the structure
-to have a 'locked' (or 'locked_reason') field, in which case the
-reason could be stored there instead of in this static strbuf. In
-fact, my idea at the time was that get_worktrees() would populate that
-field automatically, rather than having to do so via a separate
-on-demand function call as in this patch.
-
-> +extern const char *is_worktree_locked(const struct worktree *wt);
-
-I was wondering if builtin/worktree.c:prune_worktree() should be
-updated to invoke this new function instead of consulting
-"worktrees/<id>/locked" manually, but I see that the entire "prune
-worktrees" functionality in builting/worktree.c first needs to be
-updated to the get_worktrees() API for that to happen.
+diff --git a/contrib/hooks/multimail/CHANGES b/contrib/hooks/multimail/CHANGES
+index 53c71b4..100cc7a 100644
+--- a/contrib/hooks/multimail/CHANGES
++++ b/contrib/hooks/multimail/CHANGES
+@@ -1,3 +1,11 @@
++Release 1.3.1 (bugfix-only release)
++===================================
++
++* Generate links to commits in combined emails (it was done only for
++  commit emails in 1.3.0).
++
++* Fix broken links on PyPi.
++
+ Release 1.3.0
+ =============
+ 
+diff --git a/contrib/hooks/multimail/README b/contrib/hooks/multimail/README
+index 1e04801..0c91d19 100644
+--- a/contrib/hooks/multimail/README
++++ b/contrib/hooks/multimail/README
+@@ -1,4 +1,4 @@
+-git-multimail 1.3.0
++git-multimail 1.3.1
+ ===================
+ 
+ .. image:: https://travis-ci.org/git-multimail/git-multimail.svg?branch=master
+diff --git a/contrib/hooks/multimail/README.Git b/contrib/hooks/multimail/README.Git
+index ee1fa75..1210bde 100644
+--- a/contrib/hooks/multimail/README.Git
++++ b/contrib/hooks/multimail/README.Git
+@@ -6,10 +6,10 @@ website:
+     https://github.com/git-multimail/git-multimail
+ 
+ The version in this directory was obtained from the upstream project
+-on May 03 2016 and consists of the "git-multimail" subdirectory from
++on May 13 2016 and consists of the "git-multimail" subdirectory from
+ revision
+ 
+-    26f3ae9f86aa7f8a054ba89235c4d3879f98b03d refs/tags/1.3.0
++    3ce5470d4abf7251604cbf64e73a962e1b617f5e refs/tags/1.3.1
+ 
+ Please see the README file in this directory for information about how
+ to report bugs or contribute to git-multimail.
+diff --git a/contrib/hooks/multimail/git_multimail.py b/contrib/hooks/multimail/git_multimail.py
+index f2c92ae..54ab4a4 100755
+--- a/contrib/hooks/multimail/git_multimail.py
++++ b/contrib/hooks/multimail/git_multimail.py
+@@ -1,6 +1,6 @@
+ #! /usr/bin/env python
+ 
+-__version__ = '1.3.0'
++__version__ = '1.3.1'
+ 
+ # Copyright (c) 2015 Matthieu Moy and others
+ # Copyright (c) 2012-2014 Michael Haggerty and others
+@@ -1704,6 +1704,14 @@ class BranchChange(ReferenceChange):
+         self.header_template = COMBINED_HEADER_TEMPLATE
+         self.intro_template = COMBINED_INTRO_TEMPLATE
+         self.footer_template = COMBINED_FOOTER_TEMPLATE
++
++        def revision_gen_link(base_url):
++            # revision is used only to generate the body, and
++            # _content_type is set while generating headers. Get it
++            # from the BranchChange object.
++            revision._content_type = self._content_type
++            return revision.generate_browse_link(base_url)
++        self.generate_browse_link = revision_gen_link
+         for line in self.generate_email(push, body_filter, values):
+             yield line
+ 
+-- 
+2.8.1.339.g3ad15fd
