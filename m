@@ -1,64 +1,77 @@
-From: Chris B <chris.blaszczynski@gmail.com>
-Subject: git push --quiet option does not seem to work
-Date: Fri, 13 May 2016 17:21:30 -0400
-Message-ID: <CADKp0pwHKvfSDG_-4p5tUn0_QiUGKzmRj5RwphfA8sZ_7CVHqw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] test -z/-n quoting fix + misc cleanups
+Date: Fri, 13 May 2016 15:09:51 -0700
+Message-ID: <xmqqoa898v9s.fsf@gitster.mtv.corp.google.com>
+References: <CALR6jEiH6oxq=KXfz1pqOue9VKnkp=S8zNqC4OFmbuhRFFxoMw@mail.gmail.com>
+	<20160513182325.GB30700@sigill.intra.peff.net>
+	<xmqqwpmx91mb.fsf@gitster.mtv.corp.google.com>
+	<20160513195911.GE9890@sigill.intra.peff.net>
+	<xmqqshxl9142.fsf@gitster.mtv.corp.google.com>
+	<20160513204654.GA10684@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 13 23:22:21 2016
+Content-Type: text/plain
+Cc: Armin Kunaschik <megabreit@googlemail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat May 14 00:10:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1KXK-0003rb-0B
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 23:22:18 +0200
+	id 1b1LHU-0000te-7v
+	for gcvg-git-2@plane.gmane.org; Sat, 14 May 2016 00:10:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932418AbcEMVWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 17:22:12 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:35789 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932347AbcEMVWL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 17:22:11 -0400
-Received: by mail-ig0-f172.google.com with SMTP id bi2so20134310igb.0
-        for <git@vger.kernel.org>; Fri, 13 May 2016 14:22:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=4cQ6WlvImoub6oce+w4MSxP8dacJiR29dn7y7n2yLq0=;
-        b=0GHy3GFDtAQBOhIGvFIfaMsxv00DP0dnuETVWFo3RajU9h+zfLDnJSmXC2Pn2IG9M7
-         DlXqQHxzcFgVeobvqO1zczCwHCCbHBk3A7atKBrljFbicqdtNdcU3fO/IDI7EofQMe9D
-         phi7v8yDtgFyuOT0FFXiYUd0HNM06eZdo5JoC6weDT9161abC1Stcgp9DcpEjUAdySb6
-         qMP+oO8kqYN857aPem86Vy0Zsj4WoppCHDtYut0RV3hCid2UHBsm74rFKXl4APJoO+IA
-         lC+VnfwjeD5Q4h6aN8o/96keofZZvxVRIuxlo16tGGXFFgbNfOQpSVqis/AaLpbdB9bn
-         VdbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=4cQ6WlvImoub6oce+w4MSxP8dacJiR29dn7y7n2yLq0=;
-        b=ZcMXtUMT9a74V0eLwrHKV+ljDQVhSUfnKaBKIyDoxNfIzsdBe7Aa5FC+H5Sz3Q5ojT
-         B7pgT53AYey3wNPy1R0/luD/4qA0jq7Mf5RGQFI3C8XcYaYEpScJT+V3IVgUSR2K6eDN
-         6vnGNgEvxwyE7JwWBh96vj5Y9cNm18hTiss6Cm4M0bNzVax4bCRlyG2K40qyvzilmZNK
-         +JXIyrIp92Z6jq5tYiCbEX6y0c3rgJnDeBuGqcae87jZIWq0LVxb+gfbCtfGvnimrbKk
-         oZ0R5oidskgkqbkeYOrszhdcXGB1UQ4WO7gJaZIgsRLMTY11avjylM6DcuLIzI+oymgz
-         EpZQ==
-X-Gm-Message-State: AOPr4FUjBRFEIpsKGU0eJLVFmH53VCpW/F07S/Ib2y5yg/nHn0w3iky2YjpnQUDbPFYDQyANBz8fr8g6zwTy+g==
-X-Received: by 10.50.58.166 with SMTP id s6mr3713455igq.13.1463174530201; Fri,
- 13 May 2016 14:22:10 -0700 (PDT)
-Received: by 10.107.20.88 with HTTP; Fri, 13 May 2016 14:21:30 -0700 (PDT)
+	id S1753821AbcEMWJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 18:09:55 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61055 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753817AbcEMWJz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 18:09:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D621119AA3;
+	Fri, 13 May 2016 18:09:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=u8ghgdsqdewaDSFJ1cS99vP+Lvo=; b=V5aZ5I
+	NtYmVFux0E9E7FhahqA5zdXQRSlvaAnqjAkdu7DzN0Y9ehvaF1FSxhxeigAvuJiH
+	IEYOC6hwDyors8ssFFpCY2Vd7gMfdZRT9QTNgzYkfYklvuXG67DVOpTNLiZXZhJT
+	nz00R3tXCuZGTOuSkUdWvk9GY6WJawbnVRhlc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=osm+obhh7F7li7rChpwMgPLgbsS0EGFh
+	OmoPtpfeYgYKKtXfhERrlMcAYxfNZCiKq3IPfiRANyC5g4afpevUMniEH4+5nY3V
+	t594PC7ImTHSCJINWgsbNvJp1Ygl0ITrxnCzAeykPjwgyhKd1own+xtv8qADGDeg
+	/RXHxZNBznY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CE59319AA2;
+	Fri, 13 May 2016 18:09:53 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 45FE919AA1;
+	Fri, 13 May 2016 18:09:53 -0400 (EDT)
+In-Reply-To: <20160513204654.GA10684@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 13 May 2016 16:46:54 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6B36C66C-1957-11E6-8A91-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294587>
 
-Hi I am using 2.8.2.windows.1 and writing Powershell scripts doing
-some Git stuff.
+Jeff King <peff@peff.net> writes:
 
-I have to use the --quiet option for git because it constantly outputs
-progress to stderr.
+> Anyway. Here's a series that fixes the -n/-z cases, along with a bunch
+> of cleanups that remove the false positives (most of which I sent out
+> just a few minutes ago as "minor fixes to some svn tests").
+>
+>   [1/6]: t/lib-git-svn: drop $remote_git_svn and $git_svn_id
+>   [2/6]: t9100,t3419: enclose all test code in single-quotes
+>   [3/6]: t9107: use "return 1" instead of "exit 1"
+>   [4/6]: t9107: switch inverted single/double quotes in test
+>   [5/6]: t9103: modernize test style
+>   [6/6]: always quote shell arguments to test -z/-n
 
-However, it seems that --quiet does not actually work in git push. The
-output still goes to stderr.
-When there are changes committed to push it always outputs something
-to stderr. If there is nothing to push, then it actually is silent.
+All look sensible; thanks.
