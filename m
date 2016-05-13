@@ -1,135 +1,85 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v10 11/20] index-helper: use watchman to avoid
- refreshing index with lstat()
-Date: Fri, 13 May 2016 13:47:25 -0400
-Organization: Twitter
-Message-ID: <1463161645.24478.59.camel@twopensource.com>
-References: <1463084415-19826-1-git-send-email-dturner@twopensource.com>
-	 <1463084415-19826-12-git-send-email-dturner@twopensource.com>
-	 <57350D7F.5030006@ramsayjones.plus.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/2] Work on t3404 in preparation for rebase--helper
+Date: Fri, 13 May 2016 10:57:27 -0700
+Message-ID: <xmqqa8jtaliw.fsf@gitster.mtv.corp.google.com>
+References: <cover.1462888768.git.johannes.schindelin@gmx.de>
+	<cover.1463067811.git.johannes.schindelin@gmx.de>
+	<xmqq8tzfgsbd.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1605130835070.4092@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-	pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Fri May 13 19:47:37 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 13 19:57:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1HBW-0008SM-JI
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 19:47:34 +0200
+	id 1b1HLE-0004hd-PT
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 19:57:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932098AbcEMRra convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 May 2016 13:47:30 -0400
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:33044 "EHLO
-	mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751573AbcEMRr3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 13:47:29 -0400
-Received: by mail-qk0-f169.google.com with SMTP id n63so64705671qkf.0
-        for <git@vger.kernel.org>; Fri, 13 May 2016 10:47:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:organization
-         :mime-version:content-transfer-encoding;
-        bh=1x7LZvYmPR9ya7gUrX+womvcCGlOgjS21+y8olnXYDE=;
-        b=KpvaqJnmp4nDq4J/t0UCfl/vX3hX2jdXpZahd6DWU0UXGoYniaoDEzQDoyvayGrfJN
-         jgLS3pbWLqxErUs80qh554ExTAixtV7yksl+scCLGpguClS7PkRryX5tRtAq84RgDesw
-         Um6zeCDgFW8YNtOZqT8fC79T5ihdBawoOxIh98mY7OCDaWranEgO7aPktwosN5iAkDyb
-         kGwZq9SQQxh02yBYMeWspJE8x4lIXwBkO3Vq0qT4HrHik+cFR8adi7PXCwUNjaxL+WUD
-         ADREZHfceExRFCCkZv1obbrpDylktPhU6QXssyuX0Ws7GyUeYn2h0De5gH22RR2qcdee
-         tfmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=1x7LZvYmPR9ya7gUrX+womvcCGlOgjS21+y8olnXYDE=;
-        b=Ye6SDuVutYbhNy6Dfj0ebjo4+fSQdZgEchaDHL+R54JewjhCJBZWtsHFI8lGj1s3cT
-         nxRP9Fey7lRQtdH6iyWqijyeGnC2M4GzcO4mWbh1XQYr2AqgDLfHU7KLZ4C+YdndMQUn
-         1GGGtbBM9szrdkF2xRontKOpg7sy4BpV537frW2MMyhN+jTgUC1hB1krxNdubGnDoQv7
-         W8iTjCsf5IH0Bn6oRI3zWOhTePN0fgXbsGnA0vzDrZ3E1ylDRkZUkFZQuM2WNtStNLcC
-         Bz7VTE9bpVVAi8L40YCaHtvkrnoI3vc/zFpmNf1DqGEKRe83nrMPVmzU+hCp47GIvWrK
-         XUnw==
-X-Gm-Message-State: AOPr4FVGQ/v8FHIzsi/Ovz8oAkJigNlaV60BV4NME/J9RDMYVDYxmXdRVSdr7NbWb6EUWQ==
-X-Received: by 10.55.27.98 with SMTP id b95mr10897068qkb.18.1463161648753;
-        Fri, 13 May 2016 10:47:28 -0700 (PDT)
-Received: from ubuntu ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id b139sm8766201qhb.3.2016.05.13.10.47.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 13 May 2016 10:47:27 -0700 (PDT)
-In-Reply-To: <57350D7F.5030006@ramsayjones.plus.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1752676AbcEMR5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 13:57:32 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56616 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752071AbcEMR5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 13:57:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EFCDD188AD;
+	Fri, 13 May 2016 13:57:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4I5ECFkE4Oc1JIRuIs0qKf5oOc8=; b=XNyTOt
+	p/MZ9I/3UTGtqzhaa7JaPlaw/P1DtYs6QYAgC+8K0qkdUfdXhReCGg40Qf7hJlgA
+	4HQ17EFGVfgUhoWSmNQa53NfmBeRV+TapB6VEiwPy1RI/q3BcNTUm68LJc1d2F5N
+	p4ixs6X6+DwiUhMG4Hg8aAoOiCGNbp0YEaEpU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fQHNYdOPn0Fe22QwohLtfY3M6gPWOcWw
+	iImR6xe/CbaboM09nGAYdNCYncVMj2Q3E78fd56Qa6UX+/brA4covk2LrmiphI5g
+	ROsN/YAk1dURvgprfTnRwuX4q+USJgalLtsimnDJsPeT+dfpBu0riwFISz4J+FFW
+	P0IvUo8nPNg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E6548188AC;
+	Fri, 13 May 2016 13:57:29 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 515B8188AB;
+	Fri, 13 May 2016 13:57:29 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1605130835070.4092@virtualbox> (Johannes
+	Schindelin's message of "Fri, 13 May 2016 08:37:36 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 28B7DA42-1934-11E6-B1C0-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294550>
 
-On Fri, 2016-05-13 at 00:10 +0100, Ramsay Jones wrote:
->=20
-> On 12/05/16 21:20, David Turner wrote:
-> > From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
-> [snip]
->=20
-> > =20
-> > +/* in ms */
-> > +#define WATCHMAN_TIMEOUT 1000
-> > +
-> > +static int poke_and_wait_for_reply(int fd)
-> > +{
-> > +	struct strbuf buf =3D STRBUF_INIT;
-> > +	int ret =3D -1;
-> > +	struct pollfd pollfd;
-> > +	int bytes_read;
-> > +	char reply_buf[4096];
-> > +	const char *requested_capabilities =3D "";
-> > +
-> > +#ifdef USE_WATCHMAN
-> > +	requested_capabilities =3D "watchman";
-> > +#endif
-> > +
-> > +	if (fd < 0)
-> > +		return -1;
-> > +
-> > +	strbuf_addf(&buf, "poke %d %s", getpid(),
-> > requested_capabilities);
-> > +	if (packet_write_gently(fd, buf.buf, buf.len))
->=20
-> This is not causing a problem or bug, but is none the less not
-> correct - as you know, packet_write_gently() takes a 'printf' like
-> variable argument list. (So, buf.buf is the format specifier and
-> buf.len is an unused arg).
->=20
-> I think I would write this as:
->=20
-> 	strbuf_addf(&buf, "poke %d", getpid());
-> 	if (requested_capabilities && *requested_capabilities)
-> 		strbuf_addf(&buf, " %s", requested_capabilities);
-> 	if (packet_write_gently(fd, "%s", buf.buf))
->=20
-> ... or something similar. [Note, just typing into my email client, so
-> it's not been close to a compiler.]
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Thanks for the report. I'll fix it.
+> Hi Junio,
+>
+> On Thu, 12 May 2016, Junio C Hamano wrote:
+>
+>> I took these separately already, and plan to fast-track them as they are
+>> both "trivially correct"; I double checked that what I have match these
+>> two, too.
+>
+> Oh, okay. I just wanted to make things easier for you, and now that I have
+> a script to prepare patch series, it's really almost as trivial for me to
+> send out a new iteration as it would be to update a Pull Request on
+> GitHub.
+>
+> Do you want me to hold off with new iterations in the future until you
+> clarified your preferred course of action?
 
-I'm going to just send the requested_capabilities regardless of whether
-they are empty -- it won't hurt. =20
-
-> > +		return -1;
-> > +	if (packet_flush_gently(fd))
-> > +		return -1;
->=20
-> Why are you sending a flush packet - doesn't the index-helper
-> simply ignore it?
-
-It's not the packet that I'm excited about -- it's that later,
-packet_write might be buffered (according to a docstring).  So I want
-to ensure that the writes actually go out *now*.
-
-> I haven't tried this yet BTW, just reading patches as they float
-> on past... ;-)
->=20
-> ATB,
-> Ramsay Jones
->=20
+No.  You've been doing great.  I just wanted to clarify what I did
+to your patch before I merge them separately to 'next' ahead of the
+remainder that you'd be sending out, expecting a possible course
+correction, e.g. "that would make it harder to queue the other patches
+yet to come, all of which would depend on both of them--it would be
+better to queue them on a single topic to be extended with these
+other patches, after all these two are not that urgent".
