@@ -1,162 +1,151 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/6] t9100,t3419: enclose all test code in single-quotes
-Date: Fri, 13 May 2016 16:47:18 -0400
-Message-ID: <20160513204717.GB15391@sigill.intra.peff.net>
+Subject: [PATCH 3/6] t9107: use "return 1" instead of "exit 1"
+Date: Fri, 13 May 2016 16:47:21 -0400
+Message-ID: <20160513204721.GC15391@sigill.intra.peff.net>
 References: <20160513204654.GA10684@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Armin Kunaschik <megabreit@googlemail.com>,
 	Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 13 22:47:31 2016
+X-From: git-owner@vger.kernel.org Fri May 13 22:47:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1Jzb-0000Qg-Bg
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 22:47:27 +0200
+	id 1b1Jzc-0000Qg-FD
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 22:47:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932089AbcEMUrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 16:47:21 -0400
-Received: from cloud.peff.net ([50.56.180.127]:39365 "HELO cloud.peff.net"
+	id S932217AbcEMUrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 16:47:25 -0400
+Received: from cloud.peff.net ([50.56.180.127]:39369 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751501AbcEMUrV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 16:47:21 -0400
-Received: (qmail 16712 invoked by uid 102); 13 May 2016 20:47:20 -0000
+	id S932178AbcEMUrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 16:47:24 -0400
+Received: (qmail 16724 invoked by uid 102); 13 May 2016 20:47:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 May 2016 16:47:20 -0400
-Received: (qmail 21585 invoked by uid 107); 13 May 2016 20:47:20 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 May 2016 16:47:24 -0400
+Received: (qmail 21591 invoked by uid 107); 13 May 2016 20:47:23 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 May 2016 16:47:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 May 2016 16:47:18 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 May 2016 16:47:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 May 2016 16:47:21 -0400
 Content-Disposition: inline
 In-Reply-To: <20160513204654.GA10684@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294579>
 
-A few tests here use double-quotes around the snippets of
-shell code to run the tests. None of these tests wants to do
-any interpolation at all, and it just leads to an extra
-layer of quoting around all double-quotes and dollar signs
-inside the snippet.  Let's switch to single quotes, like
-most other test scripts.
+When a test runs a loop, it cannot rely on the usual
+&&-chaining to propagate a failure inside the loop; it needs
+to break out with a failure signal. However, unless you are
+in a subshell, doing so with "exit 1" will exit the entire
+test script, not just the test snippet we are in (and cause
+the harness to complain that test_done was never reached).
+
+So the fundamental point of this patch is s/exit/return/.
+But while we're there, let's fix a number of style and
+readability issues:
+
+  - snippets in double-quotes need an extra layer of quoting
+    for their meta-characters; let's avoid that by using
+    single quotes
+
+  - accumulating loop output by appending to a file in each
+    iteration is brittle, as it can be affected by content
+    left in the file by earlier tests. Instead, it's better
+    to redirect stdout for the whole loop, so we know the
+    output only comes from that loop.
+
+  - using "test -z" to check that diff output is empty is
+    overly verbose; we can just ask diff to use --exit-code.
+
+  - we can factor out long lists of refs to make it more
+    obvious we're using the same ones in each loop
+
+  - subshells are unnecessary when ending an &&-chain with
+    "|| return 1"
+
+  - minor style fixups like space-after-redirection, and
+    "do" and "done" on their own lines
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t3419-rebase-patch-id.sh | 12 ++++++------
- t/t9100-git-svn-basic.sh   | 28 ++++++++++++++--------------
- 2 files changed, 20 insertions(+), 20 deletions(-)
+ t/t9107-git-svn-migrate.sh | 42 ++++++++++++++++++++++++++----------------
+ 1 file changed, 26 insertions(+), 16 deletions(-)
 
-diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
-index 217dd79..49f548c 100755
---- a/t/t3419-rebase-patch-id.sh
-+++ b/t/t3419-rebase-patch-id.sh
-@@ -73,17 +73,17 @@ do_tests () {
- 		run git format-patch --stdout --ignore-if-in-upstream master
- 	"
- 
--	test_expect_success $pr 'detect upstream patch' "
-+	test_expect_success $pr 'detect upstream patch' '
- 		git checkout -q master &&
- 		scramble file &&
- 		git add file &&
--		git commit -q -m 'change big file again' &&
-+		git commit -q -m "change big file again" &&
- 		git checkout -q other^{} &&
- 		git rebase master &&
--		test_must_fail test -n \"\$(git rev-list master...HEAD~)\"
--	"
-+		test_must_fail test -n "$(git rev-list master...HEAD~)"
-+	'
- 
--	test_expect_success $pr 'do not drop patch' "
-+	test_expect_success $pr 'do not drop patch' '
- 		git branch -f squashed master &&
- 		git checkout -q -f squashed &&
- 		git reset -q --soft HEAD~2 &&
-@@ -91,7 +91,7 @@ do_tests () {
- 		git checkout -q other^{} &&
- 		test_must_fail git rebase squashed &&
- 		rm -rf .git/rebase-apply
--	"
-+	'
- }
- 
- do_tests 500
-diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
-index 6ec73ee..28082b1 100755
---- a/t/t9100-git-svn-basic.sh
-+++ b/t/t9100-git-svn-basic.sh
-@@ -217,11 +217,11 @@ EOF
- 
- test_expect_success POSIXPERM,SYMLINKS "$name" "test_cmp a expected"
- 
--test_expect_success 'exit if remote refs are ambigious' "
-+test_expect_success 'exit if remote refs are ambigious' '
-         git config --add svn-remote.svn.fetch \
- 		bar:refs/remotes/git-svn &&
- 	test_must_fail git svn migrate
--"
-+'
- 
- test_expect_success 'exit if init-ing a would clobber a URL' '
-         svnadmin create "${PWD}/svnrepo2" &&
-@@ -259,26 +259,26 @@ test_expect_success 'dcommit $rev does not clobber current branch' '
- 	git branch -D my-bar
+diff --git a/t/t9107-git-svn-migrate.sh b/t/t9107-git-svn-migrate.sh
+index 6efc2ab..2908aef 100755
+--- a/t/t9107-git-svn-migrate.sh
++++ b/t/t9107-git-svn-migrate.sh
+@@ -56,9 +56,11 @@ test_expect_success 'initialize a multi-repository repo' '
+ 	                        "^tags/\*:refs/remotes/origin/tags/\*$" &&
+ 	git config --add svn-remote.svn.fetch "branches/a:refs/remotes/origin/a" &&
+ 	git config --add svn-remote.svn.fetch "branches/b:refs/remotes/origin/b" &&
+-	for i in tags/0.1 tags/0.2 tags/0.3; do
++	for i in tags/0.1 tags/0.2 tags/0.3
++	do
+ 		git config --add svn-remote.svn.fetch \
+-		                 $i:refs/remotes/origin/$i || exit 1; done &&
++			$i:refs/remotes/origin/$i || return 1
++	done &&
+ 	git config --get-all svn-remote.svn.fetch > fetch.out &&
+ 	grep "^trunk:refs/remotes/origin/trunk$" fetch.out &&
+ 	grep "^branches/a:refs/remotes/origin/a$" fetch.out &&
+@@ -70,30 +72,38 @@ test_expect_success 'initialize a multi-repository repo' '
  	'
  
--test_expect_success 'able to dcommit to a subdirectory' "
-+test_expect_success 'able to dcommit to a subdirectory' '
- 	git svn fetch -i bar &&
- 	git checkout -b my-bar refs/remotes/bar &&
- 	echo abc > d &&
- 	git update-index --add d &&
--	git commit -m '/bar/d should be in the log' &&
-+	git commit -m "/bar/d should be in the log" &&
- 	git svn dcommit -i bar &&
--	test -z \"\$(git diff refs/heads/my-bar refs/remotes/bar)\" &&
-+	test -z "$(git diff refs/heads/my-bar refs/remotes/bar)" &&
- 	mkdir newdir &&
- 	echo new > newdir/dir &&
- 	git update-index --add newdir/dir &&
--	git commit -m 'add a new directory' &&
-+	git commit -m "add a new directory" &&
- 	git svn dcommit -i bar &&
--	test -z \"\$(git diff refs/heads/my-bar refs/remotes/bar)\" &&
-+	test -z "$(git diff refs/heads/my-bar refs/remotes/bar)" &&
- 	echo foo >> newdir/dir &&
- 	git update-index newdir/dir &&
--	git commit -m 'modify a file in new directory' &&
-+	git commit -m "modify a file in new directory" &&
- 	git svn dcommit -i bar &&
--	test -z \"\$(git diff refs/heads/my-bar refs/remotes/bar)\"
+ # refs should all be different, but the trees should all be the same:
+-test_expect_success 'multi-fetch works on partial urls + paths' "
++test_expect_success 'multi-fetch works on partial urls + paths' '
++	refs="trunk a b tags/0.1 tags/0.2 tags/0.3" &&
+ 	git svn multi-fetch &&
+-	for i in trunk a b tags/0.1 tags/0.2 tags/0.3; do
+-		git rev-parse --verify refs/remotes/origin/\$i^0 >> refs.out || exit 1;
+-	    done &&
+-	test -z \"\$(sort < refs.out | uniq -d)\" &&
+-	for i in trunk a b tags/0.1 tags/0.2 tags/0.3; do
+-	  for j in trunk a b tags/0.1 tags/0.2 tags/0.3; do
+-		if test \$j != \$i; then continue; fi
+-	    test -z \"\$(git diff refs/remotes/origin/\$i \
+-				 refs/remotes/origin/\$j)\" ||exit 1; done; done
 -	"
-+	test -z "$(git diff refs/heads/my-bar refs/remotes/bar)"
++	for i in $refs
++	do
++		git rev-parse --verify refs/remotes/origin/$i^0 || return 1;
++	done >refs.out &&
++	test -z "$(sort <refs.out | uniq -d)" &&
++	>expect &&
++	for i in $refs
++	do
++		for j in $refs
++		do
++			git diff --exit-code refs/remotes/origin/$i refs/remotes/origin/$j ||
++				return 1
++		done
++	done
 +'
  
- test_expect_success 'dcommit should not fail with a touched file' '
- 	test_commit "commit-new-file-foo2" foo2 &&
-@@ -291,13 +291,13 @@ test_expect_success 'rebase should not fail with a touched file' '
- 	git svn rebase
- '
- 
--test_expect_success 'able to set-tree to a subdirectory' "
-+test_expect_success 'able to set-tree to a subdirectory' '
- 	echo cba > d &&
- 	git update-index d &&
--	git commit -m 'update /bar/d' &&
-+	git commit -m "update /bar/d" &&
- 	git svn set-tree -i bar HEAD &&
--	test -z \"\$(git diff refs/heads/my-bar refs/remotes/bar)\"
--	"
-+	test -z "$(git diff refs/heads/my-bar refs/remotes/bar)"
-+'
- 
- test_expect_success 'git-svn works in a bare repository' '
- 	mkdir bare-repo &&
+ test_expect_success 'migrate --minimize on old inited layout' '
+ 	git config --unset-all svn-remote.svn.fetch &&
+ 	git config --unset-all svn-remote.svn.url &&
+ 	rm -rf "$GIT_DIR"/svn &&
+-	for i in $(cat fetch.out); do
++	for i in $(cat fetch.out)
++	do
+ 		path=$(expr $i : "\([^:]*\):.*$")
+ 		ref=$(expr $i : "[^:]*:\(refs/remotes/.*\)$")
+ 		if test -z "$ref"; then continue; fi
+ 		if test -n "$path"; then path="/$path"; fi
+-		( mkdir -p "$GIT_DIR"/svn/$ref/info/ &&
+-		echo "$svnrepo"$path > "$GIT_DIR"/svn/$ref/info/url ) || exit 1;
++		mkdir -p "$GIT_DIR"/svn/$ref/info/ &&
++		echo "$svnrepo"$path >"$GIT_DIR"/svn/$ref/info/url ||
++		return 1
+ 	done &&
+ 	git svn migrate --minimize &&
+ 	test -z "$(git config -l | grep "^svn-remote\.git-svn\.")" &&
 -- 
 2.8.2.825.gea31738
