@@ -1,81 +1,76 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: possible problem / bug
-Date: Fri, 13 May 2016 13:39:04 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605131338480.4092@virtualbox>
-References: <CAPpP+uW=ReKkUnz4PMEyhchcafd0qtgSZ_Qg0Hq77k4u+aPUyQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2016, #02; Fri, 6)
+Date: Fri, 13 May 2016 13:52:11 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605131349020.4092@virtualbox>
+References: <xmqqeg9e24ay.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1605100757410.4092@virtualbox> <xmqqy47iqszk.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Bryant Bernstein <bryant.bernstein@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 13 13:39:14 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 13 13:52:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1BR2-0007xI-0M
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 13:39:12 +0200
+	id 1b1Bdi-0007Hl-N2
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 13:52:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751743AbcEMLjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 07:39:08 -0400
-Received: from mout.gmx.net ([212.227.17.22]:63613 "EHLO mout.gmx.net"
+	id S1752102AbcEMLwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 07:52:15 -0400
+Received: from mout.gmx.net ([212.227.17.22]:56544 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751139AbcEMLjG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 07:39:06 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MQ7sF-1ax2pS3tQ3-005Gg2; Fri, 13 May 2016 13:39:02
+	id S1751139AbcEMLwO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 07:52:14 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Mhdex-1bEi1D3jyl-00MpZ1; Fri, 13 May 2016 13:52:08
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAPpP+uW=ReKkUnz4PMEyhchcafd0qtgSZ_Qg0Hq77k4u+aPUyQ@mail.gmail.com>
+In-Reply-To: <xmqqy47iqszk.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:19Mqi5dW7xL3FGvk8geoIrN/V2m8YuNVpRUNtnzIuRr9U3EEn4s
- iI1/4eyguflCdpp1l5dUbcCDBQy9bHyYe428gms317hfkyri4TOgyTiMQJlN6G5yLbXuZjv
- MTcNo1Cov9B3gZdSj1PmlFKhYbCUef0EY4qWKbhAqQuHw/Pm9AaKfscmcSsO9L7bjWDYk6t
- F4NOi4H9iiLUCFt2PGWnA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:tBHbOl6R4/Y=:HpIGhEq0AM+B7B3s0UDlhR
- qVdPgN6NtbSpu1PsYUhBCEavsMOegwzXNusBkAyvJ8e5a3wL5F2qdrX1LYco8rgvRNHI0sYo6
- 5jaQ+pxcELAbxhEZKBxsjBYcayzlAaFgGnnUQaCYXIHY9zJyu+F+PCEYfDWmn/OtS1pwmCbwp
- 206oLH6mj9X7quBKgo+HgGsDYXdHgbjC2iLgUFFHEnb2AiGPHgqN1tKq6XRjgW1EsNIH0xhxg
- 4K55v0WmaT0f0qTSSogOMxO/8ezhbQ5Sd8cpaRNJOQQbw5ahjJig7PvSauw5mCbukPQQVGQJd
- 9hLYGas/30ZUN9PyBM/d8laMcvAd3ZPFAfA8hu4InMeeLxfkrgGbIBIBFHFKII1BC3nyaj8t/
- EZTLi9Rt64Xrw9oPQnw6TYCsehF4l2xLejzsSYxCzcMKIqiOqvUrWmV3cj/0t5pMq7kq1VRz0
- ZxByFtZfq/3UVXFkfAeHQ44rMzRlYmHDaDO/hsLuCQ/ZyhOa42vNOk002X2oSgzRyE3GTd0x+
- 745grRgayDvhdbztrmI3khaJH45CQunJ5cFfrF5bJyDLxrZrGROTOO7LqUBEjgxUBq05wNThG
- 373wc9dF/LXWMVMx/NRni0BQ4xwVlBHrtdrAiQsNmgnw1g+2BThQKZXEqBpJ8YL6GbF/11iRM
- qt4wBWBmUSwaUQVvJpOvFPWc8XuY7kPFGu1wTz6P20e+GExpTmDSDdJnHbOysy+WsjovZU/Wt
- FhjsADzW+nYZjKlO+Qgfnbqw/GXJW7uFSIR1Oj2PhVgkhpY7rVvIMjGJPoker4Mv/QnNw1bj 
+X-Provags-ID: V03:K0:SexFC5iKWVyKslYCaoazUN8e61GsMiL0DfOQl4cYNhn+DfjnH8U
+ ADKsO2v7B5uCQIl66pKY0xYHsiC44TtpwnSPjvKJH5bVbhRcVzsN8G2Qp9seJWuRBDCZzfp
+ qq/oepFKcqpAyXnK6e5fxaxZpk2g7YJ0xdRjy0WiAP9naogZbNDVkY7lBM0YmOtlySVvFAM
+ Cowfc9QpnEoxGDplb/Ebg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CDhqUvPiLYc=:UyATSLWh/vViOpXMR+beYi
+ tbfWevdMyH/N+vdzhru8Gytuf2aHjTEZVwcY77ByhXMlcfod3MoDcSGgfQuS3y1fNrNhHojtG
+ nZ+7gEvpXbJ9C9ulJNpE6E/BLxR7nsW/ahgxOKQfe4p8GEC4YetpnNTvZia61OyeaQ3zK3UWO
+ sykGh7Rlq4lYQWrz/cYLLNbcEeK1IOIUC7L5IItUgXeRMkT5ydd8dcNnFMCRCGDfS0RH0DtWW
+ B9nlQAKc+E85m9Xy0OA3gBdJgUt90UA3EFuICa8B76w1jbib9X7MoyPd9TW9s5lte/7WIAoM1
+ kcr9QGjju9gHdtDqdkgDQ6lBhbHkomgH2+L2yIf37o3mx8S/zQDDvEWc9FIi/S+JjcGtAeZll
+ XxpIW+LGrALjsqxZbvkwC9qc3BcDGWMb6mPjLLChD6D2Y6gcnP6JKoHSY6YiI1VLk7Q6dXj6b
+ IHnxs4HEW6bUBVF/K4gkCXh060HaaGM+aDGLanqNH1L6mWNqX0gLF5rY4SXCkXC3E4bfz1QUh
+ VojGQe/I9XheR05FNJb0RxyneO3UQV2MPKjMFDEbAkZEHldN46X254mC0DSYAn3Tj2FRinugi
+ dqCv2oZPdWwyDTCiboajSlc8odOeTII9WxP9XgAfalDA9AOfP+0ZWWEBV1Y51AYJrLo7sUq3o
+ S8SHc9Nx3yQR7umniqoAIS88jW4xXfBSPUEqO+HB/KkbP+dK77y8Qzw0YLZd8ppQE4PsyboSq
+ 8qjk+NzVddov/mJDzH3XKWQzFwIenhxZM+CDnvb8hjPBfsF/8UKV5Mj3uwjk3hXvewzOiwqr 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294525>
 
-Hi Bryant,
+Hi Junio,
 
-On Thu, 5 May 2016, Bryant Bernstein wrote:
+On Tue, 10 May 2016, Junio C Hamano wrote:
 
-> Both windows and linux support links but both git and the git bash
-> seem to have a problem with them.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> In my source, (originally on Linux) I have a link in my source
-> directory to a config file which I normally import into python.  This
-> allows me to have something.py pointing to config.txt .  config.txt
-> can be opened by an editor and something.py can be imported into a
-> python shell.
+> > On Fri, 6 May 2016, Junio C Hamano wrote:
+> >
+> > 2) I was under the impression that we preferred test_i18ngrep over grep...
 > 
-> This worked in Linux alone and on windows  as both platforms support
-> links.  But if I use git to bring my code from linux to windows I end
-> up with a file that contains the path to the target file.
-> 
-> Then I went to try to see what git bash would do with a link.
-> 
-> I created a file and a link to it using ln -s
-> This created a copy of the file I wanted to link to.
-> 
-> What do you think?
-> Should this work better?
+> Only when the strings we are expecting are subject to i18n.  I
+> somehow did not think your report() codepath has any i18n/l10n?
 
-See https://github.com/git-for-windows/git/wiki/Symbolic-Links
+I finally remembered why I thought that test_i18ngrep was to be preferred
+over grep. For years, Git for Windows carried a patch that introduced a
+special `cmp` for use with text files, so that differences in the
+end-of-line markers could be ignored. IIRC we abandoned this when
+test_i18ncmp learned to perform this trick. Only that it really is
+test_cmp that learned this trick... so I was wrong.
+
+So please forget what I said about this part of the patch.
 
 Ciao,
-Johannes
+Dscho
