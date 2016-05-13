@@ -1,71 +1,107 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: [BUG] t9801 and t9803 broken on next
-Date: Fri, 13 May 2016 12:02:48 +0200
-Message-ID: <3A110437-F778-42E2-A987-86B4EAB3D963@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: normalperson@yhbt.net, Luke Diamand <luke@diamand.org>
-To: Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 13 12:03:17 2016
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [PATCH] t6030: explicitly test for bisection cleanup
+Date: Fri, 13 May 2016 15:44:29 +0530
+Message-ID: <1463134469-26071-1-git-send-email-pranit.bauva@gmail.com>
+Cc: Pranit Bauva <pranit.bauva@gmail.com>, larsxschneider@gmail.com,
+	christian.couder@gmail.com, chriscool@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 13 12:15:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b19w8-0004BG-Cb
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 12:03:12 +0200
+	id 1b1A8D-0001gL-U1
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 12:15:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751763AbcEMKCx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 06:02:53 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:35721 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751576AbcEMKCw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 May 2016 06:02:52 -0400
-Received: by mail-wm0-f45.google.com with SMTP id e201so15932603wme.0
-        for <git@vger.kernel.org>; Fri, 13 May 2016 03:02:51 -0700 (PDT)
+	id S932076AbcEMKPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 06:15:37 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36411 "EHLO
+	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932066AbcEMKPh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 06:15:37 -0400
+Received: by mail-pf0-f193.google.com with SMTP id g132so9025005pfb.3
+        for <git@vger.kernel.org>; Fri, 13 May 2016 03:15:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:content-transfer-encoding:subject:date:message-id:cc:to
-         :mime-version;
-        bh=AEnwCTqroFVpo4ZxiMMDbGrXVf28Kj9xwHg4op6M2gQ=;
-        b=h4DXq5v9DOLW7sC1mQSqz/4/cBhy+2veZKFAvBlWqRvbvjoTOYwWT1XuwykFjEoXPu
-         VcNSLEDV5Z7gp8YOe/fbRAWqZI7lptkE7ffmQC0Dk4grcHLbz2iWEL062JA0JY5eIsws
-         JIZZ0tecLXMf7v+R7+LQCvZTZ8D5G1wCCCNYe+FPiyk1vaWxf1HtA6NtsfMJbQ8lO9ot
-         n03KMfRiF9MX0ZGRXa+FlsLd8GjAVdcIgHns0jwMPNgGfu1xmABFSZE9uBolUq8S/vcK
-         0pIr39DLbJwi7Zo/JD4l2G0jwFV9Qe4g1R3foQg3x1VTc7GbWEBwExvuMDrYICmZhjKP
-         eV+Q==
+        h=from:to:cc:subject:date:message-id;
+        bh=P+DHtXl9eLSfvaOph8sy2vACKXzBAkrcVAk53hoQji8=;
+        b=nb0JIodVJvP+h8tmvNHwthTKkESPHrLpL2q5KC6vp3sICskJwHRMHItv1Sou+dSs7C
+         y1u9zv6GdrA4NLn98oSSHv1as3OjU4p70NImogFMVMYwf1+vYBN9lnXYyqgTH5zbsSeg
+         3ypsMJ4b7h+5Pdr++RE1S4txflFBh1CD1usz3/R+pZlhAUsgeNsBW4Ws0cy0uy1hiV6s
+         aeqiegZsuWdF/f858tk3wBpxeZa8xwRD3AMKh1tnbSFis40YZQqU5K97VE5nadw2kx3j
+         6m4d1Rdu6mt6MBYUDF8e7MPiBkCBp61G/2Px06+chzFABCCkwN81M2sP94ezhAwN9G0l
+         Qmww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-transfer-encoding:subject:date
-         :message-id:cc:to:mime-version;
-        bh=AEnwCTqroFVpo4ZxiMMDbGrXVf28Kj9xwHg4op6M2gQ=;
-        b=Za1XlNlFUth6wRLkYphJgODTF5So+TPSfEO1+zVbUm0fL9VQ4BXzejPZOENEVz5w0b
-         ay5BO3kXwXhkJdUlxWO4gxFgH8ctalnlLbzlhbHHRQ/OJqB9yitOyWstZzZcznt+yfEj
-         3Krjv7mZkLAxnXJlTkJiZ1dEVTz/A4+wWFUoNSReH1p4CFWmnCp5LpTIcCo1PqC80uS7
-         cQUNwF8J1JwWy0ivE+zNCtzl0VSE276LFti9iSAz4RjSfyvKxVNneL8BU+kpEyC7FMrG
-         kbYdyNXP11hK/sj9mXlxXfDck3NMzj7VC44f24hcNM89VXMqS2lPht9G0L3l2hrhi6Vp
-         KZKA==
-X-Gm-Message-State: AOPr4FWzYzWO55KiYiyFxvbqTUVKOIsPy8JycWxam2Vw/uSbpy0Bu1mZNcumAssw6+PMFw==
-X-Received: by 10.28.129.22 with SMTP id c22mr2816963wmd.89.1463133770564;
-        Fri, 13 May 2016 03:02:50 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([217.71.219.2])
-        by smtp.gmail.com with ESMTPSA id wb10sm17812237wjc.8.2016.05.13.03.02.49
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 13 May 2016 03:02:49 -0700 (PDT)
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=P+DHtXl9eLSfvaOph8sy2vACKXzBAkrcVAk53hoQji8=;
+        b=ZsL82m08oXhCxthWU+qaBcP6rhGcLjKq+33i3gs+Nu26S3fOR6Jd1pZ/waxNhlY9k3
+         NMkba5XVhzygkPVAAqHTX4Q5PxMecQSu0zhWNIyW+4HiVzAvYwxKygqwiHX4zGBvVG9f
+         TYJdY2nl9Bn0JmRa0riMhK4+HXlxcSu2yAH66gIST3oWn7T7YQKcoQCsUrYBK3PcvRBs
+         t7aT/aHJ1ePO5XYQnmjCCw9p78mfQc4KaXBk2KHtv87WjTd7GjyPTiqt8vTubNKkiW7T
+         380TbMLyPtZ+kVwD1uuTEHEilJ4AQ3bouy01RLqnnqcAONBzuBShH8CX0dVhT5+3ZMAr
+         Z2Lw==
+X-Gm-Message-State: AOPr4FW0d4Uf3KR2wPSmVaCub1K8jOVsreuYgHF6AWaqJFzhgCVqkaW6WOKWx6mba3mxGQ==
+X-Received: by 10.98.4.195 with SMTP id 186mr21645068pfe.154.1463134536302;
+        Fri, 13 May 2016 03:15:36 -0700 (PDT)
+Received: from localhost.localdomain ([111.119.199.22])
+        by smtp.gmail.com with ESMTPSA id qb1sm26194340pac.44.2016.05.13.03.15.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 13 May 2016 03:15:35 -0700 (PDT)
+X-Mailer: git-send-email 2.8.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294520>
 
-Hi,
+This is not an improvement in the test coverage but it helps in making
+it explicit as to know what exactly is the error as other tests are
+focussed on testing other things but they do indirectly test for this.
 
-t9801 and t9803 seem to be broken on next. A quick bisect indicates that d9545c7 
-"fast-import: implement unpack limit" might be the reason. (@gmane/292562).
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 
-Did anyone look into that already?
+---
+I faced this problem while converting `bisect_clean_state` and the tests
+where showing breakages but it wasn't clear as to where exactly are they
+breaking. This will patch  will help in that. Also I tested the test
+coverage of the test suite before this patch and it covers this (I did
+this by purposely changing names of files in git-bisect.sh and running
+the test suite).
 
-Thanks,
-Lars
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+ t/t6030-bisect-porcelain.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index e74662b..1fb5ad9 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -894,4 +894,21 @@ test_expect_success 'bisect start takes options and revs in any order' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'git bisect reset cleans bisection state properly' '
++	git bisect reset &&
++	git bisect start &&
++	git bisect good $HASH1 &&
++	git bisect bad $HASH4 &&
++	git bisect reset &&
++	test -z "$(git for-each-ref "refs/bisect/*")" &&
++	! test -s "$GIT_DIR/BISECT_EXPECTED_REV" &&
++	! test -s "$GIT_DIR/BISECT_ANCESTORS_OK" &&
++	! test -s "$GIT_DIR/BISECT_LOG" &&
++	! test -s "$GIT_DIR/BISECT_RUN" &&
++	! test -s "$GIT_DIR/BISECT_TERMS" &&
++	! test -s "$GIT_DIR/head-name" &&
++	! test -s "$GIT_DIR/BISECT_HEAD" &&
++	! test -s "$GIT_DIR/BISECT_START"
++'
++
+ test_done
+-- 
+2.8.2
