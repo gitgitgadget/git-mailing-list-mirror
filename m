@@ -1,76 +1,116 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (May 2016, #02; Fri, 6)
-Date: Fri, 13 May 2016 13:52:11 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605131349020.4092@virtualbox>
-References: <xmqqeg9e24ay.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1605100757410.4092@virtualbox> <xmqqy47iqszk.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?B?5p2O5pys6LaF?= <libenchao@gmail.com>
+Subject: Re: bug report
+Date: Fri, 13 May 2016 20:05:16 +0800
+Message-ID: <CABKuJ_SwJhjZCgL3KkHA7p2QfStW-g5oEi8qhNGXoNb721Ynhg@mail.gmail.com>
+References: <CABKuJ_SN+Ynsi9-48-iKgC1n9ARZe3ZjQR9Y2q3=tYC=QGgfZQ@mail.gmail.com>
+	<CAFZEwPNCEAU-sexn-dFr8dDg=_w02hLOhfQhKu_yRYtY3LeJHw@mail.gmail.com>
+	<CABKuJ_QZHTRcPWbwv1FSXEijxOpXameo-JJuZREGyA5daLbKLQ@mail.gmail.com>
+	<CAFZEwPP32vWrCA9H+JbFineodDtGx2_bTjGy-nZ9KW2v8bP5vQ@mail.gmail.com>
+	<CABKuJ_SEK-t93sCmj6aFSAbk8muX_ocQx6ZQZV3ZrNmvVmvDQA@mail.gmail.com>
+	<CAFZEwPMe2W2R2GghMnyQ4BLyvm00oHEweNSZYrqn+=9BhSazvw@mail.gmail.com>
+	<CABKuJ_RrOhT+FVb9PNKhBs1ATJmLWhD757oyx+AvrCGNvT1nFw@mail.gmail.com>
+	<20160513081014.GA18307@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 13 13:52:20 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Pranit Bauva <pranit.bauva@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 13 14:05:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1Bdi-0007Hl-N2
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 13:52:19 +0200
+	id 1b1BqS-0004og-Vi
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 14:05:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752102AbcEMLwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 07:52:15 -0400
-Received: from mout.gmx.net ([212.227.17.22]:56544 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751139AbcEMLwO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 07:52:14 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Mhdex-1bEi1D3jyl-00MpZ1; Fri, 13 May 2016 13:52:08
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqy47iqszk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:SexFC5iKWVyKslYCaoazUN8e61GsMiL0DfOQl4cYNhn+DfjnH8U
- ADKsO2v7B5uCQIl66pKY0xYHsiC44TtpwnSPjvKJH5bVbhRcVzsN8G2Qp9seJWuRBDCZzfp
- qq/oepFKcqpAyXnK6e5fxaxZpk2g7YJ0xdRjy0WiAP9naogZbNDVkY7lBM0YmOtlySVvFAM
- Cowfc9QpnEoxGDplb/Ebg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CDhqUvPiLYc=:UyATSLWh/vViOpXMR+beYi
- tbfWevdMyH/N+vdzhru8Gytuf2aHjTEZVwcY77ByhXMlcfod3MoDcSGgfQuS3y1fNrNhHojtG
- nZ+7gEvpXbJ9C9ulJNpE6E/BLxR7nsW/ahgxOKQfe4p8GEC4YetpnNTvZia61OyeaQ3zK3UWO
- sykGh7Rlq4lYQWrz/cYLLNbcEeK1IOIUC7L5IItUgXeRMkT5ydd8dcNnFMCRCGDfS0RH0DtWW
- B9nlQAKc+E85m9Xy0OA3gBdJgUt90UA3EFuICa8B76w1jbib9X7MoyPd9TW9s5lte/7WIAoM1
- kcr9QGjju9gHdtDqdkgDQ6lBhbHkomgH2+L2yIf37o3mx8S/zQDDvEWc9FIi/S+JjcGtAeZll
- XxpIW+LGrALjsqxZbvkwC9qc3BcDGWMb6mPjLLChD6D2Y6gcnP6JKoHSY6YiI1VLk7Q6dXj6b
- IHnxs4HEW6bUBVF/K4gkCXh060HaaGM+aDGLanqNH1L6mWNqX0gLF5rY4SXCkXC3E4bfz1QUh
- VojGQe/I9XheR05FNJb0RxyneO3UQV2MPKjMFDEbAkZEHldN46X254mC0DSYAn3Tj2FRinugi
- dqCv2oZPdWwyDTCiboajSlc8odOeTII9WxP9XgAfalDA9AOfP+0ZWWEBV1Y51AYJrLo7sUq3o
- S8SHc9Nx3yQR7umniqoAIS88jW4xXfBSPUEqO+HB/KkbP+dK77y8Qzw0YLZd8ppQE4PsyboSq
- 8qjk+NzVddov/mJDzH3XKWQzFwIenhxZM+CDnvb8hjPBfsF/8UKV5Mj3uwjk3hXvewzOiwqr 
+	id S1752232AbcEMMFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 08:05:22 -0400
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:34016 "EHLO
+	mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751280AbcEMMFR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 08:05:17 -0400
+Received: by mail-oi0-f45.google.com with SMTP id k142so166940882oib.1
+        for <git@vger.kernel.org>; Fri, 13 May 2016 05:05:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=lT7tka7knO7PEvoLFv8CvlORypi59VuONTmyKXgGhcw=;
+        b=HiZt7fnHby51JCRRey1degPQIhRAIBA4ddvG991ciIXc/cPe72XZPkykw6yEPXkeqJ
+         NbNXSBINpjBtyGeiGfN9Y0kiLhoNFUjB2lLg8snnFvErEWHp2Hs3un0L+FxqRNR0HSm9
+         IeF8+D9d9r5JGXqmHrJ7Ukyotoj60tJvYsnTSIACWImC6HCjf98hclpyXjm2AKbVt90x
+         yiUppLAFWU2Zm1xi4fyDIRQs9rpRBQBDBU55Xqok9wKDaTFCNLEJstlGDa/lF6LhYmDX
+         j0Q7Xq/Flbu/qwEUT4xlNdSed5GeviaZg6PBFOOCq9Z6HaCxYkDWJrHLQPJ/3Gjw2Gnf
+         5tbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=lT7tka7knO7PEvoLFv8CvlORypi59VuONTmyKXgGhcw=;
+        b=Zd6mmGUMxagO0rmD+Wk09nbxZ+OypbvwHJ3rk9NjeAt7cUI8cc9RpPsKvwA2KGbkYX
+         1FhzSZB9EHx5WS29Fp74EcrXt7y3m25/5UvC8nzlFGJESSBGmnAu3cTYA9cqw2p5dVjD
+         q9mHD7nk1Yl8H2E7DWHJGGf+2fgxYR4IRAVtUo/D3ubQRUW7M23xzrTMUMXJrdUqBNtg
+         3NWdqcHby0BHaRy3mAJFREfc4mtAF1XHheJ0CPonhVkg/PTmXI8n0B6E2++vCk8V+c19
+         yCnvzsZ6tJbKHnys1sqrUDdVbCmyEJVCS1pRnBs9ujjzh2FuYSov7kL1XVnkkeDnYAfo
+         ZYBQ==
+X-Gm-Message-State: AOPr4FWpz2Yu1BR2emSOtpRVR7gEDSgaDzjIyFkAa3j9U+25J+1eMF/bJtXyC99ZnJ424JPJLCyPNIY+Fcg4Hg==
+X-Received: by 10.157.7.66 with SMTP id 60mr7998170ote.187.1463141116368; Fri,
+ 13 May 2016 05:05:16 -0700 (PDT)
+Received: by 10.202.46.8 with HTTP; Fri, 13 May 2016 05:05:16 -0700 (PDT)
+In-Reply-To: <20160513081014.GA18307@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294526>
 
-Hi Junio,
+Thanks for your explanation
 
-On Tue, 10 May 2016, Junio C Hamano wrote:
+>
+> The moment where I think you'd like to be notified is when we skipped
+> doing anything with patch 1. You'd prefer it to say "woah, the other
+> side of the rebase did the same thing as us".
+Actually this is the problem where I want to be notified.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Fri, 6 May 2016, Junio C Hamano wrote:
-> >
-> > 2) I was under the impression that we preferred test_i18ngrep over grep...
-> 
-> Only when the strings we are expecting are subject to i18n.  I
-> somehow did not think your report() codepath has any i18n/l10n?
+> But rebase does not do that by default, because the intent of rebase is
+> that you are rebasing your work on an upstream which might be accepting
+> part of your work as patches. So it is a feature that rebase says
+> "already applied upstream -- let's ignore this one".
+>
+> I don't think there is a way to ask rebase not to ignore such
+> already-applied patches. But I'm not sure if there should be, for two
+> reasons:
+>
+>   1. You should consider just using "git merge" to merge the two
+>      branches. That preserves more information about what actually
+>      happened, and would find a conflict in a case like this.
+>
+>   2. Even with merging, you cannot assume that the end result is sane.
+>      In your example, there is a textual conflict. But you can easily
+>      come up with other examples where a merge is textually sound, but
+>      has some semantic conflict (e.g., you update the signature of a
+>      function but a colleague adds another call to it using the old
+>      signature).
+>
+>      You have to examine and test the results of merges for sanity. And
+>      likewise with rebases.
+>
+> -Peff
+>
+> [1] Actually, rebase does not even try to replay the first patch. When
+>     it generates the list of commits, it ignores any whose "patch-id" is
+>     the same as a commit on the other side. But the end effect is the
+>     same.
+Your explanation looks reasonable to me.
 
-I finally remembered why I thought that test_i18ngrep was to be preferred
-over grep. For years, Git for Windows carried a patch that introduced a
-special `cmp` for use with text files, so that differences in the
-end-of-line markers could be ignored. IIRC we abandoned this when
-test_i18ncmp learned to perform this trick. Only that it really is
-test_cmp that learned this trick... so I was wrong.
+Thanks a lot for your time and patience. And @Pranit Bauva too.
 
-So please forget what I said about this part of the patch.
+By the way, many thanks for maintaining this outstanding software Git.
 
-Ciao,
-Dscho
+
+-- 
+Benchao Li
+School of Electronics Engineering and Computer Science, Peking University
+Tel:+86-15650713730
+Email: libenchao@gmail.com; libenchao@pku.edu.cn
