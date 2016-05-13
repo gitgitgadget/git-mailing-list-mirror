@@ -1,84 +1,114 @@
-From: Alexander Rinass <alex@fournova.com>
-Subject: [PATCH v2] diff: run arguments through precompose_argv
-Date: Fri, 13 May 2016 22:41:01 +0200
-Message-ID: <1463172062-4175-1-git-send-email-alex@fournova.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/6] test -z/-n quoting fix + misc cleanups
+Date: Fri, 13 May 2016 16:46:54 -0400
+Message-ID: <20160513204654.GA10684@sigill.intra.peff.net>
+References: <CALR6jEiH6oxq=KXfz1pqOue9VKnkp=S8zNqC4OFmbuhRFFxoMw@mail.gmail.com>
+ <20160513182325.GB30700@sigill.intra.peff.net>
+ <xmqqwpmx91mb.fsf@gitster.mtv.corp.google.com>
+ <20160513195911.GE9890@sigill.intra.peff.net>
+ <xmqqshxl9142.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-	Alexander Rinass <alex@fournova.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 13 22:41:38 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Armin Kunaschik <megabreit@googlemail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 13 22:47:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1Jtp-0001Gz-2d
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 22:41:29 +0200
+	id 1b1JzC-0008HP-91
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 22:47:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752626AbcEMUlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 16:41:20 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:37384 "EHLO
-	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751501AbcEMUlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 16:41:19 -0400
-Received: by mail-wm0-f44.google.com with SMTP id a17so47866627wme.0
-        for <git@vger.kernel.org>; Fri, 13 May 2016 13:41:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fournova-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7KSt2AQ378zQK+7BcFv/nN+1qDbj6m/PnyknC+JX/lw=;
-        b=sh+ap5HAICTH326sg3ue28YgowJFLNgN1gTBoTUvUxDuOC48yehc8VvegxL5r5CLNY
-         B/yUW+Y+vZ8Z5ppyMDUazH7EYOuD+cxcf0VpKz35do+WluJ4iJJ4LtzSJypyAvbu8iDg
-         PWSTGycb4wpdEqoXWS/zr2Lrk0SDPFQTfQcnazkTk8XBaiQq47EyqgUHTyVKD5w0i5V1
-         iHPLI8MTZdl9ZO+U5lkeeeuwSa26CwLtOplXWQdfAaoRz6JD0SydOOCCM0oC1JEgydiK
-         mVAaJDPgPd1EEqjNTXmGI1m1M6o76Gzam+KFTMY9WpTgXA1sMF7IDmBRju3AGw5IP4BA
-         YYAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7KSt2AQ378zQK+7BcFv/nN+1qDbj6m/PnyknC+JX/lw=;
-        b=Br21vmyPMAuOgANv+o3Ch9/Q7WO7hmuCulf6W0XCuxy0S4T32xHilG6VLZmQNbiFym
-         mCLJDaHz2S54HMNobo+fsvgZyFhUkHpK7nW1NrvGB+2wenmG9siMKsXVWeTsf8e0hdl9
-         tLjSmhEPYel/BQaPMlPDJp7aBjfUWII3lTh8GDh+umUlfipCyidvzeFJGdcoYhivte+l
-         GX4yhV8R28/OhdDirAneY2BVtqjLdzJCnnren91WuYaYPPZp4XsjNIZFPFVvLHi34cip
-         mP/97hLXRMtjcvseT7l+MZhHr4wKsiW+QSKN/kOOrcfE2hMJiCmnobG3WXKaUC/UGapC
-         HXMA==
-X-Gm-Message-State: AOPr4FXPYLQ4moeWaLr+UODSoduJtUC0VMYpbqSAUPL1ZilYQFegvPtO6BAYEJnT1h2Haw==
-X-Received: by 10.194.231.196 with SMTP id ti4mr19045076wjc.41.1463172077918;
-        Fri, 13 May 2016 13:41:17 -0700 (PDT)
-Received: from Alexanders-MacBook-Pro.fritz.box (aftr-109-90-232-30.unity-media.net. [109.90.232.30])
-        by smtp.gmail.com with ESMTPSA id b15sm4950304wmd.1.2016.05.13.13.41.17
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Fri, 13 May 2016 13:41:17 -0700 (PDT)
-X-Mailer: git-send-email 2.8.2
+	id S1753060AbcEMUq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 16:46:58 -0400
+Received: from cloud.peff.net ([50.56.180.127]:39355 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751201AbcEMUq6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 16:46:58 -0400
+Received: (qmail 16690 invoked by uid 102); 13 May 2016 20:46:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 May 2016 16:46:57 -0400
+Received: (qmail 21550 invoked by uid 107); 13 May 2016 20:46:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 May 2016 16:46:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 May 2016 16:46:54 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqshxl9142.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294577>
 
-I have used Junios proposal/changes for the commit message as I 
-liked it and it is probably more in line with the usual commit
-messages of the git project. I hope this is ok.
+On Fri, May 13, 2016 at 01:03:41PM -0700, Junio C Hamano wrote:
 
-Let me know if you need me to do any more changes or what the
-next steps are if the patch is ok.
+> > And sadly,
+> >
+> >   git grep 'test -n [^"]'
+> >
+> > is not empty.
+> 
+> Are you doing an audit?  Otherwise I'm interested in taking a brief
+> look.
 
-Alexander
+There was only one buggy case there (in git-stash). The rest were false
+positives.
 
-Alexander Rinass (1):
-  diff: run arguments through precompose_argv
+I didn't audit for:
 
- builtin/diff-files.c         |  1 +
- builtin/diff-index.c         |  1 +
- builtin/diff-tree.c          |  2 ++
- builtin/diff.c               |  1 +
- t/t3910-mac-os-precompose.sh | 42 ++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 47 insertions(+)
+  test $foo = bar
 
--- 
-2.8.2
+which also has problems. You can grep for:
+
+  git grep 'test \$'
+
+and there are a lot of hits. Many of them are probably fine, if they are
+variables that are known to be non-empty and not contain whitespace
+(e.g., $#). But some of them are questionable, like:
+
+  git-request-pull.sh:if test $(git cat-file -t "$head") = tag
+
+I suspect in practice that's fine just because we're likely to see
+either the empty string (in which case test will barf with "unary
+operator expected", which matches what we want), or a single-word
+response (which doesn't need further quoting).
+
+> >> But working around older/broken shells is easy and the resulting
+> >> script it more readable, so let's take this.  It makes the resulting
+> >> code easier to understand even when we know we run it under POSIX
+> >> shell.
+
+Actually, it's not just older shells:
+
+  foo='bar baz'
+  test -z $foo
+
+is "unspecified" according to POSIX, though in practice it will complain
+about "binary operator expected". You can get some weirdness, though,
+like:
+
+  foo='!= bar'
+  test -z $foo
+
+which returns 0. Unlikely, but still clearly wrong for us not to be
+quoting.
+
+Anyway. Here's a series that fixes the -n/-z cases, along with a bunch
+of cleanups that remove the false positives (most of which I sent out
+just a few minutes ago as "minor fixes to some svn tests").
+
+  [1/6]: t/lib-git-svn: drop $remote_git_svn and $git_svn_id
+  [2/6]: t9100,t3419: enclose all test code in single-quotes
+  [3/6]: t9107: use "return 1" instead of "exit 1"
+  [4/6]: t9107: switch inverted single/double quotes in test
+  [5/6]: t9103: modernize test style
+  [6/6]: always quote shell arguments to test -z/-n
+
+You could take just 6/6 as its own series; the rest are just about
+removing the false positives, and fixing other issues. I put it last,
+though, because otherwise the "this grep is now empty" claim in it is
+not true. :)
+
+-Peff
