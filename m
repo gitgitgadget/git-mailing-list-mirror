@@ -1,87 +1,92 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 2/3] perf: make the tests work in worktrees
-Date: Fri, 13 May 2016 15:14:10 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605131352540.4092@virtualbox>
-References: <cover.1462894344.git.johannes.schindelin@gmx.de> <cover.1462955446.git.johannes.schindelin@gmx.de> <d783290cabe601ee8623044482b2992fb7936534.1462955446.git.johannes.schindelin@gmx.de>
- <CAPig+cR=MeXZXA-Xdr-7A4nxfNvBrOy2ZtmzJOLHq5YGFiuNyA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] Add a perf test for rebase -i
+Date: Fri, 13 May 2016 15:16:51 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605131515410.4092@virtualbox>
+References: <cover.1462894344.git.johannes.schindelin@gmx.de> <cover.1462955446.git.johannes.schindelin@gmx.de> <96acc54c20962376d5438f8d9613dc9c8a6d5d1c.1462955446.git.johannes.schindelin@gmx.de> <xmqqr3d8jnvo.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri May 13 15:14:54 2016
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 13 15:17:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1Cvd-0003Mm-TG
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 15:14:54 +0200
+	id 1b1Cxh-00063K-4E
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 15:17:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752525AbcEMNOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 09:14:45 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56547 "EHLO mout.gmx.net"
+	id S1751184AbcEMNQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 09:16:56 -0400
+Received: from mout.gmx.net ([212.227.15.15]:58312 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752088AbcEMNOl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 09:14:41 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Meduu-1bGWsf0Iw4-00OJ3d; Fri, 13 May 2016 15:14:29
+	id S1750784AbcEMNQz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 09:16:55 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M0gcI-1btSTW3GZi-00uslf; Fri, 13 May 2016 15:16:48
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAPig+cR=MeXZXA-Xdr-7A4nxfNvBrOy2ZtmzJOLHq5YGFiuNyA@mail.gmail.com>
+In-Reply-To: <xmqqr3d8jnvo.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:zUPCNONUP7c/vjdglgdlE1qbMzcAP6IR1tqes2Hn4QR5ALDsIwg
- UJ7prvQjL9+EmokCGVR6u4NmryfMteL0G09hr3a2+DZx0N/9Nm1mrSEa7Soz84KLylgC99p
- frBRENp5JV+TQzJdwwFaw1hfzSU8aDRAbeTJOflqBhbO2tveGIRLL2f54ZwpclI05+549w/
- 1+tidFcYcemGnVt7CIsSg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5VBYwA4Q1xE=:Cyl5P6zj1FC+wB2tOsmNvP
- LGjdjkTCTiLZ2kHltk8vOXOAkfI5fR31I/YiZIWM3bj0Mp56kKAhM5wNpsiFOp1JNH2iWmx5s
- aMhN1EAVMi1HZnPIT8ygUyt4Q+s2PbRVYpYihqi8tRqmKoT53FHXHcJGZQfdVG/VCOhbmtpvF
- UolJ3RP8Pph13uHpYtYJ9BU4N+DtmQ5zrRZyNney5QjRFBX74Q6QPNfk0dfFmns3vdVf6m0rk
- HKnPsmDJzKshN7R2Q5j4xIFiI7WO1jOZDRaJDjSk4z4jp1dx+43bLq7HE9lCVfJC17ycG1t7G
- uP5X4/4wFDnIZ7jCyacgQuyadKkp0o7ThWlF9TdLpTYZ2Zgu2qJHopK+38cav4QHtlJX9Fv9b
- KW8cNIvp2xVuHPYl+D4De5ze+bdVo2iyZVNgzYV0wEqNUXq+1oW4X62yx638O8zwq5SxPLLfU
- Ldorkgp5MH2X7yyyS592a1RBlyU+DmGwJ7ABaqcyh00R6ScOyZqDdLgJ+zN3uC7vr0o65rUuF
- DNNttkxfIf537Qn8TS6UVx4cv7tm9xgd9Av97F4BNbj9bf9mRoOIq1UpbD2u3/+oqz5B6kxTw
- azQr+8luve6u3Q0SuvhVtRfzh7nl1mJEQYDKqaFdd2rklY6jCSszT5csbTu77pwcXeSUH0jy+
- LUmOxaRCXPT1fOeqIM6HXb6ctYdyxeIAhktMoZ3BSUJx48XeE15W/35kRr4kUbxgB8s9YjTUx
- Gmv0oP+L/68rPG5dqAm8mzBJalw87tyEM4ko0PCC8W/W6yUzq9tYFn5r1/KXuobholcxCZKC 
+X-Provags-ID: V03:K0:4fWLvp5WzYuo8F3c/dzvqQBFYp6o4MjDFDMVbM3YCUJuQd6SFS8
+ a5C8v/rPA9gC2t3hftSsmkm6QkrWsSV6p3b2WpVAQrNafNj9wZ4IWPAEjNpjoP9KioIKdtD
+ ynt+j8vIuebZ3sSoD7suGxADNeISZVKLW+yAjI+eYuFt9mgoxRIgQoydUtgRmbyn9VLqafb
+ TvXwVFsOIYt1IIMLyxTKA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/oSMwAAfry0=:inclK/JVKV5uLF57jzxwjt
+ 7EC6bglgHk1ltX6rrQcglkjOg/Wg0fda8VLxeR1dtVCBjRZtMxxLbGmDsIFPHUs9nph0m+7n3
+ X5pIrEJXk1spMCxeMOaaRU8cLvF79Bkc6sFO8bOv3cL0WwUgrLSr5Atg/NRbysmdUUJ/ZTeL+
+ fFkrAlDH9dy1XusQcrnJh3KSsuO9D1iNjB6zJr+XVU3u1Qt0b2+KTm+Nyk+MaAhcehadXcCT5
+ gKE9mptLBXw+/m8BFl9An3/AlqAONLJ9S78ujnM0rf7E9WNtiitqebBg1Na2MVye2CxLQSf1n
+ 0Rm1v3Tj59kpJb8O3W+3V3Bf9dqaleT/wRu8Elsfl5IMdKrXu1wVcaumPZ/CGmkfzO4qr5bDt
+ Tl6td0uuaIurPWJanmgbcG+YZdc3qugKy/an5ebKf2/+iPvm5zbNOa/8xuhGcLE+YamctIN2v
+ zH5uj5BWATwofqsCfWjGMght08YUm/zaSmqMDZkednd+0cTaT1ezsI1SMg9eah4F60Ex1wx8n
+ wbgdQc3RK1JLwObkI+Zofqz8+YWpVDcXouQzt5jYGcxFloF5babjMtXerAYqhngcJk31/Ib1s
+ TWxjNAVmtBpSY5mu20cUM3jXUyMj5K7XIKW4am0u/5GHAZ2jT0SGZ8KVp0KFxc3T3vHl0F5Hb
+ e+gvL0oj0BDt6JYc1zvPDIDTPCx5RRADGTh/PjNBkxYRrRwDEwBtPBYou3+tNJRpvd9e57eGu
+ g5KvdBNt0Ew/+OOxGs01sTKafYiBQWg55dr+b4Xr/FKVekSoapYSJ9wqC4tJV7bMNKqtzSQx 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294532>
 
-Hi Eric,
+Hi Junio,
 
-On Wed, 11 May 2016, Eric Sunshine wrote:
+On Wed, 11 May 2016, Junio C Hamano wrote:
 
-> On Wed, May 11, 2016 at 4:42 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > This patch makes perf-lib.sh more robust so that it can run correctly
-> > even inside a worktree. For example, it assumed that $GIT_DIR/objects is
-> > the objects directory (which is not the case for worktrees) and it used
-> > the commondir file verbatim, even if it contained a relative path.
-> >
-> > Furthermore, the setup code expected `git rev-parse --git-dir` to spit
-> > out a relative path, which is also not true for worktrees. Let's just
-> > change the code to accept both relative and absolute paths, by avoiding
-> > the `cd` into the copied working directory.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-> > @@ -80,22 +80,22 @@ test_perf_create_repo_from () {
-> > -       source_git=$source/$(cd "$source" && git rev-parse --git-dir)
-> > +       source_git="$(cd "$source" && git rev-parse --git-dir)"
-> > +       objects_dir="$(cd "$source" && git rev-parse --git-path objects)"
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> Would it be out of the scope of this patch to simplify these by using -C?
+> > diff --git a/t/perf/p3404-rebase-interactive.sh b/t/perf/p3404-rebase-interactive.sh
+> > new file mode 100755
+> > index 0000000..382163c
+> > --- /dev/null
+> > +++ b/t/perf/p3404-rebase-interactive.sh
+> > @@ -0,0 +1,31 @@
+> > +#!/bin/sh
+> > +
+> > +test_description='Tests rebase -i performance'
+> > +. ./perf-lib.sh
+> > +
+> > +test_perf_default_repo
+> > +
+> > +# This commit merges a sufficiently long topic branch for reasonable
+> > +# performance testing
+> > +branch_merge=ba5312d
+> > +export branch_merge
 > 
->     source_git=$(git -C "$source" rev-parse --git-dir)
+> t/perf/README mentions the possibility to use your own repository as
+> a test data via GIT_PERF_REPO, but doing so would obviously break
+> this test.
 
-Thanks for educating me: I had not known about this option.
+Right.
 
-Will send another iteration in a moment.
+> I wonder if there is a way to say "running this perf script with
+> custom GIT_PERF_REPO is not supported" and error out.  That may
+> help other existing tests that (incorrectly) assume that their test
+> data is this project (if there is any).
+
+Good point. I will change it so that the test is skipped if that commit is
+not found.
 
 Ciao,
 Dscho
