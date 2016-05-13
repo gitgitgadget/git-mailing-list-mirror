@@ -1,110 +1,272 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH 2/2] bisect--helper: `bisect_voc` shell function in C
-Date: Sat, 14 May 2016 01:37:04 +0530
-Message-ID: <CAFZEwPNVmcVpzAocYF8e5+Y9J10+TSewNkWkj7yhVrJwXm=H=Q@mail.gmail.com>
-References: <1463169737-12701-1-git-send-email-pranit.bauva@gmail.com>
-	<1463169737-12701-2-git-send-email-pranit.bauva@gmail.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH] index-helper: use watchman to avoid refreshing index with
+ lstat()
+Date: Fri, 13 May 2016 21:17:49 +0100
+Message-ID: <5736366D.6080706@ramsayjones.plus.com>
+References: <57350D7F.5030006@ramsayjones.plus.com>
+ <1463164054-15342-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Pranit Bauva <pranit.bauva@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 13 22:07:16 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
+	pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Fri May 13 22:17:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1JMf-0006cO-KQ
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 22:07:13 +0200
+	id 1b1JX4-00048S-AJ
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 22:17:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932388AbcEMUHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 16:07:07 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:33103 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932211AbcEMUHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 16:07:06 -0400
-Received: by mail-yw0-f194.google.com with SMTP id y6so12379915ywe.0
-        for <git@vger.kernel.org>; Fri, 13 May 2016 13:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=57oatJN7Q15iqQm8miKbATQXesOPMs94HVaHZenU06U=;
-        b=xKt6H0Sv4ePJWFoQb2UR39YaC4P7WXeI8x9hbZphaHBYbAjr4hSYw/7tGhbpAufkvp
-         p8lVox91M1GaRWCfza74CHkmGUZ9MtTFtwP40OrVB1KFFVHMUGraR89fbmlN8/h+IS3D
-         F7SvrUd49CK6/gNapFIp7O5SM7iq+aqoY49Ep1Sg3R7fzDkg++ePxiJAVWjf71xK4ghG
-         HNELO9nWrjkYsudAzNiPW5E7TRB1GiMsZBHOBiIjb2CI6XspyVBjj1WPHRD/E3AiV0Bh
-         1G+POF9qWtZ2jpLeVhN6XOJ38JxBMMg9HYEreUh9nnnDaWG4ETOz4wxASc+wN4869qYo
-         laeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=57oatJN7Q15iqQm8miKbATQXesOPMs94HVaHZenU06U=;
-        b=k9VxZgg4sgK825Wzn/vMA3rgiQ0lgsxurSYeYheN1PI1uo85o1pgaIna8xxavcpy7x
-         sJ/JtfJb/H4gzcX7AAOa5CSBnutISGzqy+Wf7LexERCt2o98wCV9SXc295e8cAnBFQGC
-         xthxV/cZ5rdb+Y72Ev9LfILxmYU8wc05YbCugpUfm72TycG1uhXXWTDabKJWXLiwyMYk
-         vLjIOyOusi0aG9XOOBBH0b7zTq/7WKLT/xY8v3vP1y+KIH+wqwIp7ILKnuI+m7rlEFd7
-         K7n42CFkfzCcr0GZoL5lL/jQTQvJ9hbxbXNPzSUiQj1BIT9I8ZPN2IM9ZfoEufw3FsVW
-         rkBw==
-X-Gm-Message-State: AOPr4FWg/zlBz/Vd7w556OvgciEJcnBIR706vdh9dO8SEyfojbfJtoePqlmO4e663s/hb2DIN0x8FpyqrnDx2g==
-X-Received: by 10.13.198.5 with SMTP id i5mr9292240ywd.263.1463170024690; Fri,
- 13 May 2016 13:07:04 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Fri, 13 May 2016 13:07:04 -0700 (PDT)
-In-Reply-To: <1463169737-12701-2-git-send-email-pranit.bauva@gmail.com>
+	id S932400AbcEMURy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 May 2016 16:17:54 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:38035 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932211AbcEMURx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 16:17:53 -0400
+Received: from [10.0.2.15] ([91.125.197.102])
+	by avasout07 with smtp
+	id twHo1s0062D2Veb01wHpVw; Fri, 13 May 2016 21:17:50 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
+ a=mTUfFwB0nGOO66Ym8a+i3w==:117 a=mTUfFwB0nGOO66Ym8a+i3w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=pGLkceISAAAA:8 a=8vuQ4NNQVP-xEmDly-sA:9 a=QEXdDO2ut3YA:10
+ a=6kGIvZw6iX1k4Y-7sg4_:22
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
+In-Reply-To: <1463164054-15342-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294574>
 
-On Sat, May 14, 2016 at 1:32 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> Reimplement the `bisect_voc` shell function in C. This is a too small
-> function to be called as a subcommand though the working of this
-> function has been tested by calling it as a subcommand.
->
-> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-> Mentored-by: Pranit Bauva <pranit.bauva@gmail.com>
 
-I missed this. It should be
-     "Mentored-by: Christian Couder <chriscool@tuxfamily.org>"
 
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
->
-> ---
-> The PR for testing of this function by the subcommand approach can be
-> found at:
-> https://github.com/pranitbauva1997/git/pull/5
->
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> ---
->  builtin/bisect--helper.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index 87764fe..455f1cb 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -94,6 +94,16 @@ int bisect_log(void)
->         return 0;
->  }
->
-> +int bisect_voc(const char *term)
-> +{
-> +       if (!strcmp(term, "bad"))
-> +               printf("bad|new\n");
-> +       if (!strcmp(term, "good"))
-> +               printf("good|old\n");
+On 13/05/16 19:27, David Turner wrote:
+> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+[snip]
+
 > +
-> +       return 0;
+> +static void reply_to_poke(int client_fd, const char *pid_buf)
+> +{
+> +	char *capabilities;
+> +	struct strbuf sb =3D STRBUF_INIT;
+> +
+> +#ifdef USE_WATCHMAN
+> +	pid_t client_pid =3D strtoull(pid_buf, NULL, 10);
+> +
+> +	prepare_index(client_pid);
+> +#endif
+> +	capabilities =3D strchr(pid_buf, ' ');
+
+So, if the pid is *not* followed by a space, the capabilities
+will be NULL here, and ...
+
+> +
+> +	if (!strcmp(capabilities, " watchman"))
+
+=2E.. we segfault here.
+
+> +#ifdef USE_WATCHMAN
+> +		packet_buf_write(&sb, "OK watchman");
+> +#else
+> +		packet_buf_write(&sb, "NAK watchman");
+> +#endif
+> +	else
+> +		packet_buf_write(&sb, "OK");
+> +	if (write_in_full(client_fd, sb.buf, sb.len) !=3D sb.len)
+> +		warning(_("client write failed"));
 > +}
 > +
->  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>  static void loop(int fd, int idle_in_seconds)
 >  {
->         enum {
-> --
-> 2.8.2
->
+>  	assert(idle_in_seconds < INT_MAX / 1000);
+> @@ -252,11 +341,15 @@ static void loop(int fd, int idle_in_seconds)
+>  			buf[bytes_read] =3D 0;
+>  			if (!strcmp(buf, "refresh")) {
+>  				refresh();
+> -			} else if (!strcmp(buf, "poke")) {
+> -				/*
+> -				 * Just a poke to keep us
+> -				 * alive, nothing to do.
+> -				 */
+> +			} else if (starts_with(buf, "poke")) {
+> +				if (buf[4] =3D=3D ' ') {
+> +					reply_to_poke(client_fd, buf + 5);
+> +				} else {
+> +					/*
+> +					 * Just a poke to keep us
+> +					 * alive, nothing to do.
+> +					 */
+> +				}
+>  			} else {
+>  				warning("BUG: Bogus command %s", buf);
+>  			}
+> diff --git a/read-cache.c b/read-cache.c
+> index 1719f5a..8ec4be3 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -1235,7 +1235,7 @@ int refresh_index(struct index_state *istate, u=
+nsigned int flags,
+>  		if (!new) {
+>  			const char *fmt;
+> =20
+> -			if (really && cache_errno =3D=3D EINVAL) {
+> +			if (really || cache_errno =3D=3D EINVAL) {
+>  				/* If we are doing --really-refresh that
+>  				 * means the index is not valid anymore.
+>  				 */
+> @@ -1375,11 +1375,75 @@ static int verify_hdr(const struct cache_head=
+er *hdr, unsigned long size)
+>  	return 0;
+>  }
+> =20
+> +static struct untracked_cache_dir *find_untracked_cache_dir(
+> +	struct untracked_cache *uc, struct untracked_cache_dir *ucd,
+> +	const char *name)
+> +{
+> +	int component_len;
+> +	const char *end;
+> +	struct untracked_cache_dir *dir;
+> +
+> +	if (!*name)
+> +		return ucd;
+> +
+> +	end =3D strchr(name, '/');
+> +	if (end)
+> +		component_len =3D end - name;
+> +	else
+> +		component_len =3D strlen(name);
+> +
+> +	dir =3D lookup_untracked(uc, ucd, name, component_len);
+> +	if (dir)
+> +		return find_untracked_cache_dir(uc, dir, name + component_len + 1)=
+;
+> +
+> +	return NULL;
+> +}
+> +
+>  static void mark_no_watchman(size_t pos, void *data)
+>  {
+>  	struct index_state *istate =3D data;
+> +	struct cache_entry *ce =3D istate->cache[pos];
+> +	struct strbuf sb =3D STRBUF_INIT;
+> +	char *c;
+> +	struct untracked_cache_dir *dir;
+> +
+>  	assert(pos < istate->cache_nr);
+> -	istate->cache[pos]->ce_flags |=3D CE_WATCHMAN_DIRTY;
+> +	ce->ce_flags |=3D CE_WATCHMAN_DIRTY;
+> +
+> +	if (!istate->untracked || !istate->untracked->root)
+> +		return;
+> +
+> +	strbuf_add(&sb, ce->name, ce_namelen(ce));
+> +
+> +	for (c =3D sb.buf + sb.len - 1; c > sb.buf; c--) {
+> +		if (*c =3D=3D '/') {
+> +			strbuf_setlen(&sb, c - sb.buf);
+> +			break;
+> +		}
+> +	}
+> +
+> +	if (c =3D=3D sb.buf)
+> +		strbuf_setlen(&sb, 0);
+> +
+> +	dir =3D find_untracked_cache_dir(istate->untracked,
+> +				       istate->untracked->root, sb.buf);
+> +	if (dir)
+> +		dir->valid =3D 0;
+> +
+> +	strbuf_release(&sb);
+> +}
+> +
+> +static int mark_untracked_invalid(struct string_list_item *item, voi=
+d *uc)
+> +{
+> +	struct untracked_cache *untracked =3D uc;
+> +	struct untracked_cache_dir *dir;
+> +
+> +	dir =3D find_untracked_cache_dir(untracked, untracked->root,
+> +				       item->string);
+> +	if (dir)
+> +		dir->valid =3D 0;
+> +
+> +	return 0;
+>  }
+> =20
+>  static int read_watchman_ext(struct index_state *istate, const void =
+*data,
+> @@ -1409,10 +1473,24 @@ static int read_watchman_ext(struct index_sta=
+te *istate, const void *data,
+>  	ewah_each_bit(bitmap, mark_no_watchman, istate);
+>  	ewah_free(bitmap);
+> =20
+> -	/*
+> -	 * TODO: update the untracked cache from the untracked data in this
+> -	 * extension.
+> -	 */
+> +	if (istate->untracked && istate->untracked->root) {
+> +		int i;
+> +		const char *untracked;
+> +
+> +		untracked =3D (const char *)data + len + 8 + bitmap_size;
+> +		for (i =3D 0; i < untracked_nr; ++i) {
+> +			int len =3D strlen(untracked);
+> +			string_list_append(&istate->untracked->invalid_untracked,
+> +					   untracked);
+> +			untracked +=3D len + 1;
+> +		}
+> +
+> +		for_each_string_list(&istate->untracked->invalid_untracked,
+> +			 mark_untracked_invalid, istate->untracked);
+> +
+> +		if (untracked_nr)
+> +			istate->cache_changed |=3D WATCHMAN_CHANGED;
+> +	}
+>  	return 0;
+>  }
+> =20
+> @@ -1645,29 +1723,88 @@ static void post_read_index_from(struct index=
+_state *istate)
+>  	tweak_untracked_cache(istate);
+>  }
+> =20
+> +/* in ms */
+> +#define WATCHMAN_TIMEOUT 1000
+> +
+> +static int poke_and_wait_for_reply(int fd)
+> +{
+> +	int ret =3D -1;
+> +	struct pollfd pollfd;
+> +	int bytes_read;
+> +	char reply_buf[4096];
+> +	const char *requested_capabilities =3D "";
+> +
+> +#ifdef USE_WATCHMAN
+> +	requested_capabilities =3D "watchman";
+> +#endif
+> +
+> +	if (fd < 0)
+> +		return -1;
+> +
+> +	if (packet_write_gently(fd, "poke %d %s", getpid(), requested_capab=
+ilities))
+
+So, adding the empty capabilities (and more importantly the
+separating space) is not so much 'doesn't hurt', rather than=20
+'prevents a core-dump!' ;-)
+
+> +		return -1;
+> +	if (packet_flush_gently(fd))
+> +		return -1;
+
+And yes, I'd forgotten about the 'maybe sometime in the future, we
+could buffer the packets' ...
+
+ATB,
+Ramsay Jones
