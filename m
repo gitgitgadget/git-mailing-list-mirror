@@ -1,104 +1,86 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 48/94] builtin/apply: rename 'prefix_' parameter to 'prefix'
-Date: Fri, 13 May 2016 21:45:50 +0200
-Message-ID: <CAP8UFD05JuxG21MAV0wSYz+Vzqb8-unjW-rOSJ_c9YWWOoTTSQ@mail.gmail.com>
-References: <20160511131745.2914-1-chriscool@tuxfamily.org>
-	<20160511131745.2914-49-chriscool@tuxfamily.org>
-	<xmqqbn4bdp8f.fsf@gitster.mtv.corp.google.com>
-	<xmqq37pndn2x.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug report: Duplicate CRLF rewrite warnings on commit
+Date: Fri, 13 May 2016 12:46:57 -0700
+Message-ID: <xmqq1t55agge.fsf@gitster.mtv.corp.google.com>
+References: <20160513134953.GE2345@dinwoodie.org>
+	<20160513181255.GA30700@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jeff King <peff@peff.net>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 13 21:46:03 2016
+Content-Type: text/plain
+Cc: Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 13 21:47:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1J24-0004Hu-Rd
-	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 21:45:57 +0200
+	id 1b1J3D-0005kM-TY
+	for gcvg-git-2@plane.gmane.org; Fri, 13 May 2016 21:47:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932171AbcEMTpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2016 15:45:52 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34937 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932085AbcEMTpv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2016 15:45:51 -0400
-Received: by mail-wm0-f65.google.com with SMTP id e201so5606181wme.2
-        for <git@vger.kernel.org>; Fri, 13 May 2016 12:45:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=UrN3jm5BhrJr3W7DLQU4asqhBJs45a9LdlLdrD1d08g=;
-        b=0puFP+rkNcr639cS+hSxIiATDy4VKZOG3T+IU3As14y1CDJ2iH2yfcniJ1SLXkKB5Q
-         g92nVpV0ZUJCozLtqTImuouiiebcN0NSmWQyWbyWj990nyH0uUNyXArmaFPrEtHi6dJa
-         82ItqZBCdxE9lRI/z2r722n/20DC7WwewlSBvfKbm/DXOAzRND6gnmumXuOKT1X8HlX0
-         pv4+zaFemXdMwIXIoEpAAHCsoR43D8VWjZqEQidnSbDp8r7MMk2GiZH3bYo80wsEt1wp
-         chDsidXSMs+xm+dYySiig7jnvQUQ/LZk4FSzmDJ7K41Q0s+pcjlEZwB+lVnjhYsv2+kY
-         mzzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=UrN3jm5BhrJr3W7DLQU4asqhBJs45a9LdlLdrD1d08g=;
-        b=mvgL8CHI7i5T6Ly5P6bDMW1gW7o6g7EKMomxW7ozpn4CPdX/sDolQcA+cEPnCS+Nrz
-         008rC6eIBp+PA3QAwsnSy2bEUtoowdBa3fk2BZRRLqAEqpLdFW2FABw4uTxBfhpTgw5w
-         OFX5pesTqIRuTBXud0HvhTV4k2N/IkGS0qSJVyBav4xngEIRqSDcpJhYqgnFh1I1nUzs
-         inXNsv0ChgWdwSN2ye+GtI+VxMy6yrWb8qtB93E/R+G+vrN5GIz17RkOmpFd6jcuNr+m
-         tm3NSfhvX30OJMYwPDa48EkITE32eGzsvsYdKaTsllaS7Jo7OXK1rIfYZVHs58lTEs+O
-         uu4w==
-X-Gm-Message-State: AOPr4FXDU4oUspY4KSQJdzLj03tMHUC4GX7wRc76kQvpgGABcq6rPPNovAc3XNhaI7iLb709oGRGHMsBLFmn/w==
-X-Received: by 10.194.20.162 with SMTP id o2mr17189771wje.78.1463168750324;
- Fri, 13 May 2016 12:45:50 -0700 (PDT)
-Received: by 10.194.246.4 with HTTP; Fri, 13 May 2016 12:45:50 -0700 (PDT)
-In-Reply-To: <xmqq37pndn2x.fsf@gitster.mtv.corp.google.com>
+	id S932243AbcEMTrD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2016 15:47:03 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57151 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932165AbcEMTrB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2016 15:47:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 994F5177A7;
+	Fri, 13 May 2016 15:47:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oSKC84IPALcIvHTpIti/x4cRXcw=; b=SiXiG0
+	yoVrfZwN6UPZitbrXyT0hup6KSkKHeg6ueVHb726JkFMnFMPt3X6IXc3+Fr91njt
+	kLw5dgMEv60K4EBz9hSF91Tz4/SEjVvOHUuXEt5JeUJNBIMrCbMfsiOfnRzyCj52
+	BXVhMQbgW1kSQzYOuN+wv7J33Y+hJ/SBpJ3DE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xmyzDezbWzO101ATt/kvOGlCozf4BcwO
+	YOVwfpttV3aRB+bqDdgJrUP9AUlNn9R2HsznDdkmaPKam27oRtzemT3ghoU0jK5Z
+	+W+nUV8nPht3kvNqI/uWV5BakMJso8uQ27DHQH033RQlvT4XZi3qSfYMwFkCnB0E
+	b7oPYuCT4kM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8EBC5177A6;
+	Fri, 13 May 2016 15:47:00 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D9794177A5;
+	Fri, 13 May 2016 15:46:59 -0400 (EDT)
+In-Reply-To: <20160513181255.GA30700@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 13 May 2016 14:12:55 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7512AFAC-1943-11E6-94A4-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294561>
 
-On Thu, May 12, 2016 at 10:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Up to this point, the conversion looks quite sensible, even though I
->> think the organization of fields in apply_state do not look logical.
->
-> I'd stop here for now, as everything before this step looks
-> uncontroversial.  Anybody whose tasked to move the global state for
-> these variables into a structure would reach the samestate after
-> applying these 48 patches, modulo minor differences in the way the
-> comments would say things, how the patches are split and how the
-> fields in apply_state() are organized.
->
-> One thing that is missing is a counterpart of init_apply_state().
-> In the early part of patches where it added only "const char *"
-> borrowed from the caller and fields of intregral type, the lack of
-> clear_apply_state() did not mattter, but with a few fields with
-> "string_list" type, anybody who want to make repeated call into the
-> apply machinery would want a way to release the resource the
-> structure holds.
->
-> Because 49/94 is a step to add an unfreeable resource, this is a
-> good place to stop and then add the clean_apply_state() before that
-> happens, I would think.  After that, I think both the contributor
-> and the reviewers would benefit if these early patches are merged
-> early without waiting for the review of the remainder.
+Jeff King <peff@peff.net> writes:
 
-Ok, I will add add the clean_apply_state() and resend the patches up
-to that point soon, so that they can be merged early.
+> On Fri, May 13, 2016 at 02:49:53PM +0100, Adam Dinwoodie wrote:
+>
+>> (Tangentially: what's the accepted practice for submitting failing test
+>> scripts?  I've written a short test case to add to t0020 that shows this
+>> bugged behaviour, but I've got the vague impression from past emails
+>> that leading with the patch email adding the failing test case is not
+>> the expected way to do things on this list...)
+>
+> We don't want commits that fail the test suite, since it makes bisection
+> more difficult. But you can mark known bugs like:
+>
+>    test_expect_failure 'git-foo should output bar' '
+> 	...
+>    '
+>
+> I think it's OK to submit a patch like that. Hopefully somebody picks
+> that up and combines it with their fix patch, but if not, then it at
+> least documents the failure for later generations.
 
-Thanks,
-Christian.
+... but we do not want to overdo this.
+
+An expect_failure helps when somebody is actually starting to work
+on a breakage by setting a goal, but otherwise nobody would look at
+them.  I do not think we know if 120+ instances of expect_failure in
+t/ we already have are still all valid; some of them even might be
+requesting a behaviour that we decided is a wrong expectation later.
