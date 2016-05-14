@@ -1,75 +1,66 @@
-From: Joseph Musser <me@jnm2.com>
-Subject: Subtree split unsquashes everything
-Date: Sat, 14 May 2016 12:53:00 -0400
-Message-ID: <CAKRjdd7Czj2iTKdwVCmz4x9fDNKCPZtLi=UjgHOsSPuYL_yLXg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Empty config sections are neither deleted nor reused
+Date: Sat, 14 May 2016 10:33:25 -0700
+Message-ID: <xmqqfutk8ryy.fsf@gitster.mtv.corp.google.com>
+References: <87r3d6knwo.fsf@bernoul.li>
+	<xmqqeg95aor6.fsf@gitster.mtv.corp.google.com>
+	<877fewzseg.fsf@bernoul.li> <vpq37pk7k08.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 14 18:53:43 2016
+Content-Type: text/plain
+Cc: Jonas Bernoulli <jonas@bernoul.li>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sat May 14 19:33:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1cor-0006gh-8o
-	for gcvg-git-2@plane.gmane.org; Sat, 14 May 2016 18:53:37 +0200
+	id 1b1dRW-0001FV-DL
+	for gcvg-git-2@plane.gmane.org; Sat, 14 May 2016 19:33:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752391AbcENQxb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 May 2016 12:53:31 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:38233 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751955AbcENQxa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 May 2016 12:53:30 -0400
-Received: by mail-ig0-f170.google.com with SMTP id m9so24065771ige.1
-        for <git@vger.kernel.org>; Sat, 14 May 2016 09:53:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=B1W9OivewMc188vIexfNveoxAww1NG1L7lnLlDX1gTU=;
-        b=TB1NR6HS9VpcNHiAaHhCv1v+DGT/mzaAy+xQNrO/brk2VNvj6JFd/Eo5GX6Wk+MPdE
-         KVr4qATe7PR/a8FwPwaaKB2NfXfVMqU9QBAiM36Vf2iPt7ft1CSW3UXZBo/755LD7Kl6
-         m5MkGQaWaqgmHl9+MtYcg0m67BU0mVzQka/oJrqpR++zqME7CRRzgR2CJD0jA1+njja9
-         HLMAeStXNFKQX4+OnGQJFt2+ppdl+4JX3Axhml/PyVNJUoTT+ApM/BlabJ5EtheEp6Ny
-         TR183OVxclSZ521Nd5Ic4WibOgZ0dpYczinccEGilPVjaB63E61mtQCoOD0/FfmTIBek
-         r+uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to:content-transfer-encoding;
-        bh=B1W9OivewMc188vIexfNveoxAww1NG1L7lnLlDX1gTU=;
-        b=MhEqEb67CoEJ+BUMmlPOGVl7GVyqdOkhLGgVmqC2WrVsgvBQbzFtc/Jj56IhWp7eh1
-         5wD+YEksP75+e5zN6wdQbeIWnXdBeaGTQ98WUT84xRe6cUWjhwTdW8j7TH9/BMlxkDhz
-         CuOLbJjLFXL/yVqzWIdAGhvarJzsXwmiQViZpN5e2Vs23RXYPOSP+km9PMiI3mb3MLHJ
-         6X09zCoQPI2mmaoTNb6/Ebrr71gHZth7qJG6OwisERyx8jMyO2LluBgyzc1DT5Wo2SSk
-         7ddLkFsmk1pVtOuQZJbRD4wGe6tV+hL2P6rEsFXcatRc9fOIBYuuHTDqrbXqHKTQCLr1
-         yfyQ==
-X-Gm-Message-State: AOPr4FUtIrlTH3MWK80sNpnXt4Yo7o6P642MgYKM6251IIK7TjpdEk9l6H9QU9Ejxe8bSxkhVggF/lhd6p102A==
-X-Received: by 10.50.101.200 with SMTP id fi8mr4340329igb.76.1463244809644;
- Sat, 14 May 2016 09:53:29 -0700 (PDT)
-Received: by 10.64.64.36 with HTTP; Sat, 14 May 2016 09:53:00 -0700 (PDT)
-X-Google-Sender-Auth: pTV6PLk_DU9s_P5pL84XLbhQi38
+	id S1753448AbcENRda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 May 2016 13:33:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56297 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751955AbcENRd3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2016 13:33:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 441EF17F0A;
+	Sat, 14 May 2016 13:33:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cHggrNq/mQ9z8j6YxcroZh0UwGQ=; b=vgSAFy
+	eBjXVP6YDgmleWxESklUnVHGdM46422n5VqUHVMhnMYW/aDhSbudc5MlJfwUe3eS
+	ItygA3HxA6kPtGA7NUdpBIEKUHyyTxjoEhWLVeAEKP5pC6EUbw44zBFdzSYtzDFO
+	bwxtg0HsPLAjfckVfDLUgOWq1ecLW7JvwH8NM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f7y6l6cC7jZPSzBFv2l8qs2xU7SOQM7H
+	hsn1eVnHsNhbOBZ5wlS5OeOQUmRS/Q798D0XslXwUgHV93axOQsVfT+OkADYNz0K
+	Y6LN9DdKxp4IMlcoe89II8fTD+H2+gPVDKhNkRNUb9hRf9DLbCsI24iXacOjlhUZ
+	1hcLwXLGnS8=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C29417F09;
+	Sat, 14 May 2016 13:33:28 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A23B617F08;
+	Sat, 14 May 2016 13:33:27 -0400 (EDT)
+In-Reply-To: <vpq37pk7k08.fsf@anie.imag.fr> (Matthieu Moy's message of "Sat,
+	14 May 2016 17:10:47 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F7D3F7AA-19F9-11E6-84B2-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294617>
 
-Hello! I was directed to ask here; I hope I am respecting your format.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-I have a repo with a subtree. I squashed every merge with the subtree
-remote to keep the history manageable. Now down the road after a bunch
-of merges, I need to split my repo=E2=80=99s master branch into two new
-branches and move the subtree from `/subdir/subdir/` to `/`.
-(`/subdir/subdir/user/mycode/` contains code from my repo.)
+> Junio's explanation must not necessarily be read as "it has to be the
+> way it is", but more as "getting it right is harder than you think", and
+> that in turn explains why no one changed the behavior.
 
-I ran `git subtree split -P=3Dsubdir/subdir/ -b newbranch` and the
-outcome seems to be perfect except that each squash merge has turned
-into a full merge, bringing along all history from the other repo. Why
-does it do this and how can I preserve my repo history, including only
-squashes from the subtree remote repo like it is today?
-
-I initially asked at http://stackoverflow.com/q/36957809
-
-Thank you.
+Thanks for clarification.  s/must not necessarily/must not/;
