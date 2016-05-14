@@ -1,104 +1,82 @@
-From: Adam Dinwoodie <adam@dinwoodie.org>
-Subject: [PATCH] crlf: Add test showing double warning on commit
-Date: Sat, 14 May 2016 12:17:55 +0100
-Message-ID: <20160514111755.GG2345@dinwoodie.org>
+From: UNITED NATIONS <garnishateken_uda@goo.jp>
+Subject: PAYMENT
+Date: Sat, 14 May 2016 20:41:24 +0900 (JST)
+Message-ID: <747102521.85585979.1463226084624.JavaMail.root@goo.jp>
+References: <786279906.85488042.1463223496276.JavaMail.root@goo.jp>
+Reply-To: UNITED NATIONS <michealnkuna@consultant.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 14 13:18:26 2016
+Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 7bit
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sat May 14 13:42:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1XaG-0002DF-Sf
-	for gcvg-git-2@plane.gmane.org; Sat, 14 May 2016 13:18:13 +0200
+	id 1b1XxD-0007Nd-4W
+	for gcvg-git-2@plane.gmane.org; Sat, 14 May 2016 13:41:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752020AbcENLSD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 May 2016 07:18:03 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34126 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750952AbcENLSA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2016 07:18:00 -0400
-Received: by mail-wm0-f68.google.com with SMTP id n129so8449588wmn.1
-        for <git@vger.kernel.org>; Sat, 14 May 2016 04:18:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=zu24+8EVBZZ3/SxhYjIBSD69+1VrTa67YWPJ5+pPV/c=;
-        b=aV0H0aKG4FZaGJ7f6M5Raw7DWyomZ3YuO7y2pjlvdPALPbW8u/p5cxVDRcqQpkLRA4
-         i9WJAbXpdafbUGSk2uDRaZnH4NIJU+LNJ4OE8LMRPQTKKG9KIvwYiXCTKBgTBa53+vlj
-         XdvAWRub+pZrfkKRHaV4nc5qWNv+sSPhS0uRo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=zu24+8EVBZZ3/SxhYjIBSD69+1VrTa67YWPJ5+pPV/c=;
-        b=OxJujJK3pfTBI496QUs+2zSbxrz29bofclAopPdrZmmJcoI6fwQsMQBFNkoSpCJ6GJ
-         cRhUZ4hs7OyR8LedsWD7qePTPV5IPxuCSVRIzf/hyndkYmp37l+hqXvprVgu4iQbV5zS
-         jO+koDFxJG2se7/5+i7dxiN0gmsupEC4yCZDG/OB7glLT5VgsxQQ4o7QxEYce+n1cxkF
-         8kA3Ky/2/niQ+ApOr9skw9rHX6i1ySViuxCue5qWQn/12e0ujE/JKTP3Nb9QQjb8E/Vs
-         XcBIrfI1sUOaOXEe2RlUFFTk9S1yX9z9bRk29ki+aq1wW7A+bQpA4cyCe2IUx74bM+Hv
-         ggdA==
-X-Gm-Message-State: AOPr4FUvfYB2nGIppr+OY9P2WI7A+5ut0KIUTDiWhwAPqpB29Xi9WZcoGNgZR+nR1+qyeQ==
-X-Received: by 10.28.62.15 with SMTP id l15mr8345586wma.30.1463224679439;
-        Sat, 14 May 2016 04:17:59 -0700 (PDT)
-Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
-        by smtp.gmail.com with ESMTPSA id b1sm7835887wma.13.2016.05.14.04.17.58
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 14 May 2016 04:17:58 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752050AbcENLll (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 May 2016 07:41:41 -0400
+Received: from gfdefer006.mail.goo.jp ([153.149.229.136]:44824 "EHLO
+	gfdefer006.mail.goo.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751313AbcENLll (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2016 07:41:41 -0400
+Received: from gogw0438.mail.goo.jp (gogw0438.mail.goo.jp [153.153.65.39])
+	by gfdefer006.mail.goo.jp (Postfix) with ESMTP id EF6A590623E
+	for <git@vger.kernel.org>; Sat, 14 May 2016 20:41:37 +0900 (JST)
+Received: from ntt.pod01.gv-mta-ucb004 (gv-mta-ucb004.mail.goo.jp [153.149.229.163])
+	by gogw0438.mail.goo.jp (Postfix) with ESMTP id 5C921600480;
+	Sat, 14 May 2016 20:41:25 +0900 (JST)
+Received: from gzcstore012.mail.goo.jp ([180.8.112.235])
+	by ntt.pod01.gv-mta-ucb004 with 
+	id uBhQ1s00254mytg01BhQPj; Sat, 14 May 2016 11:41:25 +0000
+In-Reply-To: <786279906.85488042.1463223496276.JavaMail.root@goo.jp>
+X-Originating-IP: [197.111.180.70]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294609>
 
-Add failing test case showing CRLF -> LF rewrite warnings being printed
-multiple times when running "git commit".
+ 
+ 
 
-Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
----
- t/t0020-crlf.sh | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ Congratulations,
 
-diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-index f94120a..188b1dd 100755
---- a/t/t0020-crlf.sh
-+++ b/t/t0020-crlf.sh
-@@ -74,7 +74,7 @@ test_expect_success 'safecrlf: autocrlf=true mixed LF/CRLF' '
- 	test_must_fail git add mixed
- '
- 
--test_expect_success 'safecrlf: print warning only once' '
-+test_expect_success 'safecrlf: print warning only once on add' '
- 
- 	git config core.autocrlf input &&
- 	git config core.safecrlf warn &&
-@@ -87,6 +87,20 @@ test_expect_success 'safecrlf: print warning only once' '
- '
- 
- 
-+test_expect_failure 'safecrlf: print warning only once on commit' '
-+
-+	git config core.autocrlf input &&
-+	git config core.safecrlf warn &&
-+
-+	for w in I am all LF; do echo $w; done >doublewarn2 &&
-+	git add doublewarn2 &&
-+	git commit -m "nowarn" &&
-+	for w in Oh here is CRLFQ in text; do echo $w; done | q_to_cr >doublewarn2 &&
-+	git add doublewarn2 2>&1 &&
-+	test $(git commit -m Message | grep "CRLF will be replaced by LF" | wc -l) = 1
-+'
-+
-+
- test_expect_success 'safecrlf: git diff demotes safecrlf=true to warn' '
- 	git config core.autocrlf input &&
- 	git config core.safecrlf true &&
--- 
-2.8.1
+
+ You may not understand why this letter came to you. We have been having a meeting for quit sometime now and we just came to a logical conclusion few days ago in affiliation with
+the World Bank president. This letter is to few well listed people that have been scammed
+in any part of the world, the UNITED NATIONS in Affiliation with WORLD BANK have agreed to compensate them with the sum of USD $1.250,000.00 Dollars each.
+
+These includes every foreign contractors that may have not received their contract sum,
+and people that have had an unfinished transaction or international businesses that
+failed due to Government problems etc. We found your name in the list of those who are
+to benefit from these compensation exercise and that is why we are contacting you, this
+have been agreed upon and have been signed.
+
+You are advised to contact Dr Gift Solomon to our paying center in South Africa, as he is our representative in Africa. Contact him immediately for your Cheque International Bank Draft of USD$1.250,000.00Dollars.This fund is in form of a Bank Draft for security
+purpose ok? So he will send it to you and you can clear it in any bank of your choice.
+Therefore, you should send him your full Name and telephone number your correct mailing
+address where you want him to send the Draft to you.
+
+Contact information is as follow:
+Dr. MICHEAL NKUNA
+E-mail: michealnkuna@consultant.com
+
+Please contact him with your payment code: 09051982 immediately for your Cheque to be delivered to your address.
+
+begin_of_the_skype_highlightingend_of_the_skype_highli I apologize on behalf of the United Nation organization for any delay you might have
+encountered in receiving your fund in the past. Thanks and God bless you and your
+family.
+
+Congratulations, and I look forward to hear from you as soon as you confirm your payment
+making the world a better place.
+
+Regards,
+Secretary-General Ban Ki-moon,
+United Nations.
+http://www.un.org/sg/ Secretary-General Ban Ki-moon,
+United Nations.
+http://www.un.org/sg/
