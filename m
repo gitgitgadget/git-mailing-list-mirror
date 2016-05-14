@@ -1,72 +1,89 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Empty config sections are neither deleted nor reused
-Date: Sat, 14 May 2016 17:10:47 +0200
-Message-ID: <vpq37pk7k08.fsf@anie.imag.fr>
-References: <87r3d6knwo.fsf@bernoul.li>
-	<xmqqeg95aor6.fsf@gitster.mtv.corp.google.com>
-	<877fewzseg.fsf@bernoul.li>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] crlf: Add test showing double warning on commit
+Date: Sat, 14 May 2016 18:20:22 +0200
+Message-ID: <baea5604-e786-5773-aa68-f311efb23752@web.de>
+References: <20160514111755.GG2345@dinwoodie.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonas Bernoulli <jonas@bernoul.li>
-X-From: git-owner@vger.kernel.org Sat May 14 17:11:25 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 14 18:21:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1bDo-0005Ay-Ku
-	for gcvg-git-2@plane.gmane.org; Sat, 14 May 2016 17:11:16 +0200
+	id 1b1cJN-00022Y-28
+	for gcvg-git-2@plane.gmane.org; Sat, 14 May 2016 18:21:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752422AbcENPLD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 May 2016 11:11:03 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:33480 "EHLO mx2.imag.fr"
+	id S1752745AbcENQVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 May 2016 12:21:00 -0400
+Received: from mout.web.de ([212.227.17.11]:62792 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752370AbcENPLD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2016 11:11:03 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4EFAjop013156
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Sat, 14 May 2016 17:10:45 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4EFAluF014252;
-	Sat, 14 May 2016 17:10:47 +0200
-In-Reply-To: <877fewzseg.fsf@bernoul.li> (Jonas Bernoulli's message of "Sat,
-	14 May 2016 15:21:59 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Sat, 14 May 2016 17:10:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u4EFAjop013156
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1463843447.38469@cBIX8Vc/1WaZJDGczHIvHQ
+	id S1751363AbcENQU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2016 12:20:59 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0MNcMo-1ayrQO0jYg-007A2e; Sat, 14 May 2016 18:20:50
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.0
+In-Reply-To: <20160514111755.GG2345@dinwoodie.org>
+X-Provags-ID: V03:K0:/YYIyxNf/2lI46Dz7iG+kYb0rbNp7sgxDCLa/kE2BSQ63rJBKvT
+ LJpGkNzuFnzwkbStqAjnGlJ/AeVle3Pcfa77Qadt4p/1bQITyYPES923S5UO6vda+dBwjq5
+ 4g+3Vb7VioGv5sJAEwYK8DjeEPBH+JDaJ4U99AHQ5LO8vvnnsPXiYCbUXAUbMz2ZECZ6VKh
+ o9CiDb9UJq04ihAkR7kLg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Jlvzr3NAHK8=:pWAwgGEOz7ENqSan3XFiHm
+ GpdD87TbQ9iO5I2A51dNq6uh0mPcnDeTouMqDBc8l/AbgCZ65zB+u0AFcRGZwvIlO1+vvvBWv
+ cnqbhCw6q5KRHjI4m1gpk8agHL+fsGyi5xe8XaQnx3LsllkQw9x0FXr1tDaYCl4OWN3Q2yOT0
+ Im48VzfLEaK208QRe9oreGpvQu3pYxnxYMuSnsxpYV+RLuQ9wJ5l8hL+BdB07Nk53X5anG/3L
+ owAC7zpD/yoegOQOjtGz/PhiSvSPt2lOM22g179gZEZr1J9Xh++NQksoVvR2mSpfPzArVKWfD
+ KnvwU10FJ7Fo4TP0SbT4UXLTQj0QdwxLS+SRauuTN3a7N2bNF16xNEYZBEH6NwGhCB/Dbgzoe
+ UYcARRDxqoVfCdJ9a8N3t9TRLNuV3xvgW8NKaWMrBF4R10C6cx0LJIhhfFg9/PCOiklmdFpTo
+ qgsI4eEUNCFJEf9U5ghs1PQkZ/cchf+XNB6iOnG/DGRy4CAaxXmh1orkxv9Eh8sOuRH48IEyh
+ KH5YZNdLLHuzCLMf1tzUj48hmzaavKtrlnF2AqbLq511cR+9YyUsAiZ0R021H9nrgD3f+Gt/V
+ DOS4Eamv668iYVtfQewTA7/rvBn1jJPRlanOJJMCFo+CR0iDmCVBFlfie8VjSysOCDJKXdbG/
+ PnUmUjU56yHefWQMhkGcPT8aj0Ve9KHRDyG8RdAPQ+1yC1wVzzJ7j8MMVgCeQVN/MECAQJkpw
+ wtszI/Jp2z1kQSijJy4Q20gWiWeGizT7/hTlSX5Ck4RYLRycyKmtRCx8cpSAyCfafiGFkNjC 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294615>
 
-Jonas Bernoulli <jonas@bernoul.li> writes:
-
->> The configuration sections can have comments and they are preserved
->> even when they become empty.  Adding something unrelated will still
->> make it appear the stale comment applies to it.
+On 14.05.16 13:17, Adam Dinwoodie wrote:
+> Add failing test case showing CRLF -> LF rewrite warnings being printed
+> multiple times when running "git commit".
 >
-> Now that you mention it, I think I have read that before.  Unfortunately
-> I forgot about it until you reminded me.  I would still prefer if empty
-> sections were removed and/or reused provided no comment is nearby, but
-> now that you reminded me why the current behavior is how it is, I can
-> live with it.
 
-Junio's explanation must not necessarily be read as "it has to be the
-way it is", but more as "getting it right is harder than you think", and
-that in turn explains why no one changed the behavior.
+The problem seems to come from this line:
 
-Actually, Tanay Abhra's GSoC two years ago included working on this, but
-the project had other priorities and the empty sections issue was not
-tackled.
+index 5473493..59d4106 100644
+--- a/diffcore-break.c
++++ b/diffcore-break.c
+@@ -61,9 +61,18 @@ static int should_break(struct diff_filespec *src,
+            !hashcmp(src->sha1, dst->sha1))
+                return 0; /* they are the same */
+ 
++       fprintf(stderr, "%s:%d src-path=%s dst-path=%s\n",
++               __FILE__, __LINE__, src->path, dst->path);
++#if 0
+        if (diff_populate_filespec(src, 0) || diff_populate_filespec(dst, 0))
+                return 0; /* error but caught downstream */
++#else
+ 
++       if (diff_populate_filespec(src, 0))
++               return 0; /* error but caught downstream */
++       if (strcmp(src->path, dst->path) && diff_populate_filespec(dst, 0))
++               return 0; /* error but caught downstream */
++#endif
+        max_size = ((src->size > dst->size) ? src->size : dst->size);
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Do we need to run diff_populate_filespec() twice when src==dst ?
+If yes, we may need to introduce a flag besides
+#define CHECK_SIZE_ONLY 1
+#define CHECK_BINARY    2
+to suppress the conversion warning ??
+
+If no, the fix from above should do ?
