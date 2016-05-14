@@ -1,68 +1,118 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v2 29/33] refs: resolve symbolic refs first
-Date: Sat, 14 May 2016 11:02:04 +0200
-Message-ID: <44e99d76-a01f-b97c-65a7-d9b1b5e83eb4@web.de>
-References: <cover.1462550456.git.mhagger@alum.mit.edu>
- <66d33af21bd1e398973414435af43d06f2e2099c.1462550456.git.mhagger@alum.mit.edu>
- <20160512074528.GB10922@sigill.intra.peff.net>
- <20160512082526.GA20817@sigill.intra.peff.net>
- <5735C990.8080502@alum.mit.edu>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 00/94] libify apply and use lib in am
+Date: Sat, 14 May 2016 11:19:20 +0200
+Message-ID: <CAP8UFD376guRRPpMVjC36K0dvWy17xdaHvV1WoRjMaNpdp0bqQ@mail.gmail.com>
+References: <20160511131745.2914-1-chriscool@tuxfamily.org>
+	<alpine.DEB.2.20.1605130820160.4092@virtualbox>
+	<CAP8UFD2fSW0nds7myfb_09c+EaCdn6+1OqsNEzfY2rVTeA5TAw@mail.gmail.com>
+	<alpine.DEB.2.20.1605140807310.4092@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 14 11:03:52 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jeff King <peff@peff.net>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat May 14 11:20:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1VUE-0002bJ-Ts
-	for gcvg-git-2@plane.gmane.org; Sat, 14 May 2016 11:03:51 +0200
+	id 1b1VkN-0006T4-46
+	for gcvg-git-2@plane.gmane.org; Sat, 14 May 2016 11:20:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751456AbcENJCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 May 2016 05:02:36 -0400
-Received: from mout.web.de ([212.227.15.14]:59303 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751197AbcENJCe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2016 05:02:34 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0Lo4Lo-1bYNIm0LPs-00fwXW; Sat, 14 May 2016 11:02:08
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.0
-In-Reply-To: <5735C990.8080502@alum.mit.edu>
-X-Provags-ID: V03:K0:xP2X8TD58Qta5r4n9ERUuh3iQQbc7nX0JQhfHlI09g5JjOKoJTm
- /y04jNbJcv/3Ls3gUZlXQXS4q/h3nMaZ5HRMoyr9hRJFVgMZiktlXMAXGMRK9+9PfWEOet4
- e49f38sx14DSQLzm3EXm/XAKFHo1VS/Qyn2yc2RAyHatbTe2MVBVgDbs6Y4V4XxlemO5mTE
- wfhEdVbulKfszpYlThINA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OXWGc/6Ny1U=:9dFlTeUu3AVDhf9RJ00Hzu
- Us/SQGuQYYZDLSWihkKVwcMinc3eLr4eEuBL99bWtzpbXWs8vXPs3iFX6PqSvDWGgxnPTYQWd
- LvTdOJZSx5HBB65mjdaQ4f7ZFhJCdcKe3DNobsxMVSGqyo/nrCo+MnRbVChC08w5eqo+tZnPS
- UWYUUqdpNlz6Qbf1PtLBIc8d5eSpyZzugSk+Bi2ZZ0VMDY5ft+1rzcjsXBYk0Tu3h8uglMPEx
- P+YLp5IJ44ZIsuWS7CCoEd4omIKdZh6ba31p2sM+X+5/xCTjSoB65sQ+olNd5LTeiglEYvg8d
- y6ZNv4YI7splJdBg+s/ZtXfQnL5pyCK4iOnCY5/X2LIVWceuY12o0+WWTBO+PXtueKOPldqE+
- Y1K5GU+kRt5KwYhspwKLorlLZfey6GxCsokkMp0lQmGCWCRe0D/SOwM6IommU+4AXvqm1YCqy
- uHOp9UdzWKjh/vhPUfabhIAVlqzP9pU40n1CGLiptigJiTYm/myiDdruaMgND3/83EDxBVy11
- wtwWFKM/mvZMNI/mOwjO6yP8LxtxDlK3GJ1Ws/te0exlwWoLn18radKiluG9++VMTHBXxtnNe
- qDLBGvb/QalIlESZ6nTfj+0XqOW5o2/MM9NXxguHdapUxonwjhPf25DUVLXx88vIwCbX0EH0Q
- ROJ1ewJf//CM5GInxJAQlwRcJYfOCtNk7r303EfoXoloR7CUikr9P2jqjJkWerffqf0wSgOpT
- rp43/xsowl3JZC5HcqgksVkLRQHAPQzwmZ3/PSNVNFk25kRu5UWoMjilY/UJDRHa6k3IXReh 
+	id S1751918AbcENJTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 May 2016 05:19:23 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34592 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751367AbcENJTW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2016 05:19:22 -0400
+Received: by mail-wm0-f67.google.com with SMTP id n129so8028716wmn.1
+        for <git@vger.kernel.org>; Sat, 14 May 2016 02:19:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=7M3sJAFYkIqjsRkH8K0VKA4MCwDKTcaXLR1fMQU6Xck=;
+        b=WucybAGrRYPTxmYNy0H/q3V92v6OW7kWsYuZK4skBjKXOWySdFGGOTY1u90HwZLgvQ
+         AfK4AkSvMySyFDjzuv13lXFz67mhgxWhT2292nDKM8XNabY/nQsK6AhSnguwwMpVnIJb
+         TpB6HvBFTD+Ts/BxPC8l1M8gG3Ag2ANl7T6b51sQ1BjobhAeIngCEf3foRYIdX4sBKp4
+         NJvjJK5OPNXM5+33DjMFuPlDnDQV6qaJ4wU1z+/Z67pqNVxJ4QJ4SrnA7AvclJ2DZt2w
+         UL6771sgPNGqTrzu7+lVQk9n3SEzXz0GclQCvjwuNT0RY/XSRPhRFrp82sIO+XzZ4rHS
+         tUhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=7M3sJAFYkIqjsRkH8K0VKA4MCwDKTcaXLR1fMQU6Xck=;
+        b=UnVtbsOhgSTQBJeJzAUBKRRUxoW4N1tMs2L8Y346M5mWzIT21z46vZN0aiwOvVYCxu
+         a4VXqXly/k264rmpmyJ4aIi41PacNeEAYadyfGQU9FKbsVps9nSahQVyiyV5mJRA2hk6
+         axwly8KwtpQfPZ+3gqubJ7knvHPxiCL8qdhsFmjF1hyyEUTUhsThYXtvruik4TY0ZJ9W
+         oEngY3r2ztyWXO1H1B06ywcHvmOKprbVyDHnNR0xqdEz86zpmeB5fFDXypnpf90CusnH
+         0eE7oljFPJtdkTelQz3uANuwIYfurKntUxSz17FaCcJsZezwhjQMUqz3zi+wABCHmerG
+         sCng==
+X-Gm-Message-State: AOPr4FVqWkuq+zFz8YDgQ0Lcu8x41ZNUGJRLgWJyR8kWMopDrcWAMVWQuGfnPZBMIbiZA22ZRDVVn405JC3L4Q==
+X-Received: by 10.194.149.37 with SMTP id tx5mr5011627wjb.94.1463217560847;
+ Sat, 14 May 2016 02:19:20 -0700 (PDT)
+Received: by 10.194.246.4 with HTTP; Sat, 14 May 2016 02:19:20 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1605140807310.4092@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294606>
 
-On 13.05.16 14:33, Michael Haggerty wrote:
-> Torsten, thanks for the report. Peff, thanks for the analysis.
-I didn't follow all the details.
-The new "pu" passes with no errors on all of my test systems :-)
- 
- 
+On Sat, May 14, 2016 at 8:26 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+
+[...]
+
+>> >> By the way there are no tests yet for this new feature, and I am not
+>> >> sure at all that "--silent" and "be_silent" are good names.
+>> >
+>> > If you want to follow existing code's example, we typically call this
+>> > option "quiet".
+>>
+>> In the documentation there is: [... snip ...]
+>> ...
+>>
+>> So it looks to me that --quiet means something like "don't tell the
+>> story of your life, but in case of problem you are allowed to
+>> complain". In other word --quiet generally doesn't suppress error
+>> messages from error() or die().
+>
+> Right.
+>
+> And if you care to take a step back, this is most likely what we want in
+> libified code.
+
+In the previous discussion, Junio asked:
+
+"How far can you go with just set-error-routine?  Are there things,
+other than the file descriptors, that you need to futz with in order
+to covert that "we'd fallback, so this early round must be silent"
+codepath?"
+
+So it looks to me that the goal is to have something that replicate
+the current behavior, which is to not even display messages from
+error().
+
+[...]
+
+>> >> Sorry if this patch series is long. I can split it into two or more
+>> >> series if it is prefered.
+>> >
+>> > It is preferred. Much.
+>>
+>> Ok, I will split it then.
+>
+> Thank you. Maybe you take me off of the Cc: list, too?
+
+Ok I will do that.
