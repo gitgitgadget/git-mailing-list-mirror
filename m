@@ -1,57 +1,72 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Git and Mozaik
-Date: Sat, 14 May 2016 10:10:43 -0400
-Message-ID: <00bb01d1adea$6b419e30$41c4da90$@nexbridge.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Empty config sections are neither deleted nor reused
+Date: Sat, 14 May 2016 17:10:47 +0200
+Message-ID: <vpq37pk7k08.fsf@anie.imag.fr>
+References: <87r3d6knwo.fsf@bernoul.li>
+	<xmqqeg95aor6.fsf@gitster.mtv.corp.google.com>
+	<877fewzseg.fsf@bernoul.li>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	boundary="----=_NextPart_000_0098_01D1AD46.AB804040";
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: "'git mailing list'" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 14 16:11:43 2016
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonas Bernoulli <jonas@bernoul.li>
+X-From: git-owner@vger.kernel.org Sat May 14 17:11:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1aI9-00027q-K1
-	for gcvg-git-2@plane.gmane.org; Sat, 14 May 2016 16:11:41 +0200
+	id 1b1bDo-0005Ay-Ku
+	for gcvg-git-2@plane.gmane.org; Sat, 14 May 2016 17:11:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751772AbcENOLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 May 2016 10:11:04 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:47814 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751197AbcENOLD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2016 10:11:03 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [174.112.90.66])
-	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id u4EEArAe081164
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sat, 14 May 2016 10:10:54 -0400 (EDT)
-	(envelope-from rsbecker@nexbridge.com)
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGHdoQaxWpBX7hQdNvdAf8TjogxOQ==
-Content-Language: en-ca
+	id S1752422AbcENPLD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 May 2016 11:11:03 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:33480 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752370AbcENPLD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2016 11:11:03 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4EFAjop013156
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Sat, 14 May 2016 17:10:45 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4EFAluF014252;
+	Sat, 14 May 2016 17:10:47 +0200
+In-Reply-To: <877fewzseg.fsf@bernoul.li> (Jonas Bernoulli's message of "Sat,
+	14 May 2016 15:21:59 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Sat, 14 May 2016 17:10:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u4EFAjop013156
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1463843447.38469@cBIX8Vc/1WaZJDGczHIvHQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294614>
 
-Hi Everyone,
+Jonas Bernoulli <jonas@bernoul.li> writes:
 
-I'm embarking on a bit of a quest to bring git into a CNC manufacturing
-environment for the Mozaik software package. Does anyone in the group have
-experience with git for that package (expecting probably not, but I had to
-ask)? I'm hoping that there won't be too many problems (internal file format
-seems relatively compatible for the stuff that needs to be versioned
-although if there are one-liner text files it may be annoying and I may have
-to provide my own diff engine).
+>> The configuration sections can have comments and they are preserved
+>> even when they become empty.  Adding something unrelated will still
+>> make it appear the stale comment applies to it.
+>
+> Now that you mention it, I think I have read that before.  Unfortunately
+> I forgot about it until you reminded me.  I would still prefer if empty
+> sections were removed and/or reused provided no comment is nearby, but
+> now that you reminded me why the current behavior is how it is, I can
+> live with it.
 
-Cheers,
-Randall
+Junio's explanation must not necessarily be read as "it has to be the
+way it is", but more as "getting it right is harder than you think", and
+that in turn explains why no one changed the behavior.
 
--- Brief whoami: NonStop&UNIX developer since approximately
-UNIX(421664400)/NonStop(211288444200000000)
--- In my real life, I talk too much.
+Actually, Tanay Abhra's GSoC two years ago included working on this, but
+the project had other priorities and the empty sections issue was not
+tackled.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
