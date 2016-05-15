@@ -1,131 +1,101 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC PATCH 0/4] pathspec labels [WAS: submodule groups]
-Date: Sun, 15 May 2016 17:06:22 +0700
-Message-ID: <CACsJy8BK-u2VV3kkq3ANHCanYqMwphqgxZmooQfewA_J7e8MPw@mail.gmail.com>
-References: <20160513001936.7623-1-sbeller@google.com>
+From: Dmitry Gutov <dgutov@yandex.ru>
+Subject: Re: 'git diff-index' doesn't honor the 'diff.algorithm' variable
+Date: Sun, 15 May 2016 13:25:24 +0300
+Message-ID: <8e5a7045-77f7-acb0-de7f-3e8f72479ec3@yandex.ru>
+References: <9d15b6c8-ed97-7352-3df1-efab1b4ffadb@yandex.ru>
+ <xmqqshxk7aa8.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Sun May 15 12:07:05 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 15 12:26:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1sws-0001HL-Oi
-	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 12:06:59 +0200
+	id 1b1tFN-00024l-0i
+	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 12:26:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754060AbcEOKGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2016 06:06:54 -0400
-Received: from mail-lf0-f49.google.com ([209.85.215.49]:34779 "EHLO
-	mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752550AbcEOKGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 06:06:53 -0400
-Received: by mail-lf0-f49.google.com with SMTP id m64so106343085lfd.1
-        for <git@vger.kernel.org>; Sun, 15 May 2016 03:06:52 -0700 (PDT)
+	id S1753201AbcEOKZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2016 06:25:29 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34976 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752514AbcEOKZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 06:25:28 -0400
+Received: by mail-wm0-f65.google.com with SMTP id e201so12202101wme.2
+        for <git@vger.kernel.org>; Sun, 15 May 2016 03:25:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=KydU39wN9GzgX+A8dDTxCeXw/7kuk6Fk/gpcWsM5GdQ=;
-        b=BWmXyB9uXx/BzhK3F9GWU/92K/u/r1Yr8twfxA81uQLd0/3UxI8elZQ7iQTwA8f3Go
-         e3/ErYi6EbiD+D4erRabXgZOJb31IEQjbalDNyDrxS5OR262m10kAapS1fMpNRLJnl8e
-         xFEpH9S2WE6rbUEOrcS46Q/R3GmLIw6spBGJ6GJzwJzX3JQJUIuWNXmhfPrWlsqZATqy
-         YRgkln04sbJRHq6HNZgQubQo8TCoK4MPnXyos4WzFWRUsrHL0Y1lFIMAsaw2H2g7cuO9
-         59DzKyMIqImit3PoVUAWx12+T//EAjzPawKuXncxwTLD79tCGorAV2rNT3KufazIc04H
-         dL7g==
+        h=sender:subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=TodJRbnIsQzM7PXS7WRfiPD65iL3GPm1/mN3u+b5YpQ=;
+        b=MMgWV+WGi7pZ9y0nQ0VB/+wIT71wuJ4QVBzzB+P8mD7cVVL7Hx2Xds5/xZN8+7yc7G
+         WSy1sXzZtzngBoKFQQh6Ny+0qGlSHshTa3ZdJyGJ0mXQ32ldFGcw9bJMouE1sn1h+M3X
+         49s2lWhXLWbXAqVfub6mQxqxYs2RrVdy1Tuj6513aEphowRpbtSokHsl3HDJhqagOJHF
+         N2Dt6UHtfyMJszrjDKranoD2pIMVX/KkW2PKD8m/4AykqneSCUSYmHHuf0ltxxYbY06C
+         y42WCz/Jh/SG1xeyxHsHU39i3fEcbS4jXRBVtIz9UORawjpTuBYnnmbpdHMmZsPTj0F4
+         ut2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=KydU39wN9GzgX+A8dDTxCeXw/7kuk6Fk/gpcWsM5GdQ=;
-        b=FfqnBbNmfJk/vwDO6dqOp8iSBdkGo9YC2bNdQEB1N/NXZgHmJMQTifGIxwk8KIK0Fv
-         aM+raYcUdujsco15YDIJ+E67mixmHrPH17tWUCQ9kATsmkkq19BtyhEcdS+4Dyx+xM4L
-         U+faRrvlyHHJpL8SOUBzI9sjpHCFjfd9Kyz8XvqIbY+RKeDOizcBC7mTAtBO7G2YIeUH
-         bjZPJ0gftGMiz3magLIVjQMQ4C3IrlY8GMFzM3JrMmOI4IQFGT99kq2NDmrHzjMvBR14
-         qyaWKP3LPaphuh7a4Bb8YZzu4s1oQC0GdvHNOwZkREycdEzSwfFkuOPVEe7PCxQ7L3T5
-         a5FQ==
-X-Gm-Message-State: AOPr4FUA3FLmtQq3VHoaQvzP7nIEyZSS03bdbTypZmNEdVAafSVld98Rgk33U+eGE1nEthsNQLO8LfSxqZ9StQ==
-X-Received: by 10.25.162.76 with SMTP id l73mr9751765lfe.45.1463306811852;
- Sun, 15 May 2016 03:06:51 -0700 (PDT)
-Received: by 10.112.167.10 with HTTP; Sun, 15 May 2016 03:06:22 -0700 (PDT)
-In-Reply-To: <20160513001936.7623-1-sbeller@google.com>
+        h=x-gm-message-state:sender:subject:to:references:cc:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=TodJRbnIsQzM7PXS7WRfiPD65iL3GPm1/mN3u+b5YpQ=;
+        b=Cnm4As6y0S/xZxawTxAGsddXRj8uS8QB34IWNNoJaM1gDy0PsXeuJp4S1Qx2drnh82
+         1QN50lx4oiVievNJcrEnsz/vaCZCBZNFeA1vSWX9omCvmh+2Hoqa6tw5Vy2xfKEbnGPE
+         hrKTb9GlNu9/MS9msIL2rlJfvSl9Jy57p5ZMXdsoga95KCdkW/LuXGJ/nwmd7XijPKgk
+         1dUk0MAF0opqDxdLomsdpYGuEGuZpiQeuDSSKym0oDJ+34rJHwqtz+xZJatDwZ0G3Y2O
+         5xPOc5pDjpWzs8yjMHNCSwy0s0RLDaa/+QMjUe/3oqoaWvjirvXBPb3Hprdcww11LtKY
+         RXOA==
+X-Gm-Message-State: AOPr4FWd7B7dqBb0bUq9rjGa0RcUBmUNSP0h0fU/xhktimze0rRiT1s92okjxGQxrIZPsg==
+X-Received: by 10.28.62.15 with SMTP id l15mr12403836wma.30.1463307926237;
+        Sun, 15 May 2016 03:25:26 -0700 (PDT)
+Received: from [192.168.1.2] ([185.105.175.24])
+        by smtp.googlemail.com with ESMTPSA id r123sm12579845wmg.20.2016.05.15.03.25.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 15 May 2016 03:25:25 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1
+In-Reply-To: <xmqqshxk7aa8.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294648>
 
-On Fri, May 13, 2016 at 7:19 AM, Stefan Beller <sbeller@google.com> wrote:
-> After some fruitful discussion[1] in which Junio suggested trying a very
-> different route[2] that is more general and not submodule related, I considered
-> doing a mock for this.
->
-> This lets you label arbitrary pathspecs, e.g. in git.git we may want to have:
->
->     t/t[0-9]*.sh label=tests
->
-> such that
->
->     $ git log --author=Beller ":(label=tests)"
->
-> would show all commits in which I touched tests.
->
-> This has suprisingly few lines of code, as the first 3 patches are refactoring.
-> The actual new feature is in the last patch.
->
-> This would solve the submodule issues I want to solve, as I can produce a
-> .gitattributes like:
->
->     ./submodule1 label=default
->     ./submodule2 label=default
->     ./submodule3 label=optional-feature1
->
-> and then I'd instruct the users to clone like this:
->
->     git clone .. superproject
->     cd superproject
->     git submodule update --init :(label:default)
->
-> The second part of the submodule series to collapse these three commands
-> will come as an extra series later, then.
+Hi Junio,
 
-Yeah. I can see the use of this, even without submodules.
+On 05/14/2016 09:40 PM, Junio C Hamano wrote:
 
-> What annoys me here:
-> Attributes can only be set once at the moment, there is no way to collect all
-> attributes. If we'd have such a collection feature we would be able to
-> configure this:
+> The variable belongs to UI config, meant for Porcelain "git diff",
+> together with things like "diff.color", "diff.context", etc.
+
+OK, that makes sense. You might want to fix the man page, though, it 
+says, like the 'git diff' one, "For instance, if you configured 
+diff.algorithm variable to a non-default value and want to use the 
+default one, then you have to use --diff-algorithm=default option.".
+
+> A script that calls diff-index, if it wants to honor end-users'
+> UI config variables, is allowed to use 'git config' to read them and
+> turn them into appropriate command line options.  e.g.
 >
->     *.[ch] label=C,code
->     contrib/** label=oldstuff
-
-Instead of putting everything in under the same attribute name
-"label", make one attribute per label? Would this work?
-
-*.[ch] c-group code-group
-
-And the pathspec magic name can be simply "attr", any git attribute
-can be used with it, e.g. :(attr:c-group)
-
-> and run this:
+>     algo=$(git config diff.algorithm)
+>     case "$algo" in
+>     minimal|histogram|patience) algo=--$algo ;;
+>     *) algo= ;;
+>     esac
 >
->     git status ":(label:C oldstuff)"
+>     ...
+>     git diff-index $algo ... other args ...
 >
-> which would be the equivalent to
->
->     contrib/**.[ch]
->
-> as in this proposed implementation the labels which are given within one
-> pathspec item are logical AND. To get the logical OR, you'd have to give multiple
-> pathspec items, i.e. ":(label:C)" ":(label:oldstuff)"
+> or something like that.
 
-It's even better if pathspec does not have to deal with combination
-logic. Can attr macros deal with that (or if it can't at the moment,
-can we improve it)?
--- 
-Duy
+Thanks, but we don't distribute any custom Git porcelains with Emacs. We 
+usually can't rely on bash being available either. Doing an extra 
+process call from Emacs for this niche a feature doesn't seem like a 
+great idea either. To clarify, the problem is that `M-x vc-diff' doesn't 
+honor the diff.algorithm option.
+
+I'll have to see why we using 'git diff-index' there directly. Maybe we 
+could switch to 'git diff'.
