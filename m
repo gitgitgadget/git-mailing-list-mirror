@@ -1,118 +1,124 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v1 3/3] convert: ce_compare_data() checks for a sha1 of a path
-Date: Sun, 15 May 2016 02:52:50 -0400
-Message-ID: <CAPig+cSYU-+G5p=SaYs=PvMkLiB745Nf7sY3sKe3aozfVvq+iQ@mail.gmail.com>
-References: <20160513134953.GE2345@dinwoodie.org>
-	<1463294299-20256-1-git-send-email-tboegi@web.de>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v10 20/20] untracked-cache: config option
+Date: Sun, 15 May 2016 16:43:21 +0700
+Message-ID: <CACsJy8CV4tue8LscUuBcVyu-xnKadtJEajr7+X-q-RhqgdW01g@mail.gmail.com>
+References: <1463084415-19826-1-git-send-email-dturner@twopensource.com> <1463084415-19826-21-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun May 15 08:53:03 2016
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Sun May 15 11:44:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1pvC-0007sI-Kk
-	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 08:53:02 +0200
+	id 1b1sai-0005k5-9Q
+	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 11:44:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754078AbcEOGww convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 May 2016 02:52:52 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:36499 "EHLO
-	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754047AbcEOGwv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 May 2016 02:52:51 -0400
-Received: by mail-io0-f181.google.com with SMTP id i75so172505638ioa.3
-        for <git@vger.kernel.org>; Sat, 14 May 2016 23:52:51 -0700 (PDT)
+	id S1752749AbcEOJny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2016 05:43:54 -0400
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:33092 "EHLO
+	mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752514AbcEOJnx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 05:43:53 -0400
+Received: by mail-lf0-f54.google.com with SMTP id y84so106754490lfc.0
+        for <git@vger.kernel.org>; Sun, 15 May 2016 02:43:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=6nSdKSB3R00j3BLK8ITRlBM5Q76RWy9iC4qGP1TlzH4=;
-        b=mOIM1H5wJq9hOxo15SEDCnxmgvmQcA04VjA24Rk1rZIj7yQ+NOh5Ys4veg9VBh1YOe
-         MeMfuk1ZW4Fb6TzUql15UcWXip+HteH2uUUmpBuU0QKmoB5xPv34TwPYI1VkqiWmE0Dd
-         D4qtXvH61AyS9VVHxdxJZRp0dVbVc88QqeOewZaIksLePXLhBh2OBn3g5PUVYQ5GOB8f
-         mBzgiJS10Jv4MG0S9X7MZr2p8JrEMEcUqbQd/nFo/+VCkmAVFNh+CcW58mVo9S2qS1Ym
-         fhXipqY26mBXpmqvu8SB2aF9r8bRskJ2c3ds7heM4QUQB/v/O0r4GrZ2ercHjV9JmlA1
-         3e4g==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=fwjl/vdUoB5ohDGK5LXL97cr3DtG50p2mqbIvANoCtg=;
+        b=Lzf/d9yFde3u9RmRAb0AqmKWcpMRwNtrGk3mHzUe7ZUt9sCH63U/HrAtJMZYT0XQIl
+         GXBSt364XsRZs57xvUd0VX3dc3VS4wTFOe6VhSmQ5YPQbhVCTqCakRdpHErtI61oMAAf
+         C9trIx+WV3Y4VZrQl89FNspfpnzeK1EU0O9AiagNzO+IRvc5fmlLG9wtLw2HhuhsX0q/
+         n2qBD90lCDtcqd15rf+p/O4kwDPxmxUisIvdvTkKLBQAsAxHRZOpifqGDLIbd97Cd90F
+         RkFpfQKHlTW8l9xhLmKHTK/UTdVOFcLvg/0vMjyGE5ypLk875r86Eq9QoYaHAmPPDoPB
+         1x6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=6nSdKSB3R00j3BLK8ITRlBM5Q76RWy9iC4qGP1TlzH4=;
-        b=cr6Yq2gTamvZf1PPc2WKhk/HKWlwpMBYYi4e7WaqEUleJaefeouuYeCgaHZxGuGENN
-         yB9MkeCg4VYcBKBsfMMX+WEKs5x4N/OkbHy1AlW5+qlLEBMuDQ14133Qtutfcdt4Cyku
-         bCTHPIkK1WZmfw7F343FTbPWra4jN502XUlY7ktW4uM9JhjWn1zi5VZ1ahXlulyp1pUq
-         PobmIAM0XaeDxmuxDDrWUfy591YljNEaSQWaWGdLY23lwHUt3LzA4GM1oVPLujxDMkiv
-         Dq7iqIWz4FKdB7nnpz/3MhxmaoRcxoyaCtukc1g65qigylWwDMrI+P0L1XQ4nUo6AuNj
-         eJxA==
-X-Gm-Message-State: AOPr4FVHIcSSZq/jNre07rP1eqLv1L31Gcu9hLqAKdygKamXpQMHmYXamch50KWjgl+RD/LOb+tglQoEEsA64A==
-X-Received: by 10.107.132.66 with SMTP id g63mr17711730iod.34.1463295170476;
- Sat, 14 May 2016 23:52:50 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Sat, 14 May 2016 23:52:50 -0700 (PDT)
-In-Reply-To: <1463294299-20256-1-git-send-email-tboegi@web.de>
-X-Google-Sender-Auth: HuDGbxnVZFTQTlt1FE2CKmpMf0E
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=fwjl/vdUoB5ohDGK5LXL97cr3DtG50p2mqbIvANoCtg=;
+        b=VrS7PoetSEEsCkMU3ZAOCb2A4DSx555IHEE+1/DTdjm2tQLRgyQUOkn0J6uCi+cVgW
+         LYJTkob2BEr1pibpjcC/a3WTUZA6ip4mDeuk+/N4GQkEvvIoX/hbGc57zYG6R4QTBlYJ
+         yUj8+L3b3NiSPaBCTWrTBHTTNoPN6zdCg1zPQUqdS3+i6ytLgJDCLpQve/NN9P5rJpIn
+         8HUeQOxykK9rpxhkYQCWE4PQZt++4jSUykETGVG1NLrxZgnZFcmc9R4NMbaw/pKoW9xG
+         xnx4ijxqmk8ao4fwnVOyYrZyF9vhwCdJDXVsGAiVtdtQpCHdLjjYa8y9WsFX6ONMOZ6Z
+         DrAg==
+X-Gm-Message-State: AOPr4FUIub4IbAErIuje7KLyyPm6PHJm3h5CAH5tDrcrOfnULWBPk6hec9NkkMJitBCwd2tlumBtqekqG8Hi8A==
+X-Received: by 10.25.165.70 with SMTP id o67mr451317lfe.162.1463305431405;
+ Sun, 15 May 2016 02:43:51 -0700 (PDT)
+Received: by 10.112.167.10 with HTTP; Sun, 15 May 2016 02:43:21 -0700 (PDT)
+In-Reply-To: <1463084415-19826-21-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294646>
 
-On Sun, May 15, 2016 at 2:38 AM,  <tboegi@web.de> wrote:
-> To compare a file in working tree with the index, convert_to_git() is=
- used,
-> the the result is hashed and the hash value compared with ce->sha1.
+On Fri, May 13, 2016 at 3:20 AM, David Turner <dturner@twopensource.com> wrote:
+> Add a config option to populate the untracked cache.
 >
-> Deep down would_convert_crlf_at_commit() is invoked, to check if CRLF
-> are converted or not: When a CRLF had been in the index before, CRLF =
-in
-> the working tree are not converted.
->
-> While in a merge, a file name in the working tree has different blobs
-> in the index with different hash values.
-> Forwarding ce->sha1 from ce_compare_data() into crlf_to_git() makes s=
-ure
-> the would_convert_crlf_at_commit() looks at the appropriate blob.
->
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> For installations that have centrally-managed configuration, it's
+> easier to set a config once than to run update-index on every
+> repository.
+
+This sounds like the job for core.untrackedCache. It populates after
+reading the index though (in post_read_index_from) not writing, but I
+think it accomplishes the same thing.
+
+> Signed-off-by: David Turner <dturner@twopensource.com>
 > ---
-> diff --git a/convert.c b/convert.c
-> @@ -217,21 +217,29 @@ static void check_safe_crlf(const char *path, e=
-num crlf_action crlf_action,
-> -static int has_cr_in_index(const char *path)
-> +static int has_cr_in_index(const char *path, const unsigned char *sh=
-a1)
->  {
->         unsigned long sz;
->         void *data;
->         int has_cr;
-> -
-> -       data =3D read_blob_data_from_cache(path, &sz);
-> -       if (!data)
-> +       enum object_type type;
-> +       if (!sha1)
-> +               sha1 =3D get_sha1_from_cache(path);
-> +       if (!sha1)
-> +               return 0;
-> +       data =3D read_sha1_file(sha1, &type, &sz);
-> +       if (!data || type !=3D OBJ_BLOB) {
-> +               free(data);
->                 return 0;
-> +       }
+>  Documentation/config.txt | 4 ++++
+>  read-cache.c             | 7 ++++++-
+>  2 files changed, 10 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 385ea66..c7b76ef 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1848,6 +1848,10 @@ imap::
+>         The configuration variables in the 'imap' section are described
+>         in linkgit:git-imap-send[1].
+>
+> +index.adduntrackedcache::
+> +       Automatically populate the untracked cache whenever the index
+> +       is written.
 > +
->         has_cr =3D memchr(data, '\r', sz) !=3D NULL;
->         free(data);
->         return has_cr;
->  }
+>  index.addwatchmanextension::
+>         Automatically add the watchman extension to the index whenever
+>         it is written.
+> diff --git a/read-cache.c b/read-cache.c
+> index 22c64d0..4a1cccf 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -2472,7 +2472,7 @@ static int do_write_index(struct index_state *istate, int newfd,
+>         int entries = istate->cache_nr;
+>         struct stat st;
+>         struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
+> -       int watchman = 0;
+> +       int watchman = 0, untracked = 0;
+>         uint64_t start = getnanotime();
+>
+>         for (i = removed = extended = 0; i < entries; i++) {
+> @@ -2502,6 +2502,11 @@ static int do_write_index(struct index_state *istate, int newfd,
+>             !the_index.last_update)
+>                 the_index.last_update = xstrdup("");
+>
+> +       if (!git_config_get_bool("index.adduntrackedcache", &untracked) &&
+> +           untracked &&
+> +           !istate->untracked)
+> +               add_untracked_cache(&the_index);
+> +
+>         hdr_version = istate->version;
+>
+>         hdr.hdr_signature = htonl(CACHE_SIGNATURE);
+> --
+> 2.4.2.767.g62658d5-twtrsrc
+>
 
-Possible rewrite which would make it harder to forget to free 'data':
 
-    int has_cr =3D 0;
-    ...
-    data =3D read_sha1_file(...);
-    if (data && type =3D=3D OBJ_BLOB)
-        has_cr =3D memchr(...);
-    free(data);
-    return has_cr;
+
+-- 
+Duy
