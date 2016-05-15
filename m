@@ -1,77 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] attr: explain the lack of attr-name syntax check in parse_attr()
-Date: Sun, 15 May 2016 15:58:40 -0700
-Message-ID: <xmqqa8jr3p3z.fsf@gitster.mtv.corp.google.com>
+Subject: [PATCH] attr: update a stale comment on "struct match_attr"
+Date: Sun, 15 May 2016 15:59:08 -0700
+Message-ID: <xmqq60uf3p37.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 16 00:58:53 2016
+X-From: git-owner@vger.kernel.org Mon May 16 00:59:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b24zt-000781-7E
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 00:58:53 +0200
+	id 1b250F-0007UV-MQ
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 00:59:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752129AbcEOW6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2016 18:58:44 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50370 "EHLO
+	id S1752144AbcEOW7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2016 18:59:12 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62726 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751815AbcEOW6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 18:58:44 -0400
+	with ESMTP id S1751815AbcEOW7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 18:59:11 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0195819A54;
-	Sun, 15 May 2016 18:58:43 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F8951B95F;
+	Sun, 15 May 2016 18:59:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=j
-	HTwc8EZljHKfsAP1gXbFafzehU=; b=SMCZn2K/3+lbLtGPezzlmtiYVjgNdYxcF
-	KCB1P9HetomJLGD/3UBXX/beKb2Wt5D0orRboOom3IHH3Xl2OZJROBzG0mDhd3Jl
-	Nnd27y68xI9asnKbtxI69ElQwNYaKuS2EbQUaR26iCqMioQFxYAY0GALnU+0KZK5
-	6DvR4LEfhs=
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=4
+	0pufcDxfZrNvKnzZDmpiVe8JEM=; b=Yoc6IEsLXFzYVLGikX3lJSWpohalrr1jx
+	liX5Vqc+DXU82UxlDPOP1rDHm1ghRtM2wEbP/a7VPg7HInJ+r/9VDKGbYEdxmpsB
+	deD0dv7vRjG3yHDyLpmPx3st5BSCtrDJeKEiPyHUxNDnIaaZfwvAVhO8ALHJUgu/
+	BsbI7sb1mc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=TaL
-	qvq9ih1ijSeYepT6Nx+qzPkDVU1Luk1R+SW/F4meTckuqKFCNbeum3gDulXEuwd7
-	qVWDmA4ciTsFNm8gTw4xLvfygeLj6u8n1BJ4vaNm/C5IF/yeWGimAnqWiZ+jaW00
-	Hd8ejL+yvo+mT1mDi9ibeP3o33Zn0PoB9LMzFVtg=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EC3B819A53;
-	Sun, 15 May 2016 18:58:42 -0400 (EDT)
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=POt
+	7v0CmASKr2OQgxgd0vO0aV9TY1vQKYmM1heEnmQ+fw/ZFQq8DJHw8JoDsgY/K8MO
+	HXCqyvpyJd/SDgT5fj1CYCzn4yAHkxtQAjWW/rhRqd4Jk1DqfLlVNOhdw/IKXmaP
+	8H/H3f7GXyjqtrXtf1xB25VBHTZAcARO9PUYysV4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 183911B95E;
+	Sun, 15 May 2016 18:59:11 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6CCA619A51;
-	Sun, 15 May 2016 18:58:42 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 90BEE1B95D;
+	Sun, 15 May 2016 18:59:10 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 91F4BA76-1AF0-11E6-96B1-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A2BB8060-1AF0-11E6-8DE8-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294695>
 
+When 82dce998 (attr: more matching optimizations from .gitignore,
+2012-10-15) changed a pointer to a string "*pattern" into an
+embedded "struct pattern" in struct match_attr, it forgot to update
+the comment that describes the structure.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- attr.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ attr.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index 94b27f4..aac5c8f 100644
+index eec5d7d..94b27f4 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -183,6 +183,12 @@ static const char *parse_attr(const char *src, int lineno, const char *cp,
- 			return NULL;
- 		}
- 	} else {
-+		/*
-+		 * As this function is always called twice, once with
-+		 * e == NULL in the first pass and then e != NULL in
-+		 * the second pass, no need for invalid_attr_name()
-+		 * check here.
-+		 */
- 		if (*cp == '-' || *cp == '!') {
- 			e->setto = (*cp == '-') ? ATTR__FALSE : ATTR__UNSET;
- 			cp++;
+@@ -131,9 +131,8 @@ struct pattern {
+  * If is_macro is true, then u.attr is a pointer to the git_attr being
+  * defined.
+  *
+- * If is_macro is false, then u.pattern points at the filename pattern
+- * to which the rule applies.  (The memory pointed to is part of the
+- * memory block allocated for the match_attr instance.)
++ * If is_macro is false, then u.pat is the filename pattern to which the
++ * rule applies.
+  *
+  * In either case, num_attr is the number of attributes affected by
+  * this rule, and state is an array listing them.  The attributes are
 -- 
 2.8.2-748-gfb85f76
