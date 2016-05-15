@@ -1,132 +1,89 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [GSOC Update] Week 2
-Date: Mon, 16 May 2016 01:00:32 +0530
-Message-ID: <CAFZEwPNMuL8hYgUNNWWU7EDmDDWF5HX7QLtTTjvvePjboEqASQ@mail.gmail.com>
-References: <1462706822-5189-1-git-send-email-pranit.bauva@gmail.com>
-	<1463334359-14033-1-git-send-email-pranit.bauva@gmail.com>
-	<xmqqoa875e7m.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH 0/4] pathspec labels [WAS: submodule groups]
+Date: Sun, 15 May 2016 12:33:04 -0700
+Message-ID: <xmqqfutj5d73.fsf@gitster.mtv.corp.google.com>
+References: <20160513001936.7623-1-sbeller@google.com>
+	<CACsJy8BK-u2VV3kkq3ANHCanYqMwphqgxZmooQfewA_J7e8MPw@mail.gmail.com>
+	<xmqq60uf6v5d.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Andrew Ardill <andrew.ardill@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 15 21:30:46 2016
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 15 21:33:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b21kQ-0005n0-Vm
-	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 21:30:43 +0200
+	id 1b21ms-00085V-L6
+	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 21:33:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751220AbcEOTae (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2016 15:30:34 -0400
-Received: from mail-yw0-f179.google.com ([209.85.161.179]:33558 "EHLO
-	mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751139AbcEOTad (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 15:30:33 -0400
-Received: by mail-yw0-f179.google.com with SMTP id x194so10690021ywd.0
-        for <git@vger.kernel.org>; Sun, 15 May 2016 12:30:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=6E2nBhtizHK5tejiq0C2ViPXayh7pA9vyArZBCh9+R8=;
-        b=G6XmlBVjErevA6M+7RNkjziN5T9OQc+qi8dW0el3Mim77Ncjg7G7Lr0DHTjIZS4YBb
-         LaZ99g3s+nigMkhzdqpZb0DJE5LNZ+VX382yyIsUawB1qSRFCsG6SPElREps7XLtZa5J
-         6oCpLGtV+CbGkJFtURtlieEG9WDdhLoWMm4Uo3SLjI5IJNbju1eaySTGF9DMFLQpWlJo
-         AZmhYt8zoqEfu1ASVJ3epsPpVN+l92tuAvCrCP5vxnxc4glFj8T6Yop9abqJ6scoN/wz
-         QqSC53icX4KGUwTgemW/+1qNMvNsfb9q0jk4i8cnuufhGcF5REHu2zU7qrxU5nhvYrHD
-         cFxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=6E2nBhtizHK5tejiq0C2ViPXayh7pA9vyArZBCh9+R8=;
-        b=Ji4nk8yxg8jXzodY0aizx3pA+feA6euXmtYAeO2b2tv40opjviCbnHfQIjgEr3F/lG
-         yiTcUXHMbL2wXBNGfDCEllYznInGcWKWKJpF09WstpRp36UG4z6ogHVbZeOu1JUaLrrQ
-         eI5GHzwQNI3LEybOKasUwiKGqWBypd5CAzoesZ8xNM77Kd7E0NblGhyNMD4NDqsMjR3I
-         aI4JRGCYG5187NPMwBGOjeP3c7/JybfIThc7HhxSCmPHU2i6og+1XcugbSutrYqPCQf5
-         RuGeaaQELtIQksS6LJRRaeXFkX+RuzAQqgyTeT1nxwBMMSC6RkDkZVpj67diDHGDRkRq
-         51EA==
-X-Gm-Message-State: AOPr4FVtEVeeqGHmnAh3H3BFkm3Qf2UBgJWmWzinCUgZazVo8EOXBz+eT/0/4HwA1ye7vZUQagl28bjUhXaYOQ==
-X-Received: by 10.37.118.69 with SMTP id r66mr12562718ybc.80.1463340632477;
- Sun, 15 May 2016 12:30:32 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Sun, 15 May 2016 12:30:32 -0700 (PDT)
-In-Reply-To: <xmqqoa875e7m.fsf@gitster.mtv.corp.google.com>
+	id S1751618AbcEOTdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2016 15:33:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54865 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751139AbcEOTdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 15:33:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AED418544;
+	Sun, 15 May 2016 15:33:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=76IPPOx8UE6NUXh8w1gr7OB/x5o=; b=JUlZWt
+	OajFVJZJzQleWc3/s0RTl8Po4fEHGi75TvUCRVRXNpH72Eev029olRaKEKuVyuWf
+	roa4wVoX7LDP02YgoVz4Ua3dmp5FvXlnQ88BYrpqdt9zXP5wHcASIRUqUSTPsdiR
+	nAlVNotE3SnnRuYGiiQE1u+AD6rbASyBsQhhM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=L3Sgin7SrACx8mD2rCA8OF1VQQBgUWiz
+	01WmHFuP7MsMkhOEy2vRu9Pe+VQ/NRLChP/p0KAgB/4XCLptUxh2Ug85ifgrJ4VJ
+	wFrjUCH/OP6wGaHg6HsLMzncO578Per/OEr8RBOMfrvTUqD4h0QAyqpRriSpcme1
+	p+E0Ac7Wv4Y=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0145A18541;
+	Sun, 15 May 2016 15:33:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 71B921853D;
+	Sun, 15 May 2016 15:33:06 -0400 (EDT)
+In-Reply-To: <xmqq60uf6v5d.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Sun, 15 May 2016 11:19:58 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D9236F9A-1AD3-11E6-9ACB-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294681>
 
-Hey Junio,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Mon, May 16, 2016 at 12:41 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
->>    is available for testing on the pu branch. I am encouraging people to
->>    test it and provide useful comments.
+>> Instead of putting everything in under the same attribute name
+>> "label", make one attribute per label? Would this work?
+>>
+>> *.[ch] c-group code-group
 >
-> Do not encourage people to "TEST".  In general, do not put too much
-> weight on testing.  The result would only measure a small portion of
-> what you wrote in the code, i.e. what you covered with the addition
-> to the test suite, plus whatever tests we already had.
->
-> Instead, ask people to review.  A new code passing the testsuite is
-> a minimum requirement, and that is far from sufficient.
+> The attribute subsystem expects that there will not be unbounded
+> large number of attributes, so this is not a good direction to go.
 
-Okay. Will keep this in mind.
+Having said that, I do not mind too much if it turns out that it is
+necessary to use an unbounded set of random attributes to solve a
+specific problem, if the use case is good.
 
->>  * I have also converted bisect_log() and bisect_voc() whose patches[3] are
->>    sent to the list. Junio is yet to pick these up.
->
-> Again, my picking them up is not a success criteria (and certainly
-> being on 'pu' does not count for anything--it is nothing more than
-> "Junio saw them on the list and bookmarked the messages".
->
-> You should worry more about people not commenting nor reviewing them
-> than me picking them up (which would typically come later).
+But even then, in order to avoid confusion and name clashes, I'd
+prefer to see more like
 
-Sure.
+	*.[ch] group-c group-code
 
->>  * The main part (I think) was that I read about the method's which handled the
->>    refs. It was an interesting read though I did not read upon the actual
->>    implementations of those, I mainly covered "What does the method do?" and
->>    "How to use the method in my code?". git-grep is my best friend for this.
->
-> Yup.
->
-> You would not be calling for-each-ref from a C rewrite of
-> bisect-clean-state.  Instead you would likely be calling
-> for_each_ref_in() to iterate over the existing refs/bisect/* refs,
-> recording their refname and objectname from the callback to
-> something like string_list, and then after for_each_ref_in()
-> finishes, iterate over the resulting string_list and running
-> delete_ref() on them.
+that is matched by
 
-Actually I was seeing how for-each-ref called filter_ref() and
-planning to use that. But for_each_ref_in() seems much better. Thanks.
-I had planned on using delete_ref().
+	git cmd ':(group:c code)
 
-> And reading the implementation of for-each-ref and update-ref is a
-> good way to find the need to use these API calls and how they are
-> used.  API docs are your second step.
-
-Thanks. I have read the man pages as well as some parts of the
-implementation (not the core details). API docs contain little
-information about ref handling though. I can try trying writing some
-documentation after GSoC project once I am comfortable with ref
-handling.
-
-> Overall, good progress for an early week.
-
-Thanks!
-
-Regards,
-Pranit Bauva
-
-> Thanks.
+i.e. reserve a single prefix that is not and will not be used for
+other purposes.
