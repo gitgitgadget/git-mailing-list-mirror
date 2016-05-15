@@ -1,122 +1,118 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v6 02/17] ref-filter: include reference to 'used_atom' within 'atom_value'
-Date: Sun, 15 May 2016 16:15:18 +0530
-Message-ID: <1463309133-14503-3-git-send-email-Karthik.188@gmail.com>
-References: <1463309133-14503-1-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v6 00/17] Port branch.c to use ref-filter's printing options
+Date: Sun, 15 May 2016 16:15:16 +0530
+Message-ID: <1463309133-14503-1-git-send-email-Karthik.188@gmail.com>
 Cc: gitster@pobox.com, peff@peff.net,
 	Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 15 12:45:51 2016
+X-From: git-owner@vger.kernel.org Sun May 15 12:45:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1tYS-0003Ln-Uv
-	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 12:45:49 +0200
+	id 1b1tYP-0003Ln-A2
+	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 12:45:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754139AbcEOKpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2016 06:45:43 -0400
-Received: from mail-pa0-f68.google.com ([209.85.220.68]:33555 "EHLO
-	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751953AbcEOKpl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 06:45:41 -0400
-Received: by mail-pa0-f68.google.com with SMTP id gh9so12080659pac.0
-        for <git@vger.kernel.org>; Sun, 15 May 2016 03:45:41 -0700 (PDT)
+	id S1754094AbcEOKpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2016 06:45:35 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:34901 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751953AbcEOKpe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 06:45:34 -0400
+Received: by mail-pa0-f66.google.com with SMTP id zy2so14275801pac.2
+        for <git@vger.kernel.org>; Sun, 15 May 2016 03:45:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2t/YJLE9sGP56wG58cl2aU4NlhkXKt6N7CHFJAGNQDM=;
-        b=JnhPy+XKUWk57Y3PW/sSvab5Rbd57QgjDjEmfi73IO/JQqrg2C+B69OT44B6pEbD/y
-         uXPnD1fO8HqxIbie/FSrlF6OOB9x9MaZxfjnHQlIYfw5DMQbeWCmuJuT8+0vRgAO8Xld
-         Pl4+Yhxn8WM8tdbPy8TtkZuSlgrQwg329rbPMbU1uMTuyL+S43cy2ARStvGt9cRVe/0V
-         Q8iTLlursY3CHKrlkns+78JBOFmFGhYRpTHyDfGM+g6//kYPBSbBhGjK7DJgCrgD3xfT
-         uzUFgDI8gci/AcfT19omEBU5TKQpef7H+5xf7IjLyFgCTA/NNOgltHPJkHQwJ8EQjfY3
-         HifQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=n2k9RTQKAXiTCA+ZxdHl9aL2s6ib5y1mdhZgpMMfgdM=;
+        b=N92JkQ/BXp1D+2zojZfAANNHyy0pgHWZ2xetdPGPNezc36bpFL2Xlj8pTsCwJeUIn5
+         uxb0g/0xKwbjlNdRENrfA5JpGRtGreS2nx2gFwlRilSUzTVNvRJ+03ssHr6mXFemBkif
+         kt4RphSFiiu1vE9mHOR2Bu4XATBKx7ym9r1pNn3TymVJ/D94GunkoL1ZxRiFmCbP1T/7
+         83gSgaM68v4Na0nUQkWHO70T3hw9+pvsGlROT8Tc890ax2Syb2+1fShloTinugAKUyCy
+         wt4Gub6Ayy7L5e3i0TnCbjJh7mOwStWWLaI5TtA6L1BGEgmCeFAmHbLM6XRKrNo1q1Vm
+         7UdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=2t/YJLE9sGP56wG58cl2aU4NlhkXKt6N7CHFJAGNQDM=;
-        b=hdbnS78WQAN4BINFDHPQERxdACCo1FodzUbuQpMDL7xsP0WkY9TO/1rXIhEdULdoL/
-         rBb05Lcu592DVNJzAF+Eg4kYxhtgMdXMH5GBgQwxcdGYDH/Onb69zS1T6GDvLVYb4LDY
-         j27mboRMquHKfsF4xJAS2zuVqwOZXyKtA5glMXoyCc+pO3iJRzpAOmXHSbABHt34Eoev
-         qvhEas4shtXnaoyZgqm3B37s0hSPHFmMlyK3RddAZWPSCfFgFQ9/6on28N1nwnUB45P5
-         MvVSs22Vs/lofv+m/mVxr1pwDJ/4ggg1Ymx/WKvIzx761T21AhG3+uq0scM/hyklWlMY
-         Fatg==
-X-Gm-Message-State: AOPr4FXchHWgOfxDMXSQ8oaula1GfeHyz7h2yW5gDBkMTPNQAkTAFS/1EqvC923s5INg6Q==
-X-Received: by 10.66.246.165 with SMTP id xx5mr36770461pac.87.1463309140577;
-        Sun, 15 May 2016 03:45:40 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=n2k9RTQKAXiTCA+ZxdHl9aL2s6ib5y1mdhZgpMMfgdM=;
+        b=V+Pd9vrtXItgASe1oF/ufgFCTlnmYmjzm/Li3ZQlv7/wQM30VadBS18VsuQHtab2vd
+         gY3OM/d5pxIgTt05AuW12Dmo+xPMUjMW86MDsUD1+wrRPlFlUiUONWzjlWcBq6ic0Hsk
+         UJKhRfnl+2LW3WaqqA6KoIQsRT4+oMTOWFIWNufegL4FSt2NtTIQFZX0x4KX0qzGwNlS
+         2uQzKcAtua1Yq5dieXOEX42VqXNYsMXuVM+P2uxeZ1b2+MzjazgkTA0WyVL0v1cDWag6
+         /+mbAaX8s+Lklg7lUNiUGu7w0U2UvEJ3Dm1UOO1e9LgGeJH0odSvxKRMgHDygJ4JagI5
+         V+wg==
+X-Gm-Message-State: AOPr4FW6LdQFYC/eEB5uEDKpELjfROoMovEBrFHF8kXhNKcUBYiGlsiB3uDWV4fFn1owPw==
+X-Received: by 10.66.221.167 with SMTP id qf7mr36717998pac.94.1463309133343;
+        Sun, 15 May 2016 03:45:33 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.133.65])
-        by smtp.gmail.com with ESMTPSA id 71sm39866747pfy.32.2016.05.15.03.45.37
+        by smtp.gmail.com with ESMTPSA id 71sm39866747pfy.32.2016.05.15.03.45.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 15 May 2016 03:45:39 -0700 (PDT)
+        Sun, 15 May 2016 03:45:32 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.8.2
-In-Reply-To: <1463309133-14503-1-git-send-email-Karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294650>
 
-Ensure that each 'atom_value' has a reference to its corresponding
-'used_atom'. This let's us use values within 'used_atom' in the
-'handler' function.
+This is part of unification of the commands 'git tag -l, git branch -l
+and git for-each-ref'. This ports over branch.c to use ref-filter's
+printing options.
 
-Hence we can get the %(align) atom's parameters directly from the
-'used_atom' therefore removing the necessity of passing %(align) atom's
-parameters to 'atom_value'.
+Initially posted here: $(gmane/279226). It was decided that this series
+would follow up after refactoring ref-filter parsing mechanism, which
+is now merged into master (9606218b32344c5c756f7c29349d3845ef60b80c).
 
-This also acts as a preparatory patch for the upcoming patch where we
-introduce %(if:equals=) and %(if:notequals=).
+v1 can be found here: $(gmane/288342)
+v2 can be found here: $(gmane/288863)
+v3 can be found here: $(gmane/290299)
+v4 can be found here: $(gmane/291106)
+v5b can be found here: $(gmane/292467)
 
-Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
----
- ref-filter.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+Changes in this version:
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 41e73f0..12e646c 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -230,11 +230,9 @@ struct ref_formatting_state {
- 
- struct atom_value {
- 	const char *s;
--	union {
--		struct align align;
--	} u;
- 	void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
- 	unsigned long ul; /* used for sorting when not FIELD_STR */
-+	struct used_atom *atom;
- };
- 
- /*
-@@ -370,7 +368,7 @@ static void align_atom_handler(struct atom_value *atomv, struct ref_formatting_s
- 	push_stack_element(&state->stack);
- 	new = state->stack;
- 	new->at_end = end_align_handler;
--	new->at_end_data = &atomv->u.align;
-+	new->at_end_data = &atomv->atom->u.align;
- }
- 
- static void if_then_else_handler(struct ref_formatting_stack **stack)
-@@ -1069,6 +1067,7 @@ static void populate_value(struct ref_array_item *ref)
- 		struct branch *branch = NULL;
- 
- 		v->handler = append_atom;
-+		v->atom = atom;
- 
- 		if (*name == '*') {
- 			deref = 1;
-@@ -1133,7 +1132,6 @@ static void populate_value(struct ref_array_item *ref)
- 				v->s = " ";
- 			continue;
- 		} else if (starts_with(name, "align")) {
--			v->u.align = atom->u.align;
- 			v->handler = align_atom_handler;
- 			continue;
- 		} else if (!strcmp(name, "end")) {
+1. Rebased on top of f307218 (t6302: simplify non-gpg cases). This
+patch ensures that we only use signed tags when GPG is installed and
+effectively gets rid of the bug introduced by 01/17 (ref-filter:
+implement %(if), %(then), and %(else) atoms)[1].
+
+[1]: $(gmane/293901)
+
+Karthik Nayak (17):
+  ref-filter: implement %(if), %(then), and %(else) atoms
+  ref-filter: include reference to 'used_atom' within 'atom_value'
+  ref-filter: implement %(if:equals=<string>) and
+    %(if:notequals=<string>)
+  ref-filter: modify "%(objectname:short)" to take length
+  ref-filter: move get_head_description() from branch.c
+  ref-filter: introduce format_ref_array_item()
+  ref-filter: make %(upstream:track) prints "[gone]" for invalid
+    upstreams
+  ref-filter: add support for %(upstream:track,nobracket)
+  ref-filter: make "%(symref)" atom work with the ':short' modifier
+  ref-filter: introduce refname_atom_parser_internal()
+  ref-filter: introduce symref_atom_parser() and refname_atom_parser()
+  ref-filter: make remote_ref_atom_parser() use
+    refname_atom_parser_internal()
+  ref-filter: add `:dir` and `:base` options for ref printing atoms
+  ref-filter: allow porcelain to translate messages in the output
+  branch, tag: use porcelain output
+  branch: use ref-filter printing APIs
+  branch: implement '--format' option
+
+ Documentation/git-branch.txt       |   7 +-
+ Documentation/git-for-each-ref.txt |  87 +++++--
+ builtin/branch.c                   | 277 +++++++---------------
+ builtin/tag.c                      |   2 +
+ ref-filter.c                       | 456 +++++++++++++++++++++++++++++++------
+ ref-filter.h                       |   7 +
+ t/t3203-branch-output.sh           |  16 +-
+ t/t6040-tracking-info.sh           |   2 +-
+ t/t6300-for-each-ref.sh            |  73 +++++-
+ t/t6302-for-each-ref-filter.sh     |  94 ++++++++
+ 10 files changed, 726 insertions(+), 295 deletions(-)
+
 -- 
 2.8.2
