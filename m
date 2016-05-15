@@ -1,69 +1,104 @@
-From: tboegi@web.de
-Subject: [PATCH/RFC v1 0/1] Quickfix ?No duplicate CRLF rewrite warnings on commit
-Date: Sun, 15 May 2016 08:08:20 +0200
-Message-ID: <1463292500-12521-1-git-send-email-tboegi@web.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/RFC v1 1/1] No duplicate CRLF rewrite warnings on commit
+Date: Sun, 15 May 2016 02:15:15 -0400
+Message-ID: <CAPig+cTrijGb5C1DRYTYtas0Rp5Fb34KmkxW5Fqb-T5-bdyD9Q@mail.gmail.com>
 References: <20160513134953.GE2345@dinwoodie.org>
+	<1463292503-12559-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: adam@dinwoodie.org,
-	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 15 08:03:18 2016
+Cc: Git List <git@vger.kernel.org>, adam@dinwoodie.org
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun May 15 08:15:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1p91-00046i-8Z
-	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 08:03:15 +0200
+	id 1b1pKn-0006q5-1i
+	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 08:15:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751988AbcEOGDH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 May 2016 02:03:07 -0400
-Received: from mout.web.de ([212.227.15.3]:51137 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751871AbcEOGDF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 02:03:05 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0LpOOj-1bY7YE1pqv-00f9y0; Sun, 15 May 2016 08:02:59
- +0200
-X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
-In-Reply-To: <20160513134953.GE2345@dinwoodie.org>
-X-Provags-ID: V03:K0:JCRKEb14pGEyImjOYVc7A81NT+9prXeOZp5iWnOnJbO0NZuooo5
- 5AA+Mw48LqIVPxZ9FKKzMOK4VPxLDbscrahea06jp7Y7d8mE8KE+pC3DALYQ81yLKcZIj3f
- hvy/q1JIfhqfLYCzL6bnzuxqzbsnusI/fgKzK0smCx3T14Q4GTdPXZ2sjH8ezytIzlwpys2
- uGIFd51eulL3Tj80Hbo3A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dU+hIUuRS4I=:G9I/Xz2km6SFAgr5g515Vv
- c44EOIdjZcUVXfwirvYTEX10JsoxhBRfhXc0Z87rye28AS++tnNehS7FAPrfN/ANydPANn8tp
- cO/7Qu+XOD31SFGKh9+LTJ4VC7W+g7g/1rh3S6bNT6Jadxhx5l4MhBI2FO9H17LPzN56K+VvA
- AF0yc+h7NtHmC2nnKfkQXB5wikgEnfO8dzKGhZmw1ascAGnuMDufvelLlL3CXw9egVLTAuwKl
- IHk8oG8hErPWHjSfjj8x0JCHqGXLKyUicM6tUpNk8E6DlYAkdLQT6ppVQapIzbRh7Rh903raU
- 3qCDc2AFvdi/itp13Hu3leFNJdVY9Ede5mTs5l0LO4RjGjsGx7Uhhb+wj1a1Et/CUy3/QV/Iw
- b7K1fi9I2Ol8rgCJl9Gv2UJIhTBZ84Mg7JIegD6VQsCzqGWraq9UBdZIk1Cq/pfXlcF752qnP
- 81mh009nyAlhv2IRAuW8gciJ6Gdxy3yFsigpVEhp85jvJ9HexNMcchDoduRofVaUTsRZv81a6
- 4deHS2nzvh8i1ERJbjUt/7TZVqrLvpxtkPziuB5cJZ27EwzijsPHIlEtMQcsPmbtrpyvGi4Iw
- oSjDqO1siAE5RS40GjWw2A/YrSzVbS1oBDnMVttTuC1DvHha3CXa1nsMeyucwcdzQSlYMJXXk
- eIjjINbg9QVpObVg6rUPsqloyi1iGPegEtinSBAoUsXQ6CUj+HGRi9RLUZm+fyxHabEGyUJCk
- xTPVTrp+R07XlyTbWw3MQETkGGGO6hfwouRRpLimWLePB5MNUHqA95nxOdmtQ4t3pQmGSG4Z 
+	id S1752241AbcEOGPR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 May 2016 02:15:17 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:34111 "EHLO
+	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751553AbcEOGPQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 May 2016 02:15:16 -0400
+Received: by mail-io0-f180.google.com with SMTP id 190so177468406iow.1
+        for <git@vger.kernel.org>; Sat, 14 May 2016 23:15:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=3LQNch123whO/5zwY3vl7zYxLF+W7Ejnhfrk1P5Y4kI=;
+        b=Hrj/S6T1tUkJvxBBZyxqJAG5Q4TT9pTXa01CQFQ6NyPKP4i7PdwSG2Oi+Y/x/M3Vmz
+         kduaiKhJvQimShPVUeVWI5uTYhXI+D7lUkHML8md1nQumSHHu6Gcz/+xU8UfWlL29rcS
+         DYfb586MLTop5QmXDcQ8eCYg9DB9HK5oLBFq0F8d5anuD8apfTkLrUCXDkXdRbIUto+X
+         1wrqcw7EOPUkzOb0aQHiQtnUn8qxaoN7fKChFH/DBUclzFkLMsJlQjJdKqJAqtmaoTEW
+         BtGNupk29Z0KEIZXKklc6uzDH6oNO9hV67cIUmCNBi4hfupAsdgOi0ngTlRbJfA0q/yr
+         OKeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=3LQNch123whO/5zwY3vl7zYxLF+W7Ejnhfrk1P5Y4kI=;
+        b=gKow4Xg7uEaU9P4RuroC6cL+15nJdLoS+d/DUzqU+f76z9JvffWX22g4EJ5zc//iME
+         bnYkZ7t+E1glIAwwTlKW1Ij3JTeZ6I/KQGNojNvXpEYqA/JrZfj5Ixhpj7qp0Aolx/0/
+         BdBQC+YehBJ3sfi57wJvhP0gK+hZNzNZSwnr02T4D6UsCTvriuadLXEyzrgIpSWLvDXE
+         Qmc1pScTVGlDH1HVBtOZyoM+SyG3XDxTASNkwg1ZVGGslSLoTFS6FNL/MJG+4Sg8IKvF
+         M3O+6LxqMyTMHwHhLjpJTP3W1JTwQzQtDgO03jvNJ9LaFfTb5LZFqJAHi2o6Dsv3ESom
+         KnUg==
+X-Gm-Message-State: AOPr4FXsYQLEk7DklbrI+a3aU0K54h03dy5djV0AwkAOtbb+9xp9Kx7ZQdq5/UvtBq8qpfTtQ7SUSfmhi1jk/Q==
+X-Received: by 10.107.47.37 with SMTP id j37mr15468242ioo.168.1463292915443;
+ Sat, 14 May 2016 23:15:15 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Sat, 14 May 2016 23:15:15 -0700 (PDT)
+In-Reply-To: <1463292503-12559-1-git-send-email-tboegi@web.de>
+X-Google-Sender-Auth: 7AX9Q8o5xI7nhswsjNby8K-8xW0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294636>
 
-=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
+On Sun, May 15, 2016 at 2:08 AM,  <tboegi@web.de> wrote:
+> If .gitattributes are used to enable CRLF->LF rewriting,
+> then commiting a file that would have its line endings rewritten,
+> the "CRLF will be replaced by LF" warning is printed 2 times.
+> A user expects it to be printed only once.
+> The automatic rename detection by Git runs the conversion twice,
+> suppress the warning in the second run.
+>
+> Reported-By: Adam Dinwoodie <adam@dinwoodie.org>
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> ---
+> diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
+> @@ -86,6 +86,20 @@ test_expect_success 'safecrlf: print warning only =
+once' '
+> +test_expect_success 'safecrlf: print warning only once on commit' '
+> +
+> +       git config core.autocrlf input &&
+> +       git config core.safecrlf warn &&
+> +
+> +       for w in I am all LF; do echo $w; done >doublewarn2 &&
 
-It may be that this patch only covers over a sympton, rather
-than fixing the root cause.
+I would typically say something about how you could instead use:
 
-Torsten B=C3=B6gershausen (1):
-  No duplicate CRLF rewrite warnings on commit
+    test_write_lines I am all LF >doublewarn2 &&
 
- diff.c           |  2 ++
- diffcore-break.c |  6 ++++--
- diffcore.h       |  1 +
- t/t0020-crlf.sh  | 14 ++++++++++++++
- 4 files changed, 21 insertions(+), 2 deletions(-)
+but since you're just mimicking existing style in this script, I won't
+mention it.
 
---=20
-2.0.0.rc1.6318.g0c2c796
+> +       git add doublewarn2 &&
+> +       git commit -m "nowarn" &&
+> +       for w in Oh here is CRLFQ in text; do echo $w; done | q_to_cr=
+ >doublewarn2 &&
+
+Likewise; note my silence.
+
+> +       git add doublewarn2 2>&1 &&
+> +       git commit -m Message 2>&1 | grep "CRLF will be replaced by L=
+=46" >actual &&
+> +       echo "warning: CRLF will be replaced by LF in doublewarn2." >=
+expected &&
+> +       test_cmp expected actual
+> +'
