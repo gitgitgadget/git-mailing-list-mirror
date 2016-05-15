@@ -1,145 +1,204 @@
-From: tboegi@web.de
-Subject: [PATCH v2 3/3] t6038; use crlf on all platforms
-Date: Sun, 15 May 2016 15:02:30 +0200
-Message-ID: <1463317350-2749-1-git-send-email-tboegi@web.de>
-References: <20160513134953.GE2345@dinwoodie.org>
+From: Noam Postavsky <npostavs@users.sourceforge.net>
+Subject: [BUG] A part of an edge from an octopus merge gets colored, even with --color=never
+Date: Sun, 15 May 2016 09:05:25 -0400
+Message-ID: <CAM-tV-_Easz+HA0GX0YkY4FZ2LithQy0+omq64D-OoHKkRe55A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Content-Type: multipart/mixed; boundary=001a113ceaec4854ae0532e12911
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 15 14:57:40 2016
+X-From: git-owner@vger.kernel.org Sun May 15 15:05:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1vbt-00053D-9P
-	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 14:57:29 +0200
+	id 1b1vji-0004CZ-EC
+	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 15:05:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754273AbcEOM5Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 May 2016 08:57:25 -0400
-Received: from mout.web.de ([212.227.15.14]:65233 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754227AbcEOM5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 08:57:24 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0MJkvs-1b324U1b1w-0017cP; Sun, 15 May 2016 14:57:22
- +0200
-X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
-In-Reply-To: <20160513134953.GE2345@dinwoodie.org>
-X-Provags-ID: V03:K0:FlAI8Ai58QHK08mLHmulzq3fOFllLFrKSr6XQul9xhPWwG4II3m
- WObpVumIDBQktKcK2DdNGaRI7jRi1GGrnxyeQMY8VIcDJwhIP8OxJFfTZahWElNft6WpF+N
- seFtQ9myc5f4JatvFRO1edOOiuwOoN68GqBtk51y4Z5XA6Nn7RsrqfzVlZtFmQNDJXxOHHj
- Z8vn8oqljNHi6J2aY0EEg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BnUJQLRs0xk=:H+icYdPx5mDATNa4g9St2G
- X5+9guj9oanVlijI6SqCKtic/eoabHNGy/mYLX/yDLiGyH9s0End+3mWBUqPlsXsVDtvUNLDV
- vl3rRPBwU8Jz3g6S9lomC9DwJSTLSf9TgRv8Gn0guD+QXFS2LRT3KChpPp5Kbmp8i8xAikRy5
- VBnJ3rRhRKXHZi6Jmu5iDvA/7vGPqD3UcXOBf/+vl42/epmFM5oorHuuu5l5PQcb+7b186IcP
- GtwvxXaZx6I5MqdJ+UZ5XMJ6tBck0GhbRb65pnL4iYe6copJSsvfIYoXxqMLX7eCRAYieFfgw
- eKa2mZXuLYli6vj4w/2bRe9czf84PvF85dt4hvGVrOJ6f2eL9r39gyNODEbd2LedK44gbGm2O
- xNxeJnCZs5DovAVgDtr+MgnQw1Ha/0bjny7AqdQfslMieahTsJUvOIE9AJfz/kVNaZP4sQwYk
- /g1Jqlppa6F8VkqBQMzQVaDhEArX05079zmoJ6EKMNepjs4evchEFjVLLa+z8XZSI2KbsVfhm
- t8++TMMyiJI0Jpt8VrYTBkXuY6AM3aXZuZNN971vpeyrRcTbD1qJp3nP+X9cSpHCEbNXnpWYZ
- BTBzNekvgmD46zUVpjGBMQ0cBp3nvDJ3hM/ZB4qianDUOmcoUvEwsmVFnYz9JeLwF9eZOWWDl
- DJmhL95dr2FbklxPyKPT/55aeA2JyqqyaNgiX2TxtTZwz3LP7u5oPuvKV691YPwy+vS11uEAN
- jGIS5+qjh78hwe++w/+RpAk8T68LnJvgW4LmT1Q0/+CwK6xaOi24uE3RpyL35zzgfXhJsx// 
+	id S1754180AbcEONF1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2016 09:05:27 -0400
+Received: from mail-oi0-f41.google.com ([209.85.218.41]:36779 "EHLO
+	mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752420AbcEONF0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 09:05:26 -0400
+Received: by mail-oi0-f41.google.com with SMTP id x201so233957454oif.3
+        for <git@vger.kernel.org>; Sun, 15 May 2016 06:05:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to;
+        bh=7ZGVFdAv5RqaDBCchjZL2s63cbI2G0ojsGgA0wUtUyg=;
+        b=r3kurLJvI5PZ5lOwUb7rH3sNndp54Aeo8DKwuCd0YFwhCE+xaneTJglGfBi7u2yYGH
+         1Mvr83vneBWidKOOLlARuCVWeNJGbWH8DaFcHttgntP4I4AoN3zm3/TJjybsbOlDnkaD
+         7f+6qo2msFEkceQT///d4UexujW3vgVR6W5x/sB0VuA/UIhiRy/mXTPucdgPNf9ueJ0v
+         T20yhoqUM9uwAGrJvrXa56BeG4bNnSytPtNK7BQU5aW/YyS9wJFzB74pw8hY4EmqaT2A
+         EwP27jlp8j6l4NSgbMoykqPe94y0MP2syz+a0qeNiwVc08lJNKlRiHflQqcZgJUY9xBn
+         KcMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
+         :to;
+        bh=7ZGVFdAv5RqaDBCchjZL2s63cbI2G0ojsGgA0wUtUyg=;
+        b=QPkzQmZp2QuKoDDQKBwZ0hIml32un+G/KIHEB1WBL9Uhlx2UIBL2Yd0DJww+xo3YVq
+         yY3Avk4sF0EQ3kJo2cVlu/KWoQ9ffJX7xfNTDzihOKO+HgYOgUmEByATjJph+UuU3kS5
+         g9u735a6cZ8xqrGRuKNYNP80nrXIqHYKGq16sPfG8QILOaaKoc5vs0OzV56zRl9e/t+t
+         aUUiya5m4WSKDldP+1YaDzS5hrEWeVojzY0OruRP2OOLOrNrwWC2bfNsMW5CZUdbO1E9
+         RV+RJ+y6/n67FYlnlXgonhCzb6yKq3xcppIJvtNF84B3zxQH5vjQcDK7CTE7Zc0/zJSb
+         Utog==
+X-Gm-Message-State: AOPr4FVKMQO5Eu59nKXobErv2xvnMY6c8C+UVj8QbmCpksgsxUWe5lwF8XNjHmZstwaAvgKJkRQ0mM/B+MhibA==
+X-Received: by 10.157.51.12 with SMTP id f12mr8905304otc.124.1463317525178;
+ Sun, 15 May 2016 06:05:25 -0700 (PDT)
+Received: by 10.157.45.138 with HTTP; Sun, 15 May 2016 06:05:25 -0700 (PDT)
+X-Google-Sender-Auth: wSMgAOsdCFz_j2pcjwKQq9U9kfA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294671>
 
-=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
+--001a113ceaec4854ae0532e12911
+Content-Type: text/plain; charset=UTF-8
 
-t6038 uses different code, dependig if NATIVE_CRLF is set ot not.
-When the native line endings are LF, merge.renormalize is not tested ve=
-ry well.
-Change the test to always use CRLF by setting core.eol=3Dcrlf.
----
- t/t6038-merge-text-auto.sh | 37 +++++++++++--------------------------
- 1 file changed, 11 insertions(+), 26 deletions(-)
+With a certain topology involving an octopus merge, git log --graph
+--oneline --all --color=never produces output which includes some ANSI
+escape code coloring. Attached is a script to reproduce the problem
+(creates a git repository in subdir log-format-test), along with
+sample graph and valgrind output (indicates some unitialialized memory
+access).
 
-diff --git a/t/t6038-merge-text-auto.sh b/t/t6038-merge-text-auto.sh
-index 85c10b0..4dc8c1a 100755
---- a/t/t6038-merge-text-auto.sh
-+++ b/t/t6038-merge-text-auto.sh
-@@ -18,6 +18,7 @@ test_have_prereq SED_STRIPS_CR && SED_OPTIONS=3D-b
-=20
- test_expect_success setup '
- 	git config core.autocrlf false &&
-+	git config core.eol crlf &&
-=20
- 	echo first line | append_cr >file &&
- 	echo first line >control_file &&
-@@ -72,10 +73,8 @@ test_expect_success 'Merge after setting text=3Dauto=
-' '
- 	same line
- 	EOF
-=20
--	if test_have_prereq NATIVE_CRLF; then
--		append_cr <expected >expected.temp &&
--		mv expected.temp expected
--	fi &&
-+	append_cr <expected >expected.temp &&
-+	mv expected.temp expected &&
- 	git config merge.renormalize true &&
- 	git rm -fr . &&
- 	rm -f .gitattributes &&
-@@ -90,10 +89,8 @@ test_expect_success 'Merge addition of text=3Dauto' =
-'
- 	same line
- 	EOF
-=20
--	if test_have_prereq NATIVE_CRLF; then
--		append_cr <expected >expected.temp &&
--		mv expected.temp expected
--	fi &&
-+	append_cr <expected >expected.temp &&
-+	mv expected.temp expected &&
- 	git config merge.renormalize true &&
- 	git rm -fr . &&
- 	rm -f .gitattributes &&
-@@ -104,15 +101,9 @@ test_expect_success 'Merge addition of text=3Dauto=
-' '
-=20
- test_expect_success 'Detect CRLF/LF conflict after setting text=3Dauto=
-' '
- 	echo "<<<<<<<" >expected &&
--	if test_have_prereq NATIVE_CRLF; then
--		echo first line | append_cr >>expected &&
--		echo same line | append_cr >>expected &&
--		echo =3D=3D=3D=3D=3D=3D=3D | append_cr >>expected
--	else
--		echo first line >>expected &&
--		echo same line >>expected &&
--		echo =3D=3D=3D=3D=3D=3D=3D >>expected
--	fi &&
-+	echo first line | append_cr >>expected &&
-+	echo same line | append_cr >>expected &&
-+	echo =3D=3D=3D=3D=3D=3D=3D | append_cr >>expected &&
- 	echo first line | append_cr >>expected &&
- 	echo same line | append_cr >>expected &&
- 	echo ">>>>>>>" >>expected &&
-@@ -128,15 +119,9 @@ test_expect_success 'Detect LF/CRLF conflict from =
-addition of text=3Dauto' '
- 	echo "<<<<<<<" >expected &&
- 	echo first line | append_cr >>expected &&
- 	echo same line | append_cr >>expected &&
--	if test_have_prereq NATIVE_CRLF; then
--		echo =3D=3D=3D=3D=3D=3D=3D | append_cr >>expected &&
--		echo first line | append_cr >>expected &&
--		echo same line | append_cr >>expected
--	else
--		echo =3D=3D=3D=3D=3D=3D=3D >>expected &&
--		echo first line >>expected &&
--		echo same line >>expected
--	fi &&
-+	echo =3D=3D=3D=3D=3D=3D=3D | append_cr >>expected &&
-+	echo first line | append_cr >>expected &&
-+	echo same line | append_cr >>expected &&
- 	echo ">>>>>>>" >>expected &&
- 	git config merge.renormalize false &&
- 	rm -f .gitattributes &&
---=20
-2.0.0.rc1.6318.g0c2c796
+I've observed the problem with Windows git versions 2.7.0, 2.5.3.
+I've NOT observed it with 1.9.5,
+
+On GNU/Linux the symptom only appears when running with valgrind, I
+tried versions
+2.8.0, and 2.8.2.402.gedec370 (the last is where the valgrind output comes from)
+
+--001a113ceaec4854ae0532e12911
+Content-Type: text/plain; charset=US-ASCII; name="graph.log"
+Content-Disposition: attachment; filename="graph.log"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_io8l1abc0
+
+KiBlOTgyMDVhIGMKfCAqG1szMW0tG1ttG1szMW0uG1ttICAgODA4NjAzYiBtZXJnZSBhIGIKfCB8
+XCBcICAKfC8gLyAvICAKfCB8ICogODg4NmE0ZSBiCnwgKiB8IDJkODc0M2YgYQp8IHwvICAKKiB8
+IGUwOWFmMTkgMQp8LyAgCiogNzczMDA0ZSAwCg==
+--001a113ceaec4854ae0532e12911
+Content-Type: application/x-sh; name="test-multiway-merge.sh"
+Content-Disposition: attachment; filename="test-multiway-merge.sh"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_io8l1ppb1
+
+IyEvYmluL3NoCgpHSVQ9JFBXRC9naXQKI0dJVD1naXQKCm1rYnJhbmNoICgpIHsKICAgIGJyYW5j
+aD0kMQogICAgIiRHSVQiIGJyYW5jaCAiJGJyYW5jaCIgbWFzdGVyCiAgICAiJEdJVCIgY2hlY2tv
+dXQgIiRicmFuY2giCiAgICBlY2hvICIkYnJhbmNoIiA+ICIkYnJhbmNoIgogICAgIiRHSVQiIGFk
+ZCAiJGJyYW5jaCIKICAgICIkR0lUIiBjb21taXQgLW0gIiRicmFuY2giCn0KCnJtIC1yZiBsb2ct
+Zm9ybWF0LXRlc3QKbWtkaXIgbG9nLWZvcm1hdC10ZXN0CmNkIGxvZy1mb3JtYXQtdGVzdAoKCiIk
+R0lUIiBpbml0CmVjaG8gMCA+IGZvbwoiJEdJVCIgYWRkIGZvbwoiJEdJVCIgY29tbWl0IC1tIDAK
+Cm1rYnJhbmNoIGEKbWticmFuY2ggYgoKIiRHSVQiIGNoZWNrb3V0IG1hc3RlcgplY2hvIDEgPiBm
+b28KIiRHSVQiIGNvbW1pdCAtYW0gMQoKIyBUaGUgbmFtZSBvZiB0aGlzIGJyYW5jaCBhZmZlY3Rz
+IHRoZSBvdXRjb21lCiMgZS5nLiBjYWxsaW5nIGl0ICJ4IiBkb2Vzbid0IHRyaXAgdGhlIGJ1ZyAo
+ISkKbWticmFuY2ggYwoKIiRHSVQiIGJyYW5jaCBtIG1hc3RlcgoiJEdJVCIgY2hlY2tvdXQgbQoi
+JEdJVCIgbWVyZ2UgLW0gJ21lcmdlIGEgYicgYSBiCgp2YWxncmluZCAiJEdJVCIgbG9nIC0tb25l
+bGluZSAtLWdyYXBoIC0tY29sb3I9bmV2ZXIgLS1hbGwK
+--001a113ceaec4854ae0532e12911
+Content-Type: text/plain; charset=US-ASCII; name="valgrind.log"
+Content-Disposition: attachment; filename="valgrind.log"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_io8l25y62
+
+PT0xMTI4Nz09IE1lbWNoZWNrLCBhIG1lbW9yeSBlcnJvciBkZXRlY3Rvcgo9PTExMjg3PT0gQ29w
+eXJpZ2h0IChDKSAyMDAyLTIwMTUsIGFuZCBHTlUgR1BMJ2QsIGJ5IEp1bGlhbiBTZXdhcmQgZXQg
+YWwuCj09MTEyODc9PSBVc2luZyBWYWxncmluZC0zLjExLjAgYW5kIExpYlZFWDsgcmVydW4gd2l0
+aCAtaCBmb3IgY29weXJpZ2h0IGluZm8KPT0xMTI4Nz09IENvbW1hbmQ6IC9ob21lL25wb3N0YXZz
+L3NyYy9naXQvZ2l0IGxvZyAtLW9uZWxpbmUgLS1ncmFwaCAtLWNvbG9yPW5ldmVyIC0tYWxsCj09
+MTEyODc9PSAKPT0xMTI4Nz09IENvbmRpdGlvbmFsIGp1bXAgb3IgbW92ZSBkZXBlbmRzIG9uIHVu
+aW5pdGlhbGlzZWQgdmFsdWUocykKPT0xMTI4Nz09ICAgIGF0IDB4NEIwQTQ4OiBzdHJidWZfd3Jp
+dGVfY29sdW1uIChncmFwaC5jOjc5KQo9PTExMjg3PT0gICAgYnkgMHg0QjBCM0Y6IGdyYXBoX2Ry
+YXdfb2N0b3B1c19tZXJnZSAoZ3JhcGguYzo3OTkpCj09MTEyODc9PSAgICBieSAweDRCMTQ0MDog
+Z3JhcGhfb3V0cHV0X2NvbW1pdF9saW5lIChncmFwaC5jOjgzNykKPT0xMTI4Nz09ICAgIGJ5IDB4
+NEIxNzI2OiBncmFwaF9uZXh0X2xpbmUgKGdyYXBoLmM6MTEyNikKPT0xMTI4Nz09ICAgIGJ5IDB4
+NEIxQTVGOiBncmFwaF9zaG93X2NvbW1pdCAoZ3JhcGguYzoxMTk3KQo9PTExMjg3PT0gICAgYnkg
+MHg0QkNGMzc6IHNob3dfbG9nIChsb2ctdHJlZS5jOjYwMSkKPT0xMTI4Nz09ICAgIGJ5IDB4NEJE
+NzIzOiBsb2dfdHJlZV9jb21taXQgKGxvZy10cmVlLmM6ODc5KQo9PTExMjg3PT0gICAgYnkgMHg0
+NDFFOEM6IGNtZF9sb2dfd2FsayAobG9nLmM6MzQ1KQo9PTExMjg3PT0gICAgYnkgMHg0NDM5NjE6
+IGNtZF9sb2cgKGxvZy5jOjY2MCkKPT0xMTI4Nz09ICAgIGJ5IDB4NDA1MEY5OiBydW5fYnVpbHRp
+biAoZ2l0LmM6MzUwKQo9PTExMjg3PT0gICAgYnkgMHg0MDUyMTg6IGhhbmRsZV9idWlsdGluIChn
+aXQuYzo1MzYpCj09MTEyODc9PSAgICBieSAweDQwNTVBQTogcnVuX2FyZ3YgKGdpdC5jOjU4MikK
+PT0xMTI4Nz09IAo9PTExMjg3PT0gVXNlIG9mIHVuaW5pdGlhbGlzZWQgdmFsdWUgb2Ygc2l6ZSA4
+Cj09MTEyODc9PSAgICBhdCAweDRCMDVBMDogY29sdW1uX2dldF9jb2xvcl9jb2RlIChncmFwaC5j
+OjczKQo9PTExMjg3PT0gICAgYnkgMHg0QjBBNTE6IHN0cmJ1Zl93cml0ZV9jb2x1bW4gKGdyYXBo
+LmM6ODApCj09MTEyODc9PSAgICBieSAweDRCMEIzRjogZ3JhcGhfZHJhd19vY3RvcHVzX21lcmdl
+IChncmFwaC5jOjc5OSkKPT0xMTI4Nz09ICAgIGJ5IDB4NEIxNDQwOiBncmFwaF9vdXRwdXRfY29t
+bWl0X2xpbmUgKGdyYXBoLmM6ODM3KQo9PTExMjg3PT0gICAgYnkgMHg0QjE3MjY6IGdyYXBoX25l
+eHRfbGluZSAoZ3JhcGguYzoxMTI2KQo9PTExMjg3PT0gICAgYnkgMHg0QjFBNUY6IGdyYXBoX3No
+b3dfY29tbWl0IChncmFwaC5jOjExOTcpCj09MTEyODc9PSAgICBieSAweDRCQ0YzNzogc2hvd19s
+b2cgKGxvZy10cmVlLmM6NjAxKQo9PTExMjg3PT0gICAgYnkgMHg0QkQ3MjM6IGxvZ190cmVlX2Nv
+bW1pdCAobG9nLXRyZWUuYzo4NzkpCj09MTEyODc9PSAgICBieSAweDQ0MUU4QzogY21kX2xvZ193
+YWxrIChsb2cuYzozNDUpCj09MTEyODc9PSAgICBieSAweDQ0Mzk2MTogY21kX2xvZyAobG9nLmM6
+NjYwKQo9PTExMjg3PT0gICAgYnkgMHg0MDUwRjk6IHJ1bl9idWlsdGluIChnaXQuYzozNTApCj09
+MTEyODc9PSAgICBieSAweDQwNTIxODogaGFuZGxlX2J1aWx0aW4gKGdpdC5jOjUzNikKPT0xMTI4
+Nz09IAo9PTExMjg3PT0gQ29uZGl0aW9uYWwganVtcCBvciBtb3ZlIGRlcGVuZHMgb24gdW5pbml0
+aWFsaXNlZCB2YWx1ZShzKQo9PTExMjg3PT0gICAgYXQgMHg0QjBBQzU6IHN0cmJ1Zl93cml0ZV9j
+b2x1bW4gKGdyYXBoLmM6ODIpCj09MTEyODc9PSAgICBieSAweDRCMEIzRjogZ3JhcGhfZHJhd19v
+Y3RvcHVzX21lcmdlIChncmFwaC5jOjc5OSkKPT0xMTI4Nz09ICAgIGJ5IDB4NEIxNDQwOiBncmFw
+aF9vdXRwdXRfY29tbWl0X2xpbmUgKGdyYXBoLmM6ODM3KQo9PTExMjg3PT0gICAgYnkgMHg0QjE3
+MjY6IGdyYXBoX25leHRfbGluZSAoZ3JhcGguYzoxMTI2KQo9PTExMjg3PT0gICAgYnkgMHg0QjFB
+NUY6IGdyYXBoX3Nob3dfY29tbWl0IChncmFwaC5jOjExOTcpCj09MTEyODc9PSAgICBieSAweDRC
+Q0YzNzogc2hvd19sb2cgKGxvZy10cmVlLmM6NjAxKQo9PTExMjg3PT0gICAgYnkgMHg0QkQ3MjM6
+IGxvZ190cmVlX2NvbW1pdCAobG9nLXRyZWUuYzo4NzkpCj09MTEyODc9PSAgICBieSAweDQ0MUU4
+QzogY21kX2xvZ193YWxrIChsb2cuYzozNDUpCj09MTEyODc9PSAgICBieSAweDQ0Mzk2MTogY21k
+X2xvZyAobG9nLmM6NjYwKQo9PTExMjg3PT0gICAgYnkgMHg0MDUwRjk6IHJ1bl9idWlsdGluIChn
+aXQuYzozNTApCj09MTEyODc9PSAgICBieSAweDQwNTIxODogaGFuZGxlX2J1aWx0aW4gKGdpdC5j
+OjUzNikKPT0xMTI4Nz09ICAgIGJ5IDB4NDA1NUFBOiBydW5fYXJndiAoZ2l0LmM6NTgyKQo9PTEx
+Mjg3PT0gCj09MTEyODc9PSBDb25kaXRpb25hbCBqdW1wIG9yIG1vdmUgZGVwZW5kcyBvbiB1bmlu
+aXRpYWxpc2VkIHZhbHVlKHMpCj09MTEyODc9PSAgICBhdCAweDRCMEE0ODogc3RyYnVmX3dyaXRl
+X2NvbHVtbiAoZ3JhcGguYzo3OSkKPT0xMTI4Nz09ICAgIGJ5IDB4NEIwQjZGOiBncmFwaF9kcmF3
+X29jdG9wdXNfbWVyZ2UgKGdyYXBoLmM6ODAyKQo9PTExMjg3PT0gICAgYnkgMHg0QjE0NDA6IGdy
+YXBoX291dHB1dF9jb21taXRfbGluZSAoZ3JhcGguYzo4MzcpCj09MTEyODc9PSAgICBieSAweDRC
+MTcyNjogZ3JhcGhfbmV4dF9saW5lIChncmFwaC5jOjExMjYpCj09MTEyODc9PSAgICBieSAweDRC
+MUE1RjogZ3JhcGhfc2hvd19jb21taXQgKGdyYXBoLmM6MTE5NykKPT0xMTI4Nz09ICAgIGJ5IDB4
+NEJDRjM3OiBzaG93X2xvZyAobG9nLXRyZWUuYzo2MDEpCj09MTEyODc9PSAgICBieSAweDRCRDcy
+MzogbG9nX3RyZWVfY29tbWl0IChsb2ctdHJlZS5jOjg3OSkKPT0xMTI4Nz09ICAgIGJ5IDB4NDQx
+RThDOiBjbWRfbG9nX3dhbGsgKGxvZy5jOjM0NSkKPT0xMTI4Nz09ICAgIGJ5IDB4NDQzOTYxOiBj
+bWRfbG9nIChsb2cuYzo2NjApCj09MTEyODc9PSAgICBieSAweDQwNTBGOTogcnVuX2J1aWx0aW4g
+KGdpdC5jOjM1MCkKPT0xMTI4Nz09ICAgIGJ5IDB4NDA1MjE4OiBoYW5kbGVfYnVpbHRpbiAoZ2l0
+LmM6NTM2KQo9PTExMjg3PT0gICAgYnkgMHg0MDU1QUE6IHJ1bl9hcmd2IChnaXQuYzo1ODIpCj09
+MTEyODc9PSAKPT0xMTI4Nz09IFVzZSBvZiB1bmluaXRpYWxpc2VkIHZhbHVlIG9mIHNpemUgOAo9
+PTExMjg3PT0gICAgYXQgMHg0QjA1QTA6IGNvbHVtbl9nZXRfY29sb3JfY29kZSAoZ3JhcGguYzo3
+MykKPT0xMTI4Nz09ICAgIGJ5IDB4NEIwQTUxOiBzdHJidWZfd3JpdGVfY29sdW1uIChncmFwaC5j
+OjgwKQo9PTExMjg3PT0gICAgYnkgMHg0QjBCNkY6IGdyYXBoX2RyYXdfb2N0b3B1c19tZXJnZSAo
+Z3JhcGguYzo4MDIpCj09MTEyODc9PSAgICBieSAweDRCMTQ0MDogZ3JhcGhfb3V0cHV0X2NvbW1p
+dF9saW5lIChncmFwaC5jOjgzNykKPT0xMTI4Nz09ICAgIGJ5IDB4NEIxNzI2OiBncmFwaF9uZXh0
+X2xpbmUgKGdyYXBoLmM6MTEyNikKPT0xMTI4Nz09ICAgIGJ5IDB4NEIxQTVGOiBncmFwaF9zaG93
+X2NvbW1pdCAoZ3JhcGguYzoxMTk3KQo9PTExMjg3PT0gICAgYnkgMHg0QkNGMzc6IHNob3dfbG9n
+IChsb2ctdHJlZS5jOjYwMSkKPT0xMTI4Nz09ICAgIGJ5IDB4NEJENzIzOiBsb2dfdHJlZV9jb21t
+aXQgKGxvZy10cmVlLmM6ODc5KQo9PTExMjg3PT0gICAgYnkgMHg0NDFFOEM6IGNtZF9sb2dfd2Fs
+ayAobG9nLmM6MzQ1KQo9PTExMjg3PT0gICAgYnkgMHg0NDM5NjE6IGNtZF9sb2cgKGxvZy5jOjY2
+MCkKPT0xMTI4Nz09ICAgIGJ5IDB4NDA1MEY5OiBydW5fYnVpbHRpbiAoZ2l0LmM6MzUwKQo9PTEx
+Mjg3PT0gICAgYnkgMHg0MDUyMTg6IGhhbmRsZV9idWlsdGluIChnaXQuYzo1MzYpCj09MTEyODc9
+PSAKPT0xMTI4Nz09IENvbmRpdGlvbmFsIGp1bXAgb3IgbW92ZSBkZXBlbmRzIG9uIHVuaW5pdGlh
+bGlzZWQgdmFsdWUocykKPT0xMTI4Nz09ICAgIGF0IDB4NEIwQUM1OiBzdHJidWZfd3JpdGVfY29s
+dW1uIChncmFwaC5jOjgyKQo9PTExMjg3PT0gICAgYnkgMHg0QjBCNkY6IGdyYXBoX2RyYXdfb2N0
+b3B1c19tZXJnZSAoZ3JhcGguYzo4MDIpCj09MTEyODc9PSAgICBieSAweDRCMTQ0MDogZ3JhcGhf
+b3V0cHV0X2NvbW1pdF9saW5lIChncmFwaC5jOjgzNykKPT0xMTI4Nz09ICAgIGJ5IDB4NEIxNzI2
+OiBncmFwaF9uZXh0X2xpbmUgKGdyYXBoLmM6MTEyNikKPT0xMTI4Nz09ICAgIGJ5IDB4NEIxQTVG
+OiBncmFwaF9zaG93X2NvbW1pdCAoZ3JhcGguYzoxMTk3KQo9PTExMjg3PT0gICAgYnkgMHg0QkNG
+Mzc6IHNob3dfbG9nIChsb2ctdHJlZS5jOjYwMSkKPT0xMTI4Nz09ICAgIGJ5IDB4NEJENzIzOiBs
+b2dfdHJlZV9jb21taXQgKGxvZy10cmVlLmM6ODc5KQo9PTExMjg3PT0gICAgYnkgMHg0NDFFOEM6
+IGNtZF9sb2dfd2FsayAobG9nLmM6MzQ1KQo9PTExMjg3PT0gICAgYnkgMHg0NDM5NjE6IGNtZF9s
+b2cgKGxvZy5jOjY2MCkKPT0xMTI4Nz09ICAgIGJ5IDB4NDA1MEY5OiBydW5fYnVpbHRpbiAoZ2l0
+LmM6MzUwKQo9PTExMjg3PT0gICAgYnkgMHg0MDUyMTg6IGhhbmRsZV9idWlsdGluIChnaXQuYzo1
+MzYpCj09MTEyODc9PSAgICBieSAweDQwNTVBQTogcnVuX2FyZ3YgKGdpdC5jOjU4MikKPT0xMTI4
+Nz09IAo9PTExMjg3PT0gCj09MTEyODc9PSBIRUFQIFNVTU1BUlk6Cj09MTEyODc9PSAgICAgaW4g
+dXNlIGF0IGV4aXQ6IDY1MSwxNzAgYnl0ZXMgaW4gMTkxIGJsb2Nrcwo9PTExMjg3PT0gICB0b3Rh
+bCBoZWFwIHVzYWdlOiA0MTQgYWxsb2NzLCAyMjMgZnJlZXMsIDEsNzU2LDk2NyBieXRlcyBhbGxv
+Y2F0ZWQKPT0xMTI4Nz09IAo9PTExMjg3PT0gTEVBSyBTVU1NQVJZOgo9PTExMjg3PT0gICAgZGVm
+aW5pdGVseSBsb3N0OiA4MjUgYnl0ZXMgaW4gOCBibG9ja3MKPT0xMTI4Nz09ICAgIGluZGlyZWN0
+bHkgbG9zdDogMSw1MTUgYnl0ZXMgaW4gMTAgYmxvY2tzCj09MTEyODc9PSAgICAgIHBvc3NpYmx5
+IGxvc3Q6IDAgYnl0ZXMgaW4gMCBibG9ja3MKPT0xMTI4Nz09ICAgIHN0aWxsIHJlYWNoYWJsZTog
+NjQ4LDgzMCBieXRlcyBpbiAxNzMgYmxvY2tzCj09MTEyODc9PSAgICAgICAgIHN1cHByZXNzZWQ6
+IDAgYnl0ZXMgaW4gMCBibG9ja3MKPT0xMTI4Nz09IFJlcnVuIHdpdGggLS1sZWFrLWNoZWNrPWZ1
+bGwgdG8gc2VlIGRldGFpbHMgb2YgbGVha2VkIG1lbW9yeQo9PTExMjg3PT0gCj09MTEyODc9PSBG
+b3IgY291bnRzIG9mIGRldGVjdGVkIGFuZCBzdXBwcmVzc2VkIGVycm9ycywgcmVydW4gd2l0aDog
+LXYKPT0xMTI4Nz09IFVzZSAtLXRyYWNrLW9yaWdpbnM9eWVzIHRvIHNlZSB3aGVyZSB1bmluaXRp
+YWxpc2VkIHZhbHVlcyBjb21lIGZyb20KPT0xMTI4Nz09IEVSUk9SIFNVTU1BUlk6IDYgZXJyb3Jz
+IGZyb20gNiBjb250ZXh0cyAoc3VwcHJlc3NlZDogMCBmcm9tIDApCg==
+--001a113ceaec4854ae0532e12911--
