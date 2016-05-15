@@ -1,101 +1,122 @@
-From: Dmitry Gutov <dgutov@yandex.ru>
-Subject: Re: 'git diff-index' doesn't honor the 'diff.algorithm' variable
-Date: Sun, 15 May 2016 13:25:24 +0300
-Message-ID: <8e5a7045-77f7-acb0-de7f-3e8f72479ec3@yandex.ru>
-References: <9d15b6c8-ed97-7352-3df1-efab1b4ffadb@yandex.ru>
- <xmqqshxk7aa8.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 15 12:26:07 2016
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v6 02/17] ref-filter: include reference to 'used_atom' within 'atom_value'
+Date: Sun, 15 May 2016 16:15:18 +0530
+Message-ID: <1463309133-14503-3-git-send-email-Karthik.188@gmail.com>
+References: <1463309133-14503-1-git-send-email-Karthik.188@gmail.com>
+Cc: gitster@pobox.com, peff@peff.net,
+	Karthik Nayak <Karthik.188@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 15 12:45:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1tFN-00024l-0i
-	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 12:26:05 +0200
+	id 1b1tYS-0003Ln-Uv
+	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 12:45:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753201AbcEOKZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2016 06:25:29 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34976 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752514AbcEOKZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 06:25:28 -0400
-Received: by mail-wm0-f65.google.com with SMTP id e201so12202101wme.2
-        for <git@vger.kernel.org>; Sun, 15 May 2016 03:25:27 -0700 (PDT)
+	id S1754139AbcEOKpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2016 06:45:43 -0400
+Received: from mail-pa0-f68.google.com ([209.85.220.68]:33555 "EHLO
+	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751953AbcEOKpl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 06:45:41 -0400
+Received: by mail-pa0-f68.google.com with SMTP id gh9so12080659pac.0
+        for <git@vger.kernel.org>; Sun, 15 May 2016 03:45:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=TodJRbnIsQzM7PXS7WRfiPD65iL3GPm1/mN3u+b5YpQ=;
-        b=MMgWV+WGi7pZ9y0nQ0VB/+wIT71wuJ4QVBzzB+P8mD7cVVL7Hx2Xds5/xZN8+7yc7G
-         WSy1sXzZtzngBoKFQQh6Ny+0qGlSHshTa3ZdJyGJ0mXQ32ldFGcw9bJMouE1sn1h+M3X
-         49s2lWhXLWbXAqVfub6mQxqxYs2RrVdy1Tuj6513aEphowRpbtSokHsl3HDJhqagOJHF
-         N2Dt6UHtfyMJszrjDKranoD2pIMVX/KkW2PKD8m/4AykqneSCUSYmHHuf0ltxxYbY06C
-         y42WCz/Jh/SG1xeyxHsHU39i3fEcbS4jXRBVtIz9UORawjpTuBYnnmbpdHMmZsPTj0F4
-         ut2Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=2t/YJLE9sGP56wG58cl2aU4NlhkXKt6N7CHFJAGNQDM=;
+        b=JnhPy+XKUWk57Y3PW/sSvab5Rbd57QgjDjEmfi73IO/JQqrg2C+B69OT44B6pEbD/y
+         uXPnD1fO8HqxIbie/FSrlF6OOB9x9MaZxfjnHQlIYfw5DMQbeWCmuJuT8+0vRgAO8Xld
+         Pl4+Yhxn8WM8tdbPy8TtkZuSlgrQwg329rbPMbU1uMTuyL+S43cy2ARStvGt9cRVe/0V
+         Q8iTLlursY3CHKrlkns+78JBOFmFGhYRpTHyDfGM+g6//kYPBSbBhGjK7DJgCrgD3xfT
+         uzUFgDI8gci/AcfT19omEBU5TKQpef7H+5xf7IjLyFgCTA/NNOgltHPJkHQwJ8EQjfY3
+         HifQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:subject:to:references:cc:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=TodJRbnIsQzM7PXS7WRfiPD65iL3GPm1/mN3u+b5YpQ=;
-        b=Cnm4As6y0S/xZxawTxAGsddXRj8uS8QB34IWNNoJaM1gDy0PsXeuJp4S1Qx2drnh82
-         1QN50lx4oiVievNJcrEnsz/vaCZCBZNFeA1vSWX9omCvmh+2Hoqa6tw5Vy2xfKEbnGPE
-         hrKTb9GlNu9/MS9msIL2rlJfvSl9Jy57p5ZMXdsoga95KCdkW/LuXGJ/nwmd7XijPKgk
-         1dUk0MAF0opqDxdLomsdpYGuEGuZpiQeuDSSKym0oDJ+34rJHwqtz+xZJatDwZ0G3Y2O
-         5xPOc5pDjpWzs8yjMHNCSwy0s0RLDaa/+QMjUe/3oqoaWvjirvXBPb3Hprdcww11LtKY
-         RXOA==
-X-Gm-Message-State: AOPr4FWd7B7dqBb0bUq9rjGa0RcUBmUNSP0h0fU/xhktimze0rRiT1s92okjxGQxrIZPsg==
-X-Received: by 10.28.62.15 with SMTP id l15mr12403836wma.30.1463307926237;
-        Sun, 15 May 2016 03:25:26 -0700 (PDT)
-Received: from [192.168.1.2] ([185.105.175.24])
-        by smtp.googlemail.com with ESMTPSA id r123sm12579845wmg.20.2016.05.15.03.25.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 15 May 2016 03:25:25 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1
-In-Reply-To: <xmqqshxk7aa8.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=2t/YJLE9sGP56wG58cl2aU4NlhkXKt6N7CHFJAGNQDM=;
+        b=hdbnS78WQAN4BINFDHPQERxdACCo1FodzUbuQpMDL7xsP0WkY9TO/1rXIhEdULdoL/
+         rBb05Lcu592DVNJzAF+Eg4kYxhtgMdXMH5GBgQwxcdGYDH/Onb69zS1T6GDvLVYb4LDY
+         j27mboRMquHKfsF4xJAS2zuVqwOZXyKtA5glMXoyCc+pO3iJRzpAOmXHSbABHt34Eoev
+         qvhEas4shtXnaoyZgqm3B37s0hSPHFmMlyK3RddAZWPSCfFgFQ9/6on28N1nwnUB45P5
+         MvVSs22Vs/lofv+m/mVxr1pwDJ/4ggg1Ymx/WKvIzx761T21AhG3+uq0scM/hyklWlMY
+         Fatg==
+X-Gm-Message-State: AOPr4FXchHWgOfxDMXSQ8oaula1GfeHyz7h2yW5gDBkMTPNQAkTAFS/1EqvC923s5INg6Q==
+X-Received: by 10.66.246.165 with SMTP id xx5mr36770461pac.87.1463309140577;
+        Sun, 15 May 2016 03:45:40 -0700 (PDT)
+Received: from ashley.localdomain ([106.51.133.65])
+        by smtp.gmail.com with ESMTPSA id 71sm39866747pfy.32.2016.05.15.03.45.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 15 May 2016 03:45:39 -0700 (PDT)
+X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
+X-Mailer: git-send-email 2.8.2
+In-Reply-To: <1463309133-14503-1-git-send-email-Karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294649>
 
-Hi Junio,
+Ensure that each 'atom_value' has a reference to its corresponding
+'used_atom'. This let's us use values within 'used_atom' in the
+'handler' function.
 
-On 05/14/2016 09:40 PM, Junio C Hamano wrote:
+Hence we can get the %(align) atom's parameters directly from the
+'used_atom' therefore removing the necessity of passing %(align) atom's
+parameters to 'atom_value'.
 
-> The variable belongs to UI config, meant for Porcelain "git diff",
-> together with things like "diff.color", "diff.context", etc.
+This also acts as a preparatory patch for the upcoming patch where we
+introduce %(if:equals=) and %(if:notequals=).
 
-OK, that makes sense. You might want to fix the man page, though, it 
-says, like the 'git diff' one, "For instance, if you configured 
-diff.algorithm variable to a non-default value and want to use the 
-default one, then you have to use --diff-algorithm=default option.".
+Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+---
+ ref-filter.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-> A script that calls diff-index, if it wants to honor end-users'
-> UI config variables, is allowed to use 'git config' to read them and
-> turn them into appropriate command line options.  e.g.
->
->     algo=$(git config diff.algorithm)
->     case "$algo" in
->     minimal|histogram|patience) algo=--$algo ;;
->     *) algo= ;;
->     esac
->
->     ...
->     git diff-index $algo ... other args ...
->
-> or something like that.
-
-Thanks, but we don't distribute any custom Git porcelains with Emacs. We 
-usually can't rely on bash being available either. Doing an extra 
-process call from Emacs for this niche a feature doesn't seem like a 
-great idea either. To clarify, the problem is that `M-x vc-diff' doesn't 
-honor the diff.algorithm option.
-
-I'll have to see why we using 'git diff-index' there directly. Maybe we 
-could switch to 'git diff'.
+diff --git a/ref-filter.c b/ref-filter.c
+index 41e73f0..12e646c 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -230,11 +230,9 @@ struct ref_formatting_state {
+ 
+ struct atom_value {
+ 	const char *s;
+-	union {
+-		struct align align;
+-	} u;
+ 	void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
+ 	unsigned long ul; /* used for sorting when not FIELD_STR */
++	struct used_atom *atom;
+ };
+ 
+ /*
+@@ -370,7 +368,7 @@ static void align_atom_handler(struct atom_value *atomv, struct ref_formatting_s
+ 	push_stack_element(&state->stack);
+ 	new = state->stack;
+ 	new->at_end = end_align_handler;
+-	new->at_end_data = &atomv->u.align;
++	new->at_end_data = &atomv->atom->u.align;
+ }
+ 
+ static void if_then_else_handler(struct ref_formatting_stack **stack)
+@@ -1069,6 +1067,7 @@ static void populate_value(struct ref_array_item *ref)
+ 		struct branch *branch = NULL;
+ 
+ 		v->handler = append_atom;
++		v->atom = atom;
+ 
+ 		if (*name == '*') {
+ 			deref = 1;
+@@ -1133,7 +1132,6 @@ static void populate_value(struct ref_array_item *ref)
+ 				v->s = " ";
+ 			continue;
+ 		} else if (starts_with(name, "align")) {
+-			v->u.align = atom->u.align;
+ 			v->handler = align_atom_handler;
+ 			continue;
+ 		} else if (!strcmp(name, "end")) {
+-- 
+2.8.2
