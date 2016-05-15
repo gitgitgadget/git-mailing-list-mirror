@@ -1,204 +1,177 @@
-From: Noam Postavsky <npostavs@users.sourceforge.net>
-Subject: [BUG] A part of an edge from an octopus merge gets colored, even with --color=never
-Date: Sun, 15 May 2016 09:05:25 -0400
-Message-ID: <CAM-tV-_Easz+HA0GX0YkY4FZ2LithQy0+omq64D-OoHKkRe55A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=001a113ceaec4854ae0532e12911
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [GSOC Update] Week 2
+Date: Sun, 15 May 2016 23:15:59 +0530
+Message-ID: <1463334359-14033-1-git-send-email-pranit.bauva@gmail.com>
+References: <1462706822-5189-1-git-send-email-pranit.bauva@gmail.com>
+Cc: christian.couder@gmail.com, chriscool@tuxfamily.org,
+	larsxschneider@gmail.com, andrew.ardill@gmail.com,
+	Pranit Bauva <pranit.bauva@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 15 15:05:38 2016
+X-From: git-owner@vger.kernel.org Sun May 15 19:49:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1vji-0004CZ-EC
-	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 15:05:35 +0200
+	id 1b20A2-0007cm-FY
+	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 19:49:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754180AbcEONF1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2016 09:05:27 -0400
-Received: from mail-oi0-f41.google.com ([209.85.218.41]:36779 "EHLO
-	mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752420AbcEONF0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 09:05:26 -0400
-Received: by mail-oi0-f41.google.com with SMTP id x201so233957454oif.3
-        for <git@vger.kernel.org>; Sun, 15 May 2016 06:05:25 -0700 (PDT)
+	id S1751822AbcEORs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2016 13:48:58 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33947 "EHLO
+	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751612AbcEORs5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 13:48:57 -0400
+Received: by mail-pf0-f193.google.com with SMTP id 145so13705737pfz.1
+        for <git@vger.kernel.org>; Sun, 15 May 2016 10:48:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to;
-        bh=7ZGVFdAv5RqaDBCchjZL2s63cbI2G0ojsGgA0wUtUyg=;
-        b=r3kurLJvI5PZ5lOwUb7rH3sNndp54Aeo8DKwuCd0YFwhCE+xaneTJglGfBi7u2yYGH
-         1Mvr83vneBWidKOOLlARuCVWeNJGbWH8DaFcHttgntP4I4AoN3zm3/TJjybsbOlDnkaD
-         7f+6qo2msFEkceQT///d4UexujW3vgVR6W5x/sB0VuA/UIhiRy/mXTPucdgPNf9ueJ0v
-         T20yhoqUM9uwAGrJvrXa56BeG4bNnSytPtNK7BQU5aW/YyS9wJFzB74pw8hY4EmqaT2A
-         EwP27jlp8j6l4NSgbMoykqPe94y0MP2syz+a0qeNiwVc08lJNKlRiHflQqcZgJUY9xBn
-         KcMQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=u281UskwZAOhSGfFdWBDBi/tpgQx7yFW1KVGlsmVdFE=;
+        b=W6LoKgfb71PLncs3yMXZ9CMlf5i3NOgsSufqiLrL4j6lImcd5maSMBRdixnoX4K62z
+         inaNh9i0WZp3z6E9fZ6JlmaNFAqXfHlVL9Y9btC3xnRTM7MPAlNXMRTAc8U8rfkqKxN/
+         hVgay6ryUEQxJ5xoJttvJ6UJX6mlQOfr+HHmKTdpBX4b6FjS2t+Z4I0whpBXebLvE7VY
+         Akb9abEHGzhINUIbXGqzoNtbrTBDgJAqEDTYG1+62K+PxJKQ1HYzcAdBTiQ2V/QTVYq1
+         +cJVjQYXW70z82sWZuGLUalux38suuCsWT4SCcB4ZLyNe1M4cTvzosUflWtic3S+jXGs
+         ejOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
-         :to;
-        bh=7ZGVFdAv5RqaDBCchjZL2s63cbI2G0ojsGgA0wUtUyg=;
-        b=QPkzQmZp2QuKoDDQKBwZ0hIml32un+G/KIHEB1WBL9Uhlx2UIBL2Yd0DJww+xo3YVq
-         yY3Avk4sF0EQ3kJo2cVlu/KWoQ9ffJX7xfNTDzihOKO+HgYOgUmEByATjJph+UuU3kS5
-         g9u735a6cZ8xqrGRuKNYNP80nrXIqHYKGq16sPfG8QILOaaKoc5vs0OzV56zRl9e/t+t
-         aUUiya5m4WSKDldP+1YaDzS5hrEWeVojzY0OruRP2OOLOrNrwWC2bfNsMW5CZUdbO1E9
-         RV+RJ+y6/n67FYlnlXgonhCzb6yKq3xcppIJvtNF84B3zxQH5vjQcDK7CTE7Zc0/zJSb
-         Utog==
-X-Gm-Message-State: AOPr4FVKMQO5Eu59nKXobErv2xvnMY6c8C+UVj8QbmCpksgsxUWe5lwF8XNjHmZstwaAvgKJkRQ0mM/B+MhibA==
-X-Received: by 10.157.51.12 with SMTP id f12mr8905304otc.124.1463317525178;
- Sun, 15 May 2016 06:05:25 -0700 (PDT)
-Received: by 10.157.45.138 with HTTP; Sun, 15 May 2016 06:05:25 -0700 (PDT)
-X-Google-Sender-Auth: wSMgAOsdCFz_j2pcjwKQq9U9kfA
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=u281UskwZAOhSGfFdWBDBi/tpgQx7yFW1KVGlsmVdFE=;
+        b=KBIr6Cev0yl/FVhpeir9UnvOFU1UA8Iv71HscmJTHv3VJkv8dZwyCFM9l4zOLBu2of
+         YDJTS0rhzwwqQc/S3/S27PQnY46A+khUWCfHhBPYYdRqOBFtOMkVRbqL1pJ+nCq5BAOb
+         3icn1x9k622lifnCthx3ByADzyzPVru7OKT9uffSnCqrk5zaUppp795SX2yrtHI9wYUA
+         Rl1UZ6jSgkzevfwQQHyc95rtRHIP1cFvx7e3N+lI/qVjZTHGtI2c8jUJWWB+yhiVVr9B
+         iKhJgPTvkukxtyO4vOgsOOHqSKJNSc4HT3feU6p7Zhciopg7BOqSEgBSsu4kSY0pNGbv
+         wCVg==
+X-Gm-Message-State: AOPr4FXLl4FnsUFGf6aniU15iLtI01AJkOWV/iS+HhqUApce/mclPH3KmlBVE4uEqhRXVQ==
+X-Received: by 10.98.50.67 with SMTP id y64mr39269265pfy.128.1463334536399;
+        Sun, 15 May 2016 10:48:56 -0700 (PDT)
+Received: from localhost.localdomain ([183.87.140.254])
+        by smtp.gmail.com with ESMTPSA id u2sm41707325pan.45.2016.05.15.10.48.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 15 May 2016 10:48:55 -0700 (PDT)
+X-Mailer: git-send-email 2.8.2
+In-Reply-To: <1462706822-5189-1-git-send-email-pranit.bauva@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294672>
 
---001a113ceaec4854ae0532e12911
-Content-Type: text/plain; charset=UTF-8
+================================= SUMMARY ==================================
+My micro project on adding config variable to git-commit for verbose options
+is going to be merged with the master branch soon and will be available for
+git 2.8.3 . I also rewrote a few shell functions in C.
 
-With a certain topology involving an octopus merge, git log --graph
---oneline --all --color=never produces output which includes some ANSI
-escape code coloring. Attached is a script to reproduce the problem
-(creates a git repository in subdir log-format-test), along with
-sample graph and valgrind output (indicates some unitialialized memory
-access).
+My public git.git is available here[1]. I regularly keep pushing my work so
+anyone interested can track me there. Feel free to participate in the
+discussions going on PRs with my mentors. Your comments are valuable.
 
-I've observed the problem with Windows git versions 2.7.0, 2.5.3.
-I've NOT observed it with 1.9.5,
 
-On GNU/Linux the symptom only appears when running with valgrind, I
-tried versions
-2.8.0, and 2.8.2.402.gedec370 (the last is where the valgrind output comes from)
+=============================== INTRODUCTION  ==============================
+The purpose of this project is to convert the git-bisect utility which partly
+exists in the form of shell scripts to C code so as to make it more portable.
+I plan to do this by converting each function to C and then calling it from
+git-bisect.sh so as to use the existing test suite to test the function which
+is converted.
 
---001a113ceaec4854ae0532e12911
-Content-Type: text/plain; charset=US-ASCII; name="graph.log"
-Content-Disposition: attachment; filename="graph.log"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_io8l1abc0
+Mentors:
+Christian Couder <chriscool@tuxfamily.org>
+Lars Schneider <larsxschneider@gmail.com>
 
-KiBlOTgyMDVhIGMKfCAqG1szMW0tG1ttG1szMW0uG1ttICAgODA4NjAzYiBtZXJnZSBhIGIKfCB8
-XCBcICAKfC8gLyAvICAKfCB8ICogODg4NmE0ZSBiCnwgKiB8IDJkODc0M2YgYQp8IHwvICAKKiB8
-IGUwOWFmMTkgMQp8LyAgCiogNzczMDA0ZSAwCg==
---001a113ceaec4854ae0532e12911
-Content-Type: application/x-sh; name="test-multiway-merge.sh"
-Content-Disposition: attachment; filename="test-multiway-merge.sh"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_io8l1ppb1
 
-IyEvYmluL3NoCgpHSVQ9JFBXRC9naXQKI0dJVD1naXQKCm1rYnJhbmNoICgpIHsKICAgIGJyYW5j
-aD0kMQogICAgIiRHSVQiIGJyYW5jaCAiJGJyYW5jaCIgbWFzdGVyCiAgICAiJEdJVCIgY2hlY2tv
-dXQgIiRicmFuY2giCiAgICBlY2hvICIkYnJhbmNoIiA+ICIkYnJhbmNoIgogICAgIiRHSVQiIGFk
-ZCAiJGJyYW5jaCIKICAgICIkR0lUIiBjb21taXQgLW0gIiRicmFuY2giCn0KCnJtIC1yZiBsb2ct
-Zm9ybWF0LXRlc3QKbWtkaXIgbG9nLWZvcm1hdC10ZXN0CmNkIGxvZy1mb3JtYXQtdGVzdAoKCiIk
-R0lUIiBpbml0CmVjaG8gMCA+IGZvbwoiJEdJVCIgYWRkIGZvbwoiJEdJVCIgY29tbWl0IC1tIDAK
-Cm1rYnJhbmNoIGEKbWticmFuY2ggYgoKIiRHSVQiIGNoZWNrb3V0IG1hc3RlcgplY2hvIDEgPiBm
-b28KIiRHSVQiIGNvbW1pdCAtYW0gMQoKIyBUaGUgbmFtZSBvZiB0aGlzIGJyYW5jaCBhZmZlY3Rz
-IHRoZSBvdXRjb21lCiMgZS5nLiBjYWxsaW5nIGl0ICJ4IiBkb2Vzbid0IHRyaXAgdGhlIGJ1ZyAo
-ISkKbWticmFuY2ggYwoKIiRHSVQiIGJyYW5jaCBtIG1hc3RlcgoiJEdJVCIgY2hlY2tvdXQgbQoi
-JEdJVCIgbWVyZ2UgLW0gJ21lcmdlIGEgYicgYSBiCgp2YWxncmluZCAiJEdJVCIgbG9nIC0tb25l
-bGluZSAtLWdyYXBoIC0tY29sb3I9bmV2ZXIgLS1hbGwK
---001a113ceaec4854ae0532e12911
-Content-Type: text/plain; charset=US-ASCII; name="valgrind.log"
-Content-Disposition: attachment; filename="valgrind.log"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_io8l25y62
+================================== Updates =================================
+Things which were done in this week:
 
-PT0xMTI4Nz09IE1lbWNoZWNrLCBhIG1lbW9yeSBlcnJvciBkZXRlY3Rvcgo9PTExMjg3PT0gQ29w
-eXJpZ2h0IChDKSAyMDAyLTIwMTUsIGFuZCBHTlUgR1BMJ2QsIGJ5IEp1bGlhbiBTZXdhcmQgZXQg
-YWwuCj09MTEyODc9PSBVc2luZyBWYWxncmluZC0zLjExLjAgYW5kIExpYlZFWDsgcmVydW4gd2l0
-aCAtaCBmb3IgY29weXJpZ2h0IGluZm8KPT0xMTI4Nz09IENvbW1hbmQ6IC9ob21lL25wb3N0YXZz
-L3NyYy9naXQvZ2l0IGxvZyAtLW9uZWxpbmUgLS1ncmFwaCAtLWNvbG9yPW5ldmVyIC0tYWxsCj09
-MTEyODc9PSAKPT0xMTI4Nz09IENvbmRpdGlvbmFsIGp1bXAgb3IgbW92ZSBkZXBlbmRzIG9uIHVu
-aW5pdGlhbGlzZWQgdmFsdWUocykKPT0xMTI4Nz09ICAgIGF0IDB4NEIwQTQ4OiBzdHJidWZfd3Jp
-dGVfY29sdW1uIChncmFwaC5jOjc5KQo9PTExMjg3PT0gICAgYnkgMHg0QjBCM0Y6IGdyYXBoX2Ry
-YXdfb2N0b3B1c19tZXJnZSAoZ3JhcGguYzo3OTkpCj09MTEyODc9PSAgICBieSAweDRCMTQ0MDog
-Z3JhcGhfb3V0cHV0X2NvbW1pdF9saW5lIChncmFwaC5jOjgzNykKPT0xMTI4Nz09ICAgIGJ5IDB4
-NEIxNzI2OiBncmFwaF9uZXh0X2xpbmUgKGdyYXBoLmM6MTEyNikKPT0xMTI4Nz09ICAgIGJ5IDB4
-NEIxQTVGOiBncmFwaF9zaG93X2NvbW1pdCAoZ3JhcGguYzoxMTk3KQo9PTExMjg3PT0gICAgYnkg
-MHg0QkNGMzc6IHNob3dfbG9nIChsb2ctdHJlZS5jOjYwMSkKPT0xMTI4Nz09ICAgIGJ5IDB4NEJE
-NzIzOiBsb2dfdHJlZV9jb21taXQgKGxvZy10cmVlLmM6ODc5KQo9PTExMjg3PT0gICAgYnkgMHg0
-NDFFOEM6IGNtZF9sb2dfd2FsayAobG9nLmM6MzQ1KQo9PTExMjg3PT0gICAgYnkgMHg0NDM5NjE6
-IGNtZF9sb2cgKGxvZy5jOjY2MCkKPT0xMTI4Nz09ICAgIGJ5IDB4NDA1MEY5OiBydW5fYnVpbHRp
-biAoZ2l0LmM6MzUwKQo9PTExMjg3PT0gICAgYnkgMHg0MDUyMTg6IGhhbmRsZV9idWlsdGluIChn
-aXQuYzo1MzYpCj09MTEyODc9PSAgICBieSAweDQwNTVBQTogcnVuX2FyZ3YgKGdpdC5jOjU4MikK
-PT0xMTI4Nz09IAo9PTExMjg3PT0gVXNlIG9mIHVuaW5pdGlhbGlzZWQgdmFsdWUgb2Ygc2l6ZSA4
-Cj09MTEyODc9PSAgICBhdCAweDRCMDVBMDogY29sdW1uX2dldF9jb2xvcl9jb2RlIChncmFwaC5j
-OjczKQo9PTExMjg3PT0gICAgYnkgMHg0QjBBNTE6IHN0cmJ1Zl93cml0ZV9jb2x1bW4gKGdyYXBo
-LmM6ODApCj09MTEyODc9PSAgICBieSAweDRCMEIzRjogZ3JhcGhfZHJhd19vY3RvcHVzX21lcmdl
-IChncmFwaC5jOjc5OSkKPT0xMTI4Nz09ICAgIGJ5IDB4NEIxNDQwOiBncmFwaF9vdXRwdXRfY29t
-bWl0X2xpbmUgKGdyYXBoLmM6ODM3KQo9PTExMjg3PT0gICAgYnkgMHg0QjE3MjY6IGdyYXBoX25l
-eHRfbGluZSAoZ3JhcGguYzoxMTI2KQo9PTExMjg3PT0gICAgYnkgMHg0QjFBNUY6IGdyYXBoX3No
-b3dfY29tbWl0IChncmFwaC5jOjExOTcpCj09MTEyODc9PSAgICBieSAweDRCQ0YzNzogc2hvd19s
-b2cgKGxvZy10cmVlLmM6NjAxKQo9PTExMjg3PT0gICAgYnkgMHg0QkQ3MjM6IGxvZ190cmVlX2Nv
-bW1pdCAobG9nLXRyZWUuYzo4NzkpCj09MTEyODc9PSAgICBieSAweDQ0MUU4QzogY21kX2xvZ193
-YWxrIChsb2cuYzozNDUpCj09MTEyODc9PSAgICBieSAweDQ0Mzk2MTogY21kX2xvZyAobG9nLmM6
-NjYwKQo9PTExMjg3PT0gICAgYnkgMHg0MDUwRjk6IHJ1bl9idWlsdGluIChnaXQuYzozNTApCj09
-MTEyODc9PSAgICBieSAweDQwNTIxODogaGFuZGxlX2J1aWx0aW4gKGdpdC5jOjUzNikKPT0xMTI4
-Nz09IAo9PTExMjg3PT0gQ29uZGl0aW9uYWwganVtcCBvciBtb3ZlIGRlcGVuZHMgb24gdW5pbml0
-aWFsaXNlZCB2YWx1ZShzKQo9PTExMjg3PT0gICAgYXQgMHg0QjBBQzU6IHN0cmJ1Zl93cml0ZV9j
-b2x1bW4gKGdyYXBoLmM6ODIpCj09MTEyODc9PSAgICBieSAweDRCMEIzRjogZ3JhcGhfZHJhd19v
-Y3RvcHVzX21lcmdlIChncmFwaC5jOjc5OSkKPT0xMTI4Nz09ICAgIGJ5IDB4NEIxNDQwOiBncmFw
-aF9vdXRwdXRfY29tbWl0X2xpbmUgKGdyYXBoLmM6ODM3KQo9PTExMjg3PT0gICAgYnkgMHg0QjE3
-MjY6IGdyYXBoX25leHRfbGluZSAoZ3JhcGguYzoxMTI2KQo9PTExMjg3PT0gICAgYnkgMHg0QjFB
-NUY6IGdyYXBoX3Nob3dfY29tbWl0IChncmFwaC5jOjExOTcpCj09MTEyODc9PSAgICBieSAweDRC
-Q0YzNzogc2hvd19sb2cgKGxvZy10cmVlLmM6NjAxKQo9PTExMjg3PT0gICAgYnkgMHg0QkQ3MjM6
-IGxvZ190cmVlX2NvbW1pdCAobG9nLXRyZWUuYzo4NzkpCj09MTEyODc9PSAgICBieSAweDQ0MUU4
-QzogY21kX2xvZ193YWxrIChsb2cuYzozNDUpCj09MTEyODc9PSAgICBieSAweDQ0Mzk2MTogY21k
-X2xvZyAobG9nLmM6NjYwKQo9PTExMjg3PT0gICAgYnkgMHg0MDUwRjk6IHJ1bl9idWlsdGluIChn
-aXQuYzozNTApCj09MTEyODc9PSAgICBieSAweDQwNTIxODogaGFuZGxlX2J1aWx0aW4gKGdpdC5j
-OjUzNikKPT0xMTI4Nz09ICAgIGJ5IDB4NDA1NUFBOiBydW5fYXJndiAoZ2l0LmM6NTgyKQo9PTEx
-Mjg3PT0gCj09MTEyODc9PSBDb25kaXRpb25hbCBqdW1wIG9yIG1vdmUgZGVwZW5kcyBvbiB1bmlu
-aXRpYWxpc2VkIHZhbHVlKHMpCj09MTEyODc9PSAgICBhdCAweDRCMEE0ODogc3RyYnVmX3dyaXRl
-X2NvbHVtbiAoZ3JhcGguYzo3OSkKPT0xMTI4Nz09ICAgIGJ5IDB4NEIwQjZGOiBncmFwaF9kcmF3
-X29jdG9wdXNfbWVyZ2UgKGdyYXBoLmM6ODAyKQo9PTExMjg3PT0gICAgYnkgMHg0QjE0NDA6IGdy
-YXBoX291dHB1dF9jb21taXRfbGluZSAoZ3JhcGguYzo4MzcpCj09MTEyODc9PSAgICBieSAweDRC
-MTcyNjogZ3JhcGhfbmV4dF9saW5lIChncmFwaC5jOjExMjYpCj09MTEyODc9PSAgICBieSAweDRC
-MUE1RjogZ3JhcGhfc2hvd19jb21taXQgKGdyYXBoLmM6MTE5NykKPT0xMTI4Nz09ICAgIGJ5IDB4
-NEJDRjM3OiBzaG93X2xvZyAobG9nLXRyZWUuYzo2MDEpCj09MTEyODc9PSAgICBieSAweDRCRDcy
-MzogbG9nX3RyZWVfY29tbWl0IChsb2ctdHJlZS5jOjg3OSkKPT0xMTI4Nz09ICAgIGJ5IDB4NDQx
-RThDOiBjbWRfbG9nX3dhbGsgKGxvZy5jOjM0NSkKPT0xMTI4Nz09ICAgIGJ5IDB4NDQzOTYxOiBj
-bWRfbG9nIChsb2cuYzo2NjApCj09MTEyODc9PSAgICBieSAweDQwNTBGOTogcnVuX2J1aWx0aW4g
-KGdpdC5jOjM1MCkKPT0xMTI4Nz09ICAgIGJ5IDB4NDA1MjE4OiBoYW5kbGVfYnVpbHRpbiAoZ2l0
-LmM6NTM2KQo9PTExMjg3PT0gICAgYnkgMHg0MDU1QUE6IHJ1bl9hcmd2IChnaXQuYzo1ODIpCj09
-MTEyODc9PSAKPT0xMTI4Nz09IFVzZSBvZiB1bmluaXRpYWxpc2VkIHZhbHVlIG9mIHNpemUgOAo9
-PTExMjg3PT0gICAgYXQgMHg0QjA1QTA6IGNvbHVtbl9nZXRfY29sb3JfY29kZSAoZ3JhcGguYzo3
-MykKPT0xMTI4Nz09ICAgIGJ5IDB4NEIwQTUxOiBzdHJidWZfd3JpdGVfY29sdW1uIChncmFwaC5j
-OjgwKQo9PTExMjg3PT0gICAgYnkgMHg0QjBCNkY6IGdyYXBoX2RyYXdfb2N0b3B1c19tZXJnZSAo
-Z3JhcGguYzo4MDIpCj09MTEyODc9PSAgICBieSAweDRCMTQ0MDogZ3JhcGhfb3V0cHV0X2NvbW1p
-dF9saW5lIChncmFwaC5jOjgzNykKPT0xMTI4Nz09ICAgIGJ5IDB4NEIxNzI2OiBncmFwaF9uZXh0
-X2xpbmUgKGdyYXBoLmM6MTEyNikKPT0xMTI4Nz09ICAgIGJ5IDB4NEIxQTVGOiBncmFwaF9zaG93
-X2NvbW1pdCAoZ3JhcGguYzoxMTk3KQo9PTExMjg3PT0gICAgYnkgMHg0QkNGMzc6IHNob3dfbG9n
-IChsb2ctdHJlZS5jOjYwMSkKPT0xMTI4Nz09ICAgIGJ5IDB4NEJENzIzOiBsb2dfdHJlZV9jb21t
-aXQgKGxvZy10cmVlLmM6ODc5KQo9PTExMjg3PT0gICAgYnkgMHg0NDFFOEM6IGNtZF9sb2dfd2Fs
-ayAobG9nLmM6MzQ1KQo9PTExMjg3PT0gICAgYnkgMHg0NDM5NjE6IGNtZF9sb2cgKGxvZy5jOjY2
-MCkKPT0xMTI4Nz09ICAgIGJ5IDB4NDA1MEY5OiBydW5fYnVpbHRpbiAoZ2l0LmM6MzUwKQo9PTEx
-Mjg3PT0gICAgYnkgMHg0MDUyMTg6IGhhbmRsZV9idWlsdGluIChnaXQuYzo1MzYpCj09MTEyODc9
-PSAKPT0xMTI4Nz09IENvbmRpdGlvbmFsIGp1bXAgb3IgbW92ZSBkZXBlbmRzIG9uIHVuaW5pdGlh
-bGlzZWQgdmFsdWUocykKPT0xMTI4Nz09ICAgIGF0IDB4NEIwQUM1OiBzdHJidWZfd3JpdGVfY29s
-dW1uIChncmFwaC5jOjgyKQo9PTExMjg3PT0gICAgYnkgMHg0QjBCNkY6IGdyYXBoX2RyYXdfb2N0
-b3B1c19tZXJnZSAoZ3JhcGguYzo4MDIpCj09MTEyODc9PSAgICBieSAweDRCMTQ0MDogZ3JhcGhf
-b3V0cHV0X2NvbW1pdF9saW5lIChncmFwaC5jOjgzNykKPT0xMTI4Nz09ICAgIGJ5IDB4NEIxNzI2
-OiBncmFwaF9uZXh0X2xpbmUgKGdyYXBoLmM6MTEyNikKPT0xMTI4Nz09ICAgIGJ5IDB4NEIxQTVG
-OiBncmFwaF9zaG93X2NvbW1pdCAoZ3JhcGguYzoxMTk3KQo9PTExMjg3PT0gICAgYnkgMHg0QkNG
-Mzc6IHNob3dfbG9nIChsb2ctdHJlZS5jOjYwMSkKPT0xMTI4Nz09ICAgIGJ5IDB4NEJENzIzOiBs
-b2dfdHJlZV9jb21taXQgKGxvZy10cmVlLmM6ODc5KQo9PTExMjg3PT0gICAgYnkgMHg0NDFFOEM6
-IGNtZF9sb2dfd2FsayAobG9nLmM6MzQ1KQo9PTExMjg3PT0gICAgYnkgMHg0NDM5NjE6IGNtZF9s
-b2cgKGxvZy5jOjY2MCkKPT0xMTI4Nz09ICAgIGJ5IDB4NDA1MEY5OiBydW5fYnVpbHRpbiAoZ2l0
-LmM6MzUwKQo9PTExMjg3PT0gICAgYnkgMHg0MDUyMTg6IGhhbmRsZV9idWlsdGluIChnaXQuYzo1
-MzYpCj09MTEyODc9PSAgICBieSAweDQwNTVBQTogcnVuX2FyZ3YgKGdpdC5jOjU4MikKPT0xMTI4
-Nz09IAo9PTExMjg3PT0gCj09MTEyODc9PSBIRUFQIFNVTU1BUlk6Cj09MTEyODc9PSAgICAgaW4g
-dXNlIGF0IGV4aXQ6IDY1MSwxNzAgYnl0ZXMgaW4gMTkxIGJsb2Nrcwo9PTExMjg3PT0gICB0b3Rh
-bCBoZWFwIHVzYWdlOiA0MTQgYWxsb2NzLCAyMjMgZnJlZXMsIDEsNzU2LDk2NyBieXRlcyBhbGxv
-Y2F0ZWQKPT0xMTI4Nz09IAo9PTExMjg3PT0gTEVBSyBTVU1NQVJZOgo9PTExMjg3PT0gICAgZGVm
-aW5pdGVseSBsb3N0OiA4MjUgYnl0ZXMgaW4gOCBibG9ja3MKPT0xMTI4Nz09ICAgIGluZGlyZWN0
-bHkgbG9zdDogMSw1MTUgYnl0ZXMgaW4gMTAgYmxvY2tzCj09MTEyODc9PSAgICAgIHBvc3NpYmx5
-IGxvc3Q6IDAgYnl0ZXMgaW4gMCBibG9ja3MKPT0xMTI4Nz09ICAgIHN0aWxsIHJlYWNoYWJsZTog
-NjQ4LDgzMCBieXRlcyBpbiAxNzMgYmxvY2tzCj09MTEyODc9PSAgICAgICAgIHN1cHByZXNzZWQ6
-IDAgYnl0ZXMgaW4gMCBibG9ja3MKPT0xMTI4Nz09IFJlcnVuIHdpdGggLS1sZWFrLWNoZWNrPWZ1
-bGwgdG8gc2VlIGRldGFpbHMgb2YgbGVha2VkIG1lbW9yeQo9PTExMjg3PT0gCj09MTEyODc9PSBG
-b3IgY291bnRzIG9mIGRldGVjdGVkIGFuZCBzdXBwcmVzc2VkIGVycm9ycywgcmVydW4gd2l0aDog
-LXYKPT0xMTI4Nz09IFVzZSAtLXRyYWNrLW9yaWdpbnM9eWVzIHRvIHNlZSB3aGVyZSB1bmluaXRp
-YWxpc2VkIHZhbHVlcyBjb21lIGZyb20KPT0xMTI4Nz09IEVSUk9SIFNVTU1BUlk6IDYgZXJyb3Jz
-IGZyb20gNiBjb250ZXh0cyAoc3VwcHJlc3NlZDogMCBmcm9tIDApCg==
---001a113ceaec4854ae0532e12911--
+ * I have sent the patches[2] for check_term_format() and write_terms() so
+   as to demonstrate how I am going to use the subcommand approach wherein
+   I will first convert a method and then call it by using a subcommand.
+   Then when another method is converted the previous method will be removed
+   from the subcommand and will instead be called from the new method. Junio
+   has collected this patch and queued it on a branch gitster/pb/bisect and
+   is available for testing on the pu branch. I am encouraging people to
+   test it and provide useful comments.
+
+ * I have also converted bisect_log() and bisect_voc() whose patches[3] are
+   sent to the list. Junio is yet to pick these up.
+
+ * I have converted the function bisect_clean_state() but its in a very
+   rudimentary form. Well I generally do like this. I first have a *just*
+   working model of a function and then I polish it by introducing the git's
+   API and write error handling code and resolve the style issues. Though it
+   is available on github[4]. The current version plainly removes the refs
+   using the git's API. I am quite aware that refs shouldn't be handled in this way
+   (this fact is constantly reminded in the docs). I am reading up on the
+   available methods for refs manipulation.
+
+ * I have also sent an independent patch[5] to explicitly test whether
+   bisection state is properly cleaned up.
+
+ * Also studied the functioning (upto an extent) of git-for-each-ref and
+   git-udpate ref as it is required during the conversion of
+   bisect_clean_state().
+
+ * The main part (I think) was that I read about the method's which handled the
+   refs. It was an interesting read though I did not read upon the actual
+   implementations of those, I mainly covered "What does the method do?" and
+   "How to use the method in my code?". git-grep is my best friend for this.
+
+ * I am still quite amazed by the amount of attention refs receive. Christian
+   explained a bit though I still don't get the feel why they are *sooo*
+   important. I was recently reading the Git Rev News and also seeing the
+   patches by Michael Haggerty and David Turner and I was quite amazed on
+   the amount of attention refs get.
+
+ * I also noticed a minor thing with bisect cleanups[6]. After the bisection
+   state is cleaned up the folder "refs/bisect/" is not removed. I pointed
+   this out but Christian thought it is okay the way it is.
+
+ * When I was converting the function write_terms() Christian advised to use
+   `|| exit` when calling it with a subcommand using `git bisect--helper
+    --write-terms $TERM_BAD bad` but it got the test no. 43 and 44 failing in
+    t6030. On a little bit investigation by Christian, these tests seem to
+    fail when there is a bare repo. He asked me to investigate it further.
+    I have currently not found enough time. Will do it in the coming week.
+
+
+================================= NEXT STEPS ================================
+Things which would be done in the coming week:
+
+ * Finish bisect_clean_state() conversion. I will first put it up on github
+   to receive comments from my mentors and then post it to the mailing list.
+
+ * Convert the function bisect_head(). I plan to convert this function and add
+   it as a subcommand to test the implementation but I will only send the
+   function without the subcommand to the mailing list because its a too small
+   function. Though the subcommand version will be put up on github for
+   everyone to verify whether it is passing the test suite like I have done it
+   for bisect_voc().
+
+ * Convert the function bisect_write(). I plan to convert this function and
+   add it as a subcommand.
+
+ * Investigate why test no. 43 and 44 are failing in t6030 with `|| exit` in
+   --write-terms.
+
+
+================================ NOTIFICATION ==============================
+
+I will be taking a short vacation from 16th May, 2016 to 19th May, 2016 so
+I wouldn't be available via email and also will not be able to work. I intend
+to make up for the lost time by working on weekends.
+
+[1]: https://github.com/pranitbauva1997/git
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/294388
+[3]: http://thread.gmane.org/gmane.comp.version-control.git/294571
+[4]: https://github.com/pranitbauva1997/git/pull/6
+[5]: http://thread.gmane.org/gmane.comp.version-control.git/294520
+[6]: https://github.com/pranitbauva1997/git/pull/8
+
+PS: Thanks to Andrew Ardill <andrew.ardill@gmail.com> on providing his comments
+of how to improve the format of this update email. I have tried to make it
+as exhaustive as possible.
+
+Regards,
+Pranit Bauva
