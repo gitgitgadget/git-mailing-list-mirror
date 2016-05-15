@@ -1,104 +1,88 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH/RFC v1 1/1] No duplicate CRLF rewrite warnings on commit
-Date: Sun, 15 May 2016 02:15:15 -0400
-Message-ID: <CAPig+cTrijGb5C1DRYTYtas0Rp5Fb34KmkxW5Fqb-T5-bdyD9Q@mail.gmail.com>
+From: tboegi@web.de
+Subject: [PATCH v1 0/3] CRLF-Handling: bug fix around ce_compare_data()
+Date: Sun, 15 May 2016 08:37:43 +0200
+Message-ID: <1463294263-20135-1-git-send-email-tboegi@web.de>
 References: <20160513134953.GE2345@dinwoodie.org>
-	<1463292503-12559-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, adam@dinwoodie.org
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun May 15 08:15:30 2016
+Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 15 08:32:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1pKn-0006q5-1i
-	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 08:15:25 +0200
+	id 1b1pbe-00061f-Q9
+	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 08:32:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752241AbcEOGPR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 May 2016 02:15:17 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:34111 "EHLO
-	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751553AbcEOGPQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 May 2016 02:15:16 -0400
-Received: by mail-io0-f180.google.com with SMTP id 190so177468406iow.1
-        for <git@vger.kernel.org>; Sat, 14 May 2016 23:15:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=3LQNch123whO/5zwY3vl7zYxLF+W7Ejnhfrk1P5Y4kI=;
-        b=Hrj/S6T1tUkJvxBBZyxqJAG5Q4TT9pTXa01CQFQ6NyPKP4i7PdwSG2Oi+Y/x/M3Vmz
-         kduaiKhJvQimShPVUeVWI5uTYhXI+D7lUkHML8md1nQumSHHu6Gcz/+xU8UfWlL29rcS
-         DYfb586MLTop5QmXDcQ8eCYg9DB9HK5oLBFq0F8d5anuD8apfTkLrUCXDkXdRbIUto+X
-         1wrqcw7EOPUkzOb0aQHiQtnUn8qxaoN7fKChFH/DBUclzFkLMsJlQjJdKqJAqtmaoTEW
-         BtGNupk29Z0KEIZXKklc6uzDH6oNO9hV67cIUmCNBi4hfupAsdgOi0ngTlRbJfA0q/yr
-         OKeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=3LQNch123whO/5zwY3vl7zYxLF+W7Ejnhfrk1P5Y4kI=;
-        b=gKow4Xg7uEaU9P4RuroC6cL+15nJdLoS+d/DUzqU+f76z9JvffWX22g4EJ5zc//iME
-         bnYkZ7t+E1glIAwwTlKW1Ij3JTeZ6I/KQGNojNvXpEYqA/JrZfj5Ixhpj7qp0Aolx/0/
-         BdBQC+YehBJ3sfi57wJvhP0gK+hZNzNZSwnr02T4D6UsCTvriuadLXEyzrgIpSWLvDXE
-         Qmc1pScTVGlDH1HVBtOZyoM+SyG3XDxTASNkwg1ZVGGslSLoTFS6FNL/MJG+4Sg8IKvF
-         M3O+6LxqMyTMHwHhLjpJTP3W1JTwQzQtDgO03jvNJ9LaFfTb5LZFqJAHi2o6Dsv3ESom
-         KnUg==
-X-Gm-Message-State: AOPr4FXsYQLEk7DklbrI+a3aU0K54h03dy5djV0AwkAOtbb+9xp9Kx7ZQdq5/UvtBq8qpfTtQ7SUSfmhi1jk/Q==
-X-Received: by 10.107.47.37 with SMTP id j37mr15468242ioo.168.1463292915443;
- Sat, 14 May 2016 23:15:15 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Sat, 14 May 2016 23:15:15 -0700 (PDT)
-In-Reply-To: <1463292503-12559-1-git-send-email-tboegi@web.de>
-X-Google-Sender-Auth: 7AX9Q8o5xI7nhswsjNby8K-8xW0
+	id S1752328AbcEOGcl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 May 2016 02:32:41 -0400
+Received: from mout.web.de ([212.227.15.14]:53817 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751630AbcEOGcl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 02:32:41 -0400
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0LiFT1-1bOoUx36iB-00nORm; Sun, 15 May 2016 08:32:36
+ +0200
+X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
+In-Reply-To: <20160513134953.GE2345@dinwoodie.org>
+X-Provags-ID: V03:K0:yx0qtGVjB0i68EEtLmERW2dyLbiamoRSfEGAbBM/FgetjQXXrgd
+ N8qSJVB2cmwDkHlyUt9YNTaydA4pFNSio92YJ/bJ+SYoBemtgGzroelGK2O1OObnfTWrr7w
+ efkkFHWSneHq/YCKijdblF7P7Y9UhOd+z3oScM4lm76/2xmErRfOPk74UY5Zu0nliLYJnQl
+ Pr4can2w/lNOHC0FozMYQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:yq40GqoYoY4=:Ty0gRFwyNKkbmdqMz10NKY
+ J2aViEPyr1vMSjSpz6qy1HsLNEqBmcDVASBZHqMQEg+Y+jt6Gv+rFrpAMfPxM8CLFGRVcZx5d
+ 5R+DFwWno7k9276py5saYZCT9GFBQoBVkDjvn2+MgS+lDeK8qOLqTe8YtV4cVxNWys2iq8NQM
+ RU1gyHiJSqVGrBoZKjvcQ4MXtcX85A9b96rPUy7gwPu5pW0/7hMYM6ie4m+K5ek4ntrpFvBm0
+ gos3UZUSOi8/3VgfPa8+tysHitPb7N9OPPAP75606YaLgBbi0boc1UofteFJmxLmNBY6O+gm2
+ UAzutHuVUYLUrriOspUd+FLpazuVf9mh3FUpSJI4WYmOG3IqLx+RYzRJGcUhLi//3X4AAc20N
+ 1hAZyY+uTqMLVWQLSCOrddT71c9eNICD0c3EAHQa83J+bn0J1Vvzso4iAvgkZpydAR1Dmh9Fe
+ BzGJC5HwqNM4VBaCazmORhZ0C+BFyUZUvzdM5+c0vDTcmsfHs2b1XE5uOfbP18Xx6f9MCYaLN
+ YlHldt9CZWpV3tq7JT0j8P5eCPIuSeRPx6X8UmxZyHUxlTN3HnqyGoG849QT1J4wbELAKhvRr
+ n/kWBPW4ntO2rhquTEcEHT0eqFeo0DSfMoq5pV/PNgpS+TYpiKYVbbwl7b9tF5D6eTN4E+NAd
+ G9cjeBv9jpEIcJ8CMz/ocwv4la8cD4a/mul9ymG4XxzOOdYqHWLE9LnRSE4WW67TAAVZqPKos
+ bbXnHv4oO/fEBxIkFS0vE5IpKOACQ28fTCMapKNtWibiS34YS+0VBOCRjG5ctETu1VNBI0af 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294637>
 
-On Sun, May 15, 2016 at 2:08 AM,  <tboegi@web.de> wrote:
-> If .gitattributes are used to enable CRLF->LF rewriting,
-> then commiting a file that would have its line endings rewritten,
-> the "CRLF will be replaced by LF" warning is printed 2 times.
-> A user expects it to be printed only once.
-> The automatic rename detection by Git runs the conversion twice,
-> suppress the warning in the second run.
->
-> Reported-By: Adam Dinwoodie <adam@dinwoodie.org>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
-> diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-> @@ -86,6 +86,20 @@ test_expect_success 'safecrlf: print warning only =
-once' '
-> +test_expect_success 'safecrlf: print warning only once on commit' '
-> +
-> +       git config core.autocrlf input &&
-> +       git config core.safecrlf warn &&
-> +
-> +       for w in I am all LF; do echo $w; done >doublewarn2 &&
+=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-I would typically say something about how you could instead use:
+Break up the old 10/10 series about CLRF handling into smaller
+series.
 
-    test_write_lines I am all LF >doublewarn2 &&
+1/10..4/10 are now found in tb/core-eol-fix
 
-but since you're just mimicking existing style in this script, I won't
-mention it.
+This series includes 3 from the 10/10 series:
+09/10 t6038; use crlf on all platforms                    #now 1/3
+05/10 read-cache: factor out get_sha1_from_index() helper #now 2/3
+10/10 Fix for ce_compare_data(), done right.              #now 3/3
 
-> +       git add doublewarn2 &&
-> +       git commit -m "nowarn" &&
-> +       for w in Oh here is CRLFQ in text; do echo $w; done | q_to_cr=
- >doublewarn2 &&
+The most important patch is 3/3
 
-Likewise; note my silence.
+The reminding 3 patches,
+stream-and-early-out,
+convert-unify-the-auto-handling-of-CRLF
+more-safer-crlf-handling-with-text-attr
+Need to be re-done, re-sorted and re-written, thanks for all the commen=
+ts.
 
-> +       git add doublewarn2 2>&1 &&
-> +       git commit -m Message 2>&1 | grep "CRLF will be replaced by L=
-=46" >actual &&
-> +       echo "warning: CRLF will be replaced by LF in doublewarn2." >=
-expected &&
-> +       test_cmp expected actual
-> +'
+Torsten B=C3=B6gershausen (3):
+  t6038; use crlf on all platforms
+  read-cache: factor out get_sha1_from_index() helper
+  convert: ce_compare_data() checks for a sha1 of a path
+
+ cache.h                    |  4 ++++
+ convert.c                  | 33 ++++++++++++++++++++++-----------
+ convert.h                  | 23 +++++++++++++++++++----
+ read-cache.c               | 33 +++++++++++++++++++++------------
+ sha1_file.c                | 17 +++++++++++++----
+ t/t6038-merge-text-auto.sh | 37 +++++++++++--------------------------
+ 6 files changed, 90 insertions(+), 57 deletions(-)
+
+--=20
+2.0.0.rc1.6318.g0c2c796
