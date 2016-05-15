@@ -1,88 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
 Subject: Re: [GSOC Update] Week 2
-Date: Sun, 15 May 2016 12:17:38 -0700
-Message-ID: <xmqqk2iv5dwt.fsf@gitster.mtv.corp.google.com>
+Date: Mon, 16 May 2016 01:00:32 +0530
+Message-ID: <CAFZEwPNMuL8hYgUNNWWU7EDmDDWF5HX7QLtTTjvvePjboEqASQ@mail.gmail.com>
 References: <1462706822-5189-1-git-send-email-pranit.bauva@gmail.com>
 	<1463334359-14033-1-git-send-email-pranit.bauva@gmail.com>
-	<vpqr3d32obm.fsf@anie.imag.fr>
+	<xmqqoa875e7m.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com, chriscool@tuxfamily.org,
-	larsxschneider@gmail.com, andrew.ardill@gmail.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun May 15 21:21:35 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Andrew Ardill <andrew.ardill@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 15 21:30:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b21bZ-0005pq-4O
-	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 21:21:33 +0200
+	id 1b21kQ-0005n0-Vm
+	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 21:30:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751684AbcEOTRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2016 15:17:42 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60925 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751220AbcEOTRl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 15:17:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 21A391B62A;
-	Sun, 15 May 2016 15:17:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yhJIcrDb62zbN/7e/TbzMADEGnk=; b=czEt9Q
-	2UTKJYrGApHCahFZq7eXtLWiJE4owNICZD56CI0jh69IYqLZSPq4f2lJc4uXXJZJ
-	aCHKOtQzrbI5q/c2hrzs0bpomJwILZAos2GM5+51IBwyAPk8UgFCsMJH/wOsA7n0
-	tZkpx8dsvz14CfxA9IaQ819sDcMYYisBt6T44=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NRUn7rOD5QXQFaOCIPSXGquaDmyd1UA5
-	0/9tz+0/FoqxLsA7iydddi9ucgk3OAN1j45UpA9S2lF9HfPIO3d34miaFmO0Mh76
-	ybVhWGyL2pgWBx/dqqI6ueQGstjVfD8L6+68ZaCyh7JfoSrBxriyKQ2QlooT52EG
-	JUaaNsK7RsQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1281D1B629;
-	Sun, 15 May 2016 15:17:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 898301B628;
-	Sun, 15 May 2016 15:17:40 -0400 (EDT)
-In-Reply-To: <vpqr3d32obm.fsf@anie.imag.fr> (Matthieu Moy's message of "Sun,
-	15 May 2016 20:01:01 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B14C3DDC-1AD1-11E6-B5FA-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751220AbcEOTae (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2016 15:30:34 -0400
+Received: from mail-yw0-f179.google.com ([209.85.161.179]:33558 "EHLO
+	mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751139AbcEOTad (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 15:30:33 -0400
+Received: by mail-yw0-f179.google.com with SMTP id x194so10690021ywd.0
+        for <git@vger.kernel.org>; Sun, 15 May 2016 12:30:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=6E2nBhtizHK5tejiq0C2ViPXayh7pA9vyArZBCh9+R8=;
+        b=G6XmlBVjErevA6M+7RNkjziN5T9OQc+qi8dW0el3Mim77Ncjg7G7Lr0DHTjIZS4YBb
+         LaZ99g3s+nigMkhzdqpZb0DJE5LNZ+VX382yyIsUawB1qSRFCsG6SPElREps7XLtZa5J
+         6oCpLGtV+CbGkJFtURtlieEG9WDdhLoWMm4Uo3SLjI5IJNbju1eaySTGF9DMFLQpWlJo
+         AZmhYt8zoqEfu1ASVJ3epsPpVN+l92tuAvCrCP5vxnxc4glFj8T6Yop9abqJ6scoN/wz
+         QqSC53icX4KGUwTgemW/+1qNMvNsfb9q0jk4i8cnuufhGcF5REHu2zU7qrxU5nhvYrHD
+         cFxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=6E2nBhtizHK5tejiq0C2ViPXayh7pA9vyArZBCh9+R8=;
+        b=Ji4nk8yxg8jXzodY0aizx3pA+feA6euXmtYAeO2b2tv40opjviCbnHfQIjgEr3F/lG
+         yiTcUXHMbL2wXBNGfDCEllYznInGcWKWKJpF09WstpRp36UG4z6ogHVbZeOu1JUaLrrQ
+         eI5GHzwQNI3LEybOKasUwiKGqWBypd5CAzoesZ8xNM77Kd7E0NblGhyNMD4NDqsMjR3I
+         aI4JRGCYG5187NPMwBGOjeP3c7/JybfIThc7HhxSCmPHU2i6og+1XcugbSutrYqPCQf5
+         RuGeaaQELtIQksS6LJRRaeXFkX+RuzAQqgyTeT1nxwBMMSC6RkDkZVpj67diDHGDRkRq
+         51EA==
+X-Gm-Message-State: AOPr4FVtEVeeqGHmnAh3H3BFkm3Qf2UBgJWmWzinCUgZazVo8EOXBz+eT/0/4HwA1ye7vZUQagl28bjUhXaYOQ==
+X-Received: by 10.37.118.69 with SMTP id r66mr12562718ybc.80.1463340632477;
+ Sun, 15 May 2016 12:30:32 -0700 (PDT)
+Received: by 10.13.219.213 with HTTP; Sun, 15 May 2016 12:30:32 -0700 (PDT)
+In-Reply-To: <xmqqoa875e7m.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294680>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Hey Junio,
 
+On Mon, May 16, 2016 at 12:41 AM, Junio C Hamano <gitster@pobox.com> wrote:
 > Pranit Bauva <pranit.bauva@gmail.com> writes:
 >
->> ================================= SUMMARY ==================================
->> My micro project on adding config variable to git-commit for verbose options
->> is going to be merged with the master branch soon and will be available for
->> git 2.8.3 .
+>>    is available for testing on the pu branch. I am encouraging people to
+>>    test it and provide useful comments.
 >
-> Nit: being merged to master doesn't mean you'll be in the next minor
-> release, but in the next _major_ one. 2.8.3 will only contain bugfixes
-> compared to 2.8.2.
+> Do not encourage people to "TEST".  In general, do not put too much
+> weight on testing.  The result would only measure a small portion of
+> what you wrote in the code, i.e. what you covered with the addition
+> to the test suite, plus whatever tests we already had.
+>
+> Instead, ask people to review.  A new code passing the testsuite is
+> a minimum requirement, and that is far from sufficient.
 
-Correct.
+Okay. Will keep this in mind.
 
-Recent "What's cooking" lists the topic as "Will merge to 'master'"
-but this does not promise in which timeframe it will be merged to
-'master', so it may not even be in 2.9.0 at all.
+>>  * I have also converted bisect_log() and bisect_voc() whose patches[3] are
+>>    sent to the list. Junio is yet to pick these up.
+>
+> Again, my picking them up is not a success criteria (and certainly
+> being on 'pu' does not count for anything--it is nothing more than
+> "Junio saw them on the list and bookmarked the messages".
+>
+> You should worry more about people not commenting nor reviewing them
+> than me picking them up (which would typically come later).
 
-Generally, what is in 'next' is marked as "Will merge to 'master'"
-by default, until a reason not to do so is found, at which time the
-mark is changed to "Will hold", etc., so saying "master branch soon"
-upon seeing "Will merge to 'master'" is a bit of overstatement.
+Sure.
 
-In fact, "git log maint..pb/commit-verbse-config" shows that this
-new feature is not ineligible for the maintenance track.  It will
-never be in 2.8.3 or any 2.8.x series.
+>>  * The main part (I think) was that I read about the method's which handled the
+>>    refs. It was an interesting read though I did not read upon the actual
+>>    implementations of those, I mainly covered "What does the method do?" and
+>>    "How to use the method in my code?". git-grep is my best friend for this.
+>
+> Yup.
+>
+> You would not be calling for-each-ref from a C rewrite of
+> bisect-clean-state.  Instead you would likely be calling
+> for_each_ref_in() to iterate over the existing refs/bisect/* refs,
+> recording their refname and objectname from the callback to
+> something like string_list, and then after for_each_ref_in()
+> finishes, iterate over the resulting string_list and running
+> delete_ref() on them.
+
+Actually I was seeing how for-each-ref called filter_ref() and
+planning to use that. But for_each_ref_in() seems much better. Thanks.
+I had planned on using delete_ref().
+
+> And reading the implementation of for-each-ref and update-ref is a
+> good way to find the need to use these API calls and how they are
+> used.  API docs are your second step.
+
+Thanks. I have read the man pages as well as some parts of the
+implementation (not the core details). API docs contain little
+information about ref handling though. I can try trying writing some
+documentation after GSoC project once I am comfortable with ref
+handling.
+
+> Overall, good progress for an early week.
+
+Thanks!
+
+Regards,
+Pranit Bauva
+
+> Thanks.
