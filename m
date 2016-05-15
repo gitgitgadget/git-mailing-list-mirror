@@ -1,76 +1,125 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: Git log three-dot notation: include merge base
-Date: Sat, 14 May 2016 18:32:39 -0500
-Message-ID: <CAHd499D2ci-8WKh=sCGdoy_Ry7aCw+TxD_Rp7QWiUpg9Qu=nmA@mail.gmail.com>
-References: <CAHd499A_AN0U7gj8Yp0pBGGZ6deNrDJ4F4npAKy6a2U0+uTsxg@mail.gmail.com>
-	<xmqqbn486wv3.fsf@gitster.mtv.corp.google.com>
+From: git.20.BrowserUk@xoxy.net
+Subject: Automating git add & commit for every change individually?
+Date: Sat, 14 May 2016 18:01:30 -0800
+Message-ID: <C21C71EAD3C.0000026Agit.20.BrowserUk@xoxy.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 15 01:33:07 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 15 04:01:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1j3G-0002Pi-ET
-	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 01:32:54 +0200
+	id 1b1lNM-000615-Ku
+	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 04:01:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753978AbcENXck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 May 2016 19:32:40 -0400
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:36549 "EHLO
-	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753913AbcENXck (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2016 19:32:40 -0400
-Received: by mail-vk0-f51.google.com with SMTP id s184so176462738vkb.3
-        for <git@vger.kernel.org>; Sat, 14 May 2016 16:32:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=sQBQ9XpDPs2Di+hkAYjrNAiwzFBI+8N6hEwtoxJUw8E=;
-        b=tny4Qs3oDbu/GjCFNl2reUajDQxk8D9uZ9RlY9CUrB+b06R37v+4KAHEyKMsmdCYb+
-         YszwksKXTccqGQYHDhGU7NykGqviW5BDn0dbnQrYsuNKa6hkSWVQCJPeAVrqWfPb4oEQ
-         LTIN/iHi+alvmlZOsYnnE9ua0LbPROLtNN92dgsNKXKWBgNyBc5vDS8GUIc1CITcLP0x
-         G6jur7k9Addgv+bBeIEzeeC0MxWPTJQFERAgzQ6f3O4vLfmKkORIuPUBklC6xOnzCdyi
-         vWC+AzrESoCUJyIlRZtVPGYfwqfAv1eqzYbWwfNOxz0/33yLM9ZuUdsgQzKv93OChmTT
-         3QZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=sQBQ9XpDPs2Di+hkAYjrNAiwzFBI+8N6hEwtoxJUw8E=;
-        b=mB8OON4buFB0/BN18CyYrA4TFDLZ7bb862buXS9dVNdcMvB2OHJqUMLGW7kEVeJEZx
-         3bbIYd1vsG1FxDnuLEo9IiFK0gED2z2XZgvQBkyfg2QNnAhHvgtVz9KlI+eTqXIGpyaD
-         RGAD+pGC0DsVRKfH7Fbu7Kk1nGSCtsP1WGyGr1Fgcy8FdpUCAEFHD8UKPmxfQeUs2z4W
-         AnB3gTLq0RjKWfj+q8ltVW3xpkp1O2+cLFLi3+M+ptr8/ZV9ZM/clKiqDK9VriFJqVDL
-         u8tbP894mE/yD5SDmUS/+ztiEXvCB/+JZXbkoYXIeVswdDcywtd1jIP6UGEz8IDXPMNt
-         MmOQ==
-X-Gm-Message-State: AOPr4FUqcfw1wNz8jVTkTBNEm4Q+FYgsvX83jfwCSeiT/5n90nUUbUTl2/UXdLrNFpzigei3KHQM2yxJ4IKQsw==
-X-Received: by 10.176.2.171 with SMTP id 40mr11521341uah.5.1463268759252; Sat,
- 14 May 2016 16:32:39 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.159.34.134 with HTTP; Sat, 14 May 2016 16:32:39 -0700 (PDT)
-In-Reply-To: <xmqqbn486wv3.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: IpdLf1z-laFZ8iHaogUMt4WXBTs
+	id S1754036AbcEOCBf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 May 2016 22:01:35 -0400
+Received: from gourmet.spamgourmet.com ([216.75.62.102]:54295 "EHLO
+	gourmet8.spamgourmet.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753994AbcEOCBe convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2016 22:01:34 -0400
+Received: from spamgourmet by gourmet7.spamgourmet.com with local (Exim 4.80)
+	(envelope-from <git.20.BrowserUk@xoxy.net>)
+	id 1b1lN6-0008Vd-Qy
+	for git@vger.kernel.org; Sun, 15 May 2016 02:01:32 +0000
+Received: from wm50.inbox.com ([64.135.83.50])
+	by gourmet7.spamgourmet.com with smtp (Exim 4.80)
+	(envelope-from <git.20.BrowserUk@xoxy.net>)
+	id 1b1lN6-0008UA-Df
+	for ; Sun, 15 May 2016 02:01:32 +0000
+Received: from inbox.com (127.0.0.1:25)
+	by inbox.com with [InBox.Com SMTP Server]
+	id <1605141801043.WM50> for <> from <git.20.BrowserUk@xoxy.net>;
+	Sat, 14 May 2016 18:01:30 -0800
+DomainKey-Signature: q=dns; a=rsa-sha1; c=nofws;
+ d=inbox.com; s=s1;
+ h=mime-version:date:message-id:from:subject:to:content-type;
+ b=yTPHvyixayXsd8FPUkoHcuBBOZKw1FwEQ35zYBJID/kU1qT0j3hk9+r8H/FOKCAdeQ5W
+ 9asdwJ90FXrGcHHxuJsLzaRG49raMNr1LAcZpfoF2YUp540RCYcQeqk7G2hpnU10Gs9uvC
+ /6KSjR4mpvWtK5py0V6fAaCpSysh8b1EY=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; q=dns/txt;
+ d=inbox.com; s=s1;
+ h=mime-version:date:message-id:subject:from:to:content-type;
+ bh=dlfM6gKQml0b2Ty8kGULlt9oVCIj7r/vYgao57+yblk=;
+ b=qIomBiHu9X/EFWm6QZMJOug9ESc/tQg57mcC9cT/uSVv9BlFtf/W8OANIRgMzvZKO6Gp
+ UkLnGMk7WDEyI5SA7q1r/nbNf+GaSjVvK1xaVNkrWkQgmutTcagmYaNBAr5wBIXTF+4wbY
+ plyT9gjC7ST9ZwqeBXw0QcCQi95ObRr+I=
+X-Mailer: INBOX.COM
+X-Originating-IP: 146.198.67.225
+X-IWM-ACU: DRCrZLBMKik6aIam8SmsGDvQ7PPm1hjMreD5G9PXQobuihmf7yKTaTPFHt-g
+  nHM-LorMZL5yPqpMWtcE-xZWXB4k6RqBOvCAzAb0jTLxm8ktsqEXWOt4qQtN
+  6mDoAvFDIrcZx6Qb_QOpE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294633>
 
-On Sat, May 14, 2016 at 6:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Robert Dailey <rcdailey.lists@gmail.com> writes:
->
->> This is because the merge base commit isn't shown. I understand this
->> is "by-design", but is there a way to include it? It's necessary to
->> have it, for this graph to make sense.
->
-> --boundary, perhaps?
+Hi,=20
 
-Big thanks to both you and Jeff. I figured there was some option for
-this, but I always have trouble finding what I need in the
-documentation sea of git log :-)
+Not sure this is the right place; I couldn't find a mailing list specif=
+ically for git *users*?
 
-This worked perfectly. Much appreciated!!!
+Problem: Given two source trees, neither yet under source control. One =
+(hereafter:MOD)containing extensive modifications of the other (hereaft=
+er:ORIG), I want to bring these together under source control such that=
+ I can, starting with the full MOD version, back out (and subsequently =
+reinstate) changes individually.
+
+And I mean individually at the 'group of lines' level; not the 'whole f=
+ile' level.
+
+Reason. The ORIG does not compile locally due to dependency on propriet=
+ary libraries I do not have access to. The MOD compiles locally and run=
+s; but I have introduced an error that means it produces the wrong resu=
+lts.=C2=A0
+
+None of the changes required to remove the dependence on the proprietar=
+y libraries should have affected the functionality. Obviously, I must h=
+ave touched something that wasn't required to achieve the local compile=
+=2E
+
+Some of those 'incidental' changes are obvious: the original source fil=
+es contain some tabs; my editor is set to replace tabs with spaces. Thi=
+s shouldn't affect anything, but shows up in diffs. Some changes are ha=
+bitual: manually adjusting whitespace and comments when trying to under=
+stand particular sections of code. Some are changes I made trying to ac=
+hieve the compile -- addressing warnings like "Information may be lost.=
+" -- that probably weren't ultimately required to achieve the compile. =
+These *could* affect the results produced.
+
+Suggested solution:: Put the ORIG into git (init/add ./commit -am "Orig=
+inal"). Copy the modified subtree over the original. Add & Commit the c=
+hanges in chunks.
+
+Problem: It doesn't allow me to back out the changes individually; only=
+ commit sized chunks.
+
+Suggested solution:: use git add -p to stage individual changes; and th=
+en commit it. Rinse & repeat.
+
+Problem:This is extremely laborious and error prone.
+Ie. If I do git -p; {spews 377 lines of diff}; Do you want to stage thi=
+s hunk. I accept: 'Y'; now that hunk is staged; but not committed. So, =
+I have to quit out of git -p; then git commit -m {make up some reason} =
+repeat for the next 4000 changes.
+
+Question 1:: Is there any way to automate the staging & committing of a=
+ll existing changes as individual commits? Preferably with auto-generat=
+ed commit messages.
+
+Question 2:: Is there some other way get both versions into git such th=
+at I am to be able to 'undo' individual changes to the MOD version, try=
+ the build & test; and then redo the undone change if it wasn't the one=
+ that screwed things up?
+
+Thanks, Buk
+
+____________________________________________________________
+Can't remember your password? Do you need a strong and secure password?
+Use Password manager! It stores your passwords & protects your account.
+Check it out at http://mysecurelogon.com/manager
