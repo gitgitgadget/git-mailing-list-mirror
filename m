@@ -1,90 +1,156 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH] crlf: Add test showing double warning on commit
-Date: Sun, 15 May 2016 08:39:31 +0200
-Message-ID: <55965a71-7078-60ad-0746-6f677dbb3f06@web.de>
-References: <20160514111755.GG2345@dinwoodie.org>
- <baea5604-e786-5773-aa68-f311efb23752@web.de>
- <xmqqoa887a25.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v1 1/3] t6038; use crlf on all platforms
+Date: Sun, 15 May 2016 02:42:38 -0400
+Message-ID: <CAPig+cRj_=+hBw_BpBHfJLwBmMH1k8w1S1WMFes2avSOOkc77g@mail.gmail.com>
+References: <20160513134953.GE2345@dinwoodie.org>
+	<1463294280-20176-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun May 15 08:39:51 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun May 15 08:42:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b1piP-00047u-F6
-	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 08:39:49 +0200
+	id 1b1plF-0006rk-Qo
+	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 08:42:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752288AbcEOGjl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 May 2016 02:39:41 -0400
-Received: from mout.web.de ([212.227.15.3]:52094 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751553AbcEOGjk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 02:39:40 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0MaajJ-1bHZBE0k6T-00KCBO; Sun, 15 May 2016 08:39:33
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.0
-In-Reply-To: <xmqqoa887a25.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:2A6TDnSDdHQBJy/gHmx3RwW66FPii4CJxAoBWyfq8iFB57hij85
- XiualdqRdbq1x3o4VQFl/rnPgUTgkWc/9JSvcDKHL+qDQvipG3DMJM9V/pNswoEre3j0bCM
- tu69ust2Mkwbq0FZORF+lqhXHDav/MGnOr7No7MPX4+mWjbdn9e4b0/zsTiUVTpp1CyVydM
- +8E23jGvxd31OHTmGsMiA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:J2TECANjV6s=:80Q1TVWPo8m+rvMYmhrtHl
- t37VgIRiasVfAHs8lUD6RrwE2ytfH1C+tTOfy6dSZa1Kbg4MlRiVAYHIcsH20t2K2zWrIv0B1
- SdOVxbrcTXHdX7gb2FmOG+0ibapHosCEw34SjRh1NJXZTdYnVXYJrD1XfGE6yShOnOPrn90n9
- 5hZbfcfiBjTQ5t1KN8rhTDakNX0sgZTWckZP6jBGnptfsYij5oztBPizA+117O5miRiIoCLU/
- 3spmLh4830XojFVzlR1e7Z//jPRa/6YjWLkbfCv0DsrGQ+WTHG+zZ7uA4mRzRK9NqAWT0vb+2
- df3d5jbcxYZEjSuPTK6f6t5AzmqXsGH7I6Qk066HLWy+htthOub5dNG4ij2N2SXo7jGmehGas
- QhVbnD8Gd5ksqy3ZQuwwH7EkIJOQ/OMOjL+SwnCzN/2lVcC5AEXsCgLnTq6pCCJijLB68rLuy
- 6rAe4PVXcl+4WCu2cVqAQCY4OMQwTw+EN+ko5jQ8OTML6pD6XJyYtUttZftnIJ6EmFWNdg6oR
- /br6ZJWJ3woYMHt2y2B5/4GitWwumKnKl0xi/AwotasZRkp8f+rR8hgIxOSSeCuBM07LwuHEl
- j64383Jc8dg2B7/yRr+1rY3Yx86N0PPs0M2uiOsBkOstX7Pee2I/DZt3MDkMiSgq3xuBRs2cQ
- snFJP6Y5iT3VeQzezrfNibZaCP9SBP7z6YdEYN/VU20T8/FXB84z5ged5gGlIOrBZPhAloUxB
- qw0MAVoZDIFoSCY7bvPq4dTlNCPiGcVoic8lxrsofyVWWHRMiyqTyGgoqOa6uqyApmhk3f4A 
+	id S1752643AbcEOGmj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2016 02:42:39 -0400
+Received: from mail-ig0-f193.google.com ([209.85.213.193]:34975 "EHLO
+	mail-ig0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751630AbcEOGmj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 02:42:39 -0400
+Received: by mail-ig0-f193.google.com with SMTP id jn6so4531264igb.2
+        for <git@vger.kernel.org>; Sat, 14 May 2016 23:42:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=LtZZTtvfl8YRFzMrfdw35LLgAbSCMJ/eqBpGaI/aZpU=;
+        b=ztxpVAZsub+Z692VW5056KC08rZeZY0hdU5DAkOWUgcTWDyh5UFnRz4kABiSvl0ZWN
+         dBDBY3MNhaZjeRbCikHhK25ZvtVABmM573906PFmEJ+p0cQtRhQ+8R5+IVMQHKPMwSKJ
+         Jcxt6x7XVenTHLb0/D7ZapGVoux0qIzmWYbifXkUy9rb1VXGjnTLP1HQ5cH5xLhEIxLf
+         86ewcOUZPVuulZtzn3NeAZJbg85rHXbpqCaOlzNNEKHQ6L01wf/IkRnMZLr9BMKX7It5
+         +AHjPQuFl4cCVYi+9SmTSTKuFFCa0SNhqi7vvQ9ekz4C30zSCxLLE2h3x3PNgbZCAHHO
+         3qIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=LtZZTtvfl8YRFzMrfdw35LLgAbSCMJ/eqBpGaI/aZpU=;
+        b=m7O8MTgpNWrjhI0UPsj4pVKOqwz9Bx28FnM+pNxfEuSsqgmDscXINedLN6D9k2JjaZ
+         BUn9jJWocikdcx66hhCNJx1bPVkzpAFcPId+KANcU4HQ8YZshW3sHh7Vh/Mmj9tYE6RL
+         sHprSU96dwePd1mRg0BHMswIA0aBHC/H9Y+1u5gLzW3pfZooRQbaVkIfE18W0XaF+5UQ
+         pu7n8CNa+UnOSpfDL28lER2bfQnvQxUUXbWJURA/IJ7iIFlWlsynTMU70XBkeb21p49M
+         64UlhaGuI9wLD1BorKSKXz0CEET11H+t4veF7YSLplRwIkvuaoDdj03KIkaMSpIlM97P
+         xl4w==
+X-Gm-Message-State: AOPr4FXUfi/jSacIeeiK1A6qwK14sHoanmT9sTm6pnTgFNSknVrFdpDbXSqIgehDnPMxkbc28ocJrRi3U5b4hQ==
+X-Received: by 10.50.6.15 with SMTP id w15mr7272843igw.91.1463294558226; Sat,
+ 14 May 2016 23:42:38 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Sat, 14 May 2016 23:42:38 -0700 (PDT)
+In-Reply-To: <1463294280-20176-1-git-send-email-tboegi@web.de>
+X-Google-Sender-Auth: QHD5Yq5nlnAArbyXWGxUngfc3zw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294642>
 
-On 14.05.16 20:45, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->> Do we need to run diff_populate_filespec() twice when src=3D=3Ddst ?
->=20
-> Of course we do.
->=20
-> src and dst may have the same path, but are coming from different
-> places (src may be an indexed blob while dst may be a file in the
-> working tree).
->=20
->> If yes, we may need to introduce a flag besides
->> #define CHECK_SIZE_ONLY 1
->> #define CHECK_BINARY    2
->> to suppress the conversion warning ??
->=20
-> I do not think that belongs to diff_populate_filespec() at all.
->=20
-> Why should conversion routine give this warning when called by
-> diff_populate_filespec() in the first place?  Shouldn't it be silent
-> by default, and is allowed to talk _ONLY_ when we are attempting to
-> actually replace the data in the index, e.g. "git add" and "git
-> commit -a"?
->=20
+On Sun, May 15, 2016 at 2:38 AM,  <tboegi@web.de> wrote:
+> t6038 uses different code, dependig if NATIVE_CRLF is set ot not.
 
-Nja, (Or Nyes in English), the old handling tried to be "nice" to the u=
-ser:
-$ git add text # gave warning
-#User forgets, does other things, git reset HEAD....
-$ git commit # Gave the warning one more time, to remind the user,=20
-             # what he did, and what is really commited.
+s/dependig/depending/
+s/ot/or/
 
-But it may be, that diff_populate_filespec() is the wrong place for spe=
-aches ?
+> When the native line endings are LF, merge.renormalize is not tested very well.
+> Change the test to always use CRLF by setting core.eol=crlf.
+> After doing so, the test fails:
+> [...snip...]
+> This will be addressed in the next commit.
+
+Does this mean that the below tests now fail? If so, they should be
+switched to use test_expect_failure here, and then swapped back to
+test_expect_success in the patch which fixes the problem.
+
+> ---
+> diff --git a/t/t6038-merge-text-auto.sh b/t/t6038-merge-text-auto.sh
+> index 85c10b0..4dc8c1a 100755
+> --- a/t/t6038-merge-text-auto.sh
+> +++ b/t/t6038-merge-text-auto.sh
+> @@ -18,6 +18,7 @@ test_have_prereq SED_STRIPS_CR && SED_OPTIONS=-b
+>
+>  test_expect_success setup '
+>         git config core.autocrlf false &&
+> +       git config core.eol crlf &&
+>
+>         echo first line | append_cr >file &&
+>         echo first line >control_file &&
+> @@ -72,10 +73,8 @@ test_expect_success 'Merge after setting text=auto' '
+>         same line
+>         EOF
+>
+> -       if test_have_prereq NATIVE_CRLF; then
+> -               append_cr <expected >expected.temp &&
+> -               mv expected.temp expected
+> -       fi &&
+> +       append_cr <expected >expected.temp &&
+> +       mv expected.temp expected &&
+>         git config merge.renormalize true &&
+>         git rm -fr . &&
+>         rm -f .gitattributes &&
+> @@ -90,10 +89,8 @@ test_expect_success 'Merge addition of text=auto' '
+>         same line
+>         EOF
+>
+> -       if test_have_prereq NATIVE_CRLF; then
+> -               append_cr <expected >expected.temp &&
+> -               mv expected.temp expected
+> -       fi &&
+> +       append_cr <expected >expected.temp &&
+> +       mv expected.temp expected &&
+>         git config merge.renormalize true &&
+>         git rm -fr . &&
+>         rm -f .gitattributes &&
+> @@ -104,15 +101,9 @@ test_expect_success 'Merge addition of text=auto' '
+>
+>  test_expect_success 'Detect CRLF/LF conflict after setting text=auto' '
+>         echo "<<<<<<<" >expected &&
+> -       if test_have_prereq NATIVE_CRLF; then
+> -               echo first line | append_cr >>expected &&
+> -               echo same line | append_cr >>expected &&
+> -               echo ======= | append_cr >>expected
+> -       else
+> -               echo first line >>expected &&
+> -               echo same line >>expected &&
+> -               echo ======= >>expected
+> -       fi &&
+> +       echo first line | append_cr >>expected &&
+> +       echo same line | append_cr >>expected &&
+> +       echo ======= | append_cr >>expected &&
+>         echo first line | append_cr >>expected &&
+>         echo same line | append_cr >>expected &&
+>         echo ">>>>>>>" >>expected &&
+> @@ -128,15 +119,9 @@ test_expect_success 'Detect LF/CRLF conflict from addition of text=auto' '
+>         echo "<<<<<<<" >expected &&
+>         echo first line | append_cr >>expected &&
+>         echo same line | append_cr >>expected &&
+> -       if test_have_prereq NATIVE_CRLF; then
+> -               echo ======= | append_cr >>expected &&
+> -               echo first line | append_cr >>expected &&
+> -               echo same line | append_cr >>expected
+> -       else
+> -               echo ======= >>expected &&
+> -               echo first line >>expected &&
+> -               echo same line >>expected
+> -       fi &&
+> +       echo ======= | append_cr >>expected &&
+> +       echo first line | append_cr >>expected &&
+> +       echo same line | append_cr >>expected &&
+>         echo ">>>>>>>" >>expected &&
+>         git config merge.renormalize false &&
+>         rm -f .gitattributes &&
+> --
+> 2.0.0.rc1.6318.g0c2c796
