@@ -1,107 +1,85 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH 0/4] pathspec labels [WAS: submodule groups]
-Date: Mon, 16 May 2016 15:09:53 -0700
-Message-ID: <CAGZ79kaP7rPu64ORXrGcONyoM2jA+gfPpy3LFkbp0Axff9dsHg@mail.gmail.com>
-References: <20160513001936.7623-1-sbeller@google.com>
-	<CACsJy8BK-u2VV3kkq3ANHCanYqMwphqgxZmooQfewA_J7e8MPw@mail.gmail.com>
-	<CAGZ79kacKnBjzVFSShRido4rKa3-Zg465d2320M6w1qXEkOZqw@mail.gmail.com>
-	<xmqqh9dx3nsf.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZyPvAFG1TjSm76LuDLpch=7iuL_-8LYqysSESFQj-YjQ@mail.gmail.com>
-	<xmqqlh391z2v.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZuMdWdw2kcfs_P-_Ax1zXpKNHqMjNL80hBj3=SSp2zSQ@mail.gmail.com>
-	<xmqqh9dx1xku.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kbJxf6qnj1vqkbFzXBU+6Cfh6RMvs2NqqeASZAPLFXu8Q@mail.gmail.com>
-	<xmqq8tz91x1b.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 00/17] Port branch.c to use ref-filter's printing options
+Date: Mon, 16 May 2016 15:12:25 -0700
+Message-ID: <xmqq4m9x1wl2.fsf@gitster.mtv.corp.google.com>
+References: <1463309133-14503-1-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 17 00:09:59 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, peff@peff.net
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 17 00:12:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2Qi7-0002lp-1h
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 00:09:59 +0200
+	id 1b2Qkc-0003oh-1z
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 00:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751745AbcEPWJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 18:09:55 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:32843 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751593AbcEPWJy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 18:09:54 -0400
-Received: by mail-io0-f174.google.com with SMTP id f89so949314ioi.0
-        for <git@vger.kernel.org>; Mon, 16 May 2016 15:09:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=4onsR0hCOv85Mrtd7VdZyE7VKbTnSBN7FkevSXLDsPQ=;
-        b=ZLJArCwjC3BchhX9t4onfCOFYaC2aV+aA15omz7LQDQvhbXHmoyluXfQPZRSrE2BkA
-         W7+/G9YW4t4glKvkLFTZwGWYRxbiG8YdnsNDh3X6HWc18suucbjENt2l1NWLOlnk+Zd8
-         26OXBrNnAAVOFlavCWYzOn/3k/aeLVsZG/G9Ohxr4AsmnVqyINNh3silg4Kopcdm9h/6
-         OCZEMx0e/u5clkMsa4V56EuLmmSrLyAMFKXEfKFBDDPaXVu0bqHQ9ZwOEiA2cpjWYRUs
-         yysSX2W3bxwh1TmBEgmnE2p0O5VAw/6F418R+rFSaFPv+CNtmjr318v3yIj24i3BxCFV
-         kiSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=4onsR0hCOv85Mrtd7VdZyE7VKbTnSBN7FkevSXLDsPQ=;
-        b=mrAQEMr0FKNaJPQu7wSHEqdA4ArypCXw50K2hQiY2D6YhVN3Wg0nS55Wk2oTcX+CVd
-         6PxjySs0/WxIMORW/DAob8CgqCnNcKpj3QS9RZOef68OHqlUDNNdfHNaCJsGfap27cO/
-         VGttFFGeTH5NGYtCgxna/tnK0pt4PfaGP3rtnUGTQs3e3hCEg3tkrcxucqO3C+NsTGFk
-         o71qjIdSAqDx0qG/zNGtFcezHveOsTc9xnJLUHhYj1qXIynfuvTvF+d1ezu4crSrM1h/
-         5TVAaDgam8qX/HiN8QSpfVcqI2/wi80SUh7QcSgbmU52bZ/pqChKY+xG0TkY94wV9j3v
-         ZAOw==
-X-Gm-Message-State: AOPr4FXJ9Bx9b5P/9aT4LyZzP1MhT5IKIw8TvlK/hqFIW71zzkCQGriY42GYsxD+GJ9eaHg7I8pjC3CoKb9dkTiR
-X-Received: by 10.36.14.71 with SMTP id 68mr10601218ite.98.1463436593392; Mon,
- 16 May 2016 15:09:53 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Mon, 16 May 2016 15:09:53 -0700 (PDT)
-In-Reply-To: <xmqq8tz91x1b.fsf@gitster.mtv.corp.google.com>
+	id S1751811AbcEPWMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 18:12:30 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59660 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751456AbcEPWM3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 18:12:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8DB111CCDE;
+	Mon, 16 May 2016 18:12:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Euu1BQqddoZ9QcHJjn9gq5t+D0k=; b=SAO84c
+	8+3JLgG6dSdgLb5BSPNuHqWLfAlRWbZ232T+x3RXGh8kabWlFZtpsFT6ukduzghp
+	cfcZwnv50SSnzcWQnXYG15K0FummwIKlOGgUTNIq67pNmOM868obgpy+FugoFX1b
+	jj7kHAU1nNeIKdkx0vgESVVX8KHB1ABWHtJcM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hj3mGqailQRNA+zzNrhTdMaQrTLn+76q
+	WRNsm/cfhEhtSuQK+ffDfjvgd1eggDvRH+9Lptce2baJ+Sqbh3WR662tPLjscDAj
+	aIYBnz1R0fnu97mPN75CjujSA3i91Wsho08Y5zAj1yMiF3iXxzCnwwEK3fRdupJy
+	EeFsUcQ5pd4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 85ED31CCDD;
+	Mon, 16 May 2016 18:12:28 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 07F8D1CCDC;
+	Mon, 16 May 2016 18:12:27 -0400 (EDT)
+In-Reply-To: <1463309133-14503-1-git-send-email-Karthik.188@gmail.com>
+	(Karthik Nayak's message of "Sun, 15 May 2016 16:15:16 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 46B0FDC2-1BB3-11E6-8A8C-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294806>
 
-On Mon, May 16, 2016 at 3:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+> This is part of unification of the commands 'git tag -l, git branch -l
+> and git for-each-ref'. This ports over branch.c to use ref-filter's
+> printing options.
 >
->>> Hmph, why not?
->>
->> We need a namespace for which
->> * we can guarantee that it is for labeling purposes only (even in the future)
->> * is obvious to the user to be a labeling name space
->>
->> Starting with "label" offers both?
+> Initially posted here: $(gmane/279226). It was decided that this series
+> would follow up after refactoring ref-filter parsing mechanism, which
+> is now merged into master (9606218b32344c5c756f7c29349d3845ef60b80c).
+
+9606218b?
+
+> Changes in this version:
 >
-> Ah, of course.  I thought that you were trying to limit ":(attr:<attribute>)"
-> magic only to attributes that begin with "label-", which is where my
-> "why not?" comes from.
+> 1. Rebased on top of f307218 (t6302: simplify non-gpg cases).
 
-And going by the logic you presented before, we would
-need to error out for the given pathspec ":(<string>)" if
+Huh?
 
-* either the string is not well known (e.g. diif, eol )
-* or is outside of the labeling namespace.
-
-So we don't want to see users complaining about
-"bug attr:foo worked as a label, now it is a feature; you broke my code"
-
-We would need to ignore data from .gitattributes as it may be crafted from
-a newer version of Git, but the command line argument still needs to die
-for unknown arguments?
-
-So asking for :(foo) would yield a
-
-    fatal: attr 'foo' is not known to Git, nor is it in the labeling name space
-
-I guess what I am asking is if there is a nice way to query "do we know
-this attribute?"
-
-Stefan
+  $ git checkout f307218
+  $ git am 0001-ref-filter-implement-if.txt
+  Applying: ref-filter: implement %(if), %(then), and %(else) atoms
+  error: patch failed: Documentation/git-for-each-ref.txt:181
+  error: Documentation/git-for-each-ref.txt: patch does not apply
+  Patch failed at 0001 ref-filter: implement %(if), %(then), and %(else) atoms
+  The copy of the patch that failed is found in: .git/rebase-apply/patch
+  When you have resolved this problem, run "git am --continue".
+  If you prefer to skip this patch, run "git am --skip" instead.
+  To restore the original branch and stop patching, run "git am --abort".
