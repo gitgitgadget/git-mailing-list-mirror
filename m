@@ -1,85 +1,76 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Best Practices with code/build fixes post-merge?
-Date: Mon, 16 May 2016 14:19:52 -0500
-Message-ID: <CAHd499D7kgMtUXgBgsUzNLEMuuHRE7j_T1mikL21KJjDE8ey3A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] pathspec: record labels
+Date: Mon, 16 May 2016 12:27:33 -0700
+Message-ID: <xmqqvb2d247u.fsf@gitster.mtv.corp.google.com>
+References: <20160513231326.8994-1-sbeller@google.com>
+	<20160513231326.8994-6-sbeller@google.com>
+	<xmqqk2iw78aq.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZsVH3mE0zXu9wSWgit3QZ_CiKZqg-TQdyWnZw6D9=Cgw@mail.gmail.com>
+	<xmqqlh393nuv.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbN_pzAVeAa-St_KRs60SbURTfKKP0v+do_+MK7orTkTg@mail.gmail.com>
+	<xmqq8tz93kf9.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaV+hQRn6ZraZcG9ZRp1XwPGrEFibBEX5qFJdWDCg0uxQ@mail.gmail.com>
+	<xmqqzirp253d.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbLcRgM5PoTp7DA-c5DneAWJOxNwZVSMxU0LdVtuBfiRA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 16 21:20:11 2016
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon May 16 21:28:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2O3m-0001dg-FQ
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 21:20:10 +0200
+	id 1b2OBM-0005RK-U4
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 21:28:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754614AbcEPTTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 15:19:55 -0400
-Received: from mail-vk0-f43.google.com ([209.85.213.43]:34896 "EHLO
-	mail-vk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754371AbcEPTTx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 15:19:53 -0400
-Received: by mail-vk0-f43.google.com with SMTP id f66so225660771vkh.2
-        for <git@vger.kernel.org>; Mon, 16 May 2016 12:19:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to;
-        bh=18iTeKAY4QWaUNXt/mdnfVJYGzV8/zd2QB44P8Ebw+c=;
-        b=Fsf6N640kMqQEIn23oWUKhh3yhi9QjMM5kjMXeGkIf+xns2CzA0og6WHV0gcLOcETe
-         hjxLUXo2ahP9OAF5BZA5KWccmS/UoZp0NgSVl1xKQ+Lwj7N6DLViAgajUei1PRtt1K1x
-         qpzmaV5ceGYE4N54NSXKtwsGnWOB0q5JIqfSzqWcxgrJOlmhzQYTTYzyPHTuoQfXdXc0
-         92Lnp3+T6vKRCNO0Q3enIwSODhisbMROOnpZeYawWQ0MujN2UwiJ9Ri3BB2gn87N5Fvz
-         NXED7DDbs1058ZJ+Fn0biW0ZbRNvDtq/remuR2NVX4QPRICVWXcMCorxpTNz2VDNoxXw
-         nnGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
-         :to;
-        bh=18iTeKAY4QWaUNXt/mdnfVJYGzV8/zd2QB44P8Ebw+c=;
-        b=LOfBLF+JPOfixZ9htdpKhBveIzaupCs4OyDpCOWFLoMJjPjBSUUHpO5vk+blSgI5lx
-         2s1+fzieYoXezzKivfGVDlR1FjmkZ7b8B5B2Nb56y/2RlrhUZM9e4BJj/29eiQRZjGWc
-         o5ES9Wekrhp8mzlodlSbpFjxtA4DU8xSruw6uNRgNcdLXr7PZsvCHcXHZGU7bNWKTu18
-         L2ICOOL+X51oqt7uw8DBDTFvSUc3tNtuF/6jJg6Le/1Z4cJuBrrVQhsODuTcft/SL5uN
-         3RRaTU4J/xAc883B5maDNdGQM+uMWwwQlnscLppcDZD3ojcqFbqMJtqD/6GVVDQp1m4L
-         ydeQ==
-X-Gm-Message-State: AOPr4FUHt96zh2TIIaX0EnlY4pho0Bas8DiJtBKqlw4ufOdfCGfZ7fweUaLzguOpHaQ6+C8jcFrP4iOWOGXz4w==
-X-Received: by 10.176.64.100 with SMTP id h91mr13669320uad.56.1463426392038;
- Mon, 16 May 2016 12:19:52 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.159.34.134 with HTTP; Mon, 16 May 2016 12:19:52 -0700 (PDT)
-X-Google-Sender-Auth: qozpuVgPIrgUPF9hS0Ett84NVG0
+	id S1754590AbcEPT1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 15:27:45 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63854 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754474AbcEPT1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 15:27:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 35A541C87D;
+	Mon, 16 May 2016 15:27:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GS/n/lZbAaZMiDSjn6DWoLAF/4Q=; b=xDvQiK
+	zWOetyevCCXLVS1EuxSa4Z3tdvXra22d/nKNrrZuNRwOAjVqbA4hP44VcwdeGUnD
+	E4SNa8dtVQwENjsdQKGVkZxlhnthDfRoczBUpjNk65sRLU5c+ks5q8h9m11YCIJm
+	nM7CnOU8NuneJTENK2NDw3aOJK9Vt7rwEU0Vs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AMhOaBsS79VnNuZe6vCC3V9nxGfa43v4
+	UpVzaXO+24IYirBpf500Zu/YuOpuo6u5C0yIy7Oxk1QMPKNM1iZjxtpU7dnuF2mK
+	ziUE43XumtP5LDlN+5Xwl7Qum4rF6i4eD5sTZInlkEk+6vkbO14Ychdg/L2Vj8ec
+	WkEmfVk8sGc=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2AD681C87C;
+	Mon, 16 May 2016 15:27:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9810F1C872;
+	Mon, 16 May 2016 15:27:35 -0400 (EDT)
+In-Reply-To: <CAGZ79kbLcRgM5PoTp7DA-c5DneAWJOxNwZVSMxU0LdVtuBfiRA@mail.gmail.com>
+	(Stefan Beller's message of "Mon, 16 May 2016 12:12:58 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 3E5AB8AA-1B9C-11E6-9D97-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294783>
 
-Sometimes, I merge 2 branches that have deviated quite a bit. A
-worst-case example would be some API change. The topic branch
-(long-lived) may start using the old API. However, once I merge the
-topic back to master, that API no longer exists. As such, every place
-that introduces a usage of the old API will fail to build (but won't
-necessarily cause a conflict during a merge).
+Stefan Beller <sbeller@google.com> writes:
 
-Concerning best practices, which of the following is better?
+>     "Path '%s': Ignoring label set to false; This may behave
+> differently in future versions of Git."
 
-1. Make the fixes (which may be vast), smoke test, get a general feel
-that everything is working on master again. Amend the changes to the
-previous merge commit.
-
-2. Make the fixes as in step 1, but instead of amending to the merge
-commit, create a new descendant commit representing the changes.
-
-Concerns I see with either choice:
-
-1. Pros: Changes are atomic. Cons: merge commits are typically very
-difficult to view, especially from logs. For example, `git log
---name-status` does nothing for merge commits, so it makes it
-less-intuitive to get a good overview of changes.
-
-2. Opposite of #1: Changes are not atomic (con), but it makes it very
-clear that these changes were made "on top of" the merge (pro)
-
-Is there a best practice here? What do each of you do as a personal
-preference or policy? Thanks in advance.
+I agree that mentioning "ignoring" is good enough.  I think our
+recent messages begin with lowercase, though.
