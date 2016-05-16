@@ -1,107 +1,129 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v6 3/3] bisect--helper: `write_terms` shell function in C
-Date: Mon, 16 May 2016 11:42:01 -0400
-Message-ID: <CAPig+cQ=Gche_uO840wF6qE4WD-ZNZj1HFzNNgaBi_UjG1sjEg@mail.gmail.com>
-References: <1462546167-1125-1-git-send-email-pranit.bauva@gmail.com>
-	<1463031127-17718-1-git-send-email-pranit.bauva@gmail.com>
-	<1463031127-17718-4-git-send-email-pranit.bauva@gmail.com>
-	<CAPig+cS=zcSVLwARZ5A8hdiE0wqgYPU2Jwnr0OcjDXZFO--cZw@mail.gmail.com>
-	<alpine.DEB.2.20.1605161508230.3303@virtualbox>
+From: Vasily Titskiy <qehgt0@gmail.com>
+Subject: Re: [PATCH] Ignore dirty submodule states during stash
+Date: Mon, 16 May 2016 15:46:06 +0000
+Message-ID: <20160516154606.GA8797@gmail.com>
+References: <20160516020735.GA7884@gmail.com>
+ <CAGZ79kaTss6ctZDCiRP2wjuxH+rJ79RKFLM79_FJN+37Bed+HQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Pranit Bauva <pranit.bauva@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 16 17:42:53 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon May 16 17:46:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2Ken-0005VB-Hd
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 17:42:10 +0200
+	id 1b2Kj8-0000hc-D6
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 17:46:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753983AbcEPPmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 11:42:05 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:34420 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752812AbcEPPmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 11:42:03 -0400
-Received: by mail-io0-f193.google.com with SMTP id d62so15603679iof.1
-        for <git@vger.kernel.org>; Mon, 16 May 2016 08:42:02 -0700 (PDT)
+	id S1754193AbcEPPqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 11:46:13 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:36119 "EHLO
+	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754111AbcEPPqJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 11:46:09 -0400
+Received: by mail-yw0-f193.google.com with SMTP id u62so19970636ywe.3
+        for <git@vger.kernel.org>; Mon, 16 May 2016 08:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=4aXw6gNSD5AxhVTo4CSrn33q7cmx5mVCoyhUpzNZSsQ=;
-        b=a72F6DnsrEq93+Zdk4ApyobK+qXky/3gVzvX/5UUhsIjuNH0MJMb0mouPQnaY+tWEy
-         Wbi014DOz8B0SGplpkABI8FyY5fpcrsIk4RvlI3mQFYndbqwHrmHXwonEFOFKUVzFFg+
-         CX1hT5NlSZsKdIHhWtjnmmR7exEJuDxo7rN2H5OmSbMlO9fOK4KlaZcU3VSZW0Fk4nxb
-         /Jh8VZ+rr+lmbUZg5evVxar9jo7QaEvI9YP72tSDFS9g76UrGOe1O0wpZ0VpEYMq3TXm
-         LvxlCKFi6EYyJG8unfo6wWcGR8brbyXniinRDBrlkJhfLhVmzOUABV64Yn9GAO4tFtCz
-         Fwdg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=w/oWY6NRcwPLqG6GQZZwgNcDeGxHXkUid5XY6B8A1BM=;
+        b=ufwMw1UGioqrWQE8kLqnwrL099SaLoxwsTyEGfVQGwBLp4ITamS6sFnueePIJOB5xr
+         K59sWbkNFRqFUdQ31y+B0uylJkQ2yBamGlLg/NueIjNCnMBkUrVNPA8yqRucNi7XkcXs
+         4eepa5TsDt3XvljCHACpMHBTryrFGpVf0MuUOMroe+Y+XmTZcmxiwe4HxahvXHwAuWRB
+         fT8kEATh61oorIZzf7O/ZGO91/GgIfNDRLVhLurbOOpryZ+rROXe6Vze5L3lB1s36KXE
+         sAw2J9KCfScptiVs0jgYsrufmBTKaA4XrKDb1JxCLNxheyRddo0+78wUfaBkqGOK3p9r
+         gBCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=4aXw6gNSD5AxhVTo4CSrn33q7cmx5mVCoyhUpzNZSsQ=;
-        b=HtWfipNqFETWlt7pCeAVMOujLxbX90zU38tiK0CriPyFJTiAJjqpC7A9xV5ZbeJj5O
-         712I8UWVZqCHsIZfLTIHX1QcrjwmFW3JEl+NdzhoU1ztNChBxFzxfKcb4uo024HkAwxj
-         EgK+QUHneDZuL+4ZFlgqR2qdtL+IByOkCVoP6xhaQgdPiLwUSTs2wIvFF9bqPddg3mrE
-         78xPBfo4ZDHIY8IfmBF6Saz8REGPLLZNuwChEP/KYT1vwLdZfT9JOLwRyNWge/hcrGfC
-         pot8hrsHuFFcRfBYLnuPA5rWu72ouVeYxHfa7FY6u+5eJ+CpjEw5NPPoC0chNl3ZPrtx
-         rl2Q==
-X-Gm-Message-State: AOPr4FWGHOEg2o97L4niY00phF/EnJtghfB2gteDNcgJEEHaD1GD9vma3goW1NwJBch28t83zj1gZHTYFBTKhw==
-X-Received: by 10.107.132.66 with SMTP id g63mr22046418iod.34.1463413321911;
- Mon, 16 May 2016 08:42:01 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Mon, 16 May 2016 08:42:01 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1605161508230.3303@virtualbox>
-X-Google-Sender-Auth: 4nxiZmBzVrfutR6X4VvPwpKHskk
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=w/oWY6NRcwPLqG6GQZZwgNcDeGxHXkUid5XY6B8A1BM=;
+        b=CzmQdDKUW8LSlM1Br0SiUBdbJnwvHIAqWIRuqZmwwn+HeCXkhTdIrpn/DTAsMPbrFu
+         iHhIb3GOJFRvTHhh0w4QaEW1N6poiUHaxyxc4zS/WfL/Dm2YH7GA2+LRWycWm6s8tUvo
+         Idd389A/tuWhY8oAvZTfquOuhbXXl6grwmCBfOZXEVk8Iwj44Q2f2QJwNJdaeSRemjY2
+         S+SdBNHdZ1ypc+AHY2TNyfitX3153j/jAF5ZLxDCn6QZiQFik+dFiR4WiBjiYcOBbq9Z
+         Yn5BehfP3m+KP+ugKX6LMKQ1wSKeVwq2MpK8K3MCK1ZsXP29iwnTu6sYIA4qNMq1j3rS
+         XECQ==
+X-Gm-Message-State: AOPr4FX3CBV4zReqdbKtiRMRvhIgH9GqEzDnUr0gRCYheHTO6g+l5NfbfGad0s77ynukHA==
+X-Received: by 10.13.243.5 with SMTP id c5mr16712493ywf.40.1463413568409;
+        Mon, 16 May 2016 08:46:08 -0700 (PDT)
+Received: from gmail.com ([2600:3c02::f03c:91ff:fe96:da77])
+        by smtp.gmail.com with ESMTPSA id d68sm19637967ywe.53.2016.05.16.08.46.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 16 May 2016 08:46:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kaTss6ctZDCiRP2wjuxH+rJ79RKFLM79_FJN+37Bed+HQ@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294743>
 
-On Mon, May 16, 2016 at 9:16 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Mon, 16 May 2016, Eric Sunshine wrote:
->> On Thu, May 12, 2016 at 1:32 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> > +       fp = fopen(".git/BISECT_TERMS", "w");
->>
->> Hardcoding ".git/" is wrong for a variety of reasons: It won't be correct
->> with linked worktrees, or when GIT_DIR is pointing elsewhere, or when ".git"
->> is a symbolic link, etc. Check out the get_git_dir(), get_git_common_dir(),
->> etc. functions in cache.h instead.
->
-> Maybe in this case, `git_path("BISECT_TERMS")` would be a good idea. Or even
-> better: follow the example of bisect.c and use
-> `GIT_PATH_FUNC(bisect_terms_path, "BISECT_TERMS")`.
+Hi Stefan,
 
-Thanks for pointing this out. My review time is severely limited these
-days so I didn't go the distance of re-studying and re-digesting which
-function was the correct one to use.
+On Sun, May 15, 2016 at 11:37:20PM -0700, Stefan Beller wrote:
+> On Sun, May 15, 2016 at 7:07 PM, Vasily Titskiy <qehgt0@gmail.com> wrote:
+> > Do not save states of submodules as stash should ignore it.
+> 
+> Can you explain why this is a good idea?
+> (It is not obvious to me either way.)
+Actually, submodules are already ignored by stash, but not fully (it was introduced in commit 6848d58).
+Current behavior is counter-intuitive, for example (if one has a project with a submodule):
+ $ cd sub1
+ $ edit .. commit .. edit .. commit. Alternatively, just checkout some other commit
+ $ cd .. # back to main project
+ $ git stash save
+   No local changes to save
+ $ # so, stash declares there are no changes
+ $ edit main.cpp
+ $ # For example, I need to update my working tree to latest master
+ $ git stash save # save local changes of 'main.cpp'...
+ $ git pull --recurse-submodules && git submodule update --recursive # update to latest
+ $ git stash pop # I expect to get stashed changes for 'main.cpp', but...
+   warning: Failed to merge submodule sub1 (commits don't follow merge-base)
+   Auto-merging sub1
+   CONFLICT (submodule): Merge conflict in sub1
 
->> > +               strbuf_release(&content);
->> > +               die_errno(_("could not open the file to read terms"));
->>
->> Is dying here correct? I thought we established previously that you
->> should be reporting failure via normal -1 return value rather than
->> dying. Indeed, you're doing so below when strbuf_write() fails.
->
-> The rule of thumb seems to be that die()ing is okay in builtin/*.c, but not
-> in *.c. So technically, it would be okay here, too. However, I think that
-> this code should be written with libification in mind, so I would also
-> prefer it to error() and return, to give the caller a chance to do other
-> things after an error occurred.
+So, this is the issue. Instead of getting my local changes, I got a conflict (and stash is not 
+poped out). The root cause is the 'stash' command does not know how to deal with submodules,
+but currently it tries to save the state of submodules, and even tries to re-apply the state
+(and it fails of course). The proposed solution fixes this behaviour.
 
-Agreed. Specific to the "established previously" I wrote above, I was
-referring to [1] from just a few days ago which explained why 'return
--1' was preferable to die() in a similar case that had an odd mix of
-'return -1' and die() in the same function.
+All internal tests work fine with the change.
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/289476/focus=293556
+
+> 
+> Do we need a test/documentation updates for this?
+I don't think so, 'stash' have never claimed submodule support.
+
+> 
+> >
+> > Signed-off-by: Vasily Titskiy <qehgt0@gmail.com>
+> > ---
+> >  git-stash.sh | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/git-stash.sh b/git-stash.sh
+> > index c7c65e2..b500c44 100755
+> > --- a/git-stash.sh
+> > +++ b/git-stash.sh
+> > @@ -116,7 +116,7 @@ create_stash () {
+> >                         git read-tree --index-output="$TMPindex" -m $i_tree &&
+> >                         GIT_INDEX_FILE="$TMPindex" &&
+> >                         export GIT_INDEX_FILE &&
+> > -                       git diff --name-only -z HEAD -- >"$TMP-stagenames" &&
+> > +                       git diff --name-only --ignore-submodules -z HEAD -- >"$TMP-stagenames" &&
+> >                         git update-index -z --add --remove --stdin <"$TMP-stagenames" &&
+> >                         git write-tree &&
+> >                         rm -f "$TMPindex"
+> > --
+> > 2.1.4
+> >
+> > --
+> > To unsubscribe from this list: send the line "unsubscribe git" in
+> > the body of a message to majordomo@vger.kernel.org
+> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
