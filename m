@@ -1,100 +1,92 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] pathspec: record labels
-Date: Mon, 16 May 2016 11:52:10 -0700
-Message-ID: <xmqq8tz93kf9.fsf@gitster.mtv.corp.google.com>
-References: <20160513231326.8994-1-sbeller@google.com>
-	<20160513231326.8994-6-sbeller@google.com>
-	<xmqqk2iw78aq.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZsVH3mE0zXu9wSWgit3QZ_CiKZqg-TQdyWnZw6D9=Cgw@mail.gmail.com>
-	<xmqqlh393nuv.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kbN_pzAVeAa-St_KRs60SbURTfKKP0v+do_+MK7orTkTg@mail.gmail.com>
+Subject: Re: [PATCH 0/6] modernize t1500
+Date: Mon, 16 May 2016 11:52:32 -0700
+Message-ID: <xmqq4m9x3ken.fsf@gitster.mtv.corp.google.com>
+References: <20160510052055.32924-1-sunshine@sunshineco.com>
+	<xmqqfutqsaxn.fsf@gitster.mtv.corp.google.com>
+	<xmqqmvnxpyw6.fsf@gitster.mtv.corp.google.com>
+	<xmqqeg99py5j.fsf@gitster.mtv.corp.google.com>
+	<CAPig+cTPsya6_3D2wx=k3pVaDJ2PokUvK4muM7nz-eV+Ss5+tw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon May 16 20:52:33 2016
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Michael Rappazzo <rappazzo@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon May 16 20:52:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2Nco-0002nN-Pg
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 20:52:19 +0200
+	id 1b2NdA-00032F-Oq
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 20:52:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754470AbcEPSwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 14:52:15 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54589 "EHLO
+	id S1754499AbcEPSwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 14:52:37 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53263 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754054AbcEPSwO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 14:52:14 -0400
+	with ESMTP id S1753736AbcEPSwg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 14:52:36 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DDD4C1C3E5;
-	Mon, 16 May 2016 14:52:12 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 756401CF0B;
+	Mon, 16 May 2016 14:52:35 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QIxiIib/zFOmzKmTZg4qQU1l6SE=; b=ZEl/NZ
-	CpVnSPN+Fg8ZCXW4smiF/f25c9Wp9W4mIk059lo/pmGM5DsjSLEGLG2M2e+swYkM
-	Z3PIYbY8w24ZIAaFDBo8jHm0GCa0S6qoGJK8LprNZnlTaUSk+lLbe6r19MuyWuRl
-	Cb8VYouvNpjtdOtp1Gb7k4OPFcxwEXlTjKu6k=
+	:content-type; s=sasl; bh=U5QUUjoh+U9w7TvFm+dokRs+S/o=; b=Jobo83
+	aHg041OiN54ZGcWEGPG6CJ2rNs5+oykY3skxA9uUQO7VfLYE87ykSZB9ZNePLPJQ
+	roi2HD9n1ex+0FXZrVEyZYrEDGobJW9mKBt6+XdA7zV5gEA9IrYeaOXVtbRIAKP8
+	pKax4G+S/i4ViWimMuuZHfnQj+l7QbIVRUkLs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FAFY3DJf4JEU6DvLX5zRrJ3tjScTnoVy
-	BUM+si6Yxw8p/9kMjhJ21VdHxJWihE/MEbTilhIvYzWkh7qgmGAsML4AycOscxPe
-	PJRg81bRABrPhHYqN4bVZWH8p91rpdo3ePlv61iYFaZ+5mfqT4FD/LOUne7bwlIn
-	I7V06Av0GtM=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D40B71C3E4;
-	Mon, 16 May 2016 14:52:12 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=J2cUkESAnhnqoBVYIkKL7MuEN6A/Ptm8
+	Tik2DKttyXb7uRY4OzxVqQgsrlMvUWjbN5xSskVpYTWUEjCFOHK7vdO3Fw6pWt+Q
+	NRWsBubrXUDpK1D3qIau6CBm9cKMAtxIv3P7SLCdVegkD086jzBzaKN06Oakc5lh
+	fh7+LH+Kmns=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D1FD1CF0A;
+	Mon, 16 May 2016 14:52:35 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4D1D61C3E2;
-	Mon, 16 May 2016 14:52:12 -0400 (EDT)
-In-Reply-To: <CAGZ79kbN_pzAVeAa-St_KRs60SbURTfKKP0v+do_+MK7orTkTg@mail.gmail.com>
-	(Stefan Beller's message of "Mon, 16 May 2016 10:46:00 -0700")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C9FDF1CF09;
+	Mon, 16 May 2016 14:52:34 -0400 (EDT)
+In-Reply-To: <CAPig+cTPsya6_3D2wx=k3pVaDJ2PokUvK4muM7nz-eV+Ss5+tw@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 16 May 2016 13:39:52 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4CC3AB7C-1B97-11E6-B0DD-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 5A398204-1B97-11E6-BDF3-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294777>
 
-Stefan Beller <sbeller@google.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> So "warn and ignore" for data from .gitattributes and die for
-> commandline arguments? That makes sense.
-
-Yes.
-
-On the "command line" front, because we may want to give different
-meanings to these two entries in the future:
-
-        :(label=-doc)Documentation/
-	:(label=!doc)Documentation/
-
-we should diagnose -doc (FALSE) as an error, not treating it as the
-same as !doc (UNSET).  And we should warn and ignore -doc (FALSE) in
-.gitattributes.  Yes, ignoring it would be more or less equivalent
-to treating it as UNSET, but because we may use -doc (FALSE) for a
-better purpose later, we should still warn.
-
-> Ok, so here is the warn-and-ignore code:
+> On Tue, May 10, 2016 at 2:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>> Subject: [PATCH 7/6] t1500: finish preparation upfront
+>>>
+>>> The earlier tests do not attempt to modify the contents of .git (by
+>>> creating objects or refs, for example), which means that even if
+>>> some earlier tests before "cp -R" fail, the tests in repo.git will
+>>> run in an environment that we can expect them to succeed in.
+>>>
+>>> Make it clear that tests in repo.git will be independent from the
+>>> results of earlier tests done in .git by moving its initialization
+>>> "cp -R .git repo.git" much higher in the test sequence.
+>>>
+>>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>>> ---
+>>
+>> I think the same logic applies to other preparatory things like
+>> creation of sub/dir in the working tree etc.
 >
->
->         if (ATTR_TRUE(check.value))
->                 ret = 1; /* has all the labels */
->         else if (ATTR_FALSE(check.value)) {
->                 warning(_("Path '%s': Label must not be false. Treat
-> as if no label was set"), path);
->                 ret = 0;
+> Hmm, so are you suggesting a single 'setup' test at the start of
+> script which does the 'cp -R' and creates those other directories
+> needed by later tests?
 
-s/Treat as if .../The -label may be used differently in future
-versions of Git, so do not use it/;
-
-But if we are going in the direction of :(attr:crlf=auto), all this
-discussion is moot, isn't it?  I haven't formed a firm opinion on
-this, but it sure does sound tempting, doesn't it?
+Exactly.
