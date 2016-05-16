@@ -1,87 +1,59 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 0/4] pathspec labels [WAS: submodule groups]
-Date: Mon, 16 May 2016 14:50:57 -0700
-Message-ID: <xmqqh9dx1xku.fsf@gitster.mtv.corp.google.com>
-References: <20160513001936.7623-1-sbeller@google.com>
-	<CACsJy8BK-u2VV3kkq3ANHCanYqMwphqgxZmooQfewA_J7e8MPw@mail.gmail.com>
-	<CAGZ79kacKnBjzVFSShRido4rKa3-Zg465d2320M6w1qXEkOZqw@mail.gmail.com>
-	<xmqqh9dx3nsf.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZyPvAFG1TjSm76LuDLpch=7iuL_-8LYqysSESFQj-YjQ@mail.gmail.com>
-	<xmqqlh391z2v.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZuMdWdw2kcfs_P-_Ax1zXpKNHqMjNL80hBj3=SSp2zSQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] difftool: handle unmerged files in dir-diff mode
+Date: Mon, 16 May 2016 14:53:45 -0700
+Message-ID: <xmqqd1ol1xg6.fsf@gitster.mtv.corp.google.com>
+References: <20160516180537.22212-1-davvid@gmail.com>
+	<20160516180537.22212-2-davvid@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon May 16 23:52:31 2016
+Cc: Git Mailing List <git@vger.kernel.org>, Jan Smets <jan@smets.cx>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 16 23:54:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2QRB-0003kR-Sc
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 23:52:30 +0200
+	id 1b2QSd-0004PO-Oj
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 23:54:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752148AbcEPVwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 17:52:10 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55477 "EHLO
+	id S1751844AbcEPVxx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 17:53:53 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62352 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751413AbcEPVvC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 17:51:02 -0400
+	with ESMTP id S1750816AbcEPVxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 17:53:49 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 21A481C9C7;
-	Mon, 16 May 2016 17:51:00 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 495381CED7;
+	Mon, 16 May 2016 17:53:48 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WFXMOCooE8STKsTmEvMIQ8m78Lg=; b=syGT+h
-	HnYYK/m7HE6sqvjlIORzd8h0zsXSUTOh3rLMkws3bgJeQhi1HFz8i18uXEe7ByU6
-	cRNcQrniUdEQl4dQ/vgLGB9X9OGQDioGzuqStk+e4XN6Hi4yjdQWP03rzjhz6Nvo
-	xnVAsm67WjY/EoCrQVS4rDdoN7PVIzbsHu2qI=
+	:content-type; s=sasl; bh=d8SN2ftBLo8S+nEqUgWPPSiFfoY=; b=XjCT7f
+	Y5UJrKOLHoYs3c79XLvPDaWyhFhR6DDRePfJXloajB/hg1K+a2PyKq3Rnoe96bwD
+	CfdI5xeXAZhwMhpuS0jPtU/RPQhB9v1FBb8FLC3AhXytKShDpDiUbkh5WuP81UH+
+	9b4jMAP3UfpxqJcmpVa+26HAMxb0hXNHa8rHw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=P8Hnc3f0rkF9/rsthpOTIOoKMawrNDq5
-	Tpa2CgwC68GSTNPUQvGx6SwzwnIvNtPxYyZe5IrcPP3as98Js+CjGfbP0icZE1Zi
-	pmkIpjHDdotBdt3jjsYqyLPmXRhNyHFBN/ySzVAEq3b6bBx65Ohx4z3ei89Qlnn9
-	knzu85z/MYI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 17FBE1C9C6;
-	Mon, 16 May 2016 17:51:00 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=pSWarwrqMeLPuA4VVTrhYS8iXJG/TQUa
+	vQ/M4ERBgfkvUHsMSrXBdFj3lWO7E2AXy/AqZ3S4qDxRyb3GeGsGzC4DQxtqZce7
+	6TsuwrCp/KmyTcpTGoQ+yW9JLiLGjYacOakniV8V3siBGge2rKrDnP5uVwnyOXdg
+	C/TnxwTXB0A=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4108C1CED6;
+	Mon, 16 May 2016 17:53:48 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 652641C9C5;
-	Mon, 16 May 2016 17:50:59 -0400 (EDT)
-In-Reply-To: <CAGZ79kZuMdWdw2kcfs_P-_Ax1zXpKNHqMjNL80hBj3=SSp2zSQ@mail.gmail.com>
-	(Stefan Beller's message of "Mon, 16 May 2016 14:36:28 -0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B66E31CED0;
+	Mon, 16 May 2016 17:53:47 -0400 (EDT)
+In-Reply-To: <20160516180537.22212-2-davvid@gmail.com> (David Aguilar's
+	message of "Mon, 16 May 2016 11:05:37 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 46A7CF02-1BB0-11E6-A097-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: AAF2A7D4-1BB0-11E6-87A4-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294802>
 
-Stefan Beller <sbeller@google.com> writes:
-
-> And we want to have both "label=A B C" and attr:label=A B C" or *just* the
-> attr query?
-
-I think the choice at this point is between supporting just "label=A
-B C" or supporting just "attr:eol=crlf text=auto !diff".
-
-I think "attr:label=A" is merely a degenerated case of the latter.
-
-> We should not allow the user to add arbitrary attributes (i.e. labels).
-
-Hmph, why not?
-
-> Instead each of the "attr for labeling purposes" needs to follow a clear scheme
-> that allows us to add attributes later on that are outside of that scheme.
-
-That was my initial reaction when I saw Duy's "attr:crlf=auto" (by
-the way, there is no such setting; crlf should be one of TRUE, UNSET
-or set to string "input") idea.  But I do not think of a good
-argument to justify that arbitrary attributes are not allowed.
+Thanks, will queue.
