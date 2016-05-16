@@ -1,78 +1,94 @@
-From: tboegi@web.de
-Subject: [PATCH v3 0/1] CRLF-Handling: bug fix around ce_compare_data()
-Date: Mon, 16 May 2016 17:51:29 +0200
-Message-ID: <1463413889-12490-1-git-send-email-tboegi@web.de>
-References: <xmqq7fev55qk.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit.c: use strchrnul() to scan for one line
+Date: Mon, 16 May 2016 08:57:59 -0700
+Message-ID: <xmqq1t523shk.fsf@gitster.mtv.corp.google.com>
+References: <xmqq37pj55bg.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1605160810020.3303@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 16 17:47:06 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 16 17:58:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2Kj7-0000hc-Pu
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 17:46:38 +0200
+	id 1b2KuK-0002Cq-BU
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 17:58:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754087AbcEPPqI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 May 2016 11:46:08 -0400
-Received: from mout.web.de ([212.227.15.14]:64584 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752812AbcEPPqG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 11:46:06 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0LqDHE-1bX0lW2ln6-00djyA; Mon, 16 May 2016 17:46:02
- +0200
-X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
-In-Reply-To: <xmqq7fev55qk.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:2Ych8DMkLrFYDoi29nlX8LhTyOMnqA2GHIPsMh/3JGh/TLsJoZI
- TdTunWKa2B+PkrijSpgSYH0e090H6mJ+3/HIxtUAy2/2NNGecqB+v7YKvrRJ5kA7kyagn6C
- ByXmTH+DokOA2nEJAJ0bn77sQZ2p1C2atiI42tYB9zBUZQu+Ys96qtFEGxm3L+AzNx33N+Y
- 5YeJTZaCrW+JXRHYopDqw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UgIjJH8dCyY=:BkuX5gSxBSMjxwKdtaGyGd
- PKqOoffRkx22yQa0w4m29z8FtoDNYbcEr9rOJ1z4HSLty5JUsSJ8/+mkq29GMAdOhJYBOCx2/
- H9wL8qKUPgnpv4C3baB7/9AKCqq3K2mSUanfZfFv2cN7Y2qiVJ8Hq0+gc6rjMa+nqs3SsWFWE
- S0eifrvnrJJ19gvczW8nA2/gIeHj49uLMiEK4o/MCVOfKzDTdTlgMoicoIzS5Kz4mxSr4+PB+
- +6luriOGixK5DpwWdRf6EEafSPryXpSTXN5DIpkJnuUsZX0K6Zo4V2nW35jVZaZm3nkJLDxtB
- OQX1oNqnpdQJOeh+SsWyOs+an0CNWHF61AQx486tDDYhG6mQpU+TsQeKr9j0FjFP/mE3uNT98
- g6QJN2PTdkldyBp2OMzN3BgfUjLawSrKPGQM+YGh/qa31rWQAmkjxzpi7H2zvu196fnawvqrU
- UjkNLW+WIjsxV+UvDPv6yYabW87xe7ySoasXUKY8WIl+qkp3+1g9B0YunOyyC8jr4cTGU1vnC
- 8lnKCYJjL4gfrfNuMWPz3a4OLb6QcLd3Zz6nY7xBYnxZkhXiicWNLefdSMNmck0drf9Gc0ilO
- yBqMUnb6JzxewEeR4fLH15KUWZbfSqNVzTgnzA0hQvPyJ59MQlBArtUQiZ7HoWtLH4Xk0oeDz
- x4P3VrxHXD1/u2lIFix/enVTvTHyu+niR0ycW4ig2e0AsBChOztJb6YkCutdOE961fJ6VXEiT
- mA0fVZ2TZLRpYpCwegO+Z9YHkUO4tmgAYwC1Ng/n13CQKW0B7wB/J07SRCrmVKGVb10C/d7P 
+	id S1754399AbcEPP6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 11:58:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55641 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754392AbcEPP6E (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 11:58:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EB6AD1CA08;
+	Mon, 16 May 2016 11:58:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xbYtMGCXCqmeGY4En7GRQZl9rxU=; b=uGzPEg
+	bT/Jakj9Qd1xl4rNpYbNjZNndFsoVL+qzpAuPOWHk+MkQmJ7Asjt8fGzM/0Te/zu
+	xwgpWZCoIyGV+DdzwutAvQS/eQf88hsdva03uKC45Be5CDMxUdTVcC5LfIEeqa8e
+	+Oni8NMQTy284eGV2VfQmUx5hxe4Km/EOKe7M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BLhaE3Xmo43kjz19fjn7BsjWNYWawugK
+	HBwGdh9UchjoGgGCVc1UXYVAK1GpwaNgjcSuZu3NzwQbh9+rB6Ka9UPICnDuFOYH
+	q4I/cUjgYvoW/9/g87YvYMPhH0jR8MhfGS5UYxNr6//SasBnKFzOLENOOEuVbEZh
+	yrTUtmKXVzM=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DDEFA1CA07;
+	Mon, 16 May 2016 11:58:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 33D311CA06;
+	Mon, 16 May 2016 11:58:02 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1605160810020.3303@virtualbox> (Johannes
+	Schindelin's message of "Mon, 16 May 2016 08:12:33 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F804B26A-1B7E-11E6-8A59-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294746>
 
-=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Changes since v2:
+> On Sun, 15 May 2016, Junio C Hamano wrote:
+>
+>> diff --git a/commit.c b/commit.c
+>> index 3f4f371..1f9ee8a 100644
+>> --- a/commit.c
+>> +++ b/commit.c
+>> @@ -415,8 +415,7 @@ int find_commit_subject(const char *commit_buffer, const char **subject)
+>>  		p++;
+>>  	if (*p) {
+>>  		p += 2;
+>> -		for (eol = p; *eol && *eol != '\n'; eol++)
+>> -			; /* do nothing */
+>> +		eol = strchrnul(p, '\n');
+>>  	} else
+>>  		eol = p;
+>
+> ACK. This was my fault, when I introduced the code in 9509af68 (Make
+> git-revert & git-cherry-pick a builtin, 2007-03-01). To be fair,
+> strchrnul() was introduced only later, in 659c69c (Add strchrnul(),
+> 2007-11-09).
 
-- Only 1 patch, the t6038 needs to go as a separate "series"
+Oh, there is no fault.
 
-has_cr_in_index() uses either
-	data =3D read_sha1_file(sha1, &type, &sz);
-or
-	data =3D read_blob_data_from_cache(path, &sz);
+I was reading through attr.c to see how bad a work to revamp
+attribute lookup would look like, found a hand-rolled strchrnul()
+that predates the widespread use of the function, and looked for
+similar patterns while I was updating it.  As there were many false
+positives (i.e. "Yes, this loop is looking for the end of line, but
+it does something else to the characters on the line while doing so,
+so it cannot become strchrnul()") that I needed eyeballing in order
+to reject and avoid incorrect conversion, it is very much appreciated
+that you double-checked this one that I spotted.
 
-(I like v2 better, since there is a single code to get a sha object
-into memory, which later will be replaced by a streaming object)
-But in any case, here is v3
-
-Torsten B=C3=B6gershausen (1):
-  convert: ce_compare_data() checks for a sha1 of a path
-
- cache.h                    |  1 +
- convert.c                  | 35 +++++++++++++++++++++--------------
- convert.h                  | 23 +++++++++++++++++++----
- read-cache.c               |  4 +++-
- sha1_file.c                | 17 +++++++++++++----
-
---=20
-2.0.0.rc1.6318.g0c2c796
+Thanks.
