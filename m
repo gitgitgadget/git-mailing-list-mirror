@@ -1,80 +1,81 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git push --quiet option does not seem to work
-Date: Mon, 16 May 2016 15:28:30 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605161526510.3303@virtualbox>
-References: <CADKp0pwrKzHG7KVSMH+6OHuv9sKXTcKSsdKMEZ_fFdjWT+kW6g@mail.gmail.com> <CADKp0pw5FFDVvPz0CcjOTYteQ9jFn2jBZwaX6_n8r3UQRGcGdQ@mail.gmail.com> <20160515212332.GB31809@sigill.intra.peff.net> <CADKp0pzPOdcSfBESzGMhrY5itSa4KDeOQ2VgwewuwH8CGZcwCw@mail.gmail.com>
- <20160516005824.GA1963@sigill.intra.peff.net> <CADKp0pzOLs5g9Jc6_sA6jr-XOifx0Yn6b7wDW2qcC2UB5Q_WPQ@mail.gmail.com>
+Subject: mail-patch-series.sh, was Re: [PATCH v7 0/3] Add support for sending
+ additional HTTP headers (part 2)
+Date: Mon, 16 May 2016 15:35:33 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605161531090.3303@virtualbox>
+References: <cover.1462342213.git.johannes.schindelin@gmx.de> <cover.1462774709.git.johannes.schindelin@gmx.de> <34DE0A16-F0B2-4379-8E02-5235D34FDD76@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Chris B <chris.blaszczynski@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 16 15:28:53 2016
+Cc: git@vger.kernel.org
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 16 15:35:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2IZh-0006oG-Sm
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 15:28:46 +0200
+	id 1b2IgO-0004Tg-0J
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 15:35:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753261AbcEPN2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 09:28:41 -0400
-Received: from mout.gmx.net ([212.227.17.20]:58255 "EHLO mout.gmx.net"
+	id S1752322AbcEPNfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 09:35:33 -0400
+Received: from mout.gmx.net ([212.227.15.18]:52376 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752948AbcEPN2k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 09:28:40 -0400
-Received: from virtualbox ([88.128.80.193]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LjLwB-1baWn73X4h-00dW0F; Mon, 16 May 2016 15:28:27
+	id S1751977AbcEPNfd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 09:35:33 -0400
+Received: from virtualbox ([88.128.80.193]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M0h9K-1bsKVS1oje-00utv9; Mon, 16 May 2016 15:35:28
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CADKp0pzOLs5g9Jc6_sA6jr-XOifx0Yn6b7wDW2qcC2UB5Q_WPQ@mail.gmail.com>
+In-Reply-To: <34DE0A16-F0B2-4379-8E02-5235D34FDD76@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:XxIFL1GND1L3tEJOjcRFpgKgPjVtE+pN6m31kW1nv5WOaMfyhFz
- cZ+uNZx+M6Qy0abZ7f/fOT8yfn0KiF+xhKESOi39eAeeZ36WytJCGGIJvV9dp8EasIFOpBO
- +zUMr/WwoDeVA+LtYnaOzqIKhGJtzDoRYMKr9lYKFuIzoKx2sPQuZUxzhE1r4I8T8i2LjAD
- uY8KFYbogfofhCFFg54VA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZKhCb+JTWCU=:ep6klCQlaPArvjGPYwbQEH
- Axd9cPegCiMZVzwyZzknIEAjwhXak587YR0JgXVpAzpPqciZJI5/Hk6gea146vTR1NqhmUp3K
- RRlLAqj+YYpMl3jTT8mG0oDCdik8Kf40QlD1FRAnshFCdQEL4PQZzP8mIIkmD49qG8h4TZeZr
- GlRXyLFy4U7KcQmzfEX831ZnKWDGWwSrFNEE4++D5+mMPJwVFcmN3YGrNyaTwBvWbmmfW1zv7
- UFxGiKuT3f0hL7jqDBFgRHrgV+gHwfQdxz/06P6hi1GIlVZiP7vdLf94suNvr/QgZfsm5gKUv
- ZuSasuDdI34jvw23xJxCSRr6xSKAIfkwdOvqwqBx+mj7lSWLHC3iklHCav/8gYs9oueFwFu9Z
- FAGtcsAKBzGpm42Y4ah0gftcie2dbny1r6BRRGzSUTsuUlFaO12dQ+w753gfsqajDntHDwJhK
- b+ymhBkcRwT35Oqm+dqQa/51ZMrXNIuz9+2LQs+t6LNE4WDRcpim0DaPCtY1+WW/Mi98FDG3i
- c86qd6rdcCAJIFsNOqEytZVmYaVLdtqp7GBuhpDA6HhHKAZt022A2ChmacU0eqQoMEUgwjTXt
- jhiQHdkMsSNZH7rPpM+NC8eP5i2Hso3/nbBARfPnAf9HgrG6Q4HEqoEIrdRbb32jjTCro/xKP
- j1cD6ODNiNogvEEMrdx9qNEgLE+yk2JoXPXyVrkk2BE4b7LAEiUKeXTbO29Wq52puETIC1yYp
- mUMR7n7f4ibleZA9oBIr8+mJGrx64V/Vhc4zBLlWIhyXdVTaN/0BUDb2QBgje6jWCF7xQYd7 
+X-Provags-ID: V03:K0:+8hke0j9OztEKw62AUXDndsQB4FmL9KAOCVMY0ADG8A2WH+OaRn
+ BWXtcp8KkV7BqTx+xrBXVrRzhRUlb1O6kv+tASb1HtnZbHXAJ14zRTu4IqXpd83QPINauqb
+ OOTadus+Hrt46Z/6qtUwOMLUm9T/M9/intddc4DCVytxAIjH1Fu+Oq3se6PqpcQHC70XDWs
+ u3B5Es0rzlWfipdHDFvPA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5Vo5np+oSiM=:lxSf65txdq2GSXvPGcw5UF
+ +SdCKJd4Mgjl0UjAxMKNxDFHFkiVivMm1knG5gsCTjszEy7TrEMYC7XG14vKJFgsMrbky2IFW
+ Jj5P3THMjGfOnfF9c2CDCfRxxKwZ1WX8L7Xi5pve1jFZc5QsEkjFMj8oUUBa3mlih8vgq0UdL
+ WJSrw9+Zpocl46WYCG7/x8LyWXuArOfmMeYJC2aFBaVF6gmGaMkFPYhPwoup+f2JFR6VaHc9V
+ MPBGPuugeAmwS/YX6CIWejH5Bad+uR4zgklJeskuZIAvWAcqG3U/jRLTzoUeVetpzl1yTkVju
+ uAxfXak4VfHZXutT0OMee/7bbutrtYdNsTuMjKRDbnxeTC7/mDV6ebyQRMvtNy9czeyxiEsVd
+ lmn4on2gYBieZg3sC/BrFr425gODSr1i+ndKjqT07JCgBHlk7sYXrgvm9YsnDlWb9Kf8sb49O
+ d4KhlfV53WMRWo/h2Gud16uVbT5hWqqTUYpCUMFCC0A8c1/3/n6G80SoqJO0QgZGXIx+/aUag
+ gOV8PGafiofIB6ypM/FbHzPZXsQPdztB50Ki2dTjC/VAoUI+cx/59PKKbDbYQmp6kIfe7Jiw/
+ /p/4ZVasPrkYwtzOU897jMuIg8Ap9Hb8hgq3bfQIW6GOgZw3ER/j/8hj8Nuydw/E1KeiHPlsc
+ UyqLnExo1GNmrWNFs3YzXqbwKt5FxbkgX+XZj9DhyJBjI0r7ZaOsIUi4M0ZnW95hSy2jEvUna
+ y0cXkcA+XiVeWZJVdOCiDvNKHse/9YpDfQli5WVWxP40oDFALL/a81vW4WBHg+5gBUJj74Hm 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294736>
 
-Hi Chris,
+Hi Lars,
 
-could you please quote just the parts of the mail you are replying to, and
-*not* top-post? It would be appreciated.
+On Tue, 10 May 2016, Lars Schneider wrote:
 
-On Mon, 16 May 2016, Chris B wrote:
-
-> PS H:\test-ps\myrepo> git push --quiet
-> git : remote:
-> At line:1 char:1
-> + git push --quiet
-> + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->     + CategoryInfo          : NotSpecified: (remote: :String) [],
-> RemoteException
->     + FullyQualifiedErrorId : NativeCommandError
+> > On 09 May 2016, at 08:18, Johannes Schindelin
+> > <johannes.schindelin@gmx.de> wrote:
+> > 
+> > [...]
+> > 
+> > Published-As: https://github.com/dscho/git/releases/tag/extra-http-headers-v7
+> > Interdiff vs v6:
 > 
-> remote: Analyzing objects... (3/3) (119 ms)
-> remote: Storing packfile... done (113 ms)
-> remote: Storing index... done (29 ms)
+> Published-As and Interdiff are really neat. I assume you have some kind
+> of script to create all this? If yes, are you willing to share it?
 
-So it actually works, eh?
+Thanks for prodding me. I had planned to clean up my script and make it
+public for a long time already, as I think that submitting code to the Git
+project is quite a little bit too tedious, even for old timers like me, in
+particular when compared to the ease of opening Pull Requests a la GitHub.
 
-Could you please verify that this is a PowerShell-only problem by
-performing a similar push in Git CMD and in Git Bash?
+So now I cleaned up my script a bit and published it here:
+
+	https://github.com/dscho/mail-patch-series
+
+Ironically, I welcome Pull Requests for this script ;-)
 
 Ciao,
-Johannes
+Dscho
