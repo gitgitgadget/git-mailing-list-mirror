@@ -1,9 +1,9 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 56/94] apply: move 'struct apply_state' to apply.h
-Date: Sun, 15 May 2016 23:10:14 -0400
-Message-ID: <CAPig+cS98guXbeRH6oW8n2tPAa3u=2MvSx1H5rixGKdGTrVJPg@mail.gmail.com>
+Subject: Re: [PATCH v2 59/94] builtin/apply: move init_apply_state() to apply.c
+Date: Sun, 15 May 2016 23:16:18 -0400
+Message-ID: <CAPig+cSWPYx9o-fnzXqUN4KR8h+15nBAX8CHhbiCxd5QcyOJLg@mail.gmail.com>
 References: <20160511131745.2914-1-chriscool@tuxfamily.org>
-	<20160511131745.2914-57-chriscool@tuxfamily.org>
+	<20160511131745.2914-60-chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
@@ -17,71 +17,175 @@ Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 16 05:10:56 2016
+X-From: git-owner@vger.kernel.org Mon May 16 05:16:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b28vl-00063P-NM
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 05:10:54 +0200
+	id 1b291D-0002kW-U9
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 05:16:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753322AbcEPDKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2016 23:10:30 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:35993 "EHLO
-	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752615AbcEPDKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 23:10:15 -0400
-Received: by mail-io0-f195.google.com with SMTP id k129so23391522iof.3
-        for <git@vger.kernel.org>; Sun, 15 May 2016 20:10:15 -0700 (PDT)
+	id S1753327AbcEPDQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2016 23:16:20 -0400
+Received: from mail-ig0-f194.google.com ([209.85.213.194]:35457 "EHLO
+	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753102AbcEPDQT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 23:16:19 -0400
+Received: by mail-ig0-f194.google.com with SMTP id jn6so5876512igb.2
+        for <git@vger.kernel.org>; Sun, 15 May 2016 20:16:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc;
-        bh=eLy07vNVoj1rz5hivW7rBk5ZZFE+l9MUxdcAsQswt4M=;
-        b=x9lRXXTngliN93I28XbcxTHwefEwDhS4qZ5gfOLgPj3Cw8K5QE7VqYsyK18Qk/F0Q7
-         e07i6tZY+Me8MMEWwltJZFIZ4YHNixkE/vJjZDxsS0KW/uXXlbBzpcWZVedhhvTVGq9s
-         Boh1GgbseBOV6cdQH2nlKtXk2n2c0eOGGu+AKWc5pwn3TfH3lpfVYvoKCAvaIZ64YV43
-         RnzBvFvnsFMX85G/wg/k+8+25ewz0WFiwuexWlhxT33LKxpEbdTxa1o2vD8nb8rKs5C2
-         0QSbGPplT/w31JGQI24z0y9yKRfccE+5O2qb9nX5O9ZR6/b/Pm4BpIhTy7OdQSpfve+h
-         52Sg==
+        bh=kmAuXMbqVs/028KRTCegrXId1CFRYJYv/pVZDhPk7Zc=;
+        b=S2MsmSsaxKBVQtgvUhCxTT9RcXwAeGWF7HZXw4Se3hIIAa9LWNfB+AojKKvghdH1Jt
+         gOMKLXF2+s3bkN39Ny0cPGz5iDxuSOITEdKiEwmqzt8DWK+LNqNroZ8sz3COhD453PWa
+         hrQgIQmdtddhtqqLoj7ZKmKllRyu+EgnoaNsoPYEP8IjLBY9UIVyaoCFGxuOvfQ5FHNg
+         i2GneyyYOUSJy7y65+Jr25oqJH+bxgLINbZKWoo7YRahNH/Ry1vFWIf3Z+FYZjRnzTlc
+         WVgVpnNKXbYIuDUEH4imxlA5pqde48543erTMURDxGEZZsj9eC2lHonWGTc3VHOq++Ga
+         IejA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=eLy07vNVoj1rz5hivW7rBk5ZZFE+l9MUxdcAsQswt4M=;
-        b=Ppbt0lQF9DcaHbQnESDRHetM0Bim0IzbhqjuXatb74H+vEz92N5AvC4TZrkfUxprQ3
-         Zt9F3d6339yRPvIRzYxyqiQpFhEuD7HAAtBJ4aWreorV34aO2l3JI/yBP402pH7EcY+3
-         z0SHEfQ0Bux8yl055c96qSgAu+DTkO2Q6HgN0oxdFNH2q0/DjA5T1HsdO7so0HvcwXjd
-         mMECekuZ1GEknu79h/QMP4oGLKo8/5D8oDHfUPePbPdGgAP7NZ313lvJ7yMnKZ+rl2/I
-         fY/Semu9Y9HH1yAMjjkD3IecyBDvp3+p3HQLu6dtRd89PhPaCXvVV5u7kRYoFlum9Lqi
-         Snmg==
-X-Gm-Message-State: AOPr4FWzNpRYuYSO3DIplLzS9GJS5edkTC34dSvyvzM60hZvxNElNAgfKGDw/f0WMlHvDu9Gu75l4bXR5IDzlw==
-X-Received: by 10.36.69.156 with SMTP id c28mr7302567itd.84.1463368214546;
- Sun, 15 May 2016 20:10:14 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Sun, 15 May 2016 20:10:14 -0700 (PDT)
-In-Reply-To: <20160511131745.2914-57-chriscool@tuxfamily.org>
-X-Google-Sender-Auth: gexP3FEenrj6fEe2OLuu39yG4Ok
+        bh=kmAuXMbqVs/028KRTCegrXId1CFRYJYv/pVZDhPk7Zc=;
+        b=hvAMGXVn02yGNGSlvJ4KzhAjiP8omCwAeB3j40iF/Na3DBapzGJJNFmSWQgVG48M9Z
+         GWrLxC6HMSp+vBfj7XunHLHQgrmYImEyviG1IJNNm6MekJ2Cq1WOsLG6e4jMj3bk5/oA
+         0lBa6Z8XDCFzLsrCQu3c86wCp3ykOmkIYC5eC+0+gO5kshOjuyYsd+CL/ukbktE9vsp+
+         nW9k0Kt+NBmS+qkNNmbRTijnPuKQVcaT+AEEb+7fgSSth7igQyqTaLkyDZNTAWhWaNZp
+         IQjxpZPwixRuCN7dBdplUzouQk69+IgkQSNWQeLss2EunLvWwmDy7DJVYRdW8nSmw2LO
+         N+4w==
+X-Gm-Message-State: AOPr4FU8gCS2suq27LxsbTHVXiFnlirKP1fbXVEhWLcLNQ3y/KUIrGVu4BB9vj6V5pVR0v+hjrTyn1T3+64Dpg==
+X-Received: by 10.50.0.233 with SMTP id 9mr4346311igh.17.1463368578239; Sun,
+ 15 May 2016 20:16:18 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Sun, 15 May 2016 20:16:18 -0700 (PDT)
+In-Reply-To: <20160511131745.2914-60-chriscool@tuxfamily.org>
+X-Google-Sender-Auth: VAY-vEEtwRft7QPg2PUbYJOo0YI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294718>
 
 On Wed, May 11, 2016 at 9:17 AM, Christian Couder
 <christian.couder@gmail.com> wrote:
-> To libify `git apply` functionality we must make 'struct apply_state'
+> To libify `git apply` functionality we must make init_apply_state()
 > usable outside "builtin/apply.c".
+>
+> Let's do that by moving it into a new "apply.c".
 
-Why is this patch plopped right in the middle of a bunch of other
-patches which are making functions return -1 rather than die()ing?
-Seems out of place.
+Similar to my comment about apply.h and 'struct apply_state', I can
+easily see apply.c introduced very early in the conversion. In fact,
+I'd imagine apply.c and apply.h being introduced by the same patch,
+with that patch placing init_apply_state() in apply.c and 'struct
+apply_state' in apply.h. However, I see that you're moving other
+functions, as well, which already existed in builtin/apply.c, so I
+guess that's why introduction of apply.c waited until this step.
 
-> Let's do that by creating a new "apply.h" and moving
-> 'struct apply_state' there.
-
-I could easily see this header introduced at a very early stage when
-'struct apply_state' itself is introduced, rather than introducing
-'struct apply_state' in builtin/apply.c and later moving it here.
-
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> diff --git a/apply.c b/apply.c
+> @@ -0,0 +1,83 @@
+> +#include "cache.h"
+> +#include "lockfile.h"
+> +#include "apply.h"
+> +
+> +static void git_apply_config(void)
+> +{
+> +       git_config_get_string_const("apply.whitespace", &apply_default_whitespace);
+> +       git_config_get_string_const("apply.ignorewhitespace", &apply_default_ignorewhitespace);
+> +       git_config(git_default_config, NULL);
+> +}
+> +
+> +int parse_whitespace_option(struct apply_state *state, const char *option)
+> +{
+> +       if (!option) {
+> +               state->ws_error_action = warn_on_ws_error;
+> +               return 0;
+> +       }
+> +       if (!strcmp(option, "warn")) {
+> +               state->ws_error_action = warn_on_ws_error;
+> +               return 0;
+> +       }
+> +       if (!strcmp(option, "nowarn")) {
+> +               state->ws_error_action = nowarn_ws_error;
+> +               return 0;
+> +       }
+> +       if (!strcmp(option, "error")) {
+> +               state->ws_error_action = die_on_ws_error;
+> +               return 0;
+> +       }
+> +       if (!strcmp(option, "error-all")) {
+> +               state->ws_error_action = die_on_ws_error;
+> +               state->squelch_whitespace_errors = 0;
+> +               return 0;
+> +       }
+> +       if (!strcmp(option, "strip") || !strcmp(option, "fix")) {
+> +               state->ws_error_action = correct_ws_error;
+> +               return 0;
+> +       }
+> +       return error(_("unrecognized whitespace option '%s'"), option);
+> +}
+> +
+> +int parse_ignorewhitespace_option(struct apply_state *state,
+> +                                 const char *option)
+> +{
+> +       if (!option || !strcmp(option, "no") ||
+> +           !strcmp(option, "false") || !strcmp(option, "never") ||
+> +           !strcmp(option, "none")) {
+> +               state->ws_ignore_action = ignore_ws_none;
+> +               return 0;
+> +       }
+> +       if (!strcmp(option, "change")) {
+> +               state->ws_ignore_action = ignore_ws_change;
+> +               return 0;
+> +       }
+> +       return error(_("unrecognized whitespace ignore option '%s'"), option);
+> +}
+> +
+> +void init_apply_state(struct apply_state *state,
+> +                     const char *prefix,
+> +                     struct lock_file *lock_file)
+> +{
+> +       memset(state, 0, sizeof(*state));
+> +       state->prefix = prefix;
+> +       state->prefix_length = state->prefix ? strlen(state->prefix) : 0;
+> +       state->lock_file = lock_file ? lock_file : xcalloc(1, sizeof(*lock_file));
+> +       state->newfd = -1;
+> +       state->apply = 1;
+> +       state->line_termination = '\n';
+> +       state->p_value = 1;
+> +       state->p_context = UINT_MAX;
+> +       state->squelch_whitespace_errors = 5;
+> +       state->ws_error_action = warn_on_ws_error;
+> +       state->ws_ignore_action = ignore_ws_none;
+> +       state->linenr = 1;
+> +       strbuf_init(&state->root, 0);
+> +
+> +       git_apply_config();
+> +       if (apply_default_whitespace && parse_whitespace_option(state, apply_default_whitespace))
+> +               exit(1);
+> +       if (apply_default_ignorewhitespace && parse_ignorewhitespace_option(state, apply_default_ignorewhitespace))
+> +               exit(1);
+> +}
+> +
+> diff --git a/apply.h b/apply.h
+> index aa11ea6..0f77f4d 100644
+> --- a/apply.h
+> +++ b/apply.h
+> @@ -112,4 +112,13 @@ struct apply_state {
+>         enum ws_ignore ws_ignore_action;
+>  };
+>
+> +extern int parse_whitespace_option(struct apply_state *state,
+> +                                  const char *option);
+> +extern int parse_ignorewhitespace_option(struct apply_state *state,
+> +                                        const char *option);
+> +
+> +extern void init_apply_state(struct apply_state *state,
+> +                            const char *prefix,
+> +                            struct lock_file *lock_file);
+> +
+>  #endif
