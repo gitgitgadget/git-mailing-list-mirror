@@ -1,102 +1,105 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH 0/4] pathspec labels [WAS: submodule groups]
-Date: Mon, 16 May 2016 10:48:40 -0700
-Message-ID: <CAGZ79kZyPvAFG1TjSm76LuDLpch=7iuL_-8LYqysSESFQj-YjQ@mail.gmail.com>
-References: <20160513001936.7623-1-sbeller@google.com>
-	<CACsJy8BK-u2VV3kkq3ANHCanYqMwphqgxZmooQfewA_J7e8MPw@mail.gmail.com>
-	<CAGZ79kacKnBjzVFSShRido4rKa3-Zg465d2320M6w1qXEkOZqw@mail.gmail.com>
-	<xmqqh9dx3nsf.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 5/5] pathspec: record labels
+Date: Mon, 16 May 2016 10:55:56 -0700
+Message-ID: <CAGZ79kbHW+qzQjoVu9gRYC0FBqpkq5bPPLU3=BdEFKeGc=U6sA@mail.gmail.com>
+References: <20160513231326.8994-1-sbeller@google.com>
+	<20160513231326.8994-6-sbeller@google.com>
+	<xmqqk2iw78aq.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 16 19:49:01 2016
+X-From: git-owner@vger.kernel.org Mon May 16 19:56:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2MdZ-0005RB-3o
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 19:49:01 +0200
+	id 1b2MkM-0000vb-Bl
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 19:56:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754555AbcEPRsm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 13:48:42 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:34269 "EHLO
-	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754534AbcEPRsm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 13:48:42 -0400
-Received: by mail-io0-f181.google.com with SMTP id 190so219237533iow.1
-        for <git@vger.kernel.org>; Mon, 16 May 2016 10:48:41 -0700 (PDT)
+	id S1754482AbcEPRz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 13:55:58 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:36802 "EHLO
+	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754398AbcEPRz5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 13:55:57 -0400
+Received: by mail-io0-f177.google.com with SMTP id i75so214129480ioa.3
+        for <git@vger.kernel.org>; Mon, 16 May 2016 10:55:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=CVA/nZXCUbyoG834JT5LeYVY2xuBiKdE3LxOCu4oNDk=;
-        b=fU+5m2DrYS/tZbAksHplPyIfVH9ZJSJuPoSqB8GJCgiGdCVFNwehBe8fD2tRqAW0eL
-         dtHWiabIXYIyMrHZiQ6IAQCNuE9wAMBiFfFH/r0qOwC/TaxzCk6lserVuQn7Td07tIMi
-         YPtIuPee9sJ3W8b8TgdAun9nrw80P6HoZz164IsN+r97apnr4CMilLkl+M/kgbBjvCDD
-         i+LLLZJxr3E64X41tv9km6FuaHpztwcfG1sYlAkviOqcNip0Ngx45h1P2mNCWEnZf1LZ
-         71UJbfZf0Cnh5811hC7FG3HCwo9ovP49HZWTvF8qk38sEDY5tKl+v1bAkl6Woaaqu9AX
-         OzfA==
+        bh=ed5NmKo1E30gmN2tLhjjcjUcYNnrNrsNqBJdeQPmOaU=;
+        b=eexMV5PM4Ro+aoibGK/rN6VW+xnlwbnyyoOv4mRL5UE/fWoR+71RlX38NbRxpRM/9g
+         qssXtOYxCqa64RmsSFaGcvg3vrxrg26yIUxIKsotcUiBStio4qnnUHDpweSnYPKpFSFf
+         QbrDMR8KjRXzck6Zm3i3AdlXcBSO/AwXTVQsfu23t3xLcX5ztGG5MXFktQQ39nTo7W9z
+         tx7/UX/CXR8wjwhE8na5JbWP9wa4L4XQ4/IUIanECVx1UrLJUE/ZYX2+QWKcuupFOmGZ
+         jJADKFqxyuaMjfwX1uzA5p5pmGMGrkSz2A5I5nMGngCYkwVU4PMfcjEbZXelaI467LYG
+         rc7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=CVA/nZXCUbyoG834JT5LeYVY2xuBiKdE3LxOCu4oNDk=;
-        b=Rx746tF0TYZ9sIy/PFW0C11bD1iOtTTG0EQKtNh+GjyPlnRh37x0vpaGw0ceMsmc2A
-         mEt9IHX1hn4+J41LP51ZHlDnpEByHTgx7NapA09HPAZK39GdTz9ieBNnCYHU+d2L4SNx
-         ks0nqdiiL5EPaxdgkP6B9MOoBl+RiOsEdeZXlINlykYr8fCslG8JTQVps59sEyd/gulN
-         VZoc0BplDcHa6Dqo1w7BYhuhu6j7c472v7CzKG1S7U4vz7H0m+PsZqe4MJYCU7utjSY6
-         U3MvBVFHtiMe95eWlmBT2f65YOMKSRqjCiPlBtVTx3KaOhnivjS9JtxeX1RdF0McVHrS
-         MIzA==
-X-Gm-Message-State: AOPr4FWLxtNKu4NksZhHvbg8LnlP9dDWx04cBwGR/8y9UROPSVXAchbSXYjQIZAyCwgN23N0EOT0mHKAyhBBpYvD
-X-Received: by 10.107.173.3 with SMTP id w3mr8249153ioe.110.1463420920994;
- Mon, 16 May 2016 10:48:40 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Mon, 16 May 2016 10:48:40 -0700 (PDT)
-In-Reply-To: <xmqqh9dx3nsf.fsf@gitster.mtv.corp.google.com>
+        bh=ed5NmKo1E30gmN2tLhjjcjUcYNnrNrsNqBJdeQPmOaU=;
+        b=Ng0m1jIYEgTMg5xB6P4YsY+brg7IHOpri4Fc9wXK7NXRn+gv2KXbFNegbIUZOKQ+o1
+         0y9avk2MrabCbq3C1Y1VGjWjDUYgNafOqw6ReKjC8VlRclnTA7aD684zrrUmx47b1GVO
+         btr9hCoItV0wH2n0g5HDGUruAAwdQHGecx7cmnm9kxK1KOL3/oWBFTxM7nQ9D0If+DHj
+         pD26bZCrZiyxK5oKPJxTWkPRsly99VO2xq1RE4T+RswydRfhQiip1cZZFCfhCTyOXHe+
+         drt6qkoKv8phiY/KjmuGJiMK3dL6NQFjNwn8RjKXmz89dv4yPvyI+Iu/ntGrn5FNhtPz
+         GP5A==
+X-Gm-Message-State: AOPr4FVCeKJl7nZZ/G+fQGuUMou7mnQFTFNTbe95/MzrwEtCJNNz2iYHWMpdCBmQb7cF94jFdLkPH/EARpVij5fd
+X-Received: by 10.107.173.3 with SMTP id w3mr8271031ioe.110.1463421356511;
+ Mon, 16 May 2016 10:55:56 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Mon, 16 May 2016 10:55:56 -0700 (PDT)
+In-Reply-To: <xmqqk2iw78aq.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294764>
 
-On Mon, May 16, 2016 at 10:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+> I am NOT suggesting to make this enhancement in the prototype to
+> allow us experiment with submodule selection use case, but this is
+> an obvious place to allow
 >
->> On Sun, May 15, 2016 at 3:06 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->>> Instead of putting everything in under the same attribute name
->>> "label", make one attribute per label? Would this work?
->>>
->>> *.[ch] c-group code-group
->>>
->>> And the pathspec magic name can be simply "attr", any git attribute
->>> can be used with it, e.g. :(attr:c-group)
->>
->> So you want to be able to query something like:
->>
->>     git ls-files ":(crlf=auto)"
->>
->> as well?
+>         :(label=A B):(label=C D)
 >
-> It would be more like
+> to mean ((A & B) | (C & D)) by making item->labels an array of set
+> of labels.
+
+This is what already works with the series. Or rather:
+
+    ":(label=A B)" ":(label=C D)"
+
+works as you would expect for (A&B) | (C&D).
+
+So I am a bit hesitant to replace the string list by an array
+of stringlists or such, as the future enhancement can also do that?
+
+The enhancement may bring in more expressions into the label string,
+so it may even parse that string into a tree for Lexicographical order
+instead of just using an array of lists.
+
 >
->         git ls-files ":(attr:crlf=auto)"
+> And no, I do not think arbitrary boolean expression is too complex
+> to understand to the end-users, especially if we have to stay within
+> the pathspec magic syntax.  And my gut feeling is that it is not
+> worth it to support anything more complex than "OR of these ANDed
+> ones".
 >
-> It certainly sounds tempting, even though I do not want to keep what
-> this initial chunk of the series needs to do to the minimum.
-
-This is another case for using ':' instead of '='.
-So I think ':' is better for this future enhancement.
-
-Also this future enhancement may ask for
-
-      git ls-files ":(attr:label=foo)"
-
-or
-
-      git ls-files ":(attr:-label)"
-
-so the user can circumvent the warn and ignore strategy. :(
+>> +                     string_list_split(item->labels, sb.buf, ' ', -1);
+>> +                     string_list_remove_empty_items(item->labels, 0);
+>> +                     strbuf_release(&sb);
+>> +                     continue;
+>
+> The data structure to record the "required labels" is shared
+> knowledge between this function and the has_all_labels() and nobody
+> else knows it is done with string_list, so I think this is a good
+> balance between expediency and future optimization possibilities (I
+> am anticipating that linear search of string list would be found as
+> performance bottleneck).
+>
