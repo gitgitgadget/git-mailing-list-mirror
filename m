@@ -1,90 +1,85 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 0/6] modernize t1500
-Date: Mon, 16 May 2016 13:39:52 -0400
-Message-ID: <CAPig+cTPsya6_3D2wx=k3pVaDJ2PokUvK4muM7nz-eV+Ss5+tw@mail.gmail.com>
-References: <20160510052055.32924-1-sunshine@sunshineco.com>
-	<xmqqfutqsaxn.fsf@gitster.mtv.corp.google.com>
-	<xmqqmvnxpyw6.fsf@gitster.mtv.corp.google.com>
-	<xmqqeg99py5j.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH 0/4] pathspec labels [WAS: submodule groups]
+Date: Mon, 16 May 2016 10:39:28 -0700
+Message-ID: <xmqqh9dx3nsf.fsf@gitster.mtv.corp.google.com>
+References: <20160513001936.7623-1-sbeller@google.com>
+	<CACsJy8BK-u2VV3kkq3ANHCanYqMwphqgxZmooQfewA_J7e8MPw@mail.gmail.com>
+	<CAGZ79kacKnBjzVFSShRido4rKa3-Zg465d2320M6w1qXEkOZqw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Michael Rappazzo <rappazzo@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 16 19:40:22 2016
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon May 16 19:40:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2MV0-0006Pr-Hs
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 19:40:10 +0200
+	id 1b2MV1-0006Pr-3j
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 19:40:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754023AbcEPRkB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 13:40:01 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:34225 "EHLO
-	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754199AbcEPRkA (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754420AbcEPRkD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 13:40:03 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50779 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753919AbcEPRkA (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 16 May 2016 13:40:00 -0400
-Received: by mail-io0-f171.google.com with SMTP id 190so218926876iow.1
-        for <git@vger.kernel.org>; Mon, 16 May 2016 10:39:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=kFPQu+JKNIhliy1ljtX5HVPk+XwUjo5sc4ev0XoDpYA=;
-        b=ABksZ+qU2ZSkCel/HlzFi7023tQpdQ4hcUIhnQZAAEVRpnp9HbAyf3/jq+HmwNom0X
-         p7+gD75WgitkaYKznaBV6TA5kiwC0D/CnzmkgYGcIK3yPbyLssUooXJ+z5eC43QOLpSD
-         EruZ7OSBlCj7keDD+boN47Vkda37d2c9/ubBagBjUpvsu3MjVZuBXqz7gBAVrFhV8CB9
-         rY2tTOran/3jZzJTK2cIg3W3Tk3aKMO88/c9TdcUtxbbq6cck8ecQTla1xHSwgQYYahq
-         LIMpUrUuxIWryrG9Ixd87lmcsQ1C3AANFhNDvmTfj2JkZYEv++QYCRs4RdvdmdLcquJc
-         BtTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=kFPQu+JKNIhliy1ljtX5HVPk+XwUjo5sc4ev0XoDpYA=;
-        b=Z9EYnPJauUKC/9TDsu9jr0c5X/kAvSNKMPDUEZaROwY5+jFHSgUenKnFUs3xUMa1y1
-         w0Wbk37CrilAGN0Squ0kFQKGhxdnwnsK168AgY7RtvcvR3VtdquLy95l3QygUQNOEOap
-         YpbJxPco9oiOIScYxvk9OLcuTRYZ2fxRNfi0Gd+3qpqGOl8HY7X6fZuYoFL4ks6xY6Ug
-         O2fZUDsJMXu0d8nradart3NkMhHpYAZNaERyxRXeNhL3WsZNWBPBwafLDYHz7pP/NnZZ
-         T+o2kqGBtXeminO/yuMdme3qY8E8obf/F6whgebbTo6P6g8Umv9Tre3wWUKqPx1lFs1M
-         +1bA==
-X-Gm-Message-State: AOPr4FUckiu3q1Kbv3r6yyPIgAEGCEr/O6DZVe0vQBKo74hnLYrKGTsMr1O8cd7qQ7AdeoGgepwu25Z6Zv5RZg==
-X-Received: by 10.36.55.144 with SMTP id r138mr10108276itr.73.1463420392978;
- Mon, 16 May 2016 10:39:52 -0700 (PDT)
-Received: by 10.79.139.135 with HTTP; Mon, 16 May 2016 10:39:52 -0700 (PDT)
-In-Reply-To: <xmqqeg99py5j.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: lOPRC1hhq7V1uyh5Pg52K-cxh6I
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 10BB31C647;
+	Mon, 16 May 2016 13:39:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=86D1GOSxw+c75b5iMJAEc7ZwwBI=; b=fnC1YY
+	dCjczZhvtIWZpc1o4ipiztJmKno5ePlDrmznGe0ULImW6kUwpJyL9B7hIjchWWwN
+	L9NiFIl+hzuqkA7LDTINv4osFdoYnBafhhvsmf3OXJFTc84UTFiFjDy4/WDYUmvE
+	paTefjPAgS7AEioSxDgquJZpg1/YyJaZM28hU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cp3397qLyDjSMil/b5npCoUuAISErm6z
+	XAh8FwLK2dlcxKNiPKRhrnMZgurY8/QpXy7WpD8wOtbTTbuVkR0W/B1xqR6cwf4n
+	JBmAKtqyttLeiP8yQ2nroDc4s2OwPji5y7eCZlS4/lB0QbWlOwcjZHtgsLxePEjy
+	BuG/vEQ1GWo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 083E11C646;
+	Mon, 16 May 2016 13:39:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7B8F41C645;
+	Mon, 16 May 2016 13:39:30 -0400 (EDT)
+In-Reply-To: <CAGZ79kacKnBjzVFSShRido4rKa3-Zg465d2320M6w1qXEkOZqw@mail.gmail.com>
+	(Stefan Beller's message of "Mon, 16 May 2016 10:20:52 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 24EC645E-1B8D-11E6-BE77-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294761>
 
-On Tue, May 10, 2016 at 2:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->> Junio C Hamano <gitster@pobox.com> writes:
->> Subject: [PATCH 7/6] t1500: finish preparation upfront
+Stefan Beller <sbeller@google.com> writes:
+
+> On Sun, May 15, 2016 at 3:06 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> Instead of putting everything in under the same attribute name
+>> "label", make one attribute per label? Would this work?
 >>
->> The earlier tests do not attempt to modify the contents of .git (by
->> creating objects or refs, for example), which means that even if
->> some earlier tests before "cp -R" fail, the tests in repo.git will
->> run in an environment that we can expect them to succeed in.
+>> *.[ch] c-group code-group
 >>
->> Make it clear that tests in repo.git will be independent from the
->> results of earlier tests done in .git by moving its initialization
->> "cp -R .git repo.git" much higher in the test sequence.
->>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
+>> And the pathspec magic name can be simply "attr", any git attribute
+>> can be used with it, e.g. :(attr:c-group)
 >
-> I think the same logic applies to other preparatory things like
-> creation of sub/dir in the working tree etc.
+> So you want to be able to query something like:
+>
+>     git ls-files ":(crlf=auto)"
+>
+> as well?
 
-Hmm, so are you suggesting a single 'setup' test at the start of
-script which does the 'cp -R' and creates those other directories
-needed by later tests?
+It would be more like
+
+	git ls-files ":(attr:crlf=auto)"
+
+It certainly sounds tempting, even though I do not want to keep what
+this initial chunk of the series needs to do to the minimum.
