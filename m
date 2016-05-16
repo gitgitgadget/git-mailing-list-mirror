@@ -1,109 +1,114 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 0/2] bisect--helper: rewrite of check-term-format()
-Date: Sun, 15 May 2016 20:35:40 -0400
-Message-ID: <CAPig+cRhfJbbP7FE-XkW4uaMu5Gy+UvBbh-rHOY5NK4_SrwjcA@mail.gmail.com>
-References: <1462338472-3581-1-git-send-email-pranit.bauva@gmail.com>
-	<1462546167-1125-1-git-send-email-pranit.bauva@gmail.com>
-	<xmqqtwia25qc.fsf@gitster.mtv.corp.google.com>
-	<CAFZEwPOA9c8eQAacnuB1n=juOhN1zsMdzcupS3ijqwYFPRrW4A@mail.gmail.com>
-	<xmqq60up1e24.fsf@gitster.mtv.corp.google.com>
-	<CAFZEwPML8MCAL2quAN3ExMFXrhjS07g3KEC-WuSfYAXc2WQKuQ@mail.gmail.com>
-	<CAFZEwPPZJqGHsHk0RLzo-pA8rUN0VP9-ricycNOnGbhO=2JZgg@mail.gmail.com>
+Subject: Re: [PATCH 4/5] worktree: add "lock" command
+Date: Sun, 15 May 2016 20:40:19 -0400
+Message-ID: <CAPig+cQ-weDTCnKuxapwaBp8W2T_VNuJSXPE_mRWPbjnO1krxQ@mail.gmail.com>
+References: <20160510141416.GA22672@lanh>
+	<20160510141729.23063-1-pclouds@gmail.com>
+	<20160510141729.23063-4-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>, Paul Tan <pyokagan@gmail.com>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 16 02:35:56 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Reto_Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
+	Mike Rappazzo <rappazzo@gmail.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 16 02:40:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b26Vf-0001bk-U2
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 02:35:48 +0200
+	id 1b26aB-0005kU-7h
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 02:40:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752025AbcEPAfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2016 20:35:42 -0400
-Received: from mail-ig0-f195.google.com ([209.85.213.195]:35986 "EHLO
-	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751908AbcEPAfl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 20:35:41 -0400
-Received: by mail-ig0-f195.google.com with SMTP id c3so5679077igl.3
-        for <git@vger.kernel.org>; Sun, 15 May 2016 17:35:41 -0700 (PDT)
+	id S1751936AbcEPAkV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 May 2016 20:40:21 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:33599 "EHLO
+	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751908AbcEPAkU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 May 2016 20:40:20 -0400
+Received: by mail-io0-f182.google.com with SMTP id f89so192373760ioi.0
+        for <git@vger.kernel.org>; Sun, 15 May 2016 17:40:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=+PZIHjybw4vSex+Wf7lwmQsVLfQ9Svykg8yief1FzAk=;
-        b=m5JkgMsvnxX6bbTEIJ5rz1SYfgFnvwSCNh3od5dqbNLgzHeVargEXe7lt72iMY3cZB
-         bPuk+1aU12zFJ2REn3fg9udnAonWMGe8Mh+Tz8WPwFqAQsVXJn0DXXczkYHeLz5NVkLv
-         WuZRPii8X58jg8xqf5wuK3DFosrFLkiQteXbp+GZc7nJpzZRIqkShRTCBPHpwOs1WmjK
-         oQlmIuekA2ZzJocNBSrIp/hO8xqxq2QOzdFeJMVMSCIGU5gWEMtswQWgku/KStPksS3J
-         JbQ1joGcPAuu+6qjQrAeUmtrcFl0y/OJau30mJbUWLdIX+lGntRM4OwBIgm1P3mns9GN
-         FvHg==
+         :from:to:cc:content-transfer-encoding;
+        bh=0V1Exn5o69Bf1rzj3AgK6+p50KccuBQbjJK5S1nlbnQ=;
+        b=xbfIbNP32dNXIrVqVeIjQRB0aVINlcRpes2hPVlqAMNwO6CuhVPH5fJgwUTDc8aYRg
+         OjtVvdSO7MxEXaE0QhJbIX2hxtsIt8LxAAgFnwyDCPgXBpUSz4rc4RwJBph17CnTdz+l
+         0IwBVMbIuOWAEE59QVC1IqqS2DFtzGVKVg6yra/MqMkEbQqgcB/nTGxBoz+0Bb72rbhz
+         uxequU/adAWdgsL/VvKpAXIjitC/90h+XMFXWD4vvwUZdCGveXyLnZ4dLJEHu8UARBH1
+         X8rJTs9ErZhSQ9LgIU11HiA92pQyB1tzy6+UCmYRRvUREh506Ky7Ui+lDQAs57iMJLQR
+         z4SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=+PZIHjybw4vSex+Wf7lwmQsVLfQ9Svykg8yief1FzAk=;
-        b=ZnJfcDM5BkeX2Ca/SqI+J3AqpjtSrxJyC5+NVX9tn1wI1I9IVNOQbLQ47dx5ZrCQ4j
-         rEmMh8jtn54FvoqNCcLnX5jeMZNpjFurw2g/9spdRVEDgr+LjgPHHv1UnCY8N9oQMcKa
-         UfRoRbE7pb50v4uyemP1rm4iBDwjsFY/hBWdA0o9psnhIOGipILOw5NHmhYWf1XjOste
-         ip968Jl+2wOMuaO2jDAoQvsETWwuBFl75oxDShbFTAUMZ/NfUVLQBh8vOozHr4CEA4zR
-         LkhImjGvCJgaGtueXhdQYWWKrAyrBDuzFcVJQ/IKcV64ccgHoYB1dsRCSA+n5+o5jrra
-         BJSw==
-X-Gm-Message-State: AOPr4FW9VuhLPRRw1N4WdPMPh12GMZBXK6974o5zwrsRGU/BRAItEE1NrlJ/hNJaAd/HjDws10pqZ5eg1LeqAA==
-X-Received: by 10.50.3.105 with SMTP id b9mr8879333igb.17.1463358940826; Sun,
- 15 May 2016 17:35:40 -0700 (PDT)
-Received: by 10.79.139.4 with HTTP; Sun, 15 May 2016 17:35:40 -0700 (PDT)
-In-Reply-To: <CAFZEwPPZJqGHsHk0RLzo-pA8rUN0VP9-ricycNOnGbhO=2JZgg@mail.gmail.com>
-X-Google-Sender-Auth: AXVAyQCajnPhMEDMMR-7xZGrGvA
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=0V1Exn5o69Bf1rzj3AgK6+p50KccuBQbjJK5S1nlbnQ=;
+        b=U/3+sfm4u990D39+yIQAp+ymndAF5G/9dud+24xpoA/URM8neodmcVSaAl3tu1vv9b
+         afloTto0dAitC7X7HtFhaYYExcHJi3Way11GkzxVt6cjpafViJWLI/HGe28S+mDzDXl/
+         G+56rmUWocVeyQl8+22T5qSGbt4TLvjm41XPMRXW+ptP1/kpOjVWD03raPQJbFuK72tW
+         LJnPIZSPPexHQsRIetPjr2OnEfYLFby9q9OPSYxS3hN3yo2VfrqFFHglJw5fLiNVyMzu
+         3PTri/+ZRhGlfHU6mw19BP0qV0aJDOOW8tGlC2JRX12hrnBy9WIDunR0c2HeoZJKQLT6
+         LDjA==
+X-Gm-Message-State: AOPr4FV+KKfIdt299a1JJKQtQvi65tmxJeGPeCr+h+IBvUJBhzjO/zQpQna6KgW55MhJRROdEmC0WttE99i1Yw==
+X-Received: by 10.107.47.37 with SMTP id j37mr17220201ioo.168.1463359219077;
+ Sun, 15 May 2016 17:40:19 -0700 (PDT)
+Received: by 10.79.139.4 with HTTP; Sun, 15 May 2016 17:40:19 -0700 (PDT)
+In-Reply-To: <20160510141729.23063-4-pclouds@gmail.com>
+X-Google-Sender-Auth: rTPNVmHPwbEC76n7WbKHgkM2sqs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294709>
 
-On Sun, May 8, 2016 at 9:34 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> On Sun, May 8, 2016 at 11:53 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> On Sun, May 8, 2016 at 7:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Pranit Bauva <pranit.bauva@gmail.com> writes:
->>>> I completely missed your point and you want me to go the Eric Sunshine's way?
->>>
->>> I am neutral.
->>>
->>> When I read your response to Eric's "top down" suggestion, I didn't
->>> quite get much more than "I started going this way, and I do not
->>> want to change to the other direction.", which was what I had the
->>> most trouble with.  If your justification for the approach to start
->>> from building a tiny bottom layer that will need to be dismantled
->>> soon and repeat that (which sounds somewhat wasteful) were more
->>> convincing, I may have felt differently.
->>
->> Sorry if it seemed that "I have done quite some work and I don't want
->> to scrape it off and redo everything". This isn't a case for me. I
->> think of this as just a small part in the process of learning and my
->> efforts would be completely wasted as I can still reuse the methods I
->
-> efforts would **not** be completely wasted
->
->> wrote. This is still open for a "philosophical" discussion. I am
->> assuming 1e1ea69fa4e is how Eric is suggesting.
+On Tue, May 10, 2016 at 10:17 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
+ Duy
+<pclouds@gmail.com> wrote:
+> +static int lock_worktree(int ac, const char **av, const char *prefix=
+)
+> +{
+> +       const char *reason =3D "", *old_reason;
+> +       struct option options[] =3D {
+> +               OPT_STRING(0, "reason", &reason, N_("string"),
+> +                          N_("reason for locking")),
+> +               OPT_END()
+> +       };
+> +       struct worktree **worktrees, *wt;
+> +       struct strbuf dst =3D STRBUF_INIT;
+> +
+> +       ac =3D parse_options(ac, av, prefix, options, worktree_usage,=
+ 0);
+> +       if (ac !=3D 1)
+> +               usage_with_options(worktree_usage, options);
+> +
+> +       strbuf_addstr(&dst, prefix_filename(prefix,
+> +                                           strlen(prefix),
+> +                                           av[0]));
+> +
+> +       worktrees =3D get_worktrees();
+> +       wt =3D find_worktree_by_path(worktrees, dst.buf);
 
-Speaking of 1e1ea69 (pull: implement skeletal builtin pull,
-2015-06-14), one of the (numerous) things Paul Tan did which impressed
-me was to formally measure test suite coverage of the commands he was
-converting to C, and then improve coverage where it was lacking. That
-approach increases confidence in the conversion far more than fallible
-human reviews do.
+Oh, I forgot to mention in my previous email that this is leaking
+'strbuf dst'. It could be released right here at its point of final
+use.
 
-Setting aside the top-down vs. bottom-up discussion, as a reviewer
-(and user) I'd be far more interested in seeing you spend a good
-initial chunk of your project emulating Paul's approach to measuring
-and improving test coverage (though I don't know how your GSoC mentors
-feel about that).
+> +       if (!wt)
+> +               die(_("'%s' is not a working directory"), av[0]);
+> +       if (is_main_worktree(wt))
+> +               die(_("'%s' is a main working directory"), av[0]);
+> +
+> +       old_reason =3D is_worktree_locked(wt);
+> +       if (old_reason) {
+> +               if (*old_reason)
+> +                       die(_("already locked, reason: %s"), old_reas=
+on);
+> +               die(_("already locked, no reason"));
+> +       }
+> +
+> +       write_file(git_common_path("worktrees/%s/locked", wt->id),
+> +                  "%s", reason);
+> +       return 0;
+> +}
