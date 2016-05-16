@@ -1,88 +1,162 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 56/94] apply: move 'struct apply_state' to apply.h
-Date: Mon, 16 May 2016 09:03:22 -0700
-Message-ID: <xmqqwpmu2do5.fsf@gitster.mtv.corp.google.com>
-References: <20160511131745.2914-1-chriscool@tuxfamily.org>
-	<20160511131745.2914-57-chriscool@tuxfamily.org>
-	<CAPig+cS98guXbeRH6oW8n2tPAa3u=2MvSx1H5rixGKdGTrVJPg@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] Ignore dirty submodule states during stash
+Date: Mon, 16 May 2016 09:09:40 -0700
+Message-ID: <CAGZ79kZESuKiEt2RJJdWJPBySgbDA6abGkZMiTFgzaNCUP1_mA@mail.gmail.com>
+References: <20160516020735.GA7884@gmail.com>
+	<CAGZ79kaTss6ctZDCiRP2wjuxH+rJ79RKFLM79_FJN+37Bed+HQ@mail.gmail.com>
+	<20160516154606.GA8797@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jeff King <peff@peff.net>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon May 16 18:03:39 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Vasily Titskiy <qehgt0@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon May 16 18:09:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2KzT-0006pc-PU
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 18:03:32 +0200
+	id 1b2L5W-0003z7-Hy
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 18:09:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753945AbcEPQD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 12:03:28 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60975 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752202AbcEPQD1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 12:03:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D1341B817;
-	Mon, 16 May 2016 12:03:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SrU3S2mKxcPBwYyX1+7WgRRD+Mc=; b=gBHox+
-	szHCaySSSN/7y0iER0vgWse2mcGfWfiLGM/pxSbjM//WhOYBIfivrMO9XH4UEEJE
-	jhB0qiyNTEaoE7vJLKL5bVbZYY1/tLaI8gxRrp1UlvM7Q3B814c+qKlv4+OwY05D
-	xiQ4/JkhspItKQg2dB4X3pQ+aGHnm9BRqyALw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mVlLihTNUuo/fpz0JP82lAKr3DhImwuH
-	80JdtXVcOzEbTu4wB47VqMouN8ZWNiBeGdhV/tsg6jyL67cehhPyF40E9XtUl4OR
-	E6yyba0YVAU049u41ruzwc8TgoQihJAwwdkCLk9YAk5EK1kCARp3thtxo/iV6faY
-	VoK6uGbfqGE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7380F1B816;
-	Mon, 16 May 2016 12:03:25 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C82671B815;
-	Mon, 16 May 2016 12:03:24 -0400 (EDT)
-In-Reply-To: <CAPig+cS98guXbeRH6oW8n2tPAa3u=2MvSx1H5rixGKdGTrVJPg@mail.gmail.com>
-	(Eric Sunshine's message of "Sun, 15 May 2016 23:10:14 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B859A584-1B7F-11E6-807A-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1754119AbcEPQJm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 12:09:42 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:36325 "EHLO
+	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752812AbcEPQJl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 12:09:41 -0400
+Received: by mail-io0-f180.google.com with SMTP id i75so210209305ioa.3
+        for <git@vger.kernel.org>; Mon, 16 May 2016 09:09:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=xYW/k5nikQTLUWa+aP2jb/c7Dpfo9DJFxC2c5SweXpY=;
+        b=m/tpwhKyqEC35fNu7j/MsjkuNz+sG0ePuyO44PYNpUod2xZlC9VcbHcCrk0dLVjQVB
+         9F5JrybYYayinY1Yqz0+NRz+7wMEA/DV6uAtsKILQ3teDHydMWj/eDEm7b5yPJLq09cs
+         dOVKwQZ1XUWrCR00ODkVrQGh7+Np/NFUWyOSPO/494ZLp9Wal2VNSG11pJ0si60POkwl
+         6/Q/GEgLPrKlgBmhDJBpX1+00BxNP7TwnEnPGyFyoxwF6XqlC10j3nWRZq5Ov1CGO6FN
+         jEW2FSl+dhj3QQ2ucg8gg+E7iudnXlEKGD0sSROU7nJRzmcJj/Rejgf60C48eBOr84W3
+         YvWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=xYW/k5nikQTLUWa+aP2jb/c7Dpfo9DJFxC2c5SweXpY=;
+        b=N9McTVNd7k9R29TJ8DarlABcgumuIIxU4piKdPYgNWI89nPvwJ3r5cWxJeDNLqQWMw
+         BJFsLuHzoXdE7IEoKACO1W0LUe5XOxjOFqrkjqTZoVuVIA+5UW5YIWGMkhDmlQWzsDXj
+         xv+Umt2l7l+24o1dHVAEwIDOk6W1SEbfar2OBpGGA42mZE2LDekAMLaEuVKb7Q1V8eUc
+         CAwG5NYEtFgG/ljaH2OwHT/niR6cIydpB53QYA0c5uZGb/pD6CfHtORTiy8p35t9Bvto
+         5595RySs/DA0Mn9kBgkI/Sx/57fsrxB5onhTL3LNzaUTHM1tniClEsQk8QNzbAwHD/ze
+         e7cw==
+X-Gm-Message-State: AOPr4FXCh9IFKjm5YWpgKujqVfwjbUN2TqLiqYzdc5YoW8PM+mSJq7VSCcv56+2bzG59+beT+zToOVcQPiPRYPq2
+X-Received: by 10.36.253.9 with SMTP id m9mr10593533ith.52.1463414980705; Mon,
+ 16 May 2016 09:09:40 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Mon, 16 May 2016 09:09:40 -0700 (PDT)
+In-Reply-To: <20160516154606.GA8797@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294749>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> On Wed, May 11, 2016 at 9:17 AM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->> To libify `git apply` functionality we must make 'struct apply_state'
->> usable outside "builtin/apply.c".
+On Mon, May 16, 2016 at 8:46 AM, Vasily Titskiy <qehgt0@gmail.com> wrote:
+> Hi Stefan,
 >
-> Why is this patch plopped right in the middle of a bunch of other
-> patches which are making functions return -1 rather than die()ing?
-> Seems out of place.
+> On Sun, May 15, 2016 at 11:37:20PM -0700, Stefan Beller wrote:
+>> On Sun, May 15, 2016 at 7:07 PM, Vasily Titskiy <qehgt0@gmail.com> wrote:
+>> > Do not save states of submodules as stash should ignore it.
+>>
+>> Can you explain why this is a good idea?
+>> (It is not obvious to me either way.)
+> Actually, submodules are already ignored by stash, but not fully (it was introduced in commit 6848d58).
+> Current behavior is counter-intuitive, for example (if one has a project with a submodule):
+>  $ cd sub1
+>  $ edit .. commit .. edit .. commit. Alternatively, just checkout some other commit
+>  $ cd .. # back to main project
+>  $ git stash save
+>    No local changes to save
+>  $ # so, stash declares there are no changes
+>  $ edit main.cpp
+>  $ # For example, I need to update my working tree to latest master
+>  $ git stash save # save local changes of 'main.cpp'...
+>  $ git pull --recurse-submodules && git submodule update --recursive # update to latest
+>  $ git stash pop # I expect to get stashed changes for 'main.cpp', but...
+>    warning: Failed to merge submodule sub1 (commits don't follow merge-base)
+>    Auto-merging sub1
+>    CONFLICT (submodule): Merge conflict in sub1
+>
+> So, this is the issue. Instead of getting my local changes, I got a conflict (and stash is not
+> poped out). The root cause is the 'stash' command does not know how to deal with submodules,
+> but currently it tries to save the state of submodules, and even tries to re-apply the state
+> (and it fails of course). The proposed solution fixes this behaviour.
+>
+> All internal tests work fine with the change.
 
-Two possible places that would make more sense are (1) when it is
-introduced very early in the series, or (2) when it absorbed all the
-file-scope-static global states in the middle of the series.  I think
-either is fine.
+I think you could take the example as above and make it into a test?
+Showing that this change actually fixes a bug.
 
-That would be a good place to end the first batch of the topic.
-Then the second batch would be "turn die() into error status that is
-propagated upwards".
+Looking for a good place, I would have expected t/t3906-stash-submodule.sh
+would be a good place to put your code, but I am not sure how to
+properly integrate that test there.
+
+Maybe we can put the test in t3903 instead?
+
+>
+>
+>>
+>> Do we need a test/documentation updates for this?
+> I don't think so, 'stash' have never claimed submodule support.
+
+But it also never explicitly claimed it doesn't support it.
+
+Maybe we want to squash in something like
+(with better wording):
+
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 92df596..b2649eb 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -41,6 +41,8 @@ the usual reflog syntax (e.g. `stash@{0}` is the most recently
+ created stash, `stash@{1}` is the one before it, `stash@{2.hours.ago}`
+ is also possible).
+
++Stashing ignores submodule operations completely.
++
+ OPTIONS
+ -------
+
+
+Thanks,
+Stefan
+
+
+
+>
+>>
+>> >
+>> > Signed-off-by: Vasily Titskiy <qehgt0@gmail.com>
+>> > ---
+>> >  git-stash.sh | 2 +-
+>> >  1 file changed, 1 insertion(+), 1 deletion(-)
+>> >
+>> > diff --git a/git-stash.sh b/git-stash.sh
+>> > index c7c65e2..b500c44 100755
+>> > --- a/git-stash.sh
+>> > +++ b/git-stash.sh
+>> > @@ -116,7 +116,7 @@ create_stash () {
+>> >                         git read-tree --index-output="$TMPindex" -m $i_tree &&
+>> >                         GIT_INDEX_FILE="$TMPindex" &&
+>> >                         export GIT_INDEX_FILE &&
+>> > -                       git diff --name-only -z HEAD -- >"$TMP-stagenames" &&
+>> > +                       git diff --name-only --ignore-submodules -z HEAD -- >"$TMP-stagenames" &&
+>> >                         git update-index -z --add --remove --stdin <"$TMP-stagenames" &&
+>> >                         git write-tree &&
+>> >                         rm -f "$TMPindex"
+>> > --
+>> > 2.1.4
+>> >
+>> > --
+>> > To unsubscribe from this list: send the line "unsubscribe git" in
+>> > the body of a message to majordomo@vger.kernel.org
+>> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
