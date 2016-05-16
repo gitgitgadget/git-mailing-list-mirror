@@ -1,94 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] commit.c: use strchrnul() to scan for one line
-Date: Mon, 16 May 2016 08:57:59 -0700
-Message-ID: <xmqq1t523shk.fsf@gitster.mtv.corp.google.com>
-References: <xmqq37pj55bg.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1605160810020.3303@virtualbox>
+From: Nathan Wendt <nawendt84@gmail.com>
+Subject: (unknown)
+Date: Mon, 16 May 2016 10:58:55 -0500
+Message-ID: <CAB3F6BwTSWe2cXUNmfN1EZJKOQLrq-rauBtCwpa8ikuVK+siNA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 16 17:58:35 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 16 17:59:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2KuK-0002Cq-BU
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 17:58:12 +0200
+	id 1b2Kv6-0002sb-Vs
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 17:59:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754399AbcEPP6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 11:58:06 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55641 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754392AbcEPP6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 11:58:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EB6AD1CA08;
-	Mon, 16 May 2016 11:58:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xbYtMGCXCqmeGY4En7GRQZl9rxU=; b=uGzPEg
-	bT/Jakj9Qd1xl4rNpYbNjZNndFsoVL+qzpAuPOWHk+MkQmJ7Asjt8fGzM/0Te/zu
-	xwgpWZCoIyGV+DdzwutAvQS/eQf88hsdva03uKC45Be5CDMxUdTVcC5LfIEeqa8e
-	+Oni8NMQTy284eGV2VfQmUx5hxe4Km/EOKe7M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BLhaE3Xmo43kjz19fjn7BsjWNYWawugK
-	HBwGdh9UchjoGgGCVc1UXYVAK1GpwaNgjcSuZu3NzwQbh9+rB6Ka9UPICnDuFOYH
-	q4I/cUjgYvoW/9/g87YvYMPhH0jR8MhfGS5UYxNr6//SasBnKFzOLENOOEuVbEZh
-	yrTUtmKXVzM=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DDEFA1CA07;
-	Mon, 16 May 2016 11:58:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 33D311CA06;
-	Mon, 16 May 2016 11:58:02 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1605160810020.3303@virtualbox> (Johannes
-	Schindelin's message of "Mon, 16 May 2016 08:12:33 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F804B26A-1B7E-11E6-8A59-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1754196AbcEPP65 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 11:58:57 -0400
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:33952 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753654AbcEPP64 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 11:58:56 -0400
+Received: by mail-qg0-f50.google.com with SMTP id 90so90992386qgz.1
+        for <git@vger.kernel.org>; Mon, 16 May 2016 08:58:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to;
+        bh=IhRqQtyRnvKooT1VTIV4rrTSGs7Q7F0hqmboUBTC7ZI=;
+        b=qBLx44tBfiYRGGx9FP6dfyrsLbkpKSwhuDyATaypktrAb7ewL3bCd+qW64t6nG+5Li
+         Djm1hZc01YyVnq6HRyKsjNBaRBTJVLh8IBp4paQGrj8ziNIMvY2dICvqoTJtyHsZuwDn
+         P7+9rAF2j2lxuuqHHgDBVT8fNsQVasCdQcx7LXIbyDCpsD4E6yCOcZ1tJxvgQrTDlMU5
+         36o6J0Hxm6L2KQ7ZJTYRVqg4IVawRT7EnolBHZd8RCEPkQDIdC0lV69dPiOtSkWkxmPB
+         LKH3ZOLwv6tkjGHlDzRjp1DCpltO5d4XCb/Xphk5//+mGfWYdyLoeO9xoJndnKz7URpt
+         UoZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+        bh=IhRqQtyRnvKooT1VTIV4rrTSGs7Q7F0hqmboUBTC7ZI=;
+        b=L/l3MBGdZpu7yJjEDPZNXlhA/rGewwUkq9S1gEDuY3ukCl+qufpv2AKChWJDbYi6rH
+         D5R7KvGu6VDH6LpslKwf8GWQvTH4mLgbPAaW22ZDbb0J+3OVop15GOa1VdukeYKCU+9Z
+         VeakkSzou7euIhHm/Kx1IbEJ/tmJ0cbCNNEBUgEF1lTl6qwyffoD+QvF8kyQa6ZgWK2H
+         orsDi/VeMPhQpGGoNXE1TKSqPn5AXtnBdTCeyulCRWsDNDUSoDSPLJCnpN4N1jBlhNHF
+         MmeNzb63MJqhLjx7vcIvpGEKiEb2Qx9XpdthisLB4Gb/l2CutRR+KegmVruYRbCC7AUR
+         Nj0Q==
+X-Gm-Message-State: AOPr4FUi6rIaYtQZwR81N7dfXC7Zm1MBgvr7l/Ch1EVwH/X7q6IhMbc9hZ4ZBN18S85lLQdNyljB+HTZje5fVg==
+X-Received: by 10.141.28.204 with SMTP id f195mr31063961qhe.59.1463414335185;
+ Mon, 16 May 2016 08:58:55 -0700 (PDT)
+Received: by 10.55.153.3 with HTTP; Mon, 16 May 2016 08:58:55 -0700 (PDT)
+Subject: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294747>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Recently I have run into an issue with the git-completion.tcsh script
+where an error would occur upon sourcing the file on login. The error
+that would occur was:
 
-> On Sun, 15 May 2016, Junio C Hamano wrote:
->
->> diff --git a/commit.c b/commit.c
->> index 3f4f371..1f9ee8a 100644
->> --- a/commit.c
->> +++ b/commit.c
->> @@ -415,8 +415,7 @@ int find_commit_subject(const char *commit_buffer, const char **subject)
->>  		p++;
->>  	if (*p) {
->>  		p += 2;
->> -		for (eol = p; *eol && *eol != '\n'; eol++)
->> -			; /* do nothing */
->> +		eol = strchrnul(p, '\n');
->>  	} else
->>  		eol = p;
->
-> ACK. This was my fault, when I introduced the code in 9509af68 (Make
-> git-revert & git-cherry-pick a builtin, 2007-03-01). To be fair,
-> strchrnul() was introduced only later, in 659c69c (Add strchrnul(),
-> 2007-11-09).
+__git_tcsh_completion_version: Subscript out of range.
 
-Oh, there is no fault.
+In taking a look at the script, I noticed that when the script parses
+the tcsh version that I am running it does not put the output into an
+array. Thus, when it attempts to access subscript 2 of
+__git_tcsh_completion_version it throws the above error. To correct
+this, I changed
 
-I was reading through attr.c to see how bad a work to revamp
-attribute lookup would look like, found a hand-rolled strchrnul()
-that predates the widespread use of the function, and looked for
-similar patterns while I was updating it.  As there were many false
-positives (i.e. "Yes, this loop is looking for the end of line, but
-it does something else to the characters on the line while doing so,
-so it cannot become strchrnul()") that I needed eyeballing in order
-to reject and avoid incorrect conversion, it is very much appreciated
-that you double-checked this one that I spotted.
+set __git_tcsh_completion_version =  ` \echo ${tcsh} | \sed 's/\./ /g'`
+
+to
+
+set __git_tcsh_completion_version =  `( \echo ${tcsh} | \sed 's/\./ /g' )`
+
+and the script runs correctly. I could not find others having issues
+with this in the forums so I am not sure if this is unique to my
+system or not. Thought I would pass it along.
+
+For reference, I am running tcsh 6.17.00 on RHEL 6.8
 
 Thanks.
