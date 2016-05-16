@@ -1,92 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/6] modernize t1500
-Date: Mon, 16 May 2016 11:52:32 -0700
-Message-ID: <xmqq4m9x3ken.fsf@gitster.mtv.corp.google.com>
-References: <20160510052055.32924-1-sunshine@sunshineco.com>
-	<xmqqfutqsaxn.fsf@gitster.mtv.corp.google.com>
-	<xmqqmvnxpyw6.fsf@gitster.mtv.corp.google.com>
-	<xmqqeg99py5j.fsf@gitster.mtv.corp.google.com>
-	<CAPig+cTPsya6_3D2wx=k3pVaDJ2PokUvK4muM7nz-eV+Ss5+tw@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 5/5] pathspec: record labels
+Date: Mon, 16 May 2016 12:03:06 -0700
+Message-ID: <CAGZ79kaV+hQRn6ZraZcG9ZRp1XwPGrEFibBEX5qFJdWDCg0uxQ@mail.gmail.com>
+References: <20160513231326.8994-1-sbeller@google.com>
+	<20160513231326.8994-6-sbeller@google.com>
+	<xmqqk2iw78aq.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZsVH3mE0zXu9wSWgit3QZ_CiKZqg-TQdyWnZw6D9=Cgw@mail.gmail.com>
+	<xmqqlh393nuv.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbN_pzAVeAa-St_KRs60SbURTfKKP0v+do_+MK7orTkTg@mail.gmail.com>
+	<xmqq8tz93kf9.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Michael Rappazzo <rappazzo@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon May 16 20:52:52 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 16 21:03:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2NdA-00032F-Oq
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 20:52:41 +0200
+	id 1b2NnO-000293-6M
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 21:03:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754499AbcEPSwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 14:52:37 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53263 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753736AbcEPSwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 14:52:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 756401CF0B;
-	Mon, 16 May 2016 14:52:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U5QUUjoh+U9w7TvFm+dokRs+S/o=; b=Jobo83
-	aHg041OiN54ZGcWEGPG6CJ2rNs5+oykY3skxA9uUQO7VfLYE87ykSZB9ZNePLPJQ
-	roi2HD9n1ex+0FXZrVEyZYrEDGobJW9mKBt6+XdA7zV5gEA9IrYeaOXVtbRIAKP8
-	pKax4G+S/i4ViWimMuuZHfnQj+l7QbIVRUkLs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J2cUkESAnhnqoBVYIkKL7MuEN6A/Ptm8
-	Tik2DKttyXb7uRY4OzxVqQgsrlMvUWjbN5xSskVpYTWUEjCFOHK7vdO3Fw6pWt+Q
-	NRWsBubrXUDpK1D3qIau6CBm9cKMAtxIv3P7SLCdVegkD086jzBzaKN06Oakc5lh
-	fh7+LH+Kmns=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D1FD1CF0A;
-	Mon, 16 May 2016 14:52:35 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C9FDF1CF09;
-	Mon, 16 May 2016 14:52:34 -0400 (EDT)
-In-Reply-To: <CAPig+cTPsya6_3D2wx=k3pVaDJ2PokUvK4muM7nz-eV+Ss5+tw@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 16 May 2016 13:39:52 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5A398204-1B97-11E6-BDF3-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1754334AbcEPTDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 15:03:09 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:34327 "EHLO
+	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754199AbcEPTDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 15:03:08 -0400
+Received: by mail-io0-f169.google.com with SMTP id 190so221881018iow.1
+        for <git@vger.kernel.org>; Mon, 16 May 2016 12:03:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=hVjFCUqKFAISmQi1OLwd+j7pnD0D5PP3xV/wKJIME5s=;
+        b=IgsWhTHV0LWJ1CJ+lZbN58ucJPGQ5ZODYEYLjMAPZDyeGkPOSCo8SEBtP1xgZATMJs
+         kHQqnSKzsKLx1H05m5gUkXROBqzHu0N3TxCOwSonzwN5z5iWWgWxD6Rtw/KJDk74oPEn
+         mXxxh89BuvZ9jPOW5b5szos1r3PNkVkfrRTgG3c5GphLoD63l7+Ds0zqIZd4xqKAivVy
+         QOEk/5NRmiPVBv8bv7sYitpeZ842FSPsWYqcqoCsU+pdp4yBmDA7vtRPQCgo2Guq0xMx
+         oTLcOv0rGfCpsvfTawvj8f2pnaUc6f6cWKtgut9m+8yduZTf17gQMenNLhRPTW0VDDYQ
+         wXyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=hVjFCUqKFAISmQi1OLwd+j7pnD0D5PP3xV/wKJIME5s=;
+        b=iJtIDraunk+rs8IXHOlBAz4nt46znLEnWgSfhGrstwzHdiy14gEEH4iTAPwcGuS/sK
+         2Yq45a6+d1UfhmMTQrOm/V4uU6NiQCpS9p1Lt4k3cM/AFH9DiVKKgb1ZsPVC9ygLjWuU
+         rS5DqbAo3osOS3PVyTHRyBo7zNPODnfSnmRD6gK41Vx8ebwUKjYHjqwPyLVjsLJtao/t
+         ikmdn+YxEurFAXTaX7OQNUQY4/Bc6tfNgAwtQxPhesMi5YSj5+Wp/OAwCwsE2Wic9Qw8
+         RyzHn19JyKl5N0XC+321Uf3Zm2zLNauSJqzfnYQY8WuXoBcyjfVnr+9gHXf84iEKlw4R
+         +0bQ==
+X-Gm-Message-State: AOPr4FWMf2UxSd0Y3RZ6SzTxBLIJ7Lt9wWWFlgwJabZDYjLCk7WF0awcigabyuX8zUKskqKW40uWGTIow3mZzJ62
+X-Received: by 10.107.53.204 with SMTP id k73mr20186633ioo.174.1463425387060;
+ Mon, 16 May 2016 12:03:07 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Mon, 16 May 2016 12:03:06 -0700 (PDT)
+In-Reply-To: <xmqq8tz93kf9.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294778>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> On Tue, May 10, 2016 at 2:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>> Junio C Hamano <gitster@pobox.com> writes:
->>> Subject: [PATCH 7/6] t1500: finish preparation upfront
->>>
->>> The earlier tests do not attempt to modify the contents of .git (by
->>> creating objects or refs, for example), which means that even if
->>> some earlier tests before "cp -R" fail, the tests in repo.git will
->>> run in an environment that we can expect them to succeed in.
->>>
->>> Make it clear that tests in repo.git will be independent from the
->>> results of earlier tests done in .git by moving its initialization
->>> "cp -R .git repo.git" much higher in the test sequence.
->>>
->>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->>> ---
->>
->> I think the same logic applies to other preparatory things like
->> creation of sub/dir in the working tree etc.
+On Mon, May 16, 2016 at 11:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Hmm, so are you suggesting a single 'setup' test at the start of
-> script which does the 'cp -R' and creates those other directories
-> needed by later tests?
+>> So "warn and ignore" for data from .gitattributes and die for
+>> commandline arguments? That makes sense.
+>
+> Yes.
+>
+> On the "command line" front, because we may want to give different
+> meanings to these two entries in the future:
+>
+>         :(label=-doc)Documentation/
+>         :(label=!doc)Documentation/
 
-Exactly.
+Yes but both of these already errors out with:
+
+    Label -doc': Label names must start with an
+    alphabetic character and use only alphanumeric
+    characters, dashes and underscores.
+    fatal: Labels in the wrong syntax are prohibited.
+
+The command line arguments are not parsed via the attr system.
+Only data from .gitattributes are parsed via the attr system.
+
+I can add tests for those to fail though.
+
+>
+> we should diagnose -doc (FALSE) as an error, not treating it as the
+> same as !doc (UNSET).  And we should warn and ignore -doc (FALSE) in
+> .gitattributes.  Yes, ignoring it would be more or less equivalent
+> to treating it as UNSET, but because we may use -doc (FALSE) for a
+> better purpose later, we should still warn.
+>
+>> Ok, so here is the warn-and-ignore code:
+>>
+>>
+>>         if (ATTR_TRUE(check.value))
+>>                 ret = 1; /* has all the labels */
+>>         else if (ATTR_FALSE(check.value)) {
+>>                 warning(_("Path '%s': Label must not be false. Treat
+>> as if no label was set"), path);
+>>                 ret = 0;
+>
+> s/Treat as if .../The -label may be used differently in future
+> versions of Git, so do not use it/;
+
+"... but for now Git treats it as if it is not set at all" is a valuable
+information to the user, still?
+
+That code path is only used for data coming from .gitattributes,
+so we can bike shed the best warning message.
+
+>
+> But if we are going in the direction of :(attr:crlf=auto), all this
+> discussion is moot, isn't it?  I haven't formed a firm opinion on
+> this, but it sure does sound tempting, doesn't it?
+>
+
+That direction sounds scary as people may use any sort of labels, so
+we can no longer add labels later on sanely.
+
+    :(attr:random-attr=foo)
+
+should also fall into the "warn and ignore" space. We only want to allow
+
+    :(attr:known-attr)
+    :(attr:label=..)
+
+instead of label= we may want to allow a little bit more, such as
+abbreviated  'l='
+or 'group=', but not any sort of labeling.
