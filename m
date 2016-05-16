@@ -1,81 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: mail-patch-series.sh, was Re: [PATCH v7 0/3] Add support for sending
- additional HTTP headers (part 2)
-Date: Mon, 16 May 2016 15:35:33 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605161531090.3303@virtualbox>
-References: <cover.1462342213.git.johannes.schindelin@gmx.de> <cover.1462774709.git.johannes.schindelin@gmx.de> <34DE0A16-F0B2-4379-8E02-5235D34FDD76@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git push --quiet option does not seem to work
+Date: Mon, 16 May 2016 09:37:31 -0400
+Message-ID: <20160516133731.GA6903@sigill.intra.peff.net>
+References: <CADKp0pwrKzHG7KVSMH+6OHuv9sKXTcKSsdKMEZ_fFdjWT+kW6g@mail.gmail.com>
+ <CADKp0pw5FFDVvPz0CcjOTYteQ9jFn2jBZwaX6_n8r3UQRGcGdQ@mail.gmail.com>
+ <20160515212332.GB31809@sigill.intra.peff.net>
+ <CADKp0pzPOdcSfBESzGMhrY5itSa4KDeOQ2VgwewuwH8CGZcwCw@mail.gmail.com>
+ <20160516005824.GA1963@sigill.intra.peff.net>
+ <CADKp0pzOLs5g9Jc6_sA6jr-XOifx0Yn6b7wDW2qcC2UB5Q_WPQ@mail.gmail.com>
+ <alpine.DEB.2.20.1605161526510.3303@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 16 15:35:43 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Chris B <chris.blaszczynski@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 16 15:37:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2IgO-0004Tg-0J
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 15:35:40 +0200
+	id 1b2IiI-0004Tg-CA
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 15:37:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752322AbcEPNfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 09:35:33 -0400
-Received: from mout.gmx.net ([212.227.15.18]:52376 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751977AbcEPNfd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 09:35:33 -0400
-Received: from virtualbox ([88.128.80.193]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0M0h9K-1bsKVS1oje-00utv9; Mon, 16 May 2016 15:35:28
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <34DE0A16-F0B2-4379-8E02-5235D34FDD76@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:+8hke0j9OztEKw62AUXDndsQB4FmL9KAOCVMY0ADG8A2WH+OaRn
- BWXtcp8KkV7BqTx+xrBXVrRzhRUlb1O6kv+tASb1HtnZbHXAJ14zRTu4IqXpd83QPINauqb
- OOTadus+Hrt46Z/6qtUwOMLUm9T/M9/intddc4DCVytxAIjH1Fu+Oq3se6PqpcQHC70XDWs
- u3B5Es0rzlWfipdHDFvPA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5Vo5np+oSiM=:lxSf65txdq2GSXvPGcw5UF
- +SdCKJd4Mgjl0UjAxMKNxDFHFkiVivMm1knG5gsCTjszEy7TrEMYC7XG14vKJFgsMrbky2IFW
- Jj5P3THMjGfOnfF9c2CDCfRxxKwZ1WX8L7Xi5pve1jFZc5QsEkjFMj8oUUBa3mlih8vgq0UdL
- WJSrw9+Zpocl46WYCG7/x8LyWXuArOfmMeYJC2aFBaVF6gmGaMkFPYhPwoup+f2JFR6VaHc9V
- MPBGPuugeAmwS/YX6CIWejH5Bad+uR4zgklJeskuZIAvWAcqG3U/jRLTzoUeVetpzl1yTkVju
- uAxfXak4VfHZXutT0OMee/7bbutrtYdNsTuMjKRDbnxeTC7/mDV6ebyQRMvtNy9czeyxiEsVd
- lmn4on2gYBieZg3sC/BrFr425gODSr1i+ndKjqT07JCgBHlk7sYXrgvm9YsnDlWb9Kf8sb49O
- d4KhlfV53WMRWo/h2Gud16uVbT5hWqqTUYpCUMFCC0A8c1/3/n6G80SoqJO0QgZGXIx+/aUag
- gOV8PGafiofIB6ypM/FbHzPZXsQPdztB50Ki2dTjC/VAoUI+cx/59PKKbDbYQmp6kIfe7Jiw/
- /p/4ZVasPrkYwtzOU897jMuIg8Ap9Hb8hgq3bfQIW6GOgZw3ER/j/8hj8Nuydw/E1KeiHPlsc
- UyqLnExo1GNmrWNFs3YzXqbwKt5FxbkgX+XZj9DhyJBjI0r7ZaOsIUi4M0ZnW95hSy2jEvUna
- y0cXkcA+XiVeWZJVdOCiDvNKHse/9YpDfQli5WVWxP40oDFALL/a81vW4WBHg+5gBUJj74Hm 
+	id S1752671AbcEPNhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 09:37:35 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40158 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751815AbcEPNhf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 09:37:35 -0400
+Received: (qmail 32074 invoked by uid 102); 16 May 2016 13:37:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 May 2016 09:37:34 -0400
+Received: (qmail 5455 invoked by uid 107); 16 May 2016 13:37:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 May 2016 09:37:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 May 2016 09:37:31 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1605161526510.3303@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294737>
 
-Hi Lars,
+On Mon, May 16, 2016 at 03:28:30PM +0200, Johannes Schindelin wrote:
 
-On Tue, 10 May 2016, Lars Schneider wrote:
-
-> > On 09 May 2016, at 08:18, Johannes Schindelin
-> > <johannes.schindelin@gmx.de> wrote:
+> > PS H:\test-ps\myrepo> git push --quiet
+> > git : remote:
+> > At line:1 char:1
+> > + git push --quiet
+> > + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >     + CategoryInfo          : NotSpecified: (remote: :String) [],
+> > RemoteException
+> >     + FullyQualifiedErrorId : NativeCommandError
 > > 
-> > [...]
-> > 
-> > Published-As: https://github.com/dscho/git/releases/tag/extra-http-headers-v7
-> > Interdiff vs v6:
+> > remote: Analyzing objects... (3/3) (119 ms)
+> > remote: Storing packfile... done (113 ms)
+> > remote: Storing index... done (29 ms)
 > 
-> Published-As and Interdiff are really neat. I assume you have some kind
-> of script to create all this? If yes, are you willing to share it?
+> So it actually works, eh?
+> 
+> Could you please verify that this is a PowerShell-only problem by
+> performing a similar push in Git CMD and in Git Bash?
 
-Thanks for prodding me. I had planned to clean up my script and make it
-public for a long time already, as I think that submitting code to the Git
-project is quite a little bit too tedious, even for old timers like me, in
-particular when compared to the ease of opening Pull Requests a la GitHub.
+I don't know much about PowerShell, but presumably it is responsible for
+the first few lines.
 
-So now I cleaned up my script a bit and published it here:
+But there is something else going on, too, which is those "remote:"
+lines. Those are being relayed from the server by the git client. I
+don't think it would be correct for the client to suppress them, even
+with "--quiet", because the client side has no idea if they are progress
+junk or critical error messages.
 
-	https://github.com/dscho/mail-patch-series
+The client _does_ pass along the "quiet" flag to the server via the git
+protocol, so it should be the server's responsibility to drop progress
+output when it is present. The server side here is clearly not stock
+git, from the content of those progress messages (some googling shows it
+looks like whatever visualstudio.com is running, but I don't know what
+that is). So either the server implementation doesn't support the
+"quiet" protocol extension, or it is ignoring it. It might be worth
+filing a bug with them.
 
-Ironically, I welcome Pull Requests for this script ;-)
-
-Ciao,
-Dscho
+-Peff
