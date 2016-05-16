@@ -1,184 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] pathspec: record labels
-Date: Mon, 16 May 2016 10:38:00 -0700
-Message-ID: <xmqqlh393nuv.fsf@gitster.mtv.corp.google.com>
-References: <20160513231326.8994-1-sbeller@google.com>
-	<20160513231326.8994-6-sbeller@google.com>
-	<xmqqk2iw78aq.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZsVH3mE0zXu9wSWgit3QZ_CiKZqg-TQdyWnZw6D9=Cgw@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 0/6] modernize t1500
+Date: Mon, 16 May 2016 13:39:52 -0400
+Message-ID: <CAPig+cTPsya6_3D2wx=k3pVaDJ2PokUvK4muM7nz-eV+Ss5+tw@mail.gmail.com>
+References: <20160510052055.32924-1-sunshine@sunshineco.com>
+	<xmqqfutqsaxn.fsf@gitster.mtv.corp.google.com>
+	<xmqqmvnxpyw6.fsf@gitster.mtv.corp.google.com>
+	<xmqqeg99py5j.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon May 16 19:38:29 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Michael Rappazzo <rappazzo@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 16 19:40:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2MT5-0004f3-0H
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 19:38:11 +0200
+	id 1b2MV0-0006Pr-Hs
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 19:40:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754128AbcEPRiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 13:38:06 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65528 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753887AbcEPRiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 13:38:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 48E771C98C;
-	Mon, 16 May 2016 13:38:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vbctj/kHnNb6XGX0UfCMgf+p7Vk=; b=VBtzIA
-	+IIzIOhwm1ei41wNvUrpbkdO1MXXo9bLqAeErRLoM683ZR1f2KYeVdh2FlVFaIms
-	GyHA8kVoxy+/3M0+mgY6KC0CLCgs2n+k5gfx1lpwPBWrCjl5E/NAvnlMWYyC476p
-	vmu8QNiHI/B4KgXSdoLAygPgZ41ordjSO9h8g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZvukGri/eacw7EOVikqpWhNqutvUU+Q4
-	H8yRRxYIO16/0yt1dw8Npaz+DcV6XGYiQQRpWoOQ7PcLCwq9pW4WPzQJ6nV4H8G9
-	YX8qkrytLoCvpEutlJLWhX0YSPA2sCtt1fxSbbnWsOZxiXwO3z0xYZg0bGEG0113
-	6hJ9oAgtixE=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 37C001C98B;
-	Mon, 16 May 2016 13:38:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 941AD1C98A;
-	Mon, 16 May 2016 13:38:02 -0400 (EDT)
-In-Reply-To: <CAGZ79kZsVH3mE0zXu9wSWgit3QZ_CiKZqg-TQdyWnZw6D9=Cgw@mail.gmail.com>
-	(Stefan Beller's message of "Mon, 16 May 2016 10:16:55 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F092C874-1B8C-11E6-AF51-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1754023AbcEPRkB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 13:40:01 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:34225 "EHLO
+	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754199AbcEPRkA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 13:40:00 -0400
+Received: by mail-io0-f171.google.com with SMTP id 190so218926876iow.1
+        for <git@vger.kernel.org>; Mon, 16 May 2016 10:39:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=kFPQu+JKNIhliy1ljtX5HVPk+XwUjo5sc4ev0XoDpYA=;
+        b=ABksZ+qU2ZSkCel/HlzFi7023tQpdQ4hcUIhnQZAAEVRpnp9HbAyf3/jq+HmwNom0X
+         p7+gD75WgitkaYKznaBV6TA5kiwC0D/CnzmkgYGcIK3yPbyLssUooXJ+z5eC43QOLpSD
+         EruZ7OSBlCj7keDD+boN47Vkda37d2c9/ubBagBjUpvsu3MjVZuBXqz7gBAVrFhV8CB9
+         rY2tTOran/3jZzJTK2cIg3W3Tk3aKMO88/c9TdcUtxbbq6cck8ecQTla1xHSwgQYYahq
+         LIMpUrUuxIWryrG9Ixd87lmcsQ1C3AANFhNDvmTfj2JkZYEv++QYCRs4RdvdmdLcquJc
+         BtTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=kFPQu+JKNIhliy1ljtX5HVPk+XwUjo5sc4ev0XoDpYA=;
+        b=Z9EYnPJauUKC/9TDsu9jr0c5X/kAvSNKMPDUEZaROwY5+jFHSgUenKnFUs3xUMa1y1
+         w0Wbk37CrilAGN0Squ0kFQKGhxdnwnsK168AgY7RtvcvR3VtdquLy95l3QygUQNOEOap
+         YpbJxPco9oiOIScYxvk9OLcuTRYZ2fxRNfi0Gd+3qpqGOl8HY7X6fZuYoFL4ks6xY6Ug
+         O2fZUDsJMXu0d8nradart3NkMhHpYAZNaERyxRXeNhL3WsZNWBPBwafLDYHz7pP/NnZZ
+         T+o2kqGBtXeminO/yuMdme3qY8E8obf/F6whgebbTo6P6g8Umv9Tre3wWUKqPx1lFs1M
+         +1bA==
+X-Gm-Message-State: AOPr4FUckiu3q1Kbv3r6yyPIgAEGCEr/O6DZVe0vQBKo74hnLYrKGTsMr1O8cd7qQ7AdeoGgepwu25Z6Zv5RZg==
+X-Received: by 10.36.55.144 with SMTP id r138mr10108276itr.73.1463420392978;
+ Mon, 16 May 2016 10:39:52 -0700 (PDT)
+Received: by 10.79.139.135 with HTTP; Mon, 16 May 2016 10:39:52 -0700 (PDT)
+In-Reply-To: <xmqqeg99py5j.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: lOPRC1hhq7V1uyh5Pg52K-cxh6I
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294760>
 
-Stefan Beller <sbeller@google.com> writes:
-
->> Let's avoid "are meant to", which is merely to give you an excuse to
->> say "it was meant to ... but the implementation did not quite achieve
->> that goal".
+On Tue, May 10, 2016 at 2:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> Subject: [PATCH 7/6] t1500: finish preparation upfront
 >>
->>     The "label" attribute can be attached to paths, and the pathspec
->>     mechanism is extended via the new ":(label=X)pattern/to/match"
+>> The earlier tests do not attempt to modify the contents of .git (by
+>> creating objects or refs, for example), which means that even if
+>> some earlier tests before "cp -R" fail, the tests in repo.git will
+>> run in an environment that we can expect them to succeed in.
+>>
+>> Make it clear that tests in repo.git will be independent from the
+>> results of earlier tests done in .git by moving its initialization
+>> "cp -R .git repo.git" much higher in the test sequence.
+>>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
 >
-> I wasn't sure about whether we want to have '=' or ':' as the separator
-> of "label" and its values. ...
+> I think the same logic applies to other preparatory things like
+> creation of sub/dir in the working tree etc.
 
-Oh, sorry, the above wasn't a suggestion to change : to = at all.  I
-was merely being sloppy in the details that is irrelevant to my main
-point (which is, it is better spend the bits you spent for "meant
-to" instead for saying clearly what it does).
-
-> ... But as that is only internal, we can be inconsistent to a new
-> public feature, so '=' seems better for the labeling system.
-
-I can buy that, too.  Good that my sloppy wording helped you think
-about it further ;-).
-
-> But still we do not enforce it early enough. Some crazy upstream may
-> add some labels which do not follow the requirements and then
-> tell downstream to run a command like `git foo "(label=!@#$)".
-> and then downstream curses at upstream as well as Git.
-
-That is why it is "warn and ignore", not "die".
-
->>> +     if (ATTR_TRUE(check.value))
->>> +             ret = 1; /* has all the labels */
->>
->> So this is "pretend that I have all the labels under the sun".
->>
->>> +     else if (ATTR_FALSE(check.value))
->>> +             ret = 0; /* has no labels */
->>
->> I do not see a value in this.  What difference does it have compared
->> to having a "label=" that explicitly says "I do not have one"?  What
->> is your answer to an end-user question "When should I say 'label='
->> and when should I say '!label'?"
->>
->> Just forbid it for now; we may find a better use for it later.
->
-> I don't think we want to die in that code as it is in the data already.
-
-Is it?  I think this is coming from the command line pathspec magic,
-not from .gitattributes file recorded in the tree.
-
-> We need to allow the UNSET case, as otherwise you'd need to label
-> any path if using labels?
-
-You do need UNSET (roughly, "no label is mentioned for the path").
-
-If I want to say "Everything under Documentation/ and also things
-with label=doc", I'd say
-
-	git cmd "Documentation/" ":(label=doc)"
-
-and no path in Documentation/ need any label, i.e. for them, the
-labels are unset.  They will not be caught with ":(label=doc)"
-because they are not set, but that is OK.
-
-FALSE is different from UNSET.  It needs an explicit mention, i.e.
-
-	*.doc	doc
-        false.doc	-doc
-
-What's the difference between saying "-doc" and not saying anything?
-If you really want to explicitly say "doc attribute is unset for
-this path (perhaps because you may have other patterns that set the
-doc elsewhere), you would say "!doc", and you already have code for
-that.
-
->         if (ATTR_TRUE(check.value))
->                 ret = 1; /* has all the labels */
->         else if (ATTR_FALSE(check.value))
->                 die(_("Label attributes must not be unset"));
-
-The message is wrong.  You are dying because the user explicitly set
-it to false, not because the user made it unset.
-
->         else if (ATTR_UNSET(check.value))
->                 ret = 0; /* has no labels */
-
->>> +             struct string_list_item *si;
->>> +             struct string_list attr_labels = STRING_LIST_INIT_DUP;
->>> +             string_list_split(&attr_labels, check.value, ',', -1);
->>> +             string_list_sort(&attr_labels);
->>
->> Filter out a non-compliant label values here, so that they are
->> ignored from day one.  That way you would not have to deal with "I
->> know I got the warning, but it used to work and you broke it" later.
->
-> So you're saying we should not die(...) but just ignore those labels?
-
-Do not die() but warn-and-ignore when you see funnies in
-.gitattributes; do die() if you see funnies in pathspec magic.
-
->> I am NOT suggesting to make this enhancement in the prototype to
->> allow us experiment with submodule selection use case, but this is
->> an obvious place to allow
->>
->>         :(label=A B):(label=C D)
->>
->> to mean ((A & B) | (C & D)) by making item->labels an array of set
->> of labels.
->>
->> And no, I do not think arbitrary boolean expression is too complex
-
-s/do not/do/
-
->> to understand to the end-users, especially if we have to stay within
->> the pathspec magic syntax.  And my gut feeling is that it is not
->> worth it to support anything more complex than "OR of these ANDed
->> ones".
->
-> That makes sense.
-
-Thanks.
+Hmm, so are you suggesting a single 'setup' test at the start of
+script which does the 'cp -R' and creates those other directories
+needed by later tests?
