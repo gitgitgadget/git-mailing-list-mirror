@@ -1,213 +1,205 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 09/12] attr: (re)introduce git_check_attr() and struct git_attr_check
-Date: Mon, 16 May 2016 14:05:42 -0700
-Message-ID: <20160516210545.6591-10-gitster@pobox.com>
+Subject: [PATCH v2 12/12] attr: retire git_check_attrs() API
+Date: Mon, 16 May 2016 14:05:45 -0700
+Message-ID: <20160516210545.6591-13-gitster@pobox.com>
 References: <20160516210545.6591-1-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 16 23:06:20 2016
+X-From: git-owner@vger.kernel.org Mon May 16 23:06:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2PiV-0001LI-Kx
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 23:06:20 +0200
+	id 1b2Pik-0001Oc-Jz
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 23:06:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751413AbcEPVGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 17:06:12 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54547 "EHLO
+	id S1751593AbcEPVGU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 17:06:20 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54522 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751266AbcEPVGK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 17:06:10 -0400
+	with ESMTP id S1751441AbcEPVGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 17:06:17 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A2BFA1C454;
-	Mon, 16 May 2016 17:06:09 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D5C41C756;
+	Mon, 16 May 2016 17:06:16 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=B4jx
-	PNQ7l1+RaRQiIQcZ6tVh5DU=; b=OIhdNF55EVSIq2q6Eq7ntbk4RGrSQTtBErCF
-	RevXdiH3w0UzeEwgTawQvFB1/DBByx2JySXAnpgcEC2A4w3vpaSAGnr7DrDc5N8f
-	+OGDtZNLONsv1kz/FXt4NgYgIRXsx6oAXnSPce93+hcncSgZoNIWfPqwzunSp+6y
-	vX6RNnc=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=WSD+
+	AjxQeEUGMoJzOUzJ3fnBRxA=; b=laEAiFDa3ZOpPPvybD47UqvIEMm3bCIT+eyG
+	BADjM6k70OQTM85/4UWAKghwOqNbIHsxqEpROuZemyn3ack/6wkAnlsn4Bu8Du5j
+	Ps9ZoOXmzzTmCTFf2Ihw/87YkjeOEXJj3GcDxo30pmVsO2PKTVAycagHSAHjtZny
+	TVoGbrU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=XCasa/
-	o8Lw4ixEkRUtWtpm9B32JvN4LLlXaEygkWtn+0UZz876ifbGcgmixniEZX7sqKDQ
-	cqEC92mnRPrBt/V4E/+5VXbpsl9zhN4s7l2jEUt39qFX9aCLPZpKmu2IH8q8agzj
-	v5jdYk/ULFB/HVz6XRezSe21UjrTaVRDpLKNE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B3BB1C453;
-	Mon, 16 May 2016 17:06:09 -0400 (EDT)
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=mJegZu
+	wlvod3QqCIJwMtVTT07YaD0d5PLgjKblr2DlzmuQv8W6nVDZow0C5DlqIy00U/TB
+	7W5nFMwxbAxTnDrVrIDvSbdm4cseaoJ/6byxx8x8L1YPmwp9+09SsAQC8eIcjrUQ
+	SawuOhyqcE+kMHMz26q8sjansrJSfGthmpw+M=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1655B1C753;
+	Mon, 16 May 2016 17:06:16 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0421A1C44D;
-	Mon, 16 May 2016 17:06:08 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 734901C752;
+	Mon, 16 May 2016 17:06:15 -0400 (EDT)
 X-Mailer: git-send-email 2.8.2-755-g8847aff
 In-Reply-To: <20160516210545.6591-1-gitster@pobox.com>
-X-Pobox-Relay-ID: 03032B58-1BAA-11E6-AE0C-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 06DB8932-1BAA-11E6-B1CD-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294796>
 
-A common pattern to check N attributes for many paths is to
-
- (1) prepare an array A of N git_attr_check_elem items;
- (2) call git_attr() to intern the N attribute names and fill A;
- (3) repeatedly call git_check_attrs() for path with N and A;
-
-A look-up for these N attributes for a single path P scans the
-entire attr_stack, starting from the .git/info/attributes file and
-then .gitattributes file in the directory the path P is in, going
-upwards to find .gitattributes file found in parent directories.
-
-An earlier commit 06a604e6 (attr: avoid heavy work when we know the
-specified attr is not defined, 2014-12-28) tried to optimize out
-this scanning for one trivial special case: when the attribute being
-sought is known not to exist, we do not have to scan for it.  While
-this may be a cheap and effective heuristic, it would not work well
-when N is (much) more than 1.
-
-What we would want is a more customized way to skip irrelevant
-entries in the attribute stack, and the definition of irrelevance
-is tied to the set of attributes passed to git_check_attrs() call,
-i.e. the set of attributes being sought.  The data necessary for
-this optimization needs to live alongside the set of attributes, but
-a simple array of git_attr_check_elem simply does not have any place
-for that.
-
-Introduce "struct git_attr_check" that contains N, the number of
-attributes being sought, and A, the array that holds N
-git_attr_check_elem items, and a function git_check_attr() that
-takes a path P and this structure as its parameters.  This structure
-can later be extended to hold extra data necessary for optimization.
-
-Also, to make it easier to write the first two steps in common
-cases, introduce git_attr_check_initl() helper function, which takes
-a NULL-terminated list of attribute names and initialize this
-structure.
-
-As an illustration of this new API, convert archive.c that asks for
-export-subst and export-ignore attributes for each paths.
+Since nobody uses the old API, make it file-scope static, and update
+the documentation to describe the new API.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- archive.c | 24 ++++++------------------
- attr.c    | 34 ++++++++++++++++++++++++++++++++++
- attr.h    |  9 +++++++++
- 3 files changed, 49 insertions(+), 18 deletions(-)
+ Documentation/technical/api-gitattributes.txt | 62 +++++++++++++++------------
+ attr.c                                        |  3 +-
+ attr.h                                        |  2 -
+ 3 files changed, 36 insertions(+), 31 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 0f6acc5..7779af1 100644
---- a/archive.c
-+++ b/archive.c
-@@ -87,19 +87,6 @@ void *sha1_file_to_archive(const struct archiver_args *args,
- 	return buffer;
+diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
+index 2602668..6f13f94 100644
+--- a/Documentation/technical/api-gitattributes.txt
++++ b/Documentation/technical/api-gitattributes.txt
+@@ -16,10 +16,15 @@ Data Structure
+ 	of no interest to the calling programs.  The name of the
+ 	attribute can be retrieved by calling `git_attr_name()`.
+ 
++`struct git_attr_check_elem`::
++
++	This structure represents one attribute and its value.
++
+ `struct git_attr_check`::
+ 
+-	This structure represents a set of attributes to check in a call
+-	to `git_check_attr()` function, and receives the results.
++	This structure represents a collection of `git_attr_check_elem`.
++	It is passed to `git_check_attr()` function, specifying the
++	attributes to check, and receives their values.
+ 
+ 
+ Attribute Values
+@@ -48,49 +53,47 @@ value of the attribute for the path.
+ Querying Specific Attributes
+ ----------------------------
+ 
+-* Prepare an array of `struct git_attr_check` to define the list of
+-  attributes you would want to check.  To populate this array, you would
+-  need to define necessary attributes by calling `git_attr()` function.
++* Prepare `struct git_attr_check` using git_attr_check_initl()
++  function, enumerating the names of attributes whose values you are
++  interested in, terminated with a NULL pointer.
+ 
+ * Call `git_check_attr()` to check the attributes for the path.
+ 
+-* Inspect `git_attr_check` structure to see how each of the attribute in
+-  the array is defined for the path.
++* Inspect `git_attr_check` structure to see how each of the
++  attribute in the array is defined for the path.
+ 
+ 
+ Example
+ -------
+ 
+-To see how attributes "crlf" and "indent" are set for different paths.
++To see how attributes "crlf" and "ident" are set for different paths.
+ 
+-. Prepare an array of `struct git_attr_check` with two elements (because
+-  we are checking two attributes).  Initialize their `attr` member with
+-  pointers to `struct git_attr` obtained by calling `git_attr()`:
++. Prepare a `struct git_attr_check` with two elements (because
++  we are checking two attributes):
+ 
+ ------------
+-static struct git_attr_check check[2];
++static struct git_attr_check *check;
+ static void setup_check(void)
+ {
+-	if (check[0].attr)
++	if (check)
+ 		return; /* already done */
+-	check[0].attr = git_attr("crlf");
+-	check[1].attr = git_attr("ident");
++	check = git_attr_check_initl("crlf", "ident", NULL);
  }
+ ------------
  
--static void setup_archive_check(struct git_attr_check_elem *check)
--{
--	static struct git_attr *attr_export_ignore;
--	static struct git_attr *attr_export_subst;
--
--	if (!attr_export_ignore) {
--		attr_export_ignore = git_attr("export-ignore");
--		attr_export_subst = git_attr("export-subst");
--	}
--	check[0].attr = attr_export_ignore;
--	check[1].attr = attr_export_subst;
--}
--
- struct directory {
- 	struct directory *up;
- 	struct object_id oid;
-@@ -123,7 +110,7 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
- 	struct archiver_context *c = context;
- 	struct archiver_args *args = c->args;
- 	write_archive_entry_fn_t write_entry = c->write_entry;
--	struct git_attr_check_elem check[2];
-+	static struct git_attr_check *check;
- 	const char *path_without_prefix;
- 	int err;
+-. Call `git_check_attr()` with the prepared array of `struct git_attr_check`:
++. Call `git_check_attr()` with the prepared `struct git_attr_check`:
  
-@@ -137,11 +124,12 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
- 		strbuf_addch(&path, '/');
- 	path_without_prefix = path.buf + args->baselen;
+ ------------
+ 	const char *path;
  
--	setup_archive_check(check);
--	if (!git_check_attrs(path_without_prefix, ARRAY_SIZE(check), check)) {
--		if (ATTR_TRUE(check[0].value))
-+	if (!check)
-+		check = git_attr_check_initl("export-ignore", "export-subst", NULL);
-+	if (!git_check_attr(path_without_prefix, check)) {
-+		if (ATTR_TRUE(check->check[0].value))
- 			return 0;
--		args->convert = ATTR_TRUE(check[1].value);
-+		args->convert = ATTR_TRUE(check->check[1].value);
- 	}
+ 	setup_check();
+-	git_check_attr(path, ARRAY_SIZE(check), check);
++	git_check_attr(path, check);
+ ------------
  
- 	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
+-. Act on `.value` member of the result, left in `check[]`:
++. Act on `.value` member of the result, left in `check->check[]`:
+ 
+ ------------
+-	const char *value = check[0].value;
++	const char *value = check->check[0].value;
+ 
+ 	if (ATTR_TRUE(value)) {
+ 		The attribute is Set, by listing only the name of the
+@@ -115,14 +118,17 @@ Querying All Attributes
+ 
+ To get the values of all attributes associated with a file:
+ 
+-* Call `git_all_attrs()`, which returns an array of `git_attr_check`
+-  structures.
++* Prepare an empty `git_attr_check` structure by calling
++  `git_attr_check_alloc()`.
++
++* Call `git_all_attrs()`, which populates the `git_attr_check`
++  with the attributes attached to the path.
+ 
+-* Iterate over the `git_attr_check` array to examine the attribute
+-  names and values.  The name of the attribute described by a
+-  `git_attr_check` object can be retrieved via
+-  `git_attr_name(check[i].attr)`.  (Please note that no items will be
+-  returned for unset attributes, so `ATTR_UNSET()` will return false
+-  for all returned `git_array_check` objects.)
++* Iterate over the `git_attr_check.check[]` array to examine
++  the attribute names and values.  The name of the attribute
++  described by a  `git_attr_check.check[]` object can be retrieved via
++  `git_attr_name(check->check[i].attr)`.  (Please note that no items
++  will be returned for unset attributes, so `ATTR_UNSET()` will return
++  false for all returned `git_array_check` objects.)
+ 
+-* Free the `git_array_check` array.
++* Free the `git_array_check` by calling `git_attr_check_free()`.
 diff --git a/attr.c b/attr.c
-index 8aa346c..285fc58 100644
+index 9c187bc..c3295a9 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -825,3 +825,37 @@ void git_attr_set_direction(enum git_attr_direction new, struct index_state *ist
- 		drop_attr_stack();
- 	use_index = istate;
+@@ -769,7 +769,8 @@ static void collect_some_attrs(const char *path, int num,
+ 		rem = fill(path, pathlen, basename_offset, stk, rem);
  }
-+
-+int git_check_attr(const char *path, struct git_attr_check *check)
-+{
-+	return git_check_attrs(path, check->check_nr, check->check);
-+}
-+
-+struct git_attr_check *git_attr_check_initl(const char *one, ...)
-+{
-+	struct git_attr_check *check;
-+	int cnt;
-+	va_list params;
-+	const char *param;
-+
-+	va_start(params, one);
-+	for (cnt = 1; (param = va_arg(params, const char *)) != NULL; cnt++)
-+		;
-+	va_end(params);
-+	check = xcalloc(1,
-+			sizeof(*check) + cnt * sizeof(*(check->check)));
-+	check->check_nr = cnt;
-+	check->check = (struct git_attr_check_elem *)(check + 1);
-+
-+	check->check[0].attr = git_attr(one);
-+	va_start(params, one);
-+	for (cnt = 1; cnt < check->check_nr; cnt++) {
-+		param = va_arg(params, const char *);
-+		if (!param)
-+			die("BUG: counted %d != ended at %d",
-+			    check->check_nr, cnt);
-+		check->check[cnt].attr = git_attr(param);
-+	}
-+	va_end(params);
-+	return check;
-+}
+ 
+-int git_check_attrs(const char *path, int num, struct git_attr_check_elem *check)
++static int git_check_attrs(const char *path, int num,
++			   struct git_attr_check_elem *check)
+ {
+ 	int i;
+ 
 diff --git a/attr.h b/attr.h
-index cab82ec..3ed89e5 100644
+index b5557ae..7dc49f8 100644
 --- a/attr.h
 +++ b/attr.h
-@@ -29,6 +29,15 @@ struct git_attr_check_elem {
- 	const char *value;
- };
+@@ -52,8 +52,6 @@ extern void git_attr_check_free(struct git_attr_check *);
+  */
+ char *git_attr_name(struct git_attr *);
  
-+struct git_attr_check {
-+	int check_nr;
-+	int check_alloc;
-+	struct git_attr_check_elem *check;
-+};
-+
-+extern struct git_attr_check *git_attr_check_initl(const char *, ...);
-+extern int git_check_attr(const char *path, struct git_attr_check *);
-+
+-int git_check_attrs(const char *path, int, struct git_attr_check_elem *);
+-
  /*
-  * Return the name of the attribute represented by the argument.  The
-  * return value is a pointer to a null-delimited string that is part
+  * Retrieve all attributes that apply to the specified path.
+  * check holds the attributes and their values.
 -- 
 2.8.2-748-gfb85f76
