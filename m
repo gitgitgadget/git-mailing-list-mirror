@@ -1,95 +1,92 @@
-From: Chris B <chris.blaszczynski@gmail.com>
-Subject: Re: git push --quiet option does not seem to work
-Date: Mon, 16 May 2016 09:13:20 -0400
-Message-ID: <CADKp0pzOLs5g9Jc6_sA6jr-XOifx0Yn6b7wDW2qcC2UB5Q_WPQ@mail.gmail.com>
-References: <CADKp0pwrKzHG7KVSMH+6OHuv9sKXTcKSsdKMEZ_fFdjWT+kW6g@mail.gmail.com>
- <CADKp0pw5FFDVvPz0CcjOTYteQ9jFn2jBZwaX6_n8r3UQRGcGdQ@mail.gmail.com>
- <20160515212332.GB31809@sigill.intra.peff.net> <CADKp0pzPOdcSfBESzGMhrY5itSa4KDeOQ2VgwewuwH8CGZcwCw@mail.gmail.com>
- <20160516005824.GA1963@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v6 3/3] bisect--helper: `write_terms` shell function in
+ C
+Date: Mon, 16 May 2016 15:16:49 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605161508230.3303@virtualbox>
+References: <1462546167-1125-1-git-send-email-pranit.bauva@gmail.com> <1463031127-17718-1-git-send-email-pranit.bauva@gmail.com> <1463031127-17718-4-git-send-email-pranit.bauva@gmail.com> <CAPig+cS=zcSVLwARZ5A8hdiE0wqgYPU2Jwnr0OcjDXZFO--cZw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 16 15:14:12 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Pranit Bauva <pranit.bauva@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon May 16 15:17:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2ILV-0002MU-OJ
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 15:14:06 +0200
+	id 1b2IOR-0004zE-Hm
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 15:17:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753442AbcEPNOC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 09:14:02 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:36777 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752705AbcEPNOA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 09:14:00 -0400
-Received: by mail-ig0-f173.google.com with SMTP id qe5so49160495igc.1
-        for <git@vger.kernel.org>; Mon, 16 May 2016 06:14:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=3P+Ghj2yWqzbj8Fmi1fYzOi35/Z1EXHQBud1A3R70P4=;
-        b=guPsJOQyjlkymKwRDKh2KeIe2YmZonFbevy/09QsDnS5kPuJ/CdM/72PTfc9yz1SpW
-         jth+5G9qjLAwScOb+qHqW0RZRlVQw4l720ot4zLM/tHNzLB53TQr60yv26ZQx7EdLFsW
-         DYRHVORHqUmmAZE1orZ0NZ2yB5SKkMD3nGJdo+6SeqaeWDQw+hjzCbKeYIDttgMuaxma
-         CenJ03Wne/FhtMwwLL6wamHQv94mGrHyKxPAGticNl0qdoeVMybRc5CJBJ48WsoWvfL2
-         zRhXlPhgCevVDvk5myRp732Rz6OE4W+ul8dKBnwMiqkW7Fuw31WBZlVJmnyCPYsXcjcD
-         stMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=3P+Ghj2yWqzbj8Fmi1fYzOi35/Z1EXHQBud1A3R70P4=;
-        b=VmtJNKDfPWxt28jJ6VFy45mzYyJD3ipDrNRQTRe3RjQvdfRJqbCEJvzWjbelEXlm8D
-         kcTnA70zi6wP8Wx1dP2VkxT6vl9vwZ0Y6zpG4eFD5qdrBlXEqC/XtNEYHr1GN8Um9uUV
-         m+TEwyrof9JzetDvfuyAx4flkMT3xGyDTOQylbksmhaL6TVlf8Ubw3ZgwahNxOE/XpIv
-         /6RuPiiVIZYKSReuBSMCjBJ2dMyY5NwrXsHGY9/UrKSMyHUU8trUoGXtQT9L1+Pgpn/c
-         UK9b10Uj5okx4Cozp23gEtJCEm+GC+vKF7zwjSpGjC1L8EqG063wErktquuEjU0qAiKO
-         NgnA==
-X-Gm-Message-State: AOPr4FW1Kt7UgZ1QwajAZKwS6z38rcEL2wf6+ngTqP1FLaCC3t+IzAeLZUgNGKoSNVhvxNCjcDDqMD/MzS7wiA==
-X-Received: by 10.50.58.166 with SMTP id s6mr10744974igq.13.1463404439451;
- Mon, 16 May 2016 06:13:59 -0700 (PDT)
-Received: by 10.107.20.88 with HTTP; Mon, 16 May 2016 06:13:20 -0700 (PDT)
-In-Reply-To: <20160516005824.GA1963@sigill.intra.peff.net>
+	id S1752875AbcEPNRC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 09:17:02 -0400
+Received: from mout.gmx.net ([212.227.15.15]:50416 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750785AbcEPNRA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 09:17:00 -0400
+Received: from virtualbox ([88.128.80.193]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MPDaC-1axufP0EzI-004SLQ; Mon, 16 May 2016 15:16:47
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CAPig+cS=zcSVLwARZ5A8hdiE0wqgYPU2Jwnr0OcjDXZFO--cZw@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:IxBeVR2/+2uCs+F+2IbU3cAIUnzl9Viyz7hdn1Rr6hpEz9k99cU
+ GmgA4AtZTQic5xBmU+l2jRE29y5519OGvA3VKOeEzFR9gcvB1lBy8ofYSSVz4gK0tS5+7hv
+ CIqZk8nSrEoE09p9N6llgMaur2qlUeH2CXtWsocHCt/mSOm/JZEN2CJDhe5ASDFzmpEbbVT
+ itr/bkJcXszzvra/pBnCw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:B9TThgzD010=:oktNPodml01BjskdA9BIVk
+ vX0fAq+jQuuAXAfrhHnbDg0JrwMMdaLEk8DJG5dlTf8eWF74zXPertVQ9F0QY/YRulkDAmXUz
+ gDTWa9NL5PYrluJ/dcQE1aeVMSxWXq6I2NPGuCca2r43LAyrscv25V7RB2gAJhXmQjrNdqqdQ
+ tj+Fd84Pa8U1ZYvxxKRzoeUMZIFCtMl9sNvGWwVUMo2UZLd9E13f5xLo7qRSD4cHuTnscZlZx
+ rdGhJQ4jNfquy8oO4iCbgFubGqFNPJnzP+GkkDkFW/pLartW+BJF6+9T+bG9WjeCwCccu6lab
+ hNRKj/+AZA4l1eaIVoLJCNElnBeRO/AvLbBhDqo3TVxUDiY9ykAQ3K9knqmqPCGZUYNFYjwIl
+ k78D+In4jzG9GLd+vZtBGI1zKqC8F4vSEKYAAy/ompX6gXwjfRiulDlXR/iKkwaEEoT+RWKIE
+ 7hRruJmdy5AfLXAROtcD1s6p3IzfiQCADx+kyU4AF+VK+8j8PfTrkQaT7E83wNagxo/sfDxnw
+ RRxkATFV30uKUPCj8o4lVHURpl4NF+jLCmxNqwxnBQ3RAG+7L0YwMIh61GsBeXl3P/+KyV9Yi
+ s5eoKDKvWJbcDqFMUdmiL3xutDNEWguDb9a9NwPtxGzNWAwr7nyk36lpNrQbnXVTsaaj3+b77
+ E/TdxOQ2Ftsev/paUDYLp1fppSpQ0c8zYw8+5RrhYbl4o0R1Sf8MaLRNvta+OCyve3rBemOW0
+ cuQU6IcZcl3Wk76trHduFZg58HtWLZGY0BblSOKspV7mnESnVepFW6WK6sLVjPRobl8gN29K 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294734>
 
-PS H:\test-ps\myrepo> "hi" >> whatever
+Hi,
 
-PS H:\test-ps\myrepo> git add .
+On Mon, 16 May 2016, Eric Sunshine wrote:
 
-PS H:\test-ps\myrepo> git commit -m 'boo'
-[test1 3cde450] boo
- Committer: xxxxxxxxxxxxxxxx
-Your name and email address were configured automatically based
-on your username and hostname. Please check that they are accurate.
-You can suppress this message by setting them explicitly. Run the
-following command and follow the instructions in your editor to edit
-your configuration file:
+> On Thu, May 12, 2016 at 1:32 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> 
+> > +       fp = fopen(".git/BISECT_TERMS", "w");
+> 
+> Hardcoding ".git/" is wrong for a variety of reasons: It won't be correct
+> with linked worktrees, or when GIT_DIR is pointing elsewhere, or when ".git"
+> is a symbolic link, etc. Check out the get_git_dir(), get_git_common_dir(),
+> etc. functions in cache.h instead.
 
-    git config --global --edit
+Maybe in this case, `git_path("BISECT_TERMS")` would be a good idea. Or even
+better: follow the example of bisect.c and use
+`GIT_PATH_FUNC(bisect_terms_path, "BISECT_TERMS")`.
 
-After doing this, you may fix the identity used for this commit with:
+> > +               strbuf_release(&content);
+> > +               die_errno(_("could not open the file to read terms"));
+> 
+> "read terms"? I thought this was writing.
+> 
+> Is dying here correct? I thought we established previously that you
+> should be reporting failure via normal -1 return value rather than
+> dying. Indeed, you're doing so below when strbuf_write() fails.
 
-    git commit --amend --reset-author
+The rule of thumb seems to be that die()ing is okay in builtin/*.c, but not
+in *.c. So technically, it would be okay here, too. However, I think that
+this code should be written with libification in mind, so I would also
+prefer it to error() and return, to give the caller a chance to do other
+things after an error occurred.
 
- 1 file changed, 0 insertions(+), 0 deletions(-)
-
-PS H:\test-ps\myrepo> git push --quiet
-git : remote:
-At line:1 char:1
-+ git push --quiet
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (remote: :String) [],
-RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
-
-remote: Analyzing objects... (3/3) (119 ms)
-remote: Storing packfile... done (113 ms)
-remote: Storing index... done (29 ms)
+Ciao,
+Dscho
