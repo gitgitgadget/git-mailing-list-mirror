@@ -1,109 +1,88 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 54/94] builtin/apply: make parse_chunk() return a
- negative integer on error
-Date: Mon, 16 May 2016 20:19:11 +0200
-Message-ID: <CAP8UFD1Qwyi6uO4YTNB_RqR9QiCkuc9DbRb2JHTsiv9KrEjpeQ@mail.gmail.com>
-References: <20160511131745.2914-1-chriscool@tuxfamily.org>
-	<20160511131745.2914-55-chriscool@tuxfamily.org>
-	<CAPig+cQkKijp_Mg0Ho0wAFSxmLin0EPA_a5PwV9DaHkHLJKNMA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] pathspec: record labels
+Date: Mon, 16 May 2016 11:43:12 -0700
+Message-ID: <xmqqd1ol3ku7.fsf@gitster.mtv.corp.google.com>
+References: <20160513231326.8994-1-sbeller@google.com>
+	<20160513231326.8994-6-sbeller@google.com>
+	<xmqqk2iw78aq.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbHW+qzQjoVu9gRYC0FBqpkq5bPPLU3=BdEFKeGc=U6sA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jeff King <peff@peff.net>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon May 16 20:19:35 2016
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon May 16 20:43:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2N77-00034s-JL
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 20:19:33 +0200
+	id 1b2NUD-0004zJ-W2
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 20:43:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753274AbcEPSTa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 14:19:30 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34829 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750729AbcEPST3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 14:19:29 -0400
-Received: by mail-wm0-f67.google.com with SMTP id e201so19906199wme.2
-        for <git@vger.kernel.org>; Mon, 16 May 2016 11:19:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=JCR8vt4eExt/WeK7Iv+/twK0u3lrY9C53AAG2kkaz/k=;
-        b=venlCcK+6yCKHKkBE16odUpJyKFGtHk/TyH8GjDupV5mmuAPLa+8suQ1htSbdvt9gt
-         +c5YGtO/MWZq/LnPhMyaMoXdUlgTvbDFsB2jsQWwzohtExaSVubo97PsRsmDSPy40rPy
-         rt72MQ5wYKZF8qGjzKfArOG2nRkQy50+cYIGygvlikgbTRV6HA9MzAhJGpxFZ5Pa06o3
-         0V+J4fr/9tEEQ9g3dqtJ1XCXcVn7sfBQHHgKSalJngxvu3pkCy5jouy56g6R6y2WamRC
-         bwYner2xtaLCuXjUUL5iL5lkEGJP2Ik1Yvr7v7hypbVHnXC19XLLaOxYMhzrY6keTQXh
-         oHGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=JCR8vt4eExt/WeK7Iv+/twK0u3lrY9C53AAG2kkaz/k=;
-        b=MvIlLsMWQJqd00eJbBN14AU7p2gJDOaFU/AN5IfJoaR+x6v0dhnPPGmrRW1r8MEwRu
-         6TCrlnglCPbeIQpCTtTD2lMRcRw1r3em68SJCTXjEirVnCHnna0fJzFtaBcGjRPyeROP
-         IAFrupmFAZcQd93wn3wi4fXmAwQ9V+y/JJnuMOLg4k0Vs6oNUlD5ihXGhiRTKhoZTexu
-         3JqCrWLOqcVo/SIjyoK4RQ+tqPN7YUE7VvTtDbPazfEE2a3uWRxDYAv4C8iGB2QLeGWh
-         Nqo09Gw3+SJq31EVv6faVyvT4CuPU2GEw35TXqnaZJ9hMOO4AoHOgwOU6Lb9GmXUgNoQ
-         nk+g==
-X-Gm-Message-State: AOPr4FXt9JyBxZcI6ReKskG6xtjyFHmVP5b1pgcaaBjrqw/ssUApnkhHLIBvKcAns/uiVa1YO/8cHNZFcgl7TA==
-X-Received: by 10.28.151.133 with SMTP id z127mr18381447wmd.79.1463422751572;
- Mon, 16 May 2016 11:19:11 -0700 (PDT)
-Received: by 10.194.246.4 with HTTP; Mon, 16 May 2016 11:19:11 -0700 (PDT)
-In-Reply-To: <CAPig+cQkKijp_Mg0Ho0wAFSxmLin0EPA_a5PwV9DaHkHLJKNMA@mail.gmail.com>
+	id S1754156AbcEPSnR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 14:43:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52358 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753561AbcEPSnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 14:43:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EECA01CE03;
+	Mon, 16 May 2016 14:43:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=65EExlWljQCOq7cGqM0Zc0q4/TM=; b=o07C/f
+	0AFkJ+v5rL0fjP2nwYjNnQ06zC/pdeOfrH+QPFM+EbiLvrOU3oe1kX+Axqs6Njku
+	tnozmWN3Nczr+i7m7P4vC9lx7xLfKrea14tbvoy0phyVTu3qR61/NodlJaG+VOag
+	fnRnlnZEYvhy2qfSImNRSgOuhs7wEBgvU+Z80=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hw0FTUkfE+yp559ftB4CL4FgxJqcKlxg
+	1pcA/NFEo3rLMZfmXWdWric938nGfwhxs8XcMuPK6PvmjMFrgWuHxErP4SFwXB7O
+	d/6KS5re1KGwFnZhsCk6PDQmtSIZAKxWImlKuU8DoS9agKS+785lS5lM6yejKpix
+	zyCJXBSSpYI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E58D51CE02;
+	Mon, 16 May 2016 14:43:14 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 62EFB1CE01;
+	Mon, 16 May 2016 14:43:14 -0400 (EDT)
+In-Reply-To: <CAGZ79kbHW+qzQjoVu9gRYC0FBqpkq5bPPLU3=BdEFKeGc=U6sA@mail.gmail.com>
+	(Stefan Beller's message of "Mon, 16 May 2016 10:55:56 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0C2F373A-1B96-11E6-B6CC-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294775>
 
-On Mon, May 16, 2016 at 5:04 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Wed, May 11, 2016 at 9:17 AM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->> To libify `git apply` functionality we have to signal errors to the
->> caller instead of die()ing or exit()ing.
->>
->> To do that in a compatible manner with the rest of the error handling
->> in builtin/apply.c, find_header() should return -1 instead of calling
->> die() or exit().
->
-> Why is this talking about making find_header() return -1? Didn't that
-> happen in the previous patch?
->
->> As parse_chunk() is called only by apply_patch() which already
->> returns -1 when an error happened, let's make apply_patch() return -1
->> when parse_chunk() returns -1.
->>
->> If find_header() returns -2 because no patch header has been found, it
->> is ok for parse_chunk() to also return -2. If find_header() returns -1
->> because an error happened, it is ok for parse_chunk() to do the same.
->>
->> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> ---
->> diff --git a/builtin/apply.c b/builtin/apply.c
->> @@ -2176,8 +2176,9 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
->>                  * empty to us here.
->>                  */
->>                 if ((state->apply || state->check) &&
->> -                   (!patch->is_binary && !metadata_changes(patch)))
->> -                       die(_("patch with only garbage at line %d"), state->linenr);
->> +                   (!patch->is_binary && !metadata_changes(patch))) {
->> +                       return error(_("patch with only garbage at line %d"), state->linenr);
->> +               }
->
-> Unnecessary braces.
+Stefan Beller <sbeller@google.com> writes:
 
-Ok, will remove.
+>> I am NOT suggesting to make this enhancement in the prototype to
+>> allow us experiment with submodule selection use case, but this is
+>> an obvious place to allow
+>>
+>>         :(label=A B):(label=C D)
+>>
+>> to mean ((A & B) | (C & D)) by making item->labels an array of set
+>> of labels.
+>
+> This is what already works with the series. Or rather:
+>
+>     ":(label=A B)" ":(label=C D)"
+>
+> works as you would expect for (A&B) | (C&D).
+
+That is "duplicationg path".  I was envisioning a single
+
+	":(label=A B):(label=C D)tediously/long/path/because/java/"
+
+a shorter and sweeter way to say your two pathspec variant, i.e.
+
+	":(label=A B)tediously/long/path/because/java/" \
+        ":(label=C D)tediously/long/path/because/java/"
