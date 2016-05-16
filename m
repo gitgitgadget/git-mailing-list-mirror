@@ -1,80 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] attr: update a stale comment on "struct match_attr"
-Date: Sun, 15 May 2016 15:59:08 -0700
-Message-ID: <xmqq60uf3p37.fsf@gitster.mtv.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC PATCH 0/4] pathspec labels [WAS: submodule groups]
+Date: Mon, 16 May 2016 07:03:50 +0700
+Message-ID: <CACsJy8BU-zym6Nkmbs-jk66af1LwHaasybHBvBUJscU=eBOkQA@mail.gmail.com>
+References: <20160513001936.7623-1-sbeller@google.com> <CACsJy8BK-u2VV3kkq3ANHCanYqMwphqgxZmooQfewA_J7e8MPw@mail.gmail.com>
+ <xmqq60uf6v5d.fsf@gitster.mtv.corp.google.com> <xmqqfutj5d73.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 16 00:59:25 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 16 02:04:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b250F-0007UV-MQ
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 00:59:16 +0200
+	id 1b261N-0007LE-Ba
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 02:04:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752144AbcEOW7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2016 18:59:12 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62726 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751815AbcEOW7L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 18:59:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F8951B95F;
-	Sun, 15 May 2016 18:59:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=4
-	0pufcDxfZrNvKnzZDmpiVe8JEM=; b=Yoc6IEsLXFzYVLGikX3lJSWpohalrr1jx
-	liX5Vqc+DXU82UxlDPOP1rDHm1ghRtM2wEbP/a7VPg7HInJ+r/9VDKGbYEdxmpsB
-	deD0dv7vRjG3yHDyLpmPx3st5BSCtrDJeKEiPyHUxNDnIaaZfwvAVhO8ALHJUgu/
-	BsbI7sb1mc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=POt
-	7v0CmASKr2OQgxgd0vO0aV9TY1vQKYmM1heEnmQ+fw/ZFQq8DJHw8JoDsgY/K8MO
-	HXCqyvpyJd/SDgT5fj1CYCzn4yAHkxtQAjWW/rhRqd4Jk1DqfLlVNOhdw/IKXmaP
-	8H/H3f7GXyjqtrXtf1xB25VBHTZAcARO9PUYysV4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 183911B95E;
-	Sun, 15 May 2016 18:59:11 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 90BEE1B95D;
-	Sun, 15 May 2016 18:59:10 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A2BB8060-1AF0-11E6-8DE8-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1752082AbcEPAEW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2016 20:04:22 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:32808 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751895AbcEPAEV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 20:04:21 -0400
+Received: by mail-yw0-f194.google.com with SMTP id y6so17454376ywe.0
+        for <git@vger.kernel.org>; Sun, 15 May 2016 17:04:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8QxXRRcvNq7qvIhz1nMM5FiLWv5dv6dXzyv7uwPVNk0=;
+        b=eoxZbngcGldZTCM9B1jeoNNdk5p2juYkIzEC3/UfDfWKt5WsxVad06W1FC88Utvfmm
+         fj+uwNqbXppi0BWxxQ/yWg+wGnIdBdfLuTvoJkzWPb5Ah9FJblRt8Cl+5CCVBEBk/dJ2
+         wFgiRw2uLwAl7PCxZ/hvH7lAUFgsDonxVEQpRjJktNnejF44yJgJq9k+A2C1tX+FwzQ1
+         HU0cjKoplLomAwkbJ2J/tq3uN0j5BXwNjMWlRq7rrqF14qhgW7iLO7fn+H5Og5j3b3S/
+         UXeMu1WgH/DSD/6cglrP6W3FRl043zHH5OzCftMVMb9kgnFRHhVkz5/JhXDE5nJAQ1jS
+         hIyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8QxXRRcvNq7qvIhz1nMM5FiLWv5dv6dXzyv7uwPVNk0=;
+        b=AnRN84WLU3pEjpZfHjk6I9w/05GVyeHIQVSrl6MToI+ISWrOjNEal25bN72Jrlugsh
+         3qfAwdDic/wBbOYqBkOmMbH1A1+aK4LVKPPzlXxDBDb5Fb62K1EKCKDlV0Y6pg5NAg9f
+         Qkx88qmMiuWWqKyhxdXYM45xEzr5y+TGG0/fhGiKXIHbJIjVCqtprAbT2mIIy3ksw6IG
+         PBki8klTa6wx5diU0KMferq3HhBxQk33aNI9B8rFzLWMIgMRCbEhOeZtvj/Whaw18jHZ
+         kbmPyCiiNm3xWWs0v3DI8moeINhayDfSXIpt2IexgZckkR/gwJyTnB8YrPbmdVR1x8l+
+         NwuQ==
+X-Gm-Message-State: AOPr4FWYpTWjTZociYh6JzEk56XreouWiRxeREd9JEazd5p3bOcOxZ9PitQbtIfcTaNIpJHHW5nyqaLBJCDXtQ==
+X-Received: by 10.37.72.195 with SMTP id v186mr12823037yba.101.1463357060009;
+ Sun, 15 May 2016 17:04:20 -0700 (PDT)
+Received: by 10.83.11.131 with HTTP; Sun, 15 May 2016 17:03:50 -0700 (PDT)
+In-Reply-To: <xmqqfutj5d73.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294696>
 
-When 82dce998 (attr: more matching optimizations from .gitignore,
-2012-10-15) changed a pointer to a string "*pattern" into an
-embedded "struct pattern" in struct match_attr, it forgot to update
-the comment that describes the structure.
+On Mon, May 16, 2016 at 2:33 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Duy Nguyen <pclouds@gmail.com> writes:
+>>
+>>> Instead of putting everything in under the same attribute name
+>>> "label", make one attribute per label? Would this work?
+>>>
+>>> *.[ch] c-group code-group
+>>
+>> The attribute subsystem expects that there will not be unbounded
+>> large number of attributes, so this is not a good direction to go.
+>
+> Having said that, I do not mind too much if it turns out that it is
+> necessary to use an unbounded set of random attributes to solve a
+> specific problem, if the use case is good.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- attr.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+I only have a vague idea so far, it seems to me a good idea to be able
+to specify "binary-marked paths" or "filter attached paths" from
+pathspec. We can already do this with scripts, but we need to be very
+careful about quoting. And if it's pathspec it can be combined with
+other magic (most likely negation)
 
-diff --git a/attr.c b/attr.c
-index eec5d7d..94b27f4 100644
---- a/attr.c
-+++ b/attr.c
-@@ -131,9 +131,8 @@ struct pattern {
-  * If is_macro is true, then u.attr is a pointer to the git_attr being
-  * defined.
-  *
-- * If is_macro is false, then u.pattern points at the filename pattern
-- * to which the rule applies.  (The memory pointed to is part of the
-- * memory block allocated for the match_attr instance.)
-+ * If is_macro is false, then u.pat is the filename pattern to which the
-+ * rule applies.
-  *
-  * In either case, num_attr is the number of attributes affected by
-  * this rule, and state is an array listing them.  The attributes are
+> But even then, in order to avoid confusion and name clashes, I'd
+> prefer to see more like
+>
+>         *.[ch] group-c group-code
+>
+> that is matched by
+>
+>         git cmd ':(group:c code)
+>
+> i.e. reserve a single prefix that is not and will not be used for
+> other purposes.
+
+For my above use case, i can still define macro group-binary that is
+an alias of binary to get around this. So it's ok.
 -- 
-2.8.2-748-gfb85f76
+Duy
