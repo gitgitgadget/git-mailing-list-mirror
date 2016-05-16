@@ -1,61 +1,51 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git push --quiet option does not seem to work
-Date: Sun, 15 May 2016 20:58:24 -0400
-Message-ID: <20160516005824.GA1963@sigill.intra.peff.net>
-References: <CADKp0pwrKzHG7KVSMH+6OHuv9sKXTcKSsdKMEZ_fFdjWT+kW6g@mail.gmail.com>
- <CADKp0pw5FFDVvPz0CcjOTYteQ9jFn2jBZwaX6_n8r3UQRGcGdQ@mail.gmail.com>
- <20160515212332.GB31809@sigill.intra.peff.net>
- <CADKp0pzPOdcSfBESzGMhrY5itSa4KDeOQ2VgwewuwH8CGZcwCw@mail.gmail.com>
+From: kolp.lola23@silvaonline.biz
+Subject: COOL DEAR
+Date: Mon, 16 May 2016 01:08:20 -1100
+Message-ID: <735774.67901.qm@smtp103.biz.mail.ne1.yahoo.com>
+Reply-To: vivianeric44@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Chris B <chris.blaszczynski@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 16 03:00:47 2016
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients <kolp.lola23@silvaonline.biz>
+X-From: git-owner@vger.kernel.org Mon May 16 03:12:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b26tq-00075L-8t
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 03:00:46 +0200
+	id 1b274y-0000QY-D8
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 03:12:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752256AbcEPA7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2016 20:59:00 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40021 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752153AbcEPA7A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2016 20:59:00 -0400
-Received: (qmail 22134 invoked by uid 102); 16 May 2016 00:58:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 15 May 2016 20:58:27 -0400
-Received: (qmail 2517 invoked by uid 107); 16 May 2016 00:58:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 15 May 2016 20:58:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 15 May 2016 20:58:24 -0400
-Content-Disposition: inline
-In-Reply-To: <CADKp0pzPOdcSfBESzGMhrY5itSa4KDeOQ2VgwewuwH8CGZcwCw@mail.gmail.com>
+	id S1752246AbcEPBLH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2016 21:11:07 -0400
+Received: from smtp103.biz.mail.ne1.yahoo.com ([98.138.207.10]:27405 "EHLO
+	smtp103.biz.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751921AbcEPBLG convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2016 21:11:06 -0400
+Received: (qmail 91475 invoked from network); 16 May 2016 01:10:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1463361050; bh=K6m+IGjh9iXYuZB36quHRZXEHUNLlS3CSnpvnqFy8sw=; h=Message-ID:Content-Type:MIME-Version:Content-Transfer-Encoding:Content-Description:Subject:To:From:Date:Reply-To; b=UUg1/qIblBzmlQG+sb+Kv+rGJlzJRO2Kbvlmqm3eUFb7c8ACvQRvD1Mc2N7M0cFoo0737zT6E0RaXdQ6W7PLDWn8QwZ31z3ML2m4AYfdfcU+9QLEsXss6S3IOQo5Q1UzV4MRRPVoFD2gAVGCrkWj7t0VaspMFBjiJTWJkNVB/xg=
+X-Yahoo-Newman-Property: ymail-3
+X-YMail-OSG: 9hvJlzsVM1ndMa5O2W0N_TEdxNeKUtsl0vmFkaKOwY.V7FC
+ 8t33PEfDn.VXVFg8rVf7qlsfDiVCPr_YitKsWxzmIKKXWfv5G8tcsSFrhurM
+ HhWVq5pV.iwIlLPitvBTfEXir38MOR42FnZ0VB02noB5krU3BnW5YdyfBugl
+ PWwG.Lswc85UuqMz768gc9El6r4HpM_tZiGVkrOP16Cr.Vs6ZgdUuWrMryYk
+ T8HM3dJKRoIU8NjgYGm_MY5bkjl3yW_1Szj52.HqTlmkOhCKz.8wqKqX.RwN
+ LFhWT4eRfSVXmsm2Sjy_iX8NuVZidASFKjCrrq.OjPvid1ztBbrt4Y7abYAz
+ aDKLff0ghdEL7VBf42aQbPcQpHqfwlvrHS9miX9jjxGgZcZzFSlCwna6ApMr
+ GAgAqfzKeCsa_XWDzqCNGkCmjaHg49vHpWKwUcHOa0CWKb2ORRhAs47fWti5
+ e8zDvWYSVBLmjGPq772qijCaj1eAxSsmWN8nVa4qD1SdiUFFAmjJNSI6c3OT
+ CQbG.Jjh_XCvaWP_zwfE_Ekjv.1n7eP95EddggrWiD3At83wNF0krTphAZcw
+ ll7RTC8ABMOt1nJGUrsgwF1oMSMp4yfIqdL_RRi1O6GbvRHzGlP6EjeX7Pfh
+ vyp7RfJyctCs-
+X-Yahoo-SMTP: hwWyK_iswBAYmPyTFMt6WJmBZz4E4oslklOPOLPBZEwocFNAZAjTPDnNySm7aJ3Gz0ZiFjg-
+Content-Description: Mail message body
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294713>
 
-On Sun, May 15, 2016 at 08:51:53PM -0400, Chris B wrote:
-
-> I did not see in your example any commit. But if you say so.
-
-I didn't show the commit step. But you can see that I made two identical
-pushes, one quiet and one not, and the non-quiet one actually pushed
-commits and showed the progress meter.
-
-That doesn't help with your problem, though...
-
-> I saw git init which would be a new repo.. don't know if it makes a difference.
-> 
-> It's pushing to HTTPS.
-
-I repeated my test pushing over https, but it still seems to work as
-expected with "-q".  So perhaps it is just Windows-specific, or perhaps
-there's something else going on.
-
--Peff
+My greeting to you over there and i hope all is fine, how are you doing, please my dear i saw your profile on FB and i
+became interested to know more about you, and i hope it will be the same from you, please i will like you to contact me
+to my email so that i will tell you more about me below,( vivianeric44@gmail.com
