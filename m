@@ -1,92 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/2] Work on t3404 in preparation for rebase--helper
-Date: Mon, 16 May 2016 08:33:55 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605160830340.3303@virtualbox>
-References: <cover.1462888768.git.johannes.schindelin@gmx.de> <cover.1463067811.git.johannes.schindelin@gmx.de> <xmqq8tzfgsbd.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1605130835070.4092@virtualbox> <xmqqa8jtaliw.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] Ignore dirty submodule states during stash
+Date: Sun, 15 May 2016 23:37:20 -0700
+Message-ID: <CAGZ79kaTss6ctZDCiRP2wjuxH+rJ79RKFLM79_FJN+37Bed+HQ@mail.gmail.com>
+References: <20160516020735.GA7884@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 16 08:35:02 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Vasily Titskiy <qehgt0@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 16 08:37:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2C76-0005Fg-93
-	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 08:34:48 +0200
+	id 1b2C9g-0007YG-NG
+	for gcvg-git-2@plane.gmane.org; Mon, 16 May 2016 08:37:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751477AbcEPGeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 02:34:36 -0400
-Received: from mout.gmx.net ([212.227.15.19]:57814 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750753AbcEPGef (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 02:34:35 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MEnjW-1anJzk2tQY-00FzWZ; Mon, 16 May 2016 08:34:10
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqa8jtaliw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:ILPcJyXmKNrZrTh2mpJ8YXiGG8st7RpCOEL7ELZVW3/ajXUbjI5
- zL2OYlZteeSvb91vXs+4mW/CLlxektF8JGvjIFFr0NvsU82cOchpt0J8B3muUYY96gbXC2Q
- 3gfET5/ws9hK9NVjeV6SZgEv5xtnqWcMH0Gfp/oWT5L13qyISwTQ8z2N8zTmymVtJ4kkCGH
- y/XhYR6fszo99EIcE/lJg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rjrU8uAtTQE=:Tou3qjEffvoZYOB17PMmg4
- GhOdXL71bke5o0sSmAFP9dPRr5VF6pO+Zuxd7C2x5cl/Tlx+UzihBEdNQA3w7yHCdVTMmYADI
- qyZLSAu56E1+F8NHXemSLm7HYG/z6aCjdDTepcVoaonaftOp3P3fk52bqPbkaivgAyacRc7oQ
- /HghTPuQ9DWdotjt57kXIxL6ACi1m/MheH0+zkUznIgpAVBffU7qAajLESHDOzpzmOv/12U18
- u9FMEA+FqMFznqzgKr0zTDg8KLFhImEUY4dDRx8a3+lLDtzZLSbRKjrcs+GVXEIRbVLITH2LI
- 0zRIwb76d/vfvwg6OQZwfmZD0ow6JrifJz1AFTIZhsTmH9EHpGaOIaKpknRQOOU0d+Yzg/5Dr
- FVKYHx4416olDFzpRQyYTMuDLXY9wO+ZWBCGK4wipP71PUo0GoITzHRoeatftvnoUHfBykL8y
- 8OLGOdDpZEcs6R4Z+XNvuweGSeq51Cm0gLx+NuNq7gtv1HCZB/ky5IQukTOi7oL+wrq22AZ8r
- MmthOgD8e2ksvsVUQ40wl9dTAl8RRdji1vCPVDtcuxp6M6dB3E36muRRUUGVvA1G+GbJghx9q
- y/yOmmaNWNGhLOLYBYra7FnfYIR81lUMxe2lof2Z3hilTCrzhvSfYq/jCOroQ2ZcQ/xiWH/Wd
- 4tIxoMXZmnhoq8NAjs6heqc5/mGdtyhWpktjwrvlj4us5ZW10MpZqLOzW9hxDMxsPPHcACbmK
- IyskHs0q/cCjSviQr8v+UpAWKJINJAXHUTn2FT6vEoUzhzJQcwe/haVZS6uYKs8UC6S/iPdJ 
+	id S1751266AbcEPGhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 02:37:22 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:36371 "EHLO
+	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750721AbcEPGhV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 02:37:21 -0400
+Received: by mail-io0-f176.google.com with SMTP id i75so193722136ioa.3
+        for <git@vger.kernel.org>; Sun, 15 May 2016 23:37:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=ixdbKskVoXkN3bkiKMBeymnuI6/pRs7vOj9vNmqFLBo=;
+        b=Yvc7CIL0OeIBrd+7XskTxydCWhM4w9m/0kSmQDKPeXwABuG5+ib2OaAOSbZ8pwZEXK
+         w9yOjgZytaFnoWF2NZi8XkJv4ly5Zbz3ugDboWLASarfvEP7sWuzXUgNUXXOGlA8f+PH
+         qdmgaOnJD7wLZ1hi6+aaRoyQ54m+/GQReM4iJFuBrRwVoYlIidbzDBoGnh8t6dyjhiER
+         TyeIQjHrHQJay4KQzfqRDL44CkX3dU3SO92B02/S94JVV8xprDV6bULWYcQ5Cx33+ap6
+         Qln7P8m/uhFA7EBkinOvrqocb4+bX1QpbpvfDRTCw8fabskrv0ojtlBd87EZ0+9DYMh6
+         05DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=ixdbKskVoXkN3bkiKMBeymnuI6/pRs7vOj9vNmqFLBo=;
+        b=OtUfA1YRp8EwFnER0FED+ZBmxU20i2sD60KbgAiMd6sGsPiUPKPGQ0vYn6uraeGd/G
+         4/MCuOxRItC2YGmPR9q0/6UVnWtIcbj6gwDyQ/G57fayVQS3trkQAqVTh3K9E9QZabx+
+         M+WQJyewo7c8z8bGpD4VnGtpt5BSz4agPxlM5s2e92eEIWOB9POQbSUlPmEMlQFv+qEO
+         +0wDJ6ctn7ErlhegnzS6uDAQN7E62BNsu9AzH/JLb37IIZ2O4mpaGYZzRhZ3KKy43g4n
+         llU87n+h3sJPBpA/jK0rMFZcC0vTNgRiBBH0Hd8+Oi6YaUm21LSXG0zkTa7l/vb661KQ
+         lRRQ==
+X-Gm-Message-State: AOPr4FUKUfDhdpyyqp5JTnIfuLGSlqaqfnfMUPUson8baSWpdNtNNO6R+4N+otO6xzyP4DYcj1EE0cYhVedlw30A
+X-Received: by 10.36.107.129 with SMTP id v123mr7687362itc.52.1463380640563;
+ Sun, 15 May 2016 23:37:20 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Sun, 15 May 2016 23:37:20 -0700 (PDT)
+In-Reply-To: <20160516020735.GA7884@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294725>
 
-Hi Junio,
+On Sun, May 15, 2016 at 7:07 PM, Vasily Titskiy <qehgt0@gmail.com> wrote:
+> Do not save states of submodules as stash should ignore it.
 
-On Fri, 13 May 2016, Junio C Hamano wrote:
+Can you explain why this is a good idea?
+(It is not obvious to me either way.)
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Thu, 12 May 2016, Junio C Hamano wrote:
-> >
-> >> I took these separately already, and plan to fast-track them as they
-> >> are both "trivially correct"; I double checked that what I have match
-> >> these two, too.
-> >
-> > Oh, okay. I just wanted to make things easier for you, and now that I
-> > have a script to prepare patch series, it's really almost as trivial
-> > for me to send out a new iteration as it would be to update a Pull
-> > Request on GitHub.
-> >
-> > Do you want me to hold off with new iterations in the future until you
-> > clarified your preferred course of action?
-> 
-> No.  You've been doing great.  I just wanted to clarify what I did
-> to your patch before I merge them separately to 'next' ahead of the
-> remainder that you'd be sending out, expecting a possible course
-> correction, e.g. "that would make it harder to queue the other patches
-> yet to come, all of which would depend on both of them--it would be
-> better to queue them on a single topic to be extended with these
-> other patches, after all these two are not that urgent".
+Do we need a test/documentation updates for this?
 
-Thanks.
-
-I planned to work on the remainder as a "topic thicket" using my Git
-garden shears [*1*] anyway, picking up the changes you picked up,
-replacing my original patches.
-
-Ciao,
-Dscho
-
-Footnote *1*: The garden shears are kind of a `git rebase -i -p` as I wish
-I had designed it originally. Thet live here:
-https://github.com/git-for-windows/build-extra/blob/master/shears.sh
+>
+> Signed-off-by: Vasily Titskiy <qehgt0@gmail.com>
+> ---
+>  git-stash.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/git-stash.sh b/git-stash.sh
+> index c7c65e2..b500c44 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -116,7 +116,7 @@ create_stash () {
+>                         git read-tree --index-output="$TMPindex" -m $i_tree &&
+>                         GIT_INDEX_FILE="$TMPindex" &&
+>                         export GIT_INDEX_FILE &&
+> -                       git diff --name-only -z HEAD -- >"$TMP-stagenames" &&
+> +                       git diff --name-only --ignore-submodules -z HEAD -- >"$TMP-stagenames" &&
+>                         git update-index -z --add --remove --stdin <"$TMP-stagenames" &&
+>                         git write-tree &&
+>                         rm -f "$TMPindex"
+> --
+> 2.1.4
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
