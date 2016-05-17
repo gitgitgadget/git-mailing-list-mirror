@@ -1,141 +1,180 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC-PATCHv6 4/4] pathspec: allow querying for attributes
-Date: Tue, 17 May 2016 13:25:58 -0700
-Message-ID: <xmqqposkv3c9.fsf@gitster.mtv.corp.google.com>
-References: <20160517031353.23707-1-sbeller@google.com>
-	<20160517031353.23707-5-sbeller@google.com>
-	<xmqqvb2dxomo.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZ-xf167LiO+zY+B8BTYd-9h7u=dgpL=4tsEJDPgwq8CA@mail.gmail.com>
+Subject: Re: [PATCH v6 00/17] Port branch.c to use ref-filter's printing options
+Date: Tue, 17 May 2016 13:30:52 -0700
+Message-ID: <xmqqinycv343.fsf@gitster.mtv.corp.google.com>
+References: <1463309133-14503-1-git-send-email-Karthik.188@gmail.com>
+	<xmqq4m9x1wl2.fsf@gitster.mtv.corp.google.com>
+	<CAOLa=ZQ5nUazL61eqj34-v06rueyjzvvJHzp8du7HHGi5=7TMA@mail.gmail.com>
+	<xmqqtwhwwp0c.fsf@gitster.mtv.corp.google.com>
+	<CAOLa=ZQ-XwEhTRwoNhrBH=NCQhpsHR=PfgtDrfJs23j6hkBWRA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue May 17 22:26:20 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git <git@vger.kernel.org>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 17 22:31:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2lZL-0006Bx-Pq
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 22:26:20 +0200
+	id 1b2ldt-0008GO-3F
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 22:31:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751284AbcEQU0F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 16:26:05 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54134 "EHLO
+	id S1751119AbcEQUa5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 May 2016 16:30:57 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65391 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751119AbcEQU0E (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 16:26:04 -0400
+	with ESMTP id S1750792AbcEQUa4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 May 2016 16:30:56 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2981E1D04C;
-	Tue, 17 May 2016 16:26:02 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7CF461AA99;
+	Tue, 17 May 2016 16:30:55 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fjybWtAzGxOEGTfmMA2enIhaiYI=; b=m5OfZa
-	kI7m5z0k2vIoj6IkW4dprDASb50yR4AoNa6ue/VHQj+GK/bon1e73FgFG5uP6jr4
-	ojifLUb2TdJN2JnWAH0cu4WJAfKkD76ASJhlINWdUCV/fpatoashLfz49JtlQ5xa
-	pRa0X/PTuLqTVdTbD6kjanH70CjJBKHiOpPsI=
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=s238ZQBiOSUUMFHnNFxJUx9mX
+	+Q=; b=Yq56xr2zElUZow5zSqblK8j20+UCP791fcqON85qyD9T2QShDfVt2tGJL
+	yCefEsdPzNdFOTz5WCLerGMr41F40fDJEn2aVsBZPvOUj4oNdVPJNbxclrYv9C/T
+	+9IagtnGvYs4IbQE9msc2se9/sSAaiS/qrv17Dark4nqGXtJFc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BFI5RrcXE9j4ikj08UZxtadvDX62D1zy
-	9mBQJ6e4zyeAq2ZhIPkCpdYDhAQ4Pat1ytrVIQ6L51pwIi3idlKTyp8W5iy3rsvX
-	Jrajbq6vF5pJd772eFnW36DR05Wk52h2oLY0KIwOF8rqLXSaNWdLudIUmXtdxeVW
-	/JJeLNvdF64=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 077771D04A;
-	Tue, 17 May 2016 16:26:01 -0400 (EDT)
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=x/QLJvrczB97r/LzE3f
+	MbzbomhUMWDnVQhpMK3034o3bl4Ey8QWmu7RHmdqKTRtqhkOAPZUN0Dsff0EB/0c
+	rTvUjN5abrhSXRyJBJp2tnrb9ggM4EuFxcZ05R30Ds4dFJ8bE4MAR3MFxYsvVTcG
+	Bj1oCC7FWOnFApPLNnHB3fBg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 749681AA98;
+	Tue, 17 May 2016 16:30:55 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0DD741D049;
-	Tue, 17 May 2016 16:25:59 -0400 (EDT)
-In-Reply-To: <CAGZ79kZ-xf167LiO+zY+B8BTYd-9h7u=dgpL=4tsEJDPgwq8CA@mail.gmail.com>
-	(Stefan Beller's message of "Tue, 17 May 2016 12:23:33 -0700")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DB9E11AA97;
+	Tue, 17 May 2016 16:30:54 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9192A614-1C6D-11E6-AA18-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 415013C0-1C6E-11E6-A093-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294911>
 
-Stefan Beller <sbeller@google.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> On Mon, May 16, 2016 at 10:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> When matching (i.e. the match_attrs() function), you would instead
->> do
->>
->>         path = xmemdupz(name, namelen);
->>         git_check_attr(path, item->attr_check);
->>
->> to grab values for only attributes that matter to you, instead of
->> calling git_all_attrs() [*2*].
->>
->> After git_check_attr() returns, item->attr_check.check[0].attr would
->> be git_attr("VAR1") and item->attr_check.check[0].value would be
->> whatever setting the path has for the VAR1 attribute.  You can use
->> your match_mode logic to compare it with the values .attr_match
->> expects.
->>
->> You do not necessarily have to have the same number of elements in
->> .attr_match and .attr_check.check by the way.  .attr_match might say
->>
->>         VAR1=VAL2 !VAR1 -VAR1
->>
->> which may be always false if these are ANDed together, but in order
->> to evaluate it, you need only one git_attr_check_elem for VAR1.
+> Sorry for that.
+> The only reason I haven't based it on 'master' is because it doesn't =
+contain
+> 'f307218'.
 >
+> =E2=9E=94 git branch --contains=3Df307218
+>   next
+>   ref-filter
 
-The key phrase in the message you are reacting to is "not
-necessarily".  It is not a crime to ask for the same attribute twice
-in a git_attr_check structure.
+It is not clear from the above what your local ref-filter contains
+beyond 'master', so it is not very useful to me when I am trying to
+help you to avoid taking this topic hostage to all the topics in
+'next' (if I queued this directly on 'next', I have to hold this
+series until all the topics in 'next' graduates to 'master).
 
-    $ git check-attr text text text -- path
+The series certainly would not apply to f307218 at all; it depends
+on other stuff you have either in your local 'ref-filter' or 'next'.
+It does not apply to the result of a merge of 'es/test-gpg-tags' topic=20
+into 'master', either, but the above does not make it clear what
+else you are using from 'next' at all.
 
-would stuff three instances of "text" in there and ask them for
-"path".  The simple in-code callers that uses git_attr_check_initl()
-do rely on the order of the attributes it placed in attr_check
-structure (see e.g. how ll_merge() uses check[0].value and
-check[1].value to see the driver name and marker size), and that is
-perfectly kosher.  Existing code is your friend.
+In any case, I think I managed to reduce the dependency on only
+'es/test-gpg-tags' and 'master', and that is what I'll be queuing.
+Please double check the patches in kn/ref-filter-branch-list topic
+and also the merge of it into 'pu' for mismerges.
 
-The mention of the possibility is purely as a hint useful for a
-possible enhancement in the far future.  If we ever want to support
-something like this:
+The difference between the result of merging the previously queued
+one to 'pu', and the result of merging this round to 'pu', looks
+like the attached.
 
-	":(attr-expression (VAR1=VAL1 | VAR1=VAL2) & VAR2)"
+Thanks.
 
-you can remember that you can put VAR1 and VAR2 in attr_check to
-grab values for VAR1 and VAR2 (even though VAR1 is mentioned twice
-in the expression), and use them in the evaluation you will perform.
+ builtin/branch.c               |  2 +-
+ ref-filter.c                   |  6 ++++--
+ t/t6302-for-each-ref-filter.sh | 30 +++++++++++++++---------------
+ 3 files changed, 20 insertions(+), 18 deletions(-)
 
-> So for the matching we would need to get the order right, i.e.
->
->     const char *inspect_name = git_attr_name(item.attr_match[i].attr);
->     for (j=0; j <  p.attr_check.check_nr; j++) {
->         const char *cur_name = git_attr_name(p.attr_check.check[j].attr);
->         if (!strcmp(inspect_name, cur_name))
->             break;
-
-You do not strcmp() when you have attributes.  They are interned so
-that you can compare their addresses.  That makes it somewhat
-cheaper.
-
-Once you start "expression over random attributes", you'd need to
-map attr => value somehow.  The format attr_check structure gives
-you, i.e. a list of <attr, value>, is aimed at compactness than
-random hashmap-like access.  If the caller wants a hashmap-like
-access for performance purposes, the caller does that itself.
-
-Existing users do not need a hashmap-like access, because they know
-at which index in attr_check they placed request for what attribute.
-An array that can be indexed with a small integer is exactly what
-they want.
-
-> This doesn't look cheap to me? Am I holding it wrong again?
-
-By the way, I do not think during the entire discussion on this
-topic, you have never been in a situation to deserve the "holding it
-wrong" label (which implies "a ware is broken, but somehow the end
-user is blamed for using it incorrectly").  When you were wrong, you
-were simply wrong.
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 0bbb4de..2412738 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -293,7 +293,7 @@ static int calc_maxwidth(struct ref_array *refs, in=
+t remote_bonus)
+ 		skip_prefix(it->refname, "refs/remotes/", &desc);
+ 		if (it->kind =3D=3D FILTER_REFS_DETACHED_HEAD) {
+ 			char *head_desc =3D get_head_description();
+-			w =3D strlen(head_desc);
++			w =3D utf8_strwidth(head_desc);
+ 			free(head_desc);
+ 		} else
+ 			w =3D utf8_strwidth(desc);
+diff --git a/ref-filter.c b/ref-filter.c
+index 74c4869..f25671c 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1196,12 +1196,14 @@ char *get_head_description(void)
+ 		strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
+ 			    state.branch);
+ 	else if (state.detached_from) {
+-		/* TRANSLATORS: make sure these match _("HEAD detached at ")
+-		   and _("HEAD detached from ") in wt-status.c */
+ 		if (state.detached_at)
++			/* TRANSLATORS: make sure this matches
++			   "HEAD detached at " in wt-status.c */
+ 			strbuf_addf(&desc, _("(HEAD detached at %s)"),
+ 				state.detached_from);
+ 		else
++			/* TRANSLATORS: make sure this matches
++			   "HEAD detached from " in wt-status.c */
+ 			strbuf_addf(&desc, _("(HEAD detached from %s)"),
+ 				state.detached_from);
+ 	}
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filt=
+er.sh
+index 331d978..a09a1a4 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -342,22 +342,22 @@ test_expect_success 'improper usage of %(if), %(t=
+hen), %(else) and %(end) atoms'
+ '
+=20
+ test_expect_success 'check %(if)...%(then)...%(end) atoms' '
+-	git for-each-ref --format=3D"%(if)%(authorname)%(then)%(authorname): =
+%(refname)%(end)" >actual &&
++	git for-each-ref --format=3D"%(refname)%(if)%(authorname)%(then) Auth=
+or: %(authorname)%(end)" >actual &&
+ 	cat >expect <<-\EOF &&
+-	A U Thor: refs/heads/master
+-	A U Thor: refs/heads/side
+-	A U Thor: refs/odd/spot
+-
+-
+-
+-	A U Thor: refs/tags/foo1.10
+-	A U Thor: refs/tags/foo1.3
+-	A U Thor: refs/tags/foo1.6
+-	A U Thor: refs/tags/four
+-	A U Thor: refs/tags/one
+-
+-	A U Thor: refs/tags/three
+-	A U Thor: refs/tags/two
++	refs/heads/master Author: A U Thor
++	refs/heads/side Author: A U Thor
++	refs/odd/spot Author: A U Thor
++	refs/tags/annotated-tag
++	refs/tags/doubly-annotated-tag
++	refs/tags/doubly-signed-tag
++	refs/tags/foo1.10 Author: A U Thor
++	refs/tags/foo1.3 Author: A U Thor
++	refs/tags/foo1.6 Author: A U Thor
++	refs/tags/four Author: A U Thor
++	refs/tags/one Author: A U Thor
++	refs/tags/signed-tag
++	refs/tags/three Author: A U Thor
++	refs/tags/two Author: A U Thor
+ 	EOF
+ 	test_cmp expect actual
+ '
