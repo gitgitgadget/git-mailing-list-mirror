@@ -1,72 +1,154 @@
 From: tboegi@web.de
-Subject: [PATCH v4 0/2] CRLF: ce_compare_data() checks for a sha1 of a path
-Date: Tue, 17 May 2016 18:41:06 +0200
-Message-ID: <1463503266-3552-1-git-send-email-tboegi@web.de>
+Subject: [PATCH v4 1/2] read-cache: factor out get_sha1_from_index() helper
+Date: Tue, 17 May 2016 18:41:24 +0200
+Message-ID: <1463503284-3592-1-git-send-email-tboegi@web.de>
 References: <573A993F.8020205@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 17 18:36:02 2016
+X-From: git-owner@vger.kernel.org Tue May 17 18:36:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2hyT-0003ao-D1
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 18:36:01 +0200
+	id 1b2hyk-0003ju-Cu
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 18:36:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755689AbcEQQf4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 May 2016 12:35:56 -0400
-Received: from mout.web.de ([212.227.15.3]:53811 "EHLO mout.web.de"
+	id S1755810AbcEQQgO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 May 2016 12:36:14 -0400
+Received: from mout.web.de ([212.227.17.11]:54541 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752261AbcEQQfz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 12:35:55 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0MHYLM-1b1bVc18zk-003KBj; Tue, 17 May 2016 18:35:52
+	id S1755723AbcEQQgN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 12:36:13 -0400
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0Ma2Pz-1bIJPy0TFv-00LnAM; Tue, 17 May 2016 18:36:09
  +0200
 X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
 In-Reply-To: <573A993F.8020205@web.de>
-X-Provags-ID: V03:K0:KVcMUixb0SEsMqVVLgpwWM8aSHT2iFdpOteihAaXUkp8oHJzl3W
- nXQUP2lNX+1TKgOlad+xKSC8QFreaTd+nAxUC5EeMUdEOv4McXFMaevxqhbxIOeFaSm1DNS
- OGNyOpK+ktaXvZSHNa+vAi/IfQUtPFR6fGZOi3KImtPYpBZq7ojKWR8WcfInLrK41hHv5kX
- KO9aL2xHKeWPIPyBzox5w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:nvhFOek/c7o=:RSpUfPewa9H3MoEHn5ydyJ
- Nu9nMr/bm7LOaGEGbx5Az3aB2UXuLsHoQa2zmOHgEMM14BOJhvVAzRgmmHfQdjdCcfWSwC1WP
- BVmSBHBWUWjqj/gZuX+jujqMKu74kyQ7jq1TrIIETUtIEcpsr7c/3JyRNbPeYKINEq7bUU9Mk
- uMiRwor6Ksqhj4JbswWnPbDLDHEbjg0g3/CIbKCp9R95LELc4LKcpHtF4EZoJAVUc5bAJPwrF
- 4ShL8VjInbDv0EaQKhVo3diNgyUXrb5nm6s/b1CNdArwYINeb2UHiSGJIyMbwlOO6psi38GyG
- p4F3VQZoAW4QDrUv7D9r1Yiuqh78nOo/z/yGwlfSxMddV4qlnpntHzZoT9uGr1fRtJEAVT/Py
- Pl7VVSUqe1bxMah1IswUZOtFxqZrT1TEYCkDuI07UShtAmYjgDVhp6yS307dsQlLbAqtFAJBB
- BvFGo6446iJc+0xCwl8qZ/qKQ+uZQOXyF/WoFWmm/Czl398wxxg7N5/bZc5TSxJFCud2LmPwo
- F+/6dbwPZBZS7gtomEOxEn2C4wrx0gTLT5VVGt9hRmLejIQuEYCtUjaDwUOhDNoH7dHItmCVj
- 2B4nDrfM6uX2m89NZNplArM9drjpl2Oomk558B/FAU1yThKY6E4vBL5IHD5CLXtFdBnaWrroU
- 59aC74qxk0YrE8HOkCc6jLV++HkqkkinmJdI98lyl1GtwNXHYVTkY6ykHy3JoYOW/PHAG5S6b
- Y9zqCucTyV3sitTu+oPdRaVO8W1eMc7RVxRoDX6ZZNRmX/2aRqGGXvzMffsQcD1mHisyUa4H 
+X-Provags-ID: V03:K0:CEKer6jYQC9IVgcndcEN16FNN1KLiRKb52PidQaGcIRusuzvTMd
+ PPDFMAL5RIXZTCizntcugPAsQiaPMB6Z/waXl1ThgxLpPfL+3wK6V/0LNhy5KznGnSc4EQC
+ AlMP3BDldTb7+oLyHigpGEcMdNJXS3P9U4y0IYfo9UH+hDL7nALDOi3UtHkyXHDYlLDU2rl
+ h1jb2Mmh50FQsqIk2UKxg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LrtHbCR5Y7Q=:Up3QfwnOrxPi+kopGPwCmi
+ JguRs2pg9Jm5Q+BAM5FmBHN/qH3YEpqdP6/FAk+cjemdN1VvxSKTA2O99/M4AMQ/QKRATQay+
+ oOQ8IBDXaoysOM+YhnZR4mHJJ12KovRJ4eRoHKhvVVR1H9FdoloaTAdJR9IZVA+25IgL/T/tq
+ f/R8HeOMn7IyC65Q520aTvE4SL6LHA5SotWnM5vAZHSi0rZIxHP7/ZV51EKCRfa1v/DXzdgiS
+ A1YqW5SmOWGmwGuW3YN6ilAF6JGRHleoxgo5G7sYh1HxolRTQRe47CVKpBqefWJJORXIgEKLc
+ nHPb6uxHEJf3lGLS6EpTtW43FwhvAo3pjNUlMDZGeyFPMnGd58/5ST3P21IOm7bT1QJHfdG4L
+ TSIEVEnWZRsWKAgjqjtt5zRgY6q6QxJAS9ahOS9kkZpR0noLZTalntndv+hE9q38SE++lSJte
+ Iy5rDze4NLL/m+U9sOsBXrv+VW3Xg8UYL17fewEFfELOpHnQlbagJG26YfpKer3B6NawKPYWu
+ yFjMfWQG/oqsxjyC6o5zrKKept25bN9oVKE62087siSLfVBggzlmJWl+5zx7+fdNFMD7GtFzC
+ 3cublWZJSX7/a+2KFxcJVJA8vp96yDZM3+MBTbrqpZkhCjUXy1pEue88k8DmHhHsNnU+2QgAR
+ 7Tz4cLcGPxWk7Q6Sdw2ufgawskEOVWT7N8Ri0BdR/ihhsFNJRlaU+pMf1++9421VFhhr1WnH8
+ OAYdCQeGqJK4IaCVFyQIrPwgj96Fi9zA1iBrL7wSn/qr752YoMeXK+XKexBU3x6CQxhc2YAd 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294871>
 
 =46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-Break up the old 10/10 series about CLRF handling into smaller
-series. This is a small bugfix, when merge.renormalize is used
-with core.autocrlf (and no attributes are set).
-Prepare the refactoring to use the streaming interface.
+=46actor out the retrieval of the sha1 for a given path in
+read_blob_data_from_index() into the function get_sha1_from_index().
 
-Torsten B=C3=B6gershausen (2):
-  read-cache: factor out get_sha1_from_index() helper
-  convert: ce_compare_data() checks for a sha1 of a path
+This will be used in the next commit, when convert.c can do the
+analyze for "text=3Dauto" without slurping the whole blob into memory
+at once.
 
- cache.h      |  4 ++++
- convert.c    | 34 ++++++++++++++++++++++------------
- convert.h    | 23 +++++++++++++++++++----
- read-cache.c | 33 +++++++++++++++++++++------------
- sha1_file.c  | 17 +++++++++++++----
- 5 files changed, 79 insertions(+), 32 deletions(-)
+Add a wrapper definition get_sha1_from_cache().
 
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ cache.h      |  3 +++
+ read-cache.c | 29 ++++++++++++++++++-----------
+ 2 files changed, 21 insertions(+), 11 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index 160f8e3..15a2a10 100644
+--- a/cache.h
++++ b/cache.h
+@@ -379,6 +379,7 @@ extern void free_name_hash(struct index_state *ista=
+te);
+ #define unmerge_cache_entry_at(at) unmerge_index_entry_at(&the_index, =
+at)
+ #define unmerge_cache(pathspec) unmerge_index(&the_index, pathspec)
+ #define read_blob_data_from_cache(path, sz) read_blob_data_from_index(=
+&the_index, (path), (sz))
++#define get_sha1_from_cache(path)  get_sha1_from_index (&the_index, (p=
+ath))
+ #endif
+=20
+ enum object_type {
+@@ -1038,6 +1039,8 @@ static inline void *read_sha1_file(const unsigned=
+ char *sha1, enum object_type *
+ 	return read_sha1_file_extended(sha1, type, size, LOOKUP_REPLACE_OBJEC=
+T);
+ }
+=20
++const unsigned char *get_sha1_from_index(struct index_state *istate, c=
+onst char *path);
++
+ /*
+  * This internal function is only declared here for the benefit of
+  * lookup_replace_object().  Please do not call it directly.
+diff --git a/read-cache.c b/read-cache.c
+index d9fb78b..a3ef967 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2263,13 +2263,27 @@ int index_name_is_other(const struct index_stat=
+e *istate, const char *name,
+=20
+ void *read_blob_data_from_index(struct index_state *istate, const char=
+ *path, unsigned long *size)
+ {
+-	int pos, len;
++	const unsigned char *sha1;
+ 	unsigned long sz;
+ 	enum object_type type;
+ 	void *data;
+=20
+-	len =3D strlen(path);
+-	pos =3D index_name_pos(istate, path, len);
++	sha1 =3D get_sha1_from_index(istate, path);
++	if (!sha1)
++		return NULL;
++	data =3D read_sha1_file(sha1, &type, &sz);
++	if (!data || type !=3D OBJ_BLOB) {
++		free(data);
++		return NULL;
++	}
++	if (size)
++		*size =3D sz;
++	return data;
++}
++
++const unsigned char *get_sha1_from_index(struct index_state *istate, c=
+onst char *path)
++{
++	int pos =3D index_name_pos(istate, path, strlen(path));
+ 	if (pos < 0) {
+ 		/*
+ 		 * We might be in the middle of a merge, in which
+@@ -2285,14 +2299,7 @@ void *read_blob_data_from_index(struct index_sta=
+te *istate, const char *path, un
+ 	}
+ 	if (pos < 0)
+ 		return NULL;
+-	data =3D read_sha1_file(istate->cache[pos]->sha1, &type, &sz);
+-	if (!data || type !=3D OBJ_BLOB) {
+-		free(data);
+-		return NULL;
+-	}
+-	if (size)
+-		*size =3D sz;
+-	return data;
++	return (istate->cache[pos]->sha1);
+ }
+=20
+ void stat_validity_clear(struct stat_validity *sv)
 --=20
 2.0.0.rc1.6318.g0c2c796
