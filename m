@@ -1,99 +1,151 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v6 00/17] Port branch.c to use ref-filter's printing options
-Date: Tue, 17 May 2016 13:34:13 +0530
-Message-ID: <CAOLa=ZQ5nUazL61eqj34-v06rueyjzvvJHzp8du7HHGi5=7TMA@mail.gmail.com>
-References: <1463309133-14503-1-git-send-email-Karthik.188@gmail.com> <xmqq4m9x1wl2.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue May 17 10:04:59 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [BUG] t9801 and t9803 broken on next
+Date: Tue, 17 May 2016 10:07:16 +0200
+Message-ID: <5E7631C9-DD59-4358-B907-D7C7AEA1739C@gmail.com>
+References: <3A110437-F778-42E2-A987-86B4EAB3D963@gmail.com> <20160513103621.GA12329@dcvr.yhbt.net> <xmqqpospap8g.fsf@gitster.mtv.corp.google.com> <4830D469-3885-4010-9A04-D809F0C6159D@gmail.com> <xmqq37pk8q0h.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Eric Wong <e@80x24.org>, Git Users <git@vger.kernel.org>,
+	Luke Diamand <luke@diamand.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 17 10:07:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2Zzr-0002f2-Up
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 10:04:56 +0200
+	id 1b2a2M-0003lW-LA
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 10:07:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755065AbcEQIEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 04:04:51 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:33411 "EHLO
-	mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755036AbcEQIEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 04:04:43 -0400
-Received: by mail-qk0-f196.google.com with SMTP id q184so742393qkf.0
-        for <git@vger.kernel.org>; Tue, 17 May 2016 01:04:43 -0700 (PDT)
+	id S1755155AbcEQIHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2016 04:07:24 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:37522 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755054AbcEQIHU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 May 2016 04:07:20 -0400
+Received: by mail-wm0-f48.google.com with SMTP id a17so16297610wme.0
+        for <git@vger.kernel.org>; Tue, 17 May 2016 01:07:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:cc;
-        bh=KQ/sug+r0WlbtYTM859pID3n9XAQdRdD52y7C4OcO2s=;
-        b=DZ4dKc2f4QJUV/1Jc4I2P35jCL2f9N8vpUEBDZKl3zlyiPTOb7wK6SvZRBOwy/3no4
-         SEPwdxtc5+e8LB00IJn2qHtPElyHL8p0tWmY1V0+cmoQmtrnOoKdWG2q0f4cVt7i4vYZ
-         kJAwSFH4SdiFdP13bs1KWZq/uXlL5iXfQDyiC7LDzIhBTgqnVuCIk2LPz0TBJmbsUx//
-         86DYxjPerTM2ovqXx5/KPLjXSyrnpm3gOKy/yfflZpOM4Qlr8GwsbWHfYhN7HZFoIi9k
-         2Th1rlou24CY2rHxM+IRqbzme8Dw2iNhR4LzIENeo1uRRnyhFDD9HeoP/+amL0lNkqzm
-         L7CA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=9NMLa4slkQPVXJ0SVpsuxkGqctbhBKMe7/bznTjGkB8=;
+        b=aXpcXfl8r5kXuT1M8LOOpJ6jEaY+6lMm7BbViudOS7b+v/BgAVtFJCUFCeF6bSu07k
+         ntMbPlFvUiIWsIpZRNXJxQp/SNqtQchJtpKqwSc8R5jwiM3yWVF5pdUiYw44n2DroOVK
+         +UVXdk2vbSWVcIVye9JFGt64cePs5NLoXU6DFQd68HbudGm2Vkyk/p6rGTqjUR5djVKD
+         oZXiFwgGdtYGQlxfV0tTVqM/Bi/F/u0ohe45U5fvNi13+xLym16YzrT0R4lXvWe9niHt
+         U0YIhb5NQzTeCJBy1qiMs4LexXbkLh/FVSLF1VYO8aOqFNfyRz+cAdD0ScB0XNjFuZqe
+         naDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:cc;
-        bh=KQ/sug+r0WlbtYTM859pID3n9XAQdRdD52y7C4OcO2s=;
-        b=k+Jv6n4jpWlOKuARZs9XobpKE1rOXp+IWMJkpmPYcu37CteShGMQhJ1xarN7j61X0C
-         UcOGUKO0Ngn05b7rZ/L0xhXrJgzoS1t8exjKvyCPszD7o7T84nC48QD+Bb4Dd5he+iYD
-         u7PcWPfM0U0eNJve+yZsuTSPKUzYXqhDcLgNN8kXLJNIurrWGp0UbEPO5q/0jyjaRZJA
-         OEY5qcsK4UoRoyGBIY6KhUSNfCYdAQy9XBgJMW2YXYXo5M70m610hL9bKNPZfhxPswLX
-         S2jPGuUh1XcyJqcayykwZ0eZYX0jL7vxqgQkN9DXpVnTQUlT/H4heMUcUXX6NR3KWNnc
-         7b2w==
-X-Gm-Message-State: AOPr4FXzc4tawrpUFkoh0EXIrkAChSHmVkRqTn0iWEMP/5Q2Girj0OCmjqNTkPYF+aI6HdpfhUe2c9YH/dBVFg==
-X-Received: by 10.55.74.14 with SMTP id x14mr36613489qka.70.1463472282759;
- Tue, 17 May 2016 01:04:42 -0700 (PDT)
-Received: by 10.140.92.178 with HTTP; Tue, 17 May 2016 01:04:13 -0700 (PDT)
-In-Reply-To: <xmqq4m9x1wl2.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=9NMLa4slkQPVXJ0SVpsuxkGqctbhBKMe7/bznTjGkB8=;
+        b=Ifh2As99cQqPxRAJOkA/iN2dvQBHWeJlsfRV1xq1roLWIz/eUMuMEniEuLqPPQaXjc
+         jea1jBvetYq8nHajqqo8MlOxmROp5YzM/62v2fvCiQX02eUbZr12WeyGMqwz+LhpdsQq
+         NHxABKuopA+lviL6CLxkhC6dZvmuwpU+o+ZyoFs23Uf8gGfOGP1zEuYpfOd4sLo3hXaF
+         /thR/V44oao3XgoMvUwZdfSzx9av5bQAf8UD5pwAZHhfw/zU7gCUYf4lpXolFzIx0OV7
+         jmV+clmnqZ2zwAT2pru05xZnnLtYP8BeMSi+SsBQ7YQiaO4GIW221u8Jx8B2G+JK6rO8
+         XPOg==
+X-Gm-Message-State: AOPr4FV5LV6qHwK5JrUB/1qHd385SyOo9LWX1RCGvTY3x0oBvUnxE6KFhh1FHH28NbMR8A==
+X-Received: by 10.28.101.215 with SMTP id z206mr21328586wmb.37.1463472438869;
+        Tue, 17 May 2016 01:07:18 -0700 (PDT)
+Received: from slxbook4.fritz.box (p508BA3A9.dip0.t-ipconnect.de. [80.139.163.169])
+        by smtp.gmail.com with ESMTPSA id i1sm1655526wjm.12.2016.05.17.01.07.17
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 17 May 2016 01:07:18 -0700 (PDT)
+In-Reply-To: <xmqq37pk8q0h.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294859>
 
-On Tue, May 17, 2016 at 3:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
-> > This is part of unification of the commands 'git tag -l, git branch -l
-> > and git for-each-ref'. This ports over branch.c to use ref-filter's
-> > printing options.
-> >
-> > Initially posted here: $(gmane/279226). It was decided that this series
-> > would follow up after refactoring ref-filter parsing mechanism, which
-> > is now merged into master (9606218b32344c5c756f7c29349d3845ef60b80c).
->
-> 9606218b?
->
 
-I believe it should be 50cd83dca100174ba95baa9f6ed8426bce731ac2
+> On 14 May 2016, at 20:15, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Lars Schneider <larsxschneider@gmail.com> writes:
+> 
+>>> On 13 May 2016, at 18:37, Junio C Hamano <gitster@pobox.com> wrote:
+>>> 
+>>> Are you saying that "git p4" itself breaks unless fast-import always
+>>> writes a new (tiny) packfile?  That sounds quite broken, and setting
+>>> unpacklimit to 0 does not sound like a sensible "fix".  Of course,
+>>> if the test script is somehow looking at the number of packs or
+>>> loose objects and declaring a failure, even when the resulting
+>>> history in p4 and git are correct, then that is a different issue,
+>>> and forcing to explode a tiny pack is a reasonable workaround.  I
+>>> couldn't quite tell which the case is.
+>>> 
+>>> Puzzled.  Please help.
+>> 
+>> t9801 "import depot, branch detection" is the first test that fails
+>> with a fast import error:
+>> https://github.com/git/git/blob/78b384c29366e199741393e56030a8384110760d/t/t9801-git-p4-branch.sh#L110
+>> 
+>> fast-import crash report:
+>>    fast-import process: 77079
+>>    parent process     : 77077
+>>    at 2016-05-14 07:48:40 +0000
+>> 
+>> fatal: offset beyond end of packfile (truncated pack?)
+> 
+> Hmm, does that suggest Eric's "explode them into loose instead of
+> keeping a small pack" insufficient?  It sounds like that somebody
+> wanted to read some data back from its packfile without knowing that
+> the updated code may make it available in a loose object form, which
+> would mean that somebody needs to be told about what is going on,
+> namely, these objects are not in a half-written pack but are found
+> as loose objects.
 
->
-> > Changes in this version:
-> >
-> > 1. Rebased on top of f307218 (t6302: simplify non-gpg cases).
->
->
->   $ git checkout f307218
->   $ git am 0001-ref-filter-implement-if.txt
->   Applying: ref-filter: implement %(if), %(then), and %(else) atoms
->   error: patch failed: Documentation/git-for-each-ref.txt:181
->   error: Documentation/git-for-each-ref.txt: patch does not apply
->   Patch failed at 0001 ref-filter: implement %(if), %(then), and %(else) atoms
->   The copy of the patch that failed is found in: .git/rebase-apply/patch
->   When you have resolved this problem, run "git am --continue".
->   If you prefer to skip this patch, run "git am --skip" instead.
->   To restore the original branch and stop patching, run "git am --abort".
+I think that is pretty much the problem. Here is what is happening:
 
-Hello, sorry for the confusion, it's built on top of 'next' which contains
-f307218 (t6302: simplify non-gpg cases). The merge conflict is due to the
-commit made by you 1cca17df (Documentation: fix linkgit references).
+1.  git-p4 imports all changelists for the "main" branch
 
---
-Regards,
-Karthik
+2.  git-p4 starts to import a second branch and creates a fast-import
+    "progress checkpoint". This triggers:
+
+    --> fast-import.c: cycle_packfile
+    --> fast-import.c: end_packfile
+    --> fast-import.c: loosen_small_pack
+
+    At this point we have no packfile anymore.
+
+3.  git-p4 sends the command "commit refs/remotes/p4/depot/branch2"
+    to fast-import in order to create a new branch. This triggers:
+
+    --> fast-import.c: parse_new_commit
+    --> fast-import.c: load_branch
+    --> fast-import.c: load_tree
+
+    "load_tree" calls "find_object" and the result has a "pack_id" of 0.
+    I think this indicates that the object is in the packfile. Shouldn't
+    the "pack_id" be "MAX_PACK_ID" instead?
+
+        myoe = find_object(sha1);
+        if (myoe && myoe->pack_id != MAX_PACK_ID) {
+
+    --> fast-import.c: gfi_unpack_entry
+
+    In "gfi_unpack_entry" this condition evaluates to "true":
+
+        struct packed_git *p = all_packs[oe->pack_id];
+        if (p == pack_data && p->pack_size < (pack_size + 20)) 
+
+    In the comment below Git thinks that the object is stored in the
+    packfile. This seems wrong but the flow continues:
+
+    --> sha1_filec: unpack_entry
+    --> sha1_filec: unpack_object_header
+    --> sha1_filec: use_pack
+
+    At this point fast-import dies with "offset beyond end of packfile 
+    (truncated pack?)".
+
+I am no expert in "fast-import". Does anyone have a few hints how to
+proceed?
+
+Thanks,
+Lars
