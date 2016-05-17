@@ -1,117 +1,154 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/2] convert: ce_compare_data() checks for a sha1 of a path
-Date: Tue, 17 May 2016 11:58:03 -0700
-Message-ID: <xmqq60ucwlz8.fsf@gitster.mtv.corp.google.com>
-References: <573A993F.8020205@web.de>
-	<1463503301-3634-1-git-send-email-tboegi@web.de>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v6 00/17] Port branch.c to use ref-filter's printing options
+Date: Wed, 18 May 2016 00:32:51 +0530
+Message-ID: <CAOLa=ZQ-XwEhTRwoNhrBH=NCQhpsHR=PfgtDrfJs23j6hkBWRA@mail.gmail.com>
+References: <1463309133-14503-1-git-send-email-Karthik.188@gmail.com>
+ <xmqq4m9x1wl2.fsf@gitster.mtv.corp.google.com> <CAOLa=ZQ5nUazL61eqj34-v06rueyjzvvJHzp8du7HHGi5=7TMA@mail.gmail.com>
+ <xmqqtwhwwp0c.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: tboegi@web.de
-X-From: git-owner@vger.kernel.org Tue May 17 20:58:19 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 17 21:03:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2kCB-0006rM-ET
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 20:58:19 +0200
+	id 1b2kH9-0000q3-Kb
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 21:03:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752456AbcEQS6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 14:58:09 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50795 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751248AbcEQS6I (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 14:58:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7BCC71B271;
-	Tue, 17 May 2016 14:58:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dB8R5DpUsPSEyiDtaBQCSnGDU6A=; b=WBnHUs
-	E0hWsBs3TJcMvi4dxmUDAJZ1AA2I+gau99KD/UU5qSeOt39KCaENoIuHTCz3qrs4
-	wIdSetudKHrbAvSZ8IfG6cHjuJc+rHiQ1aK1qW5MF0tWnxzY3yRJhYt8qLu6C00b
-	oevVIuTK3P9oK/T3oS8w6VgvaVDf5MbWYEY0A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xQF79SwdaRJbcCQ01HUYXTMZ8hRQAoGF
-	W2vU353zPQR6gp3zk+gRc9UXRdtS4T4BXJ+ZahYCc/6QiWNwuvDF5ipbMfqD/gxC
-	vOq+YZw9MIFlAZrGGQF50pRfDcx/PurOQB5MWplXX+3dycCn/ZlwmdcDQMMJjBli
-	XvlPDRFVJ0Y=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 72A501B270;
-	Tue, 17 May 2016 14:58:06 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C4BB41B26F;
-	Tue, 17 May 2016 14:58:05 -0400 (EDT)
-In-Reply-To: <1463503301-3634-1-git-send-email-tboegi@web.de> (tboegi@web.de's
-	message of "Tue, 17 May 2016 18:41:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 49DF94BE-1C61-11E6-9D1E-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752621AbcEQTDX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 May 2016 15:03:23 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:33880 "EHLO
+	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751663AbcEQTDW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 May 2016 15:03:22 -0400
+Received: by mail-qk0-f178.google.com with SMTP id r184so14311210qkc.1
+        for <git@vger.kernel.org>; Tue, 17 May 2016 12:03:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=GJ0BzGMBjj3nz9MKsb/l5hr3W5hvl7mShl9YENguufg=;
+        b=pQEPLzaQ9ycHbeseXmugMPGZMy/yPnq4p9iSk7iSrqwDePxzB1JDIxJ0xdpS3Ku0db
+         wj06vK6yIlq/pp05q6whbsuu8g6zC1hjT5p8HTlsqIWw7IQMJKLi/1Sx9uNE6wG6mHzR
+         tTigodOiPp/IS4ZU6QMkZ1BjNEDuKl+mBs64gIbucr0lXhxtAKfp28QG7qTlBDDxnCQT
+         9EeLxAAlLTg0oQ5pNyZ7z2laDuRl6C0dBLr83EkwOLhySfr1LrwfDQwusNIQCG/jVDxG
+         XPE3WyqSVCs9IyGxBZuxIM7gKgDEZDwUquR0OmlleojDBqsUrjCTFAU4s5EcH5HGaaB3
+         ddFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GJ0BzGMBjj3nz9MKsb/l5hr3W5hvl7mShl9YENguufg=;
+        b=kQo+FgahF0zCOyfVt+WIBERejSng7QKa9mRBelg3lSnRLU94KsqTnOnEnQnpTnIT/E
+         reEzEC90tHtwzDdxTKRqHl1BrXzWz6sJLR0+poEukhAUoUfGr4jUL/Mmst8D/u7IcGvE
+         NT+j9JLinZ9tM3FBzUb/rAaaXYKHK2VvFbd7n+lW7Gt80L6ucPF7k3rq0m0/72emVrRh
+         xdN0/3VTIvJdgFwHJfCbGM2b9gf9wMG+U9gW688s7JNElbXhWE6dcAjfJ8gtTBdRC3su
+         CDd9lvs9x53d5ZyHKjE5IbNhpO4Ochmn4KhTx5UsK1hFX+EHCcBpKO9joine0AAQEjYj
+         rgsw==
+X-Gm-Message-State: AOPr4FW+C59e2RKbEuyrDL+wJQjGjSX/AaKxrLgegfa0fl+bfAGxIOhW96bfdALYD1752tZ0kKolVyC0Gv9yDA==
+X-Received: by 10.55.79.5 with SMTP id d5mr3536162qkb.30.1463511801257; Tue,
+ 17 May 2016 12:03:21 -0700 (PDT)
+Received: by 10.140.92.178 with HTTP; Tue, 17 May 2016 12:02:51 -0700 (PDT)
+In-Reply-To: <xmqqtwhwwp0c.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294896>
 
-tboegi@web.de writes:
+On Tue, May 17, 2016 at 11:22 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> Hello, sorry for the confusion, it's built on top of 'next' which co=
+ntains
+>> f307218 (t6302: simplify non-gpg cases). The merge conflict is due t=
+o the
+>> commit made by you 1cca17df (Documentation: fix linkgit references).
+>
+> That is not "confusion", but an "incorrect piece of information".
+>
+> The series does not seem to apply on 'next', either.
+>
+> Where did you exactly rebase on top of?  It is not on f307218, it is
+> not on 'next', 'next@{1}',... 'next@{8}'.
+>
+> f3072180 (t6302: simplify non-gpg cases, 2016-05-09) was merged to
+> 'next' at 9fcb98b2 (Merge branch 'es/test-gpg-tags' into next,
+> 2016-05-10), but the series does not seem to apply there, either.
+>
+> $ git co 9fcb98b2
+> Applying: ref-filter: implement %(if), %(then), and %(else) atoms
+> error: patch failed: Documentation/git-for-each-ref.txt:181
+> error: Documentation/git-for-each-ref.txt: patch does not apply
+> Patch failed at 0001 ref-filter: implement %(if), %(then), and %(else=
+) atoms
+> The copy of the patch that failed is found in: .git/rebase-apply/patc=
+h
+> When you have resolved this problem, run "git am --continue".
+> If you prefer to skip this patch, run "git am --skip" instead.
+> To restore the original branch and stop patching, run "git am --abort=
+".
+>
+> Not that a series built on top of any 'next' is directly usable.
+> You are forcing me to identify which topics in 'next' you depend on,
+> and build a topic that does not contain anything unrelated that is
+> in 'next' before starting to apply these patches.  Can you pick a
+> more appropriate place to base these patches on, please?  Why isn't
+> this based on 'master', for example?
 
->  #define HASH_WRITE_OBJECT 1
->  #define HASH_FORMAT_CHECK 2
-> +#define HASH_CE_HAS_SHA1  4
+Hello,
 
-How does one pronounce the words in this constant?  Does it make a
-listener understand what this constant means?
+Sorry for that.
+The only reason I haven't based it on 'master' is because it doesn't co=
+ntain
+'f307218'.
 
+=E2=9E=94 git branch --contains=3Df307218
+  next
+  ref-filter
 
-/*
- * We need a comment around here to say what these two
- * parameters mean.  I am guessing that (1) if sha1 is not NULL,
- * path is ignored and the function inspects if it has CR; (2)
- * otherwise it checks the index entry at path and inspects if
- * it has CR.
- */
->  
-> -static int has_cr_in_index(const char *path)
-> +static int has_cr_in_index(const char *path, const unsigned char *sha1)
->  {
+Now speaking of which, this is based on next.
 
-This makes me seriously wonder if it is a good idea to modify this
-function like this.  (1) means this function is not about IN INDEX
-at all!
+=E2=9E=94 git branch -v
+    * next       78b384c Sync with master
 
-Perhaps add a "static int blob_has_cr(const unsigned char *sha1)"
-and call it from the real caller you added that wants to call this
-butchered two-param version that has sha1 is a better solution?
+And Idk what the problem is but it seems to apply perfectly on top of i=
+t [1]
 
-> -static int crlf_to_git(const char *path, const char *src, size_t len,
-> +static int crlf_to_git(const char *path, const unsigned char *sha1,
-> +		       const char *src, size_t len,
->  		       struct strbuf *buf,
->  		       enum crlf_action crlf_action, enum safe_crlf checksafe)
->  {
-> @@ -260,7 +267,7 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
->  			 * If the file in the index has any CR in it, do not convert.
->  			 * This is the new safer autocrlf handling.
->  			 */
-> -			if (has_cr_in_index(path))
-> +			if (has_cr_in_index(path, sha1))
+=E2=9E=94 git am v6-00*
+Applying: ref-filter: implement %(if), %(then), and %(else) atoms
+Applying: ref-filter: include reference to 'used_atom' within 'atom_val=
+ue'
+Applying: ref-filter: implement %(if:equals=3D<string>) and
+%(if:notequals=3D<string>)
+Applying: ref-filter: modify "%(objectname:short)" to take length
+Applying: ref-filter: move get_head_description() from branch.c
+Applying: ref-filter: introduce format_ref_array_item()
+Applying: ref-filter: make %(upstream:track) prints "[gone]" for
+invalid upstreams
+Applying: ref-filter: add support for %(upstream:track,nobracket)
+Applying: ref-filter: make "%(symref)" atom work with the ':short' modi=
+fier
+Applying: ref-filter: introduce refname_atom_parser_internal()
+Applying: ref-filter: introduce symref_atom_parser() and refname_atom_p=
+arser()
+Applying: ref-filter: make remote_ref_atom_parser() use
+refname_atom_parser_internal()
+Applying: ref-filter: add `:dir` and `:base` options for ref printing a=
+toms
+Applying: ref-filter: allow porcelain to translate messages in the outp=
+ut
+Applying: branch, tag: use porcelain output
+Applying: branch: use ref-filter printing APIs
+Applying: branch: implement '--format' option
 
-I think this change is too ugly.  The new "sha1" parameter is
-telling us that "in order to see if the indexed version has CR, do
-not look at the index, but look at the contents of this blob".
+[1] : https://github.com/KarthikNayak/git/commits/ref-filter
 
-But wouldn't the result become more understandable if instead we
-passed a new parameter "cr-state-for-conversion" that takes UNKNOWN,
-HAS_CR, or NO_CR to this function?
-
-In other words, what if, when the caller knows it does not care
-what's in the index but wants to instead see if a different blob has
-CR, we make it the caller's responsibility to figure it out by
-calling blob_has_cr() before calling into this codepath and pass the
-result of that check down?  When cr-state-for-conversion is UNKNOWN,
-this code knows that it needs to call has_cr_in_index(path) to
-figure it out itself.  Otherwise, it can and should use the
-caller-supplied value without asking has_cr_in_index(path).
+--=20
+Regards,
+Karthik Nayak
