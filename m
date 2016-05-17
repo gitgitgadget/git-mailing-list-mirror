@@ -1,103 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fast-import: do not truncate exported marks file
-Date: Tue, 17 May 2016 15:22:30 -0700
-Message-ID: <xmqq1t50uxy1.fsf@gitster.mtv.corp.google.com>
-References: <1463521223-14565-1-git-send-email-felipe.contreras@gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 04/14] connect: rewrite feature parsing to work on
+ string_list
+Date: Tue, 17 May 2016 18:23:49 -0400
+Organization: Twitter
+Message-ID: <1463523829.24478.78.camel@twopensource.com>
+References: <1461972887-22100-1-git-send-email-sbeller@google.com>
+	 <1461972887-22100-5-git-send-email-sbeller@google.com>
+	 <xmqqr3dhfuo9.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git-fc@googlegroups.com, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 18 00:22:40 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed May 18 00:23:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2nNu-00037l-Ft
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 00:22:38 +0200
+	id 1b2nPA-0003p2-Ji
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 00:23:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751475AbcEQWWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 18:22:34 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60553 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751267AbcEQWWe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 18:22:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BE0FD1DE63;
-	Tue, 17 May 2016 18:22:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4igcYyKKDcz6BH4SMfvkrS38TZc=; b=RLPEE2
-	ZXlrlK5NDroIZmhTMotYb0kuE8D7wfQQ8Tq8H4U7iCcmzISP3lFdWaf9O5VlftXx
-	4Wi47yBR7OUjErXcDbqiieUP1NcQpj1eOA1LUszUv3ZVFGWiIIem6LFgQRk+lJWq
-	KhjlHjoC9CqMcO1No3S1eVARCVuPJ03VSe4ss=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YH1pmLCumFMJe9aLrMJZaNahhqm3IeDT
-	zMtJwYHMwJc6hT3K9OwiCrHvQVOH0pSvRvgbBXHva//ZZeGrfrS4ayv7VStPoFUd
-	9slXP/eujjdbUqtQzrw93DrmAdTt//rxXwPi66/gfazwMSAWU+WfkcrrG5yYfQ5O
-	fe7Gf5+I/II=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B6AD41DE62;
-	Tue, 17 May 2016 18:22:32 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 263FA1DE61;
-	Tue, 17 May 2016 18:22:32 -0400 (EDT)
-In-Reply-To: <1463521223-14565-1-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Tue, 17 May 2016 16:40:23 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D9307270-1C7D-11E6-BA8C-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1751267AbcEQWXx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2016 18:23:53 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:34619 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751187AbcEQWXw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 18:23:52 -0400
+Received: by mail-ig0-f180.google.com with SMTP id u5so12308738igk.1
+        for <git@vger.kernel.org>; Tue, 17 May 2016 15:23:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:mime-version:content-transfer-encoding;
+        bh=p1ZLUxj1iCEV1AF736l5M9fwgyBEkxAok2VvgcXEwCA=;
+        b=qGegJjB2YupvkbkRAIO5rDm0TU2K5hKkuNceIfqEwZ565lGeeAtWV4Q05chD2RMJsD
+         T9+Gi31J+63ptqknHBHSd30S9GNkLgHVKd9O2NAI2+FQ3f/eGBrIlZhZjiAff6qfQwau
+         lzDq7wVFVMsX+3dU9cjgkf+vzLqD14BZqZ8ph7Bn0EXkK5dig3BpEx2u/p3f/DnM54ZU
+         qpCz9Jd8YboLd0EQISnC46e58miHxi1w07aqAHUNldpn9+2HtwkIfr4RRbyb0SLm+WOf
+         J6a+5fe9G2v1CHHGoyC7w8MqeUcYfozO/nWEvX/nlk30xhEEGeu1XgqUVlALJZ+Be0Gu
+         OEqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=p1ZLUxj1iCEV1AF736l5M9fwgyBEkxAok2VvgcXEwCA=;
+        b=aYazvxcPsPIemmhkR4A46qvl1DSl7x5XRlquxvOZoFBvyL04PKueCtYmfsWEiwdSPf
+         q4WlySxKgS/XViiL+8XTGZapgKCaSlE0gf/0+DCz3JQAT5kb8M+yhwz+2pbs9Ck8ncXy
+         5O4bFFNwDCiMRRXx9vwu+/oLeAAoZ9Ccz88t0r2qfEuxWAC65HDDm2UE87O9nHavuZQD
+         ZR7/f6hRI3g/+TB0smAkvAdzMMhGtHWIdfTJP6jUgWR8hyl/GlIEfYfUibXE5GEmstrm
+         TyXlCGJVQu7F9Jveu0QfihHYi8Ffo0ImfJpxBRcCxZi2ZK8I/4OQO7SeAixauIVIdADP
+         JLDg==
+X-Gm-Message-State: AOPr4FWaApTxplK1T8Q8COuIa68dAugDYDq7pPPjAQZlcXlYkTG0GqCnhlAu+iFEcyUn3Q==
+X-Received: by 10.50.134.131 with SMTP id pk3mr10321131igb.88.1463523831391;
+        Tue, 17 May 2016 15:23:51 -0700 (PDT)
+Received: from ubuntu ([8.25.196.26])
+        by smtp.gmail.com with ESMTPSA id h125sm1754457ioa.20.2016.05.17.15.23.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 17 May 2016 15:23:50 -0700 (PDT)
+In-Reply-To: <xmqqr3dhfuo9.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294919>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Wed, 2016-05-04 at 13:13 -0700, Junio C Hamano wrote:
+> Stefan Beller <sbeller@google.com> writes:
+> 
+> > Later on when we introduce the version 2 transport protocol, the
+> > capabilities will not be transported in one lone string but each
+> 
+> s/lone/long/, I think.
+> 
+> > capability will be carried in its own pkt line.
+> > 
+> > To reuse existing infrastructure we would either need to join the
+> > capabilities into a single string again later or refactor the
+> > current
+> > capability parsing to be using a data structure which fits both
+> > versions of the transport protocol. We chose to implement the
+> > later.
+> > 
+> > Signed-off-by: Stefan Beller <sbeller@google.com>
+> > ---
+> >  builtin/receive-pack.c | 15 ++++++---
+> >  connect.c              | 82 +++++++++++++++++++++++---------------
+> > ------------
+> >  connect.h              |  2 +-
+> >  upload-pack.c          | 13 ++++++--
+> >  4 files changed, 58 insertions(+), 54 deletions(-)
+> 
+> I am not sure if the churn is make a right tradeoff here.
+> 
+> A loop to concatenate each segment into a strbuf before passing it
+> to parse_feature_request would be at most 5 lines long, no?
 
-> Certain lines of the marks file might be corrupted (or the objects
-> missing due to a garbage collection), but that's no reason to truncate
-> the file and essentially destroy the rest of it.
-
-Hmm, so the issue is:
-
- - we use die_nicely() that calls dump_marks() after writing a crash
-   report as our die_routine().
-
- - when dump_marks() is called, and export_marks_file names an
-   existing file, it tries to write marks in it.  If we let it go
-   through, we would end up writing a new marks file based on an
-   incomplete set of marks we have only half-read in the earlier
-   step, which is bad, as the resulting one is incomplete, and the
-   original one that this replaced may have been a good one.
-
-Is that what this change addresses?
-
-I am just wondering if a solution to preserve both files is more
-desirable.
-
-This change looks a bit over-eager to discard the dump die_nicely()
-is trying to create in one scenario, and a bit less careful at the
-same time in another scenario.
-
- - Even if we are reading from somewhere, export_marks_file can
-   point at a completely new file that is different from
-   import_marks file, in which case, we are not really losing any
-   information by freshly creating a new marks file, no?
-
- - Even if we did not read from any existing marks file, if we are
-   given export_marks_file that names an existing file, wouldn't we
-   want to avoid corrupting it with a dump from this aborted run?
-
-In other words, I understand the intent of "import-marks-file-done",
-but I am not sure if that is so special a case.
-
-If the patch were to tell dump_marks() if the caller is die_nicely()
-or not, and stop it from overwriting an existing file, whether we
-read from any import-marks file, I would agree with the change a lot
-more strongly.  An obvious extension of that line of thought would
-be to export to an alternative marks file, perhaps to
-strbuf_addf("%s.crash", exports_marks_file), if exports_marks_file
-already exists if we are called while dying.
+I started looking at this again briefly today, and I actually think
+that string manipulation of this sort is a mistake.  String
+manipulation is error-prone, and having an interface defined in terms
+of strings makes it hard for a reader to see what sorts of input are
+valid and invalid.   (It's also often somewhat less efficient).  So I
+think it is a good idea to improve the interface while we're already
+changing code in this area.
