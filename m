@@ -1,85 +1,121 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/3] pack-redundant: free all memory
-Date: Mon, 16 May 2016 23:42:46 -0400
-Message-ID: <CAPig+cTAZfRp=bD=CNgcfYcpkRfGuxdCbPCimhpM1Q_atv8G4g@mail.gmail.com>
-References: <20160517032247.25092-1-sbeller@google.com>
-	<20160517032247.25092-3-sbeller@google.com>
+Subject: Re: [PATCH v1 2/2] Ignore dirty submodule states during stash
+Date: Mon, 16 May 2016 23:49:29 -0400
+Message-ID: <CAPig+cTShM4Qc7sVN5NXSmwP8Cxz22q+ZAbSrW3bHVm66aaCQg@mail.gmail.com>
+References: <20160517033632.GA2782@gmail.com>
+	<20160517034050.GC2782@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Stefan Beller <stefanbeller@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue May 17 05:42:54 2016
+Cc: Git List <git@vger.kernel.org>
+To: Vasily Titskiy <qehgt0@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 17 05:49:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2VuG-0001L8-EC
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 05:42:52 +0200
+	id 1b2W0m-0003lG-1E
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 05:49:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754204AbcEQDms (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 23:42:48 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:34332 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754185AbcEQDmr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 23:42:47 -0400
-Received: by mail-io0-f193.google.com with SMTP id d62so1174094iof.1
-        for <git@vger.kernel.org>; Mon, 16 May 2016 20:42:47 -0700 (PDT)
+	id S1755124AbcEQDtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2016 23:49:33 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:33545 "EHLO
+	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755081AbcEQDta (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2016 23:49:30 -0400
+Received: by mail-io0-f196.google.com with SMTP id x35so1205922ioi.0
+        for <git@vger.kernel.org>; Mon, 16 May 2016 20:49:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc;
-        bh=o5w6Nxyuj3CRAeU0Ejdnejtz6cepHFf7YwPr2JD37EY=;
-        b=KhyhiJQbI/JJeG78gKbPQdf4tpT4t5Hr0DylISl/JrbVe6JOMgRZSJc2WM2bmDAWb4
-         GZSXq1tcoAgBdaSTU++DbJXT8rSQPbAbSgNPcs5HG66LJ+1GEnatNVvAAqLprsQGR9mm
-         yNq4IgLqw4jKZGco/Xrsox7VrGo4WswWtU7qd9Gu845FjoAZD76LDBiitrebX/yCsOTN
-         wnQDvg+LYa4X95I5OLs8FzypLDR39tF0r56iVEYjqdiPjnlYhB6QmOaPe+T6urDhmoq0
-         lXMd1EXq4i5nF0GG39CTJW49+cO/199Z7Om7beH17BSMO+Bb5DMSvmSuGR7KVvgsgkv/
-         tSSQ==
+        bh=BxEV94WQh+/QdNs5fANY1J6/c4hNK2PtgUvdzyTVEbk=;
+        b=vkX8+NzExyhIUMGD5kV/peCBAKi0lgcEhJdiTh8HZIS7wSQeBXfB5dIloVys+8aRVg
+         G8i7cIPYycHaKX80OpLPpcEO0HHeo/pSOfurpsjvBtUl/dt2sByJqEy9St5fMFSgPYx0
+         0tPAuDWWvfKNEJ28Mri6dYg9r2AUvjrLnYJzRPpTI/0G0MVRZ/kVCNL/8BagRu1J8lRS
+         kZMc2ky/Mzyks9RMZc9kPyqJb+Kf61Y2AlXYxKzGu75YnSjD4/+kjK7OpGd3qRqtGKUF
+         392u5kPOwUouvY7bJMbG/hy4Awf9grQwMsX/TScjUxuYICQY5i2tIp3cZ8lKEHPcvfWc
+         71Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=o5w6Nxyuj3CRAeU0Ejdnejtz6cepHFf7YwPr2JD37EY=;
-        b=jfkgrcOc5TMFam/OjzJECG1Ec75OgryeGy+vi1rzeIPiYBQbLy5S9RnZzALZaTHsQu
-         fX8cfha7j1nBVW8aZtuF4vN8yHT2L843NeHR5Ufw5UVywOBT2ycWog5TZqrCXpz9DYte
-         pnvl3ExcMKkL5tGzu2qdshQWpqCcz+Zpje5gAOus6BRzD1BCu+YNu0unQLZmRY4pScDH
-         vM7cIgLDtM8nVeOBbpxZnvuqgJPQxS7o9lyI4t59JA8y2azVXmoYmTGqfDgju6YjTBNI
-         oakaMnt9Cv61TPBWRYIN+po+fdvZFswNGnInn3HVaeRZ04r7kCuUurO5CowKwMBf1eT7
-         WXWA==
-X-Gm-Message-State: AOPr4FVGjEKZ/TRTO3P9fBc/gSIinGXpczLlAcHDjPXbv2kHHQy9plP1t2Q9FIJP+S2yKTqujjQe8tZpizdK3w==
-X-Received: by 10.107.47.37 with SMTP id j37mr21205411ioo.168.1463456566915;
- Mon, 16 May 2016 20:42:46 -0700 (PDT)
-Received: by 10.79.139.135 with HTTP; Mon, 16 May 2016 20:42:46 -0700 (PDT)
-In-Reply-To: <20160517032247.25092-3-sbeller@google.com>
-X-Google-Sender-Auth: aaVfR1aApww-v3qFQQfvo_xoT2o
+        bh=BxEV94WQh+/QdNs5fANY1J6/c4hNK2PtgUvdzyTVEbk=;
+        b=cnuwKe77bcR2ImUZxXLEFPaVXb+Z1hIwr1I147oodMK9v/p3hobz2CzxNxqLQoE5qh
+         bTbyIy28h171bsaxmIhjPxf+cEku9iQvDSvxAhJw2uaAsWY88NlFoLO2zvTDyHg9xfDz
+         txsqeYYUGghG56M4cufoG3HX398TnDluvIW1Bh6047r4crsFvjLq94w1+5HzXYTvf7vn
+         4kZ+iU2KimKY5q/TB5zETMKvnjbH9y5Lv730yR+pQt4Lexl+2whfoMsb4p1hSRR8CCTm
+         KuIK2Eg6wMPliz9L2VH15ZRyKH06n5j43qbzI8tSrrLfvFvy3MGikMfxFqVty811zcH7
+         sVpQ==
+X-Gm-Message-State: AOPr4FWcA8MkyX9nL1ijKriS8OkQQfeHowh2+ryDO5fOFL0DokWnwDqfuXvbssV0yH0im3AGeDgBYUQmySqyvg==
+X-Received: by 10.36.55.81 with SMTP id r78mr13065433itr.73.1463456969275;
+ Mon, 16 May 2016 20:49:29 -0700 (PDT)
+Received: by 10.79.139.135 with HTTP; Mon, 16 May 2016 20:49:29 -0700 (PDT)
+In-Reply-To: <20160517034050.GC2782@gmail.com>
+X-Google-Sender-Auth: MixAZOUBNMH5ehlzv89uHPKcVbY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294849>
 
-On Mon, May 16, 2016 at 11:22 PM, Stefan Beller <sbeller@google.com> wrote:
-> Signed-off-by: Stefan Beller <sbeller@google.com>
+On Mon, May 16, 2016 at 11:40 PM, Vasily Titskiy <qehgt0@gmail.com> wrote:
+> It checks if 'stash pop' does not trigger merge conflics
+> in submodules.
+
+Missing sign-off.
+
+Also, it would be best to combine these two patches so that the fix
+and patch reside in a single patch.
+
+More below...
+
 > ---
-> diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-> @@ -223,6 +223,18 @@ static inline size_t pack_list_size(struct pack_list *pl)
-> +static inline void pack_list_free(struct pack_list *pl)
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> @@ -731,4 +731,39 @@ test_expect_success 'stash list --cc shows combined diff' '
+> +test_expect_success 'stash ignores changes in submodules' '
+> +       git submodule init &&
+> +       git init sub1 &&
+> +       (
+> +               cd sub1 &&
+> +               echo "x" > file1 &&
 
-s/inline//
+Style: Drop space after redirection operator: >file1
 
-> +{
-> +       struct pack_list *cur_pl;
+Ditto below for both '>' and '>>'.
 
-You can declare this within the scope of the while-loop.
+> +               git add file1 &&
+> +               git commit -a -m "initial sub1"
+> +       ) &&
+> +       git submodule add ./. sub1 &&
+> +       echo "main" > file1 &&
+> +       git add file1 &&
+> +       git commit -a -m "initial main" &&
+> +       # make changes in submodule
+> +       (
+> +               cd sub1 &&
+> +               echo "y" >> file1 &&
+> +               git commit -a -m "change y"
+> +       ) &&
+> +       git commit sub1 -m "update reference" &&
+> +       # switch submodule to another revision
+> +       (
+> +               cd sub1 &&
+> +               echo "z" >> file1 &&
+> +               git commit -a -m "change z"
+> +       ) &&
+> +       # everything is prepared, check if changes in submodules are ignored
+> +       echo "local change" >> file1 &&
+> +       git stash save &&
+> +       git checkout HEAD~1 &&
+> +       git submodule update &&
+> +       git stash pop
+> +'
+> +
+> +
 
-> +       while (pl) {
-> +               llist_free(pl->unique_objects);
-> +               llist_free(pl->all_objects);
-> +               cur_pl = pl;
-> +               pl = pl->next;
-> +               free(cur_pl);
-> +       }
-> +}
+Style: drop extra blank line
+
+>  test_done
+> --
+> 2.1.4
