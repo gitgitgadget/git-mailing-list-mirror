@@ -1,106 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Ignore dirty submodule states during stash
-Date: Tue, 17 May 2016 09:15:24 -0700
-Message-ID: <xmqqmvnoy82r.fsf@gitster.mtv.corp.google.com>
-References: <20160517131635.GA5299@gmail.com>
+From: tboegi@web.de
+Subject: [PATCH v4 0/2] CRLF: ce_compare_data() checks for a sha1 of a path
+Date: Tue, 17 May 2016 18:41:06 +0200
+Message-ID: <1463503266-3552-1-git-send-email-tboegi@web.de>
+References: <573A993F.8020205@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Vasily Titskiy <qehgt0@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 17 18:15:37 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 17 18:36:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2heg-0001IO-4n
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 18:15:34 +0200
+	id 1b2hyT-0003ao-D1
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 18:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755424AbcEQQP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 12:15:29 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53731 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751829AbcEQQP3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 12:15:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A068E193E3;
-	Tue, 17 May 2016 12:15:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vx+eDUxPgeDL8jPcJjmOZxbLEy0=; b=Wh6QLo
-	UQvAPCLroVjSgRWte6gxYwaTINu0JRNZ27oV9vbdXlr0aR24E2P+MFZ8ROwQHd8J
-	8rCUMQualmflQ6K1KzrYESdh1+P1VFUvBB3UE90LxF9XXHu81fLqSlZ9npFUzSt8
-	4X4u/NKNZAxn0QcEZOAM4/iIGejNpcuMVAbcI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TgLRQL6DeqBzPJprFQdq2gAjwZiXyinv
-	QAdzZY+9JPvJ3oSriFgXaETHrpm32ZLIYcl8PaB7KxncoAyWMVD/FEV4JhB3D3a6
-	E6Vd9wbPIfGT6bROt+BKxyfwbANBdBByWBKOLIsw0OMWYXvx9CSvMm/3NG7S3lL+
-	a1HQEWm6BbE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 986D8193E2;
-	Tue, 17 May 2016 12:15:27 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 18E6E193DF;
-	Tue, 17 May 2016 12:15:27 -0400 (EDT)
-In-Reply-To: <20160517131635.GA5299@gmail.com> (Vasily Titskiy's message of
-	"Tue, 17 May 2016 13:16:35 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 913C0584-1C4A-11E6-AA2C-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1755689AbcEQQf4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 May 2016 12:35:56 -0400
+Received: from mout.web.de ([212.227.15.3]:53811 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752261AbcEQQfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 12:35:55 -0400
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb002) with
+ ESMTPSA (Nemesis) id 0MHYLM-1b1bVc18zk-003KBj; Tue, 17 May 2016 18:35:52
+ +0200
+X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
+In-Reply-To: <573A993F.8020205@web.de>
+X-Provags-ID: V03:K0:KVcMUixb0SEsMqVVLgpwWM8aSHT2iFdpOteihAaXUkp8oHJzl3W
+ nXQUP2lNX+1TKgOlad+xKSC8QFreaTd+nAxUC5EeMUdEOv4McXFMaevxqhbxIOeFaSm1DNS
+ OGNyOpK+ktaXvZSHNa+vAi/IfQUtPFR6fGZOi3KImtPYpBZq7ojKWR8WcfInLrK41hHv5kX
+ KO9aL2xHKeWPIPyBzox5w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nvhFOek/c7o=:RSpUfPewa9H3MoEHn5ydyJ
+ Nu9nMr/bm7LOaGEGbx5Az3aB2UXuLsHoQa2zmOHgEMM14BOJhvVAzRgmmHfQdjdCcfWSwC1WP
+ BVmSBHBWUWjqj/gZuX+jujqMKu74kyQ7jq1TrIIETUtIEcpsr7c/3JyRNbPeYKINEq7bUU9Mk
+ uMiRwor6Ksqhj4JbswWnPbDLDHEbjg0g3/CIbKCp9R95LELc4LKcpHtF4EZoJAVUc5bAJPwrF
+ 4ShL8VjInbDv0EaQKhVo3diNgyUXrb5nm6s/b1CNdArwYINeb2UHiSGJIyMbwlOO6psi38GyG
+ p4F3VQZoAW4QDrUv7D9r1Yiuqh78nOo/z/yGwlfSxMddV4qlnpntHzZoT9uGr1fRtJEAVT/Py
+ Pl7VVSUqe1bxMah1IswUZOtFxqZrT1TEYCkDuI07UShtAmYjgDVhp6yS307dsQlLbAqtFAJBB
+ BvFGo6446iJc+0xCwl8qZ/qKQ+uZQOXyF/WoFWmm/Czl398wxxg7N5/bZc5TSxJFCud2LmPwo
+ F+/6dbwPZBZS7gtomEOxEn2C4wrx0gTLT5VVGt9hRmLejIQuEYCtUjaDwUOhDNoH7dHItmCVj
+ 2B4nDrfM6uX2m89NZNplArM9drjpl2Oomk558B/FAU1yThKY6E4vBL5IHD5CLXtFdBnaWrroU
+ 59aC74qxk0YrE8HOkCc6jLV++HkqkkinmJdI98lyl1GtwNXHYVTkY6ykHy3JoYOW/PHAG5S6b
+ Y9zqCucTyV3sitTu+oPdRaVO8W1eMc7RVxRoDX6ZZNRmX/2aRqGGXvzMffsQcD1mHisyUa4H 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294870>
 
-Vasily Titskiy <qehgt0@gmail.com> writes:
+=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index 2142c1f..1be62f3 100755
-> --- a/t/t3903-stash.sh
-> +++ b/t/t3903-stash.sh
-> @@ -731,4 +731,38 @@ test_expect_success 'stash list --cc shows combined diff' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'stash ignores changes in submodules' '
-> +	git submodule init &&
+Break up the old 10/10 series about CLRF handling into smaller
+series. This is a small bugfix, when merge.renormalize is used
+with core.autocrlf (and no attributes are set).
+Prepare the refactoring to use the streaming interface.
 
-Hmmmm... what is this "submodule init" needed for at this point in
-the test sequence?
+Torsten B=C3=B6gershausen (2):
+  read-cache: factor out get_sha1_from_index() helper
+  convert: ce_compare_data() checks for a sha1 of a path
 
-> +	git init sub1 &&
-> +	(
-> +		cd sub1 &&
-> +		echo "x" >file1 &&
-> +		git add file1 &&
-> +		git commit -a -m "initial sub1"
-> +	) &&
-> +	git submodule add ./. sub1 &&
-> +	echo "main" >file1 &&
-> +	git add file1 &&
-> +	git commit -a -m "initial main" &&
-> +	# make changes in submodule
-> +	(
-> +		cd sub1 &&
-> +		echo "y" >>file1 &&
-> +		git commit -a -m "change y"
-> +	) &&
-> +	git commit sub1 -m "update reference" &&
-> +	# switch submodule to another revision
-> +	(
-> +		cd sub1 &&
-> +		echo "z" >>file1 &&
-> +		git commit -a -m "change z"
-> +	) &&
-> +	# everything is prepared, check if changes in submodules are ignored
-> +	echo "local change" >>file1 &&
-> +	git stash save &&
-> +	git checkout HEAD~1 &&
-> +	git submodule update &&
-> +	git stash pop
-> +'
-> +
->  test_done
+ cache.h      |  4 ++++
+ convert.c    | 34 ++++++++++++++++++++++------------
+ convert.h    | 23 +++++++++++++++++++----
+ read-cache.c | 33 +++++++++++++++++++++------------
+ sha1_file.c  | 17 +++++++++++++----
+ 5 files changed, 79 insertions(+), 32 deletions(-)
+
+--=20
+2.0.0.rc1.6318.g0c2c796
