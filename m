@@ -1,170 +1,108 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 3/5] t1500: avoid changing working directory outside of tests
-Date: Tue, 17 May 2016 15:36:28 -0400
-Message-ID: <20160517193630.10379-4-sunshine@sunshineco.com>
-References: <20160517193630.10379-1-sunshine@sunshineco.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Michael Rappazzo <rappazzo@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 17 21:37:38 2016
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] A part of an edge from an octopus merge gets colored, even
+ with --color=never
+Date: Tue, 17 May 2016 15:45:34 -0400
+Message-ID: <20160517194533.GA11289@sigill.intra.peff.net>
+References: <CAM-tV-_Easz+HA0GX0YkY4FZ2LithQy0+omq64D-OoHKkRe55A@mail.gmail.com>
+ <573B6BF5.1090004@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Noam Postavsky <npostavs@users.sourceforge.net>,
+	git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue May 17 21:45:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2koD-00008r-9y
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 21:37:37 +0200
+	id 1b2kw1-0004F4-RW
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 21:45:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751741AbcEQThd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 15:37:33 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:33047 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751497AbcEQThQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 15:37:16 -0400
-Received: by mail-io0-f193.google.com with SMTP id x35so5523103ioi.0
-        for <git@vger.kernel.org>; Tue, 17 May 2016 12:37:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dhfRppOoYfAGf9i7xldMRIoNwNOzsWhMI1TGyLCfQHk=;
-        b=jI7Y8E4EficaqoT995iSb3Y2G5nVOUO8exdW4LhhewdJn+zsmXw7SLRvZtTbPIcHzn
-         BJ2DZ6RiNg65A0B7iIJQjbcFzioZkj5b9O6W6sfEW9SX/GnWmk0SDWGOOey3cUeWDQdl
-         2Ql3AUktq1CPsAFVkHu3XVoob7zUOLK7Alyr09PU5GxLmyWyDkIIxPWEWJrxBr6TuIkv
-         hnfQ0V/IidffxR4pYDDiHOdl75NxVTTr2I3g/6ey6SOXubJJ/dJWlPGPXjHh/uph8v9R
-         i7Az2J9QtPGg+RgAXkqRliT1wxgpa6+otUtYFgRO40eX0Gqax/vNHprtmqiT+ZAUZ/qb
-         WVWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references;
-        bh=dhfRppOoYfAGf9i7xldMRIoNwNOzsWhMI1TGyLCfQHk=;
-        b=Z9vPHdLGgMRt2FnzF0dbNaUvvDdsg/5XV7geU6NGdIL6T4RtxpfB/qmOhLNVi7R8oE
-         cMNwOTWM39h8f+fKTqhc7X+hiCj04ubPNU2uGAM/8rCz5oGjqwpdzi70E6DfifBPQ5Zz
-         i4cEd9R0BwyYjvHpe/CDwxemMpTZ3ChldfKwvSJDAKrtA+lJmz3DIFtkLNmXixO5cS91
-         NisPRFtJDRYm9eSbZVNVciEo4mmn4kaIP6UGz1WsD705OusY9ly2HITpL7kRuiS+UIVr
-         0jIREXk0QtiQx68whR7jMTXuQUkag7UYO34SQWdsmXbpxWihL0UEfySdA1fRje5pJHNy
-         +csw==
-X-Gm-Message-State: AOPr4FWGA/72zMorOWTVjSWfHnLU1QY5qZu2HlWG8wSlmalrZ5Tl47xJNcGyotgYlT9KTA==
-X-Received: by 10.36.61.137 with SMTP id n131mr2431467itn.74.1463513835614;
-        Tue, 17 May 2016 12:37:15 -0700 (PDT)
-Received: from localhost.localdomain (user-12l3c5v.cable.mindspring.com. [69.81.176.191])
-        by smtp.gmail.com with ESMTPSA id b67sm1506218iob.33.2016.05.17.12.37.14
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 17 May 2016 12:37:15 -0700 (PDT)
-X-Mailer: git-send-email 2.8.2.703.g78b384c
-In-Reply-To: <20160517193630.10379-1-sunshine@sunshineco.com>
+	id S1750800AbcEQTpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2016 15:45:38 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40924 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750729AbcEQTph (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 15:45:37 -0400
+Received: (qmail 10908 invoked by uid 102); 17 May 2016 19:45:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 May 2016 15:45:36 -0400
+Received: (qmail 17364 invoked by uid 107); 17 May 2016 19:45:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 May 2016 15:45:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 May 2016 15:45:34 -0400
+Content-Disposition: inline
+In-Reply-To: <573B6BF5.1090004@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294905>
 
-Ideally, each test should be responsible for setting up state it needs
-rather than relying upon transient global state. Toward this end, teach
-test_rev_parse() to accept a "-C <dir>" option to allow callers to
-instruct it explicitly in which directory its tests should be run. Take
-advantage of this new option to avoid changing the working directory
-outside of tests.
+On Tue, May 17, 2016 at 09:07:33PM +0200, Johannes Sixt wrote:
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- t/t1500-rev-parse.sh | 42 +++++++++++++++++++++++-------------------
- 1 file changed, 23 insertions(+), 19 deletions(-)
+> Am 15.05.2016 um 15:05 schrieb Noam Postavsky:
+> > With a certain topology involving an octopus merge, git log --graph
+> > --oneline --all --color=never produces output which includes some ANSI
+> > escape code coloring. Attached is a script to reproduce the problem
+> > (creates a git repository in subdir log-format-test), along with
+> > sample graph and valgrind output (indicates some unitialialized memory
+> > access).
+> > 
+> > I've observed the problem with Windows git versions 2.7.0, 2.5.3.
+> > I've NOT observed it with 1.9.5,
+> > 
+> > On GNU/Linux the symptom only appears when running with valgrind, I
+> > tried versions
+> > 2.8.0, and 2.8.2.402.gedec370 (the last is where the valgrind output comes from)
+> > 
+> 
+> Sorry, I can't reproduce your observation. I ran the script you provided
+> with HOME=$PWD and a minimal .gitconfig that only sets user.email. But
+> valgrind is happy with both 2.8.0 and v2.8.2-402-gedec370 on my Linux box.
 
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-index c84f5c3..fb2cee8 100755
---- a/t/t1500-rev-parse.sh
-+++ b/t/t1500-rev-parse.sh
-@@ -3,8 +3,18 @@
- test_description='test git rev-parse'
- . ./test-lib.sh
- 
--# usage: label is-bare is-inside-git is-inside-work prefix git-dir
-+# usage: [options] label is-bare is-inside-git is-inside-work prefix git-dir
- test_rev_parse () {
-+	dir=
-+	while :
-+	do
-+		case "$1" in
-+		-C) dir="$2"; shift; shift ;;
-+		-*) error "test_rev_parse: unrecognized option '$1'" ;;
-+		*) break ;;
-+		esac
-+	done
-+
- 	name=$1
- 	shift
- 
-@@ -18,7 +28,7 @@ test_rev_parse () {
- 		expect="$1"
- 		test_expect_success "$name: $o" '
- 			echo "$expect" >expect &&
--			git rev-parse --$o >actual &&
-+			git ${dir:+-C "$dir"} rev-parse --$o >actual &&
- 			test_cmp expect actual
- 		'
- 		shift
-@@ -34,15 +44,10 @@ test_expect_success 'setup' '
- 
- test_rev_parse toplevel false false true '' .git
- 
--cd .git || exit 1
--test_rev_parse .git/ false true false '' .
--cd objects || exit 1
--test_rev_parse .git/objects/ false true false '' "$ROOT/.git"
--cd ../.. || exit 1
-+test_rev_parse -C .git .git/ false true false '' .
-+test_rev_parse -C .git/objects .git/objects/ false true false '' "$ROOT/.git"
- 
--cd sub/dir || exit 1
--test_rev_parse subdirectory false false true sub/dir/ "$ROOT/.git"
--cd ../.. || exit 1
-+test_rev_parse -C sub/dir subdirectory false false true sub/dir/ "$ROOT/.git"
- 
- git config core.bare true
- test_rev_parse 'core.bare = true' true false false
-@@ -50,30 +55,29 @@ test_rev_parse 'core.bare = true' true false false
- git config --unset core.bare
- test_rev_parse 'core.bare undefined' false false true
- 
--cd work || exit 1
- GIT_DIR=../.git
--GIT_CONFIG="$(pwd)"/../.git/config
-+GIT_CONFIG="$(pwd)/work/../.git/config"
- export GIT_DIR GIT_CONFIG
- 
- git config core.bare false
--test_rev_parse 'GIT_DIR=../.git, core.bare = false' false false true ''
-+test_rev_parse -C work 'GIT_DIR=../.git, core.bare = false' false false true ''
- 
- git config core.bare true
--test_rev_parse 'GIT_DIR=../.git, core.bare = true' true false false ''
-+test_rev_parse -C work 'GIT_DIR=../.git, core.bare = true' true false false ''
- 
- git config --unset core.bare
--test_rev_parse 'GIT_DIR=../.git, core.bare undefined' false false true ''
-+test_rev_parse -C work 'GIT_DIR=../.git, core.bare undefined' false false true ''
- 
- GIT_DIR=../repo.git
--GIT_CONFIG="$(pwd)"/../repo.git/config
-+GIT_CONFIG="$(pwd)/work/../repo.git/config"
- 
- git config core.bare false
--test_rev_parse 'GIT_DIR=../repo.git, core.bare = false' false false true ''
-+test_rev_parse -C work 'GIT_DIR=../repo.git, core.bare = false' false false true ''
- 
- git config core.bare true
--test_rev_parse 'GIT_DIR=../repo.git, core.bare = true' true false false ''
-+test_rev_parse -C work 'GIT_DIR=../repo.git, core.bare = true' true false false ''
- 
- git config --unset core.bare
--test_rev_parse 'GIT_DIR=../repo.git, core.bare undefined' false false true ''
-+test_rev_parse -C work 'GIT_DIR=../repo.git, core.bare undefined' false false true ''
- 
- test_done
--- 
-2.8.2.703.g78b384c
+Interesting. It replicates out of the box for me. It looks like the
+column pointer we are passing is bogus. If I instrument git like this:
+
+diff --git a/graph.c b/graph.c
+index 1350bdd..62a5810 100644
+--- a/graph.c
++++ b/graph.c
+@@ -76,6 +76,7 @@ static const char *column_get_color_code(unsigned short color)
+ static void strbuf_write_column(struct strbuf *sb, const struct column *c,
+ 				char col_char)
+ {
++	warning("c=%p, c->color = %d, max=%d", c, c->color, column_colors_max);
+ 	if (c->color < column_colors_max)
+ 		strbuf_addstr(sb, column_get_color_code(c->color));
+ 	strbuf_addch(sb, col_char);
+@@ -390,6 +391,9 @@ static void graph_insert_into_new_columns(struct git_graph *graph,
+ 	 */
+ 	graph->new_columns[graph->num_new_columns].commit = commit;
+ 	graph->new_columns[graph->num_new_columns].color = graph_find_commit_color(graph, commit);
++	warning("assigned %p, %d",
++		&graph->new_columns[graph->num_new_columns],
++		graph->new_columns[graph->num_new_columns].color);
+ 	graph->mapping[*mapping_index] = graph->num_new_columns;
+ 	*mapping_index += 2;
+ 	graph->num_new_columns++;
+
+Then I get this output:
+
+    warning: assigned 0x20d21d0, 12
+    * 163b784 (c) c
+    warning: assigned 0x20d8f90, 12
+    warning: assigned 0x20d8fa0, 12
+    warning: assigned 0x20d8fb0, 12
+    warning: c=0x20d21d0, c->color = 12, max=12
+    warning: c=0x20d8fc0, c->color = 0, max=12
+    warning: c=0x20d8fc0, c->color = 0, max=12
+    | *-.   a9a6975 (HEAD -> m) merge a b
+
+Note that we set up f90, fa0, and fb0, but then pass fc0 into
+strbuf_write_column (and it has bogus color values). It looks like we're
+reading one past the end of our array, but I haven't figured out where
+or why.
+
+-Peff
