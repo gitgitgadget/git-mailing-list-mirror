@@ -1,133 +1,146 @@
-From: Vasily Titskiy <qehgt0@gmail.com>
-Subject: [PATCH v2] Ignore dirty submodule states during stash
-Date: Tue, 17 May 2016 13:16:35 +0000
-Message-ID: <20160517131635.GA5299@gmail.com>
+From: tboegi@web.de
+Subject: [PATCH v1 1/1] t6038; use crlf on all platforms
+Date: Tue, 17 May 2016 18:09:58 +0200
+Message-ID: <1463501398-8608-1-git-send-email-tboegi@web.de>
+References: <573A993F.8020205@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 17 15:16:43 2016
+X-From: git-owner@vger.kernel.org Tue May 17 18:06:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2era-0003HV-EP
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 15:16:42 +0200
+	id 1b2hVw-0005QU-Jl
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 18:06:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754897AbcEQNQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 09:16:38 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:32871 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751443AbcEQNQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 09:16:37 -0400
-Received: by mail-yw0-f194.google.com with SMTP id y6so2079190ywe.0
-        for <git@vger.kernel.org>; Tue, 17 May 2016 06:16:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=GK2mEhYFPzICZ4HA4wxVi3atiAZqdxx7gaRlo7w6Ahc=;
-        b=pOY9u4Je/nt3MQY6TPmuq+HmrxzU6RSuLogA4lsySh/IYd8egnONcbbpGwt9HzB2IW
-         /Ukq+C2IpaWY27y9obsoVWZu0b9atOI2Mt4MvWST+a3PlSGbnsZlva71AlfTYyjo9kB/
-         o2rVx5QPhoCDfZ+2v6OHC2guW3OE6SPBrWzYIXf5ua442yPaW4PtMXVna9eAYCScD1qZ
-         WfbaCS2fwg8R2F3ISMis+w/WN0kNT5b+7b4wxf135oiuc+EmSffvUvUVpe6otUKFf5zw
-         BYeaMbRH/CAw5wnAI4ivzY90CUaq7nxDISPi6c1x9YAdIzs06+hZw/jvSDeSn+z26Fgl
-         d1lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=GK2mEhYFPzICZ4HA4wxVi3atiAZqdxx7gaRlo7w6Ahc=;
-        b=FpJNKLTHWn5B7mGB4Ied+kwt1GrzAH8qYphFW+/8D3t1jr/EIZqIjKFJOAjlntsNf0
-         +LJm74UDOriXyXJ/zu7IsgV8PxU8of+YJw27BgVEah0iAtsgNrxc0oEw8owFLqsiHVki
-         tYnXJEAISkjexWHa7oed8i4sjRJdoxcwsAuq9WbAoEytTSF3cQTe19yEfpDNtcORamlX
-         D4sqB1jm4IaF/z/SP7CU7qNwNRwO/dKW144Jr3ShPr+pSiZ0jrXTfdkEVY1dj/+1okxE
-         ppz8C2v5cLxuMEN8Zl/WvqLsHypchm1fEkvTq+XB09ivQNk3SNlXeMLnGLIxR2V1whco
-         go5w==
-X-Gm-Message-State: AOPr4FX8mu76jsYkAc7QeveAH8f6RJVkeFjIBotn/3JQmqH8vkTkH9sQgRSwj+8X023R2A==
-X-Received: by 10.37.208.75 with SMTP id h72mr570287ybg.137.1463490996928;
-        Tue, 17 May 2016 06:16:36 -0700 (PDT)
-Received: from gmail.com ([2600:3c02::f03c:91ff:fe96:da77])
-        by smtp.gmail.com with ESMTPSA id x9sm1514254ywg.56.2016.05.17.06.16.36
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 May 2016 06:16:36 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1755332AbcEQQG2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 May 2016 12:06:28 -0400
+Received: from mout.web.de ([212.227.15.4]:52242 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754848AbcEQQG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 12:06:27 -0400
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb003) with
+ ESMTPSA (Nemesis) id 0Lfzwp-1bLsE00GlP-00pbPh; Tue, 17 May 2016 18:06:23
+ +0200
+X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
+In-Reply-To: <573A993F.8020205@web.de>
+X-Provags-ID: V03:K0:aj5c8sYfmlRrnxMJ6P9ADe0vxgIuoIhuWvcZeooEOCTkMk+USgO
+ Sz37Fj1fsRyEiuVQRNLBBdOxQFPKIn9xk39zZCJPkXoQscJnoO+ZCR6GQEqml9+1LJIzYu5
+ 9c5/lGV8rDDqqiu+ZNnyHu/ib4WfYeJCT6BY/7dUAk8c8HykWRWsb+9F4bde4SLDtpyQ+1i
+ CWE9E/H+1PlQDn8ZuTIYw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NYhzhIU4vLE=:u6WrAe/Rzv6ifXVhw1HsOz
+ tfd0duI6foRd+uM+Mwqy+ynnld0SXBVXeW0mjeGmC7v6IYl8bap/l1zUjTgiq6Qqb2OsBoKUo
+ JMWq3hDZEQ2+roaKTTFfTMuKXs/lpUPeuWWg0SyiVnFD67yYivdGmD46aOVdkUHt6ybB1UgBi
+ pSXF1R4lpJd1cER0j3cTecqHag8EAiuj9fKURThT9wtd2gj4Qj6bQRaSq6hDlt23/vyB1RjqX
+ YgoL1ERZo8LgJm6xB8ALxsSUx9x1tvg8Ky5GrKrmS3quCKgX47kxkaJZelWOkGpZX6wLQcmPI
+ cBryV2DxPqugFyu0SbTzcIY2UAJIWANFT1UuTMxMSyxBOf9qUbqvs9cQ8OrwV+mpabm/H14nZ
+ boACd0zGDhdYGZD8Wr1WAeHifVaPO7jdlTOQdkmPe+sp1MHtmnUSLjpcHIKM5Nn+DZrkjQjNj
+ HAFltllH6aZ/IqKzjYJUWdwVURl3Ir+PKrC+khmx5BeJT74TV2tYu7BanMmVfzsHqlHz/Im6R
+ nSPsXB0Op10dQgW90NKLaaJS+ElsgpuItgvadUPqzdS1CS8tobwuBcMapferILWC75GCmtRdz
+ be6MBEJ8BQz/uePR/v4rsqOtVVZU7AtqjoF6HJPpw81mhxqOWEKxw7AvieQPVe8thZ7w465JS
+ MZ8YbtBa+zXDvA1SbqsEAZfPEjcXA0zbEOT2QvMBrHWkGtWSma94srCEGQuXv+modcs4fXH0r
+ 8Et2m2p4gDX72wGPW5g2z9uqmiRXlDkV0YdHxLU6193F0aarOK50RKz8qn5oPip0WgdEZRCs 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294868>
 
-As stash does not know how to deal with submodules,
-it should not try to save/restore their states
-as it leads to redundant merge conflicts.
+=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-Added test checks if 'stash pop' does not trigger merge conflics
-in submodules.
-
-Signed-off-by: Vasily Titskiy <qehgt0@gmail.com>
+t6038 uses different code, depending if NATIVE_CRLF is set ot not.
+When the native line endings are LF, merge.renormalize is not tested ve=
+ry well.
+Change the test to always use CRLF by setting core.eol=3Dcrlf.
 ---
- git-stash.sh     |  2 +-
- t/t3903-stash.sh | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+), 1 deletion(-)
+Broke the 10/10 series into smaller pieces, this is the update of t6038
+ t/t6038-merge-text-auto.sh | 37 +++++++++++--------------------------
+ 1 file changed, 11 insertions(+), 26 deletions(-)
 
-diff --git a/git-stash.sh b/git-stash.sh
-index c7c65e2..b500c44 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -116,7 +116,7 @@ create_stash () {
- 			git read-tree --index-output="$TMPindex" -m $i_tree &&
- 			GIT_INDEX_FILE="$TMPindex" &&
- 			export GIT_INDEX_FILE &&
--			git diff --name-only -z HEAD -- >"$TMP-stagenames" &&
-+			git diff --name-only --ignore-submodules -z HEAD -- >"$TMP-stagenames" &&
- 			git update-index -z --add --remove --stdin <"$TMP-stagenames" &&
- 			git write-tree &&
- 			rm -f "$TMPindex"
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 2142c1f..1be62f3 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -731,4 +731,38 @@ test_expect_success 'stash list --cc shows combined diff' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'stash ignores changes in submodules' '
-+	git submodule init &&
-+	git init sub1 &&
-+	(
-+		cd sub1 &&
-+		echo "x" >file1 &&
-+		git add file1 &&
-+		git commit -a -m "initial sub1"
-+	) &&
-+	git submodule add ./. sub1 &&
-+	echo "main" >file1 &&
-+	git add file1 &&
-+	git commit -a -m "initial main" &&
-+	# make changes in submodule
-+	(
-+		cd sub1 &&
-+		echo "y" >>file1 &&
-+		git commit -a -m "change y"
-+	) &&
-+	git commit sub1 -m "update reference" &&
-+	# switch submodule to another revision
-+	(
-+		cd sub1 &&
-+		echo "z" >>file1 &&
-+		git commit -a -m "change z"
-+	) &&
-+	# everything is prepared, check if changes in submodules are ignored
-+	echo "local change" >>file1 &&
-+	git stash save &&
-+	git checkout HEAD~1 &&
-+	git submodule update &&
-+	git stash pop
-+'
-+
- test_done
--- 
-2.1.4
+diff --git a/t/t6038-merge-text-auto.sh b/t/t6038-merge-text-auto.sh
+index 85c10b0..4dc8c1a 100755
+--- a/t/t6038-merge-text-auto.sh
++++ b/t/t6038-merge-text-auto.sh
+@@ -18,6 +18,7 @@ test_have_prereq SED_STRIPS_CR && SED_OPTIONS=3D-b
+=20
+ test_expect_success setup '
+ 	git config core.autocrlf false &&
++	git config core.eol crlf &&
+=20
+ 	echo first line | append_cr >file &&
+ 	echo first line >control_file &&
+@@ -72,10 +73,8 @@ test_expect_success 'Merge after setting text=3Dauto=
+' '
+ 	same line
+ 	EOF
+=20
+-	if test_have_prereq NATIVE_CRLF; then
+-		append_cr <expected >expected.temp &&
+-		mv expected.temp expected
+-	fi &&
++	append_cr <expected >expected.temp &&
++	mv expected.temp expected &&
+ 	git config merge.renormalize true &&
+ 	git rm -fr . &&
+ 	rm -f .gitattributes &&
+@@ -90,10 +89,8 @@ test_expect_success 'Merge addition of text=3Dauto' =
+'
+ 	same line
+ 	EOF
+=20
+-	if test_have_prereq NATIVE_CRLF; then
+-		append_cr <expected >expected.temp &&
+-		mv expected.temp expected
+-	fi &&
++	append_cr <expected >expected.temp &&
++	mv expected.temp expected &&
+ 	git config merge.renormalize true &&
+ 	git rm -fr . &&
+ 	rm -f .gitattributes &&
+@@ -104,15 +101,9 @@ test_expect_success 'Merge addition of text=3Dauto=
+' '
+=20
+ test_expect_success 'Detect CRLF/LF conflict after setting text=3Dauto=
+' '
+ 	echo "<<<<<<<" >expected &&
+-	if test_have_prereq NATIVE_CRLF; then
+-		echo first line | append_cr >>expected &&
+-		echo same line | append_cr >>expected &&
+-		echo =3D=3D=3D=3D=3D=3D=3D | append_cr >>expected
+-	else
+-		echo first line >>expected &&
+-		echo same line >>expected &&
+-		echo =3D=3D=3D=3D=3D=3D=3D >>expected
+-	fi &&
++	echo first line | append_cr >>expected &&
++	echo same line | append_cr >>expected &&
++	echo =3D=3D=3D=3D=3D=3D=3D | append_cr >>expected &&
+ 	echo first line | append_cr >>expected &&
+ 	echo same line | append_cr >>expected &&
+ 	echo ">>>>>>>" >>expected &&
+@@ -128,15 +119,9 @@ test_expect_success 'Detect LF/CRLF conflict from =
+addition of text=3Dauto' '
+ 	echo "<<<<<<<" >expected &&
+ 	echo first line | append_cr >>expected &&
+ 	echo same line | append_cr >>expected &&
+-	if test_have_prereq NATIVE_CRLF; then
+-		echo =3D=3D=3D=3D=3D=3D=3D | append_cr >>expected &&
+-		echo first line | append_cr >>expected &&
+-		echo same line | append_cr >>expected
+-	else
+-		echo =3D=3D=3D=3D=3D=3D=3D >>expected &&
+-		echo first line >>expected &&
+-		echo same line >>expected
+-	fi &&
++	echo =3D=3D=3D=3D=3D=3D=3D | append_cr >>expected &&
++	echo first line | append_cr >>expected &&
++	echo same line | append_cr >>expected &&
+ 	echo ">>>>>>>" >>expected &&
+ 	git config merge.renormalize false &&
+ 	rm -f .gitattributes &&
+--=20
+2.0.0.rc1.6318.g0c2c796
