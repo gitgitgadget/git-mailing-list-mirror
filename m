@@ -1,161 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 10/12] attr: convert git_all_attrs() to use "struct git_attr_check"
-Date: Tue, 17 May 2016 10:00:52 -0700
-Message-ID: <xmqqeg90y5yz.fsf@gitster.mtv.corp.google.com>
-References: <20160516210545.6591-1-gitster@pobox.com>
-	<20160516210545.6591-11-gitster@pobox.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC-PATCHv6 4/4] pathspec: allow querying for attributes
+Date: Tue, 17 May 2016 10:03:38 -0700
+Message-ID: <CAGZ79kbYB_4KO+XpYa0OhAcU63Q2M2kLWa03HcxeYS1HJOgfZw@mail.gmail.com>
+References: <20160517031353.23707-1-sbeller@google.com> <20160517031353.23707-5-sbeller@google.com>
+ <xmqqvb2dxomo.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 17 19:01:01 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 17 19:03:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2iMe-0007j2-Fl
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 19:01:00 +0200
+	id 1b2iPJ-0000gM-BL
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 19:03:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751053AbcEQRA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 13:00:57 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51001 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750941AbcEQRA4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 13:00:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id EFB0719C1D;
-	Tue, 17 May 2016 13:00:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GuSn04x+b5dLpOFgd5TLBYj9fD8=; b=hY/e9A
-	F9wIgi1htkYGtqo5VVKF5XQXsY4G0Mn9QasViKqAL25FDZzVGiAZDNL5Ten7bqc9
-	WoiJEB4c8Ye/soS5mFwdDPZsffHpirJD/6NMTQsCrhHCP2za/2F7aCgFZwuyJXQk
-	ajpTouTspxNaTDrOTtnadCsyaPUiup0y9hHwI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lYyuU+GmO5wrwve46UxxSTBYPnoRqjnw
-	UULDYct/4DYMPUNC61fFdBM0G9GCv+ehDBnHBcNFqf23EwI7tNuq+VsVuZvEtQoD
-	03g92klSMI5vS3rNia3d16+823cZDhTWMIfd3d0dVuEnin/9/a505xCxdfD+nt9A
-	FREZhc/CLGo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E491519C1C;
-	Tue, 17 May 2016 13:00:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 518F519C1A;
-	Tue, 17 May 2016 13:00:54 -0400 (EDT)
-In-Reply-To: <20160516210545.6591-11-gitster@pobox.com> (Junio C. Hamano's
-	message of "Mon, 16 May 2016 14:05:43 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EACA49C0-1C50-11E6-AE27-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751172AbcEQRDl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2016 13:03:41 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:32993 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750954AbcEQRDk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 13:03:40 -0400
+Received: by mail-io0-f181.google.com with SMTP id f89so31725361ioi.0
+        for <git@vger.kernel.org>; Tue, 17 May 2016 10:03:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=SNJfjzLY9qflZvgaLoxcLaxSBnA8U6FYWlupTU8XTfQ=;
+        b=VvNYqtF4fnJ10kMlKWuC/EH+h6YWhSGUKPX/gP7yLD717WU5CTIanfWrFjTllEIiOY
+         +3F/UzepvErqpHXekFfVnNyHPWagwx7qi6Hjq/oDbYyTJYR8IKarR3gDeG4/wYoT5XGc
+         M/FdoEHfwg9kNg+U8eEsnCXzyKmZN3GZcMp1gLXjeIIMnJ6HOCjhHD1M/VMvdrmPIDkC
+         P1wAp6H7qPcTFyJsvMHWUKy+fiABZLZD+c1lbq1yr5epWRuDJuAB0NbJyATqF89ghhsg
+         m004AX+xgChOVvg1uhZ9l+mBILlOCWI3shRDOumCWaCXgK1nbiiP3gbBJjJLVlon8Y+G
+         /RAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=SNJfjzLY9qflZvgaLoxcLaxSBnA8U6FYWlupTU8XTfQ=;
+        b=g5bqHHLLV7YA07hyV18WrMn3gBOQjeCRfk3uCXuQBOPeXS5r4F/gZNdP5d6rE2tG/v
+         3qLUj11iZPvjlw+n4UnS+8qaa8u04wLxIqyHjb+aDewl/aQDYB5vMGfrpc/PtD1Vugot
+         ZBPjGH2/taiV/AIwCRCJ/qAn9x8HDirmfsO6FeOY1idGQzebpv99A2F79XWbxXaBxsA1
+         EtlIojWmOvemj2RAsZN8xmogpygsK2WLIWstfmEcHW2czZ5u6d3FlmvHkny0RjA9nWPV
+         Q/HWM4R2/EWeFafOIja3bwRCfVS4mj7ghSAXiJ6ZPkJt46CdqzdxPWNxSdhEL6u6a6dK
+         TAiw==
+X-Gm-Message-State: AOPr4FUEFKdBIMFXD20PtMDcd4D5BH5ESXg0MefFvBOqEa0bcQw+WtQk7X2hVaky1ccJPcZJMV0h8Dh+wsT06Jwu
+X-Received: by 10.36.107.129 with SMTP id v123mr14037960itc.52.1463504619311;
+ Tue, 17 May 2016 10:03:39 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Tue, 17 May 2016 10:03:38 -0700 (PDT)
+In-Reply-To: <xmqqvb2dxomo.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294877>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, May 16, 2016 at 10:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>         int attr_match_nr;
+>         int attr_match_alloc;
+>         struct attr_match {
+>                 struct git_attr *attr;
+>                 char *value;
+>                 enum attr_match_mode {
+>                         ...
+>                 } match_mode;
+>         } *attr_match;
+>         struct git_attr_check *attr_check;
 
-> +struct git_attr_check *git_attr_check_alloc(void)
-> +{
-> +	return xcalloc(1, sizeof(struct git_attr_check));
-> +}
-> +
-> +void git_attr_check_append(struct git_attr_check *check, const char *name)
-> +{
-> +	struct git_attr *attr;
-> +
-> +	if (check->finalized)
-> +		die("BUG: append after git_attr_check structure is finalized");
-> +
-> +	attr = git_attr(name);
-> +	if (!attr)
-> +		die("%s: not a valid attribute name", name);
-> +	ALLOC_GROW(check->check, check->check_nr + 1, check->check_alloc);
-> +	check->check[check->check_nr++].attr = attr;
-> +}
+ok, I'll use that structure and go from here.
 
-Given that one of the two expected callers, namely, "check-attr" and
-Stefan's pathspec label magic, of this "alloc and then append" side
-of the API wants to have an access to git_attr(name), I think
-the function signature for this one should be updated to take not
-"const char *name" but instead take "struct git_attr *attr", i.e.
 
-void git_attr_check_append(struct git_attr_check *check,
-			   struct git_attr *attr);
+>
+> Then while parsing ":(attr:VAR1=VAL1 -VAR2 VAR3...)path/to/dir/",
 
-Then the loop in check-attr below
+This syntax is not pleasant to parse IMHO as it is not clear if the token
+after white space (-VAR2 here) is another attribute or the next part of
+the list of VAR1, i.e. this could also be:
 
-> +		check = git_attr_check_alloc();
-> +		for (i = 0; i < cnt; i++)
-> +			git_attr_check_append(check, argv[i]);
+    :(attr:VAR1=VAL1 VAL2)
 
-would become
+I wonder if we'd want to use the colon to separate different VARs:
 
-		check = git_attr_check_alloc();
-		for (i = 0; i < cnt; i++)
-			git_attr_check_append(check, git_attr(argv[i]));
+    :(attr:VAR1=VAL1 VAL2:-VAR2:VAR3)
 
-And this part in $gmane/294855
+which means:
 
-    Then while parsing ":(attr:VAR1=VAL1 -VAR2 VAR3...)path/to/dir/",
-    you would first do:
-
-            p->attr_check = git_attr_check_alloc();
-
-    once, and then send each of VAR1=VAL2, -VAR2, VAR3... to your
-    parse_one_item() helper function which would:
-
-     * parse the match-mode like your code does;
-
-     * parse out the attribute name (i.e. VAR1, VAR2 and VAR3), and
-       instead of keeping it as a "(const) char *", call git_attr()
-       to intern it (and keep it in local variable "attr"), and save
-       it in p->attr_match[p->attr_nr].attr;
-
-     * call git_attr_check_append(p->attr_check, git_attr_name(attr))
-
-would look like
-
-	... saw ":(attr:", expect "VAR1=VAL1 -VAR2...)" to follow;
-        ... char *scan points at byte after attr: now.
-
-	item->attr_check = git_attr_check_alloc();
-	while (scan) {
-		const char *var, *val;
-                enum attr_match_mode mode;
-		struct git_attr *attr;
-		struct attr_match *match;
-
-        	scan = parse_attr_match(scan, &var, &val, &mode);
-                ... var points at VAR1, val points at VAL,
-                ... mode becomes MATCH_VALUE; scan skips
-                ... forward to pint at -VAR2.  parse_attr_match()
-                ... would return NULL once input runs out.
-
-                ALLOC_GROW(item->attr_match, ...);
-                match = &item->attr_match[item->attr_match_nr++];
-
-        	attr = git_attr(var);
-
-		match->attr = attr;
-                match->value = val;
-                match->match_mode = mode;
-                
-                git_attr_check_append(item->attr_check, attr);
-	}
-
-Then matching part would get the "item" and would do:
-
-	... after making sure that the path matches
-        ... the pathspec the magic is attached to ...
-
-	git_check_attr(path, item->attr_check);
-	for (i = 0; i < item->attr_match_nr; i++) {
-		struct git_attr *attr = item->attr_check->check[i].attr;
-		const char *value = item->attr_check->check[i].value;
-                struct attr_match *match = &item->attr_match[i];
-
-                ... compare what "match" expects with <attr, value> ...
-        }
+   match all path, that
+    * have VAR1 set to a value list containing at least
+      VAL1 and VAL2
+    * have VAR2 unset
+    * have VAR3 set to true.
