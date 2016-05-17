@@ -1,66 +1,59 @@
-From: Eric Wong <e@80x24.org>
-Subject: Re: [BUG] t9801 and t9803 broken on next
-Date: Tue, 17 May 2016 09:13:42 +0000
-Message-ID: <20160517091342.GA10180@dcvr.yhbt.net>
-References: <3A110437-F778-42E2-A987-86B4EAB3D963@gmail.com>
- <20160513103621.GA12329@dcvr.yhbt.net>
- <xmqqpospap8g.fsf@gitster.mtv.corp.google.com>
- <4830D469-3885-4010-9A04-D809F0C6159D@gmail.com>
- <xmqq37pk8q0h.fsf@gitster.mtv.corp.google.com>
- <5E7631C9-DD59-4358-B907-D7C7AEA1739C@gmail.com>
+From: "Marilyn Shaw (Mrs)" <noreply@mail.co.uk>
+Subject: Charity Proposal
+Date: Tue, 17 May 2016 18:47:57 +0900 (JST)
+Message-ID: <1673240205.96423058.1463478477523.JavaMail.root@goo.jp>
+References: <50913232.95921419.1463473241586.JavaMail.root@goo.jp>
+Reply-To: marilynshaw03@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Users <git@vger.kernel.org>,
-	Luke Diamand <luke@diamand.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 17 11:13:48 2016
+Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 7bit
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Tue May 17 11:49:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2b4W-0000D9-9T
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 11:13:48 +0200
+	id 1b2bd3-0008Ae-Gn
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 11:49:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754750AbcEQJNo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 05:13:44 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:49710 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754078AbcEQJNn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 05:13:43 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 105AA1FA7A;
-	Tue, 17 May 2016 09:13:43 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <5E7631C9-DD59-4358-B907-D7C7AEA1739C@gmail.com>
+	id S1754928AbcEQJtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2016 05:49:24 -0400
+Received: from gfdefer006.mail.goo.jp ([153.149.229.136]:52530 "EHLO
+	gfdefer006.mail.goo.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754709AbcEQJtX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 05:49:23 -0400
+Received: from gogw0403.mail.goo.jp (gogw0403.mail.goo.jp [153.153.65.4])
+	by gfdefer006.mail.goo.jp (Postfix) with ESMTP id 8D6EA9052F5
+	for <git@vger.kernel.org>; Tue, 17 May 2016 18:49:10 +0900 (JST)
+Received: from ntt.pod01.gv-mta-ucb002 (gv-mta-ucb002.mail.goo.jp [180.8.112.201])
+	by gogw0403.mail.goo.jp (Postfix) with ESMTP id 4EAE2600486;
+	Tue, 17 May 2016 18:47:58 +0900 (JST)
+Received: from gzcstore012.mail.goo.jp ([180.8.112.235])
+	by ntt.pod01.gv-mta-ucb002 with 
+	id vMnx1s00854mytg01Mnxpd; Tue, 17 May 2016 09:47:58 +0000
+In-Reply-To: <50913232.95921419.1463473241586.JavaMail.root@goo.jp>
+X-Originating-IP: [197.78.173.132]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294862>
+X-Spam-Report: 5.3 points;
+ *  1.8 MILLION_USD BODY: Talks about millions of dollars
+ *  2.0 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
+ *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294863>
 
-Lars Schneider <larsxschneider@gmail.com> wrote:
-> I am no expert in "fast-import". Does anyone have a few hints how to
-> proceed?
+Dearest One Please Be Honest,
 
-I don't know fast-import or the C internals of git well at all,
-either.  But capturing the exact input to fast-import (using
-tee) would be useful for non-p4 users to debug the problem
-and would go a long way in reproducing a standalone test case.
+My name is Mrs. Marilyn Shaw; I am a dying woman who had decided to donate what I have to the Charities. I am 75 years old and was diagnosed for cancer about four years ago, immediately after the death of my husband.
 
-I'm Python-illiterate , but hopefully this works
-to capture the stdin fed to fast-import (totally untested):
+I have been touched to donate from what I have inherited from my late husband for the good work rather than allow his relatives to lavish my husband's hard earned fund.
 
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -3366,7 +3366,8 @@ class P4Sync(Command, P4UserMap):
- 
-         self.tz = "%+03d%02d" % (- time.timezone / 3600, ((- time.timezone % 3600) / 60))
- 
--        self.importProcess = subprocess.Popen(["git", "fast-import"],
-+        cmd = [ "sh", "-c", "tee /tmp/gfi-in.$$ | git fast-import" ]
-+        self.importProcess = subprocess.Popen(cmd,
-                                               stdin=subprocess.PIPE,
-                                               stdout=subprocess.PIPE,
-                                               stderr=subprocess.PIPE);
+As I lay on my sick bed, I want you to help me in carrying out my last wish on earth which will also be very profitable to you. I want to WILL a total sum of $5.5 million USD to you which I want you to distribute part of it to any charity home for me and the rest for yourself and your family. I will inform you on how to share all, please for further information contact me ASAP.
+
+Please reply me only with this my private email id: marilynshaw03@gmail.com
+
+Regards,
+
+Mrs.  Marilyn Shaw.
