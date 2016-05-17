@@ -1,95 +1,125 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC-PATCHv6 4/4] pathspec: allow querying for attributes
-Date: Tue, 17 May 2016 12:23:33 -0700
-Message-ID: <CAGZ79kZ-xf167LiO+zY+B8BTYd-9h7u=dgpL=4tsEJDPgwq8CA@mail.gmail.com>
-References: <20160517031353.23707-1-sbeller@google.com> <20160517031353.23707-5-sbeller@google.com>
- <xmqqvb2dxomo.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 17 21:23:45 2016
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 1/5] t1500: be considerate to future potential tests
+Date: Tue, 17 May 2016 15:36:26 -0400
+Message-ID: <20160517193630.10379-2-sunshine@sunshineco.com>
+References: <20160517193630.10379-1-sunshine@sunshineco.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Michael Rappazzo <rappazzo@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 17 21:37:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2kak-0001qW-KE
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 21:23:42 +0200
+	id 1b2knz-0008Ue-Sn
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 21:37:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502AbcEQTXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 15:23:36 -0400
-Received: from mail-io0-f179.google.com ([209.85.223.179]:36052 "EHLO
-	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751204AbcEQTXf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 15:23:35 -0400
-Received: by mail-io0-f179.google.com with SMTP id i75so36772683ioa.3
-        for <git@vger.kernel.org>; Tue, 17 May 2016 12:23:35 -0700 (PDT)
+	id S1751515AbcEQThR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2016 15:37:17 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:35995 "EHLO
+	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751154AbcEQThP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 15:37:15 -0400
+Received: by mail-io0-f195.google.com with SMTP id k129so5486383iof.3
+        for <git@vger.kernel.org>; Tue, 17 May 2016 12:37:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=YifqyAbvUTEciK2mtJS39v4+oTTk0vOOMfQFt3aGuYo=;
-        b=UvZYqY0Art8ISYwbYOXidCx4+sSaLzWBnqWRf4yc0vhMcoKja56vXtwLRWpSAwHMoL
-         odhx3MlCosSpJv+47vSJUOm872EXjqWMzSvmuXHDRibF6RCtSgv+AkZNiHTMY1mMfa5h
-         QI9gRuPsOPA2X1+Hps0q0Kb8h7+HFv8y3hrNtKT6YVxRmHMEr+iZyBtwD5Di+UaLJXL8
-         vxg8jBd/4x6mU/00Y+Tr+tSLn58/YZts1IdkQkEadKnMvhFx9MFmtztZguwaz2F/UOoe
-         5h6fxff4HaIuazvNCuUH8T6rtktbepiwxhfXvi9u/xmSmZewh7y7RtuhBEXh9n4d6xdX
-         Hn7w==
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=EhbbrddfA1utnCYlKLr6+WNEvaEFR0MfuCMLX9gijZU=;
+        b=prWfyDqKS7RGaLBHGTL+yxBlnTwv3thpHnYuYaWBHQq08LU48h5vTsCCYfrvMmxQqV
+         6uuRE30Gna5PuEjzXToj+FYFs6lFGH9TAdqdX/dbERwjnazZ+ou3SWsSQU+dNqQk+Z+t
+         RZDMhlP4X+mM68zz4qxhD9WrGJ2d6Z+LKwLNA0UWuJXfZOkTsd/1dZSQGhgKFVYvpETJ
+         BbNR9iXE2Fqc6R6kDWRorEP7w6N/XUz0T368bxXc8kpa4RB4Mffhrq8q3gJwflR7lg7F
+         Q71xCv0udQM8rogWEDaPnAqbVvN6JK92xu9FtGxHrZ0MMWcxNl06l8WZuebHuIpcIUAh
+         SLNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=YifqyAbvUTEciK2mtJS39v4+oTTk0vOOMfQFt3aGuYo=;
-        b=MYRgCEuVSHyRmn0IbIqGoy5G3RcqxXlL1uuMRYfXx0Iymhm3sFfVMOcR4WYtv2lZAy
-         Po6SgFyh1LjaWpJWNS1yQea3pIXn9/IvDbAnLX+Zi/jcZeSyDfymEOvMJMyLv+hzn0mA
-         PNo83kTqQHI4pHAXEnfYxmra666I05aqN+IvEcbkD0I+oTrbHSF+1ILtCqKbS34T8xyo
-         7haoKuLjKOT35t/KoQN2v0hHO6vNIYoZsSmruB1VQoXnNaefLYSlqXr55mV6K8IQyoze
-         9AzYrt8pu43jo5Kxm4dcK2G1ybhnJTYYLLC3DRhTiQQyifUSLAuTAnT/TXvlUdR8a7D/
-         U7NA==
-X-Gm-Message-State: AOPr4FVmUVkRs7FrN5Hk9CJfFZRgm6YEHy14nOXspeFP1dIB20tNJ+qXCtnWCu8O+vBIpgFBoz8wJ0sjKL64FoOe
-X-Received: by 10.107.53.204 with SMTP id k73mr2322584ioo.174.1463513014317;
- Tue, 17 May 2016 12:23:34 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Tue, 17 May 2016 12:23:33 -0700 (PDT)
-In-Reply-To: <xmqqvb2dxomo.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references;
+        bh=EhbbrddfA1utnCYlKLr6+WNEvaEFR0MfuCMLX9gijZU=;
+        b=JKRuaYR+2dNQA9neeV1gctuDIA1wjE4Rw/b6IiYf/TvzmQ6yXwdu2twpQmG4IyhMg9
+         3DgJTUFt0ltidedXuM94DKAf0npdlIG1gC+JiTVvb1RP9QYKf0m79BDhboFyuJ0HOLs2
+         rewt/xAVilYrXBI6VC01PaXA5DdKUbbVpO02mt+z42HxV81mQgXSzK/DeM9v5NLw9b6x
+         JdqgfRCmJ2iCwd/0aNYY+sS0QUqPNTjiPF7CnEhS7NldPfxjejZbIRDp/gptEau5Siz3
+         RTFMzQ8NYv8aqr6Wg9DS1UlJ5mpgIM2hWU+E8ejGZkSLotmQketdx8CHxXejNfKrMek2
+         10Ow==
+X-Gm-Message-State: AOPr4FVBiYzEaaogKEqjVWsNLsHz4lh8EgZNJvSg0PwHAtEX2kzXgtjoZZvOke5ys7Taww==
+X-Received: by 10.107.56.131 with SMTP id f125mr2410354ioa.188.1463513833791;
+        Tue, 17 May 2016 12:37:13 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3c5v.cable.mindspring.com. [69.81.176.191])
+        by smtp.gmail.com with ESMTPSA id b67sm1506218iob.33.2016.05.17.12.37.12
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Tue, 17 May 2016 12:37:13 -0700 (PDT)
+X-Mailer: git-send-email 2.8.2.703.g78b384c
+In-Reply-To: <20160517193630.10379-1-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294899>
 
-On Mon, May 16, 2016 at 10:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> When matching (i.e. the match_attrs() function), you would instead
-> do
->
->         path = xmemdupz(name, namelen);
->         git_check_attr(path, item->attr_check);
->
-> to grab values for only attributes that matter to you, instead of
-> calling git_all_attrs() [*2*].
->
-> After git_check_attr() returns, item->attr_check.check[0].attr would
-> be git_attr("VAR1") and item->attr_check.check[0].value would be
-> whatever setting the path has for the VAR1 attribute.  You can use
-> your match_mode logic to compare it with the values .attr_match
-> expects.
->
-> You do not necessarily have to have the same number of elements in
-> .attr_match and .attr_check.check by the way.  .attr_match might say
->
->         VAR1=VAL2 !VAR1 -VAR1
->
-> which may be always false if these are ANDed together, but in order
-> to evaluate it, you need only one git_attr_check_elem for VAR1.
+The final batch of git-rev-parse tests work against a non-local object
+database named repo.git. This is done by renaming .git to repo.git and
+pointing GIT_DIR at it, but the name is never restored to .git at the
+end of the script, which can be problematic for tests added in the
+future. Be more friendly by instead making repo.git a copy of .git.
 
-So for the matching we would need to get the order right, i.e.
+Furthermore, make it clear that tests in repo.git will be independent
+from the results of earlier tests done in .git by initializing repo.git
+earlier in the test sequence.
 
-    const char *inspect_name = git_attr_name(item.attr_match[i].attr);
-    for (j=0; j <  p.attr_check.check_nr; j++) {
-        const char *cur_name = git_attr_name(p.attr_check.check[j].attr);
-        if (!strcmp(inspect_name, cur_name))
-            break;
-    // now compare .attr_match[i] with attr_check.check[j]
+Likewise, bundle remaining preparation (such as directory creation) into
+a common setup test consistent with modern practice.
 
-This doesn't look cheap to me? Am I holding it wrong again?
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ t/t1500-rev-parse.sh | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index 48ee077..0194f54 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -37,6 +37,11 @@ test_rev_parse() {
+ 
+ ROOT=$(pwd)
+ 
++test_expect_success 'setup' '
++	mkdir -p sub/dir work &&
++	cp -R .git repo.git
++'
++
+ test_rev_parse toplevel false false true '' .git
+ 
+ cd .git || exit 1
+@@ -45,7 +50,6 @@ cd objects || exit 1
+ test_rev_parse .git/objects/ false true false '' "$ROOT/.git"
+ cd ../.. || exit 1
+ 
+-mkdir -p sub/dir || exit 1
+ cd sub/dir || exit 1
+ test_rev_parse subdirectory false false true sub/dir/ "$ROOT/.git"
+ cd ../.. || exit 1
+@@ -56,7 +60,6 @@ test_rev_parse 'core.bare = true' true false false
+ git config --unset core.bare
+ test_rev_parse 'core.bare undefined' false false true
+ 
+-mkdir work || exit 1
+ cd work || exit 1
+ GIT_DIR=../.git
+ GIT_CONFIG="$(pwd)"/../.git/config
+@@ -71,7 +74,6 @@ test_rev_parse 'GIT_DIR=../.git, core.bare = true' true false false ''
+ git config --unset core.bare
+ test_rev_parse 'GIT_DIR=../.git, core.bare undefined' false false true ''
+ 
+-mv ../.git ../repo.git || exit 1
+ GIT_DIR=../repo.git
+ GIT_CONFIG="$(pwd)"/../repo.git/config
+ 
+-- 
+2.8.2.703.g78b384c
