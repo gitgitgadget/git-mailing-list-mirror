@@ -1,105 +1,105 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 09/12] attr: (re)introduce git_check_attr() and struct git_attr_check
-Date: Tue, 17 May 2016 00:19:59 -0400
-Message-ID: <CAPig+cR5ksdATefkYkG7-+a_nK0w+Fdu8ae-Z4=PTp8yAYhiQQ@mail.gmail.com>
-References: <20160516210545.6591-1-gitster@pobox.com>
-	<20160516210545.6591-10-gitster@pobox.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC-PATCHv6 4/4] pathspec: allow querying for attributes
+Date: Mon, 16 May 2016 21:23:17 -0700
+Message-ID: <xmqqa8jpz51m.fsf@gitster.mtv.corp.google.com>
+References: <20160517031353.23707-1-sbeller@google.com>
+	<20160517031353.23707-5-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 17 06:20:11 2016
+Content-Type: text/plain
+Cc: pclouds@gmail.com, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue May 17 06:23:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2WUM-00074I-28
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 06:20:10 +0200
+	id 1b2WXV-0008MB-OC
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 06:23:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752636AbcEQEUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 00:20:04 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:32864 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752604AbcEQEUC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 00:20:02 -0400
-Received: by mail-io0-f193.google.com with SMTP id x35so1288251ioi.0
-        for <git@vger.kernel.org>; Mon, 16 May 2016 21:19:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=c3IEd/ZvFvmNljGfIKQJSRIYXpfUeaIdE9z+gqd5nnI=;
-        b=YL3UblTNHF7aVS2SJhpSXZIc7lLv3uYkgIcmfrvx205x4wL8t7M4JuLNHgsfcT+w1F
-         EJdnnLa3CdCgaVmI3GxNdgNe/gud1m/p5AwDoQXWsDqT5Ejhqh5heIegV3z4vhI0o42E
-         /Gc3mi8FQtyTXfkOiZA4ZKdXIc4o/c+73qJlxQ3wmLUYdy0lYV/n0E2jRhboAh9rjtCU
-         w/+QCaoIidnqRvtQIZQcJ/DhfykGfABDLWtHSfYimaniBSPWgmT8uVwjqytE0e9Ux9nk
-         9uKnovVka/4wt1txoV+8AgCZbqYLMkyrkSY7xdmMLwIBdig4Nbiy5OmwXcuN0/MWoVfs
-         Zd4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=c3IEd/ZvFvmNljGfIKQJSRIYXpfUeaIdE9z+gqd5nnI=;
-        b=kG9VmeE5/9qbx/eiTMpvCDVLx2oQ0F2c3YazZZQ3pxJGbYWDlnznFYJmCCCwVWje8y
-         23Od7gKCqMUNWZ6jH0emlQsmrtwch32rofHwVAz6mQ7iBdCjuUn3K96QE1+jn6VV5Qec
-         Iu/h+cFPnY44oInKZY8WquUK5qNvUcPZKhoBVZOkl5QXfblz9v0e86Bd5r88t/YmLpCU
-         eoakC6D7ow73MVpVhdQWYSsYmiw2toEw0M1JGtzQ5HD2Shc/6qYuykpa0AzAHlCPqSp8
-         8zAXBeH0PV9yTKkQhswrBqOwLLVcnipyyeZOhX0ojfH95mn/5efgn7RoeE3dZSaSrs9Y
-         NeXQ==
-X-Gm-Message-State: AOPr4FXoZJYDAiN7fNp+PpFN+dWfXIqD6sqLxoqDdj9FqoCCVnMJY4jrb2xPOHMXL8gJ9CPv653Kxrr30kLf4A==
-X-Received: by 10.107.132.66 with SMTP id g63mr24313310iod.34.1463458799345;
- Mon, 16 May 2016 21:19:59 -0700 (PDT)
-Received: by 10.79.139.135 with HTTP; Mon, 16 May 2016 21:19:59 -0700 (PDT)
-In-Reply-To: <20160516210545.6591-10-gitster@pobox.com>
-X-Google-Sender-Auth: gkanTwMXwUF9pNaxqbbWbADj9QI
+	id S1752685AbcEQEXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2016 00:23:21 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61336 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752641AbcEQEXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 00:23:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 28A771C639;
+	Tue, 17 May 2016 00:23:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=84ae78bpb1IAPC/jjNnbGbj0CdI=; b=Lyr7/W
+	nI914XVaH3TcERtjblrJWlR0VAhPBcBrCVBlCum9yHMpzMR7dA8mbCotSse2tZo7
+	9kFLLl15eUK4D8Xc+WWuw8MFQ1hCZSw4CxCipUHwmSQ6cp0R2pwjrsWt7hDXtFvP
+	b3wQ5Qcyt4NkbTFhJWuFBBgL2t0YyfgukfutM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gAqtwuYcPPMZZi9S1EmcO7mfQE/Xj+sS
+	JI0zxapaXuOewBNHZTs6/nXDkQoK/qL2WhEFm16P/lMOkl5icu2x2jrxRdmDmk5o
+	NZuuGeanOkJ8+E+Lt5eTWskOhTsH5lF6B6xZJEdpY3FdOxtnFUmiHBrUaG1AfiPQ
+	sw9ETOQDRTE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1FB661C638;
+	Tue, 17 May 2016 00:23:20 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 987061C637;
+	Tue, 17 May 2016 00:23:19 -0400 (EDT)
+In-Reply-To: <20160517031353.23707-5-sbeller@google.com> (Stefan Beller's
+	message of "Mon, 16 May 2016 20:13:53 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 15AC35E6-1BE7-11E6-8711-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294854>
 
-On Mon, May 16, 2016 at 5:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> A common pattern to check N attributes for many paths is to
->
->  (1) prepare an array A of N git_attr_check_elem items;
->  (2) call git_attr() to intern the N attribute names and fill A;
->  (3) repeatedly call git_check_attrs() for path with N and A;
-> [...snip...]
-> Introduce "struct git_attr_check" that contains N, the number of
-> attributes being sought, and A, the array that holds N
-> git_attr_check_elem items, and a function git_check_attr() that
-> takes a path P and this structure as its parameters.  This structure
-> can later be extended to hold extra data necessary for optimization.
->
-> Also, to make it easier to write the first two steps in common
-> cases, introduce git_attr_check_initl() helper function, which takes
-> a NULL-terminated list of attribute names and initialize this
-> structure.
-> [...snip...]
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git a/attr.c b/attr.c
-> @@ -825,3 +825,37 @@ void git_attr_set_direction(enum git_attr_direction new, struct index_state *ist
-> +struct git_attr_check *git_attr_check_initl(const char *one, ...)
+Stefan Beller <sbeller@google.com> writes:
+
+> + * attr:+val to find value set to true
+> + * attr:-val to find a value set to false
+> + * attr:!val to find a value that is not set
+> + *     (i.e. it is neither set as "val", "val=<empty>", nor unset as "-val")
+> + * attr:val=value: to find value that have at least a and b set.
+
+I would have expected that there won't be "attr:+val", but it is
+spelled as "attr:val" instead.
+
+> +static void parse_attr_item(struct attr_item *attr, const char *value)
+
+Please do not call something that is not part of the attribute
+infrastructure as "attr_item"; I wasted time looking for the
+structure definition for "attr_item" in <attr.h>.
+
+> +static int match_attrs(const char *name, int namelen,
+> +		       const struct pathspec_item *item)
 > +{
-> +       [...]
-> +       check = xcalloc(1,
-> +                       sizeof(*check) + cnt * sizeof(*(check->check)));
-> +       check->check_nr = cnt;
-> +       check->check = (struct git_attr_check_elem *)(check + 1);
-> +       [...]
-> +       return check;
-> +}
-> diff --git a/attr.h b/attr.h
-> @@ -29,6 +29,15 @@ struct git_attr_check_elem {
-> +struct git_attr_check {
-> +       int check_nr;
-> +       int check_alloc;
+> +	char *path;
+> +	int i;
+> +
+> +	if (!check) {
+> +		check = git_attr_check_alloc();
+> +		for (i = 0; i < item->attr_nr; i++)
+> +			git_attr_check_append(check, item->attrs[i].attr);
+> +	}
+> +
+> +	path = xmemdupz(name, namelen);
+> +	git_all_attrs(path, check);
 
-This field is unused, and git_attr_check_initl() neglects to
-initialize it (if it is intended to be used in the future).
+PLEASE DON'T.  git_all_attrs() asks for all the attribute under the
+sun and has no hope to perform sensibly, especially at the very leaf
+level of the pathspec logic where one call to this function is made
+for each and every path in the tree.
 
-> +       struct git_attr_check_elem *check;
-> +};
+Instead, have a pointer to "struct git_attr_check" in pathspec_item
+and make a call to git_check_attr(path, item->check) here.
+
+Which means that you would need to prepare git_attr_check around ...
+
+> +		if (skip_prefix(copyfrom, "attr:", &body)) {
+> +			ALLOC_GROW(item->attrs, item->attr_nr + 1, item->attr_alloc);
+> +			parse_attr_item(&item->attrs[item->attr_nr++], body);
+
+... HERE.
