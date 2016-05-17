@@ -1,121 +1,73 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v1 2/2] Ignore dirty submodule states during stash
-Date: Mon, 16 May 2016 23:49:29 -0400
-Message-ID: <CAPig+cTShM4Qc7sVN5NXSmwP8Cxz22q+ZAbSrW3bHVm66aaCQg@mail.gmail.com>
-References: <20160517033632.GA2782@gmail.com>
-	<20160517034050.GC2782@gmail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v3 0/1] CRLF-Handling: bug fix around ce_compare_data()
+Date: Tue, 17 May 2016 06:08:31 +0200
+Message-ID: <573A993F.8020205@web.de>
+References: <xmqq7fev55qk.fsf@gitster.mtv.corp.google.com>
+ <1463413889-12490-1-git-send-email-tboegi@web.de>
+ <xmqqshxi2d80.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Vasily Titskiy <qehgt0@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 17 05:49:37 2016
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, tboegi@web.de
+X-From: git-owner@vger.kernel.org Tue May 17 06:08:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2W0m-0003lG-1E
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 05:49:36 +0200
+	id 1b2WJV-0002WN-5J
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 06:08:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755124AbcEQDtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2016 23:49:33 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:33545 "EHLO
-	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755081AbcEQDta (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2016 23:49:30 -0400
-Received: by mail-io0-f196.google.com with SMTP id x35so1205922ioi.0
-        for <git@vger.kernel.org>; Mon, 16 May 2016 20:49:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=BxEV94WQh+/QdNs5fANY1J6/c4hNK2PtgUvdzyTVEbk=;
-        b=vkX8+NzExyhIUMGD5kV/peCBAKi0lgcEhJdiTh8HZIS7wSQeBXfB5dIloVys+8aRVg
-         G8i7cIPYycHaKX80OpLPpcEO0HHeo/pSOfurpsjvBtUl/dt2sByJqEy9St5fMFSgPYx0
-         0tPAuDWWvfKNEJ28Mri6dYg9r2AUvjrLnYJzRPpTI/0G0MVRZ/kVCNL/8BagRu1J8lRS
-         kZMc2ky/Mzyks9RMZc9kPyqJb+Kf61Y2AlXYxKzGu75YnSjD4/+kjK7OpGd3qRqtGKUF
-         392u5kPOwUouvY7bJMbG/hy4Awf9grQwMsX/TScjUxuYICQY5i2tIp3cZ8lKEHPcvfWc
-         71Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=BxEV94WQh+/QdNs5fANY1J6/c4hNK2PtgUvdzyTVEbk=;
-        b=cnuwKe77bcR2ImUZxXLEFPaVXb+Z1hIwr1I147oodMK9v/p3hobz2CzxNxqLQoE5qh
-         bTbyIy28h171bsaxmIhjPxf+cEku9iQvDSvxAhJw2uaAsWY88NlFoLO2zvTDyHg9xfDz
-         txsqeYYUGghG56M4cufoG3HX398TnDluvIW1Bh6047r4crsFvjLq94w1+5HzXYTvf7vn
-         4kZ+iU2KimKY5q/TB5zETMKvnjbH9y5Lv730yR+pQt4Lexl+2whfoMsb4p1hSRR8CCTm
-         KuIK2Eg6wMPliz9L2VH15ZRyKH06n5j43qbzI8tSrrLfvFvy3MGikMfxFqVty811zcH7
-         sVpQ==
-X-Gm-Message-State: AOPr4FWcA8MkyX9nL1ijKriS8OkQQfeHowh2+ryDO5fOFL0DokWnwDqfuXvbssV0yH0im3AGeDgBYUQmySqyvg==
-X-Received: by 10.36.55.81 with SMTP id r78mr13065433itr.73.1463456969275;
- Mon, 16 May 2016 20:49:29 -0700 (PDT)
-Received: by 10.79.139.135 with HTTP; Mon, 16 May 2016 20:49:29 -0700 (PDT)
-In-Reply-To: <20160517034050.GC2782@gmail.com>
-X-Google-Sender-Auth: MixAZOUBNMH5ehlzv89uHPKcVbY
+	id S1751886AbcEQEIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2016 00:08:53 -0400
+Received: from mout.web.de ([212.227.15.14]:56058 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751810AbcEQEIw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 00:08:52 -0400
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0MgO9u-1bGKL140EI-00Nios; Tue, 17 May 2016 06:08:34
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+In-Reply-To: <xmqqshxi2d80.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:WFDdMjqmBZ9F/X8DASyoxW060GDiPfrooETTr1CMiD3M/qcoRXs
+ 66oXnQTX0leP2Qxv8Kzm6BRK3j9fn0MrssjSHoNqRWEfMQ8oVpln1gamf0Pz0HKcmpMtdbf
+ hJg9cksgt7XNvXUbM3GjxrMbpr+bnDIVWHQYsLnAhkWDu/xKyhqRv8TvOhMqy56xQDS5NTe
+ fT1cwAms08uDHmf86ibQA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4DrJ69PynoM=:TtpdRL5gzh4UVwYpIbnJpk
+ HxqftzbVtkTz/EBWau7ABt1yFrjdISVaOemZA6YeCVuTO6twPyKLF2sSktFBT6BB4SJFWshmc
+ NfzSiWXRVUFQb5pGijRehu0v5UL8+KQvbG38dQreY/leSusv34tob5pBz752WIm6NO/HqkMdz
+ Pf7Ze6+fBVa2s0ArUTnfKqsiet4ui0q+YTY66Sji5bZJHG12RUsbX8gE7WfsOWU/8bMHX8oOQ
+ 8stJh1Uj5AAcwVEKrsSBJv19OqXr0Q+wBXhVE8vEd0UW47igWAGH8uP3q36+SdCKXLqb8sTaV
+ 2N+RrxArAxx1daIbH7vsjC/pLbuzCpqzK8LIoPef3S12kRiGReqCIu9trMCQB6CZjLK2Lilkd
+ y8/s83ovexJmVfoxnBKhR9DTk4L5EozvxiNZ4ki8JVEyIxsVkdWqOUJm9EPmA3rXD6fNsNpc3
+ yTzQx8WUcESjsSQN4Es20t8y9a7Rmhcj6HATwVK53YWhQ1jTC4RowIlQpyxyVt5V8DEbymZoZ
+ rplEh/umanRNlm7bzJ0HSHAagXmlWlGY0E67344WPgtEOjy92fDPQWIS8/ft7hdkJiWc3SOhr
+ q1P81mHOlL8yTXvEE8hPbs9buroURPXrfk7dvIGRWiOqHeFAPMm+pA3+TY8j7mW8dVTiMwTaR
+ jcl2mJddpb9gMqcJfZ8op1PG0k62c5y38DXTXSmBanh0qWl9tKhXed8PNYALMFFuxY3t0zSIx
+ ftS1yqN62AbedtV77P4vmptmuO9eLc3qi7+aq6v8GsPsQl52IePUMyEm3eEeNlZ9DoQvT8Bb 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294850>
 
-On Mon, May 16, 2016 at 11:40 PM, Vasily Titskiy <qehgt0@gmail.com> wrote:
-> It checks if 'stash pop' does not trigger merge conflics
-> in submodules.
-
-Missing sign-off.
-
-Also, it would be best to combine these two patches so that the fix
-and patch reside in a single patch.
-
-More below...
-
-> ---
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> @@ -731,4 +731,39 @@ test_expect_success 'stash list --cc shows combined diff' '
-> +test_expect_success 'stash ignores changes in submodules' '
-> +       git submodule init &&
-> +       git init sub1 &&
-> +       (
-> +               cd sub1 &&
-> +               echo "x" > file1 &&
-
-Style: Drop space after redirection operator: >file1
-
-Ditto below for both '>' and '>>'.
-
-> +               git add file1 &&
-> +               git commit -a -m "initial sub1"
-> +       ) &&
-> +       git submodule add ./. sub1 &&
-> +       echo "main" > file1 &&
-> +       git add file1 &&
-> +       git commit -a -m "initial main" &&
-> +       # make changes in submodule
-> +       (
-> +               cd sub1 &&
-> +               echo "y" >> file1 &&
-> +               git commit -a -m "change y"
-> +       ) &&
-> +       git commit sub1 -m "update reference" &&
-> +       # switch submodule to another revision
-> +       (
-> +               cd sub1 &&
-> +               echo "z" >> file1 &&
-> +               git commit -a -m "change z"
-> +       ) &&
-> +       # everything is prepared, check if changes in submodules are ignored
-> +       echo "local change" >> file1 &&
-> +       git stash save &&
-> +       git checkout HEAD~1 &&
-> +       git submodule update &&
-> +       git stash pop
-> +'
-> +
-> +
-
-Style: drop extra blank line
-
->  test_done
+On 05/16/2016 06:13 PM, Junio C Hamano wrote:
+> Wait a minute, please.  I only asked the reason why you did it that
+> way and mentioned that the end result seemed equivalent.  "The end
+> result seems equivalent" does not automatically mean "therefore you
+> must avoid changing the code."
+>
+> If you still prefer the original code, and your preference is backed
+> by a solid reasoning, don't change the code to a less preferrable
+> version.  You may have to explain what you wrote in () above clearly
+> in an updated log message to save other readers from asking the same
+> question as I asked, though.
+>
+> Thanks.
 > --
-> 2.1.4
+>
+No problem.
+I will re-send v4 in some time and pull out the update of t6038 into an 
+own path
