@@ -1,97 +1,96 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFD PATCH 0/3] Free all the memory!
-Date: Tue, 17 May 2016 11:20:45 -0700
-Message-ID: <CAGZ79kaawUGOtxcFPEdx+tSn60Zzv=jLAMU-BnS6GGp_1wBWWg@mail.gmail.com>
-References: <20160517032247.25092-1-sbeller@google.com> <CAPig+cT9UKEcNXvsQsFDrQycKwMJR5bCter76UL-zpkncniPBw@mail.gmail.com>
- <CAGZ79kaJoAxqtsTuErQSgJiVeD_vdZ1MQXKr-LTtyro-FbscTQ@mail.gmail.com> <xmqqinycwnx2.fsf@gitster.mtv.corp.google.com>
+From: Joey Hess <id@joeyh.name>
+Subject: Re: GIT_INDEX_FILE relative path breaks in subdir
+Date: Tue, 17 May 2016 14:26:45 -0400
+Message-ID: <20160517182645.GA27396@kitenet.net>
+References: <20160517171836.GA12183@kitenet.net>
+ <xmqqy478wptr.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	David Turner <dturner@twopensource.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="y0ulUmNC+osPPQO6"
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 17 20:20:56 2016
+X-From: git-owner@vger.kernel.org Tue May 17 20:26:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2jbw-0005Wk-6a
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 20:20:52 +0200
+	id 1b2jhl-0008S1-4z
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 20:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751775AbcEQSUs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 14:20:48 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:34669 "EHLO
-	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750729AbcEQSUr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 14:20:47 -0400
-Received: by mail-io0-f182.google.com with SMTP id 190so34508167iow.1
-        for <git@vger.kernel.org>; Tue, 17 May 2016 11:20:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Wl6/HTYZbpKWr2Gu97bD1Me6EsoxiDKAVgd+s4f1SHM=;
-        b=lNzqrhmSoxV9rQRpc0uCya6OmcjKyEmymINAns0FLOTk631AhrVxSVwhQtRRRQGkFL
-         P2xVxEntdQiUSMY4si+rMuex1K0+Ty9zz1iBq+LuCLZVNgjvOkX90ZpKZy3Kur9Xs7hK
-         //msc30Hswstl0YIC6ybkI7El4py186tuytt2rUgIgGqc/fvffkn1Bn1P2Iuf7sW9dgm
-         N+EEbJFB3xmcKQeQ7q3//xCqbTnliczTwZ5h+5A6s78DmH1//jwtvXPCeUXjSBz8nu3W
-         LYU8ERJxSIYDWJdfIVAX1yjULRW/gy/9IB1G15dM2U3s7uvxCvL7vJF/ulX9Yh6hox3C
-         iHKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Wl6/HTYZbpKWr2Gu97bD1Me6EsoxiDKAVgd+s4f1SHM=;
-        b=kVGXfMz0ZRtVmQSkSWa0A6ROeTHX6bBs87nsrwlTaRIYWpiz+91zGHoHlsU/1o4Pqv
-         r/dd59ZevWq9kAxJ5atp7Ecj22XnquR7tNCy/3wrPBhu80YeMRiMhR7i/aLZ492QW6V9
-         P7aWMruJjDMQ7YEK4AXyZLLsXaQ2EPW23f+xDRPY2ZUzSt+nrFp//wgrAeznUmqCFWtH
-         rOKaqP6H6g8Vyv8ovA8z9x03bD/knrt5R/QTOjg/aieB33JHUwbmzg5ed2qQvDp4PDJG
-         HTb9ppHwyzkGHFIINpq3f8/ELIF0kEoa6C/X8r76JkKutnngXVcj4PwalUSY8tx9MlH/
-         Zw3g==
-X-Gm-Message-State: AOPr4FU+6yKcdk5NZ6agzXsvPNCn+ns/UdTsu9XmEanfMYpF7RxuFvj0EDmkTSveWBudMsVfDwjWohY6y2HrKQWL
-X-Received: by 10.36.107.129 with SMTP id v123mr14304453itc.52.1463509246291;
- Tue, 17 May 2016 11:20:46 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Tue, 17 May 2016 11:20:45 -0700 (PDT)
-In-Reply-To: <xmqqinycwnx2.fsf@gitster.mtv.corp.google.com>
+	id S1752125AbcEQS0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2016 14:26:49 -0400
+Received: from kitenet.net ([66.228.36.95]:42706 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751576AbcEQS0t (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 14:26:49 -0400
+X-Question: 42
+Authentication-Results: kitenet.net;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=UpYMiTdc;
+	dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+	t=1463509605; bh=IKodlfB23PPQWoC4eRGURwxQ0iKcq35zLo9sQEgmqEQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UpYMiTdcUHLRZ1bkdY/Tie47m5EoxkLZ76hodXs/hOa40/a1HjFZZ1V3XNcjLtluO
+	 VmQVDt5FZ9KuIXNMR6ziMRo8IcoiAKjBGDdSkkHqgPCUetorHNPC4n9jiWoDM1l3nm
+	 CBhn9L7iJcPH9348Z/dKLUGyHaNgalBOIbwpuy9c=
+Content-Disposition: inline
+In-Reply-To: <xmqqy478wptr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+X-Spam-Status: No, score=-98.8 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RDNS_DYNAMIC,SPF_SOFTFAIL,
+	URIBL_BLOCKED,USER_IN_WHITELIST autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on kite.kitenet.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294892>
 
-On Tue, May 17, 2016 at 11:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> So as a developer I wish we would close all leaks that are non-concerning.
->
-> Valgrind suppression (and if you use other tools, suppression for
-> them) sounds like the way to go, I would think.
->
-> Reducing false positive is a good goal; it helps to highlight the
-> real problems.  But we need to find a way to do so without hurting
-> the use by the end users by making them pay the unnecessary cost to
-> free() at the end and by cluttering the code with #ifdefs that makes
-> it easier to introduce subtle bugs.
 
-That's why I think the `optional_free` is a good thing as it doesn't clutter
-the code?
+--y0ulUmNC+osPPQO6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->
->> David writes:
->>> AFAIK, nothing in the "definitely lost" category is fixed by your rev-parse patch.
->>>
->>> I don't think we care that much about "still reachable" memory -- I only care about lost memory.  I could imagine, I guess, something that happens to save a pointer to a bunch of memory that should be freed, but I don't think that's the common case.
->>
->> As said above I'd want them to be fixed for me as a developer for
->> better automated tooling and detection. (The alternative to fix the automated
->> tooling is a no-no for me ;)
->
-> Does the word "no-no" mean what you seem to think it means?  It
-> sounds as if you are saying "fixing tools to reduce false positives
-> is fundamentally wrong, I refuse to go in that direction".
->
+Junio C Hamano wrote:
+> Joey Hess <id@joeyh.name> writes:
+>=20
+> > Appears to be a bug in git. Seems that it's assuming GIT_INDEX_FILE is
+> > relative to the top of the worktree and not to the CWD.
+>=20
+> I think that has always been the case.  You can always specify it as
+> relative to the top.  Of course, you can use absolute.
 
-I just mean, that I have not enough time to do that, so I won't.
-I know however how to send patches to this list.
+I think it *has* always been that way, but is there anything in the
+documentation that indicates this is the case? This could well be best
+fixed in the documentation.
+
+Hmm, at least GIT_OBJECT_DIRECTORY also behaves this way.
+(OTOH, GIT_DIR does not behave this way).
+
+--=20
+see shy jo
+
+--y0ulUmNC+osPPQO6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIVAwUBVztiZckQ2SIlEuPHAQLUww//c/U9/wo+OKdVk/bzanJTEfXORtdm8nfI
+q45E9/2icjNxKzVQJuDL7psZa/mTMDwxi1xmIjAq18PNPiuxSlKlY5y13BUQIC+b
+Cau6T9MveFCvSJBzATTZDAThPyEzpbSpyLsdYoPkv06l04t6UgY0IKTTvVGA47nK
+xu4cv4NCZum6Rd7+9CxUZ2F5MQqcyvs1UMrZC62olyK1gA0WGtDu0RPTK0nUP3cg
+1Kx5QPG/5/FyrpxO07HN1/w8OeivKbLivNPhvS/pLVOMTp26vxyWdE6v+sDg7+b8
+EI4UX1Y9bb+DMgsF5/pgKKJId0BpckZ1wlevTrbQ+GxXjJrlaDrqUsML5u4Uickg
+YXEv5AcNwj/Svd9DZhbCYgr9P+GCXAvgaXjke6YrOLQJfhmXHZd5STNy59njZ6+g
+xOApAYaE6GZxh3s5XXZcegJkjhzzqdrkjrmUohp31+CqeFEecW0e2TrmAGoDPkf5
+Bq2tf9ETVvyxuxNzuK7y5GNI4O+ByFbugeqR/ioZRvxtL5DqJ7iyMmRT0+bQhc7f
+GPVl990SpPXTn1s/fLoYyk27n4qi0DAS87ORV+nm0nH36IojE5E6ju2hlRu5KMzn
+x6fqgo0vhNyKF1Xid7gAklXzvG1+7uJTOISqmcRFiprr8NB6L1nvY5fV4Twva6lk
+UN60fWePbNg=
+=L4IS
+-----END PGP SIGNATURE-----
+
+--y0ulUmNC+osPPQO6--
