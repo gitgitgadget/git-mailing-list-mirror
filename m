@@ -1,145 +1,102 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFD PATCH 0/3] Free all the memory!
-Date: Tue, 17 May 2016 10:58:30 -0700
-Message-ID: <CAGZ79kaJoAxqtsTuErQSgJiVeD_vdZ1MQXKr-LTtyro-FbscTQ@mail.gmail.com>
-References: <20160517032247.25092-1-sbeller@google.com> <CAPig+cT9UKEcNXvsQsFDrQycKwMJR5bCter76UL-zpkncniPBw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC-PATCHv6 4/4] pathspec: allow querying for attributes
+Date: Tue, 17 May 2016 11:05:10 -0700
+Message-ID: <xmqqposkwofd.fsf@gitster.mtv.corp.google.com>
+References: <20160517031353.23707-1-sbeller@google.com>
+	<20160517031353.23707-5-sbeller@google.com>
+	<xmqqvb2dxomo.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbYB_4KO+XpYa0OhAcU63Q2M2kLWa03HcxeYS1HJOgfZw@mail.gmail.com>
+	<xmqq37pgy4fn.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kYbUTC7m-5kdTbvxmSkq__5BVz5x1UeieHhB4TVSqssHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>,
-	David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue May 17 19:58:38 2016
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue May 17 20:05:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2jGQ-0002yL-0e
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 19:58:38 +0200
+	id 1b2jMv-0006G8-9O
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 20:05:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751784AbcEQR6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 13:58:33 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:35642 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751571AbcEQR6c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 13:58:32 -0400
-Received: by mail-io0-f176.google.com with SMTP id d62so33700904iof.2
-        for <git@vger.kernel.org>; Tue, 17 May 2016 10:58:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ERwl5PbHQ7uUcUVe1wQ1DtpcxnZcFq8Px2ox5XPOUwE=;
-        b=o15erxyiFuHOwWNdghvUWhPYTGnY4otHZfRteBT71EkR1DsbcO0YgHnErQwKihSlmz
-         HzE2pERBBBNSUMVdD8pDSyKOIgCg32wnIDMkraGCsO3bJ5Ff6e3G2yfK9/2WNquuIGYP
-         91iPgbz42rhZ9b46WV7Y5lA0AbkAXYjjMPf8zN2N6q6YBTo+W/Mdx39BocNiT69REnn7
-         8m/whnUfQ7ETIKHEukxKUy9KvK3f32JIxDKFmVtuHfLEOqq9qJcmpg+HEsHfY2qnh1vt
-         KuMpgN5pwLaCfJ/E+UcYfHnirfBaAzJ7dO/krwqOWi34gXLWnvjQWA/kMXClp2MjPYps
-         luiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ERwl5PbHQ7uUcUVe1wQ1DtpcxnZcFq8Px2ox5XPOUwE=;
-        b=WC8wqp7wya0icoSbopZoK2mXrc1DPcXI3ITV/gzh8f/v9ib+o1noUEWQg9cC0Dg+od
-         evWDmzQG/qkZAJxSPDyukGZw/BGwkk9fN6O+h0Sjlbmp1+LIQuv5MigbXNVxB7OxTCuy
-         FlgPXN3swCf5IGgJjOOUsmoBBrpcofBCNpo7TidFjvf+CiaPsEodehl+b32LAOwrZMdi
-         0GKJq9J6Rl7mrlN693/dXsBM3WburzHvJht0zeuaWhbDuNp/HSExtqX1m7qzXfwWo3t7
-         W1mostx77SkNkdEXB0ILWdc1/mspJCmujYcrBNVy9XtyhpkvUB3mOm9DAQIYOX/t/7uN
-         4X3g==
-X-Gm-Message-State: AOPr4FWFc7RJNsJgc109DXpMGilLADJRcjXQkyN5F+xIM6EOgTC9c5a8HLkLZNqEyG1ER6On/GwYZK0V8B+O8pV7
-X-Received: by 10.36.62.133 with SMTP id s127mr2107328its.98.1463507911128;
- Tue, 17 May 2016 10:58:31 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Tue, 17 May 2016 10:58:30 -0700 (PDT)
-In-Reply-To: <CAPig+cT9UKEcNXvsQsFDrQycKwMJR5bCter76UL-zpkncniPBw@mail.gmail.com>
+	id S1752115AbcEQSFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2016 14:05:15 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51681 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751741AbcEQSFO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 14:05:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AAEC61C9F2;
+	Tue, 17 May 2016 14:05:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4+PE7WhvY0/JDRzNSRm3J5S+6jg=; b=JQ2Ioh
+	J+aHleudc1P2Bk245hnMmQ4H5AEItymBonW9JKTccg3tSR5bFkbOSvrMmji8irZE
+	eoi7elOdlcAVEgcANJL0kKetyV0ii1fNFS1iLlhwZeiOfoEzsgUgl3WQC7IXYhYE
+	dF18ZeOmthYqSwVKoUZ3zy59DcCIwYoXzY5ok=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UeNM93gFXT2yv+Hryaz6NLJSU+GmLWoL
+	U66FSeOjluwIcDCsWyw8uYUdUl9jG8eC2y4sgA3SbfRNEZgfv0+0STkVPMim9Rf3
+	RRhlXnp3XIgCrvz6hrJ9yRmfGZU71RZUYoxqfa/7tM04SkbvwbianUrJ3iHt6l4+
+	/XEJWgjLKDs=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A246F1C9F1;
+	Tue, 17 May 2016 14:05:12 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C3571C9EB;
+	Tue, 17 May 2016 14:05:11 -0400 (EDT)
+In-Reply-To: <CAGZ79kYbUTC7m-5kdTbvxmSkq__5BVz5x1UeieHhB4TVSqssHw@mail.gmail.com>
+	(Stefan Beller's message of "Tue, 17 May 2016 10:45:31 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E62AF51E-1C59-11E6-92E4-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294887>
 
-On Mon, May 16, 2016 at 8:41 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, May 16, 2016 at 11:22 PM, Stefan Beller <sbeller@google.com> wrote:
->> When using automated tools to find memory leaks, it is hard to distinguish
->> between actual leaks and intentional non-cleanups at the end of the program,
->> such that the actual leaks hide in the noise.
->>
->> The end goal of this (unfinished) series is to close all intentional memory
->> leaks when enabling the -DFREE_ALL_MEMORY switch. This is just
->> demonstrating how the beginning of such a series could look like.
+Stefan Beller <sbeller@google.com> writes:
+
+> I am not talking about crazy stuff here, but consider our own
+> .gitattributes file:
 >
-> Considering the signal-to-noise ratio mentioned above, the goal seems
-> reasonable, but why pollute the code with #ifdef's all over the place
-> by making the cleanup conditional? If you're going though the effort
-> of plugging all these leaks, it probably makes sense to do them
-> unconditionally.
-
-I tried that once upon a time. The resentment from the list was:
-
-    We're exiting soon anyway (e.g. some cmd_foo function). Letting the
-    operating system clean up after us is faster than when we do it, so don't
-    do it.
-
-However it would be nice to have a distinction between "I know we're leaking
-this memory, but we don't care for $REASONS" and a genuine leak that
-should concern the developers.
-
-So as a developer I wish we would close all leaks that are non-concerning.
-As a user I don't care about those leaks.
-
-David writes:
-> AFAIK, nothing in the "definitely lost" category is fixed by your rev-parse patch.
+>     * whitespace=!indent,trail,space
+>     *.[ch] whitespace=indent,trail,space
+>     *.sh whitespace=indent,trail,space
 >
-> I don't think we care that much about "still reachable" memory -- I only care about lost memory.  I could imagine, I guess, something that happens to save a pointer to a bunch of memory that should be freed, but I don't think that's the common case.
-
-As said above I'd want them to be fixed for me as a developer for
-better automated tooling and detection. (The alternative to fix the automated
-tooling is a no-no for me ;)
-
-Matthieu Moy writes:
-> One potential issue with this is: if all developers and the testsuite
-> use this -DFREE_ALL_MEMORY, the non-free-all-memory setup will not be
-> well tested, and still this is the one used by real people. For example,
-> if there's a really annoying memory leak hidden by FREE_ALL_MEMORY, we
-> may not notice it.
+> Now I want to search for
 >
-> Perhaps it'd be better to activate FREE_ALL_MEMORY only when tools like
-> valgrind or so is used.
+>     "the whitespace attribute that is set to at least trail and space"
 
-That's a really good point. I'l keep it in mind for a reroll.
+With :(attr:VAR=VAL) syntax, you can only look for whitespace
+attribute exactly set to "!indent,trail,space", so you can't.  So
+you are talking about crazy stuff after all, aren't you?  Are you
+now extending it to do "whitespace~=indent" or something like that?
 
+You do not even need VAR=VAL form for your main topic.  You only
+need group-doc group-code etc. to look for "set to TRUE", no?
 
-Eric Wong writes:
-> I haven't checked for git, but I suspect we get speedups by not
-> calling free().  I've never needed to profile git, but free() at
-> exit has been a measurable bottleneck in other projects I've
-> worked on.  Often, free() was more expensive than *alloc().
+I do not want to see us wasting too much time over-engineering it
+without having a concrete and useful use case, and "find path to
+whom whitespace checks are set for 'trail' and 'space'" is not.
+These comma-separated tokens augment WS_DEFAULT_RULE which has
+'trail' already, so you do not look for 'trail' in the first place.
 
-Thanks for reiterating that original response I got back then :)
+"I want submodules under subs/ that is in either group-doc or
+group-code" is more reasonable and realistic use case, but that does
+not need any crazy stuff.  Either two separate pathspec elements,
 
->
-> In any case, I like constant conditionals in C or inline wrappers
-> macros over CPP #ifdefs littered inside functions:
->
-> /* in git-compat-util.h */
-> #ifdef FREE_ALL_MEMORY
-> static inline void optional_free(void *ptr) {}
-> #else
-> #  define FREE_ALL_MEMORY (0)
-> #  define optional_free(ptr) free(ptr)
-> #endif
->
-> /* inside any function: */
->        if (FREE_ALL_MEMORY)
->                big_function_which_calls_multiple_frees();
->
+	":(attr:group-doc)subs/" ":(attr:group-code)/subs/"
 
-Shouldn't that be "#ifndef" instead? I really like the
-"optional_free", I'll keep it in mind!
+or if we are to do the "ORed collection of ANDed attrs", it would be
+something like:
 
->
-> Also Valgrind has suppression files, so code modifications may
-> not be necessary at all.
+	":(attr:group-doc):(attr:group-code)/subs/"
 
-But there are more tools than just valgrind. (Although valgrind is really good!)
+no?
