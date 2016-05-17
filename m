@@ -1,155 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] t9801 and t9803 broken on next
-Date: Tue, 17 May 2016 08:13:31 -0400
-Message-ID: <20160517121330.GA7346@sigill.intra.peff.net>
-References: <3A110437-F778-42E2-A987-86B4EAB3D963@gmail.com>
- <20160513103621.GA12329@dcvr.yhbt.net>
- <xmqqpospap8g.fsf@gitster.mtv.corp.google.com>
- <4830D469-3885-4010-9A04-D809F0C6159D@gmail.com>
- <xmqq37pk8q0h.fsf@gitster.mtv.corp.google.com>
- <5E7631C9-DD59-4358-B907-D7C7AEA1739C@gmail.com>
+From: sandraeric55@silvaonline.biz
+Subject: Hello dear!
+Date: Tue, 17 May 2016 07:46:40 -0500
+Message-ID: <312908.40303.qm@smtp105.biz.mail.bf1.yahoo.com>
+Reply-To: sandraeric539@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-	Git Users <git@vger.kernel.org>,
-	Luke Diamand <luke@diamand.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 17 14:13:47 2016
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients <sandraeric55@silvaonline.biz>
+X-From: git-owner@vger.kernel.org Tue May 17 14:54:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2dsd-0005fY-Um
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 14:13:44 +0200
+	id 1b2eVe-0000S2-UX
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 14:54:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932756AbcEQMNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 08:13:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40666 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932580AbcEQMNe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 08:13:34 -0400
-Received: (qmail 18869 invoked by uid 102); 17 May 2016 12:13:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 May 2016 08:13:33 -0400
-Received: (qmail 13319 invoked by uid 107); 17 May 2016 12:13:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 May 2016 08:13:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 May 2016 08:13:31 -0400
-Content-Disposition: inline
-In-Reply-To: <5E7631C9-DD59-4358-B907-D7C7AEA1739C@gmail.com>
+	id S1752879AbcEQMx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2016 08:53:58 -0400
+Received: from smtp105.biz.mail.bf1.yahoo.com ([98.139.221.43]:47740 "EHLO
+	smtp105.biz.mail.bf1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752819AbcEQMx6 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 08:53:58 -0400
+X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 May 2016 08:53:58 EDT
+Received: (qmail 13827 invoked from network); 17 May 2016 12:47:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1463489237; bh=/vk0g7tABh2ea2+T8xJMwmtmpYGeFzonsy8zKzV8gz4=; h=Message-ID:Content-Type:MIME-Version:Content-Transfer-Encoding:Content-Description:Subject:To:From:Date:Reply-To; b=oVTJcSV7phiFN7jfBkflnO28y2gMhU+wVDB9Wp9utb1vKvh1I9sUsYXCEGbOkookjYUASo+mONR4mfUb9+wnMCaUdt1ocNmSA6ENcJwe2rIYxM2feFfeFGOaB0YXJP14RcbMqbmv6//8hc66dsqqfs5yRoVpO1XzZnK1iUDn86o=
+X-Yahoo-Newman-Property: ymail-3
+X-YMail-OSG: wjLIDnQVM1kNduBhzP_UCrPfVBZoMrPAs2WpPB4YNWgZzl9
+ ZPhofyNSxGJEXIXlv4uy2i32OBu_f2eyCu4p7siI2FSYJUTbIRCA.ohY0bmd
+ Ke7W_byI5Dx0bkJhkwiV_qm1GeCuk0W3ICshh7fr3xs58mycwrQMLrDx2VYY
+ xeFkeBuIvYOOrkwV2jeE_brZcz_KLvs0ssFe.1FhbIjqs8oMRzEEgecGryco
+ BCwPGn4xQ0o02z_JD5.qbginCgOmAqprtBJ1aV58QUmwQX8ZNt.9f18VZwwf
+ dVVF_G5GUx5yxcR4cczepy0PMsnDA4umx7AAWs4UjrZR8qN3p.vbOEBzjzgW
+ tpAsDOvajHaPgZYKHnfUh89MCbk0DuvToU23OlfM7ePG1NTSj11mFGP3D5O8
+ ZuqYaIc1RYflcC9dM6vCoxYjtGc5jlw5tVSTl5nl.N0CABIpoONJtGCin9iB
+ 94ICk8JdDNe544xNmOYrMl.7eKD8mQLTvL1GFzf1QSRhJzv.G7FpAiKR_OOC
+ ORV3oYmsrJnJOalodqBvd8Nn3oUgqbkeGzSIuCU4lMfvX57NpiKqlHz1LXBg
+ Blyqklm47cHz1hw5T3dPPfhWlB641ClrZNnF0APgp9m_HOHUQH1MhpLnk9dw
+ IrQ--
+X-Yahoo-SMTP: AgBDHE2swBCfXEIOcfXATYpliGcCqNXAJRnghtcDN7dJDVy1lRB6VsgLYfDmUl6R8.h4bSU-
+Content-Description: Mail message body
+X-Antivirus: avast! (VPS 160516-2, 05/16/2016), Outbound message
+X-Antivirus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294866>
 
-On Tue, May 17, 2016 at 10:07:16AM +0200, Lars Schneider wrote:
 
-> I think that is pretty much the problem. Here is what is happening:
-> 
-> 1.  git-p4 imports all changelists for the "main" branch
-> 
-> 2.  git-p4 starts to import a second branch and creates a fast-import
->     "progress checkpoint". This triggers:
-> 
->     --> fast-import.c: cycle_packfile
->     --> fast-import.c: end_packfile
->     --> fast-import.c: loosen_small_pack
-> 
->     At this point we have no packfile anymore.
-> 
-> 3.  git-p4 sends the command "commit refs/remotes/p4/depot/branch2"
->     to fast-import in order to create a new branch. This triggers:
-> 
->     --> fast-import.c: parse_new_commit
->     --> fast-import.c: load_branch
->     --> fast-import.c: load_tree
-> 
->     "load_tree" calls "find_object" and the result has a "pack_id" of 0.
->     I think this indicates that the object is in the packfile. Shouldn't
->     the "pack_id" be "MAX_PACK_ID" instead?
-> 
->         myoe = find_object(sha1);
->         if (myoe && myoe->pack_id != MAX_PACK_ID) {
+I wish you in sincerity a wonderful life full of love and happiness.How are you my dear?am Sandra Eric.hope this message find you in good health. Don't find it disturbing please,dear i which you contact me with my email address for a confidential discussion which i will disclose to you as soon as i receive your mail.it's pleasure to hear from you,God bless.
+Here is my email - sandraeric539@gmail.com
 
-Thanks for the analysis. I think this is definitely the problem.  After
-fast-import finalizes a packfile (either at the end of the program or
-due to a checkpoint), it never discards its internal mapping of objects
-to pack locations. It _has_ to keep such a mapping before the pack is
-finalized, because git's regular object database doesn't know about it.
-But afterwards, it should be able to rely on the object database.
-
-Retaining the mapping at the end of the program is obviously OK because
-we won't make any more lookups in it.
-
-Retaining it at a checkpoint when we keep the packfile is OK, because we
-can (usually) still access that packfile (the exception would be if
-somebody runs "git repack" while fast-import is running).
-
-But obviously a checkpoint where we throw away the pack needs to clear
-that mapping.
-
-The patch below probably makes your case work, but there are a lot of
-open questions:
-
-  1. Should we always discard the mapping, even when not loosening
-     objects? I can't think of a real downside to always using git's
-     object lookups.
-
-  2. Can we free memory associated with object_entry structs at this
-     point? They won't be accessible via the hash, but might other bits
-     of the code have kept pointers to them?
-
-     I suspect it may screw up the statistics that fast-import prints at
-     the end, but that's a minor point.
-
-  3. I notice that a few other structs (branch and tag) hold onto the
-     pack_id, which will now point to a pack we can't access. Does this
-     matter? I don't think so, because checkpoint() seems to dump the
-     branches and tags.
-
-  4. In general, should we be loosening objects at checkpoints at all?
-
-     I guess it is probably more efficient than creating a bunch of
-     little packs. And it should probably not happen much at all outside
-     of tests (i.e., callers should generally checkpoint after an
-     appreciable amount of work is done).
-
-diff --git a/fast-import.c b/fast-import.c
-index 0e8bc6a..9bfbfb0 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -597,6 +597,22 @@ static struct object_entry *insert_object(unsigned char *sha1)
- 	return e;
- }
- 
-+static void clear_object_table(void)
-+{
-+	unsigned int h;
-+	for (h = 0; h < ARRAY_SIZE(object_table); h++) {
-+		/*
-+		 * We can't individually free objects here
-+		 * because they are allocated from a pool.
-+		 */
-+		object_table[h] = NULL;
-+	}
-+	/*
-+	 * XXX maybe free object_entry_pool here,
-+	 * or might something still be referencing them?
-+	 */
-+}
-+
- static unsigned int hc_str(const char *s, size_t len)
- {
- 	unsigned int r = 0;
-@@ -1035,6 +1051,9 @@ discard_pack:
- 	pack_data = NULL;
- 	running = 0;
- 
-+	/* The objects are now available via git's regular lookups. */
-+	clear_object_table();
-+
- 	/* We can't carry a delta across packfiles. */
- 	strbuf_release(&last_blob.data);
- 	last_blob.offset = 0;
+---
+This email has been checked for viruses by Avast antivirus software.
+https://www.avast.com/antivirus
