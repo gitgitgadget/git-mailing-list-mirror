@@ -1,78 +1,112 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 3/5] t1500: avoid changing working directory outside of tests
-Date: Tue, 17 May 2016 16:48:33 -0400
-Message-ID: <CAPig+cTAgB6DXoEeJaDVy7_J7QiqNOm6AJqZTiSowO6_jqa8_w@mail.gmail.com>
-References: <20160517193630.10379-1-sunshine@sunshineco.com>
-	<20160517193630.10379-4-sunshine@sunshineco.com>
-	<xmqqeg90v2ss.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 10/12] attr: convert git_all_attrs() to use "struct git_attr_check"
+Date: Tue, 17 May 2016 14:08:37 -0700
+Message-ID: <xmqq7fesv1d6.fsf@gitster.mtv.corp.google.com>
+References: <20160516210545.6591-1-gitster@pobox.com>
+	<20160516210545.6591-11-gitster@pobox.com>
+	<xmqqeg90y5yz.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Michael Rappazzo <rappazzo@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 17 22:48:40 2016
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 17 23:08:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2luw-0000An-UF
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 22:48:39 +0200
+	id 1b2mES-0000wi-4P
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 23:08:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750821AbcEQUsf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 16:48:35 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:34050 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750711AbcEQUse (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 16:48:34 -0400
-Received: by mail-io0-f193.google.com with SMTP id d62so5859850iof.1
-        for <git@vger.kernel.org>; Tue, 17 May 2016 13:48:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=Wd6sw5PPeb5IjxfAEXbIns47Ep187rHnj5VpBQgqLFs=;
-        b=Rf9ZMZ3sJPqrWdIZSy8kFvClOka2ursdGVBaacdoT+/FOkGXjlEy74AH7S3fQg0ruS
-         /yHARdZSmXzhrhHHS4os7OpEFyRt1aObpDOWrsWvQPsajzLXiFsPcTvWrAQuhdsbYgz/
-         YxlJpmCADQ0XByAjzLmYg+sO21HWBjS+RUwOPuhUzOZKwGPFrKc7obA/N7DhoPq1GX9X
-         DXyXoOZoi2QaD+14dTx/N9JipUZ3N9QUCQOAIbny/FJmrn8qLRdweKBZNfqHqaPjITK4
-         CBf8GJODnvmnNcU5dm/DEntOr5jAc7H5rEZlyCDyqk95uJ42VNs5IIWUk0UtYywe8tGf
-         Jgxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Wd6sw5PPeb5IjxfAEXbIns47Ep187rHnj5VpBQgqLFs=;
-        b=VsvyYjUyUctYNdKGb6jNWG/n92nIgrKNSh5n/gRu0rztNvo/hPbOuSY+8WQMnParX0
-         boD5bQF2mJrpjm+g9rASp2Fxv1eBzZqcRZFQYa6QgiBPRcgOuDJYGMSvl9y3b4MtSEac
-         bZo6EIbdmnBKKXl4b43cy25pkx5hjfzoNabO91R3gBLK7RV46pMqEILOrLL935G94RoV
-         qRQVo4gdkTUncvX7ZZOG7YEDT7X8ObiypjYFiTjL0wBsNbnATInqPXLjAnEiE4yloJhL
-         VVuojHXWz4FOOA3PlUuYBVEPedT0QyYYAdcwg/WhyyA0jp47FAAmxVtAXHvmRxQoAPRq
-         jYQQ==
-X-Gm-Message-State: AOPr4FUIpaueKFfkgrm4/bOlyY2MT4qEcHo49QGTx2Us7mxYfXRYonlWaM+Ldq5GH5ZKr7Td7EDNA1HSh47BiA==
-X-Received: by 10.107.132.66 with SMTP id g63mr2838264iod.34.1463518113462;
- Tue, 17 May 2016 13:48:33 -0700 (PDT)
-Received: by 10.79.139.135 with HTTP; Tue, 17 May 2016 13:48:33 -0700 (PDT)
-In-Reply-To: <xmqqeg90v2ss.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: ZasreCskjkjU2ZRE7CXsw1SfzCA
+	id S1751886AbcEQVIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2016 17:08:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62465 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751346AbcEQVIl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 17:08:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 29B6A1B050;
+	Tue, 17 May 2016 17:08:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sBQjoHdkoxcltLSwz6soWAL8JU8=; b=NqMxaF
+	NhzgPLxXWfTneNyZaBFUj7CM/iqABT9LsUJhL3u7blkvViCC0gbTGD1SdT3AA6XG
+	R9Qjiz2gtrDQxvkMxtmFbQiXrR8HMDdz1SVxqWFfP7dfRdfxkWxceID9qvNdrzQe
+	aMepIy15tZIezvXGKvaKu1GyKQVQZaHWcO0gY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=m5tbKi4bSyZceqhhfvLqO3FmvUg/tmhq
+	8rJwU+2buuiXkP3+nbkSKkTqIeXi0hHCpGZvhr/7G8NwSXDZY9u3PIzUTe1StNOC
+	SP5uKQmSD1HB9E3vIoOWA/KGUdINAIeDzPl2y4KYCnEj+5knu4i22YDeRrpjFm/m
+	ElIlkfsYmes=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 221741B04F;
+	Tue, 17 May 2016 17:08:40 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C16D1B04E;
+	Tue, 17 May 2016 17:08:39 -0400 (EDT)
+In-Reply-To: <xmqqeg90y5yz.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 17 May 2016 10:00:52 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8733B4AA-1C73-11E6-8B5C-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294914>
 
-On Tue, May 17, 2016 at 4:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->> +                     git ${dir:+-C "$dir"} rev-parse --$o >actual &&
->
-> This is kosher POSIX, but I vaguely recall some shells had trouble
-> with the SP between -C and "$dir" in the past.  Let's see if anybody
-> screams; hopefully I am misremembering or buggy shells died out.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I also am bothered by a vague recollection of some issue (possibly
-involving the internal space and lack of quotes around the entire
-${...}), but couldn't remember nor find a reference to the specific
-details. Perhaps someone reading the patch has a better memory than I.
+> Given that one of the two expected callers, namely, "check-attr" and
+> Stefan's pathspec label magic, of this "alloc and then append" side
+> of the API wants to have an access to git_attr(name), I think
+> the function signature for this one should be updated to take not
+> "const char *name" but instead take "struct git_attr *attr", i.e.
+
+Perhaps this can be squashed into 12/12 to update the tutorial part
+to cover this less often used form.
+
+ Documentation/technical/api-gitattributes.txt | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
+index 6f13f94..92fc32a 100644
+--- a/Documentation/technical/api-gitattributes.txt
++++ b/Documentation/technical/api-gitattributes.txt
+@@ -55,7 +55,11 @@ Querying Specific Attributes
+ 
+ * Prepare `struct git_attr_check` using git_attr_check_initl()
+   function, enumerating the names of attributes whose values you are
+-  interested in, terminated with a NULL pointer.
++  interested in, terminated with a NULL pointer.  Alternatively, an
++  empty `struct git_attr_check` can be prepared by calling
++  `git_attr_check_alloc()` function and then attributes you want to
++  ask about can be added to it with `git_attr_check_append()`
++  function.
+ 
+ * Call `git_check_attr()` to check the attributes for the path.
+ 
+@@ -112,6 +116,22 @@ static void setup_check(void)
+ 	}
+ ------------
+ 
++To see how attributes in argv[] are set for different paths, only
++the first step in the above would be different.
++
++------------
++static struct git_attr_check *check;
++static void setup_check(const char **argv)
++{
++	check = git_attr_check_alloc();
++	while (*argv) {
++		struct git_attr *attr = git_attr(*argv);
++		git_attr_check_append(check, attr);
++		argv++;
++	}
++}
++------------
++
+ 
+ Querying All Attributes
+ -----------------------
