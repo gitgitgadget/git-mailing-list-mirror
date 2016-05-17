@@ -1,7 +1,7 @@
 From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH v6 1/9] connect: call get_host_and_port() earlier
-Date: Tue, 17 May 2016 10:35:46 +0900
-Message-ID: <20160517013554.22578-2-mh@glandium.org>
+Subject: [PATCH v6 2/9] connect: only match the host with core.gitProxy
+Date: Tue, 17 May 2016 10:35:47 +0900
+Message-ID: <20160517013554.22578-3-mh@glandium.org>
 References: <20160517013554.22578-1-mh@glandium.org>
 Cc: gitster@pobox.com, tboegi@web.de
 To: git@vger.kernel.org
@@ -11,199 +11,123 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2Tvn-0006uf-5F
-	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 03:36:19 +0200
+	id 1b2Tvm-0006uf-0m
+	for gcvg-git-2@plane.gmane.org; Tue, 17 May 2016 03:36:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932993AbcEQBgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S932995AbcEQBgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 16 May 2016 21:36:06 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:35468 "EHLO
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:35500 "EHLO
 	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932983AbcEQBgD (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932981AbcEQBgD (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 16 May 2016 21:36:03 -0400
 Received: from glandium by zenigata with local (Exim 4.87)
 	(envelope-from <glandium@glandium.org>)
-	id 1b2TvO-0005t1-Qn; Tue, 17 May 2016 10:35:54 +0900
+	id 1b2TvO-0005t3-S7; Tue, 17 May 2016 10:35:54 +0900
 X-Mailer: git-send-email 2.8.2.411.ga570dec.dirty
 In-Reply-To: <20160517013554.22578-1-mh@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294826>
 
-Currently, get_host_and_port() is called in git_connect() for the ssh
-protocol, and in git_tcp_connect_sock() for the git protocol. Instead
-of doing this, just call it from a single place, right after
-parse_connect_url(), and pass the host and port separately to
-git_*_connect() functions.
+Currently, core.gitProxy doesn't actually match purely on domain names
+as documented: it also matches ports.
 
-We however preserve hostandport, at least for now.
+So a core.gitProxy value like "script for kernel.org" doesn't make the
+script called for an url like git://kernel.org:port/path, while it is
+called for git://kernel.org/path.
 
-Note that in git_tcp_connect_sock, the port was set to "<none>" in a
-case that never can happen, so that code path was removed.
+This per-port behavior seems like an oversight rather than a deliberate
+choice, so, make git://kernel.org:port/path call the gitProxy script in
+the case described above.
+
+However, if people have been relying on this behavior, git now fails
+with an error message inviting for a configuration change.
 
 Signed-off-by: Mike Hommey <mh@glandium.org>
 ---
- connect.c | 47 +++++++++++++++++++++++------------------------
- 1 file changed, 23 insertions(+), 24 deletions(-)
+ connect.c              | 20 +++++++++++++++++---
+ t/t5532-fetch-proxy.sh |  8 +++++++-
+ 2 files changed, 24 insertions(+), 4 deletions(-)
 
 diff --git a/connect.c b/connect.c
-index c53f3f1..d3448c2 100644
+index d3448c2..0f48cde 100644
 --- a/connect.c
 +++ b/connect.c
-@@ -343,18 +343,16 @@ static const char *ai_name(const struct addrinfo *ai)
- /*
-  * Returns a connected socket() fd, or else die()s.
-  */
--static int git_tcp_connect_sock(char *host, int flags)
-+static int git_tcp_connect_sock(const char *host, const char *port, int flags)
- {
- 	struct strbuf error_message = STRBUF_INIT;
- 	int sockfd = -1;
--	const char *port = STR(DEFAULT_GIT_PORT);
- 	struct addrinfo hints, *ai0, *ai;
- 	int gai;
- 	int cnt = 0;
- 
--	get_host_and_port(&host, &port);
--	if (!*port)
--		port = "<none>";
-+	if (!port)
-+		port = STR(DEFAULT_GIT_PORT);
- 
- 	memset(&hints, 0, sizeof(hints));
- 	if (flags & CONNECT_IPV4)
-@@ -411,11 +409,10 @@ static int git_tcp_connect_sock(char *host, int flags)
- /*
-  * Returns a connected socket() fd, or else die()s.
-  */
--static int git_tcp_connect_sock(char *host, int flags)
-+static int git_tcp_connect_sock(const char *host, const char *port, int flags)
- {
- 	struct strbuf error_message = STRBUF_INIT;
- 	int sockfd = -1;
--	const char *port = STR(DEFAULT_GIT_PORT);
- 	char *ep;
- 	struct hostent *he;
- 	struct sockaddr_in sa;
-@@ -423,7 +420,8 @@ static int git_tcp_connect_sock(char *host, int flags)
- 	unsigned int nport;
- 	int cnt;
- 
--	get_host_and_port(&host, &port);
-+	if (!port)
-+		port = STR(DEFAULT_GIT_PORT);
- 
- 	if (flags & CONNECT_VERBOSE)
- 		fprintf(stderr, "Looking up %s ... ", host);
-@@ -482,9 +480,10 @@ static int git_tcp_connect_sock(char *host, int flags)
- #endif /* NO_IPV6 */
- 
- 
--static void git_tcp_connect(int fd[2], char *host, int flags)
-+static void git_tcp_connect(int fd[2], const char *host, const char *port,
-+			    int flags)
- {
--	int sockfd = git_tcp_connect_sock(host, flags);
-+	int sockfd = git_tcp_connect_sock(host, port, flags);
- 
- 	fd[0] = sockfd;
- 	fd[1] = dup(sockfd);
-@@ -550,18 +549,16 @@ static int git_use_proxy(const char *host)
- 	return (git_proxy_command && *git_proxy_command);
+@@ -490,6 +490,8 @@ static void git_tcp_connect(int fd[2], const char *host, const char *port,
  }
  
--static struct child_process *git_proxy_connect(int fd[2], char *host)
-+static struct child_process *git_proxy_connect(int fd[2], const char *host,
-+					       const char *port)
- {
--	const char *port = STR(DEFAULT_GIT_PORT);
- 	struct child_process *proxy;
  
--	get_host_and_port(&host, &port);
--
- 	proxy = xmalloc(sizeof(*proxy));
- 	child_process_init(proxy);
- 	argv_array_push(&proxy->args, git_proxy_command);
- 	argv_array_push(&proxy->args, host);
--	argv_array_push(&proxy->args, port);
-+	argv_array_push(&proxy->args, port ? port : STR(DEFAULT_GIT_PORT));
- 	proxy->in = -1;
- 	proxy->out = -1;
- 	if (start_command(proxy))
-@@ -672,7 +669,8 @@ static struct child_process no_fork = CHILD_PROCESS_INIT;
- struct child_process *git_connect(int fd[2], const char *url,
- 				  const char *prog, int flags)
- {
--	char *hostandport, *path;
-+	char *hostandport, *path, *host;
-+	const char *port = NULL;
- 	struct child_process *conn = &no_fork;
- 	enum protocol protocol;
- 	struct strbuf cmd = STRBUF_INIT;
-@@ -683,6 +681,8 @@ struct child_process *git_connect(int fd[2], const char *url,
- 	signal(SIGCHLD, SIG_DFL);
++static char *get_port(char *host);
++
+ static char *git_proxy_command;
  
- 	protocol = parse_connect_url(url, &hostandport, &path);
-+	host = xstrdup(hostandport);
-+	get_host_and_port(&host, &port);
- 	if ((flags & CONNECT_DIAG_URL) && (protocol != PROTO_SSH)) {
- 		printf("Diag: url=%s\n", url ? url : "NULL");
- 		printf("Diag: protocol=%s\n", prot_name(protocol));
-@@ -707,9 +707,9 @@ struct child_process *git_connect(int fd[2], const char *url,
+ static int git_proxy_command_options(const char *var, const char *value,
+@@ -517,10 +519,14 @@ static int git_proxy_command_options(const char *var, const char *value,
+ 			/* matches everybody */
+ 			matchlen = strlen(value);
+ 		else {
+-			hostlen = strlen(for_pos + 5);
++			struct strbuf host = STRBUF_INIT;
++			char *port;
++			strbuf_addstr(&host, for_pos + 5);
++			port = get_port(host.buf);
++			hostlen = strlen(host.buf);
+ 			if (rhost_len < hostlen)
+ 				matchlen = -1;
+-			else if (!strncmp(for_pos + 5,
++			else if (!strncmp(host.buf,
+ 					  rhost_name + rhost_len - hostlen,
+ 					  hostlen) &&
+ 				 ((rhost_len == hostlen) ||
+@@ -528,6 +534,14 @@ static int git_proxy_command_options(const char *var, const char *value,
+ 				matchlen = for_pos - value;
+ 			else
+ 				matchlen = -1;
++			if (matchlen > 0 && port)
++				die("core.gitProxy only supports \"for "
++				    "host/domain\", not \"for host:port\".\n"
++				    "Please change your configuration "
++				    "accordingly.\nPlease note that the port "
++				    "is given as second argument to the proxy "
++				    "script.\n");
++			strbuf_release(&host);
+ 		}
+ 		if (0 <= matchlen) {
+ 			/* core.gitproxy = none for kernel.org */
+@@ -706,7 +720,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 		/* These underlying connection commands die() if they
  		 * cannot connect.
  		 */
- 		if (git_use_proxy(hostandport))
--			conn = git_proxy_connect(fd, hostandport);
-+			conn = git_proxy_connect(fd, host, port);
+-		if (git_use_proxy(hostandport))
++		if (git_use_proxy(host))
+ 			conn = git_proxy_connect(fd, host, port);
  		else
--			git_tcp_connect(fd, hostandport, flags);
-+			git_tcp_connect(fd, host, port, flags);
- 		/*
- 		 * Separate original protocol components prog and path
- 		 * from extended host header with a NUL byte.
-@@ -737,22 +737,20 @@ struct child_process *git_connect(int fd[2], const char *url,
- 		if (protocol == PROTO_SSH) {
- 			const char *ssh;
- 			int putty = 0, tortoiseplink = 0;
--			char *ssh_host = hostandport;
--			const char *port = NULL;
- 			transport_check_allowed("ssh");
--			get_host_and_port(&ssh_host, &port);
+ 			git_tcp_connect(fd, host, port, flags);
+diff --git a/t/t5532-fetch-proxy.sh b/t/t5532-fetch-proxy.sh
+index 51c9669..efa80f8 100755
+--- a/t/t5532-fetch-proxy.sh
++++ b/t/t5532-fetch-proxy.sh
+@@ -33,7 +33,9 @@ test_expect_success 'setup proxy script' '
  
- 			if (!port)
--				port = get_port(ssh_host);
-+				port = get_port(host);
+ test_expect_success 'setup local repo' '
+ 	git remote add fake git://example.com/remote &&
+-	git config core.gitproxy ./proxy
++	git remote add fake_b git://example.org/remote &&
++	git config core.gitproxy "./proxy for example.com" &&
++	git config --add core.gitproxy "./proxy for example.org:9418"
+ '
  
- 			if (flags & CONNECT_DIAG_URL) {
- 				printf("Diag: url=%s\n", url ? url : "NULL");
- 				printf("Diag: protocol=%s\n", prot_name(protocol));
--				printf("Diag: userandhost=%s\n", ssh_host ? ssh_host : "NULL");
-+				printf("Diag: userandhost=%s\n", host ? host : "NULL");
- 				printf("Diag: port=%s\n", port ? port : "NONE");
- 				printf("Diag: path=%s\n", path ? path : "NULL");
+ test_expect_success 'fetch through proxy works' '
+@@ -43,4 +45,8 @@ test_expect_success 'fetch through proxy works' '
+ 	test_cmp expect actual
+ '
  
- 				free(hostandport);
-+				free(host);
- 				free(path);
- 				free(conn);
- 				return NULL;
-@@ -798,7 +796,7 @@ struct child_process *git_connect(int fd[2], const char *url,
- 				argv_array_push(&conn->args, putty ? "-P" : "-p");
- 				argv_array_push(&conn->args, port);
- 			}
--			argv_array_push(&conn->args, ssh_host);
-+			argv_array_push(&conn->args, host);
- 		} else {
- 			transport_check_allowed("file");
- 		}
-@@ -812,6 +810,7 @@ struct child_process *git_connect(int fd[2], const char *url,
- 		strbuf_release(&cmd);
- 	}
- 	free(hostandport);
-+	free(host);
- 	free(path);
- 	return conn;
- }
++test_expect_success 'core.gitProxy with port fails' '
++	test_must_fail git fetch fake_b
++'
++
+ test_done
 -- 
 2.8.2.411.ga570dec.dirty
