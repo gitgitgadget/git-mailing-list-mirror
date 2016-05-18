@@ -1,72 +1,144 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: RE: [Bug] git-log prints wrong unixtime with --date=format:%s
-Date: Wed, 18 May 2016 12:44:43 -0400
-Message-ID: <005a01d1b124$976dceb0$c6496c10$@nexbridge.com>
-References: <87vb2d37ea.fsf@web.de> <8760ucoaus.fsf@web.de>	<20160518004008.GA20007@sigill.intra.peff.net>	<20160518005824.GA7120@sigill.intra.peff.net> <xmqqvb2bs5f5.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "'Michael Heerdegen'" <michael_heerdegen@web.de>,
-	<git@vger.kernel.org>
-To: "'Junio C Hamano'" <gitster@pobox.com>,
-	"'Jeff King'" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 18 18:45:07 2016
+From: Antoine Queru <Antoine.Queru@ensimag.grenoble-inp.fr>
+Subject: [PATCH] upload-pack.c: use of parse-options API
+Date: Wed, 18 May 2016 18:40:19 +0200
+Message-ID: <20160518164019.26443-1-Antoine.Queru@ensimag.grenoble-inp.fr>
+Cc: william.duclot@ensimag.grenoble-inp.fr,
+	simon.rabourg@ensimag.grenoble-inp.fr,
+	francois.beutin@ensimag.grenoble-inp.fr,
+	Matthieu.Moy@grenoble-inp.fr,
+	Antoine Queru <Antoine.Queru@ensimag.grenoble-inp.fr>,
+	Antoine Queru <antoine.queru@grenoble-inp.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 18 18:48:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b34an-0007M9-N9
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 18:45:06 +0200
+	id 1b34eH-0001LN-GC
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 18:48:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753423AbcERQpA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2016 12:45:00 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:51208 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752609AbcERQo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2016 12:44:59 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [174.112.90.66])
-	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id u4IGitIP088004
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Wed, 18 May 2016 12:44:55 -0400 (EDT)
-	(envelope-from rsbecker@nexbridge.com)
-In-Reply-To: <xmqqvb2bs5f5.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQInIeoWAW0xNve+6XPolRPPOistbQJt/9XUA2G2Y9sBlcDtiwKmDhSRnsOnNzA=
-Content-Language: en-ca
+	id S932113AbcERQsi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 12:48:38 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:45817 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753237AbcERQsh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 May 2016 12:48:37 -0400
+X-Greylist: delayed 448 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 May 2016 12:48:36 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 1940720F4;
+	Wed, 18 May 2016 18:41:05 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id u2hcAFb8ufMN; Wed, 18 May 2016 18:41:05 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 05AAB20F1;
+	Wed, 18 May 2016 18:41:05 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id F40832066;
+	Wed, 18 May 2016 18:41:04 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HRuCfzAGUsbO; Wed, 18 May 2016 18:41:04 +0200 (CEST)
+Received: from quetutemobile.grenet.fr (eduroam-032070.grenet.fr [130.190.32.70])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id DCFDD2064;
+	Wed, 18 May 2016 18:41:04 +0200 (CEST)
+X-Mailer: git-send-email 2.8.2.403.gaa9c3f6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294973>
 
-On May 18, 2016 12:22 PM Jeff King wrote:
-> > I tried a few obvious things, but couldn't make anything work. Setting
-> > "timezone" manually seems to do nothing. It's supposed to be set by
-> > putting the right thing in $TZ and then calling tzset(). So I tried
-> > munging $TZ to something like "+0200". It did have _some_ effect, but
-> > I
-> 
-> Wouldn't that be more like "UTC+0200"?
-> 
-> In any case, I do not think anybody wants to do tzset() on each and every
-> commit while running "git log".  Can we declare "format:<strftime>"
-> will always use the local timezone, or something?
+Option parsing now uses the parser API instead of a local parser.
+Code is now more compact.
 
-Off the wall: Dealing in a dispersed team sharing a server that has a
-timezone local for only two of the members, git log messes with me also from
-a TZ POV. I would like to suggest a more general solution, like configuring
-my own TZ in ~/.gitconfig which would potentially allow an override on the
-command line. Would user.timezone be helpful in this situation and if set,
-call setenv("TZ=...")? It's not an issue when I'm local, but if I touch a
-clone on the server, even I get confused around DST changes in October ;).
+Signed-off-by: Antoine Queru <antoine.queru@grenoble-inp.fr>
+Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+---
+This is our first project as a warm up. It was taken from the GSoC microproject list. 
+ upload-pack.c | 51 ++++++++++++++++-----------------------------------
+ 1 file changed, 16 insertions(+), 35 deletions(-)
 
-Cheers,
-Randall
-
--- Brief whoami: NonStop&UNIX developer since approximately
-UNIX(421664400)/NonStop(211288444200000000)
--- In my real life, I talk too much.
+diff --git a/upload-pack.c b/upload-pack.c
+index dc802a0..80f65eb 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -14,8 +14,12 @@
+ #include "sigchain.h"
+ #include "version.h"
+ #include "string-list.h"
++#include "parse-options.h"
+ 
+-static const char upload_pack_usage[] = "git upload-pack [--strict] [--timeout=<n>] <dir>";
++static const char * const upload_pack_usage[] = {
++	N_("git upload-pack [--strict] [--timeout=<n>] <dir>"),
++	NULL
++};
+ 
+ /* Remember to update object flag allocation in object.h */
+ #define THEY_HAVE	(1u << 11)
+@@ -820,49 +824,26 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
+ int main(int argc, char **argv)
+ {
+ 	char *dir;
+-	int i;
+ 	int strict = 0;
++	struct option options[] = {
++		OPT_HIDDEN_BOOL(0, "stateless-rpc", &stateless_rpc, NULL),
++		OPT_HIDDEN_BOOL(0, "advertise-refs", &advertise_refs, NULL),
++		OPT_BOOL(0, "strict", &strict, NULL),
++		OPT_INTEGER(0, "timeout", &timeout, NULL),
++		OPT_END()
++	};
+ 
+ 	git_setup_gettext();
+ 
+ 	packet_trace_identity("upload-pack");
+ 	git_extract_argv0_path(argv[0]);
+ 	check_replace_refs = 0;
+-
+-	for (i = 1; i < argc; i++) {
+-		char *arg = argv[i];
+-
+-		if (arg[0] != '-')
+-			break;
+-		if (!strcmp(arg, "--advertise-refs")) {
+-			advertise_refs = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--stateless-rpc")) {
+-			stateless_rpc = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--strict")) {
+-			strict = 1;
+-			continue;
+-		}
+-		if (starts_with(arg, "--timeout=")) {
+-			timeout = atoi(arg+10);
+-			daemon_mode = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--")) {
+-			i++;
+-			break;
+-		}
+-	}
+-
+-	if (i != argc-1)
+-		usage(upload_pack_usage);
+-
++	argc = parse_options(argc, (const char **)argv, NULL, options, upload_pack_usage, 0);
++	if (timeout != 0)
++		daemon_mode = 1;
+ 	setup_path();
+ 
+-	dir = argv[i];
++	dir = argv[0];
+ 
+ 	if (!enter_repo(dir, strict))
+ 		die("'%s' does not appear to be a git repository", dir);
+-- 
+2.8.2.403.gaa9c3f6
