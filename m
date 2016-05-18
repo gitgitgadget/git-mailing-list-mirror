@@ -1,113 +1,96 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v4 2/2] convert: ce_compare_data() checks for a sha1 of a
- path
-Date: Wed, 18 May 2016 06:26:23 +0200
-Message-ID: <573BEEEF.8040305@web.de>
-References: <573A993F.8020205@web.de>
- <1463503301-3634-1-git-send-email-tboegi@web.de>
- <xmqq60ucwlz8.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fast-import: do not truncate exported marks file
+Date: Tue, 17 May 2016 22:02:04 -0700
+Message-ID: <xmqqoa84t0vn.fsf@gitster.mtv.corp.google.com>
+References: <1463521223-14565-1-git-send-email-felipe.contreras@gmail.com>
+	<xmqq1t50uxy1.fsf@gitster.mtv.corp.google.com>
+	<CAMP44s1WDzRAFV8iNj_RYiiRwJdBcuUDVR-Ew5FF37qdpEO5Mg@mail.gmail.com>
+	<CAPc5daVJCfnEfA1sHrAGsXaA-80kFV4_4Hd0tLOMocE+qVV=-Q@mail.gmail.com>
+	<CAMP44s06+V8_PvYA=wsqZ625hrMPLKuZ6v5eOmLBO97kTqwxvw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 18 06:26:46 2016
+Content-Type: text/plain
+Cc: git-fc <git-fc@googlegroups.com>, Git <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 18 07:02:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2t4H-00053U-0M
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 06:26:45 +0200
+	id 1b2tcd-00088c-1y
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 07:02:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751382AbcERE0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2016 00:26:37 -0400
-Received: from mout.web.de ([212.227.15.4]:59629 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751068AbcERE0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2016 00:26:37 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0LZeou-1bS04I2DZE-00lUSt; Wed, 18 May 2016 06:26:30
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
- Icedove/38.7.0
-In-Reply-To: <xmqq60ucwlz8.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:C7dNTKJ+AWp5MqyTj0jgeWQROpeDwIqHf/bWCH7owuqe/k1+Od3
- JwR8GOhym+3cOtI5qEBhIEfCqNPrBOfnSqiU6Bkk7hLTroBL7qvlhdmzOlWLKvwKx73bWcG
- CoUpagKiWvmmPF8SnifLTRJofAAZyYoaChpPu08kqu4Ob65XeDaKyzARJFBqDW0e8mVcqeQ
- cV3gx9+2xpyCeWX0sJuRQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:azcT7rLNTdk=:Fb3jKzF18fja8lVdV4fHXH
- iePZndX5J4/c/BaRGk+/LHBt7l/6sXC7A8x1FogJMwe9Abpmo78Pf+ouTN2Px5A0yES7sSt/P
- WySqeJhhmWzF9EiAfEt9eL58Z5a2RabxsO43hZQWA7j7mX7BH+RZZ3YCrgjrUCcJbENrsaDOk
- TJcQkK1bNyPvbtf/Ylfdy9xi7UgCAHVLowa4XCNn4lFqsXuqGgs/kX9uOgcB2BPEyntWknSgi
- 6P6T4jRWa5re/kJxwCMFmmMRrR4dLWuQtNj5T6Q6p+8HiAydTNnFxUWpHrRkvOJRzBlbnLmUf
- 1O0s69gDLFhDZmZZjfMnQq1dbg+V6agU4vzTxsgGXSFNs/OuFpXdFd2IbwlIJzleF4ss7f13j
- KGTaztipnqgW1c8B0kAkwMxbY5JXSoEmAXTfHk64FgUy1QrRTKoofgUY3Obxu6DRfxNm7xjkM
- QnPf1bMu+xmmngvB4esgkRYP2MqJNBcH6JGnl78QVb1WAhfTAcRZ/AgmWdUtETXGVCJoCYHW3
- 7g9AE0r26JYvH7BXVFV9tMgMv175vCdiOti2XK/qYXLLd/oRgUGU8IumDvC9IcEtKG+xe8lyP
- s4T08m7blomBu51v6ogPtoSUjmt1MfzvgkDTN6ssoZMxA5nF+uoj2LyTQFASGhcssgMGml6Nd
- 3jfwjEEkCNm5ZUO9E5zy7LA8cSHDLnRRTbPzAql9jCsthFDsmMjnb4hpoVVhgDzzkVxjmDJAD
- WEWpfs067bFJPg61YVzWAfZBe2Aeq5aSiv9nhackEfHSScURCmHcL2MIbKvTkVRH7YESwUDW 
+	id S1751758AbcERFCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 01:02:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59465 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751403AbcERFCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2016 01:02:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 189B31DEB5;
+	Wed, 18 May 2016 01:02:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=A5M4dSqJvmLo++LPKslX4laRTHc=; b=Q/EhLo
+	XG1YXU5ES1j6Hn3OgWu8d3j75ejD2Ot1zdkmhC1xxMwxhURbmKoxkWj60Sc0+l1I
+	dylprGVFiUF3yEcKTTtkMrdAA/HGsQZ2sWEB0M24rUB0io39lD6QZykWE9Um74lz
+	SQkWjtsBJs4NN+sCHRb5nBHNsaLnkB/zIZPU4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fUnBFPUrr1thGWWmGHIyhRNkWNg+bPfP
+	hM1dviGtCweFf9xnSxSvwSmbfzXQSgmtnQRaPEy8suO/C9q/BNYsA/0Tz1nr3BwE
+	Lr+Dichkz6eWa0Ss1WyksL/ITGSh2DGly+qY+stdjR0mN8sA2DXQFUjuj6SfKz7I
+	OVhUlzQJEHY=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EEB11DEB4;
+	Wed, 18 May 2016 01:02:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7716F1DEB3;
+	Wed, 18 May 2016 01:02:06 -0400 (EDT)
+In-Reply-To: <CAMP44s06+V8_PvYA=wsqZ625hrMPLKuZ6v5eOmLBO97kTqwxvw@mail.gmail.com>
+	(Felipe Contreras's message of "Tue, 17 May 2016 23:03:41 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AB0116BA-1CB5-11E6-8916-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294933>
 
-On 05/17/2016 08:58 PM, Junio C Hamano wrote:
-> tboegi@web.de writes:
->
->>   #define HASH_WRITE_OBJECT 1
->>   #define HASH_FORMAT_CHECK 2
->> +#define HASH_CE_HAS_SHA1  4
->
-> How does one pronounce the words in this constant?  Does it make a
-> listener understand what this constant means?
-How about
-HASH_USE_SHA1_FROM_CE
-or
-HASH_CE_HAS_VALID_SHA1
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-
+> On Tue, May 17, 2016 at 10:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> On Tue, May 17, 2016 at 8:31 PM, Felipe Contreras
+>> <felipe.contreras@gmail.com> wrote:
+>>> On Tue, May 17, 2016 at 5:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
->
-> /*
->   * We need a comment around here to say what these two
->   * parameters mean.  I am guessing that (1) if sha1 is not NULL,
->   * path is ignored and the function inspects if it has CR; (2)
->   * otherwise it checks the index entry at path and inspects if
->   * it has CR.
->   */
+>>>>  - Even if we did not read from any existing marks file, if we are
+>>>>    given export_marks_file that names an existing file, wouldn't we
+>>>>    want to avoid corrupting it with a dump from this aborted run?
+>>>
+>>> If we don't run from an existing marks file, this patch has no effect.
 >>
->> -static int has_cr_in_index(const char *path)
->> +static int has_cr_in_index(const char *path, const unsigned char *sha1)
->>   {
+>> Yes, that is exactly what I was wondering if we may want to improve
+>> while at it.
 >
-> This makes me seriously wonder if it is a good idea to modify this
-> function like this.  (1) means this function is not about IN INDEX
-> at all!
->
-> Perhaps add a "static int blob_has_cr(const unsigned char *sha1)"
-> and call it from the real caller you added that wants to call this
-> butchered two-param version that has sha1 is a better solution?
->
->> -static int crlf_to_git(const char *path, const char *src, size_t len,
->> +static int crlf_to_git(const char *path, const unsigned char *sha1,
->> +		       const char *src, size_t len,
->>   		       struct strbuf *buf,
->>   		       enum crlf_action crlf_action, enum safe_crlf checksafe)
->>   {
->> @@ -260,7 +267,7 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
->>   			 * If the file in the index has any CR in it, do not convert.
->>   			 * This is the new safer autocrlf handling.
->>   			 */
->> -			if (has_cr_in_index(path))
->> +			if (has_cr_in_index(path, sha1))
+> This doesn't make much sense. Corrupted from where? This patch is
+> tackling the issue where the imported marks file is "corrupted".
 
->
-> I think this change is too ugly.  The new "sha1" parameter is
-> telling us that "in order to see if the indexed version has CR, do
-> not look at the index, but look at the contents of this blob".
-Thanks for some fresh eyes, I guess that
-blob_has_cr(sha1)
-would make most sense.
+s/corrupted/overwritten by garbage/ is what I really meant, but in
+any case, I do not think there is any valid use case that relied on
+the current behaviour that will be broken by this update.  I do not
+think a script that used separate import and export marks files (and
+used mv to rename the exported one to the import used by the next
+round, only after seeing fast-import successfully exits) would be
+harmed, as a non-zero status is still a non-exit status and it
+wouldn't have moved a corrupt export file to the next import, for
+example.  Other people and real users of fast-import might find
+cases I couldn't think of that this change negatively affects, but
+that's expected for any change and that's why we cook any changes in
+'pu' and then 'next'.
+
+So let's queue this as a strict improvement.
+
+Thanks.
