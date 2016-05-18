@@ -1,83 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/12] revamping git_check_attr() API
-Date: Wed, 18 May 2016 11:36:07 -0700
-Message-ID: <xmqqk2irrz6w.fsf@gitster.mtv.corp.google.com>
-References: <20160516210545.6591-1-gitster@pobox.com>
-	<CAGZ79kYLVDkeHUMCxOB57YYeJt3f4O8csEp_tyO-oWMTzJ-9hw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed May 18 20:36:18 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCHv7 2/5] Documentation: fix a typo
+Date: Wed, 18 May 2016 12:02:19 -0700
+Message-ID: <20160518190222.28105-3-sbeller@google.com>
+References: <20160518190222.28105-1-sbeller@google.com>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com, pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Wed May 18 21:02:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b36KO-00021e-Mz
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 20:36:17 +0200
+	id 1b36jq-00023o-TH
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 21:02:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753673AbcERSgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2016 14:36:12 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64291 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752609AbcERSgM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2016 14:36:12 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 66BC21C03E;
-	Wed, 18 May 2016 14:36:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eosOxSdz5bvuC1OLQFrt779x7UY=; b=I1Mlnx
-	+5hYVcQTyjIhOqXZoxXaWyqpRXaRxivGQxR4aRLrBidyA9AygupI4brwxc0Y/FGP
-	Tb1t5bUYrFoIcyVBHYU9FTW5bjiYZL/C90i+j1cB1PQw5nHjHNdmG+GE/Y6k0WVM
-	WxdrZnxWcci393P1qTk4lfVTFMdWq9bIyJ+vU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gYnXk83U0jURHq2LLO5MbyhsnbR+IpQ0
-	EBbfplKq6K4CmSkyWZu3zr6RJHOAvOvNlk5a7MmcWjAaucYS2MRGorVGPQ7sOXsy
-	O7LMPECfbrH+eG+4JWFDV4WpcztaP3CPuCmTDlzlq9TejF9il3RIcH+CYWURSF/X
-	ievZA26MWEo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5CEC01C03C;
-	Wed, 18 May 2016 14:36:10 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D6E341C03B;
-	Wed, 18 May 2016 14:36:09 -0400 (EDT)
-In-Reply-To: <CAGZ79kYLVDkeHUMCxOB57YYeJt3f4O8csEp_tyO-oWMTzJ-9hw@mail.gmail.com>
-	(Stefan Beller's message of "Wed, 18 May 2016 09:51:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 63EF2312-1D27-11E6-80FD-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1753957AbcERTCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 15:02:32 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:32838 "EHLO
+	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753349AbcERTCa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2016 15:02:30 -0400
+Received: by mail-pf0-f170.google.com with SMTP id 206so21471795pfu.0
+        for <git@vger.kernel.org>; Wed, 18 May 2016 12:02:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Q4ZsB0PCCS+pY5qIDQy9mLBBNIR9s/x3xJ2f/SSufLs=;
+        b=pJZAzUO2gFgs9d1Uo1UyXbvGkEdR0yDFY0oPPHjSbK6gA1A5udnQ7O3bDYsUMGDU0q
+         QFz/EwWDHn2kT8cndR+T8kB+ujAoJjuhD91MuxDq8scgrp6SE3Jd0p84nvN2Soc+q0ja
+         ks3lMqsKCqLNKlYXc0GJ1gTTRMAlmccITtMBE0iRrWnzbzyp5if28jhPeowFWyiKR7Qj
+         5xqD30Wd73LvYUCAmyxpqASVwkwUWe2eVNiEezNavfrXEfmCDCNgkXItO95W3tFE/hRj
+         XYAHYt7HlRtJx39VgLd0Qbbn6iOtdmuDtHLDaVke3X2xCPdvF94JUY4upqE3Gc+mg2ne
+         asZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Q4ZsB0PCCS+pY5qIDQy9mLBBNIR9s/x3xJ2f/SSufLs=;
+        b=iqyuKHwVFUoNCns+zOhqs9gniprlmKTA072w0ULUKcbASEuDEKEqI6fbOD8NjLt0pE
+         ScRZcWLv4cpCD/wW2dU9YMZP0/c4SFHs9lt4csG+WMQyVWsgyU5L9vaEzzh3l8MYIb88
+         55JYLF2vGA1TCngRx2VJCZn87hzVMNqkczjO5JUGDatWYGsDjvbnQkf5dEp7hBYX0PQf
+         HK1lKknphcaZ2/P02LWcDdzB3GqAg4CZ5lcHjwuP16lQrgX3F49O2Mt854xaMHMjXYuM
+         Yt2TxZjVE0Wv2NVwpy9JEgKqQ6GKt6GDJR8FX0bEH2Pc9qtrKCz3mOUNMVg5d5rO5Tsg
+         JIAA==
+X-Gm-Message-State: AOPr4FVQAENxGBCu2BzGTVUUV7UIFSNEBST/kWdxB3ljoQBgOAQP2kUswAXf2lnsFjyGS3tS
+X-Received: by 10.98.79.213 with SMTP id f82mr13121943pfj.65.1463598149785;
+        Wed, 18 May 2016 12:02:29 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:d468:afb3:b0f0:947e])
+        by smtp.gmail.com with ESMTPSA id o63sm14034765pfj.30.2016.05.18.12.02.28
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 18 May 2016 12:02:28 -0700 (PDT)
+X-Mailer: git-send-email 2.8.2.121.ga97fb08
+In-Reply-To: <20160518190222.28105-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294987>
 
-Stefan Beller <sbeller@google.com> writes:
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ Documentation/gitattributes.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->> The patches in the earliest part of the series have been sent to the
->> list already; there is no substantial change (I think I made a
->> typofix in the commit log message found by Eric).
->
-> and a new patch got added here:
->
->     attr.c: tighten constness around "git_attr" structure
->
-> I cannot find it on the list though?
-
-Just like everybody else has private "wip" version to be sent to the
-list, I have my own.  I haven't had enough time to cook v3 yet into
-a publishable state yet.
-
-> So I wondered when you prefix the subject of the patches with "attr.c:"
-> and when with "attr:".
-
-The early ones with label attr.c are meant to be "good clean-ups,
-whether we decide to go with API update or not, that can live
-standalone outside the series"; the remainders may have been better
-labeled with fully-spelled "attributes:", perhaps, as that is not
-about the attr.c file alone, but is about the whole attributes
-subsystem.
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index e3b1de8..af2c682 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -86,7 +86,7 @@ is either not set or empty, $HOME/.config/git/attributes is used instead.
+ Attributes for all users on a system should be placed in the
+ `$(prefix)/etc/gitattributes` file.
+ 
+-Sometimes you would need to override an setting of an attribute
++Sometimes you would need to override a setting of an attribute
+ for a path to `Unspecified` state.  This can be done by listing
+ the name of the attribute prefixed with an exclamation point `!`.
+ 
+-- 
+2.8.2.121.ga97fb08
