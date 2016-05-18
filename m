@@ -1,144 +1,79 @@
-From: Antoine Queru <Antoine.Queru@ensimag.grenoble-inp.fr>
-Subject: [PATCH] upload-pack.c: use of parse-options API
-Date: Wed, 18 May 2016 18:40:19 +0200
-Message-ID: <20160518164019.26443-1-Antoine.Queru@ensimag.grenoble-inp.fr>
-Cc: william.duclot@ensimag.grenoble-inp.fr,
-	simon.rabourg@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr,
-	Matthieu.Moy@grenoble-inp.fr,
-	Antoine Queru <Antoine.Queru@ensimag.grenoble-inp.fr>,
-	Antoine Queru <antoine.queru@grenoble-inp.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 18 18:48:42 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2 00/12] revamping git_check_attr() API
+Date: Wed, 18 May 2016 09:51:23 -0700
+Message-ID: <CAGZ79kYLVDkeHUMCxOB57YYeJt3f4O8csEp_tyO-oWMTzJ-9hw@mail.gmail.com>
+References: <20160516210545.6591-1-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 18 18:51:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b34eH-0001LN-GC
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 18:48:41 +0200
+	id 1b34hB-0003Hs-W3
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 18:51:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932113AbcERQsi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2016 12:48:38 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:45817 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753237AbcERQsh (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 May 2016 12:48:37 -0400
-X-Greylist: delayed 448 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 May 2016 12:48:36 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 1940720F4;
-	Wed, 18 May 2016 18:41:05 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id u2hcAFb8ufMN; Wed, 18 May 2016 18:41:05 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 05AAB20F1;
-	Wed, 18 May 2016 18:41:05 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id F40832066;
-	Wed, 18 May 2016 18:41:04 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HRuCfzAGUsbO; Wed, 18 May 2016 18:41:04 +0200 (CEST)
-Received: from quetutemobile.grenet.fr (eduroam-032070.grenet.fr [130.190.32.70])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id DCFDD2064;
-	Wed, 18 May 2016 18:41:04 +0200 (CEST)
-X-Mailer: git-send-email 2.8.2.403.gaa9c3f6
+	id S932731AbcERQvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 12:51:33 -0400
+Received: from mail-io0-f179.google.com ([209.85.223.179]:34620 "EHLO
+	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932694AbcERQvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2016 12:51:25 -0400
+Received: by mail-io0-f179.google.com with SMTP id 190so72913483iow.1
+        for <git@vger.kernel.org>; Wed, 18 May 2016 09:51:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=nx9w5V8u5SNw2wizsMTx2jOhEmoRFw+Kw8TkmrYUSVQ=;
+        b=WyZW1c9LAQBYmhE+77aQdMK/Nj85K2cK0aFPCk/ewZg5PA0rW3LHBDr6SYTctqBzHu
+         8pCDU8Kn5Fq11QYifu1OnKXPxBY7k4fCjzR6i7ysvTRQUNaS7MEK0l72Cmc3/YaVGNUO
+         ykaCYzPtNfu3yWN5b33vg1ETMdCngUFuckp1YwJfAE9e68hPlSd5fYEddw4p6wgHr2IY
+         ToEHtrRRTnWo6VUjAx2f7buDBTb1FQB8mFtoWJ0/rpAQB06w3mGx/fwcehGuGbKfZTnl
+         ECV8zQ4jMhUrDAmgmlgUVTvrm4tK4kpqpCdHTJCxvFfmTdB4/E1bOGT9JSYxGXZ5aDi6
+         yo1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=nx9w5V8u5SNw2wizsMTx2jOhEmoRFw+Kw8TkmrYUSVQ=;
+        b=ApUJjmLsM7J4vQqDjKF3jBtRVRvgiuwVGQb2kzgq+0T11ras9JjD+hLMbRjfPK4pFt
+         8Qu7MlJq9Lm3pP0EwoI3zr2HxGEUiZzq2zd3pxHJXyLI1GeTJKHWkRDsA7hH55YCNBe/
+         dVpuDCUhE5uofeOWQxAxrrMoQcOOjLiLffez8QsL36d8t89Ke8HpGtvNs3Kr2ctQSErU
+         bYCmRE38SRoB86gfjFOL8JVkVRm5vqfoJp5AdB309UscHKQa8+28Xd67j7FkqhnvRUOL
+         3aGVEcnWC+AnHYS9CkaxvE3wozwTCwcqkhxuvwvIXwvAeZP0Q/3H9uVXCG58s6I5+xvd
+         DU1Q==
+X-Gm-Message-State: AOPr4FXC5ySg3lqPFT3it65eS09U113ksOmLLdIm/2ei7W/sbh0791JoiFYMec5vVbtzKv/xWXxCw70KpXjJhkU+
+X-Received: by 10.107.173.3 with SMTP id w3mr6693716ioe.110.1463590284344;
+ Wed, 18 May 2016 09:51:24 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Wed, 18 May 2016 09:51:23 -0700 (PDT)
+In-Reply-To: <20160516210545.6591-1-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294974>
 
-Option parsing now uses the parser API instead of a local parser.
-Code is now more compact.
+> The patches in the earliest part of the series have been sent to the
+> list already; there is no substantial change (I think I made a
+> typofix in the commit log message found by Eric).
 
-Signed-off-by: Antoine Queru <antoine.queru@grenoble-inp.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
----
-This is our first project as a warm up. It was taken from the GSoC microproject list. 
- upload-pack.c | 51 ++++++++++++++++-----------------------------------
- 1 file changed, 16 insertions(+), 35 deletions(-)
+and a new patch got added here:
 
-diff --git a/upload-pack.c b/upload-pack.c
-index dc802a0..80f65eb 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -14,8 +14,12 @@
- #include "sigchain.h"
- #include "version.h"
- #include "string-list.h"
-+#include "parse-options.h"
- 
--static const char upload_pack_usage[] = "git upload-pack [--strict] [--timeout=<n>] <dir>";
-+static const char * const upload_pack_usage[] = {
-+	N_("git upload-pack [--strict] [--timeout=<n>] <dir>"),
-+	NULL
-+};
- 
- /* Remember to update object flag allocation in object.h */
- #define THEY_HAVE	(1u << 11)
-@@ -820,49 +824,26 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
- int main(int argc, char **argv)
- {
- 	char *dir;
--	int i;
- 	int strict = 0;
-+	struct option options[] = {
-+		OPT_HIDDEN_BOOL(0, "stateless-rpc", &stateless_rpc, NULL),
-+		OPT_HIDDEN_BOOL(0, "advertise-refs", &advertise_refs, NULL),
-+		OPT_BOOL(0, "strict", &strict, NULL),
-+		OPT_INTEGER(0, "timeout", &timeout, NULL),
-+		OPT_END()
-+	};
- 
- 	git_setup_gettext();
- 
- 	packet_trace_identity("upload-pack");
- 	git_extract_argv0_path(argv[0]);
- 	check_replace_refs = 0;
--
--	for (i = 1; i < argc; i++) {
--		char *arg = argv[i];
--
--		if (arg[0] != '-')
--			break;
--		if (!strcmp(arg, "--advertise-refs")) {
--			advertise_refs = 1;
--			continue;
--		}
--		if (!strcmp(arg, "--stateless-rpc")) {
--			stateless_rpc = 1;
--			continue;
--		}
--		if (!strcmp(arg, "--strict")) {
--			strict = 1;
--			continue;
--		}
--		if (starts_with(arg, "--timeout=")) {
--			timeout = atoi(arg+10);
--			daemon_mode = 1;
--			continue;
--		}
--		if (!strcmp(arg, "--")) {
--			i++;
--			break;
--		}
--	}
--
--	if (i != argc-1)
--		usage(upload_pack_usage);
--
-+	argc = parse_options(argc, (const char **)argv, NULL, options, upload_pack_usage, 0);
-+	if (timeout != 0)
-+		daemon_mode = 1;
- 	setup_path();
- 
--	dir = argv[i];
-+	dir = argv[0];
- 
- 	if (!enter_repo(dir, strict))
- 		die("'%s' does not appear to be a git repository", dir);
--- 
-2.8.2.403.gaa9c3f6
+    attr.c: tighten constness around "git_attr" structure
+
+I cannot find it on the list though?
+(I only see it in the "What's cooking" email and on origin/jc/attr)
+
+Minor nit:
+So I wondered when you prefix the subject of the patches with "attr.c:"
+and when with "attr:". All patches with "attr.c" prefixed touch only that
+file, the others will change the attr system beyond that file scope.
+However the "tighten constness" touches the header file, too. So
+you'd maybe want to loose the ".c".
+
+Thanks,
+Stefan
