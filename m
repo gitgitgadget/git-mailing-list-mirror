@@ -1,77 +1,155 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv7 5/5] pathspec: allow querying for attributes
-Date: Wed, 18 May 2016 13:00:41 -0700
-Message-ID: <xmqq37pfrv9y.fsf@gitster.mtv.corp.google.com>
-References: <20160518190222.28105-1-sbeller@google.com>
-	<20160518190222.28105-6-sbeller@google.com>
-	<xmqq7ferrvvd.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: pclouds@gmail.com, git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed May 18 22:00:52 2016
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v3 0/5] modernize t1500
+Date: Wed, 18 May 2016 16:15:40 -0400
+Message-ID: <20160518201545.9113-1-sunshine@sunshineco.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Michael Rappazzo <rappazzo@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 18 22:16:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b37eE-0005CU-7n
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 22:00:50 +0200
+	id 1b37t6-0006tS-9h
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 22:16:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753187AbcERUAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2016 16:00:45 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55934 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752101AbcERUAp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2016 16:00:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A8ED1DFE4;
-	Wed, 18 May 2016 16:00:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HXTI5uc1cJ22T89qHC55SCAz2q4=; b=mKfjoA
-	RigWv2Wm7ccIvqZ+oCMhLbfrz7X6Mkmw2n8WO4QZ7mYNNtO/at7F2aS2Aw6JYVzP
-	uY80nyqX/BvL6YRCRjcdWNBe8AopsO0+xFheMzhycTKuLI5yxeqvu5WK/GF1SFuB
-	Gx7fTssUe3rsD5q39JrJCTUZmJcuDFe8eLvuo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=K02ErjeLDtMtcglrW1NztWGxRzAZHc7K
-	DXhuZrW0AUnQUNGahhfa02D21L+7zaO0xnwvdvQw84L+SrR/jhQ97i2SJWFKeCfM
-	viHfN9zbbSTKoZv5cZ7PFcXEC5YZJPIjqlvd/4ncpcc35GzVlV1CKzhm48a4I4Yg
-	waocbJOmiwU=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 83B691DFE3;
-	Wed, 18 May 2016 16:00:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 11BC61DFE2;
-	Wed, 18 May 2016 16:00:43 -0400 (EDT)
-In-Reply-To: <xmqq7ferrvvd.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 18 May 2016 12:47:50 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 33CACD1A-1D33-11E6-A3B9-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752276AbcERUQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 16:16:08 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:34987 "EHLO
+	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751513AbcERUQG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2016 16:16:06 -0400
+Received: by mail-io0-f194.google.com with SMTP id i75so11525453ioa.2
+        for <git@vger.kernel.org>; Wed, 18 May 2016 13:16:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=/dnmM+JLAPCUJuA+1JHN8yITlL3PrtU8yFo7DLW2XTg=;
+        b=vyeLGnIqNN7GA1za8RFVQ4Wz43S9ObOl6liCCh22YW3jLt1WV43BSEysg7agDcNsJJ
+         pTCkwh444GC3Y7H25LUTZXU0FYSa3JjYA/TdT3ZaGr3wUr/tVCvFWnaBnHBO41Kiv1RX
+         efdJSBprVbMkg7RDwGPyHsyF8VJdKtIRNSm9JNwrKAi1NuIzh6yZF6fwra52TGcDDO6v
+         SiDcMNADqIo8kx3aDzPxb7bxPW+Jq50Z7s8k5wPu3GpViHDYXIB26Cw/6e9FfVZ+nxhk
+         YMQpEwNO9kDzU5ZIux6PucJXUeaLx+GBL2sPug5HIIhdBZ6aTEpC+7lgIDf7FAHCyOkN
+         LhLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id;
+        bh=/dnmM+JLAPCUJuA+1JHN8yITlL3PrtU8yFo7DLW2XTg=;
+        b=XJ2IFaUGTETyLqUuMzOqT1IX2mkL+uRwtOdXzso7ZZ3+OCChGujHyP2FVFtezdReFS
+         xIqZG+5PYmXuPHDKAcMjqDbvw8geJ50huQ+X/M2Wmt7shDLxLmyjt7kat8A9d8JHIvTn
+         YjQ1Q13+sDjkHLiedhogp+p8D/Fz4oFe3oQsBqeCS2IDIU2UFYR06jMUPOT5UxDJQvgc
+         KhSqRKpN5XyJPVUXgZK3v4O1uAmE3JeZA4ZU1r5wXE4L2BX2dlLOVHMV9RF2PP3uaZql
+         q6b96CnwuQAmYRvOk0GO466wKaKEH4718UI0+mc2Sazn36orT/xvBFPvpnI6Tg+yk5e6
+         8a6Q==
+X-Gm-Message-State: AOPr4FVMueba1TBy9BbaNDb730s1Skz3gHvKXNzetPqtKeEiPV5YESPi9pQmlHP653K/Kw==
+X-Received: by 10.36.207.137 with SMTP id y131mr20400676itf.32.1463602565017;
+        Wed, 18 May 2016 13:16:05 -0700 (PDT)
+Received: from localhost.localdomain (user-12l3c5v.cable.mindspring.com. [69.81.176.191])
+        by smtp.gmail.com with ESMTPSA id q15sm3241137iod.6.2016.05.18.13.16.02
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Wed, 18 May 2016 13:16:02 -0700 (PDT)
+X-Mailer: git-send-email 2.8.2.748.g927f425
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294999>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This is a re-roll of [1] which modernizes t1500 by updating tests to set
+up their own needed state rather than relying upon manipulation of
+global state.
 
-Just this part:
+Changes since v2[1]:
 
-> The last part "set, unset or value matches" does not make sense,
-> though.
+Avoid POSIX ${dir:+-C "$dir"} since some older broken shells incorrectly
+expand this to a single argument ("-C <dir>") rather than the expected
+two (-C and "<dir>"). Thanks to Peff and SZEDER for providing links to
+previous reports of this problem[2][3].
 
-I re-read the line and I think you meant
+Include the leading dashes in option names iterated over by the for-loop
+in test_rev_parse() to potentially make it easier for some future change
+to specify multiple options at once to git-rev-parse (SZEDER's
+example[4] was "git rev-parse --absolute-path --git-dir").
 
-    ?VAR makes a path match if VAR attribute is set, set to false,
-    or set to value for the path
+A v2 to v3 interdiff is included below.
 
-and I shouldn't have read it as a 3-tuple ("set", "unset", "value matches"),
-but as a 3-tuple ("set", "unset", "value").  That is,
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/294902
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/294902/focus=294916
+[3]: http://thread.gmane.org/gmane.comp.version-control.git/294902/focus=294923
+[4]: http://thread.gmane.org/gmane.comp.version-control.git/294902/focus=294971
 
-    A path (whose attribute state is one of these three) matches.
+Eric Sunshine (5):
+  t1500: be considerate to future potential tests
+  t1500: test_rev_parse: facilitate future test enhancements
+  t1500: avoid changing working directory outside of tests
+  t1500: avoid setting configuration options outside of tests
+  t1500: avoid setting environment variables outside of tests
 
-So I retract "does not make sense"; it still is "hard to grok", though.
+ t/t1500-rev-parse.sh | 123 ++++++++++++++++++++++++++-------------------------
+ 1 file changed, 63 insertions(+), 60 deletions(-)
+
+--- >8 ---
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index 39af565..038e24c 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -5,13 +5,13 @@ test_description='test git rev-parse'
+ 
+ # usage: [options] label is-bare is-inside-git is-inside-work prefix git-dir
+ test_rev_parse () {
+-	dir=
++	d=
+ 	bare=
+ 	gitdir=
+ 	while :
+ 	do
+ 		case "$1" in
+-		-C) dir="$2"; shift; shift ;;
++		-C) d="$2"; shift; shift ;;
+ 		-b) case "$2" in
+ 		    [tfu]*) bare="$2"; shift; shift ;;
+ 		    *) error "test_rev_parse: bogus core.bare value '$2'" ;;
+@@ -25,11 +25,11 @@ test_rev_parse () {
+ 	name=$1
+ 	shift
+ 
+-	for o in is-bare-repository \
+-		 is-inside-git-dir \
+-		 is-inside-work-tree \
+-		 show-prefix \
+-		 git-dir
++	for o in --is-bare-repository \
++		 --is-inside-git-dir \
++		 --is-inside-work-tree \
++		 --show-prefix \
++		 --git-dir
+ 	do
+ 		test $# -eq 0 && break
+ 		expect="$1"
+@@ -42,13 +42,13 @@ test_rev_parse () {
+ 			fi &&
+ 
+ 			case "$bare" in
+-			t*) test_config ${dir:+-C "$dir"} core.bare true ;;
+-			f*) test_config ${dir:+-C "$dir"} core.bare false ;;
+-			u*) test_unconfig ${dir:+-C "$dir"} core.bare ;;
++			t*) test_config ${d:+-C} ${d:+"$d"} core.bare true ;;
++			f*) test_config ${d:+-C} ${d:+"$d"} core.bare false ;;
++			u*) test_unconfig ${d:+-C} ${d:+"$d"} core.bare ;;
+ 			esac &&
+ 
+ 			echo "$expect" >expect &&
+-			git ${dir:+-C "$dir"} rev-parse --$o >actual &&
++			git ${d:+-C} ${d:+"$d"} rev-parse $o >actual &&
+ 			test_cmp expect actual
+ 		'
+ 		shift
+--- >8 ---
+
+-- 
+2.8.2.748.g927f425
