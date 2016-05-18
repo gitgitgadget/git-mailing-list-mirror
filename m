@@ -1,242 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 6/6] upload-pack: provide a hook for running pack-objects
-Date: Wed, 18 May 2016 18:45:37 -0400
-Message-ID: <20160518224537.GF22443@sigill.intra.peff.net>
-References: <20160518223712.GA18317@sigill.intra.peff.net>
+From: Michael Heerdegen <michael_heerdegen@web.de>
+Subject: Re: [Bug] git-log prints wrong unixtime with --date=format:%s
+Date: Thu, 19 May 2016 00:57:15 +0200
+Message-ID: <87vb2b560k.fsf@web.de>
+References: <87vb2d37ea.fsf@web.de> <8760ucoaus.fsf@web.de>
+	<20160518004008.GA20007@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 19 00:45:47 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 19 00:57:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3ADp-0002uS-HZ
-	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 00:45:46 +0200
+	id 1b3APB-0001Xa-34
+	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 00:57:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906AbcERWpl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2016 18:45:41 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41579 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750736AbcERWpk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2016 18:45:40 -0400
-Received: (qmail 32684 invoked by uid 102); 18 May 2016 22:45:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 May 2016 18:45:39 -0400
-Received: (qmail 27731 invoked by uid 107); 18 May 2016 22:45:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 May 2016 18:45:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 May 2016 18:45:37 -0400
-Content-Disposition: inline
-In-Reply-To: <20160518223712.GA18317@sigill.intra.peff.net>
+	id S1751291AbcERW5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 18:57:25 -0400
+Received: from mout.web.de ([212.227.15.14]:52426 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751050AbcERW5Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2016 18:57:24 -0400
+Received: from drachen.dragon ([94.217.122.112]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0M8QeQ-1bpt8x1tzu-00vx9j; Thu, 19 May 2016 00:57:17
+ +0200
+In-Reply-To: <20160518004008.GA20007@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 17 May 2016 20:40:08 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.93 (gnu/linux)
+X-Provags-ID: V03:K0:f4nI1D4M6JMU623453WZUwuVf0GuhEoBdZKSx9LcoNve2eCyGL9
+ APuKWvYxJ7nJCBoXRc69MDodSmC7wzgbtqvAQ3QCqZombrL6k7k1UEl2TN1/mB7KtKHMmVp
+ hKcYE0UumPf1FVwsqakLBJHtip4ceZdbtct4mJQYH0LMGW62NNIC1rEreOEe9PiL8CMe4em
+ MQTTYrPExdFm1RezwX8jA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pbtY6N/yJ70=:1eVL4uRnEIsCtIa5cOOpkn
+ GK/ia9AXOsCKiDCvf5GdPevoPqO5lMKSu1jnz34kbZGT3yfkpafQQJQX/JCW8CuAOLWLxsFLx
+ I/sXEZhdWjyTdSks6/K9VaUlP8cMpqeju6+NFxRG5csQw/FZWhzUsuIwoeYX4XyDdgcJey5IN
+ PQ5hS3vczI5cS2+foon+W7i8dLQFDV0bqBr+h1MlZCwDyrJthEQZlFbYnnznBoM2d2LVJvRLT
+ 0jOJySw+bD9YZeii4/E4gglLHYyFhWm29zJG+x8GbkpoEI7DwlE2RIwPhTucfKCYFi/ZDy60C
+ j0Xgbjx4RQNWX+hcZdxNw3b96omt4xqOvAH8IMPHS+K7r8fFdX0MAbdBZyEX1UekWkGlBUdoI
+ 97pzwEboK3Rb1+uffJfHad1MRhKRiTSKLuBzioOHv7s2+cC5+cRz/Y2B1hj+5RVH9ddyHsaPW
+ PiG7dYHiAbLIuPugObSFVanTuGyjNpbjM6bQsPcT0gAYn4mr0PoVk5sAnnk5CF8fkd5FpX+cb
+ PN5ulIDB0nWulHn7h/8zRPDeSgeT3BRsQ8N48NA+vjh/0vzPRyYDx23HqWdfaU0SsfAp3uTY7
+ wALwzAeQbzFb4gg8MlhO404BU7bR7gky/uTL4TdnDQFVLrIYt6hhsNOe/GbzZe4oQBpG1hTde
+ ADnU6d+dpysXDMNususvyn0nC3QiPEXG2P+/ERx2E/3BDCmNWrnGedqVs2hVcZsXP3d85Fph3
+ UUH78rz4qBcJVbWwOiB4hxmWtrk1AR5yQirDMApd1ddQnYCS+7lJ8niGddnSeFvJ7OVfyfsZ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295025>
 
-When upload-pack serves a client request, it turns to
-pack-objects to do the heavy lifting of creating a
-packfile. There's no easy way to intercept the call to
-pack-objects, but there are a few good reasons to want to do
-so:
+Jeff King <peff@peff.net> writes:
 
-  1. If you're debugging a client or server issue with
-     fetching, you may want to store a copy of the generated
-     packfile.
+> This is probably a totally separate issue, as it would not be using
+> strftime (or IIRC, any of the standard time functions at all). Do you
+> have a detailed example that shows the problem?
 
-  2. If you're gathering data from real-world fetches for
-     performance analysis or debugging, storing a copy of
-     the arguments and stdin lets you replay the pack
-     generation at your leisure.
+Ok, this was probably false alarm.  Magit (An Emacs Git front end) shows
+rounded duration values (rounded hours in my case) in its log views, I
+think I just got confused because of this.  In my tests now, the results
+were as expected.
 
-  3. You may want to insert a caching layer around
-     pack-objects; it is the most CPU- and memory-intensive
-     part of serving a fetch, and its output is a pure
-     function[1] of its input, making it an ideal place to
-     consolidate identical requests.
 
-This patch adds a simple "hook" interface to intercept calls
-to pack-objects. The new test demonstrates how it can be
-used for debugging (using it for caching is a
-straightforward extension; the tricky part is writing the
-actual caching layer).
+Thanks,
 
-This hook is unlike the normal hook scripts found in the
-"hooks/" directory of a repository. Because we promise that
-upload-pack is safe to run in an untrusted repository, we
-cannot execute arbitrary code or commands found in the
-repository (neither in hooks/, nor in the config). So
-instead, this hook is triggered from a config variable that
-is explicitly ignored in the per-repo config.
-
-The config variable holds the actual shell command to run as
-the hook.  Another approach would be to simply treat it as a
-boolean: "should I respect the upload-pack hooks in this
-repo?", and then run the script from "hooks/" as we usually
-do. However, that isn't as flexible; there's no way to run a
-hook approved by the site administrator (e.g., in
-"/etc/gitconfig") on a repository whose contents are not
-trusted. The approach taken by this patch is more
-fine-grained, if a little less conventional for git hooks
-(it does behave similar to other configured commands like
-diff.external, etc).
-
-[1] Pack-objects isn't _actually_ a pure function. Its
-    output depends on the exact packing of the object
-    database, and if multi-threading is used for delta
-    compression, can even differ racily. But for the
-    purposes of caching, that's OK; of the many possible
-    outputs for a given input, it is sufficient only that we
-    output one of them.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/config.txt     | 15 +++++++++++
- t/t5544-pack-objects-hook.sh | 62 ++++++++++++++++++++++++++++++++++++++++++++
- upload-pack.c                | 13 +++++++++-
- 3 files changed, 89 insertions(+), 1 deletion(-)
- create mode 100755 t/t5544-pack-objects-hook.sh
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e4cd291..b9b0541 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2872,6 +2872,21 @@ uploadpack.keepAlive::
- 	`uploadpack.keepAlive` seconds. Setting this option to 0
- 	disables keepalive packets entirely. The default is 5 seconds.
- 
-+uploadpack.packObjectsHook::
-+	If this option is set, when `upload-pack` would run
-+	`git pack-objects` to create a packfile for a client, it will
-+	run this shell command instead.  The `pack-objects` command and
-+	arguments it _would_ have run (including the `git pack-objects`
-+	at the beginning) are appended to the shell command. The stdin
-+	and stdout of the hook are treated as if `pack-objects` itself
-+	was run. I.e., `upload-pack` will feed input intended for
-+	`pack-objects` to the hook, and expects a completed packfile on
-+	stdout.
-++
-+Note that this configuration variable is ignored if it is seen in the
-+repository-level config (this is a safety measure against fetching from
-+untrusted repositories).
-+
- url.<base>.insteadOf::
- 	Any URL that starts with this value will be rewritten to
- 	start, instead, with <base>. In cases where some site serves a
-diff --git a/t/t5544-pack-objects-hook.sh b/t/t5544-pack-objects-hook.sh
-new file mode 100755
-index 0000000..4357af1
---- /dev/null
-+++ b/t/t5544-pack-objects-hook.sh
-@@ -0,0 +1,62 @@
-+#!/bin/sh
-+
-+test_description='test custom script in place of pack-objects'
-+. ./test-lib.sh
-+
-+test_expect_success 'create some history to fetch' '
-+	test_commit one &&
-+	test_commit two
-+'
-+
-+test_expect_success 'create debugging hook script' '
-+	write_script .git/hook <<-\EOF
-+		echo >&2 "hook running"
-+		echo "$*" >hook.args
-+		cat >hook.stdin
-+		"$@" <hook.stdin >hook.stdout
-+		cat hook.stdout
-+	EOF
-+'
-+
-+clear_hook_results () {
-+	rm -rf .git/hook.* dst.git
-+}
-+
-+test_expect_success 'hook runs via global config' '
-+	clear_hook_results &&
-+	test_config_global uploadpack.packObjectsHook ./hook &&
-+	git clone --no-local . dst.git 2>stderr &&
-+	grep "hook running" stderr
-+'
-+
-+test_expect_success 'hook outputs are sane' '
-+	# check that we recorded a usable pack
-+	git index-pack --stdin <.git/hook.stdout &&
-+
-+	# check that we recorded args and stdin. We do not check
-+	# the full argument list or the exact pack contents, as it would make
-+	# the test brittle. So just sanity check that we could replay
-+	# the packing procedure.
-+	grep "^git" .git/hook.args &&
-+	$(cat .git/hook.args) <.git/hook.stdin >replay
-+'
-+
-+test_expect_success 'hook runs from -c config' '
-+	clear_hook_results &&
-+	git clone --no-local \
-+	  -u "git -c uploadpack.packObjectsHook=./hook upload-pack" \
-+	  . dst.git 2>stderr &&
-+	grep "hook running" stderr
-+'
-+
-+test_expect_success 'hook does not run from repo config' '
-+	clear_hook_results &&
-+	test_config uploadpack.packObjectsHook "./hook" &&
-+	git clone --no-local . dst.git 2>stderr &&
-+	! grep "hook running" stderr &&
-+	test_path_is_missing .git/hook.args &&
-+	test_path_is_missing .git/hook.stdin &&
-+	test_path_is_missing .git/hook.stdout
-+'
-+
-+test_done
-diff --git a/upload-pack.c b/upload-pack.c
-index f19444d..8979be6 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -52,6 +52,7 @@ static int keepalive = 5;
- static int use_sideband;
- static int advertise_refs;
- static int stateless_rpc;
-+static const char *pack_objects_hook;
- 
- static void reset_timeout(void)
- {
-@@ -93,6 +94,14 @@ static void create_pack_file(void)
- 	int i;
- 	FILE *pipe_fd;
- 
-+	if (!pack_objects_hook)
-+		pack_objects.git_cmd = 1;
-+	else {
-+		argv_array_push(&pack_objects.args, pack_objects_hook);
-+		argv_array_push(&pack_objects.args, "git");
-+		pack_objects.use_shell = 1;
-+	}
-+
- 	if (shallow_nr) {
- 		argv_array_push(&pack_objects.args, "--shallow-file");
- 		argv_array_push(&pack_objects.args, "");
-@@ -115,7 +124,6 @@ static void create_pack_file(void)
- 	pack_objects.in = -1;
- 	pack_objects.out = -1;
- 	pack_objects.err = -1;
--	pack_objects.git_cmd = 1;
- 
- 	if (start_command(&pack_objects))
- 		die("git upload-pack: unable to fork git-pack-objects");
-@@ -812,6 +820,9 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
- 		keepalive = git_config_int(var, value);
- 		if (!keepalive)
- 			keepalive = -1;
-+	} else if (current_config_scope() != CONFIG_SCOPE_REPO) {
-+		if (!strcmp("uploadpack.packobjectshook", var))
-+			return git_config_string(&pack_objects_hook, var, value);
- 	}
- 	return parse_hide_refs_config(var, value, "uploadpack");
- }
--- 
-2.8.2.888.gecb1fe3
+Michael.
