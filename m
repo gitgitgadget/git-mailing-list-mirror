@@ -1,97 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/21] i18n: advice: internationalize message for conflicts
-Date: Wed, 18 May 2016 14:31:00 -0700
-Message-ID: <xmqqd1ojqciz.fsf@gitster.mtv.corp.google.com>
-References: <1463585274-9027-1-git-send-email-vascomalmeida@sapo.pt>
-	<1463585274-9027-4-git-send-email-vascomalmeida@sapo.pt>
-	<CAPig+cTgQmJG5a8dNjkYcNPG_vEHycyi19sHkO_yO-EfFQzy5A@mail.gmail.com>
-	<573CD7EC.9060606@sapo.pt>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] attr: add counted string version of git_attr()
+Date: Wed, 18 May 2016 14:36:46 -0700
+Message-ID: <CAGZ79kbMsitKNeb-D3gmTFwrRS-6ZiCZcmu1MP42UCd5AHcHbA@mail.gmail.com>
+References: <20160518190222.28105-1-sbeller@google.com> <20160518190222.28105-6-sbeller@google.com>
+ <xmqq7ferrvvd.fsf@gitster.mtv.corp.google.com> <xmqqy477qfr2.fsf@gitster.mtv.corp.google.com>
+ <xmqqmvnnqdtd.fsf_-_@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Vasco Almeida <vascomalmeida@sapo.pt>
-X-From: git-owner@vger.kernel.org Wed May 18 23:31:10 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 18 23:36:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b393e-0007E5-10
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 23:31:10 +0200
+	id 1b399B-0002h9-4P
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 23:36:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752603AbcERVbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2016 17:31:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59328 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752008AbcERVbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2016 17:31:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 386BD1C846;
-	Wed, 18 May 2016 17:31:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Uroeun6s9QDH6yKXudd1pVwvoOU=; b=l/sHXe
-	Pc5nIYUFTJYbby7sLHRM53dmSdmr8+2GlpaxpymeSZs27z154/IQPDk/MIx6tlSO
-	NsTbXy2IMO4BlN0bPst4Cy1W4UT4R61yFIj8009EZVYtD8bq8MSbWmN/sEUtYxa8
-	s8Eov//B1Hw3KYgG5dcDApkt6pah/raqKWFrA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iBlBHlB3qEf2kT3mQclTxcydMvPm6vFj
-	KS1E0kW6sWTYkPG/eK1rp/6w1RAZJk6mqw7wLgfsLdCJ3JEz6DI602g8UFST5zW4
-	i4RejtjU7jIjpjX/kNpuiE02c+nI4YE7pN+T+58JDlUau+gvu4vyLhwFfRyEva1n
-	HotssTx/JfM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2FDED1C845;
-	Wed, 18 May 2016 17:31:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9321A1C844;
-	Wed, 18 May 2016 17:31:02 -0400 (EDT)
-In-Reply-To: <573CD7EC.9060606@sapo.pt> (Vasco Almeida's message of "Wed, 18
-	May 2016 21:00:28 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D21F962E-1D3F-11E6-929E-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1752691AbcERVgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 17:36:48 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:34712 "EHLO
+	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752008AbcERVgr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2016 17:36:47 -0400
+Received: by mail-io0-f171.google.com with SMTP id 190so82966838iow.1
+        for <git@vger.kernel.org>; Wed, 18 May 2016 14:36:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Hmb/WkoVY/Ln3jxy8K5zdZCfc1DpPcmayC3GO99WKus=;
+        b=HSoxo+oVB4NjTLYCXG2gTdlUVH1Fxv0i98FgXGjNBipiZ75GNbfo5wog3sQuTbmOQV
+         TkBVHxUfRHalAUQUDtStI5VPd2B/bwgSd3jJ/p2sGtlfMIt82U1sv9sYwazWdH3bPOci
+         NzZWJeDsD5UFoUIt4v23CmagCZhyoxR1mqIs7/u5GHwo0CY8IEqomu6gOFQGIDR9H4I0
+         eR8Mj4MJ299xMPcNiK/os4m1e53/t5hDs6gqxm+Nx36UbXr5H8JRkYKQjpul1jaT5oHU
+         p1dH6UZPY47qmnj8x5FbnBS8aTOUen5gJpa5tBUuAt+hYwBZDzkHOO9pvC/hsJkSqn2G
+         8l3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Hmb/WkoVY/Ln3jxy8K5zdZCfc1DpPcmayC3GO99WKus=;
+        b=E5n8A55UYcjRaIYbYRFHqcOfkfBPOw2jZ5t8bCT2oM4+UJLqdC9WNbaCYLo3ababzY
+         dp9S4UvmnS4HBdvMpGxDd2Om4UofPZPVg/EjpO3bupaAM7SJ1reTvxkR7X6esgpr3g6p
+         WPoAFi4+BUp/5po7EzSghkCw546jNMWuMyEgeInheZ5owOvy1mvUwYRom1w5ylmj1X+t
+         BYUKFeNXkVPbqqSfyhL+0srEAbE+vQc+1L8FOMegm6qR/TTHI63cuYfvwFHl6JDndKpy
+         TU8O9MhgYbjmU/oRpFix1PaBuWCabBewvK+9rwZ2MVrKdTqH55vO32XGWDDfefBFRNPk
+         6CPA==
+X-Gm-Message-State: AOPr4FXxSCaYQxYdAf1ryDatlD+Q9iL9kru4+NqkYfPZ7pq1AeCdXFw3oyLC5RsEBnysT6hxZg18+C6vs6DyAZkg
+X-Received: by 10.107.53.204 with SMTP id k73mr6915513ioo.174.1463607406701;
+ Wed, 18 May 2016 14:36:46 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Wed, 18 May 2016 14:36:46 -0700 (PDT)
+In-Reply-To: <xmqqmvnnqdtd.fsf_-_@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295013>
 
-Vasco Almeida <vascomalmeida@sapo.pt> writes:
+On Wed, May 18, 2016 at 2:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Often a potential caller has <name, namelen> pair that
+> represents the name it wants to create an attribute out of.
+>
+> When name[namelen] is not NUL, the caller has to xmemdupz()
+> only to call git_attr().
+>
+> Add git_attr_counted() that takes such a counted string instead of
+> "const char *name".
 
->>> +       else
->>> +               error(_("%s is not possible because you have unmerged files."),
->>> +                       me);
->> 
->> Despite the commit message, I still don't understand this change. 'me'
->> is a literal git command which shouldn't be translated, so how is this
->> helping?
->> 
-> I saw it as an operation that could be translated, not necessary a git
-> command
+s/ "const char *name"/a standard C string that is null terminated/ maybe?
 
-The intention of who wrote this message was to tell this to the
-user:
-
-    Running the command '$X' is not possible in this situation.
-
-implying "Don't type '$X' again; it is futile.  Correct the unmerged
-status first".
-
-Our subcommand names are English verbs, because they are designed to
-be easily understandable by English speakers, so we do not exactly
-say "Running the command 'commit'" in the message.  Instead we say
-"commit is not possible..." for brevity.
-
-Languages, if their grammatical rules do not allow a subcommand name
-in the place in a straight-translation of that original sentence,
-are allowed to (and encouraged to) translate the original "%s is not
-possible" as if it were "Running the command '%s' is not possible".
-That is what good translaters would do anyway.
-
-So for this (and 05/21 for the same reasons), I do not think we want
-to split and duplicate the messages.
+"const char *name" is not a strong hint that it is not counted?
