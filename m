@@ -1,119 +1,105 @@
-From: Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>
-Subject: [PATCH] Allow the short-hand - replacing @{-1} in git worktree add
-Date: Thu, 19 May 2016 00:49:18 +0200
-Message-ID: <1463611758-1210-1-git-send-email-jordan.de-gea@ensimag.grenoble-inp.fr>
-Cc: samuel.groot@ensimag.grenoble-inp.fr,
-	erwan.mathoniere@ensimag.grenoble-inp.fr,
-	tom.russello@grenoble-inp.org, Matthieu.Moy@grenoble-inp.fr,
-	Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 19 00:57:56 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv7 5/5] pathspec: allow querying for attributes
+Date: Wed, 18 May 2016 15:59:20 -0700
+Message-ID: <xmqq4m9vq8fr.fsf@gitster.mtv.corp.google.com>
+References: <20160518190222.28105-1-sbeller@google.com>
+	<20160518190222.28105-6-sbeller@google.com>
+	<xmqq7ferrvvd.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79ka0Of6S3AGx24jrvso=AwMsxQOnWVFZA-XWy3590JbVgA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu May 19 00:59:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3APb-0001pG-1s
-	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 00:57:55 +0200
+	id 1b3AR6-0002mT-Qb
+	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 00:59:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751363AbcERW5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2016 18:57:51 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:44489 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751081AbcERW5u (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 May 2016 18:57:50 -0400
-X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 May 2016 18:57:50 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 7A4F92506;
-	Thu, 19 May 2016 00:49:46 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jGy2Tz0AucG1; Thu, 19 May 2016 00:49:46 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 67DCD24A7;
-	Thu, 19 May 2016 00:49:46 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 620562066;
-	Thu, 19 May 2016 00:49:46 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ef-CfbzwEBXK; Thu, 19 May 2016 00:49:46 +0200 (CEST)
-Received: from macbook-pro-de-jordan.home (LFbn-1-8005-19.w90-112.abo.wanadoo.fr [90.112.16.19])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id F312F2064;
-	Thu, 19 May 2016 00:49:45 +0200 (CEST)
-X-Mailer: git-send-email 2.7.4 (Apple Git-66)
+	id S1751331AbcERW7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 18:59:25 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62827 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751097AbcERW7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2016 18:59:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 54ADE1C2C2;
+	Wed, 18 May 2016 18:59:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hLb0B5Mmt8ERDbc8zbV8tdsgLuI=; b=ZxuSJU
+	vqZpRAdbsCAgXe9EN/zWo0CFtyqXMqix/t3RLQ+e1H3KBVxTLiKYfUBbd5jTK2my
+	Z4wUwCypLcWEQManamABfa3u2jvKDmXxhD+x9QXS5gr+RQLswH7t1TIKLdA0b11p
+	KQhgdhSPzSMjHJhmtBbrMoD/jnnXeQ69ccBGY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bjJwwlgwhDKPRhJbUD9dhsZwFcP4LDdc
+	kzsWEelaFpO6eIc61h6KLz9dT3hF/dK+mO4b/OdNlhu5xhPjwAKzqtVGUKkSTbrb
+	5ggIqrYT/fMvYuqaJluGlkZgaR6NQYHd0/0mBxP0YZgMBgZcMk0X5aSLJ/paWanB
+	uEuSO0+t+58=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4C4161C2C1;
+	Wed, 18 May 2016 18:59:23 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BB48C1C2C0;
+	Wed, 18 May 2016 18:59:22 -0400 (EDT)
+In-Reply-To: <CAGZ79ka0Of6S3AGx24jrvso=AwMsxQOnWVFZA-XWy3590JbVgA@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 18 May 2016 15:31:45 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 293A99D4-1D4C-11E6-BCAB-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295027>
 
-Since `git worktree add` uses `git checkout` when `[<branch>]` is used,
-and `git checkout -` is already supported, it makes sense to allow the
-same shortcut in `git worktree add`.
+Stefan Beller <sbeller@google.com> writes:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>
----
- Documentation/git-worktree.txt |  3 ++-
- builtin/worktree.c             |  3 +++
- t/t2025-worktree-add.sh        | 17 +++++++++++++++++
- 3 files changed, 22 insertions(+), 1 deletion(-)
+> and those are not yet codified, but for discussion then:
+>
+>  - "`?`" the attribute must not be unspecified, i.e. set, unset or has any value
+>  - "`+`" the attribute must be set or has any value
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index c622345..28dc559 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -48,7 +48,8 @@ add <path> [<branch>]::
- 
- Create `<path>` and checkout `<branch>` into it. The new working directory
- is linked to the current repository, sharing everything except working
--directory specific files such as HEAD, index, etc.
-+directory specific files such as HEAD, index, etc. You may also specify
-+`-` as `<branch>` which is synonymous with `"@{-1}"`.
- +
- If `<branch>` is omitted and neither `-b` nor `-B` nor `--detached` used,
- then, as a convenience, a new branch based at HEAD is created automatically,
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index d8e3795..d800d47 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -340,6 +340,9 @@ static int add(int ac, const char **av, const char *prefix)
- 	path = prefix ? prefix_filename(prefix, strlen(prefix), av[0]) : av[0];
- 	branch = ac < 2 ? "HEAD" : av[1];
- 
-+	if (!strcmp(branch, "-"))
-+		branch = "@{-1}";
-+
- 	opts.force_new_branch = !!new_branch_force;
- 	if (opts.force_new_branch) {
- 		struct strbuf symref = STRBUF_INIT;
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index 3acb992..3f8437b 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -18,6 +18,23 @@ test_expect_success '"add" an existing empty worktree' '
- 	git worktree add --detach existing_empty master
- '
- 
-+test_expect_success '"add" using shorthand - fails when no previous branch' '
-+	test_must_fail git worktree add existing -
-+'
-+
-+test_expect_success '"add" using shorthand' '
-+	git checkout -b newbranch &&
-+	echo hello >myworld &&
-+	git add myworld &&
-+	git commit -m myworld &&
-+	git checkout master &&
-+	git worktree add short-hand - && 
-+	(
-+		cd short-hand &&
-+		git status | head -1 | grep newbranch
-+	)
-+'
-+
- test_expect_success '"add" refuses to checkout locked branch' '
- 	test_must_fail git worktree add zere master &&
- 	! test -d zere &&
--- 
-2.7.4 (Apple Git-66)
+I'd suggest not to support these until we see any concrete and
+convincing example use case to tell us why this is useful.
+
+> That is why I am not super happy with it though.
+>
+>     ":(attr:A=a,attr:B)/path",
+>     ":(attr:A=a B)/path",
+>
+> are the same for the user as well as in the internal data structures.
+
+You can interpret the former as ORed :(attr:A=a) and :(attr:B) if
+you really wanted to.  You left the door open for such a future
+extension by explicitly rejecting multiple attributes added to a
+single pathspec element in earlier round, which was good.  You could
+do the same here if you do not want to code that ORed ANDs, so that
+it (or some other semantics) can be introduced later without breaking
+the mental model the users would form with the initial implementation.
+
+>>> +             val_len = strcspn(val, "=,)");
+>>
+>> I understand "=", but can "," and ")" appear here?
+>
+> This was overly caution from some intermediate state, where the caller
+> handed in more than required.
+
+Is that being overly cautious?
+
+It looks to me more like being sloppy and sweeping bugs in callers
+that you could have diagnosed here.
+
+If you didn't have ",)" in the cspn set above, at least you would
+see the effect caused by a broken caller.  E.g. ":(attr:FOO,icase)"
+would be given to you as "FOO,icase)" by a broken caller, you would
+split "FOO,icase" as one of the SP separated items, and try to parse
+it as an attribute name.  You can notice the breakage of the caller
+at that time.  With ",)" in cspn set, you silently pass the parameter
+given by a broken caller.
