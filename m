@@ -1,7 +1,7 @@
 From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH 21/21] t5523: use test_i18ngrep for negation
-Date: Wed, 18 May 2016 15:27:54 +0000
-Message-ID: <1463585274-9027-22-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH 20/21] t4153: fix negated test_i18ngrep call
+Date: Wed, 18 May 2016 15:27:53 +0000
+Message-ID: <1463585274-9027-21-git-send-email-vascomalmeida@sapo.pt>
 References: <1463585274-9027-1-git-send-email-vascomalmeida@sapo.pt>
 Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
 	Jiang Xin <worldhello.net@gmail.com>,
@@ -14,21 +14,21 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b33RL-0001pD-P8
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 17:31:16 +0200
+	id 1b33RK-0001pD-LK
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 17:31:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932639AbcERPbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2016 11:31:11 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:59103 "EHLO sapo.pt"
+	id S932630AbcERPbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 11:31:06 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:59040 "EHLO sapo.pt"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S932634AbcERPbJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2016 11:31:09 -0400
-Received: (qmail 22031 invoked from network); 18 May 2016 15:31:07 -0000
-Received: (qmail 4276 invoked from network); 18 May 2016 15:31:07 -0000
+	id S1752006AbcERPbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2016 11:31:03 -0400
+Received: (qmail 21847 invoked from network); 18 May 2016 15:31:01 -0000
+Received: (qmail 2850 invoked from network); 18 May 2016 15:31:01 -0000
 Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 18 May 2016 15:31:02 -0000
+          for <git@vger.kernel.org>; 18 May 2016 15:30:55 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -38,55 +38,36 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294965>
 
-Replace the first form by the second one:
-	! grep expected actual
-	test_i18ngrep ! expected actual
+The function test_i18ngrep fakes success when run under GETTEXT_POISON.
+Hence, running in the following manner will always fail under gettext
+poison:
 
-The latter syntax is supported by test_i18ngrep defined in
-t/test-lib.sh.
+	! test_i18ngrep expected actual
 
-Although the test already passes whether GETTEXT_POSION is enabled, use
-the i18n grep variant for the sake of consistency and also to make
-obvious that those strings are subject to i18n.
+Use correct syntax: test_i18ngrep ! expected actual
+
+For other instance of this issue see 41ca19b ("tests: fix negated
+test_i18ngrep calls", 2014-08-13).
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- t/t5523-push-upstream.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t4153-am-resume-override-opts.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-index 4a7b98b..d6981ba 100755
---- a/t/t5523-push-upstream.sh
-+++ b/t/t5523-push-upstream.sh
-@@ -83,7 +83,7 @@ test_expect_success 'progress messages do not go to non-tty' '
+diff --git a/t/t4153-am-resume-override-opts.sh b/t/t4153-am-resume-override-opts.sh
+index 7c013d8..8ea22d1 100755
+--- a/t/t4153-am-resume-override-opts.sh
++++ b/t/t4153-am-resume-override-opts.sh
+@@ -53,7 +53,7 @@ test_expect_success '--no-quiet overrides --quiet' '
+ 	# Applying side1 will be quiet.
+ 	test_must_fail git am --quiet side[123].eml >out &&
+ 	test_path_is_dir .git/rebase-apply &&
+-	! test_i18ngrep "^Applying: " out &&
++	test_i18ngrep ! "^Applying: " out &&
+ 	echo side1 >file &&
+ 	git add file &&
  
- 	# skip progress messages, since stderr is non-tty
- 	git push -u upstream master >out 2>err &&
--	! grep "Writing objects" err
-+	test_i18ngrep ! "Writing objects" err
- '
- 
- test_expect_success 'progress messages go to non-tty (forced)' '
-@@ -98,15 +98,15 @@ test_expect_success TTY 'push -q suppresses progress' '
- 	ensure_fresh_upstream &&
- 
- 	test_terminal git push -u -q upstream master >out 2>err &&
--	! grep "Writing objects" err
-+	test_i18ngrep ! "Writing objects" err
- '
- 
- test_expect_success TTY 'push --no-progress suppresses progress' '
- 	ensure_fresh_upstream &&
- 
- 	test_terminal git push -u --no-progress upstream master >out 2>err &&
--	! grep "Unpacking objects" err &&
--	! grep "Writing objects" err
-+	test_i18ngrep ! "Unpacking objects" err &&
-+	test_i18ngrep ! "Writing objects" err
- '
- 
- test_expect_success TTY 'quiet push' '
 -- 
 2.7.3
