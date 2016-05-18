@@ -1,113 +1,94 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 2/5] t1500: test_rev_parse: facilitate future test enhancements
-Date: Wed, 18 May 2016 13:43:29 -0400
-Message-ID: <CAPig+cQtt1TcHdRgZcB_fJ7_SEbZLjbKP04Eq=eRCCkU6PnQ1Q@mail.gmail.com>
-References: <20160517193630.10379-1-sunshine@sunshineco.com>
-	<20160517193630.10379-3-sunshine@sunshineco.com>
-	<20160518183827.Horde.e7PY7wuh3iXKFZgoQ0oLR3D@webmail.informatik.kit.edu>
-	<CAPig+cTv8UNg+0taNF4B2wytn0d-jGboCntxBy8TPgY+1qW85w@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [Bug] git-log prints wrong unixtime with --date=format:%s
+Date: Wed, 18 May 2016 13:49:19 -0400
+Message-ID: <20160518174919.GA5796@sigill.intra.peff.net>
+References: <87vb2d37ea.fsf@web.de>
+ <8760ucoaus.fsf@web.de>
+ <20160518004008.GA20007@sigill.intra.peff.net>
+ <20160518005824.GA7120@sigill.intra.peff.net>
+ <xmqqvb2bs5f5.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Michael Rappazzo <rappazzo@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed May 18 19:43:37 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Heerdegen <michael_heerdegen@web.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 18 19:49:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b35VP-0002UM-Oe
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 19:43:36 +0200
+	id 1b35b5-00061F-JQ
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 19:49:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753119AbcERRnc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 May 2016 13:43:32 -0400
-Received: from mail-ig0-f195.google.com ([209.85.213.195]:34195 "EHLO
-	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751967AbcERRnb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 May 2016 13:43:31 -0400
-Received: by mail-ig0-f195.google.com with SMTP id kj7so5306975igb.1
-        for <git@vger.kernel.org>; Wed, 18 May 2016 10:43:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=deZ4xQmkoZD/pV2k9CbMXOJqp+lAKJ+Eum6namAsAck=;
-        b=a8pUMwXxb9aGoZx+SdM0pbsb48H+b8zPBu2eLyB/5c8OAAS0s/NzdD8AB2DN1CYkcq
-         JUVCArUPDmSMussGjua6aGDfkNb848P9V4NN4qAPkSE+kOG2/S9JdQ2hCvcbDIDJRfqO
-         fArYtZmSor3P44FZeARLGh//tY2n+MANedWtsHDaPC1DK6jvbj8sHcOjd5LUoQhnH6xo
-         M/xgypeGnoQiG3f3d3jGaXWMtmP5jSPl7yctIPhPao5v+61cYrX7ewHOUwO4EX0oMDD5
-         9sYKJZIu+WotPna4S9QYfavMfwlbb3H9HtUdeSURDnqAMcttDJNOpy8B4KFtYZmzbqYy
-         KtDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=deZ4xQmkoZD/pV2k9CbMXOJqp+lAKJ+Eum6namAsAck=;
-        b=UU8vMz8WyNKDVFJN/NVtljA6GnZbg+lioK/LTir/eA7YCD27XZ2HuQEldgInyLHpAI
-         GdJkH+8sMvkeFUB0B865Olohr+3bz+7QGPst9D1kOtOtWtym1oat0s09amQj1QpXyyfv
-         Q4bzTJ+qy1Ibgey2L6fQd0zvOTDrgr4HjQot8o6T0Lw8u4IkcgakOIq1qen9bjabqzbU
-         bTlb7kYFpwuRVbftpVwhGiw2dEbh00Yr9k3y5AZ88Pnq5LHU4aHcF8NHh5LgkTKv4fd6
-         6cPtKydOrrzQH4ic782EAKRk2zGDWiHhcdp//V/enx5Q4OhmDnQdgoiJxLOdyEKpCZAJ
-         4myQ==
-X-Gm-Message-State: AOPr4FU6a3D9PhfBFTVSzr3aj7lUvDbpEopYChnJlxUvjEhXuwJSJ0SwTRqXRPof+lobn3ZE7mDDu80ABI78vQ==
-X-Received: by 10.50.6.15 with SMTP id w15mr6701987igw.91.1463593409694; Wed,
- 18 May 2016 10:43:29 -0700 (PDT)
-Received: by 10.79.139.135 with HTTP; Wed, 18 May 2016 10:43:29 -0700 (PDT)
-In-Reply-To: <CAPig+cTv8UNg+0taNF4B2wytn0d-jGboCntxBy8TPgY+1qW85w@mail.gmail.com>
-X-Google-Sender-Auth: u_MJXTwyw47enddyDk_Igr1Gpgc
+	id S1753282AbcERRtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 13:49:23 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41354 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752772AbcERRtW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2016 13:49:22 -0400
+Received: (qmail 15196 invoked by uid 102); 18 May 2016 17:49:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 May 2016 13:49:22 -0400
+Received: (qmail 24734 invoked by uid 107); 18 May 2016 17:49:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 May 2016 13:49:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 May 2016 13:49:19 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqvb2bs5f5.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294982>
 
-On Wed, May 18, 2016 at 1:32 PM, Eric Sunshine <sunshine@sunshineco.com=
-> wrote:
-> On Wed, May 18, 2016 at 12:38 PM, SZEDER G=C3=A1bor <szeder@ira.uka.d=
-e> wrote:
->> Quoting Eric Sunshine <sunshine@sunshineco.com>:
->>> +       for o in is-bare-repository \
->>> +                is-inside-git-dir \
->>> +                is-inside-work-tree \
->>> +                show-prefix \
->>> +                git-dir
->>> +       do
->>> +               test $# -eq 0 && break
->>> +               expect=3D"$1"
->>> +               test_expect_success "$name: $o" '
->>> +                       echo "$expect" >expect &&
->>> +                       git rev-parse --$o >actual &&
->>
->> I think that "--$o" looks really weird, but that's subjective, of co=
-urse.
->>
->> However, the idea popped up in an other thread[1] that we might want
->> something like 'git rev-parse --absolute-path --git-dir', which woul=
-dn't
->> really work with '--$o'.
->>
->> Even if we don't go that route, perhaps it would be better to list t=
-he
->> options to be tested including their doubledash prefix.
->
-> As this series is only about modernizing t1500, I'd prefer to keep th=
-e
-> conversion faithful to the original which titles each test "$name:
-> is-bare-repository", "$name: is-inside-git-dir", etc., and the curren=
-t
-> approach does so without additional complexity.
->
-> I have no objection to upgrading the for-loop items to include the
-> leading dashes or updating the logic to support --absolute-path, but
-> such changes are outside the scope of this series and can easily be
-> built atop it. Also, due to severe time constraints, I'd rather not
-> re-roll only for a superficial and subjective change such as adding
-> leading dashes to for-loop items.
+On Wed, May 18, 2016 at 09:21:34AM -0700, Junio C Hamano wrote:
 
-On reflection, I agree with your points and will include the change in
-the re-roll. Thanks.
+> Jeff King <peff@peff.net> writes:
+> 
+> > I tried a few obvious things, but couldn't make anything work. Setting
+> > "timezone" manually seems to do nothing. It's supposed to be set by
+> > putting the right thing in $TZ and then calling tzset(). So I tried
+> > munging $TZ to something like "+0200". It did have _some_ effect, but I
+> 
+> Wouldn't that be more like "UTC+0200"?
+
+Maybe. I tried several different things, and couldn't make it work
+sensibly with any of them. My test case is basically:
+
+  git log --format="%ad%n%at" --date=format:'%H:%M %z (%Z)%n%s'
+
+Which should give three lines: the human-readable time and date,
+strftime's epoch time, and git's epoch time. And the following
+conditions should be met:
+
+  1. The human-readable time is in the author's timezone (or the user's
+     if you use format-local).
+
+  2. The zone offset and name in the first line matches the time we
+     show.
+
+  3. The epoch times for the latter lines should match.
+
+We currently get (1) right (which is good, because it is IMHO the most
+important). I haven't been able to get (2) to change at all, no matter
+what I do. And (3) is the subject of debate here; I suspect I could make
+it work at the cost of breaking (1) by giving a "struct tm" that is in
+UTC.
+
+> In any case, I do not think anybody wants to do tzset() on each and
+> every commit while running "git log".  Can we declare "format:<strftime>"
+> will always use the local timezone, or something?
+
+I think that is basically the case already. It is in the author's
+timezone or in the viewing user's timezone (as reported by localtime()),
+and everything seems to work except the %z zone information and the %s
+format.
+
+For a raw "%s" date-format, my suggestion is: don't. It is redundant
+with --date=raw.
+
+I'd love to make %z work, but I have no idea how.
+
+So I guess we could list those in BUGS in one of the manpages.
+
+-Peff
