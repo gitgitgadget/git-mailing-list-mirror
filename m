@@ -1,73 +1,92 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v4 2/2] convert: ce_compare_data() checks for a sha1 of a
- path
-Date: Wed, 18 May 2016 17:10:06 +0200
-Message-ID: <04175530-b0b8-572d-1fea-06a2bd029029@web.de>
-References: <573A993F.8020205@web.de>
- <1463503301-3634-1-git-send-email-tboegi@web.de>
- <xmqq60ucwlz8.fsf@gitster.mtv.corp.google.com> <573BEEEF.8040305@web.de>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [RFD PATCH 0/3] Free all the memory!
+Date: Wed, 18 May 2016 17:19:58 +0200
+Message-ID: <CACBZZX6t5RsTe0GCPifA9cq7wbChY-ekVXZOYSqPTuOHp_D4Vw@mail.gmail.com>
+References: <20160517032247.25092-1-sbeller@google.com> <CAPig+cT9UKEcNXvsQsFDrQycKwMJR5bCter76UL-zpkncniPBw@mail.gmail.com>
+ <CAGZ79kaJoAxqtsTuErQSgJiVeD_vdZ1MQXKr-LTtyro-FbscTQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 18 17:10:36 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	David Turner <dturner@twopensource.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed May 18 17:20:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b337M-0005Lh-78
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 17:10:36 +0200
+	id 1b33Gq-0003JL-Fe
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 17:20:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752240AbcERPK1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 May 2016 11:10:27 -0400
-Received: from mout.web.de ([212.227.15.14]:57094 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751458AbcERPK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2016 11:10:26 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0LhNaa-1bOxfQ1c0W-00mZea; Wed, 18 May 2016 17:10:12
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.1.0
-In-Reply-To: <573BEEEF.8040305@web.de>
-X-Provags-ID: V03:K0:+0j/U/jGw/CLoXqcLLbZ0jQChqfCGlkSgyn59T+CH2dMBZ1CVer
- AuK0lApnY8hC7s1Rydk7RjlFUyTQ7bT/ewNPi305IUXT7ooNpYoQdV7jWK/2ybq/w0+j3FC
- aoob56DTHxl9XjY+f0aCkgk+minO5eTakNXJKEiEqj7omJWKp9msA2Xl9snpIQhzJf3wBUB
- YxdOv1DLdhw9elDZHDP3g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:heCW+p94us4=:eYz/vgZkAoFssnT9gv3Tdr
- yTY9tNOc3DzwgJQH8fRa6NLsPv+TkF8aXBmaWql4wU6U3KmjvucuxCH+6MVjebUN75eqYTKmL
- Ju4a3o5VOqLm3lh3wZjbZc93dxUa2opRZeXHnnh/+KExR3tw4rUxhf0G/bb/qyUzfUiI9b0+f
- tsqsTFX7YuTI89RJE59jN4W12RzWVhGyEYBgHP5yBoNeFnGnZH13tHe3qe6VhgQpWm8SbEGxx
- z7S0zqoVzvc7FFmVWAmdd+eJL2XV3o08DmgHn8fr2m6WBDedSKOskQgOUhUnwXBWybOsw2Ji3
- am2eg9OkHzHDX9+RANZIK4hXE8D2h8bT2DUiHfLf2W1u6caohJ7tR0Vc02FTEOdpRZVHWT8bL
- eJGqtWBdCqkKhqzgojtuKgSIrEbQXSUicR52dvYbKGGhxrtM5V53posrKJF65Hf6OBAoJTqGR
- n82LZsYAdKVR7lVk1lVruUzAHunzU0WrdNb/wEIHhkgfxbiTqK3Uw2ykTPi+K/hTJqE4hngE5
- /7j0MmxGqSMmItMVWRfgzdHhfvC7Bm2w4VgfgohTfwXpLot8RA/8t81lB8zBjFE6vXfiVt2V+
- N30/O33oXR9rODKTB/RlYRDcojogoniyOWWZfkEUKm2Wb4BsTCHak9060Mo/oqpStnaYbr0G3
- b23TLTvd7i9Qhc7+CyYLIxyPVArsaXKwnyunTve0Kv27Mrz22Ys/ySI+1Lq6bhh+/4IHbxuDa
- MLe3pEYdrS3NhoxcNHLHfptL8WBA6TAWxg3I9cZZM6LxkIUMdx68moNu67r193hBjFyJSDSr 
+	id S1753492AbcERPUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 11:20:20 -0400
+Received: from mail-qg0-f66.google.com ([209.85.192.66]:34517 "EHLO
+	mail-qg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752952AbcERPUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2016 11:20:18 -0400
+Received: by mail-qg0-f66.google.com with SMTP id e35so4435057qge.1
+        for <git@vger.kernel.org>; Wed, 18 May 2016 08:20:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=APOT28UZKRPVHxLa+sxrFQ+UtcuxCpDGP6ERoiGYjNc=;
+        b=mpmcmTNA0iDCT/7mtgSDqbJNEvKzvM+2r2wK+p7GDh8tvialZLbIAMuKdokuUONDMC
+         jlgcVC+c5YfWF3s9xmR38SFAjPrQCnB7QuzjFmkYt59ujyKdywbhb7lFOJoz7eSgiLC8
+         /YZ0hWvLJ0xtMt6Sw5ekFGIq5gOe1k6TocFYBFzR/+hY8C7kzYL++u0Hg0Y5HP1ESupC
+         OVENTFB2uUaGun6WYo0OQ4jpqAdr7jIbKk8f5uZtanqeHQQ+HGl/3Cv26EC6P27x2Dih
+         i28V5nZJQdkfDkJdx7Eho3Zbwv2KguoNO+vOHLYXjdB+qCDC7VpN3UZT6Byu72s3z5JJ
+         6chA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=APOT28UZKRPVHxLa+sxrFQ+UtcuxCpDGP6ERoiGYjNc=;
+        b=UFM9+kZVjTAt5b+yybfyW5Bx0eiTGDRPRnO68sFB0jxRg8SwnAzkbWW3cuoLErHI6t
+         CGhNXl9ApDc3mwuNg3yTuFOpoBA07BilO9VxJHueIiHVQHBOaPW3pSCRq3r4BQu0zkra
+         nIR5I4aSMPpOhI0DqKmZ7l5QlS8SO35DhZ/w484q1voT9L61A01GwtCrOgOYrcEJwgLu
+         EmbmTF/DY18ciT566zKGGQBy4ByWZNyD6+hFywomEPhGPM+EI7bUVL75vj7aGOEU2E9i
+         oPdDv4wzdsQWpEDTgmeq8r+cJJ1tSb7Di+a61dmXr20gqXiINANVLO8DYEKQdFFlEKRP
+         ILPQ==
+X-Gm-Message-State: AOPr4FWDJ/jOP1IyXzyEwTgjwNjG9hSaWGRNPOf5psddYjKe60H8g5ZI31Z3WJ6G0MLhCploBZFt6ANxzXcBmA==
+X-Received: by 10.140.108.183 with SMTP id j52mr8131494qgf.90.1463584817731;
+ Wed, 18 May 2016 08:20:17 -0700 (PDT)
+Received: by 10.55.77.133 with HTTP; Wed, 18 May 2016 08:19:58 -0700 (PDT)
+In-Reply-To: <CAGZ79kaJoAxqtsTuErQSgJiVeD_vdZ1MQXKr-LTtyro-FbscTQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294943>
 
-On 18.05.16 06:26, Torsten B=F6gershausen wrote:
-> On 05/17/2016 08:58 PM, Junio C Hamano wrote:
->> tboegi@web.de writes:
+On Tue, May 17, 2016 at 7:58 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Mon, May 16, 2016 at 8:41 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Mon, May 16, 2016 at 11:22 PM, Stefan Beller <sbeller@google.com> wrote:
+>>> When using automated tools to find memory leaks, it is hard to distinguish
+>>> between actual leaks and intentional non-cleanups at the end of the program,
+>>> such that the actual leaks hide in the noise.
+>>>
+>>> The end goal of this (unfinished) series is to close all intentional memory
+>>> leaks when enabling the -DFREE_ALL_MEMORY switch. This is just
+>>> demonstrating how the beginning of such a series could look like.
 >>
->>>   #define HASH_WRITE_OBJECT 1
->>>   #define HASH_FORMAT_CHECK 2
->>> +#define HASH_CE_HAS_SHA1  4
->>
->> How does one pronounce the words in this constant?  Does it make a
->> listener understand what this constant means?
-> How about
-> HASH_USE_SHA1_FROM_CE
-> or
-> HASH_CE_HAS_VALID_SHA1
-or, before I send a new patch,
-HASH_USE_SHA_NOT_PATH=20
+>> Considering the signal-to-noise ratio mentioned above, the goal seems
+>> reasonable, but why pollute the code with #ifdef's all over the place
+>> by making the cleanup conditional? If you're going though the effort
+>> of plugging all these leaks, it probably makes sense to do them
+>> unconditionally.
+>
+> I tried that once upon a time. The resentment from the list was:
+>
+>     We're exiting soon anyway (e.g. some cmd_foo function). Letting the
+>     operating system clean up after us is faster than when we do it, so don't
+>     do it.
+
+Not a direct comment on this patch, but has anyone done some detailed
+performance testing of this with git? E.g. using a free() that just
+no-ops, or one that no-ops unless runtime > x_seconds, or no-ops
+unless total_allocated > some_limit.
+
+It might be interesting to play with that as a performance optimization.
