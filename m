@@ -1,68 +1,119 @@
-From: Michael Heerdegen <michael_heerdegen@web.de>
-Subject: Re: [Bug] git-log prints wrong unixtime with --date=format:%s
-Date: Thu, 19 May 2016 00:57:15 +0200
-Message-ID: <87vb2b560k.fsf@web.de>
-References: <87vb2d37ea.fsf@web.de> <8760ucoaus.fsf@web.de>
-	<20160518004008.GA20007@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 19 00:57:32 2016
+From: Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>
+Subject: [PATCH] Allow the short-hand - replacing @{-1} in git worktree add
+Date: Thu, 19 May 2016 00:49:18 +0200
+Message-ID: <1463611758-1210-1-git-send-email-jordan.de-gea@ensimag.grenoble-inp.fr>
+Cc: samuel.groot@ensimag.grenoble-inp.fr,
+	erwan.mathoniere@ensimag.grenoble-inp.fr,
+	tom.russello@grenoble-inp.org, Matthieu.Moy@grenoble-inp.fr,
+	Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 19 00:57:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3APB-0001Xa-34
-	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 00:57:29 +0200
+	id 1b3APb-0001pG-1s
+	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 00:57:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291AbcERW5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2016 18:57:25 -0400
-Received: from mout.web.de ([212.227.15.14]:52426 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751050AbcERW5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2016 18:57:24 -0400
-Received: from drachen.dragon ([94.217.122.112]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0M8QeQ-1bpt8x1tzu-00vx9j; Thu, 19 May 2016 00:57:17
- +0200
-In-Reply-To: <20160518004008.GA20007@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 17 May 2016 20:40:08 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.93 (gnu/linux)
-X-Provags-ID: V03:K0:f4nI1D4M6JMU623453WZUwuVf0GuhEoBdZKSx9LcoNve2eCyGL9
- APuKWvYxJ7nJCBoXRc69MDodSmC7wzgbtqvAQ3QCqZombrL6k7k1UEl2TN1/mB7KtKHMmVp
- hKcYE0UumPf1FVwsqakLBJHtip4ceZdbtct4mJQYH0LMGW62NNIC1rEreOEe9PiL8CMe4em
- MQTTYrPExdFm1RezwX8jA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pbtY6N/yJ70=:1eVL4uRnEIsCtIa5cOOpkn
- GK/ia9AXOsCKiDCvf5GdPevoPqO5lMKSu1jnz34kbZGT3yfkpafQQJQX/JCW8CuAOLWLxsFLx
- I/sXEZhdWjyTdSks6/K9VaUlP8cMpqeju6+NFxRG5csQw/FZWhzUsuIwoeYX4XyDdgcJey5IN
- PQ5hS3vczI5cS2+foon+W7i8dLQFDV0bqBr+h1MlZCwDyrJthEQZlFbYnnznBoM2d2LVJvRLT
- 0jOJySw+bD9YZeii4/E4gglLHYyFhWm29zJG+x8GbkpoEI7DwlE2RIwPhTucfKCYFi/ZDy60C
- j0Xgbjx4RQNWX+hcZdxNw3b96omt4xqOvAH8IMPHS+K7r8fFdX0MAbdBZyEX1UekWkGlBUdoI
- 97pzwEboK3Rb1+uffJfHad1MRhKRiTSKLuBzioOHv7s2+cC5+cRz/Y2B1hj+5RVH9ddyHsaPW
- PiG7dYHiAbLIuPugObSFVanTuGyjNpbjM6bQsPcT0gAYn4mr0PoVk5sAnnk5CF8fkd5FpX+cb
- PN5ulIDB0nWulHn7h/8zRPDeSgeT3BRsQ8N48NA+vjh/0vzPRyYDx23HqWdfaU0SsfAp3uTY7
- wALwzAeQbzFb4gg8MlhO404BU7bR7gky/uTL4TdnDQFVLrIYt6hhsNOe/GbzZe4oQBpG1hTde
- ADnU6d+dpysXDMNususvyn0nC3QiPEXG2P+/ERx2E/3BDCmNWrnGedqVs2hVcZsXP3d85Fph3
- UUH78rz4qBcJVbWwOiB4hxmWtrk1AR5yQirDMApd1ddQnYCS+7lJ8niGddnSeFvJ7OVfyfsZ 
+	id S1751363AbcERW5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 18:57:51 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:44489 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751081AbcERW5u (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 May 2016 18:57:50 -0400
+X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 May 2016 18:57:50 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 7A4F92506;
+	Thu, 19 May 2016 00:49:46 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id jGy2Tz0AucG1; Thu, 19 May 2016 00:49:46 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 67DCD24A7;
+	Thu, 19 May 2016 00:49:46 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 620562066;
+	Thu, 19 May 2016 00:49:46 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ef-CfbzwEBXK; Thu, 19 May 2016 00:49:46 +0200 (CEST)
+Received: from macbook-pro-de-jordan.home (LFbn-1-8005-19.w90-112.abo.wanadoo.fr [90.112.16.19])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id F312F2064;
+	Thu, 19 May 2016 00:49:45 +0200 (CEST)
+X-Mailer: git-send-email 2.7.4 (Apple Git-66)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295026>
 
-Jeff King <peff@peff.net> writes:
+Since `git worktree add` uses `git checkout` when `[<branch>]` is used,
+and `git checkout -` is already supported, it makes sense to allow the
+same shortcut in `git worktree add`.
 
-> This is probably a totally separate issue, as it would not be using
-> strftime (or IIRC, any of the standard time functions at all). Do you
-> have a detailed example that shows the problem?
+Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>
+---
+ Documentation/git-worktree.txt |  3 ++-
+ builtin/worktree.c             |  3 +++
+ t/t2025-worktree-add.sh        | 17 +++++++++++++++++
+ 3 files changed, 22 insertions(+), 1 deletion(-)
 
-Ok, this was probably false alarm.  Magit (An Emacs Git front end) shows
-rounded duration values (rounded hours in my case) in its log views, I
-think I just got confused because of this.  In my tests now, the results
-were as expected.
-
-
-Thanks,
-
-Michael.
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index c622345..28dc559 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -48,7 +48,8 @@ add <path> [<branch>]::
+ 
+ Create `<path>` and checkout `<branch>` into it. The new working directory
+ is linked to the current repository, sharing everything except working
+-directory specific files such as HEAD, index, etc.
++directory specific files such as HEAD, index, etc. You may also specify
++`-` as `<branch>` which is synonymous with `"@{-1}"`.
+ +
+ If `<branch>` is omitted and neither `-b` nor `-B` nor `--detached` used,
+ then, as a convenience, a new branch based at HEAD is created automatically,
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index d8e3795..d800d47 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -340,6 +340,9 @@ static int add(int ac, const char **av, const char *prefix)
+ 	path = prefix ? prefix_filename(prefix, strlen(prefix), av[0]) : av[0];
+ 	branch = ac < 2 ? "HEAD" : av[1];
+ 
++	if (!strcmp(branch, "-"))
++		branch = "@{-1}";
++
+ 	opts.force_new_branch = !!new_branch_force;
+ 	if (opts.force_new_branch) {
+ 		struct strbuf symref = STRBUF_INIT;
+diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+index 3acb992..3f8437b 100755
+--- a/t/t2025-worktree-add.sh
++++ b/t/t2025-worktree-add.sh
+@@ -18,6 +18,23 @@ test_expect_success '"add" an existing empty worktree' '
+ 	git worktree add --detach existing_empty master
+ '
+ 
++test_expect_success '"add" using shorthand - fails when no previous branch' '
++	test_must_fail git worktree add existing -
++'
++
++test_expect_success '"add" using shorthand' '
++	git checkout -b newbranch &&
++	echo hello >myworld &&
++	git add myworld &&
++	git commit -m myworld &&
++	git checkout master &&
++	git worktree add short-hand - && 
++	(
++		cd short-hand &&
++		git status | head -1 | grep newbranch
++	)
++'
++
+ test_expect_success '"add" refuses to checkout locked branch' '
+ 	test_must_fail git worktree add zere master &&
+ 	! test -d zere &&
+-- 
+2.7.4 (Apple Git-66)
