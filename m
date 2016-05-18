@@ -1,81 +1,113 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] fast-import: do not truncate exported marks file
-Date: Tue, 17 May 2016 23:03:41 -0500
-Message-ID: <CAMP44s06+V8_PvYA=wsqZ625hrMPLKuZ6v5eOmLBO97kTqwxvw@mail.gmail.com>
-References: <1463521223-14565-1-git-send-email-felipe.contreras@gmail.com>
-	<xmqq1t50uxy1.fsf@gitster.mtv.corp.google.com>
-	<CAMP44s1WDzRAFV8iNj_RYiiRwJdBcuUDVR-Ew5FF37qdpEO5Mg@mail.gmail.com>
-	<CAPc5daVJCfnEfA1sHrAGsXaA-80kFV4_4Hd0tLOMocE+qVV=-Q@mail.gmail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v4 2/2] convert: ce_compare_data() checks for a sha1 of a
+ path
+Date: Wed, 18 May 2016 06:26:23 +0200
+Message-ID: <573BEEEF.8040305@web.de>
+References: <573A993F.8020205@web.de>
+ <1463503301-3634-1-git-send-email-tboegi@web.de>
+ <xmqq60ucwlz8.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git-fc <git-fc@googlegroups.com>, Git <git@vger.kernel.org>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 18 06:03:47 2016
+X-From: git-owner@vger.kernel.org Wed May 18 06:26:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2si2-0000Dd-NJ
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 06:03:47 +0200
+	id 1b2t4H-00053U-0M
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 06:26:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751251AbcEREDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2016 00:03:43 -0400
-Received: from mail-vk0-f45.google.com ([209.85.213.45]:34468 "EHLO
-	mail-vk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751181AbcEREDm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2016 00:03:42 -0400
-Received: by mail-vk0-f45.google.com with SMTP id c189so46080419vkb.1
-        for <git@vger.kernel.org>; Tue, 17 May 2016 21:03:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=dDKxWgtcdl33TqqQBtHB4nOFuV94crrWR6H08jEQ6xI=;
-        b=Voca8xahDAlcRbtSXboDlkGRr777QcXh7xmBV84tXYO4pv+J3c6WP5RnBgwnULx7Mz
-         aVspiss7NMs1wCQ8H7BWaIkK5NDo+BkpQHVWCKoCwDxTyq4B/1ldY8WJuK4QPgd1onkl
-         SxXsAEy4YyjltuQCD6d37HpWVWE/PbnWIw07MKoxBr6m6vZynCa9BntLbQ78ob2trdSc
-         WZZga2Q2VxrqWXUPNeJFXTaZxxFTft8vCKe0QJy1FSp46lkAvdTpyOwO+DMA8FNWaKFH
-         BIt5soeaag+FBNj2TbvzT+1iKxFbr5nxqQ/NY4A0qq7sNfM8spPwg37nQQewy+fZn7EQ
-         z/QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=dDKxWgtcdl33TqqQBtHB4nOFuV94crrWR6H08jEQ6xI=;
-        b=GTifS1phqJVxsXu43tS7h7LLTbihWjdBy7WtTchISAklBE8NmqtO/Okn7z/WRWYbHL
-         c/DD8uEDfnk7Q1O8qg/uGXbHmK1fG07rr3DTQTFNbE5MYY4ypd9sQeakFHR/7iDWc5kl
-         aWwpyDm/2C3CGzk/RNNnX19OsNQLrX5CMjnxr+Q55BAcIXsaCHKJIqlIjYVsUWnSxcKI
-         ZgwrdPh45LCHdTMT5NSpKq6hJZiHFSW5pAjI+GHv8NLmnF5eC0wyrb/ciBZlTkZUd23O
-         xbFLnFr6IB493rW48sUCo5jrEL7GXMHs7grOqNf//08YWjEnr7UkUQerSc3pIjspEK7v
-         IDrw==
-X-Gm-Message-State: AOPr4FUBadXldUOvJqtSizsdDkZ0lmt/E0pyGTD44ISZxDnZHy7hwO2mgyKYBBxNu62kFPi1tngqQYjm6e6tCg==
-X-Received: by 10.31.188.73 with SMTP id m70mr2792557vkf.70.1463544221270;
- Tue, 17 May 2016 21:03:41 -0700 (PDT)
-Received: by 10.31.192.137 with HTTP; Tue, 17 May 2016 21:03:41 -0700 (PDT)
-In-Reply-To: <CAPc5daVJCfnEfA1sHrAGsXaA-80kFV4_4Hd0tLOMocE+qVV=-Q@mail.gmail.com>
+	id S1751382AbcERE0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 00:26:37 -0400
+Received: from mout.web.de ([212.227.15.4]:59629 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751068AbcERE0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2016 00:26:37 -0400
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0LZeou-1bS04I2DZE-00lUSt; Wed, 18 May 2016 06:26:30
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+In-Reply-To: <xmqq60ucwlz8.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:C7dNTKJ+AWp5MqyTj0jgeWQROpeDwIqHf/bWCH7owuqe/k1+Od3
+ JwR8GOhym+3cOtI5qEBhIEfCqNPrBOfnSqiU6Bkk7hLTroBL7qvlhdmzOlWLKvwKx73bWcG
+ CoUpagKiWvmmPF8SnifLTRJofAAZyYoaChpPu08kqu4Ob65XeDaKyzARJFBqDW0e8mVcqeQ
+ cV3gx9+2xpyCeWX0sJuRQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:azcT7rLNTdk=:Fb3jKzF18fja8lVdV4fHXH
+ iePZndX5J4/c/BaRGk+/LHBt7l/6sXC7A8x1FogJMwe9Abpmo78Pf+ouTN2Px5A0yES7sSt/P
+ WySqeJhhmWzF9EiAfEt9eL58Z5a2RabxsO43hZQWA7j7mX7BH+RZZ3YCrgjrUCcJbENrsaDOk
+ TJcQkK1bNyPvbtf/Ylfdy9xi7UgCAHVLowa4XCNn4lFqsXuqGgs/kX9uOgcB2BPEyntWknSgi
+ 6P6T4jRWa5re/kJxwCMFmmMRrR4dLWuQtNj5T6Q6p+8HiAydTNnFxUWpHrRkvOJRzBlbnLmUf
+ 1O0s69gDLFhDZmZZjfMnQq1dbg+V6agU4vzTxsgGXSFNs/OuFpXdFd2IbwlIJzleF4ss7f13j
+ KGTaztipnqgW1c8B0kAkwMxbY5JXSoEmAXTfHk64FgUy1QrRTKoofgUY3Obxu6DRfxNm7xjkM
+ QnPf1bMu+xmmngvB4esgkRYP2MqJNBcH6JGnl78QVb1WAhfTAcRZ/AgmWdUtETXGVCJoCYHW3
+ 7g9AE0r26JYvH7BXVFV9tMgMv175vCdiOti2XK/qYXLLd/oRgUGU8IumDvC9IcEtKG+xe8lyP
+ s4T08m7blomBu51v6ogPtoSUjmt1MfzvgkDTN6ssoZMxA5nF+uoj2LyTQFASGhcssgMGml6Nd
+ 3jfwjEEkCNm5ZUO9E5zy7LA8cSHDLnRRTbPzAql9jCsthFDsmMjnb4hpoVVhgDzzkVxjmDJAD
+ WEWpfs067bFJPg61YVzWAfZBe2Aeq5aSiv9nhackEfHSScURCmHcL2MIbKvTkVRH7YESwUDW 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294932>
 
-On Tue, May 17, 2016 at 10:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Tue, May 17, 2016 at 8:31 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> On Tue, May 17, 2016 at 5:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
-
->>>  - Even if we did not read from any existing marks file, if we are
->>>    given export_marks_file that names an existing file, wouldn't we
->>>    want to avoid corrupting it with a dump from this aborted run?
->>
->> If we don't run from an existing marks file, this patch has no effect.
+On 05/17/2016 08:58 PM, Junio C Hamano wrote:
+> tboegi@web.de writes:
 >
-> Yes, that is exactly what I was wondering if we may want to improve
-> while at it.
+>>   #define HASH_WRITE_OBJECT 1
+>>   #define HASH_FORMAT_CHECK 2
+>> +#define HASH_CE_HAS_SHA1  4
+>
+> How does one pronounce the words in this constant?  Does it make a
+> listener understand what this constant means?
+How about
+HASH_USE_SHA1_FROM_CE
+or
+HASH_CE_HAS_VALID_SHA1
 
-This doesn't make much sense. Corrupted from where? This patch is
-tackling the issue where the imported marks file is "corrupted".
 
--- 
-Felipe Contreras
+>
+>
+> /*
+>   * We need a comment around here to say what these two
+>   * parameters mean.  I am guessing that (1) if sha1 is not NULL,
+>   * path is ignored and the function inspects if it has CR; (2)
+>   * otherwise it checks the index entry at path and inspects if
+>   * it has CR.
+>   */
+>>
+>> -static int has_cr_in_index(const char *path)
+>> +static int has_cr_in_index(const char *path, const unsigned char *sha1)
+>>   {
+>
+> This makes me seriously wonder if it is a good idea to modify this
+> function like this.  (1) means this function is not about IN INDEX
+> at all!
+>
+> Perhaps add a "static int blob_has_cr(const unsigned char *sha1)"
+> and call it from the real caller you added that wants to call this
+> butchered two-param version that has sha1 is a better solution?
+>
+>> -static int crlf_to_git(const char *path, const char *src, size_t len,
+>> +static int crlf_to_git(const char *path, const unsigned char *sha1,
+>> +		       const char *src, size_t len,
+>>   		       struct strbuf *buf,
+>>   		       enum crlf_action crlf_action, enum safe_crlf checksafe)
+>>   {
+>> @@ -260,7 +267,7 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
+>>   			 * If the file in the index has any CR in it, do not convert.
+>>   			 * This is the new safer autocrlf handling.
+>>   			 */
+>> -			if (has_cr_in_index(path))
+>> +			if (has_cr_in_index(path, sha1))
+
+>
+> I think this change is too ugly.  The new "sha1" parameter is
+> telling us that "in order to see if the indexed version has CR, do
+> not look at the index, but look at the contents of this blob".
+Thanks for some fresh eyes, I guess that
+blob_has_cr(sha1)
+would make most sense.
