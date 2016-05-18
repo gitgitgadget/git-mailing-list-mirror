@@ -1,97 +1,106 @@
-From: Josh McCullough <joshua.mccullough@gmail.com>
-Subject: Ignore updates to files which are ignored, even if they're indexed.
-Date: Tue, 17 May 2016 21:07:16 -0400
-Message-ID: <CAK-5vhzvuwteJgWSkAhAAFf9-L4FSs2o58yNF5rQQrrE231d3w@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] fast-import: do not truncate exported marks file
+Date: Tue, 17 May 2016 22:31:10 -0500
+Message-ID: <CAMP44s1WDzRAFV8iNj_RYiiRwJdBcuUDVR-Ew5FF37qdpEO5Mg@mail.gmail.com>
+References: <1463521223-14565-1-git-send-email-felipe.contreras@gmail.com>
+	<xmqq1t50uxy1.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 18 03:07:24 2016
+Cc: git-fc <git-fc@googlegroups.com>, Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 18 05:31:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2pxL-0005Lk-KC
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 03:07:23 +0200
+	id 1b2sCb-00077m-68
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 05:31:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752167AbcERBHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2016 21:07:19 -0400
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:32918 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751842AbcERBHS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2016 21:07:18 -0400
-Received: by mail-vk0-f42.google.com with SMTP id z184so42513661vkg.0
-        for <git@vger.kernel.org>; Tue, 17 May 2016 18:07:17 -0700 (PDT)
+	id S1752373AbcERDbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2016 23:31:12 -0400
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:33984 "EHLO
+	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751095AbcERDbL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2016 23:31:11 -0400
+Received: by mail-vk0-f44.google.com with SMTP id c189so45464543vkb.1
+        for <git@vger.kernel.org>; Tue, 17 May 2016 20:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=+tsQsj75/huJX1uJ31IcyKU3yb8w2EDTuGbctx4k6UA=;
-        b=KNvPwZUQXDFxuOe8XVFFmzp4SNkgQyP4EntJ+MY+iVr57oC4dU4hiz+PyMDIR33vFq
-         2IoBl/tETH5Z99SAjsPNf8vKWY2hrwFaWwxpyIiX763trNGHLq9jKudatclHZEq67YjL
-         4L7DrDrRo817qzem3nKA/pB7+SD/ffwMPV+aHTEMPp1kdNXE78U8mavOh2VT406C21ZA
-         eHG1L+Wh2dIp6pvs8A7x55zPYDAUWHJBoSL2X4/2NX7w80QsbJBTC/hpP3TKFLIlX5EP
-         Vz/kwTIfCUVUPZp0/2PZ4lXCmidw7035qmf2tdWANt7NK53jDz5/UDF/4j8rv55yuJM6
-         HhRw==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=Y0SPhg1eGiL9aapsz7cQrw9VBidPiIz4wOaMnuAYeGk=;
+        b=ysk94PMWkTP7MbRVGn2SwcbQc+zq44A9QeKwfrp5FCYrHThzeQUT8jOIHdsp2yZsfW
+         J9enik7mAREW3ROdZQb/AoLVNwzVnQ955iuPYNuKlYJneCuDMkAEMJKr4HQ/14dSki66
+         9aO1Zv8Nd/iKUC9k9RHiozrrhLAUSuZ8dhU2hIXmuAK3qvAtj326YAm3tGirkRE9/gN6
+         GqbKj+lkF7rWcKhIbgONPfMfjVhMb+ay0S2B++KmDLsTTtnce2BkOAuGfhbbZOOUwCbX
+         /7QodBXlPKbbKULdsHtYH6xBPzI/ij/P6uwcjUrVESFbmfYR4wYNhhnoYQ85oiYXfOLC
+         kPrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=+tsQsj75/huJX1uJ31IcyKU3yb8w2EDTuGbctx4k6UA=;
-        b=MbaMojRsnJ19Tcq+TO0+oXKmQ/pL37D36j2YAd4CcieuwO7C+laz6aUr0jOPayMUFs
-         w6UIxDCRF5B1jO2jeCbw5lr4AbDmsaejCVLY8PQE1elJbT34Evqxsz7FFXkS2WsyT2qn
-         XrgkPsQI5OcDtW+JNn+S3txeVycNNZ3SbmGoFgzw72qGtcmhHcqO1k+uv8IRaVH7mx17
-         4nLizo906FSsEf020eMBamXRBZcL8ED5vlcCo4H4a6yJEEoxFzOygX42+R0ZF3HVwg+J
-         gUjUjY+kV3qaQoEqYc8EM7w9LzLXWQAci6fg3zB8qsw3YGqvxsQOmurcfwzwlAKIbuPB
-         mCYQ==
-X-Gm-Message-State: AOPr4FUea2vvsydgujc5dRGMIGs+dyUmTCXQql3rK/qCw+IGICpaQROwaQtNAvb9eKbNdunWgeg684x8Vu7c/w==
-X-Received: by 10.31.190.139 with SMTP id o133mr2240931vkf.154.1463533636820;
- Tue, 17 May 2016 18:07:16 -0700 (PDT)
-Received: by 10.31.216.193 with HTTP; Tue, 17 May 2016 18:07:16 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=Y0SPhg1eGiL9aapsz7cQrw9VBidPiIz4wOaMnuAYeGk=;
+        b=g1EKvMseVdASYTv4rVVQ0U6MBAycdy1xy3lCKANjyemECbsqUS4y7WIjjCXe+A1c5l
+         ggH7LvtwgebK0cBID61Mxro3DwcykFTsrSE7PUrrz9uhdYaNZAd+MkRHJt5aen/L5knx
+         4B6CN6X3eeIeGtXxlohPiXqYSulbPjfBblNsvRllzfogedD/RcFQyl0mIlp4ka0ZHdQU
+         kWrRc2DUG+ZyfPutpMDHqWBdEZYJ6WN0wzONgXpKcXmkeH9+hsw0EdP8eKfJA0dgW1s2
+         2oaDoYGEbVRnklLH45Gg5hq5YPclgb7oMZz1QtKjE5R2W6ZqfKhw8t/htsdkC6szrO/U
+         dK4Q==
+X-Gm-Message-State: AOPr4FWxpkLaHFITy1PPVOzY59fM2BxZak+jH0NtGAq4+NA/kWIu0yBJMYFhC1z+Z8kYuir1qih/hSgCw1PIEw==
+X-Received: by 10.31.188.73 with SMTP id m70mr2730193vkf.70.1463542270532;
+ Tue, 17 May 2016 20:31:10 -0700 (PDT)
+Received: by 10.31.192.137 with HTTP; Tue, 17 May 2016 20:31:10 -0700 (PDT)
+In-Reply-To: <xmqq1t50uxy1.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294928>
 
-TL;DR: Git should ignore files if they are in `.gitignore`, regardless
-of whether or not the file has changed (or been removed).
+On Tue, May 17, 2016 at 5:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> Certain lines of the marks file might be corrupted (or the objects
+>> missing due to a garbage collection), but that's no reason to truncate
+>> the file and essentially destroy the rest of it.
+>
+> Hmm, so the issue is:
+>
+>  - we use die_nicely() that calls dump_marks() after writing a crash
+>    report as our die_routine().
+>
+>  - when dump_marks() is called, and export_marks_file names an
+>    existing file, it tries to write marks in it.  If we let it go
+>    through, we would end up writing a new marks file based on an
+>    incomplete set of marks we have only half-read in the earlier
+>    step, which is bad, as the resulting one is incomplete, and the
+>    original one that this replaced may have been a good one.
+>
+> Is that what this change addresses?
 
-Use Case
+Yes. As I said; the marks file gets truncated.
 
-An initial set of "local" config files are committed to a repo. Each
-developer will pull down this set of files, but changes will be
-auto-ignored unless the file is force-added after a change is made.
+> I am just wondering if a solution to preserve both files is more
+> desirable.
+>
+> This change looks a bit over-eager to discard the dump die_nicely()
+> is trying to create in one scenario, and a bit less careful at the
+> same time in another scenario.
+>
+>  - Even if we are reading from somewhere, export_marks_file can
+>    point at a completely new file that is different from
+>    import_marks file, in which case, we are not really losing any
+>    information by freshly creating a new marks file, no?
 
-Current Workarounds
+Right, we are not losing any information, but we are not gaining much
+either: it's a truncated version of the import marks.
 
-1) Use `git update-index --assume-unchanged local-config.xyz` to
-ignore local changes to the file.
-2) Add templates instead (local-config.template.xyz) and tell each
-developer to copy these templates and remove the ".template" portion
-of the file name. The file name without the ".template" portion is
-added to `.gitignore`.
+>  - Even if we did not read from any existing marks file, if we are
+>    given export_marks_file that names an existing file, wouldn't we
+>    want to avoid corrupting it with a dump from this aborted run?
 
-The current workarounds rely on the developer to know/remember what to
-do. It would be nice if we could do this instead:
+If we don't run from an existing marks file, this patch has no effect.
 
-1) Create the initial `config-local.xyz`.
-2) Add the new file to the index (`git add`).
-3) Add the same path to `.gitignore`, and add the changes to the index.
-4) Commit the staged changes.
-5) Edit the `config-local.xyz` file.
-6) Run `git status` -- git will not suggest that the file was changed
-since it is in the `.gitignore`. If 7) The user specifically made
-changes they wish to commit, the can force-add the ignored file.
-
-Doing a search for [git commit file only once then ignore changes]
-will show that other people wish for the same feature.
-
-
-Thanks!
-
-
------ ----- -----
-
-Side note: It took me 4 tries to get this email to go through, since
-non-plain-text messages are strictly forbidden by this mailing list. I
-use Inbox, which doesn't have an option to ensure a message is sent as
-plain text. I had to switch back to GMail to get it to go through.
+-- 
+Felipe Contreras
