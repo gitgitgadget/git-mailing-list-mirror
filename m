@@ -1,120 +1,199 @@
-From: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
-Subject: [PATCH] pull: warn on --verify-signatures with --rebase
-Date: Wed, 18 May 2016 12:18:27 +0200
-Message-ID: <20160518101827.GA14475@netblarch>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v6 00/17] Port branch.c to use ref-filter's printing options
+Date: Wed, 18 May 2016 16:15:55 +0530
+Message-ID: <CAOLa=ZSeQ5ZEiBBRvw2vM7ngXGoeVRP8hv8-Hf3SJ65RfFWvLQ@mail.gmail.com>
+References: <1463309133-14503-1-git-send-email-Karthik.188@gmail.com>
+ <xmqq4m9x1wl2.fsf@gitster.mtv.corp.google.com> <CAOLa=ZQ5nUazL61eqj34-v06rueyjzvvJHzp8du7HHGi5=7TMA@mail.gmail.com>
+ <xmqqtwhwwp0c.fsf@gitster.mtv.corp.google.com> <CAOLa=ZQ-XwEhTRwoNhrBH=NCQhpsHR=PfgtDrfJs23j6hkBWRA@mail.gmail.com>
+ <xmqqinycv343.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 18 12:08:10 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 18 12:46:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b2yOf-0000Bt-Kr
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 12:08:09 +0200
+	id 1b2yzo-0004MM-Ch
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 12:46:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753128AbcERKIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2016 06:08:01 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35770 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752251AbcERKIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2016 06:08:00 -0400
-Received: by mail-wm0-f65.google.com with SMTP id g17so4931673wme.2
-        for <git@vger.kernel.org>; Wed, 18 May 2016 03:07:59 -0700 (PDT)
+	id S1752886AbcERKq1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 May 2016 06:46:27 -0400
+Received: from mail-qg0-f67.google.com ([209.85.192.67]:33676 "EHLO
+	mail-qg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752237AbcERKq0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 May 2016 06:46:26 -0400
+Received: by mail-qg0-f67.google.com with SMTP id 90so3787736qgz.0
+        for <git@vger.kernel.org>; Wed, 18 May 2016 03:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=3DiiVbvp612cP7rnQFj9FcaNOY/64z4FzeiQSPxCLe8=;
-        b=gapAMOXRutK2+mO6FByhuhEfg0zt8zSOZkbC1Ol2u6nbcXdOyw8ypYqUouiDGnSEwB
-         VawnEmzeKrJwMU7HeGGRdFemQFprv0VuKnJgpFSIbux8FaLE+To35AzH0YXAmX+UHNKR
-         EBSe83xso3YzakpSCyAgN04+k3o7d5NrZjqPFB0avNZX+6m7r6hpiAWId0UBXMCVdKcN
-         2QNYYer4plZDRPQxDUCtick++RfIadBggBf5DKuiVWnChMkzYJj7hVtWPOjLNXns/qKH
-         kexqEOKFX71LbGFoJPDBROxqCr8++XKWt/RT5u/YHshP79ksMUqNAjyrSXGOeENfjkAN
-         PMNQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4RzXrkq+h0Pvxhgd7OxSnNzl3GBmVUGnLtJopni1P/4=;
+        b=hCLSD1whiwVc3uiCuTBw/m5gwtXpl36rrXMV8ivTBIGEoyWSIl9Gbdb0QsVCxYqlKG
+         ORGsa4dWqaWHxDf4yQ7kI/UfB9DUm0nN3PytGR9gsltuj29Os+m/c05xbDwdLpjq/rro
+         ILSsUQEZRx2KzlW1FoVUqSXTvIfQhergOi7w7gkBvfPOD+1u2xJVsFe6lb9oRW2BqRWw
+         kufALVspPzcxcHGmJ9yXehAZJQeBsI7pWxBX3gDEWgN5ELsyNHk8hzHoLifsgFaFoPnZ
+         YDIy4HDqSObPYcHMf9voYXEAzH388rIbfolmBUfj2/scqPCuEsLsRohYcoqsTOEpzJ9D
+         bKQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=3DiiVbvp612cP7rnQFj9FcaNOY/64z4FzeiQSPxCLe8=;
-        b=PB5n4f63IePYKwL/VeTgx6FF84A1sAsVYOAp5DHcnIongz+AT0T5GrU5AUiYqitgPA
-         JOjKJMW0TotkBaMF7QOUlZY4xdUultnROCHTq/Glg8zmZzN+nTFhXDPJ2BCO8TlUbDxz
-         xs0w+AomHEf4r2A6oAwEYBCjKOkomJ9QZUnGa4aOLN3Td0Lk1Rfu6Wtuh3n/YPOwBPHB
-         r1f+6Sfj3MxkrTbX2iwm12eGHOXJTE9kN5l58j5PUqTjXbLvXig8+XCV4s5ctcWYJhdw
-         TareZSetSDalq1MFlFfhYCJaQ4PBoj9vHGsUJOneWe9/6Txkqt7P8x/lpyrxTccc2GSk
-         ZARQ==
-X-Gm-Message-State: AOPr4FXLBlCx1vSj9YK1fd2HQShs+oPUf0pPq5NXBqoVf4F+rekZH1yFkfCD5A9zf4PE6w==
-X-Received: by 10.28.7.197 with SMTP id 188mr30134148wmh.101.1463566078601;
-        Wed, 18 May 2016 03:07:58 -0700 (PDT)
-Received: from netblarch (s4414.dyn.hrz.tu-darmstadt.de. [130.83.217.158])
-        by smtp.gmail.com with ESMTPSA id ib1sm7768759wjb.48.2016.05.18.03.07.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 May 2016 03:07:57 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.6.1 (2016-04-27)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4RzXrkq+h0Pvxhgd7OxSnNzl3GBmVUGnLtJopni1P/4=;
+        b=mvpwK7B9Qb19OI12kc8Y+UjGmi0X659YAQboAJQP5QfjpkPpO8rKKp/XW/2sZrMDei
+         7z9OVu0BLJu9XSKJ5nydHEQVdthHSxnbohLRfGiEYyp1MGKfXPr2rIua7r/avAhks4sV
+         +L/LrcNZiJSsKxoZStN1SAEdpgdv8aNDo8N9zy5kGnmfibRuWEH9yaNNw01ZWCUiq3fW
+         +CoG1SZeUSMBwjLkPh/di0Hhavl1M1DxajyxiKWzO7mWDvTLACql/kdBIzBnBvHa80g2
+         WFoby91XqDN2Tl1W8XxJxQa7PAOgoC9a3k0BKOSukIz2YXX2e3LookO43c+M1SZbe5Bv
+         hBOg==
+X-Gm-Message-State: AOPr4FWg/KbOwuaLRi49/fqutW4u4AaB93gzbOUuvOQPJJtcglTv8Y7x8q6lxHNO/oMvfeMKzOFpFOnMQEMdQA==
+X-Received: by 10.140.204.212 with SMTP id z203mr2154561qha.41.1463568385322;
+ Wed, 18 May 2016 03:46:25 -0700 (PDT)
+Received: by 10.140.92.178 with HTTP; Wed, 18 May 2016 03:45:55 -0700 (PDT)
+In-Reply-To: <xmqqinycv343.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294939>
 
-Previously git-pull silently ignored the --verify-signatures option for
---rebase.
+On Wed, May 18, 2016 at 2:00 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> Sorry for that.
+>> The only reason I haven't based it on 'master' is because it doesn't=
+ contain
+>> 'f307218'.
+>>
+>> =E2=9E=94 git branch --contains=3Df307218
+>>   next
+>>   ref-filter
+>
+> It is not clear from the above what your local ref-filter contains
+> beyond 'master', so it is not very useful to me when I am trying to
+> help you to avoid taking this topic hostage to all the topics in
+> 'next' (if I queued this directly on 'next', I have to hold this
+> series until all the topics in 'next' graduates to 'master).
+>
+> The series certainly would not apply to f307218 at all; it depends
+> on other stuff you have either in your local 'ref-filter' or 'next'.
+> It does not apply to the result of a merge of 'es/test-gpg-tags' topi=
+c
+> into 'master', either, but the above does not make it clear what
+> else you are using from 'next' at all.
+>
+> In any case, I think I managed to reduce the dependency on only
+> 'es/test-gpg-tags' and 'master', and that is what I'll be queuing.
+> Please double check the patches in kn/ref-filter-branch-list topic
+> and also the merge of it into 'pu' for mismerges.
+>
+> The difference between the result of merging the previously queued
+> one to 'pu', and the result of merging this round to 'pu', looks
+> like the attached.
+>
+> Thanks.
+>
+>  builtin/branch.c               |  2 +-
+>  ref-filter.c                   |  6 ++++--
+>  t/t6302-for-each-ref-filter.sh | 30 +++++++++++++++---------------
+>  3 files changed, 20 insertions(+), 18 deletions(-)
+>
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 0bbb4de..2412738 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -293,7 +293,7 @@ static int calc_maxwidth(struct ref_array *refs, =
+int remote_bonus)
+>                 skip_prefix(it->refname, "refs/remotes/", &desc);
+>                 if (it->kind =3D=3D FILTER_REFS_DETACHED_HEAD) {
+>                         char *head_desc =3D get_head_description();
+> -                       w =3D strlen(head_desc);
+> +                       w =3D utf8_strwidth(head_desc);
+>                         free(head_desc);
+>                 } else
+>                         w =3D utf8_strwidth(desc);
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 74c4869..f25671c 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1196,12 +1196,14 @@ char *get_head_description(void)
+>                 strbuf_addf(&desc, _("(no branch, bisect started on %=
+s)"),
+>                             state.branch);
+>         else if (state.detached_from) {
+> -               /* TRANSLATORS: make sure these match _("HEAD detache=
+d at ")
+> -                  and _("HEAD detached from ") in wt-status.c */
+>                 if (state.detached_at)
+> +                       /* TRANSLATORS: make sure this matches
+> +                          "HEAD detached at " in wt-status.c */
+>                         strbuf_addf(&desc, _("(HEAD detached at %s)")=
+,
+>                                 state.detached_from);
+>                 else
+> +                       /* TRANSLATORS: make sure this matches
+> +                          "HEAD detached from " in wt-status.c */
+>                         strbuf_addf(&desc, _("(HEAD detached from %s)=
+"),
+>                                 state.detached_from);
+>         }
+> diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-fi=
+lter.sh
+> index 331d978..a09a1a4 100755
+> --- a/t/t6302-for-each-ref-filter.sh
+> +++ b/t/t6302-for-each-ref-filter.sh
+> @@ -342,22 +342,22 @@ test_expect_success 'improper usage of %(if), %=
+(then), %(else) and %(end) atoms'
+>  '
+>
+>  test_expect_success 'check %(if)...%(then)...%(end) atoms' '
+> -       git for-each-ref --format=3D"%(if)%(authorname)%(then)%(autho=
+rname): %(refname)%(end)" >actual &&
+> +       git for-each-ref --format=3D"%(refname)%(if)%(authorname)%(th=
+en) Author: %(authorname)%(end)" >actual &&
+>         cat >expect <<-\EOF &&
+> -       A U Thor: refs/heads/master
+> -       A U Thor: refs/heads/side
+> -       A U Thor: refs/odd/spot
+> -
+> -
+> -
+> -       A U Thor: refs/tags/foo1.10
+> -       A U Thor: refs/tags/foo1.3
+> -       A U Thor: refs/tags/foo1.6
+> -       A U Thor: refs/tags/four
+> -       A U Thor: refs/tags/one
+> -
+> -       A U Thor: refs/tags/three
+> -       A U Thor: refs/tags/two
+> +       refs/heads/master Author: A U Thor
+> +       refs/heads/side Author: A U Thor
+> +       refs/odd/spot Author: A U Thor
+> +       refs/tags/annotated-tag
+> +       refs/tags/doubly-annotated-tag
+> +       refs/tags/doubly-signed-tag
+> +       refs/tags/foo1.10 Author: A U Thor
+> +       refs/tags/foo1.3 Author: A U Thor
+> +       refs/tags/foo1.6 Author: A U Thor
+> +       refs/tags/four Author: A U Thor
+> +       refs/tags/one Author: A U Thor
+> +       refs/tags/signed-tag
+> +       refs/tags/three Author: A U Thor
+> +       refs/tags/two Author: A U Thor
+>         EOF
+>         test_cmp expect actual
+>  '
+>
 
-Signed-off-by: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
----
+Seems to be right, Thanks for putting in the extra effort, Will ensure
+this doesn't
+happen again from my side.
 
-Sorry it took so long for the update.
-I made git-pull warn instead or error and explained why "the
---verify-signatures option does not work for --rebase" in the message.
-
- builtin/pull.c  |  2 ++
- t/t5520-pull.sh | 16 ++++++++++++++++
- 2 files changed, 18 insertions(+)
-
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 1d7333c..0eafae7 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -815,6 +815,8 @@ static int run_rebase(const unsigned char *curr_head,
- 		argv_array_push(&args, "--no-autostash");
- 	else if (opt_autostash == 1)
- 		argv_array_push(&args, "--autostash");
-+	if (opt_verify_signatures && strcmp(opt_verify_signatures, "--verify-signatures") == 0)
-+		warning(_("git-rebase does not support --verify-signatures"));
- 
- 	argv_array_push(&args, "--onto");
- 	argv_array_push(&args, sha1_to_hex(merge_head));
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 739c089..d605450 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -341,6 +341,22 @@ test_expect_success 'branch.to-rebase.rebase should override pull.rebase' '
- 	test new = "$(git show HEAD:file2)"
- '
- 
-+test_expect_success "pull --rebase warns on --verify-signatures" '
-+	git reset --hard before-rebase &&
-+	git pull --rebase --verify-signatures . copy 2>err &&
-+	test "$(git rev-parse HEAD^)" = "$(git rev-parse copy)" &&
-+	test new = "$(git show HEAD:file2)" &&
-+	test_i18ngrep "git-rebase does not support --verify-signatures" err
-+'
-+
-+test_expect_success "pull --rebase does not warn on --no-verify-signatures" '
-+	git reset --hard before-rebase &&
-+	git pull --rebase --no-verify-signatures . copy 2>err &&
-+	test "$(git rev-parse HEAD^)" = "$(git rev-parse copy)" &&
-+	test new = "$(git show HEAD:file2)" &&
-+	test_i18ngrep ! "verify-signatures" err
-+'
-+
- # add a feature branch, keep-merge, that is merged into master, so the
- # test can try preserving the merge commit (or not) with various
- # --rebase flags/pull.rebase settings.
--- 
-2.8.2
+--=20
+Regards,
+Karthik Nayak
