@@ -1,75 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] Formatting variables in the documentation
-Date: Wed, 18 May 2016 14:15:00 -0400
-Message-ID: <20160518181500.GD5796@sigill.intra.peff.net>
-References: <1463587109-22476-1-git-send-email-tom.russello@grenoble-inp.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/12] revamping git_check_attr() API
+Date: Wed, 18 May 2016 11:36:07 -0700
+Message-ID: <xmqqk2irrz6w.fsf@gitster.mtv.corp.google.com>
+References: <20160516210545.6591-1-gitster@pobox.com>
+	<CAGZ79kYLVDkeHUMCxOB57YYeJt3f4O8csEp_tyO-oWMTzJ-9hw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, matthieu.moy@grenoble-inp.fr,
-	samuel.groot@ensimag.grenoble-inp.fr,
-	erwan.mathoniere@ensimag.grenoble-inp.fr,
-	jordan.de-gea@ensimag.grenoble-inp.fr
-To: Tom Russello <tom.russello@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Wed May 18 20:15:10 2016
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed May 18 20:36:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b35zx-0005XU-EA
-	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 20:15:09 +0200
+	id 1b36KO-00021e-Mz
+	for gcvg-git-2@plane.gmane.org; Wed, 18 May 2016 20:36:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752533AbcERSPE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2016 14:15:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41413 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752272AbcERSPD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2016 14:15:03 -0400
-Received: (qmail 16807 invoked by uid 102); 18 May 2016 18:15:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 May 2016 14:15:03 -0400
-Received: (qmail 25150 invoked by uid 107); 18 May 2016 18:15:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 May 2016 14:15:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 May 2016 14:15:00 -0400
-Content-Disposition: inline
-In-Reply-To: <1463587109-22476-1-git-send-email-tom.russello@grenoble-inp.org>
+	id S1753673AbcERSgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2016 14:36:12 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64291 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752609AbcERSgM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2016 14:36:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 66BC21C03E;
+	Wed, 18 May 2016 14:36:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eosOxSdz5bvuC1OLQFrt779x7UY=; b=I1Mlnx
+	+5hYVcQTyjIhOqXZoxXaWyqpRXaRxivGQxR4aRLrBidyA9AygupI4brwxc0Y/FGP
+	Tb1t5bUYrFoIcyVBHYU9FTW5bjiYZL/C90i+j1cB1PQw5nHjHNdmG+GE/Y6k0WVM
+	WxdrZnxWcci393P1qTk4lfVTFMdWq9bIyJ+vU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gYnXk83U0jURHq2LLO5MbyhsnbR+IpQ0
+	EBbfplKq6K4CmSkyWZu3zr6RJHOAvOvNlk5a7MmcWjAaucYS2MRGorVGPQ7sOXsy
+	O7LMPECfbrH+eG+4JWFDV4WpcztaP3CPuCmTDlzlq9TejF9il3RIcH+CYWURSF/X
+	ievZA26MWEo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5CEC01C03C;
+	Wed, 18 May 2016 14:36:10 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D6E341C03B;
+	Wed, 18 May 2016 14:36:09 -0400 (EDT)
+In-Reply-To: <CAGZ79kYLVDkeHUMCxOB57YYeJt3f4O8csEp_tyO-oWMTzJ-9hw@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 18 May 2016 09:51:23 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 63EF2312-1D27-11E6-80FD-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294986>
 
-On Wed, May 18, 2016 at 05:58:29PM +0200, Tom Russello wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> There is no agreement on this topic (the CodingGuidelines does not
-> mention it), it would be better if everyone follows the same rule: put
-> each environment variable in monospace style and write this rule in
-> the guide.
-> 
-> It is a good thing to have a consistent documentation however it
-> will be painful to change with a simple regex all occurences
-> (especially environment variables without any format) because some of
-> them are in paths or code section.
-> 
-> What do you think ?
+>> The patches in the earliest part of the series have been sent to the
+>> list already; there is no substantial change (I think I made a
+>> typofix in the commit log message found by Eric).
+>
+> and a new patch got added here:
+>
+>     attr.c: tighten constness around "git_attr" structure
+>
+> I cannot find it on the list though?
 
-Personally, I like the "literal" backticks versus the "emphasis"
-single-quotes. But you should keep in mind how they are rendered in the
-manpages, which is as "nothing" and "underline", respectively (by
-default, anyway). So I think some people are negative on using backticks
-for that reason.
+Just like everybody else has private "wip" version to be sent to the
+list, I have my own.  I haven't had enough time to cook v3 yet into
+a publishable state yet.
 
-I also turn on the MAN_BOLD_LITERAL knob, which turns that "nothing"
-into "bold", and the result looks quite nice. But there is some
-compatibility question of whether that can be used everywhere.
+> So I wondered when you prefix the subject of the patches with "attr.c:"
+> and when with "attr:".
 
-Here's the most recent discussion I could find:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/281170
-
-which talks about the issue and references an earlier discussion (which
-I didn't re-read). But you probably need to address the concerns there
-before moving forward with a patch like this.
-
--Peff
+The early ones with label attr.c are meant to be "good clean-ups,
+whether we decide to go with API update or not, that can live
+standalone outside the series"; the remainders may have been better
+labeled with fully-spelled "attributes:", perhaps, as that is not
+about the attr.c file alone, but is about the whole attributes
+subsystem.
