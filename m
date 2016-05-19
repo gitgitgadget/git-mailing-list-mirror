@@ -1,90 +1,59 @@
-From: "Hawk, Jeff" <jeff.hawk@here.com>
-Subject: Re: since/after not working properly
-Date: Thu, 19 May 2016 19:43:09 +0000
-Message-ID: <DB5PR0401MB184571A07FD0E88F5ADD60569B4A0@DB5PR0401MB1845.eurprd04.prod.outlook.com>
-References: <573DDEBF.7000903@here.com>
-	<CAPc5daXPWiY8=NtOcsjMcVN2MiwaaQUbVY6GBn2Eu31Q0fZrUQ@mail.gmail.com>
-	<AM4PR0401MB184426EE089AE65941C5F7869B4A0@AM4PR0401MB1844.eurprd04.prod.outlook.com>,<xmqqeg8xj2ed.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rerere: plug memory leaks upon "rerere forget" failure
+Date: Thu, 19 May 2016 13:05:15 -0700
+Message-ID: <xmqq60u9izk4.fsf@gitster.mtv.corp.google.com>
+References: <xmqqpossi31p.fsf@gitster.mtv.corp.google.com>
+	<573E1758.8090801@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 19 21:58:24 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu May 19 22:05:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3U5P-0004Kp-Kr
-	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 21:58:23 +0200
+	id 1b3UCC-0000f3-2F
+	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 22:05:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932960AbcEST6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2016 15:58:19 -0400
-Received: from mail-am1on0144.outbound.protection.outlook.com ([157.56.112.144]:55869
-	"EHLO emea01-am1-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S932719AbcEST6S convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 May 2016 15:58:18 -0400
-X-Greylist: delayed 905 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 May 2016 15:58:17 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hmcs.onmicrosoft.com;
- s=selector1-here-com;
- h=From:To:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=S+7PcLXYQeXnY0yPKW9mWeOlf+KDA/cv1XbaVVWk97s=;
- b=vPXhbqee+zFwqGtBXIr3DWlzHs5vKr/i/bzFw2CWlZ6On1wy1743vrXxRNTnIwr4g0t+Xt4+YKinzDsXNyRuNUn3YUlNJPXBYOUP1LIvmIUJWQC8dPFyRs8v5zIoOwzQ9OYPlwyw5WkK3+jhREyRU4eJ+Jsc4yjhdT+QmOdvTaE=
-Received: from DB5PR0401MB1845.eurprd04.prod.outlook.com (10.165.6.15) by
- DB5PR0401MB1845.eurprd04.prod.outlook.com (10.165.6.15) with Microsoft SMTP
- Server (TLS) id 15.1.497.12; Thu, 19 May 2016 19:43:09 +0000
-Received: from DB5PR0401MB1845.eurprd04.prod.outlook.com ([10.165.6.15]) by
- DB5PR0401MB1845.eurprd04.prod.outlook.com ([10.165.6.15]) with mapi id
- 15.01.0497.019; Thu, 19 May 2016 19:43:09 +0000
-Thread-Topic: since/after not working properly
-Thread-Index: AQHRseUkX+tAMLq9k0a7tYzRmYa1YZ/Ag5eAgAACGdiAABjs9oAACtJX
-In-Reply-To: <xmqqeg8xj2ed.fsf@gitster.mtv.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: pobox.com; dkim=none (message not signed)
- header.d=none;pobox.com; dmarc=none action=none header.from=here.com;
-x-originating-ip: [25.164.12.4]
-x-ms-office365-filtering-correlation-id: 0fb8c5b5-d5bc-442c-2169-08d3801dce98
-x-microsoft-exchange-diagnostics: 1;DB5PR0401MB1845;5:ICkDz48Iesj+xi8/X54NbzpzQtD+HJwgp2jCWUsQNlCigq/3znYaFie6E8hyCz6G3zYUzEqgMyUlSr3ck5vpOv3d5oZ/aoaTG3HA09s+6+Hwb6WyN8EEAW5SfX+sWVdGMaXuyt2p/q0av82A+s4scg==;24:L/PDp27ANBRJHWoQrcRS+/k+DNIdQqXxMm3FUcGFQudha3R+EBYttXWufoBDsXMikRKr9JzLx9QfVlvVLLVGHkTuaaJp7usgdrJkD3A4B6s=;7:9yp3SPAWp5WRqyIk+8JVqGzURCvgE4xvO1ZN1IwCcQyvH7/j3quLCV71F01U6/Nc94NEqNnFysoQrP5Tv94UxVbohNg4owBIQrTykvwGg3Z9VbdLtH1WYYuvVyF+JVUJxXDWzjfSGP5Ne669vYPLl3chS8DQoInz72B0pUZ5/9Gz5+F02pgtrSiTJJl/+lf+
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:DB5PR0401MB1845;
-x-microsoft-antispam-prvs: <DB5PR0401MB1845E614E6D142C55F66AA609B4A0@DB5PR0401MB1845.eurprd04.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(601004)(2401047)(8121501046)(5005006)(10201501046)(3002001)(6055026);SRVR:DB5PR0401MB1845;BCL:0;PCL:0;RULEID:;SRVR:DB5PR0401MB1845;
-x-forefront-prvs: 094700CA91
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(40764003)(377454003)(4326007)(3660700001)(2906002)(3280700002)(9686002)(3480700004)(11100500001)(5004730100002)(10400500002)(2900100001)(74316001)(122556002)(2950100001)(1220700001)(106116001)(110136002)(189998001)(76576001)(19580405001)(19580395003)(87936001)(66066001)(92566002)(86362001)(76176999)(54356999)(50986999)(93886004)(102836003)(3846002)(6116002)(77096005)(81166006)(8676002)(5008740100001)(5002640100001)(33656002)(586003)(5003600100002)(8936002)(7059030);DIR:OUT;SFP:1102;SCL:1;SRVR:DB5PR0401MB1845;H:DB5PR0401MB1845.eurprd04.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-spamdiagnosticoutput: 1:23
-spamdiagnosticmetadata: NSPM
-X-OriginatorOrg: here.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 May 2016 19:43:09.4105
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 6d4034cd-7225-4f72-b853-91feaea64919
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB5PR0401MB1845
+	id S1754231AbcESUFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2016 16:05:20 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52723 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753942AbcESUFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2016 16:05:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A5E781CC7D;
+	Thu, 19 May 2016 16:05:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=VBNClp
+	u1vWXNd3V26LwpnIc4dBzrme7vTA9RI11F36dQGnNJayfAv1EgPRu82D4nvyJxUT
+	v8kTU06fnLBHqpYF70vtKANyE6epS8wyh/xyG4Jy5BXHtl4cf+/p+yAIgQb5/9WH
+	d8OY4Zw2Me1PJJbYqMjJ/D5tyVKz3xNsmcgeE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ATdU0UR4hSSIL/NL7jcifidHZAJpcdVw
+	gDbVV8RVgNJk+8dKr3Fyry47ZcHv7DWWGLNsYn2YoczPl5RW3qlBCfTtXRbrMcMP
+	abdYhy7zR5HpkDncke3QLRZ+gKUsFzcsNQralITDhZmVcAwHKc61M9SoIGr0ZbbE
+	ixQL+LIEEsQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 93E411CC7C;
+	Thu, 19 May 2016 16:05:17 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 136811CC7B;
+	Thu, 19 May 2016 16:05:17 -0400 (EDT)
+In-Reply-To: <573E1758.8090801@kdbg.org> (Johannes Sixt's message of "Thu, 19
+	May 2016 21:43:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0186BBF0-1DFD-11E6-8E5C-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295096>
 
-
-Thanks for your help and sorry for my confused regarding ad and cd.
-________________________________________
-From: Junio C Hamano <gitster@pobox.com>
-Sent: Thursday, May 19, 2016 2:03:54 PM
-To: Hawk, Jeff
-Cc: Git Mailing List
-Subject: Re: since/after not working properly
-
-"Hawk, Jeff" <jeff.hawk@here.com> writes:
-
-> They suggest this:
-> git log --all --numstat --date=short --pretty=format:'--%h--%ad--%aN' --no-renames
->
-> Seems like the %ad should be %cd.
-
-I have no opinion on that.  If somebody wants to show author dates,
-that's her choice.
+Thanks.
