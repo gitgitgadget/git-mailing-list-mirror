@@ -1,99 +1,85 @@
-From: Mike Rappazzo <rappazzo@gmail.com>
-Subject: Re: [PATCH] rev-parse: fix --git-common-dir when executed from
- subpath of main tree
-Date: Thu, 19 May 2016 10:15:49 -0400
-Message-ID: <CANoM8SUDVtGa12i2LXor6-bEwgH100zztYFR5mmQbs4z-5K4tg@mail.gmail.com>
-References: <1459734143-95832-1-git-send-email-rappazzo@gmail.com>
- <CACsJy8CgNy8+s0j+UUVVDk1ru702mtkTrO6QsYNpisGY-eAYGw@mail.gmail.com>
- <CANoM8SWCiJch-nXq=-=ELKOc6tV-TNg6U-hcc9W69Fz4rz+j+g@mail.gmail.com> <20160519074939.GA22796@glandium.org>
+From: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Subject: Re: [PATCH] upload-pack.c: use of parse-options API
+Date: Thu, 19 May 2016 16:36:39 +0200 (CEST)
+Message-ID: <800962099.10901198.1463668599601.JavaMail.zimbra@imag.fr>
+References: <20160518164019.26443-1-Antoine.Queru@ensimag.grenoble-inp.fr> <20160518180800.GC5796@sigill.intra.peff.net> <721240639.4127450.1463652631815.JavaMail.zimbra@ensimag.grenoble-inp.fr> <20160519115725.GB3050@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu May 19 16:16:17 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Antoine Queru <antoine.queru@ensimag.grenoble-inp.fr>,
+	git@vger.kernel.org,
+	william duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
+	Antoine Queru <antoine.queru@grenoble-inp.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 19 16:36:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3OkK-0005rW-Na
-	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 16:16:17 +0200
+	id 1b3P4J-000187-Oy
+	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 16:36:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932361AbcESOQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2016 10:16:12 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:36159 "EHLO
-	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932233AbcESOQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2016 10:16:10 -0400
-Received: by mail-io0-f172.google.com with SMTP id i75so108703223ioa.3
-        for <git@vger.kernel.org>; Thu, 19 May 2016 07:16:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=CQubids2o//HeBwlHjAS/dq5cROyIC7yQq+ii5mpoS8=;
-        b=xqvfqp0YnCbg5Ucgyj6ROGdXQAuCmcSoR40TdSSe0v7fIIENtU40tkNhtnakMfErZD
-         DMELq7HoKapIb7Mzs7JANWH9vawnrJlISc+N87ElirLXK6V35p5Ohnpn/8N+u3p0nT+Z
-         j4Xpk4IHWXCTKRrNcgfidWm0PuCmn1nmMSd4fnrVPybskhExs1MuxFaJME0HFYj3TOmV
-         RfHRYkvG0XzLOptmBnsenw3f9uFfD1x6wYBnFKqydAHw0LpA2ei+4EMVSiUwk37ZflCu
-         UhAZIEx+eAq/SXNJEqgvcADdd7zZu5QyIydgHZcebT0cQATJTmjbmI4+cbxwfz9QD3SZ
-         VEjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=CQubids2o//HeBwlHjAS/dq5cROyIC7yQq+ii5mpoS8=;
-        b=J9fVgVwDDkPov+y9lmUDxy3u97KLURFFoLB3Xq1M1NFvJ6okVbhoKL+Nt2KN/PjBQW
-         t2Vz8dIZpr/Nt9cZlJXPkoshFfgXS5CY5E5uVitCpdSO4dlf9JpDjCHHCS3PorbLdIKg
-         dndMYwOOsbcewDdGdKX0gl/SniMKavHR9fVlOmSvGq9+Dopfn/Crip3se8XIP0QNqqec
-         m1LLnVSc+AOsKHOkBA9DQrFMvt9GjugqKwUN5imtYRa7lvkSKk9KHL0Eso+qayi2rWJh
-         PMteWfWsVaDfSruQQB25MHzqjbSf8kzJqR/RLdM7eGZXeWErpdz9biPkdkcaBKLuVbUw
-         qWyw==
-X-Gm-Message-State: AOPr4FVbW2u6F3JfWaGrsl9N16nEIBkjePQgjfAqhKqpLg17murq4AVBOlFOBSob0w9ol/jmFMIzmKE+nacidA==
-X-Received: by 10.107.11.213 with SMTP id 82mr3755139iol.55.1463667369097;
- Thu, 19 May 2016 07:16:09 -0700 (PDT)
-Received: by 10.107.7.220 with HTTP; Thu, 19 May 2016 07:15:49 -0700 (PDT)
-In-Reply-To: <20160519074939.GA22796@glandium.org>
+	id S1754323AbcESOgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2016 10:36:49 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:50632 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753995AbcESOgs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2016 10:36:48 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4JEacEm026878
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 19 May 2016 16:36:38 +0200
+Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4JEadYr032238;
+	Thu, 19 May 2016 16:36:40 +0200
+In-Reply-To: <20160519115725.GB3050@sigill.intra.peff.net>
+X-Originating-IP: [129.88.6.115]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF45 (Linux)/8.0.9_GA_6191)
+Thread-Topic: upload-pack.c: use of parse-options API
+Thread-Index: XkQA+7bmcKl/V81T4wBVKv9+5+GuNA==
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Thu, 19 May 2016 16:36:38 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u4JEacEm026878
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1464273402.57373@RtOTCZvg4j/chSCCoEpNyA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295064>
 
-On Thu, May 19, 2016 at 3:49 AM, Mike Hommey <mh@glandium.org> wrote:
-> On Fri, Apr 08, 2016 at 08:35:51AM -0400, Mike Rappazzo wrote:
->> On Fri, Apr 8, 2016 at 7:47 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->> > On Mon, Apr 4, 2016 at 8:42 AM, Michael Rappazzo <rappazzo@gmail.com> wrote:
->> >> Executing `git-rev-parse --git-common-dir` from the root of the main
->> >> worktree results in '.git', which is the relative path to the git dir.
->> >> When executed from a subpath of the main tree it returned somthing like:
->> >> 'sub/path/.git'.  Change this to return the proper relative path to the
->> >> git directory (similar to `--show-cdup`).
->> >
->> > I faced a similar problem just a couple days ago, I expected "git
->> > rev-parse --git-path" to return a path relative to cwd too, but it
->> > returned relative to git dir. The same solution (or Eric's, which is
->> > cleaner in my opinion) applies. --shared-index-path also does
->> > puts(git_path(... and has the same problem. Do you want to fix them
->> > too?
->>
->> Sure, I can do that.  I will try to get it up soon.
->
-> If I'm not mistaken, it looks like this fell off your radar. (I haven't
-> seen an updated patch, and it doesn't look like the fix made it to any
-> git branch). Would you mind updating?
->
-> Cheers,
->
-> Mike
+Jeff King wrote:
+> On Thu, May 19, 2016 at 12:10:31PM +0200, Antoine Queru wrote:
+> 
+> > > I'm not sure whether it is worth hiding the first two options. We
+> > > typically hide "internal" options like this for user-facing programs, so
+> > > as not to clutter the "-h" output. But upload-pack isn't a user-facing
+> > > program. Anybody who is calling it directly with "-h" may be interested
+> > > in even its more esoteric options.
+> > 
+> > In fact, to do this, I looked at builtin/receive-pack.c, where the parser
+> > API
+> > was already implemented, and these first two options were hidden. There
+> > were
+> > also no description for any options, so I thought it was not needed. Maybe
+> > we
+> > could update this file too ?
+> 
+> Yeah, I don't think it's that bad to hide them, and perhaps consistency
+> with receive-pack is better.
 
-There is a newer version submitted on May 6th[1].  Eric Sunshine has
-submitted a patch [2] which fixes
-up t1500.  It looks like that is in a stable form, so I will rebase my
-v2 onto those changes, and resubmit
-in the near future.
+IIRC, part of the reason receive-pack has hidden options is that it was a
+GSoC microproject, and writing an accurate description is much harder than
+what we expect from a microproject.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/293778
-[2] http://thread.gmane.org/gmane.comp.version-control.git/294999
+IOW, I'm all for un-hiding these options, but that shouldn't be a requirement
+for a beginner's project.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
