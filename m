@@ -1,143 +1,104 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv8 0/5] pathspec magic extension to search for attributes
-Date: Thu, 19 May 2016 14:25:52 -0700
-Message-ID: <CAGZ79kYx_pX81bmpyXCvJSVsZW=t3VpBizUPQ90Wz9=HdG42UA@mail.gmail.com>
-References: <20160519010935.27856-1-sbeller@google.com> <xmqqiny9j2sc.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kZvZQxPUkECupvqk0KRbq-pRK6y=GksOiYn_zz+TM=dBA@mail.gmail.com> <xmqqshxdhi76.fsf@gitster.mtv.corp.google.com>
+From: Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: Re: [PATCH 19/21] t9003: become resilient to GETTEXT_POISON
+Date: Thu, 19 May 2016 21:31:52 +0000
+Message-ID: <573E30C8.4070600@sapo.pt>
+References: <1463585274-9027-1-git-send-email-vascomalmeida@sapo.pt>
+ <1463585274-9027-20-git-send-email-vascomalmeida@sapo.pt>
+ <CAPig+cT3yf7D4xOmOhy5Y21qwHuA5Ny9ULEJhC1OBgrhiayQ3g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 19 23:26:00 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu May 19 23:32:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3VSB-000201-11
-	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 23:25:59 +0200
+	id 1b3VYV-00061r-TB
+	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 23:32:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932405AbcESVZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2016 17:25:55 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:35670 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753782AbcESVZy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2016 17:25:54 -0400
-Received: by mail-io0-f174.google.com with SMTP id p64so32871303ioi.2
-        for <git@vger.kernel.org>; Thu, 19 May 2016 14:25:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=C3JFNObZFWCNsHVY5EnK/M3HwpTiNn82BXwjcovs2iE=;
-        b=DLyycJUUD1cZG4WUHqW7Nqc21YAJgpXvYyio210+psCGglFT1ETyczDX61I3DCNJDz
-         igJF1ooq7FSSjwSrDHyJkCmoxAFYcvkkrcfe9lyWpbiqSy0ZI+H8MlCM5Z7hAv19eEcm
-         T3oCO+6ozDOSqnihI9jSTgoyI8yz1QCcYDLB/0MK9bUdx3QymC2lp+1Q2zb81oVsFngF
-         fe5c/S75xQvy5XvJ94a69Vqw8AowmL68DVLqzOva1YIWP0QC+rl3nm7ZLnEwnm7wd40t
-         5GaoGCUSO1xemP4AlPipMxzz3nXeE1TipTFBVtcS6yBvsUZ8GdcyGItloUlQnbukjaMr
-         rgMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=C3JFNObZFWCNsHVY5EnK/M3HwpTiNn82BXwjcovs2iE=;
-        b=RRRwUMN+DyOPh/1C0A87GnEML/8bTanrzKU8DL0M/i26/ZRTwhrgVTI+t2ucKESWup
-         9PAUGB6CV6jyTsyn9i0FVIQ1+JCYQ5fIHN3pmWx/d4SJL385J+PzZlQi0t/+SlKbKA+p
-         BBoLWLYWUQaVxqdQVOT0gMA7NPCruSCFdkyslKq0LWntUZX3wsjEuVCH+ajElCbdgv99
-         IL4A1wo5CfsykFIibWwAx8H62JIbeodHm2iz0VfT39vLxi82dPTW6lFbuzUUZJZIqtZJ
-         HfeHUY8vfLTj6ODG4vJjFQjT6Wop7GrCMi2eHAhVU4UtUwDkOGdBjkMct3YAlSEGonp+
-         ldaA==
-X-Gm-Message-State: AOPr4FXIWIeJnwng3e1ZAFhBfaeXRV+VVQbbGInnE3vP7fMqmLI63v72qdNBSQMXrPjSjUp/MC63eMcGtRG44N+J
-X-Received: by 10.36.14.71 with SMTP id 68mr4709487ite.98.1463693153346; Thu,
- 19 May 2016 14:25:53 -0700 (PDT)
-Received: by 10.107.2.3 with HTTP; Thu, 19 May 2016 14:25:52 -0700 (PDT)
-In-Reply-To: <xmqqshxdhi76.fsf@gitster.mtv.corp.google.com>
+	id S1754853AbcESVb6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 May 2016 17:31:58 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:56600 "EHLO sapo.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753782AbcESVb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2016 17:31:58 -0400
+Received: (qmail 694 invoked from network); 19 May 2016 21:31:54 -0000
+Received: (qmail 11753 invoked from network); 19 May 2016 21:31:54 -0000
+Received: from unknown (HELO [192.168.1.66]) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
+          for <avarab@gmail.com>; 19 May 2016 21:31:54 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
+In-Reply-To: <CAPig+cT3yf7D4xOmOhy5Y21qwHuA5Ny9ULEJhC1OBgrhiayQ3g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295104>
 
-On Thu, May 19, 2016 at 2:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> (B) requires some thought though. Here is my vision:
+=C3=80s 18:34 de 19-05-2016, Eric Sunshine escreveu:
+> On Wed, May 18, 2016 at 11:27 AM, Vasco Almeida <vascomalmeida@sapo.p=
+t> wrote:
+>> The test t9003-help-autocorrect.sh fails when run under GETTEXT_POIS=
+ON,
+>> because it's expecting to filter out the original output. Accommodat=
+e
+>> gettext poison case by also filtering out the default simulated outp=
+ut.
 >>
->>     1) Allow pathspecs for sparse checkout.
+>> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+>> ---
+>> diff --git a/t/t9003-help-autocorrect.sh b/t/t9003-help-autocorrect.=
+sh
+>> @@ -31,10 +31,14 @@ test_expect_success 'autocorrect showing candida=
+tes' '
+>>         git config help.autocorrect 0 &&
 >>
->>       I wonder if we just add support for that in .git/info-sparse-checkout
->>       or if we add a new file that is for pathspecs only, or we have a config
->>       option whether sparse-checkout follows pathspecs or gitignore patterns
+>>         test_must_fail git lfg 2>actual &&
+>> -       sed -e "1,/^Did you mean this/d" actual | grep lgf &&
+>> +       sed -e "1,/^Did you mean this/d" actual |
+>> +       sed -e "/GETTEXT POISON/d" actual |
+>=20
+> Why not do so with a single sed invocation?
+>=20
+>    sed -e "..." -e "..." |
+>=20
+>> +       grep lgf &&
 >>
->>     2) Teach `git clone` a new option `--sparse-checkout <pathspec>`
->>       When that option is set the pathspec is written into the new file from
->>       (1) and core.sparsecheckout is set to true
->>
->>     3) Advertise to do a `git clone --sparse-checkout
->> :(attr:default_submodules)`
->>
->> Going this way we would help making submodules not different but integrate more
->> into other concepts of Git. As a downside this would require touching
->> sparse checkout which may be more time consuming than just adding a
->> `git clone --init-submodules-by-label` which stores the labels and only upddates
->> those submodules.
->>
->> Or are there other ideas how to go from here?
->
-> My take is to pretend sparse checkout does not exist at all and then
-> go from there ;-)  It is a poorly designed and implemented "concept"
-> that we do not want to spread around.
->
-> You were going to add defaultGroup and teach 'clone' (and other
-> commands) about it, and have clone find submodules in that Group,
-> right?
+>>         test_must_fail git distimdist 2>actual &&
+>> -       sed -e "1,/^Did you mean this/d" actual | grep distimdistim
+>> +       sed -e "1,/^Did you mean this/d" actual |
+>> +       sed -e "/GETTEXT POISON/d" actual |
+>=20
+> Ditto.
+>=20
+>> +       grep distimdistim
+>>  '
 
-Right. But upon finding the new name for clone, I wondered why
-this has to be submodule specific. The attr pathspecs are also working
-with any other files. So if you don't use submodules, I think it would be
-pretty cool to have a
+I tried but it seems not to work.
 
-    git clone --sparse-checkout=Documentation/ ...
+Actually I did this wrong, I haven't thought this through.
 
-> Isn't the pathspec magic just another way to introduce
-> how you express the "defaultGroup", i.e. not with the "label" thing
-> in .gitmodules, but with pathspec elements with attribute magic?
+Under gettext poison:
+sed -e "1,/^Did you mean this/d" removes all lines, gives no output.
+And then the one second, sed -e "/GETTEXT POISON/d", outputs "lgf" as
+expected.
 
-Right. So instead I could do a
+But running normally (without gettext poison):
+1st sed outputs "lgf" as expected
+And then second one output the entire 'actual' file, like if it were
+cat, undoing the first sed.
 
-    git clone --recursive --restrict-submodules-to=<pathspec> --save-restriction
-
-and then later on
-
-    git submodule update --use-restriction-saved-by-clone
-
-I think we'd not want more than that for some first real tests
-by some engineers.
-
-However after thinking about this for a while I think it's too
-submodule centric? The more special sauce we add for submodules
-the harder they will be to maintain/support as they grow into their own
-thing down the road.
-
-Using these pathspec attrs are a good example for why we would
-want to make it more generic. Imagine a future, where more attributes
-can be codified into pathspecs and this is one of the possibilities:
-
-    git clone --sparse=":(exclude,size>5MB,binary)
-
-which would not checkout files that are large binary files. We could
-also extend the protocol (v2 with the capabilities in client speaks first)
-to transmit such a requirement to the server.
-
-Why is sparseness considered bad?
-(I did find only limited resources on the net, those bogs I found are
-advertising it as the last remainder Git needed to be superior to svn in
-any discipline; I did not find a lot of negative feedback on it. So I guess
-usability and confusion?)
-
-If I wanted to just do the submodule only thing, this would be a smaller
-series, I would guess.
-
-Thanks,
-Stefan
+I think the sed here is superfluous in the first place.
+Should we remove it? If it weren't the case of gettext poison it was ok
+to have sed there, but it makes the test fail under gettext poison.
