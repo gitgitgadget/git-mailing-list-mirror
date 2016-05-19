@@ -1,119 +1,84 @@
-From: Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>
-Subject: [RFC/PATCHv2] Allow the short-hand - replacing @{-1} in git worktree add
-Date: Thu, 19 May 2016 10:59:09 +0200
-Message-ID: <1463648349-4053-1-git-send-email-jordan.de-gea@ensimag.grenoble-inp.fr>
-Cc: samuel.groot@ensimag.grenoble-inp.fr,
-	erwan.mathoniere@ensimag.grenoble-inp.fr,
-	tom.russello@grenoble-inp.org, Matthieu.Moy@grenoble-inp.fr,
-	Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>
+From: larsxschneider@gmail.com
+Subject: [PATCH v1 1/2] travis-ci: enable Git SVN tests t91xx on Linux
+Date: Thu, 19 May 2016 11:10:08 +0200
+Message-ID: <1463649009-56941-2-git-send-email-larsxschneider@gmail.com>
+References: <1463649009-56941-1-git-send-email-larsxschneider@gmail.com>
+Cc: e@80x24.org, Lars Schneider <larsxschneider@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 19 10:59:29 2016
+X-From: git-owner@vger.kernel.org Thu May 19 11:10:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3Jnj-0006mW-IQ
-	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 10:59:27 +0200
+	id 1b3JyJ-00045c-3U
+	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 11:10:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753704AbcESI7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2016 04:59:16 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:58682 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752344AbcESI7O (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 May 2016 04:59:14 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id B50FC2072;
-	Thu, 19 May 2016 10:59:11 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id NyWShn8F0MqH; Thu, 19 May 2016 10:59:11 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 9C0F82054;
-	Thu, 19 May 2016 10:59:11 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 8F8372066;
-	Thu, 19 May 2016 10:59:11 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1zWEDC5bZF0m; Thu, 19 May 2016 10:59:11 +0200 (CEST)
-Received: from eduroam-033061.grenet.fr (eduroam-033061.grenet.fr [130.190.33.61])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 752C72055;
-	Thu, 19 May 2016 10:59:11 +0200 (CEST)
-X-Mailer: git-send-email 2.7.4 (Apple Git-66)
+	id S932674AbcESJKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2016 05:10:17 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34581 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932668AbcESJKO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2016 05:10:14 -0400
+Received: by mail-wm0-f67.google.com with SMTP id n129so19282263wmn.1
+        for <git@vger.kernel.org>; Thu, 19 May 2016 02:10:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=3eVi2pWE/fr0fzHmxmYmY8XD2nVhkPvLtZMqGqOz+2Y=;
+        b=I8jGORaiFz2pfWcvBPHkpm/Jj3gzHR/3SK/2YIHYB8BspMWlAfpqvsCdSlgx1m7UhI
+         oHjjtv7pTUiaqwgVfGLPAn4OLfdU69EkVBoV2zdttS0NzhXTZklNQ8ubtIlIjTRZjg69
+         EjMuDtTxPETwIgHkvFbEyVeEA+HL+f9iTbIF3MwtqVVW3MBvjWt5A223PwyTvOicDsSC
+         Mow0KCEj4ankw3eVPtxup/hSpbzBebfAebQv6R2cwVdvDB0Zzoh8mW2vZW9QZsLpFt7M
+         phKdgyxP0gv0EIKX1mqhdf5hvEUZNkdNVcp/gzuVjDh+mavsTLUyP8tNDefCMXMCb47W
+         5BuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=3eVi2pWE/fr0fzHmxmYmY8XD2nVhkPvLtZMqGqOz+2Y=;
+        b=dWCkuEZAsxFSnhVI87QoHqlVpqCBNeyG4Jt5303YOtRdNUCKtohxpRr2hvh+Zkf1AA
+         SfFDYRLUvHFfI9dyFDeQ1aTiefyWcCX0tPpVT3dk4vUyA2eg9hzVbqSedeyi3JLuzIyU
+         U4pxN8fQkQoEzVUwDw9bt++WzoNGuTgHycArE9QvhEisyZkHBqAnfkn2GugKDYiGl2pn
+         amnTwlLG6rUxmB4XW7f/MzAb9ygyV8v59TjnYHPcV0ACmKbJ51zcNcoozdGIOWoctawL
+         CTLOdmN+Rs/nz+NDLh0ZD8wT4JWdRJCamhjDYGJwUEZfGcuZzSOvGBAfzA9f0FS2Cdi9
+         dQmw==
+X-Gm-Message-State: AOPr4FVZeM+5CpzJcmoOHXu0WoRH6B98Rz4nkb332C703YfNjngGbM8zAIw/SuHso0U9/g==
+X-Received: by 10.28.1.151 with SMTP id 145mr1395585wmb.25.1463649012984;
+        Thu, 19 May 2016 02:10:12 -0700 (PDT)
+Received: from slxBook3.fritz.box (p5DDB7732.dip0.t-ipconnect.de. [93.219.119.50])
+        by smtp.gmail.com with ESMTPSA id n66sm13716029wmf.6.2016.05.19.02.10.12
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Thu, 19 May 2016 02:10:12 -0700 (PDT)
+X-Mailer: git-send-email 2.5.1
+In-Reply-To: <1463649009-56941-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295048>
 
-Since `git worktree add` uses `git checkout` when `[<branch>]` is used,
-and `git checkout -` is already supported, it makes sense to allow the
-same shortcut in `git worktree add`.
+From: Lars Schneider <larsxschneider@gmail.com>
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Signed-off-by: Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>
+Install the "git-svn" package to make the Perl SVN libraries available
+to the Git SVN tests on Travis-CI Linux build machines.
+
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- Documentation/git-worktree.txt |  3 ++-
- builtin/worktree.c             |  3 +++
- t/t2025-worktree-add.sh        | 17 +++++++++++++++++
- 3 files changed, 22 insertions(+), 1 deletion(-)
+ .travis.yml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index c622345..28dc559 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -48,7 +48,8 @@ add <path> [<branch>]::
+diff --git a/.travis.yml b/.travis.yml
+index adab5b8..c20ec54 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -18,6 +18,7 @@ addons:
+   apt:
+     packages:
+     - language-pack-is
++    - git-svn
  
- Create `<path>` and checkout `<branch>` into it. The new working directory
- is linked to the current repository, sharing everything except working
--directory specific files such as HEAD, index, etc.
-+directory specific files such as HEAD, index, etc. You may also specify
-+`-` as `<branch>` which is synonymous with `"@{-1}"`.
- +
- If `<branch>` is omitted and neither `-b` nor `-B` nor `--detached` used,
- then, as a convenience, a new branch based at HEAD is created automatically,
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index d8e3795..d800d47 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -340,6 +340,9 @@ static int add(int ac, const char **av, const char *prefix)
- 	path = prefix ? prefix_filename(prefix, strlen(prefix), av[0]) : av[0];
- 	branch = ac < 2 ? "HEAD" : av[1];
- 
-+	if (!strcmp(branch, "-"))
-+		branch = "@{-1}";
-+
- 	opts.force_new_branch = !!new_branch_force;
- 	if (opts.force_new_branch) {
- 		struct strbuf symref = STRBUF_INIT;
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index 3acb992..ef81bc6 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -18,6 +18,23 @@ test_expect_success '"add" an existing empty worktree' '
- 	git worktree add --detach existing_empty master
- '
- 
-+test_expect_success '"add" using shorthand - fails when no previous branch' '
-+	test_must_fail git worktree add existing -
-+'
-+
-+test_expect_success '"add" using shorthand' '
-+	git checkout -b newbranch &&
-+	echo hello >myworld &&
-+	git add myworld &&
-+	git commit -m myworld &&
-+	git checkout master &&
-+	git worktree add short-hand - && 
-+	(
-+		cd short-hand &&
-+		test $(git rev-parse --symbolic-full-name HEAD) = "refs/heads/newbranch"
-+	)
-+'
-+
- test_expect_success '"add" refuses to checkout locked branch' '
- 	test_must_fail git worktree add zere master &&
- 	! test -d zere &&
+ env:
+   global:
 -- 
-2.7.4 (Apple Git-66)
+2.5.1
