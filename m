@@ -1,225 +1,126 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v12 05/20] index-helper: add --strict
-Date: Thu, 19 May 2016 17:45:42 -0400
-Message-ID: <1463694357-6503-6-git-send-email-dturner@twopensource.com>
-References: <1463694357-6503-1-git-send-email-dturner@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 2/2] convert: ce_compare_data() checks for a sha1 of a path
+Date: Thu, 19 May 2016 16:03:37 -0700
+Message-ID: <xmqqk2iphcqe.fsf@gitster.mtv.corp.google.com>
+References: <573A993F.8020205@web.de>
+	<1463667680-26008-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Turner <dturner@twopensource.com>
-To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu May 19 23:47:41 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: tboegi@web.de
+X-From: git-owner@vger.kernel.org Fri May 20 01:03:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3VnB-00079o-1U
-	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 23:47:41 +0200
+	id 1b3Wyp-0002XA-6b
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 01:03:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932896AbcESVre convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 May 2016 17:47:34 -0400
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:35414 "EHLO
-	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755498AbcESVqo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2016 17:46:44 -0400
-Received: by mail-qk0-f170.google.com with SMTP id n62so50133875qkc.2
-        for <git@vger.kernel.org>; Thu, 19 May 2016 14:46:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=09miKliYICJJgEHiBXKwc/PGvf8+MnDx+s9dD72OEiI=;
-        b=oOZYIxO6nx6Tgz+6inhZhm21mXUHGO7ER/LcXg8N8VAupcWRl+S2expu3nDDlw1Dwb
-         cNdNu/BEGS94REmorsqUD9XR3P2/HOrydoszIbaWrCx1QsnJZ99dYyBmmPTyVyMHmvID
-         9DkB4u9Ww0WGZP1MkRGRva7wg9SfrITHHcCZuR1DVgBnD5uNlJHIH7TFwS1ZG0iEJsxa
-         VgTZLpaKnz5iwzAxpO9Reqpmvc90dEmN3V7jYve3Q4W+Z8ihwbdpVpqF2ImuCb1Emgoz
-         6wBVgaLzQ3t5UdswhBp4nPIV121mOJBwqR70vhDFbpsAdWfdCh/PYSQClHSdxRb+HRmL
-         fAbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=09miKliYICJJgEHiBXKwc/PGvf8+MnDx+s9dD72OEiI=;
-        b=j0g340K+v8gieXNxvfpgtgfXl0qiVe3Gwg791dVISWoops3HX4Icq5awr/dTr2ub65
-         YrRjbj6qL6gKMFaNVxa9rwj5cGOgveaUlfFtDNO5P9xKdSMWsaSthSDHCoC+WtzYyAxm
-         HbGSz3Zzn0tOzJljk3wHA7AwmiN2pj+a6f2A/5h40FwfSBD/Wc/JDIxumFvNxKHjgPTc
-         Ft2D10Rrss/GOY/ondSCxrjPWe/8OCigikEDg0nlYtrm672rzScSOD8n1TEg+5FkgVN6
-         31PMzebq7vNueX7HqY9xaOYblXzrbEmt5yiTHS0HMJ/HLfQAsTg3wyjz9/oj4amsh1Dc
-         QLiQ==
-X-Gm-Message-State: AOPr4FU1WjyBZ/RuMYyKaI3xXOfAQjFbBvzvefSowDpglGBn4o/u2xJhLr0tUAJ7E0QGDw==
-X-Received: by 10.55.153.3 with SMTP id b3mr16777274qke.102.1463694403352;
-        Thu, 19 May 2016 14:46:43 -0700 (PDT)
-Received: from twopensource.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id r124sm7424730qhr.48.2016.05.19.14.46.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 19 May 2016 14:46:42 -0700 (PDT)
-X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
-In-Reply-To: <1463694357-6503-1-git-send-email-dturner@twopensource.com>
+	id S1755368AbcESXDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2016 19:03:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56727 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753809AbcESXDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2016 19:03:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C583F1C409;
+	Thu, 19 May 2016 19:03:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DvWhnTxz6iR+UYe9M3Makc5ShFM=; b=OojAUh
+	zsKcV15QPnk2X115iZjBPZl1ITHHzK75wO0NKXlHq8RYwv1hDuN5EdhcXEdRawKy
+	eJaOjCRUbwRey4qHy4zHwnoUp6qp7lWE8oQZ9EjlNP/oAUOXssYmPOjghIIK/qBM
+	sdDwlfrEPyUO1tgf4zR0eYPxcygmKJVjNtCzk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=V0aIqY/XjPFVdorVEuTv4DkE5pbuSOHa
+	WEQX6uG0ZHxh24fSoyBprWTjcqCbpseaYzfc/JPJdljmgLayCsI6JynE2VMq5Iq8
+	62r2PghE0z7D/Uoq93Lb1YziWAORt0YP2xn76eYhTvfKk6CaV7Nae5C+UR8e+LiE
+	NfXlP8db6vc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id BD0EA1C408;
+	Thu, 19 May 2016 19:03:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 351BD1C407;
+	Thu, 19 May 2016 19:03:39 -0400 (EDT)
+In-Reply-To: <1463667680-26008-1-git-send-email-tboegi@web.de>
+	(tboegi@web.de's message of "Thu, 19 May 2016 16:21:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: EC7F4CF4-1E15-11E6-A7B0-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295126>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+tboegi@web.de writes:
 
-There are "holes" in the index-helper approach because the shared
-memory is not verified again by git. If $USER is compromised, shared
-memory could be modified. But anyone who could do this could already
-modify $GIT_DIR/index. A more realistic risk is some bugs in
-index-helper that produce corrupt shared memory. --strict is added to
-avoid that.
+> +int convert_to_git_ce_sha1(const char *path, const unsigned char *sha1,
+> +			   const char *src, size_t len,
+> +			   struct strbuf *dst, enum safe_crlf checksafe)
 
-Strictly speaking there's still a very small gap where corrupt shared
-memory could still be read by git: after we write the trailing SHA-1 in
-the shared memory (thus signaling "this shm is ready") and before
-verify_shm() detects an error.
+That's a strange name for the function, as "ce" and "sha1" gives no
+hints what they are about.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: David Turner <dturner@twopensource.com>
----
- Documentation/git-index-helper.txt |  9 +++++++
- cache.h                            |  1 +
- index-helper.c                     | 48 ++++++++++++++++++++++++++++++=
-++++++++
- read-cache.c                       |  9 ++++---
- 4 files changed, 64 insertions(+), 3 deletions(-)
+If I understand correctly:
 
-diff --git a/Documentation/git-index-helper.txt b/Documentation/git-ind=
-ex-helper.txt
-index f892184..1f92c89 100644
---- a/Documentation/git-index-helper.txt
-+++ b/Documentation/git-index-helper.txt
-@@ -25,6 +25,15 @@ OPTIONS
- 	Exit if the cached index is not accessed for `<n>`
- 	seconds. Specify 0 to wait forever. Default is 600.
-=20
-+--strict::
-+--no-strict::
-+	Strict mode makes index-helper verify the shared memory after
-+	it's created. If the result does not match what's read from
-+	$GIT_DIR/index, the shared memory is destroyed. This makes
-+	index-helper take more than double the amount of time required
-+	for reading an index, but because it will happen in the
-+	background, it's not noticable. `--strict` is enabled by default.
-+
- NOTES
- -----
-=20
-diff --git a/cache.h b/cache.h
-index 2d7af6f..6cb0d02 100644
---- a/cache.h
-+++ b/cache.h
-@@ -345,6 +345,7 @@ struct index_state {
- 		  * on it.
- 		  */
- 		 to_shm : 1,
-+		 always_verify_trailing_sha1 : 1,
- 		 initialized : 1;
- 	struct hashmap name_hash;
- 	struct hashmap dir_hash;
-diff --git a/index-helper.c b/index-helper.c
-index 260ef4a..a7f8a42 100644
---- a/index-helper.c
-+++ b/index-helper.c
-@@ -17,6 +17,7 @@ struct shm {
-=20
- static struct shm shm_index;
- static struct shm shm_base_index;
-+static int to_verify =3D 1;
-=20
- static void release_index_shm(struct shm *is)
- {
-@@ -114,11 +115,56 @@ static void share_index(struct index_state *istat=
-e, struct shm *is)
- 	hashcpy((unsigned char *)new_mmap + istate->mmap_size - 20, is->sha1)=
-;
- }
-=20
-+static int verify_shm(void)
-+{
-+	int i;
-+	struct index_state istate;
-+	memset(&istate, 0, sizeof(istate));
-+	istate.always_verify_trailing_sha1 =3D 1;
-+	istate.to_shm =3D 1;
-+	i =3D read_index(&istate);
-+	if (i !=3D the_index.cache_nr)
-+		goto done;
-+	for (; i < the_index.cache_nr; i++) {
-+		struct cache_entry *base, *ce;
-+		/* namelen is checked separately */
-+		const unsigned int ondisk_flags =3D
-+			CE_STAGEMASK | CE_VALID | CE_EXTENDED_FLAGS;
-+		unsigned int ce_flags, base_flags, ret;
-+		base =3D the_index.cache[i];
-+		ce =3D istate.cache[i];
-+		if (ce->ce_namelen !=3D base->ce_namelen ||
-+		    strcmp(ce->name, base->name)) {
-+			warning("mismatch at entry %d", i);
-+			break;
-+		}
-+		ce_flags =3D ce->ce_flags;
-+		base_flags =3D base->ce_flags;
-+		/* only on-disk flags matter */
-+		ce->ce_flags   &=3D ondisk_flags;
-+		base->ce_flags &=3D ondisk_flags;
-+		ret =3D memcmp(&ce->ce_stat_data, &base->ce_stat_data,
-+			     offsetof(struct cache_entry, name) -
-+			     offsetof(struct cache_entry, ce_stat_data));
-+		ce->ce_flags =3D ce_flags;
-+		base->ce_flags =3D base_flags;
-+		if (ret) {
-+			warning("mismatch at entry %d", i);
-+			break;
-+		}
-+	}
-+done:
-+	discard_index(&istate);
-+	return i =3D=3D the_index.cache_nr;
-+}
-+
- static void share_the_index(void)
- {
- 	if (the_index.split_index && the_index.split_index->base)
- 		share_index(the_index.split_index->base, &shm_base_index);
- 	share_index(&the_index, &shm_index);
-+	if (to_verify && !verify_shm())
-+		cleanup_shm();
- 	discard_index(&the_index);
- }
-=20
-@@ -250,6 +296,8 @@ int main(int argc, char **argv)
- 	struct option options[] =3D {
- 		OPT_INTEGER(0, "exit-after", &idle_in_seconds,
- 			    N_("exit if not used after some seconds")),
-+		OPT_BOOL(0, "strict", &to_verify,
-+			 "verify shared memory after creating"),
- 		OPT_END()
- 	};
-=20
-diff --git a/read-cache.c b/read-cache.c
-index e3c8f3e..41647ea 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1674,9 +1674,12 @@ int do_read_index(struct index_state *istate, co=
-nst char *path, int must_exist)
-=20
- 	istate->mmap =3D mmap;
- 	istate->mmap_size =3D mmap_size;
--	if (try_shm(istate) &&
--	    verify_hdr(istate->mmap, istate->mmap_size) < 0)
--		goto unmap;
-+	if (try_shm(istate)) {
-+		if (verify_hdr(istate->mmap, istate->mmap_size) < 0)
-+			goto unmap;
-+	} else if (istate->always_verify_trailing_sha1 &&
-+		   verify_hdr(istate->mmap, istate->mmap_size) < 0)
-+			goto unmap;
- 	hdr =3D mmap =3D istate->mmap;
- 	mmap_size =3D istate->mmap_size;
- 	if (!istate->keep_mmap)
---=20
-2.4.2.767.g62658d5-twtrsrc
+ - convert_to_git() is about converting <src, len> into <dst>, and
+   "path" is not for reading the contents to be converted.  It is
+   used to tell crlf_to_git() the index entry to pay attention to
+   when defeating the usual conversion rules due to strange contents
+   in the index (it also is used to report errors for safe-crlf
+   check).
+
+ - This one adds "sha1", and that is not about the contents to be
+   converted, either.  Like "path", "sha1" is used to tell what blob
+   to check when disabling the usual conversion rules.
+
+Does the above description help in coming up with a better
+description for the ce/sha1 thing?  The comment near the code that
+uses them reads like so:
+
+	/*
+	 * If the file in the index has any CR in it, do not convert.
+	 * This is the new safer autocrlf handling.
+	 */
+
+What is a good name to call the input to that logic?  "This
+function, in addition to convert_to_git(), takes an extra parameter,
+that tells it an extra piece of information 'X'"; what is X?
+
+At the same time, the parameter "sha1" needs to be renamed to
+clarify what object it is and what purpose it serves.  "sha1" alone
+is an overly generic name, and it does not hint that it may not even
+be given to the function, and that it doesn't have anything to do
+with the contents <src, len> points at.
+
+	Note. Perhaps you wanted _ce_sha1 suffix to tell the readers
+	that it takes "an object name of the cache entry" that
+	further affects the conversion?  If so the sha1 parameter
+	should be renamed to match (and make it clear to readers
+	that is what you meant).
+
+The "sha1" is pretending to be the more important input for the
+primary function of this function by being in early part of the
+parameter list.  This may need to be rethought; we probably should
+have done so as part of your previous refactoring of this file.
+
+convert_to_git() takes the data for <path> in <src, len> and gives
+result in <dst>, so these four should be its first parameters.  The
+detail of the way the conversion works may be affected by additional
+parameters, e.g. <checksafe> controls if extra warnings are given.
+
+The <sha1> is to influence the conversion logic further to disable
+the crlf-to-git conversion by inspecting a blob, and it tells the
+function that the blob comes from an unusual place (as opposed to
+the index entry at <path>).  So it should sit next to checksafe as
+an auxiliary input parameter.
+
+The logic implemented by the patch looks correct, but I'd have to
+say that the result is an unmaintainable mess.  Right now, I can see
+what is going on in the new code.  I am sure that in 6 months, with
+poorly named helper functions and parameters, I will have hard time
+recalling how the new code works.
