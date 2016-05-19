@@ -1,67 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pull: warn on --verify-signatures with --rebase
-Date: Thu, 19 May 2016 08:46:25 -0700
-Message-ID: <xmqqeg8ykq3y.fsf@gitster.mtv.corp.google.com>
-References: <20160518101827.GA14475@netblarch>
-	<xmqq37pftks7.fsf@gitster.mtv.corp.google.com>
-	<20160519100221.GB22257@netblarch>
+From: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] upload-pack.c: use of parse-options API
+Date: Thu, 19 May 2016 18:10:20 +0200 (CEST)
+Message-ID: <431335092.10912437.1463674220365.JavaMail.zimbra@imag.fr>
+References: <20160518164019.26443-1-Antoine.Queru@ensimag.grenoble-inp.fr> <20160519153903.22104-1-Antoine.Queru@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Stefan Beller <sbeller@google.com>
-To: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 19 17:46:39 2016
+	william duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Antoine Queru <Antoine.Queru@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu May 19 18:10:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3Q9h-0002Xf-R0
-	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 17:46:34 +0200
+	id 1b3QX1-0000lR-8S
+	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 18:10:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754594AbcESPq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2016 11:46:29 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50351 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754280AbcESPq3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2016 11:46:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C7A81CE1C;
-	Thu, 19 May 2016 11:46:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ClUylEke4vcRoQMKMeEgdIEKGAE=; b=sbwMcB
-	aLYhf9V4dj2rBvr+p5j3o3ts1XUzyRNh3QW8fnl+pxscxHfIiV0h0NZ5sE89qf/p
-	/TLwg9AqSQJSLi0IGq+rV+67M37iZEZw7x3A/Yuu/rH8VMsjXCQ61m+d80RWsm6t
-	o+XPEc/J72YFCM48SRylvj8i9brW36qG+lsUE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=o92lIBdJDW/eMv5NwyxI+/UXTsIyk4tM
-	dRU3tIBLmnofDw4FgwzukLF29PB04liETxTOv05l7N4WVVsVIsTvPz35Kjkkud8+
-	Tk/yN1qDeVtOYVlZ0oT8MYhAgrJElXsQJY4WnKYyLcQhWLMYQLdbru52Sa20ba5G
-	4hH/dKZrgsY=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 946511CE1B;
-	Thu, 19 May 2016 11:46:27 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 075561CE1A;
-	Thu, 19 May 2016 11:46:26 -0400 (EDT)
-In-Reply-To: <20160519100221.GB22257@netblarch> (Alexander Hirsch's message of
-	"Thu, 19 May 2016 12:02:21 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D8E64E28-1DD8-11E6-8017-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S932627AbcESQKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2016 12:10:30 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53574 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932617AbcESQKa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2016 12:10:30 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4JGAIZG018228
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 19 May 2016 18:10:18 +0200
+Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4JGAK9J002276;
+	Thu, 19 May 2016 18:10:20 +0200
+In-Reply-To: <20160519153903.22104-1-Antoine.Queru@ensimag.grenoble-inp.fr>
+X-Originating-IP: [129.88.6.115]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF46 (Linux)/8.0.9_GA_6191)
+Thread-Topic: upload-pack.c: use of parse-options API
+Thread-Index: yI6zO+bb0O9ju5GSOrl821ZLWNH3lQ==
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Thu, 19 May 2016 18:10:19 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u4JGAIZG018228
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1464279022.11306@USV/UTJY9cGNTPxZcwRM0A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295072>
 
-Alexander 'z33ky' Hirsch <1zeeky@gmail.com> writes:
+Antoine.Queru@ensimag.grenoble-inp.fr wrote:
+> Option parsing now uses the parser API instead of a local parser.
+> Code is now more compact.
+> Description for -stateless-rpc and --advertise-refs
+> come from the commit (gmane/131517)
 
-> Would "ignoring --verify-signatures for rebase" be sufficient? It does
-> not describe why it is ignored though.
+Please, use a real commit id instead of a Gmane link.
 
-Yeah, I agree that that would be sufficient.
+We don't know how long Gmane will remain up, but a self
+reference from Git's history to itself will always remain valid.
+
+The following alias is handy for this:
+
+[alias]
+        whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+
+In your case it would allow writing: 
+
+Description for --stateless-rpc and --advertise-refs is taken
+from commit 42526b4 (Add stateless RPC options to upload-pack,
+receive-pack, 2009-10-30).
+
+> diff v1 v2:
+
+We usually say "diff" to refer to an actual diff. I'd write "changes since v1" here.
+
+> +		OPT_BOOL(0, "stateless-rpc", &stateless_rpc,
+> +			 N_("may perform only a single read-write cycle with stdin and stdout")),
+
+It's weird to define what an option does with "may". It's a
+property of --stateless-rpc, but does not really define it.
+
+> +	if (argc != 1)
+> +		usage_with_options(upload_pack_usage, options);
+>  
+> -	setup_path();
+> +	if (timeout)
+> +		daemon_mode = 1;
+>  
+> -	dir = argv[i];
+> +	setup_path();
+>  
+> +	dir = argv[0];
+
+Not a problem with your code, but the patch shows "setup_path()"
+as moved while it is not really. Maybe using "send-email
+--patience" or some other diff option could make the patch nicer.
+Not really important as it does not change the final state.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
