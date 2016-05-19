@@ -1,88 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 0/2] CRLF: ce_compare_data() checks for a sha1 of a path
-Date: Thu, 19 May 2016 16:10:44 -0700
-Message-ID: <xmqqfutdhcej.fsf@gitster.mtv.corp.google.com>
-References: <573A993F.8020205@web.de>
-	<1463667675-25930-1-git-send-email-tboegi@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: tboegi@web.de
-X-From: git-owner@vger.kernel.org Fri May 20 01:11:18 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCHv9 1/4] Documentation: fix a typo
+Date: Thu, 19 May 2016 16:23:20 -0700
+Message-ID: <20160519232323.12775-2-sbeller@google.com>
+References: <20160519232323.12775-1-sbeller@google.com>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com, pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Fri May 20 01:23:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3X64-0006xT-UW
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 01:11:17 +0200
+	id 1b3XHy-0005kO-RZ
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 01:23:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932132AbcESXKs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 May 2016 19:10:48 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60664 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753809AbcESXKs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 May 2016 19:10:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AE0701E289;
-	Thu, 19 May 2016 19:10:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0ldYi4eduiLu
-	j0qyCMAH4DpACIc=; b=ACJX85Hz1dy2J9oHSAsGaT34NOJkVfdEb4+2q7q3g3xS
-	gTGZNndzpL9O1xui5jsZ8HUWigLpA6aj/0YGApzFOWdJPLHhLvI2saPXY/0NUU3u
-	wyyHfxPPEI+h7MKBrGp5OaVUq1kYf0YUHwvdCQEitUQxroiDbns6obUMnwMO+dQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pKhprC
-	Pa58wi9Sc4E3emkyEi/Fbw/SZsUKbEU1QNzdMBKG0vbZA8N/or3rz5E9sXK72cUU
-	FJSKgHyLrQ4ZaoBK9Ks8/MIyoTMTz4bSMhRl3GwhtbSenT8zZZBUAhQJyBmJrVVs
-	r20x6VYRDBquHUpOkuA14cUS7gS/oRMzfvp3I=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A68121E288;
-	Thu, 19 May 2016 19:10:46 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2CB831E287;
-	Thu, 19 May 2016 19:10:46 -0400 (EDT)
-In-Reply-To: <1463667675-25930-1-git-send-email-tboegi@web.de>
-	(tboegi@web.de's message of "Thu, 19 May 2016 16:21:15 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EAFD1568-1E16-11E6-9521-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1754799AbcESXXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2016 19:23:31 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:33060 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753824AbcESXXa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2016 19:23:30 -0400
+Received: by mail-pa0-f47.google.com with SMTP id xk12so33354106pac.0
+        for <git@vger.kernel.org>; Thu, 19 May 2016 16:23:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Su/U5LWa8s2LvlLMeQZidUtD/9SzMGJVgjnSYiVj79I=;
+        b=BRNxjgz8aBhKiU7t47UojaN2nQtqae5AXguRnZktKfVK6NqH9ik93QeZjDYEtU2FfB
+         JAGukkeiSxruQ4OYk8qP0yyhRWLzJwQLKVV/JghNMMa+7oe/T8f5sDj0cFcO5aRemHuA
+         pGRHO2x8KAdanKiOJ/bOzcluMLcx1zA+np2lAg0LdDsgnQuwFdwD9SpCKxDBZ4njVb2z
+         WSsjsIUVEOus54pK7NBMoVhz1chiDLi9PgEizaWrt2Qkqpz+dk0oqnjt1FWGdpaNJ1Fp
+         yyN56rr2GYEQcHVNymOZYC/J9PJfpMmCJwny0mVKEE/tP8jhGBiSSLnGtwFK1mysYMm7
+         h0Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Su/U5LWa8s2LvlLMeQZidUtD/9SzMGJVgjnSYiVj79I=;
+        b=fwBHa84dXl1c+2MEDFMIaIyegPIVE+q3pDrCOZvIx7ZRb9q+Yek2wXCVGbX0O9EmDR
+         JNryB1S9hNTe8TgrmRDp0Xrw4JTjvh5C4J9nUgFIl8P/nqzSzVZxIJ0efMsTFoVX6aWc
+         2apq/GXkCk6N8x1iliDncx7Xc3IMQCCSIyKrjcvwxxFwpAz7Tx3df077PlvunyUSGzR7
+         BQsHyeAtjw4laPsSG4ZJoQ4HshBFPXdB1Ebb87wukUWt4MF95K3RrCV1ZtS4QMiP+TnY
+         jj2jo1BGROUIjhEak2NfgzgJuXTJmklKGQ/k/gRKkXsmqUcswS/NZfhLZ8hiJQOBD7/G
+         TGlg==
+X-Gm-Message-State: AOPr4FXfvg5wfqrOQJT3/2fB57sLhyQcm9fZ20cFJsey3uW/hvUfsBEaY6WFy1syFmfBN9E/
+X-Received: by 10.66.196.105 with SMTP id il9mr23471164pac.97.1463700209583;
+        Thu, 19 May 2016 16:23:29 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:acf4:8121:b728:8fc4])
+        by smtp.gmail.com with ESMTPSA id q70sm22267339pfj.81.2016.05.19.16.23.28
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 19 May 2016 16:23:29 -0700 (PDT)
+X-Mailer: git-send-email 2.8.2.123.gb4ad9b6.dirty
+In-Reply-To: <20160519232323.12775-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295128>
 
-tboegi@web.de writes:
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ Documentation/gitattributes.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> From: Torsten B=C3=B6gershausen <tboegi@web.de>
->
-> Break up the old 10/10 series about CLRF handling into smaller
-> series. This is a small bugfix, when merge.renormalize is used
-> with core.autocrlf (and no attributes are set).
-
-Is it worth protecting the fix with a new test?  Or does this flip
-an existing "expect-failure" to "expect-success"?
-
-> Prepare the refactoring to use the streaming interface.
-
-> Changes since v4:
->  - Rename #define in cache.h into HASH_USE_SHA_NOT_PATH
->  - convert.c: Rename has_cr_in_index into blob_has_cr()
->    Better logic when sha1 !=3D NULL,
->    Adjusted the commit message
->
-> Torsten B=C3=B6gershausen (2):
->   read-cache: factor out get_sha1_from_index() helper
->   convert: ce_compare_data() checks for a sha1 of a path
->
->  cache.h      |  4 ++++
->  convert.c    | 34 ++++++++++++++++++++++------------
->  convert.h    | 23 +++++++++++++++++++----
->  read-cache.c | 33 +++++++++++++++++++++------------
->  sha1_file.c  | 17 +++++++++++++----
->  5 files changed, 79 insertions(+), 32 deletions(-)
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index e3b1de8..af2c682 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -86,7 +86,7 @@ is either not set or empty, $HOME/.config/git/attributes is used instead.
+ Attributes for all users on a system should be placed in the
+ `$(prefix)/etc/gitattributes` file.
+ 
+-Sometimes you would need to override an setting of an attribute
++Sometimes you would need to override a setting of an attribute
+ for a path to `Unspecified` state.  This can be done by listing
+ the name of the attribute prefixed with an exclamation point `!`.
+ 
+-- 
+2.8.2.123.gb4ad9b6.dirty
