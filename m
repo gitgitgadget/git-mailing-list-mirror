@@ -1,53 +1,189 @@
-From: Eric Wong <e@80x24.org>
-Subject: Re: [PATCH v1 2/2] travis-ci: enable sequential test execution for
- t9113 and 9126
-Date: Thu, 19 May 2016 10:06:58 +0000
-Message-ID: <20160519100658.GA20225@dcvr.yhbt.net>
-References: <1463649009-56941-1-git-send-email-larsxschneider@gmail.com>
- <1463649009-56941-3-git-send-email-larsxschneider@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Thu May 19 12:07:08 2016
+From: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
+Subject: [PATCH/RFC] Add userdiff built-in pattern for CSS code
+Date: Thu, 19 May 2016 12:06:25 +0200
+Message-ID: <20160519100625.7945-1-william.duclot@ensimag.grenoble-inp.fr>
+Cc: simon.rabourg@ensimag.grenoble-inp.fr,
+	matthieu.moy@grenoble-inp.fr,
+	antoine.queru@ensimag.grenoble-inp.fr,
+	francois.beutin@ensimag.grenoble-inp.fr
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 19 12:12:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3KrD-0000kh-Ag
-	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 12:07:07 +0200
+	id 1b3Kwn-0004KM-3f
+	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 12:12:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754540AbcESKHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2016 06:07:00 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:56012 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753960AbcESKHA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2016 06:07:00 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73B8E1FA7B;
-	Thu, 19 May 2016 10:06:58 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1463649009-56941-3-git-send-email-larsxschneider@gmail.com>
+	id S1754604AbcESKMu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2016 06:12:50 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:43073 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753910AbcESKMt (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 May 2016 06:12:49 -0400
+X-Greylist: delayed 378 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 May 2016 06:12:48 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id EB7B62506;
+	Thu, 19 May 2016 12:06:28 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eDWA3ZVMsqPy; Thu, 19 May 2016 12:06:28 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id DCDC824D7;
+	Thu, 19 May 2016 12:06:28 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id D75502066;
+	Thu, 19 May 2016 12:06:28 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KC-b0a3i41i4; Thu, 19 May 2016 12:06:28 +0200 (CEST)
+Received: from Messiaen.grenet.fr (eduroam-033085.grenet.fr [130.190.33.85])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id B48A92055;
+	Thu, 19 May 2016 12:06:28 +0200 (CEST)
+X-Mailer: git-send-email 2.8.2.403.gdc9c9d0.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295054>
 
-larsxschneider@gmail.com wrote:
-> Enable t9113 and 9126 by defining the SVNSERVER_PORT. Since both tests
-> open the same port during execution, they cannot run in parallel. Add
-> a ".seq.sh" suffix to the test files and teach "prove" to run them
-> sequentially.
+CSS is widely used, motivating it being included as a built-in pattern.
+It must be noted that the word_regex for CSS (i.e. the regex defining what is a word in the language) does not consider '.' and '#' characters (in CSS selectors) to be part of the word. This behavior is documented by the test t/t4018/css-rule.
 
-Interesting, I guess I forgot the problem because had some
-rules in config.mak to serialize them for many years, now :x
+Add the info in documentation that CSS is now built-in.
+---
+ Documentation/gitattributes.txt |  2 ++
+ t/t4018-diff-funcname.sh        |  1 +
+ t/t4018/css-rule                |  4 ++++
+ t/t4034-diff-words.sh           |  1 +
+ t/t4034/css/expect              | 16 ++++++++++++++++
+ t/t4034/css/post                |  9 +++++++++
+ t/t4034/css/pre                 |  9 +++++++++
+ userdiff.c                      |  8 ++++++++
+ 8 files changed, 50 insertions(+)
+ create mode 100644 t/t4018/css-rule
+ create mode 100644 t/t4034/css/expect
+ create mode 100644 t/t4034/css/post
+ create mode 100644 t/t4034/css/pre
 
-Anyways, how about making the tests run on separate ports and
-not worry about serializing them at all?  Maybe there was a
-reason we didn't do this years ago, but I forget...
-
-But probably the best (but I guess more difficult) option is to
-get svnserve+apache to do socket activation off a random port
-bound by a parent process at startup.
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index e3b1de8..81f60ad 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -525,6 +525,8 @@ patterns are available:
+ 
+ - `csharp` suitable for source code in the C# language.
+ 
++- `css` suitable for source code in the CSS language.
++
+ - `fortran` suitable for source code in the Fortran language.
+ 
+ - `fountain` suitable for Fountain documents.
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 67373dc..1795ffc 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -30,6 +30,7 @@ diffpatterns="
+ 	bibtex
+ 	cpp
+ 	csharp
++	css
+ 	fortran
+ 	fountain
+ 	html
+diff --git a/t/t4018/css-rule b/t/t4018/css-rule
+new file mode 100644
+index 0000000..84ed754
+--- /dev/null
++++ b/t/t4018/css-rule
+@@ -0,0 +1,4 @@
++RIGHT label.control-label {
++    margin-top: 10px!important;
++    border : 10px ChangeMe #C6C6C6;
++}
+diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+index f2f55fc..912df91 100755
+--- a/t/t4034-diff-words.sh
++++ b/t/t4034-diff-words.sh
+@@ -302,6 +302,7 @@ test_language_driver ada
+ test_language_driver bibtex
+ test_language_driver cpp
+ test_language_driver csharp
++test_language_driver css
+ test_language_driver fortran
+ test_language_driver html
+ test_language_driver java
+diff --git a/t/t4034/css/expect b/t/t4034/css/expect
+new file mode 100644
+index 0000000..b025d88
+--- /dev/null
++++ b/t/t4034/css/expect
+@@ -0,0 +1,16 @@
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index 735f301..bdf6a90 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
++<CYAN>@@ -1,9 +1,9 @@<RESET>
++.<RED>class-form<RESET><GREEN>other-form<RESET> label.control-label {
++    margin-top: <RED>10<RESET><GREEN>15<RESET>px!important;
++    border : 10px <RED>dashed<RESET><GREEN>dotted<RESET> #C6C6C6;
++}<RESET>
++<RED>#CCCCCC<RESET>
++<RED>padding-bottom<RESET><GREEN>#CCCCCB<RESET>
++<GREEN>margin-left<RESET>
++150<RED>px<RESET><GREEN>em<RESET>
++10px
++<RED>!important<RESET>
++<RED>div<RESET><GREEN>li<RESET>.class#id
+diff --git a/t/t4034/css/post b/t/t4034/css/post
+new file mode 100644
+index 0000000..bdf6a90
+--- /dev/null
++++ b/t/t4034/css/post
+@@ -0,0 +1,9 @@
++.other-form label.control-label {
++    margin-top: 15px!important;
++    border : 10px dotted #C6C6C6;
++}
++#CCCCCB
++margin-left
++150em
++10px
++li.class#id
+diff --git a/t/t4034/css/pre b/t/t4034/css/pre
+new file mode 100644
+index 0000000..735f301
+--- /dev/null
++++ b/t/t4034/css/pre
+@@ -0,0 +1,9 @@
++.class-form label.control-label {
++    margin-top: 10px!important;
++    border : 10px dashed #C6C6C6;
++}
++#CCCCCC
++padding-bottom
++150px
++10px!important
++div.class#id
+diff --git a/userdiff.c b/userdiff.c
+index 6bf2505..715a1fd 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -148,6 +148,14 @@ PATTERNS("csharp",
+ 	 "[a-zA-Z_][a-zA-Z0-9_]*"
+ 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+ 	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
++PATTERNS("css",
++	 "^([^,{}]+)((,[^}]*\\{)|([ \t]*\\{))$",
++	 /* -- */
++	 /* This regex comes from W3C CSS specs. Should theorically also allow ISO 10646 characters U+00A0 and higher,
++	  * this not handled in this regex. */
++	 "-?[_a-zA-F][-_a-zA-F0-9]*" /* identifiers */
++	 "|-?[0-9]+|\\#[0-9a-fA-F]+" /* numbers */
++),
+ { "default", NULL, -1, { NULL, 0 } },
+ };
+ #undef PATTERNS
+-- 
+2.8.2.403.gdc9c9d0.dirty
