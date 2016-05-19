@@ -1,72 +1,99 @@
-From: Christian Goetze <christian.goetze@appdynamics.com>
-Subject: Pulling git tags from multiple sources incorrectly reports stale tags
-Date: Thu, 19 May 2016 16:25:25 -0700
-Message-ID: <CACuwOqNZC3NipCVJ5YbTA_0d-P+i2KmQ5V2HzYPhZFQn4Kuwkg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv9 4/4] pathspec: allow querying for attributes
+Date: Thu, 19 May 2016 16:32:13 -0700
+Message-ID: <xmqqbn41hbeq.fsf@gitster.mtv.corp.google.com>
+References: <20160519232323.12775-1-sbeller@google.com>
+	<20160519232323.12775-5-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 01:25:31 2016
+Content-Type: text/plain
+Cc: pclouds@gmail.com, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri May 20 01:32:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3XJq-0006uJ-Ut
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 01:25:31 +0200
+	id 1b3XQg-0002fZ-Jx
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 01:32:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754897AbcESXZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2016 19:25:27 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:36265 "EHLO
-	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754172AbcESXZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2016 19:25:26 -0400
-Received: by mail-io0-f171.google.com with SMTP id b78so10366522ioj.3
-        for <git@vger.kernel.org>; Thu, 19 May 2016 16:25:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=appdynamics.com; s=google;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=ZEilXg887d/XmZxTJyPK9P9mLRZn4hDry1qlhV+/Lbs=;
-        b=Z0i2NfBK0cuzJTEq+sGy9lbbVxnV7SZ9uko8Xy0aP66L7NgB2kVyxFXB0D90zSRstp
-         ujBm3DvC3J8YdM0e+1qGCJDFpd14sKyzuAvoOU6gk1zo35W3b0mQq9I+1OUOMBL0k0cs
-         IZ3ofXzvOAnQZYMrFdV3VNbaytLTDftKWVNUI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=ZEilXg887d/XmZxTJyPK9P9mLRZn4hDry1qlhV+/Lbs=;
-        b=XpImC9D44X7UYlsjLR0E0WccfwCn5aicxRl5+HBKLVY75Fk7IlRn47kcN/vESJ9jf8
-         ZqkUsbuI8POM7oCuJa8IVldfqopGeptLq+yIznzOowawuwXu6w+TXh4B+7EdtznT66kU
-         wP1ieerj2UFsI7hCUSWBxSowujqh68qwZbheuxVCsrnPv5WJ0NJzJToHtRYq4lKG5rTS
-         XpOHGhr8fQC/UVl9AYb7C0PX//ONjXsAR5QssBoz039DyQEsma6zqmHYMO8hF5biP+ie
-         pZe6csVmRNBh1i3d0OMDp4Y/Hky5XIcqk9pFmxLt9okhuC5zSdYFVWiX8xklXA0T6bUu
-         EnTw==
-X-Gm-Message-State: AOPr4FXnmTSThYU8LwjRmBB+d97eR6epKVGE4p9//SijzhbCvvRdk+QYdpf3JmhalY6z0IxQ+Wi9MXl2v/OsrNvT
-X-Received: by 10.36.69.33 with SMTP id y33mr297952ita.84.1463700325909; Thu,
- 19 May 2016 16:25:25 -0700 (PDT)
-Received: by 10.79.131.67 with HTTP; Thu, 19 May 2016 16:25:25 -0700 (PDT)
+	id S1754904AbcESXcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2016 19:32:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60680 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753942AbcESXcR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2016 19:32:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7BD231C7A6;
+	Thu, 19 May 2016 19:32:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=f74Vd4YVUb3F3HqxcyeF10CQzgI=; b=UvsVAL
+	hFlBixvz+UO6+Lmg5yjz9tyZ5BsS474mwIFlHBLPEa2+nHyV1wAtudnWCkhiiHkR
+	lLwB7rPJsMJzJHfRQK3JCBjMIWDbYiHDdiR+u6GVVTsQsSVQ70Nrb9gxIJtxmuUt
+	5PcjbS8Se0UCPz+HMdieGjaXm7tqUhd88vBj0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qXyYkp7YYiwFB7I5e7TFobj20eAWuHRk
+	/yQ3DdYWhS0rwJh1rq82K8vvUePgCpOdwLCHDWGCEB5cuTFk+NkfGno7Ul+m6hRH
+	mO9J80JZoB+/N/99OTd/HYmxRCVmTyugJDJxgyky4OZHN4y1whKW0Lbf8OpiiVlM
+	34QfKflvcoc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 719F81C7A4;
+	Thu, 19 May 2016 19:32:16 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D89C21C7A3;
+	Thu, 19 May 2016 19:32:15 -0400 (EDT)
+In-Reply-To: <20160519232323.12775-5-sbeller@google.com> (Stefan Beller's
+	message of "Thu, 19 May 2016 16:23:23 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: EBB6AD72-1E19-11E6-A15E-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295134>
 
-See https://gist.github.com/cg-soft/62ac3529cf9ad6f6586e07866de43bc4
-and discussion here:
-http://stackoverflow.com/questions/37330041/merging-git-tags-from-multiple-reference-locations
+Stefan Beller <sbeller@google.com> writes:
 
-Essentially, using this git config to pull tags from multiple remote
-refs works fine:
+> +attr;;
+> +After `attr:` comes a space separated list of "attribute
+> +...
+> ++
 
-[remote "origin"]
-    url = /Users/christian.goetze/git/tag-merge-demo/origin
-    fetch = +refs/heads/*:refs/remotes/origin/*
-    fetch = +refs/private/tags/*:refs/tags/*
-    fetch = +refs/tags/*:refs/tags/*
+The text looks OK, but does it format well?
 
-But this, leaving out the last line,  doesn't:
+> +		attr_len = strcspn(attr, "=");
 
-[remote "origin"]
-    url = /Users/christian.goetze/git/tag-merge-demo/origin
-    fetch = +refs/heads/*:refs/remotes/origin/*
-    fetch = +refs/private/tags/*:refs/tags/*
+Scanning for '=' here retains the same bug from the previous
+iteration where you take !VAR=VAL and silently ignore =VAL part
+without diagnosing the error, doesn't it?
 
-I would expect either to work the same way.
+Perhaps strlen(attr) here, and...
+
+> +		switch (*attr) {
+> +		case '!':
+> +			am->match_mode = MATCH_UNSPECIFIED;
+> +			attr++;
+> +			attr_len--;
+> +			break;
+> +		case '-':
+> +			am->match_mode = MATCH_UNSET;
+> +			attr++;
+> +			attr_len--;
+> +			break;
+> +		default:
+> +			if (attr[attr_len] != '=')
+> +				am->match_mode = MATCH_SET;
+> +			else {
+> +				am->match_mode = MATCH_VALUE;
+> +				am->value = xstrdup(&attr[attr_len + 1]);
+> +				if (strchr(am->value, '\\'))
+> +					die(_("attr spec values must not contain backslashes"));
+> +			}
+> +			break;
+> +		}
+
+... doing strcspn() only in default: part would be a quick fix.
