@@ -1,69 +1,67 @@
-From: Michael Heerdegen <michael_heerdegen@web.de>
-Subject: Re: [Bug] git-log prints wrong unixtime with --date=format:%s
-Date: Thu, 19 May 2016 17:41:39 +0200
-Message-ID: <878tz6m4wc.fsf@web.de>
-References: <87vb2d37ea.fsf@web.de> <8760ucoaus.fsf@web.de>
-	<20160518004008.GA20007@sigill.intra.peff.net>
-	<20160518005824.GA7120@sigill.intra.peff.net>
-	<xmqqvb2bs5f5.fsf@gitster.mtv.corp.google.com>
-	<20160518174919.GA5796@sigill.intra.peff.net> <87r3cz55mv.fsf@web.de>
-	<20160519015455.GB24225@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pull: warn on --verify-signatures with --rebase
+Date: Thu, 19 May 2016 08:46:25 -0700
+Message-ID: <xmqqeg8ykq3y.fsf@gitster.mtv.corp.google.com>
+References: <20160518101827.GA14475@netblarch>
+	<xmqq37pftks7.fsf@gitster.mtv.corp.google.com>
+	<20160519100221.GB22257@netblarch>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 19 17:41:59 2016
+Cc: git@vger.kernel.org,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Stefan Beller <sbeller@google.com>
+To: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 19 17:46:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3Q5B-0007kN-QL
-	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 17:41:54 +0200
+	id 1b3Q9h-0002Xf-R0
+	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 17:46:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932299AbcESPlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2016 11:41:49 -0400
-Received: from mout.web.de ([212.227.15.4]:63494 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753782AbcESPls (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2016 11:41:48 -0400
-Received: from drachen.dragon ([94.217.122.112]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0M89jd-1bpJpc2r0D-00vgYw; Thu, 19 May 2016 17:41:41
- +0200
-In-Reply-To: <20160519015455.GB24225@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 18 May 2016 21:54:55 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.94 (gnu/linux)
-X-Provags-ID: V03:K0:B5DX6eic1fYZFvbTsdAGtdELDUdqSXDZC+r1leLFCyozGmEmtgI
- yy9JV0UFi0m2ylP92KvKoAUlQg6tDmQEiKDdnnV/lVxYeVYi46t6/GmnoN1avuorokd2v0w
- XHLTJz9tUdB3/JygCpqFmSQtS0atoZQf+ZPlUh6V4IFhLnVj4fEwdKcoWwNNW4mFIMxsZFe
- Xwq6ONbgQyVWuTtAW34eA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SXqsFrt3qho=:JXg3dOJB547mc82xU1UZBk
- vERZncc3yn0jEtPuDT1jOddkK+V7ht8mABwNDeWCQeSnfWn4msQtBz1wbwMxT1m23EQ0j9PV6
- 5ORyF6tHpY0DnCnKydRZZPn2fNUkncUYnzkuiU7fhV1YVVz8IhwKRvG4sZDTTB3nF/g9lnX7D
- Fu0LxdeIm7pM1T7Ic/OGi6sKcdsro906EJ7uB92bb1L1Mh1fgV02HS0dbNh6AEC7ZzkXL8zsT
- ADiYyTiWm4grpSQU7QHjqrFGxNXS5Gun8ud3fw7vopCuZTmjYwpZgAYoUkzW7+NKIetrV6mdn
- NiRsdhGSSBm8hKunxWlJ0BjhVUU8u1kpVCeFUvJCW9iKXXZKZy9zwOp7uuZ3ba+kPxIeWXaPN
- xnmAs1twYHIg7YxCUouQR70z5hiPI4XJTQPFHnxNt79k0bpSCw9X4XGEaAX2VEA7K5QA9ljFk
- KewvR8SIoMBMQgWa3VDTP2DVu8FE18LkagA7ToWRCUFzq88NZXzgFUL3kBm5nct9Hz1qqAhcx
- iGiFal2gloSiYjUNRZ+irRLjF0Vx8J0od582iptJtBWLL1ErHTanIQKvdeEUuHgrntJ+k9O8L
- oaRt34VVh5j+/v59xRDtACWQ4BI3YjMjDS+djyr7T45D80a5NGuGGf2ddDL7zbmVlQy36vBgG
- cbCVycxelnkiR4Gc3HeXaqvWuzYMlURYxeHotbHexmMvXvJxxxyMy+cCbVMieZxCQpqGpzbNn
- ntEgZ5ud8iY3tb7Ri0j+ofrBw373Hej2TTewnRCn6RKMRw4yBvRMHojSPkqJz3kN1DOW22Gh 
+	id S1754594AbcESPq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2016 11:46:29 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50351 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754280AbcESPq3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2016 11:46:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C7A81CE1C;
+	Thu, 19 May 2016 11:46:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ClUylEke4vcRoQMKMeEgdIEKGAE=; b=sbwMcB
+	aLYhf9V4dj2rBvr+p5j3o3ts1XUzyRNh3QW8fnl+pxscxHfIiV0h0NZ5sE89qf/p
+	/TLwg9AqSQJSLi0IGq+rV+67M37iZEZw7x3A/Yuu/rH8VMsjXCQ61m+d80RWsm6t
+	o+XPEc/J72YFCM48SRylvj8i9brW36qG+lsUE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=o92lIBdJDW/eMv5NwyxI+/UXTsIyk4tM
+	dRU3tIBLmnofDw4FgwzukLF29PB04liETxTOv05l7N4WVVsVIsTvPz35Kjkkud8+
+	Tk/yN1qDeVtOYVlZ0oT8MYhAgrJElXsQJY4WnKYyLcQhWLMYQLdbru52Sa20ba5G
+	4hH/dKZrgsY=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 946511CE1B;
+	Thu, 19 May 2016 11:46:27 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 075561CE1A;
+	Thu, 19 May 2016 11:46:26 -0400 (EDT)
+In-Reply-To: <20160519100221.GB22257@netblarch> (Alexander Hirsch's message of
+	"Thu, 19 May 2016 12:02:21 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D8E64E28-1DD8-11E6-8017-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295071>
 
-Jeff King <peff@peff.net> writes:
+Alexander 'z33ky' Hirsch <1zeeky@gmail.com> writes:
 
-> Oh, I agree that unix times are handy. I just think that "use %at in the
-> pretty-format, instead of %ad and then %s in the date-format" is not
-> such a bad workaround.
+> Would "ignoring --verify-signatures for rebase" be sufficient? It does
+> not describe why it is ignored though.
 
-I had missed %at (and %ct).  Yes, works perfectly - thanks for the hint.
-
-
-Regards,
-
-Michael.
+Yeah, I agree that that would be sufficient.
