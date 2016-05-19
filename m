@@ -1,68 +1,148 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: since/after not working properly
-Date: Thu, 19 May 2016 12:03:54 -0700
-Message-ID: <xmqqeg8xj2ed.fsf@gitster.mtv.corp.google.com>
-References: <573DDEBF.7000903@here.com>
-	<CAPc5daXPWiY8=NtOcsjMcVN2MiwaaQUbVY6GBn2Eu31Q0fZrUQ@mail.gmail.com>
-	<AM4PR0401MB184426EE089AE65941C5F7869B4A0@AM4PR0401MB1844.eurprd04.prod.outlook.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v10 00/20] index-helper/watchman
+Date: Thu, 19 May 2016 15:08:45 -0400
+Organization: Twitter
+Message-ID: <1463684925.24478.81.camel@twopensource.com>
+References: <1463084415-19826-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Hawk\, Jeff" <jeff.hawk@here.com>
-X-From: git-owner@vger.kernel.org Thu May 19 21:04:03 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org, pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Thu May 19 21:09:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3TEo-00013m-E0
-	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 21:04:02 +0200
+	id 1b3TJg-0004H1-Ve
+	for gcvg-git-2@plane.gmane.org; Thu, 19 May 2016 21:09:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932658AbcESTD6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2016 15:03:58 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53673 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754342AbcESTD5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2016 15:03:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3DF771CE6A;
-	Thu, 19 May 2016 15:03:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mRKlpaGlUeDK+P2HVrcH+r22Guk=; b=l8N1gI
-	IjZJ6NWUaS3SeHqGjSKWc19rcdJaxYIAw9GRlmROUBOK9r/ZmJyTcSlb4pfmbQ36
-	rAnPhNGkJpfjg4ro25SL4I/oS05zuosW8b2RRbGvKv9ULIhwm278shZ4H5IUF4tl
-	S3qtukTaINz4acxmn7QBEbtFlalJXkvqaHVaM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Co5DlPY5ursiaoy5avZTj41iOiKLrshp
-	atBFfQmVEFM/JoWaD87JTSELG8t2aA0JrtouSFseBkMhdbwrKEMvukxgouFdCcQo
-	9pq6zzyldRy/0lvYCxbkEIv8RRCeWv8VqylNPehrpz9qNtU1qAhUO5PMegUIxa7z
-	XBh9NL29dHg=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 34B041CE69;
-	Thu, 19 May 2016 15:03:56 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B2B171CE66;
-	Thu, 19 May 2016 15:03:55 -0400 (EDT)
-In-Reply-To: <AM4PR0401MB184426EE089AE65941C5F7869B4A0@AM4PR0401MB1844.eurprd04.prod.outlook.com>
-	(Jeff Hawk's message of "Thu, 19 May 2016 17:37:42 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6F45A10A-1DF4-11E6-8A19-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1755231AbcESTIt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 May 2016 15:08:49 -0400
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:35035 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755160AbcESTIr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2016 15:08:47 -0400
+Received: by mail-qg0-f41.google.com with SMTP id j18so706169qge.2
+        for <git@vger.kernel.org>; Thu, 19 May 2016 12:08:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:organization
+         :mime-version:content-transfer-encoding;
+        bh=Ofi3tVLpYQoXHkKrS4Hr8ePwCs4MyMhiCnjTmYUMjJo=;
+        b=pH/O0lpvOyDvYWqiFTZOLsjR5t7VS+Wcym1qZU60S2MgI1KRgPG+BWNkdV0jxrgUwh
+         ENankj2BVZQ7/6gAdUkZSFdb4MuxqMKL9tLNFldcyN3gobeiPYpn1VP5Fv6CNYuWX1wu
+         ojRhb/4Lq3HWkC0oCIl2dZWYhXJohMb+yF05P+f9itC/j/5HWE8u9VnqApE3LIfx3Kwb
+         0x+5Utjw7xudu5XBgD19y8c/oFfwYfgM2BRPoWvvKeYe2bBDTUz4IHbSCxdDI/cwbnbX
+         Hyuqi2XY8/K6ial0lGWsBvc4bZxMcpk2GwXM+vTuYGwzuqSga/jpQn0XAUxo6Ea0DBXS
+         cQ/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=Ofi3tVLpYQoXHkKrS4Hr8ePwCs4MyMhiCnjTmYUMjJo=;
+        b=lmQSxKxT7e2bJtD4KBZ0PTiARQrEuZFBIzh0PK1y0PxR/jrgm5SbZ01NxDJXbfyTXL
+         UxywJFFj4VI7E/43eyhfqMswE/5woHF7YWDZvdj9KNyOiClEUIEzPM62wqfA02oUA5Xw
+         Tbjat7FC5+wLcJWvxhsR61HJi3sK7rI6j7igtZz83Wev8wQz2mN/GX9yZDXCBlNYDLry
+         KtKUQUIFKQhffbgHLQA6TJqxFCSo38kTKpV1mWJKXInQSr7ioFQ7zJo9rt72JYxuW4Qk
+         sswN6Hfoci6arnaVFaAvci+HfNLn5Sj7MXhZypBToD7xL6T8l0OjYIVInHmo2Uz3FdLH
+         71Tw==
+X-Gm-Message-State: AOPr4FXM67wyQqxLDtw90GsyxaOsYyYwh0L9cC9Ypck2k9zusGn0RezZptUPYZZfUa+P+w==
+X-Received: by 10.140.230.20 with SMTP id a20mr16728098qhc.68.1463684926713;
+        Thu, 19 May 2016 12:08:46 -0700 (PDT)
+Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
+        by smtp.gmail.com with ESMTPSA id i126sm7271106qkf.1.2016.05.19.12.08.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 19 May 2016 12:08:46 -0700 (PDT)
+In-Reply-To: <1463084415-19826-1-git-send-email-dturner@twopensource.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295092>
 
-"Hawk, Jeff" <jeff.hawk@here.com> writes:
+Do folks have any more comments on this version? Do I need to re-roll
+to replace 11/20 as I proposed and drop 20/20? =20
 
-> They suggest this:
-> git log --all --numstat --date=short --pretty=format:'--%h--%ad--%aN' --no-renames
->
-> Seems like the %ad should be %cd.
+Thanks.
 
-I have no opinion on that.  If somebody wants to show author dates,
-that's her choice.
+On Thu, 2016-05-12 at 16:19 -0400, David Turner wrote:
+> packet_write was causing the sigpipes (by calling write_or_die, which
+> intentionally overrides the caller's preferences about signal
+> handling).
+>=20
+> This version fixes that.  I didn't test on a virtual machine, but I
+> did
+> test by adding a sleep().
+>=20
+> David Turner (9):
+>   pkt-line: add gentle version of packet_write
+>   index-helper: log warnings
+>   unpack-trees: preserve index extensions
+>   watchman: add a config option to enable the extension
+>   index-helper: kill mode
+>   index-helper: don't run if already running
+>   index-helper: autorun mode
+>   index-helper: optionally automatically run
+>   untracked-cache: config option
+>=20
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (11):
+>   read-cache.c: fix constness of verify_hdr()
+>   read-cache: allow to keep mmap'd memory after reading
+>   index-helper: new daemon for caching index and related stuff
+>   index-helper: add --strict
+>   daemonize(): set a flag before exiting the main process
+>   index-helper: add --detach
+>   read-cache: add watchman 'WAMA' extension
+>   watchman: support watchman to reduce index refresh cost
+>   index-helper: use watchman to avoid refreshing index with lstat()
+>   update-index: enable/disable watchman support
+>   trace: measure where the time is spent in the index-heavy
+> operations
+>=20
+>  .gitignore                               |   2 +
+>  Documentation/config.txt                 |  12 +
+>  Documentation/git-index-helper.txt       |  81 +++++
+>  Documentation/git-update-index.txt       |   6 +
+>  Documentation/technical/index-format.txt |  22 ++
+>  Makefile                                 |  18 ++
+>  builtin/gc.c                             |   2 +-
+>  builtin/update-index.c                   |  16 +
+>  cache.h                                  |  25 +-
+>  config.c                                 |   5 +
+>  configure.ac                             |   8 +
+>  contrib/completion/git-completion.bash   |   1 +
+>  daemon.c                                 |   2 +-
+>  diff-lib.c                               |   4 +
+>  dir.c                                    |  25 +-
+>  dir.h                                    |   6 +
+>  environment.c                            |   3 +
+>  git-compat-util.h                        |   1 +
+>  index-helper.c                           | 486
+> ++++++++++++++++++++++++++++
+>  name-hash.c                              |   2 +
+>  pkt-line.c                               |  18 ++
+>  pkt-line.h                               |   2 +
+>  preload-index.c                          |   2 +
+>  read-cache.c                             | 536
+> ++++++++++++++++++++++++++++++-
+>  refs/files-backend.c                     |   2 +
+>  setup.c                                  |   4 +-
+>  t/t1701-watchman-extension.sh            |  37 +++
+>  t/t7063-status-untracked-cache.sh        |  22 ++
+>  t/t7900-index-helper.sh                  |  69 ++++
+>  t/test-lib-functions.sh                  |   4 +
+>  test-dump-watchman.c                     |  16 +
+>  unpack-trees.c                           |   1 +
+>  watchman-support.c                       | 135 ++++++++
+>  watchman-support.h                       |   7 +
+>  34 files changed, 1561 insertions(+), 21 deletions(-)
+>  create mode 100644 Documentation/git-index-helper.txt
+>  create mode 100644 index-helper.c
+>  create mode 100755 t/t1701-watchman-extension.sh
+>  create mode 100755 t/t7900-index-helper.sh
+>  create mode 100644 test-dump-watchman.c
+>  create mode 100644 watchman-support.c
+>  create mode 100644 watchman-support.h
+>=20
