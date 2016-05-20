@@ -1,101 +1,106 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 05/11] completion: remove zsh hack
-Date: Thu, 19 May 2016 23:58:39 -0500
-Message-ID: <1463720325-8853-6-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 06/11] completion: zsh: trivial cleanups
+Date: Thu, 19 May 2016 23:58:40 -0500
+Message-ID: <1463720325-8853-7-git-send-email-felipe.contreras@gmail.com>
 References: <1463720325-8853-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 06:59:04 2016
+X-From: git-owner@vger.kernel.org Fri May 20 06:59:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3cWd-0001bo-IW
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 06:59:03 +0200
+	id 1b3cWf-0001bo-AJ
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 06:59:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932256AbcETE6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 00:58:54 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:36020 "EHLO
+	id S932346AbcETE7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 00:59:00 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:36025 "EHLO
 	mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932138AbcETE6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 00:58:52 -0400
-Received: by mail-oi0-f68.google.com with SMTP id g16so7294569oib.3
-        for <git@vger.kernel.org>; Thu, 19 May 2016 21:58:51 -0700 (PDT)
+	with ESMTP id S932232AbcETE6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 00:58:53 -0400
+Received: by mail-oi0-f68.google.com with SMTP id g16so7294594oib.3
+        for <git@vger.kernel.org>; Thu, 19 May 2016 21:58:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ujIIR7gQbWVF1WQKApx+3cuwQedbjYBTZzKipbyE9lU=;
-        b=e3IeJbaNNNAJHkGjv2iPH21/DRf9rLGCKm1/NmK9e0SVbSU1Dr0LTWetdsH2U1j46t
-         A/+gOeGYCh8+vSO7vwFaXWD/8iyr9TfveR85A4FprHlDXAsm39e0CU9NyxIYcTNHqyRa
-         ur9fJOvsB0H1TvbSn1sZAAkymDAcChZ+dN+7wVXthMD4ODbQEGzcDjITNtARCl2y70hR
-         0/Hgs5vf4/AAxEfmJbbX12uj1LFEFX+diVNcmQAs8xskFO5ALkcudIyxjO9s3wvnLGc/
-         0jpkBr41rKco6rc17kWMZIQzcndzly43hpXwAuwdy4kXvabCRkPNOsoNUWd0fhru84hY
-         H/PQ==
+        bh=8VHA5d3tleQe8bgBpJqk3QmXiluLviOXT7zAc/UPywI=;
+        b=hSltos0jdGxP6jjFlMzL8SBwIQ3OlbSARBhccB68QynArOSp+aCaK+Vs3QZf/aBnGl
+         TMOgZ0sFTowQa77Bj/8Aee9bJp9fj4BlDujDFkdswoOM9puvytxR10rcwvOUlRe3FQ6M
+         1IKqg35kGHWJUl9mXnWgrEAFj74AtbrZJ3IJdtleFJi6wLEael8gzMQaKC5ikCdkjax3
+         PO7m/YU2eZuofBHdyn8so7d+C33fWSMKgKzy2H1ywWN/MCauwoqrFwNzEhFAzAXUDGi6
+         xMoHNbZt8Re9+bozVHHNHMy8XfxHavEjKd0PPd95ZV5R76qBGSyDeSy8wQAq4MJEZj/w
+         LgYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ujIIR7gQbWVF1WQKApx+3cuwQedbjYBTZzKipbyE9lU=;
-        b=RaD7aiUsZSnqUCukr4J103MvzkniwpdBymwRDujd/8599eqiVVWuuZeATJKnHzvQmM
-         ftxf64w+v1i0RMGtgmTmt3uoEZJDKDv6BFUopVtdZOGdQCdwKuGY9VfEd0eDeRjZjQp9
-         OkQhImrWlIZm2zRw6psgEh8Re3/IZ0Faa0XPMN/I4UvNTLtGu0m6G+kP3Apjzl7YKD5k
-         qMugZ7FczHgAfMqnT1KxF4gheWn0p6FfHLDn90S8GpCHAL2fQ1TRea/SKADbw2GDLHVT
-         9BhfoyA5n4a1xakqXJuZ/gFMWkWMnXeQZopSjvCEjhPMTgGxZlo1Mkv9v3BHhCLylgBR
-         pKrQ==
-X-Gm-Message-State: AOPr4FXraLOhuM9tfna4srK3IPg52tEeTMkcWm9danYxp3QVDDPRqSgULZxUTXNmBIRNcw==
-X-Received: by 10.202.182.69 with SMTP id g66mr605915oif.26.1463720331249;
-        Thu, 19 May 2016 21:58:51 -0700 (PDT)
+        bh=8VHA5d3tleQe8bgBpJqk3QmXiluLviOXT7zAc/UPywI=;
+        b=dFRMac6a8kZeQSUBSeZR23tW67H/vn5QUhPozQbiy0m4+wRFiLR50fqNCh0KrhL2gc
+         qAyufDCVfN+X3l+xvmap7XIFb5S9aGTaeg4WkMkw3t6+ZD/d27xOt/rErPQzurguM4fJ
+         skLWVr5B58xb0H2U+YL1xOTqVtkKZHbuLExv3WUY87n7RXwB8K5ntPxWoDhHURVzaBiU
+         6VI5tfU55kWvRCbMWswAPvsKy+C8QT7eHUBPsp6BUrHjwF0EhYxEQwTko4RPKLTzp1ds
+         UEJkFsoY9Ox1Nw/a8E+J1hVUaW8qmQcdyWTeuyrOa13kqGWcHs4lujopqDLBoRcDGXUq
+         7j1w==
+X-Gm-Message-State: AOPr4FVkOn3Pfhgdwva4/+EqkqtP7xHjvThSp9H5LUaVISrMU4cDLzKRPdY8HyWVUkvBqw==
+X-Received: by 10.202.225.6 with SMTP id y6mr585500oig.186.1463720332275;
+        Thu, 19 May 2016 21:58:52 -0700 (PDT)
 Received: from localhost ([189.208.111.205])
-        by smtp.gmail.com with ESMTPSA id y127sm4783704oie.28.2016.05.19.21.58.50
+        by smtp.gmail.com with ESMTPSA id fo3sm5003721obb.1.2016.05.19.21.58.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 May 2016 21:58:50 -0700 (PDT)
+        Thu, 19 May 2016 21:58:51 -0700 (PDT)
 X-Mailer: git-send-email 2.8.0+fc1
 In-Reply-To: <1463720325-8853-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295142>
 
-We don't want to override the 'complete()' function in zsh, which can be
-used by bashcomp.
+We don't need to override IFS, zsh has a native way of splitting by new
+lines: the expansion flag (f).
 
-Reported-by: Mark Lodato <lodato@google.com>
+Also, we don't need to split files by ':' or '='; that's only for words.
+
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 1 +
- contrib/completion/git-completion.zsh  | 6 ------
- 2 files changed, 1 insertion(+), 6 deletions(-)
+ contrib/completion/git-completion.zsh | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 9cbae6f..6c338ae 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2684,6 +2684,7 @@ __git_func_wrap ()
- # This is NOT a public function; use at your own risk.
- __git_complete ()
- {
-+	test -n "$ZSH_VERSION" && return
- 	local wrapper="__git_wrap${2}"
- 	eval "$wrapper () { __git_func_wrap $2 ; }"
- 	complete -o bashdefault -o default -o nospace -F $wrapper $1 2>/dev/null \
 diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 475705a..e10df7d 100644
+index e10df7d..317b8eb 100644
 --- a/contrib/completion/git-completion.zsh
 +++ b/contrib/completion/git-completion.zsh
-@@ -16,12 +16,6 @@
- #
- #  fpath=(~/.zsh $fpath)
+@@ -65,26 +65,22 @@ __gitcomp_nl ()
+ {
+ 	emulate -L zsh
  
--complete ()
--{
--	# do nothing
--	return 0
--}
--
- zstyle -T ':completion:*:*:git:*' tag-order && \
- 	zstyle ':completion:*:*:git:*' tag-order 'common-commands'
+-	local IFS=$'\n'
+ 	compset -P '*[=:]'
+-	compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
++	compadd -Q -S "${4- }" -p "${2-}" -- ${(f)1} && _ret=0
+ }
  
+ __gitcomp_nl_append ()
+ {
+ 	emulate -L zsh
+ 
+-	local IFS=$'\n'
+-	compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
++	compadd -Q -S "${4- }" -p "${2-}" -- ${(f)1} && _ret=0
+ }
+ 
+ __gitcomp_file ()
+ {
+ 	emulate -L zsh
+ 
+-	local IFS=$'\n'
+-	compset -P '*[=:]'
+-	compadd -Q -p "${2-}" -f -- ${=1} && _ret=0
++	compadd -Q -p "${2-}" -f -- ${(f)1} && _ret=0
+ }
+ 
+ __git_zsh_bash_func ()
 -- 
 2.8.0+fc1
