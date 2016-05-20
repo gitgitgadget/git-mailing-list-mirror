@@ -1,112 +1,86 @@
-From: Francois Beutin <beutinf@ensimag.grenoble-inp.fr>
-Subject: [Opinion gathering] Git remote whitelist/blacklist
-Date: Fri, 20 May 2016 16:21:44 +0200 (CEST)
-Message-ID: <584027154.5608416.1463754104066.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1040142021.5607762.1463753271105.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: Odd Difference Between Windows Git and Standard Git
+Date: Fri, 20 May 2016 16:19:25 +0200
+Message-ID: <ede1c113-1ab8-6043-3e39-bbacec5db31c@web.de>
+References: <nhlqd4$ekr$1@ger.gmane.org>
+ <c07df4ac-08c9-8eaa-0233-06616945c857@web.de>
+ <c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: matthieu.moy@grenoble-inp.fr,
-	simon.rabourg@ensimag.grenoble-inp.fr,
-	wiliam.duclot@ensimag.grenoble-inp.fr,
-	antoine.queru@ensimag.grenoble-inp.fr
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 16:14:38 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Jon Forrest <nobozo@gmail.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 20 16:19:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3lCE-0005Za-M0
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 16:14:35 +0200
+	id 1b3lH5-0000aa-Sf
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 16:19:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752584AbcETOOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 10:14:30 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:59779 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751842AbcETOO3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2016 10:14:29 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id EF8F1210E;
-	Fri, 20 May 2016 16:14:25 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id K9TngOlQovFP; Fri, 20 May 2016 16:14:25 +0200 (CEST)
-Received: from zm-int-mbx7.grenet.fr (zm-int-mbx7.grenet.fr [130.190.242.146])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id D67A82106;
-	Fri, 20 May 2016 16:14:25 +0200 (CEST)
-In-Reply-To: <1040142021.5607762.1463753271105.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF46 (Linux)/8.0.9_GA_6191)
-Thread-Topic: Git remote whitelist/blacklist
-Thread-Index: dzch463Bxl16hI5b5t/lNym25nbflw==
+	id S1755023AbcETOTb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2016 10:19:31 -0400
+Received: from mout.web.de ([212.227.17.11]:62721 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753947AbcETOTa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 10:19:30 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0LwHxK-1bdil60hDi-017zOs; Fri, 20 May 2016 16:19:26
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.1.0
+In-Reply-To: <c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com>
+X-Provags-ID: V03:K0:0cNzLOwSYOk5nBXVmSIsRh8TJQg7/tEBOuJ6GQhDA/4vRkBsilv
+ jgMlXVv/8L6RguZxCTQRbOA5LLp4XDuFc5p4qwDhAUJW01qOdfsXI0xExcHQFtQLkg5Xk+8
+ +YmZ3Cu0Y/fDhcQv0C0uhxZrP44N1l64rOaCe0E1aY3bcJEp3ab3UUydI4+nrQp0rwb7iiz
+ b74hD6VALXFW5tQzntS6w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DwSyttQaPhY=:NwS6pk9056RjoyFI94ax0R
+ rAWhql4D6g4QyOIaclkscjXon3hU5w72DWKupEUqtgqYbbjgW4hdfYSpvsmnAoRPBd4ZA4eMx
+ LGdXxu+yikJRVIopniwUsZFPEN71gb6Z8WaxEwhRgr4rJw+dutM6hFoFQ0ukguAbYJgRl9qip
+ wzVzyTQQ3lD1yuVG3/oSOYPjTcJci3hMl+ULh2Tm3jRabx/YbhlTWkzDvMFDT2xv5z3YhB/N4
+ ccUfME3G1t03CXGQrwPZg69quVvBViL+nYqTNjsItG3l+g8YOqGFtKfCdQpGBp27Wy4w9eO0n
+ SSJWcz5CaZq28nIxItOU8aErVG1UNEnP78kqvHahvmN3lBcXJgr+Z3XOs+ZCUwjOsQ7AzwhJn
+ 8H5O7Oy6GAEN4xkFZQ6Wyn5dfuxlI4phmKXdi6yuXvCBX/yCd5e+lQ7s2avJHmq7Ejzyel0lT
+ CQ5snYhVo29p/gfbRyB6FsZlmnAEVC4v8ROrt46ipX2W/Ol2y4wJr3beqOIWE0i7BPCQQ2crS
+ qfjfNRynrtZ/dpk1L8EkGaoJ911IqD25mnV85NQj01S/v34BwYXxv93Ls5cOibJkOSHdeYYUB
+ c/CttebtR/zjzggI7mvL/3gy8dhofUWRaS1e4+0REyBqqwHjjpyf2gVKXYatxuugjSUo7uU5+
+ SrDX+wVy7vLg9ob57FaOSYNlcrUqZUgZLBhNUnWJ6pL0MFohxSnUqXQy70jubJTUcU3zjrYXQ
+ TyipjYvqWkoXwG6WA5X2XXJJsqzHWewv3Sgt//hLKcp/tOfcusDlMaOeCrbxzckGb8AKHnHE 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295167>
 
-Hi everyone,
+On 20.05.16 15:48, Jon Forrest wrote:
+>=20
+>=20
+> On 5/20/2016 6:19 AM, Torsten B=C3=B6gershausen wrote:
+>> On 20.05.16 03:48, Jon Forrest wrote:
+>>> I'm running Git version 2.8.2 built from source on Ubuntu 16.04.
+>>> I'm using a repository that's stored on Dropbox. I'm the only perso=
+n
+>>> accessing this repo. Everything works great.
+>>>
+>>> For reasons unrelated to Git, I decided to try Git for Windows,
+>>> so I installed "git version 2.8.2.windows.1" on Windows 10.
+>>> When I run 'git status' on Ubuntu the list I see is exactly what
+>>> I expect. However, when I run 'git status' on the
+>>> same Dropbox repo on Windows, I see what I expect plus I'm told
+>>> that every .pdf file and some .png files are modified.
+>> To bring at least a little light into the story:
+>>
+>> What does
+>> git diff
+>> say ?
+>=20
+> Great question. For all the unexpected files it says the
+> same thing:
+>=20
+> old mode 100755
+> new mode 100644
 
-We (Ensimag students) plan to implement the
-"remote whitelist/blacklist" feature described in the SoC 2016 ideas,
-but first I would like to be sure we agree on what exactly this
-feature would be, and that the community sees an interest in it.
-
-The general idea is to add a way to prevent accidental push to the
-wrong repository, we see two ways to do it:
-First solution:
- - a whitelist: Git will accept a push to a repository in it
- - a blacklist: Git will refuse a push to a repository in it
- - a default policy
-
-Second solution:
- - a default policy
- - a list of repository not following the default policy
-
-The new options in config if we implement the first solution:
-
-[remote]
-	# List of repository that will be allowed/denied with
-					# a whitelist/blacklist
-	whitelisted = "http://git-hosting.org"
-	blacklisted = "http://git-hosting2.org"
-
-	# What is displayed when the user attempts a push on an
-		# unauthorised repository? (this option overwrites
-		# the default message)
-	denymessage = "message"
-
-	# What git should do if the user attempts a push on an
-		# unauthorised repository (reject or warn and
-		# ask the user)?
-	denypolicy = reject(default)/warning
-
-	# How should unknown repositories be treated?
-	defaultpolicy = allow(default)/deny
-
-
-Some concrete usage example:
-
- - A beginner is working on company code, to prevent him from
-	accidentally pushing the code on a public repository, the
-	company (or him) can do:
-git config --global remote.defaultpolicy "deny"
-git config --global remote.denymessage "Not the company's server!"
-git config --global remote.denypolicy "reject"
-git config --global remote.whitelisted "http://company-server.com"
-
-
- - A regular git user fears that he might accidentally push sensible
-	code to a public repository he often uses for free-time
-	projects, he can do:
-git config remote.defaultpolicy "allow"	#not really needed
-git config remote.denymessage "Are you sure it is the good server?"
-git config remote.denypolicy "warning"
-git config remote.blacklisted "http://github/personnalproject"
-
-
-We would like to gather opinions about this before starting to
-	implement it, is there any controversy? Do you prefer the
-	first or second solution (or none)? Do you find the option's
-	names accurate?
+So the solution is to run
+git config  core.filemode false
