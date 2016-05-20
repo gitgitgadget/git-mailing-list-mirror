@@ -1,81 +1,77 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: Odd Difference Between Windows Git and Standard Git
-Date: Fri, 20 May 2016 17:57:22 +0200
-Message-ID: <b6ab2200-30a1-d0ce-4d4e-097838b74781@web.de>
-References: <nhlqd4$ekr$1@ger.gmane.org>
- <c07df4ac-08c9-8eaa-0233-06616945c857@web.de>
- <c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com>
- <ede1c113-1ab8-6043-3e39-bbacec5db31c@web.de>
- <ba34485d-43cc-ef35-ebc0-67b944a420a7@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t0008 test fails with ksh
+Date: Fri, 20 May 2016 09:03:31 -0700
+Message-ID: <xmqqr3cwg1ik.fsf@gitster.mtv.corp.google.com>
+References: <CALR6jEjWjJA0X2qXsxqObqc_yxrgX87LYf8cmJ0MmJFF6PkmTQ@mail.gmail.com>
+	<20160512182055.GB13886@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Jon Forrest <nobozo@gmail.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 17:57:33 2016
+Content-Type: text/plain
+Cc: Armin Kunaschik <megabreit@googlemail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 20 18:03:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3mns-0001M3-Gp
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 17:57:32 +0200
+	id 1b3mtq-0005nZ-P4
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 18:03:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754005AbcETP52 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2016 11:57:28 -0400
-Received: from mout.web.de ([212.227.15.3]:56600 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752809AbcETP51 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 11:57:27 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0LuuSf-1blg6k0CB7-0108Mk; Fri, 20 May 2016 17:57:23
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.1.0
-In-Reply-To: <ba34485d-43cc-ef35-ebc0-67b944a420a7@gmail.com>
-X-Provags-ID: V03:K0:xSJx4/zSpaJB8rRUr3Kb5Y/0AaknWx/fMLxFWya7B4hjKeZLnRO
- ynBGpKgEMzBqJryr7ziGB7dljinStwjXVb7wC7Z3klwdoeW9//AwL7WW/lD7cp3cfMlHuoF
- o3JIbbFGOJJQH+HE1Eng81UkbgZZE8oOLMZkSkUwrVrU6b3IEasE/TxVQsK3eZV0qzBtB1n
- k6e2eGP5xSrZqa7YI+Anw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:r+hfoLBGIZo=:SoDRk1BKt1lEDS58dxUUGz
- RzyU/cPlZfP28dILssFw4RbsQmMowKtj7QLFsFzh0qbI5BKU2sffkLZsrCp1Fc/tNIl0c6VgC
- /T5OSnNgJ2L1R8R4+jBllWcFhidEZCS4Xn3RGSFo/FmR5CfZfgzovbnw3iDxpHk0TocGLzydr
- vkxRgl0ash+JFkxqtjqGF0HslD5mCkQydiz+F6ixIftN2LU0ElP8+l6OZYSn+iHRodmbkQRDw
- zPUT0otq/EkKEaHcJvVSbDxlbFpb0w7EeCzogUiuCzJakgXQGlh1pXagjtTyw+DeB56ckeUke
- TFAjHFg+VwIR7BIqvaXi8+A//dhwdTxM/hGfGlCbk4AF2DsqlBNBE7sYvOcA3se+q5ii169oO
- hfJUQAKhxyaxtM1pzWgGAVR7UBGXKHBPx41gFkZrMqut6Ke7SqVQ6wEYRGVaQOzWxNMlyrFZ2
- 2ATIl1K4qbiWXqygQLc4+geSuc8Ak9aNqRckZV7WlpAb+oDpQwcFf2Np8Jvh6u9BgDDuetAek
- uRH3nWxik+QG+wtS6DOg0Kt6czxmZKNhSIlLW6bXn8rinXU9bipg5/phQsSiQKTQODoBtSBw0
- ZgIbUvWnhH+Stf6Rxdk5KgrWBoS1YyU8TK0hYXdG/uSMQ2bC3V7649b+6iKDeliwkwsu3cyW1
- 3NizFc5dtROq4KKTvhfJPPW7h18Mfr/BdU8aZc46YqgmIArwhvfMCqgb2T0iAU82MHIEJ6ObY
- E/CCjFzmbi6amaVWeA0VV2AgM1vOaVhYGJmm7bBAk6AetHIRiLfUjvjtlINCXof/AWFOElBk 
+	id S1754631AbcETQDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 12:03:36 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56305 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754499AbcETQDf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 12:03:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0DCB61C315;
+	Fri, 20 May 2016 12:03:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0Yhh6Gkt2bvfjGCei3uko1SugOg=; b=vNjYEb
+	4/B1CQZciMYSuKTEcnympYKqsmqTHV2aUKS133g1i4Q85Mv2lbvMP0Q5A6ibPUpC
+	Aw166ZvTZfQO4WyglJKPYP7tvH4IclFyJcsEgM+IsCLdc7e5H5jyfHzhaPNuHm1j
+	fo/7R1ejNoYitgLrC4L623WU9M0nWX+1qW1q8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Cy484is5W91Pdld9BB2ak84GfVpxK8pi
+	Ej1jJIiq84EY8JRZDmuAu2w0uYqsUvU/UYzJhqHxxV4VvGJIlcm39Y5cnkLiigqm
+	N3vb/DEAMBY95VGaUKGXHbC9JEn00VQkals2cBZKMswXZSJjPW6CG8yM2QZ+QCpU
+	za7l7ohW7XQ=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id ED6851C312;
+	Fri, 20 May 2016 12:03:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5729D1C310;
+	Fri, 20 May 2016 12:03:33 -0400 (EDT)
+In-Reply-To: <20160512182055.GB13886@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 12 May 2016 14:20:55 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 670BF024-1EA4-11E6-9336-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295178>
 
-On 20.05.16 16:28, Jon Forrest wrote:
->=20
->=20
-> On 5/20/2016 7:19 AM, Torsten B=C3=B6gershausen wrote:
->=20
->>> Great question. For all the unexpected files it says the
->>> same thing:
->>>
->>> old mode 100755
->>> new mode 100644
->>
->> So the solution is to run
->> git config  core.filemode false
->=20
-> This worked perfectly!
->=20
-> I wonder if this should be the default for Git for Windows.
+Jeff King <peff@peff.net> writes:
 
-It is.
-But you need to clone the repo under Windows.
+>   ... However,
+>   the double-quote character ( '"' ) shall not be treated specially
+>   within a here-document, except when the double-quote appears within
+>   "$()", "``", or "${}".
+>
+> So OK, that sounds like ksh is doing the right thing. But what's that
+> "specially" in the last sentence?
 
-I probably submit a patch some day, that core.filemode will be ignored
-under Windows.
+I would say: Just like \X is passed thru as-is without losing \, \"
+is passed thru without losing \, because " is not special, just like
+X is not special.
+
+> Anyway, it doesn't really matter what the standard says. We can spell
+> this in a less ambiguous way, and it does not hurt too much to do so.
+
+Yes.
