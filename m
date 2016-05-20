@@ -1,86 +1,138 @@
-From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: Re: [PATCH 19/21] t9003: become resilient to GETTEXT_POISON
-Date: Fri, 20 May 2016 17:39:56 +0000
-Message-ID: <573F4BEC.7000906@sapo.pt>
-References: <1463585274-9027-1-git-send-email-vascomalmeida@sapo.pt>
- <1463585274-9027-20-git-send-email-vascomalmeida@sapo.pt>
- <CAPig+cT3yf7D4xOmOhy5Y21qwHuA5Ny9ULEJhC1OBgrhiayQ3g@mail.gmail.com>
- <573E30C8.4070600@sapo.pt>
- <CAPig+cRo3tjt9N0YO8sNn90dL3dP0asfmKTr5rerS9YLO6QBtw@mail.gmail.com>
- <xmqqbn40fzu8.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 2/2] convert: ce_compare_data() checks for a sha1 of a path
+Date: Fri, 20 May 2016 10:46:41 -0700
+Message-ID: <xmqqshxcei66.fsf@gitster.mtv.corp.google.com>
+References: <xmqqk2iphcqe.fsf@gitster.mtv.corp.google.com>
+	<1463764366-21683-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri May 20 19:40:13 2016
+Cc: git@vger.kernel.org
+To: tboegi@web.de
+X-From: git-owner@vger.kernel.org Fri May 20 19:46:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3oPE-0007js-Q9
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 19:40:13 +0200
+	id 1b3oVf-00052s-3m
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 19:46:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751070AbcETRkH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2016 13:40:07 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:37459 "EHLO sapo.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750810AbcETRkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 13:40:06 -0400
-Received: (qmail 29623 invoked from network); 20 May 2016 17:40:02 -0000
-Received: (qmail 23387 invoked from network); 20 May 2016 17:40:02 -0000
-Received: from unknown (HELO [192.168.1.66]) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <avarab@gmail.com>; 20 May 2016 17:39:57 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-In-Reply-To: <xmqqbn40fzu8.fsf@gitster.mtv.corp.google.com>
+	id S1752696AbcETRqq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2016 13:46:46 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62655 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752013AbcETRqp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2016 13:46:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 829891D329;
+	Fri, 20 May 2016 13:46:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=PND77KRnyRRt
+	4UggNEoiXZM/FQo=; b=pgUbA5zVkezAxKtzVXMl40SgAUwMzE6akBmNZgGDmPS3
+	bqcZwXPjLiqZp5Cm/iuRmqRgBrEGzLEf8FLuOoylnbQAN12bGlzrCb8WNbS6feUf
+	XAAujeCyA1bYDn+X59uRc2pp3GOO3bSqMvxtvhhn2c6NeSeukVZLJaq0/qujbR4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=u4K5yd
+	mYrnHhceDMQ6AkVJk+pFIvTFNhwRQWmqI6MRjFKrN1Qi4AkTMKof6fbHQRDkN1+p
+	/xR3+GRY//KLQDj2pl6ei461wg5utKe49tcCbFZHq4HVcyLao6GPr8QH4dEpzf62
+	uhefSPxlyDSHhV9EZkGJCxPYKgwJah82HbfoA=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 78D231D326;
+	Fri, 20 May 2016 13:46:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E76F31D325;
+	Fri, 20 May 2016 13:46:42 -0400 (EDT)
+In-Reply-To: <1463764366-21683-1-git-send-email-tboegi@web.de>
+	(tboegi@web.de's message of "Fri, 20 May 2016 19:12:46 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D054B436-1EB2-11E6-B76A-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295192>
 
-=C0s 16:39 de 20-05-2016, Junio C Hamano escreveu:
-> We want to see the string appear after "Did you mean this?" and we
-> do not want to be fooled by a future change in the early part of the
-> message, which may contain a substring l-g-f that does not have
-> anything to do with the alias we are looking for.
->=20
-> And the way you express "I do not care anything above this line" is
-> to say "sed -e '1,/^that line/d'".
->=20
-> Of course, if you use this with POISON, you'd need to consider that
-> "Did you mean this" would not be a good marker to identify where the
-> introductory text we want to ignore ends.  You'd need to find a
-> different mechanism to exclude the introductory text if you want to
-> retain the future-proofing the existing "sed -e" gave us.
->=20
-> Perhaps discarding up to the first blank line (i.e. assuming that we
-> would not remove that blank, and also assuming that we will not
-> rephrase "Did you mean this?") may be a good alternative.
->=20
-> Or assuming that the explanatory text would not begin its lines with
-> a tab, i.e.
->=20
-> 	grep '^	lgf$' actual
->=20
-> (the space between '^' and 'l' above is a TAB) without using
-> test_i18ngrep?
->=20
-> I think I like that the best among what I can think of offhand.
->=20
->=20
-Alternatively, we could leave sed alone as it were before this patch an=
-d
-use test_i18ngrep instead of grep to fake success under GETTEXT_POISON.
-I think I prefer this way. What do you think?
+tboegi@web.de writes:
+
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+>
+> To compare a file in working tree with the index, convert_to_git() is=
+ used,
+> the result is hashed and the hash value compared with ce->sha1.
+>
+> Deep down would_convert_crlf_at_commit() is invoked, to check if CRLF
+> are converted or not: When a CRLF had been in the index before, CRLF =
+in
+> the working tree are not converted.
+>
+> While in a merge, a file name in the working tree has different blobs
+> in the index with different hash values.
+> Forwarding ce->sha1 from ce_compare_data() into crlf_to_git() makes s=
+ure
+> the would_convert_crlf_at_commit() looks at the appropriate blob.
+>
+> Forward sha1 from ce_compare_data() into convert_to_git().
+> All other callers use NULL, and the sha1 it is determined from path u=
+sing
+> get_sha1_from_cache(path), this is the same handling as before.
+>
+> Re-order the arguments for convert_to_git() according to their import=
+ance:
+>   `src`, `len` and `dst` are the place in memory, where the conversio=
+n is done
+>   `path` is the file name to look up the attributes.
+>   `sha1` is needed by the "new safer autocrlf handling".
+>   `checksafe` determines, if a warning is printed or an error is rais=
+ed.
+>
+> In the same spirit, forward the sha1 into would_convert_to_git().
+>
+> While at it, rename has_cr_in_index() into blob_has_cr()
+>
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+
+
+> Changes sinve v6:
+>  decrease the messiness with 12 %
+
+What does that mean????
+
+>  convert_to_git() has a re-ordered parameter list.
+
+That is not what I suggested, though.  <path, src, len> being
+the first three would be fine, and that would be in line with
+helpers ${frotz}_to_git() that are used from there.
+
+The primary thing that made me worried was a new parameter with a
+bland name "sha1" whose purpose is unclear was added near the
+beginning, leading readers to confusion.
+
+Whether you keep <path> at the beginning of move it to later
+together with <sha1>, helpers like crlf_to_git() need to be updated
+to match.  E.g. I would say that this
+
+> -	ret |=3D crlf_to_git(path, src, len, dst, ca.crlf_action, checksafe=
+);
+> +	ret |=3D crlf_to_git(path, sha1, src, len, dst, ca.crlf_action, che=
+cksafe);
+
+would want to be ordered more like this:
+
+    ret |=3D crlf_to_git(path, src, len, dst,
+                       ca.crlf_action, checksafe, index_blob_sha1);
+
+if you choose to keep the first four intact for convert_to_git(),
+that is.
+
+>  Describe whats going on better in the commit msg.
+
+The suggestion to rename the parameter was to allow readers of the
+code to immediately know what kind of SHA1 it is.  They cannot
+afford to run "git blame" every time to find the commit to read the
+commit log message; for a public function like convert_to_git(),
+in-code comment is also necessary.
