@@ -1,129 +1,112 @@
-From: Jon Forrest <nobozo@gmail.com>
-Subject: Re: Odd Difference Between Windows Git and Standard Git
-Date: Fri, 20 May 2016 06:48:32 -0700
-Message-ID: <c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com>
-References: <nhlqd4$ekr$1@ger.gmane.org>
- <c07df4ac-08c9-8eaa-0233-06616945c857@web.de>
+From: Francois Beutin <beutinf@ensimag.grenoble-inp.fr>
+Subject: [Opinion gathering] Git remote whitelist/blacklist
+Date: Fri, 20 May 2016 16:21:44 +0200 (CEST)
+Message-ID: <584027154.5608416.1463754104066.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <1040142021.5607762.1463753271105.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 15:50:58 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: matthieu.moy@grenoble-inp.fr,
+	simon.rabourg@ensimag.grenoble-inp.fr,
+	wiliam.duclot@ensimag.grenoble-inp.fr,
+	antoine.queru@ensimag.grenoble-inp.fr
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 20 16:14:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3knB-0008TO-7j
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 15:48:41 +0200
+	id 1b3lCE-0005Za-M0
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 16:14:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755794AbcETNsh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2016 09:48:37 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:32998 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752930AbcETNsg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 09:48:36 -0400
-Received: by mail-pa0-f43.google.com with SMTP id xk12so39933425pac.0
-        for <git@vger.kernel.org>; Fri, 20 May 2016 06:48:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding;
-        bh=Idw3QCcuR6mXUzOAqc9Ls1pQxqyluZYVdw6Hqp7PDJs=;
-        b=BgZHpxkbAvDDAroAsxLWqRSYoo6QTazVSCNxgOSFAiHvLnU5Ugb3N2ssQOH8qTw9MU
-         fhrt3WukNz99/x1PQF14N0sDeWBoXN2inApq2LjoSUc43E8jKSDhnjS72hXyYsJ+r/F1
-         uCyImXnGGcz6DVS7iRH1Hd6/tAtt/9heELk4ldDvQYQiXhJyI3au5khOtSjVuQHZwPuL
-         pyM/znYAdxgMxFkK9FhUlT6B6aD+gWdQfGtFdbUq5uQ3d0JA89jP/bV35mcSmm5SZ0zZ
-         zbPqiU+Vl30wpNG5oY8vuDFiVwM3HYo8ORA3pFpmxluvCdKfEd/G+kkdSWDzfXrU67l+
-         4Egg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=Idw3QCcuR6mXUzOAqc9Ls1pQxqyluZYVdw6Hqp7PDJs=;
-        b=KrGBs8ZPhgZpxtnJdh13UOxTaH6rntirY4KDK7MHZyfH1EEA3GUv7rbjfoK25Up/iB
-         hFs2zD6ocIB/q/imMmuyQkyUCf1uF5eSesY6JorL8MmsfYyG1cbMHcNrMn7VzGZk83/o
-         fuTx9kLTbfpzWG1Putts9f9zeYXlQ7BSfrEmpz+hUxTjFGtvbyjYtZtK0LXgkj74kMib
-         H2OLotedwGfwc8H1LlgT3CtwKc7BN45oaUQ+PaTT36yX/ynWGm+0ArI4/ngxoDg1D5yi
-         by3TS7pQOYLLbsmQ3l5VhD51Cs+pgqN+zSX7FCjiKSEAK5cBsGeyD8GMQCOpRDXfapYy
-         YPlA==
-X-Gm-Message-State: AOPr4FVxSwN/sHZFXRVVaRMYUqhpZXvexcyjgYtHTmINsxGm9XBm89JbFio3yWdy1Pt7gQ==
-X-Received: by 10.66.152.164 with SMTP id uz4mr4987213pab.9.1463752115607;
-        Fri, 20 May 2016 06:48:35 -0700 (PDT)
-Received: from [192.168.0.104] (c-71-202-183-39.hsd1.ca.comcast.net. [71.202.183.39])
-        by smtp.googlemail.com with ESMTPSA id lz5sm27618596pab.34.2016.05.20.06.48.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 20 May 2016 06:48:34 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
-In-Reply-To: <c07df4ac-08c9-8eaa-0233-06616945c857@web.de>
+	id S1752584AbcETOOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 10:14:30 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:59779 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751842AbcETOO3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2016 10:14:29 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id EF8F1210E;
+	Fri, 20 May 2016 16:14:25 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id K9TngOlQovFP; Fri, 20 May 2016 16:14:25 +0200 (CEST)
+Received: from zm-int-mbx7.grenet.fr (zm-int-mbx7.grenet.fr [130.190.242.146])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id D67A82106;
+	Fri, 20 May 2016 16:14:25 +0200 (CEST)
+In-Reply-To: <1040142021.5607762.1463753271105.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+X-Originating-IP: [130.190.242.136]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF46 (Linux)/8.0.9_GA_6191)
+Thread-Topic: Git remote whitelist/blacklist
+Thread-Index: dzch463Bxl16hI5b5t/lNym25nbflw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295166>
+
+Hi everyone,
+
+We (Ensimag students) plan to implement the
+"remote whitelist/blacklist" feature described in the SoC 2016 ideas,
+but first I would like to be sure we agree on what exactly this
+feature would be, and that the community sees an interest in it.
+
+The general idea is to add a way to prevent accidental push to the
+wrong repository, we see two ways to do it:
+First solution:
+ - a whitelist: Git will accept a push to a repository in it
+ - a blacklist: Git will refuse a push to a repository in it
+ - a default policy
+
+Second solution:
+ - a default policy
+ - a list of repository not following the default policy
+
+The new options in config if we implement the first solution:
+
+[remote]
+	# List of repository that will be allowed/denied with
+					# a whitelist/blacklist
+	whitelisted = "http://git-hosting.org"
+	blacklisted = "http://git-hosting2.org"
+
+	# What is displayed when the user attempts a push on an
+		# unauthorised repository? (this option overwrites
+		# the default message)
+	denymessage = "message"
+
+	# What git should do if the user attempts a push on an
+		# unauthorised repository (reject or warn and
+		# ask the user)?
+	denypolicy = reject(default)/warning
+
+	# How should unknown repositories be treated?
+	defaultpolicy = allow(default)/deny
 
 
+Some concrete usage example:
 
-On 5/20/2016 6:19 AM, Torsten B=C3=B6gershausen wrote:
-> On 20.05.16 03:48, Jon Forrest wrote:
->> I'm running Git version 2.8.2 built from source on Ubuntu 16.04.
->> I'm using a repository that's stored on Dropbox. I'm the only person
->> accessing this repo. Everything works great.
->>
->> For reasons unrelated to Git, I decided to try Git for Windows,
->> so I installed "git version 2.8.2.windows.1" on Windows 10.
->> When I run 'git status' on Ubuntu the list I see is exactly what
->> I expect. However, when I run 'git status' on the
->> same Dropbox repo on Windows, I see what I expect plus I'm told
->> that every .pdf file and some .png files are modified.
-> To bring at least a little light into the story:
->
-> What does
-> git diff
-> say ?
+ - A beginner is working on company code, to prevent him from
+	accidentally pushing the code on a public repository, the
+	company (or him) can do:
+git config --global remote.defaultpolicy "deny"
+git config --global remote.denymessage "Not the company's server!"
+git config --global remote.denypolicy "reject"
+git config --global remote.whitelisted "http://company-server.com"
 
-Great question. For all the unexpected files it says the
-same thing:
 
-old mode 100755
-new mode 100644
+ - A regular git user fears that he might accidentally push sensible
+	code to a public repository he often uses for free-time
+	projects, he can do:
+git config remote.defaultpolicy "allow"	#not really needed
+git config remote.denymessage "Are you sure it is the good server?"
+git config remote.denypolicy "warning"
+git config remote.blacklisted "http://github/personnalproject"
 
-> What does
-> git config -l | grep core
-> say ?
 
-core.symlinks=3Dfalse
-core.autocrlf=3Dtrue
-core.fscache=3Dtrue
-core.editor=3Dvim
-core.repositoryformatversion=3D0
-core.filemode=3Dtrue
-core.bare=3Dfalse
-core.logallrefupdates=3Dtrue
->
-> And what does
-> git ls-files --eol
-> say?
-
-The same thing for all the unexpected files,
-which is:
-
-i/-text w/-text attr/
-
-I'm running the above commands on Windows.
-
-The result of the 2nd question on Ubuntu is:
-
-core.repositoryformatversion=3D0
-core.filemode=3Dtrue
-core.bare=3Dfalse
-core.logallrefupdates=3Dtrue
-
-and the 3rd (for the expected files) is:
-
-i/lf    w/lf    attr/
-
-Jon
+We would like to gather opinions about this before starting to
+	implement it, is there any controversy? Do you prefer the
+	first or second solution (or none)? Do you find the option's
+	names accurate?
