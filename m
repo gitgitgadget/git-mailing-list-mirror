@@ -1,104 +1,118 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v6 05/17] ref-filter: move get_head_description() from branch.c
-Date: Fri, 20 May 2016 19:50:31 +0530
-Message-ID: <CAOLa=ZQOHFFS+j-AR2Nv66-QKt1umQbh0Q7=8-rmJ67pAnN7dQ@mail.gmail.com>
-References: <1463309133-14503-1-git-send-email-Karthik.188@gmail.com>
- <1463309133-14503-6-git-send-email-Karthik.188@gmail.com> <xmqqtwhwv4kd.fsf@gitster.mtv.corp.google.com>
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: RE: [Opinion gathering] Git remote whitelist/blacklist
+Date: Fri, 20 May 2016 10:22:17 -0400
+Message-ID: <001001d1b2a3$06d7bbb0$14873310$@nexbridge.com>
+References: <1040142021.5607762.1463753271105.JavaMail.zimbra@ensimag.grenoble-inp.fr> <584027154.5608416.1463754104066.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 20 16:21:20 2016
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+Cc: <matthieu.moy@grenoble-inp.fr>,
+	<simon.rabourg@ensimag.grenoble-inp.fr>,
+	<wiliam.duclot@ensimag.grenoble-inp.fr>,
+	<antoine.queru@ensimag.grenoble-inp.fr>
+To: "'Francois Beutin'" <beutinf@ensimag.grenoble-inp.fr>,
+	<git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 20 16:23:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3lIa-0001n2-Nk
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 16:21:09 +0200
+	id 1b3lKH-00035a-0o
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 16:22:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752902AbcETOVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 10:21:04 -0400
-Received: from mail-qg0-f65.google.com ([209.85.192.65]:36834 "EHLO
-	mail-qg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750937AbcETOVC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 10:21:02 -0400
-Received: by mail-qg0-f65.google.com with SMTP id z70so5282994qge.3
-        for <git@vger.kernel.org>; Fri, 20 May 2016 07:21:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=V/r5a5eKxq+yxSY2rcZzke3tz+p02ceKdxcGzNpNmmQ=;
-        b=xj7AvdjxWtj/i1+Qf3YPn93nNndGRVkodv61ic0qBui84fJCg2QQlaNv+NPW3cJani
-         fqvdpBG/pR8JgkFPZZiGeJYjWi0WMvA/gzdbV4yI28XtwkeL4TivRoCz18yLshHE92ft
-         hKRB2tBIBJ9qDzD5LwzpfPFnd16zBZVz8JJ98u2INrrWof9yDcD0w36KGcdlN+wv7CfX
-         tTfTkyi9QOe3pUxqezlt2dhzVwv6J6UX8tifZKiHKhfDQhYEfFoI/pMp/d2zkKh3wNcX
-         +DWKcFAOnc+G3k3lzoO0z0onubxmjfW8abKBhATz4Wwa/6EcRhswSc0DnmdSdkK3JSRj
-         tuUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=V/r5a5eKxq+yxSY2rcZzke3tz+p02ceKdxcGzNpNmmQ=;
-        b=ESTUuaijJSyj02hJUERjGzmwpZUFPyBSZqKeOfzszy4YK3TpRtSfOIUJUmzEDEoRQi
-         EmEumdzS584mfzYGjqL67viqnC/uIK4P7qxSiZ2nELllLF5dUGn6REvcVakWng4GSeop
-         ox0173o/11nanXyksML2HUt+2vtH3H/hvfZrjOe6ou758oEy+27mhqGnvceTXn8KvXLi
-         Lj6MZ4HXkwPqmQmStBh6+vKAhRapP0TYVFIIHYpJ96pNTuSfnv4EZ/4tlVt3O2hRi1S6
-         ayClAlqphPnQS1Oukr4CyaSowNKwzxeYWBeJNvu7qcgVosYzcu1RiMUjjdDMRVbOlqfk
-         GxuA==
-X-Gm-Message-State: AOPr4FU9LQRUMDwmpdNZglZ2Kk/2VG2rTTTzzz2jCS1iinyzDkkdSCm7H+Sv25DOnya7vbMNXVXrnNLsUSihpQ==
-X-Received: by 10.140.46.11 with SMTP id j11mr3536853qga.96.1463754060713;
- Fri, 20 May 2016 07:21:00 -0700 (PDT)
-Received: by 10.140.92.178 with HTTP; Fri, 20 May 2016 07:20:31 -0700 (PDT)
-In-Reply-To: <xmqqtwhwv4kd.fsf@gitster.mtv.corp.google.com>
+	id S1753080AbcETOWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 10:22:44 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:20062 "EHLO
+	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752415AbcETOWn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2016 10:22:43 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [174.112.90.66])
+	(authenticated bits=0)
+	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id u4KEMVZZ069661
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Fri, 20 May 2016 10:22:32 -0400 (EDT)
+	(envelope-from rsbecker@nexbridge.com)
+In-Reply-To: <584027154.5608416.1463754104066.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQLJLMcy5aI0sQo5p+pO4Y/K+qYQcZ3S6uzw
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295169>
 
->
-> Note that this expects that va/i18n-misc-updates topic, which
-> corrects the translator instruction around here, is already applied.
->
->> diff --git a/ref-filter.c b/ref-filter.c
->> index 7d3af1c..fcb3353 100644
->> ...
->> +char *get_head_description(void)
->> +{
->> +     struct strbuf desc = STRBUF_INIT;
->> +     struct wt_status_state state;
->> +     memset(&state, 0, sizeof(state));
->> +     wt_status_get_state(&state, 1);
->> +     if (state.rebase_in_progress ||
->> +         state.rebase_interactive_in_progress)
->> +             strbuf_addf(&desc, _("(no branch, rebasing %s)"),
->> +                         state.branch);
->> +     else if (state.bisect_in_progress)
->> +             strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
->> +                         state.branch);
->> +     else if (state.detached_from) {
->> +             /* TRANSLATORS: make sure these match _("HEAD detached at ")
->> +                and _("HEAD detached from ") in wt-status.c */
->> +             if (state.detached_at)
->> +                     strbuf_addf(&desc, _("(HEAD detached at %s)"),
->> +                             state.detached_from);
->> +             else
->> +                     strbuf_addf(&desc, _("(HEAD detached from %s)"),
->> +                             state.detached_from);
->> +     }
->
-> ... but the change is apparently lost.
->
-> It is a good lesson not to blindly rebase things on 'next', which
-> would have unrelated changes.  If you needed es/test-gpg-tags topic
-> for the test script change, check out 'master', merge that single
-> topic, and then rebase the series on top of the result.
->
+On May 20, 2016 10:22 AM, Francois Beutin wrote:
+> We (Ensimag students) plan to implement the "remote whitelist/blacklist"
+> feature described in the SoC 2016 ideas, but first I would like to be sure we
+> agree on what exactly this feature would be, and that the community sees an
+> interest in it.
+> 
+> The general idea is to add a way to prevent accidental push to the wrong
+> repository, we see two ways to do it:
+> First solution:
+>  - a whitelist: Git will accept a push to a repository in it
+>  - a blacklist: Git will refuse a push to a repository in it
+>  - a default policy
+> 
+> Second solution:
+>  - a default policy
+>  - a list of repository not following the default policy
+> 
+> The new options in config if we implement the first solution:
+> 
+> [remote]
+> 	# List of repository that will be allowed/denied with
+> 					# a whitelist/blacklist
+> 	whitelisted = "http://git-hosting.org"
+> 	blacklisted = "http://git-hosting2.org"
+> 
+> 	# What is displayed when the user attempts a push on an
+> 		# unauthorised repository? (this option overwrites
+> 		# the default message)
+> 	denymessage = "message"
+> 
+> 	# What git should do if the user attempts a push on an
+> 		# unauthorised repository (reject or warn and
+> 		# ask the user)?
+> 	denypolicy = reject(default)/warning
+> 
+> 	# How should unknown repositories be treated?
+> 	defaultpolicy = allow(default)/deny
+> 
+> 
+> Some concrete usage example:
+> 
+>  - A beginner is working on company code, to prevent him from
+> 	accidentally pushing the code on a public repository, the
+> 	company (or him) can do:
+> git config --global remote.defaultpolicy "deny"
+> git config --global remote.denymessage "Not the company's server!"
+> git config --global remote.denypolicy "reject"
+> git config --global remote.whitelisted "http://company-server.com"
+> 
+> 
+>  - A regular git user fears that he might accidentally push sensible
+> 	code to a public repository he often uses for free-time
+> 	projects, he can do:
+> git config remote.defaultpolicy "allow"	#not really needed
+> git config remote.denymessage "Are you sure it is the good server?"
+> git config remote.denypolicy "warning"
+> git config remote.blacklisted "http://github/personnalproject"
+> 
+> 
+> We would like to gather opinions about this before starting to
+> 	implement it, is there any controversy? Do you prefer the
+> 	first or second solution (or none)? Do you find the option's
+> 	names accurate?
 
-Lesson learned. Will do that from now on :)
+How would this feature be secure and made reliably consistent in managing the policies (I do like storing the lists separate from the repository, btw)? My concern is that by using git config, a legitimate clone can be made of a repository with these attributes, then the attributes overridden by local config on the clone turning the policy off, changing the remote, and thereby allowing a push to an unauthorized destination (example: one on the originally intended blacklist). It is unclear to me how a policy manager would keep track of this or even know this happened and prevent policies from being bypassed - could you clarify this for the requirements?
 
--- 
-Regards,
-Karthik Nayak
+Cheers,
+Randall
+
+-- Brief whoami: NonStop&UNIX developer since approximately UNIX(421664400)/NonStop(211288444200000000)
+-- In my real life, I talk too much.
