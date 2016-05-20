@@ -1,80 +1,80 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 01/11] completion: add missing fetch options
-Date: Thu, 19 May 2016 23:58:35 -0500
-Message-ID: <1463720325-8853-2-git-send-email-felipe.contreras@gmail.com>
-References: <1463720325-8853-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 06:59:26 2016
+From: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] upload-pack.c: use of parse-options API
+Date: Fri, 20 May 2016 08:53:10 +0200 (CEST)
+Message-ID: <1446970271.10941827.1463727190993.JavaMail.zimbra@imag.fr>
+References: <20160518164019.26443-1-Antoine.Queru@ensimag.grenoble-inp.fr> <20160519153903.22104-1-Antoine.Queru@ensimag.grenoble-inp.fr> <431335092.10912437.1463674220365.JavaMail.zimbra@imag.fr> <xmqq60uakmr4.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Antoine Queru <Antoine.Queru@ensimag.grenoble-inp.fr>,
+	git@vger.kernel.org,
+	william duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 20 08:53:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3cWw-0001mJ-F2
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 06:59:22 +0200
+	id 1b3eJI-0005ww-FA
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 08:53:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754502AbcETE6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 00:58:49 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:35764 "EHLO
-	mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754419AbcETE6s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 00:58:48 -0400
-Received: by mail-oi0-f66.google.com with SMTP id w198so21095651oiw.2
-        for <git@vger.kernel.org>; Thu, 19 May 2016 21:58:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ziOfscq6QvMIjpzEdZpxHW9A6ckuiIixf6Q/gX5XXGE=;
-        b=mMYAUkoNeUyKQ8iP6TCtrWnW+4dQb50+hL0RG1/cuUC52uc490+JWRxDnSuy8/TdcW
-         opwwdWwy3Z/JPRCN9IDQXvLDis3ubOd+ZoSCVtiRuy0uQ0iFhrbc2kclNcIZSkh5g/UB
-         PP93GuhPQiRNTjN+9JC3S4HPS1qOQnpUyyjrxCV+ifYKzWJIBSEY+UBrqh9wgvu8KOih
-         DKWS6DNG7boE4VHnCC6AD2AC2JjGGF+MpEPOHmLV26qyikXDbLdNPa/p/Li40fi2jI/7
-         sl3D3y4LML5Y8JAJIwuIGCo8dgo2k1eSgzX+CXFAgN71DxV5yAvsDYsxmODqI1WczBS0
-         X3Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ziOfscq6QvMIjpzEdZpxHW9A6ckuiIixf6Q/gX5XXGE=;
-        b=J+KHPnPOU2eblXLKjXSd87P/+UwmQwgZy6RbATbK5KmvouLsLUGRKzCmSbOuAd6IOa
-         eZto+KabdhdpxJS19Rw2/3bjZWWM/6AuLLWZBtpRe/JFjPs1YxShep1nhFPXiGrGEN2m
-         ME4YGbR9BlGuAfbIKg5P2xpPEp4DX+ODas1qaLcACUpLY6Ca579w2pLiaWbEY5u2lORJ
-         it+k7lg84GngoKjEMm2s+KSpOJTG6qFnxLG5ZAeHOwjdp8PB8DIxdJYKeuVz163pYouY
-         Ko1qoMXpS6uQlbbWvZqjJvKl8+JS5wpcrh3Viv4VGYR+IMEEri99kDkaAFZp4MSW1TZL
-         WINA==
-X-Gm-Message-State: AOPr4FUTU9O1rIiBEoUnR4TQGK2b1OGYsdQMaQqpjgGNuCpchoT8dWxrenCsh67puK0UUA==
-X-Received: by 10.157.18.179 with SMTP id g48mr505777otg.53.1463720327171;
-        Thu, 19 May 2016 21:58:47 -0700 (PDT)
-Received: from localhost ([189.208.111.205])
-        by smtp.gmail.com with ESMTPSA id v16sm4882280oie.5.2016.05.19.21.58.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 May 2016 21:58:46 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0+fc1
-In-Reply-To: <1463720325-8853-1-git-send-email-felipe.contreras@gmail.com>
+	id S1753865AbcETGxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 02:53:19 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50308 "EHLO mx1.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751903AbcETGxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 02:53:19 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u4K6rAsj023884
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 20 May 2016 08:53:11 +0200
+Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4K6rB5e014162;
+	Fri, 20 May 2016 08:53:11 +0200
+In-Reply-To: <xmqq60uakmr4.fsf@gitster.mtv.corp.google.com>
+X-Originating-IP: [129.88.6.115]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF45 (Linux)/8.0.9_GA_6191)
+Thread-Topic: upload-pack.c: use of parse-options API
+Thread-Index: VKNAMA4eBCk6VsOwnmvBklvq7mbB6w==
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Fri, 20 May 2016 08:53:11 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u4K6rAsj023884
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1464331993.36163@+Rw34lbmucPGmENnx3C7fQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295149>
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash | 2 ++
- 1 file changed, 2 insertions(+)
+Junio C Hamano wrote:
+> Encouraging use of "send-email" with "--patience" is a losing
+> approach if your goal is to present more reviewable diff, isn't it?
+> Using "send-email" as if it is a front-end of "format-patch" means
+> you lose the opportunity for the final proof-reading (not just
+> finding typoes in the message, but the shape of diff, like you are
+> pointing out).
+> 
+> Using "format-patch --patience" or some other diff option, and pick
+> the best one to give to "send-email" would indeed be a way to do so.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e3918c8..ecdf742 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1225,6 +1225,8 @@ __git_fetch_recurse_submodules="yes on-demand no"
- __git_fetch_options="
- 	--quiet --verbose --append --upload-pack --force --keep --depth=
- 	--tags --no-tags --all --prune --dry-run --recurse-submodules=
-+	--no-recurse-submodules --unshallow --update-shallow --multiple
-+	--submodule-prefix= --update-head-ok --progress
- "
- 
- _git_fetch ()
+It's a matter of taste. My flow is "send-email-only", I do as much as
+possible in-tree, and when I notice something to do during "git send-email",
+I just abort and retry. So "Oops, looks ugly, I'll try with another
+option" is OK in this flow.
+
+> What is happening is that Antoine's patch (which is slightly
+> different from what you quoted above) has trailing whitespace after
+> "setup_path();"
+
+Nice catch!
+
 -- 
-2.8.0+fc1
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
