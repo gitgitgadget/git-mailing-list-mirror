@@ -1,87 +1,130 @@
 From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH 2/2] bisect--helper: `bisect_voc` shell function in C
-Date: Fri, 20 May 2016 12:53:04 +0530
-Message-ID: <CAFZEwPMFBmHUaX+Y8Fpd4BnJiB8N_XBOX30hRsSvb3tm8-MX5w@mail.gmail.com>
+Subject: Re: [PATCH 1/2] bisect--helper: `bisect_log` shell function in C
+Date: Fri, 20 May 2016 12:58:21 +0530
+Message-ID: <CAFZEwPO3=-vqEdxPPTA40YoVf_PtEJrfjtHskicnYzAj+Efe7w@mail.gmail.com>
 References: <1463169737-12701-1-git-send-email-pranit.bauva@gmail.com>
-	<1463169737-12701-2-git-send-email-pranit.bauva@gmail.com>
-	<alpine.DEB.2.20.1605160838540.3303@virtualbox>
+	<CAPig+cTfZ1hWXZcx5OLNRRqJ7FkTigizpMB9E1xzv1Tv+8YY2w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Lars Schneider <larsxschneider@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 20 09:23:16 2016
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri May 20 09:29:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3em8-0002qS-07
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 09:23:12 +0200
+	id 1b3erE-0006e1-A6
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 09:28:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754634AbcETHXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 03:23:08 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:34738 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753719AbcETHXF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 03:23:05 -0400
-Received: by mail-yw0-f194.google.com with SMTP id i22so13645733ywc.1
-        for <git@vger.kernel.org>; Fri, 20 May 2016 00:23:05 -0700 (PDT)
+	id S1754590AbcETH2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 03:28:23 -0400
+Received: from mail-yw0-f177.google.com ([209.85.161.177]:34832 "EHLO
+	mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754089AbcETH2X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 03:28:23 -0400
+Received: by mail-yw0-f177.google.com with SMTP id g133so101577815ywb.2
+        for <git@vger.kernel.org>; Fri, 20 May 2016 00:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=L0eMG+ni2BEuxP9PemZWnbUjCljP+55HzP77dle4mXg=;
-        b=oQs4jWPWnYwuaZDMLdkCBI/dvxyNeI0eO9834iNW21jcekQc4+wRlz31HEPopFNqnR
-         1aVZgqhngj11r2cZl2ufHJtimbxIzKQ7QHR0hdwDFiv5xP4FaeiEVx02O0cLCOPMzVp3
-         oA+aomTQWAeKqQyrE0MNy/DXgzlgQyykY/yHGyrWZafYgF+wOdASLlFcVf9O/jx8qtDl
-         ScbQopMLTtqk4g37et7ePDEH2kwzsqsd6i6qyAEahgWfQeZohPh9dNWxW6lzJVAKUXFj
-         Hikn26jESP3G12HqbkHF49uWFUvPUsUZJYEY3TT32BIKr1R0XmTtqXcIgylVEgAyGDJw
-         mz6A==
+        bh=VkuYxdhc87H9vwGPt3JokQZVXO42UMNQ8wRFztMZhMI=;
+        b=M3v3zFzpwZ59EaJFzrKS7fiDaGnpwjoMn2ZZk/OBjP6zn3rlbfEjiUMrOLiColrdDI
+         1PRO05tHMVmvRLeBpsysBPBYjGnwLk3zaBEShWnt2FaIFojCbk5GRdbCHiRpAdiy3fBX
+         7lNS9574VausnhdQMV1MZgsZlij8AZKsswCfRYenjgQbQ05iydr5wl0BvL39qE0fTxbz
+         GXRIag25+ddf683Ei765PZH294NK74bI5YcJQIkq0yZ0mIaHl7Jao4e3FsF6CZuyhpJM
+         iTQV0MMytW6NV0I51BPr1dz4cfl+ZgKzZwzKjWhioHaP2NpUJdhVf/p9FUNQOnMONRwg
+         4YDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=L0eMG+ni2BEuxP9PemZWnbUjCljP+55HzP77dle4mXg=;
-        b=d+OL7lSdfecy19PHnPGqQEdmHFxIRav02IqLamb9dJlduTcBCrjjWeCwyxQ7T9ohVE
-         pIPi/1UCxeUHg0jPV5nhYiKFnbguEYUa2+imE5ak3HSfmfv4FBHw4bfwutBcr4bVM8A7
-         ZhNgztfvh/EE3MRMviIoXj1GFnVSlofm8bV/WwVo51/guhW35b1XcMqyGgy5edRy1TrZ
-         1RqOUDjgX3Mg1akQsbpJAfIuPS7uqoYexRmRNitVXAo2bz9C7yQF9cxkTfNUDF4Fp+0V
-         Xt5+jFBtM9UKyyD9Eip4hmAALfRPZx/zm/3pO1hBVKgxX/DuHNHpmkNSFvKe2WB3sHzX
-         CmMQ==
-X-Gm-Message-State: AOPr4FWNiFcCFhlwKYhAiSvoNwOau63PO1537hIzDPPnu7HwH4I7y1hZmrcnXQXPi1CMY7Ar+j+s/n9rs6IeTg==
-X-Received: by 10.13.235.143 with SMTP id u137mr939021ywe.20.1463728984975;
- Fri, 20 May 2016 00:23:04 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Fri, 20 May 2016 00:23:04 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1605160838540.3303@virtualbox>
+        bh=VkuYxdhc87H9vwGPt3JokQZVXO42UMNQ8wRFztMZhMI=;
+        b=Mx758ptis35jE2yp5lHxSrin6zr1pAzbkovKbRHJR5O9XpDNjgOb+0hBK6ZRa7WN/7
+         4MGWfkW2o7tGqjWMuJT1NA6m9tkemkWCqILtWYicZQwJmQidbJ61g5096frIW4WqXk0F
+         uB+L0yzruYC60KcrINOctzq3I+J2r+SAUhzR1l4hNrkDE0gKzVsIQfCgvOnB/jnEWYCJ
+         ky4vExoKV0HZGBm0n2eSXB+MTmiqsAokLZZlTKIsas4mrDWoxz7nTz7iWZQ++PWptUe/
+         2OIKwRbyIq6tIeJWrfMSBCuatMpTz2zQrUltU3/DrbOQ0zDUNbkZ3vDjCS02WmtK3Ekf
+         0lBQ==
+X-Gm-Message-State: AOPr4FX/IUvlpYSJI0oynw20CxSohHqcaSTzC+PO3ib5VhOHI64HHuJKnWkCXAU8gZwtqInaFm87ehQzPpmuPQ==
+X-Received: by 10.129.81.87 with SMTP id f84mr832450ywb.154.1463729302037;
+ Fri, 20 May 2016 00:28:22 -0700 (PDT)
+Received: by 10.13.219.213 with HTTP; Fri, 20 May 2016 00:28:21 -0700 (PDT)
+In-Reply-To: <CAPig+cTfZ1hWXZcx5OLNRRqJ7FkTigizpMB9E1xzv1Tv+8YY2w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295154>
 
-Hey Johannes,
+Hey Eric,
 
-On Mon, May 16, 2016 at 12:10 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Pranit,
+On Mon, May 16, 2016 at 1:06 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Fri, May 13, 2016 at 4:02 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> bisect--helper: `bisect_log` shell function in C
 >
-> On Sat, 14 May 2016, Pranit Bauva wrote:
+> Do you need to insert "rewrite" or "reimplement" in the subject?
 >
->> Reimplement the `bisect_voc` shell function in C. This is a too small
->> function to be called as a subcommand though the working of this
->> function has been tested by calling it as a subcommand.
+>> Reimplement the `bisect_log` shell function in C and add a
+>> `--bisect-log` subcommand to `git bisect--helper` to call it from
+>> git-bisect.sh .
+>>
+>> Using `--bisect-log` subcommand is a temporary measure to port shell
+>> function to C so as to use the existing test suite. As more functions
+>> are ported, this subcommand will be retired and will be called by some
+>> other method.
+>>
+>> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+>> ---
+>> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+>> @@ -79,11 +80,26 @@ int write_terms(const char *bad, const char *good)
+>> +int bisect_log(void)
 >
-> This leaves me puzzled as to what this patch is supposed to do. Maybe
-> rename this function to have a more intuitive name, and then throw in a
-> patch that makes use of the function?
+> s/^/static/
 
-Are you suggesting to first have an introductory patch which will
-rename the function in the shell script and then this patch which will
-convert the "new" shell function to C? I can do this. I have to think
-of a nice name. How does 'good_or_bad" sound?
+Will include this in the re-roll
+
+>> +{
+>> +       struct strbuf buf = STRBUF_INIT;
+>> +
+>> +       if (strbuf_read_file(&buf, ".git/BISECT_LOG", 256) < 0)
+>
+> As mentioned in my review of the "write-terms" rewrite, hardcoding
+> ".git/" here is wrong for a variety of reasons. See get_git_dir(),
+> get_git_common_dir(), etc. in cache.h instead.
+
+Thanks. I will have a look into this.
+
+>> +               return error(_("We are not bisecting."));
+>> +
+>> +       printf("%s", buf.buf);
+>> +       strbuf_release(&buf);
+>> +
+>> +       return 0;
+>> +}
+>> +
+>>  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>>  {
+>> @@ -109,6 +127,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>>                 if (argc != 2)
+>>                         die(_("--write-terms requires two arguments"));
+>>                 return write_terms(argv[0], argv[1]);
+>> +       case BISECT_LOG:
+>
+> Shouldn't you be die()ing here with an appropriate error message if
+> argc is not 0?
+
+I think it would be better to check for argc != 0 and die
+appropriately. Will include this in the re-roll.
+
+>> +               return bisect_log();
+>>         default:
+>>                 die("BUG: unknown subcommand '%d'", cmdmode);
+>>         }
 
 Regards,
 Pranit Bauva
