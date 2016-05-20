@@ -1,107 +1,81 @@
-From: enrico <enrico.guiraud@gmail.com>
-Subject: Re: more novice-friendly behaviour of =?utf-8?b?YGdpdA==?= add =?utf-8?b?LXBg?=
-Date: Fri, 20 May 2016 15:32:54 +0000 (UTC)
-Message-ID: <loom.20160520T172851-785@post.gmane.org>
-References: <loom.20160520T150517-391@post.gmane.org> <xmqq7feohirb.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: Odd Difference Between Windows Git and Standard Git
+Date: Fri, 20 May 2016 17:57:22 +0200
+Message-ID: <b6ab2200-30a1-d0ce-4d4e-097838b74781@web.de>
+References: <nhlqd4$ekr$1@ger.gmane.org>
+ <c07df4ac-08c9-8eaa-0233-06616945c857@web.de>
+ <c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com>
+ <ede1c113-1ab8-6043-3e39-bbacec5db31c@web.de>
+ <ba34485d-43cc-ef35-ebc0-67b944a420a7@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 17:33:21 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Jon Forrest <nobozo@gmail.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 20 17:57:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3mQT-0008Cm-6V
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 17:33:21 +0200
+	id 1b3mns-0001M3-Gp
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 17:57:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754913AbcETPdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 11:33:16 -0400
-Received: from plane.gmane.org ([80.91.229.3]:39752 "EHLO plane.gmane.org"
+	id S1754005AbcETP52 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2016 11:57:28 -0400
+Received: from mout.web.de ([212.227.15.3]:56600 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753936AbcETPdQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 11:33:16 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1b3mQE-00080K-VY
-	for git@vger.kernel.org; Fri, 20 May 2016 17:33:07 +0200
-Received: from nancy.w2kroot.uni-oldenburg.de ([134.106.116.48])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 May 2016 17:33:06 +0200
-Received: from enrico.guiraud by nancy.w2kroot.uni-oldenburg.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 May 2016 17:33:06 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 134.106.116.48 (Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0)
+	id S1752809AbcETP51 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 11:57:27 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb003) with
+ ESMTPSA (Nemesis) id 0LuuSf-1blg6k0CB7-0108Mk; Fri, 20 May 2016 17:57:23
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.1.0
+In-Reply-To: <ba34485d-43cc-ef35-ebc0-67b944a420a7@gmail.com>
+X-Provags-ID: V03:K0:xSJx4/zSpaJB8rRUr3Kb5Y/0AaknWx/fMLxFWya7B4hjKeZLnRO
+ ynBGpKgEMzBqJryr7ziGB7dljinStwjXVb7wC7Z3klwdoeW9//AwL7WW/lD7cp3cfMlHuoF
+ o3JIbbFGOJJQH+HE1Eng81UkbgZZE8oOLMZkSkUwrVrU6b3IEasE/TxVQsK3eZV0qzBtB1n
+ k6e2eGP5xSrZqa7YI+Anw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:r+hfoLBGIZo=:SoDRk1BKt1lEDS58dxUUGz
+ RzyU/cPlZfP28dILssFw4RbsQmMowKtj7QLFsFzh0qbI5BKU2sffkLZsrCp1Fc/tNIl0c6VgC
+ /T5OSnNgJ2L1R8R4+jBllWcFhidEZCS4Xn3RGSFo/FmR5CfZfgzovbnw3iDxpHk0TocGLzydr
+ vkxRgl0ash+JFkxqtjqGF0HslD5mCkQydiz+F6ixIftN2LU0ElP8+l6OZYSn+iHRodmbkQRDw
+ zPUT0otq/EkKEaHcJvVSbDxlbFpb0w7EeCzogUiuCzJakgXQGlh1pXagjtTyw+DeB56ckeUke
+ TFAjHFg+VwIR7BIqvaXi8+A//dhwdTxM/hGfGlCbk4AF2DsqlBNBE7sYvOcA3se+q5ii169oO
+ hfJUQAKhxyaxtM1pzWgGAVR7UBGXKHBPx41gFkZrMqut6Ke7SqVQ6wEYRGVaQOzWxNMlyrFZ2
+ 2ATIl1K4qbiWXqygQLc4+geSuc8Ak9aNqRckZV7WlpAb+oDpQwcFf2Np8Jvh6u9BgDDuetAek
+ uRH3nWxik+QG+wtS6DOg0Kt6czxmZKNhSIlLW6bXn8rinXU9bipg5/phQsSiQKTQODoBtSBw0
+ ZgIbUvWnhH+Stf6Rxdk5KgrWBoS1YyU8TK0hYXdG/uSMQ2bC3V7649b+6iKDeliwkwsu3cyW1
+ 3NizFc5dtROq4KKTvhfJPPW7h18Mfr/BdU8aZc46YqgmIArwhvfMCqgb2T0iAU82MHIEJ6ObY
+ E/CCjFzmbi6amaVWeA0VV2AgM1vOaVhYGJmm7bBAk6AetHIRiLfUjvjtlINCXof/AWFOElBk 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295177>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+On 20.05.16 16:28, Jon Forrest wrote:
+>=20
+>=20
+> On 5/20/2016 7:19 AM, Torsten B=C3=B6gershausen wrote:
+>=20
+>>> Great question. For all the unexpected files it says the
+>>> same thing:
+>>>
+>>> old mode 100755
+>>> new mode 100644
+>>
+>> So the solution is to run
+>> git config  core.filemode false
+>=20
+> This worked perfectly!
+>=20
+> I wonder if this should be the default for Git for Windows.
 
-> 
-> enrico <enrico.guiraud <at> gmail.com> writes:
-> 
-> > Hello all,
-> > I have encountered a couple of non-necessary difficulties when editing a
-> > patch during a `git add -p`.
-> >
-> > Firstly, the help message says
-> > "To remove '-' lines, make them ' ' lines (context)."
-> > which is a bit confusing because that "them" refers to '-', not to 'lines'.
-> 
-> I think that sentence refers to a line line this in a patch:
-> 
->     -This is what the line used to be
-> 
-> as a '-'-line.  A line that does not change between preimage and
-> postimage have SP instead of '-' at the beginning, and the sentence
-> seems to refer to it as a ' '-line.  So from that reading, "turning
-> '-'-lines that you do not want to loes into ' '-lines" is perfectly
-> sensible phrasing.
+It is.
+But you need to clone the repo under Windows.
 
-I agree it is, and that little dash would definitely make the message less
-ambiguous.
-Git has a way to "explain itself" to its users so that they can become
-better as they use it, and these sort of messages play a very important part
-in this learning process.
-
-> 
-> In any case, "edit" is about giving a low-level access and precise
-> control to people who are familiar with (1) what each line of "diff"
-> output means and (2) what is done to them by "patch" (rather, in
-> Git's context, "apply").
-> 
-> I agree with you that "edit" mode is a too-advanced tool for those
-> who are not comfortable with these two things.  A solution would
-> however not be to modify "edit" mode (which would affect those who
-> are prepared to and want to use the "low-level access and precise
-> control" to their advantage), but to introduce an easier-to-use,
-> and perhaps a bit limited for safety, mode for those who are not the
-> target audience for "edit" mode.
-> 
-> The "split" subcommand to split the hunk before applying was an
-> attempt to go in that direction; it never allows you the user to
-> make an arbitrary change to corrupt the patch and make it unusable.
-> Perhaps you can mimick its spirit and come up with a new "guarded
-> edit" command?
->
-
-I am not sure we are talking about the same issue. I am not pointing out
-that git is unsafe to less-than-very-expert users.
-Much more trivially, I am saying that the current behaviour of the "edit"
-mode, when coupled with hunk splitting, is needlessly frustrating (because
-of the issue described in the link I provided in my previous message).
-That's why I would argue that git would help wanna-be-experts better if
-it told them, in some way, that editing after splitting is generally a bad idea.
-Advanced users would not be bothered by this
-warning/lack-of-edit-after-splitting because, I think, they don't do it
-anyway. They already know it
-is a pain, so they either split or edit.
+I probably submit a patch some day, that core.filemode will be ignored
+under Windows.
