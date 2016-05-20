@@ -1,76 +1,72 @@
-From: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-Subject: run-command: output owner picking strategy
-Date: Fri, 20 May 2016 15:11:50 +0200 (CEST)
-Message-ID: <401208017.5792558.1463749910970.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <906110267.5791524.1463748828183.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: enrico <enrico.guiraud@gmail.com>
+Subject: more novice-friendly behaviour of =?utf-8?b?YGdpdA==?= add =?utf-8?b?LXBg?=
+Date: Fri, 20 May 2016 13:06:15 +0000 (UTC)
+Message-ID: <loom.20160520T150517-391@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: sbeller@google.com,
-	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
-	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
-	antoine queru <antoine.queru@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 15:05:54 2016
+X-From: git-owner@vger.kernel.org Fri May 20 15:10:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3k7T-0006Rp-Eb
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 15:05:35 +0200
+	id 1b3kCJ-000226-TT
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 15:10:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933084AbcETNFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 09:05:25 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:56022 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932681AbcETNFV (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2016 09:05:21 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id DB0C2210E;
-	Fri, 20 May 2016 15:05:16 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SjS5SeOLz2Wc; Fri, 20 May 2016 15:05:16 +0200 (CEST)
-Received: from zm-int-mbx5.grenet.fr (zm-int-mbx5.grenet.fr [130.190.242.144])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id C43122109;
-	Fri, 20 May 2016 15:05:16 +0200 (CEST)
-In-Reply-To: <906110267.5791524.1463748828183.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF46 (Linux)/8.0.9_GA_6191)
-Thread-Topic: run-command: output owner picking strategy
-Thread-Index: T/WNbvdI9tE985WrStiBhyrVtA0LNQ==
+	id S1755842AbcETNKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 09:10:12 -0400
+Received: from plane.gmane.org ([80.91.229.3]:43308 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755798AbcETNKK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 09:10:10 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1b3kBp-0001gg-5W
+	for git@vger.kernel.org; Fri, 20 May 2016 15:10:05 +0200
+Received: from nancy.w2kroot.uni-oldenburg.de ([134.106.116.48])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 May 2016 15:10:05 +0200
+Received: from enrico.guiraud by nancy.w2kroot.uni-oldenburg.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 May 2016 15:10:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 134.106.116.48 (Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295162>
 
-Hi,
-I stumbled upon this piece of code (run-command.c:pp_collect_finish()), picking the owner of the output amongst parallel processes (introduced by Stephan Beller in commit c553c72eed64b5f7316ce227f6d5d783eae6f2ed)
+Hello all,
+I have encountered a couple of non-necessary difficulties when editing a
+patch during a `git add -p`.
 
-/*
- * Pick next process to output live.
- * NEEDSWORK:
- * For now we pick it randomly by doing a round
- * robin. Later we may want to pick the one with
- * the most output or the longest or shortest
- * running process time.
- */
-for (i = 0; i < n; i++)
-   if (pp->children[(pp->output_owner + i) % n].state == GIT_CP_WORKING)
-      break;
-pp->output_owner = (pp->output_owner + i) % n;
+Firstly, the help message says
+"To remove '-' lines, make them ' ' lines (context)."
+which is a bit confusing because that "them" refers to '-', not to 'lines'.
+I spent a good half hour changing '-' lines to lines containing a single
+white space but git was not very happy about it.
+I would suggest to change that line with
+"To remove '-' lines, change '-' into ' ' (for context)"
 
+Secondly, as discussed here
+(http://git.661346.n2.nabble.com/git-add-patch-bug-with-split-edit-td2171634.html)
+and in numerous stackoverflow questions, the behaviour of the "edit" (e)
+option during an interactive add is a bit...bizarre: it requires the user to
+do a lot of gymnastic if (s)he is editing a hunk after having used the split
+(s) option, and nine times out of ten the patch will not apply cleanly.
+I would suggest to change the behaviour of the interactive add to only allow
+edits when the hunk has not been split (possibly with a one-line explanation
+for why editing is not possible appearing when inside a split hunk). Since
+editing is more powerful than splitting this would not result in a loss of
+generality, but, in my humble opinion, in a much nicer experience for
+novices and experts alike.
 
-Would it be useful to improve this round-robin into something smarter (as stated by the NEEDSWORK)? It seems to be only used for submodules fetch/clone.
-
-The options would be (as said in the comment):
-1 - pick the process with the longest running process time
-2 - pick the process with the shortest running process time
-3 - pick the process for which the output buffer is the longest
-
-But with one of those strategies, wouldn't we lose the advantage of having the same output order as a non-parallelized version? Cf the commit message.
-
-What do you think ? 
+Best regards,
+enrico
