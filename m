@@ -1,88 +1,95 @@
-From: Armin Kunaschik <megabreit@googlemail.com>
-Subject: [PATCH] t0008: 4 tests fail with ksh88
-Date: Fri, 20 May 2016 16:31:30 +0200
-Message-ID: <CALR6jEhviK9KZxR6R6xzkZ5EAO-RjWj3xYah_DOSDXhEjYsT-A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: more novice-friendly behaviour of `git add -p`
+Date: Fri, 20 May 2016 08:05:44 -0700
+Message-ID: <xmqq7feohirb.fsf@gitster.mtv.corp.google.com>
+References: <loom.20160520T150517-391@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 20 16:31:39 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: enrico <enrico.guiraud@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 20 17:05:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3lSh-0001c9-W0
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 16:31:36 +0200
+	id 1b3lzt-0003hJ-EH
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 17:05:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754913AbcETObc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 10:31:32 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:35234 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751479AbcETObb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 10:31:31 -0400
-Received: by mail-yw0-f194.google.com with SMTP id n16so1795910ywd.2
-        for <git@vger.kernel.org>; Fri, 20 May 2016 07:31:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc;
-        bh=qdi4hKr+Nrrkj2KQq7orNHKoHjqmGPXgn6YEjhTWaso=;
-        b=zXQqQ18XRQVZzvFSeuyxyA7Uyg1JqSbRwc2Isll0730XDv1/2kmDU8/05f5r/JJgql
-         ZQi51xQvm8Q2QSfnCC8Jzf5D4ZgyoBdJq90xkeLXKwcjEW3tLiZiY9zNU5inhDEMiRL4
-         xnkEhi68iqEitKvRS5OIX8rl4V1eq9UstIarpe//mtgqxsiQHdg05eX3pEmrtr9FEo9i
-         Zo7+C/r9uiEAi+SVXWBwqrjK3MBIu+G/hWfZc4phE/LfWF+t2b/gUH+Kzp3oa6fxnTbq
-         AY2nV4IX+B1CvLui4BdYQbETGmBvmla0PUIU8GRLn1yNo5JTpvLEqjS2A51twwoV6Y3f
-         rowQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
-        bh=qdi4hKr+Nrrkj2KQq7orNHKoHjqmGPXgn6YEjhTWaso=;
-        b=XpjfBD7fBQ5HPgYG1/jl6opuv6vch26yrrHzuSHIo3cCo47NItCqqtus7PVl+CFDnA
-         ew8EePT3rUOBY8UN360A9QgL4d4R77PcSy3Clq5Fwo0KODYpQM9PIy2CuWlSeId4cXkk
-         MbwC2e2GbA5gtJ2txmGFALC5ITmxTjndi8M/QwDYtJHc0hs43138vbyRRDCsCDy+/DO3
-         xLguTVhQweJTR8OZLyvHNHla5Dx4e5IfQK+auwCxm0Jx+wg/3rqP9TSc+lQv+1rnBPR9
-         0StjTLGGx9pQobuj4jvmpXqzqJDEHP+1KUk0UT3HZhMFZ2V0zC2Ij/78kL49p842T3MT
-         Pe8g==
-X-Gm-Message-State: AOPr4FVMqwDE52s1xHK0+R9yl9AobKDKHBQQXPSU+M8kEHe1no4nDnfOgZ00VwTaNNe5VHTkJaOc8cxX7e3WkQ==
-X-Received: by 10.13.204.69 with SMTP id o66mr2039819ywd.168.1463754690403;
- Fri, 20 May 2016 07:31:30 -0700 (PDT)
-Received: by 10.129.45.132 with HTTP; Fri, 20 May 2016 07:31:30 -0700 (PDT)
+	id S933019AbcETPFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 11:05:49 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50110 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932985AbcETPFs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 11:05:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B380C16BAE;
+	Fri, 20 May 2016 11:05:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Kky52Jxl2GOPTqBKFBDDQkDEJSE=; b=mtXZGI
+	xFhD0PLmXUZV1TADFMe4xzEfIM+ib3TtZs9qk2EGwIO6dmZXCZu2cgfgUhO8FBSM
+	eLOBnAwn0NkB/XsIL+CeesXfvP6tjFZhmVlsGy7WUxNNHZbE5LmuYvL0vrtMOs6f
+	etKOPmQO6U6SKLCjzf5fRv0FWWopSjP0v/5JE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=F7xdMy13qPhd0vL9FHBFGJAOzkl6IQDK
+	EpPHjloaVFyZBFKhiYi2ygyf+rd3L4+/KOHwPC2Sc6idWSq49yi0OuB4T3pn2pfx
+	tL8WwkTfpvaoKGAisOu+dignAFHxnDUslHWYaY5UFQ1gHQNJ0Ole+Qi9X3XF1qjE
+	wYZT2heqR+k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A842216BAD;
+	Fri, 20 May 2016 11:05:46 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2210E16BAC;
+	Fri, 20 May 2016 11:05:46 -0400 (EDT)
+In-Reply-To: <loom.20160520T150517-391@post.gmane.org> (enrico's message of
+	"Fri, 20 May 2016 13:06:15 +0000 (UTC)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 546CF45C-1E9C-11E6-BE0B-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295172>
 
-From: Armin Kunaschik <megabreit@googlemail.com>
+enrico <enrico.guiraud@gmail.com> writes:
 
-\" in the test t0008 is not treated the same way in bash and in ksh.
-In ksh the \ disappears and generates false expect data to
-compare with.
-Using \\" works portable, the same way in bash and in ksh and
-is less ambigous.
+> Hello all,
+> I have encountered a couple of non-necessary difficulties when editing a
+> patch during a `git add -p`.
+>
+> Firstly, the help message says
+> "To remove '-' lines, make them ' ' lines (context)."
+> which is a bit confusing because that "them" refers to '-', not to 'lines'.
 
-Acked-by: Jeff King <peff@peff.net>
-Signed-off-by: Armin Kunaschik <megabreit@googlemail.com>
----
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index 89544dd..b425f3a 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
-@@ -605,7 +605,7 @@ cat <<-EOF >expected-verbose
-        a/b/.gitignore:8:!on*   a/b/one
-        a/b/.gitignore:8:!on*   a/b/one one
-        a/b/.gitignore:8:!on*   a/b/one two
--       a/b/.gitignore:8:!on*   "a/b/one\"three"
-+       a/b/.gitignore:8:!on*   "a/b/one\\"three"
-        a/b/.gitignore:9:!two   a/b/two
-        a/.gitignore:1:two*     a/b/twooo
-        $global_excludes:2:!globaltwo   globaltwo
-@@ -686,7 +686,7 @@ cat <<-EOF >expected-all
-        a/b/.gitignore:8:!on*   b/one
-        a/b/.gitignore:8:!on*   b/one one
-        a/b/.gitignore:8:!on*   b/one two
--       a/b/.gitignore:8:!on*   "b/one\"three"
-+       a/b/.gitignore:8:!on*   "b/one\\"three"
-        a/b/.gitignore:9:!two   b/two
-        ::      b/not-ignored
-        a/.gitignore:1:two*     b/twooo
+I think that sentence refers to a line line this in a patch:
+
+    -This is what the line used to be
+
+as a '-'-line.  A line that does not change between preimage and
+postimage have SP instead of '-' at the beginning, and the sentence
+seems to refer to it as a ' '-line.  So from that reading, "turning
+'-'-lines that you do not want to loes into ' '-lines" is perfectly
+sensible phrasing.
+
+In any case, "edit" is about giving a low-level access and precise
+control to people who are familiar with (1) what each line of "diff"
+output means and (2) what is done to them by "patch" (rather, in
+Git's context, "apply").
+
+I agree with you that "edit" mode is a too-advanced tool for those
+who are not comfortable with these two things.  A solution would
+however not be to modify "edit" mode (which would affect those who
+are prepared to and want to use the "low-level access and precise
+control" to their advantage), but to introduce an easier-to-use,
+and perhaps a bit limited for safety, mode for those who are not the
+target audience for "edit" mode.
+
+The "split" subcommand to split the hunk before applying was an
+attempt to go in that direction; it never allows you the user to
+make an arbitrary change to corrupt the patch and make it unusable.
+Perhaps you can mimick its spirit and come up with a new "guarded
+edit" command?
