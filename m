@@ -1,77 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 19/21] t9003: become resilient to GETTEXT_POISON
-Date: Fri, 20 May 2016 10:50:20 -0700
-Message-ID: <xmqqoa80ei03.fsf@gitster.mtv.corp.google.com>
-References: <1463585274-9027-1-git-send-email-vascomalmeida@sapo.pt>
-	<1463585274-9027-20-git-send-email-vascomalmeida@sapo.pt>
-	<CAPig+cT3yf7D4xOmOhy5Y21qwHuA5Ny9ULEJhC1OBgrhiayQ3g@mail.gmail.com>
-	<573E30C8.4070600@sapo.pt>
-	<CAPig+cRo3tjt9N0YO8sNn90dL3dP0asfmKTr5rerS9YLO6QBtw@mail.gmail.com>
-	<xmqqbn40fzu8.fsf@gitster.mtv.corp.google.com>
-	<573F4BEC.7000906@sapo.pt>
+From: Kevin Harrington <mad.hephaestus@gmail.com>
+Subject: BowlerStudio: using GIT as a file system for distributed robots
+Date: Fri, 20 May 2016 13:55:13 -0400
+Message-ID: <CAASPp8+x01E5W3cLiLNaXM6KMHVGTE0owZ4vFk97vKAZ3Z3yzw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Vasco Almeida <vascomalmeida@sapo.pt>
-X-From: git-owner@vger.kernel.org Fri May 20 19:50:56 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 20 19:55:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3oZK-0008C4-8L
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 19:50:38 +0200
+	id 1b3oeA-00048k-RI
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 19:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752039AbcETRu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 13:50:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51892 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751317AbcETRuY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 13:50:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3F28D1A248;
-	Fri, 20 May 2016 13:50:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OtSTxAxytevvenjZ0dHLpQT9xLE=; b=QUaJG+
-	AONaiqfgmiEAmZUZS6wRedi7zmogGgo6cYO2H5nS8MT5f8bqoRia3+AxdaNIsVQB
-	dZfePMJcNSCQzrdFXvMA1e+YepkM60z1lAi18FQ8Y5BvT0Le39ZnmjAtb7CRQmL1
-	eymj9j5haUbCVUcXoZGk0Lk6SaVzr5D1moFv4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=edcbP0bQwJSo/AtDks+0yGy8syc0d4pd
-	S4nPD04MEYS60IJ4t5VC3BacsLF542vDPJ7p8bgkUKuYDoCLtWdGelQj+1SR2AsQ
-	TnVX/mxjgJszZTElg4/WYmTBjC/NKnoTgIeIsdzHxuky6rCNGayZUEXmb5kxFz3F
-	P7szRjg/2Gc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 36D631A247;
-	Fri, 20 May 2016 13:50:23 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AF1561A246;
-	Fri, 20 May 2016 13:50:22 -0400 (EDT)
-In-Reply-To: <573F4BEC.7000906@sapo.pt> (Vasco Almeida's message of "Fri, 20
-	May 2016 17:39:56 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5353133C-1EB3-11E6-A82A-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751317AbcETRze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 13:55:34 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:38115 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750818AbcETRze (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 13:55:34 -0400
+Received: by mail-wm0-f48.google.com with SMTP id n129so93016313wmn.1
+        for <git@vger.kernel.org>; Fri, 20 May 2016 10:55:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Ich/l4FvgN04l4MQrlmOmoNRgwsKvybUGewj9/I+Dus=;
+        b=CidTidDcXihztVlf/L631j5vNDeJUmxv8subVgYWFnrfhZCFTp7Bxqfke4gDu3S3FH
+         IcrjyVjcfjYsREIEq50XVOno7t1d0zIiQlDIXx+HNvnmlFj5N11q7b5KZw/qQ+Vm2oaT
+         vDDdOTybWiOm1E+8I2cqFWexAZ0pYFo8s2nqvTJ3zrzdRRdAJHNpVO/SKV7AzItaBbWV
+         5UOTGPcI6EFosrfhlWcWr8prRbNlxi4Z7cIYB51F9Oc9ekCXqCcntvr7xiqtN7n4ARmg
+         18uideWX3htWHDwlqbZcNjw7dMjqdtl6iQvPP0aysRKCFxb5+1txC0y7lH1BFU0mX8xD
+         +yeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Ich/l4FvgN04l4MQrlmOmoNRgwsKvybUGewj9/I+Dus=;
+        b=FhsZ7j8k8VDlroHBpZotQoOfsZoC6ZpPOJKsy3FRhI886VhGJ/znWO+dAMeoi93t/K
+         m0rfmoHB3JExPjvDUWQBXJGZ39YYyJHTe8w9o2YaqOgF48lgRalQRMcPv6dNlA/UogXb
+         ofqAHB+tD8lIye7xVlHKuyFGfGYMuLUFcZXFKW+exYEH8Ymh3Dw7GQ7Agd+HZ09+oouR
+         XXZyNwRyI3vsVvdKq61HrLN5u6siwPqGCq4NEcdYvF5GK5Je+rniRXuRHJQ70ob/0sVG
+         HKlofbHw5rwKluwo4jxznnD4/ptwU0GkaipmNLEhVnJAkZdj+0AaRTmIkwRcRBldwpVZ
+         9kqQ==
+X-Gm-Message-State: AOPr4FW8/E44SrSmsuZhAGxMMi/Uijqbl995irtckN6idwl7xn6bOxHaP81ZjBD6VrAbRkpPZrAKL9ZZGrxTSQ==
+X-Received: by 10.28.144.11 with SMTP id s11mr4785566wmd.72.1463766932574;
+ Fri, 20 May 2016 10:55:32 -0700 (PDT)
+Received: by 10.28.234.141 with HTTP; Fri, 20 May 2016 10:55:13 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295194>
 
-Vasco Almeida <vascomalmeida@sapo.pt> writes:
+I have spent the past year building an new open source robotics
+development platform and wanted to show you fine folks working on Git:
 
-> Alternatively, we could leave sed alone as it were before this patch and
-> use test_i18ngrep instead of grep to fake success under GETTEXT_POISON.
-> I think I prefer this way. What do you think?
+BowlerStudio: https://github.com/NeuronRobotics/BowlerStudio
 
-That is equivalent to saying that "we would translate 'lgf' to
-end-user's language", which does not make much sense to me.
+I started working a set of robotics control libraries back in 2009 and
+have deployed them as the control framework for MRI compatible robots.
 
-Wouldn't the introductory explanation, up to "Did you mean this?",
-be the only thing that is translated?
+Over the past year i began developing a set of tutorials for building
+robots using my framework. In this process i build a small scripting
+engine that uses Git as its file system. This allows scripts to
+hyperlink to each other based on the Git repository they live in.
+
+The platform supports Java/Groovy, Clojure, and Python scripts, and
+these scripts use an "Object in Object out" version of the Pipe
+pattern for interfacing. Since the JVM provides the common runtime,
+they can pass memory references back and forth in the pipe pattern as
+opposed to parsing and building stings. This lets any of the languages
+trivially interoperate together. If a script you want is in a
+different langauge hosted on a different Git repo, no problem just
+call it in line and the compiled and typed object is returned.
+
+Under the hood, JGIT, the same library eclipse uses to provide Git
+support, is the library that manages the local caches of files pulled
+from the Git repo. The scripting engine has features to commit changes
+and push them upstream. In the Tutorials, you look at spike examples
+in the WebBrowser (using GitHub Gist to JS embed the code), JGIT takes
+the Git URL extracted from the Gist, caches the repo to the disk, and
+makes it availible to the new user to run. From there the user can
+fork, modify, and publish changes to the demo code. In this way, all
+examples are executable right out of the built in browser for the
+fastest startup time with new code examples.
+
+The Application is used to connect cameras, robot controllers,
+kinematics libraries, CSG Cad engine, a physics engine and a few AI
+libraries all in a common runtime with a shallow on-ramp for even
+novice programmers.
+
+TL;DR Kerbal Space Program meets ROS on the JVM using Git as a filesystem
