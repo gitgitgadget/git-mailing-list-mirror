@@ -1,104 +1,78 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: Odd Difference Between Windows Git and Standard Git
-Date: Fri, 20 May 2016 18:12:47 +0200
-Message-ID: <5067f10f-a12e-c6e6-493b-5ff14dae4380@web.de>
-References: <nhlqd4$ekr$1@ger.gmane.org>
- <c07df4ac-08c9-8eaa-0233-06616945c857@web.de>
- <c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com>
- <ede1c113-1ab8-6043-3e39-bbacec5db31c@web.de>
- <xmqqy474g3cv.fsf@gitster.mtv.corp.google.com>
+From: Armin Kunaschik <megabreit@googlemail.com>
+Subject: Re: [PATCH] t0008: 4 tests fail with ksh88
+Date: Fri, 20 May 2016 18:14:36 +0200
+Message-ID: <CALR6jEgaHXAfh6137XYfouFbNL7SYSdrgE_+PSX=xiS8u-mNjQ@mail.gmail.com>
+References: <CALR6jEhviK9KZxR6R6xzkZ5EAO-RjWj3xYah_DOSDXhEjYsT-A@mail.gmail.com>
+	<xmqq37pchi90.fsf@gitster.mtv.corp.google.com>
+	<xmqqk2iog16g.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jon Forrest <nobozo@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri May 20 18:13:22 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 20 18:14:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3n38-0004La-9R
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 18:13:18 +0200
+	id 1b3n4U-0005UG-SM
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 18:14:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754277AbcETQNO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2016 12:13:14 -0400
-Received: from mout.web.de ([212.227.17.11]:51202 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754059AbcETQNN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 12:13:13 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0MORiL-1axzcb3iUv-005tKJ; Fri, 20 May 2016 18:12:48
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.1.0
-In-Reply-To: <xmqqy474g3cv.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:L6/yc+b2jcHILxvh7Y0ftWGDTwYFY+iVZP8uI/FpJsaDnkpQo2B
- rLgkK9DDoJwbuzL6qrlAJCFm4kL/Guqbu8bNm6RQYZQnZ6sKZtWyW6OxaDgO/oqe937BKb1
- pyKGuB086MNHBAwBvle1Ac1LXGz4rP5GcPbqkEC8pKh9kqH7mqY9hKs0XQhkH2w6CCKI8HC
- wRBJHqHc1JN1MqZHRl5Dg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:I+ox3fg9wJ4=:k2Y0UZp8Su+TRq+Z6ssPTe
- ws/+8cBvNtnCaF74x99d9eGWpADkK3EE3+lffJb0gqJIGvrBwF0URw8c8/NxW7uGpRjHRCP0l
- EQ3VNWvcAjkrH/nQ2ZhXNj/rSqZFFsEhfkb3Ol5YcH8RnFWkzhdDxSJM/w1fJPeH+uIwoPATE
- LY5QyCgJESMK6XRmGTJKM/GW3o8l11URAtrTLcHd4ealQQU0pAcue2dREm6qR6LdWpMIukx53
- UKM7HdoNTNCzF1zT39X0m9QtpaDRW28myMblsf7Ny7FKQU6lxO3g3TsRFsnbahVujQua+3wqc
- khYwWDrH6p5FOCpeMO8djz6E0eRxTz879P+TbsreQyos7u9B7QTkdscH783TfbrQ8myCUWNCa
- VvUTUJLfPfEFl17xMi0iEAVV7gIIiBDtwkDlhRHJaxxXottPP+lxX0F5yhV+kou/vTYIGErJ7
- qocRG547AOjgxfU3PGd8K+UYMBAfbBKct3OhlkzQ7RCVWDByNiwYyYwgfH3l4Nz4A4cwvRymu
- KAEDDtK1uxa/O9BHz+bGdLTFd6uHGPijEuehS8erA/rVRiFkRP2kw6B0R3guS5sG09yAZwD9g
- vNhO0aCPFneQYOoSK2hUnF0Ye2ZpWoFYJW09xclIjRePXyI1Kl0i6W9k1wJqkNyf0xKERpD/R
- BVsrc8LGE+pEbCZYjmSTNrgPQAFUxQqQvUaw4Qlwq3EqOFunIM5ZGk66cLSJCP7vI1E+Sq1fE
- zWQe2zErzmRcwn2tpyj/myGhMkhwNofojh0O4C6F4KPUj/oxGuxVHRQakk2HO7W6BSbCyyRi 
+	id S1755417AbcETQOi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 12:14:38 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:36310 "EHLO
+	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750881AbcETQOh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 12:14:37 -0400
+Received: by mail-yw0-f193.google.com with SMTP id u62so15410399ywe.3
+        for <git@vger.kernel.org>; Fri, 20 May 2016 09:14:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=TwJcj766vuvlyurCJHG4UbZj6HPY1iW/tlAMqSA/qTs=;
+        b=YduBt6PjHXOmvO2OWX9+6nijILIBB0E4ppxhpBsEZLMsmQdnGY7tcBHwDEPaQqsRqe
+         tQzFuCwRlllnUsAgS2epZ6BUU+yOTP5Qo2DlrXpF+iYruEMACm+4A8cqo/zOlBM3DGI6
+         nkCsGJYmhWrhlGGxLphuXwSlVDMY/CJXS5O7WZm3Iqkj60MfjBS/kDrGyMn6FhDZYfVS
+         CDSpc8sd/IOvUqt6HR3sgsX+gm33Fp3CBcW1X+qfdXNnWsPWmapMLTGNkNy5XRTBtU5S
+         CHiA+LZdH0QRk1TT81hfj6xUkqomnywhCGUtrEpmNMnq0d84OTeMQHfy97DusKlf9x4b
+         A6jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=TwJcj766vuvlyurCJHG4UbZj6HPY1iW/tlAMqSA/qTs=;
+        b=XaNkxxOSfOU8S5zEH+FXmvr0E8bfgh4ZbimVELmg68AIgOo8uwiBuDbMZsA00A2x9+
+         MrcIT5kdRAjf6bGVOjzCUwvRRuz4KuEUnQ+a7RzU1vQKOdC4ijEKkY/VCsSVIeAwMqUi
+         cla3j9Zhb0/1eDKtnukI09jb2CquHC3np33Ique+ZzyIKlCltZV4GjuFKpMj+iDYV2St
+         m0jl/Nbnh8tMEu3FqwmI8jbVT2CdOIQE7SgzBBctRWW+JOdILgL3YXKAJ7z6+TQwky9B
+         uk8B8Ab+uZhlT5O7o3egaOof/M3N7R58+/s6aE0RrDVQEubx3frfbfGyoMkmpjo6I+YF
+         KRXQ==
+X-Gm-Message-State: AOPr4FVZAELZXjXBq01Tlb0dgxO3V0gBROiEUUrkMKSWH7MfymyBxYiWkV6GWMQHdUqwLToFKbJ0ZdTV4PMQuA==
+X-Received: by 10.13.204.69 with SMTP id o66mr2423054ywd.168.1463760876665;
+ Fri, 20 May 2016 09:14:36 -0700 (PDT)
+Received: by 10.129.45.132 with HTTP; Fri, 20 May 2016 09:14:36 -0700 (PDT)
+In-Reply-To: <xmqqk2iog16g.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295182>
 
-On 20.05.16 17:23, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->>>> What does
->>>> git diff
->>>> say ?
->>>
->>> Great question. For all the unexpected files it says the
->>> same thing:
->>>
->>> old mode 100755
->>> new mode 100644
->>
->> So the solution is to run
->> git config  core.filemode false
->=20
-> Thanks for asking a great question.  I somehow expected that we
-> probe in init-db.c::create_default_files() for this when we probe
-> for case sensitivity, symlinks, etc., but apparently we don't.
->=20
-> I guess we don't because on some filesystems we can't.  IIRC, it
-> goes something like: chmod immediately followed by lstat pretends
-> that change to the executable bit stuck, until the in-core buffer at
-> the vfs layer is flushed to the disk platter that holds the
-> filesystem without any notion of executable bit.
+On Fri, May 20, 2016 at 6:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>>> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+>>> index 89544dd..b425f3a 100755
+>>> --- a/t/t0008-ignores.sh
+>>> +++ b/t/t0008-ignores.sh
+>>> @@ -605,7 +605,7 @@ cat <<-EOF >expected-verbose
+>>>         a/b/.gitignore:8:!on*   a/b/one
+>>>         a/b/.gitignore:8:!on*   a/b/one one
+>
+> The patch was whitespace-damaged and didn't apply, so I had to redo
+> it from scratch while updating the log message.  If this looks good
+> to you, there is no need to resend.
 
-We do the probing, when the repo is cloned, and then never again.
-If I clone the repo under Windows, the probing gives core.filemod false=
-=2E
-If I clone under Linux, the probing gives core.filemod true.
-
-Unfortunatly Git for Windows looks at core.filemode, when looking
-at the working tree, even if the stat() implementation never detects
-the executable bit.
-
-A fix could look like this:
-=20
-static int git_default_core_config(const char *var, const char *value)
-{
-	/* This needs a better name */
-	if (!strcmp(var, "core.filemode")) {
-#ifndef GIT_WINDOWS_NATIVE
-		trust_executable_bit =3D git_config_bool(var, value);
-#endif
-		return 0;
-	}
+Thanks. Looks like even Google Mail interface in plain text mode eats
+white spaces :-(
