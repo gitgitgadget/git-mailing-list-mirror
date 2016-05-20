@@ -1,72 +1,76 @@
-From: enrico <enrico.guiraud@gmail.com>
-Subject: more novice-friendly behaviour of =?utf-8?b?YGdpdA==?= add =?utf-8?b?LXBg?=
-Date: Fri, 20 May 2016 13:06:15 +0000 (UTC)
-Message-ID: <loom.20160520T150517-391@post.gmane.org>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: Odd Difference Between Windows Git and Standard Git
+Date: Fri, 20 May 2016 15:19:49 +0200
+Message-ID: <c07df4ac-08c9-8eaa-0233-06616945c857@web.de>
+References: <nhlqd4$ekr$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 15:10:39 2016
+To: Jon Forrest <nobozo@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 20 15:20:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3kCJ-000226-TT
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 15:10:36 +0200
+	id 1b3kLb-0000YI-6R
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 15:20:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755842AbcETNKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 09:10:12 -0400
-Received: from plane.gmane.org ([80.91.229.3]:43308 "EHLO plane.gmane.org"
+	id S1755955AbcETNUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 09:20:03 -0400
+Received: from mout.web.de ([212.227.15.3]:53480 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755798AbcETNKK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 09:10:10 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1b3kBp-0001gg-5W
-	for git@vger.kernel.org; Fri, 20 May 2016 15:10:05 +0200
-Received: from nancy.w2kroot.uni-oldenburg.de ([134.106.116.48])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 May 2016 15:10:05 +0200
-Received: from enrico.guiraud by nancy.w2kroot.uni-oldenburg.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 May 2016 15:10:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 134.106.116.48 (Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0)
+	id S1755777AbcETNUB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 09:20:01 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb003) with
+ ESMTPSA (Nemesis) id 0LbrTY-1bTDBo2yJg-00jHmY; Fri, 20 May 2016 15:19:56
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.1.0
+In-Reply-To: <nhlqd4$ekr$1@ger.gmane.org>
+X-Provags-ID: V03:K0:6Zl+/buXDeQmCG6hHVcIyscW1mXiOU5WfCVg8i4m/JPSawEURvD
+ QpeyiVqMd8dhhrh046J3/sqIhNCUM7PbEam4mWcq1opjnhnjaiGc0R0PsX7fJtVOFtWzcE4
+ KMYPUhPY2Jlef/Qj+5LsmtHGl9Yii6C7MQNCGvYk9gaE+CtUku9Pi0HwGm4dmu6NhJg2FPL
+ eY9+pNgizMEN7zmaMK9Ww==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Gli1MNEMY9M=:avk6vEtG+OIhcPTwbreO28
+ 14rPZMYVVhoF5MF+2c0Cy92pBov/JE1l+2yHMkdQlAh3C93dx4xUXIqKIvi7GgXrd+y9SoO5N
+ GkhG8yh10zu74rzoqfPuUAAqa6o7iWr80oPTS/VR8pKr1tfDraDjd8fTSMSwtHQCM9Ar+pjys
+ DwNuAFUcduh1xjpLHhBgKdabgxlWzaPpJc4wehlj71j/KjdeawILSPFSkp6hBb4FfrF8VhXSy
+ R5Xrx7e8Tzb5i5KgiYQkLkMXzIhKSPoBhcigtyFvywyd6SdvmnUPVgCuJp3yDRTY7v7GqyHZg
+ AMdIMLIU6QKapjSKu8TMcyhzsHRzqXcCYtRswPpkEX6fZFIraRrpZBolpc7GhsSXGD388qC4a
+ /3l8bo0F5+XL5c+EOG5t1XNycwqZp39Gm8GyxlpZS0zOpP93/9wSW20IkqY6WkSf2nHdmd3ti
+ u0PIvl9E+V9P7R8BaWios2o8KZorULzZZj4ULGm1fv3H2J6SBMudM1kJ8YcscCp7SQiAndqFD
+ Yo+iKWuwOEVB04y4Hh/IYT4FlQJ78/QoajGIlXpV0tHgGjgCJjaxK9Nh1vYaKswh4BQ0oBFtZ
+ JrR4AOp853yGzyA0kDy8w2YZ83iVvyx13Mdw1S7ywe8n4uvVl694f5qnkg0eCCKtgTTI5MVp8
+ 5TO/wcL6eOEVeq9h+5lBXlpBhIw/ER+c6bAPrAS0xVmUYZ+P7Z4a50UuTry9X0gkOQVaNY1Uh
+ 5n5KtMCdo9spwiWerd//jcBn3QTpOFFlQj3zG0sblLrPOulociz4Dnlk0peC+kE7e71SSMrp 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295163>
 
-Hello all,
-I have encountered a couple of non-necessary difficulties when editing a
-patch during a `git add -p`.
+On 20.05.16 03:48, Jon Forrest wrote:
+> I'm running Git version 2.8.2 built from source on Ubuntu 16.04.
+> I'm using a repository that's stored on Dropbox. I'm the only person
+> accessing this repo. Everything works great.
+> 
+> For reasons unrelated to Git, I decided to try Git for Windows,
+> so I installed "git version 2.8.2.windows.1" on Windows 10.
+> When I run 'git status' on Ubuntu the list I see is exactly what
+> I expect. However, when I run 'git status' on the
+> same Dropbox repo on Windows, I see what I expect plus I'm told
+> that every .pdf file and some .png files are modified.
+To bring at least a little light into the story:
 
-Firstly, the help message says
-"To remove '-' lines, make them ' ' lines (context)."
-which is a bit confusing because that "them" refers to '-', not to 'lines'.
-I spent a good half hour changing '-' lines to lines containing a single
-white space but git was not very happy about it.
-I would suggest to change that line with
-"To remove '-' lines, change '-' into ' ' (for context)"
+What does 
+git diff
+say ?
 
-Secondly, as discussed here
-(http://git.661346.n2.nabble.com/git-add-patch-bug-with-split-edit-td2171634.html)
-and in numerous stackoverflow questions, the behaviour of the "edit" (e)
-option during an interactive add is a bit...bizarre: it requires the user to
-do a lot of gymnastic if (s)he is editing a hunk after having used the split
-(s) option, and nine times out of ten the patch will not apply cleanly.
-I would suggest to change the behaviour of the interactive add to only allow
-edits when the hunk has not been split (possibly with a one-line explanation
-for why editing is not possible appearing when inside a split hunk). Since
-editing is more powerful than splitting this would not result in a loss of
-generality, but, in my humble opinion, in a much nicer experience for
-novices and experts alike.
+What does 
+git config -l | grep core
+say ?
 
-Best regards,
-enrico
+And what does
+git ls-files --eol
+say?
