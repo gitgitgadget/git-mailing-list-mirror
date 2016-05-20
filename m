@@ -1,73 +1,111 @@
-From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: Re: [PATCH 19/21] t9003: become resilient to GETTEXT_POISON
-Date: Fri, 20 May 2016 18:21:39 +0000
-Message-ID: <573F55B3.4080603@sapo.pt>
-References: <1463585274-9027-1-git-send-email-vascomalmeida@sapo.pt>
- <1463585274-9027-20-git-send-email-vascomalmeida@sapo.pt>
- <CAPig+cT3yf7D4xOmOhy5Y21qwHuA5Ny9ULEJhC1OBgrhiayQ3g@mail.gmail.com>
- <573E30C8.4070600@sapo.pt>
- <CAPig+cRo3tjt9N0YO8sNn90dL3dP0asfmKTr5rerS9YLO6QBtw@mail.gmail.com>
- <xmqqbn40fzu8.fsf@gitster.mtv.corp.google.com> <573F4BEC.7000906@sapo.pt>
- <xmqqoa80ei03.fsf@gitster.mtv.corp.google.com>
- <xmqqh9dsehl6.fsf@gitster.mtv.corp.google.com>
+From: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
+Subject: Re: run-command: output owner picking strategy
+Date: Fri, 20 May 2016 20:29:20 +0200 (CEST)
+Message-ID: <390486239.5813961.1463768960439.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <906110267.5791524.1463748828183.JavaMail.zimbra@ensimag.grenoble-inp.fr> <401208017.5792558.1463749910970.JavaMail.zimbra@ensimag.grenoble-inp.fr> <CAGZ79kZ1LTF4h_WVV9mMCAQCVtH667GU011LiRNtkTmi9ygUYw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 20 20:21:54 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
+	antoine queru <antoine.queru@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri May 20 20:22:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3p3Z-0000wF-5b
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 20:21:53 +0200
+	id 1b3p4X-0001lW-IB
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 20:22:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751038AbcETSVs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2016 14:21:48 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:50126 "EHLO sapo.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750918AbcETSVs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 14:21:48 -0400
-Received: (qmail 30741 invoked from network); 20 May 2016 18:21:45 -0000
-Received: (qmail 31064 invoked from network); 20 May 2016 18:21:45 -0000
-Received: from unknown (HELO [192.168.1.66]) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <avarab@gmail.com>; 20 May 2016 18:21:40 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-In-Reply-To: <xmqqh9dsehl6.fsf@gitster.mtv.corp.google.com>
+	id S1751167AbcETSWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 14:22:49 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:58184 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750893AbcETSWt (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2016 14:22:49 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 32377253C;
+	Fri, 20 May 2016 20:22:45 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Qs28iHnakAhY; Fri, 20 May 2016 20:22:45 +0200 (CEST)
+Received: from zm-int-mbx5.grenet.fr (zm-int-mbx5.grenet.fr [130.190.242.144])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 2108B252D;
+	Fri, 20 May 2016 20:22:45 +0200 (CEST)
+In-Reply-To: <CAGZ79kZ1LTF4h_WVV9mMCAQCVtH667GU011LiRNtkTmi9ygUYw@mail.gmail.com>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF46 (Linux)/8.0.9_GA_6191)
+Thread-Topic: run-command: output owner picking strategy
+Thread-Index: IMuv+mGj9QIUnC7u593drCcsTpNI/w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295201>
 
-=C0s 17:59 de 20-05-2016, Junio C Hamano escreveu:
-> As long as translators do not translate "Did you mean..." to begin a
-> line with a tab (which I do not think there is any reason to), it is
-> going to work reliably to grep for "^ lgf$" here, and it will catch
-> such a potential future bug under GETTEXT_POISON build.
+> When running in parallel we already may be out of order
+> (relative to serial processing). See the second example in the
+> commit message to produce a different order.
 
-Translations don't affect the tests since they're run with C locale.
-I think all tests source test-lib.sh which does:
+Right, I could (should) have understood that by myself.
+ 
+> Consider we scheduled tasks to be run in 3 parallel processes:
+> (As we NEEDSWORK comment only addresses the ouput selection,
+> let's assume this is a fixes schedule, which we cannot alter.
+> Which is true if we only change the code you quoted. That picks
+> the process to output.)
+> 
+> [...]
+ 
+> The output is produced by the current algorithm:
+> (1) Start with process 1 (A) whose output will be live
+> (2) Once A is done, flush all other done things, (B)
+> (3) live output will be round robin, so process 2 (D)
+> (4) Once D is done, flush all other done things (C, F, E)
+>     in order of who finshed first
+> 
+> 
+> (1) is uncontroversial. We have no information about tasks A,B,C,
+>     so pick a random candidate. We hardcoded process 1 for now.
+> 
+> (2) also uncontroversial IMHO. There is not much we can do different.
 
-	# For repeatability, reset the environment to known value.
-	# TERM is sanitized below, after saving color control sequences.
-	LANG=3DC
-	LC_ALL=3DC
-	PAGER=3Dcat
-	TZ=3DUTC
-	export LANG LC_ALL PAGER TZ
+Agreed
+ 
+> (3) is what this NEEDSWORK comment is about. Instead of outputting D
+>     we might have choosen C. (for $REASONS, e.g.: C is running longer than
+>     D already, so we expect it to finish sooner, by assuming
+>     any task takes the same expected time to finish. And as C
+>     is expected to finish earlier than D, we may have smoother
+>     output. "Less buffered bursts")
+> 
+> [...]
+> 
+> This seems to be better than the current behavior as we have more
+> different tasks with "live" output, i.e. you see stuff moving.
+> I made up the data to make the point though. We would need to use
+> live data and experiment with different strategies to find a
+> good/better solution.
 
-So, I'll remove sed command and use grep the way you said it, in the
-next re-roll.
+We should probably settle on what is the behavior we want to obtain, 
+before trying to find a strategy to implement (or approximate) it:
+- Do we want to be as close as possible to a serial processing output? 
+- Do we want to see as much live output as possible?
+
+I do not think that being close to serial processing is a relevant 
+behavior: we applied an arbitrary order to tasks when naming them for
+explanations (A, B, C...), but the tasks aren't really sorted in any
+way (and that's why the parallelization is relevant).Neither the user
+nor git have any interest in getting these ouputs in a specific order.
+
+Therefore, a "as much live output as possible" behavior would be more
+sensible. But I wonder: is there a worthy benefit in optimizing the
+output owner strategy? I'm not used to working with submodules, but I
+don't think that having a great number of submodules is a common thing.
+Basically: we could solve a problem, but is there a problem?
+I'm not trying to bury this NEEDSWORK, I'd be happy to look into it if
+need be!
