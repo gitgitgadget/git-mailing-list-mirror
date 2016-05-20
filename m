@@ -1,111 +1,77 @@
-From: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-Subject: Re: run-command: output owner picking strategy
-Date: Fri, 20 May 2016 20:29:20 +0200 (CEST)
-Message-ID: <390486239.5813961.1463768960439.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <906110267.5791524.1463748828183.JavaMail.zimbra@ensimag.grenoble-inp.fr> <401208017.5792558.1463749910970.JavaMail.zimbra@ensimag.grenoble-inp.fr> <CAGZ79kZ1LTF4h_WVV9mMCAQCVtH667GU011LiRNtkTmi9ygUYw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv9 4/4] pathspec: allow querying for attributes
+Date: Fri, 20 May 2016 11:31:13 -0700
+Message-ID: <xmqq4m9seg3y.fsf@gitster.mtv.corp.google.com>
+References: <20160519232323.12775-1-sbeller@google.com>
+	<20160519232323.12775-5-sbeller@google.com>
+	<xmqqbn41hbeq.fsf@gitster.mtv.corp.google.com>
+	<xmqqd1ogegtn.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZOmo6hh_trBJ_H5QRWgAxbP4JUu_KBUKeeKL1XsAwiOQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
-	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
-	antoine queru <antoine.queru@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri May 20 20:22:58 2016
+X-From: git-owner@vger.kernel.org Fri May 20 20:31:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3p4X-0001lW-IB
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 20:22:53 +0200
+	id 1b3pCj-0000Fx-7G
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 20:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751167AbcETSWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 14:22:49 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:58184 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750893AbcETSWt (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2016 14:22:49 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 32377253C;
-	Fri, 20 May 2016 20:22:45 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Qs28iHnakAhY; Fri, 20 May 2016 20:22:45 +0200 (CEST)
-Received: from zm-int-mbx5.grenet.fr (zm-int-mbx5.grenet.fr [130.190.242.144])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 2108B252D;
-	Fri, 20 May 2016 20:22:45 +0200 (CEST)
-In-Reply-To: <CAGZ79kZ1LTF4h_WVV9mMCAQCVtH667GU011LiRNtkTmi9ygUYw@mail.gmail.com>
-X-Originating-IP: [130.190.242.137]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF46 (Linux)/8.0.9_GA_6191)
-Thread-Topic: run-command: output owner picking strategy
-Thread-Index: IMuv+mGj9QIUnC7u593drCcsTpNI/w==
+	id S1751759AbcETSbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 14:31:17 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62724 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751291AbcETSbQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 14:31:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 784CF1DA98;
+	Fri, 20 May 2016 14:31:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=970IRWTT6WmLKKK3MZitRYBhQ6U=; b=jEG1C0
+	JfeD7gp0HDQlcWA+CCRDksuPOdg+a09wgfJAJK83gcRjoiLtn8VBEZ6L2sVHy1vy
+	ExoWStuDIlzbTdROn8COkCosldXuqkwfY6wAXuPVTHjKxQublZQ9rDoc4O7SAegF
+	XesP+FyXqGAgmfbTksXwMRJRDRIpERND0arsA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=R8AUUNGUZlX5k8L+rvPAe4DhWEVYTIX4
+	sVvpMHVfJy+FYqx1CmWxU8MfUoTfYpSgDMazUHUdAqzwne5ZBYEG9JhyuHRHWqRL
+	hAfKcuGlGxHCNoh+Fuw1E6Lm6lynz0ZzkSpElxZQjKbb//KEk/J3mP2/gAGakLY/
+	/S9reuXHYTQ=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6AD001DA96;
+	Fri, 20 May 2016 14:31:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CDFA01DA95;
+	Fri, 20 May 2016 14:31:14 -0400 (EDT)
+In-Reply-To: <CAGZ79kZOmo6hh_trBJ_H5QRWgAxbP4JUu_KBUKeeKL1XsAwiOQ@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 20 May 2016 11:21:40 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 08E7E48E-1EB9-11E6-8150-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295202>
 
-> When running in parallel we already may be out of order
-> (relative to serial processing). See the second example in the
-> commit message to produce a different order.
+Stefan Beller <sbeller@google.com> writes:
 
-Right, I could (should) have understood that by myself.
- 
-> Consider we scheduled tasks to be run in 3 parallel processes:
-> (As we NEEDSWORK comment only addresses the ouput selection,
-> let's assume this is a fixes schedule, which we cannot alter.
-> Which is true if we only change the code you quoted. That picks
-> the process to output.)
-> 
-> [...]
- 
-> The output is produced by the current algorithm:
-> (1) Start with process 1 (A) whose output will be live
-> (2) Once A is done, flush all other done things, (B)
-> (3) live output will be round robin, so process 2 (D)
-> (4) Once D is done, flush all other done things (C, F, E)
->     in order of who finshed first
-> 
-> 
-> (1) is uncontroversial. We have no information about tasks A,B,C,
->     so pick a random candidate. We hardcoded process 1 for now.
-> 
-> (2) also uncontroversial IMHO. There is not much we can do different.
+> I checked and it looks wrong. the "exclude" section is indented below
+> the new attr section
+> ...
+> I can resend with your proposed fixes as well.
 
-Agreed
- 
-> (3) is what this NEEDSWORK comment is about. Instead of outputting D
->     we might have choosen C. (for $REASONS, e.g.: C is running longer than
->     D already, so we expect it to finish sooner, by assuming
->     any task takes the same expected time to finish. And as C
->     is expected to finish earlier than D, we may have smoother
->     output. "Less buffered bursts")
-> 
-> [...]
-> 
-> This seems to be better than the current behavior as we have more
-> different tasks with "live" output, i.e. you see stuff moving.
-> I made up the data to make the point though. We would need to use
-> live data and experiment with different strategies to find a
-> good/better solution.
+If you do so, please make sure that the way tests check for error
+condition are consistent.  I personally do not think it adds any
+value to grep for "fatal", but I do not mind if you adjusted them to
+go the same test_i18ngrep route if you think it does (and if you
+agree that grepping is not necessary, please do not forget to update
+the tests you had that use test_i18ngrep).
 
-We should probably settle on what is the behavior we want to obtain, 
-before trying to find a strategy to implement (or approximate) it:
-- Do we want to be as close as possible to a serial processing output? 
-- Do we want to see as much live output as possible?
-
-I do not think that being close to serial processing is a relevant 
-behavior: we applied an arbitrary order to tasks when naming them for
-explanations (A, B, C...), but the tasks aren't really sorted in any
-way (and that's why the parallelization is relevant).Neither the user
-nor git have any interest in getting these ouputs in a specific order.
-
-Therefore, a "as much live output as possible" behavior would be more
-sensible. But I wonder: is there a worthy benefit in optimizing the
-output owner strategy? I'm not used to working with submodules, but I
-don't think that having a great number of submodules is a common thing.
-Basically: we could solve a problem, but is there a problem?
-I'm not trying to bury this NEEDSWORK, I'd be happy to look into it if
-need be!
+Thanks.
