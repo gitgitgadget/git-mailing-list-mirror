@@ -1,86 +1,104 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: Odd Difference Between Windows Git and Standard Git
-Date: Fri, 20 May 2016 16:19:25 +0200
-Message-ID: <ede1c113-1ab8-6043-3e39-bbacec5db31c@web.de>
-References: <nhlqd4$ekr$1@ger.gmane.org>
- <c07df4ac-08c9-8eaa-0233-06616945c857@web.de>
- <c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v6 05/17] ref-filter: move get_head_description() from branch.c
+Date: Fri, 20 May 2016 19:50:31 +0530
+Message-ID: <CAOLa=ZQOHFFS+j-AR2Nv66-QKt1umQbh0Q7=8-rmJ67pAnN7dQ@mail.gmail.com>
+References: <1463309133-14503-1-git-send-email-Karthik.188@gmail.com>
+ <1463309133-14503-6-git-send-email-Karthik.188@gmail.com> <xmqqtwhwv4kd.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Jon Forrest <nobozo@gmail.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 16:19:41 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 20 16:21:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3lH5-0000aa-Sf
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 16:19:36 +0200
+	id 1b3lIa-0001n2-Nk
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 16:21:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755023AbcETOTb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2016 10:19:31 -0400
-Received: from mout.web.de ([212.227.17.11]:62721 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753947AbcETOTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 10:19:30 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0LwHxK-1bdil60hDi-017zOs; Fri, 20 May 2016 16:19:26
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.1.0
-In-Reply-To: <c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com>
-X-Provags-ID: V03:K0:0cNzLOwSYOk5nBXVmSIsRh8TJQg7/tEBOuJ6GQhDA/4vRkBsilv
- jgMlXVv/8L6RguZxCTQRbOA5LLp4XDuFc5p4qwDhAUJW01qOdfsXI0xExcHQFtQLkg5Xk+8
- +YmZ3Cu0Y/fDhcQv0C0uhxZrP44N1l64rOaCe0E1aY3bcJEp3ab3UUydI4+nrQp0rwb7iiz
- b74hD6VALXFW5tQzntS6w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DwSyttQaPhY=:NwS6pk9056RjoyFI94ax0R
- rAWhql4D6g4QyOIaclkscjXon3hU5w72DWKupEUqtgqYbbjgW4hdfYSpvsmnAoRPBd4ZA4eMx
- LGdXxu+yikJRVIopniwUsZFPEN71gb6Z8WaxEwhRgr4rJw+dutM6hFoFQ0ukguAbYJgRl9qip
- wzVzyTQQ3lD1yuVG3/oSOYPjTcJci3hMl+ULh2Tm3jRabx/YbhlTWkzDvMFDT2xv5z3YhB/N4
- ccUfME3G1t03CXGQrwPZg69quVvBViL+nYqTNjsItG3l+g8YOqGFtKfCdQpGBp27Wy4w9eO0n
- SSJWcz5CaZq28nIxItOU8aErVG1UNEnP78kqvHahvmN3lBcXJgr+Z3XOs+ZCUwjOsQ7AzwhJn
- 8H5O7Oy6GAEN4xkFZQ6Wyn5dfuxlI4phmKXdi6yuXvCBX/yCd5e+lQ7s2avJHmq7Ejzyel0lT
- CQ5snYhVo29p/gfbRyB6FsZlmnAEVC4v8ROrt46ipX2W/Ol2y4wJr3beqOIWE0i7BPCQQ2crS
- qfjfNRynrtZ/dpk1L8EkGaoJ911IqD25mnV85NQj01S/v34BwYXxv93Ls5cOibJkOSHdeYYUB
- c/CttebtR/zjzggI7mvL/3gy8dhofUWRaS1e4+0REyBqqwHjjpyf2gVKXYatxuugjSUo7uU5+
- SrDX+wVy7vLg9ob57FaOSYNlcrUqZUgZLBhNUnWJ6pL0MFohxSnUqXQy70jubJTUcU3zjrYXQ
- TyipjYvqWkoXwG6WA5X2XXJJsqzHWewv3Sgt//hLKcp/tOfcusDlMaOeCrbxzckGb8AKHnHE 
+	id S1752902AbcETOVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 10:21:04 -0400
+Received: from mail-qg0-f65.google.com ([209.85.192.65]:36834 "EHLO
+	mail-qg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750937AbcETOVC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 10:21:02 -0400
+Received: by mail-qg0-f65.google.com with SMTP id z70so5282994qge.3
+        for <git@vger.kernel.org>; Fri, 20 May 2016 07:21:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=V/r5a5eKxq+yxSY2rcZzke3tz+p02ceKdxcGzNpNmmQ=;
+        b=xj7AvdjxWtj/i1+Qf3YPn93nNndGRVkodv61ic0qBui84fJCg2QQlaNv+NPW3cJani
+         fqvdpBG/pR8JgkFPZZiGeJYjWi0WMvA/gzdbV4yI28XtwkeL4TivRoCz18yLshHE92ft
+         hKRB2tBIBJ9qDzD5LwzpfPFnd16zBZVz8JJ98u2INrrWof9yDcD0w36KGcdlN+wv7CfX
+         tTfTkyi9QOe3pUxqezlt2dhzVwv6J6UX8tifZKiHKhfDQhYEfFoI/pMp/d2zkKh3wNcX
+         +DWKcFAOnc+G3k3lzoO0z0onubxmjfW8abKBhATz4Wwa/6EcRhswSc0DnmdSdkK3JSRj
+         tuUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=V/r5a5eKxq+yxSY2rcZzke3tz+p02ceKdxcGzNpNmmQ=;
+        b=ESTUuaijJSyj02hJUERjGzmwpZUFPyBSZqKeOfzszy4YK3TpRtSfOIUJUmzEDEoRQi
+         EmEumdzS584mfzYGjqL67viqnC/uIK4P7qxSiZ2nELllLF5dUGn6REvcVakWng4GSeop
+         ox0173o/11nanXyksML2HUt+2vtH3H/hvfZrjOe6ou758oEy+27mhqGnvceTXn8KvXLi
+         Lj6MZ4HXkwPqmQmStBh6+vKAhRapP0TYVFIIHYpJ96pNTuSfnv4EZ/4tlVt3O2hRi1S6
+         ayClAlqphPnQS1Oukr4CyaSowNKwzxeYWBeJNvu7qcgVosYzcu1RiMUjjdDMRVbOlqfk
+         GxuA==
+X-Gm-Message-State: AOPr4FU9LQRUMDwmpdNZglZ2Kk/2VG2rTTTzzz2jCS1iinyzDkkdSCm7H+Sv25DOnya7vbMNXVXrnNLsUSihpQ==
+X-Received: by 10.140.46.11 with SMTP id j11mr3536853qga.96.1463754060713;
+ Fri, 20 May 2016 07:21:00 -0700 (PDT)
+Received: by 10.140.92.178 with HTTP; Fri, 20 May 2016 07:20:31 -0700 (PDT)
+In-Reply-To: <xmqqtwhwv4kd.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295168>
 
-On 20.05.16 15:48, Jon Forrest wrote:
->=20
->=20
-> On 5/20/2016 6:19 AM, Torsten B=C3=B6gershausen wrote:
->> On 20.05.16 03:48, Jon Forrest wrote:
->>> I'm running Git version 2.8.2 built from source on Ubuntu 16.04.
->>> I'm using a repository that's stored on Dropbox. I'm the only perso=
-n
->>> accessing this repo. Everything works great.
->>>
->>> For reasons unrelated to Git, I decided to try Git for Windows,
->>> so I installed "git version 2.8.2.windows.1" on Windows 10.
->>> When I run 'git status' on Ubuntu the list I see is exactly what
->>> I expect. However, when I run 'git status' on the
->>> same Dropbox repo on Windows, I see what I expect plus I'm told
->>> that every .pdf file and some .png files are modified.
->> To bring at least a little light into the story:
->>
->> What does
->> git diff
->> say ?
->=20
-> Great question. For all the unexpected files it says the
-> same thing:
->=20
-> old mode 100755
-> new mode 100644
+>
+> Note that this expects that va/i18n-misc-updates topic, which
+> corrects the translator instruction around here, is already applied.
+>
+>> diff --git a/ref-filter.c b/ref-filter.c
+>> index 7d3af1c..fcb3353 100644
+>> ...
+>> +char *get_head_description(void)
+>> +{
+>> +     struct strbuf desc = STRBUF_INIT;
+>> +     struct wt_status_state state;
+>> +     memset(&state, 0, sizeof(state));
+>> +     wt_status_get_state(&state, 1);
+>> +     if (state.rebase_in_progress ||
+>> +         state.rebase_interactive_in_progress)
+>> +             strbuf_addf(&desc, _("(no branch, rebasing %s)"),
+>> +                         state.branch);
+>> +     else if (state.bisect_in_progress)
+>> +             strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
+>> +                         state.branch);
+>> +     else if (state.detached_from) {
+>> +             /* TRANSLATORS: make sure these match _("HEAD detached at ")
+>> +                and _("HEAD detached from ") in wt-status.c */
+>> +             if (state.detached_at)
+>> +                     strbuf_addf(&desc, _("(HEAD detached at %s)"),
+>> +                             state.detached_from);
+>> +             else
+>> +                     strbuf_addf(&desc, _("(HEAD detached from %s)"),
+>> +                             state.detached_from);
+>> +     }
+>
+> ... but the change is apparently lost.
+>
+> It is a good lesson not to blindly rebase things on 'next', which
+> would have unrelated changes.  If you needed es/test-gpg-tags topic
+> for the test script change, check out 'master', merge that single
+> topic, and then rebase the series on top of the result.
+>
 
-So the solution is to run
-git config  core.filemode false
+Lesson learned. Will do that from now on :)
+
+-- 
+Regards,
+Karthik Nayak
