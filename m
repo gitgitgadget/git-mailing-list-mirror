@@ -1,86 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Odd Difference Between Windows Git and Standard Git
-Date: Fri, 20 May 2016 08:23:44 -0700
-Message-ID: <xmqqy474g3cv.fsf@gitster.mtv.corp.google.com>
-References: <nhlqd4$ekr$1@ger.gmane.org>
-	<c07df4ac-08c9-8eaa-0233-06616945c857@web.de>
-	<c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com>
-	<ede1c113-1ab8-6043-3e39-bbacec5db31c@web.de>
+From: enrico <enrico.guiraud@gmail.com>
+Subject: Re: more novice-friendly behaviour of =?utf-8?b?YGdpdA==?= add =?utf-8?b?LXBg?=
+Date: Fri, 20 May 2016 15:32:54 +0000 (UTC)
+Message-ID: <loom.20160520T172851-785@post.gmane.org>
+References: <loom.20160520T150517-391@post.gmane.org> <xmqq7feohirb.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jon Forrest <nobozo@gmail.com>, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri May 20 17:23:59 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 20 17:33:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3mHI-0000eu-Ta
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 17:23:53 +0200
+	id 1b3mQT-0008Cm-6V
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 17:33:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755891AbcETPXt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2016 11:23:49 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61018 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755675AbcETPXs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2016 11:23:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A4F3116E89;
-	Fri, 20 May 2016 11:23:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=KlsRvh+zadMH
-	hcNt9z40WDv/sc0=; b=KavHRh5N4fDUuSzVnwpZr5qpooBQgJg3s8pS96Yt8fQw
-	uQMYO5C/AX3LmT/wm2Jan5bqLLqLdR/snyZojjdhXRlzdeW/3r3Li8qMiAtvXRrB
-	+ww4fK9XnqFB6ffbqvxiISxlKE1WXd+u8/U4RtA4G6/13Ruyz2Kirxc9ex91c04=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ABe3Iy
-	J8DhcW+0Iuvc+II6kGr3GjqIBQkJ4flp4pstqnR4WfR2f85EHWXJdchxLHiD6VAb
-	7AuQJkIHw6stVNHtZjaNro0qrfVA85/xixjy4XnZX60J+BmSiA5Ia1Uz5w92++YX
-	5zBJwhpjkGhMxNCiGfvZpYKQm9IlPgEiv7r6g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 840B816E88;
-	Fri, 20 May 2016 11:23:46 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DB9D216E87;
-	Fri, 20 May 2016 11:23:45 -0400 (EDT)
-In-Reply-To: <ede1c113-1ab8-6043-3e39-bbacec5db31c@web.de> ("Torsten
-	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Fri, 20 May 2016 16:19:25
- +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D803918E-1E9E-11E6-8740-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1754913AbcETPdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 11:33:16 -0400
+Received: from plane.gmane.org ([80.91.229.3]:39752 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753936AbcETPdQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 11:33:16 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1b3mQE-00080K-VY
+	for git@vger.kernel.org; Fri, 20 May 2016 17:33:07 +0200
+Received: from nancy.w2kroot.uni-oldenburg.de ([134.106.116.48])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 May 2016 17:33:06 +0200
+Received: from enrico.guiraud by nancy.w2kroot.uni-oldenburg.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 May 2016 17:33:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 134.106.116.48 (Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295176>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Junio C Hamano <gitster <at> pobox.com> writes:
 
->>> What does
->>> git diff
->>> say ?
->>=20
->> Great question. For all the unexpected files it says the
->> same thing:
->>=20
->> old mode 100755
->> new mode 100644
+> 
+> enrico <enrico.guiraud <at> gmail.com> writes:
+> 
+> > Hello all,
+> > I have encountered a couple of non-necessary difficulties when editing a
+> > patch during a `git add -p`.
+> >
+> > Firstly, the help message says
+> > "To remove '-' lines, make them ' ' lines (context)."
+> > which is a bit confusing because that "them" refers to '-', not to 'lines'.
+> 
+> I think that sentence refers to a line line this in a patch:
+> 
+>     -This is what the line used to be
+> 
+> as a '-'-line.  A line that does not change between preimage and
+> postimage have SP instead of '-' at the beginning, and the sentence
+> seems to refer to it as a ' '-line.  So from that reading, "turning
+> '-'-lines that you do not want to loes into ' '-lines" is perfectly
+> sensible phrasing.
+
+I agree it is, and that little dash would definitely make the message less
+ambiguous.
+Git has a way to "explain itself" to its users so that they can become
+better as they use it, and these sort of messages play a very important part
+in this learning process.
+
+> 
+> In any case, "edit" is about giving a low-level access and precise
+> control to people who are familiar with (1) what each line of "diff"
+> output means and (2) what is done to them by "patch" (rather, in
+> Git's context, "apply").
+> 
+> I agree with you that "edit" mode is a too-advanced tool for those
+> who are not comfortable with these two things.  A solution would
+> however not be to modify "edit" mode (which would affect those who
+> are prepared to and want to use the "low-level access and precise
+> control" to their advantage), but to introduce an easier-to-use,
+> and perhaps a bit limited for safety, mode for those who are not the
+> target audience for "edit" mode.
+> 
+> The "split" subcommand to split the hunk before applying was an
+> attempt to go in that direction; it never allows you the user to
+> make an arbitrary change to corrupt the patch and make it unusable.
+> Perhaps you can mimick its spirit and come up with a new "guarded
+> edit" command?
 >
-> So the solution is to run
-> git config  core.filemode false
 
-Thanks for asking a great question.  I somehow expected that we
-probe in init-db.c::create_default_files() for this when we probe
-for case sensitivity, symlinks, etc., but apparently we don't.
-
-I guess we don't because on some filesystems we can't.  IIRC, it
-goes something like: chmod immediately followed by lstat pretends
-that change to the executable bit stuck, until the in-core buffer at
-the vfs layer is flushed to the disk platter that holds the
-filesystem without any notion of executable bit.
+I am not sure we are talking about the same issue. I am not pointing out
+that git is unsafe to less-than-very-expert users.
+Much more trivially, I am saying that the current behaviour of the "edit"
+mode, when coupled with hunk splitting, is needlessly frustrating (because
+of the issue described in the link I provided in my previous message).
+That's why I would argue that git would help wanna-be-experts better if
+it told them, in some way, that editing after splitting is generally a bad idea.
+Advanced users would not be bothered by this
+warning/lack-of-edit-after-splitting because, I think, they don't do it
+anyway. They already know it
+is a pain, so they either split or edit.
