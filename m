@@ -1,86 +1,114 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.8.3
-Date: Fri, 20 May 2016 17:06:58 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605201706500.4122@virtualbox>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t0008: 4 tests fail with ksh88
+Date: Fri, 20 May 2016 08:16:43 -0700
+Message-ID: <xmqq37pchi90.fsf@gitster.mtv.corp.google.com>
+References: <CALR6jEhviK9KZxR6R6xzkZ5EAO-RjWj3xYah_DOSDXhEjYsT-A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1022897964-1463756834=:4122"
-To: git-for-windows@googlegroups.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 17:07:29 2016
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: Armin Kunaschik <megabreit@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri May 20 17:16:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3m1K-0004p6-PT
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 17:07:23 +0200
+	id 1b3mAa-0003Xl-DO
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 17:16:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755786AbcETPHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 11:07:16 -0400
-Received: from mout.gmx.net ([212.227.15.19]:60839 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754753AbcETPHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 11:07:14 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MS5QA-1b9qqa3Vne-00THFO; Fri, 20 May 2016 17:07:10
- +0200
-X-X-Sender: virtualbox@virtualbox
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:zjCAGwy365ou0PF2a6Nlih4l1CUq9scVNVc5GWNxIlAoihoaShg
- 7KT83jDnKx0RjywpUGiwa6XcchSTZy1AsM6Z1xHBrU9iZGj3AGmOAsfZXKVcOvxkQXm67Dm
- obdhhD41ugPbZkkHhprAPpLJZZ2cJDTen/a5RJ8E00ev/pcvIRs/cJB/9k1MQEQd8D+fKLt
- WeWLS5TWB0sabr9LN5+FA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HUVzJGJRwjk=:RsLH2Lm3fwPV+Y29OE8Ekb
- BNJLIc31ISlN5IeD9gjnEBSYLfMfn1dUfzF0DA/o0FFBUeLu7C9OUWHfH9QVLdOHGciL1PA3w
- FUq3rdc1hCYpBcyNVEhJA5SMGNVFivfrYlsh3wV+4LUs9iEqlU2eG3hQwKDFG3BtPLORJJpM5
- /qX7bWddjx1PJ/oYPgUk/65gLXI2yN9HiZkkKYdISS++dGidaI42R6zpzQsdJEkuED6xC8bh4
- nvZrFUqp9H5DTCzuI8PoSEbVHqMDtWefc1UyS/QzD/8/1mEgkS9ZmWaWhEAnnznH0SVrMX1ql
- T2hYPc0pD4FeHEJyxTFyKAQOBkb81aCjPfVXNCJkIK5OfQi3v0JWRPCtjfyBXSmTWgex+Z/QD
- BPoboz8gOS/dFQsV4dSiFVqzSzP6pGZ++wrmtkZpeNAebK12jMnr7xmg4Bvu1s2SgyUOP3hDZ
- JvVx3kJNMx6FHOmC//oXoGKpvD0Hu4cokqTiow7uYw36aCsCs743GFJ1/fZ0RdNKgQ5KmqcWP
- U4ixgWMDJXT/e+jU1sgL1Z3UX0wXeUfw+cDQm72CW3uX3c5tOiusKa0yLIrnnMVu+b5/dImrl
- DFK5+NLOU8BIS984Vy/ks/ChLNLXnU/aaSYLTfyfnrrQUHoJ8t84QjTQkQ8EI2oWQjRmy4Cl6
- U/HtCOG3AoTWp/xFzcdTnLfD/8RuwRJlH3wViBclRHgv0jj8PIWdH5+R0fDKLycdwajaIoUnL
- 9m61afU6+avkp+0aledeSgm+omi4dNwItvSLNyGeqnl4O90tBiO176TbLj2inKC308OcpNpK 
+	id S1754545AbcETPQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 11:16:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56195 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752568AbcETPQv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 11:16:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 393C81BBB3;
+	Fri, 20 May 2016 11:16:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zQg4XRYqlRCmu37rLrw5xd57BAA=; b=jdoR9z
+	e/GE631gu0NgBy1lBwXYdPxBLGmbuHbA7HiyZdINfDb6FAo9KwG8Ev1/WQdI2YGT
+	ACwViqVCvsZqh92jEb74MTZ4GEFvfcKtCna/FhDW9ioXCm6UrW1oZI9FKSMUQgkz
+	DeMZW1fzkDI1Yfb/aoiq0yYx9lO27GtfGOMRM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oH4lrLqUSA2wj6jeQmAoEhXTq0bLIBd7
+	xsxr5FeQKAbQY61RFDAn/cmWNGQKk+ma5SRtYkQO5vYQEGSX5q05qOF9rR30TVDo
+	KPWeg6ckcF0nwgVqBnY7dNTuqgLz+3cZqW6VJ01pddSjD8cYnRBi373MhU1weyEJ
+	xL0tY0f1Z2Y=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F3411BBAF;
+	Fri, 20 May 2016 11:16:45 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A8EC11BBAA;
+	Fri, 20 May 2016 11:16:44 -0400 (EDT)
+In-Reply-To: <CALR6jEhviK9KZxR6R6xzkZ5EAO-RjWj3xYah_DOSDXhEjYsT-A@mail.gmail.com>
+	(Armin Kunaschik's message of "Fri, 20 May 2016 16:31:30 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DCF39816-1E9D-11E6-AEF2-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295174>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Armin Kunaschik <megabreit@googlemail.com> writes:
 
---8323329-1022897964-1463756834=:4122
-Content-Type: text/plain; charset=X-UNKNOWN
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> From: Armin Kunaschik <megabreit@googlemail.com>
+>
+> \" in the test t0008 is not treated the same way in bash and in ksh.
 
-Dear Git users,
+Could you refrain from singling out "bash"?  We don't write for
+"bash" specifically (and the test I ran are with "dash" before I
+push things out).
 
-It is my pleasure to announce that Git for Windows 2.8.3 is available from:
+Ideally, if you can try ksh93 and if you find out that ksh93 works,
+then the above can be made in line with your "Subject" to mark ksh88
+as broken (as opposed to other POSIX shells)?  That would help us by
+reminding that running test fine with ksh93 is not a sufficient
+check to make sure we didn't break ksh88 users.
 
-=09https://git-for-windows.github.io/
+> In ksh the \ disappears and generates false expect data to
+> compare with.
+> Using \\" works portable, the same way in bash and in ksh and
+> is less ambigous.
 
-Changes since Git for Windows v2.8.2 (May 3rd 2016)
+All of the above would need s/ksh/&88/g; I'd think.  I just tried
 
-New Features
+	make SHELL_PATH=/bin/ksh93
+        cd t && /bin/ksh93 t0008-*.sh
 
-  =E2=80=A2 Comes with Git v2.8.3.
+and this patch is not necessary for ksh93.
 
-Filename | SHA-256
--------- | -------
-Git-2.8.3-64-bit.exe | 5b26be59b9e289351338befe7f2f185011bc057c63515afb9d29=
-d3744cc68e6b
-Git-2.8.3-32-bit.exe | 428a1765cfbadd88b767b779823dfeae134dcbe43170740b088f=
-fad2cdb4be4b
-PortableGit-2.8.3-64-bit.7z.exe | 5db28a49b014e99435b9a238527a6efeaecb6648e=
-b803a451357505407bc297c
-PortableGit-2.8.3-32-bit.7z.exe | de52d070219e9c4ec1db179f2adbf4b760686c318=
-0608f0382a1f8c7031e72ad
-Git-2.8.3-64-bit.tar.bz2 | 7fb5237c6ed2fe379bdec02b35649573e928c23b196773fd=
-e952f9ae45aec345
-Git-2.8.3-32-bit.tar.bz2 | b70218f9ab677a63d366dfa89ae5bdbee34849529d9f2ce4=
-a09d91f7669a0b44
+> Acked-by: Jeff King <peff@peff.net>
 
-Ciao,
-Johannes
---8323329-1022897964-1463756834=:4122--
+I didn't see him acking this exact version, so if you didn't include
+this line here, I would have missed it.  Thanks.
+
+> Signed-off-by: Armin Kunaschik <megabreit@googlemail.com>
+> ---
+> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+> index 89544dd..b425f3a 100755
+> --- a/t/t0008-ignores.sh
+> +++ b/t/t0008-ignores.sh
+> @@ -605,7 +605,7 @@ cat <<-EOF >expected-verbose
+>         a/b/.gitignore:8:!on*   a/b/one
+>         a/b/.gitignore:8:!on*   a/b/one one
+>         a/b/.gitignore:8:!on*   a/b/one two
+> -       a/b/.gitignore:8:!on*   "a/b/one\"three"
+> +       a/b/.gitignore:8:!on*   "a/b/one\\"three"
+>         a/b/.gitignore:9:!two   a/b/two
+>         a/.gitignore:1:two*     a/b/twooo
+>         $global_excludes:2:!globaltwo   globaltwo
+> @@ -686,7 +686,7 @@ cat <<-EOF >expected-all
+>         a/b/.gitignore:8:!on*   b/one
+>         a/b/.gitignore:8:!on*   b/one one
+>         a/b/.gitignore:8:!on*   b/one two
+> -       a/b/.gitignore:8:!on*   "b/one\"three"
+> +       a/b/.gitignore:8:!on*   "b/one\\"three"
+>         a/b/.gitignore:9:!two   b/two
+>         ::      b/not-ignored
+>         a/.gitignore:1:two*     b/twooo
