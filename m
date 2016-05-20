@@ -1,99 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv9 4/4] pathspec: allow querying for attributes
-Date: Thu, 19 May 2016 16:32:13 -0700
-Message-ID: <xmqqbn41hbeq.fsf@gitster.mtv.corp.google.com>
-References: <20160519232323.12775-1-sbeller@google.com>
-	<20160519232323.12775-5-sbeller@google.com>
+From: Jon Forrest <nobozo@gmail.com>
+Subject: Odd Difference Between Windows Git and Standard Git
+Date: Thu, 19 May 2016 18:48:18 -0700
+Message-ID: <nhlqd4$ekr$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: pclouds@gmail.com, git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri May 20 01:32:36 2016
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 20 03:48:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3XQg-0002fZ-Jx
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 01:32:34 +0200
+	id 1b3ZYH-0002L6-CU
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 03:48:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754904AbcESXcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2016 19:32:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60680 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753942AbcESXcR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2016 19:32:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7BD231C7A6;
-	Thu, 19 May 2016 19:32:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=f74Vd4YVUb3F3HqxcyeF10CQzgI=; b=UvsVAL
-	hFlBixvz+UO6+Lmg5yjz9tyZ5BsS474mwIFlHBLPEa2+nHyV1wAtudnWCkhiiHkR
-	lLwB7rPJsMJzJHfRQK3JCBjMIWDbYiHDdiR+u6GVVTsQsSVQ70Nrb9gxIJtxmuUt
-	5PcjbS8Se0UCPz+HMdieGjaXm7tqUhd88vBj0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qXyYkp7YYiwFB7I5e7TFobj20eAWuHRk
-	/yQ3DdYWhS0rwJh1rq82K8vvUePgCpOdwLCHDWGCEB5cuTFk+NkfGno7Ul+m6hRH
-	mO9J80JZoB+/N/99OTd/HYmxRCVmTyugJDJxgyky4OZHN4y1whKW0Lbf8OpiiVlM
-	34QfKflvcoc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 719F81C7A4;
-	Thu, 19 May 2016 19:32:16 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D89C21C7A3;
-	Thu, 19 May 2016 19:32:15 -0400 (EDT)
-In-Reply-To: <20160519232323.12775-5-sbeller@google.com> (Stefan Beller's
-	message of "Thu, 19 May 2016 16:23:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EBB6AD72-1E19-11E6-A15E-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1753693AbcETBs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2016 21:48:29 -0400
+Received: from plane.gmane.org ([80.91.229.3]:39262 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753342AbcETBs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2016 21:48:28 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1b3ZYA-0002IY-Gn
+	for git@vger.kernel.org; Fri, 20 May 2016 03:48:26 +0200
+Received: from c-71-202-183-39.hsd1.ca.comcast.net ([71.202.183.39])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 May 2016 03:48:26 +0200
+Received: from nobozo by c-71-202-183-39.hsd1.ca.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 May 2016 03:48:26 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: c-71-202-183-39.hsd1.ca.comcast.net
+X-Mozilla-News-Host: news://www.gmane.org:119
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295135>
 
-Stefan Beller <sbeller@google.com> writes:
+I'm running Git version 2.8.2 built from source on Ubuntu 16.04.
+I'm using a repository that's stored on Dropbox. I'm the only person
+accessing this repo. Everything works great.
 
-> +attr;;
-> +After `attr:` comes a space separated list of "attribute
-> +...
-> ++
+For reasons unrelated to Git, I decided to try Git for Windows,
+so I installed "git version 2.8.2.windows.1" on Windows 10.
+When I run 'git status' on Ubuntu the list I see is exactly what
+I expect. However, when I run 'git status' on the
+same Dropbox repo on Windows, I see what I expect plus I'm told
+that every .pdf file and some .png files are modified.
 
-The text looks OK, but does it format well?
+I'm guessing that this is caused by some mishandling of
+binary files. Is this behavior to be expected? If so, is there
+something I can do to have the output on Windows be the
+same as on Ubuntu? I'm aware of 'git update-index --assume-unchanged'
+but this seems harsh.
 
-> +		attr_len = strcspn(attr, "=");
+I copied the repo to a non-Dropbox location, just in case
+it was Dropbox that was causing the problem, but this didn't
+make any difference.
 
-Scanning for '=' here retains the same bug from the previous
-iteration where you take !VAR=VAL and silently ignore =VAL part
-without diagnosing the error, doesn't it?
+(If you want to try this yourself, try it on the ProGit2
+book source on Github).
 
-Perhaps strlen(attr) here, and...
-
-> +		switch (*attr) {
-> +		case '!':
-> +			am->match_mode = MATCH_UNSPECIFIED;
-> +			attr++;
-> +			attr_len--;
-> +			break;
-> +		case '-':
-> +			am->match_mode = MATCH_UNSET;
-> +			attr++;
-> +			attr_len--;
-> +			break;
-> +		default:
-> +			if (attr[attr_len] != '=')
-> +				am->match_mode = MATCH_SET;
-> +			else {
-> +				am->match_mode = MATCH_VALUE;
-> +				am->value = xstrdup(&attr[attr_len + 1]);
-> +				if (strchr(am->value, '\\'))
-> +					die(_("attr spec values must not contain backslashes"));
-> +			}
-> +			break;
-> +		}
-
-... doing strcspn() only in default: part would be a quick fix.
+Thanks,
+Jon Forrest
