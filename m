@@ -1,135 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Armin Kunaschik <megabreit@googlemail.com>
 Subject: Re: [PATCH] t0008: 4 tests fail with ksh88
-Date: Fri, 20 May 2016 09:10:47 -0700
-Message-ID: <xmqqk2iog16g.fsf@gitster.mtv.corp.google.com>
+Date: Fri, 20 May 2016 18:11:45 +0200
+Message-ID: <CALR6jEj=Nd6K8poP=G+n_5dZfAGaZLqmnOV0EuSJ9aE5LNniEQ@mail.gmail.com>
 References: <CALR6jEhviK9KZxR6R6xzkZ5EAO-RjWj3xYah_DOSDXhEjYsT-A@mail.gmail.com>
 	<xmqq37pchi90.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Armin Kunaschik <megabreit@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri May 20 18:10:56 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 20 18:11:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3n0q-0002cA-08
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 18:10:56 +0200
+	id 1b3n1l-0003FO-Kl
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 18:11:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754907AbcETQKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 12:10:51 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62640 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751699AbcETQKv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 12:10:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A099C194D6;
-	Fri, 20 May 2016 12:10:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N1KPhsQPS8xqASgyvF/hMbGsoSU=; b=Em0rzm
-	J6C/O27SHweZG05AxRgW2/P4gSwBQZkCWkZd7PaIR+Gk8Xet3CXLH+imAtlRYwOX
-	eIL4oByXmcy50HgcT3SQymhEgQFWjSoRGBGGQBHmp8yisO/soeAyWV/BnvvUMHYw
-	+ZnsmN72KbIhmh+8AVD/RUlKoyCqvB328BVWg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xYc1NTm5lUzs373BkeOshVGL5hGtNuOu
-	KhERCr6dHAp8ikF50js2IJe5dIdpgq+s6s21mh5pseugouSuu87QDuIQEII9NGWD
-	AyQOcL4fTwb63EXSGrlNSTo6UyRgpwSK+cZH3d06ATCvOyxOBYKUgrVXekCgdqKg
-	Dr3Kx11ZUh8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9892E194D5;
-	Fri, 20 May 2016 12:10:49 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0D3FF194D4;
-	Fri, 20 May 2016 12:10:48 -0400 (EDT)
-In-Reply-To: <xmqq37pchi90.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 20 May 2016 08:16:43 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6ABE5260-1EA5-11E6-AE99-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1754231AbcETQLr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 12:11:47 -0400
+Received: from mail-yw0-f173.google.com ([209.85.161.173]:34285 "EHLO
+	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752769AbcETQLq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 12:11:46 -0400
+Received: by mail-yw0-f173.google.com with SMTP id j74so113745646ywg.1
+        for <git@vger.kernel.org>; Fri, 20 May 2016 09:11:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=bLEuFc2ttylazFQwcMF9u4PBDQJ9CJubHyPnQcvo8iQ=;
+        b=vAIcnRh7iOJoz+fRwcgWXYcQ7dbdKsamjDboAH4fTwLDkNI8Rflrudp/biOpdHF3Gz
+         NznmEa3/IaVo7j7M+IR9E2raa4d6eJJCvZdPheL3WToEhJF4wfhZLcZAJHyQLMv4RE3K
+         xnQxuP+yWDZR8cexOB3mZQ2FiJ2k3xBSUvBEZAtAqUc5GlaOzv1zA7GyHjKT2NBWDv28
+         HRmGjz8V1syaUSW50xcixYFBMw9Fqg5/mI6z9p/6sIgSp1+oP57WZ9YQO1gCtmOOUmvQ
+         NVRAd4deyGXD1VGoO0/dzbHTQe7oIo25ILSwp7ftLjoE+nnYVzVtLwdPlvLykrqzII6N
+         xvZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=bLEuFc2ttylazFQwcMF9u4PBDQJ9CJubHyPnQcvo8iQ=;
+        b=nEaYmu1R1O7pG/nQ5Tuy0SACREzNdA1PhXUuAt/eX7o3US8pYhU/RV+kqg+vzsCMCa
+         mnSdNoeOohEUcWTPMnZMaFfXEgKa7VOMD/Brz+NB+XSw9aC9g7v0CLy22cx4guInhFll
+         E9OdglHueWNvY4CQg2n9OeYSYP/AafXD8U9ASLBk93eipvqJIrhlLC8lJpS2/UH2bVVA
+         b/WKiqUsUMOaNhILod4+2MT9HtAI5VIDXu0FRas0qIzmoNz6Foi0lNt29yCFA+pS4gRR
+         lC/LF9KGmMrHNoKR769t7st1kz31QJP6mcVYZy4gHkjAegQ+ApAX20MPmoneC16mQI5x
+         D4mA==
+X-Gm-Message-State: AOPr4FUdW1aEYXVq6yjcZNTwhJJDOPMKjKvNEMiCE6AGj4e7DEPlwv3GQXLo7xhHjfIW69ciFx8I/X9pLyBA5w==
+X-Received: by 10.37.122.69 with SMTP id v66mr2438640ybc.68.1463760705895;
+ Fri, 20 May 2016 09:11:45 -0700 (PDT)
+Received: by 10.129.45.132 with HTTP; Fri, 20 May 2016 09:11:45 -0700 (PDT)
+In-Reply-To: <xmqq37pchi90.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295180>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, May 20, 2016 at 5:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Armin Kunaschik <megabreit@googlemail.com> writes:
+>
+>> From: Armin Kunaschik <megabreit@googlemail.com>
+>>
+>> \" in the test t0008 is not treated the same way in bash and in ksh.
+>
+> Could you refrain from singling out "bash"?  We don't write for
+> "bash" specifically (and the test I ran are with "dash" before I
+> push things out).
+I can name it "other shells" if this is more comfortable. But I tested
+this only with bash and ksh88 on AIX.
 
->> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
->> index 89544dd..b425f3a 100755
->> --- a/t/t0008-ignores.sh
->> +++ b/t/t0008-ignores.sh
->> @@ -605,7 +605,7 @@ cat <<-EOF >expected-verbose
->>         a/b/.gitignore:8:!on*   a/b/one
->>         a/b/.gitignore:8:!on*   a/b/one one
+> Ideally, if you can try ksh93 and if you find out that ksh93 works,
+> then the above can be made in line with your "Subject" to mark ksh88
+> as broken (as opposed to other POSIX shells)?  That would help us by
+> reminding that running test fine with ksh93 is not a sufficient
+> check to make sure we didn't break ksh88 users.
+>
+>> In ksh the \ disappears and generates false expect data to
+>> compare with.
+>> Using \\" works portable, the same way in bash and in ksh and
+>> is less ambigous.
+>
+> All of the above would need s/ksh/&88/g; I'd think.  I just tried
+>
+>         make SHELL_PATH=/bin/ksh93
+>         cd t && /bin/ksh93 t0008-*.sh
+>
+> and this patch is not necessary for ksh93.
+Yes, the patch is not necessary with ksh93 on AIX, but it works :-)
+The patch is targeting "ksh" on AIX (which actually is a ksh88).
 
-The patch was whitespace-damaged and didn't apply, so I had to redo
-it from scratch while updating the log message.  If this looks good
-to you, there is no need to resend.
+In the discussion Jeff took a look into the POSIX specification
+and described the behavior like this:
 
-Thanks.
+<snip>
+I think either is reasonable (there is no need to backslash-escape a
+double-quote inside a here-doc, but one assumes that backslash would
+generally have its usual behavior). I'm not quite sure how to interpret
+POSIX here (see below), but it seems clear that spelling it with two
+backslashes as you suggest is the best bet.
+<snip>
 
--- >8 --
-From: Armin Kunaschik <megabreit@googlemail.com>
-Date: Fri, 20 May 2016 16:31:30 +0200
-Subject: [PATCH] t0008: 4 tests fail with ksh88
+I'd not declare ksh88 on AIX broken just because of this ambiguity
+since it is not 100% clear in the POSIX description.
 
-In t0008, we have
-
-	cat <<-EOF
-	...
-	a/b/.gitignore:8:!on*	"a/b/one\"three"
-	...
-	EOF
-
-ane expect that the backslash-dq is passed through literally.
-
-ksh88 eats \ and generates a wrong expect data to compare with.
-
-Using \\" works this around without breaking other POSIX shells
-(which collapse backslash-backslash to a single backslash), and
-ksh88 does so, too.
-
-It makes it easier to read, too, because the reason why we are
-writing backslash there is *not* because we think dq is special and
-want to quote it (if that were the case we would have two more
-backslashes on that line).  It is simply because we want a single
-literal backslash there.  Since backslash is treated specially in
-unquoted here-document, explicitly doubling it to quote it expresses
-our intent better than relying on the character that immediately
-comes after it (i.e. '"') not being a special character.
-
-Signed-off-by: Armin Kunaschik <megabreit@googlemail.com>
-Acked-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t0008-ignores.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index 89544dd..b425f3a 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
-@@ -605,7 +605,7 @@ cat <<-EOF >expected-verbose
- 	a/b/.gitignore:8:!on*	a/b/one
- 	a/b/.gitignore:8:!on*	a/b/one one
- 	a/b/.gitignore:8:!on*	a/b/one two
--	a/b/.gitignore:8:!on*	"a/b/one\"three"
-+	a/b/.gitignore:8:!on*	"a/b/one\\"three"
- 	a/b/.gitignore:9:!two	a/b/two
- 	a/.gitignore:1:two*	a/b/twooo
- 	$global_excludes:2:!globaltwo	globaltwo
-@@ -686,7 +686,7 @@ cat <<-EOF >expected-all
- 	a/b/.gitignore:8:!on*	b/one
- 	a/b/.gitignore:8:!on*	b/one one
- 	a/b/.gitignore:8:!on*	b/one two
--	a/b/.gitignore:8:!on*	"b/one\"three"
-+	a/b/.gitignore:8:!on*	"b/one\\"three"
- 	a/b/.gitignore:9:!two	b/two
- 	::	b/not-ignored
- 	a/.gitignore:1:two*	b/twooo
--- 
-2.8.3-625-g89e3711
+Armin
