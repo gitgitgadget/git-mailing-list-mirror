@@ -1,244 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 1/2] http.c: implement the GIT_TRACE_CURL environment variable
-Date: Fri, 20 May 2016 13:39:06 -0700
-Message-ID: <xmqqlh34cvmd.fsf@gitster.mtv.corp.google.com>
-References: <20160520103708.38308-1-gitter.spiros@gmail.com>
-	<20160520103708.38308-2-gitter.spiros@gmail.com>
+From: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
+Subject: [PATCH v2] pull: warn on --verify-signatures with --rebase
+Date: Fri, 20 May 2016 23:00:54 +0200
+Message-ID: <20160520210054.GA1856@netblarch.fritz.box>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, tboegi@web.de, ramsay@ramsayjones.plus.com,
-	sunshine@sunshineco.com, peff@peff.net
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 20 22:39:19 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 20 22:50:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3rCV-000222-OV
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 22:39:16 +0200
+	id 1b3rNX-0003fG-1Q
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 22:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263AbcETUjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 16:39:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54608 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750961AbcETUjK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 16:39:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E45E1BC3B;
-	Fri, 20 May 2016 16:39:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R5SrQbbPr33jZlxXIl7aEVH76dA=; b=EV92w+
-	rcXhtxwu2iZ41l/tOuiPoKomHYnItBpHY5Q88pFtWduEcFv8fjJjoeXapkyFX3bm
-	lkGYv4Y2/i63axLfSZ8gqOPBZEktnwGNHYyyv3T+WkqGFKIFat7KwL1FsVaFFjQf
-	h6+cuK7gdj1CMjol2mPmd4zhkurTP9ykmqL0Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=j5GMYR5LeAFGT+s4vRWus8z9Why/xLad
-	bjxNLJVEkIPzgBsOXktNu4i8n6WNfeQwQe+xgJrf5qpoLc4/Ym0TBMexulnw7qp0
-	ps7X78y/ZcmaebVwAD7ri1C4+9PY0dEW2SUlC2GRVhKN+3Mz4jfapxWd0nzG4/OV
-	3CjcFmDvoZM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 145DB1BC3A;
-	Fri, 20 May 2016 16:39:09 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 51E4F1BC39;
-	Fri, 20 May 2016 16:39:08 -0400 (EDT)
-In-Reply-To: <20160520103708.38308-2-gitter.spiros@gmail.com> (Elia Pinto's
-	message of "Fri, 20 May 2016 10:37:07 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E6B33794-1ECA-11E6-B958-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751103AbcETUu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 16:50:29 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34302 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750995AbcETUu3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 16:50:29 -0400
+Received: by mail-wm0-f66.google.com with SMTP id n129so32200666wmn.1
+        for <git@vger.kernel.org>; Fri, 20 May 2016 13:50:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=EY03WRHT8P7TYbWsGDiM2xI+u/YBGsQ/iuIFjXNCtrw=;
+        b=ZaZcl2hq4Ql1jbD+0Hp8BKYpc56woOA+ChqQUeJ7gDNkhT6UFreQeA2weTYJjuAMXs
+         ovs04loc5K7EgB1Rzkc59rCA1xILCvNb8DJxVjB+tmcO2507L8Y+QNCoOlpOeZaj0B26
+         jbx5MONObAZcZOoO+JTwdHOOFjxyAaM3aV5yymHx+GG0IJU50ZzzjPJAsFv6o7OWQRoP
+         pwRg8qvCqfIujOTgxzt8qIPSgd1JsNxpX+ZLp+qPPFr9VstUBMOguE7VurlRvTPx+Gc3
+         b6gFYOOmQewbSKe56xB96weoupUK9YTsfwX0A/fjwSG/wxxCqjv1xxfuLKU5ggNHDuq2
+         AZNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=EY03WRHT8P7TYbWsGDiM2xI+u/YBGsQ/iuIFjXNCtrw=;
+        b=JBTW/wydWjHChscdEZ73OuT6u57Cv7jn377vQNu3fvHl2SZsJah3MRnNGO4J63ACwC
+         57sG7amGgqE4aCDw0Zjhq53ENBfn17gxDB6a/BAJMdJ5atgAvKfJ5r5YOqJpLbZypV2V
+         Z5lmYFe77Lv+NmUnR6v5CrEthrrwbouAn3nWvAIihuT4CWKI1q4Ot0a8fRimrLZGcl0Q
+         MLeOvvb5PgkF4hSriYz/Cs5IgtMP7MoUYST8l6/1skFZE6dQ8/yA36NzX+YFVfe37q16
+         k9PY1NgZnNyoNdG4LyvjwiDLqfdFUWWyX95pfmef0DvXgN6UrRHhoUZdwx5Sh5C83d96
+         hEsA==
+X-Gm-Message-State: AOPr4FXznFxdQM8oZuGpO+Tq+9X2UJgwKWupf/pBFFTJ04KgCfhnNWRMpQQyKudvO8lZug==
+X-Received: by 10.28.20.144 with SMTP id 138mr5640262wmu.103.1463777427500;
+        Fri, 20 May 2016 13:50:27 -0700 (PDT)
+Received: from netblarch.fritz.box (dslb-088-068-242-091.088.068.pools.vodafone-ip.de. [88.68.242.91])
+        by smtp.gmail.com with ESMTPSA id d86sm2610889wmh.4.2016.05.20.13.50.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 May 2016 13:50:26 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.6.1 (2016-04-27)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295208>
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
+Previously git-pull silently ignored the --verify-signatures option for
+--rebase, potentially leaving users in the believe that the rebase
+operation would check for valid GPG signatures.
 
-> diff --git a/http.c b/http.c
-> index df6dd01..ba32bac 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -11,6 +11,7 @@
->  #include "gettext.h"
->  #include "transport.h"
->  
-> +static struct trace_key trace_curl = TRACE_KEY_INIT(CURL);
->  #if LIBCURL_VERSION_NUM >= 0x070a08
->  long int git_curl_ipresolve = CURL_IPRESOLVE_WHATEVER;
->  #else
-> @@ -477,6 +478,125 @@ static void set_curl_keepalive(CURL *c)
->  }
->  #endif
->  
-> +static void curl_dump_header(const char *text, unsigned char *ptr, size_t size, int nopriv_header)
-> +{
-> +	struct strbuf out = STRBUF_INIT;
-> +	const char *header;
-> +	struct strbuf **header_list, **ptr_list;
-> +
-> +	strbuf_addf(&out, "%s, %10.10ld bytes (0x%8.8lx)\n",
-> +		text, (long)size, (long)size);
-> +	trace_strbuf(&trace_curl, &out);
-> +	strbuf_reset(&out);
-> +	strbuf_add(&out,ptr,size);
-> +	header_list = strbuf_split_max(&out, '\n', 0);
-> +
-> +	for (ptr_list = header_list; *ptr_list; ptr_list++) {
-> +	/*
-> +	 * if we are called with nopriv_header substitute a dummy value
-> +	 * in the Authorization or Proxy-Authorization http header if
-> +	 * present.
-> +	 */
-> +	if (nopriv_header &&
-> +		(skip_prefix((*ptr_list)->buf , "Authorization:", &header)
-> +		|| skip_prefix((*ptr_list)->buf , "Proxy-Authorization:", &header))) { 
-> +		/* The first token is the type, which is OK to log */
-> +		while (isspace(*header))
-> +			header++;
-> +		while (*header && !isspace(*header))
-> +			header++;
-> +		/* Everything else is opaque and possibly sensitive */
-> +		strbuf_setlen((*ptr_list),  header - (*ptr_list)->buf );
-> +		strbuf_addstr((*ptr_list), " <redacted>");
-> +	}
-> +	strbuf_insert((*ptr_list), 0, text, strlen(text));
-> +	strbuf_insert((*ptr_list), strlen(text), ": ", 2);
-> +	strbuf_rtrim((*ptr_list));
-> +	strbuf_addch((*ptr_list), '\n');
-> +	trace_strbuf(&trace_curl, (*ptr_list));
+Implementing --verify-signatures for git-rebase was talked about, but
+doubts for a valid workflow rose up.
+Since you usually merge other's branches into your branch you might have
+an interest that their side has a valid GPG signature.
+Rebasing, on the other hand, is you building something on top of
+another's branch, essentially giving you the power to keep things sane.
+If a valid use case is found, where --verify-signatures for git-rebase
+looks sensible, that feature may be added then.
 
-This funny indentation makes me wonder why you didn't make it into a
-helper function.  If it would require too many parameters, I could
-understand the aversion, as it would end up looking like:
+A warning was chosen in favor of emitting an error to prevent potential
+breakage. A warning keeps things running, scripts for instance, while
+still informing users about possibly unexpected behavior.
 
-	for (header = headers; *header; header++) {
-        	if (hide_sensitive_header)
-			redact_sensitive_header(header, &too, &many, &other,
-			                        &params, &you,
-        					&need, &to, &pass);
-		strbuf_insert(*header, 0, text, strlen(text));
-                strbuf_insert(*header, strlen(text), ": ", 2);
-                ...
-                trace_strbuf(&trace_curl, *header);
-	}
+Signed-off-by: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
+---
 
-but I think redact_sensitive_header() helper would only need to take
-a single strbuf, from the look of your actual implementation.
+The warning message was changed to make it clear that the pull (and
+rebase) operation still proceeds.
 
-Yes, I am also suggesting to rename header_list and ptr_list to
-headers and header, respectively.  header_list may be an OK name (as
-it is "a list, each element of which is a header"), but ptr_list is
-a poor name--"a pointer into a list" is a much less interesting thing
-for the reader of the code to learn from the name than it represents
-"one header".
+And the commit message was amended with more reasoning about the change
+and why alternative approaches were not used.
 
-And your "const char *header" does not have to be here (it would be
-an implementation detail of redact_sensitive_header() function), so
-such a renaming would not cause conflicts in variable names.
+ builtin/pull.c  |  3 +++
+ t/t5520-pull.sh | 16 ++++++++++++++++
+ 2 files changed, 19 insertions(+)
 
-> +	}
-> +	strbuf_list_free(header_list);
-> +	strbuf_release(&out);
-> +}
-> +static void curl_dump_data(const char *text, unsigned char *ptr, size_t size)
-
-A blank line, between the end of previous function body and the
-begining of this function, is missing.
-
-> +{
-> +	size_t i;
-> +	struct strbuf out = STRBUF_INIT;
-> +	unsigned int width = 80;
-
-In a few places Git limits the width of the output, like using function
-name in hunk header lines and drawing diffstat in "diff --stat", we
-do default to limit the total width to 80 display columns.
-
-Given that this routine prefixes each and every line with a short
-heading like "=> Send header: " that costs at around 15-20 columns,
-and the loop we see below only counts the true payload without
-counting the heading, you would probably want to reduce this
-somewhat so that the whole thing would fit within 80 columns.
-
-> +	strbuf_addf(&out, "%s, %10.10ld bytes (0x%8.8lx)\n",
-> +		text, (long)size, (long)size);
-> +	trace_strbuf(&trace_curl, &out);
-> +
-> +	for (i = 0; i < size; i += width) {
-> +		size_t w;
-> +
-> +		strbuf_reset(&out);
-> +		strbuf_addf(&out, "%s: ", text);
-> +		for (w = 0; (w < width) && (i + w < size); w++) {
-> +			strbuf_addch(&out, (ptr[i + w] >= 0x20)
-> +				&& (ptr[i + w] < 0x80) ? ptr[i + w] : '.');
-
-Please think twice to make sure a long expression that has to span
-multiple lines is cut at a sensible place.  This cuts at the worst
-place where the syntactic element that binds strongest sits in the
-expression.
-
-The weakest binding is the comma between two parameters given to
-addch(), so let's cut it there:
-
-                for (w = 0; (w < width) && (i + w < size); w++) {
-                        unsigned char ch = ptr[i + w];
-                        strbuf_addch(&out,
-                                     (0x20 <= ch && ch < 0x80) ? ch : '.');
-                }
-
-If you find the second line still too long, then cut it before '?', i.e.
-
-                        strbuf_addch(&out,
-                                     (0x20 <= ch && ch < 0x80) 
-                                     ? ch : '.');
-
-or alternatively:
-
-
-                        strbuf_addch(&out, ((0x20 <= ch && ch < 0x80) 
-                                            ? ch : '.'));
-
-> +static int curl_trace(CURL *handle, curl_infotype type, char *data, size_t size, void *userp)
-> +{
-> +	const char *text;
-> +	int nopriv_header = 0;	/*
-> +				 * default: there are no sensitive data
-> +				 * in the trace to be skipped
-> +				 */
-> +
-> +	switch (type) {
-> +	case CURLINFO_TEXT:
-> +		trace_printf_key(&trace_curl, "== Info: %s", data);
-> +	default:		/* we ignore unknown types by default */
-> +		return 0;
-> +
-> +	case CURLINFO_HEADER_OUT:
-> +		text = "=> Send header";
-> +		nopriv_header = 1;
-> +		curl_dump_header(text, (unsigned char *)data, size, nopriv_header);
-> +	case CURLINFO_HEADER_IN:
-> +		text = "<= Recv header";
-> +		nopriv_header = 0;
-> +		curl_dump_header(text, (unsigned char *)data, size, nopriv_header);
-> +		break;
-
-I do not think an extra variable nopriv_header gives us any
-readability advantage.  If you looked at these two calls to
-curl_dump_header() and its parameters alone, you cannot tell
-which one is sensitive.
-
-Wouldn't it be easier to read if they were like this?
-
-        static int curl_trace(..., char *data_, ...)
-        {
-                enum { NO_FILTER = 0, DO_FILTER = 1 };
-                unsigned char *data = (unsigned char *) data_;
-
-                curl_dump_header("Send header", data, size, DO_FILTER);
-                curl_dump_header("Recv header", data, size, NO_FILTER);
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 1d7333c..b03bc39 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -815,6 +815,9 @@ static int run_rebase(const unsigned char *curr_head,
+ 		argv_array_push(&args, "--no-autostash");
+ 	else if (opt_autostash == 1)
+ 		argv_array_push(&args, "--autostash");
++	if (opt_verify_signatures &&
++		strcmp(opt_verify_signatures, "--verify-signatures") == 0)
++		warning(_("ignoring --verify-signatures for rebase"));
+ 
+ 	argv_array_push(&args, "--onto");
+ 	argv_array_push(&args, sha1_to_hex(merge_head));
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 739c089..3159956 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -341,6 +341,22 @@ test_expect_success 'branch.to-rebase.rebase should override pull.rebase' '
+ 	test new = "$(git show HEAD:file2)"
+ '
+ 
++test_expect_success "pull --rebase warns on --verify-signatures" '
++	git reset --hard before-rebase &&
++	git pull --rebase --verify-signatures . copy 2>err &&
++	test "$(git rev-parse HEAD^)" = "$(git rev-parse copy)" &&
++	test new = "$(git show HEAD:file2)" &&
++	test_i18ngrep "ignoring --verify-signatures for rebase" err
++'
++
++test_expect_success "pull --rebase does not warn on --no-verify-signatures" '
++	git reset --hard before-rebase &&
++	git pull --rebase --no-verify-signatures . copy 2>err &&
++	test "$(git rev-parse HEAD^)" = "$(git rev-parse copy)" &&
++	test new = "$(git show HEAD:file2)" &&
++	test_i18ngrep ! "verify-signatures" err
++'
++
+ # add a feature branch, keep-merge, that is merged into master, so the
+ # test can try preserving the merge commit (or not) with various
+ # --rebase flags/pull.rebase settings.
+-- 
+2.8.2
