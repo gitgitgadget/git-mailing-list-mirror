@@ -1,115 +1,93 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v6 3/3] bisect--helper: `write_terms` shell function in C
-Date: Fri, 20 May 2016 13:15:51 +0530
-Message-ID: <CAFZEwPNkPZ6JnzqbTyhYMwEF-hor2rm39NcB84omrh+uCiVPNw@mail.gmail.com>
-References: <1462546167-1125-1-git-send-email-pranit.bauva@gmail.com>
-	<1463031127-17718-1-git-send-email-pranit.bauva@gmail.com>
-	<1463031127-17718-4-git-send-email-pranit.bauva@gmail.com>
-	<CAPig+cS=zcSVLwARZ5A8hdiE0wqgYPU2Jwnr0OcjDXZFO--cZw@mail.gmail.com>
-	<alpine.DEB.2.20.1605161508230.3303@virtualbox>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH v6 2/2] imap-send.c: introduce the GIT_TRACE_CURL enviroment variable
+Date: Fri, 20 May 2016 10:37:08 +0000
+Message-ID: <20160520103708.38308-3-gitter.spiros@gmail.com>
+References: <20160520103708.38308-1-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 20 09:45:59 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org, tboegi@web.de, ramsay@ramsayjones.plus.com,
+	gitster@pobox.com, sunshine@sunshineco.com, peff@peff.net
+X-From: git-owner@vger.kernel.org Fri May 20 12:38:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3f88-0000mP-P7
-	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 09:45:57 +0200
+	id 1b3hol-0006QP-Pl
+	for gcvg-git-2@plane.gmane.org; Fri, 20 May 2016 12:38:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754140AbcETHpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 03:45:53 -0400
-Received: from mail-yw0-f176.google.com ([209.85.161.176]:34251 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751043AbcETHpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 03:45:52 -0400
-Received: by mail-yw0-f176.google.com with SMTP id j74so101943721ywg.1
-        for <git@vger.kernel.org>; Fri, 20 May 2016 00:45:52 -0700 (PDT)
+	id S933063AbcETKh6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2016 06:37:58 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:32964 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932455AbcETKh4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 06:37:56 -0400
+Received: by mail-wm0-f65.google.com with SMTP id 67so4883317wmg.0
+        for <git@vger.kernel.org>; Fri, 20 May 2016 03:37:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=hriVWLjGwguYiFHXsLEjXLbhpNXjzjfEXlFNgOVNgQo=;
-        b=sd60UVyta246kfCBo/HQJDRfbj3tZoyfeWaXQm311CkEXUHy5Bxa1tt4Tq2Kc4qdwg
-         nElY6JSPHqPFDU+cRrO24GFml41E91Uk8Ank0+w10szzwPkYmWLOCJKjDjKzlvrQWBMo
-         lSody4i/OJYlYBWF6mfECcEKgLwnd4OShyi7eNiEQnadSGzgbOWux7NaorBhawODEmo4
-         bMtGIYGWMMdh8Xj3mDNNz5pY5ogr3apiHLDfkMsINS84juy88uNGyTMPPMvMaSMH57O+
-         SWf4oNC32xNW63IoC8sQvYzomLQSF2OkIr8mkWFqSzhPcQHxfr1wKSZpc4hpjAYFV4Ky
-         JP1g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ylbmv8xm2iwVBHuWYo+1+k1LoASQAchPvT/UCwzxTOE=;
+        b=hOC6kah9lU0JOIDHWgQPnbV1a7+QYayLzNd2fbjI1+M/rVM/HU4EY0weriFG/wHwDZ
+         L43omxjvWe9Yz4PbKUYiKpmFLaPb+/O/+wySNHj1j3JNpwmsJBnM6hKI6Yhda3SFNHnx
+         z0okHmSafuXLj5Z0uskrJPgnArUD2+p2szR0+zyNnJWQB75Y6/vDBfKB5UilZl3T3a8S
+         GO/W0xig/rvwuzYaUDlgiUaX6rmn3u1/7pg8Elkmh0jZSDs9d+O9aV6NQ4c1X3oaBvLH
+         PShh1i8Kxd3JJFae9X0N61Y4hOC/6xBexnIoCJWoXQ83SpTmfOrU99BriknZdO6eGyyT
+         s3dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=hriVWLjGwguYiFHXsLEjXLbhpNXjzjfEXlFNgOVNgQo=;
-        b=BFMz3ojcqMyRCVnsnB5wRKgyNvNhKF93QFriDd4YMYBeLwgtcM31GG2ZYms7sgikd8
-         W5BBdqLH5FtjTlMt+8ExX+Xq7NuCu6RIYPZZrdju3n3Nvg1AgobTqk132cucnxt+Gqaa
-         KEjx9cNxMu8XbE9POTrgrG+EwGdxATkWJpdeLnkmaiEb31Ld9A46o4xAdIHMBkBmPaSN
-         usU/YisQqWuA54C/WHQ72cBXKyRuGlXycCM4rSBfbnSL9HcaQRMMi5++L+fqD5W2PiBJ
-         Kk6eWBGMKBffM1g3uzD4TluNf4HQrorBmRkmwhugmZMIk8RxP7lFmFAIIosueVko+hHm
-         7BNQ==
-X-Gm-Message-State: AOPr4FVhUy7pasF3UIqC3qlfbdQL6/Yfl7GCwvBaohmsb+oehtggWlE2mr7M1CBQ0VXHFHp1BFAavqfILooYVA==
-X-Received: by 10.13.198.5 with SMTP id i5mr966690ywd.263.1463730351848; Fri,
- 20 May 2016 00:45:51 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Fri, 20 May 2016 00:45:51 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1605161508230.3303@virtualbox>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ylbmv8xm2iwVBHuWYo+1+k1LoASQAchPvT/UCwzxTOE=;
+        b=Au3w1k1LYH1cXXB6bWhP+PN/7Xd7C5wzOTi00yT9qhdUD0+wG18pnr7nyxGvkwZgYC
+         U8jyV0kwcdC/59Ga9Dwv/CMnuGAkd+5X8WoQVa3k7NbfuoVxlGtGQrvAOlNnNM6Upyg9
+         LRW8xlfPz4Syui2I5QjU07bdPph8z9V/vQ0Q9xNGourOXpzUpg1i2Wg8k6/ZIYI6dt5n
+         t8DChAiwh/cDdfaFCYh3rQeDy4bUUDLKdkwUxuIL3P8Tio9Yh+79FupfJ575Z6VbCfAe
+         w090aqt1dCnPgtmHW3y81X5qH7Y5ouZYN+OTtNRXmYbbAmKm3kP0vyOyYHN1vTdH9Jhw
+         nymw==
+X-Gm-Message-State: AOPr4FWoQofCyBvJDVoCcH10wOzzzcCbwzFee/2ZCLilkkI0NI+PTA9a5sctH9DdnXsmPQ==
+X-Received: by 10.194.114.228 with SMTP id jj4mr2538381wjb.121.1463740669202;
+        Fri, 20 May 2016 03:37:49 -0700 (PDT)
+Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([23.101.69.192])
+        by smtp.gmail.com with ESMTPSA id k127sm1372659wmf.21.2016.05.20.03.37.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 20 May 2016 03:37:48 -0700 (PDT)
+X-Mailer: git-send-email 2.8.2.435.g7c6234f.dirty
+In-Reply-To: <20160520103708.38308-1-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295157>
 
-Hey Johannes,
+Permit the use of the GIT_TRACE_CURL environment variable calling
+the setup_curl_trace http.c helper routine.
 
-On Mon, May 16, 2016 at 6:46 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Mon, 16 May 2016, Eric Sunshine wrote:
->
->> On Thu, May 12, 2016 at 1:32 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>
->> > +       fp = fopen(".git/BISECT_TERMS", "w");
->>
->> Hardcoding ".git/" is wrong for a variety of reasons: It won't be correct
->> with linked worktrees, or when GIT_DIR is pointing elsewhere, or when ".git"
->> is a symbolic link, etc. Check out the get_git_dir(), get_git_common_dir(),
->> etc. functions in cache.h instead.
->
-> Maybe in this case, `git_path("BISECT_TERMS")` would be a good idea. Or even
-> better: follow the example of bisect.c and use
-> `GIT_PATH_FUNC(bisect_terms_path, "BISECT_TERMS")`.
+Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ imap-send.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks. I will look into this.
-
-
->> > +               strbuf_release(&content);
->> > +               die_errno(_("could not open the file to read terms"));
->>
->> "read terms"? I thought this was writing.
->>
->> Is dying here correct? I thought we established previously that you
->> should be reporting failure via normal -1 return value rather than
->> dying. Indeed, you're doing so below when strbuf_write() fails.
->
-> The rule of thumb seems to be that die()ing is okay in builtin/*.c, but not
-> in *.c. So technically, it would be okay here, too. However, I think that
-> this code should be written with libification in mind, so I would also
-> prefer it to error() and return, to give the caller a chance to do other
-> things after an error occurred.
-
-Frankly, I have no idea what you mean by libification but I will use
-error() since efforts for libification have already started.
-
-Regards,
-Pranit Bauva
-
-> Ciao,
-> Dscho
+diff --git a/imap-send.c b/imap-send.c
+index 938c691..50377c5 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1443,6 +1443,7 @@ static CURL *setup_curl(struct imap_server_conf *=
+srvc)
+=20
+ 	if (0 < verbosity || getenv("GIT_CURL_VERBOSE"))
+ 		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
++	setup_curl_trace(curl);
+=20
+ 	return curl;
+ }
+--=20
+2.8.2.435.g7c6234f.dirty
