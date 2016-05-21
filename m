@@ -1,104 +1,98 @@
-From: Shannon Pekary <spekary@gmail.com>
-Subject: Mac OS Git non-interactive shell problem
-Date: Sat, 21 May 2016 08:05:26 -0700
-Message-ID: <91B3CC94-4955-4AAB-B461-E6F5C5D9F682@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 21 17:05:55 2016
+From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [Bug?] log -p -W showing the whole file for a patch that adds to
+ the end?
+Date: Sat, 21 May 2016 20:42:48 +0200
+Message-ID: <5740AC28.6010202@web.de>
+References: <xmqqh9e5mvjs.fsf@gitster.mtv.corp.google.com>
+ <xmqq4ma5msrd.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 21 20:43:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b48TL-0005eI-3m
-	for gcvg-git-2@plane.gmane.org; Sat, 21 May 2016 17:05:47 +0200
+	id 1b4Bs4-0007vr-1v
+	for gcvg-git-2@plane.gmane.org; Sat, 21 May 2016 20:43:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752104AbcEUPFb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 May 2016 11:05:31 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35693 "EHLO
-	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751373AbcEUPFa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 May 2016 11:05:30 -0400
-Received: by mail-pf0-f181.google.com with SMTP id b66so29546127pfb.2
-        for <git@vger.kernel.org>; Sat, 21 May 2016 08:05:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-transfer-encoding:subject:message-id:date:to
-         :mime-version;
-        bh=fsmVB/NTv/fadMx2D831DmV9VqpnkcY58osnaM5JCl8=;
-        b=ursXGURU3K0EI7Pc/9pwXux7f+u3HTQNksgaiZx/fxuVKEe2e8KPzIhgw0Kqyk9LdQ
-         dfqdUjSj3qcfBL/V83WGbpiFn0I/1jzkPCt6JgRX0hq41YKxIwmAXFIl9PFuzHAcB61i
-         unEt0TIhk0odVrwLaGuKFkBqxedlkniH03HdpZkHtPRYUnsYbBgWe9TCqSEouQPW/4f1
-         de6vnZL1TQ4oAq58lRLgSjS7eZMrlDhE6dgHoAYq7lycwZAWdegkg0HbkMidWVXkI5KQ
-         kJusfowBwP6OivH6+8Qxa818dNHuHYK/W5lTJBXvSSBoZTfdQwsTYXSXaB7/bFnWISze
-         VTkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-transfer-encoding:subject
-         :message-id:date:to:mime-version;
-        bh=fsmVB/NTv/fadMx2D831DmV9VqpnkcY58osnaM5JCl8=;
-        b=HSvJyjtW+fwiYK5ZtYHxmMTK0XuxjkH3GIOh1N0+mgZ3wN16im2VHBHTrKjF2OFsAO
-         bfpW1/lx085shdprAYmNKB+zi/m4SO4riNZXUJScdmZ0c+actovUM3yczUCrY+m8anV+
-         rgu8Ljap7TXrabAxc1DH/ms5vg/DdtzUWaFgj+RTxd4Bm1ESd+2sPN3SKT2q0a0EaCQg
-         DvTvPlwr4ZMID+Gm6laTq9jTEyvOAGwaNzn2bdI/7z+ggvlLj4M1pucL9rcTsN9Q7B5Q
-         P4z20n/6n2NMKwoPrBXWaGpCu5V5I8RKfOIZBTCFR3eFvjlPp+pp78nC2ZKGYWLV+M5p
-         dO1A==
-X-Gm-Message-State: AOPr4FUbiz50X8mlvpUcSeo5ezcWwsZQXHOhbqo1qT5O64W05MzjvJusMxGRhebJOZgFzQ==
-X-Received: by 10.98.88.66 with SMTP id m63mr13330403pfb.79.1463843129204;
-        Sat, 21 May 2016 08:05:29 -0700 (PDT)
-Received: from [192.168.123.90] (c-98-210-100-59.hsd1.ca.comcast.net. [98.210.100.59])
-        by smtp.gmail.com with ESMTPSA id o6sm34774065pfo.64.2016.05.21.08.05.27
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 21 May 2016 08:05:27 -0700 (PDT)
-X-Mailer: Apple Mail (2.3124)
+	id S1751496AbcEUSm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 May 2016 14:42:58 -0400
+Received: from mout.web.de ([212.227.15.3]:53412 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751179AbcEUSm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 May 2016 14:42:57 -0400
+Received: from [192.168.178.36] ([79.237.63.247]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0Lj2TO-1bh5e837y2-00dCqa; Sat, 21 May 2016 20:42:50
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
+In-Reply-To: <xmqq4ma5msrd.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:LBSZuclfNx5m34gKU7Aa0gAIbBE1o7BXBrkrOBc1eGLlK1r+Sq5
+ d9ktLWu0N5TUALUjT7rkFDKIMtUy5WspOchnRVRsqN06qwXDq61iZKeaEdzUbWwuWry8KwS
+ 67Qj0/Q6QrEZ6JFziBrSqGrxbtY+VaUBzx/xmmivcxlKyj6kftEGhD3QylRNvLKBmThXHgy
+ dTe7/JbkxZc8p6W0jAm/A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+m0Z5H/jrks=:5uNJIJsMoLfvkZhqvJDny2
+ z3zfMMrJ2E1veVWH7L56+qyY/gjW3qtIeB+FpGdjRuX4BX+k6bmRmKyKKEOeK1ea2VVO7R1mQ
+ 6xvgwQ/XpmDijobkQlAxmVXlybwD44t+hr/34VscrS0GqW430c+H/gJFuyhUDHkWair8OmS7u
+ SYu8P18KXUu3oH4K/dh7EFkHo6Q3Zv+ZtrW8Tp2thWKY4hK4oj3B+ezTEjkdJ1R6vapKc00X7
+ gLQc1yN5oovXMU9U3oIaExvXNvNxcYRN7S6CJF7EWBRxfvhZWUhHkdhKa97flV1Y905zylMKp
+ UfyDFQWTR9TlNdj5FvR1tg76v+H+B0OJbDLpHImKDgQMXTll06XFgCO6pZU/1Ac6hGeuiJJ8w
+ WcMpSITd2oMgThrsU3qAvxLiTo6VgLCe5Uyl8hBwwoft6aTTvAOiPY/jyQewTkyNS83Nf9bYz
+ sYBKt3zshYsB+l4qHMQ/rQgTyQi3SDNmLoieUqXvNjB7dJjnucaHjOAKSERhrrkqq3HWvWYqZ
+ NLWEBDvlyhKMDPGQhzJ087zYCLHBBt2yn+z7L3cdfN8jUQIdA49DoaAkTkzvPHdmlBbVzEl0j
+ hFpJ5T7WChmVGVFWNiCVeCKwe5kDoddxcO/OwFLUZxqxDyThIjRoo25v4SRrdFVLCOsx6/nEM
+ ui+Hekg5vFn61JXZPvdbHM7tqQCHiT8xrN2ZDqSUM5SUFKZxazK9hhRDsh5NS+21maBU2PJoG
+ MJDyNmAfDZPA9Hzgz/s4K9MV5XJC0R3AcQC0kl0knTHgvcaJb7++psczC+1eU3KQoybCV4Ge 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295232>
 
-I recently had a problem with SmartGIt that I think is related to the M=
-ac version of the Git install, or perhaps git itself. Its hard for me t=
-o tell. Here is the recreation steps:
+Am 11.05.2016 um 00:51 schrieb Junio C Hamano:
+> The helper function get_func_line() however gets confused when a
+> hunk adds a new function at the very end, and returns -1 to signal
+> that it did not find a suitable "function header line", i.e. the
+> beginning of previous function.  The caller then takes this signal
+> and shows from the very beginning of the file.  We end up showing
+> the entire file, starting from the very beginning to the end of the
+> newly added lines.
 
-- Install a clean El Capitan
-- Install the latest SmartGit
-- Install the latest Mac OS Git from the Git website
-- enable the keychain credential helper (perhaps as a global git option=
-)
-- Set the SmartGit preference to point to the newly installed git in /u=
-sr/local/bin such that it specifically starts that git.
-- Try to push to a github repo that uses a keychain credential
+In this case we need to look at the added lines in the post-image to
+see if the original context suffices.  We currently only look at the
+pre-image.  And if we have to extend the context simply search from the
+bottom of the pre-image.  That's what the second patch does; the first
+one is just a small preparation.
 
-Result: Multiple error messages that osxkeychain-credential is not a gi=
-t command.
+The last three patches introduce special handling of empty lines.
+Before them the code for -W only distinguished between function lines
+and non-function lines.  Not allowing empty lines between functions to
+extend the context with -W is most useful in the case of appended full
+functions -- otherwise we'd get the preceding function shown as well as
+it "belongs" to the empty line separating them.
 
-Running git from the command line in Terminal works fine.
+And if we do that then it's easy and more consistent to stop showing
+empty lines trailing functions with -W (unless they're already included
+in the one requested with -u/-U, of course).  Doing the same for grep
+then is only fair.
 
-The problem is that when SmartGit tries invokes git, it does it from a =
-non-interactive shell, and in this mode, all the usual .profile and .ba=
-sh_profile files are not sourced. I do not know where or if the MacOS g=
-it installer is trying to put /usr/local/bin into the path, but its not=
- in the default path in non-interactive mode. Thus, git, when invoked i=
-n non-interactive mode cannot find the credential-helper, since El Capi=
-tain seems to come with version 2.7 by default, and that does not have =
-a credential helper.=20
+Considering empty lines as uninteresting collides with languages like
+Whitespace.  I'm not sure -W was useful for it to begin with, though.
+Any other possible downsides?
 
-It was driving me crazy, because git worked perfectly fine from Termina=
-l. The reason being, bash was reading my local .bash_profile where I wa=
-s putting /usr/local/bin in the path.
+NB: Comments are still not handled specially.  That means they are
+considered to be part of the preceding function.  Fixing that is not in
+scope for this series.  (And I'm not sure it would be worth the hassle.)
 
-So, the fix. Not so easy perhaps. Should the Git Mac OS installer put /=
-usr/local/bin in the path for all invocations of shells? Probably OK if=
- it is last in line. It certainly isn=E2=80=99t there by default. Or ca=
-n git itself be changed to look for a credential helper in the same loc=
-ation as where git was invoked, if git is not in the path (in other wor=
-ds, if git is specifically invoked with a path, like /usr/local/bin/git=
-, should it not also look for the credential helper in the same place, =
-even if /usr/local/bin is not in the PATH environment variable?).
+  diff: factor out match_func_rec()
+  diff: handle appended chunks better with -W
+  diff: ignore empty lines before added functions with -W
+  diff: don't include common trailing empty lines with -W
+  grep: don't extend context to trailing empty lines with -W
 
-Shannon Pekary
-spekary@gmail.com
+ grep.c        | 28 ++++++++++++++++++++++++--
+ xdiff/xemit.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 2 files changed, 82 insertions(+), 9 deletions(-)
