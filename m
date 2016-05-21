@@ -1,78 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 2/9] connect: only match the host with core.gitProxy
-Date: Fri, 20 May 2016 15:56:35 -0700
-Message-ID: <xmqqoa80baos.fsf@gitster.mtv.corp.google.com>
-References: <20160517013554.22578-1-mh@glandium.org>
-	<20160517013554.22578-3-mh@glandium.org>
-	<xmqqbn40cser.fsf@gitster.mtv.corp.google.com>
-	<20160520223054.GB7752@glandium.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, tboegi@web.de
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sat May 21 00:57:35 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 0/2] Persistent submodule pathspec specification
+Date: Fri, 20 May 2016 17:28:09 -0700
+Message-ID: <20160521002811.24656-1-sbeller@google.com>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com, Jens.Lehmann@web.de
+X-From: git-owner@vger.kernel.org Sat May 21 02:28:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b3tMM-00054A-E4
-	for gcvg-git-2@plane.gmane.org; Sat, 21 May 2016 00:57:34 +0200
+	id 1b3umN-0001EE-Ld
+	for gcvg-git-2@plane.gmane.org; Sat, 21 May 2016 02:28:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751153AbcETW4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2016 18:56:40 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65446 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751065AbcETW4j (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2016 18:56:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 40CC51E8A3;
-	Fri, 20 May 2016 18:56:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KJZhQApqc1Ie+sJmsJCbi28AMKc=; b=N11HEd
-	dO7FVQm235c4BS6Os0b/nMHJ2Yfn52bpuzxxZfTPPXE04wQ9Ozq5jYOgk4R4bxUk
-	kStJgf47LL3mO9QcJXrurWJwM/3r+2e917o31kOXK7/KMwEzdXLmY1YhvgJGCKkx
-	tSK1fxTigPwxPZI37311AC66/98OQx/EVFxeQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vbr5m4olnkt7V/s39gaDTP/79bFItJ8X
-	UCRhpUTlYLgjkDhrba9IWJg//GIyC4ueE84QnDurhyB2uVn0bAc1mV7XGIwDKtgF
-	OHEWKhTVUbGFVLAyneGIePcTpgdiE3KDpsclTF4fGuF4two9LGlbs9+JecT8xEi+
-	0MB2xkKzIdA=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 392BC1E8A2;
-	Fri, 20 May 2016 18:56:38 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9FCD31E8A0;
-	Fri, 20 May 2016 18:56:37 -0400 (EDT)
-In-Reply-To: <20160520223054.GB7752@glandium.org> (Mike Hommey's message of
-	"Sat, 21 May 2016 07:30:54 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1BA3C1A4-1EDE-11E6-9DA8-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1751591AbcEUA2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2016 20:28:20 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:32991 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751576AbcEUA2T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2016 20:28:19 -0400
+Received: by mail-pa0-f44.google.com with SMTP id xk12so44068332pac.0
+        for <git@vger.kernel.org>; Fri, 20 May 2016 17:28:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=Ljxm7H9dFH3eLRgN/EC+CFIj4SGv4s5F6qpTPk69S/Q=;
+        b=XR4uMJE51nk+I9IgtEZIMX4dKrXWEEY4EPb1fm+LQCWX8vCYMcw6jIHfqtYqCm2sRs
+         z/ZWcmFRAQNtbWABFqDWSHJFCMGwutt/0Hem8z8wl4cF4KVND+vdYYr0XwQJISBaTJr3
+         +HWbTDhYSEHpVe4Yzz5TFElJlCxwuRgUgwDf6Og024DdvVXr5ANXt0yqaXRF92lqmVLZ
+         msSR7BK9sxmpVDvrVCorSssxK6j727iQ1Rs2NKAlluC1o8Cn8uSI93gQUfq14V0QsZIx
+         Y8de+Ks3cjcp1R72IoxNmX2hIbL0Dx0RblXj5yboqrMsUImenZ/b2lwoMEWGZTUj+hsH
+         kglA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Ljxm7H9dFH3eLRgN/EC+CFIj4SGv4s5F6qpTPk69S/Q=;
+        b=UYLW2VVENftw3tY5rlFvIw5C7B6ygD1/h1BA8odBbrAo86sBxcYPxhTQcQuzMI1V3d
+         iisXbaMU5CIq+sLTGbRP1HSIPuIxR4DTLTxXBaWW1lMQp7/xabIgPZ/o2UEAl3iE6VTE
+         MaV6aFdpEnCg818cUCunwW8zTNAMY8o36Ov29OPdN/aNKtEzbVfyiMBg8moJJaTq3T3x
+         PhdKkZZzv4cgV75QoNUGWTI1eBSdbf3wqOuazyb8RuSu6Yv8O+9+EpaGG1SGtLyNglpU
+         BO7M6OM2nLVqk5hUugNeC89Uj4z8+sEt6lVqPkXux+qxCN7E/PWjP6Weu56yKQ51rdq3
+         D0dQ==
+X-Gm-Message-State: AOPr4FWxkJFMCEQuL/F+qjhMYeXOD9N22hm0tHMlUXfCEaIkf8YqZPruCI9/b/sub1W+Rzh4
+X-Received: by 10.67.22.168 with SMTP id ht8mr9049727pad.50.1463790498168;
+        Fri, 20 May 2016 17:28:18 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:104:6ffe:257d:9a11])
+        by smtp.gmail.com with ESMTPSA id q186sm29697525pfq.96.2016.05.20.17.28.17
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 20 May 2016 17:28:17 -0700 (PDT)
+X-Mailer: git-send-email 2.8.3.396.g3aebe0e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295221>
 
-Mike Hommey <mh@glandium.org> writes:
+This was part of the former series 'submodule groups'.
+However the labeling was ripped out and goes in its own series
+sb/pathspec-label.
 
-> On Fri, May 20, 2016 at 02:48:28PM -0700, Junio C Hamano wrote:
->> So, even if we agree that per-port behaviour is not something we
->> would use if we were building the system without any existing users
->> today, I do not think we want "git now fails with an error" at all.
->> It goes against the approach Git takes to give smooth transtion to
->> users when we must break backward compatibility.
->
-> I don't disagree. I went with a hard fail because it was easier. I'm
-> not too keen blocking this series on this transition happening. So I'll
-> try to finish this series without this change, and we can separate this
-> transition discussion from the rest of the connect.c changes.
+First we introduce a switch `--init-default-path` for `git submodule update`
+which will read the pathspec to initialize the submodules not from the command
+line but from `submodule.defaultUpdatePath`, which can be configured permanently.
 
-Yeah, I was thinking about the same thing as a short-term
-direction.
+The second patch utilizes this by having `clone` set that config option
+and using that new option when calling to update the submodules.
 
-Thanks.
+Thanks,
+Stefan
+
+Stefan Beller (2):
+  submodule update: add `--init-default-path` switch
+  clone: add --init-submodule=<pathspec> switch
+
+ 6 files changed, 216 insertions(+), 14 deletions(-)
+ Documentation/config.txt        |   5 ++
+ Documentation/git-clone.txt     |  25 +++++---
+ Documentation/git-submodule.txt |  11 +++-
+ builtin/clone.c                 |  34 +++++++++-
+ git-submodule.sh                |  21 ++++++-
+ t/t7400-submodule-basic.sh      | 134 ++++++++++++++++++++++++++++++++++++++++
+
+-- 
+2.8.3.396.g0eed146
