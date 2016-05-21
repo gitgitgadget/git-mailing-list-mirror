@@ -1,169 +1,78 @@
 From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH v7 9/9] connect: move ssh command line preparation to a separate function
-Date: Sun, 22 May 2016 08:17:32 +0900
-Message-ID: <20160521231732.4888-10-mh@glandium.org>
+Subject: [PATCH v7 5/9] connect: group CONNECT_DIAG_URL handling code
+Date: Sun, 22 May 2016 08:17:28 +0900
+Message-ID: <20160521231732.4888-6-mh@glandium.org>
 References: <20160521231732.4888-1-mh@glandium.org>
 Cc: gitster@pobox.com, tboegi@web.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 22 01:18:07 2016
+X-From: git-owner@vger.kernel.org Sun May 22 01:18:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4G9m-0005ls-7i
-	for gcvg-git-2@plane.gmane.org; Sun, 22 May 2016 01:18:06 +0200
+	id 1b4G9m-0005ls-PY
+	for gcvg-git-2@plane.gmane.org; Sun, 22 May 2016 01:18:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751989AbcEUXRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 May 2016 19:17:50 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:55514 "EHLO
+	id S1751996AbcEUXR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 May 2016 19:17:59 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:55534 "EHLO
 	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751592AbcEUXRj (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751847AbcEUXRj (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 21 May 2016 19:17:39 -0400
 Received: from glandium by zenigata with local (Exim 4.87)
 	(envelope-from <glandium@glandium.org>)
-	id 1b4G9F-0001Hy-7L; Sun, 22 May 2016 08:17:33 +0900
+	id 1b4G9F-0001Hp-0h; Sun, 22 May 2016 08:17:33 +0900
 X-Mailer: git-send-email 2.8.3
 In-Reply-To: <20160521231732.4888-1-mh@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295249>
+
+Previous changes made both branches handling CONNECT_DIAG_URL identical.
+We can now remove one of those branches and have CONNECT_DIAG_URL be
+handled in one place.
 
 Signed-off-by: Mike Hommey <mh@glandium.org>
 ---
- connect.c | 108 +++++++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 58 insertions(+), 50 deletions(-)
+ connect.c | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
 diff --git a/connect.c b/connect.c
-index 04ce210..ddfda4e 100644
+index edbf0e2..c0fad4f 100644
 --- a/connect.c
 +++ b/connect.c
-@@ -680,6 +680,61 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_user,
- 	return protocol;
- }
+@@ -698,7 +698,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 	signal(SIGCHLD, SIG_DFL);
  
-+static int prepare_ssh_command(struct argv_array *cmd, const char *user,
-+			       const char *host, const char *port, int flags)
-+{
-+	const char *ssh;
-+	int putty = 0, tortoiseplink = 0, use_shell = 1;
-+	transport_check_allowed("ssh");
-+
-+	ssh = getenv("GIT_SSH_COMMAND");
-+	if (!ssh) {
-+		const char *base;
-+		char *ssh_dup;
-+
-+		/*
-+		 * GIT_SSH is the no-shell version of
-+		 * GIT_SSH_COMMAND (and must remain so for
-+		 * historical compatibility).
-+		 */
-+		use_shell = 0;
-+
-+		ssh = getenv("GIT_SSH");
-+		if (!ssh)
-+			ssh = "ssh";
-+
-+		ssh_dup = xstrdup(ssh);
-+		base = basename(ssh_dup);
-+
-+		tortoiseplink = !strcasecmp(base, "tortoiseplink") ||
-+			!strcasecmp(base, "tortoiseplink.exe");
-+		putty = tortoiseplink ||
-+			!strcasecmp(base, "plink") ||
-+			!strcasecmp(base, "plink.exe");
-+
-+		free(ssh_dup);
-+	}
-+
-+	argv_array_push(cmd, ssh);
-+	if (flags & CONNECT_IPV4)
-+		argv_array_push(cmd, "-4");
-+	else if (flags & CONNECT_IPV6)
-+		argv_array_push(cmd, "-6");
-+	if (tortoiseplink)
-+		argv_array_push(cmd, "-batch");
-+	if (port) {
-+		/* P is for PuTTY, p is for OpenSSH */
-+		argv_array_push(cmd, putty ? "-P" : "-p");
-+		argv_array_push(cmd, port);
-+	}
-+	if (user)
-+		argv_array_pushf(cmd, "%s@%s", user, host);
-+	else
-+		argv_array_push(cmd, host);
-+
-+	return use_shell;
-+}
-+
- static struct child_process no_fork = CHILD_PROCESS_INIT;
+ 	protocol = parse_connect_url(url, &host, &port, &path);
+-	if ((flags & CONNECT_DIAG_URL) && (protocol != PROTO_SSH)) {
++	if (flags & CONNECT_DIAG_URL) {
+ 		printf("Diag: url=%s\n", url ? url : "NULL");
+ 		printf("Diag: protocol=%s\n", prot_name(protocol));
+ 		printf("Diag: userandhost=%s\n", host ? host : "NULL");
+@@ -770,20 +770,6 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 			int putty = 0, tortoiseplink = 0;
+ 			transport_check_allowed("ssh");
  
- /*
-@@ -776,59 +831,12 @@ struct child_process *git_connect(int fd[2], const char *url,
- 
- 		/* remove repo-local variables from the environment */
- 		conn->env = local_repo_env;
--		conn->use_shell = 1;
- 		conn->in = conn->out = -1;
- 		if (protocol == PROTO_SSH) {
--			const char *ssh;
--			int putty = 0, tortoiseplink = 0;
--			transport_check_allowed("ssh");
+-			if (flags & CONNECT_DIAG_URL) {
+-				printf("Diag: url=%s\n", url ? url : "NULL");
+-				printf("Diag: protocol=%s\n", prot_name(protocol));
+-				printf("Diag: userandhost=%s\n", host ? host : "NULL");
+-				printf("Diag: port=%s\n", port ? port : "NONE");
+-				printf("Diag: path=%s\n", path ? path : "NULL");
 -
--			ssh = getenv("GIT_SSH_COMMAND");
--			if (!ssh) {
--				const char *base;
--				char *ssh_dup;
--
--				/*
--				 * GIT_SSH is the no-shell version of
--				 * GIT_SSH_COMMAND (and must remain so for
--				 * historical compatibility).
--				 */
--				conn->use_shell = 0;
--
--				ssh = getenv("GIT_SSH");
--				if (!ssh)
--					ssh = "ssh";
--
--				ssh_dup = xstrdup(ssh);
--				base = basename(ssh_dup);
--
--				tortoiseplink = !strcasecmp(base, "tortoiseplink") ||
--					!strcasecmp(base, "tortoiseplink.exe");
--				putty = tortoiseplink ||
--					!strcasecmp(base, "plink") ||
--					!strcasecmp(base, "plink.exe");
--
--				free(ssh_dup);
+-				free(host);
+-				free(port);
+-				free(path);
+-				free(conn);
+-				return NULL;
 -			}
 -
--			argv_array_push(&conn->args, ssh);
--			if (flags & CONNECT_IPV4)
--				argv_array_push(&conn->args, "-4");
--			else if (flags & CONNECT_IPV6)
--				argv_array_push(&conn->args, "-6");
--			if (tortoiseplink)
--				argv_array_push(&conn->args, "-batch");
--			if (port) {
--				/* P is for PuTTY, p is for OpenSSH */
--				argv_array_push(&conn->args, putty ? "-P" : "-p");
--				argv_array_push(&conn->args, port);
--			}
--			if (user)
--				argv_array_pushf(&conn->args, "%s@%s",
--						 user, host);
--			else
--				argv_array_push(&conn->args, host);
-+			conn->use_shell = prepare_ssh_command(
-+				&conn->args, user, host, port, flags);
- 		} else {
-+			conn->use_shell = 1;
- 			transport_check_allowed("file");
- 		}
- 		argv_array_push(&conn->args, cmd.buf);
+ 			ssh = getenv("GIT_SSH_COMMAND");
+ 			if (!ssh) {
+ 				const char *base;
 -- 
 2.8.3.401.ga81c606.dirty
