@@ -1,34 +1,34 @@
 From: greened@obbligato.org (David A. Greene)
-Subject: Re: Subtree split unsquashes everything
-Date: Sat, 21 May 2016 18:26:35 -0500
-Message-ID: <87a8jjouvo.fsf@waller.obbligato.org>
-References: <CAKRjdd7Czj2iTKdwVCmz4x9fDNKCPZtLi=UjgHOsSPuYL_yLXg@mail.gmail.com>
+Subject: Re: [PATCH] contrib/subtree: add repo url to commit messages
+Date: Sat, 21 May 2016 17:52:11 -0500
+Message-ID: <87twhrowh0.fsf@waller.obbligato.org>
+References: <20160223102559.GA18668@iki.fi>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Joseph Musser <me@jnm2.com>
-X-From: git-owner@vger.kernel.org Sun May 22 01:26:51 2016
+Cc: git@vger.kernel.org, gitster@pobox.com, npaolucci@atlassian.com
+To: Mathias Nyman <mathias.nyman@iki.fi>
+X-From: git-owner@vger.kernel.org Sun May 22 01:29:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4GI9-0003K7-03
-	for gcvg-git-2@plane.gmane.org; Sun, 22 May 2016 01:26:45 +0200
+	id 1b4GLH-0005Fi-6B
+	for gcvg-git-2@plane.gmane.org; Sun, 22 May 2016 01:29:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751856AbcEUX0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 May 2016 19:26:38 -0400
-Received: from li209-253.members.linode.com ([173.255.199.253]:57872 "EHLO
+	id S1751988AbcEUX3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 May 2016 19:29:40 -0400
+Received: from li209-253.members.linode.com ([173.255.199.253]:57884 "EHLO
 	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751600AbcEUX0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 May 2016 19:26:37 -0400
+	with ESMTP id S1751974AbcEUX3g (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 May 2016 19:29:36 -0400
 Received: from chippewa-nat.cray.com ([136.162.34.1] helo=waller.obbligato.org)
 	by johnson.obbligato.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
 	(Exim 4.86)
 	(envelope-from <greened@obbligato.org>)
-	id 1b4GI0-0004Io-2n; Sat, 21 May 2016 18:26:36 -0500
-In-Reply-To: <CAKRjdd7Czj2iTKdwVCmz4x9fDNKCPZtLi=UjgHOsSPuYL_yLXg@mail.gmail.com>
-	(Joseph Musser's message of "Sat, 14 May 2016 12:53:00 -0400")
+	id 1b4Fki-0004BE-U9; Sat, 21 May 2016 17:52:13 -0500
+In-Reply-To: <20160223102559.GA18668@iki.fi> (Mathias Nyman's message of "Tue,
+	23 Feb 2016 12:25:59 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 X-Filter-Spam-Score: ()
 X-Filter-Spam-Report: 
@@ -36,45 +36,229 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295252>
 
-Joseph Musser <me@jnm2.com> writes:
+Mathias Nyman <mathias.nyman@iki.fi> writes:
 
-> I ran `git subtree split -P=subdir/subdir/ -b newbranch` and the
-> outcome seems to be perfect except that each squash merge has turned
-> into a full merge, bringing along all history from the other repo. Why
-> does it do this and how can I preserve my repo history, including only
-> squashes from the subtree remote repo like it is today?
+> For recalling where a subtree came from; git-subtree operations 'add'
+> and 'pull', when called with the <repository> parameter add this to the
+> commit message:
+>     git-subtree-repo: <repo_url>
 
-The only thing that --squash does on an add/merge/pull is a read-tree of
-the fetched commit into a new commit in the host repository which is
-then merged in to the host repository's branch.  It also annotates the
-hash of the original commit in the git-subtree-split metadata.
+I am sorry it tooks a couple of months to respond.  I am finally coming
+up for air at work.
 
-As the split code processes commits it records parents to link up the
-history to that in the subtree's original repository.  Crucially, the
-git-subtree-split metadata of the commit message git-subtree creates for
-squashes lists the original commit ID of the squashd commit.  That lets
-git-subtree hook up split commits back to the original project history.
-I believe that's why the split branch is showing the full history.  It's
-baked into the split algorithm.
+What is the future intent of this?  I've toyed with the idea of adding
+something like this either as commit message metadata or in .gitconfig
+but every time I get ready to pull the trigger, I question what it will
+be used for.
 
-Presumably you split the subdirectory from the same working repository
-in which you added the subtree commits in the first place.  Thus the
-history of the original project is all there (it was fetched when the
-subtree was added/merged).  I have not tested this, but I wonder what
-would happen if you either deleted that history from the host repository
-or you cloned the host repository to a new place and tried the split
-there.  The original hisory wouldn't be there and git-subtree would not
-have it to hook up to.
+Having been using git-subtree in anger for a couple of years now, I
+frequently pull subtree updates from multiple sources, so noting a
+particular repository is not only mostly meaningless, it may actually be
+misleading in that a quick perusal of the logs may lead one to think
+commits were draw from fewer places than they actually were.
 
-I have mentioned before that I'm working on a complete overhaul of the
-split code.  Since git-subtree split it typically used to send commits
-back to the original subtree repository, I never imagined that someone
-would *not* want to get the original history back.  If the squash were
-not reversed we would not be able to merge the history back in to the
-original repository.  If keeping squashes is truly desired I will have
-to think about how to do that, likely as a non-default option to split
-or even an entirely different command.
+I don't think it would be a good idea, for example, to have git-subtree
+use this information to auto-guess from where to pull future commits.
+Again, I think that would be misleading behavior.
 
-                      -David
+                         -David
+
+> Other operations that don't have the <repository> information, like
+> 'merge' and 'add' without <repository>, are unchanged. Users with such a
+> workflow will continue to be on their own with the --message parameter,
+> if they'd like to record where the subtree came from.
+>
+> Signed-off-by: Mathias Nyman <mathias.nyman@iki.fi>
+> Based-on-patch-by: Nicola Paolucci <npaolucci@atlassian.com>
+> ---
+>  contrib/subtree/git-subtree.sh | 73 ++++++++++++++++++++++++++++--------------
+>  1 file changed, 49 insertions(+), 24 deletions(-)
+>
+> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+> index 7a39b30..7cf73c0 100755
+> --- a/contrib/subtree/git-subtree.sh
+> +++ b/contrib/subtree/git-subtree.sh
+> @@ -335,18 +335,21 @@ add_msg()
+>  	dir="$1"
+>  	latest_old="$2"
+>  	latest_new="$3"
+> +	repo="$4" # optional
+>  	if [ -n "$message" ]; then
+>  		commit_message="$message"
+>  	else
+>  		commit_message="Add '$dir/' from commit '$latest_new'"
+>  	fi
+> -	cat <<-EOF
+> -		$commit_message
+> -		
+> -		git-subtree-dir: $dir
+> -		git-subtree-mainline: $latest_old
+> -		git-subtree-split: $latest_new
+> -	EOF
+> +	echo $commit_message
+> +	echo
+> +	echo git-subtree-dir: $dir
+> +	echo git-subtree-mainline: $latest_old
+> +	echo git-subtree-split: $latest_new
+> +	if [ -n "$repo" ]; then
+> +		repo_url=$(get_repository_url "$repo")
+> +		echo "git-subtree-repo: $repo_url"
+> +	fi
+>  }
+>  
+>  add_squashed_msg()
+> @@ -382,8 +385,9 @@ squash_msg()
+>  	dir="$1"
+>  	oldsub="$2"
+>  	newsub="$3"
+> +	repo="$4" # optional
+>  	newsub_short=$(git rev-parse --short "$newsub")
+> -	
+> +
+>  	if [ -n "$oldsub" ]; then
+>  		oldsub_short=$(git rev-parse --short "$oldsub")
+>  		echo "Squashed '$dir/' changes from $oldsub_short..$newsub_short"
+> @@ -397,6 +401,10 @@ squash_msg()
+>  	echo
+>  	echo "git-subtree-dir: $dir"
+>  	echo "git-subtree-split: $newsub"
+> +	if [ -n "$repo" ]; then
+> +		repo_url=$(get_repository_url "$repo")
+> +		echo "git-subtree-repo: $repo_url"
+> +	fi
+>  }
+>  
+>  toptree_for_commit()
+> @@ -440,12 +448,13 @@ new_squash_commit()
+>  	old="$1"
+>  	oldsub="$2"
+>  	newsub="$3"
+> +	repo="$4" # optional
+>  	tree=$(toptree_for_commit $newsub) || exit $?
+>  	if [ -n "$old" ]; then
+> -		squash_msg "$dir" "$oldsub" "$newsub" | 
+> +		squash_msg "$dir" "$oldsub" "$newsub" "$repo" |
+>  			git commit-tree "$tree" -p "$old" || exit $?
+>  	else
+> -		squash_msg "$dir" "" "$newsub" |
+> +		squash_msg "$dir" "" "$newsub" "$repo" |
+>  			git commit-tree "$tree" || exit $?
+>  	fi
+>  }
+> @@ -517,6 +526,16 @@ ensure_valid_ref_format()
+>  	    die "'$1' does not look like a ref"
+>  }
+>  
+> +get_repository_url()
+> +{
+> +	repo=$1
+> +	repo_url=$(git config --get remote.$repo.url)
+> +	if [ -z "$repo_url" ]; then
+> +		repo_url=$repo
+> +	fi
+> +	echo $repo_url
+> +}
+> +
+>  cmd_add()
+>  {
+>  	if [ -e "$dir" ]; then
+> @@ -548,19 +567,18 @@ cmd_add()
+>  cmd_add_repository()
+>  {
+>  	echo "git fetch" "$@"
+> -	repository=$1
+> +	repo=$1
+>  	refspec=$2
+>  	git fetch "$@" || exit $?
+>  	revs=FETCH_HEAD
+> -	set -- $revs
+> +	set -- $revs $repo
+>  	cmd_add_commit "$@"
+>  }
+>  
+>  cmd_add_commit()
+>  {
+> -	revs=$(git rev-parse $default --revs-only "$@") || exit $?
+> -	set -- $revs
+> -	rev="$1"
+> +	rev=$(git rev-parse $default --revs-only "$1") || exit $?
+> +	repo="$2" # optional
+>  	
+>  	debug "Adding $dir as '$rev'..."
+>  	git read-tree --prefix="$dir" $rev || exit $?
+> @@ -575,12 +593,12 @@ cmd_add_commit()
+>  	fi
+>  	
+>  	if [ -n "$squash" ]; then
+> -		rev=$(new_squash_commit "" "" "$rev") || exit $?
+> +		rev=$(new_squash_commit "" "" "$rev" "$repo") || exit $?
+>  		commit=$(add_squashed_msg "$rev" "$dir" |
+>  			 git commit-tree $tree $headp -p "$rev") || exit $?
+>  	else
+>  		revp=$(peel_committish "$rev") &&
+> -		commit=$(add_msg "$dir" "$headrev" "$rev" |
+> +		commit=$(add_msg "$dir" "$headrev" "$rev" "$repo" |
+>  			 git commit-tree $tree $headp -p "$revp") || exit $?
+>  	fi
+>  	git reset "$commit" || exit $?
+> @@ -609,7 +627,8 @@ cmd_split()
+>  	else
+>  		unrevs="$(find_existing_splits "$dir" "$revs")"
+>  	fi
+> -	
+> +e
+> +	rev="$1"
+>  	# We can't restrict rev-list to only $dir here, because some of our
+>  	# parents have the $dir contents the root, and those won't match.
+>  	# (and rev-list --follow doesn't seem to solve this)
+> @@ -683,15 +702,20 @@ cmd_split()
+>  
+>  cmd_merge()
+>  {
+> -	revs=$(git rev-parse $default --revs-only "$@") || exit $?
+> +	revs=$(git rev-parse $default --revs-only "$1") || exit $?
+>  	ensure_clean
+> -	
+>  	set -- $revs
+>  	if [ $# -ne 1 ]; then
+>  		die "You must provide exactly one revision.  Got: '$revs'"
+>  	fi
+> +	do_merge "$@"
+> +}
+> +
+> +do_merge()
+> +{
+>  	rev="$1"
+> -	
+> +	repo="$2" # optional
+> +
+>  	if [ -n "$squash" ]; then
+>  		first_split="$(find_latest_squash "$dir")"
+>  		if [ -z "$first_split" ]; then
+> @@ -704,7 +728,7 @@ cmd_merge()
+>  			say "Subtree is already at commit $rev."
+>  			exit 0
+>  		fi
+> -		new=$(new_squash_commit "$old" "$sub" "$rev") || exit $?
+> +		new=$(new_squash_commit "$old" "$sub" "$rev" "$repo") || exit $?
+>  		debug "New squash commit: $new"
+>  		rev="$new"
+>  	fi
+> @@ -730,12 +754,13 @@ cmd_pull()
+>  	if [ $# -ne 2 ]; then
+>  	    die "You must provide <repository> <ref>"
+>  	fi
+> +	repo=$1
+>  	ensure_clean
+>  	ensure_valid_ref_format "$2"
+>  	git fetch "$@" || exit $?
+>  	revs=FETCH_HEAD
+> -	set -- $revs
+> -	cmd_merge "$@"
+> +	set -- $revs $repo
+> +	do_merge "$@"
+>  }
+>  
+>  cmd_push()
