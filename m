@@ -1,120 +1,116 @@
 From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH 2/2] bisect--helper: `bisect_voc` shell function in C
-Date: Mon, 23 May 2016 01:19:56 +0530
-Message-ID: <CAFZEwPN0fydOiKZ4ZShivuNDpU=VAKe=wwimPSi-Yae0JA4Ukw@mail.gmail.com>
-References: <1463169737-12701-1-git-send-email-pranit.bauva@gmail.com>
-	<1463169737-12701-2-git-send-email-pranit.bauva@gmail.com>
-	<alpine.DEB.2.20.1605160838540.3303@virtualbox>
-	<CAFZEwPMFBmHUaX+Y8Fpd4BnJiB8N_XBOX30hRsSvb3tm8-MX5w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun May 22 21:50:07 2016
+Subject: [GSoC Update] Week 3
+Date: Mon, 23 May 2016 01:28:23 +0530
+Message-ID: <1463947103-28464-1-git-send-email-pranit.bauva@gmail.com>
+References: <1463334359-14033-1-git-send-email-pranit.bauva@gmail.com>
+Cc: larsxschneider@gmail.com, chriscool@tuxfamily.org,
+	christian.couder@gmail.com, Pranit Bauva <pranit.bauva@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 22 22:00:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4ZO0-0001Ar-LK
-	for gcvg-git-2@plane.gmane.org; Sun, 22 May 2016 21:50:05 +0200
+	id 1b4ZXu-0006a2-8J
+	for gcvg-git-2@plane.gmane.org; Sun, 22 May 2016 22:00:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752516AbcEVTt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 May 2016 15:49:58 -0400
-Received: from mail-yw0-f176.google.com ([209.85.161.176]:36233 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752491AbcEVTt5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 May 2016 15:49:57 -0400
-Received: by mail-yw0-f176.google.com with SMTP id x189so153623716ywe.3
-        for <git@vger.kernel.org>; Sun, 22 May 2016 12:49:57 -0700 (PDT)
+	id S1752536AbcEVUAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 May 2016 16:00:05 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:36355 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752529AbcEVUAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 May 2016 16:00:04 -0400
+Received: by mail-pa0-f54.google.com with SMTP id bt5so55133777pac.3
+        for <git@vger.kernel.org>; Sun, 22 May 2016 13:00:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=4j+SGKkVsFun93HjVvMbYnfnpcPointDPEb/5n5tko8=;
-        b=KGAhktKbuSoBp0YzkiEEi9a59FtSdWMooM0u9ePEL1h090ZPWktWOdnt9/3sMmXt9C
-         /X0HzkM0DV6zrhPAwJ8pH2p4nKKBFaFKKVdxmD/AqQAAZegkC3cs6/v2dHXEm8F4FEwM
-         EuIChPyoRKZOD+Z2jjuxxjXyfNei1g91QPQgEPamtQ7QRZMqpNzhU1p5yuqHcf5gpZ85
-         baOWb3O2KlFRmyBwctEElduarYrsbB6JMi0KEkZ09CCsnziiZIqTx7k03y5c9zBitbL/
-         qhiFfLt1SGo85JLEEiwPHiYANHtnAkRHrTdStfD2FvUxVvqXvmZfHBtqzLrWWhdOdSUu
-         HNbg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=3eikgx8HzwMiZArbniLYEQVgUQZbboUau1FKo6n/sqY=;
+        b=QmEAtpv4RvxhXMMmhHwRPGNHaz4Ab8eq0fMyXPSgTOTITdQ4oC1XVexo5HYh8EsfQX
+         zRVslgEP/Dg6VHZLaa7qX4QdNuVA+4FSnUREYfbadgCP6uZ3ChaCZCOEOq6vEV09b3uC
+         ah+bQGHWFKuEBH67V80eHc3dtpekKkp4Wz3EGurBb/ooCrY8rOv1mOoSrUcpQ04eK9yg
+         eBrhszbY926R26Bjin2xtdfWaJ9xZ3+nL4bOHGugziDDel3AGO4iFwEKjGuEJruv3Xu4
+         uA8VDMB7lpXiNYV5670oWXppfPAoroo3ywE10w/TBSJhy4ze+bakWngpRHkuGuMJOhfI
+         EVDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=4j+SGKkVsFun93HjVvMbYnfnpcPointDPEb/5n5tko8=;
-        b=Cvm6y5rzx2Bvsv7vgloIMMj5hkihZap0faGXrgtIFw0irn+h/xM6VSzMsgv4h4DZCo
-         oZX4UAHRzKiAwjXRySOrdc+Ic15cDSFfpw/YFlfl+jpB/Cfb3M07NUvpeYW1m0ViGglV
-         61UhvaV2cq9wFJ/BJqpf28xowW9AhxRim2JONYkahml0SQu4wjzC1B1rLjE4xIwZZ3XE
-         m7lrNt7CTDXmD0VvRVt8LCOFjgRR1Cwo8WkgADreI8i2TlyatjlXCPUQv5NBa1TYbk4Y
-         w8QVRuFjdnVei0z4h+WFWHe4dpqEpynTA47RM/ojsJlt1vxgnYjAsQEAP8qY5Y69ahew
-         b0kA==
-X-Gm-Message-State: AOPr4FWQ/MvCvc3AO9unBzKyDTiH5TP1lIFSYPz48ehJS+T0rCSuTMv9N6f8AnEOo7GIIdGDVvWZ306Ez534Fg==
-X-Received: by 10.129.164.145 with SMTP id b139mr8758218ywh.171.1463946596834;
- Sun, 22 May 2016 12:49:56 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Sun, 22 May 2016 12:49:56 -0700 (PDT)
-In-Reply-To: <CAFZEwPMFBmHUaX+Y8Fpd4BnJiB8N_XBOX30hRsSvb3tm8-MX5w@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=3eikgx8HzwMiZArbniLYEQVgUQZbboUau1FKo6n/sqY=;
+        b=SItYD6FMe+4PlWXzSFExcEX2Hjy1CgmdiKSGzsQg+eHf/cPOtPPX38VUYob10APj83
+         mOJiqBhCm1VwkCaK0qlISE0lFVWWCCvrNg6C0VIasz6rxMeZqb6HvqHpeD2M/sMb8mVh
+         a7d+bQtwzFFLNDp85xl8bqYImocgDNTiVGeX6MFrHIEiHMSvEl0gNOS3Af0dt6V/XLC8
+         ims4V5NiKw7Smb/UBEP6gbTvj7o9HTWtEH7qc8+BIAo0qpkS28qbeZN7DK4KKoKNMsd+
+         rsDocZG5DEhMAfSkaXd4filisJD/Vk0tvfX5WjOtz3Iviu2zy/cPyY4dv57hPJU1+7hl
+         siQA==
+X-Gm-Message-State: AOPr4FW0I7S3ISmvJ6kWGS2RCCIqYcGTXOM03itKFgaOxfO/aSvtbCWvaYAv44LQtWv7EQ==
+X-Received: by 10.67.21.177 with SMTP id hl17mr21904556pad.39.1463947203078;
+        Sun, 22 May 2016 13:00:03 -0700 (PDT)
+Received: from localhost.localdomain ([183.87.83.48])
+        by smtp.gmail.com with ESMTPSA id vw1sm26889562pab.35.2016.05.22.12.59.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 22 May 2016 13:00:02 -0700 (PDT)
+X-Mailer: git-send-email 2.8.2
+In-Reply-To: <1463334359-14033-1-git-send-email-pranit.bauva@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295290>
 
-Hey Matthieu,
-Sorry for the late reply. Somehow your email didn't receive my
-mailbox. I got to see this mail when I was going through the gmane
-archives.
+============================ INTRODUCTION ==============================
+The purpose of this project is to convert the git-bisect utility which
+partly exists in the form of shell scripts to C code so as to make it more
+portable. I plan to do this by converting each function to C and then
+calling it from git-bisect.sh so as to use the existing test suite to test
+the function which is converted.
 
-Matthieu Moy <Matthieu.Moy <at> grenoble-inp.fr> writes:
-  Pranit Bauva <pranit.bauva <at> gmail.com> writes:
+Mentors:
+Christian Couder <chriscool@tuxfamily.org>
+Lars Schneider <larsxschneider@gmail.com>
 
->> +int bisect_voc(const char *term)
->> +{
->> + if (!strcmp(term, "bad"))
->> + printf("bad|new\n");
->> + if (!strcmp(term, "good"))
->> + printf("good|old\n");
->
-> If you meant to use this as a helper command, then the implementation is
-> right, but you're not doing that.
+============================== UPDATES =================================
+Things which were done in this week:
 
-> If you write the function because one day you'll be calling it from C,
-> then:
+ * My patches for write_terms()[1] and bisect_log()/voc()[2] have collected
+   some reviews from Eric Sunshine and Johannes Schindelin.
 
-> 1) First, I'd wait for this "one day" to happen. In general, write code
->    when you need it, don't write it ahead of time. Currently, you have
->    dead and untested code (I know, *you* have tested it, but it's still
->    "untested" as far as git.git is concerned). Dead code may bother
->    people reading the code (one would not understand why it's there),
->    and untested code means it may break later without anyone noticing.
->
+ * As advised in the reviews I have mainly read about git_path() and other
+   related functions from cache.h
 
-I think this function can wait then. I will include this patch when
-its really required. I wanted to convert this function ASAP because it
-was a really tiny one and an easy one.
+ * Also read up on the refs stuff like for_each_ref_in() which Junio
+   mentioned in the previous update email.
 
-> 2) Second, you'd need to return the string, not print it. You'll
->    typically use it like this:
+ * I have made 2 commits[3] which I am keeping on hold for now as they are
+   followup for a commit made by Jeff King which I came across while
+   reading about git_path() and related stuff.
 
->     printf(_("You need to give me at least one %s and one %s"),
->            bisect_voc(BISECT_BAD), bisect_voc(BISECT_GOOD));
+ * I have kind of finished writing bisect_clean_state() function. But I
+   am still working on that as I suspect there might be something missing.
 
->   which gives one more argument for 1): once you have a use-case, you
->   can design the API properly, and not blindly guess that you're going
->   to need printf. Actually, writting these 2 example lines, I also
->   noticed that the parameters could/should be an enum type rather than
->   a string, it makes the code both more efficient and clearer.
->
+============================ NEXT STEPS ================================
+Since I wasn't able to cover up many things this week (which I had
+initially planned), those things have now been carried forward along with
+a few other stuff. I plan to work more this week and the coming few ones
+to make up for the lost time.
 
-Okay I get it. It would be much more efficient to return a enum
-because its difficult to parse text output into a C program. I hadn't
-looked further into the function. Thanks for pointing it out early!
+Things which would be done in the coming week:
 
-I will wait before re-rolling this patch and will do it when I convert
-bisect_state().
+ * Finish off (finally) bisect_clean_state() conversion.
 
-Regards,
-Pranit Bauva
+ * Convert the function bisect_head(). I plan to convert this function and
+   add it as a subcommand to test the implementation but I will only send
+   the function without the subcommand to the mailing list because its a
+   too small function. Though the subcommand version will be put up on
+   github for everyone to verify whether it is passing the test suite like
+   I have done it for bisect_voc().
+
+ * Convert the function bisect_write(). I plan to convert this function
+   and add it as a subcommand.
+
+ * Investigate why test no. 43 and 44 are failing in t6030 with `|| exit`
+   in --write-terms.
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/294388
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/294571
