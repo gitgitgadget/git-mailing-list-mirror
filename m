@@ -1,94 +1,81 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 3/5] worktree.c: add is_worktree_locked()
-Date: Sun, 22 May 2016 16:53:51 +0700
-Message-ID: <CACsJy8ChM99n6skQCv-GmFiod19mnwwH4j-6R+cfZSiVFAxjgA@mail.gmail.com>
-References: <20160510141416.GA22672@lanh> <20160510141729.23063-1-pclouds@gmail.com>
- <20160510141729.23063-3-pclouds@gmail.com> <CAPig+cQR40u4nMEP1wz74ubA=wW5m+KiCZnpZwuWAyYvXsPHrw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Reto_Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
-	Mike Rappazzo <rappazzo@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun May 22 11:54:36 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v1 2/2] travis-ci: enable sequential test execution for t9113 and 9126
+Date: Sun, 22 May 2016 12:10:28 +0200
+Message-ID: <7A9DE9C1-4AC7-4FF3-B8B1-26DE84BA625B@gmail.com>
+References: <1463649009-56941-1-git-send-email-larsxschneider@gmail.com> <1463649009-56941-3-git-send-email-larsxschneider@gmail.com> <20160519100658.GA20225@dcvr.yhbt.net> <xmqqwpmqj7m1.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <e@80x24.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 22 12:11:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4Q5a-0007Gv-QM
-	for gcvg-git-2@plane.gmane.org; Sun, 22 May 2016 11:54:27 +0200
+	id 1b4QLC-0001uE-R7
+	for gcvg-git-2@plane.gmane.org; Sun, 22 May 2016 12:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752169AbcEVJyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 May 2016 05:54:23 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:34108 "EHLO
-	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751898AbcEVJyW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 May 2016 05:54:22 -0400
-Received: by mail-io0-f169.google.com with SMTP id 190so176275408iow.1
-        for <git@vger.kernel.org>; Sun, 22 May 2016 02:54:21 -0700 (PDT)
+	id S1752125AbcEVKKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 May 2016 06:10:30 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:38005 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751898AbcEVKK3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 May 2016 06:10:29 -0400
+Received: by mail-wm0-f51.google.com with SMTP id n129so37127387wmn.1
+        for <git@vger.kernel.org>; Sun, 22 May 2016 03:10:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JjWvP/DFKPqRye698huK6p2f669aQFM2ZAknkZat4tI=;
-        b=n8t9GUUG/HvEYAaTWXIiEYMmTKP6RY/v8aA+LkK7ArkogXqCZGXD/BRMmp8rfFU4Wa
-         SBF9qo7t2UOgK4qJFqCKc/0xjRCx3lgFJ7qMXPNPqLTh4xBBrfgRGBFrzSVKTFyD9LUj
-         1y/0EnsFn7MheBF5Ki43oesiov3rqgr2NDo/zCc8X3sPbh5oeRS2loPesHQvaJYgIIoI
-         XflXKBo/Z+znv0Y83EgwSRxovPlPd6qLOHEbLC/Bbs827K47d5WY9f11uEFA6EelbA7D
-         9tnD30m8oOS3Yl0FsbcbzZ3VZwn85vTyQ3batreHIQ4imV7pGj7916YZ1gph7EMMMxai
-         lGGQ==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=A4Vo3FdIOJvDTT2RpiJlImsgosZDTfGtUCVl1a+ZHQM=;
+        b=MQ8EofNmjmOZwox4t2eQ69b9gLaAoBSZCNrUZERNwgYxWo2zxOMtlj78okSvdRxFkA
+         4FeO4g8syqoV9nxOHWhtv2NKhNv76CZMUN4hVkAC3y5P1Zy4XDmhcJ1GJHg6YWJm7b53
+         MpN/YlB/n2lBkCkiM6RrpxBbeHBVjSxRK5+OlUw+jvr7m+/ytqc+dA047pfyRDze15tc
+         x+BCmv6pegvvzOpnp8q+IlkjTR+wU4jXeLlthnZduZi8ZEFp7ytj6vscdDgb4KCS5VD8
+         E6KNcQcOmtUaYMOEjqIksSzr6d66F8txur8hnygydO/6/uYD/ZOrc4mr5g8cc5P7tPpt
+         kw/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JjWvP/DFKPqRye698huK6p2f669aQFM2ZAknkZat4tI=;
-        b=P8CEU4XPKwffT1zb4Zu6SFPv4iP6hXTxI6eZiNsG+kUIDXoV9tFhlundt26sG9ywNU
-         6HzrR5fhFondCPbq3Y1xL6mXokWFiv+nmWhpdEIh1DMoROF1VwCdjQPY5rF6f9FETgXF
-         6UVR8M5PIbxw/mXQJmUs4xC/7lgoozCQsGYQM994W9Tp/Uix8uPVttTLtzXL1HhjzC/I
-         7FIpHmz25e7UnNwTT1rUXjeIlvkkrtqQMiYdN7zSt0mzHspUY8TzPImn6P6N5lONv3Ew
-         NjAp9+4SWr0z49W5A9mahDVuD+n5IqbE8aRskdMupsOiRRv5lLq/4GZF3A3M3W9tM3cE
-         EiUA==
-X-Gm-Message-State: AOPr4FVTgCWUdmqYc/FnjXsa2NUX6LoSV4a6sIubrf1B/0uDfj3EWAB52hGazWDdiLup5JcfkpoPxSYzPnXXDA==
-X-Received: by 10.107.159.84 with SMTP id i81mr8124530ioe.29.1463910861365;
- Sun, 22 May 2016 02:54:21 -0700 (PDT)
-Received: by 10.64.173.167 with HTTP; Sun, 22 May 2016 02:53:51 -0700 (PDT)
-In-Reply-To: <CAPig+cQR40u4nMEP1wz74ubA=wW5m+KiCZnpZwuWAyYvXsPHrw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=A4Vo3FdIOJvDTT2RpiJlImsgosZDTfGtUCVl1a+ZHQM=;
+        b=NcNMVb4cI1gMkftqLNbYgItxNWdQxkAYxFUNCLuiQa1h5mN7kFmEOMTstqtiL1VHd/
+         qaeTOcB0yLT/i1rlSSFIfJakLBT2/VjE4YEdEKaF4pzxXXua4n/WeHjXAmQI7K0Pzy+p
+         Jzsm4YkKaO/Na3ZsW3AWGF7i2Bm6V12jezEoB09Bbh9BtKkz9tAiHZSv0lkih+VTUxzb
+         L7aAgfYL9QBzWlJya37EAcd+++gwvpIUiBZqZPQ+EAd6JXEgUh+5IdDUsK9w8ZDOT5zX
+         KZRykxQLTJ2WKksA5UQ+vca5pztaK66/jnRPtNg2FjbJHE8pK/6GicxsjvZO0g7TH4jY
+         mlew==
+X-Gm-Message-State: AOPr4FVZP7L8aWKkWX/30SSplRiOaxNFmH7O7vftPPhBjj/o/rnZ9u75MJ3FAod5y9eFRQ==
+X-Received: by 10.28.1.151 with SMTP id 145mr11033944wmb.25.1463911827615;
+        Sun, 22 May 2016 03:10:27 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB5ECD.dip0.t-ipconnect.de. [93.219.94.205])
+        by smtp.gmail.com with ESMTPSA id xt9sm29119884wjb.17.2016.05.22.03.10.26
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 22 May 2016 03:10:26 -0700 (PDT)
+In-Reply-To: <xmqqwpmqj7m1.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295268>
 
-On Fri, May 13, 2016 at 11:52 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> Actually, I recall that when I suggested the idea of 'struct worktree'
-> and get_worktrees() to Mike that it would be natural for the structure
-> to have a 'locked' (or 'locked_reason') field, in which case the
-> reason could be stored there instead of in this static strbuf. In
-> fact, my idea at the time was that get_worktrees() would populate that
-> field automatically, rather than having to do so via a separate
-> on-demand function call as in this patch.
 
-I'm keeping this as a separate function for now. I don't like
-get_worktrees() doing extra work unless it has to. We soon will see
-the complete picture of "git worktree" then we can merge it back to
-get_worktrees() if it turns out checking "locked" is the common
-operation. is_worktree_locked() then may become a thin wrapper to
-access this "locked" field.
+> On 19 May 2016, at 19:11, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Eric Wong <e@80x24.org> writes:
+> 
+>> Anyways, how about making the tests run on separate ports and
+>> not worry about serializing them at all?
+> 
+> Yeah, that does sound like a more sensible approach.
 
->> +extern const char *is_worktree_locked(const struct worktree *wt);
->
-> I was wondering if builtin/worktree.c:prune_worktree() should be
-> updated to invoke this new function instead of consulting
-> "worktrees/<id>/locked" manually, but I see that the entire "prune
-> worktrees" functionality in builting/worktree.c first needs to be
-> updated to the get_worktrees() API for that to happen.
+Makes sense. However, it's not something I will tackle soon.
+Would you be willing to pick up $gmane/295048 (the first patch) as is 
+and drop $gmane/295050 (the patch discussed here)? Then the majority
+of Git SVN tests would run on Travis CI.
 
-I thought about updating prune too. But it is in a bit special
-situation where it may need to consider invalid (or partly invalid)
-worktrees as well. So far worktree api is about valid worktrees only
-if I'm not mistaken and we probably should keep it that way, otherwise
-all callers may need to check "is this worktree valid" all over the
-place.
--- 
-Duy
+Thanks,
+Lars
