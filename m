@@ -1,178 +1,123 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v1 3/3] travis-ci: run Git bisect on failed tests
-Date: Sun, 22 May 2016 22:51:20 +0530
-Message-ID: <CAFZEwPOuCRJFx0wH5YHKxWNmjkvi2R6s5G0Bw+WrnHywT3cR0g@mail.gmail.com>
-References: <1463914856-64745-1-git-send-email-larsxschneider@gmail.com>
-	<1463914856-64745-4-git-send-email-larsxschneider@gmail.com>
+From: Joey Hess <id@joeyh.name>
+Subject: Re: GIT_INDEX_FILE relative path breaks in subdir
+Date: Sun, 22 May 2016 15:04:04 -0400
+Message-ID: <20160522190404.GA20998@kitenet.net>
+References: <20160517171836.GA12183@kitenet.net>
+ <xmqqy478wptr.fsf@gitster.mtv.corp.google.com>
+ <20160517182645.GA27396@kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 22 19:21:27 2016
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="0OAP2g/MAC+5xKAE"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 22 21:05:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4X4B-0005ju-6n
-	for gcvg-git-2@plane.gmane.org; Sun, 22 May 2016 19:21:27 +0200
+	id 1b4Ygy-0000Lc-9q
+	for gcvg-git-2@plane.gmane.org; Sun, 22 May 2016 21:05:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752434AbcEVRVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 May 2016 13:21:22 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:35768 "EHLO
-	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752338AbcEVRVV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 May 2016 13:21:21 -0400
-Received: by mail-yw0-f193.google.com with SMTP id n16so7490504ywd.2
-        for <git@vger.kernel.org>; Sun, 22 May 2016 10:21:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=H7WL5sqVbe04ir79TSf+72nDTQIsswx2eyYyMFvjikw=;
-        b=ZEBESnRBpP1X4T415M6X00cGlnmdNE8ryBNGgxKBX11VzAevyRLllcXk/oTnVyJ9zh
-         kleI5nChqg1R3UZTJ6yq9CaQA1kEZIRh0ZuXPxiH/GM9IFMjMc+dOHiCm3Rzq3/UcFd2
-         wYsgG6ZAP4seJ3l0oRTo4jfBjapm5OVpx2FpLqlNnGfpE+aRuZZNEUKnmbDmJFLcvWGK
-         TGtg+k6+E/R3EW/4c4TRgH7LeLm0hZxjA429TY1FHSoA/tm0a7fhvpDPi+SIq/1ftn2s
-         ohORt3a1SPUgHc9LCzX/RKew2ph8X0XeSfZrDgEN0kNXHPFU04rt/n6RiBTvRX2bHC4N
-         gvlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=H7WL5sqVbe04ir79TSf+72nDTQIsswx2eyYyMFvjikw=;
-        b=Zv0gKz5Xr7xVRnuP+tVbGoNdxMOl67fSpetVUa/VVTXV5iF3mRL0b061MaLkNMihOu
-         A916qZUT8z+JXdDve4+dgQzOPOcaeJ1lhJQ1Zv0WDBO9IhmWJjYkRBvRg+mP9OdGCpk5
-         1Y436KejLPFYNmO+xYsDgdcNcX2+cn/2X9mx4QtmQcR+O2JHH+aShJpDgkbwlBRW7YD4
-         VOR2uszSG+q4IaCmIE57KWF4/nwdE8F/yI4uYR+Rz3Ewr3DofeREeDNUtg2OzE8G+H6F
-         VwDP2V9bKbpWwGxN4iBh2DF4pRo/bdW3wztJ9W+5piMuDCDoDhfcf3MutI05lGoQhBfw
-         CAWg==
-X-Gm-Message-State: AOPr4FUpSkIYyiBB1AKZ4yjDFD6+fWpd3lX0Hjp1d55UmI3Pnd98cqy2/86fup19VoAmBlnnRqRvcWkztqXSTA==
-X-Received: by 10.13.198.5 with SMTP id i5mr8069457ywd.263.1463937680350; Sun,
- 22 May 2016 10:21:20 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Sun, 22 May 2016 10:21:20 -0700 (PDT)
-In-Reply-To: <1463914856-64745-4-git-send-email-larsxschneider@gmail.com>
+	id S1752472AbcEVTER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 May 2016 15:04:17 -0400
+Received: from kitenet.net ([66.228.36.95]:55502 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752449AbcEVTEQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 May 2016 15:04:16 -0400
+X-Question: 42
+Authentication-Results: kitenet.net;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=b3egMzWW;
+	dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+	t=1463943844; bh=700fJk6Ud3QTNhjJM9l3VkfN43170pNTE6bbfBj8Ka4=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=b3egMzWWzAff5NjNH48jS5QN7E850imqFzeGNuJS2SYsHcZZXVBPInnjgWWj6X76C
+	 e86hgH9G09x/Ul7Ud+b6jHe307kOPImtuEX5gvo14N0mksUiV9XNS1EjEhlHKliwNj
+	 CFt8n4x2KeltOCes477cAI1595M1Ux63jzyX/J6w=
+Content-Disposition: inline
+In-Reply-To: <20160517182645.GA27396@kitenet.net>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+X-Spam-Status: No, score=-93.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_PBL,RCVD_IN_RP_RNBL,
+	RCVD_IN_SORBS_DUL,RDNS_DYNAMIC,SPF_SOFTFAIL,USER_IN_WHITELIST autolearn=no
+	autolearn_force=no version=3.4.1
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on kite.kitenet.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295288>
 
-Hey Lars,
 
-On Sun, May 22, 2016 at 4:30 PM,  <larsxschneider@gmail.com> wrote:
-> From: Lars Schneider <larsxschneider@gmail.com>
->
-> Junio usually pushes many commits at once to the public "pu"/"next"/
-> "master" branches. If a test fails then it is not obvious what commit
-> caused the failure. Therefore we run Git bisect with the merge base
-> between the failing rev and its more stable branch ("next" for "pu",
-> "master" for "next", and "maint" for "master") as good ref to find the
-> offending commit. This is only enabled on "github.com/git/git" because
-> there we can assume that all relevant branches are up to date.
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->  .travis.yml       |  2 +-
->  ci/test-report.sh | 65 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 66 insertions(+), 1 deletion(-)
->
-> diff --git a/.travis.yml b/.travis.yml
-> index 81d2027..922807b 100644
-> --- a/.travis.yml
-> +++ b/.travis.yml
-> @@ -101,7 +101,7 @@ script: make --quiet test
->  after_failure:
->    - >
->      : '<-- Click here to see detailed test output!                                                        ';
-> -    ./ci/test-report.sh
-> +    ./ci/test-report.sh $TRAVIS_REPO_SLUG $TRAVIS_BRANCH;
->
->  notifications:
->    email: false
-> diff --git a/ci/test-report.sh b/ci/test-report.sh
-> index d08a999..8f7adad 100755
-> --- a/ci/test-report.sh
-> +++ b/ci/test-report.sh
-> @@ -1,5 +1,12 @@
->  #!/bin/sh
->  #
-> +# Print test results and run Git bisect on failed tests.
-> +#
-> +REPO_ORG_NAME=$1
-> +CURRENT_BRANCH_NAME=$2
-> +
-> +
-> +#
->  # Print test results
->  #
->  for TEST_EXIT in t/test-results/*.exit
-> @@ -17,3 +24,61 @@ do
->         fi
->  done
->
-> +
-> +#
-> +# Run Git bisect
-> +#
-> +run_bisect () {
-> +       TEST_SCRIPT=$1
-> +       BAD_REV=$2
-> +       GOOD_RV=$3
-> +       TMPDIR=$(mktemp -d -t "ci-report-bisect-XXXXXX" 2>/dev/null)
-> +       cat > "$TMPDIR/bisect-run.sh" <<EOF
+--0OAP2g/MAC+5xKAE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If you are doing a re-roll, then you could probably fix the style issue.
-' cat >"$TMPDIR..."  '
+This is actually worse than I thought; when git is being run with a
+detached work tree, GIT_INDEX_FILE is treated as a path relative to CWD,
+instead of the normal behavior of relative the top of the work tree.
 
-> +
-> +EOF
-> +       chmod +x "$TMPDIR/bisect-run.sh"
-> +       git bisect start $BAD_REV $GOOD_RV
-> +       git bisect run "$TMPDIR/bisect-run.sh"
-> +       if test -e ./t/$TEST_SCRIPT.sh && make --jobs=2 >/dev/null 2>&1
-> +       then
-> +               cd t && ./$TEST_SCRIPT.sh >/dev/null 2>&1
-> +       else
-> +               # If the test file does not exist or the build fails then tell
-> +               # Git bisect to skip the commit.
-> +               exit 125
-> +       fi
-> +       git bisect reset >/dev/null 2>&1
-> +}
-> +
-> +case "$CURRENT_BRANCH_NAME" in
-> +       master) STABLE_BRANCH="maint";;
-> +       next)   STABLE_BRANCH="master";;
-> +       pu)     STABLE_BRANCH="next";;
-> +esac
-> +
-> +if test "$REPO_ORG_NAME" = "git/git" && test -n $STABLE_BRANCH
-> +then
-> +       BAD_REV=$(git rev-parse HEAD)
-> +
-> +       # Travis CI clones are shallow. It is possible that the last good revision
-> +       # was not fetched, yet. Therefore we need to fetch all commits on the
-> +       # stable branch.
-> +       git config remote.origin.fetch "+refs/heads/$STABLE_BRANCH:refs/remotes/origin/$STABLE_BRANCH"
-> +       git fetch --unshallow --quiet
-> +       LAST_GOOD_REV=$(git merge-base $BAD_REV "remotes/origin/$STABLE_BRANCH")
-> +
-> +       for TEST_EXIT in t/test-results/*.exit
-> +       do
-> +               if test "$(cat "$TEST_EXIT")" != "0"
-> +               then
-> +                       TEST="${TEST_EXIT%.exit}"
-> +                       TEST_SCRIPT=${TEST#t/test-results/}
-> +                       echo "------------------------------------------------------------------------"
-> +                       echo "  $(tput setaf 1)${TEST} Bisect$(tput sgr0)"
-> +                       echo "------------------------------------------------------------------------"
-> +                       run_bisect $TEST_SCRIPT $BAD_REV $LAST_GOOD_REV
-> +                       echo ""
-> +                       echo ""
-> +               fi
-> +       done
-> +fi
+Normal and expected (according to this thread anyway):
 
-Regards,
-Pranit Bauva
+joey@darkstar:~/src/other/git/Documentation> input=3D"100644 8a1218a1024a21=
+2bb3db30becd860315f9f3ac52 1    frotz"
+joey@darkstar:~/src/other/git/Documentation> echo "$input" | GIT_INDEX_FILE=
+=3D.git/newindex git update-index --index-info=20
+joey@darkstar:~/src/other/git/Documentation> ls ../.git/newindex=20
+=2E./.git/newindex
+
+Fully detached worktree and git dir:
+
+joey@darkstar:/> echo "$input" | GIT_INDEX_FILE=3D.git/index git --git-dir=
+=3D/home/joey/src/other/git/.git --work-tree=3D/home/joey/src/other/git upd=
+ate-index --index-info=20
+fatal: Unable to create '/.git/index.lock': No such file or directory
+joey@darkstar:/> echo "$input" | GIT_WORK_TREE=3D/home/joey/src/other/git G=
+IT_DIR=3D/home/joey/src/other/git/.git GIT_INDEX_FILE=3D.git/newindex git u=
+pdate-index --index-info=20
+fatal: Unable to create '/.git/newindex.lock': No such file or directory
+
+Work tree detached via git configuration:
+
+joey@darkstar:~/src/other/git> git config core.worktree /home/joey/src/othe=
+r/git/tmptree
+joey@darkstar:~/src/other/git> mkdir tmptree
+joey@darkstar:~/src/other/git> cd tmptree/
+joey@darkstar:~/src/other/git/tmptree> mkdir Documentation
+joey@darkstar:~/src/other/git/tmptree> cd Documentation/
+joey@darkstar:~/src/other/git/tmptree/Documentation> echo "$input" | GIT_IN=
+DEX_FILE=3D.git/index git update-index --index-info
+fatal: Unable to create '/home/joey/src/other/git/tmptree/.git/index.lock':=
+ No such file or directory
+
+This seems to make it basically impossible for any program that wants to
+use GIT_INDEX_FILE to use anything other than an absolute path;
+there are too many configurations to keep straight that could change how
+git interprets what should be a simple relative path to a file.
+
+--=20
+see shy jo
+
+--0OAP2g/MAC+5xKAE
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIVAwUBV0ICpMkQ2SIlEuPHAQKeRQ/8CWvv8Tx06ezQU4MZLloeu8e6I+vZvfv1
+7x2o8eAqvrITwN8HuIDTbDhatc4YTB+CdAQWLutzABkAxckXLivkFg7B357pXxGI
+e7aF0Wo4lxecIqRZUoTUHx3Zq92lA7yfBBsSYf9I9Xb/PyVNFHurV2CSbdf/Gya5
+Pm41jpL9IdfUTRrIyZuN4uikuzRQspVUwKoE9rGf3TWwlvaONznQp3vvalpU+c1w
+HBSR7C4NbvJ/bEWh5/IeA/0ILC4tME+B4WV1Tknw9AuawqXQa14B9YeXtKLEOhfM
+UlgdQ0bdfNzsG/GzsETBRWnXtt45YReNvFILZ9KHlSxEN4t3GnQsDvoVZ0gQciTD
+xLvevVI0LAK1X70o/HyUCiJ+Rw5Nf2j6XdTTeALiP5jilJWgmkF/X1KHUh1LQLLk
+5C7griG4LivSaypNYG0fvflRBnpPG5ianSAqhLKtxNUlYfF0g/8xFE2e4zFstvlM
+7pTIdExcQkQt5qyBbNEIim+wkGhYLdk6DeMjakn1/XHZGjbRzqLyFhRDA5S/KLjJ
+fRTiyGX47JAMKv6KTPqzTqZ9vLUe6SErxyV2vzVc27FAltIndVg9n+bLqMl/iUus
+bqc3pzVyT1yfsdwHNDTj1lVe5/Q3eD7xnP1WeJC4mYkQL6qrzcCkXk2ZToMxZUWe
+AUUoviW3cJ8=
+=hN1t
+-----END PGP SIGNATURE-----
+
+--0OAP2g/MAC+5xKAE--
