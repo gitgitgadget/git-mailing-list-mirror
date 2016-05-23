@@ -1,34 +1,34 @@
 From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH v2 11/22] i18n: bisect: simplify error message for i18n
-Date: Mon, 23 May 2016 19:27:30 +0000
-Message-ID: <1464031661-18988-12-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v2 17/22] i18n: setup: mark strings for translation
+Date: Mon, 23 May 2016 19:27:36 +0000
+Message-ID: <1464031661-18988-18-git-send-email-vascomalmeida@sapo.pt>
 References: <1464031661-18988-1-git-send-email-vascomalmeida@sapo.pt>
 Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
 	Jiang Xin <worldhello.net@gmail.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 23 21:30:26 2016
+X-From: git-owner@vger.kernel.org Mon May 23 21:30:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4vYX-00025H-Kp
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 21:30:26 +0200
+	id 1b4vYX-00025H-3C
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 21:30:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753880AbcEWT3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2016 15:29:45 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:50841 "EHLO sapo.pt"
+	id S1754053AbcEWTaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 15:30:17 -0400
+Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:50856 "EHLO sapo.pt"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753676AbcEWT3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2016 15:29:42 -0400
-Received: (qmail 747 invoked from network); 23 May 2016 19:29:40 -0000
-Received: (qmail 4065 invoked from network); 23 May 2016 19:29:40 -0000
+	id S1753679AbcEWT3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 15:29:47 -0400
+Received: (qmail 798 invoked from network); 23 May 2016 19:29:45 -0000
+Received: (qmail 5052 invoked from network); 23 May 2016 19:29:45 -0000
 Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 23 May 2016 19:29:39 -0000
+          for <git@vger.kernel.org>; 23 May 2016 19:29:44 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -38,40 +38,93 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295373>
 
-The message was not being extracted by xgettext, although it was marked
-for translation, seemingly because it contained a command substitution.
-Moreover, eval_gettext should be used instead of gettext for strings
-with substitution.
-
-See step 4. of section 15.5.2.1 Preparing Shell Scripts for
-Internationalization from gettext manual [1]:
-"Simplify translatable strings so that they don't contain command
-substitution ("`...`" or "$(...)") [...]"
-
-[1] http://www.gnu.org/software/gettext/manual/gettext.html#Preparing-Shell-Scripts
+Update tests that compare the strings newly marked for translation to
+succeed when running under GETTEXT_POISON.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- git-bisect.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ setup.c                        | 16 ++++++++--------
+ t/t1506-rev-parse-diagnosis.sh |  2 +-
+ t/t4208-log-magic-pathspec.sh  |  4 ++--
+ 3 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 5d1cb00..737bf05 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -277,8 +277,9 @@ bisect_state() {
- 	0,*)
- 		die "$(gettext "Please call 'bisect_state' with at least one argument.")" ;;
- 	1,"$TERM_BAD"|1,"$TERM_GOOD"|1,skip)
--		rev=$(git rev-parse --verify $(bisect_head)) ||
--			die "$(gettext "Bad rev input: $(bisect_head)")"
-+		bisected_head=$(bisect_head)
-+		rev=$(git rev-parse --verify "$bisected_head") ||
-+			die "$(eval_gettext "Bad rev input: \$bisected_head")"
- 		bisect_write "$state" "$rev"
- 		check_expected_revs "$rev" ;;
- 	2,"$TERM_BAD"|*,"$TERM_GOOD"|*,skip)
+diff --git a/setup.c b/setup.c
+index c86bf5c..6d0e0c9 100644
+--- a/setup.c
++++ b/setup.c
+@@ -157,8 +157,8 @@ static void NORETURN die_verify_filename(const char *prefix,
+ 					 int diagnose_misspelt_rev)
+ {
+ 	if (!diagnose_misspelt_rev)
+-		die("%s: no such path in the working tree.\n"
+-		    "Use 'git <command> -- <path>...' to specify paths that do not exist locally.",
++		die(_("%s: no such path in the working tree.\n"
++		      "Use 'git <command> -- <path>...' to specify paths that do not exist locally."),
+ 		    arg);
+ 	/*
+ 	 * Saying "'(icase)foo' does not exist in the index" when the
+@@ -170,9 +170,9 @@ static void NORETURN die_verify_filename(const char *prefix,
+ 		maybe_die_on_misspelt_object_name(arg, prefix);
+ 
+ 	/* ... or fall back the most general message. */
+-	die("ambiguous argument '%s': unknown revision or path not in the working tree.\n"
+-	    "Use '--' to separate paths from revisions, like this:\n"
+-	    "'git <command> [<revision>...] -- [<file>...]'", arg);
++	die(_("ambiguous argument '%s': unknown revision or path not in the working tree.\n"
++	      "Use '--' to separate paths from revisions, like this:\n"
++	      "'git <command> [<revision>...] -- [<file>...]'"), arg);
+ 
+ }
+ 
+@@ -220,9 +220,9 @@ void verify_non_filename(const char *prefix, const char *arg)
+ 		return; /* flag */
+ 	if (!check_filename(prefix, arg))
+ 		return;
+-	die("ambiguous argument '%s': both revision and filename\n"
+-	    "Use '--' to separate paths from revisions, like this:\n"
+-	    "'git <command> [<revision>...] -- [<file>...]'", arg);
++	die(_("ambiguous argument '%s': both revision and filename\n"
++	      "Use '--' to separate paths from revisions, like this:\n"
++	      "'git <command> [<revision>...] -- [<file>...]'"), arg);
+ }
+ 
+ int get_common_dir(struct strbuf *sb, const char *gitdir)
+diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
+index 86c2ff2..79a0251 100755
+--- a/t/t1506-rev-parse-diagnosis.sh
++++ b/t/t1506-rev-parse-diagnosis.sh
+@@ -106,7 +106,7 @@ test_expect_success 'incorrect revision id' '
+ 	test_must_fail git rev-parse foobar:file.txt 2>error &&
+ 	grep "Invalid object name '"'"'foobar'"'"'." error &&
+ 	test_must_fail git rev-parse foobar 2> error &&
+-	grep "unknown revision or path not in the working tree." error
++	test_i18ngrep "unknown revision or path not in the working tree." error
+ '
+ 
+ test_expect_success 'incorrect file in sha1:path' '
+diff --git a/t/t4208-log-magic-pathspec.sh b/t/t4208-log-magic-pathspec.sh
+index d8f23f4..001343e 100755
+--- a/t/t4208-log-magic-pathspec.sh
++++ b/t/t4208-log-magic-pathspec.sh
+@@ -18,7 +18,7 @@ test_expect_success '"git log :/" should not be ambiguous' '
+ test_expect_success '"git log :/a" should be ambiguous (applied both rev and worktree)' '
+ 	: >a &&
+ 	test_must_fail git log :/a 2>error &&
+-	grep ambiguous error
++	test_i18ngrep ambiguous error
+ '
+ 
+ test_expect_success '"git log :/a -- " should not be ambiguous' '
+@@ -31,7 +31,7 @@ test_expect_success '"git log -- :/a" should not be ambiguous' '
+ 
+ test_expect_success '"git log :" should be ambiguous' '
+ 	test_must_fail git log : 2>error &&
+-	grep ambiguous error
++	test_i18ngrep ambiguous error
+ '
+ 
+ test_expect_success 'git log -- :' '
 -- 
 2.7.3
