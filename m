@@ -1,81 +1,105 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v6 3/3] bisect--helper: `write_terms` shell function in
- C
-Date: Mon, 23 May 2016 17:10:03 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605231709170.4449@virtualbox>
-References: <1462546167-1125-1-git-send-email-pranit.bauva@gmail.com> <1463031127-17718-1-git-send-email-pranit.bauva@gmail.com> <1463031127-17718-4-git-send-email-pranit.bauva@gmail.com> <CAPig+cS=zcSVLwARZ5A8hdiE0wqgYPU2Jwnr0OcjDXZFO--cZw@mail.gmail.com>
- <alpine.DEB.2.20.1605161508230.3303@virtualbox> <CAFZEwPNkPZ6JnzqbTyhYMwEF-hor2rm39NcB84omrh+uCiVPNw@mail.gmail.com> <alpine.DEB.2.20.1605231301560.4122@virtualbox> <CAP8UFD1gjfFC_v23RDiHedzwQm3XoYJKv32GT7R9GNyK4pXJpQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v7 3/3] bisect--helper: `write_terms` shell function in C
+Date: Mon, 23 May 2016 12:01:46 -0400
+Message-ID: <CAPig+cSOOv9sGGCTD7=5As9Opu3=e9ofkTpFhCzXC9cJPK21Tg@mail.gmail.com>
+References: <1463031127-17718-1-git-send-email-pranit.bauva@gmail.com>
+	<1464014928-31548-1-git-send-email-pranit.bauva@gmail.com>
+	<1464014928-31548-4-git-send-email-pranit.bauva@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Pranit Bauva <pranit.bauva@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
 	Lars Schneider <larsxschneider@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 23 17:10:31 2016
+	Christian Couder <chriscool@tuxfamily.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 23 18:01:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4rV1-0000Dr-9G
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 17:10:31 +0200
+	id 1b4sIh-0000ga-9K
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 18:01:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754138AbcEWPK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2016 11:10:27 -0400
-Received: from mout.gmx.net ([212.227.15.15]:64575 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752484AbcEWPK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2016 11:10:26 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MLO9y-1b4JWj0xjm-000Ywd; Mon, 23 May 2016 17:10:03
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAP8UFD1gjfFC_v23RDiHedzwQm3XoYJKv32GT7R9GNyK4pXJpQ@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:4+wLmAWSP9gN2UZXGavYKgl+jVA7bPA+s6PvtZIbXhMd/+1xz+A
- G7zjAFh7pzWotNf0N2hvf7mkG4Y2DKSoYKNrjZy4R8v9IWllrkjCYUB9zsrFe2FBNzinzG2
- VlF7ccnFUW1wxPIujHLidJrmKbbSxgHL8JOm2OvoDR4arN/3spqe/x8sHK6RFAT6Av1ndVD
- LRN+hdPHwBZ05SKY0iQlQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:oqqj6vtbYNc=:OTFM01hmOVXQIHqGAEQJ3H
- HgPWGec4D4revnY4QLqT+86g3Oj0z79uwQYtaK7rK+J6n5Z7gWv4cRt5rY4CM+oM6NSJRbFXG
- KrXPkk21yGZYA1L/bTKL0gdeKi929z5/a8u2wgm/x+tRBinjixLgP1Okvu3ZPpGc7Pqs1yHQj
- vye2lOQpvTGZNnnNFgWtV/fPwUHsmWJ0al62S9Ix+hKjZk9ZmdzEYSbDgSDtfly2RiKFQ/XX2
- P7RGy6dRF95nSLgadpTH3RaTe8La6gQq3PiqaRdQw3gyQNbe0zhEvpdw0lIQddcHwpfWXAiaQ
- dAwlwG7Hd0OFuQ6kyMRcLJiuV0dl2AwZkNyqSSIxBvj2Fuh5v8OHwKwkC5Uz5m6uBF5++sAkq
- iBtZzOnTWHVHPWydubw1Z4j8I85KdqaLKtaizy23VrYcF+nsoRgXoqV7i4ENjWdDGENmuLt6q
- T37oMsoEkkLqBMiQUOjK27jwFIa1iAuSXDH7tylPwZbMu+ZtQFAHunxVMsbDMwKxZGhPrCBuB
- nuU9oIm8FWBT6UMzwvdh1sVUcB9pvf3gXo9nobv7TKImgazYttgTap+7X0irLc7IdFq/moux6
- P5B4e2JUxV93c2Yz2C5CYTcOYx5XblBpNVDXjyuH+8dTLzJ/O3mNuenoNmEsVPMWMyXrMKFaE
- Yrhfx0G8gi/4JTmRCaqC8LjI2iLKTddLWmk9ezPhAJOsNTPxr39CLkdyUuK37cCSazZm40KcT
- j6TyXyNTjtv+05nP0CrC2fK06VjMqE+RMYVLf3d5q6aHYEtorD7X/q9WxYk5A5KlebT4kTA6 
+	id S1753085AbcEWQBs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 12:01:48 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:33493 "EHLO
+	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752446AbcEWQBr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 12:01:47 -0400
+Received: by mail-io0-f196.google.com with SMTP id s67so4200079ios.0
+        for <git@vger.kernel.org>; Mon, 23 May 2016 09:01:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=nSWekPMVXV2mlowfyPF7Iw7VL1fNlvtMohufco04E4g=;
+        b=DdVKEfz25lAZPS6qFVDChZCgS9E5sLVy3Kbd6aOclO06b01SArCCnGQf/7Wff3L6HY
+         DbWEwgulfLO/89b22JgvEYv3YclbadDvBH8PToG9wj242Ez6sVq49/lljrE44cZ9KnXT
+         7B5wLMU/IfXM9csQgDRFh0Q6kI0RYLFMOhWKCHWb0w4HjVXeDmNzHRdvNU8TkieoinOK
+         cD/v4zBQEfSDS2Eer2KCETIjkRUfe1l8O/oVByBHdoNq4/j5BY9JcBg2yb395v4Oj2fn
+         cOIIpP3RQ0syZbuF21NaVCybOLfx6gN5BfSJb4qEntweyKP5EeTEP9/nkh7uTlQdDItc
+         Ta9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=nSWekPMVXV2mlowfyPF7Iw7VL1fNlvtMohufco04E4g=;
+        b=eiHSmOXOFHD5lORBBAr2xsaSssjfth28OHO+OHmHXtNZx3kiufK6syfb6BHv/SjrCW
+         QKIz8kBkXPnwZnoiwDA5LRPAYsBU1IjUIVxHXJdVaVzJcTDWCORTa9mcAuxRSRSwrSnY
+         FfklX4SXxMimrguBMWKeXhW/jkXOM3Fa3+s2w4M6IgSVe/zXU/UgCMsiArTV4c9nJs57
+         Rs6JfXcbmev2a8fDtRU0Y7V+rtAbXQ9HZ4DGnw7AKQL7T1y7mG7NOm4+pIJuLsLXc5sx
+         TxR0tsOqhYvH7TVBx3JE4d0Nn8WYezYDsEZBUU9cV2/BGIGbehvjQHOtAYtfpn58ntFh
+         yL1A==
+X-Gm-Message-State: AOPr4FXZGXyEHzAa30GQ3+haiM//sOGtzhnVlyquAHQRLM8hrVnVG52Iz7lGifPEoaVOg+sxH5PFUE/sYBX8bQ==
+X-Received: by 10.107.47.37 with SMTP id j37mr12535900ioo.168.1464019306268;
+ Mon, 23 May 2016 09:01:46 -0700 (PDT)
+Received: by 10.79.110.21 with HTTP; Mon, 23 May 2016 09:01:46 -0700 (PDT)
+In-Reply-To: <1464014928-31548-4-git-send-email-pranit.bauva@gmail.com>
+X-Google-Sender-Auth: A4EVlAb1R3N77-PJU441wvCoZWU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295334>
 
-Hi Christian,
+On Mon, May 23, 2016 at 10:48 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> Reimplement the `write_terms` shell function in C and add a `write-terms`
+> subcommand to `git bisect--helper` to call it from git-bisect.sh . Also
+> remove the subcommand `--check-term-format` as it can now be called from
+> inside the function write_terms() C implementation.
+> [...]
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> ---
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> @@ -56,18 +58,38 @@ static int check_term_format(const char *term, const char *orig_term)
+> +static int write_terms(const char *bad, const char *good)
+> +{
+> +       FILE *fp;
+> +       int res;
+> +
+> +       if (!strcmp(bad, good))
+> +               return error(_("please use two different terms"));
+> +
+> +       if (check_term_format(bad, "bad") || check_term_format(good, "good"))
+> +               return -1;
+> +
+> +       fp = fopen(git_path_bisect_write_terms(), "w");
+> +       if (!fp)
+> +               return error(_("could not open the file to write terms"));
 
-On Mon, 23 May 2016, Christian Couder wrote:
+By adding two pieces of information, you could make this error message
+much more helpful for anyone trying to debug the failure.
+Specifically:
 
-> On Mon, May 23, 2016 at 1:07 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Fri, 20 May 2016, Pranit Bauva wrote:
-> >
-> >> Frankly, I have no idea what you mean by libification but I will use
-> >> error() since efforts for libification have already started.
-> >
-> > The term "libification" is frequently used in the Git project: it means to
-> > convert code that was formerly used in a standalone program to make it
-> > usable as a library function.
-> 
-> Yeah, and Git standalone programs in C are builtin/*.c files,
+(1) the pathname for which open() failed
+(2) the actual system-level error
 
-Do not forget the non-builtins, e.g. git-upload-pack. And scripts.
+For (2), you could use strerror(errno) or, better yet, error_errno()
+which recently graduated to 'master'.
 
-Ciao,
-Johannes
+> +       res = fprintf(fp, "%s\n%s\n", bad, good);
+> +       fclose(fp);
+> +       return (res < 0) ? -1 : 0;
+> +}
