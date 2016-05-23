@@ -1,51 +1,129 @@
-From: Yotam Gingold <yotam@yotamgingold.com>
-Subject: Re: Git reset --hard with staged changes
-Date: Mon, 23 May 2016 00:55:55 +0000 (UTC)
-Message-ID: <loom.20160523T023140-975@post.gmane.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 05/21] i18n: sequencer: mark entire sentences for translation
+Date: Sun, 22 May 2016 21:00:37 -0400
+Message-ID: <CAPig+cSoq=+jsKPrqOG5khgK64VvyuJ1_EeumFBFYiaLnL27UA@mail.gmail.com>
+References: <1463585274-9027-1-git-send-email-vascomalmeida@sapo.pt>
+	<1463585274-9027-6-git-send-email-vascomalmeida@sapo.pt>
+	<CAPig+cQzsxMMv1XSdStFDs08C3qvb_Ttb4oVeN3T1si85v=f7w@mail.gmail.com>
+	<573CD84F.7000207@sapo.pt>
+	<CACBZZX790=CtGnryUNrc7S1rpV7D75MOnWnXqd=Smdkojx=ymw@mail.gmail.com>
+	<xmqqk2ilbo2o.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 23 03:00:17 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Vasco Almeida <vascomalmeida@sapo.pt>,
+	Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 23 03:00:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4eEC-0007DS-7D
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 03:00:16 +0200
+	id 1b4eEd-0007Rt-1D
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 03:00:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752726AbcEWBAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 May 2016 21:00:09 -0400
-Received: from plane.gmane.org ([80.91.229.3]:55677 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752706AbcEWBAI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 May 2016 21:00:08 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1b4eE1-00075m-4M
-	for git@vger.kernel.org; Mon, 23 May 2016 03:00:05 +0200
-Received: from c-73-200-28-96.hsd1.dc.comcast.net ([73.200.28.96])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 23 May 2016 03:00:05 +0200
-Received: from yotam by c-73-200-28-96.hsd1.dc.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 23 May 2016 03:00:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 73.200.28.96 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/601.5.17 (KHTML, like Gecko) Version/9.1 Safari/601.5.17)
+	id S1752735AbcEWBAj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 May 2016 21:00:39 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:34011 "EHLO
+	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752706AbcEWBAi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 May 2016 21:00:38 -0400
+Received: by mail-io0-f180.google.com with SMTP id 190so183700904iow.1
+        for <git@vger.kernel.org>; Sun, 22 May 2016 18:00:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=fzGJBh3FIWXmYCYaUHdD4GYDrT7xJdfFoVXyRwzH9nE=;
+        b=DnfNzDP1Ga1ClX1nhyLvbJjBRRTaNk7aRjZSh3QH5VoURl6v9raiH0lcL+FzsICy32
+         nRkmzmruewYactm6dQupoXY9uoNsvDU+RciKRf6nJ9/DgIjfAQaDwPqJM6Yw6xOrBg3s
+         7zq7HgtiTKV3ggyKTvQJDHusOPj31l27caRgQFHCcHBaiMHI4ds5yRRa5OYkh4wkGAfx
+         6v0cZhINtXUlEMig8IzCDKDLz7IS0ChY3zu7uhGvr0mkcwfCP9dur9yK/4P6exkH5dLg
+         cOpV33gAjTT1K13xorgjOCxyEaQewPJEgF78gnyl/qZmur0BWBAP1d9UpKFAlUpz/mfb
+         +AdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=fzGJBh3FIWXmYCYaUHdD4GYDrT7xJdfFoVXyRwzH9nE=;
+        b=mlNWiH7qijMLt5uufWyCTzy90oFZE4YY9rMeI6eooUttq5jifgGdB2mOJjN69eSnT3
+         iMXEVNjFdpFCK0wVxutGFLrS4TuFUPEvWm7cH3Q8SYTZesmcL0fZOXshuC20Mf3N+hkd
+         49ZTHDmASbiQ6n8AbC5beykPkw+91mP+Ij3u3GCncisnlWHkoVWt39Ye3eDRYrunOW/H
+         Ru9E6tt7iGFXWW1N55iXgF8Mn3RrsQGyKuwgbLcrB7EylV84Elg+Hlj7WST9wRdUo/Cn
+         /REC/kNYsD8RrGgNVl+c9hDnssyA6rcqcCQim0MRVxxgT7JJ9uhaT5yZw3WQl7VnvSrn
+         Pcng==
+X-Gm-Message-State: ALyK8tK7fLal+AqXSZnOjwLXU0qEA9ZHS54LGvNq3pXp9WAop4IWiXk6xo2Km5sTaLEZwWz3tf7hGaIHEYE0CQ==
+X-Received: by 10.36.31.3 with SMTP id d3mr1908990itd.84.1463965237237; Sun,
+ 22 May 2016 18:00:37 -0700 (PDT)
+Received: by 10.79.110.21 with HTTP; Sun, 22 May 2016 18:00:37 -0700 (PDT)
+In-Reply-To: <xmqqk2ilbo2o.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: rYopRgQJmCwGQTqigxgYylnh2G0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295297>
 
-UGllcnJlLUZyYW7Dp29pcyBDTEVNRU5UIDxsaWtleW4gPGF0PiBnbWFpbC5jb20+IHdyaXRlczoKPiAyMDE0LTA2LTEwIDE3OjI3IEdNVCswMjowMCBEYXZpZCBLYXN0cnVwIDxkYWsgPGF0PiBnbnUub3JnPjoKPj4gUGllcnJlLUZyYW7Dp29pcyBDTEVNRU5UIDxsaWtleW4gPGF0PiBnbWFpbC5jb20+IHdyaXRlczoKPj4KPj4+IC4uLgo+Pj4KPj4+IEhtIEkgc2VlLiBFdmVuIHRob3VnaCB0aGUgZG9jdW1lbnRhdGlvbiBkb2Vzbid0IG1ha2UgaXQgdmVyeSBjbGVhcgo+Pj4gYWJvdXQgd2hhdCBoYXBwZW5zIHRvIHN1Y2ggZmlsZXMsIGl0IHR1cm5zIG91dCB0aGUgc2NlbmFyaW8gd2UKPj4+IHN0dW1ibGVkIHVwb24gc2VlbXMgdG8gYmUgdGhlIHNwZWNpYWwgdXNlIGNhc2UgYWZ0ZXIgYWxsLiBUaGFua3MgZm9yCj4+PiBzaGVkZGluZyBzb21lIGxpZ2h0IG9uIHRoaXMgOikgSSB3b25kZXIgd2h5IGRvZXMgZ2l0LXJlc2V0J3MgaGFyZCBtb2RlCj4+PiBub3QgYWx3YXlzIHJlbW92ZSB1bnRyYWNrZWQgZmlsZXMgdGhlbj8KPj4KPj4gQmVjYXVzZSBpdCBuZXZlciByZW1vdmVzIHRoZW0/ICBHaXQgb25seSByZW1vdmVzIGZpbGVzIG9uY2UgaXQgdHJhY2tz
- Cj4+IHRoZW0uICBUaGlzIGluY2x1ZGVzIHRoZSBvcGVyYXRpb24gb2YgcmVtb3ZpbmcgX2FuZF8gdW50cmFja2luZyB0aGVtLAo+PiBsaWtlIHdpdGggZ2l0IHJlc2V0IC0taGFyZC4KPj4KPj4gVGhlIG9ubHkgY29tbWFuZCB3aGljaCBleHBsaWNpdGx5IG1lc3NlcyB3aXRoIHVudHJhY2tlZCBmaWxlcyBpcwo+PiBnaXQtY2xlYW4uCj4+Cj4+IC0tCj4+IERhdmlkIEthc3RydXAKPiAKPiAuLi4gSSBjb3VsZG4ndCBmaW5kIGEgZGVmaW5pdGlvbiB0aGF0IGJhY2tzIHRoaXMgaW4gdGhlIG1hbgo+IHBhZ2VzIChtYXliZSB0aGUgZ2l0LWdsb3NzYXJ5IHdvdWxkIGJlIGEgZ29vZCBwbGFjZSBmb3IgaXQ/KSwgYW5kIHRoZQo+IG9uZSBmcm9tIHRoZSBHaXQtU2NtIGJvb2sgb25seSBjb25mdXNlZCBtZSBpbiB0aGlua2luZyB0aGUgb3Bwb3NpdGUuCj4gVGhhbmtzIGZvciB0aGUgY2xhcmlmaWNhdGlvbgo+IAo+IC0tCj4gUGllcnJlLUZyYW7Dp29pcyBDTEVNRU5UCj4gQXBwbGljYXRpb24gZGV2ZWxvcGVyIGF0IFVwY2FzdCBTb2NpYWwKCkp1bXBpbmcgaW50byB0aGlzIGNvbnZlcnNhdGlvbiB0d28geWVhcnMgbGF0ZXIqLiBUaGVyZSdzIGNvbmZ1c2lvbi
- BhYm91dCB3aGF0CmNvbnN0aXR1dGVzIGEgdHJhY2tlZCBmaWxlIGZvciBnaXQgcmVzZXQgLS1oYXJkLCBhbmQgZ29vZCByZWFzb25zIGZvciBnaXQgcmVzZXQKLS1oYXJkJ3MgYmVoYXZpb3IuIE5ldmVydGhlbGVzcywgSSB0aGluayB3ZSBjYW4gYWxsIGFncmVlIHRoYXQgdGhlIG1hbiBwYWdlCmVudHJ5IGZvciBnaXQgcmVzZXQgLS1oYXJkIGlzIHdvZWZ1bGx5IGRlZmljaWVudDoKCi0taGFyZCBSZXNldHMgdGhlIGluZGV4IGFuZCB3b3JraW5nIHRyZWUuIEFueSBjaGFuZ2VzIHRvIHRyYWNrZWQgZmlsZXMgaW4gdGhlCndvcmtpbmcgdHJlZSBzaW5jZSA8Y29tbWl0PiBhcmUgZGlzY2FyZGVkLgoKVGhpcyBzaG91bGQgYmUgY2xhcmlmaWVkIHRvIGRlZmluZSB3aGF0IGEgdHJhY2tlZCBmaWxlIGlzLiBJIHByb3Bvc2UgYXBwZW5kaW5nOgoKICAgIEEgZmlsZSBpcyBjb25zaWRlcmVkIHRyYWNrZWQgaWYgaXQgZXhpc3RzIGluIGEgcHJpb3IgY29tbWl0IG9yIGluIHRoZQogICAgc3RhZ2luZyBhcmVhLiBOb3RlIHRoYXQgYSBuZXdseSBhZGRlZCBmaWxlIG5vdCBpbiBhbnkgcHJpb3IgY29tbWl0IHdpbGwgYmUKICAgIHJlbW92ZWQuCgpJIHdvdWxkIGFs
- c28gbGlrZSB0byBwcm9wb3NlIHRoYXQgdGhlIHN0YWdpbmcgYXJlYSdzIHRyZWUgb2JqZWN0IGJlIHNhdmVkLApwZXJoYXBzIGluIHRoZSByZWZsb2cgb3IgcGVyaGFwcyBqdXN0IGFzIGEgZGFuZ2xpbmcgb2JqZWN0LiBUaGlzIHdvdWxkIGFsbG93CmdyYWNlZnVsIHJlY292ZXJ5IGZyb20gZ2l0IHJlc2V0IC0taGFyZC4gV2l0bmVzcyB0aGUgbWFueSBxdWVzdGlvbnMgYW5kIGFuc3dlcnMKb24gcmVjb3Zlcnk6CiAgICBodHRwOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVlc3Rpb25zLzczNzQwNjkvdW5kby1naXQtcmVzZXQtaGFyZC13aXRoLXVuY29tbWl0dGVkLWZpbGVzLWluLXRoZS0Kc3RhZ2luZy1hcmVhCiAgICBodHRwOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVlc3Rpb25zLzU3ODgwMzcvcmVjb3Zlci1mcm9tLWdpdC1yZXNldC1oYXJkCiAgICBodHRwOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVlc3Rpb25zLzU0NzMvaG93LWNhbi1pLXVuZG8tZ2l0LXJlc2V0LWhhcmQtaGVhZDEKICAgIGh0dHA6Ly9naXRyZWFkeS5jb20vYWR2YW5jZWQvMjAwOS8wMS8xNy9yZXN0b3JpbmctbG9zdC1jb21taXRzLmh0bWwKICAgIGh0dHBzOi8vYmFuaS5jb20uYnIvMj
- AxNC8xMC9yZWNvdmVyaW5nLWxvc3QtZmlsZXMtYWZ0ZXItYS1naXQtcmVzZXQtaGFyZC8KICAgIGh0dHBzOi8vbWVkaXVtLmNvbS9AQ2FycmllR3Vzcy9ob3ctdG8tcmVjb3Zlci1mcm9tLWEtZ2l0LWhhcmQtcmVzZXQtYjgzMGI1ZTNmNjBjCgpBbGwgb2YgdGhlc2Ugc29sdXRpb25zIHJlY292ZXIgdGhlIGNvbnRlbnRzIG9mIGZpbGVzLCBidXQgbm90IHRoZWlyIG5hbWVzIG9yIHRoZQpkaXJlY3Rvcnkgc3RydWN0dXJlLiBTYXZpbmcgdGhlIHRyZWUgb2JqZWN0IHNvbWV3aGVyZSAoYW55d2hlcmUhKSB3b3VsZCBzb2x2ZQp0aGlzIHByb2JsZW0uCgpJIHdhcyBiaXR0ZW4gYnkgdGhpcyBpbiBhIHZpY2lvdXMgd2F5LiBJIHdhcyBzZXR0aW5nIHVwIGEgbmV3IHJlcG9zaXRvcnkgZm9yIGEKYnVuY2ggb2YgY29kZSBhbmQgZGF0YSAoZ2l0IGluaXQ7IGdpdCBhZGQgLiksIGNoYW5nZWQgbXkgbWluZCBhYm91dCBhZGRpbmcgdGhlCmRhdGEgKGdpdCByZXNldCAtLWhhcmQpLCBhbmQgbmVhcmx5IGxvc3QgZXZlcnl0aGluZy4gVGhlIG9ubHkgdHJlZSBvYmplY3QgdGhhdApjb3VsZCBiZSBmb3VuZCB3YXMgYW4gZW1wdHkgb25lLCBzbyBJIGdvdCBmaWxlIGNv
- bnRlbnRzIHdpdGhvdXQgbmFtZXMgb3IKZGlyZWN0b3JpZXMgKG5vdCBnb29kLCBiZWNhdXNlIGV4cGVyaW1lbnRhbCBjb25kaXRpb25zIGZvciB0aGUgZGF0YSB3ZXJlIGVuY29kZWQKaW4gdGhlIGRpcmVjdG9yeSBzdHJ1Y3R1cmUpLgoKQ2hlZXJzLApZb3RhbQ==
+On Sun, May 22, 2016 at 8:44 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>> For what it's worth I agree with you and disagree with Eric here and
+>> Junio in the "[PATCH 03/21] i18n: advice: internationalize message f=
+or
+>> conflicts" thread.
+>>
+>> Of course there's a trade-off in source code verbosity when you have
+>> to change every occurance of (pseudocode):
+>>
+>>     "our %s failed" # %s can be revert or merge
+>>
+>> to:
+>>
+>>     if (action =3D=3D "merge")
+>>         gettext("our merge failed")
+>>     elsif (action =3D=3D "revert")
+>>         gettext("our revert failed")
+>>
+>> But forcing the translator to turn every such occurrence that flows
+>> naturally in English into "the '%s' command failed" leads to a worse
+>> translation.
+>>
+>> For example, if I ever get around to doing the Icelandic translation
+>> which I've had on my backlog I might translate something like this:
+>> ...
+>> I.e. even though you might be running "git merge" or "git revert" th=
+e
+>> UI is talking about those terms in the translated using native terms
+>> for the action of merging or reverting, but referring to the literal
+>> command names in English.
+>> ...
+>> It just doesn't flow as well, and leads to a more verbose translatio=
+n.
+>
+> OK.  I couldn't judge your example in Icelandic, but I have enough
+> trust in you to believe your conclusion ;-).
+
+I have no problem viewing the issue from either side (the sentence
+referencing a *literal* command or the *action* of the command), and
+understood that it could go either way when I wrote the review. What
+threw me was that 3/21 seemed to be using the literal command in the
+strings rather than the action, despite the commit message. For
+instance:
+
+    error(_("commit is not possible because ..."));
+    error(_("merge is not possible because ..."));
+    error(_("pull is not possible because ..."));
+    error(_("revert is not possible because ..."));
+
+In each case, the first word looks like a git command; it's not
+particularly grammatically correct. Had Vasco instead changed them to:
+
+    committing is not possible...
+    merging is not possible...
+    pulling is not possible...
+    reverting is not posible...
+
+then the issue likely would never have come up.
