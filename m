@@ -1,115 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Odd Difference Between Windows Git and Standard Git
-Date: Mon, 23 May 2016 11:52:37 -0700
-Message-ID: <xmqqeg8sa9oq.fsf@gitster.mtv.corp.google.com>
-References: <nhlqd4$ekr$1@ger.gmane.org>
-	<c07df4ac-08c9-8eaa-0233-06616945c857@web.de>
-	<c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com>
-	<ede1c113-1ab8-6043-3e39-bbacec5db31c@web.de>
-	<xmqqy474g3cv.fsf@gitster.mtv.corp.google.com>
-	<xmqqfutcg0pe.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1605231310190.4122@virtualbox>
+From: Joey Hess <id@joeyh.name>
+Subject: Re: GIT_INDEX_FILE relative path breaks in subdir
+Date: Mon, 23 May 2016 14:52:58 -0400
+Message-ID: <20160523185258.GA10389@kitenet.net>
+References: <20160517171836.GA12183@kitenet.net>
+ <xmqqy478wptr.fsf@gitster.mtv.corp.google.com>
+ <20160517182645.GA27396@kitenet.net>
+ <20160522190404.GA20998@kitenet.net>
+ <xmqqwpmkafmb.fsf@gitster.mtv.corp.google.com>
+ <20160523172951.GA1184@kitenet.net>
+ <xmqqiny4aaq9.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Jon Forrest <nobozo@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 23 20:52:46 2016
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ZPt4rx8FFjLCG7dd"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 23 20:53:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4uy6-0003og-FZ
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 20:52:46 +0200
+	id 1b4uyY-00041L-U4
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 20:53:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752564AbcEWSwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2016 14:52:42 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59444 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751310AbcEWSwl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2016 14:52:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8CB291CCBC;
-	Mon, 23 May 2016 14:52:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ax0CwHnFkFdXbuKOryK5CeVl410=; b=EF7iwq
-	LWGTu8YyPVzelzu9thAfczPd1UN9KtYaync5lZTFB5HgxWSppQ+6l8ugA2nGY+Po
-	630tP+xfVZVGNVSWQa3Q1rCaBanKunX0yEo1/kxCYV8Nmx6kktX7CRNTjV5zE6NI
-	KH5Yi3vrnP/Ez2rE/QDdtoZPHxmVxrY0cbLaw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CWGh/4k0R0ANGvtQlMiJ/FiRjwrD0KAN
-	T64DfhE88zQv4PTo1IMSctQ/WSEjRSnSWNUPxEiHj2biNn1el4v7gOoKNWezKFHb
-	2mus5iLw7OZIX8FldYAOvrqUy3aboq5fc+kp/956hdGi4rSnaPh0DdehYaOCAU7o
-	jOAfjwJe7eo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 854791CCBB;
-	Mon, 23 May 2016 14:52:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EAC511CCBA;
-	Mon, 23 May 2016 14:52:39 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1605231310190.4122@virtualbox> (Johannes
-	Schindelin's message of "Mon, 23 May 2016 13:12:07 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8622FD16-2117-11E6-A03C-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1754529AbcEWSxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 14:53:10 -0400
+Received: from kitenet.net ([66.228.36.95]:56882 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753246AbcEWSxJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 14:53:09 -0400
+X-Question: 42
+Authentication-Results: kitenet.net;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=ilgT2Mgo;
+	dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+	t=1464029579; bh=8MDfntb6PlsCvWGAstz3m0BMUN5+mNiMafT2RPr0kEE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ilgT2Mgow62IE1FYPi4MkUiJUKQ3BUZTtcO5Yvsde5lfVWv+t5k0/TPgsM9NShUcV
+	 0wuBI/CtZhzfQ2BJ9B4mtxyiR5kZ/2qk7nnk6pbZj83w78GFDP0GlafMjJ92DjarPi
+	 22aePH2WkR+6A44fpKxyiaRK+BFLdYVQlTddbCBw=
+Content-Disposition: inline
+In-Reply-To: <xmqqiny4aaq9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.6.0 (2016-04-01)
+X-Spam-Status: No, score=-98.8 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RDNS_DYNAMIC,SPF_SOFTFAIL,
+	USER_IN_WHITELIST autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on kite.kitenet.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295350>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> Of course, if you are doing network mount between systems with and
->> without filemode support, the result would depend on where you did
->> the "git init", so that would not help.
->> 
->> Which means that other probed things like symlink support and case
->> sensitivity are likely to be wrong in the .git/config that the user
->> may want to fix.
->
-> What we could do is to make the default config setting platform-dependent,
-> a la CRLF_NATIVE.
->
-> I imagine that we would want this for core.filemode, core.ignorecase and
-> core.symlinks.
->
-> What do you think?
+--ZPt4rx8FFjLCG7dd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The reason why we probe for filemode, icase, etc. at repository
-creation time and record the result in the configuration is because
-we do not to want to do the auto-probing at runtime, every time we
-run any Git command.  You may be able to say "On this platform, no
-matter what filesystem is in use, you will always get icase and you
-will never have executable bit", and a build on such a platform can
-hardcode these three values.  But on other platforms these may be
-per-filesystem properties, and their binaries would not be able to
-hardcode the choices, which would mean we would record these three
-in .git/config on these platforms when a repository is created.
+Junio C Hamano wrote:
+> I personally think that it would be OK as long as we do not change
+> behaviours for those who do not use core.worktree, $GIT_DIR and/or
+> $GIT_WORK_TREE and change behaviour for others to match that
+> behaviour, simply because the plain vanilla no-configuration would
+> be used by the largest number of people.  But depending on the size
+> of the "minority", you may get pushback from them.
 
-Git built for Windows may have core.filemode=false as "the default
-config setting platform-dependent, a la CRLF_NATIVE"; how would that
-interact with a configured core.filemode value in .git/config?
+The minority affected would I think be limited to:
 
-If a repository that is initialized on a non Windows system is
-network mounted or rsynced and made available on Windows, its
-.git/config would record values that are suitable for the origin
-platform (and the filesystem the repository was originally on).  On
-Windows where you can declare "no case sensitivity, no symlink and
-no executable bits", a solution would be to ignore these three
-configurable values and always use hardcoded values.  Everything
-would work without the end user even having to know what is going
-on.
+1. People who have a configuration that *always* sets core.worktree etc,
+   and used GIT_INDEX_FILE with a cwd-relative path and it just happened
+   to work for them.
 
-But that would not be a good approach other platforms can follow to
-solve the same issue.  A repository created on ext4 may be rsynced
-into a case sensitive HFS+ or a case insensitive one.  MacOS X side
-needs to have some way to tell what value for core.ignorecase to use
-between these two cases, as its binary cannot hardcode "no case
-sensitivity".
+2. People who have gone through the learning curve I've suffered about
+   how relative GIT_INDEX_FILE works, and put in a workaround that's
+   not the obvious "use an absolute path" workaround, but is more
+   complex. Like, checking the git configs and adjusting what the
+   variable is set relative to. And apparently nobody in this set felt
+   worth mentioning this to the list..
 
-So,... I am not enthused.
+I am unsure about the size of 1, and am sure 2 is small to nonexistant.
+
+> I am not sure if relative to PWD is useful.  If it were relative to
+> either the GIT_DIR or the GIT_WORK_TREE, i.e. a fixed point, then
+> you can set and export GIT_INDEX_FILE and chdir around without
+> having to adjust it.  If it were relative to PWD, you would need to
+> adjust it every time you chdir, no?
+
+Good point, I had not considered this use case. Although if I set a
+long-term environment variable and expect to chdir around, well, that's
+what absolute paths are for. All my uses of GIT_INDEX_FILE
+are in short-term contexts where the program does not chdir.
+
+--=20
+see shy jo
+
+--ZPt4rx8FFjLCG7dd
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIVAwUBV0NRiskQ2SIlEuPHAQJ2hQ//exfnrlqrp5qJorkZKsO9FF+ai1PwUbwJ
+paFxe/Xo3HnH5D20SaZQwag1zr4RSmlI1/QBgb8qCOMAGEVvB6X3vpkEefeU0kLB
+DCz2IgYcU4qqfZNR+HRhHHF1669jWEfwcx8pS2yCl0QY4rVoVn1WsRIbPo1cYLnf
+YNlFUE8dKWl8DHUzz1xhvf9VGx0RcVr0oafvVgLh12nJZq9Le/y1aINHvmbRlNaS
+rfC5D10ixu4jR25iC9GgfdtU7PNvMSGad13RPiJjzt99EbZYBYV0IPGIF1sxq3bq
+wfqJaGxjvacx8tr/llFnldK+4tJDHi/N6H5qqx9a3/Wj4joaPpbAMYNQgQBWsBHp
+y27YXHH5kZAkkNxdi4n3avT27E1VMj8sBxS3is9qOzsv4uJcqafCaaPe3bvjYAj+
+70IhytpyLGGKe0EhiWKI0r6uNYoZrJA7YC6AJtf8q05L7iMAcWJ1r3aR/ybuocz7
+VicW7t3WOeNsMXXOOjrPowbunMOJiUUa9QotHSOYOFYMG1wPH4MLgzsAuf0DxEv4
+qtW4xvoM9n1yjAw9Dx65TQ5KGZCL9jCiCdAMmg/cPumoRFDvmkYHuM+gD6KzqXSs
+yrYvo5ZsXsHKEOIKBvNsyrbcLc/puz21Ccz59xcRBrrESW+wfsVTdfGLcD7H4rx+
+ZvTzb/f4VQs=
+=bliQ
+-----END PGP SIGNATURE-----
+
+--ZPt4rx8FFjLCG7dd--
