@@ -1,7 +1,7 @@
 From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH v2 09/22] i18n: rebase: fix marked string to use eval_gettext variant
-Date: Mon, 23 May 2016 19:27:28 +0000
-Message-ID: <1464031661-18988-10-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v2 13/22] i18n: git-sh-setup.sh: mark strings for translation
+Date: Mon, 23 May 2016 19:27:32 +0000
+Message-ID: <1464031661-18988-14-git-send-email-vascomalmeida@sapo.pt>
 References: <1464031661-18988-1-git-send-email-vascomalmeida@sapo.pt>
 Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
 	Jiang Xin <worldhello.net@gmail.com>,
@@ -14,21 +14,21 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4vYh-0002Cr-7p
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 21:30:35 +0200
+	id 1b4vYh-0002Cr-Pz
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 21:30:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753791AbcEWT3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2016 15:29:43 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:56374 "EHLO sapo.pt"
+	id S1754072AbcEWTaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 15:30:30 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:47400 "EHLO sapo.pt"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753624AbcEWT3l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2016 15:29:41 -0400
-Received: (qmail 24750 invoked from network); 23 May 2016 19:29:39 -0000
-Received: (qmail 3760 invoked from network); 23 May 2016 19:29:39 -0000
+	id S1753693AbcEWT3n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 15:29:43 -0400
+Received: (qmail 24085 invoked from network); 23 May 2016 19:29:41 -0000
+Received: (qmail 4341 invoked from network); 23 May 2016 19:29:41 -0000
 Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 23 May 2016 19:29:36 -0000
+          for <git@vger.kernel.org>; 23 May 2016 19:29:41 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -38,29 +38,172 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295376>
 
-The string message marked for translation should use eval_gettext
-variant instead of the gettext one, since we want to dollar-substitute
-$head_name in the result.
+Positional arguments, such as $0, $1, etc, need to be stored on shell
+variables for use in translatable strings, according to gettext manual.
+
+Add git-sh-setup.sh to LOCALIZED_SH variable in Makefile to enable
+extraction of string marked for translation by xgettext.
+
+Although git-sh-setup.sh is a shell library to be sourced by other shell
+scripts, it is necessary to source git-sh-i18n at this point, because
+some scripts don't do it themselves. Not sourcing git-sh-i18n would lead
+to failure due to, for instance, gettextln not being found.
+
+Source "$(git --exec-path)"/git-sh-i18n instead of simply git-sh-i18n,
+because latter case would fail test t2300-cd-to-toplevel.sh.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- git-rebase.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile        |  4 +++-
+ git-sh-setup.sh | 56 ++++++++++++++++++++++++++++++++++++++++++--------------
+ 2 files changed, 45 insertions(+), 15 deletions(-)
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 44ede36..1fadc04 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -154,7 +154,7 @@ move_to_original_branch () {
- 		git symbolic-ref \
- 			-m "rebase finished: returning to $head_name" \
- 			HEAD $head_name ||
--		die "$(gettext "Could not move back to $head_name")"
-+		die "$(eval_gettext "Could not move back to \$head_name")"
- 		;;
- 	esac
+diff --git a/Makefile b/Makefile
+index bc3d41e..d31fcf2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2062,7 +2062,9 @@ XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
+ 	--keyword=gettextln --keyword=eval_gettextln
+ XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --keyword=__ --language=Perl
+ LOCALIZED_C = $(C_OBJ:o=c) $(LIB_H) $(GENERATED_H)
+-LOCALIZED_SH = $(SCRIPT_SH) git-parse-remote.sh
++LOCALIZED_SH = $(SCRIPT_SH)
++LOCALIZED_SH += git-parse-remote.sh
++LOCALIZED_SH += git-sh-setup.sh
+ LOCALIZED_PERL = $(SCRIPT_PERL)
+ 
+ ifdef XGETTEXT_INCLUDE_TESTS
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index c48139a..55efa23 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -2,6 +2,10 @@
+ # to set up some variables pointing at the normal git directories and
+ # a few helper shell functions.
+ 
++# Some shell scripts source git-sh-setup (i.e. this scriplet) but
++# don't source git-sh-i18n which is needed here for gettext support.
++. "$(git --exec-path)"/git-sh-i18n
++
+ # Having this variable in your environment would break scripts because
+ # you would cause "cd" to be taken to unexpected places.  If you
+ # like CDPATH, define it for your interactive shell sessions without
+@@ -83,14 +87,14 @@ if test -n "$OPTIONS_SPEC"; then
+ else
+ 	dashless=$(basename -- "$0" | sed -e 's/-/ /')
+ 	usage() {
+-		die "usage: $dashless $USAGE"
++		die "$(gettext usage:) $dashless $USAGE"
+ 	}
+ 
+ 	if [ -z "$LONG_USAGE" ]
+ 	then
+-		LONG_USAGE="usage: $dashless $USAGE"
++		LONG_USAGE="$(gettext usage:) $dashless $USAGE"
+ 	else
+-		LONG_USAGE="usage: $dashless $USAGE
++		LONG_USAGE="$(gettext usage:) $dashless $USAGE
+ 
+ $LONG_USAGE"
+ 	fi
+@@ -182,48 +186,72 @@ is_bare_repository () {
+ cd_to_toplevel () {
+ 	cdup=$(git rev-parse --show-toplevel) &&
+ 	cd "$cdup" || {
+-		echo >&2 "Cannot chdir to $cdup, the toplevel of the working tree"
++		gettextln "Cannot chdir to \$cdup, the toplevel of the working tree" >&2
+ 		exit 1
+ 	}
  }
+ 
+ require_work_tree_exists () {
++	program_name=$0
+ 	if test "z$(git rev-parse --is-bare-repository)" != zfalse
+ 	then
+-		die "fatal: $0 cannot be used without a working tree."
++		die "$(gettext "fatal: \$program_name cannot be used without a working tree.")"
+ 	fi
+ }
+ 
+ require_work_tree () {
++	program_name=$0
+ 	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true ||
+-	die "fatal: $0 cannot be used without a working tree."
++		die "$(gettext "fatal: \$program_name cannot be used without a working tree.")"
+ }
+ 
+ require_clean_work_tree () {
++	action=$1
++	hint=$2
+ 	git rev-parse --verify HEAD >/dev/null || exit 1
+ 	git update-index -q --ignore-submodules --refresh
+ 	err=0
+ 
+ 	if ! git diff-files --quiet --ignore-submodules
+ 	then
+-		echo >&2 "Cannot $1: You have unstaged changes."
++		case "$action" in
++		rebase)
++			gettextln "Cannot rebase: You have unstaged changes." >&2
++			;;
++		"pull with rebase")
++			gettextln "Cannot pull with rebase: You have unstaged changes." >&2
++			;;
++		*)
++			eval_gettextln "Cannot \$action: You have unstaged changes." >&2
++			;;
++		esac
+ 		err=1
+ 	fi
+ 
+ 	if ! git diff-index --cached --quiet --ignore-submodules HEAD --
+ 	then
+-		if [ $err = 0 ]
++		if test $err = 0
+ 		then
+-		    echo >&2 "Cannot $1: Your index contains uncommitted changes."
++			case "$action" in
++			rebase)
++				gettextln "Cannot rebase: Your index contains uncommitted changes." >&2
++				;;
++			"pull with rebase")
++				gettextln "Cannot pull with rebase: Your index contains uncommitted changes." >&2
++				;;
++			*)
++				eval_gettextln "Cannot \$action: Your index contains uncommitted changes." >&2
++				;;
++			esac
+ 		else
+-		    echo >&2 "Additionally, your index contains uncommitted changes."
++		    gettextln "Additionally, your index contains uncommitted changes." >&2
+ 		fi
+ 		err=1
+ 	fi
+ 
+-	if [ $err = 1 ]
++	if test $err = 1
+ 	then
+-		test -n "$2" && echo >&2 "$2"
++		test -n "$hint" && echo "$2" >&2
+ 		exit 1
+ 	fi
+ }
+@@ -336,12 +364,12 @@ git_dir_init () {
+ 	then
+ 		test -z "$(git rev-parse --show-cdup)" || {
+ 			exit=$?
+-			echo >&2 "You need to run this command from the toplevel of the working tree."
++			gettextln "You need to run this command from the toplevel of the working tree." >&2
+ 			exit $exit
+ 		}
+ 	fi
+ 	test -n "$GIT_DIR" && GIT_DIR=$(cd "$GIT_DIR" && pwd) || {
+-		echo >&2 "Unable to determine absolute path of git directory"
++		gettextln "Unable to determine absolute path of git directory" >&2
+ 		exit 1
+ 	}
+ 	: ${GIT_OBJECT_DIRECTORY="$(git rev-parse --git-path objects)"}
 -- 
 2.7.3
