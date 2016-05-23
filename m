@@ -1,98 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 1/9] connect: document why we sometimes call get_port after get_host_and_port
-Date: Mon, 23 May 2016 14:30:57 -0700
-Message-ID: <xmqqwpmk797y.fsf@gitster.mtv.corp.google.com>
-References: <20160521231732.4888-1-mh@glandium.org>
-	<20160521231732.4888-2-mh@glandium.org>
-	<399331a6-dadb-c318-b0e0-c83e0f81ecb0@web.de>
-	<20160522080316.GA19790@glandium.org> <574287B9.4090307@web.de>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Small rerere in rebase regression
+Date: Mon, 23 May 2016 23:30:59 +0200
+Message-ID: <57437693.3030106@kdbg.org>
+References: <57434572.6030306@kdbg.org>
+ <xmqqy4708ss0.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon May 23 23:31:10 2016
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 23 23:31:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4xRN-0005Ua-AA
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 23:31:09 +0200
+	id 1b4xRN-0005Ua-T0
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 23:31:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752235AbcEWVbF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 May 2016 17:31:05 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63032 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752176AbcEWVbD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2016 17:31:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 96A061CB2E;
-	Mon, 23 May 2016 17:31:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=B79GpbuYoAKV
-	3V+nAspBehDK7ZU=; b=PKGWX1ofP2qjrUywVzxk1eY26xDPvirBTYfcw7zXZFU9
-	3Uxhp8LOiqnZPcdvXMWiasmBraj6odn6/L/kkxBCQTOLvm5t/6D/mSIPqzUwh2Ot
-	Xj2UTurK/CKDpKfkXv3Fim6WRAFsXhXMmCm7VdIDfq7CJ30CfG1nuTuG3ustn+A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=o5ydMO
-	1lC8jpCiK5df08IoyN+oS15e72hZ3tHPRZYPJyMH94H3ezOXbHjH7D4cHtL/UKiZ
-	9v+LgrRsSqiuP9lq3y5qhxaRKzxgDTl02OPHlvkEeJuqsX8o3ZQ4wyw0huq33+JL
-	BXhXg6fvPf5BTDaBdNqRqwuZZEll3/oydZnlA=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D89D1CB2D;
-	Mon, 23 May 2016 17:31:01 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A71AC1CB2B;
-	Mon, 23 May 2016 17:31:00 -0400 (EDT)
-In-Reply-To: <574287B9.4090307@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Mon, 23 May 2016 06:31:53 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A501F1D6-212D-11E6-B22E-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752216AbcEWVbD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 17:31:03 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:44083 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752168AbcEWVbC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 17:31:02 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3rDBYH5Ll2z5tlL;
+	Mon, 23 May 2016 23:30:59 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 418BC5291;
+	Mon, 23 May 2016 23:30:59 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <xmqqy4708ss0.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295397>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Am 23.05.2016 um 21:43 schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+>
+>> I'm not sure whether the new behavior is a defect in rerere.c or a
+>> consequence of the extra rerere call in interactive rebase...
+>
+> Interesting.  When running an unnecessary "git rerere" (because it
+> already was run and recorded the preimage), we used to be silent.
+> With the updated code, we say something.
+>
+> At least it seems that we do not record the same preimage as a
+> different variant, so the regression is hopefully merely cosmetic.
+>
+> I do not think it is a crime to say "git rerere" repeatedly without
+> changing anything, so I do not think "rebase -i"'s call to rerere
+> in die_with_patch is wrong, even though some calls to it seem to be
+> made after seeing a "git merge" fail (which means we know 'rerere'
+> has been run already).
+>
+> I think all plumbing that can turn an index into unmerged state has
+> a call to git_rerere() at the end (the only obvious exception being
+> "update-index" that lets you stuff higher stage entries to the
+> index), so as long as "rebase -i" uses them correctly, I suspect
+> that die_with_patch shouldn't have to have a call to "git rerere".
 
->>>>   			get_host_and_port(&ssh_host, &port);
->>>>   +			/* get_host_and_port may not return a port
->>>> even when
->>>> +			 * there is one: In the [host:port]:path case,
->>>> +			 * get_host_and_port is called with "[host:port]" and
->>>> +			 * returns "host:port" and NULL.
->>>> +			 * In that specific case, we still need to split the
->>>> +			 * port. */
->>> Is it worth to mention that this case is "still supported legacy" ?
->> If it's worth mentioning anywhere, it seems to me it would start wit=
-h
->> urls.txt?
->>
->> Mike
->>
-> I don't know.
-> urls.txt is for Git users, and connect.c is for Git developers.
-> urls.txt does not mention that Git follows any RFC when parsing the
-> URLS', it doesn't claim to be 100% compliant.
-> Even if it makes sense to do so, as many user simply expect Git to ac=
-cept
-> RFC compliant URL's, and it makes the development easier, if there is
-> an already
-> written specification, that describes all the details.
-> The parser is not 100% RFC compliant, one example:
-> - old-style usgage like "git clone [host:222]:~/path/to/repo are supp=
-orted
+I also come to the conclusion that die_with_patch shouldn't have to have 
+a call to "git rerere". die_with_patch can be called after "git 
+cherry-pick", "git merge", "git commit", all of which have their own 
+rerere() invocation.
 
-Is it an option to fix get_host_and_port() so that it returns what
-the caller expects even when it is given "[host:port]"?  When the
-caller passes other forms like "host:port", it expects to get "host"
-and "port" parsed out into two variables.  Why can't the caller
-expect to see the same happen when feeding "[host:port]" to the
-function?
+However, calling "git rerere" after a failed "git commit" may be 
+destructive: it would record a resolution even though the commit has not 
+be completed. Think of an squash commit being aborted because the user 
+notices an error in the last minute. If that error is in a conflict 
+resolution, that wrong resolution would be recorded.
+
+-- Hannes
