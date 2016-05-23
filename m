@@ -1,56 +1,58 @@
-From: Thaina Yu <thainayu@gmail.com>
-Subject: Please add http REST api in addition to command line
-Date: Mon, 23 May 2016 11:55:26 +0700
-Message-ID: <CADeMgjCQBpBLb8b98FxCNi+M9wgJJzVSoYYvYYaYVY+tbWYT=A@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Please add http REST api in addition to command line
+Date: Mon, 23 May 2016 07:39:08 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605230738380.4122@virtualbox>
+References: <CADeMgjCQBpBLb8b98FxCNi+M9wgJJzVSoYYvYYaYVY+tbWYT=A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 23 06:56:17 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Thaina Yu <thainayu@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 23 07:39:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4hua-0007oj-SH
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 06:56:17 +0200
+	id 1b4iaB-00052Z-EV
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 07:39:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752892AbcEWE4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2016 00:56:08 -0400
-Received: from mail-oi0-f50.google.com ([209.85.218.50]:33774 "EHLO
-	mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750802AbcEWE4H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2016 00:56:07 -0400
-Received: by mail-oi0-f50.google.com with SMTP id k23so53926522oih.0
-        for <git@vger.kernel.org>; Sun, 22 May 2016 21:56:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=+4LSWRtnKos2n7bE2hyivQj+CRhPBlfFzM044C8EXb4=;
-        b=B+YbCA05JOkEQELa1NyLWTkvgsAWl/qpLic6ByQx8JVYoRnQyZJ5gJRabZT5WUBMIy
-         ctNM+awS7H4WKm5K8DuD7EVOCVxEv07HOtl+zbb5F2zmBZhLab5H/G0d7vpGWIAq0aB/
-         9+pu0LpvnUUtF3Aopp0viXc/M449Y89KMWWdAzAMX/VElzHcb4ssti/d2Xeo1o7mqFH5
-         rWK/yemqwvxKj5Aj9nGWdwxSDwIGT3/JqU4SY5nnneBZk4wcZX0ByqG2JQmGXtRUnnSa
-         eGWqMN5Sw5mB1otqq74yUiK/PP19sI29HtZAWoe3v1nPS0H5NQNQT6r1vANhHtM/GMX4
-         LeKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=+4LSWRtnKos2n7bE2hyivQj+CRhPBlfFzM044C8EXb4=;
-        b=YLRvKNIt9hfFayiSD95bgG7gAyMQMJ5ewCO/gIabXbzZ42Pw9yfdwXS6mQ+uRscpux
-         bqYrGv+c/ct8gxutIPhKdq6mZb2cS+ocsqqjDPCDZsp+VkWs8cKxgfZyVBaq8oKKJL4i
-         mMrHZdZ9Rgt4pG6A5+ubvZI3Ht04gYmtSGYiFct6j5nLipalAktHq4GI4MW39ke0tSIj
-         zzgauhJ00DscfIRPiTr40eNnjD1vlJJHXnvhobFdhx/1fGTpBCstz6EJAvAawvKKuHDP
-         TTuFe2K/oOaL3ShTz5RENESfgZoDIV502PZExeA1HmokpY1Orkm3qDzNlYzbPSF5TXnV
-         PPlw==
-X-Gm-Message-State: AOPr4FV2AKHw1Sd3yg3aGm5iuIUAlm9f1WDJS2TfpF0EtBEAUS/bs0FMuDvHFra2WIKLiGhpBGB06MWBE/WM2g==
-X-Received: by 10.157.5.100 with SMTP id 91mr9251863otw.38.1463979365968; Sun,
- 22 May 2016 21:56:05 -0700 (PDT)
-Received: by 10.157.38.147 with HTTP; Sun, 22 May 2016 21:55:26 -0700 (PDT)
+	id S1752970AbcEWFjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 01:39:11 -0400
+Received: from mout.gmx.net ([212.227.15.19]:52075 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750976AbcEWFjL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 01:39:11 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LaG7C-1bpMer0FtW-00m1Hf; Mon, 23 May 2016 07:39:07
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CADeMgjCQBpBLb8b98FxCNi+M9wgJJzVSoYYvYYaYVY+tbWYT=A@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:yljzflq5k2WJppmHTIGjDdJ0K0F2EB2/yOod/Hdc78QuHIpxm0j
+ +RSZ8wxghfzRCryq0bRpWUJeu56vCirZHqtKFSF14FUxcZ1CLO+h5dKa0gEMpicvzdGwnQf
+ NveQc9uI4POUx57dsOD/SYzrtgBJAZcl58qjLR2AmDCJM5tSRmVGyhm0uwsPO9xYjR4JESW
+ D8DbTmgwtocbHdEDruNig==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TOl4ivJOjIg=:q4VjQQlO39hgxiKPvdmjA7
+ 1I6jbNYn7MuqXaPAmCKVoG8jkyAE0kLXQgoQBhLMKW/QPu1hlgPZ8yU1GOT1mDIcMu724KvFX
+ s3DcZLe71YdwDmB9LOjVxHYFnkEE/kDara0CDGnjfYYV3Sgwfmnbt+hPJF2VbYoMDLPIO3S1A
+ UqAyFzwUfrEHNw9U5udOPZqVDRE2AI4VWMdED/ATejsek9WWaL7J8rd6jdyIEOYe8T2Bl2Wrd
+ kc/BJzH6fPYiWQpVe+68kM8qzwejkV3qoVHhXsL7CymvePnkg6gFu21yIED4nxBZOJf2kBnlG
+ 8oxKtMpTemM+ERlYT7KWo4EhcPlpATbU4rdJD7gfLhD0H44GfQGUJlLolo8UTqZCPhzimizx9
+ KQdaP8PIZakz/NU4P1HsZz4kpjkWpQS14FAPjxS9GDJHmMY7NNzxEtC6y2K+pQHUEAp1ioHrs
+ Bp8CYcuxi0PZ2wJWkRlnoZmdd3cLs06+Xr/PSP5NurgmCtFLOnFY0ye6Sy13RFVStUWkQPFjJ
+ 203nVno5x00hxQeGCXZPZfKctTSk5FPyojL769zT9yCSGFqdsqkaQqw542BeVo0pZ0cKOfdSD
+ kFWZJXyvkmle0Xg5vET66uENYFCCSMLm/hoXduEqZemaXirbmlMDTIQH7BnwJiZ7iOusIMi21
+ tX9KFj4SKAwHc0HFcXP9tarzXqVe0/6yoiVjQn9EKpXs0I2Es3jR1EOITU99BNlX4aa+1a2O+
+ BJbLAK0uSN4quNt0OyHihkcM7T3wMoY2AYmCP5exR8/+xFZVOYa+5QgPA82dsmWJ3uRA+hwo 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295311>
 
-git should have REST api and able to work with command from remote
-place (and also localhost)
+On Mon, 23 May 2016, Thaina Yu wrote:
+
+> git should have REST api and able to work with command from remote
+> place (and also localhost)
+
+you should write and contribute it.
