@@ -1,103 +1,51 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] fetch: better alignment in ref summary
-Date: Sun, 22 May 2016 17:58:12 -0700
-Message-ID: <xmqqfut9bnff.fsf@gitster.mtv.corp.google.com>
-References: <20160522112019.26516-1-pclouds@gmail.com>
-	<20160522112019.26516-2-pclouds@gmail.com>
+From: Yotam Gingold <yotam@yotamgingold.com>
+Subject: Re: Git reset --hard with staged changes
+Date: Mon, 23 May 2016 00:55:55 +0000 (UTC)
+Message-ID: <loom.20160523T023140-975@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 23 02:58:24 2016
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 23 03:00:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4eCK-000682-H3
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 02:58:20 +0200
+	id 1b4eEC-0007DS-7D
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 03:00:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752720AbcEWA6Q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 May 2016 20:58:16 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53428 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752706AbcEWA6Q convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 May 2016 20:58:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 96E3C1CD3E;
-	Sun, 22 May 2016 20:58:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=bIDfTWwtxs/T
-	gII3gdLYvP3+JgU=; b=r6UiUX84ncmk+VrfLwmufTnR4Tre8odWxfmlNG9mME0t
-	siM72/JNaG7vnN0WBMs+CqIFYyzgvGoUtvoeYlo6R2TAITjBhZGS5kstyZoOTNvM
-	M4AA13UnSh6hkN5VRUCaVWCbJwfkZnzACLf4IYlCRqpOBAfI133QXX6M6Bz9wto=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=KHilbe
-	LG7PdbJ9/nQGt9Ghz5HCl9/zZKZ2fOwE2gqttpDoxsYnlV/zJHwUqurViOcG9EEX
-	/3JplDwBxMXxrRi0NCGJ4KfvLJGpA5OmWBEel95SKrR6WrsnnRcj45gHYsPRIgNL
-	fudhMEEOcvhXfD6tHNaZb8DZI+qR6J6Lcj85A=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F1821CD3D;
-	Sun, 22 May 2016 20:58:14 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 131E31CD3B;
-	Sun, 22 May 2016 20:58:14 -0400 (EDT)
-In-Reply-To: <20160522112019.26516-2-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-	Duy"'s message of "Sun, 22 May 2016 18:20:18 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6D78C908-2081-11E6-80C6-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752726AbcEWBAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 May 2016 21:00:09 -0400
+Received: from plane.gmane.org ([80.91.229.3]:55677 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752706AbcEWBAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 May 2016 21:00:08 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1b4eE1-00075m-4M
+	for git@vger.kernel.org; Mon, 23 May 2016 03:00:05 +0200
+Received: from c-73-200-28-96.hsd1.dc.comcast.net ([73.200.28.96])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 May 2016 03:00:05 +0200
+Received: from yotam by c-73-200-28-96.hsd1.dc.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 May 2016 03:00:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 73.200.28.96 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/601.5.17 (KHTML, like Gecko) Version/9.1 Safari/601.5.17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295296>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
-
-> Currently fetch hard-codes the "remote" column to be 10. For repos
-> with long branch names, the output could look ugly like this
->
-> From github.com:pclouds/git
->  * [new branch]      2nd-index  -> pclouds/2nd-index
->  * [new branch]      3nd-index  -> pclouds/3nd-index
->  * [new branch]      file-watcher -> pclouds/file-watcher
->  ...
-
-So, we have to show "an object taken from their name is copied to
-our name", and somebody designed the format to report it to use
-"their-name -> our-name", and decided that a certain number of
-columns is sufficient for "their-name" part and that attempting to
-align "->" sign is a good idea..
-
-That was long before a few best practices were established.  We
-encourage people to use longer and more descriptive branch names, so
-"their-name" is a lot longer than 10 columns, which contradicts the
-first one of two old assumptions.  And we want to keep the second
-old assumption alive.
-
-Progressively pushing "->" to the right like you did might be a
-cheap way to do so, but shouldn't we be also taking advantage of
-another best practice that has been established since we started
-reporting this "their-name came to our-name", namely, very often,
-our-name is a short and fixed prefix plus their-name?
-
-That is, I wonder if the above can become something like:
-
-> From github.com:pclouds/git
->  * [new branch]      { -> pclouds/}2nd-index
->  * [new branch]      { -> pclouds/}3nd-index
->  * [new branch]      { -> pclouds/}file-watcher
->  ...
-
-The above example borrows the idea used in diffstat label for
-renaming patch and I think you can design a better notataion, but a
-big point is that you can shorten the whole thing by not repeating
-the common part twice.  The arrow aligns merely as a side effect of
-the shortening, taking advantage of the fact that most people fetch
-with "$their_prefix/*:$our_prefix/*" renaming refspec.
+UGllcnJlLUZyYW7Dp29pcyBDTEVNRU5UIDxsaWtleW4gPGF0PiBnbWFpbC5jb20+IHdyaXRlczoKPiAyMDE0LTA2LTEwIDE3OjI3IEdNVCswMjowMCBEYXZpZCBLYXN0cnVwIDxkYWsgPGF0PiBnbnUub3JnPjoKPj4gUGllcnJlLUZyYW7Dp29pcyBDTEVNRU5UIDxsaWtleW4gPGF0PiBnbWFpbC5jb20+IHdyaXRlczoKPj4KPj4+IC4uLgo+Pj4KPj4+IEhtIEkgc2VlLiBFdmVuIHRob3VnaCB0aGUgZG9jdW1lbnRhdGlvbiBkb2Vzbid0IG1ha2UgaXQgdmVyeSBjbGVhcgo+Pj4gYWJvdXQgd2hhdCBoYXBwZW5zIHRvIHN1Y2ggZmlsZXMsIGl0IHR1cm5zIG91dCB0aGUgc2NlbmFyaW8gd2UKPj4+IHN0dW1ibGVkIHVwb24gc2VlbXMgdG8gYmUgdGhlIHNwZWNpYWwgdXNlIGNhc2UgYWZ0ZXIgYWxsLiBUaGFua3MgZm9yCj4+PiBzaGVkZGluZyBzb21lIGxpZ2h0IG9uIHRoaXMgOikgSSB3b25kZXIgd2h5IGRvZXMgZ2l0LXJlc2V0J3MgaGFyZCBtb2RlCj4+PiBub3QgYWx3YXlzIHJlbW92ZSB1bnRyYWNrZWQgZmlsZXMgdGhlbj8KPj4KPj4gQmVjYXVzZSBpdCBuZXZlciByZW1vdmVzIHRoZW0/ICBHaXQgb25seSByZW1vdmVzIGZpbGVzIG9uY2UgaXQgdHJhY2tz
+ Cj4+IHRoZW0uICBUaGlzIGluY2x1ZGVzIHRoZSBvcGVyYXRpb24gb2YgcmVtb3ZpbmcgX2FuZF8gdW50cmFja2luZyB0aGVtLAo+PiBsaWtlIHdpdGggZ2l0IHJlc2V0IC0taGFyZC4KPj4KPj4gVGhlIG9ubHkgY29tbWFuZCB3aGljaCBleHBsaWNpdGx5IG1lc3NlcyB3aXRoIHVudHJhY2tlZCBmaWxlcyBpcwo+PiBnaXQtY2xlYW4uCj4+Cj4+IC0tCj4+IERhdmlkIEthc3RydXAKPiAKPiAuLi4gSSBjb3VsZG4ndCBmaW5kIGEgZGVmaW5pdGlvbiB0aGF0IGJhY2tzIHRoaXMgaW4gdGhlIG1hbgo+IHBhZ2VzIChtYXliZSB0aGUgZ2l0LWdsb3NzYXJ5IHdvdWxkIGJlIGEgZ29vZCBwbGFjZSBmb3IgaXQ/KSwgYW5kIHRoZQo+IG9uZSBmcm9tIHRoZSBHaXQtU2NtIGJvb2sgb25seSBjb25mdXNlZCBtZSBpbiB0aGlua2luZyB0aGUgb3Bwb3NpdGUuCj4gVGhhbmtzIGZvciB0aGUgY2xhcmlmaWNhdGlvbgo+IAo+IC0tCj4gUGllcnJlLUZyYW7Dp29pcyBDTEVNRU5UCj4gQXBwbGljYXRpb24gZGV2ZWxvcGVyIGF0IFVwY2FzdCBTb2NpYWwKCkp1bXBpbmcgaW50byB0aGlzIGNvbnZlcnNhdGlvbiB0d28geWVhcnMgbGF0ZXIqLiBUaGVyZSdzIGNvbmZ1c2lvbi
+ BhYm91dCB3aGF0CmNvbnN0aXR1dGVzIGEgdHJhY2tlZCBmaWxlIGZvciBnaXQgcmVzZXQgLS1oYXJkLCBhbmQgZ29vZCByZWFzb25zIGZvciBnaXQgcmVzZXQKLS1oYXJkJ3MgYmVoYXZpb3IuIE5ldmVydGhlbGVzcywgSSB0aGluayB3ZSBjYW4gYWxsIGFncmVlIHRoYXQgdGhlIG1hbiBwYWdlCmVudHJ5IGZvciBnaXQgcmVzZXQgLS1oYXJkIGlzIHdvZWZ1bGx5IGRlZmljaWVudDoKCi0taGFyZCBSZXNldHMgdGhlIGluZGV4IGFuZCB3b3JraW5nIHRyZWUuIEFueSBjaGFuZ2VzIHRvIHRyYWNrZWQgZmlsZXMgaW4gdGhlCndvcmtpbmcgdHJlZSBzaW5jZSA8Y29tbWl0PiBhcmUgZGlzY2FyZGVkLgoKVGhpcyBzaG91bGQgYmUgY2xhcmlmaWVkIHRvIGRlZmluZSB3aGF0IGEgdHJhY2tlZCBmaWxlIGlzLiBJIHByb3Bvc2UgYXBwZW5kaW5nOgoKICAgIEEgZmlsZSBpcyBjb25zaWRlcmVkIHRyYWNrZWQgaWYgaXQgZXhpc3RzIGluIGEgcHJpb3IgY29tbWl0IG9yIGluIHRoZQogICAgc3RhZ2luZyBhcmVhLiBOb3RlIHRoYXQgYSBuZXdseSBhZGRlZCBmaWxlIG5vdCBpbiBhbnkgcHJpb3IgY29tbWl0IHdpbGwgYmUKICAgIHJlbW92ZWQuCgpJIHdvdWxkIGFs
+ c28gbGlrZSB0byBwcm9wb3NlIHRoYXQgdGhlIHN0YWdpbmcgYXJlYSdzIHRyZWUgb2JqZWN0IGJlIHNhdmVkLApwZXJoYXBzIGluIHRoZSByZWZsb2cgb3IgcGVyaGFwcyBqdXN0IGFzIGEgZGFuZ2xpbmcgb2JqZWN0LiBUaGlzIHdvdWxkIGFsbG93CmdyYWNlZnVsIHJlY292ZXJ5IGZyb20gZ2l0IHJlc2V0IC0taGFyZC4gV2l0bmVzcyB0aGUgbWFueSBxdWVzdGlvbnMgYW5kIGFuc3dlcnMKb24gcmVjb3Zlcnk6CiAgICBodHRwOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVlc3Rpb25zLzczNzQwNjkvdW5kby1naXQtcmVzZXQtaGFyZC13aXRoLXVuY29tbWl0dGVkLWZpbGVzLWluLXRoZS0Kc3RhZ2luZy1hcmVhCiAgICBodHRwOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVlc3Rpb25zLzU3ODgwMzcvcmVjb3Zlci1mcm9tLWdpdC1yZXNldC1oYXJkCiAgICBodHRwOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVlc3Rpb25zLzU0NzMvaG93LWNhbi1pLXVuZG8tZ2l0LXJlc2V0LWhhcmQtaGVhZDEKICAgIGh0dHA6Ly9naXRyZWFkeS5jb20vYWR2YW5jZWQvMjAwOS8wMS8xNy9yZXN0b3JpbmctbG9zdC1jb21taXRzLmh0bWwKICAgIGh0dHBzOi8vYmFuaS5jb20uYnIvMj
+ AxNC8xMC9yZWNvdmVyaW5nLWxvc3QtZmlsZXMtYWZ0ZXItYS1naXQtcmVzZXQtaGFyZC8KICAgIGh0dHBzOi8vbWVkaXVtLmNvbS9AQ2FycmllR3Vzcy9ob3ctdG8tcmVjb3Zlci1mcm9tLWEtZ2l0LWhhcmQtcmVzZXQtYjgzMGI1ZTNmNjBjCgpBbGwgb2YgdGhlc2Ugc29sdXRpb25zIHJlY292ZXIgdGhlIGNvbnRlbnRzIG9mIGZpbGVzLCBidXQgbm90IHRoZWlyIG5hbWVzIG9yIHRoZQpkaXJlY3Rvcnkgc3RydWN0dXJlLiBTYXZpbmcgdGhlIHRyZWUgb2JqZWN0IHNvbWV3aGVyZSAoYW55d2hlcmUhKSB3b3VsZCBzb2x2ZQp0aGlzIHByb2JsZW0uCgpJIHdhcyBiaXR0ZW4gYnkgdGhpcyBpbiBhIHZpY2lvdXMgd2F5LiBJIHdhcyBzZXR0aW5nIHVwIGEgbmV3IHJlcG9zaXRvcnkgZm9yIGEKYnVuY2ggb2YgY29kZSBhbmQgZGF0YSAoZ2l0IGluaXQ7IGdpdCBhZGQgLiksIGNoYW5nZWQgbXkgbWluZCBhYm91dCBhZGRpbmcgdGhlCmRhdGEgKGdpdCByZXNldCAtLWhhcmQpLCBhbmQgbmVhcmx5IGxvc3QgZXZlcnl0aGluZy4gVGhlIG9ubHkgdHJlZSBvYmplY3QgdGhhdApjb3VsZCBiZSBmb3VuZCB3YXMgYW4gZW1wdHkgb25lLCBzbyBJIGdvdCBmaWxlIGNv
+ bnRlbnRzIHdpdGhvdXQgbmFtZXMgb3IKZGlyZWN0b3JpZXMgKG5vdCBnb29kLCBiZWNhdXNlIGV4cGVyaW1lbnRhbCBjb25kaXRpb25zIGZvciB0aGUgZGF0YSB3ZXJlIGVuY29kZWQKaW4gdGhlIGRpcmVjdG9yeSBzdHJ1Y3R1cmUpLgoKQ2hlZXJzLApZb3RhbQ==
