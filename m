@@ -1,99 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GIT_INDEX_FILE relative path breaks in subdir
-Date: Mon, 23 May 2016 11:30:06 -0700
-Message-ID: <xmqqiny4aaq9.fsf@gitster.mtv.corp.google.com>
-References: <20160517171836.GA12183@kitenet.net>
-	<xmqqy478wptr.fsf@gitster.mtv.corp.google.com>
-	<20160517182645.GA27396@kitenet.net>
-	<20160522190404.GA20998@kitenet.net>
-	<xmqqwpmkafmb.fsf@gitster.mtv.corp.google.com>
-	<20160523172951.GA1184@kitenet.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Reviews for the first patches of pclouds/narrow-checkout
+Date: Mon, 23 May 2016 11:26:16 -0700
+Message-ID: <CAGZ79kb-y6gUHEBSdVB6Y+A=EjykZgcNsLynXcwSMyVNHiDU2Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Joey Hess <id@joeyh.name>
-X-From: git-owner@vger.kernel.org Mon May 23 20:30:21 2016
+Content-Type: text/plain; charset=UTF-8
+To: Duy Nguyen <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 23 20:31:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4ucM-0002gR-Eo
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 20:30:18 +0200
+	id 1b4udd-0003Gw-S5
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 20:31:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753019AbcEWSaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2016 14:30:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50914 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752329AbcEWSaL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2016 14:30:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B3A101CE73;
-	Mon, 23 May 2016 14:30:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kmCAk7IRDrKPFp0qUg5gpOxK/rA=; b=mbXSqh
-	Q+EWzgSnQnvqzOW45llK3I+pcLhCiO6KsiAQcfZ/QjrvJKYszO4ENCHT8Japf3C+
-	0Z01TpN4bp3QsfTKxhB6wN3G1g7KGtfoJgghTD//hvUAWN81ObApl0glodzCnbIw
-	8BEgads1+uh73aY5+iVQu4gbUdrtOQkSQFlow=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AataS6yaxq8ILOnNdIFtMTZNRxD/6sv2
-	/8wcT4JZcm41bx8HdGKZUVjAHRJS3zquL7N5iWacp39xOsVGy8+edlaRczNQTvZN
-	cY++JEvbQhZX++3ddVk/ULTWLA1amu6pfyAMm4GQE1fDz/kTUYj6xD33D/VL89QK
-	iCerMf5l+MM=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7FCD71CE70;
-	Mon, 23 May 2016 14:30:09 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CC1241CE6F;
-	Mon, 23 May 2016 14:30:08 -0400 (EDT)
-In-Reply-To: <20160523172951.GA1184@kitenet.net> (Joey Hess's message of "Mon,
-	23 May 2016 13:29:51 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 60CD1C48-2114-11E6-BD3D-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752868AbcEWSbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 14:31:34 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:36490 "EHLO
+	mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751837AbcEWSbd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 14:31:33 -0400
+X-Greylist: delayed 316 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 May 2016 14:31:33 EDT
+Received: by mail-it0-f44.google.com with SMTP id e62so36455732ita.1
+        for <git@vger.kernel.org>; Mon, 23 May 2016 11:31:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=YZyLJHaF54ZuTl1KY7zDDT2P5Ayn9T20qAnnznLEJng=;
+        b=Z7imQ5A7uYx5PdBn3PE5WsLkthTeg5i3sQpeusUdsyTnx5MJLvvZq3c9nRcskyLvQp
+         CpUqjlhZGPzxbWVklxw0b0LpZyofPyvTRjUC86J4JVivL+v6XEFuZ5z060QNf0uDKKyc
+         14EJB3EVcptQm1HlQXPs8Q60PKod3ffzi13Z3Xe5VXsfGcy5B/8k5xjKXN+cvKpOKvD6
+         yMDliCy0EJB5eS/JfMWV27gQ6bazh83lSoVNW0PW0UdLPsKUYl4kOwBkGKmoTGQe5x5v
+         kTHHa28wGqqYMHJC9mpm8j+pYxY/OeeXBPZUD3nBnfKpBSpwlYUdxI+Lxdds5SuNYpkV
+         oE8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=YZyLJHaF54ZuTl1KY7zDDT2P5Ayn9T20qAnnznLEJng=;
+        b=bhfgAhsBV2RFa+/pZ0/OJpNV/1OcCvhhsy+4wt4ZQ9BKMCX2QpnYzRDQp5wk7oGnLi
+         Xo5voU/ifDht5OYOPSA0jxn+YHqIibwF4ujRr9Ny/NvEP8H1jiNmI0m3WLXvzPmQeeIU
+         LBneWhzdvLG1WBxsBOfuVNjdpQkxSyfoWRO4VvLFQ76b2WyLlqfmGqwd3yEyr1tlOHho
+         h3nFbx3bRa/TXOoQtKKi3lRdyxyOzC0b7V8QJKbYQs6ttL+AG3iFDlG1kzbsztJCqMYG
+         BpIjC2f//xJTPTE/BFoiFOqYPCdJxyo7qnxj7JtYtBUaA8U7ibpPUSMkNygO41CVy4bU
+         7qdA==
+X-Gm-Message-State: AOPr4FVsCUQrSqAycxE5OYZJo6H0ehLcBaZpE71f1RLf8+NJ5oK/MSxC0gVNA55yHSOMBJ24s9nXqmrUplW+4ou/
+X-Received: by 10.36.14.71 with SMTP id 68mr13727741ite.98.1464027976773; Mon,
+ 23 May 2016 11:26:16 -0700 (PDT)
+Received: by 10.107.2.3 with HTTP; Mon, 23 May 2016 11:26:16 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295347>
 
-Joey Hess <id@joeyh.name> writes:
+Hi,
 
-> I feel it should be made consistently relative to top of work tree.
->
-> Seems fairly unlikely that any scripts driving git rely on it
-> being relative to the pwd when GIT_WORK_TREE etc is set.
+so I started looking into your narrow checkout branch and started reviewing
+the patches. Thanks for working on the narrow checkout!
 
-Oh, I do agree that the current status may be a sign that nobody
-that is cautious to cater to all possible cases would be relying on
-the current behaviour in their scripts.  It is likely that their
-scripts would first notice GIT_INDEX_FILE being relative, turn it
-into absolute (or even error out---if the authors were aware of the
-issue), before doing anything else.
+Reviewed-by: Stefan Beller <sbeller@google.com> (just asking for signoff)
+    tree.c: break long lines
+    read-cache: realign some statements
+    read-cache: add sort_index()
+    read-cache: description for base_name_compare()
+    unpack-trees: break down long lines
 
-But people do write their scripts assuming that they will never use
-GIT_WORK_TREE environment (i.e. they rely on their workflow to stay
-within a subset of cases you described in your message); IOW, it is
-OK for them that their script is usable only in their workflow.
+Regarding:
+    base_name_compare: do not assume name[len] == '\0'
+Could you clarify if this is an existing bug or a preparation for a future
+different use?
 
-And once you start worrying about not breaking them, your update
-would become a lot trickier.
 
-I personally think that it would be OK as long as we do not change
-behaviours for those who do not use core.worktree, $GIT_DIR and/or
-$GIT_WORK_TREE and change behaviour for others to match that
-behaviour, simply because the plain vanilla no-configuration would
-be used by the largest number of people.  But depending on the size
-of the "minority", you may get pushback from them.
 
-> (I'd prefer relative to pwd because that is much more sane IMHO, but
-> making that change is more likely to break something.)
+    read-cache: new sort compare function that pays attention to ce_mode
 
-I am not sure if relative to PWD is useful.  If it were relative to
-either the GIT_DIR or the GIT_WORK_TREE, i.e. a fixed point, then
-you can set and export GIT_INDEX_FILE and chdir around without
-having to adjust it.  If it were relative to PWD, you would need to
-adjust it every time you chdir, no?
+Would a new mode (0100 (directory)) require bumping the index version?
+Or the other way round: What If I use these patches and then try to use
+another version of Git without this feature?
+
+
+
+    read-cache: refactor check_ce_order()
+
+Would it make sense to avoid the yoda condition?
+(i.e. "cmp > 0" instead of "0 < cmp" -> die("unordered stage entries"))
+Or rather: I found it confusing that cmp is on both sides of the < in two
+different conditions, i.e. it looks like you prefer to keep the "<" sign
+constant, whereas I would have written
+
+    if (cmp < 0)
+        continue;
+    if (cmp > 0)
+        die(...);
+
+It's a style thing, so I guess either is fine.
+I would however put the case for (cmp < 0) first as that is the expected case?
+
+
+
+    read-cache: check ce_mode in check_ce_order()
+
+    Can we replace
+        cmp = (c1 < c2) ? -1 : (c1 > c2) ? 1 : 0;
+    by:
+        cmp = c1 - c2;
+    as it is only used in comparisons lesser/greater than 0 afterwards.
+
+Again, I would put the "continue" case first (cmp >0)
+
+
+
+    read-cache: index_name_stage_pos() => index_name_mode_stage_pos()
+
+"After this read-cache.c code is pretty much ready for accepting dir
+entries in the index."
+
+What is missing?
+
+
+So that's a review for the first third of the patches. :)
+
+I wonder how much is left for actually finishing the narrow checkout,
+as I could not find documentation or code the user interacts with.
+(i.e. I would like to use a narrow checkout. How do I start? Where do I put
+the pathspec of things I would like to use? Or are you envisioning a git wrapper
+for that? "git narrow [make-go-away, revive] <pathspec>" ?)
+
+Thanks,
+Stefan
