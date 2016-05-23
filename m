@@ -1,118 +1,64 @@
-From: Tom Russello <tom.russello@grenoble-inp.org>
-Subject: [RFC-PATCH 2/2] t9001: adding --quote-mail option test
-Date: Mon, 23 May 2016 21:30:29 +0200
-Message-ID: <1464031829-6107-3-git-send-email-tom.russello@grenoble-inp.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC-PATCH 0/2] send-email: new --quote-mail option
+Date: Mon, 23 May 2016 21:38:34 +0200
+Message-ID: <vpqlh30d0p1.fsf@anie.imag.fr>
 References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
-Cc: samuel.groot@grenoble-inp.org, matthieu.moy@grenoble-inp.fr,
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, samuel.groot@grenoble-inp.org,
 	erwan.mathoniere@grenoble-inp.org,
-	jordan.de-gea@ensimag.grenoble-inp.fr,
-	Tom Russello <tom.russello@ensimag.grenoble-inp.fr>,
-	Tom Russello <tom.russello@grenoble-inp.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 23 21:32:22 2016
+	jordan.de-gea@ensimag.grenoble-inp.fr
+To: Tom Russello <tom.russello@grenoble-inp.org>
+X-From: git-owner@vger.kernel.org Mon May 23 21:38:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4vaQ-00033H-8T
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 21:32:22 +0200
+	id 1b4vgc-00067v-BP
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 21:38:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754160AbcEWTcM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2016 15:32:12 -0400
-Received: from zm-smtpout-2.grenet.fr ([130.190.244.98]:58717 "EHLO
-	zm-smtpout-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753364AbcEWTcL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2016 15:32:11 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id D1AC4210B;
-	Mon, 23 May 2016 21:32:08 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VtFoL24ZJD90; Mon, 23 May 2016 21:32:08 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id B1684210A;
-	Mon, 23 May 2016 21:32:08 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id AE2712077;
-	Mon, 23 May 2016 21:32:08 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TTK7eG-CtRsJ; Mon, 23 May 2016 21:32:08 +0200 (CEST)
-Received: from ux-305.numericable.fr (1.23.6.84.rev.sfr.net [84.6.23.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 705412066;
-	Mon, 23 May 2016 21:32:08 +0200 (CEST)
-X-Mailer: git-send-email 2.8.2
+	id S1753356AbcEWTil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 15:38:41 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:57912 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751790AbcEWTik (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 15:38:40 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4NJcWgU010523
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 23 May 2016 21:38:32 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4NJcYZs002009;
+	Mon, 23 May 2016 21:38:34 +0200
 In-Reply-To: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
+	(Tom Russello's message of "Mon, 23 May 2016 21:30:27 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Mon, 23 May 2016 21:38:32 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u4NJcWgU010523
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1464637115.26734@vLq9eM2dtxkz+8vvs5Qzzg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295381>
 
-From: Tom Russello <tom.russello@ensimag.grenoble-inp.fr>
+Tom Russello <tom.russello@grenoble-inp.org> writes:
 
-Tests if the "To", "Cc" and "Subject" fields are adequately filled and if the
-message is correctly quoted.
+> Hello,
+>
+> With the current send-email command, you can send a series of patches "in reply
+> to" an email.
+> This patch adds a new option to `git send-email`, `--quote-mail=<file>`, to
 
-Signed-off-by: Tom Russello <tom.russello@grenoble-inp.org>
-Signed-off-by: Samuel Groot <samuel.groot@grenoble-inp.org>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+I think the option name should be --quote-email. Even though "mail"
+usually means "email" for French people, there's still non-electronic
+mail for english-speaking ones.
 
----
-
-
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index b3355d2..bda4018 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1885,4 +1885,47 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
- 	test_cmp expected-list actual-list
- '
- 
-+test_expect_success $PREREQ 'setup expect' '
-+	cat >email <<-\EOF
-+	Message-Id: <author_123456@example.com>
-+	From: author@example.com
-+	To: to1@example.com
-+	Cc: cc1@example.com
-+	Date: Sat, 12 Jun 2010 15:53:58 +0200
-+	Subject: subject goes here
-+
-+	Have you seen my previous email?
-+	> Previous content
-+	EOF
-+'
-+
-+test_expect_success $PREREQ 'From, To, Cc, Subject with --quote-mail are correct' '
-+	clean_fake_sendmail &&
-+	git send-email \
-+		--quote-mail=email \
-+		--from="Example <nobody@example.com>" \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		-1 \
-+		2>errors &&
-+	grep "From: Example <nobody@example.com>" msgtxt1 &&
-+	to_adr=$(awk "/^To: /,/^Cc: /" msgtxt1) &&
-+	echo "$to_adr" | grep author@example.com &&
-+	echo "$to_adr" | grep to1@example.com &&
-+	grep "Cc: cc1@example.com" msgtxt1
-+'
-+test_expect_success $PREREQ 'the message given is quoted with --quote-mail' '
-+	grep "> Have you seen my previous email?" msgtxt1 &&
-+	grep ">> Previous content" msgtxt1
-+'
-+test_expect_success $PREREQ 'Check if Re is written, only once with --quote-mail' '
-+	grep "Subject: Re: subject goes here" msgtxt1 &&
-+	git send-email \
-+		--quote-mail=msgtxt1 \
-+		--from="Example <nobody@example.com>" \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		-1 \
-+		2>errors &&
-+	grep "Subject: Re: subject goes here" msgtxt3
-+'
-+
- test_done
 -- 
-2.8.2
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
