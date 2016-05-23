@@ -1,64 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC-PATCH 0/2] send-email: new --quote-mail option
-Date: Mon, 23 May 2016 21:38:34 +0200
-Message-ID: <vpqlh30d0p1.fsf@anie.imag.fr>
-References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Small rerere in rebase regression
+Date: Mon, 23 May 2016 12:43:11 -0700
+Message-ID: <xmqqy4708ss0.fsf@gitster.mtv.corp.google.com>
+References: <57434572.6030306@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, samuel.groot@grenoble-inp.org,
-	erwan.mathoniere@grenoble-inp.org,
-	jordan.de-gea@ensimag.grenoble-inp.fr
-To: Tom Russello <tom.russello@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Mon May 23 21:38:46 2016
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon May 23 21:43:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4vgc-00067v-BP
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 21:38:46 +0200
+	id 1b4vl1-0007xp-Mx
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 21:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753356AbcEWTil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2016 15:38:41 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57912 "EHLO mx2.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751790AbcEWTik (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2016 15:38:40 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4NJcWgU010523
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 23 May 2016 21:38:32 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4NJcYZs002009;
-	Mon, 23 May 2016 21:38:34 +0200
-In-Reply-To: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
-	(Tom Russello's message of "Mon, 23 May 2016 21:30:27 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Mon, 23 May 2016 21:38:32 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u4NJcWgU010523
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1464637115.26734@vLq9eM2dtxkz+8vvs5Qzzg
+	id S1752770AbcEWTnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 15:43:16 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53458 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751890AbcEWTnP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 15:43:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BE7EF1C9A0;
+	Mon, 23 May 2016 15:43:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=L7Bi2axdLHUXIompYuGQe/K/jA0=; b=epixxo
+	RdlJzgG31VnunyxyiLPy3ljhceNKzGq4ysiQUBIItvRlN7a5nyMS4PgKsv8RpjRL
+	707cGIys1T3yV2Wi7cLNDOIok3SvB1lc49bPr5CJHBIAE0H5MEhVAgVqm3ANOSCe
+	x7LZf2ruHybgJk/zk6WtEnZZuEcr1WPTWHCCY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cEthq1jukSnBBLm0FAvUAtz9ojQkAIPt
+	wSu6cewiZ7piBXXbsd1I4TV41SQdya/61AnqgJd7mPuIuxMmuCHuTl4dX83W9yTE
+	CRwQKBPrHNHRdZtW1Mo72PS/CT5X2Dm1j1ij6+4Cbv1YXZzXXLsm05BKy6zRc+Uk
+	HcMwuLEq9LE=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B715C1C99E;
+	Mon, 23 May 2016 15:43:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3FE591C99B;
+	Mon, 23 May 2016 15:43:13 -0400 (EDT)
+In-Reply-To: <57434572.6030306@kdbg.org> (Johannes Sixt's message of "Mon, 23
+	May 2016 20:01:22 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 961F2E86-211E-11E6-BFF7-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295382>
 
-Tom Russello <tom.russello@grenoble-inp.org> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> Hello,
->
-> With the current send-email command, you can send a series of patches "in reply
-> to" an email.
-> This patch adds a new option to `git send-email`, `--quote-mail=<file>`, to
+> I'm not sure whether the new behavior is a defect in rerere.c or a
+> consequence of the extra rerere call in interactive rebase...
 
-I think the option name should be --quote-email. Even though "mail"
-usually means "email" for French people, there's still non-electronic
-mail for english-speaking ones.
+Interesting.  When running an unnecessary "git rerere" (because it
+already was run and recorded the preimage), we used to be silent.
+With the updated code, we say something.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+At least it seems that we do not record the same preimage as a
+different variant, so the regression is hopefully merely cosmetic.
+
+I do not think it is a crime to say "git rerere" repeatedly without
+changing anything, so I do not think "rebase -i"'s call to rerere
+in die_with_patch is wrong, even though some calls to it seem to be
+made after seeing a "git merge" fail (which means we know 'rerere'
+has been run already).
+
+I think all plumbing that can turn an index into unmerged state has
+a call to git_rerere() at the end (the only obvious exception being
+"update-index" that lets you stuff higher stage entries to the
+index), so as long as "rebase -i" uses them correctly, I suspect
+that die_with_patch shouldn't have to have a call to "git rerere".
