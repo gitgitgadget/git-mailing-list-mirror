@@ -1,83 +1,56 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 0/5] worktree lock/unlock
-Date: Mon, 23 May 2016 00:51:09 -0400
-Message-ID: <CAPig+cQVaMOKtbUCWdZqYDO8ZUZkVcSJH14S=2xrZiDVJ59Xdg@mail.gmail.com>
-References: <20160510141416.GA22672@lanh>
-	<20160522104341.656-1-pclouds@gmail.com>
+From: Thaina Yu <thainayu@gmail.com>
+Subject: Please add http REST api in addition to command line
+Date: Mon, 23 May 2016 11:55:26 +0700
+Message-ID: <CADeMgjCQBpBLb8b98FxCNi+M9wgJJzVSoYYvYYaYVY+tbWYT=A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Reto_Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
-	Mike Rappazzo <rappazzo@gmail.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 23 06:51:16 2016
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 23 06:56:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4hpj-0005Yy-IT
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 06:51:15 +0200
+	id 1b4hua-0007oj-SH
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 06:56:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752879AbcEWEvL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 May 2016 00:51:11 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:34943 "EHLO
-	mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750873AbcEWEvK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2016 00:51:10 -0400
-Received: by mail-it0-f41.google.com with SMTP id z189so20459824itg.0
-        for <git@vger.kernel.org>; Sun, 22 May 2016 21:51:10 -0700 (PDT)
+	id S1752892AbcEWE4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 00:56:08 -0400
+Received: from mail-oi0-f50.google.com ([209.85.218.50]:33774 "EHLO
+	mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750802AbcEWE4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 00:56:07 -0400
+Received: by mail-oi0-f50.google.com with SMTP id k23so53926522oih.0
+        for <git@vger.kernel.org>; Sun, 22 May 2016 21:56:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=Pr+nueObncuWUzPt0HlBmPQSe8n55klprvAYvDArQ6Y=;
-        b=DsE5Chgj/RpHOBk9YShIEH2REOzC3zGTzYduBBm9OsMhkbLMGZxv+u7uSUScLDqdYS
-         CzH3PV0wYeiGSrN3l6MpjiAykrcyRtnQ6JRkBMuJ68iqTVV6wWg3WkmNqTAXUeFf2xCD
-         lblIlwt5rYWrezJfZGdWmLPdrolAkI2Lu1l/DKqmry2fKR8WU+BlRovutdKo98/IWXLf
-         RrmfdBEL1gjn3lhvlvHHoNviYzubm33u3Cr9/B/TUdK9O9jtAUqsj6rz0TaWmMFNQ6yX
-         hxadEpijZXeA4kxzKTTOvmVrCapts170NGGd3DeA7F0HGT1L8oyfjfXIhrsyhnc6ewA9
-         iyYg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=+4LSWRtnKos2n7bE2hyivQj+CRhPBlfFzM044C8EXb4=;
+        b=B+YbCA05JOkEQELa1NyLWTkvgsAWl/qpLic6ByQx8JVYoRnQyZJ5gJRabZT5WUBMIy
+         ctNM+awS7H4WKm5K8DuD7EVOCVxEv07HOtl+zbb5F2zmBZhLab5H/G0d7vpGWIAq0aB/
+         9+pu0LpvnUUtF3Aopp0viXc/M449Y89KMWWdAzAMX/VElzHcb4ssti/d2Xeo1o7mqFH5
+         rWK/yemqwvxKj5Aj9nGWdwxSDwIGT3/JqU4SY5nnneBZk4wcZX0ByqG2JQmGXtRUnnSa
+         eGWqMN5Sw5mB1otqq74yUiK/PP19sI29HtZAWoe3v1nPS0H5NQNQT6r1vANhHtM/GMX4
+         LeKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=Pr+nueObncuWUzPt0HlBmPQSe8n55klprvAYvDArQ6Y=;
-        b=WNwz0Mx7jR5rLi29SonEQCzeUVIou0r+WXRCF/6K3+NcngpkUCLAkWYhlW0EJXvxWd
-         njTWzdozGO5h5ofE+2QtB+6ux/1z9J6lA6QofVOgjQagFKGmFyqUomBwFgISneb/2Ahp
-         Z/jAdEQQXVPUjSW+JGPvZ5VlSECJfEusFP9fqONG5hMqa4lRCYqWrX71AmaTvizKPiwH
-         o1iqAVhtAW06otVJkfoSGhucRFeYjGLnNo3nQzUO4eVroOyOyijOsWeRBiJZyaG6EwZA
-         K8v6R3h3GlX18gx1S/RSayuwfq8CgDalmcu2f8FGXIHwF8k9TCvCQrzLVaiN13lpu6Qk
-         I3xg==
-X-Gm-Message-State: AOPr4FW8bA1rOFD7y/ydd8XY2wlQXHChfvcfkjzeth+Yv2EyUdyFz679IR2t2f4ceKrqYb6e+WS0Rve+OIwt6g==
-X-Received: by 10.36.55.141 with SMTP id r135mr9243799itr.73.1463979069552;
- Sun, 22 May 2016 21:51:09 -0700 (PDT)
-Received: by 10.79.110.21 with HTTP; Sun, 22 May 2016 21:51:09 -0700 (PDT)
-In-Reply-To: <20160522104341.656-1-pclouds@gmail.com>
-X-Google-Sender-Auth: UHfIFgYIRcHfmyeKXWn4OiuDjEg
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=+4LSWRtnKos2n7bE2hyivQj+CRhPBlfFzM044C8EXb4=;
+        b=YLRvKNIt9hfFayiSD95bgG7gAyMQMJ5ewCO/gIabXbzZ42Pw9yfdwXS6mQ+uRscpux
+         bqYrGv+c/ct8gxutIPhKdq6mZb2cS+ocsqqjDPCDZsp+VkWs8cKxgfZyVBaq8oKKJL4i
+         mMrHZdZ9Rgt4pG6A5+ubvZI3Ht04gYmtSGYiFct6j5nLipalAktHq4GI4MW39ke0tSIj
+         zzgauhJ00DscfIRPiTr40eNnjD1vlJJHXnvhobFdhx/1fGTpBCstz6EJAvAawvKKuHDP
+         TTuFe2K/oOaL3ShTz5RENESfgZoDIV502PZExeA1HmokpY1Orkm3qDzNlYzbPSF5TXnV
+         PPlw==
+X-Gm-Message-State: AOPr4FV2AKHw1Sd3yg3aGm5iuIUAlm9f1WDJS2TfpF0EtBEAUS/bs0FMuDvHFra2WIKLiGhpBGB06MWBE/WM2g==
+X-Received: by 10.157.5.100 with SMTP id 91mr9251863otw.38.1463979365968; Sun,
+ 22 May 2016 21:56:05 -0700 (PDT)
+Received: by 10.157.38.147 with HTTP; Sun, 22 May 2016 21:55:26 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295310>
 
-On Sun, May 22, 2016 at 6:43 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> This should address all of Eric's comments (thanks!). An extra change
-> I made is free_worktrees() at the end of {,un}lock_worktree() to avoi=
-d
-> leaking. This series depends on nd/worktree-cleanup-post-head-protect=
-ion.
-
-Thanks, this addresses all my comments from the previous round (aside
-from the suggestion to add a 'locked' field to 'struct worktree' and
-populate it automatically, which you elected to defer for the
-present).
-
-I re-read the entire series and, aside from the typo in the
-documentation update of patch 4/5, everything looks fine, and the
-series is:
-
-    Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+git should have REST api and able to work with command from remote
+place (and also localhost)
