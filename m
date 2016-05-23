@@ -1,90 +1,113 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Odd Difference Between Windows Git and Standard Git
-Date: Mon, 23 May 2016 17:08:42 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605231700380.4449@virtualbox>
-References: <nhlqd4$ekr$1@ger.gmane.org> <c07df4ac-08c9-8eaa-0233-06616945c857@web.de> <c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com> <ede1c113-1ab8-6043-3e39-bbacec5db31c@web.de> <xmqqy474g3cv.fsf@gitster.mtv.corp.google.com> <xmqqfutcg0pe.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1605231310190.4122@virtualbox> <6e4862b8-b5ab-ced4-29a0-bf975848e98f@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Jon Forrest <nobozo@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 23 17:08:54 2016
+From: Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>
+Subject: [RFC] Asymetric implementation
+Date: Mon, 23 May 2016 17:09:25 +0200
+Message-ID: <104FC79E-501B-4AA6-BE73-D0001D78F4B8@ensimag.grenoble-inp.fr>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Samuel Groot <samuel.groot@ensimag.grenoble-inp.fr>,
+	Erwan Mathoniere <erwan.mathoniere@ensimag.grenoble-inp.fr>,
+	Tom Russello <tom.russello@ensimag.grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 23 17:09:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4rTR-0007xN-RE
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 17:08:54 +0200
+	id 1b4rU6-0008FP-KO
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 17:09:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753390AbcEWPIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2016 11:08:49 -0400
-Received: from mout.gmx.net ([212.227.17.22]:55739 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751963AbcEWPIs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2016 11:08:48 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Ll0tl-1bf1Aa1vJF-00anE8; Mon, 23 May 2016 17:08:41
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <6e4862b8-b5ab-ced4-29a0-bf975848e98f@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:ntpDZMJLela0dlPZmgr0I0hBYV2s/18S4diElOW95e9EIs2gg2h
- zgmSAHnIn8WaXdBv187hOeV7Tcoo8mPX27EEEQVP9P7saILau4+3Y8Xh62a2EChZ4ua8W2l
- OgrVfMdCUJVcdgCzhu0Ai94tjoJbhBmLUZtD1DyiCjf65A2WYc370dYQPPQa9asBgZ1s8/m
- j7oEdYEC89lQU4iBC0qeA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8NUml0OAcXY=:HxyfOviECmWLOlSycUzz0J
- yasPfv4APzzR3AbntRO9pU1Mt+nXBQbTGw1E4OC16pf8I/TQo70GtBv/kZ5NVGXc0e4ufWo2G
- acOkU3eHXCKAMcnkW93iBMq14Pd0ljUGxTVFuSjuiBHmN+gNURuu7i7wiRb9vunfme7/dDrCe
- cSNJuPdIfIda/9H7LSCq9+4Gtj/KkliyEDR1jebkGAqxPoDiKFRlKPixSc+kIo/0l2fqZ3WJP
- OwHqekWS5DhDBW0EV71uSN+YxsOdvVGraG2OZ9ic82u6ITZdtZWgkcH9P/3eR0kdDBGkOOFYb
- hP78p89zKcDHw4fVvovgxtb9E6FYFDQUe7Apx1LsTsHO6ILJ4XecqaDZyLqkjqFjOaC6aqiqN
- ZbAOjNXOqQR5I/bA2eMu9hHfmI6++yKEmuM1jmwxqovxFBaYqKwQlQ1TY4JEzP6mDNJieqQFx
- +0BO0j/ij/pY5Jl7XE9NWDdoMqE7CeWHiAUk+QbKvMxuZqFBTUrZ3543tdmo0+hw/y60cbqBX
- 1Y7gQBmaZ1dOMrjH3oauJLQCo5cN0FaZEXDhnSanmuRarzZCcJ1HBBcIAdg8NmtUF2uUAPpa4
- F0fzehBJEMCC1+RpdHiGJTFuDdn2pTY9id5kxbOQihkfWLXysWpL0BhGzcqXWA7I7ulJIzuCr
- AjGLpyVP678NuhAleG4F4qNqKo3QFKYAD4IclX9RIWk//NpDPUPRUHaMJ1CXJRPVb91JUjoDL
- RlXxEvx0sX4oh2nUrr8KBIfR0FXVxQY7fkQ1+t9oYpqdQoAyGHtLz1BTuYewx+5E6L94PKAk 
+	id S1752461AbcEWPJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 11:09:30 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:52954 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751877AbcEWPJa convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 11:09:30 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 696E82111;
+	Mon, 23 May 2016 17:09:26 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id hPUr38nwyLmL; Mon, 23 May 2016 17:09:26 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 51E5B20FF;
+	Mon, 23 May 2016 17:09:26 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 4BEA42077;
+	Mon, 23 May 2016 17:09:26 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id wB1-XUPH_rt0; Mon, 23 May 2016 17:09:26 +0200 (CEST)
+Received: from eduroam-033182.grenet.fr (eduroam-033182.grenet.fr [130.190.33.182])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 329982066;
+	Mon, 23 May 2016 17:09:26 +0200 (CEST)
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295332>
 
-Hi Jon,
+Hi everyone, 
 
-On Mon, 23 May 2016, Jon Forrest wrote:
+here is the fact, working with an asymetric workflow is not as easy as it could be. 
+There are many options only setting by hands. And they are not easy to use, to understand and sometimes there are not suitable. 
 
-> On 5/23/2016 4:12 AM, Johannes Schindelin wrote:
-> 
-> > What we could do is to make the default config setting platform-dependent,
-> > a la CRLF_NATIVE.
-> >
-> > I imagine that we would want this for core.filemode, core.ignorecase and
-> > core.symlinks.
-> >
-> > What do you think?
-> 
-> Would this change have any bad effects when the same repo is shared
-> by both Windows and *nix Git users over Dropbox or a shared filesystem?
+This is an example of what git could do :
+Environment : 
+- You have the main repository -> A.
+- You have the fork repository of A -> fA
+- You have the clone of fA on your computer. 
+- You want to work on fA/master and synchronize your branch A/branch1 with A/master
 
-Yes, if you have symbolic links in that repository. Likewise, if you have
-users who find it funny to add different files whose names only differ in
-their case, say, xt_DSCP.c and xt_dscp.c.
+So, you need to link the pull request to A/master and the push request to fA/branchA. 
 
-Also, if your Windows users want to add scripts, they will most likely not
-mark them executable and your Linux users will call them names (forgetting
-that they know just as little about the other platform as the developers
-they try to ridicule).
+Configuration :
+ - branch.branchA.remote with A
+ - remote.pushDefault with fA or branch.branchA.pushRemote with fA
+ - branch.branchA.merge with fA.
 
-Lots of fun things to keep in mind when sharing the same working directory
-between Operating Systems.
+The steps to set those parameters are not user friendly, not complete and mistakes can happen(with --set-upstream for example)
 
-But you said "when the same repo is shared"? Do you really mean the
-*repository*? If so, there is not a problem. Only if you add a working
-directory into the mix.
+We are working on it and have solutions about it. Please, tell me what is the best for you and why ?
 
-Ciao,
-Johannes
+Here is the solutions : 
+
+1.
+a. add the config var : remote.pullDefault
+b. add the config var : branch.<name>.pullRemote
+c. add `git pull --set-default` in order to set remote.pushDefault
+d. add `git pull --set-remote` in order to set branch.<name>.pullRemote
+
+With that solution, git will have a complete configuration with :
+ - branch.<name.>remote, branch.<name>pullRemote and branch.<name>.pushRemote.
+ - remote.pullDefault, remote.pushDefault
+
+
+2.
+a. add `git pull --set-default` in order to move branch.<name>.remote to remote.pushDefault
+b. add git pull --set-remote` in order to move branch.<name>.remote to branch.<name>.pushRemote
+
+With this solution, we only add options for commands and not in config file. 
+
+
+You can add your solution. 
+
+
+I think that the first one is the best for now and for the future. The second one seems to be the easy way to implement but not the best. 
+
+
+What is your opinion ? 
+
+
+Best Regards. 
+
+
+
+
+Jordan DE GEA
+ENSIMAG 2A - ISI
+jordan.de-gea@ensimag.grenoble-inp.fr
