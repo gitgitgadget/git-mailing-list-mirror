@@ -1,70 +1,109 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH] Formatting variables in the documentation
-Date: Mon, 23 May 2016 19:57:43 +0200
-Message-ID: <vpq8tz0hd2g.fsf@anie.imag.fr>
-References: <1463587109-22476-1-git-send-email-tom.russello@grenoble-inp.org>
-	<20160518181500.GD5796@sigill.intra.peff.net>
-	<b06231ac-b100-2565-3bf7-99f268014788@ensimag.grenoble-inp.fr>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v7 3/3] bisect--helper: `write_terms` shell function in C
+Date: Mon, 23 May 2016 23:29:21 +0530
+Message-ID: <CAFZEwPNrAj0-8W150Yg1E+7y-y6_XB_=m2BLpaZqAOBRbksPCg@mail.gmail.com>
+References: <1463031127-17718-1-git-send-email-pranit.bauva@gmail.com>
+	<1464014928-31548-1-git-send-email-pranit.bauva@gmail.com>
+	<1464014928-31548-4-git-send-email-pranit.bauva@gmail.com>
+	<CAPig+cSOOv9sGGCTD7=5As9Opu3=e9ofkTpFhCzXC9cJPK21Tg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>,
-	Tom Russello <tom.russello@grenoble-inp.org>,
-	git@vger.kernel.org, erwan.mathoniere@ensimag.grenoble-inp.fr,
-	jordan.de-gea@ensimag.grenoble-inp.fr, gitster@pobox.com,
-	stefan@sevenbyte.org, jrnieder@gmail.com, rybak.a.v@gmail.com
-To: Samuel GROOT <samuel.groot@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon May 23 19:58:23 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon May 23 19:59:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4u7R-0006Ix-G7
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 19:58:21 +0200
+	id 1b4u8V-0006m3-AU
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 19:59:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752763AbcEWR6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2016 13:58:17 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:59682 "EHLO mx1.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752205AbcEWR6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2016 13:58:16 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u4NHvf8b012799
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 23 May 2016 19:57:41 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4NHvhbw025413;
-	Mon, 23 May 2016 19:57:43 +0200
-In-Reply-To: <b06231ac-b100-2565-3bf7-99f268014788@ensimag.grenoble-inp.fr>
-	(Samuel GROOT's message of "Mon, 23 May 2016 18:00:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Mon, 23 May 2016 19:57:42 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u4NHvf8b012799
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1464631065.35004@DnP6n7o8MDGtp0A/9aM4+A
+	id S1752770AbcEWR7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 13:59:24 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:36343 "EHLO
+	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752205AbcEWR7W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 13:59:22 -0400
+Received: by mail-yw0-f193.google.com with SMTP id u62so24433234ywe.3
+        for <git@vger.kernel.org>; Mon, 23 May 2016 10:59:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=h3Thwm1YPufccXPn1QL56fCzVw7T0Ey7bsPb1M3cWfk=;
+        b=00dpPSKOs+M+rgXEdkjb7zQAaMzkzA3OBT5v53qpw8NI7OOwx5edBOs3S4G3RsavDK
+         1Ojzhza5Vuf0qJKk9lzm3Bmeis6uM9Ldeuur27Es/Q4J/JJEno5Ksnw60ncxv4X/oQDZ
+         xERaMnohcGLJfVtOmlFpJj+Hx+v1akjo2ry3Z/KWZ52SjjJQWHmXvllK/+ql9IK109V0
+         8WSXtGKSiXCpM/sdSatKcKw6ajCvxGLLoSIakS63ekO9RF+sCy773+eNgVlbA/0uhG/Y
+         +DJJOpf9bgPvKRkGf91g5EsBH0mRqxy0z5Mjn6MGfdgYcF0zrDNtNDyNXshcouBLr6gt
+         ngcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=h3Thwm1YPufccXPn1QL56fCzVw7T0Ey7bsPb1M3cWfk=;
+        b=Znm3ol8H6uMti0b38jnq1X4Jbi9m+K90ipXOPb8NCeoSy4YoEZjE1pUG9Bpm/1VKmf
+         IrU5/3+j/eZUscd8P20eMH4xwxxEDJwRASn/T18TjiFOUrPob7IU7HZfaZSU6L+JflUu
+         qlLNNM9P9hpRzR3nFkyect3/KiiGLlygQsF+wOSbwf3JIW9bjkunTWnhVxdOlmIJZvxz
+         jQgM5jw7X2KWbhtmKUqJLNbVb6DKScZI9Src+7VXJQT0ACZrFcMA5j0PSZ+5bSsMlgS0
+         3SqPc+TBj7UmxbWac50dnx6Vup+Qxv0Y6rz80i6jD/TN4IlCj0SNiz5kTw7iQSQWLWFb
+         9yFg==
+X-Gm-Message-State: ALyK8tIIze4nwul/68Rb0ro2VHacL14EVoyyfpeqWwFDpJJpcJCoCfBrka3Muk+2E9aWTj77yRTyacLNUd7MmQ==
+X-Received: by 10.129.134.133 with SMTP id w127mr70233ywf.252.1464026361810;
+ Mon, 23 May 2016 10:59:21 -0700 (PDT)
+Received: by 10.13.219.213 with HTTP; Mon, 23 May 2016 10:59:21 -0700 (PDT)
+In-Reply-To: <CAPig+cSOOv9sGGCTD7=5As9Opu3=e9ofkTpFhCzXC9cJPK21Tg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295342>
 
-Samuel GROOT <samuel.groot@ensimag.grenoble-inp.fr> writes:
+On Mon, May 23, 2016 at 9:31 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, May 23, 2016 at 10:48 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> Reimplement the `write_terms` shell function in C and add a `write-terms`
+>> subcommand to `git bisect--helper` to call it from git-bisect.sh . Also
+>> remove the subcommand `--check-term-format` as it can now be called from
+>> inside the function write_terms() C implementation.
+>> [...]
+>> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+>> ---
+>> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+>> @@ -56,18 +58,38 @@ static int check_term_format(const char *term, const char *orig_term)
+>> +static int write_terms(const char *bad, const char *good)
+>> +{
+>> +       FILE *fp;
+>> +       int res;
+>> +
+>> +       if (!strcmp(bad, good))
+>> +               return error(_("please use two different terms"));
+>> +
+>> +       if (check_term_format(bad, "bad") || check_term_format(good, "good"))
+>> +               return -1;
+>> +
+>> +       fp = fopen(git_path_bisect_write_terms(), "w");
+>> +       if (!fp)
+>> +               return error(_("could not open the file to write terms"));
+>
+> By adding two pieces of information, you could make this error message
+> much more helpful for anyone trying to debug the failure.
+> Specifically:
+>
+> (1) the pathname for which open() failed
+> (2) the actual system-level error
+>
+> For (2), you could use strerror(errno) or, better yet, error_errno()
+> which recently graduated to 'master'.
 
-> Since 2.8.3 was out recently, we could flip MAN_BOLD_LITERAL on by
-> default for this cycle to shake out problems as Jeff King suggested
-> [2].
+Yes it would definitely be better to make the error message more
+helpful. I will dig more into this.
 
-2.8.3 was a bufix release, and flipping a controversial flag should
-clearly not be done on a bugfix release. So, in this context, "beginning
-of a cycle" means after a x.y.0 release.
-
-Anyway, a patch enabling MAN_BOLD_LITERAL by default would need to cook
-in pu and next as any other patches, so the time when the patch is sent
-does not really matter.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+>> +       res = fprintf(fp, "%s\n%s\n", bad, good);
+>> +       fclose(fp);
+>> +       return (res < 0) ? -1 : 0;
+>> +}
