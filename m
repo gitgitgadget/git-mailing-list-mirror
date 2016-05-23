@@ -1,80 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Confusing --graph --all output with detached branches
-Date: Mon, 23 May 2016 14:18:31 -0700
-Message-ID: <xmqqa8jg8od4.fsf@gitster.mtv.corp.google.com>
-References: <CA+cck7FPzK-zccBVzphY_N41acOvqjwmDmgQH7ZE3SHG2k1rFw@mail.gmail.com>
-	<xmqqvb2aoz13.fsf@gitster.mtv.corp.google.com>
+From: Per Cederqvist <cederp@opera.com>
+Subject: Re: git log: invert --author and --committer
+Date: Mon, 23 May 2016 23:21:32 +0200
+Message-ID: <CAP=KgsSNgKY5gR3uSSMZdOxZ1687YRnQRQFsV22UwCXqmdfB9g@mail.gmail.com>
+References: <CAP=KgsSdX3pCRzeUVobrFWVGOGGSrwkO0MjFhUWruiajAxn38Q@mail.gmail.com>
+	<xmqqmvngaedn.fsf@gitster.mtv.corp.google.com>
+	<xmqq37p8a84y.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?Q?Bj=C3=B8rnar?= Snoksrud <snoksrud@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 23 23:18:42 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 23 23:21:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4xFJ-0007Qf-Na
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 23:18:42 +0200
+	id 1b4xIB-0000Zf-Mv
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 23:21:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752458AbcEWVSh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 May 2016 17:18:37 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63385 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751745AbcEWVSg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2016 17:18:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C502F1D2F6;
-	Mon, 23 May 2016 17:18:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=LeaUcaSdVZG4
-	GZSN1mi0QRc9IEQ=; b=ab5JnIU8ybPfqRzQH5uVgK+YlEsT3Vkj8J1RHXo1u7d3
-	vKLdK52dePYXq5yzbJ7N1KXSaCYhTX9N9tIMrrVjmSEDgayxeVCSfC7QHmVzWIxK
-	F6C0q7CGTWpRb97MhYQts6oyur2tBGQRLZUW8ttz5GUK9xf7IVMHRex8idcC7qw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xF1+Eh
-	ei6fHxSw1Y9nTeeEqXFkfr8fQjkd/vj7Q+E6vDwCTKldKPKggkXpemTldA1JF2+B
-	C+x/n963VLL+P+qKpROvTeo4Qo4Q3aYiS1bRF6QkENeQ4d6eVfAMkftI2TwJU/Hi
-	rAXx3FG+9YHeT/OJChAs2GEJyQyVpt+gE9r14=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id BCEA01D2F5;
-	Mon, 23 May 2016 17:18:34 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 472451D2F4;
-	Mon, 23 May 2016 17:18:34 -0400 (EDT)
-In-Reply-To: <xmqqvb2aoz13.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 19 May 2016 08:20:08 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E81F1A68-212B-11E6-BD77-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751906AbcEWVVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 17:21:35 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:34684 "EHLO
+	mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751068AbcEWVVd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 17:21:33 -0400
+Received: by mail-qk0-f173.google.com with SMTP id y126so82364944qke.1
+        for <git@vger.kernel.org>; Mon, 23 May 2016 14:21:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=opera-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=/XLLw94pmnhFyq3b3UtQUh6lTb9svOdxU6olSubiRTo=;
+        b=e927vBJCc0MY4HA4Qck/XEdFL7pH26G2DgFWBf9JSmMXKs4QTVp1KSB3Jgqh3EvxAD
+         euAcyliV8My0oL910NO86hvqoU0djAZCk3EopEuovclmHIppCu35jXpa4xDwu2/arAR5
+         T/nWylnWfT8FyiXIqFFz1PF2c5pNOQBstnf8P4zTUuvOTcmw8z1EQ41FhM+mku7Mywac
+         ZBiYmZJbTfLe9r6C9DbzTt1ggYdEPF+XPS1JMymk3z9b2aCJXel5yRbubL8dyuco+d8g
+         39QIVUK3JPQ/xGpSISTip0F7ALOM58UUKCtTQy85H+/q0egrEdxH42Po2Huq476ehV6B
+         ZL8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=/XLLw94pmnhFyq3b3UtQUh6lTb9svOdxU6olSubiRTo=;
+        b=UkwoBLBsnm+EKxEprrVihUSe6U+cBsFre/8FwppUp8hN0wGSFPltKnj0yVIRl35eMN
+         gGvZ9bjmkixbqyZ7Wiz1FmY/mSuJgARpEV+jtKTiP348Lk5ip75jYytLeL/wTkj+FgqG
+         6IZ5QWmau5PLAuyoM2gnp0P/63PI4EOFWjYjPpCCTXrKIfc8CoQe8BjAnBu9+griWJZf
+         H915KFA7y7tnyWlRxP49s/ATeHIsIgRgt6G46BmeLvOOGo/ng6CF8tuxLHRfDnjemx3m
+         Oka+Cxzg48cRroKnIQfMuMUYgdVzBJFBZ6iy1X6pajmAGzdtbAw/D/QzCaQuiPOvGuqU
+         caLw==
+X-Gm-Message-State: ALyK8tL7izzaF35ad8DFOOIYCir4uyVOYdY6GHuxAOoz3zFNCllmdi8kowr4n2+jEVCjf6lxXjpulut+xXCQ6fwW
+X-Received: by 10.237.52.199 with SMTP id x65mr993468qtd.27.1464038492227;
+ Mon, 23 May 2016 14:21:32 -0700 (PDT)
+Received: by 10.55.184.70 with HTTP; Mon, 23 May 2016 14:21:32 -0700 (PDT)
+In-Reply-To: <xmqq37p8a84y.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295393>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Bj=C3=B8rnar Snoksrud <snoksrud@gmail.com> writes:
+On Mon, May 23, 2016 at 9:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> .. which indicates that `foo` is contained within `bar`. Maybe
+>> Per Cederqvist <cederp@opera.com> writes:
 >>
->> *   ff4265f  (HEAD -> master) Merge branch 'bar'
->> |\
->> | * 0bbc311  (bar) 5
->> | * b1c9c49  4
->> |
->> | * ce053f9  (foo) 3
->> |/
->> * 8b62de9  2
->> * cb7e7e2  1
+>>>     git log --invert-grep --author cibot
+>>...
+>> Yeah, the author/committer search piggy-backs the more generic "grep
+>> in the log" machinery, but it is quite hidden and the document
+>> failed to tell the end users that is what is going on.  Mentioning
+>> that invert (or any tweak that works on the grep machinery) affects
+>> author/committer search is a good idea.
 >>
->> .. would be better?
+>> Does "-i/--regexp-ignore-case" also need the same treatment?
 >
-> Yes, it would be.
+> It seems it does.
+>
+> How about making this clarification not about --invert-grep but
+> about --committer/--author option, perhaps like this?
+>
+>  Documentation/rev-list-options.txt | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index 4f009d4..3fca366 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -44,6 +44,10 @@ endif::git-rev-list[]
+>         expression).  With more than one `--author=<pattern>`,
+>         commits whose author matches any of the given patterns are
+>         chosen (similarly for multiple `--committer=<pattern>`).
+> ++
+> +Options that affect how a regular expression match is performed
+> +(such as `-i`, `-E`, `--invert-grep`) can also be used affect these
+> +options.
+>
+>  --grep-reflog=<pattern>::
+>         Limit the commits output to ones with reflog entries that
 
-Another possibility would be to shift the columns between 4 and 3.
+"can also be used to affect", right? (I think the word "to" is missing.)
+
+I think it does make sense to document this with the --author/--committer
+options.
+
+That wording would however make me assume that --all-match could also
+be used, so that
+
+    git log --all-match --author ceder --author cibot
+
+would list nothing (since there are no authors that match both
+"ceder" and "cibot" in this codebase).  That isn't the fact, though.
+It seems to list all commits that have either ceder or cibot as author,
+just as if I had not used --all-match.
+
+As a reader of the man-page, I would prefer to have the exact list
+of options in the documentation.  (I realize that it will make it harder
+to maintain.)
+
+    /ceder
