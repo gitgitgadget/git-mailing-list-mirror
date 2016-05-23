@@ -1,209 +1,80 @@
-From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH v2 13/22] i18n: git-sh-setup.sh: mark strings for translation
-Date: Mon, 23 May 2016 19:27:32 +0000
-Message-ID: <1464031661-18988-14-git-send-email-vascomalmeida@sapo.pt>
-References: <1464031661-18988-1-git-send-email-vascomalmeida@sapo.pt>
-Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
+From: Tom Russello <tom.russello@grenoble-inp.org>
+Subject: [RFC-PATCH 0/2] send-email: new --quote-mail option
+Date: Mon, 23 May 2016 21:30:27 +0200
+Message-ID: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
+Cc: samuel.groot@grenoble-inp.org, matthieu.moy@grenoble-inp.fr,
+	erwan.mathoniere@grenoble-inp.org,
+	jordan.de-gea@ensimag.grenoble-inp.fr
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 23 21:30:36 2016
+X-From: git-owner@vger.kernel.org Mon May 23 21:31:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4vYh-0002Cr-Pz
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 21:30:36 +0200
+	id 1b4vZF-0002UW-GZ
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 21:31:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754072AbcEWTaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2016 15:30:30 -0400
-Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:47400 "EHLO sapo.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753693AbcEWT3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2016 15:29:43 -0400
-Received: (qmail 24085 invoked from network); 23 May 2016 19:29:41 -0000
-Received: (qmail 4341 invoked from network); 23 May 2016 19:29:41 -0000
-Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 23 May 2016 19:29:41 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-X-Mailer: git-send-email 2.7.3
-In-Reply-To: <1464031661-18988-1-git-send-email-vascomalmeida@sapo.pt>
+	id S1753396AbcEWTbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 15:31:04 -0400
+Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:48284 "EHLO
+	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753182AbcEWTbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 15:31:03 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 6C958254A;
+	Mon, 23 May 2016 21:30:59 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lVnnB2YW8d82; Mon, 23 May 2016 21:30:59 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 5C9972549;
+	Mon, 23 May 2016 21:30:59 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 56FAC2077;
+	Mon, 23 May 2016 21:30:59 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id i7d5vDU2MUWM; Mon, 23 May 2016 21:30:59 +0200 (CEST)
+Received: from ux-305.numericable.fr (1.23.6.84.rev.sfr.net [84.6.23.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 21C782066;
+	Mon, 23 May 2016 21:30:59 +0200 (CEST)
+X-Mailer: git-send-email 2.8.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295377>
 
-Positional arguments, such as $0, $1, etc, need to be stored on shell
-variables for use in translatable strings, according to gettext manual.
+Hello,
 
-Add git-sh-setup.sh to LOCALIZED_SH variable in Makefile to enable
-extraction of string marked for translation by xgettext.
+With the current send-email command, you can send a series of patches "in reply
+to" an email.
+This patch adds a new option to `git send-email`, `--quote-mail=<file>`, to
+quote an email in the cover letter in your series of patches.
 
-Although git-sh-setup.sh is a shell library to be sourced by other shell
-scripts, it is necessary to source git-sh-i18n at this point, because
-some scripts don't do it themselves. Not sourcing git-sh-i18n would lead
-to failure due to, for instance, gettextln not being found.
+The "To", "Cc" and "Subject" fields will be filled appropriately and the message
+given quoted in the cover letter for the series of patches.
 
-Source "$(git --exec-path)"/git-sh-i18n instead of simply git-sh-i18n,
-because latter case would fail test t2300-cd-to-toplevel.sh.
+In this first patch, the new option `--quote-mail=<file>` needs an
+email file and does not manage accents.
 
-Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
----
- Makefile        |  4 +++-
- git-sh-setup.sh | 56 ++++++++++++++++++++++++++++++++++++++++++--------------
- 2 files changed, 45 insertions(+), 15 deletions(-)
+There is still work in progress, including:
 
-diff --git a/Makefile b/Makefile
-index bc3d41e..d31fcf2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2062,7 +2062,9 @@ XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
- 	--keyword=gettextln --keyword=eval_gettextln
- XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --keyword=__ --language=Perl
- LOCALIZED_C = $(C_OBJ:o=c) $(LIB_H) $(GENERATED_H)
--LOCALIZED_SH = $(SCRIPT_SH) git-parse-remote.sh
-+LOCALIZED_SH = $(SCRIPT_SH)
-+LOCALIZED_SH += git-parse-remote.sh
-+LOCALIZED_SH += git-sh-setup.sh
- LOCALIZED_PERL = $(SCRIPT_PERL)
- 
- ifdef XGETTEXT_INCLUDE_TESTS
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index c48139a..55efa23 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -2,6 +2,10 @@
- # to set up some variables pointing at the normal git directories and
- # a few helper shell functions.
- 
-+# Some shell scripts source git-sh-setup (i.e. this scriplet) but
-+# don't source git-sh-i18n which is needed here for gettext support.
-+. "$(git --exec-path)"/git-sh-i18n
-+
- # Having this variable in your environment would break scripts because
- # you would cause "cd" to be taken to unexpected places.  If you
- # like CDPATH, define it for your interactive shell sessions without
-@@ -83,14 +87,14 @@ if test -n "$OPTIONS_SPEC"; then
- else
- 	dashless=$(basename -- "$0" | sed -e 's/-/ /')
- 	usage() {
--		die "usage: $dashless $USAGE"
-+		die "$(gettext usage:) $dashless $USAGE"
- 	}
- 
- 	if [ -z "$LONG_USAGE" ]
- 	then
--		LONG_USAGE="usage: $dashless $USAGE"
-+		LONG_USAGE="$(gettext usage:) $dashless $USAGE"
- 	else
--		LONG_USAGE="usage: $dashless $USAGE
-+		LONG_USAGE="$(gettext usage:) $dashless $USAGE
- 
- $LONG_USAGE"
- 	fi
-@@ -182,48 +186,72 @@ is_bare_repository () {
- cd_to_toplevel () {
- 	cdup=$(git rev-parse --show-toplevel) &&
- 	cd "$cdup" || {
--		echo >&2 "Cannot chdir to $cdup, the toplevel of the working tree"
-+		gettextln "Cannot chdir to \$cdup, the toplevel of the working tree" >&2
- 		exit 1
- 	}
- }
- 
- require_work_tree_exists () {
-+	program_name=$0
- 	if test "z$(git rev-parse --is-bare-repository)" != zfalse
- 	then
--		die "fatal: $0 cannot be used without a working tree."
-+		die "$(gettext "fatal: \$program_name cannot be used without a working tree.")"
- 	fi
- }
- 
- require_work_tree () {
-+	program_name=$0
- 	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true ||
--	die "fatal: $0 cannot be used without a working tree."
-+		die "$(gettext "fatal: \$program_name cannot be used without a working tree.")"
- }
- 
- require_clean_work_tree () {
-+	action=$1
-+	hint=$2
- 	git rev-parse --verify HEAD >/dev/null || exit 1
- 	git update-index -q --ignore-submodules --refresh
- 	err=0
- 
- 	if ! git diff-files --quiet --ignore-submodules
- 	then
--		echo >&2 "Cannot $1: You have unstaged changes."
-+		case "$action" in
-+		rebase)
-+			gettextln "Cannot rebase: You have unstaged changes." >&2
-+			;;
-+		"pull with rebase")
-+			gettextln "Cannot pull with rebase: You have unstaged changes." >&2
-+			;;
-+		*)
-+			eval_gettextln "Cannot \$action: You have unstaged changes." >&2
-+			;;
-+		esac
- 		err=1
- 	fi
- 
- 	if ! git diff-index --cached --quiet --ignore-submodules HEAD --
- 	then
--		if [ $err = 0 ]
-+		if test $err = 0
- 		then
--		    echo >&2 "Cannot $1: Your index contains uncommitted changes."
-+			case "$action" in
-+			rebase)
-+				gettextln "Cannot rebase: Your index contains uncommitted changes." >&2
-+				;;
-+			"pull with rebase")
-+				gettextln "Cannot pull with rebase: Your index contains uncommitted changes." >&2
-+				;;
-+			*)
-+				eval_gettextln "Cannot \$action: Your index contains uncommitted changes." >&2
-+				;;
-+			esac
- 		else
--		    echo >&2 "Additionally, your index contains uncommitted changes."
-+		    gettextln "Additionally, your index contains uncommitted changes." >&2
- 		fi
- 		err=1
- 	fi
- 
--	if [ $err = 1 ]
-+	if test $err = 1
- 	then
--		test -n "$2" && echo >&2 "$2"
-+		test -n "$hint" && echo "$2" >&2
- 		exit 1
- 	fi
- }
-@@ -336,12 +364,12 @@ git_dir_init () {
- 	then
- 		test -z "$(git rev-parse --show-cdup)" || {
- 			exit=$?
--			echo >&2 "You need to run this command from the toplevel of the working tree."
-+			gettextln "You need to run this command from the toplevel of the working tree." >&2
- 			exit $exit
- 		}
- 	fi
- 	test -n "$GIT_DIR" && GIT_DIR=$(cd "$GIT_DIR" && pwd) || {
--		echo >&2 "Unable to determine absolute path of git directory"
-+		gettextln "Unable to determine absolute path of git directory" >&2
- 		exit 1
- 	}
- 	: ${GIT_OBJECT_DIRECTORY="$(git rev-parse --git-path objects)"}
--- 
-2.7.3
+  1. An option `--quote-mail-id=<message-id>` to download the message
+     from any source, e.g. http://mid.gmane.org/<message-id>/raw.
+     The server's address could be set in the repo's config file.
+
+  2. The proper documentation for `--quote-mail=<file>` and
+     `--quote-mail-id=<message-id>` as soon as their definitive
+     behavior is approved by the community.
+
+  3. The code to parse the email headers is currently duplicated several
+     times, we should refactor it to help maintaining the code.
+
+  4. More tests on the features described above.
+
+
+git-send-email.perl   | 99 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+t/t9001-send-email.sh | 43 +++++++++++++++++++++++++++++++++++++++++++
+2 files changed, 141 insertions(+), 1 deletion(-)
