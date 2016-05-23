@@ -1,106 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 3/3] travis-ci: run Git bisect on failed tests
-Date: Sun, 22 May 2016 18:22:02 -0700
-Message-ID: <xmqq1t4tbmbp.fsf@gitster.mtv.corp.google.com>
-References: <1463914856-64745-1-git-send-email-larsxschneider@gmail.com>
-	<1463914856-64745-4-git-send-email-larsxschneider@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 1/5] worktree.c: add find_worktree_by_path()
+Date: Sun, 22 May 2016 21:41:11 -0400
+Message-ID: <CAPig+cQTWK_yR4hCdMDj35Rwx6tAUXdfzrOkALJU3j6qCBxoew@mail.gmail.com>
+References: <20160510141416.GA22672@lanh>
+	<20160522104341.656-1-pclouds@gmail.com>
+	<20160522104341.656-2-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Mon May 23 03:22:12 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Reto_Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
+	Mike Rappazzo <rappazzo@gmail.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 23 03:41:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4eZP-0002RX-ET
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 03:22:11 +0200
+	id 1b4ert-00033R-74
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 03:41:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752755AbcEWBWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 May 2016 21:22:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62962 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752694AbcEWBWG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 May 2016 21:22:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D40831CFD4;
-	Sun, 22 May 2016 21:22:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=E7VAxfmJjGO/2r7o297wPCsnpj4=; b=i3PwR/
-	gIWgpHX6zHwwgD6lcveWdjH8cpZOua9bCEuxMkckZoKHGOHKXchi9XAY1im78lC1
-	g3m1nZh+4XKf98E2UPOmcSado5togQLDT/LqLVJdcQBc4kVqHfsWDPDRJnLRerKJ
-	QrHT6aBEIJCr/LlkVuuydt2CjBRYUyO9hIlME=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y8fEOBKVgxpza1gmmTvdfEoo43nk7NiD
-	6UsOUeWKvSMbaL6uSqMM0kKd0FVRmWAkcna9L26+UcdGL30T7eUnHOH/r2IgHXhT
-	xjyVifgAD8XNZHun2E3GVfGvUk568U8nFQ6NepmWWwLmno5cxh6rS1s4Ed0SRiPN
-	jfP9CPpZkB8=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CA3DC1CFD3;
-	Sun, 22 May 2016 21:22:04 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 44CC51CFD1;
-	Sun, 22 May 2016 21:22:04 -0400 (EDT)
-In-Reply-To: <1463914856-64745-4-git-send-email-larsxschneider@gmail.com>
-	(larsxschneider@gmail.com's message of "Sun, 22 May 2016 13:00:56
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C1F0E1A2-2084-11E6-994E-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1752760AbcEWBlN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 May 2016 21:41:13 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:34683 "EHLO
+	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752728AbcEWBlM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 May 2016 21:41:12 -0400
+Received: by mail-io0-f176.google.com with SMTP id 190so184398949iow.1
+        for <git@vger.kernel.org>; Sun, 22 May 2016 18:41:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=6dKRoOlqMLqpM9rdjVh0+8PmLbDv1Sj3DN7oesUfZEU=;
+        b=xubDPj2DF8A3CElebgMtTiajAQeKAv8Fv/z0LpGlJpMUgqV9jt/kWmEmnyQWVy4Pwk
+         NMIyaA4hlZc54T1QzSp+eQ6XnlHQLfkJF0BOM7umbSxH2DJercqOsx3dZldgoMo0Ru+U
+         9FCQvkmAlPZg5SqrmOZRS0Lg9laQRUQQK6H/cOsi2cqIlTMhpfzOFuBBeL50skpVmSak
+         OWk35lT6lXIl+tLM1VFPSsH7jF0jkG34XvUDlVUyZYcobYUAI4JPHKrdKP4+vlw2Aef5
+         OJtzg6J+O8/eQ4cObqjF8th+v66rZZdUJThrgtdHy1dfc/72iUZ9AQ0oXp2a/L28L9t4
+         e79w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=6dKRoOlqMLqpM9rdjVh0+8PmLbDv1Sj3DN7oesUfZEU=;
+        b=KnGoC2MnFZw8NcEvBf3/HqosX9Cy8s4OE1kJNr5r30r5Z+qLH0lfoXYzs+CZ7QoSCV
+         p1HJYruTibDrOJGb4+iQwYSktLGF2u+SQB23iKZq5HMNyfAHvgRlIAUEcDJe4AVPInU8
+         G8eD97JvwF+U9Ayfu0AI8+Ao8nsCGFW55YsEczltpibkebixJymLoVXfU679TvLTYgba
+         m03gHN2ERGWP4oGbADtW8NNDQpP/FTw6LGr0YbPjINjtqXXyjiHfhQHza0kK8Cr/1LnG
+         hgN2Sd0SdJr1chdEx3I/yXl1CivUDby0YnYRQeLqX2VpSg5vzMTcXfJrsm+/fFkPJ5eP
+         fc0Q==
+X-Gm-Message-State: ALyK8tIQ7W6j1cNFIyeDkP1OyOVHvvfnac10LgFnDzTAEqkeZUqxtNb8m0CGb+fuwgYCorterlKaplW+NZNRxQ==
+X-Received: by 10.36.31.3 with SMTP id d3mr1984640itd.84.1463967671805; Sun,
+ 22 May 2016 18:41:11 -0700 (PDT)
+Received: by 10.79.110.21 with HTTP; Sun, 22 May 2016 18:41:11 -0700 (PDT)
+In-Reply-To: <20160522104341.656-2-pclouds@gmail.com>
+X-Google-Sender-Auth: RKxCKTRqyD8XZ7GsMj-mSNGe_wA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295300>
 
-larsxschneider@gmail.com writes:
+On Sun, May 22, 2016 at 6:43 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> So far we haven't needed to identify an existing worktree from comman=
+d
+> line. Future commands such as lock or move will need it. There are of
+> course other options for identifying a worktree, for example by branc=
+h
+> or even by internal id. They may be added later if proved useful.
+>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> diff --git a/worktree.h b/worktree.h
+> @@ -29,6 +29,12 @@ extern struct worktree **get_worktrees(void);
+> +/*
+> + * Search a worktree by its path. Paths are normalized internally.
+> + */
+> +extern struct worktree *find_worktree_by_path(struct worktree **list=
+,
+> +                                             const char *path_);
+> +
 
-> Junio usually pushes many commits at once to the public "pu"/"next"/
-> "master" branches. If a test fails then it is not obvious what commit
-> caused the failure. Therefore we run Git bisect with the merge base
-> between the failing rev and its more stable branch ("next" for "pu",
-> "master" for "next", and "maint" for "master") as good ref to find the
-> offending commit. This is only enabled on "github.com/git/git" because
-> there we can assume that all relevant branches are up to date.
+Sorry for not noticing last time, but I'd probably have named this
+argument 'path' rather than 'path_' here in the header.
 
-Just FYI, 'git log next..pu' is not a very interesting range unless
-you also use the "--no-merges" option.
-
-Is there a good way to tell the CI that, instead of testing 'pu' (or
-a specific branch in general), test all new commits that appear on
-the first-parent chain between 'master'..'pu'?
-
-It would be ideal if CI can do this every time 'master' and 'pu'
-gets updated.
-
- - Find all commits that appear on the first-parent chain between
-   'master..pu'.
-
- - For each of them:
-
-   - Test it.  This tests the merge result and can catch breakages
-     introduced by mismerging.
-
-   - Also test its second parent if it is a merge.  This tests the
-     tip of each topic branch in isolation.  CI gets a bonus point
-     if it can remember that the tip of the topic did not move and
-     the commit already passed the test to skip it ;-)
-
- - Optionally, for those topics that failed the "tip of the topic
-   branch" test, "bisect master..$topic" to see where it breaks.
-
-The thing is, "bisect" works only when you have a _single_ cause of
-breakage, but because 'pu' is a pile of unsorted raw material yet to
-be sifted into dirt and gem, once you see a failure at the tip of
-'pu', mechanical 'bisect run' may not be a very useful tool, as you
-do not know if there is only one breakage you are looking for.
-
-Because the unit of integration we use is a topic branch (not an
-individual commit on a topic branch), "this topic is broken", and
-"this topic itself may be good, but merging it breaks 'pu'" are far
-more interesting and relevant piece of information than "this commit
-is what broke 'pu'".
+Not worth a re-roll, of course.
