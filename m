@@ -1,181 +1,212 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: Git reset --hard with staged changes
-Date: Mon, 23 May 2016 21:31:16 +0200
-Message-ID: <CAP8UFD0dQGmfhPuHjEGRZjEZHwUHR_XzAASwq+87Obf26yi+BQ@mail.gmail.com>
-References: <loom.20160523T023140-975@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Yotam Gingold <yotam@yotamgingold.com>
-X-From: git-owner@vger.kernel.org Mon May 23 21:31:23 2016
+From: Tom Russello <tom.russello@grenoble-inp.org>
+Subject: [RFC-PATCH 1/2] send-email: new option to quote an email and reply to
+Date: Mon, 23 May 2016 21:30:28 +0200
+Message-ID: <1464031829-6107-2-git-send-email-tom.russello@grenoble-inp.org>
+References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
+Cc: samuel.groot@grenoble-inp.org, matthieu.moy@grenoble-inp.fr,
+	erwan.mathoniere@grenoble-inp.org,
+	jordan.de-gea@ensimag.grenoble-inp.fr,
+	Tom Russello <tom.russello@ensimag.grenoble-inp.fr>,
+	Tom Russello <tom.russello@grenoble-inp.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 23 21:32:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4vZS-0002c2-US
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 21:31:23 +0200
+	id 1b4vaP-00033H-Ml
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 21:32:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754079AbcEWTbS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 May 2016 15:31:18 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:37104 "EHLO
-	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753182AbcEWTbR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2016 15:31:17 -0400
-Received: by mail-wm0-f44.google.com with SMTP id z87so60748820wmh.0
-        for <git@vger.kernel.org>; Mon, 23 May 2016 12:31:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=lstBkU37W/jxK8jPo0FpS05DyaAYCvl+0nF/oQbngvg=;
-        b=D7H7ihsAyRychabFhSp/qEQKlQpb+bEBv95BdmNFbilZV2mFeyqhd1IjinnqvREzl6
-         Fp2Q1VijH2QYy3MO7UUzMRT8uJREZah8Pk7OyTFdtO5dhVSZXIZxo0s+AM0sA+4ld45d
-         171z1z3VoiESsHd16fgHi/V1MzQC2MBtki0z4MVXDcT0f+RthGBoxuMCB4FjG1quGKrI
-         4L/k1uvWCTvf0Va69c1mOETL2TNGBd/r9QDLwOLfCpZt0UQSaH2ymMuSmr45ZJca0Ilx
-         oCThJWVOXZ/252da6tTtCjJR6INoTahu9QSgRe5PmUAO5mT5aPgPQetY6rlM8RvQ6ugJ
-         cFJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=lstBkU37W/jxK8jPo0FpS05DyaAYCvl+0nF/oQbngvg=;
-        b=eElmgBWVuy7YNyxIMgQJSKD2xu91V1QsFLgHcusCsuLP/E3U2qMckku/+BM5aB3ff8
-         +dFLnjn66VWALkoYHDN4XUzOM2w2rlWAmXFv0xe9BNjhv/Fpleei2gN6wIq2y21H/s6k
-         DxCDDx/m/J+qUAR+NnKxxuqVG42KMPQX2v19DI5Nx2wurtJRWrldkPyfSXEd22dQw0OY
-         5rcVEdRYiVWVx7S2e7kcx7ubzGlY3gDdJ0pF5Z3G0CJ6Yx6QHQA9Rzy90fSOVYZvxHXz
-         CibwL7gbVb9vX/gD42XF09h0SMzksxntbPymHgriXbEk+scbIKQtyqMqzJ2EvfIgf1A2
-         1oig==
-X-Gm-Message-State: ALyK8tJe7HK9WbPjv3t7vAh5j+kYeEzCS4Bm0uma5Xoi2Zb3kT1OO1I5nmGdE9Xmfqe8V+1v3pc1GX0BpvcEeg==
-X-Received: by 10.194.109.4 with SMTP id ho4mr454209wjb.78.1464031876110; Mon,
- 23 May 2016 12:31:16 -0700 (PDT)
-Received: by 10.194.148.146 with HTTP; Mon, 23 May 2016 12:31:16 -0700 (PDT)
-In-Reply-To: <loom.20160523T023140-975@post.gmane.org>
+	id S1754154AbcEWTb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 15:31:56 -0400
+Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:56379 "EHLO
+	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753182AbcEWTbx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 15:31:53 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id B4D93254A;
+	Mon, 23 May 2016 21:31:49 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id NIIXZA1VJpyR; Mon, 23 May 2016 21:31:49 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id A3AC92549;
+	Mon, 23 May 2016 21:31:49 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id A10F52077;
+	Mon, 23 May 2016 21:31:49 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bQ2ubF9y93Xl; Mon, 23 May 2016 21:31:49 +0200 (CEST)
+Received: from ux-305.numericable.fr (1.23.6.84.rev.sfr.net [84.6.23.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 636282066;
+	Mon, 23 May 2016 21:31:49 +0200 (CEST)
+X-Mailer: git-send-email 2.8.2
+In-Reply-To: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295379>
 
-On Mon, May 23, 2016 at 2:55 AM, Yotam Gingold <yotam@yotamgingold.com>=
- wrote:
-> Pierre-Fran=C3=A7ois CLEMENT <likeyn <at> gmail.com> writes:
->> 2014-06-10 17:27 GMT+02:00 David Kastrup <dak <at> gnu.org>:
->>> Pierre-Fran=C3=A7ois CLEMENT <likeyn <at> gmail.com> writes:
->>>
->>>> ...
->>>>
->>>> Hm I see. Even though the documentation doesn't make it very clear
->>>> about what happens to such files, it turns out the scenario we
->>>> stumbled upon seems to be the special use case after all. Thanks f=
-or
->>>> shedding some light on this :) I wonder why does git-reset's hard =
-mode
->>>> not always remove untracked files then?
->>>
->>> Because it never removes them?  Git only removes files once it trac=
-ks
->>> them.  This includes the operation of removing _and_ untracking the=
-m,
->>> like with git reset --hard.
->>>
->>> The only command which explicitly messes with untracked files is
->>> git-clean.
->>>
->>> --
->>> David Kastrup
->>
->> ... I couldn't find a definition that backs this in the man
->> pages (maybe the git-glossary would be a good place for it?), and th=
-e
->> one from the Git-Scm book only confused me in thinking the opposite.
->> Thanks for the clarification
->>
->> --
->> Pierre-Fran=C3=A7ois CLEMENT
->> Application developer at Upcast Social
->
-> Jumping into this conversation two years later*. There's confusion ab=
-out what
-> constitutes a tracked file for git reset --hard, and good reasons for=
- git reset
-> --hard's behavior. Nevertheless, I think we can all agree that the ma=
-n page
-> entry for git reset --hard is woefully deficient:
->
-> --hard Resets the index and working tree. Any changes to tracked file=
-s in the
-> working tree since <commit> are discarded.
->
-> This should be clarified to define what a tracked file is. I propose =
-appending:
->
->     A file is considered tracked if it exists in a prior commit or in=
- the
->     staging area. Note that a newly added file not in any prior commi=
-t will be
->     removed.
+From: Tom Russello <tom.russello@ensimag.grenoble-inp.fr>
 
-Would you like to send a patch with something like the above?
+This new option takes an email message file, parses it, fills the "To",
+"Subject" and "Cc" fields appropriately and quote the message.
+This option involves the `--compose` mode to edit the cover letter quoting the
+given email.
 
-I don't know if something about why it is like this, or why it is the
-right thing to do, at least for recovering from merges, should be
-added though.
+Signed-off-by: Tom Russello <tom.russello@grenoble-inp.org>
+Signed-off-by: Samuel Groot <samuel.groot@grenoble-inp.org>
+Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 
-> I would also like to propose that the staging area's tree object be s=
-aved,
-> perhaps in the reflog or perhaps just as a dangling object. This woul=
-d allow
-> graceful recovery from git reset --hard. Witness the many questions a=
-nd answers
-> on recovery:
->     http://stackoverflow.com/questions/7374069/undo-git-reset-hard-wi=
-th-uncommitted-files-in-the-
-> staging-area
->     http://stackoverflow.com/questions/5788037/recover-from-git-reset=
--hard
->     http://stackoverflow.com/questions/5473/how-can-i-undo-git-reset-=
-hard-head1
->     http://gitready.com/advanced/2009/01/17/restoring-lost-commits.ht=
-ml
->     https://bani.com.br/2014/10/recovering-lost-files-after-a-git-res=
-et-hard/
->     https://medium.com/@CarrieGuss/how-to-recover-from-a-git-hard-res=
-et-b830b5e3f60c
->
-> All of these solutions recover the contents of files, but not their n=
-ames or the
-> directory structure. Saving the tree object somewhere (anywhere!) wou=
-ld solve
-> this problem.
+---
 
-Yeah, it might be a good idea.
-
-> I was bitten by this in a vicious way. I was setting up a new reposit=
-ory for a
-> bunch of code and data (git init; git add .), changed my mind about a=
-dding the
-> data (git reset --hard), and nearly lost everything.
-
-I think we could also perhaps have a special case when the current
-branch doesn't really exist yet.
-
-At least if you had used "git reset --keep", it would have failed with:
-
-$ git reset --keep
-error: You do not have a valid HEAD.
-fatal: Could not reset index file to revision 'HEAD'.
-
-Also if there had already been a commit, with --keep the new files
-would not have been deleted.
-
-> The only tree object that
-> could be found was an empty one, so I got file contents without names=
- or
-> directories (not good, because experimental conditions for the data w=
-ere encoded
-> in the directory structure).
-
-Best,
-Christian.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 6958785..784b8a6 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -55,6 +55,7 @@ git send-email --dump-aliases
+     --[no-]bcc              <str>  * Email Bcc:
+     --subject               <str>  * Email "Subject:"
+     --in-reply-to           <str>  * Email "In-Reply-To:"
++    --quote-mail            <str>  * Email To, Cc and quote the message.
+     --[no-]xmailer                 * Add "X-Mailer:" header (default).
+     --[no-]annotate                * Review each patch that will be sent in an editor.
+     --compose                      * Open an editor for introduction.
+@@ -160,7 +161,7 @@ my $re_encoded_word = qr/=\?($re_token)\?($re_token)\?($re_encoded_text)\?=/;
+ 
+ # Variables we fill in automatically, or via prompting:
+ my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh,
+-	$initial_reply_to,$initial_subject,@files,
++	$initial_reply_to,$quote_mail,$initial_subject,@files,
+ 	$author,$sender,$smtp_authpass,$annotate,$use_xmailer,$compose,$time);
+ 
+ my $envelope_sender;
+@@ -304,6 +305,7 @@ $rc = GetOptions(
+ 		    "sender|from=s" => \$sender,
+                     "in-reply-to=s" => \$initial_reply_to,
+ 		    "subject=s" => \$initial_subject,
++		    "quote-mail=s" => \$quote_mail,
+ 		    "to=s" => \@initial_to,
+ 		    "to-cmd=s" => \$to_cmd,
+ 		    "no-to" => \$no_to,
+@@ -638,6 +640,98 @@ if (@files) {
+ 	print STDERR "\nNo patch files specified!\n\n";
+ 	usage();
+ }
++my $message_quoted;
++if ($quote_mail) {
++	$message_quoted = "";
++	my $error = validate_patch($quote_mail);
++	$error and die "fatal: $quote_mail: $error\nwarning: no patches were sent\n";
++	$compose = 1;
++	my @header = ();
++	open my $fh, "<", $quote_mail or die "can't open file $quote_mail";
++	while(<$fh>) {
++		#for files containing crlf line endings
++		$_=~ s/\r//g;
++		last if /^\s*$/;
++		if (/^\s+\S/ and @header) {
++			chomp($header[$#header]);
++			s/^\s+/ /;
++			$header[$#header] .= $_;
++		} else {
++			push(@header, $_);
++		}
++	}
++
++	foreach(@header) {
++		my $input_format;
++		my $initial_sender = $sender || $repoauthor || $repocommitter || '';
++		if (/^From /) {
++			$input_format = 'mbox';
++			next;
++		}
++		chomp;
++		if (!defined $input_format && /^[-A-Za-z]+:\s/) {
++			$input_format = 'mbox';
++		}
++
++		if (defined $input_format && $input_format eq 'mbox') {
++			if (/^Subject:\s+(.*)$/i) {
++				my $prefix_re = "";
++				my $subject_re = $1;
++				if ($1=~/^[^Re:]/) {
++					$prefix_re = "Re: ";
++				}
++				$initial_subject = $prefix_re.$subject_re;
++			}
++			elsif (/^From:\s+(.*)$/i) {
++				push @initial_to, $1;
++			}
++			elsif (/^To:\s+(.*)$/i) {
++				foreach my $addr (parse_address_line($1)) {
++					if (!($addr eq $initial_sender)) {
++						push @initial_to, $addr;
++					}
++				}
++			} elsif (/^Cc:\s+(.*)$/i) {
++				foreach my $addr (parse_address_line($1)) {
++					my $qaddr = unquote_rfc2047($addr);
++					my $saddr = sanitize_address($qaddr);
++					if ($saddr eq $initial_sender) {
++						next if ($suppress_cc{'self'});
++					} else {
++						next if ($suppress_cc{'cc'});
++					}
++					push @initial_cc, $addr;
++				}
++			} elsif (/^Message-Id: (.*)/i) {
++				$initial_reply_to = $1;
++			}
++		} else {
++			# In the traditional
++			# "send lots of email" format,
++			# line 1 = cc
++			# line 2 = subject
++			# So let's support that, too.
++			$input_format = 'lots';
++			if (@cc == 0 && !$suppress_cc{'cc'}) {
++				push @cc, $_;
++			} elsif (!defined $initial_subject) {
++				$initial_subject = $_;
++			}
++		}
++	}
++
++	#Message body
++	while (<$fh>) {
++		#for files containing crlf line endings
++		$_=~ s/\r//g;
++		my $space="";
++		if (/^[^>]/) {
++			$space = " ";
++		}
++		$message_quoted .=  ">".$space.$_;
++	}
++
++}
+ 
+ sub get_patch_subject {
+ 	my $fn = shift;
+@@ -664,6 +758,7 @@ if ($compose) {
+ 	my $tpl_sender = $sender || $repoauthor || $repocommitter || '';
+ 	my $tpl_subject = $initial_subject || '';
+ 	my $tpl_reply_to = $initial_reply_to || '';
++	my $tpl_quote = $message_quoted || '';
+ 
+ 	print $c <<EOT;
+ From $tpl_sender # This line is ignored.
+@@ -676,6 +771,8 @@ From: $tpl_sender
+ Subject: $tpl_subject
+ In-Reply-To: $tpl_reply_to
+ 
++$tpl_quote
++
+ EOT
+ 	for my $f (@files) {
+ 		print $c get_patch_subject($f);
+-- 
+2.8.2
