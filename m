@@ -1,140 +1,99 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH] builtin/commit.c: memoize git-path for COMMIT_EDITMSG
-Date: Mon, 23 May 2016 23:46:30 +0530
-Message-ID: <1464027390-1512-1-git-send-email-pranit.bauva@gmail.com>
-Cc: Pranit Bauva <pranit.bauva@gmail.com>, larsxschneider@gmail.com,
-	chriscool@tuxfamily.org, christian.couder@gmail.com, peff@peff.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 23 20:17:50 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: GIT_INDEX_FILE relative path breaks in subdir
+Date: Mon, 23 May 2016 11:30:06 -0700
+Message-ID: <xmqqiny4aaq9.fsf@gitster.mtv.corp.google.com>
+References: <20160517171836.GA12183@kitenet.net>
+	<xmqqy478wptr.fsf@gitster.mtv.corp.google.com>
+	<20160517182645.GA27396@kitenet.net>
+	<20160522190404.GA20998@kitenet.net>
+	<xmqqwpmkafmb.fsf@gitster.mtv.corp.google.com>
+	<20160523172951.GA1184@kitenet.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Joey Hess <id@joeyh.name>
+X-From: git-owner@vger.kernel.org Mon May 23 20:30:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b4uQH-0006At-Ff
-	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 20:17:49 +0200
+	id 1b4ucM-0002gR-Eo
+	for gcvg-git-2@plane.gmane.org; Mon, 23 May 2016 20:30:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752428AbcEWSRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2016 14:17:45 -0400
-Received: from mail-pa0-f65.google.com ([209.85.220.65]:33709 "EHLO
-	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751865AbcEWSRo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2016 14:17:44 -0400
-Received: by mail-pa0-f65.google.com with SMTP id f8so6834173pag.0
-        for <git@vger.kernel.org>; Mon, 23 May 2016 11:17:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=8bZAG++/8HKAFVFc30J24pWehEfXf7M0D/SqxOTyvMo=;
-        b=oGz59rGeJS6ZQ/d11sVsuu0tahxyAObJYuNo9dpQ916c9RZc0CL/UB3Md/mFrVzP0M
-         Dvc8sjJ1wW7i7sAfq98p2JM6dq8W+I5PB4hXvsEEdL8IcYXfWnbzC6zu1v8FmytTlas5
-         bFznFgSqkS5r4wHdj8h+0iNyZGTKd49xBE/WtBGveyw9255/tnQpauYwvFvkeXHrt+E5
-         0C6Pq6oJkwL7Uw7AHAbEVBLMC4p/FKBVRnuPgM21wunEJ+dUPRuIRJVhL1iGgqtaWvap
-         3/TeWe0m3zPKqWVRPXegHFFfz2p3FxWFOqBWXfPuQy9oYPemUP3qFkAWpPF2odtItily
-         w5fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=8bZAG++/8HKAFVFc30J24pWehEfXf7M0D/SqxOTyvMo=;
-        b=LCZEfGwbU84hPcZZdJVTaCpZD3JgE0SmsbWbj8QdErgxzaYztHkx4/7tSBHaIb9Xnn
-         HeYejQpOmwTTuwD/JrccEBFfZOZ9X0xB094mg6pWcnapDXRayX6VnA1IOKNBa6qYjAzY
-         YEB9B857K+7kv/EwgtGAtMFPKvbn/VsEGkqi6BMvHSPtp1yluVH76lpNmIPr0YUiI4QD
-         UCUqejEavLnFElPK0RGWJX0sEvg5G7zznb13YhzTX2tuR1tGxWB4BGL+G5Lg96HlK7L/
-         V4tpRx75j09kRbn8hprRlu9qzu7jfM1lJG041JyVltNrEE0wSV5Nz7OJzdpwvb+dljR/
-         O/bQ==
-X-Gm-Message-State: ALyK8tKTAXyFUlPCFpUoyiNOEcW1PKjB+295LsXTfFvsCt3dMbyP0POB/ByysIJ6gAjq3Q==
-X-Received: by 10.66.7.69 with SMTP id h5mr285598paa.11.1464027463926;
-        Mon, 23 May 2016 11:17:43 -0700 (PDT)
-Received: from localhost.localdomain ([111.119.199.22])
-        by smtp.gmail.com with ESMTPSA id c190sm48287530pfb.33.2016.05.23.11.17.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 23 May 2016 11:17:43 -0700 (PDT)
-X-Mailer: git-send-email 2.8.2
+	id S1753019AbcEWSaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2016 14:30:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50914 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752329AbcEWSaL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2016 14:30:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B3A101CE73;
+	Mon, 23 May 2016 14:30:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kmCAk7IRDrKPFp0qUg5gpOxK/rA=; b=mbXSqh
+	Q+EWzgSnQnvqzOW45llK3I+pcLhCiO6KsiAQcfZ/QjrvJKYszO4ENCHT8Japf3C+
+	0Z01TpN4bp3QsfTKxhB6wN3G1g7KGtfoJgghTD//hvUAWN81ObApl0glodzCnbIw
+	8BEgads1+uh73aY5+iVQu4gbUdrtOQkSQFlow=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AataS6yaxq8ILOnNdIFtMTZNRxD/6sv2
+	/8wcT4JZcm41bx8HdGKZUVjAHRJS3zquL7N5iWacp39xOsVGy8+edlaRczNQTvZN
+	cY++JEvbQhZX++3ddVk/ULTWLA1amu6pfyAMm4GQE1fDz/kTUYj6xD33D/VL89QK
+	iCerMf5l+MM=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7FCD71CE70;
+	Mon, 23 May 2016 14:30:09 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CC1241CE6F;
+	Mon, 23 May 2016 14:30:08 -0400 (EDT)
+In-Reply-To: <20160523172951.GA1184@kitenet.net> (Joey Hess's message of "Mon,
+	23 May 2016 13:29:51 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 60CD1C48-2114-11E6-BD3D-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295346>
 
-This is a follow up commit for f932729c (memoize common git-path
-"constant" files, 10-Aug-2015).
+Joey Hess <id@joeyh.name> writes:
 
-It serves two purposes:
-  1. It reduces the number of calls to git_path() .
+> I feel it should be made consistently relative to top of work tree.
+>
+> Seems fairly unlikely that any scripts driving git rely on it
+> being relative to the pwd when GIT_WORK_TREE etc is set.
 
-  2. It serves the benefits of using GIT_PATH_FUNC as mentioned in the
-     commit message of f932729c.
+Oh, I do agree that the current status may be a sign that nobody
+that is cautious to cater to all possible cases would be relying on
+the current behaviour in their scripts.  It is likely that their
+scripts would first notice GIT_INDEX_FILE being relative, turn it
+into absolute (or even error out---if the authors were aware of the
+issue), before doing anything else.
 
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- builtin/commit.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+But people do write their scripts assuming that they will never use
+GIT_WORK_TREE environment (i.e. they rely on their workflow to stay
+within a subset of cases you described in your message); IOW, it is
+OK for them that their script is usable only in their workflow.
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 391126e..ffa242c 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -92,8 +92,10 @@ N_("If you wish to skip this commit, use:\n"
- "Then \"git cherry-pick --continue\" will resume cherry-picking\n"
- "the remaining commits.\n");
- 
-+static GIT_PATH_FUNC(git_path_commit_editmsg, "COMMIT_EDITMSG")
-+
- static const char *use_message_buffer;
--static const char commit_editmsg[] = "COMMIT_EDITMSG";
-+static const char commit_editmsg_path[] = git_path_commit_editmsg();
- static struct lock_file index_lock; /* real index */
- static struct lock_file false_lock; /* used only for partial commits */
- static enum {
-@@ -771,9 +773,9 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		hook_arg2 = "";
- 	}
- 
--	s->fp = fopen_for_writing(git_path(commit_editmsg));
-+	s->fp = fopen_for_writing(commit_editmsg_path);
- 	if (s->fp == NULL)
--		die_errno(_("could not open '%s'"), git_path(commit_editmsg));
-+		die_errno(_("could not open '%s'"), commit_editmsg_path);
- 
- 	/* Ignore status.displayCommentPrefix: we do need comments in COMMIT_EDITMSG. */
- 	old_display_comment_prefix = s->display_comment_prefix;
-@@ -950,7 +952,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	}
- 
- 	if (run_commit_hook(use_editor, index_file, "prepare-commit-msg",
--			    git_path(commit_editmsg), hook_arg1, hook_arg2, NULL))
-+			    commit_editmsg_path, hook_arg1, hook_arg2, NULL))
- 		return 0;
- 
- 	if (use_editor) {
-@@ -958,7 +960,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		const char *env[2] = { NULL };
- 		env[0] =  index;
- 		snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", index_file);
--		if (launch_editor(git_path(commit_editmsg), NULL, env)) {
-+		if (launch_editor(commit_editmsg_path, NULL, env)) {
- 			fprintf(stderr,
- 			_("Please supply the message using either -m or -F option.\n"));
- 			exit(1);
-@@ -966,7 +968,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	}
- 
- 	if (!no_verify &&
--	    run_commit_hook(use_editor, index_file, "commit-msg", git_path(commit_editmsg), NULL)) {
-+	    run_commit_hook(use_editor, index_file, "commit-msg", commit_editmsg_path, NULL)) {
- 		return 0;
- 	}
- 
-@@ -1728,7 +1730,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 
- 	/* Finally, get the commit message */
- 	strbuf_reset(&sb);
--	if (strbuf_read_file(&sb, git_path(commit_editmsg), 0) < 0) {
-+	if (strbuf_read_file(&sb, commit_editmsg_path, 0) < 0) {
- 		int saved_errno = errno;
- 		rollback_index_files();
- 		die(_("could not read commit message: %s"), strerror(saved_errno));
--- 
-2.8.2
+And once you start worrying about not breaking them, your update
+would become a lot trickier.
+
+I personally think that it would be OK as long as we do not change
+behaviours for those who do not use core.worktree, $GIT_DIR and/or
+$GIT_WORK_TREE and change behaviour for others to match that
+behaviour, simply because the plain vanilla no-configuration would
+be used by the largest number of people.  But depending on the size
+of the "minority", you may get pushback from them.
+
+> (I'd prefer relative to pwd because that is much more sane IMHO, but
+> making that change is more likely to break something.)
+
+I am not sure if relative to PWD is useful.  If it were relative to
+either the GIT_DIR or the GIT_WORK_TREE, i.e. a fixed point, then
+you can set and export GIT_INDEX_FILE and chdir around without
+having to adjust it.  If it were relative to PWD, you would need to
+adjust it every time you chdir, no?
