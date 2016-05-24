@@ -1,138 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-prompt.sh: Don't error on null ${ZSH,BASH}_VERSION
-Date: Tue, 24 May 2016 12:53:01 -0700
-Message-ID: <xmqq7fej44iq.fsf@gitster.mtv.corp.google.com>
-References: <1464078713-3220-1-git-send-email-ville.skytta@iki.fi>
-	<xmqqshx75psw.fsf@gitster.mtv.corp.google.com>
+From: Edward Thomson <ethomson@edwardthomson.com>
+Subject: [PATCH] format_commit_message: honor `color=auto` for `%C(auto)`
+Date: Tue, 24 May 2016 14:48:14 -0500
+Message-ID: <20160524194814.GA12479@zoidberg>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue May 24 21:53:17 2016
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 24 22:05:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5IOC-00039k-Ia
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 21:53:16 +0200
+	id 1b5IZc-0007eD-GW
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 22:05:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932564AbcEXTxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 15:53:08 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54064 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932525AbcEXTxE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 15:53:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6CB691EFCA;
-	Tue, 24 May 2016 15:53:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Be0WMd5z6wMJtZew9ADgvaFJvE0=; b=qIyEd5
-	Zpr/FCOUZDn248Vg5ZRmSvBkgbrdU7lngRH9dIUzW90FyxDGo3rr0idIiQTBsYpn
-	8qpfygytyYkRelrRkpyyErnCv184cm0FviWXA6amIrxe+cnXjFC7c/I8b7CRYhHD
-	t54noEKn/jBWn6HEHatt/1LUaxO2PjZNg+Buk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nYT3mE+T8OAsHng+q8kunlPmLehx75aj
-	JlVCHnxkl2XOSkECLXreC1H0TdYL0EZs6yXzKNab+iktW5YnUb8JFNHTEFJLI6/f
-	iOQv+nkej55ZyzpBWyridS30ICFyv2p9Ody8nQu7RQ+M7OhtrRN1/C5u6azd+zHd
-	zmt5ga95RwA=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 626891EFC9;
-	Tue, 24 May 2016 15:53:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D2BB51EFC6;
-	Tue, 24 May 2016 15:53:02 -0400 (EDT)
-In-Reply-To: <xmqqshx75psw.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 24 May 2016 10:27:59 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1FF77850-21E9-11E6-8B49-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1754731AbcEXUEt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 16:04:49 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:34839 "EHLO
+	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754713AbcEXUEr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 16:04:47 -0400
+Received: by mail-it0-f66.google.com with SMTP id z123so2997627itg.2
+        for <git@vger.kernel.org>; Tue, 24 May 2016 13:04:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=edwardthomson-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=zPdzGFMvjZ8aONPp9MqoKIgHDVm6FGRebV+wepcY6ic=;
+        b=KKaM/Z44wGssooUA4rdzB8dnkT0cR/U4e4cv8oRkvddHE90seTMPOfqaSmDH57bBuD
+         E3MIplrdtvHPLuDTVVeivYoQQZbyJTNncaue2z8kpkwGDFkXOI4HPv9hkFp4U+rmduul
+         Z+0sBO6fQZKMM5y4u5gUeafHcOU+WiM6x7ktwTalp7kRMgD8o8lIJdlOYg7+RkcbbGBy
+         EdvPqNEQX5lLiR49kqZ8L9hmzL9Thf0etrxC0qpV3KBWq8qmSuNQOeg6h1qVUedPNMIG
+         PinZ3XgB9akLCF2U4suSEFEwN17ukbhWjm0W/qv1fOukgTIPnDud1l57UQOrg3zpaQk4
+         tqsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=zPdzGFMvjZ8aONPp9MqoKIgHDVm6FGRebV+wepcY6ic=;
+        b=Vwz7ln90HUD11yDAnYx6NHuknZc/pRoI+WDy0H1pULTvWtvS9FcQZwlreT+D+SvoZY
+         A6zznf2gGVBC3t4ijWKtuZ58WVaq/lUsYFNp6beQEtnXt8BjGGARFU+dnX8jmVQhuAkm
+         P9t7kaZehpVMpAmkcALIXbOxjYSyO+slz+h6SG+DXOdpkm+yiQQQeh1U18ZBpa9EDkH6
+         QYD9VP3HsGu1lK+VLYoyHfC60FELe1joLSINGHgo4woLWRGz77SuVmsYR75b8V/7b8cs
+         HoSVePGd8T08iNpqrWh71g26bli8OhWYuIFrLl0D94FDbWn3ouYjTSzxgzSzTG9dIA4P
+         9M+g==
+X-Gm-Message-State: ALyK8tKVYBw62CdNeqa3lm6xUptm8w3oKGIaNKw7aZHzod7JOUAVKdWcn1hg1F+NeWO1MA==
+X-Received: by 10.36.155.84 with SMTP id o81mr459700itd.55.1464119298040;
+        Tue, 24 May 2016 12:48:18 -0700 (PDT)
+Received: from zoidberg ([2601:249:1000:6850:518c:7508:4f1a:1942])
+        by smtp.gmail.com with ESMTPSA id l123sm5524353ita.1.2016.05.24.12.48.16
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 24 May 2016 12:48:16 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295530>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Check that we are configured to display colors in the given context when
+the user specifies a format string of `%C(auto)`, instead of always
+displaying the default color for the given context.  This makes
+`%C(auto)` obey the `color=auto` setting and brings its behavior in line
+with the behavior of `%C(auto,<colorname>)`.
 
-> Others, I am not sure how seriously we would want to support those
-> who use "set -u"; the damage to test-lib.sh so far (see below) does
-> not look _too_ bad, but the reason why I have "set -u" after
-> including lib-bash.sh is because it will trigger a lot more errors
-> while lib-bash and test-lib do their preparation.
+This allows the user the ability to specify that color should be
+displayed for a string only when the output is a tty, and to use the
+default color for the given context without having to hardcode a
+color value.
+---
+ pretty.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Ehh, this didn't come out very well as I hoped, primarily because my
-thinking behind it was muddy X-<.
-
-I do want to see us keep supporting those who "set -u" in their
-interactive shell environment, and we should strive to make sure
-that the "prompt" and the "completion", which are part of their
-interactive shell experience, work well with "set -u".
-
-It does not mean "cd t && sh t$anything.sh" must be "set -u" clean
-at all (this is where my thinking was muddy); it is sufficient if we
-can successfully run t9903 (prompt) with "set -u" before the script
-includes "git-prompt".  We do not have to be able to insert "set -u"
-at the beginning of test-lib.sh and cleanly run other tests.
-
-Having said that, some parts of "minimum" change shown in my "how
-about this" patch would probably be worth doing anyway.  They make
-sure that:
-
- (1) variables the test framework uses will always be initialized
-     properly, without getting affected a stray environment variable
-     the user may have.  E.g. "trace".
-
- (2) environment variables the test framework may accept to change
-     the behaviour, e.g. GIT_SKIP_TESTS, are clearly documented by
-     using the idiom "set to an empty string if not set".
-
-So in that sense, even though we may not add "set -u" at the
-beginning of test-lib.sh in the production code, doing so may be a
-good developer aid to catch other variables the attached patch did
-not catch and complete the above two points.
-
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 0055ebb..36ca13e 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -186,6 +186,9 @@ test "x$TERM" != "xdumb" && (
->  	) &&
->  	color=t
->  
-> +HARNESS_ACTIVE= quiet= verbose_only= run_list= trace=
-> +: ${GIT_SKIP_TESTS=}
-> +
->  while test "$#" -ne 0
->  do
->  	case "$1" in
-> @@ -585,7 +588,7 @@ test_eval_ () {
->  
->  test_run_ () {
->  	test_cleanup=:
-> -	expecting_failure=$2
-> +	expecting_failure=${2-}
->  
->  	if test "${GIT_TEST_CHAIN_LINT:-1}" != 0; then
->  		# turn off tracing for this test-eval, as it simply creates
-> @@ -750,6 +753,8 @@ test_done () {
->  	esac
->  }
->  
-> +GIT_VALGRIND=
-> +
->  if test -n "$valgrind"
->  then
->  	make_symlink () {
-> @@ -902,6 +907,7 @@ fi
->  # in subprocesses like git equals our $PWD (for pathname comparisons).
->  cd -P "$TRASH_DIRECTORY" || exit 1
->  
-> +skip_all=
->  this_test=${0##*/}
->  this_test=${this_test%%-*}
->  if match_pattern_list "$this_test" $GIT_SKIP_TESTS
+diff --git a/pretty.c b/pretty.c
+index 87c4497..c3ec430 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1063,7 +1063,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 	switch (placeholder[0]) {
+ 	case 'C':
+ 		if (starts_with(placeholder + 1, "(auto)")) {
+-			c->auto_color = 1;
++			c->auto_color = want_color(c->pretty_ctx->color);
+ 			return 7; /* consumed 7 bytes, "C(auto)" */
+ 		} else {
+ 			int ret = parse_color(sb, placeholder, c);
+-- 
+2.6.4 (Apple Git-63)
