@@ -1,214 +1,137 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH v9 3/3] bisect--helper: `write_terms` shell function in C
-Date: Wed, 25 May 2016 00:12:42 +0530
-Message-ID: <20160524184242.7518-4-pranit.bauva@gmail.com>
-References: <20160524184242.7518-1-pranit.bauva@gmail.com>
-Cc: Pranit Bauva <pranit.bauva@gmail.com>, gitster@pobox.com,
-	larsxschneider@gmail.com, christian.couder@gmail.com,
-	chriscool@gmail.com, sunshine@sunshineco.com,
-	Johannes.Schindelin@gmx.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 20:46:55 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] userdiff: add built-in pattern for CSS
+Date: Tue, 24 May 2016 12:06:16 -0700
+Message-ID: <xmqqmvnf46on.fsf@gitster.mtv.corp.google.com>
+References: <20160520132829.7937-1-william.duclot@ensimag.grenoble-inp.fr>
+	<20160524142537.19324-1-william.duclot@ensimag.grenoble-inp.fr>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, simon.rabourg@ensimag.grenoble-inp.fr,
+	francois.beutin@ensimag.grenoble-inp.fr,
+	antoine.queru@ensimag.grenoble-inp.fr,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue May 24 21:06:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5HLz-0004lU-3h
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 20:46:55 +0200
+	id 1b5Hes-0003er-9d
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 21:06:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753048AbcEXSqv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 14:46:51 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33131 "EHLO
-	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752287AbcEXSqu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 14:46:50 -0400
-Received: by mail-pf0-f195.google.com with SMTP id b124so2478734pfb.0
-        for <git@vger.kernel.org>; Tue, 24 May 2016 11:46:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=qtlN78AMp3dgcbMPJveCoFABarRkUFDgKFgw5yOIvS8=;
-        b=o5DYgIT5QC/O+W28ng6XyJ47ExZltK08PP5V6tEpFmHEN5mes9ojp0hFMHYeN+wLgE
-         X99nMpuADAZLjO5r0GVyf//xjPlqwYYGrBSD1HObTc7aYfQqE1ApbcuLi8OAp2cA8rwR
-         qShQ75s7+gvLYci4ZvQq3Am7LIFWkjvWOOwrfiY9fTXv2+lJuy5uPY6+EIhIEBJf+y/V
-         /2SYaCw7KmXmtObpiiJ/fX3d3tQ3m63p4LVd+D5KgASW1uaGOCgvnD4mzavpAkgDvxLt
-         545+4XCOc53JE4IO3+vNHEmOvwT8E+3vNisKM8jhn42PpRiz4tStwWrsRGmGgS0FwpB1
-         x9mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=qtlN78AMp3dgcbMPJveCoFABarRkUFDgKFgw5yOIvS8=;
-        b=TDmdx10tyUJD2iXEJ+RZpcQVn9y4P//IvPrGHaIgBMipG0KLotGDDir8VU9wMund6c
-         hvRzFTMObi+fTcIb+XyeZtUXbKChN2od8Ww7VmUrflWCZLoJ+Ifhn9k0lTCX1aS4vVwk
-         9vT8ORXjkPwlC3JpY+OzEhzMtT1dT3j/JxNzLg/ShkzaogKVFwPT/t4tLH3ZONZDiyAe
-         0dPlMMtXb9Om8ibzC/Omu7hLeQTXVSf0uWxMpbtHVr0ikYCkFBYUNtRMEZCJuZ+d8ZcN
-         YFqAw/fn0JHxed5kjWAxzZ9bLxxunflcyWlCJf07et8ABz5TGBhwo3aN9MCcE9kTkIHt
-         43DQ==
-X-Gm-Message-State: ALyK8tLnXiQcdw0XCNvFsvjg0TUkBXND789nTuKBYIa2w2Glmj4TMjXpgUg5O+DZpxpIEg==
-X-Received: by 10.98.28.84 with SMTP id c81mr9163085pfc.131.1464115609411;
-        Tue, 24 May 2016 11:46:49 -0700 (PDT)
-Received: from localhost.localdomain ([183.87.140.254])
-        by smtp.gmail.com with ESMTPSA id u2sm6918859pan.45.2016.05.24.11.46.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 May 2016 11:46:48 -0700 (PDT)
-X-Mailer: git-send-email 2.8.3
-In-Reply-To: <20160524184242.7518-1-pranit.bauva@gmail.com>
-In-Reply-To: <20160524072124.2945-1-pranit.bauva@gmail.com>
-References: <20160524072124.2945-1-pranit.bauva@gmail.com>
+	id S1752764AbcEXTGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 15:06:21 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57651 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752304AbcEXTGU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 15:06:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E4581C0C3;
+	Tue, 24 May 2016 15:06:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xyMVfQwlJrAh4cjDOVFo9XnrUUU=; b=twBlIr
+	tfvwhLEj2o8/BiSTMuNbz/nzNNjksb8cBIjAdF/nXkxOyIu1HgTqIUg1SvIpM4Kd
+	t0i2E8U5cDST3osuTONh83M0R0PvV6rAeFLOOunJg1rDlLnTwJDI+a0dMmWNfAdx
+	cMBC5eGmK4ssW27cScLh4nVgbMXnc/1vWByP0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=X6umDXjbmfpcMQzB+nbMykl2zsomxxu6
+	C9F0/yej2rkhdlYnAyYYlWq7edWogqSVi9ZWLj/5urxgeCHsc6RhjgzHnROIJ2qS
+	onFA1fz1pQ/gT3UibGIkhtH9fu/hVgP2I44dqwI8Jp5cKhmTNQeLa4EexLY3Xizd
+	gfB3OxHjm3g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5559B1C0C2;
+	Tue, 24 May 2016 15:06:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B373E1C0C1;
+	Tue, 24 May 2016 15:06:18 -0400 (EDT)
+In-Reply-To: <20160524142537.19324-1-william.duclot@ensimag.grenoble-inp.fr>
+	(William Duclot's message of "Tue, 24 May 2016 16:25:37 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 989CF2F0-21E2-11E6-82E9-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295521>
 
-Reimplement the `write_terms` shell function in C and add a `write-terms`
-subcommand to `git bisect--helper` to call it from git-bisect.sh . Also
-remove the subcommand `--check-term-format` as it can now be called from
-inside the function write_terms() C implementation.
+William Duclot <william.duclot@ensimag.grenoble-inp.fr> writes:
 
-Also `|| exit` is added when calling write-terms subcommand from
-git-bisect.sh so as to exit whenever there is an error.
+> CSS is widely used, motivating it being included as a built-in pattern.
+>
+> It must be noted that the word_regex for CSS (i.e. the regex defining
+> what is a word in the language) does not consider '.' and '#' characters
+> (in CSS selectors) to be part of the word. This behavior is documented
+> by the test t/t4018/css-rule.
+> The logic behind this behavior is the following: identifiers in CSS
+> selectors are identifiers in a HTML/XML document. Therefore, the '.'/'#'
+> character are not part of the identifier, but an indicator of the nature
+> of the identifier in HTML/XML (class or id). Diffing ".class1" and
+> ".class2" must show that the class name is changed, but we still are
+> selecting a class.
+>
+> Signed-off-by: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
+> Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+> ---
+> changes since v1:
+> Fix a typo in the word_regex ("A-F" => "A-Z").
+> Clearer comment about ISO 10646 characters.
 
-Using `--write-terms` subcommand is a temporary measure to port shell
-function to C so as to use the existing test suite. As more functions
-are ported, this subcommand will be retired and will be called by some
-other method.
+It is not a big deal for a small single-patch topic like this, but
+it often is hard to reviewers if you do not respond to comments you
+received and instead just send a new version of the patch with
+"changes since..." comment.  Please make it a habit to do both.
 
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- builtin/bisect--helper.c | 36 +++++++++++++++++++++++++++++-------
- git-bisect.sh            | 22 +++++++---------------
- 2 files changed, 36 insertions(+), 22 deletions(-)
+I can see in the above "changes since v1" comment, you took the
+A-F/A-Z thing, but I cannot tell if you thought about PATTERNS vs
+IPATTERN and rejected IPATTERN with a good reason or if you simply
+missed it when reading the review comments you received, for
+example.
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 3c748d1..91027b0 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -4,9 +4,11 @@
- #include "bisect.h"
- #include "refs.h"
- 
-+static GIT_PATH_FUNC(git_path_bisect_write_terms, "BISECT_TERMS")
-+
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --next-all [--no-checkout]"),
--	N_("git bisect--helper --check-term-format <term> <orig_term>"),
-+	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
- 	NULL
- };
- 
-@@ -56,18 +58,38 @@ static int check_term_format(const char *term, const char *orig_term)
- 	return 0;
- }
- 
-+static int write_terms(const char *bad, const char *good)
-+{
-+	FILE *fp;
-+	int res;
-+
-+	if (!strcmp(bad, good))
-+		return error(_("please use two different terms"));
-+
-+	if (check_term_format(bad, "bad") || check_term_format(good, "good"))
-+		return -1;
-+
-+	fp = fopen(git_path_bisect_write_terms(), "w");
-+	if (!fp)
-+		return error_errno(_("could not open the file BISECT_TERMS"));
-+
-+	res = fprintf(fp, "%s\n%s\n", bad, good);
-+	fclose(fp);
-+	return (res < 0) ? -1 : 0;
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
- 		NEXT_ALL = 1,
--		CHECK_TERM_FMT
-+		WRITE_TERMS
- 	} cmdmode = 0;
- 	int no_checkout = 0;
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "next-all", &cmdmode,
- 			 N_("perform 'git bisect next'"), NEXT_ALL),
--		OPT_CMDMODE(0, "check-term-format", &cmdmode,
--			 N_("check format of the term"), CHECK_TERM_FMT),
-+		OPT_CMDMODE(0, "write-terms", &cmdmode,
-+			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_END()
-@@ -82,10 +104,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	switch (cmdmode) {
- 	case NEXT_ALL:
- 		return bisect_next_all(prefix, no_checkout);
--	case CHECK_TERM_FMT:
-+	case WRITE_TERMS:
- 		if (argc != 2)
--			die(_("--check-term-format requires two arguments"));
--		return check_term_format(argv[0], argv[1]);
-+			die(_("--write-terms requires two arguments"));
-+		return write_terms(argv[0], argv[1]);
- 	default:
- 		die("BUG: unknown subcommand '%d'", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 7d7965d..cd39bd0 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -210,7 +210,7 @@ bisect_start() {
- 	eval "$eval true" &&
- 	if test $must_write_terms -eq 1
- 	then
--		write_terms "$TERM_BAD" "$TERM_GOOD"
-+		git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD"
- 	fi &&
- 	echo "git bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
- 	#
-@@ -557,18 +557,6 @@ get_terms () {
- 	fi
- }
- 
--write_terms () {
--	TERM_BAD=$1
--	TERM_GOOD=$2
--	if test "$TERM_BAD" = "$TERM_GOOD"
--	then
--		die "$(gettext "please use two different terms")"
--	fi
--	git bisect--helper --check-term-format "$TERM_BAD" bad || exit
--	git bisect--helper --check-term-format "$TERM_GOOD" good || exit
--	printf '%s\n%s\n' "$TERM_BAD" "$TERM_GOOD" >"$GIT_DIR/BISECT_TERMS"
--}
--
- check_and_set_terms () {
- 	cmd="$1"
- 	case "$cmd" in
-@@ -582,13 +570,17 @@ check_and_set_terms () {
- 		bad|good)
- 			if ! test -s "$GIT_DIR/BISECT_TERMS"
- 			then
--				write_terms bad good
-+				TERM_BAD=bad
-+				TERM_GOOD=good
-+				git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD" || exit
- 			fi
- 			;;
- 		new|old)
- 			if ! test -s "$GIT_DIR/BISECT_TERMS"
- 			then
--				write_terms new old
-+				TERM_BAD=new
-+				TERM_GOOD=old
-+				git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD" || exit
- 			fi
- 			;;
- 		esac ;;
--- 
-2.8.3
+Three remaining issues are:
+
+ - Have you considered using IPATTERN()?  PATTERNS() that defaults
+   case sensitive match is suitable for real languages with fixed
+   case keywords, but the pattern you are defining for CSS does not
+   do anything special for any set of fixed-case built-in keywords,
+   and appears to be better served by IPATTERN().
+
+ - In our codebase, we format multi-line comments in a particular
+   way, namely
+
+	/*
+         * A multi-line comment begins with slash asterisk
+         * on its own line, and its closing asterisk slash
+         * also is on its own line.
+         */
+
+ - Try not to write overlong lines.  If your expression needs to
+   become long and there is no good place to fold lines, that is one
+   thing, but an overlong comment is unexcuable, as you can fold
+   lines anywhere between words.
+
+Thanks.
+
+> diff --git a/userdiff.c b/userdiff.c
+> index 6bf2505..9273969 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -148,6 +148,14 @@ PATTERNS("csharp",
+>  	 "[a-zA-Z_][a-zA-Z0-9_]*"
+>  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+>  	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
+> +PATTERNS("css",
+> +	 "^([^,{}]+)((,[^}]*\\{)|([ \t]*\\{))$",
+> +	 /* -- */
+> +	 /* This regex comes from W3C CSS specs. Should theoretically also allow ISO 10646 characters U+00A0 and higher,
+> +	  * but they are not handled with this regex. */
+> +	 "-?[_a-zA-Z][-_a-zA-Z0-9]*" /* identifiers */
+> +	 "|-?[0-9]+|\\#[0-9a-fA-F]+" /* numbers */
+> +),
+>  { "default", NULL, -1, { NULL, 0 } },
+>  };
+>  #undef PATTERNS
