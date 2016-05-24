@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 20/49] builtin/apply: move 'numstat' global into 'struct apply_state'
-Date: Tue, 24 May 2016 10:10:57 +0200
-Message-ID: <20160524081126.16973-21-chriscool@tuxfamily.org>
+Subject: [PATCH v3 17/49] builtin/apply: move 'allow_overlap' global into 'struct apply_state'
+Date: Tue, 24 May 2016 10:10:54 +0200
+Message-ID: <20160524081126.16973-18-chriscool@tuxfamily.org>
 References: <20160524081126.16973-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -14,51 +14,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 10:16:15 2016
+X-From: git-owner@vger.kernel.org Tue May 24 10:16:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b57Vf-0002ED-7b
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:16:15 +0200
+	id 1b57VX-0002Bi-0f
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:16:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753583AbcEXIPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 04:15:51 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36179 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932282AbcEXIMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 04:12:15 -0400
-Received: by mail-wm0-f66.google.com with SMTP id q62so3637465wmg.3
-        for <git@vger.kernel.org>; Tue, 24 May 2016 01:12:14 -0700 (PDT)
+	id S1754060AbcEXIPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 04:15:55 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35358 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932275AbcEXIML (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 04:12:11 -0400
+Received: by mail-wm0-f65.google.com with SMTP id f75so3654323wmf.2
+        for <git@vger.kernel.org>; Tue, 24 May 2016 01:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=n1q7IrJubdKZBucrjplxe55CVeHud6O2nl91pXzOYUw=;
-        b=z8xCYJI2P5o0CDYoryu0IE3d+UZDKIHQL61riG8AYzdiIQHi3rBzovOOFP4qyhj0wu
-         QlyugtJcILW/tXxPmOs3no7KgMMGx7Cd6xM2QrcNecyJNcmeLC8m2q+cX3OU4c5Pv1y9
-         uEFB0FaGLpHQeQMobIpUcxIvKeSWDaheCAA3sYhELOxNBJEfUruGReXG5xT8b5l8C3jX
-         AwoWqBu1TWnUbJ8znh10AnM2b6qHbzrdKDU+Se8/+fJ4xR+Ze9OfwoGt+J/hZi64+QmH
-         hpFhUV3jH4XC4GcHpGv72PyyV9LsZ+nBYSwCMUjiBffKKbQqdPaKkFCcEd7aLZsb//fx
-         wUmQ==
+        bh=z3nkr5WEceT3iA5OYcZMn8tat/qzwOgGJC0J7EgoJ+g=;
+        b=D0n90KWujqNOyZ1u0rK4MJTfjyWJRBxUgf05+vLTaqsWr0yYC2cDca3gcNUcUxGBcN
+         /eEc6NBejz2TVQd9EKtLr8fYDwSoCQqjhBvutNTwB5pBPwcX02Xqs5bRJeIsEac7SjsW
+         KDBHuJJobg+HlayfXCAHc3mOZ8o6PdYo/eM0jHOXDCyCOjSS948fslJyWuJachw5WPY2
+         IQp8zARbYIbJuJwTW9O6phfg3CsTkINT2zYrTqEqrXuq/VbEzVeZE08K0Spo1+WVy+W7
+         vZw6wS7GExH1i9vPPohCVxpxfF3Qw28Q5PqJmSsru6++STFcuPRmZf6H0eq+q3AeyCHn
+         SndA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=n1q7IrJubdKZBucrjplxe55CVeHud6O2nl91pXzOYUw=;
-        b=a5XfVhKQkqciuA/4HYPw+NFPBBqO/MKw+SORXG5ZvABuNACjDp3rPsu4YdzFQjElDg
-         dUcDIaDv2V//AWirE7PoGgCqDhR4VhnHqhjKtWBh0J4GoIb2y1Kg7b45ZiFv0lHl2Mes
-         H1l0U4gpnsPcjFnQnosqB6gwo9wdisQBxHB7Xkl+Y+A6Rza0whnQtg1EJRA0JvCmwcdR
-         Xlkp7bD+fkc34ffkTNCerBhXmJ67md04gOG2iMJBk2rjxkoqp/vcacmszJYcvvhEArjD
-         9LQr6ViTWuY02WWxul07Vbp657+rynqgyZi+QC0TebXxoJ3aQ7KDK4tciT4yDXiOwEIO
-         M06A==
-X-Gm-Message-State: ALyK8tJv4uX7oYF4rPfYfybnUxOwpSZV2gX8pmFu2KABo+fG4ySlHiWTWYYTxTwYQgbPVw==
-X-Received: by 10.28.23.143 with SMTP id 137mr851457wmx.89.1464077533766;
-        Tue, 24 May 2016 01:12:13 -0700 (PDT)
+        bh=z3nkr5WEceT3iA5OYcZMn8tat/qzwOgGJC0J7EgoJ+g=;
+        b=f8iYocBP48OB9TpOoBZXcs8WKarpgzMNM6OLqPLWXl/rYI5EWbx+ItZRNP3Gci3jXl
+         whgnHffkU6Sqay1FooluxD1tNr621aFd9vhbw0jj40YdH44F9+SyOA+a1yyRcGLpCESx
+         qm+dIfPDs2Y1K27JwIlbocUWxeh2Jehx3I6Be0YkkSI+IZLoYxZNtyPA96FONgciD+jk
+         elCpRZvIaMvO3PWblVGaiLeRxa43rJCCxlMA1wfylDDzI3M/6WYfdxGzqJqN8hiWOBjL
+         fP6cq5RcFOfSg29g2k1qZXCqqyi3Y5GEH5O8trdYTL+YVBJ51DCPmgMb9cLRmh4MJfpN
+         WPLg==
+X-Gm-Message-State: ALyK8tJxzEMV86cMH0w+xc2zixfXSzyRtseMcV2/0bSPnvzwc7/aT6EMIyRJmUXC+Xo2zg==
+X-Received: by 10.28.31.68 with SMTP id f65mr10749398wmf.45.1464077529698;
+        Tue, 24 May 2016 01:12:09 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.12.12
+        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.12.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 May 2016 01:12:13 -0700 (PDT)
+        Tue, 24 May 2016 01:12:08 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.3.443.gaeee61e
 In-Reply-To: <20160524081126.16973-1-chriscool@tuxfamily.org>
@@ -66,71 +66,74 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295472>
 
-To libify the apply functionality the 'numstat' variable should
+To libify the apply functionality the 'allow_overlap' variable should
 not be static and global to the file. Let's move it into
 'struct apply_state'.
 
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ builtin/apply.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index d940125..47a45a7 100644
+index 7b5abb9..ad3bec4 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -33,6 +33,7 @@ struct apply_state {
- 
- 	/* These control cosmetic aspect of the output */
- 	int diffstat; /* just show a diffstat, and don't actually apply */
-+	int numstat; /* just show a numeric diffstat, and don't actually apply */
+@@ -31,6 +31,7 @@ struct apply_state {
+ 	int update_index; /* check_index && apply */
  
  	/* These boolean parameters control how the apply is done */
- 	int allow_overlap;
-@@ -43,14 +44,12 @@ struct apply_state {
- };
- 
- /*
-- *  --numstat does numeric diffstat, and doesn't actually apply
-  *  --index-info shows the old and new index info for paths if available.
-  */
- static int newfd = -1;
- 
- static int state_p_value = 1;
- static int p_value_known;
--static int numstat;
++	int allow_overlap;
+ 	int apply_in_reverse;
+ 	int apply_with_reject;
+ 	int apply_verbosely;
+@@ -52,7 +53,6 @@ static int diffstat;
+ static int numstat;
  static int summary;
  static int apply = 1;
+-static int allow_overlap;
  static int no_add;
-@@ -4490,7 +4489,7 @@ static int apply_patch(struct apply_state *state,
- 	if (state->diffstat)
- 		stat_patch_list(list);
- 
--	if (numstat)
-+	if (state->numstat)
- 		numstat_patch_list(list);
- 
- 	if (summary)
-@@ -4607,7 +4606,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
- 			N_("instead of applying the patch, output diffstat for the input")),
- 		OPT_NOOP_NOARG(0, "allow-binary-replacement"),
- 		OPT_NOOP_NOARG(0, "binary"),
--		OPT_BOOL(0, "numstat", &numstat,
-+		OPT_BOOL(0, "numstat", &state.numstat,
- 			N_("show number of added and deleted lines in decimal notation")),
- 		OPT_BOOL(0, "summary", &summary,
- 			N_("instead of applying the patch, output a summary for the input")),
-@@ -4676,7 +4675,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
- 	}
- 	if (state.apply_with_reject)
- 		apply = state.apply_verbosely = 1;
--	if (!force_apply && (state.diffstat || numstat || summary || state.check || fake_ancestor))
-+	if (!force_apply && (state.diffstat || state.numstat || summary || state.check || fake_ancestor))
- 		apply = 0;
- 	if (state.check_index && is_not_gitdir)
- 		die(_("--index outside a repository"));
+ static int threeway;
+ static int unsafe_paths;
+@@ -2627,7 +2627,8 @@ static void remove_last_line(struct image *img)
+  * apply at applied_pos (counts in line numbers) in "img".
+  * Update "img" to remove "preimage" and replace it with "postimage".
+  */
+-static void update_image(struct image *img,
++static void update_image(struct apply_state *state,
++			 struct image *img,
+ 			 int applied_pos,
+ 			 struct image *preimage,
+ 			 struct image *postimage)
+@@ -2692,7 +2693,7 @@ static void update_image(struct image *img,
+ 	memcpy(img->line + applied_pos,
+ 	       postimage->line,
+ 	       postimage->nr * sizeof(*img->line));
+-	if (!allow_overlap)
++	if (!state->allow_overlap)
+ 		for (i = 0; i < postimage->nr; i++)
+ 			img->line[applied_pos + i].flag |= LINE_PATCHED;
+ 	img->nr = nr;
+@@ -2940,7 +2941,7 @@ static int apply_one_fragment(struct apply_state *state,
+ 			fprintf_ln(stderr, _("Context reduced to (%ld/%ld)"
+ 					     " to apply fragment at %d"),
+ 				   leading, trailing, applied_pos+1);
+-		update_image(img, applied_pos, &preimage, &postimage);
++		update_image(state, img, applied_pos, &preimage, &postimage);
+ 	} else {
+ 		if (state->apply_verbosely)
+ 			error(_("while searching for:\n%.*s"),
+@@ -4640,7 +4641,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 			N_("don't expect at least one line of context")),
+ 		OPT_BOOL(0, "reject", &state.apply_with_reject,
+ 			N_("leave the rejected hunks in corresponding *.rej files")),
+-		OPT_BOOL(0, "allow-overlap", &allow_overlap,
++		OPT_BOOL(0, "allow-overlap", &state.allow_overlap,
+ 			N_("allow overlapping hunks")),
+ 		OPT__VERBOSE(&state.apply_verbosely, N_("be verbose")),
+ 		OPT_BIT(0, "inaccurate-eof", &options,
 -- 
 2.8.3.443.gaeee61e
