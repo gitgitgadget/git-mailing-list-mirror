@@ -1,83 +1,159 @@
-From: Nathan Collins <nathan.collins@gmail.com>
-Subject: Re: [BUG?] Spaces not allowed in directory names in .git/info/attributes
-Date: Tue, 24 May 2016 16:30:35 -0700
-Message-ID: <CAO8RVve07Gvr2Bes2Dp-08_8MSQoVcBm9gjMaKTU=uAXcY_1wQ@mail.gmail.com>
-References: <CAO8RVveOwrS6+pTnHY36d1Nk_B_VJD022W9i8STnNb-KyMkqNg@mail.gmail.com>
- <xmqqmvng8qle.fsf@gitster.mtv.corp.google.com>
+From: Samuel GROOT <samuel.groot@grenoble-inp.org>
+Subject: Re: [RFC-PATCH 1/2] send-email: new option to quote an email and
+ reply to
+Date: Wed, 25 May 2016 01:31:28 +0200
+Message-ID: <b1752a59-af2b-6e18-fc69-0650440939e3@grenoble-inp.org>
+References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
+ <1464031829-6107-2-git-send-email-tom.russello@grenoble-inp.org>
+ <vpq60u4bl4e.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 25 01:31:20 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, erwan.mathoniere@grenoble-inp.org,
+	jordan.de-gea@ensimag.grenoble-inp.fr,
+	Tom Russello <tom.russello@ensimag.grenoble-inp.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Tom Russello <tom.russello@grenoble-inp.org>
+X-From: git-owner@vger.kernel.org Wed May 25 01:31:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5LnE-0007Xj-0p
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 01:31:20 +0200
+	id 1b5LnW-0007d5-QO
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 01:31:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755132AbcEXXbQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 19:31:16 -0400
-Received: from mail-yw0-f181.google.com ([209.85.161.181]:35167 "EHLO
-	mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754970AbcEXXbP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 19:31:15 -0400
-Received: by mail-yw0-f181.google.com with SMTP id o16so31821734ywd.2
-        for <git@vger.kernel.org>; Tue, 24 May 2016 16:31:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=NLurfVY0cq1BSYQXduFRgZzZ5j+Mgxewrc6vOwDKToo=;
-        b=o4lt/cDrZ47qfVzSf9z38Nj+bqXYvlB5F7qwQ2jV2JdxU7z4faqHSTy4nai6VnRhaR
-         xiIxgaLqF0AiVDss18aOvZ5PjIQDVJmAAJVrA5HjIfSVIk26nw7vKtXH5mjZsDp4mfnC
-         BGxSkUoC3i4CzqdrUoup9hWw+Zc4kKPj8jd7E4Hcecuo3uQcOGQ2sw5HMtZUGtdyDI5a
-         MhRhl/VIwZdi503KNUT+gfyx9yojiJvn1wtOLtJfoxMYACoj1mGYSLqmB5IAWFifebX1
-         ik2pfUXna9en3ZvhMkWoihDhQwTYgFjpobmerJvYwVqzc/W/QljO38lf/91BSHwReUUX
-         SLtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=NLurfVY0cq1BSYQXduFRgZzZ5j+Mgxewrc6vOwDKToo=;
-        b=nOV1OanLhoV3ilzdGE25kvENbHNTsG8RMr4WBd6ofJgowBjZPvQpVWKi3B1knsOcBG
-         D4KLjhEbXnkJcXANorwYbao5QW4Z+vNieHeBlRib1mOIsLopclZfk9fBSHHQH9E4nlzJ
-         cwPbKy7GaysmVmIub5qFfSFK5Awi10IGY8NGrXTshyGwdwaTTX/Ch3kH+4oPGZbP724x
-         rpdVk+DwqzdzZ9YsoEKk7yJCA9UTvXH7scjGQ2locscBuuxOCebpu1dvb0H4A/jFL2ik
-         m31oy7Df4AtLTSI68EDWN8VeiVZpwLoqEENRvGxeiJwtJjVuHn6DrXocFt27NYf4/8OE
-         uxNg==
-X-Gm-Message-State: ALyK8tJvPiVS5f88RbZlVcSt7lwrUXw9CVCchM/SHw75M/NGdDvcTkNv4vqFI73YyUrSfhLOuwa3wt5kWbXuyg==
-X-Received: by 10.13.208.69 with SMTP id s66mr520820ywd.267.1464132674821;
- Tue, 24 May 2016 16:31:14 -0700 (PDT)
-Received: by 10.83.81.5 with HTTP; Tue, 24 May 2016 16:30:35 -0700 (PDT)
-In-Reply-To: <xmqqmvng8qle.fsf@gitster.mtv.corp.google.com>
+	id S1755152AbcEXXbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 19:31:34 -0400
+Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:49659 "EHLO
+	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753725AbcEXXbd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 19:31:33 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 4110E2506;
+	Wed, 25 May 2016 01:31:29 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id kyX6jb4OFSlI; Wed, 25 May 2016 01:31:29 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id E807924DE;
+	Wed, 25 May 2016 01:31:28 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id DE3BF2077;
+	Wed, 25 May 2016 01:31:28 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id sWCn7KP3NJcj; Wed, 25 May 2016 01:31:28 +0200 (CEST)
+Received: from localhost.localdomain (LFbn-1-8166-195.w90-112.abo.wanadoo.fr [90.112.75.195])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 851992066;
+	Wed, 25 May 2016 01:31:28 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.0
+In-Reply-To: <vpq60u4bl4e.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295545>
 
-On Mon, May 23, 2016 at 1:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nathan Collins <nathan.collins@gmail.com> writes:
+On 05/23/2016 10:00 PM, Matthieu Moy wrote:
+> I don't think this is right: I often reply to an email with a single
+> patch, for which it would clearly be overkill to have a cover-letter.
+
+Yes indeed, we are working on inserting the quoted message body in the 
+patch's "below-triple-dash" section.
+
+> Your --quote-mail does two things:
 >
->> Example session:
+> 1) Populate the To and Cc field
+>
+> 2) Include the original message body with quotation prefix.
+>
+> When not using --compose, 1) clearly makes sense already, and there's no
+> reason to prevent this use-case. When sending a single patch, 2) also
+> makes sense as "below-tripple-dash comment", like
+>
+>   This is the commit message for feature A.
+>   ---
+>   John Smith wrote:
+>   > You should implement feature A.
+>
+>   Indeed, here's a patch.
+>
+>   modified-file.c   | 99 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+>
+> When sending multiple patches without --compose, 2) may not make sense,
+> but I think a sane behavior would be:
+>
+> * If --compose is given, cite the message there.
+>
+> * If --compose is not given, don't send a cover-letter but cite the body
+>   as comment in the first patch.
+>
+> As a first step, the second point can be changed to "if --compose is not
+> given, don't cite the message, just populate the To: and Cc: fields".
+
+It seems a good behavior to me too.
+
+> * If --compose is not given, don't send a cover-letter but cite the body
+>   as comment in the first patch.
+
+Then should the option imply `--annotate`, to let the user edit the 
+patch containing the quoted email?
+
+>> +			push(@header, $_);
+>
+> I think the code would be clearer if @header was a list of pairs
+> (header-name, header-content). Then you'd need much less regex magic
+> when going through it.
+
+The next series of patches may include (if the code is clean enough by 
+then) a cleaner subroutine to parse the email, probably returning 
+something like:
+
+   return (
+     "from" => $from,
+     "subject" => $subject,
+     "date" => $date,
+     "message_id" => $message_id,
+     "to" => [@to],
+     "cc" => [@cc],
+     "xh" => [@xh],
+     "config" => {%config}
+   );
+
+>> +			elsif (/^From:\s+(.*)$/i) {
+>> +				push @initial_to, $1;
+>> +			}
+>> +			elsif (/^To:\s+(.*)$/i) {
+>> +				foreach my $addr (parse_address_line($1)) {
+>> +					if (!($addr eq $initial_sender)) {
+>> +						push @initial_to, $addr;
+>> +					}
+>> +				}
+>
+> This adds the content of the To: field in the original email to the Cc:
+> field in the new message, right? If so, this is a weird behavior: when
+> following up to an email, one usually addresses to the person s/he's
+> replying, keeping the others Cc-ed, hence the original From: becomes the
+> To header, and the original To: and Cc: become Cc:.
+
+We made the option behave like Thunderbird does, but indeed RFC 2822 [1] 
+sees it the same you do, it will be fixed in next iteration.
+
+>> @@ -676,6 +771,8 @@ From: $tpl_sender
+>>  Subject: $tpl_subject
+>>  In-Reply-To: $tpl_reply_to
 >>
->>     $ git init test.git
->>     Initialized empty Git repository in /tmp/test.git/.git/
->>     $ cd test.git
->>     $ mkdir "dir name"
->>     $ touch dir\ name/file.txt
->>     $ echo "dir\\ name/file.txt -text -whitespace" >> .git/info/attributes
->>     $ git add dir\ name/file.txt
->>     name/file.txt is not a valid attribute name: .git/info/attributes:1
+>> +$tpl_quote
+>> +
+>>  EOT
 >
-> That's because spaces are not allowed in paths there.
->
->         echo "dir?name/file.txt -text" >.git/info/attributes
->
-> may be an easy workaround for now.
+> Doesn't this add two extra useless blank lines if $tpl_quote is empty?
 
-Thanks, I'll use the workaround,
+Yes it does, it will be fixed in the next series of patches.
 
--nathan
+Thank you for your time!
+
+
+[1] https://www.ietf.org/rfc/rfc2822.txt
