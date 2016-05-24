@@ -1,76 +1,80 @@
-From: Armin Kunaschik <megabreit@googlemail.com>
-Subject: t1400 test failures
-Date: Tue, 24 May 2016 13:18:23 +0200
-Message-ID: <CALR6jEhDS46tC2W-oA2BsppVvjrDpRO92oQ-w=B-209M-EoSrg@mail.gmail.com>
+From: =?UTF-8?Q?Jean-No=c3=abl_Avila?= <avila.jn@gmail.com>
+Subject: Re: [BUG] can not escape sharps in git config file
+Date: Tue, 24 May 2016 13:23:31 +0200
+Message-ID: <574439B3.9090308@gmail.com>
+References: <57442992.6030306@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 24 13:18:41 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 24 13:23:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5AMA-0001yc-6x
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 13:18:38 +0200
+	id 1b5AR1-0003Ws-Gg
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 13:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755801AbcEXLS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 07:18:26 -0400
-Received: from mail-yw0-f179.google.com ([209.85.161.179]:33343 "EHLO
-	mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755798AbcEXLSZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 07:18:25 -0400
-Received: by mail-yw0-f179.google.com with SMTP id h19so12284457ywc.0
-        for <git@vger.kernel.org>; Tue, 24 May 2016 04:18:24 -0700 (PDT)
+	id S1754022AbcEXLXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 07:23:35 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:37599 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751976AbcEXLXe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 07:23:34 -0400
+Received: by mail-wm0-f54.google.com with SMTP id z87so19750792wmh.0
+        for <git@vger.kernel.org>; Tue, 24 May 2016 04:23:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=0I61Yb2mR1ReJ8yoYYQ2xFkldrLbXK8H9sfwFPDO8Jc=;
-        b=YxMgPTqiq9ivUAImhZihkc+nm/3Zey1ixI73nkFaYs2PN7sm0zITMI5y3poS9l77qM
-         JqvcsrCN5TUYFOS92zKOIjvNkLN5GcrBNbvka5dBmcI/TjFBtbj/iSAUI+AXT1LdaqJU
-         eQ4DuPphrrZV/eYgvQtlMmwuQCFOY37YGI+Ke4rjDzRKd8Lb8Ao/+17g1QF1SLeURyCk
-         eOnr7TRR397x7C7CVEdV9X9C1QeS/UkU7WM1N/i7GT5C6i60uYdjmlfcLMb3EuzjmXVG
-         pazgtoZgRfUt3d+xelwNmWUIAtZIu+ITwxGYQZZw65zCmr+DzzVKE/Z8dclaebD61WjS
-         DfIA==
+        d=gmail.com; s=20120113;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=4/6MItP49YnWjrMCKHVIFye6J0CZSSa1JbkGrB/vqgs=;
+        b=vOhqAFDej66lSUJt/y09U3x8EEYyWujI+NnzH4Wp4P8kZX25rSzqdeWB7PcIq5iZOT
+         /fAecXAbXfiTdKACF38xwta8ybnly/HRTrT4XgnTMBqjmREMTKQRlbCccX3L9Y1jqXpi
+         lfbKN3VgyOL+NjJCbTsOKeJQd9yRnu+mPk8Qjn5erWALJBD+h8L4T3MZ7RV/qtK9c+i7
+         f0BxjByZPRyFYC9v2lQp+GX8E76eSiZV0Pupxqc8NHGc/3UL+R+hlbpcqI9+kP+37/tP
+         7IItRQ+wbxK9pCn41XCFVbKout+k2N0sDnfFmWL5iPZL+Wif1bH5WhCMoa/+XrCGFaYK
+         q2ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=0I61Yb2mR1ReJ8yoYYQ2xFkldrLbXK8H9sfwFPDO8Jc=;
-        b=aQe7oti3DSTipzwUWk5BSBHDaY3Ev6DX26XEOWhmwSPbfobuBB0yjWsSmFroLAs3pj
-         3/H2Nqp9eMM/I8PYjGAxMQAeqJK3CTvQi5UqxN4tmUu7g3dnDG/2WmeUJeGt6TJ7oi1Q
-         AssUVHTxazd39bSHNvd40k6HTIQE3MDwpPQ7GFTxKDdiSN+e/DWn6AzY3Mvu0uLLAr5h
-         truDTI1xHOCRZywAE0MFEkdDKI03JDlaYrVsseU/s1yMY0OT1gDsDyJ7Hd2qJIguPpuQ
-         9l3f96jJLilASDpD9rdipUqxQT6kjcg2RduPnAvix4rISnD04zudo60jHZSxKhF9GGj8
-         vwJg==
-X-Gm-Message-State: ALyK8tKt+3jmSfY+9WC3jRyCTdXz7ITID6H8ahqDgu2xUtGxR1xzc19UU3qmiFnJYMG+OFNOSTBxUZbLwMqtCA==
-X-Received: by 10.37.80.133 with SMTP id e127mr1915578ybb.162.1464088703872;
- Tue, 24 May 2016 04:18:23 -0700 (PDT)
-Received: by 10.129.45.132 with HTTP; Tue, 24 May 2016 04:18:23 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=4/6MItP49YnWjrMCKHVIFye6J0CZSSa1JbkGrB/vqgs=;
+        b=TUNg9T9Ggf9DAOB4wCj2m3aJ7BDOGp/jrUMUL1ShrMg9ieoN3B7M0WHsYZIgvuVLSS
+         Om6Fe6qJ/uFgGRbycKpuMw5bLJjG5UcfxMjdssULGpXuc6+63oOQtBVSCTyi8/4TwW7b
+         tzLG5+67/QSJN/mXThP4+qswyqdb6cIpKgsTZAL3pgW3xVvRNKLTlpVqkxSIPaQwLxar
+         nuxms26+1pZdGrxILO+dV8Mp3tQSotZ689FWXnmFjtE4ThRCgz1WGvrvq6msPdA9BA+/
+         ZiW0IZRPx9mfpTgRcAtYMdjocE1wxRnGoEe/C35Av3ytqdfyRFjOqitVH1DE6zcdVI61
+         biSg==
+X-Gm-Message-State: ALyK8tIHO7Uj+zke21lbsyk0YXRc4df2gInczBv6/v680kTxkpEKkS7jbEn9d7v0IB//2w==
+X-Received: by 10.194.10.69 with SMTP id g5mr3726803wjb.7.1464089013090;
+        Tue, 24 May 2016 04:23:33 -0700 (PDT)
+Received: from [192.168.1.75] (static-csq-cds-097114.business.bouyguestelecom.com. [164.177.97.114])
+        by smtp.googlemail.com with ESMTPSA id kz1sm2652696wjc.46.2016.05.24.04.23.31
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 24 May 2016 04:23:31 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
+In-Reply-To: <57442992.6030306@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295486>
 
-Hello,
+My mistake, sorry for the noise,
 
-I have 2 failed tests here:
-large transaction creating branches does not burst open file limit
-large transaction deleting branches does not burst open file limit
+JFTR:
 
-both tests fail because of the decreased file limit:
-git-2.8.3/t/../bin-wrappers/git: bad file unit number
+ * only double quotes can fully escape a string (it is safer to enclose
+the whole value in double quotes)
+ * backslashes have to be doubled because they are interpreted by git
 
-The tests run fine on AIX with ksh88 when I increase the ulimit to 63 or higher.
-bash and ksh93 test fine with the present ulimit of 32.
+So
 
-Changing the shell interpreter of the git-wrapper script to /bin/bash or
-/bin/ksh93 is enough to make these 2 tests work with the lower ulimit.
-All other scripts can be run with any shell.
+[filter "kicad_sch"]
+    clean = "sed -E 's/#(PWR|FLG)[0-9]+/#\\1?/'"
+    smudge = cat
 
-I have no idea why the ksh88 consumes so much file descriptors, I also
-don't have an idea if or how this test can be "fixed".
-
-So I'll leave this here for information purposes :-)
-
-Armin
+JN
