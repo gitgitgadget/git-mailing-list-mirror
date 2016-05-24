@@ -1,128 +1,98 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 27/49] builtin/apply: move 'p_context' global into 'struct apply_state'
-Date: Tue, 24 May 2016 10:11:04 +0200
-Message-ID: <20160524081126.16973-28-chriscool@tuxfamily.org>
-References: <20160524081126.16973-1-chriscool@tuxfamily.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jeff King <peff@peff.net>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 10:14:50 2016
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] builtin/commit.c: memoize git-path for COMMIT_EDITMSG
+Date: Tue, 24 May 2016 10:11:57 +0200
+Message-ID: <vpq1t4rri2a.fsf@anie.imag.fr>
+References: <1464027390-1512-1-git-send-email-pranit.bauva@gmail.com>
+	<xmqq7feka8kk.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org,
+	larsxschneider@gmail.com, chriscool@tuxfamily.org,
+	christian.couder@gmail.com, peff@peff.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 24 10:14:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b57UG-0001f6-DL
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:14:48 +0200
+	id 1b57UM-0001gE-RA
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:14:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754750AbcEXIOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 04:14:44 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33438 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754664AbcEXIMY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 04:12:24 -0400
-Received: by mail-wm0-f65.google.com with SMTP id 67so3641551wmg.0
-        for <git@vger.kernel.org>; Tue, 24 May 2016 01:12:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+3uDV6Uouc1KAp5iySSRF5Gc/kk+HTefGvtdgjsR9ow=;
-        b=vCZLUCYj1YObxOah1X8NJ2T6o6tN4NY4uiaGJ3lYKqZNOa1KqJPwSlcLdWNLDNhN/c
-         MxzCE56XqKlQjgqjvw+lu6uVmsG2A4kqefpv6mWGVEMqDYTEwPHAZS03S5uSjAOjokHU
-         J9y3Fs3yTo0E16n7DRQxx4KC4eHbAcY7f64t4tus0yomLT8WkfQ4drvTWOw3O8xim57l
-         fJyrUc4c81L2Yt/sH/Psv/4Lqqgiy4wovAXhgG/yKSFisTLgYEPjFQaKlI8jIHma+q+Y
-         5NPILfotY/xZnGoyYj/IbAQ7SCZJQ5KLe/rEdtwsRYoCqzOfBSOrlbsYSKSInnD/o4sj
-         CSvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=+3uDV6Uouc1KAp5iySSRF5Gc/kk+HTefGvtdgjsR9ow=;
-        b=LSl3O+/WoSjtsnaSQiImE22mtHU+UHy30MNp/ZHVE3NTLp9wc3QWMNWGHBbUz6vdXc
-         /s5rDneALjO9owTUsSZBKBrO4s9pumsztAltpCKsqAZaUVzqlUMrEpirSFdJV2wgVnEv
-         dEozuRaSXW/3kIbUU05EJTvOlDj/p5NvhuogNZSftCUPkTO3iOTp3eW8Xh/a0draYLq+
-         mtG7wkMhYMGSseYtslg6kZcgA/5uETeSCVQ2PgEfTe1X7TssIrLqph9btVAFNabjTqNp
-         1g9jB3+TQYtY84iiHArU7zidtFNpI5vXWPsK/zAAFVk6VsnCLubYDT0GCDPU/fOCppAn
-         cJmw==
-X-Gm-Message-State: AOPr4FWkh5EoqOqzBZmy8t84pR6EE6CtcZds7cKlgqmJO52Ivcy8RtFvPM3osyKdQ3u8Mw==
-X-Received: by 10.28.161.198 with SMTP id k189mr21843173wme.23.1464077542732;
-        Tue, 24 May 2016 01:12:22 -0700 (PDT)
-Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.12.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 May 2016 01:12:22 -0700 (PDT)
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.8.3.443.gaeee61e
-In-Reply-To: <20160524081126.16973-1-chriscool@tuxfamily.org>
+	id S1753364AbcEXIOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 04:14:40 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:57513 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754665AbcEXIM0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 04:12:26 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4O8Bu6k004718
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 24 May 2016 10:11:56 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4O8BviR013985;
+	Tue, 24 May 2016 10:11:57 +0200
+In-Reply-To: <xmqq7feka8kk.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 23 May 2016 12:16:43 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Tue, 24 May 2016 10:11:56 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u4O8Bu6k004718
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1464682317.50422@NZuPcq4tSCxqg3cRI3vUSg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295458>
 
-To libify the apply functionality the 'p_context' variable should
-not be static and global to the file. Let's move it into
-'struct apply_state'.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/apply.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+> Pranit Bauva <pranit.bauva@gmail.com> writes:
+>
+>>  static const char *use_message_buffer;
+>> -static const char commit_editmsg[] = "COMMIT_EDITMSG";
+>> +static const char commit_editmsg_path[] = git_path_commit_editmsg();
+>
+> The function defined with the macro looks like
+>
+> 	const char *git_path_commit_editmsg(void)
+>         {
+> 		static char *ret;
+>                 if (!ret)
+>                 	ret = git_pathdup("COMMIT_EDITMSG");
+> 		return ret;
+> 	}
+>
+> so receiving its result to "const char v[]" looks somewhat
+> suspicious.
+>
+> More importantly, when is this function evaluated and returned value
+> used to fill commit_editmsg_path[]?
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 59b0f1b..3c9f052 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -49,6 +49,7 @@ struct apply_state {
- 	/* Other non boolean parameters */
- 	const char *fake_ancestor;
- 	int line_termination;
-+	unsigned int p_context;
- };
- 
- static int newfd = -1;
-@@ -56,7 +57,6 @@ static int newfd = -1;
- static int state_p_value = 1;
- static int p_value_known;
- static int apply = 1;
--static unsigned int p_context = UINT_MAX;
- static const char * const apply_usage[] = {
- 	N_("git apply [<options>] [<patch>...]"),
- 	NULL
-@@ -2872,7 +2872,7 @@ static int apply_one_fragment(struct apply_state *state,
- 			break;
- 
- 		/* Am I at my context limits? */
--		if ((leading <= p_context) && (trailing <= p_context))
-+		if ((leading <= state->p_context) && (trailing <= state->p_context))
- 			break;
- 		if (match_beginning || match_end) {
- 			match_beginning = match_end = 0;
-@@ -4566,6 +4566,7 @@ static void init_apply_state(struct apply_state *state, const char *prefix)
- 	state->prefix = prefix;
- 	state->prefix_length = state->prefix ? strlen(state->prefix) : 0;
- 	state->line_termination = '\n';
-+	state->p_context = UINT_MAX;
- 
- 	git_apply_config();
- 	if (apply_default_whitespace)
-@@ -4628,7 +4629,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
- 		/* Think twice before adding "--nul" synonym to this */
- 		OPT_SET_INT('z', NULL, &state.line_termination,
- 			N_("paths are separated with NUL character"), '\0'),
--		OPT_INTEGER('C', NULL, &p_context,
-+		OPT_INTEGER('C', NULL, &state.p_context,
- 				N_("ensure at least <n> lines of context match")),
- 		{ OPTION_CALLBACK, 0, "whitespace", &whitespace_option, N_("action"),
- 			N_("detect new or modified lines that have whitespace errors"),
+I may have missed something, but I'd say "never", as the code is not
+compilable at least with my gcc:
+
+builtin/commit.c:98:1: error: invalid initializer
+ static const char commit_editmsg_path[] = git_path_commit_editmsg();
+ ^
+
+AFAIK, initializing a global variable with a function call is allowed in
+C++, but not in C.
+
+And indeed, this construct is a huge source of trouble, as it would mean
+that git_path_commit_editmsg() is called 1) unconditionnally, and 2)
+before entering main().
+
+1) means that the function call is made even when git is called for
+another command. This is terrible for the startup time: if all git
+commands have a not-totally-immediate initializer, then all commands
+would need to run the initializers for all other commands. 2) means it's
+a nightmare to debug, as you can hardly predict when the code will be
+executed.
+
 -- 
-2.8.3.443.gaeee61e
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
