@@ -1,94 +1,207 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Small rerere in rebase regression
-Date: Tue, 24 May 2016 15:18:15 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605241510370.4449@virtualbox>
-References: <57434572.6030306@kdbg.org> <xmqqy4708ss0.fsf@gitster.mtv.corp.google.com> <57437693.3030106@kdbg.org> <xmqqk2ik77cr.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 24 15:27:47 2016
+From: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
+Subject: [PATCH] userdiff: add built-in pattern for CSS
+Date: Tue, 24 May 2016 16:25:37 +0200
+Message-ID: <20160524142537.19324-1-william.duclot@ensimag.grenoble-inp.fr>
+References: <20160520132829.7937-1-william.duclot@ensimag.grenoble-inp.fr>
+Cc: simon.rabourg@ensimag.grenoble-inp.fr,
+	francois.beutin@ensimag.grenoble-inp.fr,
+	antoine.queru@ensimag.grenoble-inp.fr, gitster@pobox.com,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 24 16:25:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5CN6-0007C3-0K
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 15:27:44 +0200
+	id 1b5DHL-0004JR-Va
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 16:25:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755145AbcEXN1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 09:27:37 -0400
-Received: from mout.gmx.net ([212.227.17.21]:50169 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754367AbcEXN1g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 09:27:36 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0LzbXq-1bad703Guw-014mpf; Tue, 24 May 2016 15:27:08
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqk2ik77cr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:3UAi0F0AYub32FZJxWK9g/w3+eUyk9E0ypsywjkRR31Ym6Ky8O3
- FdPWbzNh1MoJ+4gCSN+cQL3dNOWO5SFUjkQC7tP3jDvfhjwL3/vbiYBjIlwR+jn9OzxtmI8
- yjfoZ33DQnxUDLspyHGRd5nWkE1c4GN2A9j3yXilPmaXtCKEySM+xiyB+2Xzb83wkPNk046
- C8oa+vDGQHFBN0Q0doefg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Z5tdQn0faA0=:mHB3yqedDI11cwqKXvi8nI
- 1Qldu+pR7W7ssx0PzPWuzCuQlprsCl7+mSMAuAIclKxul5SVC/RlBBFMIhwnyR1JMS5pUf/DU
- chNIKElOzDaF3RcpI7jUgTPtZD+rbEajYWN5rZSoUqzyXpKwtaG6lGIaYQCNxzVcdE6369Jrj
- g6YVCY4beyvNKXLwekI7oH/zPKBQe/F15elOoKeB0dL0O/xDNUaJjW8wioSBIpbG66DA7owfS
- lpqhG0D9SnkeVuVNo4ptzPx2jUpEaPbgLWtleOdlP7nrmBLQL96w5lA3FiHO+BM/nR+cZLaVW
- D8SWmnUQwZj6Dh7sZlGu2TpeZW7tLlHDrZtIdMP0AzBulpxddeFkhzzk3paHQcQYU5QrlEKjl
- epkLLYx5HfpoI7jFV2kv23eIl+ew07m49ic/Gu768FxYjAiWKToisGrJAFhZ80QYvnf/05plv
- WgFIiJypA5bN5eIxXa2uxXztOF2/54k7uk8RMsv96vIP2cc13ogdQJPMxBu5ZOTI37Lz2QKib
- 2M/fOjluTELDWMR1W3GuJvgj93AVe8v9JtU7gd4JRP16wa955RSQShydfmAvjQr1HGbuOa0tz
- tpsFMVruiH4oRTaPOZUFq3j40NOrltG/7Fd2XZK74UkfZWxrIQYD69Mvww9vH4jBnqvOheDeU
- MNJeozSiRhdBK2UB8fNrDlZ5TKzLtXziek7ZRxA4/XRth+9dx/1iNKp+2usBUcWxoGwmLBgl0
- uCS5iUkbVmATlIADB4foywksls3eQr62Wc8lWv0Fiwsku37L3b285AOlgrXKq3ENy/1rodJR 
+	id S1755885AbcEXOZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 10:25:48 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:57970 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754204AbcEXOZr (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 May 2016 10:25:47 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id E6D3420F2;
+	Tue, 24 May 2016 16:25:41 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ylF4tmunGyyC; Tue, 24 May 2016 16:25:41 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id D0EC120ED;
+	Tue, 24 May 2016 16:25:41 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id CAC592077;
+	Tue, 24 May 2016 16:25:41 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id tz_lxj49aNmd; Tue, 24 May 2016 16:25:41 +0200 (CEST)
+Received: from Messiaen.grenet.fr (eduroam-032170.grenet.fr [130.190.32.170])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id AFBE32066;
+	Tue, 24 May 2016 16:25:41 +0200 (CEST)
+X-Mailer: git-send-email 2.9.0.rc0.1.g521d471.dirty
+In-Reply-To: <20160520132829.7937-1-william.duclot@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295495>
 
-Hi,
+CSS is widely used, motivating it being included as a built-in pattern.
 
-On Mon, 23 May 2016, Junio C Hamano wrote:
+It must be noted that the word_regex for CSS (i.e. the regex defining
+what is a word in the language) does not consider '.' and '#' characters
+(in CSS selectors) to be part of the word. This behavior is documented
+by the test t/t4018/css-rule.
+The logic behind this behavior is the following: identifiers in CSS
+selectors are identifiers in a HTML/XML document. Therefore, the '.'/'#'
+character are not part of the identifier, but an indicator of the nature
+of the identifier in HTML/XML (class or id). Diffing ".class1" and
+".class2" must show that the class name is changed, but we still are
+selecting a class.
 
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
-> > I also come to the conclusion that die_with_patch shouldn't have to
-> > have a call to "git rerere". die_with_patch can be called after "git
-> > cherry-pick", "git merge", "git commit", all of which have their own
-> > rerere() invocation.
-> >
-> > However, calling "git rerere" after a failed "git commit" may be
-> > destructive: it would record a resolution even though the commit has
-> > not be completed. Think of an squash commit being aborted because the
-> > user notices an error in the last minute. If that error is in a
-> > conflict resolution, that wrong resolution would be recorded.
-> 
-> So, the behaviour change you observed uncovered a small bug in "rebase
-> -i" that was covered by the old limitation of "rerere" that refrained
-> from creating preimage when there already is one?
-> 
-> I think removing the call to "git rerere" there is a safe and sensible
-> thing regardless, but perhaps authors of "rebase -i" had their own
-> reasons.  I dunno (it is unlikely I'll have a chance to do blame and
-> digging today).
+Signed-off-by: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
+Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+---
+changes since v1:
+Fix a typo in the word_regex ("A-F" => "A-Z").
+Clearer comment about ISO 10646 characters.
 
-I introduced this in ecfe72ff658124ea301ec7b2bb8b987689303685, as a (late)
-answer to f131dd492f098f9f565df93df13e35c734284590.
+ Documentation/gitattributes.txt |  2 ++
+ t/t4018-diff-funcname.sh        |  1 +
+ t/t4018/css-rule                |  4 ++++
+ t/t4034-diff-words.sh           |  1 +
+ t/t4034/css/expect              | 16 ++++++++++++++++
+ t/t4034/css/post                | 10 ++++++++++
+ t/t4034/css/pre                 | 10 ++++++++++
+ userdiff.c                      |  8 ++++++++
+ 8 files changed, 52 insertions(+)
+ create mode 100644 t/t4018/css-rule
+ create mode 100644 t/t4034/css/expect
+ create mode 100644 t/t4034/css/post
+ create mode 100644 t/t4034/css/pre
 
-Hannes, could you quickly test whether
-https://github.com/dscho/git/tree/interactive-rebase calls rerere twice,
-too? (Please call interactive rebase with the GIT_USE_REBASE_HELPER=true
-to avoid running the interactive rebase twice.)
-
-I have a hunch that it does not call rerere twice, which would be a nice
-bonus in that patch thicket (so far, I split the patches into seven patch
-series, in addition to the ones I already sent, still have to do one
-thorough review before I'll continue submitting them).
-
-Ciao,
-Dscho
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index e3b1de8..81f60ad 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -525,6 +525,8 @@ patterns are available:
+ 
+ - `csharp` suitable for source code in the C# language.
+ 
++- `css` suitable for source code in the CSS language.
++
+ - `fortran` suitable for source code in the Fortran language.
+ 
+ - `fountain` suitable for Fountain documents.
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 67373dc..1795ffc 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -30,6 +30,7 @@ diffpatterns="
+ 	bibtex
+ 	cpp
+ 	csharp
++	css
+ 	fortran
+ 	fountain
+ 	html
+diff --git a/t/t4018/css-rule b/t/t4018/css-rule
+new file mode 100644
+index 0000000..84ed754
+--- /dev/null
++++ b/t/t4018/css-rule
+@@ -0,0 +1,4 @@
++RIGHT label.control-label {
++    margin-top: 10px!important;
++    border : 10px ChangeMe #C6C6C6;
++}
+diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+index f2f55fc..912df91 100755
+--- a/t/t4034-diff-words.sh
++++ b/t/t4034-diff-words.sh
+@@ -302,6 +302,7 @@ test_language_driver ada
+ test_language_driver bibtex
+ test_language_driver cpp
+ test_language_driver csharp
++test_language_driver css
+ test_language_driver fortran
+ test_language_driver html
+ test_language_driver java
+diff --git a/t/t4034/css/expect b/t/t4034/css/expect
+new file mode 100644
+index 0000000..ed10393
+--- /dev/null
++++ b/t/t4034/css/expect
+@@ -0,0 +1,16 @@
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index b8ae0bb..fe500b7 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
++<CYAN>@@ -1,10 +1,10 @@<RESET>
++.<RED>class-form<RESET><GREEN>other-form<RESET> label.control-label {
++    margin-top: <RED>10<RESET><GREEN>15<RESET>px!important;
++    border : 10px <RED>dashed<RESET><GREEN>dotted<RESET> #C6C6C6;
++}<RESET>
++<RED>#CCCCCC<RESET><GREEN>#CCCCCB<RESET>
++10em<RESET>
++<RED>padding-bottom<RESET><GREEN>margin-left<RESET>
++150<RED>px<RESET><GREEN>em<RESET>
++10px
++<RED>!important<RESET>
++<RED>div<RESET><GREEN>li<RESET>.class#id
+diff --git a/t/t4034/css/post b/t/t4034/css/post
+new file mode 100644
+index 0000000..fe500b7
+--- /dev/null
++++ b/t/t4034/css/post
+@@ -0,0 +1,10 @@
++.other-form label.control-label {
++    margin-top: 15px!important;
++    border : 10px dotted #C6C6C6;
++}
++#CCCCCB
++10em
++margin-left
++150em
++10px
++li.class#id
+diff --git a/t/t4034/css/pre b/t/t4034/css/pre
+new file mode 100644
+index 0000000..b8ae0bb
+--- /dev/null
++++ b/t/t4034/css/pre
+@@ -0,0 +1,10 @@
++.class-form label.control-label {
++    margin-top: 10px!important;
++    border : 10px dashed #C6C6C6;
++}
++#CCCCCC
++10em
++padding-bottom
++150px
++10px!important
++div.class#id
+diff --git a/userdiff.c b/userdiff.c
+index 6bf2505..9273969 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -148,6 +148,14 @@ PATTERNS("csharp",
+ 	 "[a-zA-Z_][a-zA-Z0-9_]*"
+ 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+ 	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
++PATTERNS("css",
++	 "^([^,{}]+)((,[^}]*\\{)|([ \t]*\\{))$",
++	 /* -- */
++	 /* This regex comes from W3C CSS specs. Should theoretically also allow ISO 10646 characters U+00A0 and higher,
++	  * but they are not handled with this regex. */
++	 "-?[_a-zA-Z][-_a-zA-Z0-9]*" /* identifiers */
++	 "|-?[0-9]+|\\#[0-9a-fA-F]+" /* numbers */
++),
+ { "default", NULL, -1, { NULL, 0 } },
+ };
+ #undef PATTERNS
+-- 
+2.9.0.rc0.1.g521d471.dirty
