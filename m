@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 37/49] builtin/apply: remove whitespace_option arg from set_default_whitespace_mode()
-Date: Tue, 24 May 2016 10:11:14 +0200
-Message-ID: <20160524081126.16973-38-chriscool@tuxfamily.org>
+Subject: [PATCH v3 39/49] builtin/apply: move 'applied_after_fixing_ws' into 'struct apply_state'
+Date: Tue, 24 May 2016 10:11:16 +0200
+Message-ID: <20160524081126.16973-40-chriscool@tuxfamily.org>
 References: <20160524081126.16973-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -20,45 +20,45 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b57SL-0000wb-De
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:12:49 +0200
+	id 1b57SM-0000wb-0A
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:12:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754700AbcEXIMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754704AbcEXIMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 04:12:43 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34877 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754699AbcEXIMl (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 24 May 2016 04:12:41 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36538 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754689AbcEXIMi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 04:12:38 -0400
-Received: by mail-wm0-f66.google.com with SMTP id q62so3640386wmg.3
-        for <git@vger.kernel.org>; Tue, 24 May 2016 01:12:37 -0700 (PDT)
+Received: by mail-wm0-f68.google.com with SMTP id f75so3657950wmf.2
+        for <git@vger.kernel.org>; Tue, 24 May 2016 01:12:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dB5QVFYVXQZOtBwxyPjIJnSlZKoaPkEm+8l0fvrEYcE=;
-        b=K+mhnzoAwQyg3q/z+Kis99rPECOwgZm72drHN3GXF3UD+HJD3HJxhd/q8+Qb9P4KVX
-         ZN07+NVZEhQ4PVzPYM+JHTO0UfrjgDCBfJEiI3u8MwOmtwdodmL8GiLS5YNTbN0c4ehp
-         JJ/cdKWKGVtdw/JFcwimFHEYydWfQ2dhQml1XrVnCxz6SeMUT1ONtk25oawYGxaI4n65
-         rO0UZhANu8skci81ln3dhJDmNC9pUPlwwwZ9A8t8Wfy+Pc2ZfJ7KPN5EPyLmJwlD+sOH
-         ybRhzL3KT9yOsWWeZZSiNFTdme2gw59S/iE04HSm7x9Dve6tnYdPuV4d5QO+1WJ+dNij
-         1SQw==
+        bh=dNGnbdJ5X68nkzcls0yCzzybO2NIXHadIP077y5qxO0=;
+        b=nOCi8PCjZikRsezX6dTtw2KExrH3qbT2oNkeV2FKzXVrONdobfFN0CSHf6I9zRry0p
+         GG5pRyOmcMINyNTddzYAL2tF/EmFheimnyp923T3wmtdnS/17CspBZCGDoa19PfOeJsL
+         A958OzjMOg7lcC0A7wfK37Ji52aOxh8qEZ2GcTsL9PFoaFRy3HMowHt4UPdwkMEZtIOz
+         AROL+6iyhvJI2H5LM5E0a6u0s2gmhXgDaV7aMjfwwAR4lBkjc3l06OgJ81d55UWGmxQZ
+         aWQnhfcBJzN7jI3bu9+S+CFfM6REmmEw5XlbQqYw/+dt0jOiB6BnwTYp3NneEqn6FFHE
+         EvZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=dB5QVFYVXQZOtBwxyPjIJnSlZKoaPkEm+8l0fvrEYcE=;
-        b=OPCxth8nUwOyzHlKY1/4Cur+UTdKTOWN47XWCeXu3KRELSRQ9d+EnCIFWjDZNEJPTT
-         ldW20663lR8VoEelE8/s4rpEkiywwwBCCWqQj1jXyOqc5ReITk+xKq8fK0/mtTVxIQrd
-         4Du/dBZBUL72a6V5B8ZU0pb3RKgxp4OOx/u7ZOkmNgMBBKO3q1ct4Dk/Jz/4guNf0zgj
-         7Yx8omVeGE8tL8jvDqj+cGyqhLstAZ4wjYE510hVOzqIxazDNz7SQ+8euPJHHe71zfvH
-         2MI/hj8vIXqelz209klQNziHgOGM47z7u9DTwWEoUHrJGmLpumj7rmdVmgI2gPMr+7fU
-         zmKQ==
-X-Gm-Message-State: ALyK8tIqWMcWsF5cLB6GsIlehnwl2wd51d7EMoN23yj5IWb0DsuFVLZTQ0V7sMkKvm808w==
-X-Received: by 10.194.186.179 with SMTP id fl19mr3150079wjc.2.1464077556565;
-        Tue, 24 May 2016 01:12:36 -0700 (PDT)
+        bh=dNGnbdJ5X68nkzcls0yCzzybO2NIXHadIP077y5qxO0=;
+        b=FVj/vj/gOmCn+Y9mQECmG5wwW4tWFhq9xMky3iwIFU7piNHVrHQk7CJ22SZAWalxlp
+         bv3xPojtvhIrYJYeQGxN+DINoUXZE/VTb0ijUlomNxh40L5ndifKd2FlA0c9dMlY5BPY
+         jNOPHtiDYul1RgSn9MOUudRB2YYL+5LWAFf0yk4fUxDgPcjB7yfrMJWnFe87dY4VSRgs
+         hK7vah7ZW3iPHKDCbM+YOflAlpw9M/y0tuT6sIyhlWHZNvZdNKQO8PMXLI0tsGX3Ot5u
+         zW4PtAO8Zg/dMp7cqog8Qngni1GAWuVTtSosA8GzPLg1kcg4i8ZuSkqC/iZ91Hl5xe3L
+         3Oug==
+X-Gm-Message-State: AOPr4FWXeBFXlyJwb4ll0KapktbJwnUblQ9FAcGHcV3z2R2qh1S1xdU3yuS0QnNtzHOJQw==
+X-Received: by 10.28.88.208 with SMTP id m199mr20594934wmb.39.1464077560148;
+        Tue, 24 May 2016 01:12:40 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.12.34
+        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.12.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 May 2016 01:12:35 -0700 (PDT)
+        Tue, 24 May 2016 01:12:39 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.3.443.gaeee61e
 In-Reply-To: <20160524081126.16973-1-chriscool@tuxfamily.org>
@@ -66,48 +66,61 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295439>
 
-A previous change has move the whitespace_option variable from cmd_apply
-into 'struct apply_state', so that we can now avoid passing it separately
-to set_default_whitespace_mode().
+To libify the apply functionality the 'applied_after_fixing_ws' variable should
+not be static and global to the file. Let's move it into
+'struct apply_state'.
 
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ builtin/apply.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 78205f8..523ed74 100644
+index 619b8fb..91b6283 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -132,10 +132,9 @@ static void parse_ignorewhitespace_option(const char *option)
- 	die(_("unrecognized whitespace ignore option '%s'"), option);
- }
+@@ -64,6 +64,7 @@ struct apply_state {
+ 	const char *whitespace_option;
+ 	int whitespace_error;
+ 	int squelch_whitespace_errors;
++	int applied_after_fixing_ws;
+ };
  
--static void set_default_whitespace_mode(struct apply_state *state,
--					const char *whitespace_option)
-+static void set_default_whitespace_mode(struct apply_state *state)
- {
--	if (!whitespace_option && !apply_default_whitespace)
-+	if (!state->whitespace_option && !apply_default_whitespace)
- 		ws_error_action = (state->apply ? warn_on_ws_error : nowarn_ws_error);
- }
+ static int newfd = -1;
+@@ -79,7 +80,6 @@ static enum ws_error_action {
+ 	die_on_ws_error,
+ 	correct_ws_error
+ } ws_error_action = warn_on_ws_error;
+-static int applied_after_fixing_ws;
  
-@@ -4785,11 +4784,11 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
- 		if (fd < 0)
- 			die_errno(_("can't open patch '%s'"), arg);
- 		read_stdin = 0;
--		set_default_whitespace_mode(&state, state.whitespace_option);
-+		set_default_whitespace_mode(&state);
- 		errs |= apply_patch(&state, fd, arg, options);
- 		close(fd);
- 	}
--	set_default_whitespace_mode(&state, state.whitespace_option);
-+	set_default_whitespace_mode(&state);
- 	if (read_stdin)
- 		errs |= apply_patch(&state, 0, "<stdin>", options);
- 	if (state.whitespace_error) {
+ static enum ws_ignore {
+ 	ignore_ws_none,
+@@ -2862,7 +2862,7 @@ static int apply_one_fragment(struct apply_state *state,
+ 				strbuf_add(&newlines, patch + 1, plen);
+ 			}
+ 			else {
+-				ws_fix_copy(&newlines, patch + 1, plen, ws_rule, &applied_after_fixing_ws);
++				ws_fix_copy(&newlines, patch + 1, plen, ws_rule, &state->applied_after_fixing_ws);
+ 			}
+ 			add_line_info(&postimage, newlines.buf + start, newlines.len - start,
+ 				      (first == '+' ? 0 : LINE_COMMON));
+@@ -4806,11 +4806,11 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 			       "%d lines add whitespace errors.",
+ 			       state.whitespace_error),
+ 			    state.whitespace_error);
+-		if (applied_after_fixing_ws && state.apply)
++		if (state.applied_after_fixing_ws && state.apply)
+ 			warning("%d line%s applied after"
+ 				" fixing whitespace errors.",
+-				applied_after_fixing_ws,
+-				applied_after_fixing_ws == 1 ? "" : "s");
++				state.applied_after_fixing_ws,
++				state.applied_after_fixing_ws == 1 ? "" : "s");
+ 		else if (state.whitespace_error)
+ 			warning(Q_("%d line adds whitespace errors.",
+ 				   "%d lines add whitespace errors.",
 -- 
 2.8.3.443.gaeee61e
