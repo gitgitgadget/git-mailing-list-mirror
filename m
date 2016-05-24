@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 42/49] builtin/apply: move 'max_change' and 'max_len' into 'struct apply_state'
-Date: Tue, 24 May 2016 10:11:19 +0200
-Message-ID: <20160524081126.16973-43-chriscool@tuxfamily.org>
+Subject: [PATCH v3 48/49] builtin/apply: move 'lock_file' global into 'struct apply_state'
+Date: Tue, 24 May 2016 10:11:25 +0200
+Message-ID: <20160524081126.16973-49-chriscool@tuxfamily.org>
 References: <20160524081126.16973-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -14,51 +14,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 10:13:20 2016
+X-From: git-owner@vger.kernel.org Tue May 24 10:13:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b57Sn-00018M-IM
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:13:17 +0200
+	id 1b57TL-0001LX-A1
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:13:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932335AbcEXIM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 04:12:59 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34955 "EHLO
+	id S1754736AbcEXINr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 04:13:47 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36790 "EHLO
 	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754699AbcEXIMp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 04:12:45 -0400
-Received: by mail-wm0-f67.google.com with SMTP id f75so3658513wmf.2
-        for <git@vger.kernel.org>; Tue, 24 May 2016 01:12:44 -0700 (PDT)
+	with ESMTP id S932325AbcEXIMy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 04:12:54 -0400
+Received: by mail-wm0-f67.google.com with SMTP id q62so3642298wmg.3
+        for <git@vger.kernel.org>; Tue, 24 May 2016 01:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qhJXzjW7/5ItVUxlSJptU24FgbNa8I3rmM7c8cgQHIk=;
-        b=1EXsh5MX2IN8HRJUf6xyAODCeCk5fdEQrJgjAri0bVZBNKHMCEePMePEcNI0BEraXQ
-         YYIIPwx0Yw8JWM1riYhyrIGvy19fxx4BiGyePZJ7HrHueruGZteiTr9k0RJetaOpnfhc
-         KDNNQPDhXQshCbIydsu95ood6NYYRGz6vJsElwIuYBU7Ayvej+JWU6gOH0i1BIbR+Oy/
-         mjg7GJkodiTZaVptqT3DoN7o//v7EGpfbJV6vYH2lcYf1a1kUAN2edc0CnRFTRycrxk8
-         NqbESAKenLlrhsaxAo3CJCDJyiZxVmOUVbOQBmOPGFYwo0xzvhicRLrsJW+zC1RibNPJ
-         TmEg==
+        bh=F4RtKCWsSP7x9+vD7GNMB3e1SL12Kw+zBAGReeTluEc=;
+        b=maZdGMDiagEUX64Fou9xFANFaJ9GXUlRMVqjDejvLr5dF78/h12rh+mnsBLdmN3YLz
+         r/RbFdk01FZ5rapAIKj6X4c3crWPsJpPBLnj84ntO7bW2zOgNrmAl9i+X0czru3lfMk7
+         V/9fr689mSNS4hgaCzkWkLXfgMSU4ogPLOKz2pxJYoOCKpJZu7xJPFPGYTI+8Y/heY41
+         Ay2D8xwjfq+c/QusjvLWzuIJ4+9L9fXI9GpASK689jLrCOSqAvR5dpsDXRJ9to1S5135
+         /cA6OQ5CpEJO94lnj7xOOEA3OM/CYxy0MV21uk+ZyIwL5VFZGc+DV+whGVU8+xZOe9O1
+         upvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=qhJXzjW7/5ItVUxlSJptU24FgbNa8I3rmM7c8cgQHIk=;
-        b=FCiDaqNYbYWtDzQ11zMEsBzrEt/bewuOl6+t37W1gy3nx1sb5mNmE/QgMlOntogCsn
-         4nvLtSv/XrBg0Z8bmucokB9hU3ZLvykM3mw69hXJJjQCE/eqJrUxsGEK3H8WwvDlucnF
-         LcLMlkRauDkiig0//G+A0UWzot4UzbFGq9Xc6R+uVJ924Wn4+s8nuekLbapQeMJQ8j/S
-         8TBv/jFXIo5RohZ4VeXCGtaB8SKzWYJepbVB6xrLx7zuoLtCLMAj6mpx9jEL9AKtlleo
-         Cy625nCgdcaXCHRm/7lHyDebJREP/G3JpQSrUdcbtiE7taMAhJHd9xi+A2aybh9fGfE7
-         8rKg==
-X-Gm-Message-State: ALyK8tK3C1bF3exFJdegHrwn1DIDT9Wfw64vUnq7jICPsu9CT0XmFrtLF5mztMK5eX/pdA==
-X-Received: by 10.194.0.138 with SMTP id 10mr2775655wje.73.1464077564097;
-        Tue, 24 May 2016 01:12:44 -0700 (PDT)
+        bh=F4RtKCWsSP7x9+vD7GNMB3e1SL12Kw+zBAGReeTluEc=;
+        b=EkNmPgKdPmcUiSdGZIDsJ5c/8Sil1Aao+M2cY1Z5zR73YSDeg4aKigvyIjWG1GtB2u
+         I9xFWy9ANDRqAczlb21iDbU+yw943Fnjkl42/eOdKsc7j5pyMH7uHuqWWMcFmU3ZCD/G
+         TYPerpyKUktvbS+nj2BAaE0VSjxlczSR2uq9JtFqUhsu58S7rFFN7V8q0m2qKD2mBZoD
+         4sIhoFFJhUutYROn9owINLBXQWFrmKeeyK7bOPH6fFHX/RVbkJzNP/c4elbVOejkPMwV
+         TgOKOgySBAUmywP6AChKvdxGudI2c2HExj7YVLRsRzovG3ZzUBVbdiBGxPI+PjS5ND4V
+         X05w==
+X-Gm-Message-State: ALyK8tKQRWq6Fac5zwvAgzVR3WMrZSKHwG7gIP9hUTYFpQYYWU81jkDODwCdNQKiptKKVQ==
+X-Received: by 10.194.0.171 with SMTP id 11mr2809461wjf.110.1464077572653;
+        Tue, 24 May 2016 01:12:52 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.12.42
+        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.12.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 May 2016 01:12:43 -0700 (PDT)
+        Tue, 24 May 2016 01:12:51 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.3.443.gaeee61e
 In-Reply-To: <20160524081126.16973-1-chriscool@tuxfamily.org>
@@ -66,155 +66,91 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295447>
 
-To libify the apply functionality the 'max_change' and 'max_len'
-variables should not be static and global to the file. Let's move
-them into 'struct apply_state'.
+We cannot have a 'struct lock_file' allocated on the stack, as lockfile.c
+keeps a linked list of all created lock_file structures. So let's make the
+'lock_file' variable a pointer to a 'struct lock_file'
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
+As the same instance of this struct can be reused, let's add an argument
+to init_apply_state(), so that the caller can supply the same instance to
+different calls. And let's alloc an instance in init_apply_state(), if the
+caller doesn't want to supply one.
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 49 +++++++++++++++++++++++++------------------------
- 1 file changed, 25 insertions(+), 24 deletions(-)
+ builtin/apply.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index e5bc9cc..9e7d181 100644
+index 5027f1b..5d46b7c 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -73,6 +73,14 @@ struct apply_state {
- 	struct string_list limit_by_name;
- 	int has_include;
+@@ -52,6 +52,12 @@ struct apply_state {
+ 	const char *prefix;
+ 	int prefix_length;
  
 +	/*
-+	 * For "diff-stat" like behaviour, we keep track of the biggest change
-+	 * we've seen, and the longest filename. That allows us to do simple
-+	 * scaling.
++	 * Since lockfile.c keeps a linked list of all created
++	 * lock_file structures, it isn't safe to free(lock_file).
 +	 */
-+	int max_change;
-+	int max_len;
++	struct lock_file *lock_file;
 +
- 	/* These control whitespace errors */
- 	enum ws_error_action ws_error_action;
- 	enum ws_ignore ws_ignore_action;
-@@ -141,13 +149,6 @@ static void set_default_whitespace_mode(struct apply_state *state)
- 		state->ws_error_action = (state->apply ? warn_on_ws_error : nowarn_ws_error);
+ 	/* These control what gets looked at and modified */
+ 	int apply; /* this is not a dry-run */
+ 	int cached; /* apply to the index only */
+@@ -4493,8 +4499,6 @@ static int write_out_results(struct apply_state *state, struct patch *list)
+ 	return errs;
  }
  
--/*
-- * For "diff-stat" like behaviour, we keep track of the biggest change
-- * we've seen, and the longest filename. That allows us to do simple
-- * scaling.
-- */
--static int max_change, max_len;
+-static struct lock_file lock_file;
 -
- /*
-  * Various "current state", notably line numbers and what
-  * file (and how) we're patching right now.. The "is_xxxx"
-@@ -2172,7 +2173,7 @@ static const char pluses[] =
- static const char minuses[]=
- "----------------------------------------------------------------------";
+ #define INACCURATE_EOF	(1<<0)
+ #define RECOUNT		(1<<1)
  
--static void show_stats(struct patch *patch)
-+static void show_stats(struct apply_state *state, struct patch *patch)
- {
- 	struct strbuf qname = STRBUF_INIT;
- 	char *cp = patch->new_name ? patch->new_name : patch->old_name;
-@@ -2183,7 +2184,7 @@ static void show_stats(struct patch *patch)
- 	/*
- 	 * "scale" the filename
- 	 */
--	max = max_len;
-+	max = state->max_len;
- 	if (max > 50)
- 		max = 50;
+@@ -4547,7 +4551,7 @@ static int apply_patch(struct apply_state *state,
  
-@@ -2206,13 +2207,13 @@ static void show_stats(struct patch *patch)
- 	/*
- 	 * scale the add/delete
- 	 */
--	max = max + max_change > 70 ? 70 - max : max_change;
-+	max = max + state->max_change > 70 ? 70 - max : state->max_change;
- 	add = patch->lines_added;
- 	del = patch->lines_deleted;
+ 	state->update_index = state->check_index && state->apply;
+ 	if (state->update_index && newfd < 0)
+-		newfd = hold_locked_index(&lock_file, 1);
++		newfd = hold_locked_index(state->lock_file, 1);
  
--	if (max_change > 0) {
--		int total = ((add + del) * max + max_change / 2) / max_change;
--		add = (add * max + max_change / 2) / max_change;
-+	if (state->max_change > 0) {
-+		int total = ((add + del) * max + state->max_change / 2) / state->max_change;
-+		add = (add * max + state->max_change / 2) / state->max_change;
- 		del = total - add;
- 	}
- 	printf("%5d %.*s%.*s\n", patch->lines_added + patch->lines_deleted,
-@@ -4038,7 +4039,7 @@ static void build_fake_ancestor(struct patch *list, const char *filename)
- 	discard_index(&result);
+ 	if (state->check_index) {
+ 		if (read_cache() < 0)
+@@ -4648,11 +4652,14 @@ static int option_parse_directory(const struct option *opt,
+ 	return 0;
  }
  
--static void stat_patch_list(struct patch *patch)
-+static void stat_patch_list(struct apply_state *state, struct patch *patch)
+-static void init_apply_state(struct apply_state *state, const char *prefix)
++static void init_apply_state(struct apply_state *state,
++			     const char *prefix,
++			     struct lock_file *lock_file)
  {
- 	int files, adds, dels;
- 
-@@ -4046,7 +4047,7 @@ static void stat_patch_list(struct patch *patch)
- 		files++;
- 		adds += patch->lines_added;
- 		dels += patch->lines_deleted;
--		show_stats(patch);
-+		show_stats(state, patch);
+ 	memset(state, 0, sizeof(*state));
+ 	state->prefix = prefix;
+ 	state->prefix_length = state->prefix ? strlen(state->prefix) : 0;
++	state->lock_file = lock_file ? lock_file : xcalloc(1, sizeof(*lock_file));
+ 	state->apply = 1;
+ 	state->line_termination = '\n';
+ 	state->p_value = 1;
+@@ -4769,7 +4776,7 @@ static int apply_all_patches(struct apply_state *state,
  	}
  
- 	print_stat_summary(stdout, files, adds, dels);
-@@ -4144,25 +4145,25 @@ static void summary_patch_list(struct patch *patch)
+ 	if (state->update_index) {
+-		if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
++		if (write_locked_index(&the_index, state->lock_file, COMMIT_LOCK))
+ 			die(_("Unable to write new index file"));
  	}
- }
  
--static void patch_stats(struct patch *patch)
-+static void patch_stats(struct apply_state *state, struct patch *patch)
- {
- 	int lines = patch->lines_added + patch->lines_deleted;
+@@ -4852,7 +4859,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
  
--	if (lines > max_change)
--		max_change = lines;
-+	if (lines > state->max_change)
-+		state->max_change = lines;
- 	if (patch->old_name) {
- 		int len = quote_c_style(patch->old_name, NULL, NULL, 0);
- 		if (!len)
- 			len = strlen(patch->old_name);
--		if (len > max_len)
--			max_len = len;
-+		if (len > state->max_len)
-+			state->max_len = len;
- 	}
- 	if (patch->new_name) {
- 		int len = quote_c_style(patch->new_name, NULL, NULL, 0);
- 		if (!len)
- 			len = strlen(patch->new_name);
--		if (len > max_len)
--			max_len = len;
-+		if (len > state->max_len)
-+			state->max_len = len;
- 	}
- }
+-	init_apply_state(&state, prefix);
++	init_apply_state(&state, prefix, NULL);
  
-@@ -4519,7 +4520,7 @@ static int apply_patch(struct apply_state *state,
- 		if (state->apply_in_reverse)
- 			reverse_patches(patch);
- 		if (use_patch(state, patch)) {
--			patch_stats(patch);
-+			patch_stats(state, patch);
- 			*listp = patch;
- 			listp = &patch->next;
- 		}
-@@ -4563,7 +4564,7 @@ static int apply_patch(struct apply_state *state,
- 		build_fake_ancestor(list, state->fake_ancestor);
- 
- 	if (state->diffstat)
--		stat_patch_list(list);
-+		stat_patch_list(state, list);
- 
- 	if (state->numstat)
- 		numstat_patch_list(state, list);
+ 	argc = parse_options(argc, argv, state.prefix, builtin_apply_options,
+ 			apply_usage, 0);
 -- 
 2.8.3.443.gaeee61e
