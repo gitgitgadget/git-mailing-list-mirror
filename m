@@ -1,94 +1,127 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v8 3/3] bisect--helper: `write_terms` shell function in C
-Date: Wed, 25 May 2016 00:01:29 +0530
-Message-ID: <CAFZEwPMiNNB5CKOYWmHGR=sU8i1t9qb+-RTSrcNVkVZW14UMFg@mail.gmail.com>
-References: <1464014928-31548-1-git-send-email-pranit.bauva@gmail.com>
-	<20160524072124.2945-1-pranit.bauva@gmail.com>
-	<20160524072124.2945-4-pranit.bauva@gmail.com>
-	<CAP8UFD1WZ=5e9u5awrHDG-vhMR5dw5NNY_yVEkp2o0rgx59nnQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 2/2] convert: ce_compare_data() checks for a sha1 of a path
+Date: Tue, 24 May 2016 11:36:26 -0700
+Message-ID: <xmqqy46z482d.fsf@gitster.mtv.corp.google.com>
+References: <xmqqk2iphcqe.fsf@gitster.mtv.corp.google.com>
+	<1463824909-10229-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 24 20:31:35 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: tboegi@web.de
+X-From: git-owner@vger.kernel.org Tue May 24 20:36:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5H78-0007se-QF
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 20:31:35 +0200
+	id 1b5HBy-0001Ez-Sp
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 20:36:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932296AbcEXSba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 14:31:30 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:36725 "EHLO
-	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753886AbcEXSba (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 14:31:30 -0400
-Received: by mail-yw0-f196.google.com with SMTP id l126so3450486ywe.3
-        for <git@vger.kernel.org>; Tue, 24 May 2016 11:31:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=o32MtXJgiPn/9e0juodRJ3NBSFx8NOcH5b73SqAuVBk=;
-        b=Q4Egjfx4aKHMvDmsWHVDWnEpQ6MfhFMXjn/Nil3L9+ymVHHWO0ODJ8SwzyDFy0FYOa
-         ZMD6DKoBTDrgV2NwC2AFUZsJ137bYrSY0xY7k1jEgMtqqYoUvvWC1TkWF8rM+tRV7acW
-         W6Zx3tT5VTIG3G65WfdsFRgh18Q+HdbVhADiG3afoVRfKXY+eJXUzkEMeGzMpYWx2ee1
-         SUUe9r3Jj92PkyO7fz9cViUGQvikmaVBZHp+gWStKgAKYmgkXXnEAH9UnLRvRj6FkGyq
-         KdSlViFEOtGwU23OcnPl1DFQ5fArqGap51/9qZnFGy3ZlonE1W9m5GDID7WVdV3D6O05
-         KtLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=o32MtXJgiPn/9e0juodRJ3NBSFx8NOcH5b73SqAuVBk=;
-        b=NaLP1AMHUzJY/P34yZDlPTtc+je4TsBcEUIIhRTJtx6TkwpzkSIcwjwP8kO1mjx9ho
-         6u0uOiLE+tEJezqGAS/rX+mLSpQEsf+0eJpX5fl14NhBhCgZQx0hDibSVQVNq2P4nM9p
-         gnbkzgnkmQ/cuRfyBbqlxxYAHXNRuwVjOOZuPXmQt/HpbqCnI3egwnYYpUMH6sYS1oiU
-         bTyccjoqJp/uKgufxan+iD0RuFTgMEkdltZw+dzCXUEWBVuXze13X0Ho5fE3x9Uape5n
-         ScZyocsU9ybZjJCOeo3uzUes75pMpSMh1VPI7cbPdv4VYlxrNg8Wx74n+kUWkBQs+4r7
-         K/YA==
-X-Gm-Message-State: ALyK8tLvWFTe8cnOVb7LvAR++DZY/Ka89HPO7D3IfMyzPOpsRew/C11oYaObFm0D0ofLz0K/yJ5rM1AMTzWybg==
-X-Received: by 10.129.90.135 with SMTP id o129mr3802717ywb.20.1464114689223;
- Tue, 24 May 2016 11:31:29 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Tue, 24 May 2016 11:31:29 -0700 (PDT)
-In-Reply-To: <CAP8UFD1WZ=5e9u5awrHDG-vhMR5dw5NNY_yVEkp2o0rgx59nnQ@mail.gmail.com>
+	id S932530AbcEXSgb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 May 2016 14:36:31 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55314 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752864AbcEXSga convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 May 2016 14:36:30 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E89111DC46;
+	Tue, 24 May 2016 14:36:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=xhz/bBd+6Yvv
+	7FMEtkhk/0pq94E=; b=lqtq3BZsgq/V5ah/skesgMgD9aAadlFP2iSxndh0lip8
+	muh0dFmy+F5/+Bz36L6rm3C+u+XXnHorPMQpfLth+h884m2cJbCYHAM7tpEHhT8q
+	ouJ2/6jyYUJdymC8+Vdoxo/9jFO0BMmjSPBP1qV4AD6uVq+/dzGQIAbZzbhfVIE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EtSyGw
+	RoxCQxEbOFoRC/GgxCT6HIpeLBNJozYiRs75mcrJKlarDBrtpKr+yByqQ2x1/uMH
+	pbWOcHjDKYkrFOoqdqWgn2axxksJzSePMCDa33Hs0M776iwP9IqjcOx8Jfq9ILRJ
+	cnVGzzRdqb4rft+M59E+nXvG3hVZzdf6koMYo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E030D1DC45;
+	Tue, 24 May 2016 14:36:28 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6C84B1DC44;
+	Tue, 24 May 2016 14:36:28 -0400 (EDT)
+In-Reply-To: <1463824909-10229-1-git-send-email-tboegi@web.de>
+	(tboegi@web.de's message of "Sat, 21 May 2016 12:01:49 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6D7A55DA-21DE-11E6-9068-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295515>
 
-Hey Christian,
+tboegi@web.de writes:
 
-On Tue, May 24, 2016 at 1:03 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Tue, May 24, 2016 at 9:21 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> diff --git a/git-bisect.sh b/git-bisect.sh
->> index 7d7965d..cd39bd0 100755
->> --- a/git-bisect.sh
->> +++ b/git-bisect.sh
->> @@ -210,7 +210,7 @@ bisect_start() {
->>         eval "$eval true" &&
->>         if test $must_write_terms -eq 1
->>         then
->> -               write_terms "$TERM_BAD" "$TERM_GOOD"
->> +               git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD" || exit
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
 >
-> This `|| exit` is not needed because...
+> To compare a file in working tree with the index, convert_to_git() is=
+ used,
+> the result is hashed and the hash value compared with ce->sha1.
 >
->>         fi &&
->>         echo "git bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
+> Deep down would_convert_crlf_at_commit() is invoked, to check if CRLF
+> are converted or not.
+> The "new safer autocrlf handling" checks if CRLF had been in the inde=
+x before,
+> and if, the CRLF in the working tree are not converted.
 >
-> ... there is an `|| exit` on the line above (which is chained using
-> `&&` to the previous lines).
+> While in a merge, a file name in the working tree has different blobs
+> in the index with different hash values.
+> Forwarding ce->sha1 from ce_compare_data() into crlf_to_git() makes s=
+ure
+> the would_convert_crlf_at_commit() looks at the appropriate blob.
+>
+> Add a new parameter index_blob_sha1 to convert_to_git(), and forward =
+the
+> sha1 from ce_compare_data() into convert_to_git(). Other callers use =
+NULL
+> for index_blob_sha1, and the sha1 is determined from path
+> using get_sha1_from_cache(path). This is the same handling as before.
+>
+> In the same spirit, forward the sha1 into would_convert_to_git().
+>
+> While at it, rename has_cr_in_index() into blob_has_cr() and replace
+> 0 with SAFE_CRLF_FALSE.
+>
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> ---
 
-Nice notice. I will send a re-roll
+Assuming that it is sensible to pass an extra "no, no, do not look
+at the index entry at path, but look at this blob to see if the CRLF
+conversion must be disabled" parameter all the down the callchain,
+this round looks good.
 
-Regards,
-Pranit Bauva
+I really hate to say this this late in the reroll cycle, but this
+part of the description makes me wonder:
+
+    > While in a merge, a file name in the working tree has
+    > different blobs in the index with different hash values.
+    > Forwarding ce->sha1 from ce_compare_data() into crlf_to_git()
+    > makes sure the would_convert_crlf_at_commit() looks at the
+    > appropriate blob.
+
+When we need content-level merges with help from the end user, we
+would need to "convert-to-git" the result of conflict resolution by
+the user left in the working tree, and that convert-to-git needs to
+take our original contents into account, i.e. "did we have CR in the
+blob already? if so, disable the CRLF thing".
+
+But we would always have "our" original contents at stage #2 in the
+index in such a case, and would_convert_to_git() eventually calls
+into read_blob_data_from_cache(), which knows to read from stage #2
+
+Even if we were in a renaming merge conflict, where they renamed
+file F to G while we kept file F as file F, the conflicted working
+tree file will be made in path G, and stage #2 of the index for path
+G would have our original contents we had at path F.
+
+So it is not clear why this "no, no, look at this blob instead" is
+necessary in the first place.  What problem does this solve?  Is
+this a fix for something that can be easily demonstrated with a new
+test case?
