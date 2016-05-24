@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 29/49] builtin/apply: move 'patch_input_file' global into 'struct apply_state'
-Date: Tue, 24 May 2016 10:11:06 +0200
-Message-ID: <20160524081126.16973-30-chriscool@tuxfamily.org>
+Subject: [PATCH v3 22/49] builtin/apply: move 'threeway' global into 'struct apply_state'
+Date: Tue, 24 May 2016 10:10:59 +0200
+Message-ID: <20160524081126.16973-23-chriscool@tuxfamily.org>
 References: <20160524081126.16973-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -14,51 +14,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 10:14:55 2016
+X-From: git-owner@vger.kernel.org Tue May 24 10:15:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b57UL-0001gE-LP
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:14:54 +0200
+	id 1b57V1-0001xG-29
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:15:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754747AbcEXIOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 04:14:42 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36364 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754668AbcEXIM0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 04:12:26 -0400
-Received: by mail-wm0-f65.google.com with SMTP id q62so3639073wmg.3
-        for <git@vger.kernel.org>; Tue, 24 May 2016 01:12:26 -0700 (PDT)
+	id S1753601AbcEXIP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 04:15:28 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33333 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932273AbcEXIMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 04:12:18 -0400
+Received: by mail-wm0-f67.google.com with SMTP id 67so3640682wmg.0
+        for <git@vger.kernel.org>; Tue, 24 May 2016 01:12:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Kjc56ErCiIS4mYa4BOgC74bNzOYpNStfpguWnAoHhcw=;
-        b=vEUymlglsKrt41w1Ak9ysti10WCgQwH0VdYnNWmQk2y0/d2JjKZ9MYkhkqw9zhzwqS
-         zbM9D+zJvw6Hy9Am8IA86u/onl/s4IfzVicqcCIXcBLMhx+vG0/NZ7MTxj0kvHqRKHBc
-         3ykyCCdXcQI6Mw+TEkivi8Y0Zam0L4GySuG5WsSMbL/QDzeLSm48SPnxP1OQRCAmUbIV
-         MeGkDwkaZLfsaIa1mbhwm+81H924UYX8/G2wjAxdtcwnHSWc9tiROvIyvZl8T4pS++dX
-         1in4RBPGybVyRIsrMlSdf+QKG8axgvTGD8uT7SY4ftd1+SqkTunt3OVlglgQTPM2Hnep
-         jiNw==
+        bh=rhMBJh+NqeylPpdGAvaJ5l2C3fNyBWho9lL7m9AmnrI=;
+        b=R9hMxl3RvyXn+u55FBSN5foReYNSgsAcwm2ySEVoG6FyDlMyP44/r6YF0KCzd3ETrj
+         fXIU8YeNAC8L53iUnkqN4RRRiNA33RU14CRda5syQOFH/KOmz0z73GbI4PYR3rMmrEQD
+         INanPj91pF/IhRj2sxHsdnzYbIbchzuU0Y9XunHuCnmFMogmWdPD9zI6h6KfFoidFEc8
+         V1OvGHCH7KC4cn/9j9yd18JzKT63vd28PfH89MsFWM9Jo6V3I14+mYsUqwbpY3jJLedR
+         Czxb9St/ssqEX6txZ95X/u3jiBbIjZvG0YXuEaIlHtD0T4aHeg2eSY/QxDPz2z0OsLqA
+         yofQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Kjc56ErCiIS4mYa4BOgC74bNzOYpNStfpguWnAoHhcw=;
-        b=f062wq26/lJwtdX3XNYYKHZsHL4Hmu6epoiCYfLcCg0Dx5Si1EO+DvNWfLe9U3E9Th
-         YhW73xbY9wrsTQPPsmjojdG5XxCCPcFEZHGHXESU/S7YvcqdvacXSGTVSJyRTaATtcTK
-         WJjPT7MOAK70F7zD+I92S05gw08AeDQVkX7v5KmLCEyiRCLtzqjSKFVVAs9YmHGumyQq
-         4+E04GRAjXqfwMaEEemTcel7BpzNtjdEA8OvlhRmWekdA00tnqiX0HlrBpSl7dgOm0mk
-         MHcFJeaRmxeqIF0cUfnW1mSwWELjhycuEDYGE9LgH+U+WZXNZRmtRepCUSxJXCXFemfz
-         sTPg==
-X-Gm-Message-State: ALyK8tKAEKs1B7tR+BbSzB25Y5TtPbKParFY+LXm+hDmnOGLPhlrg5b1zBfhdErGTofx+A==
-X-Received: by 10.194.57.146 with SMTP id i18mr3377878wjq.0.1464077545286;
-        Tue, 24 May 2016 01:12:25 -0700 (PDT)
+        bh=rhMBJh+NqeylPpdGAvaJ5l2C3fNyBWho9lL7m9AmnrI=;
+        b=CTooP9/lF8jS5YPL2bv2HujhGU0id0aARkuroQZAP0lXoucqOsmoTjOOYQr3/4kapD
+         nbS/8tKQKrnTtQYpqyhh8rOonaICZYM0LmZ0ggNDUGFPqFQHqv3O7fFoSjMzrykCa8pH
+         qQFLy4Kt+uH/t7mkKNCrzShhg46IAlLR/kNfptW+6fKXVMzhvcbc9wvcteW9EauGe68Y
+         y/EOFZFDLi5D2Ub68mdGDhrw53Ctw5yoBHcel5sP54vfPccvEjfEAUtAfKwNeuw7c+Qo
+         hWcOKf9B39gucTUsQ3VDLYGd6e8Aa1RU+ar+pjf+DLmAV8cIsEyQBx4IYBmVOKgsSfCo
+         cgEw==
+X-Gm-Message-State: ALyK8tLHsd2nEGywQeGMOtWGPRf8P5M1FgpQpk7Ynz6HYsHnyPfvIsjNj7wISXS5Vss65Q==
+X-Received: by 10.194.89.33 with SMTP id bl1mr2791694wjb.43.1464077536498;
+        Tue, 24 May 2016 01:12:16 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.12.24
+        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.12.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 May 2016 01:12:24 -0700 (PDT)
+        Tue, 24 May 2016 01:12:15 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.3.443.gaeee61e
 In-Reply-To: <20160524081126.16973-1-chriscool@tuxfamily.org>
@@ -66,114 +66,79 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295462>
 
-To libify the apply functionality the 'patch_input_file' variable should
+To libify the apply functionality the 'threeway' variable should
 not be static and global to the file. Let's move it into
 'struct apply_state'.
 
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ builtin/apply.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index c0c18ce..fa90028 100644
+index f174a42..d00017b 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -49,6 +49,7 @@ struct apply_state {
- 
- 	/* Other non boolean parameters */
- 	const char *fake_ancestor;
-+	const char *patch_input_file;
- 	int line_termination;
- 	unsigned int p_context;
+@@ -41,6 +41,7 @@ struct apply_state {
+ 	int apply_in_reverse;
+ 	int apply_with_reject;
+ 	int apply_verbosely;
++	int threeway;
+ 	int unidiff_zero;
  };
-@@ -79,7 +80,6 @@ static enum ws_ignore {
- } ws_ignore_action = ignore_ws_none;
  
+@@ -53,7 +54,6 @@ static int state_p_value = 1;
+ static int p_value_known;
+ static int apply = 1;
+ static int no_add;
+-static int threeway;
+ static int unsafe_paths;
+ static const char *fake_ancestor;
+ static int line_termination = '\n';
+@@ -3491,7 +3491,7 @@ static int apply_data(struct apply_state *state, struct patch *patch,
+ 	if (patch->direct_to_threeway ||
+ 	    apply_fragments(state, &image, patch) < 0) {
+ 		/* Note: with --reject, apply_fragments() returns 0 */
+-		if (!threeway || try_threeway(state, &image, patch, st, ce) < 0)
++		if (!state->threeway || try_threeway(state, &image, patch, st, ce) < 0)
+ 			return -1;
+ 	}
+ 	patch->result = image.buf;
+@@ -3786,7 +3786,7 @@ static int check_patch(struct apply_state *state, struct patch *patch)
+ 	    ((0 < patch->is_new) || patch->is_rename || patch->is_copy)) {
+ 		int err = check_to_create(state, new_name, ok_if_exists);
  
--static const char *patch_input_file;
- static struct strbuf root = STRBUF_INIT;
+-		if (err && threeway) {
++		if (err && state->threeway) {
+ 			patch->direct_to_threeway = 1;
+ 		} else switch (err) {
+ 		case 0:
+@@ -4620,7 +4620,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 			N_("accept a patch that touches outside the working area")),
+ 		OPT_BOOL(0, "apply", &force_apply,
+ 			N_("also apply the patch (use with --stat/--summary/--check)")),
+-		OPT_BOOL('3', "3way", &threeway,
++		OPT_BOOL('3', "3way", &state.threeway,
+ 			 N_( "attempt three-way merge if a patch does not apply")),
+ 		OPT_FILENAME(0, "build-fake-ancestor", &fake_ancestor,
+ 			N_("build a temporary index based on embedded index information")),
+@@ -4664,11 +4664,11 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, state.prefix, builtin_apply_options,
+ 			apply_usage, 0);
  
- static void parse_whitespace_option(const char *option)
-@@ -1525,7 +1525,11 @@ static int find_header(struct apply_state *state,
- 	return -1;
- }
- 
--static void record_ws_error(unsigned result, const char *line, int len, int linenr)
-+static void record_ws_error(struct apply_state *state,
-+			    unsigned result,
-+			    const char *line,
-+			    int len,
-+			    int linenr)
- {
- 	char *err;
- 
-@@ -1539,15 +1543,18 @@ static void record_ws_error(unsigned result, const char *line, int len, int line
- 
- 	err = whitespace_error_string(result);
- 	fprintf(stderr, "%s:%d: %s.\n%.*s\n",
--		patch_input_file, linenr, err, len, line);
-+		state->patch_input_file, linenr, err, len, line);
- 	free(err);
- }
- 
--static void check_whitespace(const char *line, int len, unsigned ws_rule)
-+static void check_whitespace(struct apply_state *state,
-+			     const char *line,
-+			     int len,
-+			     unsigned ws_rule)
- {
- 	unsigned result = ws_check(line + 1, len - 1, ws_rule);
- 
--	record_ws_error(result, line + 1, len - 2, state_linenr);
-+	record_ws_error(state, result, line + 1, len - 2, state_linenr);
- }
- 
- /*
-@@ -1602,12 +1609,12 @@ static int parse_fragment(struct apply_state *state,
- 			trailing++;
- 			if (!state->apply_in_reverse &&
- 			    ws_error_action == correct_ws_error)
--				check_whitespace(line, len, patch->ws_rule);
-+				check_whitespace(state, line, len, patch->ws_rule);
- 			break;
- 		case '-':
- 			if (state->apply_in_reverse &&
- 			    ws_error_action != nowarn_ws_error)
--				check_whitespace(line, len, patch->ws_rule);
-+				check_whitespace(state, line, len, patch->ws_rule);
- 			deleted++;
- 			oldlines--;
- 			trailing = 0;
-@@ -1615,7 +1622,7 @@ static int parse_fragment(struct apply_state *state,
- 		case '+':
- 			if (!state->apply_in_reverse &&
- 			    ws_error_action != nowarn_ws_error)
--				check_whitespace(line, len, patch->ws_rule);
-+				check_whitespace(state, line, len, patch->ws_rule);
- 			added++;
- 			newlines--;
- 			trailing = 0;
-@@ -2904,7 +2911,7 @@ static int apply_one_fragment(struct apply_state *state,
- 		    preimage.nr + applied_pos >= img->nr &&
- 		    (ws_rule & WS_BLANK_AT_EOF) &&
- 		    ws_error_action != nowarn_ws_error) {
--			record_ws_error(WS_BLANK_AT_EOF, "+", 1,
-+			record_ws_error(state, WS_BLANK_AT_EOF, "+", 1,
- 					found_new_blank_lines_at_end);
- 			if (ws_error_action == correct_ws_error) {
- 				while (new_blank_lines_at_end--)
-@@ -4427,7 +4434,7 @@ static int apply_patch(struct apply_state *state,
- 	struct patch *list = NULL, **listp = &list;
- 	int skipped_patch = 0;
- 
--	patch_input_file = filename;
-+	state->patch_input_file = filename;
- 	read_patch_file(&buf, fd);
- 	offset = 0;
- 	while (offset < buf.len) {
+-	if (state.apply_with_reject && threeway)
++	if (state.apply_with_reject && state.threeway)
+ 		die("--reject and --3way cannot be used together.");
+-	if (state.cached && threeway)
++	if (state.cached && state.threeway)
+ 		die("--cached and --3way cannot be used together.");
+-	if (threeway) {
++	if (state.threeway) {
+ 		if (is_not_gitdir)
+ 			die(_("--3way outside a repository"));
+ 		state.check_index = 1;
 -- 
 2.8.3.443.gaeee61e
