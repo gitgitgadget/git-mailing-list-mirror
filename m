@@ -1,137 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] userdiff: add built-in pattern for CSS
-Date: Tue, 24 May 2016 12:06:16 -0700
-Message-ID: <xmqqmvnf46on.fsf@gitster.mtv.corp.google.com>
-References: <20160520132829.7937-1-william.duclot@ensimag.grenoble-inp.fr>
-	<20160524142537.19324-1-william.duclot@ensimag.grenoble-inp.fr>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, simon.rabourg@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr,
-	antoine.queru@ensimag.grenoble-inp.fr,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue May 24 21:06:27 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [Opinion gathering] Git remote whitelist/blacklist
+Date: Tue, 24 May 2016 15:11:02 -0400
+Message-ID: <B559ECA4-0C95-4E40-8E2C-22299614E559@gmail.com>
+References: <1040142021.5607762.1463753271105.JavaMail.zimbra@ensimag.grenoble-inp.fr> <584027154.5608416.1463754104066.JavaMail.zimbra@ensimag.grenoble-inp.fr> <001001d1b2a3$06d7bbb0$14873310$@nexbridge.com> <1929221963.5686879.1464007899902.JavaMail.zimbra@ensimag.grenoble-inp.fr> <1884904685.12056.1464084750628.JavaMail.zimbra@ensimag.grenoble-inp.fr> <84BDC4A4-FBE1-4542-868C-FA77A25469F3@gmail.com> <vpq37p74nu1.fsf@anie.imag.fr> <CAPc5daURo8SkbeGf0MEsp0sLzdzFfUOxptgusFr58UG9SKmDAA@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Francois Beutin <beutinf@ensimag.grenoble-inp.fr>,
+	"Randall S. Becker" <rsbecker@nexbridge.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	wiliam duclot <wiliam.duclot@ensimag.grenoble-inp.fr>,
+	antoine queru <antoine.queru@ensimag.grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 24 21:11:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5Hes-0003er-9d
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 21:06:26 +0200
+	id 1b5HjT-0005R6-MV
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 21:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752764AbcEXTGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 15:06:21 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57651 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752304AbcEXTGU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 15:06:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E4581C0C3;
-	Tue, 24 May 2016 15:06:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xyMVfQwlJrAh4cjDOVFo9XnrUUU=; b=twBlIr
-	tfvwhLEj2o8/BiSTMuNbz/nzNNjksb8cBIjAdF/nXkxOyIu1HgTqIUg1SvIpM4Kd
-	t0i2E8U5cDST3osuTONh83M0R0PvV6rAeFLOOunJg1rDlLnTwJDI+a0dMmWNfAdx
-	cMBC5eGmK4ssW27cScLh4nVgbMXnc/1vWByP0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X6umDXjbmfpcMQzB+nbMykl2zsomxxu6
-	C9F0/yej2rkhdlYnAyYYlWq7edWogqSVi9ZWLj/5urxgeCHsc6RhjgzHnROIJ2qS
-	onFA1fz1pQ/gT3UibGIkhtH9fu/hVgP2I44dqwI8Jp5cKhmTNQeLa4EexLY3Xizd
-	gfB3OxHjm3g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5559B1C0C2;
-	Tue, 24 May 2016 15:06:19 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B373E1C0C1;
-	Tue, 24 May 2016 15:06:18 -0400 (EDT)
-In-Reply-To: <20160524142537.19324-1-william.duclot@ensimag.grenoble-inp.fr>
-	(William Duclot's message of "Tue, 24 May 2016 16:25:37 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 989CF2F0-21E2-11E6-82E9-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1752031AbcEXTLH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 15:11:07 -0400
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:35035 "EHLO
+	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751587AbcEXTLF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 15:11:05 -0400
+Received: by mail-qk0-f175.google.com with SMTP id t145so16820133qke.2
+        for <git@vger.kernel.org>; Tue, 24 May 2016 12:11:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=YP+68FFyn+7aeUUfKwNFcmgXTg+ARH6pFJpQ36CBGyM=;
+        b=lsYBBr1xTPoeKILFZo9pjLh0fPSdbBwinn9fpZZQ4cccO2Yw/YHJZeTLBbxQc71U0+
+         gzmYpiSAXAphduStefY9bpiXjHcK4SA7QNY6JjcNDEsRWzdkyGySe6UkkG3wjixevHEH
+         riqp5GkF49v2pTtZJVecSLFsFo7bFRtUS8P2YBIIGRM8YKPlKvIoqAukZTb1AXsS6zmx
+         lTHYxjdkOUx6a0Um6//2Z+tq2SMeMKfMHya71KRIoftA8oBnYF8CBG7eVrsij07uPMWB
+         yjZrH+XACt2CI9LQ9Ybahs8mhKFcBQRFlcV7x9++dszPacNhGNEqS3Y4YWq768BC+V2v
+         HMlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=YP+68FFyn+7aeUUfKwNFcmgXTg+ARH6pFJpQ36CBGyM=;
+        b=i13uc5rbTNM2JW2BMOxAywAoLXv6TC9bUTH8TTN+ceuXab5x3t8/71qFhTTXYvQ9Lz
+         QtqgaSdeBj3WvhRNQNXRbk62lohOHEfMB5XEnRkbpT92+VkdsYKwe39ONruuuTmfgj61
+         YA6Row0fE1YXWNu2ZoKSGe+23LcwXGH2dgYNNVs7Za1650kQ7B4UEbXjyQjsUQfG61IB
+         DjbmiX5/sBqnDuoaBhKs3ff8dWSexBhFDd+KCYBMiN2fov4LFcBQuCVRHXYWG/9HNlH5
+         FYMAbh+Oo6rJwNLzaQb4RHK4DPPdhPPe6UX6IrvJJ6DGQqh9/4EqgImbRpmC/BL9nBIU
+         3JmA==
+X-Gm-Message-State: ALyK8tJAA3axM5f/ngbH3RJE3LAcXFYTYvd6KQ/DQN9C5xiPdzEXpRYJpKEG9KaHBZoMMg==
+X-Received: by 10.55.115.69 with SMTP id o66mr5174877qkc.67.1464117064576;
+        Tue, 24 May 2016 12:11:04 -0700 (PDT)
+Received: from rem20twn32.ads.autodesk.com ([132.188.72.187])
+        by smtp.gmail.com with ESMTPSA id f66sm5457461qge.7.2016.05.24.12.11.03
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 24 May 2016 12:11:03 -0700 (PDT)
+In-Reply-To: <CAPc5daURo8SkbeGf0MEsp0sLzdzFfUOxptgusFr58UG9SKmDAA@mail.gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295522>
 
-William Duclot <william.duclot@ensimag.grenoble-inp.fr> writes:
 
-> CSS is widely used, motivating it being included as a built-in pattern.
->
-> It must be noted that the word_regex for CSS (i.e. the regex defining
-> what is a word in the language) does not consider '.' and '#' characters
-> (in CSS selectors) to be part of the word. This behavior is documented
-> by the test t/t4018/css-rule.
-> The logic behind this behavior is the following: identifiers in CSS
-> selectors are identifiers in a HTML/XML document. Therefore, the '.'/'#'
-> character are not part of the identifier, but an indicator of the nature
-> of the identifier in HTML/XML (class or id). Diffing ".class1" and
-> ".class2" must show that the class name is changed, but we still are
-> selecting a class.
->
-> Signed-off-by: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-> Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> ---
-> changes since v1:
-> Fix a typo in the word_regex ("A-F" => "A-Z").
-> Clearer comment about ISO 10646 characters.
+> On 24 May 2016, at 12:07, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> On Tue, May 24, 2016 at 5:55 AM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> So, when trying a forbidden push, Git would deny it and the only way to
+>> force the push would be to remove the blacklist from the config, right?
+>> 
+>> Probably the sanest way to go. I thought about adding a "git push
+>> --force-even-if-in-blacklist" or so, but I don't think the feature
+>> deserves one specific option (hence add some noise in `git push -h`).
+> 
+> Yeah, I agree --even-if-in-blacklist is a road to madness, but I wonder
+> how this is different from setting pushURL to /dev/null or something
+> illegal and replace that phony configuration value when you really need
+> to push?
+It is no different from changing the push URL. As a matter of fact, that
+is how I've implemented this "blacklist" feature with the current version
+of Git:
+https://speakerdeck.com/larsxschneider/git-at-scale?slide=35
 
-It is not a big deal for a small single-patch topic like this, but
-it often is hard to reviewers if you do not respond to comments you
-received and instead just send a new version of the patch with
-"changes since..." comment.  Please make it a habit to do both.
-
-I can see in the above "changes since v1" comment, you took the
-A-F/A-Z thing, but I cannot tell if you thought about PATTERNS vs
-IPATTERN and rejected IPATTERN with a good reason or if you simply
-missed it when reading the review comments you received, for
-example.
-
-Three remaining issues are:
-
- - Have you considered using IPATTERN()?  PATTERNS() that defaults
-   case sensitive match is suitable for real languages with fixed
-   case keywords, but the pattern you are defining for CSS does not
-   do anything special for any set of fixed-case built-in keywords,
-   and appears to be better served by IPATTERN().
-
- - In our codebase, we format multi-line comments in a particular
-   way, namely
-
-	/*
-         * A multi-line comment begins with slash asterisk
-         * on its own line, and its closing asterisk slash
-         * also is on its own line.
-         */
-
- - Try not to write overlong lines.  If your expression needs to
-   become long and there is no good place to fold lines, that is one
-   thing, but an overlong comment is unexcuable, as you can fold
-   lines anywhere between words.
-
-Thanks.
-
-> diff --git a/userdiff.c b/userdiff.c
-> index 6bf2505..9273969 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -148,6 +148,14 @@ PATTERNS("csharp",
->  	 "[a-zA-Z_][a-zA-Z0-9_]*"
->  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
->  	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
-> +PATTERNS("css",
-> +	 "^([^,{}]+)((,[^}]*\\{)|([ \t]*\\{))$",
-> +	 /* -- */
-> +	 /* This regex comes from W3C CSS specs. Should theoretically also allow ISO 10646 characters U+00A0 and higher,
-> +	  * but they are not handled with this regex. */
-> +	 "-?[_a-zA-Z][-_a-zA-Z0-9]*" /* identifiers */
-> +	 "|-?[0-9]+|\\#[0-9a-fA-F]+" /* numbers */
-> +),
->  { "default", NULL, -1, { NULL, 0 } },
->  };
->  #undef PATTERNS
+- Lars
