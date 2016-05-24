@@ -1,94 +1,59 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] transport, send-pack: append period to up-to-date message
-Date: Tue, 24 May 2016 14:21:00 -0700
-Message-ID: <CAGZ79kayB59-U52oAw=13a2CAhJLsfmoD6JbAURbt0p8g8a8fg@mail.gmail.com>
-References: <1464123104-45513-1-git-send-email-junk@humanoriented.com>
+From: Eric Wong <e@80x24.org>
+Subject: Re: [RFC-PATCH 1/2] send-email: new option to quote an email and
+ reply to
+Date: Tue, 24 May 2016 21:23:56 +0000
+Message-ID: <20160524212356.GA2649@dcvr.yhbt.net>
+References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
+ <1464031829-6107-2-git-send-email-tom.russello@grenoble-inp.org>
+ <20160523195504.GA8957@dcvr.yhbt.net>
+ <0285f901-a1d1-2715-4207-68c7d103da5e@grenoble-inp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>, barkalow@iabervon.org,
-	Yong Bakos <ybakos@humanoriented.com>
-To: Yong Bakos <junk@humanoriented.com>
-X-From: git-owner@vger.kernel.org Tue May 24 23:21:09 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Tom Russello <tom.russello@grenoble-inp.org>, git@vger.kernel.org,
+	matthieu.moy@grenoble-inp.fr, erwan.mathoniere@grenoble-inp.org,
+	Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>
+To: Samuel GROOT <samuel.groot@grenoble-inp.org>
+X-From: git-owner@vger.kernel.org Tue May 24 23:24:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5JlE-0000hc-DC
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 23:21:08 +0200
+	id 1b5Jo2-0001ZZ-V2
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 23:24:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751941AbcEXVVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 17:21:04 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:38503 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751587AbcEXVVC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 17:21:02 -0400
-Received: by mail-ig0-f171.google.com with SMTP id fh2so18244163igd.1
-        for <git@vger.kernel.org>; Tue, 24 May 2016 14:21:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=mCD7cUmrvPt/prG8aQ+QCNhkXtSioGj2PMyZxoWMdxU=;
-        b=Wftz4vHtQgRbaYfYrU9m2yB/fUf4DCEIWUGUklCU+rxgAUzIfKAkGW7hAcl71YLmly
-         uBHEzN+WbMTp0wiImlnPoW+cg9nBzwgL9JsU8X0OQjd50sJ+BZs0cEBBNVyq9TBj5KKL
-         hl1WTxMgn0Jda2UJpdM+oQcYzK/RneDVoh1MJWYcUNrq6oNfhNFAQfKEvyBU2ulbDG+X
-         LJF/rZg/bHqo6nqt5jE1rNv631B7WdJqBr70UYuWnJNohOSjVwVK/BXy7S5WeBPjlf47
-         3zDOc01oBLV7MVmCP2wpL3QRIHDZhSaoLxl5Nhg5mb/uY9CdOghiOQuFkB0YlTPprlnM
-         Ku+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=mCD7cUmrvPt/prG8aQ+QCNhkXtSioGj2PMyZxoWMdxU=;
-        b=DVmjAX2kF5ybVp1l5TB95JlLchdx5ubUXvmDIpK3eCmN4zuu6r2U/AMrXbviKemgH5
-         L4VrPWvaHepzeVPIB3IyA/nnRfYks/uvIRKQ0CXg/Vcwfap+uIvlTK047UOFkkesnAIm
-         zuvoP7kWnzHUO3JvH+O8Y62T8caPTkBHx3tLh+I+3GjYIc1z7D3L0piWNGLKJV9UyHJo
-         Zy9sYRb5EjQd0Y6Za+UuAJw+EYOw5echWa3ysOfidLk2R/xaHGtYfdMInWyppItJdBdr
-         JH7yeBKTKvEijjknnUoZdx9GzOKoDg/wyMG6UpxF/a0/DMy6s/VE7ghoJYgrW2zfDTSm
-         9VXQ==
-X-Gm-Message-State: AOPr4FV0Z8gjjngki0PSyThwZpJWWpl6l4o/nwCbIvb/CzLBFzwxOS3sU5jUUBXXsf+E8Glqve0VEUTGO6nIiZZ4
-X-Received: by 10.50.250.165 with SMTP id zd5mr19639862igc.85.1464124860837;
- Tue, 24 May 2016 14:21:00 -0700 (PDT)
-Received: by 10.107.136.19 with HTTP; Tue, 24 May 2016 14:21:00 -0700 (PDT)
-In-Reply-To: <1464123104-45513-1-git-send-email-junk@humanoriented.com>
+	id S1752031AbcEXVX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 17:23:58 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:53138 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750769AbcEXVX5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 17:23:57 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id C31E31FCC4;
+	Tue, 24 May 2016 21:23:56 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <0285f901-a1d1-2715-4207-68c7d103da5e@grenoble-inp.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295535>
 
-On Tue, May 24, 2016 at 1:51 PM, Yong Bakos <junk@humanoriented.com> wrote:
-> Appending a period to "Everything up-to-date" makes the output message
-> consistent with similar output in builtin/merge.c.
->
-> Signed-off-by: Yong Bakos <ybakos@humanoriented.com>
-> ---
->  builtin/send-pack.c | 2 +-
->  transport.c         | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-> index 1ff5a67..67d9304 100644
-> --- a/builtin/send-pack.c
-> +++ b/builtin/send-pack.c
+Samuel GROOT <samuel.groot@grenoble-inp.org> wrote:
+> On 05/23/2016 09:55 PM, Eric Wong wrote:
+> >Cool!  There should probably be some help text to encourage
+> >trimming down the quoted text to only relevant portions.
+> 
+> What kind of help text would you want to see?
+> 
+> Maybe something like this:
+> 
+>   GIT: Quoted message body below.
+>   GIT: Feel free to trim down the quoted text
+>   GIT: to only relevant portions.
+> 
+> As "GIT:" portions are ignored when parsed by `git send-email`.
 
-While consistency is a good idea in general, I wonder how that applies here.
-git-send-pack is a low level (i.e. plumbing) command.
-
-       The interface (input, output, set of options and the semantics) to
-       these low-level commands are meant to be a lot more stable than
-       Porcelain level commands, because these commands are primarily for
-       scripted use. The interface to Porcelain commands on the other hand are
-       subject to change in order to improve the end user experience.
-
-So if another porcelain exists and compares the output string
-exactly, this would be a regression for them. That is why I'd refrain
-from updating these strings
-
-However these two strings are only showing up in these 2 places, so
-maybe instead
-we'd want to see a test documenting existing behavior?
-
-Thanks,
-Stefan
+Yes, given we have instructions for diffstat and table of contents;
+I think it'd be useful to discourage quoting irrelevant parts of
+the message (especially signatures and like).
