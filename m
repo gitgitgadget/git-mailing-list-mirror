@@ -1,92 +1,107 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [Opinion gathering] Git remote whitelist/blacklist
-Date: Tue, 24 May 2016 15:11:02 -0400
-Message-ID: <B559ECA4-0C95-4E40-8E2C-22299614E559@gmail.com>
-References: <1040142021.5607762.1463753271105.JavaMail.zimbra@ensimag.grenoble-inp.fr> <584027154.5608416.1463754104066.JavaMail.zimbra@ensimag.grenoble-inp.fr> <001001d1b2a3$06d7bbb0$14873310$@nexbridge.com> <1929221963.5686879.1464007899902.JavaMail.zimbra@ensimag.grenoble-inp.fr> <1884904685.12056.1464084750628.JavaMail.zimbra@ensimag.grenoble-inp.fr> <84BDC4A4-FBE1-4542-868C-FA77A25469F3@gmail.com> <vpq37p74nu1.fsf@anie.imag.fr> <CAPc5daURo8SkbeGf0MEsp0sLzdzFfUOxptgusFr58UG9SKmDAA@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=us-ascii
+From: David Turner <dturner@twopensource.com>
+Subject: Signing off, for now
+Date: Tue, 24 May 2016 15:22:30 -0400
+Organization: Twitter
+Message-ID: <1464117750.24478.104.camel@twopensource.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Francois Beutin <beutinf@ensimag.grenoble-inp.fr>,
-	"Randall S. Becker" <rsbecker@nexbridge.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
-	wiliam duclot <wiliam.duclot@ensimag.grenoble-inp.fr>,
-	antoine queru <antoine.queru@ensimag.grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 24 21:11:12 2016
+Cc: Keith McGuigan <kamggg@gmail.com>
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 24 21:22:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5HjT-0005R6-MV
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 21:11:12 +0200
+	id 1b5HuX-000169-QV
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 21:22:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752031AbcEXTLH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 15:11:07 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:35035 "EHLO
-	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751587AbcEXTLF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 15:11:05 -0400
-Received: by mail-qk0-f175.google.com with SMTP id t145so16820133qke.2
-        for <git@vger.kernel.org>; Tue, 24 May 2016 12:11:05 -0700 (PDT)
+	id S1754456AbcEXTWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 15:22:34 -0400
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:33619 "EHLO
+	mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752836AbcEXTWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 15:22:33 -0400
+Received: by mail-qk0-f177.google.com with SMTP id n63so19020898qkf.0
+        for <git@vger.kernel.org>; Tue, 24 May 2016 12:22:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=YP+68FFyn+7aeUUfKwNFcmgXTg+ARH6pFJpQ36CBGyM=;
-        b=lsYBBr1xTPoeKILFZo9pjLh0fPSdbBwinn9fpZZQ4cccO2Yw/YHJZeTLBbxQc71U0+
-         gzmYpiSAXAphduStefY9bpiXjHcK4SA7QNY6JjcNDEsRWzdkyGySe6UkkG3wjixevHEH
-         riqp5GkF49v2pTtZJVecSLFsFo7bFRtUS8P2YBIIGRM8YKPlKvIoqAukZTb1AXsS6zmx
-         lTHYxjdkOUx6a0Um6//2Z+tq2SMeMKfMHya71KRIoftA8oBnYF8CBG7eVrsij07uPMWB
-         yjZrH+XACt2CI9LQ9Ybahs8mhKFcBQRFlcV7x9++dszPacNhGNEqS3Y4YWq768BC+V2v
-         HMlA==
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:organization:mime-version
+         :content-transfer-encoding;
+        bh=rJjh4vjfA2OfdoOvyBWcV8RlZeHc26jldjA9R/rR6vk=;
+        b=KqWm2n9gtwtg2OaRDREwt3PW64Y8peLuzEtnlzq4PB2SD5LkSg2JAHeD7OnuL+Ihwr
+         sJ8aH91YJU6XxzIs8iEQP2EsiCymQ2WDOpuY9X/khNrfHedwU2rSwCHMaZRaKa6J11Co
+         Ed3O0CzTYGdUCChSafE2BUy/GRmDdelql2G6FrRbmJ71FmY98Y+yWvmvqRnvpNIXe8/p
+         GrwP0XFLzVEppXuluy4XKucl887dQmGPTTuFWlzquRitSjwEmX8Ky7PUh2r65DoLEbe4
+         OkKFai6Ptcl76ktH+8JduS2KEpuViXk85f44Nf9KupUkx7mefOizCxYMTRDQDjpYCgK1
+         QEcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=YP+68FFyn+7aeUUfKwNFcmgXTg+ARH6pFJpQ36CBGyM=;
-        b=i13uc5rbTNM2JW2BMOxAywAoLXv6TC9bUTH8TTN+ceuXab5x3t8/71qFhTTXYvQ9Lz
-         QtqgaSdeBj3WvhRNQNXRbk62lohOHEfMB5XEnRkbpT92+VkdsYKwe39ONruuuTmfgj61
-         YA6Row0fE1YXWNu2ZoKSGe+23LcwXGH2dgYNNVs7Za1650kQ7B4UEbXjyQjsUQfG61IB
-         DjbmiX5/sBqnDuoaBhKs3ff8dWSexBhFDd+KCYBMiN2fov4LFcBQuCVRHXYWG/9HNlH5
-         FYMAbh+Oo6rJwNLzaQb4RHK4DPPdhPPe6UX6IrvJJ6DGQqh9/4EqgImbRpmC/BL9nBIU
-         3JmA==
-X-Gm-Message-State: ALyK8tJAA3axM5f/ngbH3RJE3LAcXFYTYvd6KQ/DQN9C5xiPdzEXpRYJpKEG9KaHBZoMMg==
-X-Received: by 10.55.115.69 with SMTP id o66mr5174877qkc.67.1464117064576;
-        Tue, 24 May 2016 12:11:04 -0700 (PDT)
-Received: from rem20twn32.ads.autodesk.com ([132.188.72.187])
-        by smtp.gmail.com with ESMTPSA id f66sm5457461qge.7.2016.05.24.12.11.03
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 May 2016 12:11:03 -0700 (PDT)
-In-Reply-To: <CAPc5daURo8SkbeGf0MEsp0sLzdzFfUOxptgusFr58UG9SKmDAA@mail.gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:organization
+         :mime-version:content-transfer-encoding;
+        bh=rJjh4vjfA2OfdoOvyBWcV8RlZeHc26jldjA9R/rR6vk=;
+        b=DVijpmQhzBCuTNfXPe2yxp50hlzpDB3yh1uE4ClpD/cfRUEzCyIKiZj02Ri1JmHE/T
+         kbBojig0hw9asgRVM7PDAcD5XtkvwM9YoFTu9cbV1GEEFhAFvT+FDe2ytnbiCRYb35Y3
+         l4BKkOlbsS3jGiDwmeSjwQkMdHCf+Rd6fsSHfTxtb9K88Z6BZbzNC9QV9QZmfgVOESIq
+         xidluYZxJXkLtZrGbK2EJGvU1BCtCmd851neR1VvT7yIRlqOV/vNqYmgCk6q1nEu3W6g
+         +hpJinKmcxilt1ahjzj6orpkh8xNB++IAm3/S1UBmIyx3L0peixlQ2CI9U2bv/0vJkHi
+         1/FQ==
+X-Gm-Message-State: ALyK8tLxUIH3sLO9OZ7RJY5SE+pCNNZZgIx/Qnp0FrMT7/IOcem4rmJKHsgXQET58rjDxg==
+X-Received: by 10.55.96.131 with SMTP id u125mr4920795qkb.97.1464117752415;
+        Tue, 24 May 2016 12:22:32 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id k20sm1239538qtk.47.2016.05.24.12.22.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 24 May 2016 12:22:31 -0700 (PDT)
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295523>
 
+June 3rd will be my last day at Twitter.  I hope that my new job
+(starting in July after a month of vacation) will give me time to work
+on Git, but I don't know exactly what parts I'll be working on, or on
+what schedule.
 
-> On 24 May 2016, at 12:07, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> On Tue, May 24, 2016 at 5:55 AM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> So, when trying a forbidden push, Git would deny it and the only way to
->> force the push would be to remove the blacklist from the config, right?
->> 
->> Probably the sanest way to go. I thought about adding a "git push
->> --force-even-if-in-blacklist" or so, but I don't think the feature
->> deserves one specific option (hence add some noise in `git push -h`).
-> 
-> Yeah, I agree --even-if-in-blacklist is a road to madness, but I wonder
-> how this is different from setting pushURL to /dev/null or something
-> illegal and replace that phony configuration value when you really need
-> to push?
-It is no different from changing the push URL. As a matter of fact, that
-is how I've implemented this "blacklist" feature with the current version
-of Git:
-https://speakerdeck.com/larsxschneider/git-at-scale?slide=35
+As a result, some of my patchsets may get significantly less of my
+attention.  Also, my twopensource.com email address will (probably) be
+going away.  You can reach me on my personal email address at 
+novalis@novalis.org.  
 
-- Lars
+Keith McGuigan <kamggg@gmail.com> will be taking over Git work at
+Twitter.  You may remember Keith from his diagnosis of the user-after
+free which we fixed in "name-hash: don't reuse cache_entry in
+dir_entry".  Some of you also met him at Git Merge.
+
+Here is the status on the pending patchsets that I've worked on:
+
+- index-helper/watchman is in pu.  Keith will be interested in
+iterating on this series if necessary.
+
+- alternate refs backends: Michael Haggerty is working on a new version
+of this.  I don't know if Keith will have time to jump in on this.
+Depending on the exact timing of Michael's work, I might have a chance
+to do another round on this.
+
+- Protocol v2: I would like to get a new draft of Stefan's series out
+before I leave, but no promises.  It's turned out to be a bit more
+complicated than I expected to support HTTP.  At worst, I'll toss my
+WIP on github and send a link to the list.  
+
+As you may have heard at Git Merge 2015, Twitter uses a journal-based
+replication scheme.  We would like to switch to vanilla fetch but are
+concerned about performance in the presence of many refs.  Protocol v2
+could help with this.  We haven't sent the journal code to the list
+because its handling of refs is suboptimal.  A LMDB refs backend would
+make that much simpler.  I think I've sent a github link to the list in
+the past for that code.
+
+Keith might or might not do some work on protocol v2, depending on his
+time and on how Twitter decides to handle fetching.
+
+I've really enjoyed working on Git, and I hope I get the chance to do
+more in the future.  Thanks to everyone for wonderful code reviews and
+a pleasant environment.  It's been great.
