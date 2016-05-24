@@ -1,163 +1,102 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH] builtin/commit.c: memoize git-path for COMMIT_EDITMSG
-Date: Tue, 24 May 2016 11:24:15 +0530
-Message-ID: <CAFZEwPN3L5Y-7wNj6TMjg-jPb_oDQYjukBj1uL6OJ8rWAoqjcQ@mail.gmail.com>
-References: <1464027390-1512-1-git-send-email-pranit.bauva@gmail.com>
-	<xmqq7feka8kk.fsf@gitster.mtv.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Git reset --hard with staged changes
+Date: Tue, 24 May 2016 08:20:18 +0200
+Message-ID: <CAP8UFD0yB8XjUi0f2OTUrW9W1UPC_ekY3+8--CC5rk_5RciYAA@mail.gmail.com>
+References: <loom.20160523T023140-975@post.gmane.org>
+	<CAP8UFD0dQGmfhPuHjEGRZjEZHwUHR_XzAASwq+87Obf26yi+BQ@mail.gmail.com>
+	<xmqqeg8s8og8.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Jeff King <peff@peff.net>
+Cc: Yotam Gingold <yotam@yotamgingold.com>, git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 24 07:54:25 2016
+X-From: git-owner@vger.kernel.org Tue May 24 08:20:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b55IO-00086P-GQ
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 07:54:24 +0200
+	id 1b55hd-0007jk-FD
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 08:20:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754178AbcEXFyR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 01:54:17 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:33521 "EHLO
-	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753920AbcEXFyQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 01:54:16 -0400
-Received: by mail-yw0-f195.google.com with SMTP id y6so956380ywe.0
-        for <git@vger.kernel.org>; Mon, 23 May 2016 22:54:16 -0700 (PDT)
+	id S1753490AbcEXGUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 02:20:21 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:35435 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753318AbcEXGUU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 02:20:20 -0400
+Received: by mail-wm0-f52.google.com with SMTP id a136so55224459wme.0
+        for <git@vger.kernel.org>; Mon, 23 May 2016 23:20:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=OhKyElWholU380XcXzPfxitnYjINQcNlJJrG+JhvlCU=;
-        b=ivxdCtGx/dqmc8cRaOc6EnPRZf629CWN3U2iOjr0ZpfcBoqM2HapedktJgf3agzTIw
-         qytJ3L1Nx5zx9t2cALNAx+qkPDQVpq3U66kBOQKHJ5QUBereeuEmUDt4qig6mdYJ3YiO
-         nylRMNMepQ5IP31jGRojNmu0i3WLFCNaCT0RVpPT9H55Z5Zb0WozNUsswxU3NXcFVuwh
-         BOQ/1R7/28lBXO5vpxY/qHP29CQnWyz4C7g0/GGz7tatlhH0oDnlq/qCeJdfxJ4y+1Oc
-         iY96Q+j2E1WgLh9xT8E+KPJZy+q01Rp5noKYxjHkD/q2Whtjos5qwNhjKHHqY/mL6u4b
-         OqMg==
+        bh=XOdqF/0CR4bC4MNq1vU7T48wgWWQFiTasK1d7MuaLQE=;
+        b=se9sk/qX3OJ+pL3DPO8IVaccQYBbtgc6XKKoqg86IeYeFGdq/AZsSw8m6qBveihoVW
+         e5Xlmk/8we1CNgO62KEI2xcmRmvMwvY9c7rp1VTnpiCysYPAfWHDHwbRf99U4/wmsEa/
+         FTV6oLqO7fk3qUw+DuWFeAhWHsbDpsOD+p650OFNYiZPOcjfWb5+mRAID5+zKs1n43kI
+         1593hRFVHMiAsEACBLAW6Yg6XbCdpMDA3rrtatVftOOGawIkU2ZNH5TAbrJqa/0RyxZv
+         vqrUe+vTBvdHFdUQs5K17xeCKx2cDiKyP4PpaKW6YgMvCS4KymqKxeYRQ6ITOjRGotHI
+         6kKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=OhKyElWholU380XcXzPfxitnYjINQcNlJJrG+JhvlCU=;
-        b=SmT+b+cuBw07piSGv0ITcDSDVmSlhZJYCfjEiqSuQ0KQKCvNrvH61UMjqmQNoerBIY
-         YzSMuVM08pL7c89bCA+TimiYZWyGvUkD+HH0mAqCNHrogkF96TgEyBEZzA3qxLm86J/r
-         ysb8ek0ZU/GZeHj88mpw83k7aJoiZWeQuRvGgyCAJmE8kOli9cI52LuNQgxcqvWNDvCF
-         Ab6KMKE9Bdv9hdOfNiYmj8FSbbbnXAVltHqwkmLjjho7Dqw7ZZW2KxQJWNwoh1Jr85/E
-         9FtvyJJ/SyC4WdMIQ0AgQLHtkQdNfy4UlGZclaQwTWGkvlTDfOLBH8J7Guw0dQNSsPWS
-         wnnA==
-X-Gm-Message-State: ALyK8tIOrnZ/BXHwnaWEbGgCUVuqzorQLR5nNVQ/eUtiEv1D5Q1PinvGXiezLBoSl1+iecebcDqmumUsxM7qzw==
-X-Received: by 10.37.215.86 with SMTP id o83mr1420158ybg.131.1464069255126;
- Mon, 23 May 2016 22:54:15 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Mon, 23 May 2016 22:54:15 -0700 (PDT)
-In-Reply-To: <xmqq7feka8kk.fsf@gitster.mtv.corp.google.com>
+        bh=XOdqF/0CR4bC4MNq1vU7T48wgWWQFiTasK1d7MuaLQE=;
+        b=GbvWuRKRTg7UoQ7g0vTH17qqj4zm09JyZyVkvI3pA58/aUE5Umm+vHx4Zjs4KRFraq
+         U9T6W+S9gWOKxk3814YbaQcL5MO2Emg7wDNru5GtgJl9+w8mWRoeBQCmgRP3PlQCaRcy
+         bDcPM19Y8iSgXfhvU4r2/CWKuSPEvCc761YjIqqoa8+nBYgC1D0/SyRrD+krXydJLKGJ
+         hAJKTbb/0XhWCtSba4v0VFxNll+jvpA0a/GSnD/L/Htn8Q7Qx1nTUQ8XltFlsGvUzNbH
+         uJBj9JVkzRIe0Q91TMzWP4NXzK03Ewqz+QRhaQTfvXRlK6LJem5FEQ1K1eWbcoJuEz6Y
+         Wl6Q==
+X-Gm-Message-State: ALyK8tJ4HkiUpuLqZHurNuf5x0YACrBzfB42cXck91UM56d/vI3wsOoQIsAGagQdqKg4xkuY/mHZ73c+Lauq/A==
+X-Received: by 10.28.23.143 with SMTP id 137mr332182wmx.89.1464070818714; Mon,
+ 23 May 2016 23:20:18 -0700 (PDT)
+Received: by 10.194.148.146 with HTTP; Mon, 23 May 2016 23:20:18 -0700 (PDT)
+In-Reply-To: <xmqqeg8s8og8.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295418>
 
-Hey Junio,
-
-On Tue, May 24, 2016 at 12:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
+On Mon, May 23, 2016 at 11:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
->> This is a follow up commit for f932729c (memoize common git-path
->> "constant" files, 10-Aug-2015).
+>>> This should be clarified to define what a tracked file is. I propose appending:
+>>>
+>>>     A file is considered tracked if it exists in a prior commit or in the
+>>>     staging area. Note that a newly added file not in any prior commit will be
+>>>     removed.
 >>
->> It serves two purposes:
->>   1. It reduces the number of calls to git_path() .
->>
->>   2. It serves the benefits of using GIT_PATH_FUNC as mentioned in the
->>      commit message of f932729c.
+>> Would you like to send a patch with something like the above?
 >
-> All of that is a good idea, but I have huge doubts about its use.
->
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index 391126e..ffa242c 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -92,8 +92,10 @@ N_("If you wish to skip this commit, use:\n"
->>  "Then \"git cherry-pick --continue\" will resume cherry-picking\n"
->>  "the remaining commits.\n");
->>
->> +static GIT_PATH_FUNC(git_path_commit_editmsg, "COMMIT_EDITMSG")
->> +
->>  static const char *use_message_buffer;
->> -static const char commit_editmsg[] = "COMMIT_EDITMSG";
->> +static const char commit_editmsg_path[] = git_path_commit_editmsg();
->
-> The function defined with the macro looks like
->
->         const char *git_path_commit_editmsg(void)
->         {
->                 static char *ret;
->                 if (!ret)
->                         ret = git_pathdup("COMMIT_EDITMSG");
->                 return ret;
->         }
->
-> so receiving its result to "const char v[]" looks somewhat
-> suspicious.
->
-> More importantly, when is this function evaluated and returned value
-> used to fill commit_editmsg_path[]?  In order for git_pathdup() to
-> produce a meaningful result, it needs to know where .git/ directory
-> is, which (roughly) means setup_git_dir() must have been called from
-> a callchain from main() somewhere already.
->
-> But I do not think the linker knows that fact.
+> I am not sure if that is a good addition, though.
 
-I think otherwise. git_pathdup() calls get_worktree_git_dir() which
-calls get_git_dir() which if uninitialized calls setup_git_env(). So
-technically the code gets to know the .git/ directory quite early.
-Though I am not very sure whether this one is a desirable fact. There
-would be later instances which would in turn call to know where the
-.git/ directory.
+I am not sure either, but at least if something like that is added,
+people may complain less.
 
+>> I don't know if something about why it is like this, or why it is the
+>> right thing to do, at least for recovering from merges, should be
+>> added though.
 >
->> @@ -771,9 +773,9 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->>               hook_arg2 = "";
->>       }
->>
+> I excuse you as it seems that you haven't read my response ;-)
 >
-> Instead, what you could do is to call git_path_commit_editmsg() when
-> you refer to that global variable whose initialization is suspect.
+>>> I would also like to propose that the staging area's tree object be saved,
+>>> ..
+>> Yeah, it might be a good idea.
 >
->> -     s->fp = fopen_for_writing(git_path(commit_editmsg));
->> +     s->fp = fopen_for_writing(commit_editmsg_path);
+> Two issues with that "proposal" is that
 >
-> i.e.
+>  1. the index may not be writable as a tree (think: during a
+>     conflict resolution); and
 >
->         s->fp = fopen_for_writing(git_path_commit_editmsg());
+>  2. the sole point of "reset --hard" is to "discard the changes".
+>     If you want to instead save them away, there is another command
+>     that was designed to do just that.
 >
-> As you can see in its definition, when the original code used to
-> call git_path(), it is safe to call git_path_commit_editmsg(),
-> because for the original git_path() to be correct, the code should
-> already have established where $GIT_DIR is, so it is safe to call
-> git_pathdup(), too.  Also, as you can see in its definition, calling
-> the function many times would not cause git_path() called many
-> times.  The first invocation will keep its value that is constant
-> within the program that works with a constant $GIT_DIR.
+> It wasn't all that surprising that those on stackoverflow would
+> think such a proposal is a good idea, but I somehow was hoping you
+> have been around here long enough to know "git stash" ;-)
 
-I agree that it is actually not required to again compute the location
-of .git/ directory and can only return the value.
-
-Overall I agree to your idea of just using git_path_commit_editmsg()
-instead of git_path() so as to not disturb any previous
-implementations which can lead to some complications. Also if I am
-changing some internal semantics there should be a valid reason which
-there isn't really as I don't see any benefit in getting the location
-of .git/ early in the program.
-
-> And you do not free its return value.
-This is one of the thing that bugging me with GIT_PATH_FUNC. Wouldn't
-not freeing the memory lead to memory leaks?
-
-Regards,
-Pranit Bauva
+Yeah, we can try to teach people about git stash and git reset --keep
+instead, but I doubt that it will be very effective.
