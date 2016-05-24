@@ -1,91 +1,64 @@
-From: Edward Thomson <ethomson@edwardthomson.com>
-Subject: [PATCH] format_commit_message: honor `color=auto` for `%C(auto)`
-Date: Tue, 24 May 2016 14:48:14 -0500
-Message-ID: <20160524194814.GA12479@zoidberg>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Small rerere in rebase regression
+Date: Tue, 24 May 2016 22:46:15 +0200
+Message-ID: <5744BD97.4070902@kdbg.org>
+References: <57434572.6030306@kdbg.org>
+ <xmqqy4708ss0.fsf@gitster.mtv.corp.google.com> <57437693.3030106@kdbg.org>
+ <xmqqk2ik77cr.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 22:05:05 2016
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 24 22:46:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5IZc-0007eD-GW
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 22:05:04 +0200
+	id 1b5JDb-0005Xn-E8
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 22:46:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754731AbcEXUEt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 16:04:49 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:34839 "EHLO
-	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754713AbcEXUEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 16:04:47 -0400
-Received: by mail-it0-f66.google.com with SMTP id z123so2997627itg.2
-        for <git@vger.kernel.org>; Tue, 24 May 2016 13:04:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=edwardthomson-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=zPdzGFMvjZ8aONPp9MqoKIgHDVm6FGRebV+wepcY6ic=;
-        b=KKaM/Z44wGssooUA4rdzB8dnkT0cR/U4e4cv8oRkvddHE90seTMPOfqaSmDH57bBuD
-         E3MIplrdtvHPLuDTVVeivYoQQZbyJTNncaue2z8kpkwGDFkXOI4HPv9hkFp4U+rmduul
-         Z+0sBO6fQZKMM5y4u5gUeafHcOU+WiM6x7ktwTalp7kRMgD8o8lIJdlOYg7+RkcbbGBy
-         EdvPqNEQX5lLiR49kqZ8L9hmzL9Thf0etrxC0qpV3KBWq8qmSuNQOeg6h1qVUedPNMIG
-         PinZ3XgB9akLCF2U4suSEFEwN17ukbhWjm0W/qv1fOukgTIPnDud1l57UQOrg3zpaQk4
-         tqsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=zPdzGFMvjZ8aONPp9MqoKIgHDVm6FGRebV+wepcY6ic=;
-        b=Vwz7ln90HUD11yDAnYx6NHuknZc/pRoI+WDy0H1pULTvWtvS9FcQZwlreT+D+SvoZY
-         A6zznf2gGVBC3t4ijWKtuZ58WVaq/lUsYFNp6beQEtnXt8BjGGARFU+dnX8jmVQhuAkm
-         P9t7kaZehpVMpAmkcALIXbOxjYSyO+slz+h6SG+DXOdpkm+yiQQQeh1U18ZBpa9EDkH6
-         QYD9VP3HsGu1lK+VLYoyHfC60FELe1joLSINGHgo4woLWRGz77SuVmsYR75b8V/7b8cs
-         HoSVePGd8T08iNpqrWh71g26bli8OhWYuIFrLl0D94FDbWn3ouYjTSzxgzSzTG9dIA4P
-         9M+g==
-X-Gm-Message-State: ALyK8tKVYBw62CdNeqa3lm6xUptm8w3oKGIaNKw7aZHzod7JOUAVKdWcn1hg1F+NeWO1MA==
-X-Received: by 10.36.155.84 with SMTP id o81mr459700itd.55.1464119298040;
-        Tue, 24 May 2016 12:48:18 -0700 (PDT)
-Received: from zoidberg ([2601:249:1000:6850:518c:7508:4f1a:1942])
-        by smtp.gmail.com with ESMTPSA id l123sm5524353ita.1.2016.05.24.12.48.16
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 May 2016 12:48:16 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.6.0 (2016-04-01)
+	id S1755236AbcEXUqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 16:46:19 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:64409 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753601AbcEXUqS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 16:46:18 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3rDnWC5VjTz5tlF;
+	Tue, 24 May 2016 22:46:15 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 19C8D523B;
+	Tue, 24 May 2016 22:46:15 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <xmqqk2ik77cr.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295531>
 
-Check that we are configured to display colors in the given context when
-the user specifies a format string of `%C(auto)`, instead of always
-displaying the default color for the given context.  This makes
-`%C(auto)` obey the `color=auto` setting and brings its behavior in line
-with the behavior of `%C(auto,<colorname>)`.
+Am 24.05.2016 um 00:11 schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+>> However, calling "git rerere" after a failed "git commit" may be
+>> destructive: it would record a resolution even though the commit has
+>> not be completed. Think of an squash commit being aborted because the
+>> user notices an error in the last minute. If that error is in a
+>> conflict resolution, that wrong resolution would be recorded.
+>
+> So, the behaviour change you observed uncovered a small bug in
+> "rebase -i" that was covered by the old limitation of "rerere" that
+> refrained from creating preimage when there already is one?
 
-This allows the user the ability to specify that color should be
-displayed for a string only when the output is a tty, and to use the
-default color for the given context without having to hardcode a
-color value.
----
- pretty.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I had a closer look, and found that the failure mode I described does 
+not occur: after having resolved a commit, the user can call "git rebase 
+--continue", but the "git commit" invocation that occurs there is 
+guarded with a mere 'die', not 'die_with_patch'.
 
-diff --git a/pretty.c b/pretty.c
-index 87c4497..c3ec430 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1063,7 +1063,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 	switch (placeholder[0]) {
- 	case 'C':
- 		if (starts_with(placeholder + 1, "(auto)")) {
--			c->auto_color = 1;
-+			c->auto_color = want_color(c->pretty_ctx->color);
- 			return 7; /* consumed 7 bytes, "C(auto)" */
- 		} else {
- 			int ret = parse_color(sb, placeholder, c);
--- 
-2.6.4 (Apple Git-63)
+All other "git commit" guarded with 'die_with_patch' are either not 
+interactive or are after a non-conflicting merge or cherry-pick (and so 
+there was no opportunity to resolve a conflict).
+
+-- Hannes
