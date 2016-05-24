@@ -1,10 +1,8 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 00/49] libify apply and use lib in am, part 1
-Date: Tue, 24 May 2016 10:10:37 +0200
-Message-ID: <20160524081126.16973-1-chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Subject: [PATCH v3 08/49] builtin/apply: introduce 'struct apply_state' to start libifying
+Date: Tue, 24 May 2016 10:10:45 +0200
+Message-ID: <20160524081126.16973-9-chriscool@tuxfamily.org>
+References: <20160524081126.16973-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
@@ -16,246 +14,341 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 10:12:11 2016
+X-From: git-owner@vger.kernel.org Tue May 24 10:12:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b57Rc-0000fN-1U
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:12:04 +0200
+	id 1b57Rl-0000iU-2D
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:12:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932252AbcEXILz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 May 2016 04:11:55 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:32883 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753510AbcEXILs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 04:11:48 -0400
-Received: by mail-wm0-f68.google.com with SMTP id 67so3637058wmg.0
-        for <git@vger.kernel.org>; Tue, 24 May 2016 01:11:47 -0700 (PDT)
+	id S932271AbcEXIMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 04:12:05 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34331 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932254AbcEXIL7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 04:11:59 -0400
+Received: by mail-wm0-f66.google.com with SMTP id n129so3657064wmn.1
+        for <git@vger.kernel.org>; Tue, 24 May 2016 01:11:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5L4aa6XfOuwwahpvAwaQuYoVSj5bgCBccdNB4GwPPrM=;
-        b=Kvh3M3Dgr+NpmxRs7CpRvzXmIXvBEEJgFuqji3h6HSCXbru+zxvUws9fSf4oWidcKg
-         CTNnK2ooseeyYDeVeYUbjkzp7UB2G7qvSDX0MpxsOlCE3Uqf9jGbTLMQdcNqrrGR5h4x
-         vFozd71HXfZEGImneJOS3SyfXszEaSMH0o34VTUh8YhOlIP54Pqg0zvQf5Hs8tlgJxwc
-         O33dcRWugB64xD37/4UTxQTmr5Hk9z1DO8oe+Owxk+YMP+t2opdIWSdzSZeRO5Yx/rwJ
-         UPRO4y+Wqpc7P9fkyv7FJHZF2jD6SnzeOcJ29lA1D/dO0fQ8DrN/lpaALMIqW2KZNaSP
-         f9jQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=W2rMevzjZMSeMGY2Dp/0nHAn9NGV+vxB+w1vHSKqRkw=;
+        b=rr8jLQmo8V1jnugC+Z4eRX0cDO3G57Q9bX/egxKrLwHj55agFXBc9iiHHAHggdQbWv
+         vhhWpjdSJfa5rn4mHIeNgfujGo46SCIOtosZHASvVnUlIaKvbOcjf2yrG3+AG6OuteIW
+         GGtQxU3kmyTR+JMgwh/6KMxj5VzS8Ij0brLMbca5ZO50jf7H5lM/VmlaJP5lIbZ6MRLR
+         Q3JVwFWuzjMsm+alj/6LOWbKb5JtM7YUur2qxM7mu9+OBx41Q0kf0lRcy3J1Svo5311v
+         5N210gXYNvj0DmcI3hWgcu/RWE+WPjS/z9BGkhH8UWEwyQfUl+TqOgM9bTLUkARd0AC/
+         CZGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5L4aa6XfOuwwahpvAwaQuYoVSj5bgCBccdNB4GwPPrM=;
-        b=UqgWNeWU3/WWFQeCWTI/Mxt5pVQrEqX87nr9xUk24XyKFITz7eAOackR/vN7Te0AA8
-         vjaik4ermoCD++r7XZ1suNKfRhcWvQ8CQsKplfNOldA2WbyiM6iDdrDZfhdoBBz0+ieg
-         4rGRwP8avNGBZYhBOrsoeQlgKxqUTeVNHsLp5tu8NyceJp+cooZRqvQQe65fdk8AkQGC
-         HIcUPXg4FaN7OfI5pc6t4PVJI6GpCkRK9tlaVjs4O/Gx7e2m4W37ZNYTEyi5Rra/LdQW
-         aj88wYvctK8SMbaFD/GAQcEM1VeqkNixR83rQFoNDgVrZT9wDeEzDwFqwgpheW26w8bU
-         oa4Q==
-X-Gm-Message-State: AOPr4FVelh4eSctBghUq3tM6mXal/XkAt9JQwecf2WlZnna5BROtXGgASXNtmmAPWGCwlQ==
-X-Received: by 10.28.153.80 with SMTP id b77mr21572826wme.71.1464077505827;
-        Tue, 24 May 2016 01:11:45 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=W2rMevzjZMSeMGY2Dp/0nHAn9NGV+vxB+w1vHSKqRkw=;
+        b=WVGEU5U3pu6AyxKpN4Wkh9kSmul+u+7h6iFF0SIewZaGToEn0HJuCZ2nd5xPQnkw9l
+         SgMUrf0LReLUXG2/CF2JgcnWShP3FFd+uEQsLaVtEjv65aoavxV7bV0otwbOdH8XcU9Q
+         iudA/Pzzt9Qt4j5UkuTuoBPU1bELXq2wBy+Xgxw6GwJIq1bg9UWrNWBTw7YFfGdHNmJK
+         tYtNpn7+wJuWtYZXk3NseGtA2hxG41iuORsean8kQUNFsVGSGcFqtGhxUpAAtstUMSJz
+         C5RP+u3Z5hzpRuWSq15CSPhXtyMQ+dtn4zP3lOXx+zwgOLYrkZqRgbkaKsHNDZecnRNN
+         r+2w==
+X-Gm-Message-State: AOPr4FX1llR42TomyvFi0PD39ovfxqhgdL9XezSTaZPI1Ay7nOHV8xQ9RKudKrpAGNj2lA==
+X-Received: by 10.28.150.211 with SMTP id y202mr21853020wmd.41.1464077517457;
+        Tue, 24 May 2016 01:11:57 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.11.43
+        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.11.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 May 2016 01:11:44 -0700 (PDT)
+        Tue, 24 May 2016 01:11:56 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.3.443.gaeee61e
+In-Reply-To: <20160524081126.16973-1-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295430>
 
-Goal
-~~~~
+Currently commands that want to use the apply functionality have to launch
+a "git apply" process which can be bad for performance.
 
-This is a patch series about libifying `git apply` functionality, and
-using this libified functionality in `git am`, so that no 'git apply'
-process is spawn anymore. This makes `git am` significantly faster, so
-`git rebase`, when it uses the am backend, is also significantly
-faster.
+Let's start libifying the apply functionality and to do that we first need
+to get rid of the global variables in "builtin/apply.c".
 
-Previous discussions and patches series
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This patch introduces "struct apply_state" into which all the previously
+global variables will be moved. A new parameter called "state" that is a
+pointer to the "apply_state" structure will come at the beginning of the
+helper functions that need it and will be passed around the call chain.
 
-This has initially been discussed in the following thread:
+To start let's move the "prefix" and "prefix_length" global variables into
+"struct apply_state".
 
-  http://thread.gmane.org/gmane.comp.version-control.git/287236/
+Reviewed-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin/apply.c | 94 ++++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 56 insertions(+), 38 deletions(-)
 
-Then the following patch series were sent:
-
-RFC: http://thread.gmane.org/gmane.comp.version-control.git/288489/
-v1: http://thread.gmane.org/gmane.comp.version-control.git/292324/
-v2: http://thread.gmane.org/gmane.comp.version-control.git/294248/
-
-Highlevel view of the patches in the series
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This new patch series is built on top of the above previous work.
-
-It contains only patches 01/94 to 50/94 from v2, as v2 contains too
-many patches and it was decided to split it.
-
-The changes since v2 are the following:
-
-    - Patch 48/94 (builtin/apply: rename 'prefix_' parameter to
-      'prefix') was squashed into 09/94 (builtin/apply: move 'state'
-      init into init_apply_state()), as suggested by Junio.
-
-    - Fields in 'struct apply_state' have been reorganized, as
-      suggested by Junio.
-
-    - clear_apply_state() has been added to free 'struct apply_state'
-      resources.
-
-General comments
-~~~~~~~~~~~~~~~~
-
-Sorry if this patch series is still long despite being splitted.
-
-I will send a diff between this version and the 50 first patches of v2
-soon as a reply to this email.
-
-The benefits are not just related to not creating new processes. When
-`git am` launched a `git apply` process, this new process had to read
-the index from disk. Then after the `git apply`process had terminated,
-`git am` dropped its index and read the index from disk to get the
-index that had been modified by the `git apply`process. This was
-inefficient and also prevented the split-index mechanism to provide
-many performance benefits.
-
-Using this series as rebase material, Duy explains it like this:
-
- > Without the series, the picture is not so surprising. We run git-app=
-ly
- > 80+ times, each consists of this sequence
- >
- > read index
- > write index (cache tree updates only)
- > read index again
- > optionally initialize name hash (when new entries are added, I guess=
-)
- > read packed-refs
- > write index
- >
- > With this series, we run a single git-apply which does
- >
- > read index (and sharedindex too if in split-index mode)
- > initialize name hash
- > write index 80+ times
-
-(See: http://thread.gmane.org/gmane.comp.version-control.git/292324/foc=
-us=3D292460)
-
-Links
-~~~~~
-
-This patch series is available here:
-
-v3: https://github.com/chriscool/git/commits/libify-apply61
-v2: https://github.com/chriscool/git/commits/libify-apply-use-in-am54
-v1: https://github.com/chriscool/git/commits/libify-apply-use-in-am25=20
-
-Performance numbers
-~~~~~~~~~~~~~~~~~~~
-
-=46or now only tests on Linux have been performed on v1 around mid
-April. It could be interesting to test on other platforms especially
-Windows and perhaps OSX too.
-
-  - =C3=86var did a huge many-hundred commit rebase on the kernel with
-    untracked cache.
-
-command: git rebase --onto 1993b17 52bef0c 29dde7c
-
-Vanilla "next" without split index:                1m54.953s
-Vanilla "next" with split index:                   1m22.476s
-This series on top of "next" without split index:  1m12.034s
-This series on top of "next" with split index:     0m15.678s
-
-=C3=86var used his Debian laptop with SSD.
-
-  - I tested rebasing 13 commits in Booking.com's monorepo on a Red
-    Hat 6.5 server with split-index and GIT_TRACE_PERFORMANCE=3D1.
-
-With Git v2.8.0, the rebase took 6.375888383 s, with the git am
-command launched by the rebase command taking 3.705677431 s.
-
-With this series on top of next, the rebase took 3.044529494 s, with
-the git am command launched by the rebase command taking 0.583521168
-s.
-
-
-Christian Couder (49):
-  builtin/apply: make gitdiff_verify_name() return void
-  builtin/apply: avoid parameter shadowing 'p_value' global
-  builtin/apply: avoid parameter shadowing 'linenr' global
-  builtin/apply: avoid local variable shadowing 'len' parameter
-  builtin/apply: extract line_by_line_fuzzy_match() from
-    match_fragment()
-  builtin/apply: move 'options' variable into cmd_apply()
-  builtin/apply: move 'read_stdin' global into cmd_apply()
-  builtin/apply: introduce 'struct apply_state' to start libifying
-  builtin/apply: move 'state' init into init_apply_state()
-  builtin/apply: move 'unidiff_zero' global into 'struct apply_state'
-  builtin/apply: move 'check' global into 'struct apply_state'
-  builtin/apply: move 'check_index' global into 'struct apply_state'
-  builtin/apply: move 'apply_in_reverse' global into 'struct
-    apply_state'
-  builtin/apply: move 'apply_with_reject' global into 'struct
-    apply_state'
-  builtin/apply: move 'apply_verbosely' global into 'struct apply_state=
-'
-  builtin/apply: move 'update_index' global into 'struct apply_state'
-  builtin/apply: move 'allow_overlap' global into 'struct apply_state'
-  builtin/apply: move 'cached' global into 'struct apply_state'
-  builtin/apply: move 'diffstat' global into 'struct apply_state'
-  builtin/apply: move 'numstat' global into 'struct apply_state'
-  builtin/apply: move 'summary' global into 'struct apply_state'
-  builtin/apply: move 'threeway' global into 'struct apply_state'
-  builtin/apply: move 'no_add' global into 'struct apply_state'
-  builtin/apply: move 'unsafe_paths' global into 'struct apply_state'
-  builtin/apply: move 'line_termination' global into 'struct
-    apply_state'
-  builtin/apply: move 'fake_ancestor' global into 'struct apply_state'
-  builtin/apply: move 'p_context' global into 'struct apply_state'
-  builtin/apply: move 'apply' global into 'struct apply_state'
-  builtin/apply: move 'patch_input_file' global into 'struct
-    apply_state'
-  builtin/apply: move 'limit_by_name' global into 'struct apply_state'
-  builtin/apply: move 'has_include' global into 'struct apply_state'
-  builtin/apply: move 'p_value' global into 'struct apply_state'
-  builtin/apply: move 'p_value_known' global into 'struct apply_state'
-  builtin/apply: move 'root' global into 'struct apply_state'
-  builtin/apply: move 'whitespace_error' global into 'struct
-    apply_state'
-  builtin/apply: move 'whitespace_option' into 'struct apply_state'
-  builtin/apply: remove whitespace_option arg from
-    set_default_whitespace_mode()
-  builtin/apply: move 'squelch_whitespace_errors' into 'struct
-    apply_state'
-  builtin/apply: move 'applied_after_fixing_ws' into 'struct
-    apply_state'
-  builtin/apply: move 'ws_error_action' into 'struct apply_state'
-  builtin/apply: move 'ws_ignore_action' into 'struct apply_state'
-  builtin/apply: move 'max_change' and 'max_len' into 'struct
-    apply_state'
-  builtin/apply: move 'state_linenr' global into 'struct apply_state'
-  builtin/apply: move 'fn_table' global into 'struct apply_state'
-  builtin/apply: move 'symlink_changes' global into 'struct apply_state=
-'
-  builtin/apply: move 'state' check into check_apply_state()
-  builtin/apply: move applying patches into apply_all_patches()
-  builtin/apply: move 'lock_file' global into 'struct apply_state'
-  builtin/apply: move 'newfd' global into 'struct apply_state'
-
- builtin/apply.c | 1432 +++++++++++++++++++++++++++++++----------------=
---------
- 1 file changed, 821 insertions(+), 611 deletions(-)
-
---=20
+diff --git a/builtin/apply.c b/builtin/apply.c
+index c911e4e..ae068e7 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -21,6 +21,11 @@
+ #include "ll-merge.h"
+ #include "rerere.h"
+ 
++struct apply_state {
++	const char *prefix;
++	int prefix_length;
++};
++
+ /*
+  *  --check turns on checking that the working tree matches the
+  *    files that are being modified, but doesn't apply the patch
+@@ -30,8 +35,6 @@
+  *  --index updates the cache as well.
+  *  --cached updates only the cache without ever touching the working tree.
+  */
+-static const char *prefix;
+-static int prefix_length = -1;
+ static int newfd = -1;
+ 
+ static int unidiff_zero;
+@@ -748,7 +751,7 @@ static int count_slashes(const char *cp)
+  * Given the string after "--- " or "+++ ", guess the appropriate
+  * p_value for the given patch.
+  */
+-static int guess_p_value(const char *nameline)
++static int guess_p_value(struct apply_state *state, const char *nameline)
+ {
+ 	char *name, *cp;
+ 	int val = -1;
+@@ -761,17 +764,17 @@ static int guess_p_value(const char *nameline)
+ 	cp = strchr(name, '/');
+ 	if (!cp)
+ 		val = 0;
+-	else if (prefix) {
++	else if (state->prefix) {
+ 		/*
+ 		 * Does it begin with "a/$our-prefix" and such?  Then this is
+ 		 * very likely to apply to our directory.
+ 		 */
+-		if (!strncmp(name, prefix, prefix_length))
+-			val = count_slashes(prefix);
++		if (!strncmp(name, state->prefix, state->prefix_length))
++			val = count_slashes(state->prefix);
+ 		else {
+ 			cp++;
+-			if (!strncmp(cp, prefix, prefix_length))
+-				val = count_slashes(prefix) + 1;
++			if (!strncmp(cp, state->prefix, state->prefix_length))
++				val = count_slashes(state->prefix) + 1;
+ 		}
+ 	}
+ 	free(name);
+@@ -858,7 +861,10 @@ static int has_epoch_timestamp(const char *nameline)
+  * files, we can happily check the index for a match, but for creating a
+  * new file we should try to match whatever "patch" does. I have no idea.
+  */
+-static void parse_traditional_patch(const char *first, const char *second, struct patch *patch)
++static void parse_traditional_patch(struct apply_state *state,
++				    const char *first,
++				    const char *second,
++				    struct patch *patch)
+ {
+ 	char *name;
+ 
+@@ -866,8 +872,8 @@ static void parse_traditional_patch(const char *first, const char *second, struc
+ 	second += 4;	/* skip "+++ " */
+ 	if (!p_value_known) {
+ 		int p, q;
+-		p = guess_p_value(first);
+-		q = guess_p_value(second);
++		p = guess_p_value(state, first);
++		q = guess_p_value(state, second);
+ 		if (p < 0) p = q;
+ 		if (0 <= p && p == q) {
+ 			state_p_value = p;
+@@ -1429,7 +1435,11 @@ static int parse_fragment_header(const char *line, int len, struct fragment *fra
+ 	return offset;
+ }
+ 
+-static int find_header(const char *line, unsigned long size, int *hdrsize, struct patch *patch)
++static int find_header(struct apply_state *state,
++		       const char *line,
++		       unsigned long size,
++		       int *hdrsize,
++		       struct patch *patch)
+ {
+ 	unsigned long offset, len;
+ 
+@@ -1506,7 +1516,7 @@ static int find_header(const char *line, unsigned long size, int *hdrsize, struc
+ 			continue;
+ 
+ 		/* Ok, we'll consider it a patch */
+-		parse_traditional_patch(line, line+len, patch);
++		parse_traditional_patch(state, line, line+len, patch);
+ 		*hdrsize = len + nextlen;
+ 		state_linenr += 2;
+ 		return offset;
+@@ -1913,21 +1923,21 @@ static int parse_binary(char *buffer, unsigned long size, struct patch *patch)
+ 	return used;
+ }
+ 
+-static void prefix_one(char **name)
++static void prefix_one(struct apply_state *state, char **name)
+ {
+ 	char *old_name = *name;
+ 	if (!old_name)
+ 		return;
+-	*name = xstrdup(prefix_filename(prefix, prefix_length, *name));
++	*name = xstrdup(prefix_filename(state->prefix, state->prefix_length, *name));
+ 	free(old_name);
+ }
+ 
+-static void prefix_patch(struct patch *p)
++static void prefix_patch(struct apply_state *state, struct patch *p)
+ {
+-	if (!prefix || p->is_toplevel_relative)
++	if (!state->prefix || p->is_toplevel_relative)
+ 		return;
+-	prefix_one(&p->new_name);
+-	prefix_one(&p->old_name);
++	prefix_one(state, &p->new_name);
++	prefix_one(state, &p->old_name);
+ }
+ 
+ /*
+@@ -1944,16 +1954,16 @@ static void add_name_limit(const char *name, int exclude)
+ 	it->util = exclude ? NULL : (void *) 1;
+ }
+ 
+-static int use_patch(struct patch *p)
++static int use_patch(struct apply_state *state, struct patch *p)
+ {
+ 	const char *pathname = p->new_name ? p->new_name : p->old_name;
+ 	int i;
+ 
+ 	/* Paths outside are not touched regardless of "--include" */
+-	if (0 < prefix_length) {
++	if (0 < state->prefix_length) {
+ 		int pathlen = strlen(pathname);
+-		if (pathlen <= prefix_length ||
+-		    memcmp(prefix, pathname, prefix_length))
++		if (pathlen <= state->prefix_length ||
++		    memcmp(state->prefix, pathname, state->prefix_length))
+ 			return 0;
+ 	}
+ 
+@@ -1980,17 +1990,17 @@ static int use_patch(struct patch *p)
+  * Return the number of bytes consumed, so that the caller can call us
+  * again for the next patch.
+  */
+-static int parse_chunk(char *buffer, unsigned long size, struct patch *patch)
++static int parse_chunk(struct apply_state *state, char *buffer, unsigned long size, struct patch *patch)
+ {
+ 	int hdrsize, patchsize;
+-	int offset = find_header(buffer, size, &hdrsize, patch);
++	int offset = find_header(state, buffer, size, &hdrsize, patch);
+ 
+ 	if (offset < 0)
+ 		return offset;
+ 
+-	prefix_patch(patch);
++	prefix_patch(state, patch);
+ 
+-	if (!use_patch(patch))
++	if (!use_patch(state, patch))
+ 		patch->ws_rule = 0;
+ 	else
+ 		patch->ws_rule = whitespace_rule(patch->new_name
+@@ -4367,7 +4377,10 @@ static struct lock_file lock_file;
+ #define INACCURATE_EOF	(1<<0)
+ #define RECOUNT		(1<<1)
+ 
+-static int apply_patch(int fd, const char *filename, int options)
++static int apply_patch(struct apply_state *state,
++		       int fd,
++		       const char *filename,
++		       int options)
+ {
+ 	size_t offset;
+ 	struct strbuf buf = STRBUF_INIT; /* owns the patch text */
+@@ -4384,14 +4397,14 @@ static int apply_patch(int fd, const char *filename, int options)
+ 		patch = xcalloc(1, sizeof(*patch));
+ 		patch->inaccurate_eof = !!(options & INACCURATE_EOF);
+ 		patch->recount =  !!(options & RECOUNT);
+-		nr = parse_chunk(buf.buf + offset, buf.len - offset, patch);
++		nr = parse_chunk(state, buf.buf + offset, buf.len - offset, patch);
+ 		if (nr < 0) {
+ 			free_patch(patch);
+ 			break;
+ 		}
+ 		if (apply_in_reverse)
+ 			reverse_patches(patch);
+-		if (use_patch(patch)) {
++		if (use_patch(state, patch)) {
+ 			patch_stats(patch);
+ 			*listp = patch;
+ 			listp = &patch->next;
+@@ -4517,6 +4530,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 	int force_apply = 0;
+ 	int options = 0;
+ 	int read_stdin = 1;
++	struct apply_state state;
+ 
+ 	const char *whitespace_option = NULL;
+ 
+@@ -4589,15 +4603,17 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 		OPT_END()
+ 	};
+ 
+-	prefix = prefix_;
+-	prefix_length = prefix ? strlen(prefix) : 0;
++	memset(&state, 0, sizeof(state));
++	state.prefix = prefix_;
++	state.prefix_length = state.prefix ? strlen(state.prefix) : 0;
++
+ 	git_apply_config();
+ 	if (apply_default_whitespace)
+ 		parse_whitespace_option(apply_default_whitespace);
+ 	if (apply_default_ignorewhitespace)
+ 		parse_ignorewhitespace_option(apply_default_ignorewhitespace);
+ 
+-	argc = parse_options(argc, argv, prefix, builtin_apply_options,
++	argc = parse_options(argc, argv, state.prefix, builtin_apply_options,
+ 			apply_usage, 0);
+ 
+ 	if (apply_with_reject && threeway)
+@@ -4628,23 +4644,25 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 		int fd;
+ 
+ 		if (!strcmp(arg, "-")) {
+-			errs |= apply_patch(0, "<stdin>", options);
++			errs |= apply_patch(&state, 0, "<stdin>", options);
+ 			read_stdin = 0;
+ 			continue;
+-		} else if (0 < prefix_length)
+-			arg = prefix_filename(prefix, prefix_length, arg);
++		} else if (0 < state.prefix_length)
++			arg = prefix_filename(state.prefix,
++					      state.prefix_length,
++					      arg);
+ 
+ 		fd = open(arg, O_RDONLY);
+ 		if (fd < 0)
+ 			die_errno(_("can't open patch '%s'"), arg);
+ 		read_stdin = 0;
+ 		set_default_whitespace_mode(whitespace_option);
+-		errs |= apply_patch(fd, arg, options);
++		errs |= apply_patch(&state, fd, arg, options);
+ 		close(fd);
+ 	}
+ 	set_default_whitespace_mode(whitespace_option);
+ 	if (read_stdin)
+-		errs |= apply_patch(0, "<stdin>", options);
++		errs |= apply_patch(&state, 0, "<stdin>", options);
+ 	if (whitespace_error) {
+ 		if (squelch_whitespace_errors &&
+ 		    squelch_whitespace_errors < whitespace_error) {
+-- 
 2.8.3.443.gaeee61e
