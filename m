@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 44/49] builtin/apply: move 'fn_table' global into 'struct apply_state'
-Date: Tue, 24 May 2016 10:11:21 +0200
-Message-ID: <20160524081126.16973-45-chriscool@tuxfamily.org>
+Subject: [PATCH v3 40/49] builtin/apply: move 'ws_error_action' into 'struct apply_state'
+Date: Tue, 24 May 2016 10:11:17 +0200
+Message-ID: <20160524081126.16973-41-chriscool@tuxfamily.org>
 References: <20160524081126.16973-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -14,51 +14,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 10:13:07 2016
+X-From: git-owner@vger.kernel.org Tue May 24 10:13:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b57Sb-00015o-5p
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:13:05 +0200
+	id 1b57Sn-00018M-01
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:13:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932333AbcEXIM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 04:12:58 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34995 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932318AbcEXIMs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 04:12:48 -0400
-Received: by mail-wm0-f68.google.com with SMTP id f75so3658852wmf.2
-        for <git@vger.kernel.org>; Tue, 24 May 2016 01:12:47 -0700 (PDT)
+	id S932341AbcEXINC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 04:13:02 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34910 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754689AbcEXIMn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 04:12:43 -0400
+Received: by mail-wm0-f66.google.com with SMTP id f75so3658187wmf.2
+        for <git@vger.kernel.org>; Tue, 24 May 2016 01:12:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=okHkNSe/OkmqxZwMAojdI2MhF3d/S1YqzK83wiBZijY=;
-        b=d462K7JdfA04TrFiJIj3Jc0m1ZY6fAiP8+1im0jALJkqjNsakHgnaAqvNIxvIExvRt
-         NHzArnMeefOFqkNlgsgk/rigSQD+VndCS/LxNBe4XUtJEHWigUILFdLZeVizTKQU9gyh
-         6B4Zce87ZtbjCu/IHiPTQdYYFLyr/ZXfd/JjKcBMe5bW1mGMkOBUcHdK2YBJINq68ZnC
-         vd5P/dsMsckf7NLzjP5GYYHxciInaclJLtPZ2yP9SvEDNwSx+2v+MLuCB+ILcNAAGapT
-         0C3UkqJO89MCDq5fsFsSkigW6rJ4CpGgNgwZfxaHOWteSaMZAeRIW5cQ8UTL5wSi9eMQ
-         usRA==
+        bh=1Uwof7aA6TRfCYfqDIylFAS2uXkDiZ1WmJrM401o6rU=;
+        b=M0YNZr92a7jFO0252UIo0BIEHTit9n7qj4vz+/r5K3vDltncADe7q8jsg3x0lLnpnG
+         hRLDR1o97rehrmrZwrq0A18ACjNHieXXbkIby/KKUY402hKizP1QqrF2S3bBHExQd0fz
+         j0yrzuWIEVHb75wje5N+MJgo9pfQZ/Lu/52yiqDkE0rpeXRFZUXnIyD/4L+hdUZ8ndgf
+         9QXuIWaJcEhSi16tybWR8+aTI0OyoB2Jc5VC6Wr+zrB1sQU19odd8fBdWJGQoerx32lc
+         ISsitjLuDdCDJwni1CcI4rscEx5IcFa8W4ND/Fd/P14fS8QiDgsC0+y6XaykTyQj32Ju
+         uYbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=okHkNSe/OkmqxZwMAojdI2MhF3d/S1YqzK83wiBZijY=;
-        b=J9A8p9UEZXwBtAfQB8mm99gooPYGM6RALlXsnLGdxY3exy2T0AcrgmCW2zQ/jTOaNZ
-         2HdqFJKJji+ByLIf5qeFuUgdLbsV8pvXGjfNwcj9ot+YjNmQ1VJ9QX/HqMmQceqs72Wx
-         dTNg2PMXrtXP7+VbtuLf3BZaZfrwYp/O2e5rZQKYQ7EiaMc3aDMnik0C2ZrG/QbeQZCP
-         6hfc6AsJRTolWL3scnPgQDJxpeItMqCQvynVKKUquKPIzaqd42bHNFa+L95+zwPfC4sI
-         hneDBw8PXIpsCKey/5u6A1BewYjK9VZADaJUTXCImvuFDxx1a0wFDpZsJHzs2XpNvrzM
-         6qYA==
-X-Gm-Message-State: ALyK8tKZ31YDGWDKrXJlmLfyNsMFzcYiBVjFF0fABfMg+TlRkJa5N5owjaK9Rbv4r1PopA==
-X-Received: by 10.194.173.161 with SMTP id bl1mr2811347wjc.11.1464077567096;
-        Tue, 24 May 2016 01:12:47 -0700 (PDT)
+        bh=1Uwof7aA6TRfCYfqDIylFAS2uXkDiZ1WmJrM401o6rU=;
+        b=DcTAfyIalNGLgJSYfu76jrzmi2JF7Dqdrd0ilkF30T5Ntqm9hSFE9LHcCpCR4MaKsN
+         yKzgK/Ox0vGeq6qtK501yjrqFEOMGH7gHQKxx6zFM3avBVTu5hP4YjbvjdDYfzXG9+g9
+         yzz8HiBXcoVjl9QJ2CF5lsicrVDkLsky6VoBKe4taKgfo5dn2/1zzXBw4t9GFPEpkbq5
+         FbkjgkKES6LTzgoL3nT56zzlpP0S6EVX3SKwMTncC5GvYQFY9PMAXqdEpt1LtZ21Im1y
+         jkHnvWMecACZYPb2XK2n5XL4HKxRbW1BaygyBLOGPoUlTtIorIUt7412R6EX0a3vPRwr
+         vrFA==
+X-Gm-Message-State: ALyK8tLM52BfzsbS9g+fnuU5Jn0rGw1OcGKLP2OtD/Bz1smbUqgtC1SeG8dJ/T50eGsPtg==
+X-Received: by 10.194.240.230 with SMTP id wd6mr2701616wjc.86.1464077561590;
+        Tue, 24 May 2016 01:12:41 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.12.45
+        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.12.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 May 2016 01:12:46 -0700 (PDT)
+        Tue, 24 May 2016 01:12:40 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.3.443.gaeee61e
 In-Reply-To: <20160524081126.16973-1-chriscool@tuxfamily.org>
@@ -66,193 +66,236 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295444>
 
-To libify the apply functionality the 'fn_table' variable should
+To libify the apply functionality the 'ws_error_action' variable should
 not be static and global to the file. Let's move it into
 'struct apply_state'.
 
-As fn_table is cleared at the end of apply_patch(), it is not
-necessary to clear it in clear_apply_state().
-
-Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 47 +++++++++++++++++++++++++----------------------
- 1 file changed, 25 insertions(+), 22 deletions(-)
+ builtin/apply.c | 61 +++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 33 insertions(+), 28 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index dd56a8e..47622be 100644
+index 91b6283..61d809a 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -84,6 +84,12 @@ struct apply_state {
- 	int max_change;
- 	int max_len;
+@@ -21,6 +21,13 @@
+ #include "ll-merge.h"
+ #include "rerere.h"
  
-+	/*
-+	 * Records filenames that have been touched, in order to handle
-+	 * the case where more than one patches touch the same file.
-+	 */
-+	struct string_list fn_table;
++enum ws_error_action {
++	nowarn_ws_error,
++	warn_on_ws_error,
++	die_on_ws_error,
++	correct_ws_error
++};
 +
+ struct apply_state {
+ 	const char *prefix;
+ 	int prefix_length;
+@@ -61,6 +68,7 @@ struct apply_state {
+ 	int has_include;
+ 
  	/* These control whitespace errors */
- 	enum ws_error_action ws_error_action;
- 	enum ws_ignore ws_ignore_action;
-@@ -271,13 +277,6 @@ struct image {
- 	struct line *line;
++	enum ws_error_action ws_error_action;
+ 	const char *whitespace_option;
+ 	int whitespace_error;
+ 	int squelch_whitespace_errors;
+@@ -74,12 +82,6 @@ static const char * const apply_usage[] = {
+ 	NULL
  };
  
--/*
-- * Records filenames that have been touched, in order to handle
-- * the case where more than one patches touch the same file.
-- */
--
--static struct string_list fn_table;
--
- static uint32_t hash_line(const char *cp, size_t len)
+-static enum ws_error_action {
+-	nowarn_ws_error,
+-	warn_on_ws_error,
+-	die_on_ws_error,
+-	correct_ws_error
+-} ws_error_action = warn_on_ws_error;
+ 
+ static enum ws_ignore {
+ 	ignore_ws_none,
+@@ -90,28 +92,28 @@ static enum ws_ignore {
+ static void parse_whitespace_option(struct apply_state *state, const char *option)
  {
- 	size_t i;
-@@ -3207,14 +3206,14 @@ static int read_file_or_gitlink(const struct cache_entry *ce, struct strbuf *buf
- 	return read_blob_object(buf, ce->sha1, ce->ce_mode);
- }
- 
--static struct patch *in_fn_table(const char *name)
-+static struct patch *in_fn_table(struct apply_state *state, const char *name)
- {
- 	struct string_list_item *item;
- 
- 	if (name == NULL)
- 		return NULL;
- 
--	item = string_list_lookup(&fn_table, name);
-+	item = string_list_lookup(&state->fn_table, name);
- 	if (item != NULL)
- 		return (struct patch *)item->util;
- 
-@@ -3246,7 +3245,7 @@ static int was_deleted(struct patch *patch)
- 	return patch == PATH_WAS_DELETED;
- }
- 
--static void add_to_fn_table(struct patch *patch)
-+static void add_to_fn_table(struct apply_state *state, struct patch *patch)
- {
- 	struct string_list_item *item;
- 
-@@ -3256,7 +3255,7 @@ static void add_to_fn_table(struct patch *patch)
- 	 * file creations and copies
- 	 */
- 	if (patch->new_name != NULL) {
--		item = string_list_insert(&fn_table, patch->new_name);
-+		item = string_list_insert(&state->fn_table, patch->new_name);
- 		item->util = patch;
+ 	if (!option) {
+-		ws_error_action = warn_on_ws_error;
++		state->ws_error_action = warn_on_ws_error;
+ 		return;
  	}
- 
-@@ -3265,12 +3264,12 @@ static void add_to_fn_table(struct patch *patch)
- 	 * later chunks shouldn't patch old names
- 	 */
- 	if ((patch->new_name == NULL) || (patch->is_rename)) {
--		item = string_list_insert(&fn_table, patch->old_name);
-+		item = string_list_insert(&state->fn_table, patch->old_name);
- 		item->util = PATH_WAS_DELETED;
+ 	if (!strcmp(option, "warn")) {
+-		ws_error_action = warn_on_ws_error;
++		state->ws_error_action = warn_on_ws_error;
+ 		return;
  	}
+ 	if (!strcmp(option, "nowarn")) {
+-		ws_error_action = nowarn_ws_error;
++		state->ws_error_action = nowarn_ws_error;
+ 		return;
+ 	}
+ 	if (!strcmp(option, "error")) {
+-		ws_error_action = die_on_ws_error;
++		state->ws_error_action = die_on_ws_error;
+ 		return;
+ 	}
+ 	if (!strcmp(option, "error-all")) {
+-		ws_error_action = die_on_ws_error;
++		state->ws_error_action = die_on_ws_error;
+ 		state->squelch_whitespace_errors = 0;
+ 		return;
+ 	}
+ 	if (!strcmp(option, "strip") || !strcmp(option, "fix")) {
+-		ws_error_action = correct_ws_error;
++		state->ws_error_action = correct_ws_error;
+ 		return;
+ 	}
+ 	die(_("unrecognized whitespace option '%s'"), option);
+@@ -135,7 +137,7 @@ static void parse_ignorewhitespace_option(const char *option)
+ static void set_default_whitespace_mode(struct apply_state *state)
+ {
+ 	if (!state->whitespace_option && !apply_default_whitespace)
+-		ws_error_action = (state->apply ? warn_on_ws_error : nowarn_ws_error);
++		state->ws_error_action = (state->apply ? warn_on_ws_error : nowarn_ws_error);
  }
  
--static void prepare_fn_table(struct patch *patch)
-+static void prepare_fn_table(struct apply_state *state, struct patch *patch)
- {
- 	/*
- 	 * store information about incoming file deletion
-@@ -3278,7 +3277,7 @@ static void prepare_fn_table(struct patch *patch)
- 	while (patch) {
- 		if ((patch->new_name == NULL) || (patch->is_rename)) {
- 			struct string_list_item *item;
--			item = string_list_insert(&fn_table, patch->old_name);
-+			item = string_list_insert(&state->fn_table, patch->old_name);
- 			item->util = PATH_TO_BE_DELETED;
- 		}
- 		patch = patch->next;
-@@ -3299,7 +3298,9 @@ static int checkout_target(struct index_state *istate,
- 	return 0;
+ /*
+@@ -1670,12 +1672,12 @@ static int parse_fragment(struct apply_state *state,
+ 				leading++;
+ 			trailing++;
+ 			if (!state->apply_in_reverse &&
+-			    ws_error_action == correct_ws_error)
++			    state->ws_error_action == correct_ws_error)
+ 				check_whitespace(state, line, len, patch->ws_rule);
+ 			break;
+ 		case '-':
+ 			if (state->apply_in_reverse &&
+-			    ws_error_action != nowarn_ws_error)
++			    state->ws_error_action != nowarn_ws_error)
+ 				check_whitespace(state, line, len, patch->ws_rule);
+ 			deleted++;
+ 			oldlines--;
+@@ -1683,7 +1685,7 @@ static int parse_fragment(struct apply_state *state,
+ 			break;
+ 		case '+':
+ 			if (!state->apply_in_reverse &&
+-			    ws_error_action != nowarn_ws_error)
++			    state->ws_error_action != nowarn_ws_error)
+ 				check_whitespace(state, line, len, patch->ws_rule);
+ 			added++;
+ 			newlines--;
+@@ -2396,7 +2398,8 @@ static int line_by_line_fuzzy_match(struct image *img,
+ 	return 1;
  }
  
--static struct patch *previous_patch(struct patch *patch, int *gone)
-+static struct patch *previous_patch(struct apply_state *state,
-+				    struct patch *patch,
-+				    int *gone)
- {
- 	struct patch *previous;
+-static int match_fragment(struct image *img,
++static int match_fragment(struct apply_state *state,
++			  struct image *img,
+ 			  struct image *preimage,
+ 			  struct image *postimage,
+ 			  unsigned long try,
+@@ -2417,7 +2420,7 @@ static int match_fragment(struct image *img,
+ 		preimage_limit = preimage->nr;
+ 		if (match_end && (preimage->nr + try_lno != img->nr))
+ 			return 0;
+-	} else if (ws_error_action == correct_ws_error &&
++	} else if (state->ws_error_action == correct_ws_error &&
+ 		   (ws_rule & WS_BLANK_AT_EOF)) {
+ 		/*
+ 		 * This hunk extends beyond the end of img, and we are
+@@ -2489,7 +2492,7 @@ static int match_fragment(struct image *img,
+ 		return line_by_line_fuzzy_match(img, preimage, postimage,
+ 						try, try_lno, preimage_limit);
  
-@@ -3307,7 +3308,7 @@ static struct patch *previous_patch(struct patch *patch, int *gone)
- 	if (patch->is_copy || patch->is_rename)
- 		return NULL; /* "git" patches do not depend on the order */
- 
--	previous = in_fn_table(patch->old_name);
-+	previous = in_fn_table(state, patch->old_name);
- 	if (!previous)
- 		return NULL;
- 
-@@ -3376,7 +3377,7 @@ static int load_preimage(struct apply_state *state,
- 	struct patch *previous;
- 	int status;
- 
--	previous = previous_patch(patch, &status);
-+	previous = previous_patch(state, patch, &status);
- 	if (status)
- 		return error(_("path %s has been renamed/deleted"),
- 			     patch->old_name);
-@@ -3572,7 +3573,7 @@ static int apply_data(struct apply_state *state, struct patch *patch,
- 	}
- 	patch->result = image.buf;
- 	patch->resultsize = image.len;
--	add_to_fn_table(patch);
-+	add_to_fn_table(state, patch);
- 	free(image.line_allocated);
- 
- 	if (0 < patch->is_delete && patch->resultsize)
-@@ -3606,7 +3607,7 @@ static int check_preimage(struct apply_state *state,
+-	if (ws_error_action != correct_ws_error)
++	if (state->ws_error_action != correct_ws_error)
  		return 0;
  
- 	assert(patch->is_new <= 0);
--	previous = previous_patch(patch, &status);
-+	previous = previous_patch(state, patch, &status);
- 
- 	if (status)
- 		return error(_("path %s has been renamed/deleted"), old_name);
-@@ -3852,7 +3853,7 @@ static int check_patch(struct apply_state *state, struct patch *patch)
- 	 * B and rename from A to B is handled the same way by asking
- 	 * was_deleted().
- 	 */
--	if ((tpatch = in_fn_table(new_name)) &&
-+	if ((tpatch = in_fn_table(state, new_name)) &&
- 	    (was_deleted(tpatch) || to_be_deleted(tpatch)))
- 		ok_if_exists = 1;
- 	else
-@@ -3930,7 +3931,7 @@ static int check_patch_list(struct apply_state *state, struct patch *patch)
- 	int err = 0;
- 
- 	prepare_symlink_changes(patch);
--	prepare_fn_table(patch);
-+	prepare_fn_table(state, patch);
- 	while (patch) {
- 		if (state->apply_verbosely)
- 			say_patch_name(stderr,
-@@ -4574,7 +4575,7 @@ static int apply_patch(struct apply_state *state,
- 
- 	free_patch_list(list);
- 	strbuf_release(&buf);
--	string_list_clear(&fn_table, 0);
-+	string_list_clear(&state->fn_table, 0);
+ 	/*
+@@ -2601,7 +2604,8 @@ static int match_fragment(struct image *img,
  	return 0;
  }
  
-@@ -4668,6 +4669,8 @@ static void clear_apply_state(struct apply_state *state)
- {
- 	string_list_clear(&state->limit_by_name, 0);
- 	strbuf_release(&state->root);
-+
-+	/* &state->fn_table is cleared at the end of apply_patch() */
- }
+-static int find_pos(struct image *img,
++static int find_pos(struct apply_state *state,
++		    struct image *img,
+ 		    struct image *preimage,
+ 		    struct image *postimage,
+ 		    int line,
+@@ -2645,7 +2649,7 @@ static int find_pos(struct image *img,
+ 	try_lno = line;
  
- int cmd_apply(int argc, const char **argv, const char *prefix)
+ 	for (i = 0; ; i++) {
+-		if (match_fragment(img, preimage, postimage,
++		if (match_fragment(state, img, preimage, postimage,
+ 				   try, try_lno, ws_rule,
+ 				   match_beginning, match_end))
+ 			return try_lno;
+@@ -2858,7 +2862,7 @@ static int apply_one_fragment(struct apply_state *state,
+ 			start = newlines.len;
+ 			if (first != '+' ||
+ 			    !state->whitespace_error ||
+-			    ws_error_action != correct_ws_error) {
++			    state->ws_error_action != correct_ws_error) {
+ 				strbuf_add(&newlines, patch + 1, plen);
+ 			}
+ 			else {
+@@ -2936,7 +2940,7 @@ static int apply_one_fragment(struct apply_state *state,
+ 
+ 	for (;;) {
+ 
+-		applied_pos = find_pos(img, &preimage, &postimage, pos,
++		applied_pos = find_pos(state, img, &preimage, &postimage, pos,
+ 				       ws_rule, match_beginning, match_end);
+ 
+ 		if (applied_pos >= 0)
+@@ -2972,10 +2976,10 @@ static int apply_one_fragment(struct apply_state *state,
+ 		if (new_blank_lines_at_end &&
+ 		    preimage.nr + applied_pos >= img->nr &&
+ 		    (ws_rule & WS_BLANK_AT_EOF) &&
+-		    ws_error_action != nowarn_ws_error) {
++		    state->ws_error_action != nowarn_ws_error) {
+ 			record_ws_error(state, WS_BLANK_AT_EOF, "+", 1,
+ 					found_new_blank_lines_at_end);
+-			if (ws_error_action == correct_ws_error) {
++			if (state->ws_error_action == correct_ws_error) {
+ 				while (new_blank_lines_at_end--)
+ 					remove_last_line(&postimage);
+ 			}
+@@ -2986,7 +2990,7 @@ static int apply_one_fragment(struct apply_state *state,
+ 			 * apply_patch->check_patch_list->check_patch->
+ 			 * apply_data->apply_fragments->apply_one_fragment
+ 			 */
+-			if (ws_error_action == die_on_ws_error)
++			if (state->ws_error_action == die_on_ws_error)
+ 				state->apply = 0;
+ 		}
+ 
+@@ -4530,7 +4534,7 @@ static int apply_patch(struct apply_state *state,
+ 	if (!list && !skipped_patch)
+ 		die(_("unrecognized input"));
+ 
+-	if (state->whitespace_error && (ws_error_action == die_on_ws_error))
++	if (state->whitespace_error && (state->ws_error_action == die_on_ws_error))
+ 		state->apply = 0;
+ 
+ 	state->update_index = state->check_index && state->apply;
+@@ -4645,6 +4649,7 @@ static void init_apply_state(struct apply_state *state, const char *prefix)
+ 	state->p_value = 1;
+ 	state->p_context = UINT_MAX;
+ 	state->squelch_whitespace_errors = 5;
++	state->ws_error_action = warn_on_ws_error;
+ 	strbuf_init(&state->root, 0);
+ 
+ 	git_apply_config();
+@@ -4801,7 +4806,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 				   squelched),
+ 				squelched);
+ 		}
+-		if (ws_error_action == die_on_ws_error)
++		if (state.ws_error_action == die_on_ws_error)
+ 			die(Q_("%d line adds whitespace errors.",
+ 			       "%d lines add whitespace errors.",
+ 			       state.whitespace_error),
 -- 
 2.8.3.443.gaeee61e
