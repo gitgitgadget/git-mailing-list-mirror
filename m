@@ -1,70 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Signing off, for now
-Date: Tue, 24 May 2016 12:42:06 -0700
-Message-ID: <xmqqd1ob450x.fsf@gitster.mtv.corp.google.com>
-References: <1464117750.24478.104.camel@twopensource.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Small rerere in rebase regression
+Date: Tue, 24 May 2016 21:48:29 +0200
+Message-ID: <5744B00D.4020006@kdbg.org>
+References: <57434572.6030306@kdbg.org>
+ <xmqqy4708ss0.fsf@gitster.mtv.corp.google.com> <57437693.3030106@kdbg.org>
+ <xmqqk2ik77cr.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1605241510370.4449@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git mailing list <git@vger.kernel.org>,
-	Keith McGuigan <kamggg@gmail.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue May 24 21:42:18 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 24 21:48:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5IDX-0007cJ-EI
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 21:42:15 +0200
+	id 1b5IJk-0001Y0-B9
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 21:48:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932387AbcEXTmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 15:42:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61577 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932371AbcEXTmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 15:42:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 78A5F1ED86;
-	Tue, 24 May 2016 15:42:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nqVba8kPX0pi6mRaQff4VzPACIY=; b=iJCcFE
-	8isLy21mQr1++NTzM6oP+/NxMwybhV8/QFzN+oS4sM03cATU4CMKXDAQwwrgwQJJ
-	Z1sD2S76HTzyAnrf6jo/B8Z+NMcFOxfEyrny4Vl2uOIAlPu8ocwUAeR0l6Cz7MCE
-	tvA9WOKNVJymD/s+qbx0yzm1zMAkArDgHKZTo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YvbHFE/9PXC9OcOzCIzTiDyf6ye/N+L+
-	5Rvf2rQGhyPpsEExrYav9ku3ga4Zs4sFoPkZlYejqhi85UeugLhVl3BI4CerOF3/
-	F2BHBpAuWyw21JeorRYMubqHE7ePnASq9H0T6Ckp1uJerX6eqjUif6BpOKSC5eNJ
-	faEuf/hPMas=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7006E1ED83;
-	Tue, 24 May 2016 15:42:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E3CE01ED7C;
-	Tue, 24 May 2016 15:42:07 -0400 (EDT)
-In-Reply-To: <1464117750.24478.104.camel@twopensource.com> (David Turner's
-	message of "Tue, 24 May 2016 15:22:30 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9998C58A-21E7-11E6-86BC-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1754653AbcEXTsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 15:48:36 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:33707 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754389AbcEXTsf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 15:48:35 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3rDmDZ3S8Zz5tlB;
+	Tue, 24 May 2016 21:48:30 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id E23FC5291;
+	Tue, 24 May 2016 21:48:29 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <alpine.DEB.2.20.1605241510370.4449@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295528>
 
-David Turner <dturner@twopensource.com> writes:
+Am 24.05.2016 um 15:18 schrieb Johannes Schindelin:
+> Hannes, could you quickly test whether
+> https://github.com/dscho/git/tree/interactive-rebase calls rerere twice,
+> too? (Please call interactive rebase with the GIT_USE_REBASE_HELPER=true
+> to avoid running the interactive rebase twice.)
+>
+> I have a hunch that it does not call rerere twice, which would be a nice
+> bonus in that patch thicket
 
-> June 3rd will be my last day at Twitter.  I hope that my new job
-> (starting in July after a month of vacation) will give me time to work
-> on Git, but I don't know exactly what parts I'll be working on, or on
-> what schedule.
+It prints the message only once:
 
-Thanks for your contributions so far, not just patches but also
-discussions and helping other contributors.
+gittest@master:1007> GIT_USE_REBASE_HELPER=true git rebase -i side
+error: could not apply fa62fea... master
 
-Good luck with your new endevour, have fun and hopefully we'll see
-you here again.
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase 
+--abort".
+
+Recorded preimage for 'a'
+Could not apply fa62fea... mastergittest@master|REBASE-i 1/1:1008> 5~
+
+(Take note of the missing LF at the end of the message.)
+
+Can this result be interpreted as another indication that the "git 
+rerere" call in die_with_patch can be removed, or are the two git-rebase 
+implementations too different to be comparable?
+
+-- Hannes
