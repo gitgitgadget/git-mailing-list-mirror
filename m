@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 06/49] builtin/apply: move 'options' variable into cmd_apply()
-Date: Tue, 24 May 2016 10:10:43 +0200
-Message-ID: <20160524081126.16973-7-chriscool@tuxfamily.org>
+Subject: [PATCH v3 01/49] builtin/apply: make gitdiff_verify_name() return void
+Date: Tue, 24 May 2016 10:10:38 +0200
+Message-ID: <20160524081126.16973-2-chriscool@tuxfamily.org>
 References: <20160524081126.16973-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -14,51 +14,51 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 10:12:05 2016
+X-From: git-owner@vger.kernel.org Tue May 24 10:12:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b57Rc-0000fN-PF
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:12:05 +0200
+	id 1b57Ra-0000fN-Ex
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 10:12:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932259AbcEXIMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 04:12:01 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35875 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753510AbcEXIL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 04:11:56 -0400
-Received: by mail-wm0-f67.google.com with SMTP id q62so3635157wmg.3
-        for <git@vger.kernel.org>; Tue, 24 May 2016 01:11:55 -0700 (PDT)
+	id S1754653AbcEXILw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 04:11:52 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34990 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753848AbcEXILs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 04:11:48 -0400
+Received: by mail-wm0-f66.google.com with SMTP id f75so3651490wmf.2
+        for <git@vger.kernel.org>; Tue, 24 May 2016 01:11:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=//aCk9ZfNrcOIlttgknL0wRNNIhN+W+QI5fJWMZdUx0=;
-        b=ERXKfSJsUH518iJnhcIT79et1p7j+PeixHfe/cpsEWbIq5DtMg2KkcHV38hfttL7oa
-         JQ+75zvpmPBi5hjs9ycOonU6h6625JVsJfaQqMKUCYCH8NX80eV1KFLDBQQsyFn51gmd
-         NCSOS82biytKd2V9gYUsQbLotweHGXGlXT13rI7ZByHRNLZkuybeKDtURo2kXTXi4orx
-         L+wqTp57B/q7yKoF5e3aaIPbEgk80hsNl0siGhCllQDDqUm1HXiqxLpw0Tdkt/Vb6sjf
-         D0SDoAiLkAyvWvNPB/x+Z4QByLU/NpDm1hLM9GArAw7bZsP5DmKTFWw6d35ygCgsA5Ka
-         FLbw==
+        bh=IJnV9D0k0p0Or4F6ogNMklA7ZgdJeVzft48ItpqkDb4=;
+        b=dE9qgbanL75EsLadsmDP5eQeNqAlSlvSOMVxb5wKZl+FKdtnZIqQe4afu9JOiJUPsz
+         Bd/CibnM9x1+WDixABdgsb8yzt/c88FFJr74rzcBGRJk+mmZQ7lwxPdk+zeFGuhPwP0b
+         W5Bs3EDYqoW7R2tqAgaqKDlUnXTNCRTYMCc/3Ux3qnf9nLZEBqscV0408Mvy8W1Qj35v
+         DdqcaTmmrOY3jrcHJk3oAFTJVaRyB6rGPFngpEldf5Unm6JOL7JAGJ85GKEjA4Y01bqe
+         19w2PfVgEa1yI3VWshkSc/Gl6GX/5pWV2L5HdIQKi5SUn83LfLKY9Ylt6IqYDfViN3Dn
+         GUEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=//aCk9ZfNrcOIlttgknL0wRNNIhN+W+QI5fJWMZdUx0=;
-        b=T3RktaYzyHh07qMC+SuOAHuUNKCgupurtm0SSW63GTPo2aP3H5BNbJa0cAUSPN3Qer
-         zwCCGqSltuzYg0z9vhNqKG0CWsbLY1+iEU4qeSNAAqDcoRxj2TPb+cORBex96RSjVUHD
-         TSL+cpZnK+XRM6Q/2aMri2YWzcGJH8sU61Np5NDbjVOjK7ArGw3gZohW64b0NDYQhkA9
-         YkeNKOv0wP6YCaer7soB4VwSyF7nHS+IzVWxtmw3XcmftFAd48sU+qH6b6aegQWWj0UQ
-         c0nZcUen45rpvPyKPZCJ91NBvIQB/e6GwS8iEwB0gQaKWovD4vXadG2oz3lEa0jSLKrQ
-         uUCg==
-X-Gm-Message-State: AOPr4FXGYRwmvBW4OhW3/tp6I3NsBuvsN6lOoivSX3uuZBK4oQIrLjXqYnx4U3oeNo8dyA==
-X-Received: by 10.28.230.137 with SMTP id e9mr22809961wmi.0.1464077514533;
-        Tue, 24 May 2016 01:11:54 -0700 (PDT)
+        bh=IJnV9D0k0p0Or4F6ogNMklA7ZgdJeVzft48ItpqkDb4=;
+        b=lQ6Rl+QH01cx6V62AKKIfKpFVrIV04YPyF1VUEGuuWT3PVsVpWTsakYfAYKCWZ0wc7
+         Mvpp2EP3X3NT6ljxUxcLCN0ctsvqSajZLrsJNfrJtts38/zYwhZysLvGovsGZEB59BCE
+         5l+r9B7zLy/v3OPQNq+9W4EiyyHiJvkxJTRR5MIb5QRUX62juBlcXbwFoB5goYX3oaOz
+         8c8IJ/B/UJMS6JRNiryg25tTW0l4BGq+i8R94cPe0Tzugbh3f/aX+IgsS9xG1vE9dMhk
+         qUAR3adLfRHyKr9MjX97h4bmgCLyxr1UzhmXem3BCy6ZZI5y3iR+QMokEFirKJwIFo8e
+         hJWA==
+X-Gm-Message-State: ALyK8tLMvMACbNBHr3evnnchZ5Lq482bjX8X/yPhdNI5aZT49pLrdlaLqI6yp6JWB9Au3Q==
+X-Received: by 10.194.169.37 with SMTP id ab5mr2795820wjc.141.1464077507215;
+        Tue, 24 May 2016 01:11:47 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.11.52
+        by smtp.gmail.com with ESMTPSA id 131sm2258044wmu.17.2016.05.24.01.11.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 24 May 2016 01:11:53 -0700 (PDT)
+        Tue, 24 May 2016 01:11:46 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.3.443.gaeee61e
 In-Reply-To: <20160524081126.16973-1-chriscool@tuxfamily.org>
@@ -66,38 +66,82 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295428>
 
-The 'options' variable doesn't need to be static and global to the
-file. It can be local to cmd_apply(), so let's move it there.
+As the value returned by gitdiff_verify_name() is put into the
+same variable that is passed as a parameter to this function,
+it is simpler to pass the address of the variable and have
+gitdiff_verify_name() change the variable itself.
 
-This will make it easier to libify the apply functionality.
+This also makes it possible to later have this function return
+-1 instead of die()ing in case of error.
 
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/apply.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 7bab466..5a1d65a 100644
+index 8e4da2e..fe5aebd 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -79,7 +79,6 @@ static enum ws_ignore {
- static const char *patch_input_file;
- static struct strbuf root = STRBUF_INIT;
- static int read_stdin = 1;
--static int options;
+@@ -925,43 +925,43 @@ static int gitdiff_hdrend(const char *line, struct patch *patch)
+ #define DIFF_OLD_NAME 0
+ #define DIFF_NEW_NAME 1
  
- static void parse_whitespace_option(const char *option)
+-static char *gitdiff_verify_name(const char *line, int isnull, char *orig_name, int side)
++static void gitdiff_verify_name(const char *line, int isnull, char **name, int side)
  {
-@@ -4517,6 +4516,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 	int errs = 0;
- 	int is_not_gitdir = !startup_info->have_repository;
- 	int force_apply = 0;
-+	int options = 0;
+-	if (!orig_name && !isnull)
+-		return find_name(line, NULL, p_value, TERM_TAB);
++	if (!*name && !isnull) {
++		*name = find_name(line, NULL, p_value, TERM_TAB);
++		return;
++	}
  
- 	const char *whitespace_option = NULL;
+-	if (orig_name) {
+-		int len = strlen(orig_name);
++	if (*name) {
++		int len = strlen(*name);
+ 		char *another;
+ 		if (isnull)
+ 			die(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
+-			    orig_name, linenr);
++			    *name, linenr);
+ 		another = find_name(line, NULL, p_value, TERM_TAB);
+-		if (!another || memcmp(another, orig_name, len + 1))
++		if (!another || memcmp(another, *name, len + 1))
+ 			die((side == DIFF_NEW_NAME) ?
+ 			    _("git apply: bad git-diff - inconsistent new filename on line %d") :
+ 			    _("git apply: bad git-diff - inconsistent old filename on line %d"), linenr);
+ 		free(another);
+-		return orig_name;
+ 	} else {
+ 		/* expect "/dev/null" */
+ 		if (memcmp("/dev/null", line, 9) || line[9] != '\n')
+ 			die(_("git apply: bad git-diff - expected /dev/null on line %d"), linenr);
+-		return NULL;
+ 	}
+ }
+ 
+ static int gitdiff_oldname(const char *line, struct patch *patch)
+ {
+-	patch->old_name = gitdiff_verify_name(line, patch->is_new, patch->old_name,
+-					      DIFF_OLD_NAME);
++	gitdiff_verify_name(line, patch->is_new, &patch->old_name,
++			    DIFF_OLD_NAME);
+ 	return 0;
+ }
+ 
+ static int gitdiff_newname(const char *line, struct patch *patch)
+ {
+-	patch->new_name = gitdiff_verify_name(line, patch->is_delete, patch->new_name,
+-					      DIFF_NEW_NAME);
++	gitdiff_verify_name(line, patch->is_delete, &patch->new_name,
++			    DIFF_NEW_NAME);
+ 	return 0;
+ }
  
 -- 
 2.8.3.443.gaeee61e
