@@ -1,193 +1,114 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Reviews for the first patches of pclouds/narrow-checkout
-Date: Tue, 24 May 2016 19:02:48 +0700
-Message-ID: <CACsJy8DVr7iL-bGWbQs52ZgnVeC0NhFM2NzZYmNA-FZ=Yu7+oA@mail.gmail.com>
-References: <CAGZ79kb-y6gUHEBSdVB6Y+A=EjykZgcNsLynXcwSMyVNHiDU2Q@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Odd Difference Between Windows Git and Standard Git
+Date: Tue, 24 May 2016 13:57:31 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605241352361.4449@virtualbox>
+References: <nhlqd4$ekr$1@ger.gmane.org> <c07df4ac-08c9-8eaa-0233-06616945c857@web.de> <c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com> <ede1c113-1ab8-6043-3e39-bbacec5db31c@web.de> <xmqqy474g3cv.fsf@gitster.mtv.corp.google.com> <xmqqfutcg0pe.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1605231310190.4122@virtualbox> <xmqqeg8sa9oq.fsf@gitster.mtv.corp.google.com> <5743DE28.5070000@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue May 24 14:03:35 2016
+Content-Type: multipart/mixed; BOUNDARY="8323329-2121850293-1464091053=:4449"
+Cc: Junio C Hamano <gitster@pobox.com>, Jon Forrest <nobozo@gmail.com>,
+	git@vger.kernel.org
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue May 24 14:06:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5B3c-0008Ac-D0
-	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 14:03:32 +0200
+	id 1b5B6U-0000jh-6q
+	for gcvg-git-2@plane.gmane.org; Tue, 24 May 2016 14:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932265AbcEXMDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 08:03:20 -0400
-Received: from mail-it0-f52.google.com ([209.85.214.52]:35156 "EHLO
-	mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752102AbcEXMDT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 08:03:19 -0400
-Received: by mail-it0-f52.google.com with SMTP id z189so43472580itg.0
-        for <git@vger.kernel.org>; Tue, 24 May 2016 05:03:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=FOo9XWnfp7d2VmrftUjWrk+szjxidWb6AYMPi4JW+u8=;
-        b=BvGexJPYZ1lW4V6YlWxVQ1tGXgoWtf2zxhYYq/Ff42Ggc4uAeQ0lMXNmCPR6e0RyR9
-         uOyR9gXXi1jJO6oM016QVsLdkBeN5X1PvQfm224EvQosf0lS2MOmu3H6ORE/aqpbVHRn
-         kStLTPXYaHqcA+s6TBzWlMfcYoI1iJHWPXjXnO94FTqspI+Yw9jg/wuFOS4xUQ5KcNE2
-         zET8qDXpCzk4vEiH15vTh8qkIiwZcOU3+liw+yP58jhhuxngEgvH/AkzL6NioILVBmSH
-         kfdiVz+QahaGxJi4LooGHhrUpcqHNZ9O3OFMrQQJIWueHwC4uurQhG4FBwZEMUlwtVYD
-         hS5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=FOo9XWnfp7d2VmrftUjWrk+szjxidWb6AYMPi4JW+u8=;
-        b=TH3+cqq+6Ce0YcAkOuPkH8q+qAg5EODfcsoGX9LRXsH3Couo5C/ZaSW63mQAZzF2YE
-         7G3Z4qulNLVprDcCZJThwW+z24goIssUcb5GRJ49MHRqXVAvJ5njytrf1wvBrNBAzn16
-         sQ37kUndlyoTgNqhPESH+frWG2gdLS+4AZ9id8HUxbEV05/tukNfCf0NPoLGmw5Sxv0d
-         OpJv8VXhWuAqzb7r5mOAAwu4o3vSD4Uo7y5gKO8fjeO2ymZkFclYCZKbswjUPut9tkH2
-         RFadOaqQS4MnO8ciVwNzLLzWdHbEJUdzbrvNJEq/ZMPcFo8We6nUUoCpXWlges6P5GAr
-         +V1Q==
-X-Gm-Message-State: ALyK8tJoNzXeFALbqpuS7gfyITvX9xm0xUZ9Lf10NVykAyxL+LmqJh0GP6GO+5ww7zHyPoXpWIDc+vK4lOToPw==
-X-Received: by 10.36.211.4 with SMTP id n4mr708805itg.57.1464091397939; Tue,
- 24 May 2016 05:03:17 -0700 (PDT)
-Received: by 10.64.173.167 with HTTP; Tue, 24 May 2016 05:02:48 -0700 (PDT)
-In-Reply-To: <CAGZ79kb-y6gUHEBSdVB6Y+A=EjykZgcNsLynXcwSMyVNHiDU2Q@mail.gmail.com>
+	id S1753476AbcEXMGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2016 08:06:21 -0400
+Received: from mout.gmx.net ([212.227.17.21]:62922 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752458AbcEXMGU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2016 08:06:20 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LrqNe-1bXL7J2uTO-013fyr; Tue, 24 May 2016 14:06:07
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <5743DE28.5070000@web.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:w4HJbU5ny+F3SKpYryLRcLmV9uQedEMi1a20EITYjfyfILwwOE4
+ 9sr3rJvKNFGTp+sgbatxakRl4rLY+6wSM2PdpWh4xOi1xTlUpSUqeSf2AGehQKzCiCb2d16
+ N2yR5BMl9EdkADq0epnxNBK4iBcUA38YzBuKcnFMmTMxFCoHqG44JjIne25Qul/fUPVCyLK
+ G5xsS4LMHyYsut09maKWA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XFn+wOOo5kc=:XEO185feyg90bGJScVDKBP
+ gEhlDwV+/gM8eSD7Lflvz+VghUTZAKKdw1eLq0G91dAlShUnFHLwsUgQJ+xwXAFBFqEmlEaxf
+ EcAVbqoQks0SuQBY6bmxpxdw6GXVS1lox6QaMYTl3mNYsG4nknaIPzTJUHeoB0Psb+kA1wnIX
+ BDcujYefqbTy1C/iZk/9dVpj5OVxBjonlwwYLF40NnmuxGa+qxMm37xKLca0x44GgpU4UmU74
+ QevGvdxFUPhPPRF04nHX4Ssw2RCqtfCO+wbTbSqYKYzNQ/V2QKxDUAebaB9SLfoiXy9q0kwG4
+ yZ3dqilBhBbA3iJzdNBR/kfpq0UOj94hFKF2l+n9TbOFXsfgRH1abheUtCvIrauESAoJhsWEI
+ cx/y4tZTfOsQ3L/LIvjMj0ha3TTnwvKzhCWlKGCkjAAUPbxBcTDkGROHPGqabu8jzpbrxex4e
+ pTL1NcHY8VwRVYZca3jlJlXpa4xrP61ZkEha4N33wZcfLIo8qsBSyP415+3Vnx40XGTlnIJPi
+ To/z4c+wY3D03htRq0Oz/mW4UQm4sDYB9gLu2eDAvBt5/Y5nb/07nPMD8FOZtKGKqfE5cl/CY
+ VTnaIZVFwEM3ZG4qSwm5PN4bYYC+7OOcFkV0KgPF8+lgsh48kMkk67f/FwvPTIfGN3tla7ISD
+ Kx/XGSVBkiuxgO/LpkwFCBSZQiPNlP1qipJv86Pkjx+QXJLKqHSvQNInj1GssyZ6qDYXs7kHt
+ kw5TTjeaccCoKYrIgEOBVKgQpN7Y8WbCNb5fzdepIA5mevb/9A4XVzSSbb0ovDWQNytE9kug 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295490>
 
-On Tue, May 24, 2016 at 1:26 AM, Stefan Beller <sbeller@google.com> wrote:
-> Hi,
->
-> so I started looking into your narrow checkout branch and started reviewing
-> the patches. Thanks for working on the narrow checkout!
->
-> Reviewed-by: Stefan Beller <sbeller@google.com> (just asking for signoff)
->     tree.c: break long lines
->     read-cache: realign some statements
->     read-cache: add sort_index()
->     read-cache: description for base_name_compare()
->     unpack-trees: break down long lines
->
-> Regarding:
->     base_name_compare: do not assume name[len] == '\0'
-> Could you clarify if this is an existing bug or a preparation for a future
-> different use?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-It's a hidden bug if I remember correctly. New code activates it.
+--8323329-2121850293-1464091053=:4449
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
+Hi,
 
->     read-cache: new sort compare function that pays attention to ce_mode
->
-> Would a new mode (0100 (directory)) require bumping the index version?
-> Or the other way round: What If I use these patches and then try to use
-> another version of Git without this feature?
+On Tue, 24 May 2016, Torsten B=C3=B6gershausen wrote:
 
-Good question. Current git happily takes index with directories (not
-good). However, high level like git-diff will detect and reject
-entries that are neither regular files or git-links. I might bump
-index version up in the end to be on the safe side.
+> On 05/23/2016 08:52 PM, Junio C Hamano wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >
+> > > > Of course, if you are doing network mount between systems with and
+> > > > without filemode support, the result would depend on where you did
+> > > > the "git init", so that would not help.
+> > > >
+> > > > Which means that other probed things like symlink support and case
+> > > > sensitivity are likely to be wrong in the .git/config that the
+> > > > user may want to fix.
+> > >
+> > > What we could do is to make the default config setting
+> > > platform-dependent, a la CRLF_NATIVE.
+> > >
+> > > I imagine that we would want this for core.filemode, core.ignorecase =
+and
+> > > core.symlinks.
+> > >
+> > > What do you think?
+> >
+> > The reason why we probe for filemode, icase, etc. at repository
+> > creation time and record the result in the configuration is because we
+> > do not to want to do the auto-probing at runtime, every time we run
+> > any Git command.
 
->     read-cache: refactor check_ce_order()
->
-> Would it make sense to avoid the yoda condition?
-> (i.e. "cmp > 0" instead of "0 < cmp" -> die("unordered stage entries"))
-> Or rather: I found it confusing that cmp is on both sides of the < in two
-> different conditions, i.e. it looks like you prefer to keep the "<" sign
-> constant, whereas I would have written
->
->     if (cmp < 0)
->         continue;
->     if (cmp > 0)
->         die(...);
->
-> It's a style thing, so I guess either is fine.
+Right, I missed this of course. My idea was to have saner defaults *iff
+the config variables are not set explicitly*. But they *are* set, of
+course. Just not in a way that makes sense when the very same working
+directory is accessed from different Operating Systems.
 
-I didn't notice the new "cmp < 0" makes the old "cmp <0" look weird. Will fix.
+> if core.filemode is true, Git for Windows could:
+> a) Behave as today, report changed files (filemode)
+> b) Give warning to the user (and report changed filemode)
+> c) Error out, saying misconfigured worktree
+> d) use core.filemode =3D false anyway.
+> e) Give a warning and use core.filemode =3D false anyway.
+>=20
+> At the moment I tend for c), as it makes it clear what is going wrong,
+> what do you think ?
 
-> I would however put the case for (cmp < 0) first as that is the expected case?
+The problem with that is that we would need to probe again. Or dictate for
+all eternity that Git for Windows cannot determine the executable bit (but
+who knows for certain?)
 
-Yep.
+I am pretty convinced that we should go with a)
 
->     read-cache: check ce_mode in check_ce_order()
->
->     Can we replace
->         cmp = (c1 < c2) ? -1 : (c1 > c2) ? 1 : 0;
->     by:
->         cmp = c1 - c2;
->     as it is only used in comparisons lesser/greater than 0 afterwards.
-
-
-Hmm.. c1 and c2 are unsigned. I guess it's ok to do the subtraction,
-going to need to run some tests...
->
-> Again, I would put the "continue" case first (cmp >0)
->
->
->
->     read-cache: index_name_stage_pos() => index_name_mode_stage_pos()
->
-> "After this read-cache.c code is pretty much ready for accepting dir
-> entries in the index."
->
-> What is missing?
-
-Something like the next patch, replacing file with a dir of same name
-or vice versa.
-
-> So that's a review for the first third of the patches. :)
-
-Thanks :)
-
-> I wonder how much is left for actually finishing the narrow checkout,
-> as I could not find documentation or code the user interacts with.
-> (i.e. I would like to use a narrow checkout. How do I start? Where do I put
-> the pathspec of things I would like to use? Or are you envisioning a git wrapper
-> for that? "git narrow [make-go-away, revive] <pathspec>" ?)
-
-UI is bare bone at this stage. You can do "git read-tree -mu HEAD --
-<pathspec>". Directories that are _completely_ excluded will be folded
-and you should have some nice dir entries in the index (can be
-examined with ls-files --stage, notice the mode column). Then you can
-try out various commands and see whether they still work (they
-should). The shape of the index is not defined in a file like sparse
-checkout. You can fold and unfold directories at will and they should
-remain so (I think git reset --hard just drops the old index and write
-a new one, we may need to fix that, because we would lose fold/unfold
-state)
-
-The next step is unfold operation, then re-fold. I think I aimed too
-high trying to combine those operations as one in unpack-trees.c.
-Unfolding a directory should be simple (UI in update-index), you read
-the corresponding tree, you check out all files (and need to make sure
-the directory is missing, so no overwrite/data loss can happen).
-Re-folding is simply running "read-tree" command again, I think.
-read-tree (or unpack_trees() in fact) already knows how to fold and
-delete files in folded directories (or refuse to do so if files to be
-deleted are dirty). I was trying to do both operations in one step to
-avoid unnecessary I/O (e.g. you have folded directory "a", now you
-want to unfold "a/b", but you want to keep "a/b/c" folded). That sort
-of work can be done at a later phase.
-
-Once you support  both fold and unfold, you can teach "git checkout"
-about this so we have a friendlier UI. "git checkout --reshape --
-<pathspec>" (or whatever option name) will try to unfold first (only
-relevant directories, not unfold the entire worktree) then refold.
-Narrow checkout is pretty much done at this point. More work may be
-required, e.g. audit the code and prevent it from reading dir's SHA-1,
-for narrow _clone_ because such an operation will fail in narrow clone
-(but not narrow checkout with full repository). If I remember
-correctly the major work to make narrow clone work is dealing with
-worktree. Once narrow checkout works, it's probably ~10 patches to get
-a naive version of narrow clone.
-
-PS. I forgot about merge. If a merge conflict happens at a directory,
-I guess we can simply reject the merge and ask the user to unfold
-those directories first... It's probably the same behavior we have
-with submodules today, and we are probably fine as submodules have
-mostly addressed the "directory in index" issue for us. We just need
-to follow the path and accept directories where it already accepts
-git-links.
--- 
-Duy
+Ciao,
+Dscho
+--8323329-2121850293-1464091053=:4449--
