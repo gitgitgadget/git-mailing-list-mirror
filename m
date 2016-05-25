@@ -1,95 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC-PATCH 1/2] send-email: new option to quote an email and reply to
-Date: Wed, 25 May 2016 11:15:05 -0700
-Message-ID: <xmqqr3cqypg6.fsf@gitster.mtv.corp.google.com>
-References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
-	<1464031829-6107-2-git-send-email-tom.russello@grenoble-inp.org>
-	<vpq60u4bl4e.fsf@anie.imag.fr>
-	<b1752a59-af2b-6e18-fc69-0650440939e3@grenoble-inp.org>
-	<vpqh9dmfy5k.fsf@anie.imag.fr>
-	<xmqqwpmi16zt.fsf@gitster.mtv.corp.google.com>
-	<vpqeg8q5b6f.fsf@anie.imag.fr>
+From: Mehul Jain <mehul.jain2029@gmail.com>
+Subject: Re: Please add a git config option to make --show-signature the default
+Date: Wed, 25 May 2016 23:48:57 +0530
+Message-ID: <CA+DCAeSqTitycrO2y=SdutK1H2+jbzp7OzbhZ3pOYY_YOdOkGw@mail.gmail.com>
+References: <57438568.60707@gmail.com>
+	<alpine.DEB.2.20.1605241313440.4449@virtualbox>
+	<CACC5Q1c2s4yOtGAtKsepwnme7udq7yqyN7S5BfMHbi0L08XwzA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Samuel GROOT <samuel.groot@grenoble-inp.org>,
-	Tom Russello <tom.russello@grenoble-inp.org>,
-	git@vger.kernel.org, erwan.mathoniere@grenoble-inp.org,
-	jordan.de-gea@ensimag.grenoble-inp.fr,
-	Tom Russello <tom.russello@ensimag.grenoble-inp.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed May 25 20:15:17 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Austin English <austinenglish@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 25 20:19:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5dKv-0003xM-2r
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 20:15:17 +0200
+	id 1b5dOc-0005Bd-UM
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 20:19:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754259AbcEYSPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 14:15:10 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62722 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752237AbcEYSPJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 14:15:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 14E411D8FA;
-	Wed, 25 May 2016 14:15:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BVMb8OoH9e5ISSll8OXuDWggK/M=; b=j+qZRQ
-	9ExvrXCIJjee0VBqYO+id7x51MANIGpuHE75nzK9xhITa5AOxNLIGPzXnkdiVBmK
-	G49vbwy47d4TgGTG2iRqY/6BtTUtkGj72hEmy3K0XIFWOmvfYZKvhdm4//udtNwE
-	Wazj4S65P8p8IZaFL20g0c5nXMbZpBuzPNGgw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aP8XXOIOd5A3A1/oRgfo1soKnW5d9a0a
-	YS50ijXyEcRjHhYXPcf+cGtWSoxiWyuWW91qJHJgnpxH3MvENA1N7CjKQyDheOG3
-	1LaYHSTdbUncVwxRalw9iqmcFY6xdWdjqUCzotjilbZfrOSSguWjbbPXHTTgVsKi
-	2fvjzg+d7wk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id F36D71D8F8;
-	Wed, 25 May 2016 14:15:07 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E26E21D8F4;
-	Wed, 25 May 2016 14:15:06 -0400 (EDT)
-In-Reply-To: <vpqeg8q5b6f.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
-	25 May 2016 18:56:08 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9C1647E8-22A4-11E6-A1F5-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1755791AbcEYSTC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 14:19:02 -0400
+Received: from mail-qg0-f44.google.com ([209.85.192.44]:35095 "EHLO
+	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755763AbcEYSS7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 14:18:59 -0400
+Received: by mail-qg0-f44.google.com with SMTP id e93so25846389qgf.2
+        for <git@vger.kernel.org>; Wed, 25 May 2016 11:18:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=Xa/W4JT0Qa6K3/af32GTAi1u/kkmWC6hcseKGYzkGdw=;
+        b=h2xPCtMOQc6jjC+OHEEFC6bJ2d8zytGSSH3Cmyzkp9Yq5VVgE36XvP5GTaACc/lDay
+         74kUwN4cxCfjZeox0fENIstWKeAUMVMcQ7kDCy9ycBwV6Lc6o9Z6qjEPbpMljPIipB7f
+         5qR7ME3zhv/gKr/QJRYq7MEs5Lr0hfNhi6w4hfNysmIVv3Ebge7AlZeS193H3PS8MTdd
+         Ah7zv/08qAMQpmep2RlP7u8AAvOJv4m1lEc6gfBB59TOHjOxnTSrhyb+2v9smx6I6VvF
+         IG8McBaDjsLtAK10YP8ciQMWNOeWc1IVzat9jMfuu1VW56UELhYREH5BGGyCzpHdMh+5
+         JN+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=Xa/W4JT0Qa6K3/af32GTAi1u/kkmWC6hcseKGYzkGdw=;
+        b=hEwRMkh+gBCddUXcsvSUROn6E2aWjCqPFieO//2joghipAiPZ0te6SU4MMiDKuAWFE
+         sukZntZUGbG4jObzUp4ZJZsM8t8rOM+blh61mLSll7jhtCh7NqnOewiUKv0hMKq7FJ3l
+         Cz0isn+OfworWskHw6bxrYYk8uLm62CNb39A0BkRgfe0cgKkePXmO7XrS2iuzgLiiBug
+         Zpk3/TqISGNN5kLgi7NPZf/a0LKuj1RE0ANz5JarAobedGfA54eHYf4Pzu9hgKybNy1T
+         YSQycQpaUS6kjcvbYOYJ++XHTklE6Yh4S1PI2qxyd/HcrPL2ud7b/rdJWDL3O3ZKYHjz
+         CreQ==
+X-Gm-Message-State: ALyK8tI4ufDYF+y2TZQy0Cnd7kgahRd389PM33YHVg36PO4yJQbw0MPBZ1OQ8zoPp+wSsVZITRrK5/0LY5ZPCw==
+X-Received: by 10.140.109.10 with SMTP id k10mr4848224qgf.89.1464200337894;
+ Wed, 25 May 2016 11:18:57 -0700 (PDT)
+Received: by 10.55.51.212 with HTTP; Wed, 25 May 2016 11:18:57 -0700 (PDT)
+In-Reply-To: <CACC5Q1c2s4yOtGAtKsepwnme7udq7yqyN7S5BfMHbi0L08XwzA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295584>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Hi,
 
-> This should work, but sounds like too much of overloading of
-> --in-reply-to IMHO: if given a message id, it would only add a reference
-> to this message-id, but if given a file, it would also modify the To:
-> and Cc: list.
->
-> Not a strong objection, though.
+On Wed, May 25, 2016 at 9:28 AM, Austin English <austinenglish@gmail.com> wrote:
+> I'll try
+> to submit my own patch. In the meantime, it seems appropriate to file
+> a bug so that others can have the opportunity to solve the problem if
+> they're interested.
 
-Well, with your "that is the plan indeed", the option would behave
-the same whether given a message ID or a filename, no?
+If you haven't started working on it and if no one else has picked it up
+then I would like to try it out and submit a patch.
 
-But I do agree that those who have accustomed to the behaviour of
---in-reply-to that does not mess with To/Cc:, such a behaviour
-change is not desirable.
-
-If we are adding a new --reply-to-email=<file|id>, it should behave
-as a superset of --in-reply-to (i.e. it should set In-Reply-to:
-using the message ID of the e-mail we are replying to), though.
-
->> In the future, you might even teach send-email, perhaps via a user
->> configurable hook, a way to get to the message header and text given a
->> message-id, and when it happens, the same logic can be used when
->> --in-reply-to is given a message-id (i.e. you go from the id to the
->> message and find the addresses you would To/Cc: your message).
->
-> That is the plan indeed. Fetching from gmane for example should be
-> rather easy in perl, and would be really convenient!
+Thanks,
+Mehul
