@@ -1,85 +1,128 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] transport, send-pack: append period to up-to-date message
-Date: Wed, 25 May 2016 17:47:34 -0500
-Message-ID: <20160525224733.GF13776@sigill.intra.peff.net>
-References: <1464123104-45513-1-git-send-email-junk@humanoriented.com>
- <CAGZ79kayB59-U52oAw=13a2CAhJLsfmoD6JbAURbt0p8g8a8fg@mail.gmail.com>
+From: Eric Wong <e@80x24.org>
+Subject: Re: [BUG] t9801 and t9803 broken on next
+Date: Wed, 25 May 2016 22:49:07 +0000
+Message-ID: <20160525224907.GA18894@dcvr.yhbt.net>
+References: <3A110437-F778-42E2-A987-86B4EAB3D963@gmail.com>
+ <20160513103621.GA12329@dcvr.yhbt.net>
+ <xmqqpospap8g.fsf@gitster.mtv.corp.google.com>
+ <4830D469-3885-4010-9A04-D809F0C6159D@gmail.com>
+ <xmqq37pk8q0h.fsf@gitster.mtv.corp.google.com>
+ <5E7631C9-DD59-4358-B907-D7C7AEA1739C@gmail.com>
+ <20160517121330.GA7346@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Yong Bakos <junk@humanoriented.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>, barkalow@iabervon.org,
-	Yong Bakos <ybakos@humanoriented.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu May 26 00:47:42 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Luke Diamand <luke@diamand.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 26 00:49:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5haX-0002J2-Q2
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 00:47:42 +0200
+	id 1b5hcV-0002mO-0n
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 00:49:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752344AbcEYWri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 18:47:38 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44303 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751829AbcEYWrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 18:47:37 -0400
-Received: (qmail 23026 invoked by uid 102); 25 May 2016 22:47:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 May 2016 18:47:37 -0400
-Received: (qmail 14812 invoked by uid 107); 25 May 2016 22:47:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 May 2016 18:47:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2016 17:47:34 -0500
+	id S1752312AbcEYWtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 18:49:39 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:42594 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752275AbcEYWti (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 18:49:38 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94B471FCC6;
+	Wed, 25 May 2016 22:49:37 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kayB59-U52oAw=13a2CAhJLsfmoD6JbAURbt0p8g8a8fg@mail.gmail.com>
+In-Reply-To: <20160517121330.GA7346@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295608>
 
-On Tue, May 24, 2016 at 02:21:00PM -0700, Stefan Beller wrote:
-
-> On Tue, May 24, 2016 at 1:51 PM, Yong Bakos <junk@humanoriented.com> wrote:
-> > Appending a period to "Everything up-to-date" makes the output message
-> > consistent with similar output in builtin/merge.c.
-> >
-> > Signed-off-by: Yong Bakos <ybakos@humanoriented.com>
-> > ---
-> >  builtin/send-pack.c | 2 +-
-> >  transport.c         | 2 +-
-> >  2 files changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-> > index 1ff5a67..67d9304 100644
-> > --- a/builtin/send-pack.c
-> > +++ b/builtin/send-pack.c
+Jeff King <peff@peff.net> wrote:
+> On Tue, May 17, 2016 at 10:07:16AM +0200, Lars Schneider wrote:
 > 
-> While consistency is a good idea in general, I wonder how that applies here.
-> git-send-pack is a low level (i.e. plumbing) command.
+> > I think that is pretty much the problem. Here is what is happening:
+> > 
+> > 1.  git-p4 imports all changelists for the "main" branch
+> > 
+> > 2.  git-p4 starts to import a second branch and creates a fast-import
+> >     "progress checkpoint". This triggers:
+> > 
+> >     --> fast-import.c: cycle_packfile
+> >     --> fast-import.c: end_packfile
+> >     --> fast-import.c: loosen_small_pack
+> > 
+> >     At this point we have no packfile anymore.
+> > 
+> > 3.  git-p4 sends the command "commit refs/remotes/p4/depot/branch2"
+> >     to fast-import in order to create a new branch. This triggers:
+> > 
+> >     --> fast-import.c: parse_new_commit
+> >     --> fast-import.c: load_branch
+> >     --> fast-import.c: load_tree
+> > 
+> >     "load_tree" calls "find_object" and the result has a "pack_id" of 0.
+> >     I think this indicates that the object is in the packfile. Shouldn't
+> >     the "pack_id" be "MAX_PACK_ID" instead?
+
+Yes; I think that is correct.  Alternative patch to Jeff's
+coming in reply to this message.
+
+> >         myoe = find_object(sha1);
+> >         if (myoe && myoe->pack_id != MAX_PACK_ID) {
 > 
->        The interface (input, output, set of options and the semantics) to
->        these low-level commands are meant to be a lot more stable than
->        Porcelain level commands, because these commands are primarily for
->        scripted use. The interface to Porcelain commands on the other hand are
->        subject to change in order to improve the end user experience.
+> Thanks for the analysis. I think this is definitely the problem.  After
+> fast-import finalizes a packfile (either at the end of the program or
+> due to a checkpoint), it never discards its internal mapping of objects
+> to pack locations. It _has_ to keep such a mapping before the pack is
+> finalized, because git's regular object database doesn't know about it.
+> But afterwards, it should be able to rely on the object database.
+
+Almost; but relying on marks is a problem since that set can contain
+mark => object_entry mappings which the normal object database won't
+know about.
+
+> The patch below probably makes your case work, but there are a lot of
+> open questions:
 > 
-> So if another porcelain exists and compares the output string
-> exactly, this would be a regression for them. That is why I'd refrain
-> from updating these strings
+>   1. Should we always discard the mapping, even when not loosening
+>      objects? I can't think of a real downside to always using git's
+>      object lookups.
 
-I think messages to stderr are generally fair game for changing, even in
-plumbing. In many cases they are also translated (and I would argue that
-these messages probably should be translated, too).
+I'm not sure.  It's safe to clear the top-level table, but it
+might speedup some lookups for just oe->type if we keep it
+around.
 
-That being said, CodingGuidelines says:
+I decided to keep it, anyways, because the mark set references them.
 
-   - Do not end error messages with a full stop.
+>   2. Can we free memory associated with object_entry structs at this
+>      point? They won't be accessible via the hash, but might other bits
+>      of the code have kept pointers to them?
 
-This isn't an error message exactly, but I think it's in the same vein.
-I will note that we have not historically been consistent here, though
-(as evidenced by the noted message in git-merge).
+Yes, invalid entries are also held in "struct mark_set marks";
+this is a major problem with merely clearing the top-level
+object table.
 
--Peff
+>      I suspect it may screw up the statistics that fast-import prints at
+>      the end, but that's a minor point.
+
+I still need to check, on that; but yeah, minor.
+
+>   3. I notice that a few other structs (branch and tag) hold onto the
+>      pack_id, which will now point to a pack we can't access. Does this
+>      matter? I don't think so, because checkpoint() seems to dump the
+>      branches and tags.
+
+I don't think it matters unless a crash log or core dump is
+created; then it becomes confusing to the person tracking down a
+problem, so I've invalidated pack_id.  This doesn't affect
+dump_branches or dump_tags from what I can tell.
+
+>   4. In general, should we be loosening objects at checkpoints at all?
+
+I think so.  It should be useful to checkpoint to make objects
+available to other read-only processes while leaving a
+fast-import running indefinitely.
