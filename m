@@ -1,70 +1,158 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Submodules: have a depth field in the .gitmodules file
-Date: Wed, 25 May 2016 15:38:57 -0700
-Message-ID: <xmqqeg8pzrsu.fsf@gitster.mtv.corp.google.com>
-References: <20160525220006.27138-1-sbeller@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] format_commit_message: honor `color=auto` for `%C(auto)`
+Date: Wed, 25 May 2016 17:39:04 -0500
+Message-ID: <20160525223904.GD13776@sigill.intra.peff.net>
+References: <20160525015649.GA13258@zoidberg>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de, jrnieder@gmail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu May 26 00:39:16 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Edward Thomson <ethomson@edwardthomson.com>
+X-From: git-owner@vger.kernel.org Thu May 26 00:39:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5hSO-0000Ky-82
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 00:39:16 +0200
+	id 1b5hSO-0000Ky-QU
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 00:39:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751577AbcEYWjB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 18:39:01 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64217 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751480AbcEYWjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 18:39:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id EEC1E1E115;
-	Wed, 25 May 2016 18:38:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sX81uh+/WgJyGU7Xd/ZYJz4n3UI=; b=HhqG3z
-	j7ik36IyBv6XnI5A9tfyvyR1N/G2kJIcAwLRtMWpUwIM/hAD88LPhNDmVzrrAj/q
-	8Ndn0mw/GYKlNb4E0ftBJowQyfcT3SKQQ8Z8x5TV/4etFJwRWo7LGixYn+/IraHM
-	53Tb3ngjbTT+o3SCFFKifLz1dtb9Ik/FlhkZ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pCL6nI/DYIhPIckypnJa2PFGtVvzydk0
-	imSpy1IlKVieOnTmrIswXEYI9/bdyA/p4TYr+Z5AbGm/tAFaVgCWfZfyBNJCYrY5
-	jHCtOYDd1GTz1EGiLczg8Mule4pYAlZWvXMRdPs8mu1ISrDL4ksSy0sH6sok44PV
-	9eDR5K0EVmI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DCBBC1E113;
-	Wed, 25 May 2016 18:38:59 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4DF711E112;
-	Wed, 25 May 2016 18:38:59 -0400 (EDT)
-In-Reply-To: <20160525220006.27138-1-sbeller@google.com> (Stefan Beller's
-	message of "Wed, 25 May 2016 15:00:03 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 78E365BA-22C9-11E6-BFAE-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751810AbcEYWjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 18:39:09 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44283 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751789AbcEYWjI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 May 2016 18:39:08 -0400
+Received: (qmail 22621 invoked by uid 102); 25 May 2016 22:39:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 May 2016 18:39:07 -0400
+Received: (qmail 14697 invoked by uid 107); 25 May 2016 22:39:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 May 2016 18:39:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2016 17:39:04 -0500
+Content-Disposition: inline
+In-Reply-To: <20160525015649.GA13258@zoidberg>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295601>
 
-Stefan Beller <sbeller@google.com> writes:
+On Tue, May 24, 2016 at 08:56:49PM -0500, Edward Thomson wrote:
 
-> Sometimes the history of a submodule is not considered important by
-> the projects upstream. To make it easier for downstream users, allow
-> a field 'submodule.<name>.depth' in .gitmodules, which can be used
-> to indicate the recommended depth.
+> Check that we are configured to display colors in the given context when
+> the user specifies a format string of `%C(auto)`.  This brings that
+> behavior in line with the behavior of `%C(auto,<colorname>)`, which will
+> display the given color only when the configuration specifies to do so.
+> 
+> This allows the user the ability to specify that color should be
+> displayed only when the output is a tty, and to use the default color
+> for the given context (instead of a hardcoded color value).
+> 
+> Signed-off-by: Edward Thomson <ethomson@edwardthomson.com>
 
-Hmph.  I can understand and certainly agree with the first sentence,
-but I am not sure if "depth", if it is anything other than "1" or
-"infinity", is a reasonable value.
+I somehow had trouble figuring out the problem from this description and
+the patch. It seems to be about much more than just color=auto or a
+given context, and more like:
 
-I'd understand if a project wants to say something like "at this
-moment, history before v2.0 tag does not matter", though.
+  When %C(auto) is used, we unconditionally turn on color for any
+  subsequent placeholders, even if the user said "--no-color", or color
+  config is turned off, or it is set to "auto" and we are not going to a
+  tty.
+
+It's possible somebody is relying on the ability to unconditionally turn
+on color for "auto-colored" placeholders like "%H" or "%d", but I'm
+inclined to call this a strict bug-fix, for two reasons:
+
+  1. It says "%C(auto)", not "%C(on)".
+
+  2. This is documented as behaving like "%C(auto,...)", which as you
+     note works in a more sane way.
+
+I think it's worth mentioning this explicitly in the commit message. We
+could also add "%C(on)", I guess, but it's unclear to me whether anybody
+would want it (they would probably just use "--color" in that case,
+unless they really want unconditional coloring for just _some_
+elements).
+
+I'm adding Duy to the cc as the original author of %C(auto), in case
+there is something subtle I'm missing.
+
+> ---
+>  pretty.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+
+Looks like we didn't have any tests at all for %C(auto). And the tests
+for %C(auto,...) were labeled as %C(auto), making it all the more
+confusing. Perhaps it is worth squashing this in:
+
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index b77d4c9..a1dcdb8 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -184,38 +184,38 @@ commit $head1
+ [1;31;43mfoo[m
+ EOF
+ 
+-test_expect_success '%C(auto) does not enable color by default' '
++test_expect_success '%C(auto,...) does not enable color by default' '
+ 	git log --format=$AUTO_COLOR -1 >actual &&
+ 	has_no_color actual
+ '
+ 
+-test_expect_success '%C(auto) enables colors for color.diff' '
++test_expect_success '%C(auto,...) enables colors for color.diff' '
+ 	git -c color.diff=always log --format=$AUTO_COLOR -1 >actual &&
+ 	has_color actual
+ '
+ 
+-test_expect_success '%C(auto) enables colors for color.ui' '
++test_expect_success '%C(auto,...) enables colors for color.ui' '
+ 	git -c color.ui=always log --format=$AUTO_COLOR -1 >actual &&
+ 	has_color actual
+ '
+ 
+-test_expect_success '%C(auto) respects --color' '
++test_expect_success '%C(auto,...) respects --color' '
+ 	git log --format=$AUTO_COLOR -1 --color >actual &&
+ 	has_color actual
+ '
+ 
+-test_expect_success '%C(auto) respects --no-color' '
++test_expect_success '%C(auto,...) respects --no-color' '
+ 	git -c color.ui=always log --format=$AUTO_COLOR -1 --no-color >actual &&
+ 	has_no_color actual
+ '
+ 
+-test_expect_success TTY '%C(auto) respects --color=auto (stdout is tty)' '
++test_expect_success TTY '%C(auto,...) respects --color=auto (stdout is tty)' '
+ 	test_terminal env TERM=vt100 \
+ 		git log --format=$AUTO_COLOR -1 --color=auto >actual &&
+ 	has_color actual
+ '
+ 
+-test_expect_success '%C(auto) respects --color=auto (stdout not tty)' '
++test_expect_success '%C(auto,...) respects --color=auto (stdout not tty)' '
+ 	(
+ 		TERM=vt100 && export TERM &&
+ 		git log --format=$AUTO_COLOR -1 --color=auto >actual &&
+@@ -223,6 +223,18 @@ test_expect_success '%C(auto) respects --color=auto (stdout not tty)' '
+ 	)
+ '
+ 
++test_expect_success '%C(auto) respects --color' '
++	git log --color --format="%C(auto)%H" -1 >actual &&
++	printf "\\033[33m%s\\033[m\\n" $(git rev-parse HEAD) >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '%C(auto) respects --no-color' '
++	git log --no-color --format="%C(auto)%H" -1 >actual &&
++	git rev-parse HEAD >expect &&
++	test_cmp expect actual
++'
++
+ iconv -f utf-8 -t $test_encoding > commit-msg <<EOF
+ Test printing of complex bodies
+ 
