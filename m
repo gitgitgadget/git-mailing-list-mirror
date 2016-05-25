@@ -1,284 +1,91 @@
-From: Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>
-Subject: [RFC/PATCH] pull: set-upstream implementation
-Date: Wed, 25 May 2016 17:25:28 +0200
-Message-ID: <20160525152528.22202-1-erwan.mathoniere@grenoble-inp.org>
-Cc: tom.russello@grenoble-inp.org, samuel.groot@grenoble-inp.org,
-	Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>,
-	Jordan De Gea <jordan.de-gea@grenoble-inp.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 25 17:26:57 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC-PATCH 1/2] send-email: new option to quote an email and reply to
+Date: Wed, 25 May 2016 08:40:06 -0700
+Message-ID: <xmqqwpmi16zt.fsf@gitster.mtv.corp.google.com>
+References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
+	<1464031829-6107-2-git-send-email-tom.russello@grenoble-inp.org>
+	<vpq60u4bl4e.fsf@anie.imag.fr>
+	<b1752a59-af2b-6e18-fc69-0650440939e3@grenoble-inp.org>
+	<vpqh9dmfy5k.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Samuel GROOT <samuel.groot@grenoble-inp.org>,
+	Tom Russello <tom.russello@grenoble-inp.org>,
+	git@vger.kernel.org, erwan.mathoniere@grenoble-inp.org,
+	jordan.de-gea@ensimag.grenoble-inp.fr,
+	Tom Russello <tom.russello@ensimag.grenoble-inp.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed May 25 17:40:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5ahv-0006eB-1n
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 17:26:51 +0200
+	id 1b5aux-0003NK-6v
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 17:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753425AbcEYP0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 11:26:38 -0400
-Received: from zm-smtpout-2.grenet.fr ([130.190.244.98]:55962 "EHLO
-	zm-smtpout-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752694AbcEYP0g (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 11:26:36 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 319B820F2;
-	Wed, 25 May 2016 17:26:32 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id w1gCRhmqCFNF; Wed, 25 May 2016 17:26:32 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 2107B20D9;
-	Wed, 25 May 2016 17:26:32 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 1AF962077;
-	Wed, 25 May 2016 17:26:32 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3vK2v-YwTbZz; Wed, 25 May 2016 17:26:32 +0200 (CEST)
-Received: from machin-portable.grenet.fr (eduroam-033094.grenet.fr [130.190.33.94])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id E61C92055;
-	Wed, 25 May 2016 17:26:31 +0200 (CEST)
-X-Mailer: git-send-email 2.8.0.GIT
+	id S1754317AbcEYPkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 11:40:12 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58368 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752758AbcEYPkL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 11:40:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1D3451C02B;
+	Wed, 25 May 2016 11:40:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zXqxBhiokdpIllBj6TM70Euof6k=; b=ZvuuZw
+	7roF6lM/qOjlI4ayJ9x+HyCQ0sipIlY+34XxOuWkcg8K/vnkIp0el4yb6+1GyhXH
+	mQ335D9fVTWWPcceRUP8lYsjUBG1vMJJpfuBSzosxdd0HbOs+ZnlLKIu6254C3Vq
+	7aXr6zDn0rmgz4e/ZyvpjlQvKtmJuB7QxEx2k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EVW7cmJBKvroNPi6K0FRE9IJyHFUlFub
+	vQfj+oaKSdWyGs93jMsFXYRNmLhFKmDSVo+WFWxBhWWq32qYzhJWHeGEaq29rHXD
+	TkivJYkVIV0n3lsUFTKZWoBBEVnZIM48IQof9z7DPelnIknZeJ583TjQW23Q+oEg
+	WEHl9TjkVLI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1419E1C02A;
+	Wed, 25 May 2016 11:40:10 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 616451C027;
+	Wed, 25 May 2016 11:40:09 -0400 (EDT)
+In-Reply-To: <vpqh9dmfy5k.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
+	25 May 2016 08:29:43 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F653F798-228E-11E6-B3B5-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295575>
 
-Implements pull [--set-upstream | -u] which sets the remote tracking
-branch to the one the user just pulled from.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-	git pull [--set-upstream | -u] <remote> <branch>
+> Actually, I'm not sure what the ideal behavior should be. Perhaps it's
+> better to distinguish 1) and 2) above, and have two options
+> --reply-to-email=<file> doing 1), and --quote doing 2), implying
+> --compose and requiring --reply-to-email.
 
-After successfully fetched from <remote>, sets branch.<name>.remote to
-<remote> and branch.<name>.merge to follow <remote>/<branch>
+I tend to agree that sounds like a better way to structure these
+features.
 
-Signed-off-by: Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>
-Signed-off-by: Jordan De Gea <jordan.de-gea@grenoble-inp.org>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
----
-Hello,
+I wonder if we can safely repurpose existing --in-reply-to option?
+That is, if the value of --in-reply-to can be reliably determined as
+a filename that has the message (as opposed to a message-id), we
+read the "Message-Id:" from that file to figuire out what message-id
+to use, and figure out To/Cc: to use for the purpose of your (1) at
+the same time.  In the future, you might even teach send-email,
+perhaps via a user configurable hook, a way to get to the message
+header and text given a message-id, and when it happens, the same
+logic can be used when --in-reply-to is given a message-id (i.e. you
+go from the id to the message and find the addresses you would
+To/Cc: your message).
 
-`git push --set-upstream <remote> <branch>` sets the remote and merge config
-variables for <branch> after successfully pushed.
-
-This patch implements an equivalent for `git pull` or
-`git branch --set-upstream-to=<remote>/<branch>`.
-
-Difficulties:
-	- I can't figure out what remote branch sould be tracked
-	in that case: `git pull -u origin :master`
-	- Is the result of 'resolve_ref_unsafe' should be freed ?
-
-What's your opinion ?
-
-
- Documentation/git-pull.txt |  7 +++++
- builtin/pull.c             | 61 +++++++++++++++++++++++++++++++++++++
- t/t5544-pull-upstream.sh   | 75 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 143 insertions(+)
- create mode 100755 t/t5544-pull-upstream.sh
-
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index d033b25..3a2e0b7 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -93,6 +93,13 @@ OPTIONS
- 	has to be called afterwards to bring the work tree up to date with the
- 	merge result.
- 
-+-u::
-+--set-upstream::
-+	For each branch that is successfully pulled, add
-+	upstream (tracking) reference, used by argument-less
-+	linkgit:git-push[1] and other commands. For more information,
-+	see 'branch.<name>.merge' in linkgit:git-config[1].
-+
- Options related to merging
- ~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 1d7333c..e096858 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -17,6 +17,7 @@
- #include "revision.h"
- #include "tempfile.h"
- #include "lockfile.h"
-+#include "branch.h"
- 
- enum rebase_type {
- 	REBASE_INVALID = -1,
-@@ -109,6 +110,9 @@ static char *opt_unshallow;
- static char *opt_update_shallow;
- static char *opt_refmap;
- 
-+/* Options about upstream */
-+static int opt_set_upstream;
-+
- static struct option pull_options[] = {
- 	/* Shared options */
- 	OPT__VERBOSITY(&opt_verbosity),
-@@ -116,6 +120,9 @@ static struct option pull_options[] = {
- 		N_("force progress reporting"),
- 		PARSE_OPT_NOARG),
- 
-+	/* Options about upstream */
-+	OPT_BOOL('u', "set-upstream", &opt_set_upstream, N_("set upstream for git pull/status")),
-+
- 	/* Options passed to git-merge or git-rebase */
- 	OPT_GROUP(N_("Options related to merging")),
- 	{ OPTION_CALLBACK, 'r', "rebase", &opt_rebase,
-@@ -829,6 +836,57 @@ static int run_rebase(const unsigned char *curr_head,
- 	return ret;
- }
- 
-+static int set_pull_upstream(const char *repo, const char **refspecs_name)
-+{
-+	unsigned char sha1[GIT_SHA1_RAWSZ];
-+	const char *local_branch, *remote_branch;
-+	struct strbuf remote_name;
-+	struct refspec *refspecs;
-+	int nr_refspec, i;
-+
-+	if (repo == NULL) {
-+		warning(N_("no remote was specified"));
-+		return 1;
-+	}
-+
-+	for (nr_refspec = 0; refspecs_name[nr_refspec] != NULL; nr_refspec++);
-+
-+	if (nr_refspec == 0) {
-+		warning(N_("no refspec was specified"));
-+		return 1;
-+	}
-+
-+	refspecs = parse_fetch_refspec(nr_refspec, refspecs_name);
-+
-+	for (i = 0; i < nr_refspec; i++) {
-+		if (refspecs[i].src != NULL && strlen(refspecs[i].src) > 0) {
-+			remote_branch = refspecs[i].src;
-+		} else {
-+			warning(N_("not yet implemented"));
-+			continue;
-+		}
-+
-+		if (refspecs[i].dst != NULL && strlen(refspecs[i].dst) > 0) {
-+			local_branch = refspecs[i].dst;
-+		} else {
-+			// TODO : Should it be freed ?
-+			local_branch = resolve_ref_unsafe("HEAD", 0, sha1, NULL);
-+			skip_prefix(local_branch, "refs/heads/", &local_branch);
-+		}
-+
-+		strbuf_init(&remote_name, strlen(repo) + strlen(remote_branch) + 1);
-+		strbuf_addf(&remote_name, "%s/%s", repo, remote_branch);
-+
-+		create_branch(local_branch, local_branch, remote_name.buf, 0, 0, 0, opt_verbosity < 0, BRANCH_TRACK_OVERRIDE);
-+
-+		strbuf_release(&remote_name);
-+	}
-+
-+	free_refspec(nr_refspec, refspecs);
-+
-+	return 0;
-+}
-+
- int cmd_pull(int argc, const char **argv, const char *prefix)
- {
- 	const char *repo, **refspecs;
-@@ -884,6 +942,9 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	if (opt_dry_run)
- 		return 0;
- 
-+	if (opt_set_upstream)
-+		set_pull_upstream(repo, refspecs);
-+
- 	if (get_sha1("HEAD", curr_head))
- 		hashclr(curr_head);
- 
-diff --git a/t/t5544-pull-upstream.sh b/t/t5544-pull-upstream.sh
-new file mode 100755
-index 0000000..38eb51d
---- /dev/null
-+++ b/t/t5544-pull-upstream.sh
-@@ -0,0 +1,75 @@
-+#!/bin/sh
-+
-+test_description='pull with --set-upstream'
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-terminal.sh
-+
-+ensure_fresh_upstream() {
-+	rm -rf parent &&
-+	git init parent &&
-+	cd parent &&
-+	(
-+		echo content >file &&
-+		git add file &&
-+		git commit -m one &&
-+		git checkout -b other &&
-+		echo content >file2 &&
-+		git add file2 &&
-+		git commit -m two &&
-+		git checkout -b master2 &&
-+		git checkout master
-+	) &&
-+	cd ..
-+}
-+
-+test_expect_success 'setup bare parent' '
-+	ensure_fresh_upstream &&
-+	git remote add upstream parent &&
-+	git pull upstream master
-+'
-+
-+check_config() {
-+	(echo $2; echo $3) >expect.$1
-+	(git config branch.$1.remote
-+	 git config branch.$1.merge) >actual.$1
-+	test_cmp expect.$1 actual.$1
-+}
-+
-+test_expect_success 'pull -u master' '
-+	git pull -u upstream master &&
-+	check_config master upstream refs/heads/master
-+'
-+
-+test_expect_success 'pull -u master:other' '
-+	git pull -u upstream master:other &&
-+	check_config other upstream refs/heads/master
-+'
-+
-+test_expect_success 'pull -u --dry-run other:other' '
-+	git pull -u --dry-run upstream other:other &&
-+	check_config other upstream refs/heads/master
-+'
-+
-+test_expect_success 'pull -u master2:master2 master:other' '
-+	git branch master2 &&
-+	git pull -u upstream master2:master2 master:other &&
-+	check_config master2 upstream refs/heads/master2 &&
-+	check_config other upstream refs/heads/master
-+'
-+
-+test_expect_success 'pull -u HEAD' '
-+	git clone parent son &&
-+	cd son &&
-+	git checkout -b headbranch &&
-+	git pull -u origin HEAD &&
-+	check_config headbranch origin refs/heads/master
-+'
-+
-+test_expect_success TTY 'quiet pull' '
-+	ensure_fresh_upstream &&
-+
-+	test_terminal git pull -u --quiet upstream master 2>&1 | tee output &&
-+	test_cmp /dev/null output
-+'
-+
-+test_done
--- 
-2.8.2.562.gdbf6e3e
+> In any case, quoting the message without replying to it does not make
+> sense (especially if you add instructions to trim it: the user would not
+> even see it). So it its current form, I'd say --quote-email should imply
+> --annotate.
