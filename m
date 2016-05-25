@@ -1,94 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add: add --chmod=+x / --chmod=-x options
-Date: Wed, 25 May 2016 09:10:09 -0700
-Message-ID: <xmqqoa7u15lq.fsf@gitster.mtv.corp.google.com>
-References: <20160525020609.GA20123@zoidberg>
-	<xmqqh9dm37xk.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1605251406020.4449@virtualbox>
+Subject: Re: [WIP PATCH 00/14] Protocol v2 patches
+Date: Wed, 25 May 2016 09:23:01 -0700
+Message-ID: <xmqqfut6150a.fsf@gitster.mtv.corp.google.com>
+References: <1461972887-22100-1-git-send-email-sbeller@google.com>
+	<1464130008.24478.134.camel@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Edward Thomson <ethomson@edwardthomson.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 25 18:10:30 2016
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed May 25 18:23:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5bO9-0007NQ-Km
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 18:10:29 +0200
+	id 1b5baR-0004fQ-Ik
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 18:23:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932644AbcEYQKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 12:10:15 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65358 "EHLO
+	id S1754002AbcEYQXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 12:23:07 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55976 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932636AbcEYQKN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 12:10:13 -0400
+	with ESMTP id S1751699AbcEYQXG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 12:23:06 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E49D1DBFE;
-	Wed, 25 May 2016 12:10:12 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BC9281DDF1;
+	Wed, 25 May 2016 12:23:03 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=a1G7qR6nRiPzogjXupoz7O/uJow=; b=tX//P+
-	ucvu6iJJe1tpOvxfIpf3Az8xE5pLIycfoPJ71AG/lHP+IZhiMw/rIZiBuhAgj/aN
-	1pB9zMz6vrMjWonAH8WO2A4fsDcnLntyX/F1Vfk1FQ/+E14o19vNNv0NqDmKzqQ4
-	RFOnyM0xj7IkyOwsbWwYMWlGwlI3hgn/zOa+Y=
+	:content-type; s=sasl; bh=rX6YJ/wJ1qoVUYPI7bquRI4C1TA=; b=bXBuNh
+	uofot0CqUUpzust1DV9qOJYl53F2eaGhS5S/vnyzFilU4i2PuJlobaqFSFrV5E+j
+	0XA7jB9/XM6ZVQWt6pqWNEg836Sg4fQS7C3CmmGsqL++eCgomwEXTL8STbYWrJEW
+	30Z8qnfQUebuh2S9iDWiLfYVb/hu+S6EfBKLA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ugsBVlG7xQPeIwc8tJdUtRXk2C4xPGRj
-	++fAePe0vU6EBPzbGYfiWW8ovN6OUuZuLuigYkiJOIjuqOZGNXdhTziujcu84AS0
-	M/lUSujlmgDZ0zX5tWvmkoyXpCoKjDG29s6mkVBMu5G7dxwekusc/ApkW4qXqde3
-	ooPVXKpo4Y8=
+	:content-type; q=dns; s=sasl; b=S+/YxeKzcEona59FLlA8w/LRL30hBpoM
+	Ekl28C+BeW7TkrODbHmoBP4omp87miJkrwA0NIqlZhPOpFucNjAmTXIXaSS8WzLD
+	U1s72RmWbO6rgEezXcokiqf6U7BOtxrO2JPuAbTy/egZhe4jTV1oDSnmzHRz79Be
+	v5W3LeQPBmk=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 36CDC1DBFD;
-	Wed, 25 May 2016 12:10:12 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B55171DDF0;
+	Wed, 25 May 2016 12:23:03 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B88D81DBFC;
-	Wed, 25 May 2016 12:10:11 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.20.1605251406020.4449@virtualbox> (Johannes
-	Schindelin's message of "Wed, 25 May 2016 14:19:35 +0200 (CEST)")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 379971DDEF;
+	Wed, 25 May 2016 12:23:03 -0400 (EDT)
+In-Reply-To: <1464130008.24478.134.camel@twopensource.com> (David Turner's
+	message of "Tue, 24 May 2016 18:46:48 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 28939264-2293-11E6-8028-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F468E136-2294-11E6-99A3-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295578>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+David Turner <dturner@twopensource.com> writes:
 
-> On Wed, 25 May 2016, Junio C Hamano wrote:
+> I was looking at this again today, and noticed that it doesn't really
+> address the HTTP case.
 >
->>  * I am not familiar with life on filesystems with core.filemode=0;
->>    do files people would want to be able to "add --chmod=+x" share
->>    common trait that can be expressed with .gitattributes mechanism?
+> The central problem is that protocol v2 goes like this:
+> server: I have capabilities w,x,y, and z
+> client: I want capabilities x and z.
 >
-> I think it is safe to say that the biggest example of core.filemode == 0
-> is Windows. On that platform, there simply is no executable bit in the
-> sense of POSIX permissions. ...
-> ... I still like Ed's idea and would love to have it: it is murky waters to
-> require users to call plumbing only because our porcelain isn't up to par.
+> But HTTP goes like this:
+> client: [request]
+> server: [response]
 
-I thought that I made it absolutely clear that I like the addition,
-too.  If it wasn't clear enough, I can say it again, but I do not
-think you need it ;-).
+I wonder if that can be solved by speculative request?
 
-The "attribute" thing was an idea that was hoping to make the system
-as a whole even more helpful; if pattern matching with paths is
-sufficient for projects to hint desired permission bits per paths,
-then those working on such a cross-platform project on Windows do
-not have to even worry about "git cmd --chmod=+x", whether cmd is
-add or update-index.  If they can just do "git add" and need to use
-the new "--chmod=+x" option only when the patterns are not set up
-correctly, wouldn't that be even more helpful?  In other words, it
-wasn't "with this we can _eliminate_ need for 'add --chmod'".
-
-The only thing I was unsure about that scheme was if "pattern
-matching with paths" is sufficiently powerful (if not, such an
-addition would not work as a mechanism to reduce the need for the
-users to run "git add --chmod=+x").  And that was my inquiry.
-
-Unfortunately, your answer does not help answer that question;
-it was a question to Edward, so that's OK anyway.
+Let the connection initiator say "If you can do x and z, please do
+so", and allow the responder to say either "OK, I can do x and z; by
+the way the full capabilites I support are w, x, y and z", or
+"Sorry, can't do that; I have capabilities w, x, and y".
