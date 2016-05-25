@@ -1,75 +1,108 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: Re: Please add a git config option to make --show-signature the default
-Date: Wed, 25 May 2016 23:48:57 +0530
-Message-ID: <CA+DCAeSqTitycrO2y=SdutK1H2+jbzp7OzbhZ3pOYY_YOdOkGw@mail.gmail.com>
-References: <57438568.60707@gmail.com>
-	<alpine.DEB.2.20.1605241313440.4449@virtualbox>
-	<CACC5Q1c2s4yOtGAtKsepwnme7udq7yqyN7S5BfMHbi0L08XwzA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC-PATCH 1/2] send-email: new option to quote an email and reply to
+Date: Wed, 25 May 2016 20:31:00 +0200
+Message-ID: <vpq8tyyt2fv.fsf@anie.imag.fr>
+References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
+	<1464031829-6107-2-git-send-email-tom.russello@grenoble-inp.org>
+	<vpq60u4bl4e.fsf@anie.imag.fr>
+	<b1752a59-af2b-6e18-fc69-0650440939e3@grenoble-inp.org>
+	<vpqh9dmfy5k.fsf@anie.imag.fr>
+	<xmqqwpmi16zt.fsf@gitster.mtv.corp.google.com>
+	<vpqeg8q5b6f.fsf@anie.imag.fr>
+	<xmqqr3cqypg6.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Austin English <austinenglish@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 25 20:19:08 2016
+Content-Type: text/plain
+Cc: Samuel GROOT <samuel.groot@grenoble-inp.org>,
+	Tom Russello <tom.russello@grenoble-inp.org>,
+	git@vger.kernel.org, erwan.mathoniere@grenoble-inp.org,
+	jordan.de-gea@ensimag.grenoble-inp.fr,
+	Tom Russello <tom.russello@ensimag.grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 25 20:31:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5dOc-0005Bd-UM
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 20:19:07 +0200
+	id 1b5daQ-0001Qr-0M
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 20:31:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755791AbcEYSTC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 14:19:02 -0400
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:35095 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755763AbcEYSS7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 14:18:59 -0400
-Received: by mail-qg0-f44.google.com with SMTP id e93so25846389qgf.2
-        for <git@vger.kernel.org>; Wed, 25 May 2016 11:18:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=Xa/W4JT0Qa6K3/af32GTAi1u/kkmWC6hcseKGYzkGdw=;
-        b=h2xPCtMOQc6jjC+OHEEFC6bJ2d8zytGSSH3Cmyzkp9Yq5VVgE36XvP5GTaACc/lDay
-         74kUwN4cxCfjZeox0fENIstWKeAUMVMcQ7kDCy9ycBwV6Lc6o9Z6qjEPbpMljPIipB7f
-         5qR7ME3zhv/gKr/QJRYq7MEs5Lr0hfNhi6w4hfNysmIVv3Ebge7AlZeS193H3PS8MTdd
-         Ah7zv/08qAMQpmep2RlP7u8AAvOJv4m1lEc6gfBB59TOHjOxnTSrhyb+2v9smx6I6VvF
-         IG8McBaDjsLtAK10YP8ciQMWNOeWc1IVzat9jMfuu1VW56UELhYREH5BGGyCzpHdMh+5
-         JN+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Xa/W4JT0Qa6K3/af32GTAi1u/kkmWC6hcseKGYzkGdw=;
-        b=hEwRMkh+gBCddUXcsvSUROn6E2aWjCqPFieO//2joghipAiPZ0te6SU4MMiDKuAWFE
-         sukZntZUGbG4jObzUp4ZJZsM8t8rOM+blh61mLSll7jhtCh7NqnOewiUKv0hMKq7FJ3l
-         Cz0isn+OfworWskHw6bxrYYk8uLm62CNb39A0BkRgfe0cgKkePXmO7XrS2iuzgLiiBug
-         Zpk3/TqISGNN5kLgi7NPZf/a0LKuj1RE0ANz5JarAobedGfA54eHYf4Pzu9hgKybNy1T
-         YSQycQpaUS6kjcvbYOYJ++XHTklE6Yh4S1PI2qxyd/HcrPL2ud7b/rdJWDL3O3ZKYHjz
-         CreQ==
-X-Gm-Message-State: ALyK8tI4ufDYF+y2TZQy0Cnd7kgahRd389PM33YHVg36PO4yJQbw0MPBZ1OQ8zoPp+wSsVZITRrK5/0LY5ZPCw==
-X-Received: by 10.140.109.10 with SMTP id k10mr4848224qgf.89.1464200337894;
- Wed, 25 May 2016 11:18:57 -0700 (PDT)
-Received: by 10.55.51.212 with HTTP; Wed, 25 May 2016 11:18:57 -0700 (PDT)
-In-Reply-To: <CACC5Q1c2s4yOtGAtKsepwnme7udq7yqyN7S5BfMHbi0L08XwzA@mail.gmail.com>
+	id S1751337AbcEYSbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 14:31:12 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:37502 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750742AbcEYSbK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 14:31:10 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4PIUwYq031058
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 25 May 2016 20:30:58 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4PIV014026000;
+	Wed, 25 May 2016 20:31:00 +0200
+In-Reply-To: <xmqqr3cqypg6.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 25 May 2016 11:15:05 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Wed, 25 May 2016 20:30:58 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u4PIUwYq031058
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1464805860.70411@mX4unWtb8aV8198UkgOH4A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295585>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Wed, May 25, 2016 at 9:28 AM, Austin English <austinenglish@gmail.com> wrote:
-> I'll try
-> to submit my own patch. In the meantime, it seems appropriate to file
-> a bug so that others can have the opportunity to solve the problem if
-> they're interested.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> This should work, but sounds like too much of overloading of
+>> --in-reply-to IMHO: if given a message id, it would only add a reference
+>> to this message-id, but if given a file, it would also modify the To:
+>> and Cc: list.
+>>
+>> Not a strong objection, though.
+>
+> Well, with your "that is the plan indeed", the option would behave
+> the same whether given a message ID or a filename, no?
 
-If you haven't started working on it and if no one else has picked it up
-then I would like to try it out and submit a patch.
+The "fetch message from ID" feature should not be unconditional IMHO. So
+it would probably be stg like:
 
-Thanks,
-Mehul
+  git send-email --in-reply-to=<id> --fetch
+
+What's a bit counter-intuitive is that --fetch would not only trigger
+fetching the complete message, but also populate To/Cc. But thinking
+about it, it's not _that_ counter-intuitive, as fetching the message
+should be done for a reason, so the user can guess that the message is
+going to be used for something.
+
+So, a possible UI would be:
+
+  git send-email --in-reply-to=<id> => just set In-Reply-To: field.
+
+  git send-email --in-reply-to=<file> => set In-Reply-To, To and Cc.
+
+  git send-email --in-reply-to=<file> --cite => in addition, add the
+    body of the message quoted with '> '.
+
+  git send-email --in-reply-to=<id> --fetch => fetch and do like <file>
+    using the default configuration for fetch.
+
+This leaves room for:
+
+  git send-email --in-reply-to=<id> --fetch=gmane => fetch from gmane
+    (details on how to fetch would be in the config file)
+
+This UI wouldn't allow using a file to get only the message-id. But I'm
+not sure this is an interesting use-case.
+
+So, I guess you convinced me.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
