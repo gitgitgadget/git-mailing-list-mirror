@@ -1,203 +1,237 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 09/26] upload-pack: move rev-list code out of check_non_tip()
-Date: Wed, 25 May 2016 03:36:49 -0400
-Message-ID: <CAPig+cRM_6Yj0=ZOwf8xq9fipCVOFVVLeh5yOpqTxrq4r314iw@mail.gmail.com>
-References: <1460552110-5554-1-git-send-email-pclouds@gmail.com>
-	<1460552110-5554-10-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add: add --chmod=+x / --chmod=-x options
+Date: Wed, 25 May 2016 00:36:55 -0700
+Message-ID: <xmqqh9dm37xk.fsf@gitster.mtv.corp.google.com>
+References: <20160525020609.GA20123@zoidberg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 25 09:36:56 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Edward Thomson <ethomson@edwardthomson.com>
+X-From: git-owner@vger.kernel.org Wed May 25 09:37:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5TN9-0003sR-FB
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 09:36:55 +0200
+	id 1b5TNM-0003xV-6H
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 09:37:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348AbcEYHgv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2016 03:36:51 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:36625 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751840AbcEYHgu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 May 2016 03:36:50 -0400
-Received: by mail-io0-f193.google.com with SMTP id m17so3662965ioi.3
-        for <git@vger.kernel.org>; Wed, 25 May 2016 00:36:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=SYByHVWmImYGWOhY4zh7Wx2oGnYXW9loHJWAOOfgdrY=;
-        b=Nm/YrWtWsp8mHF5XOsivHzMzlVKgyDOL38aIkGZDXgvUxPeHv9RSp0kjjl6qecGkFU
-         R7OFijocCu05RiKSKO3rjvZHS7MaoIobsWQnDF+R6bibLzsfu3Ne67R8KZJ5Nq1mlSMI
-         qSj/oy1kHEePOZFznnF28PNHtTUe+vmUVgwp9Vx5OnyYiS0D2Jw8PSKUn9ING2P5+lr1
-         7nwUOvomNFXVKlncIGd6W5aklJ3FQPPuWM3QepQ2KLmkEZjXtPiNG1+aR7VgErB0NnZt
-         fxGomN1jA3G29iIJUUTtyvenlxPThPZqdsC+0SyHsGsHiSyt6FMlI93znwCaYEUmf9wV
-         F4EA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=SYByHVWmImYGWOhY4zh7Wx2oGnYXW9loHJWAOOfgdrY=;
-        b=YeYUb++ZOOr2zP/7EfDNI94s91FaSnKrG9bErwzrpNBlaU292LRWCaR18ExeBA/J7B
-         SCVt1wp0yDhvS4QayyyOwQNaHb1/aCwg0teWKBWpLNYF/3RGYemW0+ISOqDN/hiFWt4Y
-         yY0HLWenuPtNKQpCiYKgYuABBX43glU2gQxkw0FkzBBvv3MGZ8bjwcf/JFOb8a7hX3qP
-         YIpWCYX/Ra9pOHat4+eeZ/mQSkrIxXJg/VUb9sWKnxs25Ilhk7cy+rslb11IZmzzWNOV
-         dYO9mJLkbMTr+40xcpcMMAnE461FHWJTgU4wXf9cIFGMbp2FuHWcagf5PYj6RRyiSHj/
-         b23A==
-X-Gm-Message-State: ALyK8tKi2ZY15E0vpgcLHIchmkUUBMJ1gD+KkeaA1dVz8CnY94e2dxL9A94nxv9OR2r8YdyYiBzah9MDGZbQmg==
-X-Received: by 10.107.47.37 with SMTP id j37mr2403663ioo.168.1464161809697;
- Wed, 25 May 2016 00:36:49 -0700 (PDT)
-Received: by 10.79.110.21 with HTTP; Wed, 25 May 2016 00:36:49 -0700 (PDT)
-In-Reply-To: <1460552110-5554-10-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: KaIkLwIujWCcI5E3tmwzMEX3E5g
+	id S1752653AbcEYHhB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 03:37:01 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62016 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752353AbcEYHg7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 03:36:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A8AA18A5E;
+	Wed, 25 May 2016 03:36:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=SnULnVbWIrGm58PxCPZNFnyJUfM=; b=wOB5x1
+	b90EHvRdn6ZqoOnesja+PEk/5QB7UNQOXjA0SKPGiZhZ+EsLOlKBuEuvpVQJ7uah
+	oZLizsDyoj8QzOfgGxtz1ku1gqD6cR5ieWr7UJ9QC8tDfgroLrWSG4j70T0yvDha
+	OfktMRDrcK75q1jl4vUl9eQGow+kAIrdqQ/CE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=D+No7+RJio2VQHtXedEevxd5mVLJuef6
+	gAR2O2JsqzMCR8erIfseK1jFFA8EerDU5q+Ft2E+Nfbh6VZfIzF3ugKUzIsDPnK0
+	d5vmpHA3Warr1daXlv24X3IEoX2YLHkYLaLSAju0I5C+cXlsXOJJ+14F8DVMN82U
+	XD2uWh64PJc=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 51DE818A5D;
+	Wed, 25 May 2016 03:36:58 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A969918A5B;
+	Wed, 25 May 2016 03:36:57 -0400 (EDT)
+In-Reply-To: <20160525020609.GA20123@zoidberg> (Edward Thomson's message of
+	"Tue, 24 May 2016 21:06:09 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 75E2DBDA-224B-11E6-926E-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295567>
 
-On Wed, Apr 13, 2016 at 8:54 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+Edward Thomson <ethomson@edwardthomson.com> writes:
+
+> Users on deficient filesystems that lack an execute bit may still
+> wish to add files to the repository with the appropriate execute
+> bit set (or not).  Although this can be done in two steps
+> (`git add foo && git update-index --chmod=+x foo`), providing the
+> `--chmod=+x` option to the add command allows users to set a file
+> executable in a single command that they're already familiar with.
+>
+> Signed-off-by: Edward Thomson <ethomson@edwardthomson.com>
 > ---
-> diff --git a/upload-pack.c b/upload-pack.c
-> @@ -451,7 +451,7 @@ static int is_our_ref(struct object *o)
-> -static void check_non_tip(void)
-> +static int check_unreachable(struct object_array *src)
-> @@ -461,14 +461,6 @@ static void check_non_tip(void)
-> -       /*
-> -        * In the normal in-process case without
-> -        * uploadpack.allowReachableSHA1InWant,
-> -        * non-tip requests can never happen.
-> -        */
-> -       if (!stateless_rpc && !(allow_unadvertised_object_request & A=
-LLOW_REACHABLE_SHA1))
-> -               goto error;
-> -
-> @@ -476,7 +468,7 @@ static void check_non_tip(void)
->         if (start_command(&cmd))
-> -               goto error;
-> +               return 0;
-> @@ -495,16 +487,16 @@ static void check_non_tip(void)
->                 if (write_in_full(cmd.in, namebuf, 42) < 0)
-> -                       goto error;
-> +                       return 0;
-> [...]
-> +       for (i =3D 0; i < src->nr; i++) {
-> +               o =3D src->objects[i].item;
->                 if (is_our_ref(o))
->                         continue;
->                 memcpy(namebuf, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
->                 if (write_in_full(cmd.in, namebuf, 41) < 0)
-> -                       goto error;
-> +                       return 0;
->         }
->         close(cmd.in);
 
-It's a little bit ugly how this close() becomes disconnected after the
-refactoring. In the original code, due to the consistent application
-of 'goto error', it's reasonably obvious that skipping the close() is
-not harmful since the error case die()'s unconditionally (according to
-the comment). However, after the refactoring, the function simply
-returns without invoking close(), so there's a disconnect, and it's
-not obvious without looking at the caller that the program will die().
+I think we should tone down the first sentence of the proposed
+commit log message.  With "s/deficient //" the paragraph still reads
+perfectly well.  Even when an underlying filesystem is capable of
+expressing executable bit, we can set core.filemode to false to
+emulate the behaviour on DOS, so perhaps
 
-Also, if this function later gets a new caller, is that caller going
-to need intimate knowledge about this potential descriptor leak?
+    The executable bit will not be set for paths in a repository
+    with core.filemode set to false, but the users may still wish to
+    add files to ...
 
-> @@ -516,7 +508,7 @@ static void check_non_tip(void)
->          */
->         i =3D read_in_full(cmd.out, namebuf, 1);
->         if (i)
-> -               goto error;
-> +               return 0;
->         close(cmd.out);
+or something like it?
 
-Same observation.
+Giving an easy to use single-command short-hand for a common thing
+that takes two commands is a worthy goal.  Another way to do the
+above is
 
-It might be clearer if you retained the 'error' label and used it to
-ensure that the descriptors get closed:
+	git update-index --add --chmod=+x foo
 
-    cmd.in =3D -1;
-    cmd.out =3D -1;
-    ...
-    if (...)
-        goto error;
-    ...
-    /* All the non-tip ... */
-    return 1;
+and from that point of view, we do not need this patch, but that is
+still a mouthful ;-)  I think it is a good idea to teach "git add",
+an end-user facing command, to be more helpful.
 
-error:
-    if (cmd.in >=3D 0)
-        close(cmd.in);
-    if (cmd.out >=3D 0)
-        close(cmd.out);
-    return 0;
+At the design level, I have a few comments.
 
->         /*
-> @@ -525,15 +517,29 @@ static void check_non_tip(void)
->          * even when it showed no commit.
->          */
->         if (finish_command(&cmd))
-> -               goto error;
-> +               return 0;
+ * Unlike the command "chmod", which is _only_ about changing modes,
+   "add --chmod" updates both the contents and modes in the index,
+   which may invite "I only want to change modes--how?"
 
-Here too. Does 'cmd' need to be cleaned up if the function bails
-before finish_command()?
+	Note. We had an ancient regression at 227bdb18 (make
+	update-index --chmod work with multiple files and --stdin,
+	2006-04-23), where "update-index --chmod=+x foo" stopped
+	being "only flip the executable bit without hashing the
+	contents" and that was done purely by mistake.  There is no
+	longer a good answer to that question, which makes the above
+	worry less of an issue.
 
->         /* All the non-tip ones are ancestors of what we advertised *=
-/
-> -       return;
-> +       return 1;
-> +}
-> +
-> +static void check_non_tip(void)
+ * This is about a repository with core.filemode=0; I wonder if
+   something for a repository with core.symlinks=0 would also help?
+   That is, would it be a big help to users if they can prepare a
+   text file that holds symbolic link contents and add it as if it
+   were a symlink with "git add", instead of having to run two
+   commands, "hash-objects && update-index --cacheinfo"?
+
+ * I am not familiar with life on filesystems with core.filemode=0;
+   do files people would want to be able to "add --chmod=+x" share
+   common trait that can be expressed with .gitattributes mechanism?
+
+   What I am wondering is if a scheme like the following would work
+   well, in addition to your patch:
+
+   1. Have these in .gitattributes:
+
+      *		-executable
+      *.bat	executable text
+      *.exe	executable binary
+      *.com	executable binary
+
+      A path with Unset "executable" attribute is explicitly marked
+      as "not executable"; a path with Set "executable" attribute is
+      marked as "executable", i.e. "needing chmod=+x".
+
+   2. Teach "git add" to take the above hint _only_ in a repository
+      where core.filemode is false and _only_ when adding a new path
+      to the index.
+
+   If something like this works well enough, users do not have to
+   type --chmod=+x too often when doing "git add"; your patch
+   becomes an escape hatch that is only needed when the attributes
+   system gets it wrong.
+
+
+Now some comments on the actual code.
+
+> +static int chmod_cb(const struct option *opt, const char *arg, int unset)
 > +{
-> +       int i;
+> +	char *flip = opt->value;
+> +	if ((arg[0] != '-' && arg[0] != '+') || arg[1] != 'x' || arg[2])
+> +		return error("option 'chmod' expects \"+x\" or \"-x\"");
+> +	*flip = arg[0];
+> +	return 0;
+> +}
+
+I know you mimicked the command line parser of update-index, but you
+didn't have to, and you shouldn't have.
+
+The command line semantics of update-index is largely "we read one
+option and prepare to make its effect immediately available", which
+predates parse-options where its attitude for command line parsing
+is "we first parse all options and figure out what to do, and then
+we work on arguments according to these options".  Because of these
+vastly different attitudes, the way builtin/update-index.c uses
+parse-options API is atypical.  The only reason it uses callback is
+because it wants to allow you to say this:
+
+    git update-index --chmod=+x foo bar --chmod=-x baz
+
+and register foo and bar as executable, while baz as non-executable.
+
+The way update-index uses parse-options API is not something you
+want to mimick when adding a similar option to a more modern command
+like "git add", whose attitude toward command line parsing is quite
+different.  Modern command line parsing typically takes "the last
+one wins" semantics, i.e.
+
+    git add --chmod=-x --chmod=+x foo
+
+would make foo executable.
+
+If I were doing this patch, I'd just allocate a file scope global
+"static char *chmod_arg;" and OPT_STRING("chmod") to set it, After
+parse_options() returns, I'd do something like:
+
+	if (chmod_arg) {
+        	if (strcmp(chmod_arg, "-x") && strcmp(chmod_arg, "+x"))
+			die("--chmod param must be either -x or +x");
+	}
+
+> @@ -661,6 +663,10 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+>  
+>  	if (trust_executable_bit && has_symlinks)
+>  		ce->ce_mode = create_ce_mode(st_mode);
+> +	else if (force_executable)
+> +		ce->ce_mode = create_ce_mode(0777);
+> +	else if (force_notexecutable)
+> +		ce->ce_mode = create_ce_mode(0666);
+
+This is an iffy design decision.
+
+Even when you are in core.filemode=true repository, if you
+explicitly said
+
+	git add --chmod=+x READ.ME
+
+wouldn't you expect that the path would have executable bit in the
+index, whether it has it as executable in the filesystem?  The above
+if/else cascade, because trust-executable-bit is tested first, will
+ignore force_* flags altogether, won't it?  It also is strange that
+the decision to honor or ignore force_* flags is also tied to
+has_symlinks, which is a totally orthogonal concept.
+
+> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+> index f14a665..e551eaf 100755
+> --- a/t/t3700-add.sh
+> +++ b/t/t3700-add.sh
+> @@ -332,4 +332,23 @@ test_expect_success 'git add --dry-run --ignore-missing of non-existing file out
+>  	test_i18ncmp expect.err actual.err
+>  '
+>  
+> +test_expect_success 'git add --chmod=+x stages a non-executable file with +x' '
+> +	echo foo >foo1 &&
+> +	git add --chmod=+x foo1 &&
+> +	case "$(git ls-files --stage foo1)" in
+> +	100755" "*foo1) echo pass;;
+> +	*) echo fail; git ls-files --stage foo1; (exit 1);;
+> +	esac
+> +'
 > +
-> +       /*
-> +        * In the normal in-process case without
-> +        * uploadpack.allowReachableSHA1InWant,
-> +        * non-tip requests can never happen.
-> +        */
-> +       if (!stateless_rpc && !(allow_unadvertised_object_request & A=
-LLOW_REACHABLE_SHA1))
-> +               ;               /* error */
-> +       else if (check_unreachable(&want_obj))
-> +               return;
-
-With the loss of the 'error' label (below), this logic becomes a bit
-more difficult to follow. I wonder if it would help to invert the
-sense of the conditional...
-
-    if (stateless_rpc || ...)
-        if (check_unreachable(...))
-            return;
-
-Or, perhaps, retain the 'error' label:
-
-    if (!stateless_rpc && ...)
-        goto error:
-    if (check_unreachable(...))
-        return;
-
-error:
-    /* Pick one ... */
-
-I think I might find the latter a bit clearer, but it's highly subjecti=
-ve.
-
-> -error:
->         /* Pick one of them (we know there at least is one) */
->         for (i =3D 0; i < want_obj.nr; i++) {
-> -               o =3D want_obj.objects[i].item;
-> +               struct object *o =3D want_obj.objects[i].item;
->                 if (!is_our_ref(o))
->                         die("git upload-pack: not our ref %s",
->                             oid_to_hex(&o->oid));
+> +test_expect_success 'git add --chmod=-x stages an executable file with -x' '
+> +	echo foo >xfoo1 &&
+> +	chmod 755 xfoo1 &&
+> +	git add --chmod=-x xfoo1 &&
+> +	case "$(git ls-files --stage xfoo1)" in
+> +	100644" "*xfoo1) echo pass;;
+> +	*) echo fail; git ls-files --stage xfoo1; (exit 1);;
+> +	esac
+> +'
+> +
+>  test_done
