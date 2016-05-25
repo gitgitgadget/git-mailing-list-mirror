@@ -1,116 +1,125 @@
-From: Austin English <austinenglish@gmail.com>
-Subject: Re: Please add a git config option to make --show-signature the default
-Date: Tue, 24 May 2016 22:58:13 -0500
-Message-ID: <CACC5Q1c2s4yOtGAtKsepwnme7udq7yqyN7S5BfMHbi0L08XwzA@mail.gmail.com>
-References: <57438568.60707@gmail.com> <alpine.DEB.2.20.1605241313440.4449@virtualbox>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: Odd Difference Between Windows Git and Standard Git
+Date: Wed, 25 May 2016 06:36:09 +0200
+Message-ID: <57452BB9.5090500@web.de>
+References: <nhlqd4$ekr$1@ger.gmane.org>
+ <c07df4ac-08c9-8eaa-0233-06616945c857@web.de>
+ <c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com>
+ <ede1c113-1ab8-6043-3e39-bbacec5db31c@web.de>
+ <xmqqy474g3cv.fsf@gitster.mtv.corp.google.com>
+ <xmqqfutcg0pe.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1605231310190.4122@virtualbox>
+ <xmqqeg8sa9oq.fsf@gitster.mtv.corp.google.com> <5743DE28.5070000@web.de>
+ <alpine.DEB.2.20.1605241352361.4449@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 25 05:59:02 2016
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jon Forrest <nobozo@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed May 25 06:37:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5PyE-00030k-QS
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 05:58:59 +0200
+	id 1b5QZ2-0003Sa-0d
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 06:37:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752349AbcEYD6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2016 23:58:54 -0400
-Received: from mail-io0-f179.google.com ([209.85.223.179]:36289 "EHLO
-	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750797AbcEYD6y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2016 23:58:54 -0400
-Received: by mail-io0-f179.google.com with SMTP id f8so24830567ioe.3
-        for <git@vger.kernel.org>; Tue, 24 May 2016 20:58:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0OsuQ23FwFC/aBj5Td/dktlJwxU1MbeMxNgk4+Xlg+o=;
-        b=Ihub1CcrtGvx0H3+hh9pn0E9yJlZ9f1AXdvxluKkA+0fyH0zuJQ13ylOyOQILVEmel
-         bgVl/u8zH3XJTlPBX1wb5imLurpmp7z0JugI6XzbngnRrylfXMR+s5stNIiYiYGe56YY
-         ugMK0pW29p4MlWmVp11RVtpI9NQ0EgpvXpDRO2ZE/6QTr1kD6qm5VA2O6RTYxjrqrAmr
-         de0Prz1LgHhMcI0gr0jU4MwMz07KLi7lXmH5fAw5RPbJSmrDUsGRhrPW1ui3uDiFbgHK
-         UrYsL0+JfDybheyHlTNvl3rs+Vuyv4AAe/0zlwgAfBKXoW2Psf021b46udlV7mLIbBcK
-         aXuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0OsuQ23FwFC/aBj5Td/dktlJwxU1MbeMxNgk4+Xlg+o=;
-        b=gCqWD+oLbTrCJ9uX2/Qm0vy9DVDLWoSKifr80jHvkpoX9M/gpXlxxcGCIO8K9g7+D9
-         EmTXQAXHPOtuf8gJYwRyfhlC4mUVivB9Bw4KDytLtctoFZGMqzGlRWbP0Pjq296Z8+qy
-         lRLWhLYddAr7tWArW+44nNz0NjCMqmTWLdXpSVtUllmgshaJMaVNh9Ze8B0kmBF4jyao
-         s7LOH0EJAOGPTtnuB9J+qZutsxEdhpJNhVQARXSjkQQwQenjrOCDTVgr+UI70dfgH/Z7
-         UQyVdytJrcLUf20qr9IN7Zw1XGOkzIBxtvbDsAeUnEvd4rha6CkRBDIUrhp7ok8GEJAv
-         59Gw==
-X-Gm-Message-State: ALyK8tI6VXGckp4/3uZCTVQ28tLEP6u80Gw2CoYri/RMmqpzTfjrM+Sy7T91KBxERGOPYVvdXB8ez+qbuMeGnQ==
-X-Received: by 10.107.55.212 with SMTP id e203mr1841460ioa.108.1464148733257;
- Tue, 24 May 2016 20:58:53 -0700 (PDT)
-Received: by 10.79.114.83 with HTTP; Tue, 24 May 2016 20:58:13 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1605241313440.4449@virtualbox>
+	id S1753590AbcEYEgu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2016 00:36:50 -0400
+Received: from mout.web.de ([212.227.15.3]:51711 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750786AbcEYEgt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 00:36:49 -0400
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0M4lkz-1bST5D0xC9-00yzaz; Wed, 25 May 2016 06:36:42
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+In-Reply-To: <alpine.DEB.2.20.1605241352361.4449@virtualbox>
+X-Provags-ID: V03:K0:xDcvJjN4d0bed7i0XwpKkVzTOaA4T33yNdFWurRs9pEWn7c9PCf
+ KEuF2oAzOziH3/7uSO11PSVOoSSElqibs+6M9WEKQupCK+q6DImFkl3loFImdUi8zKKBJVZ
+ fwHcXzrBzLwQ1mMvTdHsY3YuMiNJSjIqjn4jI1Mp0Rq7fEcxMBdgss5Dts0FglpPxAkGDea
+ X8EEyBDdZ4pAGcCCx/5Qw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+fR0/m6WIcc=:DRCOnEOx/nicV63vRA4xAo
+ Vsy8I4I0TOv4MGI/EXrsjamdmhCbhWQtS8oXSXijNYswVKBlC/vRZmwEn5oB0YyTTtzGZ3Pv4
+ n1WCNX1vBe1Sm2Y+0wAD5TN5XzOcI6bQyj8gJPTLzMIaGNWqJ7WRqwwgKFUvQ4dfjo8HlwEBC
+ kncnMudxfegG8sKlqOCu3MHVnroZmM0fIc5yabZfgQ70bDrIreLHTChBokgKd9vePzTbHGJqo
+ hGQ3kLr6+HnO8i1gQvfQGb/E9MzyGiCq27GOkoHbsop4tbb2etaC/Ll7eXlewJPTD/DQIhAdh
+ MJnoNGmjviwil6I1t1A6FNrm4GJJEf52yzixXv7+tZ8LfNBZoINxtGlMO7fAcs/7JrwIXwBRz
+ q7Ao3ysIfjdrfbsiiK6g/lioSChrFHR5Pxu1OrEoGN8ZrjJ1XPiVg5Ba15JvTrb1yNI7WSZ+J
+ 7UKDVa5uNNAlR3yoROSCznBRq1VAY7wOQFX11llL+t/dBuWeqFxlGeqCcW5h5Bt3k7wpzzkQU
+ m6sX3p/sDtjh7SuRZ7caXV2ZbAxHwH2YkU94tfhUcnY2cK4mJ+RYX8LwgxEL0mEOpCYSd799w
+ 8FZfE+JSbIREWEFKVsraWoVaewqpALlY8+Ueveya5xbckiSUVKd2CKw0V7g2ruheL6Ry6AVXW
+ JvU2LwhIO1xflpuiVJmGPH9POPwpau8y52Qcu6BNGslk04YvGsYEq/FLzpUDTyfRu+HEBFQqD
+ /ro8hy8Q8t/jQGghaPLNaWh1aZMEzzTeLC9oS3B2TwhSPjU4DbAN1LG1ov2ljjTJoUFXgQQq 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295555>
 
-On Tue, May 24, 2016 at 6:20 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Austin,
+On 05/24/2016 01:57 PM, Johannes Schindelin wrote:
+> Hi,
 >
-> On Mon, 23 May 2016, Austin English wrote:
+> On Tue, 24 May 2016, Torsten B=C3=B6gershausen wrote:
 >
->> As stated in title, I'd like to see an option to enable GPG signature
->> by default.
+>> On 05/23/2016 08:52 PM, Junio C Hamano wrote:
+>>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>>
+>>>>> Of course, if you are doing network mount between systems with an=
+d
+>>>>> without filemode support, the result would depend on where you di=
+d
+>>>>> the "git init", so that would not help.
+>>>>>
+>>>>> Which means that other probed things like symlink support and cas=
+e
+>>>>> sensitivity are likely to be wrong in the .git/config that the
+>>>>> user may want to fix.
+>>>> What we could do is to make the default config setting
+>>>> platform-dependent, a la CRLF_NATIVE.
+>>>>
+>>>> I imagine that we would want this for core.filemode, core.ignoreca=
+se and
+>>>> core.symlinks.
+>>>>
+>>>> What do you think?
+>>> The reason why we probe for filemode, icase, etc. at repository
+>>> creation time and record the result in the configuration is because=
+ we
+>>> do not to want to do the auto-probing at runtime, every time we run
+>>> any Git command.
+> Right, I missed this of course. My idea was to have saner defaults *i=
+ff
+> the config variables are not set explicitly*. But they *are* set, of
+> course. Just not in a way that makes sense when the very same working
+> directory is accessed from different Operating Systems.
 >
-> I see an option was mentioned in the mail's subject line, but no
-> indication which command you want to assume implicitly that this option
-> was passed.
->
-> Care to elaborate?
-
-My mistake, 'git show'.
-
->> I find this feature very useful and would like to enable it by default
->> on my machine, without having to resort to an alias in my ~/.bash_rc.
->
-> You probably meant $HOME/.bashrc.
-
-Well $HOME and ~ are functionally equivalent on bash, but yes I did
-mistake the filename, thanks.
-
->> I asked in #git and checked the git repo, but I didn't see an option
->> listed for this.
->
-> Since you are already a Git user, why not just use Git itself to
-> investigate further? It is easy:
->
-> 1. clone https://github.com/git/git
-> 2. run `git grep show-signature` to figure out where this option is handled
-> 3. open the corresponding file and find out where the flag is stored
-> 4. use `git grep` again to determine whether there is another way to set
->    that flag
-
-I used git to verify that there were no options for signature, which
-led me to file a bug, but in the absence of a bug tracker, to this
-mailing list.
-
-> If there is no other way, why not go the whole nine yards and just come up
-> with a patch? That is how many, many other improvements were made: users
-> wanted a certain feature and then just went ahead and made it all happen.
->
-> You will find it a rewarding experience, and you will also find that you
-> will receive excellent help on this mailing list when you demonstrate your
-> willingness to invest some of your own time into that project.
-
-I'll keep that in mind. I have a full time job and several other open
-source projects that I contribute to, so if I can find time, I'll try
-to submit my own patch. In the meantime, it seems appropriate to file
-a bug so that others can have the opportunity to solve the problem if
-they're interested.
-
--- 
--Austin
+>> if core.filemode is true, Git for Windows could:
+>> a) Behave as today, report changed files (filemode)
+>> b) Give warning to the user (and report changed filemode)
+>> c) Error out, saying misconfigured worktree
+>> d) use core.filemode =3D false anyway.
+>> e) Give a warning and use core.filemode =3D false anyway.
+>>
+>> At the moment I tend for c), as it makes it clear what is going wron=
+g,
+>> what do you think ?
+> The problem with that is that we would need to probe again.
+The probing for the filemode:
+Wouldn't it be enough to run lstat() on .git/ ?
+If the user-execuatable bit is not set, but core.filemode is true, erro=
+r=20
+out ?
+That would not cost too much.
+>   Or dictate for
+> all eternity that Git for Windows cannot determine the executable bit=
+ (but
+> who knows for certain?)
+Can we can limit the eternity until the day when Windows can determine=20
+the executable
+bit ?
