@@ -1,88 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] add: add --chmod=+x / --chmod=-x options
-Date: Wed, 25 May 2016 18:49:29 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605251844580.4449@virtualbox>
-References: <20160525020609.GA20123@zoidberg> <xmqqh9dm37xk.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1605251406020.4449@virtualbox> <xmqqoa7u15lq.fsf@gitster.mtv.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC-PATCH 1/2] send-email: new option to quote an email and reply to
+Date: Wed, 25 May 2016 18:56:08 +0200
+Message-ID: <vpqeg8q5b6f.fsf@anie.imag.fr>
+References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
+	<1464031829-6107-2-git-send-email-tom.russello@grenoble-inp.org>
+	<vpq60u4bl4e.fsf@anie.imag.fr>
+	<b1752a59-af2b-6e18-fc69-0650440939e3@grenoble-inp.org>
+	<vpqh9dmfy5k.fsf@anie.imag.fr>
+	<xmqqwpmi16zt.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Edward Thomson <ethomson@edwardthomson.com>, git@vger.kernel.org
+Content-Type: text/plain
+Cc: Samuel GROOT <samuel.groot@grenoble-inp.org>,
+	Tom Russello <tom.russello@grenoble-inp.org>,
+	git@vger.kernel.org, erwan.mathoniere@grenoble-inp.org,
+	jordan.de-gea@ensimag.grenoble-inp.fr,
+	Tom Russello <tom.russello@ensimag.grenoble-inp.fr>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 25 18:49:46 2016
+X-From: git-owner@vger.kernel.org Wed May 25 18:56:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5c09-0006LE-Jj
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 18:49:45 +0200
+	id 1b5c6Z-0000RL-L5
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 18:56:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755829AbcEYQtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 12:49:39 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49181 "EHLO mout.gmx.net"
+	id S1755792AbcEYQ4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 12:56:19 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:34048 "EHLO mx2.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755824AbcEYQti (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 12:49:38 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MLNpK-1b69xh1GiY-000Yfe; Wed, 25 May 2016 18:49:31
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqoa7u15lq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:fKOyEjdkT39m3yztqT86iASI4x6PD/foeenh8KrlnosxM0SuAa8
- 9ojtqlmx7IEQWFvl2UysntKU9lfv8LhRl6nnRNyTb8CtIDup+TdZBmFSce9G6dQ8QhXMOO1
- 5K1i1aUcCz8klZ0niXzdpUkJcs7su1wHfgpGbO4ulRdLfVUge+D5kYWGOO6CCFtUpxiLnWq
- ttL9hM8ABr6h3k5aVabpQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jdXh+zqWjFk=:LCNUtwU5ZrF2NuZn4+sjXX
- 2FiQ4UtkL13anelBT8lV6YOo+rFLgQKu0at747DiztaXc03i2mA5g0+EAxukXG8oF3ebfU9pJ
- g7R/H0sIZhuKHz7Bt6i1YYltKLvNQKQByKvkWLZ15a0363yB2qOA5hLduR/JxBQ93g5rrwq51
- mQG3+kfySiJ05Mj/RZBDVBOtlNoaL6lC5f9KRnrl6/5doG5Tun0wfpYTVfSYUtoe4tZZ5Gvu/
- ZrTOT2SEEYCaA7T8dq7jig73JCN4GHhmdM1EbrokKu+nyasaYyXKHFU6XLU1fQpI1+Tq8F43n
- 2lR5FCZN+RXWShrZ+/4nLv0JLnFN0Piepv2OAchPOpZS+c3DNtxK3vuD/QYzcFfykMCAo8OmK
- BuSqVRiuixgU1G46pmvXGmtU58B8e48jo4CbefmBiRX6It+WDFW+dCfIcWBpiXGiSoPSksi3s
- dF+9gNfndYSvPf1q83W4JAqCfhQ9N1QQ/Ha/meJgoCKuXV60cacUVOcqZ5T8MrASUOJ9Vqfhg
- bx9BoY4Gc3f17g4YMe/ZWOe5gEvqMlkjlOimGCO0zEYb5D23kJdCa+gpncuFbWWotd42bu4LV
- drmvGVLMPMa2XO7M89VBcKSfY8LwvviGrlo6cfBhrFuumbF1aqDP+f2rtKC1rd9lwnTYPKlTF
- O0ZCg4N8YiSImiQ93mOsqxETbhUOXFCz48rnRPm2eRFqkrfB3kBOS3pBpKR/SDy+ZkN1FQkbN
- oljgaHL7wbxN6Hl8Zh6BmvQDcfcaNqkgnkuiyff0pv8xsYBkEA8B+3onBaUKFnX1NoJCB6on 
+	id S1755491AbcEYQ4T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 12:56:19 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4PGu69q004609
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 25 May 2016 18:56:06 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4PGu8r2024675;
+	Wed, 25 May 2016 18:56:08 +0200
+In-Reply-To: <xmqqwpmi16zt.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 25 May 2016 08:40:06 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Wed, 25 May 2016 18:56:06 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u4PGu69q004609
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1464800170.60309@lbA6zNyvv5BKNo2qOZJtXQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295581>
 
-Hi Junio,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Wed, 25 May 2016, Junio C Hamano wrote:
+> I wonder if we can safely repurpose existing --in-reply-to option?
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Wed, 25 May 2016, Junio C Hamano wrote:
-> >
-> >>  * I am not familiar with life on filesystems with core.filemode=0;
-> >>    do files people would want to be able to "add --chmod=+x" share
-> >>    common trait that can be expressed with .gitattributes mechanism?
-> >
-> > I think it is safe to say that the biggest example of core.filemode == 0
-> > is Windows. On that platform, there simply is no executable bit in the
-> > sense of POSIX permissions. ...
-> > ... I still like Ed's idea and would love to have it: it is murky waters to
-> > require users to call plumbing only because our porcelain isn't up to par.
-> 
-> I thought that I made it absolutely clear that I like the addition,
-> too.  If it wasn't clear enough, I can say it again, but I do not
-> think you need it ;-).
+In theory, obviously no as there can be a file with this name _and_ it
+can be a valid message-id. In practice, it is clearly unlikely. The only
+use-case I can think of where both would be valid is if the user happens
+to have saved the message using the message-id as filename. But then,
+the ambiguity would not harm, as the message-id contained in the file
+would be the same as the filename.
 
-Oh, I understood that you liked it, sorry if my mail looked accusatory.
+> That is, if the value of --in-reply-to can be reliably determined as
+> a filename that has the message (as opposed to a message-id), we
+> read the "Message-Id:" from that file to figuire out what message-id
+> to use, and figure out To/Cc: to use for the purpose of your (1) at
+> the same time.
 
-> The "attribute" thing was an idea that was hoping to make the system
-> as a whole even more helpful;
+This should work, but sounds like too much of overloading of
+--in-reply-to IMHO: if given a message id, it would only add a reference
+to this message-id, but if given a file, it would also modify the To:
+and Cc: list.
 
-I understood that, too. My first impression was that it would not be.
-However, as Git for Windows can set default attributes in
-/mingw64/etc/gitconfig, I guess it would actually be helpful. We could
-automatically mark all *.exe, *.com, *.bat, *.cmd files as executable. It
-would then still be the users' responsibility to add their own attributes
-for, say, *.js, *.rb, *.py, *.sh, and whatever else.
+Not a strong objection, though.
 
-Ciao,
-Dscho
+> In the future, you might even teach send-email, perhaps via a user
+> configurable hook, a way to get to the message header and text given a
+> message-id, and when it happens, the same logic can be used when
+> --in-reply-to is given a message-id (i.e. you go from the id to the
+> message and find the addresses you would To/Cc: your message).
+
+That is the plan indeed. Fetching from gmane for example should be
+rather easy in perl, and would be really convenient!
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
