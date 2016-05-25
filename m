@@ -1,98 +1,111 @@
-From: Jeff King <peff@peff.net>
+From: Luke Madhanga <lmadhanga@gmail.com>
 Subject: Re: Why is my git-http-backend solution using WebDAV on push?
-Date: Wed, 25 May 2016 16:38:50 -0500
-Message-ID: <20160525213850.GB13776@sigill.intra.peff.net>
+Date: Wed, 25 May 2016 22:54:26 +0100
+Message-ID: <CABwKKP-rKSGzdk6E78BMRCVdumtVnj7tysv90c7RL8=059PxoA@mail.gmail.com>
 References: <CABwKKP958cW3a5Cjxox+1FCtNLetdufJj0rrYBouAUhJSXKKWA@mail.gmail.com>
+	<20160525213850.GB13776@sigill.intra.peff.net>
+	<CABwKKP89Ncht0MfB7X1x15a6PB-Nm68SDGEDvX1AnQdDucXQkA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Luke Madhanga <lmadhanga@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 25 23:38:58 2016
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 25 23:54:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5gW1-0001k7-L2
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 23:38:57 +0200
+	id 1b5gl7-0005nA-1E
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 23:54:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752298AbcEYVix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 17:38:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44229 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750738AbcEYVix (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 17:38:53 -0400
-Received: (qmail 20083 invoked by uid 102); 25 May 2016 21:38:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 May 2016 17:38:52 -0400
-Received: (qmail 13973 invoked by uid 107); 25 May 2016 21:38:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 May 2016 17:38:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2016 16:38:50 -0500
-Content-Disposition: inline
-In-Reply-To: <CABwKKP958cW3a5Cjxox+1FCtNLetdufJj0rrYBouAUhJSXKKWA@mail.gmail.com>
+	id S1751250AbcEYVy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 17:54:29 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:36791 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750732AbcEYVy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 17:54:28 -0400
+Received: by mail-lb0-f173.google.com with SMTP id h1so19411675lbj.3
+        for <git@vger.kernel.org>; Wed, 25 May 2016 14:54:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=kiNXPDuizypk6wDAmgX98RKu6vJxOD7ttgAyIrvmxCc=;
+        b=P0R2KTKcJ9oa1kK9R5Us7J8g71tKstvHdhkZbsJ5FeXy6M4etspBnw4kA5HbNTpg1n
+         ONbgSt0s68sI6ptA0g2VuhbDkQjV+TC/OnneAFOYs+mPp2Qhocbft58Wt7JngRZX+ISZ
+         6TdDoj0JjHRgssFEfg6ghXA+eSOmrabx/+agewZKOwsUhBERljCPQhr9ttf3MtQsNen8
+         N/dAhWzWT5o6UcixsdYbYKsdOU96zQMuWvCTp+uD0GapDCl2i9D0dBnL/HF5ywm6UcCn
+         rTbRBKD7kFqe+a3v0v3xuzGqN7oWwc/CFu9J8WKZ50i/W88xX4KISHs3ZzYSBFv6MMJI
+         1i6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=kiNXPDuizypk6wDAmgX98RKu6vJxOD7ttgAyIrvmxCc=;
+        b=BBNWzisHPqdVRAgku0q1Wt6eOmd1dYLHpCoxKq90PdzQPoHkgKSViyJIJ/I6dDZJ/n
+         jZDIWCU2+fUT1GnZDjNYl15PBQh8otqaZRUQwRfGBKdNcc/7BzD2aqI3PDLNT8zAj/Ut
+         hg4UEX/O00E4PLaUv543pO21UCx0gTmfVz+EQL70vEwUqx5WxpAqbwbXpZ5/lWxb766v
+         JzG/lnru8L1Jobj2VWSAQRLsfMrB1SoRH+ZAH/QxJ6ecLvY/25d1poHjsDBRucq7g4bB
+         fABhSKVCZHNJEXVFhozCbei8t3wzryT+Jw/hLI9zqpHcc6vK8taUHnpWLnmyOZd2Q/65
+         G5Sw==
+X-Gm-Message-State: ALyK8tLd4uzae2Mw87j7R2b76vLPAJAOhILVnem5TLNf+eZmgW5hXqiKKw662Pd5+Yuiw9jIKFCDiUeC9pqDIg==
+X-Received: by 10.176.3.201 with SMTP id 67mr3575421uau.78.1464213266551; Wed,
+ 25 May 2016 14:54:26 -0700 (PDT)
+Received: by 10.176.4.76 with HTTP; Wed, 25 May 2016 14:54:26 -0700 (PDT)
+In-Reply-To: <CABwKKP89Ncht0MfB7X1x15a6PB-Nm68SDGEDvX1AnQdDucXQkA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295591>
 
-On Wed, May 25, 2016 at 09:28:21PM +0100, Luke Madhanga wrote:
+Thanks for the response btw
 
-> I've implemented a PHP wrapper for git http backend which works well.
-> I've done this to give me advanced control of who has access to
-> repositories on my server. You can see the implementation on
-> http://stackoverflow.com/questions/36998492/channel-git-on-the-server-calls-through-php/37242591#37242591.
-> I can pull from the server okay and all works well. However, I cannot
-> push. When I read my trace code to see where it fails, I see that the
-> last request is a PROPFIND request. The URL for this request does not
-> have any of the usual 'info/refs' etc. that one usually gets on git
-> calls.
-
-If the git client detects that the server doesn't implement the
-smart-http protocol, it will automatically downgrade to the older,
-"dumb" protocol which is less efficient.
-
-For fetching/cloning, this might make your test appear to work, even
-though it is downgrading behind the scenes. You should be able to check
-GIT_CURL_VERBOSE output to tell the difference; the smart protocol will
-POST to .../git-upload-pack, whereas the dumb protocol will download the
-individual packfiles and objects directly.
-
-For pushing, the dumb protocol uses WebDAV, which is what you're seeing.
-
-So the question is: why doesn't the client think your server is a smart
-server?
-
-Just skimming your output, I'd guess:
-
-> > GET /p/git-backend/run/1/info/refs?service=git-receive-pack HTTP/1.1
-> Host: xxx
-> User-Agent: git/2.7.4
-> Accept: */*
-> Accept-Encoding: gzip
-> Accept-Language: en-GB, en;q=0.9, *;q=0.8
+On 25 May 2016 at 22:54, Luke Madhanga <lmadhanga@gmail.com> wrote:
+> Hmmmm. Interesting.
+>
+> When you look at the PHP code, you'll see the following
+>
+>     $res = self::proc_open("{$gitcoredir}/git-http-backend", [],
+> $gitdir, true, [...]);
+>     ...
+>     $resbits = explode("\n", $res);
+>     foreach ($resbits as $index => $header) {
+>         if ($header && strpos($header, ':') !== false) {
+>             // Headers
+>             header($header);
+>             unset($resbits[$index]);
+>         } else {
+>             // First blank line is the space between the headers and
+> the start of the response from Git
+>             break;
+>         }
+>     }
+>     echo ltrim(implode("\n", $resbits));
+>     exit;
+>
+>
+> Everything being returned is from a direct call to the git-http-backend.
+>
+> A manual CLI call to git-http-backend doesn't include
+> 'application/x-git-receive-pack-advertisement'
+>
+> REQUEST_METHOD=GET GIT_PROJECT_ROOT=/path/to/core/
+> PATH_INFO=/repo.git/info/refs /usr/lib/git-core/git-http-backend
+>
+> The above command outputs
+>
+> Expires: Fri, 01 Jan 1980 00:00:00 GMT
 > Pragma: no-cache
-> 
-> < HTTP/1.1 200 OK
-> < Date: Wed, 25 May 2016 19:00:25 GMT
-> < Server: Apache/2.4.18 (Ubuntu)
-> < Set-Cookie: PHPSESSID=yyy; path=/
-> < Expires: Fri, 01 Jan 1980 00:00:00 GMT
-> < Cache-Control: no-cache, max-age=0, must-revalidate
-> < Pragma: no-cache
-> < Vary: Accept-Encoding
-> < Content-Encoding: gzip
-> < Content-Length: 109
-> < Content-Type: text/plain;charset=UTF-8
-> <
+> Cache-Control: no-cache, max-age=0, must-revalidate
+> Content-Length: 118
+> Content-Type: text/plain
+>
+> f4648182f5f8eee082c37a83a0072cfc4210e5c5 refs/heads/master
+> 8c4efcd77809bc9b94a59cf94653add8007c6b7d refs/heads/zztest
 
-The content-type here should be:
 
-  application/x-git-receive-pack-advertisement
 
-The body content should also include "# service=git-receive-pack" on the
-first line, but if you are successfully calling into git-http-backend, I
-think it should take care of that detail.
-
--Peff
+-- 
+Yours,
+Luke Madhanga
