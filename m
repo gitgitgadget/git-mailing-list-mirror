@@ -1,75 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG?] Spaces not allowed in directory names in .git/info/attributes
-Date: Wed, 25 May 2016 14:56:36 -0700
-Message-ID: <xmqqmvndztrf.fsf@gitster.mtv.corp.google.com>
-References: <CAO8RVveOwrS6+pTnHY36d1Nk_B_VJD022W9i8STnNb-KyMkqNg@mail.gmail.com>
-	<xmqqmvng8qle.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8DXW-K-iNO65yuzMLPZS_8+R1gsQgNftwei1XUZNxhicg@mail.gmail.com>
+From: Luke Madhanga <lmadhanga@gmail.com>
+Subject: Re: Why is my git-http-backend solution using WebDAV on push?
+Date: Wed, 25 May 2016 22:54:13 +0100
+Message-ID: <CABwKKP89Ncht0MfB7X1x15a6PB-Nm68SDGEDvX1AnQdDucXQkA@mail.gmail.com>
+References: <CABwKKP958cW3a5Cjxox+1FCtNLetdufJj0rrYBouAUhJSXKKWA@mail.gmail.com>
+	<20160525213850.GB13776@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Nathan Collins <nathan.collins@gmail.com>,
-	git <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 25 23:56:44 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 25 23:59:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5gnE-0006NW-Bj
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 23:56:44 +0200
+	id 1b5gqG-0007Kd-L9
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 23:59:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423AbcEYV4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 17:56:40 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59107 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750732AbcEYV4k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 17:56:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A5D0C1EC11;
-	Wed, 25 May 2016 17:56:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/69bm3opAK680/rrCcs5ebgTy30=; b=UrcFsh
-	1XGFcCjEZzca3UYDcW1pRgwmNPk2zZ9nR4gFhfuoaUmicd9dVTVy0y/AO3GOBKFc
-	o2nSsmnox65CM5Rfs/RH8vMjT4NdCDzkdP7BklbcwhqN0CayV7kP+q8vo+27vhfX
-	nUMul6t+YgfjdjuH3hKyxuhR17HsiMwqZF5As=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Eow1TmOVIhIQb8BRg2qI96Ft/pBzpXr2
-	JA2aV0phRngLw9mqLLdjkBMLgslqxs4hy4Iuc12+qMN5LE2sylltjpWW9m8PMjn7
-	ywgzD9vw/g8xaXThvWZpvXZMthokRS64NW59P6fJXvbDWORAI0C3rBp13tvfg1jG
-	qdy8HeVOdR4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E57F1EC10;
-	Wed, 25 May 2016 17:56:38 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2394B1EC0F;
-	Wed, 25 May 2016 17:56:38 -0400 (EDT)
-In-Reply-To: <CACsJy8DXW-K-iNO65yuzMLPZS_8+R1gsQgNftwei1XUZNxhicg@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 24 May 2016 08:37:33 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8E3B898E-22C3-11E6-8C6E-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1751833AbcEYV7s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 17:59:48 -0400
+Received: from mail-vk0-f45.google.com ([209.85.213.45]:35251 "EHLO
+	mail-vk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751810AbcEYV7s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 17:59:48 -0400
+Received: by mail-vk0-f45.google.com with SMTP id f66so80813633vkh.2
+        for <git@vger.kernel.org>; Wed, 25 May 2016 14:59:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=Z5lyCu38jMdbOCqmFPLOBCcOqrZEzkg9+wo2Ea8MJ24=;
+        b=gV+wg1lOyURCsSWRYSyHjyiclnMLPRB7R8fC1w6kCWGDez/HETyimg/TtCyWjcnZQu
+         Go2cInLMzo2nYFU9fsNxXPwEpkP6bNAV1mDlALGYpydRiZ4RuVgK/XkXLQfDkZHsWKMX
+         1KY0/vUEv5SlRie+CAhd6ffPlWAiSkJcRm+ka5jyUJA5ZOjVJbseMdJNu8+07KFpKfiX
+         z2ISgwffBTeXK3rBDXl02YHa88k/I1R278FA8mugdk7Z4/HAR4z/on2Yi93HOUbcQBF7
+         2rFCbCYdJxwzphobr/PWCd0YX8F1SZcUkwTiKQHEk0Rm/sOxCU8DvOMwnVM/xPb6YmDR
+         gHMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=Z5lyCu38jMdbOCqmFPLOBCcOqrZEzkg9+wo2Ea8MJ24=;
+        b=O/anQoUL5YjnW0AOSPvY3HqNuZRbqihPKo6BKYjGmd9IeItThiNgZuB8QUrxuqwpye
+         Ut1EAsgLcacHD6N/GnBG5Ie7GmbNbPBtCYsHMx6TZ61QzPJhoB+FCyO3YcTofZoBi1Gp
+         FX5N4TeSI2t5oKTdhQ5dnDSd+7J1QVOGN0LrXBBb3Ega0ILiwk1miIzyaGj978WwgdqK
+         jh94KPxsDtWh3axVqCTIrh8dz+57jS5bXRw6uNPghp7xN+0U1iBkL89MfbLyrzBZBe2a
+         O0NX0t+czuTkOkboWMGyp4ulMULPFX48MXWhzIlkTNd+ofZb9wVyoMmEipB4XHHV4cgl
+         iHbA==
+X-Gm-Message-State: ALyK8tLJpJnikgrP//SCdFRf5NrLsA9xzXEmcXadvnBFtb7Xk1fRpLfjeYYrm70OiYZwuI56Q4/FUZkbpnVb0g==
+X-Received: by 10.31.98.135 with SMTP id w129mr3296723vkb.106.1464213253645;
+ Wed, 25 May 2016 14:54:13 -0700 (PDT)
+Received: by 10.176.4.76 with HTTP; Wed, 25 May 2016 14:54:13 -0700 (PDT)
+In-Reply-To: <20160525213850.GB13776@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295593>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Hmmmm. Interesting.
 
-> Maybe bring back [1] (cquoting paths) and optionally optionally with
-> backslash escaping? The conclusion at the end of that thread seems to
-> be "ok, we may break rare setups, we just need to be upfront about
-> it". Another option is the pathspec way: match quotes literally as
-> well.
->
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/160597/focus=160720
+When you look at the PHP code, you'll see the following
 
-I coaxed the ancient patch that was done in the 1.7.2 timeperiod and
-will push out the result near the tip of jc/attr topic that has been
-cooking in 'pu'.
+    $res = self::proc_open("{$gitcoredir}/git-http-backend", [],
+$gitdir, true, [...]);
+    ...
+    $resbits = explode("\n", $res);
+    foreach ($resbits as $index => $header) {
+        if ($header && strpos($header, ':') !== false) {
+            // Headers
+            header($header);
+            unset($resbits[$index]);
+        } else {
+            // First blank line is the space between the headers and
+the start of the response from Git
+            break;
+        }
+    }
+    echo ltrim(implode("\n", $resbits));
+    exit;
 
-Thanks.
+
+Everything being returned is from a direct call to the git-http-backend.
+
+A manual CLI call to git-http-backend doesn't include
+'application/x-git-receive-pack-advertisement'
+
+REQUEST_METHOD=GET GIT_PROJECT_ROOT=/path/to/core/
+PATH_INFO=/repo.git/info/refs /usr/lib/git-core/git-http-backend
+
+The above command outputs
+
+Expires: Fri, 01 Jan 1980 00:00:00 GMT
+Pragma: no-cache
+Cache-Control: no-cache, max-age=0, must-revalidate
+Content-Length: 118
+Content-Type: text/plain
+
+f4648182f5f8eee082c37a83a0072cfc4210e5c5 refs/heads/master
+8c4efcd77809bc9b94a59cf94653add8007c6b7d refs/heads/zztest
