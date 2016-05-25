@@ -1,66 +1,77 @@
-From: Eric Wong <e@80x24.org>
-Subject: Re: [PATCH] daemon: enable SO_KEEPALIVE for all sockets
-Date: Wed, 25 May 2016 23:11:14 +0000
-Message-ID: <20160525231114.GA20691@dcvr.yhbt.net>
-References: <20160525031505.5720-1-e@80x24.org>
- <xmqq37p5zrjk.fsf@gitster.mtv.corp.google.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] clone: don't use an integer as a NULL pointer
+Date: Thu, 26 May 2016 00:12:46 +0100
+Message-ID: <5746316E.8020902@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 26 01:11:20 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu May 26 01:12:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5hxP-0007M7-9p
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 01:11:19 +0200
+	id 1b5hyw-0007j1-6g
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 01:12:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752107AbcEYXLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 19:11:15 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:43414 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751386AbcEYXLP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 19:11:15 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C4241FCC7;
-	Wed, 25 May 2016 23:11:14 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <xmqq37p5zrjk.fsf@gitster.mtv.corp.google.com>
+	id S1752033AbcEYXMu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 19:12:50 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:39187 "EHLO
+	avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751836AbcEYXMt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 19:12:49 -0400
+X-Greylist: delayed 378 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 May 2016 19:12:49 EDT
+Received: from [10.0.2.15] ([84.92.139.254])
+	by avasout01 with smtp
+	id ynCn1s0015VX2mk01nCoB3; Thu, 26 May 2016 00:12:48 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=bsGxfxui c=1 sm=1 tr=0
+ a=RCQFcU9wfaUQolwYLdiqXg==:117 a=RCQFcU9wfaUQolwYLdiqXg==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=EBOSESyhAAAA:8 a=u1ZbWeDvq19SH6arjJgA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295615>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> This makes sense as a follow-up to e47a8583 (enable SO_KEEPALIVE for
-> connected TCP sockets, 2011-12-06), I think.
 
-Yes, a15d069a19867 for http, too; hat trick :>
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-Anyways, it might've helped Savannah when they had networking
-problems:
+Hi Stefan,
 
-  http://mid.gmane.org/20160524214102858920068@bob.proulx.com
+If you need to re-roll your 'sb/submodule-default-paths' branch, could
+you please squash this into the relevant patch. (commit 8efbe28b,
+"clone: add --init-submodule=<pathspec> switch", 23-05-2016).
 
-They might be running an old version that didn't send keepalive
-heartbeats during packing, too.  But SO_KEEPALIVE will still
-help during init when --init-timeout is not set.
+Thanks!
 
-Perhaps it also makes sense to squash the following xinetd
-setting into giteveryday.txt, too; since some users could be
-running out-of-date git but reading new documentation on
-the web:
+ATB,
+Ramsay Jones
 
---- a/Documentation/giteveryday.txt
-+++ b/Documentation/giteveryday.txt
-@@ -390,6 +390,7 @@ service git
- 	server          = /usr/bin/git-daemon
- 	server_args     = --inetd --export-all --base-path=/pub/scm
- 	log_on_failure  += USERID
-+	flags           = KEEPALIVE
- }
- ------------
- +
+ builtin/clone.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 22b6eac..a056f72 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -925,7 +925,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		struct strbuf sb = STRBUF_INIT;
+ 		for_each_string_list_item(item, &init_submodules) {
+ 			strbuf_addf(&sb, "submodule.defaultUpdatePath=%s", item->string);
+-			string_list_append(&option_config, strbuf_detach(&sb, 0));
++			string_list_append(&option_config, strbuf_detach(&sb, NULL));
+ 		}
+ 	}
+ 
+-- 
+2.8.0
