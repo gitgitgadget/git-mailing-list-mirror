@@ -1,102 +1,103 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH v8 2/3] bisect: rewrite `check_term_format` shell function
- in C
-Date: Wed, 25 May 2016 10:43:43 +0530
-Message-ID: <CAFZEwPPf6sRnJDyW9hLjEYa-=6Bjw_rWss9T5D_n_aXUX=TcGA@mail.gmail.com>
-References: <20160524072124.2945-1-pranit.bauva@gmail.com>
-	<20160524072124.2945-3-pranit.bauva@gmail.com>
-	<alpine.DEB.2.20.1605250657250.4449@virtualbox>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Small rerere in rebase regression
+Date: Wed, 25 May 2016 07:38:12 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605250710340.4449@virtualbox>
+References: <57434572.6030306@kdbg.org> <xmqqy4708ss0.fsf@gitster.mtv.corp.google.com> <57437693.3030106@kdbg.org> <xmqqk2ik77cr.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1605241510370.4449@virtualbox> <5744B00D.4020006@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 25 07:13:49 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed May 25 07:38:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5R8d-0004SM-Fm
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 07:13:47 +0200
+	id 1b5RWk-0002sG-7x
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 07:38:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754546AbcEYFNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 01:13:45 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:34480 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754349AbcEYFNo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 01:13:44 -0400
-Received: by mail-yw0-f194.google.com with SMTP id j74so5226455ywg.1
-        for <git@vger.kernel.org>; Tue, 24 May 2016 22:13:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=n9+BVx3u7x9NrMlE20d/ch3d6KTBsU2vqMwUKTFZwlg=;
-        b=thOgOeVcGgKZ6MAynNH88uzTCV5oxo3rw5Hg0JMspAQZlRUC+P4MHXi0xUIFUbRR5B
-         pLhjcPPZ6ANI+gx9wMmfJLrhIhu4SaqUgZ+85UzxJ6y5rCsSxf2E0OgKRmMjQy+s65Qk
-         YGLGzQr++QzFUh2cUHvgosk8Qm0ho5h4GHmf0+3JPcrSZTM0KELE/EnNbEOtlIF95f0Q
-         I0bUQlv6V7y7RZxvjk0jVXV1PJiZf+q2N22xEFLsfTqcYMD9N00uKFYerjW77ImqlW6b
-         wpw499GKlpwS0lunIt4PCqZQjt1txcpWHv5ckSrDdKzkndZM6JeoGw+001OCzY9b0j8X
-         W4yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=n9+BVx3u7x9NrMlE20d/ch3d6KTBsU2vqMwUKTFZwlg=;
-        b=iNtioY5vc+JubU4hBzntRtU2FSSdAYiKzSj8lAPj2WvIvk7VJchyndfDCY10tboKHz
-         tkk3IsdUOI7jmUEC+ChOGVdjbD68qhZbEI0NLNst3SwNsKBxJz2GAQv4QgI6eAZbYLsa
-         UC7xWCtaRfvdnyoeYPiZBPlEWQhHTZtXmgAKM/ODW7qkwyKL32bUsPkELPm8Bp4U83wK
-         PPvH2wgnbX98sRUxbYBvx5+aA/6TVoL/otjeDOG2E/qNoUS+c24yPTXjK6viGtEeQ3OF
-         aI36bfwAmOwxkyQXb5AICnfUBZBfE6i6k3UDLrMteuEKMTUUcVTfjDWr1DV41BbmFlsu
-         +sHw==
-X-Gm-Message-State: ALyK8tIfvcSSq57yEdRxq9by2CoyxkIGmbEq5+fOvBkFq+8CPfCGB0XooYntQt3aQs586DcAdepshr2kw2d4LA==
-X-Received: by 10.129.164.145 with SMTP id b139mr1241943ywh.171.1464153223234;
- Tue, 24 May 2016 22:13:43 -0700 (PDT)
-Received: by 10.13.219.213 with HTTP; Tue, 24 May 2016 22:13:43 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1605250657250.4449@virtualbox>
+	id S1751015AbcEYFii (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 01:38:38 -0400
+Received: from mout.gmx.net ([212.227.15.18]:49885 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750708AbcEYFih (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 01:38:37 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0Lj1Cw-1bgQEl31m2-00dDOm; Wed, 25 May 2016 07:38:29
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <5744B00D.4020006@kdbg.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:I/XUoKsL7sNhV9Y8SQC70jp5zjvTuziHL7U4lSEWvaZMdgwPD86
+ +rg9V36Hrt7ns2N99cJF3oEoEmUe4pfi44sx4U+ARWsrwOhIP1ZIoVYkOQ1qhQgEN8yK2TM
+ VXaln3yqvL8DNakNhCFN4nXbkomYF/Xq2vuXRblx5BL0o/QeksqNh96qFlN8r0UryxaGRwi
+ jiqU9yEBMDZBz12/v6fzg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:53kdUFUGkvw=:F0dHapqafYLq4UODeS7f5q
+ WVZI65Hp6NZ9K1auJCaGemTpcUdbsP02lYNpwtqX3+lVGT6w7BbcExNpyOOpwbffQmZfZ/R+w
+ Gf8wibmOnDU14fyVfuJDH6hhx+jZ8h3OBLSJ4iIDE7fjmiUhYNgRUhglaYJ+uCjrq+03JKEMg
+ PnNIRNYHTGwdYco6/zWNX3ss+jFBTUUy7CitqQhZhR6JrbG6Lc4ps83AjOem7PsY2yHUixsH9
+ UEu4EGVQscTP9nBszBG4rZu5OLGUkgaT3g8wjClft/bg1vDOvBI6XhKYLdVKxX6aKMy3CTrMG
+ OW3vqtHeKeqC3a7z2TcPpZ+mKaswJ/1+PyX6gmw76k88YjQbRYxRKT/uK3Njx+nPl6xANmHPF
+ GUEkPOB0dhXQ1cxh7XiHQ7HF4/EKdjh9NCPAFOL4mtNNpD7K/sp/bbVJSegeTtKEGk9n/W9JK
+ rzp7QqdS5OJWCPdqMhl722y7I22erxU4qPw/fuXkhEIEwOP1jEQGVCYQWAZMGeIefN/4pL7Yv
+ 6tTTMnK7j86R10451Jzg85lh6X+LZ29gjA9A7RUMhtWV43vcgbSKUNmIibc7jU2Nagyy/To04
+ jRXpxIodOhTkVuT/iiQiuevlbtmQi4wnffsagyJ1lRPbRQ+Yhr3FKqlmHGbOBzK6bOqB8n4c1
+ L/N3zHtn5wHgI1j0y8rF/geEjeomIPLbpdHu3QtBegH2c2a8isq9qCcuLLXEn27VU8PLFzD0z
+ I+Q356VRlLLgM5fAZmwZy0/Lh1Wt5kyRnSpXTb9lLf0Sz6Ozf/ngoe7E4zuxU3EDI4Fe2chP 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295560>
 
-Hey Johannes,
+Hi Hannes,
 
-On Wed, May 25, 2016 at 10:34 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Pranit,
->
-> I think this patch series is now in a fine shape. Just one minor nit:
+On Tue, 24 May 2016, Johannes Sixt wrote:
 
-Thanks!
+> Am 24.05.2016 um 15:18 schrieb Johannes Schindelin:
+> > Hannes, could you quickly test whether
+> > https://github.com/dscho/git/tree/interactive-rebase calls rerere twice,
+> > too? (Please call interactive rebase with the GIT_USE_REBASE_HELPER=true
+> > to avoid running the interactive rebase twice.)
+> >
+> > I have a hunch that it does not call rerere twice, which would be a nice
+> > bonus in that patch thicket
+> 
+> It prints the message only once:
 
-> On Tue, 24 May 2016, Pranit Bauva wrote:
->
->> +             OPT_CMDMODE(0, "check-term-format", &cmdmode,
->> +                      N_("check format of the term"), CHECK_TERM_FMT),
->
-> Just like with cmd_mode and CMD_MODE, it would be more consistent to use
-> CHECK_TERM_FORMAT (instead of abbreviating it) when the option is already
-> spelled --check-term-format and the function name is check_term_format.
->
-> It not only causes the eyes to stumble less, being consistent in naming
-> causes less typos and also makes it easier to dig into the source code
-> (think: `git grep -i check.name.format`).
->
-> Not a big thing, but if you re-roll for any other reason, it would be good
-> to make the naming consistent, too.
+Thanks for confirming.
 
-Sure I would include this in a re-roll. Anywhich ways it will really
-not make a big difference because after some time, "git grep -i
-check.term.format" wouldn't return anything except for the method
-name. Other occurrences would be vanished.
+> Could not apply fa62fea... mastergittest@master|REBASE-i 1/1:1008> 5~
+> 
+> (Take note of the missing LF at the end of the message.)
 
-Regards,
-Pranit Bauva
+Oops. Good catch, thank you! I just fixed this:
 
-> Ciao,
-> Johannes
+	https://github.com/dscho/git/commit/0393d7bb2d
+
+> Can this result be interpreted as another indication that the "git rerere"
+> call in die_with_patch can be removed, or are the two git-rebase
+> implementations too different to be comparable?
+
+The code used by the rebase--helper is not *quite* the same as the entire
+cherry-pick code path. For one, we run the sequencer directly, without any
+of cherry-pick's option parsing.
+
+Having said that, yes, we inherit sequencer's rerere() call that was part
+of cherry-pick originally ever since aa1a011 (Make cherry-pick use rerere
+for conflict resolution., 2008-08-10) (amd which was moved to
+builtin/revert.c in 81b50f3 (Move 'builtin-*' into a 'builtin/'
+subdirectory, 2010-02-22) and refactored out into the sequencer in 043a449
+(sequencer: factor code out of revert builtin, 2012-01-11)).
+
+I did notice that rerere() call when implementing rebase -i's
+functionality in the sequencer, and dropped the extra call in
+error_with_patch() (the libified version of rebase -i's die_with_patch
+function).
+
+In short: yes, the explicit `git rerere` call can be dropped, that is
+essentially what I did in the rebase--helper branch.
+
+Ciao,
+Dscho
