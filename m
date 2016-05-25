@@ -1,73 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Small rerere in rebase regression
-Date: Wed, 25 May 2016 07:47:54 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605250747040.4449@virtualbox>
-References: <57434572.6030306@kdbg.org> <xmqqy4708ss0.fsf@gitster.mtv.corp.google.com> <57437693.3030106@kdbg.org> <xmqqk2ik77cr.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1605241510370.4449@virtualbox> <5744B00D.4020006@kdbg.org>
- <alpine.DEB.2.20.1605250710340.4449@virtualbox>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC-PATCH 1/2] send-email: new option to quote an email and reply to
+Date: Wed, 25 May 2016 08:29:43 +0200
+Message-ID: <vpqh9dmfy5k.fsf@anie.imag.fr>
+References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
+	<1464031829-6107-2-git-send-email-tom.russello@grenoble-inp.org>
+	<vpq60u4bl4e.fsf@anie.imag.fr>
+	<b1752a59-af2b-6e18-fc69-0650440939e3@grenoble-inp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed May 25 07:48:11 2016
+Content-Type: text/plain
+Cc: Tom Russello <tom.russello@grenoble-inp.org>, git@vger.kernel.org,
+	erwan.mathoniere@grenoble-inp.org,
+	jordan.de-gea@ensimag.grenoble-inp.fr,
+	Tom Russello <tom.russello@ensimag.grenoble-inp.fr>
+To: Samuel GROOT <samuel.groot@grenoble-inp.org>
+X-From: git-owner@vger.kernel.org Wed May 25 08:29:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5Rfv-0005uu-0A
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 07:48:11 +0200
+	id 1b5SKH-0001ER-I8
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 08:29:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755241AbcEYFsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 01:48:06 -0400
-Received: from mout.gmx.net ([212.227.17.20]:61741 "EHLO mout.gmx.net"
+	id S1754622AbcEYG3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 02:29:50 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:59452 "EHLO mx2.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750765AbcEYFsF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 01:48:05 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Li1hG-1bsTob2zeU-00n5yy; Wed, 25 May 2016 07:47:51
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <alpine.DEB.2.20.1605250710340.4449@virtualbox>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:HM1mqpxcyxBwvDs1yTG3xss+OtLg03z/XJTxmsdmAr85K7ECMTC
- PZzfI0qPeoblWqsqu+C07QoclumIQjU0EAu3e03v+Jfi82B6E+5DUK8fdlWUZmjTady0uC0
- t8qW8iw2gzHwQF5eXjKM4AgkCNVuBwTDJkE1d27ZBuG7I76XMQF/mN1ARvgbdZcMNijAH8d
- QbG+VVQUXCMU3mnlm1kYA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fcdcsfltKr4=:fbpKk/fRDK9Y4s6Jp8McSQ
- FPfRgA3+XKWC4KWb4w01G4HaNZvuUqZlvdQl9gozmIv6tE3asd2CKMuz21NnpmdC6zKmo8WRj
- QVDCy6MFOBc01wXFMVse02DWug/a7NtM0ajRFmqQ86g2FnHrpiO7udr27Qfk2m7zYVMNKuuSI
- UDW++mdjEtHJlTIzI2SLpo0A0ImHF7LwRurgnVczKibNLraqbQ7Q8mFStfyD/ERPi3q7UsNJP
- yKrJTptD6CCQ/gdnmpBFiItENckZJ5xiQ1wrh+hleeN8YWMsz5TZdwbHTqrAlk12tDKHaXxVt
- jjy+5nrB1pCkifDL/PhYZrkb+5U4+Eq2zCIi4hgWtkgDq+uV9mgaIhlUCOxuIeSKpXXO0wQpc
- 1wFMaz+pJX6TYL+dHB7Xfj6q4O4QrD74ilCPWs7bjXx7QAFS7NMSPn2FTUleQV9LfVZk+MjNC
- kzBS5Wpa+QsGwKkPD0ITNjRPlpCGK536WNIlkmDPsoxmcMGyAZIt2bQaSp/5HNX89J165j6Br
- hHwYQwxtZ4DPW0bJr3qPQLN8Dg+IrgA3zikWQqwZpTDEP801seE2ic4vogqTKw89hlvTNV3Fz
- 9J5I10v3LIcO5ZPmwG0I6klrs4bmM/OsTbc7/+aQWs/9KDpGdOsLdM6eNHhgqr8XWQ2p3J+2n
- aylTDe6CSiu6x88H2bSO4NADcildcjR0QodzmBYWI7O3FBMEBj8Dxw5yXYfzsPSObhLmqJD02
- /zt8FwgvstsJoO5C5cdHKEzpsV0cS1VrCl/6eULFgogLXFX0CwBGrlkoXNxAjKZGrOX/4uEP 
+	id S1750765AbcEYG3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 02:29:48 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4P6Tg2g006287
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 25 May 2016 08:29:42 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4P6ThV3007613;
+	Wed, 25 May 2016 08:29:43 +0200
+In-Reply-To: <b1752a59-af2b-6e18-fc69-0650440939e3@grenoble-inp.org> (Samuel
+	GROOT's message of "Wed, 25 May 2016 01:31:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Wed, 25 May 2016 08:29:43 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u4P6Tg2g006287
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1464762584.19099@9zuI4IfB8fpzKgBle5T8Ug
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295562>
 
-Hi Hannes,
+Samuel GROOT <samuel.groot@grenoble-inp.org> writes:
 
-On Wed, 25 May 2016, Johannes Schindelin wrote:
+> On 05/23/2016 10:00 PM, Matthieu Moy wrote:
+>
+>> Your --quote-mail does two things:
+>>
+>> 1) Populate the To and Cc field
+>>
+>> 2) Include the original message body with quotation prefix.
+>>
 
-> On Tue, 24 May 2016, Johannes Sixt wrote:
-> 
-> > Could not apply fa62fea... mastergittest@master|REBASE-i 1/1:1008> 5~
-> > 
-> > (Take note of the missing LF at the end of the message.)
-> 
-> Oops. Good catch, thank you! I just fixed this:
-> 
-> 	https://github.com/dscho/git/commit/0393d7bb2d
+[...]
 
-Argh. I fixed it in https://github.com/dscho/git/commit/0704d6f425 of
-course.
+>> * If --compose is not given, don't send a cover-letter but cite the body
+>>   as comment in the first patch.
+>
+> Then should the option imply `--annotate`, to let the user edit the
+> patch containing the quoted email?
 
-Ciao,
-Dscho
+Actually, I'm not sure what the ideal behavior should be. Perhaps it's
+better to distinguish 1) and 2) above, and have two options
+--reply-to-email=<file> doing 1), and --quote doing 2), implying
+--compose and requiring --reply-to-email.
+
+That would be more flexible, but that would require two new options, and
+I also like to keep things simple.
+
+In any case, quoting the message without replying to it does not make
+sense (especially if you add instructions to trim it: the user would not
+even see it). So it its current form, I'd say --quote-email should imply
+--annotate.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
