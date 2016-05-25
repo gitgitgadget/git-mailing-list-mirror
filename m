@@ -1,107 +1,109 @@
-From: Armin Kunaschik <megabreit@googlemail.com>
-Subject: Re: t7800 test failure
-Date: Wed, 25 May 2016 11:33:33 +0200
-Message-ID: <CALR6jEixZitA1CTE_kDkDEHv59ALT9zkCOgd28unMhLUZKt48Q@mail.gmail.com>
-References: <CALR6jEiJwx14zAyond9ggz29Q64Fz84URtjr8zaddjnrdY7TjA@mail.gmail.com>
-	<vpqk2ijs8p2.fsf@anie.imag.fr>
-	<xmqq1t4r75sv.fsf@gitster.mtv.corp.google.com>
-	<CALR6jEj67MA7CCHQ_jfdtAuGoo9wjPie0+a=e-BqJjoYtJ9oHw@mail.gmail.com>
-	<xmqqfut75peg.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Odd Difference Between Windows Git and Standard Git
+Date: Wed, 25 May 2016 13:52:38 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605251349210.4449@virtualbox>
+References: <nhlqd4$ekr$1@ger.gmane.org> <c07df4ac-08c9-8eaa-0233-06616945c857@web.de> <c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com> <ede1c113-1ab8-6043-3e39-bbacec5db31c@web.de> <xmqqy474g3cv.fsf@gitster.mtv.corp.google.com> <xmqqfutcg0pe.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1605231310190.4122@virtualbox> <xmqqeg8sa9oq.fsf@gitster.mtv.corp.google.com> <5743DE28.5070000@web.de> <alpine.DEB.2.20.1605241352361.4449@virtualbox> <57452BB9.5090500@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 25 11:33:48 2016
+Content-Type: multipart/mixed; BOUNDARY="8323329-1517380263-1464177160=:4449"
+Cc: Junio C Hamano <gitster@pobox.com>, Jon Forrest <nobozo@gmail.com>,
+	git@vger.kernel.org
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed May 25 13:52:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5VCC-00081J-4L
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 11:33:44 +0200
+	id 1b5XMk-0004Js-To
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 13:52:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751515AbcEYJdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 05:33:35 -0400
-Received: from mail-yw0-f174.google.com ([209.85.161.174]:34499 "EHLO
-	mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750857AbcEYJde (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 05:33:34 -0400
-Received: by mail-yw0-f174.google.com with SMTP id c127so41813390ywb.1
-        for <git@vger.kernel.org>; Wed, 25 May 2016 02:33:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=UIxBCY2mIdcbYSOzjlyxpvyL97HSRGL5Mbva1NU4pi8=;
-        b=UcQ9LVrHH9+7H0zIam0QX3ZvWqFYLG0l9AH+JMcQOHQ6Ox283WwYXwjqq6JIX2yxTz
-         pL19VhvXV5AySPwSQRnvhEsFpliQinoi5Q5syALyA1pInyMP1+S97AHYzK7cM4CG9vHb
-         2CJopWWaY4bCljuaQUmsbbIK+us57ckP6ZOoK3POxpO89A82DmahfZ2czZYSLgzGwgQW
-         ItxRiMStX65sIjIsfSivCLlG74yYpvRyA+J+yufX+L1emUI4dPpvGyUC19IK2YGcMK9g
-         kBPlEfqY0p9sFD1RcNmlY3I8c+73lGM7FUoCFHarZDwOBMJEQZbMB2b9JaErcUBUx7wN
-         sQ3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=UIxBCY2mIdcbYSOzjlyxpvyL97HSRGL5Mbva1NU4pi8=;
-        b=c7KwtM0FGzsFcQkk6+ZAhoRk28yHyuwMpVj3pNlkPok6BQfpCmrgvOYbap8GhY3dx+
-         02z9d1eVPCdAObYryhzJtFfXlPW40FLTDEQm/YLd1lxNggUl27uVppiYMmEmX5PGk0zs
-         r2jJ8MxFjkGsbKx/k988n994GVBjPo9wuo4JCUF0wMTK+aSpJyQ5Ys2mgi1CK6Yud86F
-         Mi7Wm48T9BORGKQyy028wx0g6uindwMtl4w0VwpFzrCzuZ9g05OoHCRHq2/f6hTkGKeC
-         9QW7CUF9c37ITJM0/DUN9DE498Jm3hUYoQIde0nFTmF9hbLuM9BS1VAPHz6EUwQVQs1W
-         7HjA==
-X-Gm-Message-State: ALyK8tIT++isExuP35XeOzWPb7SKIDEav/q9mH/QVbF/f50nTKlUUJIQOmH792Vrp7f5sbhJwmve47tIaM4ppw==
-X-Received: by 10.13.202.151 with SMTP id m145mr1831838ywd.63.1464168813327;
- Wed, 25 May 2016 02:33:33 -0700 (PDT)
-Received: by 10.129.45.132 with HTTP; Wed, 25 May 2016 02:33:33 -0700 (PDT)
-In-Reply-To: <xmqqfut75peg.fsf@gitster.mtv.corp.google.com>
+	id S1752218AbcEYLwn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 07:52:43 -0400
+Received: from mout.gmx.net ([212.227.15.19]:54985 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750740AbcEYLwm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 07:52:42 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MX1hk-1b080d3hae-00W1r3; Wed, 25 May 2016 13:52:36
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <57452BB9.5090500@web.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:8k5pzdexAkZlm7Wa1v3WNu0guJqIuX27nA0JGqJLedsq/D/+BFT
+ NrcejOWxjHv3QF/sM9pSARRDJJklzF9MI+UVcF3+cZPnSS93wG47/KEfJ/T4aKxG4RfVtMH
+ d57aBDQKYnpfO/FWn7Myh4Ky8/5gE6yFarp4rD4JpPxUcB6hFdYzdw5zwGcWxmyZF94H7sA
+ B+AMAdfIM+HyKckPiXbIQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gyzj5A9rhh4=:vYAQ/servL9CneMkiiZtxS
+ J+PdoDhz1jBD0ZsUqD3hCot9c0rZBlvkezmSUcxdg7KCfriWYYoVitkHWWXWdfqo2sa1kkBQj
+ KgHnRZa2fhnrFInPfdgG8rw5Mz7ykhJqtR+dCPMStZpp/CMvykPhPif2FDIeDqSqozT4RHoN8
+ NP5zYEJ331f01XY3dTyqaGEiDQsWAPOjrorOA3zWhEWsZ+5Dni41nLVB87XqnnCh8aFgEYKdU
+ 1lbJjqX42p6DJnkxMwGaTh/lekq0DKhm5M8ZSw/3z5G4LK6/fbB6c1QO1WAHym7ldfQaaXfJq
+ 8DxMm7anxaBPFQQmrQDUKbSL+9ZGG3iMbysrna5jotPoJ5HvEfBc9IGTG/r6mE5mDz7SjaINq
+ C9mEtRjxM2jIYymYqV2tgiSn+Kv8DiTRe2ma/cZUjCm9WCoNpFN4hQrtzc2yNz4pUL+HT8dNv
+ IFXaV6cwzT9+9FO8NN3u0XZm5pmtdMzz8TQHg2qzlxNYVL7Az9BW9T7SdPpkHzaTq+lbu18AA
+ Yl94U80UOEagVtoeRhSlI07ejH1i9v3UzPAY0usKzp3fLR4MRqUGFn3rtFHZOoOzQOyMq5+Dx
+ VeGTqn7xj50t5heuKGVHv+c62fMl2baNqmIERc4TeHUzmrM2pUxQ1NVD/93NWY4tuphnGHKKN
+ n/j769TqC5/z/pHNAihMZYMlCI9HsglD5vcVyfoE+BApetGGw1SrcrDIcMKEe0xs6vFRAW+kB
+ Ocxzi0xSHyB7E3E0Pak80w/3TVUfJXJ/DRSylkVR95YyQQCb3NbxBINJSbaVZeUjBWNUNKCn 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295571>
 
-On Tue, May 24, 2016 at 7:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Armin Kunaschik <megabreit@googlemail.com> writes:
->>
->> Ok, how can this be implemented within the test environment?
->
-> I actually think an unconditional check like this is sufficient.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Ah, good. My thoughts were a bit more complicated.
-Anyway, this works for me.
-Thanks!
+--8323329-1517380263-1464177160=:4449
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
->  t/t7800-difftool.sh | 17 +++++++++--------
->  1 file changed, 9 insertions(+), 8 deletions(-)
+Hi Torsten,
+
+On Wed, 25 May 2016, Torsten B=C3=B6gershausen wrote:
+
+> On 05/24/2016 01:57 PM, Johannes Schindelin wrote:
+> >
+> > On Tue, 24 May 2016, Torsten B=C3=B6gershausen wrote:
+> >
+> > > if core.filemode is true, Git for Windows could:
+> > > a) Behave as today, report changed files (filemode)
+> > > b) Give warning to the user (and report changed filemode)
+> > > c) Error out, saying misconfigured worktree
+> > > d) use core.filemode =3D false anyway.
+> > > e) Give a warning and use core.filemode =3D false anyway.
+> > >
+> > > At the moment I tend for c), as it makes it clear what is going wrong=
+,
+> > > what do you think ?
+> >
+> > The problem with that is that we would need to probe again.
 >
-> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-> index 7ce4cd7..f304228 100755
-> --- a/t/t7800-difftool.sh
-> +++ b/t/t7800-difftool.sh
-> @@ -442,15 +442,16 @@ run_dir_diff_test 'difftool --dir-diff with unmerged files' '
->         test_cmp expect actual
->  '
+> The probing for the filemode:
+> Wouldn't it be enough to run lstat() on .git/ ?
+
+What about `git diff --no-index`? There is no `.git/` to probe there.
+
+> If the user-execuatable bit is not set, but core.filemode is true, error
+> out ?  That would not cost too much.
+
+I think it would cost us a nice and clean logic ;-)
+
+> > Or dictate for all eternity that Git for Windows cannot determine the
+> > executable bit (but who knows for certain?)
 >
-> -write_script .git/CHECK_SYMLINKS <<\EOF
-> -for f in file file2 sub/sub
-> -do
-> -       echo "$f"
-> -       readlink "$2/$f"
-> -done >actual
-> -EOF
-> -
->  test_expect_success PERL,SYMLINKS 'difftool --dir-diff --symlink without unstaged changes' '
-> +
-> +       write_script .git/CHECK_SYMLINKS <<-\EOF &&
-> +       for f in file file2 sub/sub
-> +       do
-> +               echo "$f"
-> +               ls -ld "$2/$f" | sed -e "s/.* -> //"
-> +       done >actual
-> +       EOF
-> +
->         cat >expect <<-EOF &&
->         file
->         $PWD/file
+> Can we can limit the eternity until the day when Windows can determine
+> the executable bit ?
+
+The point is: I will have forgotten by next week what we talked about
+(there are way too many things going on in my life), and if and when
+compat/mingw.c will be taught to infer the executable bit, I am prone to
+forget that warning (if we introduce it).
+
+Therefore, out of entirely practical considerations, I favor the status
+quo.
+
+Ciao,
+Dscho
+--8323329-1517380263-1464177160=:4449--
