@@ -1,115 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] add: add --chmod=+x / --chmod=-x options
-Date: Wed, 25 May 2016 09:00:03 -0700
-Message-ID: <xmqqshx6162k.fsf@gitster.mtv.corp.google.com>
+Date: Wed, 25 May 2016 09:10:09 -0700
+Message-ID: <xmqqoa7u15lq.fsf@gitster.mtv.corp.google.com>
 References: <20160525020609.GA20123@zoidberg>
 	<xmqqh9dm37xk.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1605251406020.4449@virtualbox>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Edward Thomson <ethomson@edwardthomson.com>
-X-From: git-owner@vger.kernel.org Wed May 25 18:00:31 2016
+Cc: Edward Thomson <ethomson@edwardthomson.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 25 18:10:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5bET-0003MS-DZ
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 18:00:29 +0200
+	id 1b5bO9-0007NQ-Km
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 18:10:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755371AbcEYQAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 12:00:16 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53713 "EHLO
+	id S932644AbcEYQKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 12:10:15 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65358 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754229AbcEYQAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 12:00:11 -0400
+	with ESMTP id S932636AbcEYQKN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 12:10:13 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F13271D9C8;
-	Wed, 25 May 2016 12:00:09 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E49D1DBFE;
+	Wed, 25 May 2016 12:10:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MtnMgeCLNhAokpTdpyVDwjvfN5c=; b=fnfPBP
-	WG8Qfyt8Yn8S0u35DykOJjt+yuls8nSgtNuVga2UDSovtnrVMVcgol8oukZ0YXem
-	5BOmdqKmwwlu49XaTtOnZfID9mkMoq2kCXpmoaIAkFWabeQiWGZK6CIkSwKAhNZC
-	B9Z2OC7rBiDfEg0Dacrd4/yAOF0T1sxDDKras=
+	:content-type; s=sasl; bh=a1G7qR6nRiPzogjXupoz7O/uJow=; b=tX//P+
+	ucvu6iJJe1tpOvxfIpf3Az8xE5pLIycfoPJ71AG/lHP+IZhiMw/rIZiBuhAgj/aN
+	1pB9zMz6vrMjWonAH8WO2A4fsDcnLntyX/F1Vfk1FQ/+E14o19vNNv0NqDmKzqQ4
+	RFOnyM0xj7IkyOwsbWwYMWlGwlI3hgn/zOa+Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Mz1jp45mJPuzZ3BFtszBINP5uBGv3RDR
-	wWPxaiey7MWJN74O7XQjoXDqoqf0zNjiEbY+pao6RoeSHX49B1H+rGUZYheDmteM
-	PEKkRCWlqAiivHlEAJ4pQP4nmE+7tEPChwFWuWCr5hvYYcZV5sx1ImjPRTSxkKiZ
-	HAk6eaVYNMg=
+	:content-type; q=dns; s=sasl; b=ugsBVlG7xQPeIwc8tJdUtRXk2C4xPGRj
+	++fAePe0vU6EBPzbGYfiWW8ovN6OUuZuLuigYkiJOIjuqOZGNXdhTziujcu84AS0
+	M/lUSujlmgDZ0zX5tWvmkoyXpCoKjDG29s6mkVBMu5G7dxwekusc/ApkW4qXqde3
+	ooPVXKpo4Y8=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E19731D9C6;
-	Wed, 25 May 2016 12:00:09 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 36CDC1DBFD;
+	Wed, 25 May 2016 12:10:12 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6AECB1D9C1;
-	Wed, 25 May 2016 12:00:08 -0400 (EDT)
-In-Reply-To: <xmqqh9dm37xk.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 25 May 2016 00:36:55 -0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B88D81DBFC;
+	Wed, 25 May 2016 12:10:11 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1605251406020.4449@virtualbox> (Johannes
+	Schindelin's message of "Wed, 25 May 2016 14:19:35 +0200 (CEST)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C101F272-2291-11E6-BC29-9A9645017442-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 28939264-2293-11E6-8028-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295577>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> @@ -661,6 +663,10 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
->>  
->>  	if (trust_executable_bit && has_symlinks)
->>  		ce->ce_mode = create_ce_mode(st_mode);
->> +	else if (force_executable)
->> +		ce->ce_mode = create_ce_mode(0777);
->> +	else if (force_notexecutable)
->> +		ce->ce_mode = create_ce_mode(0666);
+> On Wed, 25 May 2016, Junio C Hamano wrote:
 >
-> This is an iffy design decision.
+>>  * I am not familiar with life on filesystems with core.filemode=0;
+>>    do files people would want to be able to "add --chmod=+x" share
+>>    common trait that can be expressed with .gitattributes mechanism?
 >
-> Even when you are in core.filemode=true repository, if you
-> explicitly said
->
-> 	git add --chmod=+x READ.ME
->
-> wouldn't you expect that the path would have executable bit in the
-> index, whether it has it as executable in the filesystem?  The above
-> if/else cascade, because trust-executable-bit is tested first, will
-> ignore force_* flags altogether, won't it?  It also is strange that
-> the decision to honor or ignore force_* flags is also tied to
-> has_symlinks, which is a totally orthogonal concept.
+> I think it is safe to say that the biggest example of core.filemode == 0
+> is Windows. On that platform, there simply is no executable bit in the
+> sense of POSIX permissions. ...
+> ... I still like Ed's idea and would love to have it: it is murky waters to
+> require users to call plumbing only because our porcelain isn't up to par.
 
-Here is an additional patch to your tests.  It repeats one of the
-tests you added, but runs in a repository with core.filemode and
-core.symlinks both enabled.  The test fails to force executable bit
-on platforms where it runs.
+I thought that I made it absolutely clear that I like the addition,
+too.  If it wasn't clear enough, I can say it again, but I do not
+think you need it ;-).
 
-It passes with your patch if you drop core.symlinks, which is a good
-demonstration why letting has_symlinks decide if force* is to be
-honored is iffy.
+The "attribute" thing was an idea that was hoping to make the system
+as a whole even more helpful; if pattern matching with paths is
+sufficient for projects to hint desired permission bits per paths,
+then those working on such a cross-platform project on Windows do
+not have to even worry about "git cmd --chmod=+x", whether cmd is
+add or update-index.  If they can just do "git add" and need to use
+the new "--chmod=+x" option only when the patterns are not set up
+correctly, wouldn't that be even more helpful?  In other words, it
+wasn't "with this we can _eliminate_ need for 'add --chmod'".
 
- t/t3700-add.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+The only thing I was unsure about that scheme was if "pattern
+matching with paths" is sufficiently powerful (if not, such an
+addition would not work as a mechanism to reduce the need for the
+users to run "git add --chmod=+x").  And that was my inquiry.
 
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index e551eaf..2afcb74 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -351,4 +351,15 @@ test_expect_success 'git add --chmod=-x stages an executable file with -x' '
- 	esac
- '
- 
-+test_expect_success POSIXPERM,SYMLINKS 'git add --chmod=+x' '
-+	git config core.filemode 1 &&
-+	git config core.symlinks 1 &&
-+	echo foo >foo2 &&
-+	git add --chmod=+x foo2 &&
-+	case "$(git ls-files --stage foo2)" in
-+	100755" "*foo2) echo pass;;
-+	*) echo fail; git ls-files --stage foo2; (exit 1);;
-+	esac
-+'
-+
- test_done
+Unfortunately, your answer does not help answer that question;
+it was a question to Edward, so that's OK anyway.
