@@ -1,125 +1,101 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: Odd Difference Between Windows Git and Standard Git
-Date: Wed, 25 May 2016 06:36:09 +0200
-Message-ID: <57452BB9.5090500@web.de>
-References: <nhlqd4$ekr$1@ger.gmane.org>
- <c07df4ac-08c9-8eaa-0233-06616945c857@web.de>
- <c20b9819-1b2d-6704-d870-1c0102dd9e35@gmail.com>
- <ede1c113-1ab8-6043-3e39-bbacec5db31c@web.de>
- <xmqqy474g3cv.fsf@gitster.mtv.corp.google.com>
- <xmqqfutcg0pe.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1605231310190.4122@virtualbox>
- <xmqqeg8sa9oq.fsf@gitster.mtv.corp.google.com> <5743DE28.5070000@web.de>
- <alpine.DEB.2.20.1605241352361.4449@virtualbox>
+From: VIRET <pag.mar38@gmail.com>
+Subject: =?UTF-8?Q?Offre_de_pr=C3=AAts?=
+Date: Wed, 25 May 2016 06:43:14 +0200
+Message-ID: <CALK0ss51WUrrovHR3XdwjG9dQE1+Zz65SLgtNT=_vzCjmmCNzw@mail.gmail.com>
+References: <CALK0ss54PYN_as+eMZfqOxWdUi+LtBWSO46=xHoQSXvfZgVN7Q@mail.gmail.com>
+	<CALK0ss572qyjvr8H0-_qd2wjsMwyBMOf71vHCJ7h1o1fR4yymg@mail.gmail.com>
+	<CALK0ss44YLtr_DD89nJ=ZSZO=Dwok6vDkR+vuk56hM0ZEL120g@mail.gmail.com>
+	<CALK0ss4jcZPaCfbzg_of3G49-QBhgTmMY_CXmRUzVa4BQo0M_A@mail.gmail.com>
+	<CALK0ss4oc3Edpb-9LvDX8aACR75n8JXCL9Nc_y+2n0DjDiuLVA@mail.gmail.com>
+	<CALK0ss4vFXwxtd-fvFsr9HDfOOdjjXSAEJ4E7wkji3m4r645Rg@mail.gmail.com>
+	<CALK0ss40=vtMb6uFsT81wmjEyTSO8t+5jrh+5YsPRJnT25r7eQ@mail.gmail.com>
+	<CALK0ss4H7TmMmjWcODOBeHA7tFsMvu--nna5kFHQvaGo+wfF0w@mail.gmail.com>
+Reply-To: viretmaxime24@outlook.fr
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jon Forrest <nobozo@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed May 25 06:37:01 2016
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Wed May 25 06:43:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5QZ2-0003Sa-0d
-	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 06:37:00 +0200
+	id 1b5QfC-00050L-LA
+	for gcvg-git-2@plane.gmane.org; Wed, 25 May 2016 06:43:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753590AbcEYEgu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2016 00:36:50 -0400
-Received: from mout.web.de ([212.227.15.3]:51711 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750786AbcEYEgt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 00:36:49 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0M4lkz-1bST5D0xC9-00yzaz; Wed, 25 May 2016 06:36:42
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
- Icedove/38.7.0
-In-Reply-To: <alpine.DEB.2.20.1605241352361.4449@virtualbox>
-X-Provags-ID: V03:K0:xDcvJjN4d0bed7i0XwpKkVzTOaA4T33yNdFWurRs9pEWn7c9PCf
- KEuF2oAzOziH3/7uSO11PSVOoSSElqibs+6M9WEKQupCK+q6DImFkl3loFImdUi8zKKBJVZ
- fwHcXzrBzLwQ1mMvTdHsY3YuMiNJSjIqjn4jI1Mp0Rq7fEcxMBdgss5Dts0FglpPxAkGDea
- X8EEyBDdZ4pAGcCCx/5Qw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+fR0/m6WIcc=:DRCOnEOx/nicV63vRA4xAo
- Vsy8I4I0TOv4MGI/EXrsjamdmhCbhWQtS8oXSXijNYswVKBlC/vRZmwEn5oB0YyTTtzGZ3Pv4
- n1WCNX1vBe1Sm2Y+0wAD5TN5XzOcI6bQyj8gJPTLzMIaGNWqJ7WRqwwgKFUvQ4dfjo8HlwEBC
- kncnMudxfegG8sKlqOCu3MHVnroZmM0fIc5yabZfgQ70bDrIreLHTChBokgKd9vePzTbHGJqo
- hGQ3kLr6+HnO8i1gQvfQGb/E9MzyGiCq27GOkoHbsop4tbb2etaC/Ll7eXlewJPTD/DQIhAdh
- MJnoNGmjviwil6I1t1A6FNrm4GJJEf52yzixXv7+tZ8LfNBZoINxtGlMO7fAcs/7JrwIXwBRz
- q7Ao3ysIfjdrfbsiiK6g/lioSChrFHR5Pxu1OrEoGN8ZrjJ1XPiVg5Ba15JvTrb1yNI7WSZ+J
- 7UKDVa5uNNAlR3yoROSCznBRq1VAY7wOQFX11llL+t/dBuWeqFxlGeqCcW5h5Bt3k7wpzzkQU
- m6sX3p/sDtjh7SuRZ7caXV2ZbAxHwH2YkU94tfhUcnY2cK4mJ+RYX8LwgxEL0mEOpCYSd799w
- 8FZfE+JSbIREWEFKVsraWoVaewqpALlY8+Ueveya5xbckiSUVKd2CKw0V7g2ruheL6Ry6AVXW
- JvU2LwhIO1xflpuiVJmGPH9POPwpau8y52Qcu6BNGslk04YvGsYEq/FLzpUDTyfRu+HEBFQqD
- /ro8hy8Q8t/jQGghaPLNaWh1aZMEzzTeLC9oS3B2TwhSPjU4DbAN1LG1ov2ljjTJoUFXgQQq 
+	id S1753664AbcEYEnR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2016 00:43:17 -0400
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:33533 "EHLO
+	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752540AbcEYEnQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 May 2016 00:43:16 -0400
+Received: by mail-vk0-f67.google.com with SMTP id y2so6155372vka.0
+        for <git@vger.kernel.org>; Tue, 24 May 2016 21:43:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:content-transfer-encoding;
+        bh=ZnCoGPre3B7wmIeSI66YRsK2jUFqIQOrfAeQk6OkcHg=;
+        b=zrFAaWmP+z7+04gcaZeNbVsd22CWQVGhyvhsOfZls02DLl9livunMklzQ94yqmvne1
+         E+oX0qsG7jgXYf5MlwQaqcZ/wIJ/Js5WcmFGHBg/rDOaTEBZRADEsIGVMcNlq5SH/S65
+         LEPGDCeszS3g/9W5E7zoclzCuCG2w5EUDBcbYJay2JeTzD7C3bGRHqyt1VpkhmrJZmq2
+         MhzfLs0ibTpJW5nkpAfbNOBKXzg3/x1+3T8pjqd+Re9tH1puCcRzF5tgxrMQqQ5XrQDf
+         j1fAye12npqUbMp1NPleYFafEYhH72/0CxhrJfHl3g/KVsRLgSXMwLdwXcuYWUr7ks8v
+         ZnnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
+         :date:message-id:subject:from:to:content-transfer-encoding;
+        bh=ZnCoGPre3B7wmIeSI66YRsK2jUFqIQOrfAeQk6OkcHg=;
+        b=P7irbKuRAmHz4/+fGrsbikg2ugAnjMUMXCLypSVQ1uH4uC0KnWOeLD5CYxvXbDWHb6
+         qHRqeEQX7aa7VV7K3FKlyBtINI2TKq1zwM+CJSVrRssJSkY/RH9hqys26jlYn4Ha8U3F
+         THBFNhoXF0xtAlXdg/Ve+mpbFBohRouifsjzDuFrA+9zvPYsqVjV1M/ICVP6mDBlhWFb
+         fbcS4CRjbsnsJJDuAM4DP2AVJNILqRC8UGJMPqjiZ9JmmcwiGlDCIEWLvBtTGk8cfg8V
+         axIiaiU1+kpgXBaEuRvwoCt1K0JH2VuR6dYbPiPzpvSXJGyjozYhZSIp2MFWZcsAQK+t
+         peOQ==
+X-Gm-Message-State: ALyK8tL+62sZIzPRuK42I6Ej/lc6ODslkvA57zLhKliCUChVjj2kRoluTyY1nGpP7UMhMhXHsv81NmFAjgJAxg==
+X-Received: by 10.31.7.71 with SMTP id 68mr1119348vkh.92.1464151395048; Tue,
+ 24 May 2016 21:43:15 -0700 (PDT)
+Received: by 10.31.226.195 with HTTP; Tue, 24 May 2016 21:43:14 -0700 (PDT)
+In-Reply-To: <CALK0ss4H7TmMmjWcODOBeHA7tFsMvu--nna5kFHQvaGo+wfF0w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295556>
 
-On 05/24/2016 01:57 PM, Johannes Schindelin wrote:
-> Hi,
->
-> On Tue, 24 May 2016, Torsten B=C3=B6gershausen wrote:
->
->> On 05/23/2016 08:52 PM, Junio C Hamano wrote:
->>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>>
->>>>> Of course, if you are doing network mount between systems with an=
-d
->>>>> without filemode support, the result would depend on where you di=
-d
->>>>> the "git init", so that would not help.
->>>>>
->>>>> Which means that other probed things like symlink support and cas=
+Bonjour
+
+Vous aviez besoin de pr=C3=AAts d'argent entre particuliers pour faire =
+face
+aux difficult=C3=A9s financi=C3=A8res pour enfin sortir de l'impasse qu=
 e
->>>>> sensitivity are likely to be wrong in the .git/config that the
->>>>> user may want to fix.
->>>> What we could do is to make the default config setting
->>>> platform-dependent, a la CRLF_NATIVE.
->>>>
->>>> I imagine that we would want this for core.filemode, core.ignoreca=
-se and
->>>> core.symlinks.
->>>>
->>>> What do you think?
->>> The reason why we probe for filemode, icase, etc. at repository
->>> creation time and record the result in the configuration is because=
- we
->>> do not to want to do the auto-probing at runtime, every time we run
->>> any Git command.
-> Right, I missed this of course. My idea was to have saner defaults *i=
-ff
-> the config variables are not set explicitly*. But they *are* set, of
-> course. Just not in a way that makes sense when the very same working
-> directory is accessed from different Operating Systems.
->
->> if core.filemode is true, Git for Windows could:
->> a) Behave as today, report changed files (filemode)
->> b) Give warning to the user (and report changed filemode)
->> c) Error out, saying misconfigured worktree
->> d) use core.filemode =3D false anyway.
->> e) Give a warning and use core.filemode =3D false anyway.
->>
->> At the moment I tend for c), as it makes it clear what is going wron=
-g,
->> what do you think ?
-> The problem with that is that we would need to probe again.
-The probing for the filemode:
-Wouldn't it be enough to run lstat() on .git/ ?
-If the user-execuatable bit is not set, but core.filemode is true, erro=
-r=20
-out ?
-That would not cost too much.
->   Or dictate for
-> all eternity that Git for Windows cannot determine the executable bit=
- (but
-> who knows for certain?)
-Can we can limit the eternity until the day when Windows can determine=20
-the executable
-bit ?
+provoquent les banques, par le rejet de vos dossiers de demande de
+cr=C3=A9dits ?
+Je suis un un citoyen fran=C3=A7ais a la retraite en mesure de vous fai=
+re
+un pr=C3=AAt de 5000 euros =C3=A0 500000 euros et avec des conditions q=
+ui vous
+faciliteront la vie.Voici les domaines dans lesquels je peux vous
+aider:
+* Financier
+* Pr=C3=AAt immobilier
+* Pr=C3=AAt =C3=A0 l'investissement
+* Pr=C3=AAt automobile
+* Dette de consolidation
+* Marge de cr=C3=A9dit
+* Deuxi=C3=A8me hypoth=C3=A8que
+* Rachat de cr=C3=A9dit
+* Pr=C3=AAt personnel
+Vous =C3=AAtes fich=C3=A9s, interdits bancaires et vous n'avez pas la f=
+aveur des
+banques ou mieux vous avez un projet et besoin de financement, un
+mauvais dossier de cr=C3=A9dit ou besoin d'argent pour payer des factur=
+es,
+fonds =C3=A0 investir dans les entreprises.
+Alors si vous avez besoin de pr=C3=AAts d'argent n'h=C3=A9sitez pas =C3=
+=A0 me
+contacter pour en savoir plus sur mes conditions bien favorables.
+Personne pas s=C3=A9rieux s'abstenir
+Merci
