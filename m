@@ -1,7 +1,7 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/2] submodule update: add `--init-default-path` switch
-Date: Thu, 26 May 2016 13:47:29 -0700
-Message-ID: <20160526204730.20309-2-sbeller@google.com>
+Subject: [PATCH 2/2] clone: add --init-submodule=<pathspec> switch
+Date: Thu, 26 May 2016 13:47:30 -0700
+Message-ID: <20160526204730.20309-3-sbeller@google.com>
 References: <20160526204730.20309-1-sbeller@google.com>
 Cc: sunshine@sunshineco.com, gitster@pobox.com, pclouds@gmail.com,
 	ramsay@ramsayjones.plus.com, Stefan Beller <sbeller@google.com>
@@ -12,232 +12,274 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b62C1-00058y-93
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 22:47:45 +0200
+	id 1b62C2-00058y-1P
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 22:47:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755251AbcEZUri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 16:47:38 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:32879 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754441AbcEZUrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 16:47:37 -0400
-Received: by mail-pa0-f46.google.com with SMTP id xk12so32811821pac.0
-        for <git@vger.kernel.org>; Thu, 26 May 2016 13:47:36 -0700 (PDT)
+	id S1755273AbcEZUrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 16:47:40 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:35016 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754441AbcEZUrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 16:47:39 -0400
+Received: by mail-pa0-f47.google.com with SMTP id fy7so16398081pac.2
+        for <git@vger.kernel.org>; Thu, 26 May 2016 13:47:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=45olQk5vMF4ErnPc+7/owTIoiRiciTKEDhBg8k1Y7cY=;
-        b=CDcQsD6lxC84/33Hdtb5V7MdogqQuMKXD85QECDT5g5fCGVW7iUZO88NSJmm5ROKTf
-         KCMaKo5Hl8jOMNWDTsNxH+8CQeEeOcr39P+ny9F8RxmngXrMDcZ4V6Uy+GPcQswIfSqv
-         LC7sxW0RD61aD8FrutLr9SDHIoV/iwsWcQHbnQ44tdpMWSMBRwlpaGxlk3Ehk7AgWBKd
-         PrBhqljyp4kTsbBtjDqp+6m0msfdxeMsb4pr4BPAmXAKKrjiicfC3jimn67t5zbqHISq
-         exvFm6fbE38EYBg4dldWw2C1nCg378BEHy8RGwqPkyjrF4cQTh65pg+k3MO/m3WFHhBT
-         BnpQ==
+        bh=TfJz8SyCmXiZbRTmRQzHRdOZt26S5WamQKyjQMEcVvU=;
+        b=Z8L+fYomm5jSf7Si3QnCoTZdYN2oD6NfsFTMQOvgm0L65zR19vQd/zZlO2HhAhLTmL
+         VjmwGw2lTxhJogNWWc9WXwSbl5f8AIZYi7xu7Dx5aBVw7UmsDg7hpOOzk/Frf1Kanpql
+         TE7wEN7c/G33+tZoILtEO91wQLxVDRS5kLWTg6mWYhQPV+n7xk0XyGaJSWr9Oa1ZCR4Z
+         7vbnw/HzUstKeTYJcnhqWk5h+cuau+iPyuVrgUuJzogwsmt7ymBulmu6GO/sKU81YXQI
+         Wwl1awBmvgccsBAiti0/7/XavLUT6O6FuC0AfIlFNOAxubUA8AxhcHxc+Asw8mxT1YIW
+         5N0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=45olQk5vMF4ErnPc+7/owTIoiRiciTKEDhBg8k1Y7cY=;
-        b=TLzNB5jUbNjrwag1/EbZlSCzE8G/9wUR7h2h/D7ACsH0gw8CQhGDpc9EttHo8uZO+a
-         vy2d87qDVndtzPgtgu1fi3T1KHo9Hz3bJxPvYEAObVjcrll5T5s65h/IKvQ4U1Dztxzv
-         nNsqqC1Vkj3Wci2nKG3Q1PA2vGsONg/U6/nzoxHyapT90jzbHP8jcACQqP8VxnSZvpwK
-         AtRnp3XJk0LQhUa4dpn4rMwzayijDEuCayqqqRKgbfrzpaaVCjkBmMXKw1izonYLUr+I
-         OsH+r9UMRGt96N3ogJsyg3LKsHaPx4Nt4t/NooqKMOJBu+tJnsqEKx6FZXnq4aYUliZr
-         Xnkg==
-X-Gm-Message-State: ALyK8tL10ZRPxMZDW4f4IBxyJfH1aZ8k3gV5S4ptj4Nba/AmzKMRwzbMgNUDz1UhmqNfruk7
-X-Received: by 10.66.251.2 with SMTP id zg2mr17130225pac.32.1464295655892;
-        Thu, 26 May 2016 13:47:35 -0700 (PDT)
+        bh=TfJz8SyCmXiZbRTmRQzHRdOZt26S5WamQKyjQMEcVvU=;
+        b=mp+psZbuvQlXyhrcAcHxESa6NycJWOilXHcuA1zMFnOvghgwc6xlE+7vmwDxzzKA/X
+         U1XPChFq86sb9oQ2pLZtf+DDQV0uU4Y944KZfV/gtkj9h1l8d86KFkeu7K41ktaSuQYC
+         M6rbP0iKzlDqw5bQihONFAouUQ6At0yPw4Gm9pR6qlyR/NL3Tb0RxfkwPLATZD5U7IGA
+         Ar2kTk4qP/GBZRxHj2zQTaXdOlClVn2UBNm2aKUfco5/3fIdSSFStE6ezTabQ+opeUwG
+         f3yOLau+6nvmRQlhecPPZroyaKW6zUhr/Ozm8mnLdva0Yf3uJwfV9lbe0M1c9oWWjnqK
+         3RVA==
+X-Gm-Message-State: ALyK8tJlUr6VdSnbssM0/bZRKffD3UrIYz7BYCvoo0+yBoqpdF6TAFcexjwsStejKqWwm0RD
+X-Received: by 10.66.84.74 with SMTP id w10mr16856847pay.140.1464295657791;
+        Thu, 26 May 2016 13:47:37 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:f5f9:aea3:ef22:58b3])
-        by smtp.gmail.com with ESMTPSA id l67sm8172052pfi.10.2016.05.26.13.47.34
+        by smtp.gmail.com with ESMTPSA id z12sm8164065pfj.1.2016.05.26.13.47.36
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 26 May 2016 13:47:35 -0700 (PDT)
+        Thu, 26 May 2016 13:47:37 -0700 (PDT)
 X-Mailer: git-send-email 2.9.0.rc0.2.g145fc64
 In-Reply-To: <20160526204730.20309-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295692>
 
-The new switch `--init-default-path` initializes the submodules which are
-configured in `submodule.defaultUpdatePath` instead of those given as
-command line arguments before updating. In the first implementation this
-is made incompatible with further command line arguments as it is
-unclear what the user means by
+The new switch passes the pathspec to `git submodule update --init`
+which is called after the actual clone is done.
 
-    git submodule update --init --init-default-path <paths>
-
-This new switch allows to record more complex patterns as it saves
-retyping them whenever you invoke update.
+Additionally this configures the submodule.defaultUpdatePath to
+be the given pathspec, such that any future invocation of
+`git submodule update --init-default-paths` will keep up
+with the pathspec.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/config.txt        |  5 ++++
- Documentation/git-submodule.txt | 11 ++++++++-
- git-submodule.sh                | 21 +++++++++++++---
- t/t7400-submodule-basic.sh      | 53 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 86 insertions(+), 4 deletions(-)
+ Documentation/git-clone.txt | 25 +++++++++-----
+ builtin/clone.c             | 36 ++++++++++++++++++--
+ t/t7400-submodule-basic.sh  | 81 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 132 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 53f00db..beb158d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2794,6 +2794,11 @@ submodule.fetchJobs::
- 	in parallel. A value of 0 will give some reasonable default.
- 	If unset, it defaults to 1.
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 1b15cd7..33e5894 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -14,8 +14,9 @@ SYNOPSIS
+ 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+ 	  [--dissociate] [--separate-git-dir <git dir>]
+ 	  [--depth <depth>] [--[no-]single-branch]
+-	  [--recursive | --recurse-submodules] [--[no-]shallow-submodules]
+-	  [--jobs <n>] [--] <repository> [<directory>]
++	  [--recursive | --recurse-submodules] [--jobs <n>]
++	  [--init-submodule <submodulespec>] [--] <repository>
++	  [<directory>]
  
-+submodule.defaultUpdatePath::
-+	Specifies a set of submodules to initialize when calling
-+	`git submodule --init-default-group` by using the pathspec
-+	syntax.
+ DESCRIPTION
+ -----------
+@@ -207,12 +208,20 @@ objects from the source repository into a pack in the cloned repository.
+ 
+ --recursive::
+ --recurse-submodules::
+-	After the clone is created, initialize all submodules within,
+-	using their default settings. This is equivalent to running
+-	`git submodule update --init --recursive` immediately after
+-	the clone is finished. This option is ignored if the cloned
+-	repository does not have a worktree/checkout (i.e. if any of
+-	`--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
++	After the clone is created, initialize and clone all submodules
++	within, using their default settings. This is equivalent to
++	running `git submodule update --recursive --init `
++	immediately after the clone is finished. This option is ignored
++	if the cloned repository does not have a worktree/checkout (i.e.
++	if any of `--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
 +
- tag.forceSignAnnotated::
- 	A boolean to specify whether annotated tags created should be GPG signed.
- 	If `--annotate` is specified on the command line, it takes
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 9226c43..000231e 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
- 'git submodule' [--quiet] init [--] [<path>...]
- 'git submodule' [--quiet] deinit [-f|--force] (--all|[--] <path>...)
--'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
-+'git submodule' [--quiet] update [--init[-default-path]] [--remote] [-N|--no-fetch]
- 	      [-f|--force] [--rebase|--merge] [--reference <repository>]
- 	      [--depth <depth>] [--recursive] [--jobs <n>] [--] [<path>...]
- 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
-@@ -193,6 +193,10 @@ If the submodule is not yet initialized, and you just want to use the
- setting as stored in .gitmodules, you can automatically initialize the
- submodule with the `--init` option.
++--init-submodule::
++	After the clone is created, initialize and clone specified
++	submodules within, using their default settings. It is possible
++	to give multiple specifications by giving this argument multiple
++	times. This is equivalent to configure `submodule.defaultUpdateGroup`
++	and then running `git submodule update --init-default-path`
++	immediately after the clone is finished.
  
-+You can configure a set of submodules using pathspec syntax in
-+submodule.defaultUpdatePath you can use `--init-default-path` to initialize
-+those before updating.
+ --[no-]shallow-submodules::
+ 	All submodules which are cloned will be shallow with a depth of 1.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 5f867e6..668c1f4 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -53,6 +53,16 @@ static struct string_list option_config;
+ static struct string_list option_reference;
+ static int option_dissociate;
+ static int max_jobs = -1;
++static struct string_list init_submodules;
 +
- If `--recursive` is specified, this command will recurse into the
- registered submodules, and update any nested submodules within.
- --
-@@ -360,6 +364,11 @@ the submodule itself.
- 	Initialize all submodules for which "git submodule init" has not been
- 	called so far before updating.
- 
-+--init-default-path::
-+	This option is only valid for the update command.
-+	Initialize all submodules configured in "`submodule.defaultUpdatePath`"
-+	that have not been updated before.
++static int init_submodules_cb(const struct option *opt, const char *arg, int unset)
++{
++	if (unset)
++		return -1;
 +
- --name::
- 	This option is only valid for the add command. It sets the submodule's
- 	name to the given string instead of defaulting to its path. The name
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 5a4dec0..3d12145 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -9,7 +9,7 @@ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <re
-    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] init [--] [<path>...]
-    or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
--   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--reference <repository>] [--recursive] [--] [<path>...]
-+   or: $dashless [--quiet] update [--init[-default-path]] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--reference <repository>] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
-    or: $dashless [--quiet] foreach [--recursive] <command>
-    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
-@@ -528,7 +528,12 @@ cmd_update()
- 			GIT_QUIET=1
- 			;;
- 		-i|--init)
--			init=1
-+			test -z $init || test $init = by_args || die "$(gettext "Only one of --init or --init-default-path may be used.")"
-+			init=by_args
-+			;;
-+		--init-default-path)
-+			test -z $init || test $init = by_config || die "$(gettext "Only one of --init or --init-default-path may be used.")"
-+			init=by_config
- 			;;
- 		--remote)
- 			remote=1
-@@ -591,7 +596,17 @@ cmd_update()
++	string_list_append((struct string_list *)opt->value, arg);
++	return 0;
++}
  
- 	if test -n "$init"
- 	then
--		cmd_init "--" "$@" || return
-+		if test "$init" = "by_config"
-+		then
-+			if test $# -gt 0
-+			then
-+				die "$(gettext "path arguments are incompatible with --init-default-path")"
-+			fi
-+			cmd_init "--" $(git config --get-all submodule.defaultUpdatePath) || return
+ static struct option builtin_clone_options[] = {
+ 	OPT__VERBOSITY(&option_verbosity),
+@@ -103,6 +113,9 @@ static struct option builtin_clone_options[] = {
+ 			TRANSPORT_FAMILY_IPV4),
+ 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+ 			TRANSPORT_FAMILY_IPV6),
++	OPT_CALLBACK(0, "init-submodule", &init_submodules, N_("<pathspec>"),
++			N_("clone specific submodules. Pass ultiple times for complex pathspecs"),
++			init_submodules_cb),
+ 	OPT_END()
+ };
+ 
+@@ -734,14 +747,22 @@ static int checkout(void)
+ 	err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
+ 			   sha1_to_hex(sha1), "1", NULL);
+ 
+-	if (!err && option_recursive) {
++	if (!err && (option_recursive || init_submodules.nr > 0)) {
+ 		struct argv_array args = ARGV_ARRAY_INIT;
+-		argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
++		argv_array_pushl(&args, "submodule", "update", NULL);
++
++		if (init_submodules.nr > 0)
++			argv_array_pushf(&args, "--init-default-path");
 +		else
-+			cmd_init "--" "$@" || return
-+		fi
-+
- 	fi
++			argv_array_pushf(&args, "--init");
  
- 	{
+ 		if (option_shallow_submodules == 1
+ 		    || (option_shallow_submodules == -1 && option_depth))
+ 			argv_array_push(&args, "--depth=1");
+ 
++		if (option_recursive)
++			argv_array_pushf(&args, "--recursive");
++
+ 		if (max_jobs != -1)
+ 			argv_array_pushf(&args, "--jobs=%d", max_jobs);
+ 
+@@ -883,6 +904,17 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		option_no_checkout = 1;
+ 	}
+ 
++	if (init_submodules.nr > 0) {
++		struct string_list_item *item;
++		struct strbuf sb = STRBUF_INIT;
++		for_each_string_list_item(item, &init_submodules) {
++			strbuf_addf(&sb, "submodule.defaultUpdatePath=%s",
++				    item->string);
++			string_list_append(&option_config,
++					   strbuf_detach(&sb, NULL));
++		}
++	}
++
+ 	if (!option_origin)
+ 		option_origin = "origin";
+ 
 diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 3570f7b..112d86a 100755
+index 112d86a..a8d45cda 100755
 --- a/t/t7400-submodule-basic.sh
 +++ b/t/t7400-submodule-basic.sh
-@@ -1116,5 +1116,58 @@ test_expect_success 'submodule helper list is not confused by common prefixes' '
+@@ -1170,4 +1170,85 @@ test_expect_success 'submodule update --init-default-path' '
  	test_cmp expect actual
  '
  
-+test_expect_success 'setup superproject with submodules' '
-+	mkdir sub1 &&
++cat <<EOF > expected
++ sub0 (test2)
++-sub1
++-sub2
++-sub3
++EOF
++
++test_expect_success 'clone --init-submodule works' '
++	test_when_finished "rm -rf multisuper_clone" &&
++	git clone --recurse-submodules --init-submodule="sub0" multisuper multisuper_clone &&
 +	(
-+		cd sub1 &&
-+		git init &&
-+		test_commit test &&
-+		test_commit test2
++		cd multisuper_clone &&
++		git submodule status |cut -c 1,43- >../actual
 +	) &&
-+	mkdir multisuper &&
-+	(
-+		cd multisuper &&
-+		git init &&
-+		git submodule add ../sub1 sub0 &&
-+		git submodule add ../sub1 sub1 &&
-+		git submodule add ../sub1 sub2 &&
-+		git submodule add ../sub1 sub3 &&
-+		git commit -m "add some submodules"
-+	)
++	test_cmp actual expected
 +'
 +
-+cat >expect <<-EOF
++cat <<EOF > expect
 +-sub0
 + sub1 (test2)
-+ sub2 (test2)
++-sub2
++ sub3 (test2)
++EOF
++test_expect_success 'clone with multiple --init-submodule options' '
++	test_when_finished "rm -rf multisuper_clone" &&
++	git clone --recurse-submodules \
++		  --init-submodule="." \
++		  --init-submodule ":(exclude)sub0" \
++		  --init-submodule ":(exclude)sub2" \
++			multisuper multisuper_clone &&
++	(
++		cd multisuper_clone &&
++		git submodule status |cut -c1,43- >../actual
++	) &&
++	test_cmp expect actual
++'
++
++cat <<EOF > expect
++-sub0
++ sub1 (test2)
++-sub2
 + sub3 (test2)
 +EOF
 +
-+test_expect_success 'submodule update --init with a specification' '
++cat <<EOF > expect2
++-sub0
++ sub1 (test2)
++-sub2
++ sub3 (test2)
++-sub4
++ sub5 (test2)
++EOF
++
++test_expect_success 'clone and subsequent updates correctly auto-initialize submodules' '
 +	test_when_finished "rm -rf multisuper_clone" &&
-+	pwd=$(pwd) &&
-+	git clone file://"$pwd"/multisuper multisuper_clone &&
++	git clone --recurse-submodules --init-submodule="." \
++				       --init-submodule ":(exclude)sub0" \
++				       --init-submodule ":(exclude)sub2" \
++				       --init-submodule ":(exclude)sub4" \
++				       multisuper multisuper_clone &&
 +	(
 +		cd multisuper_clone &&
-+		git submodule update --init . ":(exclude)sub0" &&
-+		git submodule status |cut -c 1,43- >../actual
++		git submodule status |cut -c1,43- >../actual
 +	) &&
-+	test_cmp expect actual
++	test_cmp expect actual &&
++	(
++		cd multisuper &&
++		git submodule add ../sub1 sub4 &&
++		git submodule add ../sub1 sub5 &&
++		git commit -m "add more submodules"
++	) &&
++	(
++		cd multisuper_clone &&
++		# obtain the new superproject
++		git pull &&
++		git submodule update --init-default-path &&
++		git submodule status |cut -c1,43- >../actual
++	) &&
++	test_cmp expect2 actual
 +'
 +
-+test_expect_success 'submodule update --init-default-path' '
-+	test_when_finished "rm -rf multisuper_clone" &&
-+	pwd=$(pwd) &&
-+	git clone file://"$pwd"/multisuper multisuper_clone &&
-+	(
-+		cd multisuper_clone &&
-+		git config submodule.defaultUpdatePath "." &&
-+		git config --add submodule.defaultUpdatePath ":(exclude)sub0" &&
-+		git submodule update --init-default-path &&
-+		git submodule status |cut -c 1,43- >../actual &&
-+		test_must_fail git submodule update --init-default-path sub0
-+	) &&
-+	test_cmp expect actual
-+'
- 
  test_done
 -- 
 2.9.0.rc0.2.g145fc64
