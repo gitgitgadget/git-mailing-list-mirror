@@ -1,97 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 2/2] log: add "--no-show-signature" command line option
-Date: Thu, 26 May 2016 10:22:01 -0700
-Message-ID: <xmqqiny0wx8m.fsf@gitster.mtv.corp.google.com>
-References: <20160526130647.27001-1-mehul.jain2029@gmail.com>
-	<20160526130647.27001-3-mehul.jain2029@gmail.com>
-	<20160526163241.GC18210@sigill.intra.peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 1/2] submodule-config: keep shallow recommendation around
+Date: Thu, 26 May 2016 10:22:27 -0700
+Message-ID: <CAGZ79kaFD=0ijNvs8B9V+KbhasqF1N6OoAVucR-Hf_hVN+b-dQ@mail.gmail.com>
+References: <20160526000633.27223-1-sbeller@google.com> <20160526000633.27223-2-sbeller@google.com>
+ <2022441346.44059.1464253372857.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Mehul Jain <mehul.jain2029@gmail.com>, git@vger.kernel.org,
-	Austin English <austinenglish@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 26 19:22:21 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu May 26 19:22:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5yz7-0001Fb-81
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 19:22:13 +0200
+	id 1b5yzW-0001Mj-5D
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 19:22:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753612AbcEZRWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 13:22:07 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62454 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752175AbcEZRWG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 13:22:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 910081E45F;
-	Thu, 26 May 2016 13:22:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Z5xgxw/xyWwI5Ytna5DHusDtwKc=; b=PAbtIU
-	Lf/Zky0UJYEQlR+rFNS1lfEuGT/UifOc3yvMNPXOQV/vaI1VZ/RzEyTQ32IFlmDM
-	3MfxjRhZU1sCQoqVzh8ErLwRIai+aps4M1aOtxnyKl3jbCdJgsFnNfb0G3N9f8sN
-	U+IKDn6etrhwluqRn6yqvXCoVOSxx4Qc6Ggis=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OKhyI5YFtI/g/VxndQ52gRJxdH88cWO1
-	wDM/ZaGdH185TWicCU6nelGFYzb5NL3tWz2/ligjl56tT/Pulm0Fo81LrNALQjtx
-	Q434uxo1rLWYxobU0C/xN7wIVSlFIEZc9LtoXhfwL6tag80yfjhSU+58DQHKCyvo
-	GPtmhwp7KaM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 845AC1E45E;
-	Thu, 26 May 2016 13:22:04 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E0BDE1E45D;
-	Thu, 26 May 2016 13:22:03 -0400 (EDT)
-In-Reply-To: <20160526163241.GC18210@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 26 May 2016 12:32:42 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5D3E2E2E-2366-11E6-8129-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1754659AbcEZRW3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 May 2016 13:22:29 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:34996 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754377AbcEZRW2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 May 2016 13:22:28 -0400
+Received: by mail-io0-f181.google.com with SMTP id p64so16279433ioi.2
+        for <git@vger.kernel.org>; Thu, 26 May 2016 10:22:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=RvZ1vRciBD1K5fHT4ULBYpF1XpdwfU5/+TA1gj2UwHA=;
+        b=oSfKy14Ov2whf69Acbg6FaGFbIPT4ew7EklWZ6lC4tELubSxchD/Z5+R8FR5mkAbPz
+         DO/mIkFJaNpua/NuptKR0gT8GgkBojurCy/blnGxxgQFQJuk+gFH5qusIyGPGwaeGyPP
+         5tm1FQsCN9Pjocau5NdhxbRuRaQmqp/jjSLUeq0XTRY80VS0RVrzn+DDztTZpEQR0rbK
+         ZmKyIi2sf8oDDGqYBa0xWsxQlUajYR7Ycw2xXVFBSYAftJt2UtjaZyVJgvReX0OGdoQe
+         uRsYExGv622b7pU8tgwE40gXtpEOfBkSEevB6p6hrwTz9yDN6bNE0auzjMOTaV5fD0DA
+         YbTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=RvZ1vRciBD1K5fHT4ULBYpF1XpdwfU5/+TA1gj2UwHA=;
+        b=i98DAma5NOBN/Eo9AADv/s6sPtk/1UAAa+w+YNu5AWaeI8x4Na3HyuGvxgPcU9uOi2
+         Smij8+cpxmrcKUX3+umHXbaveoHoUOCVj7BPFZMql/tVHUe7dNZS16RaX+ZHvedBdj6I
+         rZSyc5bLZhoSDsE6yd1dW/J/W23HO+wQP2hSDJYAj0IyUm6I4jO/kLtshNgSELT5jY8h
+         EyFr+KaLbIE9AzXs1IwAirP70UPGg+QaI/tFtkVcmJ2yxdnxJUUHfg/250PRUuvbb1eF
+         gEJdy/WwXsK5RJ4Tc8nFFofEHTLEjK5u1RE0ShsyjHot1gGfC0vdbgPQC2BaJmssfRzn
+         HUwQ==
+X-Gm-Message-State: ALyK8tJSSZv2N4yKJ3tRYVsoyt34aKKYqEWzxh6UAG/rrYXIWDl71nP49RA8+dC+T98uv/Ytsx/sAgbfpEBnIW5Q
+X-Received: by 10.107.173.20 with SMTP id w20mr10863903ioe.110.1464283347840;
+ Thu, 26 May 2016 10:22:27 -0700 (PDT)
+Received: by 10.107.136.19 with HTTP; Thu, 26 May 2016 10:22:27 -0700 (PDT)
+In-Reply-To: <2022441346.44059.1464253372857.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295677>
 
-Jeff King <peff@peff.net> writes:
-
-> On Thu, May 26, 2016 at 06:36:47PM +0530, Mehul Jain wrote:
+On Thu, May 26, 2016 at 2:02 AM, Remi Galan Alfonso
+<remi.galan-alfonso@ensimag.grenoble-inp.fr> wrote:
+> Hi Stefan,
 >
->> If "log.showsignature=true", then there is no way to override it using
->> command line switch.
->> 
->> Teach "git log" and "git show" about "--no-show-signature" command line
->> option.
+> Stefan Beller <sbeller@google.com> writes:
+>> [...]
+>> @ -353,6 +354,15 @@ static int parse_config(const char *var, const c=
+har *value, void *data)
+>>                  else if (parse_submodule_update_strategy(value,
+>>                           &submodule->update_strategy) < 0)
+>>                                  die(_("invalid value for %s"), var)=
+;
+>> +        } else if (!strcmp(item.buf, "shallow")) {
+>> +                if (!me->overwrite &&
+>> +                         submodule->recommend_shallow !=3D -1)
 >
-> I think this is teaching all of the revision machinery about it (which
-> is a good thing).
+> Nit: You seems to be able to keep the whole condition on the same lin=
+e:
+>
+>                 if (!me->overwrite && submodule->recommend_shallow !=3D=
+ -1)
+>
+> If you want to keep it in two line, you might want to align it:
+>                 if (!me->overwrite &&
+>                     submodule->recommend_shallow !=3D -1)
 
-I agree that the proposed commit log message should be updated to
-say so.
+Thanks will fix!
 
-Because we do not want .showsignature configuration to affect
-rev-list nor format-patch, and we will not make "--show-sig" the
-default for them either.  From that point of view, there is no
-reason for them to know about the "--no-show-signature" option.
-
-The only reason why teaching the "--no-show-signature" option to
-these commands is a good idea is because it would help people who
-create an alias with "--show-sig" in early part of the command line,
-e.g.
-
-	[alias] fp = format-patch --show-signature
-
-by allowing them to countermand with --no-show-signature, i.e.
-
-	$ git fp --no-show-signature ...
-
-If we are updating the log message in the final submission of this
-patch, we'd want it to be clear that the presence of this option is
-not an excuse to introduce .showsignature that affects rev-list
-later to make sure we do not have to waste our time rejecting such a
-patch in the future.
+>
+> Thanks,
+> R=C3=A9mi
