@@ -1,91 +1,99 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 0/2] Submodule shallow recommendation [WAS: Submodules: have a depth field in the .gitmodules file]
-Date: Wed, 25 May 2016 17:06:31 -0700
-Message-ID: <20160526000633.27223-1-sbeller@google.com>
-Cc: gitster@pobox.com, jrnieder@gmail.com, Jens.Lehmann@web.de,
-	Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 26 02:06:54 2016
+From: Samuel GROOT <samuel.groot@grenoble-inp.org>
+Subject: Re: [RFC-PATCH 1/2] send-email: new option to quote an email and
+ reply to
+Date: Thu, 26 May 2016 02:08:32 +0200
+Message-ID: <e678afcb-b378-9829-fae4-1f1ed38ee593@grenoble-inp.org>
+References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
+ <1464031829-6107-2-git-send-email-tom.russello@grenoble-inp.org>
+ <vpq60u4bl4e.fsf@anie.imag.fr>
+ <b1752a59-af2b-6e18-fc69-0650440939e3@grenoble-inp.org>
+ <vpqh9dmfy5k.fsf@anie.imag.fr> <xmqqwpmi16zt.fsf@gitster.mtv.corp.google.com>
+ <vpqeg8q5b6f.fsf@anie.imag.fr> <xmqqr3cqypg6.fsf@gitster.mtv.corp.google.com>
+ <vpq8tyyt2fv.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Tom Russello <tom.russello@grenoble-inp.org>, git@vger.kernel.org,
+	erwan.mathoniere@grenoble-inp.org,
+	jordan.de-gea@ensimag.grenoble-inp.fr,
+	Tom Russello <tom.russello@ensimag.grenoble-inp.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 26 02:08:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5ip7-0003EO-KO
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 02:06:49 +0200
+	id 1b5iqv-0003gr-IW
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 02:08:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751790AbcEZAGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 20:06:40 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:33597 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751411AbcEZAGk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 20:06:40 -0400
-Received: by mail-pa0-f52.google.com with SMTP id xk12so23527424pac.0
-        for <git@vger.kernel.org>; Wed, 25 May 2016 17:06:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=dg+ANG03PW3GEqVor9VxAlsgNTv2i4+5orpCNNUHb8I=;
-        b=TXDbB1Qxyq32/5jVYZFGtjnYwI/n9wDZTlsmPPVLIoEOE1s5W0bYa1gnxVZfaQbl/E
-         FghQSlq4hHc5TsfSGYvuyEWjKFMHbKETV7atNCIsEqwq/g4Ryy14FsLUeu0LLW9Y7ZNj
-         rmEdR5qG7L6Jnpz3RhhYRuIBjfkAUhQap1/vt2Z7HHEZzxoSsiaSa4fOT0m7aryb3ph4
-         HBbFJ0mgkcVmPpMbSvRBTvug7lTAmnY/VPZFPaCOkZW1dkwnDg4TzeG5V3KD7wlMSn8C
-         o/DVrt92ngUC3kmiMlWqA5a8PsWzkraNgmKaIwquogF7+OtCmZh5nRRFUZj5/uQ5ut9G
-         L5jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=dg+ANG03PW3GEqVor9VxAlsgNTv2i4+5orpCNNUHb8I=;
-        b=MiaXNmwOYzXkYY4ooXu3e1XPwlV5tjWF12kxuHZ1EnN9HR7JfEDgTWZ7z9dbwvyxG4
-         jdHx3/LnwUMaLcqIRyBZ2vbhyTCKcvGpcCF1YNQoVCH9Jl/3j7t17Bx3G5HbjRYta+q7
-         f6VDFlBVy5OYOZNXNYpHp7dNHx9d2JoqjOcRnFcvxucPDiK605lo3m8ozdyJEXHTJuig
-         lBhfYAIKxrZOd+GPOYZdSeGorJvWs9g2hAflQ+I6n5PTxL888J6zADZ+cdxECHXlUR7K
-         qdvYCbXpZ8ZSN1EatCYPlWGhflC4/CY50hjBW1Q/NlHx5z4AUz3mKxhFHNs1gSdBYw+u
-         Nt5A==
-X-Gm-Message-State: ALyK8tJ8ev5Xv56w5el5FPa8tUJdcTqWoOVLx5QxjNs+pqfmavOogpedJBV/rdA8g2Ebgvsb
-X-Received: by 10.66.224.141 with SMTP id rc13mr4543123pac.29.1464221199300;
-        Wed, 25 May 2016 17:06:39 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:9ded:7fc0:154a:2e3b])
-        by smtp.gmail.com with ESMTPSA id 83sm1062549pfl.12.2016.05.25.17.06.38
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 25 May 2016 17:06:38 -0700 (PDT)
-X-Mailer: git-send-email 2.9.0.rc0.2.g145fc64
+	id S1752568AbcEZAIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 20:08:37 -0400
+Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:47045 "EHLO
+	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751411AbcEZAIh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 20:08:37 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 0A383253D;
+	Thu, 26 May 2016 02:08:33 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YF1sFKne6b1G; Thu, 26 May 2016 02:08:32 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id E812924A7;
+	Thu, 26 May 2016 02:08:32 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id DDC072077;
+	Thu, 26 May 2016 02:08:32 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id WXYBJAOem0i6; Thu, 26 May 2016 02:08:32 +0200 (CEST)
+Received: from linux.home (LFbn-1-8166-195.w90-112.abo.wanadoo.fr [90.112.75.195])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 77BC02055;
+	Thu, 26 May 2016 02:08:32 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.0
+In-Reply-To: <vpq8tyyt2fv.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295623>
 
-v2:
-* Instead of storing the depth, we keep a boolean `shallow` field in the
-  `.gitmodules` file.
-* slightly renamed options (--recommend-shallow instead of --recommended-depth)
-* one more test
-* I dropped [PATCH 1/3] submodule update: make use of the existing fetch_in_submodule function
-  as Junio picked it up separately as sb/submodule-misc-cleanups
+On 05/25/2016 08:31 PM, Matthieu Moy wrote:
+> So, a possible UI would be:
+>
+>   git send-email --in-reply-to=<id> => just set In-Reply-To: field.
+>
+>   git send-email --in-reply-to=<file> => set In-Reply-To, To and Cc.
+>
+>   git send-email --in-reply-to=<file> --cite => in addition, add the
+>     body of the message quoted with '> '.
+>
+>   git send-email --in-reply-to=<id> --fetch => fetch and do like <file>
+>     using the default configuration for fetch.
 
-v1:
-Sometimes the history of a submodule is not considered important by
-the projects upstream. To make it easier for downstream users, allow
-a field 'submodule.<name>.depth' in .gitmodules, which can be used
-to indicate the recommended depth.
+We designed a similar UI, except for the --fetch option:
 
-Thanks,
-Stefan
+We wanted to try to fetch the email from a distant server (e.g. gmane)
+if that server address was set in the config file, and populate the
+To:/Cc: fields.
 
-Stefan Beller (2):
-  submodule-config: keep shallow recommendation around
-  submodule update: learn `--[no-]recommend-shallow` option
+If the file cannot be downloaded, or server address not set, just fill 
+the Reply-to header.
 
- Documentation/git-submodule.txt | 10 ++++++--
- builtin/submodule--helper.c     |  7 +++++-
- git-submodule.sh                |  9 ++++++-
- submodule-config.c              | 10 ++++++++
- submodule-config.h              |  1 +
- t/t5614-clone-submodules.sh     | 52 +++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 85 insertions(+), 4 deletions(-)
+Either way, display what was done with the message-id given (unless
+--quiet is set, of course).
 
--- 
-2.9.0.rc0.2.g145fc64
+> This leaves room for:
+>
+>   git send-email --in-reply-to=<id> --fetch=gmane => fetch from gmane
+>     (details on how to fetch would be in the config file)
+>
+> This UI wouldn't allow using a file to get only the message-id. But I'm
+> not sure this is an interesting use-case.
 
-base-commit: 3a0f269e7c82aa3a87323cb7ae04ac5f129f036b
+IMHO when you reply to a thread with a patch, it seems
+counter-productive to reply without notifying (putting in To:/Cc:) the
+original author and people involved in the thread.
