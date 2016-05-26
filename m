@@ -1,153 +1,114 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH v7 1/9] connect: document why we sometimes call get_port
- after get_host_and_port
-Date: Thu, 26 May 2016 08:34:03 +0900
-Message-ID: <20160525233403.GA23405@glandium.org>
-References: <20160521231732.4888-1-mh@glandium.org>
- <20160521231732.4888-2-mh@glandium.org>
- <399331a6-dadb-c318-b0e0-c83e0f81ecb0@web.de>
- <20160522080316.GA19790@glandium.org>
- <574287B9.4090307@web.de>
- <xmqqwpmk797y.fsf@gitster.mtv.corp.google.com>
- <5743DC2A.6030808@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Torsten =?iso-8859-15?Q?B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu May 26 01:34:44 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 1/2] submodule-config: keep shallow recommendation around
+Date: Wed, 25 May 2016 17:06:32 -0700
+Message-ID: <20160526000633.27223-2-sbeller@google.com>
+References: <20160526000633.27223-1-sbeller@google.com>
+Cc: gitster@pobox.com, jrnieder@gmail.com, Jens.Lehmann@web.de,
+	Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 26 02:06:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5iK1-00049i-NO
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 01:34:42 +0200
+	id 1b5ip9-0003EO-2R
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 02:06:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752270AbcEYXeh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2016 19:34:37 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:52032 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751386AbcEYXef (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 19:34:35 -0400
-Received: from glandium by zenigata with local (Exim 4.87)
-	(envelope-from <mh@glandium.org>)
-	id 1b5iJP-0007PD-35; Thu, 26 May 2016 08:34:03 +0900
-Content-Disposition: inline
-In-Reply-To: <5743DC2A.6030808@web.de>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.6.0 (2016-04-01)
+	id S1751843AbcEZAGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 20:06:43 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:35783 "EHLO
+	mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751793AbcEZAGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 20:06:42 -0400
+Received: by mail-pf0-f178.google.com with SMTP id g64so24665307pfb.2
+        for <git@vger.kernel.org>; Wed, 25 May 2016 17:06:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=zerINdOh8Pj3WqBYBsw3yCW+N44tuKeDldejYlqWz78=;
+        b=S43Ibs4HRYpFSpGJjSIVHb5wt76j1Gti0dse7FzKDUaq2v+yNrKytxG+hUiHXGIty8
+         UuK+sZ/N6Nwpdld8C6oDsHwpJ0QCgjeb/SZr8/4o6X0SLJveM5DlSBzQaDkk0n1kZ0E3
+         8n0/SR9V3gAF4EGEhR2CuvoVBk5LcLYdpTSlnrimzOgBnIxDQvYmr3t4EwFA9wNbCxbD
+         l6c64+7+atFF7rTiZ4+kD1zQE0bI+wOSHafUiNXuKFZJU7+u8wmyba0Ui/XGOroskkOj
+         hkoNOM3/Mb4zJ/i+QfkGjDm0PHLv1/0lIubvAUPdbnkkJ0PrZTE4TXzU1+bPBTnnn2vK
+         Y6Eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=zerINdOh8Pj3WqBYBsw3yCW+N44tuKeDldejYlqWz78=;
+        b=m0T5uAjD/wD6HJXfoDbqwaTmzASVkbXXup4EUITSX8knrIgQqBBN4eMxSZ9f8RAT8Q
+         OUx+CD58PZ069FDHUCniCTGPX3oZE3+iK3yK19f2Hp1htsHNfiF7FrhIuvl2jKa1W56q
+         2S3jlZZhgH8odSlGOIh6hm+3lU+zchvmDT+Km1bQUU9hdpy/p58HCCgee8/+IlRVCCtw
+         0GbqTrMfDWRt5oMVELX7NbPGaTWCIc7d8mxaKD36xXTW4RHIkDX4E9o987HzGqrOlKiz
+         jVerA61dFF0l+aWmHdOYDCL337LfULfYogS3TtLxy+fJXI92Pb7NL8Q/nphYTTvoYkCq
+         S0XA==
+X-Gm-Message-State: ALyK8tLlDSU2Lgp7tlnaSL3yGoOsax1/xfWY8Wyq+2Ovxdxo8lHM9uenFbVshPEBdLLZHVHK
+X-Received: by 10.98.65.209 with SMTP id g78mr9801768pfd.163.1464221201507;
+        Wed, 25 May 2016 17:06:41 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:9ded:7fc0:154a:2e3b])
+        by smtp.gmail.com with ESMTPSA id c190sm1047543pfb.33.2016.05.25.17.06.40
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 25 May 2016 17:06:40 -0700 (PDT)
+X-Mailer: git-send-email 2.9.0.rc0.2.g145fc64
+In-Reply-To: <20160526000633.27223-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295620>
 
-On Tue, May 24, 2016 at 06:44:26AM +0200, Torsten B=F6gershausen wrote:
-> On 05/23/2016 11:30 PM, Junio C Hamano wrote:
-> > Torsten B=F6gershausen <tboegi@web.de> writes:
-> >=20
-> > > > > >    			get_host_and_port(&ssh_host, &port);
-> > > > > >    +			/* get_host_and_port may not return a port
-> > > > > > even when
-> > > > > > +			 * there is one: In the [host:port]:path case,
-> > > > > > +			 * get_host_and_port is called with "[host:port]" and
-> > > > > > +			 * returns "host:port" and NULL.
-> > > > > > +			 * In that specific case, we still need to split the
-> > > > > > +			 * port. */
-> > > > > Is it worth to mention that this case is "still supported leg=
-acy" ?
-> > > > If it's worth mentioning anywhere, it seems to me it would star=
-t with
-> > > > urls.txt?
-> > > >=20
-> > > > Mike
-> > > >=20
-> > > I don't know.
-> > > urls.txt is for Git users, and connect.c is for Git developers.
-> > > urls.txt does not mention that Git follows any RFC when parsing t=
-he
-> > > URLS', it doesn't claim to be 100% compliant.
-> > > Even if it makes sense to do so, as many user simply expect Git t=
-o accept
-> > > RFC compliant URL's, and it makes the development easier, if ther=
-e is
-> > > an already
-> > > written specification, that describes all the details.
-> > > The parser is not 100% RFC compliant, one example:
-> > > - old-style usgage like "git clone [host:222]:~/path/to/repo are =
-supported
-> > Is it an option to fix get_host_and_port() so that it returns what
-> > the caller expects even when it is given "[host:port]"?  When the
-> > caller passes other forms like "host:port", it expects to get "host=
-"
-> > and "port" parsed out into two variables.  Why can't the caller
-> > expect to see the same happen when feeding "[host:port]" to the
-> > function?
-> >=20
-> This is somewhat out of my head:
-> git clone   git://[example.com:123]:/test        #illegal, malformate=
-d URL
-> git clone   [example.com:123]:/test               #scp-like URL, lega=
-cy
-> git clone   ssh://[example.com:123]:/test       #illegal, but support=
-ed as
-> legacy, because
-> git clone  ssh://[user@::1]/test                       # was the only=
- way to
-> specify a user name at a literal IPv6 address
->=20
-> May be we should have some  more test cases for malformated git:// UR=
-Ls?
+The shallow field will be used in a later patch by `submodule update`.
+To differentiate between the actual depth (which may be different),
+we name it `recommend_shallow` as the field in the .gitmodules file
+is only a recommendation by the project.
 
-None of these malformed urls are rejected with or without my series
-applied:
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule-config.c | 10 ++++++++++
+ submodule-config.h |  1 +
+ 2 files changed, 11 insertions(+)
 
-Without:
-$ git fetch-pack --diag-url git://[example.com:123]:/test=20
-Diag: url=3Dgit://[example.com:123]:/test
-Diag: protocol=3Dgit
-Diag: hostandport=3D[example.com:123]:
-Diag: path=3D/test
-$ git fetch-pack --diag-url
-ssh://[example.com:123]:/test
-Diag: url=3Dssh://[example.com:123]:/test
-Diag: protocol=3Dssh
-Diag: userandhost=3Dexample.com
-Diag: port=3D123
-Diag: path=3D/test
-
-With:
-$ git fetch-pack --diag-url git://[example.com:123]:/test=20
-Diag: url=3Dgit://[example.com:123]:/test
-Diag: protocol=3Dgit
-Diag: user=3DNULL
-Diag: host=3Dexample.com
-Diag: port=3D123
-Diag: path=3D/test
-$ git fetch-pack --diag-url ssh://[example.com:123]:/test
-Diag: url=3Dssh://[example.com:123]:/test
-Diag: protocol=3Dssh
-Diag: user=3DNULL
-Diag: host=3Dexample.com
-Diag: port=3D123
-Diag: path=3D/test
-
-Note in the first case, hostandport is "[example.com:123]:", and that
-is treated as host=3Dexample.com:123 and port=3DNULL further down, so m=
-y
-series is changing something here, but arguably, it makes it less worse=
-=2E
-(note that both with and without my series,
-"git://[example.com:123]:42/path" is treated the same, so only a corner
-case changed)
-
-Can we go forward with the current series (modulo the comment style
-thing Eric noted, and maybe adding a note about the parser handling url=
-s
-as per urls.txt), and not bloat scope it? If anything, the state of the
-code after the series should make further parser changes easier.
-
-Cheers,
-
-Mike
+diff --git a/submodule-config.c b/submodule-config.c
+index debab29..e11b35d 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -199,6 +199,7 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
+ 	submodule->update_strategy.command = NULL;
+ 	submodule->fetch_recurse = RECURSE_SUBMODULES_NONE;
+ 	submodule->ignore = NULL;
++	submodule->recommend_shallow = -1;
+ 
+ 	hashcpy(submodule->gitmodules_sha1, gitmodules_sha1);
+ 
+@@ -353,6 +354,15 @@ static int parse_config(const char *var, const char *value, void *data)
+ 		else if (parse_submodule_update_strategy(value,
+ 			 &submodule->update_strategy) < 0)
+ 				die(_("invalid value for %s"), var);
++	} else if (!strcmp(item.buf, "shallow")) {
++		if (!me->overwrite &&
++			 submodule->recommend_shallow != -1)
++			warn_multiple_config(me->commit_sha1, submodule->name,
++					     "shallow");
++		else {
++			submodule->recommend_shallow =
++				git_config_bool(var, value);
++		}
+ 	}
+ 
+ 	strbuf_release(&name);
+diff --git a/submodule-config.h b/submodule-config.h
+index e4857f5..b1fdcc0 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -18,6 +18,7 @@ struct submodule {
+ 	struct submodule_update_strategy update_strategy;
+ 	/* the sha1 blob id of the responsible .gitmodules file */
+ 	unsigned char gitmodules_sha1[20];
++	int recommend_shallow;
+ };
+ 
+ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
+-- 
+2.9.0.rc0.2.g145fc64
