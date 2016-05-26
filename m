@@ -1,94 +1,186 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Triangular Workflow: user friendly full implementation
-Date: Thu, 26 May 2016 11:30:16 -0700
-Message-ID: <xmqqwpmgvfif.fsf@gitster.mtv.corp.google.com>
-References: <E83A9439-54C8-4925-8EE3-6AEEDD9416F3@grenoble-inp.org>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv2 0/2] Submodule shallow recommendation [WAS: Submodules:
+ have a depth field in the .gitmodules file]
+Date: Thu, 26 May 2016 11:54:45 -0700
+Message-ID: <CAGZ79kZKSC-vdUXg0uzb_u022TNVY-JHXuXLAc2LOT7OvpYckQ@mail.gmail.com>
+References: <20160526000633.27223-1-sbeller@google.com> <xmqq1t4owuue.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>,
-	Tom Russello <tom.russello@grenoble-inp.org>,
-	Samuel Groot <samuel.groot@grenoble-inp.org>
-To: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Thu May 26 20:30:33 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 26 20:54:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b603C-00033S-1u
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 20:30:30 +0200
+	id 1b60Qq-0004hb-Hv
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 20:54:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753400AbcEZSaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 14:30:21 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60451 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750939AbcEZSaU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 14:30:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EC76A1EF75;
-	Thu, 26 May 2016 14:30:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MmH0vnp37Ne0h2UFnMXU79hIxCc=; b=ILJ7J/
-	CqEun1ilBgW9n36chGokwhPWTpeqP+ozqYYcIA1MvphMBjd44iR0p6aDj4BWDnOO
-	EzYbAHbjpQT+trBRCK8hnBWbZqrlZFCPUgwmLQK80fMed3EYJeNa+sR8UJUqmfQ8
-	jB6XoBNGCTiuUsxumLgrJyjC3k3e8WEszHxdg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TjrmjcFXlap794jncrhQKYRyQ/2ZabYk
-	1dpNgKP4E10dV5qMo8p+MiGErunq6lM4ubYhUxUISn0HSraZHNG5mICkJlHfFCYO
-	4tJXzGjFoHhE3sT2IMr5+o4uE6P+fMTN/mSg4p8HekL4Rur9dl05qtG6nY4xX0Fu
-	RDE2p8WXUzA=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E15281EF74;
-	Thu, 26 May 2016 14:30:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4C5ED1EF71;
-	Thu, 26 May 2016 14:30:18 -0400 (EDT)
-In-Reply-To: <E83A9439-54C8-4925-8EE3-6AEEDD9416F3@grenoble-inp.org> (Jordan
-	DE's message of "Thu, 26 May 2016 12:06:33 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E5BA1958-236F-11E6-B0E9-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1755065AbcEZSys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 14:54:48 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:33954 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755035AbcEZSyr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 14:54:47 -0400
+Received: by mail-io0-f181.google.com with SMTP id 190so58780199iow.1
+        for <git@vger.kernel.org>; Thu, 26 May 2016 11:54:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=cKP6oLVsOxxJHRk2RR73pHDnDANqFsxTFTZjfrCzSiM=;
+        b=IJtnlKClN/zStJ/2EZv/Awd28W30RI50MV9WvrT1IXDAa5XscUiM3e24th815ZYAkL
+         VxKNmnkbHDxxUakZdKWKMmFdLeXqKdQojcoPmcURb4/Eyc7y8F7qtTZXuXY4CBcP6BlH
+         w6oZbhbGodDKCn11iS5CpkTz2eXvWLdbWca/Y5mPsglX490X4JFNEiK5cCw9jnt9DdiP
+         rkjjrR0vRmibQn+aHUtlqj3QjFTO8zrQokHdchBlDM+d3LP+179hAEf6A9WvBTRtRP0g
+         DDouxtD/pv1TpT3FdDBV7mKxM05krkVvw78a3vsGjrWG3zBmA/9GXP5VMK6mWjJXrOad
+         JmOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=cKP6oLVsOxxJHRk2RR73pHDnDANqFsxTFTZjfrCzSiM=;
+        b=ZvVkVOC1GS7cnNmpDDbIV8PR0m8ixrvK3IpHax8naqS2oDyCOBg47jxDcqQkTLTlKa
+         qOiF73NzyemvPWw5WmAfHPngKh7CZ7guOHIkrgTgywivntoKxYxY/nhJJjcZOTyLEJEn
+         kdhFOCtrcGYhKi906T7eZnbdviRaQ3scvNrp+B4R4D5AaLl89UH/MhkivzkEpkCZbUeW
+         K0a+6nCDbV6zS9AixDxFOnfy2d/ktMha6ahzSUrrfyOXvvbsrLw2Cld9kpsH5d4bmvg8
+         fv7tCQ/hDwmK8P9dPaXGA7esO07Yo6fSn/09hZg52Rj+f4yolvarMn7YSbvhQ7TzQb1V
+         6XGw==
+X-Gm-Message-State: ALyK8tKGfgBAK9wqeyXCXwUJ/Z/7+WAd/Nuyc2uYyXZpDNGz8p5dMUkWOC/s6HOT4NqRXzz7XxjCgxS67YRqhqT1
+X-Received: by 10.107.173.20 with SMTP id w20mr11245591ioe.110.1464288886193;
+ Thu, 26 May 2016 11:54:46 -0700 (PDT)
+Received: by 10.107.136.19 with HTTP; Thu, 26 May 2016 11:54:45 -0700 (PDT)
+In-Reply-To: <xmqq1t4owuue.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295684>
 
-Jordan DE GEA <jordan.de-gea@grenoble-inp.org> writes:
+On Thu, May 26, 2016 at 11:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> Sometimes the history of a submodule is not considered important by
+>> the projects upstream. To make it easier for downstream users, allow
+>> a field 'submodule.<name>.depth' in .gitmodules, which can be used
+>> to indicate the recommended depth.
+>
+> I have a design-level question.
+>
+> If your project consists of 600 submodules, among which 40 of them
+> you would recommend making a shallow clone, are there traits, other
+> than "most people would not care about its history", that are shared
+> across these 40 subprojects?
 
-> We are working on full implementation of triangular workflow feature.
-> For now, the main options available are: 
-> 	 - branch.<name>.pushRemote
-> 	 - remote.pushDefault
-> And only setable by hands. 
+>From my understanding these 40 subprojects are a large file storage
+done different than Git LFS. In the repo world this was choosen to be
+a separate repository, such that you had versioning available as the
+large files change a few times (like a precompiled kernel for special
+hardware, etc). And this is one of the missing pieces to translate the
+current repo-tool workflow to submodules.
 
-And once it is set, you do not have to worry about it.  I am not
-sure per-branch thing is all that useful, unless you are always
-working on a single branch like 'master', but the latter would be
-just set once and forget about it.
+>
+> What I am trying to get at is that after adding .shallow annotation
+> to these 40 submodules in .gitmodules, the project may need to add a
+> different annotation for the same 40 submodules to control another
+> operation.  Which would be cumbersome, and a level of redirection
+> might be a good way to solve it.
+>
+> IIRC, earlier you had talked about a vision where you can just say
+> 'submodule init --group=framework' to prepare your top-level project
+> tree with its submodules in a state suitable to work on 'the
+> framework part of the project', and the 'app' folks can substitute
+> 'framework' with 'app' in that command.  I thought the earlier
+> defaultGroup work (and the attribute limited pathspec work that lays
+> groundwork for it) was part of that effort.
+>
+> Perhaps when a user says "submodule init --group=framework", that
+> "framework" can choose some "developer profile" that indirectly
+> specifies things like which group of submodules to initialize, which
+> group of submodules can be shallow, etc.?
 
-> Context:
-> 	- One main remote repository, e.g. git/git.
-> 	- A remote fork (e.g. a GitHub fork) of git/git, e.g. me/git.
-> 	- A local clone of me/git on the machine
-> Purposes:
-> 	- the local branch master has to fetch to git/git by default
-> 	- the local branch master has to push to me/git by default
+So you are proposing another layer of indirection, i.e. instead of giving
+a pathspec with ":(attr:label-framework)" we would want to give a profile
+which then has the pathspec plus additional information on shallowness
+an such.
 
-Wouldn't remote.pushDefault be the single thing you need to set just
-once and forget about it?  Why would your users even want to do
-these things ...
+>
+> Just a strawman (without worrying about details and expressiveness
+> of the syntax), I am wondering if you want something like this in
+> your .gitmodules:
+>
+>     [profile "framework"]
+>         initialize = $submodule_spec
+>         shallow = $submodule_spec
+>         ...
 
-> 	c. add `git fetch --set-default` in order to set remote.fetchDefault
-> 	d. add `git fetch --set-remote` in order to set branch.<name>.fetchRemote
-> 	e. add `git pull --set-default` in order to set remote.fetchDefault
-> 	f. add `git pull --set-remote` in order to set branch.<name>.fetchRemote
-> 	a. add `git push --set-default` in order to set remote.pushDefault
-> 	b. add `git push --set-remote` in order to set branch.<name>.pushRemote
+There could be more operations here, like update strategies.
 
-... just to configure many variables every time they work on a new
-branch?
+>
+>     [submodule "kernel"]
+>         url = ...
+>         path = ...
+
+instead here we could also put a (no-)init recommendation additionally
+to the shallow recommendation.
+
+>
+>     ...
+>
+> where $submodule_spec would be a way to choose modules by various
+> means.  You may name them by their names.  You may name them by
+> their paths.  With the submodule-pathspec topic graduated, you may
+> use ":(attr:framework)*" to choose them by attribute limited
+> pathspec.
+>
+
+And you reinvented submodule groups. ;)
+IIRC we had a discussion if we want to have the submodule groups
+stored at each submodule or at a central "profile/group" setting.
+The advantage of putting the setting to each submodule is that it
+is easier to organize, i.e. it produces better locality for the settings.
+
+It is easier to know for the [submodule "kernel"] what to set for flags or
+labels when looking at that submodule as you're likely to have knowledge
+about it. However adding a new group/profile is cumbersome, so we'd want a
+
+    git config --add multi-set
+submodule.<pathspec-matching-many-submodules>.label "initialize"
+
+Another idea for having profiles would be to add conditional recommendations
+
+     [submodule "kernel"]
+         url = ...
+         path = ...
+         shallow = true if selected via :(attr:framework)
+
+I have a worse feeling about these conditionals than about the profile, though
+
+I think the profiles are selected using different repo manifest files, i.e. that
+would be different .gitmodules/.gitattributes files on different branches.
+However in each of these branches we would want to have a way to
+recommend which submodules to initialize/checkout/shallow and such.
+
+If keeping these different settings in different branches, we may desire better
+merge support for .gitattributes, though (adjacent lines do not influence each
+other, like in source code. So if one branch had a change like
+     submodule0 ...
+    - /submodule1 label-foo
+    + /submodule1 label-foo label-bar
+     submodule2 ...
+
+and andother branch had
+
+     submodule1 label-foo
+    - /submodule2 label-baz
+    + /submodule2 label-baz label-bar
+     submodule3 ...
+
+we would not want to see the merge conflict as we would with todays merge
+strategy.)
+
+Thanks,
+Stefan
