@@ -1,77 +1,71 @@
-From: Eric Wong <e@80x24.org>
-Subject: Re: [RFC] fast-import: invalidate pack_id references after loosening
-Date: Thu, 26 May 2016 08:02:36 +0000
-Message-ID: <20160526080236.GA27652@dcvr.yhbt.net>
-References: <3A110437-F778-42E2-A987-86B4EAB3D963@gmail.com>
- <20160513103621.GA12329@dcvr.yhbt.net>
- <xmqqpospap8g.fsf@gitster.mtv.corp.google.com>
- <4830D469-3885-4010-9A04-D809F0C6159D@gmail.com>
- <xmqq37pk8q0h.fsf@gitster.mtv.corp.google.com>
- <5E7631C9-DD59-4358-B907-D7C7AEA1739C@gmail.com>
- <20160517121330.GA7346@sigill.intra.peff.net>
- <20160525224907.GA18894@dcvr.yhbt.net>
- <20160525225402.GB18894@dcvr.yhbt.net>
- <20160525230913.GB2634@sigill.intra.peff.net>
+From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] submodule-config: keep shallow recommendation
+ around
+Date: Thu, 26 May 2016 11:02:52 +0200 (CEST)
+Message-ID: <2022441346.44059.1464253372857.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <20160526000633.27223-1-sbeller@google.com> <20160526000633.27223-2-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Luke Diamand <luke@diamand.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 26 10:06:53 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu May 26 10:52:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5qJg-0007fY-KQ
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 10:06:52 +0200
+	id 1b5r1y-0003JU-NT
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 10:52:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753260AbcEZIGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 04:06:47 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:58034 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753383AbcEZICh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 04:02:37 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D5D51FCC4;
-	Thu, 26 May 2016 08:02:36 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20160525230913.GB2634@sigill.intra.peff.net>
+	id S1752270AbcEZIwe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 May 2016 04:52:34 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:40199 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751100AbcEZIwd convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 04:52:33 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 5FBD720F4;
+	Thu, 26 May 2016 10:52:29 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lQceYVneJx5B; Thu, 26 May 2016 10:52:29 +0200 (CEST)
+Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 4908320F0;
+	Thu, 26 May 2016 10:52:29 +0200 (CEST)
+In-Reply-To: <20160526000633.27223-2-sbeller@google.com>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF39 (Linux)/8.0.9_GA_6191)
+Thread-Topic: submodule-config: keep shallow recommendation around
+Thread-Index: VBieT1Fm6QhY76cnRuG7KF6MGhPFgw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295638>
 
-Jeff King <peff@peff.net> wrote:
-> On Wed, May 25, 2016 at 10:54:02PM +0000, Eric Wong wrote:
-> > +	for (h = 0; h < ARRAY_SIZE(object_table); h++) {
-> > +		struct object_entry *e;
-> > +
-> > +		for (e = object_table[h]; e; e = e->next)
-> > +			if (e->pack_id == id)
-> > +				e->pack_id = MAX_PACK_ID;
-> > +	}
+Hi Stefan,
 
-<snip>
+Stefan Beller <sbeller@google.com> writes:
+> [...]
+> @ -353,6 +354,15 @@ static int parse_config(const char *var, const ch=
+ar *value, void *data)
+>                  else if (parse_submodule_update_strategy(value,
+>                           &submodule->update_strategy) < 0)
+>                                  die(_("invalid value for %s"), var);
+> +        } else if (!strcmp(item.buf, "shallow")) {
+> +                if (!me->overwrite &&
+> +                         submodule->recommend_shallow !=3D -1)
 
-> This looks pretty straightforward. I do notice that we never shrink the
-> number of items in the object table when checkpointing, and so our
-> linear walk will grow ever larger. So if one were to checkpoint every
-> k-th object, it makes the whole operation quadratic in the number of
-> objects (actually, O(n^2/k) but k is a constant).
+Nit: You seems to be able to keep the whole condition on the same line:
 
-Good point, I'll work on a separate patch to fix it.
+		if (!me->overwrite && submodule->recommend_shallow !=3D -1)
 
-> That's probably OK in practice, as I think the actual pack-write already
-> does a linear walk of the object table to generate the pack index. So
-> presumably nobody checkpoints often enough for it to be a problem. And
-> the solution would be to keep a separate list of pointers to objects for
-> the current pack-id, which would trivially fix both this case and the
-> one in create_index().  So we can punt on it until somebody actually
-> runs into it, I think.
+If you want to keep it in two line, you might want to align it:
+		if (!me->overwrite &&
+		    submodule->recommend_shallow !=3D -1)
 
-I might checkpoint that much and run into the problem soon :)
-Too tired now; maybe in a day or two I'll be able to make sense
-of C again :x
+Thanks,
+R=C3=A9mi
