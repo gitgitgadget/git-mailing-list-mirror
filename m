@@ -1,113 +1,73 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH 1/2] fetch: better alignment in ref summary
-Date: Thu, 26 May 2016 18:13:40 -0400
-Message-ID: <57477514.9020800@xiplink.com>
-References: <20160522112019.26516-1-pclouds@gmail.com>
- <20160522112019.26516-2-pclouds@gmail.com>
- <xmqqfut9bnff.fsf@gitster.mtv.corp.google.com>
- <CACsJy8BS2n8T1smxEJMPNiXBvMYHWnQ9BQGk_OKqJd1GFcuk7w@mail.gmail.com>
- <574706A1.8040606@xiplink.com> <20160526162940.GB18210@sigill.intra.peff.net>
- <xmqq8tywwwab.fsf@gitster.mtv.corp.google.com> <57473CDA.5000408@xiplink.com>
- <xmqqk2igvcoj.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 16/22] i18n: rebase-interactive: mark comments of squash for translation
+Date: Thu, 26 May 2016 15:35:21 -0700
+Message-ID: <xmqqwpmgtpli.fsf@gitster.mtv.corp.google.com>
+References: <1464031661-18988-1-git-send-email-vascomalmeida@sapo.pt>
+	<1464031661-18988-17-git-send-email-vascomalmeida@sapo.pt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 27 00:13:49 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Vasco Almeida <vascomalmeida@sapo.pt>
+X-From: git-owner@vger.kernel.org Fri May 27 00:35:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b63XH-0003KB-RV
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 00:13:48 +0200
+	id 1b63sH-00011R-Fm
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 00:35:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755286AbcEZWNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 18:13:43 -0400
-Received: from smtp90.ord1c.emailsrvr.com ([108.166.43.90]:56573 "EHLO
-	smtp90.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754849AbcEZWNm (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 May 2016 18:13:42 -0400
-Received: from smtp12.relay.ord1c.emailsrvr.com (localhost.localdomain [127.0.0.1])
-	by smtp12.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id AE6483801F8;
-	Thu, 26 May 2016 18:13:41 -0400 (EDT)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp12.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id C87CE38014E;
-	Thu, 26 May 2016 18:13:40 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.5.4);
-	Thu, 26 May 2016 18:13:41 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-In-Reply-To: <xmqqk2igvcoj.fsf@gitster.mtv.corp.google.com>
+	id S1755306AbcEZWfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 18:35:25 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55483 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754857AbcEZWfZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 18:35:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3C9AF1F4D1;
+	Thu, 26 May 2016 18:35:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iiPqYGsU3QCQq65KenCPoyfOPTI=; b=YmRyNe
+	sq1OwlMFsQ3Z6M4E3RzSv4A3QVNHEYVqkNXbSESoeUg/M4OnpE7p44ahDcSrDQFU
+	d113hXDOIbcUDagq91foADQ8Zoqz9OYZgGEna6QoyEeREQeordQBHgytpFnmaj+O
+	0O24YWMgbpAwX9GIbDTUL8p+6WnQUVSh1l2iM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lpP7qvPqIe1t5ZuYzaiP33FiWdeq3KFP
+	W4VwScg8D5tdFiN784gALuBZnXxSRBgsytsuwxzJZd9KgvlxFJC42yzkDGbvC8Hi
+	hy/C6h0LB0buRdtzHKRLBPBV9zWx46P7OVV4SKhNT3yobfcMZ/qk53lucuXByBcd
+	Z4TWhQOyaYk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 314351F4D0;
+	Thu, 26 May 2016 18:35:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 95CC61F4CF;
+	Thu, 26 May 2016 18:35:23 -0400 (EDT)
+In-Reply-To: <1464031661-18988-17-git-send-email-vascomalmeida@sapo.pt> (Vasco
+	Almeida's message of "Mon, 23 May 2016 19:27:35 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 22C51024-2392-11E6-9533-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295700>
 
-On 2016-05-26 03:31 PM, Junio C Hamano wrote:
-> Marc Branchaud <marcnarc@xiplink.com> writes:
->
->> The fact that something is buried in some odd part of the ref tree is
->> less relevant, IMO.  If I'm using custom fetch refspecs or other
->> oddities, I'll have that in the back of my head.  But what I really
->> care about is what ref I can use with commands like log and checkout.
->>
->> So, regarding Peff's examples:
->>
->>> $ git fetch origin refs/pull/*/head:refs/remotes/pr/*
->>
->> Just show me the "pr/foo" refs.  I know where things are coming
->> from. Even if I configured that fetch refspec a long time ago, I don't
->> need to see the exact mapping every time I fetch.
->
-> That is only because you are used to seeing them.  You cannot claim
-> "I'll remember forever without seeing them" without actually
-> experiencing not seeing them for a long time.
+Vasco Almeida <vascomalmeida@sapo.pt> writes:
 
-I don't expect (or even want) to forever remember the mapping.  It's a 
-matter of context.
+> Helper functions this_nth_commit_message and skip_nth_commit_message
+> replace the previous method of making the comment messages (such as
+> "This is the 2nd commit message:") aided by nth_string helper function.
+> This step was taken as a workaround to enabled translation of entire
+> sentences. However, doesn't change any text seen in English by the user,
+> except for string "The first commit's message is:" which was changed to
+> match the style of other instances.
 
-When fetching, I'm interested in shiny new refs and I want to work with 
-them.
-
-When configuring a remote repository, I'm interested in how to bring 
-that repo's refs into my own repository.
-
-These are two distinct modes of thought, and I don't think fetch's 
-output always needs to display the latter.  Perhaps the --verbose switch 
-could turn on showing how the remote refs get mapped.  I can see how 
-that would occasionally be useful for debugging fetch refspecs.
-
->> I think the output should show the plain SHA values, since those are
->> the only things the user can use to work with those refs.
->
-> When they tell others how to reproduce what they did (or record what
-> they did so that they can reproduce it later), they need what it is
-> called at the remote end.
-
-Which is why I included the refnames in my proposal to Peff's second 
-example.  Really, the SHA and the remote's name for the SHA are the only 
-meaningful things in this case.
-
-> I would hesitate to go in the approach based on discarding
-> information, as if it is the only way to shorten and clarify the
-> output.  Let's not do so before thinking things through to achieve
-> the same while keeping the information we give to the users.
-
-I agree, this is not something to undertake lightly.  But I've yet to be 
-convinced of the utility of always showing the ref mapping during a fetch.
-
-I actually found fetch's output quite confusing when I first started 
-using git.  It's really not obvious that the thing on the left of the 
-"->" is the remote's local name, especially since to see what was 
-fetched one has to use the thing on the right-hand side -- which is 
-obviously in a remote-specific namespace.  (Admittedly, this was before 
-checkout learned to search refs/remotes/ for things to check out.)
-
-		M.
+If only the original were written as "This is the commit message
+$N", you didn't have to do a lot of work like this, but such is
+life.  Thanks for working on this.
