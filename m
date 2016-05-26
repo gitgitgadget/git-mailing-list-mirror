@@ -1,84 +1,121 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] mingw: make isatty() recognize MSYS2's pseudo terminals
- (/dev/pty*)
-Date: Thu, 26 May 2016 15:28:29 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605261525400.4449@virtualbox>
-References: <f1408371e14ff10539990ad710681ef17f29fea1.1461770158.git.johannes.schindelin@gmx.de>
+From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: Re: [RFC/PATCH 1/2] log: add "log.showsignature" configuration
+ variable
+Date: Thu, 26 May 2016 15:42:11 +0200 (CEST)
+Message-ID: <156149583.51074.1464270131166.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <20160526130647.27001-1-mehul.jain2029@gmail.com> <20160526130647.27001-2-mehul.jain2029@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Karsten Blees <blees@dcon.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 26 15:29:37 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Austin English <austinenglish@gmail.com>
+To: Mehul Jain <mehul.jain2029@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 26 15:32:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5vLc-0006iE-1c
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 15:29:12 +0200
+	id 1b5vOI-0000XA-QW
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 15:31:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753780AbcEZN3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 09:29:08 -0400
-Received: from mout.gmx.net ([212.227.15.19]:64341 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753499AbcEZN3G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 09:29:06 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MAPoQ-1bGKed3D4M-00Bbxs; Thu, 26 May 2016 15:28:29
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <f1408371e14ff10539990ad710681ef17f29fea1.1461770158.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:mnbyfROYBtyRCfjErqejN8D+0+DK6iipqJMlhLtwBkrbb1qrqYd
- sxzU0z9Y3X6/Mamy0yofe8Ebc7ZGj5MvtqirjeZkfGrzKbASweYBnJdaJRlfBk508KEFe+u
- YeUIaPGWJYr6Pf2qMVc/ecFAHUMWp14j+A/6DkNoZxCKES48FeJLMcFYJC/9e6h7Tf7sZMr
- yxQytwTaBfKEKAByVxvxA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:IMBfZpT3gR8=:oXyVtHjDZ7933qSJ2EM9/X
- 8jpfJiQawoLMHvcVKHXjkLqar4UqPFx6qgTYHlX0L5EfUfJjS2YMhe95BLloIBdFwoFYF4fSX
- AOBiNvsimLGKPb8nrj7+rzybCNy6n9ti6Bc8vIDIehDZoJA3TbtK9IW+xCD7k8yWXHa3+h1Z7
- 0KmSvKj+u+SR5Rm5D3yOX4Eo29eeeIyILY1tBh07l82OpAiPDTr6iBs0mIN2hmiaFYaOirQ4x
- luS0UCWpH9uGnPWsOdsh9AhRx+Wittx1+NbHHB57wevDJHyjdAdlefT3jQh7DM3L0rzRP9nm4
- QrZFzTl8vHk5JHN8J7MGXyJW0HQy9ZkgCmv4hnTQAnvdnMoQys2Yh56qQuVwVsc0fSeZqMe6V
- TZciJc1lEeSX6FeeDiCOpoWIKrTWFgdxcWOIzcOTJMNbmJ97UvBKdsRrVciGjTvgfqkBhMr/a
- WIZf7F/9m8Q+AhjdIcL+FgImD07pyyKfGt8Dy07DEbgGG7ATaihboWbGWkol8bPFwwEpQfqv9
- t32Qa2zaarwLiVU+EEkLJzpkx9tkXGA7G4fFIR/Mn257NgwISgbB5sGiVEnASYaLWEVIv+dFr
- HCtxacsG0R0RZY0icPzTG/J2ZL9CA9cQqLHRtKH5Im4slcCWKD7MzEQvKYGav4F4IqvAuG78E
- tI8YXdxZZpIzjBkR/mUvRk181YLjpS/cOlddzBq7xqYrsZDiRLqbbxw2/ix7njYMZxfx+RA2x
- L+DjlozLodksrPSMiJwcJhAsoeds0D/z+e3DZZ2GlPZ6ssDPkjfmaus+fz0WPjEl23C8tOcg 
+	id S1753971AbcEZNbt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 May 2016 09:31:49 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:53678 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753499AbcEZNbs convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 09:31:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id AD78E24A7;
+	Thu, 26 May 2016 15:31:45 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cV67rRApIHHY; Thu, 26 May 2016 15:31:45 +0200 (CEST)
+Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 9B74F2533;
+	Thu, 26 May 2016 15:31:45 +0200 (CEST)
+In-Reply-To: <20160526130647.27001-2-mehul.jain2029@gmail.com>
+X-Originating-IP: [130.190.242.136]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF39 (Linux)/8.0.9_GA_6191)
+Thread-Topic: add "log.showsignature" configuration variable
+Thread-Index: huxeBb4wTQ3/1WcIhEwBTYy4ufxp9A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295654>
 
-Hi Junio,
+Hi Mehul,
 
-On Wed, 27 Apr 2016, Johannes Schindelin wrote:
+Mehul Jain <mehul.jain2029@gmail.com> writes:
+> People may want to always use "--show-signature" while using "git log=
+"
+> or "git show".
+>=20
+> When log.showsignature set true, "git log" and "git show" will behave
 
-> From: Karsten Blees <blees@dcon.de>
-> 
-> MSYS2 emulates pseudo terminals via named pipes, and isatty() returns 0
-> for such file descriptors. Therefore, some interactive functionality
-> (such as launching a pager, asking if a failed unlink should be repeated
-> etc.) doesn't work when run in a terminal emulator that uses MSYS2's
-> ptys (such as mintty).
-> 
-> However, MSYS2 uses special names for its pty pipes ('msys-*-pty*'),
-> which allows us to distinguish them from normal piped input / output.
-> 
-> On startup, check if stdin / stdout / stderr are connected to such pipes
-> using the NtQueryObject API from NTDll.dll. If the names match, adjust
-> the flags in MSVCRT's ioinfo structure accordingly.
-> 
-> Signed-off-by: Karsten Blees <blees@dcon.de>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+'When log.showsignature is set to true' ?
 
-For the record, this patch is needed to make the output of `git log` *not*
-whizz by when running in MinTTY, the default terminal of Git for Windows
-and MSYS2.
+> as "--show-signature" was given to them.
 
-I do not see this patch in 'pu'... Anything I can do to get this into
-'master' eventually?
+s/as/as if
 
-Ciao,
-Dscho
+> Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
+> ---
+>  Documentation/git-log.txt |  4 ++++
+>  builtin/log.c             |  6 ++++++
+>  t/t4202-log.sh            | 19 +++++++++++++++++++
+>  t/t7510-signed-commit.sh  |  7 +++++++
+>  4 files changed, 36 insertions(+)
+> [...]
+> [...]
+> +test_expect_success GPG 'log.showsignature=3Dtrue behaves like --sho=
+w-signature' '
+> +        git checkout -b test_sign master &&
+> +        echo foo >foo &&
+> +        git add foo &&
+> +        git commit -S -m signed_commit &&
+> +        test_config log.showsignature true &&
+> +        git log -1 signed >actual &&
+> +        test_i18ngrep "gpg: Signature made" actual &&
+> +        test_i18ngrep "gpg: Good signature" actual
+> +'
+> +
+> +test_expect_success GPG '--show-signature overrides log.showsignatur=
+e=3Dfalse' '
+> +        test_when_finished "git reset --hard && git checkout master"=
+ &&
+> +        git config log.showsignature false &&
+
+Any specific reason as to why you don't use test_config like in the
+first test?
+
+> +        git log -1 --show-signature signed >actual &&
+> +        test_i18ngrep "gpg: Signature made" actual &&
+> +        test_i18ngrep "gpg: Good signature" actual
+> +'
+> +
+>  test_expect_success 'log --graph --no-walk is forbidden' '
+>          test_must_fail git log --graph --no-walk
+>  '
+> diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+> index 4177a86..326dcc8 100755
+> --- a/t/t7510-signed-commit.sh
+> +++ b/t/t7510-signed-commit.sh
+> @@ -210,4 +210,11 @@ test_expect_success GPG 'show lack of signature =
+with custom format' '
+>          test_cmp expect actual
+>  '
+> =20
+> +test_expect_success GPG 'log.showsignature behaves like --show-signa=
+ture' '
+> +        git config log.showsignature true &&
+
+Same here.
+
+> +        git show initial > actual &&
+
+Style: no space after redirection.
+
+Thanks,
+R=C3=A9mi
