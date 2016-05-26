@@ -1,74 +1,92 @@
-From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH] xemit.c: fix a [-Wchar-subscripts] compiler warning
-Date: Thu, 26 May 2016 04:22:04 +0200
-Message-ID: <57465DCC.9080809@web.de>
-References: <57462FF3.4010705@ramsayjones.plus.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] archive-tar: convert snprintf to xsnprintf
+Date: Thu, 26 May 2016 00:28:08 -0400
+Message-ID: <20160526042807.GA6756@sigill.intra.peff.net>
+References: <CO2PR0801MB599926424BC99D7DFC2622B8E4F0@CO2PR0801MB599.namprd08.prod.outlook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Thu May 26 04:22:33 2016
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Green, Paul" <Paul.Green@stratus.com>
+X-From: git-owner@vger.kernel.org Thu May 26 06:28:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5kwS-0006zN-Aa
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 04:22:32 +0200
+	id 1b5muE-00075Q-LE
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 06:28:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752761AbcEZCW1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2016 22:22:27 -0400
-Received: from mout.web.de ([212.227.15.14]:51178 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752722AbcEZCW0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 22:22:26 -0400
-Received: from [192.168.178.36] ([79.237.57.138]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0M5Oql-1bScPM3g9X-00zX7J; Thu, 26 May 2016 04:22:11
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
-In-Reply-To: <57462FF3.4010705@ramsayjones.plus.com>
-X-Provags-ID: V03:K0:qRZBHOnpoJDNjyXjp7jot6m7kbb+FkQ0lrQV7oqMRv6SMBTKsKZ
- pVUUYegk4en5Fp390hBieqzdmvxPt0JmD4l9kP08+S6f9O3EflNckim0zSK6WvJI9mtEA78
- gXYjNIThwvLLuemHmT/W0qQ1C7Ph+xT6fNEoR4SONY7Hs0xXK+yi3KFD9Phe8UBXMF8dpv+
- K0Yq2xCs9vaq45L316paQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AJ+9TrYhGXg=:Cw/Dvti4KEpD/CGJ3Lssw6
- /0XlS6yU1uWOCQQTrc5uuTScCoRmoaUqiIoc7jwXCOzMSDIZoTMnYtqZLomiH6uClqwvMOH3w
- BFIhcFEQxsCFV8OGu3ruxwmQDfgDZkdDXZfBkSZbHO0YowIrPcfMmcQqXjpBufkH5FdCITf3F
- 8+H65na22Y15afpLV6Dx0R8FCSKm+hMYRWqjPqxpyE/10ZTpywfVjYq4ULZ82geTQz6Hipg4P
- M3nvjMjNvWVgNII2YWIJZ2pqIEJlZ3wowdOGL2H6nIzMRU2sCNcj0EEDK/HmXasFtrk+x0qqr
- xrWS43SFdxaW1aJ5yT8n9NI/Mnnuqt8zBm61qNCU8Qbz9bx1Nm3Gh2KKU42T9n8kC+davEgdM
- T1fvcMmHxelNkSUy42c9lXtUGxfO4Oo6pepW33Xc9JdXt7Wk02VeYSHrO54fHkqTOBTz/i0kJ
- tLsuHnIMem5CqMCuKPWxTT1z6mrsZhK/a/vfsIxYk/bbgpqzIHQqIJelGIUjU30IsUiU451sd
- jQW83NJup/MGb+7cSbyY6bqeXGX4TMDfAn/tE2r/uUB3BKrARkS0LZgRjYz1P1s6FGwPisr5k
- MQ19T6Em6ZKJwGVEt1cLcTzEidgrnEg4O5+anuB7HkmeGNeL7XZw9SQBW/qvZKAa3PVh9m1MP
- rIDbvF11QjzbKPQmR4epc7bJJER6B7Memztp6vTbrwnknzxB5vL8wOseno+ObILbYLiUhp7sq
- vj9AVYYSWWjWy6qqINKOWc03o4tQ8cVHm8z1LVFKndu35YRUxPKeVrLcI96Ycc9lJmgf9Wv+ 
+	id S1750735AbcEZE2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 00:28:12 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44427 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750716AbcEZE2L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 00:28:11 -0400
+Received: (qmail 5033 invoked by uid 102); 26 May 2016 04:28:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 00:28:10 -0400
+Received: (qmail 16843 invoked by uid 107); 26 May 2016 04:28:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 00:28:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2016 00:28:08 -0400
+Content-Disposition: inline
+In-Reply-To: <CO2PR0801MB599926424BC99D7DFC2622B8E4F0@CO2PR0801MB599.namprd08.prod.outlook.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295628>
 
-[sorry for duplicate]
+On Tue, May 24, 2016 at 12:44:24AM +0000, Green, Paul wrote:
 
-Am 26.05.2016 um 01:06 schrieb Ramsay Jones:
->
-> While compiling on cygwin (x86_64), gcc complains thus:
->
->        CC xdiff/xemit.o
->    xdiff/xemit.c: In function =E2=80=98is_empty_rec=E2=80=99:
->    xdiff/xemit.c:163:2: warning: array subscript has type =E2=80=98ch=
-ar=E2=80=99 [-Wchar-subscripts]
->      while (len > 0 && isspace(*rec)) {
->      ^
+> While examining (relatively) recent changes to git, my eye happened to
+> notice the following inconsistency on line 184 of the current version
+> of archive-tar.c. 
+> 
+> -    sprintf(header->chksum, "%07o", ustar_header_chksum(header));
+> +    snprintf(header->chksum, sizeof(header->chksum), "%07o", ustar_header_chksum(header));
+> 
+> I believe the author meant to invoke the xsnprintf function, not the
+> snprintf function. I say this because all of the other references to
+> sprintf were indeed changed to xsnprintf, with the necessary
+> additional 2nd argument.
 
-Ah, it's not using our own isspace(), which works fine with signed=20
-chars, because it doesn't include git-compat-util.h.  I'm spoilt by=20
-those char classifier macros that can be actually used with chars..=20
-Thanks for catching!
+Yep, it was indeed just a typo. Thanks for noticing.
 
-Ren=C3=A9
+-- >8 --
+Subject: archive-tar: convert snprintf to xsnprintf
+
+Commit f2f0267 (archive-tar: use xsnprintf for trivial
+formatting, 2015-09-24) converted cases of "sprintf" to
+"xsnprintf", but accidentally left one as just "snprintf".
+This meant that we could silently truncate the resulting
+buffer instead of flagging an error.
+
+In practice, this is impossible to achieve, as we are
+formatting a ustar checksum, which can be at most 7
+characters. But the point of xsnprintf is to document and
+check for "should be impossible" conditions; this site was
+just accidentally mis-converted during f2f0267.
+
+Noticed-by: Paul Green <Paul.Green@stratus.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ archive-tar.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/archive-tar.c b/archive-tar.c
+index 501ca97..cb99df2 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -181,7 +181,7 @@ static void prepare_header(struct archiver_args *args,
+ 	memcpy(header->magic, "ustar", 6);
+ 	memcpy(header->version, "00", 2);
+ 
+-	snprintf(header->chksum, sizeof(header->chksum), "%07o", ustar_header_chksum(header));
++	xsnprintf(header->chksum, sizeof(header->chksum), "%07o", ustar_header_chksum(header));
+ }
+ 
+ static int write_extended_header(struct archiver_args *args,
+-- 
+2.9.0.rc0.307.gc679867
