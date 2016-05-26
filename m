@@ -1,152 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 0/2] Submodule shallow recommendation [WAS: Submodules: have a depth field in the .gitmodules file]
-Date: Thu, 26 May 2016 12:16:15 -0700
-Message-ID: <xmqqoa7svdds.fsf@gitster.mtv.corp.google.com>
-References: <20160526000633.27223-1-sbeller@google.com>
-	<xmqq1t4owuue.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZKSC-vdUXg0uzb_u022TNVY-JHXuXLAc2LOT7OvpYckQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] fetch: better alignment in ref summary
+Date: Thu, 26 May 2016 12:31:24 -0700
+Message-ID: <xmqqk2igvcoj.fsf@gitster.mtv.corp.google.com>
+References: <20160522112019.26516-1-pclouds@gmail.com>
+	<20160522112019.26516-2-pclouds@gmail.com>
+	<xmqqfut9bnff.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8BS2n8T1smxEJMPNiXBvMYHWnQ9BQGk_OKqJd1GFcuk7w@mail.gmail.com>
+	<574706A1.8040606@xiplink.com>
+	<20160526162940.GB18210@sigill.intra.peff.net>
+	<xmqq8tywwwab.fsf@gitster.mtv.corp.google.com>
+	<57473CDA.5000408@xiplink.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu May 26 21:16:27 2016
+Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Thu May 26 21:31:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b60lc-0004SI-Bs
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 21:16:24 +0200
+	id 1b610H-00023U-48
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 21:31:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755164AbcEZTQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 15:16:20 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50459 "EHLO
+	id S1754954AbcEZTb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 15:31:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52250 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754728AbcEZTQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 15:16:19 -0400
+	with ESMTP id S1754597AbcEZTb2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 15:31:28 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C4DF1D7E4;
-	Thu, 26 May 2016 15:16:18 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D9A8E1DA30;
+	Thu, 26 May 2016 15:31:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1pfweCxVF0YizvnczIDBZDqqr9Y=; b=oEz7yH
-	Cw0zZ2wNCst6bJLQmG6NtmLEpu6h1p4aYZhiPag6ufmUqV4wTuh6JIplf91Abpv6
-	RPUhLXvGvtIJBqCxqOGfu/kT18tmtcLSbJBQMTjqyNNWZryggp5tPkEuXE4w0rWg
-	ypJ+RYhryR6EiB80r6En4gtKrlsC4vw/c8b0g=
+	:content-type; s=sasl; bh=+MfG8gsbC4vjOG/kqLOGMxRmRqI=; b=mD/Fo5
+	tST0n4B4g4scMVKELk2HCa/YJz/B4rAJSqLXpB8bj0AM9PpxLg/lAcoPTrbENaho
+	yrtmXPkOInhTeW2yynHMPTTpQ8N/Vc17JNCv3TD8VPfP9SEvwjtPeqhkaPA+yFSo
+	y+21brLWPMaZxvJSloWE2kf8lw/RwNpKkwI5U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ys7yCQLSdnarswwc7NM9hDewxjh7imcQ
-	zxv/8oldD9a5Fb49vKSI+LR3SFwwrES2NxyLjVv1OW93k8rOLJj+IBp5QKGD1d6r
-	+B3EKm1YmfwH67qf1ieyUpX2OdvX/JoXaNdSCY6XNuYmurQ7le7AT8lmu0ZXGFYv
-	UgdebgyIr88=
+	:content-type; q=dns; s=sasl; b=ghjlo25kk4i5HvkpjQ7JXTUO27SekHpC
+	F3cuEOhUYRXPkYc/mr8HMDMk3K0oTDId2ShWCT2OBNxB/Xgxi+MDOevVzQ6FABSY
+	/pVY5fN+K8DNZspijR1N5/Ho3qrh4Zb3g+FBgoEvbCimDtq2FmCKwkg6iLisnHdT
+	ox2QZjLrKro=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 84A461D7E1;
-	Thu, 26 May 2016 15:16:18 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D11911DA2F;
+	Thu, 26 May 2016 15:31:26 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 057911D7E0;
-	Thu, 26 May 2016 15:16:17 -0400 (EDT)
-In-Reply-To: <CAGZ79kZKSC-vdUXg0uzb_u022TNVY-JHXuXLAc2LOT7OvpYckQ@mail.gmail.com>
-	(Stefan Beller's message of "Thu, 26 May 2016 11:54:45 -0700")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4F5C51DA2E;
+	Thu, 26 May 2016 15:31:26 -0400 (EDT)
+In-Reply-To: <57473CDA.5000408@xiplink.com> (Marc Branchaud's message of "Thu,
+	26 May 2016 14:13:46 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 529AB2AC-2376-11E6-AE38-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 6FFEDF24-2378-11E6-8859-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295687>
 
-Stefan Beller <sbeller@google.com> writes:
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-> On Thu, May 26, 2016 at 11:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> Sometimes the history of a submodule is not considered important by
->>> the projects upstream. To make it easier for downstream users, allow
->>> a field 'submodule.<name>.depth' in .gitmodules, which can be used
->>> to indicate the recommended depth.
->>
->> I have a design-level question.
->>
->> If your project consists of 600 submodules, among which 40 of them
->> you would recommend making a shallow clone, are there traits, other
->> than "most people would not care about its history", that are shared
->> across these 40 subprojects?
+> The fact that something is buried in some odd part of the ref tree is
+> less relevant, IMO.  If I'm using custom fetch refspecs or other
+> oddities, I'll have that in the back of my head.  But what I really
+> care about is what ref I can use with commands like log and checkout.
 >
-> From my understanding these 40 subprojects are a large file storage
-> done different than Git LFS. In the repo world this was choosen to be
-> a separate repository, such that you had versioning available as the
-> large files change a few times (like a precompiled kernel for special
-> hardware, etc). And this is one of the missing pieces to translate the
-> current repo-tool workflow to submodules.
+> So, regarding Peff's examples:
+>
+>> $ git fetch origin refs/pull/*/head:refs/remotes/pr/*
+>
+> Just show me the "pr/foo" refs.  I know where things are coming
+> from. Even if I configured that fetch refspec a long time ago, I don't
+> need to see the exact mapping every time I fetch.
 
-I am not questioning the value of being able to say "this and that
-submodule need only a shallow copy".  I am trying to see
-"individually mark each and every such submodules" should be the
-primary interface to do so.
+That is only because you are used to seeing them.  You cannot claim
+"I'll remember forever without seeing them" without actually
+experiencing not seeing them for a long time.
 
-> So you are proposing another layer of indirection, i.e. instead of giving
-> a pathspec with ":(attr:label-framework)" we would want to give a profile
-> which then has the pathspec plus additional information on shallowness
-> an such.
+> I think the output should show the plain SHA values, since those are
+> the only things the user can use to work with those refs.
 
-I do not understand what you mean by "instead of giving a pathspec"
-at all.
+When they tell others how to reproduce what they did (or record what
+they did so that they can reproduce it later), they need what it is
+called at the remote end.
 
-When you have 40 submodules, with your design the user has to
-sprinkle 40 lines of
-
-	shallow = true
-
-for each of [submodule "$n"] sections.  If there are other traits
-(see my first question) that are similar, they will have some other
-setting next to the "shallow = true" 40 times.  When a new submodule
-is added to that same class, they will again have to add these two
-lines.
-
-I was wondering if a level of indirection that lets you say
-"submodules in this group all share 'shallow=true' (by default)"
-would improve that cumbersomeness.  When you add another similar
-trait, you add that just once, not 40 times.  When you add another
-submodule, you say "this submodule is also in that group", without
-mentioning "shallow".
-
-We probably _need_ shallow=true at individual module level, if only
-to override the default given by such an indirection scheme.  So
-don't take the message you are responding to as "no, your design is
-not good, scrap it, and here is a better one".  It is more like "It
-would be a good first step, but have you considered where it will
-eventually lead us to?  Would the more complete future look like
-this, and how well would this first step fit in that world?  Would
-it be a good escape hatch, or would it have to be deprecated?"
-
-> And you reinvented submodule groups. ;)
-> IIRC we had a discussion if we want to have the submodule groups
-> stored at each submodule or at a central "profile/group" setting.
-
-As I said, it was not my intention to get into that; I am not
-interested in the exact syntax, and I am not interested whether the
-pointer goes from group to individual modules (i.e. [group "bar"]
-says "foo" is one of its member modules), or individual modules have
-pointers to groups (i.e. "module [foo]" declares its membership in
-group "bar") at all.  I really do not care.
-
-What matters in my suggestion was, after you established that group
-"bar" exists, you can do:
-
-	[profile "framework"]
-        	shallow = "some notation that refers to group bar"
-
-so that you do not have to repeat "shallow = true" many times per
-submodule.
-
-By the way, I do not see the "profile" as about "submodules" or
-"submodule groups".  It is more about "Who am I?  What am I working
-on?  Give me an appropriate set of settings for the 600 submodules
-you have, with the knowledge that I am a framework person".
-
-grouping submodules would merely be one mechanism to help specify
-that.
+I would hesitate to go in the approach based on discarding
+information, as if it is the only way to shorten and clarify the
+output.  Let's not do so before thinking things through to achieve
+the same while keeping the information we give to the users.
