@@ -1,109 +1,110 @@
-From: Sebastian Staudt <koraktor@gmail.com>
-Subject: Re: [feature request] find git commit log before rebase
-Date: Thu, 26 May 2016 22:37:37 +0200
-Message-ID: <CA+xP2SZgYYcQOVcWQsEY2YccW3cwONOhXOvViCfH2ONvm5-G8g@mail.gmail.com>
-References: <CAKkAvax5Yf2=qLhVkn8EgkNEgHL97Doxr3JWR10aqxksYVsYXA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: ryenus <ryenus@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 26 22:38:26 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCHv3 0/2] Persistent submodule pathspec specification
+Date: Thu, 26 May 2016 13:47:28 -0700
+Message-ID: <20160526204730.20309-1-sbeller@google.com>
+Cc: sunshine@sunshineco.com, gitster@pobox.com, pclouds@gmail.com,
+	ramsay@ramsayjones.plus.com, Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 26 22:47:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b622z-0001gU-6J
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 22:38:25 +0200
+	id 1b62Bv-00056k-3z
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 22:47:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755226AbcEZUiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 16:38:19 -0400
-Received: from mail-lb0-f195.google.com ([209.85.217.195]:36797 "EHLO
-	mail-lb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754386AbcEZUiS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 16:38:18 -0400
-Received: by mail-lb0-f195.google.com with SMTP id r5so4986723lbj.3
-        for <git@vger.kernel.org>; Thu, 26 May 2016 13:38:17 -0700 (PDT)
+	id S1755145AbcEZUrf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 16:47:35 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:36419 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754369AbcEZUre (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 16:47:34 -0400
+Received: by mail-pa0-f45.google.com with SMTP id eu11so23719915pad.3
+        for <git@vger.kernel.org>; Thu, 26 May 2016 13:47:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=VyTmy29IudZwi2f/vUpf4Ntr3N+fuvucqEwj84Sv+AY=;
-        b=gTqsADBD2FLpiGgzyHL7uX2AT8A2m/hGSc6Vrdj+fispBU/SbR2vBz2BRhz1QvoK9e
-         2yULrPr8XiYN79ktYYKeQvVsAm2GbNuKSuuCzoCgRa8p+MiohLTJQdkCg7dlcu5LjM8I
-         uz/uwM6GFeCb40w5O+l0qSPGXaTKkE4XgK+VoOLCgAuNmTgAg/9coI3401BOspi8KrmJ
-         AkIuoGUpnM9F6PvKZN7kGoc6f0UQhoHRAJxsAqHXPjBZZXN+bd2GVSfrSYJjZd+5lOMx
-         IdQ/Np2tlX1sMQM8yMceOAha7wA59gtKf+4qgtj2jqv4hyzpKjC+0sCUQDlki1h3FzZ5
-         876g==
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=m0qZDmsJCpScnMiWcgL4aO2NKuWRPT8bFofkEQyap8U=;
+        b=C9eR+6bzHkIuOykZA35FoWpjal+3WwmQJ9nzSN+UWoVHMGv8F7btJCXrCb77rW7a8R
+         AEbnwCc0iB9Tq/k2he81kDgyfJFiPqtA6wVajMNRDK/nCdLyR+J12lpjfS6/QlKiOVJN
+         4YZ6/BQAvzFJnh7G8ambAjqbAHPNKuWejEuIfRC4wgYb8WwYjQLBuTJsMcw++jjN/628
+         /vKkPjoaF9PcaPZYZ6yXgpR0Ovss5xwQ7t8+Tm2mJlwUX2wQX05eYZeLtWLhooI9SXiM
+         dVC1weAfzaYq2WUONFCZzvVDl2n6PrS2BGzly0L6GcHYSKY/Y9Npm5egb0hN6tQxBl2O
+         dRPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=VyTmy29IudZwi2f/vUpf4Ntr3N+fuvucqEwj84Sv+AY=;
-        b=GCyJdDj8V4PiDOTbNMUZKmoa5xwiaEVD02YZ2VOw7hdWIEIdMXuboDSduQ4gNKYICJ
-         UmxHr7wuf4ycXLz2w1P/Idw3wD1ZMpxOWi39GPd7+QY/+ST55w3dFf127QmK9/MCA1BV
-         xN5E8sDksj0XO03i0rwh+4rQXZEQs6pStO0BK5fx5VB+QQ/9CuoOUaj8XepsLJEDRhlt
-         8qqPMRoJmZ/EBPeOBs3dkWhvCEIr3VIVGFSoU40Cua4EfHqa7UlS/x6FGKzTF9JxPqOQ
-         ZhqDwOal1XEvxQ8neMM1djKwzMQI5/jHV/gDEuC6+IhzjToV20kNZCrfw41lPqX1ZZ7/
-         uSug==
-X-Gm-Message-State: ALyK8tJtdKV/JbQvzcRtDFbtP3pkW0dn1IXhKjy2475UGYbSMoSYVoW+zoH38josrLozc/KxmK/ahO5g7Z6tSQ==
-X-Received: by 10.112.6.231 with SMTP id e7mr3439551lba.45.1464295096886; Thu,
- 26 May 2016 13:38:16 -0700 (PDT)
-Received: by 10.25.32.142 with HTTP; Thu, 26 May 2016 13:37:37 -0700 (PDT)
-In-Reply-To: <CAKkAvax5Yf2=qLhVkn8EgkNEgHL97Doxr3JWR10aqxksYVsYXA@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=m0qZDmsJCpScnMiWcgL4aO2NKuWRPT8bFofkEQyap8U=;
+        b=LRlhiPam/EI+EVMfHPIIEDVMNp2B1x2P6rRLPOJ+tlrah/nADyRnFmrnTsbVivlOjt
+         OP/3G0qZat4xk1VgVeKt0JPv+0OHjLscS1JbXhIx+IoFrLJnlytpriNXwXZ/YIHx0wq/
+         HyLD9boPW7zT9d6/ybrYOrBgLFHwQOPw6T1b1Uvm25g0xAEHsMI48/q4jD3ueSfuWT5a
+         9hdI22kz1mQRR+qTmWx0zbV7LpOi6iyds/qNwq9U8vPKLiivGmKqzAJsDPGLhSw8Np38
+         WawhR0vCJGV04G/v12OVVQKD6wroO5qSrJuydjCLbXMJINZX32EIsIV4tSqflNctAbXQ
+         TqGg==
+X-Gm-Message-State: ALyK8tJHKOuM5MpktLOLvBX5SC2mCUNNh0BwzT7R0CKKV7PtWcL6s0pwnUcAA97HOgpzIMDQ
+X-Received: by 10.66.179.169 with SMTP id dh9mr16904093pac.133.1464295653948;
+        Thu, 26 May 2016 13:47:33 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:f5f9:aea3:ef22:58b3])
+        by smtp.gmail.com with ESMTPSA id 7sm8113304pfe.88.2016.05.26.13.47.32
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 26 May 2016 13:47:32 -0700 (PDT)
+X-Mailer: git-send-email 2.9.0.rc0.2.g145fc64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295690>
 
-Hi.
+Changes since v2:
+ * I replaced one 0 by NULL as pointed out by Ramsay, and reformatted the line
+   to stay within 80 characters:
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -908,8 +908,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+                struct string_list_item *item;
+                struct strbuf sb = STRBUF_INIT;
+                for_each_string_list_item(item, &init_submodules) {
+-                       strbuf_addf(&sb, "submodule.defaultUpdatePath=%s", item->string);
+-                       string_list_append(&option_config, strbuf_detach(&sb, 0));
++                       strbuf_addf(&sb, "submodule.defaultUpdatePath=%s",
++                                   item->string);
++                       string_list_append(&option_config,
++                                          strbuf_detach(&sb, NULL));
+                }
+        }
+ 
 
-I think what you want is `git reflog` (http://git-scm.com/man/reflog).
+Changes since v1:
+ * fixed a broken && chain in a subshell for testing, as pointed out by Eric!
 
-git reflog b
+This was part of the former series 'submodule groups'.
+However the labeling was ripped out and goes in its own series
+sb/pathspec-label.
 
-Will tell you the commits b pointed to in the past.
+First we introduce a switch `--init-default-path` for `git submodule update`
+which will read the pathspec to initialize the submodules not from the command
+line but from `submodule.defaultUpdatePath`, which can be configured permanently.
 
-Best regards,
-    Sebastian
+The second patch utilizes this by having `clone` set that config option
+and using that new option when calling to update the submodules.
 
-2016-05-26 18:55 GMT+02:00 ryenus <ryenus@gmail.com>:
-> Assuming I have branches master (m), and a side branch (b), with a
-> history tree like below:
->
-> m0 --- m1 -- m2 -- m3 -- m4 --- master (m)
->         \          /      \
->         b1 ------ b2       b3 -- b4 -- branch (b) (HEAD)
->                   |
->       (tag:POINT_BEFORE_REBASE)
->
-> The history of branch b is can be described as:
->
-> 1. branch b is forked at point of m1
-> 2. branch b is merged to master into m3,
-> 3. branch b then is rebased (fast-forward) from b2 to m4
-> 4. then branch b started its new life as b3 b4 after rebase
->
-> With the following command: I can find b3 and b4 since last fork-point
->
->     git log --oneline $(git merge-base --fork-point master)..b
->
-> But how to find out commits b1 b2, given the fact that b2 is the point
-> before rebase?
->
-> I understand it can be achieved via:
->
->     git log --oneline m2..b2
->
-> That's because I know b2 is the point before rebase,
-> and m2 is another child of the subsequent merge commit m3
->
-> I wonder how to do this with an simple (enough) command without me
-> looking through the history and find b2 and m2 manually?
->
-> Thanks!
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Thanks,
+Stefan
+
+Stefan Beller (2):
+  submodule update: add `--init-default-path` switch
+  clone: add --init-submodule=<pathspec> switch
+
+ Documentation/config.txt        |   5 ++
+ Documentation/git-clone.txt     |  25 +++++---
+ Documentation/git-submodule.txt |  11 +++-
+ builtin/clone.c                 |  36 ++++++++++-
+ git-submodule.sh                |  21 ++++++-
+ t/t7400-submodule-basic.sh      | 134 ++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 218 insertions(+), 14 deletions(-)
+
+-- 
+2.9.0.rc0.2.g145fc64
+
+base-commit: 3a0f269e7c82aa3a87323cb7ae04ac5f129f036b
