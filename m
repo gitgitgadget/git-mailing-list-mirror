@@ -1,80 +1,117 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/6] config: return configset value for current_config_
- functions
-Date: Thu, 26 May 2016 12:50:33 -0400
-Message-ID: <20160526165033.GA20355@sigill.intra.peff.net>
-References: <20160518223712.GA18317@sigill.intra.peff.net>
- <20160518224323.GD22443@sigill.intra.peff.net>
- <20160519000821.GA22543@sigill.intra.peff.net>
- <CACsJy8Ad=yN6aLkH9B6ujUNUvPT-b+jw+CwJORD5Fh1jYeOUZQ@mail.gmail.com>
- <xmqq7fegydmf.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [RFC/PATCH 1/2] log: add "log.showsignature" configuration
+ variable
+Date: Thu, 26 May 2016 12:59:46 -0400
+Message-ID: <20160526165946.GA18383@sigill.intra.peff.net>
+References: <20160526130647.27001-1-mehul.jain2029@gmail.com>
+ <20160526130647.27001-2-mehul.jain2029@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 26 18:50:44 2016
+Cc: git@vger.kernel.org, Austin English <austinenglish@gmail.com>
+To: Mehul Jain <mehul.jain2029@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 26 18:59:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5yUb-0005Wg-5S
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 18:50:41 +0200
+	id 1b5ydV-00019o-Vs
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 18:59:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753920AbcEZQuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 12:50:37 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44700 "HELO cloud.peff.net"
+	id S1753544AbcEZQ7u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 12:59:50 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44708 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750985AbcEZQug (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 12:50:36 -0400
-Received: (qmail 5792 invoked by uid 102); 26 May 2016 16:50:35 -0000
+	id S1751113AbcEZQ7t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 12:59:49 -0400
+Received: (qmail 6228 invoked by uid 102); 26 May 2016 16:59:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 12:50:35 -0400
-Received: (qmail 20350 invoked by uid 107); 26 May 2016 16:50:41 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 12:59:48 -0400
+Received: (qmail 20417 invoked by uid 107); 26 May 2016 16:59:54 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 12:50:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2016 12:50:33 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 12:59:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2016 12:59:46 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqq7fegydmf.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20160526130647.27001-2-mehul.jain2029@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295671>
 
-On Thu, May 26, 2016 at 09:42:48AM -0700, Junio C Hamano wrote:
+On Thu, May 26, 2016 at 06:36:46PM +0530, Mehul Jain wrote:
 
-> Duy Nguyen <pclouds@gmail.com> writes:
-> 
-> > On Thu, May 19, 2016 at 7:08 AM, Jeff King <peff@peff.net> wrote:
-> >> On Wed, May 18, 2016 at 06:43:23PM -0400, Jeff King wrote:
-> >>
-> >>>  cache.h                |  1 +
-> >>>  config.c               | 51 +++++++++++++++++++++++++++++++++++++++++---------
-> >>>  t/helper/test-config.c | 20 ++++++++++++++++++++
-> >>>  t/t1308-config-set.sh  | 23 +++++++++++++++++++++++
-> >>> [...]
-> >>> +test_expect_success 'iteration shows correct origins' '
-> >>> +     echo "[alias]test-config = !test-config" >.gitconfig &&
-> >
-> > How about using 'which' to get absolute path for test-config and put
-> > it here? Then we don't rely on $PATH anymore.
-> 
-> Don't use which, which is not portable.
-> 
-> Remind me why we end up running ./test-config instead of
-> ./bin-wrappers/test-config?  Should our tests be running 
-> bin-wrappers early in their $PATH, perhaps?
+> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+> index 03f9580..f39f800 100644
+> --- a/Documentation/git-log.txt
+> +++ b/Documentation/git-log.txt
+> @@ -196,6 +196,10 @@ log.showRoot::
+>  	`git log -p` output would be shown without a diff attached.
+>  	The default is `true`.
+>  
+> +log.showSignature::
+> +	If `true`, `git log` and `git show` will act as if `--show-signature`
+> +	option was passed to them.
 
-The problem is running test-config inside of a git alias. The
-bin-wrappers will set the exec-path to the root-level of git's build
-directory, which the git binary will then stick at the front of the
-$PATH.
+This should be:
 
-So the simplest solution really is: don't do that. The only debate in my
-mind is whether this is rare enough that it won't bite somebody again in
-the future, or if we should look into a solution that makes this Just
-Work.
+  ...if the `--show-signature` option was...
+
+or:
+
+  ...if `--show-signature` was...
+
+Either is correct; you just need an article when not referring directly
+to the option by its name.
+
+The documentation here mentions "log" and "show". But I think this will
+affect other programs, too, including "whatchanged" and "reflog". Those
+ones are probably good, but the documentation is a little misleading (I
+think other options just say "git-log and related commands" or
+something).
+
+I thought at first it would affect format-patch, too, which would be
+weird. But in that command we _do_ parse the variable and end up setting
+default_show_signature, but we never call cmd_log_init_defaults(), which
+is what copies that value into the rev_info struct. That's kind of a
+weird way to split it, but it's certainly not something you introduced
+here.
+
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index 128ba93..36be9a1 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -890,6 +890,25 @@ test_expect_success GPG 'log --graph --show-signature for merged tag' '
+>  	grep "^| | gpg: Good signature" actual
+>  '
+>  
+> +test_expect_success GPG 'log.showsignature=true behaves like --show-signature' '
+> +	git checkout -b test_sign master &&
+> +	echo foo >foo &&
+> +	git add foo &&
+> +	git commit -S -m signed_commit &&
+> +	test_config log.showsignature true &&
+> +	git log -1 signed >actual &&
+> +	test_i18ngrep "gpg: Signature made" actual &&
+> +	test_i18ngrep "gpg: Good signature" actual
+> +'
+
+You can see in the context that we do not use test_i18ngrep for finding
+gpg output in existing tests. I'm not sure if the new tests should be
+consistent, or if they should be changed to use test_i18ngrep. I don't
+think it's actually doing anything here, though. It's used with a
+git-specific GETTEXT_POISON flag that tweaks the output generated by
+git, but not by sub-programs like gpg.
+
+> +test_expect_success GPG '--show-signature overrides log.showsignature=false' '
+> +	test_when_finished "git reset --hard && git checkout master" &&
+> +	git config log.showsignature false &&
+
+Should this be test_config?
+
+> +test_expect_success GPG 'log.showsignature behaves like --show-signature' '
+> +	git config log.showsignature true &&
+
+Ditto here.
 
 -Peff
