@@ -1,285 +1,114 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/2] clone: add --init-submodule=<pathspec> switch
-Date: Thu, 26 May 2016 13:47:30 -0700
-Message-ID: <20160526204730.20309-3-sbeller@google.com>
-References: <20160526204730.20309-1-sbeller@google.com>
-Cc: sunshine@sunshineco.com, gitster@pobox.com, pclouds@gmail.com,
-	ramsay@ramsayjones.plus.com, Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 26 22:47:48 2016
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] userdiff: add built-in pattern for CSS
+Date: Thu, 26 May 2016 23:11:56 +0200
+Message-ID: <5747669C.9020807@kdbg.org>
+References: <20160520132829.7937-1-william.duclot@ensimag.grenoble-inp.fr>
+ <20160524142537.19324-1-william.duclot@ensimag.grenoble-inp.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, simon.rabourg@ensimag.grenoble-inp.fr,
+	francois.beutin@ensimag.grenoble-inp.fr,
+	antoine.queru@ensimag.grenoble-inp.fr, gitster@pobox.com,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu May 26 23:12:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b62C2-00058y-1P
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 22:47:46 +0200
+	id 1b62Za-0006xw-0H
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 23:12:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755273AbcEZUrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 16:47:40 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:35016 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754441AbcEZUrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 16:47:39 -0400
-Received: by mail-pa0-f47.google.com with SMTP id fy7so16398081pac.2
-        for <git@vger.kernel.org>; Thu, 26 May 2016 13:47:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TfJz8SyCmXiZbRTmRQzHRdOZt26S5WamQKyjQMEcVvU=;
-        b=Z8L+fYomm5jSf7Si3QnCoTZdYN2oD6NfsFTMQOvgm0L65zR19vQd/zZlO2HhAhLTmL
-         VjmwGw2lTxhJogNWWc9WXwSbl5f8AIZYi7xu7Dx5aBVw7UmsDg7hpOOzk/Frf1Kanpql
-         TE7wEN7c/G33+tZoILtEO91wQLxVDRS5kLWTg6mWYhQPV+n7xk0XyGaJSWr9Oa1ZCR4Z
-         7vbnw/HzUstKeTYJcnhqWk5h+cuau+iPyuVrgUuJzogwsmt7ymBulmu6GO/sKU81YXQI
-         Wwl1awBmvgccsBAiti0/7/XavLUT6O6FuC0AfIlFNOAxubUA8AxhcHxc+Asw8mxT1YIW
-         5N0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=TfJz8SyCmXiZbRTmRQzHRdOZt26S5WamQKyjQMEcVvU=;
-        b=mp+psZbuvQlXyhrcAcHxESa6NycJWOilXHcuA1zMFnOvghgwc6xlE+7vmwDxzzKA/X
-         U1XPChFq86sb9oQ2pLZtf+DDQV0uU4Y944KZfV/gtkj9h1l8d86KFkeu7K41ktaSuQYC
-         M6rbP0iKzlDqw5bQihONFAouUQ6At0yPw4Gm9pR6qlyR/NL3Tb0RxfkwPLATZD5U7IGA
-         Ar2kTk4qP/GBZRxHj2zQTaXdOlClVn2UBNm2aKUfco5/3fIdSSFStE6ezTabQ+opeUwG
-         f3yOLau+6nvmRQlhecPPZroyaKW6zUhr/Ozm8mnLdva0Yf3uJwfV9lbe0M1c9oWWjnqK
-         3RVA==
-X-Gm-Message-State: ALyK8tJlUr6VdSnbssM0/bZRKffD3UrIYz7BYCvoo0+yBoqpdF6TAFcexjwsStejKqWwm0RD
-X-Received: by 10.66.84.74 with SMTP id w10mr16856847pay.140.1464295657791;
-        Thu, 26 May 2016 13:47:37 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:f5f9:aea3:ef22:58b3])
-        by smtp.gmail.com with ESMTPSA id z12sm8164065pfj.1.2016.05.26.13.47.36
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 26 May 2016 13:47:37 -0700 (PDT)
-X-Mailer: git-send-email 2.9.0.rc0.2.g145fc64
-In-Reply-To: <20160526204730.20309-1-sbeller@google.com>
+	id S1755127AbcEZVMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 17:12:00 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:46594 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755101AbcEZVMA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 17:12:00 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3rG1zx4nj7z5tl9;
+	Thu, 26 May 2016 23:11:57 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id BBB1D527A;
+	Thu, 26 May 2016 23:11:56 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <20160524142537.19324-1-william.duclot@ensimag.grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295693>
 
-The new switch passes the pathspec to `git submodule update --init`
-which is called after the actual clone is done.
+Am 24.05.2016 um 16:25 schrieb William Duclot:
+> +PATTERNS("css",
+> +	 "^([^,{}]+)((,[^}]*\\{)|([ \t]*\\{))$",
 
-Additionally this configures the submodule.defaultUpdatePath to
-be the given pathspec, such that any future invocation of
-`git submodule update --init-default-paths` will keep up
-with the pathspec.
+This hunk header pattern is a bit too restrictive for my taste. Find
+below a few more test cases that you should squash in. One case fails
+because only the first CSS selector is picked up, for which I do not
+see a reason.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- Documentation/git-clone.txt | 25 +++++++++-----
- builtin/clone.c             | 36 ++++++++++++++++++--
- t/t7400-submodule-basic.sh  | 81 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 132 insertions(+), 10 deletions(-)
+Another case fails because the opening brace is not on the line with
+the CSS selectors.
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 1b15cd7..33e5894 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -14,8 +14,9 @@ SYNOPSIS
- 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
- 	  [--dissociate] [--separate-git-dir <git dir>]
- 	  [--depth <depth>] [--[no-]single-branch]
--	  [--recursive | --recurse-submodules] [--[no-]shallow-submodules]
--	  [--jobs <n>] [--] <repository> [<directory>]
-+	  [--recursive | --recurse-submodules] [--jobs <n>]
-+	  [--init-submodule <submodulespec>] [--] <repository>
-+	  [<directory>]
- 
- DESCRIPTION
- -----------
-@@ -207,12 +208,20 @@ objects from the source repository into a pack in the cloned repository.
- 
- --recursive::
- --recurse-submodules::
--	After the clone is created, initialize all submodules within,
--	using their default settings. This is equivalent to running
--	`git submodule update --init --recursive` immediately after
--	the clone is finished. This option is ignored if the cloned
--	repository does not have a worktree/checkout (i.e. if any of
--	`--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
-+	After the clone is created, initialize and clone all submodules
-+	within, using their default settings. This is equivalent to
-+	running `git submodule update --recursive --init `
-+	immediately after the clone is finished. This option is ignored
-+	if the cloned repository does not have a worktree/checkout (i.e.
-+	if any of `--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
-+
-+--init-submodule::
-+	After the clone is created, initialize and clone specified
-+	submodules within, using their default settings. It is possible
-+	to give multiple specifications by giving this argument multiple
-+	times. This is equivalent to configure `submodule.defaultUpdateGroup`
-+	and then running `git submodule update --init-default-path`
-+	immediately after the clone is finished.
- 
- --[no-]shallow-submodules::
- 	All submodules which are cloned will be shallow with a depth of 1.
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 5f867e6..668c1f4 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -53,6 +53,16 @@ static struct string_list option_config;
- static struct string_list option_reference;
- static int option_dissociate;
- static int max_jobs = -1;
-+static struct string_list init_submodules;
-+
-+static int init_submodules_cb(const struct option *opt, const char *arg, int unset)
+I think what the hunk header pattern should do is:
+
+1. reject lines containing a colon (because that are properties)
+2. if a line begins with a name in column 1, pick the whole line
+
+See the cpp patterns: a pattern beginning with ! is a "reject" pattern.
+
+
+diff --git a/t/t4018/css-brace-in-col-1 b/t/t4018/css-brace-in-col-1
+new file mode 100644
+index 0000000..7831577
+--- /dev/null
++++ b/t/t4018/css-brace-in-col-1
+@@ -0,0 +1,5 @@
++RIGHT label.control-label
 +{
-+	if (unset)
-+		return -1;
-+
-+	string_list_append((struct string_list *)opt->value, arg);
-+	return 0;
++    margin-top: 10px!important;
++    border : 10px ChangeMe #C6C6C6;
 +}
- 
- static struct option builtin_clone_options[] = {
- 	OPT__VERBOSITY(&option_verbosity),
-@@ -103,6 +113,9 @@ static struct option builtin_clone_options[] = {
- 			TRANSPORT_FAMILY_IPV4),
- 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
- 			TRANSPORT_FAMILY_IPV6),
-+	OPT_CALLBACK(0, "init-submodule", &init_submodules, N_("<pathspec>"),
-+			N_("clone specific submodules. Pass ultiple times for complex pathspecs"),
-+			init_submodules_cb),
- 	OPT_END()
- };
- 
-@@ -734,14 +747,22 @@ static int checkout(void)
- 	err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
- 			   sha1_to_hex(sha1), "1", NULL);
- 
--	if (!err && option_recursive) {
-+	if (!err && (option_recursive || init_submodules.nr > 0)) {
- 		struct argv_array args = ARGV_ARRAY_INIT;
--		argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
-+		argv_array_pushl(&args, "submodule", "update", NULL);
-+
-+		if (init_submodules.nr > 0)
-+			argv_array_pushf(&args, "--init-default-path");
-+		else
-+			argv_array_pushf(&args, "--init");
- 
- 		if (option_shallow_submodules == 1
- 		    || (option_shallow_submodules == -1 && option_depth))
- 			argv_array_push(&args, "--depth=1");
- 
-+		if (option_recursive)
-+			argv_array_pushf(&args, "--recursive");
-+
- 		if (max_jobs != -1)
- 			argv_array_pushf(&args, "--jobs=%d", max_jobs);
- 
-@@ -883,6 +904,17 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		option_no_checkout = 1;
- 	}
- 
-+	if (init_submodules.nr > 0) {
-+		struct string_list_item *item;
-+		struct strbuf sb = STRBUF_INIT;
-+		for_each_string_list_item(item, &init_submodules) {
-+			strbuf_addf(&sb, "submodule.defaultUpdatePath=%s",
-+				    item->string);
-+			string_list_append(&option_config,
-+					   strbuf_detach(&sb, NULL));
-+		}
-+	}
-+
- 	if (!option_origin)
- 		option_origin = "origin";
- 
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 112d86a..a8d45cda 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -1170,4 +1170,85 @@ test_expect_success 'submodule update --init-default-path' '
- 	test_cmp expect actual
- '
- 
-+cat <<EOF > expected
-+ sub0 (test2)
-+-sub1
-+-sub2
-+-sub3
-+EOF
-+
-+test_expect_success 'clone --init-submodule works' '
-+	test_when_finished "rm -rf multisuper_clone" &&
-+	git clone --recurse-submodules --init-submodule="sub0" multisuper multisuper_clone &&
-+	(
-+		cd multisuper_clone &&
-+		git submodule status |cut -c 1,43- >../actual
-+	) &&
-+	test_cmp actual expected
-+'
-+
-+cat <<EOF > expect
-+-sub0
-+ sub1 (test2)
-+-sub2
-+ sub3 (test2)
-+EOF
-+test_expect_success 'clone with multiple --init-submodule options' '
-+	test_when_finished "rm -rf multisuper_clone" &&
-+	git clone --recurse-submodules \
-+		  --init-submodule="." \
-+		  --init-submodule ":(exclude)sub0" \
-+		  --init-submodule ":(exclude)sub2" \
-+			multisuper multisuper_clone &&
-+	(
-+		cd multisuper_clone &&
-+		git submodule status |cut -c1,43- >../actual
-+	) &&
-+	test_cmp expect actual
-+'
-+
-+cat <<EOF > expect
-+-sub0
-+ sub1 (test2)
-+-sub2
-+ sub3 (test2)
-+EOF
-+
-+cat <<EOF > expect2
-+-sub0
-+ sub1 (test2)
-+-sub2
-+ sub3 (test2)
-+-sub4
-+ sub5 (test2)
-+EOF
-+
-+test_expect_success 'clone and subsequent updates correctly auto-initialize submodules' '
-+	test_when_finished "rm -rf multisuper_clone" &&
-+	git clone --recurse-submodules --init-submodule="." \
-+				       --init-submodule ":(exclude)sub0" \
-+				       --init-submodule ":(exclude)sub2" \
-+				       --init-submodule ":(exclude)sub4" \
-+				       multisuper multisuper_clone &&
-+	(
-+		cd multisuper_clone &&
-+		git submodule status |cut -c1,43- >../actual
-+	) &&
-+	test_cmp expect actual &&
-+	(
-+		cd multisuper &&
-+		git submodule add ../sub1 sub4 &&
-+		git submodule add ../sub1 sub5 &&
-+		git commit -m "add more submodules"
-+	) &&
-+	(
-+		cd multisuper_clone &&
-+		# obtain the new superproject
-+		git pull &&
-+		git submodule update --init-default-path &&
-+		git submodule status |cut -c1,43- >../actual
-+	) &&
-+	test_cmp expect2 actual
-+'
-+
- test_done
+diff --git a/t/t4018/css-rule b/t/t4018/css-common
+similarity index 100%
+rename from t/t4018/css-rule
+rename to t/t4018/css-common
+diff --git a/t/t4018/css-long-selector-list b/t/t4018/css-long-selector-list
+new file mode 100644
+index 0000000..7ccd25d
+--- /dev/null
++++ b/t/t4018/css-long-selector-list
+@@ -0,0 +1,6 @@
++p.header,
++label.control-label,
++div ul#RIGHT {
++    margin-top: 10px!important;
++    border : 10px ChangeMe #C6C6C6;
++}
+diff --git a/t/t4018/css-prop-sans-indent b/t/t4018/css-prop-sans-indent
+new file mode 100644
+index 0000000..a9e3c86
+--- /dev/null
++++ b/t/t4018/css-prop-sans-indent
+@@ -0,0 +1,5 @@
++RIGHT, label.control-label {
++margin-top: 10px!important;
++padding: 0;
++border : 10px ChangeMe #C6C6C6;
++}
+diff --git a/t/t4018/css-short-selector-list b/t/t4018/css-short-selector-list
+new file mode 100644
+index 0000000..6a0bdee
+--- /dev/null
++++ b/t/t4018/css-short-selector-list
+@@ -0,0 +1,4 @@
++label.control, div ul#RIGHT {
++    margin-top: 10px!important;
++    border : 10px ChangeMe #C6C6C6;
++}
 -- 
-2.9.0.rc0.2.g145fc64
+2.9.0.rc0.40.gb3c1388
