@@ -1,75 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 0/6] pack-objects hook for upload-pack
-Date: Thu, 26 May 2016 09:44:20 -0700
-Message-ID: <xmqqzircwyzf.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/6] config: return configset value for current_config_
+ functions
+Date: Thu, 26 May 2016 12:50:33 -0400
+Message-ID: <20160526165033.GA20355@sigill.intra.peff.net>
 References: <20160518223712.GA18317@sigill.intra.peff.net>
-	<CAPc5daV6bdUKS-ExHmpT4Ppy2S832NXoyPw7aOLP7fG=WrBPgg@mail.gmail.com>
-	<20160526054418.GB21580@sigill.intra.peff.net>
+ <20160518224323.GD22443@sigill.intra.peff.net>
+ <20160519000821.GA22543@sigill.intra.peff.net>
+ <CACsJy8Ad=yN6aLkH9B6ujUNUvPT-b+jw+CwJORD5Fh1jYeOUZQ@mail.gmail.com>
+ <xmqq7fegydmf.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 26 18:44:30 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 26 18:50:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5yOa-0003Dy-2U
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 18:44:28 +0200
+	id 1b5yUb-0005Wg-5S
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 18:50:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753544AbcEZQoY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 12:44:24 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58874 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750985AbcEZQoY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 12:44:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 17C711DD5A;
-	Thu, 26 May 2016 12:44:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oGN1Txt1jkYZfc/Mw01RdMPMVac=; b=Lpukle
-	vCT1Gbeq1i9jqbXFrh0DrqfuOicLAYUfuxp5Lmee+hoHgQCX5XuDJa1++f1/C0X9
-	1oQyibCkthmK9wTa3X0YGQ9BGazGlzCgMEQ6ogNbYFl2JRDw8aI4+Ego9ljpeneN
-	iLoxmLbz9QeHo8R5vTeMXZEkd/1r1TnjOSb8s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Vc1X6BV6AWdctDxjhfs9Jyrf1doIytYi
-	aPg3OX6Jqh5dqeU2+BuH0P40madtLLCyvjj4VKggBIdXXaMNLplgrxKTXjIHS1NO
-	CC47TBY73Yiia0ab5vXhU84+OLxEI3CiFX8S3Wijnqyb+ltBqkmpnKw63CGbsFJF
-	o0WwAH9G8Pk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F6DC1DD59;
-	Thu, 26 May 2016 12:44:23 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 884981DD58;
-	Thu, 26 May 2016 12:44:22 -0400 (EDT)
-In-Reply-To: <20160526054418.GB21580@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 26 May 2016 01:44:18 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 195D518A-2361-11E6-9251-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1753920AbcEZQuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 12:50:37 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44700 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750985AbcEZQug (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 12:50:36 -0400
+Received: (qmail 5792 invoked by uid 102); 26 May 2016 16:50:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 12:50:35 -0400
+Received: (qmail 20350 invoked by uid 107); 26 May 2016 16:50:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 12:50:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2016 12:50:33 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq7fegydmf.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295670>
 
-Jeff King <peff@peff.net> writes:
+On Thu, May 26, 2016 at 09:42:48AM -0700, Junio C Hamano wrote:
 
-> Yeah, I had the same thought while working on this, but just didn't want
-> to have to tweak every config callback. As you say, I don't think this
-> makes anything fundamentally worse, though. I'm inclined to go with this
-> strategy, especially with the extra die("BUG") safety added here.
+> Duy Nguyen <pclouds@gmail.com> writes:
+> 
+> > On Thu, May 19, 2016 at 7:08 AM, Jeff King <peff@peff.net> wrote:
+> >> On Wed, May 18, 2016 at 06:43:23PM -0400, Jeff King wrote:
+> >>
+> >>>  cache.h                |  1 +
+> >>>  config.c               | 51 +++++++++++++++++++++++++++++++++++++++++---------
+> >>>  t/helper/test-config.c | 20 ++++++++++++++++++++
+> >>>  t/t1308-config-set.sh  | 23 +++++++++++++++++++++++
+> >>> [...]
+> >>> +test_expect_success 'iteration shows correct origins' '
+> >>> +     echo "[alias]test-config = !test-config" >.gitconfig &&
+> >
+> > How about using 'which' to get absolute path for test-config and put
+> > it here? Then we don't rely on $PATH anymore.
+> 
+> Don't use which, which is not portable.
+> 
+> Remind me why we end up running ./test-config instead of
+> ./bin-wrappers/test-config?  Should our tests be running 
+> bin-wrappers early in their $PATH, perhaps?
 
-Fine by me.
+The problem is running test-config inside of a git alias. The
+bin-wrappers will set the exec-path to the root-level of git's build
+directory, which the git binary will then stick at the front of the
+$PATH.
 
-> PS Did you have any thoughts on the t/helper problem mentioned in:
->
->      http://article.gmane.org/gmane.comp.version-control.git/295029
->
->    I suspect it will bite you if you try merging/testing this.
+So the simplest solution really is: don't do that. The only debate in my
+mind is whether this is rare enough that it won't bite somebody again in
+the future, or if we should look into a solution that makes this Just
+Work.
 
-It already did but thanks to that message I didn't have to panic ;-).
+-Peff
