@@ -1,93 +1,81 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: Re: [RFC/PATCH 2/2] log: add "--no-show-signature" command line option
-Date: Thu, 26 May 2016 22:12:30 +0530
-Message-ID: <CA+DCAeRRunqgbbbpDDK6gA-cXYrPtkmAuX-ERvtDtXsD2Z=xkw@mail.gmail.com>
-References: <20160526130647.27001-1-mehul.jain2029@gmail.com>
-	<20160526130647.27001-3-mehul.jain2029@gmail.com>
-	<20160526163241.GC18210@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/6] config: return configset value for current_config_ functions
+Date: Thu, 26 May 2016 09:42:48 -0700
+Message-ID: <xmqq7fegydmf.fsf@gitster.mtv.corp.google.com>
+References: <20160518223712.GA18317@sigill.intra.peff.net>
+	<20160518224323.GD22443@sigill.intra.peff.net>
+	<20160519000821.GA22543@sigill.intra.peff.net>
+	<CACsJy8Ad=yN6aLkH9B6ujUNUvPT-b+jw+CwJORD5Fh1jYeOUZQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Austin English <austinenglish@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 26 18:42:37 2016
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 26 18:42:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5yMl-0002U4-ST
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 18:42:36 +0200
+	id 1b5yN7-0002d3-C8
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 18:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754377AbcEZQmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 12:42:32 -0400
-Received: from mail-qg0-f66.google.com ([209.85.192.66]:36116 "EHLO
-	mail-qg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751679AbcEZQmb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 12:42:31 -0400
-Received: by mail-qg0-f66.google.com with SMTP id l75so1687696qgd.3
-        for <git@vger.kernel.org>; Thu, 26 May 2016 09:42:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=c4kxi24pxjYK/tDNpx94F4c9A3IXApjWgCf7wwkdp70=;
-        b=KcgSLHOgLU5fw+FaV4qJnV7YqeUbu/LXvD81FL/DVb6OhURPj8bz7Lm4Lp948yc6PK
-         Ig5VYiP7/M3+HapidoqouXbmJCKyG1f2wqbbOCyW6iGbVJjueAhUQY2r3pxIxoAPr3yx
-         46276S2xP21SHcpx8PcTFIKtHIGi2OhaWzQOEooWRnfkzEYfSjJChZvssa/2G5KI1fTf
-         glKdcqKlLa1DtdYPRy0fBcyyNJ87j4W3UzCmq/4gpkacokW0Gcg/QXCi7Eht3ThkZJAE
-         EiIHqURAVYFlg2rn+b5wOA6z3J/xwWjBkG0jOoidoPxWdqxEElMQPi6h5op/uR/btwtS
-         kaKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=c4kxi24pxjYK/tDNpx94F4c9A3IXApjWgCf7wwkdp70=;
-        b=JWf1oWAZdSkJRYpi8JM4+dVoGogp7pWaXrFcv3q8ROFLOR2eOmHH8HGw83UknYcXNq
-         uSy7LhM/gSv/tXep64OFqnyKzKJhjwu0cA2Jl0gyo0nSCMrwJpTk6wpppsRZ7E7/8LsC
-         5UjlPtbAzHPwk+FSwuxbod0Akte7cRjLLWjNLvlG7HLMIe74ts1YKy+tieqGf2rspwFA
-         AkFXYXOOiODZVCkGIGcdk+hfWhdL0V+qwgMajX5SKRrAQKcXNgz26Zoihw0e+OHEonUO
-         qSYh5nzQjlc2yzRlUp1CsHfKrvG/BaFQCVTawxXVCJsEuHLPPz3htdMg3IyOZXQ12gLl
-         QU4w==
-X-Gm-Message-State: ALyK8tLxsdsY/+ha1uwOXPRIdLhCUMevX9cMl2IJIEar8BgsWnpU2UjUN7bvSRzdFNidwTtpc9cc1yjALDahXA==
-X-Received: by 10.140.107.101 with SMTP id g92mr9480755qgf.87.1464280950695;
- Thu, 26 May 2016 09:42:30 -0700 (PDT)
-Received: by 10.55.56.139 with HTTP; Thu, 26 May 2016 09:42:30 -0700 (PDT)
-In-Reply-To: <20160526163241.GC18210@sigill.intra.peff.net>
+	id S1753880AbcEZQmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 12:42:53 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60540 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752366AbcEZQmw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 12:42:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 240FA1EDA9;
+	Thu, 26 May 2016 12:42:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cAxbf4hPD2n3iSc5WVpebs8v/Yo=; b=X6DQLF
+	AFpRWT1oJLD7CJv1oa/oiaQGC5VEhXUIar55VHfLRYkF/zrF85xk4oIP7YCs8UCU
+	v7qA4Tq98R65nDReGg77ehUyYKYNcbOl8+uppvM9hs+P+ILdL471SVZtcN8J+Q1D
+	RqpelCKA82cMXshTdd99lAGanPVPYx9MaLEd4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=p4dwbXJAF9iHPbowobPxexOskDoNwRTQ
+	c2oVOrmEVp+UJA0KVxtUKe/xxsD1OcQPswHuE+W/5mEyQFOyCl6WszsNBXhUDmzP
+	CFHXWVCYztQ8CcGJUL1bZAZ0l8ZtvSnzflRZrK5bxisOecdJL6+P3G1iEMPzOt/f
+	dBr/9ly0bDQ=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 19F301EDA7;
+	Thu, 26 May 2016 12:42:51 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8D38E1EDA6;
+	Thu, 26 May 2016 12:42:50 -0400 (EDT)
+In-Reply-To: <CACsJy8Ad=yN6aLkH9B6ujUNUvPT-b+jw+CwJORD5Fh1jYeOUZQ@mail.gmail.com>
+	(Duy Nguyen's message of "Thu, 26 May 2016 14:47:15 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E28A487A-2360-11E6-B313-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295668>
 
-Hi,
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Thanks for your input.
-
-On Thu, May 26, 2016 at 10:02 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, May 26, 2016 at 06:36:47PM +0530, Mehul Jain wrote:
->> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
->> index 36be9a1..ea24259 100755
->> --- a/t/t4202-log.sh
->> +++ b/t/t4202-log.sh
->> @@ -901,6 +901,13 @@ test_expect_success GPG 'log.showsignature=true behaves like --show-signature' '
->>       test_i18ngrep "gpg: Good signature" actual
->>  '
+> On Thu, May 19, 2016 at 7:08 AM, Jeff King <peff@peff.net> wrote:
+>> On Wed, May 18, 2016 at 06:43:23PM -0400, Jeff King wrote:
 >>
->> +test_expect_success GPG '--no-show-signature overrides log.showsignature=true' '
->> +     git config log.showsignature true &&
->> +     git log -1 --no-show-signature signed >actual &&
->> +     test "$(test_i18ngrep "gpg: Signature made" actual)" = "" &&
->> +     test "$(test_i18ngrep "gpg: Good signature" actual)" = ""
->> +'
+>>>  cache.h                |  1 +
+>>>  config.c               | 51 +++++++++++++++++++++++++++++++++++++++++---------
+>>>  t/helper/test-config.c | 20 ++++++++++++++++++++
+>>>  t/t1308-config-set.sh  | 23 +++++++++++++++++++++++
+>>> [...]
+>>> +test_expect_success 'iteration shows correct origins' '
+>>> +     echo "[alias]test-config = !test-config" >.gitconfig &&
 >
-> Perhaps it would be more robust to simply grep for "gpg:". We should not
-> be seeing any gpg-related lines in the output. It probably isn't that
-> big a deal in practice, though. If the output from gpg changes, this
-> test could report a false success, but all of the other nearby tests
-> would show a breakage, so somebody would probably notice.
+> How about using 'which' to get absolute path for test-config and put
+> it here? Then we don't rely on $PATH anymore.
 
-That's a very good point. I will make the changes accordingly.
+Don't use which, which is not portable.
 
-Thanks,
-Mehul
+Remind me why we end up running ./test-config instead of
+./bin-wrappers/test-config?  Should our tests be running 
+bin-wrappers early in their $PATH, perhaps?
