@@ -1,85 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC] Triangular Workflow: user friendly full implementation
-Date: Thu, 26 May 2016 13:04:10 +0200
-Message-ID: <vpqeg8pgjx1.fsf@anie.imag.fr>
-References: <E83A9439-54C8-4925-8EE3-6AEEDD9416F3@grenoble-inp.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>,
-	Tom Russello <tom.russello@grenoble-inp.org>,
-	Samuel Groot <samuel.groot@grenoble-inp.org>
-To: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Thu May 26 13:05:23 2016
+From: Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH v4 0/2] rev-parse: fix some options when executed from subpath of main tree
+Date: Thu, 26 May 2016 07:19:14 -0400
+Message-ID: <1464261556-89722-1-git-send-email-rappazzo@gmail.com>
+Cc: gitster@pobox.com, pclouds@gmail.com, szeder@ira.uka.de,
+	mh@glandium.org, sunshine@sunshineco.com,
+	Michael Rappazzo <rappazzo@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 26 13:19:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5t6Q-0000js-P6
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 13:05:23 +0200
+	id 1b5tJx-0004oE-Qe
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 13:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753187AbcEZLFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 07:05:17 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:49863 "EHLO mx2.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751627AbcEZLFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 07:05:16 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4QB55Mw021091
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 26 May 2016 13:05:05 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4QB4Aeo011320;
-	Thu, 26 May 2016 13:04:10 +0200
-In-Reply-To: <E83A9439-54C8-4925-8EE3-6AEEDD9416F3@grenoble-inp.org> (Jordan
-	DE's message of "Thu, 26 May 2016 12:06:33 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Thu, 26 May 2016 13:05:05 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u4QB55Mw021091
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1464865507.74263@niPsH0b1uzITdCapNV+bLQ
+	id S1753374AbcEZLTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 07:19:12 -0400
+Received: from mail-yw0-f178.google.com ([209.85.161.178]:33307 "EHLO
+	mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751627AbcEZLTL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 07:19:11 -0400
+Received: by mail-yw0-f178.google.com with SMTP id h19so73402935ywc.0
+        for <git@vger.kernel.org>; Thu, 26 May 2016 04:19:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=xvvr/yjRjWH+799mdTYZBLJptt/J8+lrhqSE/NlVBR0=;
+        b=pQXhsw3HcUvQAdW7y+tK0QbLS23PqwkXzOBytoreCLzDP6S+uJ/AdJSzYkvqZo8ba7
+         EpWHwVHpzF3qmjt9cT2vNVTq3/GmzKV6kmBRFeupOa8RSOQr8dO7ODvFCARf2+boa2ch
+         IfSWdjSymwVsBzJTEV4Hw7C/DqgYOHixRILiT8R7avdJD8igkJNZ0cslYC2Tm5S0jAi5
+         AIheiupArx+n2eq68ZLzpc5a5yL/pwnuvuhH+gRR/Bx1GJqetB7dM4jts6i+zAb7sb5j
+         kZghfyGVwScqt2AxieiOOnNQGEjxrxDYdYeQaqSyAr2B5PUqD4ZtkmQK1g4wFuHT8Elx
+         pNXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=xvvr/yjRjWH+799mdTYZBLJptt/J8+lrhqSE/NlVBR0=;
+        b=SP8XFRI2jjbA2EjCS5wp7U/uplFCvT5KzMl9hRC5UISCi0Uu+ZjbHVcuxkgdFf2V6M
+         rs7tb4nGNCvDugfrm0nsWbs5HK0MBL8x1bMpfa2zkQzzLf7C8tYfaTQYK7HP4M/K2Msp
+         QpKqD+pvAQG7Y1hiawue9rQ9oyIMpg4L91pPJvr6xxc844BbzJTHIep0fs18r4jPv9te
+         LLtxaJYVxTS/hYMMprj8H0hO51lbG/IEKpKe2BGt4aTg1g9bnPJtjLvgXUEb2MjYq1Ke
+         b0k2U8RLv9OlDgpaZAySlhFF64/xFr02Jn9fsCDvbND0EclP4jMWoCCZg5hD3RKW0DZ8
+         4wqA==
+X-Gm-Message-State: ALyK8tKZcICLHethteB5x1zaRhir6YqHKj4zQiy2kWhxAU97hTdlTXE9UHtYPM0EcrrahA==
+X-Received: by 10.129.119.4 with SMTP id s4mr5092472ywc.234.1464261549631;
+        Thu, 26 May 2016 04:19:09 -0700 (PDT)
+Received: from localhost.localdomain (146.sub-70-208-87.myvzw.com. [70.208.87.146])
+        by smtp.gmail.com with ESMTPSA id l200sm2095979ywe.40.2016.05.26.04.19.07
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Thu, 26 May 2016 04:19:08 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295644>
 
-Jordan DE GEA <jordan.de-gea@grenoble-inp.org> writes:
+Changes since v3 [1]:
+ - Rebased onto 'pu' which includes the cleanup of t1500 by Eric Sunshine
+ - Fixed a memory leak due to misusing xstrfmt()
 
-> Here is what we want to implement: 
+[1] http://thread.gmane.org/gmane.comp.version-control.git/293778
 
-Your message contains the word "implement" too many times. Before
-thinking about implementation, think, and discuss, about the design.
+Michael Rappazzo (2):
+  rev-parse tests: add tests executed from a subdirectory
+  rev-parse: fix some options when executed from subpath of main tree
 
-If your message is intended to be a discussion on the design, then avoid
-using "implementation" in the subject.
-
-> 1. 
-> 	a. add the config var: remote.fetchDefault
-> 	b. add the config var: branch.<name>.fetchRemote
-> 	c. add `git fetch --set-default` in order to set remote.fetchDefault
-> 	d. add `git fetch --set-remote` in order to set branch.<name>.fetchRemote
-> 	e. add `git pull --set-default` in order to set remote.fetchDefault
-> 	f. add `git pull --set-remote` in order to set branch.<name>.fetchRemote
->
-> 2. 
-> 	a. add `git push --set-default` in order to set remote.pushDefault
-> 	b. add `git push --set-remote` in order to set branch.<name>.pushRemote
-
-This tells a lot about the "what?", but lacks the most important "why?"
-(or "what for?") question.
-
-The user doesn't want to "set configuration variables". He wants to work
-with git, have commands do the right thing, avoid typing useless
-keystrokes and avoid surprising behavior. Please explain how your
-proposal would improve the situation. For example, show a typical
-use-case with commands to type before and after your proposal is
-implemented.
+ builtin/rev-parse.c      | 22 +++++++++++++++++-----
+ t/t1500-rev-parse.sh     | 28 ++++++++++++++++++++++++++++
+ t/t1700-split-index.sh   | 17 +++++++++++++++++
+ t/t2027-worktree-list.sh | 10 +++++++++-
+ 4 files changed, 71 insertions(+), 6 deletions(-)
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.8.0
