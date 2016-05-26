@@ -1,71 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [ANNOUNCE] Git v2.9.0-rc0
-Date: Thu, 26 May 2016 15:24:43 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605261523160.4449@virtualbox>
-References: <xmqq60u47403.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1605261156070.4449@virtualbox>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH v4 2/2] rev-parse: fix some options when executed from
+ subpath of main tree
+Date: Thu, 26 May 2016 22:26:11 +0900
+Message-ID: <20160526132611.GA2736@glandium.org>
+References: <1464261556-89722-1-git-send-email-rappazzo@gmail.com>
+ <1464261556-89722-3-git-send-email-rappazzo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 26 15:25:22 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
+	szeder@ira.uka.de, sunshine@sunshineco.com
+To: Michael Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 26 15:26:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5vHT-00038f-Q3
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 15:24:56 +0200
+	id 1b5vIw-0004Qd-0B
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 15:26:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753843AbcEZNYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 09:24:52 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50552 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753652AbcEZNYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 09:24:51 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LgNGi-1br2Gu1JpM-00neCD; Thu, 26 May 2016 15:24:44
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <alpine.DEB.2.20.1605261156070.4449@virtualbox>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:cE3dk8ADwLBtAzsyUYubzm8Koy1YNvIKGUu1Xj/zAul61ODc0rU
- HC3ua6COq6IVfyrQ8+qoXEM2SAmU71dEl9FixMGk4ChXFZdpwFh2y9t0sRQ76FHqdSLvzmj
- eAc0ehRZtZ2dn/fsWYqXk9R2ZVMwwZU4Pjx1G8+T8puL5Jra7V+vUfV7NmxZpLKpVjEDO3U
- jsiNxFMtaQl2bvh1xBJ+g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:WuoYwlO23lE=:mM5voLrlkIqmPT+oJTPh/B
- BD63pD8SWqTKD3tFvGxWa/b8nL9qzPZCeHCFkClIWJl0se2u73wVN5Z+D6YOyWbla/AzWNUKB
- w5bDEbPRQ94N8AY6F5xGsWEM9CCMUgJ5gxj1nc3UybhBFvwLQUgdV6nX2gpNs0WzWw7+vTIke
- r8iD21zI7l14i7X1Gba6msCGMEDu6SPgJqKkg0NYSPyH3xxsTWrCDWwFOsWzqf2OdkrK7kpnp
- KoDazL3kQYhEr39B1N6qvpj09vo0xbCFjB5FgeC/Gn51GX4mCasL0y3Pk/u3yfmQ1ntfq0rHY
- PXKXGJg0CAEUzbOGR3Qp5p9zrdyJ9mV6gM0D1sf+OFO2QcLC5DqvU6eXTTkS+RFJxThtTsvPQ
- HY3SWcBVGZxP9TCXVjgirCojQ9A+dZzwGgxoqaTtnPkgR6p0SX1hKQ6jm4lNidwSDqMg2MlnF
- KwFF4gl8aiQ19qydcCySW1/M9rp6vQMQ8reUJ3RV3GUzegcboe0og0bP54NGcwPvMP/L51lSG
- 4h6ZONvx8sy2Z475v7o9Usk8kIr/d1IiGl+RJ6nDtsjla9L646VOxUE1Oihr/Klwk2nOxPPZ1
- 4L/nvW3xx/T4Db+eTZErU+V/HcxgZFmKUBBFM4wJ3YxhfYz/s0siibhAIefPjr4+e8sYpozc4
- Yt9ESCpSl9rYAe6Z8O/TjQaJZBBReNZibj8p6Wi0QVORnERkvSAXWWiffD1ccbZZNiX0FnGgW
- GyV9nSM4Sa9310y31BpAE0PjoTpOnjFS8DtAxUjRBWIMhn/JeD6dqEBZ2wwh2gv9ml+pfMng 
+	id S1753888AbcEZN0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 09:26:22 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:33858 "EHLO
+	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753648AbcEZN0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 09:26:21 -0400
+Received: from glandium by zenigata with local (Exim 4.87)
+	(envelope-from <mh@glandium.org>)
+	id 1b5vIh-0000pg-9T; Thu, 26 May 2016 22:26:11 +0900
+Content-Disposition: inline
+In-Reply-To: <1464261556-89722-3-git-send-email-rappazzo@gmail.com>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295652>
 
-Hi all,
-
-On Thu, 26 May 2016, Johannes Schindelin wrote:
-
-> On Mon, 23 May 2016, Junio C Hamano wrote:
+On Thu, May 26, 2016 at 07:19:16AM -0400, Michael Rappazzo wrote:
+> Executing `git-rev-parse` with `--git-common-dir`, `--git-path <path>`,
+> or `--shared-index-path` from the root of the main worktree results in
+> a relative path to the git dir.
 > 
-> > An early preview release Git v2.9.0-rc0 is now available for
-> > testing at the usual places.
+> When executed from a subdirectory of the main tree, it can incorrectly
+> return a path which starts 'sub/path/.git'.  Change this to return the
+> proper relative path to the git directory.
 > 
-> Thanks. I pushed out a tagged source-only Git for Windows v2.9.0-rc0 for
-> interested parties:
-> 
-> 	https://github.com/git-for-windows/git/releases/tag/v2.9.0-rc0.windows.1
+> Related tests marked to expect failure are updated to expect success
 
-Very sorry: the tagging revealed a flaw in one of the patches and I had to
-re-tag. My apologies to anybody who already fetched the previous tag.
+As mentioned previously (but late in the thread), I don't get why this
+one case of --git-common-dir should not return the same thing as
+--git-dir, which is an absolute directory. Especially when there is
+other flag telling you whether you are in the main or another worktree,
+so comparing the output for --git-dir and --git-common-dir is the
+easiest way to do so, but then you have to normalize them on their own
+because git returns different values pointing to the same directory.
 
-Ciao,
-Dscho
+Mike
