@@ -1,72 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [ANNOUNCE] Git v2.9.0-rc0
-Date: Thu, 26 May 2016 11:59:02 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605261156070.4449@virtualbox>
-References: <xmqq60u47403.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 26 11:59:48 2016
+From: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
+Subject: [RFC] Triangular Workflow: user friendly full implementation
+Date: Thu, 26 May 2016 12:06:33 +0200
+Message-ID: <E83A9439-54C8-4925-8EE3-6AEEDD9416F3@grenoble-inp.org>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>,
+	Tom Russello <tom.russello@grenoble-inp.org>,
+	Samuel Groot <samuel.groot@grenoble-inp.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 26 12:13:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5s4y-0005u9-Bl
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 11:59:48 +0200
+	id 1b5sIf-0001r5-Es
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 12:13:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753398AbcEZJ7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 05:59:31 -0400
-Received: from mout.gmx.net ([212.227.15.19]:56149 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750803AbcEZJ7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 05:59:30 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MQR3s-1ay8HS2EPs-00Tnn7; Thu, 26 May 2016 11:59:18
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqq60u47403.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:YyrwGNS3xgxPxC6Ko3wxxN2U2/zGIwzMgoYh5tO4vdUH7MiPw+G
- cXc1KVZinBIG39tsNj7z2nW2UqCZVw+KJ4i5y+hwpJn6NAimAS2Qr/kFfDzGEOx0gN5Gpc2
- ms+20kketOu388KlJ7mHclVGrqHD4R0qdfF6W50xBI6GLe+HI0hl8rtMsBRhMjwDFoXIPY8
- 7Bdkcei80xWlxl9WrP3QA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SqyoLAOwIXU=:RWxwJlRFAMvrwOKiB+6XEk
- 3bxIxcCTnXDTN2a28I+Fi4rMipN89COdvDW3TK24yPuY+qCpdzw3rXzFDyhSHYwu1D4McRsAN
- 4JutwM1IDxYLcsGGFqCr6Etq9rAcjhxdSBWjebEVO9wBqowgibZEB68HWO+2nAMup41gz//8q
- GCb8M0dA58ddi97Fj7Fj+rghYaCupeAayVqnE7aChsZ+4QGYY8CnFMfaXyHK0SvRcPYm1yhKe
- XeoEdn+3FVeL2FugoXiIM9LNg4pyEDraHDbH6lOSueFJZG8y3UnrZ1spXOjwgMQfIUzAbJp9S
- zjHlqT8NQljrEl6UzIw0zcHmbt56tL3QP7riWWUL0MSQTsS8x84z7hx5OPd5K3GB7M4S3Lbg+
- tsfh2LmBkq8c7Xg4TmDt38qa/OAfSNh9uPJyAK9KBokv46NKan71pArb/HKyi6JyvT0wGOilQ
- 8oZmvKAgs+UASa8gVoHsoTzuLnf5cj3Xba9LPs01v0DYRmIheCO6Fm2cTJ6upwCo/vqdVrD9R
- ccGSXh9WnjjB0/6MjTKN/OiT7kGXKSRcg6n0QH5tlizYXlLWR6ItoC/r0rXbHjRqk+AIotwKC
- H1Lltmo6/XpWzqwtTW5PWCpHYuzjSeTSXZyjBsI6isuFrnlW+eA01su6a8Ag5X6jYb5xdLzRk
- uZX7oZF2rwfjWWQmOL1/mXuomXCL2yQGDy4V6m9W2BqXnsMoNb8Fm6y2GL9Pj5s3lUsviHB7a
- 6PZjyBNXkZ9UG/+zD3WA0fuoNK4vDVD3RjzW5Dja/hNBwOdXiWafdD9835UJmzpdmYA9bhGl 
+	id S1751545AbcEZKNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 06:13:53 -0400
+Received: from zm-smtpout-2.grenet.fr ([130.190.244.98]:44284 "EHLO
+	zm-smtpout-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750791AbcEZKNx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 06:13:53 -0400
+X-Greylist: delayed 434 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 May 2016 06:13:52 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 8C3B920F5;
+	Thu, 26 May 2016 12:06:34 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id CvoX1SI3xhBB; Thu, 26 May 2016 12:06:34 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 73D7D20F0;
+	Thu, 26 May 2016 12:06:34 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 6D9682077;
+	Thu, 26 May 2016 12:06:34 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bFpgN5-axuwd; Thu, 26 May 2016 12:06:34 +0200 (CEST)
+Received: from eduroam-032217.grenet.fr (eduroam-032217.grenet.fr [130.190.32.217])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 49D792055;
+	Thu, 26 May 2016 12:06:34 +0200 (CEST)
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295642>
 
-Hi Junio,
+We are working on full implementation of triangular workflow feature.
+For now, the main options available are: 
+	 - branch.<name>.pushRemote
+	 - remote.pushDefault
+And only setable by hands. 
 
-On Mon, 23 May 2016, Junio C Hamano wrote:
+As it can be difficult to understand, here is what we want to do. 
 
-> An early preview release Git v2.9.0-rc0 is now available for
-> testing at the usual places.
 
-Thanks. I pushed out a tagged source-only Git for Windows v2.9.0-rc0 for
-interested parties:
+Context:
+	- One main remote repository, e.g. git/git.
+	- A remote fork (e.g. a GitHub fork) of git/git, e.g. me/git.
+	- A local clone of me/git on the machine
 
-	https://github.com/git-for-windows/git/releases/tag/v2.9.0-rc0.windows.1
+Purposes:
+	- the local branch master has to fetch to git/git by default
+	- the local branch master has to push to me/git by default
 
->  * The test scripts for "git p4" (but not "git p4" implementation
->    itself) has been updated so that they would work even on a system
->    where the installed version of Python is python 3.
+Configuration wanted:
+	- Add a remote to git/git e.g. `git remote add ...`
+	- Set the fetch remote for branch as default. 
 
-s/has/have/
+For now, we can do that by setting: 
+	- branch.<name>.remote to git/git
+	- branch.<name>.pushRemote to me/git
+But many options set `branch.<name>.remote`, a suitable solution is to
+implement an option for the fetch for example. 
 
-Ciao,
-Dscho
+
+Here is what we want to implement: 
+
+1. 
+	a. add the config var: remote.fetchDefault
+	b. add the config var: branch.<name>.fetchRemote
+	c. add `git fetch --set-default` in order to set remote.fetchDefault
+	d. add `git fetch --set-remote` in order to set branch.<name>.fetchRemote
+	e. add `git pull --set-default` in order to set remote.fetchDefault
+	f. add `git pull --set-remote` in order to set branch.<name>.fetchRemote
+
+2. 
+	a. add `git push --set-default` in order to set remote.pushDefault
+	b. add `git push --set-remote` in order to set branch.<name>.pushRemote
+
+
+What's your opinion about this feature ?
