@@ -1,82 +1,72 @@
-From: Austin English <austinenglish@gmail.com>
-Subject: Re: Please add a git config option to make --show-signature the default
-Date: Wed, 25 May 2016 19:27:22 -0500
-Message-ID: <CACC5Q1eaORyTn3gBzry7ove05_t0SpbJdnZia3+czYz+7NpBAw@mail.gmail.com>
-References: <57438568.60707@gmail.com> <alpine.DEB.2.20.1605241313440.4449@virtualbox>
- <CACC5Q1c2s4yOtGAtKsepwnme7udq7yqyN7S5BfMHbi0L08XwzA@mail.gmail.com> <CA+DCAeSqTitycrO2y=SdutK1H2+jbzp7OzbhZ3pOYY_YOdOkGw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: t7610-mergetool.sh test failure
+Date: Wed, 25 May 2016 20:51:14 -0500
+Message-ID: <20160526015114.GA12851@sigill.intra.peff.net>
+References: <CALR6jEhQrSuVAG9=8AC10Lr776KyVurdTkH8QRHH5GWEMk+wNg@mail.gmail.com>
+ <CAPc5daWmhYKNXZJxnZYuCe90vOti7Su-Uab7=9JvvsFYfw1s_Q@mail.gmail.com>
+ <20160525231615.GC2634@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Mehul Jain <mehul.jain2029@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 26 02:33:58 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Armin Kunaschik <megabreit@googlemail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 26 03:51:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5jFO-0000hc-50
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 02:33:58 +0200
+	id 1b5kSK-0007Et-SC
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 03:51:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752678AbcEZAdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2016 20:33:55 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:35980 "EHLO
-	mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752274AbcEZAdy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2016 20:33:54 -0400
-X-Greylist: delayed 352 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 May 2016 20:33:54 EDT
-Received: by mail-it0-f41.google.com with SMTP id e62so84418930ita.1
-        for <git@vger.kernel.org>; Wed, 25 May 2016 17:33:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=C+B5VnNWGlq51QCbiUWrzxRBI1141k6aWaiQtl6pi7Y=;
-        b=fQosf4jFxbBsuJacpG96Huqg7An2/7ulqiHmtIuSK8PBRExoa0UubOvQ8281a9kMHP
-         agG3dkMZr7oc9F/sOTnEvUqXDWj7kbNjvmlj0mwvEpDl5wWZd0TTMLZfOg5DlP3B2w4S
-         djNXXJL6BBsdjoak3T2WlC5zi0lKtSXVj15+4vXkL1B4A93MnuwwBlmFxW0mf5UJ4JXL
-         7F2PbZTd98GQKr75oo5pmzeQboOxZRh9ZpnYZv3ueBceoxdJG9pF0LMRyNeCRHj1deUK
-         nT3Q/HAjhb1eF68uUECwvXL/tavMpV639QDfLNtFR/+JloEOMYulmyqhJfL+NJyJrxJv
-         waig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=C+B5VnNWGlq51QCbiUWrzxRBI1141k6aWaiQtl6pi7Y=;
-        b=WH/cWFIL91SEwLUF2o5WNSfODkhrBkbH+J9mP8fmMuLtpvvBBPGP2vrTaWZbzVK6p5
-         8JWBbKuwbK1MjFrDkKQ/NfBLD3nyAiCevrLllCoEATwtaSp/zpTNIYs3cSGRP4F27m/u
-         VAqyDWljAASCMTrAEcgWMmALwhh8DHjV2M3aczcDfzHKh+ccnxXTMnu5d0RwSTDq2War
-         AwlSo0mFgcCEF4T7EHcFOv2a9g894ZtvW+v8piTwTrg9KPSCdAhBdOI7rcxxACMNjH/r
-         I72SBDGb1iWTqSXqiqNtSCqa35Ozwl+ChNhyGHZWv1B4I4KNpWpaZddDtb/y7PSlKtmS
-         UTyw==
-X-Gm-Message-State: ALyK8tLHhIJTY7W10j6jR/u7zW44PpFXCpqbsACJBxu60WTbLqTsvk/Kl8/ws+jNWZ1RhljdsHTmLfZxMmP5cg==
-X-Received: by 10.36.58.135 with SMTP id m129mr555790itm.96.1464222481768;
- Wed, 25 May 2016 17:28:01 -0700 (PDT)
-Received: by 10.79.114.83 with HTTP; Wed, 25 May 2016 17:27:22 -0700 (PDT)
-In-Reply-To: <CA+DCAeSqTitycrO2y=SdutK1H2+jbzp7OzbhZ3pOYY_YOdOkGw@mail.gmail.com>
+	id S1752581AbcEZBvU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2016 21:51:20 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44404 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752349AbcEZBvT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2016 21:51:19 -0400
+Received: (qmail 31006 invoked by uid 102); 26 May 2016 01:51:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 May 2016 21:51:18 -0400
+Received: (qmail 15825 invoked by uid 107); 26 May 2016 01:51:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 May 2016 21:51:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2016 20:51:14 -0500
+Content-Disposition: inline
+In-Reply-To: <20160525231615.GC2634@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295626>
 
-On Wed, May 25, 2016 at 1:18 PM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
-> Hi,
->
-> On Wed, May 25, 2016 at 9:28 AM, Austin English <austinenglish@gmail.com> wrote:
->> I'll try
->> to submit my own patch. In the meantime, it seems appropriate to file
->> a bug so that others can have the opportunity to solve the problem if
->> they're interested.
->
-> If you haven't started working on it and if no one else has picked it up
-> then I would like to try it out and submit a patch.
+On Wed, May 25, 2016 at 06:16:15PM -0500, Jeff King wrote:
 
-Hi Mehul,
+> On Tue, May 24, 2016 at 09:45:25AM -0700, Junio C Hamano wrote:
+> 
+> > On Tue, May 24, 2016 at 9:44 AM, Armin Kunaschik
+> > <megabreit@googlemail.com> wrote:
+> > > t7610-mergetool.sh fails on systems without mktemp.
+> > >
+> > > mktemp is used in git-mergetool.sh and throws an error when it's not available.
+> > > error: mktemp is needed when 'mergetool.writeToTemp' is true
+> > >
+> > > I see 2 options:
+> > > 1. code around it, write an own mktemp, maybe use the test-mktemp as a basis.
+> > > 2. disable the test when mktemp is not available
+> > 
+> > 3. find and install mktemp?
+> 
+> I'd agree more with (3) if it was some critical part of git-mergetool.
+> But it seems to be a completely optional feature that we use in only one
+> place, and git-mergetool even detects this case and complains.
+> 
+> So another alternative would be for the test to detect either that
+> mergetool worked, or that we got the "mktemp is needed" error.
 
-I have not started work, Gentoo/Tails have been keeping me busy. I
-would greatly appreciate you picking this up. I'm happy to test any
-patches if you'd like.
+BTW, one thing I happened to note while looking at this: running the
+test script will write into /tmp (or wherever your $TMPDIR points).
+Probably not a big deal, but I wonder if we should be setting $TMPDIR in
+our test harness.
 
--- 
--Austin
+-Peff
