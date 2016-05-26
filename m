@@ -1,114 +1,59 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] userdiff: add built-in pattern for CSS
-Date: Thu, 26 May 2016 23:11:56 +0200
-Message-ID: <5747669C.9020807@kdbg.org>
-References: <20160520132829.7937-1-william.duclot@ensimag.grenoble-inp.fr>
- <20160524142537.19324-1-william.duclot@ensimag.grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 0/2] Persistent submodule pathspec specification
+Date: Thu, 26 May 2016 14:12:04 -0700
+Message-ID: <xmqq8tywv80r.fsf@gitster.mtv.corp.google.com>
+References: <20160526204730.20309-1-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, simon.rabourg@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr,
-	antoine.queru@ensimag.grenoble-inp.fr, gitster@pobox.com,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu May 26 23:12:07 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, pclouds@gmail.com,
+	ramsay@ramsayjones.plus.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu May 26 23:12:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b62Za-0006xw-0H
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 23:12:06 +0200
+	id 1b62Zi-00071X-O7
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 23:12:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755127AbcEZVMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 17:12:00 -0400
-Received: from bsmtp8.bon.at ([213.33.87.20]:46594 "EHLO bsmtp8.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755101AbcEZVMA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 17:12:00 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3rG1zx4nj7z5tl9;
-	Thu, 26 May 2016 23:11:57 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id BBB1D527A;
-	Thu, 26 May 2016 23:11:56 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-In-Reply-To: <20160524142537.19324-1-william.duclot@ensimag.grenoble-inp.fr>
+	id S1755273AbcEZVMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 17:12:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51580 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755198AbcEZVMI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 17:12:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E6AED1E8D8;
+	Thu, 26 May 2016 17:12:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZFJ11POxgG8HZ+iO+BULUnEeT1Q=; b=GNYkvi
+	h9c477XARsY7tjLWG8IELITvg+UPJmowjrIOg4I8xaMsDRgGUF/d4l/9aPzMINLH
+	YkwIgIgbGPI9Meex9uWVfrnCkHP163frw33SNlLlU7nvNu9DxRn7LwNB1ZsYedEt
+	D2p0mysds/NwPupZqWjrlNyk0ND+GODO6PGxg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jcO3DRSi4ngS0JTnJ4uyD+48ar6wsWaG
+	JTLA9wP2tdi3DEvn+aPihRYn9yuqDSID2ow4s4tjYGdGQ88pzm2bFqU1Q+lHqMsY
+	VWAC2oE4u4qP+iGoJ1c5P+5WoZTg9uI3VfkbZtl9Mo/zmwpgxQOPLDXeOMEWqAkJ
+	s/WYR9aRgwg=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DC3461E8D7;
+	Thu, 26 May 2016 17:12:06 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4E0F21E8D6;
+	Thu, 26 May 2016 17:12:06 -0400 (EDT)
+In-Reply-To: <20160526204730.20309-1-sbeller@google.com> (Stefan Beller's
+	message of "Thu, 26 May 2016 13:47:28 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8026B0EE-2386-11E6-9352-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295694>
 
-Am 24.05.2016 um 16:25 schrieb William Duclot:
-> +PATTERNS("css",
-> +	 "^([^,{}]+)((,[^}]*\\{)|([ \t]*\\{))$",
-
-This hunk header pattern is a bit too restrictive for my taste. Find
-below a few more test cases that you should squash in. One case fails
-because only the first CSS selector is picked up, for which I do not
-see a reason.
-
-Another case fails because the opening brace is not on the line with
-the CSS selectors.
-
-I think what the hunk header pattern should do is:
-
-1. reject lines containing a colon (because that are properties)
-2. if a line begins with a name in column 1, pick the whole line
-
-See the cpp patterns: a pattern beginning with ! is a "reject" pattern.
-
-
-diff --git a/t/t4018/css-brace-in-col-1 b/t/t4018/css-brace-in-col-1
-new file mode 100644
-index 0000000..7831577
---- /dev/null
-+++ b/t/t4018/css-brace-in-col-1
-@@ -0,0 +1,5 @@
-+RIGHT label.control-label
-+{
-+    margin-top: 10px!important;
-+    border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/t/t4018/css-rule b/t/t4018/css-common
-similarity index 100%
-rename from t/t4018/css-rule
-rename to t/t4018/css-common
-diff --git a/t/t4018/css-long-selector-list b/t/t4018/css-long-selector-list
-new file mode 100644
-index 0000000..7ccd25d
---- /dev/null
-+++ b/t/t4018/css-long-selector-list
-@@ -0,0 +1,6 @@
-+p.header,
-+label.control-label,
-+div ul#RIGHT {
-+    margin-top: 10px!important;
-+    border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/t/t4018/css-prop-sans-indent b/t/t4018/css-prop-sans-indent
-new file mode 100644
-index 0000000..a9e3c86
---- /dev/null
-+++ b/t/t4018/css-prop-sans-indent
-@@ -0,0 +1,5 @@
-+RIGHT, label.control-label {
-+margin-top: 10px!important;
-+padding: 0;
-+border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/t/t4018/css-short-selector-list b/t/t4018/css-short-selector-list
-new file mode 100644
-index 0000000..6a0bdee
---- /dev/null
-+++ b/t/t4018/css-short-selector-list
-@@ -0,0 +1,4 @@
-+label.control, div ul#RIGHT {
-+    margin-top: 10px!important;
-+    border : 10px ChangeMe #C6C6C6;
-+}
--- 
-2.9.0.rc0.40.gb3c1388
+Thanks; will replace.
