@@ -1,80 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 2/2] log: add "--no-show-signature" command line
- option
-Date: Thu, 26 May 2016 13:01:07 -0400
-Message-ID: <20160526170107.GA20677@sigill.intra.peff.net>
-References: <20160526130647.27001-1-mehul.jain2029@gmail.com>
- <20160526130647.27001-3-mehul.jain2029@gmail.com>
- <20160526163241.GC18210@sigill.intra.peff.net>
- <CA+DCAeRRunqgbbbpDDK6gA-cXYrPtkmAuX-ERvtDtXsD2Z=xkw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] mingw: make isatty() recognize MSYS2's pseudo terminals (/dev/pty*)
+Date: Thu, 26 May 2016 10:02:02 -0700
+Message-ID: <xmqqvb20wy5x.fsf@gitster.mtv.corp.google.com>
+References: <f1408371e14ff10539990ad710681ef17f29fea1.1461770158.git.johannes.schindelin@gmx.de>
+	<alpine.DEB.2.20.1605261525400.4449@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Austin English <austinenglish@gmail.com>
-To: Mehul Jain <mehul.jain2029@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 26 19:01:31 2016
+Content-Type: text/plain
+Cc: Karsten Blees <blees@dcon.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 26 19:02:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5yf4-0001s2-T8
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 19:01:31 +0200
+	id 1b5yfk-00029M-EK
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 19:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754607AbcEZRBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 13:01:12 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44713 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751679AbcEZRBL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 13:01:11 -0400
-Received: (qmail 6276 invoked by uid 102); 26 May 2016 17:01:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 13:01:10 -0400
-Received: (qmail 20443 invoked by uid 107); 26 May 2016 17:01:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 13:01:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2016 13:01:07 -0400
-Content-Disposition: inline
-In-Reply-To: <CA+DCAeRRunqgbbbpDDK6gA-cXYrPtkmAuX-ERvtDtXsD2Z=xkw@mail.gmail.com>
+	id S1754724AbcEZRCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 13:02:08 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61748 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752366AbcEZRCH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 13:02:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B9731DFA3;
+	Thu, 26 May 2016 13:02:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pp9QUNj97Ngnwl7Du9wygttQ7l0=; b=tWDw/4
+	cOWtWoFm8tH0VcchnXerIF/rsjlQdnkVbri/fJo2Rmq6FmoRR2tpvnvcQ+Hp8UTN
+	XOaBZDWsnihchiVfRF41u9INvOMau4TUOBahJwxF/B4mzICvjItStndFtWo6TAjW
+	xscCuUFfR1RHlEwxWxs9N1BPqSxoTp/7gvOjM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CGG4mCM2qgSEVWRWLmextRI88K2g4Xno
+	OBKlhQs0hDjIQpeeZrByVG1dOIGe3ClaA1aX9c50lf1LXS8opqhUb/aR7KdsfoVv
+	7VWrZ0xzcytuiZKk5SW1umRhoQRquW2+UMZcs27voqlOCFNsXsuYTCkIJX3HZaDb
+	DOReL4CDGV8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 49F4D1DFA2;
+	Thu, 26 May 2016 13:02:05 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 806C21DFA1;
+	Thu, 26 May 2016 13:02:04 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1605261525400.4449@virtualbox> (Johannes
+	Schindelin's message of "Thu, 26 May 2016 15:28:29 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 925C5052-2363-11E6-82D5-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295673>
 
-On Thu, May 26, 2016 at 10:12:30PM +0530, Mehul Jain wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Thu, May 26, 2016 at 10:02 PM, Jeff King <peff@peff.net> wrote:
-> > On Thu, May 26, 2016 at 06:36:47PM +0530, Mehul Jain wrote:
-> >> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> >> index 36be9a1..ea24259 100755
-> >> --- a/t/t4202-log.sh
-> >> +++ b/t/t4202-log.sh
-> >> @@ -901,6 +901,13 @@ test_expect_success GPG 'log.showsignature=true behaves like --show-signature' '
-> >>       test_i18ngrep "gpg: Good signature" actual
-> >>  '
-> >>
-> >> +test_expect_success GPG '--no-show-signature overrides log.showsignature=true' '
-> >> +     git config log.showsignature true &&
-> >> +     git log -1 --no-show-signature signed >actual &&
-> >> +     test "$(test_i18ngrep "gpg: Signature made" actual)" = "" &&
-> >> +     test "$(test_i18ngrep "gpg: Good signature" actual)" = ""
-> >> +'
-> >
-> > Perhaps it would be more robust to simply grep for "gpg:". We should not
-> > be seeing any gpg-related lines in the output. It probably isn't that
-> > big a deal in practice, though. If the output from gpg changes, this
-> > test could report a false success, but all of the other nearby tests
-> > would show a breakage, so somebody would probably notice.
-> 
-> That's a very good point. I will make the changes accordingly.
+> I do not see this patch in 'pu'... Anything I can do to get this into
+> 'master' eventually?
 
-While you are here, note that test_i18ngrep can already do the
-"negative" grep, like:
+The reason why I left it in my inbox was because I couldn't tell if
+this was a final submission with concensus among Git developers on
+Windows, or I should be giving a chance to comment to some folks who
+work on Windows port but are not necessarily closely communicating
+with you.
 
-  test_i18ngrep ! "^gpg:" actual
+If the message were Cc'ed to J6t, I would probably have queued it on
+'pu' and marked it as "Will merge after waiting for a few days" in
+What's cooking.
 
-Though see my comments in the other part of the thread; I'm not sure
-it's worth using i18ngrep at all.
-
--Peff
+Thanks.
