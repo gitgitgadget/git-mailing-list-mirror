@@ -1,185 +1,145 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v7 1/9] connect: document why we sometimes call get_port
- after get_host_and_port
-Date: Thu, 26 May 2016 07:35:23 +0200
-Message-ID: <57468B1B.4080604@web.de>
-References: <20160521231732.4888-1-mh@glandium.org>
- <20160521231732.4888-2-mh@glandium.org>
- <399331a6-dadb-c318-b0e0-c83e0f81ecb0@web.de>
- <20160522080316.GA19790@glandium.org> <574287B9.4090307@web.de>
- <xmqqwpmk797y.fsf@gitster.mtv.corp.google.com> <5743DC2A.6030808@web.de>
- <20160525233403.GA23405@glandium.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/6] upload-pack: provide a hook for running pack-objects
+Date: Thu, 26 May 2016 01:37:58 -0400
+Message-ID: <20160526053758.GA21580@sigill.intra.peff.net>
+References: <20160518223712.GA18317@sigill.intra.peff.net>
+ <20160518224537.GF22443@sigill.intra.peff.net>
+ <CACBZZX5SVJ2CSB0AS3Lj1A8_S+ejGOPUDn6Sc3whotkyFwxEiA@mail.gmail.com>
+ <20160519120848.GC3050@sigill.intra.peff.net>
+ <CACBZZX7nuy3RYPQ5e_FFqvCTStZka49ZSNNe9q2agffa7fp-EA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu May 26 07:36:22 2016
+Cc: Git <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 26 07:38:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5ny1-0003q9-Ad
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 07:36:21 +0200
+	id 1b5nzm-0003rf-3H
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 07:38:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750776AbcEZFgL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 May 2016 01:36:11 -0400
-Received: from mout.web.de ([212.227.17.12]:52379 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750781AbcEZFgK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 01:36:10 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0LqDYi-1bjHZS1t32-00djZk; Thu, 26 May 2016 07:35:46
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
- Icedove/38.7.0
-In-Reply-To: <20160525233403.GA23405@glandium.org>
-X-Provags-ID: V03:K0:AO2aNaMmBXOO/YDqzasaI0LEvmnngdodmaSchurbZu/dD7GSNhY
- MroCOOvla0lQ3+NaW7RuXxe88aNQLpDxwUTtqfbYWrMw73AAcH7X4ZN5Y4FN4GugjEdp3vo
- xMhnHdeTaSptJbwQjTD2407r74oW0MKQvd2fOWtG42BxVkY2sN1XwvhrTI0A/tpyqVubMR2
- TjF1v1RrXMrCyC6+nnCAw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:o7lgn5TGrto=:9/CK/q0aQFxpDiPlK3yI13
- sSXS+i5LxuaiN1/l0k1f3CBzAw2ePw17nOWLKO++Z43wuCzr+ovig0MMQtiYAdQZabcAM3Kf3
- oHKZVc4y2S+gZucCMtmJNR3we/e9hsVJqxOaFNSYD0uqIEoJIgADyC8Pk8zr/CDhVqNwD4nsg
- DQSx5R2NVu4ErfftamhZgIyG/Ffa0fIoEP7Of7zVVSMKNCRb387temgIDfv4tUpOaJEYURWnu
- BEgjq7xuFzjpDlyGOtsKWNydas2YN0U6At8k4IDF6eeq1drr1m90zJTGeB52bkmtDZ10WLDbc
- HSoh99y0RGQDQdsb6q/p3qTQt6xRIOqDu4thKqWLdv6ANCi5GW29JJzIapeBlABsMx7tSm+yf
- tehW7rrHrn1yZ7h7MlLE6DbWy7WwLoqgcpMonR0Apr3yXKDXBsQpnS7n88Oac+FjNbNnHGVAl
- qlXlksD3G0mk8dzxBu7lNkihOVfuIxAkjh8zW4+qJr4eW2MVWVpyWMHKoY8LcmrVC+WfEzgP0
- hAEREZtXgXp5b3MsmwTVG+kRMn2w+WhYd7qnk3pnzCwWtHg2DKH0I9LJONvzeNgXVfaDqO+qK
- JwPj4A114JfG3AzhXYsAKL2wg+bdoe2KhidlBz57f11fGq26waeOMjKAYvdtLmtQkrqCr6rsp
- ariMFsLxd/yZgyGUNflrTsQxV+PdpOo2Wq2U1y5BHwFfdsGP8ry0nR4OcKc5Wp2Wjd1+nJINf
- 1a14WJQmDLbSgHW9ieobnMWtf9OvWk/Jk+IteaKHHtOhzr+NhyDPoxyAkJ3xJT5ATL00i+b2 
+	id S1750808AbcEZFiE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 May 2016 01:38:04 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44465 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750744AbcEZFiC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 01:38:02 -0400
+Received: (qmail 7973 invoked by uid 102); 26 May 2016 05:38:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 01:38:01 -0400
+Received: (qmail 17165 invoked by uid 107); 26 May 2016 05:38:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 01:38:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2016 01:37:58 -0400
+Content-Disposition: inline
+In-Reply-To: <CACBZZX7nuy3RYPQ5e_FFqvCTStZka49ZSNNe9q2agffa7fp-EA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295634>
 
-On 05/26/2016 01:34 AM, Mike Hommey wrote:
-> On Tue, May 24, 2016 at 06:44:26AM +0200, Torsten B=F6gershausen wrot=
-e:
->> On 05/23/2016 11:30 PM, Junio C Hamano wrote:
->>> Torsten B=F6gershausen <tboegi@web.de> writes:
->>>
->>>>>>>     			get_host_and_port(&ssh_host, &port);
->>>>>>>     +			/* get_host_and_port may not return a port
->>>>>>> even when
->>>>>>> +			 * there is one: In the [host:port]:path case,
->>>>>>> +			 * get_host_and_port is called with "[host:port]" and
->>>>>>> +			 * returns "host:port" and NULL.
->>>>>>> +			 * In that specific case, we still need to split the
->>>>>>> +			 * port. */
->>>>>> Is it worth to mention that this case is "still supported legacy=
-" ?
->>>>> If it's worth mentioning anywhere, it seems to me it would start =
-with
->>>>> urls.txt?
->>>>>
->>>>> Mike
->>>>>
->>>> I don't know.
->>>> urls.txt is for Git users, and connect.c is for Git developers.
->>>> urls.txt does not mention that Git follows any RFC when parsing th=
-e
->>>> URLS', it doesn't claim to be 100% compliant.
->>>> Even if it makes sense to do so, as many user simply expect Git to=
- accept
->>>> RFC compliant URL's, and it makes the development easier, if there=
- is
->>>> an already
->>>> written specification, that describes all the details.
->>>> The parser is not 100% RFC compliant, one example:
->>>> - old-style usgage like "git clone [host:222]:~/path/to/repo are s=
-upported
->>> Is it an option to fix get_host_and_port() so that it returns what
->>> the caller expects even when it is given "[host:port]"?  When the
->>> caller passes other forms like "host:port", it expects to get "host=
-"
->>> and "port" parsed out into two variables.  Why can't the caller
->>> expect to see the same happen when feeding "[host:port]" to the
->>> function?
->>>
->> This is somewhat out of my head:
->> git clone   git://[example.com:123]:/test        #illegal, malformat=
-ed URL
->> git clone   [example.com:123]:/test               #scp-like URL, leg=
-acy
->> git clone   ssh://[example.com:123]:/test       #illegal, but suppor=
-ted as
->> legacy, because
->> git clone  ssh://[user@::1]/test                       # was the onl=
-y way to
->> specify a user name at a literal IPv6 address
->>
->> May be we should have some  more test cases for malformated git:// U=
-RLs?
->
-> None of these malformed urls are rejected with or without my series
-> applied:
->
-> Without:
-> $ git fetch-pack --diag-url git://[example.com:123]:/test
-> Diag: url=3Dgit://[example.com:123]:/test
-> Diag: protocol=3Dgit
-> Diag: hostandport=3D[example.com:123]:
-> Diag: path=3D/test
-> $ git fetch-pack --diag-url
-> ssh://[example.com:123]:/test
-> Diag: url=3Dssh://[example.com:123]:/test
-> Diag: protocol=3Dssh
-> Diag: userandhost=3Dexample.com
-> Diag: port=3D123
-> Diag: path=3D/test
->
-> With:
-> $ git fetch-pack --diag-url git://[example.com:123]:/test
-> Diag: url=3Dgit://[example.com:123]:/test
-> Diag: protocol=3Dgit
-> Diag: user=3DNULL
-> Diag: host=3Dexample.com
-> Diag: port=3D123
-> Diag: path=3D/test
-> $ git fetch-pack --diag-url ssh://[example.com:123]:/test
-> Diag: url=3Dssh://[example.com:123]:/test
-> Diag: protocol=3Dssh
-> Diag: user=3DNULL
-> Diag: host=3Dexample.com
-> Diag: port=3D123
-> Diag: path=3D/test
->
-> Note in the first case, hostandport is "[example.com:123]:", and that
-> is treated as host=3Dexample.com:123 and port=3DNULL further down, so=
- my
-> series is changing something here, but arguably, it makes it less wor=
-se.
-> (note that both with and without my series,
-> "git://[example.com:123]:42/path" is treated the same, so only a corn=
-er
-> case changed)
->
-> Can we go forward with the current series (modulo the comment style
-> thing Eric noted, and maybe adding a note about the parser handling u=
-rls
-> as per urls.txt), and not bloat scope it? If anything, the state of t=
-he
-> code after the series should make further parser changes easier.
->
-> Cheers,
->
-> Mike
->
+On Thu, May 19, 2016 at 04:54:37PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
+> > This is the "could we just set a bool" option I discussed in the co=
+mmit
+> > message. The problem is that it doesn't let the admin say "I don't =
+trust
+> > these repositories, but I _do_ want to run just this one hook when
+> > serving them, and not any other hooks".
+>=20
+> Indeed. I wonder if there's really any overlap in practice between
+> systems administrators on a central Git server that are going to want
+> this relatively obscure feature *but* have potentially malicious user=
+s
+> / repos, or enough to warrant this unusual edge case in how this
+> specific hook is configured, as opposed to reducing the special case
+> in how the hook is run with something like core.runDangerousHooks.
 
-Thanks for digging.
+I dunno. Certainly I am not running such a site. But something like
+kernel.org might fit into that boat. For a long time I think people had
+actual shell accounts and a common git-daemon served the repositories. =
+I
+think that these days it might be more locked-down, though.
 
-How about something like this:
+> I'm definitely not saying that these patches should be blocked by
+> this, but it occurs to me that both your uploadpack.packObjectsHook
+> implementation and my proposed core.runDangerousHooks which normalize=
+s
+> it a bit in some ways, but leaves it as a special case in others, are
+> both stumbling their way toward hacks that we might also solve with
+> some generally configurable restrictions system that takes advantage
+> of your earlier patches, e.g.:
+>=20
+>     $ cat /etc/gitconfig
+>     # Not "repository" so hooksPath can't be set per-repo
+>     [core]
+>         configRestriction                 =3D "core.hooksPath: system=
+, global"
 
-/*
-  * get_host_and_port may not return a port in the [host:port]:path cas=
-e.
-  * To support this undocumented legacy we still need to split the port=
-=2E
-*/
+I was hoping to avoid setting up configuration restriction via the
+configuration files, if only because it implies some ordering in the
+parsing. So for example, you'd need to do a separate pass to load the
+restrictions system, and then actually parse the config.
+
+I guess that's not too bad with the caching system that's in place,
+though.
+
+> Of course those are some rather large hoops to jump through just to
+> accomplish this particular thing, but it would be more generally
+> composable and you could e.g. say users can't disable gc.auto or
+> whatever on their repos if they're hosted on your server. Which of
+> course assumes that you control the git binary and they can't run
+> their own.
+
+Yeah, I was also hoping to avoid something too baroque. :) I don't know
+if there's much value in restricting things like gc.auto. If they can
+make arbitrary edits to the config file, they can run arbitrary code. I
+think this is _just_ about protecting a git-daemon serving the untruste=
+d
+repositories (or a user fetching from an untrusted other-user on the
+system).
+
+> Yeah, the reason I'm prodding you about this is because I want to tes=
+t
+> this out at some point, and a *really* nice thing about the Git
+> configuration facility is that you can test all these sorts of things
+> on a per-repo basis now due to how all the git-config variables work
+> now.
+>=20
+> With uploadpack.packObjectsHook you *can* do that by defining a globa=
+l
+> pass-through hook, but it makes it more of a hassle to test changes
+> that straddle the divide between testing & production.
+
+One thing I didn't elaborate on is that the "don't respect this key fro=
+m
+the repo config" could be made more featureful. For example, your
+core.allowDangerousHooks could just as easily be an environment
+variable: $GIT_ALLOW_DANGEROUS_CONFIG. [1]=20
+
+And then you could set that on your servers, and only set
+uploadpack.packObjectsHook in the repositories you wanted, achieving
+your goal.
+
+This does still leave the pack-objects hook unlike the other hooks (in
+that it leaves the command in the config rather than in a script), but =
+I
+actually like that flexibility. Being able to use "git -c" to set the
+hook for a one-shot invocation is kind of nice (though you do have to d=
+o
+tricks with "--upload-pack=3D" to get it to cross the remote boundary).
+
+-Peff
+
+[1] We also talked long ago (in the v1.6.x days, regarding a
+post-upload-pack hook) of auto-enabling "dangerous" hooks when getuid()
+matched the owner of the hook. We could do the same thing for the confi=
+g
+file (though TBH, it is confusing enough of a rule that I think I prefe=
+r
+something like the explicit environment variable).
