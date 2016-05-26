@@ -1,78 +1,126 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: Re: [RFC/PATCH 1/2] log: add "log.showsignature" configuration variable
-Date: Thu, 26 May 2016 21:36:34 +0530
-Message-ID: <CA+DCAeS4gP=n2s_dfNAQyZz7G38End3U5xM6b-VKu82UNf9f7w@mail.gmail.com>
-References: <20160526130647.27001-1-mehul.jain2029@gmail.com>
-	<20160526130647.27001-2-mehul.jain2029@gmail.com>
-	<156149583.51074.1464270131166.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<CA+DCAeSYr-q-0uSeDymJPHZwVZDZhh4yHH48peLOKodbxW1N7A@mail.gmail.com>
-	<393273591.80027.1464277402819.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] Formatting variables in the documentation
+Date: Thu, 26 May 2016 09:18:17 -0700
+Message-ID: <xmqqmvncyera.fsf@gitster.mtv.corp.google.com>
+References: <1463587109-22476-1-git-send-email-tom.russello@grenoble-inp.org>
+	<20160518181500.GD5796@sigill.intra.peff.net>
+	<b06231ac-b100-2565-3bf7-99f268014788@ensimag.grenoble-inp.fr>
+	<vpq8tz0hd2g.fsf@anie.imag.fr>
+	<20160526043607.GB6756@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Austin English <austinenglish@gmail.com>
-To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu May 26 18:06:44 2016
+Content-Type: text/plain
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Samuel GROOT <samuel.groot@ensimag.grenoble-inp.fr>,
+	Tom Russello <tom.russello@grenoble-inp.org>,
+	git@vger.kernel.org, erwan.mathoniere@ensimag.grenoble-inp.fr,
+	jordan.de-gea@ensimag.grenoble-inp.fr, stefan@sevenbyte.org,
+	jrnieder@gmail.com, rybak.a.v@gmail.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 26 18:18:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b5xo2-00050t-88
-	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 18:06:42 +0200
+	id 1b5xzO-0001KF-N2
+	for gcvg-git-2@plane.gmane.org; Thu, 26 May 2016 18:18:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754115AbcEZQGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 12:06:36 -0400
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:36657 "EHLO
-	mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753900AbcEZQGf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 12:06:35 -0400
-Received: by mail-qk0-f176.google.com with SMTP id x7so61071927qkd.3
-        for <git@vger.kernel.org>; Thu, 26 May 2016 09:06:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=WKKnlIcOrjiVHGmVgde+8g8FA/8aP3rTMcAcWfZbQaU=;
-        b=eI9o4iQeOe1t12WuC3Ihr0D8faqVWGrWXVERHTWZGMSdZsAPWMGTtt2/6rrHy2Mth2
-         grSe/bFp9wE2c+539NraS1QR8+NfpBFk8+9YgipfXCU0U6AoMxJCYHYacJMkgxSTb28/
-         NsKdOnO1aPZChoCSB8/YRAHdSmHgvbKI1kOmCaQgniBkRS3ladv9rUgEzjhnGxFkLCKg
-         /YRjxEcXDT8wWc5+He/nYldrBizAPRBOhCt/ApgMimZiiLgju0QYPsO6jJ/dSAtbE5g/
-         CTc0zypOWQLpro9Y8FynU+/Rxg2kEhFeAuAymWFJ76drHCHYcy9njJpFNKS/6KsLt2xH
-         x/6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=WKKnlIcOrjiVHGmVgde+8g8FA/8aP3rTMcAcWfZbQaU=;
-        b=jFY66yngi4emzFCmqPDtMgtT+NQv2AUQr2tCb7wcvLXotiDvImaVrLlx8EAFSceddm
-         9z8KOTLjyIJnUyedULSWwtA8muGYoEzcf9Q4W9OjvdnCVU+fSLjPgRVPzThYeirirHAu
-         XN8uvOfB2Bu28P2wFLl5rH1P8tMc7m1S87rz2MWZnrpNhI5JzdmAscMGLHzDiEHjTPld
-         nb2gRqdolXlmFLCmQ/dzOaIosNP82cYxJGF/2/m8yMZeRzFPFCCh7E7yGpV6HyyMJqvV
-         oh2qqhSObUF0rh3TPZWnedT/MeE/6PUuoOrAoao6kbjYb7PzIH16wVw4HcFV8lZoho/6
-         MrfA==
-X-Gm-Message-State: ALyK8tKEvxBTQvran1i175sH1Dkkhfi5UQe+3OLyBZTKAl0fJGVPcveIHuWsoNwxA7/IZpx51NlyHVA9ei0aow==
-X-Received: by 10.55.209.2 with SMTP id s2mr9661878qki.15.1464278795043; Thu,
- 26 May 2016 09:06:35 -0700 (PDT)
-Received: by 10.55.51.212 with HTTP; Thu, 26 May 2016 09:06:34 -0700 (PDT)
-In-Reply-To: <393273591.80027.1464277402819.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	id S1754380AbcEZQSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 12:18:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60211 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753900AbcEZQSV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 12:18:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CD3B01D860;
+	Thu, 26 May 2016 12:18:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QJbP7n59z5KARXiXelHkK9892F8=; b=xW5X84
+	2cZ107MjSj0TTyEzBfrih0/kTP8IfyB0gkFEMMkIEpR1gG5EVuUksGdKc8BSQBEj
+	2c2Spb70JOCW4Avytf1kLHw41PQJpvnKBxI7FtodgxDQkEKhJRP9cgw2NFSQtf1I
+	EZVPfY5b5xvrzlcjCfmjf3G1oTfTmVi7Rvs9k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RTRS413mUQinO8kTi6TsEOzvAovQc6oS
+	iEGaaAvfOLVCfNcGL2VPY8ON7GHtY20WkCFQD1ML4WohLGL9L/q3CbJDlesGbcc0
+	VftmUJaytF2tqjU3pEkn7D0Zy6edkBvmpzzAXvoSooDXPlrmrQlk+0wgTn2tD+pj
+	fnyCN71Hsko=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C345E1D85F;
+	Thu, 26 May 2016 12:18:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3BD871D85E;
+	Thu, 26 May 2016 12:18:19 -0400 (EDT)
+In-Reply-To: <20160526043607.GB6756@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 26 May 2016 00:36:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7598D734-235D-11E6-9B80-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295661>
 
-On Thu, May 26, 2016 at 9:13 PM, Remi Galan Alfonso
-<remi.galan-alfonso@ensimag.grenoble-inp.fr> wrote:
-> Sorry, I should have made explicit what went through my mind.
-> "When log.showsignature set true" doesn't sound right to me, while
-> "When log.showsignature is set to true" sounds better, however not
-> being a native english speaker maybe it's just me being wrong.
+Jeff King <peff@peff.net> writes:
 
-I think "When log.showsignature is set to true" is better.
-The one that I phrased does sound bit strange. I also
-not being a native English speaker, have a history of making
-grammatical mistakes. :)
+> On Mon, May 23, 2016 at 07:57:43PM +0200, Matthieu Moy wrote:
+>
+>> Samuel GROOT <samuel.groot@ensimag.grenoble-inp.fr> writes:
+>> 
+>> > Since 2.8.3 was out recently, we could flip MAN_BOLD_LITERAL on by
+>> > default for this cycle to shake out problems as Jeff King suggested
+>> > [2].
+>> 
+>> 2.8.3 was a bufix release, and flipping a controversial flag should
+>> clearly not be done on a bugfix release. So, in this context, "beginning
+>> of a cycle" means after a x.y.0 release.
+>> 
+>> Anyway, a patch enabling MAN_BOLD_LITERAL by default would need to cook
+>> in pu and next as any other patches, so the time when the patch is sent
+>> does not really matter.
+>
+> Yeah, I think a reasonable plan is:
+>
+>   1. Somebody produces a patch flipping the default. The patch is
+>      trivial, but the commit message should tell why, and try to dig up
+>      any possible problems we might see (e.g., why wasn't this the
+>      default? Particular versions of tools? Some platforms?)
 
-Thanks,
-Mehul
+"git log -SBOLD_LITERAL Documentation/" tells me that it's not like
+we had this on by default sometime in the past and then we flipped
+the default back in response to some problems (which I forgot
+about).
+
+I just re-read the two iterations that introduced BOLD_LITERAL:
+
+ * http://news.gmane.org/find-root.php?message_id=<1237881866-5497-1-git-send-email-chris_johnsen@pobox.com>
+
+ * http://news.gmane.org/find-root.php?message_id=<1238136245-22853-1-git-send-email-chris_johnsen@pobox.com>
+
+There was no particular "caveat" raised there to recommend against
+using this on particular versions of tools or platforms.  It was
+inertia that has kept the new optional feature "optional".
+
+>   2. Assuming no problems, Junio merges the patch to "next". We get
+>      any reports of issues from people using "next" day-to-day.
+
+So I can do these steps myself up to this point.  After waiting for
+a few days to see if somebody else with better memory tells me what
+I forgot, perhaps.
+
+>   3. Assuming no problems, Junio merges to "master". We hit more people
+>      (who build from master). And also it would be part of the
+>      pre-generated pages that Junio ships, so we might get reports
+>      there.
+>
+>   4. Eventually it's released. We hope to get no problem reports there,
+>      though it _does_ hit a wider audience at that point.
+>
+> Steps 1 and 2 can happen now. As we are in the -rc cycle right now,
+> probably step 3 would happen post-v2.9. But there's no reason not to
+> start the clock ticking now.
+>
+> -Peff
