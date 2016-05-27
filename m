@@ -1,80 +1,82 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH] t6030: explicitly test for bisection cleanup
-Date: Sat, 28 May 2016 00:52:21 +0530
-Message-ID: <CAFZEwPPMaCtG4VsJ31LKUP=mK_mqEekEPPrwDagyEUHHB0F2hQ@mail.gmail.com>
-References: <1463134469-26071-1-git-send-email-pranit.bauva@gmail.com>
-	<CAFZEwPMyts8msEgdHOiPfC-_HEXp8SJ7-8FQScr-af=5tSxq7w@mail.gmail.com>
-	<CAP8UFD0NfUZa_SH7Q9WizV0=5DbjGq58sOU2COe5NSPSSn=+-Q@mail.gmail.com>
+From: Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: Re: [PATCH v2 18/22] tests: use test_i18n* functions to suppress
+ false positives
+Date: Fri, 27 May 2016 19:34:18 +0000
+Message-ID: <5748A13A.6070608@sapo.pt>
+References: <1464031661-18988-1-git-send-email-vascomalmeida@sapo.pt>
+ <1464031661-18988-19-git-send-email-vascomalmeida@sapo.pt>
+ <xmqqd1o7sa30.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Lars Schneider <larsxschneider@gmail.com>, chriscool@gmail.com
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 27 21:22:27 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 27 21:34:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6NL1-00044N-55
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 21:22:27 +0200
+	id 1b6NWg-0007wU-1q
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 21:34:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756201AbcE0TWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 15:22:23 -0400
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:33372 "EHLO
-	mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756193AbcE0TWW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 15:22:22 -0400
-Received: by mail-yw0-f180.google.com with SMTP id h19so114986328ywc.0
-        for <git@vger.kernel.org>; Fri, 27 May 2016 12:22:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=iuXFcjtBtVw2lPiS6eVcFGjIL0mYriMQxRsoZjTuCBg=;
-        b=O7Alkr7QU5DwyhBZdxLtvbrI2mFoMIdTl5wPDGIuNztWsh0L1l9Kpxg05CtO3XZxmp
-         OCsnvaH+569YKboataKBiR/pl7NnzDOCGj+302QX33xgxaoWDVtdRp7tur1zda+O0Ekj
-         TiyLVDiJRLbdBPrVEWvSXNbH9hZGNQxpIuRpOGcKugMyt2yXr7Zf1ZONCbDE8XnhlrEJ
-         8P32Df+xj9S2Al31nUmcdbkCgZdIMcUhbgtQ8LF1IITVPqSuz2cpp2SLojNEQMUbTo0I
-         +fdabkrvlEe352OaKxGk1PPDHr+AXrANTFZCjZZmEVJEuZNg2HujsIRsbTYjwzoM1aZf
-         RSpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=iuXFcjtBtVw2lPiS6eVcFGjIL0mYriMQxRsoZjTuCBg=;
-        b=C8773KsO53XvercDKIMJ2x28XxdvtDbB57ZNgw4twJa1yQHh39VDqZjvlpHKSw3sb1
-         iqfxZ3XfmIiaysegXjpqal6SiP70ycEM99xfEduON1KF1y1hGAM/gZ4UZEI8Fhkokm1E
-         qpQA5HNKNFU34EOvlOL69OpgFMJHHFOjLjpQtqPkoAoTdRUwQfsOfqUB3HP979twCp0i
-         f6RhZcclKG0bKazEo3DH6g4pMtYobCBGUut/cTqhP5UfDWP7yeiAE+mHsjyh53vHW5w9
-         Zzm3UpTy5PRf7iIdZWeesQP0jl9s1sBIwND6uHXJyhxqd84s/BjP/UfRrFMI/Xaw83gx
-         sTfQ==
-X-Gm-Message-State: ALyK8tL1+ucLohuJTwFrPHIIsJbzrtsl3QT3/FXswPn9x1d9VA/OHlUlbG7AJt6ytQWQSBe+TWtNP82iZ5LJCQ==
-X-Received: by 10.129.116.67 with SMTP id p64mr2629858ywc.68.1464376941923;
- Fri, 27 May 2016 12:22:21 -0700 (PDT)
-Received: by 10.129.124.132 with HTTP; Fri, 27 May 2016 12:22:21 -0700 (PDT)
-In-Reply-To: <CAP8UFD0NfUZa_SH7Q9WizV0=5DbjGq58sOU2COe5NSPSSn=+-Q@mail.gmail.com>
+	id S1754696AbcE0TeX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 May 2016 15:34:23 -0400
+Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:35596 "EHLO sapo.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753221AbcE0TeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 15:34:22 -0400
+Received: (qmail 21144 invoked from network); 27 May 2016 19:34:19 -0000
+Received: (qmail 746 invoked from network); 27 May 2016 19:34:19 -0000
+Received: from unknown (HELO [192.168.1.66]) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
+          for <sunshine@sunshineco.com>; 27 May 2016 19:34:19 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
+In-Reply-To: <xmqqd1o7sa30.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295788>
 
-Hey Christian,
+=C0s 17:08 de 27-05-2016, Junio C Hamano escreveu:
+> Vasco Almeida <vascomalmeida@sapo.pt> writes:
+>=20
+>> diff --git a/t/t1307-config-blob.sh b/t/t1307-config-blob.sh
+>> index 3c6791e..4079fef 100755
+>> --- a/t/t1307-config-blob.sh
+>> +++ b/t/t1307-config-blob.sh
+>> @@ -64,7 +64,7 @@ test_expect_success 'parse errors in blobs are pro=
+perly attributed' '
+>> =20
+>>  	# just grep for our token as the exact error message is likely to
+>>  	# change or be internationalized
+>> -	grep "HEAD:config" err
+>> +	test_i18ngrep "HEAD:config" err
+>>  '
+>=20
+> It is unfortunate that the gettext-poison mechanism is too dumb to
+> notice that it is clobbering a format string with placeholders and
+> leave them intact, which is what the comment above this change is
+> wishing for.  I do not think we will be granting that wish any time
+> soon, so perhaps remove the two lines while we are at it?
+>=20
+Yes, that was more or less what I thought when read that comment, but
+forgot about it after.
+I'll remove that comment in the next re-roll. Also, because it can be
+deceiving for someone not entirely sure how does gettext poison,
+translations and tests work together when test are run.
 
-On Sat, May 28, 2016 at 12:30 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Fri, May 27, 2016 at 7:57 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>
->> Anyone any comments?
->
-> Maybe you could add this patch to, or squash it into, the patch that
-> convert bisect_clean_state to C.
-
-Sure!
-
-Regards,
-Pranit Bauva
-
-> Thanks,
-> Christian.
+=46or the record, test are run under C locale, so translations don't
+matter in tests. Under GETTEXT_POISON build, all strings interpolated b=
+y
+gettext (for instance _("a message from git") in C language) are
+replaced by garbage string "# GETTEXT POISON #".
