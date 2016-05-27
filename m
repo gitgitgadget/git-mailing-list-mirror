@@ -1,157 +1,177 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: RFC: dynamic "auto" date formats
-Date: Thu, 26 May 2016 20:36:57 -0700
-Message-ID: <CA+55aFzWEf2sN647v0mfiPOFE=KindQpweoHwdPmDshUb0YVsA@mail.gmail.com>
+From: Edward Thomson <ethomson@edwardthomson.com>
+Subject: [PATCH] format_commit_message: honor `color=auto` for `%C(auto)`
+Date: Thu, 26 May 2016 22:46:10 -0500
+Message-ID: <20160527034610.GA31629@zoidberg>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=94eb2c11171665dba50533ca9eb6
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 27 05:44:41 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 27 05:46:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b68hU-0000Ij-Lj
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 05:44:41 +0200
+	id 1b68jO-0000nL-97
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 05:46:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932332AbcE0Dog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 23:44:36 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:36906 "EHLO
-	mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932194AbcE0Dof (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 23:44:35 -0400
-X-Greylist: delayed 457 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 May 2016 23:44:35 EDT
-Received: by mail-it0-f41.google.com with SMTP id z123so57259693itg.0
-        for <git@vger.kernel.org>; Thu, 26 May 2016 20:44:35 -0700 (PDT)
+	id S932347AbcE0DqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 23:46:18 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:32871 "EHLO
+	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932259AbcE0DqQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 May 2016 23:46:16 -0400
+Received: by mail-io0-f194.google.com with SMTP id p194so1635413iod.0
+        for <git@vger.kernel.org>; Thu, 26 May 2016 20:46:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:cc;
-        bh=3cM4plRFC0YpHhk3a0VtaBaGYxrq+30iCa6+iL67Qtc=;
-        b=ETQvvFoUtNn2gMSqZj3FlVOyrZqIhUCApB6OdbV3IuWHMoXombKUzcJcenL+5P6lxV
-         FwP6xlgZy7H6gKq5xIdodkUutUvIblwZWpCLZ7YOuU/wNBQbN4tSeILIH8lhbbL3W/Nz
-         uKfD4krM/KnoobmuURSe+ftTYE3QSJxz8d3cisNcsoJQBOjthwk4xwj2C5NpKCLyaL7q
-         uK3d83ets2hw6QlFPlOPboRJc2+aEyS9XJZRFU7Dy+ZumX3K8mU5TAA6r71aBNh4fmxh
-         oCZAY9eVT5s3a/gbjU5ASlyTdo+rPsw+3YD6yj1to3zIiG4m65EO+9x/bJ7orA43VTCl
-         c8YA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:date:message-id:subject:from:to:cc;
-        bh=3cM4plRFC0YpHhk3a0VtaBaGYxrq+30iCa6+iL67Qtc=;
-        b=hQsx5fgk+MrOYVvstrswbgh0aWt5MBLpX5/MR2IXdzq7DRhw/WLMV/HCTvjfr4VZio
-         SraLqnJERNIEdPD3tRUq7/ilzCDvfygnfByBXy0O/Q3LLr1I/GH+6CacShWhXaAcLOYw
-         mpQnq2OpI1g76ILC30uW/xLASAgS906VLvkRE=
+        d=edwardthomson-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=7hZlPzD3XyK4Q31Xp5ThMX3u6LMlxMtM0R26rkVnLkA=;
+        b=l32Xd38v1mTrkZfTYiC71KCUTd17RIWZJ2eSqDiG0j3rU9LbA4yUHP552pXit3Q4DC
+         pOPgthmu2qorRBtpJojmBp9cALjfEmZ0nh3qZ1aXAsv8MGxjplJCUYo+mGgIrKrPt573
+         nD8xxCHkH7wyjXBUWbFiqwL8LN/pjACW5S64AJQeizRrnD/WkvfueWjYlrJfGt80c+NR
+         F5e0e1cjiQ+psDR17cVzm6ngHnUfp1CELlIRE0XYF1IPBFZUwDOBAOkuyRvpxS2djg2v
+         FL3eiWgLSmPJNOhVrUoL6fGOIVoJIcueF1EGtBJe8HF7DhmhVuDZNCv7nbyyFatxvoga
+         anoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
-         :to:cc;
-        bh=3cM4plRFC0YpHhk3a0VtaBaGYxrq+30iCa6+iL67Qtc=;
-        b=cEzoJYB1CHF8V5Kng3Ys1FuCGPRXAYXuPnxrPzqvGsWAcmL6wpPG/z4K0FsMBp/LHG
-         sGQC4R1BMUu6j4MQTOgP8BTtBJlL4UgiONn3nugJcW7auJMHSqQs/0FFEDJTS5p7eVGD
-         wl5mtEdx+j7hgQ7CtEi+/zk6mLcRll4LnrXmQqRVAtuPcrD1OddXKLvpm4/fvAVH5JXq
-         vbzleSbgH2bbYtyKFlcI/cD2C558tJGwSs3YLINZcHVJkB71wnJFnMBYRUXAcdNRb9Xk
-         0Qfpo76BCpVrx486Zg2Gq27rkw49usFRhEGz2Wv+2SDUOxqK0hX/lyIO3Wfu9QzmD72W
-         jnVQ==
-X-Gm-Message-State: ALyK8tKqfL7qG2adTXF6pY/ei1jregddfUUPJ3lxEQVd1HZskdtfWOGBl+Zt5n5+Os2fmNa6/RfH8WjgSb5X+A==
-X-Received: by 10.36.227.12 with SMTP id d12mr6104936ith.49.1464320217430;
- Thu, 26 May 2016 20:36:57 -0700 (PDT)
-Received: by 10.36.131.132 with HTTP; Thu, 26 May 2016 20:36:57 -0700 (PDT)
-X-Google-Sender-Auth: 7sZZFE5A3T5SucEZZMBz4p1xblA
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding:user-agent;
+        bh=7hZlPzD3XyK4Q31Xp5ThMX3u6LMlxMtM0R26rkVnLkA=;
+        b=UxKoVPBKjrcmcsjY4l9kZItwZHxSn9TbDOLgt8uLqkIDDplDiyA7Og517XTrrex/RE
+         7lA8Xe6noTaR+F0p+C3otiPKn7NFjOUlspe8M/gb0BbrXH/NdtT0zGkq9+/9uzPjGFy9
+         Qb+EWIIc8YtKaW/UQInMH3+61K8BOEGdHsXhwgVYg1IsQ/BfrqRIuaUak8G0BipCqacp
+         +lrhqZpCGwlB2wzwyEPqlBIkgTbethvG8yx9a+tzj2J5D0vlyBf4YV8Y1GUmvBBn3AYD
+         Ng2SbdKG6tpy5oDa96P3Ox7dCj3j9GKTtuy4yCjwdX4QZ7dF/IKXQ2xuj7RdeVVggVJP
+         0L1g==
+X-Gm-Message-State: ALyK8tLJVjhlPnsdM+ay0A648FIyBmh4f8e2j+3//QGwYv2wt3uKisRFAcxsPbRZ1vPS3w==
+X-Received: by 10.107.5.141 with SMTP id 135mr12339808iof.91.1464320775309;
+        Thu, 26 May 2016 20:46:15 -0700 (PDT)
+Received: from zoidberg ([2601:249:1000:6850:3125:f490:e3f1:e1d])
+        by smtp.gmail.com with ESMTPSA id j70sm5483137ioi.19.2016.05.26.20.46.13
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 May 2016 20:46:14 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295722>
 
---94eb2c11171665dba50533ca9eb6
-Content-Type: text/plain; charset=UTF-8
+git-log(1) documents that when specifying the `%C(auto)` format
+placeholder will "turn on auto coloring on the next %placeholders
+until the color is switched again."
 
-This is a throw-away idea with a simple patch attached, which I don't
-think anybody should really take all that seriously per se, but I
-thought I'd throw it out and see if it generates any discussion.
+However, when `%C(auto)` is used, the present implementation will turn
+colors on unconditionally (even if the color configuration is turned off
+for the current context - for example, `--no-color` was specified or the
+color is `auto` and the output is not a tty).
 
-I almost never use anything but the default date format (DATE_NORMAL),
-but every once in a while I will use "--date=relative", typically
-because I'm looking at my own commits and I'm just checking when I did
-something.
+Update `format_commit_one` to examine the current context when a format
+string of `%C(auto)` is specified, which ensures that we will not
+unconditionally write colors.  This brings that behavior in line with
+the behavior of `%C(auto,<colorname>)`, and allows the user the ability
+to specify that color should be displayed only when the output is a
+tty.
 
-It struck me that I've made the default for most of the logging things
-be that when I'm just browsing with the pager, git will automatically
-do the right thing. So I have
+Additionally, add a test for `%C(auto)` and update the existing tests
+for `%C(auto,...)` as they were misidentified as being applicable to
+`%C(auto)`.
 
-  [color]
-      ui=auto
+Signed-off-by: Edward Thomson <ethomson@edwardthomson.com>
 
-  [log]
-      decorate = auto
+Tests from Jeff King.
 
-in my ~/.gitconfig, and it shows me all those other things I tench to
-want to know (like "thar's what I've pushed out" thanks to
-decorations).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ pretty.c                   |  2 +-
+ t/t6006-rev-list-format.sh | 26 +++++++++++++++++++-------
+ 2 files changed, 20 insertions(+), 8 deletions(-)
 
-So I started thinking about when I care about dates, and decided that
-maybe I can have a "--date=auto" too. It basically uses relative date
-formats for the last 24 hours, and then switches over to the default
-format.
-
-I've used it a bit, and like Katy Perry said, I think I might like it.
-
-Note that this doesn't add any gitconfig setting to do this, which
-would be part of the whole point if this is actually sensible. But I'm
-not entirely convinced it's worth it in the first place, thus this
-email to see how people react ("That's just stupid" vs "yeah, I didn't
-even know I wanted it, but now I need it").
-
-And no, I'm not at all sure that the 24-hour cut-off is the right
-thing, but it didn't seem completely crazy either. I tend to like the
-relative date format when it is "19 minutes ago" vs "2 hours ago", at
-some point it's long enough ago that it's more useful to know "Tuesday
-at 3pm" than about how long ago it was.
-
-(And yes, it would be even better to have the "short term relative
-date" turn into a "medium-term 'day of the week at time x'" and then
-turn into "full date" when it's more than a week ago, but this patch
-only has the two modes of "short term" and "long term" and nothing in
-between).
-
-               Linus
-
---94eb2c11171665dba50533ca9eb6
-Content-Type: text/plain; charset=US-ASCII; name="patch.diff"
-Content-Disposition: attachment; filename="patch.diff"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_iop6fkqy0
-
-IGJ1aWx0aW4vYmxhbWUuYyB8ICAxICsKIGNhY2hlLmggICAgICAgICB8ICAzICsrLQogZGF0ZS5j
-ICAgICAgICAgIHwgMTAgKysrKysrKy0tLQogMyBmaWxlcyBjaGFuZ2VkLCAxMCBpbnNlcnRpb25z
-KCspLCA0IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2J1aWx0aW4vYmxhbWUuYyBiL2J1aWx0
-aW4vYmxhbWUuYwppbmRleCAyMWY0MmIwYjYyYjguLjRkODcxODFkYzZjZCAxMDA2NDQKLS0tIGEv
-YnVpbHRpbi9ibGFtZS5jCisrKyBiL2J1aWx0aW4vYmxhbWUuYwpAQCAtMjY0MCw2ICsyNjQwLDcg
-QEAgcGFyc2VfZG9uZToKIAkJICAgZmV3ZXIgZGlzcGxheSBjb2x1bW5zLiAqLwogCQlibGFtZV9k
-YXRlX3dpZHRoID0gdXRmOF9zdHJ3aWR0aChfKCI0IHllYXJzLCAxMSBtb250aHMgYWdvIikpICsg
-MTsgLyogYWRkIHRoZSBudWxsICovCiAJCWJyZWFrOworCWNhc2UgREFURV9BVVRPOgogCWNhc2Ug
-REFURV9OT1JNQUw6CiAJCWJsYW1lX2RhdGVfd2lkdGggPSBzaXplb2YoIlRodSBPY3QgMTkgMTY6
-MDA6MDQgMjAwNiAtMDcwMCIpOwogCQlicmVhazsKZGlmZiAtLWdpdCBhL2NhY2hlLmggYi9jYWNo
-ZS5oCmluZGV4IDYwNDlmODY3MTEzOC4uNjI0ODE3YzIwNDE0IDEwMDY0NAotLS0gYS9jYWNoZS5o
-CisrKyBiL2NhY2hlLmgKQEAgLTEyMjMsNyArMTIyMyw4IEBAIHN0cnVjdCBkYXRlX21vZGUgewog
-CQlEQVRFX0lTTzg2MDFfU1RSSUNULAogCQlEQVRFX1JGQzI4MjIsCiAJCURBVEVfU1RSRlRJTUUs
-Ci0JCURBVEVfUkFXCisJCURBVEVfUkFXLAorCQlEQVRFX0FVVE8sCiAJfSB0eXBlOwogCWNvbnN0
-IGNoYXIgKnN0cmZ0aW1lX2ZtdDsKIAlpbnQgbG9jYWw7CmRpZmYgLS1naXQgYS9kYXRlLmMgYi9k
-YXRlLmMKaW5kZXggN2M5Zjc2OTk4YWM3Li5jMzg0MTRhM2Q5NjggMTAwNjQ0Ci0tLSBhL2RhdGUu
-YworKysgYi9kYXRlLmMKQEAgLTE4NCwxMyArMTg0LDE1IEBAIGNvbnN0IGNoYXIgKnNob3dfZGF0
-ZSh1bnNpZ25lZCBsb25nIHRpbWUsIGludCB0eiwgY29uc3Qgc3RydWN0IGRhdGVfbW9kZSAqbW9k
-ZSkKIAkJcmV0dXJuIHRpbWVidWYuYnVmOwogCX0KIAotCWlmIChtb2RlLT50eXBlID09IERBVEVf
-UkVMQVRJVkUpIHsKKwlpZiAobW9kZS0+dHlwZSA9PSBEQVRFX1JFTEFUSVZFIHx8IG1vZGUtPnR5
-cGUgPT0gREFURV9BVVRPKSB7CiAJCXN0cnVjdCB0aW1ldmFsIG5vdzsKIAogCQlzdHJidWZfcmVz
-ZXQoJnRpbWVidWYpOwogCQlnZXR0aW1lb2ZkYXkoJm5vdywgTlVMTCk7Ci0JCXNob3dfZGF0ZV9y
-ZWxhdGl2ZSh0aW1lLCB0eiwgJm5vdywgJnRpbWVidWYpOwotCQlyZXR1cm4gdGltZWJ1Zi5idWY7
-CisJCWlmIChtb2RlLT50eXBlICE9IERBVEVfQVVUTyB8fCB0aW1lICsgMjQqNjAqNjAgPiBub3cu
-dHZfc2VjKSB7CisJCQlzaG93X2RhdGVfcmVsYXRpdmUodGltZSwgdHosICZub3csICZ0aW1lYnVm
-KTsKKwkJCXJldHVybiB0aW1lYnVmLmJ1ZjsKKwkJfQogCX0KIAogCXRtID0gdGltZV90b190bSh0
-aW1lLCB0eik7CkBAIC03OTIsNiArNzk0LDggQEAgc3RhdGljIGVudW0gZGF0ZV9tb2RlX3R5cGUg
-cGFyc2VfZGF0ZV90eXBlKGNvbnN0IGNoYXIgKmZvcm1hdCwgY29uc3QgY2hhciAqKmVuZCkKIAkJ
-cmV0dXJuIERBVEVfUkFXOwogCWlmIChza2lwX3ByZWZpeChmb3JtYXQsICJmb3JtYXQiLCBlbmQp
-KQogCQlyZXR1cm4gREFURV9TVFJGVElNRTsKKwlpZiAoc2tpcF9wcmVmaXgoZm9ybWF0LCAiYXV0
-byIsIGVuZCkpCisJCXJldHVybiBEQVRFX0FVVE87CiAKIAlkaWUoInVua25vd24gZGF0ZSBmb3Jt
-YXQgJXMiLCBmb3JtYXQpOwogfQo=
---94eb2c11171665dba50533ca9eb6--
+diff --git a/pretty.c b/pretty.c
+index 87c4497..c3ec430 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1063,7 +1063,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 	switch (placeholder[0]) {
+ 	case 'C':
+ 		if (starts_with(placeholder + 1, "(auto)")) {
+-			c->auto_color = 1;
++			c->auto_color = want_color(c->pretty_ctx->color);
+ 			return 7; /* consumed 7 bytes, "C(auto)" */
+ 		} else {
+ 			int ret = parse_color(sb, placeholder, c);
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index b77d4c9..a1dcdb8 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -184,38 +184,38 @@ commit $head1
+ [1;31;43mfoo[m
+ EOF
+ 
+-test_expect_success '%C(auto) does not enable color by default' '
++test_expect_success '%C(auto,...) does not enable color by default' '
+ 	git log --format=$AUTO_COLOR -1 >actual &&
+ 	has_no_color actual
+ '
+ 
+-test_expect_success '%C(auto) enables colors for color.diff' '
++test_expect_success '%C(auto,...) enables colors for color.diff' '
+ 	git -c color.diff=always log --format=$AUTO_COLOR -1 >actual &&
+ 	has_color actual
+ '
+ 
+-test_expect_success '%C(auto) enables colors for color.ui' '
++test_expect_success '%C(auto,...) enables colors for color.ui' '
+ 	git -c color.ui=always log --format=$AUTO_COLOR -1 >actual &&
+ 	has_color actual
+ '
+ 
+-test_expect_success '%C(auto) respects --color' '
++test_expect_success '%C(auto,...) respects --color' '
+ 	git log --format=$AUTO_COLOR -1 --color >actual &&
+ 	has_color actual
+ '
+ 
+-test_expect_success '%C(auto) respects --no-color' '
++test_expect_success '%C(auto,...) respects --no-color' '
+ 	git -c color.ui=always log --format=$AUTO_COLOR -1 --no-color >actual &&
+ 	has_no_color actual
+ '
+ 
+-test_expect_success TTY '%C(auto) respects --color=auto (stdout is tty)' '
++test_expect_success TTY '%C(auto,...) respects --color=auto (stdout is tty)' '
+ 	test_terminal env TERM=vt100 \
+ 		git log --format=$AUTO_COLOR -1 --color=auto >actual &&
+ 	has_color actual
+ '
+ 
+-test_expect_success '%C(auto) respects --color=auto (stdout not tty)' '
++test_expect_success '%C(auto,...) respects --color=auto (stdout not tty)' '
+ 	(
+ 		TERM=vt100 && export TERM &&
+ 		git log --format=$AUTO_COLOR -1 --color=auto >actual &&
+@@ -223,6 +223,18 @@ test_expect_success '%C(auto) respects --color=auto (stdout not tty)' '
+ 	)
+ '
+ 
++test_expect_success '%C(auto) respects --color' '
++	git log --color --format="%C(auto)%H" -1 >actual &&
++	printf "\\033[33m%s\\033[m\\n" $(git rev-parse HEAD) >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '%C(auto) respects --no-color' '
++	git log --no-color --format="%C(auto)%H" -1 >actual &&
++	git rev-parse HEAD >expect &&
++	test_cmp expect actual
++'
++
+ iconv -f utf-8 -t $test_encoding > commit-msg <<EOF
+ Test printing of complex bodies
+ 
+-- 
+2.7.4 (Apple Git-66)
