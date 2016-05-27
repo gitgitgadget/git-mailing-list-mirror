@@ -1,129 +1,152 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 14/22] i18n: rebase-interactive: mark strings for translation
-Date: Fri, 27 May 2016 09:58:04 -0700
-Message-ID: <xmqqk2ifsajn.fsf@gitster.mtv.corp.google.com>
-References: <1464031661-18988-1-git-send-email-vascomalmeida@sapo.pt>
-	<1464031661-18988-15-git-send-email-vascomalmeida@sapo.pt>
-	<xmqqpos8tpjo.fsf@gitster.mtv.corp.google.com>
-	<57481CA0.5080801@sapo.pt>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4] upload-pack.c: use of parse-options API
+Date: Fri, 27 May 2016 12:59:14 -0400
+Message-ID: <CAPig+cRipGvwqXQhY1koOLR2h=VcHqrTMhp_zbphYtaabQ0qAw@mail.gmail.com>
+References: <20160523130231.8725-1-Antoine.Queru@ensimag.grenoble-inp.fr>
+	<20160527141628.1677-1-Antoine.Queru@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Vasco Almeida <vascomalmeida@sapo.pt>
-X-From: git-owner@vger.kernel.org Fri May 27 18:58:16 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: Antoine Queru <Antoine.Queru@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri May 27 18:59:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6L5S-0002PZ-CQ
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 18:58:14 +0200
+	id 1b6L6Z-0002sT-N0
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 18:59:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756010AbcE0Q6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 12:58:09 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58405 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754539AbcE0Q6I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 12:58:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E0D141F7C0;
-	Fri, 27 May 2016 12:58:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qH9D8+YewteDRkKZiwLemdkXclE=; b=Nw4h8r
-	xSpE18Q2CXB8BK7OVseTvikQf7VegX+/NeSk9WuVn/XpYtk3/HeTLaeZENd+n3+8
-	iwQ86ec+ZBLj24iyQ7mV9IifjGEtfPeoxd24OfMGwHqIPAT47FP2WTTjdtp+QseZ
-	1WF6kCHJ9hl+92MmQhTkgc8D7UMie6TwvO5MQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XYjlPUxTqaW5gu07/JtOKohwKxPA7hfu
-	Xmi63yjvIw6HJWjJM6xGt/WFcrBLm85xeeLIXwtiRDNpNJBT/FqspTjfIPdmlxoM
-	VpdOC0vMyDzdphvXbar63wsoHtU0sfZ15PYJJopDIyTlRep4EgPcz4qkrFkOSw+1
-	gs/CGqVu9FA=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D68021F7BE;
-	Fri, 27 May 2016 12:58:06 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 380D81F7BD;
-	Fri, 27 May 2016 12:58:06 -0400 (EDT)
-In-Reply-To: <57481CA0.5080801@sapo.pt> (Vasco Almeida's message of "Fri, 27
-	May 2016 10:08:32 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2EB978F8-242C-11E6-9718-9A9645017442-77302942!pb-smtp1.pobox.com
+	id S1756256AbcE0Q7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 12:59:19 -0400
+Received: from mail-it0-f41.google.com ([209.85.214.41]:35860 "EHLO
+	mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755243AbcE0Q7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 12:59:15 -0400
+Received: by mail-it0-f41.google.com with SMTP id e62so162399ita.1
+        for <git@vger.kernel.org>; Fri, 27 May 2016 09:59:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=bDCp2bgRTVCzQcMEi78OAdl7mmGZPao1Nk5mV2kIRds=;
+        b=cO3emJ2G57bHaZ+UPavRS7OT3IlVltFKhGLaHloqhu5/mr3DcyiQu899vEaUh2lKPv
+         Qh1xQ/z5YoRbgHxvMoA97HvaEjhM9WUOHFm4/ShZe62W6BrfPU/4Ynoc6NrkbwJId6XZ
+         VG2w42sPc3VcjlHvlvnBT/5CwcCoPeFcikwCkQucnio5u1EVVmB1RF2UaQwcoDULC+Ge
+         SxoEvVPwwtXqmIQWCRPNt+Xr8HS46eBGpISMvhsNVnB1hVgH9dCwJgDlHdansqQ0FoMT
+         L4KSlfQ5RUAzUHmRe/ITzROJBebLnvbpWB6PGDbiG9QgjyDiMPOAkf6zK57VB7+AnndL
+         EbUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=bDCp2bgRTVCzQcMEi78OAdl7mmGZPao1Nk5mV2kIRds=;
+        b=duvxv+mcsak+Hl0l/MBX1EsOoseXdL+qBeEtucNEtvTsd4QijSn3udpDuNcqWEEYdv
+         6pOsshITFgEQSNFHAymgswmAZHfIxZ0Kn/LANXYP5r+hzYeYDpYLoekZP7UzLveDaXTB
+         zZIh7xtgpsGzlSiEvn50HjFI+7eov0igtNDa7Ltbi+UyeT4Y0Hailo9BHtERNxQPrKyH
+         Y82agDM3T/q0RDFFOlwbPg8EI+4y0XaiYgSgE9tzLwxLn+Yq9Y0XP+qsP8r0nr9KBUjn
+         iD0gR7NhNaUeYOVlEHnWwp9DgOKtLs9QTnNNcPnUagkjyqzq5fU20RUXnL9FbpyVZdku
+         lySw==
+X-Gm-Message-State: ALyK8tK3ioZJDm9FL2vqPZlFq9svXbjwWE6C3zRIewPGD0Pvcw60DdbqrIBaGhwijlsK2nPq1ANWH1v4Msg0hQ==
+X-Received: by 10.36.69.33 with SMTP id y33mr9048714ita.84.1464368354093; Fri,
+ 27 May 2016 09:59:14 -0700 (PDT)
+Received: by 10.79.110.21 with HTTP; Fri, 27 May 2016 09:59:14 -0700 (PDT)
+In-Reply-To: <20160527141628.1677-1-Antoine.Queru@ensimag.grenoble-inp.fr>
+X-Google-Sender-Auth: jYSxyxx0S2ke8GkjGwaoT-aezIM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295769>
 
-Vasco Almeida <vascomalmeida@sapo.pt> writes:
+On Fri, May 27, 2016 at 10:16 AM, Antoine Queru
+<Antoine.Queru@ensimag.grenoble-inp.fr> wrote:
+> upload-pack.c: use of parse-options API
 
->>>  is_empty_commit() {
->>> -	tree=$(git rev-parse -q --verify "$1"^{tree} 2>/dev/null ||
->>> -		die "$1: not a commit that can be picked")
->>> -	ptree=$(git rev-parse -q --verify "$1"^^{tree} 2>/dev/null ||
->>> +	sha1=$1
->>> +	tree=$(git rev-parse -q --verify "$sha1"^{tree} 2>/dev/null ||
->>> +		die "$(eval_gettext "\$sha1: not a commit that can be picked")")
->>> +	ptree=$(git rev-parse -q --verify "$sha1"^^{tree} 2>/dev/null ||
->>>  		ptree=4b825dc642cb6eb9a060e54bf8d69288fbee4904)
->>>  	test "$tree" = "$ptree"
->>>  }
->> 
->> Both of the two callsites of this function use the variable $sha1,
->> and at least one of them uses that variable after this function
->> returns, but they pass it as the first parameter to this function,
->> so the assignment added by this patch does not break them, which is
->> good.
->> 
-> I didn't know that. I can change sha1=$1 to local_sha1=$1 or _sha1=$1 (I
-> don't know what is the convention here) if that is safer, avoiding using
-> the bash-ism "local" keyword, and preventing future distractions.
+Matthieu already mentioned that this should use imperative mood:
 
-I do not think it is necessary to do any of the changes for this
-one, which is only used locally in this file.  They just need to be
-careful when they add or modify the callers.
+    upload-pack: use parse-options API
 
-Even if it is renamed $local_sha1, they will still need to be
-careful anyway, because the only way they _can_ break or be broken
-by your patch is when they somehow decide to pass something that is
-not called $sha1 to this function, i.e. they would be changing the
-callsite---which they must be doing for a reason and would also
-involve change to the code what happens after this function returns.
-If they start using $local_sha1 there, they would be broken if you
-renamed it today, and if they use $sha1 there, they would be broken
-if you didn't---so they have to be careful and check what this one
-clobbers _anyway_.  
+> Option parsing now uses the parser API instead of a local parser.
+> Code is now more compact.
 
-IOW, a solution that clobbers _some_ variable cannot be made safer
-by renaming.  The callers always have to be careful not to be
-affected.
+Imperative:
 
-You could do something like this, though.  I _think_ the original
-that calls "die" inside $() is broken anyway, so it probably is a
-good change regardless.
+    Use the parse-options API rather than a hand-rolled
+    option parser.
 
- git-rebase--interactive.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+That the code becomes more compact is a nice result of this change,
+but not particularly important, thus not really worth a mention in the
+commit message.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 9d2bfb7..b5113d6 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -222,8 +222,10 @@ has_action () {
- }
- 
- is_empty_commit() {
--	tree=$(git rev-parse -q --verify "$1"^{tree} 2>/dev/null ||
--		die "$1: not a commit that can be picked")
-+	tree=$(git rev-parse -q --verify "$1"^{tree} 2>/dev/null) || {
-+		sha1=$1
-+		die "$(eval_gettext "\$sha1: not a commit that can be picked")"
-+	}
- 	ptree=$(git rev-parse -q --verify "$1"^^{tree} 2>/dev/null ||
- 		ptree=4b825dc642cb6eb9a060e54bf8d69288fbee4904)
- 	test "$tree" = "$ptree"
+> Description for --stateless-rpc and --advertise-refs come from
+> the commit 42526b4 (Add stateless RPC options to upload-pack,
+> receive-pack, 2009-10-30).
+
+s/from the commit/from/
+
+> Signed-off-by: Antoine Queru <antoine.queru@grenoble-inp.fr>
+> Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+> ---
+> diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-upload-pack.txt
+> @@ -31,6 +31,19 @@ OPTIONS
+> +--stateless-rpc::
+> +       the programs now assume they may perform only a single read-write
+
+s/the/The/
+
+Also, to what "programs" does this refer? And what does "now" mean here?
+
+> +       cycle with stdin and stdout. This fits with the HTTP POST request
+> +       processing model where a program may read the request, write a
+> +       response, and must exit.
+> +
+> +--advertise-refs::
+> +       When --advertise-refs is passed as a command line parameter only
+
+The entire "When ... parameter" bit is redundant, isn't it? Why not
+just say "Perform only..."?
+
+> +       the initial ref advertisement is output, and the program exits
+> +       immediately.  This fits with the HTTP GET request model, where
+> +       no request content is received but a response must be produced.
+> +
+> +
+
+Style: Drop the extra blank line.
+
+>  <directory>::
+>         The repository to sync from.
+>
+> diff --git a/upload-pack.c b/upload-pack.c
+> @@ -817,11 +821,21 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
+> -int main(int argc, char **argv)
+> +int main(int argc, const char **argv)
+>  {
+> -       char *dir;
+> -       int i;
+> +       const char *dir;
+>         int strict = 0;
+> +       struct option options[] = {
+> +               OPT_BOOL(0, "stateless-rpc", &stateless_rpc,
+> +                        N_("quit after a single request/response exchange")),
+> +               OPT_BOOL(0, "advertise-refs", &advertise_refs,
+> +                        N_("only the initial ref advertisement is output, program exits immediately")),
+
+Possible rewrite: "exit immediately after initial ref advertisement"
+
+> +               OPT_BOOL(0, "strict", &strict,
+> +                        N_("do not try <directory>/.git/ if <directory> is no Git directory")),
+
+Use of OPT_BOOL introduces a --no-strict option which didn't exist
+before. Does this need to be documented? (Genuine question.)
+
+> +               OPT_INTEGER(0, "timeout", &timeout,
+> +                           N_("interrupt transfer after <n> seconds of inactivity")),
+> +               OPT_END()
+> +       };
