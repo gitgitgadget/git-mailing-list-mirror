@@ -1,65 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Advanced revision selection?
-Date: Fri, 27 May 2016 17:59:12 +0200
-Message-ID: <vpq8tyvmqzz.fsf@anie.imag.fr>
-References: <874m9j7bnv.fsf@thinkpad.rath.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Small rerere in rebase regression
+Date: Fri, 27 May 2016 18:28:21 +0200
+Message-ID: <574875A5.9040303@kdbg.org>
+References: <57434572.6030306@kdbg.org>
+ <xmqqy4708ss0.fsf@gitster.mtv.corp.google.com> <57437693.3030106@kdbg.org>
+ <xmqqk2ik77cr.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1605241510370.4449@virtualbox> <5744B00D.4020006@kdbg.org>
+ <alpine.DEB.2.20.1605250710340.4449@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 27 17:59:22 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 27 18:28:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6KAS-0005EU-Mh
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 17:59:21 +0200
+	id 1b6Kcg-0007wc-Kg
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 18:28:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755959AbcE0P7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 11:59:16 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:59954 "EHLO mx2.imag.fr"
+	id S1754823AbcE0Q20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 12:28:26 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:46862 "EHLO bsmtp8.bon.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755229AbcE0P7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 11:59:16 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4RFxAFO007315
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 27 May 2016 17:59:10 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4RFxC4H013365;
-	Fri, 27 May 2016 17:59:12 +0200
-In-Reply-To: <874m9j7bnv.fsf@thinkpad.rath.org> (Nikolaus Rath's message of
-	"Fri, 27 May 2016 08:39:32 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Fri, 27 May 2016 17:59:10 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u4RFxAFO007315
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1464969550.36414@HC3AaEg3msgrHYRk68Y7+A
+	id S1750914AbcE0Q2Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 12:28:25 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3rGWfG5MHjz5tlC;
+	Fri, 27 May 2016 18:28:22 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 05A835291;
+	Fri, 27 May 2016 18:28:21 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <alpine.DEB.2.20.1605250710340.4449@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295766>
 
-Nikolaus Rath <Nikolaus@rath.org> writes:
+Am 25.05.2016 um 07:38 schrieb Johannes Schindelin:
+> In short: yes, the explicit `git rerere` call can be dropped, that is
+> essentially what I did in the rebase--helper branch.
 
-> In Mercurial, this can be done with a more verbose syntax (e.g.
-> "last(ancestors(tag("re:release-.*")),3) and descendants(aebeccf)" for
-> the above example).
+Here's a patch to do that.
 
-This has no direct equivalent in Git. A lot can be done passing options
-to "git rev-list" or so, for example, but I don't think a combination
-can be found for your exact example.
+--- 8< ---
+Subject: [PATCH] rebase -i: remove an unnecessary 'rerere' invocation
 
-The closest I get is:
+Interactive rebase uses 'git cherry-pick' and 'git merge' to replay
+commits. Both invoke the 'rerere' machinery when they fail due to merge
+conflicts. Note that all code paths with these two commands also invoke
+the shell function die_with_patch when the commands fail.
 
-  git log `git for-each-ref refs/tags/release- --format '%(refname)'` -3
+Since commit 629716d2 ("rerere: do use multiple variants") the second
+operation of the rerere machinery can be observed by a duplicated
+message "Recorded preimage for 'file'". This second operation records
+the same preimage as the first one and, hence, only wastes cycles.
+Remove the 'git rerere' invocation from die_with_patch.
 
-Which lists 3 commits preceeding a tag whose name starts with release-.
+Shell function die_with_patch can be called after the failure of
+"git commit", too, which also calls into the rerere machinery, but it
+does so only after a successful commit to record the resolution.
+Therefore, it is wrong to call 'git rerere' from die_with_patch after
+"git commit" fails.
 
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ git-rebase--interactive.sh | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 9d2bfb7..6e96abc 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -192,7 +192,6 @@ make_patch () {
+ die_with_patch () {
+ 	echo "$1" > "$state_dir"/stopped-sha
+ 	make_patch "$1"
+-	git rerere
+ 	die "$2"
+ }
+ 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.9.0.rc0.40.gb3c1388
