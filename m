@@ -1,74 +1,85 @@
-From: Edward Thomson <ethomson@edwardthomson.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] format_commit_message: honor `color=auto` for `%C(auto)`
-Date: Thu, 26 May 2016 22:47:48 -0500
-Message-ID: <20160527034748.GB31629@zoidberg>
-References: <20160525015649.GA13258@zoidberg>
- <20160525223904.GD13776@sigill.intra.peff.net>
+Date: Thu, 26 May 2016 23:55:54 -0400
+Message-ID: <20160527035553.GA24972@sigill.intra.peff.net>
+References: <20160527034610.GA31629@zoidberg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 27 05:47:59 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Edward Thomson <ethomson@edwardthomson.com>
+X-From: git-owner@vger.kernel.org Fri May 27 05:56:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b68kg-00017F-Aj
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 05:47:58 +0200
+	id 1b68sT-0003E0-Om
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 05:56:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932335AbcE0Dry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2016 23:47:54 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:38698 "EHLO
-	mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932194AbcE0Dry (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2016 23:47:54 -0400
-Received: by mail-it0-f49.google.com with SMTP id l63so65943639ita.1
-        for <git@vger.kernel.org>; Thu, 26 May 2016 20:47:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=edwardthomson-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5q3SYDMIqtZ+H/2kbjAFJHIAg5mUKtlZ6jpGBGkPDFs=;
-        b=ycozFOuhx/LJ/yI6jOV2HpDatkdvTKNPSXV5Yf+xvfRrE0jjFhvP4U6pNaC9mK/s6L
-         +xf6CoEPt2PEJ40xsNCaXkezCRmZKueyxy1iJF0bi2T+CjMHiJspVhiPLfHf7NW4+iNe
-         zQBYI86f/Kox7rlSJr3B7FZ7691DytdkfZvTqwOw9iRqVKYkfMdiBIkSxbDWFYb4LY02
-         Oa/FR3cXjN49N+WsQCN2jTbBadjrixsQ8CZGNM0cJzNnJmMV+CHN+B2joFpQ5I1duGDe
-         yxD1mZx8a8D9Z0AsmAXwIVMo2rS18IqtWDI7+hFyXkM/2yzwOKzMLDtt0k785U3SRBYw
-         DJTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5q3SYDMIqtZ+H/2kbjAFJHIAg5mUKtlZ6jpGBGkPDFs=;
-        b=UPXCGi0KSZlRQIS6f9NlZ/eoIrI76fPyaUyqat1gGIg03F169FpywsxzeNYwDd2V2t
-         FKSyaC/JLX8loaiBHUO26hbgneVa4kGBzd76/RchUhzohT1DjzItJVKVHSLngz+AAa57
-         BAWFJxP5vv4sTT9akxazapp6Kmh0/1XAM51Irf4I3rokbKCjNKBYvWhiFWQtKSIhVIeI
-         xwham7zWPmP0i/71i/osqf9nKzDsxZq85IsgE06PFTHYCr9JZT2eceZAJPklnbL5Cfix
-         spp3RcDiVKbeIGSdgeIg7QY5SpgdWNn+0XCDBjs2E3RqrhelknmghbVzK1qAhoNo0NFw
-         5i1Q==
-X-Gm-Message-State: ALyK8tIkFGp2fjze6m1SLEjmTFgWhsB09nvP1h0VzUYk/UJTiq4Zv+uPXmXQbNTibSv5Og==
-X-Received: by 10.36.160.5 with SMTP id o5mr6527013ite.31.1464320873200;
-        Thu, 26 May 2016 20:47:53 -0700 (PDT)
-Received: from zoidberg ([2601:249:1000:6850:3125:f490:e3f1:e1d])
-        by smtp.gmail.com with ESMTPSA id k72sm2103455ita.17.2016.05.26.20.47.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 May 2016 20:47:52 -0700 (PDT)
+	id S1752832AbcE0Dz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2016 23:55:57 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45056 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750906AbcE0Dz5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2016 23:55:57 -0400
+Received: (qmail 1690 invoked by uid 102); 27 May 2016 03:55:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 23:55:56 -0400
+Received: (qmail 26596 invoked by uid 107); 27 May 2016 03:56:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 May 2016 23:56:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2016 23:55:54 -0400
 Content-Disposition: inline
-In-Reply-To: <20160525223904.GD13776@sigill.intra.peff.net>
-User-Agent: Mutt/1.6.0 (2016-04-01)
+In-Reply-To: <20160527034610.GA31629@zoidberg>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295724>
 
-On Wed, May 25, 2016 at 05:39:04PM -0500, Jeff King wrote:
-> Looks like we didn't have any tests at all for %C(auto). And the tests
-> for %C(auto,...) were labeled as %C(auto), making it all the more
-> confusing. Perhaps it is worth squashing this in:
+On Thu, May 26, 2016 at 10:46:10PM -0500, Edward Thomson wrote:
 
-Thanks, peff.  Indeed I did squash that into my updated patch.
+> git-log(1) documents that when specifying the `%C(auto)` format
+> placeholder will "turn on auto coloring on the next %placeholders
+> until the color is switched again."
+> 
+> However, when `%C(auto)` is used, the present implementation will turn
+> colors on unconditionally (even if the color configuration is turned off
+> for the current context - for example, `--no-color` was specified or the
+> color is `auto` and the output is not a tty).
+> 
+> Update `format_commit_one` to examine the current context when a format
+> string of `%C(auto)` is specified, which ensures that we will not
+> unconditionally write colors.  This brings that behavior in line with
+> the behavior of `%C(auto,<colorname>)`, and allows the user the ability
+> to specify that color should be displayed only when the output is a
+> tty.
+> 
+> Additionally, add a test for `%C(auto)` and update the existing tests
+> for `%C(auto,...)` as they were misidentified as being applicable to
+> `%C(auto)`.
 
--ed
+Explanation and the patch look good.
+
+> Signed-off-by: Edward Thomson <ethomson@edwardthomson.com>
+> 
+> Tests from Jeff King.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+
+Trailers should all go at the bottom in a single stanza, and should
+generally be in chronological order (so you got the bits from with an
+s-o-b, and then you signed off the whole thing). IOW:
+
+> Tests from Jeff King.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Edward Thomson <ethomson@edwardthomson.com>
+
+I suspect Junio can just tweak that while applying, unless there's
+another reason to re-roll.
+
+(Also for anybody watching, Ed did not just make up my signoff; I gave
+it to him off-list).
+
+-Peff
