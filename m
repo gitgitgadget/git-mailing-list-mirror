@@ -1,306 +1,214 @@
-From: Samuel GROOT <samuel.groot@grenoble-inp.org>
-Subject: [WIP-PATCH 2/2] send-email: use refactored subroutine to parse patches
-Date: Fri, 27 May 2016 16:01:04 +0200
-Message-ID: <20160527140104.11192-3-samuel.groot@grenoble-inp.org>
-References: <20160527140104.11192-1-samuel.groot@grenoble-inp.org>
-Cc: e@80x24.org, erwan.mathoniere@grenoble-inp.org,
-	jordan.de-gea@grenoble-inp.org, matthieu.moy@grenoble-inp.fr,
-	gitster@pobox.com, aaron@schrab.com,
-	Samuel GROOT <samuel.groot@grenoble-inp.org>,
-	Tom RUSSELLO <tom.russello@grenoble-inp.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 27 16:01:29 2016
+From: Adam Spiers <git@adamspiers.org>
+Subject: RFC: new git-splice subcommand for non-interactive branch splicing
+Date: Fri, 27 May 2016 15:08:11 +0100
+Message-ID: <20160527140811.GB11256@pacific.linksys.moosehall>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 27 16:13:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6IKL-0005JC-8r
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 16:01:25 +0200
+	id 1b6IWO-0001rm-Kr
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 16:13:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753862AbcE0OBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 10:01:17 -0400
-Received: from zm-smtpout-2.grenet.fr ([130.190.244.98]:33245 "EHLO
-	zm-smtpout-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752003AbcE0OBQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 10:01:16 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id CFAF320F9;
-	Fri, 27 May 2016 16:01:11 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yZ-omUXww87g; Fri, 27 May 2016 16:01:11 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id B66D720F5;
-	Fri, 27 May 2016 16:01:11 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id B292E2077;
-	Fri, 27 May 2016 16:01:11 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aadn3d0nVLzT; Fri, 27 May 2016 16:01:11 +0200 (CEST)
-Received: from wificampus-031045.grenet.fr (wificampus-031045.grenet.fr [130.190.31.45])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id B2D3C2055;
-	Fri, 27 May 2016 16:01:10 +0200 (CEST)
-X-Mailer: git-send-email 2.8.2.537.gb153d2a
-In-Reply-To: <20160527140104.11192-1-samuel.groot@grenoble-inp.org>
+	id S1754950AbcE0ONh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 10:13:37 -0400
+Received: from coral.adamspiers.org ([85.119.82.20]:44358 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754921AbcE0ONf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 10:13:35 -0400
+X-Greylist: delayed 318 seconds by postgrey-1.27 at vger.kernel.org; Fri, 27 May 2016 10:13:35 EDT
+Received: from localhost (243.103.2.81.in-addr.arpa [81.2.103.243])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 035292E0E6
+	for <git@vger.kernel.org>; Fri, 27 May 2016 15:08:12 +0100 (BST)
+Content-Disposition: inline
+X-OS: GNU/Linux
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295755>
 
-Use the two subroutines `parse_email` and `parse_header` introduced in
-previous commit to parse patches.
+Hi all,
 
-Signed-off-by: Samuel GROOT <samuel.groot@grenoble-inp.org>
-Signed-off-by: Tom RUSSELLO <tom.russello@grenoble-inp.org>
-Signed-off-by: Matthieu MOY <matthieu.moy@grenoble-inp.fr>
----
- git-send-email.perl | 179 +++++++++++++++++-----------------------------------
- 1 file changed, 59 insertions(+), 120 deletions(-)
+I finally got around to implementing a new git subcommand which I've
+wanted for quite a while.  I've called it git-splice.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index f33a083..7bb4a2d 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -161,7 +161,7 @@ my $re_encoded_word = qr/=\?($re_token)\?($re_token)\?($re_encoded_text)\?=/;
- # Variables we fill in automatically, or via prompting:
- my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh,
- 	$initial_reply_to,$initial_subject,@files,
--	$author,$sender,$smtp_authpass,$annotate,$use_xmailer,$compose,$time);
-+	$sender,$smtp_authpass,$annotate,$use_xmailer,$compose,$time);
- 
- my $envelope_sender;
- 
-@@ -1431,117 +1431,57 @@ $subject = $initial_subject;
- $message_num = 0;
- 
- foreach my $t (@files) {
--	open my $fh, "<", $t or die "can't open file $t";
--
--	my $author = undef;
--	my $sauthor = undef;
--	my $author_encoding;
--	my $has_content_type;
--	my $body_encoding;
--	my $xfer_encoding;
--	my $has_mime_version;
--	@to = ();
--	@cc = ();
--	@xh = ();
--	my $input_format = undef;
--	my @header = ();
- 	$message = "";
- 	$message_num++;
--	# First unfold multiline header fields
--	while(<$fh>) {
--		last if /^\s*$/;
--		if (/^\s+\S/ and @header) {
--			chomp($header[$#header]);
--			s/^\s+/ /;
--			$header[$#header] .= $_;
--	    } else {
--			push(@header, $_);
--		}
--	}
--	# Now parse the header
--	foreach(@header) {
--		if (/^From /) {
--			$input_format = 'mbox';
--			next;
--		}
--		chomp;
--		if (!defined $input_format && /^[-A-Za-z]+:\s/) {
--			$input_format = 'mbox';
--		}
- 
--		if (defined $input_format && $input_format eq 'mbox') {
--			if (/^Subject:\s+(.*)$/i) {
--				$subject = $1;
--			}
--			elsif (/^From:\s+(.*)$/i) {
--				($author, $author_encoding) = unquote_rfc2047($1);
--				$sauthor = sanitize_address($author);
--				next if $suppress_cc{'author'};
--				next if $suppress_cc{'self'} and $sauthor eq $sender;
--				printf("(mbox) Adding cc: %s from line '%s'\n",
--					$1, $_) unless $quiet;
--				push @cc, $1;
--			}
--			elsif (/^To:\s+(.*)$/i) {
--				foreach my $addr (parse_address_line($1)) {
--					printf("(mbox) Adding to: %s from line '%s'\n",
--						$addr, $_) unless $quiet;
--					push @to, $addr;
--				}
--			}
--			elsif (/^Cc:\s+(.*)$/i) {
--				foreach my $addr (parse_address_line($1)) {
--					my $qaddr = unquote_rfc2047($addr);
--					my $saddr = sanitize_address($qaddr);
--					if ($saddr eq $sender) {
--						next if ($suppress_cc{'self'});
--					} else {
--						next if ($suppress_cc{'cc'});
--					}
--					printf("(mbox) Adding cc: %s from line '%s'\n",
--						$addr, $_) unless $quiet;
--					push @cc, $addr;
--				}
--			}
--			elsif (/^Content-type:/i) {
--				$has_content_type = 1;
--				if (/charset="?([^ "]+)/) {
--					$body_encoding = $1;
--				}
--				push @xh, $_;
--			}
--			elsif (/^MIME-Version/i) {
--				$has_mime_version = 1;
--				push @xh, $_;
--			}
--			elsif (/^Message-Id: (.*)/i) {
--				$message_id = $1;
--			}
--			elsif (/^Content-Transfer-Encoding: (.*)/i) {
--				$xfer_encoding = $1 if not defined $xfer_encoding;
--			}
--			elsif (!/^Date:\s/i && /^[-A-Za-z]+:\s+\S/) {
--				push @xh, $_;
--			}
-+	# Split email into header and body
-+	open my $fh, "<", $t or die "can't open file $t";
-+	my (@header, @body) = parse_email($fh);
-+	close $fh;
- 
-+	# Parse header
-+	my %parsed_header = parse_header(@header);
-+	my $from = $parsed_header{"from"};
-+	$subject = $parsed_header{"subject"};
-+	$message_id = $parsed_header{"message_id"};
-+	@to = @{$parsed_header{"to"}};
-+	@cc = @{$parsed_header{"cc"}};
-+	@xh = @{$parsed_header{"xh"}};
-+	my %flags = %{$parsed_header{"flags"}};
-+
-+	# Process parsed headers
-+	my ($author, $author_encoding) = unquote_rfc2047($from);
-+	my $sauthor = sanitize_address($author);
-+	unless ($suppress_cc{'author'} or
-+		($suppress_cc{'self'} and $sauthor eq $sender)) {
-+		printf("(mbox) Adding cc: %s from line 'From: %s'\n",
-+			$from, $from) unless $quiet;
-+		push @cc, $from;
-+	}
-+
-+	foreach (@to) {
-+		printf("(mbox) Adding to: %s from line 'To: %s'\n",
-+			$_, $_) unless $quiet;
-+	}
-+
-+	my @tmpcc = ();
-+	foreach (@cc) {
-+		my $qaddr = unquote_rfc2047($_);
-+		my $saddr = sanitize_address($qaddr);
-+		if ($saddr eq $sender) {
-+			next if ($suppress_cc{'self'});
- 		} else {
--			# In the traditional
--			# "send lots of email" format,
--			# line 1 = cc
--			# line 2 = subject
--			# So let's support that, too.
--			$input_format = 'lots';
--			if (@cc == 0 && !$suppress_cc{'cc'}) {
--				printf("(non-mbox) Adding cc: %s from line '%s'\n",
--					$_, $_) unless $quiet;
--				push @cc, $_;
--			} elsif (!defined $subject) {
--				$subject = $_;
--			}
-+			next if ($suppress_cc{'cc'});
- 		}
-+		printf("(mbox) Adding cc: %s from line 'Cc: %s'\n",
-+			$_, $_) unless $quiet;
-+		push @tmpcc, $_;
- 	}
-+	@cc = @tmpcc;
-+
-+
- 	# Now parse the message body
--	while(<$fh>) {
-+	foreach (@body) {
- 		$message .=  $_;
- 		if (/^(Signed-off-by|Cc): (.*)$/i) {
- 			chomp;
-@@ -1559,18 +1499,17 @@ foreach my $t (@files) {
- 				$c, $_) unless $quiet;
- 		}
- 	}
--	close $fh;
- 
- 	push @to, recipients_cmd("to-cmd", "to", $to_cmd, $t)
- 		if defined $to_cmd;
- 	push @cc, recipients_cmd("cc-cmd", "cc", $cc_cmd, $t)
- 		if defined $cc_cmd && !$suppress_cc{'cccmd'};
- 
--	if ($broken_encoding{$t} && !$has_content_type) {
--		$xfer_encoding = '8bit' if not defined $xfer_encoding;
--		$has_content_type = 1;
-+	if ($broken_encoding{$t} && !$flags{"has_content_type"}) {
-+		$flags{"xfer_encoding"} = '8bit' if not defined $flags{"xfer_encoding"};
-+		$flags{"has_content_type"} = 1;
- 		push @xh, "Content-Type: text/plain; charset=$auto_8bit_encoding";
--		$body_encoding = $auto_8bit_encoding;
-+		$flags{"body_encoding"} = $auto_8bit_encoding;
- 	}
- 
- 	if ($broken_encoding{$t} && !is_rfc2047_quoted($subject)) {
-@@ -1580,8 +1519,8 @@ foreach my $t (@files) {
- 	if (defined $sauthor and $sauthor ne $sender) {
- 		$message = "From: $author\n\n$message";
- 		if (defined $author_encoding) {
--			if ($has_content_type) {
--				if ($body_encoding eq $author_encoding) {
-+			if ($flags{"has_content_type"}) {
-+				if ($flags{"body_encoding"} eq $author_encoding) {
- 					# ok, we already have the right encoding
- 				}
- 				else {
-@@ -1589,24 +1528,24 @@ foreach my $t (@files) {
- 				}
- 			}
- 			else {
--				$xfer_encoding = '8bit' if not defined $xfer_encoding;
--				$has_content_type = 1;
-+				$flags{"xfer_encoding"} = '8bit' if not defined $flags{"xfer_encoding"};
-+				$flags{"has_content_type"} = 1;
- 				push @xh,
- 				  "Content-Type: text/plain; charset=$author_encoding";
- 			}
- 		}
- 	}
- 	if (defined $target_xfer_encoding) {
--		$xfer_encoding = '8bit' if not defined $xfer_encoding;
-+		$flags{"xfer_encoding"} = '8bit' if not defined $flags{"xfer_encoding"};
- 		$message = apply_transfer_encoding(
--			$message, $xfer_encoding, $target_xfer_encoding);
--		$xfer_encoding = $target_xfer_encoding;
-+			$message, $flags{"xfer_encoding"}, $target_xfer_encoding);
-+		$flags{"xfer_encoding"} = $target_xfer_encoding;
- 	}
--	if (defined $xfer_encoding) {
--		push @xh, "Content-Transfer-Encoding: $xfer_encoding";
-+	if (defined $flags{"xfer_encoding"}) {
-+		push @xh, "Content-Transfer-Encoding: ".$flags{"xfer_encoding"};
- 	}
--	if (defined $xfer_encoding or $has_content_type) {
--		unshift @xh, 'MIME-Version: 1.0' unless $has_mime_version;
-+	if (defined $flags{"xfer_encoding"} or $flags{"has_content_type"}) {
-+		unshift @xh, 'MIME-Version: 1.0' unless $flags{"has_mime_version"};
- 	}
- 
- 	$needs_confirm = (
--- 
-2.8.2.537.gb153d2a
+Description
+-----------
+
+git-splice(1) non-interactively splices the current branch by removing
+a range of commits from within it and/or cherry-picking a range of
+commits into it.  It's essentially just a glorified wrapper around
+cherry-pick and rebase -i.
+
+Usage
+-----
+
+Examples:
+
+    # Remove commit A from the current branch
+    git splice A^!
+
+    # Remove commits A..B from the current branch
+    git splice A..B
+
+    # Remove commits A..B from the current branch, and cherry-pick
+    # commits C..D at the same point
+    git splice A..B C..D
+
+    # Cherry-pick commits C..D, splicing them in just after commit A
+    git splice A C..D
+
+    # Remove first commit mentioning 'foo', and insert all commits
+    # in the 'elsewhere' branch which mention 'bar'
+    git splice --grep=foo -n1 HEAD -- --grep=bar HEAD..elsewhere
+
+    # Abort a splice which failed during cherry-pick or rebase
+    git splice --abort
+
+    # Resume a splice after manually fixing conflicts caused by
+    # cherry-pick or rebase
+    git splice --continue
+
+N.B. Obviously this command rewrites history!  As with git rebase,
+you should be aware of all the implications of history rewriting
+before using it.
+
+Code
+----
+
+Currently this is in alpha state:
+
+  https://github.com/git/git/compare/master...aspiers:splice
+
+and I reserve the right to rewrite the history of that branch in the
+near future ;-)
+
+I realise that the code does not yet conform to the coding standards
+of the git project.  For example, it relies on non-POSIX bash
+features, like arrays.  I would be happy to fix this if there is a
+chance git-splice might be accepted for inclusion within the git
+distribution.  (Presumably contrib/ is another possibility.)
+Also, I haven't yet written a proper man page for it.
+
+Motivation
+----------
+
+I wrote git-splice as the next step in the journey towards being able
+to implement a tool which automatically (or at least
+semi-automatically) splits a linear sequence of commits into a commit
+graph where ancestry exactly mirrors commit "dependency".[0]  In other
+words, in this commit graph, a commit B would have commit A as an
+ancestor if and *only* if commit B cannot cleanly apply without A
+already being present in the branch.  As a corollary, if commit F
+depends on D and E, but D and E are mutually independent, F would
+need to depend on a merge commit which contains D and E.
+
+Such a tool could be useful for a few reasons.  Firstly, large patch
+series are much harder to review than single commits or small patch
+series, but typical development workflows often lead to large patch
+series.
+
+For example, if I work privately on a new feature for some hours /
+days / weeks, I will typically amass a bunch of commits which are not
+all directly related to the new feature: there are often refactorings,
+fixes for bugs discovered during development of the new feature, etc.
+
+I doubt I'm the only git user not disciplined enough to maintain neat
+branch organization for the whole of a long period of hacking!
+i.e. religiously maintaining one branch per bugfix, one branch per
+refactoring, and one branch for the new feature.[1]  Typically, tidying
+up the branches comes a bit later, when I want to start feeding stuff
+upstream for review.
+
+Therefore being able to reduce the effort involved with breaking a
+large patch series into smaller related chunks seems potentially very
+useful.
+
+As well as making reviews smaller easier, this allows both the reviews
+and any corresponding CI to proceed in a more parallelized fashion.
+
+Some review systems can implicitly discourage reviews of large patch
+series, by treating each commit as a review in its own right and/or not
+providing sophisticated support for patch series.  Gerrit is one
+example; gitlab and GitHub are counter-examples.
+
+I'm sure there are other use cases which I didn't think of yet.
+
+Next steps, and the future
+--------------------------
+
+Obviously, I'd welcome thoughts on whether it would make sense to
+include this in the git distribution.
+
+In the longer term however, I'd like to write two more subcommands:
+
+  - git-transplant(1) which wraps around git-splice(1) and enables
+    easy non-interactive transplanting of a range of commits from
+    one branch to another.  This should be pretty straightforward
+    to implement.
+
+  - git-explode(1) which wraps around git-transplant(1) and
+    git-deps(1), and automatically breaks a linear sequence of commits
+    into multiple smaller sequences, forming a commit graph where
+    ancestry mirrors commit dependency, as mentioned above.  I expect
+    this to be more difficult, and would probably write it in Python.
+
+    Ideally, this tool would also be able to integrate with other
+    workflow management tools[1] in order to effectively create /
+    manage topic branches and track dependencies between them.
+
+Eventually, the utopia I'm dreaming about would become a reality and
+look something like this:
+
+    git checkout -b new-feature
+
+    while in_long_frenzied_period_of_hacking; do
+        # don't worry too much about branch maintenance here, just hack
+        git add ...
+        git commit ...
+    done
+
+    # Break lots of commits from new-feature into new topic branches:
+    git explode
+
+    # List topic branches
+    git work list
+
+    # Manually complete tidy-up of those branches
+    git push ...
+    git send-email ...
+
+
+Feedback on any of this is very welcome!
+
+Thanks,
+Adam
+
+
+[0] https://github.com/aspiers/git-deps/#user-content-use-case-2-splitting-a-patch-series
+
+    This type of dependency could be described as textual or syntactic or
+    lexical, and is automatically detected by git-deps:
+
+        https://github.com/aspiers/git-deps/
+
+    which I wrote a couple of years ago and previously announced on this list:
+
+        http://thread.gmane.org/gmane.comp.version-control.git/262000/focus=262606
+
+    Of course, this is a somewhat naive approach in that it has no
+    awareness of semantic dependencies, e.g. commit A changing file X
+    in a way which only makes sense if commit B changing file Y is
+    already present.  However in my experience it's still a useful
+    start in the right direction, saving a lot of time by detecting
+    the "obvious" dependencies, and often revealing dependencies which
+    I would have otherwise missed.
+
+[1] There are tools which can help with this, e.g. topgit, git-flow,
+    and gitwork, which IMHO is particularly interesting.
