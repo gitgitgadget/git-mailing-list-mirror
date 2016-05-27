@@ -1,123 +1,109 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: Re: [RFC/PATCH 2/2] log: add "--no-show-signature" command line option
-Date: Fri, 27 May 2016 11:38:32 +0530
-Message-ID: <CA+DCAeTnkTRnmscduio1-buKd2gNcaScYkLY7YfEQ+_Cm=Z28Q@mail.gmail.com>
-References: <20160526130647.27001-1-mehul.jain2029@gmail.com>
-	<20160526130647.27001-3-mehul.jain2029@gmail.com>
-	<20160526163241.GC18210@sigill.intra.peff.net>
-	<xmqqiny0wx8m.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC: dynamic "auto" date formats
+Date: Thu, 26 May 2016 23:21:07 -0700
+Message-ID: <xmqq1t4ot418.fsf@gitster.mtv.corp.google.com>
+References: <CA+55aFzWEf2sN647v0mfiPOFE=KindQpweoHwdPmDshUb0YVsA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-	Austin English <austinenglish@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 27 08:08:38 2016
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri May 27 08:21:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6Awn-0003A0-Q7
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 08:08:38 +0200
+	id 1b6B91-0006sX-UF
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 08:21:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932214AbcE0GIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 02:08:34 -0400
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:36863 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754034AbcE0GId (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 02:08:33 -0400
-Received: by mail-qg0-f50.google.com with SMTP id q32so46896165qgq.3
-        for <git@vger.kernel.org>; Thu, 26 May 2016 23:08:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=PFW+0AsEgW03lnYBhrDQJmc0yJT3m5V2JRa+/duGKe0=;
-        b=hjrWCvbska1fSmIqlaB3ZuBJyQoBl5l5UquP5h5MejllLKaztPqOhITJfr9sbOOhM/
-         jQoL6nD5GsdyuyBiiym1kTbH9KVMN6A5FIIlr0JRKS8GB17tHe4bjnFHzwocfq9rfr9X
-         zWBrb6Pglnzq9t/ThxVkB7n3agZ3b8B/e/FOkewBLtw/gIr+LEhe8sX2zQOLOXr1Q+nC
-         zTUNwZb4QQljhgyF0ts0OeLjD9t5xQUGUuHp/dMscjRHutpYha3k3GE+/VHfoTssOcwi
-         MQXS6PMRv3TcVje9gpiDspyPvivgGe0b65pZhmiYAQ4UGRe+ydlsc6Sf/1b/CDn9m4SK
-         wWog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=PFW+0AsEgW03lnYBhrDQJmc0yJT3m5V2JRa+/duGKe0=;
-        b=dkc5Q2WRICne14X8CgtxqiZHCx6S7xqDOzADV/mL+Tqao0OBVyiZ5Wxb5LnH5PpGaU
-         Uph6BDIp8+ccGvzrii8nlydAsz4QAJHoz6RFtc893b2U1VpL7pC3R4DIcUJWTwJyMgrl
-         l01O9q99E1zWxssL+vYtUYHUc8On0yxnrhefnGhUYihDE3k+9koRUgkuNj6X9CRyFr7o
-         ZdYxUfOihrSKlNwJDwDTsG5tLiSEOcpGv61y/7X7+Seqe9sKLXLG9cWjtChiRy0KBY4s
-         qlFO3o12CAXT7yR6HO8rB/Wd0i02CF2Pf6+GhHsrBupxuIbfvDpkdLutzDyNp6yK4t+p
-         vYBA==
-X-Gm-Message-State: ALyK8tJvxxGLE400o2ON3LGAZJpKQtdQhhdBbfawBJqLC5xaBhjgWCFNoBbPdnYz2b4+au4x7UiRE0xfL8s4mg==
-X-Received: by 10.140.18.197 with SMTP id 63mr11654726qgf.18.1464329312408;
- Thu, 26 May 2016 23:08:32 -0700 (PDT)
-Received: by 10.55.51.212 with HTTP; Thu, 26 May 2016 23:08:32 -0700 (PDT)
-In-Reply-To: <xmqqiny0wx8m.fsf@gitster.mtv.corp.google.com>
+	id S1754213AbcE0GVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 02:21:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55668 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754102AbcE0GVL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 02:21:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AFE6E1B9BC;
+	Fri, 27 May 2016 02:21:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AjeD/GHmY6T6Dck0oI9Pv5dPDio=; b=K/nmOo
+	PtXqVnlg5J0BrIbT8f2jBhSeaPTnXIHxtOavWBVzSfg4ow/DmFVEjcFIuwBpgAVg
+	WrgQmc9vYde1GuXMVjUkf0UkOsSTOV/IImqeQsqrmuBgAFFvVpkIdQThfSuHEswT
+	GfZBdRKl5jj/6unjVFbg+fAcLWmIydOKuCwzA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jo0GbFyu479zAvH7isAvIUgCy5b6NVPX
+	G95KGYpitoVScyrbVHSGtbznQB1s5HBAm7VvQW7voFLKVsA5rnNR2sA1JfJJQPYN
+	blhcnhJpflGNRe0UpNkZi8pdNH/PglvjZizZCYzHpU/VZ3rhThxy8xk0zjMrl9fU
+	evwvl1+ph4Q=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A74C61B9BB;
+	Fri, 27 May 2016 02:21:09 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1EEB41B9BA;
+	Fri, 27 May 2016 02:21:09 -0400 (EDT)
+In-Reply-To: <CA+55aFzWEf2sN647v0mfiPOFE=KindQpweoHwdPmDshUb0YVsA@mail.gmail.com>
+	(Linus Torvalds's message of "Thu, 26 May 2016 20:36:57 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 338DB032-23D3-11E6-82A7-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295735>
 
-On Thu, May 26, 2016 at 10:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->
->> On Thu, May 26, 2016 at 06:36:47PM +0530, Mehul Jain wrote:
->>
->>> If "log.showsignature=true", then there is no way to override it using
->>> command line switch.
->>>
->>> Teach "git log" and "git show" about "--no-show-signature" command line
->>> option.
->>
->> I think this is teaching all of the revision machinery about it (which
->> is a good thing).
->
-> I agree that the proposed commit log message should be updated to
-> say so.
->
-> Because we do not want .showsignature configuration to affect
-> rev-list nor format-patch, and we will not make "--show-sig" the
-> default for them either.  From that point of view, there is no
-> reason for them to know about the "--no-show-signature" option.
->
-> The only reason why teaching the "--no-show-signature" option to
-> these commands is a good idea is because it would help people who
-> create an alias with "--show-sig" in early part of the command line,
-> e.g.
->
->         [alias] fp = format-patch --show-signature
->
-> by allowing them to countermand with --no-show-signature, i.e.
->
->         $ git fp --no-show-signature ...
->
-> If we are updating the log message in the final submission of this
-> patch, we'd want it to be clear that the presence of this option is
-> not an excuse to introduce .showsignature that affects rev-list
-> later to make sure we do not have to waste our time rejecting such a
-> patch in the future.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Currently, with the [patch 1/2], only git-show, git-log, git-whatchanged
-and git-reflog are able to learn about log.showsignature config variable.
-But commands which will learn about "--no-show-signature" with
-[patch 2/2] are notably a super-set of above mentioned commands.
-Introduction of this option should not give an impression that we might
-need log.showSignature for commands like git-format-patch etc, and
-it will definitely be a wise decision to convey the same in the commit
-message of this patch. I will do the necessary change.
+> And no, I'm not at all sure that the 24-hour cut-off is the right
+> thing, but it didn't seem completely crazy either. I tend to like the
+> relative date format when it is "19 minutes ago" vs "2 hours ago", at
+> some point it's long enough ago that it's more useful to know "Tuesday
+> at 3pm" than about how long ago it was.
+>
+> (And yes, it would be even better to have the "short term relative
+> date" turn into a "medium-term 'day of the week at time x'" and then
+> turn into "full date" when it's more than a week ago, but this patch
+> only has the two modes of "short term" and "long term" and nothing in
+> between).
 
-Just out of curiosity, I was thinking that we might be able to teach
-"--no-show-signature" option only to git-show, git-log, git-whatchanged
-and git-reflog. To do this we can introduce a new member
-"no_show_signature" in struct rev_info, and use this variable further
-to modify the value of value of "rev.show_signature" after init_revision()
-is called. This way we can selectively decide which commands should
-learn about "--no-show-signature". This may be a bad idea because
-we will have two variables in rev_info, for option --[no]-show-signature.
-Any thoughts?
+While I do not think this has much to do with "auto", other than
+that it changes the representation depending on how far back the
+time is to match the taste of Linus automatically, I think the
+observation you made about the relative uselessness of "relative in
+the long past" is real.  "6 years ago" that does not say if it was
+in the morning and that does not even say if it was in the summer
+is losing a bit too much information.
 
-Thanks,
-Mehul
+Your message made me realize another thing I feel while viewing
+"relative in the long past" output.  In "git log --date=relative"
+output (especially when the log is "limited" in some way, like with
+a pathspec, --grep, -S, etc.) that shows multiple commits, all of
+which are labeled "6 years ago", they make me wonder how they are
+related to each other chronologically.  Perhaps I am seeing 6
+commits, but the earlier four was made all within 20 minutes, and
+the fifth one three days later, and the final one a month later,
+which may indicate that the first four was the initial round of a
+topic, with two "oops, this is a fix" follow-up patches that are
+related in one area.  All of them being labeled "6 years ago" would
+not give such a clue.
+
+Which makes me wonder if another variant is useful (or at least
+"interesting").  What if we chose format according to this rule?
+
+    0. Set the "reference time" to the current time.
+
+    1. Do get_revision() to grab one commit to show.
+
+    2. Show that commit, using timeformat determined as:
+       a. if its time is close to the "reference time", then use
+          "N hours M minues before that" format;
+       b. otherwise, use the default time format;
+
+    3. Update the "reference time" to the timestamp of the commit
+       we just showed.
+
+    4. Go back to 1.
+    
