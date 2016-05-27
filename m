@@ -1,72 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: dynamic "auto" date formats
-Date: Thu, 26 May 2016 23:57:11 -0700
-Message-ID: <CAPc5daVQEnehW311wi5U2Fs0cdYKzW_jqwpQ8M3c6ZqNGXuLsA@mail.gmail.com>
-References: <CA+55aFzWEf2sN647v0mfiPOFE=KindQpweoHwdPmDshUb0YVsA@mail.gmail.com>
- <xmqq1t4ot418.fsf@gitster.mtv.corp.google.com> <CA+55aFwhUJ2g9690yMBR3inZmVXRupmgjbePmm4GC5kEcx2XLA@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [RFC] Triangular Workflow: user friendly full implementation
+Date: Fri, 27 May 2016 08:32:11 +0100
+Organization: OPDS
+Message-ID: <D501BE7EF38A4CDF9ADB786B53CCFE0C@PhilipOakley>
+References: <E83A9439-54C8-4925-8EE3-6AEEDD9416F3@grenoble-inp.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 27 08:57:36 2016
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Matthieu Moy" <matthieu.moy@grenoble-inp.fr>,
+	"Erwan Mathoniere" <erwan.mathoniere@grenoble-inp.org>,
+	"Tom Russello" <tom.russello@grenoble-inp.org>,
+	"Samuel Groot" <samuel.groot@grenoble-inp.org>
+To: "Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>,
+	<git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 27 09:32:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6BiB-00005V-P3
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 08:57:36 +0200
+	id 1b6CFq-0004vH-HU
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 09:32:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754901AbcE0G5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 02:57:32 -0400
-Received: from mail-yw0-f182.google.com ([209.85.161.182]:36628 "EHLO
-	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751451AbcE0G5b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 02:57:31 -0400
-Received: by mail-yw0-f182.google.com with SMTP id x189so98123028ywe.3
-        for <git@vger.kernel.org>; Thu, 26 May 2016 23:57:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=SFvv8vizIRjiv3x1ZREUsgkDNAbXZPkSmHwRSZ4OwFQ=;
-        b=zy+K/9P7QYXEYumH1rlpxOfUrelGIZxAeeV1M+8SiPNBldSkhz2ha5qMIq7ZHwuywO
-         FOEkgumXdBwJ5QrLMJCRmQe87+wGxHlY62WtRY8scp+adSL536hHcqCpLPuFUtFCSeOT
-         85kwOumTNErNKaiKisXB5RoAUWGQJdEKjC5UVODhnqQM9OAsLhQtjoFxYi4lkElprTzc
-         yVUiAtwWH/mhOSWI8HLe2JgaI598PwMq/Ln/znFuunZAiCMeqLEUneOmE/NA/dtAM6Oz
-         N5TTZ5QQXGjFUfMePSYZHbFrG2V0SXSrxXmQc88/v22/xDZ8xB0gHdMxit/qltreBJ9W
-         b0Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=SFvv8vizIRjiv3x1ZREUsgkDNAbXZPkSmHwRSZ4OwFQ=;
-        b=FaGL/w7B1xaqHfFJCX9x/bycPO2aVt9IOPQnv3MTVWESqbx3VNWBPcGa7zFlgtiy+D
-         edDZM3y8KPACoWOwD66e2bGcOL/oJBsg/OEIVsXv03ScLVxywrXwpdP/doEW2QYtRO7E
-         TMh1kk7bADUSLm6/ZwejODIaOYOfJSzUOt5eiAXFnbpd7IRFTCoXjcMBfoDJLa6lQpS3
-         SWKwjf+lduIOnaiN+nWIqVR5kG0pw6cZIk1EARuw3GFZMGpuCeFKWKr1hO3NbDY1mHr+
-         Metrv1nPWWNUO2XzI6+5jwCfAcTy/TGALu8/vCnv5ZMf5q9FSDRi8UWmLkE31NiGto7U
-         rHPg==
-X-Gm-Message-State: ALyK8tJeoDxEGty03pemg3ejxgo2w7XHRIoCetRU4Nm9kkio8rkLqRy1EN5Id1ryH7xf7HfeIuSM1Trwt/MjUA==
-X-Received: by 10.129.80.139 with SMTP id e133mr8474954ywb.197.1464332250952;
- Thu, 26 May 2016 23:57:30 -0700 (PDT)
-Received: by 10.13.251.71 with HTTP; Thu, 26 May 2016 23:57:11 -0700 (PDT)
-In-Reply-To: <CA+55aFwhUJ2g9690yMBR3inZmVXRupmgjbePmm4GC5kEcx2XLA@mail.gmail.com>
-X-Google-Sender-Auth: 6GN-dF4BtvBmmWOQ3A5iZWqjp8c
+	id S932532AbcE0HcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 03:32:17 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:37428 "EHLO
+	smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932416AbcE0HcP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 03:32:15 -0400
+Received: from PhilipOakley ([92.22.67.185])
+	by smtp.talktalk.net with SMTP
+	id 6CFgbuEk9OORZ6CFgbgs0T; Fri, 27 May 2016 08:32:13 +0100
+X-Originating-IP: [92.22.67.185]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=Tq6kv3fh c=1 sm=1 tr=0 a=pxL+8fxP9jym1BLqsrSJlw==:117
+ a=pxL+8fxP9jym1BLqsrSJlw==:17 a=8nJEP1OIZ-IA:10 a=aSBN74SrAAAA:8
+ a=lTFX22NTolzt58o6f9kA:9 a=QLKLDn6n7aLR3e0nYJH2:22
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfGsQ8bFcNu4dlBoNmyFrdacOzp/yPQvMJADElOT1kthEDgDlGxi8exMJF2Zq+DuT73CC8EvHUF/DQxbvwsKW02/sHF3OnS1eAwLbAPP8hC405/PouQRo
+ i8pKJDZ3d4kDj1f1ljBLLJxq28cmtyQZ3oSlAR1Tpaj3m1OoQsx8vFuJ4eLUB1XuzhEHEZIcBK4RdzbORlKpn9iJ9OgjCuOc3zxgPdCqEJHOnwwVGUcEwDT2
+ MwkCP/bJVpho8GufRniPfCk9Rq6oH69cb0FwfHiKNCeTK2IqSC8vGsl913WQ3g8oqQvXw9adevtqyrscVnPzUZEvfK33VgSuaqL1ngBf4mg/pmO9j8EyryeJ
+ 73st6JstYbEQL/7diGoBBPn9MnGM5SpMJ0okT8Rm8pZobrQChi0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295740>
 
-On Thu, May 26, 2016 at 11:53 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
+From: "Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>
+> We are working on full implementation of triangular workflow feature.
+> For now, the main options available are:
+> - branch.<name>.pushRemote
+> - remote.pushDefault
+> And only setable by hands.
 >
-> So I think what I really would like to see is more like a reverse
-> "approxidate" that gives the date in human terms.
+> As it can be difficult to understand, here is what we want to do.
+>
+>
+> Context:
+> - One main remote repository, e.g. git/git.
+> - A remote fork (e.g. a GitHub fork) of git/git, e.g. me/git.
+> - A local clone of me/git on the machine
+>
+> Purposes:
+> - the local branch master has to fetch to git/git by default
+> - the local branch master has to push to me/git by default
+>
+> Configuration wanted:
+> - Add a remote to git/git e.g. `git remote add ...`
+> - Set the fetch remote for branch as default.
+>
+> For now, we can do that by setting:
+> - branch.<name>.remote to git/git
+> - branch.<name>.pushRemote to me/git
+> But many options set `branch.<name>.remote`, a suitable solution is to
+> implement an option for the fetch for example.
+>
+>
+> Here is what we want to implement:
+>
+> 1.
+> a. add the config var: remote.fetchDefault
+> b. add the config var: branch.<name>.fetchRemote
+> c. add `git fetch --set-default` in order to set remote.fetchDefault
+> d. add `git fetch --set-remote` in order to set branch.<name>.fetchRemote
+> e. add `git pull --set-default` in order to set remote.fetchDefault
+> f. add `git pull --set-remote` in order to set branch.<name>.fetchRemote
+>
+> 2.
+> a. add `git push --set-default` in order to set remote.pushDefault
+> b. add `git push --set-remote` in order to set branch.<name>.pushRemote
+>
+>
+> What's your opinion about this feature ?
+>
+For me, the first step would be to actually document a (the?) Triangular 
+Workflow in the documentation, so we are all taking about the same broad 
+method.
 
-Yeah, "human" was the word I was looking for while composing my response.
+At the moment there is a choice (assuming a ithub like service) of either 
+clone and then fork, or fork and clone the fork, which leave the user with 
+different fixups of their config's being required, so describing the easier 
+one would help folk.
 
-I am sure somebody will write the reverse approxidate that utters "tea
-time" when
-it is appropriate, if only just for fun. I can't wait ;-)
+Likewise there are missing terms such as for the third place (the personal 
+fork) that is neither the upstream, nor the local repo. Making sure the 
+terminology is crisp and clean will greatly ease any implementation issues. 
+And then there are the possible workflows...
+
+--
+Philip
+(sorry for the rushed message, a long weekend beckons) 
