@@ -1,91 +1,134 @@
-From: Michael Rappazzo <rappazzo@gmail.com>
-Subject: [PATCH] Documentation: add instructions to help setup gmail 2FA
-Date: Fri, 27 May 2016 16:39:57 -0400
-Message-ID: <1464381597-27634-1-git-send-email-rappazzo@gmail.com>
-Cc: gitster@pobox.com, Michael Rappazzo <rappazzo@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 27 22:40:50 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Require 0 context lines in git-blame algorithm
+Date: Fri, 27 May 2016 13:59:03 -0700
+Message-ID: <xmqqtwhjp694.fsf@gitster.mtv.corp.google.com>
+References: <1464358592-5409-1-git-send-email-dak@gnu.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri May 27 22:59:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6OYr-0004GB-FY
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 22:40:49 +0200
+	id 1b6Oqf-0001bq-LI
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 22:59:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932272AbcE0UkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 16:40:23 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:34028 "EHLO
-	mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964799AbcE0UkN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 16:40:13 -0400
-Received: by mail-it0-f68.google.com with SMTP id k76so640098ita.1
-        for <git@vger.kernel.org>; Fri, 27 May 2016 13:40:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=OThrtWXHII236Jl8CcQQHeEn6TtVeRf/80cKZan4U3w=;
-        b=wAz8JWaFjzs6rLMoFN6naFsC+L44hlGDBY+OpT+0vOEW/XsGgqsFD7BDQWHhY8oouB
-         QkIsYh0OWAzdJ+k+iQAxgEvOQMPpXMuKttc0+6qzxNDgJFLmJqsbsRfiFSCF6mzGST0B
-         xgkjEjtWRPAW/u1Kbb64f2hvbrB8/AXIpG79+zzsdy+4QzzCUrcmZ2+dspyD+pIeHVOQ
-         gIxBbp6TKo/pE1nNgOj9QLdcFpS6eLfK8ySZkNkFJOVfP0MAcMa/xm3JQ+R+Ov9eNI99
-         zuwXHN6sjW1PRZCyjFdBR3o0dq2Npd59n3JLcRcl+mo+JvMD4yCl9auD/Cbx0QQYlXaH
-         UAvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=OThrtWXHII236Jl8CcQQHeEn6TtVeRf/80cKZan4U3w=;
-        b=Z8m9lHQ/Hwtan8n8EAxlLgKgiICks1yZO0B6/iosPoZj2Zgw4uMHj9EhtGTB6/PuDP
-         aru247j2t1nYYmf95++S2yixo3PL2DftcDBPFl9LpK2UigRjdMMsjjrKW803cCBwd7Zx
-         qwGfxoCwCxRH6AlwSyCr28T/FET2OFb7rPnicwwYP9uEJcoOtE1wEjhiuu1eZFu5WAAC
-         gwfXGKFX5l+nT408rwI3E9gChjx3v3vP3cPHsXdtMLU4FLUw7C1410+eIhmiK2bwcEGz
-         Yez74qPlXwt+gVSJxeFgnH595z3cCWYb+P9a+BCafsxyk2sZQsji7Rk425ayH363dejl
-         uLiA==
-X-Gm-Message-State: ALyK8tLxvRFPvLDaNlO9iWiIVSR73JA0DAMqqfZDPEcs5j6o68/pKda3efkbtjOf3EbEfg==
-X-Received: by 10.36.120.83 with SMTP id p80mr513814itc.46.1464381612587;
-        Fri, 27 May 2016 13:40:12 -0700 (PDT)
-Received: from localhost.localdomain (86.sub-70-208-86.myvzw.com. [70.208.86.86])
-        by smtp.gmail.com with ESMTPSA id r206sm3178881itc.3.2016.05.27.13.39.55
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Fri, 27 May 2016 13:40:12 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0
+	id S1756071AbcE0U7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 16:59:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60357 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751575AbcE0U7I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 16:59:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9EA7F1DC90;
+	Fri, 27 May 2016 16:59:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9bzQqgofiF1uVWDtpEswXEuO8+o=; b=wFk2Ck
+	XUmTQ36gIZ/xKp1zMsmS4BWZzCYpC75jUJinq83WNmxz0BWWo6qb3TzP8GKX/RFa
+	1ubdQzud08aFtixWykUHWcSo2QM0RmgRsT+zTlBiaNWDOlQ6mdXkKT0H7JK5RqYk
+	TkdpUKr/DZfF5FbQb/Mn5GZo+/LUMAOEPwomg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gdAuLYjc5AGK+omEIkyZTXk39LrexT0W
+	D4tGy1VoJWr98sLXNaXmpRK04TDVaGlYEUxJlLknWgCeT7gOtEF9g621iHcBI4tr
+	nBev+4ohZ6f3Fz3PUixawnw+pYw2kKW5DXG0M8FdoWzTmxvDxAme4xIN1xqH3ife
+	v57Ig39XfKE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 96DA01DC8E;
+	Fri, 27 May 2016 16:59:05 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 207631DC8D;
+	Fri, 27 May 2016 16:59:05 -0400 (EDT)
+In-Reply-To: <1464358592-5409-1-git-send-email-dak@gnu.org> (David Kastrup's
+	message of "Fri, 27 May 2016 16:16:32 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D8E6AADC-244D-11E6-8EF6-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295795>
 
-For those who use two-factor authentication with gmail, git-send-email
-will not work unless it is setup with an app-specific password. The
-example for setting up git-send-email for use with gmail will now
-include information on generating and storing the app-specific password.
----
- Documentation/git-send-email.txt | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+David Kastrup <dak@gnu.org> writes:
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 771a7b5..edbba3a 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -450,6 +450,19 @@ edit ~/.gitconfig to specify your account settings:
- 		smtpUser = yourname@gmail.com
- 		smtpServerPort = 587
- 
-+If you have multifactor authentication setup on your gmail acocunt, you will
-+need to generate an app-specific password for use with 'git send-email'. Visit
-+https://security.google.com/settings/security/apppasswords to setup an
-+app-specific password.  Once setup, you can store it with the credentials
-+helper:
-+
-+	$ git credential fill
-+	protocol=smtp
-+	host=smtp.gmail.com
-+	username=youname@gmail.com
-+	password=app-password
-+
-+
- Once your commits are ready to be sent to the mailing list, run the
- following commands:
- 
--- 
-2.8.0
+> Previously, the core part of git blame -M required 1 context line.
+> There is no rationale to be found in the code (one guess would be that
+> the old blame algorithm was unable to deal with immediately adjacent
+> regions), and it causes artifacts like discussed in the thread
+> <URL:http://thread.gmane.org/gmane.comp.version-control.git/255289/>
+
+The only thing that remotely hints why we thought a non-zero context
+was a good idea was this:
+
+http://thread.gmane.org/gmane.comp.version-control.git/28336/focus=28580
+
+in which I said:
+
+ | we may need to use a handful surrounding context lines for
+ | better identification of copy source by the "ciff" algorithm but
+ | that is a minor implementation detail.
+
+But I do not think the amount of context affects the quality of the
+match.  So it could be that it was completely a misguided attempt
+since the very beginning, cee7f245 (git-pickaxe: blame rewritten.,
+2006-10-19), which allowed the caller to specify context when
+calling compare_buffer(), the function that corresponds to
+diff_hunks() in today's code.
+
+> ---
+>  builtin/blame.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+
+I totally forgot about the discussion around $gmane/255289; thanks
+for bringing this back again.
+
+As usual, we'd need your sign-off to use this patch.
+
+Thanks.
+
+
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 21f42b0..a3f6874 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -134,7 +134,7 @@ struct progress_info {
+>  	int blamed_lines;
+>  };
+>  
+> -static int diff_hunks(mmfile_t *file_a, mmfile_t *file_b, long ctxlen,
+> +static int diff_hunks(mmfile_t *file_a, mmfile_t *file_b,
+>  		      xdl_emit_hunk_consume_func_t hunk_func, void *cb_data)
+>  {
+>  	xpparam_t xpp = {0};
+> @@ -142,7 +142,6 @@ static int diff_hunks(mmfile_t *file_a, mmfile_t *file_b, long ctxlen,
+>  	xdemitcb_t ecb = {NULL};
+>  
+>  	xpp.flags = xdl_opts;
+> -	xecfg.ctxlen = ctxlen;
+>  	xecfg.hunk_func = hunk_func;
+>  	ecb.priv = cb_data;
+>  	return xdi_diff(file_a, file_b, &xpp, &xecfg, &ecb);
+> @@ -980,7 +979,7 @@ static void pass_blame_to_parent(struct scoreboard *sb,
+>  	fill_origin_blob(&sb->revs->diffopt, target, &file_o);
+>  	num_get_patch++;
+>  
+> -	if (diff_hunks(&file_p, &file_o, 0, blame_chunk_cb, &d))
+> +	if (diff_hunks(&file_p, &file_o, blame_chunk_cb, &d))
+>  		die("unable to generate diff (%s -> %s)",
+>  		    oid_to_hex(&parent->commit->object.oid),
+>  		    oid_to_hex(&target->commit->object.oid));
+> @@ -1129,7 +1128,7 @@ static void find_copy_in_blob(struct scoreboard *sb,
+>  	 * file_p partially may match that image.
+>  	 */
+>  	memset(split, 0, sizeof(struct blame_entry [3]));
+> -	if (diff_hunks(file_p, &file_o, 1, handle_split_cb, &d))
+> +	if (diff_hunks(file_p, &file_o, handle_split_cb, &d))
+>  		die("unable to generate diff (%s)",
+>  		    oid_to_hex(&parent->commit->object.oid));
+>  	/* remainder, if any, all match the preimage */
