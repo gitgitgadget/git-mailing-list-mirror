@@ -1,140 +1,152 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] blame.c: don't drop origin blobs as eagerly
-Date: Fri, 27 May 2016 17:00:25 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605271633230.4449@virtualbox>
-References: <1464356141-3797-1-git-send-email-dak@gnu.org>
+Subject: Re: RFC: new git-splice subcommand for non-interactive branch
+ splicing
+Date: Fri, 27 May 2016 17:27:14 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605271701500.4449@virtualbox>
+References: <20160527140811.GB11256@pacific.linksys.moosehall>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Fri May 27 17:00:42 2016
+Cc: git mailing list <git@vger.kernel.org>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Fri May 27 17:27:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6JFf-0004Os-Pl
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 17:00:40 +0200
+	id 1b6JfX-0006cA-EM
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 17:27:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750850AbcE0PAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 11:00:36 -0400
-Received: from mout.gmx.net ([212.227.15.15]:60678 "EHLO mout.gmx.net"
+	id S1755911AbcE0P1T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 11:27:19 -0400
+Received: from mout.gmx.net ([212.227.17.20]:57916 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750744AbcE0PAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 11:00:35 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MXZbS-1b3TrS1B5S-00WYRC; Fri, 27 May 2016 17:00:24
+	id S1755904AbcE0P1T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 11:27:19 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Lg5kl-1brSrR1h8d-00pg8p; Fri, 27 May 2016 17:27:14
  +0200
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1464356141-3797-1-git-send-email-dak@gnu.org>
+In-Reply-To: <20160527140811.GB11256@pacific.linksys.moosehall>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:/OZt9xXqohQSYMzI3ZkPRKml/7PTM1MYunbFqvrsv/TTx5nKFRI
- YCfAut2zaAifzkoBf2bio/CXHV6IpLH8dJ/eDjQlKx5o6d0F3SXBaoHTxPI0vrXdN5AV4jX
- 5IwVi0Mk7NeBKm8o6gmOLkGM6KYhk8rRNQC3e9HQHWC1ukNo1iPMipPNThSQxsBjLajFyfr
- igRAQ4v0UAU6ZyhBABk+A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:H77ZccM/DgU=:XakhuNFIs/geKOxBqwacCx
- +6xNlSui6pg9usmx+rtBMgjjcQCINvy38iW4n6NPVNKkoKhnCOHOX78uFYoCFdZPH5z5IXw1W
- wJi/A/exqbi85O4JkjlBp0C91M6VDJoO+IsKRNM4JfJNVXiFUoYk8sZ9eJzYhcF1oJnWTIcp+
- lSghtPQy+AvKnxiaUut+fZlhhAUwIuOZh35qm6LPaq+eIUX1xV17RPZHth40dUmmsv9fQm6Ol
- 5DjOL6wraHGZa9smhpj/Lmrb/YCiCvmfAmufGfqBoeEDV5/xSm7dMOOaMY1pPno5D8VG/PMtH
- XT7+dMbX5CVk3+7gF9Poa3wGlg2/0YziIEFQvLepHhOzPFFvsUjRmDqFUwCyOxSz0sQsxi3Q+
- qMHLQ+WZkhK3t1YoSB2PJGLKjfQDDAKj6hgaDJtYtIdKyIvkSD7gPjxWbXf1CqnYL7dBci1Tb
- QseiH+RJzGdNl5xsE9p7HQ5fG3bxUnfPyHIximaMihRPtiE8JipRsqF8mNGCeOmpLfksjz9tx
- 74YtSqJFR+AYlzf2q3Ty2BGlwTNXxFliQf5ilMMrlRAUB+2xa4SHRZ15c7UQsemHSnm8eBsc8
- YhRb6Ihh6Vm39aUWI6UCh/CJYSW8BNOnjakuABWytHQ6Ntm6GjifVLq4r/EQ5MkbCDTAjH77F
- d6nRZ/XTzrIO9F0RerrQFPIzOtKYv4vQXsC78QvsS7GSMF5NAdPFUosyCHaQE3clEmuX9Akyx
- nUXxv5rcKCcwyyO6/cjUx6B8PI79ifwtTrPanl9kb7zIxYCvjGnPo24RP84ZQnqZ1eGFpqRF 
+X-Provags-ID: V03:K0:LLs1ldrPuAc9uVpFh2TgnoHurEaThCeQ2PflnMCkZH0QRQKT5M6
+ sT5jYxxdhjajKE7T3hAy2Mbw6+JUh9YhSzo1SE/B6/zhKGyGKMqIOjCAW5HnFks/lFPrAeh
+ 8obXll8j2FHxVcuj/AaL+gn1Hf4U97B7RLHRC8juUd4pR4lRbchgZiuqnz0i+dcBG5eEIm4
+ rGU9ixXRi/qBiobW69gcQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/fh3Hl2Gf5I=:r99pYYQg0qLddmI3wQiHwO
+ Ifzkq0007HHvPX0bW3ageopDr4VnrwUCNY2DX0wn/kHkXCnO1ODMYt/+Fhp6vwTXXwYLsxiqb
+ yiJ9nv9qMOSPYHXNPprB196GA60X34TUdSHiFs2XNq654ggxbHbYtYNA0y2aJwn7tBqpzDhQl
+ CaRios0iiCZcaLcaoEDxm1iw/ZFGzJJugozCMA2E/cJQkOQQSqstzroflanMX5WDTehiiNazM
+ 6y1WxpsasvCN7Z9SMQMKWXkSMSFq61vzW2bhM0tMJTiuEPN2uTXNPIrDwXI3lVzz0CkP0vcNp
+ EMjA44DyHD3pw/JKnnHuWm6ofjBG9vxymK8aXu70IT12KJ0h7H2JWAeVeUYbGh9l1hMaH6ggK
+ dzuCIgCm6BUXtmTSQBZ35IfeUTKnR5x+7yi8rbpCePE/UUBgrsQOOCvhPE8qNVovgR+SGL8Kj
+ ELXExQfcIUAQrCxS/bZSb0DcWRIn+6iDDkYuRXzOhsXqdhNghz8RcfFzviFV5Nmlgc3fgpkXZ
+ tLIT/ehc/vMhRz6y6yu23hCGyxE+wSHuF31pmiRr7bhL6zO/zrYmgFQKp+4LULLqHcPlD+Eou
+ 8njjTKYCJ+pRkORb2wAiZV6o0yTWEZzkG7HRQRv777G1cFp1GihgN+AU7vsqn0uJYAFszO2pD
+ Wn9AOqvh7JUb8y5mK4hnXAUwv6NVFb5L+3wR1WlfjddLoW9FzAEs9LKHaLsU+of6iHPCZESLw
+ ySgTFCV3dN/ogT0HnbqB/mnn2tJCk5Frjl+E5gzeLUVShe9U7aH8lxHOEdsrfoEt4a7li2lo 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295761>
 
-Hi David,
+Hi Adam,
 
-it is good practice to Cc: the original author of the code in question, in
-this case Junio. I guess he sees this anyway, but that is really just an
-assumption.
+On Fri, 27 May 2016, Adam Spiers wrote:
 
-On Fri, 27 May 2016, David Kastrup wrote:
+> Description
+> -----------
+> 
+> git-splice(1) non-interactively splices the current branch by removing
+> a range of commits from within it and/or cherry-picking a range of
+> commits into it.  It's essentially just a glorified wrapper around
+> cherry-pick and rebase -i.
 
-> When a parent blob already has chunks queued up for blaming, dropping
-> the blob at the end of one blame step will cause it to get reloaded
-> right away, doubling the amount of I/O and unpacking when processing a
-> linear history.
+It sounds as if you could accomplish the same with
 
-It is obvious from your commit message that you have studied the code
-quite deeply. To make it easier for the reader (which might be your future
-self), it is advisable to give at least a little bit of introduction, e.g.
-what the "parent blob" is.
+	git checkout -b former-commits <split>
+	git checkout -b latter-commits <base>
+	git cherry-pick <split>..HEAD@{2}
 
-I would *guess* that it is the blob corresponding to the same path in the
-parent of the current revision, but that should be spelled out explicitly.
+> Next steps, and the future
+> --------------------------
+> 
+> Obviously, I'd welcome thoughts on whether it would make sense to
+> include this in the git distribution.
 
-> Keeping such parent blobs in memory seems like a reasonable
-> optimization.  It's conceivable that this may incur additional memory
+Far be I from discouraging you to work on these scripts, but I think that
+a really good place for such subcommands is a separate repository, as you
+have it already. There are already some rarely used subcommands in
+libexec/git-core/ cluttering up the space and I would be reluctant to add
+even more subcommands to the default Git installation delivered to every
+user.
 
-This sentence would be easier to read if "It's conceivable that" was
-simply deleted.
+You can *always* just extend the PATH so that git-splice can be found;
+Then `git splice ...` will do exactly what you want. That is e.g. how
+git-flow works. (Of course I hope that you will maintain your scripts
+much, much better than git-flow, i.e. not abandon all users).
 
-> pressure particularly when the history contains lots of merges from
-> long-diverged branches.  In practice, this optimization appears to
-> behave quite benignly,
+> In the longer term however, I'd like to write two more subcommands:
+> 
+>   - git-transplant(1) which wraps around git-splice(1) and enables
+>     easy non-interactive transplanting of a range of commits from
+>     one branch to another.  This should be pretty straightforward
+>     to implement.
 
-Why not just stop here? I say that because...
+This is just cherry-pick with a range...
 
-> and a viable strategy for limiting the total amount of cached blobs in a
-> useful manner seems rather hard to implement.
+>   - git-explode(1) which wraps around git-transplant(1) and
+>     git-deps(1), and automatically breaks a linear sequence of commits
+>     into multiple smaller sequences, forming a commit graph where
+>     ancestry mirrors commit dependency, as mentioned above.  I expect
+>     this to be more difficult, and would probably write it in Python.
 
-... this sounds awfully handwaving. Since we already have reference
-counting, it sounds fishy to claim that simply piggybacking a global
-counter on top of it would be "rather hard".
+You mean something like Darcs on top of Git. Essentially, you want to end
+up with an octopus merge of branches whose commits would conflict if
+exchanged.
 
-> In addition, calling git-blame with -C leads to similar memory retention
-> patterns.
+I implemented the logic for this in a shell script somewhere, so it is not
+*all* that hard (Python not required). But I ended up never quite using it
+because it turns out that in practice, the commit "dependency" (as defined
+by the commit diffs) does not really reflect the true dependency.
 
-This is a red herring. Just delete it. I, for one, being a heavy user of
-`git blame`, could count the number of times I used blame's -C option
-without any remaining hands. Zero times.
+For example, in my work to move large parts of rebase -i into a builtin, I
+have an entire series of commits that do nothing else but prepare the
+sequencer for rebase -i's functionality. Most of these commits touch
+completely separate parts of the code, so they would make independent
+branches in your git-explode command. Yet, that would destroy the story
+that the patch series tells, as the natural flow would get lost.
 
-Besides, -C is *supposed* to look harder. By that argument, you could read
-all blobs in rev-list even when the user did not specify --objects
-"because --objects leads to similar memory retention patterns". So: let's
-just forget about that statement.
+Another major complication is that sometimes the "dependency as per the
+diff" is totally bogus. Take for example Git for Windows' patches on top
+of Git: there are a couple "sub branches" that add global variables to
+environment.c. By the logic of the overlapping (or touching) hunks, these
+sub branches should build on top of each other, right? But they are
+logically completely independent.
 
-The commit message is missing your sign-off.
+So I think that this is a nice exercise, but in practice it will require a
+human to determine which commits really depend on each other.
 
-Also: is there an easy way to reproduce your claims of better I/O
-characteristics? Something like a command-line, ideally with a file in
-git.git's own history, that demonstrates the I/O before and after the
-patch, would be an excellent addition to the commit message.
+> Eventually, the utopia I'm dreaming about would become a reality and
+> look something like this:
+> 
+>     git checkout -b new-feature
+> 
+>     while in_long_frenzied_period_of_hacking; do
+>         # don't worry too much about branch maintenance here, just hack
+>         git add ...
+>         git commit ...
+>     done
+> 
+>     # Break lots of commits from new-feature into new topic branches:
+>     git explode
+> 
+>     # List topic branches
+>     git work list
 
-Further: I would have at least expected some rudimentary discussion why
-this patch -- which seems to at least partially contradict 7c3c796 (blame:
-drop blob data after passing blame to the parent, 2007-12-11) -- is not
-regressing on the intent of said commit.
-
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 21f42b0..2596fbc 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -1556,7 +1556,8 @@ finish:
->  	}
->  	for (i = 0; i < num_sg; i++) {
->  		if (sg_origin[i]) {
-> -			drop_origin_blob(sg_origin[i]);
-> +			if (!sg_origin[i]->suspects)
-> +				drop_origin_blob(sg_origin[i]);
->  			origin_decref(sg_origin[i]);
->  		}
-
-It would be good to mention in the commit message that this patch does not
-change anything for blobs with only one remaining reference (the current
-one) because origin_decref() would do the same job as drop_origin_blob
-when decrementing the reference counter to 0.
-
-In fact, I suspect that simply removing the drop_origin_blob() call might
-result in the exact same I/O pattern.
+You would render me *really* impressed if you could come up with an
+automated way to determine logical dependencies between patches.
 
 Ciao,
 Johannes
