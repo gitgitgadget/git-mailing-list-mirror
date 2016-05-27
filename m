@@ -1,90 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t7610-mergetool.sh test failure
-Date: Thu, 26 May 2016 23:33:27 -0700
-Message-ID: <xmqqshx4row8.fsf@gitster.mtv.corp.google.com>
-References: <CALR6jEhQrSuVAG9=8AC10Lr776KyVurdTkH8QRHH5GWEMk+wNg@mail.gmail.com>
-	<CAPc5daWmhYKNXZJxnZYuCe90vOti7Su-Uab7=9JvvsFYfw1s_Q@mail.gmail.com>
-	<20160525231615.GC2634@sigill.intra.peff.net>
-	<20160526015114.GA12851@sigill.intra.peff.net>
-	<20160527044027.GA26143@gmail.com>
-	<20160527050054.GA25774@sigill.intra.peff.net>
+Subject: Re: [PATCH] add: add --chmod=+x / --chmod=-x options
+Date: Thu, 26 May 2016 23:36:05 -0700
+Message-ID: <xmqqoa7sroru.fsf@gitster.mtv.corp.google.com>
+References: <20160525020609.GA20123@zoidberg>
+	<xmqqh9dm37xk.fsf@gitster.mtv.corp.google.com>
+	<20160527044112.GA31742@zoidberg>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: David Aguilar <davvid@gmail.com>,
-	Armin Kunaschik <megabreit@googlemail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 27 08:33:38 2016
+Cc: git@vger.kernel.org
+To: Edward Thomson <ethomson@edwardthomson.com>
+X-From: git-owner@vger.kernel.org Fri May 27 08:36:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6BKy-0001iP-Si
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 08:33:37 +0200
+	id 1b6BNW-0002R2-MV
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 08:36:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754282AbcE0Gdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 02:33:32 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61976 "EHLO
+	id S1754796AbcE0GgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 02:36:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63225 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753966AbcE0Gdb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 02:33:31 -0400
+	with ESMTP id S1754397AbcE0GgJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 02:36:09 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D3C7146F4;
-	Fri, 27 May 2016 02:33:30 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BFFDC1BA88;
+	Fri, 27 May 2016 02:36:07 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ymbi41jIE3h4afeaQyi2WwXE84M=; b=V/ulMS
-	/HWKlDHT3WVN/ixd7K16nWnob6wL4ZygoGr1IVC5jfIfUybUM6yvh5O+6lxxncom
-	HPuDnwMj08RaEWZ9UhvIa9zsk/dK42EO/LfTMVedrO/AOH39l8nClH1uhrih2RLx
-	MnQ7IqKxqe/Hq2dOehMQDWOcvzT+YhDtacYSY=
+	:content-type; s=sasl; bh=5oCdNUDN2C02oTI2FKY8akMCTG0=; b=XLNqcL
+	m5zqz9LMLalxeYBQGeVee221qe6D9Yukh8QnDyEgDvV39J9I7i1T8Ddh9jYZv73k
+	qirV+Jvs3x3g159orhkDncIOx8G6+09YKQnSDyN8lFZwqA6emqtR4apbKK55N+PX
+	XqbAYXtwj0Us5f7Dz0JBGPYDazQkenEAOslhM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O1W0GnRxONXZX9CLUxEkRmcFamY4K2Cx
-	8A8PvCAZt+wVEt8aeOm9efn/jBgD7BcmG94GWTPr5CwMxgFgciyOhdYHxU56328R
-	kpFYa2DuCf+9dUDHMUYyYi1oIYdU1BdE8ORssxHzIdnqB1wth7R7VujqE1BCmPDp
-	iqb/rhhtGLQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 34CBB146F3;
-	Fri, 27 May 2016 02:33:30 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=yb7nqu15vPEDhrzbmdO4ao9FZUZSZFsR
+	rPyVDXNwIW3B2/1X2JUPXqCq/6RFq44d2pfiCcN7IIOtjqscwGTOq1sOiARTGukV
+	MPpI4We0hS2K4uDuC1XoFa3RNC3R+FwnveTw+REppgkLXT+FrD+blHXVnAv/f4L/
+	+B0SqprLjXg=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B8A121BA87;
+	Fri, 27 May 2016 02:36:07 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B4797146F2;
-	Fri, 27 May 2016 02:33:29 -0400 (EDT)
-In-Reply-To: <20160527050054.GA25774@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 27 May 2016 01:00:54 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 412431BA85;
+	Fri, 27 May 2016 02:36:07 -0400 (EDT)
+In-Reply-To: <20160527044112.GA31742@zoidberg> (Edward Thomson's message of
+	"Thu, 26 May 2016 23:41:12 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: ECFEA6EC-23D4-11E6-9821-D05A70183E34-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 4AE36572-23D5-11E6-80C9-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295738>
 
-Jeff King <peff@peff.net> writes:
+Edward Thomson <ethomson@edwardthomson.com> writes:
 
-> The only one I can think of is that if something leaves cruft in
-> $TMPDIR, it could affect later tests that want to `git add`
-> indiscriminately.
+> However I do not think that this is a common enough action that it needs
+> to be made automatic such that when I `git add foo.rb` it is
+> automatically made executable.  I think that the reduced complexity of
+> having a single mechanism to control executability (that being the
+> execute mode in the index or a tree) is preferable to a gitattributes
+> based mechanism, at least until somebody else makes a cogent argument
+> that the gitattributes approach would be helpful for them.  :)
 
-Or "git ls-files -u", "git clean", etc.  I'd mostly worry about a
-failed test in which a program dies without a chance to clean up
-after itself, and letting the cruft affecting the next test.
+It wasn't a "having to specify it every time sucks; you must do this
+way instead" at all.  I was just gauging if it would be a viable idea
+for a follow-up series to complement your patch.
 
-> OTOH, I do not think putting things in /tmp is hurting anything. I was
-> mostly just surprised by it.
-
-Moving TMPDIR into somewhere under t/ would force us to do more work
-to clean things up, and it would probably be a good thing in the
-longer term.
-
-I just checked my /tmp, and I see a lot of directories whose name
-look like mktemp generated one, with a single socket 's' in them.  I
-wouldn't be surprised if they turn out to be from our tests that
-expect failure, killing a daemon that does not properly clean after
-itself.  People probably would not notice if they are in /tmp, and
-if we moved TMPDIR to the trash, we still wouldn't (because running
-tests successfully without "-d" option will remove the trash
-directory at the end), but if it were dropped somewhere in the
-source tree, we have a better chance of noticing it.
+Thanks.
