@@ -1,199 +1,78 @@
-From: Antoine Queru <Antoine.Queru@ensimag.grenoble-inp.fr>
-Subject: [PATCH v4] upload-pack.c: use of parse-options API
-Date: Fri, 27 May 2016 16:16:28 +0200
-Message-ID: <20160527141628.1677-1-Antoine.Queru@ensimag.grenoble-inp.fr>
-References: <20160523130231.8725-1-Antoine.Queru@ensimag.grenoble-inp.fr>
-Cc: william.duclot@ensimag.grenoble-inp.fr,
-	simon.rabourg@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr,
-	Matthieu.Moy@grenoble-inp.fr, gitster@pobox.com, peff@peff.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 27 16:17:19 2016
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v8 0/9] connect: various cleanups
+Date: Fri, 27 May 2016 16:24:20 +0200
+Message-ID: <a6f4bf06-a52b-dcdf-9407-0c03b8b1dfe1@web.de>
+References: <20160527022756.22904-1-mh@glandium.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, tboegi@web.de
+To: Mike Hommey <mh@glandium.org>, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri May 27 16:24:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6IZh-0003B0-Hl
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 16:17:17 +0200
+	id 1b6Ih2-00066V-N7
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 16:24:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752172AbcE0ORO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 10:17:14 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:56653 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750980AbcE0ORN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 May 2016 10:17:13 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id CD1762570;
-	Fri, 27 May 2016 16:17:04 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id FKi4EXI-mkwm; Fri, 27 May 2016 16:17:04 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id BCA7B256E;
-	Fri, 27 May 2016 16:17:04 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id B6BFC2077;
-	Fri, 27 May 2016 16:17:04 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id G56MQHIqf8Dy; Fri, 27 May 2016 16:17:04 +0200 (CEST)
-Received: from quetutemobile.grenet.fr (eduroam-033140.grenet.fr [130.190.33.140])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 9C1AA2055;
-	Fri, 27 May 2016 16:17:04 +0200 (CEST)
-X-Mailer: git-send-email 2.8.2.403.g31e708f
-In-Reply-To: <20160523130231.8725-1-Antoine.Queru@ensimag.grenoble-inp.fr>
+	id S1754245AbcE0OYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 10:24:48 -0400
+Received: from mout.web.de ([212.227.15.4]:65482 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750927AbcE0OYr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 10:24:47 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0MMFFF-1b9r3K1pHx-007z73; Fri, 27 May 2016 16:24:23
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.1.0
+In-Reply-To: <20160527022756.22904-1-mh@glandium.org>
+X-Provags-ID: V03:K0:ORReHgVwd1tDZ9Uewk5Ho0giSFW0mRUlSashvAvV2+3odzZ3HBD
+ +fRaJ2n99tVT1e4lKIWrSoBAquyGanUh6ksqIVVTYdgrj50xS6lCIf0qX9vFy7HagTZEzEV
+ q6mXBxuQSVrviUk2w1LFLuFgLrYoZg7Qn3AJ+WhWtWnvZbgtDCH6C+WkiAa1MFfHFar+WnX
+ RA71CVOI13UXgerVNDskw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:a3gIuzlvAfI=:lhcX2q0dZfRFK8vq4wwXXo
+ gRYsjYwkpVunkbgpcYXYpd4oYVS9j2cjNHT3u3RcYf7d9ZBMCUv52kd74Momyn2LED8CO7vqb
+ FDAYdamcNplVvyKT6IR1I21o8WR+FXCmStf7SvXI77Zg8bIRgIWHuI/DEJLSH6i1A5lMjmvrT
+ nf9BqtncFv3QIr5xLUCWAhkefXx1h2Clipg+cpHukXA5oZVIvxO6T9t3y/dbRUByr2uWVC9SK
+ rF7FEauu5xAffpuliH38yVYY/LaS3DMMkDAeYbPahAGLc+YVBXWg7ictCICOYz/JKXiooVNsk
+ V0sULIGXJI/p3hXaezqaIYEAloBypwOu8iCTb/wbw8YSY/Qo3fIxOVAmQOIsBBpx2gHe1yxQx
+ ahpbBF/emlMhbdyPg6YHX+DgXq+0b2ST7yePtxT5Trd3lS83Ui6Hebgi5FlZfJTvlemXC23bt
+ 495HcGdgnrGCTTfQz6MxhQavrnH5x6HinKzZS4tEPBOf3xVOxnYM5xpM2x8VwljoSO+99iGCt
+ gmWoJsRJJTpOI8B8PtG/jQ9JLcLrSoYhIiHbL5jU9gsh6VzAEFmwEgeqsEgqqSDewCdp+3rKd
+ zZfqR+eig1K+bDlvhCgZy7AnHwcrShCRHHQfEdp3n3gYLqlM4SUbp/fEtk5uIyw/nfNPa8l75
+ 7L7xgmUMetW4ogjzaNoRu4e4BtMtuYwHoTpWpINCaA4Xsyailtp1ouy3/OjpikBXvaLKVYbHE
+ YVZg7vjDLqmSx8pisxb+7b2hkH6VMIrwUOURHDOaCY9m/Vy7258SnpZYlMTcKzX3OHiKuwKT 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295757>
 
-Option parsing now uses the parser API instead of a local parser.
-Code is now more compact.
-
-Description for --stateless-rpc and --advertise-refs come from
-the commit 42526b4 (Add stateless RPC options to upload-pack,
-receive-pack, 2009-10-30).
-
-Signed-off-by: Antoine Queru <antoine.queru@grenoble-inp.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
----
-
-Change since v3 :
-
-Commit message is now well formated.
-Updated documentation.
-
- Documentation/git-upload-pack.txt | 17 +++++++++--
- upload-pack.c                     | 59 +++++++++++++++++----------------------
- 2 files changed, 40 insertions(+), 36 deletions(-)
-
-diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-upload-pack.txt
-index 0abc806..22ddf8a 100644
---- a/Documentation/git-upload-pack.txt
-+++ b/Documentation/git-upload-pack.txt
-@@ -9,8 +9,8 @@ git-upload-pack - Send objects packed back to git-fetch-pack
- SYNOPSIS
- --------
- [verse]
--'git-upload-pack' [--strict] [--timeout=<n>] <directory>
--
-+'git-upload-pack' [--strict] [--timeout=<n>] [--stateless-rpc]
-+		  [--advertise-refs] <directory>
- DESCRIPTION
- -----------
- Invoked by 'git fetch-pack', learns what
-@@ -31,6 +31,19 @@ OPTIONS
- --timeout=<n>::
- 	Interrupt transfer after <n> seconds of inactivity.
- 
-+--stateless-rpc::
-+	the programs now assume they may perform only a single read-write
-+	cycle with stdin and stdout. This fits with the HTTP POST request
-+	processing model where a program may read the request, write a
-+	response, and must exit.
-+
-+--advertise-refs::
-+	When --advertise-refs is passed as a command line parameter only
-+    	the initial ref advertisement is output, and the program exits
-+    	immediately.  This fits with the HTTP GET request model, where
-+    	no request content is received but a response must be produced.
-+
-+
- <directory>::
- 	The repository to sync from.
- 
-diff --git a/upload-pack.c b/upload-pack.c
-index dc802a0..2d53c7b 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -14,8 +14,12 @@
- #include "sigchain.h"
- #include "version.h"
- #include "string-list.h"
-+#include "parse-options.h"
- 
--static const char upload_pack_usage[] = "git upload-pack [--strict] [--timeout=<n>] <dir>";
-+static const char * const upload_pack_usage[] = {
-+	N_("git upload-pack [options] <dir>"),
-+	NULL
-+};
- 
- /* Remember to update object flag allocation in object.h */
- #define THEY_HAVE	(1u << 11)
-@@ -817,11 +821,21 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
- 	return parse_hide_refs_config(var, value, "uploadpack");
- }
- 
--int main(int argc, char **argv)
-+int main(int argc, const char **argv)
- {
--	char *dir;
--	int i;
-+	const char *dir;
- 	int strict = 0;
-+	struct option options[] = {
-+		OPT_BOOL(0, "stateless-rpc", &stateless_rpc,
-+			 N_("quit after a single request/response exchange")),
-+		OPT_BOOL(0, "advertise-refs", &advertise_refs,
-+			 N_("only the initial ref advertisement is output, program exits immediately")),
-+		OPT_BOOL(0, "strict", &strict,
-+			 N_("do not try <directory>/.git/ if <directory> is no Git directory")),
-+		OPT_INTEGER(0, "timeout", &timeout,
-+			    N_("interrupt transfer after <n> seconds of inactivity")),
-+		OPT_END()
-+	};
- 
- 	git_setup_gettext();
- 
-@@ -829,40 +843,17 @@ int main(int argc, char **argv)
- 	git_extract_argv0_path(argv[0]);
- 	check_replace_refs = 0;
- 
--	for (i = 1; i < argc; i++) {
--		char *arg = argv[i];
--
--		if (arg[0] != '-')
--			break;
--		if (!strcmp(arg, "--advertise-refs")) {
--			advertise_refs = 1;
--			continue;
--		}
--		if (!strcmp(arg, "--stateless-rpc")) {
--			stateless_rpc = 1;
--			continue;
--		}
--		if (!strcmp(arg, "--strict")) {
--			strict = 1;
--			continue;
--		}
--		if (starts_with(arg, "--timeout=")) {
--			timeout = atoi(arg+10);
--			daemon_mode = 1;
--			continue;
--		}
--		if (!strcmp(arg, "--")) {
--			i++;
--			break;
--		}
--	}
-+	argc = parse_options(argc, argv, NULL, options, upload_pack_usage, 0);
-+	
-+	if (argc != 1)
-+		usage_with_options(upload_pack_usage, options);
- 
--	if (i != argc-1)
--		usage(upload_pack_usage);
-+	if (timeout)
-+		daemon_mode = 1;
- 
- 	setup_path();
- 
--	dir = argv[i];
-+	dir = argv[0];
- 
- 	if (!enter_repo(dir, strict))
- 		die("'%s' does not appear to be a git repository", dir);
--- 
-2.8.2.403.g31e708f
+On 27.05.16 04:27, Mike Hommey wrote:
+> Changes from v7:
+> - Fixed comments.
+> 
+> Mike Hommey (9):
+>   connect: document why we sometimes call get_port after
+>     get_host_and_port
+>   connect: call get_host_and_port() earlier
+>   connect: re-derive a host:port string from the separate host and port
+>     variables
+>   connect: make parse_connect_url() return separated host and port
+>   connect: group CONNECT_DIAG_URL handling code
+>   connect: make parse_connect_url() return the user part of the url as a
+>     separate value
+>   connect: change the --diag-url output to separate user and host
+>   connect: actively reject git:// urls with a user part
+>   connect: move ssh command line preparation to a separate function
+> 
+>  connect.c             | 235 +++++++++++++++++++++++++++++---------------------
+>  t/t5500-fetch-pack.sh |  42 ++++++---
+>  2 files changed, 170 insertions(+), 107 deletions(-)
+> 
+Is the whole series somewhere on a public repo ?
+No major remarks so far, if possible, I would like
+to have a look at the resulting connect.c
