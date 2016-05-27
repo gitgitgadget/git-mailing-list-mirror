@@ -1,118 +1,98 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH] t6030: explicitly test for bisection cleanup
-Date: Fri, 27 May 2016 23:27:12 +0530
-Message-ID: <CAFZEwPMyts8msEgdHOiPfC-_HEXp8SJ7-8FQScr-af=5tSxq7w@mail.gmail.com>
-References: <1463134469-26071-1-git-send-email-pranit.bauva@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] worktree: allow "-" short-hand for @{-1} in add command
+Date: Fri, 27 May 2016 11:01:31 -0700
+Message-ID: <xmqqr3cnqt1g.fsf@gitster.mtv.corp.google.com>
+References: <vpqshx5cb51.fsf@anie.imag.fr>
+	<1464263662-1290-1-git-send-email-jordan.de-gea@grenoble-inp.org>
+	<xmqqshx4vedr.fsf@gitster.mtv.corp.google.com>
+	<9975E0C6-7BCC-4D80-BBC6-2C0BAB13D3E6@grenoble-inp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Pranit Bauva <pranit.bauva@gmail.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	chriscool@gmail.com
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 27 19:57:20 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>,
+	Samuel Groot <samuel.groot@grenoble-inp.org>,
+	Tom Russello <tom.russello@grenoble-inp.org>,
+	Matthieu.Moy@grenoble-inp.fr
+To: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
+X-From: git-owner@vger.kernel.org Fri May 27 20:01:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6M0d-0007WO-Lg
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 19:57:20 +0200
+	id 1b6M4q-0000pP-3J
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 20:01:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932996AbcE0R5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 13:57:15 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:36461 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932516AbcE0R5N (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 13:57:13 -0400
-Received: by mail-yw0-f194.google.com with SMTP id l126so7220977ywe.3
-        for <git@vger.kernel.org>; Fri, 27 May 2016 10:57:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=EHef0TVqXikg+ltjmq0lU62MoIdBVLIho043eHjXfgs=;
-        b=j/rq9vE8IRrw1Rn8WN3Mu5MKn7XRLe60XZ4FUKjQU8TfrmlOG0Gt5PDya4Y+agD33M
-         XLHGI466nBiCIPeK4a8KIaCj+aKgmzLelvvSYDcU7+HpJvBYqrcENqkqqkD8NazF5t3X
-         LpiMBQa2iXYkshbCAw/bJbwnLUPmrn5MAZX1SLIDzuqgJZHlcFq8jPsD+NGL5z08aDlm
-         ZFeJzuFmywhuIpWzydrmp1/nZmXtnSmJUvf6lGZM+hdEZJOlv6ZFl7lsu4JpA17Rs6QE
-         PuI11PwtPnSOdbq8rpWfudEwZegI+/iNiqmqRmkPYt0b5Hnjc0cwX/tPp7zL1iI7H4Fp
-         2LNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=EHef0TVqXikg+ltjmq0lU62MoIdBVLIho043eHjXfgs=;
-        b=Xz8PKJRTUqONGUm3hhxW86M6+qPWlts6m5qsw56mTh5NNu4aPTipO1xcfBAWYooJ8o
-         fQwvKncOU+kGJEaaOv+hKqs0O/FB7sLNrqSAZdmQIGecJEEo2w9lFYn1rHiqRzCh9foY
-         W3l6v3CV/wxlEIEbnxDmEr1Dd7WaWEo/nq6VYswBA9CMgkgjWe6HEj98rXnHdeVrHQwr
-         S6c9B8IqfSOTxTkpim94T2wLsAj0xntsxi943g1CzBxGhvvnzEO9GMAa6DfhMBhF/GZ7
-         ttKddivIQ3IEF5eKLI03GNCaLen8E1GChCrkBerhOqKa8Gx2k4T4nafeUFr3buu7isPM
-         ZZ2g==
-X-Gm-Message-State: ALyK8tIjsyuZS95rjjYxCULXr6RoBgex0FzwgOAfKk+ra6nvcUFwAHDuwjeWdn0SwZvRsPrJmwkqE2Jg9bPrBA==
-X-Received: by 10.129.134.133 with SMTP id w127mr9093874ywf.252.1464371832477;
- Fri, 27 May 2016 10:57:12 -0700 (PDT)
-Received: by 10.129.124.132 with HTTP; Fri, 27 May 2016 10:57:12 -0700 (PDT)
-In-Reply-To: <1463134469-26071-1-git-send-email-pranit.bauva@gmail.com>
+	id S1753205AbcE0SBg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 May 2016 14:01:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52044 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750927AbcE0SBf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 May 2016 14:01:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 97F721E301;
+	Fri, 27 May 2016 14:01:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=asxVbjc1FPrl
+	U44jcByrMD/plaQ=; b=RrZgRalbV+8hNGWCUf3AgvqgHMpCOqmCLPhnocbUmADr
+	OBPOWvzqUc3zLjxyY7ELMjOvic2jfS1n5ZZ1JGc8euU96WAh7N+vugLzuK5g0Jlr
+	xRShDzq3MEamlr7EwwKjSAg/JBSDRA0bvLKbLYZouxNEvDA+VI+OwYYbaQLUyAo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yjr35q
+	p19LbhKtgBdDegrkoVq0XSrIZRPP4rnJ8ZT2jQxLoXTta8kzc9Qm7g+swnTeKZeJ
+	CiVG9g+qupM4pf1L72SSTH0SF9mz6yV2IXuVx1JGRsKN/0DlHwRB0EhI4V5sxsjP
+	nG4aXx8e7cFBsk81+1w8gaS8at9SGNBwnb40A=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8EC911E300;
+	Fri, 27 May 2016 14:01:34 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 03C971E2FF;
+	Fri, 27 May 2016 14:01:34 -0400 (EDT)
+In-Reply-To: <9975E0C6-7BCC-4D80-BBC6-2C0BAB13D3E6@grenoble-inp.org> (Jordan
+	DE's message of "Fri, 27 May 2016 14:43:47 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0C612CF2-2435-11E6-8B85-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295780>
 
-On Fri, May 13, 2016 at 3:44 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> This is not an improvement in the test coverage but it helps in making
-> it explicit as to know what exactly is the error as other tests are
-> focussed on testing other things but they do indirectly test for this.
->
-> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
->
-> ---
-> I faced this problem while converting `bisect_clean_state` and the tests
-> where showing breakages but it wasn't clear as to where exactly are they
-> breaking. This will patch  will help in that. Also I tested the test
-> coverage of the test suite before this patch and it covers this (I did
-> this by purposely changing names of files in git-bisect.sh and running
-> the test suite).
->
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> ---
->  t/t6030-bisect-porcelain.sh | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->
-> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-> index e74662b..1fb5ad9 100755
-> --- a/t/t6030-bisect-porcelain.sh
-> +++ b/t/t6030-bisect-porcelain.sh
-> @@ -894,4 +894,21 @@ test_expect_success 'bisect start takes options and revs in any order' '
->         test_cmp expected actual
->  '
->
-> +test_expect_success 'git bisect reset cleans bisection state properly' '
-> +       git bisect reset &&
-> +       git bisect start &&
-> +       git bisect good $HASH1 &&
-> +       git bisect bad $HASH4 &&
-> +       git bisect reset &&
-> +       test -z "$(git for-each-ref "refs/bisect/*")" &&
-> +       ! test -s "$GIT_DIR/BISECT_EXPECTED_REV" &&
-> +       ! test -s "$GIT_DIR/BISECT_ANCESTORS_OK" &&
-> +       ! test -s "$GIT_DIR/BISECT_LOG" &&
-> +       ! test -s "$GIT_DIR/BISECT_RUN" &&
-> +       ! test -s "$GIT_DIR/BISECT_TERMS" &&
-> +       ! test -s "$GIT_DIR/head-name" &&
-> +       ! test -s "$GIT_DIR/BISECT_HEAD" &&
-> +       ! test -s "$GIT_DIR/BISECT_START"
-> +'
-> +
->  test_done
-> --
-> 2.8.2
->
+Jordan DE GEA <jordan.de-gea@grenoble-inp.org> writes:
 
-Anyone any comments?
+>>> +test_expect_success '"add" using shorthand - fails when no previou=
+s branch' '
+>>> +	test_must_fail git worktree add existing -
+>>> +'
+>>=20
+>> Just an observation, but the error message we would see here might
+>> be interesting.
+>
+> Of course, that=E2=80=99s useful to be sure of the error, I will do i=
+n next preroll.
 
-Regards,
-Pranit Bauva
+That was not what I meant.  The exit status being non-zero is what
+we primarily care about.  The exact phrasing of the error message is
+much less important and in general we shouldn't enforce "the error
+message must remain so" in the test.
+
+If you observe the error message from this test, e.g. by running it
+with "-v", I suspect that you would see the message would complain
+about "@{-1}".
+
+I just wanted to make sure that you saw it and thought about its
+ramifications.
+
+It is perfectly fine by me (others might disagree, though) if your
+conclusion after thinking about it is "Even though the user may be
+surprised to get complaints for "@{-1}" that she never gave to the
+command (she gave "-"), because we clearly document that "-" is a
+mere synonym/short-hand for @{-1}, it is OK".  I still want to see
+that behaviour justified in the proposed commit log message.
+
+And that is why I said it "might be interesting".
