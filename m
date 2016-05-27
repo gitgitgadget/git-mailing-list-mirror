@@ -1,126 +1,87 @@
-From: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
-Subject: [PATCH v2] worktree: allow "-" short-hand for @{-1} in add command
-Date: Fri, 27 May 2016 15:17:08 +0200
-Message-ID: <1464355028-10574-1-git-send-email-jordan.de-gea@grenoble-inp.org>
-References: <9975E0C6-7BCC-4D80-BBC6-2C0BAB13D3E6@grenoble-inp.org>
-Cc: git@vger.kernel.org, erwan.mathoniere@grenoble-inp.org,
-	samuel.groot@grenoble-inp.org, tom.russello@grenoble-inp.org,
-	Matthieu.Moy@grenoble-inp.fr,
-	Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri May 27 15:17:54 2016
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] mingw: make isatty() recognize MSYS2's pseudo terminals
+ (/dev/pty*)
+Date: Fri, 27 May 2016 15:33:51 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1605271529540.4449@virtualbox>
+References: <f1408371e14ff10539990ad710681ef17f29fea1.1461770158.git.johannes.schindelin@gmx.de> <alpine.DEB.2.20.1605261525400.4449@virtualbox> <xmqqvb20wy5x.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Cc: Karsten Blees <blees@dcon.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 27 15:34:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6HeD-0004FJ-Fy
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 15:17:54 +0200
+	id 1b6Hu9-00038d-6q
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 15:34:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754167AbcE0NRs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 09:17:48 -0400
-Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:52599 "EHLO
-	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754108AbcE0NRr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 09:17:47 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id C657B2570;
-	Fri, 27 May 2016 15:17:43 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jZzLZZ1gF3AJ; Fri, 27 May 2016 15:17:43 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id B7185256E;
-	Fri, 27 May 2016 15:17:43 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id B0D302077;
-	Fri, 27 May 2016 15:17:43 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xdFt7ipv1J0d; Fri, 27 May 2016 15:17:43 +0200 (CEST)
-Received: from eduroam-032166.grenet.fr (eduroam-032166.grenet.fr [130.190.32.166])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 976FB2055;
-	Fri, 27 May 2016 15:17:43 +0200 (CEST)
-X-Mailer: git-send-email 2.7.4 (Apple Git-66)
-In-Reply-To: <9975E0C6-7BCC-4D80-BBC6-2C0BAB13D3E6@grenoble-inp.org>
+	id S1753035AbcE0NeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 09:34:11 -0400
+Received: from mout.gmx.net ([212.227.17.21]:53241 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750980AbcE0NeK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 09:34:10 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MTfZc-1axSC00Rf6-00QReL; Fri, 27 May 2016 15:33:52
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqvb20wy5x.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:1RsSjW2BceqmScsec18cx+WtCvpA/gO+OLKIsSIehAy//hRFDNj
+ CGI7a/Y29Y82CO3aaldmEYdLgUMHTRrocQNfYJJDgXUlJ2nDAYOoZQVKbq4Os8kI3DtTsSI
+ x2j6RbxBGyqK7F+2jy9MUEgFTXVDByxdixGb1YB2pqEhhfD4ASuRm4GDhall+x+iaOUpQxW
+ yfpnYBTMbqoD/AYc0bzhA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:X2UcfcznFMQ=:r1nQdJjUm2EsIYaTNoNgPB
+ pUfwgveP1+GPDe0oEvQiHjLY4UnYjjmHSt7EJJiPMDBH+gYWewYcmog+mxNEbJHCe6z8UFd0J
+ mtQE8lbJ5l37oarlqp1Fk0QV7go0cDLVkFXXhu0Kvk1W3P0yt9PAJHKRU6/ZecUT4JmNMdUzV
+ AikIqyBtlbhP7OmFAitwVKJUhE7YN5sSpnTcIKoR7d8IxNjdGlNcYOe/roLPcFmxpQZ+kHriE
+ mpw4EPTpjH9Dnq6qCKQX/2+Kaw8oZUjADnCAZ6CayEFuece67KesqQEA50qm9/gu1uunlHtAJ
+ Y/YLlzZUvAL3FM+uHpE21uVp9rI0WhpHOxRNm3ruzi3f6fFUaekRxdH6oVwPCE4GCrqBxbfqF
+ 9oDNS+dW8820PmMRA6A8zuoedrBdrJo9yuHNT0gQ2Pv7iBk5aY/zEGgPQEHPhVTBp5j7ryzOL
+ NIV3Ikpb7d3CJkpQ5LmX5p8MB5iD41OjuRC5XtXU5JK+xqHHvXRxYWCPsZsJxZFhIOuxavnzV
+ cXxIwTBgQrxiJrANeRo2o5VrPj3hQwKwTUmc011uR/GSgCgQfdPdaT3L2tM/NsG0Fc9VV5uvb
+ ryaMjXr5c3X2f1MCZ+60zZZEolrNFcRS46m6K7EDvFYDVAjoRArsy6E2NCWF804R7zpfhQImS
+ BqHWFgltfyOGtL5YSNPfrVwPMQOMl4KTCvpn3fXhJ7wEWbJ3x7Y+PkaJGjiXVpOv31GY1pcAF
+ 7LF4n1yUimzJi5ig+fQa/FMIvmkpQGeMkLToHAapksvSRlkBwu8TWCdSa8LTkgEzSCzeElow 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295750>
 
-Since `git worktree add` uses `git checkout` when `[<branch>]` is used,
-and `git checkout -` is already supported, it makes sense to allow the
-same shortcut in `git worktree add`.
+Hi Junio,
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Signed-off-by: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
----
-Changes since v1:
-  - improved tests.
-  - improved documentation.
+On Thu, 26 May 2016, Junio C Hamano wrote:
 
- Documentation/git-worktree.txt |  3 ++-
- builtin/worktree.c             |  3 +++
- t/t2025-worktree-add.sh        | 18 ++++++++++++++++++
- 3 files changed, 23 insertions(+), 1 deletion(-)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > I do not see this patch in 'pu'... Anything I can do to get this into
+> > 'master' eventually?
+> 
+> The reason why I left it in my inbox was because I couldn't tell if
+> this was a final submission with concensus among Git developers on
+> Windows, or I should be giving a chance to comment to some folks who
+> work on Windows port but are not necessarily closely communicating
+> with you.
+> 
+> If the message were Cc'ed to J6t, I would probably have queued it on
+> 'pu' and marked it as "Will merge after waiting for a few days" in
+> What's cooking.
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index c622345..8358a3e 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -48,7 +48,8 @@ add <path> [<branch>]::
- 
- Create `<path>` and checkout `<branch>` into it. The new working directory
- is linked to the current repository, sharing everything except working
--directory specific files such as HEAD, index, etc.
-+directory specific files such as HEAD, index, etc. `-` may also be 
-+specified as `<branch>`; it is synonymous with `@{-1}`.
- +
- If `<branch>` is omitted and neither `-b` nor `-B` nor `--detached` used,
- then, as a convenience, a new branch based at HEAD is created automatically,
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index d8e3795..d800d47 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -340,6 +340,9 @@ static int add(int ac, const char **av, const char *prefix)
- 	path = prefix ? prefix_filename(prefix, strlen(prefix), av[0]) : av[0];
- 	branch = ac < 2 ? "HEAD" : av[1];
- 
-+	if (!strcmp(branch, "-"))
-+		branch = "@{-1}";
-+
- 	opts.force_new_branch = !!new_branch_force;
- 	if (opts.force_new_branch) {
- 		struct strbuf symref = STRBUF_INIT;
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index 3acb992..c4f5177 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -18,6 +18,24 @@ test_expect_success '"add" an existing empty worktree' '
- 	git worktree add --detach existing_empty master
- '
- 
-+test_expect_success '"add" using shorthand - fails when no previous branch' '
-+	echo "fatal: invalid reference: @{-1}" >expect &&
-+	test_must_fail git worktree add existing_short - 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '"add" using - shorthand' '
-+	git checkout -b newbranch &&
-+	echo hello >myworld &&
-+	git add myworld &&
-+	git commit -m myworld &&
-+	git checkout master &&
-+	git worktree add short-hand - &&
-+	echo refs/heads/newbranch >expect &&
-+	git -C short-hand rev-parse --symbolic-full-name HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '"add" refuses to checkout locked branch' '
- 	test_must_fail git worktree add zere master &&
- 	! test -d zere &&
--- 
-2.7.4 (Apple Git-66)
+Hannes does not use Git for Windows' SDK, but instead uses an old
+MSys-based development environment that predates even msysGit (which was
+the SDK used to develop Git for Windows 1.x). His environment most
+notably does *not* use MinTTY, and therefore is unaffected by the bug that
+this patch fixes.
+
+That was the entire reasoning why I did not ask Hannes to review this
+patch: it is unlikely that he knows about the issue, let alone about the
+correctness of the implementation of this patch.
+
+The implementation relies on some really low-level knowledge of the
+Windows internals, which Karsten reverse-engineered and I verified.
+
+Thanks,
+Dscho
