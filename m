@@ -1,59 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] log: document the --decorate=auto option
-Date: Fri, 27 May 2016 13:17:36 -0700
-Message-ID: <xmqqy46vp867.fsf@gitster.mtv.corp.google.com>
-References: <57486E12.7030907@ramsayjones.plus.com> <57489366.507@xiplink.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Fri May 27 22:17:51 2016
+From: Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH] Documentation: add instructions to help setup gmail 2FA
+Date: Fri, 27 May 2016 16:39:57 -0400
+Message-ID: <1464381597-27634-1-git-send-email-rappazzo@gmail.com>
+Cc: gitster@pobox.com, Michael Rappazzo <rappazzo@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 27 22:40:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6OCc-0004tf-8Y
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 22:17:50 +0200
+	id 1b6OYr-0004GB-FY
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 22:40:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756575AbcE0URl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 16:17:41 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59098 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756572AbcE0URk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 16:17:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 24EC91D709;
-	Fri, 27 May 2016 16:17:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N7WuDyLeDcKHEHRrtjsCNHTD4jw=; b=Ux6nfW
-	DzEHTOhhDMuKzJQZTX8M+LcHtrAg3HHHPEtMFs6mk55sdfRYtmmpO7rDeucVq3KO
-	ek9h9tiSmuLOhCXTyHCHIwMAZRtOejNFqkW0nSUqenfLM348WjrNbglYreOQc6Sl
-	qq9r7ZtTwl3QxT5L7yvez+9t6joGJMoan+f/E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FU7ep4r63frdeUs/XNznIGr53kiP204d
-	7VnPRemQLdcuB601vEEKjiTP+4iba6yzNBVQLHqFWITBEZpm7HAQNiCMZ6lSgCKu
-	PBznzJRlTdbj7zaeZMfV+xp3f+zXr274jrMcErmeR9SFp9cicixiHxfkNt9nl3qy
-	smL0+2N4Ui4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C5061D708;
-	Fri, 27 May 2016 16:17:39 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8B9741D707;
-	Fri, 27 May 2016 16:17:38 -0400 (EDT)
-In-Reply-To: <57489366.507@xiplink.com> (Marc Branchaud's message of "Fri, 27
-	May 2016 14:35:18 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0ECB9104-2448-11E6-96E7-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S932272AbcE0UkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 16:40:23 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:34028 "EHLO
+	mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964799AbcE0UkN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 16:40:13 -0400
+Received: by mail-it0-f68.google.com with SMTP id k76so640098ita.1
+        for <git@vger.kernel.org>; Fri, 27 May 2016 13:40:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=OThrtWXHII236Jl8CcQQHeEn6TtVeRf/80cKZan4U3w=;
+        b=wAz8JWaFjzs6rLMoFN6naFsC+L44hlGDBY+OpT+0vOEW/XsGgqsFD7BDQWHhY8oouB
+         QkIsYh0OWAzdJ+k+iQAxgEvOQMPpXMuKttc0+6qzxNDgJFLmJqsbsRfiFSCF6mzGST0B
+         xgkjEjtWRPAW/u1Kbb64f2hvbrB8/AXIpG79+zzsdy+4QzzCUrcmZ2+dspyD+pIeHVOQ
+         gIxBbp6TKo/pE1nNgOj9QLdcFpS6eLfK8ySZkNkFJOVfP0MAcMa/xm3JQ+R+Ov9eNI99
+         zuwXHN6sjW1PRZCyjFdBR3o0dq2Npd59n3JLcRcl+mo+JvMD4yCl9auD/Cbx0QQYlXaH
+         UAvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=OThrtWXHII236Jl8CcQQHeEn6TtVeRf/80cKZan4U3w=;
+        b=Z8m9lHQ/Hwtan8n8EAxlLgKgiICks1yZO0B6/iosPoZj2Zgw4uMHj9EhtGTB6/PuDP
+         aru247j2t1nYYmf95++S2yixo3PL2DftcDBPFl9LpK2UigRjdMMsjjrKW803cCBwd7Zx
+         qwGfxoCwCxRH6AlwSyCr28T/FET2OFb7rPnicwwYP9uEJcoOtE1wEjhiuu1eZFu5WAAC
+         gwfXGKFX5l+nT408rwI3E9gChjx3v3vP3cPHsXdtMLU4FLUw7C1410+eIhmiK2bwcEGz
+         Yez74qPlXwt+gVSJxeFgnH595z3cCWYb+P9a+BCafsxyk2sZQsji7Rk425ayH363dejl
+         uLiA==
+X-Gm-Message-State: ALyK8tLxvRFPvLDaNlO9iWiIVSR73JA0DAMqqfZDPEcs5j6o68/pKda3efkbtjOf3EbEfg==
+X-Received: by 10.36.120.83 with SMTP id p80mr513814itc.46.1464381612587;
+        Fri, 27 May 2016 13:40:12 -0700 (PDT)
+Received: from localhost.localdomain (86.sub-70-208-86.myvzw.com. [70.208.86.86])
+        by smtp.gmail.com with ESMTPSA id r206sm3178881itc.3.2016.05.27.13.39.55
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Fri, 27 May 2016 13:40:12 -0700 (PDT)
+X-Mailer: git-send-email 2.8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295794>
 
-Thanks, both.
+For those who use two-factor authentication with gmail, git-send-email
+will not work unless it is setup with an app-specific password. The
+example for setting up git-send-email for use with gmail will now
+include information on generating and storing the app-specific password.
+---
+ Documentation/git-send-email.txt | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 771a7b5..edbba3a 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -450,6 +450,19 @@ edit ~/.gitconfig to specify your account settings:
+ 		smtpUser = yourname@gmail.com
+ 		smtpServerPort = 587
+ 
++If you have multifactor authentication setup on your gmail acocunt, you will
++need to generate an app-specific password for use with 'git send-email'. Visit
++https://security.google.com/settings/security/apppasswords to setup an
++app-specific password.  Once setup, you can store it with the credentials
++helper:
++
++	$ git credential fill
++	protocol=smtp
++	host=smtp.gmail.com
++	username=youname@gmail.com
++	password=app-password
++
++
+ Once your commits are ready to be sent to the mailing list, run the
+ following commands:
+ 
+-- 
+2.8.0
