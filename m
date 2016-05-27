@@ -1,103 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/2] rev-parse: fix some options when executed from subpath of main tree
-Date: Fri, 27 May 2016 11:50:35 -0700
-Message-ID: <xmqqa8jbqqro.fsf@gitster.mtv.corp.google.com>
-References: <1464261556-89722-1-git-send-email-rappazzo@gmail.com>
-	<1464261556-89722-3-git-send-email-rappazzo@gmail.com>
-	<20160526132611.GA2736@glandium.org>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] t6030: explicitly test for bisection cleanup
+Date: Fri, 27 May 2016 21:00:17 +0200
+Message-ID: <CAP8UFD0NfUZa_SH7Q9WizV0=5DbjGq58sOU2COe5NSPSSn=+-Q@mail.gmail.com>
+References: <1463134469-26071-1-git-send-email-pranit.bauva@gmail.com>
+	<CAFZEwPMyts8msEgdHOiPfC-_HEXp8SJ7-8FQScr-af=5tSxq7w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Rappazzo <rappazzo@gmail.com>, git@vger.kernel.org,
-	pclouds@gmail.com, szeder@ira.uka.de, sunshine@sunshineco.com
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Fri May 27 20:50:44 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Lars Schneider <larsxschneider@gmail.com>, chriscool@gmail.com
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 27 21:00:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6MqJ-0001RO-Q4
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 20:50:44 +0200
+	id 1b6Mzg-0004rG-27
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 21:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754998AbcE0Suj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 14:50:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52038 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754774AbcE0Suj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 14:50:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 176501EA4E;
-	Fri, 27 May 2016 14:50:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MCrKMAbhkla8vn3YQqinP9OpAak=; b=mm4Djl
-	LrEfMkCHS1YVJy5H+Ih2sMpmC1nDS4mRVwEYzKZ8lth1E96OBrlX51RVfyBMneoI
-	Hjx6XptpRaXzJQUWOXsXleE8DiSEqJeAMLIP6sIWqw47zt7RwVIKs5YFA+825FGw
-	F88nV2JIe88b5PmaDB7PyZWiZEupdYCaH0vsA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HAL8fgtAG2H2ss2a1ulH9njPvkq6F32y
-	jOtIfGeMwPxwnISehTKR7+G8abE3wtft5Axv86XlQ/Jr5i99EE3jH4FPivuSdXAG
-	1jb776vMot6mjT6fg0zMqBIQt5azz/hiNyHhlClTL2sNlN6YyeDfaajorqpM5vNW
-	NQ9kGe6yAO8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 07C511EA4D;
-	Fri, 27 May 2016 14:50:38 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6D0621EA4C;
-	Fri, 27 May 2016 14:50:37 -0400 (EDT)
-In-Reply-To: <20160526132611.GA2736@glandium.org> (Mike Hommey's message of
-	"Thu, 26 May 2016 22:26:11 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E6CBD27E-243B-11E6-9C09-D05A70183E34-77302942!pb-smtp2.pobox.com
+	id S1755539AbcE0TAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 15:00:20 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:35416 "EHLO
+	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754934AbcE0TAT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 15:00:19 -0400
+Received: by mail-wm0-f46.google.com with SMTP id a136so4276550wme.0
+        for <git@vger.kernel.org>; Fri, 27 May 2016 12:00:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=BgOptZpuPpVCEDFBmTJJoyeViL35YupYA6yp8yPeYz8=;
+        b=Qr1rHQtJ2EA6R/0/z9DdFHsWV1Gu6x05Icmkc0ytX2TfXCpMslQVeRVq/1XJTciO8f
+         Qg0Kt28lFZJ30b/By+bpPD1pGu3ZzKucTgzHW0MYUxmuO+xk9/My6D6KbTh0gnQCAPqJ
+         Gpox3exfeqw1BKgEyrUSm9hgylIXn1vPACk1GN6r7+wF3mlnOIEzcK6Xihm1m/GVf43V
+         zlUaW4dZ4mFwHtNCinO4UUy7C8Zt/fJdiokm8VZqvdlsIhtdsOfgHz8eOybJ4or7b7H+
+         osCXX7BpVMEbsZBzsj0pLyFsUg7vGgrK6Ry9hBNdszJLtHH8hkUh/mrMOz0FXPaJDOSx
+         lYrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=BgOptZpuPpVCEDFBmTJJoyeViL35YupYA6yp8yPeYz8=;
+        b=IBWiBSq6qjHBfqCkrsZVD9sNoSg7/7epl+4SXB4Ws7vKAuqvZlzMf05m/pru/hTFYI
+         lLm2Z5xCIgalVhXuj+A8pfL8TcUZmqjJwJaPqIoGz68Zqv3gmmgAHBI2VoYbfTrh1LL7
+         K3PRmFVznaEsfR+ibt3He9sBJLtmy5H9hF2dEE/AplgomB6FZxv9ghGj3AC+QLst33OV
+         hHB81PYAwoQmCOIeEWkLQNkPIBr2XmJVATAIUZ3+0oIjFB+4hTGrWBhkvTFAHmWGNRsM
+         iK2U7iQpiD8fA1Hehz0COD+qlXEAtu5zPpAreVwm+GGKYZLqltv3kSyPHolq+xb62VQM
+         cW6Q==
+X-Gm-Message-State: ALyK8tLW7jsp0vnaRrBy6HwjyVQaWOmykOFLDzHEhCmqsAVPAljl1Qs9VVbwowxPXtWbyPsMAX72oWkkcvdIcQ==
+X-Received: by 10.28.94.194 with SMTP id s185mr164001wmb.62.1464375617784;
+ Fri, 27 May 2016 12:00:17 -0700 (PDT)
+Received: by 10.194.148.146 with HTTP; Fri, 27 May 2016 12:00:17 -0700 (PDT)
+In-Reply-To: <CAFZEwPMyts8msEgdHOiPfC-_HEXp8SJ7-8FQScr-af=5tSxq7w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295786>
 
-Mike Hommey <mh@glandium.org> writes:
-
-> On Thu, May 26, 2016 at 07:19:16AM -0400, Michael Rappazzo wrote:
->> Executing `git-rev-parse` with `--git-common-dir`, `--git-path <path>`,
->> or `--shared-index-path` from the root of the main worktree results in
->> a relative path to the git dir.
->> 
->> When executed from a subdirectory of the main tree, it can incorrectly
->> return a path which starts 'sub/path/.git'.  Change this to return the
->> proper relative path to the git directory.
->> 
->> Related tests marked to expect failure are updated to expect success
+On Fri, May 27, 2016 at 7:57 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
 >
-> As mentioned previously (but late in the thread), I don't get why this
-> one case of --git-common-dir should not return the same thing as
-> --git-dir, which is an absolute directory. Especially when there is
-> other flag telling you whether you are in the main or another worktree,
-> so comparing the output for --git-dir and --git-common-dir is the
-> easiest way to do so, but then you have to normalize them on their own
-> because git returns different values pointing to the same directory.
+> Anyone any comments?
 
-Sounds like a sensible line of thought.
+Maybe you could add this patch to, or squash it into, the patch that
+convert bisect_clean_state to C.
 
-A possible/plausible counter-argument from Michael's side that would
-be equally sensible might run along the lines of:
-
-    An expected use of "git rev-parse --commit-dir" is to store the
-    output in $GIT_DIR/$X so that the layout the worktree machinery
-    expects can be set up by scripted Porcelains without using "git
-    worktree".  Making the value stored in $GIT_DIR/$X relative to
-    $Y would help for such and such reasons.
-
-While making it easier to build a competing UI like that is a
-sensible goal, I do not think of what that $X or $Y are, and I do
-not think of what that "such and such reasons" are, either.
-
-And the cost of having to compare absolute --git-dir output with
-relative --git-common-dir (i.e. the justification for Mike's
-proposal to make --git-common-dir absolute) and the cost of having
-to turn absolute output from --git-common-dir to a path relative to
-$Y (i.e. the justification of making it relative in the hypothetical
-counter-argument) would be about the same, so it does not sound very
-compelling after all.
+Thanks,
+Christian.
