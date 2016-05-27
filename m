@@ -1,112 +1,59 @@
-From: Eric Wong <e@80x24.org>
-Subject: Re: [WIP-PATCH 0/2] send-email: refactor the email parser loop
-Date: Fri, 27 May 2016 20:14:36 +0000
-Message-ID: <20160527201436.GA16547@dcvr.yhbt.net>
-References: <20160527140104.11192-1-samuel.groot@grenoble-inp.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] log: document the --decorate=auto option
+Date: Fri, 27 May 2016 13:17:36 -0700
+Message-ID: <xmqqy46vp867.fsf@gitster.mtv.corp.google.com>
+References: <57486E12.7030907@ramsayjones.plus.com> <57489366.507@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, erwan.mathoniere@grenoble-inp.org,
-	jordan.de-gea@grenoble-inp.org, matthieu.moy@grenoble-inp.fr,
-	gitster@pobox.com, aaron@schrab.com
-To: Samuel GROOT <samuel.groot@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Fri May 27 22:14:22 2016
+Content-Type: text/plain
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Fri May 27 22:17:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6O9B-0003ol-TX
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 22:14:18 +0200
+	id 1b6OCc-0004tf-8Y
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 22:17:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756519AbcE0UON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 16:14:13 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:52158 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751575AbcE0UON (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 16:14:13 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5204A1FCC6;
-	Fri, 27 May 2016 20:14:11 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20160527140104.11192-1-samuel.groot@grenoble-inp.org>
+	id S1756575AbcE0URl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 16:17:41 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59098 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756572AbcE0URk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 16:17:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 24EC91D709;
+	Fri, 27 May 2016 16:17:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=N7WuDyLeDcKHEHRrtjsCNHTD4jw=; b=Ux6nfW
+	DzEHTOhhDMuKzJQZTX8M+LcHtrAg3HHHPEtMFs6mk55sdfRYtmmpO7rDeucVq3KO
+	ek9h9tiSmuLOhCXTyHCHIwMAZRtOejNFqkW0nSUqenfLM348WjrNbglYreOQc6Sl
+	qq9r7ZtTwl3QxT5L7yvez+9t6joGJMoan+f/E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FU7ep4r63frdeUs/XNznIGr53kiP204d
+	7VnPRemQLdcuB601vEEKjiTP+4iba6yzNBVQLHqFWITBEZpm7HAQNiCMZ6lSgCKu
+	PBznzJRlTdbj7zaeZMfV+xp3f+zXr274jrMcErmeR9SFp9cicixiHxfkNt9nl3qy
+	smL0+2N4Ui4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C5061D708;
+	Fri, 27 May 2016 16:17:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8B9741D707;
+	Fri, 27 May 2016 16:17:38 -0400 (EDT)
+In-Reply-To: <57489366.507@xiplink.com> (Marc Branchaud's message of "Fri, 27
+	May 2016 14:35:18 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0ECB9104-2448-11E6-96E7-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295793>
 
-Samuel GROOT <samuel.groot@grenoble-inp.org> wrote:
-> While working on the new option `quote-email`, we needed to parse an
-> email file. Since the work is already done, but the parsing and data
-> processing are in the same loop, we wanted to refactor the parser, to
-> make the code more maintainable.
-
-Thank you for doing this work :)
-
-> This is still WIP, and one of the main issue (and we need your
-> advice on that), is that around 30 tests will fail, and most of them
-> are false-negatives: to pass, they rely on the format of what is
-> displayed by `git send-email`, not only data.
-> 
-> 
-> For example, several tests will fail because they do a strict compare
-> between `git send-email`'s output and:
-> 
->    (mbox) Adding cc: A<author@example.com>  from line 'Cc: A<author@example.com>, One<one@example.com>'
->    (mbox) Adding cc: One<one@example.com>  from line 'Cc: A<author@example.com>, One<one@example.com>'
-> 
-> Though `git send-email` now outputs something like:
-> 
->    (mbox) Adding cc: A<author@example.com>  from line 'Cc: A<author@example.com>'
->    (mbox) Adding cc: One<one@example.com>  from line 'Cc: One<one@example.com>'
-I actually like neither, and would prefer something shorter:
-
-    (mbox) Adding cc: A <author@example.com> from Cc: header
-    (mbox) Adding cc: One <one@example.com> from Cc: header
-    (mbox) Adding cc: SoB <SoB@example.com> from Signed-off-by: trailer
-
-That way, there's no redundant addresses in each line and less
-likely to wrap.
-
-But I actually never noticed these lines in the past since they
-scrolled off my terminal :x
-
-Since the headers are already shown after those lines, it's
-redundant to have the entire line.  And we could add
-trailers after the headers (with a blank line to delimit):
-
-    # existing header output:
-    From: F <F@example.com>
-    Cc: A <author@example.com>, One <one@example.com>
-    Subject: foo
-
-    # new trailer output
-    Signed-off-by: SoB <SoB@example.com>
-    Acked-by: ack <ack@example.com>
-
-> We can think of several solutions:
-> 
->    1. Modify the parser, to give the script the knowledge of the exact
->       line the data came from.
-> 
->    2. Hack the tests: modify the script using the parser to artificially
->       recreate the supposedly parsed line.
->       (e.g. with a list.join(', ')-like function)
-> 
->    3. Modify the tests to replace exact cmp by greps.
-> 
-> 
-> IMHO, we should consider option 3, since the tests should rely on data
-> rather than exact outputs. It also makes the tests more maintainable,
-> in the sense that they will be more resilient to future output
-> modifications.
-
-Agreed on 3.
-
-I am not sure if anybody outside of tests parses the stdout of
-send-email.  It's certainly a porcelain and I don't think
-stdout needs to be stable, and maybe the output in
-question should go to stderr since it could be considered
-debug output.
-
-But I could be wrong...
+Thanks, both.
