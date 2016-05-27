@@ -1,67 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: t7610-mergetool.sh test failure
-Date: Fri, 27 May 2016 16:01:23 -0400
-Message-ID: <20160527200122.GA26608@sigill.intra.peff.net>
-References: <CALR6jEhQrSuVAG9=8AC10Lr776KyVurdTkH8QRHH5GWEMk+wNg@mail.gmail.com>
- <CAPc5daWmhYKNXZJxnZYuCe90vOti7Su-Uab7=9JvvsFYfw1s_Q@mail.gmail.com>
- <20160525231615.GC2634@sigill.intra.peff.net>
- <20160526015114.GA12851@sigill.intra.peff.net>
- <20160527044027.GA26143@gmail.com>
- <20160527050054.GA25774@sigill.intra.peff.net>
- <xmqqshx4row8.fsf@gitster.mtv.corp.google.com>
- <20160527182444.GA1871@sigill.intra.peff.net>
- <CAPc5daV1zAwAHDmkc93kGvwCEFoioZNVta2xGsFJj9jq1H1H4A@mail.gmail.com>
+From: Eric Wong <e@80x24.org>
+Subject: Re: [WIP-PATCH 0/2] send-email: refactor the email parser loop
+Date: Fri, 27 May 2016 20:14:36 +0000
+Message-ID: <20160527201436.GA16547@dcvr.yhbt.net>
+References: <20160527140104.11192-1-samuel.groot@grenoble-inp.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: David Aguilar <davvid@gmail.com>,
-	Armin Kunaschik <megabreit@googlemail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 27 22:01:33 2016
+Cc: git@vger.kernel.org, erwan.mathoniere@grenoble-inp.org,
+	jordan.de-gea@grenoble-inp.org, matthieu.moy@grenoble-inp.fr,
+	gitster@pobox.com, aaron@schrab.com
+To: Samuel GROOT <samuel.groot@grenoble-inp.org>
+X-From: git-owner@vger.kernel.org Fri May 27 22:14:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6Nwo-0000Hb-SG
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 22:01:31 +0200
+	id 1b6O9B-0003ol-TX
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 22:14:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756222AbcE0UB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 16:01:26 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45409 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752616AbcE0UBZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 16:01:25 -0400
-Received: (qmail 10260 invoked by uid 102); 27 May 2016 20:01:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 May 2016 16:01:25 -0400
-Received: (qmail 31977 invoked by uid 107); 27 May 2016 20:01:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 May 2016 16:01:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 May 2016 16:01:23 -0400
+	id S1756519AbcE0UON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 16:14:13 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:52158 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751575AbcE0UON (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 16:14:13 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5204A1FCC6;
+	Fri, 27 May 2016 20:14:11 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <CAPc5daV1zAwAHDmkc93kGvwCEFoioZNVta2xGsFJj9jq1H1H4A@mail.gmail.com>
+In-Reply-To: <20160527140104.11192-1-samuel.groot@grenoble-inp.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295792>
 
-On Fri, May 27, 2016 at 12:58:15PM -0700, Junio C Hamano wrote:
+Samuel GROOT <samuel.groot@grenoble-inp.org> wrote:
+> While working on the new option `quote-email`, we needed to parse an
+> email file. Since the work is already done, but the parsing and data
+> processing are in the same loop, we wanted to refactor the parser, to
+> make the code more maintainable.
 
-> On Fri, May 27, 2016 at 11:24 AM, Jeff King <peff@peff.net> wrote:
-> > Which perhaps shows that maybe some people would
-> > see a performance regression if we moved from /tmp to a slower
-> > filesystem (e.g., especially people whose git clone is on NFS or
-> > something).
+Thank you for doing this work :)
+
+> This is still WIP, and one of the main issue (and we need your
+> advice on that), is that around 30 tests will fail, and most of them
+> are false-negatives: to pass, they rely on the format of what is
+> displayed by `git send-email`, not only data.
 > 
-> Yup, but they would be using "--root" already if NFS bothers them;
-> having TMPDIR pointing somewhere in it would not hurt them, I
-> would think.
+> 
+> For example, several tests will fail because they do a strict compare
+> between `git send-email`'s output and:
+> 
+>    (mbox) Adding cc: A<author@example.com>  from line 'Cc: A<author@example.com>, One<one@example.com>'
+>    (mbox) Adding cc: One<one@example.com>  from line 'Cc: A<author@example.com>, One<one@example.com>'
+> 
+> Though `git send-email` now outputs something like:
+> 
+>    (mbox) Adding cc: A<author@example.com>  from line 'Cc: A<author@example.com>'
+>    (mbox) Adding cc: One<one@example.com>  from line 'Cc: One<one@example.com>'
+I actually like neither, and would prefer something shorter:
 
-Yeah, but that is not quite the same as "in the source directory" (i.e.,
-they would not notice via "git status" later if cruft was left in their
---root path). But I guess people not using "--root" would, and that may
-be good enough.
+    (mbox) Adding cc: A <author@example.com> from Cc: header
+    (mbox) Adding cc: One <one@example.com> from Cc: header
+    (mbox) Adding cc: SoB <SoB@example.com> from Signed-off-by: trailer
 
--Peff
+That way, there's no redundant addresses in each line and less
+likely to wrap.
+
+But I actually never noticed these lines in the past since they
+scrolled off my terminal :x
+
+Since the headers are already shown after those lines, it's
+redundant to have the entire line.  And we could add
+trailers after the headers (with a blank line to delimit):
+
+    # existing header output:
+    From: F <F@example.com>
+    Cc: A <author@example.com>, One <one@example.com>
+    Subject: foo
+
+    # new trailer output
+    Signed-off-by: SoB <SoB@example.com>
+    Acked-by: ack <ack@example.com>
+
+> We can think of several solutions:
+> 
+>    1. Modify the parser, to give the script the knowledge of the exact
+>       line the data came from.
+> 
+>    2. Hack the tests: modify the script using the parser to artificially
+>       recreate the supposedly parsed line.
+>       (e.g. with a list.join(', ')-like function)
+> 
+>    3. Modify the tests to replace exact cmp by greps.
+> 
+> 
+> IMHO, we should consider option 3, since the tests should rely on data
+> rather than exact outputs. It also makes the tests more maintainable,
+> in the sense that they will be more resilient to future output
+> modifications.
+
+Agreed on 3.
+
+I am not sure if anybody outside of tests parses the stdout of
+send-email.  It's certainly a porcelain and I don't think
+stdout needs to be stable, and maybe the output in
+question should go to stderr since it could be considered
+debug output.
+
+But I could be wrong...
