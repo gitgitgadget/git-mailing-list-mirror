@@ -1,95 +1,82 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC-PATCH 1/2] send-email: new option to quote an email and reply to
-Date: Fri, 27 May 2016 11:06:54 +0200
-Message-ID: <vpq4m9juaxd.fsf@anie.imag.fr>
-References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
-	<1464031829-6107-2-git-send-email-tom.russello@grenoble-inp.org>
-	<vpq60u4bl4e.fsf@anie.imag.fr>
-	<b1752a59-af2b-6e18-fc69-0650440939e3@grenoble-inp.org>
-	<vpqh9dmfy5k.fsf@anie.imag.fr>
-	<xmqqwpmi16zt.fsf@gitster.mtv.corp.google.com>
-	<vpqeg8q5b6f.fsf@anie.imag.fr>
-	<xmqqr3cqypg6.fsf@gitster.mtv.corp.google.com>
-	<vpq8tyyt2fv.fsf@anie.imag.fr>
-	<e678afcb-b378-9829-fae4-1f1ed38ee593@grenoble-inp.org>
+Subject: Re: [PATCH] worktree: allow "-" short-hand for @{-1} in add command
+Date: Fri, 27 May 2016 11:18:43 +0200
+Message-ID: <vpqvb1zrh8s.fsf@anie.imag.fr>
+References: <vpqshx5cb51.fsf@anie.imag.fr>
+	<1464263662-1290-1-git-send-email-jordan.de-gea@grenoble-inp.org>
+	<xmqqshx4vedr.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Tom Russello <tom.russello@grenoble-inp.org>,
+Cc: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>,
 	git@vger.kernel.org, erwan.mathoniere@grenoble-inp.org,
-	jordan.de-gea@ensimag.grenoble-inp.fr,
-	Tom Russello <tom.russello@ensimag.grenoble-inp.fr>
-To: Samuel GROOT <samuel.groot@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Fri May 27 11:07:14 2016
+	samuel.groot@grenoble-inp.org, tom.russello@grenoble-inp.org,
+	Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 27 11:19:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6Djd-0002m1-Gy
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 11:07:13 +0200
+	id 1b6Dv9-0006kx-EQ
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 11:19:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932708AbcE0JHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 05:07:06 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:60754 "EHLO mx1.imag.fr"
+	id S932427AbcE0JTC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 05:19:02 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:33122 "EHLO mx1.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932690AbcE0JHE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 05:07:04 -0400
+	id S1754032AbcE0JTB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 05:19:01 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u4R96rU9013816
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u4R9Ih85017425
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 27 May 2016 11:06:54 +0200
+	Fri, 27 May 2016 11:18:43 +0200
 Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4R96sAR003092;
-	Fri, 27 May 2016 11:06:54 +0200
-In-Reply-To: <e678afcb-b378-9829-fae4-1f1ed38ee593@grenoble-inp.org> (Samuel
-	GROOT's message of "Thu, 26 May 2016 02:08:32 +0200")
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4R9IhNt003491;
+	Fri, 27 May 2016 11:18:43 +0200
+In-Reply-To: <xmqqshx4vedr.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 26 May 2016 11:54:40 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Fri, 27 May 2016 11:06:54 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Fri, 27 May 2016 11:18:43 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u4R96rU9013816
+X-MailScanner-ID: u4R9Ih85017425
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1464944816.66342@Qz5j6T5V8hOGT3UNqide5w
+MailScanner-NULL-Check: 1464945525.9253@eh6WiDym3U5lrD3a3elkBQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295744>
 
-Samuel GROOT <samuel.groot@grenoble-inp.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 05/25/2016 08:31 PM, Matthieu Moy wrote:
->> So, a possible UI would be:
->>
->>   git send-email --in-reply-to=<id> => just set In-Reply-To: field.
->>
->>   git send-email --in-reply-to=<file> => set In-Reply-To, To and Cc.
->>
->>   git send-email --in-reply-to=<file> --cite => in addition, add the
->>     body of the message quoted with '> '.
->>
->>   git send-email --in-reply-to=<id> --fetch => fetch and do like <file>
->>     using the default configuration for fetch.
+> Jordan DE GEA <jordan.de-gea@grenoble-inp.org> writes:
 >
-> We designed a similar UI, except for the --fetch option:
+>> +	branch=$(cd short-hand && git rev-parse --symbolic-full-name HEAD) &&
+>> +	test "$branch" = refs/heads/newbranch &&
+>> +	cd ..
 >
-> We wanted to try to fetch the email from a distant server (e.g. gmane)
-> if that server address was set in the config file, and populate the
-> To:/Cc: fields.
+> If any of the command between "cd short-hand" and "cd .." failed,
+> after correcting the broken &&-chain, the next test will end up
+> running in short-hand directory, which it is not expecting.  A
+> canonical way to avoid this problem is to replace the above with:
 >
-> If the file cannot be downloaded, or server address not set, just fill
-> the Reply-to header.
+> 	...
+>         git worktree add short-hand - &&
+>         (
+> 		cd short-hand &&
+>                 ...
+>                 test "$branch" = refs/heads/newbranch
+> 	)
 
-I'm not sure this is right. I'd typically configure gmane in my
-user-wide config file, so I'd have it configured all the time, but I may
-not always want to fetch from it (e.g. replying to a message which is
-not on a mailing-list, or if gmane is down, or ...).
+Actually, $(...) implicitly does a subshell, so the "cd .." was just
+useless.
 
-Fetching by default would clearly work in most cases, but for the few
-remaning cases it may be painful for the user if the only way to disable
-fetching is to remove the configuration from the config file.
+> 	git -C short-hand rev-parse --symbolic-full-name HEAD >actual &&
+
+Indeed, git -C is an even better way to say "cd .. && git ..."
 
 -- 
 Matthieu Moy
