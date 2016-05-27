@@ -1,224 +1,129 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: RFC: new git-splice subcommand for non-interactive branch
- splicing
-Date: Fri, 27 May 2016 17:36:52 +0100
-Message-ID: <20160527163652.GC11256@pacific.linksys.moosehall>
-References: <20160527140811.GB11256@pacific.linksys.moosehall>
- <alpine.DEB.2.20.1605271701500.4449@virtualbox>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 14/22] i18n: rebase-interactive: mark strings for translation
+Date: Fri, 27 May 2016 09:58:04 -0700
+Message-ID: <xmqqk2ifsajn.fsf@gitster.mtv.corp.google.com>
+References: <1464031661-18988-1-git-send-email-vascomalmeida@sapo.pt>
+	<1464031661-18988-15-git-send-email-vascomalmeida@sapo.pt>
+	<xmqqpos8tpjo.fsf@gitster.mtv.corp.google.com>
+	<57481CA0.5080801@sapo.pt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 27 18:37:04 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Vasco Almeida <vascomalmeida@sapo.pt>
+X-From: git-owner@vger.kernel.org Fri May 27 18:58:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6Kkx-0002nm-Q6
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 18:37:04 +0200
+	id 1b6L5S-0002PZ-CQ
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 18:58:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932270AbcE0Qg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 12:36:58 -0400
-Received: from coral.adamspiers.org ([85.119.82.20]:45056 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755869AbcE0Qg5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 12:36:57 -0400
-Received: from localhost (243.103.2.81.in-addr.arpa [81.2.103.243])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id E49D22E0E6
-	for <git@vger.kernel.org>; Fri, 27 May 2016 17:36:52 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1605271701500.4449@virtualbox>
-X-OS: GNU/Linux
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756010AbcE0Q6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 12:58:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58405 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754539AbcE0Q6I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2016 12:58:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E0D141F7C0;
+	Fri, 27 May 2016 12:58:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qH9D8+YewteDRkKZiwLemdkXclE=; b=Nw4h8r
+	xSpE18Q2CXB8BK7OVseTvikQf7VegX+/NeSk9WuVn/XpYtk3/HeTLaeZENd+n3+8
+	iwQ86ec+ZBLj24iyQ7mV9IifjGEtfPeoxd24OfMGwHqIPAT47FP2WTTjdtp+QseZ
+	1WF6kCHJ9hl+92MmQhTkgc8D7UMie6TwvO5MQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XYjlPUxTqaW5gu07/JtOKohwKxPA7hfu
+	Xmi63yjvIw6HJWjJM6xGt/WFcrBLm85xeeLIXwtiRDNpNJBT/FqspTjfIPdmlxoM
+	VpdOC0vMyDzdphvXbar63wsoHtU0sfZ15PYJJopDIyTlRep4EgPcz4qkrFkOSw+1
+	gs/CGqVu9FA=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D68021F7BE;
+	Fri, 27 May 2016 12:58:06 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 380D81F7BD;
+	Fri, 27 May 2016 12:58:06 -0400 (EDT)
+In-Reply-To: <57481CA0.5080801@sapo.pt> (Vasco Almeida's message of "Fri, 27
+	May 2016 10:08:32 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2EB978F8-242C-11E6-9718-9A9645017442-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295768>
 
-Hi Johannes,
+Vasco Almeida <vascomalmeida@sapo.pt> writes:
 
-Thanks for the quick reply!  Responses inline below:
+>>>  is_empty_commit() {
+>>> -	tree=$(git rev-parse -q --verify "$1"^{tree} 2>/dev/null ||
+>>> -		die "$1: not a commit that can be picked")
+>>> -	ptree=$(git rev-parse -q --verify "$1"^^{tree} 2>/dev/null ||
+>>> +	sha1=$1
+>>> +	tree=$(git rev-parse -q --verify "$sha1"^{tree} 2>/dev/null ||
+>>> +		die "$(eval_gettext "\$sha1: not a commit that can be picked")")
+>>> +	ptree=$(git rev-parse -q --verify "$sha1"^^{tree} 2>/dev/null ||
+>>>  		ptree=4b825dc642cb6eb9a060e54bf8d69288fbee4904)
+>>>  	test "$tree" = "$ptree"
+>>>  }
+>> 
+>> Both of the two callsites of this function use the variable $sha1,
+>> and at least one of them uses that variable after this function
+>> returns, but they pass it as the first parameter to this function,
+>> so the assignment added by this patch does not break them, which is
+>> good.
+>> 
+> I didn't know that. I can change sha1=$1 to local_sha1=$1 or _sha1=$1 (I
+> don't know what is the convention here) if that is safer, avoiding using
+> the bash-ism "local" keyword, and preventing future distractions.
 
-On Fri, May 27, 2016 at 05:27:14PM +0200, Johannes Schindelin wrote:
-> On Fri, 27 May 2016, Adam Spiers wrote:
-> 
-> > Description
-> > -----------
-> > 
-> > git-splice(1) non-interactively splices the current branch by removing
-> > a range of commits from within it and/or cherry-picking a range of
-> > commits into it.  It's essentially just a glorified wrapper around
-> > cherry-pick and rebase -i.
-> 
-> It sounds as if you could accomplish the same with
-> 
->       git checkout -b former-commits <split>
->       git checkout -b latter-commits <base>
->       git cherry-pick <split>..HEAD@{2}
+I do not think it is necessary to do any of the changes for this
+one, which is only used locally in this file.  They just need to be
+careful when they add or modify the callers.
 
-Not really - that is missing several features which git-splice
-provides, e.g.
+Even if it is renamed $local_sha1, they will still need to be
+careful anyway, because the only way they _can_ break or be broken
+by your patch is when they somehow decide to pass something that is
+not called $sha1 to this function, i.e. they would be changing the
+callsite---which they must be doing for a reason and would also
+involve change to the code what happens after this function returns.
+If they start using $local_sha1 there, they would be broken if you
+renamed it today, and if they use $sha1 there, they would be broken
+if you didn't---so they have to be careful and check what this one
+clobbers _anyway_.  
 
-  - The ability to remove a non-consecutive list of commits
-    from the branch.
+IOW, a solution that clobbers _some_ variable cannot be made safer
+by renaming.  The callers always have to be careful not to be
+affected.
 
-  - The ability to insert commits at the same time as removing
-    (granted, that's just in extra cherry-pick your method, but again
-    that's another thing to orchestrate).
+You could do something like this, though.  I _think_ the original
+that calls "die" inside $() is broken anyway, so it probably is a
+good change regardless.
 
-  - The ability to specify commits to remove / insert using
-    arguments understood by git-rev-list.
+ git-rebase--interactive.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-  - The patch-id magic which is built into git-rebase.  This
-    would kick in if any of the commits to insert are already
-    in <split>..HEAD@{2} (using your reference terminology).
-
-  - A single command to orchestrate the whole workflow, including
-    cleanup, and --abort and --continue when manual conflict
-    resolution is required.  This modularity should help a lot when
-    building further tools which wrap around it in order to perform
-    more complex tasks.
-
-This last point is perhaps the most important.  Of course it's
-possible to do this manually already.  But the whole point of
-git-splice is to automate it in a convenient and reliable manner.
-
-> > Next steps, and the future
-> > --------------------------
-> > 
-> > Obviously, I'd welcome thoughts on whether it would make sense to
-> > include this in the git distribution.
-> 
-> Far be I from discouraging you to work on these scripts, but I think that
-> a really good place for such subcommands is a separate repository, as you
-> have it already. There are already some rarely used subcommands in
-> libexec/git-core/ cluttering up the space and I would be reluctant to add
-> even more subcommands to the default Git installation delivered to every
-> user.
-
-Sure, I appreciate the difficulty in deciding where to draw the line.
-My feeling is that rebase -i provides something tremendously
-important, which the vast majority of users use on a regular basis,
-but that git is currently missing a convenient way to
-*non-interactively* perform the same magic which rebase -i
-facilitates.  And removing / reordering commits is surely one of the
-most common use cases of rebase -i, so I think a lot of people could
-benefit from some porcelain to automate that and allow building
-higher-level tools on top of it.
-
-I suspect the most popular use-case in the short term would be the
-infamous "oops, I only just noticed that I put that commit on the
-wrong branch, and now there's already a whole bunch of other commits
-on top of it".  I would expect that reducing this solution to a single
-git-transplant(1) command would be pretty attractive for a lot of
-people.  And of course GUIs / IDEs could incorporate it into their
-more beautiful front-ends.  However, if it's not in git core, that's
-unlikely to happen.
-
-> You can *always* just extend the PATH so that git-splice can be found;
-> Then `git splice ...` will do exactly what you want. That is e.g. how
-> git-flow works.
-
-Sure, I've been using that trick since at least 2009 ;-) [0]
-
-> (Of course I hope that you will maintain your scripts
-> much, much better than git-flow, i.e. not abandon all users).
-
-I hope so too ;-)
-
-> > In the longer term however, I'd like to write two more subcommands:
-> > 
-> >   - git-transplant(1) which wraps around git-splice(1) and enables
-> >     easy non-interactive transplanting of a range of commits from
-> >     one branch to another.  This should be pretty straightforward
-> >     to implement.
-> 
-> This is just cherry-pick with a range...
-
-No it's not:
-
-  - git-transplant would be able to splice commits from one branch
-    *into* (i.e. inside, *not* onto) another branch.
-
-  - git-transplant would also take care of removing the commits from
-    the source branch, but not before they were safely inside the
-    destination branch.
-
-  - git-transplant would orchestrate the whole workflow with a single
-    command, complete with --abort and --continue.
-
-> >   - git-explode(1) which wraps around git-transplant(1) and
-> >     git-deps(1), and automatically breaks a linear sequence of commits
-> >     into multiple smaller sequences, forming a commit graph where
-> >     ancestry mirrors commit dependency, as mentioned above.  I expect
-> >     this to be more difficult, and would probably write it in Python.
-> 
-> You mean something like Darcs on top of Git. Essentially, you want to end
-> up with an octopus merge of branches whose commits would conflict if
-> exchanged.
-
-Something like that, yes, but it's not as simple as a single octopus
-merge.  It would support arbitrarily deep DAGs of topic branches.
-
-> I implemented the logic for this in a shell script somewhere, so it is not
-> *all* that hard (Python not required). But I ended up never quite using it
-> because it turns out that in practice, the commit "dependency" (as defined
-> by the commit diffs) does not really reflect the true dependency.
->
-> For example,
-
-[snipped examples]
-
-Sure - I already covered this concern in footnote [0] of my previous
-mail; maybe you missed that?  As I said there, in my experience, I
-have found it very useful to be able to automatically detect textual
-dependencies via git-deps, even though they do not represent the
-entire set of dependencies.  I've even recorded a YouTube screencast
-demonstrating one such use case[1].  So please don't let the question
-for perfection become the enemy of the good ;-)
-
-> So I think that this is a nice exercise, but in practice it will require a
-> human to determine which commits really depend on each other.
-
-Of course - this is exactly why I wrote "or at least
-semi-automatically" in the first mail of this thread.  But even though
-git-deps / git-explode can never automatically handle *all*
-dependencies, they can handle enough dependencies to be significantly
-useful.  I have concrete real-world experience of that.  In fact there
-is one scenario I am working on right now which is current proof of
-this (no coincidence, since that's what motivated me to take this next
-step on this journey and write git-splice):
-
-I have made a large bunch of small commits to a single text file
-(design document).  Some are possibly contentious; some aren't.  So I
-need to split them out into a series of smaller independent patch
-series which I can submit to gerrit for review, thereby making life
-easier for the reviewers and minimizing any bottlenecks where reviews
-for one change are blocked because another change hasn't been reviewed
-yet.  And in this case, because the changes are all applying to a
-single file containing only natural language, git-deps correctly
-determines *all* dependencies, not just textual ones.
-
-> You would render me *really* impressed if you could come up with an
-> automated way to determine logical dependencies between patches.
-
-Hey, I would *really* impress myself if I could do that, too; after
-all, that would be a pretty sophisticated form of artificial
-intelligence :-)
-
-Thanks again for the feedback!
-
-Adam
-
-
-[0] https://github.com/aspiers/git-config/commit/287685408326
-
-    BTW there are currently 36 git-* scripts in that repo; you may or
-    may not find it interesting to browse through them.
-
-[1] https://github.com/aspiers/git-deps#use-case-1-porting-between-branches
-
-    In this case, git-deps can serve as an early warning system to
-    flag when a backporting task's cost:reward ratio would be too
-    high to justify starting work on it.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 9d2bfb7..b5113d6 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -222,8 +222,10 @@ has_action () {
+ }
+ 
+ is_empty_commit() {
+-	tree=$(git rev-parse -q --verify "$1"^{tree} 2>/dev/null ||
+-		die "$1: not a commit that can be picked")
++	tree=$(git rev-parse -q --verify "$1"^{tree} 2>/dev/null) || {
++		sha1=$1
++		die "$(eval_gettext "\$sha1: not a commit that can be picked")"
++	}
+ 	ptree=$(git rev-parse -q --verify "$1"^^{tree} 2>/dev/null ||
+ 		ptree=4b825dc642cb6eb9a060e54bf8d69288fbee4904)
+ 	test "$tree" = "$ptree"
