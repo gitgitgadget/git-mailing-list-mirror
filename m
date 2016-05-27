@@ -1,120 +1,166 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [RFC] Triangular Workflow: user friendly full implementation
-Date: Fri, 27 May 2016 08:32:11 +0100
-Organization: OPDS
-Message-ID: <D501BE7EF38A4CDF9ADB786B53CCFE0C@PhilipOakley>
-References: <E83A9439-54C8-4925-8EE3-6AEEDD9416F3@grenoble-inp.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH] userdiff: add built-in pattern for CSS
+Date: Fri, 27 May 2016 09:48:17 +0200 (CEST)
+Message-ID: <2067613701.116691.1464335297679.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <352724780.115915.1464334324896.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: "Matthieu Moy" <matthieu.moy@grenoble-inp.fr>,
-	"Erwan Mathoniere" <erwan.mathoniere@grenoble-inp.org>,
-	"Tom Russello" <tom.russello@grenoble-inp.org>,
-	"Samuel Groot" <samuel.groot@grenoble-inp.org>
-To: "Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>,
-	<git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 27 09:32:25 2016
+Cc: git@vger.kernel.org,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
+	antoine queru <antoine.queru@ensimag.grenoble-inp.fr>,
+	gitster@pobox.com, Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri May 27 09:41:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6CFq-0004vH-HU
-	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 09:32:22 +0200
+	id 1b6COW-0008M2-BJ
+	for gcvg-git-2@plane.gmane.org; Fri, 27 May 2016 09:41:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932532AbcE0HcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 03:32:17 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:37428 "EHLO
-	smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932416AbcE0HcP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 03:32:15 -0400
-Received: from PhilipOakley ([92.22.67.185])
-	by smtp.talktalk.net with SMTP
-	id 6CFgbuEk9OORZ6CFgbgs0T; Fri, 27 May 2016 08:32:13 +0100
-X-Originating-IP: [92.22.67.185]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=Tq6kv3fh c=1 sm=1 tr=0 a=pxL+8fxP9jym1BLqsrSJlw==:117
- a=pxL+8fxP9jym1BLqsrSJlw==:17 a=8nJEP1OIZ-IA:10 a=aSBN74SrAAAA:8
- a=lTFX22NTolzt58o6f9kA:9 a=QLKLDn6n7aLR3e0nYJH2:22
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfGsQ8bFcNu4dlBoNmyFrdacOzp/yPQvMJADElOT1kthEDgDlGxi8exMJF2Zq+DuT73CC8EvHUF/DQxbvwsKW02/sHF3OnS1eAwLbAPP8hC405/PouQRo
- i8pKJDZ3d4kDj1f1ljBLLJxq28cmtyQZ3oSlAR1Tpaj3m1OoQsx8vFuJ4eLUB1XuzhEHEZIcBK4RdzbORlKpn9iJ9OgjCuOc3zxgPdCqEJHOnwwVGUcEwDT2
- MwkCP/bJVpho8GufRniPfCk9Rq6oH69cb0FwfHiKNCeTK2IqSC8vGsl913WQ3g8oqQvXw9adevtqyrscVnPzUZEvfK33VgSuaqL1ngBf4mg/pmO9j8EyryeJ
- 73st6JstYbEQL/7diGoBBPn9MnGM5SpMJ0okT8Rm8pZobrQChi0=
+	id S1754282AbcE0HlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2016 03:41:12 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:60894 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752103AbcE0HlL (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 May 2016 03:41:11 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 140C5256C;
+	Fri, 27 May 2016 09:41:08 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Zd-Albk-NxLD; Fri, 27 May 2016 09:41:08 +0200 (CEST)
+Received: from zm-int-mbx5.grenet.fr (zm-int-mbx5.grenet.fr [130.190.242.144])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 03A702560;
+	Fri, 27 May 2016 09:41:08 +0200 (CEST)
+In-Reply-To: <5747669C.9020807@kdbg.org>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF46 (Linux)/8.0.9_GA_6191)
+Thread-Topic: userdiff: add built-in pattern for CSS
+Thread-Index: +EMfGpJGMcCwynvcmW7qHaXpx2ofeg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295741>
 
-From: "Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>
-> We are working on full implementation of triangular workflow feature.
-> For now, the main options available are:
-> - branch.<name>.pushRemote
-> - remote.pushDefault
-> And only setable by hands.
+Junio C Hamano <gitster@pobox.com> writes:
+> William Duclot <william.duclot@ensimag.grenoble-inp.fr> writes:
 >
-> As it can be difficult to understand, here is what we want to do.
->
->
-> Context:
-> - One main remote repository, e.g. git/git.
-> - A remote fork (e.g. a GitHub fork) of git/git, e.g. me/git.
-> - A local clone of me/git on the machine
->
-> Purposes:
-> - the local branch master has to fetch to git/git by default
-> - the local branch master has to push to me/git by default
->
-> Configuration wanted:
-> - Add a remote to git/git e.g. `git remote add ...`
-> - Set the fetch remote for branch as default.
->
-> For now, we can do that by setting:
-> - branch.<name>.remote to git/git
-> - branch.<name>.pushRemote to me/git
-> But many options set `branch.<name>.remote`, a suitable solution is to
-> implement an option for the fetch for example.
->
->
-> Here is what we want to implement:
->
-> 1.
-> a. add the config var: remote.fetchDefault
-> b. add the config var: branch.<name>.fetchRemote
-> c. add `git fetch --set-default` in order to set remote.fetchDefault
-> d. add `git fetch --set-remote` in order to set branch.<name>.fetchRemote
-> e. add `git pull --set-default` in order to set remote.fetchDefault
-> f. add `git pull --set-remote` in order to set branch.<name>.fetchRemote
->
-> 2.
-> a. add `git push --set-default` in order to set remote.pushDefault
-> b. add `git push --set-remote` in order to set branch.<name>.pushRemote
->
->
-> What's your opinion about this feature ?
->
-For me, the first step would be to actually document a (the?) Triangular 
-Workflow in the documentation, so we are all taking about the same broad 
-method.
+>> As the CSS pattern
+>> does not deal with letters at all it seemed sensible to me to follow
+>> the example of the HTML pattern, which use PATTERNS().
+> 
+> Did you notice that HTML pattern has to do an [Hh] that would be
+> unnecessary if it chose to use IPATTTERN()?
+> 
+> You do not have to ask a person, but instead ask the history.
+> IPATTERN() was added at 909a5494 (userdiff.c: add builtin fortran
+> regex patterns, 2010-09-10) when adding fortran support.  Anything
+> that existed before, including HTML, did [A-Za-z] when they could
+> have done [a-z] if IPATTERN() existed back then.
 
-At the moment there is a choice (assuming a ithub like service) of either 
-clone and then fork, or fork and clone the fork, which leave the user with 
-different fixups of their config's being required, so describing the easier 
-one would help folk.
+I hadn't noticed that the HTML pattern was older, indeed
 
-Likewise there are missing terms such as for the third place (the personal 
-fork) that is neither the upstream, nor the local repo. Making sure the 
-terminology is crisp and clean will greatly ease any implementation issues. 
-And then there are the possible workflows...
+>>>  - In our codebase, we format multi-line comments in a particular
+>>>    way, namely
+>>> 
+>>> 	   /*
+>>>          * A multi-line comment begins with slash asterisk
+>>>          * on its own line, and its closing asterisk slash
+>>>          * also is on its own line.
+>>>          */
+>>
+>> I take good note of that. I took example on the fortran pattern
+>> comment, should I fix it too while I'm at it?
+> 
+> Not "while you are at it".
+> 
+> Making existing things better is welcome but such a change shouldn't
+> be mixed with addition of new things.  You can do it as a separate
+> patch, probably as a preliminary clean-up before your change, if you
+> want to.
 
---
-Philip
-(sorry for the rushed message, a long weekend beckons) 
+OK !
+
+
+Johannes Sixt <j6t@kdbg.org> writes:
+> Am 24.05.2016 um 16:25 schrieb William Duclot:
+>> +PATTERNS("css",
+>> +	 "^([^,{}]+)((,[^}]*\\{)|([ \t]*\\{))$",
+> 
+> This hunk header pattern is a bit too restrictive for my taste. Find
+> below a few more test cases that you should squash in. One case fails
+> because only the first CSS selector is picked up, for which I do not
+> see a reason.
+> 
+> Another case fails because the opening brace is not on the line with
+> the CSS selectors.
+
+Yes, it seems you're right !
+
+> I think what the hunk header pattern should do is:
+> 
+> 1. reject lines containing a colon (because that are properties)
+> 2. if a line begins with a name in column 1, pick the whole line
+> 
+> See the cpp patterns: a pattern beginning with ! is a "reject" pattern.
+
+That may be a good idea, I will look into that
+
+> diff --git a/t/t4018/css-brace-in-col-1 b/t/t4018/css-brace-in-col-1
+> new file mode 100644
+> index 0000000..7831577
+> --- /dev/null
+> +++ b/t/t4018/css-brace-in-col-1
+> @@ -0,0 +1,5 @@
+> +RIGHT label.control-label
+> +{
+> +    margin-top: 10px!important;
+> +    border : 10px ChangeMe #C6C6C6;
+> +}
+> diff --git a/t/t4018/css-rule b/t/t4018/css-common
+> similarity index 100%
+> rename from t/t4018/css-rule
+> rename to t/t4018/css-common
+> diff --git a/t/t4018/css-long-selector-list b/t/t4018/css-long-selector-list
+> new file mode 100644
+> index 0000000..7ccd25d
+> --- /dev/null
+> +++ b/t/t4018/css-long-selector-list
+> @@ -0,0 +1,6 @@
+> +p.header,
+> +label.control-label,
+> +div ul#RIGHT {
+> +    margin-top: 10px!important;
+> +    border : 10px ChangeMe #C6C6C6;
+> +}
+> diff --git a/t/t4018/css-prop-sans-indent b/t/t4018/css-prop-sans-indent
+> new file mode 100644
+> index 0000000..a9e3c86
+> --- /dev/null
+> +++ b/t/t4018/css-prop-sans-indent
+> @@ -0,0 +1,5 @@
+> +RIGHT, label.control-label {
+> +margin-top: 10px!important;
+> +padding: 0;
+> +border : 10px ChangeMe #C6C6C6;
+> +}
+> diff --git a/t/t4018/css-short-selector-list
+> b/t/t4018/css-short-selector-list
+> new file mode 100644
+> index 0000000..6a0bdee
+> --- /dev/null
+> +++ b/t/t4018/css-short-selector-list
+> @@ -0,0 +1,4 @@
+> +label.control, div ul#RIGHT {
+> +    margin-top: 10px!important;
+> +    border : 10px ChangeMe #C6C6C6;
+> +}
+> --
+> 2.9.0.rc0.40.gb3c1388
+
+Thanks for the test cases, I'll look into that as soon as I have time
