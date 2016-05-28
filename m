@@ -1,63 +1,114 @@
-From: matveevma <matveevma@jinr.ru>
-Subject: ssh key
-Date: Sat, 28 May 2016 16:47:06 +0300
-Message-ID: <5c45dd8c03d2a9e0079796ce6850af9f@jinr.ru>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] blame.c: don't drop origin blobs as eagerly
+Date: Sat, 28 May 2016 16:00:21 +0200
+Message-ID: <87bn3qnuyy.fsf@fencepost.gnu.org>
+References: <1464356141-3797-1-git-send-email-dak@gnu.org>
+	<alpine.DEB.2.20.1605271633230.4449@virtualbox>
+	<87d1o7pkyy.fsf@fencepost.gnu.org>
+	<alpine.DEB.2.20.1605280815040.4449@virtualbox>
+	<87shx2oaaw.fsf@fencepost.gnu.org>
+	<alpine.DEB.2.20.1605281430440.4449@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 28 15:55:20 2016
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat May 28 16:01:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6ehz-0002zD-Bm
-	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 15:55:19 +0200
+	id 1b6enV-0004X1-LP
+	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 16:01:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752044AbcE1NzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 May 2016 09:55:04 -0400
-Received: from mail.jinr.ru ([159.93.14.110]:41581 "EHLO mail.jinr.ru"
+	id S1752093AbcE1OAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 May 2016 10:00:48 -0400
+Received: from eggs.gnu.org ([208.118.235.92]:51442 "EHLO eggs.gnu.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751269AbcE1NzD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2016 09:55:03 -0400
-X-Greylist: delayed 470 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 May 2016 09:55:02 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.jinr.ru (Postfix) with ESMTP id 3F57E40A01A
-	for <git@vger.kernel.org>; Sat, 28 May 2016 16:47:08 +0300 (MSK)
-X-Virus-Scanned: amavisd-new at jinr.ru
-Received: from mail.jinr.ru ([127.0.0.1])
-	by localhost (mail.jinr.ru [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JBEEalKOxHLT for <git@vger.kernel.org>;
-	Sat, 28 May 2016 16:47:08 +0300 (MSK)
-Received: from webmail.jinr.ru (webmail.jinr.ru [159.93.14.111])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: matveevma)
-	by mail.jinr.ru (Postfix) with ESMTPSA id 18F2640A019
-	for <git@vger.kernel.org>; Sat, 28 May 2016 16:47:08 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jinr.ru; s=mail;
-	t=1464443228; bh=DHJu0wmJukFOsoN7ZJl0XYJsL96uvTf7bKr5tpo9+ik=;
-	h=Date:From:To:Subject;
-	b=WFsIEHh2lEjXAEcjWNefvkiWglFNazkWml0U66ypNtr1tR6I7GxImNLu0pkW0OcUf
-	 LPhBMajxcU3UPkO70/TYsBD2YpEkFw7RKdeN0lF8OV8dbrGer/hRyUogmEVNeO4miR
-	 lz1Ia4zTJm13ZDoNxO51/qJcqxPVenMk6FuvpWjg=
-Received: from [185.48.37.30]
- by webmail.jinr.ru
- with HTTP (HTTP/1.1 POST); Sat, 28 May 2016 16:47:06 +0300
-X-Sender: matveevma@jinr.ru
-User-Agent: JINR Webmail/1.0.1
+	id S1751269AbcE1OAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 May 2016 10:00:48 -0400
+Received: from Debian-exim by eggs.gnu.org with spam-scanned (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1b6en9-0000D5-8m
+	for git@vger.kernel.org; Sat, 28 May 2016 10:00:40 -0400
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on eggs.gnu.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_50,RP_MATCHES_RCVD
+	autolearn=disabled version=3.3.2
+Received: from fencepost.gnu.org ([2001:4830:134:3::e]:39119 helo=lola.localdomain)
+	by eggs.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1b6en1-0000AR-El; Sat, 28 May 2016 10:00:31 -0400
+Received: by lola.localdomain (Postfix, from userid 1000)
+	id 9576DDFA8E; Sat, 28 May 2016 16:00:29 +0200 (CEST)
+In-Reply-To: <alpine.DEB.2.20.1605281430440.4449@virtualbox> (Johannes
+	Schindelin's message of "Sat, 28 May 2016 14:34:35 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.50 (gnu/linux)
+X-detected-operating-system: by eggs.gnu.org: GNU/Linux 2.2.x-3.x [generic]
+X-Received-From: 2001:4830:134:3::e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295814>
 
-Hi,
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Can i add SSH id_rsa.pub to GIT by shell terminal?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Thank you!
+> Hi David,
+>
+> On Sat, 28 May 2016, David Kastrup wrote:
+>
+>> > The short version of your answer is that you will leave this patch in
+>> > its current form and address none of my concerns because you moved on,
+>> > correct? If so, that's totally okay, it just needs to be spelled out.
+>>=20
+>> Yes, that's it.  You'll notice that the code change itself is both
+>> minuscule as well purely functional, so it contains nothing
+>> copyrightable.
+>
+> That is unfortunately an interpretation of the law that would need to
+> come from a professional lawyer.
 
-Mikhail.
+A professional lawyer would laugh at "Signed-off-by:" being of more
+legal significance than a written record of intent but of course you
+know that.  This is mere bluster.
+
+> As it is, the patch was clearly authored by you, and anybody else who
+> would claim authorship would most likely be breaking the law.
+
+The _diff_ is not "clearly authored" by me but just the simplest
+expression of the intent.  The commit message is clearly authored by me
+but is not acceptable anyway.  Whoever gets to write an acceptable
+commit message is up for all copyrightable credit in my book.  Feel free
+to keep the authorship if you really want to, but when replacing the
+commit message it is not a particularly accurate attribution.
+
+> So I won't touch it.
+
+Signed-off-by: David Kastrup <dak@gnu.org>
+
+You don't get more than that for other patches either and it's a few
+bytes compared to a mail conversation.  Here is a PGP signature on top.
+
+As I said: I am not going to put more work into it anyway and if it's an
+occasion for theatralics, it has at least accomplished something.
+
+=2D-=20
+David Kastrup
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iEYEARECAAYFAldJpHUACgkQBo350SLJfmgRNgCfe5LUhbIF+tntVu//I1RXRWOV
+iugAn0qlv/GvA/ybPp5da0I0AQKbx7+v
+=fCxf
+-----END PGP SIGNATURE-----
+--=-=-=--
