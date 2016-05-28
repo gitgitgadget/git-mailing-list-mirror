@@ -1,187 +1,452 @@
 From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [Bug?] log -p -W showing the whole file for a patch that adds to
- the end?
-Date: Sat, 28 May 2016 16:46:49 +0200
-Message-ID: <5749AF59.2070704@web.de>
+Subject: [PATCH v2 1/8] t4051: rewrite, add more tests
+Date: Sat, 28 May 2016 16:57:46 +0200
+Message-ID: <5749B1EA.10707@web.de>
 References: <xmqqh9e5mvjs.fsf@gitster.mtv.corp.google.com>
  <xmqq4ma5msrd.fsf@gitster.mtv.corp.google.com> <5740AC28.6010202@web.de>
+ <5749AF59.2070704@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 28 16:52:21 2016
+X-From: git-owner@vger.kernel.org Sat May 28 16:58:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6fb9-0002s7-34
-	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 16:52:19 +0200
+	id 1b6fgs-0004ZC-JR
+	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 16:58:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752093AbcE1OwJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 May 2016 10:52:09 -0400
-Received: from mout.web.de ([212.227.17.12]:53947 "EHLO mout.web.de"
+	id S1752306AbcE1O6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 May 2016 10:58:09 -0400
+Received: from mout.web.de ([212.227.15.14]:64775 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751493AbcE1OwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2016 10:52:08 -0400
-Received: from [192.168.178.36] ([79.213.120.97]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MHY1o-1b5YW72WJ2-003KU9; Sat, 28 May 2016 16:46:51
+	id S1752206AbcE1O6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 May 2016 10:58:07 -0400
+Received: from [192.168.178.36] ([79.213.120.97]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0LuuC9-1bWgoP3ctF-0108ZG; Sat, 28 May 2016 16:57:48
  +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
  Thunderbird/38.7.2
-In-Reply-To: <5740AC28.6010202@web.de>
-X-Provags-ID: V03:K0:sTrwQRVMtbtQrD4/9d2hoamOCusz40yrvxirdhaU3lLOQA1l1q4
- /yxy2ypYedewUjGtFSqGjik/7A67YPlY0a4o1C7qKFdPvFHMHbJtNLDGHIjcCA3aA1Psoqu
- OBtwTyZUlvSVyMwGt1YNJDQp9tDPMUFAatmmJVxTmJDNB+YJUuKvwz6ylUe4/IANzszOuHq
- 41Dn237KfXLgoUqVpsYEA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:H20fIvuA9DY=:5p6YI4s/39CcycjFolUgPA
- gC8gFzhZnhTzx5+R/6di0hKCxkbJvsuIICs3bW1jFOUaSQJS+63y5GKzmL0AlKm3z2oKJ3F+9
- bwrenh6xXiVRDUnkEcgmy4ksFoxq/hKpqMs2rYbzXJ6lU+5uFYo5mIXvE4DKaDAYUy9456xZW
- LxpfcD2WussOGoQEqnUV7QJdye8n2x++3lJy5nwi0ziWNg3NkoVw2W90xoA2csx7oJZyDpSkT
- HnMDBTctRtE3T0L3Gd/E2OXFunaw0zO2IkzdE0B6Ad1mIVvYJAX6LlwAobTLsK5lQQlIdzlV3
- wMtaPSEDNT8KmeuaaKKGN3iK09DdjtZYMU3/0XFwAdpLhDa4mjj5Hel6HyGfzwChmtd5nC+OE
- EwPM3iuq1fhnbCZB69856PNvDnXMxPdGcA7WjKtPPV+WQdPK/lwNi1TetoYGL4NDBp7BPfZP4
- 42wIcKeyfiBoy9F5RiqNCXnC7KcdLDN3rTUhpvBqt+qrZ9qfsaWJJh9XKNBAtmWKS6sNN/1dc
- T2CNiWG9PpAae+F60PaAni1tqHBIHiojcuaYbqdsAXLY1fgVNe15SEmcHMHPuuZzY5gvb/E9g
- SAPBLK6K0li0jdVJdlNZxFxRSQbQGz9feU7AAXaPp5QPDV1xNXDtQVvj3YLfz44rY3Zzm67/R
- JWUA3GXmWHriaUETkIEeHzjgSiAeD8u1pBhWmRztMtEBCR1Ll3L1xfpP0bYI9m5B9O2++jiZ4
- ru0NJITA8wLL9Yix7bcLOCriOnIcpV/ax6gsdn9xa0UFNjkzLYRaV4cUhvIH1FOvn9DnuQds 
+In-Reply-To: <5749AF59.2070704@web.de>
+X-Provags-ID: V03:K0:St2ZS32L84Rj5SH6VIDHRZJJY3gKfCURN37IX2KwL3At/+rvQs/
+ jA/XV9tv+t+o0W3qK8kXQ0Yxv35vrig2iA9cgaxEHgsN2tcRQn/2OufEzSyG10k2SeWXj8B
+ ybjU5U7APRc5zmZSyPXiFQxr9DP2yYVGqAjw8ZqdWcPQAv6ZdErUcBuFkcvi09YDvxSglFD
+ jkp4/wZpjxqbXEfJbCc9g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Wh/fXuRpKwU=:2n6Koo2fYTHr3FsbKflYA+
+ PXv5GBxZgHujeDHnN1XM629WvYWzqVZZ9hqB2dQnztG/hM9hZ9a/fp9zIj6p+7uDxvZvJ8KMJ
+ Hu3mKpwN8OWFXuf4PngTHL7jgBZQwaT3h9u7H7sC0xlb+EifvaDeCblETrYgaWMp+8ijMJ42s
+ DPzrvHJ/xPp1WQJD6to1arsivWCT6xi4/O40CsduFOYek40vRXMgJxpzAdKWG9KPxf2y7AAej
+ 3QPX6DGZAU/dHiIuvCuhbGL+AVSyx1kntQ6wPG73GZqZpU8hdHKwtrVS3X0wsjNStziGRdDJ7
+ PQTPT29VnRw3J43hbD0giUpQxHcUHQZljlgk51rSDka7i3SisO4mRZOiv6wHrs1PI2EDTIvZg
+ 2V2JMM2ygSucjuYOEtX/c6Zf6xlttEy5PO2WSjxM4toGW7nhnTRSsdDg6DXlGmnYqkMaHjV+4
+ epp7BHpUeQEit0PDfs08xheJUfLrdWfcCkDPz1AhQBhfXI03PkFNYuH5DAbfv1j+XZsVIIuBK
+ t8sAaaoOxT9AzaeEs6SQR5OQ7K6F/6sFtD1Qjag4qmPZnXTaAz8o9Yta8uYhKuVKtai2g1qzT
+ EpB6C3B9sjPOrJ3x1BCh8cmj6pj6ouZt9Ob16hJTZa4+KvINkrHa4Y92m8cpgeKNJbC+Daa9y
+ hIhkiBGSsrpi6+Q7dWn7R8VvTcGmO4526g8C+filYoJHTleJxwJykDBT/nc9ZXaKDxwmpzpjm
+ EvZwKmvG0CoRFtAPU0QRucymdDUwUMAky+tcXD8R3J/BwiN4itL91JRYEPMT/MlfPveSHqjI 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295817>
 
-Am 21.05.2016 um 20:42 schrieb Ren=E9 Scharfe:
-> Am 11.05.2016 um 00:51 schrieb Junio C Hamano:
->> The helper function get_func_line() however gets confused when a
->> hunk adds a new function at the very end, and returns -1 to signal
->> that it did not find a suitable "function header line", i.e. the
->> beginning of previous function.  The caller then takes this signal
->> and shows from the very beginning of the file.  We end up showing
->> the entire file, starting from the very beginning to the end of the
->> newly added lines.
->=20
-> In this case we need to look at the added lines in the post-image to
-> see if the original context suffices.  We currently only look at the
-> pre-image.  And if we have to extend the context simply search from t=
-he
-> bottom of the pre-image.  That's what the second patch does; the firs=
-t
-> one is just a small preparation.
->=20
-> The last three patches introduce special handling of empty lines.
-> Before them the code for -W only distinguished between function lines
-> and non-function lines.  Not allowing empty lines between functions t=
-o
-> extend the context with -W is most useful in the case of appended ful=
-l
-> functions -- otherwise we'd get the preceding function shown as well =
-as
-> it "belongs" to the empty line separating them.
->=20
-> And if we do that then it's easy and more consistent to stop showing
-> empty lines trailing functions with -W (unless they're already includ=
-ed
-> in the one requested with -u/-U, of course).  Doing the same for grep
-> then is only fair.
->=20
-> Considering empty lines as uninteresting collides with languages like
-> Whitespace.  I'm not sure -W was useful for it to begin with, though.
-> Any other possible downsides?
->=20
-> NB: Comments are still not handled specially.  That means they are
-> considered to be part of the preceding function.  Fixing that is not =
-in
-> scope for this series.  (And I'm not sure it would be worth the hassl=
-e.)
->=20
->    diff: factor out match_func_rec()
->    diff: handle appended chunks better with -W
->    diff: ignore empty lines before added functions with -W
->    diff: don't include common trailing empty lines with -W
->    grep: don't extend context to trailing empty lines with -W
->=20
->   grep.c        | 28 ++++++++++++++++++++++++--
->   xdiff/xemit.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++++=
-++++-------
->   2 files changed, 82 insertions(+), 9 deletions(-)
+Remove the tests that checked diff -W output against a fixed expected
+result and replace them with more focused checks of desired properties
+of the created diffs.  That way we get more detailed and meaningful
+diagnostics.
 
-And here's the second round, this time with tests, a fix for a
-signedness issue found by Ramsay, a small cleanup of the new function
-is_empty_rec() and a new fix for the case of using git diff -W -U0.
-An interdiff for the files touched by the original series is at the
-bottom.
+Store test file contents in files in a subdirectory in order to avoid
+cluttering the test script with them.
 
+Use tagged commits to store the changes to test diff -W against instead
+of using changes to the worktree.  Use the worktree instead to try and
+apply the generated patch in order to validate it.
 
-  t4051: rewrite, add more tests
-  xdiff: factor out match_func_rec()
-  xdiff: handle appended chunks better with -W
-  xdiff: ignore empty lines before added functions with -W
-  xdiff: -W: don't include common trailing empty lines in context
-  xdiff: don't trim common tail with -W
-  t7810: add test for grep -W and trailing empty context lines
-  grep: -W: don't extend context to trailing empty lines
+Document unwanted features: trailing empty lines, too much context for
+appended functions, insufficient context at the end with -U0.
 
- grep.c                           |  28 ++++-
- t/t4051-diff-function-context.sh | 216 +++++++++++++++++++++++++------=
---------
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ t/t4051-diff-function-context.sh | 216 +++++++++++++++++++++++++--------------
  t/t4051/appended1.c              |  15 +++
  t/t4051/appended2.c              |  35 +++++++
  t/t4051/dummy.c                  |   7 ++
  t/t4051/hello.c                  |  21 ++++
  t/t4051/includes.c               |  20 ++++
- t/t7810-grep.sh                  |  19 +++-
- xdiff-interface.c                |  10 +-
- xdiff/xemit.c                    |  62 +++++++++--
- 10 files changed, 341 insertions(+), 92 deletions(-)
+ 6 files changed, 240 insertions(+), 74 deletions(-)
  create mode 100644 t/t4051/appended1.c
  create mode 100644 t/t4051/appended2.c
  create mode 100644 t/t4051/dummy.c
  create mode 100644 t/t4051/hello.c
  create mode 100644 t/t4051/includes.c
 
-
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index d0c0738..bfa53d3 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -155,12 +155,12 @@ static long get_func_line(xdfenv_t *xe, xdemitcon=
-f_t const *xecfg,
- 	return -1;
+diff --git a/t/t4051-diff-function-context.sh b/t/t4051-diff-function-context.sh
+index 001d678..a3adba4 100755
+--- a/t/t4051-diff-function-context.sh
++++ b/t/t4051-diff-function-context.sh
+@@ -3,90 +3,158 @@
+ test_description='diff function context'
+ 
+ . ./test-lib.sh
+-. "$TEST_DIRECTORY"/diff-lib.sh
+ 
++dir="$TEST_DIRECTORY/t4051"
+ 
+-cat <<\EOF >hello.c
+-#include <stdio.h>
+-
+-static int a(void)
+-{
+-	/*
+-	 * Dummy.
+-	 */
++commit_and_tag () {
++	message=$1 &&
++	shift &&
++	git add $@ &&
++	test_tick &&
++	git commit -m $message &&
++	git tag $message
  }
-=20
--static int is_empty_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long=
- ri)
-+static int is_empty_rec(xdfile_t *xdf, long ri)
- {
- 	const char *rec;
- 	long len =3D xdl_get_rec(xdf, ri, &rec);
-=20
--	while (len > 0 && isspace(*rec)) {
-+	while (len > 0 && XDL_ISSPACE(*rec)) {
- 		rec++;
- 		len--;
- 	}
-@@ -196,7 +196,7 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, x=
-demitcb_t *ecb,
- 				 * starting with empty lines.
- 				 */
- 				while (i2 < xe->xdf2.nrec &&
--				       is_empty_rec(&xe->xdf2, xecfg, i2))
-+				       is_empty_rec(&xe->xdf2, i2))
- 					i2++;
- 				if (i2 < xe->xdf2.nrec &&
- 				    match_func_rec(&xe->xdf2, xecfg, i2,
-@@ -231,8 +231,7 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, x=
-demitcb_t *ecb,
- 			long fe1 =3D get_func_line(xe, xecfg, NULL,
- 						 xche->i1 + xche->chg1,
- 						 xe->xdf1.nrec);
--			while (fe1 > 0 &&
--			       is_empty_rec(&xe->xdf1, xecfg, fe1 - 1))
-+			while (fe1 > 0 && is_empty_rec(&xe->xdf1, fe1 - 1))
- 				fe1--;
- 			if (fe1 < 0)
- 				fe1 =3D xe->xdf1.nrec;
+ 
+-static int hello_world(void)
+-{
+-	/* Classic. */
+-	printf("Hello world.\n");
+-
+-	/* Success! */
+-	return 0;
++first_context_line () {
++	awk '
++		found {print; exit}
++		/^@@/ {found = 1}
++	'
+ }
+-static int b(void)
+-{
+-	/*
+-	 * Dummy, too.
+-	 */
++
++last_context_line () {
++	sed -n '$ p'
+ }
+ 
+-int main(int argc, char **argv)
+-{
+-	a();
+-	b();
+-	return hello_world();
++check_diff () {
++	name=$1
++	desc=$2
++	options="-W $3"
++
++	test_expect_success "$desc" '
++		git diff $options "$name^" "$name" >"$name.diff"
++	'
++
++	test_expect_success ' diff applies' '
++		test_when_finished "git reset --hard" &&
++		git checkout --detach "$name^" &&
++		git apply "$name.diff" &&
++		git diff --exit-code "$name"
++	'
+ }
+-EOF
+ 
+ test_expect_success 'setup' '
+-	git add hello.c &&
+-	test_tick &&
+-	git commit -m initial &&
+-
+-	grep -v Classic <hello.c >hello.c.new &&
+-	mv hello.c.new hello.c
+-'
+-
+-cat <<\EOF >expected
+-diff --git a/hello.c b/hello.c
+---- a/hello.c
+-+++ b/hello.c
+-@@ -10,8 +10,7 @@ static int a(void)
+- static int hello_world(void)
+- {
+--	/* Classic. */
+- 	printf("Hello world.\n");
+- 
+- 	/* Success! */
+- 	return 0;
+- }
+-EOF
+-
+-test_expect_success 'diff -U0 -W' '
+-	git diff -U0 -W >actual &&
+-	compare_diff_patch actual expected
+-'
+-
+-cat <<\EOF >expected
+-diff --git a/hello.c b/hello.c
+---- a/hello.c
+-+++ b/hello.c
+-@@ -9,9 +9,8 @@ static int a(void)
+- 
+- static int hello_world(void)
+- {
+--	/* Classic. */
+- 	printf("Hello world.\n");
+- 
+- 	/* Success! */
+- 	return 0;
+- }
+-EOF
+-
+-test_expect_success 'diff -W' '
+-	git diff -W >actual &&
+-	compare_diff_patch actual expected
++	cat "$dir/includes.c" "$dir/dummy.c" "$dir/dummy.c" "$dir/hello.c" \
++		"$dir/dummy.c" "$dir/dummy.c" >file.c &&
++	commit_and_tag initial file.c &&
++
++	grep -v "delete me from hello" <file.c >file.c.new &&
++	mv file.c.new file.c &&
++	commit_and_tag changed_hello file.c &&
++
++	grep -v "delete me from includes" <file.c >file.c.new &&
++	mv file.c.new file.c &&
++	commit_and_tag changed_includes file.c &&
++
++	cat "$dir/appended1.c" >>file.c &&
++	commit_and_tag appended file.c &&
++
++	cat "$dir/appended2.c" >>file.c &&
++	commit_and_tag extended file.c &&
++
++	grep -v "Begin of second part" <file.c >file.c.new &&
++	mv file.c.new file.c &&
++	commit_and_tag long_common_tail file.c
++'
++
++check_diff changed_hello 'changed function'
++
++test_expect_success ' context includes begin' '
++	grep "^ .*Begin of hello" changed_hello.diff
++'
++
++test_expect_success ' context includes end' '
++	grep "^ .*End of hello" changed_hello.diff
++'
++
++test_expect_success ' context does not include other functions' '
++	test $(grep -c "^[ +-].*Begin" changed_hello.diff) -le 1
++'
++
++test_expect_success ' context does not include preceding empty lines' '
++	test "$(first_context_line <changed_hello.diff)" != " "
++'
++
++test_expect_failure ' context does not include trailing empty lines' '
++	test "$(last_context_line <changed_hello.diff)" != " "
++'
++
++check_diff changed_includes 'changed includes'
++
++test_expect_success ' context includes begin' '
++	grep "^ .*Begin.h" changed_includes.diff
++'
++
++test_expect_success ' context includes end' '
++	grep "^ .*End.h" changed_includes.diff
++'
++
++test_expect_success ' context does not include other functions' '
++	test $(grep -c "^[ +-].*Begin" changed_includes.diff) -le 1
++'
++
++test_expect_failure ' context does not include trailing empty lines' '
++	test "$(last_context_line <changed_includes.diff)" != " "
++'
++
++check_diff appended 'appended function'
++
++test_expect_success ' context includes begin' '
++	grep "^[+].*Begin of first part" appended.diff
++'
++
++test_expect_success ' context includes end' '
++	grep "^[+].*End of first part" appended.diff
++'
++
++test_expect_failure ' context does not include other functions' '
++	test $(grep -c "^[ +-].*Begin" appended.diff) -le 1
++'
++
++check_diff extended 'appended function part'
++
++test_expect_success ' context includes begin' '
++	grep "^ .*Begin of first part" extended.diff
++'
++
++test_expect_success ' context includes end' '
++	grep "^[+].*End of second part" extended.diff
++'
++
++test_expect_failure ' context does not include other functions' '
++	test $(grep -c "^[ +-].*Begin" extended.diff) -le 2
++'
++
++test_expect_success ' context does not include preceding empty lines' '
++	test "$(first_context_line <extended.diff)" != " "
++'
++
++check_diff long_common_tail 'change with long common tail and no context' -U0
++
++test_expect_success ' context includes begin' '
++	grep "^ .*Begin of first part" long_common_tail.diff
++'
++
++test_expect_failure ' context includes end' '
++	grep "^ .*End of second part" long_common_tail.diff
++'
++
++test_expect_success ' context does not include other functions' '
++	test $(grep -c "^[ +-].*Begin" long_common_tail.diff) -le 2
++'
++
++test_expect_success ' context does not include preceding empty lines' '
++	test "$(first_context_line <long_common_tail.diff.diff)" != " "
+ '
+ 
+ test_done
+diff --git a/t/t4051/appended1.c b/t/t4051/appended1.c
+new file mode 100644
+index 0000000..a9f56f1
+--- /dev/null
++++ b/t/t4051/appended1.c
+@@ -0,0 +1,15 @@
++
++int appended(void) // Begin of first part
++{
++	int i;
++	char *s = "a string";
++
++	printf("%s\n", s);
++
++	for (i = 99;
++	     i >= 0;
++	     i--) {
++		printf("%d bottles of beer on the wall\n", i);
++	}
++
++	printf("End of first part\n");
+diff --git a/t/t4051/appended2.c b/t/t4051/appended2.c
+new file mode 100644
+index 0000000..e651f71
+--- /dev/null
++++ b/t/t4051/appended2.c
+@@ -0,0 +1,35 @@
++	printf("Begin of second part\n");
++
++	/*
++	 * Lorem ipsum dolor sit amet, consectetuer sadipscing elitr,
++	 * sed diam nonumy eirmod tempor invidunt ut labore et dolore
++	 * magna aliquyam erat, sed diam voluptua. At vero eos et
++	 * accusam et justo duo dolores et ea rebum. Stet clita kasd
++	 * gubergren, no sea takimata sanctus est Lorem ipsum dolor
++	 * sit amet.
++	 *
++	 * Lorem ipsum dolor sit amet, consectetuer sadipscing elitr,
++	 * sed diam nonumy eirmod tempor invidunt ut labore et dolore
++	 * magna aliquyam erat, sed diam voluptua. At vero eos et
++	 * accusam et justo duo dolores et ea rebum. Stet clita kasd
++	 * gubergren, no sea takimata sanctus est Lorem ipsum dolor
++	 * sit amet.
++	 *
++	 * Lorem ipsum dolor sit amet, consectetuer sadipscing elitr,
++	 * sed diam nonumy eirmod tempor invidunt ut labore et dolore
++	 * magna aliquyam erat, sed diam voluptua. At vero eos et
++	 * accusam et justo duo dolores et ea rebum. Stet clita kasd
++	 * gubergren, no sea takimata sanctus est Lorem ipsum dolor
++	 * sit amet.
++	 *
++	 * Lorem ipsum dolor sit amet, consectetuer sadipscing elitr,
++	 * sed diam nonumy eirmod tempor invidunt ut labore et dolore
++	 * magna aliquyam erat, sed diam voluptua. At vero eos et
++	 * accusam et justo duo dolores et ea rebum. Stet clita kasd
++	 * gubergren, no sea takimata sanctus est Lorem ipsum dolor
++	 * sit amet.
++	 *
++	 */
++
++	return 0;
++}	// End of second part
+diff --git a/t/t4051/dummy.c b/t/t4051/dummy.c
+new file mode 100644
+index 0000000..a43016e
+--- /dev/null
++++ b/t/t4051/dummy.c
+@@ -0,0 +1,7 @@
++
++static int dummy(void)	// Begin of dummy
++{
++	int rc = 0;
++
++	return rc;
++}	// End of dummy
+diff --git a/t/t4051/hello.c b/t/t4051/hello.c
+new file mode 100644
+index 0000000..63b1a1e
+--- /dev/null
++++ b/t/t4051/hello.c
+@@ -0,0 +1,21 @@
++
++static void hello(void)	// Begin of hello
++{
++	/*
++	 * Classic.
++	 */
++	putchar('H');
++	putchar('e');
++	putchar('l');
++	putchar('l');
++	putchar('o');
++	putchar(' ');
++	/* delete me from hello */
++	putchar('w');
++	putchar('o');
++	putchar('r');
++	putchar('l');
++	putchar('d');
++	putchar('.');
++	putchar('\n');
++}	// End of hello
+diff --git a/t/t4051/includes.c b/t/t4051/includes.c
+new file mode 100644
+index 0000000..efc68f8
+--- /dev/null
++++ b/t/t4051/includes.c
+@@ -0,0 +1,20 @@
++#include <Begin.h>
++#include <unistd.h>
++#include <stdio.h>
++#include <sys/stat.h>
++#include <fcntl.h>
++#include <stddef.h>
++#include <stdlib.h>
++#include <stdarg.h>
++/* delete me from includes */
++#include <string.h>
++#include <sys/types.h>
++#include <dirent.h>
++#include <sys/time.h>
++#include <time.h>
++#include <signal.h>
++#include <assert.h>
++#include <regex.h>
++#include <utime.h>
++#include <syslog.h>
++#include <End.h>
+-- 
+2.8.3
