@@ -1,107 +1,77 @@
-From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH v2 5/8] xdiff: -W: don't include common trailing empty lines
- in context
-Date: Sat, 28 May 2016 17:03:16 +0200
-Message-ID: <5749B334.7030404@web.de>
-References: <xmqqh9e5mvjs.fsf@gitster.mtv.corp.google.com>
- <xmqq4ma5msrd.fsf@gitster.mtv.corp.google.com> <5740AC28.6010202@web.de>
- <5749AF59.2070704@web.de>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [WIP-PATCH 0/2] send-email: refactor the email parser loop
+Date: Sat, 28 May 2016 17:04:19 +0200
+Message-ID: <vpq8tyujkb0.fsf@anie.imag.fr>
+References: <20160527140104.11192-1-samuel.groot@grenoble-inp.org>
+	<20160527201436.GA16547@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 28 17:03:36 2016
+Content-Type: text/plain
+Cc: Samuel GROOT <samuel.groot@grenoble-inp.org>, git@vger.kernel.org,
+	erwan.mathoniere@grenoble-inp.org, jordan.de-gea@grenoble-inp.org,
+	gitster@pobox.com, aaron@schrab.com
+To: Eric Wong <e@80x24.org>
+X-From: git-owner@vger.kernel.org Sat May 28 17:04:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6fm3-00064n-PK
-	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 17:03:36 +0200
+	id 1b6fn1-0006Mt-2P
+	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 17:04:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752970AbcE1PDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 May 2016 11:03:30 -0400
-Received: from mout.web.de ([212.227.15.3]:53814 "EHLO mout.web.de"
+	id S1752979AbcE1PEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 May 2016 11:04:31 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:58413 "EHLO mx1.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752206AbcE1PD3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2016 11:03:29 -0400
-Received: from [192.168.178.36] ([79.213.120.97]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0Lw0vl-1bZzJY2vsL-017ou0; Sat, 28 May 2016 17:03:17
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
-In-Reply-To: <5749AF59.2070704@web.de>
-X-Provags-ID: V03:K0:HUKJDA7VNCs9S/5h4lXcU1MqjqFLFiRLrm3KOhH+eq1FchI9wVr
- O7EasvUQKMbhNDH8G2oIzqGGQnwAkYmz+jcq/OAFdTTyo6XE+xVPzwU6UaN4rWiKIMGcaEN
- X/pHe3A9mz3tr0Sgh9maDOhb66OkqY7XhYYRnTXhZCZIRq7iVM1PuxCwVXI1KXWBOT0hdWz
- AoarC8zN7cvnRyhfURGAw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/+enB17+iwE=:kNFp759hdYgGlOttSgWz9f
- SVloid7RJsnr9rd3Bkn+V+r2U2bNZ6vLrpCx+K1Cw5YzOpsETLgujnGKlN1JJVmimuvVI9KtD
- aJB6rVyZDo9I1iLlsVeWj1VnV4ogNSkwswjeSKhLQrG8+ktH13Auf6Z0ptI40yvYb80VBTS1e
- UjcQgvATAP4oHRlf3itjk/XXbiUOA49Uj6M3QftrqXCBjOPAwDtK4KsWcj8U/gj0N+557kEEn
- CMqTXyTt9M9Ra9TyTY79AT4j5Z9DcbkX7+lekDwJSBJDp5vg1gJve6q7OvmEJSI0OupwvTRP4
- H3XUHsjQ/SugOVgTjQYDpxQ2xxT1jGmHgnE8/SuEYzOK/ULMXEGRD8aEjfTSJs2DgRBGC4CfM
- +Q9YpAowVb+RGAoCMTtT1SWCBSU7yfVQW1Cv5Ayy2owPsrM57HDRjuMJT4C3JFTl1V2GIORBq
- fgE1ZUqHYZaKAqv7x9SDTSyvmHJG1WhtP9kfMVFtBwYvDr1pw3LlIWHsohN8xyHLK4V4IkVqk
- SKiS8PgK+PjW7o1ybXdPf3M/NK7yDfblatEoAii4tXZoRNE3l3Puya1iBUI06yEcQ71DC38V4
- IkooiZUeRmgyuBSn/k5ktLINApFZE47XwA4ytf8wWJRekGtCq2/dzZT61iavUaj7sqFZ5tI5x
- +8gqyRlD4x9N2innWlSkvMUkF4lZ9IkvPmkIgYY5e13uW2ax2ytxIVhdpSGtRUNusn+CI5nSb
- PY9lS66oUN9eh4CRK+VlCvDA97TqWWcgrWfG2fGSbSyuAqWPCojQpJ1LoUBvG4OrCF7Xxzdf 
+	id S1752100AbcE1PEb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 May 2016 11:04:31 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u4SF4Iam004706
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Sat, 28 May 2016 17:04:18 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4SF4JaE031163;
+	Sat, 28 May 2016 17:04:19 +0200
+In-Reply-To: <20160527201436.GA16547@dcvr.yhbt.net> (Eric Wong's message of
+	"Fri, 27 May 2016 20:14:36 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Sat, 28 May 2016 17:04:18 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u4SF4Iam004706
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1465052661.06506@AVJjsg8Nm9cF5BFkyFi+tw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295823>
 
-Empty lines between functions are shown by diff -W, as it considers them
-to be part of the function preceding them.  They are not interesting in
-most languages.  The previous patch stopped showing them in the special
-case of a function added at the end of a file.
+Eric Wong <e@80x24.org> writes:
 
-Stop extending context to those empty lines by skipping back over them
-from the start of the next function.
+> Samuel GROOT <samuel.groot@grenoble-inp.org> wrote:
+>
+>>    (mbox) Adding cc: A<author@example.com>  from line 'Cc: A<author@example.com>, One<one@example.com>'
+>>    (mbox) Adding cc: One<one@example.com>  from line 'Cc: A<author@example.com>, One<one@example.com>'
+>> 
+>> Though `git send-email` now outputs something like:
+>> 
+>>    (mbox) Adding cc: A<author@example.com>  from line 'Cc: A<author@example.com>'
+>>    (mbox) Adding cc: One<one@example.com>  from line 'Cc: One<one@example.com>'
+> I actually like neither, and would prefer something shorter:
+>
+>     (mbox) Adding cc: A <author@example.com> from Cc: header
+>     (mbox) Adding cc: One <one@example.com> from Cc: header
+>     (mbox) Adding cc: SoB <SoB@example.com> from Signed-off-by: trailer
+>
+> That way, there's no redundant addresses in each line and less
+> likely to wrap.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- t/t4051-diff-function-context.sh | 4 ++--
- xdiff/xemit.c                    | 2 ++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+I agree with this. Actually, I'd even say that the current output of
+"git send-email" looks sloppy, and internal refactoring may be a good
+opportunity to get it cleaner.
 
-diff --git a/t/t4051-diff-function-context.sh b/t/t4051-diff-function-context.sh
-index b191c655..9fe590f 100755
---- a/t/t4051-diff-function-context.sh
-+++ b/t/t4051-diff-function-context.sh
-@@ -85,7 +85,7 @@ test_expect_success ' context does not include preceding empty lines' '
- 	test "$(first_context_line <changed_hello.diff)" != " "
- '
- 
--test_expect_failure ' context does not include trailing empty lines' '
-+test_expect_success ' context does not include trailing empty lines' '
- 	test "$(last_context_line <changed_hello.diff)" != " "
- '
- 
-@@ -103,7 +103,7 @@ test_expect_success ' context does not include other functions' '
- 	test $(grep -c "^[ +-].*Begin" changed_includes.diff) -le 1
- '
- 
--test_expect_failure ' context does not include trailing empty lines' '
-+test_expect_success ' context does not include trailing empty lines' '
- 	test "$(last_context_line <changed_includes.diff)" != " "
- '
- 
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index 29cec12..bfa53d3 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -231,6 +231,8 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 			long fe1 = get_func_line(xe, xecfg, NULL,
- 						 xche->i1 + xche->chg1,
- 						 xe->xdf1.nrec);
-+			while (fe1 > 0 && is_empty_rec(&xe->xdf1, fe1 - 1))
-+				fe1--;
- 			if (fe1 < 0)
- 				fe1 = xe->xdf1.nrec;
- 			if (fe1 > e1) {
 -- 
-2.8.3
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
