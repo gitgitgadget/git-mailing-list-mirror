@@ -1,137 +1,99 @@
-From: Eric Wong <e@80x24.org>
-Subject: Re: [RFC] fast-import: invalidate pack_id references after loosening
-Date: Sat, 28 May 2016 00:20:48 +0000
-Message-ID: <20160528002048.GA31463@dcvr.yhbt.net>
-References: <xmqqpospap8g.fsf@gitster.mtv.corp.google.com>
- <4830D469-3885-4010-9A04-D809F0C6159D@gmail.com>
- <xmqq37pk8q0h.fsf@gitster.mtv.corp.google.com>
- <5E7631C9-DD59-4358-B907-D7C7AEA1739C@gmail.com>
- <20160517121330.GA7346@sigill.intra.peff.net>
- <20160525224907.GA18894@dcvr.yhbt.net>
- <20160525225402.GB18894@dcvr.yhbt.net>
- <20160525230913.GB2634@sigill.intra.peff.net>
- <20160526080236.GA27652@dcvr.yhbt.net>
- <20160526141644.GA15836@sigill.intra.peff.net>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v8 0/9] connect: various cleanups
+Date: Sat, 28 May 2016 07:02:01 +0200
+Message-ID: <5071966e-6bce-fa91-8837-81cb3c9157f7@web.de>
+References: <20160527022756.22904-1-mh@glandium.org>
+ <a6f4bf06-a52b-dcdf-9407-0c03b8b1dfe1@web.de>
+ <20160527215943.GA21018@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Luke Diamand <luke@diamand.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 28 02:20:33 2016
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat May 28 07:07:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6RzV-00023K-9e
-	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 02:20:33 +0200
+	id 1b6WTG-0003Do-LA
+	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 07:07:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754998AbcE1AU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2016 20:20:26 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:58190 "EHLO dcvr.yhbt.net"
+	id S1750966AbcE1FHa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 May 2016 01:07:30 -0400
+Received: from mout.web.de ([212.227.17.11]:53626 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754051AbcE1AUZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2016 20:20:25 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 280791FCC6;
-	Sat, 28 May 2016 00:20:24 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20160526141644.GA15836@sigill.intra.peff.net>
+	id S1750814AbcE1FH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 May 2016 01:07:29 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0MPHGG-1bAwEm2Dey-004Oo7; Sat, 28 May 2016 07:02:04
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.1.0
+In-Reply-To: <20160527215943.GA21018@glandium.org>
+X-Provags-ID: V03:K0:EjJjk7VgdnrsvHouC/cLyS6xXutbnzb0R4usP1BYEs4DFSMhLh+
+ IasCaFcsed/oxtTtyBCaliy2wmqGNX0ZEslb89YX+8+V37G4bm3AlLrvEOCpovi3x4nL3hj
+ JUwe0/drMgSYWk6UaIcPbS9mjFOT5+DC5juAVnX2hdQ1p0jKK8UsMFp4+WPymtFsrUyF+mt
+ w6Fqlc+UZ+u+Rn+EEVSpQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RDlm5m4FPoc=:UE3pQpV0cQqzLy9ex/6i59
+ UzUNOXakEYABo8c9gnz1Ibvja1lOwOzF4M8nCjZjaKddeNPqkETUqao5jtYZSUV9Jxgz2cpup
+ kTt/Ii+D3mxR6JasJM2rDoLb3PrquqDwUVa0ssHxL+5WqZblkeTyzG3n3vsKxGOE1tvwmv26b
+ fHwJibg8K9k4yCdSFnCe9cuuBdF+1Ff6QXhtYCRedbPDE087WL263YVlZ0LMhXY2v+rv8+1wm
+ OCE5tGvLHy+eSEMHVIt8/bgtQRFccexjaAdohl8ej+Mje9oqw3soIqXZ8NnM6hE71w9SdWkqO
+ HWY2aRuS8SyOC2kthAuk1XFzvt6TfIWHQP+K7zh/zP50OdFeIzjJ6vZhKeXrrMtO9twoJyu5R
+ nY63uTOPRKQe1Jrt9v8R5+TnymnxpYT6Xq1biKze8GYQcXxFFfZW4uUcfgFwGfzy4pm5ZZWpW
+ uKOqhEryx29FyEeOIPziNfzk9uV/T33ti/8aWF+8+5kZTn6CgYLBikkUb3mb8OpJPhLkiCrs8
+ r2DVGktWxOvelxWZIloc8dFG9pLTaTqeJPiPttv38RXqq5MlTaY0/+v/QGAbAcjmMOGOjGUfB
+ zflgXET1KdDm4w/px/q1WMMArUj5A725lAQJeBvVhDR8aBkPULz7iA32FQtbSp0kVCtVGVt55
+ ibJk+6P/mP3ufGLyWswOEWcEXxjN/bJSYxuli5RnyKs7r3eKo9dqjC3SDFFqYms6uA+BW2D4c
+ vIXHYWegzJSRE0U0HOJ8f0O/jhoYXAtxz/Cdx1dPCgbxd9EsNYZ8P7EjNVIz8conSu1T5elH 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295800>
 
-Jeff King <peff@peff.net> wrote:
-> On Thu, May 26, 2016 at 08:02:36AM +0000, Eric Wong wrote:
-> 
-> > > That's probably OK in practice, as I think the actual pack-write already
-> > > does a linear walk of the object table to generate the pack index. So
-> > > presumably nobody checkpoints often enough for it to be a problem. And
-> > > the solution would be to keep a separate list of pointers to objects for
-> > > the current pack-id, which would trivially fix both this case and the
-> > > one in create_index().  So we can punt on it until somebody actually
-> > > runs into it, I think.
-> > 
-> > I might checkpoint that much and run into the problem soon :)
-> > Too tired now; maybe in a day or two I'll be able to make sense
-> > of C again :x
-
-OK, I guess I was too tired and not thinking clearly.
-
-I now figure it's not worth it to checkpoint frequently and have
-a very-long-lived fast-import process.  The object table and
-marks set will grow indefinitely, so forking off another gfi
-with a new set of marks is better for my case[1], anyways.
+On 27.05.16 23:59, Mike Hommey wrote:
+> On Fri, May 27, 2016 at 04:24:20PM +0200, Torsten B=F6gershausen wrot=
+e:
+>> On 27.05.16 04:27, Mike Hommey wrote:
+>>> Changes from v7:
+>>> - Fixed comments.
+>>>
+>>> Mike Hommey (9):
+All in all, a great improvement.
+2 things left.
+- The comment about [] is now stale, isn't it ?
+- The legacy support should only be active for ssh, and not
+  be used by other schemes.
 
 
-Junio: I think my RFC can go into pu as-is and replace
-Jeff's object_table discarding patch.
 
-
-[1] inotify watching a Maildir + fast-import
-
-> In theory the list of objects in the allocation pool are contiguous for
-> a particular pack. So you could break out of the double-loop at the
-> first non-matching object you see:
-> 
-> diff --git a/fast-import.c b/fast-import.c
-> index 83558dc..f214bd3 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -900,10 +900,13 @@ static const char *create_index(void)
->  	c = idx;
->  	for (o = blocks; o; o = o->next_pool)
->  		for (e = o->next_free; e-- != o->entries;)
->  			if (pack_id == e->pack_id)
->  				*c++ = &e->idx;
-> +			else
-> +				goto done;
-> +done:
->  	last = idx + object_count;
->  	if (c != last)
->  		die("internal consistency error creating the index");
->  
->  	tmpfile = write_idx_file(NULL, idx, object_count, &pack_idx_opts, pack_data->sha1);
-> 
-> But that seems to break some of the tests, so I think there is some case
-> which does not match my theory. :)
-
-Yes, it's probably because duplicate objects from the object
-store will create entries with e->pack_id == MAX_PACK_ID
-
-> Another strategy is to note that we cross-check against object_count
-> here. So you could simply break out of the loop when we have found
-> object_count matches.
-
-I'm worried that could fail to detect bugs which should've led
-us to die of the internal consistency error.
-
-
-What we could probably do more safely is limit the scan to only
-recent object pools (new ones since the previous create_index call
-and the last one scanned).
-
-This passes tests, but I could be missing something:
-
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -926,14 +926,16 @@ static const char *create_index(void)
- 	struct pack_idx_entry **idx, **c, **last;
- 	struct object_entry *e;
- 	struct object_entry_pool *o;
-+	static struct object_entry_pool *last_seen;
- 
- 	/* Build the table of object IDs. */
- 	ALLOC_ARRAY(idx, object_count);
- 	c = idx;
--	for (o = blocks; o; o = o->next_pool)
-+	for (o = blocks; o; o = (o == last_seen) ? NULL : o->next_pool)
- 		for (e = o->next_free; e-- != o->entries;)
- 			if (pack_id == e->pack_id)
- 				*c++ = &e->idx;
-+	last_seen = blocks;
- 	last = idx + object_count;
- 	if (c != last)
- 		die("internal consistency error creating the index");
+diff --git a/connect.c b/connect.c
+index 076ae09..79b8dae 100644
+--- a/connect.c
++++ b/connect.c
+@@ -618,10 +618,6 @@ static enum protocol parse_connect_url(const char =
+*url_orig, char **ret_user,
+                }
+        }
+=20
+-       /*
+-        * Don't do destructive transforms as protocol code does
+-        * '[]' unwrapping in get_host_and_port()
+-        */
+        end =3D host_end(&host, 0);
+=20
+        if (protocol =3D=3D PROTO_LOCAL)
+@@ -673,7 +669,7 @@ static enum protocol parse_connect_url(const char *=
+url_orig, char **ret_user,
+         * "host:port" and NULL.
+         * To support this undocumented legacy we still need to split t=
+he port.
+         */
+-       if (!port)
++       if (!port && protocol =3D=3D PROTO_SSH)
+                port =3D get_port(host);
+=20
+        *ret_user =3D user ? xstrdup(user) : NULL;
