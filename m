@@ -1,173 +1,131 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC-PATCH v2 2/2] send-email: quote-email quotes the message body
-Date: Sat, 28 May 2016 17:01:11 +0200
-Message-ID: <vpqlh2ujkg8.fsf@anie.imag.fr>
-References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
-	<1464369102-7551-1-git-send-email-tom.russello@grenoble-inp.org>
-	<1464369102-7551-3-git-send-email-tom.russello@grenoble-inp.org>
+From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH v2 4/8] xdiff: ignore empty lines before added functions with
+ -W
+Date: Sat, 28 May 2016 17:02:24 +0200
+Message-ID: <5749B300.3000804@web.de>
+References: <xmqqh9e5mvjs.fsf@gitster.mtv.corp.google.com>
+ <xmqq4ma5msrd.fsf@gitster.mtv.corp.google.com> <5740AC28.6010202@web.de>
+ <5749AF59.2070704@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, jordan.de-gea@grenoble-inp.org,
-	erwan.mathoniere@grenoble-inp.org, samuel.groot@grenoble-inp.org,
-	e@80x24.org, aaron@schrab.com, gitster@pobox.com
-To: Tom Russello <tom.russello@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Sat May 28 17:01:33 2016
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 28 17:02:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6fk3-0005Uv-Qc
-	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 17:01:32 +0200
+	id 1b6fl8-0005mC-Am
+	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 17:02:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752579AbcE1PB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 May 2016 11:01:28 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:35935 "EHLO mx2.imag.fr"
+	id S1752894AbcE1PCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 May 2016 11:02:34 -0400
+Received: from mout.web.de ([212.227.15.3]:58594 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752044AbcE1PB1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2016 11:01:27 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4SF19Iw006435
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Sat, 28 May 2016 17:01:09 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4SF1BKb031132;
-	Sat, 28 May 2016 17:01:11 +0200
-In-Reply-To: <1464369102-7551-3-git-send-email-tom.russello@grenoble-inp.org>
-	(Tom Russello's message of "Fri, 27 May 2016 19:11:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Sat, 28 May 2016 17:01:09 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u4SF19Iw006435
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1465052471.17777@9BMKOmrKzv0ODyryY+EE9A
+	id S1752852AbcE1PCd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 May 2016 11:02:33 -0400
+Received: from [192.168.178.36] ([79.213.120.97]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0MQ8vL-1bBKKI25rv-005E8G; Sat, 28 May 2016 17:02:25
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
+In-Reply-To: <5749AF59.2070704@web.de>
+X-Provags-ID: V03:K0:tS5XKBBbftuGD5PIcke1NcNMv2m8Vb1ghpREqHue5T7cRBsk+3L
+ 7fV3fymtIfdddBwZKCFF+Q8VvGpfBeXLGqOmrrMQ7cfW02Xgk3Meaf8jahspe2H2erTOdb7
+ fcKxahTAKh8r6agKFk5Gm6SshNC9Lup/6fvVF5iiOs1nvxhNok3qHLALj5LfjjjxgqNHuxp
+ E/N0+HWcvLia0zsZNtXxg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OK28fD2qWII=:0I6sBZu6PFjHAYFbGD+S0g
+ Fg7r9lcBaG8RatNMrq15O5zk3kYA/eSaMCLqcDbdQmxh4jt7gWhRWOEa9XgXS7JYz995FxMRM
+ 5tWiJUUAiH3IWySDb5PxYxzFRoIUynWBmEFqes60BEQb7C5jd57SJrE7VKmmLTxhT16D+hkND
+ q3wuj2HVL+6PzPCwKWwVcn5doa/QDovs89CxkhFoeS+6NTXNz13/NyV7oHwQNvjVq9A2oO2zR
+ lXxNwsCE/WQFo6k30OqZ2sl9bMO2nv+VQuADTgUnTlkL7Y3LUdKttz4jYxKQlANYdl4AHyLE8
+ EL+/dj1jXjcjKAACrTrsjEQc/xIDh7xlFuoNZa5oyUaUqI8xucO+IbG9pOK9b1Xh6jKZDlB+q
+ sNiGncyQNsk7DfODKl9lgueEeMViEg9US4Bx5OnQNJrqka8mPiqkA6TO4e1jZBr6KR3FX+DB/
+ uh5n81BxejHGuWWB7FWOQsS6yLLQf+Pv3AHctI9Ir0UH5L5eauGjjPopxrUwhtqBhjzCyEVvl
+ WKu5fLmxEyJ5shno5Np3fF0wtxg6kaNve2jjBVzvohL47M+Z0zBMeO/ZjLvBiGeL0k0Cssgvq
+ A2/y8IFJlkM/BNU/H3MfiREXX7iI6GSHTvQjg3mQMYAIZh24lXswh7gkSetq92vEo7TmbZPqC
+ SIS7SGlbgGxeJP/5IOZTQCs6IkLUKFUfC9lC4iFDyg9Nax3K3OWFwLEETrBVIUFUm+HxkkG9H
+ V+TNBq8svUlnA1P9Yf6lh9drgvC0QCvCdbfADavUInyTApJMwpIDaisJ9Iww77FcLOyuxklv 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295821>
 
-Tom Russello <tom.russello@grenoble-inp.org> writes:
+If a new function and a preceding empty line is appended, diff -W shows
+the previous function in full in order to provide context for that empty
+line.  In most languages empty lines between sections are not
+interesting in and off themselves and showing a whole extra function for
+them is not what we want.
 
-> Currently, `send-email` without `--compose` implies `--annotate`.
+Skip empty lines when checking of the appended chunk starts with a
+function line, thereby avoiding to extend the context just for them.
 
-I don't get it. Did you mean s/without/with/? Even if so, this is not
-exactly true: "git send-email --compose -1" will open the editor only
-for the cover-letter, while adding --annotate will also open it for the
-patch.
+Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ t/t4051-diff-function-context.sh |  2 +-
+ xdiff/xemit.c                    | 22 ++++++++++++++++++++--
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
-> Keeping that behavior when using `--quote-email` populates the patch file with
-> the quoted message body, and the patch is saved no matter what. If the user
-> closes his editor and then exits `send-email`, changes will be saved.
->
-> Should we keep the current behavior for the user, keeping the changes (including
-> the quoted message body) in the patch, or should we discard them?
-
-(Note: we discussed this off-list already, but I'll try to summarize my
-thoughts here)
-
-I don't have strong opinion on this, but I think there's a difference
-between launching the editor directly on the input patch files
-(resulting in _user_'s edit being done directly on them) and having the
-script modify it in-place (resulting in automatic changes done directly
-on the user's files).
-
-I usually use "git send-email" directly without using "git
-format-patch", so I'm not the best juge. But I can imagine a flow like
-
-1) run "git send-email *.patch"
-
-2) start editting
-
-3) notice there's something wrong, give up for now (answer 'q' when git
-   send-email prompts for confirmation, or kill it via Control-C in a
-   terminal)
-
-4) run "git send-email *.patch" again
-
-5) be happy that changes done at 2) are still there.
-
-With --quote-email, it's different. The scenario above would result in
-
-5') WTF, why is the email quoted twice?
-
-Unfortunately, I don't really have a solution for this. My first thought
-was that we should copy the files to a temporary location before
-starting the editor (that what I'm used to when using "git send-email"
-without "git format-patch"), but that would prevent 5) above.
-
-> @@ -109,7 +109,10 @@ is not set, this will be prompted for.
->  --quote-email=<email_file>::
->  	Reply to the given email and automatically populate the "To:", "Cc:" and
->  	"In-Reply-To:" fields. If `--compose` is set, this will also fill the
-> -	subject field with "Re: [<email_file>'s subject]".
-> +	subject field with "Re: [<email_file>'s subject]" and quote the message body
-> +	of <email_file>.
-
-I'd add "in the introductory message".
-
-> +	while (<$fh>) {
-> +		# Only for files containing crlf line endings
-> +		s/\r//g;
-
-The comment doesn't really say what it does.
-
-What about "turn crlf line endings into lf-only"?
-
->  } elsif ($annotate) {
-> -	do_edit(@files);
-> +	if ($quote_email) {
-> +		my $quote_email_filename = ($repo ?
-> +			tempfile(".gitsendemail.msg.XXXXXX",
-> +				DIR => $repo->repo_path()) :
-> +			tempfile(".gitsendemail.msg.XXXXXX",
-> +				DIR => "."))[1];
-> +
-> +		do_insert_quoted_message($quote_email_filename, $files[0]);
-> +
-> +		my $tmp = $files[0];
-> +		$files[0] = $quote_email_filename;
-> +
-> +		do_edit(@files);
-> +
-> +		# Erase the original patch
-> +		move($quote_email_filename, $tmp);
-> +		$files[0] = $tmp;
-
-When writing comment, always try to ask the question "why?" more than
-"what?". This part is possibly controversial, think about a contributor
-finding this piece of code later without having followed the current
-conversation. He'd probably expect an explanation about why you need a
-temp file here and not elsewhere.
-
-> +	open my $c, "<", $original_file
-> +	or die "Failed to open $original_file : " . $!;
-> +
-> +	open my $c2, ">", $tmp_file
-> +		or die "Failed to open $tmp_file : " . $!;
-
-No space before :.
-
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -1916,6 +1916,12 @@ test_expect_success $PREREQ 'Fields with --quote-email are correct' '
->  	echo "$cc_adr" | grep cc1@example.com
->  '
->  
-> +test_expect_success $PREREQ 'correct quoted message with --quote-email' '
-> +	grep "On Sat, 12 Jun 2010 15:53:58 +0200, author@example.com wrote:" msgtxt1 &&
-> +	grep "> Have you seen my previous email?" msgtxt1 &&
-> +	grep ">> Previous content" msgtxt1
-> +'
-
-When the spec says "if --compose ... then ...", "after the triple-dash",
-and "in the first patch", one would expect at least one test with
---compose and one without, something to check that the insertion was
-done below the triple-dash, and one test with two patches, checking that
-the second patch is not altered by --quote-email.
-
+diff --git a/t/t4051-diff-function-context.sh b/t/t4051-diff-function-context.sh
+index d78461d..b191c655 100755
+--- a/t/t4051-diff-function-context.sh
++++ b/t/t4051-diff-function-context.sh
+@@ -117,7 +117,7 @@ test_expect_success ' context includes end' '
+ 	grep "^[+].*End of first part" appended.diff
+ '
+ 
+-test_expect_failure ' context does not include other functions' '
++test_expect_success ' context does not include other functions' '
+ 	test $(grep -c "^[ +-].*Begin" appended.diff) -le 1
+ '
+ 
+diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+index 969100d..29cec12 100644
+--- a/xdiff/xemit.c
++++ b/xdiff/xemit.c
+@@ -155,6 +155,18 @@ static long get_func_line(xdfenv_t *xe, xdemitconf_t const *xecfg,
+ 	return -1;
+ }
+ 
++static int is_empty_rec(xdfile_t *xdf, long ri)
++{
++	const char *rec;
++	long len = xdl_get_rec(xdf, ri, &rec);
++
++	while (len > 0 && XDL_ISSPACE(*rec)) {
++		rec++;
++		len--;
++	}
++	return !len;
++}
++
+ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+ 		  xdemitconf_t const *xecfg) {
+ 	long s1, s2, e1, e2, lctx;
+@@ -176,12 +188,18 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+ 			/* Appended chunk? */
+ 			if (i1 >= xe->xdf1.nrec) {
+ 				char dummy[1];
++				long i2 = xch->i2;
+ 
+ 				/*
+ 				 * We don't need additional context if
+-				 * a whole function was added.
++				 * a whole function was added, possibly
++				 * starting with empty lines.
+ 				 */
+-				if (match_func_rec(&xe->xdf2, xecfg, xch->i2,
++				while (i2 < xe->xdf2.nrec &&
++				       is_empty_rec(&xe->xdf2, i2))
++					i2++;
++				if (i2 < xe->xdf2.nrec &&
++				    match_func_rec(&xe->xdf2, xecfg, i2,
+ 						   dummy, sizeof(dummy)) >= 0)
+ 					goto post_context_calculation;
+ 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.8.3
