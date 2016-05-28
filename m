@@ -1,133 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [WIP-PATCH 1/2] send-email: create email parser subroutine
-Date: Sat, 28 May 2016 17:22:17 +0200
-Message-ID: <vpqeg8mi4wm.fsf@anie.imag.fr>
-References: <20160527140104.11192-1-samuel.groot@grenoble-inp.org>
-	<20160527140104.11192-2-samuel.groot@grenoble-inp.org>
+From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] apply: remove unused parameters from name_terminate()
+Date: Sat, 28 May 2016 18:12:01 +0200
+Message-ID: <5749C351.8070806@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, e@80x24.org,
-	erwan.mathoniere@grenoble-inp.org, jordan.de-gea@grenoble-inp.org,
-	gitster@pobox.com, aaron@schrab.com,
-	Tom RUSSELLO <tom.russello@grenoble-inp.org>
-To: Samuel GROOT <samuel.groot@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Sat May 28 17:22:40 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 28 18:12:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6g4U-0003yr-7O
-	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 17:22:38 +0200
+	id 1b6gqh-0001kw-Ib
+	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 18:12:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752656AbcE1PWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 May 2016 11:22:34 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:36365 "EHLO mx2.imag.fr"
+	id S1753012AbcE1QMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 May 2016 12:12:16 -0400
+Received: from mout.web.de ([212.227.15.14]:61282 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752220AbcE1PWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2016 11:22:33 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4SFMFY4013820
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Sat, 28 May 2016 17:22:15 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4SFMHZ2031363;
-	Sat, 28 May 2016 17:22:17 +0200
-In-Reply-To: <20160527140104.11192-2-samuel.groot@grenoble-inp.org> (Samuel
-	GROOT's message of "Fri, 27 May 2016 16:01:03 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Sat, 28 May 2016 17:22:15 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u4SFMFY4013820
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1465053740.91655@cra2P4ER6i/uUtRSKXLhgw
+	id S1752870AbcE1QMP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 May 2016 12:12:15 -0400
+Received: from [192.168.178.36] ([79.213.120.97]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0LzbAA-1bbsiP3a66-014mkx; Sat, 28 May 2016 18:12:03
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
+X-Provags-ID: V03:K0:NescxFoWcPPqQzpy7DCHoqviwTQ8j/0LKK8nlkj4lDZ9eoZFyUX
+ n/aPY3FcGGj59HeT48Ya+Ok0z7KopwZZQ/62i8HR7VXv6VLK4yBIOzRyjZuvO71dZuu91kl
+ M+dbQaCscSGgyJ8ravpgM7z7WwlItqlkV86e+poG6ImMSxGswgu5dTTwowVPJHmrToaO1mM
+ 1kPgkNSNZachbxARDR16g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7YPOAAL8o4E=:6gAvl+1fEhw+E8V6HI2Fjc
+ 3W5sf9exjYqTnl1P5+07GiettRYPmWE7MHlZVDr4jiv2u4Evt1ewyUgTytO0J7om74pqtX7mj
+ SK5e4Vr/6cRnd+HHpbnWA35dr116YdutmvxpD9OqbWJOxUid0x2dtIHTaDxddKCgiMrQUaMF0
+ scgdGg37dmhVvm2wiAQUHXgON5YiK1ehMZJG6pbMS+JB3/RHJ/yepadeoHQj7AQrETAst79EJ
+ gyVeETi2t5V4brBb8V7JvWzRKT6WHmYBMoE76wKjJRGjnjOfSPT0cdFkGIcx9G8DciEARi+Oj
+ VG87Jz041riG2cxSqKfY55mWFQ7GkCx9TX+Dsn4U4uPUK16701+PnFzgCpvS88SCNOfeQK91h
+ Yzewb75ozkbWmfvzmYE03yg4cJDYfkTTj2MduxMWqR3ELrD/fxDYnR5JoZTl7pymAI7OBDBQ/
+ xPsMGE3DkQ+2xW13rGDhuRbpJ5fdX9p1Fr8B3XEH52QmXtuKq5a5qiRMN108qKV2zj9ydCvAN
+ r8k60jSCccecgGPUbkfoIXd0yirPi4CyQnIifseeKKeWm1CxIdHzPyemt2//+WWcoeK3RK1FZ
+ Qs4aURcvnjA21S+USnzROwWj0OfebSkXxoWvk8H9eNuIVoInaHFvHScZxjjOQpsupby0zRTNB
+ BRIhMF7KzTQOCiyLEPDV0T5mcwiDmXLnWDOuZng1splDeyect3P+tQ3rjH0gTyWVfH9W5Pmcu
+ GLGSUP0m/FgxjnQVlb/lMdXGV9oK89RvLbickLIrjAQdaiOayT6SMZJaaSK9ohmbTt3SB651 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295828>
 
-Samuel GROOT <samuel.groot@grenoble-inp.org> writes:
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/apply.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> Parsing and processing in send-email is done in the same loop.
->
-> To make the code more maintainable, we create two subroutines:
-> - `parse_email` to separate header and body
-> - `parse_header` to retrieve data from header
-
-These routines are not specific to git send-email, nor to Git.
-
-Does it make sense to use an external library, like
-http://search.cpan.org/~rjbs/Email-Simple-2.210/lib/Email/Simple.pm ,
-either by depending on it, or by copying it in Git's source tree ?
-
-If not, I think it would be better to introduce an email parsing library
-in a dedicated Perl module in perl/ in our source tree, to keep
-git-send-email.perl more focused on the "send-email" logic.
-
-> +sub parse_email {
-> +	my @header = ();
-> +	my @body = ();
-> +	my $fh = shift;
-> +
-> +	# First unfold multiline header fields
-> +	while (<$fh>) {
-> +		last if /^\s*$/;
-> +		if (/^\s+\S/ and @header) {
-> +			chomp($header[$#header]);
-> +			s/^\s+/ /;
-> +			$header[$#header] .= $_;
-> +		} else {
-> +			push(@header, $_);
-> +		}
-> +	}
-> +
-> +	# Now unfold the message body
-
-Why "unfold"? Don't you mean "split message body into a list of lines"?
-
-> +	while (<$fh>) {
-> +		push @body, $_;
-> +	}
-> +
-> +	return (@header, @body);
-> +}
-
-Please document your functions. See e.g. perl/Git.pm for an example of
-what perldoc allows you to do.
-
-This also lacks tests. One advantage of having a clean API is that it
-also makes it simpler to do unit-testing. Grep "Test::More" in t/ to see
-some existing unit-tests in Perl.
-
-> +	foreach(@_) {
-
-Style: space before (.
-
-> +		if (defined $input_format && $input_format eq 'mbox') {
-> +			if (/^Subject:\s+(.*)$/i) {
-> +				$subject = $1;
-> +			} elsif (/^From:\s+(.*)$/i) {
-> +				$from = $1;
-
-Not sure we need thes if/elsif/ for generic headers. Email::Simple's API
-seems much simpler and general: $email->header("From");
-
-> +				foreach my $addr (parse_address_line($1)) {
-> +					push @to, $addr;
-> +				}
-
-3 lines for an array concatenation in a high-level language. It looks
-like 2 more than needed ;-).
-
-> +			}
-> +
-> +		} else {
-
-Useless blank line.
-
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 8e4da2e..c770d7d 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -442,7 +442,7 @@ static int is_dev_null(const char *str)
+ #define TERM_SPACE	1
+ #define TERM_TAB	2
+ 
+-static int name_terminate(const char *name, int namelen, int c, int terminate)
++static int name_terminate(int c, int terminate)
+ {
+ 	if (c == ' ' && !(terminate & TERM_SPACE))
+ 		return 0;
+@@ -671,7 +671,7 @@ static char *find_name_common(const char *line, const char *def,
+ 		if (!end && isspace(c)) {
+ 			if (c == '\n')
+ 				break;
+-			if (name_terminate(start, line-start, c, terminate))
++			if (name_terminate(c, terminate))
+ 				break;
+ 		}
+ 		line++;
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.8.3
