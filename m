@@ -1,7 +1,8 @@
 From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH v2 6/8] xdiff: don't trim common tail with -W
-Date: Sat, 28 May 2016 17:04:31 +0200
-Message-ID: <5749B37F.4080301@web.de>
+Subject: [PATCH v2 7/8] t7810: add test for grep -W and trailing empty context
+ lines
+Date: Sat, 28 May 2016 17:05:41 +0200
+Message-ID: <5749B3C5.4060809@web.de>
 References: <xmqqh9e5mvjs.fsf@gitster.mtv.corp.google.com>
  <xmqq4ma5msrd.fsf@gitster.mtv.corp.google.com> <5740AC28.6010202@web.de>
  <5749AF59.2070704@web.de>
@@ -10,114 +11,116 @@ Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
 Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 28 17:04:46 2016
+X-From: git-owner@vger.kernel.org Sat May 28 17:05:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6fnA-0006Q3-Q4
-	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 17:04:45 +0200
+	id 1b6foH-0006md-BU
+	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 17:05:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753018AbcE1PEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 May 2016 11:04:41 -0400
-Received: from mout.web.de ([212.227.15.4]:51757 "EHLO mout.web.de"
+	id S1753037AbcE1PFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 May 2016 11:05:50 -0400
+Received: from mout.web.de ([212.227.15.14]:56500 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752999AbcE1PEk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2016 11:04:40 -0400
-Received: from [192.168.178.36] ([79.213.120.97]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0MRA59-1ax5pv38E3-00UcrR; Sat, 28 May 2016 17:04:32
+	id S1752206AbcE1PFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 May 2016 11:05:49 -0400
+Received: from [192.168.178.36] ([79.213.120.97]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0Maazp-1amfx12zl3-00KASQ; Sat, 28 May 2016 17:05:42
  +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
  Thunderbird/38.7.2
 In-Reply-To: <5749AF59.2070704@web.de>
-X-Provags-ID: V03:K0:mFXSoW5Oa6+BNr/WsuHO0VSgRNzViXhNOJ2c6PSAMT6duBNDbLP
- o+0OSc2OzST8f2z8ib3yTDBnWQN9jz0bnjgpJoXRVp57ZHl2dsoP4JR7TyEn4/3xSVBEbRZ
- nXdcxsjyeSh1mLW9Y8Hw4b0msdHD8Ep5RfyWD9ZDnQOb9kC9k5w+y4cBNFpAp7xKL0sup5y
- X0pfg442e7UBIwq9daK/Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wu3i9lwCVOs=:Y8vVjKd+r3k3JyYS1aGoTV
- M/kWFnbfrH3h/TCLceiGhljQhyRE96KWB/hsWrf644Ui3u9o0UOP21dHCjYap9hC/EgPhU/Vo
- YLqhzqPGVoUYXyxjuIRUgluvZPWpxqAdl3MZCxOccD3RPCRBveAwIOyrwKJgd6K+FL5UqYFMz
- 6AYcsvrmY4NkD2yajS2b1A+Hz0EYsboWwOdixiNJkZ7VSaihAlwuwnFP8g4mgb05d30zYww9l
- 8YT3QsWNLYovSRZQKiMnO9rUYdM7Do5ODZtog1A1RF45DaeM73rf97+ZkNUAgErLAjJ+eKTr1
- wtUXTNwbXV9XIl4nu5vCZ4O163A2Or+7wLhg8DlBqCrU4QhHC1BZ3u5HpkjutAOAR77BnZhuy
- QniBtn/f8uTXtkDQUG4QkNaLk5XeyAl1A8ScAnLJPG/NpCFiRBMVn4HIDRwDRZLS/kiKcpLfR
- XAyx/AsBWJkwZRPvIEvIHZgI8/uIKkgU+SEJVNmfE9P+nlFWYQGmNDl5+xb/Z4/dPK32vuu+l
- xZSJbVw5aY1q+HbRrYcsiZq3Lz2eHRpy4LVd86ZevZFWBn+pMiDkX4rLuE2TNFauMCsvxpC2Y
- /T17TVYnjGZMUJgXD0wcFdLVqXrp2GpKMJH0yUV+MRXftywQNEvXY/bhdJi3CoVUVrUqCj4bK
- uLG2YNJcQUZPouuvOxljfnXaHo7c+D3jFqGnfZLgtaY/gcVEzpdYNCezIiZio9gqhoMVjtMqk
- 7S9AzehOQVJnSeDUVGjgVrLO/JclloXueUm+mzeXDScAlXZpkC5qkl74/m4Ekja5e6aQcO3C 
+X-Provags-ID: V03:K0:6gzlFZ7Qqg6v2Wv+pNumnaOinfUTrlq4Kx334Jyzt9ASjIspX+O
+ zFO8SnwBux2eywFk9OpDvQK0JvrT8LvJ8vVuTHCs25tDBEB9c/jVKsvv3xN5JgVdlfDncot
+ zQEOZ7XSlaMTAKhsla/zdtvQCF2Id3+3fyyZUYw+PTnkn8TuvJQkVA1inyxuQbXlXeVwRaK
+ m0rCHsEoMh4OkjklKB47g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lwLtLVi5Ax8=:OwO/KjzuJd2o3OAPMcRqDO
+ jmUhXb0qmIWXAKWQHP/D2kvBTqK01GMxKK/QH67nQmw0E0sUL7rnh9tTEQY5t6nT4u3dJP1vJ
+ HBbKu0mTzg3Yzz/Edw9PUXvqwWWEBv9qdkM/IxCUU2kDMpUNz2v5bqQ9MFbkI+oGzgd8i1c3y
+ XaTAyU79Zxp9Q0p35LwTifwNdHfxeq0gmlmM//26Q6pZK0rC7YjjZKRKHAFXqY48KMYdf7h7r
+ NQT88IYmLcVX3GqJbGCUfWkmwztqVDWUQTKQUwq7c5OXGmjwWgqHXPqzCDiQ2NUGUwNs9V7aP
+ jFwCgmJ5/a0vVPn3weeqpUm8pV0hNZxzbT9quDuE4+/lg/EmTFQ80Nj8H1DrcjbW8cqyTJrqx
+ Q+ZmGGMvbnlIq9nIaCUGzMlGc155l97MFuqntMfY9UGQij/lYXlvwHiViai5P/9oWtpVvWGUP
+ dns6+hKhMDshDdgkLi3ppDm/JWgvLt6idMt1fkKFzl3AMTn2ukCgeZzXrboaxJKR6WFy9GVvK
+ JdD+B3/GSK3KpEFAJMEZbhNa5H1nYQXHM6VcBMD2yedldWTfUoHy528EhYregjqUWh3ykA/xg
+ 6KjDpMtMV2mwaZRwczPKhAQn+xGOo8ZVMJURcoHGHkFhW0BhysyirlNtWcM8EtKF7HDuHlf9X
+ iK0qlo+ZQ3kkB2VdPkfjR8zKJpbizh7Bcuegjo7ChTQA7IHlP7488wJ5zgm96OLFnfrecT204
+ HixkbifyzuEx6MIHdIcuY9IycVICT5+Qd6SIgBQ1OIc5LlknxOOsuSvFccpET8fzFFpPtkG1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295825>
 
-The function trim_common_tail() exits early if context lines are
-requested.  If -U0 and -W are specified together then it can still trim
-context lines that might belong to a changed function.  As a result
-that function is shown incompletely.
-
-Fix that by calling trim_common_tail() only if no function context or
-fixed context is requested.  The parameter ctx is no longer needed now;
-remove it.
-
-While at it fix an outdated comment as well.
+Add a test demonstrating that git grep -W prints empty lines following
+the function context we're actually interested in.  The modified test
+file makes it necessary to adjust three unrelated test cases.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- t/t4051-diff-function-context.sh |  2 +-
- xdiff-interface.c                | 10 ++++------
- 2 files changed, 5 insertions(+), 7 deletions(-)
+ t/t7810-grep.sh | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/t/t4051-diff-function-context.sh b/t/t4051-diff-function-context.sh
-index 9fe590f..88a3308 100755
---- a/t/t4051-diff-function-context.sh
-+++ b/t/t4051-diff-function-context.sh
-@@ -145,7 +145,7 @@ test_expect_success ' context includes begin' '
- 	grep "^ .*Begin of first part" long_common_tail.diff
- '
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 1e72971..26912dc 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -9,7 +9,9 @@ test_description='git grep various.
+ . ./test-lib.sh
  
--test_expect_failure ' context includes end' '
-+test_expect_success ' context includes end' '
- 	grep "^ .*End of second part" long_common_tail.diff
- '
- 
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 54236f2..f34ea76 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -100,9 +100,9 @@ static int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
- 
- /*
-  * Trim down common substring at the end of the buffers,
-- * but leave at least ctx lines at the end.
-+ * but end on a complete line.
-  */
--static void trim_common_tail(mmfile_t *a, mmfile_t *b, long ctx)
-+static void trim_common_tail(mmfile_t *a, mmfile_t *b)
+ cat >hello.c <<EOF
++#include <assert.h>
+ #include <stdio.h>
++
+ int main(int argc, const char **argv)
  {
- 	const int blk = 1024;
- 	long trimmed = 0, recovered = 0;
-@@ -110,9 +110,6 @@ static void trim_common_tail(mmfile_t *a, mmfile_t *b, long ctx)
- 	char *bp = b->ptr + b->size;
- 	long smaller = (a->size < b->size) ? a->size : b->size;
+ 	printf("Hello world.\n");
+@@ -715,6 +717,7 @@ test_expect_success 'grep -p' '
  
--	if (ctx)
--		return;
--
- 	while (blk + trimmed <= smaller && !memcmp(ap - blk, bp - blk, blk)) {
- 		trimmed += blk;
- 		ap -= blk;
-@@ -134,7 +131,8 @@ int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t co
- 	if (mf1->size > MAX_XDIFF_SIZE || mf2->size > MAX_XDIFF_SIZE)
- 		return -1;
+ cat >expected <<EOF
+ hello.c-#include <stdio.h>
++hello.c-
+ hello.c=int main(int argc, const char **argv)
+ hello.c-{
+ hello.c-	printf("Hello world.\n");
+@@ -741,6 +744,16 @@ test_expect_success 'grep -W' '
+ '
  
--	trim_common_tail(&a, &b, xecfg->ctxlen);
-+	if (!xecfg->ctxlen && !(xecfg->flags & XDL_EMIT_FUNCCONTEXT))
-+		trim_common_tail(&a, &b);
+ cat >expected <<EOF
++hello.c-#include <assert.h>
++hello.c:#include <stdio.h>
++EOF
++
++test_expect_failure 'grep -W shows no trailing empty lines' '
++	git grep -W stdio >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
+ hello.c=	printf("Hello world.\n");
+ hello.c:	return 0;
+ hello.c-	/* char ?? */
+@@ -1232,8 +1245,8 @@ test_expect_success 'grep --heading' '
  
- 	return xdl_diff(&a, &b, xpp, xecfg, xecb);
- }
+ cat >expected <<EOF
+ <BOLD;GREEN>hello.c<RESET>
+-2:int main(int argc, const <BLACK;BYELLOW>char<RESET> **argv)
+-6:	/* <BLACK;BYELLOW>char<RESET> ?? */
++4:int main(int argc, const <BLACK;BYELLOW>char<RESET> **argv)
++8:	/* <BLACK;BYELLOW>char<RESET> ?? */
+ 
+ <BOLD;GREEN>hello_world<RESET>
+ 3:Hel<BLACK;BYELLOW>lo_w<RESET>orld
+@@ -1340,7 +1353,7 @@ test_expect_success 'grep --color -e A --and --not -e B with context' '
+ '
+ 
+ cat >expected <<EOF
+-hello.c-#include <stdio.h>
++hello.c-
+ hello.c=int main(int argc, const char **argv)
+ hello.c-{
+ hello.c:	pr<RED>int<RESET>f("<RED>Hello<RESET> world.\n");
 -- 
 2.8.3
