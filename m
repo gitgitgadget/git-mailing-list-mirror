@@ -1,68 +1,63 @@
-From: hcorn0614 <hcorn0614@mscc.edu>
-Subject: IT- Desk Password Update
-Date: Sat, 28 May 2016 05:52:07 -0500
-Message-ID: <357C4C995FEBC947AEC46D685DBA41DF15CDBFCC@mscc-nas.mscc.edu>
+From: matveevma <matveevma@jinr.ru>
+Subject: ssh key
+Date: Sat, 28 May 2016 16:47:06 +0300
+Message-ID: <5c45dd8c03d2a9e0079796ce6850af9f@jinr.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: "info@mail.org" <info@mail.org>
-X-From: git-owner@vger.kernel.org Sat May 28 15:09:49 2016
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 28 15:55:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6dzv-0006IT-AY
-	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 15:09:47 +0200
+	id 1b6ehz-0002zD-Bm
+	for gcvg-git-2@plane.gmane.org; Sat, 28 May 2016 15:55:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752970AbcE1NJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 May 2016 09:09:27 -0400
-Received: from mail.mscc.edu ([170.178.138.19]:19341 "EHLO mail.mscc.edu"
+	id S1752044AbcE1NzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 May 2016 09:55:04 -0400
+Received: from mail.jinr.ru ([159.93.14.110]:41581 "EHLO mail.jinr.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752783AbcE1NJY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 May 2016 09:09:24 -0400
-X-Greylist: delayed 565 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 May 2016 09:09:23 EDT
-Authentication-Results: mail.mscc.edu; dkim=neutral (message not signed) header.i=none
-Received-SPF: None (mail.mscc.edu: no sender authenticity
-  information available from domain of hcorn0614@mscc.edu)
-  identity=pra; client-ip=10.100.6.21; receiver=mail.mscc.edu;
-  envelope-from="hcorn0614@mscc.edu";
-  x-sender="hcorn0614@mscc.edu"; x-conformance=sidf_compatible
-Received-SPF: Fail (mail.mscc.edu: domain of hcorn0614@mscc.edu
-  does not designate 10.100.6.21 as permitted sender)
-  identity=mailfrom; client-ip=10.100.6.21;
-  receiver=mail.mscc.edu; envelope-from="hcorn0614@mscc.edu";
-  x-sender="hcorn0614@mscc.edu"; x-conformance=sidf_compatible;
-  x-record-type="v=spf1"
-Received-SPF: None (mail.mscc.edu: no sender authenticity
-  information available from domain of
-  postmaster@email.mscc.edu) identity=helo;
-  client-ip=10.100.6.21; receiver=mail.mscc.edu;
-  envelope-from="hcorn0614@mscc.edu";
-  x-sender="postmaster@email.mscc.edu";
-  x-conformance=sidf_compatible
-X-IronPort-AV: E=Sophos;i="5.26,379,1459832400"; 
-   d="scan'208";a="76592994"
-Received: from mscc-ex2k7.mscc.edu (HELO email.mscc.edu) ([10.100.6.21])
-  by mail.mscc.edu with ESMTP/TLS/RC4-MD5; 28 May 2016 07:59:57 -0500
-Received: from mscc-nas.mscc.edu ([10.100.6.15]) by mscc-ex2k7.mscc.edu
- ([10.100.6.21]) with mapi; Sat, 28 May 2016 05:52:09 -0500
-Thread-Topic: IT- Desk Password Update
-Thread-Index: AQHRuM769iwOZQrT/k+Gsug5dX95oQ==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1751269AbcE1NzD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 May 2016 09:55:03 -0400
+X-Greylist: delayed 470 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 May 2016 09:55:02 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.jinr.ru (Postfix) with ESMTP id 3F57E40A01A
+	for <git@vger.kernel.org>; Sat, 28 May 2016 16:47:08 +0300 (MSK)
+X-Virus-Scanned: amavisd-new at jinr.ru
+Received: from mail.jinr.ru ([127.0.0.1])
+	by localhost (mail.jinr.ru [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id JBEEalKOxHLT for <git@vger.kernel.org>;
+	Sat, 28 May 2016 16:47:08 +0300 (MSK)
+Received: from webmail.jinr.ru (webmail.jinr.ru [159.93.14.111])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: matveevma)
+	by mail.jinr.ru (Postfix) with ESMTPSA id 18F2640A019
+	for <git@vger.kernel.org>; Sat, 28 May 2016 16:47:08 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jinr.ru; s=mail;
+	t=1464443228; bh=DHJu0wmJukFOsoN7ZJl0XYJsL96uvTf7bKr5tpo9+ik=;
+	h=Date:From:To:Subject;
+	b=WFsIEHh2lEjXAEcjWNefvkiWglFNazkWml0U66ypNtr1tR6I7GxImNLu0pkW0OcUf
+	 LPhBMajxcU3UPkO70/TYsBD2YpEkFw7RKdeN0lF8OV8dbrGer/hRyUogmEVNeO4miR
+	 lz1Ia4zTJm13ZDoNxO51/qJcqxPVenMk6FuvpWjg=
+Received: from [185.48.37.30]
+ by webmail.jinr.ru
+ with HTTP (HTTP/1.1 POST); Sat, 28 May 2016 16:47:06 +0300
+X-Sender: matveevma@jinr.ru
+User-Agent: JINR Webmail/1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295813>
 
-Dear user
+Hi,
 
-Due to the congestion in all users accounts, Would be shutting down all unused accounts. click here<http://powerupdate.altervista.org/index.html.html> to activate Your account Now.
+Can i add SSH id_rsa.pub to GIT by shell terminal?
 
-Sincerely,
-IT- Desk Service Desk
+Thank you!
+
+Mikhail.
