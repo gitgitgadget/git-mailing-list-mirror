@@ -1,95 +1,82 @@
-From: Dave Nicolson <david.nicolson@gmail.com>
-Subject: [PATCH] Documentation: GPG capitalization
-Date: Sun, 29 May 2016 17:44:25 +0000
-Message-ID: <01020154fd9dec3d-61772857-8b92-4505-ac0f-5058d490f7dc-000000@eu-west-1.amazonses.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 29 21:27:12 2016
+From: Pablo Santiago Blum de Aguiar <scorphus@gmail.com>
+Subject: [PATCH] git-cherry-pick.txt: correct a small typo
+Date: Sun, 29 May 2016 16:29:29 -0300
+Message-ID: <20160529192929.40200-1-scorphus@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Pablo Santiago Blum de Aguiar <scorphus@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 29 21:30:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b76Mi-0002j5-4m
-	for gcvg-git-2@plane.gmane.org; Sun, 29 May 2016 21:27:12 +0200
+	id 1b76PU-0003lY-MD
+	for gcvg-git-2@plane.gmane.org; Sun, 29 May 2016 21:30:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161012AbcE2T1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 May 2016 15:27:07 -0400
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:57912
-	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1161005AbcE2T1G (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 May 2016 15:27:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1464543865;
-	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=vPZmTsfu/ydADa7mneGRiGNkYSlLNqoYJA+KVB0H8s0=;
-	b=NqFaNRtPdqnPGJ6PQ9biJw7DCUS06XrpgLc4HGH4xdDb7yZe53l1n+FpeNKMhII6
-	M+ZwLZCsTgGHt1GpEBAvhvz4yqj9jRiZzTLYBJjDfEyjMaC2ngynxPDH4VwYubZPQlj
-	M3PxKNdLCwSe0io/binjawXjPjYB/jUKnmGMwmBU=
-X-SES-Outgoing: 2016.05.29-54.240.7.12
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S1753164AbcE2T34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 May 2016 15:29:56 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:33407 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753150AbcE2T3z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 May 2016 15:29:55 -0400
+Received: by mail-yw0-f194.google.com with SMTP id y6so12597945ywe.0
+        for <git@vger.kernel.org>; Sun, 29 May 2016 12:29:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=kGvzTPj7/l0i/xVuspPNsT6DRH8uhlG5gIt7h2WnEFA=;
+        b=nWhFTY7GOLrlvMhhvcasn/eJuIfjI8J6bHwFpz2LZOTdgxn14Y+LpS+iUzfOmF/nDe
+         UT60vJaBrFKboro8+VklnvqGoy100TGvMvLhKuJgGSaZ7CgI/xQ8HgBsBTu3ZMKdTrTZ
+         uiwKK8wkdv+v+nPk9KmmA7a+Z3lbcJZYNwz/4ZzBDyR4nlj701e/jZYdAHMW8gacL4xf
+         6UEJw5XjonE7wAsrWknBs7WBDuVbZ/x4zC6PQVBwkjO8dh3bZJhnaYNdtmGV4mV9Ih76
+         S7vMtpji6ZmMDSjTZ+FB4LGy+54CTW5zlike0MG15J2hQ6aB4UZ6RI63dkNKhKivlnx7
+         lVEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=kGvzTPj7/l0i/xVuspPNsT6DRH8uhlG5gIt7h2WnEFA=;
+        b=mhuMK8Zreda6BfOkTltTGhg5L9TrVmFFt6/6hNyZDIzzXmC0uEscEQx9866fHXsNdT
+         PbYj6lspn74x4FKgMTsulAyTWZ3dhzMKnZR5n5FstpnJVRwwASClpLNH2LTn112150w2
+         RCsUWWYCsfAw5n1aBSUpR8MmfNjlTtynSsqrq7vOxJZedlD8NuHgFYm1oqE3JmVrbYDQ
+         78rqxlpRm64IhJomOCGLIhlmcGtwNY1cJ4RGdsEVzPwiAX8/EHRN/JDteK5+wRU9gTHd
+         3adsukDDLAmlnB2ospXxNy+Wq+0z4YJfxKVVxm6jziziR1Ur6Hq9pV+Iekdn+rms96a3
+         /GfA==
+X-Gm-Message-State: ALyK8tJdswxZlRqTZB7pCfTxN90Tf5U5/GCNm4OkI2XVxarz8u0BjrG/GrcT6392Xsw+jw==
+X-Received: by 10.37.124.5 with SMTP id x5mr14423853ybc.43.1464550194499;
+        Sun, 29 May 2016 12:29:54 -0700 (PDT)
+Received: from localhost.localdomain ([187.20.58.167])
+        by smtp.gmail.com with ESMTPSA id s133sm10050665ywg.33.2016.05.29.12.29.52
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 29 May 2016 12:29:53 -0700 (PDT)
+X-Mailer: git-send-email 2.8.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295843>
 
-When "GPG" is used in a sentence it is now consistently capitalized. When referring to the binary it is left as "gpg".
+Most of the document mentions `behavior` instead of the British
+variation, `behaviour`. This change makes it consistent.
 
-Signed-off-by: David Nicolson <david.nicolson@gmail.com>
+Signed-off-by: Pablo Santiago Blum de Aguiar <scorphus@gmail.com>
 ---
- Documentation/git-mktag.txt         | 2 +-
- Documentation/git-tag.txt           | 2 +-
- Documentation/git-verify-commit.txt | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ Documentation/git-cherry-pick.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
-index fa6a756..724408d 100644
---- a/Documentation/git-mktag.txt
-+++ b/Documentation/git-mktag.txt
-@@ -32,7 +32,7 @@ followed by some 'optional' free-form message (some tags created
- by older Git may not have `tagger` line).  The message, when
- exists, is separated by a blank line from the header.  The
- message part may contain a signature that Git itself doesn't
--care about, but that can be verified with gpg.
-+care about, but that can be verified with GPG.
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index 6154e57..c104a59 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -128,7 +128,7 @@ effect to your index in a row.
  
- GIT
- ---
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index abab481..32bc4aa 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -78,7 +78,7 @@ OPTIONS
+ --allow-empty-message::
+ 	By default, cherry-picking a commit with an empty message will fail.
+-	This option overrides that behaviour, allowing commits with empty
++	This option overrides that behavior, allowing commits with empty
+ 	messages to be cherry picked.
  
- -v::
- --verify::
--	Verify the gpg signature of the given tag names.
-+	Verify the GPG signature of the given tag names.
- 
- -n<num>::
- 	<num> specifies how many lines from the annotation, if any,
-diff --git a/Documentation/git-verify-commit.txt b/Documentation/git-verify-commit.txt
-index ecf4da1..0101f0f 100644
---- a/Documentation/git-verify-commit.txt
-+++ b/Documentation/git-verify-commit.txt
-@@ -12,12 +12,12 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Validates the gpg signature created by 'git commit -S'.
-+Validates the GPG signature created by 'git commit -S'.
- 
- OPTIONS
- -------
- --raw::
--	Print the raw gpg status output to standard error instead of the normal
-+	Print the raw GPG status output to standard error instead of the normal
- 	human-readable output.
- 
- -v::
-
---
-https://github.com/git/git/pull/246
+ --keep-redundant-commits::
+-- 
+2.8.3
