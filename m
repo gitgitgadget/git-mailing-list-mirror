@@ -1,148 +1,102 @@
-From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH v3 2/3] perf: make the tests work in worktrees
-Date: Sun, 29 May 2016 18:43:41 +0200
-Message-ID: <574B1C3D.3000706@web.de>
-References: <cover.1462955446.git.johannes.schindelin@gmx.de>
- <cover.1463145936.git.johannes.schindelin@gmx.de>
- <0f0bc7ac7b6eebed22b05c277cf7352122d164d2.1463145936.git.johannes.schindelin@gmx.de>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 1/2] Do not output whitespace on blank lines
+Date: Sun, 29 May 2016 18:06:37 +0100
+Message-ID: <20160529170637.GC2286@hank>
+References: <01020154fd28aa12-f536bf3e-58df-4d1f-b903-929b429954d3-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 29 18:44:04 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dave Nicolson <david.nicolson@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 29 19:06:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b73op-0000fo-6f
-	for gcvg-git-2@plane.gmane.org; Sun, 29 May 2016 18:44:03 +0200
+	id 1b74AQ-0000Km-7Y
+	for gcvg-git-2@plane.gmane.org; Sun, 29 May 2016 19:06:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752838AbcE2Qn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 May 2016 12:43:59 -0400
-Received: from mout.web.de ([212.227.15.14]:61440 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752750AbcE2Qn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 May 2016 12:43:58 -0400
-Received: from [192.168.178.36] ([79.213.127.144]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0LecN4-1brx6L237G-00qQwo; Sun, 29 May 2016 18:43:47
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
-In-Reply-To: <0f0bc7ac7b6eebed22b05c277cf7352122d164d2.1463145936.git.johannes.schindelin@gmx.de>
-X-Provags-ID: V03:K0:in9Xp4pSHIcWMpabo5Mcp/ZUBzHDPxIUcxNtvX54TSwGM0LqKPy
- crf8zpbhvmuX363Ry0D5WQ2sJhNGg2anJHB90l4JL78YH/EY8cDlymrkEn4bnmI3u2BiT0m
- sAe3NDe9EnbnTOSN0FpR2Q2iUIuh1B+1sOtpoKI62Q0XsZzy26A2Dgc2/akqKVK1BcbMXpY
- zoVdmOjYaTM+Y/KY9nKfA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cFf00k+tUOE=:RErxHlRG6uosQmFwD327dx
- vmeQr9cm9CTLmodxPcGMDB3codFA0pv0heh3JKQprUn5kUkxqc8zDT3jVr+DBxOyS9pva0c24
- zOWa5h+qw0QHEsr2cXiOfNThJScSx9mI+Thr5s/jHxhXzKxbRn40/5M/3pqQ63dZioUhfXMDL
- 2DvVDXt2VNOMFTSBUCQwPABVCagiCLIabJ4ypFNQXs/d1c1Y+k7td3blIlZad0VrhG8CExVTs
- MRIYyn9ZBkCo3nREJ7nArYrAd+B4gu10LmPXPbQcntE0JrZgudS547MF+tdRXRoqy/faydKuD
- EDCp2/g9a6td+3QBMw7qH8Va2iqAG+EFVSvIhAtIi4zWR38N+V4dFGQXX2p1DRpb+VMA0Razu
- E3A9bZlRwVwzc9icsrBitWnwUQF7DTk9Lyo6L7vPTwfuSjPItZsKyjHJ/tmps2ju97x+AtvjG
- 5Ge8W6OSxNPR/9M8xZEsCFAH4MkI5x7+Q70qDePtHhKePsCaU+onu2Jm+xQriFU3s1qs2gSGI
- DNqZBXxFBRO0vonXohWr9m1ULqtpqVqAa80i6yQUnvIByZaWNvVy65+5CBzoYhgBhuJHN8dTZ
- C8hEKSRD2Qy0QzxbANwSIACR1lu5W8t++ceB37qZia0wOVy3L3t9LbgYsa+r9DfBD5APbQzT8
- h8BSUtXeZ9BfUguOS3gRRUj83uY2AiArHv+rCMokk06iFncrDwm2WWC/ll+v5YrBlbvFfIoJm
- ufhIiIpi/v279UtIQmjtYTGzGlDLvv2NNAeCXf2jaLSNCP+U8p8GW1CNbu3hyrXdgN1ZVhNK 
+	id S1752805AbcE2RGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 May 2016 13:06:18 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35641 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752725AbcE2RGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 May 2016 13:06:17 -0400
+Received: by mail-wm0-f65.google.com with SMTP id e3so15522479wme.2
+        for <git@vger.kernel.org>; Sun, 29 May 2016 10:06:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wIWrixkPytfyvnXNFkFLNNv0fAF/+lWnVOZqUK/uC4w=;
+        b=VXuqjJjeF9lM+NyZGkg2bAtcgy581sR5UYtGXOLQNvA5IQgHzW+X4p9G2tSwWOqICQ
+         eXIah8eAyGyFb0k3Sc0u96b+GmkhsG7tfXhUlpHzchcuu+r9zTcFeAg0h84RMaE5bdDJ
+         AeSBZWnLplF9/NMkuo3LSwQsFpGYmCiZtZRjk4wyL2cgKEmJU7IT9Iw1/GpR2Su9++n/
+         41N9jFhSKTAzLOJ0puEhMuMPVdeYW910a3nrD8EgEYpQX7K0Mp0PR3Lc7GVOShgwJqTf
+         Gybi8QilR3IWYOJFmu9wQsB/Nkt8KJOtPhSHer1Gjkh2pOmuv2ioICZMLAgRstpEY+HM
+         /4vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wIWrixkPytfyvnXNFkFLNNv0fAF/+lWnVOZqUK/uC4w=;
+        b=AmOT0/42xWyRqXHEah2GUzXd6Ijq4B6N9IBBtUToHD3wr2xFuNY7m0BcMxEDAuR1mI
+         bNHprkAqipecLda1WxqKukzusAtjZGFKZJ416gad+kk1ZdduAV73lj+bDzCfkpiYl7xV
+         7IJmqy6ZxaK3ERrsAkFCtx0pPeO9f8fnu8gKtqLk0VOOQrSPbD0N7RQzbsMrSBtyKcPd
+         bNq3dMN1JHv4pFZ4N3paZv5nhzmxjjE8d24GqzKtcAGowEkcR7kEBTRNK5TWLr9NabGc
+         dThASgAHvQkTNPCy2qjuL3fFQW6p0EP83x9cuJzRjqB9X4c/Adg/ztWipbMCBqinvQfb
+         Ixfg==
+X-Gm-Message-State: ALyK8tLIDuYYSVSrdh+97EcXBLzrsU6caHXitxzntF9ovYbzZQYsZRKJ5k/+Jpq77QKFGA==
+X-Received: by 10.28.25.129 with SMTP id 123mr7367530wmz.10.1464541576168;
+        Sun, 29 May 2016 10:06:16 -0700 (PDT)
+Received: from localhost (97e49f40.skybroadband.com. [151.228.159.64])
+        by smtp.gmail.com with ESMTPSA id q125sm19448359wmd.19.2016.05.29.10.06.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 29 May 2016 10:06:14 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <01020154fd28aa12-f536bf3e-58df-4d1f-b903-929b429954d3-000000@eu-west-1.amazonses.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295836>
 
-Am 13.05.2016 um 15:25 schrieb Johannes Schindelin:
-> This patch makes perf-lib.sh more robust so that it can run correctly
-> even inside a worktree. For example, it assumed that $GIT_DIR/objects is
-> the objects directory (which is not the case for worktrees) and it used
-> the commondir file verbatim, even if it contained a relative path.
-> 
-> Furthermore, the setup code expected `git rev-parse --git-dir` to spit
-> out a relative path, which is also not true for worktrees. Let's just
-> change the code to accept both relative and absolute paths, by avoiding
-> the `cd` into the copied working directory.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 05/29, Dave Nicolson wrote:
 > ---
->   t/perf/perf-lib.sh | 14 +++++++-------
->   1 file changed, 7 insertions(+), 7 deletions(-)
+
+The commit message should describe why you think this is a good
+change.  Without the commit message I don't see how this is a
+improvement.  It is also missing your Sign-off (see
+Documentation/SubmittingPatches section 5).
+
+The test changes you sent in Patch 2/2 should be in this commit,
+otherwise the git bisect is broken when it hits this patch, which is
+something we want to avoid.
+
+>  diff.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-> index 9fa0706..5ef1744 100644
-> --- a/t/perf/perf-lib.sh
-> +++ b/t/perf/perf-lib.sh
-> @@ -80,22 +80,22 @@ test_perf_create_repo_from () {
->   	error "bug in the test script: not 2 parameters to test-create-repo"
->   	repo="$1"
->   	source="$2"
-> -	source_git=$source/$(cd "$source" && git rev-parse --git-dir)
-> +	source_git="$(git -C "$source" rev-parse --git-dir)"
-> +	objects_dir="$(git -C "$source" rev-parse --git-path objects)"
->   	mkdir -p "$repo/.git"
->   	(
-> -		cd "$repo/.git" &&
-> -		{ cp -Rl "$source_git/objects" . 2>/dev/null ||
-> -			cp -R "$source_git/objects" .; } &&
-> +		{ cp -Rl "$objects_dir" "$repo/.git/" 2>/dev/null ||
-> +			cp -R "$objects_dir" "$repo/.git/"; } &&
->   		for stuff in "$source_git"/*; do
->   			case "$stuff" in
-> -				*/objects|*/hooks|*/config)
-> +				*/objects|*/hooks|*/config|*/commondir)
->   					;;
->   				*)
-> -					cp -R "$stuff" . || exit 1
-> +					cp -R "$stuff" "$repo/.git/" || exit 1
->   					;;
->   			esac
->   		done &&
-> -		cd .. &&
-> +		cd "$repo" &&
->   		git init -q && {
->   			test_have_prereq SYMLINKS ||
->   			git config core.symlinks false
+> diff --git a/diff.c b/diff.c
+> index d3734d3..459b36a 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -471,7 +471,7 @@ static void emit_line_0(struct diff_options *o, const char *set, const char *res
+>  		has_trailing_carriage_return = (len > 0 && line[len-1] == '\r');
+>  		if (has_trailing_carriage_return)
+>  			len--;
+> -		nofirst = 0;
+> +		nofirst = len == 0 && (char)first == ' ' ? 1 : 0;
+>  	}
+>  
+>  	if (len || !nofirst) {
 > 
+> --
+> https://github.com/git/git/pull/245
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-This breaks perf for the non-worktree case:
-
-lsr@debian:~/src/git/t/perf$ make
-rm -rf test-results
-./run
-=== Running 12 tests in this tree ===
-cp: cannot stat '.git/objects': No such file or directory
-error: failed to copy repository '/home/lsr/src/git/t/..' to '/tmp/trash directory.p0000-perf-lib-sanity'
-cp: cannot stat '.git/objects': No such file or directory
-error: failed to copy repository '/home/lsr/src/git/t/..' to '/tmp/trash directory.p0001-rev-list'
-...
-
-Here's a fix:
-
--- >8 --
-Subject: perf: make the tests work without a worktree
-
-In regular repositories $source_git and $objects_dir contain relative
-paths based on $source.  Go there to allow cp to resolve them.
-
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- t/perf/perf-lib.sh | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index 5ef1744..1888790 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -84,6 +84,7 @@ test_perf_create_repo_from () {
- 	objects_dir="$(git -C "$source" rev-parse --git-path objects)"
- 	mkdir -p "$repo/.git"
- 	(
-+		cd "$source" &&
- 		{ cp -Rl "$objects_dir" "$repo/.git/" 2>/dev/null ||
- 			cp -R "$objects_dir" "$repo/.git/"; } &&
- 		for stuff in "$source_git"/*; do
 -- 
-2.8.3
+Thomas
