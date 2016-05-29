@@ -1,161 +1,126 @@
-From: Tom Russello <tom.russello@grenoble-inp.org>
-Subject: Re: [RFC-PATCH v2 2/2] send-email: quote-email quotes the message
- body
-Date: Sun, 29 May 2016 13:41:14 +0200
-Message-ID: <6f76c691-c822-a9bc-4568-819e4ff31491@grenoble-inp.org>
-References: <1464031829-6107-1-git-send-email-tom.russello@grenoble-inp.org>
- <1464369102-7551-1-git-send-email-tom.russello@grenoble-inp.org>
- <1464369102-7551-3-git-send-email-tom.russello@grenoble-inp.org>
- <vpqlh2ujkg8.fsf@anie.imag.fr>
+From: Dave Nicolson <david.nicolson@gmail.com>
+Subject: [PATCH 2/2] Fix tests
+Date: Sun, 29 May 2016 15:36:21 +0000
+Message-ID: <01020154fd28aaa8-7c49c7ef-eed2-4092-80c5-6f43986f174a-000000@eu-west-1.amazonses.com>
+References: <01020154fd28aa12-f536bf3e-58df-4d1f-b903-929b429954d3-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, jordan.de-gea@grenoble-inp.org,
-	erwan.mathoniere@grenoble-inp.org, samuel.groot@grenoble-inp.org,
-	e@80x24.org, aaron@schrab.com, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun May 29 13:41:31 2016
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 29 17:39:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b6z60-0004PW-94
-	for gcvg-git-2@plane.gmane.org; Sun, 29 May 2016 13:41:28 +0200
+	id 1b72ns-0006MY-1G
+	for gcvg-git-2@plane.gmane.org; Sun, 29 May 2016 17:39:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932159AbcE2LlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 May 2016 07:41:19 -0400
-Received: from zm-smtpout-2.grenet.fr ([130.190.244.98]:36966 "EHLO
-	zm-smtpout-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932134AbcE2LlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 May 2016 07:41:19 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 210B320A4;
-	Sun, 29 May 2016 13:41:15 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Nf2Q8jAKaNhS; Sun, 29 May 2016 13:41:15 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 0B7762098;
-	Sun, 29 May 2016 13:41:15 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id F409B2077;
-	Sun, 29 May 2016 13:41:14 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fiUbiEdsIH-o; Sun, 29 May 2016 13:41:14 +0200 (CEST)
-Received: from [192.168.0.19] (1.23.6.84.rev.sfr.net [84.6.23.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id AD5EF2064;
-	Sun, 29 May 2016 13:41:14 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
-In-Reply-To: <vpqlh2ujkg8.fsf@anie.imag.fr>
+	id S932244AbcE2PgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 May 2016 11:36:24 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:39683
+	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752730AbcE2PgX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 May 2016 11:36:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1464536181;
+	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=txe/1rROQT5d7iO6vKTiHZvsWDtxfSt9u2SGtS3LCzo=;
+	b=bmsWrOf+0/Jwm/2J8BGOn9WPQgs0JrLa2sXN509yfWWT/Ug7RCFGnl5iJf4RhUXR
+	EhR/EGvgAdzaiMyYvOZPURogDs64bbLPKrfWe8iB2S88vbrbF6IyOqVluLNDw7zig60
+	Q3DIA9L78UD9kShvS1n+DEAFhFQpPqv3zfExscQw=
+In-Reply-To: <01020154fd28aa12-f536bf3e-58df-4d1f-b903-929b429954d3-000000@eu-west-1.amazonses.com>
+X-SES-Outgoing: 2016.05.29-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295833>
 
-On 05/28/16 17:01, Matthieu Moy wrote:
->> Currently, `send-email` without `--compose` implies `--annotate`.
->
-> I don't get it. Did you mean s/without/with/? Even if so, this is not
-> exactly true: "git send-email --compose -1" will open the editor only
-> for the cover-letter, while adding --annotate will also open it for the
-> patch.
+---
+ t/lib-diff-alternative.sh        | 4 ++--
+ t/t4029-diff-trailing-space.sh   | 2 +-
+ t/t4034-diff-words.sh            | 2 +-
+ t/t4051-diff-function-context.sh | 6 +++---
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
-We meant that the default behavior of `--quote-email` (i.e. without
---compose enabled) will open the editor with the given patches in
-argument and will quote the message body in the first one.
+diff --git a/t/lib-diff-alternative.sh b/t/lib-diff-alternative.sh
+index 8b4dbf2..4a5d9d0 100644
+--- a/t/lib-diff-alternative.sh
++++ b/t/lib-diff-alternative.sh
+@@ -66,7 +66,7 @@ index 6faa5a3..e3af329 100644
+ +++ b/file2
+ @@ -1,26 +1,25 @@
+  #include <stdio.h>
+- 
++
+ +int fib(int n)
+ +{
+ +    if(n > 2)
+@@ -86,7 +86,7 @@ index 6faa5a3..e3af329 100644
+          printf("%d\n", foo);
+      }
+  }
+- 
++
+ -int fact(int n)
+ -{
+ -    if(n > 1)
+diff --git a/t/t4029-diff-trailing-space.sh b/t/t4029-diff-trailing-space.sh
+index 3ccc237..751469c 100755
+--- a/t/t4029-diff-trailing-space.sh
++++ b/t/t4029-diff-trailing-space.sh
+@@ -27,7 +27,7 @@ test_expect_success \
+      git config --bool diff.suppressBlankEmpty true &&
+      git diff f > actual &&
+      test_cmp exp actual &&
+-     perl -i.bak -p -e "s/^\$/ /" exp &&
++     perl -i.bak -p -e "s/^\$//" exp &&
+      git config --bool diff.suppressBlankEmpty false &&
+      git diff f > actual &&
+      test_cmp exp actual &&
+diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+index f2f55fc..7458e61 100755
+--- a/t/t4034-diff-words.sh
++++ b/t/t4034-diff-words.sh
+@@ -106,7 +106,7 @@ test_expect_success '--word-diff=porcelain' '
+ 		-h(4)
+ 		+h(4),hh[44]
+ 		~
+-		 # significant space
++		# significant space
+ 		~
+ 		 a = b + c
+ 		~
+diff --git a/t/t4051-diff-function-context.sh b/t/t4051-diff-function-context.sh
+index 001d678..f786139 100755
+--- a/t/t4051-diff-function-context.sh
++++ b/t/t4051-diff-function-context.sh
+@@ -57,7 +57,7 @@ diff --git a/hello.c b/hello.c
+  {
+ -	/* Classic. */
+  	printf("Hello world.\n");
+- 
++
+  	/* Success! */
+  	return 0;
+  }
+@@ -73,12 +73,12 @@ diff --git a/hello.c b/hello.c
+ --- a/hello.c
+ +++ b/hello.c
+ @@ -9,9 +9,8 @@ static int a(void)
+- 
++
+  static int hello_world(void)
+  {
+ -	/* Classic. */
+  	printf("Hello world.\n");
+- 
++
+  	/* Success! */
+  	return 0;
+  }
 
-> (Note: we discussed this off-list already, but I'll try to summarize my
-> thoughts here)
->
-> I don't have strong opinion on this, but I think there's a difference
-> between launching the editor directly on the input patch files
-> (resulting in _user_'s edit being done directly on them) and having the
-> script modify it in-place (resulting in automatic changes done directly
-> on the user's files).
->
-> I usually use "git send-email" directly without using "git
-> format-patch", so I'm not the best juge. But I can imagine a flow like
->
-> 1) run "git send-email *.patch"
->
-> 2) start editting
->
-> 3) notice there's something wrong, give up for now (answer 'q' when git
->    send-email prompts for confirmation, or kill it via Control-C in a
->    terminal)
->
-> 4) run "git send-email *.patch" again
->
-> 5) be happy that changes done at 2) are still there.
->
-> With --quote-email, it's different. The scenario above would result in
->
-> 5') WTF, why is the email quoted twice?
-
-Actually the Control-C during the edition will cancel all the
-annotations written (including the cited email).
-
-> Unfortunately, I don't really have a solution for this. My first thought
-> was that we should copy the files to a temporary location before
-> starting the editor (that what I'm used to when using "git send-email"
-> without "git format-patch"), but that would prevent 5) above.
-
-It's already what we did: the first original patch is copied in a
-temporary file. However, if the edition went well (i.e. the editor
-closed by the user), the temporary file will erase the original one.
-
->> @@ -109,7 +109,10 @@ is not set, this will be prompted for.
->>  --quote-email=<email_file>::
->>  	Reply to the given email and automatically populate the "To:",
-"Cc:" and
->>  	"In-Reply-To:" fields. If `--compose` is set, this will also fill the
->> -	subject field with "Re: [<email_file>'s subject]".
->> +	subject field with "Re: [<email_file>'s subject]" and quote the
-message body
->> +	of <email_file>.
->
-> I'd add "in the introductory message".
-
-Agreed.
-
->> +	while (<$fh>) {
->> +		# Only for files containing crlf line endings
->> +		s/\r//g;
->
-> The comment doesn't really say what it does.
->
-> What about "turn crlf line endings into lf-only"?
-
-Yes, I completely agree this suggestion.
-
-> When writing comment, always try to ask the question "why?" more than
-> "what?". This part is possibly controversial, think about a contributor
-> finding this piece of code later without having followed the current
-> conversation. He'd probably expect an explanation about why you need a
-> temp file here and not elsewhere.
-
-Thank you for the advice, I'll keep it in mind.
-
->> +	open my $c, "<", $original_file
->> +	or die "Failed to open $original_file : " . $!;
->> +
->> +	open my $c2, ">", $tmp_file
->> +		or die "Failed to open $tmp_file : " . $!;
->
-> No space before :.
-
-Sorry, I copied the previous error messages.
-
-> When the spec says "if --compose ... then ...", "after the triple-dash",
-> and "in the first patch", one would expect at least one test with
-> --compose and one without, something to check that the insertion was
-> done below the triple-dash, and one test with two patches, checking that
-> the second patch is not altered by --quote-email.
-
-Yes, indeed. I'll add these tests in the next version.
-
-Thank you for the review.
+--
+https://github.com/git/git/pull/245
