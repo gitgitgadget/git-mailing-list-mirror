@@ -1,138 +1,81 @@
-From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH v3 2/3] perf: make the tests work in worktrees
-Date: Mon, 30 May 2016 20:24:49 +0200
-Message-ID: <574C8571.6080607@web.de>
-References: <cover.1462955446.git.johannes.schindelin@gmx.de>
- <cover.1463145936.git.johannes.schindelin@gmx.de>
- <0f0bc7ac7b6eebed22b05c277cf7352122d164d2.1463145936.git.johannes.schindelin@gmx.de>
- <574B1C3D.3000706@web.de> <alpine.DEB.2.20.1605301026430.4449@virtualbox>
- <xmqqr3cjo23d.fsf@gitster.mtv.corp.google.com>
+From: Samuel GROOT <samuel.groot@grenoble-inp.org>
+Subject: Re: [WIP-PATCH 0/2] send-email: refactor the email parser loop
+Date: Mon, 30 May 2016 20:28:01 +0200
+Message-ID: <f80f8c1b-6a69-1356-d300-82b7c5af5821@grenoble-inp.org>
+References: <20160527140104.11192-1-samuel.groot@grenoble-inp.org>
+ <20160527201436.GA16547@dcvr.yhbt.net> <vpq8tyujkb0.fsf@anie.imag.fr>
+ <7423b133-cec4-e633-f1ef-70ccc6a6cc02@grenoble-inp.org>
+ <vpq8tyshh8f.fsf@anie.imag.fr>
+ <0abbc11b-5741-ee2e-292c-245c2b974f8e@grenoble-inp.org>
+ <vpqfuszaapu.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 30 20:25:12 2016
+Cc: Eric Wong <e@80x24.org>, git@vger.kernel.org,
+	erwan.mathoniere@grenoble-inp.org, jordan.de-gea@grenoble-inp.org,
+	gitster@pobox.com, aaron@schrab.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon May 30 20:28:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7RsG-0006ij-0z
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 20:25:12 +0200
+	id 1b7RvA-0007t2-Dk
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 20:28:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161834AbcE3SZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 14:25:07 -0400
-Received: from mout.web.de ([212.227.15.14]:65461 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161330AbcE3SZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 14:25:05 -0400
-Received: from [192.168.178.36] ([79.213.117.50]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0LfAbI-1brZJX2jjk-00optY; Mon, 30 May 2016 20:24:55
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
-In-Reply-To: <xmqqr3cjo23d.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:IAiab2gI6SRfMGwXwfBmhLR2AYeAjeMzErzw4Dxo2RBKx6OExSQ
- PrcObJix/SzLmtECmpQnG9FOoHawPI/CXHhgDnfX3vnTI3iI61gYbe3JwfCliiPttKublKP
- BtZkdK0lBRTm/+oGM1BgBQNlmWjl7fs0jLvO2d1x1cmcQROAGiX15d3e/0VunmUb1M3/c3o
- ysRVy3qAY36a0RDBgzpIA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dbxyaZWRcCI=:/JjcEdtN9STHT+Ob315SrT
- nc9nvKLkl9/3vVUZkF1FlwIrZqPflrEYJtVZj7+O3LR01LtzpVhlJ3HU4m6sPbuS+6QdnaC35
- ffN4f+bb6/6wu7/6DG0zSj69zSkcX1iiWFc3GsAgyETyNY2NIzdEmvgmtpkUmpZvrOqO3qeED
- Tub9I+5Q+iJnU6gezZiO1NqRo2W01QTSn9K4COVBaPv3NBsFGufRveCdV4vADsUD3tOlt+vlA
- swKe0tJnNi4iMP2uDFgYCO91jBbexJ54FklyHVLh8TnkPr7QlwV1++LJTexuD4lGdTjNJrjqY
- bIYl9IIDJoT0yw0aSK+3UrnvwsjlRQ3umjQR8HC2KtALg/RWVJ4WgcEONcfga8mp1OrJ5FFOB
- lqwodCzmtccVnustTYYea/ZwBqeDvZuGsXV9aMcV5R+n6hh74O2+dzlPv4q/i0dZ0b+KmQ0TX
- NzQsYZM1O2bzFRM+HRezo/A1A+wBNHWF5H0DOcNFD0jHA+bfJbGPqbanwEZ5m0NWS3vPrHSEe
- LSvPnJrBw5glF7LPqtLrAxiAr/rxX4kwirpxfBz/MnncnzzhuqPlFh9oHNGXVEdqsvOHNopiG
- 9xMbKQPbkG7iyglGL9jbsdZpaF2WCtUfa6se+NcVCfp668JhDhkQQSbKuEb/7Y8MfnXKYdbdH
- 8bBvXPEQwELWKBnwrvLsxFFZRsr7T2joUeLiKawqKakMnlcecA6pTzcPohZO6H4o9cmlOUA+S
- KcJKhAjDhyEZ0OWVAxphutLkehum0/mZ8vXDeqggWuWnKdBewGvB9EvOxYNz6bfqIhGznvb9 
+	id S1161792AbcE3S2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 14:28:07 -0400
+Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:42731 "EHLO
+	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161732AbcE3S2G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 14:28:06 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 2C62C24F3;
+	Mon, 30 May 2016 20:28:03 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Nhwe9-4Jfgxg; Mon, 30 May 2016 20:28:03 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 186AF24D7;
+	Mon, 30 May 2016 20:28:03 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 0DA632077;
+	Mon, 30 May 2016 20:28:03 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id dY4V4nA-kMJ9; Mon, 30 May 2016 20:28:02 +0200 (CEST)
+Received: from linux.home (LFbn-1-8166-195.w90-112.abo.wanadoo.fr [90.112.75.195])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 8BDE22066;
+	Mon, 30 May 2016 20:28:02 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.0
+In-Reply-To: <vpqfuszaapu.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295921>
 
-Am 30.05.2016 um 20:03 schrieb Junio C Hamano:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
->>> This breaks perf for the non-worktree case:
->>
->> Oh drats!
->>
->>> lsr@debian:~/src/git/t/perf$ make
->>> rm -rf test-results
->>> ./run
->>> === Running 12 tests in this tree ===
->>> cp: cannot stat '.git/objects': No such file or directory
->>> error: failed to copy repository '/home/lsr/src/git/t/..' to '/tmp/trash directory.p0000-perf-lib-sanity'
->>> cp: cannot stat '.git/objects': No such file or directory
->>> error: failed to copy repository '/home/lsr/src/git/t/..' to '/tmp/trash directory.p0001-rev-list'
->>> ...
->>>
->>> Here's a fix:
->>>
->>> -- >8 --
->>> Subject: perf: make the tests work without a worktree
->>>
->>> In regular repositories $source_git and $objects_dir contain relative
->>> paths based on $source.  Go there to allow cp to resolve them.
->>>
->>> Signed-off-by: Rene Scharfe <l.s.r@web.de>
->>> ---
->>>   t/perf/perf-lib.sh | 1 +
->>>   1 file changed, 1 insertion(+)
->>>
->>> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
->>> index 5ef1744..1888790 100644
->>> --- a/t/perf/perf-lib.sh
->>> +++ b/t/perf/perf-lib.sh
->>> @@ -84,6 +84,7 @@ test_perf_create_repo_from () {
->>>   	objects_dir="$(git -C "$source" rev-parse --git-path objects)"
->>>   	mkdir -p "$repo/.git"
->>>   	(
->>> +		cd "$source" &&
->>
->> I fear that interacts badly with the `cd "$repo"` I introduced later
->> (replacing a `cd ..`)...
+On 05/30/2016 04:20 PM, Matthieu Moy wrote:
+>> Is the "lots of email" format still used?
+>
+> AFAICT, it was initially supported for backward compatibility, and then
+> no one removed it, but I wouldn't be surprised if no one actually used
+> it.
+>
+> I vaguely remember a message from Ryan Anderson being surprised to see
+> the old format still supported, but I can't find it in the archives.
+>
+> In any case:
+>
+> - git log --grep 'lots of email' => shows only 83b2443
+> - git log -S'lots of email' => likewise
+> - git grep 'lots of email' => just one answer in a comment
+>
+> I'm not sure the feature is even tested.
 
-Oh, right, it does if $repo is a relative path.
+`grep "non-mbox" t/t9001-send-email.sh` didn't return anything, 
+apparently it's not tested.
 
-> What do you want to do then?  For now before -rc1 we can revert the
-> whole thing so that we can get a tested thing that works in both
-> layouts.
-
-Put it in its own subshell, e.g. like this?
-
----
- t/perf/perf-lib.sh | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index 5ef1744..18c363e 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -84,6 +84,7 @@ test_perf_create_repo_from () {
- 	objects_dir="$(git -C "$source" rev-parse --git-path objects)"
- 	mkdir -p "$repo/.git"
- 	(
-+		cd "$source" &&
- 		{ cp -Rl "$objects_dir" "$repo/.git/" 2>/dev/null ||
- 			cp -R "$objects_dir" "$repo/.git/"; } &&
- 		for stuff in "$source_git"/*; do
-@@ -94,7 +95,9 @@ test_perf_create_repo_from () {
- 					cp -R "$stuff" "$repo/.git/" || exit 1
- 					;;
- 			esac
--		done &&
-+		done
-+	) &&
-+	(
- 		cd "$repo" &&
- 		git init -q && {
- 			test_have_prereq SYMLINKS ||
--- 
-2.8.3
+Can we consider this feature obsolete and remove it?
