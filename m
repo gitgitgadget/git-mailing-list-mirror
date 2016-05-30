@@ -1,169 +1,95 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH 09/13] refs: introduce an iterator interface
-Date: Mon, 30 May 2016 16:22:24 +0100
-Message-ID: <574C5AB0.4090005@ramsayjones.plus.com>
-References: <cover.1464537050.git.mhagger@alum.mit.edu>
- <89634d216544d1102dafd5d18247bff2581d48a8.1464537050.git.mhagger@alum.mit.edu>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: git add without whitespace
+Date: Mon, 30 May 2016 10:26:44 -0500
+Message-ID: <CAHd499Agn=vLBxDpHi2dy1HMy-_58PZGs7VNtFJnBfP5zXatTA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?Q?y?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon May 30 17:22:36 2016
+Content-Type: text/plain; charset=UTF-8
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 30 17:27:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7P1X-0006Ki-AZ
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 17:22:35 +0200
+	id 1b7P5t-0007wE-3P
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 17:27:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933360AbcE3PWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 11:22:32 -0400
-Received: from avasout01.plus.net ([84.93.230.227]:54048 "EHLO
-	avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161220AbcE3PWa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 11:22:30 -0400
-Received: from [10.0.2.15] ([84.92.139.254])
-	by avasout01 with smtp
-	id 0fNQ1t00C5VX2mk01fNSRy; Mon, 30 May 2016 16:22:28 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=bsGxfxui c=1 sm=1 tr=0
- a=RCQFcU9wfaUQolwYLdiqXg==:117 a=RCQFcU9wfaUQolwYLdiqXg==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=EKyYwYEKm18lv5KQIWkA:9 a=qBgaLr46IJr6lzCp:21 a=uCWEi13J6PY9A6Gu:21
- a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-In-Reply-To: <89634d216544d1102dafd5d18247bff2581d48a8.1464537050.git.mhagger@alum.mit.edu>
+	id S933412AbcE3P0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 11:26:47 -0400
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:35515 "EHLO
+	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933000AbcE3P0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 11:26:46 -0400
+Received: by mail-vk0-f67.google.com with SMTP id f62so2498225vkc.2
+        for <git@vger.kernel.org>; Mon, 30 May 2016 08:26:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to;
+        bh=hN/pCpGEi9BcJmUjxacpy1zn58oekBOdul1wJHezP6E=;
+        b=DgMDdfQtvfXO3pIg1rT/Xzt5DcrxnPuYFpAatBI6pT2EeZoaCfSwP3G1ULPu/uBco6
+         Fus2h3vJJK3PCyP0rTlxZg9LpJzoIqGewKN8VJmlEXQcVHLTVqyt0e8T04s4jdDEA7hn
+         sls5W3ExT+r9440q6gE//SK/CVTs3cWIXni6cUfBn5gYix31m3PAUDpHZf2wTjVQKlwC
+         NuCMq9A5nrIHT5bOpcgyW7y4ieLsC0ask678/u7KKqnzJuc2I3DwYR/3HWs6k7rj41hu
+         xjYc3a8zckJWsFCp8febstfCEaih83u8KYgFEMcuYskPY0e3L/Rn4Zi0nHjB743K/da0
+         RxIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
+         :to;
+        bh=hN/pCpGEi9BcJmUjxacpy1zn58oekBOdul1wJHezP6E=;
+        b=DIE1hUm+A6umhEnrBZNrMuU9QGCGQ+aVkHiX9AbSdvevjUs6xQUfaPu+9cKfgmOuVc
+         tFRsLXr43M8ACbkM2FfVVzj/UIFt3VerJNRxGqAYilIcORkV534Kaj9sORQDMgMWDg5p
+         Ei0HabQ7PG1Yw4zv9XFOoUM+MsUCOni6NDIuCT84jcmb0NK0yZHiqUdYsd7IBR0KvyqX
+         RJ2ZG1aD81y8VAKGozmUQ735jgyysIyUFMDr3LeTZWnC+VGLmAT3aFH5jL03TFcRnDw0
+         HmSOGWSX+EWsExFTXL1YHT9YFohjsrR3WHib1Er+UM7xw6xTGfabKw1UZmePcVUkGw4s
+         vuiQ==
+X-Gm-Message-State: ALyK8tIzIUMz6DhUzNQcOTQ7CaymQx95/UOP5xoAZoPQps/MN72FnC+j3c6ZMMZCaTN4xJlGRSqMs8uHKbkmBQ==
+X-Received: by 10.159.55.196 with SMTP id q62mr13259618uaq.8.1464622004953;
+ Mon, 30 May 2016 08:26:44 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.159.34.134 with HTTP; Mon, 30 May 2016 08:26:44 -0700 (PDT)
+X-Google-Sender-Auth: bxNfPtHCYKoBuI_GplLRdkswH0E
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295908>
 
+I think it would be useful to have a '-w' option for 'git add' that
+completely ignores whitespace changes, the same way that 'git diff -w'
+does.
 
+Real life scenario:
 
-On 30/05/16 08:55, Michael Haggerty wrote:
-[snip]
+Sometimes developers will use tooling that does not properly strip
+trailing whitespace in source files. Next time I edit those files for
+a simple 1-line code change, my tooling will strip whitespace from the
+whole file. I *do* want these changes, however I want 2 commits: 1
+commit with the bugfix, and a supplementary commit with just the
+whitespace changes.
 
->  /* Reference is a symbolic reference. */
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 8ab4d5f..dbf1587 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -1,6 +1,7 @@
->  #include "../cache.h"
->  #include "../refs.h"
->  #include "refs-internal.h"
-> +#include "../iterator.h"
->  #include "../lockfile.h"
->  #include "../object.h"
->  #include "../dir.h"
-> @@ -704,6 +705,154 @@ static void prime_ref_dir(struct ref_dir *dir)
->  	}
->  }
->  
-> +/*
-> + * A level in the reference hierarchy that is currently being iterated
-> + * through.
-> + */
-> +struct cache_ref_iterator_level {
-> +	/*
-> +	 * The ref_dir being iterated over at this level. The ref_dir
-> +         * is sorted before being stored here.
-> +	 */
-> +	struct ref_dir *dir;
-> +
-> +	/*
-> +	 * The index of the current entry within dir (which might
-> +	 * itself be a directory). If index == -1, then the iteration
-> +	 * hasn't yet begun. If index == dir->nr, then the iteration
-> +	 * through this level is over.
-> +	 */
-> +	int index;
-> +};
-> +
-> +/*
-> + * Represent an iteration through a ref_dir in the memory cache. The
-> + * iteration recurses through subdirectories.
-> + */
-> +struct cache_ref_iterator {
-> +	struct ref_iterator base;
-> +
-> +	/*
-> +	 * The number of levels currently on the stack. This is always
-> +	 * at least 1, because when it becomes zero the iteration is
-> +	 * ended and this struct is freed.
-> +	 */
-> +	size_t levels_nr;
-> +
-> +	/* The number of levels that have been allocated on the stack */
-> +	size_t levels_alloc;
-> +
-> +	/*
-> +	 * A stack of levels. levels[0] is the uppermost level that is
-> +	 * being iterated over in this iteration. (This is not
-> +	 * necessary the top level in the references hierarchy. If we
-> +	 * are iterating through a subtree, then levels[0] will hold
-> +	 * the ref_dir for that subtree, and subsequent levels will go
-> +	 * on from there.)
-> +	 */
-> +	struct cache_ref_iterator_level *levels;
-> +};
-> +
-> +static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
-> +{
-> +	struct cache_ref_iterator *iter =
-> +		(struct cache_ref_iterator *)ref_iterator;
-> +
-> +	while (1) {
-> +		struct cache_ref_iterator_level *level =
-> +			&iter->levels[iter->levels_nr - 1];
-> +		struct ref_dir *dir = level->dir;
-> +		struct ref_entry *entry;
-> +
-> +		if (level->index == -1)
-> +			sort_ref_dir(dir);
+At the moment, there is no way for me to conveniently add the source
+file to the index without whitespace. The only way to accomplish this
+today that I'm aware of is via this command:
 
-do you need to sort here ...
-> +
-> +		if (++level->index == level->dir->nr) {
-> +			/* This level is exhausted; pop up a level */
-> +			if (--iter->levels_nr == 0)
-> +				return ref_iterator_abort(ref_iterator);
-> +
-> +			continue;
-> +		}
-> +
-> +		entry = dir->entries[level->index];
-> +
-> +		if (entry->flag & REF_DIR) {
-> +			/* push down a level */
-> +			ALLOC_GROW(iter->levels, iter->levels_nr + 1,
-> +				   iter->levels_alloc);
-> +
-> +			level = &iter->levels[iter->levels_nr++];
-> +			level->dir = get_ref_dir(entry);
-> +			sort_ref_dir(level->dir);
+$ git diff -U0 -w --no-color | git apply --cached --ignore-whitespace
+--unidiff-zero
 
-... given that you sort here?
+This command explicitly leaves out context because it can sometimes
+cause the patch to fail to apply, I think due to whitespace being in
+it, but I'm not completely sure myself.
 
-> +			level->index = -1;
-> +		} else {
-> +			iter->base.refname = entry->name;
-> +			iter->base.oid = &entry->u.value.oid;
-> +			iter->base.flags = entry->flag;
-> +			return ITER_OK;
-> +		}
-> +	}
-> +}
-> +
+It would be useful to be able to do this instead:
 
-ATB,
-Ramsay Jones
+$ git add -w
+
+This would effectively function the same as my workaround command
+shown earlier. It should also be valid to use -w with -i and -p. In
+the -p case, it just won't show hunks containing whitespace changes.
+For -i, it would assume '-w' as part of any command run during the
+interactive session.
+
+Does this idea sound good? I have some free time on my hands so I
+wouldn't mind implementing this. Maybe there isn't a huge audience for
+this kind of thing, or maybe I'm just going about this the wrong way.
+Thoughts would be much appreciated.
