@@ -1,90 +1,104 @@
-From: David Nicolson <david.nicolson@gmail.com>
-Subject: Re: [PATCH] Documentation: GPG capitalization
-Date: Mon, 30 May 2016 23:43:26 +0200
-Message-ID: <CAKp3HaMvsJ58fvtC+rp13wigw75vVm3F7T2U+Gqnyqke71279Q@mail.gmail.com>
-References: <01020154fd9dec3d-61772857-8b92-4505-ac0f-5058d490f7dc-000000@eu-west-1.amazonses.com>
-	<xmqqvb1vo25i.fsf@gitster.mtv.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC/PATCH] bisect--helper: `bisect_clean_state` shell function
+ in C
+Date: Mon, 30 May 2016 23:48:17 +0200
+Message-ID: <CAP8UFD2wAKN2CsfndLNeCb1dAEH5H-wj_6spAm+d_AtBQDZfhQ@mail.gmail.com>
+References: <20160530182148.18801-1-pranit.bauva@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 30 23:43:41 2016
+Cc: git <git@vger.kernel.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 30 23:48:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7UyK-0004xK-TQ
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 23:43:41 +0200
+	id 1b7V32-000760-Bo
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 23:48:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422909AbcE3Vna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 17:43:30 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:33788 "EHLO
-	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422796AbcE3Vn2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 17:43:28 -0400
-Received: by mail-lf0-f66.google.com with SMTP id w16so12912981lfd.0
-        for <git@vger.kernel.org>; Mon, 30 May 2016 14:43:27 -0700 (PDT)
+	id S1162528AbcE3VsY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 17:48:24 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35803 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1162396AbcE3VsU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 17:48:20 -0400
+Received: by mail-wm0-f65.google.com with SMTP id e3so26462577wme.2
+        for <git@vger.kernel.org>; Mon, 30 May 2016 14:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=umk3rqjBF5LUsSExghvGmcr+6VBZIbZm8Nq2nbY2R3Q=;
-        b=oHdIu1toYw+OAiJq2E6VazISpegw7r7PNr8KgcDZaczpXsjf9hDNBwCioMURMRO890
-         bDP0Lyzm+Z3yBYV/TisnDuOiBBUemkzSl91M0bJATNnqgOUc545G+Y0pLrUyPIHU6o10
-         7QGhfiYMN+zVXzGNmRXnwQBTjvL9hOvqhajZxhFms1rjBiAovuT2Sm6T70V+t7bpzrst
-         0q/Z9wcbayFiudJq3rpUw3VJVJEvDgpx5jaY4YZ3HrcLxXBKW0VgXgurc8xY3o0igmrL
-         WrMwQtAoTNDx3TH05X40Esa+LwZUnOeyjfBNRzTMZVktsjLSBXmjBy2MyvcaN7rp/lGB
-         zJCA==
+        bh=2shcD9rs5g5jxJ2y6buQcWx9euNjN0xkwWuJ26BiIvs=;
+        b=h+s5E4k/Gi3O/OQc9afkdp0hvo+l1Y3SlCv7hCa1TWBenlGuV+HnHxhxN0W9nTBnDN
+         2NBC6ZBCiatxqVGKWkk+EjskUR1PXRheGxgiKFz8m1ybVf/v1IlRhBBEuh7spEFodigl
+         bLltILo/lMcP0R4LR8ZXp9q/Uacn62xnsywWxTd2F8Q9If2CtrNLSf6/FO9xTY4I94Xu
+         LgbSsnGfhtEK6G1pRn9R01wyCXI9UVL4cUSx6ENncrWWbZS1ZpKKpeQJ45DfLuOwxitb
+         xK8NW9iaj33sbjJZmccUFS8BwjBkXnTWBRL503MpkD+zMCrfrN3d6NanaT/acFU1Ay80
+         KBpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=umk3rqjBF5LUsSExghvGmcr+6VBZIbZm8Nq2nbY2R3Q=;
-        b=g67VbjYv6q8JG5013boPXK/doH75ZYJHSpEWCBT0BcRwSeREsj58vZVr4uA6fJ5Pwl
-         05Hl+zd3VC6d7GsXZ/tgRLdnmel3jkbctFtoc7iWHUXQfov8pOSJuVdaMwQY5bbxXVMa
-         vj5kn1C+TWOIdRE8Dzpfeaud/qxJFCcakxMOWPxPebikqa7sKkyAA3mFrpTjmAgfJDh/
-         qIP/ZX4SlwCvjh1rVnbka5kzWmHyc95bmz367YgajETIR+mD0OjC+SkHxElFOLt39lE7
-         NKzf0vD4h9jfTbWf9zis5SWNjF4vC/BpHToYLECjGv90V6dIzRdmZQDQFHSQbtHKy8pQ
-         eqwQ==
-X-Gm-Message-State: ALyK8tJD3NB4AFo4lXDO5sJtGwAxP0EqC4eIEvtj6T2UTGtw8MtQoZgVeftGVfV3/PnDiZUjlOG79+Njwe7bDg==
-X-Received: by 10.25.168.197 with SMTP id r188mr9726962lfe.150.1464644606433;
- Mon, 30 May 2016 14:43:26 -0700 (PDT)
-Received: by 10.114.27.197 with HTTP; Mon, 30 May 2016 14:43:26 -0700 (PDT)
-In-Reply-To: <xmqqvb1vo25i.fsf@gitster.mtv.corp.google.com>
+        bh=2shcD9rs5g5jxJ2y6buQcWx9euNjN0xkwWuJ26BiIvs=;
+        b=VH9VzWY6uIhggSiAtYCNfE9sxLPY9zWzROcT3NeCjiJ9sahvifWD+qXxkwI9n3tURd
+         WjkaCqfQoRhjnXznt6/ueJiT1qsahhPG+Vi0VSksMZWkvET+6GStQeTq2I0+SY1dXnFT
+         0AvuU30doild4npTiKy8AiMO9Afq9HzpcgCbMSLaCLPa/Fkseuf9x+rJwnLfAz+v3dCN
+         7eQ6Pzw1R/T8PMFUgOOGuxh8GAwn4SQ2CQ+PmFxCS+A1GOAtYzUbegDBUxll69251XxI
+         yLomh9+2wseUChNPGokXZnevEOjH2mWweNwNurumZvxOQIVgMuzUHJBpVcbVKNh06ktt
+         7Bsw==
+X-Gm-Message-State: ALyK8tJiG9SbaEmD0GmvU0gH3f8b8epVgkybTCU4LaQ6mEqA0/My7PxIvbj8omcmXl7D4hulEKHOmMFsY9Hr5A==
+X-Received: by 10.195.17.166 with SMTP id gf6mr28149697wjd.124.1464644897740;
+ Mon, 30 May 2016 14:48:17 -0700 (PDT)
+Received: by 10.194.148.146 with HTTP; Mon, 30 May 2016 14:48:17 -0700 (PDT)
+In-Reply-To: <20160530182148.18801-1-pranit.bauva@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295933>
 
-On Mon, May 30, 2016 at 8:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Dave Nicolson <david.nicolson@gmail.com> writes:
+On Mon, May 30, 2016 at 8:21 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> ---
+> This patch contains a bug. I have tried to identify the bug and I suppose it
+> exists in do_for_each_entry_in_dir(). I have reproduced the debugging session
+> at this link[1]. I have seen that some patches in mailing list regarding
+> iterating over refs. Will those affect this? Or is this bug fixed in those
+> patches?
 >
->> When "GPG" is used in a sentence it is now consistently capitalized. When referring to the binary it is left as "gpg".
->>
->> Signed-off-by: David Nicolson <david.nicolson@gmail.com>
->> ---
->>  Documentation/git-mktag.txt         | 2 +-
->>  Documentation/git-tag.txt           | 2 +-
->>  Documentation/git-verify-commit.txt | 4 ++--
->>  3 files changed, 4 insertions(+), 4 deletions(-)
->>
->> diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
->> index fa6a756..724408d 100644
->> --- a/Documentation/git-mktag.txt
->> +++ b/Documentation/git-mktag.txt
->> @@ -32,7 +32,7 @@ followed by some 'optional' free-form message (some tags created
->>  by older Git may not have `tagger` line).  The message, when
->>  exists, is separated by a blank line from the header.  The
->>  message part may contain a signature that Git itself doesn't
->> -care about, but that can be verified with gpg.
->> +care about, but that can be verified with GPG.
->
-> Isn't this a name of the program, though?  Other two hunks in your
-> patch clearly refer to the concept and not to a particular program,
-> and they are good changes, I think.
+> [1]: http://paste.ubuntu.com/16830752/
 
-This one was not as clear as the other hunks. Git is referred to as
-"Git" in the preceding line, which in itself could be referring to the
-concept or the particular program I guess?
+The debug session seems to use code source from a previous version of
+this patch.
+Also it is not cear in which context you run git under gdb. What have
+you done before?
+And we don't see a crash. Could you show the crash and run the "bt"
+command in gdb to get a backtrace?
+
+> @@ -79,11 +90,42 @@ int write_terms(const char *bad, const char *good)
+>         strbuf_release(&content);
+>         return (res < 0) ? -1 : 0;
+>  }
+> +
+> +int remove_bisect_ref(const char *refname, const struct object_id *oid,
+> +                      int flag, void *cb_data)
+> +{
+> +       char *ref;
+> +       ref = xstrfmt("refs/bisect/%s", refname);
+
+You could save one line by concatenating the 2 above lines.
+
+> +       if (delete_ref(ref, oid->hash, flag))
+> +               return error(_("couldn't delete the ref %s\n"), ref);
+> +       return 0;
+
+You need to free "ref".
+
+> +}
+
+Thanks,
+Christian.
