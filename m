@@ -1,71 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How to cut extra liftime of expired loose objects
-Date: Mon, 30 May 2016 14:24:06 -0400
-Message-ID: <20160530182405.GA17253@sigill.intra.peff.net>
-References: <574C6D9B.1080200@kdbg.org>
+From: Konstantin Khomoutov <kostix+git@007spb.ru>
+Subject: Re: How to add custom metadata to Git commit object
+Date: Mon, 30 May 2016 21:24:38 +0300
+Message-ID: <20160530212438.32d863cf1448361d286bdcb4@domain007.com>
+References: <959E96F7-0FF3-4336-B098-58836136DB08@jetbrains.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon May 30 20:24:16 2016
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
+X-From: git-owner@vger.kernel.org Mon May 30 20:24:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7RrL-0006Ka-FU
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 20:24:15 +0200
+	id 1b7Rrr-0006Zq-Ea
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 20:24:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161841AbcE3SYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 14:24:10 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46116 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161330AbcE3SYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 14:24:09 -0400
-Received: (qmail 27751 invoked by uid 102); 30 May 2016 18:24:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 30 May 2016 14:24:08 -0400
-Received: (qmail 16244 invoked by uid 107); 30 May 2016 18:24:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 30 May 2016 14:24:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 30 May 2016 14:24:06 -0400
-Content-Disposition: inline
-In-Reply-To: <574C6D9B.1080200@kdbg.org>
+	id S1161851AbcE3SYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 14:24:44 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:37010 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161330AbcE3SYn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 14:24:43 -0400
+X-Greylist: delayed 26002 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 May 2016 14:24:42 EDT
+Received: from tigra.domain007.com ([192.168.2.102])
+	by mailhub.007spb.ru (8.14.4/8.14.4/Debian-4) with SMTP id u4UIOcdp032441;
+	Mon, 30 May 2016 21:24:39 +0300
+In-Reply-To: <959E96F7-0FF3-4336-B098-58836136DB08@jetbrains.com>
+X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295919>
 
-On Mon, May 30, 2016 at 06:43:07PM +0200, Johannes Sixt wrote:
+On Mon, 30 May 2016 20:58:08 +0300
+Kirill Likhodedov <kirill.likhodedov@jetbrains.com> wrote:
 
-> I think there is logic somewhere in git gc or its minions that gives expired
-> objects that have been packed a two weeks extra life time as loose objects.
+> Is it possible to add custom metadata to Git commit object? 
+> Such metadata should be ignored by Git commands, but could be used by
+> a 3-party tool which knows the format and knows where to look. 
 > 
-> That is, reachable loose objects are moved to a pack, but those objects that
-> were packed, but become unreachable due to expired reflogs, are evicted from
-> the pack and live for another two weeks or so as loose objects.
+> I assume that this should be possible, given that Git objects are
+> actually patches, and patches can contain additional details. But can
+> this be done with the help of Git commands? 
+[...]
+> There are git-notes, which could be used for the purpose, but they
+> are visible to the user via standard Git command, and could be used
+> by the user for other purposes, so they are not very suitable for the
+> task.
 
-Sort of. The loose objects should get the mtime of the pack, which is
-likely newer than 2 weeks. So it's not a 2-week extension, but it may
-take up to 2 weeks for them to go away (and if the pack is already more
-than 2 weeks old, the objects are dropped without even loosening).
+AFAIK, within your restrictions, it's not possible because there are
+only two ways to add meta information for a Git commit:
 
-> As a consequence of this, I always have a few thousand loose objects in my
-> busy repositories, no matter how often I collect garbage. Is there a knob
-> that removes the extra lease of life of objects without reducing the usual
-> expiration times of reflogs etc?
+* Store it externally and somehow correlate it with the commit.
 
-gc.pruneExpire should do this.
+  This is what git-notes does.
 
-I have run into this, too, and it interacts annoyingly with the
-background-gc (which complains "you have too many objects; run
-git-prune", leaves that in a .lock file, and then every subsequent
-auto-gc spews it at me).
+* Encode it directly into a commit object.
 
-I think we should consider dropping the default time to something more
-like 1 day. The 2-week period predates reflogs, I believe (OTOH, it does
-save objects which you might have used with "git add" but never actually
-committed).
+  Since you can't use your own headers in commit objects,
+  you have to encode this information into the commit message in some
+  form parsable by a machine.   This is what, say, git-svn does to
+  make it possible to correlate the commits it creates with their source
+  Subversion revisions.
 
--Peff
+In both cases the information can be viewed by the user.
+
+What I can't really understand is what is so bad about the user being
+able to peer at that data.
