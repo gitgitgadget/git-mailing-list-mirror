@@ -1,283 +1,145 @@
 From: Eric Wong <e@80x24.org>
-Subject: [PATCH 1/3] pretty: support "mboxrd" output format
-Date: Mon, 30 May 2016 23:21:40 +0000
-Message-ID: <20160530232142.21098-2-e@80x24.org>
+Subject: [PATCH 3/3] am: support --patch-format=mboxrd
+Date: Mon, 30 May 2016 23:21:42 +0000
+Message-ID: <20160530232142.21098-4-e@80x24.org>
 References: <20160530232142.21098-1-e@80x24.org>
 Cc: Eric Wong <e@80x24.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 31 01:22:02 2016
+X-From: git-owner@vger.kernel.org Tue May 31 01:22:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7WVV-0005Hg-Lj
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 01:22:02 +0200
+	id 1b7WVX-0005Hg-0R
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 01:22:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161979AbcE3XVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 19:21:53 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:34840 "EHLO dcvr.yhbt.net"
+	id S1162002AbcE3XV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 19:21:58 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:34848 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161857AbcE3XVw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 19:21:52 -0400
+	id S1161857AbcE3XV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 19:21:58 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 006C11FE32;
-	Mon, 30 May 2016 23:21:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E7F31FE34;
+	Mon, 30 May 2016 23:21:48 +0000 (UTC)
 In-Reply-To: <20160530232142.21098-1-e@80x24.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295941>
 
-This output format prevents format-patch output from breaking
-readers if somebody copy+pasted an mbox into a commit message.
-
-Unlike the traditional "mboxo" format, "mboxrd" is designed to
-be fully-reversible.  "mboxrd" also gracefully degrades to
-showing extra ">" in existing "mboxo" readers.
-
-This degradation is preferable to breaking message splitting
-completely, a problem I've seen in "mboxcl" due to having
-multiple, non-existent, or inaccurate Content-Length headers.
-
-"mboxcl2" is a non-starter since it's inherits the problems
-of "mboxcl" while being completely incompatible with existing
-tooling based around mailsplit.
-
-ref: http://homepage.ntlworld.com/jonathan.deboynepollard/FGA/mail-mbox-formats.html
+Combined with "git format-patch --pretty=mboxrd", this should
+allow us to round-trip commit messages with embedded mbox
+"From " lines without corruption.
 
 Signed-off-by: Eric Wong <e@80x24.org>
 ---
- builtin/log.c           |  2 +-
- commit.h                |  6 ++++++
- log-tree.c              |  4 ++--
- pretty.c                | 45 +++++++++++++++++++++++++++++++++++++--------
- t/t4014-format-patch.sh | 27 +++++++++++++++++++++++++++
- 5 files changed, 73 insertions(+), 11 deletions(-)
+ Documentation/git-am.txt |  3 ++-
+ builtin/am.c             | 14 +++++++++++---
+ t/t4150-am.sh            | 20 ++++++++++++++++++++
+ 3 files changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 099f4f7..6d6f368 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -953,7 +953,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 	struct pretty_print_context pp = {0};
- 	struct commit *head = list[0];
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 13cdd7f..6348c29 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -116,7 +116,8 @@ default.   You can use `--no-utf8` to override this.
+ 	By default the command will try to detect the patch format
+ 	automatically. This option allows the user to bypass the automatic
+ 	detection and specify the patch format that the patch(es) should be
+-	interpreted as. Valid formats are mbox, stgit, stgit-series and hg.
++	interpreted as. Valid formats are mbox, mboxrd,
++	stgit, stgit-series and hg.
  
--	if (rev->commit_format != CMIT_FMT_EMAIL)
-+	if (!cmit_fmt_is_mail(rev->commit_format))
- 		die(_("Cover letter needs email format"));
- 
- 	committer = git_committer_info(0);
-diff --git a/commit.h b/commit.h
-index b06db4d..1e04d3a 100644
---- a/commit.h
-+++ b/commit.h
-@@ -131,11 +131,17 @@ enum cmit_fmt {
- 	CMIT_FMT_FULLER,
- 	CMIT_FMT_ONELINE,
- 	CMIT_FMT_EMAIL,
-+	CMIT_FMT_MBOXRD,
- 	CMIT_FMT_USERFORMAT,
- 
- 	CMIT_FMT_UNSPECIFIED
+ -i::
+ --interactive::
+diff --git a/builtin/am.c b/builtin/am.c
+index 3dfe70b..d5da5fe 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -70,7 +70,8 @@ enum patch_format {
+ 	PATCH_FORMAT_MBOX,
+ 	PATCH_FORMAT_STGIT,
+ 	PATCH_FORMAT_STGIT_SERIES,
+-	PATCH_FORMAT_HG
++	PATCH_FORMAT_HG,
++	PATCH_FORMAT_MBOXRD
  };
  
-+static inline int cmit_fmt_is_mail(enum cmit_fmt fmt)
-+{
-+	return (fmt == CMIT_FMT_EMAIL || fmt == CMIT_FMT_MBOXRD);
-+}
-+
- struct pretty_print_context {
- 	/*
- 	 * Callers should tweak these to change the behavior of pp_* functions.
-diff --git a/log-tree.c b/log-tree.c
-index 78a5381..48daf84 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -603,7 +603,7 @@ void show_log(struct rev_info *opt)
- 	 * Print header line of header..
- 	 */
- 
--	if (opt->commit_format == CMIT_FMT_EMAIL) {
-+	if (cmit_fmt_is_mail(opt->commit_format)) {
- 		log_write_email_headers(opt, commit, &ctx.subject, &extra_headers,
- 					&ctx.need_8bit_cte);
- 	} else if (opt->commit_format != CMIT_FMT_USERFORMAT) {
-@@ -694,7 +694,7 @@ void show_log(struct rev_info *opt)
- 
- 	if ((ctx.fmt != CMIT_FMT_USERFORMAT) &&
- 	    ctx.notes_message && *ctx.notes_message) {
--		if (ctx.fmt == CMIT_FMT_EMAIL) {
-+		if (cmit_fmt_is_mail(ctx.fmt)) {
- 			strbuf_addstr(&msgbuf, "---\n");
- 			opt->shown_dashes = 1;
- 		}
-diff --git a/pretty.c b/pretty.c
-index 87c4497..a33e604 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -92,6 +92,7 @@ static void setup_commit_formats(void)
- 		{ "medium",	CMIT_FMT_MEDIUM,	0,	8 },
- 		{ "short",	CMIT_FMT_SHORT,		0,	0 },
- 		{ "email",	CMIT_FMT_EMAIL,		0,	0 },
-+		{ "mboxrd",	CMIT_FMT_MBOXRD,	0,	0 },
- 		{ "fuller",	CMIT_FMT_FULLER,	0,	8 },
- 		{ "full",	CMIT_FMT_FULL,		0,	8 },
- 		{ "oneline",	CMIT_FMT_ONELINE,	1,	0 }
-@@ -444,7 +445,7 @@ void pp_user_info(struct pretty_print_context *pp,
- 	if (pp->mailmap)
- 		map_user(pp->mailmap, &mailbuf, &maillen, &namebuf, &namelen);
- 
--	if (pp->fmt == CMIT_FMT_EMAIL) {
-+	if (cmit_fmt_is_mail(pp->fmt)) {
- 		if (pp->from_ident && ident_cmp(pp->from_ident, &ident)) {
- 			struct strbuf buf = STRBUF_INIT;
- 
-@@ -494,6 +495,7 @@ void pp_user_info(struct pretty_print_context *pp,
- 			    show_ident_date(&ident, &pp->date_mode));
- 		break;
- 	case CMIT_FMT_EMAIL:
-+	case CMIT_FMT_MBOXRD:
- 		strbuf_addf(sb, "Date: %s\n",
- 			    show_ident_date(&ident, DATE_MODE(RFC2822)));
- 		break;
-@@ -535,7 +537,7 @@ static void add_merge_info(const struct pretty_print_context *pp,
+ enum keep_type {
+@@ -712,7 +713,8 @@ done:
+  * Splits out individual email patches from `paths`, where each path is either
+  * a mbox file or a Maildir. Returns 0 on success, -1 on failure.
+  */
+-static int split_mail_mbox(struct am_state *state, const char **paths, int keep_cr)
++static int split_mail_mbox(struct am_state *state, const char **paths,
++				int keep_cr, int mboxrd)
  {
- 	struct commit_list *parent = commit->parents;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	struct strbuf last = STRBUF_INIT;
+@@ -724,6 +726,8 @@ static int split_mail_mbox(struct am_state *state, const char **paths, int keep_
+ 	argv_array_push(&cp.args, "-b");
+ 	if (keep_cr)
+ 		argv_array_push(&cp.args, "--keep-cr");
++	if (mboxrd)
++		argv_array_push(&cp.args, "--mboxrd");
+ 	argv_array_push(&cp.args, "--");
+ 	argv_array_pushv(&cp.args, paths);
  
--	if ((pp->fmt == CMIT_FMT_ONELINE) || (pp->fmt == CMIT_FMT_EMAIL) ||
-+	if ((pp->fmt == CMIT_FMT_ONELINE) || (cmit_fmt_is_mail(pp->fmt)) ||
- 	    !parent || !parent->next)
- 		return;
+@@ -965,13 +969,15 @@ static int split_mail(struct am_state *state, enum patch_format patch_format,
  
-@@ -1614,7 +1616,7 @@ void pp_title_line(struct pretty_print_context *pp,
- 	if (pp->after_subject) {
- 		strbuf_addstr(sb, pp->after_subject);
+ 	switch (patch_format) {
+ 	case PATCH_FORMAT_MBOX:
+-		return split_mail_mbox(state, paths, keep_cr);
++		return split_mail_mbox(state, paths, keep_cr, 0);
+ 	case PATCH_FORMAT_STGIT:
+ 		return split_mail_conv(stgit_patch_to_mail, state, paths, keep_cr);
+ 	case PATCH_FORMAT_STGIT_SERIES:
+ 		return split_mail_stgit_series(state, paths, keep_cr);
+ 	case PATCH_FORMAT_HG:
+ 		return split_mail_conv(hg_patch_to_mail, state, paths, keep_cr);
++	case PATCH_FORMAT_MBOXRD:
++		return split_mail_mbox(state, paths, keep_cr, 1);
+ 	default:
+ 		die("BUG: invalid patch_format");
  	}
--	if (pp->fmt == CMIT_FMT_EMAIL) {
-+	if (cmit_fmt_is_mail(pp->fmt)) {
- 		strbuf_addch(sb, '\n');
- 	}
- 
-@@ -1697,12 +1699,34 @@ static void pp_handle_indent(struct pretty_print_context *pp,
- 		strbuf_add(sb, line, linelen);
- }
- 
-+static regex_t *mboxrd_prepare(void)
-+{
-+	static regex_t preg;
-+	const char re[] = "^>*From ";
-+	int err = regcomp(&preg, re, REG_NOSUB | REG_EXTENDED);
-+
-+	if (err) {
-+		char errbuf[1024];
-+
-+		regerror(err, &preg, errbuf, sizeof(errbuf));
-+		regfree(&preg);
-+		die("Cannot prepare regexp `%s': %s", re, errbuf);
-+	}
-+
-+	return &preg;
-+}
-+
- void pp_remainder(struct pretty_print_context *pp,
- 		  const char **msg_p,
- 		  struct strbuf *sb,
- 		  int indent)
- {
- 	int first = 1;
-+	static regex_t *mboxrd_from;
-+
-+	if (pp->fmt == CMIT_FMT_MBOXRD && !mboxrd_from)
-+		mboxrd_from = mboxrd_prepare();
-+
- 	for (;;) {
- 		const char *line = *msg_p;
- 		int linelen = get_one_line(line);
-@@ -1725,8 +1749,13 @@ void pp_remainder(struct pretty_print_context *pp,
- 		else if (pp->expand_tabs_in_log)
- 			strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
- 					     line, linelen);
--		else
-+		else {
-+			if (pp->fmt == CMIT_FMT_MBOXRD &&
-+					!regexec(mboxrd_from, line, 0, 0, 0))
-+				strbuf_addch(sb, '>');
-+
- 			strbuf_add(sb, line, linelen);
-+		}
- 		strbuf_addch(sb, '\n');
- 	}
- }
-@@ -1750,14 +1779,14 @@ void pretty_print_commit(struct pretty_print_context *pp,
- 	encoding = get_log_output_encoding();
- 	msg = reencoded = logmsg_reencode(commit, NULL, encoding);
- 
--	if (pp->fmt == CMIT_FMT_ONELINE || pp->fmt == CMIT_FMT_EMAIL)
-+	if (pp->fmt == CMIT_FMT_ONELINE || cmit_fmt_is_mail(pp->fmt))
- 		indent = 0;
- 
- 	/*
- 	 * We need to check and emit Content-type: to mark it
- 	 * as 8-bit if we haven't done so.
- 	 */
--	if (pp->fmt == CMIT_FMT_EMAIL && need_8bit_cte == 0) {
-+	if (cmit_fmt_is_mail(pp->fmt) && need_8bit_cte == 0) {
- 		int i, ch, in_body;
- 
- 		for (in_body = i = 0; (ch = msg[i]); i++) {
-@@ -1785,7 +1814,7 @@ void pretty_print_commit(struct pretty_print_context *pp,
- 	msg = skip_empty_lines(msg);
- 
- 	/* These formats treat the title line specially. */
--	if (pp->fmt == CMIT_FMT_ONELINE || pp->fmt == CMIT_FMT_EMAIL)
-+	if (pp->fmt == CMIT_FMT_ONELINE || cmit_fmt_is_mail(pp->fmt))
- 		pp_title_line(pp, &msg, sb, encoding, need_8bit_cte);
- 
- 	beginning_of_body = sb->len;
-@@ -1802,7 +1831,7 @@ void pretty_print_commit(struct pretty_print_context *pp,
- 	 * format.  Make sure we did not strip the blank line
- 	 * between the header and the body.
- 	 */
--	if (pp->fmt == CMIT_FMT_EMAIL && sb->len <= beginning_of_body)
-+	if (cmit_fmt_is_mail(pp->fmt) && sb->len <= beginning_of_body)
- 		strbuf_addch(sb, '\n');
- 
- 	unuse_commit_buffer(commit, reencoded);
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 8049cad..0a2070e 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1565,4 +1565,31 @@ test_expect_success 'format-patch --base overrides format.useAutoBase' '
- 	test_cmp expected actual
+@@ -2201,6 +2207,8 @@ static int parse_opt_patchformat(const struct option *opt, const char *arg, int
+ 		*opt_value = PATCH_FORMAT_STGIT_SERIES;
+ 	else if (!strcmp(arg, "hg"))
+ 		*opt_value = PATCH_FORMAT_HG;
++	else if (!strcmp(arg, "mboxrd"))
++		*opt_value = PATCH_FORMAT_MBOXRD;
+ 	else
+ 		return error(_("Invalid value for --patch-format: %s"), arg);
+ 	return 0;
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index b41bd17..74e093d 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -957,4 +957,24 @@ test_expect_success 'am -s unexpected trailer block' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'format-patch --pretty=mboxrd' '
++test_expect_success 'am --patch-format=mboxrd handles mboxrd' '
++	rm -fr .git/rebase-apply &&
++	git checkout -f first &&
++	echo mboxrd >>file &&
++	git add file &&
 +	cat >msg <<-INPUT_END &&
 +	mboxrd should escape the body
 +
 +	From could trip up a loose mbox parser
 +	>From extra escape for reversibility
-+	>>From extra escape for reversibility 2
-+	from lower case not escaped
-+	Fromm bad speling not escaped
-+	 From with leading space not escaped
 +	INPUT_END
-+
-+	cat >expect <<-INPUT_END &&
-+	>From could trip up a loose mbox parser
-+	>>From extra escape for reversibility
-+	>>>From extra escape for reversibility 2
-+	from lower case not escaped
-+	Fromm bad speling not escaped
-+	 From with leading space not escaped
-+	INPUT_END
-+
-+	C=$(git commit-tree HEAD^^{tree} -p HEAD <msg) &&
-+	git format-patch --pretty=mboxrd --stdout -1 $C~1..$C >patch &&
-+	grep -A5 "^>From could trip up a loose mbox parser" patch >actual &&
-+	test_cmp expect actual
++	git commit -F msg &&
++	git format-patch --pretty=mboxrd --stdout -1 >mboxrd1 &&
++	grep "^>From could trip up a loose mbox parser" mboxrd1 &&
++	git checkout -f first &&
++	git am --patch-format=mboxrd mboxrd1 &&
++	git cat-file commit HEAD | tail -n4 >out &&
++	test_cmp msg out
 +'
 +
  test_done
