@@ -1,85 +1,52 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [WIP-PATCH 0/2] send-email: refactor the email parser loop
-Date: Mon, 30 May 2016 16:20:45 +0200
-Message-ID: <vpqfuszaapu.fsf@anie.imag.fr>
-References: <20160527140104.11192-1-samuel.groot@grenoble-inp.org>
-	<20160527201436.GA16547@dcvr.yhbt.net> <vpq8tyujkb0.fsf@anie.imag.fr>
-	<7423b133-cec4-e633-f1ef-70ccc6a6cc02@grenoble-inp.org>
-	<vpq8tyshh8f.fsf@anie.imag.fr>
-	<0abbc11b-5741-ee2e-292c-245c2b974f8e@grenoble-inp.org>
+From: "Timo Sigurdsson" <public_timo.s@silentcreek.de>
+Subject: Gitweb: Persistant download URLs for snapshots?
+Date: Mon, 30 May 2016 16:12:53 +0200 (CEST)
+Message-ID: <20160530141253.AB7586C80ABB@dd34104.kasserver.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Wong <e@80x24.org>, git@vger.kernel.org,
-	erwan.mathoniere@grenoble-inp.org, jordan.de-gea@grenoble-inp.org,
-	gitster@pobox.com, aaron@schrab.com
-To: Samuel GROOT <samuel.groot@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Mon May 30 16:21:21 2016
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 30 16:22:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7O4F-0005jj-4D
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 16:21:19 +0200
+	id 1b7O5I-0006a9-Jx
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 16:22:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754964AbcE3OVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 10:21:12 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39364 "EHLO mx1.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933116AbcE3OU6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 10:20:58 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u4UEKiun031125
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 30 May 2016 16:20:45 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4UEKj9H005764;
-	Mon, 30 May 2016 16:20:45 +0200
-In-Reply-To: <0abbc11b-5741-ee2e-292c-245c2b974f8e@grenoble-inp.org> (Samuel
-	GROOT's message of "Mon, 30 May 2016 16:01:29 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Mon, 30 May 2016 16:20:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u4UEKiun031125
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1465222846.46203@/ktBB+ZvAlll/H1i8ulZLw
+	id S1755168AbcE3OWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 10:22:16 -0400
+Received: from dd34104.kasserver.com ([85.13.151.79]:33070 "EHLO
+	dd34104.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755149AbcE3OWD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 10:22:03 -0400
+X-Greylist: delayed 547 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 May 2016 10:22:03 EDT
+Received: from dd34104.kasserver.com (dd0801.kasserver.com [85.13.143.205])
+	by dd34104.kasserver.com (Postfix) with ESMTPSA id AB7586C80ABB
+	for <git@vger.kernel.org>; Mon, 30 May 2016 16:12:53 +0200 (CEST)
+X-SenderIP: 153.96.32.62
+User-Agent: ALL-INKL Webmail 2.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295901>
 
-Samuel GROOT <samuel.groot@grenoble-inp.org> writes:
+Hi,
 
-> (mbox) prefix was introduced by Ryan Anderson in 2005 (can't find the
-> exact commit though), in opposition with the (non-mbox) format ("lots
-> of email") that was used before.
+I hope this is the right place to ask this, but I wanted to know whether it is possible to have a persistant URL to obtain a snapshot of the latest master of a repository through Gitweb.
 
-That is actually from the original commit introducing send-email:
-83b2443 ([PATCH] Add git-send-email-script - tool to send emails from
-git-format-patch-script, 2005-07-31), i.e. ~3 month after Git was born.
+I set up a gitweb instance and it works nicely. I can click on the snapshot link to get a tgz archive of a specific commit hash to quickly receive or distribute files of a repository exposed by Gitweb. However, I have two problems with these links:
 
-At that time, user-friendlyness was not really a priority ;-).
+1) The link seems to depend on a commit hash. I haven't found a shorter or persitant link that would e.g. always give me the latest master snapshot.
 
-> Is the "lots of email" format still used?
+2) Another issue which is actually more problematic: The links only seem to work interactively in my desktop browser. If I right click the link "snapshot", copy the URL and then try to download that link from another (headless) machine using wget, I end up getting a html file instead of a tgz archive.
 
-AFAICT, it was initially supported for backward compatibility, and then
-no one removed it, but I wouldn't be surprised if no one actually used
-it.
+Is it possible to generate such links that conssitantly work for the latest commit of a repository and that work non-interactively from a command line? Am I doing something wrong (well aside fromt he possibility that I'm trying to use gitweb for something which it might not have been designed for...)?
 
-I vaguely remember a message from Ryan Anderson being surprised to see
-the old format still supported, but I can't find it in the archives.
+Thank you!
 
-In any case:
+Kind regards,
 
-- git log --grep 'lots of email' => shows only 83b2443
-- git log -S'lots of email' => likewise
-- git grep 'lots of email' => just one answer in a comment
-
-I'm not sure the feature is even tested.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Timo
