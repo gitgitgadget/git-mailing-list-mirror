@@ -1,167 +1,88 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH 09/13] refs: introduce an iterator interface
-Date: Mon, 30 May 2016 17:57:19 +0100
-Message-ID: <574C70EF.5070705@ramsayjones.plus.com>
-References: <cover.1464537050.git.mhagger@alum.mit.edu>
- <89634d216544d1102dafd5d18247bff2581d48a8.1464537050.git.mhagger@alum.mit.edu>
- <574C5AB0.4090005@ramsayjones.plus.com>
+From: tboegi@web.de
+Subject: [PATCH v1 0/1] t6038-merge-text-auto.sh
+Date: Mon, 30 May 2016 19:00:42 +0200
+Message-ID: <1464627642-23994-1-git-send-email-tboegi@web.de>
+References: <xmqq7fev55qk.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?Q?y?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon May 30 18:57:29 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 30 18:59:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7QVM-0003rn-JM
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 18:57:28 +0200
+	id 1b7QXZ-0004fu-8d
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 18:59:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161764AbcE3Q5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 12:57:24 -0400
-Received: from avasout01.plus.net ([84.93.230.227]:59032 "EHLO
-	avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161418AbcE3Q5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 12:57:24 -0400
-Received: from [10.0.2.15] ([84.92.139.254])
-	by avasout01 with smtp
-	id 0gxL1t0015VX2mk01gxMmf; Mon, 30 May 2016 17:57:21 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=bsGxfxui c=1 sm=1 tr=0
- a=RCQFcU9wfaUQolwYLdiqXg==:117 a=RCQFcU9wfaUQolwYLdiqXg==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=QAdNkNimmr_ngT2Z8oUA:9 a=3vHU_G3GScEn-qTI:21 a=Uj_MRYtTeGApSJ7w:21
- a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-In-Reply-To: <574C5AB0.4090005@ramsayjones.plus.com>
+	id S1161641AbcE3Q7l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2016 12:59:41 -0400
+Received: from mout.web.de ([217.72.192.78]:59032 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161220AbcE3Q7k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 12:59:40 -0400
+X-Greylist: delayed 304 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 May 2016 12:59:40 EDT
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0M89mf-1bTkhl2j4r-00vioi; Mon, 30 May 2016 18:54:32
+ +0200
+X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
+In-Reply-To: <xmqq7fev55qk.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:gJal2FPvfRt9JLBFjmjHGzbA2Ph+t/l9aCra2gYRHuGQyw011cG
+ d1HZcEY6BMy5wv1U+m3pkaOeJ63YkxpITjNoUTTKiVGN3EUgOiuuEboWwWbN6ehy03iKuSx
+ B/GwnSho54mTfT2HRlYOpn9bHWvkeOwyYZ4i4ZU4rQnja0tk2L03mErE/gifqqXW+KCoTIy
+ KKfstSvsqpr9oLloc3NDg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:e7FE5N5q9Ng=:mmdeB+gyMqpQRlCrXX1Wuq
+ 2UXUaumCxAafqFJX/6RmzIK4Hsgtif/uhkMqL6YSEQDZHj1AzsSe4+IcapnXLXlFwcuS+WZqu
+ DqSy468WO/SFD7yODIKravS1vF/GH5cE2uKW//qPpxty9rXGC2we8OL1GS/CF48j3w79KDsDi
+ 3KZhKRHXL+4NNmTSR3tsAShaJqXmeSAtuMA2ZpVTyZg4wRD8w1K2CB3cqsKmpudkPpUgBJ6b8
+ lBwz72TvuI+BNDJhrFMlltb78Tvp5i2CC6vnIAygI8bHFZjEqgDr6zVvGxG1Tq7mVChHPy7b7
+ 48Cndt8ksQ2CEIfePx+PVaHrLQcId6grO+bl2n0MpkdxLKd4hd2xA5hRHmsbbDxwDiSZjbbRB
+ V+DJ7R983dNm1u7B8WerQ/2qmEtyywCjh0CD3ubcWxJZ1Wbb8GyaXxHThF4LBcU+eviFqG+gk
+ XN0SwDc+UxowctJ7urhZYrsn0Te+qtsOSaPh37Q7Hf/T2ZE7Llp4rgvbDDZfJieeT4C8yO5u2
+ 1ae/s+yPIw9JmTf4SXQqPYKnDrVokYn+12vMPJdAE1iIOxyult4krHcbF8UIKf2d2nZlTNnRm
+ xnRnt71MV26Bf2AwalduHD9Csw4CPTuMZ7Z+GbijnMf9oexU1LNzBmJZdJz2uXl1kPJ12P+uq
+ peJ/EVRdzG/Fb1EztW+a3I/Bq5HvcPBgLk3vBFoqYXJxZA16stk/P0xWD3p/8k2PfbFQ1pVo0
+ aIDZbCPy90XhYcH3DINzcebRKTUmt4n/TGcos21G5wCjR/nKpAaZRBoVDRmS4EprijSHEu+K 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295912>
 
+=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
+Split of the old 10/10 series.
+This is the update of t6038, which is needed to
+motivate the patch
+   `convert: ce_compare_data() checks for a sha1 of a path`
+on top of
+   `convert: unify the "auto" handling of CRLF`
 
-On 30/05/16 16:22, Ramsay Jones wrote:
-> 
-> 
-> On 30/05/16 08:55, Michael Haggerty wrote:
-> [snip]
-> 
->>  /* Reference is a symbolic reference. */
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index 8ab4d5f..dbf1587 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -1,6 +1,7 @@
->>  #include "../cache.h"
->>  #include "../refs.h"
->>  #include "refs-internal.h"
->> +#include "../iterator.h"
->>  #include "../lockfile.h"
->>  #include "../object.h"
->>  #include "../dir.h"
->> @@ -704,6 +705,154 @@ static void prime_ref_dir(struct ref_dir *dir)
->>  	}
->>  }
->>  
->> +/*
->> + * A level in the reference hierarchy that is currently being iterated
->> + * through.
->> + */
->> +struct cache_ref_iterator_level {
->> +	/*
->> +	 * The ref_dir being iterated over at this level. The ref_dir
->> +         * is sorted before being stored here.
->> +	 */
->> +	struct ref_dir *dir;
->> +
->> +	/*
->> +	 * The index of the current entry within dir (which might
->> +	 * itself be a directory). If index == -1, then the iteration
->> +	 * hasn't yet begun. If index == dir->nr, then the iteration
->> +	 * through this level is over.
->> +	 */
->> +	int index;
->> +};
->> +
->> +/*
->> + * Represent an iteration through a ref_dir in the memory cache. The
->> + * iteration recurses through subdirectories.
->> + */
->> +struct cache_ref_iterator {
->> +	struct ref_iterator base;
->> +
->> +	/*
->> +	 * The number of levels currently on the stack. This is always
->> +	 * at least 1, because when it becomes zero the iteration is
->> +	 * ended and this struct is freed.
->> +	 */
->> +	size_t levels_nr;
->> +
->> +	/* The number of levels that have been allocated on the stack */
->> +	size_t levels_alloc;
->> +
->> +	/*
->> +	 * A stack of levels. levels[0] is the uppermost level that is
->> +	 * being iterated over in this iteration. (This is not
->> +	 * necessary the top level in the references hierarchy. If we
->> +	 * are iterating through a subtree, then levels[0] will hold
->> +	 * the ref_dir for that subtree, and subsequent levels will go
->> +	 * on from there.)
->> +	 */
->> +	struct cache_ref_iterator_level *levels;
->> +};
->> +
->> +static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
->> +{
->> +	struct cache_ref_iterator *iter =
->> +		(struct cache_ref_iterator *)ref_iterator;
->> +
->> +	while (1) {
->> +		struct cache_ref_iterator_level *level =
->> +			&iter->levels[iter->levels_nr - 1];
->> +		struct ref_dir *dir = level->dir;
->> +		struct ref_entry *entry;
->> +
->> +		if (level->index == -1)
->> +			sort_ref_dir(dir);
-> 
-> do you need to sort here ...
->> +
->> +		if (++level->index == level->dir->nr) {
->> +			/* This level is exhausted; pop up a level */
->> +			if (--iter->levels_nr == 0)
->> +				return ref_iterator_abort(ref_iterator);
->> +
->> +			continue;
->> +		}
->> +
->> +		entry = dir->entries[level->index];
->> +
->> +		if (entry->flag & REF_DIR) {
->> +			/* push down a level */
->> +			ALLOC_GROW(iter->levels, iter->levels_nr + 1,
->> +				   iter->levels_alloc);
->> +
->> +			level = &iter->levels[iter->levels_nr++];
->> +			level->dir = get_ref_dir(entry);
->> +			sort_ref_dir(level->dir);
-> 
-> ... given that you sort here?
+When files with different eols are merged with
+merge.renormalize =3D true,
+it is important to look at the right blob to determine if
+the crlf came from the blob or are a result of a coversion.
+This is a little bit of a hen-and-egg problem:
+The problem comes up after the "unified auto handling".
+In theory, it should have been since before:
+get_sha1_from_index() says:
 
-I had intended to say 'or vice versa' here. When I wrote this, I had not
-finished reading this patch (let alone the series). Now, I suspect that
-you can simply drop this 'sort_ref_dir()' call site. Unless I've misread
-the code, of course! ;-)
+ * We might be in the middle of a merge, in which
+ * case we would read stage #2 (ours).
 
-ATB,
-Ramsay Jones
+This seams wrong, as in the merge we sometimes need to
+look at "theirs".
+(But I haven't managed to construct a TC)
+
+t6038-merge-text-auto.sh
+
+Torsten B=C3=B6gershausen (1):
+  t6038: different eol for "Merge addition of text=3Dauto"
+
+ t/t6038-merge-text-auto.sh | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
+
+--=20
+2.0.0.rc1.6318.g0c2c796
