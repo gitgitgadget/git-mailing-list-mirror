@@ -1,89 +1,80 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH 2/2] strbuf: allow to use preallocated memory
-Date: Tue, 31 May 2016 07:50:29 +0900
-Message-ID: <20160530225029.GA9624@glandium.org>
-References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr>
- <20160530103642.7213-3-william.duclot@ensimag.grenoble-inp.fr>
- <20160530215652.GA6456@glandium.org>
- <1686469496.216457.1464648383516.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
-	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
-	antoine queru <antoine.queru@ensimag.grenoble-inp.fr>,
-	matthieu moy <matthieu.moy@grenoble-inp.fr>,
-	mhagger@alum.mit.edu
-To: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue May 31 00:51:57 2016
+From: Eric Wong <e@80x24.org>
+Subject: [RFC/PATCH 0/3] support mboxrd format
+Date: Mon, 30 May 2016 23:21:39 +0000
+Message-ID: <20160530232142.21098-1-e@80x24.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 31 01:21:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7W2P-0001Rb-B7
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 00:51:57 +0200
+	id 1b7WVN-0005D7-Qk
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 01:21:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161790AbcE3Wuk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 18:50:40 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:60042 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161690AbcE3Wuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 18:50:40 -0400
-Received: from glandium by zenigata with local (Exim 4.87)
-	(envelope-from <mh@glandium.org>)
-	id 1b7W0z-0002XV-H5; Tue, 31 May 2016 07:50:29 +0900
-Content-Disposition: inline
-In-Reply-To: <1686469496.216457.1464648383516.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.6.0 (2016-04-01)
+	id S1161941AbcE3XVt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 19:21:49 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:34822 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161857AbcE3XVs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 19:21:48 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC06E1FE31
+	for <git@vger.kernel.org>; Mon, 30 May 2016 23:21:47 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295939>
 
-On Tue, May 31, 2016 at 12:46:23AM +0200, William Duclot wrote:
-> Mike Hommey <mh@glandium.org> writes:
-> >>  struct strbuf {
-> >> +	unsigned int flags;
-> >>  	size_t alloc;
-> >>  	size_t len;
-> >>  	char *buf;
-> >>  };
-> > 
-> > Depending whether the size of strbuf matters, it /might/ be worth
-> > considering some packing here. malloc() usually returns buffers that can
-> > contain more data than what is requested. Which means allocation sizes
-> > could be rounded and that wouldn't change the amount of allocated
-> > memory. On glibc malloc_usable_size(malloc(1)) apparently returns 24.
-> > On jemalloc, it's 4 or 8. It's in the same ballbark with many
-> > allocators.
-> > 
-> > So, it would be possible to round alloc such that it's always a multiple
-> > of, say, 4, and stick flags in the low, unused bits.
-> 
-> If I'm not mistaken, the memory allocated is not necessarily linear with
-> the size asked, depending on the algorithm used by the allocator and/or
-> the kernel. The system for exemple use powers of two, if the user asks
-> for exactly 2^x bytes, adding the space for the flags would lead to an
-> allocation of 2^(x+1) bytes.
+Sometimes users will copy+paste an entire mbox into a
+commit message, leading to bad splits when a patch is
+output as an email.
 
-No, it would not. If you requested 129 bytes, you'd request 136 instead,
-which the allocator would round to the same power of two. If you
-requested 128, you'd still request 128. It's not about adding space in
-the allocated buffer for the flags, it's about needing less bits in
-`alloc` because those bits are effectively useless because of how
-allocators work.
+Unlike other mbox-family formats, mboxrd allows reversible
+round-tripping while avoiding bad splits for old "mboxo"
+readers.
 
-> Way worse than storing an unsigned.
-> If the allocator use a fibonnaci system, we can't even rely on multiples
-> of 4 (or 2).
-> I'm not sure the fibonnaci system is actually used by any allocator, but
-> my point is that I'm not sure it is a good thing to rely on such 
-> low-level implementations.
+I'm also considering altering the current
+"From ${COMMIT} Mon Sep 17 00:00:00 2001" line to something
+else so mailsplit (or "am") can autodetect.
 
-Allocators have constraints related to word sizes and alignment, so they
-are pretty much guaranteed to align things to powers of two.
+Maybe:
+	From ${COMMIT}@mboxrd Mon Sep 17 00:00:00 2001
+?
 
-Mike
+
+We may also want to default to single escaping "From " in
+commit messages for --pretty=email to avoid corruption when
+somebody copy+pastes an mbox into the commit message.
+This is a technically incompatible change, but I think it's
+preferable to breaking splitting complete.
+
+In other words, --pretty=email changes to output "mboxo"
+for now.
+
+Long term (possibly git 3.0?), maybe mboxrd can become the
+default mail format.  IMHO, it should've been since 2005.
+
+ref: http://homepage.ntlworld.com/jonathan.deboynepollard/FGA/mail-mbox-formats.html
+
+Eric Wong (3):
+      pretty: support "mboxrd" output format
+      mailsplit: support unescaping mboxrd messages
+      am: support --patch-format=mboxrd
+
+ Documentation/git-am.txt        |  3 ++-
+ Documentation/git-mailsplit.txt |  7 ++++++-
+ builtin/am.c                    | 14 ++++++++++---
+ builtin/log.c                   |  2 +-
+ builtin/mailsplit.c             | 23 +++++++++++++++++++++
+ commit.h                        |  6 ++++++
+ log-tree.c                      |  4 ++--
+ pretty.c                        | 45 +++++++++++++++++++++++++++++++++--------
+ t/t4014-format-patch.sh         | 27 +++++++++++++++++++++++++
+ t/t4150-am.sh                   | 20 ++++++++++++++++++
+ t/t5100-mailinfo.sh             | 13 ++++++++++++
+ t/t5100/0001mboxrd              |  4 ++++
+ t/t5100/0002mboxrd              |  3 +++
+ t/t5100/sample.mboxrd           | 17 ++++++++++++++++
+ 14 files changed, 172 insertions(+), 16 deletions(-)
