@@ -1,118 +1,121 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 0/1] t6038-merge-text-auto.sh
-Date: Mon, 30 May 2016 11:00:25 -0700
-Message-ID: <xmqqzir7o286.fsf@gitster.mtv.corp.google.com>
-References: <xmqq7fev55qk.fsf@gitster.mtv.corp.google.com>
-	<1464627642-23994-1-git-send-email-tboegi@web.de>
+Subject: Re: [PATCH] Documentation: GPG capitalization
+Date: Mon, 30 May 2016 11:02:01 -0700
+Message-ID: <xmqqvb1vo25i.fsf@gitster.mtv.corp.google.com>
+References: <01020154fd9dec3d-61772857-8b92-4505-ac0f-5058d490f7dc-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: tboegi@web.de
-X-From: git-owner@vger.kernel.org Mon May 30 20:00:35 2016
+To: Dave Nicolson <david.nicolson@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 30 20:02:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7RUQ-0004dK-Ir
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 20:00:34 +0200
+	id 1b7RVz-0005R2-RW
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 20:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161717AbcE3SAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 14:00:30 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60116 "EHLO
+	id S1161685AbcE3SCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 14:02:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57861 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1161249AbcE3SAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 14:00:30 -0400
+	with ESMTP id S1161330AbcE3SCG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 14:02:06 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 474B01EDAD;
-	Mon, 30 May 2016 14:00:28 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DFA8620712;
+	Mon, 30 May 2016 14:02:03 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hrGSpnrLO0QxijojPPz/zMJeHsU=; b=YkynoO
-	rieq5jGSHoRzAaZx0Vl8Jf/LvhDcAykQI94Qg4hkYitdWQA9Rb9sFKLgWNjuMFmN
-	ATiTjFAZxnA/6Yhhjja78lztq9Kv/cG3JEmkBOjZBM83a6g+SpDcnFjYKMyBwArx
-	RyIBbBns2SbjaP3OndjZEV+AhFnQmr6DXQBgE=
+	:content-type; s=sasl; bh=H8YWRVhC24pCxYSX+QyNxAuUMyw=; b=YfmAwq
+	hmUcljows/MD6ybYUpw+Q8jG7+khnTrj4i+djrTBFn/8YHBXry0yO0vPjRzYoRjM
+	IQ6iZD+Dyj7l2krJarHzfaVuHCKPUoL4i3f9PG68AQXINM0nnpBYqGgRJiHr46+7
+	cFI7J7hQDJCVPsChcjG7UvSxGVxRj73ku7BQo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=c5OeD8Qmb+OwQPtFrIFqvTxHJakVVDqV
-	54/+qSRg2agauoAv9uz4xzCMnFPYtnsEgNWvurztLp144PRAlS0rrrUO3hFquBpS
-	6rbm/eZhVSyjSpZMbaQRkXh4So4sch5L5CikCs9KghddPEl+4ROnXkI1k8bv2mby
-	704q7+eJ4RA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FD301EDA7;
-	Mon, 30 May 2016 14:00:28 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=qYrF4Uc5lVZDyj7cRO7QmvEX2FD2kDzj
+	/xoSMob6qMrZswEBWcpDPNFk7FJG+MSJQ4BJs7Iaxnz49Kgu7xNZJNaVqqGz9aPi
+	ZEeiJuLHQyFDTNAXfnkM3K8SGsIVid2ioNLRdfnpmOA5+mNmVtlWvnsyaC25lpzM
+	nrLvQHPmf5U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D74FA20711;
+	Mon, 30 May 2016 14:02:03 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B543A1EDA3;
-	Mon, 30 May 2016 14:00:27 -0400 (EDT)
-In-Reply-To: <1464627642-23994-1-git-send-email-tboegi@web.de>
-	(tboegi@web.de's message of "Mon, 30 May 2016 19:00:42 +0200")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 59C7020710;
+	Mon, 30 May 2016 14:02:03 -0400 (EDT)
+In-Reply-To: <01020154fd9dec3d-61772857-8b92-4505-ac0f-5058d490f7dc-000000@eu-west-1.amazonses.com>
+	(Dave Nicolson's message of "Sun, 29 May 2016 17:44:25 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 641397CA-2690-11E6-9099-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 9D1390DE-2690-11E6-88BA-D05A70183E34-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295915>
 
-tboegi@web.de writes:
+Dave Nicolson <david.nicolson@gmail.com> writes:
 
-> This is a little bit of a hen-and-egg problem:
-> The problem comes up after the "unified auto handling".
-> In theory, it should have been since before:
-> get_sha1_from_index() says:
+> When "GPG" is used in a sentence it is now consistently capitalized. When referring to the binary it is left as "gpg".
 >
->  * We might be in the middle of a merge, in which
->  * case we would read stage #2 (ours).
+> Signed-off-by: David Nicolson <david.nicolson@gmail.com>
+> ---
+>  Documentation/git-mktag.txt         | 2 +-
+>  Documentation/git-tag.txt           | 2 +-
+>  Documentation/git-verify-commit.txt | 4 ++--
+>  3 files changed, 4 insertions(+), 4 deletions(-)
 >
-> This seams wrong, as in the merge we sometimes need to
-> look at "theirs".
+> diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
+> index fa6a756..724408d 100644
+> --- a/Documentation/git-mktag.txt
+> +++ b/Documentation/git-mktag.txt
+> @@ -32,7 +32,7 @@ followed by some 'optional' free-form message (some tags created
+>  by older Git may not have `tagger` line).  The message, when
+>  exists, is separated by a blank line from the header.  The
+>  message part may contain a signature that Git itself doesn't
+> -care about, but that can be verified with gpg.
+> +care about, but that can be verified with GPG.
 
-The two comment you quoted is absolutely the right thing to do.
-"In a merge, we sometimes need to look at 'theirs'" is like saying
-"When we are dong 'git add', we need to look at what is in the
-working tree".  It is total red herring.
+Isn't this a name of the program, though?  Other two hunks in your
+patch clearly refer to the concept and not to a particular program,
+and they are good changes, I think.
 
-Step back and think why we even look at what in the index in the
-first place; it is to decide if we want or do not want to disable
-the automatic CRLF -> LF conversion.  And think again the reason why
-do we look at the index.
-
-There may be a line with CRLF line endings in the new contents,
-whether it came from a merge, cherry-pick, patch application, or
-plain-simple "git add" from the working tree.  Auto-CRLF usually
-says "We want CRLF turned into LF".  But the user misconfigured and
-for this path the user might not want the conversion take place, in
-which case you would disable the conversion.  Where do you take that
-hint "the user might have misconfigured?" from?  By looking at what
-the user _started_ her update from.  If the state before this "we
-need to replace the blob in the index with a new contents, so we
-need to hash the new contents to come up with the updated blob"
-started contains CRLF already, that may be a hint--if we apply the
-CRLF->LF conversion on the original, even if the "new contents" were
-identical to what she already had, we would end up changing the blob
-with her current configuration.  Hence we disable.
-
-Isn't that the reasoning behind that "safe auto-crlf" thing?
-
-The new contents getting integrated into her current state may have
-CRLF, and if a merge or a cherry-pick leaves conflicts, they may be
-stored in stage #3.  But paying attention to that to decide if we
-want to disable Auto-CRLF conversion is simply wrong; you should
-look at the CRLF in stage #3 as purely something that might need to
-be converted, not something that affects the decision if it needs to
-be converted, just like you view CRLF in a working tree file when
-you do "git add"..
-
-Imagine that you started from a history where somebody recorded a
-text file with CRLF in the blob, unconverted.  Later the project
-decided to express their text with LF to support cross-platform
-development better, and sets up the Auto-CRLF.  Your user is working
-near the tip of that history after the eol correction happened.  Now
-she gets a pull-request of a branch that forked from an old point in
-the history, before the eol correction and full of CRLF.  Yes, to
-integrate the change being proposed, she needs to look at "theirs";
-that's the whole point of a "merge".  Why should she revert the eol
-correction her history has by getting fooled by the fact that the
-update was based on a part of the history before the eol correction?
+>  
+>  GIT
+>  ---
+> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+> index abab481..32bc4aa 100644
+> --- a/Documentation/git-tag.txt
+> +++ b/Documentation/git-tag.txt
+> @@ -78,7 +78,7 @@ OPTIONS
+>  
+>  -v::
+>  --verify::
+> -	Verify the gpg signature of the given tag names.
+> +	Verify the GPG signature of the given tag names.
+>  
+>  -n<num>::
+>  	<num> specifies how many lines from the annotation, if any,
+> diff --git a/Documentation/git-verify-commit.txt b/Documentation/git-verify-commit.txt
+> index ecf4da1..0101f0f 100644
+> --- a/Documentation/git-verify-commit.txt
+> +++ b/Documentation/git-verify-commit.txt
+> @@ -12,12 +12,12 @@ SYNOPSIS
+>  
+>  DESCRIPTION
+>  -----------
+> -Validates the gpg signature created by 'git commit -S'.
+> +Validates the GPG signature created by 'git commit -S'.
+>  
+>  OPTIONS
+>  -------
+>  --raw::
+> -	Print the raw gpg status output to standard error instead of the normal
+> +	Print the raw GPG status output to standard error instead of the normal
+>  	human-readable output.
+>  
+>  -v::
+>
+> --
+> https://github.com/git/git/pull/246
