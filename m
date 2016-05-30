@@ -1,163 +1,122 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/3] perf: make the tests work in worktrees
-Date: Mon, 30 May 2016 10:28:04 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605301026430.4449@virtualbox>
-References: <cover.1462955446.git.johannes.schindelin@gmx.de> <cover.1463145936.git.johannes.schindelin@gmx.de> <0f0bc7ac7b6eebed22b05c277cf7352122d164d2.1463145936.git.johannes.schindelin@gmx.de> <574B1C3D.3000706@web.de>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1219177588-1464596890=:4449"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Mon May 30 10:45:36 2016
+From: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
+Subject: [RFC] Triangular Workflow UI improvement
+Date: Mon, 30 May 2016 10:46:40 +0200
+Message-ID: <521237FA-0DC4-4C47-AB44-778888A7726F@grenoble-inp.org>
+References: <E83A9439-54C8-4925-8EE3-6AEEDD9416F3@grenoble-inp.org> <xmqqwpmgvfif.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>,
+	Tom Russello <tom.russello@grenoble-inp.org>,
+	Samuel Groot <samuel.groot@grenoble-inp.org>, peff@peff.net,
+	artagnon@gmail.com, philipoakley@iee.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 30 10:46:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7IpL-00021O-Pu
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 10:45:36 +0200
+	id 1b7IqW-0002Rc-9k
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 10:46:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932360AbcE3Ipc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 04:45:32 -0400
-Received: from mout.gmx.net ([212.227.17.22]:63807 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932141AbcE3Ipb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 04:45:31 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MPYqL-1bBPQe0b69-004m4N; Mon, 30 May 2016 10:45:21
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <574B1C3D.3000706@web.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:9kRpC5eKybcv5RMB/n/dj6NdB2cWrhw84PRzjttxljVdgkfU4t6
- YocBBykd6E2DZMyBokTwhJOmRxcIqWwt/lL8stwXScpeB9XkvMJcQxThPs8Ko5IKyY0vZnQ
- I17H6W2yrPDkUE1CKsngVUb59kQPeotLGMkI21t7b/Ct/eVwJ/NrhqtyPigCyDVMV5Utitf
- D3C1LcqLCCeEdD86lFpXg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UE7dVwKaPMs=:WsUk2Vg9GxM+jlLSCRawNk
- 3eD2SkTerAjDw6wzCXhK0QSNNrcI3ScEiNXKQAw23zF1nIYafTz1XHj0kcjzUwX/ddlltWMB9
- 7Gby6Ki9KcNM7QsyX74p49muz7Qd5biF3ICCFHUWMQzVWOHG3cK7o7EDAD3YMedr07QEArRoS
- esib2zX02iVO7OhcYW+vqFO0mDGA6gHpRtOHWORQJKON8dZpcnOwrtZ7StEKpK9CWROGDtchm
- YBBA4MmERwwj89voQlKqJvsZsZ3K58IOnoX6QrpJOT3VSSzjNY+kyjv8uScT8RPJ7MUpb+3VS
- bS6HvcKto23g/4rdKimrlWcoUhxNrUnHvIT9Tc6aiH7kWC1Ue6oCht0ZHd3O/jDLKHIFBU8hw
- qeAydm0FEjffRPYgxI7EslQVl4ggrQTFkMJUZsuUsB2Q4lmSUZl9enQG86poHeCbMN9hHOI+b
- 18MV6DxZUWLj6njaKssAbNvP+KJG6957QJ2ftQfzTu1KmC2J3wBbJ3w+jyEdJYoGebtIM9a4x
- H0+VDKXP5YAV15TWzpu3mWqosf/WemIxlxHudubGi6gBPSmqfO9chq5pk9/l5SWxPE8sMOHZi
- t3OF4ZIjBwCQx9ZwvMqN5y1HewgQ5rFjro0D4PMAJUE9uyfYcg5cEe4oqSHTVO+O+jQdC/8es
- T19ItPNRUvtDxSojUg+pOL6dNSo41A2UCaI/Ci2YyNHLtZJXjbJmI5N/6CqXJWcTbttCm7sfn
- 3c8asQ+e2vCeGxsijNuvrN5+TUdpLr5GIz1Ar0BYgbb57NFndP3ldYenxR+wsRKz1aiQv5Rz 
+	id S932743AbcE3Iqo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2016 04:46:44 -0400
+Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:36418 "EHLO
+	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932736AbcE3Iqo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 May 2016 04:46:44 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 81A5F247F;
+	Mon, 30 May 2016 10:46:41 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KDfYXDXoI-hQ; Mon, 30 May 2016 10:46:41 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 70559246D;
+	Mon, 30 May 2016 10:46:41 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 6D6AE2077;
+	Mon, 30 May 2016 10:46:41 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 6yuCW329-8-r; Mon, 30 May 2016 10:46:41 +0200 (CEST)
+Received: from eduroam-032091.grenet.fr (eduroam-032091.grenet.fr [130.190.32.91])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 3E78E2066;
+	Mon, 30 May 2016 10:46:41 +0200 (CEST)
+In-Reply-To: <xmqqwpmgvfif.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295872>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-1219177588-1464596890=:4449
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-
-Hi Ren=C3=A9,
-
-On Sun, 29 May 2016, Ren=C3=A9 Scharfe wrote:
-
-> Am 13.05.2016 um 15:25 schrieb Johannes Schindelin:
-> > This patch makes perf-lib.sh more robust so that it can run correctly
-> > even inside a worktree. For example, it assumed that $GIT_DIR/objects i=
-s
-> > the objects directory (which is not the case for worktrees) and it used
-> > the commondir file verbatim, even if it contained a relative path.
-> >=20
-> > Furthermore, the setup code expected `git rev-parse --git-dir` to spit
-> > out a relative path, which is also not true for worktrees. Let's just
-> > change the code to accept both relative and absolute paths, by avoiding
-> > the `cd` into the copied working directory.
-> >=20
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >   t/perf/perf-lib.sh | 14 +++++++-------
-> >   1 file changed, 7 insertions(+), 7 deletions(-)
-> >=20
-> > diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-> > index 9fa0706..5ef1744 100644
-> > --- a/t/perf/perf-lib.sh
-> > +++ b/t/perf/perf-lib.sh
-> > @@ -80,22 +80,22 @@ test_perf_create_repo_from () {
-> >   =09error "bug in the test script: not 2 parameters to test-create-rep=
-o"
-> >   =09repo=3D"$1"
-> >   =09source=3D"$2"
-> > -=09source_git=3D$source/$(cd "$source" && git rev-parse --git-dir)
-> > +=09source_git=3D"$(git -C "$source" rev-parse --git-dir)"
-> > +=09objects_dir=3D"$(git -C "$source" rev-parse --git-path objects)"
-> >   =09mkdir -p "$repo/.git"
-> >   =09(
-> > -=09=09cd "$repo/.git" &&
-> > -=09=09{ cp -Rl "$source_git/objects" . 2>/dev/null ||
-> > -=09=09=09cp -R "$source_git/objects" .; } &&
-> > +=09=09{ cp -Rl "$objects_dir" "$repo/.git/" 2>/dev/null ||
-> > +=09=09=09cp -R "$objects_dir" "$repo/.git/"; } &&
-> >   =09=09for stuff in "$source_git"/*; do
-> >   =09=09=09case "$stuff" in
-> > -=09=09=09=09*/objects|*/hooks|*/config)
-> > +=09=09=09=09*/objects|*/hooks|*/config|*/commondir)
-> >   =09=09=09=09=09;;
-> >   =09=09=09=09*)
-> > -=09=09=09=09=09cp -R "$stuff" . || exit 1
-> > +=09=09=09=09=09cp -R "$stuff" "$repo/.git/" || exit 1
-> >   =09=09=09=09=09;;
-> >   =09=09=09esac
-> >   =09=09done &&
-> > -=09=09cd .. &&
-> > +=09=09cd "$repo" &&
-> >   =09=09git init -q && {
-> >   =09=09=09test_have_prereq SYMLINKS ||
-> >   =09=09=09git config core.symlinks false
-> >=20
+>> We are working on full implementation of triangular workflow feature=
+=2E
+>> For now, the main options available are:=20
+>> 	 - branch.<name>.pushRemote
+>> 	 - remote.pushDefault
+>> And only setable by hands.=20
 >=20
-> This breaks perf for the non-worktree case:
+> And once it is set, you do not have to worry about it.  I am not
+> sure per-branch thing is all that useful, unless you are always
+> working on a single branch like 'master', but the latter would be
+> just set once and forget about it.
 
-Oh drats!
+We got the example of our fork of git(e.g. GitHub).=20
+We want :=20
+ - some branches that only fetch from git/git and push to our/git
+ - the others branches fetch from and push to our/git.=20
+=46or now, we have to change branch.<name>.remote and=20
+branch.<name>.pushRemote(or remote.pushDefault).=20
+With branch.<name>.fetchRemote, we only have to set this one.=20
+fetchRemote is more explicit than remote for that case.=20
 
-> lsr@debian:~/src/git/t/perf$ make
-> rm -rf test-results
-> ./run
-> =3D=3D=3D Running 12 tests in this tree =3D=3D=3D
-> cp: cannot stat '.git/objects': No such file or directory
-> error: failed to copy repository '/home/lsr/src/git/t/..' to '/tmp/trash =
-directory.p0000-perf-lib-sanity'
-> cp: cannot stat '.git/objects': No such file or directory
-> error: failed to copy repository '/home/lsr/src/git/t/..' to '/tmp/trash =
-directory.p0001-rev-list'
-> ...
->=20
-> Here's a fix:
->=20
-> -- >8 --
-> Subject: perf: make the tests work without a worktree
->=20
-> In regular repositories $source_git and $objects_dir contain relative
-> paths based on $source.  Go there to allow cp to resolve them.
->=20
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  t/perf/perf-lib.sh | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-> index 5ef1744..1888790 100644
-> --- a/t/perf/perf-lib.sh
-> +++ b/t/perf/perf-lib.sh
-> @@ -84,6 +84,7 @@ test_perf_create_repo_from () {
->  =09objects_dir=3D"$(git -C "$source" rev-parse --git-path objects)"
->  =09mkdir -p "$repo/.git"
->  =09(
-> +=09=09cd "$source" &&
+Another point is that many commands can erase the old=20
+value of branch.<name>.remote.=20
 
-I fear that interacts badly with the `cd "$repo"` I introduced later
-(replacing a `cd ..`)...
+>> Context:
+>> 	- One main remote repository, e.g. git/git.
+>> 	- A remote fork (e.g. a GitHub fork) of git/git, e.g. me/git.
+>> 	- A local clone of me/git on the machine
+>> Purposes:
+>> 	- the local branch master has to fetch to git/git by default
+>> 	- the local branch master has to push to me/git by default
+>=20
+> Wouldn't remote.pushDefault be the single thing you need to set just
+> once and forget about it?  Why would your users even want to do
+> these things =E2=80=A6
 
-Ciao,
-Dscho
---8323329-1219177588-1464596890=:4449--
+remote.pushDefault overrides branch.<name>.remote for all branches.=20
+The goal is to give an easily understandable config for=20
+complex configuration.=20
+Having all the configuration in the same part (e.g [branch =C2=AB maste=
+r =C2=BB])=20
+is easier to understand and edit.=20
+
+>=20
+>> 	c. add `git fetch --set-default` in order to set remote.fetchDefaul=
+t
+>> 	d. add `git fetch --set-remote` in order to set branch.<name>.fetch=
+Remote
+>> 	e. add `git pull --set-default` in order to set remote.fetchDefault
+>> 	f. add `git pull --set-remote` in order to set branch.<name>.fetchR=
+emote
+>> 	a. add `git push --set-default` in order to set remote.pushDefault
+>> 	b. add `git push --set-remote` in order to set branch.<name>.pushRe=
+mote
+>=20
+> ... just to configure many variables every time they work on a new
+> branch?
+
+branch.<name>.pushRemote and all these options are optional.
+Options in commands may not be added. It just gives user=20
+friendly interaction with these options. =20
+
+
+
+To conclude:=20
+This feature is more about configuration clarity than possibility itsel=
+f.=20
