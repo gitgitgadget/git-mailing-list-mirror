@@ -1,88 +1,98 @@
-From: tboegi@web.de
-Subject: [PATCH v1 0/1] t6038-merge-text-auto.sh
-Date: Mon, 30 May 2016 19:00:42 +0200
-Message-ID: <1464627642-23994-1-git-send-email-tboegi@web.de>
-References: <xmqq7fev55qk.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
+Subject: How to add custom metadata to Git commit object
+Date: Mon, 30 May 2016 20:58:08 +0300
+Message-ID: <959E96F7-0FF3-4336-B098-58836136DB08@jetbrains.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 30 18:59:47 2016
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 30 19:58:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7QXZ-0004fu-8d
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 18:59:45 +0200
+	id 1b7RSE-0003cO-Hf
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 19:58:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161641AbcE3Q7l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2016 12:59:41 -0400
-Received: from mout.web.de ([217.72.192.78]:59032 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161220AbcE3Q7k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 12:59:40 -0400
-X-Greylist: delayed 304 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 May 2016 12:59:40 EDT
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0M89mf-1bTkhl2j4r-00vioi; Mon, 30 May 2016 18:54:32
- +0200
-X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
-In-Reply-To: <xmqq7fev55qk.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:gJal2FPvfRt9JLBFjmjHGzbA2Ph+t/l9aCra2gYRHuGQyw011cG
- d1HZcEY6BMy5wv1U+m3pkaOeJ63YkxpITjNoUTTKiVGN3EUgOiuuEboWwWbN6ehy03iKuSx
- B/GwnSho54mTfT2HRlYOpn9bHWvkeOwyYZ4i4ZU4rQnja0tk2L03mErE/gifqqXW+KCoTIy
- KKfstSvsqpr9oLloc3NDg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:e7FE5N5q9Ng=:mmdeB+gyMqpQRlCrXX1Wuq
- 2UXUaumCxAafqFJX/6RmzIK4Hsgtif/uhkMqL6YSEQDZHj1AzsSe4+IcapnXLXlFwcuS+WZqu
- DqSy468WO/SFD7yODIKravS1vF/GH5cE2uKW//qPpxty9rXGC2we8OL1GS/CF48j3w79KDsDi
- 3KZhKRHXL+4NNmTSR3tsAShaJqXmeSAtuMA2ZpVTyZg4wRD8w1K2CB3cqsKmpudkPpUgBJ6b8
- lBwz72TvuI+BNDJhrFMlltb78Tvp5i2CC6vnIAygI8bHFZjEqgDr6zVvGxG1Tq7mVChHPy7b7
- 48Cndt8ksQ2CEIfePx+PVaHrLQcId6grO+bl2n0MpkdxLKd4hd2xA5hRHmsbbDxwDiSZjbbRB
- V+DJ7R983dNm1u7B8WerQ/2qmEtyywCjh0CD3ubcWxJZ1Wbb8GyaXxHThF4LBcU+eviFqG+gk
- XN0SwDc+UxowctJ7urhZYrsn0Te+qtsOSaPh37Q7Hf/T2ZE7Llp4rgvbDDZfJieeT4C8yO5u2
- 1ae/s+yPIw9JmTf4SXQqPYKnDrVokYn+12vMPJdAE1iIOxyult4krHcbF8UIKf2d2nZlTNnRm
- xnRnt71MV26Bf2AwalduHD9Csw4CPTuMZ7Z+GbijnMf9oexU1LNzBmJZdJz2uXl1kPJ12P+uq
- peJ/EVRdzG/Fb1EztW+a3I/Bq5HvcPBgLk3vBFoqYXJxZA16stk/P0xWD3p/8k2PfbFQ1pVo0
- aIDZbCPy90XhYcH3DINzcebRKTUmt4n/TGcos21G5wCjR/nKpAaZRBoVDRmS4EprijSHEu+K 
+	id S1161681AbcE3R6O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2016 13:58:14 -0400
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:36741 "EHLO
+	mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161249AbcE3R6N convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 May 2016 13:58:13 -0400
+Received: by mail-lf0-f50.google.com with SMTP id b73so53576012lfb.3
+        for <git@vger.kernel.org>; Mon, 30 May 2016 10:58:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jetbrains.com; s=googleapps;
+        h=from:content-transfer-encoding:subject:message-id:date:to
+         :mime-version;
+        bh=Gc0m2TYxxw39QMvN2lCAB3O+Dzhd/hncyPEcxJlgN3Q=;
+        b=TRauL90/3seSVjsqpcsSQzju+Aoau3qx5l1LvCh0ii3rVknhc4L4q49jsi2TfTBjBU
+         NXP5UlmfLRmj/A4IzgbN7ygNjgZ81eOyc3IdTy5vA6vj8BaU6BISUdQ16sGYqlsDWxqE
+         Nrn/AJU4lIdNl7aglcPObEHvYsqCiIJ9nXPD4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:content-transfer-encoding:subject
+         :message-id:date:to:mime-version;
+        bh=Gc0m2TYxxw39QMvN2lCAB3O+Dzhd/hncyPEcxJlgN3Q=;
+        b=OPltlOtAWA9U4JwB9n3MQDdrbxghIQ/Nup8tgs6ei9WbDWM90eCVVUssQ3jxZkYk3e
+         wupO4IT17l9Ni9OZ+QepP4McK1SI90CO6IrZ/nTKduW3tdaDSIMcOb4QmREqDWoOt3sR
+         /mLFvmecu2kIGTVchSJ0YVwZmIHdxFNzhHqAs58SBg6pxmOkxSXg0aWpNGpDZ/OxAJ9u
+         G9WqZ14h57suYjiNeUlN+XgCYPrf9NOAMH+noyMkhSIWQtmO4k1JO32VhWc+uk+1VcYP
+         Lm2u3zre5cHy5nfYWM6O88/S+DHftRIl1PPxbnplMo9/hgjKb9lMXpuV9RSQ37q9WjRM
+         bg0g==
+X-Gm-Message-State: ALyK8tIlm4lbxNC1suNZYXBy0T3kUU7aU33iGI0rj0VFYuyvjw5Wyn2aJdt0TJ6Qf+EVHj7x
+X-Received: by 10.25.16.104 with SMTP id f101mr9043119lfi.34.1464631091032;
+        Mon, 30 May 2016 10:58:11 -0700 (PDT)
+Received: from loki.times.labs.intellij.net ([217.148.215.18])
+        by smtp.gmail.com with ESMTPSA id wc3sm4531137lbb.27.2016.05.30.10.58.09
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 30 May 2016 10:58:09 -0700 (PDT)
+X-Google-Original-From: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295913>
 
-=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
+Is it possible to add custom metadata to Git commit object?=20
+Such metadata should be ignored by Git commands, but could be used by a=
+ 3-party tool which knows the format and knows where to look.=20
 
-Split of the old 10/10 series.
-This is the update of t6038, which is needed to
-motivate the patch
-   `convert: ce_compare_data() checks for a sha1 of a path`
-on top of
-   `convert: unify the "auto" handling of CRLF`
+I assume that this should be possible, given that Git objects are actua=
+lly patches, and patches can contain additional details. But can this b=
+e done with the help of Git commands?=20
 
-When files with different eols are merged with
-merge.renormalize =3D true,
-it is important to look at the right blob to determine if
-the crlf came from the blob or are a result of a coversion.
-This is a little bit of a hen-and-egg problem:
-The problem comes up after the "unified auto handling".
-In theory, it should have been since before:
-get_sha1_from_index() says:
+----
 
- * We might be in the middle of a merge, in which
- * case we would read stage #2 (ours).
+The reason why I am asking this - is to create a tool which could overc=
+ome false rename detection.=20
 
-This seams wrong, as in the merge we sometimes need to
-look at "theirs".
-(But I haven't managed to construct a TC)
+As all of you know, if I make significant changes to the code together =
+with rename, Git won=E2=80=99t detect this rename and will treat this c=
+hange as added + deleted. And sometimes there are false rename detectio=
+ns as well. It would be useful to record the fact of rename and use it =
+afterwards.
 
-t6038-merge-text-auto.sh
+If a user is developing with our IDE (IntelliJ IDEA), we could remember=
+ the fact that he renamed a file, then write this information to the co=
+mmit object, and when the commit information is requested (e.g. from th=
+e git log graphical view), the IDE could read the additional informatio=
+n of the commit and display the file as renamed, not as added + deleted=
+=2E The IDE could also use this information to follow rename through th=
+e file history.
 
-Torsten B=C3=B6gershausen (1):
-  t6038: different eol for "Merge addition of text=3Dauto"
+As a real example, in our project we are converting a lot of files from=
+ Java to Kotlin, and such conversion always looses history unless the d=
+eveloper remembers to prepare a separate rename-commit first, which is =
+tedious.=20
 
- t/t6038-merge-text-auto.sh | 28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+There are git-notes, which could be used for the purpose, but they are =
+visible to the user via standard Git command, and could be used by the =
+user for other purposes, so they are not very suitable for the task.
 
---=20
-2.0.0.rc1.6318.g0c2c796
+Thanks a lot!
+-- Kirill
