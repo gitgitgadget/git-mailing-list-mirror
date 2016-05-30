@@ -1,91 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH 1/2] strbuf: add tests
-Date: Mon, 30 May 2016 13:26:48 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1605301323310.4449@virtualbox>
-References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr> <20160530103642.7213-2-william.duclot@ensimag.grenoble-inp.fr>
+Date: Mon, 30 May 2016 13:56:05 +0200
+Message-ID: <vpqwpmbg3oq.fsf@anie.imag.fr>
+References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr>
+	<20160530103642.7213-2-william.duclot@ensimag.grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain
 Cc: git@vger.kernel.org, simon.rabourg@ensimag.grenoble-inp.fr,
 	francois.beutin@ensimag.grenoble-inp.fr,
-	antoine.queru@ensimag.grenoble-inp.fr,
-	matthieu.moy@grenoble-inp.fr, mhagger@alum.mit.edu
+	antoine.queru@ensimag.grenoble-inp.fr, mhagger@alum.mit.edu
 To: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon May 30 13:27:05 2016
+X-From: git-owner@vger.kernel.org Mon May 30 13:56:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7LLc-00013N-Sl
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 13:27:05 +0200
+	id 1b7Lns-0003te-Mc
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 13:56:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933000AbcE3L04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 07:26:56 -0400
-Received: from mout.gmx.net ([212.227.15.15]:55279 "EHLO mout.gmx.net"
+	id S933116AbcE3L4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 07:56:12 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:34838 "EHLO mx1.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751137AbcE3L0z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 07:26:55 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Lb4vZ-1bnWi11tWL-00keEs; Mon, 30 May 2016 13:26:48
- +0200
-X-X-Sender: virtualbox@virtualbox
+	id S932899AbcE3L4M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 07:56:12 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u4UBu4Ra009415
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 30 May 2016 13:56:04 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4UBu5Re002055;
+	Mon, 30 May 2016 13:56:05 +0200
 In-Reply-To: <20160530103642.7213-2-william.duclot@ensimag.grenoble-inp.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:xs7xSkQEJ5KBNFESEFi9lekft0P/cfmyxtvEbaPIoeApGymzBWz
- h+JB0H7fbs2TEfzEkrhmOY4Cy7/lDYz3ZwdWKRORhcnmPNFNPOSE+51EbLVfhT3i5Cxcfcd
- 4JT9u3U6EAtVEp9QoDvoByrlN4FQm11lFiZtfg8a28JCM5kxQDtGQgmRgep0DL/9PT3wKkO
- aYVJOe1/Xzy5GbZcbiPzQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:l0Ht50GQNu0=:WXD6cTQN5/T8DZtelc6Noh
- QL59TC5NBkNcrcbJxw3qyMvab0BIpKFK2NQzT2RtZFoOe79XlvCzKmmyB0BergH/9UaX5wPaC
- MJQRB9cSSw8JXH/22yH6mdflFje98f2/jbidmPFcbWww4dUCRq6NUZOJW+rybNSGHEh9r60Cc
- VaKoYhKVSp2JU0k/PwgHkq5azOb7qqw1BzFB6FO6QEFjnDTaRwz6K96LHboTbdrTJkY9Uxyi1
- dRlo7AifxjN0jfTQByFzM7V0drkiW2iWPs9whOA2sdujqI2NmOYmnQTdA2TxnjM9VLmbUrVuo
- SZRawVNJSRD0WjKPRI0MRgwZ81d2rMFi/x2XxxM46zfwpgbIuGJDg7kdWCjDRuqzzAmnEIqiK
- 30Pp2DVcARomNFIQ5mnXMaIOEtO/6CNAfY4fVW+NRP/WuQAnISnkFI8fIqZzywTI+O5b9Fy6T
- 0WBfDnNP4l9sjilDXdZcfxyRhB/oh3pucEJRb8XH64naykJWMMDCriALLA3R7NaxL3KxctAPT
- AwHoEOXeURPs8d6gPDY/dh/j7NZp1JQzSS+iVjlNHW2QgiN4p/Rhx66fA9ZIep+tZ8RT6NEg0
- Xp1CfE4D5efV6XPA4d+lA229gvSkx9yBXbN8GB4SF9lvXqXchGF4KGMrq75cncheIySlKvTP+
- pUbekhcOsRJ3tJq0MFdQ+AqY1YexPA+6E7yWTbfjEDWrJTXic7xlWMRQWkTNYrfBZRxZYwdF/
- 0b2cPOVNoMHEbCpltvGQAAXjekXQVF1ZlDNsuPw9pn8SfGWO2sr/GW3fZDtrRvxhrq6DOvjQ 
+	(William Duclot's message of "Mon, 30 May 2016 12:36:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Mon, 30 May 2016 13:56:04 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u4UBu4Ra009415
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1465214165.77747@nCw2WXLFiMOdfnnGJv7ovQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295889>
 
-Hi William,
+I agree with Johannes' remarks. I'd add two style nits:
 
-On Mon, 30 May 2016, William Duclot wrote:
+William Duclot <william.duclot@ensimag.grenoble-inp.fr> writes:
 
-> Test the strbuf API. Being used throughout all Git the API could be
-> considered tested, but adding specific tests makes it easier to improve
-> and extend the API.
-> ---
-
-The commit message makes sense. Please add your sign-off.
-
->  Makefile               |  1 +
->  t/helper/test-strbuf.c | 69 ++++++++++++++++++++++++++++++++++++++++++++++++++
->  t/t0082-strbuf.sh      | 19 ++++++++++++++
->  3 files changed, 89 insertions(+)
->  create mode 100644 t/helper/test-strbuf.c
->  create mode 100755 t/t0082-strbuf.sh
-> 
-> diff --git a/Makefile b/Makefile
-> index 3f03366..dc84f43 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -613,6 +613,7 @@ TEST_PROGRAMS_NEED_X += test-scrap-cache-tree
->  TEST_PROGRAMS_NEED_X += test-sha1
->  TEST_PROGRAMS_NEED_X += test-sha1-array
->  TEST_PROGRAMS_NEED_X += test-sigchain
-> +TEST_PROGRAMS_NEED_X += test-strbuf
->  TEST_PROGRAMS_NEED_X += test-string-list
->  TEST_PROGRAMS_NEED_X += test-submodule-config
->  TEST_PROGRAMS_NEED_X += test-subprocess
-> diff --git a/t/helper/test-strbuf.c b/t/helper/test-strbuf.c
-> new file mode 100644
-> index 0000000..622f627
 > --- /dev/null
 > +++ b/t/helper/test-strbuf.c
 > @@ -0,0 +1,69 @@
@@ -96,68 +62,25 @@ The commit message makes sense. Please add your sign-off.
 > + * Check behavior on usual use cases
 > + */
 > +int test_usual(struct strbuf *sb)
-
-I have to admit that I would prefer a more concrete name. And since your
-other tests are more fine-grained, maybe this one could be split into
-multiple separate ones, too?
-
 > +{
 > +	size_t size, old_alloc;
 > +	char *res, *old_buf, *str_test = malloc(5*sizeof(char));
 
-Our convention is to list the initialized variables first, the
-uninitialized ones after that, and for readability an empty line is
-recommended after the variable declaration block.
+Spaces around binary operator.
 
-> +	strbuf_grow(sb, 1);
-> +	strcpy(str_test, "test");
-> +	old_alloc = sb->alloc;
-> +	strbuf_grow(sb, 1000);
-> +	if (old_alloc == sb->alloc)
-> +		die("strbuf_grow does not realloc the buffer as expected");
-> +	old_buf = sb->buf;
-> +	res = strbuf_detach(sb, &size);
-> +	if (res != old_buf)
-> +		die("strbuf_detach does not return the expected buffer");
-> +	free(res);
-> +
-> +	strcpy(str_test, "test");
-> +	strbuf_attach(sb, (void *)str_test, strlen(str_test), sizeof(str_test));
-> +	res = strbuf_detach(sb, &size);
-> +	if (res != str_test)
-> +		die("strbuf_detach does not return the expected buffer");
-> +	free(res);
-> +	strbuf_release(sb);
-> +
-> +	return 0;
-> +}
-> +
 > +int main(int argc, char *argv[])
 > +{
 > +	size_t size = 1;
 > +	struct strbuf sb;
-
-The common theme in our source code seems to initialize using
-STRBUF_INIT... Let's use that paradigm here, too?
-
 > +	char str_test[5] = "test";
 > +	char str_foo[7] = "foo";
 > +
 > +	if (argc != 2)
 > +		usage("test-strbuf mode");
-
-A nice and convenient way to do command-line parsing is to use the
-parse-options API, in this case with OPT_CMDMODE. This would also give us
-a chance to document the command modes in a nice and succinct way: as help
-strings.
-
 > +
 > +	if (!strcmp(argv[1], "basic_grow")) {
 > +		/*
 > +		 * Check if strbuf_grow(0) allocate a new NUL-terminated buffer
-
-s/allocate/&s/
-
 > +		 */
 > +		strbuf_init(&sb, 0);
 > +		strbuf_grow(&sb, 0);
@@ -169,37 +92,11 @@ s/allocate/&s/
 > +	} else if (!strcmp(argv[1], "strbuf_check_behavior")) {
 > +		strbuf_init(&sb, 0);
 > +		return test_usual(&sb);
-> +	} else if (!strcmp(argv[1], "grow_overflow")) {
-> +		/*
-> +		 * size_t overflow: should die()
-> +		 */
-> +		strbuf_init(&sb, 1000);
-> +		strbuf_grow(&sb, maximum_unsigned_value_of_type((size_t)1));
 
-A comment "If this does not die(), fall through to returning success, to
-indicate an error" might be nice here.
+I think the command ("strbuf_check_behavior") should have the same name
+as the function (test_usual). This avoids one indirection for the
+reader going from t*.sh file to the actual test code.
 
-> +	} else {
-> +		usage("test-strbuf mode");
-> +	}
-> +
-> +	return 0;
-> +}
-> diff --git a/t/t0082-strbuf.sh b/t/t0082-strbuf.sh
-> new file mode 100755
-> index 0000000..0800d26
-> --- /dev/null
-> +++ b/t/t0082-strbuf.sh
-> @@ -0,0 +1,19 @@
-> +#!/bin/sh
-> +
-> +test_description="Test the strbuf API.
-> +"
-
-This description does not need a new-line, and existing one-liner test
-descriptions seem not to be terminated by a period.
-
-The rest of this patch looks good.
-
-Ciao,
-Johannes
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
