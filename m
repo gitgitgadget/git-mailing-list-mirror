@@ -1,235 +1,254 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
 Subject: Re: [PATCH 2/2] strbuf: allow to use preallocated memory
-Date: Mon, 30 May 2016 14:52:41 +0200
-Message-ID: <vpqlh2remhy.fsf@anie.imag.fr>
-References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr>
-	<20160530103642.7213-3-william.duclot@ensimag.grenoble-inp.fr>
+Date: Mon, 30 May 2016 15:20:53 +0200 (CEST)
+Message-ID: <953965621.202433.1464614453377.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr> <20160530103642.7213-3-william.duclot@ensimag.grenoble-inp.fr> <alpine.DEB.2.20.1605301326530.4449@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, simon.rabourg@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr,
-	antoine.queru@ensimag.grenoble-inp.fr, mhagger@alum.mit.edu
-To: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon May 30 14:52:53 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
+	antoine queru <antoine.queru@ensimag.grenoble-inp.fr>,
+	matthieu moy <matthieu.moy@grenoble-inp.fr>,
+	mhagger@alum.mit.edu
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 30 15:13:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7Mge-00012s-Ia
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 14:52:53 +0200
+	id 1b7N0f-0000W2-FN
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 15:13:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932930AbcE3Mwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 08:52:49 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:45544 "EHLO mx2.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754541AbcE3Mws (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 08:52:48 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u4UCqdWW008150
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 30 May 2016 14:52:40 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4UCqfUK003691;
-	Mon, 30 May 2016 14:52:41 +0200
-In-Reply-To: <20160530103642.7213-3-william.duclot@ensimag.grenoble-inp.fr>
-	(William Duclot's message of "Mon, 30 May 2016 12:36:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Mon, 30 May 2016 14:52:40 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u4UCqdWW008150
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1465217561.25145@NOqHmasRmGtQtEhdJ8ThIg
+	id S1161220AbcE3NNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 09:13:30 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:43880 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1161029AbcE3NN3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 May 2016 09:13:29 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 5A64920B1;
+	Mon, 30 May 2016 15:13:26 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Ts2yqa8SWTsy; Mon, 30 May 2016 15:13:26 +0200 (CEST)
+Received: from zm-int-mbx5.grenet.fr (zm-int-mbx5.grenet.fr [130.190.242.144])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 468B420AE;
+	Mon, 30 May 2016 15:13:26 +0200 (CEST)
+In-Reply-To: <alpine.DEB.2.20.1605301326530.4449@virtualbox>
+X-Originating-IP: [130.190.242.137]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF46 (Linux)/8.0.9_GA_6191)
+Thread-Topic: strbuf: allow to use preallocated memory
+Thread-Index: nBwHV0UoAsW3WHzN67DggED8Sibcpg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295892>
 
-William Duclot <william.duclot@ensimag.grenoble-inp.fr> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Mon, 30 May 2016, William Duclot wrote:
+> 
+>> It is unfortunate that it is currently impossible to use a strbuf
+>> without doing a memory allocation. So code like
+>> 
+>> void f()
+>> {
+>>     char path[PATH_MAX];
+>>     ...
+>> }
+>> 
+>> typically gets turned into either
+>> 
+>> void f()
+>> {
+>>     struct strbuf path;
+>>     strbuf_add(&path, ...); <-- does a malloc
+>>     ...
+>>     strbuf_release(&path);  <-- does a free
+>> }
+>> 
+>> which costs extra memory allocations, or
+>> 
+>> void f()
+>> {
+>>     static struct strbuf path;
+>>     strbuf_add(&path, ...);
+>>     ...
+>>     strbuf_setlen(&path, 0);
+>> }
+>> 
+>> which, by using a static variable, avoids most of the malloc/free
+>> overhead, but makes the function unsafe to use recursively or from
+>> multiple threads. Those limitations prevent strbuf to be used in
+>> performance-critical operations.
+> 
+> This description is nice and verbose, but maybe something like this would
+> introduce the subject in a quicker manner?
+> 
+> 	When working e.g. with file paths or with dates, strbuf's
+> 	malloc()/free() dance of strbufs can be easily avoided: as
+> 	a sensible initial buffer size is already known, it can be
+> 	allocated on the heap.
 
-> multiple threads. Those limitations prevent strbuf to be used in
+strbuf already allow to indicate a sensible initial buffer size thanks
+to strbuf_init() second parameter. The main perk of pre-allocation
+is to use stack-allocated memory, and not heap-allocated :)
+Unless I misunderstood your message?
 
-prevent strbuf from being used ...
+>> diff --git a/strbuf.c b/strbuf.c
+>> index 1ba600b..527b986 100644
+>> --- a/strbuf.c
+>> +++ b/strbuf.c
+>> @@ -1,6 +1,14 @@
+>>  #include "cache.h"
+>>  #include "refs.h"
+>>  #include "utf8.h"
+>> +#include <sys/param.h>
+> 
+> Why?
 
-> API ENHANCEMENT
-> ---------------
->
-> All functions of the API can still be reliably called without
-> knowledge of the initialization (normal/preallocated/fixed) with the
-> exception that strbuf_grow() may die() if the string try to overflow a
+For the MAX macro. It may be a teeny tiny overkill
 
-s/try/tries/
+>> +/**
+>> + * Flags
+>> + * --------------
+>> + */
+>> +#define STRBUF_OWNS_MEMORY 1
+>> +#define STRBUF_FIXED_MEMORY (1 << 1)
+> 
+> From reading the commit message, I expected STRBUF_OWNS_MEMORY.
+> STRBUF_FIXED_MEMORY still needs to be explained.
 
-> @@ -20,16 +28,37 @@ char strbuf_slopbuf[1];
->  
->  void strbuf_init(struct strbuf *sb, size_t hint)
->  {
-> +	sb->flags = 0;
->  	sb->alloc = sb->len = 0;
->  	sb->buf = strbuf_slopbuf;
->  	if (hint)
->  		strbuf_grow(sb, hint);
->  }
+Yes, that seems right
 
-If you set flags = 0 here, existing callers will have all flags off,
-including OWNS_MEMORY.
+>> @@ -20,16 +28,37 @@ char strbuf_slopbuf[1];
+>>  
+>>  void strbuf_init(struct strbuf *sb, size_t hint)
+>>  {
+>> +	sb->flags = 0;
+>>  	sb->alloc = sb->len = 0;
+>>  	sb->buf = strbuf_slopbuf;
+>>  	if (hint)
+>>  		strbuf_grow(sb, hint);
+>>  }
+>>  
+>> +void strbuf_wrap_preallocated(struct strbuf *sb, char *path_buf,
+>> +			      size_t path_buf_len, size_t alloc_len)
+>> +{
+>> +	if (!path_buf)
+>> +		die("you try to use a NULL buffer to initialize a strbuf");
+>> +
+>> +	strbuf_init(sb, 0);
+>> +	strbuf_attach(sb, path_buf, path_buf_len, alloc_len);
+>> +	sb->flags &= ~STRBUF_OWNS_MEMORY;
+>> +	sb->flags &= ~STRBUF_FIXED_MEMORY;
+> 
+> Shorter: sb->flags &= ~(STRBUF_OWNS_MEMORY | STRBUF_FIXED_MEMORY);
 
-I *think* this is OK, as sb->buf is currently pointing to
-strbuf_slopbuf, which the the strbuf doesn't own. But that is too subtle
-to go without an explanatory comment IMHO.
+Okay with me
 
-Also, doesn't this make the "new_buf" case useless in strbuf_grow?
+>> +}
+>> +
+>> +void strbuf_wrap_fixed(struct strbuf *sb, char *path_buf,
+>> +		       size_t path_buf_len, size_t alloc_len)
+>> +{
+>> +	strbuf_wrap_preallocated(sb, path_buf, path_buf_len, alloc_len);
+>> +	sb->flags |= STRBUF_FIXED_MEMORY;
+>> +}
+> 
+> Rather than letting strbuf_wrap_preallocated() set sb->flags &=
+> ~FIXED_MEMORY only to revert that decision right away, a static function
+> could be called by both strbuf_wrap_preallocated() and
+> strbuf_wrap_fixed().
 
-With your patch, the code looks like:
+Makes sense
 
-void strbuf_grow(struct strbuf *sb, size_t extra)
-{
-	int new_buf = !sb->alloc;
-...
-	if (sb->flags & STRBUF_OWNS_MEMORY) {
-		if (new_buf) // <---------------------------------------- (1)
-			sb->buf = NULL;
-		ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
-	} else {
-		/*
-		 * The strbuf doesn't own the buffer: to avoid to realloc it,
-		 * the strbuf needs to use a new buffer without freeing the old
-		 */
-		if (sb->len + extra + 1 > sb->alloc) {
-			size_t new_alloc = MAX(sb->len + extra + 1, alloc_nr(sb->alloc));
-			char *buf = xmalloc(new_alloc);
-			memcpy(buf, sb->buf, sb->alloc);
-			sb->buf = buf;
-			sb->alloc = new_alloc;
-			sb->flags |= STRBUF_OWNS_MEMORY;
-		}
-	}
+>>  void strbuf_release(struct strbuf *sb)
+>>  {
+>>  	if (sb->alloc) {
+>> -		free(sb->buf);
+>> +		if (sb->flags & STRBUF_OWNS_MEMORY)
+>> +			free(sb->buf);
+>>  		strbuf_init(sb, 0);
+>>  	}
+> 
+> Should we not reset the flags here, too?
 
-	if (new_buf) // <---------------------------------------- (2)
-		sb->buf[0] = '\0';
-}
+Well, strbuf_init() reset the flags. The only way to have !sb->alloc
+is that strbuf has been initialized and never used (even alloc_grow(0)
+set sb->alloc=1), so sb==STRBUF_INIT, so the flags don't have to be reset 
 
-I think (1) is now dead code, since sb->alloc == 0 implies that
-STRBUF_OWNS_MEMORY is set. (2) seems redundant since you've just
-memcpy-ed the existing '\0' into the buffer.
+>> @@ -38,7 +67,11 @@ char *strbuf_detach(struct strbuf *sb, size_t *sz)
+>>  {
+>>  	char *res;
+>>  	strbuf_grow(sb, 0);
+>> -	res = sb->buf;
+>> +	if (sb->flags & STRBUF_OWNS_MEMORY)
+>> +		res = sb->buf;
+>> +	else
+>> +		res = xmemdupz(sb->buf, sb->alloc - 1);
+> 
+> This looks like a usage to be avoided: if we plan to detach the buffer,
+> anyway, there is no good reason to allocate it on the heap first. I would
+> at least issue a warning here.
 
-> +void strbuf_wrap_preallocated(struct strbuf *sb, char *path_buf,
-> +			      size_t path_buf_len, size_t alloc_len)
-> +{
-> +	if (!path_buf)
-> +		die("you try to use a NULL buffer to initialize a strbuf");
-> +
-> +	strbuf_init(sb, 0);
-> +	strbuf_attach(sb, path_buf, path_buf_len, alloc_len);
-> +	sb->flags &= ~STRBUF_OWNS_MEMORY;
-> +	sb->flags &= ~STRBUF_FIXED_MEMORY;
-> +}
+strbuf_detach() guarantees to return heap-allocated memory, that the caller
+can use however he want and that he'll have to free. If the strbuf doesn't
+own the memory, it cannot return the buf attribute directly because:
+- The memory belong to someone else (so the caller can't use it however
+he want)
+- The caller can't have the responsibility to free (because the memory
+belong to someone else)
+- The memory may not even be heap-allocated
 
-strbuf_wrap_preallocated seem very close to strbuf_attach. I'd rather
-see a symmetric code sharing like
+>> @@ -51,6 +84,8 @@ void strbuf_attach(struct strbuf *sb, void *buf, size_t
+>> len, size_t alloc)
+>>  	sb->buf   = buf;
+>>  	sb->len   = len;
+>>  	sb->alloc = alloc;
+>> +	sb->flags |= STRBUF_OWNS_MEMORY;
+>> +	sb->flags &= ~STRBUF_FIXED_MEMORY;
+>>  	strbuf_grow(sb, 0);
+>>  	sb->buf[sb->len] = '\0';
+>>  }
+>> @@ -61,9 +96,32 @@ void strbuf_grow(struct strbuf *sb, size_t extra)
+>>  	if (unsigned_add_overflows(extra, 1) ||
+>>  	    unsigned_add_overflows(sb->len, extra + 1))
+>>  		die("you want to use way too much memory");
+>> -	if (new_buf)
+>> -		sb->buf = NULL;
+>> -	ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
+>> +	if ((sb->flags & STRBUF_FIXED_MEMORY) && sb->len + extra + 1 > sb->alloc)
+>> +		die("you try to make a string overflow the buffer of a fixed strbuf");
+> 
+> We try to avoid running over 80 columns/row. This message could be
+> more to the point: cannot grow fixed string
 
-void strbuf_attach_internal(struct strbuf *sb, ..., unsigned int flags)
+What is fixed is the buffer, not the string. I'll shrink that under 80 columns
+   
+>>  extern char strbuf_slopbuf[];
+>> -#define STRBUF_INIT  { 0, 0, strbuf_slopbuf }
+>> +#define STRBUF_INIT  { 0, 0, 0, strbuf_slopbuf }
+> 
+> If I am not mistaken, to preserve the existing behavior the initial flags
+> should be 1 (own memory).
 
-and then strbuf_attach() and strbuf_wrap_preallocated() become
-straightforward wrappers around it.
+strbuf_slopbuf is a buffer that doesn't belong to any strbuf (because it's
+shared between all just-initialized strbufs). If STRBUF_OWNS_MEMORY was
+set, strbuf_slopbuf could be freed (which is impossible because it is
+shared AND even more because it is stack-allocated) 
 
-This would avoid setting and then unsetting STRBUF_OWNS_MEMORY (the
-performance impact is probably small, but it looks weird to set the flag
-and then unset it right away).
+> BTW this demonstrates that it may not be a good idea to declare the
+> "flags" field globally but then make the actual flags private.
 
-After your patch, there are differences between
-strbuf_wrap_preallocated() which I think are inconsistencies:
+I'm not sure what you mean here?
 
-* strbuf_attach() does not check for NULL buffer, but it doesn't accept
-  them either if I read correctly. It would make sense to add the check
-  to strbuf_attach(), but it's weird to have the performance-critical
-  oriented function do the expensive stuff that the
-  non-performance-critical one doesn't.
+> Also: similar use cases in Git used :1 flags (see e.g. the "configured"
+> field in credential.h).
 
-* strbuf_attach() calls strbuf_release(), which allows reusing an
-  existing strbuf. strbuf_wrap_preallocated() calls strbuf_init which
-  would override silently any previous content. I think strbuf_attach()
-  does the right thing here.
-
-  (And I'm probably the one who misguided you to do this)
-
-  In any case, you probably want to include calls to strbuf_attach() and
-  strbuf_wrap_*() functions on existing non-empty strbufs.
-
-> +void strbuf_wrap_fixed(struct strbuf *sb, char *path_buf,
-> +		       size_t path_buf_len, size_t alloc_len)
-> +{
-> +	strbuf_wrap_preallocated(sb, path_buf, path_buf_len, alloc_len);
-> +	sb->flags |= STRBUF_FIXED_MEMORY;
-> +}
-
-And this could become a 3rd caller of strbuf_attach_internal().
-
-> @@ -61,9 +96,32 @@ void strbuf_grow(struct strbuf *sb, size_t extra)
->  	if (unsigned_add_overflows(extra, 1) ||
->  	    unsigned_add_overflows(sb->len, extra + 1))
->  		die("you want to use way too much memory");
-> -	if (new_buf)
-> -		sb->buf = NULL;
-> -	ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
-> +	if ((sb->flags & STRBUF_FIXED_MEMORY) && sb->len + extra + 1 > sb->alloc)
-> +		die("you try to make a string overflow the buffer of a fixed strbuf");
-> +
-> +	/*
-> +	 * ALLOC_GROW may do a realloc() if needed, so we must not use it on
-> +	 * a buffer the strbuf doesn't own
-> +	 */
-> +	if (sb->flags & STRBUF_OWNS_MEMORY) {
-> +		if (new_buf)
-> +			sb->buf = NULL;
-> +		ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
-> +	} else {
-> +		/*
-> +		 * The strbuf doesn't own the buffer: to avoid to realloc it,
-> +		 * the strbuf needs to use a new buffer without freeing the old
-> +		 */
-> +		if (sb->len + extra + 1 > sb->alloc) {
-> +			size_t new_alloc = MAX(sb->len + extra + 1, alloc_nr(sb->alloc));
-> +			char *buf = xmalloc(new_alloc);
-> +			memcpy(buf, sb->buf, sb->alloc);
-
-I think you want to memcpy only sb->len + 1 bytes. Here, you're
-memcpy-ing the allocated-but-not-initialized part of the array.
-
-xmemdupz can probably simplify the code too (either you include the '\0'
-in what memcpy copies, or you let xmemdupz add it).
-
-> +/**
-> + * Allow the caller to give a pre-allocated piece of memory for the strbuf
-> + * to use. It is possible then to strbuf_grow() the string past the size of the
-> + * pre-allocated buffer: a new buffer will be allocated. The pre-allocated
-
-To make it clearer: "a new buffer will then be allocated"?
-
-> +/**
-> + * Allow the caller to give a pre-allocated piece of memory for the strbuf
-> + * to use and indicate that the strbuf must use exclusively this buffer,
-> + * never realloc() it or allocate a new one. It means that the string can
-> + * be manipulated but cannot overflow the pre-allocated buffer. The
-> + * pre-allocated buffer will never be freed.
-> + */
-
-Perhaps say explicitly that although the allocated buffer has a fixed
-size, the string itself can grow as long as it does not overflow the
-buffer?
-
-> @@ -91,6 +116,8 @@ extern void strbuf_release(struct strbuf *);
->   * Detach the string from the strbuf and returns it; you now own the
->   * storage the string occupies and it is your responsibility from then on
->   * to release it with `free(3)` when you are done with it.
-> + * Must allocate a copy of the buffer in case of a preallocated/fixed buffer.
-> + * Performance-critical operations have to be aware of this.
-
-Better than just warn about performance, you can give the alternative.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I think that keeping an obscure `flags` attribute may be better, as they
+should only be useful for internal operations and the user shouldn't mess
+with it. Keeping it a `private` attribute, in a way
