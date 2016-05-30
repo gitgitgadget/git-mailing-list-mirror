@@ -1,123 +1,120 @@
-From: Yotam Gingold <yotam@yotamgingold.com>
-Subject: Re: Git reset --hard with staged changes
-Date: Mon, 30 May 2016 01:07:49 -0400
-Message-ID: <4067AC3B-D369-4E86-9EB9-ED19FD362E2D@yotamgingold.com>
-References: <loom.20160523T023140-975@post.gmane.org> <CAP8UFD0dQGmfhPuHjEGRZjEZHwUHR_XzAASwq+87Obf26yi+BQ@mail.gmail.com> <xmqqeg8s8og8.fsf@gitster.mtv.corp.google.com> <CAP8UFD0yB8XjUi0f2OTUrW9W1UPC_ekY3+8--CC5rk_5RciYAA@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 30 07:07:58 2016
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [GSOC Update] Week 2
+Date: Mon, 30 May 2016 11:07:58 +0530
+Message-ID: <20160530053758.28134-1-pranit.bauva@gmail.com>
+References: <1463947103-28464-1-git-send-email-pranit.bauva@gmail.com>
+Cc: larsxschneider@gmail.com, christian.couder@gmail.com,
+	chriscool@tuxfamily.org, Pranit Bauva <pranit.bauva@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 30 07:43:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7FQj-0001wY-Ty
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 07:07:58 +0200
+	id 1b7Fz3-0002xo-0u
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 07:43:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751151AbcE3FHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 01:07:53 -0400
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:34580 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751093AbcE3FHw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 May 2016 01:07:52 -0400
-Received: by mail-qg0-f53.google.com with SMTP id p34so3925961qgp.1
-        for <git@vger.kernel.org>; Sun, 29 May 2016 22:07:52 -0700 (PDT)
+	id S932219AbcE3FnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 01:43:21 -0400
+Received: from mail-pa0-f68.google.com ([209.85.220.68]:36672 "EHLO
+	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932111AbcE3FnU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 01:43:20 -0400
+Received: by mail-pa0-f68.google.com with SMTP id fg1so20289575pad.3
+        for <git@vger.kernel.org>; Sun, 29 May 2016 22:43:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=wkYumLn6cI3pUjdw56a/Kk4EutvCpDGXhXgwu/IUUvs=;
-        b=G57LzY2JadsefJ7ExLvPSZ8pQpL3E2p0rNadiiyjYT38hUHygxC/VQwE5eJX1feEFB
-         HOmqGXgXl2rp+NfSa/fyqYNF+OABegSFa5FNRaNYapMTSQ9lvnW+vc9nnFaxOcxdrGTe
-         5cv2S6nDu2UaLgayGUQREECnGt/3AvwRFjp7TA/FB6JAzdqT44BsZ/lWU1UG0YiBeVUd
-         ey9r036Yla5NWDnmEd0fG5qQktQsGH1O8pU2/bQArAjIioCil9HS+KnybQgjXYKmPb+n
-         thhGqC6i7/UNE+FCNWX8dyrIN2L2YHl720x36I1soNzLCATbFKJGNqJOqX/UtS11Fx+U
-         jWog==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=3wxywX+gGn9t4/6HXaFjMFeAH6uqG8+fmGcxpPegFE8=;
+        b=fD1Ss5+QYxqqs4Ycp61spNgBelrt+PvHF1hyxTiWq6OZd1n6O8U+TXPHglEQyxpVeu
+         py5iIzTi5y+Aja91JgNIMysNrnbLfDG0xh1UPCRVqtaHLCeiCw9nJRPLSwWQ4+jWrXOK
+         GpVlMM0tnULRb7O6JBNrG9qCsbc8LlFUsvaXswhBczS8i/wzpeY7RfqLfKg1Ra/cXZ5h
+         o3/YToNtZSqZyLm9CiNCpAwYiCF1GJsnOagcz9LWEY5lagbCAar7bbvhBZq68yuDe4uT
+         uLtKB96I1DBIP0qlYVdWOlGX9KuP+KZa1bJvpRPLmeaoZemGOgCk1XQjMOwSgHippT16
+         kB/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:mime-version:subject:from:in-reply-to
-         :date:cc:content-transfer-encoding:message-id:references:to;
-        bh=wkYumLn6cI3pUjdw56a/Kk4EutvCpDGXhXgwu/IUUvs=;
-        b=LhPOn53YYTZ3RJrSZoEp5v5OGXmwrSUw+xmz1AY38d7t3+t3ieqFkeg3/HkGZXJpd5
-         CrMD7CvvENqJnEHWLFTQZ2fg6KNovOi6/IbXzCtFqVLpj5+JmYzp5fxZPhsw712wTz3L
-         tRdo4i9pHqrvnKavgVB06DQFc4voWvZIinal1FYz0wABrte1gav7FHhhL9if2fNJxiJM
-         xiQO5BMwSw/pHrzJZH86QuoPsH5LPuwDOUWctTnWasGQUjArtd6WJZfS7KJHOLjLiHBB
-         UGfK7NErS4e5w+pU5FpIE9mxPOcnLDBqmixQ4laU8W0Q5rib/qF6p50MjF/jgVHnAaSd
-         B5Qw==
-X-Gm-Message-State: ALyK8tLnK7PCAKm1beqRpQOeXJdl9rx2rQKgWr7gUSEZrIsDUXoAsT+StREPuja+K/c3kw==
-X-Received: by 10.140.142.136 with SMTP id 130mr25417254qho.64.1464584871621;
-        Sun, 29 May 2016 22:07:51 -0700 (PDT)
-Received: from yotronagon.hsd1.dc.comcast.net (c-73-200-28-96.hsd1.dc.comcast.net. [73.200.28.96])
-        by smtp.gmail.com with ESMTPSA id 17sm2529755qhp.28.2016.05.29.22.07.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 29 May 2016 22:07:50 -0700 (PDT)
-In-Reply-To: <CAP8UFD0yB8XjUi0f2OTUrW9W1UPC_ekY3+8--CC5rk_5RciYAA@mail.gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=3wxywX+gGn9t4/6HXaFjMFeAH6uqG8+fmGcxpPegFE8=;
+        b=mqGrBmZZE0/pQ/DDWJo32A/rLnmTg9d5gqKdYos0HB3bk7z87UjDv13o6qibYiAw1n
+         Dvr9eZyTVMGLnvp4fiCoUEQmvK/D0TD4NfY8M0HhK27se/P4NMBY9rnNSx38mzes70jE
+         iFJqKMJEMh3AAImDLuZVvA9b8jb5rqdI2pigylSvdbQ1tZzgIDWqaQX/75uhIHzRf/wr
+         2ve1u/2viSZ5call0ce9xdCWcV1Py67CPSGn4kLkXnM4nXPK5qV1s7lV4rn+SbhDD3X5
+         ZUhhQmQAZszfmW2Thy6BiuDijkJwp0bE3LS+PNlVsk30i8K54jFiPYqD3a5TCglZ5OE5
+         KbXg==
+X-Gm-Message-State: ALyK8tI3IBFEpLRatLUlRq1oh/7SUjRfx3ECGMhE6ui850rzRTohQ/VDUvSH6EqinCfReA==
+X-Received: by 10.66.21.102 with SMTP id u6mr43541330pae.118.1464586999339;
+        Sun, 29 May 2016 22:43:19 -0700 (PDT)
+Received: from localhost.localdomain ([111.119.199.22])
+        by smtp.gmail.com with ESMTPSA id tn7sm43990133pac.29.2016.05.29.22.43.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 29 May 2016 22:43:18 -0700 (PDT)
+X-Mailer: git-send-email 2.8.3
+In-Reply-To: <1463947103-28464-1-git-send-email-pranit.bauva@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295853>
 
-> On May 24, 2016, at 2:20 AM, Christian Couder <christian.couder@gmail.com> wrote:
-> 
-> On Mon, May 23, 2016 at 11:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> 
->> 
->> I am not sure if that is a good addition, though.
-> 
-> I am not sure either, but at least if something like that is added,
-> people may complain less.
-
-The present documentation is at best wrong and at worst misleading.
-I read Junio's enumerations of the situations, and I appreciate that the
-current behavior of git reset --hard cannot be changed because of the
-many tools that rely on the current behavior. After reading it, I have
-modified my proposed amendment to the git reset --hard documentation:
-
-    A file is considered tracked if it exists in a prior commit or in the
-    staging area. Note that a newly added file not in any prior commit will be
-    removed. This is useful for aborting a failed merge.
-
-Shall I submit a patch?
+================================= SUMMARY ==================================
+My public git.git is available here[1]. I regularly keep pushing my work so
+anyone interested can track me there. Feel free to participate in the
+discussions going on PRs with my mentors. Your comments are valuable.
 
 
->>>> I would also like to propose that the staging area's tree object be saved,
->>>> ..
->>> Yeah, it might be a good idea.
->> 
->> Two issues with that "proposal" is that
->> 
->> 1. the index may not be writable as a tree (think: during a
->>    conflict resolution); and
+=============================== INTRODUCTION  ==============================
+The purpose of this project is to convert the git-bisect utility which partly
+exists in the form of shell scripts to C code so as to make it more portable.
+I plan to do this by converting each function to C and then calling it from
+git-bisect.sh so as to use the existing test suite to test the function which
+is converted.
 
-So why not do it only when possible? But in this case (and every case),
-wouldn't a solution be to create a tree that is not the index just for the reflog?
-
-
->> 2. the sole point of "reset --hard" is to "discard the changes".
->>    If you want to instead save them away, there is another command
->>    that was designed to do just that.
-
-git stash isn't relevant here. git reset --hard deletes data from disk that has
-only ever been in the staging area. Many commands in git can be "undone"
-due to the fact that it is a version control system and there is a reflog.
-This is not one of those. git reset --hard can cause a catastrophic loss of
-data, with no way to undo it.
+Mentors:
+Christian Couder <chriscool@tuxfamily.org>
+Lars Schneider <larsxschneider@gmail.com>
 
 
->> It wasn't all that surprising that those on stackoverflow would
->> think such a proposal is a good idea, but I somehow was hoping you
->> have been around here long enough to know "git stash" ;-)
-> 
-> Yeah, we can try to teach people about git stash and git reset --keep
-> instead, but I doubt that it will be very effective.
+================================== Updates =================================
+Things which were done in this week:
 
-git stash doesn't make sense in this context. The documentation for
-git reset --hard is misleading. The error is unrecoverable. How could anyone
-but a git developer know this?
+ * bisect_clean_state() function is having a segmentation fault which is yet
+   not fixed by me. I will try this for one more day and then send it to the
+   list for RFC.
 
-Yotam
+ * I also converted is_expected_rev() and check_expected_revs() which also has
+   segmentation fault.
+
+ * I also converted bisect_head() function. I changed the semantics a little
+   bit. Previously the shell function used to echo the string, now it returns
+   the value to the caller.
+
+ * I investigated why test no. 43 and 44 are failing with t6030 with `|| exit`
+   in the previous version of the patch but it didn't in the newer one. This
+   is because the location of .git was hardcoded and thus it created problems
+   with bare repositories.
+
+ * I also sent a cleanup patch for using the marco GIT_PATH_FUNC to create a
+   function instead of using git_path() because of the benefits described
+   in the commit message of that change.
+
+================================= NEXT STEPS ================================
+Things which would be done in the coming week:
+
+ * Finish bisect_clean_state() conversion.
+
+ * Finish is_expected_rev() and check_expected_revs() conversion.
+
+ * Convert the function bisect_write(). I plan to convert this function and
+   add it as a subcommand.
+
+ * Convert bisect_reset() and add it as a subcommand.
+
+ * Convert get_terms() and add the variables TERM_GOOD and TERM_BAD in a struct
+   in the global state.
+
+
+Regards,
+Pranit Bauva
