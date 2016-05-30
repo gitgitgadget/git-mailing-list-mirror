@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 06/13] get_ref_cache(): only create an instance if there is a submodule
-Date: Mon, 30 May 2016 09:55:27 +0200
-Message-ID: <3d6c93bd7907f3e6c34787a47b1d75c5cca52a1b.1464537050.git.mhagger@alum.mit.edu>
+Subject: [PATCH 07/13] entry_resolves_to_object(): rename function from ref_resolves_to_object()
+Date: Mon, 30 May 2016 09:55:28 +0200
+Message-ID: <1d91b1d9f970184ac2d117c9d92379725f468d8d.1464537050.git.mhagger@alum.mit.edu>
 References: <cover.1464537050.git.mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -9,128 +9,87 @@ Cc: Jeff King <peff@peff.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>,
 	David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon May 30 09:56:09 2016
+X-From: git-owner@vger.kernel.org Mon May 30 09:56:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7I3V-0001FJ-DM
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 09:56:09 +0200
+	id 1b7I3b-0001Iq-1Z
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 09:56:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932632AbcE3H4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 03:56:01 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:63916 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932500AbcE3Hz7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 May 2016 03:55:59 -0400
-X-AuditID: 12074414-63fff700000008e6-73-574bf20ba004
+	id S932608AbcE3Hz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 03:55:59 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:50408 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932360AbcE3Hz6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 May 2016 03:55:58 -0400
+X-AuditID: 1207440e-f07ff700000008c5-d3-574bf20d0478
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id EF.0C.02278.B02FB475; Mon, 30 May 2016 03:55:56 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id 56.F7.02245.D02FB475; Mon, 30 May 2016 03:55:57 -0400 (EDT)
 Received: from michael.fritz.box (p508EADDB.dip0.t-ipconnect.de [80.142.173.219])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u4U7tgRv032144
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u4U7tgRw032144
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 30 May 2016 03:55:54 -0400
+	Mon, 30 May 2016 03:55:56 -0400
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <cover.1464537050.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrOIsWRmVeSWpSXmKPExsUixO6iqMvzyTvcYPtZNov5m04wWnRd6Way
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGIsWRmVeSWpSXmKPExsUixO6iqMv7yTvc4MNFFYv5m04wWnRd6Way
 	aOi9wmxxe8V8ZovuKW8ZLX609DA7sHn8ff+ByWPnrLvsHs969zB6XLyk7LHg+X12j8+b5ALY
-	orhtkhJLyoIz0/P07RK4M3bN/s9YMF+kYvK9DUwNjHsEuhg5OSQETCSeLm1n62Lk4hAS2Moo
-	sbD3IwuEc5JJYvmvDawgVWwCuhKLepqZQGwRgQiJhlctjCBFzAL7GCVOrpvPApIQFgiXuPl4
-	OSOIzSKgKnH/2w4gm4ODVyBKoulOLsQ2OYnL0x+wgdicAhYSE2e9A5spJGAusWzmSeYJjDwL
-	GBlWMcol5pTm6uYmZuYUpybrFicn5uWlFula6OVmluilppRuYoQElMgOxiMn5Q4xCnAwKvHw
-	Fmh6hwuxJpYVV+YeYpTkYFIS5XXjAArxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4X37GCjHm5JY
-	WZValA+TkuZgURLn/bZY3U9IID2xJDU7NbUgtQgmK8PBoSTBK/wRqFGwKDU9tSItM6cEIc3E
-	wQkynEtKpDg1LyW1KLG0JCMeFAPxxcAoAEnxAO3d/wFkb3FBYi5QFKL1FKMux5H999YyCbHk
-	5eelSonz2oMUCYAUZZTmwa2ApY9XjOJAHwvzSoFcwgNMPXCTXgEtYQJaYnbOC2RJSSJCSqqB
-	cbVq67RPm2I/fXO4cubFx9aHLbtNjlrNs+d+JWO6YXbFYvWjAZl/hV7+aPBQf/OXTfrtv8NL
-	4n+Lu9Vnax2d+vV/fGd2S7E9y31L3pKLHkInV7/JO/Zg/+ywDUsqNxt7X0x/mfDs 
+	orhtkhJLyoIz0/P07RK4M2at/M1c0Mhd0TNtNUsD4yeOLkZODgkBE4m+75+Yuhi5OIQEtjJK
+	tCzdyQzhnGSS6Jx1lwWkik1AV2JRTzMTiC0iECHR8KqFEaSIWWAfo8TJdfPBioQFEiQ2LD/N
+	2sXIwcEioCpxdU80iMkrECWxeYI4xDI5icvTH7CB2JwCFhITZ70DGykkYC6xbOZJ5gmMPAsY
+	GVYxyiXmlObq5iZm5hSnJusWJyfm5aUW6Rrr5WaW6KWmlG5ihIQT3w7G9vUyhxgFOBiVeHgL
+	NL3DhVgTy4orcw8xSnIwKYnyunEAhfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwvn0MlONNSays
+	Si3Kh0lJc7AoifOqLVH3ExJITyxJzU5NLUgtgsnKcHAoSfA2fQBqFCxKTU+tSMvMKUFIM3Fw
+	ggznkhIpTs1LSS1KLC3JiAdFQHwxMAZAUjxAe/eDtPMWFyTmAkUhWk8x6nIc2X9vLZMQS15+
+	XqqUOK89SJEASFFGaR7cCljyeMUoDvSxMO8JkCoeYOKBm/QKaAkT0BKzc14gS0oSEVJSDYwe
+	V40yT8qfZS5YovLm+kSOM7YNnZtmCuiG/fz6i3+txcrTxurfnUvLb76a/n9Hbv2/E9LMjtqP
+	NY+sM3bsu3jzEf/iju1nZDOK0rRXtMV96Gq4lurW12jyXV/qwJFwwVevrRq5YgTj 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295864>
 
-If there is not a nonbare repository where a submodule is supposedly
-located, then don't instantiate a ref_cache for it.
-
-The analogous check can be removed from resolve_gitlink_ref().
+Free up the old name for a more general purpose.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
-This doesn't actually reduce the number of ref_cache instances
-generated by out test suite, but it is a more logical place for
-the check that was added in
-
-  a2d5156c resolve_gitlink_ref: ignore non-repository paths
-
- refs/files-backend.c | 33 ++++++++++++++++++++++-----------
- 1 file changed, 22 insertions(+), 11 deletions(-)
+ refs/files-backend.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index a0d09f4..142c977 100644
+index 142c977..1a46f32 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -954,15 +954,26 @@ static struct ref_cache *lookup_ref_cache(const char *submodule)
- 
- /*
-  * Return a pointer to a ref_cache for the specified submodule. For
-- * the main repository, use submodule==NULL. The returned structure
-- * will be allocated and initialized but not necessarily populated; it
-- * should not be freed.
-+ * the main repository, use submodule==NULL; such a call cannot fail.
-+ * For a submodule, the submodule must exist and be a nonbare
-+ * repository, otherwise return NULL.
-+ *
-+ * The returned structure will be allocated and initialized but not
-+ * necessarily populated; it should not be freed.
+@@ -517,7 +517,7 @@ static void sort_ref_dir(struct ref_dir *dir)
+  * an object in the database.  Emit a warning if the referred-to
+  * object does not exist.
   */
- static struct ref_cache *get_ref_cache(const char *submodule)
+-static int ref_resolves_to_object(struct ref_entry *entry)
++static int entry_resolves_to_object(struct ref_entry *entry)
  {
- 	struct ref_cache *refs = lookup_ref_cache(submodule);
--	if (!refs)
--		refs = create_ref_cache(submodule);
-+
-+	if (!refs) {
-+		struct strbuf submodule_sb = STRBUF_INIT;
-+
-+		strbuf_addstr(&submodule_sb, submodule);
-+		if (is_nonbare_repository_dir(&submodule_sb))
-+			refs = create_ref_cache(submodule);
-+		strbuf_release(&submodule_sb);
-+	}
-+
- 	return refs;
- }
+ 	if (entry->flag & REF_ISBROKEN)
+ 		return 0;
+@@ -563,7 +563,7 @@ static int do_one_ref(struct ref_entry *entry, void *cb_data)
+ 		return 0;
  
-@@ -1341,13 +1352,10 @@ int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sh
- 		return -1;
+ 	if (!(data->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
+-	      !ref_resolves_to_object(entry))
++	      !entry_resolves_to_object(entry))
+ 		return 0;
  
- 	strbuf_add(&submodule, path, len);
--	refs = lookup_ref_cache(submodule.buf);
-+	refs = get_ref_cache(submodule.buf);
- 	if (!refs) {
--		if (!is_nonbare_repository_dir(&submodule)) {
--			strbuf_release(&submodule);
--			return -1;
--		}
--		refs = create_ref_cache(submodule.buf);
-+		strbuf_release(&submodule);
-+		return -1;
- 	}
- 	strbuf_release(&submodule);
+ 	/* Store the old value, in case this is a recursive call: */
+@@ -2228,7 +2228,7 @@ static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
+ 		return 0;
  
-@@ -1885,6 +1893,9 @@ int do_for_each_ref(const char *submodule, const char *prefix,
- 	struct ref_cache *refs;
+ 	/* Do not pack symbolic or broken refs: */
+-	if ((entry->flag & REF_ISSYMREF) || !ref_resolves_to_object(entry))
++	if ((entry->flag & REF_ISSYMREF) || !entry_resolves_to_object(entry))
+ 		return 0;
  
- 	refs = get_ref_cache(submodule);
-+	if (!refs)
-+		return 0;
-+
- 	data.prefix = prefix;
- 	data.trim = trim;
- 	data.flags = flags;
+ 	/* Add a packed ref cache entry equivalent to the loose entry. */
 -- 
 2.8.1
