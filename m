@@ -1,90 +1,128 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: git add without whitespace
-Date: Mon, 30 May 2016 14:50:05 -0500
-Message-ID: <CAHd499Drdt6GoScdksNNWLrsvG3Dex7fTYNhatL-qboCPW5RZQ@mail.gmail.com>
-References: <CAHd499Agn=vLBxDpHi2dy1HMy-_58PZGs7VNtFJnBfP5zXatTA@mail.gmail.com>
-	<xmqqlh2r8ixu.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH v2 1/8] t4051: rewrite, add more tests
+Date: Mon, 30 May 2016 22:55:35 +0200
+Message-ID: <574CA8C7.8070807@web.de>
+References: <xmqqh9e5mvjs.fsf@gitster.mtv.corp.google.com>
+ <xmqq4ma5msrd.fsf@gitster.mtv.corp.google.com> <5740AC28.6010202@web.de>
+ <5749AF59.2070704@web.de> <5749B1EA.10707@web.de>
+ <xmqqinxwpgfn.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 30 21:50:20 2016
+X-From: git-owner@vger.kernel.org Mon May 30 22:57:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7TCb-0006i7-MX
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 21:50:18 +0200
+	id 1b7UFX-0000lb-3J
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 22:57:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933475AbcE3TuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 15:50:08 -0400
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:35366 "EHLO
-	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933361AbcE3TuG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 15:50:06 -0400
-Received: by mail-vk0-f51.google.com with SMTP id d127so73066770vkh.2
-        for <git@vger.kernel.org>; Mon, 30 May 2016 12:50:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=slhljaAsvLTbnH3bGYwo+aZGF6pR+9L7+CIZiOHVAPs=;
-        b=zgefaOeqosUvbM27lCKrHsyXU/FXwdBN/lApxhw14HSicBgJSPaS7qUalp9QdvjQhs
-         M4z2BRbETq3hxBqFMt5J3Q4lRe4GYa/0GSsuQ4m9ChmeoqZrZut5SRGO7gK0kMEwX0q5
-         LpRTnODPVLTz2idKi8yZwLQjayOiFvXXBM5k1oaN5cdOsjuWKgUl0sElcVTYEHfL3z53
-         do2jDayoW6MI/ocMER73KJgQzR/hHvKAF+LxXxbwL68uSJqV0zEFLZF+E3UuQoH4isQ3
-         grcHF8u+XH4m+MBhF0O+yrcxZ2mbODZYV0+aTTPudYUzs5TeEgqnrTmvIi9nHd4xCd39
-         rNwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=slhljaAsvLTbnH3bGYwo+aZGF6pR+9L7+CIZiOHVAPs=;
-        b=eRMO9safyaXSG5+LzqcRLy5hMo6T0/tvE7rT/oAd37Jv/TDRUTpQ/eZ8xUmuHlLm/J
-         /c8cgS6v15g3dJ25hPcNam1nYXpjG0UlKdY5Q8HXV8k2h7ZqQJWPXBpJk1VWIw3WJMnl
-         81vMOv+QTpcB1cAMSJHLpCJTKcbCH0Xxb4pD6UOEJKZcv7MAtxzOMeKvXzXwvuIRKHdg
-         2os+HaxV0Mtal3FzD10wQsQYl560T4o6PqdQ2h1bWA+3I6HISbaKVUhbOnMc0mgED3a5
-         0HmfRN6W/9sLDNoCmH6DI1zayAynsWCQJuRdVlR+ZAIe1/20LOvs8UQS1ezg3t54OmGk
-         TZcg==
-X-Gm-Message-State: ALyK8tK1d+ipab+q6y1KLKayKuxGHV61usb28P22AJPHa/7gWXdLLPaW5rZuM1Phdt79rbYOMTtMZ2yKTIrR0g==
-X-Received: by 10.31.181.83 with SMTP id e80mr13615527vkf.26.1464637805368;
- Mon, 30 May 2016 12:50:05 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.159.34.134 with HTTP; Mon, 30 May 2016 12:50:05 -0700 (PDT)
-In-Reply-To: <xmqqlh2r8ixu.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: 2cfHl9D3zaAPbwjaCn64e80ROi4
+	id S1162345AbcE3U4I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2016 16:56:08 -0400
+Received: from mout.web.de ([212.227.15.4]:60622 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161857AbcE3Uzt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 16:55:49 -0400
+Received: from [192.168.178.36] ([79.213.117.50]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0MMEyj-1b8sKm13Gv-007zS1; Mon, 30 May 2016 22:55:41
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
+In-Reply-To: <xmqqinxwpgfn.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:glT9JUeGBFEf+79HsSipIobat1ISCV4zksEeVzbFWbQjWFDzoVZ
+ TtvLKrWV+2pjrZ0KPDt/ax0RfW0fU4Y994Y2ynR6sBnXAiVqAv2xL8pCW9Irv79eqMvbybA
+ TdkuUE6U0goPtbyB+1+S4xOVnWOC2Z6453Vo/jSPdTBf+r68BwEqZUvgB7lhxgGEiwYb0tt
+ 8O770yjhL1r0exjcfTDyQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:g1ftyuWiVQE=:76TfVXWM1KSfvEOmSR5ccY
+ oskEc9NV0hCrvhl9kUrpTM5452bi2BR4vDjbIIhbsKDvAWhstIny/03K8pONeZI7eqXAR+ky4
+ 7weGeBFRh0WY582k/PEeL7wbLR8i8FB3kTBIIKe/z2FT6xpSWjVOIiakaAcS3LQ5OfiLYSBcO
+ Mnz4NpOICgTqHLM8uGlZU7WH1jKwt0k3S0GMyKQj1nhkkMAxsbd3ttcaPlXhPFef319f5oGVg
+ 0MknRTq2LdKVneRT/u62GgA9vbz2zvimyPs/RCejlzuO51eYNN8YYD7juK0SLA39Q31eBRn2v
+ SMHmABOqDbySbfvOJUyqfwoOWW3duCTCjErIE1V+kSf5Brj6tSphfLc76roOu5hWVGk4HJ2hF
+ DRHTUoCyCaQu9xL7db0jzbcPtS6bVGqG1/SvUwiDfsx1XgfU7crL+MIsHYPUKm1aWdI3xP60A
+ OafeyNkvT6lQm/r3+rMcoF2IZ+DeHs3Sua2tGz/ZVbUe+EFXoJuEdHBxix1RN90S/k7f/fs+7
+ eGBf70cIoVru82qfovcCOQ0hxIU47OqPifK9yQkCtzKxSH1DPZuytbvd8zqIGINcw5g/VxdGi
+ MSqJ4cu5zmi8EvsyNb6JdDyRKjz1QNO2UwqxHj2VEJiZ5yY0UHbrolRGBpEgf0Yd11o3pCwM9
+ m96UX3p7jtobGn0VjIjzkWBa4T7NenCyL1wlU3/lRnTCl95IESMiTgtlgaAlJc8fgykAXI2lg
+ QQeapz2M9GOkzoJe4tVhUQHEvK7koeTr++N1ZfhRSvUnTj1A33Irz202B1zNVM3VhHRdmCX4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295931>
 
-On Mon, May 30, 2016 at 2:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I have had this in my ~/.gitconfig for a long time.
+Am 30.05.2016 um 01:55 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >
-> [alias]
->         wsadd = "!sh -c 'git diff -- \"$@\" | git apply --cached --whitespace=fix;\
->                 git co -- ${1-.} \"$@\"' -"
+>> +commit_and_tag () {
+>> +	message=3D$1 &&
+>> +	shift &&
+>> +	git add $@ &&
 >
-> That is, "take what's different from the _index_ and the working
-> tree, apply that difference while correcting whitespace errors to
-> the index, and check the result out to the working tree".  This
-> would _not_ touch existing whitespace-damaged lines that you are not
-> touching, and honours the customized definition of what is
-> considered whitespace breakage for each paths (which you set up with
-> the attributes system).
+> Lack of dq around $@ makes me wonder if there is something funny
+> going on (looking at the callers, there isn't, so we'd better quote
+> it to avoid wasting time, I think).
+
+OK.
+
+>> +	test_tick &&
+>> +	git commit -m $message &&
+>> +	git tag $message
+>>   }
 >
+> The use of $message as the sole argument to "git tag" makes the
+> readers guess that it must be a single token without any funny
+> character, so the readers would probably do not waste too much time
+> wondreing if the lack of dq around $message in the last two is
+> problematic.
 
-I like your solution better than mine because it utilizes the rules
-defined in .gitattributes. I think that's a really good idea. But
-other than that, yours is functionally the same as what I'm doing,
-right? I just want to make sure I understand: What ends up in the
-index/staging area is the code MINUS the trailing whitespace (e.g.
-whitespace errors)?
+Well, let's call it $tag; $message is a bit misleading here.  The saved=
+=20
+letters can be invested in quotes. ;)
 
-What does the checkout at the end do? That part confuses me (granted
-I'm not well-versed with bash script).
+>> +last_context_line () {
+>> +	sed -n '$ p'
+>>   }
+>
+> I have a vague recollection that some implementations of sed are
+> unhappy to see that space between the address and the operation; I'd
+> feel safer without it.
 
-Thanks for the feedback. Looks like this is niche enough that an
-alias/script is probably the best solution.
+Indeed most sed calls in t/ have no space there (found counter-examples=
+=20
+only in annotate-tests.sh, t4201-shortlog.sh, t9824-git-p4-git-lfs.sh).
+
+>> +check_diff () {
+>> +	name=3D$1
+>> +	desc=3D$2
+>> +	options=3D"-W $3"
+>> +
+>> +	test_expect_success "$desc" '
+>> +		git diff $options "$name^" "$name" >"$name.diff"
+>> +	'
+>> +
+>> +	test_expect_success ' diff applies' '
+>> +		test_when_finished "git reset --hard" &&
+>> +		git checkout --detach "$name^" &&
+>
+> With the presence of ^ there, --detach is unnecessary; it would not
+> hurt, though.
+
+Right.  It's just there to make that intent clear.
+
+>> +		git apply "$name.diff" &&
+>> +		git diff --exit-code "$name"
+>
+> Even though we may know that $name.diff" will never have a creation
+> of new paths, I'd feel safer if "apply" is run with "--index".
+
+Makes sense; the less we assume about the diff to be checked the better=
+=2E
+
+Thanks a lot!
+
+Ren=C3=A9
