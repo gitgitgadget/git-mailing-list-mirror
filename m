@@ -1,122 +1,79 @@
 From: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
-Subject: [RFC] Triangular Workflow UI improvement
-Date: Mon, 30 May 2016 10:46:40 +0200
-Message-ID: <521237FA-0DC4-4C47-AB44-778888A7726F@grenoble-inp.org>
-References: <E83A9439-54C8-4925-8EE3-6AEEDD9416F3@grenoble-inp.org> <xmqqwpmgvfif.fsf@gitster.mtv.corp.google.com>
+Subject: [RFC] Triangular Workflow UI improvments
+Date: Mon, 30 May 2016 11:07:30 +0200
+Message-ID: <9A874F00-ABD8-43D5-A32E-6A39ED333E6D@grenoble-inp.org>
+References: <E83A9439-54C8-4925-8EE3-6AEEDD9416F3@grenoble-inp.org> <D501BE7EF38A4CDF9ADB786B53CCFE0C@PhilipOakley>
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
 	Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>,
 	Tom Russello <tom.russello@grenoble-inp.org>,
-	Samuel Groot <samuel.groot@grenoble-inp.org>, peff@peff.net,
-	artagnon@gmail.com, philipoakley@iee.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 30 10:46:49 2016
+	Samuel Groot <samuel.groot@grenoble-inp.org>,
+	philipoakley@iee.org, artagnon@gmail.com, peff@peff.net
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Mon May 30 11:07:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7IqW-0002Rc-9k
-	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 10:46:48 +0200
+	id 1b7JAf-0002Zn-Qf
+	for gcvg-git-2@plane.gmane.org; Mon, 30 May 2016 11:07:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932743AbcE3Iqo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2016 04:46:44 -0400
-Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:36418 "EHLO
+	id S932141AbcE3JHe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2016 05:07:34 -0400
+Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:49519 "EHLO
 	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932736AbcE3Iqo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 May 2016 04:46:44 -0400
+	with ESMTP id S1751137AbcE3JHd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 May 2016 05:07:33 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 81A5F247F;
-	Mon, 30 May 2016 10:46:41 +0200 (CEST)
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 4ACD3247F;
+	Mon, 30 May 2016 11:07:31 +0200 (CEST)
 Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KDfYXDXoI-hQ; Mon, 30 May 2016 10:46:41 +0200 (CEST)
+	with ESMTP id D68sydnWvEwp; Mon, 30 May 2016 11:07:31 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 70559246D;
-	Mon, 30 May 2016 10:46:41 +0200 (CEST)
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 3A3BC246D;
+	Mon, 30 May 2016 11:07:31 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 6D6AE2077;
-	Mon, 30 May 2016 10:46:41 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 33C822077;
+	Mon, 30 May 2016 11:07:31 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6yuCW329-8-r; Mon, 30 May 2016 10:46:41 +0200 (CEST)
+	with ESMTP id zOKizZvkxj7N; Mon, 30 May 2016 11:07:31 +0200 (CEST)
 Received: from eduroam-032091.grenet.fr (eduroam-032091.grenet.fr [130.190.32.91])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 3E78E2066;
-	Mon, 30 May 2016 10:46:41 +0200 (CEST)
-In-Reply-To: <xmqqwpmgvfif.fsf@gitster.mtv.corp.google.com>
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 19F2D2066;
+	Mon, 30 May 2016 11:07:31 +0200 (CEST)
+X-Priority: 3
+In-Reply-To: <D501BE7EF38A4CDF9ADB786B53CCFE0C@PhilipOakley>
 X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295873>
 
->> We are working on full implementation of triangular workflow feature=
-=2E
->> For now, the main options available are:=20
->> 	 - branch.<name>.pushRemote
->> 	 - remote.pushDefault
->> And only setable by hands.=20
+
+> Le 27 mai 2016 =C3=A0 09:32, Philip Oakley <philipoakley@iee.org> a =C3=
+=A9crit :
+> For me, the first step would be to actually document a (the?) Triangu=
+lar Workflow in the documentation, so we are all taking about the same =
+broad method.
 >=20
-> And once it is set, you do not have to worry about it.  I am not
-> sure per-branch thing is all that useful, unless you are always
-> working on a single branch like 'master', but the latter would be
-> just set once and forget about it.
-
-We got the example of our fork of git(e.g. GitHub).=20
-We want :=20
- - some branches that only fetch from git/git and push to our/git
- - the others branches fetch from and push to our/git.=20
-=46or now, we have to change branch.<name>.remote and=20
-branch.<name>.pushRemote(or remote.pushDefault).=20
-With branch.<name>.fetchRemote, we only have to set this one.=20
-fetchRemote is more explicit than remote for that case.=20
-
-Another point is that many commands can erase the old=20
-value of branch.<name>.remote.=20
-
->> Context:
->> 	- One main remote repository, e.g. git/git.
->> 	- A remote fork (e.g. a GitHub fork) of git/git, e.g. me/git.
->> 	- A local clone of me/git on the machine
->> Purposes:
->> 	- the local branch master has to fetch to git/git by default
->> 	- the local branch master has to push to me/git by default
+> At the moment there is a choice (assuming a ithub like service) of ei=
+ther clone and then fork, or fork and clone the fork, which leave the u=
+ser with different fixups of their config's being required, so describi=
+ng the easier one would help folk.
 >=20
-> Wouldn't remote.pushDefault be the single thing you need to set just
-> once and forget about it?  Why would your users even want to do
-> these things =E2=80=A6
+> Likewise there are missing terms such as for the third place (the per=
+sonal fork) that is neither the upstream, nor the local repo. Making su=
+re the terminology is crisp and clean will greatly ease any implementat=
+ion issues. And then there are the possible workflows...
 
-remote.pushDefault overrides branch.<name>.remote for all branches.=20
-The goal is to give an easily understandable config for=20
-complex configuration.=20
-Having all the configuration in the same part (e.g [branch =C2=AB maste=
-r =C2=BB])=20
-is easier to understand and edit.=20
+Yes, you=E2=80=99re right.=20
 
->=20
->> 	c. add `git fetch --set-default` in order to set remote.fetchDefaul=
-t
->> 	d. add `git fetch --set-remote` in order to set branch.<name>.fetch=
-Remote
->> 	e. add `git pull --set-default` in order to set remote.fetchDefault
->> 	f. add `git pull --set-remote` in order to set branch.<name>.fetchR=
-emote
->> 	a. add `git push --set-default` in order to set remote.pushDefault
->> 	b. add `git push --set-remote` in order to set branch.<name>.pushRe=
-mote
->=20
-> ... just to configure many variables every time they work on a new
-> branch?
+Writing a complete tutorial is a good idea.=20
 
-branch.<name>.pushRemote and all these options are optional.
-Options in commands may not be added. It just gives user=20
-friendly interaction with these options. =20
-
-
-
-To conclude:=20
-This feature is more about configuration clarity than possibility itsel=
-f.=20
+I start this job and the content will depend=20
+on the result of this discussion.=20
