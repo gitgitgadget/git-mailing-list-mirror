@@ -1,145 +1,192 @@
 From: Eric Wong <e@80x24.org>
-Subject: [PATCH 3/3] am: support --patch-format=mboxrd
-Date: Mon, 30 May 2016 23:21:42 +0000
-Message-ID: <20160530232142.21098-4-e@80x24.org>
+Subject: [PATCH 2/3] mailsplit: support unescaping mboxrd messages
+Date: Mon, 30 May 2016 23:21:41 +0000
+Message-ID: <20160530232142.21098-3-e@80x24.org>
 References: <20160530232142.21098-1-e@80x24.org>
 Cc: Eric Wong <e@80x24.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 31 01:22:05 2016
+X-From: git-owner@vger.kernel.org Tue May 31 01:22:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7WVX-0005Hg-0R
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 01:22:03 +0200
+	id 1b7WVW-0005Hg-CZ
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 01:22:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162002AbcE3XV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 19:21:58 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:34848 "EHLO dcvr.yhbt.net"
+	id S1161986AbcE3XV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 19:21:56 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:34842 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161857AbcE3XV6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 19:21:58 -0400
+	id S1161857AbcE3XVz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 19:21:55 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E7F31FE34;
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C8ED1FE33;
 	Mon, 30 May 2016 23:21:48 +0000 (UTC)
 In-Reply-To: <20160530232142.21098-1-e@80x24.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295942>
 
-Combined with "git format-patch --pretty=mboxrd", this should
-allow us to round-trip commit messages with embedded mbox
-"From " lines without corruption.
+This will allow us to parse the output of --pretty=mboxrd
+and the output of other mboxrd generators.
 
 Signed-off-by: Eric Wong <e@80x24.org>
 ---
- Documentation/git-am.txt |  3 ++-
- builtin/am.c             | 14 +++++++++++---
- t/t4150-am.sh            | 20 ++++++++++++++++++++
- 3 files changed, 33 insertions(+), 4 deletions(-)
+ Documentation/git-mailsplit.txt |  7 ++++++-
+ builtin/mailsplit.c             | 23 +++++++++++++++++++++++
+ t/t5100-mailinfo.sh             | 13 +++++++++++++
+ t/t5100/0001mboxrd              |  4 ++++
+ t/t5100/0002mboxrd              |  3 +++
+ t/t5100/sample.mboxrd           | 17 +++++++++++++++++
+ 6 files changed, 66 insertions(+), 1 deletion(-)
+ create mode 100644 t/t5100/0001mboxrd
+ create mode 100644 t/t5100/0002mboxrd
+ create mode 100644 t/t5100/sample.mboxrd
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 13cdd7f..6348c29 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -116,7 +116,8 @@ default.   You can use `--no-utf8` to override this.
- 	By default the command will try to detect the patch format
- 	automatically. This option allows the user to bypass the automatic
- 	detection and specify the patch format that the patch(es) should be
--	interpreted as. Valid formats are mbox, stgit, stgit-series and hg.
-+	interpreted as. Valid formats are mbox, mboxrd,
-+	stgit, stgit-series and hg.
+diff --git a/Documentation/git-mailsplit.txt b/Documentation/git-mailsplit.txt
+index 4d1b871..e3b2a88 100644
+--- a/Documentation/git-mailsplit.txt
++++ b/Documentation/git-mailsplit.txt
+@@ -8,7 +8,8 @@ git-mailsplit - Simple UNIX mbox splitter program
+ SYNOPSIS
+ --------
+ [verse]
+-'git mailsplit' [-b] [-f<nn>] [-d<prec>] [--keep-cr] -o<directory> [--] [(<mbox>|<Maildir>)...]
++'git mailsplit' [-b] [-f<nn>] [-d<prec>] [--keep-cr] [--mboxrd]
++		-o<directory> [--] [(<mbox>|<Maildir>)...]
  
- -i::
- --interactive::
-diff --git a/builtin/am.c b/builtin/am.c
-index 3dfe70b..d5da5fe 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -70,7 +70,8 @@ enum patch_format {
- 	PATCH_FORMAT_MBOX,
- 	PATCH_FORMAT_STGIT,
- 	PATCH_FORMAT_STGIT_SERIES,
--	PATCH_FORMAT_HG
-+	PATCH_FORMAT_HG,
-+	PATCH_FORMAT_MBOXRD
- };
+ DESCRIPTION
+ -----------
+@@ -47,6 +48,10 @@ OPTIONS
+ --keep-cr::
+ 	Do not remove `\r` from lines ending with `\r\n`.
  
- enum keep_type {
-@@ -712,7 +713,8 @@ done:
-  * Splits out individual email patches from `paths`, where each path is either
-  * a mbox file or a Maildir. Returns 0 on success, -1 on failure.
-  */
--static int split_mail_mbox(struct am_state *state, const char **paths, int keep_cr)
-+static int split_mail_mbox(struct am_state *state, const char **paths,
-+				int keep_cr, int mboxrd)
++--mboxrd::
++	Input is of the "mboxrd" format and "^>+From " line escaping is
++	reversed.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
+index 4859ede..fad871d 100644
+--- a/builtin/mailsplit.c
++++ b/builtin/mailsplit.c
+@@ -45,6 +45,7 @@ static int is_from_line(const char *line, int len)
+ 
+ static struct strbuf buf = STRBUF_INIT;
+ static int keep_cr;
++static regex_t *gtfrom;
+ 
+ /* Called with the first line (potentially partial)
+  * already in buf[] -- normally that should begin with
+@@ -77,6 +78,10 @@ static int split_one(FILE *mbox, const char *name, int allow_bare)
+ 			strbuf_addch(&buf, '\n');
+ 		}
+ 
++		if (gtfrom && buf.len > (sizeof(">From ") - 1) &&
++				!regexec(gtfrom, buf.buf, 0, 0, 0))
++			strbuf_remove(&buf, 0, 1);
++
+ 		if (fwrite(buf.buf, 1, buf.len, output) != buf.len)
+ 			die_errno("cannot write output");
+ 
+@@ -242,6 +247,22 @@ out:
+ 	return ret;
+ }
+ 
++static regex_t *gtfrom_prepare(void)
++{
++	static regex_t preg;
++	const char re[] = "^>+From ";
++	int err = regcomp(&preg, re, REG_NOSUB | REG_EXTENDED);
++
++	if (err) {
++		char errbuf[1024];
++		regerror(err, &preg, errbuf, sizeof(errbuf));
++		regfree(&preg);
++		die("Cannot prepare regexp `%s': %s", re, errbuf);
++	}
++
++	return &preg;
++}
++
+ int cmd_mailsplit(int argc, const char **argv, const char *prefix)
  {
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct strbuf last = STRBUF_INIT;
-@@ -724,6 +726,8 @@ static int split_mail_mbox(struct am_state *state, const char **paths, int keep_
- 	argv_array_push(&cp.args, "-b");
- 	if (keep_cr)
- 		argv_array_push(&cp.args, "--keep-cr");
-+	if (mboxrd)
-+		argv_array_push(&cp.args, "--mboxrd");
- 	argv_array_push(&cp.args, "--");
- 	argv_array_pushv(&cp.args, paths);
- 
-@@ -965,13 +969,15 @@ static int split_mail(struct am_state *state, enum patch_format patch_format,
- 
- 	switch (patch_format) {
- 	case PATCH_FORMAT_MBOX:
--		return split_mail_mbox(state, paths, keep_cr);
-+		return split_mail_mbox(state, paths, keep_cr, 0);
- 	case PATCH_FORMAT_STGIT:
- 		return split_mail_conv(stgit_patch_to_mail, state, paths, keep_cr);
- 	case PATCH_FORMAT_STGIT_SERIES:
- 		return split_mail_stgit_series(state, paths, keep_cr);
- 	case PATCH_FORMAT_HG:
- 		return split_mail_conv(hg_patch_to_mail, state, paths, keep_cr);
-+	case PATCH_FORMAT_MBOXRD:
-+		return split_mail_mbox(state, paths, keep_cr, 1);
- 	default:
- 		die("BUG: invalid patch_format");
- 	}
-@@ -2201,6 +2207,8 @@ static int parse_opt_patchformat(const struct option *opt, const char *arg, int
- 		*opt_value = PATCH_FORMAT_STGIT_SERIES;
- 	else if (!strcmp(arg, "hg"))
- 		*opt_value = PATCH_FORMAT_HG;
-+	else if (!strcmp(arg, "mboxrd"))
-+		*opt_value = PATCH_FORMAT_MBOXRD;
- 	else
- 		return error(_("Invalid value for --patch-format: %s"), arg);
- 	return 0;
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index b41bd17..74e093d 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -957,4 +957,24 @@ test_expect_success 'am -s unexpected trailer block' '
- 	test_cmp expect actual
+ 	int nr = 0, nr_prec = 4, num = 0;
+@@ -271,6 +292,8 @@ int cmd_mailsplit(int argc, const char **argv, const char *prefix)
+ 			keep_cr = 1;
+ 		} else if ( arg[1] == 'o' && arg[2] ) {
+ 			dir = arg+2;
++		} else if (!strcmp(arg, "--mboxrd")) {
++			gtfrom = gtfrom_prepare();
+ 		} else if ( arg[1] == '-' && !arg[2] ) {
+ 			argp++;	/* -- marks end of options */
+ 			break;
+diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
+index 85b3df5..62b442c 100755
+--- a/t/t5100-mailinfo.sh
++++ b/t/t5100-mailinfo.sh
+@@ -111,4 +111,17 @@ test_expect_success 'mailinfo on message with quoted >From' '
+ 	test_cmp "$TEST_DIRECTORY"/t5100/quoted-from.expect quoted-from/msg
  '
  
-+test_expect_success 'am --patch-format=mboxrd handles mboxrd' '
-+	rm -fr .git/rebase-apply &&
-+	git checkout -f first &&
-+	echo mboxrd >>file &&
-+	git add file &&
-+	cat >msg <<-INPUT_END &&
-+	mboxrd should escape the body
-+
-+	From could trip up a loose mbox parser
-+	>From extra escape for reversibility
-+	INPUT_END
-+	git commit -F msg &&
-+	git format-patch --pretty=mboxrd --stdout -1 >mboxrd1 &&
-+	grep "^>From could trip up a loose mbox parser" mboxrd1 &&
-+	git checkout -f first &&
-+	git am --patch-format=mboxrd mboxrd1 &&
-+	git cat-file commit HEAD | tail -n4 >out &&
-+	test_cmp msg out
++test_expect_success 'mailinfo unescapes with --mboxrd' '
++	mkdir mboxrd &&
++	git mailsplit -omboxrd --mboxrd \
++		"$TEST_DIRECTORY"/t5100/sample.mboxrd >last &&
++	test x"$(cat last)" = x2 &&
++	for i in 0001 0002
++	do
++		git mailinfo mboxrd/msg mboxrd/patch \
++		  <mboxrd/$i >mboxrd/out &&
++		test_cmp "$TEST_DIRECTORY"/t5100/${i}mboxrd mboxrd/msg
++	done
 +'
 +
  test_done
+diff --git a/t/t5100/0001mboxrd b/t/t5100/0001mboxrd
+new file mode 100644
+index 0000000..494ec55
+--- /dev/null
++++ b/t/t5100/0001mboxrd
+@@ -0,0 +1,4 @@
++From the beginning, mbox should have been mboxrd
++>From escaped
++From not mangled but this line should have been escaped
++
+diff --git a/t/t5100/0002mboxrd b/t/t5100/0002mboxrd
+new file mode 100644
+index 0000000..3c30b0b
+--- /dev/null
++++ b/t/t5100/0002mboxrd
+@@ -0,0 +1,3 @@
++ >From unchanged
++ From also unchanged
++
+diff --git a/t/t5100/sample.mboxrd b/t/t5100/sample.mboxrd
+new file mode 100644
+index 0000000..75de6dd
+--- /dev/null
++++ b/t/t5100/sample.mboxrd
+@@ -0,0 +1,17 @@
++From mboxrd Mon Sep 17 00:00:00 2001
++From: mboxrd writer <mboxrd@example.com>
++Date: Fri, 9 Jun 2006 00:44:16 -0700
++Subject: [PATCH] a commit with escaped From lines
++
++>From the beginning, mbox should have been mboxrd
++>>From escaped
++From not mangled but this line should have been escaped
++
++From mboxrd Mon Sep 17 00:00:00 2001
++From: mboxrd writer <mboxrd@example.com>
++Date: Fri, 9 Jun 2006 00:44:16 -0700
++Subject: [PATCH 2/2] another with fake From lines
++
++ >From unchanged
++ From also unchanged
++
