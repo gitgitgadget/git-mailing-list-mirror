@@ -1,126 +1,224 @@
-From: Eric Wong <e@80x24.org>
-Subject: Re: [PATCH 1/3] pretty: support "mboxrd" output format
-Date: Tue, 31 May 2016 07:45:06 +0000
-Message-ID: <20160531074506.GA8911@dcvr.yhbt.net>
-References: <20160530232142.21098-1-e@80x24.org>
- <20160530232142.21098-2-e@80x24.org>
- <CAPig+cQrSJe03_RtSyf5KO2vE3Rri7t70-he8SXA9Y4oBYY_Ww@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 09/13] refs: introduce an iterator interface
+Date: Tue, 31 May 2016 09:59:04 +0200
+Message-ID: <574D4448.5020004@alum.mit.edu>
+References: <cover.1464537050.git.mhagger@alum.mit.edu>
+ <89634d216544d1102dafd5d18247bff2581d48a8.1464537050.git.mhagger@alum.mit.edu>
+ <CAPig+cSjzZGUjdgkz1y7brGNb1M2gHfW0UG-wgBc00beNDQmnA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Turner <dturner@twopensource.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Git List <git@vger.kernel.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue May 31 09:45:13 2016
+X-From: git-owner@vger.kernel.org Tue May 31 09:59:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7eMS-00050J-Ua
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 09:45:13 +0200
+	id 1b7ea2-00045Z-Am
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 09:59:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755481AbcEaHpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 03:45:08 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:38760 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755416AbcEaHpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2016 03:45:08 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17BAF1F71A;
-	Tue, 31 May 2016 07:45:07 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQrSJe03_RtSyf5KO2vE3Rri7t70-he8SXA9Y4oBYY_Ww@mail.gmail.com>
+	id S1755463AbcEaH7K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 May 2016 03:59:10 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:51166 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750852AbcEaH7J (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 May 2016 03:59:09 -0400
+X-AuditID: 12074413-487ff700000008c7-96-574d444b377c
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 4B.76.02247.B444D475; Tue, 31 May 2016 03:59:08 -0400 (EDT)
+Received: from [192.168.69.130] (p508EABD0.dip0.t-ipconnect.de [80.142.171.208])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u4V7x4Hp002209
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 31 May 2016 03:59:05 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.8.0
+In-Reply-To: <CAPig+cSjzZGUjdgkz1y7brGNb1M2gHfW0UG-wgBc00beNDQmnA@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMKsWRmVeSWpSXmKPExsUixO6iqOvj4htuMP88q8X8TScYLbqudDNZ
+	NPReYbbonvKW0eJHSw+zxZk3jYwObB47Z91l93jWu4fR4+IlZY/FD7w8Fjy/z+7xeZNcAFsU
+	t01SYklZcGZ6nr5dAnfGl6YJLAX/dSuefJjG3sD4QbmLkZNDQsBEYturm8xdjFwcQgJbGSUW
+	rT7NAuFcYJJYsP87E0iVsICDxN3PTSwgtoiAtsSHDZsYQWwhgfOMEmffioI0MAu8ZpR4c7WZ
+	HSTBJqArsainGayZF6hh4bTHQA0cHCwCqhInvvuChEUFQiTOr9vKClEiKHFy5hMWkBJOgUCJ
+	R/vtQcLMAuoSf+ZdYoaw5SWat85mnsDIPwtJxywkZbOQlC1gZF7FKJeYU5qrm5uYmVOcmqxb
+	nJyYl5dapGuul5tZopeaUrqJERLcwjsYd52UO8QowMGoxMPL0OkTLsSaWFZcmXuIUZKDSUmU
+	1+o3UIgvKT+lMiOxOCO+qDQntfgQowQHs5IIL4eDb7gQb0piZVVqUT5MSpqDRUmcV22Jup+Q
+	QHpiSWp2ampBahFMVoaDQ0mCN8QZqFGwKDU9tSItM6cEIc3EwQkynEtKpDg1LyW1KLG0JCMe
+	FJHxxcCYBEnxAO2VB2nnLS5IzAWKQrSeYjTm2LLgxlomjiP7761lEmLJy89LlRLnZXcCKhUA
+	Kc0ozYNbBEtrrxjFgf4W5p0IMpAHmBLh5r0CWsUEtCo+wwdkVUkiQkqqgXHBpVNXj0yQi3m2
+	Z85D19C++sD7kq8Fd3VfWvTjv6pS+QPxt5/Wat6eytYlrmN7gV0s4twnv8t7lFou 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295963>
 
-Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, May 30, 2016 at 7:21 PM, Eric Wong <e@80x24.org> wrote:
-> > diff --git a/pretty.c b/pretty.c
-> > @@ -1697,12 +1699,34 @@ static void pp_handle_indent(struct pretty_print_context *pp,
-> > +static regex_t *mboxrd_prepare(void)
-> > +{
-> > +       static regex_t preg;
-> > +       const char re[] = "^>*From ";
-> > +       int err = regcomp(&preg, re, REG_NOSUB | REG_EXTENDED);
-> > +[...]
-> > +       return &preg;
-> > +}
-> > +
-> >  void pp_remainder(struct pretty_print_context *pp,
-> >                   const char **msg_p,
-> >                   struct strbuf *sb,
-> >                   int indent)
-> >  {
-> > +       static regex_t *mboxrd_from;
-> > +
-> > +       if (pp->fmt == CMIT_FMT_MBOXRD && !mboxrd_from)
-> > +               mboxrd_from = mboxrd_prepare();
-> > +
-> > @@ -1725,8 +1749,13 @@ void pp_remainder(struct pretty_print_context *pp,
-> >                 else if (pp->expand_tabs_in_log)
-> >                         strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
-> >                                              line, linelen);
-> > -               else
-> > +               else {
-> > +                       if (pp->fmt == CMIT_FMT_MBOXRD &&
-> > +                                       !regexec(mboxrd_from, line, 0, 0, 0))
-> > +                               strbuf_addch(sb, '>');
-> 
-> At first glance, this seems dangerous since it's handing 'line' to
-> regexec() without paying attention to 'linelen'. For an arbitrary
-> regex, this could result in erroneous matches on subsequent "lines",
-> however, since this expression is anchored with '^', it's not a
-> problem. But, it is a bit subtle.
+On 05/31/2016 07:29 AM, Eric Sunshine wrote:
+> On Mon, May 30, 2016 at 3:55 AM, Michael Haggerty <mhagger@alum.mit.e=
+du> wrote:
+>> [...]
+> [...]
+> Either:
+>=20
+>     s/false/something other than ITER_OK/
+>=20
+> or:
+>=20
+>     s/false/ITER_DONE or ITER_ERROR/
 
-Maybe having more context of the pp_remainder function and
-seeing the get_one_line call would've helped in the diff;
-I didn't think of this issue once I figured out where to
-place the change.
+Thanks.
 
-On the other hand, not being too familiar with git C APIs, I was
-more worried strbuf was not NUL-terminated for regexec, but it
-seems to be.
+>> +int ref_iterator_advance(struct ref_iterator *ref_iterator);
+>> +
+>> +/*
+>> + * An iterator over nothing (its first ref_iterator_advance() call
+>> + * returns 0).
+>> + */
+>=20
+> s/0/ITER_DONE/
 
-> I wonder if hand-coding, rather than using a regex, could be an improvement:
-> 
->     static int is_mboxrd_from(const char *s, size_t n)
->     {
->         size_t f = strlen("From ");
->         const char *t = s + n;
-> 
->         while (s < t && *s == '>')
->             s++;
->         return t - s >= f && !memcmp(s, "From ", f);
->     }
-> 
-> or something.
+Thanks. I guess you can guess what an earlier draft of this interface
+looked like :-)
 
-Yikes.  I mostly work in high-level languages and do my best to
-avoid string parsing in C; so that scares me.  A lot.
+>> +struct ref_iterator *empty_ref_iterator_begin(void);
+>> +
+>> +/*
+>> + * Return true iff ref_iterator is an empty_ref_iterator.
+>> + */
+>> +int is_empty_ref_iterator(struct ref_iterator *ref_iterator);
+>=20
+> I can see that you used this function as an optimization or
+> convenience in overlay_ref_iterator_begin(), but do you expect it to
+> be generally useful otherwise? Is it worth publishing? Do you have
+> other use-cases in mind?
 
-I admit a regex isn't necessary, but I'm wondering if the above
-could be made less frightening to someone like me.
+It is only "published" within the refs module, in refs/refs-internal.h.
+This header file is not meant to be used by code outside of the refs mo=
+dule.
 
-Or maybe I'm just easily frightened :x
+My thinking was that it might be useful to other reference backends. Th=
+e
+function is pretty safe for anybody to call, though I admit that it is
+not very general.
 
-Maybe extra test cases + valgrind can quell my fears :)
+I don't have a strong feeling either way. If nobody else chimes in, I'l=
+l
+remove it from the header file as you suggested. We can always add it
+back if somebody needs it.
 
-> > diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> > @@ -1565,4 +1565,31 @@ test_expect_success 'format-patch --base overrides format.useAutoBase' '
-> > +test_expect_success 'format-patch --pretty=mboxrd' '
-> > +       cat >msg <<-INPUT_END &&
-> 
-> Maybe use <<-\INPUT_END to indicate that no variable interpolation is
-> expected. Ditto below.
+> Also, can you explain why the merge iterator doesn't also perform the
+> optimization/convenience of checking if one iterator is an empty
+> iterator?
 
-Noted, though I may add variable interpolation to test a line
-with trailing whitespace (just "From ") to ensure we don't
-overrun a buffer.
+That's because the merge iterator doesn't know what its select function
+will do. For example, you could imagine an "intersect" select function
+that only lets through references that were in *both* sub-iterators. In
+that case, your suggested "optimization" would be incorrect.
 
-> Hmm, -A is not POSIX and is otherwise not used in Git tests. Perhaps
-> you could use 'git grep --no-index -A' instead or something?
+Incidentally, that's also why I decided to leave the select function in
+charge even after one or both of the sub-iterators is exhausted=E2=80=94=
+because
+it lets merge_ref_iterator implement more diverse behavior.
 
-Noted and will fix for v2.  Will wait a day or two for
-further comments on this series.
+>> +/*
+>> + * Iterate over the intries from iter0 and iter1, with the values
+>=20
+> s/intries/entries/
+
+Thanks.
+
+>> + * interleaved as directed by the select function. The iterator tak=
+es
+>> + * ownership of iter0 and iter1 and frees them when the iteration i=
+s
+>> + * over.
+>> + */
+>> +struct ref_iterator *merge_ref_iterator_begin(
+>> +               struct ref_iterator *iter0, struct ref_iterator *ite=
+r1,
+>> +               ref_iterator_select_fn *select, void *cb_data);
+>> +
+>> +/*
+>> + * An iterator consisting of the union of the entries from iter0 an=
+d
+>> + * iter1. If there are entries common to the two sub-iterators, use
+>> + * the one from iter1. Each iterator must iterate over its entries =
+in
+>> + * strcmp() order by refname for this to work.
+>> + *
+>> + * The new iterator takes ownership of its arguments and frees them
+>> + * when the iteration is over. As a convenience to callers, if iter=
+0
+>> + * or iter1 is_empty_ref_iterator(), then abort that one immediatel=
+y
+>> + * and return the other iterator directly, without wrapping it.
+>> + */
+>> +struct ref_iterator *overlay_ref_iterator_begin(struct ref_iterator=
+ *iter0,
+>> +                                               struct ref_iterator =
+*iter1);
+>=20
+> When reading about the overlay iterator (both code and documentation)=
+,
+> my expectation was that iter0 would shadow iter1, not the other way
+> around as implemented here. Of course, that's entirely subjective, bu=
+t
+> the generic names don't provide any useful clues as to which shadows
+> which. Perhaps giving them more meaningful names would help.
+
+That's a good idea. I also found myself having to refer back to the
+documentation to remind myself which was which.
+
+How about I rename them "back" and "front"? I will also reverse the
+order of the arguments.
+
+(But I will leave the names "iter0" and "iter1" in merge_ref_iterator,
+and also the constants like ITER_SELECT_0, because these don't
+necessarily have the interpretation of "back" and "front".)
+
+>> +/*
+>> + * Wrap iter0, only letting through the references whose names star=
+t
+>> + * with prefix. If trim is set, set iter->refname to the name of th=
+e
+>> + * reference with that many characters trimmed off the front;
+>> + * otherwise set it to the full refname. The new iterator takes ove=
+r
+>> + * ownership of iter0 and frees it when iteration is over. It makes
+>> + * its own copy of prefix.
+>> + *
+>> + * As an convenience to callers, if prefix is the empty string and
+>> + * trim is zero, this function returns iter0 directly, without
+>> + * wrapping it.
+>> + */
+>> +struct ref_iterator *prefix_ref_iterator_begin(struct ref_iterator =
+*iter0,
+>> +                                              const char *prefix,
+>> +                                              int trim);
+>=20
+> Minor: Similarly, when reading the code and documentation, I wondered
+> why this was named 'iter0' when no 'iter1' was in sight. Perhaps name
+> it simply 'iter'.
+
+I found that it got a little bit confusing, because the constructor and
+method implementations all use `iter` as a local variable. In particula=
+r
+in the constructor there would want to be an argument "iter" and also
+the local variable "iter" for the iterator being constructed, so a new
+name would otherwise have to be invented for one or the other. Between
+all the "iter" and "iter" and "iter->iter", I found that naming the
+sub-iterator "iter0" made things a little bit less bewildering.
+
+If you don't like that, we could name the embedded iterators something
+like "subiter", "subiter0", and "subiter1". But the current convention
+is a bit more succinct so I slightly prefer it.
+
+Thanks for all your comments!
+
+Michael
