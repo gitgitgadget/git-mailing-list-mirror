@@ -1,95 +1,94 @@
-From: Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>
-Subject: [PATCH] Documentation: bold literals in man
-Date: Tue, 31 May 2016 18:20:33 +0200
-Message-ID: <20160531162033.7137-1-erwan.mathoniere@grenoble-inp.org>
-References: <xmqqbn3sydvk.fsf@gitster.mtv.corp.google.com>
-Cc: jordan.de-gea@grenoble-inp.org, gitster@pobox.com, peff@peff.net,
-	jrnieder@gmail.com, stefan@sevenbyte.org, rybak.a.v@gmail.com,
-	Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>,
-	Samuel GROOT <samuel.groot@grenoble-inp.org>,
-	Tom RUSSELLO <tom.russello@grenoble-inp.org>,
-	Matthieu MOY <matthieu.moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 31 18:21:03 2016
+From: demerphq <demerphq@gmail.com>
+Subject: Re: git add without whitespace
+Date: Tue, 31 May 2016 18:27:21 +0200
+Message-ID: <CANgJU+WZHes1-d2GXT9p+Up4e6_aA-Q5r1A8EEmCEOXjsOyuXw@mail.gmail.com>
+References: <CAHd499Agn=vLBxDpHi2dy1HMy-_58PZGs7VNtFJnBfP5zXatTA@mail.gmail.com>
+	<xmqqlh2r8ixu.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 31 18:27:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7mPe-00052d-ER
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 18:21:02 +0200
+	id 1b7mVr-0001JY-Ja
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 18:27:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751484AbcEaQU6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 12:20:58 -0400
-Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:51256 "EHLO
-	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751322AbcEaQU5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2016 12:20:57 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 5D1472415;
-	Tue, 31 May 2016 18:20:54 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 429f42OMPbpu; Tue, 31 May 2016 18:20:54 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 4BBF1222F;
-	Tue, 31 May 2016 18:20:54 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 457D92077;
-	Tue, 31 May 2016 18:20:54 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dOYbjjAPpH0A; Tue, 31 May 2016 18:20:54 +0200 (CEST)
-Received: from machin-portable.grenet.fr (eduroam-033003.grenet.fr [130.190.33.3])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 2D5E82064;
-	Tue, 31 May 2016 18:20:54 +0200 (CEST)
-X-Mailer: git-send-email 2.8.0.GIT
-In-Reply-To: <xmqqbn3sydvk.fsf@gitster.mtv.corp.google.com>
+	id S1754980AbcEaQ1X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2016 12:27:23 -0400
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:32877 "EHLO
+	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754959AbcEaQ1W (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2016 12:27:22 -0400
+Received: by mail-oi0-f53.google.com with SMTP id k23so305266367oih.0
+        for <git@vger.kernel.org>; Tue, 31 May 2016 09:27:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=bQGd9EU2ZhGN6Vfiu595BVmKwrasrK+nQngpqpUvzfk=;
+        b=iJj5Gb3mp+5L7ubkTpC+w3qmCwzHMiuqflJSrjwIEpLCPMEXSUWIWXR/vS21GR5yxr
+         kp0CR663aEMLuCDDW7PoJTvJYVgobkzfsFu0cIyOcquBkExpqkJY8RrHB5m/6PI63k6d
+         UtLhPYSg0mZ9ehsUGGWXTGbW2pvGc8fUaOYmrOchUfoL0Xgj8/YGv6Zvqk2YVpCDXz1R
+         XyEspvmE/neH+py3js1SdmrPXLhLNAFOJ+m2wNhT9DxW220m1KVOj5tMUTmy6PD1Jdtl
+         768AjC/cuSTkxhPrlpzNxeKnSCKMuPivVy146/08ZBB8uDYtJKD0+S4HP4tUMM1/m3XV
+         SVoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=bQGd9EU2ZhGN6Vfiu595BVmKwrasrK+nQngpqpUvzfk=;
+        b=EJB0kp+FCrUmR10pQRdA2R8YcoJ6t+9tVQfOpNMjoZoe7pxbW/OTUZmULuhWsWsn7R
+         DdOZVLO9BJlkOijAPEc8MfJ3Dm1GnXMbaq9s2A1q0fYwmRWe69vyGiAbZ/fv3tWskvsW
+         /oiruAZtKSFCa/uQJKQwipFQwMV5jUbQpv5BRy3F4bSKs2eIxpdz/PDdv53BeBxnwWSn
+         KwvGCBQJvsaFJrQtn2jBx90+p6uc6pVXN9gF05IwK2oulndDloa3GO/+0MloP9stFrno
+         FlfyFtKZqCJ3flWiefwLAYaFmXlMnQ/sfbNqcP8CaRLwXhd7meT9KrHpg1C6EllIJs+0
+         wU9Q==
+X-Gm-Message-State: ALyK8tJiILCQ3z2h5Mj7SonOFckR48t+1L1gcfmG5fU/JdC1S/JbNF1IiIPj+ULYa1hsTT/QRoHLKeVs+6XPgQ==
+X-Received: by 10.157.11.28 with SMTP id a28mr19396747ota.128.1464712041635;
+ Tue, 31 May 2016 09:27:21 -0700 (PDT)
+Received: by 10.202.75.19 with HTTP; Tue, 31 May 2016 09:27:21 -0700 (PDT)
+In-Reply-To: <xmqqlh2r8ixu.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295995>
 
-Backticks are emphasized through monospaced styling in the HTML
-version of Git documentation. But were left unstyled in the man version.
+On 30 May 2016 at 21:06, Junio C Hamano <gitster@pobox.com> wrote:
+> Robert Dailey <rcdailey.lists@gmail.com> writes:
+>
+>> $ git diff -U0 -w --no-color | git apply --cached --ignore-whitespace
+>> --unidiff-zero
+>>
+>> This command explicitly leaves out context because it can sometimes
+>> cause the patch to fail to apply, I think due to whitespace being in
+>> it, but I'm not completely sure myself.
+>
+> I have had this in my ~/.gitconfig for a long time.
+>
+> [alias]
+>         wsadd = "!sh -c 'git diff -- \"$@\" | git apply --cached --whitespace=fix;\
+>                 git co -- ${1-.} \"$@\"' -"
+>
+> That is, "take what's different from the _index_ and the working
+> tree, apply that difference while correcting whitespace errors to
+> the index, and check the result out to the working tree".  This
+> would _not_ touch existing whitespace-damaged lines that you are not
+> touching, and honours the customized definition of what is
+> considered whitespace breakage for each paths (which you set up with
+> the attributes system).
 
-To make the man version reading more comfortable, `MAN_BOLD_LITERAL`
-was added by:
-5121a6d (Documentation: option to render literal text as bold for
-manpages, 2009-03-27)
-It allowed the user to build the documentation manpages with literals
-in bold style.
 
-For precaution it was not set by default.
-Since 79c461d (docs: default to more modern toolset, 2010-11-19),
-it is assumed ASCIIDOC 8 and at least docbook-xsl 1.73 are used,
-so no compatibility issue may occur.
+That is very very cool. I have a perl script that does the same thing
+from git-blame output. This is MUCH nicer.
 
-Remove `MAN_BOLD_LITERAL`. Set by default literals as bold.
-Implement `NO_MAN_BOLD_LITERAL`, a new Makefile option, disabling
-this feature when defined.
+cheers,
+Yves
 
-Signed-off-by: Erwan MATHONIERE <erwan.mathoniere@grenoble-inp.org>
-Signed-off-by: Samuel GROOT <samuel.groot@grenoble-inp.org>
-Signed-off-by: Tom RUSSELLO <tom.russello@grenoble-inp.org>
-Signed-off-by: Matthieu MOY <matthieu.moy@grenoble-inp.fr>
----
- Documentation/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index f6e288b..35c1385 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -146,7 +146,7 @@ else
- 	ASCIIDOC_EXTRA += -a git-asciidoc-no-roff
- 	endif
- endif
--ifdef MAN_BOLD_LITERAL
-+ifndef NO_MAN_BOLD_LITERAL
- XMLTO_EXTRA += -m manpage-bold-literal.xsl
- endif
- ifdef DOCBOOK_SUPPRESS_SP
 -- 
-2.8.2.662.gc18eb58
+perl -Mre=debug -e "/just|another|perl|hacker/"
