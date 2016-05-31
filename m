@@ -1,119 +1,170 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 2/2] strbuf: allow to use preallocated memory
-Date: Tue, 31 May 2016 05:05:25 +0200
-Message-ID: <574CFF75.3090805@alum.mit.edu>
-References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr>
- <20160530103642.7213-3-william.duclot@ensimag.grenoble-inp.fr>
- <alpine.DEB.2.20.1605301326530.4449@virtualbox>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/3] pretty: support "mboxrd" output format
+Date: Mon, 30 May 2016 23:40:48 -0400
+Message-ID: <CAPig+cQrSJe03_RtSyf5KO2vE3Rri7t70-he8SXA9Y4oBYY_Ww@mail.gmail.com>
+References: <20160530232142.21098-1-e@80x24.org>
+	<20160530232142.21098-2-e@80x24.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, simon.rabourg@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr,
-	antoine.queru@ensimag.grenoble-inp.fr, matthieu.moy@grenoble-inp.fr
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue May 31 05:05:39 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Eric Wong <e@80x24.org>
+X-From: git-owner@vger.kernel.org Tue May 31 05:45:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7Zzr-00033C-Ep
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 05:05:35 +0200
+	id 1b7acf-00055I-Pi
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 05:45:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162723AbcEaDFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 23:05:31 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:58099 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1161631AbcEaDFa (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 May 2016 23:05:30 -0400
-X-AuditID: 1207440f-8bbff700000008e4-b7-574cff78e6aa
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 4E.A7.02276.87FFC475; Mon, 30 May 2016 23:05:28 -0400 (EDT)
-Received: from [192.168.69.130] (p508EABD0.dip0.t-ipconnect.de [80.142.171.208])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u4V35Pm9021461
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 30 May 2016 23:05:27 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.8.0
-In-Reply-To: <alpine.DEB.2.20.1605301326530.4449@virtualbox>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqFvx3yfcYOkJXYvJG+6xWtxtyrDo
-	utLNZNG/vIvN4tLn9awWV7feZLTYPfkSowO7x9XmAI8PH+M8Jn45zurxeZNcAEsUt01SYklZ
-	cGZ6nr5dAnfGvM2pBctEKv5N0GtgXC3QxcjJISFgIvGto4m5i5GLQ0hgK6PEkYNvmCCcC0wS
-	F/4cZQKpEhZwlDh36zAbiC0iUCZx+uhssLiQwF5GibYLxiANzAL7GCUa7lwBK2IT0JVY1NMM
-	VsQroC3xZckMRhCbRUBVYuW9X2A1ogIhEufXbWWFqBGUODnzCQuIzSlgI3H97gawemYBPYkd
-	13+xQtjyEtvfzmGewMg/C0nLLCRls5CULWBkXsUol5hTmqubm5iZU5yarFucnJiXl1qka6KX
-	m1mil5pSuokREtD8Oxi71sscYhTgYFTi4Y3o9gkXYk0sK67MPcQoycGkJMpr9RsoxJeUn1KZ
-	kVicEV9UmpNafIhRgoNZSYR39T+gHG9KYmVValE+TEqag0VJnFd9ibqfkEB6YklqdmpqQWoR
-	TFaGg0NJgvcmSKNgUWp6akVaZk4JQpqJgxNkOJeUSHFqXkpqUWJpSUY8KCLji4ExCZLiAdr7
-	EWxvcUFiLlAUovUUoy7Hkf331jIJseTl56VKifOGgRQJgBRllObBrYClr1eM4kAfC/OWglTx
-	AFMf3KRXQEuYgJbEZ4AtKUlESEk1MFZX32fMj7rzpML8uMd95zKbNvOUm7k7VG/ocf16Ma+2
-	R+WW4tlkvQN8bjML9jvfiXi5pM88/rOPpqKhnPY9X4nD7Y2p0XkRijMfl/9qDWM1 
+	id S932632AbcEaDku (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 23:40:50 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:33823 "EHLO
+	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932469AbcEaDku (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 23:40:50 -0400
+Received: by mail-it0-f66.google.com with SMTP id k76so9216903ita.1
+        for <git@vger.kernel.org>; Mon, 30 May 2016 20:40:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=NxJYJk7WWVSpjJE1aFHW4ZzNtRWXh4C04k0sRd3jYec=;
+        b=enOg3ipv8eoNhm9BVxq2+98wTRL2h2Wrta8NCna1EM1WY3TAOS9KAk/Vmf6rkUzYB2
+         oB4ITgMpb8UX6ubC+6E/giNFe/fej48ChDNQmxzQDbBvpXf3lNuRUVuRQzPu28/aX+BS
+         gKryg8uSxVFuGy5T4WzYfWXZzSU5kcOb0+mLryYaMJ0jp8YwxP4EaUqr888jXEf0PJrO
+         pEBNH1oeXENgEGWqLgL07Et1ns/auYcywS4iQUbCqaK3Fgs0SewTETc1FFFbI2P0eXqb
+         t5lxNQ0065SjuWvx36bPvQHBV/hIUYM79l7TqGRxYFtnWLpqN/uuXcE6wjPGTpclvIL/
+         534A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=NxJYJk7WWVSpjJE1aFHW4ZzNtRWXh4C04k0sRd3jYec=;
+        b=gnrZExWSIWh0h1rn9bZaHYhXT9bagEzc/rDupZ5Yb9T8nol11mxPs/x1wSfRA85Wl1
+         oyJCcBYbX3TkvEZbmMpM1l3FLtEP7AaLCfwJXNOoXezusf6/lVNDvlkAnyhpfxT7HQoO
+         7KKTUx1Wl9sWYOJ//oO7uRwHGYrZ0zdR8vfH8Dyvxq33bNW7WxXwz5HkpwA9M04kSItA
+         KpV2zZODkjCqQhGmFK5mtTsAfTZG13n+9sPRR7GmOpnIyP+0k2l2n09S73a8MyU1VawK
+         BEzyQURDwte9KBCe/3aF0kcMoXY8LHhZWQD2gB8g8w9sEWLMLmsTEHKehfwyd+sMuMNP
+         ZXMg==
+X-Gm-Message-State: ALyK8tKoGN46aKiCaH/JSvcLfVfldMgMPb/3HNvrHLvY+gEBvEvUeQ3VwOEQEZRmB2ko+DjgYm1AlKLhy6cHkA==
+X-Received: by 10.36.112.81 with SMTP id f78mr11328418itc.32.1464666048826;
+ Mon, 30 May 2016 20:40:48 -0700 (PDT)
+Received: by 10.79.110.21 with HTTP; Mon, 30 May 2016 20:40:48 -0700 (PDT)
+In-Reply-To: <20160530232142.21098-2-e@80x24.org>
+X-Google-Sender-Auth: YmJ87Zdwd1_NiQ4w1GrQUEpY9-A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295947>
 
-On 05/30/2016 02:13 PM, Johannes Schindelin wrote:
+On Mon, May 30, 2016 at 7:21 PM, Eric Wong <e@80x24.org> wrote:
+> This output format prevents format-patch output from breaking
+> readers if somebody copy+pasted an mbox into a commit message.
+>
+> Unlike the traditional "mboxo" format, "mboxrd" is designed to
+> be fully-reversible.  "mboxrd" also gracefully degrades to
+> showing extra ">" in existing "mboxo" readers.
 > [...]
->> @@ -38,7 +67,11 @@ char *strbuf_detach(struct strbuf *sb, size_t *sz)
->>  {
->>  	char *res;
->>  	strbuf_grow(sb, 0);
->> -	res = sb->buf;
->> +	if (sb->flags & STRBUF_OWNS_MEMORY)
->> +		res = sb->buf;
->> +	else
->> +		res = xmemdupz(sb->buf, sb->alloc - 1);
-> 
-> This looks like a usage to be avoided: if we plan to detach the buffer,
-> anyway, there is no good reason to allocate it on the heap first. I would
-> at least issue a warning here.
+> Signed-off-by: Eric Wong <e@80x24.org>
+> ---
+> diff --git a/pretty.c b/pretty.c
+> @@ -1697,12 +1699,34 @@ static void pp_handle_indent(struct pretty_print_context *pp,
+> +static regex_t *mboxrd_prepare(void)
+> +{
+> +       static regex_t preg;
+> +       const char re[] = "^>*From ";
+> +       int err = regcomp(&preg, re, REG_NOSUB | REG_EXTENDED);
+> +[...]
+> +       return &preg;
+> +}
+> +
+>  void pp_remainder(struct pretty_print_context *pp,
+>                   const char **msg_p,
+>                   struct strbuf *sb,
+>                   int indent)
+>  {
+> +       static regex_t *mboxrd_from;
+> +
+> +       if (pp->fmt == CMIT_FMT_MBOXRD && !mboxrd_from)
+> +               mboxrd_from = mboxrd_prepare();
+> +
+> @@ -1725,8 +1749,13 @@ void pp_remainder(struct pretty_print_context *pp,
+>                 else if (pp->expand_tabs_in_log)
+>                         strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
+>                                              line, linelen);
+> -               else
+> +               else {
+> +                       if (pp->fmt == CMIT_FMT_MBOXRD &&
+> +                                       !regexec(mboxrd_from, line, 0, 0, 0))
+> +                               strbuf_addch(sb, '>');
 
-I think this last case should be changed to
+At first glance, this seems dangerous since it's handing 'line' to
+regexec() without paying attention to 'linelen'. For an arbitrary
+regex, this could result in erroneous matches on subsequent "lines",
+however, since this expression is anchored with '^', it's not a
+problem. But, it is a bit subtle.
 
-    res = xmemdupz(sb->buf, sb->len);
+I wonder if hand-coding, rather than using a regex, could be an improvement:
 
-Johannes, if this change is made then I think that there is a reasonable
-use case for calling `strbuf_detach()` on a strbuf that wraps a
-stack-allocated string, so I don't think that a warning is needed.
+    static int is_mboxrd_from(const char *s, size_t n)
+    {
+        size_t f = strlen("From ");
+        const char *t = s + n;
 
-I think this change makes sense. After all, once a caller detaches a
-string, it is probably not planning on growing/shrinking it anymore, so
-any more space than that would probably be wasted. In fact, since the
-caller has no way to ask how much extra space the detached string has
-allocated, it is almost guaranteed that the space would be wasted.
+        while (s < t && *s == '>')
+            s++;
+        return t - s >= f && !memcmp(s, "From ", f);
+    }
 
-Actually, that is not 100% certain. Theoretically, a caller might read
-`sb->alloc` *before* calling `strbuf_detach()`, and assume that the
-detached string has that allocated size. Or the caller might call
-`strbuf_grow()` then assume that the detached string has at least that
-much free space.
+    ...
+    if (is_mboxrd_from(line, linelen)
+        strbuf_addch(sb, '>');
 
-I sure hope that no callers actually do that. The docstring for
-`strbuf_detach()` doesn't promise that it will work, and there is a
-pretty stern warning [1] that should hopefully have dissuaded developers
-from such a usage. But how could it be checked for sure?
+or something.
 
-* Audit the callers of strbuf_detach(). But given that there are nearly
-200 callers, that would be a huge amount of work.
+> +
+>                         strbuf_add(sb, line, linelen);
+> +               }
+>                 strbuf_addch(sb, '\n');
+>         }
+>  }
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> @@ -1565,4 +1565,31 @@ test_expect_success 'format-patch --base overrides format.useAutoBase' '
+> +test_expect_success 'format-patch --pretty=mboxrd' '
+> +       cat >msg <<-INPUT_END &&
 
-* On a test branch, change the existing implementation of
-strbuf_detach() to return newly-allocated memory of size `sb->len + 1`
-and free `sb->buf`, then run the test suite under valgrind. This would
-flush out examples of this antipattern in the test suite.
+Maybe use <<-\INPUT_END to indicate that no variable interpolation is
+expected. Ditto below.
 
-It might seem like we don't have to worry about this, because existing
-callers only deal with strbufs that wrap heap-allocated strings. But
-such a caller might get a strbuf passed to it from a caller, and that
-caller might someday be modified to use stack-allocated strings. So I
-think that at least the valgrind test suggested above would be prudent.
+> +       mboxrd should escape the body
+> +
+> +       From could trip up a loose mbox parser
+> +       >From extra escape for reversibility
+> +       >>From extra escape for reversibility 2
+> +       from lower case not escaped
+> +       Fromm bad speling not escaped
+> +        From with leading space not escaped
+> +       INPUT_END
+> +
+> +       cat >expect <<-INPUT_END &&
+> +       >From could trip up a loose mbox parser
+> +       >>From extra escape for reversibility
+> +       >>>From extra escape for reversibility 2
+> +       from lower case not escaped
+> +       Fromm bad speling not escaped
+> +        From with leading space not escaped
+> +       INPUT_END
+> +
+> +       C=$(git commit-tree HEAD^^{tree} -p HEAD <msg) &&
+> +       git format-patch --pretty=mboxrd --stdout -1 $C~1..$C >patch &&
+> +       grep -A5 "^>From could trip up a loose mbox parser" patch >actual &&
 
-Michael
+Hmm, -A is not POSIX and is otherwise not used in Git tests. Perhaps
+you could use 'git grep --no-index -A' instead or something?
 
-[1]
-https://github.com/git/git/blob/f3913c2d03abc660140678a9e14dac399f847647/strbuf.h#L20-L23
+> +       test_cmp expect actual
+> +'
+> +
+>  test_done
