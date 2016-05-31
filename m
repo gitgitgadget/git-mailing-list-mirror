@@ -1,85 +1,74 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [BUG] git-submodule has bash-ism?
-Date: Tue, 31 May 2016 16:16:20 -0700
-Message-ID: <CAGZ79kYoZfwWfigUZJM9ryTSNv-WE-0owxF=iUSHsc_nQ9rWVA@mail.gmail.com>
-References: <xmqq1t4h3jxo.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t0005: ksh93 portability workaround
+Date: Tue, 31 May 2016 16:17:01 -0700
+Message-ID: <xmqqwpm924ya.fsf@gitster.mtv.corp.google.com>
+References: <xmqqinxt3kwq.fsf@gitster.mtv.corp.google.com>
+	<20160531230301.GB4585@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 01:16:30 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 01 01:17:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7ste-0005SL-W2
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 01:16:27 +0200
+	id 1b7suN-0005t4-Fi
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 01:17:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857AbcEaXQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 19:16:22 -0400
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:34136 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750730AbcEaXQW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2016 19:16:22 -0400
-Received: by mail-qg0-f50.google.com with SMTP id p34so30053321qgp.1
-        for <git@vger.kernel.org>; Tue, 31 May 2016 16:16:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=KJ0eUw6JQHpsF/IhJmazKWNdgaUrklYSukfdXlnXMSY=;
-        b=HUheBpjebkOJ0gLz6ULYlCZSgWive90rsPKIFt5hviYo3QPThUzqhBEQJDzHG/8grG
-         ef3gpdxaaXsKuHiOH6PcI90X/XU9Q4w+iANJk58tW/BPUXI47O+RRyejhjkNuVzNFGvf
-         D82GPu5q6BaEOhH5Breuno6k3bay2URvqsYvgWnwR9XoCtmqeDT7Ril3sJJq3h3zki4Q
-         r+iqgusIbwPTrSCvfL0iSp1foO54tQXt0ynTjCqfdVG8eiyL/GQn9Fdxg5qykE3ZzOUh
-         mp9c0LYFWDdxpCBHGjHXLvnIrpzW2lBNw01LKxxdiKlOf7dRMUy1n4FZHVyZ6mr1VoXm
-         yUBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=KJ0eUw6JQHpsF/IhJmazKWNdgaUrklYSukfdXlnXMSY=;
-        b=JMClhmw9X7cDMMTTwnTZhBURPDzJ0O9DrPE6MRz7mlarigLSGiY0gDM898AGGD6+kf
-         8m4IDawLsxxmyTDbsVJAti8rN5R3ghABSWqAMw5/wlDTKC5DoFNMfVtdpRJgacoB8ewP
-         2TllvrGjNvAF1h1Fbq9QFRb3LevBOTRjssyhetmsXjdOqy2jNGsHo9WsL3yx1MpnKbKx
-         AlLfF0O5WQ+/mDqkZmS6ayNwCibO8M1jb2UEprYQFEJv1rycIxhM/Wi/Q7IEp+SwV0Fx
-         pdHfBUw5XP9ug3VnOXdeD3quARGPecQ726fd3Y7A3Rk8Rnwst0hbJp4tKeQ8moFIIg0N
-         WDUg==
-X-Gm-Message-State: ALyK8tJg09vFWJKgM2GapIQfAIEfvope38/YyQ7RmAUzkXLyrwNGppFcSw0XJmcvaOh/LrmVEyvOc43+HrNf9b+B
-X-Received: by 10.140.23.180 with SMTP id 49mr33910511qgp.9.1464736581095;
- Tue, 31 May 2016 16:16:21 -0700 (PDT)
-Received: by 10.200.55.212 with HTTP; Tue, 31 May 2016 16:16:20 -0700 (PDT)
-In-Reply-To: <xmqq1t4h3jxo.fsf@gitster.mtv.corp.google.com>
+	id S1752788AbcEaXRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2016 19:17:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60064 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750730AbcEaXRG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2016 19:17:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 34EBE20354;
+	Tue, 31 May 2016 19:17:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CL7FSYPqa9FQGhkovMKhRFZjf9k=; b=e0VMBf
+	XTuNn5svtwAYdofLT/8tbycFvtbcNxoN5kFbk2aMYRHqvWEz9Qa880nGxN0yHXNv
+	CSlmVC3xG+7ihS0HHO2ZSa2BiPzvEkH823pa6oLXMfkA41h+2gzgn6kmpQNMGQaL
+	uGTerJHkTQ3lSc/DxaCbw9/ggrFf6fh0ALJ8s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DSWljrs4LcNs9WkKhDiN/Ue/7WCqHAYG
+	tFmhxHjChKlQFr9T6qbehKeQtcJbg3wq35/Pa43VpQRCkOMhOi1ntFkU/2d8XmPe
+	53IdqE6L+oRi0DS7yP0Ipnddu3bP1UWisrdc6mrEepQH0ygHsvT+RFxWn5B0MV2v
+	XKVEtDW+y9o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D4AE20353;
+	Tue, 31 May 2016 19:17:04 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A644620352;
+	Tue, 31 May 2016 19:17:03 -0400 (EDT)
+In-Reply-To: <20160531230301.GB4585@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 31 May 2016 19:03:01 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C8F366FC-2785-11E6-BAA6-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296036>
 
-On Tue, May 31, 2016 at 4:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> relative_path ()
-> {
->         local target curdir result
->         target=$1
->         curdir=${2-$wt_prefix}
+Jeff King <peff@peff.net> writes:
+
+> Hmm. We discussed these back in:
 >
-> I am hoping that Stefan's "gradually rewrite things in C" will make
-> it unnecessary to worry about this one.  "git submodule" would not
-> work correctly on posixly correct shells in the meantime.
-
-noted.
-
-Maybe as a smaller step we can expose the relative_path from the
-submodule--helper
-instead of rewriting all actual users first.
-
-Thanks for pointing out,
-Stefan
-
-
+>   http://thread.gmane.org/gmane.comp.version-control.git/268657
 >
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> but I thought we decided not to do anything about them (according to
+> that thread, I found a bunch of other ksh93 oddities, but maybe we've
+> since fixed them?).
+
+OK, I completely forgot about that topic.
+
+Sorry for the noise.  Let's drop it.
+
+Thanks for reminding me of that thread; I would have been stumped
+with the "cd ../.git/objects" thing and wasted a lot of time.
