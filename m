@@ -1,114 +1,93 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [RFC/PATCH] bisect--helper: `bisect_clean_state` shell function
- in C
-Date: Tue, 31 May 2016 12:10:58 +0530
-Message-ID: <CAFZEwPMKQ6JtaNvoexzGqWRphqEgXBXn-PSrkUaPLzs6phM4Ww@mail.gmail.com>
-References: <20160530182148.18801-1-pranit.bauva@gmail.com>
-	<574D122F.7080608@alum.mit.edu>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Git reset --hard with staged changes
+Date: Tue, 31 May 2016 08:41:34 +0200
+Message-ID: <CAP8UFD18mbT12+9P0vqNWAnNirCD0oRz1O-ajFmm5y1BNTdVFA@mail.gmail.com>
+References: <loom.20160523T023140-975@post.gmane.org>
+	<CAP8UFD0dQGmfhPuHjEGRZjEZHwUHR_XzAASwq+87Obf26yi+BQ@mail.gmail.com>
+	<xmqqeg8s8og8.fsf@gitster.mtv.corp.google.com>
+	<CAP8UFD0yB8XjUi0f2OTUrW9W1UPC_ekY3+8--CC5rk_5RciYAA@mail.gmail.com>
+	<4067AC3B-D369-4E86-9EB9-ED19FD362E2D@yotamgingold.com>
+	<xmqqvb1u7okk.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 31 08:41:06 2016
+Cc: Yotam Gingold <yotam@yotamgingold.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 31 08:41:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7dMO-0003O3-GY
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 08:41:04 +0200
+	id 1b7dMy-0003nz-NK
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 08:41:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751631AbcEaGlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 02:41:00 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:33304 "EHLO
-	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751288AbcEaGk7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2016 02:40:59 -0400
-Received: by mail-yw0-f196.google.com with SMTP id y6so17531724ywe.0
-        for <git@vger.kernel.org>; Mon, 30 May 2016 23:40:58 -0700 (PDT)
+	id S1752307AbcEaGlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2016 02:41:37 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:38137 "EHLO
+	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750956AbcEaGlg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2016 02:41:36 -0400
+Received: by mail-wm0-f42.google.com with SMTP id n129so93821519wmn.1
+        for <git@vger.kernel.org>; Mon, 30 May 2016 23:41:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=LUzs6yKKACFLh4haogmeSVnMx4C+23qt0B9J4eAH+wI=;
-        b=QjsnoeC/19Uo+jf6hwDPftMfBtO8vLvAkFaE11PQHtmwyD/5PC06YgTIeSR8Uv/JVO
-         yemn/zM7tBwhv3c0UVHb9OAXla0ZiQqBpsdY0RGrkrhIGteyLqTK6Zf7S4JrlO3NbdDp
-         5GGQe/fJjd+qSDdzM9qSvLMrplNSlsOBfwjYVgW2/rfzmXMuq8zusvCY5+H5uPsnmHYm
-         enxZ2MTwb3Gn1IV1iB5g9y9lDvx/zdsOOUC0M9xR9RzSw25nCVaRlXNlUL7n1jaUyF45
-         PlrQnJiI4SUwa5z4tv51ulbvgwVfgLV6uX5IjhcLNAiLdaYo0k5mjWDFt1fqB+VkLrw6
-         GFJQ==
+        bh=ZGWQcU1hSTp+SQz+yQKjCfQyNkWZEQR7UoFwBLjFWnI=;
+        b=Y0JDdQ3YfcLsgpm6kyI1DQ3E7AEe35R56rFiIxbteXvoWexT919CcsOd8qkx52QBuc
+         dwfJmDzwnB6y5p5qlTkGVeLq32GnzWcvkUDG4xbXCEOcRowz7SpYoce3UURmsqIQvj1g
+         p27Af9LhyPeeoE+UG/IMGNMPCcqVKiD6vTGxCz48L4bBaomZffM+gBTjDeNmXaaALVRf
+         l9iAGjQfnISHO5kxrIXnp+7OttvS0wG0ofN/16m4V/ZzfA5Um6u0jCjGG5hdVgVqtduq
+         Jgd7Ae7TPYpOqXOQa9dquMifjhk4nbQTs9ZawoWXGPRLzakio2C/pF9AYab3F29n+TFg
+         RQ4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=LUzs6yKKACFLh4haogmeSVnMx4C+23qt0B9J4eAH+wI=;
-        b=KeI3K6MrEjaaZzA27mS1d0yJrg+0h8AI03CGEH58Y8Ceb03h1CpoB3cynD5UTLWadM
-         XvwVg8vtbDvVVr3/IVk/MCxsUrvIYfRLiW4bAEh6SigmxrVA3tYFGvtw7XJSoPBaW9nk
-         u7z0MqYJYiuVQ9ZKXb5LoXXb21sGHep7MJNvLmlyNrtBIUkhHpeVxtsIEnbg3gKL7x8o
-         jLvzew/kWBgnokhB6rBY7AztPKLiyfAIpWDZaTTY2Stieo0PKNBs6DdH6FYZcCshwSuo
-         yF3U4jhr8Hu+rk7wsTJUGxBe7DEIzpDFEm37w30Ke5aN4L3vHD4jp3jd9JxOfOFS2ath
-         1vxg==
-X-Gm-Message-State: ALyK8tJZKA2BWcBnJSRviWFbyrjND1K9RJ1Zt4IYY7S8wuify9wxBkufZdSGQ4ZOsuyqAIv5soRwg2WVxn5Pyg==
-X-Received: by 10.129.90.135 with SMTP id o129mr20895999ywb.20.1464676858292;
- Mon, 30 May 2016 23:40:58 -0700 (PDT)
-Received: by 10.129.124.132 with HTTP; Mon, 30 May 2016 23:40:58 -0700 (PDT)
-In-Reply-To: <574D122F.7080608@alum.mit.edu>
+        bh=ZGWQcU1hSTp+SQz+yQKjCfQyNkWZEQR7UoFwBLjFWnI=;
+        b=ZNd+gvej2gvwTHoKM4jwhQxpxeTkZ4P9vuC6XY45G9S4aI2RzQ2oBw5+rT6wQ0nAyJ
+         B5zTd+oe59SxCbVA51EpCuU8GkSBZZanWw3SCddnbDz5PeIJL6A/Kw2U8ephmVjDonAs
+         90AEf5lFzkRF1CPD2iwz4CNEzFVCHwRMAfXyiOnDe76OgpW1wn7I9/UX+ryXUFDOTQsn
+         PB1+GyPZIYYHLjewLSPcu+zv3zbw5eVdWd9j6UDosuF3RQ7q+vIDahGUi1ko8ThEZQn3
+         HihuAXPe79jSHzVS7lFItJ8b3LnBCSC9AYULunH+ysJizehi8ECC1SDRVNwoBl+GQIDA
+         WP8Q==
+X-Gm-Message-State: ALyK8tI7AZ3oXtvNnf7TzSmT0ow6nPVd0X+aBoP1uMWDFTOul5m3tKs19EVKCMW59NYexyD0EGtj9uWY/uEElg==
+X-Received: by 10.28.98.215 with SMTP id w206mr13397801wmb.79.1464676894443;
+ Mon, 30 May 2016 23:41:34 -0700 (PDT)
+Received: by 10.194.148.146 with HTTP; Mon, 30 May 2016 23:41:34 -0700 (PDT)
+In-Reply-To: <xmqqvb1u7okk.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295959>
 
-Hey Michael,
-
-On Tue, May 31, 2016 at 9:55 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 05/30/2016 08:21 PM, Pranit Bauva wrote:
->> Reimplement `bisect_clean_state` shell function in C and add a
->> `bisect-clean-state` subcommand to `git bisect--helper` to call it from
->> git-bisect.sh .
->>
->> Using `bisect_clean_state` subcommand is a measure to port shell
->> function to C so as to use the existing test suite. As more functions
->> are ported, this subcommand will be retired and will be called by
->> bisect_reset() and bisect_start().
->>
->> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
->> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
->> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
->> ---
->> This patch contains a bug. I have tried to identify the bug and I suppose it
->> exists in do_for_each_entry_in_dir(). I have reproduced the debugging session
->> at this link[1]. I have seen that some patches in mailing list regarding
->> iterating over refs. Will those affect this? Or is this bug fixed in those
->> patches?
+On Tue, May 31, 2016 at 8:02 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> The problem is that it is not legal to modify references while iterating
-> over them. See [1]. Your remove_bisect_ref() callback function deletes
-> references, which modifies the reference cache that is being iterated over.
-
-Thanks for explaining this. I wasn't aware about this.
-
-> Instead I suggest that your remove_bisect_ref() add the references to a
-> string_list, then call delete_refs() *after* the iteration is over.
-> Alternatively, you can change remove_bisect_ref() to call
-> ref_transaction_delete() to add reference deletions to a
-> ref_transaction, then call ref_transaction_commit() after the iteration
-> is over. See the rm() function in builtin/remote.c [2] for an example.
-
-I have gone through the links and I think I will stick with the first
-one because I don't see how the latter one would be better.
-
-> [1]
-> https://github.com/git/git/blob/f3913c2d03abc660140678a9e14dac399f847647/refs.h#L176-L184
-> [2]
-> https://github.com/git/git/blob/f3913c2d03abc660140678a9e14dac399f847647/builtin/remote.c#L738
+> diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+> index 25432d9..c4cc035 100644
+> --- a/Documentation/git-reset.txt
+> +++ b/Documentation/git-reset.txt
+> @@ -65,8 +65,14 @@ If `-N` is specified, removed paths are marked as intent-to-add (see
+>  linkgit:git-add[1]).
 >
->> [...]
->
+>  --hard::
+> -       Resets the index and working tree. Any changes to tracked files in the
+> -       working tree since <commit> are discarded.
+> +       Reset the index and the working tree to be identical to the
+> +       tree of the given <commit> (defaults to HEAD) by discarding
+> +       the changes made to them relative to <commit>.  Paths
+> +       modified in the index and in the working tree are reset to
+> +       what is recorded in <commit>.  Paths removed in the working
+> +       tree and in the index are resurrected from <commit>.  Paths
+> +       added to the index and the working tree since <commit> are
+> +       removed.
 
-Regards,
-Pranit Bauva
+This is a great improvement.
+
+I am not sure that it will be enough to make people use `git stash`
+and `git reset --keep` more though. But maybe that can wait until the
+next time someone complain.
+
+Thanks,
+Christian.
