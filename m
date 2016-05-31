@@ -1,59 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] README.md: format CLI commands with code syntax
-Date: Tue, 31 May 2016 08:54:37 -0700
-Message-ID: <xmqqzir65iki.fsf@gitster.mtv.corp.google.com>
-References: <01020154ffa221f6-c45ab36e-cc26-46a8-b2fa-2c40e54959f1-000000@eu-west-1.amazonses.com>
-	<vpqbn3odqs9.fsf@anie.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/2] strbuf: allow to use preallocated memory
+Date: Tue, 31 May 2016 17:54:59 +0200
+Message-ID: <vpq4m9eql2k.fsf@anie.imag.fr>
+References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr>
+	<20160530103642.7213-3-william.duclot@ensimag.grenoble-inp.fr>
+	<xmqqbn3m7n25.fsf@gitster.mtv.corp.google.com>
+	<20160531154503.GA24895@Messiaen>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Benjamin Dopplinger <b.dopplinger@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue May 31 17:54:46 2016
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	simon.rabourg@ensimag.grenoble-inp.fr,
+	francois.beutin@ensimag.grenoble-inp.fr,
+	antoine.queru@ensimag.grenoble-inp.fr, mhagger@alum.mit.edu
+To: William <william.duclot@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue May 31 17:55:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7m0C-0003zt-W3
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 17:54:45 +0200
+	id 1b7m0y-0004Z1-99
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 17:55:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754959AbcEaPym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 11:54:42 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59649 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754925AbcEaPyk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2016 11:54:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A1A11E1CD;
-	Tue, 31 May 2016 11:54:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M2Tp9RNLZHb3g/nBmBeK78X/loI=; b=B3eEWt
-	M8A6lvFmifT2EQHqa0GU3WYBpx0jzAdPlliFRRinje01XFWDG53v4G9gH3EMK08T
-	/jDKdeyGFb3sr+FOxCRx7DOaN6xB6oJX3ZF7qcApEAY8JFYZjXRxW1S1lXJ5GgH0
-	eFNdBTX0aH1oyN/DyT+jMZL+uRnqmxAtmhJ2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=auEzbQQfvS53RUasW9sVhpnIKQEBnH+R
-	cRXmSfNVuYr2oIZbb/dQbwy9LFsW6+feQqRXVAS/WxENPkdzaF9NvKEx0SPTZ5/I
-	GyNyxpL4RSDgEpYgRJNTEQotHrlHQLy9WGjMQFT5eROVTycVtO5wzkDnYZVwD4b2
-	EzDDPcqrgvU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 920EC1E1CB;
-	Tue, 31 May 2016 11:54:39 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1EA671E1CA;
-	Tue, 31 May 2016 11:54:39 -0400 (EDT)
-In-Reply-To: <vpqbn3odqs9.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
-	30 May 2016 08:05:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FB29F1D8-2747-11E6-A8C5-89D312518317-77302942!pb-smtp1.pobox.com
+	id S1755159AbcEaPzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2016 11:55:12 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:51719 "EHLO mx1.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754364AbcEaPzK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2016 11:55:10 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u4VFsvXe007854
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 31 May 2016 17:54:57 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4VFsxwb001863;
+	Tue, 31 May 2016 17:54:59 +0200
+In-Reply-To: <20160531154503.GA24895@Messiaen> (William's message of "Tue, 31
+	May 2016 17:45:03 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Tue, 31 May 2016 17:54:58 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u4VFsvXe007854
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1465314900.86247@PStgVlbB7hjTVwHyvXa1eQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295989>
 
-Thanks, both..
+William <william.duclot@ensimag.grenoble-inp.fr> writes:
+
+> On Mon, May 30, 2016 at 11:34:42PM -0700, Junio C Hamano wrote:
+>
+>> As long as your "on stack strbuf" allows lengthening the string
+>> beyond the initial allocation (i.e. .alloc, not .len), the user of
+>> the API (i.e. the one that placed the strbuf on its stack) would not
+>> know when the implementation (i.e. the code in this patch) decides
+>> to switch to allocated memory, so it must call strbuf_release()
+>> before it leaves.  Which in turn means that your implementation of
+>> strbuf_release() must be prepared to be take a strbuf that still has
+>> its string on the stack.
+>
+> Well, my implementation does handle a strbuf that still has its
+> string on the stack: the buffer won't be freed in this case (only a
+> reset to STRBUF_INIT).
+> Unless I misunderstood you?
+
+I think Junio meant:
+
+void f()
+{
+	struct strbuf sb;
+	char buf[N];
+	strbuf_wrap_preallocated(&sb, buf, ...);
+	strbuf_add(&sb, ...);
+
+	// is it safe to just let sb reach the end of its scope?
+}
+
+To answer the last question, the user would need to know too much about
+the allocation policy, so in this case the user should call
+strbuf_release(), and let it chose whether to call "free()"
+(OWNS_MEMORY) or not. This is OK with your implementation, but the doc
+needs to reflect this.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
