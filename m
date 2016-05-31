@@ -1,96 +1,113 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC/PATCH] bisect--helper: `bisect_clean_state` shell function
- in C
-Date: Tue, 31 May 2016 06:25:19 +0200
-Message-ID: <574D122F.7080608@alum.mit.edu>
-References: <20160530182148.18801-1-pranit.bauva@gmail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] t7800 readlink not found
+Date: Tue, 31 May 2016 07:06:50 +0200
+Message-ID: <574D1BEA.5020409@web.de>
+References: <CALR6jEiJwx14zAyond9ggz29Q64Fz84URtjr8zaddjnrdY7TjA@mail.gmail.com>
+ <vpqk2ijs8p2.fsf@anie.imag.fr> <xmqq1t4r75sv.fsf@gitster.mtv.corp.google.com>
+ <CALR6jEj67MA7CCHQ_jfdtAuGoo9wjPie0+a=e-BqJjoYtJ9oHw@mail.gmail.com>
+ <xmqqfut75peg.fsf@gitster.mtv.corp.google.com>
+ <CALR6jEixZitA1CTE_kDkDEHv59ALT9zkCOgd28unMhLUZKt48Q@mail.gmail.com>
+ <20160527041944.GA17438@gmail.com> <574CDA24.1020906@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: larsxschneider@gmail.com, chriscool@tuxfamily.org,
-	christian.couder@gmail.com, peff@peff.net
-To: Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 31 06:25:28 2016
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>
+To: Armin Kunaschik <megabreit@googlemail.com>,
+	David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 31 07:08:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7bF9-0006yz-N0
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 06:25:28 +0200
+	id 1b7buL-0002OV-72
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 07:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751897AbcEaEZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 00:25:24 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:55194 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751828AbcEaEZX (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 May 2016 00:25:23 -0400
-X-AuditID: 1207440c-c53ff70000000b85-ab-574d12316980
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 58.AE.02949.1321D475; Tue, 31 May 2016 00:25:22 -0400 (EDT)
-Received: from [192.168.69.130] (p508EABD0.dip0.t-ipconnect.de [80.142.171.208])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u4V4PJpe025167
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 31 May 2016 00:25:20 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.8.0
-In-Reply-To: <20160530182148.18801-1-pranit.bauva@gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrEKsWRmVeSWpSXmKPExsUixO6iqGsk5Btu0NXMbLHp+URmi9szW5gt
-	uq50M1k8friE1eJHSw+zxf+v21gc2Dx2zrrL7vGsdw+jx/IHr9g9Pm+SC2CJ4rZJSiwpC85M
-	z9O3S+DOOHrjKmvBPL6KhksJDYx/uLsYOTkkBEwkbvw9x9zFyMUhJLCVUWJt0x5WCOcCk8Tl
-	5q/sIFXCAsESN+7MZQSxRQTsJCZNe88EYgsJWEt8utYL1M3BwSyQKXF1MSdImE1AV2JRTzMT
-	SJhXQFvi8DMOkDCLgKrEzQn7wDpFBUIkzq/bygpi8woISpyc+YQFpJxTwEai7asXSJhZQE9i
-	x/VfrBC2vMT2t3OYJzDyz0LSMQtJ2SwkZQsYmVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Rrq
-	5WaW6KWmlG5ihIQxzw7Gb+tkDjEKcDAq8fBGdPuEC7EmlhVX5h5ilORgUhLltfoNFOJLyk+p
-	zEgszogvKs1JLT7EKMHBrCTC6yDoGy7Em5JYWZValA+TkuZgURLnVV2i7ickkJ5YkpqdmlqQ
-	WgSTleHgUJLg/SMA1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPisX4YmA0gqR4
-	gPZOBGnnLS5IzAWKQrSeYtTlOLL/3lomIZa8/LxUKXHeYyBFAiBFGaV5cCtgSesVozjQx8K8
-	USAv8AATHtykV0BLmICWxGf4gCwpSURISTUw5gg/UDzPbH28+JGTr4fyJb6DfxoOHD4ia3Hz
-	xCbTXatv5v26F7n4fdrunWIMnRNLp8zvePX86KSdx9slNrXP1Ll4ZhWLCePjS7pS 
+	id S1751089AbcEaFH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2016 01:07:56 -0400
+Received: from mout.web.de ([212.227.17.11]:51129 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750907AbcEaFHz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2016 01:07:55 -0400
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MbyIM-1apWoc3nuA-00JKJU; Tue, 31 May 2016 07:07:25
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+In-Reply-To: <574CDA24.1020906@googlemail.com>
+X-Provags-ID: V03:K0:WcHJXeynGxHCiqzLenT8WV6LtJ4SntD3pEVu9QzsWohNbobryQs
+ Y/KTQJgcT/NmcROJuEoG575aW2O0kjtrTfUIOWq/OcTMM7Ny3g81q7hpNZeO+Tf3ab7TSbM
+ vEXDVuOMKMVSgsTfMia6phDC/TULvb/TbymXU89oXUteIVq5XTPtDy2EhNbNzKMDQYAbRYC
+ yN8WMEAZ5hmNGR+1cxzcg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6VLHZYFwr1Q=:Q/MDO+U+xjoz068giSsjRw
+ EUnmEr5l3B9/jxSjzOg7GEIfpNTUA1AjOIAL2UuMBYZgavu53AHxPg6CDzvGTBjBFg2ghjqyI
+ AvayUpTXWtd9JhLlyA4GV3E4DMUBpmzAyA141CV/DH4YQl55W9SKGkcPgwgGYfEvJjkKWzP5+
+ uPZUJNQmQHUJOkfBwUiTjxDg2r/ELyP2I2SCmxxrJ0T1t/eLT871DBx0bEv3c3fG0RD6Ciy/A
+ zV6ZDSEtebzYvF9B9FPNG4UmVi1GJdeWh4emY0/DbMvEq3+WYkLgUmO305CxwPidLg5984qMO
+ IxHqtIIP3WWe0zCMQgsaGwtD2Y4Yzfxe1EKS5+9LpEv2720kByQHxktX4lqH8cJ56X2o/3UYQ
+ Ci1HhDfapSnH++lb11kN+LHp52CWC3UqGmVqjxI9yXIb71tQMY21Jf5g4L1oCLfdD1MeYYuiE
+ LvWA1K6YexVHYL3a+ByFQCoD+N3Er67AoVLnJ/aKysWrAPEskTd+YtNlz8Gf0MLTm+Rn0dInD
+ QrTtaxbySwzSYNP3duobcNh4l2191Jo7jyMCPgMIGEHw/RRCFnTKyQNi0e1wWW77UWD11rvct
+ mym8H1wU1mmCvyPMJRhJrzYDVViN+z34mWAQcEv6je7D4EYIstgWztUtCQM66G/yGFra2HF0/
+ 20idSmtAUvqKEQSDeQgLRk80irCEME8v2GPeo++5xEQVYvvPF0wOzZbdywaW3SWykLpuohNSG
+ 4SCe8fy6OLszaVjOsH1PVLEtrEPJIRo1yxK1AkehklGUpDSF7PBHQYqWep1Btcz7kFW36hLD 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295950>
 
-On 05/30/2016 08:21 PM, Pranit Bauva wrote:
-> Reimplement `bisect_clean_state` shell function in C and add a
-> `bisect-clean-state` subcommand to `git bisect--helper` to call it from
-> git-bisect.sh .
-> 
-> Using `bisect_clean_state` subcommand is a measure to port shell
-> function to C so as to use the existing test suite. As more functions
-> are ported, this subcommand will be retired and will be called by
-> bisect_reset() and bisect_start().
-> 
-> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+On 05/31/2016 02:26 AM, Armin Kunaschik wrote:
+> On 05/27/2016 06:19 AM, David Aguilar wrote:
+>> On Wed, May 25, 2016 at 11:33:33AM +0200, Armin Kunaschik wrote:
+>>
+>> Would you mind submitting a patch so that we can support these
+>> tests when running on AIX/HP-UX?
+> I don't feel comfortable to submit patches for tests I can't verify. I
+> don't have valgrind and python/p4 here. Looking to the code I'd say,
+> patching the p4 tests with "ls -ld | sed" looks quite save.
+> But I'm not sure about the test-lib.sh. When you are really super
+> paranoid, as written in the comment, you should probably use perl like
+>
+> perl -e 'print readlink $ARGV[0]' $name
+>
+> as a replacement.
+>
+> So, as suggested by Junio, here the readlink workaround for t7800 only.
+> (hopefully whitespace clean this time)
+>
+> --- 8< --- 8< ---
+> From: Armin Kunaschik <megabreit@googlemail.com>
+> Subject: t7800: readlink is not portable
+>
+> The readlink(1) command is not available on all platforms (notably not
+> on AIX and HP-UX) and can be replaced in this test with the "workaround"
+>
+> ls -ld <name> | sed -e 's/.* -> //'
+>
+> This is no universal readlink replacement but works in the controlled
+> test environment good enough.
+>
+> Signed-off-by: Armin Kunaschik <megabreit@googlemail.com>
 > ---
-> This patch contains a bug. I have tried to identify the bug and I suppose it
-> exists in do_for_each_entry_in_dir(). I have reproduced the debugging session
-> at this link[1]. I have seen that some patches in mailing list regarding
-> iterating over refs. Will those affect this? Or is this bug fixed in those
-> patches?
-
-The problem is that it is not legal to modify references while iterating
-over them. See [1]. Your remove_bisect_ref() callback function deletes
-references, which modifies the reference cache that is being iterated over.
-
-Instead I suggest that your remove_bisect_ref() add the references to a
-string_list, then call delete_refs() *after* the iteration is over.
-Alternatively, you can change remove_bisect_ref() to call
-ref_transaction_delete() to add reference deletions to a
-ref_transaction, then call ref_transaction_commit() after the iteration
-is over. See the rm() function in builtin/remote.c [2] for an example.
-
-[1]
-https://github.com/git/git/blob/f3913c2d03abc660140678a9e14dac399f847647/refs.h#L176-L184
-[2]
-https://github.com/git/git/blob/f3913c2d03abc660140678a9e14dac399f847647/builtin/remote.c#L738
-
-> [...]
-
-Michael
+>
+> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+> index 7ce4cd7..905035c 100755
+> --- a/t/t7800-difftool.sh
+> +++ b/t/t7800-difftool.sh
+> @@ -446,7 +446,7 @@ write_script .git/CHECK_SYMLINKS <<\EOF
+>   for f in file file2 sub/sub
+>   do
+>   	echo "$f"
+> -	readlink "$2/$f"
+> +	ls -ld "$2/$f" | sed -e 's/.* -> //'
+>   done >actual
+>   EOF
+>
+I don't know how portable #ls -ld" really is.
+If there is one platform, that doesn't support readlink, would it
+make sense to implement readlink() in test-lib.sh,
+similar to what we have for MINGW, e.g. sort() or find() ?
+And keep t7800 as it is ?
