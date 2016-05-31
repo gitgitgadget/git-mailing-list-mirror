@@ -1,74 +1,62 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] format_commit_message: honor `color=auto` for `%C(auto)`
-Date: Tue, 31 May 2016 18:18:05 -0400
-Message-ID: <20160531221805.GB3824@sigill.intra.peff.net>
-References: <20160525015649.GA13258@zoidberg>
- <20160525223904.GD13776@sigill.intra.peff.net>
- <CACsJy8BF6woZy8WUsJzVFqaMDCOMEYK-3xFNNeOQ6B+OMyqJLw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] bundle v3: the beginning
+Date: Tue, 31 May 2016 18:23:22 -0400
+Message-ID: <20160531222322.GC3824@sigill.intra.peff.net>
+References: <xmqqfuw84uhb.fsf@gitster.mtv.corp.google.com>
+ <1456950761-19759-1-git-send-email-gitster@pobox.com>
+ <1456950761-19759-5-git-send-email-gitster@pobox.com>
+ <CAP8UFD1xqRMFE2Wzntu=XevCyj+acGLEO-cTq1fqn+NMe3x0vg@mail.gmail.com>
+ <CACsJy8Dr_Z886Jb-O8gbAv_vzBLicNH6bPPpKwb9HWZTKQ9muw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Edward Thomson <ethomson@edwardthomson.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
 To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 00:18:17 2016
+X-From: git-owner@vger.kernel.org Wed Jun 01 00:23:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7rzL-0001sL-F5
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 00:18:15 +0200
+	id 1b7s4Q-0005UH-J5
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 00:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752896AbcEaWSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 18:18:10 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46784 "HELO cloud.peff.net"
+	id S1755517AbcEaWX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2016 18:23:27 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46789 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750730AbcEaWSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2016 18:18:09 -0400
-Received: (qmail 1014 invoked by uid 102); 31 May 2016 22:18:09 -0000
+	id S1752788AbcEaWX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2016 18:23:26 -0400
+Received: (qmail 1241 invoked by uid 102); 31 May 2016 22:23:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 31 May 2016 18:18:09 -0400
-Received: (qmail 27798 invoked by uid 107); 31 May 2016 22:18:16 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 31 May 2016 18:23:26 -0400
+Received: (qmail 27847 invoked by uid 107); 31 May 2016 22:23:33 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 31 May 2016 18:18:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 May 2016 18:18:05 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 31 May 2016 18:23:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 May 2016 18:23:22 -0400
 Content-Disposition: inline
-In-Reply-To: <CACsJy8BF6woZy8WUsJzVFqaMDCOMEYK-3xFNNeOQ6B+OMyqJLw@mail.gmail.com>
+In-Reply-To: <CACsJy8Dr_Z886Jb-O8gbAv_vzBLicNH6bPPpKwb9HWZTKQ9muw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296023>
 
-On Tue, May 31, 2016 at 07:23:32PM +0700, Duy Nguyen wrote:
+On Tue, May 31, 2016 at 07:43:27PM +0700, Duy Nguyen wrote:
 
-> I think the (old) "auto" here means "automatically select the
-> color" and what you do would be equivalent to %(auto,auto) where the
-> first (and new) "auto" is about on/off switch, and the second is about
-> selecting the actual color.
-
-Ah, right. The current behavior does make more sense if you realize we
-are talking about two different meaning of "auto" here.
-
-> > I think it's worth mentioning this explicitly in the commit message. We
-> > could also add "%C(on)", I guess, but it's unclear to me whether anybody
-> > would want it (they would probably just use "--color" in that case,
-> > unless they really want unconditional coloring for just _some_
-> > elements).
+> > [3] http://thread.gmane.org/gmane.comp.version-control.git/202902/focus=203020
 > 
-> If I could redo, I would go with %C(default) instead of %C(auto) then
-> we could have %C(auto,default). Perhaps we can make %C(auto) an
-> equivalent of %C(auto,default) now (i.e. exactly what this patch does)
-> and at some point in future add %C(default) which is what %C(auto) is
-> now if people really need to force it on?
+> This points to  https://github.com/peff/git/commits/jk/external-odb
+> which is dead. Jeff, do you still have it somewhere, or is it not
+> worth looking at anymore?
 
-That makes a lot of sense to me. It does change the current meaning of
-"%C(auto)", but the current state is sufficiently confusing that I think
-we can call the existing behavior a bug. I'm ambivalent on either
-implementing %C(default) now, or waiting until somebody actually wants
-it.
+It's now "jk/external-odb-wip" at the same repo. I wouldn't be surprised
+if it doesn't even compile, though. I basically rebase my topics daily
+against Junio's "master", so it may be carried forward, but things
+marked "-wip" aren't part of my daily git build, and generally don't
+even get compile-tested (usually if the rebase looks too hairy or awful,
+I'll drop it completely, though, and I haven't done that here).
 
-Thanks for clarifying the history.
+You're probably better off looking whatever Christian produces. :)
 
 -Peff
