@@ -1,79 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v5] upload-pack.c: use parse-options API
-Date: Tue, 31 May 2016 13:27:56 +0200
-Message-ID: <vpqbn3mxy9v.fsf@anie.imag.fr>
-References: <20160527141628.1677-1-Antoine.Queru@ensimag.grenoble-inp.fr>
-	<20160530145347.15643-1-antoine.queru@ensimag.grenoble-inp.fr>
-	<xmqqd1o38i0m.fsf@gitster.mtv.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: git gc and worktrees
+Date: Tue, 31 May 2016 19:02:15 +0700
+Message-ID: <CACsJy8BHU0YtgvjuefRPuMPLhvoOPLVMhR4YzH8=wVFeOie+Xw@mail.gmail.com>
+References: <574D382A.8030809@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Antoine Queru <antoine.queru@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org, william.duclot@ensimag.grenoble-inp.fr,
-	simon.rabourg@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr, peff@peff.net,
-	sunshine@sunshineco.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 31 13:28:16 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue May 31 14:03:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7hqK-0004iV-G4
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 13:28:16 +0200
+	id 1b7iNx-0000rk-6X
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 14:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751311AbcEaL2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 07:28:12 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39193 "EHLO mx1.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750865AbcEaL2L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2016 07:28:11 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u4VBRuLl017629
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 31 May 2016 13:27:56 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u4VBRvmX027071;
-	Tue, 31 May 2016 13:27:57 +0200
-In-Reply-To: <xmqqd1o38i0m.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 30 May 2016 12:26:01 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Tue, 31 May 2016 13:27:57 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u4VBRuLl017629
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1465298877.88502@GP8TekFKVwsa/5S85U1FHg
+	id S1752252AbcEaMC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2016 08:02:57 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:32931 "EHLO
+	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751418AbcEaMCp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2016 08:02:45 -0400
+Received: by mail-io0-f169.google.com with SMTP id t40so131230647ioi.0
+        for <git@vger.kernel.org>; Tue, 31 May 2016 05:02:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BT8+y9P+yxBD3aEu0k5B/TG1YT3limc7xyN23J7kX70=;
+        b=QnRneE2uiIiH1FHpTPQx2CFw1WMpXo+kVCL5/nWBbxOBQBpJvFp2O4g3X3JnyNNsOa
+         rf64dJjjZY8BnrzdSmhzDeslG/x8dBNwmkIjLoDD1ENwA5aZOUdagC6S0QSfFDDN7eZj
+         v6c7f0A00CfC+TFnlt7wLWgo7fC3rnQjZ0/+euCaa4pFtGV+INXBxmp2vnoaiRp8Qown
+         /Tr22T5XcF2g0qdz0W7gga8DWfsjQGzXqUhg5HOSBzjay3SFF7opvkx4vB+fFEmN/phl
+         1XJOGgjfwvyu61+X8EWF0LReaMOAjw/i4Q2l1PRAKuGwsZUoBOeG7WAzRQcALcbIgeqe
+         LDgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BT8+y9P+yxBD3aEu0k5B/TG1YT3limc7xyN23J7kX70=;
+        b=KMDHmepGJQQv1uH9QcybBaXthZZdFEWTaJyJphUdC/x1sGMSghvAFhBQN/yUzGxwW6
+         RKNlFzAPrPl3smsDyNySh/WfDOnZhbnl5Ai10WrATO8f1S1kZPwfyxHILXxhMzQkEBaq
+         4m9LgQO4DblfKlBw8rSP/nZOHDa4oZG+UY1Bj5bLDjB0jImSLOGDIw8MFx318ILMvBrm
+         ncVeCgxfLjolUqWjc9tAqfXEap8+jU7KNOtXXyc86fNCR3eLY6cFEjufcJ+dgFbJ+ITh
+         p3e0L/0PoXdKX2beelQeS7SYnn0FLAaKgOnWaVc2iwIaj5qQKEtuYmzUCbed7aRLnFoJ
+         +Dlw==
+X-Gm-Message-State: ALyK8tKKXUyD/Z8VhnaKgnCdpk/4Pl0qCNTP/sIy+Um5Nz+OxQSbTpZTlzcIjHyUMO07lmUqcuBPqet7NrfF4g==
+X-Received: by 10.107.8.142 with SMTP id h14mr27411353ioi.95.1464696164774;
+ Tue, 31 May 2016 05:02:44 -0700 (PDT)
+Received: by 10.64.173.167 with HTTP; Tue, 31 May 2016 05:02:15 -0700 (PDT)
+In-Reply-To: <574D382A.8030809@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295970>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Antoine Queru <antoine.queru@ensimag.grenoble-inp.fr> writes:
+On Tue, May 31, 2016 at 2:07 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Earlier this year I had a largish merge going on in a separate worktree.
+> With a mix of staged resolutions and unmerged paths in the index, I ran 'git
+> gc' in the main worktree. This removed a lot of objects that were recorded
+> in that separate worktree index. (I was able to recover them because the
+> content was still on disk.)
 >
->> From: Antoine Queru <Antoine.Queru@ensimag.grenoble-inp.fr>
->> Signed-off-by: Antoine Queru <antoine.queru@grenoble-inp.fr>
+> Now I wanted to derive a test case that shows that breakage, but I am unable
+> to. The objects recorded in a separate worktree index, but not committed,
+> yet, are not pruned anymore.
 >
-> Don't you want to be known to the project as the email that matches
-> your Signed-off-by: line?
+> Have there been any fixes in this regard recently? Or does this look like
+> something else going on?
 
-Actually, that's even: don't you want to use a valid email address in
-your Signed-off-by: ? ;-)
+Not sure. I vaguely recall Jeff touched this pruning issue once,
+something about recent objects will not be pruned based on mtime. But
+maybe some of those objects in the index are not so young, and because
+I think we never check indexes in git-gc/git-prune, they have a chance
+to be deleted.
 
-@ensimag.grenoble-inp.fr => student's current adress
-@grenoble-inp.org => students lifelong address. If not already done,
-                     students can already set it up to redirect to their
-                     current address.
-@grenoble-inp.fr => only for staff (i.e. me but not students).
-
-I have a preference for the @grenoble-inp.org in the From and
-Signed-off-by as the Git history will remain after the current adress
-become invalid.
-
+No I'm wrong. mark_reachable_objects() which is used by git-prune,
+does add objects from index and HEAD, which only covers those from
+_current_ worktree. This should be fixed even if it is not the root
+cause of your problem. I'll look into it.
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Duy
