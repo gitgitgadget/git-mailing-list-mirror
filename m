@@ -1,192 +1,118 @@
-From: Eric Wong <e@80x24.org>
-Subject: [PATCH 2/3] mailsplit: support unescaping mboxrd messages
-Date: Mon, 30 May 2016 23:21:41 +0000
-Message-ID: <20160530232142.21098-3-e@80x24.org>
-References: <20160530232142.21098-1-e@80x24.org>
-Cc: Eric Wong <e@80x24.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 31 01:22:04 2016
+From: Armin Kunaschik <megabreit@googlemail.com>
+Subject: [PATCH] t7800 readlink not found
+Date: Tue, 31 May 2016 02:26:12 +0200
+Message-ID: <574CDA24.1020906@googlemail.com>
+References: <CALR6jEiJwx14zAyond9ggz29Q64Fz84URtjr8zaddjnrdY7TjA@mail.gmail.com>
+ <vpqk2ijs8p2.fsf@anie.imag.fr> <xmqq1t4r75sv.fsf@gitster.mtv.corp.google.com>
+ <CALR6jEj67MA7CCHQ_jfdtAuGoo9wjPie0+a=e-BqJjoYtJ9oHw@mail.gmail.com>
+ <xmqqfut75peg.fsf@gitster.mtv.corp.google.com>
+ <CALR6jEixZitA1CTE_kDkDEHv59ALT9zkCOgd28unMhLUZKt48Q@mail.gmail.com>
+ <20160527041944.GA17438@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 31 02:26:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7WVW-0005Hg-CZ
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 01:22:02 +0200
+	id 1b7XVo-00072n-09
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 02:26:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161986AbcE3XV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 19:21:56 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:34842 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161857AbcE3XVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 19:21:55 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C8ED1FE33;
-	Mon, 30 May 2016 23:21:48 +0000 (UTC)
-In-Reply-To: <20160530232142.21098-1-e@80x24.org>
+	id S1162145AbcEaA0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 20:26:16 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33323 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161860AbcEaA0P (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2016 20:26:15 -0400
+Received: by mail-wm0-f66.google.com with SMTP id a136so27518563wme.0
+        for <git@vger.kernel.org>; Mon, 30 May 2016 17:26:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=sBRuJDVbWFF5km0P+LqHauQiLaHGhBhVf5BOY/zCnlY=;
+        b=U+SvNm/Dn0jw9kpmxoraMOoP0D9MJ2mVLBYADFOA342ZZf8xulm+r5xRlWT4tOjSvp
+         Gj95Joyp+ukHcicy8x+4gg63BTEtBgcYXijADbNvx2BHjjBNDI7skpjhEaWYMt99plZL
+         kxUuG61tomawkKrZhGXwSga+MvxueG91ttrMu3NAuMC9xiHZokmReTBX5BkgzcuCIarf
+         m9h+RQKsnv3wuYiwQzjNmVwL8t/IrBhSBK4/2Hao/UnYXh6mkux4MwOg30uTsXKES0xO
+         5Fbg1TgS5m6lHjwjxNteSi+pIAu5vT++4ePLR8pg7yeUdkZznTFZ5uh5A2Ga3PjhKeE3
+         qJEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=sBRuJDVbWFF5km0P+LqHauQiLaHGhBhVf5BOY/zCnlY=;
+        b=iuEQviFX3+8bjQpBEe7lVXwPU+HbbnkSENtV69Agx/HPjJ/ZTsEgfp9KwUsbNgggx9
+         t6Uzy3Ix9KJ7F4m20nNNlfHaPJt4qIcvyq7/FZb/Xsej7eRXVXekuevtH7V8Q8wYlUqq
+         EfQYbOKttf3eEWp/E97DNcuuhqqI1rz3d4sdQKEdOvKmZLDNM/R/vESm7o/2wI2buBLT
+         oiScWoF7GgEU4wYkpJTbQbhhje69Rdz846NBSmviCcyTywKzlDZcaHRCzEWLdw5samcz
+         ABydzo2k9PVHQBf2lIUKjqcplSKJy/Tcas2uq/wLt+Dv2vdRWP6U5CaEV70J3cHNoR3T
+         hOKQ==
+X-Gm-Message-State: ALyK8tLfH5Qavnl3aTHXylL1TbsMtMzp2RhrkCuwSsT8xVE+SKlZ4p7xrAQ0AOBJzzxmow==
+X-Received: by 10.194.55.10 with SMTP id n10mr28829836wjp.28.1464654374247;
+        Mon, 30 May 2016 17:26:14 -0700 (PDT)
+Received: from ?IPv6:2001:4dd0:f840:0:225:22ff:fe02:19c9? ([2001:4dd0:f840:0:225:22ff:fe02:19c9])
+        by smtp.gmail.com with ESMTPSA id q1sm17536140wjx.18.2016.05.30.17.26.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 30 May 2016 17:26:13 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
+In-Reply-To: <20160527041944.GA17438@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295943>
 
-This will allow us to parse the output of --pretty=mboxrd
-and the output of other mboxrd generators.
+On 05/27/2016 06:19 AM, David Aguilar wrote:
+> On Wed, May 25, 2016 at 11:33:33AM +0200, Armin Kunaschik wrote:
+> 
+> Would you mind submitting a patch so that we can support these
+> tests when running on AIX/HP-UX?
 
-Signed-off-by: Eric Wong <e@80x24.org>
+I don't feel comfortable to submit patches for tests I can't verify. I
+don't have valgrind and python/p4 here. Looking to the code I'd say,
+patching the p4 tests with "ls -ld | sed" looks quite save.
+But I'm not sure about the test-lib.sh. When you are really super
+paranoid, as written in the comment, you should probably use perl like
+
+perl -e 'print readlink $ARGV[0]' $name
+
+as a replacement.
+
+So, as suggested by Junio, here the readlink workaround for t7800 only.
+(hopefully whitespace clean this time)
+
+--- 8< --- 8< ---
+From: Armin Kunaschik <megabreit@googlemail.com>
+Subject: t7800: readlink is not portable
+
+The readlink(1) command is not available on all platforms (notably not
+on AIX and HP-UX) and can be replaced in this test with the "workaround"
+
+ls -ld <name> | sed -e 's/.* -> //'
+
+This is no universal readlink replacement but works in the controlled
+test environment good enough.
+
+Signed-off-by: Armin Kunaschik <megabreit@googlemail.com>
 ---
- Documentation/git-mailsplit.txt |  7 ++++++-
- builtin/mailsplit.c             | 23 +++++++++++++++++++++++
- t/t5100-mailinfo.sh             | 13 +++++++++++++
- t/t5100/0001mboxrd              |  4 ++++
- t/t5100/0002mboxrd              |  3 +++
- t/t5100/sample.mboxrd           | 17 +++++++++++++++++
- 6 files changed, 66 insertions(+), 1 deletion(-)
- create mode 100644 t/t5100/0001mboxrd
- create mode 100644 t/t5100/0002mboxrd
- create mode 100644 t/t5100/sample.mboxrd
 
-diff --git a/Documentation/git-mailsplit.txt b/Documentation/git-mailsplit.txt
-index 4d1b871..e3b2a88 100644
---- a/Documentation/git-mailsplit.txt
-+++ b/Documentation/git-mailsplit.txt
-@@ -8,7 +8,8 @@ git-mailsplit - Simple UNIX mbox splitter program
- SYNOPSIS
- --------
- [verse]
--'git mailsplit' [-b] [-f<nn>] [-d<prec>] [--keep-cr] -o<directory> [--] [(<mbox>|<Maildir>)...]
-+'git mailsplit' [-b] [-f<nn>] [-d<prec>] [--keep-cr] [--mboxrd]
-+		-o<directory> [--] [(<mbox>|<Maildir>)...]
- 
- DESCRIPTION
- -----------
-@@ -47,6 +48,10 @@ OPTIONS
- --keep-cr::
- 	Do not remove `\r` from lines ending with `\r\n`.
- 
-+--mboxrd::
-+	Input is of the "mboxrd" format and "^>+From " line escaping is
-+	reversed.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-index 4859ede..fad871d 100644
---- a/builtin/mailsplit.c
-+++ b/builtin/mailsplit.c
-@@ -45,6 +45,7 @@ static int is_from_line(const char *line, int len)
- 
- static struct strbuf buf = STRBUF_INIT;
- static int keep_cr;
-+static regex_t *gtfrom;
- 
- /* Called with the first line (potentially partial)
-  * already in buf[] -- normally that should begin with
-@@ -77,6 +78,10 @@ static int split_one(FILE *mbox, const char *name, int allow_bare)
- 			strbuf_addch(&buf, '\n');
- 		}
- 
-+		if (gtfrom && buf.len > (sizeof(">From ") - 1) &&
-+				!regexec(gtfrom, buf.buf, 0, 0, 0))
-+			strbuf_remove(&buf, 0, 1);
-+
- 		if (fwrite(buf.buf, 1, buf.len, output) != buf.len)
- 			die_errno("cannot write output");
- 
-@@ -242,6 +247,22 @@ out:
- 	return ret;
- }
- 
-+static regex_t *gtfrom_prepare(void)
-+{
-+	static regex_t preg;
-+	const char re[] = "^>+From ";
-+	int err = regcomp(&preg, re, REG_NOSUB | REG_EXTENDED);
-+
-+	if (err) {
-+		char errbuf[1024];
-+		regerror(err, &preg, errbuf, sizeof(errbuf));
-+		regfree(&preg);
-+		die("Cannot prepare regexp `%s': %s", re, errbuf);
-+	}
-+
-+	return &preg;
-+}
-+
- int cmd_mailsplit(int argc, const char **argv, const char *prefix)
- {
- 	int nr = 0, nr_prec = 4, num = 0;
-@@ -271,6 +292,8 @@ int cmd_mailsplit(int argc, const char **argv, const char *prefix)
- 			keep_cr = 1;
- 		} else if ( arg[1] == 'o' && arg[2] ) {
- 			dir = arg+2;
-+		} else if (!strcmp(arg, "--mboxrd")) {
-+			gtfrom = gtfrom_prepare();
- 		} else if ( arg[1] == '-' && !arg[2] ) {
- 			argp++;	/* -- marks end of options */
- 			break;
-diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-index 85b3df5..62b442c 100755
---- a/t/t5100-mailinfo.sh
-+++ b/t/t5100-mailinfo.sh
-@@ -111,4 +111,17 @@ test_expect_success 'mailinfo on message with quoted >From' '
- 	test_cmp "$TEST_DIRECTORY"/t5100/quoted-from.expect quoted-from/msg
- '
- 
-+test_expect_success 'mailinfo unescapes with --mboxrd' '
-+	mkdir mboxrd &&
-+	git mailsplit -omboxrd --mboxrd \
-+		"$TEST_DIRECTORY"/t5100/sample.mboxrd >last &&
-+	test x"$(cat last)" = x2 &&
-+	for i in 0001 0002
-+	do
-+		git mailinfo mboxrd/msg mboxrd/patch \
-+		  <mboxrd/$i >mboxrd/out &&
-+		test_cmp "$TEST_DIRECTORY"/t5100/${i}mboxrd mboxrd/msg
-+	done
-+'
-+
- test_done
-diff --git a/t/t5100/0001mboxrd b/t/t5100/0001mboxrd
-new file mode 100644
-index 0000000..494ec55
---- /dev/null
-+++ b/t/t5100/0001mboxrd
-@@ -0,0 +1,4 @@
-+From the beginning, mbox should have been mboxrd
-+>From escaped
-+From not mangled but this line should have been escaped
-+
-diff --git a/t/t5100/0002mboxrd b/t/t5100/0002mboxrd
-new file mode 100644
-index 0000000..3c30b0b
---- /dev/null
-+++ b/t/t5100/0002mboxrd
-@@ -0,0 +1,3 @@
-+ >From unchanged
-+ From also unchanged
-+
-diff --git a/t/t5100/sample.mboxrd b/t/t5100/sample.mboxrd
-new file mode 100644
-index 0000000..75de6dd
---- /dev/null
-+++ b/t/t5100/sample.mboxrd
-@@ -0,0 +1,17 @@
-+From mboxrd Mon Sep 17 00:00:00 2001
-+From: mboxrd writer <mboxrd@example.com>
-+Date: Fri, 9 Jun 2006 00:44:16 -0700
-+Subject: [PATCH] a commit with escaped From lines
-+
-+>From the beginning, mbox should have been mboxrd
-+>>From escaped
-+From not mangled but this line should have been escaped
-+
-+From mboxrd Mon Sep 17 00:00:00 2001
-+From: mboxrd writer <mboxrd@example.com>
-+Date: Fri, 9 Jun 2006 00:44:16 -0700
-+Subject: [PATCH 2/2] another with fake From lines
-+
-+ >From unchanged
-+ From also unchanged
-+
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 7ce4cd7..905035c 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -446,7 +446,7 @@ write_script .git/CHECK_SYMLINKS <<\EOF
+ for f in file file2 sub/sub
+ do
+ 	echo "$f"
+-	readlink "$2/$f"
++	ls -ld "$2/$f" | sed -e 's/.* -> //'
+ done >actual
+ EOF
