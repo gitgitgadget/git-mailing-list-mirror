@@ -1,94 +1,138 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: git add without whitespace
-Date: Tue, 31 May 2016 18:27:21 +0200
-Message-ID: <CANgJU+WZHes1-d2GXT9p+Up4e6_aA-Q5r1A8EEmCEOXjsOyuXw@mail.gmail.com>
-References: <CAHd499Agn=vLBxDpHi2dy1HMy-_58PZGs7VNtFJnBfP5zXatTA@mail.gmail.com>
-	<xmqqlh2r8ixu.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RCF/PATCH] Makefile: move 'ifdef DEVELOPER' after config.mak* inclusion
+Date: Tue, 31 May 2016 10:00:29 -0700
+Message-ID: <xmqqpos25fiq.fsf@gitster.mtv.corp.google.com>
+References: <20160531132443.5033-1-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 31 18:27:28 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue May 31 19:00:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7mVr-0001JY-Ja
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 18:27:27 +0200
+	id 1b7n1z-0007jP-2R
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 19:00:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754980AbcEaQ1X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 12:27:23 -0400
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:32877 "EHLO
-	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754959AbcEaQ1W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2016 12:27:22 -0400
-Received: by mail-oi0-f53.google.com with SMTP id k23so305266367oih.0
-        for <git@vger.kernel.org>; Tue, 31 May 2016 09:27:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=bQGd9EU2ZhGN6Vfiu595BVmKwrasrK+nQngpqpUvzfk=;
-        b=iJj5Gb3mp+5L7ubkTpC+w3qmCwzHMiuqflJSrjwIEpLCPMEXSUWIWXR/vS21GR5yxr
-         kp0CR663aEMLuCDDW7PoJTvJYVgobkzfsFu0cIyOcquBkExpqkJY8RrHB5m/6PI63k6d
-         UtLhPYSg0mZ9ehsUGGWXTGbW2pvGc8fUaOYmrOchUfoL0Xgj8/YGv6Zvqk2YVpCDXz1R
-         XyEspvmE/neH+py3js1SdmrPXLhLNAFOJ+m2wNhT9DxW220m1KVOj5tMUTmy6PD1Jdtl
-         768AjC/cuSTkxhPrlpzNxeKnSCKMuPivVy146/08ZBB8uDYtJKD0+S4HP4tUMM1/m3XV
-         SVoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=bQGd9EU2ZhGN6Vfiu595BVmKwrasrK+nQngpqpUvzfk=;
-        b=EJB0kp+FCrUmR10pQRdA2R8YcoJ6t+9tVQfOpNMjoZoe7pxbW/OTUZmULuhWsWsn7R
-         DdOZVLO9BJlkOijAPEc8MfJ3Dm1GnXMbaq9s2A1q0fYwmRWe69vyGiAbZ/fv3tWskvsW
-         /oiruAZtKSFCa/uQJKQwipFQwMV5jUbQpv5BRy3F4bSKs2eIxpdz/PDdv53BeBxnwWSn
-         KwvGCBQJvsaFJrQtn2jBx90+p6uc6pVXN9gF05IwK2oulndDloa3GO/+0MloP9stFrno
-         FlfyFtKZqCJ3flWiefwLAYaFmXlMnQ/sfbNqcP8CaRLwXhd7meT9KrHpg1C6EllIJs+0
-         wU9Q==
-X-Gm-Message-State: ALyK8tJiILCQ3z2h5Mj7SonOFckR48t+1L1gcfmG5fU/JdC1S/JbNF1IiIPj+ULYa1hsTT/QRoHLKeVs+6XPgQ==
-X-Received: by 10.157.11.28 with SMTP id a28mr19396747ota.128.1464712041635;
- Tue, 31 May 2016 09:27:21 -0700 (PDT)
-Received: by 10.202.75.19 with HTTP; Tue, 31 May 2016 09:27:21 -0700 (PDT)
-In-Reply-To: <xmqqlh2r8ixu.fsf@gitster.mtv.corp.google.com>
+	id S1755410AbcEaRAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2016 13:00:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55414 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755204AbcEaRAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2016 13:00:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 35E241EC8A;
+	Tue, 31 May 2016 13:00:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2psrV8Bt4zgXb4ONhjKkIj+T3F0=; b=I4n6Bg
+	AvlVrhTVVGI6VjcA/yxyzrSTHRniWNq2pK+kTmMWnTimUp3bAofjwSzwbuo/kaiT
+	retVbSIwEQ8qhJEzUNxE/qb6mxqZbvx/oPA5j3jolQXAQePgRZL8oTThfaUAHCxf
+	IGZzOZEi+Oot3eS6Ci1YDtXxXjiFLJTqgEGcQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BTOAb8Ui8R8I+7OfQzz2TH7Lc60RyI/v
+	nmTdmv83Kv1oe1E6djolmJoi/aYLUtVmpxvDGdA1Tpla5xEACOUBSnF+NH+X0+TQ
+	8IeBu6w9zF7SnukFMr4q0YXS0tjjjTHQH9XGINPZWAilt2S1CMk7pQnPXuUrpuy+
+	6zLluKXarYQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E9FD1EC89;
+	Tue, 31 May 2016 13:00:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C3EF01EC87;
+	Tue, 31 May 2016 13:00:30 -0400 (EDT)
+In-Reply-To: <20160531132443.5033-1-Matthieu.Moy@imag.fr> (Matthieu Moy's
+	message of "Tue, 31 May 2016 15:24:43 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2E8BC458-2751-11E6-B7FB-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295996>
 
-On 30 May 2016 at 21:06, Junio C Hamano <gitster@pobox.com> wrote:
-> Robert Dailey <rcdailey.lists@gmail.com> writes:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+
+> The DEVELOPER knob was introduced in 658df95 (add DEVELOPER makefile
+> knob to check for acknowledged warnings, 2016-02-25), and works well
+> when used as "make DEVELOPER=1", and when the configure script was not
+> used.
 >
->> $ git diff -U0 -w --no-color | git apply --cached --ignore-whitespace
->> --unidiff-zero
->>
->> This command explicitly leaves out context because it can sometimes
->> cause the patch to fail to apply, I think due to whitespace being in
->> it, but I'm not completely sure myself.
+> However, the advice given in CodingGuidelines to add DEVELOPER=1 to
+> config.mak does not: config.mak is included after testing for
+> DEVELOPER in the Makefile, and at least GNU Make's manual specifies
+> "Conditional directives are parsed immediately", hence the config.mak
+> declaration is not visible at the time the conditional is evaluated.
 >
-> I have had this in my ~/.gitconfig for a long time.
+> Also, when using the configure script to generate a
+> config.mak.autogen, the later file contained a "CFLAGS = <flags>"
+> initialization, which overrode the "CFLAGS += -W..." triggered by
+> DEVELOPER.
 >
-> [alias]
->         wsadd = "!sh -c 'git diff -- \"$@\" | git apply --cached --whitespace=fix;\
->                 git co -- ${1-.} \"$@\"' -"
+> This patch fixes both issues.
 >
-> That is, "take what's different from the _index_ and the working
-> tree, apply that difference while correcting whitespace errors to
-> the index, and check the result out to the working tree".  This
-> would _not_ touch existing whitespace-damaged lines that you are not
-> touching, and honours the customized definition of what is
-> considered whitespace breakage for each paths (which you set up with
-> the attributes system).
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+> I'm surprised that no one noticed the issue. Probably because the
+> Makefile is silent by default. Did I miss anything obvious?
 
+Probably because the overlap of the population that use DEVELOPER=1
+and config.mak is miniscule?  
 
-That is very very cool. I have a perl script that does the same thing
-from git-blame output. This is MUCH nicer.
+When you work in multiple "git worktrees" (or its equivalent), it is
+far more convenient to have a single "make" wrapper that you use
+everywhere than to make sure that you copy (or symlink) a config.mak
+into each and every one of them.
 
-cheers,
-Yves
+In any case, this change is a right thing to do.  Thanks for
+noticing.
 
-
--- 
-perl -Mre=debug -e "/just|another|perl|hacker/"
+>  Makefile | 24 ++++++++++++------------
+>  1 file changed, 12 insertions(+), 12 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 15fcd57..2226319 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -380,18 +380,6 @@ ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
+>  ALL_LDFLAGS = $(LDFLAGS)
+>  STRIP ?= strip
+>  
+> -ifdef DEVELOPER
+> -CFLAGS += -Werror \
+> -	-Wdeclaration-after-statement \
+> -	-Wno-format-zero-length \
+> -	-Wold-style-definition \
+> -	-Woverflow \
+> -	-Wpointer-arith \
+> -	-Wstrict-prototypes \
+> -	-Wunused \
+> -	-Wvla
+> -endif
+> -
+>  # Create as necessary, replace existing, make ranlib unneeded.
+>  ARFLAGS = rcs
+>  
+> @@ -952,6 +940,18 @@ include config.mak.uname
+>  -include config.mak.autogen
+>  -include config.mak
+>  
+> +ifdef DEVELOPER
+> +CFLAGS += -Werror \
+> +	-Wdeclaration-after-statement \
+> +	-Wno-format-zero-length \
+> +	-Wold-style-definition \
+> +	-Woverflow \
+> +	-Wpointer-arith \
+> +	-Wstrict-prototypes \
+> +	-Wunused \
+> +	-Wvla
+> +endif
+> +
+>  ifndef sysconfdir
+>  ifeq ($(prefix),/usr)
+>  sysconfdir = /etc
