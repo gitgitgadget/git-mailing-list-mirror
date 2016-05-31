@@ -1,109 +1,96 @@
 From: Matteo Bertini <naufraghi@develer.com>
-Subject: [PATCH 1/4] hash-object.c: Allow distinct file/path in stdin mode too.
-Date: Tue, 31 May 2016 17:07:46 +0200
-Message-ID: <20160531150749.24840-2-naufraghi@develer.com>
+Subject: [PATCH 3/4] SVN/Fetcher.pm: Add svn-remote.<id>.enable-filters to enable the filters.
+Date: Tue, 31 May 2016 17:07:48 +0200
+Message-ID: <20160531150749.24840-4-naufraghi@develer.com>
 References: <20160531150749.24840-1-naufraghi@develer.com>
 Cc: Matteo Bertini <matteo@naufraghi.net>, normalperson@yhbt.net,
 	gitster@pobox.com, Matteo Bertini <naufraghi@develer.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 31 17:15:04 2016
+X-From: git-owner@vger.kernel.org Tue May 31 17:15:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7lNm-0002Hr-6D
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 17:15:02 +0200
+	id 1b7lNn-0002Hr-9k
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 17:15:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754159AbcEaPOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 11:14:50 -0400
-Received: from neo.develer.net ([2.228.72.10]:39512 "EHLO neo.develer.net"
+	id S1754410AbcEaPOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2016 11:14:52 -0400
+Received: from neo.develer.net ([2.228.72.10]:39509 "EHLO neo.develer.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753673AbcEaPOo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2016 11:14:44 -0400
+	id S1753984AbcEaPOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2016 11:14:49 -0400
 Received: from odello.trilan (odello.trilan [10.3.15.118])
 	(Authenticated sender: naufraghi)
-	by neo.develer.net (Postfix) with ESMTPSA id C0F4B5E311F;
+	by neo.develer.net (Postfix) with ESMTPSA id D1A445E3123;
 	Tue, 31 May 2016 17:07:57 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=develer.com;
 	s=gongolo; t=1464707277;
-	bh=NW/PcQ1c0GZrtVpFOkB8hg9Eq65BUv5N0awlQi4bdf0=;
+	bh=9Ffju3UMG6povlbneKEwV2xuOciKu5pfOlEkM8orkvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rM3I3kBDcQL0Dh+wxAL+p4hYc/Gvk1g8R1/R+ZnoCE7RnFSZ+KGLM9Kia3fUh8v0F
-	 RXoumLcwozAzL816DUsH4JJjmjcD+rA19bl4VUCxgiJlONN4c3UQzEFvwzbS8hQfga
-	 bYqvPVeFP9pza1MfZ8DcN3FadHsnWlP7Opexv2TE=
+	b=x/+n4AqG2eyi3WNRZ/eH1NqR2oP/tZaEjAGq0vEwKyv8zrEjmJd+1SDir5yk5G28g
+	 HWK98lgW+gQbcBpAl+I1ocakiYYkJe7gdPy5Tl10O7j9ZsYlIZoopAD3tshr+fGbnW
+	 X2TPo2UPJ+lyMRbQnJj7d65QbfMmExy9faOg4Y4w=
 X-Mailer: git-send-email 2.9.0.rc0.39.gb9f310b.dirty
 In-Reply-To: <20160531150749.24840-1-naufraghi@develer.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295982>
 
 From: Matteo Bertini <matteo@naufraghi.net>
 
-The hash-object command has the --path option to use a name for the filters
-that is different from the file containing the data.
-
-This patch exposes the same functionality for the --stdin-paths, using \t
-as separator.
+Given the fact that git-svn uses temporary files to build the index,
+provide the real $path to hash_and_insert_object if the filters are
+enabled.
 
 Signed-off-by: Matteo Bertini <naufraghi@develer.com>
 ---
- builtin/hash-object.c | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ perl/Git/SVN/Fetcher.pm | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index f7d3567..f74c6bd 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -58,20 +58,45 @@ static void hash_object(const char *path, const char *type, const char *vpath,
- static void hash_stdin_paths(const char *type, int no_filters, unsigned flags,
- 			     int literally)
- {
-+	int has_path = 0;
- 	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf path = STRBUF_INIT;
- 	struct strbuf unquoted = STRBUF_INIT;
-+	struct strbuf **pair;
- 
- 	while (strbuf_getline(&buf, stdin) != EOF) {
-+		pair = strbuf_split_max(&buf, '\t', 2);
-+		if (pair[0]) {
-+			if (pair[0]->len && pair[0]->buf[pair[0]->len - 1] == '\t') {
-+				strbuf_setlen(pair[0], pair[0]->len - 1);
-+			}
-+			strbuf_swap(&buf, pair[0]);
-+		}
-+		if (pair[1]) {
-+			strbuf_swap(&path, pair[1]);
-+			has_path = 1;
-+		}
-+		strbuf_list_free(pair);
-+
- 		if (buf.buf[0] == '"') {
- 			strbuf_reset(&unquoted);
- 			if (unquote_c_style(&unquoted, buf.buf, NULL))
- 				die("line is badly quoted");
- 			strbuf_swap(&buf, &unquoted);
- 		}
--		hash_object(buf.buf, type, no_filters ? NULL : buf.buf, flags,
--			    literally);
-+
-+		if (has_path && path.buf[0] == '"') {
-+			strbuf_reset(&unquoted);
-+			if (unquote_c_style(&unquoted, path.buf, NULL))
-+				die("line is badly quoted");
-+			strbuf_swap(&path, &unquoted);
-+		}
-+
-+		hash_object(buf.buf, type, no_filters ? NULL : (has_path ? path.buf : buf.buf),
-+				  flags, literally);
+diff --git a/perl/Git/SVN/Fetcher.pm b/perl/Git/SVN/Fetcher.pm
+index d8c21ad..3557abe 100644
+--- a/perl/Git/SVN/Fetcher.pm
++++ b/perl/Git/SVN/Fetcher.pm
+@@ -1,7 +1,7 @@
+ package Git::SVN::Fetcher;
+ use vars qw/@ISA $_ignore_regex $_include_regex $_preserve_empty_dirs
+             $_placeholder_filename @deleted_gpath %added_placeholder
+-            $repo_id/;
++            $repo_id $_enable_filters/;
+ use strict;
+ use warnings;
+ use SVN::Delta;
+@@ -46,6 +46,10 @@ sub new {
+ 		$_placeholder_filename = $v;
  	}
- 	strbuf_release(&buf);
-+	strbuf_release(&path);
- 	strbuf_release(&unquoted);
- }
  
++	$k = "svn-remote.$repo_id.enable-filters";
++	$v = eval { command_oneline('config', '--get', '--bool', $k) };
++	$_enable_filters = 1
++		if ($v && $v eq 'true');
+ 	# Load the list of placeholder files added during previous invocations.
+ 	$k = "svn-remote.$repo_id.added-placeholder";
+ 	$v = eval { command_oneline('config', '--get-all', $k) };
+@@ -415,9 +419,13 @@ sub close_file {
+ 				Git::temp_release($tmp_fh, 1);
+ 			}
+ 		}
+-
+-		$hash = $::_repository->hash_and_insert_object(
+-				Git::temp_path($fh));
++		if ($_enable_filters) {
++			$hash = $::_repository->hash_and_insert_object(
++					Git::temp_path($fh), $path, $_enable_filters);
++		} else {
++			$hash = $::_repository->hash_and_insert_object(
++					Git::temp_path($fh));
++		}
+ 		$hash =~ /^[a-f\d]{40}$/ or die "not a sha1: $hash\n";
+ 
+ 		Git::temp_release($fb->{base}, 1);
 -- 
 2.9.0.rc0.39.gb9f310b.dirty
