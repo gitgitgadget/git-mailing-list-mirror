@@ -1,118 +1,93 @@
-From: Armin Kunaschik <megabreit@googlemail.com>
-Subject: [PATCH] t7800 readlink not found
-Date: Tue, 31 May 2016 02:26:12 +0200
-Message-ID: <574CDA24.1020906@googlemail.com>
-References: <CALR6jEiJwx14zAyond9ggz29Q64Fz84URtjr8zaddjnrdY7TjA@mail.gmail.com>
- <vpqk2ijs8p2.fsf@anie.imag.fr> <xmqq1t4r75sv.fsf@gitster.mtv.corp.google.com>
- <CALR6jEj67MA7CCHQ_jfdtAuGoo9wjPie0+a=e-BqJjoYtJ9oHw@mail.gmail.com>
- <xmqqfut75peg.fsf@gitster.mtv.corp.google.com>
- <CALR6jEixZitA1CTE_kDkDEHv59ALT9zkCOgd28unMhLUZKt48Q@mail.gmail.com>
- <20160527041944.GA17438@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 09/13] refs: introduce an iterator interface
+Date: Tue, 31 May 2016 03:16:49 +0200
+Message-ID: <574CE601.3010701@alum.mit.edu>
+References: <cover.1464537050.git.mhagger@alum.mit.edu>
+ <89634d216544d1102dafd5d18247bff2581d48a8.1464537050.git.mhagger@alum.mit.edu>
+ <574C5AB0.4090005@ramsayjones.plus.com>
+ <574C70EF.5070705@ramsayjones.plus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 31 02:26:25 2016
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?Q?y?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue May 31 03:17:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7XVo-00072n-09
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 02:26:24 +0200
+	id 1b7YIr-0003b8-K0
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 03:17:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162145AbcEaA0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2016 20:26:16 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33323 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161860AbcEaA0P (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2016 20:26:15 -0400
-Received: by mail-wm0-f66.google.com with SMTP id a136so27518563wme.0
-        for <git@vger.kernel.org>; Mon, 30 May 2016 17:26:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=sBRuJDVbWFF5km0P+LqHauQiLaHGhBhVf5BOY/zCnlY=;
-        b=U+SvNm/Dn0jw9kpmxoraMOoP0D9MJ2mVLBYADFOA342ZZf8xulm+r5xRlWT4tOjSvp
-         Gj95Joyp+ukHcicy8x+4gg63BTEtBgcYXijADbNvx2BHjjBNDI7skpjhEaWYMt99plZL
-         kxUuG61tomawkKrZhGXwSga+MvxueG91ttrMu3NAuMC9xiHZokmReTBX5BkgzcuCIarf
-         m9h+RQKsnv3wuYiwQzjNmVwL8t/IrBhSBK4/2Hao/UnYXh6mkux4MwOg30uTsXKES0xO
-         5Fbg1TgS5m6lHjwjxNteSi+pIAu5vT++4ePLR8pg7yeUdkZznTFZ5uh5A2Ga3PjhKeE3
-         qJEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=sBRuJDVbWFF5km0P+LqHauQiLaHGhBhVf5BOY/zCnlY=;
-        b=iuEQviFX3+8bjQpBEe7lVXwPU+HbbnkSENtV69Agx/HPjJ/ZTsEgfp9KwUsbNgggx9
-         t6Uzy3Ix9KJ7F4m20nNNlfHaPJt4qIcvyq7/FZb/Xsej7eRXVXekuevtH7V8Q8wYlUqq
-         EfQYbOKttf3eEWp/E97DNcuuhqqI1rz3d4sdQKEdOvKmZLDNM/R/vESm7o/2wI2buBLT
-         oiScWoF7GgEU4wYkpJTbQbhhje69Rdz846NBSmviCcyTywKzlDZcaHRCzEWLdw5samcz
-         ABydzo2k9PVHQBf2lIUKjqcplSKJy/Tcas2uq/wLt+Dv2vdRWP6U5CaEV70J3cHNoR3T
-         hOKQ==
-X-Gm-Message-State: ALyK8tLfH5Qavnl3aTHXylL1TbsMtMzp2RhrkCuwSsT8xVE+SKlZ4p7xrAQ0AOBJzzxmow==
-X-Received: by 10.194.55.10 with SMTP id n10mr28829836wjp.28.1464654374247;
-        Mon, 30 May 2016 17:26:14 -0700 (PDT)
-Received: from ?IPv6:2001:4dd0:f840:0:225:22ff:fe02:19c9? ([2001:4dd0:f840:0:225:22ff:fe02:19c9])
-        by smtp.gmail.com with ESMTPSA id q1sm17536140wjx.18.2016.05.30.17.26.13
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 30 May 2016 17:26:13 -0700 (PDT)
+	id S1162290AbcEaBRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2016 21:17:00 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:45075 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1161883AbcEaBQ7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 May 2016 21:16:59 -0400
+X-AuditID: 12074414-63fff700000008e6-c7-574ce60503de
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id CB.D4.02278.506EC475; Mon, 30 May 2016 21:16:53 -0400 (EDT)
+Received: from [192.168.69.130] (p508EABD0.dip0.t-ipconnect.de [80.142.171.208])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u4V1GoKU016066
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Mon, 30 May 2016 21:16:51 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-In-Reply-To: <20160527041944.GA17438@gmail.com>
+ Icedove/38.8.0
+In-Reply-To: <574C70EF.5070705@ramsayjones.plus.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrOKsWRmVeSWpSXmKPExsUixO6iqMv6zCfc4HSLssX8TScYLbqudDNZ
+	NPReYbbonvKW0eJHSw+zxcyr1g5sHjtn3WX3eNa7h9Hj4iVlj/1Lt7F5LHh+n93j8ya5ALYo
+	bpukxJKy4Mz0PH27BO6M201TWApeslX8vvGRqYFxI2sXIyeHhICJxKvrh9m7GLk4hAS2Mkrc
+	aV3PBOFcYJI4sHsnWJWwgIPE3c9NLCAJEYFeRonmpgksEFV3gJzfe8H6mQWmMUo82XaNGaSF
+	TUBXYlFPMxOIzSugLbHk8m4WEJtFQFVi0/kusLioQIjE+XVbWSFqBCVOznwCVsMJdNTk/7fY
+	QGxmAXWJP/MuMUPY8hLb385hnsDIPwtJyywkZbOQlC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyY
+	l5dapGuhl5tZopeaUrqJERLkIjsYj5yUO8QowMGoxMPL0OkTLsSaWFZcmXuIUZKDSUmUd8E9
+	oBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR3ocPgXK8KYmVValF+TApaQ4WJXHeb4vV/YQE0hNL
+	UrNTUwtSi2CyMhwcShK8EU+BGgWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJBkRlf
+	DIxNkBQP0N7UJyB7iwsSc4GiEK2nGI05Fvy4vZaJ48j+e2uZhFjy8vNSpcR5XzwGKhUAKc0o
+	zYNbBEtvrxjFgf4W5u0GuYcHmBrh5r0CWsUEtCo+A2xVSSJCSqqBcQonywbpB594l5stFDP/
+	H/NV6vLsvc0zHv7kTsjcz50/6XlahsWGjKPqnXeKrsxWnxgTLOYbqd+5+1Lmk6uR 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295944>
 
-On 05/27/2016 06:19 AM, David Aguilar wrote:
-> On Wed, May 25, 2016 at 11:33:33AM +0200, Armin Kunaschik wrote:
+On 05/30/2016 06:57 PM, Ramsay Jones wrote:
 > 
-> Would you mind submitting a patch so that we can support these
-> tests when running on AIX/HP-UX?
+> 
+> On 30/05/16 16:22, Ramsay Jones wrote:
+>>
+>>
+>> On 30/05/16 08:55, Michael Haggerty wrote:
+>> [snip]
+>>
+>>>  /* Reference is a symbolic reference. */
+>>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>>> index 8ab4d5f..dbf1587 100644
+>>> --- a/refs/files-backend.c
+>>> +++ b/refs/files-backend.c
+>>> [...]
+>>> +			sort_ref_dir(dir);
+>>
+>> do you need to sort here ...
+>>> [...]
+>>> +			sort_ref_dir(level->dir);
+>>
+>> ... given that you sort here?
+> 
+> I had intended to say 'or vice versa' here. When I wrote this, I had not
+> finished reading this patch (let alone the series). Now, I suspect that
+> you can simply drop this 'sort_ref_dir()' call site. Unless I've misread
+> the code, of course! ;-)
 
-I don't feel comfortable to submit patches for tests I can't verify. I
-don't have valgrind and python/p4 here. Looking to the code I'd say,
-patching the p4 tests with "ls -ld | sed" looks quite save.
-But I'm not sure about the test-lib.sh. When you are really super
-paranoid, as written in the comment, you should probably use perl like
+Yes, you are right. Thanks for catching this! I'll fix it in v2.
 
-perl -e 'print readlink $ARGV[0]' $name
-
-as a replacement.
-
-So, as suggested by Junio, here the readlink workaround for t7800 only.
-(hopefully whitespace clean this time)
-
---- 8< --- 8< ---
-From: Armin Kunaschik <megabreit@googlemail.com>
-Subject: t7800: readlink is not portable
-
-The readlink(1) command is not available on all platforms (notably not
-on AIX and HP-UX) and can be replaced in this test with the "workaround"
-
-ls -ld <name> | sed -e 's/.* -> //'
-
-This is no universal readlink replacement but works in the controlled
-test environment good enough.
-
-Signed-off-by: Armin Kunaschik <megabreit@googlemail.com>
----
-
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 7ce4cd7..905035c 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -446,7 +446,7 @@ write_script .git/CHECK_SYMLINKS <<\EOF
- for f in file file2 sub/sub
- do
- 	echo "$f"
--	readlink "$2/$f"
-+	ls -ld "$2/$f" | sed -e 's/.* -> //'
- done >actual
- EOF
+Michael
