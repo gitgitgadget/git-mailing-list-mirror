@@ -1,71 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t/lib-git-daemon: ksh portability workaround
-Date: Tue, 31 May 2016 19:05:47 -0400
-Message-ID: <20160531230547.GC4585@sigill.intra.peff.net>
-References: <xmqqinxt3kwq.fsf@gitster.mtv.corp.google.com>
- <xmqq60tt3k4f.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [BUG] git-submodule has bash-ism?
+Date: Tue, 31 May 2016 16:08:03 -0700
+Message-ID: <xmqq1t4h3jxo.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 01:05:57 2016
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 01 01:08:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7sjT-0007JF-Gl
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 01:05:55 +0200
+	id 1b7slh-0000Jl-9m
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 01:08:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754707AbcEaXFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 19:05:51 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46826 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750730AbcEaXFv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2016 19:05:51 -0400
-Received: (qmail 3088 invoked by uid 102); 31 May 2016 23:05:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 31 May 2016 19:05:50 -0400
-Received: (qmail 28220 invoked by uid 107); 31 May 2016 23:05:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 31 May 2016 19:05:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 May 2016 19:05:47 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq60tt3k4f.fsf@gitster.mtv.corp.google.com>
+	id S1756684AbcEaXIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2016 19:08:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60321 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750813AbcEaXII (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2016 19:08:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EDF5F20603;
+	Tue, 31 May 2016 19:08:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=q
+	pQ2g3k0OA4bAkEtvokWQRdrElo=; b=wYwJ9ErlVxbsxg5hznoZOphcJRRJot0MX
+	h2IGo2+57HoByQdejWoop6kv/qboKL6FJNDhya+QCLN7FIGzP2RHqYtOrgPrBPsM
+	IMdPI3NdjS4m7NrkEaf1F3nQBtB6FYUzQYYrFp2+7gVfEcNnZSCle28IREoZOI05
+	CHqLsYGYUA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=tdx
+	oKlVyCcGwZRueJk5gRxgt9fdblIYRsCUUKRHwgLlzmDxBtayOscvGEAGrK8xJPdC
+	DJaPlGLFPQXN4sejo3l21jWTi2/EsC273ahFd+MKOUFQ0W6mtKBrPE0d2hbQXHdh
+	V4p9kz3vorTgPUbPJYQv1FwJ70nqdeHzTMrq5Dt0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E528F20602;
+	Tue, 31 May 2016 19:08:05 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6FE9F20601;
+	Tue, 31 May 2016 19:08:05 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 88254808-2784-11E6-BE6E-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296033>
 
-On Tue, May 31, 2016 at 04:04:00PM -0700, Junio C Hamano wrote:
+relative_path ()
+{
+	local target curdir result
+	target=$1
+	curdir=${2-$wt_prefix}
 
-> The "git daemon" test checks with what status the daemon exits when
-> we terminate it, and we expect that we can observe death by SIGTERM.
-> 
-> We forgot that ksh adds 256, unlike 128 that are used by other POSIX
-> shells, to the signal number that caused the process to die when
-> coming up with the exit status.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
-> index 340534c..623b3ae 100644
-> --- a/t/lib-git-daemon.sh
-> +++ b/t/lib-git-daemon.sh
-> @@ -83,7 +83,8 @@ stop_git_daemon() {
->  	wait "$GIT_DAEMON_PID" >&3 2>&4
->  	ret=$?
->  	# expect exit with status 143 = 128+15 for signal TERM=15
-> -	if test $ret -ne 143
-> +	# or 271 = 256+15 on ksh
-> +	if test $ret -ne 143 && test $ret -ne 271
-
-The presence of this patch (on top of the other one) makes me think we
-should go with something like:
-
-  test_exit_code_is
-
-or something, and make it available via test-lib-functions.sh.
-
--Peff
+I am hoping that Stefan's "gradually rewrite things in C" will make
+it unnecessary to worry about this one.  "git submodule" would not
+work correctly on posixly correct shells in the meantime.
