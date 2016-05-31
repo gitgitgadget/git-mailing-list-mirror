@@ -1,138 +1,117 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/3] pretty: support "mboxrd" output format
-Date: Tue, 31 May 2016 14:10:03 -0400
-Message-ID: <CAPig+cQrQfxWrGhpvtb-GKYfK0tMLsx9JJ+eWRRx00F8mNXrLg@mail.gmail.com>
-References: <20160530232142.21098-1-e@80x24.org>
-	<20160530232142.21098-2-e@80x24.org>
-	<CAPig+cQrSJe03_RtSyf5KO2vE3Rri7t70-he8SXA9Y4oBYY_Ww@mail.gmail.com>
-	<20160531074506.GA8911@dcvr.yhbt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 5/6] worktree: add "lock" command
+Date: Tue, 31 May 2016 11:10:17 -0700
+Message-ID: <xmqq4m9e5cae.fsf@gitster.mtv.corp.google.com>
+References: <20160522104341.656-1-pclouds@gmail.com>
+	<20160530104939.28407-1-pclouds@gmail.com>
+	<20160530104939.28407-6-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Wong <e@80x24.org>
-X-From: git-owner@vger.kernel.org Tue May 31 20:10:12 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	rethab.ch@gmail.com, rappazzo@gmail.com
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 31 20:10:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7o7H-00072K-KZ
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 20:10:11 +0200
+	id 1b7o7X-0007EM-Pu
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 20:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755481AbcEaSKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 14:10:06 -0400
-Received: from mail-it0-f45.google.com ([209.85.214.45]:36604 "EHLO
-	mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755214AbcEaSKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2016 14:10:05 -0400
-Received: by mail-it0-f45.google.com with SMTP id e62so67202375ita.1
-        for <git@vger.kernel.org>; Tue, 31 May 2016 11:10:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=whI0VgiVR/1V7cVSx7Wdk3YeMDnsji2ZDBRxsWZhsDI=;
-        b=WI0jWFhPMH5Dd06nxNt5VM5ryDWFZCetlIk61ANsmkHtD/LIYZ+2TxSPUq9jtzesp5
-         lV3yW9o4qOxq8JdoR3qP+eXniBaqzLx0yGXcgeIgqcYPNmCy8i4mHXowZazMpMGY4M7M
-         vxSJR9DNbpuA0WlggFki+vl8N3TSfqZ08MBa8fVJFLpVqfYAU0fjN1jJE2PMNFpLjs03
-         VqR9uohrHdy8PuU15woiI+nTPUhN6NmsHH6LKpFi1lcFguZrXIfiIWAXpmRpQPUThg0t
-         SUxsTWSczCGiJIWRO5WYqIx35Pfa9OqzGXKbzmKUx2iI0rS/2yETEEVIs27yZLpKQAX9
-         bOzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=whI0VgiVR/1V7cVSx7Wdk3YeMDnsji2ZDBRxsWZhsDI=;
-        b=Bfh0j1Pyp3CkStfAxJ2ziDKUTrIl5gLGQHIktZnaGQf9zfe9zaLgihnBNjZl3uTnZ6
-         EyzhVpWGOe2YvGuVjI7ud3SfPKmvB0LR70tmHf3bHqW1jAb+ND+nSg/NKvAdBrS3Ps5B
-         8xEPCXreXcWClh84nMu/V4EU8MRrwSbKYfJssogHrryKfLc7gt7NbkyUu9Tq1A1l5mBf
-         Gtp7PaBO7Mg9S+BD6A1PeRhDWZqj/pGZHSvUtrXrvujoPWcFtJ0gCm8nqvhcosNXe987
-         ZvHriIIGJl/CC/wHQL2FeRTH71ItcBGPn0DUwGvMEfohR+NY31waGIYAlIPM2PoTME0V
-         3rww==
-X-Gm-Message-State: ALyK8tJr2qT2KOzoxziBDK1cBwXkWJOlMMMoIPUiIeFZproL1BtGzUg8lrpLEHcWRPPMLi4ci8cfgKr0EJ9X+w==
-X-Received: by 10.36.55.13 with SMTP id r13mr15203099itr.73.1464718203212;
- Tue, 31 May 2016 11:10:03 -0700 (PDT)
-Received: by 10.79.0.30 with HTTP; Tue, 31 May 2016 11:10:03 -0700 (PDT)
-In-Reply-To: <20160531074506.GA8911@dcvr.yhbt.net>
-X-Google-Sender-Auth: _FrMr3_sCX1TeyZ6frCVn90xFCk
+	id S1755574AbcEaSKX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 May 2016 14:10:23 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62176 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755214AbcEaSKV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 May 2016 14:10:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BB0AB1F855;
+	Tue, 31 May 2016 14:10:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=E6IkAe4wmiUb
+	CirJoKD0EP1tXEg=; b=PDiFR/uNNsYe0l+R7xgX2c8jHNpJFhZpcABM5+JLZcrA
+	NHltReZBslm2RGwdh+3Dndnwn70ne2T5Vlh500aMV8rcOmHycZSwnU9C4yHX2dv7
+	6r1oOcObT+b+TI6xBNeRCtisjhrovxvKPQVZ+9n1xIUKu3xlbtlrONRqfvYNfIM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FVWfjL
+	udhrPO6jNKa4sCDerJHGQD7md/9/zhoMQDlGG6xg/k5tnpEzql637H3lebZZgja6
+	P0TPloDyR5Yp69HUMvtbyprhuANFwf0CYn6uI+grQj1JS9neoXSaeEPCMc0os7vd
+	IYfDyiI6LNbYTMXIGHBuLmkTLYFtaTGt3o5q0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B48811F854;
+	Tue, 31 May 2016 14:10:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 524DD1F853;
+	Tue, 31 May 2016 14:10:19 -0400 (EDT)
+In-Reply-To: <20160530104939.28407-6-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+	Duy"'s message of "Mon, 30 May 2016 17:49:38 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: EF1B43A2-275A-11E6-BA13-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296002>
 
-On Tue, May 31, 2016 at 3:45 AM, Eric Wong <e@80x24.org> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Mon, May 30, 2016 at 7:21 PM, Eric Wong <e@80x24.org> wrote:
->> > +                       if (pp->fmt == CMIT_FMT_MBOXRD &&
->> > +                                       !regexec(mboxrd_from, line, 0, 0, 0))
->> > +                               strbuf_addch(sb, '>');
->>
->> At first glance, this seems dangerous since it's handing 'line' to
->> regexec() without paying attention to 'linelen'. For an arbitrary
->> regex, this could result in erroneous matches on subsequent "lines",
->> however, since this expression is anchored with '^', it's not a
->> problem. But, it is a bit subtle.
->
-> Maybe having more context of the pp_remainder function and
-> seeing the get_one_line call would've helped in the diff;
-> I didn't think of this issue once I figured out where to
-> place the change.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-No, extra context wouldn't have helped. The problem is that
-get_one_line() merely returns the length of the line, which might be
-where the NUL-terminator is or it might be where the next newline is.
-Therefore, you can't rely upon the "current line" being
-NUL-terminated. So, in general, it's not "safe" to pass it to a
-function expecting the "line" to end at a NUL-terminator.
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index f9dac37..84fe63b 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -14,6 +14,7 @@
+>  static const char * const worktree_usage[] =3D {
+>  	N_("git worktree add [<options>] <path> [<branch>]"),
+>  	N_("git worktree list [<options>]"),
+> +	N_("git worktree lock [<options>] <path>"),
+>  	N_("git worktree prune [<options>]"),
+>  	NULL
+>  };
+> @@ -459,6 +460,41 @@ static int list(int ac, const char **av, const c=
+har *prefix)
+>  	return 0;
+>  }
+> =20
+> +static int lock_worktree(int ac, const char **av, const char *prefix=
+)
+> +{
+> +	const char *reason =3D "", *old_reason;
+> +	struct option options[] =3D {
+> +		OPT_STRING(0, "reason", &reason, N_("string"),
+> +			   N_("reason for locking")),
+> +		OPT_END()
+> +	};
+> +	struct worktree **worktrees, *wt;
+> +
+> +	ac =3D parse_options(ac, av, prefix, options, worktree_usage, 0);
+> +	if (ac !=3D 1)
+> +		usage_with_options(worktree_usage, options);
+> +
+> +	worktrees =3D get_worktrees();
+> +	wt =3D find_worktree(worktrees, prefix, av[0]);
+> +	if (!wt)
+> +		die(_("'%s' is not a working directory"), av[0]);
+> +	if (is_main_worktree(wt))
+> +		die(_("'%s' is a main working directory"), av[0]);
+> +
+> +	old_reason =3D wt->lock_reason;
 
-> On the other hand, not being too familiar with git C APIs, I was
-> more worried strbuf was not NUL-terminated for regexec, but it
-> seems to be.
+This use pattern suggests that the reading of lock_reason should be
+done lazily, doesn't it?  The other user of the "is it locked?"
+information, which is builtin/worktree.c::prune_worktree(), does not
+even use the get_worktrees() interface and instead it just checks if
+the lock marker git_path("worktrees/*/locked") exists.
 
-Yes, that's a guarantee, but it doesn't help in this case. Given
-line="foo\nbar", get_one_line(line) will return 4, the length of
-"foo\n", but regexec() won't know to stop looking until it hits the
-NUL after the 'r'. An arbitrary regex, such as /bar/ will match beyond
-what get_one_line() considers the end-of-line, which is why this code
-looks scary (wrong) at first glance.
+Perhaps you want one of these as a public interface:
 
->> I wonder if hand-coding, rather than using a regex, could be an improvement:
->>
->>     static int is_mboxrd_from(const char *s, size_t n)
->>     {
->>         size_t f = strlen("From ");
->>         const char *t = s + n;
->>
->>         while (s < t && *s == '>')
->>             s++;
->>         return t - s >= f && !memcmp(s, "From ", f);
->>     }
->>
->> or something.
->
-> Yikes.  I mostly work in high-level languages and do my best to
-> avoid string parsing in C; so that scares me.  A lot.
+	int worktree_is_locked(const char *id, const char **reason);
+	int worktree_is_locked(struct worktree *wt, const char **reason);
 
-The hand-coded is_mboxrd_from() above is pretty much idiomatic C and
-(I think) typical of how such a function would be coded in Git itself,
-so it looks normal and easy to grok to me (but, of course, I'm
-probably biased since I wrote it).
-
-> I admit a regex isn't necessary, but I'm wondering if the above
-> could be made less frightening to someone like me.
-
-Perhaps, but it's difficult to say without knowing how it frightens you.
-
-> Maybe extra test cases + valgrind can quell my fears :)
-
-I can envision tests such as:
-
-    ""
-    "F"
-    "From"
-    "From "
-    "From     "
-    "From foobar"
-
-and so on, if that's what you mean.
+where the caller can learn if a worktree is locked, and optionally why?
