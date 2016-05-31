@@ -1,159 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] strbuf: allow to use preallocated memory
-Date: Mon, 30 May 2016 23:34:42 -0700
-Message-ID: <xmqqbn3m7n25.fsf@gitster.mtv.corp.google.com>
-References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr>
-	<20160530103642.7213-3-william.duclot@ensimag.grenoble-inp.fr>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [RFC/PATCH] bisect--helper: `bisect_clean_state` shell function
+ in C
+Date: Tue, 31 May 2016 12:10:58 +0530
+Message-ID: <CAFZEwPMKQ6JtaNvoexzGqWRphqEgXBXn-PSrkUaPLzs6phM4Ww@mail.gmail.com>
+References: <20160530182148.18801-1-pranit.bauva@gmail.com>
+	<574D122F.7080608@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, simon.rabourg@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr,
-	antoine.queru@ensimag.grenoble-inp.fr,
-	matthieu.moy@grenoble-inp.fr, mhagger@alum.mit.edu
-To: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue May 31 08:35:16 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue May 31 08:41:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7dGl-0008KF-PW
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 08:35:16 +0200
+	id 1b7dMO-0003O3-GY
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 08:41:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755971AbcEaGex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 02:34:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51273 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753291AbcEaGeu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2016 02:34:50 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4D5DA19C07;
-	Tue, 31 May 2016 02:34:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eJlm4wDcDjqYm81Qr8lmjJtxF3o=; b=Kiohey
-	uPMvqq6tI9g4dGPv9joITfhH6spsy2y1jmqIGOseMJWthrpQKEU3qlZTdMouIqUz
-	MoZr9EvStIPC7yxsOcrBTs63Nl2+Mc63FQB1nsB2WEC0RTAbxD4X0TDE/btvPXJG
-	MZmJxa97oVXZ0QzY8A1wRuYpyOA50xe+H6qF4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WX5XX/r0F5y79nD+29/uCmDGvTLf7+31
-	Wg6gCh7VMBOvqIMgnlxggnfXnufbnQmpblgQ6ceP07nYDyRtHluHSVDHVYa0B9Cj
-	osh3QCBtlYXcfKLxCsaH5NYpCX5mwp0LjAxhtW9+nds4znVmU+z6BLMFmccQoWXh
-	xiiHoKXsFoY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4456419C06;
-	Tue, 31 May 2016 02:34:44 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B358519C05;
-	Tue, 31 May 2016 02:34:43 -0400 (EDT)
-In-Reply-To: <20160530103642.7213-3-william.duclot@ensimag.grenoble-inp.fr>
-	(William Duclot's message of "Mon, 30 May 2016 12:36:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C2CA374C-26F9-11E6-BCF9-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1751631AbcEaGlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2016 02:41:00 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:33304 "EHLO
+	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751288AbcEaGk7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2016 02:40:59 -0400
+Received: by mail-yw0-f196.google.com with SMTP id y6so17531724ywe.0
+        for <git@vger.kernel.org>; Mon, 30 May 2016 23:40:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=LUzs6yKKACFLh4haogmeSVnMx4C+23qt0B9J4eAH+wI=;
+        b=QjsnoeC/19Uo+jf6hwDPftMfBtO8vLvAkFaE11PQHtmwyD/5PC06YgTIeSR8Uv/JVO
+         yemn/zM7tBwhv3c0UVHb9OAXla0ZiQqBpsdY0RGrkrhIGteyLqTK6Zf7S4JrlO3NbdDp
+         5GGQe/fJjd+qSDdzM9qSvLMrplNSlsOBfwjYVgW2/rfzmXMuq8zusvCY5+H5uPsnmHYm
+         enxZ2MTwb3Gn1IV1iB5g9y9lDvx/zdsOOUC0M9xR9RzSw25nCVaRlXNlUL7n1jaUyF45
+         PlrQnJiI4SUwa5z4tv51ulbvgwVfgLV6uX5IjhcLNAiLdaYo0k5mjWDFt1fqB+VkLrw6
+         GFJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=LUzs6yKKACFLh4haogmeSVnMx4C+23qt0B9J4eAH+wI=;
+        b=KeI3K6MrEjaaZzA27mS1d0yJrg+0h8AI03CGEH58Y8Ceb03h1CpoB3cynD5UTLWadM
+         XvwVg8vtbDvVVr3/IVk/MCxsUrvIYfRLiW4bAEh6SigmxrVA3tYFGvtw7XJSoPBaW9nk
+         u7z0MqYJYiuVQ9ZKXb5LoXXb21sGHep7MJNvLmlyNrtBIUkhHpeVxtsIEnbg3gKL7x8o
+         jLvzew/kWBgnokhB6rBY7AztPKLiyfAIpWDZaTTY2Stieo0PKNBs6DdH6FYZcCshwSuo
+         yF3U4jhr8Hu+rk7wsTJUGxBe7DEIzpDFEm37w30Ke5aN4L3vHD4jp3jd9JxOfOFS2ath
+         1vxg==
+X-Gm-Message-State: ALyK8tJZKA2BWcBnJSRviWFbyrjND1K9RJ1Zt4IYY7S8wuify9wxBkufZdSGQ4ZOsuyqAIv5soRwg2WVxn5Pyg==
+X-Received: by 10.129.90.135 with SMTP id o129mr20895999ywb.20.1464676858292;
+ Mon, 30 May 2016 23:40:58 -0700 (PDT)
+Received: by 10.129.124.132 with HTTP; Mon, 30 May 2016 23:40:58 -0700 (PDT)
+In-Reply-To: <574D122F.7080608@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/295958>
 
-William Duclot <william.duclot@ensimag.grenoble-inp.fr> writes:
+Hey Michael,
 
-> The API contract is still respected:
+On Tue, May 31, 2016 at 9:55 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 05/30/2016 08:21 PM, Pranit Bauva wrote:
+>> Reimplement `bisect_clean_state` shell function in C and add a
+>> `bisect-clean-state` subcommand to `git bisect--helper` to call it from
+>> git-bisect.sh .
+>>
+>> Using `bisect_clean_state` subcommand is a measure to port shell
+>> function to C so as to use the existing test suite. As more functions
+>> are ported, this subcommand will be retired and will be called by
+>> bisect_reset() and bisect_start().
+>>
+>> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+>> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+>> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+>> ---
+>> This patch contains a bug. I have tried to identify the bug and I suppose it
+>> exists in do_for_each_entry_in_dir(). I have reproduced the debugging session
+>> at this link[1]. I have seen that some patches in mailing list regarding
+>> iterating over refs. Will those affect this? Or is this bug fixed in those
+>> patches?
 >
-> - The API users may peek strbuf.buf in-place until they perform an
->   operation that makes it longer (at which point the .buf pointer
->   may point at a new piece of memory).
+> The problem is that it is not legal to modify references while iterating
+> over them. See [1]. Your remove_bisect_ref() callback function deletes
+> references, which modifies the reference cache that is being iterated over.
 
-I think the contract is actually a bit stronger; the API reserves
-the right to free and reallocate a smaller chunk of memory if you
-make the string shorter, so peeked value of .buf will not be relied
-upon even if you didn't make it longer.
+Thanks for explaining this. I wasn't aware about this.
 
-> - The API users may strbuf_detach() to obtain a piece of memory that
->   belongs to them (at which point the strbuf becomes empty), hence
->   needs to be freed by the callers.
+> Instead I suggest that your remove_bisect_ref() add the references to a
+> string_list, then call delete_refs() *after* the iteration is over.
+> Alternatively, you can change remove_bisect_ref() to call
+> ref_transaction_delete() to add reference deletions to a
+> ref_transaction, then call ref_transaction_commit() after the iteration
+> is over. See the rm() function in builtin/remote.c [2] for an example.
 
-Shouldn't you be honuoring another API contract?
+I have gone through the links and I think I will stick with the first
+one because I don't see how the latter one would be better.
 
- - If you allow an instance of strbuf go out of scope without taking
-   the ownership of the string by calling strbuf_detach(), you must
-   release the resource by calling strbuf_release().
+> [1]
+> https://github.com/git/git/blob/f3913c2d03abc660140678a9e14dac399f847647/refs.h#L176-L184
+> [2]
+> https://github.com/git/git/blob/f3913c2d03abc660140678a9e14dac399f847647/builtin/remote.c#L738
+>
+>> [...]
+>
 
-As long as your "on stack strbuf" allows lengthening the string
-beyond the initial allocation (i.e. .alloc, not .len), the user of
-the API (i.e. the one that placed the strbuf on its stack) would not
-know when the implementation (i.e. the code in this patch) decides
-to switch to allocated memory, so it must call strbuf_release()
-before it leaves.  Which in turn means that your implementation of
-strbuf_release() must be prepared to be take a strbuf that still has
-its string on the stack.
-
-On the other hand, if your "on stack strbuf" does not allow
-lengthening, I'd find such a "feature" pretty much useless.  The
-caller must always test the remaining capacity, and switch to a
-dynamic strbuf, which is something the caller would expect the API
-implementation to handle silently.  You obviously do not have to
-release the resource in such a case, but that is being convenient
-in the wrong part of the API.
-
-It would be wonderful if I can do:
-
-	void func (void)
-        {
-		extern void use(char *[2]);
-		/*
-                 * strbuf that uses 1024-byte on-stack buffer
-                 * initially, but it may be extended dynamically.
-                 */
-		struct strbuf buf = STRBUF_INIT_ON_STACK(1024);
-		char *x[2];
-
-		strbuf_add(&buf, ...); /* add a lot of stuff */
-                x[0] = strbuf_detach(&buf, NULL);
-		strbuf_add(&buf, ...); /* do some stuff */
-                x[1] = strbuf_detach(&buf, NULL);
-		use(x);
-
-                strbuf_release(&buf);
-	}
-
-and add more than 2kb with the first add (hence causing buf to
-switch to dynamic scheme), the first _detach() gives the malloc()ed 
-piece of memory to x[0] _and_ points buf.buf back to the on-stack
-buffer (and buf.alloc back to 1024) while setting buf.len to 0,
-so that the second _add() can still work purely on stack as long as
-it does not go beyond the 1024-byte on-stack buffer.
-
-> +/**
-> + * Flags
-> + * --------------
-> + */
-> +#define STRBUF_OWNS_MEMORY 1
-> +#define STRBUF_FIXED_MEMORY (1 << 1)
-
-This is somewhat a strange way to spell two flag bits.  Either spell
-them as 1 and 2 (perhaps in octal or hexadecimal), or spell them as
-1 shifted by 0 and 1 to the left.  Don't mix the notation.
-
-> @@ -20,16 +28,37 @@ char strbuf_slopbuf[1];
->  
->  void strbuf_init(struct strbuf *sb, size_t hint)
->  {
-> +	sb->flags = 0;
->  	sb->alloc = sb->len = 0;
->  	sb->buf = strbuf_slopbuf;
->  	if (hint)
->  		strbuf_grow(sb, hint);
->  }
->  
-> +void strbuf_wrap_preallocated(struct strbuf *sb, char *path_buf,
-> +			      size_t path_buf_len, size_t alloc_len)
-> +{
-> +	if (!path_buf)
-> +		die("you try to use a NULL buffer to initialize a strbuf");
-
-What does "path" mean in the context of this function (and its
-"fixed" sibling)?
+Regards,
+Pranit Bauva
