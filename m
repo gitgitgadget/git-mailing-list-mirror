@@ -1,81 +1,106 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/3] pretty: support "mboxrd" output format
-Date: Tue, 31 May 2016 16:12:16 -0400
-Message-ID: <CAPig+cSrqs7W2hSz6Z4_O9U52gUJFCqTSfRL0E0b=d=bO9RCEQ@mail.gmail.com>
-References: <20160530232142.21098-1-e@80x24.org>
-	<20160530232142.21098-2-e@80x24.org>
-	<CAPig+cQrSJe03_RtSyf5KO2vE3Rri7t70-he8SXA9Y4oBYY_Ww@mail.gmail.com>
-	<20160531074506.GA8911@dcvr.yhbt.net>
-	<CAPig+cQrQfxWrGhpvtb-GKYfK0tMLsx9JJ+eWRRx00F8mNXrLg@mail.gmail.com>
-	<20160531182932.GA27021@dcvr.yhbt.net>
+From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH v2.5 1/8] t4051: rewrite, add more tests
+Date: Tue, 31 May 2016 22:15:36 +0200
+Message-ID: <574DF0E8.8060908@web.de>
+References: <xmqqh9e5mvjs.fsf@gitster.mtv.corp.google.com>
+ <xmqq4ma5msrd.fsf@gitster.mtv.corp.google.com> <5740AC28.6010202@web.de>
+ <5749AF59.2070704@web.de> <5749B1EA.10707@web.de>
+ <xmqqinxwpgfn.fsf@gitster.mtv.corp.google.com> <574DED66.6050008@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Wong <e@80x24.org>
-X-From: git-owner@vger.kernel.org Tue May 31 22:12:23 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 31 22:15:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b7q1W-0002UN-Q4
-	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 22:12:23 +0200
+	id 1b7q4z-0004qD-Sl
+	for gcvg-git-2@plane.gmane.org; Tue, 31 May 2016 22:15:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751284AbcEaUMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2016 16:12:18 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:36600 "EHLO
-	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750813AbcEaUMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2016 16:12:18 -0400
-Received: by mail-io0-f195.google.com with SMTP id m17so250772ioi.3
-        for <git@vger.kernel.org>; Tue, 31 May 2016 13:12:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=aGgFzxC8GufXG2ynixx4uZcqgdxDV2YhTSRHgyhAHz0=;
-        b=Jyk+HJkX8+o7KSnmFTdF6xrxhHST38hyyxTs3qCg5Iuy6LX4LCZHr0ME3FnQ3krP7D
-         LRV7GvgcuYFc/wTiVB4ivQML30WHPXhlXgEEv18QXszuOSmColf3HBRQWbxLV762aX6h
-         zZa/NolqEJIAEFdH03M6ZJJCn1ex5KatPYLXaRHlmkG4CBDwWahSBTL8jTrlNjfreoxs
-         HwPLt3sMGn0OGlcaqxfi/Kfe24/TqMJmKu2mEMFFxdegjhGwUfG0Fr/mKSN1dwmpCJlH
-         y6lkqc5x2vIUHdTDKdoIU+PVE3rYkyOtCa+Je5/9yRIbsFQxZqncgMKqjf9gf9vQ7aZy
-         MKaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=aGgFzxC8GufXG2ynixx4uZcqgdxDV2YhTSRHgyhAHz0=;
-        b=CifCGDdY3YILe3+nosESDYuJqxMsKeC9QXuXNI+fdWV1Obz4esOg3/QjTWdkKU2LUc
-         8e6r9GBATwYHnE78fpIOVSgSU+6kGnnQMUiDGueTUnDflfovXMEy9cO54q8j+i+q07vf
-         1/Yi2So46WpZ0MRgR7zmS0OvelasPpNr/TVPPjeAapW1pzoQfbhLYz8041nKpXky0hUu
-         9UaKSGI4NMhbEIXXztzPJ050l16J6E7qWXgnGBkTsfnkcKSINa0Q6Z1xpc/zc9voR81d
-         YCV632o5dM136/MAIwV+xr8QUB1JE0FFshFhvT/TGXYkz9jKWXZ1rtKAHOrbbrZFuvDc
-         2pcg==
-X-Gm-Message-State: ALyK8tKO0cix8iDiyW911H5Z7WoTs+p+nc5CMNWs7hj8QEwUpXo+yTneGK6GLO2HrWnopve22XRxU89eAqId5Q==
-X-Received: by 10.107.132.40 with SMTP id g40mr555793iod.34.1464725537053;
- Tue, 31 May 2016 13:12:17 -0700 (PDT)
-Received: by 10.79.0.30 with HTTP; Tue, 31 May 2016 13:12:16 -0700 (PDT)
-In-Reply-To: <20160531182932.GA27021@dcvr.yhbt.net>
-X-Google-Sender-Auth: B0VA40vCeTMoNKf0OUqbly3m1gE
+	id S1756413AbcEaUPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2016 16:15:53 -0400
+Received: from mout.web.de ([217.72.192.78]:50195 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756398AbcEaUPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2016 16:15:52 -0400
+Received: from [192.168.178.36] ([79.213.120.243]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0LpwB1-1bkSoj1frb-00ffN1; Tue, 31 May 2016 22:15:42
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
+In-Reply-To: <574DED66.6050008@web.de>
+X-Provags-ID: V03:K0:YylIHGplAq9iw3j0vEK4Gbcu6GmVKyIfCafyxfjNXdvRTnll0mT
+ WwPfphXTthMtoZClqECyT0KnF/J9AqeBH0GccOqoUfYP/pwBI/X5ybnbQvPsuyAbdvPxQHA
+ RRp/jHqZb9LA7fAP7Dn1ozMSc4k8HDfzRfUQEgVlJ7PefKjAcZsHdEQxSSv7MZJDMhBl4Vk
+ 3R0B/WNroExzWvC9Oxz8Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qU+IYIYVAX8=:UffC3WQsm5bNX6/8JNeLDR
+ bLuH4cjE+hhwbJm6+SbDfHewtoKuc+G9nRtHpuUBHBN7xpzoj7f7nNhVhhNoHw2N2TOK236hC
+ MtKmJTE/nlf9n8e9gxy2qHIUVgnVpcFww4LGffgxLFvHhBr/pI/zemwDMY4aPx2JZJfjdag8M
+ UT87guo8lQkZ8OY807flhyqqxHfVdKvhuWuuXPmw8rkTW1dBRiZj93O1xPLtRwxmr2QhL8s0W
+ v9XhB+yB6eZgtCPbMvpJhQmW1d7X1wKDfKiuRBa6NnRIklOy5q2g33z/yQQ4mDjdInVgWWp77
+ bM/vugswQ/j1fKpUUv9Gtj8DPNEYMMDpkk8KqssK7JEvg6NbWipvsVXVIUHubRkvkwfYXkgbR
+ LtZQg9xwMaSPQ7mByULTaXVyKuhxmLNmUl8ykDtHjYO0+F5+ipqM2rKG6fpOXyq1j5OdJ8vNK
+ aIXoaSaXN4GCambGtB4fjDGZge+kfFj1vW9lFgh2/RO2NVI9VTvdlP6GrXLvR4VCowjfyfIIv
+ s3+3/XAusvkGqsiNUXFee9pJk8Dt/oJEOFS03GCKIN4qNUK+UVu+G6x0yrDxLotACWv4vZmAh
+ XQKaJR7Wr/9Bv49C/daOCpkEbciydZ4SyeK+sYVJTOpIF9eT9DC4G/N5NtLzHvP2BlHeAy+VX
+ gWdpOAlO/qmYYma0Fo4Kll58vou6OPYAyEQxqWbIehOEAL5KvbdxSugzEyh0U2Uiivbutn9+Z
+ kQhGnsagd+LEg8lgENOO08FDC90ToVVMZoridGHBMRKYQbP3xO3jc0AIWz9jOeQFm0x6zxSV 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296011>
 
-On Tue, May 31, 2016 at 2:29 PM, Eric Wong <e@80x24.org> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Tue, May 31, 2016 at 3:45 AM, Eric Wong <e@80x24.org> wrote:
->> > Eric Sunshine <sunshine@sunshineco.com> wrote:
-> <snip>  Ah thanks, I can see your point-of-view, now.
-> I always had the '^' in my mind since I've written the same
-> thing in Perl and Ruby.
+Interdiff between v2 and v2.5:
+- Rename $message to $tag, as that fits its purpose better, and quote it.
+- Quote $@.
+- Use the most common sed invocation from t/ for getting the last line of
+  a file, for consistency.
+- Use apply --index to make sure we notice if the generated diff adds or
+  deletes files unintendedly.
+---
+ t/t4051-diff-function-context.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-On reflection, even with the '^' anchor, it isn't safe the way it's
-coded since '^' will match following a newline, won't it? Therefore,
-because 'line' isn't necessarily NUL-terminated, the pattern could
-match on some line beyond what get_one_line() considers the "current
-line".
-
-This makes the hand-coded is_mboxrd_from() even more attractive; plus
-you can re-use it in patch 2.
+diff --git a/t/t4051-diff-function-context.sh b/t/t4051-diff-function-context.sh
+index 88a3308..b6bb04a 100755
+--- a/t/t4051-diff-function-context.sh
++++ b/t/t4051-diff-function-context.sh
+@@ -7,12 +7,12 @@ test_description='diff function context'
+ dir="$TEST_DIRECTORY/t4051"
+ 
+ commit_and_tag () {
+-	message=$1 &&
++	tag=$1 &&
+ 	shift &&
+-	git add $@ &&
++	git add "$@" &&
+ 	test_tick &&
+-	git commit -m $message &&
+-	git tag $message
++	git commit -m "$tag" &&
++	git tag "$tag"
+ }
+ 
+ first_context_line () {
+@@ -23,7 +23,7 @@ first_context_line () {
+ }
+ 
+ last_context_line () {
+-	sed -n '$ p'
++	sed -ne \$p
+ }
+ 
+ check_diff () {
+@@ -38,7 +38,7 @@ check_diff () {
+ 	test_expect_success ' diff applies' '
+ 		test_when_finished "git reset --hard" &&
+ 		git checkout --detach "$name^" &&
+-		git apply "$name.diff" &&
++		git apply --index "$name.diff" &&
+ 		git diff --exit-code "$name"
+ 	'
+ }
