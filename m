@@ -1,97 +1,276 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: git gc and worktrees
-Date: Wed, 1 Jun 2016 10:57:08 +0200
-Message-ID: <574EA364.60408@alum.mit.edu>
-References: <574D382A.8030809@kdbg.org>
- <CACsJy8BHU0YtgvjuefRPuMPLhvoOPLVMhR4YzH8=wVFeOie+Xw@mail.gmail.com>
- <20160531221415.GA3824@sigill.intra.peff.net>
-Mime-Version: 1.0
+From: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
+Subject: Re: [RFC/PATCH] Triangular Workflow UI improvement: Documentation
+Date: Wed, 1 Jun 2016 11:32:19 +0200
+Message-ID: <2254CE50-8B7C-4FFF-BAA3-26EF1932AAD4@grenoble-inp.org>
+References: <9A874F00-ABD8-43D5-A32E-6A39ED333E6D@grenoble-inp.org> <1464697717-5751-1-git-send-email-jordan.de-gea@grenoble-inp.org> <vpqy46qs3f3.fsf@anie.imag.fr>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Turner <dturner@twopensource.com>
-To: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 10:57:34 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>,
+	Samuel Groot <samuel.groot@grenoble-inp.org>,
+	Tom Russello <tom.russello@grenoble-inp.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 01 11:32:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b81xy-0000Wy-1K
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 10:57:30 +0200
+	id 1b82WC-0005iz-V5
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 11:32:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757869AbcFAI5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2016 04:57:17 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:64833 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757792AbcFAI5N (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Jun 2016 04:57:13 -0400
-X-AuditID: 1207440c-c3fff70000000b85-d1-574ea3673dff
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 30.19.02949.763AE475; Wed,  1 Jun 2016 04:57:12 -0400 (EDT)
-Received: from [192.168.69.130] (p508EAFFA.dip0.t-ipconnect.de [80.142.175.250])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u518v8ps014241
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 1 Jun 2016 04:57:10 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.8.0
-In-Reply-To: <20160531221415.GA3824@sigill.intra.peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqJux2C/c4NAHZov5m04wWnRd6Way
-	eDL3LrNF95S3jBY/WnqYHVg9ds66y+7x8FUXu8ez3j2MHgue32f3+LxJLoA1itsmKbGkLDgz
-	PU/fLoE7Y+nup+wFHbwVHybyNzDe4upi5OSQEDCROH9+J3MXIxeHkMBWRoneRbPYIJzzTBLn
-	f55gAakSFlCUmLb0EiuILSJgK/F093+oonmMEnfaX7N3MXJwMAtUSaw+bwdSwyagK7Gop5kJ
-	xOYV0JSY8+M0M4jNIqAicaf7JJgtKhAicX7dVlaIGkGJkzOfgO3iFLCSeHt6IVgNs4C6xJ95
-	l6BseYntb+cwT2Dkn4WkZRaSsllIyhYwMq9ilEvMKc3VzU3MzClOTdYtTk7My0st0jXUy80s
-	0UtNKd3ECAlmnh2M39bJHGIU4GBU4uFVuOgbLsSaWFZcmXuIUZKDSUmUNzXPL1yILyk/pTIj
-	sTgjvqg0J7X4EKMEB7OSCK/gZKAcb0piZVVqUT5MSpqDRUmcV3WJup+QQHpiSWp2ampBahFM
-	VoaDQ0mCd8sioEbBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4UETGFwNjEiTFA7SX
-	aTHI3uKCxFygKETrKUZdjiP7761lEmLJy89LlRLnvbcQqEgApCijNA9uBSx1vWIUB/pYmNce
-	5BIeYNqDm/QKaAkT0JL4DB+QJSWJCCmpBsY8O/ljr546Wsstb33R9FDFOdom9GFWpuDMtufB
-	mSwPtnre912QJ6KqGfAgYY4RG39w+J8nCx9VrG6/b3fMqJ/nWVL4pgNHZ02M4X8e 
+	id S1757905AbcFAJco convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jun 2016 05:32:44 -0400
+Received: from zm-smtpout-2.grenet.fr ([130.190.244.98]:36091 "EHLO
+	zm-smtpout-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754028AbcFAJcY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Jun 2016 05:32:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 7829C2136;
+	Wed,  1 Jun 2016 11:32:20 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id X0JSFUexhooh; Wed,  1 Jun 2016 11:32:20 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 5EF662135;
+	Wed,  1 Jun 2016 11:32:20 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 5847A2077;
+	Wed,  1 Jun 2016 11:32:20 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0G1Lq5is2n3J; Wed,  1 Jun 2016 11:32:20 +0200 (CEST)
+Received: from eduroam-033124.grenet.fr (eduroam-033124.grenet.fr [130.190.33.124])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 0C9A32064;
+	Wed,  1 Jun 2016 11:32:20 +0200 (CEST)
+In-Reply-To: <vpqy46qs3f3.fsf@anie.imag.fr>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296069>
 
-On 06/01/2016 12:14 AM, Jeff King wrote:
+> Jordan DE GEA <jordan.de-gea@grenoble-inp.org> writes:
+>> Currently, Triangular Workflow can be configured, but there is no
+>> Documentation about it. A documentation is useful to keep
+>> configuration possibilities up-to-date.
+>=20
+> You're using capitalization in a strange way. I don't think Triangula=
+r
+> Workflow deserves to be capitalized, and Documentation certainly
+> doesn't.
+>=20
+> Also, you're wrapping your text in a strange way. You did see the
+> exchange with Antoine about this, right?
+
+Yes, thank you. I will fix that.=20
+
+> A question about your final goal: I had understood that you wanted to
+> improve the UI, and to design a proper UI you wanted to write a tutor=
+ial
+> about the future UI, and then implement it. Did I mis-understand? Wha=
+t
+> are the next steps in your plan?
+
+The first goal is to write a documentation on "how to set up a triangul=
+ar
+workflow" with the current options. After that, we can discuss about th=
+e
+UI improvement.=20
+
+>> Documentation/Makefile                  |   1 +
+>> Documentation/gittriangularworkflow.txt | 120 ++++++++++++++++++++++=
+++++++++++
 > [...]
-> Michael (cc'd) noted to me off-list recently that there may be some
-> special cases there regarding reflogs in other worktrees (i.e., that we
-> don't always include them for our reachability checks). I don't know the
-> details, though.
+>> --- a/Documentation/Makefile
+>> +++ b/Documentation/Makefile
+>> @@ -34,6 +34,7 @@ MAN7_TXT +=3D gitrevisions.txt
+>> MAN7_TXT +=3D gittutorial-2.txt
+>> MAN7_TXT +=3D gittutorial.txt
+>> MAN7_TXT +=3D gitworkflows.txt
+>> +MAN7_TXT +=3D gittriangularworkflow.txt
+>=20
+> Adding documentation is one thing, but it needs to be discoverable. N=
+o
+> one is going to type "man gittriangularworkflow" or open
+> https://git-scm.com/docs/gittriangularworkflow without being told to.
+>=20
+> Two obvious questions/suggestions seeing the above:
+>=20
+> * Why not add the new documentation as a subsection of gitworkflows.t=
+xt?
+>=20
+> * If not, then at the very least a link to gittriangularworkflow shou=
+ld
+>  appear in the SEE ALSO section of gitworkflows.txt.
 
-That's correct. `for_each_reflog()` does its work by walking the
-directory tree under `$GIT_DIR/logs`. So when run in the main
-repository, it never looks at the per-worktree reflogs. Therefore,
-objects that are only reachable from per-worktree reflogs can end up
-getting pruned.
+Yes, adding a subsection in gitworkflows seems to be a better choice.
 
-This is closely tangled up with my ref-iterators patch series (which is
-why I noticed it), especially with
+>=20
+>> +DESCRIPTION
+>> +-----------
+>> +
+>> +Triangular Workflow (or Asymmetric Workflow) is a workflow which gi=
+ves
+>> +the possibility to:
+>> +
+>> +- fetch (or pull) from a repository
+>> +- push to another repository
+>=20
+> I wouldn't say "gives the possibility to": you already have this
+> possibility all the time when using Git.
+>=20
+> I find Michael Haggerty's definition of triangular workflow much
+> clearer:
+>=20
+> https://github.com/blog/2042-git-2-5-including-multiple-worktrees-and=
+-triangular-workflows#improved-support-for-triangular-workflows
+>=20
+> I don't see a licence on the GitHub blog, so I don't think it's legal=
+ to
+> copy-past directly to our docs, but Michael might allow us to do so?
 
-    [PATCH 13/13] for_each_reflog(): reimplement using iterators
+You=E2=80=99re right. Can Michael Taggerty allow us to use his text ?
 
-[1].
+>=20
+>> +In some projects, you don't have to push directly
+>=20
+> s/don't have to/cannot/
 
-I think reference stores are going to need two distinct types of
-reference iteration: one to iterate over the *logical* reference space
-of a single repo or worktree, and one to find all *local* references
-and/or reachability roots (e.g., when run within a linked repo). The
-current approach, where subtrees of the reference namespace are pasted
-ad-hoc into each other partly by manhandling the ref_cache and partly
-via the hack in `git_path()` is not, I think, a very good long-term design.
+Done
 
-I'd prefer the elementary operation on a low-level reference store to be
-iterating over all of the references that are stored locally, and to use
-`merge_ref_iterator` for pasting together the parts of low-level
-reference stores that are needed to form a logical view of the
-references in a linked repo.
+> ?
+>=20
+>> +Here is an example of configuration:
+>> +
+>> +........................................
+>> +------------               -----------
+>> +| UPSTREAM |  maintainer   | ORIGIN  |
+>> +|  git/git |- - - - - - - -|  me/git |
+>> +------------       =E2=86=90       -----------
+>> +         \                   /
+>> +          \                 /
+>> +     fetch=E2=86=93\               /=E2=86=91push
+>> +            \             /
+>> +             \           /
+>> +             -------------
+>> +             |   LOCAL   |
+>> +             -------------
+>> +........................................
+>=20
+> The most important is missing: what is the role of each repo? which o=
+ne
+> is public and which one is private?
+>=20
+> I'd rather avoid using "ORIGIN" here, as the name is used for the
+> default remote when cloning, and it's a valid workflow to "git clone"
+> from UPSTREAM and then "git remote add" your public fork. Perhaps
+> PUBLIC-FORK?
 
-Michael
+With Michael Taggerty=E2=80=99s text, it will be more understandable.=20
 
-[1]
-http://thread.gmane.org/gmane.comp.version-control.git/295860/focus=295866
+>=20
+>> +CREATE YOUR REPOSITORY
+>> +----------------------
+>> +The first step is to create your own repository. To do that you can=
+:
+>> +
+>> +- a. fork (e.g. GitHub) the main project (e.g git/git), or
+>> +- b. create an empty repository
+>> +
+>> +a. Fork the project
+>> +~~~~~~~~~~~~~~~~~~~
+>> +Go to the repository of the project (e.g. git/git) you want
+>> +and fork it.
+>> +
+>> +b. Create from scratch
+>> +~~~~~~~~~~~~~~~~~~~~~~
+>> +Create a repository on your prefered Git repository hosting service=
+=2E
+>> +
+>> +Clone it
+>> +~~~~~~~~
+>> +Clone your repository on your machine.
+>=20
+> I don't think this section helps much. If the user knows that he or s=
+he
+> wants to "fork (e.g. GitHub) the main project (e.g git/git),", then
+> saying
+>=20
+>  +a. Fork the project
+>  +~~~~~~~~~~~~~~~~~~~
+>  +Go to the repository of the project (e.g. git/git) you want
+>  +and fork it.
+>=20
+> does not help at all, it just says the same thing in a more verbose w=
+ay.
+
+I will shorten for the next iteration.=20
+
+>> +CONFIGURE BRANCHES
+>> +------------------
+>> +In many projects, the branch `master` have to be pulled from
+>> +the main repository(e.g. git/git) and pushed to your repository
+>> +(e.g. me/git).
+>=20
+> Be precise: you just named 3 repositories UPSTREAM, ORIGIN and LOCAL,
+> and now you're writting "the main repository" (not 100% clear) and "y=
+our
+> repository" (100% not clear, you have two repos).
+>=20
+> Actually, most of the time, you'd pull from UPSTREAM/master and push =
+to
+> PUBLIC-FORK/<topic-branch>, not PUBLIC-FORK/master.
+>=20
+>> +Adding the main project remote
+>> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>> +Add a new remote (e.g. upstream):
+>> +
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> +`git remote add upstream <main_project_url>`
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> +
+>> +Pull from upstream by default
+>> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>> +
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> +`git config branch.master.remote upstream`
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> +
+>> +
+>> +Push to origin by default
+>> +~~~~~~~~~~~~~~~~~~~~~~~~~
+>> +
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> +`git config branch.master.pushRemote origin`
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> "by default" probably needs to be clarified ("when push/pull is calle=
+d
+> without argument =C2=BB?)
+
+Yes, that is too verbose.=20
+
+>=20
+>> +GET YOUR PROJECT UP TO DATE
+>> +---------------------------
+>> +
+>> +Now that `branch.master.remote` and `branch.master.pushRemote` are
+>> +set, you can use the following commands to be up to date:
+>=20
+> What does "be up to date" mean?
+
+OK.=20
+
+
+I'll work on these issues and send a new RFC soon.=20
