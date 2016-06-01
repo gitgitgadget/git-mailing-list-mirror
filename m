@@ -1,93 +1,89 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: git gc and worktrees
-Date: Wed, 1 Jun 2016 09:00:49 +0200
-Message-ID: <574E8821.3070502@kdbg.org>
-References: <574D382A.8030809@kdbg.org>
- <CACsJy8BHU0YtgvjuefRPuMPLhvoOPLVMhR4YzH8=wVFeOie+Xw@mail.gmail.com>
- <20160531221415.GA3824@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] completion: create variable for untracked file modes
+Date: Wed, 01 Jun 2016 00:02:06 -0700
+Message-ID: <xmqqk2i91jf5.fsf@gitster.mtv.corp.google.com>
+References: <5a3d279f-d3cc-90ec-a0e7-90b7ef438966@virtuell-zuhause.de>
+	<20160601040542.GA18978@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 09:01:04 2016
+Content-Type: text/plain
+Cc: Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	John Keeping <john@keeping.me.uk>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 01 09:02:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b809B-0005Wt-8q
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 09:00:57 +0200
+	id 1b80AR-0006Jp-So
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 09:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757468AbcFAHAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2016 03:00:54 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:36954 "EHLO bsmtp3.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757441AbcFAHAx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2016 03:00:53 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3rKLq63c71z5tlH;
-	Wed,  1 Jun 2016 09:00:50 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 2D01A5247;
-	Wed,  1 Jun 2016 09:00:49 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-In-Reply-To: <20160531221415.GA3824@sigill.intra.peff.net>
+	id S1161053AbcFAHCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2016 03:02:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51147 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1161029AbcFAHCK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2016 03:02:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 281B71AFC1;
+	Wed,  1 Jun 2016 03:02:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RtYDGVFz2NxPel1c1UTr3Bp7uZc=; b=qcYq7o
+	hkIFVEdr7L6uE4l3oVgH4mmu1NuwjrQpSH2AhVjKtzNfIdrDi8vYQtzSsxqmZABR
+	ukVqsHmURhkz93CSPyODUeUwlJTTebPBiO+j0Il9KrxSCsEwtbFBj+asCO0VgS5+
+	NiFF9Qi0AGNX6s84x3PaIQ7t+un6Bh0s4W9MM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LQPCYUVFYa0ifI4DZ9RGRUEFSdvY38bN
+	RCUygtpkhRWRTL8PKcVvVeNqB8KHzf4oXjFbARnJLTSUwiPdRnaob768VQ52f4Kh
+	K3wauGMzEDhVm6OXrm5CyMm/Y/j9I45oJNmOIt6JlXFHDQby1wL6XCIqe4lkjkvM
+	jKhbGtGPiZI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F5F51AFC0;
+	Wed,  1 Jun 2016 03:02:09 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 934231AFBF;
+	Wed,  1 Jun 2016 03:02:08 -0400 (EDT)
+In-Reply-To: <20160601040542.GA18978@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 1 Jun 2016 00:05:42 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C19EA84E-27C6-11E6-833D-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296059>
 
-Am 01.06.2016 um 00:14 schrieb Jeff King:
-> Right, we use the index for reachability checks (both in "prune", but
-> also during a "repack -a", which uses the revision parser's
-> '--indexed-objects" option). That obviously should handle per-worktree
-> index files, but I don't know whether it currently does.
+Jeff King <peff@peff.net> writes:
 
-Thanks. Here's a test case to make sure that --indexed-objects looks at
-the indexes of separate worktrees. I'm not submitting a proper patch
-because I don't feel like being able to fix the problem and I'm not
-sure what the expected order of the listed objects is.
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index 3402475..57a0acc 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -1098,6 +1098,8 @@ _git_clone ()
+>>  	esac
+>>  }
+>>  +__git_untracked_file_modes="all no normal"
+>> +
+>>  _git_commit ()
+>>  {
+>>  	case "$prev" in
+>
+> There's something funny about the formatting of your patch. The first
+> "+" line is indented, which it shouldn't be. As it is, it looks like
+> context (but it's not actually part of the preimage). But if it's not
+> context, then you are missing a context line.
 
-diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
-index 3e752ce..dbd3679 100755
---- a/t/t6000-rev-list-misc.sh
-+++ b/t/t6000-rev-list-misc.sh
-@@ -96,6 +96,34 @@ test_expect_success 'rev-list can show index objects' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--indexed-objects in the index of a separate worktrees' '
-+	# see also the comments in the previous case
-+	cat >expect <<-\EOF &&
-+	8e4020bb5a8d8c873b25de15933e75cc0fc275df one
-+	d9d3a7417b9605cfd88ee6306b28dadc29e6ab08 only-in-index
-+	2043d83f5a374f119437856d2f1773c936938876 only-in-wt-index
-+	9200b628cf9dc883a85a7abc8d6e6730baee589c two
-+	EOF
-+	echo only-in-index >only-in-index &&
-+	git add only-in-index &&
-+
-+	git worktree add -b side wt &&
-+	test_when_finished "rm -r wt; git worktree prune" &&
-+	(
-+		cd wt &&
-+		echo only-in-wt-index >only-in-wt-index &&
-+		git add only-in-wt-index &&
-+
-+		# this must also include the objects of the main worktree
-+		git rev-list --objects --indexed-objects >../actual
-+	) &&
-+	test_cmp expect actual &&
-+
-+	# same result when invoked from the main worktree
-+	git rev-list --objects --indexed-objects >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '--bisect and --first-parent can not be combined' '
- 	test_must_fail git rev-list --bisect --first-parent HEAD
- '
+Not just that.  Count the context lines and notice that this appears
+to have only 2 lines of precontext.
+
+I think the MUA is somehow eating a blank line context (i.e. a
+single SP on a line by itself) immediately after the closing brace
+of the function before _git_commit and the next new line that began
+with '+' in the original and made them into a single line.  I've
+seen this exact breakage before, I think.
