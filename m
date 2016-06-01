@@ -1,205 +1,189 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] submodule operations: tighten pathspec errors
-Date: Wed, 1 Jun 2016 13:55:09 -0700
-Message-ID: <CAGZ79kbdfEJ1iSpOJ=HfHP=EvVxB9Sv+5Zk+goLSOJphh8ZZ+w@mail.gmail.com>
-References: <1463793689-19496-1-git-send-email-sbeller@google.com> <xmqqd1o8vbc4.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/2] strbuf: improve API
+Date: Wed, 1 Jun 2016 17:07:13 -0400
+Message-ID: <20160601210713.GA18118@sigill.intra.peff.net>
+References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr>
+ <1069084553.156626.1464607928755.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+ <20160601074218.GB14096@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 23:00:23 2016
+Content-Type: text/plain; charset=utf-8
+Cc: William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	git@vger.kernel.org,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
+	antoine queru <antoine.queru@ensimag.grenoble-inp.fr>,
+	matthieu moy <matthieu.moy@grenoble-inp.fr>,
+	mhagger@alum.mit.edu
+To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 01 23:07:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8DFV-0007Jt-DP
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 23:00:21 +0200
+	id 1b8DMK-0003nU-QV
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 23:07:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751254AbcFAVAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2016 17:00:15 -0400
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:36374 "EHLO
-	mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750967AbcFAVAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2016 17:00:14 -0400
-Received: by mail-qk0-f174.google.com with SMTP id i187so21775332qkd.3
-        for <git@vger.kernel.org>; Wed, 01 Jun 2016 14:00:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=7ySsgGnAqxaemZx756daU/UMfv/wc+mx1EYALu6TYMQ=;
-        b=BQJ6/FQhzzRfMOwBA76A/nuT2tgvYsg79eknuJcdek7kuyY6gQ23o+dFcbxdTDKOLd
-         I8Hje5aipFmgwrJQWz2yDvJKF9Ppqp2BClXm5qDEusHVKixBtcxY3XQBpnrE8qjK2Trv
-         CLJInbxjml5QuV4SPtlyf8aXPxIbqIwHAZ3lk76VqFJWzLUSqC8kYsrOamFnypMi5xm+
-         u1p/n2nGg+kaB4WCC1ffFMjfI03g4LlM0L5elvQrRDQ4L/ptHNK998+/makVXDL4xyHF
-         E9phcILclgDTwzJqAZhcDyuTzgkgb7USa+Totqz1zTcxmBPWDm4rjdduj68ug4wBcN67
-         nHUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=7ySsgGnAqxaemZx756daU/UMfv/wc+mx1EYALu6TYMQ=;
-        b=j/pJqqPSKfCIFNwzJVVHTpEWNehC013zXakeGLfzEkDIb/Vlxwmfe0/qUiS1LW/JqT
-         3FLZTaHXJvbEau7e/V87x32OEn+8L3tzfUO/aUH3aMIJeiFPsvvixxgZtWKAmrR/eRrv
-         w3TJMfr2C0kiIEQX2SouQ75RaPB5VCnTZp1wpgEeD3Ri9xHgUhqgK8uioyrdEcEScDpA
-         tFltufWmwFhfpWDsWYUIPASIuVXE20E4eRzQhpEzDpysyVJ/UFs4neU9kltB+m5eYHNN
-         fzW5fEi7Pwh0dVd7m4W2y2DYNol1j83nNB1FyT55ATNkm1ocxeHYUfjFQSPpKipuPLX0
-         C6LA==
-X-Gm-Message-State: ALyK8tKuGNROHXTfbwmMByruEf+fDfQQepZauPDc3dcHQCvxojgn9DjaSHbZZzgJZx1R8+HWEcUhkACFKC/vBe4J
-X-Received: by 10.237.41.5 with SMTP id s5mr5853719qtd.71.1464814510051; Wed,
- 01 Jun 2016 13:55:10 -0700 (PDT)
-Received: by 10.200.55.212 with HTTP; Wed, 1 Jun 2016 13:55:09 -0700 (PDT)
-In-Reply-To: <xmqqd1o8vbc4.fsf@gitster.mtv.corp.google.com>
+	id S1751250AbcFAVHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2016 17:07:18 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47538 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751076AbcFAVHR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2016 17:07:17 -0400
+Received: (qmail 28634 invoked by uid 102); 1 Jun 2016 21:07:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Jun 2016 17:07:16 -0400
+Received: (qmail 5209 invoked by uid 107); 1 Jun 2016 21:07:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Jun 2016 17:07:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Jun 2016 17:07:13 -0400
+Content-Disposition: inline
+In-Reply-To: <20160601074218.GB14096@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296165>
 
-On Thu, May 26, 2016 at 1:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> It's a first initial version with no tests (and probably conflicting with
->> some topics in flight), but I was curious how involved this issue actually is,
->> so I took a stab at implementing it.
->
-> I take it to mean "This is s/PATCH/RFC/".
->
->> +--error-unmatch::
->> +     If the pathspec included a specification that did not match,
->> +     the usual operation is to error out. This switch suppresses
->> +     error reporting and continues the operation.
->
-> The behaviour described is a total opposite of the option with the
-> same name "ls-files" has, no?
->
-> If there were no default, --error-unmatch would make an unmatching
-> pathspec an error and --no-error-unmatch would make it a non-error.
->
-> If the default is to error out, there is no need for --error-unmatch
-> to exist, but you do want --no-error-unmatch aka --unmatch-ok.
->
-> If the default is not to error out, --error-unmatch should make it
-> notice and turn it into an error.
->
-> I am guessing that you were debating yourself which should be the
-> default and the patch ended up in an inconsistent state, the
-> description assuming a more strict default, while the option name
-> assuming a less strict default.
+On Wed, Jun 01, 2016 at 03:42:18AM -0400, Jeff King wrote:
 
-Yes.
+> I have no idea if those ideas would work. But I wouldn't want to start
+> looking into either of them without some idea of how much time we're
+> actually spending on strbuf mallocs (or how much time we would spend if
+> strbufs were used in some proposed sites).
 
->
->> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
->> index 5295b72..91c49ec 100644
->> --- a/builtin/submodule--helper.c
->> +++ b/builtin/submodule--helper.c
->> @@ -19,7 +19,8 @@ struct module_list {
->>  static int module_list_compute(int argc, const char **argv,
->>                              const char *prefix,
->>                              struct pathspec *pathspec,
->> -                            struct module_list *list)
->> +                            struct module_list *list,
->> +                            int unmatch)
->
-> What is "unmatch"?  "Catch unmatch errors, please?"  "Do not check
-> and report unmatch errors?"
->
-> My cursory read of a few hunks below tells me that you meant the
-> latter, i.e. "unmatch_ok".
->
->> @@ -36,10 +37,9 @@ static int module_list_compute(int argc, const char **argv,
->>
->>       for (i = 0; i < active_nr; i++) {
->>               const struct cache_entry *ce = active_cache[i];
->> -
->> -             if (!match_pathspec(pathspec, ce->name, ce_namelen(ce),
->> -                                 0, ps_matched, 1) ||
->> -                 !S_ISGITLINK(ce->ce_mode))
->> +             if (!S_ISGITLINK(ce->ce_mode) ||
->> +                 !match_pathspec(pathspec, ce->name, ce_namelen(ce),
->> +                                 0, ps_matched, 1))
->>                       continue;
->
-> OK, this is the crucial bit in this patch. pathspec matches are now
-> done only against gitlinks, so any unmatch is "pattern or path
-> given, but there was no such submodule".
+So I tried to come up with some numbers.
 
-right.
+Here's an utterly silly use of strbufs, but one that I think should
+over-emphasize the effect of any improvements we make:
 
->
->> @@ -53,7 +53,9 @@ static int module_list_compute(int argc, const char **argv,
->>                       i++;
->>       }
->>
->> -     if (ps_matched && report_path_error(ps_matched, pathspec, prefix))
->> +     if (!unmatch &&
->> +         ps_matched &&
->> +         report_path_error(ps_matched, pathspec, prefix))
->>               result = -1;
->
-> If unmatch is not true, then check if ps_matched records "aw, this
-> pathspec element did not get used" and complain.  If unmatch is
-> true, we do not do that.
->
-> Which confirms my earlier "'unmatch' here means 'unmatch_ok'".
->
-> It is tempting to update report_path_error() return "OK" when its
-> first parameter is NULL.
+diff --git a/Makefile b/Makefile
+index 7a0551a..72b968a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -579,6 +579,7 @@ PROGRAM_OBJS += shell.o
+ PROGRAM_OBJS += show-index.o
+ PROGRAM_OBJS += upload-pack.o
+ PROGRAM_OBJS += remote-testsvn.o
++PROGRAM_OBJS += foo.o
+ 
+ # Binary suffix, set to .exe for Windows builds
+ X =
+diff --git a/foo.c b/foo.c
+index e69de29..b62dd97 100644
+--- a/foo.c
++++ b/foo.c
+@@ -0,0 +1,18 @@
++#include "git-compat-util.h"
++#include "strbuf.h"
++
++int main(void)
++{
++	const char *str = "this is a string that we'll repeatedly insert";
++	size_t len = strlen(str);
++
++	int i;
++	for (i = 0; i < 1000000; i++) {
++		struct strbuf buf = STRBUF_INIT;
++		int j;
++		for (j = 0; j < 500; j++)
++			strbuf_add(&buf, str, len);
++		strbuf_release(&buf);
++	}
++	return 0;
++}
 
-such that we can do a
+That takes about 3.5 seconds to run git-foo on my machine.  Here's where
+perf says the time goes:
 
-    if (report_path_error(unmatch_ok ? NULL : ps_matched, pathspec, prefix)))
-        result = -1;
+# Children      Self  Command  Shared Object      Symbol                    
+# ........  ........  .......  .................  ..........................
+#
+    35.62%    34.58%  git-foo  git-foo            [.] strbuf_add            
+    22.70%    22.14%  git-foo  git-foo            [.] strbuf_grow           
+    19.85%    19.04%  git-foo  libc-2.22.so       [.] __memcpy_avx_unaligned
+     9.47%     9.17%  git-foo  git-foo            [.] main                  
+     4.88%     4.68%  git-foo  git-foo            [.] memcpy@plt            
+     3.21%     3.12%  git-foo  libc-2.22.so       [.] realloc               
+     1.75%     1.71%  git-foo  libc-2.22.so       [.] _int_realloc          
+     1.42%     0.00%  git-foo  [unknown]          [.] 0x676e697274732061    
+     0.82%     0.79%  git-foo  git-foo            [.] xrealloc              
+     0.61%     0.59%  git-foo  git-foo            [.] memory_limit_check    
+     0.45%     0.00%  git-foo  [unknown]          [.] 0000000000000000      
+     0.32%     0.00%  git-foo  [unknown]          [.] 0x0000000000000fff    
+     0.32%     0.32%  git-foo  [unknown]          [k] 0x00007f591b44a2f0    
+     0.31%     0.31%  git-foo  [unknown]          [k] 0x0000000000404719    
+     0.30%     0.00%  git-foo  [unknown]          [.] 0x0000000000001ffe    
+     0.30%     0.30%  git-foo  libc-2.22.so       [.] _int_free             
+     0.30%     0.28%  git-foo  libc-2.22.so       [.] _int_malloc           
 
-That looks good and inside of report_path_error we would only need a
+So malloc and free are pretty low. It looks like realloc is more,
+probably because of the memcpys it has to do. I don't think that would
+be much better in a stack-based system (because we'd realloc there,
+too). What would help is simply using a larger initial size (for _this_
+made-up benchmark; I'm not convinced it would be all that good in the
+real world).
 
-    if (!ps_matched)
-        return 0;
+But either way, most of the time is actually spent in the strbuf
+functions themselves (interesting, if you replace strbuf_add with
+strbuf_addf, we spend much more time dealing with the formatted input).
+We can probably micro-optimize them some.
 
-at the beginning.
+Here's a short and hacky patch to inline strbuf_grow, and to use
+compiler intrinsics to do the overflow checks (which obviously isn't
+portable, but we can easily hide it behind a macro and fall back to the
+existing scheme):
 
->
->> diff --git a/git-submodule.sh b/git-submodule.sh
->> index fb68f1f..f10e10a 100755
->> --- a/git-submodule.sh
->> +++ b/git-submodule.sh
->> @@ -391,6 +391,9 @@ cmd_foreach()
->>               --recursive)
->>                       recursive=1
->>                       ;;
->> +             --error-unmatch)
->> +                     unmatch=1
->> +                     ;;
->
-> So "--error-unmatch" does pass "--unmatch" which is "please ignore
-> unmatch errors".  That is a bit strange (see above).
->
->> @@ -407,7 +410,7 @@ cmd_foreach()
->>       # command in the subshell (and a recursive call to this function)
->>       exec 3<&0
->>
->> -     git submodule--helper list --prefix "$wt_prefix"|
->> +     git submodule--helper list ${unmatch:+--unmatch} --prefix "$wt_prefix"|
->
-> For this to work, somebody must ensure that the variable unmatch is
-> either unset or set to empty unless the user gave --error-unmatch to
-> us.  There is a block of empty assignments hear the beginning of
-> this file for that very purpose, i.e. resetting a stray environment
-> variable that could be in user's environment.
->
-> The patch itself does not look too bad.  I do not have an opinion on
-> which one should be the default, and I certainly would understand if
-> you want to keep the default loose (i.e. not complaining) with an
-> optional error checking, but whichever default you choose, the
-> option and variable names need to be clarified to avoid confusion.
+diff --git a/strbuf.c b/strbuf.c
+index 1ba600b..4f163cb 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -55,19 +55,25 @@ void strbuf_attach(struct strbuf *sb, void *buf, size_t len, size_t alloc)
+ 	sb->buf[sb->len] = '\0';
+ }
+ 
+-void strbuf_grow(struct strbuf *sb, size_t extra)
++static inline void strbuf_grow_inline(struct strbuf *sb, size_t extra)
+ {
+ 	int new_buf = !sb->alloc;
+-	if (unsigned_add_overflows(extra, 1) ||
+-	    unsigned_add_overflows(sb->len, extra + 1))
++	if (__builtin_add_overflow(extra, sb->len, &extra) ||
++	    __builtin_add_overflow(extra, 1, &extra))
+ 		die("you want to use way too much memory");
+ 	if (new_buf)
+ 		sb->buf = NULL;
+-	ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
++	ALLOC_GROW(sb->buf, extra, sb->alloc);
+ 	if (new_buf)
+ 		sb->buf[0] = '\0';
+ }
+ 
++void strbuf_grow(struct strbuf *sb, size_t extra)
++{
++	strbuf_grow_inline(sb, extra);
++}
++#define strbuf_grow strbuf_grow_inline
++
+ void strbuf_trim(struct strbuf *sb)
+ {
+ 	strbuf_rtrim(sb);
 
-Ok I'll fix the variable names; I think for consistency with e.g.
-ls-files --error-unmatch
-we would want to be loose by default and strict on that option.
+That drops my best-of-five for git-foo from:
 
-Thanks,
-Stefan
+  real    0m3.377s
+  user    0m3.376s
+  sys     0m0.000s
 
->
+to:
+
+  real    0m3.107s
+  user    0m3.104s
+  sys     0m0.000s
+
+So that's at least measurable. Again, though, I'm not convinced it
+actually matters much in the real world. But from what I see here, I'd
+be surprised if the stack-buffer thing actually generates measurable
+improvements here _or_ in the real world.
+
+-Peff
