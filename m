@@ -1,90 +1,97 @@
-From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH v3 38/39] i18n: unmark die messages for translation
-Date: Wed,  1 Jun 2016 18:13:02 +0000
-Message-ID: <1464804783-10195-9-git-send-email-vascomalmeida@sapo.pt>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 13/39] i18n: git-sh-setup.sh: mark strings for translation
+Date: Wed, 01 Jun 2016 11:20:41 -0700
+Message-ID: <xmqqvb1sydmu.fsf@gitster.mtv.corp.google.com>
 References: <1464799289-7639-1-git-send-email-vascomalmeida@sapo.pt>
-Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 01 20:14:18 2016
+	<1464799289-7639-14-git-send-email-vascomalmeida@sapo.pt>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Sunshine <sunshine@sunshineco.com>
+To: Vasco Almeida <vascomalmeida@sapo.pt>
+X-From: git-owner@vger.kernel.org Wed Jun 01 20:20:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8Aem-0006c3-KL
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 20:14:17 +0200
+	id 1b8Al9-0002oq-MT
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 20:20:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932307AbcFASOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2016 14:14:09 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:60611 "EHLO sapo.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752901AbcFASOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2016 14:14:08 -0400
-Received: (qmail 28976 invoked from network); 1 Jun 2016 18:13:51 -0000
-Received: (qmail 23013 invoked from network); 1 Jun 2016 18:13:51 -0000
-Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 1 Jun 2016 18:13:46 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-X-Mailer: git-send-email 2.7.3
-In-Reply-To: <1464799289-7639-1-git-send-email-vascomalmeida@sapo.pt>
+	id S1750854AbcFASUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2016 14:20:45 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54278 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750744AbcFASUo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2016 14:20:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7C4731EC23;
+	Wed,  1 Jun 2016 14:20:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2dD6eSnndXLDDSjZEx/mAX1RQys=; b=JPxtVm
+	9EF4xp1aGdJKBPgEtGnows5oHHaDXx6MOrxYmKGjuu/yuUggtImXLZKoIM+s1tUH
+	4a46U015Zk6CEbXkUBoJHA/gOC9KGkXfTSMaVGQcI2GAnIwhGZ+IOWWrrGmKd1Nx
+	ahfGOqItzMQTQrzIr3lixrpGYznr5i34KnKwU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=P59DB9yAWXmhpxSX2FX3gFq2nd8/f57Z
+	nzYC/SoL8+YJNYHqIvOx1LaQA/DmZW3Nm1R5ycO9YnaK7XJjoL8KSnoke8YA+jBd
+	BFoch7RJXc6eHZoYQ4PcvURbYW/WSc8UxTZ4VlTq6HbkKk1yxc3ZdrLNqvwWoIYU
+	B64aGMBycpI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 745B61EC22;
+	Wed,  1 Jun 2016 14:20:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0114D1EC21;
+	Wed,  1 Jun 2016 14:20:42 -0400 (EDT)
+In-Reply-To: <1464799289-7639-14-git-send-email-vascomalmeida@sapo.pt> (Vasco
+	Almeida's message of "Wed, 1 Jun 2016 16:41:03 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8D419692-2825-11E6-93D9-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296146>
 
-These messages are relevant for the programmer only, not for the end
-user.  Thus, they can be unmarked for translation, saving translator
-some work.
+Vasco Almeida <vascomalmeida@sapo.pt> writes:
 
-Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
----
- git-bisect.sh | 2 +-
- wt-status.c   | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+> Positional arguments, such as $0, $1, etc, need to be stored on shell
+> variables for use in translatable strings, according to gettext manual
+> [1].
+>
+> Add git-sh-setup.sh to LOCALIZED_SH variable in Makefile to enable
+> extraction of string marked for translation by xgettext.
+>
+> Although git-sh-setup.sh is a shell library to be sourced by other shell
+> scripts, it is necessary to source git-sh-i18n at this point, because
+> some scripts don't do it themselves. Not sourcing git-sh-i18n would lead
+> to failure due to, for instance, gettextln not being found.
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 737bf05..c9acab6 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -275,7 +275,7 @@ bisect_state() {
- 	check_and_set_terms $state
- 	case "$#,$state" in
- 	0,*)
--		die "$(gettext "Please call 'bisect_state' with at least one argument.")" ;;
-+		die "Please call 'bisect_state' with at least one argument." ;;
- 	1,"$TERM_BAD"|1,"$TERM_GOOD"|1,skip)
- 		bisected_head=$(bisect_head)
- 		rev=$(git rev-parse --verify "$bisected_head") ||
-diff --git a/wt-status.c b/wt-status.c
-index 4f27bd6..5a91279 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -263,7 +263,7 @@ static const char *wt_status_unmerged_status_string(int stagemask)
- 	case 7:
- 		return _("both modified:");
- 	default:
--		die(_("bug: unhandled unmerged status %x"), stagemask);
-+		die("bug: unhandled unmerged status %x", stagemask);
- 	}
- }
- 
-@@ -388,7 +388,7 @@ static void wt_status_print_change_data(struct wt_status *s,
- 	status_printf(s, color(WT_STATUS_HEADER, s), "\t");
- 	what = wt_status_diff_status_string(status);
- 	if (!what)
--		die(_("bug: unhandled diff status %c"), status);
-+		die("bug: unhandled diff status %c", status);
- 	len = label_width - utf8_strwidth(what);
- 	assert(len >= 0);
- 	if (status == DIFF_STATUS_COPIED || status == DIFF_STATUS_RENAMED)
--- 
-2.7.3
+That is correct, but doesn't that hint that the current users of
+git-sh-i18n no longer have to (and they probably do not want to)
+dot-source it, as they are already dot-sourcing git-sh-setup?
+
+Otherwise they will waste cycles reading the same thing twice
+(assuming that git-sh-i18n is safely read twice, that is).
+
+> Source "$(git --exec-path)"/git-sh-i18n instead of simply git-sh-i18n,
+
+That is somewhat strange.  "git-rebase.sh" dot-sources both
+git-sh-setup and git-sh-i18n with just ". $name".  What is so
+special about sh-setup dot-sourcing sh-i18n your patch adds?
+
+> because latter case would fail test t2300-cd-to-toplevel.sh.
+
+What is the real cause of this?
+
+". git-sh-setup" is supposed to work because we prepend the
+$GIT_EXEC_PATH in "git" itself and git-sh-setup is installed there.
+". git-sh-i18n" in "git-rebase.sh" works the same way.  If it is
+because is t2300 doing something strange, then we should fix that,
+not adding $(git --exec-path) on the dot-source line to paper things
+over.
