@@ -1,92 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/2] strbuf: improve API
-Date: Wed, 1 Jun 2016 03:42:18 -0400
-Message-ID: <20160601074218.GB14096@sigill.intra.peff.net>
-References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr>
- <1069084553.156626.1464607928755.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RCF/PATCH] Makefile: move 'ifdef DEVELOPER' after config.mak* inclusion
+Date: Wed, 01 Jun 2016 09:57:20 +0200
+Message-ID: <vpqpos11gv3.fsf@anie.imag.fr>
+References: <20160531132443.5033-1-Matthieu.Moy@imag.fr>
+	<20160601073037.GA14096@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org,
-	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
-	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
-	antoine queru <antoine.queru@ensimag.grenoble-inp.fr>,
-	matthieu moy <matthieu.moy@grenoble-inp.fr>,
-	mhagger@alum.mit.edu
-To: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 01 09:42:30 2016
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 01 09:57:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b80nL-0004z5-Td
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 09:42:28 +0200
+	id 1b8126-0005xH-2j
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 09:57:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752209AbcFAHmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2016 03:42:22 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47033 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751037AbcFAHmW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2016 03:42:22 -0400
-Received: (qmail 24605 invoked by uid 102); 1 Jun 2016 07:42:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Jun 2016 03:42:21 -0400
-Received: (qmail 30980 invoked by uid 107); 1 Jun 2016 07:42:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Jun 2016 03:42:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Jun 2016 03:42:18 -0400
-Content-Disposition: inline
-In-Reply-To: <1069084553.156626.1464607928755.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	id S1752370AbcFAH5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2016 03:57:38 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:50418 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750842AbcFAH5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2016 03:57:37 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u517vKkF019706
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 1 Jun 2016 09:57:20 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u517vKwE015268;
+	Wed, 1 Jun 2016 09:57:21 +0200
+In-Reply-To: <20160601073037.GA14096@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 1 Jun 2016 03:30:37 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Wed, 01 Jun 2016 09:57:20 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u517vKkF019706
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1465372642.28427@9yjsy36mZIzlAxRJyBssow
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296064>
 
-On Mon, May 30, 2016 at 01:32:08PM +0200, Remi Galan Alfonso wrote:
+Jeff King <peff@peff.net> writes:
 
-> William Duclot <william.duclot@ensimag.grenoble-inp.fr> writes:
-> > This patch series implements an improvment of the strbuf API, allowing
-> > strbuf to use preallocated memory. This makes strbuf fit to be used
-> > in performance-critical operations.
-> > 
-> > The first patch is simply a preparatory work, adding tests for
-> > existing strbuf implementation.
-> > Most of the work is made in the second patch: handle pre-allocated
-> > memory, extend the API, document it and test it.
-> 
-> Seems interesting, however do you have any test/example that would
-> show the difference of performance between using these optimizations
-> and not using them?
-> 
-> Such values would make a nice addition to help convince people that
-> your series is interesting to have and use.
+> Hmm. So I think this does fix some issues, but it also means that one's
+> config.mak cannot use DEVELOPER as a base and then override particular
+> flags.
 
-I'll second the request for actual numbers. I'm a little dubious that
-malloc overhead is actually a significant place we are spending time, or
-if there is simply a superstitious avoidance of using strbufs. A huge
-number of strbufs are used for filenames, where we're about to make a
-syscall anyway. If your allocator for a 4K page is not competitive with
-a context switch, I suspect the best solution is to get a new allocator.
+You mean, using "make DEVELOPER=1" and then tweak CFLAGS in config.mak?
 
-So I wonder if we have some less-invasive alternatives:
+Well, you still can do "CFLAGS += ..." (the extra CFLAGS will come
+before the ones added by DEVELOPER instead of after), which should cover
+99% use-cases.
 
-  1. Ship a faster allocator library with git, and use its malloc by
-     default.
+You can't do "CFLAGS = $(filter-out ..., $(CFLAGS))" anymore indeed. But
+if you are at that level of customization, I'd say DEVELOPER isn't for
+you and you should just set CFLAGS directly.
 
-  2. Do caching tricks for strbufs used in tight loops. For example,
-     have strbuf_release() throw its buffer into a last-used cache, and
-     let the next strbuf_grow() use that cache entry. This cuts malloc()
-     out of the loop.
+Not really serious, but we can fix that easily. Patch follows.
 
-     You'd probably want to protect the cache with a mutex, though. Most
-     of git isn't thread-safe, but a few parts are, and strbufs are
-     low-level enough that they might get called.
-
-I have no idea if those ideas would work. But I wouldn't want to start
-looking into either of them without some idea of how much time we're
-actually spending on strbuf mallocs (or how much time we would spend if
-strbufs were used in some proposed sites).
-
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
