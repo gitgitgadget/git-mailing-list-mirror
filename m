@@ -1,92 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 28/39] i18n: config: unfold error messages marked for translation
-Date: Wed, 01 Jun 2016 10:43:33 -0700
-Message-ID: <xmqqzir4yfcq.fsf@gitster.mtv.corp.google.com>
+From: Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: [PATCH v3 34/39] i18n: remote: allow translations to reorder message
+Date: Wed,  1 Jun 2016 18:12:58 +0000
+Message-ID: <1464804783-10195-5-git-send-email-vascomalmeida@sapo.pt>
 References: <1464799289-7639-1-git-send-email-vascomalmeida@sapo.pt>
-	<1464799289-7639-29-git-send-email-vascomalmeida@sapo.pt>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Sunshine <sunshine@sunshineco.com>
-To: Vasco Almeida <vascomalmeida@sapo.pt>
-X-From: git-owner@vger.kernel.org Wed Jun 01 19:44:03 2016
+Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 01 20:14:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8ABV-0003M9-LH
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 19:44:02 +0200
+	id 1b8Aej-0006c3-1f
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 20:14:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932729AbcFARnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2016 13:43:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50098 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932719AbcFARnv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2016 13:43:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 714CC1E649;
-	Wed,  1 Jun 2016 13:43:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Y7pEd7m91u7xpiuEUp+4vngdcEs=; b=tY9cnF
-	XA5Q3zgrlFY+xGPq1xrJmPFcvzXS4fNfxN62xFnCE67xuwIKAmT4XGo/trbp7/GD
-	38olU5TedVEx6FdzcEY1iVXPVP0IEHQpNny5+Zned9MMiMwlXwPByqmfGha+KZbU
-	+B/WJQa9+8jWqgI+1O7aDrPN0U1xQZcHPIvs8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H+APXf+3oTMbQ/VYMv+fqc4andKBqLXv
-	TlaHPmoj+C8ogQ0kLJfYIRq7f9pGR5nDFWpHANU4qfXN/qesOBHSelExuceUySmd
-	/6ure/9YKw/j8LSQTAp/J5XVJ1ZuSrvogwes7bWnWgHI5vIXqEtB2+CqNnnzMW3J
-	UHQxtqYFrHU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 68A191E647;
-	Wed,  1 Jun 2016 13:43:35 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E406D1E646;
-	Wed,  1 Jun 2016 13:43:34 -0400 (EDT)
-In-Reply-To: <1464799289-7639-29-git-send-email-vascomalmeida@sapo.pt> (Vasco
-	Almeida's message of "Wed, 1 Jun 2016 16:41:18 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5D3930C2-2820-11E6-AE05-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1161288AbcFASNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2016 14:13:39 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:34633 "EHLO sapo.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754961AbcFASNi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2016 14:13:38 -0400
+Received: (qmail 9669 invoked from network); 1 Jun 2016 18:13:30 -0000
+Received: (qmail 18559 invoked from network); 1 Jun 2016 18:13:30 -0000
+Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
+          for <git@vger.kernel.org>; 1 Jun 2016 18:13:24 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+X-Mailer: git-send-email 2.7.3
+In-Reply-To: <1464799289-7639-1-git-send-email-vascomalmeida@sapo.pt>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296139>
 
-Vasco Almeida <vascomalmeida@sapo.pt> writes:
+Before this patch, translations couldn't place the branch name
+where it was better fit in the message "and with remote <branch_name>".
+Allow translations that, instead of forcing the branch name to display
+right of the message.
 
-> Introduced in 473166b ("config: add 'origin_type' to config_source
-> struct", 2016-02-19), Git can inform the user about the origin of a
-> config error, but the implementation does not allow translators to
-> translate the keywords 'file', 'blob, 'standard input', and
-> 'submodule-blob'. Moreover, for the second message, a reason for the
-> error is appended to the message, not allowing translators to translate
-> that reason either.
+Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+---
+ builtin/remote.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-Good intentions.
-
-> @@ -417,6 +417,7 @@ static int git_parse_source(config_fn_t fn, void *data)
->  	int comment = 0;
->  	int baselen = 0;
->  	struct strbuf *var = &cf->var;
-> +	char error_msg[128];
->  
->  	/* U+FEFF Byte Order Mark in UTF8 */
->  	const char *bomptr = utf8_bom;
-> @@ -471,10 +472,38 @@ static int git_parse_source(config_fn_t fn, void *data)
->  		if (get_value(fn, data, var) < 0)
->  			break;
->  	}
-> +
-> +	switch (cf->origin_type) {
-> +	case CFG_BLOB:
-> +		xsnprintf(error_msg, sizeof(error_msg),
-> +			  _("bad config line %d in blob %s"),
-> +			  cf->linenr, cf->name);
-
-Use xstrfmt() intead, perhaps?  That would be cleaner.
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 9f934cb..7f0f78b 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -952,7 +952,7 @@ static int show_local_info_item(struct string_list_item *item, void *cb_data)
+ 	struct show_info *show_info = cb_data;
+ 	struct branch_info *branch_info = item->util;
+ 	struct string_list *merge = &branch_info->merge;
+-	const char *also;
++	int width = show_info->width + 4;
+ 	int i;
+ 
+ 	if (branch_info->rebase && branch_info->merge.nr > 1) {
+@@ -969,13 +969,12 @@ static int show_local_info_item(struct string_list_item *item, void *cb_data)
+ 		return 0;
+ 	} else if (show_info->any_rebase) {
+ 		printf_ln(_(" merges with remote %s"), merge->items[0].string);
+-		also = _("    and with remote");
++		width++;
+ 	} else {
+ 		printf_ln(_("merges with remote %s"), merge->items[0].string);
+-		also = _("   and with remote");
+ 	}
+ 	for (i = 1; i < merge->nr; i++)
+-		printf("    %-*s %s %s\n", show_info->width, "", also,
++		printf(_("%-*s    and with remote %s\n"), width, "",
+ 		       merge->items[i].string);
+ 
+ 	return 0;
+-- 
+2.7.3
