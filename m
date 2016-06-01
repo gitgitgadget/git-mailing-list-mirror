@@ -1,85 +1,107 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Segfault in the attr stack
-Date: Wed, 1 Jun 2016 15:00:41 -0700
-Message-ID: <CAGZ79ka_4vZfNhgOyMeFKdossO-S5Q7RVnvEzB8YAJNc1YQ+uQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Segfault in the attr stack
+Date: Wed, 01 Jun 2016 15:11:30 -0700
+Message-ID: <xmqqpos0wodp.fsf@gitster.mtv.corp.google.com>
+References: <CAGZ79ka_4vZfNhgOyMeFKdossO-S5Q7RVnvEzB8YAJNc1YQ+uQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 02 00:00:48 2016
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Jun 02 00:11:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8EBz-0007Eo-3A
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 00:00:47 +0200
+	id 1b8EMW-0006A6-4P
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 00:11:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751839AbcFAWAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2016 18:00:45 -0400
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:35227 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751568AbcFAWAn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2016 18:00:43 -0400
-Received: by mail-qg0-f41.google.com with SMTP id e93so114946125qgf.2
-        for <git@vger.kernel.org>; Wed, 01 Jun 2016 15:00:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=nGA/IgPHXyLg72eLE3IJWC4QDnt0/9PHjsFmYaivMBg=;
-        b=ppLxUCYDXjev2HEjpiVAqSZgUPd6F1l6S+bT9kYxoOVRl3jyxw1B3Xw1AaiqQla5ED
-         JjB9s78/t9r9RSdjrzYGeXcRY6JRDMDRLvVdocrVeXcV7X2Jm1J13/+s4p5XVil0Nj2y
-         WSqueu6ey5MAcDUq/AACwxOjOx7pNPf/Tj5IatwEGuiK8pRV/jeqRPsw7xMWLKW+rfh5
-         PMT03KgvKdB7dIZ4uyiZhyA/x6u4YSHeuiO1eZyoSXx1dwvxwpGCPi5dGSsHSEfnQCwg
-         O3BHmHWFBJC/3UrKlux6OUPV+h89DJ+aVT3XZXY8L20EX2G4zAfQD2BRpX0bCFMI8jMq
-         fJ4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=nGA/IgPHXyLg72eLE3IJWC4QDnt0/9PHjsFmYaivMBg=;
-        b=SzqFZOkzIao+DYTiR5eM7dlmcBIaeWYA2RrgSFcalZnDLuvzXSOxZv/7osUMUaXuAY
-         Gg6QYYgxKzdoju/EORbhwIRt7VeTk9t16VNkXRnmtNYXXD9HAATmTis57j++uolqcdgv
-         0mqV7iOeEN8NGSXrctH/u5y5EKL3Ts8IXPAlQHVPGvNGfpKXM7dPccCe5ik6Njv4Ay8B
-         RAOICwxX28jtz4sZApV3eMHoFqWmZ9pSag/SIHGIlBa2s6Ic8PJhfKeKXPOg1Db5DVNS
-         WqQyYOBa3HTFk+/YhfX6WvQC/qAFB1FIVx9gaY3x+xecd0g+CMQvGdp5EP7PY7Mqkzzj
-         LJmA==
-X-Gm-Message-State: ALyK8tIMIovEdROHlp/m6Nwy/fGwx129BkUd1LpOXbPqyP+iF+1gU8jKPP62x1/kmG1SZoQmgD/x3KIZwePjr+py
-X-Received: by 10.140.81.145 with SMTP id f17mr12131140qgd.84.1464818442067;
- Wed, 01 Jun 2016 15:00:42 -0700 (PDT)
-Received: by 10.200.55.212 with HTTP; Wed, 1 Jun 2016 15:00:41 -0700 (PDT)
+	id S1751513AbcFAWLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2016 18:11:35 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61580 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750863AbcFAWLe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2016 18:11:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7743D20103;
+	Wed,  1 Jun 2016 18:11:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kGfKc1vs19F6/yO9Avz4ntJS19E=; b=kcc8aq
+	Yty1qGmF11kVf9sBTwu8ZaLym6RG0tWXPL1mXEzpM9YjxVGqbKCpLfWznUzEwSlO
+	41H7FJfDgd2z+ZOFNtr3+UUH9WzJOGs8SSVdQDIaocQ8R7e2kOv310C+aMsXMoYM
+	ZwY492hGptihZRCJOYAu2CqiZA0Z4SbO+Rp9M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MPI1VHCOpmJUOdv6GAgqEkKkxAlfcgRE
+	Zgzq1poQfZmgWRZ0F1Kodq74g63A77Te4P74IKBI5X7VstdSsCd6wW1JgXQmTyMJ
+	MjjuYmixUZPfPx/7PFs1QxzRSQ+QR1qZS7JScX+JA//MTnuOoXpKFIhwcrSNytWC
+	F7OcNiCwQ90=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 709C220102;
+	Wed,  1 Jun 2016 18:11:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E58CC200FF;
+	Wed,  1 Jun 2016 18:11:32 -0400 (EDT)
+In-Reply-To: <CAGZ79ka_4vZfNhgOyMeFKdossO-S5Q7RVnvEzB8YAJNc1YQ+uQ@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 1 Jun 2016 15:00:41 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CC75D5F6-2845-11E6-B321-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296170>
 
-(running git-next)
+Stefan Beller <sbeller@google.com> writes:
 
-In the Gerrit repo I did
-    $ echo "/plugins/commit-message-length-validator sub-default"
->>.gitattributes
-    $ git status ":(attr:sub-default)"
-Segmentation fault (core dumped)
+> In the Gerrit repo I did
+>     $ echo "/plugins/commit-message-length-validator sub-default"
+>>>.gitattributes
+>     $ git status ":(attr:sub-default)"
+> Segmentation fault (core dumped)
 
-Running this multiple times through gdb, this produces different back
-traces as it seems that threads are involved? (So I don't attach a
-back trace here)
+Thanks.  I can reproduce this easily with git.git, e.g.
 
-Also notable are:
-*** Error in `/usr/local/google/home/sbeller/bin/git': double free or
-corruption (fasttop): 0x00007fffd80008f0 ***
-*** Error in `/usr/local/google/home/sbeller/bin/git': double free or
-corruption (fasttop): 0x00007ffff0001000 ***
+	$ cat >>.git/info/attributes <<-\EOF
+	Documentation/git-merge.txt conflict-marker-size=32
+        Documentation/user-manual.txt conflict-marker-size=32
+	EOF
+	$ git status ':(attr:conflict-marker-size=32)'
 
-When running another command `git status ":(attr:asdf)"`, I get
-git: attr.c:634: prepare_attr_stack: Assertion `attr_stack->origin' failed.
-git: attr.c:634: prepare_attr_stack: Assertion `attr_stack->origin' failed.
-git: attr.c:634: prepare_attr_stack: Assertion `attr_stack->origin' failed.
-git: attr.c:634: prepare_attr_stack: Assertion `attr_stack->origin' failed.
-Aborted (core dumped)
+would die (presumably) the same way.
 
-The failing assertions are an indication that sb/pathspec-label is
-using the attrs incorrectly or
-jc/attr added tighter assertions than I was aware of.
+By the way, I just noticed that the <specification> part of the
+':(attr:<specification>)' syntax would need to be rethought.  In the
+.gitattributes file everybody has, we see these lines:
 
-Stefan
+        *.[ch] whitespace=indent,trail,space
+        *.sh whitespace=indent,trail,space
+
+but because comma is a special separator in the pathspec magic
+system, we cannot do
+
+	$ git status ':(attr:whitespace=indent,trail,space)'
+
+I think we should introduce a quoting mechanism to hide these commas
+from the pathspec magic splitter, e.g.
+
+where attr_value_unquote() would copy string while unquoting some
+special characters (i.e. at least ' ' and ',' because they are used
+as syntactic elements in the higher level; there might be others).
+
+diff --git a/pathspec.c b/pathspec.c
+index 0a02255..fb22f28 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -132,7 +132,7 @@ static void parse_pathspec_attr_match(struct pathspec_item *item, const char *va
+ 				am->match_mode = MATCH_SET;
+ 			else {
+ 				am->match_mode = MATCH_VALUE;
+-				am->value = xstrdup(&attr[attr_len + 1]);
++				am->value = attr_value_unquote(&attr[attr_len + 1]);
+ 				if (strchr(am->value, '\\'))
+ 					die(_("attr spec values must not contain backslashes"));
+ 			}
