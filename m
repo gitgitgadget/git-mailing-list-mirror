@@ -1,10 +1,9 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 1/4] revision.c: move read_cache() out of add_index_objects_to_pending()
-Date: Wed,  1 Jun 2016 17:45:16 +0700
-Message-ID: <20160601104519.16563-2-pclouds@gmail.com>
+Subject: [PATCH 0/4] Fix prune/gc problem with multiple worktrees
+Date: Wed,  1 Jun 2016 17:45:15 +0700
+Message-ID: <20160601104519.16563-1-pclouds@gmail.com>
 References: <574D382A.8030809@kdbg.org>
- <20160601104519.16563-1-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -13,165 +12,86 @@ Cc: Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 01 12:45:42 2016
+X-From: git-owner@vger.kernel.org Wed Jun 01 12:45:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b83ef-0001iF-8u
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 12:45:41 +0200
+	id 1b83eZ-0001dN-Ct
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 12:45:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751651AbcFAKph convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jun 2016 06:45:37 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34728 "EHLO
-	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751303AbcFAKpf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2016 06:45:35 -0400
-Received: by mail-pf0-f195.google.com with SMTP id c84so3175334pfc.1
-        for <git@vger.kernel.org>; Wed, 01 Jun 2016 03:45:35 -0700 (PDT)
+	id S1751527AbcFAKpb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jun 2016 06:45:31 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:35371 "EHLO
+	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751412AbcFAKpa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2016 06:45:30 -0400
+Received: by mail-pf0-f176.google.com with SMTP id g64so13093483pfb.2
+        for <git@vger.kernel.org>; Wed, 01 Jun 2016 03:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=sbzMtIh9LiiPoRM5i5g5bDt2WoysEsx+FyS5/rniXtw=;
-        b=MZ/ZmbOLSWWOWMzc+v1r6J9THR5S8P4sXDHZCryoiw+EuZFDekf+fRsHM10QxzRKRN
-         vZZYe12d4Jgxw7wqV69xydoCMaoR5o3UPFWEqQWkifrHlAxQuqV+y9UmItc6/lT8WJ4G
-         stWnDF1nWoiBZWIwKWCIKJpPWWCIVLDkVIdwq8zRbcZux/dWuJPKN0Nt0PMwmCQ/Lr3T
-         xGqx1SVjHR9DjfX4ugeoiWMSLm04KPYbywk4xTCi3quvpIZB02O76mTssalQCcDWz1Ea
-         2ZFF3O69fqGNhVW5oShjecad/j6K8NcH/jvQKjUGOW6PMfvliSonTdHcj3KM8anQ65Az
-         wFLA==
+        bh=QjXLDVhawZfkCZt48H0CPLD31sE3tk8Gq3baysGpMjw=;
+        b=HxR223BUduJeOBZXx7Bl9WyPuif0StGOIEeovYPKlZstAY/7daCprPnXq6G23Yz+vz
+         uGcovC4fqWoOfDgoURQ0SPImk1VDvRcPGXvwTbw0sVcmo0477XzuoxBp5pNkF9EPCR76
+         HIw3Go+9HlAD41bjfbQUBdWbKswQTI7X8rnVXTfgHrbg2YOy9dnzTZ/JB03z9MAsTTV1
+         3ntxo3WWQGYXwHzTko0KgEig9PflIh2j2Re7RvaHPKb+VwTla5MOQEZxejyXULvMI/GU
+         o0TkRn27MpwNpbP5nTGT9IS3JqjR0U1llvlPm6rAXphdLqsmjDaJhWlHSrdMp4yaZ6rZ
+         AS6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=sbzMtIh9LiiPoRM5i5g5bDt2WoysEsx+FyS5/rniXtw=;
-        b=DLQLosa4pWCzEIkSF6paKiEskFZpl4uxuylWH5RznmdT13qkrkMjSR24RuXF/E4reb
-         O6SkEixcS02on75HeAqysbl9GePBM0Lgn2bIkUChyGO8U4Nimuvq0wSfqIrI/LMg2Nnb
-         T/Gwix5soaXOgxawd6gVKNGfVSf4zCcBhr/ye2j0lxezDpaSTES7d5SF7hR64pVSaHyW
-         bT3Uot/VEvTfvMP2UH0ycw054nlvvs9UWmKCaVyqOPmZwJ+dIsvla7/qSSiXsGyZlZjS
-         uXwHDh/LzJbRTVsFIMBvNokV4+3aThLt+AWrdMW2AQNA3UjS9svvGzUhNVCDXlXm3qX3
-         NL1A==
-X-Gm-Message-State: ALyK8tJE9YqVz7U2uzMUP6l1h48qHGi0V4opD5OLUvB/BDiqr5lE50VQVjGsR6HOqc+Jfw==
-X-Received: by 10.98.34.25 with SMTP id i25mr7390730pfi.35.1464777934726;
-        Wed, 01 Jun 2016 03:45:34 -0700 (PDT)
+        bh=QjXLDVhawZfkCZt48H0CPLD31sE3tk8Gq3baysGpMjw=;
+        b=c11tjTAIA2+Z9oMXzqftZGOyKJDqdAljemAgMnsgmnC/4MQ8xolZGFLcpKu93pUBlQ
+         egkpURreakayOZycWwxoNP347k97pX2rAgKdwfI2LPmXumB9YjK1tpltLfJG5K0Y5PMx
+         F/MLiwWCbepHpl1Q2/nbOOF5bpP5Tr1lmGJZbIomKGrUgLEEh7kjQo2eLuszxgJfBlfw
+         DK11pUu+3hi6M3DaLr9tBL+2OLbhByGF+CtnUgrVRxX7qmeaZbkVboQrYrFzhAo6gd2g
+         lwYH+cq80dHRV9lmOUwWDoYBNofzRR3cbGbzq11kt7BqPKjEYqNDdb4GFRABRBnrW5JX
+         SQ4w==
+X-Gm-Message-State: ALyK8tKoL8ZbuGsojPaGhUxXN9mobHHEkXKSV6OaCvztNi88dkjCKJLRDYKphJqPjbcoCg==
+X-Received: by 10.98.27.215 with SMTP id b206mr7386549pfb.61.1464777929596;
+        Wed, 01 Jun 2016 03:45:29 -0700 (PDT)
 Received: from ash ([171.232.119.25])
-        by smtp.gmail.com with ESMTPSA id q127sm18760461pfb.34.2016.06.01.03.45.31
+        by smtp.gmail.com with ESMTPSA id v1sm23426993pfa.93.2016.06.01.03.45.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Jun 2016 03:45:34 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 01 Jun 2016 17:45:29 +0700
+        Wed, 01 Jun 2016 03:45:28 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 01 Jun 2016 17:45:24 +0700
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
-In-Reply-To: <20160601104519.16563-1-pclouds@gmail.com>
+In-Reply-To: <574D382A.8030809@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296076>
 
-A library function like this should not change global state like
-the_index. Granted, read_cache() will not re-read from $GIT_DIR/index
-and lose all in-core changes if the index is dirty (i.e. no bad side
-effects). But that sort of detail should not be relied on here.
+This series makes sure that objects referenced by all worktrees are
+marked reachable so that we don't accidentally delete objects that are
+being used. Previously per-worktree references in index, detached HEAD
+or per-worktree reflogs come from current worktree only, not all
+worktrees.
 
-Make the function take the index object from outside instead. The
-caller will be responsible for reading index files if necessary.
+The series deals with git-prune and git-gc specifically. I left out
+"git rev-list". It shares the same problem because it will only
+consider current worktree's HEAD, index and per-worktree reflogs. The
+problem is I am not sure if we simply just change, say
+--indexed-objects, to cover all indexes, or should we only do that
+with "--all-worktrees --indexed-objects". I guess this is up for
+discussion.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- reachable.c |  3 ++-
- revision.c  | 15 ++++++++-------
- revision.h  |  4 +++-
- 3 files changed, 13 insertions(+), 9 deletions(-)
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (4):
+  revision.c: move read_cache() out of add_index_objects_to_pending()
+  reachable.c: mark reachable objects in index from all worktrees
+  reachable.c: mark reachable detached HEAD from all worktrees
+  reachable.c: make reachable reflogs for all per-worktree reflogs
 
-diff --git a/reachable.c b/reachable.c
-index d0199ca..15dbe60 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -170,7 +170,8 @@ void mark_reachable_objects(struct rev_info *revs, =
-int mark_reflog,
- 	revs->tree_objects =3D 1;
-=20
- 	/* Add all refs from the index file */
--	add_index_objects_to_pending(revs, 0);
-+	read_cache();
-+	add_index_objects_to_pending(revs, 0, &the_index);
-=20
- 	/* Add all external refs */
- 	for_each_ref(add_one_ref, revs);
-diff --git a/revision.c b/revision.c
-index d30d1c4..bbb6ff1 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1275,13 +1275,13 @@ static void add_cache_tree(struct cache_tree *i=
-t, struct rev_info *revs,
-=20
- }
-=20
--void add_index_objects_to_pending(struct rev_info *revs, unsigned flag=
-s)
-+void add_index_objects_to_pending(struct rev_info *revs, unsigned flag=
-s,
-+				  const struct index_state *istate)
- {
- 	int i;
-=20
--	read_cache();
--	for (i =3D 0; i < active_nr; i++) {
--		struct cache_entry *ce =3D active_cache[i];
-+	for (i =3D 0; i < istate->cache_nr; i++) {
-+		const struct cache_entry *ce =3D istate->cache[i];
- 		struct blob *blob;
-=20
- 		if (S_ISGITLINK(ce->ce_mode))
-@@ -1294,9 +1294,9 @@ void add_index_objects_to_pending(struct rev_info=
- *revs, unsigned flags)
- 					     ce->ce_mode, ce->name);
- 	}
-=20
--	if (active_cache_tree) {
-+	if (istate->cache_tree) {
- 		struct strbuf path =3D STRBUF_INIT;
--		add_cache_tree(active_cache_tree, revs, &path);
-+		add_cache_tree(istate->cache_tree, revs, &path);
- 		strbuf_release(&path);
- 	}
- }
-@@ -2106,7 +2106,8 @@ static int handle_revision_pseudo_opt(const char =
-*submodule,
- 	} else if (!strcmp(arg, "--reflog")) {
- 		add_reflogs_to_pending(revs, *flags);
- 	} else if (!strcmp(arg, "--indexed-objects")) {
--		add_index_objects_to_pending(revs, *flags);
-+		read_cache();
-+		add_index_objects_to_pending(revs, *flags, &the_index);
- 	} else if (!strcmp(arg, "--not")) {
- 		*flags ^=3D UNINTERESTING | BOTTOM;
- 	} else if (!strcmp(arg, "--no-walk")) {
-diff --git a/revision.h b/revision.h
-index 9fac1a6..d06d098 100644
---- a/revision.h
-+++ b/revision.h
-@@ -29,6 +29,7 @@ struct rev_info;
- struct log_info;
- struct string_list;
- struct saved_parents;
-+struct index_state;
-=20
- struct rev_cmdline_info {
- 	unsigned int nr;
-@@ -271,7 +272,8 @@ extern void add_pending_sha1(struct rev_info *revs,
-=20
- extern void add_head_to_pending(struct rev_info *);
- extern void add_reflogs_to_pending(struct rev_info *, unsigned int fla=
-gs);
--extern void add_index_objects_to_pending(struct rev_info *, unsigned i=
-nt flags);
-+extern void add_index_objects_to_pending(struct rev_info *, unsigned i=
-nt flags,
-+					 const struct index_state *);
-=20
- enum commit_action {
- 	commit_ignore,
+ reachable.c      | 47 +++++++++++++++++++++++++++++++++++++++++------
+ revision.c       | 34 +++++++++++++++++++++++++++-------
+ revision.h       |  7 ++++++-
+ t/t5304-prune.sh | 40 ++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 114 insertions(+), 14 deletions(-)
+
 --=20
 2.8.2.524.g6ff3d78
