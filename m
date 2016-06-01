@@ -1,72 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule operations: tighten pathspec errors
-Date: Wed, 01 Jun 2016 14:20:38 -0700
-Message-ID: <xmqqtwhcwqqh.fsf@gitster.mtv.corp.google.com>
-References: <1463793689-19496-1-git-send-email-sbeller@google.com>
-	<xmqqd1o8vbc4.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kbdfEJ1iSpOJ=HfHP=EvVxB9Sv+5Zk+goLSOJphh8ZZ+w@mail.gmail.com>
-	<xmqqy46owr0n.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Segfault in the attr stack
+Date: Wed, 1 Jun 2016 15:00:41 -0700
+Message-ID: <CAGZ79ka_4vZfNhgOyMeFKdossO-S5Q7RVnvEzB8YAJNc1YQ+uQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 23:20:46 2016
+Content-Type: text/plain; charset=UTF-8
+To: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 02 00:00:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8DZG-0004WA-8c
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jun 2016 23:20:46 +0200
+	id 1b8EBz-0007Eo-3A
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 00:00:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750993AbcFAVUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2016 17:20:42 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54460 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750824AbcFAVUl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2016 17:20:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A0029228E6;
-	Wed,  1 Jun 2016 17:20:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=D5iXESrL16olG5CrM4D0RSmzBQs=; b=LInTR7
-	A8KRRpBw1H2ODSjsaCj+FBODVy9bcy0W5kq/PTqTvCznQXhOb5uuOx8TbTXv9YAg
-	PMBK7HVh6GHWaoJQy7eJRCp5vimOd7R6ezZUOrYjWwot5J1oudwbHbDOKJuheXGk
-	8k1XDSnUi0/NZAoY1nna4eHygQAqHxrycBqe4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OLqVRdkQRvp2F0gZZO3kUz0T2YZ6rpg7
-	5UoTmlRsiml/MbrmFmgYBPclSCoBX6NFymVFhJWDAWLEt85xtlwx67TbCPrzY4Hl
-	o/bCgYXsfYi+5SPAX28GTOMLFLZDfEbx4DNGd9cVaKd9IR52pu78nY0Tgi22U8nI
-	6OM+um9AK1g=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 985DB228E5;
-	Wed,  1 Jun 2016 17:20:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 25796228E4;
-	Wed,  1 Jun 2016 17:20:40 -0400 (EDT)
-In-Reply-To: <xmqqy46owr0n.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 01 Jun 2016 14:14:32 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B0DB90DA-283E-11E6-89A5-89D312518317-77302942!pb-smtp1.pobox.com
+	id S1751839AbcFAWAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2016 18:00:45 -0400
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:35227 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751568AbcFAWAn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2016 18:00:43 -0400
+Received: by mail-qg0-f41.google.com with SMTP id e93so114946125qgf.2
+        for <git@vger.kernel.org>; Wed, 01 Jun 2016 15:00:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=nGA/IgPHXyLg72eLE3IJWC4QDnt0/9PHjsFmYaivMBg=;
+        b=ppLxUCYDXjev2HEjpiVAqSZgUPd6F1l6S+bT9kYxoOVRl3jyxw1B3Xw1AaiqQla5ED
+         JjB9s78/t9r9RSdjrzYGeXcRY6JRDMDRLvVdocrVeXcV7X2Jm1J13/+s4p5XVil0Nj2y
+         WSqueu6ey5MAcDUq/AACwxOjOx7pNPf/Tj5IatwEGuiK8pRV/jeqRPsw7xMWLKW+rfh5
+         PMT03KgvKdB7dIZ4uyiZhyA/x6u4YSHeuiO1eZyoSXx1dwvxwpGCPi5dGSsHSEfnQCwg
+         O3BHmHWFBJC/3UrKlux6OUPV+h89DJ+aVT3XZXY8L20EX2G4zAfQD2BRpX0bCFMI8jMq
+         fJ4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=nGA/IgPHXyLg72eLE3IJWC4QDnt0/9PHjsFmYaivMBg=;
+        b=SzqFZOkzIao+DYTiR5eM7dlmcBIaeWYA2RrgSFcalZnDLuvzXSOxZv/7osUMUaXuAY
+         Gg6QYYgxKzdoju/EORbhwIRt7VeTk9t16VNkXRnmtNYXXD9HAATmTis57j++uolqcdgv
+         0mqV7iOeEN8NGSXrctH/u5y5EKL3Ts8IXPAlQHVPGvNGfpKXM7dPccCe5ik6Njv4Ay8B
+         RAOICwxX28jtz4sZApV3eMHoFqWmZ9pSag/SIHGIlBa2s6Ic8PJhfKeKXPOg1Db5DVNS
+         WqQyYOBa3HTFk+/YhfX6WvQC/qAFB1FIVx9gaY3x+xecd0g+CMQvGdp5EP7PY7Mqkzzj
+         LJmA==
+X-Gm-Message-State: ALyK8tIMIovEdROHlp/m6Nwy/fGwx129BkUd1LpOXbPqyP+iF+1gU8jKPP62x1/kmG1SZoQmgD/x3KIZwePjr+py
+X-Received: by 10.140.81.145 with SMTP id f17mr12131140qgd.84.1464818442067;
+ Wed, 01 Jun 2016 15:00:42 -0700 (PDT)
+Received: by 10.200.55.212 with HTTP; Wed, 1 Jun 2016 15:00:41 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296169>
 
-Junio C Hamano <gitster@pobox.com> writes:
+(running git-next)
 
->> Ok I'll fix the variable names; I think for consistency with e.g.
->> ls-files --error-unmatch
->> we would want to be loose by default and strict on that option.
->
-> I do not think the "typo-prevention" safety measure should suddenly
-> be turned into opt-in; I'd suggest "--unmatch-ok" instead.
+In the Gerrit repo I did
+    $ echo "/plugins/commit-message-length-validator sub-default"
+>>.gitattributes
+    $ git status ":(attr:sub-default)"
+Segmentation fault (core dumped)
 
-Sorry, I should have grepped before hitting "send".  I think this is
-in line with "git rm --ignore-unmatch".  We complain by default, but
-the user can choose to squelch.
+Running this multiple times through gdb, this produces different back
+traces as it seems that threads are involved? (So I don't attach a
+back trace here)
+
+Also notable are:
+*** Error in `/usr/local/google/home/sbeller/bin/git': double free or
+corruption (fasttop): 0x00007fffd80008f0 ***
+*** Error in `/usr/local/google/home/sbeller/bin/git': double free or
+corruption (fasttop): 0x00007ffff0001000 ***
+
+When running another command `git status ":(attr:asdf)"`, I get
+git: attr.c:634: prepare_attr_stack: Assertion `attr_stack->origin' failed.
+git: attr.c:634: prepare_attr_stack: Assertion `attr_stack->origin' failed.
+git: attr.c:634: prepare_attr_stack: Assertion `attr_stack->origin' failed.
+git: attr.c:634: prepare_attr_stack: Assertion `attr_stack->origin' failed.
+Aborted (core dumped)
+
+The failing assertions are an indication that sb/pathspec-label is
+using the attrs incorrectly or
+jc/attr added tighter assertions than I was aware of.
+
+Stefan
