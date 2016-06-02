@@ -1,65 +1,185 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Mark remote `gc --auto` error messages
-Date: Thu, 2 Jun 2016 18:04:55 -0400
-Message-ID: <20160602220454.GA17202@sigill.intra.peff.net>
-References: <146489432847.688.11121862368709034386@typhoon>
- <xmqqinxrtmgi.fsf@gitster.mtv.corp.google.com>
- <146489800609.1944.4398103814754920753@typhoon.lan>
- <CAPc5daXVx1=ptsKJEfEzXbjCNvwYxjAPyp_pob9CeR+Qr3tG_g@mail.gmail.com>
- <20160602214834.GB13356@sigill.intra.peff.net>
- <xmqqmvn3s148.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv2] pathspec: allow escaped query values
+Date: Thu, 2 Jun 2016 15:10:32 -0700
+Message-ID: <CAGZ79kaxqK=kL3=NdaHk+qo94fyiDE0LZOrKVVHtDJisKmABfQ@mail.gmail.com>
+References: <20160602213015.21712-1-sbeller@google.com> <xmqqr3cfs1dp.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Lukas Fleischer <lfleischer@lfos.de>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 03 00:05:03 2016
+X-From: git-owner@vger.kernel.org Fri Jun 03 00:10:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8aje-0003jS-Go
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 00:05:02 +0200
+	id 1b8ap5-0008Ia-Ht
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 00:10:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932914AbcFBWE6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2016 18:04:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48071 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932775AbcFBWE6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2016 18:04:58 -0400
-Received: (qmail 6532 invoked by uid 102); 2 Jun 2016 22:04:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Jun 2016 18:04:57 -0400
-Received: (qmail 14855 invoked by uid 107); 2 Jun 2016 22:05:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Jun 2016 18:05:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Jun 2016 18:04:55 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqmvn3s148.fsf@gitster.mtv.corp.google.com>
+	id S932843AbcFBWKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2016 18:10:34 -0400
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:34144 "EHLO
+	mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932253AbcFBWKd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2016 18:10:33 -0400
+Received: by mail-qk0-f180.google.com with SMTP id s186so13706906qkc.1
+        for <git@vger.kernel.org>; Thu, 02 Jun 2016 15:10:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=U9gOwTEj6Fx1yb9RegQUymcZHKEAaoBCSrO42U3n2T4=;
+        b=J3dGn8Fi7vleBfCnN3jyo5/Q93OXJqpv6u+DZp2FlCuMqG0hYpK9ulGOR0QqPb/cCb
+         6w3Dj6WrECqxzcfUuC2CcEYITCzOyEH89j0YUFr5R9EvsJteztsCV1XttN/hqW8cySgN
+         caihXbvVQaNNizppcBHLCgzQe92cKhKKjAC0crYBB9FKrkT+4LtdoHeiWmcCeHI11XZD
+         2Cb+ObyVB1k4EHv3GBvHc8RayE5bhbRmrwxlVEWTS+SgvVDUlh0cDpzU2+ghqG6TjeuW
+         kDwz3Db5UJUF9GRbQ4wQQ7+Dq5jDGlQNU1g+agmjuR5JbO5pIT6k7JV38TgKbcWwfsYC
+         hxHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=U9gOwTEj6Fx1yb9RegQUymcZHKEAaoBCSrO42U3n2T4=;
+        b=DmswexM9dkBjxufQ6jSxoVg6y+raw11wQmnTS2E2/reSDia5MNG+jXBy1AN6xwyE5G
+         MIHpHtdo/2oGAMoQPiLKLPZ5XbRGZFUhIyuZ0DefHXA7+XP19nzNQKaMwRZ5z9l6Co6Q
+         TGqa/FidjGYbACEf07AxzdlepM6dEfX5UBS4WKkVvuC5rQEUUbzgDyPAenlV8ImDfHkM
+         X4KrqSnEPsvfZBtgFIqHcYeXs9K3j/LzIHu8eMJ9hJrb1l0pdAgWAkiDWucM0z0K/JDe
+         3BjaPRqioxY1pV4SbSlPYqGJVm4SDW3w6CLwBHBD4zAkyXZys/e8+wQeGlWvJIsnjujR
+         EuDQ==
+X-Gm-Message-State: ALyK8tLX5psQ8efYRrGc/eni1uSigpHvK8wQZm4uYCxnGl8oG9VqKF7nTCmbrbuohW+GEGozv8aFsUQZLWstggY4
+X-Received: by 10.233.237.14 with SMTP id c14mr433671qkg.88.1464905432538;
+ Thu, 02 Jun 2016 15:10:32 -0700 (PDT)
+Received: by 10.200.55.212 with HTTP; Thu, 2 Jun 2016 15:10:32 -0700 (PDT)
+In-Reply-To: <xmqqr3cfs1dp.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296248>
 
-On Thu, Jun 02, 2016 at 02:59:51PM -0700, Junio C Hamano wrote:
+On Thu, Jun 2, 2016 at 2:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> In our own .gitattributes file we have attributes such as:
+>>
+>>     *.[ch] whitespace=indent,trail,space
+>>
+>> When querying for attributes we want to be able to ask for the exact
+>> value, i.e.
+>>
+>>     git ls-files :(attr:whitespace=indent,trail,space)
+>>
+>> should work, but the commas are used in the attr magic to introduce
+>> the next attr, ...
+>> ...
+>> So here is the "escaping only, but escaping done right" version.
+>> (It goes on top of sb/pathspec-label)
+>
+> The phrase "should work" is probably a bit too strong (I'd have said
+> "it would be nice if this worked"), as we do not have to even
+> support comma for our immediately expected use cases.  Allowing it
+> merely makes a casual test using our own .gitattributes easier.
+>
+>> +static size_t strcspn_escaped(const char *s, const char *reject)
+>
+> Perhaps s/reject/stop/?
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > So the greater question is not "should this output be marked" but
-> > "should auto-gc data go over the sideband so that all clients see it
-> > (and any server-side stderr does not)". And I think the answer is
-> > probably yes. And that fixes the "remote: " thing as a side effect.
-> 
-> Thanks for stating this a lot more clearly than I could, and I agree
-> that sending this to the other side regardless of the protocol is
-> the right thing.  I somehow doubt that server operators would check
-> Apache logs to decide when to do a proper GC, so I do not consider
-> it a true loss ;-)
+I took the signature from the strcspn man page, and my version of the
+man page has `reject` there, `stop` certainly works too
 
-I definitely agree. I'd wonder more about "would they want their users
-to see these details". I dunno. I am only intimately familiar with one
-git hosting site, and we turn off auto-gc completely.
+>
+>> +{
+>> +     const char *i, *j;
+>> +
+>> +     for (i = s; *i; i++) {
+>> +             /* skip escaped the character */
+>> +             if (i[0] == '\\' && i[1]) {
+>> +                     i++;
+>> +                     continue;
+>> +             }
+>> +             /* see if any of the chars matches the current character */
+>> +             for (j = reject; *j; j++)
+>> +                     if (!*i || *i == *j)
+>> +                             return i - s;
+>
+> I somehow doubt that *i can be NUL here.  In any case, this looks
+> more like
+>
+>         /* is *i is one of the stop codon? */
+>         if (strchr(stop, *i))
+>                 break;
 
--Peff
+right, that seems easier.
+
+
+>
+>> +     }
+>> +     return i - s;
+>> +}
+>
+>> +static char *attr_value_unescape(const char *value)
+>> +{
+>> +     char *i, *ret = xstrdup(value);
+>> +
+>> +     for (i = ret; *i; i++) {
+>> +             if (i[0] == '\\') {
+>> +                     if (!i[1])
+>> +                             die(_("Escape character '\\' not allowed as "
+>> +                                   "last character in attr value"));
+>> +
+>> +                     /* remove the backslash */
+>> +                     memmove(i, i + 1, strlen(i));
+>> +                     /* and ignore the character after that */
+>> +                     i++;
+>> +             }
+>> +     }
+>> +     return ret;
+>> +}
+>> +
+>
+> Repeated memmove() and strlen() somehow bothers me.  Would there be
+> a more efficient and straight-forward way to do this, perhaps along
+> the lines of this instead?
+>
+>         const char *src;
+>         char *dst, *ret;
+>
+>         ret = xmalloc(strlen(value));
+>         for (src = value, dst = ret; *src; src++, dst++) {
+>                 if (*src == '\\') {
+>                         if (!src[1])
+>                                 die();
+>                         src++;
+>                 }
+>                 if (*src && invalid_value_char(*src))
+>                         die("cannot use '%c' for value matching", *src)
+>                 *dst = *src;
+>         }
+>         *dst = '\0'
+>         return ret;
+>
+> Even though I earlier said "Now we have an unquote mechanism, we can
+> open the floodgate by lifting the "no backslash in value" check, I
+> now realize that we do want to keep some escape hatch for us to
+> extend the quoting syntax even more later, so perhaps with something
+> like this:
+>
+>         static inline int invalid_value_char(const char ch)
+>         {
+>                 if (isalnum(ch) || strchr(",-_", ch))
+>                         return 0;
+>                 return -1;
+>         }
+
+Makes sense.
+
+Later on we could have : or ; for an and/or of the values and
+parens and such, so the invalid_value_char makes sense.
+
+>
+> Thanks.
+
+Thanks,
+Stefan
