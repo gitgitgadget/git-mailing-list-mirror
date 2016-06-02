@@ -1,78 +1,110 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Segfault in the attr stack
-Date: Thu, 2 Jun 2016 08:04:25 +0700
-Message-ID: <CACsJy8CCo1UC8KZNdap8K6_z1_kXOQ0qxhDEZusG62cAt4x_bQ@mail.gmail.com>
-References: <CAGZ79ka_4vZfNhgOyMeFKdossO-S5Q7RVnvEzB8YAJNc1YQ+uQ@mail.gmail.com>
- <CAGZ79kbSKgS42nAShsK3JV78geam3k84=ipWRx7vbRODuHcmcA@mail.gmail.com>
- <CAPc5daXuQAeWvJAciRA_Kzyoxa=atEntGzKhqzjiN+ho6TnQyg@mail.gmail.com> <CACsJy8A4gXRyx4LpBmM2Y=n2KB0NurKMiW42-tPnU7K89qj5bw@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC/PATCH] pathspec: allow escaped query values
+Date: Wed, 1 Jun 2016 19:20:39 -0700
+Message-ID: <CAGZ79kZSB-r-GzS1WVtLk-sX068PDXQ1h-1FV-8YZFGGsr3hWQ@mail.gmail.com>
+References: <20160601235233.21040-1-sbeller@google.com> <574F800D.6070107@ramsayjones.plus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 02 03:05:01 2016
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Thu Jun 02 04:21:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8H4G-00009G-Ca
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 03:05:00 +0200
+	id 1b8IFq-0006VF-Qx
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 04:21:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751828AbcFBBE4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2016 21:04:56 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:34759 "EHLO
-	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751326AbcFBBE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2016 21:04:56 -0400
-Received: by mail-io0-f177.google.com with SMTP id p194so33516464iod.1
-        for <git@vger.kernel.org>; Wed, 01 Jun 2016 18:04:55 -0700 (PDT)
+	id S1752368AbcFBCUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2016 22:20:43 -0400
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:34716 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752299AbcFBCUl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2016 22:20:41 -0400
+Received: by mail-qg0-f41.google.com with SMTP id p34so47576355qgp.1
+        for <git@vger.kernel.org>; Wed, 01 Jun 2016 19:20:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=SATWCbNy7WU6e9m4adT5IEi4jQqrjBojIjAifrevV+E=;
-        b=pfWq2f7iARbFZWnNKup7C4KLponsSVCtewyjFal/Rku4bjELh4P+zpqWL3GE4qtoMY
-         3NQkvEUl3fNxtikdNBTyxiaKKHEmtKyUFAz4zDWqIB1uAYtvcwBY+HRlp5GZS6cmdvvN
-         eH7KoxIzHFvtk3FKUJY6J6zZbSrsU4naSh9wNGKnpKPYu9FJ+7/NknsljzLf5x0AlRtR
-         i9aCr4RRdDBEM4mu5d6sfd13ixOc3IttN+X5frldy8cDoxfXim/zBAN8FWcEwH78hnpv
-         +l4A/yoV3lbI5LnK+2ONOXSyoirpzqzo9sJ6iFkrizn+SMJVYk0eJUAplzLUYztHvWYC
-         2TWA==
+        bh=2+EZrKNhDWtNU1cVcen4aYSNOUVKv6K1Rw1lLU/1RoM=;
+        b=Fpb3snwIOVXk4N1NIegzapzugmRPJK7bF3ChE9w+0QoJXDuSAizJ84jBoWx2PIoAyC
+         xOB3b7DE8Q886MLz608dxhXNlThmXqeTOLjLMRheurs4MmiX8s6Jk1po3B0u+f8u3l5v
+         OS3/bdqJaHgsXb+yX00LokCO1RiXgp1oJ8j5iRsBIl3nePQdvkAGpw2874F338D6lPev
+         Wp8zXdFncgMsKqFVXO5In/yr9aJ0b1412HkaGPvaoFFK3aWf5s6DwUgagRD1d16pBu6r
+         GVaU6jAUWRKlfHpmUPeqyw7ztW7mJyrfoGUMaBmVfA1TcP0zi6t/VnVxWj97u6E2Fwb5
+         envQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=SATWCbNy7WU6e9m4adT5IEi4jQqrjBojIjAifrevV+E=;
-        b=meY0Nc2ok/W76DFxLzgsjEcYN14Ag5AehNuG6tDJMs/GF1hDmpn41nf2rYntwNFL9D
-         Ivi2Kbud5Qd4HujK+AvWfGr6IwqVVZq5YMrpqNJPUD8uUP3YAJ+MEji549O+DNmuI+LI
-         OKSPAikjtoxqcwlcQKoT/cWIUMLn29S9uXVgTraNX/PmCKMDsuwweII5yTsI/ANrSoFT
-         TrWgQuqkhdASjgDe6lzyFMbNsC6fbPVRG6S58Tz1fyviBPodkdfaAxN5FTxNsFg2Dgt+
-         eavaUKLTA2mh5rJLeb4Oij7QUKL+6uzQnmL9lL0AfQezI0y6qC6fT3vsS8Lc+uVCUg6H
-         HF4w==
-X-Gm-Message-State: ALyK8tLCURj4HDzLdH706JlJxyv3ShRbCOpWeuJ8IhJ8ZFrrEVTxxh82IVwcWg18lAoCSHCMm6flNaiJwABxAw==
-X-Received: by 10.107.22.131 with SMTP id 125mr535512iow.128.1464829495188;
- Wed, 01 Jun 2016 18:04:55 -0700 (PDT)
-Received: by 10.64.173.167 with HTTP; Wed, 1 Jun 2016 18:04:25 -0700 (PDT)
-In-Reply-To: <CACsJy8A4gXRyx4LpBmM2Y=n2KB0NurKMiW42-tPnU7K89qj5bw@mail.gmail.com>
+        bh=2+EZrKNhDWtNU1cVcen4aYSNOUVKv6K1Rw1lLU/1RoM=;
+        b=JLflHJM4OZz2e/FrBHbBCG735IqrXw/2liO9vJZECcJ/uNFjHYZCTffWb83gZH0CI6
+         Kc5u2vLNYuJyTifML8WmY6SNODzESnGIGijdyjHHwEJEe3WB+8RpMEYFAkZYfJSOUFN/
+         T+x4Yh72mSnVlFRs/K5Sg0E2q1CRBB0zLofCVdaOIoWEfwMcFX4pLToi/2hFlhWYEyqV
+         Rh/O4GLQoWdFkocQOZXk931NihTyKYS5Bm4c6rhcnqJDIBHfEH6YO2n8Xrfr5Jjw/qIh
+         3SbetCh8X3dL/6dq2upZzzWB62CFMZr2tbF6D6dw1jvpTJcP3bY4b4+J3rKCM8ek82VX
+         TLcQ==
+X-Gm-Message-State: ALyK8tL1EpysSinYHcUW0XEZtoIrRXnGUj+0Eniaan0n7DYTHnliSMvHnYW10t9HW3undDwHFRUFRoDchpBGwquF
+X-Received: by 10.140.238.66 with SMTP id j63mr39944511qhc.48.1464834039957;
+ Wed, 01 Jun 2016 19:20:39 -0700 (PDT)
+Received: by 10.200.55.212 with HTTP; Wed, 1 Jun 2016 19:20:39 -0700 (PDT)
+In-Reply-To: <574F800D.6070107@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296184>
 
-On Thu, Jun 2, 2016 at 8:02 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Thu, Jun 2, 2016 at 5:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Gaah, of course.
->>
->> This is coming from the cache preload codepath, where multiple threads
->> try to run ce_path_match().
->> It used to be OK because pathspec magic never looked at attributes,
->> but now it does, and attribute system is not thread-safe.
+On Wed, Jun 1, 2016 at 5:38 PM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
 >
-> Off topic. I wonder if we can annotate which functions are thread-safe
-> (minority currently in git code base, I believe) and make gcc, clang
-> or sparse spot them in threaded code?
+>
+> On 02/06/16 00:52, Stefan Beller wrote:
+>> In our own .gitattributes file we have attributes such as:
+>>
+>>     *.[ch] whitespace=indent,trail,space
+>>
+>> When querying for attributes we want to be able to ask for the exact
+>> value, i.e.
+>>
+>>     git ls-files :(attr:whitespace=indent,trail,space)
+>>
+>> should work, but the commas are used in the attr magic to introduce
+>> the next attr, such that this query currently fails with
+>>
+>> fatal: Invalid pathspec magic 'trail' in ':(attr:whitespace=indent,trail,space)'
+>>
+>> This change allows escaping characters by a backslash, such that the query
+>>
+>>     git ls-files :(attr:whitespace=indent\,trail\,space)
+>
+> Not having given this much thought at all, but the question which comes
+> to mind is: can you use some other separator for the <attr>-s rather than
+> a comma? That way you don't need to quote them in the <value> part of the
+> <attr>-spec.
+>
+> (I dunno, maybe use ; or : instead?)
 
-By them I mean unannotated (i.e. not thread-safe) functions, of course.
--- 
-Duy
+That was essentially my proposal as well (just that I said "white
+spaces" instead if ':' or ';'),
+but it is not a good idea according to Junio as we don't want to need
+knowledge of the attr
+syntax here in the pathspec matching IIUC. We rather want "I want to
+transport this exact
+string for the match, but to go through the pathspec magic, we need to
+apply escaping of
+the exact string. That way we can change the attr system later without
+having to worry
+about the syntax replacements done in the pathspecs.
+
+
+
+>
+> ATB,
+> Ramsay Jones
+>
+>
+>
