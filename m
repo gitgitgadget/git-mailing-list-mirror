@@ -1,98 +1,95 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC/PATCH] Triangular Workflow UI improvement: Documentation
-Date: Thu, 2 Jun 2016 14:02:48 +0200
-Message-ID: <57502068.5000500@alum.mit.edu>
-References: <9A874F00-ABD8-43D5-A32E-6A39ED333E6D@grenoble-inp.org>
- <1464697717-5751-1-git-send-email-jordan.de-gea@grenoble-inp.org>
- <vpqy46qs3f3.fsf@anie.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 0/2] strbuf: improve API
+Date: Thu, 02 Jun 2016 14:58:22 +0200
+Message-ID: <vpqwpm7n3wx.fsf@anie.imag.fr>
+References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr>
+	<1069084553.156626.1464607928755.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	<20160601074218.GB14096@sigill.intra.peff.net>
+	<20160601210713.GA18118@sigill.intra.peff.net>
+	<5750147C.5060609@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: philipoakley@iee.org, gitster@pobox.com, git@vger.kernel.org,
-	erwan.mathoniere@grenoble-inp.org, samuel.groot@grenoble-inp.org,
-	tom.russello@grenoble-inp.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Thu Jun 02 14:03:00 2016
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	git@vger.kernel.org,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
+	antoine queru <antoine.queru@ensimag.grenoble-inp.fr>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 02 14:58:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8RL1-0006DN-RK
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 14:03:00 +0200
+	id 1b8SCz-0000tr-Ur
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 14:58:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751806AbcFBMCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2016 08:02:55 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:50144 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750811AbcFBMCy (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2016 08:02:54 -0400
-X-AuditID: 1207440c-c53ff70000000b85-f1-5750206b93c5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id F8.29.02949.B6020575; Thu,  2 Jun 2016 08:02:51 -0400 (EDT)
-Received: from [192.168.69.130] (p508EAEB0.dip0.t-ipconnect.de [80.142.174.176])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u52C2mpI031299
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 2 Jun 2016 08:02:49 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.8.0
-In-Reply-To: <vpqy46qs3f3.fsf@anie.imag.fr>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRmVeSWpSXmKPExsUixO6iqJutEBBu8O+1mcWn2ROYLLqudDNZ
-	NPReYbZY+j/Z4tLn9awWnVNlLWaf/MJucfnOMiYHDo+JX46zelxb+JLRY/nSdYweFy8pe3ze
-	JBfAGsVtk5RYUhacmZ6nb5fAnfGm6SZjwVuuikM/VzA1MD7m6GLk4JAQMJF4/S68i5GLQ0hg
-	K6NEQ881FgjnPJPElj3bgBxODmEBL4nrd+8xgdgiAhkSmyZ9YIYoWsEo0dq/mRXEYRbYzChx
-	9/56NpAqNgFdiUU9zWAdvALaEi83LGUHsVkEVCT2HWwAqxEVCJE4v24rK0SNoMTJmU9YQE7i
-	BKpf9kYFJMwsoC7xZ94lZghbXmL72znMExj5ZyHpmIWkbBaSsgWMzKsY5RJzSnN1cxMzc4pT
-	k3WLkxPz8lKLdA31cjNL9FJTSjcxQsKcZwfjt3UyhxgFOBiVeHgZdPzDhVgTy4orcw8xSnIw
-	KYnyriwDCvEl5adUZiQWZ8QXleakFh9ilOBgVhLhbZcLCBfiTUmsrEotyodJSXOwKInzqi5R
-	9xMSSE8sSc1OTS1ILYLJynBwKEnw/gBpFCxKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3J
-	iAfFZHwxMCpBUjxAe+vA9hYXJOYCRSFaTzHqchzZf28tkxBLXn5eqpQ472eQIgGQoozSPLgV
-	sKT2ilEc6GNh3p3yQFU8wIQIN+kV0BImoCUFj/xBlpQkIqSkGhhD6rKLp1674Jlif80qZWnE
-	VO67x/zv80xs8Zlxc8OCRUt1m4sbp0c0HNdV9qvdeEN8Tu/UbBYL97Y72isPf99/ 
+	id S932620AbcFBM6l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2016 08:58:41 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:38045 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751452AbcFBM6l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2016 08:58:41 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u52CwLXJ024140
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 2 Jun 2016 14:58:21 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u52CwMsu016615;
+	Thu, 2 Jun 2016 14:58:22 +0200
+In-Reply-To: <5750147C.5060609@alum.mit.edu> (Michael Haggerty's message of
+	"Thu, 2 Jun 2016 13:11:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Thu, 02 Jun 2016 14:58:22 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u52CwLXJ024140
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1465477105.80425@StdP25bj7ab7fLXM2zWrOw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296197>
 
-On 05/31/2016 04:33 PM, Matthieu Moy wrote:
-> Jordan DE GEA <jordan.de-gea@grenoble-inp.org> writes:
-> [...]
->> +DESCRIPTION
->> +-----------
->> +
->> +Triangular Workflow (or Asymmetric Workflow) is a workflow which gives
->> +the possibility to:
->> +
->> +- fetch (or pull) from a repository
->> +- push to another repository
-> 
-> [...]
-> 
-> I find Michael Haggerty's definition of triangular workflow much
-> clearer:
-> 
-> https://github.com/blog/2042-git-2-5-including-multiple-worktrees-and-triangular-workflows#improved-support-for-triangular-workflows
-> 
-> I don't see a licence on the GitHub blog, so I don't think it's legal to
-> copy-past directly to our docs, but Michael might allow us to do so?
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-I'm glad you find that blog post useful!
+> 1. The amount of added code complexity is small and quite
+>    encapsulated.
 
-You are correct that the text of GitHub blog posts is copyrighted, so
-indeed you need to ask before using it.
+Actually, STRBUF_OWNS_MEMORY can even be seen as a simplification if
+done properly: we already have the case where the strbuf does not own
+the memory with strbuf_slopbuf. I already pointed places in
+strbuf_grow() which could be simplified after the patch. Re-reading the
+code it seems at lesat the call to strbuf_grow(sb, 0); in strbuf_detach
+becomes useless. The same in strbuf_attach() probably is, too.
 
-It is OK with me (and more importantly with GitHub, because I wrote this
-text in their employ) for you to use the text about triangular workflows
-from the blog post mentioned above under the Git project's license.
+So, the final strbuf.[ch] code might not be "worse" that the previous.
 
-I strongly suggest that you adapt it to make it fit better with the rest
-of the Git documentation, and because having verbatim copies of the same
-text in two places seems a little bit silly. But that's up to you.
+I'm unsure about the complexity of the future code using the new API. I
+don't forsee cases where using the new API would lead to a high
+maintenance cost, but I don't claim I considered all possible uses.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> 2. The ability to use strbufs without having to allocate memory might
+>    make enough *psychological* difference that it encourages some
+>    devs to use strbufs where they would otherwise have done manual
+>    memory management. I think this would be a *big* win in terms of
+>    potential bugs and security vulnerabilities avoided.
 
-Michael
+Note that this can also be seen as a counter-argument, since it
+may psychologically encourage people to micro-optimize code and use
+contributors/reviewers neurons to spend time on "shall this be on-stack
+or malloced?".
+
+I think we already have a tendency to micro-optimize non-critical code
+too much in Git's codebase, so it's not necessarily a step in the right
+direction.
+
+In conclusion, I don't have a conclusion, sorry ;-).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
