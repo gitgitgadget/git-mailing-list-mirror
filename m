@@ -1,95 +1,127 @@
-From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: Re: [PATCH v3 13/39] i18n: git-sh-setup.sh: mark strings for
- translation
-Date: Thu, 2 Jun 2016 14:14:22 +0000
-Message-ID: <57503F3E.1090705@sapo.pt>
-References: <1464799289-7639-1-git-send-email-vascomalmeida@sapo.pt>
- <1464799289-7639-14-git-send-email-vascomalmeida@sapo.pt>
- <xmqqvb1sydmu.fsf@gitster.mtv.corp.google.com>
- <xmqqd1o0y7m0.fsf@gitster.mtv.corp.google.com>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: Re: [PATCH v2 2/2] completion: add git status
+Date: Thu, 2 Jun 2016 17:04:58 +0200
+Message-ID: <025de231-53a3-bc71-1564-aad8f4e096c1@virtuell-zuhause.de>
+References: <20160601040542.GA18978@sigill.intra.peff.net>
+	 <6e722a5fb64b73373ac6450ec9600e98745df29d.1464769152.git.thomas.braun@virtuell-zuhause.de>
+	 <1464773857.4315.1.camel@virtuell-zuhause.de>
+	 <20160601141510.Horde.M2zGuJrzBNqf_2zYLo0P2Sx@webmail.informatik.kit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 02 16:40:09 2016
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>
+To: =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Jun 02 17:13:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8Tmn-00081V-5n
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 16:39:49 +0200
+	id 1b8UJa-0007P7-E4
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 17:13:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161307AbcFBOji convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2016 10:39:38 -0400
-Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:49537 "EHLO sapo.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1161170AbcFBOjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2016 10:39:36 -0400
-Received: (qmail 31811 invoked from network); 2 Jun 2016 14:39:33 -0000
-Received: (qmail 6195 invoked from network); 2 Jun 2016 14:39:33 -0000
-Received: from unknown (HELO [192.168.1.66]) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <sunshine@sunshineco.com>; 2 Jun 2016 14:39:27 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
+	id S932966AbcFBPNi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2016 11:13:38 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:51894 "EHLO
+	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932873AbcFBPNg convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Jun 2016 11:13:36 -0400
+Received: from p4fc87c53.dip0.t-ipconnect.de ([79.200.124.83] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1b8UJS-0003kK-34; Thu, 02 Jun 2016 17:13:34 +0200
+FCC: imap://wp1126771-182009@wp156.webpack.hosteurope.de/Gesendete Objekte
+X-Identity-Key: id2
+X-Account-Key: account1
 X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-In-Reply-To: <xmqqd1o0y7m0.fsf@gitster.mtv.corp.google.com>
+X-Mozilla-Draft-Info: internal/draft; vcard=0; receipt=0; DSN=0;
+ uuencode=0; attachmentreminder=0
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
+In-Reply-To: <20160601141510.Horde.M2zGuJrzBNqf_2zYLo0P2Sx@webmail.informatik.kit.edu>
+X-Mailer: Evolution 3.12.9-1+b1 
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1464880416;74cfb77c;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296204>
 
-=C0s 20:30 de 01-06-2016, Junio C Hamano escreveu:
-> Junio C Hamano <gitster@pobox.com> writes:
-> Would it allow you to lose the $(git --exec-path) prefix in the new
-> dot-source to have this patch before applying your patch?
+Am 01.06.2016 um 14:15 schrieb SZEDER G=C3=A1bor:
 >=20
-> -- >8 --
-> Subject: t2300: run git-sh-setup in an environment that better mimics=
- the real life
+> Quoting Thomas Braun <thomas.braun@virtuell-zuhause.de>:
 >=20
-> When we run scripted Porcelains, "git" potty has set up the $PATH by
-> prepending $GIT_EXEC_PATH, the path given by "git --exec-path=3D$ther=
-e
-> $cmd", etc. already.  Because of this, scripted Porcelains can
-> dot-source shell script library like git-sh-setup with simple dot
-> without specifying any path.
+>> Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+>> ---
+>>  contrib/completion/git-completion.bash | 29
+>> +++++++++++++++++++++++++++++
+>>  1 file changed, 29 insertions(+)
+>>
+>> diff --git a/contrib/completion/git-completion.bash
+>> b/contrib/completion/git-completion.bash
+>> index addea89..77343da 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -1782,6 +1782,35 @@ _git_stage ()
+>>      _git_add
+>>  }
+>>
+>> +_git_status ()
+>> +{
+>> +    case "$cur" in
+>> +    --ignore-submodules=3D*)
+>> +        __gitcomp "none untracked dirty all" ""
+>> "${cur##--ignore-submodules=3D}"
+>> +        return
+>> +        ;;
+>> +    --untracked-files=3D*)
+>> +        __gitcomp "$__git_untracked_file_modes" ""
+>> "${cur##--untracked-files=3D}"
+>> +        return
+>> +        ;;
+>> +    --column=3D*)
+>> +        __gitcomp "
+>> +            always never auto column row plain dense nodense
+>> +            " "" "${cur##--column=3D}"
+>> +        return
+>> +        ;;
+>> +    --*)
+>> +        __gitcomp "
+>> +            --short --branch --porcelain --long --verbose
+>> +            --untracked-files=3D --ignore-submodules=3D --ignored
+>> +            --column=3D --no-column
+>> +            "
+>> +        return
+>> +        ;;
+>> +    esac
+>> +    __git_complete_file
 >=20
-> t2300 however dot-sources git-sh-setup without adjusting $PATH like
-> the real "git" potty does.  This has not been a problem so far, but
-> once git-sh-setup wants to rely on the $PATH adjustment, just like
-> any scripted Porcelains already do, it would become one.  It cannot
-> for example dot-source another shell library without specifying the
-> full path to it by prefixing $(git --exec-path).
+> __git_complete_file()'s job is to complete the '<rev>:<path>' notatio=
+n,
+> e.g. 'master:Mak<TAB>',  which is not what we want here, because this
+> notation doesn't make sense for 'git status' and because 'git status
+> <TAB>' would then offer refs instead of files.
+
+Correct. I might have been mislead by the name ;)
+
+> I think there are two choices what to do instead:
 >=20
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  t/t2300-cd-to-toplevel.sh | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>   - Don't do anything :)  Bash will then fall back to filename
+>     completion, which is quite close to what we want here (and in thi=
+s
+>     case the return statements from the other case arms can go away a=
+s
+>     well).  The drawback is that all ignored files in the current
+>     working directory will show up after 'git status <TAB>'.
 >=20
-> diff --git a/t/t2300-cd-to-toplevel.sh b/t/t2300-cd-to-toplevel.sh
-> index 9965bc5..cccd7d9 100755
-> --- a/t/t2300-cd-to-toplevel.sh
-> +++ b/t/t2300-cd-to-toplevel.sh
-> @@ -8,7 +8,8 @@ test_cd_to_toplevel () {
->  	test_expect_success $3 "$2" '
->  		(
->  			cd '"'$1'"' &&
-> -			. "$(git --exec-path)"/git-sh-setup &&
-> +			PATH=3D"$(git --exec-path):$PATH" &&
-> +			. git-sh-setup &&
->  			cd_to_toplevel &&
->  			[ "$(pwd -P)" =3D "$TOPLEVEL" ]
->  		)
->=20
-Yes, this patch allows to have . git-sh-i18n instead of
-=2E "$(git --exec-path)"/git-sh-i18n in git-sh-setup.sh file.
+>   - use __git_complete_index_file() with appropriate options, perhaps
+>     '--cached --others', but I didn't think this through.  For bonus
+>     points pass additional options when certain 'git status' options =
+are
+>     already present on the command line, e.g. pass '--ignored', too, =
+if
+>     it is present.
+
+I went for the bonus points way. If that is too involved I can also go
+back to "Don't do anything".
