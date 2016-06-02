@@ -1,90 +1,249 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 09/13] refs: introduce an iterator interface
-Date: Thu, 2 Jun 2016 17:08:17 +0700
-Message-ID: <CACsJy8AZRJ_qa8KHTt_xcX5sDmJ2rCuMd6LpW+MB0MXKErDJQw@mail.gmail.com>
-References: <cover.1464537050.git.mhagger@alum.mit.edu> <89634d216544d1102dafd5d18247bff2581d48a8.1464537050.git.mhagger@alum.mit.edu>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 0/2] strbuf: improve API
+Date: Thu, 2 Jun 2016 13:11:56 +0200
+Message-ID: <5750147C.5060609@alum.mit.edu>
+References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr>
+ <1069084553.156626.1464607928755.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+ <20160601074218.GB14096@sigill.intra.peff.net>
+ <20160601210713.GA18118@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>,
-	Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jun 02 12:08:58 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	git@vger.kernel.org,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
+	antoine queru <antoine.queru@ensimag.grenoble-inp.fr>,
+	matthieu moy <matthieu.moy@grenoble-inp.fr>
+To: Jeff King <peff@peff.net>,
+	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 02 13:12:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8PYf-0001yG-Oq
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 12:08:58 +0200
+	id 1b8QXp-00078t-Jw
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 13:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752966AbcFBKIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2016 06:08:48 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:38243 "EHLO
-	mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751628AbcFBKIs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2016 06:08:48 -0400
-Received: by mail-it0-f49.google.com with SMTP id i127so47099974ita.1
-        for <git@vger.kernel.org>; Thu, 02 Jun 2016 03:08:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=sWIZFvNv9V4YD+2+0khyBe4n3auvWWfIzcg14VTU0Ps=;
-        b=gh1I7zKGBZUFlNoSrYyZutoIMwwch9tyxnXTgiTTSHUKB4UqtRzvv6bTIVWjFCXbAD
-         Tw54iq6Sn/1vt94GYJdDPjpWQrwxgbN0Wya1lvB5W6JYIDaJTfdLaWm7G77T/MVYX4ho
-         UXhPRjYAnz1byLeSC5HjwPZIgVaRaf8+FH1kxadwbLMUd7oEIHTlWwZmdHMcPnu3FlPQ
-         sKmSNXqsb15I7PU/VEj7rZcyFYa5aBw0wUl7lYdMYqDhz8HHo4fJc7DdR6NF3hXzisKV
-         47qNJYqOk+geiQ/KQb12XWqG7BDD0S9pMY9zhdItIH/kgGgmqsyy0PI3m9iEOw05r0TD
-         a+iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=sWIZFvNv9V4YD+2+0khyBe4n3auvWWfIzcg14VTU0Ps=;
-        b=DlIdOhJe5vcL/p1KCoL4IPm+LaKboy7Gmvfcul5qtnmikT3pU/a7Aw0dyEerh7HBGh
-         dHt9w6fzYfw1z07P2UIWjccGDPZQRgwSt8Gas8cVHWgP7YDJUCkDntu1DsmVIgmtZ2DL
-         hGU5TQPvoTAPGcr9rl0gMSCJmVxa8u1hX00u83EQgIbSXcaitOzstxqCXPKXsNe4ppl2
-         PAyL7n9FZvqUgwl04XmD4ea0TZ3dqX9j7RW4ZdcE5imDLnLiz0pGxER+PPCguHKma8yc
-         vjN25JZeG2p5SQZsDn1PMIjnmz0fbtELMTb6AcAKcJ8n36Eso/9oeUz3xH0JOqMFUo8S
-         X5Xw==
-X-Gm-Message-State: ALyK8tLdvjAQRNY8d8lxjDBKHnqJBApdGtJOgFmCGSf1xcVm7IbTMkI4B6t3d7JqpHQjbtreLC6A80RLuHB3tA==
-X-Received: by 10.36.130.130 with SMTP id t124mr2541993itd.42.1464862127310;
- Thu, 02 Jun 2016 03:08:47 -0700 (PDT)
-Received: by 10.64.173.167 with HTTP; Thu, 2 Jun 2016 03:08:17 -0700 (PDT)
-In-Reply-To: <89634d216544d1102dafd5d18247bff2581d48a8.1464537050.git.mhagger@alum.mit.edu>
+	id S932344AbcFBLME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2016 07:12:04 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:50827 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751145AbcFBLMC (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2016 07:12:02 -0400
+X-AuditID: 1207440f-8a7ff700000008e4-87-5750147f74f1
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id DE.EA.02276.F7410575; Thu,  2 Jun 2016 07:11:59 -0400 (EDT)
+Received: from [192.168.69.130] (p508EAEB0.dip0.t-ipconnect.de [80.142.174.176])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u52BBuoe028961
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 2 Jun 2016 07:11:57 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.8.0
+In-Reply-To: <20160601210713.GA18118@sigill.intra.peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrCKsWRmVeSWpSXmKPExsUixO6iqNsgEhBu0PCT0WLyhnusFnebMiy6
+	rnQzWVz6vJ7V4kdLD7NFX/9EVourW28yWuyefInRgcPjanOAx8Qvx1k9nvXuYfT4vEkugCWK
+	2yYpsaQsODM9T98ugTuj8egZ5oJvxhU/j/5mbmA8ot7FyMkhIWAiMXfRT8YuRi4OIYGtjBK9
+	05azQDjnmSSaP99gB6liE9CVWNTTzARiCwvoSEw6vg2oiINDRCBdYktfIET9D0aJO/9ngtUz
+	C1xmknjxUAfE5hXQlrhx5B8LiM0ioCJxc9EDNhBbVCBE4vy6rawQNYISJ2c+AavhFLCWWPz4
+	DCPEHHWJP/MuMUPY8hLb385hnsDIPwtJyywkZbOQlC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyY
+	l5dapGuil5tZopeaUrqJERLe/DsYu9bLHGIU4GBU4uFl0PEPF2JNLCuuzD3EKMnBpCTKu7IM
+	KMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEN0cgIFyINyWxsiq1KB8mJc3BoiTOq75E3U9IID2x
+	JDU7NbUgtQgmK8PBoSTBWyAM1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPisn4
+	YmBUgqR4gPYeFATZW1yQmAsUhWg9xWjMsWzR9bVMHEf231vLJMSSl5+XKiXO6yMEVCoAUppR
+	mge3CJbYXjGKA/0tzNsJcg8PMCnCzXsFtIoJaFXBI3+QVSWJCCmpBsZMvt26a5f1t6g++bRL
+	r5GhZI8Y05n/dxvWdzvvmyp6bc3hc0tNV8ocn/jLb0NJsNw5pqaVh1ve+H9pTNu/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296194>
 
-On Mon, May 30, 2016 at 2:55 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> Currently, the API for iterating over references is via a family of
-> for_each_ref()-type functions that invoke a callback function for each
-> selected reference. All of these eventually call do_for_each_ref(),
-> which knows how to do one thing: iterate in parallel through two
-> ref_caches, one for loose and one for packed refs, giving loose
-> references precedence over packed refs. This is rather complicated code,
-> and is quite specialized to the files backend. It also requires callers
-> to encapsulate their work into a callback function, which often means
-> that they have to define and use a "cb_data" struct to manage their
-> context.
->
-> The current design is already bursting at the seams, and will become
-> even more awkward in the upcoming world of multiple reference storage
-> backends:
->
-> * Per-worktree vs. shared references are currently handled via a kludge
->   in git_path() rather than iterating over each part of the reference
->   namespace separately and merging the results. This kludge will cease
->   to work when we have multiple reference storage backends.
+On 06/01/2016 11:07 PM, Jeff King wrote:
+> On Wed, Jun 01, 2016 at 03:42:18AM -0400, Jeff King wrote:
+> 
+>> I have no idea if those ideas would work. But I wouldn't want to start
+>> looking into either of them without some idea of how much time we're
+>> actually spending on strbuf mallocs (or how much time we would spend if
+>> strbufs were used in some proposed sites).
+> 
+> So I tried to come up with some numbers.
+> 
+> Here's an utterly silly use of strbufs, but one that I think should
+> over-emphasize the effect of any improvements we make:
+> 
+> diff --git a/Makefile b/Makefile
+> index 7a0551a..72b968a 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -579,6 +579,7 @@ PROGRAM_OBJS += shell.o
+>  PROGRAM_OBJS += show-index.o
+>  PROGRAM_OBJS += upload-pack.o
+>  PROGRAM_OBJS += remote-testsvn.o
+> +PROGRAM_OBJS += foo.o
+>  
+>  # Binary suffix, set to .exe for Windows builds
+>  X =
+> diff --git a/foo.c b/foo.c
+> index e69de29..b62dd97 100644
+> --- a/foo.c
+> +++ b/foo.c
+> @@ -0,0 +1,18 @@
+> +#include "git-compat-util.h"
+> +#include "strbuf.h"
+> +
+> +int main(void)
+> +{
+> +	const char *str = "this is a string that we'll repeatedly insert";
+> +	size_t len = strlen(str);
+> +
+> +	int i;
+> +	for (i = 0; i < 1000000; i++) {
+> +		struct strbuf buf = STRBUF_INIT;
+> +		int j;
+> +		for (j = 0; j < 500; j++)
+> +			strbuf_add(&buf, str, len);
+> +		strbuf_release(&buf);
+> +	}
+> +	return 0;
+> +}
 
-Question from a refs user. Right now worktree.c:get_worktrees() peeks
-directly to "$GIT_DIR/worktrees/xxx/HEAD" and parses the content
-itself, something that I  promised to fix but never got around to do
-it. Will we have an iterator to go through all worktrees' HEAD, or
-will  there be an API to say "resolve ref HEAD from worktree XYZ"?
--- 
-Duy
+Thanks for generating actual data.
+
+Your benchmark could do two things to stress malloc()/free()
+even more. I'm not claiming that this makes the benchmark more typical
+of real-world use, but it maybe gets us closer to the theoretical upper
+limit on improvement.
+
+1. Since strbuf_grow() allocates new space in geometrically increasing
+sizes, the number of mallocs needed to do N strbuf_add()s increases only
+like log(N). So decreasing the "500" would increase the fraction of the
+time spent on allocations.
+
+2. Since the size of the string being appended increases the time spent
+copying bytes, without appreciably changing the number of allocations
+(also because of geometric growth), decreasing the length of the string
+would also increase the fraction of the time spent on allocations.
+
+I put those together as options, programmed several variants of the
+string-concatenating loop, and added a perf script to run them; you can
+see the full patch here:
+
+
+https://github.com/mhagger/git/commit/b417935a4425e0f2bf62e59a924dc652bb2eae0c
+
+The guts look like this:
+
+> 	int j;
+> 	if (variant == 0) {
+> 		/* Use buffer allocated a single time */
+> 		char *buf = big_constant_lifetime_buf;
+> 
+> 		for (j = 0; j < reps; j++)
+> 			strcpy(buf + j * len, str);
+> 	} else if (variant == 1) {
+> 		/* One correct-sized buffer malloc per iteration */
+> 		char *buf = xmalloc(reps * len + 1);
+> 
+> 		for (j = 0; j < reps; j++)
+> 			strcpy(buf + j * len, str);
+> 
+> 		free(buf);
+> 	} else if (variant == 2) {
+> 		/* Conventional use of strbuf */
+> 		struct strbuf buf = STRBUF_INIT;
+> 
+> 		for (j = 0; j < reps; j++)
+> 			strbuf_add(&buf, str, len);
+> 
+> 		strbuf_release(&buf);
+> 	} else if (variant == 3) {
+> 		/* strbuf initialized to correct size */
+> 		struct strbuf buf;
+> 		strbuf_init(&buf, reps * len);
+> 
+> 		for (j = 0; j < reps; j++)
+> 			strbuf_add(&buf, str, len);
+> 
+> 		strbuf_release(&buf);
+> 	} else if (variant == 4) {
+> 		/*
+> 		 * Simulated fixed strbuf with correct size.
+> 		 * This code only works because we know how
+> 		 * strbuf works internally, namely that it
+> 		 * will never realloc() or free() the buffer
+> 		 * that we attach to it.
+> 		 */
+> 		struct strbuf buf = STRBUF_INIT;
+> 		strbuf_attach(&buf, big_constant_lifetime_buf, 0, reps * len + 1);
+> 
+> 		for (j = 0; j < reps; j++)
+> 			strbuf_add(&buf, str, len);
+> 
+> 		/* No strbuf_release() here! */
+> 	}
+
+I ran this for a short string ("short") and a long string ("this is a
+string that we will repeatedly insert"), and also concatenating the
+string 5, 20, or 500 times. The number of loops around the whole program
+is normalized to make the total number of concatenations approximately
+constant. Here are the full results:
+
+
+                               time (s)
+Test                   0      1      2      3      4
+----------------------------------------------------
+5 short strings     1.64   3.37   8.72   6.08   3.65
+20 short strings    1.72   2.12   5.43   4.01   3.39
+500 short strings   1.62   1.61   3.36   3.26   3.10
+5 long strings      2.08   6.64  13.09   8.50   3.79
+20 long strings     2.16   3.33   7.03   4.72   3.55
+500 long strings    2.04   2.10   3.61   3.33   3.26
+
+
+Column 0 is approximately the "bare metal" approach, with a
+pre-allocated buffer and no strbuf overhead.
+
+Column 1 is like column 0, except allocating a correctly-sized buffer
+each time through the loop. This increases the runtime by as much as 219%.
+
+Column 2 is a naive use of strbuf, where each time through the loop the
+strbuf is reinitialized to STRBUF_INIT, and managing the space is
+entirely left to strbuf.
+
+Column 3 is like column 2, except that it initializes the strbuf to the
+correct size right away using strbuf_init(). This reduces the runtime
+relative to column 2 by as much as 35%.
+
+Column 4 uses a simulated "fixed strbuf", where the fixed-size buffer is
+big enough for the full string (thus there are no calls to
+malloc()/realloc()/free()).
+
+The comparison between columns 0 and 4 shows that using a strbuf costs
+as much as 123% more than using a simple char array, even if the strbuf
+doesn't have to do any memory allocations.
+
+The comparison between columns 3 and 4 shows savings a reduction in
+runtime of up to 55% from using a "fixed strbuf" rather than a pre-sized
+conventional strbuf. I think this is the comparison that is most
+relevant to the current discussion.
+
+Of course strbuf manipulation (especially of small numbers of strings)
+is unlikely to be a big fraction of the workload of any Git command, so
+this is far from proof that this optimization is worthwhile in terms of
+code complexity. But I am still moderately in favor of the idea, for two
+reasons:
+
+1. The amount of added code complexity is small and quite
+   encapsulated.
+
+2. The ability to use strbufs without having to allocate memory might
+   make enough *psychological* difference that it encourages some
+   devs to use strbufs where they would otherwise have done manual
+   memory management. I think this would be a *big* win in terms of
+   potential bugs and security vulnerabilities avoided.
+
+Michael
