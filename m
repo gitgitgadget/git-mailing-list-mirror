@@ -1,115 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/2] completion: add git status
-Date: Thu, 02 Jun 2016 11:14:33 -0700
-Message-ID: <xmqqtwhbtq46.fsf@gitster.mtv.corp.google.com>
-References: <20160601141510.Horde.M2zGuJrzBNqf_2zYLo0P2Sx@webmail.informatik.kit.edu>
-	<9ef8cfd8fb89bcacd123ddbebc12f961a292ef8b.1464879648.git.thomas.braun@virtuell-zuhause.de>
-	<1464880296.3720.0.camel@virtuell-zuhause.de>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [RFC/PATCH] pathspec: allow escaped query values
+Date: Thu, 2 Jun 2016 19:42:05 +0100
+Message-ID: <57507DFD.6010800@ramsayjones.plus.com>
+References: <20160601235233.21040-1-sbeller@google.com>
+ <574F800D.6070107@ramsayjones.plus.com>
+ <xmqqy46ouorn.fsf@gitster.mtv.corp.google.com>
+ <57505105.2000801@ramsayjones.plus.com>
+ <xmqqoa7jvag0.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	John Keeping <john@keeping.me.uk>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-To: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-X-From: git-owner@vger.kernel.org Thu Jun 02 20:14:42 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Stefan Beller <sbeller@google.com>, pclouds@gmail.com,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 02 20:42:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8X8k-0008L6-2Q
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 20:14:42 +0200
+	id 1b8XZQ-0003XB-73
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 20:42:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161425AbcFBSOi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2016 14:14:38 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52306 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932188AbcFBSOh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2016 14:14:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BF0D21ED26;
-	Thu,  2 Jun 2016 14:14:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iqpjFYpryoGlnq8LFuXnnsXNU8c=; b=yVzwsD
-	qxGhnSATz3mJoYem7xRmrjhLMWOXIz+jRrIKVxJs0oUnXUtdmcY454n1wAFrIH/D
-	kruWcbIY+ZmNoAvpzXInJSNqBPrA5wFo76SZe966OddbI0yc4Zct3206HQRtmcqF
-	Cyu+GrjTfQBFLVzzGRb2Rks1k5QKZ5+W+E0Rs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=a5pAvbEJop9lZ2Q9Fy3WuCN1QLkGLVse
-	dBF1V67oNusu2m0YopabKdgnEsg8mP4yY+DZwhK8dRFpdwJEGmsVMUhGT3EHpe/D
-	d/iCFN51JYMmZ8A/uaJBU8y6fil1tbHcPtpsCFBAW81Jf8uvrueh7WOz3mE+E97P
-	d4SNkJEC178=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B73BB1ED24;
-	Thu,  2 Jun 2016 14:14:35 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 33C8C1ED23;
-	Thu,  2 Jun 2016 14:14:35 -0400 (EDT)
-In-Reply-To: <1464880296.3720.0.camel@virtuell-zuhause.de> (Thomas Braun's
-	message of "Thu, 02 Jun 2016 17:11:36 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DC7BE1D6-28ED-11E6-A787-89D312518317-77302942!pb-smtp1.pobox.com
+	id S932978AbcFBSmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2016 14:42:12 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:45000 "EHLO
+	avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932339AbcFBSmL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2016 14:42:11 -0400
+Received: from [10.0.2.15] ([84.92.139.254])
+	by avasout01 with smtp
+	id 1ui71t0045VX2mk01ui8jZ; Thu, 02 Jun 2016 19:42:09 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=bsGxfxui c=1 sm=1 tr=0
+ a=RCQFcU9wfaUQolwYLdiqXg==:117 a=RCQFcU9wfaUQolwYLdiqXg==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=N659UExz7-8A:10
+ a=EBOSESyhAAAA:8 a=37LUcCaBeb301YVF1n0A:9 a=pILNOxqGKmIA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
+In-Reply-To: <xmqqoa7jvag0.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296221>
 
-Thomas Braun <thomas.braun@virtuell-zuhause.de> writes:
 
-> +	untracked_state="$(__git_find_on_cmdline "--untracked-files=no\
-> +		--untracked-files=normal --untracked-files=all")"
 
-Just wondering but does this help my use of the command like
+On 02/06/16 17:10, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+>> So, at risk of annoying you, let me continue in my ignorance a little
+>> longer and ask: even if you have to protect all of this 'magic' from
+>> the shell with '/" quoting, could you not use (nested) quotes to
+>> protect the <value> part of an <attr>? For example:
+>>
+>>     git ls-files ':(attr:whitespace="indent,trail,space",icase)'
+> 
+> That would be workable, I would think.  Before attr:VAR=VAL
+> extention, supported pathspec <magic> were only single lowercase-ascii
+> alphabet tokens, so nobody would have used " as a part of magic.  So
+> quting with double-quote pair would work.
 
-	$ git status -uno <TAB>
+I was thinking about both ' and ", so that you could do:
 
-or do I now have to spell it out like
+   $ ./args ':(attr:whitespace="indent,trail,space",icase)'
+    1::(attr:whitespace="indent,trail,space",icase)
 
-	$ git status --untracked-files=no <TAB>
+   $ ./args ":(attr:whitespace='indent,trail,space',icase)"
+    1::(attr:whitespace='indent,trail,space',icase)
 
-to take advantage of it?
+   $ p=':(attr:whitespace="indent,trail,space",icase)'
+   $ ./args "$p"
+    1::(attr:whitespace="indent,trail,space",icase)
 
-> +	untracked_state=${untracked_state##--untracked-files=}
-> +
-> +	if [ -z "$untracked_state" ]; then
-> +		untracked_state="$(git --git-dir="$(__gitdir)" config "status.showUntrackedFiles")"
-> +	fi
-> +
-> +	case "$untracked_state" in
-> +		no)
-> +			# --ignored option does not matter
+   $ p=":(attr:whitespace=\"indent,trail,space\",icase)"
+   $ ./args "$p"
+    1::(attr:whitespace="indent,trail,space",icase)
 
-Style.  I see existing case/esac statements that use this style, but
-our preference is not to indent case arms like this; rather:
+but limiting it to " would probably be OK too.
 
-	case "$untracked_state" in
-        no)
-        	# --ignored ...
+> You'd need to come up with a way to quote a double quote that
+> happens to be a part of VAL somehow, though.
 
-which saves the indentation one level overall.
+Yes I was assuming \ quoting as well - I just want to reduce the
+need for such quoting (especially on windows).
 
-> +			complete_opt=
-> +			;;
-> +		all|normal|*)
-> +			complete_opt="--cached --directory --no-empty-directory --others"
-> +
-> +			if [ -n "$(__git_find_on_cmdline "--ignored")" ]; then
+>                                              I think attribute
+> value is limited to a string with non-whitespace letters; even
+> though the built-in attributes that have defined meaning to the Git
+> itself may not use values with letters beyond [-a-zA-Z0-9,], end
+> users and projects can add arbitrary values within the allowed
+> syntax, so it is not unconceivable that some project may have a
+> custom attribute that lists forbidden characters in a path with
+> 
+> 	=== .gitattributes ===
+>         *.txt forbidden=`"
+> 
+> that tells their documentation cannot have these letters in it, or
+> something like that.
 
-Same question as the "--untracked-files=no vs -uno" applies here.
+Heh, yeah, that gets ugly:
 
-> +				complete_opt="$complete_opt --ignored --exclude=*"
-> +			fi
-> +			;;
-> +	esac
-> +
-> +	__git_complete_index_file "$complete_opt"
-> +}
-> +
->  __git_config_get_set_variables ()
->  {
->  	local prevword word config_file= c=$cword
+   $ ./args ":(attr:*.txt forbidden=\'\\\",icase)"
+    1::(attr:*.txt forbidden=\'\",icase)
+
+   $ ./args ':(attr:*.txt forbidden=\'\''\",icase)'
+    1::(attr:*.txt forbidden=\'\",icase)
+
+[Note the initial ' 1:' above is output from args]
+
+ATB,
+Ramsay Jones
