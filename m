@@ -1,113 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/6] worktree.c: find_worktree() learns to identify worktrees by basename
-Date: Thu, 02 Jun 2016 09:49:53 -0700
-Message-ID: <xmqqfusvv8lq.fsf@gitster.mtv.corp.google.com>
-References: <20160522104341.656-1-pclouds@gmail.com>
-	<20160530104939.28407-1-pclouds@gmail.com>
-	<20160530104939.28407-3-pclouds@gmail.com>
-	<xmqqh9de5d6e.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8CmdTapWsst-PuwFNH8Uy3Vgow+fKWzQ+tGYPSc=aZsXg@mail.gmail.com>
-	<xmqqr3cgycjl.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8B+j2im7XOV==tBtki=tOCN4k3ZHz6Jp4fq4qjqarb+ew@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Segfault in the attr stack
+Date: Thu, 2 Jun 2016 09:56:42 -0700
+Message-ID: <CAGZ79ka7sXKwOdY4_WK15c3HHOp2pRtcUgeZ6rDAt8hSvcx1=Q@mail.gmail.com>
+References: <CAGZ79ka_4vZfNhgOyMeFKdossO-S5Q7RVnvEzB8YAJNc1YQ+uQ@mail.gmail.com>
+ <CAGZ79kbSKgS42nAShsK3JV78geam3k84=ipWRx7vbRODuHcmcA@mail.gmail.com>
+ <CAPc5daXuQAeWvJAciRA_Kzyoxa=atEntGzKhqzjiN+ho6TnQyg@mail.gmail.com>
+ <xmqqh9dcwmrr.fsf@gitster.mtv.corp.google.com> <xmqq8tyowias.fsf@gitster.mtv.corp.google.com>
+ <xmqqshwvvaxq.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Reto =?utf-8?Q?Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
-	Mike Rappazzo <rappazzo@gmail.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 02 18:50:32 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 02 18:56:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8VpB-0004In-A2
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 18:50:25 +0200
+	id 1b8VvM-0000ZU-9K
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 18:56:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161387AbcFBQt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2016 12:49:58 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51940 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752431AbcFBQt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2016 12:49:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6EE0621934;
-	Thu,  2 Jun 2016 12:49:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=B2gw6RqCXF/fnnDWJ0FuUduISIU=; b=AtqlTG
-	7liryUxpS4nhzd3gSftSxARvjsyKFSshNlgcDUVA7+LMdtIpg8jFWNwiu3a6PtLz
-	wyolXmqW7LJifyzn8VquAWFvCXeJp3vltO1sGKZIiw+GAG4GlDdiMHicqYRG5J/3
-	3S12Z7Zr0649cnm2bEU3Z7Jv2c5pkw/Jp8lYA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AxO8mk2nqJ5ewpEhfsh1paDeY2jui4Ke
-	kN/tbsAz0XZeqSdvsSwsG9HNEdRU3jn6igAs8myDr5b5CHckwIktq3cxHpF1mGUA
-	ARvuU6bSvqp2I8Qx1GSSZBPOpRF5TFvEXbYMGUEE/8/qTMWJ175lCJbCkqTwm1rH
-	PuWrFI6/+pk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 660ED21933;
-	Thu,  2 Jun 2016 12:49:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E013721932;
-	Thu,  2 Jun 2016 12:49:54 -0400 (EDT)
-In-Reply-To: <CACsJy8B+j2im7XOV==tBtki=tOCN4k3ZHz6Jp4fq4qjqarb+ew@mail.gmail.com>
-	(Duy Nguyen's message of "Thu, 2 Jun 2016 16:40:35 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 085B2F0C-28E2-11E6-9AB5-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1161105AbcFBQ4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2016 12:56:44 -0400
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:33678 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751369AbcFBQ4o (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2016 12:56:44 -0400
+Received: by mail-qg0-f41.google.com with SMTP id 52so61658288qgy.0
+        for <git@vger.kernel.org>; Thu, 02 Jun 2016 09:56:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=fcI6WURebvk/Ib2BJVwKWckLYtHsyIqkbg2kbbbDjEY=;
+        b=pfLFxzI+E8qOAgdPVXoHQUh43wz4/OWATwVH8h5dxa+uWdRJld5w7Ribvx3TecPGxr
+         8wew7WSL+gcAChQdxc0IEs/iYUfyXGKuTYm9vc7iRzZQPo3E/YI/8AQV+4+QYElIRjR5
+         2QB+d30qDhJm0oRdsEhS4NFHuNz/7DS2DJTNUJjRO0GPov67J1ft1oLnZmmV1SldlgLo
+         zDSgDn5tHCgEt1TcFKO3kds3dIkSbBH/VrckgZ5gsInJ35raT7hBaSPUxN2vjQ9Es86C
+         LYpLNG2jJfTpBemCAROFTcgF5x5w88VlLcM6GU1tLTWxgBbFIh87xtsY5+fK22H/m9yh
+         xdoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=fcI6WURebvk/Ib2BJVwKWckLYtHsyIqkbg2kbbbDjEY=;
+        b=hYXlN/mGf60dP2P7gyFbaDFe6zbGpKGp08N//nsaaXEEWfi38f2H74DglACTfmfP4F
+         Djv2y8zHe/EsP/JFc5eKaXk63HjZAMzFbkkz/81rt3gk/UwW1swFBXotoQMnzBOMNttJ
+         rWSG1/Cl+nvfGV8YUs7aLnyaa61Ifz/GoA/FUn0W9La+dgDYeUBwBgfW176Mg9r4FaYK
+         jcmSRUewmWHThH7Meun3EwBBtnqhJHi4B8luaCfDISa/0dhBuDBAxaa07o4pQO9yAeQ4
+         10J81zTJCgkMcrfSBn9fT7sH6sfiQaK+3tymMLlsBo4pRd60WCA+zRV17iBp99IHieiE
+         WJnA==
+X-Gm-Message-State: ALyK8tJtsUeNjnhjgFAP4wpjKBg7FRDsWHHWgHOqSMZtx/6tsVigKcUUWAkpFea6E/OUkbqGbkw357rH8R6PD86q
+X-Received: by 10.140.23.180 with SMTP id 49mr43260591qgp.9.1464886602791;
+ Thu, 02 Jun 2016 09:56:42 -0700 (PDT)
+Received: by 10.200.55.212 with HTTP; Thu, 2 Jun 2016 09:56:42 -0700 (PDT)
+In-Reply-To: <xmqqshwvvaxq.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296215>
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-> On Thu, Jun 2, 2016 at 1:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> We would
->>> need to convert or match both '/' and '\' in "to/foo" case because of
->>> Windows, so it's not much easier than basename().
->>
->> I never said "easier to implement".  But can this codepath get
->> backslashed paths in the first place?  I somehow thought that
->> normalization would happen a lot before the control reaches here.
->>
->> You'll be calling into fspathcmp() anyway; shouldn't the function
->> know that '/' and '\' are equivalent on some platforms, or is it
->> legal to only call fspathcmp() on a single path component without
->> directory separator?
+On Thu, Jun 2, 2016 at 8:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> We still need to calculate the length to compare, which could be
-> problematic when utf-8 is involved, or some other encoding. 
+>>>> Gaah, of course.
+>>>>
+>>>> This is coming from the cache preload codepath, where multiple threads
+>>>> try to run ce_path_match().
+>>>> It used to be OK because pathspec magic never looked at attributes,
+>>>> but now it does, and attribute system is not thread-safe.
+>
+> I'll look into teaching a threadble interface to the attribute
+> subsystem, but for now, this should get you unstuck, I think.
 
-Hmph.  I was unaware that fspathcmp() used here does more than
-byte-for-byte processing, which would cause problems due to encoding
-issues when you hand code the comparison.
+Thanks for looking into this!
+(I was about to do that if you would not have stepped up, as the bug
+only surfaces when using the pathspec labels.)
 
-+static struct worktree *find_worktree_by_basename(struct worktree **list,
-+						  const char *base_name)
-+{
-+	struct worktree *found = NULL;
-+	int nr_found = 0;
-+
-+	for (; *list && nr_found < 2; list++) {
-+		char *path = xstrdup((*list)->path);
-+		if (!fspathcmp(base_name, basename(path))) {
-+			found = *list;
-+			nr_found++;
-+		}
-+		free(path);
-+	}
-+	return nr_found == 1 ? found : NULL;
-+}
+>
+> +       /* Do not preload when pathspec uses non-threadable subsystems */
+> +       if (pathspec && pathspec_is_non_threadable(pathspec))
+> +               return; /* for now ... */
 
+This fixes the problem for now; I'll look into the comma escaping then.
 
-> If we always split at '/' boundary though (e.g. "abc/def/ghi",
-> "def/ghi" or "ghi" but never "ef/ghi") then it should be ok.
-
-Does "basename()" used here know '/' and '\' can both be a directory
-separator, or does worktree->path have a normalized representation
-of the path, i.e. '/' is the only directory separator?
+Thanks,
+Stefan
