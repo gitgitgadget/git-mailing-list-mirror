@@ -1,85 +1,113 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 2/6] worktree.c: find_worktree() learns to identify
- worktrees by basename
-Date: Thu, 2 Jun 2016 16:40:35 +0700
-Message-ID: <CACsJy8B+j2im7XOV==tBtki=tOCN4k3ZHz6Jp4fq4qjqarb+ew@mail.gmail.com>
-References: <20160522104341.656-1-pclouds@gmail.com> <20160530104939.28407-1-pclouds@gmail.com>
- <20160530104939.28407-3-pclouds@gmail.com> <xmqqh9de5d6e.fsf@gitster.mtv.corp.google.com>
- <CACsJy8CmdTapWsst-PuwFNH8Uy3Vgow+fKWzQ+tGYPSc=aZsXg@mail.gmail.com> <xmqqr3cgycjl.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 0/4] Fix prune/gc problem with multiple worktrees
+Date: Thu, 2 Jun 2016 16:53:12 +0700
+Message-ID: <CACsJy8DjKo-HcyG6sKhhvx8vtySn6VTTP-E6vX2uKNEJgjouZg@mail.gmail.com>
+References: <574D382A.8030809@kdbg.org> <20160601104519.16563-1-pclouds@gmail.com>
+ <xmqqshwwzyee.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?Q?Reto_Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
-	Mike Rappazzo <rappazzo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 02 11:41:13 2016
+	Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+	David Turner <dturner@twopensource.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 02 11:53:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8P7p-0001Nc-11
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 11:41:13 +0200
+	id 1b8PK5-00017e-2z
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 11:53:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932651AbcFBJlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2016 05:41:08 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:34600 "EHLO
-	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932440AbcFBJlG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2016 05:41:06 -0400
-Received: by mail-io0-f196.google.com with SMTP id l9so5820784ioe.1
-        for <git@vger.kernel.org>; Thu, 02 Jun 2016 02:41:05 -0700 (PDT)
+	id S932327AbcFBJxo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2016 05:53:44 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:33457 "EHLO
+	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751326AbcFBJxn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2016 05:53:43 -0400
+Received: by mail-io0-f193.google.com with SMTP id p194so5868163iod.0
+        for <git@vger.kernel.org>; Thu, 02 Jun 2016 02:53:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=GI79fdOE///CsBNiWi6vm5WTphDrFDGSihDOTylA8LQ=;
-        b=LFVaCexnJT7d2WjjAidbeDr77lMiC/lnF3bX+Qc/vme8MUx+o+mkcEuQ1aunMht3AQ
-         nDx9qxMKp/jbNWJEmJ9EpkE0PvKJKDDUZdqOMY/jB4TeoMR/6FQdu/vHLiKe9bWPvuEp
-         TeZqxOh41U4mEhMyAGkMIWus62osivpHwd2ZdwbKdlSmpVUWBC8GjY+w3SotIvnyDUsH
-         b11gmOObuNkWfiolB+oNZsoJK4uubZChWrRWL7BUOCCsN1lu32aO6qU3h1tNY1Ru2nm7
-         +lgMvL1NIcJb+p1Z/dhBmxh7s8yycYrl9YkTNKyP99gq2ysBDQMibrCtmdFVgEUFLwxP
-         8ewg==
+         :cc:content-transfer-encoding;
+        bh=zPScbaOns0ndij4npbIVcEFZhF+n+6fTbWGHWtuElPo=;
+        b=Voj1o6Qfrla9USEyGy4jcz98n3JYXEhP/REH0ooPqwVmL7z7lSDbUG21e5jR3WKbN/
+         6JDtmrIa2gC9tn6KzWXpL3LO/6V6nCRXTtPINrbKnmFUhaN0bL9pi0O3Frc/P73v7ERq
+         EoIP22uCinyks6p4IoaBdrhnzSiSrcKnWQzkd3KKI46OrOKOe6+dmyucTvKOM8cTmCRQ
+         9oZmB5HkP+lu0pSJru9t9QKLa7UsmS+f0A1boLQt2GVWWZlj7l9Bei9wYHT/1i4xcx9t
+         CYRMD2KhHCIJC7hFvAWntadDb6EalKPOlAP7ytyZLB62oVaOcez6vKFc1F8OUw/eY3Oh
+         KY8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GI79fdOE///CsBNiWi6vm5WTphDrFDGSihDOTylA8LQ=;
-        b=R1G/nJBBMiha9SjWsGJj0c+7UrvNFlIHJLuEzU/wfEVZWBHn0eBkj8XZhxLVvrvb2b
-         GOKzNSY+O308iUS8s/Cm+luTPm2AIUo2GBQ/Hn6oIneDw3ITU1yfDht+RyqGyo55IbRE
-         GGtJVg7JwpTXj0mz3fnA8ejZJamFscucJr71umBzEZTS5GazVGUUyNhHnLhizbUm1h0T
-         lzdN1+ic9+5WOujRS/gvv+xBzHWMFMB/6ZXZnKmpPTym8eq/08lE+XO/YxTwdKOH/Z3q
-         3NE+/8PKqx5xoIsdR/KEU4VddygcvMNqHX6d112136H603Gb46MsOOaM32qeopvzwxmB
-         cODg==
-X-Gm-Message-State: ALyK8tJdh5ETrg3wPp/5uDxbT5Bp9KaGp7+dt2BFuvStZMlv3js9QtQ78SB12/jPa0jHzTOeyMp6xVigIeqh5Q==
-X-Received: by 10.107.22.131 with SMTP id 125mr2015415iow.128.1464860465055;
- Thu, 02 Jun 2016 02:41:05 -0700 (PDT)
-Received: by 10.64.173.167 with HTTP; Thu, 2 Jun 2016 02:40:35 -0700 (PDT)
-In-Reply-To: <xmqqr3cgycjl.fsf@gitster.mtv.corp.google.com>
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=zPScbaOns0ndij4npbIVcEFZhF+n+6fTbWGHWtuElPo=;
+        b=mhNUh1DD5xBDcnW2Ep6BF6hrT/8E5muquMSBeYp/TRgrXoj3EW7fupwUCdNDK5VW2A
+         4cfb/oKXfq0ASnCvEOhp7Rp2dA2cZQUMEcRMLSVWBpcdO33CbBWK2DhWD0P/6AwBBQMj
+         J15y7NwKMwar5qf8bAjnJ3tV0bj6J/j+X6/mkz8JQUBdLXaX7HRyjlv3qYjEjD8POKvX
+         mFNdrKBSGPFX8phtQuuQULrIoXybdXXD7GkrPsauHa99CeAg6ZXGtnxFznrm1DqyV3py
+         7E8gkxycwKpnHHYVN6xNqgY38FRIKZXZsM+iAg6TNnTQq4QbW75TYYTKr1BLcZzC5Msr
+         w7aA==
+X-Gm-Message-State: ALyK8tLg/E146m8TSFhrH6ne2vK9q7ONPGGHJ0NPWV6FGhk8m8EUwTdfRzkWb7pzMRCPsbQsQst/7TUrBI5KaA==
+X-Received: by 10.107.159.84 with SMTP id i81mr1976685ioe.29.1464861222354;
+ Thu, 02 Jun 2016 02:53:42 -0700 (PDT)
+Received: by 10.64.173.167 with HTTP; Thu, 2 Jun 2016 02:53:12 -0700 (PDT)
+In-Reply-To: <xmqqshwwzyee.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296192>
 
-On Thu, Jun 2, 2016 at 1:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> We would
->> need to convert or match both '/' and '\' in "to/foo" case because of
->> Windows, so it's not much easier than basename().
->
-> I never said "easier to implement".  But can this codepath get
-> backslashed paths in the first place?  I somehow thought that
-> normalization would happen a lot before the control reaches here.
->
-> You'll be calling into fspathcmp() anyway; shouldn't the function
-> know that '/' and '\' are equivalent on some platforms, or is it
-> legal to only call fspathcmp() on a single path component without
-> directory separator?
+(from patch 4/4 mail)
 
-We still need to calculate the length to compare, which could be
-problematic when utf-8 is involved, or some other encoding. If we
-always split at '/' boundary though (e.g. "abc/def/ghi", "def/ghi" or
-"ghi" but never "ef/ghi") then it should be ok.
--- 
+On Wed, Jun 1, 2016 at 10:51 PM, Michael Haggerty <mhagger@alum.mit.edu=
+> wrote:
+>> +     path =3D xstrdup(worktree_git_path(wt, "logs/refs/bisect"));
+>> +     if (file_exists(path))
+>> +             handle_one_reflog(path, NULL, 0, &cb);
+>> +     free(path);
+>> +}
+>
+> `refs/bisect` is not a single reference. It is a namespace that conta=
+ins
+> references with names like `refs/bisect/bad` and
+> `refs/bisect/good-66106691a1b71e445fe5e4d6b8b043dffc7dfe4c`.
+
+Yeah I missed that. I'm not going to write another directory walker to
+collect all logs/refs/bisect/*. I didn't add pending objects for
+refs/bisect/* of other worktrees either. At that point waiting for the
+new ref iterator makes more sense...
+
+On Wed, Jun 1, 2016 at 11:06 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> This series makes sure that objects referenced by all worktrees are
+>> marked reachable so that we don't accidentally delete objects that a=
+re
+>> being used. Previously per-worktree references in index, detached HE=
+AD
+>> or per-worktree reflogs come from current worktree only, not all
+>> worktrees.
+>
+> I'll let this topic simmer on the list for now, instead of picking
+> it up immediately to 'pu', as Michael in $gmane/296068 makes me
+> wonder if we want to keep piling on the current "worktree ref
+> iterations are bolted on" or if we want to first clean it up, whose
+> natural fallout hopefully would eliminate the bug away.
+
+So what should be the way forward? My intention was having something
+that can fix the problem for now, even if a bit hacky while waiting
+for ref iterator to be ready, then convert to use it and clean things
+up, because I don't how long ref-iterator would take and losing data
+is serous enough that I'd like to fix it soon. If we go with "fix soon
+then convert to ref-iterator later", then I will drop the
+logs/bisect/* check, checking logs/HEAD alone should be good enough.
+Otherwise I'll prepare a series on top of ref-iterator.
+--=20
 Duy
