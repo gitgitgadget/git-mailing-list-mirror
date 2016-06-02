@@ -1,110 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 28/39] i18n: config: unfold error messages marked for translation
-Date: Thu, 02 Jun 2016 10:36:18 -0700
-Message-ID: <xmqq7fe7v6gd.fsf@gitster.mtv.corp.google.com>
-References: <1464799289-7639-1-git-send-email-vascomalmeida@sapo.pt>
-	<1464799289-7639-29-git-send-email-vascomalmeida@sapo.pt>
-	<xmqqzir4yfcq.fsf@gitster.mtv.corp.google.com>
-	<574FFC49.9040409@sapo.pt>
+Subject: Re: [PATCH 0/4] Fix prune/gc problem with multiple worktrees
+Date: Thu, 02 Jun 2016 10:44:55 -0700
+Message-ID: <xmqqy46ntrhk.fsf@gitster.mtv.corp.google.com>
+References: <574D382A.8030809@kdbg.org>
+	<20160601104519.16563-1-pclouds@gmail.com>
+	<xmqqshwwzyee.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8DjKo-HcyG6sKhhvx8vtySn6VTTP-E6vX2uKNEJgjouZg@mail.gmail.com>
+	<575017FF.1020901@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Sunshine <sunshine@sunshineco.com>
-To: Vasco Almeida <vascomalmeida@sapo.pt>
-X-From: git-owner@vger.kernel.org Thu Jun 02 19:36:28 2016
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+	David Turner <dturner@twopensource.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 02 19:45:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8WXj-0005JE-Q3
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 19:36:28 +0200
+	id 1b8WgD-0003P2-32
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 19:45:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753468AbcFBRgX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2016 13:36:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60298 "EHLO
+	id S932970AbcFBRpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2016 13:45:05 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53858 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751963AbcFBRgW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2016 13:36:22 -0400
+	with ESMTP id S1751963AbcFBRpE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2016 13:45:04 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1DCF31E7BE;
-	Thu,  2 Jun 2016 13:36:21 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A1BEE210A5;
+	Thu,  2 Jun 2016 13:44:57 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=3Zcp/R3+eHmT
-	1shipXHnpVZBPjE=; b=s8NpIivn/MrgjX02BMLh2Efl2gMspSD3AXhfxqlqYKDk
-	2XR0o0AbEL/fIctOAlV2nYhA+X4DXhOP3WLHAjzmZoFjD9+yF+rZQFfEo4+6AwOP
-	wETew6EPV377Y5BtysXkO4JaVNtwhj0RVW7EfUC6JyyqUb6R2YTcl2k+/bIHAM8=
+	:content-type; s=sasl; bh=FT9hvxOelCP51c9KSHMg7btD98o=; b=dVGf+B
+	hfttYAqS9MrvnLCkWOoOaPcQseVhipDlFixDVHh7n3vqREj1uzymRtXcs5uoJeNu
+	4ylrj3IOTr3bbRZ+PW59ERfDtP53DIMGSoC/ztKnNzcdEXxG/DhPP0vGdR6rEf+q
+	umt/C3Y5F5nozVacbw+xCAr0bZh4DOi5QUJoU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=s24KQa
-	O0J1rAwEAB5QwDKiRqwwkX4b0miWaZDA4BGFfNt+OAGiKElzBqZRCKbeGa2rJwdT
-	aQ4VVnOR8U3WK1TyUKpzVF5mZJ3ES/2Weah2Mp+L2KpMWEP2MMqqtDgafJ3Wdz/2
-	wVkr2y8p4/DvJ4GDcUYcp2ynErHd/XykeM0QQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 148411E7BD;
-	Thu,  2 Jun 2016 13:36:21 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=pAUmHsvKdWSZrPJx9cnr4XGf+2nQVJ3Z
+	PHI8nVnm/MSQD8bYv1/as6G9i76z2QN5gS767wnl1A2BzgOpN5yFJhykro7cuW8o
+	/FCgnmJo7pQnqcT8SFKCxcpDWwyn3CBJj4CRNSMSm7Dl28eBQv+/t17tyuT7hYX9
+	wQyVtGv0UF4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9AE5F210A4;
+	Thu,  2 Jun 2016 13:44:57 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89D021E7BC;
-	Thu,  2 Jun 2016 13:36:20 -0400 (EDT)
-In-Reply-To: <574FFC49.9040409@sapo.pt> (Vasco Almeida's message of "Thu, 2
-	Jun 2016 09:28:41 +0000")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 21045210A2;
+	Thu,  2 Jun 2016 13:44:57 -0400 (EDT)
+In-Reply-To: <575017FF.1020901@alum.mit.edu> (Michael Haggerty's message of
+	"Thu, 2 Jun 2016 13:26:55 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 84C4EB0E-28E8-11E6-8C71-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B8AB3BDE-28E9-11E6-A8F0-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296219>
 
-Vasco Almeida <vascomalmeida@sapo.pt> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> =C3=80s 17:43 de 01-06-2016, Junio C Hamano escreveu:
->> Vasco Almeida <vascomalmeida@sapo.pt> writes:
->>=20
->>> Introduced in 473166b ("config: add 'origin_type' to config_source
->>> struct", 2016-02-19), Git can inform the user about the origin of a
->>> config error, but the implementation does not allow translators to
->>> translate the keywords 'file', 'blob, 'standard input', and
->>> 'submodule-blob'. Moreover, for the second message, a reason for th=
-e
->>> error is appended to the message, not allowing translators to trans=
-late
->>> that reason either.
->>=20
->> Good intentions.
->>=20
->>> @@ -417,6 +417,7 @@ static int git_parse_source(config_fn_t fn, voi=
-d *data)
->>>  	int comment =3D 0;
->>>  	int baselen =3D 0;
->>>  	struct strbuf *var =3D &cf->var;
->>> +	char error_msg[128];
->>> =20
->>>  	/* U+FEFF Byte Order Mark in UTF8 */
->>>  	const char *bomptr =3D utf8_bom;
->>> @@ -471,10 +472,38 @@ static int git_parse_source(config_fn_t fn, v=
-oid *data)
->>>  		if (get_value(fn, data, var) < 0)
->>>  			break;
->>>  	}
->>> +
->>> +	switch (cf->origin_type) {
->>> +	case CFG_BLOB:
->>> +		xsnprintf(error_msg, sizeof(error_msg),
->>> +			  _("bad config line %d in blob %s"),
->>> +			  cf->linenr, cf->name);
->>=20
->> Use xstrfmt() intead, perhaps?  That would be cleaner.
->>=20
-> Wouldn't that create a memory leak?
+> Fixing reachability via the index and detached HEADs feels relatively
+> important.
+> ...
 
-Yes, I didn't mean to suggest "use xstrfmt() instead of xsnprintf()
-without changing anything else".  It was merely to suggest that you
-do not have to have 128-byte limit if you used xstrfmt(); having to
-free the result was too obvious that I left it unsaid, and as expected,
-you noticed the need to do so, which is good ;-)
+I agree with the order of importance above.  But "relatively" is a
+very good keyword.  Just like bisection refs, what is in the index
+and the commit detached HEAD points at are expected to be tentative.
+As a part of still-experimental feature, I'd rather see our
+bandwidth spent on fixing it the right way first time, instead of
+piling on an unproven quick-fix as a band aid, having to rip it off
+and fixing it properly later.
+
+> It's hard for me to predict when the ref-iterator stuff will be merged.
+> It is a big change, but so far the feedback seems pretty good. I can
+> tell you that pushing it and ref-stores forward is high on my priority list.
+
+Thanks.
