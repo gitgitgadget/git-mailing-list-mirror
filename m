@@ -1,92 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] userdiff: add built-in pattern for CSS
-Date: Thu, 02 Jun 2016 16:07:41 -0700
-Message-ID: <xmqq1t4frxz6.fsf@gitster.mtv.corp.google.com>
-References: <20160524142537.19324-1-william.duclot@ensimag.grenoble-inp.fr>
-	<20160602224809.5167-1-william.duclot@ensimag.grenoble-inp.fr>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/2] corner cases with "rev-list --use-bitmap-index -n"
+Date: Thu, 2 Jun 2016 19:09:25 -0400
+Message-ID: <20160602230925.GA11196@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, simon.rabourg@ensimag.grenoble-inp.fr,
-	antoine.queru@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr, j6t@kdbg.org,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 03 01:07:50 2016
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 03 01:09:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8biP-0003Cc-BG
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 01:07:49 +0200
+	id 1b8bk4-0004Vt-Pa
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 01:09:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933032AbcFBXHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2016 19:07:45 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53816 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932888AbcFBXHo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2016 19:07:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8524620734;
-	Thu,  2 Jun 2016 19:07:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=P/HzVRShWCX+6dwg3lwT+gPF7cU=; b=swYCye
-	oAs5T2/5Anmk2OpOVxs4oOXn0yGpJeeem1qR1wCnXOs5an6qerKVlX6ynIKT0qez
-	vgpx0qggT4mzndhQaBmqCZ+CLbgtu0PO/7+B2ttWfCe0C4nVLBpbwPRgXugO3HOR
-	QtciBBFc351w6RidPe4xhSx1llaI30Ri3kF8M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GiThjeSu19z+cthjYuU1svLhLnByBKXO
-	mCzBjgcTQx2SGQc6zKMUNF5NHAYJzEariFNeBoR0FRec5po24/N6Wh3eEee0uFTW
-	55fNtT+9k7rEJFRb+vn4ewlbchqXEC/8oZtlSOLXfM3CwFsXy6dQvVPEgXNxPzsS
-	KEfgClzSGm4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CC3F20732;
-	Thu,  2 Jun 2016 19:07:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 07B8C20731;
-	Thu,  2 Jun 2016 19:07:43 -0400 (EDT)
-In-Reply-To: <20160602224809.5167-1-william.duclot@ensimag.grenoble-inp.fr>
-	(William Duclot's message of "Fri, 3 Jun 2016 00:48:09 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CFA4D5FC-2916-11E6-9649-89D312518317-77302942!pb-smtp1.pobox.com
+	id S933090AbcFBXJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2016 19:09:29 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48107 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932942AbcFBXJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2016 19:09:28 -0400
+Received: (qmail 9323 invoked by uid 102); 2 Jun 2016 23:09:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Jun 2016 19:09:28 -0400
+Received: (qmail 15301 invoked by uid 107); 2 Jun 2016 23:09:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Jun 2016 19:09:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Jun 2016 19:09:25 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296255>
 
-William Duclot <william.duclot@ensimag.grenoble-inp.fr> writes:
+This series fixes two corner-cases I found when using "-n" along with
+bitmaps. The results do make _some_ sense if you interpret them
+correctly, but are sufficiently confusing that I think it's worth
+dealing with. See the commit messages for the gory details.
 
-> diff --git a/userdiff.c b/userdiff.c
-> index 6bf2505..00fc3bf 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -148,6 +148,18 @@ PATTERNS("csharp",
->  	 "[a-zA-Z_][a-zA-Z0-9_]*"
->  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
->  	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
-> +IPATTERN("css",
-> +	 "!^.*;\n"
-> +	 "^[_a-z0-9].*$",
-> +	 /* -- */
-> +	 /*
-> +	  * This regex comes from W3C CSS specs. Should theoretically also
-> +	  * allow ISO 10646 characters U+00A0 and higher,
-> +	  * but they are not handled in this regex.
-> +	  */
-> +	 "-?[_a-zA-F][-_a-zA-F0-9]*" /* identifiers */
-> +	 "|-?[0-9]+|\\#[0-9a-fA-F]+" /* numbers */
+The good news is that in the first case, we can produce a more sensible
+answer without spending any extra work.
 
-You could now lose A-F from the above two lines.  In fact, the first
-line "identifiers" has "a-zA-F", which probably would work correctly
-under IPATTERN() to include 'G-Z' as part of the legit letters for
-identifiers, but is indeed misleading.
+The bad news is that the second case cannot, and must fall back to a
+regular traversal. I doubt anybody even cares about this case in
+practice, though, as "--objects -n" is somewhat nonsensical already (I
+didn't run across it in practice; I only noticed while I fixing the
+first one, which I did see in practice).
 
-> +),
->  { "default", NULL, -1, { NULL, 0 } },
->  };
->  #undef PATTERNS
+  [1/2]: rev-list: "adjust" results of "--count --use-bitmap-index -n"
+  [2/2]: rev-list: disable bitmaps when "-n" is used with listing objects
+
+-Peff
