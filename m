@@ -1,113 +1,147 @@
-From: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH 0/2] strbuf: improve API
-Date: Thu, 2 Jun 2016 16:22:05 +0200
-Message-ID: <20160602142205.GA5566@Messiaen>
-References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr>
- <1069084553.156626.1464607928755.JavaMail.zimbra@ensimag.grenoble-inp.fr>
- <20160601074218.GB14096@sigill.intra.peff.net>
- <20160601210713.GA18118@sigill.intra.peff.net>
- <5750147C.5060609@alum.mit.edu>
- <vpqwpm7n3wx.fsf@anie.imag.fr>
+From: Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: Re: [PATCH v3 24/39] i18n: bisect: enable l10n of bisect terms in
+ messages
+Date: Thu, 2 Jun 2016 09:04:38 +0000
+Message-ID: <574FF6A6.8030609@sapo.pt>
+References: <1464799289-7639-1-git-send-email-vascomalmeida@sapo.pt>
+ <1464799289-7639-25-git-send-email-vascomalmeida@sapo.pt>
+ <xmqq4m9czu5u.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
-	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org,
-	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
-	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
-	antoine queru <antoine.queru@ensimag.grenoble-inp.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 02 16:22:22 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 02 16:39:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8TVq-0003uF-16
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 16:22:18 +0200
+	id 1b8TmZ-0007so-1Y
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 16:39:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932824AbcFBOWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2016 10:22:12 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:50477 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932761AbcFBOWK (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2016 10:22:10 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 16BAE256C;
-	Thu,  2 Jun 2016 16:22:07 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yigxZbsLTn_G; Thu,  2 Jun 2016 16:22:07 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 0597C256B;
-	Thu,  2 Jun 2016 16:22:07 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id F2F2B2077;
-	Thu,  2 Jun 2016 16:22:06 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1Fd9-yZobvhj; Thu,  2 Jun 2016 16:22:06 +0200 (CEST)
-Received: from Messiaen (eduroam-033123.grenet.fr [130.190.33.123])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id D5BC22064;
-	Thu,  2 Jun 2016 16:22:06 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <vpqwpm7n3wx.fsf@anie.imag.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1161262AbcFBOj3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2016 10:39:29 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:49461 "EHLO sapo.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932978AbcFBOj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2016 10:39:27 -0400
+Received: (qmail 31568 invoked from network); 2 Jun 2016 14:39:24 -0000
+Received: (qmail 3182 invoked from network); 2 Jun 2016 14:39:24 -0000
+Received: from unknown (HELO [192.168.1.66]) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
+          for <sunshine@sunshineco.com>; 2 Jun 2016 14:39:19 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
+In-Reply-To: <xmqq4m9czu5u.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296201>
 
-On Thu, Jun 02, 2016 at 02:58:22PM +0200, Matthieu Moy wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> 1. The amount of added code complexity is small and quite
->>    encapsulated.
-> 
-> Actually, STRBUF_OWNS_MEMORY can even be seen as a simplification if
-> done properly: we already have the case where the strbuf does not own
-> the memory with strbuf_slopbuf. I already pointed places in
-> strbuf_grow() which could be simplified after the patch. Re-reading the
-> code it seems at lesat the call to strbuf_grow(sb, 0); in strbuf_detach
-> becomes useless. The same in strbuf_attach() probably is, too.
-> 
-> So, the final strbuf.[ch] code might not be "worse" that the previous.
-> 
-> I'm unsure about the complexity of the future code using the new API. I
-> don't forsee cases where using the new API would lead to a high
-> maintenance cost, but I don't claim I considered all possible uses.
-> 
->> 2. The ability to use strbufs without having to allocate memory might
->>    make enough *psychological* difference that it encourages some
->>    devs to use strbufs where they would otherwise have done manual
->>    memory management. I think this would be a *big* win in terms of
->>    potential bugs and security vulnerabilities avoided.
-> 
-> Note that this can also be seen as a counter-argument, since it
-> may psychologically encourage people to micro-optimize code and use
-> contributors/reviewers neurons to spend time on "shall this be on-stack
-> or malloced?".
-> 
-> I think we already have a tendency to micro-optimize non-critical code
-> too much in Git's codebase, so it's not necessarily a step in the right
-> direction.
-> 
-> In conclusion, I don't have a conclusion, sorry ;-).
+=C0s 17:38 de 01-06-2016, Junio C Hamano escreveu:
+> Vasco Almeida <vascomalmeida@sapo.pt> writes:
+>=20
+>> +enum term { BAD, GOOD, OLD, NEW };
+>> +static const char *term_names[] =3D {
+>> +/* TRANSLATORS: in bisect.c source code file, the following terms a=
+re
+>> +   used to describe a "bad commit", "good commit", "new revision", =
+etc.
+>> +   Please, if you can, check the source when you are not sure if a =
+%s
+>> +   would be replaced by one of the following terms. */
+>> +	N_("bad"), N_("good"), N_("old"), N_("new"),  NULL
+>> +};
+>> +
+>>  /* Remember to update object flag allocation in object.h */
+>>  #define COUNTED		(1u<<16)
+>> =20
+>> @@ -725,12 +734,12 @@ static void handle_bad_merge_base(void)
+>>  	if (is_expected_rev(current_bad_oid)) {
+>>  		char *bad_hex =3D oid_to_hex(current_bad_oid);
+>>  		char *good_hex =3D join_sha1_array_hex(&good_revs, ' ');
+>> -		if (!strcmp(term_bad, "bad") && !strcmp(term_good, "good")) {
+>> +		if (!strcmp(term_bad, term_names[BAD]) && !strcmp(term_good, term=
+_names[GOOD])) {
+>>  			fprintf(stderr, _("The merge base %s is bad.\n"
+>>  				"This means the bug has been fixed "
+>>  				"between %s and [%s].\n"),
+>>  				bad_hex, bad_hex, good_hex);
+>> -		} else if (!strcmp(term_bad, "new") && !strcmp(term_good, "old"))=
+ {
+>> +		} else if (!strcmp(term_bad, term_names[NEW]) && !strcmp(term_goo=
+d, term_names[OLD])) {
+>>  			fprintf(stderr, _("The merge base %s is new.\n"
+>>  				"The property has changed "
+>>  				"between %s and [%s].\n"),
+>> @@ -739,7 +748,7 @@ static void handle_bad_merge_base(void)
+>>  			fprintf(stderr, _("The merge base %s is %s.\n"
+>>  				"This means the first '%s' commit is "
+>>  				"between %s and [%s].\n"),
+>> -				bad_hex, term_bad, term_good, bad_hex, good_hex);
+>> +				bad_hex, _(term_bad), _(term_good), bad_hex, good_hex);
+>=20
+> These "bad" and "good" that are compared with term_bad and term_good
+> are the literal tokens the end user gives from the "git bisect"
+> command line.  I do not think you would want to catch them with
+>=20
+>     $ git bisect novo <rev>
+>     $ git bisect velho <rev>
+>=20
+> unless the user has done
+>=20
+>     $ git bisect --term-old=3Dvelho --term-new=3Dnovo
+>=20
+> previously.
 
-Thank you all for your input and your tests, those are very valuable!
-Me and Simon have to take a decision, as this contribution is part of a
-school project that comes to an end. We won't have the time to create
-tests that are representative of the use of strbuf in the Git codebase
-(partly because we lack knowledge of the codebase) to settle on whether
-this API improvement is useful or not.
+I may be misunderstanding you, but we do not "catch" those terms with
+this patch, although I'm not sure what you mean by "catch them". I thin=
+k
+you forget that no-operation N_("good"), does not affect in any way the
+string "good", it only enables xgettext to extract it to .pot file, doe=
+s
+not trigger translation.
+Overall, I don't understand what are you trying to tell me here.
 
-Jeff made very good points, and the tests we ran ourselves seem to
-agree with yours. That being said, the tests made by Michael, more
-detailed, suggest that there may be room for an improvement of the
-strbuf API (even thought that's to confront to the reality of the
-codebase).
+>=20
+> And that "custom bisect terms" case is covered by the last "else"
+> clause in this if/elseif cascade (outside the context we can see in
+> your message).
+>=20
+> The only thing you need to do around here is to mark the string as
+> translatable.  I do not think we need "enum term", or term_names[].
 
-Having little time, we will refactor the patch and send it as a V2: this
-way, if it appears one day that improving the API with stack-allocated
-memory is indeed useful, the patch will be ready to merge :)
+This patch tries to make bisect output those term translated within the
+also translated message. To enable this, it is handy to have
+term_names[] in order to mark each term, although I could have mark the=
+m
+anywhere they appeared in the source. It was only for that I chose to
+have term_names[].
+>=20
+>> @@ -747,7 +756,7 @@ static void handle_bad_merge_base(void)
+>>  	fprintf(stderr, _("Some %s revs are not ancestor of the %s rev.\n"
+>>  		"git bisect cannot work properly in this case.\n"
+>>  		"Maybe you mistook %s and %s revs?\n"),
+>> -		term_good, term_bad, term_good, term_bad);
+>> +		_(term_good), _(term_bad), _(term_good), _(term_bad));
+>=20
+> Likewise for all _(term_good), _(term_bad) and use of term_names[]
+> we see in this patch.
+>=20
+
+Indeed this was more of a PATCH/RFC to see what people would think of
+it. If nobody contest and there is no value in it, I'll happily drop
+this patch in the next re-roll.
+
+My motivation for this patch was that a user could feel embarrassment
+reading a message in her language with those terms untranslated.
+Although I do believe that no translating them is also a possibility.
