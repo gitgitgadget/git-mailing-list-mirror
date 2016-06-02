@@ -1,92 +1,95 @@
-From: Eric Wong <e@80x24.org>
-Subject: Re: [PATCH 1/3] pretty: support "mboxrd" output format
-Date: Thu, 2 Jun 2016 07:51:25 +0000
-Message-ID: <20160602075125.GA19551@dcvr.yhbt.net>
-References: <20160530232142.21098-1-e@80x24.org>
- <20160530232142.21098-2-e@80x24.org>
- <CAPig+cQrSJe03_RtSyf5KO2vE3Rri7t70-he8SXA9Y4oBYY_Ww@mail.gmail.com>
- <20160531074506.GA8911@dcvr.yhbt.net>
- <CAPig+cQrQfxWrGhpvtb-GKYfK0tMLsx9JJ+eWRRx00F8mNXrLg@mail.gmail.com>
- <20160531182932.GA27021@dcvr.yhbt.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 2/4] reachable.c: mark reachable objects in index from all worktrees
+Date: Thu, 2 Jun 2016 16:35:18 +0700
+Message-ID: <CACsJy8BCrCYDpAXUrkFvFNXrua39Ou1r5=s_NK28Pm61O+u-rQ@mail.gmail.com>
+References: <574D382A.8030809@kdbg.org> <20160601104519.16563-1-pclouds@gmail.com>
+ <20160601104519.16563-3-pclouds@gmail.com> <CAPig+cRzRa1uZ+2jD4_uCSisb+0dywPGV3AVE38-xZr3hauTtA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+	Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	David Turner <dturner@twopensource.com>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Jun 02 09:51:38 2016
+X-From: git-owner@vger.kernel.org Thu Jun 02 11:36:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8NPg-0001rQ-T8
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 09:51:33 +0200
+	id 1b8P2k-0006ak-Dj
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 11:35:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932321AbcFBHv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2016 03:51:28 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:35486 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932188AbcFBHv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2016 03:51:26 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E5371F992;
-	Thu,  2 Jun 2016 07:51:26 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20160531182932.GA27021@dcvr.yhbt.net>
+	id S932517AbcFBJfu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2016 05:35:50 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:33970 "EHLO
+	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932440AbcFBJfs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2016 05:35:48 -0400
+Received: by mail-io0-f194.google.com with SMTP id l9so5807593ioe.1
+        for <git@vger.kernel.org>; Thu, 02 Jun 2016 02:35:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=5hyOiZ7ooy4K8jLSwo8Xl3W3y8x3oO+tGVwA57wGXM4=;
+        b=RuVkX8EV1PYQI/VQqGS4JiDRBteollJULzRI8fFO8wL+N0Mc+3PN0rlXHPH8r/HYyt
+         uVMqN7Jy+Mvx0pg/b6ibRU5u2fGPYJkG+qJJJdB3QZswF2sZFx4Hn6AzOj0/C+MVdfqb
+         t5qQNpfvXYX7Qwlku8Pi6UeE3UzHHGBuDa9go9X7PhURl035qN5A7uKh1ily1aej59wS
+         O02QcXZDgrc8/78iolyQEDxZad8ctmF2PL9GNVO3Q5sjVo0VmzGLvosjtbdxDsucopPZ
+         zJ4hCaVyv1C1jzs6091h4+lIIafCLkmTwAQd+Wp2+N/dqSGR0U8ZmxejiO9ErjhxLTt0
+         s0BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5hyOiZ7ooy4K8jLSwo8Xl3W3y8x3oO+tGVwA57wGXM4=;
+        b=c+YbeLJ+GZYrrmpRQom24ZPfijwpqI3VxCGo7fS8f65dwt5OYQFXjcfcn6gumZMU4j
+         dnVPu4Ilc3pZ61K7H5jZ/JrbuXsRnsRos0NXz//xhFyR/zBbisTQJFT35563jPVsQ3fq
+         A5V4u9s1ACuf04tgVWB7sQ+Mze/mB8miPvX/Qxoh6eDX1YVI/qPVooj+oWA7lhTosSTS
+         vLePg+6s2LLYomaUvXGvkEVsg5UCJI+eBTXOAEYshyXP00dAotEAUuoO6nYqv83TXo3H
+         z93YwvppgAkAogoM/hCPh+UJHsw1O4K5eIpyPPVb6WuQf96OzKan1ScKNK22kQud1Jq5
+         LyXg==
+X-Gm-Message-State: ALyK8tKnCFYI5wrrvvmxy5igys+R41oSEoOkNYwccGj/YQe9eVWp6oCYXKmqt16RP2/Ykpb+K0HeLA1LXwmeJQ==
+X-Received: by 10.107.22.131 with SMTP id 125mr1998624iow.128.1464860147924;
+ Thu, 02 Jun 2016 02:35:47 -0700 (PDT)
+Received: by 10.64.173.167 with HTTP; Thu, 2 Jun 2016 02:35:18 -0700 (PDT)
+In-Reply-To: <CAPig+cRzRa1uZ+2jD4_uCSisb+0dywPGV3AVE38-xZr3hauTtA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296189>
 
-Eric Wong <e@80x24.org> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Tue, May 31, 2016 at 3:45 AM, Eric Wong <e@80x24.org> wrote:
-> > > Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > >> I wonder if hand-coding, rather than using a regex, could be an improvement:
-> > >>
-> > >>     static int is_mboxrd_from(const char *s, size_t n)
-> > >>     {
-> > >>         size_t f = strlen("From ");
-> > >>         const char *t = s + n;
-> > >>
-> > >>         while (s < t && *s == '>')
-> > >>             s++;
-> > >>         return t - s >= f && !memcmp(s, "From ", f);
-> > >>     }
-> > >>
-> > >> or something.
-> > >
-> > > Yikes.  I mostly work in high-level languages and do my best to
-> > > avoid string parsing in C; so that scares me.  A lot.
-> > 
-> > The hand-coded is_mboxrd_from() above is pretty much idiomatic C and
-> > (I think) typical of how such a function would be coded in Git itself,
-> > so it looks normal and easy to grok to me (but, of course, I'm
-> > probably biased since I wrote it).
+On Thu, Jun 2, 2016 at 1:13 AM, Eric Sunshine <sunshine@sunshineco.com>=
+ wrote:
+> On Wed, Jun 1, 2016 at 6:45 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
+ Duy <pclouds@gmail.com> wrote:
+>> Current mark_reachable_objects() only marks objects from index from
+>> _current_ worktree as reachable instead of all worktrees. Because th=
+is
+>> function is used for pruning, there is a chance that objects referen=
+ced
+>> by other worktrees may be deleted. Fix that.
+>>
+>> Small behavior change in "one worktree" case, the index is read agai=
+n
+>> from file. In the current implementation, if the_index is already
+>> loaded, the index file will not be read from file again. This adds s=
+ome
+>> more cost to this operation, hopefully insignificant because
+>> reachability test is usually very expensive already.
+>
+> Could this extra index read be avoided by taking advantage of 'struct
+> worktree::is_current'[1] and passing the already-loaded index to
+> add_index_objects_to_pending() if true?
+>
+> Or, am I misunderstanding the issue?
+>
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/292194
 
-For reference, here is the gfrom function from qmail (gfrom.c,
-source package netqmail-1.06 in Debian, reformatted git style)
-
-int gfrom(char *s, int len)
-{
-	while ((len > 0) && (*s == '>')) {
-		++s;
-		--len;
-	}
-
-	return (len >= 5) && !str_diffn(s, "From ", 5);
-}
-
-Similar to yours, but a several small things improves
-readability for me:
-
-* the avoidance of subtraction from the "return" conditional
-* s/n/len/ variable name
-* extra parentheses
-* removal of "t" variable (t for "terminal/termination"?)
-
-str_diffn is memcmp-like, I assume.  My eyes glazed over
-when I saw that function implemented in str_diffn.c, too.
-
-Just thinking out loud, with sufficient tests I could go with
-either.  Will reroll when/if I get the chance tomorrow.
+Hah! I broke my worktree changes into many pieces and lost track of
+them. I thought that one was still in some unsent series. Will use it.
+--=20
+Duy
