@@ -1,92 +1,114 @@
 From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: [PATCH v2 1/2] completion: create variable for untracked file
- modes
-Date: Thu, 2 Jun 2016 14:19:31 +0200
-Message-ID: <b41a90a6-c679-d148-823c-a94231f3f90c@virtuell-zuhause.de>
-References: <20160601040542.GA18978@sigill.intra.peff.net>
-	 <1464773846.4315.0.camel@virtuell-zuhause.de>
-	 <20160601135938.Horde.2Daxezldve72SBukDSPenPP@webmail.informatik.kit.edu>
+Subject: [PATCH v3 2/2] completion: add git status
+Date: Thu, 02 Jun 2016 17:11:36 +0200
+Message-ID: <1464880296.3720.0.camel@virtuell-zuhause.de>
+References: <20160601141510.Horde.M2zGuJrzBNqf_2zYLo0P2Sx@webmail.informatik.kit.edu>
+	 <9ef8cfd8fb89bcacd123ddbebc12f961a292ef8b.1464879648.git.thomas.braun@virtuell-zuhause.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>
-To: =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Jun 02 17:13:45 2016
+	John Keeping <john@keeping.me.uk>,
+	SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 02 17:13:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8UJb-0007P7-0h
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 17:13:43 +0200
+	id 1b8UJg-0007P7-Jl
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 17:13:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932414AbcFBPNh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2016 11:13:37 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:51888 "EHLO
+	id S932971AbcFBPNk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2016 11:13:40 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:51902 "EHLO
 	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932099AbcFBPNg convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Jun 2016 11:13:36 -0400
+	by vger.kernel.org with ESMTP id S932875AbcFBPNh convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Jun 2016 11:13:37 -0400
 Received: from p4fc87c53.dip0.t-ipconnect.de ([79.200.124.83] helo=[192.168.100.43]); authenticated
 	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1b8UJR-0003kA-9O; Thu, 02 Jun 2016 17:13:33 +0200
-X-Mozilla-Keys: 
-FCC: imap://wp1126771-182009@wp156.webpack.hosteurope.de/Gesendete Objekte
-X-Identity-Key: id2
-X-Account-Key: account1
-X-Mozilla-Draft-Info: internal/draft; vcard=0; receipt=0; DSN=0;
- uuencode=0; attachmentreminder=0
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.1
-In-Reply-To: <20160601135938.Horde.2Daxezldve72SBukDSPenPP@webmail.informatik.kit.edu>
+	id 1b8UJT-0003kd-0C; Thu, 02 Jun 2016 17:13:35 +0200
+In-Reply-To: <9ef8cfd8fb89bcacd123ddbebc12f961a292ef8b.1464879648.git.thomas.braun@virtuell-zuhause.de>
 X-Mailer: Evolution 3.12.9-1+b1 
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1464880416;74cfb77c;
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1464880417;b82f73aa;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296206>
 
-Am 01.06.2016 um 13:59 schrieb SZEDER G=C3=A1bor:
->=20
-> This subject would perhaps read better:
->=20
->   completion: factor out untracked file modes into a variable
+Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+---
+ contrib/completion/git-completion.bash | 55 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-Yes, definitly. Will be included in reroll.
-
-> Quoting Thomas Braun <thomas.braun@virtuell-zuhause.de>:
->=20
->> Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
->> ---
->>  contrib/completion/git-completion.bash | 4 +++-
->>  1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git a/contrib/completion/git-completion.bash
->> b/contrib/completion/git-completion.bash
->> index 3402475..addea89 100644
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -1098,6 +1098,8 @@ _git_clone ()
->>      esac
->>  }
->>
->> +__git_untracked_file_modes=3D"all no normal"
->> +
->>  _git_commit ()
->>  {
->>      case "$prev" in
->> @@ -1119,7 +1121,7 @@ _git_commit ()
->>          return
->>          ;;
->>      --untracked-files=3D*)
->> -        __gitcomp "all no normal" "" "${cur##--untracked-files=3D}"
->> +        __gitcomp "$__git_untracked_file_modes" ""
->> "${cur##--untracked-files=3D}"
->>          return
->>          ;;
->>      --*)
->=20
->=20
->=20
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index addea89..fa7a03a 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1782,6 +1782,61 @@ _git_stage ()
+ 	_git_add
+ }
+ 
++_git_status ()
++{
++	local complete_opt
++	local untracked_state
++
++	case "$cur" in
++	--ignore-submodules=*)
++		__gitcomp "none untracked dirty all" "" "${cur##--ignore-submodules=}"
++		return
++		;;
++	--untracked-files=*)
++		__gitcomp "$__git_untracked_file_modes" "" "${cur##--untracked-files=}"
++		return
++		;;
++	--column=*)
++		__gitcomp "
++			always never auto column row plain dense nodense
++			" "" "${cur##--column=}"
++		return
++		;;
++	--*)
++		__gitcomp "
++			--short --branch --porcelain --long --verbose
++			--untracked-files= --ignore-submodules= --ignored
++			--column= --no-column
++			"
++		return
++		;;
++	esac
++
++	untracked_state="$(__git_find_on_cmdline "--untracked-files=no\
++		--untracked-files=normal --untracked-files=all")"
++	untracked_state=${untracked_state##--untracked-files=}
++
++	if [ -z "$untracked_state" ]; then
++		untracked_state="$(git --git-dir="$(__gitdir)" config "status.showUntrackedFiles")"
++	fi
++
++	case "$untracked_state" in
++		no)
++			# --ignored option does not matter
++			complete_opt=
++			;;
++		all|normal|*)
++			complete_opt="--cached --directory --no-empty-directory --others"
++
++			if [ -n "$(__git_find_on_cmdline "--ignored")" ]; then
++				complete_opt="$complete_opt --ignored --exclude=*"
++			fi
++			;;
++	esac
++
++	__git_complete_index_file "$complete_opt"
++}
++
+ __git_config_get_set_variables ()
+ {
+ 	local prevword word config_file= c=$cword
+-- 
+2.8.3.windows.1
