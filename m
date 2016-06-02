@@ -1,113 +1,90 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 0/4] Fix prune/gc problem with multiple worktrees
-Date: Thu, 2 Jun 2016 16:53:12 +0700
-Message-ID: <CACsJy8DjKo-HcyG6sKhhvx8vtySn6VTTP-E6vX2uKNEJgjouZg@mail.gmail.com>
-References: <574D382A.8030809@kdbg.org> <20160601104519.16563-1-pclouds@gmail.com>
- <xmqqshwwzyee.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 09/13] refs: introduce an iterator interface
+Date: Thu, 2 Jun 2016 17:08:17 +0700
+Message-ID: <CACsJy8AZRJ_qa8KHTt_xcX5sDmJ2rCuMd6LpW+MB0MXKErDJQw@mail.gmail.com>
+References: <cover.1464537050.git.mhagger@alum.mit.edu> <89634d216544d1102dafd5d18247bff2581d48a8.1464537050.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-	David Turner <dturner@twopensource.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jun 02 11:53:54 2016
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Turner <dturner@twopensource.com>,
+	Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 02 12:08:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8PK5-00017e-2z
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 11:53:53 +0200
+	id 1b8PYf-0001yG-Oq
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jun 2016 12:08:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932327AbcFBJxo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2016 05:53:44 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:33457 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751326AbcFBJxn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2016 05:53:43 -0400
-Received: by mail-io0-f193.google.com with SMTP id p194so5868163iod.0
-        for <git@vger.kernel.org>; Thu, 02 Jun 2016 02:53:42 -0700 (PDT)
+	id S1752966AbcFBKIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2016 06:08:48 -0400
+Received: from mail-it0-f49.google.com ([209.85.214.49]:38243 "EHLO
+	mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751628AbcFBKIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2016 06:08:48 -0400
+Received: by mail-it0-f49.google.com with SMTP id i127so47099974ita.1
+        for <git@vger.kernel.org>; Thu, 02 Jun 2016 03:08:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=zPScbaOns0ndij4npbIVcEFZhF+n+6fTbWGHWtuElPo=;
-        b=Voj1o6Qfrla9USEyGy4jcz98n3JYXEhP/REH0ooPqwVmL7z7lSDbUG21e5jR3WKbN/
-         6JDtmrIa2gC9tn6KzWXpL3LO/6V6nCRXTtPINrbKnmFUhaN0bL9pi0O3Frc/P73v7ERq
-         EoIP22uCinyks6p4IoaBdrhnzSiSrcKnWQzkd3KKI46OrOKOe6+dmyucTvKOM8cTmCRQ
-         9oZmB5HkP+lu0pSJru9t9QKLa7UsmS+f0A1boLQt2GVWWZlj7l9Bei9wYHT/1i4xcx9t
-         CYRMD2KhHCIJC7hFvAWntadDb6EalKPOlAP7ytyZLB62oVaOcez6vKFc1F8OUw/eY3Oh
-         KY8Q==
+         :cc;
+        bh=sWIZFvNv9V4YD+2+0khyBe4n3auvWWfIzcg14VTU0Ps=;
+        b=gh1I7zKGBZUFlNoSrYyZutoIMwwch9tyxnXTgiTTSHUKB4UqtRzvv6bTIVWjFCXbAD
+         Tw54iq6Sn/1vt94GYJdDPjpWQrwxgbN0Wya1lvB5W6JYIDaJTfdLaWm7G77T/MVYX4ho
+         UXhPRjYAnz1byLeSC5HjwPZIgVaRaf8+FH1kxadwbLMUd7oEIHTlWwZmdHMcPnu3FlPQ
+         sKmSNXqsb15I7PU/VEj7rZcyFYa5aBw0wUl7lYdMYqDhz8HHo4fJc7DdR6NF3hXzisKV
+         47qNJYqOk+geiQ/KQb12XWqG7BDD0S9pMY9zhdItIH/kgGgmqsyy0PI3m9iEOw05r0TD
+         a+iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zPScbaOns0ndij4npbIVcEFZhF+n+6fTbWGHWtuElPo=;
-        b=mhNUh1DD5xBDcnW2Ep6BF6hrT/8E5muquMSBeYp/TRgrXoj3EW7fupwUCdNDK5VW2A
-         4cfb/oKXfq0ASnCvEOhp7Rp2dA2cZQUMEcRMLSVWBpcdO33CbBWK2DhWD0P/6AwBBQMj
-         J15y7NwKMwar5qf8bAjnJ3tV0bj6J/j+X6/mkz8JQUBdLXaX7HRyjlv3qYjEjD8POKvX
-         mFNdrKBSGPFX8phtQuuQULrIoXybdXXD7GkrPsauHa99CeAg6ZXGtnxFznrm1DqyV3py
-         7E8gkxycwKpnHHYVN6xNqgY38FRIKZXZsM+iAg6TNnTQq4QbW75TYYTKr1BLcZzC5Msr
-         w7aA==
-X-Gm-Message-State: ALyK8tLg/E146m8TSFhrH6ne2vK9q7ONPGGHJ0NPWV6FGhk8m8EUwTdfRzkWb7pzMRCPsbQsQst/7TUrBI5KaA==
-X-Received: by 10.107.159.84 with SMTP id i81mr1976685ioe.29.1464861222354;
- Thu, 02 Jun 2016 02:53:42 -0700 (PDT)
-Received: by 10.64.173.167 with HTTP; Thu, 2 Jun 2016 02:53:12 -0700 (PDT)
-In-Reply-To: <xmqqshwwzyee.fsf@gitster.mtv.corp.google.com>
+         :message-id:subject:to:cc;
+        bh=sWIZFvNv9V4YD+2+0khyBe4n3auvWWfIzcg14VTU0Ps=;
+        b=DlIdOhJe5vcL/p1KCoL4IPm+LaKboy7Gmvfcul5qtnmikT3pU/a7Aw0dyEerh7HBGh
+         dHt9w6fzYfw1z07P2UIWjccGDPZQRgwSt8Gas8cVHWgP7YDJUCkDntu1DsmVIgmtZ2DL
+         hGU5TQPvoTAPGcr9rl0gMSCJmVxa8u1hX00u83EQgIbSXcaitOzstxqCXPKXsNe4ppl2
+         PAyL7n9FZvqUgwl04XmD4ea0TZ3dqX9j7RW4ZdcE5imDLnLiz0pGxER+PPCguHKma8yc
+         vjN25JZeG2p5SQZsDn1PMIjnmz0fbtELMTb6AcAKcJ8n36Eso/9oeUz3xH0JOqMFUo8S
+         X5Xw==
+X-Gm-Message-State: ALyK8tLdvjAQRNY8d8lxjDBKHnqJBApdGtJOgFmCGSf1xcVm7IbTMkI4B6t3d7JqpHQjbtreLC6A80RLuHB3tA==
+X-Received: by 10.36.130.130 with SMTP id t124mr2541993itd.42.1464862127310;
+ Thu, 02 Jun 2016 03:08:47 -0700 (PDT)
+Received: by 10.64.173.167 with HTTP; Thu, 2 Jun 2016 03:08:17 -0700 (PDT)
+In-Reply-To: <89634d216544d1102dafd5d18247bff2581d48a8.1464537050.git.mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296193>
 
-(from patch 4/4 mail)
-
-On Wed, Jun 1, 2016 at 10:51 PM, Michael Haggerty <mhagger@alum.mit.edu=
-> wrote:
->> +     path =3D xstrdup(worktree_git_path(wt, "logs/refs/bisect"));
->> +     if (file_exists(path))
->> +             handle_one_reflog(path, NULL, 0, &cb);
->> +     free(path);
->> +}
+On Mon, May 30, 2016 at 2:55 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Currently, the API for iterating over references is via a family of
+> for_each_ref()-type functions that invoke a callback function for each
+> selected reference. All of these eventually call do_for_each_ref(),
+> which knows how to do one thing: iterate in parallel through two
+> ref_caches, one for loose and one for packed refs, giving loose
+> references precedence over packed refs. This is rather complicated code,
+> and is quite specialized to the files backend. It also requires callers
+> to encapsulate their work into a callback function, which often means
+> that they have to define and use a "cb_data" struct to manage their
+> context.
 >
-> `refs/bisect` is not a single reference. It is a namespace that conta=
-ins
-> references with names like `refs/bisect/bad` and
-> `refs/bisect/good-66106691a1b71e445fe5e4d6b8b043dffc7dfe4c`.
-
-Yeah I missed that. I'm not going to write another directory walker to
-collect all logs/refs/bisect/*. I didn't add pending objects for
-refs/bisect/* of other worktrees either. At that point waiting for the
-new ref iterator makes more sense...
-
-On Wed, Jun 1, 2016 at 11:06 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+> The current design is already bursting at the seams, and will become
+> even more awkward in the upcoming world of multiple reference storage
+> backends:
 >
->> This series makes sure that objects referenced by all worktrees are
->> marked reachable so that we don't accidentally delete objects that a=
-re
->> being used. Previously per-worktree references in index, detached HE=
-AD
->> or per-worktree reflogs come from current worktree only, not all
->> worktrees.
->
-> I'll let this topic simmer on the list for now, instead of picking
-> it up immediately to 'pu', as Michael in $gmane/296068 makes me
-> wonder if we want to keep piling on the current "worktree ref
-> iterations are bolted on" or if we want to first clean it up, whose
-> natural fallout hopefully would eliminate the bug away.
+> * Per-worktree vs. shared references are currently handled via a kludge
+>   in git_path() rather than iterating over each part of the reference
+>   namespace separately and merging the results. This kludge will cease
+>   to work when we have multiple reference storage backends.
 
-So what should be the way forward? My intention was having something
-that can fix the problem for now, even if a bit hacky while waiting
-for ref iterator to be ready, then convert to use it and clean things
-up, because I don't how long ref-iterator would take and losing data
-is serous enough that I'd like to fix it soon. If we go with "fix soon
-then convert to ref-iterator later", then I will drop the
-logs/bisect/* check, checking logs/HEAD alone should be good enough.
-Otherwise I'll prepare a series on top of ref-iterator.
---=20
+Question from a refs user. Right now worktree.c:get_worktrees() peeks
+directly to "$GIT_DIR/worktrees/xxx/HEAD" and parses the content
+itself, something that I  promised to fix but never got around to do
+it. Will we have an iterator to go through all worktrees' HEAD, or
+will  there be an API to say "resolve ref HEAD from worktree XYZ"?
+-- 
 Duy
