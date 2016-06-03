@@ -1,100 +1,118 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH] t1308: do not get fooled by symbolic links to the source
- tree
-Date: Fri, 3 Jun 2016 11:19:36 +0200
-Message-ID: <57514BA8.7020207@web.de>
-References: <xmqqzir53mdc.fsf@gitster.mtv.corp.google.com>
- <712e0755-6008-21f5-0ee6-25ed9d97fd45@web.de>
- <xmqq1t4ftheu.fsf@gitster.mtv.corp.google.com>
- <xmqqwpm7s2ex.fsf@gitster.mtv.corp.google.com>
- <20160602213920.GA13356@sigill.intra.peff.net>
- <xmqqeg8fs0dw.fsf_-_@gitster.mtv.corp.google.com> <57511E44.1090708@kdbg.org>
- <20160603061023.GA7687@sigill.intra.peff.net> <57512980.1070200@kdbg.org>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3 48/49] builtin/apply: move 'lock_file' global into
+ 'struct apply_state'
+Date: Fri, 3 Jun 2016 11:42:13 +0200
+Message-ID: <CAP8UFD37RJ_O-5Ob7KhF_d288=Ab0o4hVJDrtBoNPJ1VPmLosg@mail.gmail.com>
+References: <20160524081126.16973-1-chriscool@tuxfamily.org>
+ <20160524081126.16973-49-chriscool@tuxfamily.org> <xmqq8tyozuul.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 03 11:20:47 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jeff King <peff@peff.net>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 03 11:42:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8lGw-0002hl-Ja
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 11:20:06 +0200
+	id 1b8lcS-0003Wk-87
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 11:42:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752828AbcFCJUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 05:20:01 -0400
-Received: from mout.web.de ([212.227.15.3]:65404 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752817AbcFCJT6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2016 05:19:58 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0MNt4V-1b6qG70pDf-007Wtf; Fri, 03 Jun 2016 11:19:40
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
- Icedove/38.7.0
-In-Reply-To: <57512980.1070200@kdbg.org>
-X-Provags-ID: V03:K0:6cQDu5N5UV7VUuluMYOt9JlL9LjRsA5yF6bpzEAWc3zD6tX/9Lk
- QfnopgSJGz/XXjq3IQs9NvO4yhZhlR4TTzz5UeIiJHWVbKs12brmESUy9KZxPXtP6d17KMY
- zk/SpxrioCDb5mCYTbPqkMI9XQ65JarOj6fWwEwpF79gX2UVeVqOKcz5NE57G4wsOnMDkdY
- +vRpa0nSCTtojn7T7+08Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ThnEI9eEDhs=:8ZouBQHYS26qb1FsJehEOa
- aquiOV+wLJYohi/YtF5qHMWZ1PokfhCCFg5ZHKRCCcMQWq5XRwsGfEvYYcMiYvYaYzfkOAmdT
- Nq/RA99C2s9EHHmAuMlRKdscPbfVBCb8BIwWY6mH7ZdbzlSH9p6hTbuHKSfMmQojjDiAN2thY
- bArwpQJB/8LzVoQDCj7+b8p6BV22k6spSFJPIhLFjcDanqffWCzNgPUvPIj4cBevWTofUY/rU
- HmYwMbuH1D0fVG9s70mAXS4zsnVz0r1pYKYCUhG7O+BuHcIJvkp3Xjy8ddFYeODI3MNcz2V39
- 3UCCmEKEx9sW9YAlvpIyjPmvFHm4kyJljhw3xxoyt8WI1iv1qKo0a0mEMRrxQeBXtfHJz21HD
- 3AkJa6C3FLxc1RrhETOcACKPzODcPk3EBjllvW4xZnOZLYb3Q13kQffcgnGNWKkIagAw8Wp1Z
- xJ1US+Fy6HQehO0BRpT8T8dZhOYGwIdtPMFedXbtmmegXXHSK2KnbgWfsutSrBb6l2Nboc1hb
- Md8wg6U+ZcXoZlGgbwesHPXR5Mf3iVFhOAI4aTz3HZUWxxZX6wJp/O8qX0sWGUMnvlHLalf6T
- R1vHtwjJ4ne8NdUq/iFEAom7f2vVUfZ4iO5+jvcJVYqfwMFlwT3sJLKxcI71Tsc3nJbUwRDGR
- 2BGu5Fae4hfQcojS4KclwsaM8y0TxCdkF43jfOcGngoykCtJ7KrgPq61T/7pr/A8hqkObBR1q
- qR/4GOCQfogguYhifXhrNWuMhxHCmXPUN/WhIrbz8gMnyqteLbzuF3NVFSFoT+Cdx7h76Tf6 
+	id S1751808AbcFCJmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 05:42:16 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:36080 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751717AbcFCJmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 05:42:15 -0400
+Received: by mail-wm0-f43.google.com with SMTP id n184so117301253wmn.1
+        for <git@vger.kernel.org>; Fri, 03 Jun 2016 02:42:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=gm7Tul4Lkyl7iVJrGjXF2YvLBfYC30LT/Gp0bygdDzI=;
+        b=SNfmd8hRcb/VT4JSfqLEQsESeTqsRE4gO3zALI44e7xYd/OZuBmomMIEhZz68ckdXU
+         rTT6liqksaHzH3179LtOE4igcCRx9WfOqJPcwFaXR0FDKerlu9ImQFkCwHiMhRDuuyG8
+         7YjrsgEZFQ6v8LrglNFYuO6dL1wZECsIRHlos8s1Rv0tfFbTdNi3ujipn2VBlYrLCepP
+         ITalYK2c7JdBQVE818Zw7gwkHrt3TxMl5AcgZj0qIYHhKfPExaR8E8eZZ+FAlD3XroiQ
+         VQ6MW24LGGugn3+9TVOAfWM1x22Apl1CL5sLv9sTlcA1nB+QkscWBwHPoXT+t644TO+5
+         C0GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=gm7Tul4Lkyl7iVJrGjXF2YvLBfYC30LT/Gp0bygdDzI=;
+        b=eezqVhg/P3gMEGfjDsUciqmdmt5tPPhaQYUIr9YtLtuP15/hZZXdMQFndRm7de/PIk
+         CsNyATOBFeBNg5KaUqJzMa8INgZIqBPCPSMX7kONuCXDKP5JPc0l2pyr5JEbT1EZ7PnR
+         E+4yGmBpl+GxwDE0rt2KZE2mNMKq3NbzAGbr6GWe7chFmYn2JNQBObpUji4mmLSP1EKT
+         ctkTTowSNfS7mJja4JM3N0DZ4czPaLXQukw0qeufHRCrJ21FVGfG2jtp3cqrIB4BE/q6
+         BghyZVXkexcjMdZPeMbIktVik95vXBzsG8bMBMrPesXD9Mr0MWhektDNCjt6ZpoC1svO
+         Z4ZA==
+X-Gm-Message-State: ALyK8tLdtuQ3VjRzC+p79bsXClFbf/Klz3YNdM1HI8qnFXmiZxLHbAC1LfmN5RVb9814/oYbVYNS5oIm8URhgg==
+X-Received: by 10.28.98.215 with SMTP id w206mr29251689wmb.79.1464946933809;
+ Fri, 03 Jun 2016 02:42:13 -0700 (PDT)
+Received: by 10.194.148.146 with HTTP; Fri, 3 Jun 2016 02:42:13 -0700 (PDT)
+In-Reply-To: <xmqq8tyozuul.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296294>
 
-On 06/03/2016 08:53 AM, Johannes Sixt wrote:
-> Am 03.06.2016 um 08:10 schrieb Jeff King:
->> On Fri, Jun 03, 2016 at 08:05:56AM +0200, Johannes Sixt wrote:
->>
->>>> -    name=$(pwd)/.gitconfig
->>>> +    name=$HOME/.gitconfig
->>>
->>> I haven't tested this, yet, but my guess is that this breaks on 
->>> Windows:
->>> test-config will produce C:/foo style path, but the updated test would
->>> expect /c/foo style path. Dscho, do you have an idea how to fix this?
->>
->> Hmm. This should come directly from expand_user_path("~/.gitconfig")
->> which prepends the literal contents of the $HOME variable. It does go
->> through convert_slashes() afterwards, but I don't see any other
->> massaging (but I won't be surprised when you tell me there is some that
->> happens behind the scenes).
+On Wed, Jun 1, 2016 at 7:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> Yes, it happens behind the scenes: /c/foo absolute paths are a 
-> convention used by the POSIX emulation layer (MSYS). When bash (an 
-> MSYS program) runs a non-MSYS program such as git or test-config, it 
-> converts the /c/foo paths in the environment (and argument list) to 
-> c:/foo style because the non-MSYS programs do not understand the MSYS 
-> convention.
+>> We cannot have a 'struct lock_file' allocated on the stack, as lockfile.c
+>> keeps a linked list of all created lock_file structures. So let's make the
+>> 'lock_file' variable a pointer to a 'struct lock_file'
 >
-> -- Hannes
-Compiling pu didn't succed:
-unix_stream_connect is missing in read_cache.c
+> Good.
+>
+>> As the same instance of this struct can be reused, let's add an argument
+>> to init_apply_state(), so that the caller can supply the same instance to
+>> different calls.
+>
+> Good.
+>
+>> And let's alloc an instance in init_apply_state(), if the
+>> caller doesn't want to supply one.
+>
+> This is questionable.
+>
+>> -static struct lock_file lock_file;
+>
+> I'd rather leave this as-is, and pass the pointer to it to
+> init_apply_state().  For the purpose of "cmd_apply()" which is the
+> first user of the "(semi-)libified apply API", that reads a single
+> patch and applies it before exiting, that is sufficient.
 
-(And many more in index-heloer.c)
+Ok, I will leave this as-is.
 
-(I thought that the index-helper is only compiled on systems,
-   which are known to have unix-sockets and other stuff ?)
+> As to the "if the caller does not want to supply one, we will
+> allocate one that will definitely be leaked", I am mildly opposed.
+>
+> By making it the responsibility of the caller, whenever a new caller
+> of the libified apply API is written, those who write it is _forced_
+> to think about not leaking the lockfile structure, which is a good
+> thing.
 
-After patching that out,  t1308 fails:
--name=/c/
-+name=c:/
+Ok, I will remove the allocation in case the caller pass NULL.
+
+> Other than that, all 49 patches look sensible to me.
+
+Ok, I think I will resend only this patch (48/49) with the changes you
+suggest, and maybe the next one 49/49 to avoid spamming the list.
+
+> Thanks for working on this.
+
+Thanks,
+Christian.
