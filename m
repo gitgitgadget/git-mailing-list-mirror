@@ -1,54 +1,94 @@
-From: "William Broady" <wbgte@maisbar.com.br>
-Subject: hi
-Date: Fri, 3 Jun 2016 21:41:36 +0000
-Message-ID: <09B1E372-979C-44C1-F66C-8686CE6FF33C@maisbar.com.br>
-Mime-Version: 1.0 (1.0)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 04 01:01:57 2016
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: What's cooking in git.git (Jun 2016, #01; Thu, 2)
+Date: Sat, 4 Jun 2016 08:26:53 +0900
+Message-ID: <20160603232653.GA24538@glandium.org>
+References: <xmqq4m9aqn4d.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Torsten =?iso-8859-15?Q?B=F6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 04 01:27:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8y6G-0006Ot-Fh
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Jun 2016 01:01:56 +0200
+	id 1b8yV1-0002gi-6d
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Jun 2016 01:27:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752352AbcFCXBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 19:01:52 -0400
-Received: from servidor.dnsvirtual.com.br ([184.107.52.24]:37774 "EHLO
-	servidor.dnsvirtual.com.br" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750994AbcFCXBv convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 19:01:51 -0400
-X-Greylist: delayed 4808 seconds by postgrey-1.27 at vger.kernel.org; Fri, 03 Jun 2016 19:01:51 EDT
-Received: from [183.87.177.183] (port=52619 helo=mail.maisbar.com.br)
-	by servidor.dnsvirtual.com.br with esmtpa (Exim 4.87)
-	(envelope-from <wbgte@maisbar.com.br>)
-	id 1b8wqV-0004I5-CU
-	for git@vger.kernel.org; Fri, 03 Jun 2016 18:41:37 -0300
-X-Mailer: iPhone Mail (12A366)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - servidor.dnsvirtual.com.br
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - maisbar.com.br
-X-Get-Message-Sender-Via: servidor.dnsvirtual.com.br: authenticated_id: paulo@maisbar.com.br
-X-Authenticated-Sender: servidor.dnsvirtual.com.br: paulo@maisbar.com.br
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751344AbcFCX1K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Jun 2016 19:27:10 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:52280 "EHLO
+	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750923AbcFCX1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 19:27:09 -0400
+Received: from glandium by zenigata with local (Exim 4.87)
+	(envelope-from <mh@glandium.org>)
+	id 1b8yUP-0007QQ-MP; Sat, 04 Jun 2016 08:26:53 +0900
+Content-Disposition: inline
+In-Reply-To: <xmqq4m9aqn4d.fsf@gitster.mtv.corp.google.com>
+ <57511086.40206@web.de>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296426>
 
-Greetings 
+On Fri, Jun 03, 2016 at 08:59:46AM -0700, Junio C Hamano wrote:
+> Torsten B=F6gershausen <tboegi@web.de> writes:
+>=20
+> > There where 2 comments in the review.
+> > The most important thing is that now
+> > git://[example.com:123]/path/to/repo is valid, but it shouldn't.
+> > This patch fixes it:
+> >
+> > @@ -673,7 +669,7 @@ static enum protocol parse_connect_url(const ch=
+ar *url_orig, char **ret_user,
+> >          * "host:port" and NULL.
+> >          * To support this undocumented legacy we still need to spl=
+it the port.
+> >          */
+> > -       if (!port)
+> > +       if (!port && protocol =3D=3D PROTO_SSH)
+>=20
+> Hmph, which one of these (if any) is valid, which ones aren't and
+> why?
+>=20
+>     git://[example.com:123]/path/to/repo
+>     ssh://[example.com:123]/path/to/repo
+>     [example.com:123]:/path/to/repo
+>=20
+> I am wondering about the latter two, because both of them would
+> become PROTO_SSH at some point in the codepath.  And I am wondering
+> about the first two, because they look the same at the syntactic
+> level and if one is allowed the users would expect the other would
+> also be (or vice versa).
 
-http://cdxdhc.com/minerals.php?coast=ky1mydg4n8s69z
+In fact, the parser doesn't even reject the one that is considered
+invalid (the first).
 
+It just happens to not work because example.com:123 is not a valid
+hostname, and can't be resolved, which is then the error presented to
+the user.
 
+Which brings me to:
 
-William
+On Fri, Jun 03, 2016 at 07:07:18AM +0200, Torsten B=F6gershausen wrote:
+> The other thing is that I asked for a test case for
+> git://[example.com:123]/path/to/repo
+> which shouldn't be hard to do.
+
+Since the parser doesn't error out, the only way to test this is to
+check that the parser thinks the output for it is host=3Dexample.com:12=
+3
+port=3DNONE. Which sounds like an awful way to check for this.
+
+(Also, the discussion back then was about
+git://[example.com:123]:/path/to/repo, not
+git://[example.com:123]/path/to/repo)
+
+Mike
