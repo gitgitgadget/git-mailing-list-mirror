@@ -1,116 +1,124 @@
-From: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH 2/2] strbuf: allow to use preallocated memory
-Date: Fri, 3 Jun 2016 16:04:44 +0200
-Message-ID: <20160603140444.GA3903@Messiaen>
-References: <20160530103642.7213-1-william.duclot@ensimag.grenoble-inp.fr>
- <20160530103642.7213-3-william.duclot@ensimag.grenoble-inp.fr>
- <vpqlh2remhy.fsf@anie.imag.fr>
- <574D0D99.6080303@alum.mit.edu>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH v2 1/3] git-fetch.txt: document fetch output
+Date: Fri, 3 Jun 2016 10:33:55 -0400
+Message-ID: <57519553.10106@xiplink.com>
+References: <20160522112019.26516-1-pclouds@gmail.com>
+ <20160603110843.15434-1-pclouds@gmail.com>
+ <20160603110843.15434-2-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	simon.rabourg@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr,
-	antoine.queru@ensimag.grenoble-inp.fr, Johannes.Schindelin@gmx.de
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Jun 03 16:05:33 2016
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 03 16:34:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8piY-0002PP-TZ
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 16:04:55 +0200
+	id 1b8qAj-0000gO-VE
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 16:34:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752907AbcFCOEu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 10:04:50 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:37700 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751961AbcFCOEu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 10:04:50 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id D32D22584;
-	Fri,  3 Jun 2016 16:04:46 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ItwUPJHQNSFf; Fri,  3 Jun 2016 16:04:46 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id C2EF62583;
-	Fri,  3 Jun 2016 16:04:46 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id BCFE72077;
-	Fri,  3 Jun 2016 16:04:46 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JRQ1zZzYQp8B; Fri,  3 Jun 2016 16:04:46 +0200 (CEST)
-Received: from Messiaen (eduroam-033140.grenet.fr [130.190.33.140])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 35C812066;
-	Fri,  3 Jun 2016 16:04:45 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <574D0D99.6080303@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932590AbcFCOd5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Jun 2016 10:33:57 -0400
+Received: from smtp106.ord1c.emailsrvr.com ([108.166.43.106]:34647 "EHLO
+	smtp106.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932489AbcFCOd5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 10:33:57 -0400
+Received: from smtp22.relay.ord1c.emailsrvr.com (localhost.localdomain [127.0.0.1])
+	by smtp22.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 8727A1803F2;
+	Fri,  3 Jun 2016 10:33:54 -0400 (EDT)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp22.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id CE72B1803C3;
+	Fri,  3 Jun 2016 10:33:53 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.5.4);
+	Fri, 03 Jun 2016 10:33:56 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
+In-Reply-To: <20160603110843.15434-2-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296331>
 
-On Tue, May 31, 2016 at 06:05:45AM +0200, Michael Haggerty wrote:
-> When reading this patch series, I found I had trouble remembering
-> whether "preallocated" meant "preallocated and movable" or "preallocated
-> and immovable". So maybe we should brainstorm alternatives to
-> "preallocated" and "fixed". For example,
-> 
-> * "growable"/"fixed"? Seems OK, though all strbufs are growable at least
-> to the size of their initial allocation, so maybe "growable" is misleading.
-> 
-> * "movable"/"fixed"? This maybe better captures the essence of the
-> distinction. I'll use those names below for concreteness, without
-> claiming that they are the best.
-> 
-> [...]
-> 
->                                                 The functions might be
-> named more like `strbuf_attach()` to emphasize their similarity to that
-> existing function. Maybe
-> 
->     strbuf_attach_fixed(struct strbuf *sb, void *s, size_t len, size_t
-> alloc);
->     strbuf_attach_movable(struct strbuf *sb, void *s, size_t len, size_t
-> alloc);
+On 2016-06-03 07:08 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote=
+:
+> This documents the ref update status of fetch. The structure of this
+> output is defined in [1]. The ouput content is refined a bit in [2]
 
-Now that I am looking in detail into it, I am not so convinced by those
-names. Using "attach" suggests the same behavior as strbuf_attach(),
-which is _not_ the case to me:
-    - The aim of the attach() function is to give ownership of a
-      buffer allocated by the caller to the strbuf.
-    - The aim of the wrap() functions is to give the right to use a
-      buffer allocated by the caller to the strbuf, while keeping
-      ownership.
-    - For completion: the aim of the init() function is to let the
-      strbuf manage its own buffer.
+s/The ouput/The output/
 
-I think that it is important to distinct those 3 use cases for the API user
-to be able to understand. And to describe this API extension, "wrap"
-seems clear to me.
-Another point that would makes me skeptical about using
-`strbuf_attach_preallocated()` is that the real difference with
-`strbuf_attach()` isn't in the allocation of the buffer parameter, it is
-in the ownership. Both takes a buffer allocated by the user as
-parameter (so a preallocated buffer), even thought
-`strbuf_attach_preallocated()` may use a stack-allocated one.
+> [3] [4].
+>
+> This patch is a copy from git-push.txt, modified a bit because the
+> flag '-' means different things in push (delete) and fetch (tag
+> update). We probably should unify the documents at some point in
+> future.
+>
+> PS. For code archaeologists, the discussion mentioned in [1] is
+> probably [5].
+>
+> [1] 165f390 (git-fetch: more terse fetch output - 2007-11-03)
+> [2] 6315472 (fetch: report local storage errors ... - 2008-06-26)
+> [3] f360d84 (builtin-fetch: add --prune option - 2009-11-10)
+> [4] 0997ada (fetch: describe new refs based on where... - 2012-04-16)
+> [5] http://thread.gmane.org/gmane.comp.version-control.git/61657
+> ---
+>   Documentation/git-fetch.txt | 46 ++++++++++++++++++++++++++++++++++=
++++++++++++
+>   1 file changed, 46 insertions(+)
+>
+> diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.tx=
+t
+> index efe56e0..18e733c 100644
+> --- a/Documentation/git-fetch.txt
+> +++ b/Documentation/git-fetch.txt
+> @@ -99,6 +99,52 @@ The latter use of the `remote.<repository>.fetch` =
+values can be
+>   overridden by giving the `--refmap=3D<refspec>` parameter(s) on the
+>   command line.
+>
+> +OUTPUT
+> +------
+> +
+> +The output of "git fetch" depends on the transport method used; this
 
-So I come to the conclusion that even using the word "preallocated" may
-not be such a good idea, as even strbuf_attach() use a preallocated
-buffer. What I think would be the clearer would be:
+What a mysterious statement!  Does this tabular format actually change=20
+when fetching over HTTP?  Maybe it's worth documenting the differences?
 
-    - strbuf_attach()       (unchanged)
-    - strbuf_wrap()         (no need for the "preallocated")
-    - strbuf_wrap_fixed()
-    - STRBUF_WRAP   
-    - STRBUF_WRAP_FIXED
+> +section describes the output when pushing over the Git protocol
 
-The two last ones would be macros, equivalent to the functions except
-that they don't release the strbuf before initializing it.
+s/pushing/fetching/
 
-What do you think about this?
+> +(either locally or via ssh).
+> +
+> +The status of the push is output in tabular form, with each line
+
+s/push/fetch/
+
+> +representing the status of a single ref. Each line is of the form:
+> +
+> +-------------------------------
+> + <flag> <summary> <from> -> <to> (<reason>)
+> +-------------------------------
+> +
+> +The status of up-to-date refs is shown only if --verbose option is
+> +used.
+> +
+> +flag::
+> +	A single character indicating the status of the ref:
+> +(space);; for a successfully fetched fast-forward;
+> +`+`;; for a successful forced update;
+> +`x`;; for a successfully deleted ref;
+
+I did a double-take here, until I remembered --prune.  Maybe add "(when=
+=20
+using the --prune option)"?
+
+		M.
