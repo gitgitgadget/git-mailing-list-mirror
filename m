@@ -1,65 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t1308: do not get fooled by symbolic links to the source
- tree
-Date: Fri, 3 Jun 2016 02:10:23 -0400
-Message-ID: <20160603061023.GA7687@sigill.intra.peff.net>
-References: <xmqqzir53mdc.fsf@gitster.mtv.corp.google.com>
- <712e0755-6008-21f5-0ee6-25ed9d97fd45@web.de>
- <xmqq1t4ftheu.fsf@gitster.mtv.corp.google.com>
- <xmqqwpm7s2ex.fsf@gitster.mtv.corp.google.com>
- <20160602213920.GA13356@sigill.intra.peff.net>
- <xmqqeg8fs0dw.fsf_-_@gitster.mtv.corp.google.com>
- <57511E44.1090708@kdbg.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] userdiff: add built-in pattern for CSS
+Date: Fri, 03 Jun 2016 08:41:53 +0200
+Message-ID: <vpqr3ce6afi.fsf@anie.imag.fr>
+References: <20160524142537.19324-1-william.duclot@ensimag.grenoble-inp.fr>
+	<20160602224809.5167-1-william.duclot@ensimag.grenoble-inp.fr>
+	<57511B2D.7040501@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
+Cc: William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	git@vger.kernel.org, simon.rabourg@ensimag.grenoble-inp.fr,
+	antoine.queru@ensimag.grenoble-inp.fr,
+	francois.beutin@ensimag.grenoble-inp.fr, gitster@pobox.com
 To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Jun 03 08:10:38 2016
+X-From: git-owner@vger.kernel.org Fri Jun 03 08:42:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8iJX-0006QH-Eu
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 08:10:35 +0200
+	id 1b8io3-0007pN-FQ
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 08:42:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751874AbcFCGK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 02:10:28 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48213 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751537AbcFCGK1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2016 02:10:27 -0400
-Received: (qmail 26964 invoked by uid 102); 3 Jun 2016 06:10:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jun 2016 02:10:26 -0400
-Received: (qmail 17829 invoked by uid 107); 3 Jun 2016 06:10:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jun 2016 02:10:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Jun 2016 02:10:23 -0400
-Content-Disposition: inline
-In-Reply-To: <57511E44.1090708@kdbg.org>
+	id S1751348AbcFCGl6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 02:41:58 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36495 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751138AbcFCGl5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 02:41:57 -0400
+Received: by mail-wm0-f65.google.com with SMTP id a20so9608973wma.3
+        for <git@vger.kernel.org>; Thu, 02 Jun 2016 23:41:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=c7RXOHSo7TtfAREqvSQ8k48mN2kMvB3Bre1sfqEQZsg=;
+        b=NxR+HNKFzMAl2DvOmyGNQ5HKCnNyhlcWPOT1mVxxyEljbarPsi2uk4z85tmt2l+X0i
+         jo8+XzzFaOyn+RsK6yXIsCu9BvbsibxVXAeJDdioe/frTl7YsCxgZC5NJF0cUlinfCS3
+         D1OsjleR20MjtxW6xCGCwmQA3HndT2rGAProuV9ZYc9lNC7umDPkEMGZKVnHdOqsJmDz
+         2DW27KDgwhox902HbZ/VkZJGIvV+THEyKZ1BSjhHKQY2EVBJ7bnHGJRGHOyb1LSKMX+c
+         IJ8Wd8WenntnhzRQWE8PdxI5e8wPzQhd1lhIEHrhhB5ngrWtD0aI1bFa2wrbyldlsf2V
+         MdiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=c7RXOHSo7TtfAREqvSQ8k48mN2kMvB3Bre1sfqEQZsg=;
+        b=TXLhX9KU9i3AYInqZ6hBBgYgEj7mnaPEjWyyExoDgD7K0oEUEWsTsTOl+onxzf+pfI
+         RyR/IkC4hcQJWAv5u7hxoBPbq1aYsC8AeZyD8lQOpnEPGwuJTKOWyWp7svqnKeUhonPB
+         dnjSU/GLR3Fc7W1lFD++3Vj760RZFYnUmKUIyMeTS3gjpied2VIb/uiTtRFK4oj01Vru
+         eraaqpjbixm6H7XdiIqwupqDu/8qsymRiN75vZlAmZujdVdSiTM3U58odHBLFRjVQiCZ
+         8WwlWRtEf7ew1NnhjwQewSCFuBQcM7RFhnr7KGYM1B8qEcp1150YBAQcHVf5EIMcxNB5
+         cWdg==
+X-Gm-Message-State: ALyK8tLrlMhBc9+fEoklJiUonZrBn7qIj/SnURztNhbUo8Ma2gD6EdYxcgI3TnSemRRftA==
+X-Received: by 10.28.52.75 with SMTP id b72mr2277430wma.98.1464936115727;
+        Thu, 02 Jun 2016 23:41:55 -0700 (PDT)
+Received: from anie (anie.imag.fr. [129.88.42.32])
+        by smtp.gmail.com with ESMTPSA id q194sm44289228wme.18.2016.06.02.23.41.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 02 Jun 2016 23:41:54 -0700 (PDT)
+In-Reply-To: <57511B2D.7040501@kdbg.org> (Johannes Sixt's message of "Fri, 3
+	Jun 2016 07:52:45 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296269>
 
-On Fri, Jun 03, 2016 at 08:05:56AM +0200, Johannes Sixt wrote:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> > -	name=$(pwd)/.gitconfig
-> > +	name=$HOME/.gitconfig
-> 
-> I haven't tested this, yet, but my guess is that this breaks on Windows:
-> test-config will produce C:/foo style path, but the updated test would
-> expect /c/foo style path. Dscho, do you have an idea how to fix this?
+>> +IPATTERN("css",
+>> +	 "!^.*;\n"
+>
+> Is there a difference between this and "!;\n"? Is it necessary to
+> anchor the pattern at the beginning of the line?
 
-Hmm. This should come directly from expand_user_path("~/.gitconfig")
-which prepends the literal contents of the $HOME variable. It does go
-through convert_slashes() afterwards, but I don't see any other
-massaging (but I won't be surprised when you tell me there is some that
-happens behind the scenes).
+Also, you don't want to force the end of line right after ;. I know
+trailing whitespaces are evil, but users may not deserve to be punished
+so hard when they have some ;-).
 
--Peff
+> In the commit message you talk about colon (':'), but you actually use
+> a semicolon (';'). Thinking a bit more about it, rejecting lines with
+> either one would be even better. Consider this case (without the
+> indentation):
+
+Rejecting colon anywhere in the line would also reject valid patterns
+like this:
+
+a:hover {
+
+Rejecting it at end of line is probably a good trade-off.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
