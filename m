@@ -1,78 +1,86 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: RFC: have a config option for running submodule update after
- checkout <revision>
-Date: Fri, 3 Jun 2016 16:30:16 -0700
-Message-ID: <CAGZ79kYC9Pub1RhcedLBqxK+pBunmN1DwjmWf83MUbY9pdvwhQ@mail.gmail.com>
-References: <CAGZ79kb9xHNYysb6gS9nPWvFW3cgcW-ey+5qyfTHTPGkT0fNfw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/13] Reference iterators
+Date: Fri, 03 Jun 2016 16:40:03 -0700
+Message-ID: <xmqq4m99265o.fsf@gitster.mtv.corp.google.com>
+References: <cover.1464957077.git.mhagger@alum.mit.edu>
+	<xmqqporyneik.fsf@gitster.mtv.corp.google.com>
+	<5751FCBF.3070507@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 04 01:30:24 2016
+Content-Type: text/plain
+Cc: David Turner <dturner@twopensource.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat Jun 04 01:40:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8yXn-0005Hr-IU
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Jun 2016 01:30:23 +0200
+	id 1b8yhJ-0005KN-Q9
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Jun 2016 01:40:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750777AbcFCXaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 19:30:19 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:32984 "EHLO
-	mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750747AbcFCXaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2016 19:30:18 -0400
-Received: by mail-qk0-f173.google.com with SMTP id n63so63378181qkf.0
-        for <git@vger.kernel.org>; Fri, 03 Jun 2016 16:30:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=7SvNWpnllnBHhbsmEGDs5KyXHItDk1y/7txKYP3acxc=;
-        b=H0qETiUblwZ3Of90/qnWPMVMUiSkjpDF0YOLiR8hcf6JledkaUcixzThv+OlSGv2BM
-         n/KE/i6Y4OSdhehYjS06i0FuRGZhoMLwFO7Ap5IgrvoNlEaTN90K32uZ8fuRKDiWE/U4
-         hoI5cXqlfSrWox88i3UUjZH0KWrLzURYGIcelbPFADNwP3AWVnT6IJxm3yaNbw9VTZFi
-         IGWbfgaqc+qUjQOcZP5npBFXw3YOGW3lHXtNTJ7+1MCIDTO9VmGm2e1BlH/oM3DwvtQ7
-         jdOX9Y+snrC22MYho9NmFUK+hB4m9tQRr8tgfHMAWmOqIBrL4CwvyqKtJ9H1xG1Noasn
-         vzAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=7SvNWpnllnBHhbsmEGDs5KyXHItDk1y/7txKYP3acxc=;
-        b=IhqzoxJccfY6rNf6uerzVp14lkS6yu2KODMlvIhxhrOPkQQ0q31Mio5HxlLz7f7IMA
-         t+kZQuOD7ETpi0qhd5nazM6o+TWt7L2DnoJm05ujfTyRoB/F9HNy6rlkoGr5NY3MZstM
-         Esjh3w5ZeOpZqs3fE4YmZklC5oGpR8dAUbKFJUa24FFN2yvFUYA0nF13qGF02M5iTjKt
-         YiltjM4JXykRMXPFqnbmfIxNgOqFDCsUo3/m0NfvYZ0Z58sEwVji/kiR2T6w0cf/u5aG
-         RLbh/QLdP3I5J6Y1Brl1Q5rfLd1C9lSNc41HQ01Jz8wC44gjGtZKyZQc82So2Ecmdg7h
-         XNRA==
-X-Gm-Message-State: ALyK8tJ6ZNVaNGH5zkRdtB8KLRAyBUa6qwoRQyJSb5g2qBHKNXoTplLQ5un9If7H1SEeYMRFfI47JPgexBpZnhdw
-X-Received: by 10.233.223.5 with SMTP id t5mr4815245qkf.35.1464996616805; Fri,
- 03 Jun 2016 16:30:16 -0700 (PDT)
-Received: by 10.200.55.212 with HTTP; Fri, 3 Jun 2016 16:30:16 -0700 (PDT)
-In-Reply-To: <CAGZ79kb9xHNYysb6gS9nPWvFW3cgcW-ey+5qyfTHTPGkT0fNfw@mail.gmail.com>
+	id S1750787AbcFCXkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 19:40:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59765 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750740AbcFCXkH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 19:40:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B387D2221A;
+	Fri,  3 Jun 2016 19:40:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ouRH4a4j1CjYBppxfe82K68yi9k=; b=SdhAuD
+	p6glE1Qg6YGQHtCkUZEVCss0Z3ZEQyC8kUjjFlUKMwLZBiZlD2dHlAf/s0UjzAQ3
+	YmmDZEMLTZMmcBDz07CKaPMwqdWoMuNphidFbH9KQ2r2cmBLwNKqy4wUQ2ClVlTE
+	1IQ5jloCbWpRiNhRNAF7C2hE4ArgMz3c2Emu8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hXiy4NYeBjIZbj4QxaiuRow4aPwpWvsB
+	SvwTXzco/erUFFH9ruJagL2o9P5rE5sFq+iScoo7ZI3k4nNASlFQ2NIX7uWdeYzi
+	n0LEooRzeZpRrQwk+oDdIUUEStKR0G/tklCLZ+WSMlVPXFY7PEzNOrwvdT/LQH5g
+	YoN4a/AoIWw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AB68D22218;
+	Fri,  3 Jun 2016 19:40:05 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 33C2322217;
+	Fri,  3 Jun 2016 19:40:05 -0400 (EDT)
+In-Reply-To: <5751FCBF.3070507@alum.mit.edu> (Michael Haggerty's message of
+	"Fri, 3 Jun 2016 23:55:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7FAF7628-29E4-11E6-B752-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296429>
 
-On Fri, Jun 3, 2016 at 3:53 PM, Stefan Beller <sbeller@google.com> wrote:
-> disadvantages:
-> * it's not `done right`, i.e. dealing with gitlinks in read-tree/unpack-tree
->    but just another command chained after checkout, so we would do that
->    for pull too eventually?
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Well one argument against the disadvantage is that we have `pull`
-already, which is
-essentially fetch and merge as a chain of commands and nobody bothers
-about having
-a chain of commands.
-
+> On 06/03/2016 11:33 PM, Junio C Hamano wrote:
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> 
+>>> This patch series applies on top of mh/split-under-lock. It can also
+>>> be obtained from my GitHub repo [2] as branch "ref-iterators".
+>> 
+>> Ah, that reminds me.  What's the doneness of the dependent topic?
 >
-> What do you think?
+> If you mean the vtable implementation, check your inbox :-) I already
+> submitted it (38 patches, but most of them are straightforward). I've
+> been iterating on that patch series for quite a while so I'm pretty
+> confident that it's solid.
+
+What I meant was the doneness of mh/split-under-lock actually.
+
+>> The patches in this series looked all good to me.
 >
-> Thanks,
-> Stefan
+> Thanks for the review (and your patience), both David and Junio!
+
+Will take a look at the updated vtable series. Thanks.
