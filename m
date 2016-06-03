@@ -1,138 +1,172 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 10/38] refs: add a transaction_commit() method
-Date: Fri,  3 Jun 2016 23:03:45 +0200
-Message-ID: <5ae6c74b12f7dbbaf6bf72c2a0deec7e6c6167f4.1464983301.git.mhagger@alum.mit.edu>
+Subject: [PATCH 14/38] read_raw_ref(): take a (struct ref_store *) argument
+Date: Fri,  3 Jun 2016 23:03:49 +0200
+Message-ID: <14f4d208f5fde3d758a65f388749b01b79698cce.1464983301.git.mhagger@alum.mit.edu>
 References: <cover.1464983301.git.mhagger@alum.mit.edu>
 Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>, git@vger.kernel.org,
-	Ronnie Sahlberg <sahlberg@google.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>,
 	David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Jun 03 23:05:20 2016
+X-From: git-owner@vger.kernel.org Fri Jun 03 23:05:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8wHH-0000Yi-EY
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 23:05:11 +0200
+	id 1b8wHK-0000Yi-5z
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 23:05:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932942AbcFCVEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 17:04:55 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:61153 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752977AbcFCVEr (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 17:04:47 -0400
-X-AuditID: 1207440f-8bbff700000008e4-f9-5751f0eab9e0
+	id S932959AbcFCVFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 17:05:10 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:52595 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932944AbcFCVE4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 17:04:56 -0400
+X-AuditID: 12074413-487ff700000008c7-e2-5751f0f28823
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id E5.EB.02276.AE0F1575; Fri,  3 Jun 2016 17:04:42 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id 47.8F.02247.2F0F1575; Fri,  3 Jun 2016 17:04:50 -0400 (EDT)
 Received: from michael.fritz.box (p548D60E2.dip0.t-ipconnect.de [84.141.96.226])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u53L4Kca003260
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u53L4Kce003260
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Fri, 3 Jun 2016 17:04:41 -0400
+	Fri, 3 Jun 2016 17:04:48 -0400
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <cover.1464983301.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCIsWRmVeSWpSXmKPExsUixO6iqPvqQ2C4wfw+a4v5m04wWnRd6Way
-	aOi9wmxxe8V8ZovuKW8ZLX609DBbzLxqbfFvQo3FmTeNjA6cHn/ff2Dy2DnrLrvHgk2lHs96
-	9zB6XLyk7LF/6TY2j8UPvDwWPL/P7vF5k1wAZxS3TVJiSVlwZnqevl0Cd8amWx3MBX9EKr5N
-	z2hg3CLYxcjBISFgIvFkH2MXIxeHkMBWRomtk1pZIJzjTBIn/mxk62Lk5GAT0JVY1NPMBGKL
-	CERINLxqAetgFjjDJDF9djs7SEJYwE5iU/9KsCIWAVWJs907GEFsXoEoif1rdrCC2BICchKX
-	pz8AG8opYCHR8nkVWFxIwFyi8dRhlgmMPAsYGVYxyiXmlObq5iZm5hSnJusWJyfm5aUW6Zro
-	5WaW6KWmlG5ihIQgP9CG9TKHGAU4GJV4eE+8CAwXYk0sK67MPcQoycGkJMq79w5QiC8pP6Uy
-	I7E4I76oNCe1+BCjBAezkghvymugHG9KYmVValE+TEqag0VJnFd9ibqfkEB6YklqdmpqQWoR
-	TFaGg0NJgnfRe6BGwaLU9NSKtMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFAExBcDYwAkxQO0
-	l/sDyN7igsRcoChE6ylGRSlx3kMgcwVAEhmleXBjYYnlFaM40JfCvIEg7TzApATX/QpoMBPQ
-	4IJH/iCDSxIRUlINjBsqP9+oMD5zRtp1z8nb3vPm3Vzvph9tol/xlE3iH7v8Rq/vAfofOD9f
-	v877sj4+JPH7onWM18z/zf34c+6OzQtkN+3k6HX8o9R5N2TJPTPH5oO7n6ck2DXf 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrDIsWRmVeSWpSXmKPExsUixO6iqPvpQ2C4wambEhbzN51gtOi60s1k
+	0dB7hdni9or5zBbdU94yWvxo6WG2mHnV2uLMm0ZGBw6Pv+8/MHnsnHWX3eNZ7x5Gj4uXlD32
+	L93G5rH4gZfHguf32T0+b5IL4IjitklKLCkLzkzP07dL4M54eb2NseC3fMXC049ZGxi/SHYx
+	cnJICJhI/Pz/jR3EFhLYyihxZTOUfZxJYvUWXRCbTUBXYlFPMxOILSIQIdHwqoWxi5GLg1lg
+	DpPE7YedzCAJYQFvid8z28BsFgFViVtLLoI18ApESUxfcoAJYpmcxOXpD9hAbE4BC4mWz6tY
+	IZaZSzSeOswygZFnASPDKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdc73czBK91JTSTYyQkBPe
+	wbjrpNwhRgEORiUe3oJngeFCrIllxZW5hxglOZiURHn33gEK8SXlp1RmJBZnxBeV5qQWH2KU
+	4GBWEuFNeQ2U401JrKxKLcqHSUlzsCiJ86otUfcTEkhPLEnNTk0tSC2CycpwcChJ8C56D9Qo
+	WJSanlqRlplTgpBm4uAEGc4lJVKcmpeSWpRYWpIRD4qA+GJgDICkeID2cn8A2VtckJgLFIVo
+	PcWoKCXOewhkrgBIIqM0D24sLJG8YhQH+lKYVwyknQeYhOC6XwENZgIaXPDIH2RwSSJCSqqB
+	Mebol0QPv1MfBGbyuk5/FemUcikosUNVOeyBx4kjJxnPZakeWPD4y7zOO/qrNzzVCu9MzrG4
+	d76u03nhcT1F38kb9VMjPmSuWypktyYlqH6J+wPNoE1HTEuO16xbmWXNp5Ttbatw 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296378>
 
-From: Ronnie Sahlberg <sahlberg@google.com>
+And make the function work for submodules.
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-Signed-off-by: David Turner <dturner@twopensource.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c               |  9 +++++++++
- refs/files-backend.c | 10 ++++++----
- refs/refs-internal.h |  5 +++++
- 3 files changed, 20 insertions(+), 4 deletions(-)
+ refs.c               |  4 +++-
+ refs/files-backend.c | 18 +++++++++++++-----
+ refs/refs-internal.h |  9 ++++++---
+ 3 files changed, 22 insertions(+), 9 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 5e20ae0..904e758 100644
+index 904e758..9d36dfe 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1375,3 +1375,12 @@ void assert_main_repository(struct ref_store *refs, const char *caller)
- 	if (*refs->submodule)
- 		die("BUG: %s called for a submodule", caller);
- }
-+
-+/* backend functions */
-+int ref_transaction_commit(struct ref_transaction *transaction,
-+			   struct strbuf *err)
-+{
+@@ -1222,6 +1222,7 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+ 	static struct strbuf sb_refname = STRBUF_INIT;
+ 	int unused_flags;
+ 	int symref_count;
 +	struct ref_store *refs = get_ref_store(NULL);
-+
-+	return refs->be->transaction_commit(refs, transaction, err);
-+}
+ 
+ 	if (!flags)
+ 		flags = &unused_flags;
+@@ -1249,7 +1250,8 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+ 	for (symref_count = 0; symref_count < SYMREF_MAXDEPTH; symref_count++) {
+ 		unsigned int read_flags = 0;
+ 
+-		if (read_raw_ref(refname, sha1, &sb_refname, &read_flags)) {
++		if (read_raw_ref(refs, refname,
++				 sha1, &sb_refname, &read_flags)) {
+ 			*flags |= read_flags;
+ 			if (errno != ENOENT || (resolve_flags & RESOLVE_REF_READING))
+ 				return NULL;
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0d64a3d..fea4487 100644
+index 5f14227..ff7ee7d 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -3703,11 +3703,12 @@ static int lock_ref_for_update(struct ref_update *update,
- 	return 0;
+@@ -1353,11 +1353,12 @@ static int resolve_packed_ref(struct files_ref_store *refs,
+ 	return -1;
  }
  
--int ref_transaction_commit(struct ref_transaction *transaction,
--			   struct strbuf *err)
-+static int files_transaction_commit(struct ref_store *ref_store,
-+				    struct ref_transaction *transaction,
-+				    struct strbuf *err)
+-int read_raw_ref(const char *refname, unsigned char *sha1,
++int read_raw_ref(struct ref_store *ref_store,
++		 const char *refname, unsigned char *sha1,
+ 		 struct strbuf *referent, unsigned int *type)
  {
  	struct files_ref_store *refs =
--		get_files_ref_store(NULL, "ref_transaction_commit");
-+		files_downcast(ref_store, 0, "ref_transaction_commit");
- 	int ret = 0, i;
- 	struct ref_update **updates = transaction->updates;
- 	struct string_list refs_to_delete = STRING_LIST_INIT_NODUP;
-@@ -4097,5 +4098,6 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
- struct ref_storage_be refs_be_files = {
- 	NULL,
- 	"files",
--	files_ref_store_create
-+	files_ref_store_create,
-+	files_transaction_commit
- };
+-		get_files_ref_store(NULL, "read_raw_ref");
++		files_downcast(ref_store, 1, "read_raw_ref");
+ 	struct strbuf sb_contents = STRBUF_INIT;
+ 	struct strbuf sb_path = STRBUF_INIT;
+ 	const char *path;
+@@ -1369,7 +1370,12 @@ int read_raw_ref(const char *refname, unsigned char *sha1,
+ 
+ 	*type = 0;
+ 	strbuf_reset(&sb_path);
+-	strbuf_git_path(&sb_path, "%s", refname);
++
++	if (*refs->base.submodule)
++		strbuf_git_path_submodule(&sb_path, refs->base.submodule, "%s", refname);
++	else
++		strbuf_git_path(&sb_path, "%s", refname);
++
+ 	path = sb_path.buf;
+ 
+ stat_ref:
+@@ -1596,8 +1602,9 @@ static int lock_raw_ref(const char *refname, int mustexist,
+ 			unsigned int *type,
+ 			struct strbuf *err)
+ {
++	struct ref_store *ref_store = get_ref_store(NULL);
+ 	struct files_ref_store *refs =
+-		get_files_ref_store(NULL, "lock_raw_ref");
++		files_downcast(ref_store, 0, "lock_raw_ref");
+ 	struct ref_lock *lock;
+ 	struct strbuf ref_file = STRBUF_INIT;
+ 	int attempts_remaining = 3;
+@@ -1687,7 +1694,8 @@ retry:
+ 	 * fear that its value will change.
+ 	 */
+ 
+-	if (read_raw_ref(refname, lock->old_oid.hash, referent, type)) {
++	if (read_raw_ref(ref_store, refname,
++			 lock->old_oid.hash, referent, type)) {
+ 		if (errno == ENOENT) {
+ 			if (mustexist) {
+ 				/* Garden variety missing reference. */
 diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index d6c74cf..e24366b 100644
+index e24366b..8c45ee3 100644
 --- a/refs/refs-internal.h
 +++ b/refs/refs-internal.h
-@@ -530,10 +530,15 @@ int read_raw_ref(const char *refname, unsigned char *sha1,
-  */
- typedef struct ref_store *ref_store_init_fn(const char *submodule);
+@@ -479,9 +479,11 @@ extern struct ref_iterator *current_ref_iter;
+ int do_for_each_ref_iterator(struct ref_iterator *iter,
+ 			     each_ref_fn fn, void *cb_data);
  
-+typedef int ref_transaction_commit_fn(struct ref_store *refs,
-+				      struct ref_transaction *transaction,
-+				      struct strbuf *err);
++struct ref_store;
 +
- struct ref_storage_be {
- 	struct ref_storage_be *next;
- 	const char *name;
- 	ref_store_init_fn *init;
-+	ref_transaction_commit_fn *transaction_commit;
- };
+ /*
+- * Read the specified reference from the filesystem or packed refs
+- * file, non-recursively. Set type to describe the reference, and:
++ * Read a reference from the specified reference store, non-recursively.
++ * Set type to describe the reference, and:
+  *
+  * - If refname is the name of a normal reference, fill in sha1
+  *   (leaving referent unchanged).
+@@ -517,7 +519,8 @@ int do_for_each_ref_iterator(struct ref_iterator *iter,
+  * - in all other cases, referent will be untouched, and therefore
+  *   refname will still be valid and unchanged.
+  */
+-int read_raw_ref(const char *refname, unsigned char *sha1,
++int read_raw_ref(struct ref_store *ref_store,
++		 const char *refname, unsigned char *sha1,
+ 		 struct strbuf *referent, unsigned int *type);
  
- extern struct ref_storage_be refs_be_files;
+ /* refs backends */
 -- 
 2.8.1
