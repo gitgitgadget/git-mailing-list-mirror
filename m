@@ -1,103 +1,138 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [RFC/PATCH] Triangular Workflow UI improvement: Documentation
-Date: Fri, 3 Jun 2016 23:16:41 +0100
-Organization: OPDS
-Message-ID: <6C6F62CA4181453BA51BB362DAA5C0C1@PhilipOakley>
-References: <9A874F00-ABD8-43D5-A32E-6A39ED333E6D@grenoble-inp.org><1464697717-5751-1-git-send-email-jordan.de-gea@grenoble-inp.org><9FB65CA220F84B6B882B75435DDA3D65@PhilipOakley> <xmqqd1nyqnr6.fsf@gitster.mtv.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/3] pretty: support "mboxrd" output format
+Date: Fri, 3 Jun 2016 18:22:02 -0400
+Message-ID: <CAPig+cTLVXJBn00aco0vC9oFvZuchTgtNXtGGjpLPx1LwRZz4Q@mail.gmail.com>
+References: <20160530232142.21098-1-e@80x24.org> <20160530232142.21098-2-e@80x24.org>
+ <CAPig+cQrSJe03_RtSyf5KO2vE3Rri7t70-he8SXA9Y4oBYY_Ww@mail.gmail.com>
+ <20160531074506.GA8911@dcvr.yhbt.net> <CAPig+cQrQfxWrGhpvtb-GKYfK0tMLsx9JJ+eWRRx00F8mNXrLg@mail.gmail.com>
+ <20160531182932.GA27021@dcvr.yhbt.net> <20160602075125.GA19551@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>,
-	<git@vger.kernel.org>, <erwan.mathoniere@grenoble-inp.org>,
-	<samuel.groot@grenoble-inp.org>, <tom.russello@grenoble-inp.org>,
-	<Matthieu.Moy@grenoble-inp.fr>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 04 00:17:36 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Eric Wong <e@80x24.org>
+X-From: git-owner@vger.kernel.org Sat Jun 04 00:22:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8xOu-0001oB-Lh
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Jun 2016 00:17:09 +0200
+	id 1b8xTn-00066H-HD
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Jun 2016 00:22:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752822AbcFCWQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 18:16:49 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:14691 "EHLO
-	smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752419AbcFCWQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2016 18:16:46 -0400
-Received: from PhilipOakley ([2.96.202.56])
-	by smtp.talktalk.net with SMTP
-	id 8xOUbn9JKUnEI8xOUbWTQn; Fri, 03 Jun 2016 23:16:43 +0100
-X-Originating-IP: [2.96.202.56]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=btQOPwSi c=1 sm=1 tr=0 a=Gr2UeF9n3zA/PrLseKPsnw==:117
- a=Gr2UeF9n3zA/PrLseKPsnw==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
- a=xtxXYLxNAAAA:8 a=XcpDTPfKAAAA:8 a=LWSQNB7Wj_Lb_rZ8Y68A:9
- a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22 a=JBJrJOrNVNaeAkU5v-im:22
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfPox3e0XpuM3ZDDZmLX0OeLCCWN8ie8Prmcsu2mg+8epoQq3Hqw1GJ46BiLr11Yr/SSAsY2oLdIwouMzI1ERtjo3C65+9vDWytvQXSlUggFksD4/dwqs
- giOPKRcS+ZDUFW7b/lVGhHibDuTOnpebJLRX7cQg8m2aAJP4x+2zt+QbUapygTYD1zR3aO34QPRu8h2ZTGghpj0PoU3xTX9Hpn63mL8SM6hOaqlVXsEKUAbT
- 9lAu4DN4cdemLsRRaj+YLK+gH/yjy8WpLyKep8K4qsh0vbNV9rSv4UGWjdRfCoBq9vQ18o6jjfBkT9Jka2frwIuupcXL0pkzOdO0kiHUd6xL2ICIKIKNS7L4
- 3UYLDDKDjxVQSMabaBYinm+tEKgfrv/C0wlclN1i1dTNAU/YWHx8YMd/t05NtmIBM4H1xqro
+	id S1752517AbcFCWWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 18:22:06 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:32998 "EHLO
+	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751814AbcFCWWF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 18:22:05 -0400
+Received: by mail-io0-f194.google.com with SMTP id p194so12580987iod.0
+        for <git@vger.kernel.org>; Fri, 03 Jun 2016 15:22:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=ayfJWDZjwVld1E2QDnKBIlrXZVNGgjxAVcC20fkW1x8=;
+        b=mWuOTfMKRQsPDnDJTwsK6yzyDyNtEYkEp23/bSnOWAa21DUBiOZeLXQlI1mRSYW63a
+         vII3T2yjlYHdDo+UAW+fxKWXTr7YlFgQGUwRZLEZ7I5TPCBgfJ4f066EUqxFATa4q9o+
+         bnoiiLogBXaS0/8G1Ge6dHWeuHtNwgQqaggv+iAuA1B7g7u+yuizCUM4qRfzryGZXCMw
+         Nw0H4yIQ6qrPs/Tw+r4rn1ObNDomeY5hXHsQ+Ujoz8VYNstX+qQttr8X/9Pm/I9a/1YW
+         siLW1C8jauT02wE7nR8edP66RoHVG8C7/ghrcli+4IOWNP5hyEGpWazjijCx1Tc1EAC+
+         cvgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=ayfJWDZjwVld1E2QDnKBIlrXZVNGgjxAVcC20fkW1x8=;
+        b=IOA3vEdOkMvnHpgsoS2Opxkx1FXCCs1lAKtuctqy54JhTdmoPI96yd47t8rQ8ZpASD
+         +bS+uBwmgnCZdbkjsnRWWIYZh8GrkR3WW8q20daPhpyj8MFpHY+saW9gUd0dWWo0nvIX
+         5tjXdL6M9TI+86GfSscbNpgDqmdQKqtDepm+6usSbIXRQ87vowo2r+sgtdsed6Ybk3sx
+         WXNZIFHtmZmEuRjFZErZuXatgaRRn0mtgtYdiHcE7T/CRDFPE/6fl8sAhpbXMtIwq0KQ
+         EbIpa/WMeJbbeRuzGk65NC76871foyRQR+E/z2Ioz+jpJCtl2+be55tQEjHKF+2TixwR
+         rsYg==
+X-Gm-Message-State: ALyK8tKopBoHVC7im8YbURcDEEdjTVS1Wh6A1jDWefLZLe4vqt24YULvOjrQhf8i5I9InP7dNYOglzU367QGdQ==
+X-Received: by 10.36.98.136 with SMTP id d130mr2732243itc.84.1464992523457;
+ Fri, 03 Jun 2016 15:22:03 -0700 (PDT)
+Received: by 10.79.0.30 with HTTP; Fri, 3 Jun 2016 15:22:02 -0700 (PDT)
+In-Reply-To: <20160602075125.GA19551@dcvr.yhbt.net>
+X-Google-Sender-Auth: DSBMsEZr_M_nOFBszRz746cCIhk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296420>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> "Philip Oakley" <philipoakley@iee.org> writes:
+[cc:+junio]
+
+On Thu, Jun 2, 2016 at 3:51 AM, Eric Wong <e@80x24.org> wrote:
+> Eric Wong <e@80x24.org> wrote:
+>> Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> > On Tue, May 31, 2016 at 3:45 AM, Eric Wong <e@80x24.org> wrote:
+>> > > Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> > >> I wonder if hand-coding, rather than using a regex, could be an improvement:
+>> > >>
+>> > >>     static int is_mboxrd_from(const char *s, size_t n)
+>> > >>     {
+>> > >>         size_t f = strlen("From ");
+>> > >>         const char *t = s + n;
+>> > >>
+>> > >>         while (s < t && *s == '>')
+>> > >>             s++;
+>> > >>         return t - s >= f && !memcmp(s, "From ", f);
+>> > >>     }
+>> > >>
+>> > >> or something.
+>> > >
+>> > > Yikes.  I mostly work in high-level languages and do my best to
+>> > > avoid string parsing in C; so that scares me.  A lot.
+>> >
+>> > The hand-coded is_mboxrd_from() above is pretty much idiomatic C and
+>> > (I think) typical of how such a function would be coded in Git itself,
+>> > so it looks normal and easy to grok to me (but, of course, I'm
+>> > probably biased since I wrote it).
 >
->> That said, trying to find a good name for that 'third place' is not easy.
->> It's neither upstream, nor downstream (for Junio - the maintainer special
->> case - git.git would be his downstream). The me/git repo is like a
->> ferryman's landing across the other side of the river flow, a safe 
->> harbour
->> if you will.
+> For reference, here is the gfrom function from qmail (gfrom.c,
+> source package netqmail-1.06 in Debian, reformatted git style)
 >
-> You raise a good point here.
+> int gfrom(char *s, int len)
+> {
+>         while ((len > 0) && (*s == '>')) {
+>                 ++s;
+>                 --len;
+>         }
 >
-> To me, the git.git public repository that everybody pulls from is
-> just like me/git for everybody else.  It is a place where you
-> publish your work.  I think the @{push} notation during its design
-> phase was once called @{publish} instead.
+>         return (len >= 5) && !str_diffn(s, "From ", 5);
+> }
 
-I'd agree that your git/git is actually an @{publish} repo, and to my mind 
-is a formal 'downstream' for you.
+Seems less idiomatic and less like what we might see elsewhere in the
+Git codebase, but that's subjective. Functionally, it appears correct.
 
-However your gitster/git repo feels like it would match the me/git 
-viewpoint, in that while it  is 'open', it isn't really a formal publishing 
-place. Certainly I don't think that I 'publish' what's in my personal github 
-repos, which I use as an open backup (and any PR's I put to the G4W project 
-repo are referenced from there).
-
-I did have a look at various thesaurus words 
-(//www.thesaurus.com/browse/repository) that might be usable and found:-
-depot, haven, shelter, sanctuary, wharf, bunker, vault, which are all 'near' 
-but not quite right, if only home-depot wasn't taken I'd suggest that!
-
+> Similar to yours, but a several small things improves
+> readability for me:
 >
-> A "downstream" that is the opposite of "upstream" is not something
-> you would configure and control.  They are those who call you
-> "upstream".  You know and actively configure who your "upstream" is
-> and pull from there.  You do not have direct control who are the
-> people who are pulling from you.
->
-> So in that sense, "downstream" exists as a concept that is just as
-> valid as "upstream", but unlike "upstream", "downstream" does not
-> manifest itself as something you explicitly tell Git about, either
-> from the command line, in the remotes definition, or in the
-> configuration files.
+> * the avoidance of subtraction from the "return" conditional
+> * s/n/len/ variable name
 
-Certainly for contributors, a configured 'downstream' repo doesn't make 
-sense, but I do think it's worthwhile for maintainers, Leiutenants, and 
-dictators who do have a specific publishing place. 
+Idiomatic C code favors concise names such as 'i', 'j', or 'n', for
+instance, but I don't care strongly.
+
+> * extra parentheses
+
+Unnecessary syntactic noise (consuming reviewer brain cycles).
+
+> * removal of "t" variable (t for "terminal/termination"?)
+
+Heh, no, just the next letter after 's'. Again, just an idiom, as 'i',
+'j', 'k' are often used for integers, 's' and 't' are common for
+strings.
+
+> str_diffn is memcmp-like, I assume.  My eyes glazed over
+> when I saw that function implemented in str_diffn.c, too.
+>
+> Just thinking out loud, with sufficient tests I could go with
+> either.  Will reroll when/if I get the chance tomorrow.
+
+As mentioned above, it's all subjective and, of course, I have a bias
+toward the example I provided, but don't otherwise feel strongly about
+it. I do, however, like the idea of using a simple hand-coded matching
+function over the regex (but no so much that I would complain about
+it). Use whatever you and Junio feel is appropriate.
