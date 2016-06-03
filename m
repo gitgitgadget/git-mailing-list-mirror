@@ -1,311 +1,106 @@
-From: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-Subject: [PATCH] userdiff: add built-in pattern for CSS
-Date: Fri,  3 Jun 2016 14:32:26 +0200
-Message-ID: <20160603123226.4687-1-william.duclot@ensimag.grenoble-inp.fr>
-References: <20160602224809.5167-1-william.duclot@ensimag.grenoble-inp.fr>
-Cc: simon.rabourg@ensimag.grenoble-inp.fr,
-	antoine.queru@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr, j6t@kdbg.org,
-	gitster@pobox.com, Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 03 14:32:41 2016
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 02/13] do_for_each_ref(): move docstring to the header file
+Date: Fri,  3 Jun 2016 14:33:42 +0200
+Message-ID: <39f17243f5f85aab5eaa1f8355929027e20fcb74.1464957077.git.mhagger@alum.mit.edu>
+References: <cover.1464957077.git.mhagger@alum.mit.edu>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>,
+	David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri Jun 03 14:34:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8oHH-0003tK-T6
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 14:32:40 +0200
+	id 1b8oIl-00052N-4H
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 14:34:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752684AbcFCMcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 08:32:35 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:43037 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751675AbcFCMce (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 08:32:34 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 17FF820DB;
-	Fri,  3 Jun 2016 14:32:31 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yUZQRETkd7gN; Fri,  3 Jun 2016 14:32:31 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 024D020D9;
-	Fri,  3 Jun 2016 14:32:31 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id EF7C72077;
-	Fri,  3 Jun 2016 14:32:30 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id oOL6SafB-6i4; Fri,  3 Jun 2016 14:32:30 +0200 (CEST)
-Received: from Messiaen.grenet.fr (eduroam-033140.grenet.fr [130.190.33.140])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id C99562066;
-	Fri,  3 Jun 2016 14:32:30 +0200 (CEST)
-X-Mailer: git-send-email 2.9.0.rc1.1.geac644e
-In-Reply-To: <20160602224809.5167-1-william.duclot@ensimag.grenoble-inp.fr>
+	id S932326AbcFCMeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 08:34:08 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:57645 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932152AbcFCMeG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 08:34:06 -0400
+X-AuditID: 1207440c-c53ff70000000b85-06-5751793b2684
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id B2.57.02949.B3971575; Fri,  3 Jun 2016 08:34:03 -0400 (EDT)
+Received: from michael.fritz.box (p548D60E2.dip0.t-ipconnect.de [84.141.96.226])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u53CXtim005761
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Fri, 3 Jun 2016 08:34:02 -0400
+X-Mailer: git-send-email 2.8.1
+In-Reply-To: <cover.1464957077.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrDIsWRmVeSWpSXmKPExsUixO6iqGtdGRhuMP+rocX8TScYLbqudDNZ
+	NPReYba4vWI+s0X3lLeMFj9aepgtZl61tjjzppHRgcPj7/sPTB47Z91l93jWu4fR4+IlZY/9
+	S7exeSx+4OWx4Pl9do/Pm+QCOKK4bZISS8qCM9Pz9O0SuDO27d/EWvCav+LxxWesDYyfeLoY
+	OTkkBEwk7p6/xN7FyMUhJLCVUeLDxBVsEM5xJolLp/aygFSxCehKLOppZgKxRQQiJBpetTCC
+	FDELzGGSuP2wkxkkISzgJ/Fv8TYgm4ODRUBVou1UPYjJKxAlceqdOsQyOYnL0x+wgdicAhYS
+	ffd+sIPYQgLmEg/n7GafwMizgJFhFaNcYk5prm5uYmZOcWqybnFyYl5eapGuoV5uZoleakrp
+	JkZIyPHsYPy2TuYQowAHoxIP74oFAeFCrIllxZW5hxglOZiURHnPnwUK8SXlp1RmJBZnxBeV
+	5qQWH2KU4GBWEuH9UxAYLsSbklhZlVqUD5OS5mBREudVXaLuJySQnliSmp2aWpBaBJOV4eBQ
+	kuD9UQ7UKFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+KgPhiYAyApHiA9n4Gaect
+	LkjMBYpCtJ5iVJQS52UASQiAJDJK8+DGwhLJK0ZxoC+FeX0qgKp4gEkIrvsV0GAmoMEFj/xB
+	BpckIqSkGhiNS07ckvyYvWj7Zh77iw3SVv3Pnmn1b7nbnqGdfGpbyYczhp0eR47ME2V6b3Tr
+	6+crfFrxcTf2yd/4feeRRmj8uxi+j0sebvNL2PRx+oeLs5hv2ekkTWC6obU38Pcx 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296315>
 
-CSS is widely used, motivating it being included as a built-in pattern.
-
-It must be noted that the word_regex for CSS (i.e. the regex defining
-what is a word in the language) does not consider '.' and '#' characters
-(in CSS selectors) to be part of the word. This behavior is documented
-by the test t/t4018/css-rule.
-The logic behind this behavior is the following: identifiers in CSS
-selectors are identifiers in a HTML/XML document. Therefore, the '.'/'#'
-character are not part of the identifier, but an indicator of the nature
-of the identifier in HTML/XML (class or id). Diffing ".class1" and
-".class2" must show that the class name is changed, but we still are
-selecting a class.
-
-Logic behind the "pattern" regex is:
-    1. reject lines ending with a colon/semicolon (properties)
-    2. if a line begins with a name in column 1, pick the whole line
-
-Credits to Johannes Sixt (j6t@kdbg.org) for the pattern regex and most
-of the tests.
-
-Signed-off-by: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
-Changes since V3:
-    - Add a few tests
-    - Remove a redondant test
-    - Handle trailing spaces
-    - Reword in doc
-    - Improvement of the pattern regex
+ refs/files-backend.c |  9 ---------
+ refs/refs-internal.h | 10 +++++++++-
+ 2 files changed, 9 insertions(+), 10 deletions(-)
 
- Documentation/gitattributes.txt |  2 ++
- t/t4018-diff-funcname.sh        |  1 +
- t/t4018/css-brace-in-col-1      |  5 +++++
- t/t4018/css-colon-eol           |  4 ++++
- t/t4018/css-colon-selector      |  5 +++++
- t/t4018/css-common              |  4 ++++
- t/t4018/css-long-selector-list  |  6 ++++++
- t/t4018/css-prop-sans-indent    |  5 +++++
- t/t4018/css-short-selector-list |  4 ++++
- t/t4018/css-trailing-space      |  5 +++++
- t/t4034-diff-words.sh           |  1 +
- t/t4034/css/expect              | 16 ++++++++++++++++
- t/t4034/css/post                | 10 ++++++++++
- t/t4034/css/pre                 | 10 ++++++++++
- userdiff.c                      | 12 ++++++++++++
- 15 files changed, 90 insertions(+)
- create mode 100644 t/t4018/css-brace-in-col-1
- create mode 100644 t/t4018/css-colon-eol
- create mode 100644 t/t4018/css-colon-selector
- create mode 100644 t/t4018/css-common
- create mode 100644 t/t4018/css-long-selector-list
- create mode 100644 t/t4018/css-prop-sans-indent
- create mode 100644 t/t4018/css-short-selector-list
- create mode 100644 t/t4018/css-trailing-space
- create mode 100644 t/t4034/css/expect
- create mode 100644 t/t4034/css/post
- create mode 100644 t/t4034/css/pre
-
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index e3b1de8..8882a3e 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -525,6 +525,8 @@ patterns are available:
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 1230dfb..68db3e8 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1878,15 +1878,6 @@ static int do_for_each_entry(struct ref_cache *refs, const char *base,
+ 	return retval;
+ }
  
- - `csharp` suitable for source code in the C# language.
+-/*
+- * Call fn for each reference in the specified ref_cache for which the
+- * refname begins with base.  If trim is non-zero, then trim that many
+- * characters off the beginning of each refname before passing the
+- * refname to fn.  flags can be DO_FOR_EACH_INCLUDE_BROKEN to include
+- * broken references in the iteration.  If fn ever returns a non-zero
+- * value, stop the iteration and return that value; otherwise, return
+- * 0.
+- */
+ int do_for_each_ref(const char *submodule, const char *base,
+ 		    each_ref_fn fn, int trim, int flags, void *cb_data)
+ {
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 1bb3d87..b4dd545 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -249,7 +249,15 @@ int rename_ref_available(const char *oldname, const char *newname);
+ #define DO_FOR_EACH_INCLUDE_BROKEN 0x01
  
-+- `css` suitable for cascading style sheets.
-+
- - `fortran` suitable for source code in the Fortran language.
- 
- - `fountain` suitable for Fountain documents.
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 67373dc..1795ffc 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -30,6 +30,7 @@ diffpatterns="
- 	bibtex
- 	cpp
- 	csharp
-+	css
- 	fortran
- 	fountain
- 	html
-diff --git a/t/t4018/css-brace-in-col-1 b/t/t4018/css-brace-in-col-1
-new file mode 100644
-index 0000000..7831577
---- /dev/null
-+++ b/t/t4018/css-brace-in-col-1
-@@ -0,0 +1,5 @@
-+RIGHT label.control-label
-+{
-+    margin-top: 10px!important;
-+    border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/t/t4018/css-colon-eol b/t/t4018/css-colon-eol
-new file mode 100644
-index 0000000..5a30553
---- /dev/null
-+++ b/t/t4018/css-colon-eol
-@@ -0,0 +1,4 @@
-+RIGHT h1 {
-+color:
-+ChangeMe;
-+}
-diff --git a/t/t4018/css-colon-selector b/t/t4018/css-colon-selector
-new file mode 100644
-index 0000000..c6d71fb
---- /dev/null
-+++ b/t/t4018/css-colon-selector
-@@ -0,0 +1,5 @@
-+RIGHT a:hover {
-+    margin-top:
-+    10px!important;
-+    border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/t/t4018/css-common b/t/t4018/css-common
-new file mode 100644
-index 0000000..84ed754
---- /dev/null
-+++ b/t/t4018/css-common
-@@ -0,0 +1,4 @@
-+RIGHT label.control-label {
-+    margin-top: 10px!important;
-+    border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/t/t4018/css-long-selector-list b/t/t4018/css-long-selector-list
-new file mode 100644
-index 0000000..7ccd25d
---- /dev/null
-+++ b/t/t4018/css-long-selector-list
-@@ -0,0 +1,6 @@
-+p.header,
-+label.control-label,
-+div ul#RIGHT {
-+    margin-top: 10px!important;
-+    border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/t/t4018/css-prop-sans-indent b/t/t4018/css-prop-sans-indent
-new file mode 100644
-index 0000000..a9e3c86
---- /dev/null
-+++ b/t/t4018/css-prop-sans-indent
-@@ -0,0 +1,5 @@
-+RIGHT, label.control-label {
-+margin-top: 10px!important;
-+padding: 0;
-+border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/t/t4018/css-short-selector-list b/t/t4018/css-short-selector-list
-new file mode 100644
-index 0000000..6a0bdee
---- /dev/null
-+++ b/t/t4018/css-short-selector-list
-@@ -0,0 +1,4 @@
-+label.control, div ul#RIGHT {
-+    margin-top: 10px!important;
-+    border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/t/t4018/css-trailing-space b/t/t4018/css-trailing-space
-new file mode 100644
-index 0000000..32b5606
---- /dev/null
-+++ b/t/t4018/css-trailing-space
-@@ -0,0 +1,5 @@
-+RIGHT label.control-label {
-+    margin:10px;   
-+    padding:10px;
-+    border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-index f2f55fc..912df91 100755
---- a/t/t4034-diff-words.sh
-+++ b/t/t4034-diff-words.sh
-@@ -302,6 +302,7 @@ test_language_driver ada
- test_language_driver bibtex
- test_language_driver cpp
- test_language_driver csharp
-+test_language_driver css
- test_language_driver fortran
- test_language_driver html
- test_language_driver java
-diff --git a/t/t4034/css/expect b/t/t4034/css/expect
-new file mode 100644
-index 0000000..ed10393
---- /dev/null
-+++ b/t/t4034/css/expect
-@@ -0,0 +1,16 @@
-+<BOLD>diff --git a/pre b/post<RESET>
-+<BOLD>index b8ae0bb..fe500b7 100644<RESET>
-+<BOLD>--- a/pre<RESET>
-+<BOLD>+++ b/post<RESET>
-+<CYAN>@@ -1,10 +1,10 @@<RESET>
-+.<RED>class-form<RESET><GREEN>other-form<RESET> label.control-label {
-+    margin-top: <RED>10<RESET><GREEN>15<RESET>px!important;
-+    border : 10px <RED>dashed<RESET><GREEN>dotted<RESET> #C6C6C6;
-+}<RESET>
-+<RED>#CCCCCC<RESET><GREEN>#CCCCCB<RESET>
-+10em<RESET>
-+<RED>padding-bottom<RESET><GREEN>margin-left<RESET>
-+150<RED>px<RESET><GREEN>em<RESET>
-+10px
-+<RED>!important<RESET>
-+<RED>div<RESET><GREEN>li<RESET>.class#id
-diff --git a/t/t4034/css/post b/t/t4034/css/post
-new file mode 100644
-index 0000000..fe500b7
---- /dev/null
-+++ b/t/t4034/css/post
-@@ -0,0 +1,10 @@
-+.other-form label.control-label {
-+    margin-top: 15px!important;
-+    border : 10px dotted #C6C6C6;
-+}
-+#CCCCCB
-+10em
-+margin-left
-+150em
-+10px
-+li.class#id
-diff --git a/t/t4034/css/pre b/t/t4034/css/pre
-new file mode 100644
-index 0000000..b8ae0bb
---- /dev/null
-+++ b/t/t4034/css/pre
-@@ -0,0 +1,10 @@
-+.class-form label.control-label {
-+    margin-top: 10px!important;
-+    border : 10px dashed #C6C6C6;
-+}
-+#CCCCCC
-+10em
-+padding-bottom
-+150px
-+10px!important
-+div.class#id
-diff --git a/userdiff.c b/userdiff.c
-index 6bf2505..2125d6d 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -148,6 +148,18 @@ PATTERNS("csharp",
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
- 	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
-+IPATTERN("css",
-+	 "![:;][[:space:]]*$\n"
-+	 "^[_a-z0-9].*$",
-+	 /* -- */
-+	 /*
-+	  * This regex comes from W3C CSS specs. Should theoretically also
-+	  * allow ISO 10646 characters U+00A0 and higher,
-+	  * but they are not handled in this regex.
-+	  */
-+	 "-?[_a-zA-Z][-_a-zA-Z0-9]*" /* identifiers */
-+	 "|-?[0-9]+|\\#[0-9a-fA-F]+" /* numbers */
-+),
- { "default", NULL, -1, { NULL, 0 } },
- };
- #undef PATTERNS
+ /*
+- * The common backend for the for_each_*ref* functions
++ * Call fn for each reference in the specified submodule for which the
++ * refname begins with base. If trim is non-zero, then trim that many
++ * characters off the beginning of each refname before passing the
++ * refname to fn. flags can be DO_FOR_EACH_INCLUDE_BROKEN to include
++ * broken references in the iteration. If fn ever returns a non-zero
++ * value, stop the iteration and return that value; otherwise, return
++ * 0.
++ *
++ * This is the common backend for the for_each_*ref* functions.
+  */
+ int do_for_each_ref(const char *submodule, const char *base,
+ 		    each_ref_fn fn, int trim, int flags, void *cb_data);
 -- 
-2.9.0.rc1.1.geac644e
+2.8.1
