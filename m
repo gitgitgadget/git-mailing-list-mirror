@@ -1,131 +1,97 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] reflog: continue walking the reflog past root commits
-Date: Fri,  3 Jun 2016 22:42:35 +0200
-Message-ID: <20160603204235.7994-1-szeder@ira.uka.de>
-References: <f51f9df7-d6d7-3a45-736f-ca2e2c9eb2cb@textalk.se>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/3] fetch: reduce duplicate in ref update status lines
+Date: Fri, 03 Jun 2016 13:53:40 -0700
+Message-ID: <xmqqtwhangdn.fsf@gitster.mtv.corp.google.com>
+References: <20160522112019.26516-1-pclouds@gmail.com>
+	<20160603110843.15434-1-pclouds@gmail.com>
+	<20160603110843.15434-4-pclouds@gmail.com>
+	<575199E7.7000503@xiplink.com>
+	<xmqqh9dap5jk.fsf@gitster.mtv.corp.google.com>
+	<5751E1C1.8080507@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Patrik Gustafsson <pvn@textalk.se>, git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 03 22:43:08 2016
+Content-Type: text/plain
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Fri Jun 03 22:54:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8vvn-0006wK-5X
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 22:42:59 +0200
+	id 1b8w6S-0007gZ-8L
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 22:54:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161031AbcFCUmz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Jun 2016 16:42:55 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:36124 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752272AbcFCUmy (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 16:42:54 -0400
-Received: from x4db1ec54.dyn.telefonica.de ([77.177.236.84] helo=localhost.localdomain)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-	iface 141.3.10.81 id 1b8vvd-0004SX-Kb; Fri, 03 Jun 2016 22:42:51 +0200
-X-Mailer: git-send-email 2.9.0.rc1.66.ge2c3978
-In-Reply-To: <f51f9df7-d6d7-3a45-736f-ca2e2c9eb2cb@textalk.se>
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1464986571.
+	id S1422672AbcFCUxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 16:53:47 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58525 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752469AbcFCUxo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 16:53:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 360D921775;
+	Fri,  3 Jun 2016 16:53:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EoCBoIIRQOVJlBqZiCTBmJ5DczY=; b=DCVwiX
+	AhMp9/lzHfKvg8Qe0+nZYx1KSfDm8JEnt7bemTTgfQo2vxRLBWrZFH5dVvyS8SY2
+	0Of7tV6E69RYGB17/dXvJ4Q1sHXO8VxQFHUPIsY6aabY79DMWArA1EwG3ttQ1C6E
+	TqLmNHLea1O3R2NsD9pMQJSEN4ihMRa3yeSrI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Bnho6nmalOrjYQWs+lDlpR6hz63K9aSJ
+	75cr1tqjmk0GPO+b2TtH8JPiWzlxiUXOFYG78zl8eUVzUD9r8u8EWw0u051LAlu/
+	5jbQ+jp2OjWjPIoNsoDQvDSp+gh6JRehPrMQoT2vBPBJzYIWg7TwKVMtDYR/6GXh
+	JECtGOodsBE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2E9C921774;
+	Fri,  3 Jun 2016 16:53:42 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BC40E21773;
+	Fri,  3 Jun 2016 16:53:41 -0400 (EDT)
+In-Reply-To: <5751E1C1.8080507@xiplink.com> (Marc Branchaud's message of "Fri,
+	3 Jun 2016 16:00:01 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 410D8750-29CD-11E6-87DE-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296372>
 
-If a repository contains more than one root commit, then its HEAD
-reflog may contain multiple "creation events", i.e. entries whose
-"from" value is the null sha1.  Listing such a reflog currently stops
-prematurely at the first such entry, even when the reflog still
-contains older entries.  This can scare users into thinking that their
-reflog got truncated after 'git checkout --orphan'.
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-Continue walking the reflog past such creation evens based on the
-preceeding reflog entry's "new" value.
+>>>   * [new branch]      2nd-index -> pclouds/2nd-index
+>>>   * [new branch]      some-kind-of-long-ref-name
+>>>                                 -> pclouds/some-kind-of-long-ref-name
+>>>   * [new branch]      3nd-index -> pclouds/3nd-index
+> ...
+> I think aligning it with the -> on the other lines makes the most
+> aesthetic sense.
+>
+> Are you worried that the right-hand-side ref might still wrap?
 
-The test 'symbolic-ref writes reflog entry' in t1401-symbolic-ref
-implicitly relies on the current behavior of the reflog walker to stop
-at a root commit and thus to list only the reflog entries that are
-relevant for that test.  Adjust the test to explicitly specify the
-number of relevant reflog entries to be listed.
+Not really.
 
-Reported-by: Patrik Gustafsson <pvn@textalk.se>
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- reflog-walk.c           |  6 ++++++
- t/t1401-symbolic-ref.sh |  2 +-
- t/t1410-reflog.sh       | 22 ++++++++++++++++++++++
- 3 files changed, 29 insertions(+), 1 deletion(-)
+Given that we reserve some fixed screen real estate on the left hand
+side for the sign and explanation (like [new branch]) and 4 columns
+in the middle for " -> ", we have around 80-25=55 columns to work
+with to fit "2nd-index" and such twice plus "pclouds/" once.
+Assuming that remote names are not overly long (say, around 10
+columns), that leaves about 20-25 columns for the branch name
+proper.
 
-diff --git a/reflog-walk.c b/reflog-walk.c
-index 0ebd1da5ceb8..a246af27678a 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -241,6 +241,12 @@ void fake_reflog_parent(struct reflog_walk_info *i=
-nfo, struct commit *commit)
- 		logobj =3D parse_object(reflog->osha1);
- 	} while (commit_reflog->recno && (logobj && logobj->type !=3D OBJ_COM=
-MIT));
-=20
-+	if (!logobj && commit_reflog->recno >=3D 0 && is_null_sha1(reflog->os=
-ha1)) {
-+		/* a root commit, but there are still more entries to show */
-+		reflog =3D &commit_reflog->reflogs->items[commit_reflog->recno];
-+		logobj =3D parse_object(reflog->nsha1);
-+	}
-+
- 	if (!logobj || logobj->type !=3D OBJ_COMMIT) {
- 		commit_info->commit =3D NULL;
- 		commit->parents =3D NULL;
-diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-index 417eecc3af2a..ca3fa406c34f 100755
---- a/t/t1401-symbolic-ref.sh
-+++ b/t/t1401-symbolic-ref.sh
-@@ -110,7 +110,7 @@ test_expect_success 'symbolic-ref writes reflog ent=
-ry' '
- 	update
- 	create
- 	EOF
--	git log --format=3D%gs -g >actual &&
-+	git log --format=3D%gs -g -2 >actual &&
- 	test_cmp expect actual
- '
-=20
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index 9cf91dc6d217..dd2be049ecf6 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -348,4 +348,26 @@ test_expect_success 'reflog expire operates on sym=
-ref not referrent' '
- 	git reflog expire --expire=3Dall the_symref
- '
-=20
-+test_expect_success 'continue walking past root commits' '
-+	git init orphanage &&
-+	(
-+		cd orphanage &&
-+		cat >expect <<-\EOF &&
-+		HEAD@{0} commit (initial): orphan2-1
-+		HEAD@{1} commit: orphan1-2
-+		HEAD@{2} commit (initial): orphan1-1
-+		HEAD@{3} commit (initial): initial
-+		EOF
-+		test_commit initial &&
-+		git reflog &&
-+		git checkout --orphan orphan1 &&
-+		test_commit orphan1-1 &&
-+		test_commit orphan1-2 &&
-+		git checkout --orphan orphan2 &&
-+		test_commit orphan2-1 &&
-+		git log -g --format=3D"%gd %gs" >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
---=20
-2.9.0.rc1.66.ge2c3978
+By punting on the effort to find a readable format that does not
+repeat the same info twice, we are sending a signal to the users
+that they cannot use a meaningful sentence as the name of a branch
+name; they need to stay within a relatively short (i.e. 1/4 of a
+line width) branch name, to avoid triggering this multi-line
+behaviour.
+
+The same 55 columns minus remote name, e.g. around 40 columns, could
+have been used to express the branch name once, if we managed to
+find a non-redundant format.
+
+That is what bothers me somewhat.
