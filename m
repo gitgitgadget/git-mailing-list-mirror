@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v4 1/6] worktree.c: add find_worktree()
-Date: Fri,  3 Jun 2016 19:19:39 +0700
-Message-ID: <20160603121944.28980-2-pclouds@gmail.com>
+Subject: [PATCH v4 3/6] worktree.c: add is_worktree_locked()
+Date: Fri,  3 Jun 2016 19:19:41 +0700
+Message-ID: <20160603121944.28980-4-pclouds@gmail.com>
 References: <20160530104939.28407-1-pclouds@gmail.com>
  <20160603121944.28980-1-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -14,123 +14,160 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 03 14:20:25 2016
+X-From: git-owner@vger.kernel.org Fri Jun 03 14:20:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8o5Q-0002wQ-9J
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 14:20:24 +0200
+	id 1b8o5Z-00034l-QY
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 14:20:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751999AbcFCMUS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Jun 2016 08:20:18 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:35815 "EHLO
-	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751749AbcFCMUN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2016 08:20:13 -0400
-Received: by mail-pf0-f193.google.com with SMTP id f144so11467659pfa.2
-        for <git@vger.kernel.org>; Fri, 03 Jun 2016 05:20:12 -0700 (PDT)
+	id S1752036AbcFCMUZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Jun 2016 08:20:25 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35843 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751963AbcFCMUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 08:20:24 -0400
+Received: by mail-pf0-f196.google.com with SMTP id 62so11401871pfd.3
+        for <git@vger.kernel.org>; Fri, 03 Jun 2016 05:20:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YeHR/L++LvGTztYBKbT5VyyD2p14loT15AZk5ah3Hjg=;
-        b=ddTcgvYDqw6bffPd3U+45TAR+k/HDK5u3xTKyQrgZKfDH9FJAv9ALm0rdCgWbrw0gq
-         gHVgAQcAJOMyWTN42DtmoFZe+4wTi6XxKOlOlCq8aBajQLiB4Cy9o5OPT8TVB88zgnre
-         49aj8RtiEakZufhSWBc+0ycQa9gcOC9IemrndlZH8J24ws191lx0xVhH9SeWucSHOMAn
-         t4+fCzEPGi/9ya0C036ngGbBmb+FJ9U/ydaDDTHy0Z9+TjSfNKz6Jfe6QGM3oxzoyJsV
-         9VY5bnc8J9JPhbIU31KL5rjilUZg1U0oMbYI76XtUNMESty2U74qkljimT26hQ6/4LRg
-         iQjw==
+        bh=log7kiumsOlM6kzmj+E5oZOqcdGdyUMoJViKjACB7GM=;
+        b=am+3zHFpp+iEpPvx0Iu2xEXQyaBo1Ejwp9hXJe1+ndq6ix/4/wCVwvWBqHvzYib6f6
+         DE+wBChW3bY752BrUcGAsP/gbdqkhry+HcNIRoE3GR3NR8uo0kPiurPiBIx3+y+GxsB+
+         wX0ufaKm8/e/gYixvDnS0JJO34XHkVDnOEIFy98a2VG6dr6gilQwVB+QVRmmRnxLkMtp
+         +vepmo1O55MK21+d7EC6cJVel4OtMk9DSka/P4SHydg2at0eU4G1abTN6TYtGZ4HCYNb
+         stz7TL4N/BsEr3P3GSBt9vylTHOfBCekvXuiQB9H0jiUwImQZYUVz62UTmpyb3jV9b+K
+         Htaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YeHR/L++LvGTztYBKbT5VyyD2p14loT15AZk5ah3Hjg=;
-        b=WCySjrirlDFdvQkzWmUGI8UOGtHtY9cFgHBjeNGWhbDeCgm9qg/GbcLavyo/CVMGVi
-         D6dZYWU2w2OXqmG4Eyh/3QXYOv6jz9BCyZw4p9+fjf1hOiP0qlcFLZzqDy4ciGNGdJWR
-         lp1F/pSoAqoaL7OfMGf1RV1vuPXjNbP5cAgJu7POsHh5G0TIvoamimo5kGR18MUOMuGZ
-         4tjEPqFBxM+850/ov5y/gfmoQzVkb+/calvIJjEbyCYBH9/bq3PeYcVEFv9XV0JAYmxD
-         ORdjjvojNiMFDDpDYQiw9qXMzNYXoXxDQfI9F80XdxwNXRui8vuDbrf2xLte+2HKsPgE
-         J8rg==
-X-Gm-Message-State: ALyK8tLOoaGbX1t52ttMbwXrcWbtYum/yDyTl9XTxb2ddSPt/LwSWbvl4+oJ92Zgk5ewFg==
-X-Received: by 10.98.102.154 with SMTP id s26mr5841914pfj.41.1464956412218;
-        Fri, 03 Jun 2016 05:20:12 -0700 (PDT)
+        bh=log7kiumsOlM6kzmj+E5oZOqcdGdyUMoJViKjACB7GM=;
+        b=Ti9x2vPF1AJNT/6wHm0bAgkAXWn0M6pjBx4WJIkU7A+HKZpGUNxjzLu2vsRzCuNUS9
+         50hSROnOUSNF2EEwg5LWxJZwP+z5rc1MLQqWp/Qz9SwsJtbK6CFoHnj5m1Wx3l7m2ZIW
+         TvuxV89uv3L+SEqX6MEnrlSH0IAp5GQv+n8A1DnQzrFTJwbENCmUtfidTkmAL46ZogXp
+         JD5DyuJ0MwmenqjjEaPJ0rZIMAWSScknV1VU67T6x9CkKp4hZNODHSgmYMh7w7rOAkGj
+         gE3GSuMBh1E+7IIkA1NHBUfXNRuWQ126w1eVMucR6EVtiE5poG6SEZ/ok8ZXBZO8Xrfc
+         z9HA==
+X-Gm-Message-State: ALyK8tKH9Xm8+YEjilmoN7ScRe8oEVh+b5wJHw2uwEDbS1PynjvgnQR0vn/MQ6qRR7S5hw==
+X-Received: by 10.98.54.133 with SMTP id d127mr5897817pfa.104.1464956423364;
+        Fri, 03 Jun 2016 05:20:23 -0700 (PDT)
 Received: from ash ([171.232.119.25])
-        by smtp.gmail.com with ESMTPSA id 17sm8084523pfj.96.2016.06.03.05.20.08
+        by smtp.gmail.com with ESMTPSA id ql1sm5758411pac.2.2016.06.03.05.20.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Jun 2016 05:20:11 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Fri, 03 Jun 2016 19:20:06 +0700
+        Fri, 03 Jun 2016 05:20:22 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Fri, 03 Jun 2016 19:20:17 +0700
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
 In-Reply-To: <20160603121944.28980-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296309>
 
-So far we haven't needed to identify an existing worktree from command
-line. Future commands such as lock or move will need it. The current
-implementation identifies worktrees by path (*). In future, the functio=
-n
-could learn to identify by $(basename $path) or tags...
+We need this later to avoid double locking a worktree, or unlocking one
+when it's not even locked.
 
-(*) We could probably go cheaper with comparing inode number (and
-probably more reliable than paths when unicode enters the game). But no=
-t
-all systems have good inode that so let's stick to something simple for
-now.
-
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- worktree.c | 15 +++++++++++++++
- worktree.h |  8 ++++++++
- 2 files changed, 23 insertions(+)
+ worktree.c | 26 ++++++++++++++++++++++++++
+ worktree.h |  7 +++++++
+ 2 files changed, 33 insertions(+)
 
 diff --git a/worktree.c b/worktree.c
-index e2a94e0..554f566 100644
+index eb3aaaa..ee592a4 100644
 --- a/worktree.c
 +++ b/worktree.c
-@@ -214,6 +214,21 @@ const char *get_worktree_git_dir(const struct work=
-tree *wt)
- 		return git_common_path("worktrees/%s", wt->id);
+@@ -5,6 +5,8 @@
+ #include "dir.h"
+ #include "wt-status.h"
+=20
++static const char *lock_field_uninitialized =3D "value is not importan=
+t";
++
+ void free_worktrees(struct worktree **worktrees)
+ {
+ 	int i =3D 0;
+@@ -13,6 +15,8 @@ void free_worktrees(struct worktree **worktrees)
+ 		free(worktrees[i]->path);
+ 		free(worktrees[i]->id);
+ 		free(worktrees[i]->head_ref);
++		if (worktrees[i]->lock_reason !=3D lock_field_uninitialized)
++			free(worktrees[i]->lock_reason);
+ 		free(worktrees[i]);
+ 	}
+ 	free (worktrees);
+@@ -98,6 +102,7 @@ static struct worktree *get_main_worktree(void)
+ 	worktree->is_detached =3D is_detached;
+ 	worktree->is_current =3D 0;
+ 	add_head_info(&head_ref, worktree);
++	worktree->lock_reason =3D (char *)lock_field_uninitialized;
+=20
+ done:
+ 	strbuf_release(&path);
+@@ -143,6 +148,7 @@ static struct worktree *get_linked_worktree(const c=
+har *id)
+ 	worktree->is_detached =3D is_detached;
+ 	worktree->is_current =3D 0;
+ 	add_head_info(&head_ref, worktree);
++	worktree->lock_reason =3D (char *)lock_field_uninitialized;
+=20
+ done:
+ 	strbuf_release(&path);
+@@ -234,6 +240,26 @@ int is_main_worktree(const struct worktree *wt)
+ 	return !wt->id;
  }
 =20
-+struct worktree *find_worktree(struct worktree **list,
-+			       const char *prefix,
-+			       const char *arg)
++const char *is_worktree_locked(struct worktree *wt)
 +{
-+	char *path;
++	if (wt->lock_reason =3D=3D lock_field_uninitialized) {
++		struct strbuf path =3D STRBUF_INIT;
 +
-+	arg =3D prefix_filename(prefix, strlen(prefix), arg);
-+	path =3D xstrdup(real_path(arg));
-+	for (; *list; list++)
-+		if (!fspathcmp(path, real_path((*list)->path)))
-+			break;
-+	free(path);
-+	return *list;
++		strbuf_addstr(&path, worktree_git_path(wt, "locked"));
++		if (file_exists(path.buf)) {
++			struct strbuf lock_reason =3D STRBUF_INIT;
++			if (strbuf_read_file(&lock_reason, path.buf, 0) < 0)
++				die_errno(_("failed to read '%s'"), path.buf);
++			strbuf_trim(&lock_reason);
++			wt->lock_reason =3D strbuf_detach(&lock_reason, NULL);
++		} else
++			wt->lock_reason =3D NULL;
++		strbuf_release(&path);
++	}
++
++	return wt->lock_reason;
 +}
 +
  int is_worktree_being_rebased(const struct worktree *wt,
  			      const char *target)
  {
 diff --git a/worktree.h b/worktree.h
-index 1394909..7ad15da 100644
+index e1c4715..263b61d 100644
 --- a/worktree.h
 +++ b/worktree.h
-@@ -29,6 +29,14 @@ extern struct worktree **get_worktrees(void);
+@@ -5,6 +5,7 @@ struct worktree {
+ 	char *path;
+ 	char *id;
+ 	char *head_ref;
++	char *lock_reason;	/* internal use */
+ 	unsigned char head_sha1[20];
+ 	int is_detached;
+ 	int is_bare;
+@@ -42,6 +43,12 @@ extern struct worktree *find_worktree(struct worktre=
+e **list,
   */
- extern const char *get_worktree_git_dir(const struct worktree *wt);
+ extern int is_main_worktree(const struct worktree *wt);
 =20
 +/*
-+ * Search a worktree that can be unambiguously identified by
-+ * "arg". "prefix" must not be NULL.
++ * Return the reason string if the given worktree is locked or NULL
++ * otherwise.
 + */
-+extern struct worktree *find_worktree(struct worktree **list,
-+				      const char *prefix,
-+				      const char *arg);
++extern const char *is_worktree_locked(struct worktree *wt);
 +
  /*
   * Free up the memory for worktree(s)
