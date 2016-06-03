@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 06/13] get_ref_cache(): only create an instance if there is a submodule
-Date: Fri,  3 Jun 2016 14:33:46 +0200
-Message-ID: <3d6c93bd7907f3e6c34787a47b1d75c5cca52a1b.1464957077.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 03/13] refs: use name "prefix" consistently
+Date: Fri,  3 Jun 2016 14:33:43 +0200
+Message-ID: <dbe2c569a5cd2b91fd6d51f99dcbfe9385f98ad4.1464957077.git.mhagger@alum.mit.edu>
 References: <cover.1464957077.git.mhagger@alum.mit.edu>
 Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
@@ -11,122 +11,174 @@ Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>,
 	David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Jun 03 14:34:28 2016
+X-From: git-owner@vger.kernel.org Fri Jun 03 14:34:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8oIv-0005Ac-9g
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 14:34:21 +0200
+	id 1b8oIt-0005Ac-N9
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 14:34:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932426AbcFCMeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 08:34:13 -0400
+	id S932351AbcFCMeK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 08:34:10 -0400
 Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:45414 "EHLO
 	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932360AbcFCMeM (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 08:34:12 -0400
-X-AuditID: 12074414-63fff700000008e6-5b-575179437d38
+	by vger.kernel.org with ESMTP id S932263AbcFCMeH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 08:34:07 -0400
+X-AuditID: 12074414-63fff700000008e6-4f-5751793d7675
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 59.8C.02278.34971575; Fri,  3 Jun 2016 08:34:11 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id F7.8C.02278.D3971575; Fri,  3 Jun 2016 08:34:05 -0400 (EDT)
 Received: from michael.fritz.box (p548D60E2.dip0.t-ipconnect.de [84.141.96.226])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u53CXtiq005761
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u53CXtin005761
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Fri, 3 Jun 2016 08:34:09 -0400
+	Fri, 3 Jun 2016 08:34:04 -0400
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <cover.1464957077.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHIsWRmVeSWpSXmKPExsUixO6iqOtcGRhu8LtPyWL+phOMFl1Xupks
-	GnqvMFvcXjGf2aJ7yltGix8tPcwWM69aW5x508jowOHx9/0HJo+ds+6yezzr3cPocfGSssf+
-	pdvYPBY/8PJY8Pw+u8fnTXIBHFHcNkmJJWXBmel5+nYJ3Bmvt81lKzggVHH/9naWBsYO/i5G
-	Tg4JAROJDS+OsXcxcnEICWxllHg4+zsbhHOcSeLB1D+sIFVsAroSi3qamUBsEYEIiYZXLYwg
-	RcwCc5gkbj/sZAZJCAtESRy738YIYrMIqEpceToRrJkXKP7w1zlGiHVyEpenP2ADsTkFLCT6
-	7v1gB7GFBMwlHs7ZzT6BkWcBI8MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0LvdzMEr3UlNJN
-	jJCwE9nBeOSk3CFGAQ5GJR7eFQsCwoVYE8uKK3MPMUpyMCmJ8p4/CxTiS8pPqcxILM6ILyrN
-	SS0+xCjBwawkwvunIDBciDclsbIqtSgfJiXNwaIkzvttsbqfkEB6YklqdmpqQWoRTFaGg0NJ
-	gte8AqhRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhQF8cXAOABJ8QDtrQBp5y0u
-	SMwFikK0nmJUlBLnFQZJCIAkMkrz4MbCkskrRnGgL4V5w8qBqniAiQiu+xXQYCagwQWP/EEG
-	lyQipKQaGLvt73jWOfU8lLjD+GZK6c0zRuERTjxJatUzz6T3G2ldibGRUQsW2mGwIMb1qo/S
-	8nnKbGVKgls4Eno05LUDsjvkIstnievnpEruXlTosc1xw8Oaw4wbly2PUPqx+Mur 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNIsWRmVeSWpSXmKPExsUixO6iqGtbGRhucP2MjsX8TScYLbqudDNZ
+	NPReYba4vWI+s0X3lLeMFj9aepgtZl61tjjzppHRgcPj7/sPTB47Z91l93jWu4fR4+IlZY/9
+	S7exeSx+4OWx4Pl9do/Pm+QCOKK4bZISS8qCM9Pz9O0SuDM6d3kWzFSr+H4wr4GxR76LkYND
+	QsBE4vYO7i5GLg4hga2MEg3HGlghnONMEm9P3gRyODnYBHQlFvU0M4HYIgIREg2vWhhBipgF
+	5jBJ3H7YyQySEBawk+h6dowdxGYRUJXYc+I9I4jNKxAlsfvDFRYQW0JATuLy9AdsIDangIVE
+	370fYPVCAuYSD+fsZp/AyLOAkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka6FXm5miV5qSukm
+	RkjAiexgPHJS7hCjAAejEg/vigUB4UKsiWXFlbmHGCU5mJREec+fBQrxJeWnVGYkFmfEF5Xm
+	pBYfYpTgYFYS4f1TEBguxJuSWFmVWpQPk5LmYFES5/22WN1PSCA9sSQ1OzW1ILUIJivDwaEk
+	wWteAdQoWJSanlqRlplTgpBm4uAEGc4lJVKcmpeSWpRYWpIRDwr/+GJgBICkeID2VoC08xYX
+	JOYCRSFaTzEqSonzCoMkBEASGaV5cGNhaeQVozjQl8K8YeVAVTzAFATX/QpoMBPQ4IJH/iCD
+	SxIRUlINjKo6nhvav9VOZO3PZqmv/3FldmSUmGusVKF6vImj/dvDHVdlj8ysCZ7nErUkQt10
+	3nHz+W8d+rViku1TU3fYzF85K+jM6olPwmb8P2wj3pNx9MnXeu4XU59oGPy+aeo7 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296318>
 
-If there is not a nonbare repository where a submodule is supposedly
-located, then don't instantiate a ref_cache for it.
-
-The analogous check can be removed from resolve_gitlink_ref().
+In the context of the for_each_ref() functions, call the prefix that
+references must start with "prefix". (In some places it was called
+"base".) This is clearer, and also prevents confusion with another
+planned use of the word "base".
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 33 ++++++++++++++++++++++-----------
- 1 file changed, 22 insertions(+), 11 deletions(-)
+ refs/files-backend.c | 24 ++++++++++++------------
+ refs/refs-internal.h | 14 +++++++-------
+ 2 files changed, 19 insertions(+), 19 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index a0d09f4..142c977 100644
+index 68db3e8..5af7441 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -954,15 +954,26 @@ static struct ref_cache *lookup_ref_cache(const char *submodule)
+@@ -542,7 +542,7 @@ static struct ref_entry *current_ref;
+ typedef int each_ref_entry_fn(struct ref_entry *entry, void *cb_data);
+ 
+ struct ref_entry_cb {
+-	const char *base;
++	const char *prefix;
+ 	int trim;
+ 	int flags;
+ 	each_ref_fn *fn;
+@@ -559,7 +559,7 @@ static int do_one_ref(struct ref_entry *entry, void *cb_data)
+ 	struct ref_entry *old_current_ref;
+ 	int retval;
+ 
+-	if (!starts_with(entry->name, data->base))
++	if (!starts_with(entry->name, data->prefix))
+ 		return 0;
+ 
+ 	if (!(data->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
+@@ -1824,12 +1824,12 @@ int peel_ref(const char *refname, unsigned char *sha1)
  
  /*
-  * Return a pointer to a ref_cache for the specified submodule. For
-- * the main repository, use submodule==NULL. The returned structure
-- * will be allocated and initialized but not necessarily populated; it
-- * should not be freed.
-+ * the main repository, use submodule==NULL; such a call cannot fail.
-+ * For a submodule, the submodule must exist and be a nonbare
-+ * repository, otherwise return NULL.
-+ *
-+ * The returned structure will be allocated and initialized but not
-+ * necessarily populated; it should not be freed.
+  * Call fn for each reference in the specified ref_cache, omitting
+- * references not in the containing_dir of base.  fn is called for all
+- * references, including broken ones.  If fn ever returns a non-zero
++ * references not in the containing_dir of prefix. Call fn for all
++ * references, including broken ones. If fn ever returns a non-zero
+  * value, stop the iteration and return that value; otherwise, return
+  * 0.
   */
- static struct ref_cache *get_ref_cache(const char *submodule)
+-static int do_for_each_entry(struct ref_cache *refs, const char *base,
++static int do_for_each_entry(struct ref_cache *refs, const char *prefix,
+ 			     each_ref_entry_fn fn, void *cb_data)
  {
- 	struct ref_cache *refs = lookup_ref_cache(submodule);
--	if (!refs)
--		refs = create_ref_cache(submodule);
-+
-+	if (!refs) {
-+		struct strbuf submodule_sb = STRBUF_INIT;
-+
-+		strbuf_addstr(&submodule_sb, submodule);
-+		if (is_nonbare_repository_dir(&submodule_sb))
-+			refs = create_ref_cache(submodule);
-+		strbuf_release(&submodule_sb);
-+	}
-+
- 	return refs;
+ 	struct packed_ref_cache *packed_ref_cache;
+@@ -1846,8 +1846,8 @@ static int do_for_each_entry(struct ref_cache *refs, const char *base,
+ 	 * disk.
+ 	 */
+ 	loose_dir = get_loose_refs(refs);
+-	if (base && *base) {
+-		loose_dir = find_containing_dir(loose_dir, base, 0);
++	if (prefix && *prefix) {
++		loose_dir = find_containing_dir(loose_dir, prefix, 0);
+ 	}
+ 	if (loose_dir)
+ 		prime_ref_dir(loose_dir);
+@@ -1855,8 +1855,8 @@ static int do_for_each_entry(struct ref_cache *refs, const char *base,
+ 	packed_ref_cache = get_packed_ref_cache(refs);
+ 	acquire_packed_ref_cache(packed_ref_cache);
+ 	packed_dir = get_packed_ref_dir(packed_ref_cache);
+-	if (base && *base) {
+-		packed_dir = find_containing_dir(packed_dir, base, 0);
++	if (prefix && *prefix) {
++		packed_dir = find_containing_dir(packed_dir, prefix, 0);
+ 	}
+ 
+ 	if (packed_dir && loose_dir) {
+@@ -1878,14 +1878,14 @@ static int do_for_each_entry(struct ref_cache *refs, const char *base,
+ 	return retval;
  }
  
-@@ -1341,13 +1352,10 @@ int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sh
- 		return -1;
- 
- 	strbuf_add(&submodule, path, len);
--	refs = lookup_ref_cache(submodule.buf);
-+	refs = get_ref_cache(submodule.buf);
- 	if (!refs) {
--		if (!is_nonbare_repository_dir(&submodule)) {
--			strbuf_release(&submodule);
--			return -1;
--		}
--		refs = create_ref_cache(submodule.buf);
-+		strbuf_release(&submodule);
-+		return -1;
- 	}
- 	strbuf_release(&submodule);
- 
-@@ -1885,6 +1893,9 @@ int do_for_each_ref(const char *submodule, const char *prefix,
+-int do_for_each_ref(const char *submodule, const char *base,
++int do_for_each_ref(const char *submodule, const char *prefix,
+ 		    each_ref_fn fn, int trim, int flags, void *cb_data)
+ {
+ 	struct ref_entry_cb data;
  	struct ref_cache *refs;
  
  	refs = get_ref_cache(submodule);
-+	if (!refs)
-+		return 0;
-+
- 	data.prefix = prefix;
+-	data.base = base;
++	data.prefix = prefix;
  	data.trim = trim;
  	data.flags = flags;
+ 	data.fn = fn;
+@@ -1896,7 +1896,7 @@ int do_for_each_ref(const char *submodule, const char *base,
+ 	if (ref_paranoia)
+ 		data.flags |= DO_FOR_EACH_INCLUDE_BROKEN;
+ 
+-	return do_for_each_entry(refs, base, do_one_ref, &data);
++	return do_for_each_entry(refs, prefix, do_one_ref, &data);
+ }
+ 
+ /*
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index b4dd545..8ad02d8 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -250,16 +250,16 @@ int rename_ref_available(const char *oldname, const char *newname);
+ 
+ /*
+  * Call fn for each reference in the specified submodule for which the
+- * refname begins with base. If trim is non-zero, then trim that many
+- * characters off the beginning of each refname before passing the
+- * refname to fn. flags can be DO_FOR_EACH_INCLUDE_BROKEN to include
+- * broken references in the iteration. If fn ever returns a non-zero
+- * value, stop the iteration and return that value; otherwise, return
+- * 0.
++ * refname begins with prefix. If trim is non-zero, then trim that
++ * many characters off the beginning of each refname before passing
++ * the refname to fn. flags can be DO_FOR_EACH_INCLUDE_BROKEN to
++ * include broken references in the iteration. If fn ever returns a
++ * non-zero value, stop the iteration and return that value;
++ * otherwise, return 0.
+  *
+  * This is the common backend for the for_each_*ref* functions.
+  */
+-int do_for_each_ref(const char *submodule, const char *base,
++int do_for_each_ref(const char *submodule, const char *prefix,
+ 		    each_ref_fn fn, int trim, int flags, void *cb_data);
+ 
+ /*
 -- 
 2.8.1
