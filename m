@@ -1,71 +1,134 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 0/2] corner cases with "rev-list --use-bitmap-index -n"
-Date: Fri, 3 Jun 2016 03:06:49 -0400
-Message-ID: <20160603070649.GA24120@sigill.intra.peff.net>
-References: <20160602230925.GA11196@sigill.intra.peff.net>
- <20160602231031.GA11247@sigill.intra.peff.net>
+Subject: [PATCH v2 1/2] rev-list: "adjust" results of "--count
+ --use-bitmap-index -n"
+Date: Fri, 3 Jun 2016 03:07:34 -0400
+Message-ID: <20160603070733.GA29852@sigill.intra.peff.net>
+References: <20160603070649.GA24120@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 03 09:07:10 2016
+X-From: git-owner@vger.kernel.org Fri Jun 03 09:07:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8jCG-000322-BF
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 09:07:08 +0200
+	id 1b8jCn-0003TQ-GI
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 09:07:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751977AbcFCHGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 03:06:54 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48241 "HELO cloud.peff.net"
+	id S1751986AbcFCHHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 03:07:37 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48244 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751348AbcFCHGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2016 03:06:53 -0400
-Received: (qmail 29360 invoked by uid 102); 3 Jun 2016 07:06:52 -0000
+	id S1751377AbcFCHHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 03:07:37 -0400
+Received: (qmail 29366 invoked by uid 102); 3 Jun 2016 07:07:37 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jun 2016 03:06:52 -0400
-Received: (qmail 18263 invoked by uid 107); 3 Jun 2016 07:07:00 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jun 2016 03:07:37 -0400
+Received: (qmail 18292 invoked by uid 107); 3 Jun 2016 07:07:44 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jun 2016 03:07:00 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Jun 2016 03:06:49 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jun 2016 03:07:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Jun 2016 03:07:34 -0400
 Content-Disposition: inline
-In-Reply-To: <20160602231031.GA11247@sigill.intra.peff.net>
+In-Reply-To: <20160603070649.GA24120@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296273>
 
-On Thu, Jun 02, 2016 at 07:10:31PM -0400, Jeff King wrote:
+If you ask rev-list for:
 
-> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-> index 275da0d..aaa79a3 100644
-> --- a/builtin/rev-list.c
-> +++ b/builtin/rev-list.c
-> @@ -360,6 +360,8 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
->  			uint32_t commit_count;
->  			if (!prepare_bitmap_walk(&revs)) {
->  				count_bitmap_commit_list(&commit_count, NULL, NULL, NULL);
-> +				if (revs.max_count && revs.max_count < commit_count)
-> +					commit_count = revs.max_count;
+    git rev-list --count --use-bitmap-index HEAD
 
-...aaaaand this patch is totally wrong. For one thing, the "not set"
-sentinel value for max_count is "-1", not "0", so it didn't kick in for
-"-n0".
+we optimize out the actual traversal and just give you the
+number of bits set in the commit bitmap. This is faster,
+which is good.
 
-And for another, any fallback traversal will actually decrement
-revs.max_count, so we have to save the value before traversing.
+But if you ask to limit the size of the traversal, like:
 
-And as luck would have it, those two bugs cancel each other out in many
-cases (including the ones in the test suite!). If you pass "-n1", gets
-decremented to "0".  That would give us a bogus adjustment, but instead
-we decide that "0" means no adjustement is necessary, and return the
-number of commits we traversed, which is the right answer as long as we
-didn't hit any bitmaps on the way down (or we hit one right away, in
-which case we didn't decrement at all).
+    git rev-list --count --use-bitmap-index -n 100 HEAD
 
-Updated patches in a moment (the second has the same sentinel problem,
-too).
+we'll still output the full bitmapped number we found. On
+the surface, that might even seem OK. You explicitly asked
+to use the bitmap index, and it was cheap to compute the
+real answer, so we gave it to you.
 
--Peff
+But there's something much more complicated going on under
+the hood. If we don't have a bitmap directly for HEAD, then
+we have to actually traverse backwards, looking for a
+bitmapped commit. And _that_ traversal is bounded by our
+`-n` count.
+
+This is a good thing, because it bounds the work we have to
+do, which is probably what the user wanted by asking for
+`-n`. But now it makes the output quite confusing. You might
+get many values:
+
+  - your `-n` value, if we walked back and never found a
+    bitmap (or fewer if there weren't that many commits)
+
+  - the actual full count, if we found a bitmap root for
+    every path of our traversal with in the `-n` limit
+
+  - any number in between! We might have walked back and
+    found _some_ bitmaps, but then cut off the traversal
+    early with some commits not accounted for in the result.
+
+So you cannot even see a value higher than your `-n` and say
+"OK, bitmaps kicked in, this must be the real full count".
+The only sane thing is for git to just clamp the value to a
+maximum of the `-n` value, which means we should output the
+exact same results whether bitmaps are in use or not.
+
+The test in t5310 demonstrates this by using `-n 1`.
+Without this patch we fail in the full-bitmap case (where we
+do not have to traverse at all) but _not_ in the
+partial-bitmap case (where we have to walk down to find an
+actual bitmap). With this patch, both cases just work.
+
+I didn't implement the crazy in-between case, just because
+it's complicated to set up, and is really a subset of the
+full-count case, which we do cover.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/rev-list.c      | 3 +++
+ t/t5310-pack-bitmaps.sh | 6 ++++++
+ 2 files changed, 9 insertions(+)
+
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 275da0d..b29f8fc 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -358,8 +358,11 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	if (use_bitmap_index && !revs.prune) {
+ 		if (revs.count && !revs.left_right && !revs.cherry_mark) {
+ 			uint32_t commit_count;
++			int max_count = revs.max_count;
+ 			if (!prepare_bitmap_walk(&revs)) {
+ 				count_bitmap_commit_list(&commit_count, NULL, NULL, NULL);
++				if (max_count >= 0 && max_count < commit_count)
++					commit_count = max_count;
+ 				printf("%d\n", commit_count);
+ 				return 0;
+ 			}
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index d446706..3893afd 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -47,6 +47,12 @@ rev_list_tests() {
+ 		test_cmp expect actual
+ 	'
+ 
++	test_expect_success "counting commits with limit ($state)" '
++		git rev-list --count -n 1 HEAD >expect &&
++		git rev-list --use-bitmap-index --count -n 1 HEAD >actual &&
++		test_cmp expect actual
++	'
++
+ 	test_expect_success "counting non-linear history ($state)" '
+ 		git rev-list --count other...master >expect &&
+ 		git rev-list --use-bitmap-index --count other...master >actual &&
+-- 
+2.9.0.rc1.132.g33c7f30
