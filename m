@@ -1,133 +1,79 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH 01/10] builtin/commit.c: convert trivial snprintf calls to
- xsnprintf
-Date: Fri, 3 Jun 2016 16:25:28 +0100
-Message-ID: <5751A168.7020408@ramsayjones.plus.com>
-References: <20160603074724.12173-1-gitter.spiros@gmail.com>
- <20160603084917.GA28401@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/6] worktree.c: find_worktree() learns to identify worktrees by basename
+Date: Fri, 03 Jun 2016 08:30:30 -0700
+Message-ID: <xmqqoa7iqoh5.fsf@gitster.mtv.corp.google.com>
+References: <20160522104341.656-1-pclouds@gmail.com>
+	<20160530104939.28407-1-pclouds@gmail.com>
+	<20160530104939.28407-3-pclouds@gmail.com>
+	<xmqqh9de5d6e.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8CmdTapWsst-PuwFNH8Uy3Vgow+fKWzQ+tGYPSc=aZsXg@mail.gmail.com>
+	<xmqqr3cgycjl.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8B+j2im7XOV==tBtki=tOCN4k3ZHz6Jp4fq4qjqarb+ew@mail.gmail.com>
+	<xmqqfusvv8lq.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8BF_KKXdMNW_aOs522wBbW9BQhbrZ_0hx+f2MCW-VPUzg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 03 17:25:42 2016
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Reto =?utf-8?Q?Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
+	Mike Rappazzo <rappazzo@gmail.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 03 17:30:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8qyg-0001Tn-3O
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 17:25:38 +0200
+	id 1b8r3Z-0005he-5b
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 17:30:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753028AbcFCPZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 11:25:34 -0400
-Received: from avasout01.plus.net ([84.93.230.227]:49367 "EHLO
-	avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751147AbcFCPZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2016 11:25:33 -0400
-Received: from [10.0.2.15] ([84.92.139.254])
-	by avasout01 with smtp
-	id 2FRV1t0025VX2mk01FRWZg; Fri, 03 Jun 2016 16:25:30 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=bsGxfxui c=1 sm=1 tr=0
- a=RCQFcU9wfaUQolwYLdiqXg==:117 a=RCQFcU9wfaUQolwYLdiqXg==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=gl6NWmOIULTmcyt9l8kA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-In-Reply-To: <20160603084917.GA28401@sigill.intra.peff.net>
+	id S932319AbcFCPag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 11:30:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61102 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751384AbcFCPae (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 11:30:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B814F1F31A;
+	Fri,  3 Jun 2016 11:30:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uhqrMiAD9Un5nGfcIsQb0x3CnN8=; b=kHy11C
+	+2oev0sCZHU03Q+IPFTq5O34HH/9Y4+xCqJw8j3tzNcrGRl0R5TLq0BGjzUocUWJ
+	PodvDuy3sKzA10OFLtQoTOeqtnJaaMQsANnl5O3YPBlxUBAypX82f362hc7+6njG
+	ZNopu1s/LxQY2NKBAUdsW4etis7yKMRyqloxI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YmJUm+dQJ/d2ghmUu5YmUmusMx9FqMZR
+	+cXLok4EXOb8U89Dh5KFvrTx9kU6zH0O4ansUzzNbBeoN3Rt2f4y5w9FQFsk8NPg
+	9GJsWsCoyp0dRyGHRmWgPzDCdiIxRNF1tWOxBveaQfSmsThS2d75OE8TVZFRfyJM
+	54TBdPbetpc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B00311F319;
+	Fri,  3 Jun 2016 11:30:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3F0391F318;
+	Fri,  3 Jun 2016 11:30:32 -0400 (EDT)
+In-Reply-To: <CACsJy8BF_KKXdMNW_aOs522wBbW9BQhbrZ_0hx+f2MCW-VPUzg@mail.gmail.com>
+	(Duy Nguyen's message of "Fri, 3 Jun 2016 18:11:29 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1C010FA4-29A0-11E6-8CC0-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296336>
 
+Duy Nguyen <pclouds@gmail.com> writes:
 
+> basename() does (or I think so because Windows has its own version).
+> worktree->path always uses '/' but the command line option can come
+> with either '/' or '\'. Probably safest to accept both.
 
-On 03/06/16 09:49, Jeff King wrote:
-> On Fri, Jun 03, 2016 at 07:47:15AM +0000, Elia Pinto wrote:
-> 
-[snip]
+OK.  Going beyond basename() was merely "This might be an easy
+nice-to-have enhancement", not "basename() is not sufficient because
+of such and such issues", so the patch is fine as-is.
 
-> For this particular change:
-> 
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index 443ff91..c65abaa 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -1552,7 +1552,7 @@ static int run_rewrite_hook(const unsigned char *oldsha1,
->>  	code = start_command(&proc);
->>  	if (code)
->>  		return code;
->> -	n = snprintf(buf, sizeof(buf), "%s %s\n",
->> +	n = xsnprintf(buf, sizeof(buf), "%s %s\n",
->>  		     sha1_to_hex(oldsha1), sha1_to_hex(newsha1));
-> 
-> I think it's the first type, as earlier we have:
-> 
-> 	/* oldsha1 SP newsha1 LF NUL */
-> 	static char buf[2*40 + 3];
-> 
-> So unless that calculation is wrong, this would never truncate. The move
-> to xsnprintf is an improvement, 
-
-I was going to suggest, if we stay with the static buffer, that the size
-expression be changed to '2 * GIT_SHA1_HEXSZ + 3'. However, ...
-
->                                  but I wonder if we would be happier
-> still with:
-> 
->   buf = xstrfmt("%s %s\n", sha1_to_hex(oldsha1), sha1_to_hex(newsha1));
-> 
-> Then we do not even have to wonder about the size computation. True, it
-> uses a heap buffer when we do not need to, but I find it hard to care
-> about grabbing 80 bytes of heap when we are in the midst of exec-ing an
-> entirely new process.
-
-... I agree with this also.
-
-> 
-> By the way, there are some other uses of snprintf in the same file, that
-> I think would fall into the type 2 I mentioned above (they use PATH_MAX,
-> which I think is shorter than necessary on some systems).
-> 
-> Those ones would also benefit from using higher-level constructs. Like:
-> 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 443ff91..9336724 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1563,24 +1563,23 @@ static int run_rewrite_hook(const unsigned char *oldsha1,
->  
->  int run_commit_hook(int editor_is_used, const char *index_file, const char *name, ...)
->  {
-> -	const char *hook_env[3] =  { NULL };
-> -	char index[PATH_MAX];
-> +	struct argv_array hook_env = ARGV_ARRAY_INIT;
->  	va_list args;
->  	int ret;
->  
-> -	snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", index_file);
-> -	hook_env[0] = index;
-> +	argv_array_pushf(&hook_env, "GIT_INDEX_FILE=%s", index_file);
->  
->  	/*
->  	 * Let the hook know that no editor will be launched.
->  	 */
->  	if (!editor_is_used)
-> -		hook_env[1] = "GIT_EDITOR=:";
-> +		argv_array_push(&hook_env, "GIT_EDITOR=:");
->  
->  	va_start(args, name);
->  	ret = run_hook_ve(hook_env, name, args);
->  	va_end(args);
->  
-> +	argv_array_clear(&hook_env);
->  	return ret;
->  }
-
-Indeed.
-
-ATB,
-Ramsay Jones
+Thanks.
