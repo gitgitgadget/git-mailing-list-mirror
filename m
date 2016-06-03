@@ -1,8 +1,10 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 34/38] refs: add method for delete_refs
-Date: Fri,  3 Jun 2016 23:04:09 +0200
-Message-ID: <17da5760ac671c98811cc5a3ec46a61f8261d8d9.1464983301.git.mhagger@alum.mit.edu>
-References: <cover.1464983301.git.mhagger@alum.mit.edu>
+Subject: [PATCH 00/38] Virtualization of the refs API
+Date: Fri,  3 Jun 2016 23:03:35 +0200
+Message-ID: <cover.1464983301.git.mhagger@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>,
@@ -11,133 +13,169 @@ Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>,
 	David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Jun 03 23:07:16 2016
+X-From: git-owner@vger.kernel.org Fri Jun 03 23:07:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8wJ2-00025e-GC
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 23:07:00 +0200
+	id 1b8wJE-0002Gf-Oz
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 23:07:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932787AbcFCVGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 17:06:32 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:61312 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932946AbcFCVF1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 17:05:27 -0400
-X-AuditID: 1207440c-c3fff70000000b85-22-5751f1174cd7
+	id S932907AbcFCVHI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Jun 2016 17:07:08 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:47035 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932807AbcFCVE1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 17:04:27 -0400
+X-AuditID: 1207440d-bc7ff7000000090b-ad-5751f0d72226
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id C4.65.02949.711F1575; Fri,  3 Jun 2016 17:05:27 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id D0.32.02315.7D0F1575; Fri,  3 Jun 2016 17:04:24 -0400 (EDT)
 Received: from michael.fritz.box (p548D60E2.dip0.t-ipconnect.de [84.141.96.226])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u53L4Kd0003260
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u53L4KcQ003260
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Fri, 3 Jun 2016 17:05:25 -0400
+	Fri, 3 Jun 2016 17:04:21 -0400
 X-Mailer: git-send-email 2.8.1
-In-Reply-To: <cover.1464983301.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHIsWRmVeSWpSXmKPExsUixO6iqCv+MTDc4OpBQYv5m04wWnRd6Way
-	aOi9wmxxe8V8ZovuKW8ZLX609DBbzLxqbXHmTSOjA4fH3/cfmDx2zrrL7vGsdw+jx8VLyh77
-	l25j81j8wMtjwfP77B6fN8kFcERx2yQllpQFZ6bn6dslcGf8OT2FqeCUeMWO5jWsDYybhLsY
-	OTkkBEwkdkxsZ+pi5OIQEtjKKDHnfyszhHOcSWLenpssIFVsAroSi3qamUBsEYEIiYZXLYwg
-	RcwCc5gkbj/sZAZJCAuYS7T/WQNWxCKgKtHa+gOsmVcgSmLesauMEOvkJC5Pf8AGYnMKWEi0
-	fF7FCmILAfU2njrMMoGRZwEjwypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXUO93MwSvdSU0k2M
-	kLDj2cH4bZ3MIUYBDkYlHt6CZ4HhQqyJZcWVuYcYJTmYlER5994BCvEl5adUZiQWZ8QXleak
-	Fh9ilOBgVhLhTXkNlONNSaysSi3Kh0lJc7AoifOqLlH3ExJITyxJzU5NLUgtgsnKcHAoSfAu
-	eg/UKFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+KgvhiYByApHiA9p4DaectLkjM
-	BYpCtJ5iVJQS5z0EkhAASWSU5sGNhSWTV4ziQF8K894GqeIBJiK47ldAg5mABhc88gcZXJKI
-	kJJqYCzMvSpc7n7T8lKuiAzT7ZMv0xKlb3TaegdNLz6W4n9BdNY917nfJ1zPvmfV9dkgftqG
-	rg9N57/fuvUszZ9Lj/XiuegZz9bYf3oYtyz79+HajIOHNjtv367yyGvDk7nNCyNU 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqHvjQ2C4wYV/LBbzN51gtOi60s1k
+	0dB7hdni9or5zBbdU94yWvxo6WG2mHnV2uLMm0ZGBw6Pv+8/MHnsnHWX3eNZ7x5Gj4uXlD32
+	L93G5rH4gZfHguf32T0+b5IL4IjitklKLCkLzkzP07dL4M7Yd/8te0GjTsWcM/wNjKtUuhg5
+	OSQETCTev3zF1MXIxSEksJVRYveqp4wQznEmiY9X97KCVLEJ6Eos6mlmArFFBCIkGl61gBUx
+	C8xhkrj9sJMZJCEsYCpx8VIrG4jNIqAq8WXFNHYQm1fAXOL0zYuMEOvkJC5Pf8AGEReUODnz
+	CUsXIwfQIHWJ9fOEQMLMAvISzVtnM09g5J2FpGoWQtUsJFULGJlXMcol5pTm6uYmZuYUpybr
+	Ficn5uWlFuka6eVmluilppRuYoQENO8Oxv/rZA4xCnAwKvHwnngRGC7EmlhWXJl7iFGSg0lJ
+	lHfvHaAQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd6U10A53pTEyqrUonyYlDQHi5I4r9oSdT8h
+	gfTEktTs1NSC1CKYrAwHh5IE76L3QI2CRanpqRVpmTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnx
+	oPiKLwZGGEiKB2jvOZB23uKCxFygKETrKUZFKXHeQyAJAZBERmke3FhYmnrFKA70pTDvbZAq
+	HmCKg+t+BTSYCWhwwSN/kMEliQgpqQbGnqXcPK+237pS3fTStH1+ykwG69ySgkaWfZ0HVxq3
+	PN23Q4q5ft95p7MZCutuVXobzs1pVLB4uCbYRMnD63E8++pK28W9tnzz3+8+P1M5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296409>
 
-From: David Turner <dturner@twopensource.com>
+Since the that ref-iterator [1] changes seem to have gotten a positive
+reception, let's try to keep up the momentum. I hope I'm not
+overloading the review pipeline...
 
-In the file-based backend, delete_refs has some special optimization
-to deal with packed refs.  In other backends, we might be able to make
-ref deletion faster by putting all deletions into a single
-transaction.  So we need a special backend function for this.
+I think all of the groundwork is in place now to virtualize the refs
+API. This will open the way to storing refs in ways other than the
+familiar loose refs / packed refs format, such as David Turner's
+proposed LMDB-based storage [2].
 
-Signed-off-by: David Turner <dturner@twopensource.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
-I think that we could get away without this method if we make
-ref_transactions a bit smarter (for example, by supporting best-effort
-updates that can fail without causing the entire transaction to be
-aborted). But that would be a significant detour, so let's leave it
-here for now.
+This is a long patch series, but most of the patches are pretty simple
+and formulaic. The goal is to implement a `ref_store`. In the language
+of object-oriented programming, `ref_store` is an abstract base class
+representing a reference storage backend. It provides methods to read,
+write, and delete references and symrefs, and to iterate over
+references, reflogs, and reflog entries, plus a number of other
+things=E2=80=9419 methods in all.
 
- refs.c               | 7 +++++++
- refs/files-backend.c | 6 ++++--
- refs/refs-internal.h | 3 +++
- 3 files changed, 14 insertions(+), 2 deletions(-)
+The one concrete implementation of this class is files_ref_store,
+which implements the traditional loose/packed refs scheme with
+caching. After this patch series, about the only things left in
+`refs/files-backend.c` with external linkage are vtables.
 
-diff --git a/refs.c b/refs.c
-index 6c1e899..8ab9862 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1529,3 +1529,10 @@ int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 
- 	return refs->be->initial_transaction_commit(refs, transaction, err);
- }
-+
-+int delete_refs(struct string_list *refnames, unsigned int flags)
-+{
-+	struct ref_store *refs = get_ref_store(NULL);
-+
-+	return refs->be->delete_refs(refs, refnames, flags);
-+}
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 253899f..5681141 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2455,10 +2455,11 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
- 	return 0;
- }
- 
--int delete_refs(struct string_list *refnames, unsigned int flags)
-+static int files_delete_refs(struct ref_store *ref_store,
-+			     struct string_list *refnames, unsigned int flags)
- {
- 	struct files_ref_store *refs =
--		get_files_ref_store(NULL, "delete_refs");
-+		files_downcast(ref_store, 0, "delete_refs");
- 	struct strbuf err = STRBUF_INIT;
- 	int i, result = 0;
- 
-@@ -4070,6 +4071,7 @@ struct ref_storage_be refs_be_files = {
- 	files_pack_refs,
- 	files_peel_ref,
- 	files_create_symref,
-+	files_delete_refs,
- 
- 	files_ref_iterator_begin,
- 	files_read_raw_ref,
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index e462b54..f944b7a 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -485,6 +485,8 @@ typedef int create_symref_fn(struct ref_store *ref_store,
- 			     const char *ref_target,
- 			     const char *refs_heads_master,
- 			     const char *logmsg);
-+typedef int delete_refs_fn(struct ref_store *ref_store,
-+			   struct string_list *refnames, unsigned int flags);
- 
- /*
-  * Iterate over the references in the specified ref_store that are
-@@ -582,6 +584,7 @@ struct ref_storage_be {
- 	pack_refs_fn *pack_refs;
- 	peel_ref_fn *peel_ref;
- 	create_symref_fn *create_symref;
-+	delete_refs_fn *delete_refs;
- 
- 	ref_iterator_begin_fn *iterator_begin;
- 	read_raw_ref_fn *read_raw_ref;
--- 
+On these 19 methods are built the refs API as used by the rest of Git.
+The OO interface is not exposed; instead, the OO implementation is
+wrapped in traditional C functions. In fact, this patch series doesn't
+change the existing public interface at all, and adds only two new
+functions!
+
+Somebody who wants to implement a new way to store references needs to
+implement a new class derived from `ref_store`, including its 19
+methods, plus one or two supporting ref_iterator classes, and wire it
+up to be instantiated when needed.
+
+This patch series opens up a lot of possibilities for improving the
+internal design of the files backend; I've described some of my plans
+in recent emails [3,4]. But that can be done separately; for now, the
+main point of this series is to clear the way for LMDB-based reference
+storage.
+
+This patch series owes a lot to Ronnie Sahlberg and David Turner, who
+wrote earlier drafts along the same basic lines. The current patch
+series differs from theirs in many details of where exactly to draw
+the line of abstraction. But the most important difference in my
+opinion is that this series allows multiple ref_stores of different
+types to coexist. I think this is important for the UI (for example,
+if somebody converts a submodule to use a different reference storage
+scheme than the umbrella repository uses), but also because it allows
+ref_stores to be compounded together internally to decrease the
+coupling between different parts of the system. I've tried to retain
+their authorship of any patches that are more or less recognizable
+from their versions (hopefully without introducing any bugs!) But the
+spirit of their versions permeates this patch series. Thanks a lot to
+both of you!
+
+This series applies on top of the "ref-iterator v2" series that I just
+submitted [1]. It can also be obtained from my GitHub repo [5] as
+branch "ref-store".
+
+Michael
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/296322
+[2] http://thread.gmane.org/gmane.comp.version-control.git/286572
+[3] http://thread.gmane.org/gmane.comp.version-control.git/295961/focus=
+=3D296096
+[4] http://thread.gmane.org/gmane.comp.version-control.git/295961/focus=
+=3D296186
+[5] https://github.com/mhagger/git
+
+David Turner (8):
+  rename_ref_available(): add docstring
+  refs: add methods for reflog
+  refs: add method for initial ref transaction commit
+  refs: add method for delete_refs
+  refs: add methods to init refs db
+  refs: add method to rename refs
+  refs: make lock generic
+  refs: implement iteration over only per-worktree refs
+
+Michael Haggerty (28):
+  resolve_gitlink_ref(): eliminate temporary variable
+  refs: rename struct ref_cache to files_ref_store
+  refs: create a base class "ref_store" for files_ref_store
+  add_packed_ref(): add a files_ref_store argument
+  get_packed_ref(): add a files_ref_store argument
+  resolve_missing_loose_ref(): add a files_ref_store argument
+  {lock,commit,rollback}_packed_refs(): add files_ref_store arguments
+  refs: reorder definitions
+  resolve_packed_ref(): rename function from resolve_missing_loose_ref(=
+)
+  resolve_gitlink_packed_ref(): remove function
+  read_raw_ref(): take a (struct ref_store *) argument
+  resolve_ref_recursively(): new function
+  resolve_gitlink_ref(): implement using resolve_ref_recursively()
+  resolve_gitlink_ref(): avoid memory allocation in many cases
+  resolve_gitlink_ref(): rename path parameter to submodule
+  refs: make read_raw_ref() virtual
+  refs: make verify_refname_available() virtual
+  refs: make pack_refs() virtual
+  refs: make create_symref() virtual
+  refs: make peel_ref() virtual
+  repack_without_refs(): add a files_ref_store argument
+  lock_raw_ref(): add a files_ref_store argument
+  commit_ref_update(): add a files_ref_store argument
+  lock_ref_for_update(): add a files_ref_store argument
+  lock_ref_sha1_basic(): add a files_ref_store argument
+  split_symref_update(): add a files_ref_store argument
+  files_ref_iterator_begin(): take a ref_store argument
+  refs: add method iterator_begin
+
+Ronnie Sahlberg (2):
+  refs: add a backend method structure
+  refs: add a transaction_commit() method
+
+ builtin/init-db.c    |  21 +-
+ refs.c               | 294 +++++++++++++++++++++++++-
+ refs.h               |  13 +-
+ refs/files-backend.c | 567 +++++++++++++++++++++++++++----------------=
+--------
+ refs/refs-internal.h | 213 +++++++++++++++++--
+ 5 files changed, 799 insertions(+), 309 deletions(-)
+
+--=20
 2.8.1
