@@ -1,142 +1,76 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v4 2/2] builtin/apply: move 'newfd' global into 'struct apply_state'
-Date: Fri,  3 Jun 2016 18:58:52 +0200
-Message-ID: <20160603165852.12399-2-chriscool@tuxfamily.org>
-References: <20160603165852.12399-1-chriscool@tuxfamily.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 03 19:11:32 2016
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/3] Better ref summary alignment in "git fetch"
+Date: Fri, 3 Jun 2016 13:00:58 -0400
+Message-ID: <20160603170058.GB1733@sigill.intra.peff.net>
+References: <20160522112019.26516-1-pclouds@gmail.com>
+ <20160603110843.15434-1-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 03 19:13:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8sRW-0002zE-Py
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 18:59:31 +0200
+	id 1b8sT6-0004a4-3I
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 19:01:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161087AbcFCQ7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 12:59:22 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35818 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161047AbcFCQ7U (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2016 12:59:20 -0400
-Received: by mail-wm0-f67.google.com with SMTP id e3so732692wme.2
-        for <git@vger.kernel.org>; Fri, 03 Jun 2016 09:59:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kairwbPkeJZ7Yprvgt9cqaHGY3b/tP0uC20yLzFy20o=;
-        b=DVD3GMjksr8XYIFYhIdvfm3zp5npZTgeuu8wiXF74Taawh6OOUXk+s+w8/Jc+SQKOX
-         7OyeVWTl8jRkyZ5vrwADGaV0wF3TuxXZyOn2K5YsTi6wyJIvwYB5n6j9NcKWT7rZZO9+
-         xGva+8gP/B1sCOwXEHAt3BiGWlaF6jMNVOqQvZLhPz4UDnEyDyFmo78A0oQRX5AwL70z
-         7W6BabTexc6sKxzmy6VzRPWIh+5LFLTPEx2dGZk+1/4jvLRdlP2Dx9N2MhTGARlTb6B+
-         jK8cWkj9v1IbMHtqH2R09zVkRT1EvQqEdYg2A9p9bf/zLjmDFYPHcqxAv2+NtUyjsUJW
-         4umg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=kairwbPkeJZ7Yprvgt9cqaHGY3b/tP0uC20yLzFy20o=;
-        b=LVmI+yyUGiKJYZ2jv0sTAqp2LI9A438rR4gXFkFUATJOfeG0lHhSKCJjokRrfXQtfP
-         8kZv1B90PEnDHasZpeQwlChMm1l9Ovha4/AgrpJSFKOKVXT3TdwNqu1bbwF3LqKKy1jt
-         x5uQgnQvLWeYISOc3SvQdxUbMN1DG5m+0oNhx8qPo8iHnQdw4u7A/CEQeV5Y8YSHgucZ
-         fEIYxRXao47fbJcJ3WlmfbAOxn1tZvvcM0AXBnd+wXmpm6asvlTYDC++bIEewPUAPWFJ
-         35iF75rF4CsAlcM30JmAzuig3Ee7tBjEnLJsbXSjRI593c9Szh+0F87JPpiOWox1c8s0
-         louA==
-X-Gm-Message-State: ALyK8tIermB3QBXZ2W1ivBZpdo7SwbvIIqP7euR9IIMLQ+78S1GBNJMlV4uNRAyKqwRGFQ==
-X-Received: by 10.194.105.34 with SMTP id gj2mr5024328wjb.154.1464973159331;
-        Fri, 03 Jun 2016 09:59:19 -0700 (PDT)
-Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id ug8sm6596659wjc.42.2016.06.03.09.59.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 03 Jun 2016 09:59:18 -0700 (PDT)
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.9.0.rc1.5.gfce4374
-In-Reply-To: <20160603165852.12399-1-chriscool@tuxfamily.org>
+	id S1752405AbcFCRBD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Jun 2016 13:01:03 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48634 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750994AbcFCRBC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 13:01:02 -0400
+Received: (qmail 23278 invoked by uid 102); 3 Jun 2016 17:01:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jun 2016 13:01:01 -0400
+Received: (qmail 23859 invoked by uid 107); 3 Jun 2016 17:01:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Jun 2016 13:01:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Jun 2016 13:00:58 -0400
+Content-Disposition: inline
+In-Reply-To: <20160603110843.15434-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296352>
 
-From: Christian Couder <christian.couder@gmail.com>
+On Fri, Jun 03, 2016 at 06:08:40PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
 
-To libify the apply functionality the 'newfd' variable should
-not be static and global to the file. Let's move it into
-'struct apply_state'.
+> v2 reformats "abc/common -> def/common" to "{abc -> def}/common"
+> instead and fall back to "a -> b" when they have nothing in commmon
+> (e.g. "HEAD -> FETCH_HEAD"). We could add an option if a user wants t=
+o
+> stick with "a -> b" (and we could do some alignment there as well) bu=
+t
+> it's not part of this series.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+I tried this on one of my nastiest long-branch-heavy repos. It really
+does look better than the status quo. I think it's nicer than the
+stair-stepping proposal in that it does get everything aligned
+perfectly, and reduces wasted data that spills off the side of my
+terminal.
 
-This is to replace:
+I do somehow find the:
 
-[PATCH v3 49/49] builtin/apply: move 'newfd' global into 'struct apply_state'
+  { -> origin}/whatever
 
-from the "libify apply and use lib in am, part 1" patch series.
+a little off-putting, I think because the "from" side is empty, and
+therefore you get this weird mix of punctuation: "{ ->". I wonder if
+there's another syntactic shorthand we could apply in that case
+(especially since it will easily be the most common), but I couldn't
+think of one.
 
-There is no change compared to the previous version except that this
-patch should apply cleanly on top of PATCH v4 1/2.
+> It's a shame that the flag '-' in these ref update lines is not the
+> same in fetch and push (see 1/3). Because git-fetch does not support
+> --porcelain option, maybe it's not too late to change its meaning... =
+=20
 
- builtin/apply.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+I'd agree with that final "maybe". :)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index cc635eb..7338ee6 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -57,6 +57,7 @@ struct apply_state {
- 	 * lock_file structures, it isn't safe to free(lock_file).
- 	 */
- 	struct lock_file *lock_file;
-+	int newfd;
- 
- 	/* These control what gets looked at and modified */
- 	int apply; /* this is not a dry-run */
-@@ -120,8 +121,6 @@ struct apply_state {
- 	int applied_after_fixing_ws;
- };
- 
--static int newfd = -1;
--
- static const char * const apply_usage[] = {
- 	N_("git apply [<options>] [<patch>...]"),
- 	NULL
-@@ -4552,8 +4551,8 @@ static int apply_patch(struct apply_state *state,
- 		state->apply = 0;
- 
- 	state->update_index = state->check_index && state->apply;
--	if (state->update_index && newfd < 0)
--		newfd = hold_locked_index(state->lock_file, 1);
-+	if (state->update_index && state->newfd < 0)
-+		state->newfd = hold_locked_index(state->lock_file, 1);
- 
- 	if (state->check_index) {
- 		if (read_cache() < 0)
-@@ -4662,6 +4661,7 @@ static void init_apply_state(struct apply_state *state,
- 	state->prefix = prefix;
- 	state->prefix_length = state->prefix ? strlen(state->prefix) : 0;
- 	state->lock_file = lock_file;
-+	state->newfd = -1;
- 	state->apply = 1;
- 	state->line_termination = '\n';
- 	state->p_value = 1;
-@@ -4782,6 +4782,7 @@ static int apply_all_patches(struct apply_state *state,
- 	if (state->update_index) {
- 		if (write_locked_index(&the_index, state->lock_file, COMMIT_LOCK))
- 			die(_("Unable to write new index file"));
-+		state->newfd = -1;
- 	}
- 
- 	return !!errs;
--- 
-2.8.2.444.g74f55c9.dirty
+-Peff
