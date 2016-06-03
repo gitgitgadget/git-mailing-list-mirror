@@ -1,79 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/6] worktree.c: find_worktree() learns to identify worktrees by basename
-Date: Fri, 03 Jun 2016 08:30:30 -0700
-Message-ID: <xmqqoa7iqoh5.fsf@gitster.mtv.corp.google.com>
-References: <20160522104341.656-1-pclouds@gmail.com>
-	<20160530104939.28407-1-pclouds@gmail.com>
-	<20160530104939.28407-3-pclouds@gmail.com>
-	<xmqqh9de5d6e.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8CmdTapWsst-PuwFNH8Uy3Vgow+fKWzQ+tGYPSc=aZsXg@mail.gmail.com>
-	<xmqqr3cgycjl.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8B+j2im7XOV==tBtki=tOCN4k3ZHz6Jp4fq4qjqarb+ew@mail.gmail.com>
-	<xmqqfusvv8lq.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8BF_KKXdMNW_aOs522wBbW9BQhbrZ_0hx+f2MCW-VPUzg@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH 02/10] builtin/index-pack.c: convert trivial snprintf
+ calls to xsnprintf
+Date: Fri, 3 Jun 2016 16:32:41 +0100
+Message-ID: <5751A319.1030806@ramsayjones.plus.com>
+References: <20160603074724.12173-1-gitter.spiros@gmail.com>
+ <20160603074724.12173-2-gitter.spiros@gmail.com>
+ <20160603085320.GC28401@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Reto =?utf-8?Q?Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
-	Mike Rappazzo <rappazzo@gmail.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 03 17:30:41 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>, Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 03 17:32:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8r3Z-0005he-5b
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 17:30:41 +0200
+	id 1b8r5e-0007aX-BC
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 17:32:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932319AbcFCPag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 11:30:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61102 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751384AbcFCPae (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2016 11:30:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B814F1F31A;
-	Fri,  3 Jun 2016 11:30:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uhqrMiAD9Un5nGfcIsQb0x3CnN8=; b=kHy11C
-	+2oev0sCZHU03Q+IPFTq5O34HH/9Y4+xCqJw8j3tzNcrGRl0R5TLq0BGjzUocUWJ
-	PodvDuy3sKzA10OFLtQoTOeqtnJaaMQsANnl5O3YPBlxUBAypX82f362hc7+6njG
-	ZNopu1s/LxQY2NKBAUdsW4etis7yKMRyqloxI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YmJUm+dQJ/d2ghmUu5YmUmusMx9FqMZR
-	+cXLok4EXOb8U89Dh5KFvrTx9kU6zH0O4ansUzzNbBeoN3Rt2f4y5w9FQFsk8NPg
-	9GJsWsCoyp0dRyGHRmWgPzDCdiIxRNF1tWOxBveaQfSmsThS2d75OE8TVZFRfyJM
-	54TBdPbetpc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B00311F319;
-	Fri,  3 Jun 2016 11:30:32 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3F0391F318;
-	Fri,  3 Jun 2016 11:30:32 -0400 (EDT)
-In-Reply-To: <CACsJy8BF_KKXdMNW_aOs522wBbW9BQhbrZ_0hx+f2MCW-VPUzg@mail.gmail.com>
-	(Duy Nguyen's message of "Fri, 3 Jun 2016 18:11:29 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1C010FA4-29A0-11E6-8CC0-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1752083AbcFCPcq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 11:32:46 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:52350 "EHLO
+	avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751384AbcFCPcp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 11:32:45 -0400
+Received: from [10.0.2.15] ([84.92.139.254])
+	by avasout01 with smtp
+	id 2FYh1t00L5VX2mk01FYjyJ; Fri, 03 Jun 2016 16:32:43 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=bsGxfxui c=1 sm=1 tr=0
+ a=RCQFcU9wfaUQolwYLdiqXg==:117 a=RCQFcU9wfaUQolwYLdiqXg==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=tHLVe309DjWccNNqqC0A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
+In-Reply-To: <20160603085320.GC28401@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296337>
 
-Duy Nguyen <pclouds@gmail.com> writes:
 
-> basename() does (or I think so because Windows has its own version).
-> worktree->path always uses '/' but the command line option can come
-> with either '/' or '\'. Probably safest to accept both.
 
-OK.  Going beyond basename() was merely "This might be an easy
-nice-to-have enhancement", not "basename() is not sufficient because
-of such and such issues", so the patch is fine as-is.
+On 03/06/16 09:53, Jeff King wrote:
+> On Fri, Jun 03, 2016 at 07:47:16AM +0000, Elia Pinto wrote:
+> 
+>> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+>> index e8c71fc..c032fe7 100644
+>> --- a/builtin/index-pack.c
+>> +++ b/builtin/index-pack.c
+>> @@ -1443,7 +1443,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+>>  		printf("%s\n", sha1_to_hex(sha1));
+>>  	} else {
+>>  		char buf[48];
+>> -		int len = snprintf(buf, sizeof(buf), "%s\t%s\n",
+>> +		int len = xsnprintf(buf, sizeof(buf), "%s\t%s\n",
+>>  				   report, sha1_to_hex(sha1));
+>>  		write_or_die(1, buf, len);
+> 
+> So it's pretty unclear here whether that 48 is big enough (it is, if you
+> read the whole function, because "report" is always a 4-char string).
+> Yuck. At least there should be a comment explaining why 48 is big
+> enough.
 
-Thanks.
+Agreed, again I would use something like:
+
+		char buf[GIT_SHA1_HEXSZ + 7]; /* 40 (sha1) + 4 (report) + 3 (\t\n\0) */
+
+(and yes yuck - is report ever likely to increase? "bitmap" perhaps?)
+
+ATB,
+Ramsay Jones
