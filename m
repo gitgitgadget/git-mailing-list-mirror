@@ -1,138 +1,92 @@
-From: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
-Subject: Re: [RFC/PATCH] Triangular Workflow UI improvement: Documentation
-Date: Fri, 3 Jun 2016 11:52:22 +0200
-Message-ID: <D1C9E2B7-EA50-4D36-A77F-00BE7E693B8F@grenoble-inp.org>
-References: <9A874F00-ABD8-43D5-A32E-6A39ED333E6D@grenoble-inp.org> <1464697717-5751-1-git-send-email-jordan.de-gea@grenoble-inp.org> <9FB65CA220F84B6B882B75435DDA3D65@PhilipOakley>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=utf-8
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 0/3] Better ref summary alignment in "git fetch"
+Date: Fri,  3 Jun 2016 18:08:40 +0700
+Message-ID: <20160603110843.15434-1-pclouds@gmail.com>
+References: <20160522112019.26516-1-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>,
-	Samuel Groot <samuel.groot@grenoble-inp.org>,
-	Tom Russello <tom.russello@grenoble-inp.org>,
-	Matthieu.Moy@grenoble-inp.fr
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri Jun 03 11:54:05 2016
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 03 13:09:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8lmb-0003PN-Lt
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 11:52:50 +0200
+	id 1b8myY-0006aD-2p
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 13:09:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932115AbcFCJw1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Jun 2016 05:52:27 -0400
-Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:42581 "EHLO
-	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751545AbcFCJw0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 05:52:26 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 8022A257E;
-	Fri,  3 Jun 2016 11:52:23 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ulGII-CuCSTB; Fri,  3 Jun 2016 11:52:23 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 700E02576;
-	Fri,  3 Jun 2016 11:52:23 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 644822077;
-	Fri,  3 Jun 2016 11:52:23 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mvRar3FVGtgM; Fri,  3 Jun 2016 11:52:23 +0200 (CEST)
-Received: from eduroam-032227.grenet.fr (eduroam-032227.grenet.fr [130.190.32.227])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 4B6142066;
-	Fri,  3 Jun 2016 11:52:23 +0200 (CEST)
-X-Priority: 3
-In-Reply-To: <9FB65CA220F84B6B882B75435DDA3D65@PhilipOakley>
-X-Mailer: Apple Mail (2.3124)
+	id S932645AbcFCLI4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Jun 2016 07:08:56 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:32898 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932232AbcFCLIy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 07:08:54 -0400
+Received: by mail-pa0-f50.google.com with SMTP id ec8so8050823pac.0
+        for <git@vger.kernel.org>; Fri, 03 Jun 2016 04:08:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=J7QLNfzSBFflE6em7hGP3iphZb5dtdQM20Ivtth8Jyk=;
+        b=kGwvuTMNJt6E2bZ0jG4PDlD6VMSXMHGmq49NX+l6bkVmi8Mc0vOn/w1AOGzqQfMwVW
+         TcsNPkMqoZ+fSxev34ZHohhBNzBfHpjG3ewI508VTUAofJrNuzdFbXkvB/o2MSzByOY5
+         qLpGuuCvPBcEKeFCg2JZ6BiIIambYiH3LCoM30hvajmPLXdHmLSGi3HiUGDETbonq9eT
+         PofAsaugzmVx/mEgpomxb2X5zeQbNcXffPCPMS1V6NgtHhvDZJXmYnUHmEQI7ffNexUf
+         XEHb7rvGt7oJNHN2KYXMCIoWrEUK8hU8fPXZHUrIOqpuV0qC/Y02hrwBapMBpjKXp0sw
+         ggQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=J7QLNfzSBFflE6em7hGP3iphZb5dtdQM20Ivtth8Jyk=;
+        b=AGbEH/6Gwx1f5MbEhqkTqw54ZYrqiLJgP2riV9gPYi7ZUk7wlXaNt+nNWMw04WbqhV
+         t1qR/xpI6tNb9AaLrhhiUWQJY+GyrxFlefmgRwmJykZXR+J7NT3ahrwbLsM0XYbpNM3B
+         J/Jmx82WD6lHn56HBwVSF4DjxiLvBE1NEACBXkGEXrQIO0jod7Xp9q3GYt51szH6uJqr
+         FS8vVI5hlRBYIwXkTrK90HHnZ7rQmUYd7QkNU4mJdcXzqIbXZ4M5bqLVyR5Xk5UObmQt
+         /RYPUDB1qpzX3kIwYMukUeo/Cwo4ZzzTEWjPn5EagsEwoDeEDmWbnGeiKPo5+iQCIvxw
+         K1PA==
+X-Gm-Message-State: ALyK8tKPneiGxX8GpluHB9xBrpInHfG3bfcUEZo1bben/DwvTJrTr67Ts2k8PR/NMVh3Xw==
+X-Received: by 10.66.132.11 with SMTP id oq11mr4601587pab.59.1464952133590;
+        Fri, 03 Jun 2016 04:08:53 -0700 (PDT)
+Received: from ash ([171.232.119.25])
+        by smtp.gmail.com with ESMTPSA id o87sm7560150pfa.75.2016.06.03.04.08.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 Jun 2016 04:08:52 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Fri, 03 Jun 2016 18:08:48 +0700
+X-Mailer: git-send-email 2.8.2.524.g6ff3d78
+In-Reply-To: <20160522112019.26516-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296297>
 
-> From: "Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>
->> This document attempts to help you configure a Triangular Workflow.
->> +Here is an example of configuration:
->> +
->> +........................................
->> +------------               -----------
->> +| UPSTREAM |  maintainer   | ORIGIN  |
->=20
-> UPSTREAM and ORIGIN are two different types of description. Origin be=
-ing a too generic Git name that is used multiply elsewhere.
->=20
-> That said, trying to find a good name for that 'third place' is not e=
-asy. It's neither upstream, nor downstream (for Junio - the maintainer =
-special case - git.git would be his downstream). The me/git repo is lik=
-e a ferryman's landing across the other side of the river flow, a safe =
-harbour if you will.
->=20
-> Finding a suitable name has all the same issues as deciding the gener=
-ic public name for the staging area / index. The ability to have a seco=
-nd perfect copy is very new - historically all the dictionary names rel=
-ate to copies or forgeries (you could only have one master - DVCS break=
-s that mould). Perhaps (poorly) "MyFork", or "MyServer". There maybe a =
-good French word we can use.
->=20
+v2 reformats "abc/common -> def/common" to "{abc -> def}/common"
+instead and fall back to "a -> b" when they have nothing in commmon
+(e.g. "HEAD -> FETCH_HEAD"). We could add an option if a user wants to
+stick with "a -> b" (and we could do some alignment there as well) but
+it's not part of this series.
 
+It's a shame that the flag '-' in these ref update lines is not the
+same in fetch and push (see 1/3). Because git-fetch does not support
+--porcelain option, maybe it's not too late to change its meaning... =20
 
-You=E2=80=99re right, finding a good name is not easy.=20
-=46irstly, I wanted to use DOWNSTREAM and UPSTREAM. But git doesn=E2=80=
-=99t make the difference between those words. =20
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
+  git-fetch.txt: document fetch output
+  fetch: refactor ref update status formatting code
+  fetch: reduce duplicate in ref update status lines
 
-Looking for the description of the third place, I wrote that it=E2=80=99=
-s the remote used to push modifications.=20
-Assembling the main words push and remote, it creates PUSH_REMOTE which=
- seems a good name.=20
-e.g. That=E2=80=99s clear to say "I push to the push_remote".  =20
+ Documentation/git-fetch.txt |  53 +++++++++++++++++++++
+ builtin/fetch.c             | 112 +++++++++++++++++++++++++++++-------=
+--------
+ t/t5510-fetch.sh            |   4 +-
+ t/t5526-fetch-submodules.sh |  26 +++++-----
+ 4 files changed, 141 insertions(+), 54 deletions(-)
 
-As the option `branch.<branch>.pushRemote` exists, a little text has to=
- be added in order to prevent confusion.=20
-By the way, in the documentation, confusions will be avoided by using `=
-branch.<name>.pushRemote` and =E2=80=98push_remote`.
-
-Like PUSH_REMOTE, the remote where we fetch can be called FETCH_REMOTE.=
-=20
-e.g. That=E2=80=99s clear to say "I fetch from fetch_remote".=20
-
-Do you agree?
-
-
->=20
->> +------------       =E2=86=90       -----------
->> +         \                   /
->> +          \                 /
->> +     fetch=E2=86=93\               /=E2=86=91push
->> +            \             /
->> +             \           /
->> +             -------------
->> +             |   LOCAL   |
->> +             -------------
->> +........................................
->> +
->> +CREATE YOUR REPOSITORY
->> +----------------------
->> +The first step is to create your own repository. To do that you can=
-:
->> +
->> +- a. fork (e.g. GitHub) the main project (e.g git/git), or
->> +- b. create an empty repository
->> +
->> +a. Fork the project
->> +~~~~~~~~~~~~~~~~~~~
->> +Go to the repository of the project (e.g. git/git) you want
->> +and fork it.
->=20
-> As I understand it one issue is to clearly suggest that it is best to=
- fork and then clone from your me/fork project such that the origin and=
- it's fetch/push are set up the easiest way.
->=20
-> If the user clones the main project before forking and then tries to =
-add the me/fork there are more hoops to jump through to get all the fet=
-ch/push settings re-arranged (this does depend on the Github fork metho=
-d, but at least the issue of which repo is cloned should be noted)
-Thank you, I will work on it.=20
+--=20
+2.8.2.524.g6ff3d78
