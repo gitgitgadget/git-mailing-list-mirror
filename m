@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 01/13] refs: remove unnecessary "extern" keywords
-Date: Fri,  3 Jun 2016 14:33:41 +0200
-Message-ID: <fa9460fbe5c8ecc9636752919adea36acd5457ed.1464957077.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 06/13] get_ref_cache(): only create an instance if there is a submodule
+Date: Fri,  3 Jun 2016 14:33:46 +0200
+Message-ID: <3d6c93bd7907f3e6c34787a47b1d75c5cca52a1b.1464957077.git.mhagger@alum.mit.edu>
 References: <cover.1464957077.git.mhagger@alum.mit.edu>
 Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
@@ -11,315 +11,122 @@ Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>,
 	David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Jun 03 14:34:15 2016
+X-From: git-owner@vger.kernel.org Fri Jun 03 14:34:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8oIk-00052N-D0
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 14:34:10 +0200
+	id 1b8oIv-0005Ac-9g
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 14:34:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932259AbcFCMeF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 08:34:05 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:55553 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932152AbcFCMeD (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 08:34:03 -0400
-X-AuditID: 1207440e-ef3ff700000008c5-80-57517939895d
+	id S932426AbcFCMeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 08:34:13 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:45414 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932360AbcFCMeM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 08:34:12 -0400
+X-AuditID: 12074414-63fff700000008e6-5b-575179437d38
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 8B.AA.02245.93971575; Fri,  3 Jun 2016 08:34:01 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id 59.8C.02278.34971575; Fri,  3 Jun 2016 08:34:11 -0400 (EDT)
 Received: from michael.fritz.box (p548D60E2.dip0.t-ipconnect.de [84.141.96.226])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u53CXtil005761
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u53CXtiq005761
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Fri, 3 Jun 2016 08:34:00 -0400
+	Fri, 3 Jun 2016 08:34:09 -0400
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <cover.1464957077.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrJIsWRmVeSWpSXmKPExsUixO6iqGtZGRhusOqntcX8TScYLbqudDNZ
-	NPReYba4vWI+s0X3lLeMFj9aepgtZl61tjjzppHRgcPj7/sPTB47Z91l93jWu4fR4+IlZY/9
-	S7exeSx+4OWx4Pl9do/Pm+QCOKK4bZISS8qCM9Pz9O0SuDOOf/3HWPA7oeL+0qUsDYx7A7oY
-	OTkkBEwktvz+xtrFyMUhJLCVUWL58TZ2COc4k8ThKUfYQKrYBHQlFvU0M4HYIgIREg2vWhhB
-	ipgF5jBJ3H7YydzFyMEhLOAiMeu6AEgNi4CqxITDa5lBbF6BKImj66cyQmyTk7g8/QHYTE4B
-	C4m+ez/YQWwhAXOJh3N2s09g5FnAyLCKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdYLzezRC81
-	pXQTIyTo+HYwtq+XOcQowMGoxMPLsDggXIg1say4MvcQoyQHk5Io7/mzQCG+pPyUyozE4oz4
-	otKc1OJDjBIczEoivH8KAsOFeFMSK6tSi/JhUtIcLErivGpL1P2EBNITS1KzU1MLUotgsjIc
-	HEoSvO3lQI2CRanpqRVpmTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoBiILwZGAUiKB2hvHUg7
-	b3FBYi5QFKL1FKMux7xJu44xCbHk5eelSonzMoAUCYAUZZTmwa2ApZhXjOJAHwvz8lQAVfEA
-	0xPcpFdAS5iAlhQ88gdZUpKIkJJqYBRsv6b081exgdb9g/8r7XYvmf5higSrfvqSR28fHpjP
-	tVhx77q8UpMGU5dtq7klQ789tfPcw3fmwtYzwovrbxmssKh6Eifbu+E068qTP7KP 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHIsWRmVeSWpSXmKPExsUixO6iqOtcGRhu8LtPyWL+phOMFl1Xupks
+	GnqvMFvcXjGf2aJ7yltGix8tPcwWM69aW5x508jowOHx9/0HJo+ds+6yezzr3cPocfGSssf+
+	pdvYPBY/8PJY8Pw+u8fnTXIBHFHcNkmJJWXBmel5+nYJ3Bmvt81lKzggVHH/9naWBsYO/i5G
+	Tg4JAROJDS+OsXcxcnEICWxllHg4+zsbhHOcSeLB1D+sIFVsAroSi3qamUBsEYEIiYZXLYwg
+	RcwCc5gkbj/sZAZJCAtESRy738YIYrMIqEpceToRrJkXKP7w1zlGiHVyEpenP2ADsTkFLCT6
+	7v1gB7GFBMwlHs7ZzT6BkWcBI8MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0LvdzMEr3UlNJN
+	jJCwE9nBeOSk3CFGAQ5GJR7eFQsCwoVYE8uKK3MPMUpyMCmJ8p4/CxTiS8pPqcxILM6ILyrN
+	SS0+xCjBwawkwvunIDBciDclsbIqtSgfJiXNwaIkzvttsbqfkEB6YklqdmpqQWoRTFaGg0NJ
+	gte8AqhRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhQF8cXAOABJ8QDtrQBp5y0u
+	SMwFikK0nmJUlBLnFQZJCIAkMkrz4MbCkskrRnGgL4V5w8qBqniAiQiu+xXQYCagwQWP/EEG
+	lyQipKQaGLvt73jWOfU8lLjD+GZK6c0zRuERTjxJatUzz6T3G2ldibGRUQsW2mGwIMb1qo/S
+	8nnKbGVKgls4Eno05LUDsjvkIstnievnpEruXlTosc1xw8Oaw4wbly2PUPqx+Mur 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296317>
 
-There's continuing work in this area, so clean up unneeded "extern"
-keywords rather than schlepping them around. Also split up some overlong
-lines and add parameter names in a couple of places.
+If there is not a nonbare repository where a submodule is supposedly
+located, then don't instantiate a ref_cache for it.
+
+The analogous check can be removed from resolve_gitlink_ref().
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.h | 132 +++++++++++++++++++++++++++++++++++------------------------------
- 1 file changed, 72 insertions(+), 60 deletions(-)
+ refs/files-backend.c | 33 ++++++++++++++++++++++-----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/refs.h b/refs.h
-index 9230d47..21874f0 100644
---- a/refs.h
-+++ b/refs.h
-@@ -52,19 +52,19 @@
- #define RESOLVE_REF_NO_RECURSE 0x02
- #define RESOLVE_REF_ALLOW_BAD_NAME 0x04
- 
--extern const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
--				      unsigned char *sha1, int *flags);
-+const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
-+			       unsigned char *sha1, int *flags);
- 
--extern char *resolve_refdup(const char *refname, int resolve_flags,
--			    unsigned char *sha1, int *flags);
-+char *resolve_refdup(const char *refname, int resolve_flags,
-+		     unsigned char *sha1, int *flags);
- 
--extern int read_ref_full(const char *refname, int resolve_flags,
--			 unsigned char *sha1, int *flags);
--extern int read_ref(const char *refname, unsigned char *sha1);
-+int read_ref_full(const char *refname, int resolve_flags,
-+		  unsigned char *sha1, int *flags);
-+int read_ref(const char *refname, unsigned char *sha1);
- 
--extern int ref_exists(const char *refname);
-+int ref_exists(const char *refname);
- 
--extern int is_branch(const char *refname);
-+int is_branch(const char *refname);
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index a0d09f4..142c977 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -954,15 +954,26 @@ static struct ref_cache *lookup_ref_cache(const char *submodule)
  
  /*
-  * If refname is a non-symbolic reference that refers to a tag object,
-@@ -74,24 +74,25 @@ extern int is_branch(const char *refname);
-  * Symbolic references are considered unpeelable, even if they
-  * ultimately resolve to a peelable tag.
+  * Return a pointer to a ref_cache for the specified submodule. For
+- * the main repository, use submodule==NULL. The returned structure
+- * will be allocated and initialized but not necessarily populated; it
+- * should not be freed.
++ * the main repository, use submodule==NULL; such a call cannot fail.
++ * For a submodule, the submodule must exist and be a nonbare
++ * repository, otherwise return NULL.
++ *
++ * The returned structure will be allocated and initialized but not
++ * necessarily populated; it should not be freed.
   */
--extern int peel_ref(const char *refname, unsigned char *sha1);
-+int peel_ref(const char *refname, unsigned char *sha1);
- 
- /**
-  * Resolve refname in the nested "gitlink" repository that is located
-  * at path.  If the resolution is successful, return 0 and set sha1 to
-  * the name of the object; otherwise, return a non-zero value.
-  */
--extern int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sha1);
-+int resolve_gitlink_ref(const char *path, const char *refname,
-+			unsigned char *sha1);
- 
- /*
-  * Return true iff abbrev_name is a possible abbreviation for
-  * full_name according to the rules defined by ref_rev_parse_rules in
-  * refs.c.
-  */
--extern int refname_match(const char *abbrev_name, const char *full_name);
-+int refname_match(const char *abbrev_name, const char *full_name);
- 
--extern int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
--extern int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
-+int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
-+int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
- 
- /*
-  * A ref_transaction represents a collection of ref updates
-@@ -182,38 +183,45 @@ typedef int each_ref_fn(const char *refname,
-  * modifies the reference also returns a nonzero value to immediately
-  * stop the iteration.
-  */
--extern int head_ref(each_ref_fn fn, void *cb_data);
--extern int for_each_ref(each_ref_fn fn, void *cb_data);
--extern int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
--extern int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data, unsigned int broken);
--extern int for_each_tag_ref(each_ref_fn fn, void *cb_data);
--extern int for_each_branch_ref(each_ref_fn fn, void *cb_data);
--extern int for_each_remote_ref(each_ref_fn fn, void *cb_data);
--extern int for_each_replace_ref(each_ref_fn fn, void *cb_data);
--extern int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
--extern int for_each_glob_ref_in(each_ref_fn fn, const char *pattern, const char *prefix, void *cb_data);
-+int head_ref(each_ref_fn fn, void *cb_data);
-+int for_each_ref(each_ref_fn fn, void *cb_data);
-+int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
-+int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
-+			unsigned int broken);
-+int for_each_tag_ref(each_ref_fn fn, void *cb_data);
-+int for_each_branch_ref(each_ref_fn fn, void *cb_data);
-+int for_each_remote_ref(each_ref_fn fn, void *cb_data);
-+int for_each_replace_ref(each_ref_fn fn, void *cb_data);
-+int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
-+int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
-+			 const char *prefix, void *cb_data);
- 
--extern int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
--extern int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
--extern int for_each_ref_in_submodule(const char *submodule, const char *prefix,
-+int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
-+int for_each_ref_submodule(const char *submodule,
-+			   each_ref_fn fn, void *cb_data);
-+int for_each_ref_in_submodule(const char *submodule, const char *prefix,
- 		each_ref_fn fn, void *cb_data);
--extern int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
--extern int for_each_branch_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
--extern int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
-+int for_each_tag_ref_submodule(const char *submodule,
-+			       each_ref_fn fn, void *cb_data);
-+int for_each_branch_ref_submodule(const char *submodule,
-+				  each_ref_fn fn, void *cb_data);
-+int for_each_remote_ref_submodule(const char *submodule,
-+				  each_ref_fn fn, void *cb_data);
- 
--extern int head_ref_namespaced(each_ref_fn fn, void *cb_data);
--extern int for_each_namespaced_ref(each_ref_fn fn, void *cb_data);
-+int head_ref_namespaced(each_ref_fn fn, void *cb_data);
-+int for_each_namespaced_ref(each_ref_fn fn, void *cb_data);
- 
- /* can be used to learn about broken ref and symref */
--extern int for_each_rawref(each_ref_fn fn, void *cb_data);
-+int for_each_rawref(each_ref_fn fn, void *cb_data);
- 
- static inline const char *has_glob_specials(const char *pattern)
+ static struct ref_cache *get_ref_cache(const char *submodule)
  {
- 	return strpbrk(pattern, "?*[");
+ 	struct ref_cache *refs = lookup_ref_cache(submodule);
+-	if (!refs)
+-		refs = create_ref_cache(submodule);
++
++	if (!refs) {
++		struct strbuf submodule_sb = STRBUF_INIT;
++
++		strbuf_addstr(&submodule_sb, submodule);
++		if (is_nonbare_repository_dir(&submodule_sb))
++			refs = create_ref_cache(submodule);
++		strbuf_release(&submodule_sb);
++	}
++
+ 	return refs;
  }
  
--extern void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname);
--extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct string_list *refnames);
-+void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname);
-+void warn_dangling_symrefs(FILE *fp, const char *msg_fmt,
-+			   const struct string_list *refnames);
+@@ -1341,13 +1352,10 @@ int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sh
+ 		return -1;
  
- /*
-  * Flags for controlling behaviour of pack_refs()
-@@ -245,13 +253,13 @@ int pack_refs(unsigned int flags);
- int safe_create_reflog(const char *refname, int force_create, struct strbuf *err);
+ 	strbuf_add(&submodule, path, len);
+-	refs = lookup_ref_cache(submodule.buf);
++	refs = get_ref_cache(submodule.buf);
+ 	if (!refs) {
+-		if (!is_nonbare_repository_dir(&submodule)) {
+-			strbuf_release(&submodule);
+-			return -1;
+-		}
+-		refs = create_ref_cache(submodule.buf);
++		strbuf_release(&submodule);
++		return -1;
+ 	}
+ 	strbuf_release(&submodule);
  
- /** Reads log for the value of ref during at_time. **/
--extern int read_ref_at(const char *refname, unsigned int flags,
--		       unsigned long at_time, int cnt,
--		       unsigned char *sha1, char **msg,
--		       unsigned long *cutoff_time, int *cutoff_tz, int *cutoff_cnt);
-+int read_ref_at(const char *refname, unsigned int flags,
-+		unsigned long at_time, int cnt,
-+		unsigned char *sha1, char **msg,
-+		unsigned long *cutoff_time, int *cutoff_tz, int *cutoff_cnt);
+@@ -1885,6 +1893,9 @@ int do_for_each_ref(const char *submodule, const char *prefix,
+ 	struct ref_cache *refs;
  
- /** Check if a particular reflog exists */
--extern int reflog_exists(const char *refname);
-+int reflog_exists(const char *refname);
- 
- /*
-  * Delete the specified reference. If old_sha1 is non-NULL, then
-@@ -260,21 +268,25 @@ extern int reflog_exists(const char *refname);
-  * exists, regardless of its old value. It is an error for old_sha1 to
-  * be NULL_SHA1. flags is passed through to ref_transaction_delete().
-  */
--extern int delete_ref(const char *refname, const unsigned char *old_sha1,
--		      unsigned int flags);
-+int delete_ref(const char *refname, const unsigned char *old_sha1,
-+	       unsigned int flags);
- 
- /*
-  * Delete the specified references. If there are any problems, emit
-  * errors but attempt to keep going (i.e., the deletes are not done in
-  * an all-or-nothing transaction).
-  */
--extern int delete_refs(struct string_list *refnames);
-+int delete_refs(struct string_list *refnames);
- 
- /** Delete a reflog */
--extern int delete_reflog(const char *refname);
-+int delete_reflog(const char *refname);
- 
- /* iterate over reflog entries */
--typedef int each_reflog_ent_fn(unsigned char *osha1, unsigned char *nsha1, const char *, unsigned long, int, const char *, void *);
-+typedef int each_reflog_ent_fn(
-+		unsigned char *old_sha1, unsigned char *new_sha1,
-+		const char *committer, unsigned long timestamp,
-+		int tz, const char *msg, void *cb_data);
+ 	refs = get_ref_cache(submodule);
++	if (!refs)
++		return 0;
 +
- int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn, void *cb_data);
- int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void *cb_data);
- 
-@@ -282,7 +294,7 @@ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void
-  * Calls the specified function for each reflog file until it returns nonzero,
-  * and returns the value
-  */
--extern int for_each_reflog(each_ref_fn, void *);
-+int for_each_reflog(each_ref_fn fn, void *cb_data);
- 
- #define REFNAME_ALLOW_ONELEVEL 1
- #define REFNAME_REFSPEC_PATTERN 2
-@@ -295,16 +307,16 @@ extern int for_each_reflog(each_ref_fn, void *);
-  * allow a single "*" wildcard character in the refspec. No leading or
-  * repeated slashes are accepted.
-  */
--extern int check_refname_format(const char *refname, int flags);
-+int check_refname_format(const char *refname, int flags);
- 
--extern const char *prettify_refname(const char *refname);
-+const char *prettify_refname(const char *refname);
- 
--extern char *shorten_unambiguous_ref(const char *refname, int strict);
-+char *shorten_unambiguous_ref(const char *refname, int strict);
- 
- /** rename ref, return 0 on success **/
--extern int rename_ref(const char *oldref, const char *newref, const char *logmsg);
-+int rename_ref(const char *oldref, const char *newref, const char *logmsg);
- 
--extern int create_symref(const char *refname, const char *target, const char *logmsg);
-+int create_symref(const char *refname, const char *target, const char *logmsg);
- 
- /*
-  * Update HEAD of the specified gitdir.
-@@ -313,7 +325,7 @@ extern int create_symref(const char *refname, const char *target, const char *lo
-  * $GIT_DIR points to.
-  * Return 0 if successful, non-zero otherwise.
-  * */
--extern int set_worktree_head_symref(const char *gitdir, const char *target);
-+int set_worktree_head_symref(const char *gitdir, const char *target);
- 
- enum action_on_err {
- 	UPDATE_REFS_MSG_ON_ERR,
-@@ -463,7 +475,7 @@ int update_ref(const char *msg, const char *refname,
- 	       const unsigned char *new_sha1, const unsigned char *old_sha1,
- 	       unsigned int flags, enum action_on_err onerr);
- 
--extern int parse_hide_refs_config(const char *var, const char *value, const char *);
-+int parse_hide_refs_config(const char *var, const char *value, const char *);
- 
- /*
-  * Check whether a ref is hidden. If no namespace is set, both the first and
-@@ -473,7 +485,7 @@ extern int parse_hide_refs_config(const char *var, const char *value, const char
-  * the ref is outside that namespace, the first parameter is NULL. The second
-  * parameter always points to the full ref name.
-  */
--extern int ref_is_hidden(const char *, const char *);
-+int ref_is_hidden(const char *, const char *);
- 
- enum ref_type {
- 	REF_TYPE_PER_WORKTREE,
-@@ -522,11 +534,11 @@ typedef void reflog_expiry_cleanup_fn(void *cb_data);
-  * enum expire_reflog_flags. The three function pointers are described
-  * above. On success, return zero.
-  */
--extern int reflog_expire(const char *refname, const unsigned char *sha1,
--			 unsigned int flags,
--			 reflog_expiry_prepare_fn prepare_fn,
--			 reflog_expiry_should_prune_fn should_prune_fn,
--			 reflog_expiry_cleanup_fn cleanup_fn,
--			 void *policy_cb_data);
-+int reflog_expire(const char *refname, const unsigned char *sha1,
-+		  unsigned int flags,
-+		  reflog_expiry_prepare_fn prepare_fn,
-+		  reflog_expiry_should_prune_fn should_prune_fn,
-+		  reflog_expiry_cleanup_fn cleanup_fn,
-+		  void *policy_cb_data);
- 
- #endif /* REFS_H */
+ 	data.prefix = prefix;
+ 	data.trim = trim;
+ 	data.flags = flags;
 -- 
 2.8.1
