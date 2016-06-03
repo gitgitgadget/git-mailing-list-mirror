@@ -1,96 +1,85 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: [PATCH v3 2/2] completion: add git status
-Date: Fri, 3 Jun 2016 17:41:35 +0200
-Message-ID: <8f5e515b-8efc-0160-820e-d81885fc6c36@virtuell-zuhause.de>
-References: <20160601141510.Horde.M2zGuJrzBNqf_2zYLo0P2Sx@webmail.informatik.kit.edu>
- <9ef8cfd8fb89bcacd123ddbebc12f961a292ef8b.1464879648.git.thomas.braun@virtuell-zuhause.de>
- <1464880296.3720.0.camel@virtuell-zuhause.de>
- <xmqqtwhbtq46.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] Triangular Workflow UI improvement: Documentation
+Date: Fri, 03 Jun 2016 08:46:05 -0700
+Message-ID: <xmqqd1nyqnr6.fsf@gitster.mtv.corp.google.com>
+References: <9A874F00-ABD8-43D5-A32E-6A39ED333E6D@grenoble-inp.org>
+	<1464697717-5751-1-git-send-email-jordan.de-gea@grenoble-inp.org>
+	<9FB65CA220F84B6B882B75435DDA3D65@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	John Keeping <john@keeping.me.uk>,
-	=?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 03 17:41:58 2016
+Content-Type: text/plain
+Cc: "Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>,
+	<git@vger.kernel.org>, <erwan.mathoniere@grenoble-inp.org>,
+	<samuel.groot@grenoble-inp.org>, <tom.russello@grenoble-inp.org>,
+	<Matthieu.Moy@grenoble-inp.fr>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Jun 03 17:46:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8rET-0006sY-Ds
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 17:41:57 +0200
+	id 1b8rIh-0002GV-4G
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jun 2016 17:46:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932074AbcFCPlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 11:41:42 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:38453 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751689AbcFCPlk (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 11:41:40 -0400
-Received: from p4fc87c53.dip0.t-ipconnect.de ([79.200.124.83] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1b8rE9-0006Lr-7h; Fri, 03 Jun 2016 17:41:37 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.1
-In-Reply-To: <xmqqtwhbtq46.fsf@gitster.mtv.corp.google.com>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1464968500;1358b4cb;
+	id S932490AbcFCPqP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 11:46:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65245 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932470AbcFCPqO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 11:46:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A8D21F61B;
+	Fri,  3 Jun 2016 11:46:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=fsdIMD2wBl9Flv46xZVvHSS8MxE=; b=iGyMDfdj8JltXx6yz++e
+	ozlQ6oivwW8pI5kGrvhla3g6TCYKmzVMzrjRhb9PCJJ8Pv4u+/6TY9+1wdpQ1vrJ
+	Njm0w7U+5R4IrxBO3M1KnjhzEYti74m2xIcQPS3Dztxm0IoVziT4UCKymoZo3CXO
+	N7cWgp8XIE0kbJT9AsQwyTI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=bg1qCnPktRSePgsv6cS+DMgG9dFQBYveIKjIZqf0RnKZHi
+	htE/mMvf7CHeBSfqF3JxrziZ1q12nyPJU1/MvjUhvpB/xeeobJkcImJYkAbA6S+l
+	+rmtO6O3kjLlrDT0gyAJd8QYFPcFwnG0rawhIL28SHlVaxxrl8RpipvQiOdiE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2F9051F61A;
+	Fri,  3 Jun 2016 11:46:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AC73E1F619;
+	Fri,  3 Jun 2016 11:46:07 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 499D06E6-29A2-11E6-A79B-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296340>
 
-Am 02.06.2016 um 20:14 schrieb Junio C Hamano:
-> Thomas Braun <thomas.braun@virtuell-zuhause.de> writes:
-> 
->> +	untracked_state="$(__git_find_on_cmdline "--untracked-files=no\
->> +		--untracked-files=normal --untracked-files=all")"
-> 
-> Just wondering but does this help my use of the command like
-> 
-> 	$ git status -uno <TAB>
-> 
-> or do I now have to spell it out like
-> 
-> 	$ git status --untracked-files=no <TAB>
-> 
-> to take advantage of it?
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-I was unsure if I should support the short option (-u) as well. On
-thinking about it again there is little use of only doing it for the
-long option.
-Will be handled in a reroll.
+> That said, trying to find a good name for that 'third place' is not easy. 
+> It's neither upstream, nor downstream (for Junio - the maintainer special 
+> case - git.git would be his downstream). The me/git repo is like a 
+> ferryman's landing across the other side of the river flow, a safe harbour 
+> if you will.
 
->> +	untracked_state=${untracked_state##--untracked-files=}
->> +
->> +	if [ -z "$untracked_state" ]; then
->> +		untracked_state="$(git --git-dir="$(__gitdir)" config "status.showUntrackedFiles")"
->> +	fi
->> +
->> +	case "$untracked_state" in
->> +		no)
->> +			# --ignored option does not matter
-> 
-> Style.  I see existing case/esac statements that use this style, but
-> our preference is not to indent case arms like this; rather:
-> 
-> 	case "$untracked_state" in
->         no)
->         	# --ignored ...
-> 
-> which saves the indentation one level overall.
+You raise a good point here.
 
-thanks, will be fixed.
+To me, the git.git public repository that everybody pulls from is
+just like me/git for everybody else.  It is a place where you
+publish your work.  I think the @{push} notation during its design
+phase was once called @{publish} instead.
 
->> +			complete_opt=
->> +			;;
->> +		all|normal|*)
->> +			complete_opt="--cached --directory --no-empty-directory --others"
->> +
->> +			if [ -n "$(__git_find_on_cmdline "--ignored")" ]; then
-> 
-> Same question as the "--untracked-files=no vs -uno" applies here.
+A "downstream" that is the opposite of "upstream" is not something
+you would configure and control.  They are those who call you
+"upstream".  You know and actively configure who your "upstream" is
+and pull from there.  You do not have direct control who are the
+people who are pulling from you.
 
-Is there a short version of --ignored? I could not find one in the help,
-and from a look into cmd_status in commit.c I would say there is none.
+So in that sense, "downstream" exists as a concept that is just as
+valid as "upstream", but unlike "upstream", "downstream" does not
+manifest itself as something you explicitly tell Git about, either
+from the command line, in the remotes definition, or in the
+configuration files.
