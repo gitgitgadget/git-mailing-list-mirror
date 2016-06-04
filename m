@@ -1,83 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] pretty: support "mboxrd" output format
-Date: Fri, 3 Jun 2016 19:03:59 -0700
-Message-ID: <CAPc5daWJ1v8EU89UN2HPK8=U17vz4LiANA9FyCvH5as7Hb1bTQ@mail.gmail.com>
-References: <20160530232142.21098-1-e@80x24.org> <20160530232142.21098-2-e@80x24.org>
- <CAPig+cQrSJe03_RtSyf5KO2vE3Rri7t70-he8SXA9Y4oBYY_Ww@mail.gmail.com>
- <20160531074506.GA8911@dcvr.yhbt.net> <CAPig+cQrQfxWrGhpvtb-GKYfK0tMLsx9JJ+eWRRx00F8mNXrLg@mail.gmail.com>
- <20160531182932.GA27021@dcvr.yhbt.net> <20160602075125.GA19551@dcvr.yhbt.net>
- <CAPig+cTLVXJBn00aco0vC9oFvZuchTgtNXtGGjpLPx1LwRZz4Q@mail.gmail.com>
- <xmqqlh2loq6p.fsf@gitster.mtv.corp.google.com> <CAPig+cQXA3mgYC3rCTx2h93rB6djdKvYJ+oCXUP24-xk2PqW=Q@mail.gmail.com>
- <xmqqzir1zvo2.fsf@gitster.mtv.corp.google.com> <CAPig+cTQkEb6K95aeJ9vNyJ=S+8x+JnCQAYSEzydXKzbq-+Yyg@mail.gmail.com>
- <CAPig+cQ7y7J02+PVtdJywGEudOGXsy1jgadvVwBg5creiUv6zA@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 3/3] fetch: reduce duplicate in ref update status lines
+Date: Sat, 4 Jun 2016 10:11:58 +0700
+Message-ID: <CACsJy8DFE=NPB8+VfLFf_v719Rz8+at_daWyQ3jQUHYrB6TWZw@mail.gmail.com>
+References: <20160522112019.26516-1-pclouds@gmail.com> <20160603110843.15434-1-pclouds@gmail.com>
+ <20160603110843.15434-4-pclouds@gmail.com> <575199E7.7000503@xiplink.com>
+ <xmqqh9dap5jk.fsf@gitster.mtv.corp.google.com> <5751E1C1.8080507@xiplink.com> <xmqqtwhangdn.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Eric Wong <e@80x24.org>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sat Jun 04 04:04:27 2016
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 04 05:12:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b90ws-000255-0o
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Jun 2016 04:04:26 +0200
+	id 1b9215-0000mb-RA
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Jun 2016 05:12:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751141AbcFDCEV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2016 22:04:21 -0400
-Received: from mail-yw0-f181.google.com ([209.85.161.181]:35884 "EHLO
-	mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750838AbcFDCET (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2016 22:04:19 -0400
-Received: by mail-yw0-f181.google.com with SMTP id x189so96549637ywe.3
-        for <git@vger.kernel.org>; Fri, 03 Jun 2016 19:04:19 -0700 (PDT)
+	id S1750777AbcFDDM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 23:12:29 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:32831 "EHLO
+	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750727AbcFDDM3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 23:12:29 -0400
+Received: by mail-io0-f175.google.com with SMTP id t40so97373409ioi.0
+        for <git@vger.kernel.org>; Fri, 03 Jun 2016 20:12:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=3RxK0aZyzNfpjfdwbk6FgPNa5E4P3bgg/USDjzaeF8E=;
-        b=q87SfdbrjuOKCDC6dFzrBJNakDzna+7tfs6v1zFZ9SP/SxCW9Lzq/BJ0BgWfSy/NB1
-         0NoesaPYLrcDm3JTVL4OG0uBYWUaXhN7S3pIlx1HLgS0VZaUgf9J1XFMlm33evFuLDuz
-         ozYxy/0jhHjtnGB0vS34Z1dO56qoJ3o6tmanxmqSrqqIN4kENCGP+AnUmakNwy2fpK+j
-         nVqVPpuReC6k1WkoeIwoEXUrnz1Ig93NAN2Oc8PbGelGoFe8CJB0/LwBeQ6mH2P/dsSN
-         aU1jjWbAaSN/fe7HJPhI+jYV6/zmewu1cDwbMKxiftdAWx/j9MWNS9A8wHYZTsQEgH6h
-         aHPg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8Crx6HoN2TLbwzFzbp6/M88yjJ4ypS0Vrjp+vFXEhe0=;
+        b=TJJkg4NHyojdQYvnwUCxzg8seQdnA3tYTIWnTyEkYQnX3+ytz8lro9UkcNAJBaNOHq
+         ePIAc1VSV/ZQ/nVIB1vW/3NyWBScKehGmiqZMeDepWPj4eiJBgvynEAo3U5snbttYIj6
+         sfXb7uQKWKmUffShtU3ZAtCcTyRbA4ERiLnJxdpu0vwjPvlTfamX2ls3qEv4RtPBubPv
+         ohMGV9D0Vc9XIEx9+Kj/yuIzwYqkkrqo+GjULreegeBzoihe2CRkb+UlbB47D3S910hB
+         7eus6ETqA/VbweM2n7hhDADeJZN/1B06hSQOrzyWy09k56/paMlcgylR45QoPEixQL+C
+         XuKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=3RxK0aZyzNfpjfdwbk6FgPNa5E4P3bgg/USDjzaeF8E=;
-        b=XQ8zDHkZ22UheX3QMuAbdQjE/Qa53F/QaFTcVmJ4sb1oj/FLft0GydPs6kPAZRHM7S
-         7K+4ipGmpx9HR4mJ9OQHfGtNKnQr0FDuPRSOR3YYaUIKN6hQd3PmRwllF8752vQzJWqy
-         AIXgm6ZK+RXFzrQP2kB4iqkrNisChgS9mTlVV7ac21QJkVkdYNzvWTax3d+ssdAqwyFg
-         IFRQEsMAYsXvn+Qmy1EXSyC+X65MMmKNWQDISW6+cw6YTskV2kcCUHQBrefNmk/WTu1L
-         KprN/ELwMT/DVtb4TII6AILy/6Yc7mYR74Y2cSuczSsmv1sR/2837yyiXP0P0KHczsdF
-         DNWA==
-X-Gm-Message-State: ALyK8tKuQ3vEJ3rVDal2ee2kC9OJvZjax9Vp7iBiAM4EgEmhfCqjj75GFq8ObSw7uQLisGLPD3/U159Qu5sJuw==
-X-Received: by 10.129.80.139 with SMTP id e133mr4736824ywb.197.1465005858642;
- Fri, 03 Jun 2016 19:04:18 -0700 (PDT)
-Received: by 10.13.251.71 with HTTP; Fri, 3 Jun 2016 19:03:59 -0700 (PDT)
-In-Reply-To: <CAPig+cQ7y7J02+PVtdJywGEudOGXsy1jgadvVwBg5creiUv6zA@mail.gmail.com>
-X-Google-Sender-Auth: reB2Miq2g1UMhl025MOdluRCG3o
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8Crx6HoN2TLbwzFzbp6/M88yjJ4ypS0Vrjp+vFXEhe0=;
+        b=gBKtnYf+oFKViAbmM4+6W4n27afYD0X+hyF3NuSrI4pzKivyrD2gy/E9UHHmxwlF45
+         WKyMISwnj8dW/ZBVXut2yjO/KNxIlKYuAtvJiCkK8NA60ePhBh0jl7ZUutw9FcaW85gS
+         cvPMKqRMOVnz7O7EyFzPEh9SPXwZjmau/H5yTgBJDoq1Qabe2ACplffOG0atLE85zPk0
+         97/xl9SXdxAiUxTDURd8bZw9otX8G2uOuceovfolTnxjMTI3PWaXG2zvmeiKW8K//3qf
+         jrkfhsTB+q2zZd9DgKmjpmfnUt2toNR2cH9vcH09yFaRBVNOB+4J/8IaexFCBaw9ciwW
+         fsLA==
+X-Gm-Message-State: ALyK8tKAVS9jXUx3T+gbif+bQNPcmF/m/wxeyaGuvnsGs+vorvYHK7Z5O/1z9f64Ogo4ZV/JD464MtiiB39wnA==
+X-Received: by 10.36.108.76 with SMTP id w73mr3695666itb.63.1465009948183;
+ Fri, 03 Jun 2016 20:12:28 -0700 (PDT)
+Received: by 10.64.173.167 with HTTP; Fri, 3 Jun 2016 20:11:58 -0700 (PDT)
+In-Reply-To: <xmqqtwhangdn.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296439>
 
-On Fri, Jun 3, 2016 at 5:19 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> My only minor reservation is that it your concise version is still
-> subtle with regard to not taking 'linelen' into account. At first
-> glance, it looks like a bug that it doesn't consider the logical
-> end-of-line, and someone reading the code has to put in extra effort
-> to convince himself that the code works as intended.
->
-> For that reason, I have a bit of a preference for a version of
-> is_mboxrd_from() which does take 'linelen' into account explicitly.
+On Sat, Jun 4, 2016 at 3:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> By punting on the effort to find a readable format that does not
+> repeat the same info twice, we are sending a signal to the users
+> that they cannot use a meaningful sentence as the name of a branch
+> name; they need to stay within a relatively short (i.e. 1/4 of a
+> line width) branch name, to avoid triggering this multi-line
+> behaviour.
 
-That certainly is true. You could check that the end result did not consume
-more than linelen after the single-liner computes its result, but I am not sure
-under what condition that check would trigger. Even though we may hold the
-entire e-mail file without NUL-terminating each line, we have a NUL-termination
-at the end of the file, no?
+This is subjective because line length (or terminal width) varies. And
+in the time where GUI and web interfaces are also used and preferred
+by some, CLI users may not be able to do much with such a signal
+(can't force everybody to suit you).
+-- 
+Duy
