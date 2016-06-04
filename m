@@ -1,93 +1,85 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 3/3] fetch: reduce duplicate in ref update status lines
-Date: Sat, 4 Jun 2016 06:52:23 +0700
-Message-ID: <CACsJy8DV5aqsxM9+QZ+5d2fMLYF4foBnAxmyiYHOLtqzvS3QGQ@mail.gmail.com>
-References: <20160522112019.26516-1-pclouds@gmail.com> <20160603110843.15434-1-pclouds@gmail.com>
- <20160603110843.15434-4-pclouds@gmail.com> <20160603170621.GA3858@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/3] pretty: support "mboxrd" output format
+Date: Fri, 3 Jun 2016 20:02:25 -0400
+Message-ID: <CAPig+cTQkEb6K95aeJ9vNyJ=S+8x+JnCQAYSEzydXKzbq-+Yyg@mail.gmail.com>
+References: <20160530232142.21098-1-e@80x24.org> <20160530232142.21098-2-e@80x24.org>
+ <CAPig+cQrSJe03_RtSyf5KO2vE3Rri7t70-he8SXA9Y4oBYY_Ww@mail.gmail.com>
+ <20160531074506.GA8911@dcvr.yhbt.net> <CAPig+cQrQfxWrGhpvtb-GKYfK0tMLsx9JJ+eWRRx00F8mNXrLg@mail.gmail.com>
+ <20160531182932.GA27021@dcvr.yhbt.net> <20160602075125.GA19551@dcvr.yhbt.net>
+ <CAPig+cTLVXJBn00aco0vC9oFvZuchTgtNXtGGjpLPx1LwRZz4Q@mail.gmail.com>
+ <xmqqlh2loq6p.fsf@gitster.mtv.corp.google.com> <CAPig+cQXA3mgYC3rCTx2h93rB6djdKvYJ+oCXUP24-xk2PqW=Q@mail.gmail.com>
+ <xmqqzir1zvo2.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jun 04 01:53:03 2016
+Cc: Eric Wong <e@80x24.org>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 04 02:03:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b8ytf-0007pu-7m
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Jun 2016 01:52:59 +0200
+	id 1b8z2t-0007IJ-6s
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Jun 2016 02:02:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750833AbcFCXwz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Jun 2016 19:52:55 -0400
-Received: from mail-it0-f43.google.com ([209.85.214.43]:38498 "EHLO
-	mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750726AbcFCXwy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2016 19:52:54 -0400
-Received: by mail-it0-f43.google.com with SMTP id i127so4876655ita.1
-        for <git@vger.kernel.org>; Fri, 03 Jun 2016 16:52:54 -0700 (PDT)
+	id S1751077AbcFDAC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2016 20:02:27 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:36230 "EHLO
+	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751026AbcFDAC0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2016 20:02:26 -0400
+Received: by mail-it0-f66.google.com with SMTP id i127so604889ita.3
+        for <git@vger.kernel.org>; Fri, 03 Jun 2016 17:02:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=2orRKLT8SbAiLWuyGh5+499Su7zygIi11OrkISU80D8=;
-        b=i4OjH9+A0pJm5P6p4lbJ60jrKWyTTb3bFBJe9Ay4j+bnWWkhzKmexUiyG/p6wBacTm
-         EZMFJvy4/8wjiH5Xf5HStLWh0C2/dWCbw+Tx4Am4NBXcHhQkNahbO1nxQSB03TdQSDL3
-         7x6BkiOHgnqBYbK/Di0XFtDqvnsIdLoW3P2qFzmCPnqEsjD+PeejfRwCMl++Ie1YMdnt
-         dga1w1x+EKKyEGVHI1WLU6SZMufgf7jKwGY4QagQ83WBO6gYXhSzuJ0SfJZhIEXuWPoI
-         AjjrqeJzOXTuhP+qMulPVVx/0lR92dBL/1hOFZ3bAUk8+5bt09bDvCwYQ3E0+849FduF
-         wI4w==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=Xvd8nFulmajNZbzhMSY7JHOzQW1fSDm3YOV+daxkicU=;
+        b=Mb/5JLPU20MKu0qwnpHeTkj0FHfCvpOAeeD6yYjIehPaD5bjAcc5ddQCGkG6Su1M0j
+         tOkP/D+LGnBiI2lDENyBn691qX/ETTxK/kjl2cCnTzEtacp7iQ6Cbs2aill2CBCmps7/
+         j1ZQzmrbQeBoZ9NdnGF3qTam73uy2np3qTaUzqjap0tVFkhJKLYpQkFTF86zC2hymwmx
+         Bertug9CY1g8VxE986WC3rTlVSx6nQaVVxxb1iFJ08rPUmi4H09GfJmi1HS/BuAKWGNG
+         lH3UVJF+3COUGfbhsRQHdPOHoo/ikK6rvKkYcDrMcJi4yfyXlruHMNj8/R01QAeZoun5
+         mNFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2orRKLT8SbAiLWuyGh5+499Su7zygIi11OrkISU80D8=;
-        b=VuUNnv7eJ104qhSD5YQ6yXoHJ5GKCBnsIS0HFWyI/VYPTBg8m9xdYtNsmD+IdKiVXb
-         224ghQRaU5z4g65Xyvjw+7tZdigrzmcMkWneNRxO7x2KhhwP1wPuyvF9ij/R5zZ8saKs
-         lSi29IuVY7e1pq7/2AwP6ozAUqIMF1BNtdcgiP9okPdC7zn7uIeiS1QBSlsdN41DgAqy
-         V6SzVz1w6B4b3EZC+FKUa9T9ynvuOIgGLext3PL58why68mqDkC9DgpL/SrvU7kFhX9w
-         YSGbuxzYFa1eAAjny84QyBXtzlMbBhU+tBH3CUzXdYfoLCutuLcphJBS35HgUpAi82OB
-         1Gbw==
-X-Gm-Message-State: ALyK8tLqzptiEO/h3OugiNj9oAFO8D7rO/K05EVDOMexA7Qin0UoZRN4AoyVan3l9ve4iihUK/9Pk2yVmulyPg==
-X-Received: by 10.36.130.130 with SMTP id t124mr3147042itd.42.1464997973513;
- Fri, 03 Jun 2016 16:52:53 -0700 (PDT)
-Received: by 10.64.173.167 with HTTP; Fri, 3 Jun 2016 16:52:23 -0700 (PDT)
-In-Reply-To: <20160603170621.GA3858@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=Xvd8nFulmajNZbzhMSY7JHOzQW1fSDm3YOV+daxkicU=;
+        b=fxE8S8Gc7FVso2KR1M8MS7LbyQObmmXh4TMowZ3hqhjAmie4tQCeyqgxANO6Qzo6kv
+         62tn8cecUTiNDU30TiitirJvyH+gHLOXbchjkyZk4ivGQFss+QFwnfRCMk5zS4UyLaZf
+         /KKZjmDsBC2FCglZvzCJPjAIO8hbvEBUWsiBM4UQgoph1oY2Jvw3HyHb3uduoKuyZM8l
+         ge7zemfjsAAK2Su0HdGauzh3HhSO5S39cAnFQW5UQ5/ghaUlYBcvtTCT3lAkjeud6gMO
+         hID8L2FClHS53Y2EbUHGrtRjukhBDmXSMT7Ntw4d0cCc5iP81vNsbf2r8G0M22FDQzai
+         FbMA==
+X-Gm-Message-State: ALyK8tLqJSeb7qM2QGW+Nc48oi+Dik4f39Mwjt+kfCMS+nv6OoNtXGS6aMxPjGg8aSZWfka8b/Vn4sWEHifNKg==
+X-Received: by 10.36.112.81 with SMTP id f78mr3239424itc.32.1464998545715;
+ Fri, 03 Jun 2016 17:02:25 -0700 (PDT)
+Received: by 10.79.0.30 with HTTP; Fri, 3 Jun 2016 17:02:25 -0700 (PDT)
+In-Reply-To: <xmqqzir1zvo2.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: YHK--IjQYdY4qGaCM3nOFjq_5p8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296434>
 
-On Sat, Jun 4, 2016 at 12:06 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Jun 03, 2016 at 06:08:43PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=
-=E1=BB=8Dc Duy wrote:
+On Fri, Jun 3, 2016 at 7:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 >
->> When there are lots of ref updates, each has different name length, =
-this
->> will make it easier to look because the variable part is at the end.
+>>>         static int is_mboxrd_from(const char *line) {
+>>>                 return starts_with(line + strspn(line, ">"), "From ");
+>>>         }
+>>>
+>>> is sufficiently high-level that no longer is scary, hopefully?
+>>
+>> That's nice and concise but unfortunately not useful for this case
+>> where we must respect the logical end-of-line (within the larger
+>> buffer), represented by line+linelen.
 >
-> Is it worth handling more complicated cases, where there is a similar
-> "middle", but different beginning?
->
-> One of my common refspecs is:
->
->   +refs/pull/*/head:refs/remotes/pull/*
->
-> That still shows as:
->
->   refs/pull/123/head -> pull/123
->
-> but could be:
->
->   {refs -> }/pull/123{head -> }
->
-> I actually think that _isn't_ an improvement, but I wonder if there i=
-s a
-> format that would be.
+> Hmph, none of ">", "F", "r", "o", "m", or " " is "\n"; would eol
+> still be an issue?
 
-A placeholder can still keep the variable part at the end, e.g.
-"refs/$/head -> pull/123"
---=20
-Duy
+Ah right. Sorry for being slow.
+
+Your concise version of is_mboxrd_from() is a nice alternative, as well.
