@@ -1,203 +1,280 @@
 From: Eric Wong <e@80x24.org>
-Subject: [PATCH v2 2/3] mailsplit: support unescaping mboxrd messages
-Date: Sun,  5 Jun 2016 04:46:40 +0000
-Message-ID: <20160605044641.9221-3-e@80x24.org>
+Subject: [PATCH v2 1/3] pretty: support "mboxrd" output format
+Date: Sun,  5 Jun 2016 04:46:39 +0000
+Message-ID: <20160605044641.9221-2-e@80x24.org>
 References: <20160605044641.9221-1-e@80x24.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 05 06:46:58 2016
+X-From: git-owner@vger.kernel.org Sun Jun 05 06:46:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9Pxh-0006df-FN
+	id 1b9Pxg-0006df-Mp
 	for gcvg-git-2@plane.gmane.org; Sun, 05 Jun 2016 06:46:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751027AbcFEEqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jun 2016 00:46:55 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:35404 "EHLO dcvr.yhbt.net"
+	id S1751627AbcFEEqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Jun 2016 00:46:50 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:35402 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751266AbcFEEqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jun 2016 00:46:52 -0400
+	id S1751569AbcFEEqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Jun 2016 00:46:49 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6C211FE6F;
+	by dcvr.yhbt.net (Postfix) with ESMTP id 757711FE50;
 	Sun,  5 Jun 2016 04:46:45 +0000 (UTC)
 In-Reply-To: <20160605044641.9221-1-e@80x24.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296463>
 
-This will allow us to parse the output of --pretty=mboxrd
-and the output of other mboxrd generators.
+This output format prevents format-patch output from breaking
+readers if somebody copy+pasted an mbox into a commit message.
+
+Unlike the traditional "mboxo" format, "mboxrd" is designed to
+be fully-reversible.  "mboxrd" also gracefully degrades to
+showing extra ">" in existing "mboxo" readers.
+
+This degradation is preferable to breaking message splitting
+completely, a problem I've seen in "mboxcl" due to having
+multiple, non-existent, or inaccurate Content-Length headers.
+
+"mboxcl2" is a non-starter since it's inherits the problems
+of "mboxcl" while being completely incompatible with existing
+tooling based around mailsplit.
+
+ref: http://homepage.ntlworld.com/jonathan.deboynepollard/FGA/mail-mbox-formats.html
 
 Signed-off-by: Eric Wong <e@80x24.org>
 ---
- Documentation/git-mailsplit.txt |  7 ++++++-
- builtin/mailsplit.c             | 18 ++++++++++++++++++
- t/t5100-mailinfo.sh             | 31 +++++++++++++++++++++++++++++++
- t/t5100/0001mboxrd              |  4 ++++
- t/t5100/0002mboxrd              |  5 +++++
- t/t5100/sample.mboxrd           | 19 +++++++++++++++++++
- 6 files changed, 83 insertions(+), 1 deletion(-)
- create mode 100644 t/t5100/0001mboxrd
- create mode 100644 t/t5100/0002mboxrd
- create mode 100644 t/t5100/sample.mboxrd
+ builtin/log.c           |  2 +-
+ commit.h                |  6 ++++++
+ log-tree.c              |  4 ++--
+ pretty.c                | 33 +++++++++++++++++++++++++--------
+ t/t4014-format-patch.sh | 41 +++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 75 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git-mailsplit.txt b/Documentation/git-mailsplit.txt
-index 4d1b871..e3b2a88 100644
---- a/Documentation/git-mailsplit.txt
-+++ b/Documentation/git-mailsplit.txt
-@@ -8,7 +8,8 @@ git-mailsplit - Simple UNIX mbox splitter program
- SYNOPSIS
- --------
- [verse]
--'git mailsplit' [-b] [-f<nn>] [-d<prec>] [--keep-cr] -o<directory> [--] [(<mbox>|<Maildir>)...]
-+'git mailsplit' [-b] [-f<nn>] [-d<prec>] [--keep-cr] [--mboxrd]
-+		-o<directory> [--] [(<mbox>|<Maildir>)...]
+diff --git a/builtin/log.c b/builtin/log.c
+index 099f4f7..6d6f368 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -953,7 +953,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	struct pretty_print_context pp = {0};
+ 	struct commit *head = list[0];
  
- DESCRIPTION
- -----------
-@@ -47,6 +48,10 @@ OPTIONS
- --keep-cr::
- 	Do not remove `\r` from lines ending with `\r\n`.
+-	if (rev->commit_format != CMIT_FMT_EMAIL)
++	if (!cmit_fmt_is_mail(rev->commit_format))
+ 		die(_("Cover letter needs email format"));
  
-+--mboxrd::
-+	Input is of the "mboxrd" format and "^>+From " line escaping is
-+	reversed.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-index 4859ede..3068168 100644
---- a/builtin/mailsplit.c
-+++ b/builtin/mailsplit.c
-@@ -45,6 +45,19 @@ static int is_from_line(const char *line, int len)
+ 	committer = git_committer_info(0);
+diff --git a/commit.h b/commit.h
+index b06db4d..1e04d3a 100644
+--- a/commit.h
++++ b/commit.h
+@@ -131,11 +131,17 @@ enum cmit_fmt {
+ 	CMIT_FMT_FULLER,
+ 	CMIT_FMT_ONELINE,
+ 	CMIT_FMT_EMAIL,
++	CMIT_FMT_MBOXRD,
+ 	CMIT_FMT_USERFORMAT,
  
- static struct strbuf buf = STRBUF_INIT;
- static int keep_cr;
-+static int mboxrd;
-+
-+static int is_gtfrom(const struct strbuf *buf)
+ 	CMIT_FMT_UNSPECIFIED
+ };
+ 
++static inline int cmit_fmt_is_mail(enum cmit_fmt fmt)
 +{
-+	size_t min = strlen(">From ");
-+	size_t ngt;
-+
-+	if (buf->len < min)
-+		return 0;
-+
-+	ngt = strspn(buf->buf, ">");
-+	return ngt && starts_with(buf->buf + ngt, "From ");
++	return (fmt == CMIT_FMT_EMAIL || fmt == CMIT_FMT_MBOXRD);
 +}
- 
- /* Called with the first line (potentially partial)
-  * already in buf[] -- normally that should begin with
-@@ -77,6 +90,9 @@ static int split_one(FILE *mbox, const char *name, int allow_bare)
- 			strbuf_addch(&buf, '\n');
- 		}
- 
-+		if (mboxrd && is_gtfrom(&buf))
-+			strbuf_remove(&buf, 0, 1);
 +
- 		if (fwrite(buf.buf, 1, buf.len, output) != buf.len)
- 			die_errno("cannot write output");
+ struct pretty_print_context {
+ 	/*
+ 	 * Callers should tweak these to change the behavior of pp_* functions.
+diff --git a/log-tree.c b/log-tree.c
+index 78a5381..48daf84 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -603,7 +603,7 @@ void show_log(struct rev_info *opt)
+ 	 * Print header line of header..
+ 	 */
  
-@@ -271,6 +287,8 @@ int cmd_mailsplit(int argc, const char **argv, const char *prefix)
- 			keep_cr = 1;
- 		} else if ( arg[1] == 'o' && arg[2] ) {
- 			dir = arg+2;
-+		} else if (!strcmp(arg, "--mboxrd")) {
-+			mboxrd = 1;
- 		} else if ( arg[1] == '-' && !arg[2] ) {
- 			argp++;	/* -- marks end of options */
- 			break;
-diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-index 85b3df5..1a5a546 100755
---- a/t/t5100-mailinfo.sh
-+++ b/t/t5100-mailinfo.sh
-@@ -111,4 +111,35 @@ test_expect_success 'mailinfo on message with quoted >From' '
- 	test_cmp "$TEST_DIRECTORY"/t5100/quoted-from.expect quoted-from/msg
+-	if (opt->commit_format == CMIT_FMT_EMAIL) {
++	if (cmit_fmt_is_mail(opt->commit_format)) {
+ 		log_write_email_headers(opt, commit, &ctx.subject, &extra_headers,
+ 					&ctx.need_8bit_cte);
+ 	} else if (opt->commit_format != CMIT_FMT_USERFORMAT) {
+@@ -694,7 +694,7 @@ void show_log(struct rev_info *opt)
+ 
+ 	if ((ctx.fmt != CMIT_FMT_USERFORMAT) &&
+ 	    ctx.notes_message && *ctx.notes_message) {
+-		if (ctx.fmt == CMIT_FMT_EMAIL) {
++		if (cmit_fmt_is_mail(ctx.fmt)) {
+ 			strbuf_addstr(&msgbuf, "---\n");
+ 			opt->shown_dashes = 1;
+ 		}
+diff --git a/pretty.c b/pretty.c
+index 87c4497..6abd8a1 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -92,6 +92,7 @@ static void setup_commit_formats(void)
+ 		{ "medium",	CMIT_FMT_MEDIUM,	0,	8 },
+ 		{ "short",	CMIT_FMT_SHORT,		0,	0 },
+ 		{ "email",	CMIT_FMT_EMAIL,		0,	0 },
++		{ "mboxrd",	CMIT_FMT_MBOXRD,	0,	0 },
+ 		{ "fuller",	CMIT_FMT_FULLER,	0,	8 },
+ 		{ "full",	CMIT_FMT_FULL,		0,	8 },
+ 		{ "oneline",	CMIT_FMT_ONELINE,	1,	0 }
+@@ -444,7 +445,7 @@ void pp_user_info(struct pretty_print_context *pp,
+ 	if (pp->mailmap)
+ 		map_user(pp->mailmap, &mailbuf, &maillen, &namebuf, &namelen);
+ 
+-	if (pp->fmt == CMIT_FMT_EMAIL) {
++	if (cmit_fmt_is_mail(pp->fmt)) {
+ 		if (pp->from_ident && ident_cmp(pp->from_ident, &ident)) {
+ 			struct strbuf buf = STRBUF_INIT;
+ 
+@@ -494,6 +495,7 @@ void pp_user_info(struct pretty_print_context *pp,
+ 			    show_ident_date(&ident, &pp->date_mode));
+ 		break;
+ 	case CMIT_FMT_EMAIL:
++	case CMIT_FMT_MBOXRD:
+ 		strbuf_addf(sb, "Date: %s\n",
+ 			    show_ident_date(&ident, DATE_MODE(RFC2822)));
+ 		break;
+@@ -535,7 +537,7 @@ static void add_merge_info(const struct pretty_print_context *pp,
+ {
+ 	struct commit_list *parent = commit->parents;
+ 
+-	if ((pp->fmt == CMIT_FMT_ONELINE) || (pp->fmt == CMIT_FMT_EMAIL) ||
++	if ((pp->fmt == CMIT_FMT_ONELINE) || (cmit_fmt_is_mail(pp->fmt)) ||
+ 	    !parent || !parent->next)
+ 		return;
+ 
+@@ -1614,7 +1616,7 @@ void pp_title_line(struct pretty_print_context *pp,
+ 	if (pp->after_subject) {
+ 		strbuf_addstr(sb, pp->after_subject);
+ 	}
+-	if (pp->fmt == CMIT_FMT_EMAIL) {
++	if (cmit_fmt_is_mail(pp->fmt)) {
+ 		strbuf_addch(sb, '\n');
+ 	}
+ 
+@@ -1697,6 +1699,16 @@ static void pp_handle_indent(struct pretty_print_context *pp,
+ 		strbuf_add(sb, line, linelen);
+ }
+ 
++static int is_mboxrd_from(const char *line, int len)
++{
++	/*
++	 * a line matching /^From $/ here would only have len == 4
++	 * at this point because is_empty_line would've trimmed all
++	 * trailing space
++	 */
++	return len > 4 && starts_with(line + strspn(line, ">"), "From ");
++}
++
+ void pp_remainder(struct pretty_print_context *pp,
+ 		  const char **msg_p,
+ 		  struct strbuf *sb,
+@@ -1725,8 +1737,13 @@ void pp_remainder(struct pretty_print_context *pp,
+ 		else if (pp->expand_tabs_in_log)
+ 			strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
+ 					     line, linelen);
+-		else
++		else {
++			if (pp->fmt == CMIT_FMT_MBOXRD &&
++					is_mboxrd_from(line, linelen))
++				strbuf_addch(sb, '>');
++
+ 			strbuf_add(sb, line, linelen);
++		}
+ 		strbuf_addch(sb, '\n');
+ 	}
+ }
+@@ -1750,14 +1767,14 @@ void pretty_print_commit(struct pretty_print_context *pp,
+ 	encoding = get_log_output_encoding();
+ 	msg = reencoded = logmsg_reencode(commit, NULL, encoding);
+ 
+-	if (pp->fmt == CMIT_FMT_ONELINE || pp->fmt == CMIT_FMT_EMAIL)
++	if (pp->fmt == CMIT_FMT_ONELINE || cmit_fmt_is_mail(pp->fmt))
+ 		indent = 0;
+ 
+ 	/*
+ 	 * We need to check and emit Content-type: to mark it
+ 	 * as 8-bit if we haven't done so.
+ 	 */
+-	if (pp->fmt == CMIT_FMT_EMAIL && need_8bit_cte == 0) {
++	if (cmit_fmt_is_mail(pp->fmt) && need_8bit_cte == 0) {
+ 		int i, ch, in_body;
+ 
+ 		for (in_body = i = 0; (ch = msg[i]); i++) {
+@@ -1785,7 +1802,7 @@ void pretty_print_commit(struct pretty_print_context *pp,
+ 	msg = skip_empty_lines(msg);
+ 
+ 	/* These formats treat the title line specially. */
+-	if (pp->fmt == CMIT_FMT_ONELINE || pp->fmt == CMIT_FMT_EMAIL)
++	if (pp->fmt == CMIT_FMT_ONELINE || cmit_fmt_is_mail(pp->fmt))
+ 		pp_title_line(pp, &msg, sb, encoding, need_8bit_cte);
+ 
+ 	beginning_of_body = sb->len;
+@@ -1802,7 +1819,7 @@ void pretty_print_commit(struct pretty_print_context *pp,
+ 	 * format.  Make sure we did not strip the blank line
+ 	 * between the header and the body.
+ 	 */
+-	if (pp->fmt == CMIT_FMT_EMAIL && sb->len <= beginning_of_body)
++	if (cmit_fmt_is_mail(pp->fmt) && sb->len <= beginning_of_body)
+ 		strbuf_addch(sb, '\n');
+ 
+ 	unuse_commit_buffer(commit, reencoded);
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 8049cad..8a1cab5 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1565,4 +1565,45 @@ test_expect_success 'format-patch --base overrides format.useAutoBase' '
+ 	test_cmp expected actual
  '
  
-+test_expect_success 'mailinfo unescapes with --mboxrd' '
-+	mkdir mboxrd &&
-+	git mailsplit -omboxrd --mboxrd \
-+		"$TEST_DIRECTORY"/t5100/sample.mboxrd >last &&
-+	test x"$(cat last)" = x2 &&
-+	for i in 0001 0002
-+	do
-+		git mailinfo mboxrd/msg mboxrd/patch \
-+		  <mboxrd/$i >mboxrd/out &&
-+		test_cmp "$TEST_DIRECTORY"/t5100/${i}mboxrd mboxrd/msg
-+	done &&
++test_expect_success 'format-patch --pretty=mboxrd' '
 +	sp=" " &&
-+	echo "From " >expect &&
-+	echo "From " >>expect &&
-+	echo >> expect &&
-+	cat >sp <<-INPUT_END &&
-+	From mboxrd Mon Sep 17 00:00:00 2001
-+	From: trailing spacer <sp@example.com>
-+	Subject: [PATCH] a commit with trailing space
++	cat >msg <<-INPUT_END &&
++	mboxrd should escape the body
 +
++	From could trip up a loose mbox parser
++	>From extra escape for reversibility
++	>>From extra escape for reversibility 2
++	from lower case not escaped
++	Fromm bad speling not escaped
++	 From with leading space not escaped
++
++	F
++	From
 +	From$sp
-+	>From$sp
-+
++	From    $sp
++	From	$sp
 +	INPUT_END
 +
-+	git mailsplit -f2 -omboxrd --mboxrd <sp >last &&
-+	test x"$(cat last)" = x1 &&
-+	git mailinfo mboxrd/msg mboxrd/patch <mboxrd/0003 &&
-+	test_cmp expect mboxrd/msg
++	cat >expect <<-INPUT_END &&
++	>From could trip up a loose mbox parser
++	>>From extra escape for reversibility
++	>>>From extra escape for reversibility 2
++	from lower case not escaped
++	Fromm bad speling not escaped
++	 From with leading space not escaped
++
++	F
++	From
++	From
++	From
++	From
++	INPUT_END
++
++	C=$(git commit-tree HEAD^^{tree} -p HEAD <msg) &&
++	git format-patch --pretty=mboxrd --stdout -1 $C~1..$C >patch &&
++	git grep -h --no-index -A11 \
++		"^>From could trip up a loose mbox parser" patch >actual &&
++	test_cmp expect actual
 +'
 +
  test_done
-diff --git a/t/t5100/0001mboxrd b/t/t5100/0001mboxrd
-new file mode 100644
-index 0000000..494ec55
---- /dev/null
-+++ b/t/t5100/0001mboxrd
-@@ -0,0 +1,4 @@
-+From the beginning, mbox should have been mboxrd
-+>From escaped
-+From not mangled but this line should have been escaped
-+
-diff --git a/t/t5100/0002mboxrd b/t/t5100/0002mboxrd
-new file mode 100644
-index 0000000..71343d4
---- /dev/null
-+++ b/t/t5100/0002mboxrd
-@@ -0,0 +1,5 @@
-+ >From unchanged
-+ From also unchanged
-+no trailing space, no escaping necessary and '>' was intended:
-+>From
-+
-diff --git a/t/t5100/sample.mboxrd b/t/t5100/sample.mboxrd
-new file mode 100644
-index 0000000..79ad5ae
---- /dev/null
-+++ b/t/t5100/sample.mboxrd
-@@ -0,0 +1,19 @@
-+From mboxrd Mon Sep 17 00:00:00 2001
-+From: mboxrd writer <mboxrd@example.com>
-+Date: Fri, 9 Jun 2006 00:44:16 -0700
-+Subject: [PATCH] a commit with escaped From lines
-+
-+>From the beginning, mbox should have been mboxrd
-+>>From escaped
-+From not mangled but this line should have been escaped
-+
-+From mboxrd Mon Sep 17 00:00:00 2001
-+From: mboxrd writer <mboxrd@example.com>
-+Date: Fri, 9 Jun 2006 00:44:16 -0700
-+Subject: [PATCH 2/2] another with fake From lines
-+
-+ >From unchanged
-+ From also unchanged
-+no trailing space, no escaping necessary and '>' was intended:
-+>From
-+
