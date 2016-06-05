@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 4/6] fetch: align all "remote -> local" output
-Date: Sun,  5 Jun 2016 10:11:39 +0700
-Message-ID: <20160605031141.23513-5-pclouds@gmail.com>
+Subject: [PATCH v3 5/6] fetch: reduce duplicate in ref update status lines with { -> }
+Date: Sun,  5 Jun 2016 10:11:40 +0700
+Message-ID: <20160605031141.23513-6-pclouds@gmail.com>
 References: <20160603110843.15434-1-pclouds@gmail.com>
  <20160605031141.23513-1-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,151 +13,215 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 05 05:12:26 2016
+X-From: git-owner@vger.kernel.org Sun Jun 05 05:12:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9OUC-0004Ys-LS
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Jun 2016 05:12:25 +0200
+	id 1b9OUH-0004cw-Er
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Jun 2016 05:12:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751508AbcFEDMU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Jun 2016 23:12:20 -0400
-Received: from mail-pa0-f65.google.com ([209.85.220.65]:34722 "EHLO
-	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751325AbcFEDMQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Jun 2016 23:12:16 -0400
-Received: by mail-pa0-f65.google.com with SMTP id x1so9021237pav.1
-        for <git@vger.kernel.org>; Sat, 04 Jun 2016 20:12:16 -0700 (PDT)
+	id S1751550AbcFEDMX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Jun 2016 23:12:23 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:34121 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751325AbcFEDMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Jun 2016 23:12:22 -0400
+Received: by mail-pf0-f196.google.com with SMTP id c84so14989696pfc.1
+        for <git@vger.kernel.org>; Sat, 04 Jun 2016 20:12:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qcq34VDHtiedfo9bvLYrwZv7LZBBourtWe15kdyoQhg=;
-        b=dtXypgLWRquk3rGwbQSBP5mxKclNE7Oi62Po9VAKBPK00CJ6jSCkrsWeJbiFk8Rv9g
-         o2xEYtsRMRWpA1TvlSJWuF/gvAEOrH5syvYSmIzxoULP6FkWFoLUxPhKaxbToUk33kPj
-         SU6Rqi0ueEdMk1NBSZwwzQVRVz+Z20qKrZ20wEGOAedTZqpfcAvsyqbVAn2xjLcHTn2g
-         6TGusVvX2r7TZsACY3h0ec9qrPhwXStKiPzS9NXMkXfpCx0HfYaudzl2SzTw5cMlLYug
-         TFXdL7aenlrB8iTx0R4gbvB7lLer7N4YETzQmxv66S5nTlwMElZTuX0aTynn/fbusIxm
-         4jYw==
+        bh=3uJEswSrRlYImTDK1r0XDC6cgIjgEsJwnfboj02CSV8=;
+        b=LTfCRAd2WEvIzPvj4HVEqJYbMxbkCStfzYEjz/R7hX68WFwqCwi5kbExH5AkRSTQIg
+         EYgPlUuFMZrwo4luU+Gqrz9LWPce6+IdrMuYMKZ2kSQAj9iXo7jk/YKbFeVvI2vjYvIZ
+         QxvRv70z0kFPavUlHMSkM6453GzXggvs9hG+aoA/MaYWpJFu4cyUh2Ek9nE8gN/mOLfG
+         yAkL1paYLtDqvD96ZSRFs1v4iyeFzli8R9gxq/gNhSN2FMif4zyc6WA4nT6FHPA/E279
+         GxeWYmijAwx56pSQu8LOfFmgnHZYk9aCHBGkJajjobOAP0Q79LUkuq4UZiSdzAgntMO3
+         aWAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qcq34VDHtiedfo9bvLYrwZv7LZBBourtWe15kdyoQhg=;
-        b=f4h2v7guJqiAXoUjT7gkkdY3Guabz/ktL52M4bh0IPLLZANddM+0t41hELVn+7W3s2
-         s3fkj+icPbQoW+zuKt6ZRWJ/yNjim7m/GTxICDLYXTYboztn6ngpNSWipCIUa2AhJ19Y
-         eOwaYa7+uWWbBa+XcNGa/p3Bd4wZNKftAB7DTzLMGKfKtLTCyN9rpas2EpQmUnX7kmi0
-         UJSG72PKGkzfTzFPJjz7tPOUn1Dz3lWOgzVZdHm0qGeyQaUN9LeSp9RjE3cei0G5PMIm
-         /btnXSLoLZ0r+xq7gw91FnxAg2E5z6OZOCszc0cxFJhhQ4jAW0lRkT3NCFN8BMZ67F9l
-         VP0g==
-X-Gm-Message-State: ALyK8tLhrELDsMcbPpjhuV89YFe2VODBa4HM9m8+/gkWvAYuPhmZK9m2rpZhKFERhs1crw==
-X-Received: by 10.66.132.72 with SMTP id os8mr15427529pab.63.1465096335953;
-        Sat, 04 Jun 2016 20:12:15 -0700 (PDT)
+        bh=3uJEswSrRlYImTDK1r0XDC6cgIjgEsJwnfboj02CSV8=;
+        b=eFz5FEMYiMwLP1zzcOfMSyFQSpaaL+3vTIGN3et7TivhdbqV0nkNmIsAdoWFCvwdAL
+         hIiK6An+j2eGD97sb+/N7ghn0Uu7I/aG95KcTtdshAjdYQdc0BSworgkVgwhDrc/TOr7
+         dirOVYlumHBTFqGcvEVxh7tAuWL2Cv4Hlt1VcsabaPK9+suwE93mqxAKb409iUuao3bp
+         3+RB2S58J4FGzuRCd4FFph6WcAFGPibgCXN3qxfUh20S3EBS1tsvSbxz0pCjmzf2Bvxn
+         Z5NRRS2QVeS7WlgbNXZoddovPr2favJaE3HkJknhv74kRW4MAO28ol2reLListeSo6OU
+         wCIw==
+X-Gm-Message-State: ALyK8tJBA3bLZIo5f7nU0CwzAGk2Aj/uD/dnQIg3NR4l9RSc97a5lr25dtRH8LeLVN8Ikg==
+X-Received: by 10.98.43.210 with SMTP id r201mr16391389pfr.9.1465096341188;
+        Sat, 04 Jun 2016 20:12:21 -0700 (PDT)
 Received: from ash ([115.76.150.26])
-        by smtp.gmail.com with ESMTPSA id i191sm951235pfe.8.2016.06.04.20.12.12
+        by smtp.gmail.com with ESMTPSA id 132sm18042756pfc.52.2016.06.04.20.12.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 04 Jun 2016 20:12:15 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 05 Jun 2016 10:12:11 +0700
+        Sat, 04 Jun 2016 20:12:20 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 05 Jun 2016 10:12:16 +0700
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
 In-Reply-To: <20160605031141.23513-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296456>
 
-We do align "remote -> local" output by allocating 10 columns to
-"remote". That produces aligned output only for short refs. An extra
-pass is performed to find the longest remote ref name (that does not
-produce a line longer than terminal width) to produce better aligned
-output.
+Most of the time, ref update lines are
+
+    variable-long-name -> fixed-remote/variable-long-name
+
+With fetch.output set to "compact" such a line will be shown as
+
+    { -> fixed-remote}/variable-long-name
+
+This keeps the output aligned (because the variable part is always at
+the end) and reduce duplication.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/fetch.c | 46 ++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 44 insertions(+), 2 deletions(-)
+ Documentation/config.txt    |  4 +++
+ Documentation/git-fetch.txt |  8 ++++++
+ builtin/fetch.c             | 67 +++++++++++++++++++++++++++++++++++++=
++++++++-
+ 3 files changed, 78 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2e1b2e4..a59aa32 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1220,6 +1220,10 @@ fetch.prune::
+ 	If true, fetch will automatically behave as if the `--prune`
+ 	option was given on the command line.  See also `remote.<name>.prune`=
+=2E
+=20
++fetch.output::
++	Valid values are "compact" or "full". See OUTPUT section in
++	linkgit:git-fetch[1] for detail.
++
+ format.attach::
+ 	Enable multipart/mixed attachments as the default for
+ 	'format-patch'.  The value can also be a double quoted string
+diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+index 6c6b2c1..856796b 100644
+--- a/Documentation/git-fetch.txt
++++ b/Documentation/git-fetch.txt
+@@ -113,6 +113,14 @@ representing the status of a single ref. Each line=
+ is of the form:
+  <flag> <summary> <from> -> <to> (<reason>)
+ -------------------------------
+=20
++When configuration variable `fetch.output` contains `compact` and
++`from` and `to` share a common suffix, the line could be displayed in
++the form:
++
++-------------------------------
++ <flag> <summary> {<from> -> <to>}<common-suffix> (<reason>)
++-------------------------------
++
+ The status of up-to-date refs is shown only if --verbose option is
+ used.
+=20
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 8177f90..c42795b 100644
+index c42795b..e2ca6bc 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -15,6 +15,7 @@
- #include "submodule.h"
- #include "connected.h"
- #include "argv-array.h"
-+#include "utf8.h"
-=20
- static const char * const builtin_fetch_usage[] =3D {
- 	N_("git fetch [<options>] [<repository> [<refspec>...]]"),
-@@ -449,14 +450,53 @@ fail:
- 			   : STORE_REF_ERROR_OTHER;
+@@ -451,6 +451,7 @@ fail:
  }
 =20
--#define REFCOL_WIDTH  10
-+static int refcol_width =3D 10;
-+
-+static void adjust_refcol_width(const struct ref *ref)
-+{
-+	int max, rlen, llen;
-+
-+	/* uptodate lines are only shown on high verbosity level */
-+	if (!verbosity && !oidcmp(&ref->peer_ref->old_oid, &ref->old_oid))
-+		return;
-+
-+	max    =3D term_columns();
-+	rlen   =3D utf8_strwidth(prettify_refname(ref->name));
-+	llen   =3D utf8_strwidth(prettify_refname(ref->peer_ref->name));
-+
-+	/*
-+	 * rough estimation to see if the output line is too long and
-+	 * should not be counted (we can't do precise calculation
-+	 * anyway because we don't know if the error explanation part
-+	 * will be printed in update_local_ref)
-+	 */
-+	if (21 /* flag and summary */ + rlen + 4 /* -> */ + llen >=3D max)
-+		return;
-+
-+	if (refcol_width < rlen)
-+		refcol_width =3D rlen;
-+}
-+
-+static void prepare_format_display(struct ref *ref_map)
-+{
-+	struct ref *rm;
-+
-+	for (rm =3D ref_map; rm; rm =3D rm->next) {
-+		if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW ||
-+		    !rm->peer_ref ||
-+		    !strcmp(rm->name, "HEAD"))
-+			continue;
-+
-+		adjust_refcol_width(rm);
-+	}
-+}
+ static int refcol_width =3D 10;
++static int compact_format;
 =20
+ static void adjust_refcol_width(const struct ref *ref)
+ {
+@@ -480,6 +481,19 @@ static void adjust_refcol_width(const struct ref *=
+ref)
+ static void prepare_format_display(struct ref *ref_map)
+ {
+ 	struct ref *rm;
++	const char *format =3D "full";
++
++	git_config_get_string_const("fetch.output", &format);
++	if (!strcasecmp(format, "full"))
++		compact_format =3D 0;
++	else if (!strcasecmp(format, "compact"))
++		compact_format =3D 1;
++	else
++		die(_("configuration fetch.output contains invalid value %s"),
++		    format);
++
++	if (compact_format)
++		return;
+=20
+ 	for (rm =3D ref_map; rm; rm =3D rm->next) {
+ 		if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW ||
+@@ -491,12 +505,63 @@ static void prepare_format_display(struct ref *re=
+f_map)
+ 	}
+ }
+=20
++static int common_suffix_length(const char *a, const char *b)
++{
++	const char *pa =3D a + strlen(a);
++	const char *pb =3D b + strlen(b);
++	int count =3D 0, final_count =3D 0;
++
++	while (pa > a && pb > b && pa[-1] =3D=3D pb[-1]) {
++		pa--;
++		pb--;
++		count++;
++		if (*pa =3D=3D '/' ||
++		    /*
++		     * if a and b are "abc" and "origin/abc" respectively,
++		     * accept "a" as the suffix boundary too.
++		     */
++		    (pa =3D=3D a && pb > b && pb[-1] =3D=3D '/') ||
++		    (pb =3D=3D b && pa > a && pa[-1] =3D=3D '/'))
++			final_count =3D count;
++	}
++
++	return final_count;
++}
++
++static void print_remote_to_local(struct strbuf *display,
++				  const char *remote, const char *local)
++{
++	strbuf_addf(display, "%-*s -> %s", refcol_width, remote, local);
++}
++
++static void print_compact(struct strbuf *display,
++			  const char *remote, const char *local)
++{
++	int len =3D common_suffix_length(remote, local);
++
++	if (len) {
++		strbuf_addf(display, "{%.*s -> %.*s}%s",
++			    (int)strlen(remote) - len, remote,
++			    (int)strlen(local) - len, local,
++			    remote + strlen(remote) - len);
++		return;
++	}
++	print_remote_to_local(display, remote, local);
++}
++
  static void format_display(struct strbuf *display, char code,
  			   const char *summary, const char *error,
  			   const char *remote, const char *local)
  {
  	strbuf_addf(display, "%c %-*s ", code, TRANSPORT_SUMMARY(summary));
--	strbuf_addf(display, "%-*s -> %s", REFCOL_WIDTH, remote, local);
-+	strbuf_addf(display, "%-*s -> %s", refcol_width, remote, local);
+-	strbuf_addf(display, "%-*s -> %s", refcol_width, remote, local);
++	switch (compact_format) {
++	case 0:
++		print_remote_to_local(display, remote, local);
++		break;
++	case 1:
++		print_compact(display, remote, local);
++		break;
++	}
  	if (error)
  		strbuf_addf(display, "  (%s)", error);
  }
-@@ -618,6 +658,8 @@ static int store_updated_refs(const char *raw_url, =
-const char *remote_name,
- 		goto abort;
- 	}
-=20
-+	prepare_format_display(ref_map);
-+
- 	/*
- 	 * We do a pass for each fetch_head_status type in their enum order, =
-so
- 	 * merged entries are written before not-for-merge. That lets readers
 --=20
 2.8.2.524.g6ff3d78
