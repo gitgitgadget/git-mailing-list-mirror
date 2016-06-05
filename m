@@ -1,75 +1,113 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v1 1/1] connect: [host:port] is lagacy for ssh
-Date: Sun, 5 Jun 2016 14:56:29 -0400
-Message-ID: <CAPig+cQRVtEXrv-s1pTBK1vym2JN5ZWUE5i0eNdH0CEDxoqz-A@mail.gmail.com>
-References: <xmqqinxozzuj.fsf@gitster.mtv.corp.google.com> <1465124993-3379-1-git-send-email-tboegi@web.de>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: Re: Creating empty commits with --intent-to-add
+Date: Sun, 5 Jun 2016 21:02:07 +0200
+Message-ID: <fefa95d8-f1ef-5007-ad99-a26b01471243@virtuell-zuhause.de>
+References: <fdf86f73-0885-7191-2932-f10feba0bdfc@virtuell-zuhause.de>
+ <CACsJy8A8-RgpYxYsJBaLrMia7D3DfQPr4cxASNsaLyCnmgm3ZQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Mike Hommey <mh@glandium.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Jun 05 20:56:47 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 05 21:02:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9dE4-00025g-H5
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Jun 2016 20:56:44 +0200
+	id 1b9dJP-0006cC-TK
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Jun 2016 21:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751556AbcFES4b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Jun 2016 14:56:31 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:35476 "EHLO
-	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750956AbcFES4a convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2016 14:56:30 -0400
-Received: by mail-it0-f66.google.com with SMTP id z123so3911906itg.2
-        for <git@vger.kernel.org>; Sun, 05 Jun 2016 11:56:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=BAsVWLNhJXlVGeyCz3bVN4QgAF1ciDfrjcZF2od7Qas=;
-        b=KNYCzT69Nn0GYoj7z2+EBkHQdBMHYhVaD8EGUGxNfxjOO4QGt7WR3YRc/sYBIUKHzW
-         VmeDmcrRzTv02haFeNolScX4yuJ2rCHsEyn6aMvjIkyb6tssX7L5MTKrU+zrvCS3UWxB
-         ZIQzm9yW1KfSUs18mmwKI3JNqR4xdaVcA1TUQXextmVErurOonigmWZXxlSulQqRoxBq
-         L5G75W8qvvvZjlte2qLK1oHI1Fx8OccSgjYNTo2R+OzrqAfIWBFOmN70PlbECqrrezAj
-         Sk0AYumm9iG8RuxzageIN8Mo8ppBUoGhr/2U5Lz8WUC4BKo3EWcspDgOJTXXhW9TAD9g
-         MqqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=BAsVWLNhJXlVGeyCz3bVN4QgAF1ciDfrjcZF2od7Qas=;
-        b=JiNSPWoo9Yh3xDTEsXGO57ulipV78OTE2d5JfXgvoWGSUMCYiYwHW8HuGzvYECedOU
-         de9QbruEzK7ewNxa1Da4+BWs/PV7zdJIr+YytRs2VjPDGbgPHpH55Z95M8exVPSybDxG
-         Pd44dy3jo+nu9BjikMzBbL5uctJG1HbOaFwMBjSLG1J0EBKZcq2aSdQmIhliJZpqY6nv
-         inRxIAaaRWMOX1ZvndZ/WVyD1T+k1jfvenGhtDAWwp9eDGuJVrqaCxpNb7+qtPKqMHyh
-         JHdoZAR0hrmxoEizF0yP0XRrlKUvfap/y04mBUJ9oMbjczqO4pwFvItDUn13lecBcpj1
-         7DOA==
-X-Gm-Message-State: ALyK8tKJeMndbMv921MDPXjLY2JWs6WL71+sDQ52XNrp5OPTRmfP1Sqn/3E28t7z2MJXti7Ro1uWwAkephl7vQ==
-X-Received: by 10.36.207.137 with SMTP id y131mr12202578itf.32.1465152989576;
- Sun, 05 Jun 2016 11:56:29 -0700 (PDT)
-Received: by 10.79.0.30 with HTTP; Sun, 5 Jun 2016 11:56:29 -0700 (PDT)
-In-Reply-To: <1465124993-3379-1-git-send-email-tboegi@web.de>
-X-Google-Sender-Auth: 2iTHY62S6AXKfDc-GlWHr_5gOBU
+	id S1751680AbcFETCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Jun 2016 15:02:12 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:35833 "EHLO
+	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751169AbcFETCL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2016 15:02:11 -0400
+Received: from p4fc87c53.dip0.t-ipconnect.de ([79.200.124.83] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	id 1b9dJI-0005ab-N4; Sun, 05 Jun 2016 21:02:08 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
+In-Reply-To: <CACsJy8A8-RgpYxYsJBaLrMia7D3DfQPr4cxASNsaLyCnmgm3ZQ@mail.gmail.com>
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1465153331;4a4d7cd2;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296478>
 
-On Sun, Jun 5, 2016 at 7:09 AM,  <tboegi@web.de> wrote:
-> connect: [host:port] is lagacy for ssh
+Am 05.06.2016 um 05:15 schrieb Duy Nguyen:
+> On Sun, Jun 5, 2016 at 12:54 AM, Thomas Braun
+> <thomas.braun@virtuell-zuhause.de> wrote:
+>> Hi,
+>>
+>> the following procedure
+>>
+>> mkdir test
+>> cd test
+>> git init
+>> echo 1 >file
+>> git add --intent-to-add file
+>> git commit -m "blurb"
+>>
+>> results in a commit. I would have expected that git commit complains,
+>> as I have not pased the --allow-empty option.
+>>
+>> Is that intended behaviour?
+> 
+> It's a bug. I'll get to it very soon.
 
-s/lagacy/legacy/
+Thanks for looking into that!
 
-> Early versions of the parser in connect.c handled
-> git clone [host:123]:/path the same as
-> git clone ssh://host:123/path
->
-> Keep that feature as legacy, but disable it for all other protocols.
-> Everything inside [] should go into the host part.
->
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Encouraged by your statement I've done some bisecting via
+
+#!/bin/sh
+
+git=../git/git
+( make -j10 git >/dev/null || exit 125 ) &&
+cd .. &&
+rm -rf test &&
+mkdir test &&
+cd test &&
+$git init &&
+echo 1>file &&
+$git add --intent-to-add file  &&
+$git commit -m "blurb"  &&
+exit 1
+
+exit 0
+
+and found 3f6d56de (commit: ignore intent-to-add entries instead of refusing, 2012-02-07)
+as first "bad" commit.
+
+This commit states
+
+#################
+commit: ignore intent-to-add entries instead of refusing
+
+Originally, "git add -N" was introduced to help users from forgetting to
+add new files to the index before they ran "git commit -a".  As an attempt
+to help them further so that they do not forget to say "-a", "git commit"
+to commit the index as-is was taught to error out, reminding the user that
+they may have forgotten to add the final contents of the paths before
+running the command.
+
+This turned out to be a false "safety" that is useless.  If the user made
+changes to already tracked paths and paths added with "git add -N", and
+then ran "git add" to register the final contents of the paths added with
+"git add -N", "git commit" will happily create a commit out of the index,
+without including the local changes made to the already tracked paths. It
+was not a useful "safety" measure to prevent "forgetful" mistakes from
+happening.
+
+It turns out that this behaviour is not just a useless false "safety", but
+actively hurts use cases of "git add -N" that were discovered later and
+have become popular, namely, to tell Git to be aware of these paths added
+by "git add -N", so that commands like "git status" and "git diff" would
+include them in their output, even though the user is not interested in
+including them in the next commit they are going to make.
+
+Fix this ancient UI mistake, and instead make a commit from the index
+ignoring the paths added by "git add -N" without adding real contents.
+#################
