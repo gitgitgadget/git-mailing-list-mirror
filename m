@@ -1,113 +1,144 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: Creating empty commits with --intent-to-add
-Date: Sun, 5 Jun 2016 21:02:07 +0200
-Message-ID: <fefa95d8-f1ef-5007-ad99-a26b01471243@virtuell-zuhause.de>
-References: <fdf86f73-0885-7191-2932-f10feba0bdfc@virtuell-zuhause.de>
- <CACsJy8A8-RgpYxYsJBaLrMia7D3DfQPr4cxASNsaLyCnmgm3ZQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 24/26] upload-pack: split check_unreachable() in two, prep
+ for get_reachable_list()
+Date: Sun, 5 Jun 2016 15:43:16 -0400
+Message-ID: <CAPig+cTyzA1HFt=K14UBPsKhWhHmy0WX8=tru7HQmP3m+GpGgQ@mail.gmail.com>
+References: <1460552110-5554-1-git-send-email-pclouds@gmail.com> <1460552110-5554-25-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 05 21:02:16 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 05 21:43:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9dJP-0006cC-TK
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Jun 2016 21:02:16 +0200
+	id 1b9dxD-0006oj-C0
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Jun 2016 21:43:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751680AbcFETCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jun 2016 15:02:12 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:35833 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751169AbcFETCL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2016 15:02:11 -0400
-Received: from p4fc87c53.dip0.t-ipconnect.de ([79.200.124.83] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1b9dJI-0005ab-N4; Sun, 05 Jun 2016 21:02:08 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.1
-In-Reply-To: <CACsJy8A8-RgpYxYsJBaLrMia7D3DfQPr4cxASNsaLyCnmgm3ZQ@mail.gmail.com>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1465153331;4a4d7cd2;
+	id S1752780AbcFETnV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Jun 2016 15:43:21 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:34100 "EHLO
+	mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751868AbcFETnS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2016 15:43:18 -0400
+Received: by mail-it0-f68.google.com with SMTP id k76so4357532ita.1
+        for <git@vger.kernel.org>; Sun, 05 Jun 2016 12:43:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=e+c5VIPTjDtgS/PJ+9Uxsg6D5yy+FnJeIp+J7l811j0=;
+        b=g8QdhwfyE/QceU2LXrXy+XPFlllfJ9Cw40VhgALHwcw0GMvush9+6POITkEZ4CIzXx
+         EglQPhWiD6ta44CaPBuFpQtTqy2gEvow2ifOpDKJwqwaSR+ZHp8FI9MjSXl9h0/DjFUu
+         7wlS9t7jF/Za8wFSKJunW5OMzNbmwQU9IwFl8RuKJMhr6hQpJQrHKCo93DudtVhdRSr8
+         pO4p1Zg0+JEFKisuxTfEWI6sdyJ0v+a8AS2WQeyAdmoGA0pqhvHTFDbpUFfLdC2EaaaV
+         zKWxAVFQ6NoHa5JzjNyiOJd3cD+zE+WSwxriojKDxqTqRO7mIEZErlpXwcxAz3DrRvNQ
+         kqGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=e+c5VIPTjDtgS/PJ+9Uxsg6D5yy+FnJeIp+J7l811j0=;
+        b=UebMPWOm+iYmqPvM/Xv0jNjkxtSuPZrdmEKtH8ZpEsUw26kCMjTV6rH4lXKiJh7GzO
+         0PZka5DyRSrLHMEi3+K9x0ZVBKQQesSGeVvAQeI1BzH8w6/gGHcQ9SkynU/hWLpsPzPm
+         hNb+h7E0Zf3WRwRLAXq8vmmFNignJ+qT33rI3jHvWPhstLpbvDHyyfMRVTkl37gZRJsf
+         FqZa4DHxApbdhgHswTQuV7SAoj3sTKFqa+V4mP6/otsgvVrNF+TQ+2DDns3Lfz+6id3r
+         TTwg3ZeNZyjzvz1k+l0ONL+h+IArHTREmul8YLFJg9kD1LcTuzSbcTMuDliL76/bfUs0
+         cQMQ==
+X-Gm-Message-State: ALyK8tLpujkBJeIaT0nQfsFCJHbBvHtoYIQTgWH2BCnUB2Qerg/mPt5SkyymwoMVmKdOTnOXLQcbgysoscNeCg==
+X-Received: by 10.36.29.137 with SMTP id 131mr11666640itj.84.1465155797350;
+ Sun, 05 Jun 2016 12:43:17 -0700 (PDT)
+Received: by 10.79.0.30 with HTTP; Sun, 5 Jun 2016 12:43:16 -0700 (PDT)
+In-Reply-To: <1460552110-5554-25-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: hs98VFJ6fFhMeWotwSh-HXdfIbY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296479>
 
-Am 05.06.2016 um 05:15 schrieb Duy Nguyen:
-> On Sun, Jun 5, 2016 at 12:54 AM, Thomas Braun
-> <thomas.braun@virtuell-zuhause.de> wrote:
->> Hi,
->>
->> the following procedure
->>
->> mkdir test
->> cd test
->> git init
->> echo 1 >file
->> git add --intent-to-add file
->> git commit -m "blurb"
->>
->> results in a commit. I would have expected that git commit complains,
->> as I have not pased the --allow-empty option.
->>
->> Is that intended behaviour?
-> 
-> It's a bug. I'll get to it very soon.
+On Wed, Apr 13, 2016 at 8:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> diff --git a/upload-pack.c b/upload-pack.c
+> @@ -452,24 +452,24 @@ static int is_our_ref(struct object *o)
+> -static int check_unreachable(struct object_array *src)
+> +static int do_reachable_revlist(struct child_process *cmd,
+> +                               struct object_array *src)
+> @@ -487,8 +487,8 @@ static int check_unreachable(struct object_array =
+*src)
+>                 if (!is_our_ref(o))
+>                         continue;
+>                 memcpy(namebuf + 1, oid_to_hex(&o->oid), GIT_SHA1_HEX=
+SZ);
+> -               if (write_in_full(cmd.in, namebuf, 42) < 0)
+> -                       return 0;
+> +               if (write_in_full(cmd->in, namebuf, 42) < 0)
+> +                       return -1;
+>         }
+>         namebuf[40] =3D '\n';
+>         for (i =3D 0; i < src->nr; i++) {
+> @@ -496,18 +496,29 @@ static int check_unreachable(struct object_arra=
+y *src)
+>                 if (is_our_ref(o))
+>                         continue;
+>                 memcpy(namebuf, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
+> -               if (write_in_full(cmd.in, namebuf, 41) < 0)
+> -                       return 0;
+> +               if (write_in_full(cmd->in, namebuf, 41) < 0)
+> +                       return -1;
+>         }
+> -       close(cmd.in);
+> +       close(cmd->in);
+>
+>         sigchain_pop(SIGPIPE);
 
-Thanks for looking into that!
+Not a new issue, but does it matter that there are early returns
+before sigchain_pop()?
 
-Encouraged by your statement I've done some bisecting via
+> +       return 0;
+> +}
+> +
+> +static int check_unreachable(struct object_array *src)
+> +{
+> +       struct child_process cmd =3D CHILD_PROCESS_INIT;
+> +       int i, ret =3D do_reachable_revlist(&cmd, src);
+> +       char buf[1];
+> +
+> +       if (ret < 0)
+> +               return 0;
 
-#!/bin/sh
+Nit: It might be a bit easier to see what this conditional is checking
+if it is closer to the code which sets 'ret'. Perhaps either:
 
-git=../git/git
-( make -j10 git >/dev/null || exit 125 ) &&
-cd .. &&
-rm -rf test &&
-mkdir test &&
-cd test &&
-$git init &&
-echo 1>file &&
-$git add --intent-to-add file  &&
-$git commit -m "blurb"  &&
-exit 1
+    char buf[1];
+    int i, ret =3D ...;
 
-exit 0
+    if (ret < 0)
 
-and found 3f6d56de (commit: ignore intent-to-add entries instead of refusing, 2012-02-07)
-as first "bad" commit.
+or:
 
-This commit states
+    char buf[1];
+    int i, ret;
 
-#################
-commit: ignore intent-to-add entries instead of refusing
+    ret =3D ...;
+    if (ret < 0)
 
-Originally, "git add -N" was introduced to help users from forgetting to
-add new files to the index before they ran "git commit -a".  As an attempt
-to help them further so that they do not forget to say "-a", "git commit"
-to commit the index as-is was taught to error out, reminding the user that
-they may have forgotten to add the final contents of the paths before
-running the command.
+>         /*
+>          * The commits out of the rev-list are not ancestors of
+>          * our ref.
+>          */
+> -       i =3D read_in_full(cmd.out, namebuf, 1);
+> +       i =3D read_in_full(cmd.out, buf, 1);
 
-This turned out to be a false "safety" that is useless.  If the user made
-changes to already tracked paths and paths added with "git add -N", and
-then ran "git add" to register the final contents of the paths added with
-"git add -N", "git commit" will happily create a commit out of the index,
-without including the local changes made to the already tracked paths. It
-was not a useful "safety" measure to prevent "forgetful" mistakes from
-happening.
+s/1/sizeof(buf)/ perhaps or does that make the intent less clear?
 
-It turns out that this behaviour is not just a useless false "safety", but
-actively hurts use cases of "git add -N" that were discovered later and
-have become popular, namely, to tell Git to be aware of these paths added
-by "git add -N", so that commands like "git status" and "git diff" would
-include them in their output, even though the user is not interested in
-including them in the next commit they are going to make.
-
-Fix this ancient UI mistake, and instead make a commit from the index
-ignoring the paths added by "git add -N" without adding real contents.
-#################
+>         if (i)
+>                 return 0;
+>         close(cmd.out);
