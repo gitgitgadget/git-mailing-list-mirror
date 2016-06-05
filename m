@@ -1,9 +1,10 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 0/6] Better ref summary alignment in "git fetch"
-Date: Sun,  5 Jun 2016 10:11:35 +0700
-Message-ID: <20160605031141.23513-1-pclouds@gmail.com>
+Subject: [PATCH v3 1/6] git-fetch.txt: document fetch output
+Date: Sun,  5 Jun 2016 10:11:36 +0700
+Message-ID: <20160605031141.23513-2-pclouds@gmail.com>
 References: <20160603110843.15434-1-pclouds@gmail.com>
+ <20160605031141.23513-1-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -12,89 +13,142 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 05 05:12:14 2016
+X-From: git-owner@vger.kernel.org Sun Jun 05 05:12:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9OU1-0004PM-Gf
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Jun 2016 05:12:13 +0200
+	id 1b9OU2-0004PM-81
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Jun 2016 05:12:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751370AbcFEDL4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Jun 2016 23:11:56 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36295 "EHLO
+	id S1751387AbcFEDMD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Jun 2016 23:12:03 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36315 "EHLO
 	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751325AbcFEDLz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Jun 2016 23:11:55 -0400
-Received: by mail-pf0-f196.google.com with SMTP id 62so15001507pfd.3
-        for <git@vger.kernel.org>; Sat, 04 Jun 2016 20:11:55 -0700 (PDT)
+	with ESMTP id S1751325AbcFEDMB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Jun 2016 23:12:01 -0400
+Received: by mail-pf0-f196.google.com with SMTP id 62so15001649pfd.3
+        for <git@vger.kernel.org>; Sat, 04 Jun 2016 20:12:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1VqokyqTBJd9iUhxGTB+7XNPctQJxiHX2uYvVs8lLGE=;
-        b=ilEshunF+VeFUJBhUzrl1Cff6Hj3xh1wf1KQmJLm+wdQb87lShRiENx8OBiY9T4ZAh
-         BFxd6IuLgTCMy/AEXr4WsBSHYZL8xEA6tjowDQ7mxuq0FudmmOMGHlUMqcMaDWqVMjbS
-         AYGHtIUFUwsMdTAZEohojfmFy1pzVEZeeohcaPkLTtaoqe5kZKlzhv7qgdNv/hl022Gw
-         ZqGvbBPD7YVwaLnBxF492p49KVZI2A+SywpZb/GeATlLxTwAwwq4e9P26o9m2feTRtpT
-         MZWXmW2Thakwffa2P9rBpya7bICDoX6GW29tBaiLXwwRimP9yTt3hVmg4as1LDzDvuei
-         G+Kg==
+        bh=73+N2jWbqQwx8FrHlb13ZKZarWBCc5PNaver1tr0zRU=;
+        b=We4Sf06A5bnMTifbtotQ1LT/ufM3Qo+yxbix9Dk+8Jzr/TYcPp7hfzMxLXM2IxLUpx
+         ONRoWNUXT6XtP4naVk62HyV8s7DKG2x32QEmHPoI+fSCsjw50Dj//y1wV/By6t9nDvnb
+         9KNF/O+IFN+nxHfAU063k8CO/QUjR7POAUoAceC4Enaxq5IV//ZlIx92KX531yiLN/Hn
+         4cJMjyXorKvvHflieO9rpatTrnYfFV2JbYsRHYtcsNDocRaiooe/qQZx7WL53JoYQoVC
+         mONS1XBguTZdvNFX/zklK/4OYD+cf440KlXbezLR/prKu/7/hzQwIHABCMjUEV1RtjNO
+         MrZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1VqokyqTBJd9iUhxGTB+7XNPctQJxiHX2uYvVs8lLGE=;
-        b=RwhnzwSnBO1M4dZLLfeKHwaEvIJrPDl9+PY/B/vJDgrQ5p/p02RlkEtrYAbUdE6oeL
-         c1EEEFQEjimbpomZU/oq20ieKdcDJL00pAscF7TDNgw0XRyaLa7O+2eTo5xyhfuzw/2G
-         Tqbugk6sD2zcFxdnso1Bo2tswfmWr+uHsQiwp0wXhNklgAltC5UVpqjQIR+W0pJqGLJL
-         /hSRDcCJuCmQJEzJRj37wDW1uAs/2idYN0AVtN9gALJVIo0tX06OQuXRXCfK3JuaCrfO
-         jvI8qo91ddDGFduervvLZ75FVn/b+3Gtpv3q3G9i0vJ2zAXP+rlaefZVIzY4v8J0frv+
-         zhNQ==
-X-Gm-Message-State: ALyK8tIy+WmA8E8FJoxvFnZDwyH2Ap326M6GLHrsP9hdyUwUn6N3ADIy00QLKSTh6EBcKA==
-X-Received: by 10.98.89.213 with SMTP id k82mr16277635pfj.99.1465096314575;
-        Sat, 04 Jun 2016 20:11:54 -0700 (PDT)
+        bh=73+N2jWbqQwx8FrHlb13ZKZarWBCc5PNaver1tr0zRU=;
+        b=MoMxAf5TYU3VORnl2USa0J6UWVFXvUToebiKE13EPt+496PFdFw0kfoEwvoL7z6x78
+         NjSqLqvuYGpTKo7sYjoZJGM+kJoNq/psKhb5tIUhMdoc/0X88TJ+safi/nFtxsWxnMeX
+         NtG+Ka3yV5QDXxs+Cllt3cnYiNXSQPnIaiXuMMrtnCDgwyNpZb68476jYBc5OMkfIUEv
+         RONSsqaTgbVulO7qNHgy4DeQYroY1r4mAF8dbMzSV3l2KAMQcO0dVE5Y6M5ANWIx8V9J
+         adlfH+ENvIaMMMVCBaxIH49Ro/B4KPNyEubTrFanEELpXH/jPX8iMBNDDHzBMfmbBbk2
+         gJbA==
+X-Gm-Message-State: ALyK8tIwClUCO7E9Bv5pwgAaFj2YUonJB4v2IU2wkhF7MbrB3Js7/r4HexB9Y53/7IEyrQ==
+X-Received: by 10.98.204.5 with SMTP id a5mr16091148pfg.37.1465096320446;
+        Sat, 04 Jun 2016 20:12:00 -0700 (PDT)
 Received: from ash ([115.76.150.26])
-        by smtp.gmail.com with ESMTPSA id ez6sm15648573pab.12.2016.06.04.20.11.51
+        by smtp.gmail.com with ESMTPSA id c15sm18012412pfj.65.2016.06.04.20.11.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 04 Jun 2016 20:11:53 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 05 Jun 2016 10:11:49 +0700
+        Sat, 04 Jun 2016 20:11:59 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 05 Jun 2016 10:11:54 +0700
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
-In-Reply-To: <20160603110843.15434-1-pclouds@gmail.com>
+In-Reply-To: <20160605031141.23513-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296452>
 
-This is so people can play with new output format... v3 adds one extra
-pass to calculate width (4/6) and swap flag code 'x' and '-' with '-'
-and 't' to align with push flag code (3/6). These are definitely good
-improvements.
+This documents the ref update status of fetch. The structure of this
+output is defined in [1]. The ouput content is refined a bit in [2]
+[3] [4].
 
-5/6 and 6/6 add two new formats "{ -> origin}/abc" and "abc -> origin/$=
-".
-=46ormat output is selected by config key fetch.output. I'm tempted to
-replace '$' with '&' as it usually means "what was matched" in s///
+This patch is a copy from git-push.txt, modified a bit because the
+flag '-' means different things in push (delete) and fetch (tag
+update).
 
-I don't think we'll want both new formats in the end. One of them (or
-a new format) will win as the optional format. The aligned "remote ->
-local" should stay default format. And later on we could break lines
-at "->" for very long lines as Marc suggested.
+PS. For code archaeologists, the discussion mentioned in [1] is
+probably [5].
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (6):
-  git-fetch.txt: document fetch output
-  fetch: refactor ref update status formatting code
-  fetch: change flag code for displaying tag update and deleted ref
-  fetch: align all "remote -> local" output
-  fetch: reduce duplicate in ref update status lines with { -> }
-  fetch: reduce duplicate in ref update status lines with placeholder
+[1] 165f390 (git-fetch: more terse fetch output - 2007-11-03)
+[2] 6315472 (fetch: report local storage errors ... - 2008-06-26)
+[3] f360d84 (builtin-fetch: add --prune option - 2009-11-10)
+[4] 0997ada (fetch: describe new refs based on where... - 2012-04-16)
+[5] http://thread.gmane.org/gmane.comp.version-control.git/61657
 
- Documentation/config.txt    |   4 +
- Documentation/git-fetch.txt |  54 ++++++++++
- builtin/fetch.c             | 233 ++++++++++++++++++++++++++++++++++++=
---------
- 3 files changed, 251 insertions(+), 40 deletions(-)
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Documentation/git-fetch.txt | 46 +++++++++++++++++++++++++++++++++++++=
+++++++++
+ 1 file changed, 46 insertions(+)
 
+diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+index efe56e0..a0d0539 100644
+--- a/Documentation/git-fetch.txt
++++ b/Documentation/git-fetch.txt
+@@ -99,6 +99,52 @@ The latter use of the `remote.<repository>.fetch` va=
+lues can be
+ overridden by giving the `--refmap=3D<refspec>` parameter(s) on the
+ command line.
+=20
++OUTPUT
++------
++
++The output of "git fetch" depends on the transport method used; this
++section describes the output when fetch over the Git protocol (either
++locally or via ssh).
++
++The status of the fetch is output in tabular form, with each line
++representing the status of a single ref. Each line is of the form:
++
++-------------------------------
++ <flag> <summary> <from> -> <to> (<reason>)
++-------------------------------
++
++The status of up-to-date refs is shown only if --verbose option is
++used.
++
++flag::
++	A single character indicating the status of the ref:
++(space);; for a successfully fetched fast-forward;
++`+`;; for a successful forced update;
++`x`;; for a successfully deleted ref;
++`-`;; for a successful tag update;
++`*`;; for a successfully fetched new ref;
++`!`;; for a ref that was rejected or failed to update; and
++`=3D`;; for a ref that was up to date and did not need fetching.
++
++summary::
++	For a successfully fetched ref, the summary shows the old and new
++	values of the ref in a form suitable for using as an argument to
++	`git log` (this is `<old>..<new>` in most cases, and
++	`<old>...<new>` for forced non-fast-forward updates).
++
++from::
++	The name of the remote ref being fetched from, minus its
++	`refs/<type>/` prefix. In the case of deletion, the name of
++	the remote ref is "(none)".
++
++to::
++	The name of the local ref being updated, minus its
++	`refs/<type>/` prefix.
++
++reason::
++	A human-readable explanation. In the case of successfully fetched
++	refs, no explanation is needed. For a failed ref, the reason for
++	failure is described.
+=20
+ EXAMPLES
+ --------
 --=20
 2.8.2.524.g6ff3d78
