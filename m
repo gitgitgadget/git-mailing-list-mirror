@@ -1,80 +1,114 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Creating empty commits with --intent-to-add
-Date: Sun, 5 Jun 2016 10:15:52 +0700
-Message-ID: <CACsJy8A8-RgpYxYsJBaLrMia7D3DfQPr4cxASNsaLyCnmgm3ZQ@mail.gmail.com>
-References: <fdf86f73-0885-7191-2932-f10feba0bdfc@virtuell-zuhause.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 18/26] t5500, t5539: tests for shallow depth since a
+ specific date
+Date: Sun, 5 Jun 2016 00:43:31 -0400
+Message-ID: <CAPig+cS8CrnF8N8SfPRtnug8r6O70M1qhnjaZTQtbgGNxwN4Ag@mail.gmail.com>
+References: <1460552110-5554-1-git-send-email-pclouds@gmail.com> <1460552110-5554-19-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-X-From: git-owner@vger.kernel.org Sun Jun 05 05:16:27 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 05 06:43:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9OY6-0007WM-L2
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Jun 2016 05:16:27 +0200
+	id 1b9Puc-0004J5-Ll
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Jun 2016 06:43:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751411AbcFEDQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Jun 2016 23:16:23 -0400
-Received: from mail-it0-f43.google.com ([209.85.214.43]:38138 "EHLO
-	mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751325AbcFEDQW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Jun 2016 23:16:22 -0400
-Received: by mail-it0-f43.google.com with SMTP id i65so12377188ith.1
-        for <git@vger.kernel.org>; Sat, 04 Jun 2016 20:16:22 -0700 (PDT)
+	id S1750912AbcFEEnd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Jun 2016 00:43:33 -0400
+Received: from mail-io0-f178.google.com ([209.85.223.178]:36746 "EHLO
+	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750729AbcFEEnd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2016 00:43:33 -0400
+Received: by mail-io0-f178.google.com with SMTP id k19so101041285ioi.3
+        for <git@vger.kernel.org>; Sat, 04 Jun 2016 21:43:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=zw3k/dgLhpS/GJYJhvV7TDV6GImnlgowtGoX3YBWWFA=;
-        b=zNZMe9aCmKcsgeswsOhoWvKDHgmwcksW9xxp/On0vPf4mIEaTKdL98FGCuhcvwI8BP
-         AIh7VNcuoIFLjXLyMnGYMZ0kNHVE/a0nrWhPxYRExbFF0NPXb6UGZvomUiUoqSUGgW22
-         KnTNio535Ibq70BbiFmJkVD7SqPZZklWJ1/uBXJ9+NpKnVnmEEP5RyHJE2kWaky6dX9P
-         hIJSwBcdoMg2eEe+5bR+3QOlnq76k/Z5rwaycVKMXz0qK9z9xdQhp406uwqtsQGTRmFo
-         JJ6gOLYkItE1RbsrE9Q/W4qGZhhejtsxjLsqwbo+cn+Kr7cT9rPcY7brAkpivx7bGaQx
-         UAFA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=75A5Hsz6Sd6pY5T4Ns2PmQyQVneMp9vTnHS71sZRsyM=;
+        b=vkn9XA5E/gFn39saqZB8lGTZXvbi/qNdZa00Wulx7K7d5uiU5o/JypZBj5lejeZ5r5
+         VeTeMF/X6+OECw5MaCDpqlLOY6vCnX2mRHRpPKjTLGADKms5bioIBhJZmAB9rJwc7qFW
+         +6/3n63c4sHo9yWxYhysLw475t69Zisq586h4SgSM/lIdOSrOPuHj6dn7HQI/muCaWPk
+         tgTiysDcRQTxLN5FHShvJs/S5YkoAUtVdZeMHaqJpt4tvmtYNsoK83gALZuCNK6falGe
+         G60+VF9DJpetSmvO3PGatUXkuZJzKG9xJATt52DbVw+EFyc1yQFMAYZmPLHXbwRz3802
+         vmMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=zw3k/dgLhpS/GJYJhvV7TDV6GImnlgowtGoX3YBWWFA=;
-        b=GBkMbqhCt90kHhJlXWoiZINSvGtBgU67EiKIAPtHX6LQHUK53hMHucQNbMk69L8mG1
-         2mhAmhjQZoWkisIjIQIYyIyh1Amcj9mmY4gwBZyBGLtDqdMcqDBQPv7mnzXRB62WRx9A
-         lY3WMlj8mSs+dIzg6ahYwdL18tVJy2fJqcaDq6GxXA+iZe0Qze5rNvf9dq4Jx+VmfXo3
-         nNToVxVKSYzJfihjCosulflCho2eWuY1QG+mudvoAmuz3wvH41gEpO1CVgGMTkXM1fzC
-         JlbLfyHfVQsdQyHViFcapcRErH9+/y2rxcl3r5P7dioVHhaK3n7wZMoIGxespo3NuYci
-         PhKw==
-X-Gm-Message-State: ALyK8tKTjYMg689cE/Bjf1QLNzs78NVij7vFseHnvCPT274dYhevPA4aFXAHvp39DQz0YYouM9y5e0ZbQFIUfA==
-X-Received: by 10.36.43.200 with SMTP id h191mr6304148ita.57.1465096581614;
- Sat, 04 Jun 2016 20:16:21 -0700 (PDT)
-Received: by 10.64.173.167 with HTTP; Sat, 4 Jun 2016 20:15:52 -0700 (PDT)
-In-Reply-To: <fdf86f73-0885-7191-2932-f10feba0bdfc@virtuell-zuhause.de>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=75A5Hsz6Sd6pY5T4Ns2PmQyQVneMp9vTnHS71sZRsyM=;
+        b=Zcs5Hgs5a8rpFA6OeD1AXm3d5tlc7n5QB/sjPgM19ul8HoZsn4nHHbs5hpz0ll3Ly4
+         ++GfHCvo1W+srB+Y/FM8rHEIoq2vby7EsX/gfV5DhCNl5yrmXjlxp516mlu9DXvLDDc/
+         TE9xwFqGSZPwQxHYmEXzHG/IgwvlYU2Vdlj0Lr1+9YOObgqE7dIThZDAyQK3TLJtA6Gw
+         d1rbHC/WH33fh9Ui+dKlH6dxYa4okmKXjVimu1qHKUr6vr4GNiFS6wQK7xG3t70UsGQo
+         MBq2XY2UuZ7souVE+pTcIU9UThh3Ds14/f2O28VVFXPwJS8NODnGGunuBcF2sfNX+qUB
+         fSYg==
+X-Gm-Message-State: ALyK8tL3lvbqQGE4LfXgGdv+kMlX6GGyTYhU0gjix7PFo/r3uKJnhkFsqs+cXWTRu59gymCs4CyAMaSMSZUypw==
+X-Received: by 10.107.47.41 with SMTP id j41mr11220389ioo.168.1465101812228;
+ Sat, 04 Jun 2016 21:43:32 -0700 (PDT)
+Received: by 10.79.0.30 with HTTP; Sat, 4 Jun 2016 21:43:31 -0700 (PDT)
+In-Reply-To: <1460552110-5554-19-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: 6INX6ESvxW4AFyZKH9NC4wo48HQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296460>
 
-On Sun, Jun 5, 2016 at 12:54 AM, Thomas Braun
-<thomas.braun@virtuell-zuhause.de> wrote:
-> Hi,
+On Wed, Apr 13, 2016 at 8:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> diff --git a/t/t5539-fetch-http-shallow.sh b/t/t5539-fetch-http-shall=
+ow.sh
+> @@ -73,5 +73,31 @@ test_expect_success 'no shallow lines after receiv=
+ing ACK ready' '
+>         )
+>  '
 >
-> the following procedure
->
-> mkdir test
-> cd test
-> git init
-> echo 1 >file
-> git add --intent-to-add file
-> git commit -m "blurb"
->
-> results in a commit. I would have expected that git commit complains,
-> as I have not pased the --allow-empty option.
->
-> Is that intended behaviour?
+> +test_expect_success 'clone shallow since ...' '
+> +       test_create_repo shallow-since &&
+> +       (
+> +       cd shallow-since &&
+> +       GIT_COMMITTER_DATE=3D"100000000 +0700" git commit --allow-emp=
+ty -m one &&
+> +       GIT_COMMITTER_DATE=3D"200000000 +0700" git commit --allow-emp=
+ty -m two &&
+> +       GIT_COMMITTER_DATE=3D"300000000 +0700" git commit --allow-emp=
+ty -m three &&
+> +       mv .git "$HTTPD_DOCUMENT_ROOT_PATH/shallow-since.git" &&
+> +       git clone --shallow-since "300000000 +0700" $HTTPD_URL/smart/=
+shallow-since.git ../shallow11 &&
+> +       git -C ../shallow11 log --pretty=3Dtformat:%s HEAD >actual &&
+> +       echo three >expected &&
+> +       test_cmp expected actual
+> +       )
+> +'
+> +
+> +test_expect_success 'fetch shallow since ...' '
+> +       git -C shallow11 fetch --shallow-since "200000000 +0700" orig=
+in &&
+> +       git -C shallow11 log --pretty=3Dtformat:%s origin/master >act=
+ual &&
+> +       cat >expected <<-\EOF &&
+> +       three
+> +       two
+> +       EOF
+> +       test_cmp expected actual
+> +'
+> +
+> +
 
-It's a bug. I'll get to it very soon.
--- 
-Duy
+Style: extra blank line (not worth a re-roll, of course)
+
+>  stop_httpd
+>  test_done
+> --
+> 2.8.0.rc0.210.gd302cd2
