@@ -1,134 +1,88 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH] regex: fix a SIZE_MAX macro redefinition warning
-Date: Sun, 5 Jun 2016 14:35:01 +0100
-Message-ID: <57542A85.3040206@ramsayjones.plus.com>
-References: <575212DF.90209@ramsayjones.plus.com>
- <alpine.DEB.2.20.1606050815360.4250@virtualbox>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jun 05 15:35:27 2016
+From: Mehul Jain <mehul.jain2029@gmail.com>
+Subject: [PATCH 0/2] Introduce "log.showSignature" config variable
+Date: Sun,  5 Jun 2016 21:09:31 +0530
+Message-ID: <20160605153933.15231-1-mehul.jain2029@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Mehul Jain <mehul.jain2029@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 05 17:40:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9YD8-0004hB-Hd
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Jun 2016 15:35:26 +0200
+	id 1b9aA0-00089c-BW
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Jun 2016 17:40:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750958AbcFENfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jun 2016 09:35:13 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:56392 "EHLO
-	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750911AbcFENfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jun 2016 09:35:12 -0400
-Received: from [10.0.2.15] ([84.92.139.254])
-	by avasout04 with smtp
-	id 31b31t0025VX2mk011b4HZ; Sun, 05 Jun 2016 14:35:09 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=K//fZHiI c=1 sm=1 tr=0
- a=RCQFcU9wfaUQolwYLdiqXg==:117 a=RCQFcU9wfaUQolwYLdiqXg==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=N659UExz7-8A:10
- a=19RlOg_XpvLLA51gPp4A:9 a=j769gL1bPeN1oPN8:21 a=xEVB34FvR-NXUy3Z:21
- a=pILNOxqGKmIA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-In-Reply-To: <alpine.DEB.2.20.1606050815360.4250@virtualbox>
+	id S1751089AbcFEPkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Jun 2016 11:40:15 -0400
+Received: from mail-pa0-f67.google.com ([209.85.220.67]:34733 "EHLO
+	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750993AbcFEPkO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Jun 2016 11:40:14 -0400
+Received: by mail-pa0-f67.google.com with SMTP id x1so9906894pav.1
+        for <git@vger.kernel.org>; Sun, 05 Jun 2016 08:40:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=Z/tJIhPKk9xVTFmrQGmkiQ3IE2AQakipcgT5sAtq97w=;
+        b=fNozPnbsO8jMuGiWa/S9N2Zh/gfGLPC7WgpHTz8n5vNEbGWCSWW54Gk4rLl4cjNzxz
+         oRL9bQGsPQm7/cl7L4cwt8Lz4PeNvsh/0EccsW7HrAPUBT++c3OLRweVA/jVK5Phyfhp
+         5oNMuWT/+qyZlx+CH3xjNt5+aRQBfetNKlkyKZgfoXqb+hKw10ra/NxiduBoVzFC4svs
+         Onw3fiqBIPsUxUOK4BypOCQrQ2RvddnGOFSS1u5t10t7xk8TggxyQ+nKMM2Hy9R/dDgP
+         fMkD72nk+1Iq3Z6zIhkn67CvBM0Ri0u5+lk7dRTSL6usUtroEUmeoXuieV2wtPEc7sVJ
+         zLFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Z/tJIhPKk9xVTFmrQGmkiQ3IE2AQakipcgT5sAtq97w=;
+        b=TqbjRS3L417fHII9eDmU+6Fej1A6e+hwtnVp/udySgvPnX1m7Lo4N1APJvdQa9NbvF
+         NTb9K+6IjlnxsLvjVd6ONdgdsbLLC/PeytLBOIA3xWJWQWdsRwWrD5U4pslrEM5zA9hk
+         FgGVkFGbC+GG/pVobHnTjOqiQyb0DteoZWFjCbNpT9UQ2OMK6DTjgQtCHA6ld0bznJu2
+         Da8aRDyrWF5BuLIHAvP0S6iH0ksE1Uw6lTTIOnvPmqRGBbhKlappy0i7FBhm9uwdKJni
+         KvRhv84QSxgrN5MR+FxbHJy0WCF2EBMs1UR6WM9IsSauCpBP4tH8mtwhwqkozWsHlsVU
+         OfAQ==
+X-Gm-Message-State: ALyK8tJE2zZ16Xll3fUEibmr4GUxBRYqxaLouNw7Q6v6AWLk+kvUCzTNctATDEV3dHp9cg==
+X-Received: by 10.66.157.193 with SMTP id wo1mr19052351pab.116.1465141213865;
+        Sun, 05 Jun 2016 08:40:13 -0700 (PDT)
+Received: from localhost.localdomain ([182.67.205.35])
+        by smtp.gmail.com with ESMTPSA id p1sm21307814pfb.73.2016.06.05.08.40.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 05 Jun 2016 08:40:13 -0700 (PDT)
+X-Mailer: git-send-email 2.9.0.rc0.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296474>
 
+Add a new configuratation variable "log.showSignature" for git-log and
+related commands. This variable will enable user to see GPG signature
+by default.
 
+[Patch 1/2] 
+	Introduce the config variable along with some tests.
 
-On 05/06/16 08:15, Johannes Schindelin wrote:
-> Hi Ramsay,
-> 
-> thanks for working on this!
-> 
-> On Sat, 4 Jun 2016, Ramsay Jones wrote:
-> 
->> diff --git a/Makefile b/Makefile
->> index 0d59718..3f6c70a 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -1987,7 +1987,7 @@ endif
->>  
->>  ifdef NO_REGEX
->>  compat/regex/regex.sp compat/regex/regex.o: EXTRA_CPPFLAGS = \
->> -	-DGAWK -DNO_MBSUPPORT
->> +	-DGAWK -DNO_MBSUPPORT -DHAVE_STDINT_H
-> 
-> Maybe a comment here, something like "the fallback regex implementation
-> *requires* stdint.h"?
+[Patch 2/2] 
+	Tackles the problem: what if user wants to disable the
+	setting of "log.showSignature=true" using a command line
+	switch.
 
-The original version of this patch looked like this:
+* Thanks Junio, Jeff and Remi for helping in reference patch.
 
-  diff --git a/compat/regex/regcomp.c b/compat/regex/regcomp.c
-  index fba5986..d8bde06 100644
-  --- a/compat/regex/regcomp.c
-  +++ b/compat/regex/regcomp.c
-  @@ -18,8 +18,6 @@
-      Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-      02110-1301 USA.  */
-   
-  -#include <stdint.h>
-  -
-   static reg_errcode_t re_compile_internal (regex_t *preg, const char * pattern,
-   					  size_t length, reg_syntax_t syntax);
-   static void re_compile_fastmap_iter (regex_t *bufp,
-  diff --git a/compat/regex/regex.c b/compat/regex/regex.c
-  index 6aaae00..5cb23e5 100644
-  --- a/compat/regex/regex.c
-  +++ b/compat/regex/regex.c
-  @@ -60,6 +60,7 @@
-      GNU regex allows.  Include it before <regex.h>, which correctly
-      #undefs RE_DUP_MAX and sets it to the right value.  */
-   #include <limits.h>
-  +#include <stdint.h>
-   
-   #ifdef GAWK
-   #undef alloca
+Previous reference patch: http://thread.gmane.org/gmane.comp.version-control.git/295649
 
-So, just move the unconditional inclusion to the start of the compilation
-unit root file, before the #include of the regex_internal.h header.
+Mehul Jain (2):
+  log: add "log.showsignature" configuration variable
+  log: "--no-show-signature" commmand-line option
 
-In some ways this is a better fix, because it makes it clear that, currently,
-the compat/regex code requires <stdint.h>. This would remove the need for
-such a comment.
+ Documentation/git-log.txt |  4 ++++
+ builtin/log.c             |  6 ++++++
+ revision.c                |  2 ++
+ t/t4202-log.sh            | 25 +++++++++++++++++++++++++
+ t/t7510-signed-commit.sh  |  7 +++++++
+ 5 files changed, 44 insertions(+)
 
-This effectively makes the conditional inclusion of <stdint.h>, and the SIZE_MAX
-fallback, in regex_internal.h dead code. (The C99 standard _requires_ the
-definition of SIZE_MAX in <stdint.h>, thankfully! ;-). So, I was tempted to
-remove them as part of the patch. However, I also wanted to minimize the changes
-to the regex code, just in case we ever wanted to re-import a newer version
-from upstream. Setting HAVE_STDINT_H seemed like a good solution, but maybe the
-first patch would be more honest?
-
-As I said earlier, I was a little concerned about the 'unconditional' aspect of
-the inclusion of <stdint.h>. At one time we wanted to support systems that didn't
-have <stdint.h> (or didn't have <inttypes.h> but did have <stdint.h>). However,
-it has been several months and we have not heard anyone scream, so ...
-
-It is slightly amusing that the reason you #included <stdint.h> was to get the
-definition of 'intptr_t' and the C standard states that this type is optional.
-In practice, I suspect that the number of platforms which do not define 'intptr_t'
-and 'uintptr_t' in the <stdint.h> header is rather small.
-
-Having said that ... If I'm reading the code/config correctly, HP-NONSTOP would
-be failing to compile at the moment. (Although it has <stdint.h>, it does not
-define 'intptr_t' - ie it defines 'NO_REGEX = YesPlease' and 'NO_INTPTR_T = \
-UnfortunatelyYes').
-
-> Other than that, I think this patch is an improvement.
-
-Thanks. What do you think of replacing it with the original patch (above)?
-
-ATB,
-Ramsay Jones
+-- 
+2.9.0.rc0.dirty
