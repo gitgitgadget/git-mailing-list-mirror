@@ -1,83 +1,119 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 3/3] doc: change configuration variables format
-Date: Mon, 06 Jun 2016 16:09:30 +0200
-Message-ID: <vpqfusqmmsl.fsf@anie.imag.fr>
-References: <20160603220837.9842-1-tom.russello@grenoble-inp.org>
-	<20160606100905.23006-1-tom.russello@grenoble-inp.org>
-	<20160606100905.23006-4-tom.russello@grenoble-inp.org>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH v3 1/6] git-fetch.txt: document fetch output
+Date: Mon, 6 Jun 2016 10:24:28 -0400
+Message-ID: <5755879C.3030602@xiplink.com>
+References: <20160603110843.15434-1-pclouds@gmail.com>
+ <20160605031141.23513-1-pclouds@gmail.com>
+ <20160605031141.23513-2-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	erwan.mathoniere@grenoble-inp.org, samuel.groot@grenoble-inp.org,
-	jordan.de-gea@grenoble-inp.org
-To: Tom Russello <tom.russello@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Mon Jun 06 16:10:22 2016
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 06 16:24:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9vET-0001qi-Uq
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 16:10:22 +0200
+	id 1b9vSF-0003ht-3j
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 16:24:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752889AbcFFOJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2016 10:09:46 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:42075 "EHLO mx1.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751105AbcFFOJo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 10:09:44 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u56E9T1I001549
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 6 Jun 2016 16:09:29 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u56E9Ubn000349;
-	Mon, 6 Jun 2016 16:09:30 +0200
-In-Reply-To: <20160606100905.23006-4-tom.russello@grenoble-inp.org> (Tom
-	Russello's message of "Mon, 6 Jun 2016 12:09:05 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Mon, 06 Jun 2016 16:09:29 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u56E9T1I001549
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1465826972.46481@MgwY9y/LBXBqv62of4cyTA
+	id S1751513AbcFFOYb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 10:24:31 -0400
+Received: from smtp82.iad3a.emailsrvr.com ([173.203.187.82]:47432 "EHLO
+	smtp82.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750914AbcFFOYa (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 10:24:30 -0400
+Received: from smtp19.relay.iad3a.emailsrvr.com (localhost.localdomain [127.0.0.1])
+	by smtp19.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id D422C18053A;
+	Mon,  6 Jun 2016 10:24:27 -0400 (EDT)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp19.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id A7CA1180469;
+	Mon,  6 Jun 2016 10:24:27 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.5.4);
+	Mon, 06 Jun 2016 10:24:28 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
+In-Reply-To: <20160605031141.23513-2-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296514>
 
-Tom Russello <tom.russello@grenoble-inp.org> writes:
+On 2016-06-04 11:11 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote=
+:
+> This documents the ref update status of fetch. The structure of this
+> output is defined in [1]. The ouput content is refined a bit in [2]
+> [3] [4].
+>
+> This patch is a copy from git-push.txt, modified a bit because the
+> flag '-' means different things in push (delete) and fetch (tag
+> update).
+>
+> PS. For code archaeologists, the discussion mentioned in [1] is
+> probably [5].
+>
+> [1] 165f390 (git-fetch: more terse fetch output - 2007-11-03)
+> [2] 6315472 (fetch: report local storage errors ... - 2008-06-26)
+> [3] f360d84 (builtin-fetch: add --prune option - 2009-11-10)
+> [4] 0997ada (fetch: describe new refs based on where... - 2012-04-16)
+> [5] http://thread.gmane.org/gmane.comp.version-control.git/61657
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>   Documentation/git-fetch.txt | 46 ++++++++++++++++++++++++++++++++++=
++++++++++++
+>   1 file changed, 46 insertions(+)
+>
+> diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.tx=
+t
+> index efe56e0..a0d0539 100644
+> --- a/Documentation/git-fetch.txt
+> +++ b/Documentation/git-fetch.txt
+> @@ -99,6 +99,52 @@ The latter use of the `remote.<repository>.fetch` =
+values can be
+>   overridden by giving the `--refmap=3D<refspec>` parameter(s) on the
+>   command line.
+>
+> +OUTPUT
+> +------
+> +
+> +The output of "git fetch" depends on the transport method used; this
+> +section describes the output when fetch over the Git protocol (eithe=
+r
 
-> As a first step,
+s/fetch/fetching/
 
-Is this your second first step? ;-)
+> +locally or via ssh).
+> +
+> +The status of the fetch is output in tabular form, with each line
+> +representing the status of a single ref. Each line is of the form:
+> +
+> +-------------------------------
+> + <flag> <summary> <from> -> <to> (<reason>)
+> +-------------------------------
 
-As 3rd and 4th first steps, I'd suggest:
+(<reason>) should really just be <reason>, as the () are part of the=20
+reason string.
 
-Format short options properly:
-perl -pi -e "s/'(-[a-z])'/\`\$1\`/g" *.txt
+> +
+> +The status of up-to-date refs is shown only if --verbose option is
 
-Format long options properly:
-perl -pi -e "s/'(--[a-z][a-z=<>-]*)'/\`\$1\`/g" *.txt
+s/if/if the/
 
-This does not have to be done right now. Large series doing only
-reformatting like this tend to create conflicts with in-flight topics so
-it may be better to split it into several series anyway.
 
-About conflicts, I just checked: the existing patch series creates one
-trivial conflict with pu, and my suggested fix for long options creates
-one more. Seems manageable.
+Also, thanks for putting so much effort into this!
 
-For now, I went carefully through the patches. With or without my
-suggested changes/additions, the series is now
+I think having a fetch.output configuration setting is perfectly fine.=20
+This sort of thing is really a matter of personal taste, so having=20
+choices is good.
 
-Reviewed-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-
-Thanks,
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+		M.
