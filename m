@@ -1,125 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/3] mailsplit: support unescaping mboxrd messages
-Date: Mon, 06 Jun 2016 11:24:53 -0700
-Message-ID: <xmqq7fe2xjii.fsf@gitster.mtv.corp.google.com>
-References: <20160605044641.9221-1-e@80x24.org>
-	<20160605044641.9221-3-e@80x24.org>
+Subject: Re: [PATCH 2/2] log: "--no-show-signature" commmand-line option
+Date: Mon, 06 Jun 2016 11:50:51 -0700
+Message-ID: <xmqq37oqxib8.fsf@gitster.mtv.corp.google.com>
+References: <20160605153933.15231-1-mehul.jain2029@gmail.com>
+	<20160605153933.15231-3-mehul.jain2029@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-To: Eric Wong <e@80x24.org>
-X-From: git-owner@vger.kernel.org Mon Jun 06 20:25:03 2016
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+To: Mehul Jain <mehul.jain2029@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 06 20:51:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9zCw-0007PA-Fr
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 20:25:03 +0200
+	id 1b9zc3-0000vJ-4l
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 20:50:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752078AbcFFSY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2016 14:24:59 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51440 "EHLO
+	id S1751926AbcFFSu5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 14:50:57 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65191 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751469AbcFFSY5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 14:24:57 -0400
+	with ESMTP id S1751313AbcFFSuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 14:50:55 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D987F22079;
-	Mon,  6 Jun 2016 14:24:55 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 87CBF22B03;
+	Mon,  6 Jun 2016 14:50:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JJxX0FjcystOJXQVllBdI/cKgcM=; b=dvXZ6z
-	2NumuCkwYYe3H45XNhQR19G1MDABqKi7TUR2MzpH0/eacd6/Lc2jL9OqWZ9v8eJA
-	a8l372zOxfjNhW1QjJlqcMCtbbuFnN6oGtjitbhvdd4k8Ht54MNvrH8tqwOx26rZ
-	WQTAwTKdzzezjUBX1waQzy4ebJXIzIJVGRNIM=
+	:content-type; s=sasl; bh=WFxzwkWuHAOlo7sv+RNvg/cM+l8=; b=wwJGek
+	9O1fJiZOTCaZ5drT3ukatPS/dSSqdLnzSty8mHo6BeM8/tYoBzLkIY+uVYwaVbmC
+	NPgvFYr7vatvPt/bex3WSyZDMNlgGfeDGLBfYX+58cZD4f546ZXkE4milhnzJ8nI
+	64biohqMRs2yAfQqj2dusiZfg08GBSZA1ab84=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Z0c/OnpuGnT+wnErmV/kWr6ay4FtefZR
-	XGTdJGjjSg0HxEwtczjd8u4pXQ5m6BCGtTcnzLRvDjekHMyEh2L/ZCA0idqHNU9q
-	WAWRT0W5jHnujWX6S7OJ1/On2oqOWxsJR/J4O+yFLfKHSPTRDxHJTuRDl5AvZ0i1
-	kPtAWWTEPHY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D21D522078;
-	Mon,  6 Jun 2016 14:24:55 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=HqILQE7KFIMNgib+1WBjYW8KFNq+GxSM
+	xC8uP0GZYmBjjVMygdGyl68Em+jxF83US+cgGgFhL08xHuAT1Zbnx2yTb18Wxe/F
+	TOujq9TWxOk1/Z5kTF2eN2CUw1DP6ePlEsA7VDfiNV3vqmbnRrTEvbONBDVnhZJw
+	7Yt/kIWTD1c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E09D22B02;
+	Mon,  6 Jun 2016 14:50:53 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5DFED22075;
-	Mon,  6 Jun 2016 14:24:55 -0400 (EDT)
-In-Reply-To: <20160605044641.9221-3-e@80x24.org> (Eric Wong's message of "Sun,
-	5 Jun 2016 04:46:40 +0000")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E1C5D22B01;
+	Mon,  6 Jun 2016 14:50:52 -0400 (EDT)
+In-Reply-To: <20160605153933.15231-3-mehul.jain2029@gmail.com> (Mehul Jain's
+	message of "Sun, 5 Jun 2016 21:09:33 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F7C0A070-2C13-11E6-B6F5-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 981E78E6-2C17-11E6-96CC-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296549>
 
-Eric Wong <e@80x24.org> writes:
+Mehul Jain <mehul.jain2029@gmail.com> writes:
 
-> This will allow us to parse the output of --pretty=mboxrd
-> and the output of other mboxrd generators.
+> If "log.showSignature=true", then there is no way to override it using
+> command line switch.
 >
-> Signed-off-by: Eric Wong <e@80x24.org>
-> ---
->  Documentation/git-mailsplit.txt |  7 ++++++-
->  builtin/mailsplit.c             | 18 ++++++++++++++++++
->  t/t5100-mailinfo.sh             | 31 +++++++++++++++++++++++++++++++
->  t/t5100/0001mboxrd              |  4 ++++
->  t/t5100/0002mboxrd              |  5 +++++
->  t/t5100/sample.mboxrd           | 19 +++++++++++++++++++
->  6 files changed, 83 insertions(+), 1 deletion(-)
->  create mode 100644 t/t5100/0001mboxrd
->  create mode 100644 t/t5100/0002mboxrd
->  create mode 100644 t/t5100/sample.mboxrd
->
-> diff --git a/Documentation/git-mailsplit.txt b/Documentation/git-mailsplit.txt
-> index 4d1b871..e3b2a88 100644
-> --- a/Documentation/git-mailsplit.txt
-> +++ b/Documentation/git-mailsplit.txt
-> @@ -8,7 +8,8 @@ git-mailsplit - Simple UNIX mbox splitter program
->  SYNOPSIS
->  --------
->  [verse]
-> -'git mailsplit' [-b] [-f<nn>] [-d<prec>] [--keep-cr] -o<directory> [--] [(<mbox>|<Maildir>)...]
-> +'git mailsplit' [-b] [-f<nn>] [-d<prec>] [--keep-cr] [--mboxrd]
-> +		-o<directory> [--] [(<mbox>|<Maildir>)...]
->  
->  DESCRIPTION
->  -----------
-> @@ -47,6 +48,10 @@ OPTIONS
->  --keep-cr::
->  	Do not remove `\r` from lines ending with `\r\n`.
->  
-> +--mboxrd::
-> +	Input is of the "mboxrd" format and "^>+From " line escaping is
-> +	reversed.
+> Teach git-log and related commands about "--no-showSignature" command
+> line option.
 
-This just makes me wonder if there is a practical reason why people
-would not want this always enabled.  I just looked at output from
+Doesn't that suggest that 1/2 alone will cause users problems?  The
+users can by mistake set the configuration variable and there is no
+way for them to override it from the command line.
 
-    $ git log --grep='>>*From '
+If you swap the order of the two patches, the topic makes more
+sense.  I.e.
 
-in the kernel repository, and I saw no cases where the committer
-really wanted to preserve the leading one or more '>' on that line.
-No, I didn't go through all of 150+ such commits, but I did check
-the couple dozen of them from the recent history.
+    [1/2] log: add "--no-show-signature" command line option
 
-Our history also have 5 instances of them, none of which should have
-had the leading '>' if the committer were careful.
+makes "git log --show-signature --no-show-signature" to run without
+GPG checks, which by itself is a worthy change.  And then
 
-> diff --git a/t/t5100/sample.mboxrd b/t/t5100/sample.mboxrd
-> new file mode 100644
-> index 0000000..79ad5ae
-> --- /dev/null
-> +++ b/t/t5100/sample.mboxrd
-> @@ -0,0 +1,19 @@
-> +From mboxrd Mon Sep 17 00:00:00 2001
-> +From: mboxrd writer <mboxrd@example.com>
-> +Date: Fri, 9 Jun 2006 00:44:16 -0700
-> +Subject: [PATCH] a commit with escaped From lines
-> +
-> +>From the beginning, mbox should have been mboxrd
+    [2/2] log: add log.showSignature configuration variable
 
-Indeed ;-)
+makes revs->show_signature default to the configured value, instead
+of always initializing it to false.
