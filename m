@@ -1,139 +1,110 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [RFC/PATCHv2] Documentation: triangular workflow
-Date: Mon, 6 Jun 2016 23:21:14 +0100
-Organization: OPDS
-Message-ID: <12C5A5F1276946DC99A03F30FEE49559@PhilipOakley>
-References: <1464697717-5751-1-git-send-email-jordan.de-gea@grenoble-inp.org><1465206518-1780-1-git-send-email-jordan.de-gea@grenoble-inp.org> <xmqqk2i2w288.fsf@gitster.mtv.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH V2 3/3] strbuf: allow to use preallocated memory
+Date: Mon, 06 Jun 2016 15:44:07 -0700
+Message-ID: <xmqqfusquedk.fsf@gitster.mtv.corp.google.com>
+References: <20160606151340.22424-1-william.duclot@ensimag.grenoble-inp.fr>
+	<20160606151340.22424-4-william.duclot@ensimag.grenoble-inp.fr>
+	<xmqqvb1mxmk4.fsf@gitster.mtv.corp.google.com>
+	<20160606203901.GA7667@Messiaen>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	reply-type=original
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, <mhagger@alum.mit.edu>,
-	<erwan.mathoniere@grenoble-inp.org>,
-	<samuel.groot@grenoble-inp.org>, <tom.russello@grenoble-inp.org>,
-	<Matthieu.Moy@grenoble-inp.fr>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Tue Jun 07 00:21:23 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, antoine.queru@ensimag.grenoble-inp.fr,
+	francois.beutin@ensimag.grenoble-inp.fr, mhagger@alum.mit.edu,
+	Johannes.Schindelin@gmx.de, peff@peff.net, mh@glandium.org
+To: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 07 00:44:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bA2te-0006zm-Iv
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 00:21:22 +0200
+	id 1bA3Fu-000529-3R
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 00:44:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753152AbcFFWVS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 18:21:18 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:25866 "EHLO
-	smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752650AbcFFWVS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 18:21:18 -0400
-Received: from PhilipOakley ([92.22.6.31])
-	by smtp.talktalk.net with SMTP
-	id A2tWbuVeVXCEWA2tWb5a7R; Mon, 06 Jun 2016 23:21:15 +0100
-X-Originating-IP: [92.22.6.31]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=cszZqBwi c=1 sm=1 tr=0 a=6rKLwjNE5rx67PMj20oCSw==:117
- a=6rKLwjNE5rx67PMj20oCSw==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
- a=aSBN74SrAAAA:8 a=OaAhOT0jWcYLDQVWbSMA:9 a=0RhZnL1DYvcuLYC8JZ5M:22
- a=QLKLDn6n7aLR3e0nYJH2:22
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfPCsbtQHfPDcyyZxO5a0uE2tmDOTcK+TLjCBeiA40TJP0/sSpmQsJI5mnsTZgJUEPz0IBBo4e+Clr7EDwRukzoxyunflUNzXnCqcA8xjV7HFmvMrMMz6
- 6WGh4YmNvo+iLu88NHfzelYAhQm4S7H4SH+uNZO/78lpFfe/sphzj0sMYG3RCAnq82NMAW7Up/P48voMsvvrhgL1SO3Ekya3ZSWy7+APCIv05oSZI1lKdufm
- zhgyXy6zj8efAAkoME0ADHFKICcWjQ0QcojeMOsmqxrOtEI3nmvJ2Kl46zWyw3HPjkJ7VcORrbG9oEInIkw9dXLGCl6G/XdKUyy30WgRGrdIEVc/HdU2mXIb
- l301AQsWulSxvbvOn1NyF0iwGCjUbxd76SdXOyYTzCbf5CrIVDdCRqnZxJiad/nCjcvHtcY0WqVJ6VXSQA9yGMpBRyqOaw==
+	id S1753617AbcFFWoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 18:44:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58812 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753612AbcFFWoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 18:44:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D16CA22271;
+	Mon,  6 Jun 2016 18:44:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QHj98kTnwRrhKHeXLgS10HmUA8o=; b=ZKCfqS
+	xOKck+w5+bq+6NRSV85YdfLP1oVz8IcbP+Tht/RJaSpIYZBvCEUZ8IjQHiadrAKL
+	hM1k3XtADnLcOOxtRmogbsykssheDz5F40SOYoEgp8IBum5FLiu3X99TwW7vvtU4
+	ylQu0FdD2IxOpuAQvpdYUCxuUpqB462+NhjK8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xSp/57Q1YRV3/tJJ5b2Tf/kRl0umWYOn
+	SaHieW8VkAyrNmJl4Lh820euolIBG5VVhhlOXVLfVY8zpgqnbraHcGbVHezWaM+N
+	g7NgDZB09YhfRN/fvKPhYltd+t4U6t4T5wynFDIADOy9/yi1FbTHQf30ql/ZNqTt
+	libe+0Ryb0M=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C8A8C22270;
+	Mon,  6 Jun 2016 18:44:09 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D4472226F;
+	Mon,  6 Jun 2016 18:44:09 -0400 (EDT)
+In-Reply-To: <20160606203901.GA7667@Messiaen> (William Duclot's message of
+	"Mon, 6 Jun 2016 22:39:01 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2EA82D6E-2C38-11E6-AA7A-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296569>
 
-=46rom: "Junio C Hamano" <gitster@pobox.com>
-> Jordan DE GEA <jordan.de-gea@grenoble-inp.org> writes:
->
->> +TRIANGULAR WORKFLOW
->> +-------------------
->> +
->> +In some projects, you cannot push directly to the project but have =
-to
->> +suggest your commits to the maintainer (e.g. pull requests).
->> +For these projects, it's common to use what's called a *triangular
->> +workflow*:
->> +
->> +- Taking the last version of the project by fetching (e.g.
->> +  **UPSTREAM**)
->> +- Writing modifications and push them to a fork (e.g. **PUBLIC-FORK=
-**)
->> +- Opening a pull request
->> +- Checking of changes by the maintainer and, merging them into the
->> +  **UPSTREAM** repository if accepted
->> +
->> +
->> +........................................
->> +------------------               -----------------
->> +| UPSTREAM       |  maintainer   | PUBLIC-FORK   |
->> +|  git/git       |- - - - - - - -|  me/remote    |
->> +------------------       =E2=86=90       -----------------
->> +              \                     /
->> +               \                   /
->> +          fetch=E2=86=93\                 /=E2=86=91push
->> +                 \               /
->> +                  \             /
->> +                   -------------
->> +                   |   LOCAL   |
->> +                   -------------
->> +........................................
->
-> I agree with other commenters that "PUBLIC-FORK" is a name that does
-> not capture the essense of the triangular being the next step
-> forward, compared to the "central shared repository" workflow, to
-> take advantage of the distributed nature of Git.
->
-> "Where you push so that somebody else can fetch from there" does not
-> have to be public.  You may be submitting a course assignment there,
-> only to be seen by your professor but not by others in the class.
-> Also, you do not your call "LOCAL" a "LOCAL-FORK" and that is a good
-> thing.  In a distributed world, everything is a fork, so adding
-> "-FORK" to a name is pretty much meaningless.
->
-> So neither "PUBLIC" nor "FORK" in "PUBLIC-FORK" is a good word to
-> describe this thing.
->
-> The only reason you are pushing there is because your "LOCAL" is
-> either not accessible from outside world, and/or you do not want to
-> give a direct access to it (otherwise you could have allowed an
-> access to whoever is going to fetch from you direct access to
-> "LOCAL" and be done with it without creating "PUBLIC-FORK").
->
-> That is why I reminded that we earlier in the design phase called
-> this "publish"; it is a place you give access to others a selected
-> work of yours that you choose to give them access to.
+William Duclot <william.duclot@ensimag.grenoble-inp.fr> writes:
 
-Given that clarification I'd be happier to go with it being one's 'Publ=
-ish'=20
-repo.
+> I'm not sure to follow you. I agree that the "fixed strbuf" feature is
+> flawed by the presence of this `die()`. But (unless misunderstanding)
+> the "owns_memory" bit you talk about does exist in this patch, and allow
+> the exact behavior you describe.
 
-My initial reticence was because of the association of "publish" with v=
-anity=20
-publishing and other forms of over-sharing and self promotion.
+Imagine that I know most of my input lines are shorter than 80 bytes
+and definitely shorter than 128 bytes.  I may want to say:
 
-A clarification/explanation that calling it a 'publish' repo is about=20
-granting access, and possible open access, would make it more acceptabl=
-e.
+	/* allocate initial buffer ch[128] and attach it to line */
+	struct strbuf line = STRBUF_INIT_ON_STACK(128);
 
-> Whether you
-> are a leaf contributor, a student who got stuck and wants to ask
-> suggestions from your friends after looking your code over, or an
-> integrator of a big public project, I would view the act to push
-> into such a place you give selective visibility to your work to
-> others as publishing your work.
+	while (!strbuf_getline(&line, stdin)) {
+		... use contents of &line ...
+	}
+        strbuf_release(&line);
 
-Agreed, in that context.
+knowing that I won't waste too much cycles and memory from heap most
+of the time.  Further imagine that one line in the input happened to
+be 200 bytes long.  After processing that line, the next call to
+strbuf_getline() will call strbuf_reset(&line).
 
---
-Philip=20
+I think that call should reset line.buf to the original buffer on
+the stack, instead of saying "Ok, I'll ignore the original memory
+not owned by us and instead keep pointing at the allocated memory",
+as the allocation was done as a fallback measure.  The reason why
+strbuf_reset() is different from strbuf_release() is because we
+anticipate that a buffer that is reset is going to be used again
+very soon and want to avoid freeing only to call another alloc
+immediately.  We just set its logical length to 0 without shrinking
+what has already been allocated in the heap, because there is no
+good hint that tells us what the optimal size of an empty
+buffer in the particular caller that is waiting to be used before
+this "improve API" effort.
+
+But that "lack of hint" no longer is true with this "imporve API"
+thing.  We _know_ that the caller thinks the anticipated typical
+workload should fit well within the 128 bytes buffer that it
+originally gave us.  That is what I'd expect from an "initialize a
+reasonably sized piece of memory on stack and use it most of the
+time in strbuf" feature.
+
+> The patch allow to use a preallocated strbuf OR a preallocated-and-fixed
+> strbuf. Does the "fixed" part is useful, that's very debatable.
+
+"Fixed and non-extendable" is useless; there is no room for
+debating.
