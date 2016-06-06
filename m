@@ -1,111 +1,94 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [BUG?] trailer command with multiple keys
-Date: Mon, 6 Jun 2016 14:27:52 +0200
-Message-ID: <b94e1666-2f89-619b-112c-023f72002d9d@drmicha.warpmail.net>
+From: =?UTF-8?q?Ville=20Skytt=C3=A4?= <ville.skytta@iki.fi>
+Subject: [PATCH] completion: complete --move for git branch
+Date: Mon,  6 Jun 2016 16:16:11 +0300
+Message-ID: <1465218971-14118-1-git-send-email-ville.skytta@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <chriscool@tuxfamily.org>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 06 14:28:40 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 06 15:16:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9te3-0003bZ-8c
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 14:28:39 +0200
+	id 1b9uOF-0005Et-Tu
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 15:16:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752422AbcFFM2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2016 08:28:34 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:50683 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751569AbcFFM17 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 08:27:59 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id A4CD421C3A;
-	Mon,  6 Jun 2016 08:27:53 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Mon, 06 Jun 2016 08:27:53 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=OPc
-	RWKsijc+M2Wi6HDxR0TU0FcA=; b=gz3+4nP7nRTCDXRpSBymLIhgK3rDojkts2C
-	I1CcTGRRhZ9ZH3nqT8ILA8JnwqQ6mhfCGo8EK2WGzsMpj6l1a7sSkxZX6Lr6lbhc
-	66EVujCQ8v7wXQ/Hl59kOReX2tK/93nmgXIIa9H3mDkSkHxzYVvhRXFnxObeF3iw
-	3tpOYKDo=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=OPcRWKsijc+M2Wi6HDxR0TU0FcA=; b=sJABq
-	H4r2208Ig0wLGDVa75sUqCMXFxfCh0FAwjtfKARsXYrgNpiPTabgLtu4A/OOuDnq
-	XF1pZHqyQsFtdSmk8Df5nGV09hoOl855q1hbfdk2xBN4vajOrcQpmMOf2uDxxUCs
-	k42kROnMyc253gONzOx/Wkr+tiSJiVtaJtqZaY=
-X-Sasl-enc: 3cHj8K/WD/vaAeQs6+XzeM93pZBZ9Os28ieBlBjpeqiE 1465216073
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 2B6E4F29F4;
-	Mon,  6 Jun 2016 08:27:53 -0400 (EDT)
-X-Mozilla-News-Host: news://news.gmane.org:119
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
+	id S1751342AbcFFNQQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 09:16:16 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:34086 "EHLO
+	mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751203AbcFFNQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 09:16:15 -0400
+Received: by mail-lf0-f65.google.com with SMTP id k192so4943657lfb.1
+        for <git@vger.kernel.org>; Mon, 06 Jun 2016 06:16:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FFEWctGiUx3Wdjeaz1QhjTAxxyiKOaLxqYYjrVIyOrI=;
+        b=lNPIbRGXhQ2fPYW9Q5i6zobHL80XCd2kzPN/0IkLcjZpecjGIn48NsMD9AMfPC/bjW
+         is0xTCuTzTyXbRBpMZvfugWzqqplid+vaSzsaUh88IdvBdAmCX2OUHr0I2Z94YPiBOcG
+         Td0VYALJ9Wh4Z4AmqHMHZYDPuFav/zN0C0MzIISDp7a2OmgxeNRnxv2ZomtNYqXB+8mD
+         5ST1iYQl1CFUDzA8fAWzLbGlf/e0/wihf2/EmP9AAxj5O7lKX6dwwg4uq5scCgKbxasP
+         SvcL0K9BRXITOKPXS4DrdZqZz04dSW/BBGn2CpJ90FRyyXJXpJYIKupXz5Yfp4n4HkWd
+         UXFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:from:to:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=FFEWctGiUx3Wdjeaz1QhjTAxxyiKOaLxqYYjrVIyOrI=;
+        b=Mqas9CQPoX1Skep4kBEHRx3A4w7O6f+oio7bMTbjhAjWpkQVYqB/5vnUuEG8ArsHNY
+         Kl4D3fJXWAnzjkOk73oLgsq2dFujcRKszu4CM7iKV1/haL/vQ35SBWp9Qfj/zizCOfVB
+         fRUQ38iKLEELt5ntnxXZJNSiEzUyFfHJFGiI+rxZ92WS5e0W+sKYXIahsUo8imq87H92
+         OCVKcmxJZTT7l6AjTy+aRVuNxER5ZoGnEaORDmVfl4P5xIyDQIDE/ktbyGyoFos83Yb1
+         oRWxYE3Rodne0p3DDRxznFdbmKgA835Yvb8CG6YiZ71V+YJi7Zp6xflGBz50MbTYE8S9
+         o9oA==
+X-Gm-Message-State: ALyK8tJ/ge0fyJEyPZmDZLT9okLdh3PBhSuUSk+UT6CcEwMZagNUfEE1ouY6JvhlPKIlRg==
+X-Received: by 10.25.168.9 with SMTP id r9mr1096834lfe.18.1465218973329;
+        Mon, 06 Jun 2016 06:16:13 -0700 (PDT)
+Received: from viper.dy.fi (dtpyyyyyyyyyyyyyb45ky-3.rev.dnainternet.fi. [2001:14ba:8300::1:c650])
+        by smtp.gmail.com with ESMTPSA id 1sm1800886ljf.5.2016.06.06.06.16.12
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 06 Jun 2016 06:16:12 -0700 (PDT)
+X-Mailer: git-send-email 2.5.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296504>
 
-The command
+Signed-off-by: Ville Skytt=C3=A4 <ville.skytta@iki.fi>
+---
+ contrib/completion/git-completion.bash | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-printf "body\n\ntest: foo\ntest: froz\n" | git -c
-trailer.test.key=tested -c trailer.test.command="echo by \$ARG"
-interpret-trailers
-
-gives:
-
-body
-
-tested: foo
-tested: froz
-tested: by froz
-
-I expected the command to be run on each "test" key, resulting in the
-output:
-
-body:
-
-tested: by foo
-tested: by froz
-
-(In a real life scenario, I would use ifexists replace.)[*]
-
-Maybe my expectation is wrong? The code breaks out of the loop after the
-first matching in_tok, apparently intentionally so. But I'm not sure -
-the key is replaced for both instances.
-
-Simply replacing that "return 1" by a "ret = 1" etc. runs into problems
-with the way the freeing of in_tok and arg_tok is arranged there :|
-
-Basically, I expected the trailer command to work "grep/sed-like" on all
-key value pairs that have matching keys, passing the value to the
-command, and using the (each) command's output as the new value for each
-of these pairs.
-
-Michael
-
-[*] My prime use case: fill in reported-by etc. with short author names,
-completed the same way we complete --author=jun using a trailer command
-(interpret-trailers in the commit-msg hook):
-
-$ git help author
-`git author' is aliased to `!f() { a=$(git log -1 --all -i --format="%aN
-<%aE>" --author "$1"); echo ${a:-$1}; }; f'
-
-$ cat .git/hooks/commit-msg
-#!/bin/sh
-git interpret-trailers --in-place "$1"
-
-$ git config --get-regexp trailer
-trailer.report.key Reported-by
-trailer.report.command git author '$ARG'
-trailer.report.ifexists replace
-trailer.report.ifmissing doNothing
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 3402475..6918cc8 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -964,8 +964,8 @@ _git_branch ()
+ 	while [ $c -lt $cword ]; do
+ 		i=3D"${words[c]}"
+ 		case "$i" in
+-		-d|-m)	only_local_ref=3D"y" ;;
+-		-r)	has_r=3D"y" ;;
++		-d|-m|--move)	only_local_ref=3D"y" ;;
++		-r)		has_r=3D"y" ;;
+ 		esac
+ 		((c++))
+ 	done
+@@ -979,7 +979,7 @@ _git_branch ()
+ 			--color --no-color --verbose --abbrev=3D --no-abbrev
+ 			--track --no-track --contains --merged --no-merged
+ 			--set-upstream-to=3D --edit-description --list
+-			--unset-upstream
++			--unset-upstream --move
+ 			"
+ 		;;
+ 	*)
+--=20
+2.5.5
