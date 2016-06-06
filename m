@@ -1,79 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] userdiff: add built-in pattern for CSS
-Date: Mon, 06 Jun 2016 13:55:49 -0700
-Message-ID: <xmqqporuuje2.fsf@gitster.mtv.corp.google.com>
-References: <20160524142537.19324-1-william.duclot@ensimag.grenoble-inp.fr>
-	<20160602224809.5167-1-william.duclot@ensimag.grenoble-inp.fr>
-	<57511B2D.7040501@kdbg.org> <20160603094544.GA3865@Messiaen>
-	<xmqq8tymqnj9.fsf@gitster.mtv.corp.google.com>
-	<20160606072800.GA3803@Messiaen>
-	<xmqqinxmxkmx.fsf@gitster.mtv.corp.google.com>
-	<20160606204542.GA9280@Messiaen>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [RFC/PATCHv2] Documentation: triangular workflow
+Date: Mon, 6 Jun 2016 23:21:14 +0100
+Organization: OPDS
+Message-ID: <12C5A5F1276946DC99A03F30FEE49559@PhilipOakley>
+References: <1464697717-5751-1-git-send-email-jordan.de-gea@grenoble-inp.org><1465206518-1780-1-git-send-email-jordan.de-gea@grenoble-inp.org> <xmqqk2i2w288.fsf@gitster.mtv.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	simon.rabourg@ensimag.grenoble-inp.fr,
-	antoine.queru@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 06 22:56:03 2016
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	reply-type=original
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>, <mhagger@alum.mit.edu>,
+	<erwan.mathoniere@grenoble-inp.org>,
+	<samuel.groot@grenoble-inp.org>, <tom.russello@grenoble-inp.org>,
+	<Matthieu.Moy@grenoble-inp.fr>
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>
+X-From: git-owner@vger.kernel.org Tue Jun 07 00:21:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bA1Yz-0007MA-CJ
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 22:55:57 +0200
+	id 1bA2te-0006zm-Iv
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 00:21:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752112AbcFFUzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2016 16:55:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61661 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751872AbcFFUzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 16:55:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 55C87224C4;
-	Mon,  6 Jun 2016 16:55:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5s/uD7GIu11EEBBlLQ0S7iZs/eI=; b=sthK8l
-	ZEsfarbD+sedUvzM4F7kRzz/rcXOsjnK+2BeRcwlOAQbhb5iOxq4SLPj92T0MrQ4
-	2mr1TPHopqqd14xbvlB+GYk631nFaNSNbHJxsbAjcpFNPxRj/hxLtVxrwAoHivsU
-	e37Nuo8B3ngJde47aAHGg7H3qU04sCK9Won14=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iTvceVKUgg1XaTa/eEaNEOUIoVRIX3un
-	bSsNMPSF1m3YDIm6Zsyxs0pwopsS+/hUZWmXZvS7VqETkbpTrlMESpvpT4uZ+mEa
-	xAo3J+pb0SWNFW9mdH0i4XPxZoTIiAISZbFITyMY7PF1vRODX0UyWUbD6BN43D07
-	sqvg3Y6yqBo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4D488224C3;
-	Mon,  6 Jun 2016 16:55:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BAC17224C2;
-	Mon,  6 Jun 2016 16:55:50 -0400 (EDT)
-In-Reply-To: <20160606204542.GA9280@Messiaen> (William Duclot's message of
-	"Mon, 6 Jun 2016 22:45:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0D370646-2C29-11E6-93C7-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1753152AbcFFWVS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 18:21:18 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:25866 "EHLO
+	smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752650AbcFFWVS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 18:21:18 -0400
+Received: from PhilipOakley ([92.22.6.31])
+	by smtp.talktalk.net with SMTP
+	id A2tWbuVeVXCEWA2tWb5a7R; Mon, 06 Jun 2016 23:21:15 +0100
+X-Originating-IP: [92.22.6.31]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=cszZqBwi c=1 sm=1 tr=0 a=6rKLwjNE5rx67PMj20oCSw==:117
+ a=6rKLwjNE5rx67PMj20oCSw==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
+ a=aSBN74SrAAAA:8 a=OaAhOT0jWcYLDQVWbSMA:9 a=0RhZnL1DYvcuLYC8JZ5M:22
+ a=QLKLDn6n7aLR3e0nYJH2:22
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfPCsbtQHfPDcyyZxO5a0uE2tmDOTcK+TLjCBeiA40TJP0/sSpmQsJI5mnsTZgJUEPz0IBBo4e+Clr7EDwRukzoxyunflUNzXnCqcA8xjV7HFmvMrMMz6
+ 6WGh4YmNvo+iLu88NHfzelYAhQm4S7H4SH+uNZO/78lpFfe/sphzj0sMYG3RCAnq82NMAW7Up/P48voMsvvrhgL1SO3Ekya3ZSWy7+APCIv05oSZI1lKdufm
+ zhgyXy6zj8efAAkoME0ADHFKICcWjQ0QcojeMOsmqxrOtEI3nmvJ2Kl46zWyw3HPjkJ7VcORrbG9oEInIkw9dXLGCl6G/XdKUyy30WgRGrdIEVc/HdU2mXIb
+ l301AQsWulSxvbvOn1NyF0iwGCjUbxd76SdXOyYTzCbf5CrIVDdCRqnZxJiad/nCjcvHtcY0WqVJ6VXSQA9yGMpBRyqOaw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296568>
 
-William Duclot <william.duclot@ensimag.grenoble-inp.fr> writes:
-
->> Yup, thanks.  Isn't that what I queued as 0719f3ee (userdiff: add
->> built-in pattern for CSS, 2016-06-03)?
+=46rom: "Junio C Hamano" <gitster@pobox.com>
+> Jordan DE GEA <jordan.de-gea@grenoble-inp.org> writes:
 >
-> It is, my bad
+>> +TRIANGULAR WORKFLOW
+>> +-------------------
+>> +
+>> +In some projects, you cannot push directly to the project but have =
+to
+>> +suggest your commits to the maintainer (e.g. pull requests).
+>> +For these projects, it's common to use what's called a *triangular
+>> +workflow*:
+>> +
+>> +- Taking the last version of the project by fetching (e.g.
+>> +  **UPSTREAM**)
+>> +- Writing modifications and push them to a fork (e.g. **PUBLIC-FORK=
+**)
+>> +- Opening a pull request
+>> +- Checking of changes by the maintainer and, merging them into the
+>> +  **UPSTREAM** repository if accepted
+>> +
+>> +
+>> +........................................
+>> +------------------               -----------------
+>> +| UPSTREAM       |  maintainer   | PUBLIC-FORK   |
+>> +|  git/git       |- - - - - - - -|  me/remote    |
+>> +------------------       =E2=86=90       -----------------
+>> +              \                     /
+>> +               \                   /
+>> +          fetch=E2=86=93\                 /=E2=86=91push
+>> +                 \               /
+>> +                  \             /
+>> +                   -------------
+>> +                   |   LOCAL   |
+>> +                   -------------
+>> +........................................
+>
+> I agree with other commenters that "PUBLIC-FORK" is a name that does
+> not capture the essense of the triangular being the next step
+> forward, compared to the "central shared repository" workflow, to
+> take advantage of the distributed nature of Git.
+>
+> "Where you push so that somebody else can fetch from there" does not
+> have to be public.  You may be submitting a course assignment there,
+> only to be seen by your professor but not by others in the class.
+> Also, you do not your call "LOCAL" a "LOCAL-FORK" and that is a good
+> thing.  In a distributed world, everything is a fork, so adding
+> "-FORK" to a name is pretty much meaningless.
+>
+> So neither "PUBLIC" nor "FORK" in "PUBLIC-FORK" is a good word to
+> describe this thing.
+>
+> The only reason you are pushing there is because your "LOCAL" is
+> either not accessible from outside world, and/or you do not want to
+> give a direct access to it (otherwise you could have allowed an
+> access to whoever is going to fetch from you direct access to
+> "LOCAL" and be done with it without creating "PUBLIC-FORK").
+>
+> That is why I reminded that we earlier in the design phase called
+> this "publish"; it is a place you give access to others a selected
+> work of yours that you choose to give them access to.
 
-Not your bad at all.  I am leaky and was asking you to double check;
-it was entirely possible that I missed your even newer patch and
-what was queued was the second from the last one.
+Given that clarification I'd be happier to go with it being one's 'Publ=
+ish'=20
+repo.
 
-Thanks.
+My initial reticence was because of the association of "publish" with v=
+anity=20
+publishing and other forms of over-sharing and self promotion.
+
+A clarification/explanation that calling it a 'publish' repo is about=20
+granting access, and possible open access, would make it more acceptabl=
+e.
+
+> Whether you
+> are a leaf contributor, a student who got stuck and wants to ask
+> suggestions from your friends after looking your code over, or an
+> integrator of a big public project, I would view the act to push
+> into such a place you give selective visibility to your work to
+> others as publishing your work.
+
+Agreed, in that context.
+
+--
+Philip=20
