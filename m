@@ -1,271 +1,179 @@
-From: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
-Subject: [RFC/PATCHv2] Documentation: triangular workflow
-Date: Mon,  6 Jun 2016 11:48:37 +0200
-Message-ID: <1465206518-1780-1-git-send-email-jordan.de-gea@grenoble-inp.org>
-References: <1464697717-5751-1-git-send-email-jordan.de-gea@grenoble-inp.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: mhagger@alum.mit.edu, philipoakley@iee.org, gitster@pobox.com,
-	erwan.mathoniere@grenoble-inp.org, samuel.groot@grenoble-inp.org,
-	tom.russello@grenoble-inp.org, Matthieu.Moy@grenoble-inp.fr,
-	Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v5 1/2] builtin/apply: add 'lock_file' pointer into 'struct apply_state'
+Date: Mon,  6 Jun 2016 11:56:57 +0200
+Message-ID: <20160606095658.1815-1-chriscool@tuxfamily.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 11:49:17 2016
+X-From: git-owner@vger.kernel.org Mon Jun 06 11:57:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9r9m-00082T-Qh
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 11:49:15 +0200
+	id 1b9rI9-00061e-Vp
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 11:57:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751137AbcFFJtK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 05:49:10 -0400
-Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:34244 "EHLO
-	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751096AbcFFJtJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 05:49:09 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id AAA1624F3;
-	Mon,  6 Jun 2016 11:49:06 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gC9yBl1mnyMg; Mon,  6 Jun 2016 11:49:06 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 9AF2124DE;
-	Mon,  6 Jun 2016 11:49:06 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 950A32066;
-	Mon,  6 Jun 2016 11:49:06 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yFsdLI5n4Riv; Mon,  6 Jun 2016 11:49:06 +0200 (CEST)
-Received: from eduroam-032165.grenet.fr (eduroam-032165.grenet.fr [130.190.32.165])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 7784A2055;
-	Mon,  6 Jun 2016 11:49:06 +0200 (CEST)
-X-Mailer: git-send-email 2.7.4 (Apple Git-66)
-In-Reply-To: <1464697717-5751-1-git-send-email-jordan.de-gea@grenoble-inp.org>
+	id S1751127AbcFFJ5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 05:57:44 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34835 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751004AbcFFJ5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 05:57:42 -0400
+Received: by mail-wm0-f68.google.com with SMTP id k184so8695544wme.2
+        for <git@vger.kernel.org>; Mon, 06 Jun 2016 02:57:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=lh5Rw4QbcDCr68VOdsXHCsT0m7aXyYECwQkFYO1j+rs=;
+        b=fEmmY9Afx1qji9SZDFeJNagbUblGKejiRmsspWGQrTOi8pkvMSrYpQsFDt+89LskTm
+         tPfJVXEmaAKFJoFXu1jn5Av8P4nvabnPODYDPaWh6KT7vSYggNAotIq0JXp6u73o49dL
+         m91aq5kXuKSlbr85nxaVNsQzGsaxO3wubzn1AYkcj9B0QpSQzAA6+SKVvcdkPJLDJdPs
+         xYCqNjXISixSIigUb2X2SpAsx5UN9DwR75pT9+wsnGT7Nr+ZZPmj6RzVJUiM8bg3cjRb
+         pOBF5q9KdOppuMSt8QVxiR//F/2gqZF4xLl4yq2hdymck5km0qQi/ClfhHG4/82PmzH1
+         8h0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=lh5Rw4QbcDCr68VOdsXHCsT0m7aXyYECwQkFYO1j+rs=;
+        b=gfdrn3j58xidwfrAjKbMvGsbm+sfCfXQB+Yz2lJFwFGzpyhOqZP/HMZ2YcAlB8LrV/
+         mco1rHt1tTo5E8vrXZ5JWy/zYSVcv/Na8UjzAsSEuqnDChFs6eQKk9x2pgqR0LcmVYaN
+         MHAS6+MJWNlJtUtZUZTHoU8wag/9e7hZUi+QB+vwgU09QI8bPHk/q/BRuwjNgbtEyy8x
+         Cla0hEjC6rWTaRsaZ1qlH1bGhQtxpdWJUZscXkNqSbK9nrg7y13foO+Bex4reNBviejp
+         fiYAYnDZvsjg6dzDhPmmLJ0ycBd9oKyLoC0t1IDhlybtdbuEImVSj3mJLhim3Lz0A/ct
+         Eq2Q==
+X-Gm-Message-State: ALyK8tLUB5VbOBAfMXRdAH6bel7gofs20Cug/dxrlXMr0xwputFj7vIPwtA85sApRLdfSg==
+X-Received: by 10.194.92.113 with SMTP id cl17mr14762350wjb.176.1465207061139;
+        Mon, 06 Jun 2016 02:57:41 -0700 (PDT)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id q189sm13325568wmd.19.2016.06.06.02.57.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 06 Jun 2016 02:57:40 -0700 (PDT)
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.8.2.445.g4623162
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296490>
 
-Currently, triangular workflow can be configured, but there is no
-documentation about it. A documentation is useful to keep
-configuration possibilities up-to-date.
+From: Christian Couder <christian.couder@gmail.com>
 
-A new subsection is created in gitworkflow.
+We cannot have a 'struct lock_file' allocated on the stack, as lockfile.c
+keeps a linked list of all created lock_file structures.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Signed-off-by: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
+Also 'struct apply_state' users might later want the same 'struct lock_file'
+instance to be reused by different series of calls to the apply api.
+
+So let's add a 'struct lock_file *lock_file' pointer into 'struct apply_state'
+and have the user of 'struct apply_state' allocate memory for the actual
+'struct lock_file' instance.
+
+Let's also add an argument to init_apply_state(), so that the caller can
+easily supply a pointer to the allocated instance.
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
-Changes since version 1:
- - content moved in gitworktree
- - content improved
+This is to replace:
 
- Documentation/gitworkflows.txt | 155 +++++++++++++++++++++++++++++++++=
-++++++++
- 1 file changed, 155 insertions(+)
+"[PATCH v3 48/49] builtin/apply: move 'lock_file' global into 'struct apply_state'"
 
-diff --git a/Documentation/gitworkflows.txt b/Documentation/gitworkflow=
-s.txt
-index f16c414..cd77893 100644
---- a/Documentation/gitworkflows.txt
-+++ b/Documentation/gitworkflows.txt
-@@ -463,6 +463,157 @@ if you get conflicts: `git am -3` will use index =
-information contained
- in patches to figure out the merge base.  See linkgit:git-am[1] for
- other options.
-=20
-+TRIANGULAR WORKFLOW
-+-------------------
+from the "libify apply and use lib in am, part 1" patch series, and
+
+"[PATCH v4 1/2] builtin/apply: add 'lock_file' pointer into 'struct apply_state'"
+
+that was sent previously to replace v3 48/49 above.
+
+See: http://thread.gmane.org/gmane.comp.version-control.git/296350/
+
+The only change compared to v4 1/2 is that the comment above 'struct
+lock_file *lock_file' in 'struct apply_state' has been replaced with a
+much shorter one.
+
+This 2 patch long patch series on top of the other unchanged commits
+from v3 is available here:
+
+https://github.com/chriscool/git/commits/libify-apply64
+
+ builtin/apply.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 5027f1b..bbe0df1 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -52,6 +52,9 @@ struct apply_state {
+ 	const char *prefix;
+ 	int prefix_length;
+ 
++	/* These are lock_file related */
++	struct lock_file *lock_file;
 +
-+In some projects, you cannot push directly to the project but have to
-+suggest your commits to the maintainer (e.g. pull requests).
-+For these projects, it's common to use what's called a *triangular
-+workflow*:
-+
-+- Taking the last version of the project by fetching (e.g.
-+  **UPSTREAM**)
-+- Writing modifications and push them to a fork (e.g. **PUBLIC-FORK**)
-+- Opening a pull request
-+- Checking of changes by the maintainer and, merging them into the
-+  **UPSTREAM** repository if accepted
-+
-+
-+........................................
-+------------------               -----------------
-+| UPSTREAM       |  maintainer   | PUBLIC-FORK   |
-+|  git/git       |- - - - - - - -|  me/remote    |
-+------------------       =E2=86=90       -----------------
-+              \                     /
-+               \                   /
-+          fetch=E2=86=93\                 /=E2=86=91push
-+                 \               /
-+                  \             /
-+                   -------------
-+                   |   LOCAL   |
-+                   -------------
-+........................................
-+
-+Git options to use:
-+~~~~~~~~~~~~~~~~~~~
-+ - `branch.<branch>.remote`
-+ - `branch.<branch>.pushRemote`
-+ - `remote.pushDefault`
-+ - `push.default`
-+
-+See linkgit:git-config[1].
-+
-+Push behaviour
-+~~~~~~~~~~~~~~
-+
-+Setting the behavior of push for the triangular workflow:
-+
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
-+* `git config push.default current`
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
-+
-+
-+Case 1: LOCAL is a clone of **PUBLIC-FORK**
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+'In this case, the remote named `origin` corresponds to **PUBLIC-FORK*=
-*.'
-+
-+Adding **UPSTREAM** remote:
-+
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+* `git remote add upstream <UPSTREAM_url>`
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+Setting `branch.<branch>.remote` and `branch.<branch>.pushRemote` in
-+order to:
-+
-+ - pull from **UPSTREAM** without argument for pull
-+ - push to **PUBLIC-FORK** (`origin`) without argument for push
-+
-+Example with master as <branch>:
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+* `git config branch.master.remote upstream`
-+* `git config branch.master.pushRemote origin`
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+Case 2: LOCAL is a clone of **UPSTREAM**
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+'In this case, the remote named `origin` corresponds to
-+**UPSTREAM**.'
-+
-+Adding **PUBLIC-FORK** remote:
-+
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+* `git remote add public_fork <PUBLIC-FORK_url>`
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+**Method 1: One option for all branches**
-+
-+Setting `remote.pushDefault` in order to push to **PUBLIC-FORK** witho=
-ut
-+argument for push.
-+
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+* `git config remote.pushDefault public_fork`
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+**Method 2: Each branch its option**
-+
-+Setting `branch.<branch>.pushRemote` in order to push to **PUBLIC-FORK=
-**
-+without argument to push.
-+
-+Example with master as <branch>:
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+* `git config branch.master.pushRemote public_fork`
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+
-+Stay up-to-date
-+~~~~~~~~~~~~~~~
-+
-+Retrieving updates from **UPSTREAM** with `git pull` and sending
-+them to **PUBLIC-FORK** with `git push`.
-+
-+Checks
-+~~~~~~
-+
-+Uses of command line shorthand `@{push}` and `@{upstream}`.
-+
-+**Display the push remote's name: **
-+
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+* `git rev-parse --abbrev-ref '@{push}'`
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+The shorthand `<branch>@{push}` denotes the remote-tracking branch
-+where the <branch> would be pushed to. If no <branch> is specified
-+(`@{push}`), <branch> takes the value of the current branch.
-+
-+See linkgit:git-rev-parse[1].
-+
-+**Display the fetch remote's name: **
-+
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+* `git rev-parse --abbrev-ref '@{upstream}'`
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+The shorthand "<branch>@{upstream}" substitutes the name of the
-+"upstream" of the branch. If no <branch> is specified (`@{upstream}`),
-+<branch> takes the value of the current branch.
-+
-+**Display commits added to the current branch since last push: **
-+
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+* `git log @{push}..`
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+See linkgit:git-log[1].
-+
-+**Display commits added to a specific branch since last push: **
-+
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-+* `git log <branch_name>@{push}..`
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-=20
- SEE ALSO
- --------
-@@ -474,6 +625,10 @@ linkgit:git-rebase[1],
- linkgit:git-format-patch[1],
- linkgit:git-send-email[1],
- linkgit:git-am[1]
-+linkgit:git-config[1],
-+linkgit:git-log[1],
-+linkgit:git-rev-parse[1]
-+
-=20
- GIT
- ---
---=20
-2.7.4 (Apple Git-66)
+ 	/* These control what gets looked at and modified */
+ 	int apply; /* this is not a dry-run */
+ 	int cached; /* apply to the index only */
+@@ -4547,7 +4550,7 @@ static int apply_patch(struct apply_state *state,
+ 
+ 	state->update_index = state->check_index && state->apply;
+ 	if (state->update_index && newfd < 0)
+-		newfd = hold_locked_index(&lock_file, 1);
++		newfd = hold_locked_index(state->lock_file, 1);
+ 
+ 	if (state->check_index) {
+ 		if (read_cache() < 0)
+@@ -4648,11 +4651,14 @@ static int option_parse_directory(const struct option *opt,
+ 	return 0;
+ }
+ 
+-static void init_apply_state(struct apply_state *state, const char *prefix)
++static void init_apply_state(struct apply_state *state,
++			     const char *prefix,
++			     struct lock_file *lock_file)
+ {
+ 	memset(state, 0, sizeof(*state));
+ 	state->prefix = prefix;
+ 	state->prefix_length = state->prefix ? strlen(state->prefix) : 0;
++	state->lock_file = lock_file;
+ 	state->apply = 1;
+ 	state->line_termination = '\n';
+ 	state->p_value = 1;
+@@ -4705,6 +4711,8 @@ static void check_apply_state(struct apply_state *state, int force_apply)
+ 	}
+ 	if (state->check_index)
+ 		state->unsafe_paths = 0;
++	if (!state->lock_file)
++		die("BUG: state->lock_file should not be NULL");
+ }
+ 
+ static int apply_all_patches(struct apply_state *state,
+@@ -4769,7 +4777,7 @@ static int apply_all_patches(struct apply_state *state,
+ 	}
+ 
+ 	if (state->update_index) {
+-		if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
++		if (write_locked_index(&the_index, state->lock_file, COMMIT_LOCK))
+ 			die(_("Unable to write new index file"));
+ 	}
+ 
+@@ -4852,7 +4860,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
+-	init_apply_state(&state, prefix);
++	init_apply_state(&state, prefix, &lock_file);
+ 
+ 	argc = parse_options(argc, argv, state.prefix, builtin_apply_options,
+ 			apply_usage, 0);
+-- 
+2.8.2.445.g4623162
