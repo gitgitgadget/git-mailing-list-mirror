@@ -1,123 +1,88 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Coccinelle for automated refactors
-Date: Mon, 6 Jun 2016 23:09:36 +0000
-Message-ID: <20160606230936.GA60445@vauxhall.crustytoothpaste.net>
-References: <20160605205518.GA153578@vauxhall.crustytoothpaste.net>
- <xmqqy46iw3ih.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: `man 1 git`: Invalid link to online documentation
+Date: Mon, 6 Jun 2016 19:19:36 -0400
+Message-ID: <20160606231936.GB22756@sigill.intra.peff.net>
+References: <ed8f000f-b8a2-ca92-e0f2-e26ff9928bbe@gentoo.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="GvXjxJ+pjyke8COw"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 07 01:09:50 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Campbell <zlg@gentoo.org>
+X-From: git-owner@vger.kernel.org Tue Jun 07 01:19:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bA3eW-0004pu-TI
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 01:09:49 +0200
+	id 1bA3o8-00035M-H0
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 01:19:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752750AbcFFXJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2016 19:09:45 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:40614 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752593AbcFFXJn (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 19:09:43 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8B4E0282A8;
-	Mon,  6 Jun 2016 23:09:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1465254581;
-	bh=wrokbz4AG20Yltu7dk9vhaWbbSXm9+oERskZxXQmpvw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=G+QCR7gN0g5dPuzM7glyYhwIj3L6bzuky71aWSMmy/HHw6JQ+LDby02KAA1ASpOn+
-	 jI9zlUS/SR8kGU5evz1eqxIXcU6Q3Qxpv+rtGeEWWwd/0SICpllxejp1sJnaDNAbad
-	 z9Zx/4SaqRwYxQHsJ7fWdY+Z8YpN82YZVu3BbXQPvKfwU0THhoNZI+MVcRb6ELGdl+
-	 dqARB8gAqcKmjfMRAZ83n56TCazKwa7QzzK9iV7uiHW2s0u+xhTUUw6P+rgfd+gR23
-	 U0HMe6Xzfm0330jGFe478zrPpvnmKy7O6OXIA/esYVVWnLIEr6YSmKz6Jrz6tF+S3F
-	 gG1exO93TsvSgtg/8QHnP3xEnWqNDie4VsN9CEC5KPPzlst5mTopPt+SjHvQvjEEXd
-	 8xhpv/uyhPcZvjuUj+GYRJ+H2aN0TPOseNFY/pai2J2YrswattXYJJ2kc2ZhNpbnsP
-	 hJy6lBFL6QdIx0vc2JDpWwzWnxTZVhzHcGFGRDx3BWVAsW+0HOC
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	id S1752909AbcFFXTk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 19:19:40 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50021 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752290AbcFFXTj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 19:19:39 -0400
+Received: (qmail 689 invoked by uid 102); 6 Jun 2016 23:19:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Jun 2016 19:19:38 -0400
+Received: (qmail 23621 invoked by uid 107); 6 Jun 2016 23:19:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 06 Jun 2016 19:19:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Jun 2016 19:19:36 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqy46iw3ih.fsf@gitster.mtv.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.6.0-trunk-amd64)
-User-Agent: Mutt/1.6.0 (2016-04-01)
-X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
+In-Reply-To: <ed8f000f-b8a2-ca92-e0f2-e26ff9928bbe@gentoo.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296573>
 
+On Sun, Jun 05, 2016 at 08:59:00PM -0700, Daniel Campbell wrote:
 
---GvXjxJ+pjyke8COw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> In `man 1 git`, the Description section outlines an address to
+> pre-generated documentation [0]. That link returns a 404 error. Playing
+> around, I found the repository at [1] and found that it hasn't been
+> updated since August 2015. Given that 2.8.3 is more recent than that, it
+> seems like this is something that should be updated (if the
+> pre-generated docs still exist somewhere) or removed altogether.
+> 
+> Also worth considering is Google Code was shut down earlier this year.
+> While archives exist, it can't be relied upon for future use. The
+> closest approximation I could find that was up to date is [2], though
+> [3] is a repository that's even fresher than 2.8.3.
 
-On Mon, Jun 06, 2016 at 11:55:50AM -0700, Junio C Hamano wrote:
-> Is the plan for such a "refactor" patch to compose such a series as
-> two patch series:
->=20
->  [1/2] automatic refactor
->=20
-> which gives the "semantic patch" in the proposed log message as part
-> of its description, and the automated result (with possible
-> misconversions that may have come from bugs in the automated tools),
-> with a separate
->=20
->  [2/2] manual fixups
->=20
-> that corrects what was misconverted and what was missed?
->=20
-> As long as [2/2] can be kept to the minimum (and an automated tool
-> that is worth using should make it so), I think that is a good way
-> forward.  Another possibility would be to send the end-result as a
-> single patch, with description on the manual fixups in the proposed
-> log message, but it would be a lot more work to generate and review
-> such a patch, I would think.
+Yeah, I think Google Code is out. The git-scm.com page automatically
+pulls in released versions of the pages, but not the tip of master
+(which is what the git-htmldocs repository has).
 
-My hope is that I can make the automated changes such that manual fixups
-are more along the lines of cleaning up related functions in the module,
-fixing issues noticed during the refactor, and the like: in other words,
-things that one might have done incidentally as part of the patch, but
-could defensibly be done in a second patch anyway.
+That repository is hosted at kernel.org and at GitHub, so either of:
 
-My goal is to make the series as much like a human-edited series as
-possible, but with less work on all sides.
+  https://git.kernel.org/cgit/git/git-htmldocs.git/plain/git.html
 
-I can send an RFC series that demonstrates this a little later to see if
-it's an acceptable direction for work.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+  https://raw.githubusercontent.com/gitster/git-htmldocs/master/git.html
 
---GvXjxJ+pjyke8COw
-Content-Type: application/pgp-signature; name="signature.asc"
+but in both cases the content-type is such that it doesn't render in a
+browser (and at least in the GitHub case, that is intentional; we don't
+want people using their repos directly as a CDN. They should build a
+Pages site and push to it).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.12 (GNU/Linux)
+So I think the options are basically:
 
-iQIcBAEBCgAGBQJXVgKwAAoJEL9TXYEfUvaLbXUQALS4UUTP+eEbtyvE8C/pVA1s
-Ey2yPBgYQZWaKJEBGyEpW69Fl6aArZmX90LWTc7VaLqCNjObd3XMtMS2bg6lSmeS
-Xb/gCJS7GabxB6IDynMTiVHKON/03weDGk+roAxrVzv149RmElAwej1CJ5QXsQqR
-UG+PlWdGTuf0GeN2oMOq0/Mi3Lv/NeWN0xE2OdmI86QXzH2VlMHHHmX1Qlc6QKIn
-tBqnqI27PlZ5O5h+XfYhiHA32bLker6ox0C2ijK6fe+M5SYrzykZ8mMJ9Jwwc4PL
-McHZGIvBggyPYa7YG1HGJDnYMvSgfoIUZwa85NElBUTFkYrPGVNr/L/xqQMj7jAw
-h3/Yz5luXrzMMrgo3FwnQVnMWgQ6lgUHn8XwRjE7wxLDyZIhsv5dnAZRdD6iak/T
-vFu5PO1MGGOFTxi1gr8t6QOU+QBZZ9v+KTRctFOiox4tiJImI5GiJmpdSJixxEmn
-/XLNocudWlTu0WllJMjq7zMNdLolPDg/7fjggmtzBUuBPDpS9Vg4w7CGCZ82YxdX
-LSWfCoVg7HvAverbC60DM2+lecc4l4WlzG9ShaJDBH5jAxdiV6dTE3MZSG0noWgR
-PDeaP9TmE0tIRvsaNix2FaSH6hHnaL2oljUsptA9x76ITsy7ik3Fy94SJbm6A4E9
-GHZXIdTJQbYz9X8ITxX7
-=BQU1
------END PGP SIGNATURE-----
+  1. Point to git-scm.com/docs as "new enough" as it covers released
+     versions (and lets you walk back to earlier versions, too). People
+     who want bleeding edge can clone htmldocs themselves.
 
---GvXjxJ+pjyke8COw--
+  2. Make git-htmldocs a real site on GitHub. I think this should be as
+     simple as pushing to the `gh-pages` branch of the repository, which
+     would make it available as https://gitster.github.io/git-htmldocs.
+     You can do a bunch of Jekyll magic, but you don't have to; it should
+     serve arbitrary html files (though I think we'd maybe want to add
+     an "index.html"; we may also want to host it under a git/htmldocs
+     project just to make the repo more official looking).
+
+  3. Publish to some other Pages-like service. I don't think kernel.org
+     has one, but it's not like there's a lack of sites you can push
+     static HTML files to. I mentioned GitHub in (2) mostly because
+     Junio already pushes there.
+
+-Peff
