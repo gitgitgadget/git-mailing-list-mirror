@@ -1,146 +1,121 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v5 2/2] builtin/apply: move 'newfd' global into 'struct apply_state'
-Date: Mon,  6 Jun 2016 11:56:58 +0200
-Message-ID: <20160606095658.1815-2-chriscool@tuxfamily.org>
-References: <20160606095658.1815-1-chriscool@tuxfamily.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
+Subject: Re: [PATCH v4 1/2] builtin/apply: add 'lock_file' pointer into
+ 'struct apply_state'
+Date: Mon, 6 Jun 2016 12:03:56 +0200
+Message-ID: <CAP8UFD3DAg02u95+227ZbsF=nQn+1jC_P7DAQUY9jaOwBoCk1w@mail.gmail.com>
+References: <20160603165852.12399-1-chriscool@tuxfamily.org> <xmqq4m9ap2ub.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Stefan Beller <sbeller@google.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 11:57:55 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 06 12:04:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9rIA-00061e-HA
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 11:57:54 +0200
+	id 1b9rOC-0002L7-Al
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 12:04:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751237AbcFFJ5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2016 05:57:50 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:32968 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751004AbcFFJ5t (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 05:57:49 -0400
-Received: by mail-wm0-f68.google.com with SMTP id c74so6874157wme.0
-        for <git@vger.kernel.org>; Mon, 06 Jun 2016 02:57:48 -0700 (PDT)
+	id S1751329AbcFFKD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 06:03:59 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36399 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751164AbcFFKD6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 06:03:58 -0400
+Received: by mail-wm0-f67.google.com with SMTP id m124so14035087wme.3
+        for <git@vger.kernel.org>; Mon, 06 Jun 2016 03:03:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bCac2IltVTFmQ4Hz2Lj4bRbuSogMfDBWsBUiIQ1Rh1w=;
-        b=jS4L+m3wRPR1K0wSfpJ76ZnMMUkV4N2CjntGxGGIkTn363Ozosp1YjgR3uf963bu7I
-         sXdIW7lmDLelfGLdIW2wz3VLkPfcCTzfjEhFsNWmJe12jTjQz6cnAV5JzZ/i9FABiLH7
-         2DmbKUHZkj3+KXzfNHgwUCpM1Hf/Wl61fO1iPekgbdlbvzwIHfR3u9YKeIB5pCfU8xfp
-         EbSn3iLF2KIA1fD6qfIQc47R17hmsSjiCwgcGIRJHNpLXh2O697wvZZHVDmnk9r8/uyU
-         OhRJsEnY6waCSpt/aKV7AE5rcHTCb+o0YJj6c3ccnQucldndHVs04acYd/oZbd5/jk89
-         FZug==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=qRnCjFshCLZuS0hZ/APi/LiRaSFqaPrx/rNwdinzCVo=;
+        b=jv1y5SvT2QidgwOuJueTTuN5PaXmemdfK4oVY97cyN/lf26Po+NIyrikiWrZwL/r02
+         HtT0oY6lJf4n8sI/gXgJQkvedAroyo8otMVPWYBuKdlsD61M6H7BVHS6BM6WVHGI4u3H
+         07KOHqRQ/3/t17G6NQ0Ulql46CI9nNqI8ofCliMcnNSb7DBnZ7zQAFshe4oHfQI+2xOx
+         rJNAo3IUqkzytjspuohWSiysRliH20yxAmDsg1q63VSNBTiY15TlVpqJrpB9sHuS1KJe
+         D6mXRHsxCzRSKSpBYwUmezY7ok1k5PyAoHSG2QWklQwaUMTGV4COsBTY0XGoyfVgdA9S
+         uHpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=bCac2IltVTFmQ4Hz2Lj4bRbuSogMfDBWsBUiIQ1Rh1w=;
-        b=F/lUIG0zEIEeX5ReQtqH2lYoTfloZDnrQTKF9S1sGbrZIpIbtJ3nd4w3rK8X66LIbw
-         Q/P6uZ0kkfwv8bY/5niAqZkG9sZyAXHnHUZXATOZHY9574PF0+7CuPu5uFSEuHtRQM7i
-         yD6luvMFPWkQI3WKMUcyPvbZ5VWOV7GYaRhHzyWGdnUknuvVMU04To8TB9V0QjztASHj
-         ad9vIHEp76ekjOrn2/L/KsV7lcUUykuhrOxGiZEA/vBFjkKAYORYO5xQ8Gn+LxWDckWl
-         TLdkMYlxO1l1YKCJiTaBYltTjiY3Yhhq1ECtUPRUvSj5HUQXw0vjpryIRSKVuYfKkJHa
-         T47w==
-X-Gm-Message-State: ALyK8tKwtCvUJziKo/W7rJzFrlYKBCJZynmSflVi/v6llCrw9BDIeE7PhwHWXRq26JG0Eg==
-X-Received: by 10.194.102.202 with SMTP id fq10mr14504105wjb.153.1465207067811;
-        Mon, 06 Jun 2016 02:57:47 -0700 (PDT)
-Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id q189sm13325568wmd.19.2016.06.06.02.57.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 06 Jun 2016 02:57:46 -0700 (PDT)
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.8.2.445.g4623162
-In-Reply-To: <20160606095658.1815-1-chriscool@tuxfamily.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=qRnCjFshCLZuS0hZ/APi/LiRaSFqaPrx/rNwdinzCVo=;
+        b=fANkpvSK4O28O4ScltzSuI1b6ZD5DfnkQd/PW8AyqksBxdiDjS47rd4CyhmvFHin15
+         2IQNs56fBjDkUSpQ18h+3A9/VepBitXY97X8J/+Vs4EMFtgNiEE8kggZBzNHZJ8yiqP5
+         UvdgHJvqyJEHOrRxPiDCxqCngoH7M3Xq467m7FaaFRzNJUiG7fCvH/UtGHdQwGPg5/D5
+         ezv6iYQtNKG5tq+WSUvCvisj77kYlSfaPcaEJ/zymMM0BZmQH8CyIFtmJiEBOT8VhC+Q
+         6Wqs8cDBxc0yd1pwwoT0m9otdq6hhJqfTrSp9P0AEAN91HtTYw6JgFsVzb1fIdYv+0y9
+         twMQ==
+X-Gm-Message-State: ALyK8tLUoSBZME34puniuDxtwnQ3cZx/N4ieHomk8ypE7Ebs8+B8/uoq4FLv0+SwO8D9h6vpL+X9ury0l3CFew==
+X-Received: by 10.28.94.194 with SMTP id s185mr11786119wmb.62.1465207437414;
+ Mon, 06 Jun 2016 03:03:57 -0700 (PDT)
+Received: by 10.194.148.146 with HTTP; Mon, 6 Jun 2016 03:03:56 -0700 (PDT)
+In-Reply-To: <xmqq4m9ap2ub.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296492>
+
+On Fri, Jun 3, 2016 at 8:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> This is to replace:
+>>
+>> "[PATCH v3 48/49] builtin/apply: move 'lock_file' global into 'struct apply_state'"
+>>
+>> from the "libify apply and use lib in am, part 1" patch series.
+>
+> Thanks; will replace the tip 2 patches and requeue.
+>
+>> diff --git a/builtin/apply.c b/builtin/apply.c
+>> index 5027f1b..cc635eb 100644
+>> --- a/builtin/apply.c
+>> +++ b/builtin/apply.c
+>> @@ -52,6 +52,12 @@ struct apply_state {
+>>       const char *prefix;
+>>       int prefix_length;
+>>
+>> +     /*
+>> +      * Since lockfile.c keeps a linked list of all created
+>> +      * lock_file structures, it isn't safe to free(lock_file).
+>> +      */
+>> +     struct lock_file *lock_file;
+>
+> Is this even an issue for this thing anymore?  It is the
+> responsibilty of the API user to manage the lifetime of what
+> lock_file points at.  The caller may have it on heap and let it
+> leak, or it may have in BSS in which case it won't even dream about
+> freeing it.
+>
+> If a comment were needed for this field, it should say "when
+> discarding/freeing apply_state, just discard this pointer without
+> touching what the pointer points at; the storage the pointer points
+> at does not belong to the API implementation but belongs to the API
+> user".
+>
+> But I do not think such a comment is needed, because the situation
+> is the same as other fields like *prefix, and for the same reason we
+> do not do anything to these fields in clear_apply_state().
+
+Ok, I just resent without this comment.
+
+I still don't understand why there is an added:
 
 From: Christian Couder <christian.couder@gmail.com>
 
-To libify the apply functionality the 'newfd' variable should
-not be static and global to the file. Let's move it into
-'struct apply_state'.
+at the beginning of the emails.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+> Other than that this looks great.
 
-This is to replace:
-
-"[PATCH v3 49/49] builtin/apply: move 'newfd' global into 'struct apply_state'"
-
-from the "libify apply and use lib in am, part 1" patch series, and
-
-"[PATCH v4 2/2] builtin/apply: move 'newfd' global into 'struct apply_state'"
-
-that was sent previously to replace v3 49/49 above.
-
-There is no change compared to both previous version except that this
-patch should apply cleanly on top of PATCH v5 1/2.
-
- builtin/apply.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/apply.c b/builtin/apply.c
-index bbe0df1..b3eb704 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -54,6 +54,7 @@ struct apply_state {
- 
- 	/* These are lock_file related */
- 	struct lock_file *lock_file;
-+	int newfd;
- 
- 	/* These control what gets looked at and modified */
- 	int apply; /* this is not a dry-run */
-@@ -117,8 +118,6 @@ struct apply_state {
- 	int applied_after_fixing_ws;
- };
- 
--static int newfd = -1;
--
- static const char * const apply_usage[] = {
- 	N_("git apply [<options>] [<patch>...]"),
- 	NULL
-@@ -4549,8 +4548,8 @@ static int apply_patch(struct apply_state *state,
- 		state->apply = 0;
- 
- 	state->update_index = state->check_index && state->apply;
--	if (state->update_index && newfd < 0)
--		newfd = hold_locked_index(state->lock_file, 1);
-+	if (state->update_index && state->newfd < 0)
-+		state->newfd = hold_locked_index(state->lock_file, 1);
- 
- 	if (state->check_index) {
- 		if (read_cache() < 0)
-@@ -4659,6 +4658,7 @@ static void init_apply_state(struct apply_state *state,
- 	state->prefix = prefix;
- 	state->prefix_length = state->prefix ? strlen(state->prefix) : 0;
- 	state->lock_file = lock_file;
-+	state->newfd = -1;
- 	state->apply = 1;
- 	state->line_termination = '\n';
- 	state->p_value = 1;
-@@ -4779,6 +4779,7 @@ static int apply_all_patches(struct apply_state *state,
- 	if (state->update_index) {
- 		if (write_locked_index(&the_index, state->lock_file, COMMIT_LOCK))
- 			die(_("Unable to write new index file"));
-+		state->newfd = -1;
- 	}
- 
- 	return !!errs;
--- 
-2.8.2.445.g4623162
+Thanks,
+Christian.
