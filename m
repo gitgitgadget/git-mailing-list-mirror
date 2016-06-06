@@ -1,81 +1,88 @@
-From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH] completion: complete --move for git branch
-Date: Mon, 6 Jun 2016 16:16:29 +0200 (CEST)
-Message-ID: <582640631.360243.1465222588996.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1465218971-14118-1-git-send-email-ville.skytta@iki.fi>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3 2/3] doc: change environment variables format
+Date: Mon, 06 Jun 2016 16:08:31 +0200
+Message-ID: <vpqinxmmmu8.fsf@anie.imag.fr>
+References: <20160603220837.9842-1-tom.russello@grenoble-inp.org>
+	<20160606100905.23006-1-tom.russello@grenoble-inp.org>
+	<20160606100905.23006-3-tom.russello@grenoble-inp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>
-X-From: git-owner@vger.kernel.org Mon Jun 06 16:04:45 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	erwan.mathoniere@grenoble-inp.org, samuel.groot@grenoble-inp.org,
+	jordan.de-gea@grenoble-inp.org
+To: Tom Russello <tom.russello@grenoble-inp.org>
+X-From: git-owner@vger.kernel.org Mon Jun 06 16:09:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9v93-00063i-1X
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 16:04:45 +0200
+	id 1b9vD4-0000hj-R1
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 16:08:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751742AbcFFOEk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 10:04:40 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:49993 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751118AbcFFOEk convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 10:04:40 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 9EFEA2597;
-	Mon,  6 Jun 2016 16:04:37 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id s-wU_Y19xjJy; Mon,  6 Jun 2016 16:04:37 +0200 (CEST)
-Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 8F2612591;
-	Mon,  6 Jun 2016 16:04:37 +0200 (CEST)
-In-Reply-To: <1465218971-14118-1-git-send-email-ville.skytta@iki.fi>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF39 (Linux)/8.0.9_GA_6191)
-Thread-Topic: completion: complete --move for git branch
-Thread-Index: 902mD2prWI/KgsAoqtCM2jmQYddxQg==
+	id S1751750AbcFFOIo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 10:08:44 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:42050 "EHLO mx1.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752836AbcFFOIm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 10:08:42 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u56E8U49001421
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 6 Jun 2016 16:08:30 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u56E8Vn3000320;
+	Mon, 6 Jun 2016 16:08:31 +0200
+In-Reply-To: <20160606100905.23006-3-tom.russello@grenoble-inp.org> (Tom
+	Russello's message of "Mon, 6 Jun 2016 12:09:04 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Mon, 06 Jun 2016 16:08:30 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u56E8U49001421
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1465826911.48701@268RdxASNXk6b5FnKgsdpg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296512>
 
-Hi,
+Tom Russello <tom.russello@grenoble-inp.org> writes:
 
-Ville Skytt=C3=A4 <ville.skytta@iki.fi> writes:
->          while [ $c -lt $cword ]; do
->                  i=3D"${words[c]}"
->                  case "$i" in
-> -                -d|-m)        only_local_ref=3D"y" ;;
-> -                -r)        has_r=3D"y" ;;
-> +                -d|-m|--move)        only_local_ref=3D"y" ;;
+> As a first step, this change GIT_* variables that where in
+> italic style to monospace font according to the guideline. It was obtained
+> with
+>
+> 	perl -pi -e "s/\'(GIT_.*?)\'/\`\1\`/g" *.txt
 
-"While you're at it" you might want to do the same thing for
-`--delete`.
+Good.
 
-> +                -r)                has_r=3D"y" ;;
+I'd add to the commit message that one of the goals of this patch is to
+make the use "mostly consistent" with CodingGuidelines, so that people
+writting new doc by mimicking the existing one later get a good
+probability of getting it right even if they didn't read
+CodingGuidelines.
 
-You are introducing an additional tab here that you probably didn't
-want.
+> @@ -619,7 +619,7 @@ core.excludesFile::
+>  core.askPass::
+>  	Some commands (e.g. svn and http interfaces) that interactively
+>  	ask for a password can be told to use an external program given
+> -	via the value of this variable. Can be overridden by the 'GIT_ASKPASS'
+> +	via the value of this variable. Can be overridden by the `GIT_ASKPASS`
+>  	environment variable. If not set, fall back to the value of the
+>  	'SSH_ASKPASS' environment variable or, failing that, a simple password
+>  	prompt. The external program shall be given a suitable prompt as
 
->                  esac
->                  ((c++))
->          done
-> @@ -979,7 +979,7 @@ _git_branch ()
->                          --color --no-color --verbose --abbrev=3D --n=
-o-abbrev
->                          --track --no-track --contains --merged --no-=
-merged
->                          --set-upstream-to=3D --edit-description --li=
-st
-> -                        --unset-upstream
-> +                        --unset-upstream --move
->                          "
->                  ;;
->          *)
+We now have a minor inconsistency between GIT_ASKPASS and SSH_ASKPASS.
 
-Thanks,
-R=C3=A9mi
+You can catch this one and a handful others with
+
+  git grep "'[A-Z_]*' environment"
+
+(That would be a separate patch)
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
