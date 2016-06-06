@@ -1,99 +1,154 @@
-From: =?UTF-8?q?Ville=20Skytt=C3=A4?= <ville.skytta@iki.fi>
-Subject: [PATCH 1/2] git-prompt.sh: Don't error on null ${ZSH,BASH}_VERSION, $short_sha
-Date: Mon,  6 Jun 2016 19:29:33 +0300
-Message-ID: <1465230573-18357-1-git-send-email-ville.skytta@iki.fi>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [RFC/PATCH v2] pull: add --set-upstream
+Date: Mon, 6 Jun 2016 17:29:39 +0100
+Organization: OPDS
+Message-ID: <2DE0829216C940168DCD804378CD18CC@PhilipOakley>
+References: <20160525152528.22202-1-erwan.mathoniere@grenoble-inp.org> <20160606093437.1992-1-erwan.mathoniere@grenoble-inp.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 18:29:42 2016
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <jordan.de-gea@grenoble-inp.org>, <samuel.groot@grenoble-inp.org>,
+	<erwan.mathoniere@grenoble-inp.org>,
+	<tom.russello@grenoble-inp.org>, <gitster@pobox.com>,
+	"Matthieu Moy" <matthieu.moy@grenoble-inp.fr>
+To: "Erwan Mathoniere" <erwan.mathoniere@grenoble-inp.org>,
+	<git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 06 18:29:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9xPK-0007ZD-1M
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 18:29:42 +0200
+	id 1b9xPT-0007gj-C0
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 18:29:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752167AbcFFQ3i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 12:29:38 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:32936 "EHLO
-	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751130AbcFFQ3h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 12:29:37 -0400
-Received: by mail-lf0-f68.google.com with SMTP id w16so13959080lfd.0
-        for <git@vger.kernel.org>; Mon, 06 Jun 2016 09:29:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=FhgVKxhGzax/hlz4wQBdXe8sjJV7M9tDn7l8Il0zqn8=;
-        b=jAcsXlkwyM+Ev69cMhRw9UtlcEzNTU7pkb8N4MhlwvCik8mZpOws0eQnw+bs6ymQxC
-         1rVpr45BpTe2DOX+ekVvSyOASsJspwtIQnplsdMD+Sn7N3R/yIcUXTTVoEc1IezH+vxg
-         3nNKD2ZTAbxHtxrK6IvQaPVpZcU/xKCMockGjnErGPyBQuBKAAXLgGFme/R0V7eoWs97
-         sQ8hgdX1NSXOHt/Y0NIOfA5HoNjoUcgAGRmKnLmFKts7Q3C41DikdAuhJJnA0gYSK0/T
-         pzXQCzM57nocP/lPv1kyYC5QH5r7FYxXPknPFcQwszx8u3vYFOjmDVC0D2Y4X74bz/G4
-         A3HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:from:to:subject:date:message-id
-         :mime-version:content-transfer-encoding;
-        bh=FhgVKxhGzax/hlz4wQBdXe8sjJV7M9tDn7l8Il0zqn8=;
-        b=JAyUTKYxDznm6l5XNW2XlSyMlzg+jTEtn0+JW19O6EsaTMFS++VZQHWtNqmwNmi+EK
-         6IwG5XmCvpD0YElgW+q+OxQpuSjE7EREsU3fEjSjh8HDUOWEttV1wV4Ksj8Brv49Q2yU
-         S72GpuhUhMou7zr2KdB5rMNxxPbRi6SdYBXl8mdaiHtgArBk73guSt61q3gce80qV/DU
-         mijsPWTkHyJgL+e7oVHI4WzWf0rez/vsySPtdEBfqgKYw+chN55B3803aDaSlGo/LHJL
-         3t/KaWr7ZbNgTkeEN7iYYfNQ9R1KoqTpQizSnu0C1j8wd9LLt3BdD0j0u1MrGbrs1og9
-         W11w==
-X-Gm-Message-State: ALyK8tKGOejqBFvb+D2KXZ1mtC9hruwilja+aUcoMOBFvvmF7pcnyRptK+Ed9D2UC8HvDA==
-X-Received: by 10.46.71.132 with SMTP id u126mr4655894lja.14.1465230575142;
-        Mon, 06 Jun 2016 09:29:35 -0700 (PDT)
-Received: from viper.dy.fi (dtpyyyyyyyyyyyyyb0xvy-3.rev.dnainternet.fi. [2001:14ba:8300::1:f4e2])
-        by smtp.gmail.com with ESMTPSA id a7sm1129411lbs.36.2016.06.06.09.29.34
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 06 Jun 2016 09:29:34 -0700 (PDT)
-X-Mailer: git-send-email 2.5.5
+	id S1752184AbcFFQ3q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 12:29:46 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:37259 "EHLO
+	smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752174AbcFFQ3n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 12:29:43 -0400
+Received: from PhilipOakley ([92.22.6.31])
+	by smtp.talktalk.net with SMTP
+	id 9xPHbu2Z2sdET9xPHb759F; Mon, 06 Jun 2016 17:29:40 +0100
+X-Originating-IP: [92.22.6.31]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=B/D766lM c=1 sm=1 tr=0 a=6rKLwjNE5rx67PMj20oCSw==:117
+ a=6rKLwjNE5rx67PMj20oCSw==:17 a=8nJEP1OIZ-IA:10 a=aSBN74SrAAAA:8
+ a=rJg5hy6MCaHl_4QEEMMA:9 a=QLKLDn6n7aLR3e0nYJH2:22
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfOYTi5joKDKadYj/1Lyvz/m3oXcBmnVER2JmJ7RqMab+BeyAjf3wHd67p0gv8tr8GdtKBCR9sSZRmZwN2yg6ZqmPetGgfZZAjPhEyRTy/9P/lPqs7QCV
+ 0BN7A/ncZVCBPpTOCqR49Gpc0GwpyHHZXb8f6kiYC+TPxuEbYtcbQCzphNZ74Yox7TJ+UBeee7paFIh7C5CfTz32ECmJAl+oOM5DgqT2fIS26E7jnhJcOkbB
+ sKrG4SkPz6dc1zQXZ8Ldf0amN6HnmuMO40if0YuzstsxwspxsyMvpXBCvlnQ2m9+tW8QRRykO+yyxJBwB6nj9nhqTHP4R1PG+dMOa/8C/uj8wKhTP5HjvLDk
+ 3QfBSRtTQXx8aq//70Jv5RO57JCbgzsKyl8u1qzLimp+cVAM/NUieh2Nk5b6d01HUI6Ry7E3DRgdXZb+oafdC8oAM1m4uzyO7MmxU/9JHcrHmBygAwE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296529>
 
-When the shell is in "nounset" or "set -u" mode, referencing unset or
-null variables results in an error. Protect $ZSH_VERSION and
-$BASH_VERSION against that, and initialize $short_sha before use.
+From: "Erwan Mathoniere" <erwan.mathoniere@grenoble-inp.org>
+> Implement `git pull [--set-upstream | -u] <remote> <refspecs>` that set
+> tracking to the remote branch the user just pulled from.
+>
+> After successfully pulling from `<remote>`, for each `<refspec>`
+> described in format `<remote_branch>:<local_branch>`, set
+> `branch.<local_branch>.remote` to `<remote>` and
+> `branch.<local_branch>.merge` to `refs/heads/<remote_branch>`. If
+> `<refspec>` lacks `<local_branch>` in the previous format or directly
+> refers to a branch, use the current branch as `<local_branch>` in the
+> above configuration setting.
+>
+> `git push` has already its `--set-upstream`, it makes sense to have its
+> symmetrical for `git pull`.
+>
+> For a beginner, when trying to use argumentless `git pull` without
+> tracking information set, advising to use
+> `git branch --set-upstream-to` to set upstream can be quite confusing.
+> Using this `git pull --set-upstream` is easier and more natural.
+>
+> Signed-off-by: Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>
+> Signed-off-by: Jordan De Gea <jordan.de-gea@grenoble-inp.org>
+> Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+> ---
+>
+> Changes from v1:
+> - Code reshaped to :
+>  * warn + no-op when pulling from or to something that isn't a branch
+> or a configured remote
+>  * set upstream only after successfully merging/rebasing
+> - More relevant documentation
+> - Tests reshaped to be more independent from each others
+> - More tests (tags, detached heads, non-configured remote...)
+>
+>
+> For now, the documentation is quite hard to understand, but I didn't
+> figure how to explain without using too technical words. Should it stay
+> as it is or should I write something similar the above commit message?
+>
+> Allowing to set non-configured repository as upstream isn't easy to
+> handle since the type of refspec must be checked and this is done by
+> verifying the existence of the remote-tracking branch at
+> `refs/remotes/<remote>/<branch>`.
+>
+>
+> Documentation/git-pull.txt |  18 +++++
+> builtin/pull.c             | 106 ++++++++++++++++++++++++++++-
+> t/t5544-pull-upstream.sh   | 164 
+> +++++++++++++++++++++++++++++++++++++++++++++
+> 3 files changed, 285 insertions(+), 3 deletions(-)
+> create mode 100755 t/t5544-pull-upstream.sh
+>
+> diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+> index d033b25..6ae5e58 100644
+> --- a/Documentation/git-pull.txt
+> +++ b/Documentation/git-pull.txt
+> @@ -93,6 +93,24 @@ OPTIONS
+>  has to be called afterwards to bring the work tree up to date with the
+>  merge result.
+>
+> +-u::
+> +--set-upstream::
+> + After successfully pulling from explicitly given <repository> and
 
-Signed-off-by: Ville Skytt=C3=A4 <ville.skytta@iki.fi>
----
- contrib/completion/git-prompt.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+s/from explicitly/from an explicitly/
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
-prompt.sh
-index 64219e6..97eacd7 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -355,8 +355,8 @@ __git_ps1 ()
- 	# incorrect.)
- 	#
- 	local ps1_expanded=3Dyes
--	[ -z "$ZSH_VERSION" ] || [[ -o PROMPT_SUBST ]] || ps1_expanded=3Dno
--	[ -z "$BASH_VERSION" ] || shopt -q promptvars || ps1_expanded=3Dno
-+	[ -z "${ZSH_VERSION-}" ] || [[ -o PROMPT_SUBST ]] || ps1_expanded=3Dn=
-o
-+	[ -z "${BASH_VERSION-}" ] || shopt -q promptvars || ps1_expanded=3Dno
-=20
- 	local repo_info rev_parse_exit_code
- 	repo_info=3D"$(git rev-parse --git-dir --is-inside-git-dir \
-@@ -368,7 +368,7 @@ __git_ps1 ()
- 		return $exit
- 	fi
-=20
--	local short_sha
-+	local short_sha=3D""
- 	if [ "$rev_parse_exit_code" =3D "0" ]; then
- 		short_sha=3D"${repo_info##*$'\n'}"
- 		repo_info=3D"${repo_info%$'\n'*}"
---=20
-2.5.5
+> + <refspecs>, set the configuration of the local branches pulled on, so
+
+s/branches pulled on/branches that were pulled/
+
+> + that each one tracks the remote branch pulled from. If a configuration
+> + already exists, it is overwriten. For example, with `git pull -u origin
+> + branch` the current branch will track `branch` from `origin`.
+> ++
+> +If two or more branches are pulled on the same local branch, only the 
+> last one
+> +in arguments will be tracked.
+
+Is this specific to this pull --setupstream or a general worning ? i.e. that 
+a second entry is created in the config file, or that only the last branch 
+refspec will be added?
+
+> ++
+> +The given <repository> must be a configured remote. Can only set tracking 
+> to
+> +remote branches (e.g. can't set upstream to remote HEAD).
+> ++
+> +Works symmetrically as `--set-upstream` for linkgit:git-push[1]. Allow 
+> using
+> +argumentless linkgit:git-pull[1] and other commands.  For more 
+> information, see
+> +`branch.<name>.merge` in linkgit:git-config[1].
+> +
+> Options related to merging
+> ~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> diff --git a/builtin/pull.c b/builtin/pull.c
+[snip] 
