@@ -1,74 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] commit: don't count i-t-a entries when checking if the new commit is empty
-Date: Mon, 06 Jun 2016 13:28:45 -0700
-Message-ID: <xmqqy46iukn6.fsf@gitster.mtv.corp.google.com>
-References: <20160606111643.7122-1-pclouds@gmail.com>
-	<20160606111643.7122-4-pclouds@gmail.com>
-	<xmqqbn3ew0mf.fsf@gitster.mtv.corp.google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: Coccinelle for automated refactors
+Date: Mon, 6 Jun 2016 13:38:13 -0700
+Message-ID: <CA+P7+xqszc-BRBYo7vaiQBFy8c9MMJwTY3sLrX5gOFZc21Mm8Q@mail.gmail.com>
+References: <20160605205518.GA153578@vauxhall.crustytoothpaste.net> <xmqqy46iw3ih.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, thomas.braun@virtuell-zuhause.de
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 06 22:28:54 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Git mailing list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 06 22:38:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bA18n-0004Yo-VR
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 22:28:54 +0200
+	id 1bA1IE-0003DI-DF
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 22:38:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751385AbcFFU2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2016 16:28:50 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63581 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751058AbcFFU2t (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 16:28:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0227623A65;
-	Mon,  6 Jun 2016 16:28:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eMoykyE8V4o7EEFvA/BYDRhT3Ko=; b=prLuHB
-	AK8azYiK38OrB1nATbLF0OqX5OI6MFQa3XzX1zl/n1OWx4ZRcYmbiJxNJlOtcTaq
-	xjvya086r+VN1Sy2DXH56DAMsNoxQMbqr9OAzd+1lKEq87n2mpUuvjhbb8/bv1FY
-	uCIVFRItR+sOS+oVocJbbHSEQy6hnaiOUXiak=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OhYiY9jhCZmRzlJ/wPtddkrIs8BU4jpy
-	vvsqP6+JbhYsffRQpb3VXrNJoRoZE5BGNWwGCmQ6fjX/rQQ/8lzbksYicMFE0r7K
-	o5zPVqcIF67LYaK8U/YqOxvUNieo4UswWlKH93fue5yqkZdfo+68c1PL/Rz7D2Yt
-	+WydW1N/ZL4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EE45023A64;
-	Mon,  6 Jun 2016 16:28:47 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8BE1A23A62;
-	Mon,  6 Jun 2016 16:28:47 -0400 (EDT)
-In-Reply-To: <xmqqbn3ew0mf.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 06 Jun 2016 12:58:16 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 45AE1040-2C25-11E6-B19F-89D312518317-77302942!pb-smtp1.pobox.com
+	id S1751957AbcFFUif (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 16:38:35 -0400
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:34975 "EHLO
+	mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751170AbcFFUie (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 16:38:34 -0400
+Received: by mail-yw0-f180.google.com with SMTP id o16so151563585ywd.2
+        for <git@vger.kernel.org>; Mon, 06 Jun 2016 13:38:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=hPf5M5diBWLkKPHzVNeffba36rUDjB9BoY/C2BU2Bq8=;
+        b=sJ5ajoRNJSZqXTxXigrqdZLXDGaJpd4gTmzmXu+Jm1Xe4KOsV8in0CB+hYRDt179hI
+         WsmB5VgJ2CJKMFfDabS4KtCXZVOyfZWeEgb686c7LmIeGKc/d9OVxJ4rTByaN1zW4VU9
+         R6lwEI5UAb6FCWJeuPDAjjW0cVJJWM1gfCyYAznhszTlgNI+aYtxYMttr1pd/lNPPAr/
+         bbqQ8TLnze7GoqoP4e8k4k3vwVUdCqQ6IrabMFRmPTuyMvfrynumB/le8z0bVstj5JYg
+         MZBIC7Orp1LkkQC8iz2xVjxJSwG4SokHUYgGqVjvgMDnvHkmTjlPnB31Y2GqpxPwgxgb
+         ssnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=hPf5M5diBWLkKPHzVNeffba36rUDjB9BoY/C2BU2Bq8=;
+        b=h0jfGybDO1iDUwEdhqxjcNVboOstWZXrgsTlCabk+5up541F8V1n8BzCna9DbzQ8u5
+         rkrrzEEiswnes0qh2q8ZGY0y9dz3jF9hedJa2CUPjvbHZj65Mr8Lev0rjkqjfO8fdcSl
+         Qgm/0aU9ESMk4RX5vHwcLWCfA4cQZx9ZWRGJI/BOIIRFgxrrZ/YiEd8Sb0ACJ/BOeKg/
+         2YprRtTIJIvI+ZSlncSlwKt+nLp0PaXnuT/nXkMREI6JVeaLeGy+fMtBXDTDqGTL52tJ
+         hzjEB2pYMyQEYPO05zMsOrANYN9v2/9FPB97YlA7KNUiW+jfz1d9iDUwNT7FAtBDJajJ
+         aoJQ==
+X-Gm-Message-State: ALyK8tJlp6RxEBRzMrQds1cUO+aRGc5WT8BfHuSPqPJvlqmExH8+exbW9vfhw+5fBa5Sec/xagJa2RG5lMX0XA==
+X-Received: by 10.129.57.5 with SMTP id g5mr12783355ywa.237.1465245513049;
+ Mon, 06 Jun 2016 13:38:33 -0700 (PDT)
+Received: by 10.37.42.132 with HTTP; Mon, 6 Jun 2016 13:38:13 -0700 (PDT)
+In-Reply-To: <xmqqy46iw3ih.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296563>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> I am wondering if this "we do not include status and do not ask
-> run_status() about commitable bit" codepath should share more with
-> the other side, which you do not touch at all with this series,
-> which in turn must be doing the right thing already, apparently
-> without having to know anything about the SHIFT_INTENT_TO_ADD
-> hackery.
+On Mon, Jun 6, 2016 at 11:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 >
-> Or does "git commit" that uses run_status() still allow an empty
-> commit after this patch?
+>> An example semantic patch looks like this:
+>>
+>> @@
+>> expression E1;
+>> @@
+>> - is_null_sha1(E1.hash)
+>> + is_null_oid(&E1)
+>>
+>> @@
+>> expression E1;
+>> @@
+>> - is_null_sha1(E1->hash)
+>> + is_null_oid(E1)
+>>
+>> This does what you think it does: transforms calls to is_null_sha1 that
+>> use the struct object_id hash member into calls to is_null_oid.
+>>
+>> I'd like to use this for some of the struct object_id work if others
+>> think this is a good idea.  I feel it's likely to reduce the reviewing
+>> overhead and allow people to better reason about the quality and
+>> behavior of the sent patches.  Of course, I would still review the
+>> patches manually for errors and improvements, and would still accept
+>> responsibility for the content of the patches.
+>
+> Is the plan for such a "refactor" patch to compose such a series as
+> two patch series:
+>
+>  [1/2] automatic refactor
+>
+> which gives the "semantic patch" in the proposed log message as part
+> of its description, and the automated result (with possible
+> misconversions that may have come from bugs in the automated tools),
+> with a separate
+>
+>  [2/2] manual fixups
+>
+> that corrects what was misconverted and what was missed?
+>
+> As long as [2/2] can be kept to the minimum (and an automated tool
+> that is worth using should make it so), I think that is a good way
+> forward.  Another possibility would be to send the end-result as a
+> single patch, with description on the manual fixups in the proposed
+> log message, but it would be a lot more work to generate and review
+> such a patch, I would think.
+>
+>> If there's interest, I can send a patch with a set of basic object_id
+>> transforms to make it easier for others to make those changes when
+>> they're doing work elsewhere in the codebase.
+>>
+>> [0] http://coccinelle.lip6.fr/
+> --
 
-Ah, I didn't see what 2/4 does.  The duplication still does make
-this look an ugly hack, but I can see that the series is at least
-internally consistent.
+I've used coccinelle before on the Linux Kernel, and I've found that
+it works quite well without producing any incorrect changes,
+especially if you keep the semantic patch small and simple. I'd
+definitely go with the 1/2 2/2 approach but I suspect in most useful
+cases 2/2 would be very minor if at all.
+
+Thanks,
+Jake
