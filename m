@@ -1,104 +1,132 @@
-From: Daniel Campbell <zlg@gentoo.org>
-Subject: `man 1 git`: Invalid link to online documentation
-Date: Sun, 5 Jun 2016 20:59:00 -0700
-Message-ID: <ed8f000f-b8a2-ca92-e0f2-e26ff9928bbe@gentoo.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="gLrkLiiH6ULk05Q4wFMQVR3bFvuqGLjuP"
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [GSOC Update] Week 5
+Date: Mon,  6 Jun 2016 12:23:01 +0530
+Message-ID: <20160606065301.5228-1-pranit.bauva@gmail.com>
+References: <20160530053758.28134-1-pranit.bauva@gmail.com>
+Cc: larsxschneider@gmail.com, chriscool@tuxfamily.org,
+	christian.couder@gmail.com, Pranit Bauva <pranit.bauva@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 05:59:13 2016
+X-From: git-owner@vger.kernel.org Mon Jun 06 08:56:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9lh2-0006f4-Tt
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 05:59:13 +0200
+	id 1b9oSD-0002uI-3M
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 08:56:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752946AbcFFD7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jun 2016 23:59:05 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:58800 "EHLO smtp.gentoo.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752534AbcFFD7E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jun 2016 23:59:04 -0400
-Received: from [192.168.1.2] (c-73-53-75-119.hsd1.wa.comcast.net [73.53.75.119])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: zlg)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 59F053408A6
-	for <git@vger.kernel.org>; Mon,  6 Jun 2016 03:59:02 +0000 (UTC)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
+	id S1751418AbcFFGz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 02:55:56 -0400
+Received: from mail-pa0-f67.google.com ([209.85.220.67]:33597 "EHLO
+	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751039AbcFFGzz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 02:55:55 -0400
+Received: by mail-pa0-f67.google.com with SMTP id di3so11163907pab.0
+        for <git@vger.kernel.org>; Sun, 05 Jun 2016 23:55:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Hw5fBr8p35Wt8g5QIlTMwmUFnDXsF3DOuVbtEEx60As=;
+        b=HbSB8C/tWxkghiQ7LSCiZPKY+e9436Il1Tkkj8f4V6okjpKAsAzhWO7YtO+wokVxs1
+         YYydEIx6u4/VCyCtIJCXFw0JhpkAlYob5H2/TOHHvSX0HNBdnFyhBEap31Lnm6lHqjd8
+         FypJ4ndW6SkR1JTAnjomQi1J7l4Kn3fNFUVecJ/l/9ZDM9w0Kj3WZWGAqpSIG3ATuOyx
+         3lzXprB9gDr2ULKAxbWvDrg50/20ODuk65YNuKPGtYUCgS4gTLtsqphl2rNK1n4uM9Ul
+         3oZ1bhpXVAU7ZuK4lW+ZYarmp9Jk+qXchRgXXcF+xuDA6K9AwUvgnJyU1/W5/Kzr6tWy
+         Jnhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Hw5fBr8p35Wt8g5QIlTMwmUFnDXsF3DOuVbtEEx60As=;
+        b=ZBoLkQvk2bxv+anyIzbX05Poc8BC7fX1hfP3E/mo51zVv1ejZWRX9maEcwR5bn7AvV
+         5YyKvs/1gRCe08z8maGSjy09vf+9g4HKDCU5qQ6ymvYkJuxyFXLJFRg6T2+1ESMs6wcp
+         ZRLVlbJU04PsmpqfAF+wcUGyQaYa8dsORjOgKJ7M2yW3cSX1Ap+bimWd3FC3rLePcpdD
+         c3VA4ukzkgU4YwWUNZRODY33UZNbCZYbEV/gN5nnLp6Ou1fFeRNl/M74K/3cLcrf9G1a
+         9CWFvlZUWABtaZ3YOeowpiuEkF1cAQXO5CamPk1ZRRMFWo1dnR415VGSi+7QATcb1/O3
+         nGuw==
+X-Gm-Message-State: ALyK8tI61yfMhMYTbLjF6qtrFT1mtwdGQ1xoihsz6sgFhFDplKVMxg5NTjnh+9gJsCw3tA==
+X-Received: by 10.66.152.111 with SMTP id ux15mr22892390pab.43.1465196154995;
+        Sun, 05 Jun 2016 23:55:54 -0700 (PDT)
+Received: from localhost.localdomain ([183.87.140.254])
+        by smtp.gmail.com with ESMTPSA id g13sm24744287pfk.2.2016.06.05.23.55.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 05 Jun 2016 23:55:54 -0700 (PDT)
+X-Mailer: git-send-email 2.8.3
+In-Reply-To: <20160530053758.28134-1-pranit.bauva@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296484>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---gLrkLiiH6ULk05Q4wFMQVR3bFvuqGLjuP
-Content-Type: multipart/mixed; boundary="uVaBT6gjON2EXjMLQXHgb3WwxfUMQHaq8"
-From: Daniel Campbell <zlg@gentoo.org>
-To: git@vger.kernel.org
-Message-ID: <ed8f000f-b8a2-ca92-e0f2-e26ff9928bbe@gentoo.org>
-Subject: `man 1 git`: Invalid link to online documentation
-
---uVaBT6gjON2EXjMLQXHgb3WwxfUMQHaq8
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-In `man 1 git`, the Description section outlines an address to
-pre-generated documentation [0]. That link returns a 404 error. Playing
-around, I found the repository at [1] and found that it hasn't been
-updated since August 2015. Given that 2.8.3 is more recent than that, it
-seems like this is something that should be updated (if the
-pre-generated docs still exist somewhere) or removed altogether.
-
-Also worth considering is Google Code was shut down earlier this year.
-While archives exist, it can't be relied upon for future use. The
-closest approximation I could find that was up to date is [2], though
-[3] is a repository that's even fresher than 2.8.3.
-
-Since I'm not familiar with Git development I figured it was wiser to
-let you know instead of making a decision on what to do and patching.
-
-I know this is minor but I figured it was overlooked. Thanks for reading.=
+================================= SUMMARY ==================================
+My public git.git is available here[1]. I regularly keep pushing my work so
+anyone interested can track me there. Feel free to participate in the
+discussions going on PRs with my mentors. Your comments are valuable.
 
 
-0: http://git-htmldocs.googlecode.com/git/git.html
-1: https://code.google.com/archive/p/git-htmldocs/
-2: https://git-scm.com/docs
-3: https://github.com/gitster/git-htmldocs
---=20
-Daniel Campbell - Gentoo Developer
-OpenPGP Key: 0x1EA055D6 @ hkp://keys.gnupg.net
-fpr: AE03 9064 AE00 053C 270C  1DE4 6F7A 9091 1EA0 55D6
+=============================== INTRODUCTION  ==============================
+The purpose of this project is to convert the git-bisect utility which partly
+exists in the form of shell scripts to C code so as to make it more portable.
+I plan to do this by converting each function to C and then calling it from
+git-bisect.sh so as to use the existing test suite to test the function which
+is converted.
+
+Mentors:
+Christian Couder <chriscool@tuxfamily.org>
+Lars Schneider <larsxschneider@gmail.com>
 
 
---uVaBT6gjON2EXjMLQXHgb3WwxfUMQHaq8--
+================================== Updates =================================
+Things which were done in this week:
 
---gLrkLiiH6ULk05Q4wFMQVR3bFvuqGLjuP
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+ * bisect_clean_state() function is converted and I have fixed the
+   segmentation fault. I am now polishing the patch with the help of my
+   mentors and will soon send it to the mailing list. The seg fault occurred
+   because I was deleting the refs in the for_each_ref_in() iteration. On
+   sending the RFC[2], Michael Haggerty pointed out the fact that deleting refs
+   causes some malfunction with the ref cache and thus triggering the seg
+   fault.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+ * I also converted bisect_write() function and currently I am polishing it
+   with the help of my mentors and will send it to the mailing list. You can
+   find the whole branch here[3].
 
-iQIcBAEBCAAGBQJXVPUEAAoJEAEkDpRQOeFwC9cP/iyBoimU183K5yAaPJBNzBSD
-nv+lDAUY9iZshrfhEIoOTUhj6jb0vKsJJbNuleU5E9jWstemQ4zUzmO9HUBzAFEK
-MmlIOr4+UBs/NM1wmmdikR41hmZJQRjG7cYW5ZM39fFrL+vTkYE4De14sqnX2iCL
-4iWtdZj+bKyN0qIMOyRdfMhAyDpwWYbnjlPxLuRGj+Ra+spEIgfs5D39hDCjS0+R
-u54ZH1qaOlR28sTkthNBth3DyQbLCPA0BbFMcQqvMIrxQQj3J82JCOgCLKZCZIeU
-g3IKK+nHiWwmiFltaz5eIjFgZMpAopf5h0fP1L1cJlsLLreyYgOhOsq6DJ+cdbL0
-3QSfRZNoI33zL2nrLZ6d5wQW6xCr0SZONTC8WukWeJnWYY4MlcVLrTX0Phv+rpxO
-Stybe+luUvd48vEL7SsG42Jxp1S+tA2kFqT5Z1dOQWPpi99IBfvXly63eJYYDtFx
-sNZ/qP9eDLQfoqtLyLMmAAF/Np0ns6TWwpvXtb/jYzFUTPUvBHp2F6x6SqO2j99C
-Qx8Gk1mvx5xVVtxxjspBHCNzn4G+Y1HPHbtFWEYSkOjOGoDxTZoURoikX9n8uWrr
-v1ryT/Ih8AtGazUAegzem5LPEk3asvIhpEAVof1/wu1nMYrawkFLEUQO5mKHq3IE
-TzTe4mRexi3yt+O512RU
-=whls
------END PGP SIGNATURE-----
+ * As a preparatory patch for bisect_write() I also introduced a function
+   file_size() which will get the file size without actually opening the
+   file.
 
---gLrkLiiH6ULk05Q4wFMQVR3bFvuqGLjuP--
+ * I also converted is_expected_rev() and check_expected_revs() and also fixed
+   the segmentation fault. I am now polishing the patch with the help of my
+   mentors and will soon send it to the mailing list. You can find the branch
+   here[4].
+
+ * My v2[5] on a cleanup patch to use the function macro GIT_PATH_FUNC is
+   yet to receive comments.
+
+ * I have also converted bisect_head()[6] but that would be sent to the mailing
+   list along with bisect_state().
+
+================================= NEXT STEPS ================================
+Things which would be done in the coming week:
+
+ * Convert the function bisect_write(). I plan to convert this function and
+   add it as a subcommand.
+
+ * Convert get_terms() and add the variables TERM_GOOD and TERM_BAD in a struct
+   in the global state.
+
+ * Convert bisect_voc()
+
+ * Convert bisect_next_check()
+
+[1]: https://github.com/pranitbauva1997/git
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/295917
+[3]: https://github.com/pranitbauva1997/git/pull/13
+[4]: https://github.com/pranitbauva1997/git/pull/10
+[5]: http://thread.gmane.org/gmane.comp.version-control.git/295524
+[6]: https://github.com/pranitbauva1997/git/pull/11
+
+
+Regards,
+Pranit Bauva
