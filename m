@@ -1,125 +1,214 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCHv2] Documentation: triangular workflow
-Date: Mon, 06 Jun 2016 12:23:35 -0700
-Message-ID: <xmqqk2i2w288.fsf@gitster.mtv.corp.google.com>
-References: <1464697717-5751-1-git-send-email-jordan.de-gea@grenoble-inp.org>
-	<1465206518-1780-1-git-send-email-jordan.de-gea@grenoble-inp.org>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] submodule operations: tighten pathspec errors
+Date: Mon, 6 Jun 2016 12:31:22 -0700
+Message-ID: <CAGZ79kY+K4-hbzL-KGgsyTHvM0BoXBLawvj2GmWJ9tbTuiSGbg@mail.gmail.com>
+References: <1463793689-19496-1-git-send-email-sbeller@google.com>
+ <xmqqd1o8vbc4.fsf@gitster.mtv.corp.google.com> <CAGZ79kbdfEJ1iSpOJ=HfHP=EvVxB9Sv+5Zk+goLSOJphh8ZZ+w@mail.gmail.com>
+ <xmqqy46owr0n.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, philipoakley@iee.org,
-	erwan.mathoniere@grenoble-inp.org, samuel.groot@grenoble-inp.org,
-	tom.russello@grenoble-inp.org, Matthieu.Moy@grenoble-inp.fr
-To: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Mon Jun 06 21:23:45 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 06 21:31:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bA07j-0007lb-BX
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 21:23:43 +0200
+	id 1bA0FG-0004yX-38
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 21:31:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751628AbcFFTXj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 15:23:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59880 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751085AbcFFTXi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 15:23:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 404FE227F6;
-	Mon,  6 Jun 2016 15:23:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=anKt6Z3t36Pj
-	vAKYDSMUKmXtVhk=; b=cFNqesxKpLR2wqQMST0D8vo+fhq+O3xSHfTdP1oqk63o
-	r9Lvn4aY4l8y4ANnMS1FJ2YcmlrrksFCmuWIXnzNKjSoNb0S2QVeG8TEJA0hu1TB
-	vrE95jYyHLnu37od5PpKZR9dw+FwbuOzr7zDxXlfSywD1MBEy1aDdv/Yj5rbBFo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ncSjrW
-	A6hX9NgJKlm65R/Gxra/jxsnxikJvAf+Z5aYbL17imKiHiI2V0uxG9/s4Ex/3lhM
-	cKb2qAKqeEAaMe7WEIcSlkuem7p1414Vmu76ofuO/9Itmqu3X/PD/7sHiERkQ9AF
-	vtbZB+P1Ox+AuBy9X8Iz/9CDFpEPdksUkHwAo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 38246227F5;
-	Mon,  6 Jun 2016 15:23:37 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AB234227F4;
-	Mon,  6 Jun 2016 15:23:36 -0400 (EDT)
-In-Reply-To: <1465206518-1780-1-git-send-email-jordan.de-gea@grenoble-inp.org>
-	(Jordan DE's message of "Mon, 6 Jun 2016 11:48:37 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2AA85A8E-2C1C-11E6-9484-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1751893AbcFFTbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 15:31:25 -0400
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:33587 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751848AbcFFTbY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 15:31:24 -0400
+Received: by mail-qg0-f41.google.com with SMTP id j96so37935359qge.0
+        for <git@vger.kernel.org>; Mon, 06 Jun 2016 12:31:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=NioTh+w4FZI1Fv5QIvk4RRshEaNr6q1npuD4rKNuybM=;
+        b=Fu2FF5RhL3jzU7m1W0a5WA7gn6VQ0u0iwQfqchmPtiU2gdFeji403+lJDKpSWsG5Pd
+         1aqif4HEcHt1uUKXyVOWWQfd9MiWdqjJ9Vx91T5BbYlGpTQkPeAPkmsCUFqKykQy8IsH
+         M/7b2YHOvHhuZw6fkmx/NRXnknSPe4JgW4elE+dR5PiI7osVdc4oHPKLH9Hxdm0HWsjU
+         2Xuqhp0IQgsM3HXlfW0nCn2ksK69/QCZcoPs07qgpK2bQCOYNi+Fgytb5CxeacXkjGY8
+         j7UMcYIPMatoQSEfBLirQTqZlsg8JwwOOw3dR8sZpcRDenqR8VZNWGvdJhE33wPCpjZS
+         z6IQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=NioTh+w4FZI1Fv5QIvk4RRshEaNr6q1npuD4rKNuybM=;
+        b=B/LptI1EmC/XF/l71luSTng8sC9yyA0EBBWQcrFcP+hAhhxkH9CmMprpYKiXX5F7HB
+         2Vzv6pa8yxcWZQiQ9+CpLnQABW6L9WYdfe3C5QoHM+6lvxR4Y7sNAF6NILfHtoMrOjEd
+         gSLvGhIKfm2ZziKAsQ09V5gfOJosIW9EuV04HLNsm6Zf/nbpeobQm8y6X8sIVL+UooJe
+         A9qos0AneKOm3SggHxOUcPlg78OC3XqfdTrc4Wb6Q3UkJYNQXfpSLZVYvKfRxkYPTe++
+         +WTMTMEUvBzuYgEfUrK0XoJ5BW58A1vYbdE1OQ7R39qU2rXRN9AJx6fL9S5BYiPiryk1
+         1nSA==
+X-Gm-Message-State: ALyK8tKZzGLDMJ9/6McH/Fqa5BDhkHH06mKLcrKPlZ94NYP4R0Mz7XvTjSCtkJ+So7LfSpJbF116G/rzBgkJd+Bp
+X-Received: by 10.140.153.135 with SMTP id 129mr17730196qhz.71.1465241483655;
+ Mon, 06 Jun 2016 12:31:23 -0700 (PDT)
+Received: by 10.200.55.212 with HTTP; Mon, 6 Jun 2016 12:31:22 -0700 (PDT)
+In-Reply-To: <xmqqy46owr0n.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296555>
 
-Jordan DE GEA <jordan.de-gea@grenoble-inp.org> writes:
+On Wed, Jun 1, 2016 at 2:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> On Thu, May 26, 2016 at 1:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>>>> @@ -36,10 +37,9 @@ static int module_list_compute(int argc, const char **argv,
+>>>>
+>>>>       for (i = 0; i < active_nr; i++) {
+>>>>               const struct cache_entry *ce = active_cache[i];
+>>>> -
+>>>> -             if (!match_pathspec(pathspec, ce->name, ce_namelen(ce),
+>>>> -                                 0, ps_matched, 1) ||
+>>>> -                 !S_ISGITLINK(ce->ce_mode))
+>>>> +             if (!S_ISGITLINK(ce->ce_mode) ||
+>>>> +                 !match_pathspec(pathspec, ce->name, ce_namelen(ce),
+>>>> +                                 0, ps_matched, 1))
+>>>>                       continue;
+>>>
+>>> OK, this is the crucial bit in this patch. pathspec matches are now
+>>> done only against gitlinks, so any unmatch is "pattern or path
+>>> given, but there was no such submodule".
+>>
+>> right.
+>
+> That changes the semantics, and its user visible effect may deserve
+> to be in the documentation, no?
+>
+> It used to be that "git submodule--helper list COPYING" did not
+> complain, but with this change, it would.  Which may be a good
+> change, but "git submodule--helper list sub*" where most but not all
+> of glob expansion done by the shell are submodule directories may be
+> a common thing people may do, and it may be irritating to see the
+> unmatch complaints.  I dunno.
 
-> +TRIANGULAR WORKFLOW
-> +-------------------
-> +
-> +In some projects, you cannot push directly to the project but have t=
-o
-> +suggest your commits to the maintainer (e.g. pull requests).
-> +For these projects, it's common to use what's called a *triangular
-> +workflow*:
-> +
-> +- Taking the last version of the project by fetching (e.g.
-> +  **UPSTREAM**)
-> +- Writing modifications and push them to a fork (e.g. **PUBLIC-FORK*=
-*)
-> +- Opening a pull request
-> +- Checking of changes by the maintainer and, merging them into the
-> +  **UPSTREAM** repository if accepted
-> +
-> +
-> +........................................
-> +------------------               -----------------
-> +| UPSTREAM       |  maintainer   | PUBLIC-FORK   |
-> +|  git/git       |- - - - - - - -|  me/remote    |
-> +------------------       =E2=86=90       -----------------
-> +              \                     /
-> +               \                   /
-> +          fetch=E2=86=93\                 /=E2=86=91push
-> +                 \               /
-> +                  \             /
-> +                   -------------
-> +                   |   LOCAL   |
-> +                   -------------
-> +........................................
+I fixed all the variable names and was confident with what I had,
+but this is an issue indeed as the error message is plain wrong:
+    git$ git submodule--helper list sub*
+    error: pathspec 'submodule.c' did not match any file(s) known to git.
+    error: pathspec 'submodule-config.c' did not match any file(s) known to git.
+    error: pathspec 'submodule-config.h' did not match any file(s) known to git.
+    error: pathspec 'submodule-config.o' did not match any file(s) known to git.
+    error: pathspec 'submodule.h' did not match any file(s) known to git.
+    error: pathspec 'submodule_multiple_references' did not match any
+file(s) known to git.
+    error: pathspec 'submodule.o' did not match any file(s) known to git.
+    error: pathspec 'submodulespec.o' did not match any file(s) known to git.
 
-I agree with other commenters that "PUBLIC-FORK" is a name that does
-not capture the essense of the triangular being the next step
-forward, compared to the "central shared repository" workflow, to
-take advantage of the distributed nature of Git.
+(I realize I have some stray object files laying around)
 
-"Where you push so that somebody else can fetch from there" does not
-have to be public.  You may be submitting a course assignment there,
-only to be seen by your professor but not by others in the class.
-Also, you do not your call "LOCAL" a "LOCAL-FORK" and that is a good
-thing.  In a distributed world, everything is a fork, so adding
-"-FORK" to a name is pretty much meaningless.
+So I do not think we can do
 
-So neither "PUBLIC" nor "FORK" in "PUBLIC-FORK" is a good word to
-describe this thing.
+-               if (!match_pathspec(pathspec, ce->name, ce_namelen(ce),
+-                                   0, ps_matched, 1) ||
+-                   !S_ISGITLINK(ce->ce_mode))
++               if (!S_ISGITLINK(ce->ce_mode) ||
++                   !match_pathspec(pathspec, ce->name, ce_namelen(ce),
++                                   0, ps_matched, 1))
 
-The only reason you are pushing there is because your "LOCAL" is
-either not accessible from outside world, and/or you do not want to
-give a direct access to it (otherwise you could have allowed an
-access to whoever is going to fetch from you direct access to
-"LOCAL" and be done with it without creating "PUBLIC-FORK").
+or we need to have custom error reporting, which checks if any file
+still matches the pathspec (and ignore non gitlinks)
 
-That is why I reminded that we earlier in the design phase called
-this "publish"; it is a place you give access to others a selected
-work of yours that you choose to give them access to.  Whether you
-are a leaf contributor, a student who got stuck and wants to ask
-suggestions from your friends after looking your code over, or an
-integrator of a big public project, I would view the act to push
-into such a place you give selective visibility to your work to
-others as publishing your work.
+>
+> When we know we are not going to complain (i.e. --unmatch-ok option
+
+I'd rather go with ignore-unmatch as git-rm does use that.
+
+> is given from the command line), I think it is perfectly fine (and
+> it is even preferrable) to swap the order of the check.  The mode
+> check done with S_ISGITLINK() is much cheaper and it is likely to
+> yield true much less often, which in turn would allow us to make
+> fewer calls to more expensive match_pathspec().
+
+As said, in that case we would then need a
+    pathspec_mark_ps_matched(ce->name, ce_namelen(ce), ps_matched)
+
+>
+> But when we want to diagnose typo (i.e. --unmatch-ok was not given),
+> we may want to preserve the current order, so that the "sub*"
+> example in a few paragraphs ago would not irritate the users.
+
+I see.
+
+     if (!S_ISGITLINK(ce->ce_mode)) {
+        pathspec_mark_ps_matched(...);
+        continue;
+    } else {
+        if ( !match_pathspec(pathspec, ce->name, ce_namelen(ce),
+                                     0, ps_matched, 1))
+        continue;
+    }
+    ...
+
+doesn't look very appealing, so I guess we'd just keep the current behavior
+of
+-               if (!match_pathspec(pathspec, ce->name, ce_namelen(ce),
+-                                   0, ps_matched, 1) ||
+-                   !S_ISGITLINK(ce->ce_mode))
+
+
+>
+>>> It is tempting to update report_path_error() return "OK" when its
+>>> first parameter is NULL.
+>>
+>> such that we can do a
+>>
+>>     if (report_path_error(unmatch_ok ? NULL : ps_matched, pathspec, prefix)))
+>>         result = -1;
+>
+> I actually was thinking about setting ps_matched to NULL so that
+> both match_pathspec() and report_path_error() would get NULL.
+> match_pathspec() has to do _more_ work when ps_matched[] aka seen[]
+> is given.
+
+Yes for one call; No from the birds eye view;
+the first lines that use the seen[]:
+
+    if (seen && seen[i] == MATCHED_EXACTLY)
+        continue;
+
+so if we have  `ps->nr > 0` then it is beneficial to have a
+seen array, I think?
+
+>
+>>>> @@ -407,7 +410,7 @@ cmd_foreach()
+>>>>       # command in the subshell (and a recursive call to this function)
+>>>>       exec 3<&0
+>>>>
+>>>> -     git submodule--helper list --prefix "$wt_prefix"|
+>>>> +     git submodule--helper list ${unmatch:+--unmatch} --prefix "$wt_prefix"|
+>>>
+>>> For this to work, somebody must ensure that the variable unmatch is
+>>> either unset or set to empty unless the user gave --error-unmatch to
+>>> us.  There is a block of empty assignments hear the beginning of
+>>> this file for that very purpose, i.e. resetting a stray environment
+>>> variable that could be in user's environment.
+
+done.
+
+>>>
+>>> The patch itself does not look too bad.  I do not have an opinion on
+>>> which one should be the default, and I certainly would understand if
+>>> you want to keep the default loose (i.e. not complaining) with an
+>>> optional error checking, but whichever default you choose, the
+>>> option and variable names need to be clarified to avoid confusion.
+>>
+>> Ok I'll fix the variable names; I think for consistency with e.g.
+>> ls-files --error-unmatch
+>> we would want to be loose by default and strict on that option.
+>
+> I do not think the "typo-prevention" safety measure should suddenly
+> be turned into opt-in; I'd suggest "--unmatch-ok" instead.
+
+--ignore-unmatch has the same meaning and is taken by git-rm already?
