@@ -1,92 +1,93 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 1/3] doc: clearer rule about formatting literals
-Date: Mon, 06 Jun 2016 15:42:37 +0200
-Message-ID: <vpq8tyio2lu.fsf@anie.imag.fr>
-References: <20160603220837.9842-1-tom.russello@grenoble-inp.org>
-	<20160606100905.23006-1-tom.russello@grenoble-inp.org>
-	<20160606100905.23006-2-tom.russello@grenoble-inp.org>
-	<vpqmvmyo2w9.fsf@anie.imag.fr>
+From: Antoine Queru <antoine.queru@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH] push: deny policy to prevent pushes to unwanted
+ remotes.
+Date: Mon, 6 Jun 2016 16:00:56 +0200 (CEST)
+Message-ID: <1589200049.381440.1465221656049.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <20160530104501.4402-1-antoine.queru@ensimag.grenoble-inp.fr> <C7CBA69F-64BC-4710-8FF7-5CDC2A59E1E5@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	erwan.mathoniere@grenoble-inp.org, samuel.groot@grenoble-inp.org,
-	jordan.de-gea@grenoble-inp.org
-To: Tom Russello <tom.russello@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Mon Jun 06 15:42:49 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	william duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
+	rsbecker@nexbridge.com, aaron@schrab.com, gitster@pobox.com,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, peff@peff.net
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 06 15:53:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9uno-0007Eb-SQ
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 15:42:49 +0200
+	id 1b9uyA-0006OJ-NO
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 15:53:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751377AbcFFNmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2016 09:42:45 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:40354 "EHLO mx1.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751320AbcFFNmo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 09:42:44 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u56DgaJR027230
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 6 Jun 2016 15:42:36 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u56DgbCW031895;
-	Mon, 6 Jun 2016 15:42:37 +0200
-In-Reply-To: <vpqmvmyo2w9.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
-	06 Jun 2016 15:36:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Mon, 06 Jun 2016 15:42:36 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u56DgaJR027230
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1465825358.90112@0uExoWpT7Z1neEDAbWy93Q
+	id S1751609AbcFFNxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 09:53:24 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:40193 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751326AbcFFNxY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 09:53:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id C9AEE2593;
+	Mon,  6 Jun 2016 15:53:21 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bzg_BDhCYOR0; Mon,  6 Jun 2016 15:53:21 +0200 (CEST)
+Received: from zm-int-mbx6.grenet.fr (zm-int-mbx6.grenet.fr [130.190.242.145])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id B8A0C2590;
+	Mon,  6 Jun 2016 15:53:21 +0200 (CEST)
+In-Reply-To: <C7CBA69F-64BC-4710-8FF7-5CDC2A59E1E5@gmail.com>
+X-Originating-IP: [130.190.242.136]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF46 (Linux)/8.0.9_GA_6191)
+Thread-Topic: push: deny policy to prevent pushes to unwanted remotes.
+Thread-Index: Dv38Qwbz2WK9Aqv+mFsZXxc3WylN4g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296510>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Hello Lars, thanks for your reply. 
+> 
+> 
+> > On 30 May 2016, at 06:45, Antoine Queru
+> > <antoine.queru@ensimag.grenoble-inp.fr> wrote:
+> > 
+> > Currently, a user wanting to prevent accidental pushes to the wrong remote
+> > has to create a pre-push hook.
+> > The feature offers a configuration to allow users to prevent accidental
+> > pushes
+> > to the wrong remote. The user may define a list of whitelisted remotes, a
+> > list
+> > of blacklisted remotes and a default policy ("allow" or "deny"). A push
+> > is denied if the remote is explicitely blacklisted or if it isn't
+> > whitelisted and the default policy is "deny".
+> > 
+> > This feature is intended as a safety net more than a real security, the
+> > user
+> > will always be able to modify the config if he wants to. It is here for him
+> > to
+> > consciously restrict his push possibilities. For example, it may be useful
+> > for an unexperimented user fearing to push to the wrong remote, or for
+> > companies wanting to avoid unintentionnal leaking of private code on public
+> > repositories.
+> 
+> Thanks for working on this feature. Unfortunately I won't be able to test and
+> review it before June 14. I am traveling without laptop and only very
+> sporadic internet access :)
+> 
+> One thing that I noticed already: I think a custom warning/error message for
+> rejected pushes would be important because, as you wrote above, this feature
+> does not provide real security. That means if a push is rejected for someone
+> in an organization then the user needs to understand what is going on. E.g.
+> in my organization I would point the user to the open source contribution
+> guidelines etc.
+> 
+> Thanks,
+> Lars
 
-> Tom Russello <tom.russello@grenoble-inp.org> writes:
->
->> --- a/Documentation/CodingGuidelines
->> +++ b/Documentation/CodingGuidelines
->> @@ -526,12 +526,13 @@ Writing Documentation:
->>   modifying paragraphs or option/command explanations that contain options
->>   or commands:
->>  
->> - Literal examples (e.g. use of command-line options, command names, and
->> - configuration variables) are typeset in monospace, and if you can use
->> - `backticks around word phrases`, do so.
->> + Literal examples (e.g. use of command-line options, command names,
->> + configuration and environment variables) must be typeset in monospace (i.e.
->> + wrapped with backticks):
->>     `--pretty=oneline`
->>     `git rev-list`
->>     `remote.pushDefault`
->> +   `GIT_DIR`
->
-> Don't you want `$GIT_DIR` here?
-
-Actually, not really. The use (which seems rather consistant) is to say
-"The `GIT_...` environment variable" when referring to the variable, and
-to use $GIT_... when referring to its value, like in "`$GIT_DIR/hooks`
-directory".
-
-It makes sense since not all systems use $ (AFAIK, Windows uses
-%variable% where POSIX uses $variable), so it's best to use a neutral
-syntax when possible. OTOH, writting `GIT_DIR/hooks` without the $ would
-be really confusing as one could read it as the literal string
-`GIT_DIR`.
-
-I think this rule (when to use $ and when not to use it) deserves to be
-clarified here too.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I might not understand what you've said, but I think this feature is already 
+implemented in our version, with remote.pushDenyMessage. Is this what you're
+talking about ?
