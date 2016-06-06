@@ -1,67 +1,73 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Minor Bug in Renaming Branches
-Date: Mon, 6 Jun 2016 11:09:37 -0700
-Message-ID: <CAGZ79kZg_ZjBS4gB+P68J+mpzGqkPNW+5NdrRiHmA0uC235RBQ@mail.gmail.com>
-References: <CA+wHs3MSax1eo9V_5hnsbEte0k5tX22dAgSUAEzN7aw22rUnhA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] regex: fix a SIZE_MAX macro redefinition warning
+Date: Mon, 06 Jun 2016 11:10:48 -0700
+Message-ID: <xmqqd1nuxk5z.fsf@gitster.mtv.corp.google.com>
+References: <575212DF.90209@ramsayjones.plus.com>
+	<alpine.DEB.2.20.1606050815360.4250@virtualbox>
+	<57542A85.3040206@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Samuel Lijin <samuel.lijin@formlabs.com>
-X-From: git-owner@vger.kernel.org Mon Jun 06 20:09:45 2016
+Content-Type: text/plain
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Mon Jun 06 20:10:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9yy8-0004xJ-Ig
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 20:09:44 +0200
+	id 1b9yzI-0005mJ-7E
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 20:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751590AbcFFSJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2016 14:09:40 -0400
-Received: from mail-qg0-f51.google.com ([209.85.192.51]:35625 "EHLO
-	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751892AbcFFSJj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 14:09:39 -0400
-Received: by mail-qg0-f51.google.com with SMTP id 93so46416575qgx.2
-        for <git@vger.kernel.org>; Mon, 06 Jun 2016 11:09:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=YSLSgNo67MUac0JoloTOypS1JAZG7JVO/fo/yh8ADFU=;
-        b=on3ZHT79fQ5GO/bpy83dzpxn7Bs68h+LSqrAHwMLa4XaXthecnShqJMIto5KV4Dxq5
-         QJZZ3dqSQgXXRxJ6Qi2qjRBuEqVUlXDzM8py3nKCVAPFMoKUYfLw88A5j3HI864p1gfr
-         SeoGwnNCgLw+yqldkg/MdjTgsuecP8FWa99ZAVfAKl1Migk4lEt1rKeou8CHHZlgz1kL
-         6Gta3zTQhkhNgRZQnWrb+G9iQOgATGyDjnCJPPYaZZxePeUQkzVp4wAX7lGOv/kbAoIo
-         gv9MIlXmIo9PcOQ3Mg4ftKcNU2TcNuOiev1E18vYwL2NB9rSZ0OFKSpgltqjE0myE/cV
-         ILIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=YSLSgNo67MUac0JoloTOypS1JAZG7JVO/fo/yh8ADFU=;
-        b=XS9VIJPI7UOB+yu/Zs/A7brnEF1IjwBcQQTl1UzySePR5jmjP1IXoX635H/Iz5UgeF
-         cYn87MjrkYQjyY4coId/ewbSuiP5F7SNcDqg9BRLkot6utJViZ9QP5pnyThOqYAlV/po
-         mk82gs0sDIqoM0EaYijcmk7Ii7TB3ok8Ef72H98rDFMbs0RIU1hO2HZSYdn//0hMwGmN
-         VpRKcKlkkAi/nPLRAaSwP+mCJrwvCF22cclB4tvu7imph99lnkGt24oSxuI3E40B8Ubx
-         69lVOBqznXoFuptNF+ds2zh+wQuSYFarKiRco0ZKzFM9u5O1eYzDLpo6bj0qlyo7e4qQ
-         jgdw==
-X-Gm-Message-State: ALyK8tJNoDMGmzKHG4LUhqsFDEuqk350C7RcTmpQvPTuWMXnT1juDJIZz3AdyYk002nS1NDx9hr+4LlXFx4GiXrA
-X-Received: by 10.140.153.135 with SMTP id 129mr17372725qhz.71.1465236578390;
- Mon, 06 Jun 2016 11:09:38 -0700 (PDT)
-Received: by 10.200.55.212 with HTTP; Mon, 6 Jun 2016 11:09:37 -0700 (PDT)
-In-Reply-To: <CA+wHs3MSax1eo9V_5hnsbEte0k5tX22dAgSUAEzN7aw22rUnhA@mail.gmail.com>
+	id S1751919AbcFFSKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 14:10:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62300 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750933AbcFFSKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 14:10:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F07222516;
+	Mon,  6 Jun 2016 14:10:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mzQwcC+BeMTo62iIizurr0hvlgg=; b=ddr6fS
+	rQMg9614rnEgpFbcvNP1nDFpLAcLwD8X8w0TenmDLn5XuM34UsY9OYcL58NCSglB
+	VtTc2dnUSBV7B0CQp0Xd+Dq2VZLMcBWk8bEgdtk2UC1DsZEbfJk7T0b+WDx8JGeB
+	+deCJ72VhwJdrncc6uEa/0ELmXmslxLy9xX8I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Fyc9m2hizB9wTRGnPwU0wcUp4gC8jHm7
+	vli+umUUPrLXskfbNjhrAVkPLUa1P9WveKdgFoYK8+ABsGvUTbn2mByPPZ/1IOjL
+	lBmP9bQqw8W6DPl3CKR6ChABDYkoS0EQx5x6HL86ReXDDRUcT/1fIPSgM4riUlv0
+	MDpufvEMBqA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 46D3822511;
+	Mon,  6 Jun 2016 14:10:50 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C16C02250C;
+	Mon,  6 Jun 2016 14:10:49 -0400 (EDT)
+In-Reply-To: <57542A85.3040206@ramsayjones.plus.com> (Ramsay Jones's message
+	of "Sun, 5 Jun 2016 14:35:01 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: FFBD5072-2C11-11E6-99C5-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296547>
 
-On Mon, Jun 6, 2016 at 10:52 AM, Samuel Lijin <samuel.lijin@formlabs.com> wrote:
-> user@windows-box MINGW64 ~/sandbox (branch/name)
-> $ git branch -m BRANCH/NAME
-> fatal: A branch named 'BRANCH/NAME' already exists.
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-Yeah, branches/refs are treated as if they are files on a file system
-(which they are currently). So depending on the file system used
-you have problems with case sensitive things.
+> The original version of this patch looked like this:
+> ...
+> So, just move the unconditional inclusion to the start of the compilation
+> unit root file, before the #include of the regex_internal.h header.
+>
+> In some ways this is a better fix, because it makes it clear that, currently,
+> the compat/regex code requires <stdint.h>. This would remove the need for
+> such a comment.
+
+Sounds sensible to me too.
