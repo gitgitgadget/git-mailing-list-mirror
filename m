@@ -1,90 +1,73 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Minor Bug in Renaming Branches
-Date: Mon, 6 Jun 2016 12:35:25 -0700
-Message-ID: <CAGZ79kb77m8ymDkJGMaWi8yOdSphpYifDPHQ=+nZMBhRi47i9w@mail.gmail.com>
-References: <CA+wHs3MSax1eo9V_5hnsbEte0k5tX22dAgSUAEzN7aw22rUnhA@mail.gmail.com>
- <54505ef2-7db6-8bc4-0ffb-0ac28c7d6046@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] diff.h: extend "flags" field to 64 bits because we're out of bits
+Date: Mon, 06 Jun 2016 12:45:28 -0700
+Message-ID: <xmqqfusqw17r.fsf@gitster.mtv.corp.google.com>
+References: <20160606111643.7122-1-pclouds@gmail.com>
+	<20160606111643.7122-2-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Samuel Lijin <samuel.lijin@formlabs.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Jun 06 21:35:36 2016
+Cc: git@vger.kernel.org, thomas.braun@virtuell-zuhause.de
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 06 21:45:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bA0JC-0007n1-BH
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 21:35:34 +0200
+	id 1bA0Sw-0006iI-4T
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 21:45:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752086AbcFFTf3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 15:35:29 -0400
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:34097 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751174AbcFFTf3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 15:35:29 -0400
-Received: by mail-qg0-f44.google.com with SMTP id p34so47740950qgp.1
-        for <git@vger.kernel.org>; Mon, 06 Jun 2016 12:35:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=wApMewSAb+jpFAcW02ZEZlFA1G7Y+U1Tei5GwunrYjc=;
-        b=FVd48mj8w8qO6ZManq/iJm462sa6wgmvj1tep2abZOQ90JWO8ovvtFfdsue0N/9pg/
-         x60Cf6oHLIp8ytcu4+GuXYGVPFHWv1Kll9t9Yom2DsksPXSuLnhn9zjVY0/d+XfvcqYh
-         IRwjgeED8oSqkJHFPswuQaBtzeru2Z3ISqrEyF7hJ9JNeWNfW+bJH0tQA4qJnkwrbypR
-         tjPWC0UZS2+9WyM0uPOtZZuBAMhf6Q5ZsQoT/TQBmpr7s7Oa0x3rBi/IRdZ6d2PzXZAl
-         1sZJQyUn+PYq4cUOae4TejyiKZdaLpyV/ckBekGdWAD0a2WqUCjj/FRdk3D+D1pnQc2P
-         Kvjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=wApMewSAb+jpFAcW02ZEZlFA1G7Y+U1Tei5GwunrYjc=;
-        b=mRl+vyTuTZB0bDi4E0Z6NJLLC6wIR1iu+CyI9EJRjh1R3y920NmKeOOt/lh68VcxHV
-         xe1N0iPerg07BKMQkBIXMuhjGxPsd8GGvE8ZJCfa5xmpPjnT3P4zrBZn3GyQJbEnRwtJ
-         KauFNNSfLVQgE4YboMgBpGFM3yUYwbxiF2i0y4fkLj6wlJ21HmMzn5pub4UFqB+oVXrx
-         p2h93YaMyRL5kNFwU6Zbd36IucVAdNHpJdfI8wmPz/1jzWweGYmCca3mgZf114va6BnG
-         IFoHAOd1WrLWkOH7tZmQSMj37Rxa7/f2FgtmTdsgNvLEJ0vGEqMz0SIhc526hDbietBw
-         c6Dw==
-X-Gm-Message-State: ALyK8tIaTGX7xGb0eVVg2XFBl5wTqb3silO7N4bLa5CH1wvz/BCkHcZmK0slzLo6k8U2USoM7rby8ZhrEDD7fxGQ
-X-Received: by 10.140.81.145 with SMTP id f17mr16784510qgd.84.1465241727946;
- Mon, 06 Jun 2016 12:35:27 -0700 (PDT)
-Received: by 10.200.55.212 with HTTP; Mon, 6 Jun 2016 12:35:25 -0700 (PDT)
-In-Reply-To: <54505ef2-7db6-8bc4-0ffb-0ac28c7d6046@web.de>
+	id S1751627AbcFFTpd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 15:45:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56590 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750789AbcFFTpc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 15:45:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 27D8E22AFA;
+	Mon,  6 Jun 2016 15:45:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Dn2kCD6z4Thl
+	FI2pgjsEwO88ABY=; b=uJIKBPgSpmgniEVgT8K+PIvYjFYaddxMEmG1fAUbjhlB
+	/larkmhFRfVRVWG4xGrIZ1SgeWRTDCz4YUMmykNFPCbyyQjfGE0HZ3cNAnNQAbMj
+	jJOA1oyJHic3lxL4m5H6sG2nHY1dfyWehk6QCZGABigS9OFgzxBIhedIoHYUSsU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=NKFJ/j
+	evXEjKybOrAWymvRe5Xjo4q/UN+MdLXHymrx+21U7EzGsW0A+Ql3jT8UgCWOoWVs
+	41zRN3Jm4LHzUvHHqcjZ6aviIPKlSLyI4p1redYmwLRg1gwdWNCYOIlfUfjLKBHO
+	m2IStFBcpNymH6FQWIK/ibAUKXLznoiBkEUlE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 20BD622AF9;
+	Mon,  6 Jun 2016 15:45:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C60C22AF8;
+	Mon,  6 Jun 2016 15:45:30 -0400 (EDT)
+In-Reply-To: <20160606111643.7122-2-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+	Duy"'s message of "Mon, 6 Jun 2016 18:16:40 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 39C9DCBA-2C1F-11E6-9B4A-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296558>
 
-On Mon, Jun 6, 2016 at 12:17 PM, Torsten B=C3=B6gershausen <tboegi@web.=
-de> wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> A limitation is introduced by Mac OS and Windows:
-> BRANCH/NAME and branch/name refer to the same object in the file
-> system.
-> As a workaround, you can pack the branch names:
-> git pack-refs --all
+> Current flags field is 32-bits, all used except one bit and we need o=
+ne
+> more bit is needed for to toggle i-t-a behavior. The 9th bit could be
+> reused for this, but we could just extend it to 64 bits now to give r=
+oom
+> for more future flags.
 
-
-Once you packed a branch into the packed refs file, you can
-create another loose branch of different capitalization,
-which then 'hides' the packed ref?
-
-That sounds error prone to me, as a seemingly unrelated branch
-changed its value:
-
-    git branch BRANCH 012345
-    git pack-refs --all
-    git branch branch BRANCH^
-    git rev-parse BRANCH
-    (I'd expect BRANCH^ as return)
-
-(I don't have a windows machine for testing here, so that
-is pure speculation)
-
-Thanks,
-Stefan
+Isn't it a better option to add new things as separate words (or a
+separate bit:1 field)?  Is this 32nd thing envisioned to be added
+going to be used everywhere like the existing flag bits, or can it
+be handled like "use_color", "break_opt", "show_rename_progress"?
