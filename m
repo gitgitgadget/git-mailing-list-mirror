@@ -1,128 +1,87 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [RFC/PATCH] Triangular Workflow UI improvement: Documentation
-Date: Mon, 6 Jun 2016 17:46:27 +0100
-Organization: OPDS
-Message-ID: <A8FD6EF510F149A4A05FE553BEDD8511@PhilipOakley>
-References: <9A874F00-ABD8-43D5-A32E-6A39ED333E6D@grenoble-inp.org><1464697717-5751-1-git-send-email-jordan.de-gea@grenoble-inp.org><9FB65CA220F84B6B882B75435DDA3D65@PhilipOakley><D1C9E2B7-EA50-4D36-A77F-00BE7E693B8F@grenoble-inp.org><vpqy46my05v.fsf@anie.imag.fr><F57B7CD2-8F8B-4D58-B145-285E69F9B4BE@grenoble-inp.org> <vpq7fe2rbno.fsf@anie.imag.fr>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: licensing question
+Date: Mon, 6 Jun 2016 09:48:27 -0700
+Message-ID: <CAGZ79kY_gkmhyPuhojNKz2CeHtu3ehc0veOVx=AFJECaF=esUQ@mail.gmail.com>
+References: <OFB3C912AC.C18AA58F-ON86257FCA.005A243D-86257FCA.005A6699@LocalDomain>
+ <vpq37oqe0do.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	reply-type=original
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>,
-	"Erwan Mathoniere" <erwan.mathoniere@grenoble-inp.org>,
-	"Samuel Groot" <samuel.groot@grenoble-inp.org>,
-	"Tom Russello" <tom.russello@grenoble-inp.org>
-To: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
-	"Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Mon Jun 06 18:46:35 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Annie Wojcik <Wojcika@ntc.edu>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 06 18:48:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9xff-0003id-4B
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 18:46:35 +0200
+	id 1b9xha-0005C3-7r
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 18:48:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752147AbcFFQqb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 12:46:31 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:32142 "EHLO
-	smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751627AbcFFQqa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 12:46:30 -0400
-Received: from PhilipOakley ([92.22.6.31])
-	by smtp.talktalk.net with SMTP
-	id 9xfXbu4wHsdET9xfXb75li; Mon, 06 Jun 2016 17:46:28 +0100
-X-Originating-IP: [92.22.6.31]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=B/D766lM c=1 sm=1 tr=0 a=6rKLwjNE5rx67PMj20oCSw==:117
- a=6rKLwjNE5rx67PMj20oCSw==:17 a=IkcTkHD0fZMA:10 a=aSBN74SrAAAA:8
- a=xtxXYLxNAAAA:8 a=oSUHMdLMAAAA:8 a=VwQbUJbxAAAA:8 a=nZxIDeVLNa_uJn8TY28A:9
- a=x8gzFH9gYPwA:10 a=QLKLDn6n7aLR3e0nYJH2:22 a=xts0dhWdiJbonKbuqhAr:22
- a=mbJZPIM0HApMLseGL71l:22 a=AjGcO6oz07-iQ99wixmX:22
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfN3yM+M214ChDykpZaL3itRhQw8442zi9fvw0xH0xfBcXXpzPbV6fzcVKw+DVKFPj8Tf8fAiZj1DrgAhPpji2sUj8Y4dgGJ9WeQKX5nycUFHLCOJbQ2L
- BYWFqkCkOyyQPCTx4v4QuAqa7pv5VMojwNAyA58w+Pce3ysoR4hLBvIskamwLFBoJVrYhZonubhhUPwRAgjyhAiqG1n5FMTCV1zJgW3/+jInNXTcxPVPeEbF
- vuznbE0Gjm3Wd0fGJSbsjtG+G1KetzpSooGfTI9gXfDz+n9r310oLNHySWKzLu/ODmnUjBw6Qv2cV1fWpfuIWLckY4QqBWfbMBcSCV0HjefxwbELi3T54AS1
- SPVF7jsc1UqmgPWxxEUv6FuIxz9HG06uglOfozuk560I1Q91TbS0jMg9IXzqtYe3ce+1iRHd
+	id S1751787AbcFFQsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 12:48:30 -0400
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:33778 "EHLO
+	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751120AbcFFQs3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2016 12:48:29 -0400
+Received: by mail-qk0-f175.google.com with SMTP id u63so10105981qkh.0
+        for <git@vger.kernel.org>; Mon, 06 Jun 2016 09:48:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KBKXGIUDWJwhvECUyJQ7GlHW0/tbHA6eXSbrq32+0HQ=;
+        b=TZbbTkagdfW0GJkN1Ytvg5+JdKtWsuKitoPFwyZZIogaM+0IZW6J284OSMwEG8vecN
+         vbO/v+g9Dw/6z+cMvlVhp382kRsjWBAdcRFsiNnvWNRVlpakBE5R8Cfas3AjV+XPTXmw
+         5vGwuZN02OtmUywMo9HPA41XzTKh5zEeJuWTVUcZgZ4twnf5yc2hOCxGR/RQimoMFfJO
+         +qyH+zWt5nYT+XAKUOr1B9vrEGW9mVZzOXXWMu0Vx2o663JAumnfPKciYiUTpZWV3xT2
+         KZ191vC+H/fOmv2HlygFDZEkSMNHKqCM21km2pvBklitzr2ZM3rAec9u5GsucQl+FTvB
+         wnog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KBKXGIUDWJwhvECUyJQ7GlHW0/tbHA6eXSbrq32+0HQ=;
+        b=g4vMA6OAL2uBUahLMVKj/rgX5c/CEizJQ4jnxi+6x+LcKmJT+NP3UlIg6HvFp6kP4K
+         WzCZlESHUgm//AjDZJeWiODoO59JVzsA8rnkTouPlguNhjezP49p3le6wEq0qCCF/Uh/
+         VBPyGVTbETqILNaN07z4K/q7H99GORFrSVqLIf8WaDLMtK4LgAbjjQCprUpSN4GkE4wl
+         Mp+qC65a68VJ9Qnfr1qC3ETOSBZYzoeVaLypYuqJlk982bqdN63UKfriQFEoLN3p1cIT
+         ZpegyD6Zqy0of3xFt2PwmQlbIRfgd6WhKY9mx9ZGyDVOWsgLvtEy/5xq1HpK03e7V6gW
+         J3YA==
+X-Gm-Message-State: ALyK8tK8F61GigufH34IAQzocecfMwDAAYSOu9Q9zdZW7lc/WIsbuluzXr/4fXladIaIOEkUyekr5BwkbTlpfNxT
+X-Received: by 10.233.237.14 with SMTP id c14mr16188081qkg.88.1465231708336;
+ Mon, 06 Jun 2016 09:48:28 -0700 (PDT)
+Received: by 10.200.55.212 with HTTP; Mon, 6 Jun 2016 09:48:27 -0700 (PDT)
+In-Reply-To: <vpq37oqe0do.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296537>
 
-=46rom: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
-> Jordan DE GEA <jordan.de-gea@grenoble-inp.org> writes:
+On Mon, Jun 6, 2016 at 9:40 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> "Annie Wojcik" <Wojcika@ntc.edu> writes:
 >
->>> Matthieu Moy <matthieu.moy@grenoble-inp.fr> a =C3=A9crit :
->>>
->>> That is technically correct, but to illustrate the overall flow, I'=
-d
->>> rather avoid naming the repositories in terms of git commands. If y=
-ou do
->>> so, you will probably end up with tautological explanations like th=
-is
->>> later in the text: "FETCH_REMOTE is the remote from where you fetch=
-,
->>> PUSH_REMOTE is the remote to which you push, and LOCAL is local".
->>>
->>> I suggested PUBLIC-FORK earlier, and didn't get any feedback on it.=
- I
->>> think it translates the intent better than PUSH_REMOTE. An alternat=
-ive
->>> would be PUBLISH (=3D the repository you use to publish your change=
-s so
->>> that the maintainer can pick them).
->>
->>> "Philip Oakley" <philipoakley@iee.org> writes:
->>> However your gitster/git repo feels like it would match the me/git
->>> viewpoint, in that while it is 'open', it isn't really a formal
->>> publishing place. Certainly I don't think that I 'publish' what's i=
-n
->>> my personal github repos, which I use as an open backup (and any
->>> PR's I put to the G4W project repo are referenced from there).
->>
->>
->> For Philip Oakley, PUBLISH seems to not be a good name.
->> For PUBLIC-FORK, a fork can be private so I think that=E2=80=99s not=
- a good idea.
+>> Hello,
+>> Can you tell me if this product is free for educational use?
 >
-> I don't think you will find a name that fits all use-cases. IHMO, bes=
-t
-> is to pick one rather general use-case, make the explanations for it,
-> and maybe explain somewhere that there are variants.
->
-> If the fork is completely private, then your diagram with a "maintain=
-er"
-> arrow from it to upstream is not valid.
+> Git is free, period ;-). Both free of charge, and "free as in free
+> speach" (http://www.gnu.org/philosophy/free-sw.en.html).
 
-That's only true for a Pull Request workflow. For a Patch workflow (suc=
-h as=20
-Git) the user's home vault can be completely private.
+A quick overview:
+https://tldrlegal.com/license/gnu-general-public-license-v2
 
->  It needs at least to be visible
-> to the maintainer. "public" may be a bit strong as you don't need to
-> make it "public" to everyone on earth, but to me that's OK to describ=
-e
-> the use-case.
+In case of doubt however the actual license should be
+read and interpreted by lawyers. :)
+
+Stefan
+
 >
->> As the third-place is the repository used to work on commits/patches=
-,
->> a simple name can be WORK_REPOSITORY.
->
-> "WORK" is already used to describe "worktree" which is precisely not
-> this repository. I don't "work" on my public fork, I "work" locally a=
-nd
-> then just send commits there.
->
-> --=20
+> --
 > Matthieu Moy
 > http://www-verimag.imag.fr/~moy/
 > --
 > To unsubscribe from this list: send the line "unsubscribe git" in
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
