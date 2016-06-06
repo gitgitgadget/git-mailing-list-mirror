@@ -1,87 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] Resurrect "diff-lib.c: adjust position of i-t-a entries in diff"
-Date: Mon, 06 Jun 2016 13:42:19 -0700
-Message-ID: <xmqqtwh6uk0k.fsf@gitster.mtv.corp.google.com>
-References: <20160606111643.7122-1-pclouds@gmail.com>
-	<20160606111643.7122-3-pclouds@gmail.com>
+From: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH] userdiff: add built-in pattern for CSS
+Date: Mon, 6 Jun 2016 22:45:42 +0200
+Message-ID: <20160606204542.GA9280@Messiaen>
+References: <20160524142537.19324-1-william.duclot@ensimag.grenoble-inp.fr>
+ <20160602224809.5167-1-william.duclot@ensimag.grenoble-inp.fr>
+ <57511B2D.7040501@kdbg.org>
+ <20160603094544.GA3865@Messiaen>
+ <xmqq8tymqnj9.fsf@gitster.mtv.corp.google.com>
+ <20160606072800.GA3803@Messiaen>
+ <xmqqinxmxkmx.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, thomas.braun@virtuell-zuhause.de
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 06 22:42:28 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+	simon.rabourg@ensimag.grenoble-inp.fr,
+	antoine.queru@ensimag.grenoble-inp.fr,
+	francois.beutin@ensimag.grenoble-inp.fr,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 06 22:45:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bA1Lv-00061w-VF
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 22:42:28 +0200
+	id 1bA1PD-0008VO-PA
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 22:45:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752222AbcFFUmY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 16:42:24 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54540 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751058AbcFFUmX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 16:42:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E9DBF222C3;
-	Mon,  6 Jun 2016 16:42:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=QK7v9aA/eFl8
-	X2q/OoU7Y59sM5g=; b=KmIywu8+jgkI+wRfpqca2uk1S59is0scTHbvbY5rmmtj
-	mSUKVur0VsrrjdLzqM/c0ZjFO1OOsffEw5hDyXRyUVeMr3Eo6V+ef9yab1HqcT0U
-	kFqjdUIXlW+B3hj84FBdwMSkyXgMTclwMW9l7KisVrYr7rzjAmKnM/YI9+zes7s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=l8YtyW
-	BLWs5gOKIAYoGVbssHNHprExMfb3XQ1jKq03KvYlWG6wvbAWV6EUkaN5ox0i/DxR
-	LkLU5bykipLehkEM5RjMS1PFdhBf7Gfz8+kPOn8IrELuVTwW1K+IlAHo++LOo2F0
-	+P+IKAFig41H9Xu5Mwxt+uqOcXSCU1j/8V6mk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E1439222C2;
-	Mon,  6 Jun 2016 16:42:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 675B3222C1;
-	Mon,  6 Jun 2016 16:42:21 -0400 (EDT)
-In-Reply-To: <20160606111643.7122-3-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
- =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-	Duy"'s message of "Mon, 6 Jun 2016 18:16:41 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2AC60E3E-2C27-11E6-B279-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1752874AbcFFUps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 16:45:48 -0400
+Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:43918 "EHLO
+	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751834AbcFFUpr (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 16:45:47 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 3635520B4;
+	Mon,  6 Jun 2016 22:45:44 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eSCs2O34jcDf; Mon,  6 Jun 2016 22:45:44 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 17DA520AE;
+	Mon,  6 Jun 2016 22:45:44 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 1113C2066;
+	Mon,  6 Jun 2016 22:45:44 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0xPNLkMyHSWy; Mon,  6 Jun 2016 22:45:44 +0200 (CEST)
+Received: from Messiaen (mut38-h02-176-189-75-243.dsl.sta.abo.bbox.fr [176.189.75.243])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id B8FFE2055;
+	Mon,  6 Jun 2016 22:45:43 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <xmqqinxmxkmx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296566>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Mon, Jun 06, 2016 at 11:00:38AM -0700, Junio C Hamano wrote:
+> William Duclot <william.duclot@ensimag.grenoble-inp.fr> writes:
+> 
+> > On Fri, Jun 03, 2016 at 08:50:50AM -0700, Junio C Hamano wrote:
+> >> William Duclot <william.duclot@ensimag.grenoble-inp.fr> writes:
+> >> 
+> >> > Here I have to disagree (with you and Junio): the IPATTERN is
+> >> > case-insensitive only on the "pattern" regex, not the "word_regex"
+> >> > regex.
+> >> 
+> >> Ahh, OK.  Obviously both of us overlooked that.  Thanks for pushing
+> >> back.
+> >> 
+> >> > On the identifier line, I have "A-F" instead of "A-Z" though
+> >> 
+> >> Yeah, that does need updating.
+> >
+> > Note that I sent a V4 :)
+> 
+> Yup, thanks.  Isn't that what I queued as 0719f3ee (userdiff: add
+> built-in pattern for CSS, 2016-06-03)?
 
-> +--shift-ita::
-> +	By default entries added by "git add -N" appear as an existing
-> +	empty file in "git diff" and a new file in "git diff --cached".
-> +	This option makes the entry appear as a new file in "git diff"
-> +	and non-existent in "git diff --cached".
-
-I do not think this should exist at the UI level, even though the
-use of it in wt-status.c (below) makes a very good sense at least
-as a temporary band-aid.
-
-At the philosophical level, I however think this "I-T-A does not
-logically exist in the index (yet)" is a mistake, and "an option
-controls if I-T-A does or does not exist depending on who calls it"
-is even worse; it is a road to insanity.
-
-=46or example, because I-T-A does not logically exist in the index,
-"git reset --hard" should not remove it but make it untracked again
-(but I do not think it does).  After "git add -N foo", because "foo"
-does not exist in the index, "git clean" should remove it for the
-definition of what's in the index to be logically consistent, but
-the whole intent of "add -N" is that the user meant it is worth
-checking into sometime in the future, which contradicts with its
-removal upon "clean".
-
-So, I dunno.
+It is, my bad
