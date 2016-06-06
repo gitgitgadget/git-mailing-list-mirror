@@ -1,130 +1,190 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH/RFC 4/4] commit: reinstate commit behavior before 3f6d56d via a config option
-Date: Mon,  6 Jun 2016 18:16:43 +0700
-Message-ID: <20160606111643.7122-5-pclouds@gmail.com>
-References: <20160606111643.7122-1-pclouds@gmail.com>
+From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] push: deny policy to prevent pushes to unwanted
+ remotes.
+Date: Mon, 6 Jun 2016 13:39:23 +0200 (CEST)
+Message-ID: <998280064.353519.1465213163063.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+References: <20160604145101.21928-1-Antoine.Queru@grenoble-inp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: thomas.braun@virtuell-zuhause.de,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 13:17:18 2016
+Cc: git@vger.kernel.org,
+	william duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
+	larsxschneider@gmail.com, rsbecker@nexbridge.com, aaron@schrab.com,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, peff@peff.net
+To: Antoine Queru <Antoine.Queru@grenoble-inp.org>
+X-From: git-owner@vger.kernel.org Mon Jun 06 13:27:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1b9sWz-0008Hz-Jw
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 13:17:17 +0200
+	id 1b9sh3-0007or-3a
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jun 2016 13:27:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751504AbcFFLRN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 07:17:13 -0400
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:36580 "EHLO
-	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751297AbcFFLRL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 07:17:11 -0400
-Received: by mail-pa0-f66.google.com with SMTP id fg1so11637366pad.3
-        for <git@vger.kernel.org>; Mon, 06 Jun 2016 04:17:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=x1xW2HkscqMCwLfs7hyvuWpMBVPr0dHEOUeKlCL2KaE=;
-        b=oqLZ0+zEkwBxnwHWSeV3iX78RuGUaMz5hI9QynOpA6AwchpF682tlM84NPs5klbww2
-         so5Htnwki2PJkatg8/je6PydL3HdslP+dPZu7wXTOEV/M9bvTf8ez7m6mgJ2irTx3bgu
-         eyjNUos7Tfo/sANJBtNLkSLNJGTKVQ6oyh2sn54yayFmOtLpvwi1JthxTXjSivCcfXQV
-         F/Gz1g1z3MFfroUEDBkfn5NRyxHAidP0OX+0rG8T3noJAscfpN6t2pWk3wV1N7rRhSAT
-         RafyaNgPGvJirxVOqtAwSLWDvg+819zlbCA+K5D73oXqpl6IDG/kFQ7Q41P7AwfoCE0P
-         L7GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=x1xW2HkscqMCwLfs7hyvuWpMBVPr0dHEOUeKlCL2KaE=;
-        b=gyXOiG1fZMwUEfBJ8Hthr0m/w5XlW+oQ5JkJzizOwp4Alw+PXgIWsL274GlYYbC9Lk
-         V6xkDya4z92enO6QOJZCNrZ1uTVarT0zwin0CxJysL5pApD8+oaaVIjFJIIEavLvYZ21
-         n8FfcsMlMPmYH/jXvGhcS/4C3qaso/2Rnht6qvipWxkEsIEGEy7eouTVCEOxYzUmAoYk
-         537wKHzKz5ooJbxaQGPqMLVVO8vQGR+ocYvQZmycocLR19uqMRLnf4WROEIcDIgmulWg
-         oDN3TgB483IigRkGwx8ZT5O1Umb8K/YFr+UfKayiHu5IdnQvjeK6YRIB3n++vMKrYuY+
-         OsBg==
-X-Gm-Message-State: ALyK8tKG54tyvO1R7m79Uv4k3/KI4jL6Qv4qBVHKlnnYp4KyTwlPa4jAxwgR+4oHPXLLsw==
-X-Received: by 10.66.55.69 with SMTP id q5mr24100096pap.145.1465211830275;
-        Mon, 06 Jun 2016 04:17:10 -0700 (PDT)
-Received: from ash ([115.76.150.26])
-        by smtp.gmail.com with ESMTPSA id c16sm26961894pfb.33.2016.06.06.04.17.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 06 Jun 2016 04:17:09 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Mon, 06 Jun 2016 18:17:06 +0700
-X-Mailer: git-send-email 2.8.2.524.g6ff3d78
-In-Reply-To: <20160606111643.7122-1-pclouds@gmail.com>
+	id S1751547AbcFFL1h convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 07:27:37 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:44337 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751006AbcFFL1g convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 07:27:36 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 222BA258D;
+	Mon,  6 Jun 2016 13:27:33 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TibaKGi6bvqa; Mon,  6 Jun 2016 13:27:33 +0200 (CEST)
+Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 103B72583;
+	Mon,  6 Jun 2016 13:27:33 +0200 (CEST)
+In-Reply-To: <20160604145101.21928-1-Antoine.Queru@grenoble-inp.org>
+X-Originating-IP: [130.190.242.136]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF39 (Linux)/8.0.9_GA_6191)
+Thread-Topic: push: deny policy to prevent pushes to unwanted remotes.
+Thread-Index: 3RX7lZmCGRn7uHRwpAOfYIYKt2L9cA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296502>
 
-There are two groups of users with regards to "git add -N". One uses
-i-t-a as a reminder that certain untracked files must be added before
-the next commit. Erroring when i-t-a entries are still present
-(i.e. real content not added) out gives the user a chance to add real
-content.
+Hi Antoine,
 
-The other group that sees i-t-a entries as a way to make Git aware of
-some untracked paths so that "git diff" and "git status" show them
-correctly. If they decide that some content should be staged for the
-next commit, they "git add" again for real. If content in these paths i=
-s
-never added, the paths are simply ignored.
+Antoine Queru <Antoine.Queru@grenoble-inp.org> writes:
+> [...]
+> +For example, if we set up the configuration variables like this:
+> +
+> +-------------------------------
+> +git config --add remote.pushBlacklist repository.com
+> +git config --add remote.pushWhitelist repository.com/Special_Folder
+> +-------------------------------
+> +
+> +Pushes like this  will be accepted:
+> +-------------------------------
+> +git push repository.com/Special_Path/*
+> +-------------------------------
 
-3f6d56d (commit: ignore intent-to-add entries instead of refusing -
-2012-02-07) changes the behavior from the former to the latter. This
-patch brings bach the former behavior if core.errorCommitIta is true.
+According to your previous `git config`, it should be:
+	git push repository.com/Special_Folder/*
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- cache-tree.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+> +
+> +While this one for example will be denied:
+> +-------------------------------
+> +git push repository.com/Other_Path/
+> +-------------------------------
+> +
+> [...]
+> +/*
+> + *NEEDSWORK: Ugly because file://... is recognized as an url, and we
+> + *may want to compare it to local path without this scheme. Forcing
+> + *the user to put file:// before every local path would make the cod=
+e
+> + *easier and avoid confusion with a distant repo like 'github.com'
+> + *which is not an url.
+> + */
 
-diff --git a/cache-tree.c b/cache-tree.c
-index ddf0cc9..b87bd3c 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -155,20 +155,28 @@ static int verify_cache(struct cache_entry **cach=
-e,
- {
- 	int i, funny;
- 	int silent =3D flags & WRITE_TREE_SILENT;
-+	int core_error_commit_ita =3D 0;
-+
-+	git_config_get_bool("core.errorcommitita", &core_error_commit_ita);
-=20
- 	/* Verify that the tree is merged */
- 	funny =3D 0;
- 	for (i =3D 0; i < entries; i++) {
- 		const struct cache_entry *ce =3D cache[i];
--		if (ce_stage(ce)) {
-+		if (ce_stage(ce) ||
-+		    (core_error_commit_ita && ce_intent_to_add(ce))) {
- 			if (silent)
- 				return -1;
- 			if (10 < ++funny) {
- 				fprintf(stderr, "...\n");
- 				break;
- 			}
--			fprintf(stderr, "%s: unmerged (%s)\n",
--				ce->name, sha1_to_hex(ce->sha1));
-+			if (ce_stage(ce))
-+				fprintf(stderr, "%s: unmerged (%s)\n",
-+					ce->name, sha1_to_hex(ce->sha1));
-+			else
-+				fprintf(stderr, "%s: not added yet\n",
-+					ce->name);
- 		}
- 	}
- 	if (funny)
---=20
-2.8.2.524.g6ff3d78
+Style: space after '*' (when there is text after), meaning:
+	/*
+	 * NEEDSWORK: Ugly because file://... is recognized [...]
+	 * [...]
+	 */
+
+> +static int longest_prefix_size(const char* target_str,
+> +                                const struct string_list *list)
+
+That might just be my mailer but this line is not properly lined up
+with the previous one (one space too much).
+It should be:
+static int longest_prefix_size(const char* target_str,
+			       const struct string_list *list)
+
+> [...]
+> +        for_each_string_list_item(curr_item, list) {
+> +                struct url_info curr_url;
+> +                const char *curr_str =3D curr_item->string;
+> +                skip_prefix(curr_str, "file://", &curr_str);
+> +                url_normalize(curr_str, &curr_url);
+> +                if (target_url.url &&
+> +                    curr_url.url &&
+
+You can put target_url.url and curr_url.url on the same line.
+
+> +                    target_url.scheme_len =3D=3D curr_url.scheme_len=
+ &&
+> +                    !strncmp(target_url.url,curr_url.url,curr_url.sc=
+heme_len))
+
+Style: space after ','.
+
+With those two things, the condition would look like this:
+
+		if (target_url.url && curr_url.url &&
+		    target_url.scheme_len =3D=3D curr_url.scheme_len &&
+		    !strncmp(target_url.url, curr_url.url, curr_url.scheme_len))
+
+> [...]
+> +        whitelist_size =3D longest_prefix_size(repo, whitelist);
+> +        blacklist_size =3D longest_prefix_size(repo, blacklist);
+> +
+> +        check_length_prefix(whitelist_size, blacklist_size, repo, de=
+ny_message, default_policy);
+
+This line is above 80 characters, so:
+
+	check_length_prefix(whitelist_size, blacklist_size, repo, deny_message=
+,
+			    default_policy);
+
+> [...]
+> +test_expect_success 'setup' '
+> +        git init --bare blacklist/ &&
+> +        git init --bare whitelist/ &&
+> +        git init --bare blacklist/allow &&
+> +        test_commit commit &&
+> +        echo "fatal: Pushing to this remote using this protocol is f=
+orbidden" > forbidden
+> +'
+> +
+> +test_expect_success 'basic case' '
+> +        git config --add remote.pushBlacklist http://blacklist.com &=
+&
+
+You use `git config` instead of `test_config`, meaning that the
+configuration you introduce will persist after the test.
+
+It is not really a problem here since for the other tests you don't
+use `git config --add` so the configuration will be
+overwritten. However I still think you should use `test_config` to
+avoid causing trouble to potential future tests that would use
+`--add` and expect a clean state.
+
+> [...]
+> +test_expect_success 'local path with file://' '
+> +        git config remote.pushBlacklist file://blacklist &&
+> +        test_must_fail git push blacklist HEAD 2> result &&
+> +        test_cmp result forbidden
+> +'
+
+(you forgot a new line here)
+
+> +test_expect_success 'only one scheme allowed' '
+> +        git config remote.pushDefaultPolicy deny &&
+> +        git config remote.pushWhitelist http://blacklist.com &&
+> +        test_must_fail git push https://blacklist.com HEAD 2> result=
+ &&
+> +        test_cmp result forbidden
+> +'
+> +
+> +test_expect_success 'denied repo in allowed repo' '
+
+'allowed repo in denied remote'? In any case the current title is
+misleading for me.
+
+> +        git config remote.pushBlacklist blacklist &&
+> +        git config --add remote.pushWhitelist blacklist/allow &&
+> +        git push blacklist/allow HEAD
+> +'
+
+Thanks,
+R=C3=A9mi
