@@ -1,540 +1,563 @@
 From: tboegi@web.de
-Subject: [PATCH v2 3/3] Correct ce_compare_data() in a middle of a merge
-Date: Tue,  7 Jun 2016 17:20:51 +0200
-Message-ID: <1465312851-4908-1-git-send-email-tboegi@web.de>
+Subject: [PATCH v2 1/3] convert: unify the "auto" handling of CRLF
+Date: Tue,  7 Jun 2016 17:20:48 +0200
+Message-ID: <1465312848-4830-1-git-send-email-tboegi@web.de>
 References: <xmqq7fev55qk.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 17:16:03 2016
+X-From: git-owner@vger.kernel.org Tue Jun 07 17:15:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAIjW-0005Nw-TU
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 17:15:59 +0200
+	id 1bAIjU-0005Nw-Oi
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 17:15:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161345AbcFGPPw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jun 2016 11:15:52 -0400
-Received: from mout.web.de ([212.227.17.11]:52306 "EHLO mout.web.de"
+	id S932578AbcFGPPx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jun 2016 11:15:53 -0400
+Received: from mout.web.de ([212.227.17.12]:54549 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932560AbcFGPOT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 11:14:19 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0M41Bm-1bR92I2qGY-00rbJ4; Tue, 07 Jun 2016 17:14:16
+	id S932456AbcFGPOO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 11:14:14 -0400
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0MDgDS-1bFEw12Kb8-00H3pI; Tue, 07 Jun 2016 17:14:11
  +0200
 X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
 In-Reply-To: <xmqq7fev55qk.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:Nl6OsktMojfkDjU6CeJ9Ly6XsAaUczqIdLaxZh5LZMcx/VUxqSz
- 2qajyD+9UP2ZrMlpLNzE8VBnypQhX5wGbKq/Hgq6JiNgZe4gyNME/OuVCV6hLWBiFMkeGjL
- 7CDNhnaA8VVz/7YTSs2uKD/8td+v+tXsCUwh+4UiupSz1yoEeJGCeJiUdRNz9rl43VwJKa7
- cBKBpDi7pYZcnbXHCxWUQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GoMlSVPLUNw=:LwFWRE1XEvXDoucflDN1rP
- QC7C1YD/zbg6urYhQVEOnZe025ksxSnAhNrg9p7DK53m1W9k4Po+zJZIdtSSIbf4y04Nxed3F
- 6uTA1I2lTHfMpkdwLONXT3SKnzA1kr5b6Ef1thLoWUN6DbdNqN8qbSgXQ9XJpM0HOL+dBJJsH
- jPGjHv2HArSvLF+ReSPO5GSKIM4TpuKdKolM8U4yCEHvpkzto0EtiuQJVAd03hWd3yoyhdgRG
- yRE05hcUxTZPJSHVhmCggCc12Gly/VQnmBNWobMqor3yvwx1q0B8MpZ6oJqoYn8Iyv8KuT4FC
- gSXyJEkpjvvqS9pKsmUCHYDTpwLQiwmF03yt1W1cWj0AKdzZgS0PKeZEMpiotTouKW6vmK8yF
- dvU6W/OHvhxIgzBkvX9IqMxNC2HPKeK3TgKxHyyrHeRHGNjkSNU7kwHWaUQ+p3rh8h4cUdt9e
- 1hp1jHHKbCys/fPSDEEDYinbiOvnnwlzliQ0vfSv3vITO24L+IL7/RIlK43sdOz4lXIKU74WF
- 8FmO5X1mN7VaowoBep/CRVG8IS9PRRgq4vk3fFky4FXMfJAqw8eb7YmXpHXzvdeoSRQrlZmrd
- o5JhDm9F/Z4J2nN6KzQkptQmvuk6wWq0JY9M56hYM3XDasK/2VkMnoGx+j9qChRNfsJ9ba7ce
- 4Y8woDnXS8kA9K7C6Fe8NczGxiT28dteYUCt2h6BgdXSNtfVpxuKKPoAGIAhV7vUjGDR5vgTT
- nnuD/6Xf/I/sYJWDDR6+cNqXvOfdylXAbhQ/F2MNHLAbeWJNnK6MNMd/fIpQvKOzRD1ppIP9 
+X-Provags-ID: V03:K0:YSccz/1tWXNOkBJJi9kQgt2hM5vAaA71CDUELLyvh1wX1dnvGKK
+ WyVX91L23nqRR5vcM+OTb8YP38fMX/d5APIT3AdN9x4rnM9/kNslizi6SZaUHT/H2n6+o0z
+ iAM1BMado7HuYMgmTHiFIwIQSPQEo9C6QbHY/g+HcfTgC3CVoTk5PKsKYmTXmUzgF3QKXx5
+ uwdWKMCatl9Lsiw1qZdPA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1cq+ium6SAw=:LhKrNOcV70yfFJx+xf9GwQ
+ ow7tl0VBm4Tls+QIYV49to1/0rD8V73yXnAz880SaUT+87gxYyUstoRqkblqAVgtbZplXHO91
+ BT4JQVxeRFuvLcyFXDWrfIyQHCVMOJA/CR6wfkUG/xsgU4bMObCsYSTukSU0ZRbmzMNgymVJA
+ NW1SrRLb/y0KJkF4MFdoiAsrHg9gRxhtUhEzvOeLHNQDQCYIa836PO9WlhqDHoFa+ovoe2KdA
+ b/2zCnthmOZnjX6THqZjUQvbmb9P86Od2g5ejPFKn7iobM9cg5Kw7ULJzjFYJX9HkDCF+UFcS
+ 7zP0AMwrjjqCn0UoLRIiDPbzZ8UoGlDEwC7482uqHQk3rPXaoHVWFYEoQ55DeUdgTD5VjYFJS
+ tczoAEyzqyAKX5/m+LLLGg7Mkj5mBG5pcrjc4+JSGUYLC7PfbivKuB2Ck3zzVEHIQuooyzQY1
+ n4Uw2RuVAL88LL/rY02/EgcFkJqPNerDcH0XbABwyZm0yd4CxJURF6A1rMNbUQ0HqX6eF2wxZ
+ lMclCbN3I6qpZ1mCkTDEKS3DMFMldepEdRs/QbrNuAEN5LPwMUSwGyys8kdf8ZWcSXRAnIQeM
+ zuGUS7W+ry/Otsq5ZjgBJV2kRvG/SxGBSyPEiyVQIs0ZUVcIrScpC4E/UqEvRtr23r9B/yC3d
+ 9z8qJZGaPseSw3vY+EcbtLV+Qv6PxGnj7P1slJPf6L9MsgpC5nABdHw7Z5WsHSbUmRgXV7E87
+ hTnQBLPdQAmc7guUrFixWkTjfRVrbL2PSjXbl46KukRPKk/eBevQVOvau77qMf91LkwC6yFD 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296692>
 
 =46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-The following didn't work as expected:
-- In a middle of a merge
-- merge.renormalize is true,
-- .gitattributes =3D "* text=3Dauto"
-- core.eol =3D crlf
+Before this change,
+$ echo "* text=3Dauto" >.gitattributes
+$ echo "* eol=3Dcrlf" >>.gitattributes
 
-Merge a blob with CRLF "first line\r\nsame line\r\n" and a blob
-with LF "first line\nsame line\n".
+would have the same effect as
+$ echo "* text" >.gitattributes
+$ git config core.eol crlf
 
-The expected result of the merge is "first line\nsame line\n".
+Since the 'eol' attribute had higher priority than 'text=3Dauto', this =
+may
+corrupt binary files and is not what most users expect to happen.
 
-The content in the working tree is "first line\r\nsame line\r\n",
-and ce_compare_data() should find that the content is clean and return =
-0.
+Make the 'eol' attribute to obey 'text=3Dauto', and now
+$ echo "* text=3Dauto" >.gitattributes
+$ echo "* eol=3Dcrlf" >>.gitattributes
+behaves the same as
+$ echo "* text=3Dauto" >.gitattributes
+$ git config core.eol crlf
 
-Deep down crlf_to_git() is invoked, to check if CRLF are converted or n=
-ot.
+In other words,
+$ echo "* text=3Dauto eol=3Dcrlf" >.gitattributes
+has the same effect as
+$ git config core.autocrlf true
 
-The "new safer autocrlf handling" calls blob_has_cr().
+and
+$ echo "* text=3Dauto eol=3Dlf" >.gitattributes
+has the same effect as
+$ git config core.autocrlf input
 
-Instead of using the sha1 of the blob, (CRLF in this example),
-the function get_sha1_from_index() is invoked.
-get_sha1_from_index() decides to return "ours" when in the middle of
-the merge, which is LF.
-
-As a result, the CRLF in the worktree are converted into LF before
-the comparison.
-The contents of LF and CRLF don't match any more.
-
-The problem is that ce_compare_data() has ce->sha1, but the sha1 is los=
-t
-on it's way into blob_has_cr().
-
-=46orwarding ce->sha1 from ce_compare_data() into crlf_to_git() makes s=
-ure
-that blob_has_cr() looks at the appropriate blob.
-
-Add a new parameter index_blob_sha1 to convert_to_git(), and forward th=
-e
-sha1 from ce_compare_data() into convert_to_git(). Other callers use NU=
-LL
-for index_blob_sha1, and the sha1 is determined from path
-using get_sha1_from_cache(path). This is the same handling as before.
-
-In the same spirit, forward the sha1 into would_convert_to_git().
-
-While at it, rename has_cr_in_index() into blob_has_cr()
-and replace 0 with SAFE_CRLF_FALSE.
-
-Add a TC in t6038 to have a test coverage under Linux.
-
-Signed-off-by: Torsten B=C3=83=C2=B6gershausen <tboegi@web.de>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
- builtin/apply.c            |  3 ++-
- builtin/blame.c            |  2 +-
- cache.h                    |  1 +
- combine-diff.c             |  3 ++-
- convert.c                  | 43 ++++++++++++++++++++++++++------------
- convert.h                  | 15 ++++++++++----
- diff.c                     |  3 ++-
- dir.c                      |  2 +-
- read-cache.c               |  4 +++-
- sha1_file.c                | 12 ++++++++---
- t/t6038-merge-text-auto.sh | 51 +++++++++++++++++++++++++-------------=
+ Documentation/config.txt        | 12 +++++-------
+ Documentation/gitattributes.txt | 15 +++++++++------
+ convert.c                       | 42 +++++++++++++++++++++------------=
 --------
- 11 files changed, 90 insertions(+), 49 deletions(-)
+ convert.h                       |  3 ++-
+ t/t0025-crlf-auto.sh            |  4 ++--
+ t/t0027-auto-crlf.sh            | 32 +++++++++++++++----------------
+ t/t6038-merge-text-auto.sh      | 23 ++++++++++++++--------
+ 7 files changed, 71 insertions(+), 60 deletions(-)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 8e4da2e..0cf9a0a 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -2140,7 +2140,8 @@ static int read_old_data(struct stat *st, const c=
-har *path, struct strbuf *buf)
- 	case S_IFREG:
- 		if (strbuf_read_file(buf, path, st->st_size) !=3D st->st_size)
- 			return error(_("unable to open or read %s"), path);
--		convert_to_git(path, buf->buf, buf->len, buf, 0);
-+		convert_to_git(path, buf->buf, buf->len, buf,
-+			       SAFE_CRLF_FALSE, NULL);
- 		return 0;
- 	default:
- 		return -1;
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 21f42b0..1c523b6 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2377,7 +2377,7 @@ static struct commit *fake_working_tree_commit(st=
-ruct diff_options *opt,
- 		if (strbuf_read(&buf, 0, 0) < 0)
- 			die_errno("failed to read from stdin");
- 	}
--	convert_to_git(path, buf.buf, buf.len, &buf, 0);
-+	convert_to_git(path, buf.buf, buf.len, &buf, SAFE_CRLF_FALSE, NULL);
- 	origin->file.ptr =3D buf.buf;
- 	origin->file.size =3D buf.len;
- 	pretend_sha1_file(buf.buf, buf.len, OBJ_BLOB, origin->blob_sha1);
-diff --git a/cache.h b/cache.h
-index 322ee40..86f48f9 100644
---- a/cache.h
-+++ b/cache.h
-@@ -605,6 +605,7 @@ extern int ie_modified(const struct index_state *, =
-const struct cache_entry *, s
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 53f00db..208b5de 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -405,13 +405,11 @@ file with mixed line endings would be reported by=
+ the `core.safecrlf`
+ mechanism.
 =20
- #define HASH_WRITE_OBJECT 1
- #define HASH_FORMAT_CHECK 2
-+#define HASH_USE_SHA_NOT_PATH 4
- extern int index_fd(unsigned char *sha1, int fd, struct stat *st, enum=
- object_type type, const char *path, unsigned flags);
- extern int index_path(unsigned char *sha1, const char *path, struct st=
-at *st, unsigned flags);
+ core.autocrlf::
+-	Setting this variable to "true" is almost the same as setting
+-	the `text` attribute to "auto" on all files except that text
+-	files are not guaranteed to be normalized: files that contain
+-	`CRLF` in the repository will not be touched.  Use this
+-	setting if you want to have `CRLF` line endings in your
+-	working directory even though the repository does not have
+-	normalized line endings.  This variable can be set to 'input',
++	Setting this variable to "true" is the same as setting
++	the `text` attribute to "auto" on all files and core.eol to "crlf".
++	Set to true if you want to have `CRLF` line endings in your
++	working directory and the repository has LF line endings.
++	This variable can be set to 'input',
+ 	in which case no output conversion is performed.
 =20
-diff --git a/combine-diff.c b/combine-diff.c
-index 8f2313d..8b535a7 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1052,7 +1052,8 @@ static void show_patch_diff(struct combine_diff_p=
-ath *elem, int num_parent,
- 			if (is_file) {
- 				struct strbuf buf =3D STRBUF_INIT;
+ core.symlinks::
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribu=
+tes.txt
+index e3b1de8..d7a124b 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -115,6 +115,7 @@ text file is normalized, its line endings are conve=
+rted to LF in the
+ repository.  To control what line ending style is used in the working
+ directory, use the `eol` attribute for a single file and the
+ `core.eol` configuration variable for all text files.
++Note that `core.autocrlf` overrides `core.eol`
 =20
--				if (convert_to_git(elem->path, result, len, &buf, safe_crlf)) {
-+				if (convert_to_git(elem->path, result, len,
-+						   &buf, safe_crlf, NULL)) {
- 					free(result);
- 					result =3D strbuf_detach(&buf, &len);
- 					result_size =3D len;
+ Set::
+=20
+@@ -130,8 +131,9 @@ Unset::
+ Set to string value "auto"::
+=20
+ 	When `text` is set to "auto", the path is marked for automatic
+-	end-of-line normalization.  If Git decides that the content is
+-	text, its line endings are normalized to LF on checkin.
++	end-of-line conversion.  If Git decides that the content is
++	text, its line endings are converted to LF on checkin.
++	When the file has been commited with CRLF, no conversion is done.
+=20
+ Unspecified::
+=20
+@@ -146,7 +148,7 @@ unspecified.
+ ^^^^^
+=20
+ This attribute sets a specific line-ending style to be used in the
+-working directory.  It enables end-of-line normalization without any
++working directory.  It enables end-of-line conversion without any
+ content checks, effectively setting the `text` attribute.
+=20
+ Set to string value "crlf"::
+@@ -186,9 +188,10 @@ the working directory, and prevent .jpg files from=
+ being normalized
+ regardless of their content.
+=20
+ ------------------------
++*               text=3Dauto
+ *.txt		text
+-*.vcproj	eol=3Dcrlf
+-*.sh		eol=3Dlf
++*.vcproj	text eol=3Dcrlf
++*.sh		text eol=3Dlf
+ *.jpg		-text
+ ------------------------
+=20
+@@ -198,7 +201,7 @@ normalization in Git.
+=20
+ If you simply want to have CRLF line endings in your working directory
+ regardless of the repository you are working with, you can set the
+-config variable "core.autocrlf" without changing any attributes.
++config variable "core.autocrlf" without using any attributes.
+=20
+ ------------------------
+ [core]
 diff --git a/convert.c b/convert.c
-index 67d69b5..802ee7c 100644
+index b1614bf..67d69b5 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -219,23 +219,28 @@ static void check_safe_crlf(const char *path, enu=
-m crlf_action crlf_action,
- 	}
- }
-=20
--static int has_cr_in_index(const char *path)
-+static int blob_has_cr(const unsigned char *index_blob_sha1)
- {
- 	unsigned long sz;
- 	void *data;
--	int has_cr;
--
--	data =3D read_blob_data_from_cache(path, &sz);
-+	int has_cr =3D 0;
-+	enum object_type type;
-+	if (!index_blob_sha1)
-+		return 0;
-+	data =3D read_sha1_file(index_blob_sha1, &type, &sz);
- 	if (!data)
- 		return 0;
--	has_cr =3D memchr(data, '\r', sz) !=3D NULL;
-+	if (type =3D=3D OBJ_BLOB)
-+		has_cr =3D memchr(data, '\r', sz) !=3D NULL;
-+
- 	free(data);
- 	return has_cr;
- }
-=20
- static int crlf_to_git(const char *path, const char *src, size_t len,
- 		       struct strbuf *buf,
--		       enum crlf_action crlf_action, enum safe_crlf checksafe)
-+		       enum crlf_action crlf_action, enum safe_crlf checksafe,
-+		       const unsigned char *index_blob_sha1)
- {
- 	struct text_stat stats;
- 	char *dst;
-@@ -256,14 +261,23 @@ static int crlf_to_git(const char *path, const ch=
+@@ -176,7 +176,9 @@ static enum eol output_eol(enum crlf_action crlf_ac=
+tion)
+ 		return EOL_LF;
+ 	case CRLF_UNDEFINED:
+ 	case CRLF_AUTO_CRLF:
++		return EOL_CRLF;
+ 	case CRLF_AUTO_INPUT:
++		return EOL_LF;
+ 	case CRLF_TEXT:
+ 	case CRLF_AUTO:
+ 		/* fall through */
+@@ -254,17 +256,15 @@ static int crlf_to_git(const char *path, const ch=
 ar *src, size_t len,
  	if (crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_AUTO_INPU=
 T || crlf_action =3D=3D CRLF_AUTO_CRLF) {
  		if (convert_is_binary(len, &stats))
  			return 0;
-+
- 		/*
- 		 * If the file in the index has any CR in it, do not convert.
- 		 * This is the new safer autocrlf handling.
- 		 */
- 		if (checksafe =3D=3D SAFE_CRLF_RENORMALIZE)
- 			checksafe =3D SAFE_CRLF_FALSE;
--		else if (has_cr_in_index(path))
--			return 0;
-+		else {
-+			/*
-+			 * If the file in the index has any CR in it, do not convert.
-+			 * This is the new safer autocrlf handling.
-+			 */
-+			if (!index_blob_sha1)
-+				index_blob_sha1 =3D get_sha1_from_cache(path);
-+			if (blob_has_cr(index_blob_sha1))
-+				return 0;
-+		}
+-
+-		if (crlf_action =3D=3D CRLF_AUTO_INPUT || crlf_action =3D=3D CRLF_AU=
+TO_CRLF) {
+-			/*
+-			 * If the file in the index has any CR in it, do not convert.
+-			 * This is the new safer autocrlf handling.
+-			 */
+-			if (has_cr_in_index(path))
+-				return 0;
+-		}
++		/*
++		 * If the file in the index has any CR in it, do not convert.
++		 * This is the new safer autocrlf handling.
++		 */
++		if (checksafe =3D=3D SAFE_CRLF_RENORMALIZE)
++			checksafe =3D SAFE_CRLF_FALSE;
++		else if (has_cr_in_index(path))
++			return 0;
  	}
+-
  	check_safe_crlf(path, crlf_action, &stats, checksafe);
 =20
-@@ -855,7 +869,8 @@ const char *get_convert_attr_ascii(const char *path=
+ 	/* Optimization: No CRLF? Nothing to convert, regardless. */
+@@ -320,12 +320,10 @@ static int crlf_to_worktree(const char *path, con=
+st char *src, size_t len,
+ 		return 0;
+=20
+ 	if (crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_AUTO_INPU=
+T || crlf_action =3D=3D CRLF_AUTO_CRLF) {
+-		if (crlf_action =3D=3D CRLF_AUTO_INPUT || crlf_action =3D=3D CRLF_AU=
+TO_CRLF) {
+-			/* If we have any CR or CRLF line endings, we do not touch it */
+-			/* This is the new safer autocrlf-handling */
+-			if (stats.lonecr || stats.crlf )
+-				return 0;
+-		}
++		/* If we have any CR or CRLF line endings, we do not touch it */
++		/* This is the new safer autocrlf-handling */
++		if (stats.lonecr || stats.crlf )
++			return 0;
+=20
+ 		if (convert_is_binary(len, &stats))
+ 			return 0;
+@@ -786,7 +784,11 @@ static void convert_attrs(struct conv_attrs *ca, c=
+onst char *path)
+ 		ca->drv =3D git_path_check_convert(ccheck + 2);
+ 		if (ca->crlf_action !=3D CRLF_BINARY) {
+ 			enum eol eol_attr =3D git_path_check_eol(ccheck + 3);
+-			if (eol_attr =3D=3D EOL_LF)
++			if (ca->crlf_action =3D=3D CRLF_AUTO && eol_attr =3D=3D EOL_LF)
++				ca->crlf_action =3D CRLF_AUTO_INPUT;
++			else if (ca->crlf_action =3D=3D CRLF_AUTO && eol_attr =3D=3D EOL_CR=
+LF)
++				ca->crlf_action =3D CRLF_AUTO_CRLF;
++			else if (eol_attr =3D=3D EOL_LF)
+ 				ca->crlf_action =3D CRLF_TEXT_INPUT;
+ 			else if (eol_attr =3D=3D EOL_CRLF)
+ 				ca->crlf_action =3D CRLF_TEXT_CRLF;
+@@ -845,9 +847,9 @@ const char *get_convert_attr_ascii(const char *path=
 )
- }
-=20
- int convert_to_git(const char *path, const char *src, size_t len,
--                   struct strbuf *dst, enum safe_crlf checksafe)
-+		   struct strbuf *dst, enum safe_crlf checksafe,
-+		   const unsigned char *index_blob_sha1)
- {
- 	int ret =3D 0;
- 	const char *filter =3D NULL;
-@@ -876,7 +891,7 @@ int convert_to_git(const char *path, const char *sr=
-c, size_t len,
- 		src =3D dst->buf;
- 		len =3D dst->len;
+ 	case CRLF_AUTO:
+ 		return "text=3Dauto";
+ 	case CRLF_AUTO_CRLF:
+-		return "text=3Dauto eol=3Dcrlf"; /* This is not supported yet */
++		return "text=3Dauto eol=3Dcrlf";
+ 	case CRLF_AUTO_INPUT:
+-		return "text=3Dauto eol=3Dlf"; /* This is not supported yet */
++		return "text=3Dauto eol=3Dlf";
  	}
--	ret |=3D crlf_to_git(path, src, len, dst, ca.crlf_action, checksafe);
-+	ret |=3D crlf_to_git(path, src, len, dst, ca.crlf_action, checksafe, =
-index_blob_sha1);
- 	if (ret && dst) {
- 		src =3D dst->buf;
- 		len =3D dst->len;
-@@ -885,7 +900,8 @@ int convert_to_git(const char *path, const char *sr=
-c, size_t len,
+ 	return "";
  }
-=20
- void convert_to_git_filter_fd(const char *path, int fd, struct strbuf =
-*dst,
--			      enum safe_crlf checksafe)
-+			      enum safe_crlf checksafe,
-+			      const unsigned char *index_blob_sha1)
- {
- 	struct conv_attrs ca;
- 	convert_attrs(&ca, path);
-@@ -896,7 +912,8 @@ void convert_to_git_filter_fd(const char *path, int=
- fd, struct strbuf *dst,
- 	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv->clean))
- 		die("%s: clean filter '%s' failed", path, ca.drv->name);
-=20
--	crlf_to_git(path, dst->buf, dst->len, dst, ca.crlf_action, checksafe)=
-;
-+	crlf_to_git(path, dst->buf, dst->len, dst, ca.crlf_action,
-+		    checksafe, index_blob_sha1);
- 	ident_to_git(path, dst->buf, dst->len, dst, ca.ident);
- }
-=20
-@@ -951,7 +968,7 @@ int renormalize_buffer(const char *path, const char=
+@@ -949,7 +951,7 @@ int renormalize_buffer(const char *path, const char=
  *src, size_t len, struct str
  		src =3D dst->buf;
  		len =3D dst->len;
  	}
--	return ret | convert_to_git(path, src, len, dst, SAFE_CRLF_RENORMALIZ=
-E);
+-	return ret | convert_to_git(path, src, len, dst, SAFE_CRLF_FALSE);
 +	return ret | convert_to_git(path, src, len, dst, SAFE_CRLF_RENORMALIZ=
-E, NULL);
+E);
  }
 =20
  /*****************************************************************
 diff --git a/convert.h b/convert.h
-index 81b6cdf..8c34dd5 100644
+index ccf436b..81b6cdf 100644
 --- a/convert.h
 +++ b/convert.h
-@@ -39,19 +39,26 @@ extern const char *get_convert_attr_ascii(const cha=
-r *path);
+@@ -7,7 +7,8 @@
+ enum safe_crlf {
+ 	SAFE_CRLF_FALSE =3D 0,
+ 	SAFE_CRLF_FAIL =3D 1,
+-	SAFE_CRLF_WARN =3D 2
++	SAFE_CRLF_WARN =3D 2,
++	SAFE_CRLF_RENORMALIZE =3D 4
+ };
 =20
- /* returns 1 if *dst was used */
- extern int convert_to_git(const char *path, const char *src, size_t le=
-n,
--			  struct strbuf *dst, enum safe_crlf checksafe);
-+			  struct strbuf *dst, enum safe_crlf checksafe,
-+			  const unsigned char *index_blob_sha1);
-+
- extern int convert_to_working_tree(const char *path, const char *src,
- 				   size_t len, struct strbuf *dst);
- extern int renormalize_buffer(const char *path, const char *src, size_=
-t len,
- 			      struct strbuf *dst);
--static inline int would_convert_to_git(const char *path)
-+static inline int would_convert_to_git(const char *path,
-+				       const unsigned char *index_blob_sha1)
- {
--	return convert_to_git(path, NULL, 0, NULL, 0);
-+	return convert_to_git(path, NULL, 0, NULL, SAFE_CRLF_FALSE,
-+			      index_blob_sha1);
- }
-+
- /* Precondition: would_convert_to_git_filter_fd(path) =3D=3D true */
- extern void convert_to_git_filter_fd(const char *path, int fd,
- 				     struct strbuf *dst,
--				     enum safe_crlf checksafe);
-+				     enum safe_crlf checksafe,
-+				     const unsigned char *index_blob_sha1);
-+
- extern int would_convert_to_git_filter_fd(const char *path);
+ extern enum safe_crlf safe_crlf;
+diff --git a/t/t0025-crlf-auto.sh b/t/t0025-crlf-auto.sh
+index c164b46..d0bee08 100755
+--- a/t/t0025-crlf-auto.sh
++++ b/t/t0025-crlf-auto.sh
+@@ -114,7 +114,7 @@ test_expect_success 'autocrlf=3Dtrue does not norma=
+lize CRLF files' '
+ 	test -z "$LFonlydiff" -a -z "$CRLFonlydiff" -a -z "$LFwithNULdiff"
+ '
 =20
- /*****************************************************************
-diff --git a/diff.c b/diff.c
-index d3734d3..a8308e0 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2810,7 +2810,8 @@ int diff_populate_filespec(struct diff_filespec *=
-s, unsigned int flags)
- 		/*
- 		 * Convert from working tree format to canonical git format
- 		 */
--		if (convert_to_git(s->path, s->data, s->size, &buf, crlf_warn)) {
-+		if (convert_to_git(s->path, s->data, s->size, &buf,
-+				   crlf_warn, NULL)) {
- 			size_t size =3D 0;
- 			munmap(s->data, s->size);
- 			s->should_munmap =3D 0;
-diff --git a/dir.c b/dir.c
-index 6172b34..66f1ffb 100644
---- a/dir.c
-+++ b/dir.c
-@@ -712,7 +712,7 @@ static int add_excludes(const char *fname, const ch=
-ar *base, int baselen,
- 				 (pos =3D cache_name_pos(fname, strlen(fname))) >=3D 0 &&
- 				 !ce_stage(active_cache[pos]) &&
- 				 ce_uptodate(active_cache[pos]) &&
--				 !would_convert_to_git(fname))
-+				 !would_convert_to_git(fname, NULL))
- 				hashcpy(sha1_stat->sha1, active_cache[pos]->sha1);
- 			else
- 				hash_sha1_file(buf, size, "blob", sha1_stat->sha1);
-diff --git a/read-cache.c b/read-cache.c
-index a3ef967..c109b6d 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -163,7 +163,9 @@ static int ce_compare_data(const struct cache_entry=
- *ce, struct stat *st)
+-test_expect_success 'text=3Dauto, autocrlf=3Dtrue _does_ normalize CRL=
+=46 files' '
++test_expect_success 'text=3Dauto, autocrlf=3Dtrue does not normalize C=
+RLF files' '
 =20
- 	if (fd >=3D 0) {
- 		unsigned char sha1[20];
--		if (!index_fd(sha1, fd, st, OBJ_BLOB, ce->name, 0))
-+		unsigned flags =3D HASH_USE_SHA_NOT_PATH;
-+		memcpy(sha1, ce->sha1, sizeof(sha1));
-+		if (!index_fd(sha1, fd, st, OBJ_BLOB, ce->name, flags))
- 			match =3D hashcmp(sha1, ce->sha1);
- 		/* index_fd() closed the file descriptor already */
- 	}
-diff --git a/sha1_file.c b/sha1_file.c
-index d5e1121..10630f0 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3273,6 +3273,7 @@ static int index_mem(unsigned char *sha1, void *b=
-uf, size_t size,
- {
- 	int ret, re_allocated =3D 0;
- 	int write_object =3D flags & HASH_WRITE_OBJECT;
-+	const int valid_sha1 =3D flags & HASH_USE_SHA_NOT_PATH;
+ 	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
+ 	git config core.autocrlf true &&
+@@ -126,7 +126,7 @@ test_expect_success 'text=3Dauto, autocrlf=3Dtrue _=
+does_ normalize CRLF files' '
+ 	LFonlydiff=3D$(git diff LFonly) &&
+ 	CRLFonlydiff=3D$(git diff CRLFonly) &&
+ 	LFwithNULdiff=3D$(git diff LFwithNUL) &&
+-	test -z "$LFonlydiff" -a -n "$CRLFonlydiff" -a -z "$LFwithNULdiff"
++	test -z "$LFonlydiff" -a -z "$CRLFonlydiff" -a -z "$LFwithNULdiff"
+ '
 =20
- 	if (!type)
- 		type =3D OBJ_BLOB;
-@@ -3283,7 +3284,8 @@ static int index_mem(unsigned char *sha1, void *b=
-uf, size_t size,
- 	if ((type =3D=3D OBJ_BLOB) && path) {
- 		struct strbuf nbuf =3D STRBUF_INIT;
- 		if (convert_to_git(path, buf, size, &nbuf,
--				   write_object ? safe_crlf : SAFE_CRLF_FALSE)) {
-+				   write_object ? safe_crlf : SAFE_CRLF_FALSE,
-+				   valid_sha1 ? sha1 : NULL)) {
- 			buf =3D strbuf_detach(&nbuf, &size);
- 			re_allocated =3D 1;
- 		}
-@@ -3311,13 +3313,15 @@ static int index_stream_convert_blob(unsigned c=
-har *sha1, int fd,
- {
- 	int ret;
- 	const int write_object =3D flags & HASH_WRITE_OBJECT;
-+	const int valid_sha1 =3D flags & HASH_USE_SHA_NOT_PATH;
- 	struct strbuf sbuf =3D STRBUF_INIT;
+ test_expect_success 'text=3Dauto, autocrlf=3Dtrue does not normalize b=
+inary files' '
+diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+index 9372589..8367d0b 100755
+--- a/t/t0027-auto-crlf.sh
++++ b/t/t0027-auto-crlf.sh
+@@ -175,8 +175,8 @@ attr_ascii () {
+ 	text,lf)   echo "text eol=3Dlf" ;;
+ 	text,crlf) echo "text eol=3Dcrlf" ;;
+ 	auto,)     echo "text=3Dauto" ;;
+-	auto,lf)   echo "text eol=3Dlf" ;;
+-	auto,crlf) echo "text eol=3Dcrlf" ;;
++	auto,lf)   echo "text=3Dauto eol=3Dlf" ;;
++	auto,crlf) echo "text=3Dauto eol=3Dcrlf" ;;
+ 	lf,)       echo "text eol=3Dlf" ;;
+ 	crlf,)     echo "text eol=3Dcrlf" ;;
+ 	,) echo "" ;;
+@@ -397,10 +397,9 @@ commit_chk_wrnNNO ""      ""      false   ""      =
+  ""        ""          ""
+ commit_chk_wrnNNO ""      ""      true    LF_CRLF   ""        ""      =
+    ""          ""
+ commit_chk_wrnNNO ""      ""      input   ""        ""        ""      =
+    ""          ""
 =20
- 	assert(path);
- 	assert(would_convert_to_git_filter_fd(path));
+-commit_chk_wrnNNO "auto"  ""      false   "$WILC"   "$WICL"   "$WAMIX"=
+    ""          ""
+-commit_chk_wrnNNO "auto"  ""      true    LF_CRLF   ""        LF_CRLF =
+    ""          ""
+-commit_chk_wrnNNO "auto"  ""      input   ""        CRLF_LF   CRLF_LF =
+    ""          ""
+-
++commit_chk_wrnNNO "auto"  ""      false   "$WILC"   ""        ""      =
+    ""          ""
++commit_chk_wrnNNO "auto"  ""      true    LF_CRLF   ""        ""      =
+    ""          ""
++commit_chk_wrnNNO "auto"  ""      input   ""        ""        ""      =
+    ""          ""
+ for crlf in true false input
+ do
+ 	commit_chk_wrnNNO -text ""      $crlf   ""        ""        ""       =
+   ""          ""
+@@ -408,8 +407,8 @@ do
+ 	commit_chk_wrnNNO -text crlf    $crlf   ""        ""        ""       =
+   ""          ""
+ 	commit_chk_wrnNNO ""    lf      $crlf   ""       CRLF_LF    CRLF_LF  =
+    ""         CRLF_LF
+ 	commit_chk_wrnNNO ""    crlf    $crlf   LF_CRLF   ""        LF_CRLF  =
+   LF_CRLF     ""
+-	commit_chk_wrnNNO auto  lf    	$crlf   ""       CRLF_LF    CRLF_LF   =
+  ""          CRLF_LF
+-	commit_chk_wrnNNO auto  crlf  	$crlf   LF_CRLF   ""        LF_CRLF   =
+  LF_CRLF     ""
++	commit_chk_wrnNNO auto  lf    	$crlf   ""        ""        ""        =
+  ""          ""
++	commit_chk_wrnNNO auto  crlf  	$crlf   LF_CRLF   ""        ""        =
+  ""          ""
+ 	commit_chk_wrnNNO text  lf    	$crlf   ""       CRLF_LF    CRLF_LF   =
+  ""          CRLF_LF
+ 	commit_chk_wrnNNO text  crlf  	$crlf   LF_CRLF   ""        LF_CRLF   =
+  LF_CRLF     ""
+ done
+@@ -454,9 +453,9 @@ do
+ 	check_in_repo_NNO -text ""     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_=
+CR  CRLF_nul
+ 	check_in_repo_NNO -text lf     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_=
+CR  CRLF_nul
+ 	check_in_repo_NNO -text crlf   $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_=
+CR  CRLF_nul
+-	check_in_repo_NNO auto  ""     $crlf   LF  LF    LF           LF_mix_=
+CR  CRLF_nul
+-	check_in_repo_NNO auto  lf     $crlf   LF  LF    LF           LF_mix_=
+CR  LF_nul
+-	check_in_repo_NNO auto  crlf   $crlf   LF  LF    LF           LF_mix_=
+CR  LF_nul
++	check_in_repo_NNO auto  ""     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_=
+CR  CRLF_nul
++	check_in_repo_NNO auto  lf     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_=
+CR  CRLF_nul
++	check_in_repo_NNO auto  crlf   $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_=
+CR  CRLF_nul
+ 	check_in_repo_NNO text  ""     $crlf   LF  LF    LF           LF_mix_=
+CR  LF_nul
+ 	check_in_repo_NNO text  lf     $crlf   LF  LF    LF           LF_mix_=
+CR  LF_nul
+ 	check_in_repo_NNO text  crlf   $crlf   LF  LF    LF           LF_mix_=
+CR  LF_nul
+@@ -493,7 +492,8 @@ fi
+ export CRLF_MIX_LF_CR MIX NL
 =20
- 	convert_to_git_filter_fd(path, fd, &sbuf,
--				 write_object ? safe_crlf : SAFE_CRLF_FALSE);
-+				 write_object ? safe_crlf : SAFE_CRLF_FALSE,
-+				 valid_sha1 ? sha1 : NULL);
+ # Same handling with and without ident
+-for id in "" ident
++#for id in "" ident
++for id in ""
+ do
+ 	for ceol in lf crlf native
+ 	do
+@@ -509,7 +509,7 @@ do
+ 			checkout_files text  "$id" "crlf" "$crlf" "$ceol"  CRLF  CRLF  CRLF=
+         CRLF_mix_CR  CRLF_nul
+ 			# currently the same as text, eol=3DXXX
+ 			checkout_files auto  "$id" "lf"   "$crlf" "$ceol"  LF    CRLF  CRLF=
+_mix_LF  LF_mix_CR    LF_nul
+-			checkout_files auto  "$id" "crlf" "$crlf" "$ceol"  CRLF  CRLF  CRLF=
+         CRLF_mix_CR  CRLF_nul
++			checkout_files auto  "$id" "crlf" "$crlf" "$ceol"  CRLF  CRLF  CRLF=
+_mix_LF  LF_mix_CR    LF_nul
+ 		done
 =20
- 	if (write_object)
- 		ret =3D write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
-@@ -3394,6 +3398,8 @@ int index_fd(unsigned char *sha1, int fd, struct =
-stat *st,
- 	     enum object_type type, const char *path, unsigned flags)
- {
- 	int ret;
-+	const unsigned char *sha1_ce;
-+	sha1_ce =3D flags & HASH_USE_SHA_NOT_PATH ? sha1 : NULL;
+ 		# core.autocrlf false, different core.eol
+@@ -517,7 +517,7 @@ do
+ 		# core.autocrlf true
+ 		checkout_files   ""    "$id" ""     true    "$ceol"  CRLF  CRLF  CRL=
+=46_mix_LF  LF_mix_CR    LF_nul
+ 		# text: core.autocrlf =3D true overrides core.eol
+-		checkout_files   auto  "$id" ""     true    "$ceol"  CRLF  CRLF  CRL=
+=46         LF_mix_CR    LF_nul
++		checkout_files   auto  "$id" ""     true    "$ceol"  CRLF  CRLF  CRL=
+=46_mix_LF  LF_mix_CR    LF_nul
+ 		checkout_files   text  "$id" ""     true    "$ceol"  CRLF  CRLF  CRL=
+=46         CRLF_mix_CR  CRLF_nul
+ 		# text: core.autocrlf =3D input overrides core.eol
+ 		checkout_files   text  "$id" ""     input   "$ceol"  LF    CRLF  CRL=
+=46_mix_LF  LF_mix_CR    LF_nul
+@@ -531,8 +531,8 @@ do
+ 	checkout_files     text  "$id" ""     false   ""       $NL   CRLF  $M=
+IX_CRLF_LF $MIX_LF_CR   $LFNUL
+ 	checkout_files     text  "$id" ""     false   native   $NL   CRLF  $M=
+IX_CRLF_LF $MIX_LF_CR   $LFNUL
+ 	# auto: core.autocrlf=3Dfalse and core.eol unset(or native) uses nati=
+ve eol
+-	checkout_files     auto  "$id" ""     false   ""       $NL   CRLF  $M=
+IX_CRLF_LF LF_mix_CR    LF_nul
+-	checkout_files     auto  "$id" ""     false   native   $NL   CRLF  $M=
+IX_CRLF_LF LF_mix_CR    LF_nul
++	checkout_files     auto  "$id" ""     false   ""       $NL   CRLF  CR=
+LF_mix_LF  LF_mix_CR    LF_nul
++	checkout_files     auto  "$id" ""     false   native   $NL   CRLF  CR=
+LF_mix_LF  LF_mix_CR    LF_nul
+ done
 =20
- 	/*
- 	 * Call xsize_t() only when needed to avoid potentially unnecessary
-@@ -3404,7 +3410,7 @@ int index_fd(unsigned char *sha1, int fd, struct =
-stat *st,
- 	else if (!S_ISREG(st->st_mode))
- 		ret =3D index_pipe(sha1, fd, type, path, flags);
- 	else if (st->st_size <=3D big_file_threshold || type !=3D OBJ_BLOB ||
--		 (path && would_convert_to_git(path)))
-+		 (path && would_convert_to_git(path,sha1_ce)))
- 		ret =3D index_core(sha1, fd, xsize_t(st->st_size), type, path,
- 				 flags);
- 	else
+ # Should be the last test case: remove some files from the worktree
 diff --git a/t/t6038-merge-text-auto.sh b/t/t6038-merge-text-auto.sh
-index 33b77ee..5e8d5fa 100755
+index 85c10b0..33b77ee 100755
 --- a/t/t6038-merge-text-auto.sh
 +++ b/t/t6038-merge-text-auto.sh
-@@ -91,16 +91,13 @@ test_expect_success 'Merge after setting text=3Daut=
-o' '
- 	compare_files expected file
+@@ -16,6 +16,13 @@ test_description=3D'CRLF merge conflict across text=3D=
+auto change
+=20
+ test_have_prereq SED_STRIPS_CR && SED_OPTIONS=3D-b
+=20
++compare_files () {
++	tr '\015\000' QN <"$1" >"$1".expect &&
++	tr '\015\000' QN <"$2" >"$2".actual &&
++	test_cmp "$1".expect "$2".actual &&
++	rm "$1".expect "$2".actual
++}
++
+ test_expect_success setup '
+ 	git config core.autocrlf false &&
+=20
+@@ -30,7 +37,7 @@ test_expect_success setup '
+ 	git branch side &&
+=20
+ 	echo "* text=3Dauto" >.gitattributes &&
+-	touch file &&
++	echo first line >file &&
+ 	git add .gitattributes file &&
+ 	test_tick &&
+ 	git commit -m "normalize file" &&
+@@ -81,7 +88,7 @@ test_expect_success 'Merge after setting text=3Dauto'=
  '
-=20
--test_expect_success 'Merge addition of text=3Dauto' '
-+test_expect_success 'Merge addition of text=3Dauto eol=3DLF' '
-+	git config core.eol lf &&
- 	cat <<-\EOF >expected &&
- 	first line
- 	same line
- 	EOF
-=20
--	if test_have_prereq NATIVE_CRLF; then
--		append_cr <expected >expected.temp &&
--		mv expected.temp expected
--	fi &&
- 	git config merge.renormalize true &&
- 	git rm -fr . &&
  	rm -f .gitattributes &&
-@@ -109,17 +106,31 @@ test_expect_success 'Merge addition of text=3Daut=
-o' '
- 	compare_files  expected file
+ 	git reset --hard a &&
+ 	git merge b &&
+-	test_cmp expected file
++	compare_files expected file
  '
 =20
-+test_expect_success 'Merge addition of text=3Dauto eol=3DCRLF' '
-+	git config core.eol crlf &&
-+	cat <<-\EOF >expected &&
-+	first line
-+	same line
-+	EOF
-+
-+	append_cr <expected >expected.temp &&
-+	mv expected.temp expected &&
-+	git config merge.renormalize true &&
-+	git rm -fr . &&
-+	rm -f .gitattributes &&
-+	git reset --hard b &&
-+	echo >&2 "After git reset --hard b" &&
-+	git ls-files -s --eol >&2 &&
-+	git merge a &&
+ test_expect_success 'Merge addition of text=3Dauto' '
+@@ -99,7 +106,7 @@ test_expect_success 'Merge addition of text=3Dauto' =
+'
+ 	rm -f .gitattributes &&
+ 	git reset --hard b &&
+ 	git merge a &&
+-	test_cmp expected file
 +	compare_files  expected file
-+'
-+
+ '
+=20
  test_expect_success 'Detect CRLF/LF conflict after setting text=3Dauto=
 ' '
-+	git config core.eol native &&
- 	echo "<<<<<<<" >expected &&
--	if test_have_prereq NATIVE_CRLF; then
--		echo first line | append_cr >>expected &&
--		echo same line | append_cr >>expected &&
--		echo =3D=3D=3D=3D=3D=3D=3D | append_cr >>expected
--	else
--		echo first line >>expected &&
--		echo same line >>expected &&
--		echo =3D=3D=3D=3D=3D=3D=3D >>expected
--	fi &&
-+	echo first line >>expected &&
-+	echo same line >>expected &&
-+	echo =3D=3D=3D=3D=3D=3D=3D >>expected &&
- 	echo first line | append_cr >>expected &&
- 	echo same line | append_cr >>expected &&
- 	echo ">>>>>>>" >>expected &&
-@@ -135,15 +146,9 @@ test_expect_success 'Detect LF/CRLF conflict from =
-addition of text=3Dauto' '
- 	echo "<<<<<<<" >expected &&
- 	echo first line | append_cr >>expected &&
- 	echo same line | append_cr >>expected &&
--	if test_have_prereq NATIVE_CRLF; then
--		echo =3D=3D=3D=3D=3D=3D=3D | append_cr >>expected &&
--		echo first line | append_cr >>expected &&
--		echo same line | append_cr >>expected
--	else
--		echo =3D=3D=3D=3D=3D=3D=3D >>expected &&
--		echo first line >>expected &&
--		echo same line >>expected
--	fi &&
-+	echo =3D=3D=3D=3D=3D=3D=3D >>expected &&
-+	echo first line >>expected &&
-+	echo same line >>expected &&
- 	echo ">>>>>>>" >>expected &&
- 	git config merge.renormalize false &&
- 	rm -f .gitattributes &&
+@@ -121,7 +128,7 @@ test_expect_success 'Detect CRLF/LF conflict after =
+setting text=3Dauto' '
+ 	git reset --hard a &&
+ 	test_must_fail git merge b &&
+ 	fuzz_conflict file >file.fuzzy &&
+-	test_cmp expected file.fuzzy
++	compare_files expected file.fuzzy
+ '
+=20
+ test_expect_success 'Detect LF/CRLF conflict from addition of text=3Da=
+uto' '
+@@ -143,7 +150,7 @@ test_expect_success 'Detect LF/CRLF conflict from a=
+ddition of text=3Dauto' '
+ 	git reset --hard b &&
+ 	test_must_fail git merge a &&
+ 	fuzz_conflict file >file.fuzzy &&
+-	test_cmp expected file.fuzzy
++	compare_files expected file.fuzzy
+ '
+=20
+ test_expect_failure 'checkout -m after setting text=3Dauto' '
+@@ -158,7 +165,7 @@ test_expect_failure 'checkout -m after setting text=
+=3Dauto' '
+ 	git reset --hard initial &&
+ 	git checkout a -- . &&
+ 	git checkout -m b &&
+-	test_cmp expected file
++	compare_files expected file
+ '
+=20
+ test_expect_failure 'checkout -m addition of text=3Dauto' '
+@@ -173,7 +180,7 @@ test_expect_failure 'checkout -m addition of text=3D=
+auto' '
+ 	git reset --hard initial &&
+ 	git checkout b -- . &&
+ 	git checkout -m a &&
+-	test_cmp expected file
++	compare_files expected file
+ '
+=20
+ test_expect_failure 'cherry-pick patch from after text=3Dauto was adde=
+d' '
+@@ -187,7 +194,7 @@ test_expect_failure 'cherry-pick patch from after t=
+ext=3Dauto was added' '
+ 	git reset --hard b &&
+ 	test_must_fail git cherry-pick a >err 2>&1 &&
+ 	grep "[Nn]othing added" err &&
+-	test_cmp expected file
++	compare_files expected file
+ '
+=20
+ test_expect_success 'Test delete/normalize conflict' '
 --=20
 2.0.0.rc1.6318.g0c2c796
