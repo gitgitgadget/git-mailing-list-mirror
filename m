@@ -1,112 +1,233 @@
 From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH 3/4] dir: introduce file_size() to check the size of file
-Date: Wed,  8 Jun 2016 02:24:53 +0530
-Message-ID: <20160607205454.22576-3-pranit.bauva@gmail.com>
+Subject: [PATCH 4/4] bisect--helper: `bisect_reset` shell function in C
+Date: Wed,  8 Jun 2016 02:24:54 +0530
+Message-ID: <20160607205454.22576-4-pranit.bauva@gmail.com>
 References: <20160607205454.22576-1-pranit.bauva@gmail.com>
 Cc: Pranit Bauva <pranit.bauva@gmail.com>, christian.couder@gmail.com,
 	chriscool@tuxfamily.org, larsxschneider@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 22:56:14 2016
+X-From: git-owner@vger.kernel.org Tue Jun 07 22:56:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAO2m-0004Hr-Md
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 22:56:13 +0200
+	id 1bAO2t-0004Lu-Fs
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 22:56:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161529AbcFGU4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 16:56:07 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:35382 "EHLO
-	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161206AbcFGU4G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 16:56:06 -0400
-Received: by mail-pf0-f193.google.com with SMTP id t190so1763503pfb.2
-        for <git@vger.kernel.org>; Tue, 07 Jun 2016 13:56:05 -0700 (PDT)
+	id S1422836AbcFGU4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 16:56:14 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:33224 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161206AbcFGU4N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 16:56:13 -0400
+Received: by mail-pa0-f66.google.com with SMTP id di3so14910707pab.0
+        for <git@vger.kernel.org>; Tue, 07 Jun 2016 13:56:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=G8n8Jp9xv8NBKOir2t1Yix595T+wCDSKDPQ4utJx24s=;
-        b=YGvhq2lAGtj3gpjB5pEvWxDvX0Ig3abwI57md7E8GOqR9YYyC5aTLemBTp1ZhzihXQ
-         ZWU2tUo6SK72q0soxbqPFjsYjlU4BytWJYW++Lxp4yEETvcVKwh7Au+R9sAHRwpDqLjJ
-         dCp0AKzwIOABWCS+radn/l+1QTs05RfIGPLpxacNM8MQIW45Qn6jYbRLL4H8yWwxZyTY
-         r5Qrp1inM/acHrKOK5cRla07LKZqSatQlqzNHbDCJrwmLSPSlE1/13fGns2Zgor8P9vK
-         CPAi6zMcQTmZEuZ+eGM3dlRschDZWxPJXGeyqnLk2R2mkybesMLyKn5vgU7fS/h9f5nb
-         UsAg==
+        bh=iIp72IXs25ZRCeYBXXvpIEZng2aqL5cYzvWXCif+wUk=;
+        b=suFxuBFWvsQ7csGqel0cC6LnSRFbVmkabQFlivXs5rqG5jnaCFXM4f1d6x0SJtFp1W
+         MY6EK3gT3KVQp2WcpCz9IMUf/AqDEZVoYDHv+QycAwx+Pb6Vz7XcT+BjUpTX6+/GLX+r
+         R2EXL85yG5NbtqcloxQTOu+6ZsQcl9XmJqY/tUT82XgtY/SSyiW52EEecfLBZVnCqHKV
+         UGEQNftI+24w5x8vjyzhLRToAGDzDtmyn947sQFz9C8YxDSZI9Xz5oQCxkdC9zSRuSxm
+         5PTEWkTWwSs/UO6EaoxEt/SouGKHCWyJ0ishD7koNWNSaqcFQujIjfY2xzOhcQt8noYk
+         C9rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=G8n8Jp9xv8NBKOir2t1Yix595T+wCDSKDPQ4utJx24s=;
-        b=N771mfDY4yFzG4dozLIB8jiH2zE0kZlIaqH8U0bh2qJWciyHx0uCW6nhspGZp4WVEJ
-         3sUtTd7EH9Uo131LGciX1Z+260Gzi6GU8p1GmacMhQqF/nfyMBgtR+voy0acHu2RwnIY
-         CZSEc58CWACPKve3kJqR3iBiq8IVOqGfwJolovNfHAb+Z4YglisqCj9pi9UQWfee3LnE
-         8groub5jCwAPHg+aygKU3hvf7BWdbmlQYPtpdCll7FBr+qY8O19gR+JdG+FLVev3+CBj
-         aSa6vy1UHWR6Z6XCugaQ/GRxRxoTC7v265ATUuOoUNpCnncC9A+xPUP7ReePaX0hmFf8
-         FY2A==
-X-Gm-Message-State: ALyK8tIzRUEL4CnXEqvsB8ARtdjrhQZLurkz6GcD4/u67zf6NBLbrthZx4LloycUEk57Vw==
-X-Received: by 10.98.96.67 with SMTP id u64mr1465890pfb.152.1465332965071;
-        Tue, 07 Jun 2016 13:56:05 -0700 (PDT)
+        bh=iIp72IXs25ZRCeYBXXvpIEZng2aqL5cYzvWXCif+wUk=;
+        b=ch8uciw3HjHHSpmRoBA3CFhA8cN6uvSJ01jypknwWWIwBMfXG2/XdxQeFwXqPw5WQZ
+         jWIyv3M/x0L4o0TFPFEECNZ8sSgRrr2NnY3DSc183WsBNGjpfaqisSZ5tJACZsBFF/3o
+         /+Vkp/ff4pOXh0hbJe01IR/lJBiGnvk4ojFgdb0Ma9gM2/J8WCiFwf5c0k73jAv1h6gy
+         Gpp49uuG7R0HMnleEZ9spDtUFvVYct8iOoPFQgSFTH/OVpIJJXbHv1q7Vrbrpr/5ITeQ
+         bf4JMmRoRfK56uFuNyrgbfFKSLNbHM2MCm4df8hbQwR7hIipHpRH4nIlDAGkCipUbND8
+         beZg==
+X-Gm-Message-State: ALyK8tIHagXiSL2fik7hJeOklXZ/O4FfQpw5IvuJNNgoYr9FbPrzCNYlyw+Qt7EM1TKEqg==
+X-Received: by 10.66.84.74 with SMTP id w10mr1428937pay.140.1465332972066;
+        Tue, 07 Jun 2016 13:56:12 -0700 (PDT)
 Received: from localhost.localdomain ([27.106.4.232])
-        by smtp.gmail.com with ESMTPSA id hw10sm35183194pac.15.2016.06.07.13.55.58
+        by smtp.gmail.com with ESMTPSA id hw10sm35183194pac.15.2016.06.07.13.56.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 07 Jun 2016 13:56:04 -0700 (PDT)
+        Tue, 07 Jun 2016 13:56:11 -0700 (PDT)
 X-Mailer: git-send-email 2.8.3
 In-Reply-To: <20160607205454.22576-1-pranit.bauva@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296720>
 
-At times we require to see if the file is empty and get the size of the
-file. By using stat we can get the file size without actually having to
-open the file to check for its contents.
+Reimplement `bisect_reset` shell function in C and add a `--bisect-reset`
+subcommand to `git bisect--helper` to call it from git-bisect.sh .
+
+Using `bisect_reset` subcommand is a temporary measure to port shell
+functions to C so as to use the existing test suite. As more functions
+are ported, this subcommand would be retired and will be called by some
+other method.
+
+Note: --bisect-clean-state subcommand has not been retired as there are
+still a function namely `bisect_start()` which still uses this
+subcommand.
 
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 ---
- dir.c | 8 ++++++++
- dir.h | 7 +++++++
- 2 files changed, 15 insertions(+)
+ builtin/bisect--helper.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++-
+ git-bisect.sh            | 28 ++------------------------
+ 2 files changed, 52 insertions(+), 27 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index 6172b34..eaee718 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2036,6 +2036,14 @@ int file_exists(const char *f)
- 	return lstat(f, &sb) == 0;
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index ad39181..4153e8a 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -4,6 +4,8 @@
+ #include "bisect.h"
+ #include "refs.h"
+ #include "dir.h"
++#include "argv-array.h"
++#include "run-command.h"
+ 
+ static GIT_PATH_FUNC(git_path_bisect_write_terms, "BISECT_TERMS")
+ static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
+@@ -13,11 +15,13 @@ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
+ static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
+ static GIT_PATH_FUNC(git_path_head_name, "head-name")
+ static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
++static GIT_PATH_FUNC(git_path_bisect_head, "BISECT_HEAD")
+ 
+ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --next-all [--no-checkout]"),
+ 	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
+ 	N_("git bisect--helper --bisect-clean-state"),
++	N_("git bisect--helper --bisect-reset [<commit>]"),
+ 	NULL
+ };
+ 
+@@ -118,12 +122,51 @@ int bisect_clean_state(void)
+ 	return result;
  }
  
-+ssize_t file_size(const char *filename)
++int bisect_reset(const char *commit)
 +{
-+	struct stat st;
-+	if (stat(filename, &st) < 0)
++	struct strbuf branch = STRBUF_INIT;
++	int status = 0;
++
++	if (file_size(git_path_bisect_start()) < 1) {
++		printf("We are not bisecting.\n");
++		return 0;
++	}
++
++	if (!commit) {
++		strbuf_read_file(&branch, git_path_bisect_start(), 0);
++		strbuf_rtrim(&branch);
++	} else {
++		struct object_id oid;
++		if (get_oid(commit, &oid))
++			return error(_("'%s' is not a valid commit"), commit);
++		strbuf_addf(&branch, "%s", commit);
++	}
++
++	if (!file_exists(git_path_bisect_head())) {
++		struct argv_array argv = ARGV_ARRAY_INIT;
++		argv_array_pushl(&argv, "checkout", branch.buf, "--", NULL);
++		status = run_command_v_opt(argv.argv, RUN_GIT_CMD);
++		argv_array_clear(&argv);
++	}
++
++	if (status) {
++		error(_("Could not check out original HEAD '%s'. "
++				"Try 'git bisect reset <commit>'."), branch.buf);
++		strbuf_release(&branch);
 +		return -1;
-+	return xsize_t(st.st_size);
++	}
++
++	strbuf_release(&branch);
++	return bisect_clean_state();
 +}
 +
- static int cmp_icase(char a, char b)
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  {
- 	if (a == b)
-diff --git a/dir.h b/dir.h
-index bfde698..aa9d276 100644
---- a/dir.h
-+++ b/dir.h
-@@ -248,6 +248,13 @@ extern void clear_exclude_list(struct exclude_list *el);
- extern void clear_directory(struct dir_struct *dir);
- extern int file_exists(const char *);
+ 	enum {
+ 		NEXT_ALL = 1,
+ 		WRITE_TERMS,
+-		BISECT_CLEAN_STATE
++		BISECT_CLEAN_STATE,
++		BISECT_RESET
+ 	} cmdmode = 0;
+ 	int no_checkout = 0;
+ 	struct option options[] = {
+@@ -133,6 +176,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
+ 		OPT_CMDMODE(0, "bisect-clean-state", &cmdmode,
+ 			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
++		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
++			 N_("reset the bisection state"), BISECT_RESET),
+ 		OPT_BOOL(0, "no-checkout", &no_checkout,
+ 			 N_("update BISECT_HEAD instead of checking out the current commit")),
+ 		OPT_END()
+@@ -155,6 +200,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		if (argc != 0)
+ 			die(_("--bisect-clean-state requires no arguments"));
+ 		return bisect_clean_state();
++	case BISECT_RESET:
++		if (argc > 1)
++			die(_("--bisect-reset requires either zero or one arguments"));
++		return bisect_reset(argc ? argv[0] : NULL);
+ 	default:
+ 		die("BUG: unknown subcommand '%d'", cmdmode);
+ 	}
+diff --git a/git-bisect.sh b/git-bisect.sh
+index bbc57d2..18580b7 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -409,35 +409,11 @@ bisect_visualize() {
+ 	eval '"$@"' --bisect -- $(cat "$GIT_DIR/BISECT_NAMES")
+ }
  
-+/*
-+ * Return the size of the file `filename`. It returns -1 if error
-+ * occurred, 0 if file is empty and a positive number denoting the size
-+ * of the file.
-+ */
-+extern ssize_t file_size(const char *);
-+
- extern int is_inside_dir(const char *dir);
- extern int dir_inside_of(const char *subdir, const char *dir);
- 
+-bisect_reset() {
+-	test -s "$GIT_DIR/BISECT_START" || {
+-		gettextln "We are not bisecting."
+-		return
+-	}
+-	case "$#" in
+-	0) branch=$(cat "$GIT_DIR/BISECT_START") ;;
+-	1) git rev-parse --quiet --verify "$1^{commit}" >/dev/null || {
+-			invalid="$1"
+-			die "$(eval_gettext "'\$invalid' is not a valid commit")"
+-		}
+-		branch="$1" ;;
+-	*)
+-		usage ;;
+-	esac
+-
+-	if ! test -f "$GIT_DIR/BISECT_HEAD" && ! git checkout "$branch" --
+-	then
+-		die "$(eval_gettext "Could not check out original HEAD '\$branch'.
+-Try 'git bisect reset <commit>'.")"
+-	fi
+-	git bisect--helper --bisect-clean-state || exit
+-}
+-
+ bisect_replay () {
+ 	file="$1"
+ 	test "$#" -eq 1 || die "$(gettext "No logfile given")"
+ 	test -r "$file" || die "$(eval_gettext "cannot read \$file for replaying")"
+-	bisect_reset
++	git bisect--helper --bisect-reset || exit
+ 	while read git bisect command rev
+ 	do
+ 		test "$git $bisect" = "git bisect" || test "$git" = "git-bisect" || continue
+@@ -627,7 +603,7 @@ case "$#" in
+ 	visualize|view)
+ 		bisect_visualize "$@" ;;
+ 	reset)
+-		bisect_reset "$@" ;;
++		git bisect--helper --bisect-reset "$@" ;;
+ 	replay)
+ 		bisect_replay "$@" ;;
+ 	log)
 -- 
 2.8.3
