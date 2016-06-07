@@ -1,7 +1,7 @@
 From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH v4 26/38] i18n: notes: mark options for translation
-Date: Tue,  7 Jun 2016 11:52:25 +0000
-Message-ID: <1465300357-7557-27-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v4 28/38] i18n: merge: mark messages for translation
+Date: Tue,  7 Jun 2016 11:52:27 +0000
+Message-ID: <1465300357-7557-29-git-send-email-vascomalmeida@sapo.pt>
 References: <1465300357-7557-1-git-send-email-vascomalmeida@sapo.pt>
 Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
 	Jiang Xin <worldhello.net@gmail.com>,
@@ -9,27 +9,27 @@ Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
 	<avarab@gmail.com>, Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 13:55:36 2016
+X-From: git-owner@vger.kernel.org Tue Jun 07 13:55:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAFbG-000827-3s
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 13:55:14 +0200
+	id 1bAFbP-0008D5-N7
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 13:55:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161155AbcFGLzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 07:55:08 -0400
-Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:58281 "EHLO sapo.pt"
+	id S1161163AbcFGLzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 07:55:16 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:33232 "EHLO sapo.pt"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754975AbcFGLzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 07:55:04 -0400
-Received: (qmail 1947 invoked from network); 7 Jun 2016 11:55:03 -0000
-Received: (qmail 22399 invoked from network); 7 Jun 2016 11:55:03 -0000
+	id S1161146AbcFGLzO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 07:55:14 -0400
+Received: (qmail 28605 invoked from network); 7 Jun 2016 11:55:12 -0000
+Received: (qmail 24002 invoked from network); 7 Jun 2016 11:55:12 -0000
 Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 7 Jun 2016 11:55:01 -0000
+          for <git@vger.kernel.org>; 7 Jun 2016 11:55:06 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -39,29 +39,63 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296656>
 
-Mark options description of git prune for translation.
+Mark messages shown to the user for translation.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/notes.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/merge.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index d11e6eb..0572051 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -934,8 +934,8 @@ static int prune(int argc, const char **argv, const char *prefix)
- 	struct notes_tree *t;
- 	int show_only = 0, verbose = 0;
- 	struct option options[] = {
--		OPT__DRY_RUN(&show_only, "do not remove, show only"),
--		OPT__VERBOSE(&verbose, "report pruned notes"),
-+		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
-+		OPT__VERBOSE(&verbose, N_("report pruned notes")),
- 		OPT_END()
- 	};
+diff --git a/builtin/merge.c b/builtin/merge.c
+index b555a1b..961def5 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1014,7 +1014,7 @@ static int default_edit_option(void)
+ 	if (e) {
+ 		int v = git_config_maybe_bool(name, e);
+ 		if (v < 0)
+-			die("Bad value '%s' in environment '%s'", e, name);
++			die(_("Bad value '%s' in environment '%s'"), e, name);
+ 		return v;
+ 	}
  
+@@ -1115,7 +1115,7 @@ static void handle_fetch_head(struct commit_list **remotes, struct strbuf *merge
+ 		if (!commit) {
+ 			if (ptr)
+ 				*ptr = '\0';
+-			die("not something we can merge in %s: %s",
++			die(_("not something we can merge in %s: %s"),
+ 			    filename, merge_names->buf + pos);
+ 		}
+ 		remotes = &commit_list_insert(commit, remotes)->next;
+@@ -1149,7 +1149,7 @@ static struct commit_list *collect_parents(struct commit *head_commit,
+ 			struct commit *commit = get_merge_parent(argv[i]);
+ 			if (!commit)
+ 				help_unknown_ref(argv[i], "merge",
+-						 "not something we can merge");
++						 _("not something we can merge"));
+ 			remotes = &commit_list_insert(commit, remotes)->next;
+ 		}
+ 		remoteheads = reduce_parents(head_commit, head_subsumed, remoteheads);
+@@ -1421,7 +1421,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		 * If head can reach all the merge then we are up to date.
+ 		 * but first the most common case of merging one remote.
+ 		 */
+-		finish_up_to_date("Already up-to-date.");
++		finish_up_to_date(_("Already up-to-date."));
+ 		goto done;
+ 	} else if (fast_forward != FF_NO && !remoteheads->next &&
+ 			!common->next &&
+@@ -1506,7 +1506,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			}
+ 		}
+ 		if (up_to_date) {
+-			finish_up_to_date("Already up-to-date. Yeeah!");
++			finish_up_to_date(_("Already up-to-date. Yeeah!"));
+ 			goto done;
+ 		}
+ 	}
 -- 
 2.7.3
