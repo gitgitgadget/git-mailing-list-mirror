@@ -1,90 +1,154 @@
 From: tboegi@web.de
-Subject: [PATCH v2 0/3] unified auto CRLF handling, V2
-Date: Tue,  7 Jun 2016 17:20:46 +0200
-Message-ID: <1465312846-4791-1-git-send-email-tboegi@web.de>
+Subject: [PATCH v2 2/3] read-cache: factor out get_sha1_from_index() helper
+Date: Tue,  7 Jun 2016 17:20:50 +0200
+Message-ID: <1465312850-4869-1-git-send-email-tboegi@web.de>
 References: <xmqq7fev55qk.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 17:14:28 2016
+X-From: git-owner@vger.kernel.org Tue Jun 07 17:14:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAIi1-0004Gn-DU
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 17:14:25 +0200
+	id 1bAIiT-0004ax-Eq
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 17:14:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161464AbcFGPOQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jun 2016 11:14:16 -0400
-Received: from mout.web.de ([212.227.17.12]:58248 "EHLO mout.web.de"
+	id S1161600AbcFGPOa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jun 2016 11:14:30 -0400
+Received: from mout.web.de ([212.227.17.11]:64543 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932411AbcFGPON (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 11:14:13 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0MEVYz-1bHATY3kN7-00FhFL; Tue, 07 Jun 2016 17:14:10
+	id S1161555AbcFGPOV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 11:14:21 -0400
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0MXpZD-1avdiM1CLv-00WjMl; Tue, 07 Jun 2016 17:14:13
  +0200
 X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
 In-Reply-To: <xmqq7fev55qk.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:oo/KNZK9iCZXuvHHZVwFfB42rf8vt1muJqxoZ4UrNikYCqZvnjA
- wxfmH45s9fazvP7NgrprKFCtqTJ5VPXZ2P4pCeNnScxMfoXTE4Z7lDz0JEUiNWYdZOFbx8o
- odZ7HTk2dW01Zr4dmK6NbZdn/qQzLstqmChbHu/phiJnB+20usFoVNigTsKZVPsAuTKdXj+
- MZlBst6i0T1jNrrm1TMbQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1BDdy8luh24=:6MroBAYCd2xSnK1Rb0iynA
- 7LDPuVnBXELO73SsDCSTEMo5rMRa22odE3ig3jh9SNmQa3f+6EUga1j1bBT5Sf4Y8qVzfhGb7
- WKtRqz41zwVNlf31jibiuR+zx6NNXb98pONSut57cHWvlIxK8g5WVSUUFKyAkoaqQPloE7iw4
- urPmbX5RGD9mbQefMVx8qbK+Tup5hkrRqDvG+yvdDjVJ1U4Is5HvO2Fn66nMimacua8zfxr/o
- i2Acu+l6uCN9zC9KL7aBwWeXPUmaFuJeCVbeBf5Weq6jaKlyjiR4kex+mpwL8HYs1UVLmic09
- aF9IYrlHPV2rbXFzewcEz4540Py/2qnL0IJ1rBXBFdwiuKd9oxbwFbNBq0aWXOJsjYKT9to31
- lymhV0ei92fTuODxByUzT4zoz/muSJZHGPL9Mgo5sRURRk7r4eP8PX9UihaxrTs5ow7gbgtr0
- HWYdN3sS0F2FmOf+p3SLuIglk5fhXODxi9+OZasCZd8zqCDnnpP5OUD9/6/RnwOojG+L6ncd7
- UQ1cIJiSNENQ4zZ8MOyDj35BDMC/3xeZ5mDdxYK8g0lgrv+LPxLKmxSBi4451D8+BiiKpsegj
- k/IB3SQ3OZABNeU6zuvemyNGln97e3/YvdQmYOD60mc3m9nj1D2e27UUmTqo0zV51n/hVca31
- U5LZUshj3oqo5Xz/rUtHAw109/Jy6scuHN1WlE5mcy9tm3rdLNZ0SydLiCEDXNHIRiUxaOsEz
- XvqVmCHORNQD0kba2nvgwsyAuaS4shRFsGrqTnxkzOEjgaqnOAHy5I1jAU3X3czbnsBy9T+i 
+X-Provags-ID: V03:K0:4lofT6+dH//6ccGXRuM1buW6SRWWFKtvjGG8fjI2L1gmVgMSc3V
+ DkEvJpJzm41PkcfElyO8W6bl46hbRWHxtCrbIay9TrisMMoUtSO0PFlXWGCyDwBW7uoXKyY
+ jx74/VJLKEePrGe2BH5oP5db86JUIZl/mTdRFsM+mVAzOMnBJDocEUM/Az4Tqb6jfkCZCLC
+ Vi5sskiIBkdNZAsRVzCdw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gn/2gx463fc=:ZpzZBxP/KCJN49qfhrh/aO
+ tpKlUG4oq5SSijPO0YPvb6vH2bUD0hqi3yKqC6OxYguklxu4ewHGc1zMB/CnPFRiOaCgSpLN3
+ qhPTHrWHNqGk/CXIcNXpecIYwnQMQolkY+Ez4NZ+gXkS+ZR/lKarRzcyFoSKjQeJF2xQjp0Tb
+ yFLQhrZRf+aLpWbQVCsf9SzR0q+uacqJc14k/90dfdI9vsTr9oIcOtfnQio/vDB9ZHkja7zC9
+ XB2BOXGWgFvVhW17H9lHh2y03l3Pb0NGmpYWzfjVReEyzp1Gu/oR96+0coPxGE/madNPvJvli
+ Lt/XtEDGYkp8YkzWBBGHiMxrVdO+B11t9xinO3t9kilsqY2CMpgkxUbJC54BcG+LOEOatOQE2
+ ZEsle3SyZkYdnicPb92Dr+MtcvI8GlnkU21PcRK8osv5d4Yuxk1WIM7ODWXG81WzuxpQkEYh/
+ 9NbnoGaLHXBNkZ1TLuM+XLfhnPUEXc29iE8AVzmVnenFeiDwHL2fQnFIEPmRkwFhi1WUl65a9
+ HJGmi2UosXZjDmhl/13MjxtthVVuS5mKzrWHeVCS4tafuWJhu8tgAC8UuosNzrfxktF/yEV9H
+ xZwKZ9zmvGfwlgpOzglQRPwZI/CHq1sO+dWQFAMmW0MWxva4crV1QjSm9IpYQ0ibS8ibi4Yhp
+ rRJOtsYeP6xfSqjFir2knMT/AWK/6IUOwMe3MUmsUQyaK8jB2VhQ7Bv/drV4dKFF601XhKfw4
+ YbIVIzUkynjKz7UebiqAXY390JCUaLQyE0ZRfmWZAakhEbIMeuCmLGwCMjHtYAk9J4FElIHc 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296690>
 
 =46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-unified auto CRLF handling, V2
-  1/3 is 7/10 of the old 10/10 series
-  2/3 and=20
-  3/3 is a replacement for tb/convert-peek-in-index:
-      Better commit message, added test case
+=46actor out the retrieval of the sha1 for a given path in
+read_blob_data_from_index() into the function get_sha1_from_index().
 
-All in all we are getting closer.
-Most of the patches had been send & reviewed earlier,
-but a critical review won't hurt.
+This will be used in the next commit, when convert.c can do the
+analyze for "text=3Dauto" without slurping the whole blob into memory
+at once.
 
-Torsten B=C3=B6gershausen (3):
-  convert: unify the "auto" handling of CRLF
-  read-cache: factor out get_sha1_from_index() helper
-  Correct ce_compare_data() in a middle of a merge
+Add a wrapper definition get_sha1_from_cache().
 
- Documentation/config.txt        | 12 +++----
- Documentation/gitattributes.txt | 15 +++++----
- builtin/apply.c                 |  3 +-
- builtin/blame.c                 |  2 +-
- cache.h                         |  4 +++
- combine-diff.c                  |  3 +-
- convert.c                       | 65 +++++++++++++++++++++++----------=
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
- convert.h                       | 18 +++++++---
- diff.c                          |  3 +-
- dir.c                           |  2 +-
- read-cache.c                    | 33 +++++++++++-------
- sha1_file.c                     | 12 +++++--
- t/t0025-crlf-auto.sh            |  4 +--
- t/t0027-auto-crlf.sh            | 32 +++++++++---------
- t/t6038-merge-text-auto.sh      | 74 ++++++++++++++++++++++++---------=
---------
- 15 files changed, 172 insertions(+), 110 deletions(-)
+ cache.h      |  3 +++
+ read-cache.c | 29 ++++++++++++++++++-----------
+ 2 files changed, 21 insertions(+), 11 deletions(-)
 
+diff --git a/cache.h b/cache.h
+index 6049f86..322ee40 100644
+--- a/cache.h
++++ b/cache.h
+@@ -379,6 +379,7 @@ extern void free_name_hash(struct index_state *ista=
+te);
+ #define unmerge_cache_entry_at(at) unmerge_index_entry_at(&the_index, =
+at)
+ #define unmerge_cache(pathspec) unmerge_index(&the_index, pathspec)
+ #define read_blob_data_from_cache(path, sz) read_blob_data_from_index(=
+&the_index, (path), (sz))
++#define get_sha1_from_cache(path)  get_sha1_from_index (&the_index, (p=
+ath))
+ #endif
+=20
+ enum object_type {
+@@ -1050,6 +1051,8 @@ static inline void *read_sha1_file(const unsigned=
+ char *sha1, enum object_type *
+ 	return read_sha1_file_extended(sha1, type, size, LOOKUP_REPLACE_OBJEC=
+T);
+ }
+=20
++const unsigned char *get_sha1_from_index(struct index_state *istate, c=
+onst char *path);
++
+ /*
+  * This internal function is only declared here for the benefit of
+  * lookup_replace_object().  Please do not call it directly.
+diff --git a/read-cache.c b/read-cache.c
+index d9fb78b..a3ef967 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2263,13 +2263,27 @@ int index_name_is_other(const struct index_stat=
+e *istate, const char *name,
+=20
+ void *read_blob_data_from_index(struct index_state *istate, const char=
+ *path, unsigned long *size)
+ {
+-	int pos, len;
++	const unsigned char *sha1;
+ 	unsigned long sz;
+ 	enum object_type type;
+ 	void *data;
+=20
+-	len =3D strlen(path);
+-	pos =3D index_name_pos(istate, path, len);
++	sha1 =3D get_sha1_from_index(istate, path);
++	if (!sha1)
++		return NULL;
++	data =3D read_sha1_file(sha1, &type, &sz);
++	if (!data || type !=3D OBJ_BLOB) {
++		free(data);
++		return NULL;
++	}
++	if (size)
++		*size =3D sz;
++	return data;
++}
++
++const unsigned char *get_sha1_from_index(struct index_state *istate, c=
+onst char *path)
++{
++	int pos =3D index_name_pos(istate, path, strlen(path));
+ 	if (pos < 0) {
+ 		/*
+ 		 * We might be in the middle of a merge, in which
+@@ -2285,14 +2299,7 @@ void *read_blob_data_from_index(struct index_sta=
+te *istate, const char *path, un
+ 	}
+ 	if (pos < 0)
+ 		return NULL;
+-	data =3D read_sha1_file(istate->cache[pos]->sha1, &type, &sz);
+-	if (!data || type !=3D OBJ_BLOB) {
+-		free(data);
+-		return NULL;
+-	}
+-	if (size)
+-		*size =3D sz;
+-	return data;
++	return (istate->cache[pos]->sha1);
+ }
+=20
+ void stat_validity_clear(struct stat_validity *sv)
 --=20
 2.0.0.rc1.6318.g0c2c796
