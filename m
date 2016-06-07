@@ -1,88 +1,161 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] verify-tag: add --check-name flag
-Date: Tue, 7 Jun 2016 15:35:07 -0700
-Message-ID: <CAPc5daV9ZvHqFtdzr565vp6Mv7O66ySr-p5Vi8o6bd6=GyVELg@mail.gmail.com>
-References: <20160607195608.16643-1-santiago@nyu.edu> <xmqq7fe0pv5b.fsf@gitster.mtv.corp.google.com>
- <20160607211707.GA7981@sigill.intra.peff.net> <xmqq37oopt28.fsf@gitster.mtv.corp.google.com>
- <20160607215536.GA20768@sigill.intra.peff.net> <xmqqy46gods1.fsf@gitster.mtv.corp.google.com>
- <20160607220743.GA21043@sigill.intra.peff.net> <CAPc5daV=gqDLeFLB2csJDvNo4fpSKW_FjoB10TyroapQiHFq=A@mail.gmail.com>
- <20160607221325.GA21166@sigill.intra.peff.net> <xmqqk2i0od1f.fsf@gitster.mtv.corp.google.com>
- <20160607222908.GA25631@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] tree-diff: avoid alloca for large allocations
+Date: Tue, 7 Jun 2016 18:53:00 -0400
+Message-ID: <20160607225300.GA2285@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: santiago@nyu.edu, Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Colin Walters <walters@verbum.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 08 00:40:18 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Kirill Smelkov <kirr@mns.spb.ru>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 08 00:53:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAPbI-0003jB-7w
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 00:35:56 +0200
+	id 1bAPrz-0001Hg-Ja
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 00:53:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423393AbcFGWf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 18:35:29 -0400
-Received: from mail-yw0-f178.google.com ([209.85.161.178]:34566 "EHLO
-	mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161129AbcFGWf1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 18:35:27 -0400
-Received: by mail-yw0-f178.google.com with SMTP id c72so3310456ywb.1
-        for <git@vger.kernel.org>; Tue, 07 Jun 2016 15:35:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=Jc9DkDvuJhwKvXe4+5HDwcER7tYgw32kbAy7HjPiAJA=;
-        b=GQwtoMsN2SmDYINLMkuepl9Q2U6pCXbxjSJV0X232SWeOMdoz4pA0XaynWz9Kjgjey
-         njJycNxdjHCFKEZaYRhIvCGy5q7xjJPOH8A7xzrqzXeZGXllzz3Uzaiu2Qf6TciqaHNW
-         FCn4SqJ2cO9bXA/tB01qHwudbDcimS4fXmLGWzExp+tCwLKbgRyQnVna8+RmyD7I38dP
-         LbRQeju++J69wP5gmWg2/DVUBSPMakN+qQrpPuouIVx3DIsWmf8lMj1UT55KkXNGBeqF
-         cWCWha0ObA9jYo/c/DCYSXclay4/KKBKHd5YJH6cj4a9WATMwh4mmS3/EGT8fvD87toI
-         6zOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=Jc9DkDvuJhwKvXe4+5HDwcER7tYgw32kbAy7HjPiAJA=;
-        b=JoHqcdr11QaJ9AB2kv/sgmrWXff4je30/CH4YZv5Qe0mGj6j2Fe8m4XxG1gKw9yGoU
-         rNG6/kv8FNrn+wHdWRKR/q5q8kNMgnaOXdTwolcRZGUZxS9Fbx/Ov4vNjxCHO+8YQVbT
-         7wXI20Gyb+zhD0pOhFEMXhdPNpifl3tOiS3iDZjvsSlGU43BGF3vapkdBI+GTZXkLwAf
-         I1pc6pcIDQTV0pXjup61G7d+U2axWnoA/XaasidwtAXU6WTZSZ1P+YTmM5wiIf57jE14
-         VqAu0dCpErk19IRRIpqDNKDPTH6ncLq2tdcAldSG1gMzF9h4OIo0cev10r+JVaeAOYqK
-         OG2A==
-X-Gm-Message-State: ALyK8tI7DO7dq/YqVvgw4tdl/bd7fNaj+aNQmY6Q5LGP2HtC6vG7ZbHWTjLbVXGldynP/iH9d7/KGODECa5C+A==
-X-Received: by 10.129.146.206 with SMTP id j197mr1126664ywg.73.1465338926777;
- Tue, 07 Jun 2016 15:35:26 -0700 (PDT)
-Received: by 10.13.251.71 with HTTP; Tue, 7 Jun 2016 15:35:07 -0700 (PDT)
-In-Reply-To: <20160607222908.GA25631@sigill.intra.peff.net>
-X-Google-Sender-Auth: QF81v4Wicz89UFp3mnu5YHcARE8
+	id S1161376AbcFGWxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 18:53:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50925 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932249AbcFGWxE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 18:53:04 -0400
+Received: (qmail 12791 invoked by uid 102); 7 Jun 2016 22:53:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Jun 2016 18:53:02 -0400
+Received: (qmail 2951 invoked by uid 107); 7 Jun 2016 22:53:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Jun 2016 18:53:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jun 2016 18:53:00 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296747>
 
-On Tue, Jun 7, 2016 at 3:29 PM, Jeff King <peff@peff.net> wrote:
-> or even:
->
->   git tag --show-tag-name foo/v1.0
->
-> when refs/remotes/foo/v1.0 exists?
->
-> The rule right now is generally that "git tag" takes actual tag names.
+Commit 72441af (tree-diff: rework diff_tree() to generate
+diffs for multiparent cases as well, 2014-04-07) introduced
+the use of alloca so that the common cases of commits with 1
+or 2 parents would not be adversely affected by going
+through the multi-parent code.
 
-Ahh, I forgot about that. Yes, indeed the command does not work
-like other Git commands, which would just let generic revision parser
-to accept an object name from anywhere. Probably it was a mistake,
-because "git tag --verify $T" may find refs/tags/$T but that may not
-necessarily mean "git checkout $T^0" would give you that exact
-tree state, but it is too late to change now.
+However, our xalloca is not ideal when the number of parents
+grows very large:
 
-So yes, I agree with you that any validation-related thing needs to
-start from names relative to refs/tags/, not from object names, to be
-consistent.
+  1. If the requested size is too large for our stack,
+     alloca() has no way to tell us, and we simply segfault
+     while trying to access the memory.
 
-Which is a bit sad, but I do not offhand think of a way to avoid it.
+  2. It does not use our usual memory_limit_check() logic.
+
+I measured, and alloca is indeed buying us a very small
+speedup over xmalloc()/free(). So we'd want to keep
+something like it.
+
+This patch simply puts a conditional in place at each
+callsite: we use alloca for common known-small numbers of
+parents, and otherwise use the heap. We are technically
+still vulnerable to (1), but no more so than if we simply
+put a few dozen bytes on the stack, which we must do all the
+time anyway. And likewise, we technically miss a memory
+limit check if it is tiny, but such a limit is pointless.
+
+An alternative to this would be implement something like:
+
+  struct tree *tp, tp_fallback[2];
+  if (nparent <= ARRAY_SIZE(tp_fallback))
+          tp = tp_fallback;
+  else
+	  ALLOC_ARRAY(tp, nparent);
+  ...
+  if (tp != tp_fallback)
+	  free(tp);
+
+That would let us drop our xalloca() portability code
+entirely. But in my measurements, this seemed to perform
+slightly worse than the xalloca solution.
+
+Note in the example above, and in the patch below, I've used
+ALLOC_ARRAY() to replace the manual xmalloc(nr * sizeof(*x)).
+Besides being shorter, this has the bonus that one cannot
+accidentally overflow a size_t during that computation.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+And yes, I actually saw this in real life. The commit in question had a
+million parents, which is obviously silly. I never let it run to
+completion, as presumably there's some quadratic stuff in there. So we
+could also have a general max-parent limit. I'm just not sure what it
+would be; any limit we set would be arbitrary. Most of the rest of git
+is happy to chug along using whatever RAM and CPU you are comfortable to
+give it, and if you want to wait 5 minutes for your answer, go right
+ahead.
+
+ tree-diff.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
+
+diff --git a/tree-diff.c b/tree-diff.c
+index ff4e0d3..ebf40f4 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -14,6 +14,16 @@
+  */
+ #define S_IFXMIN_NEQ	S_DIFFTREE_IFXMIN_NEQ
+ 
++#define FAST_ARRAY_ALLOC(x, nr) do { \
++	if ((nr) <= 2) \
++		(x) = xalloca((nr) * sizeof(*(x))); \
++	else \
++		ALLOC_ARRAY((x), nr); \
++} while(0)
++#define FAST_ARRAY_FREE(x, nr) do { \
++	if ((nr) > 2) \
++		free((x)); \
++} while(0)
+ 
+ static struct combine_diff_path *ll_diff_tree_paths(
+ 	struct combine_diff_path *p, const unsigned char *sha1,
+@@ -265,7 +275,7 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *p,
+ 	if (recurse) {
+ 		const unsigned char **parents_sha1;
+ 
+-		parents_sha1 = xalloca(nparent * sizeof(parents_sha1[0]));
++		FAST_ARRAY_ALLOC(parents_sha1, nparent);
+ 		for (i = 0; i < nparent; ++i) {
+ 			/* same rule as in emitthis */
+ 			int tpi_valid = tp && !(tp[i].entry.mode & S_IFXMIN_NEQ);
+@@ -277,7 +287,7 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *p,
+ 		strbuf_add(base, path, pathlen);
+ 		strbuf_addch(base, '/');
+ 		p = ll_diff_tree_paths(p, sha1, parents_sha1, nparent, base, opt);
+-		xalloca_free(parents_sha1);
++		FAST_ARRAY_FREE(parents_sha1, nparent);
+ 	}
+ 
+ 	strbuf_setlen(base, old_baselen);
+@@ -402,8 +412,8 @@ static struct combine_diff_path *ll_diff_tree_paths(
+ 	void *ttree, **tptree;
+ 	int i;
+ 
+-	tp     = xalloca(nparent * sizeof(tp[0]));
+-	tptree = xalloca(nparent * sizeof(tptree[0]));
++	FAST_ARRAY_ALLOC(tp, nparent);
++	FAST_ARRAY_ALLOC(tptree, nparent);
+ 
+ 	/*
+ 	 * load parents first, as they are probably already cached.
+@@ -531,8 +541,8 @@ static struct combine_diff_path *ll_diff_tree_paths(
+ 	free(ttree);
+ 	for (i = nparent-1; i >= 0; i--)
+ 		free(tptree[i]);
+-	xalloca_free(tptree);
+-	xalloca_free(tp);
++	FAST_ARRAY_FREE(tptree, nparent);
++	FAST_ARRAY_FREE(tp, nparent);
+ 
+ 	return p;
+ }
+-- 
+2.9.0.rc1.159.g81173282e
