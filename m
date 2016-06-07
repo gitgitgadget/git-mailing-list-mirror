@@ -1,147 +1,161 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 4/4] bundle v3: the beginning
-Date: Tue, 7 Jun 2016 16:49:05 +0200
-Message-ID: <CAP8UFD0+0EYUNy6sQWjHAqfTU8yx9-GmOVV+JtqzWkbO1S1G2g@mail.gmail.com>
-References: <xmqqfuw84uhb.fsf@gitster.mtv.corp.google.com> <1456950761-19759-1-git-send-email-gitster@pobox.com>
- <1456950761-19759-5-git-send-email-gitster@pobox.com> <CAP8UFD1xqRMFE2Wzntu=XevCyj+acGLEO-cTq1fqn+NMe3x0vg@mail.gmail.com>
- <CACsJy8Dr_Z886Jb-O8gbAv_vzBLicNH6bPPpKwb9HWZTKQ9muw@mail.gmail.com>
- <CAP8UFD3jPQFk2deSk5JXC3PTz5yWcvXJ4=Qjam5Qw6P9SrLzFQ@mail.gmail.com> <CACsJy8AxPKuDUZzWdaWg8tfcWBhqJBADc=ia-Y8cM+zyJ1NFTQ@mail.gmail.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v2] builtin/commit.c: memoize git-path for COMMIT_EDITMSG
+Date: Tue, 7 Jun 2016 20:25:17 +0530
+Message-ID: <CAFZEwPOZSU315oCJSdawtacPmgZobCnkkguTnSy1_V7x_n09kw@mail.gmail.com>
+References: <1464027390-1512-1-git-send-email-pranit.bauva@gmail.com> <20160524191950.21889-1-pranit.bauva@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 07 16:49:14 2016
+Cc: Pranit Bauva <pranit.bauva@gmail.com>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 07 16:55:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAIJd-0004Ia-UT
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 16:49:14 +0200
+	id 1bAIQ2-000070-7C
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 16:55:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754203AbcFGOtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 10:49:09 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:37450 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751475AbcFGOtI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 10:49:08 -0400
-Received: by mail-wm0-f51.google.com with SMTP id k204so72749700wmk.0
-        for <git@vger.kernel.org>; Tue, 07 Jun 2016 07:49:07 -0700 (PDT)
+	id S932815AbcFGOz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 10:55:27 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:36269 "EHLO
+	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932144AbcFGOzX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 10:55:23 -0400
+Received: by mail-yw0-f195.google.com with SMTP id l126so23185151ywe.3
+        for <git@vger.kernel.org>; Tue, 07 Jun 2016 07:55:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=dWDxvA1mAesk7ijqVaK/WMPC9xzHbkJ2rl8ZGb4zH8o=;
-        b=HkOMMVLIUTpY4MIj9s0RCwXo2Y1zDnTKdwB4ykO70lASt+vdBpOAOCydeD1rmpxMWf
-         g/IRCs6eWB5+IxUhKRifTji+Iy7Ih2aX/5j7rcuDI4MD2GM2jNr7w9gozdtIefvidckf
-         THo+rxiVBSJ2OGWst4Qh/UkaqAyEREeLmCzEC/j6PMrI3ONEHzo7gwO5Xp02Hdyqi4fa
-         xRC4+Euf3zeV48np/ZyMAcXfsF5aej/CnE+0roOTRNwr5x0quhKlciS7CSzVqFMIoA5I
-         xhrCZUFPY0AmKSiz+sN/7Q7twMvLRPySNDC+xGV5LdQP+EA3Q9YhRA8W7IkTWxuHoJJx
-         Gm3w==
+        bh=JGBK3xI3eaN05svRK1AUCTfk0A4DAnrseLEl25mjxsY=;
+        b=UtfQUJWhn8hddUNkY4x+3TaTO16WrgMz84NrLKVcTe0bWqnF67loh1daWhuKtknhRm
+         eyf3XIuAmCzwOZfCNInldpnvHIIuwU/jkMmDp5MzHUUVP+Dqd3hQt5EfiCVCNy2VcI+k
+         8Np3nlrsovxgOo4vBDveT+eSNUkx1gM7Epotgcez50Z45Z6ihhpaiBo8mymzaCd5Txy+
+         +OlbPOwuP4XaMxfh9k3+qXFFnWMgyTEzekNeiOmnDBfa8TD/8kYTh7xDvFM0mD6F1vK+
+         e0WrSY9fvVucy5JJrP54nW4oZfcQK/CYPEGI34/IGfPlBLPDpnVE7XnBIGh9ZaT+wVTV
+         AsZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=dWDxvA1mAesk7ijqVaK/WMPC9xzHbkJ2rl8ZGb4zH8o=;
-        b=Seyz4Jo4HYhSeednJ4eqFLfSByROM7LpvEdtuTMg/ct5fPw11xMxHb/0dPJ1aOQcgH
-         jlCMWrxBAp5SS20FLmDIKQ0RMORRpyEa39qzg/YX97gYf1dGLle3fUwxviGYE6ZC4NoD
-         EV7ckw5s6dsissuoXX6zfmVNN1EwviOyKg4wirT4jD/F4hHA1HW041hMHd4U5w3X3XNK
-         kYqeapnIdCQYQ5mv6AwPlcH+LQUaFXCWoJLllmxJ3tpn1FEWv1ykYQOBW9lQ9oCDH/+f
-         s40/ZaZ/c8k9MOIWCIkxRItq+9GeWUcmsgsgREv5vDpd4v98x+27gH03K64j10oWB1cO
-         w1Yg==
-X-Gm-Message-State: ALyK8tIPL6fhOuEXvaxndrAeWN08s1AuAMUm89yPjWCRI5t+SYiDcCh9hQyZ7H1dGs6b8g1oE4ZHvEXoYFfs0w==
-X-Received: by 10.195.17.166 with SMTP id gf6mr20849481wjd.124.1465310946457;
- Tue, 07 Jun 2016 07:49:06 -0700 (PDT)
-Received: by 10.194.148.146 with HTTP; Tue, 7 Jun 2016 07:49:05 -0700 (PDT)
-In-Reply-To: <CACsJy8AxPKuDUZzWdaWg8tfcWBhqJBADc=ia-Y8cM+zyJ1NFTQ@mail.gmail.com>
+        bh=JGBK3xI3eaN05svRK1AUCTfk0A4DAnrseLEl25mjxsY=;
+        b=b+pAozxU/wUxx2KDLtQMblW2bBVaLlp7UQObzErnLCsEL9x5CV/tZL0n6lIi+rejY8
+         OXvENKn4aLXdNRYToPTG2TUGnGGQmlQgpPnclGsk9orzH10fVJVsBbA1cm+Y7B/ka5KI
+         l+85pMiLvRitUGwk40y/LQ7EiIKmLO5mZI+EDHYy6ayOdx1l05nhPxKrK3SvzR+3Up3Y
+         lbQ6BUipS5YPup+TNlaVKpzF4IDiYjDwLa3D2dXOQgzEGcvOkG5+0woyk05zWE9UzSCU
+         kg7bKPFElWqB0m1+01Ns/mL+r+v3pjmoievawOB9JloyPBTeWpIpRrpPEQD8o59tPKlR
+         qzkA==
+X-Gm-Message-State: ALyK8tJ4843BNszCSKBAixkSZCaYA3kczJrvyhuJLwrsMqSc1Cfjz3TeVUMO6Ezxi+GfE7x7ZcsGPNssfg2aAw==
+X-Received: by 10.37.57.143 with SMTP id g137mr14361121yba.131.1465311318031;
+ Tue, 07 Jun 2016 07:55:18 -0700 (PDT)
+Received: by 10.129.124.132 with HTTP; Tue, 7 Jun 2016 07:55:17 -0700 (PDT)
+In-Reply-To: <20160524191950.21889-1-pranit.bauva@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296688>
 
-On Wed, Jun 1, 2016 at 3:37 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Tue, May 31, 2016 at 8:18 PM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->>>> I wonder if this mechanism could also be used or extended to clone and
->>>> fetch an alternate object database.
->>>>
->>>> In [1], [2] and [3], and this was also discussed during the
->>>> Contributor Summit last month, Peff says that he started working on
->>>> alternate object database support a long time ago, and that the hard
->>>> part is a protocol extension to tell remotes that you can access some
->>>> objects in a different way.
->>>>
->>>> If a Git client would download a "$name.bndl" v3 bundle file that
->>>> would have a "data: $URL/alt-odb-$name.odb" extended header, the Git
->>>> client would just need to download "$URL/alt-odb-$name.odb" and use
->>>> the alternate object database support on this file.
->>>
->>> What does this file contain exactly? A list of SHA-1 that can be
->>> retrieved from this remote/alternate odb?
->>
->> It would depend on the external odb. Git could support different
->> external odb that have different trade-offs.
->>
->>> I wonder if we could just
->>> git-replace for this marking. The replaced content could contain the
->>> uri pointing to the alt odb.
->>
->> Yeah, interesting!
->> That's indeed another possibility that might not need the transfer of
->> any external odb.
->>
->> But in this case it might be cleaner to just have a separate ref hierarchy like:
->>
->> refs/external-odbs/my-ext-odb/<sha1>
->>
->> instead of using the replace one.
->>
->> Or maybe:
->>
->> refs/replace/external-odbs/my-ext-odb/<sha1>
->>
->> if we really want to use the replace hierarchy.
+On Wed, May 25, 2016 at 12:49 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> This is a follow up commit for f932729c (memoize common git-path
+> "constant" files, 10-Aug-2015).
 >
-> Yep. replace hierarchy crossed my mind. But then I thought about
-> performance degradation when there are more than one pack (we have to
-> search through them all for every SHA-1) and discarded it because we
-> would need to do the same linear search here. I guess we will most
-> likely have one or two name spaces so it probably won't matter.
-
-Yeah.
-
->>> We could optionally contact alt odb to
->>> retrieve real content, or just show the replaced/fake data when alt
->>> odb is out of reach.
->>
->> Yeah, I wonder if that really needs the replace mechanism.
+> The many function calls to git_path() are replaced by
+> git_path_commit_editmsg() and which thus eliminates the need to repeatedly
+> compute the location of "COMMIT_EDITMSG".
 >
-> Replace mechanism provides good hook point. But it really depends how
-> invasive this remote odb is. If a fake content is enough to avoid
-> breakages up high, git-replace is enough. If you really need to pass
-> remote odb info up so higher levels can do something more fancy, then
-> it's insufficient.
+> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> ---
+> Link for v1[1].
 >
->> By the way this makes me wonder if we could implement resumable clone
->> using some kind of replace ref.
->>
->> The client while cloning nearly as usual would download one or more
->> special replace refs that would points to objects with links to
->> download bundles using standard protocols.
->> Just after the clone, the client would read these objects and download
->> the bundles from these objects.
->> And then it would clone from these bundles.
+> Changes wrt v1:
 >
-> I thought we have settled on resumable clone, just waiting for an
-> implementation :) Doing it your way, you would need to download these
-> special objects too (in a pack?) and come back download some more
-> bundles. It would be more efficient to show the bundle uri early and
-> go download the bundle on the side while you go on to get the
-> addition/smaller pack that contains the rest.
+>  * Remove the call to git_path_commit_editmsg() which would directly assign
+>    the value to the string.
+>  * Remove the string commit_editmsg[] as it is redundant now.
+>  * Call git_path_commit_editmsg() everytime when it is needed.
+>
+> [1]: http://thread.gmane.org/gmane.comp.version-control.git/295345
+>
+>  builtin/commit.c | 15 ++++++++-------
+>  1 file changed, 8 insertions(+), 7 deletions(-)
+>
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 391126e..01b921f 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -92,8 +92,9 @@ N_("If you wish to skip this commit, use:\n"
+>  "Then \"git cherry-pick --continue\" will resume cherry-picking\n"
+>  "the remaining commits.\n");
+>
+> +static GIT_PATH_FUNC(git_path_commit_editmsg, "COMMIT_EDITMSG")
+> +
+>  static const char *use_message_buffer;
+> -static const char commit_editmsg[] = "COMMIT_EDITMSG";
+>  static struct lock_file index_lock; /* real index */
+>  static struct lock_file false_lock; /* used only for partial commits */
+>  static enum {
+> @@ -771,9 +772,9 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>                 hook_arg2 = "";
+>         }
+>
+> -       s->fp = fopen_for_writing(git_path(commit_editmsg));
+> +       s->fp = fopen_for_writing(git_path_commit_editmsg());
+>         if (s->fp == NULL)
+> -               die_errno(_("could not open '%s'"), git_path(commit_editmsg));
+> +               die_errno(_("could not open '%s'"), git_path_commit_editmsg());
+>
+>         /* Ignore status.displayCommentPrefix: we do need comments in COMMIT_EDITMSG. */
+>         old_display_comment_prefix = s->display_comment_prefix;
+> @@ -950,7 +951,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>         }
+>
+>         if (run_commit_hook(use_editor, index_file, "prepare-commit-msg",
+> -                           git_path(commit_editmsg), hook_arg1, hook_arg2, NULL))
+> +                           git_path_commit_editmsg(), hook_arg1, hook_arg2, NULL))
+>                 return 0;
+>
+>         if (use_editor) {
+> @@ -958,7 +959,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>                 const char *env[2] = { NULL };
+>                 env[0] =  index;
+>                 snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", index_file);
+> -               if (launch_editor(git_path(commit_editmsg), NULL, env)) {
+> +               if (launch_editor(git_path_commit_editmsg(), NULL, env)) {
+>                         fprintf(stderr,
+>                         _("Please supply the message using either -m or -F option.\n"));
+>                         exit(1);
+> @@ -966,7 +967,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>         }
+>
+>         if (!no_verify &&
+> -           run_commit_hook(use_editor, index_file, "commit-msg", git_path(commit_editmsg), NULL)) {
+> +           run_commit_hook(use_editor, index_file, "commit-msg", git_path_commit_editmsg(), NULL)) {
+>                 return 0;
+>         }
+>
+> @@ -1728,7 +1729,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>
+>         /* Finally, get the commit message */
+>         strbuf_reset(&sb);
+> -       if (strbuf_read_file(&sb, git_path(commit_editmsg), 0) < 0) {
+> +       if (strbuf_read_file(&sb, git_path_commit_editmsg(), 0) < 0) {
+>                 int saved_errno = errno;
+>                 rollback_index_files();
+>                 die(_("could not read commit message: %s"), strerror(saved_errno));
+> --
+> 2.8.3
+>
 
-Yeah, something like the bundle v3 mechanism is probably more efficient.
+Anyone any comments?
 
-Thanks,
-Christian.
+Regards,
+Pranit Bauva
