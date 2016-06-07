@@ -1,91 +1,127 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 00/13] Reference iterators
-Date: Tue, 7 Jun 2016 13:58:19 +0200
-Message-ID: <5756B6DB.4050301@alum.mit.edu>
-References: <cover.1464957077.git.mhagger@alum.mit.edu>
- <xmqqporyneik.fsf@gitster.mtv.corp.google.com>
- <5751FCBF.3070507@alum.mit.edu>
- <xmqq4m99265o.fsf@gitster.mtv.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 2/4] Resurrect "diff-lib.c: adjust position of i-t-a
+ entries in diff"
+Date: Tue, 7 Jun 2016 19:04:26 +0700
+Message-ID: <CACsJy8DO+KU59LbQ0ZtTax6DZKqYmZVT6MHLmNK73GkO9qHf_w@mail.gmail.com>
+References: <20160606111643.7122-1-pclouds@gmail.com> <20160606111643.7122-3-pclouds@gmail.com>
+ <xmqqtwh6uk0k.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: David Turner <dturner@twopensource.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Thomas Braun <thomas.braun@virtuell-zuhause.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 07 13:58:37 2016
+X-From: git-owner@vger.kernel.org Tue Jun 07 14:06:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAFeT-00029Z-7V
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 13:58:33 +0200
+	id 1bAFl2-0007bT-6j
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 14:05:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754780AbcFGL61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 07:58:27 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:63609 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754331AbcFGL6Z (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Jun 2016 07:58:25 -0400
-X-AuditID: 1207440c-c53ff70000000b85-a2-5756b6dfa145
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id FE.40.02949.FD6B6575; Tue,  7 Jun 2016 07:58:23 -0400 (EDT)
-Received: from [192.168.69.130] (p548D6137.dip0.t-ipconnect.de [84.141.97.55])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u57BwKss014964
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 7 Jun 2016 07:58:21 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.8.0
-In-Reply-To: <xmqq4m99265o.fsf@gitster.mtv.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsUixO6iqHt/W1i4waXZ2hbzN51gtOi60s1k
-	0dB7hdmie8pbRosfLT3MFjOvWlucedPI6MDusXPWXXaPZ717GD0uXlL22L90G5vH4gdeHgue
-	32f3+LxJLoA9itsmKbGkLDgzPU/fLoE7o3PxLdaChZwVbx98Z2pg3MLexcjBISFgIvH1rlgX
-	IyeHkMBWRolPP9m6GLmA7LNMEs8W/2MBSQgLGEpsvrKUCcQWEVCTmNh2iAWiaDejxMXzXYwg
-	DrPALCaJjq0XGUGq2AR0JRb1NIN18ApoS+xbtggsziKgInHn8Bt2EFtUIETi/LqtrBA1ghIn
-	Zz4B28YpYC1xbXM7WC+zgJ7Ejuu/WCFseYntb+cwT2Dkn4WkZRaSsllIyhYwMq9ilEvMKc3V
-	zU3MzClOTdYtTk7My0st0jXUy80s0UtNKd3ECAl4nh2M39bJHGIU4GBU4uEV+B4aLsSaWFZc
-	mXuIUZKDSUmU96F3WLgQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd6EtUA53pTEyqrUonyYlDQH
-	i5I4r+oSdT8hgfTEktTs1NSC1CKYrAwHh5IE79qtQI2CRanpqRVpmTklCGkmDk6Q4VxSIsWp
-	eSmpRYmlJRnxoJiMLwZGJUiKB2gvyzaQvcUFiblAUYjWU4yKUuK8jCBzBUASGaV5cGNhaewV
-	ozjQl8K8EiDtPMAUCNf9CmgwE9DgZdeCQQaXJCKkpBoYGR+dUT4U46QctnNi183VJ9s3BxWm
-	dv9VZtuneeRJUrov83OnSZe8Hy6Nd57ZJe5jerDMKb0sj+9Q178Yg0dXzLTbqhy/ 
+	id S932383AbcFGMFN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jun 2016 08:05:13 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:34551 "EHLO
+	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753956AbcFGME4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Jun 2016 08:04:56 -0400
+Received: by mail-it0-f66.google.com with SMTP id r205so7325288itd.1
+        for <git@vger.kernel.org>; Tue, 07 Jun 2016 05:04:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=zDMrBLvVisVYhhSVxquErnJ4/NBcDH002mkX1HLYrVw=;
+        b=bCT9CJpqUndBpVnTAJAqStHUoQvdrVNM77hl0Jt+pJ0v69Wxpub9NPV8FYa1FM9YIm
+         k8S1d7aJFYrxjkUoZbTwHnyKxzm5HMwcV1rEr9wjROfem43zUEBKjEynH5jP4DbW39xz
+         0tOgnJU2XLqUS0gT8jyvc50UZFfXkc51oZtX5MEnRiQl5tGikvCYVsvUofRiYIBFZoSK
+         OIl4DM3+cPpbxlxo9O2E0YcENu4oHp+rkjLByW7LOSphadLbjH6CKxbOPGpxe0QRKwwy
+         3wkEUgLNrbiBLLSv8A3W62/kjU28EOsHl82MBy6tj3m2Umk1Ib17HsZMMpJdFxHLLPIS
+         Akcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=zDMrBLvVisVYhhSVxquErnJ4/NBcDH002mkX1HLYrVw=;
+        b=Nz39Q9VSHTwcjCfzgUsT5L99W32kGH5Pa4Hv1Y6xoH9diAeAGytAn6gIPFlZIBNfcd
+         qXP5gMwz3cg2/BEiu4cnpmuea6HB+NepuK/ZPqMTqVMsa72e0K1ITtCTkrRc8UHGhZSD
+         c5YDugZv8pEhg863zlgHdY9hpSguLYW8qpnTWWnvUIRX469+1ZDFST9SDgGZZiRq6146
+         dQpvqkC0NdqQQNYBs0GivjQQ/PCHQ7wMgKhf/DnkV5gK+PIO+PIb+NUDY3Hxrq60iPGe
+         vzgneJSmhZLvOgUv1rnxMqZ7gSVMp7lbOzzgZ62WUcv2MvF/6Ip/BJpDQ8+xejjaz5bg
+         UmQw==
+X-Gm-Message-State: ALyK8tI+QJnLCsmSr7S13qwp0qLBqfx7dXHv1NpKazQdA6AGctzml0qIGrkk5uJkvvaHqNK1Zn1SUMN3lLb7xw==
+X-Received: by 10.107.8.220 with SMTP id h89mr13368965ioi.95.1465301095447;
+ Tue, 07 Jun 2016 05:04:55 -0700 (PDT)
+Received: by 10.64.173.167 with HTTP; Tue, 7 Jun 2016 05:04:26 -0700 (PDT)
+In-Reply-To: <xmqqtwh6uk0k.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296667>
 
-On 06/04/2016 01:40 AM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> On 06/03/2016 11:33 PM, Junio C Hamano wrote:
->>> [...]
->>> Ah, that reminds me.  What's the doneness of the dependent topic?
->> [...]
-> 
-> What I meant was the doneness of mh/split-under-lock actually.
+On Tue, Jun 7, 2016 at 3:42 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> +--shift-ita::
+>> +     By default entries added by "git add -N" appear as an existing
+>> +     empty file in "git diff" and a new file in "git diff --cached"=
+=2E
+>> +     This option makes the entry appear as a new file in "git diff"
+>> +     and non-existent in "git diff --cached".
+>
+> I do not think this should exist at the UI level,
 
-I don't know of any open issues or unaddressed feedback in
-split-under-lock. I've gone over the code many times myself and am
-pretty confident about it.
+I need it. I do "git diff --stat" and "git diff --cached --stat" a lot
+more often than "git status". Without this option, I'm stuck with the
+old behavior.
 
-I just reviewed the series again, and one thing that I wasn't so happy
-about was that it makes many changes to the ref transaction
-error-handling code, but that code is not very well tested (and the
-content of the error messages is not really tested at all). So I just
-submitted another patch series to add more tests in this area [1]. Those
-tests turned up a couple of cosmetic problems but nothing serious.
+> even though the
+> use of it in wt-status.c (below) makes a very good sense at least
+> as a temporary band-aid.
+>
+> At the philosophical level, I however think this "I-T-A does not
+> logically exist in the index (yet)" is a mistake, and "an option
+> controls if I-T-A does or does not exist depending on who calls it"
+> is even worse; it is a road to insanity.
 
-So as far as I know, this series is ready to go. But it is a big and
-rather intricate change to an important area of the code, so I hope it
-can get merged early in the next release cycle to get wider testing.
+i-t-a entries have dual personality (perhaps because it's implemented
+as an index entry). Although I think the "does not exist" aspect will
+win in most cases. The intention behind the revert is we have more
+time to examine case by case and gradually convert them. Maybe in the
+end one behavior wins and we no longer need another. A thought of
+keeping i-t-a entries in an index extension instead crossed my mind.
+It may simplify things a bit (e.g. there's no "ghost" entries any more
+and active_nr in 3/4 can remain "the number of _real_ entries"). The
+few parts that do need to know about i-t-a entries need explict
+modification (probably git-reset and git-diff). But I don't know yet
+if it would just lead to another nightmare.
 
-Michael
+> For example, because I-T-A does not logically exist in the index,
+> "git reset --hard" should not remove it but make it untracked again
+> (but I do not think it does). After "git add -N foo", because "foo"
+> does not exist in the index, "git clean" should remove it for the
+> definition of what's in the index to be logically consistent, but
+> the whole intent of "add -N" is that the user meant it is worth
+> checking into sometime in the future, which contradicts with its
+> removal upon "clean".
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/296626
+I think we should fix them. I started that and so far only 4d55200
+(grep: make it clear i-t-a entries are ignored - 2015-12-27) has made
+it to 'master'.
+
+> So, I dunno.
+
+I just remembered why the old behavior (abort to commit if i-t-a
+entries are present) bugged me: it does not work well with splitting
+changes in worktree into multiple commits (e.g. with "git add -p").
+Even though I want git remind me to commit an i-t-a entry in the end,
+it does not necessarily mean I have to do it in the next commit, which
+may cover a bunch of files except that i-t-a file. I don't see any way
+around that except ignoring i-t-a entries at commit time. If there's
+another way, I'm all ears.
+--=20
+Duy
