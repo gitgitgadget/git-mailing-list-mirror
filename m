@@ -1,7 +1,7 @@
 From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH v4 15/38] i18n: rebase-interactive: mark here-doc strings for translation
-Date: Tue,  7 Jun 2016 11:52:14 +0000
-Message-ID: <1465300357-7557-16-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v4 13/38] i18n: git-sh-setup.sh: mark strings for translation
+Date: Tue,  7 Jun 2016 11:52:12 +0000
+Message-ID: <1465300357-7557-14-git-send-email-vascomalmeida@sapo.pt>
 References: <1465300357-7557-1-git-send-email-vascomalmeida@sapo.pt>
 Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
 	Jiang Xin <worldhello.net@gmail.com>,
@@ -9,27 +9,27 @@ Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
 	<avarab@gmail.com>, Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 13:54:46 2016
+X-From: git-owner@vger.kernel.org Tue Jun 07 13:54:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAFab-0007Nz-9r
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 13:54:33 +0200
+	id 1bAFaa-0007Nz-Hi
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 13:54:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932268AbcFGLyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 07:54:31 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:54151 "EHLO sapo.pt"
+	id S1754959AbcFGLy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 07:54:26 -0400
+Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:54122 "EHLO sapo.pt"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754039AbcFGLy3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 07:54:29 -0400
-Received: (qmail 24116 invoked from network); 7 Jun 2016 11:54:28 -0000
-Received: (qmail 16113 invoked from network); 7 Jun 2016 11:54:28 -0000
+	id S1754927AbcFGLyY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 07:54:24 -0400
+Received: (qmail 24026 invoked from network); 7 Jun 2016 11:54:22 -0000
+Received: (qmail 15405 invoked from network); 7 Jun 2016 11:54:22 -0000
 Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 7 Jun 2016 11:54:25 -0000
+          for <git@vger.kernel.org>; 7 Jun 2016 11:54:17 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -39,218 +39,248 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296643>
 
-Use pipe to send gettext output to git stripspace instead of the
-original method of using shell here-document, because command
-substitution '$(...)' would not take place inside the here-documents.
-The exception is the case of the last here-document redirecting to cat,
-in which commands substitution works and, thus, is preserved in this
-commit.
+Positional arguments, such as $0, $1, etc, need to be stored on shell
+variables for use in translatable strings, according to gettext manual
+[1].
 
-t3404: adapt test to the strings newly marked for translation
-Test t3404-rebase-interactive.sh would fail under GETTEXT_POISON unless
-using test_i18ngrep.
+Add git-sh-setup.sh to LOCALIZED_SH variable in Makefile to enable
+extraction of string marked for translation by xgettext.
 
-Add eval_ngettext fallback functions to be called when running, for
-instance, under GETTEXT_POISON. Otherwise, tests would fail under
-GETTEXT_POISON, or other build that doesn't support the GNU gettext,
-because that function could not be found.
+Source git-sh-i18n in git-sh-setup.sh for gettext support.
+git-sh-setup.sh is a shell library to be sourced by other shell scripts.
+In order to avoid other scripts from sourcing git-sh-i18n twice, remove
+line that sources it from them.  Not sourcing git-sh-i18n in any script
+that uses gettext would lead to failure due to, for instance, gettextln
+not being found.
+
+[1] http://www.gnu.org/software/gettext/manual/html_node/Preparing-Shell-Scripts.html
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- git-rebase--interactive.sh    | 30 +++++++++++++++---------------
- git-sh-i18n.sh                | 18 ++++++++++++++++++
- t/t3404-rebase-interactive.sh | 14 +++++++-------
- 3 files changed, 40 insertions(+), 22 deletions(-)
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 2b8a845..a16ce3a 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -144,29 +144,28 @@ reschedule_last_action () {
- }
+I don't know if we want to copy the text from git-sh-i18n.sh into
+git-sh-setup.sh file or sourcing the former in the latter is enough.
+
+ Makefile             |  4 +++-
+ git-bisect.sh        |  1 -
+ git-merge-octopus.sh |  1 -
+ git-rebase.sh        |  1 -
+ git-sh-setup.sh      | 63 +++++++++++++++++++++++++++++++++++++++-------------
+ git-stash.sh         |  1 -
+ git-submodule.sh     |  1 -
+ 7 files changed, 50 insertions(+), 22 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index de5a030..6169389 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2063,7 +2063,9 @@ XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
+ 	--keyword=gettextln --keyword=eval_gettextln
+ XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --keyword=__ --language=Perl
+ LOCALIZED_C = $(C_OBJ:o=c) $(LIB_H) $(GENERATED_H)
+-LOCALIZED_SH = $(SCRIPT_SH) git-parse-remote.sh
++LOCALIZED_SH = $(SCRIPT_SH)
++LOCALIZED_SH += git-parse-remote.sh
++LOCALIZED_SH += git-sh-setup.sh
+ LOCALIZED_PERL = $(SCRIPT_PERL)
  
- append_todo_help () {
--	git stripspace --comment-lines >>"$todo" <<\EOF
--
-+	gettext "
- Commands:
-  p, pick = use commit
-  r, reword = use commit, but edit the commit message
-  e, edit = use commit, but stop for amending
-  s, squash = use commit, but meld into previous commit
-- f, fixup = like "squash", but discard this commit's log message
-+ f, fixup = like \"squash\", but discard this commit's log message
-  x, exec = run command (the rest of the line) using shell
-  d, drop = remove commit
+ ifdef XGETTEXT_INCLUDE_TESTS
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 737bf05..30d01bb 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -33,7 +33,6 @@ Please use "git help bisect" to get the full man page.'
  
- These lines can be re-ordered; they are executed from top to bottom.
-+" | git stripspace --comment-lines >>"$todo"
+ OPTIONS_SPEC=
+ . git-sh-setup
+-. git-sh-i18n
  
--EOF
- 	if test $(get_missing_commit_check_level) = error
+ _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
+ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+diff --git a/git-merge-octopus.sh b/git-merge-octopus.sh
+index d79fc84..308eafd 100755
+--- a/git-merge-octopus.sh
++++ b/git-merge-octopus.sh
+@@ -6,7 +6,6 @@
+ #
+ 
+ . git-sh-setup
+-. git-sh-i18n
+ 
+ LF='
+ '
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 9ba21ab..04f6e44 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -45,7 +45,6 @@ skip!              skip current patch and continue
+ edit-todo!         edit the todo list during an interactive rebase
+ "
+ . git-sh-setup
+-. git-sh-i18n
+ set_reflog_action rebase
+ require_work_tree_exists
+ cd_to_toplevel
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index c48139a..2eda134 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -2,6 +2,9 @@
+ # to set up some variables pointing at the normal git directories and
+ # a few helper shell functions.
+ 
++# Source git-sh-i18n for gettext support.
++. git-sh-i18n
++
+ # Having this variable in your environment would break scripts because
+ # you would cause "cd" to be taken to unexpected places.  If you
+ # like CDPATH, define it for your interactive shell sessions without
+@@ -83,16 +86,16 @@ if test -n "$OPTIONS_SPEC"; then
+ else
+ 	dashless=$(basename -- "$0" | sed -e 's/-/ /')
+ 	usage() {
+-		die "usage: $dashless $USAGE"
++		die "$(eval_gettext "usage: \$dashless \$USAGE")"
+ 	}
+ 
+ 	if [ -z "$LONG_USAGE" ]
  	then
--		git stripspace --comment-lines >>"$todo" <<\EOF
-+		gettext "
- Do not remove any line. Use 'drop' explicitly to remove a commit.
--EOF
-+" | git stripspace --comment-lines >>"$todo"
+-		LONG_USAGE="usage: $dashless $USAGE"
++		LONG_USAGE="$(eval_gettext "usage: \$dashless \$USAGE")"
  	else
--		git stripspace --comment-lines >>"$todo" <<\EOF
-+		gettext "
- If you remove a line here THAT COMMIT WILL BE LOST.
--EOF
-+" | git stripspace --comment-lines >>"$todo"
+-		LONG_USAGE="usage: $dashless $USAGE
++		LONG_USAGE="$(eval_gettext "usage: \$dashless \$USAGE
+ 
+-$LONG_USAGE"
++$LONG_USAGE")"
+ 	fi
+ 
+ 	case "$1" in
+@@ -182,7 +185,7 @@ is_bare_repository () {
+ cd_to_toplevel () {
+ 	cdup=$(git rev-parse --show-toplevel) &&
+ 	cd "$cdup" || {
+-		echo >&2 "Cannot chdir to $cdup, the toplevel of the working tree"
++		gettextln "Cannot chdir to \$cdup, the toplevel of the working tree" >&2
+ 		exit 1
+ 	}
+ }
+@@ -190,13 +193,16 @@ cd_to_toplevel () {
+ require_work_tree_exists () {
+ 	if test "z$(git rev-parse --is-bare-repository)" != zfalse
+ 	then
+-		die "fatal: $0 cannot be used without a working tree."
++		program_name=$0
++		die "$(gettext "fatal: \$program_name cannot be used without a working tree.")"
  	fi
  }
  
-@@ -1122,13 +1121,12 @@ edit-todo)
- 	mv -f "$todo".new "$todo"
- 	collapse_todo_ids
- 	append_todo_help
--	git stripspace --comment-lines >>"$todo" <<\EOF
--
-+	gettext "
- You are editing the todo file of an ongoing interactive rebase.
- To continue rebase after editing, run:
-     git rebase --continue
- 
--EOF
-+" | git stripspace --comment-lines >>"$todo"
- 
- 	git_sequence_editor "$todo" ||
- 		die "$(gettext "Could not execute editor")"
-@@ -1269,14 +1267,16 @@ todocount=${todocount##* }
- 
- cat >>"$todo" <<EOF
- 
--$comment_char Rebase $shortrevisions onto $shortonto ($todocount command(s))
-+$comment_char $(eval_ngettext \
-+	"Rebase \$shortrevisions onto \$shortonto (\$todocount command)" \
-+	"Rebase \$shortrevisions onto \$shortonto (\$todocount commands)" \
-+	"$todocount")
- EOF
- append_todo_help
--git stripspace --comment-lines >>"$todo" <<\EOF
--
-+gettext "
- However, if you remove everything, the rebase will be aborted.
- 
--EOF
-+" | git stripspace --comment-lines >>"$todo"
- 
- if test -z "$keep_empty"
- then
-diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
-index e6c3116..1ef1889 100644
---- a/git-sh-i18n.sh
-+++ b/git-sh-i18n.sh
-@@ -53,6 +53,13 @@ gettext_without_eval_gettext)
- 			git sh-i18n--envsubst "$1"
- 		)
- 	}
-+
-+	eval_ngettext () {
-+		ngettext "$1" "$2" "$3" | (
-+			export PATH $(git sh-i18n--envsubst --variables "$2");
-+			git sh-i18n--envsubst "$2"
-+		)
+ require_work_tree () {
+-	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true ||
+-	die "fatal: $0 cannot be used without a working tree."
++	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true || {
++		program_name=$0
++		die "$(gettext "fatal: \$program_name cannot be used without a working tree.")"
 +	}
- 	;;
- poison)
- 	# Emit garbage so that tests that incorrectly rely on translatable
-@@ -64,6 +71,10 @@ poison)
- 	eval_gettext () {
- 		printf "%s" "# GETTEXT POISON #"
+ }
+ 
+ require_clean_work_tree () {
+@@ -206,24 +212,49 @@ require_clean_work_tree () {
+ 
+ 	if ! git diff-files --quiet --ignore-submodules
+ 	then
+-		echo >&2 "Cannot $1: You have unstaged changes."
++		action=$1
++		case "$action" in
++		rebase)
++			gettextln "Cannot rebase: You have unstaged changes." >&2
++			;;
++		"rewrite branches")
++			gettextln "Cannot rewrite branches: You have unstaged changes." >&2
++			;;
++		"pull with rebase")
++			gettextln "Cannot pull with rebase: You have unstaged changes." >&2
++			;;
++		*)
++			eval_gettextln "Cannot \$action: You have unstaged changes." >&2
++			;;
++		esac
+ 		err=1
+ 	fi
+ 
+ 	if ! git diff-index --cached --quiet --ignore-submodules HEAD --
+ 	then
+-		if [ $err = 0 ]
++		if test $err = 0
+ 		then
+-		    echo >&2 "Cannot $1: Your index contains uncommitted changes."
++			action=$1
++			case "$action" in
++			rebase)
++				gettextln "Cannot rebase: Your index contains uncommitted changes." >&2
++				;;
++			"pull with rebase")
++				gettextln "Cannot pull with rebase: Your index contains uncommitted changes." >&2
++				;;
++			*)
++				eval_gettextln "Cannot \$action: Your index contains uncommitted changes." >&2
++				;;
++			esac
+ 		else
+-		    echo >&2 "Additionally, your index contains uncommitted changes."
++		    gettextln "Additionally, your index contains uncommitted changes." >&2
+ 		fi
+ 		err=1
+ 	fi
+ 
+-	if [ $err = 1 ]
++	if test $err = 1
+ 	then
+-		test -n "$2" && echo >&2 "$2"
++		test -n "$2" && echo "$2" >&2
+ 		exit 1
+ 	fi
+ }
+@@ -336,12 +367,12 @@ git_dir_init () {
+ 	then
+ 		test -z "$(git rev-parse --show-cdup)" || {
+ 			exit=$?
+-			echo >&2 "You need to run this command from the toplevel of the working tree."
++			gettextln "You need to run this command from the toplevel of the working tree." >&2
+ 			exit $exit
+ 		}
+ 	fi
+ 	test -n "$GIT_DIR" && GIT_DIR=$(cd "$GIT_DIR" && pwd) || {
+-		echo >&2 "Unable to determine absolute path of git directory"
++		gettextln "Unable to determine absolute path of git directory" >&2
+ 		exit 1
  	}
-+
-+	eval_ngettext () {
-+		printf "%s" "# GETTEXT POISON #"
-+	}
- 	;;
- *)
- 	gettext () {
-@@ -76,6 +87,13 @@ poison)
- 			git sh-i18n--envsubst "$1"
- 		)
- 	}
-+
-+	eval_ngettext () {
-+		(test "$3" = 1 && printf "%s" "$1" || printf "%s" "$2") | (
-+			export PATH $(git sh-i18n--envsubst --variables "$2");
-+			git sh-i18n--envsubst "$2"
-+		)
-+	}
- 	;;
- esac
+ 	: ${GIT_OBJECT_DIRECTORY="$(git rev-parse --git-path objects)"}
+diff --git a/git-stash.sh b/git-stash.sh
+index c7509e8..22fb8bc 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -15,7 +15,6 @@ SUBDIRECTORY_OK=Yes
+ OPTIONS_SPEC=
+ START_DIR=$(pwd)
+ . git-sh-setup
+-. git-sh-i18n
+ require_work_tree
+ cd_to_toplevel
  
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 66348f1..f4ccd10 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -540,7 +540,7 @@ test_expect_success 'clean error after failed "exec"' '
- 	echo "edited again" > file7 &&
- 	git add file7 &&
- 	test_must_fail git rebase --continue 2>error &&
--	grep "You have staged changes in your working tree." error
-+	test_i18ngrep "You have staged changes in your working tree." error
- '
- 
- test_expect_success 'rebase a detached HEAD' '
-@@ -1060,7 +1060,7 @@ test_expect_success 'todo count' '
- 	EOF
- 	test_set_editor "$(pwd)/dump-raw.sh" &&
- 	git rebase -i HEAD~4 >actual &&
--	grep "^# Rebase ..* onto ..* ([0-9]" actual
-+	test_i18ngrep "^# Rebase ..* onto ..* ([0-9]" actual
- '
- 
- test_expect_success 'rebase -i commits that overwrite untracked files (pick)' '
-@@ -1160,7 +1160,7 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = ignore' '
- 	FAKE_LINES="1 2 3 4" \
- 		git rebase -i --root 2>actual &&
- 	test D = $(git cat-file commit HEAD | sed -ne \$p) &&
--	test_cmp expect actual
-+	test_i18ncmp expect actual
- '
- 
- cat >expect <<EOF
-@@ -1181,7 +1181,7 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = warn' '
- 	set_fake_editor &&
- 	FAKE_LINES="1 2 3 4" \
- 		git rebase -i --root 2>actual &&
--	test_cmp expect actual &&
-+	test_i18ncmp expect actual &&
- 	test D = $(git cat-file commit HEAD | sed -ne \$p)
- '
- 
-@@ -1205,7 +1205,7 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = error' '
- 	set_fake_editor &&
- 	test_must_fail env FAKE_LINES="1 2 4" \
- 		git rebase -i --root 2>actual &&
--	test_cmp expect actual &&
-+	test_i18ncmp expect actual &&
- 	cp .git/rebase-merge/git-rebase-todo.backup \
- 		.git/rebase-merge/git-rebase-todo &&
- 	FAKE_LINES="1 2 drop 3 4 drop 5" \
-@@ -1228,7 +1228,7 @@ test_expect_success 'static check of bad command' '
- 	set_fake_editor &&
- 	test_must_fail env FAKE_LINES="1 2 3 bad 4 5" \
- 		git rebase -i --root 2>actual &&
--	test_cmp expect actual &&
-+	test_i18ncmp expect actual &&
- 	FAKE_LINES="1 2 3 drop 4 5" git rebase --edit-todo &&
- 	git rebase --continue &&
- 	test E = $(git cat-file commit HEAD | sed -ne \$p) &&
-@@ -1263,7 +1263,7 @@ test_expect_success 'static check of bad SHA-1' '
- 	set_fake_editor &&
- 	test_must_fail env FAKE_LINES="1 2 edit fakesha 3 4 5 #" \
- 		git rebase -i --root 2>actual &&
--	test_cmp expect actual &&
-+	test_i18ncmp expect actual &&
- 	FAKE_LINES="1 2 4 5 6" git rebase --edit-todo &&
- 	git rebase --continue &&
- 	test E = $(git cat-file commit HEAD | sed -ne \$p)
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 7fe8a51..5b9674a 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -16,7 +16,6 @@ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <re
+ OPTIONS_SPEC=
+ SUBDIRECTORY_OK=Yes
+ . git-sh-setup
+-. git-sh-i18n
+ . git-parse-remote
+ require_work_tree
+ wt_prefix=$(git rev-parse --show-prefix)
 -- 
 2.7.3
