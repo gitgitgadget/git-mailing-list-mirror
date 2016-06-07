@@ -1,44 +1,44 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 8/8] merge-recursive: convert merge_recursive_generic to object_id
-Date: Tue,  7 Jun 2016 00:57:16 +0000
-Message-ID: <20160607005716.69222-9-sandals@crustytoothpaste.net>
+Subject: [PATCH 6/8] merge-recursive: convert struct merge_file_info to object_id
+Date: Tue,  7 Jun 2016 00:57:14 +0000
+Message-ID: <20160607005716.69222-7-sandals@crustytoothpaste.net>
 References: <20160607005716.69222-2-sandals@crustytoothpaste.net>
 Cc: Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 02:57:46 2016
+X-From: git-owner@vger.kernel.org Tue Jun 07 02:58:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bA5Kw-0003AM-7o
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 02:57:42 +0200
+	id 1bA5Lm-0003mx-Tj
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 02:58:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753212AbcFGA5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2016 20:57:37 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:40782 "EHLO
+	id S1753898AbcFGA62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2016 20:58:28 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:40762 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752856AbcFGA53 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 20:57:29 -0400
+	by vger.kernel.org with ESMTP id S1752314AbcFGA50 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 20:57:26 -0400
 Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:6680:99ff:fe4f:73a0])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id C14D5282A9;
-	Tue,  7 Jun 2016 00:57:26 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9E0EA282AD;
+	Tue,  7 Jun 2016 00:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1465261046;
-	bh=9tH+D20fiPh4c3XRWZgzLu1Hnr+FlGyIsDrfCSuW3QQ=;
+	s=default; t=1465261045;
+	bh=gK2g9GBaBsar+osFtzotxdTtmTwRjonHiszag3QMpNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ph3eSlrCTFirznyzcW8AUCWmaeBI8liae13kYnawSKRfh4ua+QOVuBqfuAS5L1rd9
-	 AJDa4IWvpPvD+kbWXteo8I2Bs/ld4mUpzYd8BDQcRgzy3I7jylLvMIbVMYO0kLodEi
-	 ss0bdEU8WDsEg3Dkkt3lTFc6akUCr28Yi+wt7PL/1DvAZwTMLKXXca9Bp7e7tTQoyR
-	 tXNZ6jnYf6ACMr3N6QAcMjbGuBDa8tt/8jxlzw4dtDSai6ANnytKvBAlKbd90orXRY
-	 tIMKs0CXQ3FRfTpYMgn8mxoGjeSlT4e9hkuRyv8dy4ewg752q3Em+zkAcyxoE9q0Lr
-	 ncVkrkiu+0rQ2n3v7iwY6quinvySeT16OSaOwD5j0Y1stM+qFoGKZg0IBcTczeNBdB
-	 ddPmQBAQhz7fJQ+EaTukvcdiRCs5oDsWUFaxnkPzM+WqS9gQ59i1/iLQ8VfPxW8vYn
-	 E/rweBDG8LYfJl5Vi5RR0h3NwG/45gxlCP1SBblgIxjvTFM56hB
+	b=rdaj02WorqR4kRGDb28jkUNQmG8fRj2lhsd2XmBRurpcoUd1qsbCeQ3FEAKQE8e/y
+	 2L4ZBxtAGJA0Yfhh/A1SJG3OFhmJ1zfOV94pv+y+KEAACucEjEILV+O564UBTJGN7K
+	 Lqz06aaKCnXVZxzgOlTw6JE4NeuSJgu92/YO/Egct2dPb4nRay/BthRgyNsqSDyk1X
+	 l75moI3JjaSzPVR5hWfH+31H3/PIwMx1TrFAdPrhNPuRnqmVxgGiPSdArLFOpROnsk
+	 /Q1eEtjO5FkK362rDcbOsUUA+FYolzKnokGgxXDHmrW7ckJubZ7tjBaRtlYryjzAzN
+	 cDlptn/BtrRkt1rsLVe/40aLAnxzA3AixKq6BoeUSjRyJrPsoSvuJ/GZPEs7YP98Jx
+	 W7OAzhYGSZ2QKR+G9zn8mF9V09fHx0qjjn9yDDJXvzNSrXja41yoxUX1dzSl/dABgb
+	 y02D/bEkn3kTVH2ogh6t9jyaU4lbpcHw7VLh3NIDnUgXwHDg0fO
 X-Mailer: git-send-email 2.8.1.369.geae769a
 In-Reply-To: <20160607005716.69222-2-sandals@crustytoothpaste.net>
 X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
@@ -46,142 +46,170 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296587>
 
-Convert this function and the git merge-recursive subcommand to use
-struct object_id.
+Convert struct merge_file_info to use struct object_id.  The following
+Coccinelle semantic patch was used to implement this, followed by the
+transformations in standard.cocci:
+
+@@
+struct merge_file_info *p;
+@@
+- p->sha
++ p->oid.hash
+
+@@
+struct merge_file_info o;
+@@
+- o.sha
++ o.oid.hash
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/merge-recursive.c | 20 ++++++++++----------
- merge-recursive.c         | 14 +++++++-------
- merge-recursive.h         |  6 +++---
- 3 files changed, 20 insertions(+), 20 deletions(-)
+ merge-recursive.c | 39 ++++++++++++++++++++-------------------
+ 1 file changed, 20 insertions(+), 19 deletions(-)
 
-diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index 491efd55..fd2c4556 100644
---- a/builtin/merge-recursive.c
-+++ b/builtin/merge-recursive.c
-@@ -9,10 +9,10 @@ static const char builtin_merge_recursive_usage[] =
- 
- static const char *better_branch_name(const char *branch)
- {
--	static char githead_env[8 + 40 + 1];
-+	static char githead_env[8 + GIT_SHA1_HEXSZ + 1];
- 	char *name;
- 
--	if (strlen(branch) != 40)
-+	if (strlen(branch) != GIT_SHA1_HEXSZ)
- 		return branch;
- 	xsnprintf(githead_env, sizeof(githead_env), "GITHEAD_%s", branch);
- 	name = getenv(githead_env);
-@@ -21,10 +21,10 @@ static const char *better_branch_name(const char *branch)
- 
- int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- {
--	const unsigned char *bases[21];
-+	const struct object_id *bases[21];
- 	unsigned bases_count = 0;
- 	int i, failed;
--	unsigned char h1[20], h2[20];
-+	struct object_id h1, h2;
- 	struct merge_options o;
- 	struct commit *result;
- 
-@@ -46,10 +46,10 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
- 		if (bases_count < ARRAY_SIZE(bases)-1) {
--			unsigned char *sha = xmalloc(20);
--			if (get_sha1(argv[i], sha))
-+			struct object_id *oid = xmalloc(sizeof(struct object_id));
-+			if (get_oid(argv[i], oid))
- 				die("Could not parse object '%s'", argv[i]);
--			bases[bases_count++] = sha;
-+			bases[bases_count++] = oid;
- 		}
- 		else
- 			warning("Cannot handle more than %d bases. "
-@@ -62,9 +62,9 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 	o.branch1 = argv[++i];
- 	o.branch2 = argv[++i];
- 
--	if (get_sha1(o.branch1, h1))
-+	if (get_oid(o.branch1, &h1))
- 		die("Could not resolve ref '%s'", o.branch1);
--	if (get_sha1(o.branch2, h2))
-+	if (get_oid(o.branch2, &h2))
- 		die("Could not resolve ref '%s'", o.branch2);
- 
- 	o.branch1 = better_branch_name(o.branch1);
-@@ -73,7 +73,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 	if (o.verbosity >= 3)
- 		printf("Merging %s with %s\n", o.branch1, o.branch2);
- 
--	failed = merge_recursive_generic(&o, h1, h2, bases_count, bases, &result);
-+	failed = merge_recursive_generic(&o, &h1, &h2, bases_count, bases, &result);
- 	if (failed < 0)
- 		return 128; /* die() error code */
- 	return failed;
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 7bbd4aea..48fe7e73 100644
+index a07050cd..bc455491 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1982,11 +1982,11 @@ int merge_recursive(struct merge_options *o,
- 	return clean;
- }
+@@ -819,7 +819,7 @@ static void update_file(struct merge_options *o,
+ /* Low level file merging, update and removal */
  
--static struct commit *get_ref(const unsigned char *sha1, const char *name)
-+static struct commit *get_ref(const struct object_id *oid, const char *name)
- {
- 	struct object *object;
- 
--	object = deref_tag(parse_object(sha1), name, strlen(name));
-+	object = deref_tag(parse_object(oid->hash), name, strlen(name));
- 	if (!object)
- 		return NULL;
- 	if (object->type == OBJ_TREE)
-@@ -1999,10 +1999,10 @@ static struct commit *get_ref(const unsigned char *sha1, const char *name)
- }
- 
- int merge_recursive_generic(struct merge_options *o,
--			    const unsigned char *head,
--			    const unsigned char *merge,
-+			    const struct object_id *head,
-+			    const struct object_id *merge,
- 			    int num_base_list,
--			    const unsigned char **base_list,
-+			    const struct object_id **base_list,
- 			    struct commit **result)
- {
- 	int clean;
-@@ -2015,9 +2015,9 @@ int merge_recursive_generic(struct merge_options *o,
- 		int i;
- 		for (i = 0; i < num_base_list; ++i) {
- 			struct commit *base;
--			if (!(base = get_ref(base_list[i], sha1_to_hex(base_list[i]))))
-+			if (!(base = get_ref(base_list[i], oid_to_hex(base_list[i]))))
- 				return error(_("Could not parse object '%s'"),
--					sha1_to_hex(base_list[i]));
-+					oid_to_hex(base_list[i]));
- 			commit_list_insert(base, &ca);
+ struct merge_file_info {
+-	unsigned char sha[20];
++	struct object_id oid;
+ 	unsigned mode;
+ 	unsigned clean:1,
+ 		 merge:1;
+@@ -902,10 +902,10 @@ static struct merge_file_info merge_file_1(struct merge_options *o,
+ 		result.clean = 0;
+ 		if (S_ISREG(a->mode)) {
+ 			result.mode = a->mode;
+-			hashcpy(result.sha, a->oid.hash);
++			oidcpy(&result.oid, &a->oid);
+ 		} else {
+ 			result.mode = b->mode;
+-			hashcpy(result.sha, b->oid.hash);
++			oidcpy(&result.oid, &b->oid);
  		}
- 	}
-diff --git a/merge-recursive.h b/merge-recursive.h
-index 52f0201f..d415724a 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -49,10 +49,10 @@ int merge_trees(struct merge_options *o,
-  * virtual commits and call merge_recursive() proper.
-  */
- int merge_recursive_generic(struct merge_options *o,
--			    const unsigned char *head,
--			    const unsigned char *merge,
-+			    const struct object_id *head,
-+			    const struct object_id *merge,
- 			    int num_ca,
--			    const unsigned char **ca,
-+			    const struct object_id **ca,
- 			    struct commit **result);
+ 	} else {
+ 		if (!sha_eq(a->oid.hash, one->oid.hash) && !sha_eq(b->oid.hash, one->oid.hash))
+@@ -925,9 +925,9 @@ static struct merge_file_info merge_file_1(struct merge_options *o,
+ 		}
  
- void init_merge_options(struct merge_options *o);
+ 		if (sha_eq(a->oid.hash, b->oid.hash) || sha_eq(a->oid.hash, one->oid.hash))
+-			hashcpy(result.sha, b->oid.hash);
++			oidcpy(&result.oid, &b->oid);
+ 		else if (sha_eq(b->oid.hash, one->oid.hash))
+-			hashcpy(result.sha, a->oid.hash);
++			oidcpy(&result.oid, &a->oid);
+ 		else if (S_ISREG(a->mode)) {
+ 			mmbuffer_t result_buf;
+ 			int merge_status;
+@@ -939,21 +939,21 @@ static struct merge_file_info merge_file_1(struct merge_options *o,
+ 				die(_("Failed to execute internal merge"));
+ 
+ 			if (write_sha1_file(result_buf.ptr, result_buf.size,
+-					    blob_type, result.sha))
++					    blob_type, result.oid.hash))
+ 				die(_("Unable to add %s to database"),
+ 				    a->path);
+ 
+ 			free(result_buf.ptr);
+ 			result.clean = (merge_status == 0);
+ 		} else if (S_ISGITLINK(a->mode)) {
+-			result.clean = merge_submodule(result.sha,
++			result.clean = merge_submodule(result.oid.hash,
+ 						       one->path,
+ 						       one->oid.hash,
+ 						       a->oid.hash,
+ 						       b->oid.hash,
+ 						       !o->call_depth);
+ 		} else if (S_ISLNK(a->mode)) {
+-			hashcpy(result.sha, a->oid.hash);
++			oidcpy(&result.oid, &a->oid);
+ 
+ 			if (!sha_eq(a->oid.hash, b->oid.hash))
+ 				result.clean = 0;
+@@ -1192,7 +1192,7 @@ static void conflict_rename_rename_1to2(struct merge_options *o,
+ 		 * pathname and then either rename the add-source file to that
+ 		 * unique path, or use that unique path instead of src here.
+ 		 */
+-		update_file(o, 0, mfi.sha, mfi.mode, one->path);
++		update_file(o, 0, mfi.oid.hash, mfi.mode, one->path);
+ 
+ 		/*
+ 		 * Above, we put the merged content at the merge-base's
+@@ -1255,16 +1255,16 @@ static void conflict_rename_rename_2to1(struct merge_options *o,
+ 		 * again later for the non-recursive merge.
+ 		 */
+ 		remove_file(o, 0, path, 0);
+-		update_file(o, 0, mfi_c1.sha, mfi_c1.mode, a->path);
+-		update_file(o, 0, mfi_c2.sha, mfi_c2.mode, b->path);
++		update_file(o, 0, mfi_c1.oid.hash, mfi_c1.mode, a->path);
++		update_file(o, 0, mfi_c2.oid.hash, mfi_c2.mode, b->path);
+ 	} else {
+ 		char *new_path1 = unique_path(o, path, ci->branch1);
+ 		char *new_path2 = unique_path(o, path, ci->branch2);
+ 		output(o, 1, _("Renaming %s to %s and %s to %s instead"),
+ 		       a->path, new_path1, b->path, new_path2);
+ 		remove_file(o, 0, path, 0);
+-		update_file(o, 0, mfi_c1.sha, mfi_c1.mode, new_path1);
+-		update_file(o, 0, mfi_c2.sha, mfi_c2.mode, new_path2);
++		update_file(o, 0, mfi_c1.oid.hash, mfi_c1.mode, new_path1);
++		update_file(o, 0, mfi_c2.oid.hash, mfi_c2.mode, new_path2);
+ 		free(new_path2);
+ 		free(new_path1);
+ 	}
+@@ -1474,7 +1474,8 @@ static int process_renames(struct merge_options *o,
+ 							 dst_other.mode,
+ 							 branch1, branch2);
+ 					output(o, 1, _("Adding merged %s"), ren1_dst);
+-					update_file(o, 0, mfi.sha, mfi.mode, ren1_dst);
++					update_file(o, 0, mfi.oid.hash,
++						    mfi.mode, ren1_dst);
+ 					try_merge = 0;
+ 				} else {
+ 					char *new_path = unique_path(o, ren1_dst, branch2);
+@@ -1634,7 +1635,7 @@ static int merge_content(struct merge_options *o,
+ 					 o->branch2, path2);
+ 
+ 	if (mfi.clean && !df_conflict_remains &&
+-	    sha_eq(mfi.sha, a_sha) && mfi.mode == a_mode) {
++	    sha_eq(mfi.oid.hash, a_sha) && mfi.mode == a_mode) {
+ 		int path_renamed_outside_HEAD;
+ 		output(o, 3, _("Skipped %s (merged same as existing)"), path);
+ 		/*
+@@ -1645,7 +1646,7 @@ static int merge_content(struct merge_options *o,
+ 		 */
+ 		path_renamed_outside_HEAD = !path2 || !strcmp(path, path2);
+ 		if (!path_renamed_outside_HEAD) {
+-			add_cacheinfo(mfi.mode, mfi.sha, path,
++			add_cacheinfo(mfi.mode, mfi.oid.hash, path,
+ 				      0, (!o->call_depth), 0);
+ 			return mfi.clean;
+ 		}
+@@ -1671,7 +1672,7 @@ static int merge_content(struct merge_options *o,
+ 			else {
+ 				int file_from_stage2 = was_tracked(path);
+ 				struct diff_filespec merged;
+-				hashcpy(merged.oid.hash, mfi.sha);
++				oidcpy(&merged.oid, &mfi.oid);
+ 				merged.mode = mfi.mode;
+ 
+ 				update_stages(path, NULL,
+@@ -1682,11 +1683,11 @@ static int merge_content(struct merge_options *o,
+ 		}
+ 		new_path = unique_path(o, path, rename_conflict_info->branch1);
+ 		output(o, 1, _("Adding as %s instead"), new_path);
+-		update_file(o, 0, mfi.sha, mfi.mode, new_path);
++		update_file(o, 0, mfi.oid.hash, mfi.mode, new_path);
+ 		free(new_path);
+ 		mfi.clean = 0;
+ 	} else {
+-		update_file(o, mfi.clean, mfi.sha, mfi.mode, path);
++		update_file(o, mfi.clean, mfi.oid.hash, mfi.mode, path);
+ 	}
+ 	return mfi.clean;
+ 
