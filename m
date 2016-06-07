@@ -1,310 +1,147 @@
-From: Tom Russello <tom.russello@grenoble-inp.org>
-Subject: [PATCH v3 6/6] send-email: add option --cite to quote the message body
-Date: Tue,  7 Jun 2016 16:05:19 +0200
-Message-ID: <20160607140519.23418-2-tom.russello@grenoble-inp.org>
-References: <20160607140148.23242-5-tom.russello@grenoble-inp.org>
- <20160607140519.23418-1-tom.russello@grenoble-inp.org>
-Cc: erwan.mathoniere@grenoble-inp.org, samuel.groot@grenoble-inp.org,
-	jordan.de-gea@grenoble-inp.org, matthieu.moy@grenoble-inp.fr,
-	e@80x24.org, aaron@schrab.com, gitster@pobox.com,
-	Tom Russello <tom.russello@grenoble-inp.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 16:05:51 2016
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 4/4] bundle v3: the beginning
+Date: Tue, 7 Jun 2016 16:49:05 +0200
+Message-ID: <CAP8UFD0+0EYUNy6sQWjHAqfTU8yx9-GmOVV+JtqzWkbO1S1G2g@mail.gmail.com>
+References: <xmqqfuw84uhb.fsf@gitster.mtv.corp.google.com> <1456950761-19759-1-git-send-email-gitster@pobox.com>
+ <1456950761-19759-5-git-send-email-gitster@pobox.com> <CAP8UFD1xqRMFE2Wzntu=XevCyj+acGLEO-cTq1fqn+NMe3x0vg@mail.gmail.com>
+ <CACsJy8Dr_Z886Jb-O8gbAv_vzBLicNH6bPPpKwb9HWZTKQ9muw@mail.gmail.com>
+ <CAP8UFD3jPQFk2deSk5JXC3PTz5yWcvXJ4=Qjam5Qw6P9SrLzFQ@mail.gmail.com> <CACsJy8AxPKuDUZzWdaWg8tfcWBhqJBADc=ia-Y8cM+zyJ1NFTQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 07 16:49:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAHde-0007uo-B9
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 16:05:50 +0200
+	id 1bAIJd-0004Ia-UT
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 16:49:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755323AbcFGOFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 10:05:45 -0400
-Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:45160 "EHLO
-	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754922AbcFGOFp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 10:05:45 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 861952561;
-	Tue,  7 Jun 2016 16:05:42 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2rH-NZht3CP2; Tue,  7 Jun 2016 16:05:42 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 766D024F3;
-	Tue,  7 Jun 2016 16:05:42 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 73B952066;
-	Tue,  7 Jun 2016 16:05:42 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7wRkbFnaHR8H; Tue,  7 Jun 2016 16:05:42 +0200 (CEST)
-Received: from ux-305.grenet.fr (eduroam-033003.grenet.fr [130.190.33.3])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 34C712064;
-	Tue,  7 Jun 2016 16:05:42 +0200 (CEST)
-X-Mailer: git-send-email 2.9.0.rc0.40.g1232aeb.dirty
-In-Reply-To: <20160607140519.23418-1-tom.russello@grenoble-inp.org>
+	id S1754203AbcFGOtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 10:49:09 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:37450 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751475AbcFGOtI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 10:49:08 -0400
+Received: by mail-wm0-f51.google.com with SMTP id k204so72749700wmk.0
+        for <git@vger.kernel.org>; Tue, 07 Jun 2016 07:49:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dWDxvA1mAesk7ijqVaK/WMPC9xzHbkJ2rl8ZGb4zH8o=;
+        b=HkOMMVLIUTpY4MIj9s0RCwXo2Y1zDnTKdwB4ykO70lASt+vdBpOAOCydeD1rmpxMWf
+         g/IRCs6eWB5+IxUhKRifTji+Iy7Ih2aX/5j7rcuDI4MD2GM2jNr7w9gozdtIefvidckf
+         THo+rxiVBSJ2OGWst4Qh/UkaqAyEREeLmCzEC/j6PMrI3ONEHzo7gwO5Xp02Hdyqi4fa
+         xRC4+Euf3zeV48np/ZyMAcXfsF5aej/CnE+0roOTRNwr5x0quhKlciS7CSzVqFMIoA5I
+         xhrCZUFPY0AmKSiz+sN/7Q7twMvLRPySNDC+xGV5LdQP+EA3Q9YhRA8W7IkTWxuHoJJx
+         Gm3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dWDxvA1mAesk7ijqVaK/WMPC9xzHbkJ2rl8ZGb4zH8o=;
+        b=Seyz4Jo4HYhSeednJ4eqFLfSByROM7LpvEdtuTMg/ct5fPw11xMxHb/0dPJ1aOQcgH
+         jlCMWrxBAp5SS20FLmDIKQ0RMORRpyEa39qzg/YX97gYf1dGLle3fUwxviGYE6ZC4NoD
+         EV7ckw5s6dsissuoXX6zfmVNN1EwviOyKg4wirT4jD/F4hHA1HW041hMHd4U5w3X3XNK
+         kYqeapnIdCQYQ5mv6AwPlcH+LQUaFXCWoJLllmxJ3tpn1FEWv1ykYQOBW9lQ9oCDH/+f
+         s40/ZaZ/c8k9MOIWCIkxRItq+9GeWUcmsgsgREv5vDpd4v98x+27gH03K64j10oWB1cO
+         w1Yg==
+X-Gm-Message-State: ALyK8tIPL6fhOuEXvaxndrAeWN08s1AuAMUm89yPjWCRI5t+SYiDcCh9hQyZ7H1dGs6b8g1oE4ZHvEXoYFfs0w==
+X-Received: by 10.195.17.166 with SMTP id gf6mr20849481wjd.124.1465310946457;
+ Tue, 07 Jun 2016 07:49:06 -0700 (PDT)
+Received: by 10.194.148.146 with HTTP; Tue, 7 Jun 2016 07:49:05 -0700 (PDT)
+In-Reply-To: <CACsJy8AxPKuDUZzWdaWg8tfcWBhqJBADc=ia-Y8cM+zyJ1NFTQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296687>
 
-If used with `in-reply-to=<email_file>`, cite the message body of the given
-email file. Otherwise, do nothing.
+On Wed, Jun 1, 2016 at 3:37 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, May 31, 2016 at 8:18 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>>>> I wonder if this mechanism could also be used or extended to clone and
+>>>> fetch an alternate object database.
+>>>>
+>>>> In [1], [2] and [3], and this was also discussed during the
+>>>> Contributor Summit last month, Peff says that he started working on
+>>>> alternate object database support a long time ago, and that the hard
+>>>> part is a protocol extension to tell remotes that you can access some
+>>>> objects in a different way.
+>>>>
+>>>> If a Git client would download a "$name.bndl" v3 bundle file that
+>>>> would have a "data: $URL/alt-odb-$name.odb" extended header, the Git
+>>>> client would just need to download "$URL/alt-odb-$name.odb" and use
+>>>> the alternate object database support on this file.
+>>>
+>>> What does this file contain exactly? A list of SHA-1 that can be
+>>> retrieved from this remote/alternate odb?
+>>
+>> It would depend on the external odb. Git could support different
+>> external odb that have different trade-offs.
+>>
+>>> I wonder if we could just
+>>> git-replace for this marking. The replaced content could contain the
+>>> uri pointing to the alt odb.
+>>
+>> Yeah, interesting!
+>> That's indeed another possibility that might not need the transfer of
+>> any external odb.
+>>
+>> But in this case it might be cleaner to just have a separate ref hierarchy like:
+>>
+>> refs/external-odbs/my-ext-odb/<sha1>
+>>
+>> instead of using the replace one.
+>>
+>> Or maybe:
+>>
+>> refs/replace/external-odbs/my-ext-odb/<sha1>
+>>
+>> if we really want to use the replace hierarchy.
+>
+> Yep. replace hierarchy crossed my mind. But then I thought about
+> performance degradation when there are more than one pack (we have to
+> search through them all for every SHA-1) and discarded it because we
+> would need to do the same linear search here. I guess we will most
+> likely have one or two name spaces so it probably won't matter.
 
-If `--compose` is set, quote the message body in the cover letter. Else,
-imply `--annotate` by default and quote the message body below the triple-dash
-section in the first patch only.
+Yeah.
 
-Signed-off-by: Tom RUSSELLO <tom.russello@grenoble-inp.org>
-Signed-off-by: Samuel GROOT <samuel.groot@grenoble-inp.org>
-Signed-off-by: Matthieu MOY <matthieu.moy@grenoble-inp.fr>
----
- Documentation/git-send-email.txt |  8 ++++
- git-send-email.perl              | 81 ++++++++++++++++++++++++++++++++++++++--
- t/t9001-send-email.sh            | 32 ++++++++++++++++
- 3 files changed, 117 insertions(+), 4 deletions(-)
+>>> We could optionally contact alt odb to
+>>> retrieve real content, or just show the replaced/fake data when alt
+>>> odb is out of reach.
+>>
+>> Yeah, I wonder if that really needs the replace mechanism.
+>
+> Replace mechanism provides good hook point. But it really depends how
+> invasive this remote odb is. If a fake content is enough to avoid
+> breakages up high, git-replace is enough. If you really need to pass
+> remote odb info up so higher levels can do something more fancy, then
+> it's insufficient.
+>
+>> By the way this makes me wonder if we could implement resumable clone
+>> using some kind of replace ref.
+>>
+>> The client while cloning nearly as usual would download one or more
+>> special replace refs that would points to objects with links to
+>> download bundles using standard protocols.
+>> Just after the clone, the client would read these objects and download
+>> the bundles from these objects.
+>> And then it would clone from these bundles.
+>
+> I thought we have settled on resumable clone, just waiting for an
+> implementation :) Doing it your way, you would need to download these
+> special objects too (in a pack?) and come back download some more
+> bundles. It would be more efficient to show the bundle uri early and
+> go download the bundle on the side while you go on to get the
+> addition/smaller pack that contains the rest.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 21776f0..23cbd17 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -109,6 +109,14 @@ illustration below where `[PATCH v2 0/3]` is in reply to `[PATCH 0/2]`:
- Only necessary if --compose is also set.  If --compose
- is not set, this will be prompted for.
- 
-+--cite::
-+	When used with `--in-reply-to=<email_file>`, quote the message body of the
-+	given email file.
-++
-+If `--compose` is also set, the message cited will be in the cover letter. If
-+`--compose` is not set, `--annotate` option is implied by default and the
-+message body will be cited in the "below-triple-dash" section.
-+
- --subject=<string>::
- 	Specify the initial subject of the email thread.
- 	Only necessary if --compose is also set.  If --compose
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 66aa2cd..03483f5 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -26,6 +26,7 @@ use Text::ParseWords;
- use Term::ANSIColor;
- use File::Temp qw/ tempdir tempfile /;
- use File::Spec::Functions qw(catfile);
-+use File::Copy;
- use Error qw(:try);
- use Git;
- 
-@@ -56,6 +57,8 @@ git send-email --dump-aliases
-     --subject               <str>  * Email "Subject:"
-     --in-reply-to           <str>  * Email "In-Reply-To:"
-     --in-reply-to          <file>  * Populate header fields appropriately.
-+    --cite                         * Quote the message body in the cover if
-+                                     --compose is set, else in the first patch.
-     --[no-]xmailer                 * Add "X-Mailer:" header (default).
-     --[no-]annotate                * Review each patch that will be sent in an editor.
-     --compose                      * Open an editor for introduction.
-@@ -161,7 +164,7 @@ my $re_encoded_word = qr/=\?($re_token)\?($re_token)\?($re_encoded_text)\?=/;
- 
- # Variables we fill in automatically, or via prompting:
- my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh,
--	$initial_reply_to,$initial_references,$initial_subject,@files,
-+	$initial_reply_to,$initial_references,$cite,$initial_subject,@files,
- 	$author,$sender,$smtp_authpass,$annotate,$use_xmailer,$compose,$time);
- 
- my $envelope_sender;
-@@ -305,6 +308,7 @@ $rc = GetOptions(
- 		    "sender|from=s" => \$sender,
-                     "in-reply-to=s" => \$initial_reply_to,
- 		    "subject=s" => \$initial_subject,
-+		    "cite" => \$cite,
- 		    "to=s" => \@initial_to,
- 		    "to-cmd=s" => \$to_cmd,
- 		    "no-to" => \$no_to,
-@@ -640,6 +644,7 @@ if (@files) {
- 	usage();
- }
- 
-+my $message_cited;
- if ($initial_reply_to && -f $initial_reply_to) {
- 	my $error = validate_patch($initial_reply_to);
- 	die "fatal: $initial_reply_to: $error\nwarning: no patches were sent\n"
-@@ -658,7 +663,8 @@ if ($initial_reply_to && -f $initial_reply_to) {
- 	}
- 	$initial_subject = $prefix_re . $subject_re;
- 
--	push @initial_to, $mail->{"from"}[0];
-+	my $recipient = $mail->{"from"}[0];
-+	push @initial_to, $recipient;
- 
- 	foreach my $to_addr (parse_address_line(join ",", @{$mail->{"to"}})) {
- 		if (!($to_addr eq $initial_sender)) {
-@@ -682,6 +688,25 @@ if ($initial_reply_to && -f $initial_reply_to) {
- 		$initial_references = join("", @{$mail->{"references"}}) .
- 			" " . $initial_reply_to;
- 	}
-+
-+	if ($cite) {
-+		my $date = $mail->{"date"}[0];
-+		my $tpl_date =  $date && "On $date, " || '';
-+		$message_cited = $tpl_date . $recipient . " wrote:\n";
-+
-+		# Quote the message body
-+		foreach (@{$mail->{"body"}}) {
-+			my $space = "";
-+			if (/^[^>]/) {
-+				$space = " ";
-+			}
-+			$message_cited .= ">" . $space . $_;
-+		}
-+
-+		if (!$compose) {
-+			$annotate = 1;
-+		}
-+	}
- }
- 
- sub get_patch_subject {
-@@ -709,6 +734,9 @@ if ($compose) {
- 	my $tpl_sender = $sender || $repoauthor || $repocommitter || '';
- 	my $tpl_subject = $initial_subject || '';
- 	my $tpl_reply_to = $initial_reply_to || '';
-+	my $tpl_quote = $message_cited &&
-+		"\nGIT: Please, trim down irrelevant sections in the cited message\n".
-+		"GIT: to keep your email concise.\n" . $message_cited || '';
- 
- 	print $c <<EOT;
- From $tpl_sender # This line is ignored.
-@@ -720,7 +748,7 @@ GIT: Clear the body content if you don't wish to send a summary.
- From: $tpl_sender
- Subject: $tpl_subject
- In-Reply-To: $tpl_reply_to
--
-+$tpl_quote
- EOT
- 	for my $f (@files) {
- 		print $c get_patch_subject($f);
-@@ -785,7 +813,52 @@ EOT
- 		$compose = -1;
- 	}
- } elsif ($annotate) {
--	do_edit(@files);
-+	if ($message_cited) {
-+		my $cite_email_filename = ($repo ?
-+			tempfile(".gitsendemail.msg.XXXXXX",
-+				DIR => $repo->repo_path()) :
-+			tempfile(".gitsendemail.msg.XXXXXX",
-+				DIR => "."))[1];
-+
-+		# Insertion in a temporary file to keep the original file clean
-+		# in case of cancellation/error.
-+		do_insert_cited_message($cite_email_filename, $files[0]);
-+
-+		my $tmp = $files[0];
-+		$files[0] = $cite_email_filename;
-+
-+		do_edit(@files);
-+
-+		# Erase the original patch if the edition went well
-+		move($cite_email_filename, $tmp);
-+		$files[0] = $tmp;
-+	} else {
-+		do_edit(@files);
-+	}
-+}
-+
-+sub do_insert_cited_message {
-+	my $tmp_file = shift;
-+	my $original_file = shift;
-+
-+	open my $c, "<", $original_file
-+	or die "Failed to open $original_file: " . $!;
-+
-+	open my $c2, ">", $tmp_file
-+		or die "Failed to open $tmp_file: " . $!;
-+
-+	# Insertion after the triple-dash
-+	while (<$c>) {
-+		print $c2 $_;
-+		last if (/^---$/);
-+	}
-+	print $c2 $message_cited;
-+	while (<$c>) {
-+		print $c2 $_;
-+	}
-+
-+	close $c;
-+	close $c2;
- }
- 
- sub ask {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 2d67f6d..a107bde 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1915,6 +1915,7 @@ test_expect_success $PREREQ 'Fields with --in-reply-to are correct' '
- 	git send-email \
- 		--in-reply-to=email \
- 		--from="Example <nobody@example.com>" \
-+		--cite \
- 		--smtp-server="$(pwd)/fake.sendmail" \
- 		-2 \
- 		2>errors &&
-@@ -1936,10 +1937,22 @@ test_expect_success $PREREQ 'Fields with --in-reply-to are correct' '
- 	echo "$ref_adr" | grep -v "References: <author_123456@example.com>"
- '
- 
-+test_expect_success $PREREQ 'correct cited message with --in-reply-to' '
-+	msg_cited=$(grep -A 3 "^---$" msgtxt1) &&
-+	echo "$msg_cited" | grep "On Sat, 12 Jun 2010 15:53:58 +0200, author@example.com wrote:" &&
-+	echo "$msg_cited" | grep "> Have you seen my previous email?" &&
-+	echo "$msg_cited" | grep ">> Previous content"
-+'
-+
-+test_expect_success $PREREQ 'second patch body is not modified by --in-reply-to' '
-+	! grep "Have you seen my previous email?" msgtxt2
-+'
-+
- test_expect_success $PREREQ 'Fields with --in-reply-to and --compose are correct' '
- 	clean_fake_sendmail &&
- 	git send-email \
- 		--in-reply-to=email \
-+		--cite \
- 		--compose \
- 		--from="Example <nobody@example.com>" \
- 		--smtp-server="$(pwd)/fake.sendmail" \
-@@ -1967,6 +1980,7 @@ test_expect_success $PREREQ 'Fields with --in-reply-to and --compose are correct
- test_expect_success $PREREQ 'Re: written only once with --in-reply-to and --compose ' '
- 	git send-email \
- 		--in-reply-to=msgtxt1 \
-+		--cite \
- 		--compose \
- 		--from="Example <nobody@example.com>" \
- 		--smtp-server="$(pwd)/fake.sendmail" \
-@@ -1975,4 +1989,22 @@ test_expect_success $PREREQ 'Re: written only once with --in-reply-to and --comp
- 	grep "Subject: Re: subject goes here" msgtxt3
- '
- 
-+test_expect_success $PREREQ 'correct cited message with --in-reply-to and --compose' '
-+	grep "> On Sat, 12 Jun 2010 15:53:58 +0200, author@example.com wrote:" msgtxt3 &&
-+	grep ">> Have you seen my previous email?" msgtxt3 &&
-+	grep ">>> Previous content" msgtxt3
-+'
-+
-+test_expect_success $PREREQ 'Message is not cited with only --in-reply-to' '
-+	clean_fake_sendmail &&
-+	git send-email \
-+		--in-reply-to=email \
-+		--compose \
-+		--from="Example <nobody@example.com>" \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		-1 \
-+		2>errors &&
-+	! grep "Have you seen my previous email?" msgtxt1
-+'
-+
- test_done
--- 
-2.8.3
+Yeah, something like the bundle v3 mechanism is probably more efficient.
+
+Thanks,
+Christian.
