@@ -1,7 +1,7 @@
 From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH v4 13/38] i18n: git-sh-setup.sh: mark strings for translation
-Date: Tue,  7 Jun 2016 11:52:12 +0000
-Message-ID: <1465300357-7557-14-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v4 02/38] i18n: advice: mark string about detached head for translation
+Date: Tue,  7 Jun 2016 11:52:01 +0000
+Message-ID: <1465300357-7557-3-git-send-email-vascomalmeida@sapo.pt>
 References: <1465300357-7557-1-git-send-email-vascomalmeida@sapo.pt>
 Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
 	Jiang Xin <worldhello.net@gmail.com>,
@@ -9,27 +9,27 @@ Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
 	<avarab@gmail.com>, Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 13:54:48 2016
+X-From: git-owner@vger.kernel.org Tue Jun 07 13:54:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAFaa-0007Nz-Hi
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 13:54:32 +0200
+	id 1bAFas-0007al-NO
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 13:54:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754959AbcFGLy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 07:54:26 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:54122 "EHLO sapo.pt"
+	id S1754563AbcFGLxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 07:53:40 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:60855 "EHLO sapo.pt"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754927AbcFGLyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 07:54:24 -0400
-Received: (qmail 24026 invoked from network); 7 Jun 2016 11:54:22 -0000
-Received: (qmail 15405 invoked from network); 7 Jun 2016 11:54:22 -0000
+	id S1754551AbcFGLxg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 07:53:36 -0400
+Received: (qmail 26712 invoked from network); 7 Jun 2016 11:53:35 -0000
+Received: (qmail 9263 invoked from network); 7 Jun 2016 11:53:35 -0000
 Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 7 Jun 2016 11:54:17 -0000
+          for <git@vger.kernel.org>; 7 Jun 2016 11:53:33 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -39,248 +39,54 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296644>
 
-Positional arguments, such as $0, $1, etc, need to be stored on shell
-variables for use in translatable strings, according to gettext manual
-[1].
+Mark string with advice seen by the user when in detached head.
 
-Add git-sh-setup.sh to LOCALIZED_SH variable in Makefile to enable
-extraction of string marked for translation by xgettext.
-
-Source git-sh-i18n in git-sh-setup.sh for gettext support.
-git-sh-setup.sh is a shell library to be sourced by other shell scripts.
-In order to avoid other scripts from sourcing git-sh-i18n twice, remove
-line that sources it from them.  Not sourcing git-sh-i18n in any script
-that uses gettext would lead to failure due to, for instance, gettextln
-not being found.
-
-[1] http://www.gnu.org/software/gettext/manual/html_node/Preparing-Shell-Scripts.html
+Update test t7201-co.sh to pass under GETTEXT_POISON build. Pretend
+success if the number of lines of "git checkout renamer^" output is not
+greater than 1 and test are running under GETTEXT_POISON.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
+ advice.c      | 6 +++---
+ t/t7201-co.sh | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-I don't know if we want to copy the text from git-sh-i18n.sh into
-git-sh-setup.sh file or sourcing the former in the latter is enough.
-
- Makefile             |  4 +++-
- git-bisect.sh        |  1 -
- git-merge-octopus.sh |  1 -
- git-rebase.sh        |  1 -
- git-sh-setup.sh      | 63 +++++++++++++++++++++++++++++++++++++++-------------
- git-stash.sh         |  1 -
- git-submodule.sh     |  1 -
- 7 files changed, 50 insertions(+), 22 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index de5a030..6169389 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2063,7 +2063,9 @@ XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
- 	--keyword=gettextln --keyword=eval_gettextln
- XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --keyword=__ --language=Perl
- LOCALIZED_C = $(C_OBJ:o=c) $(LIB_H) $(GENERATED_H)
--LOCALIZED_SH = $(SCRIPT_SH) git-parse-remote.sh
-+LOCALIZED_SH = $(SCRIPT_SH)
-+LOCALIZED_SH += git-parse-remote.sh
-+LOCALIZED_SH += git-sh-setup.sh
- LOCALIZED_PERL = $(SCRIPT_PERL)
+diff --git a/advice.c b/advice.c
+index 4dc5cf1..cb445a7 100644
+--- a/advice.c
++++ b/advice.c
+@@ -106,14 +106,14 @@ void NORETURN die_conclude_merge(void)
  
- ifdef XGETTEXT_INCLUDE_TESTS
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 737bf05..30d01bb 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -33,7 +33,6 @@ Please use "git help bisect" to get the full man page.'
+ void detach_advice(const char *new_name)
+ {
+-	const char fmt[] =
+-	"Note: checking out '%s'.\n\n"
++	const char *fmt =
++	_("Note: checking out '%s'.\n\n"
+ 	"You are in 'detached HEAD' state. You can look around, make experimental\n"
+ 	"changes and commit them, and you can discard any commits you make in this\n"
+ 	"state without impacting any branches by performing another checkout.\n\n"
+ 	"If you want to create a new branch to retain commits you create, you may\n"
+ 	"do so (now or later) by using -b with the checkout command again. Example:\n\n"
+-	"  git checkout -b <new-branch-name>\n\n";
++	"  git checkout -b <new-branch-name>\n\n");
  
- OPTIONS_SPEC=
- . git-sh-setup
--. git-sh-i18n
- 
- _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
- _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
-diff --git a/git-merge-octopus.sh b/git-merge-octopus.sh
-index d79fc84..308eafd 100755
---- a/git-merge-octopus.sh
-+++ b/git-merge-octopus.sh
-@@ -6,7 +6,6 @@
- #
- 
- . git-sh-setup
--. git-sh-i18n
- 
- LF='
- '
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 9ba21ab..04f6e44 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -45,7 +45,6 @@ skip!              skip current patch and continue
- edit-todo!         edit the todo list during an interactive rebase
- "
- . git-sh-setup
--. git-sh-i18n
- set_reflog_action rebase
- require_work_tree_exists
- cd_to_toplevel
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index c48139a..2eda134 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -2,6 +2,9 @@
- # to set up some variables pointing at the normal git directories and
- # a few helper shell functions.
- 
-+# Source git-sh-i18n for gettext support.
-+. git-sh-i18n
-+
- # Having this variable in your environment would break scripts because
- # you would cause "cd" to be taken to unexpected places.  If you
- # like CDPATH, define it for your interactive shell sessions without
-@@ -83,16 +86,16 @@ if test -n "$OPTIONS_SPEC"; then
- else
- 	dashless=$(basename -- "$0" | sed -e 's/-/ /')
- 	usage() {
--		die "usage: $dashless $USAGE"
-+		die "$(eval_gettext "usage: \$dashless \$USAGE")"
- 	}
- 
- 	if [ -z "$LONG_USAGE" ]
- 	then
--		LONG_USAGE="usage: $dashless $USAGE"
-+		LONG_USAGE="$(eval_gettext "usage: \$dashless \$USAGE")"
- 	else
--		LONG_USAGE="usage: $dashless $USAGE
-+		LONG_USAGE="$(eval_gettext "usage: \$dashless \$USAGE
- 
--$LONG_USAGE"
-+$LONG_USAGE")"
- 	fi
- 
- 	case "$1" in
-@@ -182,7 +185,7 @@ is_bare_repository () {
- cd_to_toplevel () {
- 	cdup=$(git rev-parse --show-toplevel) &&
- 	cd "$cdup" || {
--		echo >&2 "Cannot chdir to $cdup, the toplevel of the working tree"
-+		gettextln "Cannot chdir to \$cdup, the toplevel of the working tree" >&2
- 		exit 1
- 	}
+ 	fprintf(stderr, fmt, new_name);
  }
-@@ -190,13 +193,16 @@ cd_to_toplevel () {
- require_work_tree_exists () {
- 	if test "z$(git rev-parse --is-bare-repository)" != zfalse
- 	then
--		die "fatal: $0 cannot be used without a working tree."
-+		program_name=$0
-+		die "$(gettext "fatal: \$program_name cannot be used without a working tree.")"
- 	fi
- }
- 
- require_work_tree () {
--	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true ||
--	die "fatal: $0 cannot be used without a working tree."
-+	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true || {
-+		program_name=$0
-+		die "$(gettext "fatal: \$program_name cannot be used without a working tree.")"
-+	}
- }
- 
- require_clean_work_tree () {
-@@ -206,24 +212,49 @@ require_clean_work_tree () {
- 
- 	if ! git diff-files --quiet --ignore-submodules
- 	then
--		echo >&2 "Cannot $1: You have unstaged changes."
-+		action=$1
-+		case "$action" in
-+		rebase)
-+			gettextln "Cannot rebase: You have unstaged changes." >&2
-+			;;
-+		"rewrite branches")
-+			gettextln "Cannot rewrite branches: You have unstaged changes." >&2
-+			;;
-+		"pull with rebase")
-+			gettextln "Cannot pull with rebase: You have unstaged changes." >&2
-+			;;
-+		*)
-+			eval_gettextln "Cannot \$action: You have unstaged changes." >&2
-+			;;
-+		esac
- 		err=1
- 	fi
- 
- 	if ! git diff-index --cached --quiet --ignore-submodules HEAD --
- 	then
--		if [ $err = 0 ]
-+		if test $err = 0
- 		then
--		    echo >&2 "Cannot $1: Your index contains uncommitted changes."
-+			action=$1
-+			case "$action" in
-+			rebase)
-+				gettextln "Cannot rebase: Your index contains uncommitted changes." >&2
-+				;;
-+			"pull with rebase")
-+				gettextln "Cannot pull with rebase: Your index contains uncommitted changes." >&2
-+				;;
-+			*)
-+				eval_gettextln "Cannot \$action: Your index contains uncommitted changes." >&2
-+				;;
-+			esac
- 		else
--		    echo >&2 "Additionally, your index contains uncommitted changes."
-+		    gettextln "Additionally, your index contains uncommitted changes." >&2
- 		fi
- 		err=1
- 	fi
- 
--	if [ $err = 1 ]
-+	if test $err = 1
- 	then
--		test -n "$2" && echo >&2 "$2"
-+		test -n "$2" && echo "$2" >&2
- 		exit 1
- 	fi
- }
-@@ -336,12 +367,12 @@ git_dir_init () {
- 	then
- 		test -z "$(git rev-parse --show-cdup)" || {
- 			exit=$?
--			echo >&2 "You need to run this command from the toplevel of the working tree."
-+			gettextln "You need to run this command from the toplevel of the working tree." >&2
- 			exit $exit
- 		}
- 	fi
- 	test -n "$GIT_DIR" && GIT_DIR=$(cd "$GIT_DIR" && pwd) || {
--		echo >&2 "Unable to determine absolute path of git directory"
-+		gettextln "Unable to determine absolute path of git directory" >&2
- 		exit 1
- 	}
- 	: ${GIT_OBJECT_DIRECTORY="$(git rev-parse --git-path objects)"}
-diff --git a/git-stash.sh b/git-stash.sh
-index c7509e8..22fb8bc 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -15,7 +15,6 @@ SUBDIRECTORY_OK=Yes
- OPTIONS_SPEC=
- START_DIR=$(pwd)
- . git-sh-setup
--. git-sh-i18n
- require_work_tree
- cd_to_toplevel
- 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 7fe8a51..5b9674a 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -16,7 +16,6 @@ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <re
- OPTIONS_SPEC=
- SUBDIRECTORY_OK=Yes
- . git-sh-setup
--. git-sh-i18n
- . git-parse-remote
- require_work_tree
- wt_prefix=$(git rev-parse --show-prefix)
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index 8859236..d4b217b 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -257,7 +257,7 @@ test_expect_success 'checkout to detach HEAD' '
+ 	git checkout -f renamer && git clean -f &&
+ 	git checkout renamer^ 2>messages &&
+ 	test_i18ngrep "HEAD is now at 7329388" messages &&
+-	test_line_count -gt 1 messages &&
++	(test_line_count -gt 1 messages || test -n "$GETTEXT_POISON") &&
+ 	H=$(git rev-parse --verify HEAD) &&
+ 	M=$(git show-ref -s --verify refs/heads/master) &&
+ 	test "z$H" = "z$M" &&
 -- 
 2.7.3
