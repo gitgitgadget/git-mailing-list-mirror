@@ -1,134 +1,94 @@
-From: William Duclot <william.duclot@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH V2 3/3] strbuf: allow to use preallocated memory
-Date: Tue, 7 Jun 2016 11:06:53 +0200
-Message-ID: <20160607090653.GA4665@Messiaen>
-References: <20160606151340.22424-1-william.duclot@ensimag.grenoble-inp.fr>
- <20160606151340.22424-4-william.duclot@ensimag.grenoble-inp.fr>
- <xmqqvb1mxmk4.fsf@gitster.mtv.corp.google.com>
- <20160606203901.GA7667@Messiaen>
- <xmqqfusquedk.fsf@gitster.mtv.corp.google.com>
- <20160606225847.GA22756@sigill.intra.peff.net>
- <xmqqbn3dvr22.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.8.4
+Date: Tue, 7 Jun 2016 11:37:29 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1606071136330.28610@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	antoine.queru@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr, mhagger@alum.mit.edu,
-	Johannes.Schindelin@gmx.de, mh@glandium.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 07 11:07:13 2016
+Content-Type: multipart/mixed; BOUNDARY="8323329-1737779600-1465292250=:28610"
+To: git-for-windows@googlegroups.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 07 11:37:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bACyd-0002VL-QF
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 11:07:12 +0200
+	id 1bADS8-0003xe-OE
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 11:37:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754453AbcFGJHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 05:07:01 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:34057 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754243AbcFGJG5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Jun 2016 05:06:57 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id D179120AE;
-	Tue,  7 Jun 2016 11:06:54 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9WyLGoGxAhhv; Tue,  7 Jun 2016 11:06:54 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id B6A2220AD;
-	Tue,  7 Jun 2016 11:06:54 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id AFE1E2066;
-	Tue,  7 Jun 2016 11:06:54 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SibjmoA7HlLx; Tue,  7 Jun 2016 11:06:54 +0200 (CEST)
-Received: from Messiaen (eduroam-032048.grenet.fr [130.190.32.48])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 927A52064;
-	Tue,  7 Jun 2016 11:06:54 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <xmqqbn3dvr22.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754031AbcFGJhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 05:37:35 -0400
+Received: from mout.gmx.net ([212.227.15.15]:64949 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752221AbcFGJhd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 05:37:33 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0Mgc0l-1amtGn0yE3-00O2tN; Tue, 07 Jun 2016 11:37:30
+ +0200
+X-X-Sender: virtualbox@virtualbox
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:la0r9i2eHlryzbY+s6B5RUvxP0MG+KmIUYS2NHJyrKxDiTRkl9U
+ wtQRtFiHql4HcJRT9Z8Fum6lIttabJAEPoZ+rESFqm/FsuhKWfPkjtdJQc7lUdWFepBpsqD
+ ZM4lMxieZeFOymgdS6bBVYJKM+Ulp64lNXivxjGVybKPHN6ygzQlpba+231DuJqrEVwTQzm
+ jyaiNmOAoaxTJ1dgAX6Ag==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nDUHXZvViD8=:eJdRq0pfgTcJDBH6Fg5f/C
+ EZ5Sw9gHEf4HGVEE7VJsxbW4QoxkbxpLr5wIqXM5utsxV2FrdGhwYfU8Nj8MUWtL1BCVR4hjE
+ HPf0++53eakZhIpbyAr7EmLitjndL09o2iciCKhCX5iDuawqnzxePmIvEMfc//8vS2bTsDC+X
+ AJmLI2AUcD5wBaV5PyuLdP59VTf8H02VmNtgsmOkuBCkmaXi1qNX3h/XrMjkWZfsAPDqZcw7W
+ m+VP3Y/froW0DakvFa2erJQm3SFIWWB7m2be7gxdIMwCkzsuhr/sV4FP451G+Ktj1pTa1WvTH
+ t4H9aJb+hhgQXzNtoGJZEF3PtsQlb/z/kBNMAiGutUFvxHrVPTKOslKYf0Xm3ipsQlluemR0k
+ p6cPiZyEWQFUpiasMlFlc7s+v75ZPL2fI8HUE3nSjtpgPVh0c0WQbdSFL0yyoxZDltpUW1a+i
+ zIq5z9lgtSEqDvNTSqGEHhW2BoTevNFEtT384l0EmFbkuZn1m9lKsjIdz5I+Mq1xhq8LeGplD
+ VGOyEzZiowaXzY6Sc7ORHFPJl4K4Bwkt+1tjYXMs3oBaQQ4jCBzTtX7AQvz+FjQwbOIL9C6UE
+ 9NE0YDE+ArlUg9Za9keZUfWpu4OyJ9CAQhzHinn4zJYysMxGir7PpZ/V1Gq9uPcmqZXVR5O4s
+ TSlhqyidwukbi1gY45d4Zi11qnLF/EgtNAqccaSkAQsLMIKYEkgxQmraaXRjw+g8XtAbZzjym
+ t5Z6C6Z1nCKdJRayXfYYYez23ebT6dQjP5zIrdAkONsmD/BqvOZoZ2zOeP8u9X+Ie8n9sI1m 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296622>
 
-On Mon, Jun 06, 2016 at 04:24:53PM -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
->>> I think that call should reset line.buf to the original buffer on
->>> the stack, instead of saying "Ok, I'll ignore the original memory
->>> not owned by us and instead keep pointing at the allocated memory",
->>> as the allocation was done as a fallback measure.
->>
->> I am not sure I agree. Do we think accessing the stack buffer is somehow
->> cheaper than the heap buffer (perhaps because of cache effects)? If so,
->> how much cheaper?
-> 
-> This is not about stack vs heap or even "cheaper" (whatever your
-> definition of cheap is).  The principle applies equally if the
-> original buffer came from BSS.
-> 
-> Perhaps I made it clearer by using a more exaggerated example e.g. a
-> typical expected buffer size of 128 bytes, but the third line of
-> 1000 line input file was an anomaly that is 200k bytes long.  I do
-> not want to keep that 200k bytes after finishing to process that
-> third line while using its initial 80 bytes for the remaining 977
-> lines.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-"its initial 128 bytes", rather than "its initial 80 bytes", no?
-Or else I'm lost :)
- 
-> By the way, William seemed to be unhappy with die(), but I actually
-> think having a die() in the API may not be a bad thing if the check
-> were about something more sensible.  For example, even if a strbuf
-> that can grow dynamically, capping the maximum size and say "Hey
-> this is a one-lne-at-a-timve text interface; if we need to grow the
-> buffer to 10MB, there is something wrong and a producer of such an
-> input does not even deserve a nice error message" could be an
-> entirely sensible attitude.  But that does not mean an initial
-> allocation should be 10MB.  If the expected typical workload fits
-> within a lot lower bound, starting from there and allowing it to
-> grow up to that maximum would be the more natural thing to do.
-> 
-> And the problem I have with the proposed "fixed" is that it does not
-> allow us to do that.
+--8323329-1737779600-1465292250=:28610
+Content-Type: text/plain; charset=X-UNKNOWN
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-The "fixed" feature was aimed to allow the users to use strbuf with
-strings that they doesn't own themselves (a function parameter for
-example). From Michael example in the original mail:
+Dear Git users,
 
-void f(char *path_buf, size_t path_buf_len)
-{
-    struct strbuf path;
-    strbuf_wrap_fixed(&path, path_buf,
-    strlen(path_buf),
-    path_buf_len);
-    ...
-    /*
-     * no strbuf_release() required here, but if called it
-     * is a NOOP
-     */
-}
+It is my pleasure to announce that Git for Windows 2.8.4 is available from:
 
-I don't have enough knowledge of the codebase to judge if this is
-useful, you seem to think it's not.
+=09https://git-for-windows.github.io/
 
-About this capping, I have troubles to understand if this is something
-you'd like to see in this patch (assuming I include your changes)? Or is
-this theoretical?
+Changes since Git for Windows v2.8.3 (May 20th 2016)
 
+New Features
 
-To sum up:
-* Rename "wrap" to "attach"
-* Forget about this "fixed" feature
-* Make the strbuf reuse the preallocated buffer after a reset() (and a
-detach() probably?)
-* Introduce a more practical macro STRBUF_INIT_ON_STACK() (maybe the
-name is too technical?)
-* A few code corrections
+  =E2=80=A2 Comes with Git 2.8.4.
+
+Bug Fixes
+
+  =E2=80=A2 Child processes no longer inherit handles to temporary files, w=
+hich
+    previously could prevent index.lock from being deleted.
+  =E2=80=A2 When configuring Git Bash with Windows' default console, it no
+    longer loses its icon.
+
+Filename | SHA-256
+-------- | -------
+Git-2.8.4-64-bit.exe | 1c4f50e11a8138944c21aaf5837606778cf1835c2bcce6936b40=
+ce48c9fbdb49
+Git-2.8.4-32-bit.exe | 502dadd830560088dfd7f8f9582d028dffa10cfd20b4616f0592=
+a8098f8f5a7a
+PortableGit-2.8.4-64-bit.7z.exe | 69018cf6c8af2b24cdfb64d469e0515d5c81471e8=
+4845d6012677ea3272bd4c0
+PortableGit-2.8.4-32-bit.7z.exe | 488dab9c25465df6c9452654623f5057340216708=
+2703f7af270d2d173eecce0
+Git-2.8.4-64-bit.tar.bz2 | 41ae6d6bcf906c8bf98092ae8577212d21d20b8d4f7784f2=
+690ed132116aec63
+Git-2.8.4-32-bit.tar.bz2 | 2cffb6f899377c9241322e215f5e32963992f1a3cb607e80=
+3a6427a02b2f0a94
+
+Ciao,
+Johannes
+--8323329-1737779600-1465292250=:28610--
