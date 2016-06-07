@@ -1,142 +1,87 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v2] regex: fix a SIZE_MAX macro redefinition warning
-Date: Tue, 7 Jun 2016 01:35:33 +0100
-Message-ID: <575616D5.8000008@ramsayjones.plus.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 1/4] diff.h: extend "flags" field to 64 bits because we're
+ out of bits
+Date: Tue, 7 Jun 2016 07:40:18 +0700
+Message-ID: <CACsJy8AVzWBsDhzj+UJo9AbSi0f=jrAyrLZ9sU=VBP3woFXr0A@mail.gmail.com>
+References: <20160606111643.7122-1-pclouds@gmail.com> <20160606111643.7122-2-pclouds@gmail.com>
+ <xmqqfusqw17r.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j6t@kdbg.org>,
-	GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Thomas Braun <thomas.braun@virtuell-zuhause.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 07 02:35:46 2016
+X-From: git-owner@vger.kernel.org Tue Jun 07 02:40:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bA4zh-0006tg-De
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 02:35:45 +0200
+	id 1bA54f-0001Xm-RX
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 02:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753552AbcFGAfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2016 20:35:41 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:33527 "EHLO
-	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752703AbcFGAfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 20:35:40 -0400
-Received: from [10.0.2.15] ([84.92.139.254])
-	by avasout04 with smtp
-	id 3cba1t0025VX2mk01cbb9y; Tue, 07 Jun 2016 01:35:37 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=K//fZHiI c=1 sm=1 tr=0
- a=RCQFcU9wfaUQolwYLdiqXg==:117 a=RCQFcU9wfaUQolwYLdiqXg==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=EBOSESyhAAAA:8 a=8Jlqrp-XWLw1LHWrE3kA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
+	id S1753555AbcFGAkt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2016 20:40:49 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:36945 "EHLO
+	mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752347AbcFGAkt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2016 20:40:49 -0400
+Received: by mail-it0-f44.google.com with SMTP id z123so59945501itg.0
+        for <git@vger.kernel.org>; Mon, 06 Jun 2016 17:40:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=SunpvLSq/njFGKw8AI8UwfMQ5cvHPUjrGv8tUtpmtOI=;
+        b=SqDFEAImt57zrJl271pz8vggAza+nPZrUyDYACuPAWSZQKXowjvGvULLFcTkQL858f
+         Ji+AaCuA2dIgFuDnl8dB39oGJQ0wM+EYdbiQfrTofPxbm/5DJTgCfq6HTDrkv8UNctjR
+         h/KvN3/lJ/MIcH7TrcJQF0bV63w7moaPKiprg5Tz8CdsLKi0JqJhp3WNwJCltBt1YNVQ
+         kWAf+Ekeg8hh30wmaja0YrL8+rkymDq89BS7Q1veY2KPDHQxNyeViP6H7OZ1GxYt8MGK
+         vqvO09PKG9Bl16br6Yh7lFb2tLOe4nV3rNYpDOWVoSeVd3hqLm/hVtEu5tjgu6gWzCmE
+         C5Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=SunpvLSq/njFGKw8AI8UwfMQ5cvHPUjrGv8tUtpmtOI=;
+        b=fDchROKWLkuXlCKDrbr2d8k5bc9C0PBsDzqrzA/0PUBz212VyvSmkQ1tvySojASx8E
+         lqplJYGBcLk8krBUqF5kH6m4Bwy/BsnUyFwhxT55ecooLL+7SgXQKh/Yuq+vGaqtvjJQ
+         w7vFy7z52jZ00Kma3khT9l/bsISErX6oPRC5qSKvooJXatL8geIfTwRe14Lw3mFgFTcW
+         nKniAvXxPa2N4pIdS1Oy4h3ZEA9KUeSR+HMiecg+qBWolzU9LRLvNeOsYcgkP3AfRefa
+         qPXpMIXyIh0hCGDF7llHvqlA2xVHbO2eWw4gSUNKX/xMdStZOYSnGapy9WGbKJE4hSLv
+         rjPg==
+X-Gm-Message-State: ALyK8tKZT7Drsax90vfOSrxGbz1MGRxWEw9ooGvi7NVskKP+sEuLV1e6z36XNnM3GGqtlOtnvdyBHf2KkwvqXg==
+X-Received: by 10.107.159.84 with SMTP id i81mr24515569ioe.29.1465260047757;
+ Mon, 06 Jun 2016 17:40:47 -0700 (PDT)
+Received: by 10.64.173.167 with HTTP; Mon, 6 Jun 2016 17:40:18 -0700 (PDT)
+In-Reply-To: <xmqqfusqw17r.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296581>
 
+On Tue, Jun 7, 2016 at 2:45 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> Current flags field is 32-bits, all used except one bit and we need =
+one
+>> more bit is needed for to toggle i-t-a behavior. The 9th bit could b=
+e
+>> reused for this, but we could just extend it to 64 bits now to give =
+room
+>> for more future flags.
+>
+> Isn't it a better option to add new things as separate words (or a
+> separate bit:1 field)?  Is this 32nd thing envisioned to be added
+> going to be used everywhere like the existing flag bits, or can it
+> be handled like "use_color", "break_opt", "show_rename_progress"?
 
-Since commit 56a1a3ab ("Silence GCC's \"cast of pointer to integer of a
-different size\" warning", 26-10-2015), sparse has been issuing a macro
-redefinition warning for the SIZE_MAX macro. However, gcc did not issue
-any such warning.
-
-After commit 56a1a3ab, in terms of the order of #includes and #defines,
-the code looked something like:
-
-  $ cat -n junk.c
-       1	#include <stddef.h>
-       2
-       3	#define SIZE_MAX ((size_t) -1)
-       4
-       5	#include <stdint.h>
-       6
-       7	int main(int argc, char *argv[])
-       8	{
-       9		return 0;
-      10	}
-  $
-  $ gcc junk.c
-  $
-
-However, if you compile that file with -Wsystem-headers, then it will
-also issue a warning. Having set -Wsystem-headers in CFLAGS, using the
-config.mak file, then (on cygwin):
-
-  $ make compat/regex/regex.o
-      CC compat/regex/regex.o
-  In file included from /usr/lib/gcc/x86_64-pc-cygwin/4.9.3/include/stdint.h:9:0,
-                   from compat/regex/regcomp.c:21,
-                   from compat/regex/regex.c:77:
-  /usr/include/stdint.h:362:0: warning: "SIZE_MAX" redefined
-   #define SIZE_MAX (__SIZE_MAX__)
-   ^
-  In file included from compat/regex/regex.c:69:0:
-  compat/regex/regex_internal.h:108:0: note: this is the location of the previous definition
-   # define SIZE_MAX ((size_t) -1)
-   ^
-  $
-
-The compilation of the compat/regex code is somewhat unusual in that the
-regex.c file directly #includes the other c files (regcomp.c, regexec.c
-and regex_internal.c). Commit 56a1a3ab added an #include of <stdint.h>
-to the regcomp.c file, which results in the redefinition, since this is
-included after the regex_internal.h header. This header file contains a
-'fallback' definition for SIZE_MAX, in order to support systems which do
-not have the <stdint.h> header (the HAVE_STDINT_H macro is not defined).
-
-In order to suppress the warning, we move the #include of <stdint.h>
-from regcomp.c to the start of the compilation unit, close to the top
-of regex.c, prior to the #include of the regex_internal.h header.
-
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
-
-Change from v1:
-	- add the #include <stdint.h> to the top of regex.c, rather than
-	  use HAVE_STDINT_H to 'activate' the conditional inclusion of
-	  <stdint.h> in the regex_internal.h header.
-
-Junio and Johannes - thanks for the feedback on v1 of the patch.
-
-ATB,
-Ramsay Jones
-
- compat/regex/regcomp.c | 2 --
- compat/regex/regex.c   | 1 +
- 2 files changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/compat/regex/regcomp.c b/compat/regex/regcomp.c
-index fba5986..d8bde06 100644
---- a/compat/regex/regcomp.c
-+++ b/compat/regex/regcomp.c
-@@ -18,8 +18,6 @@
-    Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-    02110-1301 USA.  */
- 
--#include <stdint.h>
--
- static reg_errcode_t re_compile_internal (regex_t *preg, const char * pattern,
- 					  size_t length, reg_syntax_t syntax);
- static void re_compile_fastmap_iter (regex_t *bufp,
-diff --git a/compat/regex/regex.c b/compat/regex/regex.c
-index 6aaae00..5cb23e5 100644
---- a/compat/regex/regex.c
-+++ b/compat/regex/regex.c
-@@ -60,6 +60,7 @@
-    GNU regex allows.  Include it before <regex.h>, which correctly
-    #undefs RE_DUP_MAX and sets it to the right value.  */
- #include <limits.h>
-+#include <stdint.h>
- 
- #ifdef GAWK
- #undef alloca
--- 
-2.8.0
+It could probably live as a separate bitfield, or an int. What scares
+me is "flags" sometimes is backed up then restored, but it's probably
+ok. But we need to extend this "flags" eventually, don't we? I don't
+think people will stop adding new  DIFF_OPT_ flags.
+--=20
+Duy
