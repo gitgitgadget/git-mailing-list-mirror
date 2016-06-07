@@ -1,75 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/8] Add basic Coccinelle transforms.
-Date: Mon, 06 Jun 2016 19:54:12 -0700
-Message-ID: <xmqqfuspu2sr.fsf@gitster.mtv.corp.google.com>
-References: <20160607005716.69222-2-sandals@crustytoothpaste.net>
-	<xmqqk2i1u3zn.fsf@gitster.mtv.corp.google.com>
-	<20160607023144.GA72717@vauxhall.crustytoothpaste.net>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: Minor Bug in Renaming Branches
+Date: Tue, 7 Jun 2016 06:13:14 +0200
+Message-ID: <575649DA.4080702@web.de>
+References: <CA+wHs3MSax1eo9V_5hnsbEte0k5tX22dAgSUAEzN7aw22rUnhA@mail.gmail.com>
+ <54505ef2-7db6-8bc4-0ffb-0ac28c7d6046@web.de>
+ <CAGZ79kb77m8ymDkJGMaWi8yOdSphpYifDPHQ=+nZMBhRi47i9w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Tue Jun 07 04:54:22 2016
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Samuel Lijin <samuel.lijin@formlabs.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Jun 07 06:13:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bA79p-0003qE-Aj
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 04:54:21 +0200
+	id 1bA8OQ-0005OA-CS
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 06:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751675AbcFGCyR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2016 22:54:17 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53208 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750974AbcFGCyQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2016 22:54:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 89F50235D6;
-	Mon,  6 Jun 2016 22:54:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=F8UxxAiGOAcd+EpOqAhyai1Sigo=; b=Jy4UgZ
-	rd4SmsrI3ZexSR+2hfvhO/xh2h25pvEf+hJhiDxMlFB7n6CPlkQdl6u3l9lSFeNj
-	s4+TIo/Q6os2Gg6VLpMTyzPk85EzzVkS3St8K3fkVfx4dUYfq43Xi6M9g4JOF7o9
-	Y5maBk8KcxoHr4U+C87NYYFZfMpgmk2czwwB0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LRnXt/A2+9u5jNC9wV2UzRrACtNyvcfY
-	nGhQnPRydstfOUreK7dJ7fWlwvHH2or59ixuB8d3WNVDU0kal6yhAUha/Gj7nA+6
-	85D5h8pD3XBNOqI77l8nRDWgrk/+83bQEuedA4235APub4kp3WlNeNdQajkrDJRc
-	KtydA1f1NuI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8297E235D5;
-	Mon,  6 Jun 2016 22:54:14 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0DD8E235D4;
-	Mon,  6 Jun 2016 22:54:13 -0400 (EDT)
-In-Reply-To: <20160607023144.GA72717@vauxhall.crustytoothpaste.net> (brian
-	m. carlson's message of "Tue, 7 Jun 2016 02:31:44 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1E239154-2C5B-11E6-898B-89D312518317-77302942!pb-smtp1.pobox.com
+	id S1752727AbcFGENZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jun 2016 00:13:25 -0400
+Received: from mout.web.de ([212.227.15.4]:61102 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750788AbcFGENZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 00:13:25 -0400
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0LyftH-1bUsno12rX-0166KB; Tue, 07 Jun 2016 06:13:19
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
+ Icedove/38.7.0
+In-Reply-To: <CAGZ79kb77m8ymDkJGMaWi8yOdSphpYifDPHQ=+nZMBhRi47i9w@mail.gmail.com>
+X-Provags-ID: V03:K0:+aWykPR5+ORxCwkO1S4YY2S0K6sU0qUj9ZBVI8Hb4ezE02frHBI
+ Xvk5R3VcRtMOeOnOOn3Zne88WF3PHLg9HdcWwDB8EHoLQigEfIHmvt8EaS4/2B/vpVY84vw
+ 1FSPfGVjQKnJmOefFf5y33rddQPQxvUCWV0rOwZgVjvHT5KVfhODXAkj6utjBOumJqH0wgT
+ O45n8UZaZsnsgkl+9kYtw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:J64+OGlZwDE=:kMT5Srrt5q4ueC5Qo8Dkux
+ 26XJXnx3Y9tH2ibddQN8ml8MafwPdf6dEWghBuR7CMtXH/TAx/DBiHHJSp3DJFOpoe96sPb4C
+ 4HDxSUOvx6NW8Zz2fu1R6iFqXEe86wnEIL1+fJVCdQKW0rJz9ogDw0cWM1v/16AxO4B/sPxK/
+ fMDMJqMDpAUy+QEj47qRTG0eh3its+9VceVjFTcr24JIn+q6b0SRT+0ksTEGfUVDtWcV1BdJ+
+ FxrCtGRDsUB07CBdWBdhDzNIRfGf9adTaH6v0IyH1ZwRM1dZgAPpNnzf/wIFbsGqYjZ6qqw7L
+ sNcLPqUn2emegQUOxM831d9XL99xsVNnvTa/8PtKjY+fWErklbaT5kcLE6yU/R2THsRet5PcC
+ I5c9pXQx36mAIQl3GGDr7qB7qT95mbsqwk7Mx85GHXK7uGemrbxtxg4EbK7QcR1lkjkN2fxS9
+ 7/Bg10UB4IcixEUsOjY/ETNktmkEqFFXkeZLmqLwu20C+ZZyvwxnhM/gF/YdrHsF69TojKlCB
+ bKOM5lfTKisXpb0mqIZxvcSFGB3ZuPPDsz0lxHBbBomweg5m/9KdmI1+pPJg3l3GqQ77ycD3A
+ VZPjp85fgHyopWLWm1nEFZfCHCgT1oslAUk/zj4BNlrKty3OukME5+NAELvMS/os3qShajeYC
+ /uVRU/Tk4DgrgficlwSkgIgP3pciAUR5LPuZ3AFrbKLqSFa5I4ztn7Mx2zidvSPEHp6Aa+4Sr
+ jzcJCbXtU36zXkbSFHk0GW+2nG5KEeGZ3ouoQWz1vG7f1VwUFjsWa50RSflnNh5BQzvbkvcb 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296593>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-
-> My goal here is simply to avoid needing to include this set of
-> transformations in each commit message, which would tend to bloat it
-> considerably.
-
-Yeah, I understand that.  Philosophically this is similar to what we
-traditionally keep in contrib/examples/, where it is not really part
-of git-the-product but is still shipped to help git developers.
-
-The resulting changes looked reasonably clean and thorough (the
-latter is understandable as it is a tool's output ;-), and the input
-language quite understandable.  This sounds like a fun process.
-
-Thanks.
+On 06/06/2016 09:35 PM, Stefan Beller wrote:
+> On Mon, Jun 6, 2016 at 12:17 PM, Torsten B=C3=B6gershausen <tboegi@we=
+b.de> wrote:
+>
+>> A limitation is introduced by Mac OS and Windows:
+>> BRANCH/NAME and branch/name refer to the same object in the file
+>> system.
+>> As a workaround, you can pack the branch names:
+>> git pack-refs --all
+>
+> Once you packed a branch into the packed refs file, you can
+> create another loose branch of different capitalization,
+> which then 'hides' the packed ref?
+>
+> That sounds error prone to me, as a seemingly unrelated branch
+> changed its value:
+>
+>      git branch BRANCH 012345
+>      git pack-refs --all
+>      git branch branch BRANCH^
+>      git rev-parse BRANCH
+>      (I'd expect BRANCH^ as return)
+>
+> (I don't have a windows machine for testing here, so that
+> is pure speculation)
+>
+Yes, another reason not to use branch and BRANCH in the same repo.
+(You can test under Linux & vfat)
