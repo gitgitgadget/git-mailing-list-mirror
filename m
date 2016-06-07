@@ -1,7 +1,7 @@
 From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH v4 23/38] i18n: bisect: mark strings for translation
-Date: Tue,  7 Jun 2016 11:52:22 +0000
-Message-ID: <1465300357-7557-24-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v4 18/38] tests: use test_i18n* functions to suppress false positives
+Date: Tue,  7 Jun 2016 11:52:17 +0000
+Message-ID: <1465300357-7557-19-git-send-email-vascomalmeida@sapo.pt>
 References: <1465300357-7557-1-git-send-email-vascomalmeida@sapo.pt>
 Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
 	Jiang Xin <worldhello.net@gmail.com>,
@@ -9,27 +9,27 @@ Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
 	<avarab@gmail.com>, Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 13:55:08 2016
+X-From: git-owner@vger.kernel.org Tue Jun 07 13:55:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAFb7-0007sf-Pe
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 13:55:06 +0200
+	id 1bAFb5-0007sf-5P
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 13:55:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754936AbcFGLzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 07:55:00 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:54321 "EHLO sapo.pt"
+	id S932866AbcFGLyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 07:54:47 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:33013 "EHLO sapo.pt"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754057AbcFGLy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 07:54:56 -0400
-Received: (qmail 24617 invoked from network); 7 Jun 2016 11:54:55 -0000
-Received: (qmail 20765 invoked from network); 7 Jun 2016 11:54:55 -0000
+	id S932853AbcFGLyl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 07:54:41 -0400
+Received: (qmail 27868 invoked from network); 7 Jun 2016 11:54:39 -0000
+Received: (qmail 18103 invoked from network); 7 Jun 2016 11:54:39 -0000
 Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 7 Jun 2016 11:54:52 -0000
+          for <git@vger.kernel.org>; 7 Jun 2016 11:54:36 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -39,276 +39,472 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296648>
 
-In the last message, involving Q_(), try to mark the message in such way
-that is suited for RTL (Right to Left) languages.
+The test functions test_i18ncmp and test_i18ngrep pretend success if run
+under GETTEXT_POISON. By using those functions to test output which is
+correctly marked as translatable, enables one to detect if the strings
+newly marked for translation are from plumbing output. If they are
+indeed from plumbing, the test would fail, and the string should be
+unmarked, since it is not seen by users.
 
-Update test t6030-bisect-porcelain.sh to reflect the changes.
+Thus, it is productive to not have false positives when running the test
+under GETTEXT_POISON. This commit replaces normal test functions by
+their i18n aware variants in use-cases know to be correctly marked for
+translation, suppressing false positives.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- bisect.c                    | 56 +++++++++++++++++++++++++--------------------
- t/t6030-bisect-porcelain.sh | 22 +++++++++---------
- 2 files changed, 42 insertions(+), 36 deletions(-)
+ t/t0008-ignores.sh                |  4 ++--
+ t/t1300-repo-config.sh            |  8 ++++----
+ t/t1307-config-blob.sh            |  5 +----
+ t/t1308-config-set.sh             |  4 ++--
+ t/t1400-update-ref.sh             |  2 +-
+ t/t2010-checkout-ambiguous.sh     |  2 +-
+ t/t2018-checkout-branch.sh        |  2 +-
+ t/t3200-branch.sh                 |  6 +++---
+ t/t3201-branch-contains.sh        |  2 +-
+ t/t3320-notes-merge-worktrees.sh  |  2 +-
+ t/t5505-remote.sh                 |  2 +-
+ t/t5510-fetch.sh                  |  2 +-
+ t/t5523-push-upstream.sh          |  4 ++--
+ t/t5536-fetch-conflicts.sh        |  4 ++--
+ t/t6301-for-each-ref-errors.sh    | 10 +++++-----
+ t/t7063-status-untracked-cache.sh |  2 +-
+ t/t7102-reset.sh                  |  4 ++--
+ t/t7400-submodule-basic.sh        |  2 +-
+ t/t7403-submodule-sync.sh         |  4 ++--
+ t/t7406-submodule-update.sh       | 10 +++++-----
+ t/t7508-status.sh                 |  4 ++--
+ 21 files changed, 41 insertions(+), 44 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 6d93edb..a8713a8 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -438,12 +438,12 @@ static void read_bisect_paths(struct argv_array *array)
- 	FILE *fp = fopen(filename, "r");
- 
- 	if (!fp)
--		die_errno("Could not open file '%s'", filename);
-+		die_errno(_("Could not open file '%s'"), filename);
- 
- 	while (strbuf_getline_lf(&str, fp) != EOF) {
- 		strbuf_trim(&str);
- 		if (sq_dequote_to_argv_array(str.buf, array))
--			die("Badly quoted content in file '%s': %s",
-+			die(_("Badly quoted content in file '%s': %s"),
- 			    filename, str.buf);
- 	}
- 
-@@ -649,7 +649,7 @@ static void exit_if_skipped_commits(struct commit_list *tried,
- 	print_commit_list(tried, "%s\n", "%s\n");
- 	if (bad)
- 		printf("%s\n", oid_to_hex(bad));
--	printf("We cannot bisect more!\n");
-+	printf(_("We cannot bisect more!\n"));
- 	exit(2);
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index b425f3a..d27f438 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -34,7 +34,7 @@ expect_from_stdin () {
+ test_stderr () {
+ 	expected="$1"
+ 	expect_in stderr "$1" &&
+-	test_cmp "$HOME/expected-stderr" "$HOME/stderr"
++	test_i18ncmp "$HOME/expected-stderr" "$HOME/stderr"
  }
  
-@@ -702,7 +702,7 @@ static struct commit *get_commit_reference(const unsigned char *sha1)
- {
- 	struct commit *r = lookup_commit_reference(sha1);
- 	if (!r)
--		die("Not a valid commit name %s", sha1_to_hex(sha1));
-+		die(_("Not a valid commit name %s"), sha1_to_hex(sha1));
- 	return r;
- }
+ broken_c_unquote () {
+@@ -47,7 +47,7 @@ broken_c_unquote_verbose () {
  
-@@ -726,27 +726,27 @@ static void handle_bad_merge_base(void)
- 		char *bad_hex = oid_to_hex(current_bad_oid);
- 		char *good_hex = join_sha1_array_hex(&good_revs, ' ');
- 		if (!strcmp(term_bad, "bad") && !strcmp(term_good, "good")) {
--			fprintf(stderr, "The merge base %s is bad.\n"
-+			fprintf(stderr, _("The merge base %s is bad.\n"
- 				"This means the bug has been fixed "
--				"between %s and [%s].\n",
-+				"between %s and [%s].\n"),
- 				bad_hex, bad_hex, good_hex);
- 		} else if (!strcmp(term_bad, "new") && !strcmp(term_good, "old")) {
--			fprintf(stderr, "The merge base %s is new.\n"
-+			fprintf(stderr, _("The merge base %s is new.\n"
- 				"The property has changed "
--				"between %s and [%s].\n",
-+				"between %s and [%s].\n"),
- 				bad_hex, bad_hex, good_hex);
- 		} else {
--			fprintf(stderr, "The merge base %s is %s.\n"
-+			fprintf(stderr, _("The merge base %s is %s.\n"
- 				"This means the first '%s' commit is "
--				"between %s and [%s].\n",
-+				"between %s and [%s].\n"),
- 				bad_hex, term_bad, term_good, bad_hex, good_hex);
- 		}
- 		exit(3);
- 	}
- 
--	fprintf(stderr, "Some %s revs are not ancestor of the %s rev.\n"
-+	fprintf(stderr, _("Some %s revs are not ancestor of the %s rev.\n"
- 		"git bisect cannot work properly in this case.\n"
--		"Maybe you mistook %s and %s revs?\n",
-+		"Maybe you mistook %s and %s revs?\n"),
- 		term_good, term_bad, term_good, term_bad);
- 	exit(1);
- }
-@@ -757,11 +757,11 @@ static void handle_skipped_merge_base(const unsigned char *mb)
- 	char *bad_hex = sha1_to_hex(current_bad_oid->hash);
- 	char *good_hex = join_sha1_array_hex(&good_revs, ' ');
- 
--	warning("the merge base between %s and [%s] "
-+	warning(_("the merge base between %s and [%s] "
- 		"must be skipped.\n"
- 		"So we cannot be sure the first %s commit is "
- 		"between %s and %s.\n"
--		"We continue anyway.",
-+		"We continue anyway."),
- 		bad_hex, good_hex, term_bad, mb_hex, bad_hex);
- 	free(good_hex);
- }
-@@ -792,7 +792,7 @@ static void check_merge_bases(int no_checkout)
- 		} else if (0 <= sha1_array_lookup(&skipped_revs, mb)) {
- 			handle_skipped_merge_base(mb);
- 		} else {
--			printf("Bisecting: a merge base must be tested\n");
-+			printf(_("Bisecting: a merge base must be tested\n"));
- 			exit(bisect_checkout(mb, no_checkout));
- 		}
- 	}
-@@ -843,7 +843,7 @@ static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
- 	int fd;
- 
- 	if (!current_bad_oid)
--		die("a %s revision is needed", term_bad);
-+		die(_("a %s revision is needed"), term_bad);
- 
- 	/* Check if file BISECT_ANCESTORS_OK exists. */
- 	if (!stat(filename, &st) && S_ISREG(st.st_mode))
-@@ -860,7 +860,7 @@ static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
- 	/* Create file BISECT_ANCESTORS_OK. */
- 	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
- 	if (fd < 0)
--		warning_errno("could not create file '%s'",
-+		warning_errno(_("could not create file '%s'"),
- 			      filename);
+ stderr_contains () {
+ 	regexp="$1"
+-	if grep "$regexp" "$HOME/stderr"
++	if test_i18ngrep "$regexp" "$HOME/stderr"
+ 	then
+ 		return 0
  	else
- 		close(fd);
-@@ -910,7 +910,7 @@ void read_bisect_terms(const char **read_bad, const char **read_good)
- 			*read_good = "good";
- 			return;
- 		} else {
--			die_errno("could not read file '%s'", filename);
-+			die_errno(_("could not read file '%s'"), filename);
- 		}
- 	} else {
- 		strbuf_getline_lf(&str, fp);
-@@ -936,10 +936,11 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 	struct commit_list *tried;
- 	int reaches = 0, all = 0, nr, steps;
- 	const unsigned char *bisect_rev;
-+	char steps_msg[32];
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index d934a24..923bfc5 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -886,7 +886,7 @@ test_expect_success !MINGW 'get --path copes with unset $HOME' '
+ 		git config --get --path path.normal >>result &&
+ 		git config --get --path path.trailingtilde >>result
+ 	) &&
+-	grep "[Ff]ailed to expand.*~/" msg &&
++	test_i18ngrep "[Ff]ailed to expand.*~/" msg &&
+ 	test_cmp expect result
+ '
  
- 	read_bisect_terms(&term_bad, &term_good);
- 	if (read_bisect_refs())
--		die("reading bisect refs failed");
-+		die(_("reading bisect refs failed"));
+@@ -1126,7 +1126,7 @@ test_expect_success 'barf on syntax error' '
+ 	key garbage
+ 	EOF
+ 	test_must_fail git config --get section.key >actual 2>error &&
+-	grep " line 3 " error
++	test_i18ngrep " line 3 " error
+ '
  
- 	check_good_are_ancestors_of_bad(prefix, no_checkout);
+ test_expect_success 'barf on incomplete section header' '
+@@ -1136,7 +1136,7 @@ test_expect_success 'barf on incomplete section header' '
+ 	key = value
+ 	EOF
+ 	test_must_fail git config --get section.key >actual 2>error &&
+-	grep " line 2 " error
++	test_i18ngrep " line 2 " error
+ '
  
-@@ -959,7 +960,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 		 */
- 		exit_if_skipped_commits(tried, NULL);
+ test_expect_success 'barf on incomplete string' '
+@@ -1146,7 +1146,7 @@ test_expect_success 'barf on incomplete string' '
+ 	key = "value string
+ 	EOF
+ 	test_must_fail git config --get section.key >actual 2>error &&
+-	grep " line 3 " error
++	test_i18ngrep " line 3 " error
+ '
  
--		printf("%s was both %s and %s\n",
-+		printf(_("%s was both %s and %s\n"),
- 		       oid_to_hex(current_bad_oid),
- 		       term_good,
- 		       term_bad);
-@@ -967,8 +968,8 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 	}
+ test_expect_success 'urlmatch' '
+diff --git a/t/t1307-config-blob.sh b/t/t1307-config-blob.sh
+index 3c6791e..eed31ff 100755
+--- a/t/t1307-config-blob.sh
++++ b/t/t1307-config-blob.sh
+@@ -61,10 +61,7 @@ test_expect_success 'parse errors in blobs are properly attributed' '
+ 	git commit -m broken &&
  
- 	if (!all) {
--		fprintf(stderr, "No testable commit found.\n"
--			"Maybe you started with bad path parameters?\n");
-+		fprintf(stderr, _("No testable commit found.\n"
-+			"Maybe you started with bad path parameters?\n"));
- 		exit(4);
- 	}
+ 	test_must_fail git config --blob=HEAD:config some.value 2>err &&
+-
+-	# just grep for our token as the exact error message is likely to
+-	# change or be internationalized
+-	grep "HEAD:config" err
++	test_i18ngrep "HEAD:config" err
+ '
  
-@@ -985,9 +986,14 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ test_expect_success 'can parse blob ending with CR' '
+diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
+index 005d66d..cd62063 100755
+--- a/t/t1308-config-set.sh
++++ b/t/t1308-config-set.sh
+@@ -197,14 +197,14 @@ test_expect_success 'proper error on error in default config files' '
+ 	echo "[" >>.git/config &&
+ 	echo "fatal: bad config line 34 in file .git/config" >expect &&
+ 	test_expect_code 128 test-config get_value foo.bar 2>actual &&
+-	test_cmp expect actual
++	test_i18ncmp expect actual
+ '
  
- 	nr = all - reaches - 1;
- 	steps = estimate_bisect_steps(all);
--	printf("Bisecting: %d revision%s left to test after this "
--	       "(roughly %d step%s)\n", nr, (nr == 1 ? "" : "s"),
--	       steps, (steps == 1 ? "" : "s"));
-+	xsnprintf(steps_msg, sizeof(steps_msg),
-+		  Q_("(roughly %d step)", "(roughly %d steps)", steps),
-+		  steps);
-+	/* TRANSLATORS: the last %s will be replaced with
-+	   "(roughly %d steps)" translation */
-+	printf(Q_("Bisecting: %d revision left to test after this %s\n",
-+		  "Bisecting: %d revisions left to test after this %s\n",
-+		  nr), nr, steps_msg);
+ test_expect_success 'proper error on error in custom config files' '
+ 	echo "[" >>syntax-error &&
+ 	echo "fatal: bad config line 1 in file syntax-error" >expect &&
+ 	test_expect_code 128 test-config configset_get_value foo.bar syntax-error 2>actual &&
+-	test_cmp expect actual
++	test_i18ncmp expect actual
+ '
  
- 	return bisect_checkout(bisect_rev, no_checkout);
+ test_expect_success 'check line errors for malformed values' '
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index af1b20d..75fa654 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -361,7 +361,7 @@ test_expect_success 'stdin test setup' '
+ 
+ test_expect_success '-z fails without --stdin' '
+ 	test_must_fail git update-ref -z $m $m $m 2>err &&
+-	grep "usage: git update-ref" err
++	test_i18ngrep "usage: git update-ref" err
+ '
+ 
+ test_expect_success 'stdin works with no input' '
+diff --git a/t/t2010-checkout-ambiguous.sh b/t/t2010-checkout-ambiguous.sh
+index 87bdf9c..e76e84a 100755
+--- a/t/t2010-checkout-ambiguous.sh
++++ b/t/t2010-checkout-ambiguous.sh
+@@ -49,7 +49,7 @@ test_expect_success 'disambiguate checking out from a tree-ish' '
+ 
+ test_expect_success 'accurate error message with more than one ref' '
+ 	test_must_fail git checkout HEAD master -- 2>actual &&
+-	grep 2 actual &&
++	test_i18ngrep 2 actual &&
+ 	test_i18ngrep "one reference expected, 2 given" actual
+ '
+ 
+diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
+index 2741262..2131fb2 100755
+--- a/t/t2018-checkout-branch.sh
++++ b/t/t2018-checkout-branch.sh
+@@ -124,7 +124,7 @@ test_expect_success 'checkout -b to @{-1} fails with the right branch name' '
+ 	git checkout branch2 &&
+ 	echo  >expect "fatal: A branch named '\''branch1'\'' already exists." &&
+ 	test_must_fail git checkout -b @{-1} 2>actual &&
+-	test_cmp expect actual
++	test_i18ncmp expect actual
+ '
+ 
+ test_expect_success 'checkout -B to an existing branch resets branch to HEAD' '
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index f3e3b6c..ac9c764 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -550,7 +550,7 @@ If you wanted to make '"'master'"' track '"'origin/master'"', do this:
+     git branch -d origin/master
+     git branch --set-upstream-to origin/master
+ EOF
+-	test_cmp expected actual
++	test_i18ncmp expected actual
+ '
+ 
+ test_expect_success '--set-upstream with two args only shows the deprecation message' '
+@@ -559,7 +559,7 @@ test_expect_success '--set-upstream with two args only shows the deprecation mes
+ 	cat >expected <<EOF &&
+ The --set-upstream flag is deprecated and will be removed. Consider using --track or --set-upstream-to
+ EOF
+-	test_cmp expected actual
++	test_i18ncmp expected actual
+ '
+ 
+ test_expect_success '--set-upstream with one arg only shows the deprecation message if the branch existed' '
+@@ -568,7 +568,7 @@ test_expect_success '--set-upstream with one arg only shows the deprecation mess
+ 	cat >expected <<EOF &&
+ The --set-upstream flag is deprecated and will be removed. Consider using --track or --set-upstream-to
+ EOF
+-	test_cmp expected actual
++	test_i18ncmp expected actual
+ '
+ 
+ test_expect_success '--set-upstream-to notices an error to set branch as own upstream' '
+diff --git a/t/t3201-branch-contains.sh b/t/t3201-branch-contains.sh
+index 912a663..7f3ec47 100755
+--- a/t/t3201-branch-contains.sh
++++ b/t/t3201-branch-contains.sh
+@@ -156,7 +156,7 @@ test_expect_success 'branch --merged with --verbose' '
+ 	* topic  2c939f4 [ahead 1] foo
+ 	  zzz    c77a0a9 second on master
+ 	EOF
+-	test_cmp expect actual
++	test_i18ncmp expect actual
+ '
+ 
+ test_done
+diff --git a/t/t3320-notes-merge-worktrees.sh b/t/t3320-notes-merge-worktrees.sh
+index 1f71d58..522157b 100755
+--- a/t/t3320-notes-merge-worktrees.sh
++++ b/t/t3320-notes-merge-worktrees.sh
+@@ -52,7 +52,7 @@ test_expect_success 'merge z into y while mid-merge in another workdir fails' '
+ 		cd worktree &&
+ 		git config core.notesRef refs/notes/y &&
+ 		test_must_fail git notes merge z 2>err &&
+-		grep "A notes merge into refs/notes/y is already in-progress at" err
++		test_i18ngrep "A notes merge into refs/notes/y is already in-progress at" err
+ 	) &&
+ 	test_path_is_missing .git/worktrees/worktree/NOTES_MERGE_REF
+ '
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index dd2e6ce..8198d8e 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -1182,7 +1182,7 @@ test_expect_success 'extra args: setup' '
+ test_extra_arg () {
+ 	test_expect_success "extra args: $*" "
+ 		test_must_fail git remote $* bogus_extra_arg 2>actual &&
+-		grep '^usage:' actual
++		test_i18ngrep '^usage:' actual
+ 	"
  }
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 7012011..86d1380 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -362,7 +362,7 @@ test_expect_success 'bisect starting with a detached HEAD' '
- test_expect_success 'bisect errors out if bad and good are mistaken' '
- 	git bisect reset &&
- 	test_must_fail git bisect start $HASH2 $HASH4 2> rev_list_error &&
--	grep "mistook good and bad" rev_list_error &&
-+	test_i18ngrep "mistook good and bad" rev_list_error &&
- 	git bisect reset
+ 
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 454d896..88076da 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -644,7 +644,7 @@ test_expect_success 'fetch --prune prints the remotes url' '
+ 		git fetch --prune origin 2>&1 | head -n1 >../actual
+ 	) &&
+ 	echo "From ${D}/." >expect &&
+-	test_cmp expect actual
++	test_i18ncmp expect actual
  '
  
-@@ -404,7 +404,7 @@ test_expect_success 'side branch creation' '
+ test_expect_success 'branchname D/F conflict resolved by --prune' '
+diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
+index 3683df1..4a7b98b 100755
+--- a/t/t5523-push-upstream.sh
++++ b/t/t5523-push-upstream.sh
+@@ -75,7 +75,7 @@ test_expect_success TTY 'progress messages go to tty' '
+ 	ensure_fresh_upstream &&
  
- test_expect_success 'good merge base when good and bad are siblings' '
- 	git bisect start "$HASH7" "$SIDE_HASH7" > my_bisect_log.txt &&
--	grep "merge base must be tested" my_bisect_log.txt &&
-+	test_i18ngrep "merge base must be tested" my_bisect_log.txt &&
- 	grep $HASH4 my_bisect_log.txt &&
- 	git bisect good > my_bisect_log.txt &&
- 	test_must_fail grep "merge base must be tested" my_bisect_log.txt &&
-@@ -413,7 +413,7 @@ test_expect_success 'good merge base when good and bad are siblings' '
- '
- test_expect_success 'skipped merge base when good and bad are siblings' '
- 	git bisect start "$SIDE_HASH7" "$HASH7" > my_bisect_log.txt &&
--	grep "merge base must be tested" my_bisect_log.txt &&
-+	test_i18ngrep "merge base must be tested" my_bisect_log.txt &&
- 	grep $HASH4 my_bisect_log.txt &&
- 	git bisect skip > my_bisect_log.txt 2>&1 &&
- 	grep "warning" my_bisect_log.txt &&
-@@ -423,11 +423,11 @@ test_expect_success 'skipped merge base when good and bad are siblings' '
- 
- test_expect_success 'bad merge base when good and bad are siblings' '
- 	git bisect start "$HASH7" HEAD > my_bisect_log.txt &&
--	grep "merge base must be tested" my_bisect_log.txt &&
-+	test_i18ngrep "merge base must be tested" my_bisect_log.txt &&
- 	grep $HASH4 my_bisect_log.txt &&
- 	test_must_fail git bisect bad > my_bisect_log.txt 2>&1 &&
--	grep "merge base $HASH4 is bad" my_bisect_log.txt &&
--	grep "fixed between $HASH4 and \[$SIDE_HASH7\]" my_bisect_log.txt &&
-+	test_i18ngrep "merge base $HASH4 is bad" my_bisect_log.txt &&
-+	test_i18ngrep "fixed between $HASH4 and \[$SIDE_HASH7\]" my_bisect_log.txt &&
- 	git bisect reset
+ 	test_terminal git push -u upstream master >out 2>err &&
+-	grep "Writing objects" err
++	test_i18ngrep "Writing objects" err
  '
  
-@@ -460,9 +460,9 @@ test_expect_success 'many merge bases creation' '
+ test_expect_success 'progress messages do not go to non-tty' '
+@@ -91,7 +91,7 @@ test_expect_success 'progress messages go to non-tty (forced)' '
  
- test_expect_success 'good merge bases when good and bad are siblings' '
- 	git bisect start "$B_HASH" "$A_HASH" > my_bisect_log.txt &&
--	grep "merge base must be tested" my_bisect_log.txt &&
-+	test_i18ngrep "merge base must be tested" my_bisect_log.txt &&
- 	git bisect good > my_bisect_log2.txt &&
--	grep "merge base must be tested" my_bisect_log2.txt &&
-+	test_i18ngrep "merge base must be tested" my_bisect_log2.txt &&
- 	{
- 		{
- 			grep "$SIDE_HASH5" my_bisect_log.txt &&
-@@ -477,14 +477,14 @@ test_expect_success 'good merge bases when good and bad are siblings' '
- 
- test_expect_success 'optimized merge base checks' '
- 	git bisect start "$HASH7" "$SIDE_HASH7" > my_bisect_log.txt &&
--	grep "merge base must be tested" my_bisect_log.txt &&
-+	test_i18ngrep "merge base must be tested" my_bisect_log.txt &&
- 	grep "$HASH4" my_bisect_log.txt &&
- 	git bisect good > my_bisect_log2.txt &&
- 	test -f ".git/BISECT_ANCESTORS_OK" &&
- 	test "$HASH6" = $(git rev-parse --verify HEAD) &&
- 	git bisect bad > my_bisect_log3.txt &&
- 	git bisect good "$A_HASH" > my_bisect_log4.txt &&
--	grep "merge base must be tested" my_bisect_log4.txt &&
-+	test_i18ngrep "merge base must be tested" my_bisect_log4.txt &&
- 	test_must_fail test -f ".git/BISECT_ANCESTORS_OK"
+ 	# force progress messages to stderr, even though it is non-tty
+ 	git push -u --progress upstream master >out 2>err &&
+-	grep "Writing objects" err
++	test_i18ngrep "Writing objects" err
  '
  
-@@ -562,7 +562,7 @@ test_expect_success 'skipping away from skipped commit' '
+ test_expect_success TTY 'push -q suppresses progress' '
+diff --git a/t/t5536-fetch-conflicts.sh b/t/t5536-fetch-conflicts.sh
+index 6c5d3a4..2e42cf3 100755
+--- a/t/t5536-fetch-conflicts.sh
++++ b/t/t5536-fetch-conflicts.sh
+@@ -22,8 +22,8 @@ verify_stderr () {
+ 	cat >expected &&
+ 	# We're not interested in the error
+ 	# "fatal: The remote end hung up unexpectedly":
+-	grep -E '^(fatal|warning):' <error | grep -v 'hung up' >actual | sort &&
+-	test_cmp expected actual
++	test_i18ngrep -E '^(fatal|warning):' <error | grep -v 'hung up' >actual | sort &&
++	test_i18ncmp expected actual
+ }
  
- test_expect_success 'erroring out when using bad path parameters' '
- 	test_must_fail git bisect start $PARA_HASH7 $HASH1 -- foobar 2> error.txt &&
--	grep "bad path parameters" error.txt
-+	test_i18ngrep "bad path parameters" error.txt
+ test_expect_success 'setup' '
+diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
+index cdb67a0..c734ce2 100755
+--- a/t/t6301-for-each-ref-errors.sh
++++ b/t/t6301-for-each-ref-errors.sh
+@@ -20,8 +20,8 @@ test_expect_success 'Broken refs are reported correctly' '
+ 	test_when_finished "rm -f .git/$r" &&
+ 	echo "warning: ignoring broken ref $r" >broken-err &&
+ 	git for-each-ref >out 2>err &&
+-	test_cmp full-list out &&
+-	test_cmp broken-err err
++	test_i18ncmp full-list out &&
++	test_i18ncmp broken-err err
  '
  
- test_expect_success 'test bisection on bare repo - --no-checkout specified' '
+ test_expect_success 'NULL_SHA1 refs are reported correctly' '
+@@ -31,10 +31,10 @@ test_expect_success 'NULL_SHA1 refs are reported correctly' '
+ 	echo "warning: ignoring broken ref $r" >zeros-err &&
+ 	git for-each-ref >out 2>err &&
+ 	test_cmp full-list out &&
+-	test_cmp zeros-err err &&
++	test_i18ncmp zeros-err err &&
+ 	git for-each-ref --format="%(objectname) %(refname)" >brief-out 2>brief-err &&
+ 	test_cmp brief-list brief-out &&
+-	test_cmp zeros-err brief-err
++	test_i18ncmp zeros-err brief-err
+ '
+ 
+ test_expect_success 'Missing objects are reported correctly' '
+@@ -43,7 +43,7 @@ test_expect_success 'Missing objects are reported correctly' '
+ 	test_when_finished "rm -f .git/$r" &&
+ 	echo "fatal: missing object $MISSING for $r" >missing-err &&
+ 	test_must_fail git for-each-ref 2>err &&
+-	test_cmp missing-err err &&
++	test_i18ncmp missing-err err &&
+ 	(
+ 		cat brief-list &&
+ 		echo "$MISSING $r"
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index a971884..38b3890 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -643,7 +643,7 @@ test_expect_success 'test ident field is working' '
+ 	cp -R done dthree dtwo four three ../other_worktree &&
+ 	GIT_WORK_TREE=../other_worktree git status 2>../err &&
+ 	echo "warning: Untracked cache is disabled on this system or location." >../expect &&
+-	test_cmp ../expect ../err
++	test_i18ncmp ../expect ../err
+ '
+ 
+ test_done
+diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
+index 98bcfe2..86f23be 100755
+--- a/t/t7102-reset.sh
++++ b/t/t7102-reset.sh
+@@ -66,14 +66,14 @@ test_expect_success 'reset --hard message' '
+ 	hex=$(git log -1 --format="%h") &&
+ 	git reset --hard > .actual &&
+ 	echo HEAD is now at $hex $(commit_msg) > .expected &&
+-	test_cmp .expected .actual
++	test_i18ncmp .expected .actual
+ '
+ 
+ test_expect_success 'reset --hard message (ISO8859-1 logoutputencoding)' '
+ 	hex=$(git log -1 --format="%h") &&
+ 	git -c "i18n.logOutputEncoding=$test_encoding" reset --hard > .actual &&
+ 	echo HEAD is now at $hex $(commit_msg $test_encoding) > .expected &&
+-	test_cmp .expected .actual
++	test_i18ncmp .expected .actual
+ '
+ 
+ >.diff_expect
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 3570f7b..b77cce8 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -942,7 +942,7 @@ test_expect_success 'submodule deinit from subdirectory' '
+ 		cd sub &&
+ 		git submodule deinit ../init >../output
+ 	) &&
+-	grep "\\.\\./init" output &&
++	test_i18ngrep "\\.\\./init" output &&
+ 	test -z "$(git config --get-regexp "submodule\.example\.")" &&
+ 	test -n "$(git config --get-regexp "submodule\.example2\.")" &&
+ 	test -f example2/.git &&
+diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
+index 79bc135..b8690b1 100755
+--- a/t/t7403-submodule-sync.sh
++++ b/t/t7403-submodule-sync.sh
+@@ -157,7 +157,7 @@ test_expect_success '"git submodule sync" should update submodule URLs - subdire
+ 		cd sub &&
+ 		git submodule sync >../../output
+ 	) &&
+-	grep "\\.\\./submodule" output &&
++	test_i18ngrep "\\.\\./submodule" output &&
+ 	test -d "$(
+ 		cd super-clone/submodule &&
+ 		git config remote.origin.url
+@@ -188,7 +188,7 @@ test_expect_success '"git submodule sync --recursive" should update all submodul
+ 		cd sub &&
+ 		git submodule sync --recursive >../../output
+ 	) &&
+-	grep "\\.\\./submodule/sub-submodule" output &&
++	test_i18ngrep "\\.\\./submodule/sub-submodule" output &&
+ 	test -d "$(
+ 		cd super-clone/submodule &&
+ 		git config remote.origin.url
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 5f27879..88e9750 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -136,8 +136,8 @@ test_expect_success 'submodule update --init --recursive from subdirectory' '
+ 	 cd tmp &&
+ 	 git submodule update --init --recursive ../super >../../actual 2>../../actual2
+ 	) &&
+-	test_cmp expect actual &&
+-	test_cmp expect2 actual2
++	test_i18ncmp expect actual &&
++	test_i18ncmp expect2 actual2
+ '
+ 
+ apos="'";
+@@ -370,7 +370,7 @@ test_expect_success 'submodule update - command in .git/config catches failure'
+ 	(cd super &&
+ 	 test_must_fail git submodule update submodule 2>../actual
+ 	) &&
+-	test_cmp actual expect
++	test_i18ncmp actual expect
+ '
+ 
+ cat << EOF >expect
+@@ -388,7 +388,7 @@ test_expect_success 'submodule update - command in .git/config catches failure -
+ 	 mkdir tmp && cd tmp &&
+ 	 test_must_fail git submodule update ../submodule 2>../../actual
+ 	) &&
+-	test_cmp actual expect
++	test_i18ncmp actual expect
+ '
+ 
+ cat << EOF >expect
+@@ -408,7 +408,7 @@ test_expect_success 'recursive submodule update - command in .git/config catches
+ 	 mkdir -p tmp && cd tmp &&
+ 	 test_must_fail git submodule update --recursive ../super 2>../../actual
+ 	) &&
+-	test_cmp actual expect
++	test_i18ncmp actual expect
+ '
+ 
+ test_expect_success 'submodule init does not copy command into .git/config' '
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index c3ed7cb..b3bdd16 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -1377,7 +1377,7 @@ EOF
+ 	git config --add -f .gitmodules submodule.subname.ignore all &&
+ 	git config --add -f .gitmodules submodule.subname.path sm &&
+ 	git status > output &&
+-	test_cmp expect output &&
++	test_i18ncmp expect output &&
+ 	git config -f .gitmodules  --remove-section submodule.subname
+ '
+ 
+@@ -1387,7 +1387,7 @@ test_expect_success '.git/config ignore=all suppresses unstaged submodule summar
+ 	git config --add submodule.subname.ignore all &&
+ 	git config --add submodule.subname.path sm &&
+ 	git status > output &&
+-	test_cmp expect output &&
++	test_i18ncmp expect output &&
+ 	git config --remove-section submodule.subname &&
+ 	git config -f .gitmodules  --remove-section submodule.subname
+ '
 -- 
 2.7.3
