@@ -1,7 +1,7 @@
 From: Vasco Almeida <vascomalmeida@sapo.pt>
-Subject: [PATCH v4 31/38] i18n: standardise messages
-Date: Tue,  7 Jun 2016 11:52:30 +0000
-Message-ID: <1465300357-7557-32-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v4 19/38] tests: unpack-trees: update to use test_i18n* functions
+Date: Tue,  7 Jun 2016 11:52:18 +0000
+Message-ID: <1465300357-7557-20-git-send-email-vascomalmeida@sapo.pt>
 References: <1465300357-7557-1-git-send-email-vascomalmeida@sapo.pt>
 Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
 	Jiang Xin <worldhello.net@gmail.com>,
@@ -15,21 +15,21 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAFc1-0000Ej-F8
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 13:56:01 +0200
+	id 1bAFc4-0000Ej-6H
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 13:56:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161209AbcFGLzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 07:55:35 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:54544 "EHLO sapo.pt"
+	id S1161226AbcFGL4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 07:56:00 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:33045 "EHLO sapo.pt"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1161162AbcFGLza (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 07:55:30 -0400
-Received: (qmail 25323 invoked from network); 7 Jun 2016 11:55:28 -0000
-Received: (qmail 26699 invoked from network); 7 Jun 2016 11:55:28 -0000
+	id S932855AbcFGLyq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 07:54:46 -0400
+Received: (qmail 27959 invoked from network); 7 Jun 2016 11:54:44 -0000
+Received: (qmail 18968 invoked from network); 7 Jun 2016 11:54:44 -0000
 Received: from unknown (HELO localhost.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 7 Jun 2016 11:55:23 -0000
+          for <git@vger.kernel.org>; 7 Jun 2016 11:54:39 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -39,110 +39,80 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296663>
 
-Standardise messages in order to save translators some work.
+Use functions test_i18ncmp and test_i18ngrep to successfully pass tests
+running under GETTEXT_POISON.
 
-Nuances fixed in this commit:
-"failed to read %s"
-"read of %s failed"
-
-"detach the HEAD at named commit"
-"detach HEAD at named commit"
-
-"removing '%s' failed"
-"failed to remove '%s'"
-
-"index file corrupt"
-"corrupt index file"
-
-"failed to read %s"
-"read of %s failed"
-
-"detach the HEAD at named commit"
-"detach HEAD at named commit"
+The output strings compared to in these test were marked for translation
+in ed47fdf ("i18n: unpack-trees: mark strings for translation",
+2016-04-09) and later improved in 2e3926b ("i18n: unpack-trees: avoid
+substituting only a verb in sentences", 2016-05-12).
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/apply.c    | 6 +++---
- builtin/checkout.c | 6 +++---
- builtin/repack.c   | 2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ t/t1011-read-tree-sparse-checkout.sh | 2 +-
+ t/t3400-rebase.sh                    | 4 ++--
+ t/t3404-rebase-interactive.sh        | 4 ++--
+ t/t7607-merge-overwrite.sh           | 2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index c770d7d..a741274 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -3226,7 +3226,7 @@ static int load_patch_target(struct strbuf *buf,
- {
- 	if (cached || check_index) {
- 		if (read_file_or_gitlink(ce, buf))
--			return error(_("read of %s failed"), name);
-+			return error(_("failed to read %s"), name);
- 	} else if (name) {
- 		if (S_ISGITLINK(expected_mode)) {
- 			if (ce)
-@@ -3237,7 +3237,7 @@ static int load_patch_target(struct strbuf *buf,
- 			return error(_("reading from '%s' beyond a symbolic link"), name);
- 		} else {
- 			if (read_old_data(st, name, buf))
--				return error(_("read of %s failed"), name);
-+				return error(_("failed to read %s"), name);
- 		}
- 	}
- 	return 0;
-@@ -3282,7 +3282,7 @@ static int load_preimage(struct image *image,
- 			free_fragment_list(patch->fragments);
- 			patch->fragments = NULL;
- 		} else if (status) {
--			return error(_("read of %s failed"), patch->old_name);
-+			return error(_("failed to read %s"), patch->old_name);
- 		}
- 	}
+diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-sparse-checkout.sh
+index 0c74bee..3583105 100755
+--- a/t/t1011-read-tree-sparse-checkout.sh
++++ b/t/t1011-read-tree-sparse-checkout.sh
+@@ -247,7 +247,7 @@ error: The following untracked working tree files would be overwritten by checko
+ Please move or remove them before you can switch branches.
+ Aborting
+ EOF
+-	test_cmp expected actual
++	test_i18ncmp expected actual
+ '
  
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 3398c61..05c7b71 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -276,7 +276,7 @@ static int checkout_paths(const struct checkout_opts *opts,
+ test_expect_success 'checkout without --ignore-skip-worktree-bits' '
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 47b5682..f5fd15e 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -136,8 +136,8 @@ test_expect_success 'setup: recover' '
+ test_expect_success 'Show verbose error when HEAD could not be detached' '
+ 	>B &&
+ 	test_must_fail git rebase topic 2>output.err >output.out &&
+-	grep "The following untracked working tree files would be overwritten by checkout:" output.err &&
+-	grep B output.err
++	test_i18ngrep "The following untracked working tree files would be overwritten by checkout:" output.err &&
++	test_i18ngrep B output.err
+ '
+ rm -f B
  
- 	hold_locked_index(lock_file, 1);
- 	if (read_cache_preload(&opts->pathspec) < 0)
--		return error(_("corrupt index file"));
-+		return error(_("index file corrupt"));
- 
- 	if (opts->source_tree)
- 		read_tree_some(opts->source_tree, &opts->pathspec);
-@@ -470,7 +470,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 
- 	hold_locked_index(lock_file, 1);
- 	if (read_cache_preload(NULL) < 0)
--		return error(_("corrupt index file"));
-+		return error(_("index file corrupt"));
- 
- 	resolve_undo_clear();
- 	if (opts->force) {
-@@ -1138,7 +1138,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		OPT_STRING('B', NULL, &opts.new_branch_force, N_("branch"),
- 			   N_("create/reset and checkout a branch")),
- 		OPT_BOOL('l', NULL, &opts.new_branch_log, N_("create reflog for new branch")),
--		OPT_BOOL(0, "detach", &opts.force_detach, N_("detach the HEAD at named commit")),
-+		OPT_BOOL(0, "detach", &opts.force_detach, N_("detach HEAD at named commit")),
- 		OPT_SET_INT('t', "track",  &opts.track, N_("set upstream info for new branch"),
- 			BRANCH_TRACK_EXPLICIT),
- 		OPT_STRING(0, "orphan", &opts.new_orphan_branch, N_("new-branch"), N_("new unparented branch")),
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 858db38..0108819 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -378,7 +378,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 					  item->string,
- 					  exts[ext].name);
- 			if (remove_path(fname))
--				warning(_("removing '%s' failed"), fname);
-+				warning(_("failed to remove '%s'"), fname);
- 			free(fname);
- 		}
- 	}
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index f4ccd10..8ac1868 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -219,9 +219,9 @@ test_expect_success 'abort with error when new base cannot be checked out' '
+ 	git commit -m "remove file in base" &&
+ 	set_fake_editor &&
+ 	test_must_fail git rebase -i master > output 2>&1 &&
+-	grep "The following untracked working tree files would be overwritten by checkout:" \
++	test_i18ngrep "The following untracked working tree files would be overwritten by checkout:" \
+ 		output &&
+-	grep "file1" output &&
++	test_i18ngrep "file1" output &&
+ 	test_path_is_missing .git/rebase-merge &&
+ 	git reset --hard HEAD^
+ '
+diff --git a/t/t7607-merge-overwrite.sh b/t/t7607-merge-overwrite.sh
+index 758a623..e8ec54c 100755
+--- a/t/t7607-merge-overwrite.sh
++++ b/t/t7607-merge-overwrite.sh
+@@ -125,7 +125,7 @@ test_expect_success 'will not overwrite untracked file in leading path' '
+ 	cp important sub &&
+ 	cp important sub2 &&
+ 	test_must_fail git merge sub 2>out &&
+-	test_cmp out expect &&
++	test_i18ncmp out expect &&
+ 	test_path_is_missing .git/MERGE_HEAD &&
+ 	test_cmp important sub &&
+ 	test_cmp important sub2 &&
 -- 
 2.7.3
