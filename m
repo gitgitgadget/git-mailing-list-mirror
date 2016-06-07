@@ -1,68 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: t7300-clean.sh fails "not ok 32 - should avoid cleaning possible
- submodules" on debian jessie
-Date: Tue, 7 Jun 2016 12:30:56 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1606071229500.28610@virtualbox>
-References: <5756856A.4020406@debian.org>
+From: Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: Re: What's cooking in git.git (Jun 2016, #02; Mon, 6)
+Date: Tue, 7 Jun 2016 10:55:20 +0000 (UTC)
+Message-ID: <loom.20160607T124159-111@post.gmane.org>
+References: <xmqqshwpsfor.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Pirate Praveen <praveen@debian.org>
-X-From: git-owner@vger.kernel.org Tue Jun 07 12:31:17 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 07 13:00:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAEHz-0003Qp-UV
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 12:31:16 +0200
+	id 1bAEkG-0004Yn-Ke
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 13:00:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753080AbcFGKbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 06:31:10 -0400
-Received: from mout.gmx.net ([212.227.17.21]:51017 "EHLO mout.gmx.net"
+	id S932503AbcFGLAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 07:00:10 -0400
+Received: from plane.gmane.org ([80.91.229.3]:46688 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751034AbcFGKbJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 06:31:09 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MX19U-1avzBV2DDg-00Vxwr; Tue, 07 Jun 2016 12:30:57
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <5756856A.4020406@debian.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:I8QH8SNDBeRxwsc1Z+Sp+jEXqRbTGhlPBl/fL+yi5F0FD3UpLlK
- /3jztvroDAZnVE/ADrYmF2bvPWgUIZpTzQFytE9LwibZwro9yPHKx17wvvGxZQvNKRg7zY9
- TzEY7tMr4RSxH65/VCoNeIg35rUkrm+sbdplZzEc1540n4y+p1oP7iTweyLfflawFIi1p3W
- s/LaYV4Bs5JYtgXE1zuqA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AarKBGlZbQo=:t5IpPxS0lX1eflmkt4F1VY
- zwCyFVPQKtaKcWe4XaYtNJJNTryWNX6BXJ/OqVK9pu9f0MwQVFkHYS+IVW56A8fd6UssUPES6
- 0HmWKskL5q21jgDmUOBYkbxag3hr58D+IpNK2vzN5mx2TCrwIFEI6v43xE5TJNtlhvC9kKL9w
- k1FuOnfmYiScjBQn13smRyxJmdIA08lSzo7viHcFVnjkVROqAzTMXMh9WeEl9jUn6EVy1J30v
- ktSQv2vLRgXknFuLh40k4mm4OnHeSIBVJ+C4595GXlzDfSskkOwxC5i0OfsgpDJVtfAMgLyuS
- A1/yxZ5rJxVpyaBqWm3pUMoD15XPxar6vm1LeJMVUt5VUvI4yiNkJb3NgmozD51/am0U5gyhf
- swM1kEHa8UKpcQaNvnsZo127xoWG8kn554chcr1KFqbou+UyyjOND1Wp/ZPKuYdDwa45i9GJz
- 2nWhqqF1S8bLr0APPaz83F2VRVZdW17AOsAs1o/MNERbWy4L7uoPAnLm2EAuPjbntqaLa4dMI
- HdviQ4kSGLr6OCulqvegjZgm7wvSvUUbX6g6x7x9J0tzQfRf2UQ4TFKbVvM4XEAdoR4HUjbZP
- ZvqnVzfkeizAX2CcPWTxNX/yvIff+l6PUjsoulGCz2bpk0t3ShDx2RP4+CF/E5Tc6vNR21yro
- EmE5KMQxeAevgGo/F0Uhitdhsdvo3FuUWnMizmgCbuNhf8d+AY1meAfHpt1wFQ7ovweaefzu8
- VE6WbeNMNEL/2Nk44yK97Uermjp7D6HTshZKgTKSYLEM/ctfZOBoS9iVaKqAvXSIJ6wvN7uY 
+	id S932502AbcFGLAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 07:00:08 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1bAEju-0004K2-Bk
+	for git@vger.kernel.org; Tue, 07 Jun 2016 13:00:06 +0200
+Received: from bl13-157-91.dsl.telepac.pt ([85.246.157.91])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Jun 2016 13:00:06 +0200
+Received: from vascomalmeida by bl13-157-91.dsl.telepac.pt with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Jun 2016 13:00:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 85.246.157.91 (Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296625>
 
-Hi Pirate Praveen,
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-On Tue, 7 Jun 2016, Pirate Praveen wrote:
+> * va/i18n-even-more (2016-05-26) 22 commits
+>  - t5523: use test_i18ngrep for negation
 
-> I'm trying to rebuild git 2.8.1 on debian jessie/stable and I get this
-> error (tests upto this succeeds).
+[snip because of gmane]
+
+>  - i18n: advice: mark string about detached head for translation
+>  - i18n: builtin/remote.c: fix mark for translation
 > 
-> not ok 32 - should avoid cleaning possible submodules
+>  More markings of messages for i18n, with updates to various tests
+>  to pass GETTEXT_POISON tests.
+> 
+>  Is everybody happy with this version?
 
-How about re-running the script with -i -v -x? If the output is still
-not shining enough light on it, maybe you want to paste the (relevant part
-of the) output into a reply?
-
-Ciao,
-Johannes
+I'm not. I've re-rolled this series, adding more patches on top of these and
+have changed, for instance, patch "i18n: advice: mark string about detached
+head for translation" which is the second one from down.
+Also, I'm going to send yet another re-roll today (v4).
