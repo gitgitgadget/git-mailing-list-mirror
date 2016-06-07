@@ -1,110 +1,112 @@
 From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [PATCH 2/4] t6030: explicitly test for bisection cleanup
-Date: Wed,  8 Jun 2016 02:24:52 +0530
-Message-ID: <20160607205454.22576-2-pranit.bauva@gmail.com>
+Subject: [PATCH 3/4] dir: introduce file_size() to check the size of file
+Date: Wed,  8 Jun 2016 02:24:53 +0530
+Message-ID: <20160607205454.22576-3-pranit.bauva@gmail.com>
 References: <20160607205454.22576-1-pranit.bauva@gmail.com>
 Cc: Pranit Bauva <pranit.bauva@gmail.com>, christian.couder@gmail.com,
 	chriscool@tuxfamily.org, larsxschneider@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 22:56:06 2016
+X-From: git-owner@vger.kernel.org Tue Jun 07 22:56:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAO2f-0004C7-9G
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 22:56:05 +0200
+	id 1bAO2m-0004Hr-Md
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 22:56:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161119AbcFGUz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 16:55:59 -0400
-Received: from mail-pa0-f68.google.com ([209.85.220.68]:34429 "EHLO
-	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932709AbcFGUz6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 16:55:58 -0400
-Received: by mail-pa0-f68.google.com with SMTP id ug1so4888511pab.1
-        for <git@vger.kernel.org>; Tue, 07 Jun 2016 13:55:58 -0700 (PDT)
+	id S1161529AbcFGU4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 16:56:07 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35382 "EHLO
+	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161206AbcFGU4G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 16:56:06 -0400
+Received: by mail-pf0-f193.google.com with SMTP id t190so1763503pfb.2
+        for <git@vger.kernel.org>; Tue, 07 Jun 2016 13:56:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zieKyb9FnLE14Ctz7ugdhj65fZw3V18JHTnSWCtOsqc=;
-        b=NZF5e7hEK64rL0/wgw4CsU/jgcsFimoeQvyNQIj6M1qQyPzKoZcDFDH8+QyPzPOB0s
-         gMSuZBezwWkSxaBMUxHNnAS/OO8oSrywohntSKTEDxbyKe/qOmb5kdfHdCr40L8sjtJ3
-         whKxry/psTCvhtfKp2o76LUQeoGrsyuiv+RfVM+r3WsqF9pHmVAwA0jvXWIMYq/625wK
-         G0fu0PwZEj5CcZOB6JTWHSr0hNGTorxWGGQG/ag3obdKjmwzUZkOlmYbXILcCQQYa/7s
-         8JIGjxcTaQLDw6cC+oYhuJBfa397AexuWyZGtO7C8f1YheJwe++xFi4YEXygAR7vryou
-         l2xg==
+        bh=G8n8Jp9xv8NBKOir2t1Yix595T+wCDSKDPQ4utJx24s=;
+        b=YGvhq2lAGtj3gpjB5pEvWxDvX0Ig3abwI57md7E8GOqR9YYyC5aTLemBTp1ZhzihXQ
+         ZWU2tUo6SK72q0soxbqPFjsYjlU4BytWJYW++Lxp4yEETvcVKwh7Au+R9sAHRwpDqLjJ
+         dCp0AKzwIOABWCS+radn/l+1QTs05RfIGPLpxacNM8MQIW45Qn6jYbRLL4H8yWwxZyTY
+         r5Qrp1inM/acHrKOK5cRla07LKZqSatQlqzNHbDCJrwmLSPSlE1/13fGns2Zgor8P9vK
+         CPAi6zMcQTmZEuZ+eGM3dlRschDZWxPJXGeyqnLk2R2mkybesMLyKn5vgU7fS/h9f5nb
+         UsAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=zieKyb9FnLE14Ctz7ugdhj65fZw3V18JHTnSWCtOsqc=;
-        b=gJheVIiMrhj4yS+rzykkhrmVM7G1299lR1Iu+kRr92BKWoMBwEr5AasCdts02ivFqx
-         rD3cKOjyiN3rxpuuvHfqn/5/zwzqY9bH3cjzwfqTeAjBQuL8zBLrXj6M7oelEfdxqac3
-         zaFYh82zJDQ3563apfq1APYSlmwK4vZNy896P+wUY//ZAzse98R8p46Jx4dfmkRgSUe5
-         pP14xjFobAFVg3BhVy+I+KgvxneL1CbYqp51iTeZg7W63P8bipOKNJ0SaDeFePUQIjk2
-         AhojoW4kojFkY8rCNkKpMBfBpOM0TKwxsob0FBqu98SQT6M67Roei7RIC3uyJ8QvFILl
-         +Mag==
-X-Gm-Message-State: ALyK8tIb24RyjOOCfdPmzCJ0hTMfTYUeT+3tnA89Y7S6QQ7KNkd0450T5o9eTPcY/kWeug==
-X-Received: by 10.66.199.66 with SMTP id ji2mr1490510pac.34.1465332958120;
-        Tue, 07 Jun 2016 13:55:58 -0700 (PDT)
+        bh=G8n8Jp9xv8NBKOir2t1Yix595T+wCDSKDPQ4utJx24s=;
+        b=N771mfDY4yFzG4dozLIB8jiH2zE0kZlIaqH8U0bh2qJWciyHx0uCW6nhspGZp4WVEJ
+         3sUtTd7EH9Uo131LGciX1Z+260Gzi6GU8p1GmacMhQqF/nfyMBgtR+voy0acHu2RwnIY
+         CZSEc58CWACPKve3kJqR3iBiq8IVOqGfwJolovNfHAb+Z4YglisqCj9pi9UQWfee3LnE
+         8groub5jCwAPHg+aygKU3hvf7BWdbmlQYPtpdCll7FBr+qY8O19gR+JdG+FLVev3+CBj
+         aSa6vy1UHWR6Z6XCugaQ/GRxRxoTC7v265ATUuOoUNpCnncC9A+xPUP7ReePaX0hmFf8
+         FY2A==
+X-Gm-Message-State: ALyK8tIzRUEL4CnXEqvsB8ARtdjrhQZLurkz6GcD4/u67zf6NBLbrthZx4LloycUEk57Vw==
+X-Received: by 10.98.96.67 with SMTP id u64mr1465890pfb.152.1465332965071;
+        Tue, 07 Jun 2016 13:56:05 -0700 (PDT)
 Received: from localhost.localdomain ([27.106.4.232])
-        by smtp.gmail.com with ESMTPSA id hw10sm35183194pac.15.2016.06.07.13.55.48
+        by smtp.gmail.com with ESMTPSA id hw10sm35183194pac.15.2016.06.07.13.55.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 07 Jun 2016 13:55:55 -0700 (PDT)
+        Tue, 07 Jun 2016 13:56:04 -0700 (PDT)
 X-Mailer: git-send-email 2.8.3
 In-Reply-To: <20160607205454.22576-1-pranit.bauva@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296719>
 
-This is not an improvement in the test coverage but it helps in making
-it explicit as to what exactly would be the error as other tests are
-focussed on testing other things.
+At times we require to see if the file is empty and get the size of the
+file. By using stat we can get the file size without actually having to
+open the file to check for its contents.
 
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-
 ---
-I faced this problem while converting `bisect_clean_state` and the tests
-where showing breakages but it wasn't clear as to where exactly are they
-breaking. This will patch  will help in that. Also I tested the test
-coverage of the test suite before this patch and it covers this (I did
-this by purposely changing names of files in git-bisect.sh and running
-the test suite).
+ dir.c | 8 ++++++++
+ dir.h | 7 +++++++
+ 2 files changed, 15 insertions(+)
 
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- t/t6030-bisect-porcelain.sh | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
-
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index e74662b..1fb5ad9 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -894,4 +894,21 @@ test_expect_success 'bisect start takes options and revs in any order' '
- 	test_cmp expected actual
- '
+diff --git a/dir.c b/dir.c
+index 6172b34..eaee718 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2036,6 +2036,14 @@ int file_exists(const char *f)
+ 	return lstat(f, &sb) == 0;
+ }
  
-+test_expect_success 'git bisect reset cleans bisection state properly' '
-+	git bisect reset &&
-+	git bisect start &&
-+	git bisect good $HASH1 &&
-+	git bisect bad $HASH4 &&
-+	git bisect reset &&
-+	test -z "$(git for-each-ref "refs/bisect/*")" &&
-+	! test -s "$GIT_DIR/BISECT_EXPECTED_REV" &&
-+	! test -s "$GIT_DIR/BISECT_ANCESTORS_OK" &&
-+	! test -s "$GIT_DIR/BISECT_LOG" &&
-+	! test -s "$GIT_DIR/BISECT_RUN" &&
-+	! test -s "$GIT_DIR/BISECT_TERMS" &&
-+	! test -s "$GIT_DIR/head-name" &&
-+	! test -s "$GIT_DIR/BISECT_HEAD" &&
-+	! test -s "$GIT_DIR/BISECT_START"
-+'
++ssize_t file_size(const char *filename)
++{
++	struct stat st;
++	if (stat(filename, &st) < 0)
++		return -1;
++	return xsize_t(st.st_size);
++}
 +
- test_done
+ static int cmp_icase(char a, char b)
+ {
+ 	if (a == b)
+diff --git a/dir.h b/dir.h
+index bfde698..aa9d276 100644
+--- a/dir.h
++++ b/dir.h
+@@ -248,6 +248,13 @@ extern void clear_exclude_list(struct exclude_list *el);
+ extern void clear_directory(struct dir_struct *dir);
+ extern int file_exists(const char *);
+ 
++/*
++ * Return the size of the file `filename`. It returns -1 if error
++ * occurred, 0 if file is empty and a positive number denoting the size
++ * of the file.
++ */
++extern ssize_t file_size(const char *);
++
+ extern int is_inside_dir(const char *dir);
+ extern int dir_inside_of(const char *subdir, const char *dir);
+ 
 -- 
 2.8.3
