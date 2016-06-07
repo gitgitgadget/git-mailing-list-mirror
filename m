@@ -1,98 +1,269 @@
-From: Pirate Praveen <praveen@debian.org>
-Subject: t7300-clean.sh fails "not ok 32 - should avoid cleaning possible
- submodules" on debian jessie
-Date: Tue, 7 Jun 2016 13:57:22 +0530
-Message-ID: <5756856A.4020406@debian.org>
+From: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
+Subject: [PATCHv3] Documentation: triangular workflow
+Date: Tue,  7 Jun 2016 10:38:13 +0200
+Message-ID: <1465288693-6295-1-git-send-email-jordan.de-gea@grenoble-inp.org>
+References: <1465206518-1780-1-git-send-email-jordan.de-gea@grenoble-inp.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="CDALsHaN7pkIUjoc1Fm8FVlUuomPclGPw"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 10:27:44 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: mhagger@alum.mit.edu, philipoakley@iee.org, git@vger.kernel.org,
+	erwan.mathoniere@grenoble-inp.org, samuel.groot@grenoble-inp.org,
+	tom.russello@grenoble-inp.org, Matthieu.Moy@grenoble-inp.fr,
+	Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jun 07 10:38:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bACMR-0004JS-19
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 10:27:43 +0200
+	id 1bACX8-0002Wd-Nl
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 10:38:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752333AbcFGI1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 04:27:37 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:59771 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751181AbcFGI1g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 04:27:36 -0400
-Received: from homiemail-a124.g.dreamhost.com (caibbdcaaaib.dreamhost.com [208.113.200.81])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id 911D79478F
-	for <git@vger.kernel.org>; Tue,  7 Jun 2016 01:27:35 -0700 (PDT)
-Received: from homiemail-a124.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a124.g.dreamhost.com (Postfix) with ESMTP id 3F13E60002B91
-	for <git@vger.kernel.org>; Tue,  7 Jun 2016 01:27:34 -0700 (PDT)
-Received: from [192.168.1.110] (unknown [14.96.231.219])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: me@j4v4m4n.in)
-	by homiemail-a124.g.dreamhost.com (Postfix) with ESMTPSA id 671E460002B8E
-	for <git@vger.kernel.org>; Tue,  7 Jun 2016 01:27:33 -0700 (PDT)
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.7.0
+	id S1754390AbcFGIif convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jun 2016 04:38:35 -0400
+Received: from zm-smtpout-2.grenet.fr ([130.190.244.98]:52706 "EHLO
+	zm-smtpout-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754312AbcFGIi2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 04:38:28 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 9FE9A20AE;
+	Tue,  7 Jun 2016 10:38:25 +0200 (CEST)
+Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eKBO4YIOy_g2; Tue,  7 Jun 2016 10:38:25 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 869AD20AD;
+	Tue,  7 Jun 2016 10:38:25 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 7FD5B2066;
+	Tue,  7 Jun 2016 10:38:25 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cTxsTZpx8lYm; Tue,  7 Jun 2016 10:38:25 +0200 (CEST)
+Received: from eduroam-033178.grenet.fr (eduroam-033178.grenet.fr [130.190.33.178])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 621CF2064;
+	Tue,  7 Jun 2016 10:38:25 +0200 (CEST)
+X-Mailer: git-send-email 2.7.4 (Apple Git-66)
+In-Reply-To: <1465206518-1780-1-git-send-email-jordan.de-gea@grenoble-inp.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296615>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---CDALsHaN7pkIUjoc1Fm8FVlUuomPclGPw
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Currently, triangular workflow can be configured, but there is no
+documentation about it. A documentation is useful to keep
+configuration possibilities up-to-date.
 
-Hi,
+A new subsection is created in gitworkflow.
 
-I'm trying to rebuild git 2.8.1 on debian jessie/stable and I get this
-error (tests upto this succeeds).
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Signed-off-by: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
+---
+Changes since version 2:
+ - PUBLIC-FORK renamed for PUBLISH
 
-not ok 32 - should avoid cleaning possible submodules
+Changes since version 1:
+ - content moved in gitworktree
+ - content improved
 
-I added debian stretch repo to apt sources.list and ran apt-get source
--b git.
+ Documentation/gitworkflows.txt | 154 +++++++++++++++++++++++++++++++++=
+++++++++
+ 1 file changed, 154 insertions(+)
 
-You can see the build options passed here
-http://repo.or.cz/git/debian.git/blob/HEAD:/debian/rules
-
-Since it is a working fine on debian sid/unstable, I did not want to
-report it to debian package maintainers.
-
-I noticed the same failure for git 2.8.0-rc3 as well. I could ignore the
-test failure and go ahead, but I'd like to fix this if possible.
-
-Thanks
-Praveen
-
-
---CDALsHaN7pkIUjoc1Fm8FVlUuomPclGPw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJXVoVsAAoJEM4fnGdFEsIqF/UP/juLFMNrh6hyiEqiig03fJ4k
-CVJlR6QVjm9kbPU1WEGY9hjqf0DzvqbE+Iw7b1cXDVPYJp3nimXMD0sqorxTOjf2
-nhCJL7i1wA0loELz3d2UMGfxfDtW7ZD3EQcn/okBAPtv2S6yY7QC5d+torKVPGU/
-VH3K1zufyeOUomXLPdm9hwE0KmTMX93Xb8GXEHAtAFUHU/rhIvuzoR1NkoLe1vtx
-S/fO7XsKJ5kqkQbsQNjIvRQHehAZAfLTY9fMqlccZtVNtG4n5Bo0MIb1xUk86M2I
-iWCeAZ04be2GXtNq6DdzTr/7LjEjkTMX8HkiW/FdAr5pQldJgsDN2dpVQGsEjKke
-MbfhLgMStQNGNwbrw5QV3YI6+aonnf4gZAtMaimMf+1Gdv112vZ7JJ11OfHtGd3t
-L5yzORhk8NZC2ZuGq4+s+3NkWZGAXxYAnSXjy08jhl259rBZygHMfyVFLB3KG53o
-qnDg5OP9PD/qp9if3WCcDX6kBcBVI+aaH/3+jXeNBy3HbcAOZ9KnSFRm7MhOEw9f
-NQLJ7cLO1xhNkH426ClyZqTyXamaseGrtOb5KJ/JshQkn5s09YQMU5m0aSkcKY3h
-mJUJkQVryd0hVyzY3cplJj+lnaySFWE/IwQ9tWUdmrQKLc7UznW9Y9G2WT9DWaEZ
-ey8+2ZtQBS1Js2+JROCY
-=PK5U
------END PGP SIGNATURE-----
-
---CDALsHaN7pkIUjoc1Fm8FVlUuomPclGPw--
+diff --git a/Documentation/gitworkflows.txt b/Documentation/gitworkflow=
+s.txt
+index f16c414..3b5fd09 100644
+--- a/Documentation/gitworkflows.txt
++++ b/Documentation/gitworkflows.txt
+@@ -463,6 +463,156 @@ if you get conflicts: `git am -3` will use index =
+information contained
+ in patches to figure out the merge base.  See linkgit:git-am[1] for
+ other options.
+=20
++TRIANGULAR WORKFLOW
++-------------------
++
++In some projects, you cannot push directly to the project but have to
++suggest your commits to the maintainer (e.g. pull requests).
++For these projects, it's common to use what's called a *triangular
++workflow*:
++
++- Taking the last version of the project by fetching (e.g.
++  **UPSTREAM**)
++- Writing modifications and push them to a fork (e.g. **PUBLISH**)
++- Opening a pull request
++- Checking of changes by the maintainer and, merging them into the
++  **UPSTREAM** repository if accepted
++
++
++........................................
++------------------               -----------------
++| UPSTREAM       |  maintainer   | PUBLISH       |
++|  git/git       |- - - - - - - -|  me/remote    |
++------------------       =E2=86=90       -----------------
++              \                     /
++               \                   /
++          fetch=E2=86=93\                 /=E2=86=91push
++                 \               /
++                  \             /
++                   -------------
++                   |   LOCAL   |
++                   -------------
++........................................
++
++Git options to use:
++~~~~~~~~~~~~~~~~~~~
++ - `branch.<branch>.remote`
++ - `branch.<branch>.pushRemote`
++ - `remote.pushDefault`
++ - `push.default`
++
++See linkgit:git-config[1].
++
++Push behaviour
++~~~~~~~~~~~~~~
++
++Setting the behavior of push for the triangular workflow:
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
++* `git config push.default current`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
++
++
++Case 1: LOCAL is a clone of **PUBLISH**
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++'In this case, the remote named `origin` corresponds to **PUBLISH**.'
++
++Adding **UPSTREAM** remote:
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++* `git remote add upstream <UPSTREAM_url>`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++Setting `branch.<branch>.remote` and `branch.<branch>.pushRemote` in
++order to:
++
++ - pull from **UPSTREAM** without argument for pull
++ - push to **PUBLISH** (`origin`) without argument for push
++
++Example with master as <branch>:
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++* `git config branch.master.remote upstream`
++* `git config branch.master.pushRemote origin`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++Case 2: LOCAL is a clone of **UPSTREAM**
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++'In this case, the remote named `origin` corresponds to **UPSTREAM**.'
++
++Adding **PUBLISH** remote:
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++* `git remote add publish <PUBLISH_url>`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++**Method 1: One option for all branches**
++
++Setting `remote.pushDefault` in order to push to **PUBLISH** without
++argument for push.
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++* `git config remote.pushDefault publish`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++**Method 2: Each branch its option**
++
++Setting `branch.<branch>.pushRemote` in order to push to **PUBLISH**
++without argument to push.
++
++Example with master as <branch>:
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++* `git config branch.master.pushRemote publish`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++
++Stay up-to-date
++~~~~~~~~~~~~~~~
++
++Retrieving updates from **UPSTREAM** with `git pull` and sending
++them to **PUBLISH** with `git push`.
++
++Checks
++~~~~~~
++
++Uses of command line shorthand `@{push}` and `@{upstream}`.
++
++**Display the push remote's name: **
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++* `git rev-parse --abbrev-ref '@{push}'`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++The shorthand `<branch>@{push}` denotes the remote-tracking branch
++where the <branch> would be pushed to. If no <branch> is specified
++(`@{push}`), <branch> takes the value of the current branch.
++
++See linkgit:git-rev-parse[1].
++
++**Display the fetch remote's name: **
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++* `git rev-parse --abbrev-ref '@{upstream}'`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++The shorthand "<branch>@{upstream}" substitutes the name of the
++"upstream" of the branch. If no <branch> is specified (`@{upstream}`),
++<branch> takes the value of the current branch.
++
++**Display commits added to the current branch since last push: **
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++* `git log @{push}..`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++See linkgit:git-log[1].
++
++**Display commits added to a specific branch since last push: **
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
++* `git log <branch_name>@{push}..`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+=20
+ SEE ALSO
+ --------
+@@ -474,6 +624,10 @@ linkgit:git-rebase[1],
+ linkgit:git-format-patch[1],
+ linkgit:git-send-email[1],
+ linkgit:git-am[1]
++linkgit:git-config[1],
++linkgit:git-log[1],
++linkgit:git-rev-parse[1]
++
+=20
+ GIT
+ ---
+--=20
+2.7.4 (Apple Git-66)
