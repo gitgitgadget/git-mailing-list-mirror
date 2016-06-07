@@ -1,94 +1,113 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.8.4
-Date: Tue, 7 Jun 2016 11:37:29 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1606071136330.28610@virtualbox>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 4/4] bundle v3: the beginning
+Date: Tue, 7 Jun 2016 17:22:22 +0700
+Message-ID: <CACsJy8DSvS6DxBM-RUknOEe5DquF-qcRr-MK5FUZcRXYDpSgXg@mail.gmail.com>
+References: <xmqqfuw84uhb.fsf@gitster.mtv.corp.google.com> <1456950761-19759-1-git-send-email-gitster@pobox.com>
+ <1456950761-19759-5-git-send-email-gitster@pobox.com> <CAP8UFD1xqRMFE2Wzntu=XevCyj+acGLEO-cTq1fqn+NMe3x0vg@mail.gmail.com>
+ <CACsJy8Dr_Z886Jb-O8gbAv_vzBLicNH6bPPpKwb9HWZTKQ9muw@mail.gmail.com>
+ <CAP8UFD3jPQFk2deSk5JXC3PTz5yWcvXJ4=Qjam5Qw6P9SrLzFQ@mail.gmail.com>
+ <CACsJy8DB_17DZ7REBzicyA_GZCnvNkoYEzftjfyM72QVmEb_Vg@mail.gmail.com> <CAP8UFD2t=2wJ=1U1ctMYNuMSejBYLh2yeLU7ZfP5Q6KLxUApjQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1737779600-1465292250=:28610"
-To: git-for-windows@googlegroups.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 11:37:42 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 07 12:23:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bADS8-0003xe-OE
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 11:37:41 +0200
+	id 1bAE9y-0006Ut-DC
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 12:22:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754031AbcFGJhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 05:37:35 -0400
-Received: from mout.gmx.net ([212.227.15.15]:64949 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752221AbcFGJhd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 05:37:33 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0Mgc0l-1amtGn0yE3-00O2tN; Tue, 07 Jun 2016 11:37:30
- +0200
-X-X-Sender: virtualbox@virtualbox
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:la0r9i2eHlryzbY+s6B5RUvxP0MG+KmIUYS2NHJyrKxDiTRkl9U
- wtQRtFiHql4HcJRT9Z8Fum6lIttabJAEPoZ+rESFqm/FsuhKWfPkjtdJQc7lUdWFepBpsqD
- ZM4lMxieZeFOymgdS6bBVYJKM+Ulp64lNXivxjGVybKPHN6ygzQlpba+231DuJqrEVwTQzm
- jyaiNmOAoaxTJ1dgAX6Ag==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:nDUHXZvViD8=:eJdRq0pfgTcJDBH6Fg5f/C
- EZ5Sw9gHEf4HGVEE7VJsxbW4QoxkbxpLr5wIqXM5utsxV2FrdGhwYfU8Nj8MUWtL1BCVR4hjE
- HPf0++53eakZhIpbyAr7EmLitjndL09o2iciCKhCX5iDuawqnzxePmIvEMfc//8vS2bTsDC+X
- AJmLI2AUcD5wBaV5PyuLdP59VTf8H02VmNtgsmOkuBCkmaXi1qNX3h/XrMjkWZfsAPDqZcw7W
- m+VP3Y/froW0DakvFa2erJQm3SFIWWB7m2be7gxdIMwCkzsuhr/sV4FP451G+Ktj1pTa1WvTH
- t4H9aJb+hhgQXzNtoGJZEF3PtsQlb/z/kBNMAiGutUFvxHrVPTKOslKYf0Xm3ipsQlluemR0k
- p6cPiZyEWQFUpiasMlFlc7s+v75ZPL2fI8HUE3nSjtpgPVh0c0WQbdSFL0yyoxZDltpUW1a+i
- zIq5z9lgtSEqDvNTSqGEHhW2BoTevNFEtT384l0EmFbkuZn1m9lKsjIdz5I+Mq1xhq8LeGplD
- VGOyEzZiowaXzY6Sc7ORHFPJl4K4Bwkt+1tjYXMs3oBaQQ4jCBzTtX7AQvz+FjQwbOIL9C6UE
- 9NE0YDE+ArlUg9Za9keZUfWpu4OyJ9CAQhzHinn4zJYysMxGir7PpZ/V1Gq9uPcmqZXVR5O4s
- TSlhqyidwukbi1gY45d4Zi11qnLF/EgtNAqccaSkAQsLMIKYEkgxQmraaXRjw+g8XtAbZzjym
- t5Z6C6Z1nCKdJRayXfYYYez23ebT6dQjP5zIrdAkONsmD/BqvOZoZ2zOeP8u9X+Ie8n9sI1m 
+	id S1752347AbcFGKWy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 06:22:54 -0400
+Received: from mail-it0-f46.google.com ([209.85.214.46]:35731 "EHLO
+	mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751699AbcFGKWw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 06:22:52 -0400
+Received: by mail-it0-f46.google.com with SMTP id z189so77373940itg.0
+        for <git@vger.kernel.org>; Tue, 07 Jun 2016 03:22:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=r4rIy9oHCAJ0zRAScXOmQ8S7IoyahuyPlek2v9/pAT8=;
+        b=k6Tv0c9NPujdpjk9AV+Ym9zjKZM1OOMOz1PDYjMQfmH81DsB9T+iHHJlPc1gZHrjkn
+         iOyLXpvzCsbQVp1cCN2V+T2KqqF9CGPJvoUlD0JdZ6MYXzDNpn2t/xtT/7wQnYLcJ9+u
+         AEaVrB1XB6/6Mg1VPAvjC+pU7Lp4YHIR5l6pl/vBT27gkkezLhO1maLojbevyImD1NiR
+         fIWGnVvL9XS9bUf7N3MtIpwiQPycpx0uWCix/klXLoGpfqjzknKVl6K1KB7P265QfWiC
+         iOqOqub+kflua56n8wa40ByA3Af/zEP3jJzJEIwJ2Zs8UqM6j4zzh8N8HLabcAVP2eeh
+         iB1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=r4rIy9oHCAJ0zRAScXOmQ8S7IoyahuyPlek2v9/pAT8=;
+        b=f7CR6PJGTv9LOAT6+9Pxo46ZX6HAL4ElRQ1WMuUqM3BJvbKBGs3YBqMNUgYx8ON4tQ
+         jy7bKPJp0pR1Lip7Ddct2QyQ3Uh8I7kj+g1CCMA4gg4GOQV0VaVyY/RSnVySKTboeV4n
+         CAra7urqGWql5ZslBiHI7I/zN6SOH6ft4vOr3xXyHelzhTRyKn4JB9oEOXGzuSbk4akK
+         mXvcLiQL/v9ovl6OV29yFajahT4EmTaaAs+dyTQTAhvlSC75oxziEj2QMDrJn4ZjSYGj
+         Gj87bLzlHPgVChlaXmRWq+PVMpqz+TA7pGAPNEYFMbKEYAbu3wpXyx42sOoBahtNuYLS
+         CyCQ==
+X-Gm-Message-State: ALyK8tKBn1VchWVMbYAFrXNhuoogt1TEAcGigEPuhq7iGZhzNN20WSBQ7hqPzMQb6NiHgzZbr1pyVsRnvJ9PWQ==
+X-Received: by 10.36.239.197 with SMTP id i188mr2480703ith.57.1465294971899;
+ Tue, 07 Jun 2016 03:22:51 -0700 (PDT)
+Received: by 10.64.173.167 with HTTP; Tue, 7 Jun 2016 03:22:22 -0700 (PDT)
+In-Reply-To: <CAP8UFD2t=2wJ=1U1ctMYNuMSejBYLh2yeLU7ZfP5Q6KLxUApjQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296623>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Tue, Jun 7, 2016 at 3:46 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+>> Any thought on object streaming support?
+>
+> No I didn't think about this. In fact I am not sure what this means.
+>
+>> It could be a big deal (might
+>> affect some design decisions).
+>
+> Could you elaborate on this?
 
---8323329-1737779600-1465292250=:28610
-Content-Type: text/plain; charset=X-UNKNOWN
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Object streaming api is in streaming.h. Normally objects are small and
+we can inflate the whole thing in memory before doing anything with
+them. For really large objects (which I guess is one of the reasons
+for remote odb) we don't want to do that. It takes lots of memory and
+you could have objects larger than your physical memory. In some cases
+when can ignore those objects (e.g. mark them binary and choose not to
+diff). In some other cases (e.g. checkout), we use streaming interface
+to process an object while we're inflating it to keep memory usage
+down. It's easy to add a new streaming backend, once you settle on how
+remote odb streams stuff.
 
-Dear Git users,
+>> I would also think about how pack v4
+>> fits in this (e.g. how a tree walker can still walk fast, a big
+>> promise of pack v4; I suppose if you still maintain "pack" concept
+>> over external odb then it might work). Not that it really matters.
+>> Pack v4 is the future, but the future can never be "today" :)
+>
+> Sorry I haven't really followed pack v4 and I forgot what it is about.
 
-It is my pleasure to announce that Git for Windows 2.8.4 is available from:
+It's a new pack format (and practically vaporware at this point) that
+promises much faster access when you need to walk through trees and
+commits (think rev-list --objects --all, or git-blame). Because we are
+(or I am) still not sure if pack v4 will ever get to the state where
+it can be merged to git.git, I think it's ok for you to ignore it too
+if you want. You can read more about the format here [1] and go even
+further back to [2] when Nicolas teased us with the pack size
+(smaller, which is a nice side effect). The potential issue with pack
+v4 is, the tree walker (struct tree_desc and related funcs in
+walk-tree.h) needs to know about pack v4 in order to walk fast.
+Current tree walker does not care if an object is packed (using what
+format) at all. Remote odb for pack v4 must have some way that allows
+to read pack data directly, something close to "mmap", it's not just
+about an api to "get me the canonical content of this object".
 
-=09https://git-for-windows.github.io/
-
-Changes since Git for Windows v2.8.3 (May 20th 2016)
-
-New Features
-
-  =E2=80=A2 Comes with Git 2.8.4.
-
-Bug Fixes
-
-  =E2=80=A2 Child processes no longer inherit handles to temporary files, w=
-hich
-    previously could prevent index.lock from being deleted.
-  =E2=80=A2 When configuring Git Bash with Windows' default console, it no
-    longer loses its icon.
-
-Filename | SHA-256
--------- | -------
-Git-2.8.4-64-bit.exe | 1c4f50e11a8138944c21aaf5837606778cf1835c2bcce6936b40=
-ce48c9fbdb49
-Git-2.8.4-32-bit.exe | 502dadd830560088dfd7f8f9582d028dffa10cfd20b4616f0592=
-a8098f8f5a7a
-PortableGit-2.8.4-64-bit.7z.exe | 69018cf6c8af2b24cdfb64d469e0515d5c81471e8=
-4845d6012677ea3272bd4c0
-PortableGit-2.8.4-32-bit.7z.exe | 488dab9c25465df6c9452654623f5057340216708=
-2703f7af270d2d173eecce0
-Git-2.8.4-64-bit.tar.bz2 | 41ae6d6bcf906c8bf98092ae8577212d21d20b8d4f7784f2=
-690ed132116aec63
-Git-2.8.4-32-bit.tar.bz2 | 2cffb6f899377c9241322e215f5e32963992f1a3cb607e80=
-3a6427a02b2f0a94
-
-Ciao,
-Johannes
---8323329-1737779600-1465292250=:28610--
+[1] http://article.gmane.org/gmane.comp.version-control.git/234012
+[2] http://article.gmane.org/gmane.comp.version-control.git/233038
+-- 
+Duy
