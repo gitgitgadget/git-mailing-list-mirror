@@ -1,127 +1,208 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 2/4] Resurrect "diff-lib.c: adjust position of i-t-a
- entries in diff"
-Date: Tue, 7 Jun 2016 19:04:26 +0700
-Message-ID: <CACsJy8DO+KU59LbQ0ZtTax6DZKqYmZVT6MHLmNK73GkO9qHf_w@mail.gmail.com>
-References: <20160606111643.7122-1-pclouds@gmail.com> <20160606111643.7122-3-pclouds@gmail.com>
- <xmqqtwh6uk0k.fsf@gitster.mtv.corp.google.com>
+From: Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>
+Subject: Re: [RFC/PATCH v2] pull: add --set-upstream
+Date: Tue, 7 Jun 2016 14:43:06 +0200
+Message-ID: <8c74e096-f573-66b1-5f00-e4bb771720ee@grenoble-inp.org>
+References: <20160525152528.22202-1-erwan.mathoniere@grenoble-inp.org>
+ <20160606093437.1992-1-erwan.mathoniere@grenoble-inp.org>
+ <vpqvb1mgvn5.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Thomas Braun <thomas.braun@virtuell-zuhause.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 07 14:06:31 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, jordan.de-gea@grenoble-inp.org,
+	samuel.groot@grenoble-inp.org, tom.russello@grenoble-inp.org,
+	gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 07 14:44:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAFl2-0007bT-6j
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 14:05:20 +0200
+	id 1bAGLm-00051w-QT
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 14:43:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932383AbcFGMFN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jun 2016 08:05:13 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:34551 "EHLO
-	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753956AbcFGME4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Jun 2016 08:04:56 -0400
-Received: by mail-it0-f66.google.com with SMTP id r205so7325288itd.1
-        for <git@vger.kernel.org>; Tue, 07 Jun 2016 05:04:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=zDMrBLvVisVYhhSVxquErnJ4/NBcDH002mkX1HLYrVw=;
-        b=bCT9CJpqUndBpVnTAJAqStHUoQvdrVNM77hl0Jt+pJ0v69Wxpub9NPV8FYa1FM9YIm
-         k8S1d7aJFYrxjkUoZbTwHnyKxzm5HMwcV1rEr9wjROfem43zUEBKjEynH5jP4DbW39xz
-         0tOgnJU2XLqUS0gT8jyvc50UZFfXkc51oZtX5MEnRiQl5tGikvCYVsvUofRiYIBFZoSK
-         OIl4DM3+cPpbxlxo9O2E0YcENu4oHp+rkjLByW7LOSphadLbjH6CKxbOPGpxe0QRKwwy
-         3wkEUgLNrbiBLLSv8A3W62/kjU28EOsHl82MBy6tj3m2Umk1Ib17HsZMMpJdFxHLLPIS
-         Akcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zDMrBLvVisVYhhSVxquErnJ4/NBcDH002mkX1HLYrVw=;
-        b=Nz39Q9VSHTwcjCfzgUsT5L99W32kGH5Pa4Hv1Y6xoH9diAeAGytAn6gIPFlZIBNfcd
-         qXP5gMwz3cg2/BEiu4cnpmuea6HB+NepuK/ZPqMTqVMsa72e0K1ITtCTkrRc8UHGhZSD
-         c5YDugZv8pEhg863zlgHdY9hpSguLYW8qpnTWWnvUIRX469+1ZDFST9SDgGZZiRq6146
-         dQpvqkC0NdqQQNYBs0GivjQQ/PCHQ7wMgKhf/DnkV5gK+PIO+PIb+NUDY3Hxrq60iPGe
-         vzgneJSmhZLvOgUv1rnxMqZ7gSVMp7lbOzzgZ62WUcv2MvF/6Ip/BJpDQ8+xejjaz5bg
-         UmQw==
-X-Gm-Message-State: ALyK8tI+QJnLCsmSr7S13qwp0qLBqfx7dXHv1NpKazQdA6AGctzml0qIGrkk5uJkvvaHqNK1Zn1SUMN3lLb7xw==
-X-Received: by 10.107.8.220 with SMTP id h89mr13368965ioi.95.1465301095447;
- Tue, 07 Jun 2016 05:04:55 -0700 (PDT)
-Received: by 10.64.173.167 with HTTP; Tue, 7 Jun 2016 05:04:26 -0700 (PDT)
-In-Reply-To: <xmqqtwh6uk0k.fsf@gitster.mtv.corp.google.com>
+	id S1755183AbcFGMnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 08:43:12 -0400
+Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:60966 "EHLO
+	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753412AbcFGMnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 08:43:10 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 753162561;
+	Tue,  7 Jun 2016 14:43:06 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5nAqqtaEQzFJ; Tue,  7 Jun 2016 14:43:06 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 638B224F3;
+	Tue,  7 Jun 2016 14:43:06 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 5CB1E2066;
+	Tue,  7 Jun 2016 14:43:06 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id RhXITYKOBFSq; Tue,  7 Jun 2016 14:43:06 +0200 (CEST)
+Received: from [130.190.32.141] (eduroam-032141.grenet.fr [130.190.32.141])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 462CF2064;
+	Tue,  7 Jun 2016 14:43:06 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
+In-Reply-To: <vpqvb1mgvn5.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296668>
 
-On Tue, Jun 7, 2016 at 3:42 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+
+
+On 06/06/2016 17:54, Matthieu Moy wrote:
+> Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org> writes:
 >
->> +--shift-ita::
->> +     By default entries added by "git add -N" appear as an existing
->> +     empty file in "git diff" and a new file in "git diff --cached"=
-=2E
->> +     This option makes the entry appear as a new file in "git diff"
->> +     and non-existent in "git diff --cached".
+>> @@ -497,6 +504,10 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
+>>  		fprintf(stderr, "\n");
+>>  		fprintf_ln(stderr, _("If you wish to set tracking information for this branch you can do so with:"));
+>>  		fprintf(stderr, "\n");
+>> +		fprintf_ln(stderr, "    git pull -u %s %s", _("<remote>"), _("<branch>"));
 >
-> I do not think this should exist at the UI level,
+> I'd rather use the long syntax "--set-upstream" in the advice. It gives
+> a hint to the user about what the command is actually going to do.
 
-I need it. I do "git diff --stat" and "git diff --cached --stat" a lot
-more often than "git status". Without this option, I'm stuck with the
-old behavior.
+You're right, I'll change it.
 
-> even though the
-> use of it in wt-status.c (below) makes a very good sense at least
-> as a temporary band-aid.
+>> +static void set_pull_upstream(const char *repo, const char **refspecs_name)
+>> +{
+>> +	unsigned char sha1[GIT_SHA1_RAWSZ];
 >
-> At the philosophical level, I however think this "I-T-A does not
-> logically exist in the index (yet)" is a mistake, and "an option
-> controls if I-T-A does or does not exist depending on who calls it"
-> is even worse; it is a road to insanity.
+> The trend in the codebase is to use object_id instead of these char
+> sha1[] arrays. See the output of "git log --grep object_id" for details.
 
-i-t-a entries have dual personality (perhaps because it's implemented
-as an index entry). Although I think the "does not exist" aspect will
-win in most cases. The intention behind the revert is we have more
-time to examine case by case and gradually convert them. Maybe in the
-end one behavior wins and we no longer need another. A thought of
-keeping i-t-a entries in an index extension instead crossed my mind.
-It may simplify things a bit (e.g. there's no "ghost" entries any more
-and active_nr in 3/4 can remain "the number of _real_ entries"). The
-few parts that do need to know about i-t-a entries need explict
-modification (probably git-reset and git-diff). But I don't know yet
-if it would just lead to another nightmare.
+I'll dig into it, thanks.
 
-> For example, because I-T-A does not logically exist in the index,
-> "git reset --hard" should not remove it but make it untracked again
-> (but I do not think it does). After "git add -N foo", because "foo"
-> does not exist in the index, "git clean" should remove it for the
-> definition of what's in the index to be logically consistent, but
-> the whole intent of "add -N" is that the user meant it is worth
-> checking into sometime in the future, which contradicts with its
-> removal upon "clean".
+>> +	strbuf_init(&buf, 0);
+>> +	refspec = parse_fetch_refspec(nr_refspec, refspecs_name);
+>> +
+>> +	for (i = 0; i < nr_refspec; i++) {
+>> +		if (refspec[i].pattern) {
+>> +			warning(_("upstream cannot be set for patterns"));
+>> +			continue;
+>> +		}
+>> +
+>> +		branch = branch_get(refspec[i].dst);
+>> +		if (!branch || !ref_exists(branch->refname)) {
+>> +			if (!refspec[i].dst || !*refspec[i].dst)
+>> +				warning(_("could not set upstream of HEAD when "
+>> +					"it does not point to any branch."));
+>> +			else
+>> +				warning(_("cannot set upstream: "
+>> +					"'%s' is not a branch"), refspec[i].dst);
+>
+> Inconsistent message: "could not"/"cannot".
 
-I think we should fix them. I started that and so far only 4d55200
-(grep: make it clear i-t-a entries are ignored - 2015-12-27) has made
-it to 'master'.
+I copied/pasted the first warning from another portion of code in order 
+to avoid useless translation work, but it isn't really relevant in that 
+case.
 
-> So, I dunno.
+> For this kind of code, it greatly helps to have comments refering to the
+> input syntax for each branch of each conditionals. I'm not familiar with
+> this part of the code, but if I understood correctly, the above would be
+>
+> if ()
+> 	/* refspec: <branch>: */
+>         warning(...);
+> else
+> 	/* refspec: <branch>:<no-such-branch> */
+>         warning(...);
 
-I just remembered why the old behavior (abort to commit if i-t-a
-entries are present) bugged me: it does not work well with splitting
-changes in worktree into multiple commits (e.g. with "git add -p").
-Even though I want git remind me to commit an i-t-a entry in the end,
-it does not necessarily mean I have to do it in the next commit, which
-may cover a bunch of files except that i-t-a file. I don't see any way
-around that except ignoring i-t-a entries at commit time. If there's
-another way, I'm all ears.
---=20
-Duy
+Good idea, some part aren't so easy to link to the input.
+
+> I think it would make sense to actually raise an error (i.e. set the
+> exit status of the "git pull" process to a non-zero value) when such
+> issue occur. OTOH, "git push --set-upstream" does not even issue a
+> warning when trying to --set-upstream to a tag for example, so not
+> raising an error is consistant.
+
+Since the idea is to have a similar behavior to `git push 
+--set-upstream`, I think it's not relevant to raise an error when `git 
+push` doesn't. And for a minor feature, it seems disproportionate to 
+consider a `git pull -u ...` as a failure when the entire process 
+succeeded except for the upstream part.
+
+>>  int cmd_pull(int argc, const char **argv, const char *prefix)
+>>  {
+>> +	int ret;
+>>  	const char *repo, **refspecs;
+>>  	struct sha1_array merge_heads = SHA1_ARRAY_INIT;
+>>  	unsigned char orig_head[GIT_SHA1_RAWSZ], curr_head[GIT_SHA1_RAWSZ];
+>> @@ -918,11 +1013,16 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+>>  	if (is_null_sha1(orig_head)) {
+>>  		if (merge_heads.nr > 1)
+>>  			die(_("Cannot merge multiple branches into empty head."));
+>> -		return pull_into_void(*merge_heads.sha1, curr_head);
+>> +		ret = pull_into_void(*merge_heads.sha1, curr_head);
+>>  	} else if (opt_rebase) {
+>>  		if (merge_heads.nr > 1)
+>>  			die(_("Cannot rebase onto multiple branches."));
+>> -		return run_rebase(curr_head, *merge_heads.sha1, rebase_fork_point);
+>> +		ret = run_rebase(curr_head, *merge_heads.sha1, rebase_fork_point);
+>>  	} else
+>> -		return run_merge();
+>> +		ret = run_merge();
+>> +
+>> +	if (opt_set_upstream && ret < 128)
+>
+> Shouldn't this be "ret == 0"?
+
+The feature activates after rebasing/merging. When there are merge 
+conflicts, `run_merge` doesn't return a non-null error code and we want 
+to set upstream even in that case.
+On the other hand, when merge fails (e.g. histories aren't related) it 
+stops itself by invoking `die` and returning a >= 128 error code. We 
+don't want to proceed in that case.
+
+>> +check_config () {
+>
+> Perhaps "check_upstream" is more expressive.
+
+I took this procedure from t5523-push-upstream, but you're right it's 
+more relevant.
+
+>> +	(echo "$2"; echo "$3") >expect
+>
+> What happened to Junio's suggestion with test_write_lines?
+
+Oups,  small oversight.
+
+>> +test_expect_success 'setup repos' '
+>> +	git init parent &&
+>> +	(
+>> +		cd parent &&
+>> +		echo content >file &&
+>> +		git add file &&
+>> +		git commit -am one &&
+>
+> test_commit can make this code simpler.
+>
+>> +		echo content_modified >file &&
+>> +		git commit -am "file modification"
+>
+> Likewise.
+>
+
+Thanks, I'll take a look at it.
+
+>> +test_expect_success 'pull -u with a tag should not work' '
+>> +	git checkout master &&
+>> +	test_config_unchanged git pull -u upstream initial_tag
+>> +'
+>> +
+>> +test_expect_success 'pull -u on detached head should not work' '
+>> +	git checkout HEAD^0 &&
+>> +	test_config_unchanged git pull -u upstream master2 &&
+>> +	git checkout -
+>> +'
+>
+> For all these "test_config_unchanged", it would be nice to check that
+> the error message is the right one too.
+
+Ok, I'll add checks on that.
