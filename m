@@ -1,108 +1,276 @@
 From: Tom Russello <tom.russello@grenoble-inp.org>
-Subject: [PATCH v3 4/6] send-email: create email parser subroutine
-Date: Tue,  7 Jun 2016 16:01:46 +0200
-Message-ID: <20160607140148.23242-5-tom.russello@grenoble-inp.org>
-References: <1464369102-7551-1-git-send-email-tom.russello@grenoble-inp.org>
- <20160607140148.23242-1-tom.russello@grenoble-inp.org>
+Subject: [PATCH v3 5/6] send-email: --in-reply-to=<file> populates the fields
+Date: Tue,  7 Jun 2016 16:05:18 +0200
+Message-ID: <20160607140519.23418-1-tom.russello@grenoble-inp.org>
+References: <20160607140148.23242-5-tom.russello@grenoble-inp.org>
 Cc: erwan.mathoniere@grenoble-inp.org, samuel.groot@grenoble-inp.org,
 	jordan.de-gea@grenoble-inp.org, matthieu.moy@grenoble-inp.fr,
 	e@80x24.org, aaron@schrab.com, gitster@pobox.com,
-	Tom RUSSELLO <tom.russello@grenoble-inp.org>
+	Tom Russello <tom.russello@grenoble-inp.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 16:02:45 2016
+X-From: git-owner@vger.kernel.org Tue Jun 07 16:05:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAHaW-0005VW-Sf
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 16:02:37 +0200
+	id 1bAHda-0007qT-IW
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 16:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755304AbcFGOCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 10:02:25 -0400
-Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:51082 "EHLO
+	id S1755351AbcFGOFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 10:05:34 -0400
+Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:44439 "EHLO
 	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754967AbcFGOCW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 10:02:22 -0400
+	with ESMTP id S1754909AbcFGOFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 10:05:33 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id E10312591;
-	Tue,  7 Jun 2016 16:02:19 +0200 (CEST)
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 19AC02591;
+	Tue,  7 Jun 2016 16:05:31 +0200 (CEST)
 Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7ORE05fE1xrJ; Tue,  7 Jun 2016 16:02:19 +0200 (CEST)
+	with ESMTP id NnQ7ASvebFnC; Tue,  7 Jun 2016 16:05:31 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id D16A32570;
-	Tue,  7 Jun 2016 16:02:19 +0200 (CEST)
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 21751256B;
+	Tue,  7 Jun 2016 16:05:30 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id CED402066;
-	Tue,  7 Jun 2016 16:02:19 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 1C18E2066;
+	Tue,  7 Jun 2016 16:05:30 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ejdd1fL-Nz6s; Tue,  7 Jun 2016 16:02:19 +0200 (CEST)
+	with ESMTP id T_Y9en0I4Tzf; Tue,  7 Jun 2016 16:05:30 +0200 (CEST)
 Received: from ux-305.grenet.fr (eduroam-033003.grenet.fr [130.190.33.3])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id B52FE2064;
-	Tue,  7 Jun 2016 16:02:19 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id E7CB62064;
+	Tue,  7 Jun 2016 16:05:29 +0200 (CEST)
 X-Mailer: git-send-email 2.9.0.rc0.40.g1232aeb.dirty
-In-Reply-To: <20160607140148.23242-1-tom.russello@grenoble-inp.org>
+In-Reply-To: <20160607140148.23242-5-tom.russello@grenoble-inp.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296685>
 
-We need a simple and generic way to parse an email file.
+Take an email message file, parse it and fill the "From", "To", "Cc",
+"In-reply-to", "References" fields appropriately.
 
-Since it would be hard to include and maintain an external library,
-create an simple email parser subroutine to parse an email file.
+If `--compose` option is set, it will also fill the subject field with
+`Re: [<email_file>'s subject]` in the introductory message.
 
-Signed-off-by: Samuel GROOT <samuel.groot@grenoble-inp.org>
 Signed-off-by: Tom RUSSELLO <tom.russello@grenoble-inp.org>
+Signed-off-by: Samuel GROOT <samuel.groot@grenoble-inp.org>
 Signed-off-by: Matthieu MOY <matthieu.moy@grenoble-inp.fr>
 ---
-We chose to create our own simple email parser and only use it for the
-"quote email" feature to pave the way for the refactorization of the patch
-parser [0] that may come after our current school project.
+Check if the string given by argument with `--in-reply-to` leads to
+an existing plain text file. If not, consider it as a message-id.
 
-[0] * http://thread.gmane.org/gmane.comp.version-control.git/295752
+Changes sinces v2:
+	- Fill the References: field to keep the thread even if some
+	  emails have been removed
+	- Explicit error with a proper "if" when an error occured during
+	  email file opening
+	- More precise comments
+	- More tests
 
- git-send-email.perl | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ Documentation/git-send-email.txt |  9 +++--
+ git-send-email.perl              | 49 +++++++++++++++++++++++-
+ t/t9001-send-email.sh            | 83 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 136 insertions(+), 5 deletions(-)
 
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index edbba3a..21776f0 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -84,13 +84,16 @@ See the CONFIGURATION section for 'sendemail.multiEdit'.
+ 	the value of GIT_AUTHOR_IDENT, or GIT_COMMITTER_IDENT if that is not
+ 	set, as returned by "git var -l".
+ 
+---in-reply-to=<identifier>::
++--in-reply-to=<Message-Id|email_file>::
+ 	Make the first mail (or all the mails with `--no-thread`) appear as a
+-	reply to the given Message-Id, which avoids breaking threads to
+-	provide a new patch series.
++	reply to the given Message-Id (given directly by argument or via the email
++	file), which avoids breaking threads to provide a new patch series.
+ 	The second and subsequent emails will be sent as replies according to
+ 	the `--[no]-chain-reply-to` setting.
+ +
++Furthermore, if the argument is an email file, parse it and populate header
++fields appropriately for the reply.
+++
+ So for example when `--thread` and `--no-chain-reply-to` are specified, the
+ second and subsequent patches will be replies to the first one like in the
+ illustration below where `[PATCH v2 0/3]` is in reply to `[PATCH 0/2]`:
 diff --git a/git-send-email.perl b/git-send-email.perl
-index 4822f41..db114ae 100755
+index db114ae..66aa2cd 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -1750,3 +1750,31 @@ sub body_or_subject_has_nonascii {
- 	}
- 	return 0;
+@@ -55,6 +55,7 @@ git send-email --dump-aliases
+     --[no-]bcc              <str>  * Email Bcc:
+     --subject               <str>  * Email "Subject:"
+     --in-reply-to           <str>  * Email "In-Reply-To:"
++    --in-reply-to          <file>  * Populate header fields appropriately.
+     --[no-]xmailer                 * Add "X-Mailer:" header (default).
+     --[no-]annotate                * Review each patch that will be sent in an editor.
+     --compose                      * Open an editor for introduction.
+@@ -160,7 +161,7 @@ my $re_encoded_word = qr/=\?($re_token)\?($re_token)\?($re_encoded_text)\?=/;
+ 
+ # Variables we fill in automatically, or via prompting:
+ my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh,
+-	$initial_reply_to,$initial_subject,@files,
++	$initial_reply_to,$initial_references,$initial_subject,@files,
+ 	$author,$sender,$smtp_authpass,$annotate,$use_xmailer,$compose,$time);
+ 
+ my $envelope_sender;
+@@ -639,6 +640,50 @@ if (@files) {
+ 	usage();
  }
+ 
++if ($initial_reply_to && -f $initial_reply_to) {
++	my $error = validate_patch($initial_reply_to);
++	die "fatal: $initial_reply_to: $error\nwarning: no patches were sent\n"
++		if $error;
 +
-+sub parse_email {
-+        my %mail = ();
-+        my $fh = shift;
-+        my $last_header;
++	open my $fh, "<", $initial_reply_to or die "can't open file $initial_reply_to";
++	my $mail = parse_email($fh);
++	close $fh;
 +
-+        # Unfold and parse multiline header fields
-+        while (<$fh>) {
-+                last if /^\s*$/;
-+                s/\r\n|\n|\r//;
-+                if (/^([^\s:]+):[\s]+(.*)$/) {
-+                        $last_header = lc($1);
-+                        @{$mail{$last_header}} = ()
-+                                unless defined $mail{$last_header};
-+                        push @{$mail{$last_header}}, $2;
-+                } elsif (/^\s+\S/ and defined $last_header) {
-+                        s/^\s+/ /;
-+                        push @{$mail{$last_header}}, $_;
-+                } else {
-+                        die("Mail format undefined !\n");
-+                }
-+        }
++	my $initial_sender = $sender || $repoauthor || $repocommitter || '';
 +
-+        # Separate body from header
-+        $mail{"body"} = [(<$fh>)];
++	my $prefix_re = "";
++	my $subject_re = $mail->{"subject"}[0];
++	if ($subject_re =~ /^[^Re:]/) {
++		$prefix_re = "Re: ";
++	}
++	$initial_subject = $prefix_re . $subject_re;
 +
-+        return \%mail;
++	push @initial_to, $mail->{"from"}[0];
++
++	foreach my $to_addr (parse_address_line(join ",", @{$mail->{"to"}})) {
++		if (!($to_addr eq $initial_sender)) {
++			push @initial_cc, $to_addr;
++		}
++	}
++
++	foreach my $cc_addr (parse_address_line(join ",", @{$mail->{"cc"}})) {
++		my $qaddr = unquote_rfc2047($cc_addr);
++		my $saddr = sanitize_address($qaddr);
++		if ($saddr eq $initial_sender) {
++			next if ($suppress_cc{'self'});
++		} else {
++			next if ($suppress_cc{'cc'});
++		}
++		push @initial_cc, $cc_addr;
++	}
++
++	$initial_reply_to = $mail->{"message-id"}[0];
++	if ($mail->{"references"}) {
++		$initial_references = join("", @{$mail->{"references"}}) .
++			" " . $initial_reply_to;
++	}
 +}
++
+ sub get_patch_subject {
+ 	my $fn = shift;
+ 	open (my $fh, '<', $fn);
+@@ -1426,7 +1471,7 @@ Message-Id: $message_id
+ }
+ 
+ $reply_to = $initial_reply_to;
+-$references = $initial_reply_to || '';
++$references = $initial_references || $initial_reply_to || '';
+ $subject = $initial_subject;
+ $message_num = 0;
+ 
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 9b1e56f..2d67f6d 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1892,4 +1892,87 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
+ 	test_cmp_noorder expected-list actual-list
+ '
+ 
++test_expect_success $PREREQ 'setup expect' '
++	cat >email <<-\EOF
++	Subject: subject goes here
++	From: author@example.com
++	To: to1@example.com
++	Cc: cc1@example.com, cc2@example.com,
++     cc3@example.com
++	Date: Sat, 12 Jun 2010 15:53:58 +0200
++	Message-Id: <author_123456@example.com>
++	References: <firstauthor_654321@example.com>
++        <secondauthor_01546567@example.com>
++        <thirdauthor_1395838@example.com>
++
++	Have you seen my previous email?
++	> Previous content
++	EOF
++'
++
++test_expect_success $PREREQ 'Fields with --in-reply-to are correct' '
++	clean_fake_sendmail &&
++	git send-email \
++		--in-reply-to=email \
++		--from="Example <nobody@example.com>" \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		-2 \
++		2>errors &&
++	grep "From: Example <nobody@example.com>" msgtxt1 &&
++	grep "In-Reply-To: <author_123456@example.com>" msgtxt1 &&
++	to_adr=$(awk "/^To: /{flag=1}/^Cc: /{flag=0} flag {print}" msgtxt1) &&
++	cc_adr=$(awk "/^Cc: /{flag=1}/^Subject: /{flag=0} flag {print}" msgtxt1) &&
++	ref_adr=$(awk "/^References: /{flag=1}/^MIME-Version: /{flag=0} flag {print}" \
++		msgtxt1) &&
++	echo "$to_adr" | grep author@example.com &&
++	echo "$cc_adr" | grep to1@example.com &&
++	echo "$cc_adr" | grep cc1@example.com &&
++	echo "$cc_adr" | grep cc2@example.com &&
++	echo "$cc_adr" | grep cc3@example.com &&
++	echo "$ref_adr" | grep "<firstauthor_654321@example.com>" &&
++	echo "$ref_adr" | grep "<secondauthor_01546567@example.com>" &&
++	echo "$ref_adr" | grep "<thirdauthor_1395838@example.com>" &&
++	echo "$ref_adr" | grep "<author_123456@example.com>" &&
++	echo "$ref_adr" | grep -v "References: <author_123456@example.com>"
++'
++
++test_expect_success $PREREQ 'Fields with --in-reply-to and --compose are correct' '
++	clean_fake_sendmail &&
++	git send-email \
++		--in-reply-to=email \
++		--compose \
++		--from="Example <nobody@example.com>" \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		-1 \
++		2>errors &&
++	grep "From: Example <nobody@example.com>" msgtxt1 &&
++	grep "In-Reply-To: <author_123456@example.com>" msgtxt1 &&
++	grep "Subject: Re: subject goes here" msgtxt1 &&
++	to_adr=$(awk "/^To: /{flag=1}/^Cc: /{flag=0} flag {print}" msgtxt1) &&
++	cc_adr=$(awk "/^Cc: /{flag=1}/^Subject: /{flag=0} flag {print}" msgtxt1) &&
++	ref_adr=$(awk "/^References: /{flag=1}/^MIME-Version: /{flag=0} flag {print}" \
++		msgtxt1) &&
++	echo "$to_adr" | grep author@example.com &&
++	echo "$cc_adr" | grep to1@example.com &&
++	echo "$cc_adr" | grep cc1@example.com &&
++	echo "$cc_adr" | grep cc2@example.com &&
++	echo "$cc_adr" | grep cc3@example.com &&
++	echo "$ref_adr" | grep "<firstauthor_654321@example.com>" &&
++	echo "$ref_adr" | grep "<secondauthor_01546567@example.com>" &&
++	echo "$ref_adr" | grep "<thirdauthor_1395838@example.com>" &&
++	echo "$ref_adr" | grep "<author_123456@example.com>" &&
++	echo "$ref_adr" | grep -v "References: <author_123456@example.com>"
++'
++
++test_expect_success $PREREQ 'Re: written only once with --in-reply-to and --compose ' '
++	git send-email \
++		--in-reply-to=msgtxt1 \
++		--compose \
++		--from="Example <nobody@example.com>" \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		-1 \
++		2>errors &&
++	grep "Subject: Re: subject goes here" msgtxt3
++'
++
+ test_done
 -- 
 2.8.3
