@@ -1,82 +1,146 @@
-From: Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>
-Subject: Re: [RFC/PATCH v2] pull: add --set-upstream
-Date: Tue, 7 Jun 2016 15:15:02 +0200
-Message-ID: <af8762b1-3865-5d10-296c-db9bf9e8aa53@grenoble-inp.org>
-References: <20160525152528.22202-1-erwan.mathoniere@grenoble-inp.org>
- <20160606093437.1992-1-erwan.mathoniere@grenoble-inp.org>
- <vpqvb1mgvn5.fsf@anie.imag.fr> <xmqqoa7ew319.fsf@gitster.mtv.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 4/4] bundle v3: the beginning
+Date: Tue, 7 Jun 2016 15:19:46 +0200
+Message-ID: <CAP8UFD3mGKTONzh1fxCJAJBrmc=OcCHeRqBQi-xTzHvcnAJ_sw@mail.gmail.com>
+References: <xmqqfuw84uhb.fsf@gitster.mtv.corp.google.com> <1456950761-19759-1-git-send-email-gitster@pobox.com>
+ <1456950761-19759-5-git-send-email-gitster@pobox.com> <CAP8UFD1xqRMFE2Wzntu=XevCyj+acGLEO-cTq1fqn+NMe3x0vg@mail.gmail.com>
+ <20160531223118.GD3824@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, jordan.de-gea@grenoble-inp.org,
-	samuel.groot@grenoble-inp.org, tom.russello@grenoble-inp.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 07 15:15:26 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 07 15:19:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAGqq-0003yD-MU
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 15:15:25 +0200
+	id 1bAGvC-0007eT-Ll
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jun 2016 15:19:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932711AbcFGNPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 09:15:08 -0400
-Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:51632 "EHLO
-	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932308AbcFGNPF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 09:15:05 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id BC09D256B;
-	Tue,  7 Jun 2016 15:15:02 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Pn7JXz30Nzlu; Tue,  7 Jun 2016 15:15:02 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id A84442561;
-	Tue,  7 Jun 2016 15:15:02 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id A50902066;
-	Tue,  7 Jun 2016 15:15:02 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id CcjRNtD7WNXx; Tue,  7 Jun 2016 15:15:02 +0200 (CEST)
-Received: from [130.190.32.141] (eduroam-032141.grenet.fr [130.190.32.141])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 7E5F12064;
-	Tue,  7 Jun 2016 15:15:02 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.1
-In-Reply-To: <xmqqoa7ew319.fsf@gitster.mtv.corp.google.com>
+	id S1161126AbcFGNTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 09:19:50 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:35146 "EHLO
+	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751609AbcFGNTt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 09:19:49 -0400
+Received: by mail-wm0-f45.google.com with SMTP id v199so19258298wmv.0
+        for <git@vger.kernel.org>; Tue, 07 Jun 2016 06:19:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0h/Qx+RDWxdpmzlFmbhAeufq3ncDBON8Q2pUQ38fqtc=;
+        b=tmbfRWdRgtjSLt+3EpbvrreWLM2Wa8DSzwSWeNxrt3uNIuhGOgIUWwTf+QNzzYE3PM
+         lUIWnpCCIBXOkT7t1FQ3Koc787lcPNDFpQpeI5SdOs+wjAJWK0brK943LjRtB5OQN9QA
+         gn9w0VADgyicxNikPbv4+gVGKpSpn0FaAV6lxRAvdsKR2kKuCUGUQuLU60nooSa49rL8
+         c4icqtJeD06k6AKi0xgPqj35AzATqLDFC3QGssiln5nrKcLbrrExOQZkcMv1NJn6NPhv
+         KDE2vk6MAlU0bG84a3WAHCkBENnuybSiTxoWuDc1LgZBcUxsscJygvIPgCEVUsj0a//R
+         uhqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0h/Qx+RDWxdpmzlFmbhAeufq3ncDBON8Q2pUQ38fqtc=;
+        b=JV5FKDkvXai/2I459mwxqC5tFMZdQ1zdtIy/+1Al+8X8koH3HLnZYCn6fqYyK4b5nb
+         uPu1KNokidDGCb7j1FD/PMqQ8gnNBIKydI5qpLvMZCRPq1eJZJhMuQsJNGfp1nzfzkCE
+         D3kQEL75JioB5ezUfYJeA4Oz992oUxk7AY5SpqijaH5UDkmUuoSvDpMi57kGHHPPF8lh
+         ZtpspgHBnxbyNFMqr/clYOBL5iB62Irfby3ZH6XZmciUYQ5ofwOO/z2lDwG5esvtQwZO
+         OgEGJXqjzEgoJmx8ghzSHY7Xv35VRU3H9yMY94IJsV/tc+nA6Ny9GQ44S/RlotOmVnbU
+         yrfg==
+X-Gm-Message-State: ALyK8tLrCZTg4zSAKJvyDGPFITADBGhJKw/MVmF4CuRH/w08GHDOhZAAVkLFbIvKXYwzCObuA5lNHTphoigc3Q==
+X-Received: by 10.28.183.8 with SMTP id h8mr2595547wmf.79.1465305587707; Tue,
+ 07 Jun 2016 06:19:47 -0700 (PDT)
+Received: by 10.194.148.146 with HTTP; Tue, 7 Jun 2016 06:19:46 -0700 (PDT)
+In-Reply-To: <20160531223118.GD3824@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296678>
 
-
-
-On 06/06/2016 21:06, Junio C Hamano wrote:
+On Wed, Jun 1, 2016 at 12:31 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, May 20, 2016 at 02:39:06PM +0200, Christian Couder wrote:
 >
-> But I am unhappy with a more serious problem with the tests in this
-> patch.  They assume that "-u" option will forever be the only thing
-> that is allowed to modify the configuration during "git pull -u".
-> It should never make such an assumption.
+>> I wonder if this mechanism could also be used or extended to clone and
+>> fetch an alternate object database.
+>>
+>> In [1], [2] and [3], and this was also discussed during the
+>> Contributor Summit last month, Peff says that he started working on
+>> alternate object database support a long time ago, and that the hard
+>> part is a protocol extension to tell remotes that you can access some
+>> objects in a different way.
+>>
+>> If a Git client would download a "$name.bndl" v3 bundle file that
+>> would have a "data: $URL/alt-odb-$name.odb" extended header, the Git
+>> client would just need to download "$URL/alt-odb-$name.odb" and use
+>> the alternate object database support on this file.
+>>
+>> This way it would know all it has to know to access the objects in the
+>> alternate database. The alternate object database may not contain the
+>> real objects, if they are too big for example, but just files that
+>> describe how to get the real objects.
 >
-> The only thing these additional tests later in the patch (ommitted)
-> want to check, if I understand them correctly, is that when -u is
-> used on a ref that shouldn't be tracked from the given remote then
-> remote.<that remote>.merge etc. are not updated.  Make a list of the
-> configuration variables the feature cares about, and check them and
-> ignore changes to any other variable.  Somebody else's feature that
-> will be added to "git pull" may have legitimate reason to update
-> configuration variables that are not releated to this feature, and
-> you shouldn't be writing your test for your feature in such a way
-> to forbid such a new feature by others from being added.
+> I'm not sure about this strategy.
 
-I asked myself these questions but I came to the wrong conclusion since 
-I considered that testing if `--set-upstream` doesn't alter any 
-configuration var it shouldn't was also important. But there is no 
-reason "git pull -u" modify the configuration in such a chaotic way.
+I am also not sure that this is the best strategy, but I think it's
+worth discussing.
 
-I'll apply your suggestions, thanks.
+> I see two complications:
+>
+>   1. I don't think bundles need to be a part of this "external odb"
+>      strategy at all. If I understand correctly, I think you want to use
+>      it as a place to stuff metadata that the server tells the client,
+>      like "by the way, go here if you want another way to access some
+>      objects".
+
+Yeah, basically I think it might be possible to use the bundle
+mechanism to transfer what an external ODB on the client would need to
+be initialized or updated.
+
+>      But there are lots of cases where the server might want to tell
+>      the client that don't involve bundles at all.
+
+The idea is also that anytime the server needs to send external ODB
+data to the client, it would ask its own external ODB to prepare a
+kind of bundle with that data and use the bundle v3 mechanism to send
+it.
+That may need the bundle v3 mechanism to be extended, but I don't see
+in which cases it would not work.
+
+>   2. A server pointing the client to another object store is actually
+>      the least interesting bit of the protocol.
+>
+>      The more interesting cases (to me) are:
+>
+>        a. The receiving side of a connection (e.g., a fetch client)
+>           somehow has out-of-band access to some objects. How does it
+>           tell the other side "do not bother sending me these objects; I
+>           can get them in another way"?
+
+I don't see a difference with regular objects that the fetch client
+already has. If it already has some regular objects, a way to tell the
+server "don't bother sending me these objects" is useful already and
+it should be possible to use it to tell the server that there is no
+need to send some objects stored in the external ODB too.
+
+Also something like this is needed for shallow clones and narrow clones anyway.
+
+>        b. The receiving side of a connection has out-of-band access to
+>           some objects. Some of these will be expensive to get (e.g.,
+>           requiring a large download), and some may be fast (e.g.,
+>           they've already been fetched to a local cache). How do we tell
+>           the sending side not to assume we have cheap access to these
+>           objects (e.g., for use as a delta base)?
+
+I don't think we need to tell the sending side we have cheap access or
+not to some objects.
+If the objects are managed by the external ODB, it's the external ODB
+on the server and on the client that will manage these objects. They
+should not be used as delta bases.
+Perhaps there is no mechanism to say that some objects (basically all
+external ODB managed objects) should not be used as delta bases, but
+that could be added.
+
+Thanks,
+Christian.
