@@ -1,138 +1,110 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 4/6] send-email: create email parser subroutine
-Date: Wed, 8 Jun 2016 14:12:06 -0400
-Message-ID: <CAPig+cTO+-aATxyNBt2HtctH_ofgqEc8ik3OLSN+THVgu6dhKQ@mail.gmail.com>
-References: <20160607140148.23242-1-tom.russello@grenoble-inp.org>
- <20160608130142.29879-1-samuel.groot@grenoble-inp.org> <20160608130142.29879-5-samuel.groot@grenoble-inp.org>
- <xmqq8tyfmuk4.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 5/6] send-email: --in-reply-to=<file> populate header fields
+Date: Wed, 08 Jun 2016 11:23:50 -0700
+Message-ID: <xmqqvb1jletl.fsf@gitster.mtv.corp.google.com>
+References: <20160608130142.29879-1-samuel.groot@grenoble-inp.org>
+	<20160608130736.32163-1-samuel.groot@grenoble-inp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Samuel GROOT <samuel.groot@grenoble-inp.org>,
-	Git List <git@vger.kernel.org>, tom.russello@grenoble-inp.org,
+Content-Type: text/plain
+Cc: git@vger.kernel.org, tom.russello@grenoble-inp.org,
 	erwan.mathoniere@grenoble-inp.org, jordan.de-gea@grenoble-inp.org,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>, aaron@schrab.com,
-	Eric Wong <e@80x24.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 20:24:02 2016
+	matthieu.moy@grenoble-inp.fr, aaron@schrab.com, e@80x24.org
+To: Samuel GROOT <samuel.groot@grenoble-inp.org>
+X-From: git-owner@vger.kernel.org Wed Jun 08 20:27:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAhxj-0007SS-6Z
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 20:12:19 +0200
+	id 1bAi93-0001Ck-QM
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 20:24:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161160AbcFHSMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2016 14:12:09 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:34345 "EHLO
-	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161092AbcFHSMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2016 14:12:08 -0400
-Received: by mail-io0-f195.google.com with SMTP id l9so2259792ioe.1
-        for <git@vger.kernel.org>; Wed, 08 Jun 2016 11:12:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=lwMCs11rayh7NEHjudinJgrrBa7AUxkq4QXMWzaCJ/0=;
-        b=KLJxo7b/FYwANCpPamw2FWVZtcvT7gfBzjB2yCaTAApXgZ4gI0eHk8rh+v3vA4E/ex
-         UlgHMIiTzz1fbobia/U6IDMX4MZn3eVPAiep2rZaVVMvZbQEDe6BbmS9nptJrLQzQ4Br
-         uqKNl5iHcqftEqc8D8Cvnvo3MPcKEEWZ2yrHu+vBe+C/4QhuDzbZPH2+g6J2q2qBl/4B
-         H1kW+GSpEuJduK6WRYU2fyFZigE7oLQH3QOZ//1vEteHw5cXc17NLny+CiGvoAUKxAS9
-         OglpzcDTfyBdO+hxdAc4yLsUAviII6kX32M1z8kFWRaneNf56PGIzU16ToT3dBcmusgz
-         K6Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=lwMCs11rayh7NEHjudinJgrrBa7AUxkq4QXMWzaCJ/0=;
-        b=YqAY8LExsW87N3wEQdX9sqjWsC/1uY3dO06QvDFwu9LFpxRV0yhuy7qsAI4776/NUU
-         0s+I12c9ddAbe+gHiTYjiwFAX6eG0OPiA+Q1r7GuQysrYc22cO/O9DanaVzN9WrxQCdF
-         8LGt8xjOo1/M1uE3g2yK+69xeBNneiOnAf4Pa7SPlSkrI0+XkExauteAZbomFPbxHlt3
-         tRe7Ka+9XJ0DqMctmtKwVAu/2NI/4R5kGQvWFb82C6uzRsabKRt/YiyGNgdpZpB1qLaL
-         Dx/4koneX1gvgXONs7qTR0Lyz/VDraAcr8uYFoYGge/gcGcONyLFCTeBM4gfmmMCca/Y
-         rjQw==
-X-Gm-Message-State: ALyK8tL4wogjSeiSN43wKrphNmZ7QE0yr20Z7pdAKZby0cJH0vbQcavBKPZ8ptcPpKEuG/IU5b4/uHo/1LjF6Q==
-X-Received: by 10.107.25.13 with SMTP id 13mr10573773ioz.104.1465409527040;
- Wed, 08 Jun 2016 11:12:07 -0700 (PDT)
-Received: by 10.79.0.30 with HTTP; Wed, 8 Jun 2016 11:12:06 -0700 (PDT)
-In-Reply-To: <xmqq8tyfmuk4.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: Uy6pvl-GGSfRc_Ilwn2N6GWTKtI
+	id S1161196AbcFHSX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2016 14:23:57 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57231 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752104AbcFHSX5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2016 14:23:57 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9D0261F78E;
+	Wed,  8 Jun 2016 14:23:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=twXZ4A9nUm0tQMX5YDBiS2Pvp7o=; b=msBTNw
+	Q7Ed4pRFakp8Il8PnvtSso99ADuHn3/C2ZO4En6pGw65Z13LE11nV4119kpGtAD3
+	vNUPu0W2uwXNKGWIw489OyMFloEo3jN2/EZ6F6X+RCWs2kLyNcxSvzFnxlYixY0q
+	4312+aVnSf+w2r4OecLl7M90ffyc++5gsnz8A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Y0iVbChxytlA4sHLhVeEmZWYjNK+WE2E
+	+JPQxXvLb49K/kCQBiVEf1KIfOxqvAWIjP/INa3piuXnALjWRlYiK7b6jz0Wt08o
+	6Sgx1ege/dE1C/YCebdzOWDJ04QVKUAoxG1ss/B+MjNg+PMEAstrLVONJl/4xED1
+	LuP97fITQbY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 93D971F78D;
+	Wed,  8 Jun 2016 14:23:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 14A961F78C;
+	Wed,  8 Jun 2016 14:23:52 -0400 (EDT)
+In-Reply-To: <20160608130736.32163-1-samuel.groot@grenoble-inp.org> (Samuel
+	GROOT's message of "Wed, 8 Jun 2016 15:07:36 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 26E2D114-2DA6-11E6-9E42-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296828>
 
-On Wed, Jun 8, 2016 at 1:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Samuel GROOT <samuel.groot@grenoble-inp.org> writes:
->> +sub parse_email {
->> +     my %mail = ();
->> +     my $fh = shift;
->> +     my $last_header;
->
->> +     # Unfold and parse multiline header fields
->> +     while (<$fh>) {
->> +             last if /^\s*$/;
->
-> You stop at the end of fields before the message body starts.
->
->> +             s/\r\n|\n|\r//;
->
-> The pattern is not anchored at the right end of the string;
-> intended?  Is it worth worrying about a lone '\r'?
+Samuel GROOT <samuel.groot@grenoble-inp.org> writes:
 
-Thanks, I think you covered pretty much everything I was going to say.
-I'd just add that if the matching is going to be kept loose like this
-(rather than anchoring it), then s/[\r\n]+//g might be easier to read,
-but it's a minor point.
+> +if ($initial_reply_to && -f $initial_reply_to) {
+> +	my $error = validate_patch($initial_reply_to);
 
->> +             if (/^([^\s:]+):[\s]+(.*)$/) {
->> +                     $last_header = lc($1);
->> +                     @{$mail{$last_header}} = ()
->> +                             unless defined $mail{$last_header};
->> +                     push @{$mail{$last_header}}, $2;
->
->> +             } elsif (/^\s+\S/ and defined $last_header) {
->> +                     s/^\s+/ /;
->> +                     push @{$mail{$last_header}}, $_;
->
-> Even though the comment said "unfold", you do not really do the
-> unfolding here and the caller can (if it wants to) figure out where
-> one logical header was folded in the original into multiple physical
-> lines, because you are returning an arrayref.
+This call is wrong, isn't it?
 
-Also, the comment about folding lines should be moved down the part of
-the code which is actually (supposed to be) doing the folding rather
-than having the comment at the top of the loop.
+You are not going to send out the message you are responding to (the
+message may not even be a patch), and you do not want to die with an
+error message that says "patch contains an overlong line".
 
-> However, that means the caller still cannot tell what the original
-> was if you are given:
->
->         X-header: a b
->             c
->         X-header: d
->
-> as you would return { 'X-header' => ["a b", "c", "d")] }
->
-> In that sense, it may be better to do a real unfolding here, so that
-> it would return { 'X-header' => ["a b c", "d"] } from here instead?
->
-> I.e. instead of "push @{...}, $_", append $_ to the last element of
-> that array?
+> +	die "fatal: $initial_reply_to: $error\nwarning: no patches were sent\n"
+> +		if $error;
+> +
+> +	open my $fh, "<", $initial_reply_to or die "can't open file $initial_reply_to";
+> +	my $mail = Git::parse_email($fh);
+> +	close $fh;
 
-Right.
+	my $header = Git::parse_email_header($fh);
 
->> +     # Separate body from header
->> +     $mail{"body"} = [(<$fh>)];
->> +
->> +     return \%mail;
->
-> The name of the local thing is not observable from the caller, but
-> because this is "parse-email-header" and returns "header fields"
-> without reading the "mail", perhaps call it %header instead?
+perhaps?
 
-If there is (for some reason) a mail header named 'body', then this
-assignment of the body portion of the message will overwrite it.
-Perhaps this function should instead return multiple values: the
-header hash, and the message body.
+> +	my $initial_sender = $sender || $repoauthor || $repocommitter || '';
+> +
+> +	my $prefix_re = "";
+> +	my $subject_re = $mail->{"subject"}[0];
+> +	if ($subject_re =~ /^[^Re:]/) {
+> +		$prefix_re = "Re: ";
+> +	}
+> +	$initial_subject = $prefix_re . $subject_re;
+
+I am not sure what the significance of the fact that the subject
+happens to begin with a letter other than 'R', 'e', or ':'.
+
+Did you mean to do something like this instead?
+
+	my $subject = $mail->{"subject"}[0];
+	$subject =~ s/^(re:\s*)+//i; # strip "Re: Re: ..."
+        $initial_subject = "Re: $subject";
+
+instead?
+
+By the way, this is a good example why your "unfold" implementation
+in 4/6 is unwieldy for the caller.  Imagine a rather long subject
+that is folded, i.e.
+
+	To: Samuel
+        Subject: Help! I am having a trouble running git-send-email
+            correctly.
+	Message-id: <...>
