@@ -1,139 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tree-diff: avoid alloca for large allocations
-Date: Tue, 07 Jun 2016 17:36:59 -0700
-Message-ID: <xmqq8tygo6s4.fsf@gitster.mtv.corp.google.com>
-References: <20160607225300.GA2285@sigill.intra.peff.net>
+Subject: Re: [PATCH] add: add --chmod=+x / --chmod=-x options
+Date: Tue, 07 Jun 2016 17:39:40 -0700
+Message-ID: <xmqq4m94o6nn.fsf@gitster.mtv.corp.google.com>
+References: <20160531220818.GB46739@zoidberg>
+	<xmqqtwhd3lht.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1606010919360.5761@virtualbox>
+	<xmqqwpm8zyot.fsf@gitster.mtv.corp.google.com>
+	<20160607225923.GA66447@zoidberg>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 08 02:37:13 2016
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Edward Thomson <ethomson@edwardthomson.com>
+X-From: git-owner@vger.kernel.org Wed Jun 08 02:39:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bARUd-0007Bt-E4
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 02:37:11 +0200
+	id 1bARXA-0000Pq-WD
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 02:39:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754017AbcFHAhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2016 20:37:05 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54130 "EHLO
+	id S1753224AbcFHAjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2016 20:39:45 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62855 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754008AbcFHAhE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2016 20:37:04 -0400
+	with ESMTP id S1751699AbcFHAjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2016 20:39:44 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0C9C923AB5;
-	Tue,  7 Jun 2016 20:37:02 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DBE71229DA;
+	Tue,  7 Jun 2016 20:39:42 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VkPoX/tEelFejDmgdfwRYkfO9WA=; b=ajEbR5
-	wkAT/wD5vrnLp/k0wSug+IQYCN0PIWYuMyIZQaJ48eeUEAho9jtYAsNa1u91BrvY
-	NFJyyoLxh0EMWkcuqBgCWkvHxtvzW3As7mEISmopgRdmn2009MTpV3lkfL4zRyGJ
-	6Rw5QwwVHyJbJ0dpeXCUB1lTaUhIBVhuePO5Y=
+	:content-type; s=sasl; bh=ctDaESNUUi84EKQ8N61jXIGBI7Y=; b=qN/dCe
+	3pvg2Xa9K3XShW42bVC72NEzBt5jmUGPz8+28lEfHtIfO/6Yj4m9QAZ3TN/nFMkZ
+	Bvuv1blLOTKXGetM96y4noZJSi4OewPTauOpKHNn9Bwe3bboI74zFLG/El1jGWTA
+	8GKBDso9hzQHQjFDDL4thn0JDwxI4DxLUvuzM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n1SBGrYEocCaoOszwvlTwXC2QEJeXB6z
-	hAcf53OZSExmst5omjRCYQ90VN6TaNl0krlzwsdwc3KCXlhIbMHyT/6D7yEXvmXJ
-	Kv4z0WKUG1pJhNAll0Fes3kokbYhxyCriZ670hIFSzoa8bTiEky2kJPDD0vw4wzt
-	C27EcfIF3r0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 05BBE23AB3;
-	Tue,  7 Jun 2016 20:37:02 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=almq6UclAPHdd8sr6UhD/ZO5Z0WvvSqN
+	3jjdQpD6PQH0YHpPn98GRc1q6sM3ghjd6yKLQ8orqdJoxCQCQ0UqN3TKFxyO2tmQ
+	SldNAcUSg7ST/86i/uXw0/XrUs/wzvXc2ReoJnpFMeP4oVmrYGT00AYKLhVvY74k
+	GUWJopfWPq0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D3C5B229D9;
+	Tue,  7 Jun 2016 20:39:42 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8666123AB2;
-	Tue,  7 Jun 2016 20:37:01 -0400 (EDT)
-In-Reply-To: <20160607225300.GA2285@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 7 Jun 2016 18:53:00 -0400")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5D01D229D7;
+	Tue,  7 Jun 2016 20:39:42 -0400 (EDT)
+In-Reply-To: <20160607225923.GA66447@zoidberg> (Edward Thomson's message of
+	"Tue, 7 Jun 2016 15:59:23 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1D98890E-2D11-11E6-A3A4-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7D756612-2D11-11E6-A626-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296752>
 
-Jeff King <peff@peff.net> writes:
+Edward Thomson <ethomson@edwardthomson.com> writes:
 
-> An alternative to this would be implement something like:
+> On Wed, Jun 01, 2016 at 09:00:34AM -0700, Junio C Hamano wrote:
+>> 
+>> Unlike the "something like this" we saw earlier, this draws the
+>> boundary of responsibility between the caller and the API at a much
+>> more sensible place.
 >
->   struct tree *tp, tp_fallback[2];
->   if (nparent <= ARRAY_SIZE(tp_fallback))
->           tp = tp_fallback;
->   else
-> 	  ALLOC_ARRAY(tp, nparent);
->   ...
->   if (tp != tp_fallback)
-> 	  free(tp);
->
-> That would let us drop our xalloca() portability code
-> entirely. But in my measurements, this seemed to perform
-> slightly worse than the xalloca solution.
+> This makes sense to me - Junio, are you taking (or have you already
+> taken) dscho's patch, or would you like me to squash it and resend?
 
-It indeed is curious why this "obvious" alternative performed
-worse.
+I didn't plan to unilaterally squash them into one patch without
+hearing from you, so I haven't--Dscho's fix-up is queued directly
+on top, ready to be squashed in.
 
-> +#define FAST_ARRAY_ALLOC(x, nr) do { \
-> +	if ((nr) <= 2) \
-> +		(x) = xalloca((nr) * sizeof(*(x))); \
-> +	else \
-> +		ALLOC_ARRAY((x), nr); \
-> +} while(0)
-> +#define FAST_ARRAY_FREE(x, nr) do { \
-> +	if ((nr) > 2) \
-> +		free((x)); \
-> +} while(0)
+So either is fine by me, either you send a final version to replace
+the two patches on et/add-chmod-x topic, or you just tell me to go
+ahead.
 
-An obvious and clean implementation of the idea.
-
-The only slight worry I have is that nr must stay constant until the
-time the caller calls FREE(), but for the only three callsite pairs
-it is clear nparent will stay constant and this is local to the
-file.
-
-Thanks.
-
->  static struct combine_diff_path *ll_diff_tree_paths(
->  	struct combine_diff_path *p, const unsigned char *sha1,
-> @@ -265,7 +275,7 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *p,
->  	if (recurse) {
->  		const unsigned char **parents_sha1;
->  
-> -		parents_sha1 = xalloca(nparent * sizeof(parents_sha1[0]));
-> +		FAST_ARRAY_ALLOC(parents_sha1, nparent);
->  		for (i = 0; i < nparent; ++i) {
->  			/* same rule as in emitthis */
->  			int tpi_valid = tp && !(tp[i].entry.mode & S_IFXMIN_NEQ);
-> @@ -277,7 +287,7 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *p,
->  		strbuf_add(base, path, pathlen);
->  		strbuf_addch(base, '/');
->  		p = ll_diff_tree_paths(p, sha1, parents_sha1, nparent, base, opt);
-> -		xalloca_free(parents_sha1);
-> +		FAST_ARRAY_FREE(parents_sha1, nparent);
->  	}
->  
->  	strbuf_setlen(base, old_baselen);
-> @@ -402,8 +412,8 @@ static struct combine_diff_path *ll_diff_tree_paths(
->  	void *ttree, **tptree;
->  	int i;
->  
-> -	tp     = xalloca(nparent * sizeof(tp[0]));
-> -	tptree = xalloca(nparent * sizeof(tptree[0]));
-> +	FAST_ARRAY_ALLOC(tp, nparent);
-> +	FAST_ARRAY_ALLOC(tptree, nparent);
->  
->  	/*
->  	 * load parents first, as they are probably already cached.
-> @@ -531,8 +541,8 @@ static struct combine_diff_path *ll_diff_tree_paths(
->  	free(ttree);
->  	for (i = nparent-1; i >= 0; i--)
->  		free(tptree[i]);
-> -	xalloca_free(tptree);
-> -	xalloca_free(tp);
-> +	FAST_ARRAY_FREE(tptree, nparent);
-> +	FAST_ARRAY_FREE(tp, nparent);
->  
->  	return p;
->  }
+Well, you practically said the latter already, so I'll do the
+squashing.  Thanks.
