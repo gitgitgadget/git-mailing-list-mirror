@@ -1,122 +1,94 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 3/5] fixup! d5ad6c13
-Date: Wed, 8 Jun 2016 17:00:20 -0700
-Message-ID: <CAGZ79kYjaWJ8=3rizFE+EZXS3P1LjX8bGD-6LwfmjG83cjgVJQ@mail.gmail.com>
-References: <20160608225818.726-1-gitster@pobox.com> <20160608225818.726-4-gitster@pobox.com>
+From: Alfred Perlstein <alfred@freebsd.org>
+Subject: Re: `git help svn` missing description of `propset`
+Date: Wed, 8 Jun 2016 16:54:16 -0700
+Organization: FreeBSD
+Message-ID: <a87422f0-0717-1e1b-5bae-c4e779783b6a@freebsd.org>
+References: <2A4EC08B-3095-4063-BDF3-5B1CD1CEA2C3@apple.com>
+ <20160607200828.GA29701@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 02:00:26 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, David Fraser <davidf@sjsoft.com>
+To: Eric Wong <e@80x24.org>, Joseph Pecoraro <pecoraro@apple.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 02:03:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAnOc-00014g-Ej
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 02:00:26 +0200
+	id 1bAnRR-000309-0D
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 02:03:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932867AbcFIAAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2016 20:00:22 -0400
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:35963 "EHLO
-	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932119AbcFIAAV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2016 20:00:21 -0400
-Received: by mail-qk0-f170.google.com with SMTP id i187so12884554qkd.3
-        for <git@vger.kernel.org>; Wed, 08 Jun 2016 17:00:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=BvKZ6eo5xWUI01UcRKVfGFfAd2SCO14oCRIrQ2qEjDE=;
-        b=HnLPBPA4d2+zW0log0TW65qjGvJPF1xC3sfkdC0wpDRwxVRxDRCBVnSiyDSofUTTUn
-         q7DERajTABvanKXK+fitoIN1QZKZzWqH8WpacErrYmqfGi6U6CV0ZD/TXJ03fXgXXOrY
-         WeoS4425XW+8zXVoujHXzL/x/lMLBJdguviN302MtvfniAXloxx8DM57EcshohHVOWE6
-         lsiLlEyiq7L58kSnYtqnmYuOfiElfgvLSibn2X9INQ5R6CFVMeH0yDE8ZHWXRHL4Wc8p
-         hf44zJO6dNtU1wkEy7poDgiB3l4y9WPrJf9tU5mWn/wCwi0PKGDAtR5G2xNwfh2Xsxup
-         o7UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=BvKZ6eo5xWUI01UcRKVfGFfAd2SCO14oCRIrQ2qEjDE=;
-        b=hlsrKFYH5rQFf/VfAxfiCgWVLxdyD53a4seZPPq3bmN/FKTwNRmCZlreedTQTiA8rv
-         wQarI2pUNMzaapAd7s1OgD17hp9lJwyCqvfpTeMvMzFeJQe/EyCoiIoPOSE16tkqeB83
-         YiMnEJDZ3+XPCmRdSRFFxpUxn19ac673n97P/qzOq9SlkXvxYQK3mCzQtq9XURm+YKQN
-         BeCSSNO3J95AKAmRkgXzM7fCpoG7QaXjUM7mTM9GZ9lElO0lJKnUMMMZnfUEmoHRFVFB
-         5Nq2z6JmzCNx8lxB6B7afRk1rztym1oio4jp2iamNy+SjLhltynOmlR9CCndpqCfmYBC
-         12nA==
-X-Gm-Message-State: ALyK8tLzeuOtQ2AOAKv/IVtUmYGLUaz/akag5rk7nKJzkUj9DjrD/cWNP1ul9Wlp9sJpPi0vQjESnxPTHGDN0Eqg
-X-Received: by 10.233.223.5 with SMTP id t5mr7161549qkf.35.1465430420764; Wed,
- 08 Jun 2016 17:00:20 -0700 (PDT)
-Received: by 10.237.42.226 with HTTP; Wed, 8 Jun 2016 17:00:20 -0700 (PDT)
-In-Reply-To: <20160608225818.726-4-gitster@pobox.com>
+	id S932521AbcFIADG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2016 20:03:06 -0400
+Received: from elvis.mu.org ([192.203.228.196]:57961 "EHLO elvis.mu.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932086AbcFIADF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2016 20:03:05 -0400
+X-Greylist: delayed 526 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Jun 2016 20:03:05 EDT
+Received: from Alfreds-MacBook-Pro-2.local (unknown [IPv6:2601:645:8003:a4d6:c9f0:5c55:b2b3:cc8])
+	by elvis.mu.org (Postfix) with ESMTPSA id CB968346DFAC;
+	Wed,  8 Jun 2016 16:54:16 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
+ Gecko/20100101 Thunderbird/45.1.1
+In-Reply-To: <20160607200828.GA29701@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296863>
 
-On Wed, Jun 8, 2016 at 3:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> As the topic is in 'next' already, I'll leave this floating near the
-> tip for now, until we can rewind the topic after the next release.
+Eric,
 
-I don't quite understand the motivation behind this commit.
+Would love to contribute more to git!  I'm in the middle of a major 
+product launch, so I can do this next week.  Of course no hard feelings 
+will be had if someone else wants to do it.  I'm making myself a 
+calendar invite to remind myself right now.
 
-    We return the last element to allow succeeding operations
-    access to the bottom of the stack without needing to walk it?
-    This makes the follow up operations faster, because we expect the stack
-    to be larger than 5 elements.
+I'll ping y'all in a week hopefully with a patch.
 
-?
+thank you,
+
+-Alfred
 
 
-> ---
->  attr.c | 9 ++++++---
->  attr.h | 2 +-
->  2 files changed, 7 insertions(+), 4 deletions(-)
+
+On 6/7/16 1:08 PM, Eric Wong wrote:
+> +Cc Alfred, David
 >
-> diff --git a/attr.c b/attr.c
-> index 4e2172a..0e61950 100644
-> --- a/attr.c
-> +++ b/attr.c
-> @@ -899,13 +899,16 @@ struct git_attr_check *git_attr_check_alloc(void)
->         return xcalloc(1, sizeof(struct git_attr_check));
->  }
+> Joseph Pecoraro <pecoraro@apple.com> wrote:
+>> `git help svn` does not mention `propset` but it does mention `proplist` and `propget`. This seems like an oversight.
+>>
+>>
+>>      $ git help svn
+>>      ...
+>>          proplist
+>>              Lists the properties stored in the Subversion repository about a given file or directory.
+>>              Use -r/--revision to refer to a specific Subversion revision.
+>>          
+>>          propget
+>>              Gets the Subversion property given as the first argument, for a file. A specific revision
+>>              can be specified with -r/--revision.
+>>      ...
+>>
+>>
+>> Interestingly, the generic `git svn` help does mention `propset`.
+>>
+>>
+>>      $ git svn
+>>      ...
+>>        propget          Print the value of a property on a file or directory
+>>                           --revision, -r <num>
+>>        proplist         List all properties of a file or directory
+>>                           --revision, -r <num>
+>>        propset          Set the value of a property on a file or directory - will be set on commit
+>>      ...
+>>    
+>> It seems Documentation/git-svn.txt is missing text for `propset`.
+> Thanks Joseph, indeed it is missing from the manpage.
 >
-> -void git_attr_check_append(struct git_attr_check *check,
-> -                          const struct git_attr *attr)
-> +struct git_attr_check_elem *git_attr_check_append(struct git_attr_check *check,
-> +                                                 const struct git_attr *attr)
->  {
-> +       struct git_attr_check_elem *elem;
->         if (check->finalized)
->                 die("BUG: append after git_attr_check structure is finalized");
->         ALLOC_GROW(check->check, check->check_nr + 1, check->check_alloc);
-> -       check->check[check->check_nr++].attr = attr;
-> +       elem = &check->check[check->check_nr++];
-> +       elem->attr = attr;
-> +       return elem;
->  }
+> Alfred / David: either of you have a few cycles to spare to write
+> a manpage entry for this feature you worked on?
 >
->  void git_attr_check_clear(struct git_attr_check *check)
-> diff --git a/attr.h b/attr.h
-> index fc72030..40abc16 100644
-> --- a/attr.h
-> +++ b/attr.h
-> @@ -47,7 +47,7 @@ extern int git_check_attr(const char *path, struct git_attr_check *);
->  extern int git_check_attr_counted(const char *, int, struct git_attr_check *);
+> If not, let us know, too, so others can work on it.  Thanks.
 >
->  extern struct git_attr_check *git_attr_check_alloc(void);
-> -extern void git_attr_check_append(struct git_attr_check *, const struct git_attr *);
-> +extern struct git_attr_check_elem *git_attr_check_append(struct git_attr_check *, const struct git_attr *);
->
->  extern void git_attr_check_clear(struct git_attr_check *);
->  extern void git_attr_check_free(struct git_attr_check *);
-> --
-> 2.9.0-rc2-262-g9161bbf
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
