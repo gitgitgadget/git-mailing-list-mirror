@@ -1,83 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH V2 3/3] strbuf: allow to use preallocated memory
-Date: Wed, 08 Jun 2016 16:05:10 -0700
-Message-ID: <xmqqtwh3jn89.fsf@gitster.mtv.corp.google.com>
-References: <20160606151340.22424-4-william.duclot@ensimag.grenoble-inp.fr>
-	<xmqqvb1mxmk4.fsf@gitster.mtv.corp.google.com>
-	<20160606203901.GA7667@Messiaen>
-	<xmqqfusquedk.fsf@gitster.mtv.corp.google.com>
-	<20160606225847.GA22756@sigill.intra.peff.net>
-	<xmqqbn3dvr22.fsf@gitster.mtv.corp.google.com>
-	<20160607090653.GA4665@Messiaen> <575845D9.2010604@alum.mit.edu>
-	<20160608191918.GB19572@sigill.intra.peff.net>
-	<xmqq37onlawb.fsf@gitster.mtv.corp.google.com>
-	<20160608195248.GA4264@sigill.intra.peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 1/5] attr.c: add push_stack() helper
+Date: Wed, 8 Jun 2016 16:43:44 -0700
+Message-ID: <CAGZ79ka+BXOAMr7JxJXmhsmXTwTcdidJ72=9mbCkHiycj-t6AQ@mail.gmail.com>
+References: <20160608225818.726-1-gitster@pobox.com> <20160608225818.726-2-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org, antoine.queru@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr,
-	Johannes.Schindelin@gmx.de, mh@glandium.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 09 01:05:28 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 01:43:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAmXP-0001Ce-K8
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 01:05:28 +0200
+	id 1bAn8Y-0007uu-9m
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 01:43:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1426257AbcFHXFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2016 19:05:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51171 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1424401AbcFHXFO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2016 19:05:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E3C15201AD;
-	Wed,  8 Jun 2016 19:05:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0SDoMYGFKbh1y4vdIuAtm+Ze3Zw=; b=dV8OTj
-	dqztKWIh6lw5+P5p5P/FDToWijvz4Vk3bz8aOP+LNE0uJXWAJW+ONkvEBKO7AoVt
-	0Wh3VsTvAWYuy4/yIAPd/5X4YY8Jb24JVR58QKhiWAPtX3ETokG4BjDFkuedssBx
-	T3BDKf1rglzu3IFloUw9eNlOYuzKu2qOweYpQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=INT6CZAEcmtNkhiGJQwut6sHN7bXm8ZR
-	7IHU+8xb5RqqsSBM7//qbf24pDSiLzGRGYcTXKCvF9eKph1KMNwmJlq4L0W39OVm
-	75XI8lvHM+jGQ1IanPc8ZyhXRVKIYT5+e9sn4LhKWggQDmR0qJn9wc7HkxS9+031
-	B2UWokNLjFE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DA0B1201AC;
-	Wed,  8 Jun 2016 19:05:12 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 59C93201AB;
-	Wed,  8 Jun 2016 19:05:12 -0400 (EDT)
-In-Reply-To: <20160608195248.GA4264@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 8 Jun 2016 15:52:48 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7451B844-2DCD-11E6-BA61-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1753595AbcFHXnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2016 19:43:46 -0400
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:36298 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753302AbcFHXnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2016 19:43:45 -0400
+Received: by mail-qg0-f48.google.com with SMTP id q32so12505539qgq.3
+        for <git@vger.kernel.org>; Wed, 08 Jun 2016 16:43:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=gqSKYtZL5iHeOSJiY6xtbKWyPxbvMHndrkEIFGtSZQo=;
+        b=MrtK9BE2Nc3S/RIR4X0N7lmkdqJNTY7J/bKi831vXFhc5s/plZRr9hG3AkcGQsSqBx
+         EJshUmR6Qe8S6Tm+K83Zjk35PBp0FAVT/hYDhuQzvSt4PhVt+8bVQOaYgNr5CQOG06Sw
+         pk9WPfslbL131Jq9rKnEHlGmF0RoEA+8E08Qo33AubjBYe1ea4AlpY1ufuPsBNBW9vhy
+         WkD/rDMML/VYMDmiuwxPHnX67zrTrP9CdYfteGHbIFNW7PEH2pQyXpKRzxcnRrQwaZyT
+         P8e8DyePqKvU/zEANEox8epRE8uughHxiGT4zN8bieNE7noulYeR2c9b/INRjs0tXaOl
+         xl9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=gqSKYtZL5iHeOSJiY6xtbKWyPxbvMHndrkEIFGtSZQo=;
+        b=YmU7Daysq2HYxkj31G9S6DJstS41KAzWcy1jVp/XUb3qZ+6IrOt9115xUgB7azyhrl
+         5KVY/M0fZlN0dyFDE5uVOpwmNhR6Brwh0ZoyPs6+Sec0ym03HEBHUD3iLZNgwQjYiAiJ
+         s1DBDRuGDprsZJ7YO2tM8PrxUo5zpQkgiABHcZ5/zQwFvJm82l1Pb3nuihHVXGM6dDbk
+         xsBU8rkaNM9yskgDoXUFqVfVT30NuphC6wHA0cfqn2ky7MbeXs2R9l+gTGJciaJ6VxNt
+         3lgoqpde3Dvf9xqt3/d4d6gpTl5n6y8WFENtlu9UTOuH5N5ATHKyQgbLzTPflfokDfyA
+         i1bg==
+X-Gm-Message-State: ALyK8tLtv/puLSUocta5s0Qfgdfpyv09lXRFTdLrBrhz23UTFyO/QJf5RKPbnrcjIpSvW/nppfLXBGxMXpqgeTkK
+X-Received: by 10.140.221.135 with SMTP id r129mr7259578qhb.59.1465429424564;
+ Wed, 08 Jun 2016 16:43:44 -0700 (PDT)
+Received: by 10.237.42.226 with HTTP; Wed, 8 Jun 2016 16:43:44 -0700 (PDT)
+In-Reply-To: <20160608225818.726-2-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296859>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Jun 8, 2016 at 3:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> +static void push_stack(struct attr_stack **attr_stack_p,
+> +                      struct attr_stack *elem, char *origin, size_t originlen)
+> +{
+> +       if (elem) {
+> +               elem->origin = origin;
+> +               if (origin)
+> +                       elem->originlen = originlen;
 
-> I agree it can be confusing (especially on the output side your errors
-> are likely deferred until the next flush). But in this particular case,
-> I think it's an improvement (see the patch I just sent and its
-> discussion of error handling).
+Why do we need to be conditional on origin for setting the originlen,
+in all occurrences below, we pass in a reasonable number (0),
+so I would leave out the condition here.
 
-Yes, for this one, the lifetime of the file descriptor is contained
-within a single function and it is straight-forward to wrap it
-correctly inside a FILE * via fdopen() and do the error check at the
-end, so I think the patch is an improvement.
+We make use of the `originlen` in `fill` only, so maybe we can
+even get rid of the length and when we need it compute
+it with strlen? (I am unsure on this tradeoff)
 
-Will queue.
+
+>
+>         if (!is_bare_repository() || direction == GIT_ATTR_INDEX) {
+>                 elem = read_attr(GITATTRIBUTES_FILE, 1);
+> -               elem->origin = xstrdup("");
+> -               elem->originlen = 0;
+> -               elem->prev = attr_stack;
+> -               attr_stack = elem;
+> +               push_stack(&attr_stack, elem, xstrdup(""), 0);
+
+I wonder why we need to pass an empty-but-not-null string here?
+In `fill` we use
+
+  const char *base = stk->origin ? stk->origin : "";
+
+so there it would be the same. In prepare_stack we have
+       /*
+        * Pop the ones from directories that are not the prefix of
+        * the path we are checking. Break out of the loop when we see
+        * the root one (whose origin is an empty string "") or the builtin
+        * one (whose origin is NULL) without popping it.
+        */
+        while (attr_stack->origin) {
+
+which seems to answer my question  that we make a difference between
+empty and null `origin`. However I wonder if that could be made more clear?
+(By a well named bit flag in the attr_stack?)
+
+> -                       strbuf_add(&pathbuf, path, cp - path);
+> -                       strbuf_addch(&pathbuf, '/');
+> -                       strbuf_addstr(&pathbuf, GITATTRIBUTES_FILE);
+> +                       strbuf_addf(&pathbuf,
+> +                                   "%.*s/%s", (int)(cp - path), path,
+
+This is neat way of handling strings that are not null terminated!
+I have the suspicion I could have used this before.
+
+As this is meant as a refactoring patch, which doesn't want to change
+semantics, it looks good to me, the questions are rather meant for followups.
+
+Thanks,
+Stefan
