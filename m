@@ -1,79 +1,78 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v4 3/3] doc: more consistency in environment variables
- format
-Date: Wed, 8 Jun 2016 08:56:52 +0200
-Message-ID: <5757C1B4.5060709@kdbg.org>
-References: <20160606100905.23006-1-tom.russello@grenoble-inp.org>
- <20160607223507.18061-1-tom.russello@grenoble-inp.org>
- <20160607223507.18061-4-tom.russello@grenoble-inp.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: t7300-clean.sh fails "not ok 32 - should avoid cleaning possible
+ submodules" on debian jessie
+Date: Wed, 8 Jun 2016 09:12:27 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1606080911440.2680@virtualbox>
+References: <5756856A.4020406@debian.org> <alpine.DEB.2.20.1606071229500.28610@virtualbox> <5756C6F4.5050300@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, erwan.mathoniere@grenoble-inp.org,
-	matthieu.moy@grenoble-inp.fr, jordan.de-gea@grenoble-inp.org,
-	samuel.groot@grenoble-inp.org, gitster@pobox.com
-To: Tom Russello <tom.russello@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Wed Jun 08 08:57:08 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Pirate Praveen <praveen@debian.org>
+X-From: git-owner@vger.kernel.org Wed Jun 08 09:12:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAXQK-00037z-9U
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 08:57:08 +0200
+	id 1bAXfO-0005GK-W6
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 09:12:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753971AbcFHG44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2016 02:56:56 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:40957 "EHLO bsmtp3.bon.at"
+	id S1752195AbcFHHMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2016 03:12:39 -0400
+Received: from mout.gmx.net ([212.227.15.15]:56633 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753046AbcFHG4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2016 02:56:55 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3rPfPK2kM3z5tlW;
-	Wed,  8 Jun 2016 08:56:53 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 57FC952AE;
-	Wed,  8 Jun 2016 08:56:52 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-In-Reply-To: <20160607223507.18061-4-tom.russello@grenoble-inp.org>
+	id S1750837AbcFHHMi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2016 03:12:38 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MAyVY-1bIGuF2ptM-009zh8; Wed, 08 Jun 2016 09:12:27
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <5756C6F4.5050300@debian.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:xINDQf5X/8niLfsL5ilFl0DCPSUP1HwUsPUrhMI/igB+Zb/wEQ2
+ 3sr5KECTy44ULM7JPr9/t9Oum97Kxg5NZ5vqs0cEtTCevdayos4473+ABCU3d73wH5dwOdz
+ KWbKsYP8lj3dG3eHzpLyo2APKQzU/lnoFM2arrx4W5Yzd0AgFNMFSim3tJihDUnKnF825Hk
+ AUPA5EufJemjcneHVpL5w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:14H9AcSulNo=:19fHoXXPk8dYmczJJVNXZC
+ FUstWv4s97/v+gJWrv7dZcKCO1MaqZJLqouohA4RPpRURwJsYyhjJExI0cg1tQcnfwkVizAFD
+ kwF/5zJt+1cTQqDr4MDHekMN6m+Uji9T3Ig4+gUpDZRzG0am3TXtOrxyU72Xpxd+lReZwvabm
+ ROIHvWkE5wPc2nnq8QEyThKuI3ph/N1aD6gYwzLzT0BP0bV747seF3t+PPJu7kTX+szswGm3D
+ N5YYkZ6uCBkN6IR7zCLV96otc7IW3BoyEhsBttMrV/VcPOmqn0yUj/L+72uYQlVgESR1yA2AF
+ 9yvOxWSNFCaHa4kIH56XtG9/677biLOlCr92iXbxDKi1o5N04kEbITwJlowmfryQ57jb9BMCR
+ 0OvaKgRX+E5X+4gSn0WkBCXMNcfiEU19MPuCeWypqV6ZrD3+AwVAPW739m91b4ZyN/PI1ju1l
+ ZLOFfg61B9CJE01rhbeek1sqjk1q3ZTYCmadM4OqGZOYj49m5eYTHhcIdkcUzCV1+EQJTyvJ9
+ W8CbvRqniLRDYTuW4HyFH88qi1Kqz5Ood/Y2v6xSMa0VVNEXKXvncgITYPhlkw7srKwnCt1eJ
+ T5cIut7E+26CTVV7h4IWgd+aCVShDbLCD8jCu6zQqfGWMrPnD2ZetEhTiRs4ePKR1B70N9c0k
+ ifa6bgqHldJhS57crLiqhP75YHfdxKkT2SxmPM10N5WVT0Z71nEjitehixUn0BxUv9IuBIxf5
+ hIXbh+Pw5LIa6TB74CM9Sk/qUxrM1x6GCG5kfnU9WH10HR1eavbU5KSX7TD3NFusRQ8LKJ/g 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296759>
 
-Am 08.06.2016 um 00:35 schrieb Tom Russello:
-> Wrap with backticks (monospaced font) unwrapped or single-quotes wrapped
-> (italic type) environment variables which are followed by the word
-> "environment". It was obtained with:
->
-> perl -pi -e "s/\'?(\\\$?[0-9A-Z\_]+)\'?(?= environment ?)/\`\1\`/g" *.txt
->
-> One of the main purposes is to stick to the CodingGuidelines as possible so
-> that people writting new documentation by mimicking the existing are more likely
-> to have it right (even if they didn't read the CodingGuidelines).
->
-> Signed-off-by: Tom Russello <tom.russello@grenoble-inp.org>
-> Signed-off-by: Erwan Mathoniere <erwan.mathoniere@grenoble-inp.org>
-> Signed-off-by: Samuel Groot <samuel.groot@grenoble-inp.org>
-> Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> ---
-> One reason behind the creation of this patch is that patch [2/3] led to minor
-> inconsistencies in some sentences as it only deals with GIT_* environment
-> variables and let others unchanged (for example `GIT_ASKPASS` and 'SSH_ASKPASS'
-> in Documentation/config.txt).
->
-> For this one, I had to manually change GIT_AUTHOR_DATE
-> (Documentation/date-formats.txt - l.4) and GIT_EXTERNAL_DIFF
-> (Documentation/diff-generate-patch.txt - l.9) as the perl command didn't manage
-> these cases and so created minor inconsistencies.
+Hi Pirate Praveen,
 
-This last paragraph should go into the commit message.
+On Tue, 7 Jun 2016, Pirate Praveen wrote:
 
-Also, you should investigate cases where "environment" is at the 
-beginning of a line, because then the variable name is most likely at 
-the end of the previous line. At the least, you missed an occurrence of 
-GIT_EXTERNAL_DIFF in diff-config.txt.
+> On Tuesday 07 June 2016 04:00 PM, Johannes Schindelin wrote:
+> > Hi Pirate Praveen,
+> > 
+> > On Tue, 7 Jun 2016, Pirate Praveen wrote:
+> > 
+> >> I'm trying to rebuild git 2.8.1 on debian jessie/stable and I get this
+> >> error (tests upto this succeeds).
+> >>
+> >> not ok 32 - should avoid cleaning possible submodules
+> > 
+> > How about re-running the script with -i -v -x? If the output is still
+> > not shining enough light on it, maybe you want to paste the (relevant part
+> > of the) output into a reply?
+> 
+> + rm -fr to_clean possible_sub1
+> [...]
 
--- Hannes
+Sorry, I must have missed your diligent analysis.
+
+Ciao,
+Johannes
