@@ -1,78 +1,86 @@
-From: Samuel GROOT <samuel.groot@grenoble-inp.org>
-Subject: Re: [PATCH v4 4/6] send-email: create email parser subroutine
-Date: Wed, 8 Jun 2016 21:42:08 +0200
-Message-ID: <2d60a12f-5709-687c-4fc4-b6a0b4719b13@grenoble-inp.org>
-References: <20160607140148.23242-1-tom.russello@grenoble-inp.org>
- <20160608130142.29879-1-samuel.groot@grenoble-inp.org>
- <20160608130142.29879-5-samuel.groot@grenoble-inp.org>
- <xmqq8tyfmuk4.fsf@gitster.mtv.corp.google.com>
- <CAPig+cTO+-aATxyNBt2HtctH_ofgqEc8ik3OLSN+THVgu6dhKQ@mail.gmail.com>
- <xmqqr3c7lefw.fsf@gitster.mtv.corp.google.com>
- <116d56ee-afdf-b1f2-f141-7449e6503f30@grenoble-inp.org>
- <xmqqbn3blbpc.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH V2 3/3] strbuf: allow to use preallocated memory
+Date: Wed, 08 Jun 2016 12:48:36 -0700
+Message-ID: <xmqq37onlawb.fsf@gitster.mtv.corp.google.com>
+References: <20160606151340.22424-1-william.duclot@ensimag.grenoble-inp.fr>
+	<20160606151340.22424-4-william.duclot@ensimag.grenoble-inp.fr>
+	<xmqqvb1mxmk4.fsf@gitster.mtv.corp.google.com>
+	<20160606203901.GA7667@Messiaen>
+	<xmqqfusquedk.fsf@gitster.mtv.corp.google.com>
+	<20160606225847.GA22756@sigill.intra.peff.net>
+	<xmqqbn3dvr22.fsf@gitster.mtv.corp.google.com>
+	<20160607090653.GA4665@Messiaen> <575845D9.2010604@alum.mit.edu>
+	<20160608191918.GB19572@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>, tom.russello@grenoble-inp.org,
-	erwan.mathoniere@grenoble-inp.org, jordan.de-gea@grenoble-inp.org,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>, aaron@schrab.com,
-	Eric Wong <e@80x24.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 21:42:30 2016
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	git@vger.kernel.org, antoine.queru@ensimag.grenoble-inp.fr,
+	francois.beutin@ensimag.grenoble-inp.fr,
+	Johannes.Schindelin@gmx.de, mh@glandium.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 08 21:49:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAjMv-0001QR-4a
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 21:42:25 +0200
+	id 1bAjTK-0006X2-9c
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 21:49:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755235AbcFHTmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2016 15:42:14 -0400
-Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:37756 "EHLO
-	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753503AbcFHTmL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2016 15:42:11 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 0DECE2591;
-	Wed,  8 Jun 2016 21:42:08 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UiNNG8K6GDYT; Wed,  8 Jun 2016 21:42:07 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id F1D00222F;
-	Wed,  8 Jun 2016 21:42:07 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id EB3D82066;
-	Wed,  8 Jun 2016 21:42:07 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id b_OQEDjjSmFg; Wed,  8 Jun 2016 21:42:07 +0200 (CEST)
-Received: from wificampus-030012.grenet.fr (wificampus-030012.grenet.fr [130.190.30.12])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id C63E92064;
-	Wed,  8 Jun 2016 21:42:07 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
-In-Reply-To: <xmqqbn3blbpc.fsf@gitster.mtv.corp.google.com>
+	id S1425773AbcFHTsm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2016 15:48:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53059 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1425770AbcFHTsk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2016 15:48:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id F1813204A7;
+	Wed,  8 Jun 2016 15:48:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XTrN0dt4uQQwS7THLXMD5ROlKCs=; b=doYqBh
+	/4ziDD4vDRiXgivAcyxq08dvsDfcYfCFJZ7hLEm7pCSFmf84cm2encens0KUFoaW
+	rY5qCblHYOXp7LIaP7RlUUIqv03UbHV0lWBSYvWr/gqOXJDRxNurEywk7juZGC0c
+	TX/QHCDGYzV4otwbSeqmOwMR1qYGCEH9KJDU8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RLqwvcw7KeBaTm4fRDUbKSlsXyeJDBdF
+	l1xo+ZaEnvEqwm2ivID2ri5yB47lNpkHNcoNzydt3lgpNla3y9oUxNGmzuNaCD4j
+	6Ff7aNbkooEeCIg1NNC0QGRx6OAXZ/n4ZwXAYObGpfMzxXeJPAcHbW3qMU4fza27
+	nUhwzHie848=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E8C34204A6;
+	Wed,  8 Jun 2016 15:48:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 736B9204A5;
+	Wed,  8 Jun 2016 15:48:38 -0400 (EDT)
+In-Reply-To: <20160608191918.GB19572@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 8 Jun 2016 15:19:18 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: FE9C44D6-2DB1-11E6-AD60-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296847>
 
-On 06/08/2016 09:31 PM, Junio C Hamano wrote:
-> Samuel GROOT <samuel.groot@grenoble-inp.org> writes:
->
->> I think it's the best way to do it indeed. Furthermore, we did trim
->> CRs and LFs in header fields, but not in the message, making the
->> subroutine inconsistent.
->>
->> Should we rename the subroutine to `parse_header` or leave it as it is?
->
-> If it lives inside git-send-email, then parse_header is sufficient
-> as everybody would know it is about e-mail without being told.  If
-> it is in Git.pm, then parse_email_header would be more appropriate.
+Jeff King <peff@peff.net> writes:
 
-It currently lives in Git.pm, following Eric Wong's advice to have a 
-more packaged code.
+> That made me wonder if we could repeatedly reuse a buffer attached to
+> the file descriptor. And indeed, isn't that what stdio is? The whole
+> reason this buffer exists is because we are using a direct descriptor
+> write. If we switched this function to use fprintf(), we'd avoid the
+> whole buffer question, have a fixed cap on our memory use (since we just
+> flush anytime the buffer is full) _and_ we'd reduce the number of
+> write syscalls we're making by almost a factor of 100.
+
+The primary reason why we avoid stdio in the lower level part of I/O
+is that the error reporting and handling is horrible.
+
+e.g. c.f. http://article.gmane.org/gmane.comp.version-control.git/27019
+
+Otherwise, I'd agree with your "Why aren't we using stdio if
+counting and avoiding overflow is so hard?".
