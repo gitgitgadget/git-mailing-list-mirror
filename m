@@ -1,70 +1,97 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] add: add --chmod=+x / --chmod=-x options
-Date: Wed, 8 Jun 2016 18:46:14 +0700
-Message-ID: <CACsJy8DC_8LkZUCe=NY6wbg0+jTtwQTPE1zM1da9Vq8-PfyrsA@mail.gmail.com>
-References: <20160531220818.GB46739@zoidberg>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v4 37/38] i18n: unmark die messages for translation
+Date: Wed, 8 Jun 2016 17:21:47 +0530
+Message-ID: <CAFZEwPP0U4BbqfJ-a4GfnXq15CR6KVsM2yBCK6heNgx70Ojscw@mail.gmail.com>
+References: <1465300357-7557-1-git-send-email-vascomalmeida@sapo.pt>
+ <1465304141-9392-8-git-send-email-vascomalmeida@sapo.pt> <xmqqtwh4odp6.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Edward Thomson <ethomson@edwardthomson.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 13:46:52 2016
+Cc: Vasco Almeida <vascomalmeida@sapo.pt>,
+	Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 08 13:51:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAbwi-0000vd-0a
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 13:46:52 +0200
+	id 1bAc1Z-00054T-PY
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 13:51:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932930AbcFHLqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2016 07:46:46 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:33605 "EHLO
-	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751320AbcFHLqp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2016 07:46:45 -0400
-Received: by mail-io0-f169.google.com with SMTP id m62so6661045iof.0
-        for <git@vger.kernel.org>; Wed, 08 Jun 2016 04:46:45 -0700 (PDT)
+	id S1755022AbcFHLvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2016 07:51:50 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:34424 "EHLO
+	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751728AbcFHLvs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2016 07:51:48 -0400
+Received: by mail-yw0-f195.google.com with SMTP id j74so614307ywg.1
+        for <git@vger.kernel.org>; Wed, 08 Jun 2016 04:51:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=26T0FZV9bUP4+i/PrkWiIV91Phi0tLgzn3jmbVOcSq8=;
-        b=AV3bADtCc7/H4TNhXfiejPZStINZk6QHrkCrjJwVqhyohOJ4Kx+czAz86xtICXF6UJ
-         wpJzFt9krkQJZdQzlT6thm7SewqrLQpSEudLmrAEYuObrvKieN5hwgd1zaonEnDLqGW+
-         IiCB3aoVKHoT35R8DNKxQETkeEMiO5QmWPIjt5QjrZDSGBHHy9VfwfVS8tzwrbjJiBjp
-         crWXGJEeg2Tke5U/rCP5Kyo5ftjwcBCUQn2bJMEXVYW5GHGJquD+dRIwL/YSvtT/RuV+
-         gxsjHG6J8lU0owEuLyq0D3BJAdXV7L5ZYQ+rggGRCgFk6toDCYj5dqH0RMdeQMM6Qlop
-         zA7A==
+        bh=5czZK6O141rv5ckh3ysQo8OyyO1JoGM8siDmOS3Jfgw=;
+        b=aI6tne7baIDE1bgNuyA4UIhkX26TaN+jwmyuHQHUHka06OR6xZ7nW658m3HkClE5Tn
+         tYFHeFN5go9KUxjFVQ+XGgGOCfatuaUkXwV1vuzkbeVkJ4biKUw3aXUDVhBairo3Zbh6
+         W9v2q6Tf8kgXbIdDh0t1rXO4Tb67qmj8sQXa0dAFpOx7imvVH0u4csnEw8NYiqBoNiU4
+         uIwTYjsLVv0Yhs+tfG16DNdsnGyeqbi+nM5Rv4AcAlFXXTJnfDreH1diutFQ4Q+ZJwRx
+         yvEZ7yE6+uP4PPiy0Vbcux9FT+ikIcFV4t4eiCxxVfKI1rApx2AGzsHb7G8R/OBn4G3T
+         2VxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=26T0FZV9bUP4+i/PrkWiIV91Phi0tLgzn3jmbVOcSq8=;
-        b=Cg6A/zkk518BKNB3Yz/LXun7sYohrSFovAxSCvGz1REAyeSsUGEwRqnfutrdTw2yOd
-         v6fXGIzTcrp1cCSPF2aqfw+p4Qh3mBsZ6yzIroDfeIGOyc+qdpeC6XQQaXxwq0R642Oe
-         scj4qlIoYjjnV9DLj7bvhO55bYaCemNen178M8Upu/E8j8aDTXcU9JIyivzVK30Z/bXU
-         u4HBCLLNuvq+I9Tb4OyLxOVAmMxJcc/rMUX9937jI4KednQJn812cQpLxiNPMywzPf3o
-         0REPqI9gTwU88vnhVSNRFSp2j97RipOQpivmQDS+Mjp4FJszPCpytEv5ruZ6vK02BW/3
-         l/WA==
-X-Gm-Message-State: ALyK8tJ3FF13naEzsaJRTNrkMSmokoMByvHU2sKztUU3aVQl8x0cxK99WmC3P+xz+vb94M1fZLAA4db3TQQCBg==
-X-Received: by 10.107.8.220 with SMTP id h89mr7266078ioi.95.1465386404774;
- Wed, 08 Jun 2016 04:46:44 -0700 (PDT)
-Received: by 10.64.173.167 with HTTP; Wed, 8 Jun 2016 04:46:14 -0700 (PDT)
-In-Reply-To: <20160531220818.GB46739@zoidberg>
+        bh=5czZK6O141rv5ckh3ysQo8OyyO1JoGM8siDmOS3Jfgw=;
+        b=JkNbhgb7x4ngEXVAANFesnXMZmWNc2WRrLjXt1CeYnGlB5oI3/+qMPaBPz6zpTsAzT
+         IKQ2cg78ndMG8dTq/Uoj33EH4HPhYevo3PCxLliyoeSKMIkySc3ZBTso0zAIWT5jvh49
+         oF1o7iVCDv9wPmPzLjOUdB3y9XswuQQtqLN2JVV7ecTaHi+b0C1D9pZ54LGX2bNQgV7B
+         PIRUNMfT65MU8fcIytMkKAy4qI90BVwjUFeGqd80vwHOq79I7iwHneBxHbdKcxqVHFME
+         wOQTRSk2PSy/3KgiS3+H+/UHXmvg/lob968E6Y7FyG/wpi7lpvFOMjHMpQuZU933cyM/
+         MURg==
+X-Gm-Message-State: ALyK8tIlLyiwhBsA6WsrC/3jlFoLZPZqqxNrxIYRalIp3ZahF1fqqT4zRxGDfUc+PEXLzUNRpeb7++Qyvb4uMw==
+X-Received: by 10.37.231.81 with SMTP id e78mr2367330ybh.7.1465386707811; Wed,
+ 08 Jun 2016 04:51:47 -0700 (PDT)
+Received: by 10.129.124.132 with HTTP; Wed, 8 Jun 2016 04:51:47 -0700 (PDT)
+In-Reply-To: <xmqqtwh4odp6.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296784>
 
-On Wed, Jun 1, 2016 at 5:08 AM, Edward Thomson
-<ethomson@edwardthomson.com> wrote:
-> @@ -263,6 +265,7 @@ static struct option builtin_add_options[] = {
->         OPT_BOOL( 0 , "refresh", &refresh_only, N_("don't add, only refresh the index")),
->         OPT_BOOL( 0 , "ignore-errors", &ignore_add_errors, N_("just skip files which cannot be added because of errors")),
->         OPT_BOOL( 0 , "ignore-missing", &ignore_missing, N_("check if - even missing - files are ignored in dry run")),
-> +       OPT_STRING( 0 , "chmod", &chmod_arg, N_("(+/-)x"), N_("override the executable bit of the listed files")),
+Hey Junio,
 
-If this is only about +/-x, would --[no-]executable be a better option name?
--- 
-Duy
+On Wed, Jun 8, 2016 at 3:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Vasco Almeida <vascomalmeida@sapo.pt> writes:
+>
+>> These messages are relevant for the programmer only, not for the end
+>> user.  Thus, they can be unmarked for translation, saving translator
+>> some work.
+>>
+>> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+>> ---
+>>  git-bisect.sh | 2 +-
+>>  wt-status.c   | 4 ++--
+>>  2 files changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/git-bisect.sh b/git-bisect.sh
+>> index 30d01bb..ae3cb01 100755
+>> --- a/git-bisect.sh
+>> +++ b/git-bisect.sh
+>> @@ -274,7 +274,7 @@ bisect_state() {
+>>       check_and_set_terms $state
+>>       case "$#,$state" in
+>>       0,*)
+>> -             die "$(gettext "Please call 'bisect_state' with at least one argument.")" ;;
+>> +             die "Please call 'bisect_state' with at least one argument." ;;
+>
+> OK.  This should have had "bug:" prefix from the beginning, but that
+> is outside the topic.
+
+I can probably include this with the rewrite of git-bisect.sh .
+
+Regards,
+Pranit Bauva
