@@ -1,94 +1,98 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 56/94] apply: move 'struct apply_state' to apply.h
-Date: Wed, 8 Jun 2016 17:25:10 +0200
-Message-ID: <CAP8UFD0EwZMs0XotZE3jP1edUOUY87xRSZNPoKPS_sXJc7zE8A@mail.gmail.com>
-References: <20160511131745.2914-1-chriscool@tuxfamily.org>
- <20160511131745.2914-57-chriscool@tuxfamily.org> <CAPig+cS98guXbeRH6oW8n2tPAa3u=2MvSx1H5rixGKdGTrVJPg@mail.gmail.com>
- <xmqqwpmu2do5.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jeff King <peff@peff.net>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 17:29:20 2016
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [PATCH 1/2] bisect--helper: `is_expected_rev` shell function in C
+Date: Wed,  8 Jun 2016 20:54:14 +0530
+Message-ID: <20160608152415.7770-1-pranit.bauva@gmail.com>
+Cc: Pranit Bauva <pranit.bauva@gmail.com>, christian.couder@gmail.com,
+	chriscool@tuxfamily.org, larsxschneider@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 08 17:30:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAfMB-00086k-U5
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 17:25:24 +0200
+	id 1bAfMZ-0008TZ-PJ
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 17:25:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757472AbcFHPZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2016 11:25:17 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:36310 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757470AbcFHPZM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2016 11:25:12 -0400
-Received: by mail-wm0-f49.google.com with SMTP id n184so186988485wmn.1
-        for <git@vger.kernel.org>; Wed, 08 Jun 2016 08:25:12 -0700 (PDT)
+	id S1757473AbcFHPZn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2016 11:25:43 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:33296 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757469AbcFHPZn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2016 11:25:43 -0400
+Received: by mail-pa0-f66.google.com with SMTP id di3so790133pab.0
+        for <git@vger.kernel.org>; Wed, 08 Jun 2016 08:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=28TlHk8bo9I7YbPmasiV7Mn70dkVHz5eAa8+RNM44zw=;
-        b=d24M6XWqfLbEzixElgaWFAvCSNJU6iiiJKgoIsp+YPRObMP23SfDpQ7/hfHJJUZVxW
-         vb5+CPCUjc4ZvAc7n7PVwG+BXdRww2CSM7fL0sZGjKOsubxqiWsxBMfuBAz+FJJAd0CZ
-         1f24RYG8KyMncAzxFkxBLCtQ9BeAKKPxJ4BFsvgh0qwY4RvNCniadd33OopDnBn1avEJ
-         mB82oRXqiiVeIhUiKDoNyx+vsz61Hji3oU1s1Ln3RNMfW1c/WF7iFFnSBEpC8/zeRRvc
-         bjpzcQRanwfN+G31xmFy8aM/8aPrv5f3tosSKRouFXz7Oz+h+MC5Vd/Ye0wxQYzZmQ20
-         HQAg==
+        h=from:to:cc:subject:date:message-id;
+        bh=0yLi5nz02O1bbfozkEflCA+hrzGNTxTSf6c/IksKjpM=;
+        b=ogv6aezb81HA47pnZM4iTCnvdmbp7gPo9CWQyWwZOYbcbEGEU3Bf/sEHt8oKvWK5aU
+         flah69TH6AdVCfmd0uiPs/Bt1fOntYfutV2TFTAbajNf4qNgo1gzXGMpEa/zQpVv8Xv5
+         PGYbcmmUlBj1TtBNJzuDmlkc8TsZFxe3+Bd92vBMHFsr3bA5zTZ80ywseA1izcRzF5UI
+         rZUzETM5szKMiXScthh8+SrR8X5nHfyfNjimf5ehhv5zesEZiVZEyUDO9JU+X4nkAG0h
+         9YfyiqeyNCGfxlEj+FoEIspSClVyYLVYvGfr9XuXR2VPSJDXR21gKQ7VtG9C3V0OZDiS
+         HGqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=28TlHk8bo9I7YbPmasiV7Mn70dkVHz5eAa8+RNM44zw=;
-        b=Gv/zDFal/SQpIWikGkqS/rygjXwd0BvCZ4frle+bGk046Z3P9SmM9DNYdY9DneYue+
-         7Jo/aEPhhIgxjROsHZRe33FBKsD5KEoKQIiWXXoPi6OZy+pVCXncFGOQkk5KkKeQ9Wnk
-         cRS8NezA8XySOjpvQMvu0RfCdb3PpohjY3Nwv0q96/J/lC5XDBDs/oeVublNXDDIx/7h
-         ao3x8SlI8WbKSIz5PkBHVTDAz2E7yps5tyFTabDV3JDC4odqmz48OmGIvuolpvw4jPCS
-         EAlu+dtccxBQf3IBztjCCLUUBKHDbOkRKDylq3K7lsWiS0qsp8QnzHpGXcV5G8ssjW+/
-         IHDw==
-X-Gm-Message-State: ALyK8tKEVHI4MnCvKfUDvKQAaeQkrcjkMO+sibilxofuo8zLbzfSbHU5hkQL9OWlBjY7Qn01x5z7jWcDE29mGg==
-X-Received: by 10.194.109.4 with SMTP id ho4mr5102191wjb.78.1465399511352;
- Wed, 08 Jun 2016 08:25:11 -0700 (PDT)
-Received: by 10.194.148.146 with HTTP; Wed, 8 Jun 2016 08:25:10 -0700 (PDT)
-In-Reply-To: <xmqqwpmu2do5.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=0yLi5nz02O1bbfozkEflCA+hrzGNTxTSf6c/IksKjpM=;
+        b=F5KFgeptmHWUWTlzN7b9G/pHbsKWz9vsEw4UiPmayTM93WoXo3k2lK+IsrglD95PPE
+         WSrC32HMNH+ie5PpaNiLdKuGg+lDxJuquGakRH1mGuAE3vbRLRLitNkdfBfPCR2mUmd6
+         JcwG7H+Km9VgfOQblu6HxyyvqftVXMXImu88ksngC59J/Gv+zRQo4IPLRjnfBck/DdxK
+         ykE+grngjwzX3hum7F6lbv5zpBVJzeWvlANYuaJIxTlqD0WGNy4elgGsDK6cuiC0UTDH
+         T+OpNMfOPHp7LPZA/thxxGJLcfPZ5KX3XbxoCF9toaJiMVbUXrNxuZb2eim6146t4vuW
+         L8iQ==
+X-Gm-Message-State: ALyK8tJtzhyI7UsbIwY//s1H25Dp/wBjsSRks73ydoTq/t7kue2jei8zmAO2gPXE9Tt8/g==
+X-Received: by 10.66.1.134 with SMTP id 6mr6373592pam.15.1465399542154;
+        Wed, 08 Jun 2016 08:25:42 -0700 (PDT)
+Received: from localhost.localdomain ([111.119.199.22])
+        by smtp.gmail.com with ESMTPSA id ce8sm3190089pad.44.2016.06.08.08.25.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 08 Jun 2016 08:25:41 -0700 (PDT)
+X-Mailer: git-send-email 2.8.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296805>
 
-On Mon, May 16, 2016 at 6:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->> On Wed, May 11, 2016 at 9:17 AM, Christian Couder
->> <christian.couder@gmail.com> wrote:
->>> To libify `git apply` functionality we must make 'struct apply_state'
->>> usable outside "builtin/apply.c".
->>
->> Why is this patch plopped right in the middle of a bunch of other
->> patches which are making functions return -1 rather than die()ing?
->> Seems out of place.
->
-> Two possible places that would make more sense are (1) when it is
-> introduced very early in the series, or (2) when it absorbed all the
-> file-scope-static global states in the middle of the series.  I think
-> either is fine.
->
-> That would be a good place to end the first batch of the topic.
-> Then the second batch would be "turn die() into error status that is
-> propagated upwards".
+Reimplement `is_expected_rev` shell function in C. This will further be
+called from `check_expected_revs` function. This is a quite small
+function thus subcommand facility is redundant.
 
-I moved this patch at the beginning of second batch that I will send
-hopefully soon...
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+This applies on the previous patches.
+
+ builtin/bisect--helper.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 4153e8a..06bc9b8 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -160,6 +160,20 @@ int bisect_reset(const char *commit)
+ 	return bisect_clean_state();
+ }
+ 
++static int is_expected_rev(const char *expected_hex)
++{
++	struct strbuf actual_hex = STRBUF_INIT;
++
++	if (!file_exists(git_path_bisect_expected_rev()))
++		return 0;
++
++	if (!strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0))
++		return 0;
++
++	strbuf_trim(&actual_hex);
++	return !strcmp(actual_hex.buf, expected_hex);
++}
++
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+-- 
+2.8.3
