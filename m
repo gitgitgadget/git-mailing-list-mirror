@@ -1,7 +1,7 @@
 From: Samuel GROOT <samuel.groot@grenoble-inp.org>
-Subject: [PATCH v4 3/6] send-email: shorten send-email's output
-Date: Wed,  8 Jun 2016 15:01:39 +0200
-Message-ID: <20160608130142.29879-4-samuel.groot@grenoble-inp.org>
+Subject: [PATCH v4 4/6] send-email: create email parser subroutine
+Date: Wed,  8 Jun 2016 15:01:40 +0200
+Message-ID: <20160608130142.29879-5-samuel.groot@grenoble-inp.org>
 References: <20160607140148.23242-1-tom.russello@grenoble-inp.org>
  <20160608130142.29879-1-samuel.groot@grenoble-inp.org>
 Cc: samuel.groot@grenoble-inp.org, tom.russello@grenoble-inp.org,
@@ -9,247 +9,109 @@ Cc: samuel.groot@grenoble-inp.org, tom.russello@grenoble-inp.org,
 	matthieu.moy@grenoble-inp.fr, gitster@pobox.com, aaron@schrab.com,
 	e@80x24.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 15:04:02 2016
+X-From: git-owner@vger.kernel.org Wed Jun 08 15:04:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAd9O-0003Kf-AB
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 15:04:02 +0200
+	id 1bAd9Z-0003Rw-Ff
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 15:04:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161967AbcFHND4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2016 09:03:56 -0400
-Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:34307 "EHLO
+	id S1753695AbcFHNEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2016 09:04:07 -0400
+Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:35176 "EHLO
 	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1160995AbcFHNDz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2016 09:03:55 -0400
+	with ESMTP id S1753354AbcFHNEF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2016 09:04:05 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id E634F2591;
-	Wed,  8 Jun 2016 15:03:52 +0200 (CEST)
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 3F3C12591;
+	Wed,  8 Jun 2016 15:04:03 +0200 (CEST)
 Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7SGr9LOAQ1mp; Wed,  8 Jun 2016 15:03:52 +0200 (CEST)
+	with ESMTP id Vr4SXJmzuxvV; Wed,  8 Jun 2016 15:04:03 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id D67D12415;
-	Wed,  8 Jun 2016 15:03:52 +0200 (CEST)
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 2FECF2415;
+	Wed,  8 Jun 2016 15:04:03 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id D369D2066;
-	Wed,  8 Jun 2016 15:03:52 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 2D0392064;
+	Wed,  8 Jun 2016 15:04:03 +0200 (CEST)
 Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
 	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6kreZ-2TIVtQ; Wed,  8 Jun 2016 15:03:52 +0200 (CEST)
+	with ESMTP id 3ITfKQGE6SLG; Wed,  8 Jun 2016 15:04:03 +0200 (CEST)
 Received: from wificampus-030012.grenet.fr (wificampus-030012.grenet.fr [130.190.30.12])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id C0CF42064;
-	Wed,  8 Jun 2016 15:03:51 +0200 (CEST)
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id F414A2066;
+	Wed,  8 Jun 2016 15:04:01 +0200 (CEST)
 X-Mailer: git-send-email 2.8.2.667.gf43de12
 In-Reply-To: <20160608130142.29879-1-samuel.groot@grenoble-inp.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296792>
 
-Messages displayed by `send-email` should be shortened to avoid displaying
-unnecessary information.
+We need a simple and generic way to parse an email file.
+
+Since it would be hard to include and maintain an external library,
+create an simple email parser subroutine to parse an email file.
 
 Signed-off-by: Samuel GROOT <samuel.groot@grenoble-inp.org>
 Signed-off-by: Tom RUSSELLO <tom.russello@grenoble-inp.org>
 Signed-off-by: Matthieu MOY <matthieu.moy@grenoble-inp.fr>
 ---
- git-send-email.perl   | 22 +++++++++----------
- t/t9001-send-email.sh | 58 +++++++++++++++++++++++++--------------------------
- 2 files changed, 40 insertions(+), 40 deletions(-)
+We chose to create our own simple email parser and only use it for the
+"quote email" feature to pave the way for the refactorization of the patch
+parser [1] that may come after our current school project.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 6958785..9b51062 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1478,14 +1478,14 @@ foreach my $t (@files) {
- 				$sauthor = sanitize_address($author);
- 				next if $suppress_cc{'author'};
- 				next if $suppress_cc{'self'} and $sauthor eq $sender;
--				printf("(mbox) Adding cc: %s from line '%s'\n",
--					$1, $_) unless $quiet;
-+				printf("Adding cc: %s from From: header\n",
-+					$1) unless $quiet;
- 				push @cc, $1;
- 			}
- 			elsif (/^To:\s+(.*)$/i) {
- 				foreach my $addr (parse_address_line($1)) {
--					printf("(mbox) Adding to: %s from line '%s'\n",
--						$addr, $_) unless $quiet;
-+					printf("Adding to: %s from To: header\n",
-+						$addr) unless $quiet;
- 					push @to, $addr;
- 				}
- 			}
-@@ -1498,8 +1498,8 @@ foreach my $t (@files) {
- 					} else {
- 						next if ($suppress_cc{'cc'});
- 					}
--					printf("(mbox) Adding cc: %s from line '%s'\n",
--						$addr, $_) unless $quiet;
-+					printf("Adding cc: %s from Cc: header\n",
-+						$addr) unless $quiet;
- 					push @cc, $addr;
- 				}
- 			}
-@@ -1532,8 +1532,8 @@ foreach my $t (@files) {
- 			# So let's support that, too.
- 			$input_format = 'lots';
- 			if (@cc == 0 && !$suppress_cc{'cc'}) {
--				printf("(non-mbox) Adding cc: %s from line '%s'\n",
--					$_, $_) unless $quiet;
-+				printf("Adding cc: %s from Cc: header\n",
-+					$_) unless $quiet;
- 				push @cc, $_;
- 			} elsif (!defined $subject) {
- 				$subject = $_;
-@@ -1555,8 +1555,8 @@ foreach my $t (@files) {
- 				next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
- 			}
- 			push @cc, $c;
--			printf("(body) Adding cc: %s from line '%s'\n",
--				$c, $_) unless $quiet;
-+			printf("Adding cc: %s from Signed-off-by: trailer\n",
-+				$c) unless $quiet;
- 		}
- 	}
- 	close $fh;
-@@ -1660,7 +1660,7 @@ sub recipients_cmd {
- 		$address = sanitize_address($address);
- 		next if ($address eq $sender and $suppress_cc{'self'});
- 		push @addresses, $address;
--		printf("($prefix) Adding %s: %s from: '%s'\n",
-+		printf("Adding %s: %s from: '%s'\n",
- 		       $what, $address, $cmd) unless $quiet;
- 		}
- 	close $fh
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 943e6b7..aca7d5c 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -150,9 +150,9 @@ test_expect_success $PREREQ 'Verify commandline' '
- test_expect_success $PREREQ 'setup expect' "
- cat >expected-show-all-headers <<\EOF
- 0001-Second.patch
--(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
--(mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
--(mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
-+Adding cc: A <author@example.com> from From: header
-+Adding cc: One <one@example.com> from Cc: header
-+Adding cc: two@example.com from Cc: header
- Dry-OK. Log says:
- Server: relay.example.com
- MAIL FROM:<from@example.com>
-@@ -503,9 +503,9 @@ test_expect_success $PREREQ 'second message is patch' '
- test_expect_success $PREREQ 'setup expect' "
- cat >expected-suppress-sob <<\EOF
- 0001-Second.patch
--(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
--(mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
--(mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
-+Adding cc: A <author@example.com> from From: header
-+Adding cc: One <one@example.com> from Cc: header
-+Adding cc: two@example.com from Cc: header
- Dry-OK. Log says:
- Server: relay.example.com
- MAIL FROM:<from@example.com>
-@@ -555,9 +555,9 @@ test_expect_success $PREREQ 'sendemail.cc set' '
- test_expect_success $PREREQ 'setup expect' "
- cat >expected-suppress-sob <<\EOF
- 0001-Second.patch
--(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
--(mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
--(mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
-+Adding cc: A <author@example.com> from From: header
-+Adding cc: One <one@example.com> from Cc: header
-+Adding cc: two@example.com from Cc: header
- Dry-OK. Log says:
- Server: relay.example.com
- MAIL FROM:<from@example.com>
-@@ -587,10 +587,10 @@ test_expect_success $PREREQ 'sendemail.cc unset' '
- test_expect_success $PREREQ 'setup expect' "
- cat >expected-suppress-cccmd <<\EOF
- 0001-Second.patch
--(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
--(mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
--(mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
--(body) Adding cc: C O Mitter <committer@example.com> from line 'Signed-off-by: C O Mitter <committer@example.com>'
-+Adding cc: A <author@example.com> from From: header
-+Adding cc: One <one@example.com> from Cc: header
-+Adding cc: two@example.com from Cc: header
-+Adding cc: C O Mitter <committer@example.com> from Signed-off-by: trailer
- Dry-OK. Log says:
- Server: relay.example.com
- MAIL FROM:<from@example.com>
-@@ -647,10 +647,10 @@ test_expect_success $PREREQ '--suppress-cc=all' '
- test_expect_success $PREREQ 'setup expect' "
- cat >expected-suppress-body <<\EOF
- 0001-Second.patch
--(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
--(mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
--(mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
--(cc-cmd) Adding cc: cc-cmd@example.com from: './cccmd'
-+Adding cc: A <author@example.com> from From: header
-+Adding cc: One <one@example.com> from Cc: header
-+Adding cc: two@example.com from Cc: header
-+Adding cc: cc-cmd@example.com from: './cccmd'
- Dry-OK. Log says:
- Server: relay.example.com
- MAIL FROM:<from@example.com>
-@@ -681,9 +681,9 @@ test_expect_success $PREREQ '--suppress-cc=body' '
- test_expect_success $PREREQ 'setup expect' "
- cat >expected-suppress-body-cccmd <<\EOF
- 0001-Second.patch
--(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
--(mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
--(mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
-+Adding cc: A <author@example.com> from From: header
-+Adding cc: One <one@example.com> from Cc: header
-+Adding cc: two@example.com from Cc: header
- Dry-OK. Log says:
- Server: relay.example.com
- MAIL FROM:<from@example.com>
-@@ -712,9 +712,9 @@ test_expect_success $PREREQ '--suppress-cc=body --suppress-cc=cccmd' '
- test_expect_success $PREREQ 'setup expect' "
- cat >expected-suppress-sob <<\EOF
- 0001-Second.patch
--(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
--(mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
--(mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
-+Adding cc: A <author@example.com> from From: header
-+Adding cc: One <one@example.com> from Cc: header
-+Adding cc: two@example.com from Cc: header
- Dry-OK. Log says:
- Server: relay.example.com
- MAIL FROM:<from@example.com>
-@@ -744,10 +744,10 @@ test_expect_success $PREREQ '--suppress-cc=sob' '
- test_expect_success $PREREQ 'setup expect' "
- cat >expected-suppress-bodycc <<\EOF
- 0001-Second.patch
--(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
--(mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
--(mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
--(body) Adding cc: C O Mitter <committer@example.com> from line 'Signed-off-by: C O Mitter <committer@example.com>'
-+Adding cc: A <author@example.com> from From: header
-+Adding cc: One <one@example.com> from Cc: header
-+Adding cc: two@example.com from Cc: header
-+Adding cc: C O Mitter <committer@example.com> from Signed-off-by: trailer
- Dry-OK. Log says:
- Server: relay.example.com
- MAIL FROM:<from@example.com>
-@@ -778,8 +778,8 @@ test_expect_success $PREREQ '--suppress-cc=bodycc' '
- test_expect_success $PREREQ 'setup expect' "
- cat >expected-suppress-cc <<\EOF
- 0001-Second.patch
--(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
--(body) Adding cc: C O Mitter <committer@example.com> from line 'Signed-off-by: C O Mitter <committer@example.com>'
-+Adding cc: A <author@example.com> from From: header
-+Adding cc: C O Mitter <committer@example.com> from Signed-off-by: trailer
- Dry-OK. Log says:
- Server: relay.example.com
- MAIL FROM:<from@example.com>
+[1] * http://thread.gmane.org/gmane.comp.version-control.git/295752
+
+ perl/Git.pm | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+
+diff --git a/perl/Git.pm b/perl/Git.pm
+index ce7e4e8..1af4805 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -865,6 +865,40 @@ sub ident_person {
+ 	return "$ident[0] <$ident[1]>";
+ }
+ 
++=item parse_email
++
++Return a hash of email fields extracted from a file handler.
++
++=cut
++
++sub parse_email {
++	my %mail = ();
++	my $fh = shift;
++	my $last_header;
++
++	# Unfold and parse multiline header fields
++	while (<$fh>) {
++		last if /^\s*$/;
++		s/\r\n|\n|\r//;
++		if (/^([^\s:]+):[\s]+(.*)$/) {
++			$last_header = lc($1);
++			@{$mail{$last_header}} = ()
++				unless defined $mail{$last_header};
++			push @{$mail{$last_header}}, $2;
++		} elsif (/^\s+\S/ and defined $last_header) {
++			s/^\s+/ /;
++			push @{$mail{$last_header}}, $_;
++		} else {
++			die("Mail format undefined!\n");
++		}
++	}
++
++	# Separate body from header
++	$mail{"body"} = [(<$fh>)];
++
++	return \%mail;
++}
++
+ =item parse_mailboxes
+ 
+ Return an array of mailboxes extracted from a string.
 -- 
 2.8.2.537.gb153d2a
