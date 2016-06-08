@@ -1,88 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] refs: mark the file-local vtable symbols as static
-Date: Wed, 08 Jun 2016 11:55:55 -0700
-Message-ID: <xmqqfusnldc4.fsf@gitster.mtv.corp.google.com>
-References: <57583022.2030205@ramsayjones.plus.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/4] bundle v3: the beginning
+Date: Wed, 8 Jun 2016 15:00:43 -0400
+Message-ID: <20160608190043.GA19572@sigill.intra.peff.net>
+References: <1456950761-19759-1-git-send-email-gitster@pobox.com>
+ <1456950761-19759-5-git-send-email-gitster@pobox.com>
+ <CAP8UFD1xqRMFE2Wzntu=XevCyj+acGLEO-cTq1fqn+NMe3x0vg@mail.gmail.com>
+ <CACsJy8Dr_Z886Jb-O8gbAv_vzBLicNH6bPPpKwb9HWZTKQ9muw@mail.gmail.com>
+ <CAP8UFD3jPQFk2deSk5JXC3PTz5yWcvXJ4=Qjam5Qw6P9SrLzFQ@mail.gmail.com>
+ <CACsJy8DB_17DZ7REBzicyA_GZCnvNkoYEzftjfyM72QVmEb_Vg@mail.gmail.com>
+ <CAP8UFD2t=2wJ=1U1ctMYNuMSejBYLh2yeLU7ZfP5Q6KLxUApjQ@mail.gmail.com>
+ <xmqqinxkpzur.fsf@gitster.mtv.corp.google.com>
+ <20160607202351.GA5726@sigill.intra.peff.net>
+ <xmqq4m93mu8v.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 20:56:12 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 08 21:00:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAieB-00025j-4l
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 20:56:11 +0200
+	id 1bAiii-0005UR-Ph
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jun 2016 21:00:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1425313AbcFHS4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2016 14:56:00 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59947 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1423712AbcFHSz7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2016 14:55:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 27B9820DA9;
-	Wed,  8 Jun 2016 14:55:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eAwRIu/reytKGvAS4fqPimKNWI0=; b=MWjOrB
-	0a7x8nAIfK2K9zKsR/Yu4Gf/nh1BrqGAXGJyepuVk5XINXn4pTcxj8L2kXnaX4uN
-	z1sTrjVTuqpd2hwTQiHE/YSLeGivDYpQu78ERUK3R1Xv1yABBPVVkJeDqu04IQOV
-	A+JLNP93lou9ygWlwslfdGncnNzzckKA2kXDI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ht+u45ETSxfQbaHufnMD8eQJ5W4uL4Rt
-	6svQcrTiE/lV00mAi9YBy42h6JZM5l3Lh7dpWfQ6nreRdf4h0K/w3cRtEkN/ECQY
-	JVZk52h34rTT3Pj8Kp5cUC5g2QvtMuxUor3Lc3hJPI4jeBT8do7YVD/UlUgJNWxm
-	1JEl+78lS9U=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1DC9820DA8;
-	Wed,  8 Jun 2016 14:55:58 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 885B720DA6;
-	Wed,  8 Jun 2016 14:55:57 -0400 (EDT)
-In-Reply-To: <57583022.2030205@ramsayjones.plus.com> (Ramsay Jones's message
-	of "Wed, 8 Jun 2016 15:48:02 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A285492E-2DAA-11E6-ACCC-89D312518317-77302942!pb-smtp1.pobox.com
+	id S1422797AbcFHTAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2016 15:00:48 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51424 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752432AbcFHTAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2016 15:00:47 -0400
+Received: (qmail 31550 invoked by uid 102); 8 Jun 2016 19:00:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Jun 2016 15:00:45 -0400
+Received: (qmail 11323 invoked by uid 107); 8 Jun 2016 19:00:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Jun 2016 15:00:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Jun 2016 15:00:43 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq4m93mu8v.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296833>
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+On Wed, Jun 08, 2016 at 11:05:20AM -0700, Junio C Hamano wrote:
 
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
->
-> Hi Michael, Junio,
->
-> I would normally ask you to squash this into the relevant patch when
-> you next re-roll your 'mh/ref-iterators' branch, but this has already
-> been merged into next. (I normally have a bit more time ... sorry!).
->
-> Perhaps, after the release, when the next branch is re-wound/re-built,
-> this could be squashed into your branch then.
+> > Likewise, I'm not sure if "get" should be allowed to return contents
+> > that don't match the sha1.
+> 
+> Yes, this is what I was getting at.  It would be ideal to come up
+> with a way to do the large-blob offload without resorting to hacks
+> (like LFS and annex where "the same object contents will always
+> result in the same object name" is deliberately broken), and "object
+> name must match what the data hashes down to" is a basic requirement
+> for that.
 
-Yup, sounds like a plan.
+I meant to elaborate here more, but it looks like I didn't.
 
->
-> Anyway, after applying this patch, the following symbols are still
-> 'public but unused':
->
-> 	> refs/files-backend.o	- files_reflog_iterator_begin
-> 	> refs/iterator.o	- is_empty_ref_iterator
-> 	> refs/iterator.o	- merge_ref_iterator_begin
->
-> These all look (potentially) useful for the implementation of
-> additional 'ref-iter' types and look to be part of the _internal_
-> iterator API - so they should not be marked static. Can you just
-> confirm my interpretation.
+One thing that an external odb command might want to be able to do is
+say "I _do_ have that object, but it would be expensive or impossible to
+get right now, so I will give you a placeholder" (e.g., you are just
+trying to run "git log" while on an airplane, and you would not want to
+die() because you cannot fetch some blob).
 
-I am not Michael, but FWIW I think that is sensible.
+But the right way is not to have "get" send content that does not match
+the requested sha1. It needs to make git aware that the object is a
+placeholder, so git does not do stupid things like write the bogus
+content into a loose object.
+
+The right way may be as simple as the external odb returning a non-zero
+exit code, and git fills in the placeholder data itself (or dies,
+possibly, depending on what the user asks it to do).
+
+One of the reasons I worked up that initial external-odb patch was
+because I knew that before we settled on a definite interface, we would
+have to try it out and see what odd corner cases came up. E.g., when do
+we fault in objects in a way that's annoying to the user? Which code
+paths need to handle "we do have this object available, but you can't
+see it right now, so what kind of fallback can we do?". Etc.
+
+Unfortunately I never actually did any of that testing. ;)
+
+-Peff
