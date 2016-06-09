@@ -1,96 +1,100 @@
-From: Tom Russello <tom.russello@grenoble-inp.org>
-Subject: Re: [PATCH v3 1/6] t9001: non order-sensitive file comparison
-Date: Thu, 9 Jun 2016 10:15:43 +0200
-Message-ID: <214976cd-3876-62ca-b931-338d7f0fd51c@grenoble-inp.org>
-References: <1464369102-7551-1-git-send-email-tom.russello@grenoble-inp.org>
- <20160607140148.23242-1-tom.russello@grenoble-inp.org>
- <20160607140148.23242-2-tom.russello@grenoble-inp.org>
- <xmqqziqwmqth.fsf@gitster.mtv.corp.google.com> <vpqporqyko1.fsf@anie.imag.fr>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 4/4] bundle v3: the beginning
+Date: Thu, 9 Jun 2016 15:53:26 +0700
+Message-ID: <CACsJy8BGV-AWwap9c2hOjXWMYxBLUirX8i20rS_=Vmci_SG_rw@mail.gmail.com>
+References: <1456950761-19759-1-git-send-email-gitster@pobox.com>
+ <1456950761-19759-5-git-send-email-gitster@pobox.com> <CAP8UFD1xqRMFE2Wzntu=XevCyj+acGLEO-cTq1fqn+NMe3x0vg@mail.gmail.com>
+ <CACsJy8Dr_Z886Jb-O8gbAv_vzBLicNH6bPPpKwb9HWZTKQ9muw@mail.gmail.com>
+ <CAP8UFD3jPQFk2deSk5JXC3PTz5yWcvXJ4=Qjam5Qw6P9SrLzFQ@mail.gmail.com>
+ <CACsJy8DB_17DZ7REBzicyA_GZCnvNkoYEzftjfyM72QVmEb_Vg@mail.gmail.com>
+ <CAP8UFD2t=2wJ=1U1ctMYNuMSejBYLh2yeLU7ZfP5Q6KLxUApjQ@mail.gmail.com>
+ <xmqqinxkpzur.fsf@gitster.mtv.corp.google.com> <20160607202351.GA5726@sigill.intra.peff.net>
+ <CACsJy8CtsFFJPssDDBuL8TLoxi1f=734mjAjCUOr8Y63aD3xUA@mail.gmail.com> <20160608161958.GA30876@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, erwan.mathoniere@grenoble-inp.org,
-	samuel.groot@grenoble-inp.org, jordan.de-gea@grenoble-inp.org,
-	e@80x24.org, aaron@schrab.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 10:16:02 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 09 10:54:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAv8D-0001p5-7p
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 10:16:01 +0200
+	id 1bAvj9-0002wm-78
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 10:54:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754715AbcFIIP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2016 04:15:57 -0400
-Received: from zm-smtpout-2.grenet.fr ([130.190.244.98]:45819 "EHLO
-	zm-smtpout-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751926AbcFIIPv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2016 04:15:51 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id E167620B2;
-	Thu,  9 Jun 2016 10:15:47 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2HxLPSuoD9gc; Thu,  9 Jun 2016 10:15:47 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id CFF3A20A5;
-	Thu,  9 Jun 2016 10:15:47 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id C763B2066;
-	Thu,  9 Jun 2016 10:15:47 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id w-lVXckuKdJU; Thu,  9 Jun 2016 10:15:47 +0200 (CEST)
-Received: from [130.190.32.197] (eduroam-032197.grenet.fr [130.190.32.197])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 9B9F52055;
-	Thu,  9 Jun 2016 10:15:47 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.1
-In-Reply-To: <vpqporqyko1.fsf@anie.imag.fr>
+	id S1422668AbcFIIyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2016 04:54:04 -0400
+Received: from mail-it0-f45.google.com ([209.85.214.45]:34971 "EHLO
+	mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422628AbcFIIx6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2016 04:53:58 -0400
+Received: by mail-it0-f45.google.com with SMTP id z189so148643225itg.0
+        for <git@vger.kernel.org>; Thu, 09 Jun 2016 01:53:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=YzAeP7JfGmwxlT8FRD7MclEJj/CcuUWXWL+V5NYO/Bo=;
+        b=C4eE/VcZT44a9dRx4blbCavxxs96uuTrNoSFHgkJ8nUZUbeOieRYsG4KjDnDaDRSXc
+         oT31jhQgTAF66FwNMb4tT2RvmWq+J0Goxt27J80MCFgbeJc/IAcQcN/t5JDfUXaUBNuA
+         apeeIZOUqSzJUZRcuQ40hZNbHwYxeLcSyqQrI37bjVadCIMG6OyrjmdSTNZWv3rcc5hs
+         uV+51zNmR5/n9Dfx1y/QtvL23ho/A0jZoa5zOKDunl3HawbX1GqzrO7ejObRUzNa53xm
+         2hIqKUvU0JXmDOh+la598VRkuCfCO65rdvcrEOX7guMOsqRdtjKLYjXJKevqw/evpicD
+         A1OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=YzAeP7JfGmwxlT8FRD7MclEJj/CcuUWXWL+V5NYO/Bo=;
+        b=jQVge8Nl0mYGo6J/ypXPd0YNX5V876sl6W8oxPJxv7z8JLtIuu5fZ6x++ts4jDKqFT
+         bla4FMbtZ7BI7fz/zGGNqAc5m5PnVlbW8j14TvxFNuJuRbWfadfBErgA26RaJDEfp+az
+         sN6VRRPnYNXzvbG6m0X+exrq6umC/he35IJ8w4SUQW9jd2i/K1Sa4Rcorrd6St98Sh5C
+         JvkjIdgIZrTFXVtFSDUEGAHKDy8eT+4I5wl+YVcJpPzh/BOEGkOnxn7390IZNnDkGQe4
+         7ctbkJl/RsknKQN+WT1ZFEDWy/vz2t6hn2HoM9GN3qixMD23uWu9nICWZs2GQZSQ+/+y
+         s52w==
+X-Gm-Message-State: ALyK8tI5EIJhOCoBR2zpQO1Fv1MRm4ipElBW7UJNKQalalRulJMMwuMhul6cEMFOYAtD08+Tp/NSmc2Tpqt66Q==
+X-Received: by 10.36.108.76 with SMTP id w73mr15833266itb.63.1465462436081;
+ Thu, 09 Jun 2016 01:53:56 -0700 (PDT)
+Received: by 10.64.173.167 with HTTP; Thu, 9 Jun 2016 01:53:26 -0700 (PDT)
+In-Reply-To: <20160608161958.GA30876@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296876>
 
-On 06/09/16 07:51, Matthieu Moy wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Tom Russello <tom.russello@grenoble-inp.org> writes:
+On Wed, Jun 8, 2016 at 11:19 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Jun 08, 2016 at 05:44:06PM +0700, Duy Nguyen wrote:
+>
+>> On Wed, Jun 8, 2016 at 3:23 AM, Jeff King <peff@peff.net> wrote:
+>> > Because this "external odb" essentially acts as a git alternate, we
+>> > would hit it only when we couldn't find an object through regular means.
+>> > Git would then make the object available in the usual on-disk format
+>> > (probably as a loose object).
 >>
->>> +# Check if two files have the same content, non-order sensitive
->>> +test_cmp_noorder () {
->>> +	sort $1 >$1;
->>
->> Here is what I think happens:
->>
->>     0) the shell parses this command line;
->>     1) the shell notices that the output has to go to $1;
->>     2) the shell does open(2) of $1,
->>     3) the shell spawns "sort" with a single argument, with its
->>        output connected to the file descriptor obtained in 2).
->>
->> Because "$1" becomes an empty file at 2), "sort" reads nothing and
->> writes nothing.
-> 
-> Tom: in case you're not convinced, try this:
-> 
-> $ (echo b; echo a) >f
-> $ sort f
-> a
-> b
-> $ sort f >f
-> $ cat f
-> $
-> 
-> Also, useless ';' and missing double-quotes around "$1" to avoid bad
-> surprises ifever test_cmp_noorder is called on file names with special
-> characters.
+>> This means git-gc (and all things that do rev-list --objects --all)
+>> would download at least all trees and commits? Or will we have special
+>> treatment for those commands?
+>
+> Yes. To me, this was always about punting large blobs from the clones.
+> Basically the way git-lfs and other tools work, but without munging your
+> history permanently.
 
-I was totally convinced by Junio's explanation, it is partially fixed in
-v4 and will be entirely fixed in v5.
+Makes sense. If we keep all trees and commits locally, pack v4 still
+has a chance to rise!
 
-Thanks.
+> I don't know if Christian had other cases in mind (like the many-files
+> case, which I think is better served by something like narrow clones).
+
+Although for git-gc or git-fsck, I guess we need special support
+anyway not to download large blobs unnecessarily. Not sure if git-gc
+can already do that now. All I remember is git-repack can still be
+used to make a repo independent from odb alternates. We probably want
+to avoid that. git-fsck definitely should verify that large remote
+blobs are good without downloading them (a new "fsck" command to
+external odb, maybe).
+-- 
+Duy
