@@ -1,134 +1,89 @@
-From: =?UTF-8?Q?Florian_Sch=C3=BCller?= <florian.schueller@gmail.com>
-Subject: [PATCH] Gitk Inotify support
-Date: Thu, 9 Jun 2016 23:12:13 +0200
-Message-ID: <CAHdOBFrYWxfSXew5wHwcMym9=s+7cu2E9-MJJe29y+3zV89x7g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Adds *~ to the .gitignore
+Date: Thu, 09 Jun 2016 14:21:55 -0700
+Message-ID: <xmqqh9d2girw.fsf@gitster.mtv.corp.google.com>
+References: <1465506629-16577-1-git-send-email-Lars.Vogel@vogella.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=089e0149359e6fafa90534dee10e
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 09 23:13:03 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Lars Vogel <Lars.Vogel@vogella.com>
+To: Lars Vogel <lars.vogel@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 23:24:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bB7Fn-0007hZ-Hg
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 23:12:39 +0200
+	id 1bB7PG-0007Qe-7t
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 23:22:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751419AbcFIVMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2016 17:12:35 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:38479 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750806AbcFIVMf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2016 17:12:35 -0400
-Received: by mail-wm0-f42.google.com with SMTP id m124so76887995wme.1
-        for <git@vger.kernel.org>; Thu, 09 Jun 2016 14:12:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=WWSSVN3QY9a3L8DaumCpOzlxhSdoqiyQgt9EF6X3Mf4=;
-        b=bNZ5GLB9s3HePE171RbEYc1mMJkrr8QkABeEpf9hB/Hsbk/JBcd6yvdFia1TKeOav2
-         XokUufNGAQoaC1CjRLa1hQlj1gYDaUV58GRDXl2rknDWaiX7BYlFBhsxqJ+vnd2KMkIU
-         itGkugrX/sv13SB+32YwmLgZUCPqVQunxXJKgV8QBxrMqze75aodltAI+AOnez3jSu1x
-         AYgbm5fTs+nof9QMZBxP31rB7ezxUG3TP4rM7o+uUtSlm7wlesd2PmmbLmuuYowC5l64
-         TExZtp7eALQLxloHASYu99qOASTOe+3bT55tyimrP6V9qn7lUI3W9pfGfxYvXVLPXz38
-         ps9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=WWSSVN3QY9a3L8DaumCpOzlxhSdoqiyQgt9EF6X3Mf4=;
-        b=ZFjIUokvTSRuu5os6GLVqzoD/tz5eqlM2CIHpjUpClHVVTOAvyls9lFYEyLLv/qXdL
-         Bh2GIidNCtw2FCvyas+kbMeGW/eHzYJJc+E2AN/KAp9uYm1Ia3JaYzWFJ4oTwXkZwXHQ
-         J6njEVMx6ryQ4ccOe9yKI0HiNtfkk5Zo2hT0KwdZtUcNLaY8hh4oW3aBx0q2bvihwoYv
-         hR88PX4kPQLV/SkelDmqkGn0IVQmK6X3WnytYCkAbHt2HIySmIIIXgVtnBOM1+HMlfWZ
-         mlKy0Cgil8qjFnSRhEj5zcjaEkXP/3GvaAnnEZ0taWoOLmwQwNgo21qSgGT6H6LC6ats
-         /LlQ==
-X-Gm-Message-State: ALyK8tIhNcMWyeB725scMdzeVTnY2gRq3RGAQC87NTEKBrGQX6UIMjpQCHQOhVQJOzYcAipuXSuG5fGl9QhJ+Q==
-X-Received: by 10.194.216.33 with SMTP id on1mr2016646wjc.153.1465506753099;
- Thu, 09 Jun 2016 14:12:33 -0700 (PDT)
-Received: by 10.28.97.135 with HTTP; Thu, 9 Jun 2016 14:12:13 -0700 (PDT)
+	id S1752946AbcFIVWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2016 17:22:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61622 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752048AbcFIVWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2016 17:22:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C275F22E57;
+	Thu,  9 Jun 2016 17:21:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XGYH2QxbrmybEhAJ6aMHcPtjheU=; b=ZPhbFw
+	q6VTLC5CuFqiorkUxIcYk+2PmdBECrihbPxaSzhxlE5Kd4qWN8Vi2aqzWqseEJss
+	/Ku4lgbV/+CuWlnJfbaRGAaG90Ya1JjJ1eE3V7USaSYAIxq91QDEUT89pf8dheVa
+	fPz/Y2Q6rTNjWpT0PiN0gqcI2WQMPJYXG+oGc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QPxJdge21KEO9GfoQ+bMrrVn9NLWa0LE
+	zKAE68rIKMPc7q5IyqvoR2AKJh+Yzl+0IKsSA0qzpdEqZmQ37Du0H0WbBLerx+Ba
+	vTdRMkj3MZ1lDtcotlvZ3DpqMBjv2Ijze4+m0D91vmWTQ8dLCaPBVzFRQhSWOBwx
+	qq4sKA+48Qk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BB5E522E56;
+	Thu,  9 Jun 2016 17:21:57 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 45D4822E4E;
+	Thu,  9 Jun 2016 17:21:57 -0400 (EDT)
+In-Reply-To: <1465506629-16577-1-git-send-email-Lars.Vogel@vogella.com> (Lars
+	Vogel's message of "Thu, 9 Jun 2016 23:10:29 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 3222E8BA-2E88-11E6-ADE5-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296928>
 
---089e0149359e6fafa90534dee10e
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Lars Vogel <lars.vogel@gmail.com> writes:
 
-Hi
-Is this correct to send possible gitk patches here? or should I send
-them to Paul Mackerras somehow?
+> This helps contributors (like me) using editors which automatically create ~ copies of the changed data
+>
+> Signed-off-by: Lars Vogel <Lars.Vogel@vogella.com>
+> ---
 
-Anyway I just wanted that gitk automatically updates while I'm working
-in my terminal
+We deliberately left this out and kept it out of .gitignore for the
+past 10 years.  The justification was that use of Emacs is merely a
+personal choice that is better served by .git/info/excludes; we do
+not add .swp for vim users, either, for the same reason.
 
-Are you interrested?
+I personally do not care too deeply either way; I could even support
+a move to add some selected small file extensions, as long as we
+some (social) mechanism to avoid churning this file every time
+somebody new comes and complains their favourite editor or other
+tools are not supported.
 
-as described in "SubmittingPatches" this patch is based on
-git://ozlabs.org/~paulus/gitk   22a713c72df8b6799c59287c50cee44c4a6db51e
 
-The code should be robust to just don't autoupdate if
-https://sourceforge.net/projects/tcl-inotify/ is not installed
 
-Open points for now:
- - release watches for deleted directories seems to cause problems in
-tcl-inotify (so I don't)
-   I'm not sure how often that happens in ".git/"
- - I only call "updatecommits" and I don't know if there is a usecase
-where I should be calling "reloadcommits"
-
-Regards
-Florian Sch=C3=BCller
-
---089e0149359e6fafa90534dee10e
-Content-Type: text/x-patch; charset=US-ASCII; name="0001-first-support-for-inotify.patch"
-Content-Disposition: attachment; 
-	filename="0001-first-support-for-inotify.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_ip8sus6c0
-
-RnJvbSA3ODVlZDZiYzFiNGEzYjkwMTlkMzUwM2IwNjZhZmIyYTAyNWEyYmMxIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiA9P1VURi04P3E/Rmxvcmlhbj0yMFNjaD1DMz1CQ2xsZXI/PSA8
-Zmxvcmlhbi5zY2h1ZWxsZXJAZ21haWwuY29tPgpEYXRlOiBUaHUsIDkgSnVuIDIwMTYgMjI6NTQ6
-NDMgKzAyMDAKU3ViamVjdDogW1BBVENIXSBmaXJzdCBzdXBwb3J0IGZvciBpbm90aWZ5CgotLS0K
-IGdpdGsgfCA1OSArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKwogMSBmaWxlIGNoYW5nZWQsIDU5IGluc2VydGlvbnMoKykKCmRpZmYgLS1n
-aXQgYS9naXRrIGIvZ2l0awppbmRleCA4MDVhMWM3Li42ZTJlYWQyIDEwMDc1NQotLS0gYS9naXRr
-CisrKyBiL2dpdGsKQEAgLTgsNiArOCwxMiBAQCBleGVjIHdpc2ggIiQwIiAtLSAiJEAiCiAjIGVp
-dGhlciB2ZXJzaW9uIDIsIG9yIChhdCB5b3VyIG9wdGlvbikgYW55IGxhdGVyIHZlcnNpb24uCiAK
-IHBhY2thZ2UgcmVxdWlyZSBUawordHJ5IHsKKyAgICBwYWNrYWdlIHJlcXVpcmUgaW5vdGlmeQor
-ICAgIHNldCB3ZV9oYXZlX2lub3RpZnkgdHJ1ZQorfSBvbiBlcnJvciB7ZW19IHsKKyAgICBzZXQg
-d2VfaGF2ZV9pbm90aWZ5IGZhbHNlCit9CiAKIHByb2MgaGFzd29ya3RyZWUge30gewogICAgIHJl
-dHVybiBbZXhwciB7W2V4ZWMgZ2l0IHJldi1wYXJzZSAtLWlzLWJhcmUtcmVwb3NpdG9yeV0gPT0g
-ImZhbHNlIiAmJgpAQCAtMTIzNjMsNiArMTIzNjksNTkgQEAgaWYgeyRpID49IFtsbGVuZ3RoICRh
-cmd2XSAmJiAkcmV2dHJlZWFyZ3MgbmUge319IHsKICAgICB9CiB9CiAKK3Byb2MgaW5vdGlmeV9o
-YW5kbGVyIHsgZmQgfSB7CisgICAgc2V0IGV2ZW50cyBbaW5vdGlmeV93YXRjaCByZWFkXQorICAg
-IHNldCB3YXRjaF9pbmZvIFtpbm90aWZ5X3dhdGNoIGluZm9dCisgICAgc2V0IHVwZGF0ZV92aWV3
-IGZhbHNlCisKKyAgICBmb3JlYWNoIHtldmVudH0gJGV2ZW50cyB7CisgICAgICAgIHNldCBjdXJy
-ZW50X3dhdGNoaWQgW2RpY3QgZ2V0ICRldmVudCB3YXRjaGlkXQorICAgICAgICBzZXQgZmxhZ3Mg
-W2RpY3QgZ2V0ICRldmVudCBmbGFnc10KKyAgICAgICAgc2V0IGV2ZW50X2ZpbGVuYW1lIFtkaWN0
-IGdldCAkZXZlbnQgZmlsZW5hbWVdCisKKyAgICAgICAgZm9yZWFjaCB7cGF0aCB3YXRjaGlkIHdh
-dGNoX2ZsYWdzfSAkd2F0Y2hfaW5mbyB7CisgICAgICAgICAgICBpZiB7JHdhdGNoaWQgZXEgJGN1
-cnJlbnRfd2F0Y2hpZH0geworICAgICAgICAgICAgICAgIHNldCB3YXRjaF9wYXRoICRwYXRoCisg
-ICAgICAgICAgICB9CisgICAgICAgIH0KKworICAgICAgICBzZXQgZnVsbF9maWxlbmFtZSBbZmls
-ZSBqb2luICR3YXRjaF9wYXRoICRldmVudF9maWxlbmFtZV0KKworIyAgICAgICAgcmVtb3ZlIGRv
-ZXMgbm90IHNlZW0gdG8gd29yaworIyAgICAgICAgaWYgeyRmbGFncyBlcSAicyJ9IHsKKyMgICAg
-ICAgICAgICBwdXRzICJSZW1vdmUgd2F0Y2ggJGZ1bGxfZmlsZW5hbWUiCisjICAgICAgICAgICAg
-c2V0IHdkIFtpbm90aWZ5X3dhdGNoIHJlbW92ZSAkZnVsbF9maWxlbmFtZV0KKyMgICAgICAgIH0K
-KworICAgICAgICBpZiB7JGZsYWdzIGVxICJuRCJ9IHsKKyAgICAgICAgICAgIHNldCB3ZCBbaW5v
-dGlmeV93YXRjaCBhZGQgJGZ1bGxfZmlsZW5hbWUgIm53ZHMiXQorICAgICAgICB9CisgICAgICAg
-IGlmIHshW3N0cmluZyBtYXRjaCAqLmxvY2sgJGV2ZW50X2ZpbGVuYW1lXX0geworICAgICAgICAg
-ICAgc2V0IHVwZGF0ZV92aWV3IHRydWUKKyAgICAgICAgfQorICAgIH0KKworICAgICNyZWxvYWRj
-b21taXRzIG9yIHVwZGF0ZWNvbW1pdHMgLSBkZXBlbmRpbmcgb24gZmlsZSBhbmQgb3BlcmF0aW9u
-PworICAgIGlmIHskdXBkYXRlX3ZpZXd9IHsKKyAgICAgICAgdXBkYXRlY29tbWl0cworICAgIH0K
-K30KKworcHJvYyB3YXRjaF9yZWN1cnNpdmUgeyBkaXIgfSB7CisgICAgaW5vdGlmeV93YXRjaCBh
-ZGQgJGRpciAibndhQ21NZHMiCisKKyAgICBmb3JlYWNoIGkgW2dsb2IgLW5vY29tcGxhaW4gLWRp
-ciAkZGlyICpdIHsKKyAgICAgICAgaWYge1tmaWxlIHR5cGUgJGldIGVxIHtkaXJlY3Rvcnl9fSB7
-CisgICAgICAgICAgICB3YXRjaF9yZWN1cnNpdmUgJGkKKyAgICAgICAgfQorICAgIH0KK30KKwor
-aWYgeyAkd2VfaGF2ZV9pbm90aWZ5IH0geworICAgIHNldCBmZCBbaW5vdGlmeSBjcmVhdGUgImlu
-b3RpZnlfd2F0Y2giICI6Omlub3RpZnlfaGFuZGxlciJdCisgICAgd2F0Y2hfcmVjdXJzaXZlICRn
-aXRkaXIKK30KKwogc2V0IG51bGxpZCAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAw
-MDAwMDAwMCIKIHNldCBudWxsaWQyICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAw
-MDAwMDAxIgogc2V0IG51bGxmaWxlICIvZGV2L251bGwiCi0tIAoyLjcuNAoK
---089e0149359e6fafa90534dee10e--
+>  .gitignore | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/.gitignore b/.gitignore
+> index 05cb58a..13c7403 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -219,3 +219,4 @@
+>  *.pdb
+>  /Debug/
+>  /Release/
+> +*~
