@@ -1,83 +1,106 @@
-From: Lars Vogel <lars.vogel@gmail.com>
-Subject: [PATCH] Use "working tree" instead of "working directory" for git status
-Date: Thu,  9 Jun 2016 20:19:30 +0200
-Message-ID: <1465496370-11664-1-git-send-email-Lars.Vogel@vogella.com>
-Cc: Lars Vogel <Lars.Vogel@vogella.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 09 20:21:43 2016
+From: Lars Vogel <lars.vogel@vogella.com>
+Subject: Re: [PATCH] Use "working tree" instead of "working directory" for git status
+Date: Thu, 9 Jun 2016 20:21:03 +0200
+Message-ID: <CACA4a_Gzw5OXRc-ZaP78KOWW7nWzyN7KfWf_Gq_7vr+1HC-g0w@mail.gmail.com>
+References: <1465494374-10417-1-git-send-email-Lars.Vogel@vogella.com>
+	<CAPig+cR6j=L5P_i=D_6Q8Dfmu0jew9QDnRQTXjCJYQ9AUszz1g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Lars Vogel <lars.vogel@gmail.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 20:23:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bB4ZX-0004dg-MF
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 20:20:52 +0200
+	id 1bB4c5-0006pW-W4
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 20:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932907AbcFISUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2016 14:20:20 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34047 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932249AbcFISUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2016 14:20:18 -0400
-Received: by mail-wm0-f68.google.com with SMTP id n184so12658644wmn.1
-        for <git@vger.kernel.org>; Thu, 09 Jun 2016 11:20:17 -0700 (PDT)
+	id S933162AbcFISVH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jun 2016 14:21:07 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:36733 "EHLO
+	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932996AbcFISVF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2016 14:21:05 -0400
+Received: by mail-wm0-f47.google.com with SMTP id n184so236811822wmn.1
+        for <git@vger.kernel.org>; Thu, 09 Jun 2016 11:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=3BOaM2gtFQcP51vforMBe06mj6tSRpZYV24NoZ+SfHo=;
-        b=Tdk++jhdOnnSrlThAJoPFNIseCSueY7PmaWr4K46j5BS35IiXD5SGtfwnvlhM8iK4i
-         JDkMRXyxmNOkH1E7/S7DKpNrD03Y9y2QFDMEWyT+zi0z50vzqp7hrbWWQGN6Cho2nIDW
-         2I6E+16cchoq9XzOcWjb3XaXhZrapv+EOY8jVmarSwrboxmnGhK7uyOxZWZAZP4zi/ZI
-         1LpftNdAELbP7LbY+ROGYSa1etMynJdg3/qj1IFZdwGs5Qely6arteb/Z22SkLPv67if
-         nTe7pR8O5BUmxhxDdZo7ZeRxCqQ7bqI+0H0HJYO1FOwquN9OYZSwnON/y8XiE7i+57n+
-         R51w==
+        d=vogella-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=H6bvWzxOJ+s30UVm5dMr/nGbsbYVhhRQ/UFmVUAq+Lk=;
+        b=0bqjhMdNNodr0U7PqmOaWtHYVleyPZ5+OkgYvJrA6tpHN8KilntO4a3daecSg1LHi6
+         haA3TxuAwGNmYoRadKMmYaYyaxR8+R2glotpUL6I18pUU7YgX0tscqoVf0Mi89DygfJW
+         NXG+B+Y6mnDVd5D+Tuvsn6ePDsdOFslgcoYU4zYDRA7H4pyJyHP+NKz16ceFawIphk9X
+         CV6kTlX5zXrEDz3HjRAMWH0PzMJPK4LkbRtt1ZFIGHYHmj3KjVmzVBNDJ1pbAKiTRMti
+         py97teZV3PuuH/oZIIDlvM8TLuk2Ro4ysjG0uKRS5KszmpKg9uv6aMW6qlnZV/2uoITv
+         N29A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=3BOaM2gtFQcP51vforMBe06mj6tSRpZYV24NoZ+SfHo=;
-        b=IMfEBcTcG/OPVgpVpRTOHiOutdT3EdRPGt8imSWeoVf2wjsMHXrBMBMUBzrDsERdN1
-         hd9gI/9TyUd8wJUJMKHMEfGV5pxbENA5j7l7zsbJNsuCE9Ne5wcUqKq6ckb/8aP6pVv0
-         Xity6TggohBWqgtoto0EnqilvDwrjqLF4rD7ljbyYVDels36ZSx+MbVgwsdt+nMxqF0D
-         CpRgnzBEfpRCx903dUrnWqAA6C0T27VqFWht4YXUqDPF60H3qFPjDOY2lAP4h0mtPeH1
-         XOqZ5AkBJ6FHDewMxZMX91TYPQzarryW/rRZyYE+DhBW1H/LFFvo8D9MQ15046aIU4z5
-         bYQA==
-X-Gm-Message-State: ALyK8tJa6rVvAzE2LeN5zzSMi83lEkfVVZ/gI6lJzyfny7yBfgBJLwJlsI1CHk/Kx9d6aA==
-X-Received: by 10.194.123.170 with SMTP id mb10mr10888633wjb.39.1465496416372;
-        Thu, 09 Jun 2016 11:20:16 -0700 (PDT)
-Received: from Frodo.railnet.train ([88.128.80.6])
-        by smtp.gmail.com with ESMTPSA id y6sm31570051wmy.8.2016.06.09.11.20.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 09 Jun 2016 11:20:14 -0700 (PDT)
-X-Google-Original-From: Lars Vogel <Lars.Vogel@vogella.com>
-X-Mailer: git-send-email 2.8.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=H6bvWzxOJ+s30UVm5dMr/nGbsbYVhhRQ/UFmVUAq+Lk=;
+        b=Jnrbqdip8Vo7gn145AQJCYmAvzXiAHNSLVZr8sDhIml2Adw3wCdyuI8u0onqQE13hW
+         1E1DM5Mm3sCxjFwwzg8aO7hUE8w/gwMuZ3QE5qu0hxgTOQbDn9LRtsZfFrxlQYcKbLEl
+         in+ugvQQeGugGsUW/tBPkU+bMQWbNYkH+AKwSaggIsAt2Bl3fJwtcgqrAV4w+ijkd1sX
+         3/SDetEaklOU7Hrut78Z0XYYlf/QNz/kheXbdoaEIrYCAf18EqNKi7kUpYLEHHXc5KAF
+         XC67Wqb7dKYlYyZQbh55JMMf8hEqC4IXmWlx5nio/02ZqSWZ4FqS9Zx6W/EV/wXCkxKZ
+         E4Jg==
+X-Gm-Message-State: ALyK8tKTghjUV3m9PqyKut7lqnsSg8tR2uF7MLUoZUG7qsg5ioLHq8uYzW/eVY0TVsSQlAWcNbnG5CnlPk1d5YtN
+X-Received: by 10.194.41.35 with SMTP id c3mr10409507wjl.91.1465496463554;
+ Thu, 09 Jun 2016 11:21:03 -0700 (PDT)
+Received: by 10.28.136.65 with HTTP; Thu, 9 Jun 2016 11:21:03 -0700 (PDT)
+In-Reply-To: <CAPig+cR6j=L5P_i=D_6Q8Dfmu0jew9QDnRQTXjCJYQ9AUszz1g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296913>
 
-Working directory can be easily confused with the current directory.
-In one of my patches I already updated the usage of working directory
-with working tree for the man page but I noticed that git status also
-uses this incorrect term.
+Thanks updated patch on its way.
 
-Signed-off-by: Lars Vogel <Lars.Vogel@vogella.com>
----
- wt-status.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Thu, Jun 9, 2016 at 7:55 PM, Eric Sunshine <sunshine@sunshineco.com>=
+ wrote:
+> On Thu, Jun 9, 2016 at 1:46 PM, Lars Vogel <lars.vogel@gmail.com> wro=
+te:
+>> Working directory can be easily confused with the current directory.
+>> In one of my patches I already updated the usage of working director=
+y
+>> with working tree for the man page but I noticed that git status als=
+o
+>> uses this incorrect term.
+>
+> Missing sign-off.
+>
+>> ---
+>>  po/bg.po    | 2 +-
+>>  po/ca.po    | 2 +-
+>>  po/de.po    | 2 +-
+>>  po/fr.po    | 2 +-
+>>  po/git.pot  | 2 +-
+>>  po/ko.po    | 2 +-
+>>  po/ru.po    | 2 +-
+>>  po/sv.po    | 2 +-
+>>  po/vi.po    | 2 +-
+>>  po/zh_CN.po | 2 +-
+>>  wt-status.c | 2 +-
+>
+> Don't bother updating the .po files; that's the job of the
+> translators. Your patch should touch only wt-status.c.
+>
+>>  11 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index 4f27bd6..4ce4e35 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1554,7 +1554,7 @@ void wt_status_print(struct wt_status *s)
- 			else
- 				printf(_("nothing to commit\n"));
- 		} else
--			printf(_("nothing to commit, working directory clean\n"));
-+			printf(_("nothing to commit, working tree clean\n"));
- 	}
- }
- 
--- 
-2.8.1
+
+
+--=20
+Eclipse Platform UI and e4 project co-lead
+CEO vogella GmbH
+
+Haindaalwisch 17a, 22395 Hamburg
+Amtsgericht Hamburg: HRB 127058
+Gesch=C3=A4ftsf=C3=BChrer: Lars Vogel, Jennifer Nerlich de Vogel
+USt-IdNr.: DE284122352
+=46ax (040) 5247 6322, Email: lars.vogel@vogella.com, Web: http://www.v=
+ogella.com
