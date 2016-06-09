@@ -1,71 +1,90 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH] send-pack: use buffered I/O to talk to pack-objects
-Date: Thu, 9 Jun 2016 23:40:08 +0100
-Message-ID: <5759F048.7040302@ramsayjones.plus.com>
-References: <20160606203901.GA7667@Messiaen>
- <xmqqfusquedk.fsf@gitster.mtv.corp.google.com>
- <20160606225847.GA22756@sigill.intra.peff.net>
- <xmqqbn3dvr22.fsf@gitster.mtv.corp.google.com>
- <20160607090653.GA4665@Messiaen> <575845D9.2010604@alum.mit.edu>
- <20160608191918.GB19572@sigill.intra.peff.net>
- <20160608194216.GA3731@sigill.intra.peff.net> <vpqwplypnpr.fsf@anie.imag.fr>
- <57597E93.9040808@ramsayjones.plus.com>
- <20160609171246.GA9016@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Adds *~ to the .gitignore
+Date: Thu, 09 Jun 2016 15:48:12 -0700
+Message-ID: <xmqqd1nqges3.fsf@gitster.mtv.corp.google.com>
+References: <1465506629-16577-1-git-send-email-Lars.Vogel@vogella.com>
+	<xmqqh9d2girw.fsf@gitster.mtv.corp.google.com>
+	<20160609213809.GA23059@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	antoine.queru@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr,
-	Johannes.Schindelin@gmx.de, mh@glandium.org
+Content-Type: text/plain
+Cc: Lars Vogel <lars.vogel@gmail.com>, git@vger.kernel.org,
+	Lars Vogel <Lars.Vogel@vogella.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 10 00:40:24 2016
+X-From: git-owner@vger.kernel.org Fri Jun 10 00:48:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bB8cg-0005B4-9Y
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 00:40:22 +0200
+	id 1bB8kO-0002dl-3u
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 00:48:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751957AbcFIWkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2016 18:40:16 -0400
-Received: from avasout01.plus.net ([84.93.230.227]:41866 "EHLO
-	avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751248AbcFIWkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2016 18:40:14 -0400
-Received: from [10.0.2.15] ([84.92.139.254])
-	by avasout01 with smtp
-	id 4mg91t0065VX2mk01mgAYJ; Thu, 09 Jun 2016 23:40:12 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=bsGxfxui c=1 sm=1 tr=0
- a=RCQFcU9wfaUQolwYLdiqXg==:117 a=RCQFcU9wfaUQolwYLdiqXg==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=rDzLybChu7nBL-VEH24A:9 a=QEXdDO2ut3YA:10 a=gzujYqFzc2UA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-In-Reply-To: <20160609171246.GA9016@sigill.intra.peff.net>
+	id S1752081AbcFIWsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2016 18:48:16 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60408 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751331AbcFIWsP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2016 18:48:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 65571238F2;
+	Thu,  9 Jun 2016 18:48:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OPu1CBDucOjgPUoTMbNhgTz2N+w=; b=JDhK/0
+	pMY7d6IsiQGIpJsYr9hyy8zLKtHxxoLIrAsdQeBhFWHl9hn5odwojONTLxp9Kxny
+	YTjgQBK+sIcYDMC/fPwBk+W3TOvUJ7wOAMAu6RwojJG0jippvmcH5lDjJSX8negX
+	Kii7P+t6Yfyz2PY5e059SZEGN3zKIdDixKbYU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TqdfieaXoicZI57YGWk0o6NzLl/8aiVk
+	Wz9SeOwYcgkSkeoDeUWs893lpeZkel43nN9WcXxlg5wUhmqNHp6vKUXxcjhf+nKl
+	cMFNqZJcmMfRMCMjg4aU/9mp+ErHOcHU32ZGRW0GNEnsXm63KHuezXPshfrbmAKd
+	CVnUYKzH2Yc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5D0E5238F1;
+	Thu,  9 Jun 2016 18:48:14 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D8112238F0;
+	Thu,  9 Jun 2016 18:48:13 -0400 (EDT)
+In-Reply-To: <20160609213809.GA23059@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 9 Jun 2016 17:38:09 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 3FA19CB4-2E94-11E6-8E9F-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296937>
 
+Jeff King <peff@peff.net> writes:
 
+> On Thu, Jun 09, 2016 at 02:21:55PM -0700, Junio C Hamano wrote:
+>
+>> Lars Vogel <lars.vogel@gmail.com> writes:
+>> 
+>> > This helps contributors (like me) using editors which automatically create ~ copies of the changed data
+>> >
+>> > Signed-off-by: Lars Vogel <Lars.Vogel@vogella.com>
+>> > ---
+>> 
+>> We deliberately left this out and kept it out of .gitignore for the
+>> past 10 years.  The justification was that use of Emacs is merely a
+>> personal choice that is better served by .git/info/excludes; we do
+>> not add .swp for vim users, either, for the same reason.
+>
+> I think a better choice than .git/info/excludes these days is
+> ~/.config/git/ignore. Then it is associated with the user, not the
+> project (which seems a better fit, since it is the user who is picking
+> the editor; this should apply across all projects).
 
-On 09/06/16 18:12, Jeff King wrote:
-> On Thu, Jun 09, 2016 at 03:34:59PM +0100, Ramsay Jones wrote:
-> 
->> Just FYI, this patch removes the last use of write_or_whine() - should it
->> be removed?
-> 
-> That sounds reasonable. Want to do a patch on top?
+Yes, that is a better alternative you can use these days, of course.
 
-OK, will do.
+Thanks.
 
-ATB,
-Ramsay Jones
+As I said, however, I could support a move to add some selected
+small number of common file extensions, as long as we have some
+(social) mechanism to avoid churning this file every time somebody
+new comes and complains their favourite editor or other tools are
+not supported.
