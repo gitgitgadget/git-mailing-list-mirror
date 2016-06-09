@@ -1,96 +1,113 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH] send-pack: use buffered I/O to talk to pack-objects
-Date: Thu, 9 Jun 2016 15:34:59 +0100
-Message-ID: <57597E93.9040808@ramsayjones.plus.com>
-References: <20160606151340.22424-1-william.duclot@ensimag.grenoble-inp.fr>
- <20160606151340.22424-4-william.duclot@ensimag.grenoble-inp.fr>
- <xmqqvb1mxmk4.fsf@gitster.mtv.corp.google.com>
- <20160606203901.GA7667@Messiaen>
- <xmqqfusquedk.fsf@gitster.mtv.corp.google.com>
- <20160606225847.GA22756@sigill.intra.peff.net>
- <xmqqbn3dvr22.fsf@gitster.mtv.corp.google.com>
- <20160607090653.GA4665@Messiaen> <575845D9.2010604@alum.mit.edu>
- <20160608191918.GB19572@sigill.intra.peff.net>
- <20160608194216.GA3731@sigill.intra.peff.net> <vpqwplypnpr.fsf@anie.imag.fr>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 17/38] resolve_gitlink_ref(): avoid memory allocation in
+ many cases
+Date: Thu, 9 Jun 2016 16:37:14 +0200
+Message-ID: <57597F1A.3060400@alum.mit.edu>
+References: <cover.1464983301.git.mhagger@alum.mit.edu>
+ <c126a2bf5e1f48faf48b3b4ee7cc599313a76b99.1464983301.git.mhagger@alum.mit.edu>
+ <xmqq37oosya6.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	antoine.queru@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr,
-	Johannes.Schindelin@gmx.de, mh@glandium.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 09 16:36:47 2016
+Cc: David Turner <dturner@twopensource.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 16:37:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bB14a-00034w-AB
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 16:36:40 +0200
+	id 1bB15Q-0003r1-29
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 16:37:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546AbcFIOfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2016 10:35:16 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:42150 "EHLO
-	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752014AbcFIOfN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2016 10:35:13 -0400
-Received: from [10.0.2.15] ([84.92.139.254])
-	by avasout04 with smtp
-	id 4eb01t00D5VX2mk01eb1o3; Thu, 09 Jun 2016 15:35:06 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=K//fZHiI c=1 sm=1 tr=0
- a=RCQFcU9wfaUQolwYLdiqXg==:117 a=RCQFcU9wfaUQolwYLdiqXg==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=N659UExz7-8A:10
- a=PKzvZo6CAAAA:8 a=0Z7gmsLigoNx275oVM4A:9 a=pILNOxqGKmIA:10
- a=q92HNjYiIAC_jH7JDaYf:22
-X-AUTH: ramsayjones@:2500
+	id S1752845AbcFIOhY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2016 10:37:24 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:45836 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752835AbcFIOhV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2016 10:37:21 -0400
+X-AuditID: 12074412-51bff700000009f7-be-57597f1daf62
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 87.46.02551.D1F79575; Thu,  9 Jun 2016 10:37:17 -0400 (EDT)
+Received: from [192.168.69.130] (p508EAACA.dip0.t-ipconnect.de [80.142.170.202])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u59EbEki006803
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 9 Jun 2016 10:37:15 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-In-Reply-To: <vpqwplypnpr.fsf@anie.imag.fr>
+ Icedove/38.8.0
+In-Reply-To: <xmqq37oosya6.fsf@gitster.mtv.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrBKsWRmVeSWpSXmKPExsUixO6iqCtbHxlucHujpMX8TScYLbqudDNZ
+	NPReYbbonvKW0eJHSw+zxcyr1hZn3jQyOrB77Jx1l93jWe8eRo+Ll5Q99i/dxuax+IGXx4Ln
+	99k9Pm+SC2CP4rZJSiwpC85Mz9O3S+DOWPh5E3tBB0/F+j0rmBoYN3N2MXJySAiYSGy7M5up
+	i5GLQ0hgK6PE49nfGSGc80wSB++fYQSpEhaIlLj2vIcFxBYRUJOY2HaIBaJoJ6NE19cGdhCH
+	WWAWk0TH1otgHWwCuhKLepqZQGxeAW2JT+vWgcVZBFQkrlx/BRYXFQiROL9uKytEjaDEyZlP
+	gKZycHAKWEv82FQEEmYW0JPYcf0XK4QtL7H97RzmCYz8s5B0zEJSNgtJ2QJG5lWMcok5pbm6
+	uYmZOcWpybrFyYl5ealFumZ6uZkleqkppZsYISEvtINx/Um5Q4wCHIxKPLwaKRHhQqyJZcWV
+	uYcYJTmYlER5vUsiw4X4kvJTKjMSizPii0pzUosPMUpwMCuJ8ErUAuV4UxIrq1KL8mFS0hws
+	SuK8Pxer+wkJpCeWpGanphakFsFkZTg4lCR4M0EaBYtS01Mr0jJzShDSTBycIMO5pESKU/NS
+	UosSS0sy4kFRGV8MjEuQFA/Q3ktge4sLEnOBohCtpxh1OY7sv7eWSYglLz8vVUqcVx+kSACk
+	KKM0D24FLMG9YhQH+liY9wtIFQ8wOcJNegW0hAloyfIj4SBLShIRUlINjBNv/I6flHHztdtU
+	6fMPikyCBFcXinw5djP8Pv/S9UeUhT7KK1nLTXldI3lw+ZxD9g9qdlTuX1zQZObj 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296889>
 
-
-
-On 09/06/16 13:10, Matthieu Moy wrote:
-> Jeff King <peff@peff.net> writes:
+On 06/07/2016 07:29 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
 > 
->> --- a/send-pack.c
->> +++ b/send-pack.c
->> @@ -36,18 +36,15 @@ int option_parse_push_signed(const struct option *opt,
->>  	die("bad %s argument: %s", opt->long_name, arg);
->>  }
->>  
->> -static int feed_object(const unsigned char *sha1, int fd, int negative)
->> +static void feed_object(const unsigned char *sha1, FILE *fh, int negative)
+>> If we don't have to strip trailing '/' from the submodule path, then
+>> don't allocate and copy the submodule name.
+> 
+> Makes sense.
+> 
+>>  int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sha1)
 >>  {
->> -	char buf[42];
->> -
->>  	if (negative && !has_sha1_file(sha1))
->> -		return 1;
->> +		return;
-> [...]
->> @@ -97,21 +95,22 @@ static int pack_objects(int fd, struct ref *refs, struct sha1_array *extra, stru
-> [...]
->>  	for (i = 0; i < extra->nr; i++)
->> -		if (!feed_object(extra->sha1[i], po.in, 1))
->> -			break;
->> +		feed_object(extra->sha1[i], po_in, 1);
+>> -	int len = strlen(path);
+>> -	struct strbuf submodule = STRBUF_INIT;
+>> +	size_t len, orig_len = strlen(path);
+>>  	struct ref_store *refs;
+>>  	int flags;
+>>  
+>> -	while (len && path[len-1] == '/')
+>> -		len--;
+>> +	for (len = orig_len; len && path[len - 1] == '/'; len--)
+>> +		;
+>> +
+>>  	if (!len)
+>>  		return -1;
+>>  
+>> -	strbuf_add(&submodule, path, len);
+>> -	refs = get_ref_store(submodule.buf);
+>> -	strbuf_release(&submodule);
+>> +	if (len == orig_len) {
 > 
-> I may have missed the obvious, but doesn't this change the behavior when
-> "negative && !has_sha1_file(sha1)" happens? I understand that you don't
-> need write_or_whine anymore, but don't understand how you get rid of the
-> "return 1" here.
+> You can keep the original while (), without introducing orig_len,
+> and check if path[len] is NUL, which would probably be an end result
+> that is easier to read.
 
-Just FYI, this patch removes the last use of write_or_whine() - should it
-be removed?
+OK, I'll change it.
 
-ATB,
-Ramsay Jones
+>> +		refs = get_ref_store(path);
+>> +	} else {
+>> +		char *stripped = xmemdupz(path, len);
+>> +
+>> +		refs = get_ref_store(stripped);
+>> +		free(stripped);
+> 
+> An alternative might be to add get_ref_store_counted() that takes
+> (path, len) instead of NUL-terminated path, which does not look too
+> bad looking at the state after applying all 38 patches.
+
+This slash-stripping code was introduced in 2007 (0ebde32c87) and it's
+not my priority to improve it as part of this patch series.
+
+Michael
