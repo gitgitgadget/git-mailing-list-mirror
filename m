@@ -1,131 +1,95 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v4 5/6] send-email: --in-reply-to=<file> populate header fields
-Date: Thu, 09 Jun 2016 11:45:03 +0200
-Message-ID: <vpqoa7asnkw.fsf@anie.imag.fr>
-References: <20160608130142.29879-1-samuel.groot@grenoble-inp.org>
-	<20160608130736.32163-1-samuel.groot@grenoble-inp.org>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v2] builtin/commit.c: memoize git-path for COMMIT_EDITMSG
+Date: Thu, 9 Jun 2016 15:24:54 +0530
+Message-ID: <CAFZEwPPRirGKqA4=qY+TrSmkGomZVZjLqOG-ZKwciK8hLhhdHg@mail.gmail.com>
+References: <1464027390-1512-1-git-send-email-pranit.bauva@gmail.com>
+ <20160524191950.21889-1-pranit.bauva@gmail.com> <CAFZEwPOZSU315oCJSdawtacPmgZobCnkkguTnSy1_V7x_n09kw@mail.gmail.com>
+ <20160609065805.GA19015@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, tom.russello@grenoble-inp.org,
-	erwan.mathoniere@grenoble-inp.org, jordan.de-gea@grenoble-inp.org,
-	gitster@pobox.com, aaron@schrab.com, e@80x24.org
-To: Samuel GROOT <samuel.groot@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Thu Jun 09 11:46:00 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 09 11:55:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAwXG-0002JT-NA
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 11:45:59 +0200
+	id 1bAwg8-0007yu-94
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 11:55:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753518AbcFIJpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2016 05:45:43 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:34275 "EHLO mx2.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423246AbcFIJp3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2016 05:45:29 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u599j2ar004343
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 9 Jun 2016 11:45:03 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u599j3ua032137;
-	Thu, 9 Jun 2016 11:45:03 +0200
-In-Reply-To: <20160608130736.32163-1-samuel.groot@grenoble-inp.org> (Samuel
-	GROOT's message of "Wed, 8 Jun 2016 15:07:36 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Thu, 09 Jun 2016 11:45:05 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u599j2ar004343
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1466070308.71506@h/C7HStAkdIgA2Rvw3M4YA
+	id S1751062AbcFIJy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2016 05:54:58 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:34149 "EHLO
+	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750789AbcFIJy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2016 05:54:56 -0400
+Received: by mail-yw0-f196.google.com with SMTP id j74so4128018ywg.1
+        for <git@vger.kernel.org>; Thu, 09 Jun 2016 02:54:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Ve/NjPmVhnqY88rU7yNTIXPTSSxKZ8TXtNbOJqzqm0E=;
+        b=tBua1Hz9jB6CNoxjZt3xsQKesIGj/WLVkXmQYFTHmWM/73IJmCuijmN+ne6+Cfu1tk
+         YxOnACiyf3e/9X7Je3MljI3JAtQhd+N3it9e/rfKffP0ir3fQcOd6b8dbZhfMeUPHoN/
+         /1T6CBaFp6vV93kIs5rawMBzHuNcd+Stlt0ZKrQU9iPSqW63CJIdY8xk1R4SaKyPGTmK
+         N/X4BzWKVVXv2oPhO45BExRZ8IY9c00RqX9ZkuZjxEF8VG9YjI4QA10KL+8Nlv3sdH8+
+         58OsqFwpODARcnsdNnasV/0F1GyHbs6MnKHRgpGB+gzw/na59r+SwVQyAaSxURUm74KY
+         m6HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Ve/NjPmVhnqY88rU7yNTIXPTSSxKZ8TXtNbOJqzqm0E=;
+        b=E1O+hr3W9q3sGp0sPwf3odvULgCFBYEHiK2bdXkEr7Ut3ONCOqvAfvmGr+YGhtqEE4
+         0PadhqXaJaG/ukUhAEci815xq36T4qJ6qjmSW0Aegi61V2xePT4GQHcs2yAMpX4q5A9i
+         vwh9fEJkCVfVvQ/BErZBX+lKFMgABvDjJOP3GNiX347zIb5O5IAkZ32X1/dyLd3P8l19
+         QZq17mRvfVWpK+7SgKct6XnrKRpKeGttj228U5LylRuwmN/ZQmeB7Y33Pu2Blesnaz80
+         AfXaSnilYPn5j9L58gtTR/g1SuSeAIXNq67CsjwHtAXWWbXTGKM3iMEbpZn69Fcu9/5W
+         C6Rw==
+X-Gm-Message-State: ALyK8tLrHFgl3AIR4o8qgMolTHv8zVWlGO555BcBWzfBE5IYRwRujXMqhuvvYPMcymXPbwHFlNQgqY6lIpsy/Q==
+X-Received: by 10.129.164.145 with SMTP id b139mr5780582ywh.171.1465466095265;
+ Thu, 09 Jun 2016 02:54:55 -0700 (PDT)
+Received: by 10.129.124.132 with HTTP; Thu, 9 Jun 2016 02:54:54 -0700 (PDT)
+In-Reply-To: <20160609065805.GA19015@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296878>
 
-Samuel GROOT <samuel.groot@grenoble-inp.org> writes:
+Hey Jeff,
 
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index edbba3a..21776f0 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -84,13 +84,16 @@ See the CONFIGURATION section for 'sendemail.multiEdit'.
->  	the value of GIT_AUTHOR_IDENT, or GIT_COMMITTER_IDENT if that is not
->  	set, as returned by "git var -l".
->  
-> ---in-reply-to=<identifier>::
-> +--in-reply-to=<Message-Id|email_file>::
->  	Make the first mail (or all the mails with `--no-thread`) appear as a
-> -	reply to the given Message-Id, which avoids breaking threads to
-> -	provide a new patch series.
-> +	reply to the given Message-Id (given directly by argument or via the email
-> +	file), which avoids breaking threads to provide a new patch series.
->  	The second and subsequent emails will be sent as replies according to
->  	the `--[no]-chain-reply-to` setting.
->  +
-> +Furthermore, if the argument is an email file, parse it and populate header
-> +fields appropriately for the reply.
+On Thu, Jun 9, 2016 at 12:28 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Jun 07, 2016 at 08:25:17PM +0530, Pranit Bauva wrote:
+>
+>> On Wed, May 25, 2016 at 12:49 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> > This is a follow up commit for f932729c (memoize common git-path
+>> > "constant" files, 10-Aug-2015).
+>> >
+>> > The many function calls to git_path() are replaced by
+>> > git_path_commit_editmsg() and which thus eliminates the need to repeatedly
+>> > compute the location of "COMMIT_EDITMSG".
+>> >
+>> > Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+>> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+>> > Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+>> > ---
+>> [...]
+>> Anyone any comments?
+>
+> Looks good to me. You may want to re-post without the quoting to make it
+> easier for the maintainer to pick up, and feel free to add my:
+>
+>   Reviewed-by: Jeff King <peff@peff.net>
 
-"populate header fields appropriately" would seem obscure to someone not
-having followed this converation. At least s/fields/To: and Cc: fields/.
+Sure I could re-post it. Thanks for your tag! :)
 
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -55,6 +55,7 @@ git send-email --dump-aliases
->      --[no-]bcc              <str>  * Email Bcc:
->      --subject               <str>  * Email "Subject:"
->      --in-reply-to           <str>  * Email "In-Reply-To:"
-> +    --in-reply-to          <file>  * Populate header fields appropriately.
-
-Likewise. To avoid an overly long line, I'd write just "Populate
-To/Cc/In-reply-to".
-
-Probably <file> should be <email_file>.
-
-> +if ($initial_reply_to && -f $initial_reply_to) {
-> +	my $error = validate_patch($initial_reply_to);
-> +	die "fatal: $initial_reply_to: $error\nwarning: no patches were sent\n"
-> +		if $error;
-> +
-> +	open my $fh, "<", $initial_reply_to or die "can't open file $initial_reply_to";
-> +	my $mail = Git::parse_email($fh);
-> +	close $fh;
-> +
-> +	my $initial_sender = $sender || $repoauthor || $repocommitter || '';
-
-This is duplicated from the "if ($compose) { ... my $tpl_sender = ..." a
-bit later in the existing file. It would be better to get this "my
-$initial_sender = ..." out of your "if" and use $initial_sender directly
-later IMHO.
-
-Actually, $initial_sender does not seem to be a good variable name. It's
-not really "initial", right?
-
-> +	my $prefix_re = "";
-> +	my $subject_re = $mail->{"subject"}[0];
-> +	if ($subject_re =~ /^[^Re:]/) {
-> +		$prefix_re = "Re: ";
-> +	}
-> +	$initial_subject = $prefix_re . $subject_re;
-
-Why introduce $prefix_re. You can just
-
-	my $subject = $mail->{"subject"}[0];
-	if (...) {
-        	$subject = "Re: " . $subject;
-        }
-
-(preferably using sensible as '...' as noted by Junio ;-) ).
-
-In previous iterations of this series, you had issues with non-ascii
-characters in at least To: and Cc: fields (perhaps in the Subject field
-too?). Are they solved? I don't see any tests about it ...
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Regards,
+Pranit Bauva
