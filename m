@@ -1,100 +1,131 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 4/4] bundle v3: the beginning
-Date: Thu, 9 Jun 2016 15:53:26 +0700
-Message-ID: <CACsJy8BGV-AWwap9c2hOjXWMYxBLUirX8i20rS_=Vmci_SG_rw@mail.gmail.com>
-References: <1456950761-19759-1-git-send-email-gitster@pobox.com>
- <1456950761-19759-5-git-send-email-gitster@pobox.com> <CAP8UFD1xqRMFE2Wzntu=XevCyj+acGLEO-cTq1fqn+NMe3x0vg@mail.gmail.com>
- <CACsJy8Dr_Z886Jb-O8gbAv_vzBLicNH6bPPpKwb9HWZTKQ9muw@mail.gmail.com>
- <CAP8UFD3jPQFk2deSk5JXC3PTz5yWcvXJ4=Qjam5Qw6P9SrLzFQ@mail.gmail.com>
- <CACsJy8DB_17DZ7REBzicyA_GZCnvNkoYEzftjfyM72QVmEb_Vg@mail.gmail.com>
- <CAP8UFD2t=2wJ=1U1ctMYNuMSejBYLh2yeLU7ZfP5Q6KLxUApjQ@mail.gmail.com>
- <xmqqinxkpzur.fsf@gitster.mtv.corp.google.com> <20160607202351.GA5726@sigill.intra.peff.net>
- <CACsJy8CtsFFJPssDDBuL8TLoxi1f=734mjAjCUOr8Y63aD3xUA@mail.gmail.com> <20160608161958.GA30876@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v4 5/6] send-email: --in-reply-to=<file> populate header fields
+Date: Thu, 09 Jun 2016 11:45:03 +0200
+Message-ID: <vpqoa7asnkw.fsf@anie.imag.fr>
+References: <20160608130142.29879-1-samuel.groot@grenoble-inp.org>
+	<20160608130736.32163-1-samuel.groot@grenoble-inp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 09 10:54:11 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, tom.russello@grenoble-inp.org,
+	erwan.mathoniere@grenoble-inp.org, jordan.de-gea@grenoble-inp.org,
+	gitster@pobox.com, aaron@schrab.com, e@80x24.org
+To: Samuel GROOT <samuel.groot@grenoble-inp.org>
+X-From: git-owner@vger.kernel.org Thu Jun 09 11:46:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAvj9-0002wm-78
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 10:54:11 +0200
+	id 1bAwXG-0002JT-NA
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 11:45:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422668AbcFIIyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2016 04:54:04 -0400
-Received: from mail-it0-f45.google.com ([209.85.214.45]:34971 "EHLO
-	mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422628AbcFIIx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2016 04:53:58 -0400
-Received: by mail-it0-f45.google.com with SMTP id z189so148643225itg.0
-        for <git@vger.kernel.org>; Thu, 09 Jun 2016 01:53:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=YzAeP7JfGmwxlT8FRD7MclEJj/CcuUWXWL+V5NYO/Bo=;
-        b=C4eE/VcZT44a9dRx4blbCavxxs96uuTrNoSFHgkJ8nUZUbeOieRYsG4KjDnDaDRSXc
-         oT31jhQgTAF66FwNMb4tT2RvmWq+J0Goxt27J80MCFgbeJc/IAcQcN/t5JDfUXaUBNuA
-         apeeIZOUqSzJUZRcuQ40hZNbHwYxeLcSyqQrI37bjVadCIMG6OyrjmdSTNZWv3rcc5hs
-         uV+51zNmR5/n9Dfx1y/QtvL23ho/A0jZoa5zOKDunl3HawbX1GqzrO7ejObRUzNa53xm
-         2hIqKUvU0JXmDOh+la598VRkuCfCO65rdvcrEOX7guMOsqRdtjKLYjXJKevqw/evpicD
-         A1OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=YzAeP7JfGmwxlT8FRD7MclEJj/CcuUWXWL+V5NYO/Bo=;
-        b=jQVge8Nl0mYGo6J/ypXPd0YNX5V876sl6W8oxPJxv7z8JLtIuu5fZ6x++ts4jDKqFT
-         bla4FMbtZ7BI7fz/zGGNqAc5m5PnVlbW8j14TvxFNuJuRbWfadfBErgA26RaJDEfp+az
-         sN6VRRPnYNXzvbG6m0X+exrq6umC/he35IJ8w4SUQW9jd2i/K1Sa4Rcorrd6St98Sh5C
-         JvkjIdgIZrTFXVtFSDUEGAHKDy8eT+4I5wl+YVcJpPzh/BOEGkOnxn7390IZNnDkGQe4
-         7ctbkJl/RsknKQN+WT1ZFEDWy/vz2t6hn2HoM9GN3qixMD23uWu9nICWZs2GQZSQ+/+y
-         s52w==
-X-Gm-Message-State: ALyK8tI5EIJhOCoBR2zpQO1Fv1MRm4ipElBW7UJNKQalalRulJMMwuMhul6cEMFOYAtD08+Tp/NSmc2Tpqt66Q==
-X-Received: by 10.36.108.76 with SMTP id w73mr15833266itb.63.1465462436081;
- Thu, 09 Jun 2016 01:53:56 -0700 (PDT)
-Received: by 10.64.173.167 with HTTP; Thu, 9 Jun 2016 01:53:26 -0700 (PDT)
-In-Reply-To: <20160608161958.GA30876@sigill.intra.peff.net>
+	id S1753518AbcFIJpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2016 05:45:43 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:34275 "EHLO mx2.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1423246AbcFIJp3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2016 05:45:29 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u599j2ar004343
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 9 Jun 2016 11:45:03 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u599j3ua032137;
+	Thu, 9 Jun 2016 11:45:03 +0200
+In-Reply-To: <20160608130736.32163-1-samuel.groot@grenoble-inp.org> (Samuel
+	GROOT's message of "Wed, 8 Jun 2016 15:07:36 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Thu, 09 Jun 2016 11:45:05 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u599j2ar004343
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1466070308.71506@h/C7HStAkdIgA2Rvw3M4YA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296877>
 
-On Wed, Jun 8, 2016 at 11:19 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Jun 08, 2016 at 05:44:06PM +0700, Duy Nguyen wrote:
->
->> On Wed, Jun 8, 2016 at 3:23 AM, Jeff King <peff@peff.net> wrote:
->> > Because this "external odb" essentially acts as a git alternate, we
->> > would hit it only when we couldn't find an object through regular means.
->> > Git would then make the object available in the usual on-disk format
->> > (probably as a loose object).
->>
->> This means git-gc (and all things that do rev-list --objects --all)
->> would download at least all trees and commits? Or will we have special
->> treatment for those commands?
->
-> Yes. To me, this was always about punting large blobs from the clones.
-> Basically the way git-lfs and other tools work, but without munging your
-> history permanently.
+Samuel GROOT <samuel.groot@grenoble-inp.org> writes:
 
-Makes sense. If we keep all trees and commits locally, pack v4 still
-has a chance to rise!
+> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+> index edbba3a..21776f0 100644
+> --- a/Documentation/git-send-email.txt
+> +++ b/Documentation/git-send-email.txt
+> @@ -84,13 +84,16 @@ See the CONFIGURATION section for 'sendemail.multiEdit'.
+>  	the value of GIT_AUTHOR_IDENT, or GIT_COMMITTER_IDENT if that is not
+>  	set, as returned by "git var -l".
+>  
+> ---in-reply-to=<identifier>::
+> +--in-reply-to=<Message-Id|email_file>::
+>  	Make the first mail (or all the mails with `--no-thread`) appear as a
+> -	reply to the given Message-Id, which avoids breaking threads to
+> -	provide a new patch series.
+> +	reply to the given Message-Id (given directly by argument or via the email
+> +	file), which avoids breaking threads to provide a new patch series.
+>  	The second and subsequent emails will be sent as replies according to
+>  	the `--[no]-chain-reply-to` setting.
+>  +
+> +Furthermore, if the argument is an email file, parse it and populate header
+> +fields appropriately for the reply.
 
-> I don't know if Christian had other cases in mind (like the many-files
-> case, which I think is better served by something like narrow clones).
+"populate header fields appropriately" would seem obscure to someone not
+having followed this converation. At least s/fields/To: and Cc: fields/.
 
-Although for git-gc or git-fsck, I guess we need special support
-anyway not to download large blobs unnecessarily. Not sure if git-gc
-can already do that now. All I remember is git-repack can still be
-used to make a repo independent from odb alternates. We probably want
-to avoid that. git-fsck definitely should verify that large remote
-blobs are good without downloading them (a new "fsck" command to
-external odb, maybe).
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -55,6 +55,7 @@ git send-email --dump-aliases
+>      --[no-]bcc              <str>  * Email Bcc:
+>      --subject               <str>  * Email "Subject:"
+>      --in-reply-to           <str>  * Email "In-Reply-To:"
+> +    --in-reply-to          <file>  * Populate header fields appropriately.
+
+Likewise. To avoid an overly long line, I'd write just "Populate
+To/Cc/In-reply-to".
+
+Probably <file> should be <email_file>.
+
+> +if ($initial_reply_to && -f $initial_reply_to) {
+> +	my $error = validate_patch($initial_reply_to);
+> +	die "fatal: $initial_reply_to: $error\nwarning: no patches were sent\n"
+> +		if $error;
+> +
+> +	open my $fh, "<", $initial_reply_to or die "can't open file $initial_reply_to";
+> +	my $mail = Git::parse_email($fh);
+> +	close $fh;
+> +
+> +	my $initial_sender = $sender || $repoauthor || $repocommitter || '';
+
+This is duplicated from the "if ($compose) { ... my $tpl_sender = ..." a
+bit later in the existing file. It would be better to get this "my
+$initial_sender = ..." out of your "if" and use $initial_sender directly
+later IMHO.
+
+Actually, $initial_sender does not seem to be a good variable name. It's
+not really "initial", right?
+
+> +	my $prefix_re = "";
+> +	my $subject_re = $mail->{"subject"}[0];
+> +	if ($subject_re =~ /^[^Re:]/) {
+> +		$prefix_re = "Re: ";
+> +	}
+> +	$initial_subject = $prefix_re . $subject_re;
+
+Why introduce $prefix_re. You can just
+
+	my $subject = $mail->{"subject"}[0];
+	if (...) {
+        	$subject = "Re: " . $subject;
+        }
+
+(preferably using sensible as '...' as noted by Junio ;-) ).
+
+In previous iterations of this series, you had issues with non-ascii
+characters in at least To: and Cc: fields (perhaps in the Subject field
+too?). Are they solved? I don't see any tests about it ...
+
 -- 
-Duy
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
