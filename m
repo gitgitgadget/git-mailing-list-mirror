@@ -1,105 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] send-pack: use buffered I/O to talk to pack-objects
-Date: Thu, 09 Jun 2016 19:22:21 +0200
-Message-ID: <vpqeg86cm5u.fsf@anie.imag.fr>
-References: <20160606151340.22424-1-william.duclot@ensimag.grenoble-inp.fr>
-	<20160606151340.22424-4-william.duclot@ensimag.grenoble-inp.fr>
-	<xmqqvb1mxmk4.fsf@gitster.mtv.corp.google.com>
-	<20160606203901.GA7667@Messiaen>
-	<xmqqfusquedk.fsf@gitster.mtv.corp.google.com>
-	<20160606225847.GA22756@sigill.intra.peff.net>
-	<xmqqbn3dvr22.fsf@gitster.mtv.corp.google.com>
-	<20160607090653.GA4665@Messiaen> <575845D9.2010604@alum.mit.edu>
-	<20160608191918.GB19572@sigill.intra.peff.net>
-	<20160608194216.GA3731@sigill.intra.peff.net>
-	<vpqwplypnpr.fsf@anie.imag.fr>
-	<xmqqr3c6iad1.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/4] bundle v3: the beginning
+Date: Thu, 9 Jun 2016 13:23:52 -0400
+Message-ID: <20160609172352.GC9016@sigill.intra.peff.net>
+References: <CAP8UFD1xqRMFE2Wzntu=XevCyj+acGLEO-cTq1fqn+NMe3x0vg@mail.gmail.com>
+ <CACsJy8Dr_Z886Jb-O8gbAv_vzBLicNH6bPPpKwb9HWZTKQ9muw@mail.gmail.com>
+ <CAP8UFD3jPQFk2deSk5JXC3PTz5yWcvXJ4=Qjam5Qw6P9SrLzFQ@mail.gmail.com>
+ <CACsJy8DB_17DZ7REBzicyA_GZCnvNkoYEzftjfyM72QVmEb_Vg@mail.gmail.com>
+ <CAP8UFD2t=2wJ=1U1ctMYNuMSejBYLh2yeLU7ZfP5Q6KLxUApjQ@mail.gmail.com>
+ <xmqqinxkpzur.fsf@gitster.mtv.corp.google.com>
+ <20160607202351.GA5726@sigill.intra.peff.net>
+ <CACsJy8CtsFFJPssDDBuL8TLoxi1f=734mjAjCUOr8Y63aD3xUA@mail.gmail.com>
+ <20160608161958.GA30876@sigill.intra.peff.net>
+ <CACsJy8BGV-AWwap9c2hOjXWMYxBLUirX8i20rS_=Vmci_SG_rw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
-	William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org, antoine.queru@ensimag.grenoble-inp.fr,
-	francois.beutin@ensimag.grenoble-inp.fr,
-	Johannes.Schindelin@gmx.de, mh@glandium.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 19:22:49 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 19:24:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bB3fM-0008UL-PT
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 19:22:49 +0200
+	id 1bB3gZ-0000ws-Ro
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 19:24:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932594AbcFIRWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2016 13:22:39 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:46551 "EHLO mx2.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932249AbcFIRWj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2016 13:22:39 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u59HMJjZ012596
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 9 Jun 2016 19:22:19 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u59HMLYl010324;
-	Thu, 9 Jun 2016 19:22:21 +0200
-In-Reply-To: <xmqqr3c6iad1.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 09 Jun 2016 09:40:42 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Thu, 09 Jun 2016 19:22:20 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u59HMJjZ012596
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1466097743.15532@2y4wUSuQd/8kGENCz2/Lnw
+	id S932659AbcFIRYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2016 13:24:00 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52004 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932077AbcFIRXz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2016 13:23:55 -0400
+Received: (qmail 23942 invoked by uid 102); 9 Jun 2016 17:23:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Jun 2016 13:23:54 -0400
+Received: (qmail 25337 invoked by uid 107); 9 Jun 2016 17:24:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Jun 2016 13:24:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jun 2016 13:23:52 -0400
+Content-Disposition: inline
+In-Reply-To: <CACsJy8BGV-AWwap9c2hOjXWMYxBLUirX8i20rS_=Vmci_SG_rw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296908>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Jun 09, 2016 at 03:53:26PM +0700, Duy Nguyen wrote:
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Jeff King <peff@peff.net> writes:
->>
->>> --- a/send-pack.c
->>> +++ b/send-pack.c
->>> @@ -36,18 +36,15 @@ int option_parse_push_signed(const struct option *opt,
->>>  	die("bad %s argument: %s", opt->long_name, arg);
->>>  }
->>>  
->>> -static int feed_object(const unsigned char *sha1, int fd, int negative)
->>> +static void feed_object(const unsigned char *sha1, FILE *fh, int negative)
->>>  {
->>> -	char buf[42];
->>> -
->>>  	if (negative && !has_sha1_file(sha1))
->>> -		return 1;
->>> +		return;
->> [...]
->>> @@ -97,21 +95,22 @@ static int pack_objects(int fd, struct ref *refs, struct sha1_array *extra, stru
->> [...]
->>>  	for (i = 0; i < extra->nr; i++)
->>> -		if (!feed_object(extra->sha1[i], po.in, 1))
->>> -			break;
->>> +		feed_object(extra->sha1[i], po_in, 1);
->>
->> I may have missed the obvious, but doesn't this change the behavior when
->> "negative && !has_sha1_file(sha1)" happens? I understand that you don't
->> need write_or_whine anymore, but don't understand how you get rid of the
->> "return 1" here.
->
-> The original feed_object() has somewhat strange interface in that a
-> non-zero return from it is "Everything went alright!", and zero
-> means "Oops, something went wrong".
+> > Yes. To me, this was always about punting large blobs from the clones.
+> > Basically the way git-lfs and other tools work, but without munging your
+> > history permanently.
+> 
+> Makes sense. If we keep all trees and commits locally, pack v4 still
+> has a chance to rise!
 
-Indeed, this is the "obvious" I've missed. So, indeed, the new "return"
-does the same thing as the old "return 1".
+Yeah, I don't think anything here precludes pack v4.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> > I don't know if Christian had other cases in mind (like the many-files
+> > case, which I think is better served by something like narrow clones).
+> 
+> Although for git-gc or git-fsck, I guess we need special support
+> anyway not to download large blobs unnecessarily. Not sure if git-gc
+> can already do that now. All I remember is git-repack can still be
+> used to make a repo independent from odb alternates. We probably want
+> to avoid that. git-fsck definitely should verify that large remote
+> blobs are good without downloading them (a new "fsck" command to
+> external odb, maybe).
+
+I think git-gc should work out of the box; you'd want to use "repack
+-l", which git-gc passes already.
+
+Fsck would be OK as long as you didn't actually load blobs. We have
+--connectivity-only for that, but of course it isn't the default. You'd
+probably want the default mode to fsck local blobs, but _not_ to fault
+in external blobs (but have an option to fault them all in if you really
+wanted to be sure you have everything).
+
+-Peff
