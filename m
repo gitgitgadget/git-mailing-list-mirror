@@ -1,95 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] submodule--helper: initial clone learns retry logic
-Date: Thu, 09 Jun 2016 12:59:08 -0700
-Message-ID: <xmqqtwh2gmlv.fsf@gitster.mtv.corp.google.com>
-References: <20160609190637.21177-1-sbeller@google.com>
-	<20160609190637.21177-2-sbeller@google.com>
-	<xmqqy46egofw.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kbpurbwAB4H5_JPMsaGHmbeZA=EWjMOfQGB6apLhEXVeA@mail.gmail.com>
+Subject: Re: [PATCH] Use "working tree" instead of "working directory" for git status
+Date: Thu, 09 Jun 2016 12:59:24 -0700
+Message-ID: <xmqqporqgmlf.fsf@gitster.mtv.corp.google.com>
+References: <1465496370-11664-1-git-send-email-Lars.Vogel@vogella.com>
+	<vpqporqb0x0.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 21:59:17 2016
+Cc: Lars Vogel <lars.vogel@gmail.com>, git@vger.kernel.org,
+	Lars Vogel <Lars.Vogel@vogella.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 09 21:59:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bB66n-00072z-0Q
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 21:59:17 +0200
+	id 1bB673-0007Fv-9d
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 21:59:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751108AbcFIT7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2016 15:59:13 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51276 "EHLO
+	id S1751199AbcFIT73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2016 15:59:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64539 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750751AbcFIT7M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2016 15:59:12 -0400
+	with ESMTP id S1750751AbcFIT72 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2016 15:59:28 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E794B22355;
-	Thu,  9 Jun 2016 15:59:10 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EBB0921FB0;
+	Thu,  9 Jun 2016 15:59:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Z1ZVhJxfq3V1nf96jFOoENrCpHw=; b=aOCHY2
-	OU1K8fKJFanBSta/EWwKVl16tllFX5Ltj3IXXrTGiHDyKOeaJYZAIC7/+Gv7RutK
-	v/3nyUsyMgA5fjdpGDl6X4+wb3nUkjb6If+mSWysbcfT2CxbgWohy9AltdQ/IdOw
-	BYZqoYI46sjrEbRJ0pG5ZmsODT8r5nH0bLOj8=
+	:content-type; s=sasl; bh=+RyUMtNxZW2nuXwrIdc+HFgHknw=; b=GFcDcg
+	ITpEo5cEZf39jUEqZ736A/42sTt9mY3wfcc1WnlU3pxgyASX9M5/dVAgEr+MJ+FA
+	q4FVTQv6o8Eh29EK4+0IsfhZYmik9b7cOumIx7Hc3MBdfT9qcxE25w1j5rDKIIjE
+	qOimjItRRMw2Fj8WeK3yvY3cL6g1IsoDh2SLw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PYvoru6ZPjft8rt1O3B7MCX5itu7F+Lu
-	2VIn4ZnBruZCFbvaVE6cCz50QCSECdHXvVWaAQm1NR9U82GFbLbZ+s3Pga+yo/yw
-	WI9I0Z4ZmGt2oI95e1xrnJLums11+LHQc3OgmtVhYTTBaDFDXoE2qLYW0Mpt+jj9
-	l78xT5kA5Dg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DF58422354;
-	Thu,  9 Jun 2016 15:59:10 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=ly9Dloz8P0oXlc/pfHKT8K3w6yKK6Qiy
+	hZ8LiGE16ojyo+CqTpX1ZvcK2oqMPFY68Zh4g9I/xdhgtbItT0GVVwzzyXGrIDl3
+	hLBIQ5we5+6anT6BysNKrS17gonAm6gjb37Ug5yawsuqG5KBunhalhcMGSNJKi93
+	xuX+AylBTng=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E340221FAF;
+	Thu,  9 Jun 2016 15:59:26 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 66CBB22353;
-	Thu,  9 Jun 2016 15:59:10 -0400 (EDT)
-In-Reply-To: <CAGZ79kbpurbwAB4H5_JPMsaGHmbeZA=EWjMOfQGB6apLhEXVeA@mail.gmail.com>
-	(Stefan Beller's message of "Thu, 9 Jun 2016 12:47:40 -0700")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 660EC21FAE;
+	Thu,  9 Jun 2016 15:59:26 -0400 (EDT)
+In-Reply-To: <vpqporqb0x0.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
+	09 Jun 2016 21:46:35 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A1A7BFFA-2E7C-11E6-8A65-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: AB30FB4A-2E7C-11E6-878A-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296923>
 
-Stefan Beller <sbeller@google.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> instead. But that is still unspecified, so we rather go with
+> Lars Vogel <lars.vogel@gmail.com> writes:
 >
-> static int compare_ce(const void *one, const void *two, void *cb_data)
-> {
->     const struct cache_entry *ce_one = one, *ce_two = two;
->     return strcmp(ce_one->name, ce_two->name);
-> }
+>> --- a/wt-status.c
+>> +++ b/wt-status.c
+>> @@ -1554,7 +1554,7 @@ void wt_status_print(struct wt_status *s)
+>>  			else
+>>  				printf(_("nothing to commit\n"));
+>>  		} else
+>> -			printf(_("nothing to commit, working directory clean\n"));
+>> +			printf(_("nothing to commit, working tree clean\n"));
+>
+> Looks good to me, thanks.
 
-As I said below, I do not think it is worth addressing by making the
-code's behaviour on real systems worse.  As long as what you have as
-the key into priority queue is a pointer to cache_entry, you cannot
-make it better from that point of view.
-
->> I think we have one or two other instances of such fishy pointer
->> comparison already in the codebase, so it is not a show-stopper, but
->> it would be better if this can be avoided and be replaced with
->> something that I do not have to raise eyebrows at ;-)
-
-If you are using priority queue, it probably would make more sense
-to use the "priority" part properly---the paths whose ce happens to
-be lower in the address space are not inherently more important and
-deserve to be processed sooner.  From "let's retry failed ones after
-finishing", I expected that the queue was either fifo (simplest), or
-a prio queue whose priority function would give lower priority for
-entries with least number of previous attempts (more involved but
-probably more fair).
-
-So a proper "fix" probably is either (1) not to use prio queue as
-you are not doing anything with priority anyway, or (2) use
-something other than ce itself as entries in prio queue, so that the
-priority function can be computation that is more meaningful than
-"happens to sit in the lower part of the address space".
+Thanks, all.  Queued.
