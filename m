@@ -1,91 +1,114 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] bisect--helper: `check_expected_revs` shell function
- in C
-Date: Thu, 9 Jun 2016 17:54:45 -0400
-Message-ID: <CAPig+cQVWng0idk0ETRQA44OsS5+GewVX=pt4uOg-=SFbL+deQ@mail.gmail.com>
-References: <20160608152415.7770-1-pranit.bauva@gmail.com> <20160608152415.7770-2-pranit.bauva@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 63/94] builtin/apply: make apply_all_patches() return
+ -1 on error
+Date: Fri, 10 Jun 2016 00:01:06 +0200
+Message-ID: <CAP8UFD0chzr9O9hpjQ00YruwfLof3gHj32292e3s=1SFmKdPzg@mail.gmail.com>
+References: <20160511131745.2914-1-chriscool@tuxfamily.org>
+ <20160511131745.2914-64-chriscool@tuxfamily.org> <CAPig+cQAM8i2sFY9UUYfN23PRGgFacG7KiTD6mZwnm=PgKBL7A@mail.gmail.com>
+ <CAP8UFD2jA7ydsYTkQLbQJTW7NFRpkmJwgJQp=UZ0-8-7njSawA@mail.gmail.com> <CAPig+cQpk4Kknbudu1Ki3T9=rsO9+q4BCR6C2-1xjgUE0HSJYg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 23:59:54 2016
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jeff King <peff@peff.net>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Jun 10 00:01:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bB7up-0000wj-HJ
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 23:55:03 +0200
+	id 1bB80t-0006HP-Cp
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 00:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932825AbcFIVys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2016 17:54:48 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:36759 "EHLO
-	mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932651AbcFIVyq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2016 17:54:46 -0400
-Received: by mail-it0-f67.google.com with SMTP id h190so6814666ith.3
-        for <git@vger.kernel.org>; Thu, 09 Jun 2016 14:54:46 -0700 (PDT)
+	id S932628AbcFIWBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2016 18:01:11 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:32804 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932570AbcFIWBI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2016 18:01:08 -0400
+Received: by mail-wm0-f68.google.com with SMTP id r5so13822156wmr.0
+        for <git@vger.kernel.org>; Thu, 09 Jun 2016 15:01:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=u34qCsZAvfeS79Z+r1hLI2XthXKBjO0UnOg5xokM1Rc=;
-        b=XYksa5iM+4LCNc74BQ/DPdRRFdjHccv5nmUhAdx3vaEBwfdFcEyrp+4fx+Xj5FQMzs
-         wSTQgh1ESxP3ur44OlCsd/QOWS1zTSo5oNJHuI/S2BS1c5epUbJHe1ggomHP7rVi3oNi
-         svJ5T2WLkXfy0uL5MJQQ+7caLqAe0njLbn+o5UIn5vhaRZh4ugGb7Qq4E9eS6d6VM9Gu
-         7nxesfyrdLnAko01e8gRCpNO+C16luNUgIQEyggfAXYi87TisL0+6L10HY/tgXhi/hTJ
-         FZmtUW8dVdPkkioubhPytErjHF+prRzJxyE52YTbXspzqaT8AB1NuFAWaWIyTvjl7LW3
-         3oWQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=GD6FNCxysSPLJenK5RM639IK6g9LfLvodOE6SQEYims=;
+        b=UHTRhD3VlC/BY0heRjf8kteUuCkWejT/lJsdctBlyRWsLEsY37lKFfYywOCe0QDX02
+         e2dxcnwuUVbS05Z782M7QgevhV40A7bDuv/YWnzS41/Nc3N5Fpk0tRtUBY6kA4FfBeKZ
+         v+wEfxwKiP3udL+xLdmjufn5kXs4Nc5gzcv6iVbHwaKkB10UbTwe8vse+eGVX278x/4N
+         ro/xWhsN/PeUxgE2AdDdt+ttozLSdp6OHzUAnHcYyXw4Yh9hrsyS9+bzCCD42SeQupSJ
+         yo9BOHPITSz+u8I/u9fI69CJaeA9YJ9F5wD9QxHTqPRdON+Mu1zmGM+hlzrNYMOJQQcn
+         9Gkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=u34qCsZAvfeS79Z+r1hLI2XthXKBjO0UnOg5xokM1Rc=;
-        b=UQfA9Vk4XBRmmAuJNa326NjVSvQGkpAkfLw/HG3zSEOHpUYog6O+v11P1grjiQ1v8S
-         6TaT5Amjf3c9dQDB2T/IIXYGypEHD6ADNn1hlj7PImpBCu9t8AhtHdKB8gSBCvu/Wivw
-         IElhWuoPWAWVnBEE6uwR6bzIgzoOxxucMcs/9XRJ1CemuWTVjjZPy7ULB7BtBO/atEqo
-         tJNTz4mZzlZ6G1lXNlkLE/aSeAovIrAPDa67IJl9u/9vXx3jjD1tF/IDO+ve/3VHVeGY
-         J3i8JcTMIHl6nWRHndb75DRJI6rKUeJ7f4Ubmq59uaSKWYwp9wzhvtSOfdYj5q+0+1ST
-         hc2g==
-X-Gm-Message-State: ALyK8tKtGLL1Da0lRtKvrdCvFLaL9qdAf9jj+IW1KvLUdF9XvU+hKCTcKGZ78JoFmIZDBECv8xc1Ral21LG45A==
-X-Received: by 10.36.207.137 with SMTP id y131mr26495718itf.32.1465509285451;
- Thu, 09 Jun 2016 14:54:45 -0700 (PDT)
-Received: by 10.79.0.30 with HTTP; Thu, 9 Jun 2016 14:54:45 -0700 (PDT)
-In-Reply-To: <20160608152415.7770-2-pranit.bauva@gmail.com>
-X-Google-Sender-Auth: kMEmg8CJMgQQYdIkVUONo0wrncQ
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=GD6FNCxysSPLJenK5RM639IK6g9LfLvodOE6SQEYims=;
+        b=KqCZUqlwnmYlsORSEOlJYWxzHlTy3/iY8piw9ccPc7G2pZDCQoK0DOUwZSylyjJGBk
+         w7AWea+cKXY4ODzwAEyffesqTbPYoV3judWeeyaIuzBloNPSkqrt/0zFIbsHxteHrBys
+         /4+qgDchCPznIu6kpoZsjtkPAZM0W1IltHHwgg8SwLwQMNWAT/Cd91AiVt7VQzKUnLKA
+         uiGjhk8u7u/IoXSpuYfe2DBf0GbriEtMvKDTFA5kgBh1Chxbi0tE7cetU26ccVWNnF96
+         qr9jnzdbBHOXHro8wevbHFauIVx82QnQNjn/yFDERaTL3ub6QkQhoz7OEZMcgr1mERo1
+         M19A==
+X-Gm-Message-State: ALyK8tLJ943GhhUfQn0FDeHD6N2F5Lmde52WTtDR7wY4eVmP+5pe0CW4/MPuEz9i7Ez58/Vj30IXynh9V1oI1w==
+X-Received: by 10.195.17.166 with SMTP id gf6mr11416220wjd.124.1465509666923;
+ Thu, 09 Jun 2016 15:01:06 -0700 (PDT)
+Received: by 10.194.25.197 with HTTP; Thu, 9 Jun 2016 15:01:06 -0700 (PDT)
+In-Reply-To: <CAPig+cQpk4Kknbudu1Ki3T9=rsO9+q4BCR6C2-1xjgUE0HSJYg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296935>
 
-On Wed, Jun 8, 2016 at 11:24 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> Reimplement the `check_expected_revs` shell function in C and add a
-> `--check-expected-revs` subcommand to `git bisect--helper` to call it
-> from git-bisect.sh .
-> [...]
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> ---
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index 06bc9b8..500efd5 100644
-> @@ -174,13 +174,28 @@ static int is_expected_rev(const char *expected_hex)
-> +static int check_expected_revs(const char **revs, int no)
+On Wed, Jun 8, 2016 at 7:44 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Jun 8, 2016 at 12:37 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> On Mon, May 16, 2016 at 5:44 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> On Wed, May 11, 2016 at 9:17 AM, Christian Couder
+>>> <christian.couder@gmail.com> wrote:
+>>>>         if (state->update_index) {
+>>>> -               if (write_locked_index(&the_index, state->lock_file, COMMIT_LOCK))
+>>>> -                       die(_("Unable to write new index file"));
+>>>> +               res = write_locked_index(&the_index, state->lock_file, COMMIT_LOCK);
+>>>>                 state->newfd = -1;
+>>>
+>>> Does write_locked_index() unconditionally close the file descriptor
+>>> even when an error occurs? If not, then isn't this potentially leaking
+>>> 'newfd'?
+>>>
+>>> (My very cursory read of write_locked_index() seems to reveal that the
+>>> file descriptor may indeed remain open upon index write failure.)
+>>
+>> You are right, it is leaking newfd if write_locked_index() fails.
+>> The solution to that is to call `rollback_lock_file(state->lock_file)`
+>> and the following patch was supposed to do that:
+>>
+>> [PATCH v2 82/94] apply: roll back index lock file in case of error
+>>
+>> but it would do that only if `state->newfd >= 0` so we should set
+>> state->newfd to -1 only if write_locked_index() succeeds.
+>>
+>> I will fix this.
+>>
+>> I am also going to add a comment to this patch saying that this patch
+>> needs a following patch to call rollback_lock_file(state->lock_file)
+>> in case of errors.
+>>
+>> Or if you prefer, I can squash the patch that call
+>> rollback_lock_file(state->lock_file) in case of errors into this
+>> patch.
+>
+> Squashing may indeed be preferable over leaving it in a "broken" state
+> until the next patch, though I haven't thought too hard about it.
+> Alternately, can the two patches somehow be swapped?
 
-In this codebase, it's more common to name this 'nr' rather than 'no'.
-'revs_nr' would also be a good name.
-
-> +{
-> +       int i;
-> +
-> +       for (i = 0; i < no; i++) {
-> +               if (!is_expected_rev(revs[i])) {
-> +                       remove_path(git_path_bisect_ancestors_ok());
-> +                       remove_path(git_path_bisect_expected_rev());
-> +                       return 0;
-> +               }
-> +       }
-> +       return 0;
-> +}
+I just squashed them for now as the result looks reasonable.
