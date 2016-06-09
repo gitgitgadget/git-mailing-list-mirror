@@ -1,87 +1,129 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/4] Resurrect "diff-lib.c: adjust position of i-t-a
- entries in diff"
-Date: Thu, 9 Jun 2016 18:18:15 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1606091815310.2680@virtualbox>
-References: <20160606111643.7122-1-pclouds@gmail.com> <20160606111643.7122-3-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] send-pack: use buffered I/O to talk to pack-objects
+Date: Thu, 09 Jun 2016 09:40:42 -0700
+Message-ID: <xmqqr3c6iad1.fsf@gitster.mtv.corp.google.com>
+References: <20160606151340.22424-1-william.duclot@ensimag.grenoble-inp.fr>
+	<20160606151340.22424-4-william.duclot@ensimag.grenoble-inp.fr>
+	<xmqqvb1mxmk4.fsf@gitster.mtv.corp.google.com>
+	<20160606203901.GA7667@Messiaen>
+	<xmqqfusquedk.fsf@gitster.mtv.corp.google.com>
+	<20160606225847.GA22756@sigill.intra.peff.net>
+	<xmqqbn3dvr22.fsf@gitster.mtv.corp.google.com>
+	<20160607090653.GA4665@Messiaen> <575845D9.2010604@alum.mit.edu>
+	<20160608191918.GB19572@sigill.intra.peff.net>
+	<20160608194216.GA3731@sigill.intra.peff.net>
+	<vpqwplypnpr.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1943953028-1465489096=:2680"
-Cc: git@vger.kernel.org, thomas.braun@virtuell-zuhause.de
-To: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 18:21:17 2016
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+	William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	git@vger.kernel.org, antoine.queru@ensimag.grenoble-inp.fr,
+	francois.beutin@ensimag.grenoble-inp.fr,
+	Johannes.Schindelin@gmx.de, mh@glandium.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 09 18:40:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bB2hm-00073r-VC
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 18:21:15 +0200
+	id 1bB30l-0004m0-Or
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 18:40:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932511AbcFIQVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2016 12:21:11 -0400
-Received: from mout.gmx.net ([212.227.17.20]:56480 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932155AbcFIQVJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2016 12:21:09 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MZwYd-1asgjZ15sl-00Lohb; Thu, 09 Jun 2016 18:21:02
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160606111643.7122-3-pclouds@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:N0pnvyYTF4Oo+0DVuKyu/sWzCKjytqmBeadzvqBpk3QNrxN5HCH
- frpfakh16EZeEqDFR/dBOXt4kI2SzoOWMPxkVm8XsnEiClfXMFzrsmUAyUvgsOYRd2/E+Lr
- DMDG//DfRIObCRwaY9XB/FjEARTVQq4YwjFIHdRNUBOlZC2t+lQ4uXhfHxLo4Yxgw9N0d5G
- blgBq3llYpyvzu5l+WmrQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gAo15lqggJE=:7tSi+iR37cVNZr6CO64fN9
- AZUvWSsz1qGbxt2Rl7LwMwjufSPQcHb/p4fQyCABdPcDPOvvmSCv1bGj6w/Fvq4pbt8IWNZ8a
- nMb9erCiN4MZTimOEYYdT2GnjBAAjNck/tmTh/LnJUM0FSjI0fmrm2LmxN9GkQLJOZrsdITy5
- YfcCcWRFkcXWFKvP8F3wAoISeSPONorKnVa9Nz/Vy/PLhhTFHVDDPXByjBgZ2ukbF3T3xqBoo
- g4RUyv8qny5Prz8PbPvnqpaEXc/lLXtPBfujXtYRzYou5JLSt8/8IWdy7jl5b/NUXHo02kmvd
- sBii/QsJknstnfxxs4i6eTn7Gmtdc0hAQS+rc/xKao52LzEYIo4DpYaVABuij6en16PtW91gA
- 0rJXAv+PtbfmKlLFWWoZIr6Qe8wNMXNoYI1DxcFn3V+b4JZeUrJSx12GbVLBXWStl3qAI9oV7
- eeQ1E7orXIB84Lke8g6TD73Bo6V9BUTC7yQ1EKOxyC8egBzPcOFaYYuQDaymGx/eoeWGizlEN
- vC7vDPKOiH7JX7IiaV1VZFnHwWWF6yQsXllOCTBjqfvOnFo0KCN8YmBh55BE5ccaGyodm2jSs
- rc/X3LAVG5nO696/5cVGHb+lsGOBjxF4kc+TpkxTB+qIN61eM3RnkobD2l+WYeqOtWl+TqJAK
- qxLqA/kQxf2DCl2TR2IZPcZNdhGEosIrY+yg4SiayszLXymDbJXMOqD2SAqZvsnsCX+o0oBeX
- rKgi0/UNcEHlSW//2LzlxHj5S64joAeH9tCnxkX++CbLIXBzVx7IypjeUbOnFpJd5ygZQuwz 
+	id S932238AbcFIQkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2016 12:40:46 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64102 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751815AbcFIQkp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2016 12:40:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6540B21623;
+	Thu,  9 Jun 2016 12:40:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=q6T8xqTmZHyRzuQeWiBxSviuINk=; b=ZmZDHd
+	16SFpFdM5cDBfIFjfDjELMB5K32FqW/1V1qq8sla3vraEVNL3yiqnAaFrbaUJRbs
+	hQFsnsugxOO7l4jnhheM2A1H4RNFwcymAZnb2i1WguJOn9mWpr0pKjuz+W1a+1u0
+	K+lnN9j0gSoe5Pi20rkJm7KBdsv/1d/NQsdZ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=H0hKDpUasUO+XrvCOVRAevu66yuQIgSa
+	AYTkHJSJmNG8mUR+KIeq6uzfZMxzpOyxGkPh/+X2AAZ+ts6+sG3XeLXBBQT3kvjs
+	wKnmZT7BZx3yqOe+3OSlASVXESeob1hXLfTOaF/2hxInlyWF/gRHc1Mwo8yanIR5
+	CpI5eECljLI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C89021622;
+	Thu,  9 Jun 2016 12:40:44 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CB44F21621;
+	Thu,  9 Jun 2016 12:40:43 -0400 (EDT)
+In-Reply-To: <vpqwplypnpr.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
+	09 Jun 2016 14:10:24 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E8D07B4A-2E60-11E6-AAB4-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296901>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
---8323329-1943953028-1465489096=:2680
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> Jeff King <peff@peff.net> writes:
+>
+>> --- a/send-pack.c
+>> +++ b/send-pack.c
+>> @@ -36,18 +36,15 @@ int option_parse_push_signed(const struct option *opt,
+>>  	die("bad %s argument: %s", opt->long_name, arg);
+>>  }
+>>  
+>> -static int feed_object(const unsigned char *sha1, int fd, int negative)
+>> +static void feed_object(const unsigned char *sha1, FILE *fh, int negative)
+>>  {
+>> -	char buf[42];
+>> -
+>>  	if (negative && !has_sha1_file(sha1))
+>> -		return 1;
+>> +		return;
+> [...]
+>> @@ -97,21 +95,22 @@ static int pack_objects(int fd, struct ref *refs, struct sha1_array *extra, stru
+> [...]
+>>  	for (i = 0; i < extra->nr; i++)
+>> -		if (!feed_object(extra->sha1[i], po.in, 1))
+>> -			break;
+>> +		feed_object(extra->sha1[i], po_in, 1);
+>
+> I may have missed the obvious, but doesn't this change the behavior when
+> "negative && !has_sha1_file(sha1)" happens? I understand that you don't
+> need write_or_whine anymore, but don't understand how you get rid of the
+> "return 1" here.
 
-Hi Duy,
+The original feed_object() has somewhat strange interface in that a
+non-zero return from it is "Everything went alright!", and zero
+means "Oops, something went wrong".  When the function actually
+writes things out, it calls write_or_whine(), whose return value
+also uses that (unusual) convention, which is the reason why it
+behaves that way.
 
-On Mon, 6 Jun 2016, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+The "return 1" you noticed happens when the function is told not to
+send history behind one object, but that object does not exist in
+our repository.  This is a perfectly normal condition and the
+function just ignores it and returns without feeding it to
+pack-objects.  It reports to the caller "Everything went alright!".
 
-> diff --git a/diff.h b/diff.h
-> index b497078..9e42556 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -92,6 +92,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_=
-options *opt, void *data)
->  #define DIFF_OPT_FUNCCONTEXT         (1 << 29)
->  #define DIFF_OPT_PICKAXE_IGNORE_CASE (1 << 30)
->  #define DIFF_OPT_DEFAULT_FOLLOW_RENAMES (1U << 31)
-> +#define DIFF_OPT_SHIFT_INTENT_TO_ADD (1UL << 32)
+The original caller checks for errors to break out the feeding of
+the process early, with things like:
 
-I am afraid that this is not enough. On Windows, sizeof(unsigned long) is
-4 (and it is perfectly legal). That means that you would have to use at
-least (1ULL << 32), but then you also have to change the type of xdl_opts
-to uint64_t, which in turn means that you will have to change the
-definition of xpparam_t's "flags" field from unsigned long to uint64_t.
+	if (!feed_object(...))
+        	break;
 
-Maybe this can be avoided?
+IOW, the caller would have continued when hitting that "return 1"
+codepath.
 
-Ciao,
-Johannes
---8323329-1943953028-1465489096=:2680--
+And the code with the patch, the caller continues unconditionally,
+so there is no behaviour change, if I am reading the code correctly.
+
+Thanks for carefully reading the change and pointing out hard-to-read
+parts, as always.
