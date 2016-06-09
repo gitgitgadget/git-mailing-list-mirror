@@ -1,112 +1,299 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 12/13] dir_iterator: new API for iterating over a
- directory tree
-Date: Thu, 9 Jun 2016 14:35:22 +0200
-Message-ID: <5759628A.4020704@alum.mit.edu>
-References: <cover.1464957077.git.mhagger@alum.mit.edu>
- <38124bd892ac1f4683b7debe721fc69424a347be.1464957077.git.mhagger@alum.mit.edu>
- <CAPig+cRKa2QF9fp0in7wbPBzyY3UQbvNrioFWjxPjQQsoY=F9A@mail.gmail.com>
- <575956FB.9010207@alum.mit.edu>
+From: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
+Subject: [PATCHv4] Documentation: triangular workflow
+Date: Thu,  9 Jun 2016 14:35:08 +0200
+Message-ID: <1465475708-1912-1-git-send-email-jordan.de-gea@grenoble-inp.org>
+References: <1465288693-6295-1-git-send-email-jordan.de-gea@grenoble-inp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-	David Turner <novalis@novalis.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 14:35:34 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: mhagger@alum.mit.edu, philipoakley@iee.org, git@vger.kernel.org,
+	erwan.mathoniere@grenoble-inp.org, samuel.groot@grenoble-inp.org,
+	tom.russello@grenoble-inp.org, Matthieu.Moy@grenoble-inp.fr,
+	peff@peff.net, artagnon@gmail.com,
+	Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jun 09 14:35:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAzBN-0001lP-Pa
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 14:35:34 +0200
+	id 1bAzBH-0001jA-TQ
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 14:35:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751657AbcFIMf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2016 08:35:29 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:55762 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751644AbcFIMf1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2016 08:35:27 -0400
-X-AuditID: 1207440c-c3fff70000000b85-b6-5759628ec4d9
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id DC.7A.02949.E8269575; Thu,  9 Jun 2016 08:35:26 -0400 (EDT)
-Received: from [192.168.69.130] (p508EAACA.dip0.t-ipconnect.de [80.142.170.202])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u59CZNJH032371
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 9 Jun 2016 08:35:24 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.8.0
-In-Reply-To: <575956FB.9010207@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrGKsWRmVeSWpSXmKPExsUixO6iqNuXFBluMPuItEXXlW4mi4beK8wW
-	Sx6+ZrbonvKW0eJHSw+zxcyr1hZn3jQyOrB77Jx1l92jq/0Im8ez3j2MHhcvKXvsX7qNzWPx
-	Ay+Pz5vkAtijuG2SEkvKgjPT8/TtErgztjUFF3zlqViw4QVzA+Miri5GTg4JAROJIw0PmEFs
-	IYGtjBJzV+l2MXIB2eeZJM7sms0CkhAWiJRo6L3PBmKLCKhJTGw7xAJR9JFRYtP7LkYQh1lg
-	OpPElztXWUGq2AR0JRb1NDN1MXJw8ApoS/z5oAISZhFQkVhw7yQ7iC0qECJxft1WsHJeAUGJ
-	kzOfgC3jFNCRWHL/KhOIzSygLvFn3iVmCFteYvvbOcwTGPlnIWmZhaRsFpKyBYzMqxjlEnNK
-	c3VzEzNzilOTdYuTE/PyUot0DfVyM0v0UlNKNzFCwp1nB+O3dTKHGAU4GJV4eC8kRoQLsSaW
-	FVfmHmKU5GBSEuV9Yh0ZLsSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE92ECUI43JbGyKrUoHyYl
-	zcGiJM6rukTdT0ggPbEkNTs1tSC1CCYrw8GhJMH7G6RRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4
-	NS8ltSixtCQjHhSR8cXAmARJ8QDtfQK2t7ggMRcoCtF6ilGX48j+e2uZhFjy8vNSpcR5uRKB
-	igRAijJK8+BWwJLbK0ZxoI+FeW1BqniAiRFu0iugJUxAS5YfCQdZUpKIkJJqYOwXSlhw8dJx
-	wx0Z0fxrYpVNL5wrejS1/lvl1XLrh2v4c+K07+inPH80+9MXZx3fYIbCT/aPeR7y 
+	id S1751496AbcFIMfY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jun 2016 08:35:24 -0400
+Received: from zm-smtpout-1.grenet.fr ([130.190.244.97]:51077 "EHLO
+	zm-smtpout-1.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750810AbcFIMfX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2016 08:35:23 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 1A90C25AE;
+	Thu,  9 Jun 2016 14:35:20 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id h5nRm5l6N0bQ; Thu,  9 Jun 2016 14:35:20 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 0A6BF2585;
+	Thu,  9 Jun 2016 14:35:20 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 0765F2066;
+	Thu,  9 Jun 2016 14:35:20 +0200 (CEST)
+Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id LmhwzXabcgln; Thu,  9 Jun 2016 14:35:19 +0200 (CEST)
+Received: from eduroam-032230.grenet.fr (eduroam-032230.grenet.fr [130.190.32.230])
+	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id E07912055;
+	Thu,  9 Jun 2016 14:35:19 +0200 (CEST)
+X-Mailer: git-send-email 2.7.4 (Apple Git-66)
+In-Reply-To: <1465288693-6295-1-git-send-email-jordan.de-gea@grenoble-inp.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296884>
 
-On 06/09/2016 01:46 PM, Michael Haggerty wrote:
-> On 06/07/2016 07:13 AM, Eric Sunshine wrote:
->> [...]
-> Thanks for all your great comments!
+Currently, triangular workflow can be configured, but there is no
+documentation about it. A documentation is useful to keep
+configuration possibilities up-to-date.
 
-Junio,
+A new subsection is created in gitworkflow.
 
-Given that ref-iterators is in next but also that you will soon be
-rewinding next, would you like these tweaks as a re-roll of the branch,
-as fixup patches to squash on top, or as a new patch series to be
-administered separately? I don't think any of these changes are serious
-enough to warrant holding up ref-iterators, so it's mostly a question of
-what would be most convenient for you.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Signed-off-by: Jordan DE GEA <jordan.de-gea@grenoble-inp.org>
+---
+Changes since v3:
+ * Text reorganized to follow:
+   - Introduction
+   - Preparation
+   - Staying up-to-date
+   - Alternatively
+ * Texts added to explain why we use commands in:
+   - Preparation
+   - Alternatively
 
-For the case that you prefer a re-roll, I have pushed it to my fork on
-GitHub [1] as branch ref-iterators. This branch squashes in Ramsay's
-patch [2], addresses Eric's comments from this thread, and incorporates
-the whitespace fix that you made when incorporating v2.
+ Documentation/gitworkflows.txt | 177 +++++++++++++++++++++++++++++++++=
++++++++-
+ 1 file changed, 176 insertions(+), 1 deletion(-)
 
-List of changes relative to v2:
-
-* In "refs: introduce an iterator interface":
-
-  * Make two vtables private.
-
-  * Add a whitespace fix from Junio's mh/ref-iterators.
-
-* In "dir_iterator: new API for iterating over a directory tree":
-
-  * Add and improve some comments and docstrings.
-
-  * Fix some formatting problems.
-
-  * Use a for rather than a while loop in `dir_iterator_abort()` to
-    improve the clarity.
-
-  * Warn on failures of `opendir()`, `readdir()`, and `closedir()`
-    that can't be explained as a simple race.
-
-* In "for_each_reflog(): reimplement using iterators", make the vtable
-  private.
-
-If you'd prefer a separate series, let me know and I'll prepare that.
-
-Michael
-
-[1] https://github.com/mhagger/git
-[2] http://thread.gmane.org/gmane.comp.version-control.git/296801
+diff --git a/Documentation/gitworkflows.txt b/Documentation/gitworkflow=
+s.txt
+index f16c414..1ec1f63 100644
+--- a/Documentation/gitworkflows.txt
++++ b/Documentation/gitworkflows.txt
+@@ -463,6 +463,178 @@ if you get conflicts: `git am -3` will use index =
+information contained
+ in patches to figure out the merge base.  See linkgit:git-am[1] for
+ other options.
+=20
++TRIANGULAR WORKFLOW
++-------------------
++
++In some projects, you cannot push directly to the project but have to
++suggest your commits to the maintainer (e.g. pull requests).
++For these projects, it's common to use what's called a *triangular
++workflow*:
++
++- Taking the last version of the project by fetching from **UPSTREAM**
++- Writing modifications and push them to a fork (e.g. **PUBLISH**)
++- Opening a pull request
++- If the maintainer accepts the changes, he merges them into the
++  **UPSTREAM** repository.
++
++
++........................................
++------------------               -----------------
++| UPSTREAM       |  maintainer   | PUBLISH       |
++|  git/git       |- - - - - - - -|  me/remote    |
++------------------       =E2=86=90       -----------------
++              \                     /
++               \                   /
++          fetch=E2=86=93\                 /=E2=86=91push
++                 \               /
++                  \             /
++                   -------------
++                   |   LOCAL   |
++                   -------------
++........................................
++
++Motivations
++~~~~~~~~~~~
++
++* Allows contributors to work with Git even though they do not have
++write access to **UPSTREAM**.
++
++* Allows maintainers to receive code from contributors they may not
++trust.
++
++* Code review is more efficient
++
++* Encourages clean history by using `rebase -i` and `push --force` to=20
++your public fork before the code is merged
++
++Preparation
++~~~~~~~~~~~
++
++Cloning from **PUBLISH**, which is a fork of **UPSTREAM** or an empty
++repository.
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++`git clone <PUBLISH_url>`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++Setting the behavior of push for the triangular workflow:
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
++`git config push.default current`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
++
++Adding **UPSTREAM** remote:
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++`git remote add upstream <UPSTREAM_url>`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++With the `remote add` above, using `git pull upstream` pulls there,
++instead of saying its URL. In addition, `git pull` can pull from
++**UPSTREAM** without argument.
++
++For each branch requiring a triangular workflow, set
++`branch.<branch>.remote` and `branch.<branch>.pushRemote`.
++
++Example with master as <branch>:
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++* `git config branch.master.remote upstream`
++* `git config branch.master.pushRemote origin`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++Stay up-to-date
++~~~~~~~~~~~~~~~
++
++Retrieve updates from **UPSTREAM** with `git pull` and send them to
++**PUBLISH** with `git push`.
++
++Checks
++~~~~~~
++
++.Display the push remote's name:
++[caption=3D"Recipe: "]
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
++`git rev-parse --abbrev-ref @{push}`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++The shorthand `<branch>@{push}` denotes the remote-tracking branch
++where the <branch> would be pushed to. If no <branch> is specified
++(`@{push}`), <branch> takes the value of the current branch.
++
++
++.Display the fetch remote's name:
++[caption=3D"Recipe: "]
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++`git rev-parse --abbrev-ref @{upstream}`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++The shorthand `<branch>@{upstream}` substitutes the upstream name of
++the branch. If no <branch> is specified (`@{upstream}`), <branch>
++takes the value of the current branch.
++
++.Display commits added to the current branch since last push:
++[caption=3D"Recipe: "]
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++`git log @{push}..`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++.Display commits added to a specific branch since last push:
++[caption=3D"Recipe: "]
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
++`git log <branch_name>@{push}..`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
++
++Alternative configuration
++~~~~~~~~~~~~~~~~~~~~~~~~~
++
++.Cloning from **UPSTREAM**
++[caption=3D"Recipe: "]
++
++In the preparation above, a clone from **PUBLISH** was used. Starting
++with a clone of **UPSTREAM** is possible too.
++
++Cloning from **UPSTREAM**
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++`git clone <UPSTREAM_url>`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++Setting the behavior of push for the triangular workflow:
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
++`git config push.default current`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
++
++Because modifications will be often pushed into the **PUBLISH** reposi=
+tory,
++instead of having to type its URL every time, a short name can be used
++to call it.
++
++Adding **PUBLISH** remote:
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++`git remote add publish <PUBLISH_url>`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++With the `remote add` above, using `git push publish` pushes there,
++instead of saying its URL. In addition, `git push` can push to
++**PUBLISH** without argument.
++
++'Method 1: One option for all branches'
++
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++`git config remote.pushDefault publish`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++'Method 2: Each branch its option'
++
++Example with master as <branch>:
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++`git config branch.master.pushRemote publish`
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=20
+ SEE ALSO
+ --------
+@@ -473,7 +645,10 @@ linkgit:git-merge[1],
+ linkgit:git-rebase[1],
+ linkgit:git-format-patch[1],
+ linkgit:git-send-email[1],
+-linkgit:git-am[1]
++linkgit:git-am[1],
++linkgit:git-config[1],
++linkgit:git-log[1],
++linkgit:git-rev-parse[1]
+=20
+ GIT
+ ---
+--=20
+2.7.4 (Apple Git-66)
