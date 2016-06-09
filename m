@@ -1,73 +1,98 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 37/38] refs: make lock generic
-Date: Thu, 9 Jun 2016 17:53:31 +0200
-Message-ID: <575990FB.5000908@alum.mit.edu>
-References: <cover.1464983301.git.mhagger@alum.mit.edu>
- <d2a3cb56d7276c00174a08fe609d63e00755b205.1464983301.git.mhagger@alum.mit.edu>
- <xmqqlh2griq3.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/5] t1404: document function test_update_rejected
+Date: Thu, 09 Jun 2016 09:05:04 -0700
+Message-ID: <xmqqa8iujqkv.fsf@gitster.mtv.corp.google.com>
+References: <cover.1465299118.git.mhagger@alum.mit.edu>
+	<2561c38f85648144d665e870ca42c133a3a78909.1465299118.git.mhagger@alum.mit.edu>
+	<5756FCF3.7050509@kdbg.org> <57598F2F.9050806@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: David Turner <dturner@twopensource.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
+Content-Type: text/plain
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	David Turner <dturner@twopensource.com>,
 	Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 17:53:53 2016
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 09 18:05:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bB2HI-00022G-NS
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 17:53:53 +0200
+	id 1bB2SP-0003H3-LZ
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 18:05:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752478AbcFIPxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2016 11:53:49 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:63862 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751799AbcFIPxs (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2016 11:53:48 -0400
-X-AuditID: 12074414-62bff700000008e6-29-575990fe8d0a
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 07.E4.02278.EF099575; Thu,  9 Jun 2016 11:53:34 -0400 (EDT)
-Received: from [192.168.69.130] (p508EAACA.dip0.t-ipconnect.de [80.142.170.202])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u59FrVtg011166
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 9 Jun 2016 11:53:32 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.8.0
-In-Reply-To: <xmqqlh2griq3.fsf@gitster.mtv.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLKsWRmVeSWpSXmKPExsUixO6iqPtvQmS4wckf6hbzN51gtOi60s1k
-	0dB7hdmie8pbRosfLT3MFjOvWlucedPI6MDusXPWXXaPZ717GD0uXlL22L90G5vH4gdeHgue
-	32f3+LxJLoA9itsmKbGkLDgzPU/fLoE7Y+uXBuaC+0wVnfteMzUwTmPqYuTkkBAwkejsfsUM
-	YgsJbGWU2PPcGMI+zyRxuSMFxBYWMJI4/qoVrEZEQE1iYtshli5GLqCanYwS+5bNAHOYBWYx
-	SXRsvcgIUsUmoCuxqKcZbAOvgLbExPO3wOIsAioSk3e0g00SFQiROL9uKytEjaDEyZlPWEBs
-	TgFriROdZ8DqmQX0JHZc/8UKYctLbH87h3kCI/8sJC2zkJTNQlK2gJF5FaNcYk5prm5uYmZO
-	cWqybnFyYl5eapGuhV5uZoleakrpJkZIwIvsYDxyUu4QowAHoxIPr0ZKRLgQa2JZcWXuIUZJ
-	DiYlUV7BnshwIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8pt1AOd6UxMqq1KJ8mJQ0B4uSOO+3
-	xep+QgLpiSWp2ampBalFMFkZDg4lCd69/UCNgkWp6akVaZk5JQhpJg5OkOFcUiLFqXkpqUWJ
-	pSUZ8aCYjC8GRiVIigdor/YEkL3FBYm5QFGI1lOMxhwLftxey8RxZP+9tUxCLHn5ealS4ryc
-	IKUCIKUZpXlwi2Cp7hWjONDfwrxPQe7hAaZJuHmvgFYxAa1afiQcZFVJIkJKqoExolL0vfnn
-	fQwmRWo9DFNdVjbY29feu2iWs/a8wNoChrlXVnfnPJsesIs1Z+W+3TNnPE1XCVq7 
+	id S932102AbcFIQFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2016 12:05:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54857 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932075AbcFIQFJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2016 12:05:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 830B32104C;
+	Thu,  9 Jun 2016 12:05:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SOmZoqd+nJvNLXqcnBYT7rsua1U=; b=vKnaPL
+	Nmw566P80mUVOAUELKqTRsQz9tEifu3HXquKfX5fdg1k0My6X+iy8ra+hXKV6CZr
+	cjYcurbHSYVoWhYaN2FhczA/VpSt64mHpGE05zk1/e4Tl3hK2bwmdeLLALd2uKuB
+	dEgFUQ4yuebhTUiRgtjAc6jxsQ9DZSg2yRDRQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WRVW1GAlY0+Db0cutZ3YnxLticfaLjyq
+	ol0Zj5zm105psGoaPPOdpnSV4XQ3xtMvFiBOO40N0mZb65UXQbVewM7T6wEJGsv7
+	CYL2p7rgYQDvhqSnGLM3Ll/YZ62VhuhRtvACTqZPMMBAfgRgmxPyteN0VIPIkjcB
+	zlU61z9NR/4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B0E92104B;
+	Thu,  9 Jun 2016 12:05:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5282921049;
+	Thu,  9 Jun 2016 12:05:06 -0400 (EDT)
+In-Reply-To: <57598F2F.9050806@alum.mit.edu> (Michael Haggerty's message of
+	"Thu, 9 Jun 2016 17:45:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: EEC4D5F0-2E5B-11E6-8152-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296897>
 
-On 06/07/2016 07:50 PM, Junio C Hamano wrote:
-> [...]
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Thanks for all your comments, Junio. I've pushed a revised version of
-the patch series to my GitHub fork [1] as branch "ref-store", but I'll
-wait for a little longer to see if there are more comments on the list
-before sending a re-roll.
+> On 06/07/2016 06:57 PM, Johannes Sixt wrote:
+>> Am 07.06.2016 um 13:50 schrieb Michael Haggerty:
+>>>   test_update_rejected () {
+>>> +    local prefix before pack create error &&
+>> 
+>> Do we want to add more of unportable 'local' declarations?
+>
+> Sorry, I forgot that `local` is not in the POSIX standard.
 
-Michael
+Regarding portability we say three things.
 
-[1] https://github.com/mhagger/git
+ * It is supported practically everywhere, and it is even in POSIX,
+   so let's use it.
+
+ * Even this is not in POSIX, it is supported practically
+   everywhere, and it is too cumbersome to do things without using
+   it, so let's use it.
+
+ * It is not available in some platforms we (collectively) still
+   care; it is not even in POSIX.  Don't use it.
+
+I think "local" falls into the third one.
+
+: bash; ksh
+$ v=1
+$ f () { local v; v=2; echo f; }
+$ f
+ksh: local: not found [No such file or directory]
+f
+$ echo $v
+2
+$ exit
+: bash;
