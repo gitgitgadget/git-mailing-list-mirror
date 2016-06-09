@@ -1,94 +1,80 @@
-From: Alfred Perlstein <alfred@freebsd.org>
-Subject: Re: `git help svn` missing description of `propset`
-Date: Wed, 8 Jun 2016 16:54:16 -0700
-Organization: FreeBSD
-Message-ID: <a87422f0-0717-1e1b-5bae-c4e779783b6a@freebsd.org>
-References: <2A4EC08B-3095-4063-BDF3-5B1CD1CEA2C3@apple.com>
- <20160607200828.GA29701@dcvr.yhbt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] fixup! d5ad6c13
+Date: Wed, 08 Jun 2016 17:10:37 -0700
+Message-ID: <xmqqporrjk76.fsf@gitster.mtv.corp.google.com>
+References: <20160608225818.726-1-gitster@pobox.com>
+	<20160608225818.726-4-gitster@pobox.com>
+	<CAGZ79kYjaWJ8=3rizFE+EZXS3P1LjX8bGD-6LwfmjG83cjgVJQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, David Fraser <davidf@sjsoft.com>
-To: Eric Wong <e@80x24.org>, Joseph Pecoraro <pecoraro@apple.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 02:03:24 2016
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 02:10:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bAnRR-000309-0D
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 02:03:21 +0200
+	id 1bAnYb-0007fL-7r
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jun 2016 02:10:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932521AbcFIADG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2016 20:03:06 -0400
-Received: from elvis.mu.org ([192.203.228.196]:57961 "EHLO elvis.mu.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932086AbcFIADF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2016 20:03:05 -0400
-X-Greylist: delayed 526 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Jun 2016 20:03:05 EDT
-Received: from Alfreds-MacBook-Pro-2.local (unknown [IPv6:2601:645:8003:a4d6:c9f0:5c55:b2b3:cc8])
-	by elvis.mu.org (Postfix) with ESMTPSA id CB968346DFAC;
-	Wed,  8 Jun 2016 16:54:16 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.1.1
-In-Reply-To: <20160607200828.GA29701@dcvr.yhbt.net>
+	id S933758AbcFIAKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2016 20:10:42 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63877 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933755AbcFIAKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2016 20:10:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7132F22847;
+	Wed,  8 Jun 2016 20:10:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bqAGXt5rrOso5HSOw3OBGw2PnYg=; b=IeVoqA
+	4NrLqahbcd/sFqQJYRpK215FAyF2a81PV3kIXrxUNSVjL7v6W8SaL93KQhwKFxWS
+	PjnBHbWSL22vd4HHFwqNyiuW5IjiMLUNCdHeHlQ0DW2zxslqS1t0uED+KBPr4SI0
+	46zqo42zwCVoeLvvkWgwoUCGpwjNATkXzAV00=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XOCnkl33CZ4s93SJbsRmhT4g5CVEJH0E
+	Nbuq2ScfhGsKVhGbd6y19GGYAJDuCB4cQZ6zSSUPpL+xMwjqcIRrXeXsP3U62IPQ
+	LKQ64h0hP4LaKLrj7J9KG5IR43Mg9uCAY6BCe7Yqj7xt7C+9dpqKJE46/KFAq3gs
+	dVPX3T5cC/Y=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6610222846;
+	Wed,  8 Jun 2016 20:10:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DBF2922844;
+	Wed,  8 Jun 2016 20:10:38 -0400 (EDT)
+In-Reply-To: <CAGZ79kYjaWJ8=3rizFE+EZXS3P1LjX8bGD-6LwfmjG83cjgVJQ@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 8 Jun 2016 17:00:20 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 98AD065E-2DD6-11E6-9746-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296864>
 
-Eric,
+Stefan Beller <sbeller@google.com> writes:
 
-Would love to contribute more to git!  I'm in the middle of a major 
-product launch, so I can do this next week.  Of course no hard feelings 
-will be had if someone else wants to do it.  I'm making myself a 
-calendar invite to remind myself right now.
-
-I'll ping y'all in a week hopefully with a patch.
-
-thank you,
-
--Alfred
-
-
-
-On 6/7/16 1:08 PM, Eric Wong wrote:
-> +Cc Alfred, David
+> On Wed, Jun 8, 2016 at 3:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> As the topic is in 'next' already, I'll leave this floating near the
+>> tip for now, until we can rewind the topic after the next release.
 >
-> Joseph Pecoraro <pecoraro@apple.com> wrote:
->> `git help svn` does not mention `propset` but it does mention `proplist` and `propget`. This seems like an oversight.
->>
->>
->>      $ git help svn
->>      ...
->>          proplist
->>              Lists the properties stored in the Subversion repository about a given file or directory.
->>              Use -r/--revision to refer to a specific Subversion revision.
->>          
->>          propget
->>              Gets the Subversion property given as the first argument, for a file. A specific revision
->>              can be specified with -r/--revision.
->>      ...
->>
->>
->> Interestingly, the generic `git svn` help does mention `propset`.
->>
->>
->>      $ git svn
->>      ...
->>        propget          Print the value of a property on a file or directory
->>                           --revision, -r <num>
->>        proplist         List all properties of a file or directory
->>                           --revision, -r <num>
->>        propset          Set the value of a property on a file or directory - will be set on commit
->>      ...
->>    
->> It seems Documentation/git-svn.txt is missing text for `propset`.
-> Thanks Joseph, indeed it is missing from the manpage.
+> I don't quite understand the motivation behind this commit.
 >
-> Alfred / David: either of you have a few cycles to spare to write
-> a manpage entry for this feature you worked on?
+>     We return the last element to allow succeeding operations
+>     access to the bottom of the stack without needing to walk it?
+>     This makes the follow up operations faster, because we expect the stack
+>     to be larger than 5 elements.
 >
-> If not, let us know, too, so others can work on it.  Thanks.
->
+> ?
+
+Think how you call _append() that returns void and then set the
+value to the last appended item.  YOu'd need to do something
+unwieldy like
+
+	git_attr_check_append(check, attr);
+	check->check[check->check_nr-1].value = value
