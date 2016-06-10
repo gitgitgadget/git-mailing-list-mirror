@@ -1,129 +1,80 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 05/38] refs: create a base class "ref_store" for files_ref_store
-Date: Fri, 10 Jun 2016 04:08:42 -0400
-Message-ID: <CAPig+cQqnDFQ1=ydQReJimVhL7WrjH9CD1RZ63ddCnNm=YVenA@mail.gmail.com>
-References: <cover.1464983301.git.mhagger@alum.mit.edu> <8ee7d7359f6763cba29dc788aba2f236204bb76e.1464983301.git.mhagger@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 1/6] t1404: rename file to t1404-update-ref-errors.sh
+Date: Fri, 10 Jun 2016 10:14:44 +0200
+Message-ID: <13a5d2e8b84bebaa6d826dd5b7cb78be057874c4.1465544913.git.mhagger@alum.mit.edu>
+References: <cover.1465544913.git.mhagger@alum.mit.edu>
+Cc: Johannes Sixt <j6t@kdbg.org>, David Turner <novalis@novalis.org>,
 	Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Git List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Jun 10 10:08:56 2016
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 10 10:15:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBHUt-00061b-GI
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 10:08:55 +0200
+	id 1bBHaz-0001QR-Le
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 10:15:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750921AbcFJIIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 04:08:47 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:36209 "EHLO
-	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750710AbcFJIIn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 04:08:43 -0400
-Received: by mail-io0-f196.google.com with SMTP id o127so5316220iod.3
-        for <git@vger.kernel.org>; Fri, 10 Jun 2016 01:08:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=XXqyE8T9D9osfcN29jaIhWNXTpA0ZLCXqatQtsFUfoY=;
-        b=ayThXXPrpyY9OJWJblGxqgkEL3ElwEkt3hBS4XzL6D/9G9FHZ98+L4ARgto5orNv5I
-         UmY6GpZ0fsIxrPxrq8HtcuVyprEfU3UAaZLJ7tWopWNqw6cZfCDJ6WK2UllxG3DAKmAk
-         82t6fQ/TKdSiop0ukdmiMiMJwTnc/gUyOY9Ja5voJqSipAxdARYDrVdcub7ftcJwYtxA
-         bm6gaGt/yrIAGUpzjrEf3BhJP+WV1lXFNMn+fWAgdO0UQoh3jC2Iz0tAgWq5w/nUYoMI
-         D1jWwLe8Sb5g7sr8/BXkI97k97jtpTpntnxl+49Snz/2/H3zAZzWiUzp4qA23MTkFjRI
-         5/UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=XXqyE8T9D9osfcN29jaIhWNXTpA0ZLCXqatQtsFUfoY=;
-        b=Sdb+yuwh2xC15b5293JWHxqrMNsM+2/CRqDIZSnUJ95kluPwtFRHTOGzV/gIzmVeyW
-         GKURXNDVZU9P3ZfX/22I3PmnIMuhp3OTX6lfIWEtHKXOIcX43CG1CATMTSYi2m/SXEkv
-         9JcGjKs+02zL5Rp0SaUmgr0ejsx4TD/CdtZInnyad4DUCL6gOtf7Ytpr0sIK4bhWCyU9
-         6BP8+M+MvBJ5ZH0Z8pB4lJlFChSajUAfdkKSGt0+25yIx+yy+XWpSjgfPLPvq1VOhto1
-         E6CRKmc7Xp+92o+YUVphrOAXisIV+wyGoEGX2gQOBOTYvt/jsi8JsgFUrsZl8G3cW5G5
-         0lMg==
-X-Gm-Message-State: ALyK8tLIJUQYQo5bQw8HJp7/iMQfPCKi2JRnY9gD4s4vXawzWA4Ccri4kd0tYl3oue/MIyoRxW9A5TEdP9fCEg==
-X-Received: by 10.107.47.41 with SMTP id j41mr1805844ioo.168.1465546122551;
- Fri, 10 Jun 2016 01:08:42 -0700 (PDT)
-Received: by 10.79.0.30 with HTTP; Fri, 10 Jun 2016 01:08:42 -0700 (PDT)
-In-Reply-To: <8ee7d7359f6763cba29dc788aba2f236204bb76e.1464983301.git.mhagger@alum.mit.edu>
-X-Google-Sender-Auth: t-M7WlsHbFtzYz8ZgGIAsWUEK04
+	id S1751632AbcFJIPD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2016 04:15:03 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:57991 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750900AbcFJIO6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2016 04:14:58 -0400
+X-AuditID: 12074411-e2bff70000000955-4b-575a7700e508
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id C3.F3.02389.0077A575; Fri, 10 Jun 2016 04:14:57 -0400 (EDT)
+Received: from michael.fritz.box (p508EAFFC.dip0.t-ipconnect.de [80.142.175.252])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u5A8EpD3028943
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Fri, 10 Jun 2016 04:14:55 -0400
+X-Mailer: git-send-email 2.8.1
+In-Reply-To: <cover.1465544913.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCIsWRmVeSWpSXmKPExsUixO6iqMtYHhVuMPM4i0XXlW4mi4beK8wW
+	T+beZba4vWI+s8WSh6+ZLbqnvGW0+NHSw+zA7vH3/Qcmj52z7rJ7PHzVxe7R1X6EzeNZ7x5G
+	j4uXlD0+b5ILYI/itklKLCkLzkzP07dL4M7o2x9ZcJ2t4vmMN0wNjPdZuxg5OSQETCT639xl
+	72Lk4hAS2MooMXXLEyaQhJDASSaJhWtCQWw2AV2JRT3NYHERATWJiW2HWEAamAU6mSRO7HkD
+	5HBwCAt4SDxeIwpisgioSvw6qABSzisQJbHz9UI2iF1yEpenPwCzOQUsJE5fn8AGscpc4t/s
+	JvYJjDwLGBlWMcol5pTm6uYmZuYUpybrFicn5uWlFuma6uVmluilppRuYoSEl+AOxhkn5Q4x
+	CnAwKvHwRuyKDBdiTSwrrsw9xCjJwaQkyrszMCpciC8pP6UyI7E4I76oNCe1+BCjBAezkgiv
+	GEiONyWxsiq1KB8mJc3BoiTOy7dE3U9IID2xJDU7NbUgtQgmK8PBoSTBq1YG1ChYlJqeWpGW
+	mVOCkGbi4AQZziUlUpyal5JalFhakhEPCv74YmD4g6R4gPa2l4LsLS5IzAWKQrSeYjTmWPDj
+	9lomjiP7761lEmLJy89LlRLnXQRSKgBSmlGaB7cIllheMYoD/S3MuwGkigeYlODmvQJaxQS0
+	avmRcJBVJYkIKakGxhWrLHv6X+hOZE//K1uaOt/yw9OG44FrF3rdacxw37dFbU37uZv3+oQs
+	tp5V0VIyWPX+2dbvEz8fWqXz5P9pXoe/bEkWH1XEzvFafm4x/z1zfxr70YnXQqYU 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296950>
 
-On Fri, Jun 3, 2016 at 5:03 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> We want ref_stores to be polymorphic, so invent a base class of which
-> files_ref_store is a derived class. For now there is a one-to-one
-> relationship between ref_stores and submodules.
->
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> @@ -973,53 +967,54 @@ static void clear_loose_ref_cache(struct files_ref_store *refs)
-> +/*
-> + * Downcast ref_store to files_ref_store. Die if ref_store is not a
-> + * files_ref_store. If submodule_allowed is not true, then also die if
-> + * files_ref_store is for a submodule (i.e., not for the main
-> + * repository). caller is used in any necessary error messages.
-> + */
-> +static struct files_ref_store *files_downcast(
-> +               struct ref_store *ref_store, int submodule_allowed,
-> +               const char *caller)
->  {
->         struct files_ref_store *refs;
->
-> +       if (ref_store->be != &refs_be_files)
-> +               die("BUG: ref_store is type \"%s\" not \"files\" in %s",
-> +                   ref_store->be->name, caller);
->
-> +       refs = (struct files_ref_store *)ref_store;
-> +
-> +       if (!submodule_allowed)
-> +               assert_main_repository(ref_store, caller);
-> +
-> +       return refs;
->  }
+I want to broaden the scope of this test file, so rename it accordingly.
 
-Aside from returning the downcasted value, 'refs' doesn't seem to be
-used for anything, thus could be dropped and  the downcasted value
-returned directly:
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ t/{t1404-update-ref-df-conflicts.sh => t1404-update-ref-errors.sh} | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+ rename t/{t1404-update-ref-df-conflicts.sh => t1404-update-ref-errors.sh} (98%)
 
-    return (struct files_ref_store *)ref_store;
-
-Not worth a re-roll.
-
-> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-> @@ -521,11 +521,89 @@ int read_raw_ref(const char *refname, unsigned char *sha1,
-> +/*
-> + * A representation of the reference store for the main repository or
-> + * a submodule. The ref_store instances for submodules are kept in a
-> + * linked list.
-> + */
-> +struct ref_store {
-> +       /* The backend describing this ref_store's storage scheme: */
-> +       const struct ref_storage_be *be;
-> +
-> +       /*
-> +        * The name of the submodule represented by this object, or
-> +        * the empty string if it represents the main repository's
-> +        * reference store:
-> +        */
-> +       const char *submodule;
-
-Tangent: Apart from backward compatibility due to all the existing
-code which tests *submodule to distinguish between the main repository
-and a submodule, is there a technical reason that this ought to store
-an empty string rather than (the more idiomatic) NULL to signify the
-main repository?
+diff --git a/t/t1404-update-ref-df-conflicts.sh b/t/t1404-update-ref-errors.sh
+similarity index 98%
+rename from t/t1404-update-ref-df-conflicts.sh
+rename to t/t1404-update-ref-errors.sh
+index 6d869d1..2818460 100755
+--- a/t/t1404-update-ref-df-conflicts.sh
++++ b/t/t1404-update-ref-errors.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-test_description='Test git update-ref with D/F conflicts'
++test_description='Test git update-ref error handling'
+ . ./test-lib.sh
+ 
+ test_update_rejected () {
+-- 
+2.8.1
