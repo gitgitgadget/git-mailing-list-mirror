@@ -1,240 +1,126 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: [PATCH v4 2/3] completion: add __git_get_option_value helper
-Date: Fri, 10 Jun 2016 15:10:20 +0200
-Message-ID: <20160610151020.Horde.AfAwgXgKC_jSSpyr60T85sW@webmail.informatik.kit.edu>
-References: <xmqq8tymp385.fsf@gitster.mtv.corp.google.com>
- <20160603183426.13140-1-thomas.braun@virtuell-zuhause.de>
- <20160603183426.13140-3-thomas.braun@virtuell-zuhause.de>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH 1/2] bisect--helper: `is_expected_rev` shell function in C
+Date: Fri, 10 Jun 2016 19:09:45 +0530
+Message-ID: <CAFZEwPOhssmTt6TLPhxjzru+B3sWgXWh71yRt9BOvLqc0imq-g@mail.gmail.com>
+References: <20160608152415.7770-1-pranit.bauva@gmail.com> <CAPig+cRC_y9MBSsrLEs0OxL4=FMfU-=ACwhESUiECrWrDNvaCw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: peff@peff.net, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>
-To: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-X-From: git-owner@vger.kernel.org Fri Jun 10 15:10:57 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Jun 10 15:39:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBMD9-0000ww-A3
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 15:10:55 +0200
+	id 1bBMfE-0000A6-Qy
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 15:39:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161083AbcFJNKu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2016 09:10:50 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:55240 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932248AbcFJNKd convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 09:10:33 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1bBMCj-0001Qo-2i; Fri, 10 Jun 2016 15:10:29 +0200
-Received: from apache by webmail.ira.uka.de with local (Exim 4.84_2)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1bBMCa-00045o-Ao; Fri, 10 Jun 2016 15:10:20 +0200
-Received: from x4db0041d.dyn.telefonica.de (x4db0041d.dyn.telefonica.de
- [77.176.4.29]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Fri, 10 Jun 2016 15:10:20 +0200
-In-Reply-To: <20160603183426.13140-3-thomas.braun@virtuell-zuhause.de>
-User-Agent: Horde Application Framework 5
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1465564229.
+	id S932608AbcFJNjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2016 09:39:48 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:35981 "EHLO
+	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752323AbcFJNjr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 09:39:47 -0400
+Received: by mail-yw0-f195.google.com with SMTP id l126so8518408ywe.3
+        for <git@vger.kernel.org>; Fri, 10 Jun 2016 06:39:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=N191LFHCvyEu8Uq6pOl9P+rMdgoiT+rDf74gDmC4Q5c=;
+        b=PRb4XUBCyk360WwRwFoPXWWQi6KfyCTEXLIleHnc3CPtVuHqkrr9C256vaES9bRk5m
+         jloChqNUSW0JwzfDz4yKucPsy3GwZdObBAsy6aHO63PZ1kxOtXQx6KurI9RKWKeEh7ZZ
+         eOPDV61NwAl+OpWng61dCU23q/8HYTYROrZ5DI/gcvetp+X1oz/IFjY9Dt5sFEO9z4bU
+         loplWxBXEZUVPHxZonmrn8PYmvAYGSNIU70UET3jTl73tJvM9NsUnPWkyHPbjafjXX9n
+         GEU8dhbj2nmPCHYI4Bj50JLwCsMkI9xn6kpTAektbNOcLjVsNjrOC748umWbiuWjQUyN
+         b4AQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=N191LFHCvyEu8Uq6pOl9P+rMdgoiT+rDf74gDmC4Q5c=;
+        b=mFHfN265+DROhmHjYPsGLgkPlqYN19ztODHZaBA77UO/O2qWcjhWtwKDQSrCWdT85g
+         uRRPKMkW3VK6pKhA2zdJ+BevyqkaszCcjiB2XyzSj2ygJqUKfW+r9tJBya9FLtA1Q7LW
+         xmkHMFAPFuPBqhvFQaBRqpSc36g/3guHo9vLPEvHDmGkvUFvxho7ZinvsneEQtfyYthY
+         uNbRgz57GDIMaklMXeZzHV2tlYjBPdqFt5S8uqmhRVWs2AYu2YmNZE5I1hZA2IJcI7la
+         ulHojpN6yeElQWYA+nSLMympyaGzaJQKJh1Ec6vv0SVPGxfMqIsHToor+fHnO9GFSTf0
+         FALg==
+X-Gm-Message-State: ALyK8tIsCN3FrQs1deUFc23Btaw1avC9nhqJHxUnevXevrTnkMh4tYHdMjMnR4laI2Rg4gNBWlxTqrfb6oOdlg==
+X-Received: by 10.129.81.144 with SMTP id f138mr980890ywb.154.1465565986240;
+ Fri, 10 Jun 2016 06:39:46 -0700 (PDT)
+Received: by 10.129.124.132 with HTTP; Fri, 10 Jun 2016 06:39:45 -0700 (PDT)
+In-Reply-To: <CAPig+cRC_y9MBSsrLEs0OxL4=FMfU-=ACwhESUiECrWrDNvaCw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297004>
 
+Hey Eric,
 
-Hallo Thomas,
-
-I saw v5 hit my mailbox while writing this.  I glanced it over and it
-seems my comments here apply to that version as well.
-
-Quoting Thomas Braun <thomas.braun@virtuell-zuhause.de>:
-
-> This function allows to search the commmand line and config
-> files for an option, long and short, with mandatory value.
+On Fri, Jun 10, 2016 at 3:03 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Jun 8, 2016 at 11:24 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> Reimplement `is_expected_rev` shell function in C. This will further be
+>> called from `check_expected_revs` function. This is a quite small
+>> function thus subcommand facility is redundant.
 >
-> The function would return e.g. for the command line
-> "git status -uno --untracked-files=3Dall" the result
-> "all" regardless of the config option.
+> This patch should be squashed into patch 2/2, as it is otherwise
+> pointless without that patch, and merely adds dead code.
 
-Wow, regarding my earlier remark about bonus points: I didn't realize
-that there were so many bonus point to give away :)
+Sure I will squash and will explain it in the commit message.
 
-> Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-> ---
-> contrib/completion/git-completion.bash | 44 =20
-> ++++++++++++++++++++++++++++++++++
-> 1 file changed, 44 insertions(+)
+>> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+>> ---
+>> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+>> @@ -160,6 +160,20 @@ int bisect_reset(const char *commit)
+>> +static int is_expected_rev(const char *expected_hex)
+>> +{
+>> +       struct strbuf actual_hex = STRBUF_INIT;
+>> +
+>> +       if (!file_exists(git_path_bisect_expected_rev()))
+>> +               return 0;
 >
-> diff --git a/contrib/completion/git-completion.bash =20
-> b/contrib/completion/git-completion.bash
-> index addea89..4bd17aa 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -803,6 +803,50 @@ __git_find_on_cmdline ()
-> 	done
-> }
+> Invoking file_exists() seems unnecessarily redundant when you can
+> discern effectively the same by checking the return value of
+> strbuf_read_file() below. I'd drop the file_exists() check altogether.
+
+I wanted to imitate the code. But I guess it would actually be better
+if I drop this file_exists().
+
+>> +       if (!strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0))
+>> +               return 0;
 >
-> +# Echo the value of an option set on the command line or config
-> +#
-> +# $1: short option name
-> +# $2: long option name including =3D
-
-I'm not sure about requiring the '=3D', the function could just append
-it as necessary.  More on this below.
-
-> +# $3: list of possible values
-> +# $4: config string (optional)
-
-I don't understand why the list of possible values is necessary.
-
-This function will be called when the caller wants to take different
-actions based on different values, so the caller will process the
-function's output with a case statement or an if-else chain, both of
-which would be perfectly capable to ignore whatever invalid value the
-user might have specified.  Therefore, I think this function doesn't
-need the list of possible values, it should just return whatever value
-it found after the option.
-
-> +# example:
-> +# result=3D"$(__git_get_option_value "-d" "--do-something=3D"\
-> +#     "yes no" "core.doSomething")"
-> +#
-> +# result is then either empty (no option set) or "yes" or "no"
-> +#
-> +# __git_get_option_value requires 3 arguments
-> +__git_get_option_value ()
-> +{
-> +	local c short_opt long_opt val
-> +	local result=3D values config_key word
-> +
-> +	short_opt=3D"$1"
-> +	long_opt=3D"$2"
-> +	values=3D"$3"
-> +	config_key=3D"$4"
-
-These can be assigned when the variables are declared, saving a couple
-of lines.
-
-> +	((c =3D $cword - 1))
-> +	while [ $c -ge 0 ]; do
-
-Searching from the end of the command line, so even if someone were to
-do a 'git status -uall -unormal -uno <TAB>', this would still do the
-right thing.  Good!
-
-However ;)
-Just for fun imagine following:
-
-       $ >-uno
-       $ git status -- -uno <TAB>
-
-'git status' treats that '-uno' after the doubledash as a filename,
-but this function interprets it as an option, and on the subsequent
-TAB the completion script won't list untracked files.
-
-I'm tempted to say that this is such a pathological corner case that
-it doesn't worth worrying about.
-
-> +		word=3D"${words[c]}"
-> +		for val in $values; do
-
-Without the possible values argument this inner loop could go away.
-
-> +			if [ "$short_opt$val" =3D "$word" ]
-> +			|| [ "$long_opt$val"  =3D "$word" ]; then
-> +				result=3D"$val"
-> +				break 2
-
-You could just 'echo "$val"' or rather ${word#$short_opt} and return
-here ...
-
-> +			fi
-> +		done
-> +		((c--))
-> +	done
-> +
-> +	if [ -n "$config_key" ] && [ -z "$result" ]; then
-
-=2E.. and that would make the second condition unnecessary here ...
-
-> +		result=3D"$(git --git-dir=3D"$(__gitdir)" config "$config_key")"
-
-=2E.. and this could just be a simple 'git config' execution, without
-command substitution ...
-
-> +	fi
-> +
-> +	echo "$result"
-
-=2E.. and this echo could go away as well.
-
-> +}
-> +
-> __git_has_doubledash ()
-> {
-> 	local c=3D1
-> --
-> 2.8.3.windows.1
+> What exactly is this trying to do? Considering that strbuf_read_file()
+> returns -1 upon error, otherwise the number of bytes read, if I'm
+> reading this correctly, is_expected_rev() returns false if
+> strbuf_read_file() encounters an error (which is fine) but also when
+> it successfully reads the file and its content length is non-zero
+> (which is very odd).
+>
+>> +       strbuf_trim(&actual_hex);
+>> +       return !strcmp(actual_hex.buf, expected_hex);
+>
+> Thus, it only ever gets to this point if the file exists but is empty,
+> which is very unlikely to match 'expected_hex'. I could understand it
+> if you checked the result of strbuf_read_file() with <0 or even <=0,
+> but the current code doesn't make sense to me.
+>
+> Am I misunderstanding?
 
 
-However, I'm not sure we need or want this helper function _at the
-moment_.  Yes, in general helper functions are good, and in this case
-it makes _git_status() easier to follow, but it has some drawbacks,
-too:
+Definitely not. Thanks for pointing it out. :) It went off my head
+that strbuf_read_file returns the bytes it reads. Also the code
+comment regarding strbuf_read_file does not mention it which probably
+misguided me. I should also send a fixing patch so that someone else
+does not fall into this like I did.
 
-   - It has a single callsite: the upcoming _git_status().  No other
-     existing case springs to mind where it could be used, i.e. where
-     different values of an option would require different actions from
-     the completion script.  Maybe we'll have one in the future, maybe
-     not.
+I will also release the 'actual_hex'.
 
-   - This function works only with the "stuck" form of options, i.e.
-     '--opt=3Dval' or '-oval', which is mostly sufficient in this case,
-     because 'git status' understands only this form.  However, it
-     doesn't work with "unstuck" options, i.e. '--opt val' or '-o val'.
-     In many cases git supports only this "unstuck" form, and there are
-     many cases where it supports both for a given option.  We can't kn=
-ow
-     which form a future callsite might need, but requiring the '=3D' a=
-s
-     part of the long option seems to paint us into a corner.
+Thanks for your comments!
 
-   - I wrote "mostly sufficient" above, because 'git status' does accep=
-t
-     a valueless '-u|--untracked-files' option, too, e.g.:
-
-       $ git config status.showUntrackedFiles no
-       $ git status --untracked-files
-
-     lists untracked files, therefore the completion script should list
-     them as well.  Your function can't cope with this case, and I'm no=
-t
-     sure how it and its caller could differentiate between the presenc=
-e
-     of such a valueless option and no option at all.  Perhaps with an
-     additional optional function parameter holding the default value
-     that should be echo-ed when a valueless option is encountered.
-
-If this function were not a function but its logic were embedded into
-_git_status(), then we wouldn't have to spend any effort _now_ to come
-up with a proper calling convention that can cope with stuck vs.
-unstuck vs. both forms of options and with valueless options.  We would
-deal with all that and the necessary refactorization when (or if ever)
-there's a second potential callsite.  Embedding into _git_status()
-would give you more freedom to deal with the valueless '-u' option,
-too.  If embedded, some of my in-code comments wouldn't apply anymore,
-of course.
-
-I'm in favor of crossing the bridge when we get there.
-
-
-G=C3=A1bor
+Regards,
+Pranit Bauva
