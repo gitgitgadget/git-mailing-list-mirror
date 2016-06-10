@@ -1,149 +1,198 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 23/27] clone: define shallow clone boundary with --shallow-exclude
-Date: Fri, 10 Jun 2016 19:27:10 +0700
-Message-ID: <20160610122714.3341-24-pclouds@gmail.com>
+Subject: [PATCH 21/27] upload-pack: support define shallow boundary by excluding revisions
+Date: Fri, 10 Jun 2016 19:27:08 +0700
+Message-ID: <20160610122714.3341-22-pclouds@gmail.com>
 References: <20160610122714.3341-1-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 10 14:31:22 2016
+X-From: git-owner@vger.kernel.org Fri Jun 10 14:31:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBLZQ-0001kO-Ob
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 14:29:53 +0200
+	id 1bBLZG-0001at-FK
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 14:29:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932958AbcFJM3r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2016 08:29:47 -0400
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:34525 "EHLO
-	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932173AbcFJM3q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 08:29:46 -0400
-Received: by mail-pa0-f66.google.com with SMTP id ug1so5027912pab.1
-        for <git@vger.kernel.org>; Fri, 10 Jun 2016 05:29:45 -0700 (PDT)
+	id S932942AbcFJM3i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2016 08:29:38 -0400
+Received: from mail-pa0-f65.google.com ([209.85.220.65]:34502 "EHLO
+	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932843AbcFJM3h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 08:29:37 -0400
+Received: by mail-pa0-f65.google.com with SMTP id ug1so5027710pab.1
+        for <git@vger.kernel.org>; Fri, 10 Jun 2016 05:29:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=koNA9AJuJ4ZvrlUUKTRH6NZWKQJLiJnc8vvN4aZ28cI=;
-        b=COWmoNLr3K1J3Ie3BfNgETCxjYD2cEqAmcYeeAHQYSI88d+VYF/tS5OPTn1mjq6zAo
-         YJPYUcP9st8nLr3fslrLq+Pr1uvqK0nEvd8rqZZ5LV6ew092YdGfLGdN1ObmEAn8JDz3
-         BsuaoNbJpL1Ds+4ZskPHG1/0lBDeAC3fs9FwAC2mPEVlzflNElNC5izZ1byNru/G31/c
-         qvqQlG8xW9eKDpwGfg7iqaCRiXTZwnq6xC/c7jeRXxAs0FbA3C6x+s0SAskzWiF0QDfI
-         3DUb/lidfufcImLVjX+nlcUDQLu81mmFpgYbbkSfMldWRrIYPLId36RitYhMDQlrirTP
-         qXqA==
+        bh=Y5fgRalptkJlADrPINZxo3nALXqpfUCc9FqGD4xNtIU=;
+        b=SIP6+W10PfI7bVG6xw+46ljSQBhtRM3+l3mDdlPljFcgsikI2J64lxMHufSWjvKm9u
+         qN0QL0OTcgChHF+/dfT50Vtx4CfoQbk7fJqjPITGjmLz7ULHHc1fM2iBPT3iZTrynLih
+         6Gk4STgbVaGLoQkNbwM1EkwkPkniqTToDjeTjPNwzy4uzSP4YmjMR7LurLCcGswUy5BT
+         Zb5qhcXGLT/EblXWu/i+yPWYfREuc7RFGR/nOtHnmfvmmUqHJYJpMVbMrh3VoP2gByS9
+         FVzAZ7ab/GAuuVJfezgJ2bd7XNqVK+ruy9E5nD60PtSRivlTUYdfhK0aISAdU1MTmerc
+         e65A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=koNA9AJuJ4ZvrlUUKTRH6NZWKQJLiJnc8vvN4aZ28cI=;
-        b=S15kmB0A5kEI36VZEPvuRl5agwcC0x/MSMXbJS7c6M9h22DwoQGsTeuCYrsk8bz92Y
-         FF+cXxuaylUUUGLCzwnTf/Y7zO8BT8pNLpVZbtPnmHINOkFdYCUJ/6Q6FejRGf1L7Ple
-         hfEJSMXlYywj0R5mXe7Xhakw3+AT735zk1HfG5JOF2FwP2xqm/5kCwUBt/h8ZgPrMKwF
-         sEJETHAwfhhK8JiljdTyKy9szF0xMf4f4SI7Aj9EZ4AeLUSjcTxvGcwUxrZXd00bVkHx
-         SIbwXLMLuTBPwqFQyoAWg8S+eefPs9MVw3/eEk4wQBV8vqb4mme2gjFaclN65g1MfaS3
-         avFA==
-X-Gm-Message-State: ALyK8tJJnQhfXRD7i9rplM6vosr6x8pO/sttNwu4AuS5KqqCQ9HjSv6szwZZtYufQch9kQ==
-X-Received: by 10.66.126.179 with SMTP id mz19mr2020127pab.27.1465561785152;
-        Fri, 10 Jun 2016 05:29:45 -0700 (PDT)
+        bh=Y5fgRalptkJlADrPINZxo3nALXqpfUCc9FqGD4xNtIU=;
+        b=eW8GkXzrV/7X7jAWEse5aIRkciRCLxqToDQrk4efCi3D7IJy70K0ZVq/RZkbwErQFl
+         BtlxFGqaVPu3JVyqnvZE0SbuHSLSm9pq2Rz6gBkv+YWzcWiaz8HNWm1z+2y5ifJvYvp5
+         78bVH31fDOxgqY0vlf2fOj13Li1JUpCO390nbAiN3w9A8ij74TNI/fF71FwXo7gT1VHZ
+         gW/8IGGMRC+R2ztu7wMXbZA16gt0xjxSBnEgUTx1MFLyabI4kOcTSMOy3gJZeS+GulJT
+         zR9b6a7821zQropJMyObqUVjOcPpyHkJL4hxlbCtqOV9d/Is7CP6br+OBwO8djs8c6Xy
+         pkyg==
+X-Gm-Message-State: ALyK8tImsEi4q7QNCiFLGyOaB/Avo3Kg7WyzSM9AwepSjcc+XrP8Nzu8HsNMTbHtFZdYbw==
+X-Received: by 10.66.182.194 with SMTP id eg2mr1999898pac.159.1465561776147;
+        Fri, 10 Jun 2016 05:29:36 -0700 (PDT)
 Received: from ash ([115.76.211.1])
-        by smtp.gmail.com with ESMTPSA id q188sm17488159pfq.66.2016.06.10.05.29.42
+        by smtp.gmail.com with ESMTPSA id q127sm17533313pfb.34.2016.06.10.05.29.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Jun 2016 05:29:44 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Fri, 10 Jun 2016 19:29:40 +0700
+        Fri, 10 Jun 2016 05:29:35 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Fri, 10 Jun 2016 19:29:31 +0700
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
 In-Reply-To: <20160610122714.3341-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296993>
+
+This should allow the user to say "create a shallow clone of this branc=
+h
+after version <some-tag>".
+
+Short refs are accepted and expanded at the server side with expand_ref=
+()
+because we cannot expand (unknown) refs from the client side.
+
+Like deepen-since, deepen-not cannot be used with deepen. But deepen-no=
+t
+can be mixed with deepen-since. The result is exactly how you do the
+command "git rev-list --since=3D... --not ref".
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-clone.txt |  5 +++++
- builtin/clone.c             | 10 +++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ Documentation/technical/pack-protocol.txt         |  3 ++-
+ Documentation/technical/protocol-capabilities.txt |  9 +++++++++
+ upload-pack.c                                     | 23 +++++++++++++++=
+++++++--
+ 3 files changed, 32 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index a410409..5049663 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -196,6 +196,11 @@ objects from the source repository into a pack in =
-the cloned repository.
- --shallow-since=3D<date>::
- 	Create a shallow clone with a history after the specified time.
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/=
+technical/pack-protocol.txt
+index 9251df1..dee33a6 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/technical/pack-protocol.txt
+@@ -220,7 +220,8 @@ out of what the server said it could do with the fi=
+rst 'want' line.
+   shallow-line      =3D  PKT-LINE("shallow" SP obj-id)
 =20
-+--shallow-exclude=3D<revision>::
-+	Create a shallow clone with a history, excluding commits
-+	reachable from a specified remote branch or tag.  This option
-+	can be specified multiple times.
+   depth-request     =3D  PKT-LINE("deepen" SP depth) /
+-		       PKT-LINE("deepen-since" SP timestamp)
++		       PKT-LINE("deepen-since" SP timestamp) /
++		       PKT-LINE("deepen-not" SP ref)
+=20
+   first-want        =3D  PKT-LINE("want" SP obj-id SP capability-list)
+   additional-want   =3D  PKT-LINE("want" SP obj-id)
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Docume=
+ntation/technical/protocol-capabilities.txt
+index f08cc4e..0e6b57d 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/technical/protocol-capabilities.txt
+@@ -188,6 +188,15 @@ specific time, instead of depth. Internally it's e=
+quivalent of doing
+ "rev-list --max-age=3D<timestamp>" on the server side. "deepen-since"
+ cannot be used with "deepen".
+=20
++deepen-not
++----------
 +
- --[no-]single-branch::
- 	Clone only the history leading to the tip of a single branch,
- 	either specified by the `--branch` option or the primary
-diff --git a/builtin/clone.c b/builtin/clone.c
-index dc2ef4f..3849231 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -44,6 +44,7 @@ static int deepen;
- static char *option_template, *option_depth, *option_since;
- static char *option_origin =3D NULL;
- static char *option_branch =3D NULL;
-+static struct string_list option_not =3D STRING_LIST_INIT_NODUP;
- static const char *real_git_dir;
- static char *option_upload_pack =3D "git-upload-pack";
- static int option_verbosity;
-@@ -89,6 +90,8 @@ static struct option builtin_clone_options[] =3D {
- 		    N_("create a shallow clone of that depth")),
- 	OPT_STRING(0, "shallow-since", &option_since, N_("time"),
- 		    N_("create a shallow clone since a specific time")),
-+	OPT_STRING_LIST(0, "shallow-exclude", &option_not, N_("revision"),
-+			N_("deepen history of shallow clone by excluding rev")),
- 	OPT_BOOL(0, "single-branch", &option_single_branch,
- 		    N_("clone only one branch, HEAD or --branch")),
- 	OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
-@@ -852,7 +855,7 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
- 		usage_msg_opt(_("You must specify a repository to clone."),
- 			builtin_clone_usage, builtin_clone_options);
++This capability adds "deepen-not" command to fetch-pack/upload-pack
++protocol so the client can request shallow clones that are cut at a
++specific revision, instead of depth. Internally it's equivalent of
++doing "rev-list --not <rev>" on the server side. "deepen-not"
++cannot be used with "deepen", but can be used with "deepen-since".
++
+ no-progress
+ -----------
 =20
--	if (option_depth || option_since)
-+	if (option_depth || option_since || option_not.nr)
- 		deepen =3D 1;
- 	if (option_single_branch =3D=3D -1)
- 		option_single_branch =3D deepen ? 1 : 0;
-@@ -983,6 +986,8 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
- 			warning(_("--depth is ignored in local clones; use file:// instead.=
-"));
- 		if (option_since)
- 			warning(_("--shallow-since is ignored in local clones; use file:// =
-instead."));
-+		if (option_not.nr)
-+			warning(_("--shallow-exclude is ignored in local clones; use file:/=
-/ instead."));
- 		if (!access(mkpath("%s/shallow", path), F_OK)) {
- 			if (option_local > 0)
- 				warning(_("source repository is shallow, ignoring --local"));
-@@ -1004,6 +1009,9 @@ int cmd_clone(int argc, const char **argv, const =
-char *prefix)
- 	if (option_since)
- 		transport_set_option(transport, TRANS_OPT_DEEPEN_SINCE,
- 				     option_since);
-+	if (option_not.nr)
-+		transport_set_option(transport, TRANS_OPT_DEEPEN_NOT,
-+				     (const char *)&option_not);
- 	if (option_single_branch)
- 		transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
-=20
+diff --git a/upload-pack.c b/upload-pack.c
+index b0ddfff..3f40fcb 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -643,6 +643,7 @@ static void deepen_by_rev_list(int ac, const char *=
+*av,
+ static void receive_needs(void)
+ {
+ 	struct object_array shallows =3D OBJECT_ARRAY_INIT;
++	struct string_list deepen_not =3D STRING_LIST_INIT_DUP;
+ 	int depth =3D 0;
+ 	int has_non_tip =3D 0;
+ 	unsigned long deepen_since =3D 0;
+@@ -693,6 +694,16 @@ static void receive_needs(void)
+ 			deepen_rev_list =3D 1;
+ 			continue;
+ 		}
++		if (skip_prefix(line, "deepen-not ", &arg)) {
++			char *ref =3D NULL;
++			unsigned char sha1[20];
++			if (expand_ref(arg, strlen(arg), sha1, &ref) !=3D 1)
++				die("git upload-pack: ambiguous deepen-not: %s", line);
++			string_list_append(&deepen_not, ref);
++			free(ref);
++			deepen_rev_list =3D 1;
++			continue;
++		}
+ 		if (!skip_prefix(line, "want ", &arg) ||
+ 		    get_sha1_hex(arg, sha1_buf))
+ 			die("git upload-pack: protocol error, "
+@@ -747,7 +758,7 @@ static void receive_needs(void)
+ 	if (depth =3D=3D 0 && !deepen_rev_list && shallows.nr =3D=3D 0)
+ 		return;
+ 	if (depth > 0 && deepen_rev_list)
+-		die("git upload-pack: deepen and deepen-since cannot be used togethe=
+r");
++		die("git upload-pack: deepen and deepen-since (or deepen-not) cannot=
+ be used together");
+ 	if (depth > 0)
+ 		deepen(depth, &shallows);
+ 	else if (deepen_rev_list) {
+@@ -757,6 +768,14 @@ static void receive_needs(void)
+ 		argv_array_push(&av, "rev-list");
+ 		if (deepen_since)
+ 			argv_array_pushf(&av, "--max-age=3D%lu", deepen_since);
++		if (deepen_not.nr) {
++			argv_array_push(&av, "--not");
++			for (i =3D 0; i < deepen_not.nr; i++) {
++				struct string_list_item *s =3D deepen_not.items + i;
++				argv_array_push(&av, s->string);
++			}
++			argv_array_push(&av, "--not");
++		}
+ 		for (i =3D 0; i < want_obj.nr; i++) {
+ 			struct object *o =3D want_obj.objects[i].item;
+ 			argv_array_push(&av, oid_to_hex(&o->oid));
+@@ -812,7 +831,7 @@ static int send_ref(const char *refname, const stru=
+ct object_id *oid,
+ 		    int flag, void *cb_data)
+ {
+ 	static const char *capabilities =3D "multi_ack thin-pack side-band"
+-		" side-band-64k ofs-delta shallow deepen-since no-progress"
++		" side-band-64k ofs-delta shallow deepen-since deepen-not no-progres=
+s"
+ 		" include-tag multi_ack_detailed";
+ 	const char *refname_nons =3D strip_namespace(refname);
+ 	struct object_id peeled;
 --=20
 2.8.2.524.g6ff3d78
