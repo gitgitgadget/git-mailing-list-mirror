@@ -1,105 +1,125 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 00/94] libify apply and use lib in am
-Date: Fri, 10 Jun 2016 19:04:04 +0200
-Message-ID: <575AF304.8070407@kdbg.org>
-References: <20160511131745.2914-1-chriscool@tuxfamily.org>
- <5734B805.8020504@kdbg.org>
- <CAP8UFD1ukOMi_VDKzZErwSu1OBU5h1hVOxd7mPu1ytzFr11VGA@mail.gmail.com>
- <5759DB31.2000106@kdbg.org> <alpine.DEB.2.20.1606100852550.3039@virtualbox>
- <CAP8UFD1zSAxyHfZgBbfoF=th0waZWEhvHP+4jUxxVO+rU9N9RA@mail.gmail.com>
- <alpine.DEB.2.20.1606101307080.3039@virtualbox>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re* [BUG-ish] diff compaction heuristic false positive
+Date: Fri, 10 Jun 2016 11:13:10 -0700
+Message-ID: <xmqqeg84gbex.fsf_-_@gitster.mtv.corp.google.com>
+References: <20160610075043.GA13411@sigill.intra.peff.net>
+	<20160610083102.GA14192@sigill.intra.peff.net>
+	<xmqqvb1hf35y.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZLT8AfmWTrrW+a-v7aXw5sm68P2H=vT7QZr2hj4Z2gDA@mail.gmail.com>
+	<CA+P7+xp=bTPiwRRTH=h7v5pV8+=he4+789_3PNz227mv1387MA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jeff King <peff@peff.net>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 10 19:04:24 2016
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 10 20:13:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBPr2-0005RW-1p
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 19:04:20 +0200
+	id 1bBQvn-00032l-MM
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 20:13:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932989AbcFJREM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 13:04:12 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:44074 "EHLO bsmtp3.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752596AbcFJREJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 13:04:09 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3rR7n12CZ6z5tlF;
-	Fri, 10 Jun 2016 19:04:05 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id B3A4952A4;
-	Fri, 10 Jun 2016 19:04:04 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
-In-Reply-To: <alpine.DEB.2.20.1606101307080.3039@virtualbox>
+	id S1752168AbcFJSNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2016 14:13:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62678 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751382AbcFJSNO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 14:13:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A68CC21445;
+	Fri, 10 Jun 2016 14:13:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qyt+nsrDV1lgeaXy04j2wNyS3UY=; b=fHC7Wh
+	1gpetPvEGBMuyDoLSFXzC8Y5SDqW3/v/OX5QRuM5RRjVVlmVxdeHS3Vo8/kRr3tE
+	dIaL9xCQVFDwHKIW8CtWIQqDr25SqVQupgOuNJuJTC5AWkwtj9KQO59H2GhigjX9
+	5wAkPTQXsFvxisGii87f6AMi7R9azxBzwyfAc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XxhmVMgZL5Ak6U8z8/blKSNb7BBtMUVm
+	xZdSAJVU9QMy9rsJmj0RxNdkhETVxJdi41zSmWc5PVKHjQC4H6PzBkBTWwGSe8Np
+	d3/Ka24wtNUhYrCil5V4jynK6/eDP/XczpuFFjHs45ftQfNs4+6TGK8Z/1FIvfKv
+	9etc20zRnWI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9ED2821444;
+	Fri, 10 Jun 2016 14:13:12 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3CFDB21442;
+	Fri, 10 Jun 2016 14:13:12 -0400 (EDT)
+In-Reply-To: <CA+P7+xp=bTPiwRRTH=h7v5pV8+=he4+789_3PNz227mv1387MA@mail.gmail.com>
+	(Jacob Keller's message of "Fri, 10 Jun 2016 09:29:43 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: FE4D41DE-2F36-11E6-94A7-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297014>
 
-Am 10.06.2016 um 13:11 schrieb Johannes Schindelin:
-> On Fri, 10 Jun 2016, Christian Couder wrote:
->> On Fri, Jun 10, 2016 at 9:01 AM, Johannes Schindelin
->> <Johannes.Schindelin@gmx.de> wrote:
->>> I lost track in the meantime: were those issues with unclosed file handles
->>> and unreleased memory in the error code paths addressed systematically? My
->>> mail about that seems to have been left unanswered, almost as if my
->>> concerns had been hand-waved away...
->>
->> Haven't I answered to your email in this thread:
->>
->> http://thread.gmane.org/gmane.comp.version-control.git/292403/
->>
->> ?
+Jacob Keller <jacob.keller@gmail.com> writes:
+
+> I think we could use the indentation trick and it might help in this
+> case. I agree, let's disable this for this cycle and experiment in the
+> next one. Good catch, Peff.
 >
-> Not really. The reply (which I had not quite connected with my mail
-> because they were over a week apart) says this:
->
->> I fixed this by moving the "close(fd)" call just after the
->> "apply_patch()" call.
+> As others have said you will always be able to produce counter
+> examples, that's the nature of heuristics. The idea is to see if we
+> can come up with something simple that mostly improves the output,
+> even if sometimes it might have a negative impact on the outputs. But
+> I think we should avoid changing behavior unless it's mostly an
+> improvement.
 
-This bug in v1 was discovered by the test suite and fixed in v2.
+OK, let's do this then for the upcoming release for now.  I am
+tempted to flip it back on after the release in 'next', so that
+developers would be exposed to the heuristic by default, though.
 
->
-> and this:
->
->> I will have another look at the 2 other places where there are
->> open()/close() or fopen()/fclose() calls.
->
-> but nothing about a careful, systematic investigation of all error code
-> paths. As a consequence, I fully expect to encounter test failures as soon
-> as I test your patch series again, simply because resources are still in
-> use when they should no longer be used. In other words, my expectations
-> are now lower than they have been before, my concerns are not at all
-> addressed.
+-- >8 --
+Subject: [PATCH] diff: disable compaction heuristic for now
 
-Do you trust the test suite to some degree? It passes after the above 
-bug was fixed in v2. In addition, haven't found any problems so far 
-during daily use.
+http://lkml.kernel.org/g/20160610075043.GA13411@sigill.intra.peff.net
+reports that a change to add a new "function" with common ending
+with the existing one at the end of the file is shown like this:
 
->> This is the newest iteration:
->>
->> https://github.com/chriscool/git/commits/libify-apply-use-in-am65
->
-> And that cute 65 in the name is the revision.
+    def foo
+      do_foo_stuff()
 
-Yeah, that number is painful. I would appreciate an unversioned branch 
-name, too.
+   +  common_ending()
+   +end
+   +
+   +def bar
+   +  do_bar_stuff()
+   +
+      common_ending()
+    end
 
--- Hannes
+when the new heuristic is in use.  In reality, the change is to add
+the blank line before "def bar" and everything below, which is what
+the code without the new heuristic shows.
+
+Disable the heuristics by default and leave it as an experimental
+feature for now.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/diff.c b/diff.c
+index 05ca3ce..9116d9d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -25,7 +25,7 @@
+ #endif
+ 
+ static int diff_detect_rename_default;
+-static int diff_compaction_heuristic = 1;
++static int diff_compaction_heuristic; /* experimental */
+ static int diff_rename_limit_default = 400;
+ static int diff_suppress_blank_empty;
+ static int diff_use_color_default = -1;
+-- 
+2.9.0-rc2-275-g493bdbb
