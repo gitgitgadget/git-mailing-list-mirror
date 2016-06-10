@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 10/27] upload-pack: move rev-list code out of check_non_tip()
-Date: Fri, 10 Jun 2016 19:26:57 +0700
-Message-ID: <20160610122714.3341-11-pclouds@gmail.com>
+Subject: [PATCH 25/27] upload-pack: split check_unreachable() in two, prep for get_reachable_list()
+Date: Fri, 10 Jun 2016 19:27:12 +0700
+Message-ID: <20160610122714.3341-26-pclouds@gmail.com>
 References: <20160610122714.3341-1-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,145 +11,157 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 10 14:30:45 2016
+X-From: git-owner@vger.kernel.org Fri Jun 10 14:30:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBLYL-0000um-Vp
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 14:28:46 +0200
+	id 1bBLZl-00025G-0p
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 14:30:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932795AbcFJM2m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2016 08:28:42 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34150 "EHLO
-	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932602AbcFJM2k (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 08:28:40 -0400
-Received: by mail-pf0-f196.google.com with SMTP id 66so3245049pfy.1
-        for <git@vger.kernel.org>; Fri, 10 Jun 2016 05:28:39 -0700 (PDT)
+	id S933012AbcFJM36 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2016 08:29:58 -0400
+Received: from mail-pa0-f65.google.com ([209.85.220.65]:33186 "EHLO
+	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933004AbcFJM34 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 08:29:56 -0400
+Received: by mail-pa0-f65.google.com with SMTP id di3so5028721pab.0
+        for <git@vger.kernel.org>; Fri, 10 Jun 2016 05:29:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eejmqCLK1M1/lW5srIb4LU5HCo3/WBVy3SJskBfRGWY=;
-        b=rF/7RNfy3mrvyxb/hC5vyPsrYxRvE3MDVd08BSbJmyhjR4Jm4IFZze48VNLuxV7tIZ
-         K5btUzUu2/gJjl4hG/9MBllQlzaE3zHnamTgYcO5cNV2rqTp4Bqba+V6wNnwESn0Bj8h
-         sUXruICuZ4pT8yGgyF872CHJE22BZVipzU1N5hPM1CrwT7sBuBJ/yjpWr7w7opIG+9Kg
-         qt5qo5Lw7Wm/bdgPhuhCtSmxQaVR/JViMVrBczylHLQr474nmzSL7EGmtuUBWldqhXSi
-         OyFh4txoAOvzx1oMFrFJ4AAwbiwio388zs9e4YB/q9FU+knTbOB3Ex9Mq2ctieg2CBh7
-         LIeA==
+        bh=q4s/5WpdGG3djGUEFt4zrnL01dvzZiEz1Voc/Re9L5Y=;
+        b=mOMsm3KX1tisZpEFyqKVbkTAkuJBDKf+ixGpSgAhHwL7XzwEC5/RcK/mUNur6WeoEm
+         I8LwVZTRKtejU3Bj+X+SRP1QsgRXhz/+sPag5zIxC4CZ5xaWXR9kJpEkvibhKZsgxBt7
+         wt1xe19qi5xsrBK1yKQuMcfI5MEQqtJcs7yKUHle+wg6zQeBAaSJ7v6v9F3APZ5OQMwM
+         VpgGSXWj3nB1vI2YAkK7plaN3H9FInGmUXn6k+4wq1jzxsh3/8Tx8Rk0uP56SBxChyKH
+         M09FT1uP9tDbe8bsZls0F7p/U3dUfrBssS02Y036g3WiuPpiMuOxDpUxl1cJSbZR31hK
+         eBOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eejmqCLK1M1/lW5srIb4LU5HCo3/WBVy3SJskBfRGWY=;
-        b=BUEPheZxJ2kWBhrUUlgs5t/8SaahRxM/XJNLsVDK74dJf/90MsIOlLUP5lbDcEqIhh
-         MLp3NaTL3NqPMfbnV1qL80VvbBvSN3TcrRWbUw/jPwkSF8L9p6nvP1MnuV/ypvlAcSVj
-         oOgRk+bkyz3lpIhHeExnuTJqwzrTzwNowQg3mFBZl8jZsfI3ksbsmqYf+XnxbOtxT5PT
-         JRRf2JDuTIDZTHp5kVvaly86jLZTr/G4UL+/muOrtwGgrSVCVcHtUmbHW7qn5dsxBezz
-         S7ZRvIoC5EX+ZW8rffK2eYXIj4RhEXkHQUCE/5qwaQ86yWWZRA2l2NAfs9/RP3eiLOPt
-         6KqQ==
-X-Gm-Message-State: ALyK8tJ8mFOvAoPpv2sK3db96kEESKVfi9rcYxa/SEEkKBhkvN2N3RoOBR9Yx1EidHxQAg==
-X-Received: by 10.98.157.135 with SMTP id a7mr2087434pfk.117.1465561719191;
-        Fri, 10 Jun 2016 05:28:39 -0700 (PDT)
+        bh=q4s/5WpdGG3djGUEFt4zrnL01dvzZiEz1Voc/Re9L5Y=;
+        b=EKC9K8nJYuVmjYIL2juUywXSGUyhiImzCjU/thDqNt2uh82CUkEr9heSvblmZnqqif
+         hbYhC+XbLjEd6dvEnakaNhc4X9tncobVweroR4bYGxi6vFjvOmKWD0HC2icnWzrNnwF+
+         NFTZRU2VWewleZELM5laG4X+oNFwuQS/oESr/xDn19HUH0HNGkSSMJEQ9Kmsx4XTP0z1
+         o6//E2M52i5IxSAPWQs4dWqD9VlRQ7DJ8ecrsBjqTZpyPrMOqvcTFF5VeFc0CrhSK6VE
+         v4g9b5LHkwJ9duZCNPVoS79opcVoMfBh6IQTv9Pr2OlXDZ4n3LbGBhgoRxndDJpHqJle
+         n0lQ==
+X-Gm-Message-State: ALyK8tIPZL/gHn3X+iSIjmwJs08uOzNgr9kw5aOl6DR+UpIfCi79SuZmjmm5tTyaYFle8w==
+X-Received: by 10.66.126.47 with SMTP id mv15mr2161488pab.74.1465561794972;
+        Fri, 10 Jun 2016 05:29:54 -0700 (PDT)
 Received: from ash ([115.76.211.1])
-        by smtp.gmail.com with ESMTPSA id xt1sm17562893pac.7.2016.06.10.05.28.36
+        by smtp.gmail.com with ESMTPSA id g195sm17614731pfb.7.2016.06.10.05.29.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Jun 2016 05:28:38 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Fri, 10 Jun 2016 19:28:34 +0700
+        Fri, 10 Jun 2016 05:29:54 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Fri, 10 Jun 2016 19:29:50 +0700
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
 In-Reply-To: <20160610122714.3341-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296987>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- upload-pack.c | 36 +++++++++++++++++++++++-------------
- 1 file changed, 23 insertions(+), 13 deletions(-)
+ upload-pack.c | 44 +++++++++++++++++++++++++++++++-------------
+ 1 file changed, 31 insertions(+), 13 deletions(-)
 
 diff --git a/upload-pack.c b/upload-pack.c
-index 1e8b025..b6f3756 100644
+index 3f40fcb..5942f99 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -451,7 +451,7 @@ static int is_our_ref(struct object *o)
+@@ -452,23 +452,23 @@ static int is_our_ref(struct object *o)
  	return o->flags & ((allow_hidden_ref ? HIDDEN_REF : 0) | OUR_REF);
  }
 =20
--static void check_non_tip(void)
-+static int check_unreachable(struct object_array *src)
+-static int check_unreachable(struct object_array *src)
++static int do_reachable_revlist(struct child_process *cmd,
++				struct object_array *src)
  {
  	static const char *argv[] =3D {
  		"rev-list", "--stdin", NULL,
-@@ -461,14 +461,6 @@ static void check_non_tip(void)
+ 	};
+-	static struct child_process cmd =3D CHILD_PROCESS_INIT;
+ 	struct object *o;
  	char namebuf[42]; /* ^ + SHA-1 + LF */
  	int i;
 =20
--	/*
--	 * In the normal in-process case without
--	 * uploadpack.allowReachableSHA1InWant,
--	 * non-tip requests can never happen.
--	 */
--	if (!stateless_rpc && !(allow_unadvertised_object_request & ALLOW_REA=
-CHABLE_SHA1))
--		goto error;
--
- 	cmd.argv =3D argv;
- 	cmd.git_cmd =3D 1;
- 	cmd.no_stderr =3D 1;
-@@ -500,8 +492,8 @@ static void check_non_tip(void)
+-	cmd.argv =3D argv;
+-	cmd.git_cmd =3D 1;
+-	cmd.no_stderr =3D 1;
+-	cmd.in =3D -1;
+-	cmd.out =3D -1;
++	cmd->argv =3D argv;
++	cmd->git_cmd =3D 1;
++	cmd->no_stderr =3D 1;
++	cmd->in =3D -1;
++	cmd->out =3D -1;
+=20
+-	if (start_command(&cmd))
++	if (start_command(cmd))
+ 		goto error;
+=20
+ 	/*
+@@ -487,7 +487,7 @@ static int check_unreachable(struct object_array *s=
+rc)
+ 		if (!is_our_ref(o))
+ 			continue;
+ 		memcpy(namebuf + 1, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
+-		if (write_in_full(cmd.in, namebuf, 42) < 0) {
++		if (write_in_full(cmd->in, namebuf, 42) < 0) {
+ 			sigchain_pop(SIGPIPE);
+ 			goto error;
  		}
- 	}
- 	namebuf[40] =3D '\n';
--	for (i =3D 0; i < want_obj.nr; i++) {
--		o =3D want_obj.objects[i].item;
-+	for (i =3D 0; i < src->nr; i++) {
-+		o =3D src->objects[i].item;
+@@ -498,21 +498,39 @@ static int check_unreachable(struct object_array =
+*src)
  		if (is_our_ref(o))
  			continue;
  		memcpy(namebuf, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
-@@ -534,17 +526,35 @@ static void check_non_tip(void)
- 		goto error;
+-		if (write_in_full(cmd.in, namebuf, 41) < 0) {
++		if (write_in_full(cmd->in, namebuf, 41) < 0) {
+ 			sigchain_pop(SIGPIPE);
+ 			goto error;
+ 		}
+ 	}
+-	close(cmd.in);
+-	cmd.in =3D -1;
++	close(cmd->in);
++	cmd->in =3D -1;
 =20
- 	/* All the non-tip ones are ancestors of what we advertised */
--	return;
-+	return 1;
-=20
- error:
- 	if (cmd.in >=3D 0)
- 		close(cmd.in);
- 	if (cmd.out >=3D 0)
- 		close(cmd.out);
+ 	sigchain_pop(SIGPIPE);
 +	return 0;
-+}
-=20
-+static void check_non_tip(void)
-+{
-+	int i;
-+
-+	/*
-+	 * In the normal in-process case without
-+	 * uploadpack.allowReachableSHA1InWant,
-+	 * non-tip requests can never happen.
-+	 */
-+	if (!stateless_rpc && !(allow_unadvertised_object_request & ALLOW_REA=
-CHABLE_SHA1))
-+		goto error;
-+	if (check_unreachable(&want_obj))
-+		/* All the non-tip ones are ancestors of what we advertised */
-+		return;
 +
 +error:
- 	/* Pick one of them (we know there at least is one) */
- 	for (i =3D 0; i < want_obj.nr; i++) {
--		o =3D want_obj.objects[i].item;
-+		struct object *o =3D want_obj.objects[i].item;
- 		if (!is_our_ref(o))
- 			die("git upload-pack: not our ref %s",
- 			    oid_to_hex(&o->oid));
++	if (cmd->in >=3D 0)
++		close(cmd->in);
++	if (cmd->out >=3D 0)
++		close(cmd->out);
++	return -1;
++}
++
++static int check_unreachable(struct object_array *src)
++{
++	struct child_process cmd =3D CHILD_PROCESS_INIT;
++	char buf[1];
++	int i;
++
++	if (do_reachable_revlist(&cmd, src) < 0)
++		return 0;
+=20
+ 	/*
+ 	 * The commits out of the rev-list are not ancestors of
+ 	 * our ref.
+ 	 */
+-	i =3D read_in_full(cmd.out, namebuf, 1);
++	i =3D read_in_full(cmd.out, buf, 1);
+ 	if (i)
+ 		goto error;
+ 	close(cmd.out);
 --=20
 2.8.2.524.g6ff3d78
