@@ -1,86 +1,65 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH] Fix spelling of "occurred"
-Date: Sat, 11 Jun 2016 00:21:54 +0530
-Message-ID: <CAFZEwPMgYCau=LxdtjZ2WVJXp91mXYG5bc=0X0mo_eJ+eYqLHA@mail.gmail.com>
-References: <1465568551-5819-1-git-send-email-peter@colberg.org>
+From: David Turner <novalis@novalis.org>
+Subject: Re: [PATCH v2 5/6] lock_ref_for_update(): make error handling more
+ uniform
+Date: Fri, 10 Jun 2016 15:01:19 -0400
+Message-ID: <1465585279.8278.2.camel@frank>
+References: <cover.1465544913.git.mhagger@alum.mit.edu>
+	 <6cc13da6767c5fd9dbf1b372634adf7c3a353464.1465544913.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Peter Colberg <peter@colberg.org>
-X-From: git-owner@vger.kernel.org Fri Jun 10 20:52:03 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
+	<pclouds@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Jun 10 21:01:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBRXE-0001tD-Gl
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 20:52:00 +0200
+	id 1bBRgN-0000tm-OU
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 21:01:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752101AbcFJSv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 14:51:57 -0400
-Received: from mail-yw0-f178.google.com ([209.85.161.178]:35396 "EHLO
-	mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751382AbcFJSv4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 14:51:56 -0400
-Received: by mail-yw0-f178.google.com with SMTP id z186so56265471ywd.2
-        for <git@vger.kernel.org>; Fri, 10 Jun 2016 11:51:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=SlPjUcvxkorqjwUioVF792g1CVDEKcC0dgG/Yty2rmg=;
-        b=MFhdTKZsFHIy/TMviWFFQaIDWXQIBxv3CJ7O6EbaqUgr/4BY83Vni1SIP9qXaiVLwV
-         uHdwSN144L7+JFwpr58biVflg8COVXE2XILSz8IM5Ba5jqY0fAF9vUpW86wL3Feo91bg
-         n6m9XS3qbKyi6sy21sUxqv8ONpSSQsYEQfQlPrJ1yY8Xw+3w2KAxknVp4HBnvZdMCEUE
-         KTHGSj5aPKz3eB4vASptlvCwvvj65O3tHlO/0aCYUnRpEB9N4Ueubtu0Tgg6dy99KbNz
-         UOWC6UlBk5QUPLmBabH8AEh6+8yiGJHPOUPSRG6zy/nUvyEv3YkBlh8JCPgJ3RfaaZwH
-         GC2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=SlPjUcvxkorqjwUioVF792g1CVDEKcC0dgG/Yty2rmg=;
-        b=d5L6NbmteaKSuXs4lIMgj04Y5+aqVopIvl9o3fN4cFfxjPocjgjFWBQxUANKIBJN8x
-         ULn5dLaYqe8yURzlpIRLXDKCKkEzYxah9WH3NRAkpu9naXl2Uto0JJ6i4Z47in97UJZl
-         uh39Hism7jLvo1rIYOJOaU/RauHJCFEkyZs9y2G9Wj6du6xSOcsbZtWmZyXDxdlpvUPZ
-         laBcjC6i0mYoUqVhO06Y+baNqopeDpBpEcVEqvxFIh7sfqUWZS+nyZ/AnR3fOYGqn1HR
-         qRVSU7qSDrTQf/WydRYTzc6Wxc+15+JDHvPjn1hYhEWkD66XFWQ3avtcYPQGgXZ/aJly
-         EJcA==
-X-Gm-Message-State: ALyK8tJI7uy0AIdNYMwpBpjD1ftp97mUX7hJ4l9+eE41sFocCwaRvjasIUjXbvaG/do2/0Dqi23y8hsIXip6Nw==
-X-Received: by 10.129.134.133 with SMTP id w127mr1837422ywf.252.1465584715255;
- Fri, 10 Jun 2016 11:51:55 -0700 (PDT)
-Received: by 10.129.124.132 with HTTP; Fri, 10 Jun 2016 11:51:54 -0700 (PDT)
-In-Reply-To: <1465568551-5819-1-git-send-email-peter@colberg.org>
+	id S1753088AbcFJTBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2016 15:01:23 -0400
+Received: from hapkido.dreamhost.com ([66.33.216.122]:47386 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751382AbcFJTBW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 15:01:22 -0400
+Received: from homiemail-a75.g.dreamhost.com (sub3.mail.dreamhost.com [69.163.253.7])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id 1DB82A716E
+	for <git@vger.kernel.org>; Fri, 10 Jun 2016 12:01:22 -0700 (PDT)
+Received: from homiemail-a75.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a75.g.dreamhost.com (Postfix) with ESMTP id 091A65EC080;
+	Fri, 10 Jun 2016 12:01:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
+	:subject:from:to:cc:date:in-reply-to:references:content-type
+	:mime-version:content-transfer-encoding; s=novalis.org; bh=lkVOh
+	W0uyOdoxlUFV6d7Nq4FLhQ=; b=O9mPDptxgTZAHza3RtLyJmjTurBMyx3HQw8v7
+	A9cRXcq0AE5J9G9Lw5sITuSeiTTsQEDCl2qHtFK+VV+IHgThxXdCud0skMWm1sjV
+	Jts2XbYuzBIP8qIuFg3NXog39nkbfFpStwhVPYH8a1VKeGJ24ryFHqVSYCrVaO+H
+	uwV1QI=
+Received: from [10.0.1.180] (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: novalis@novalis.org)
+	by homiemail-a75.g.dreamhost.com (Postfix) with ESMTPSA id 4C9065EC07F;
+	Fri, 10 Jun 2016 12:01:20 -0700 (PDT)
+In-Reply-To: <6cc13da6767c5fd9dbf1b372634adf7c3a353464.1465544913.git.mhagger@alum.mit.edu>
+X-Mailer: Evolution 3.10.4-0ubuntu2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297017>
 
-Hey Peter,
+On Fri, 2016-06-10 at 10:14 +0200, Michael Haggerty wrote:
 
-On Fri, Jun 10, 2016 at 7:52 PM, Peter Colberg <peter@colberg.org> wrote:
-> Signed-off-by: Peter Colberg <peter@colberg.org>
-> ---
->  config.c    | 2 +-
->  po/bg.po    | 2 +-
->  po/ca.po    | 2 +-
->  po/de.po    | 2 +-
->  po/fr.po    | 2 +-
->  po/git.pot  | 2 +-
->  po/ko.po    | 2 +-
->  po/pt_PT.po | 2 +-
->  po/ru.po    | 2 +-
->  po/sv.po    | 2 +-
->  po/vi.po    | 2 +-
->  po/zh_CN.po | 2 +-
->  refs.h      | 2 +-
->  13 files changed, 13 insertions(+), 13 deletions(-)
-> ...[snip]
+>  /*
+> + * Check whether the REF_HAVE_OLD and old_oid values stored in update
+> + * are consistent with the result read for the reference. error is
+> + * true iff there was an error reading the reference; otherwise, oid
 
-You only have to change the spelling mistake in config.c and refs.h .
-Our translators take care of everything else.
-Thanks for your contribution.
-
-Regards,
-Pranit Bauva
+"error" is not a thing here?
