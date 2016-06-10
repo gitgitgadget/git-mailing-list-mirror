@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v6 25/44] builtin/apply: make try_create_file() return -1 on error
-Date: Fri, 10 Jun 2016 22:10:59 +0200
-Message-ID: <20160610201118.13813-26-chriscool@tuxfamily.org>
+Subject: [PATCH v6 18/44] builtin/apply: make build_fake_ancestor() return -1 on error
+Date: Fri, 10 Jun 2016 22:10:52 +0200
+Message-ID: <20160610201118.13813-19-chriscool@tuxfamily.org>
 References: <20160610201118.13813-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -19,45 +19,45 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBSn0-0003PH-AZ
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 22:12:22 +0200
+	id 1bBSmz-0003PH-4O
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 22:12:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932558AbcFJUMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 16:12:19 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34354 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932446AbcFJUMQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 16:12:16 -0400
-Received: by mail-wm0-f68.google.com with SMTP id n184so1056271wmn.1
-        for <git@vger.kernel.org>; Fri, 10 Jun 2016 13:12:15 -0700 (PDT)
+	id S932447AbcFJUMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2016 16:12:09 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33407 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932288AbcFJUMG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 16:12:06 -0400
+Received: by mail-wm0-f65.google.com with SMTP id r5so1068687wmr.0
+        for <git@vger.kernel.org>; Fri, 10 Jun 2016 13:12:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1bMUats5TBV2X2B2VRwIoqjjhkmgg97az7d4xvMB//Y=;
-        b=ZI5dlGmuFM9qLHzfsbdmDG6f2y6F7c6Va2xNAImwG2OAruyfsol3OEOrk3pcKay2Fq
-         8xLPVkH2zjoPCm34bfZx39iS1lv4P15gG58PO+kGUL8epoqaTlQEOaVwQAhmPV3zM0se
-         eTxMZgesjm/+vvld8/+eKF6fMA9WKN8O9taTI1alPtR+6ryLDacNby689qhBv2SzPAVY
-         V9lWav87kWFxSPtPP59+zWwihwBm+pFGGdJ+/XuhgYg7pvmKDfnbOF4R4c5NXaJ5nPK5
-         nW2tpD0TyxdONfyj21HJ791FxD3fNVeXbLj7Lf7zO2E0wCq7E4nUiIWPX0IIcXE74MEd
-         ULdg==
+        bh=Ofadee7G1w+sPe4M/5c9FVKhTUrXdRvg1xheTGNbR2U=;
+        b=H91z0+hhmO+o5WEY9U0QyyOLg1VWncK/i2OuttiR5Lc5e83cQwwx9K9JnTUxaPZf7z
+         ymHvrJFqdk6sBqjL8n5Qhnc+6BwlrpxAI+xxOBwlkM+q1se1PjxzCrBmA5gCIkxilrRY
+         L2Dmb5VnjYyXYHawVadnSEfTeKsw01XO6tR85nFTtFukz45P+rI0BWSnYE6CKwW2WsxM
+         ERtLaYng9RK8yHt1/5NF9ALLsdrP/WQT5OlhqWRGtZuMH/jeksQ4AvaWCHMNxiCsGiDB
+         bPiR0nVWqFz5F+fXHgYrrZnIJnrXN8daluGhYb8JPcITnvPEhv6AR39q3XWM/Ui0J5tR
+         b2QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=1bMUats5TBV2X2B2VRwIoqjjhkmgg97az7d4xvMB//Y=;
-        b=b0U8ic/V2kVdO/LzTzq4Iu98SxnmcsFU+CNT/cyAb0e6/hNIiAFIHFljDSHnyUwB+D
-         qFwE5GvzHs9/dRPdgJ4tyPXnnmdUeYrnBreucfWC2+9HZINp7HSAQRfFnD0VgomU2T4S
-         zeO4gQbh5i1lGopHavIi63CIkiR21mIfUwfWd/WB7Xok+Ml16QDYxeoel0NeZ5afZCOm
-         pRIZGMHIw2Ue8X/w9/FsdFzQ1Gi4HfYR6gNyAVr9Lb//QAJlteC0RCVkDFdi/LT9y+JC
-         3AA1Ya/ijO48Z8gAQ22+fgWREYX2hA+rnWTkDRIjmrXiHyQ3CIGlVbxRdz6KPUycWWZj
-         Vagg==
-X-Gm-Message-State: ALyK8tIHHv+Zgeho5kxh0Sz5RBdR5EFfxHBX2ciwuCzqQ0r7xh7pm3EaOipoRN4wEREtJQ==
-X-Received: by 10.194.76.33 with SMTP id h1mr3705502wjw.43.1465589534752;
-        Fri, 10 Jun 2016 13:12:14 -0700 (PDT)
+        bh=Ofadee7G1w+sPe4M/5c9FVKhTUrXdRvg1xheTGNbR2U=;
+        b=eeeAB1Nq7JkxPnoE/gIhW39/MT/xlMbkt+ZCo5nWfYESB9CVpfJ3mb94IhbU35cJIo
+         UT+4lDa1O/8f7pTv91L5rwwgedp9Td9OtM+rYqt4brZtH8E87UihViV+ZZllV91/ML2w
+         3vDrSTj8kS0nNcZ/r6oaXx9kQwYUtFfB4Ap4H2BdL2nSgYdUXA1B/n2qiSYJZlDRA8yr
+         4B2IQYQOyM1WAwfpoJfzSeHLGQ6NyGosxVauPCT7lA+BLB1M4x8+Kc+ITt7Ryi89qOFS
+         p/C3QCSqHa4eZYt4s2XPNWkT5JVtDxCxD7Pyrkjygq0JNs1NpKusojYoFoDFMukrFd3h
+         JpWA==
+X-Gm-Message-State: ALyK8tI5J0pdq7PinjuleUoRZavRZ5tLPdwAm2aJnzJffZiwh0AGEQFNbs0ZCi7xDhDrFA==
+X-Received: by 10.28.170.21 with SMTP id t21mr723902wme.0.1465589524629;
+        Fri, 10 Jun 2016 13:12:04 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id o129sm689125wmb.17.2016.06.10.13.12.13
+        by smtp.gmail.com with ESMTPSA id o129sm689125wmb.17.2016.06.10.13.12.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 10 Jun 2016 13:12:13 -0700 (PDT)
+        Fri, 10 Jun 2016 13:12:03 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.rc2.362.g3cd93d0
 In-Reply-To: <20160610201118.13813-1-chriscool@tuxfamily.org>
@@ -65,121 +65,103 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297035>
 
 To libify `git apply` functionality we have to signal errors to the
 caller instead of die()ing.
 
 To do that in a compatible manner with the rest of the error handling
-in "builtin/apply.c", try_create_file() should return -1 in case of
-error.
-
-Unfortunately try_create_file() currently returns -1 to signal a
-recoverable error. To fix that, let's make it return 1 in case of
-a recoverable error and -1 in case of an unrecoverable error.
+in "builtin/apply.c", build_fake_ancestor() should return -1 instead
+of calling die().
 
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 41 ++++++++++++++++++++++++++++++-----------
- 1 file changed, 30 insertions(+), 11 deletions(-)
+ builtin/apply.c | 41 ++++++++++++++++++++++++++---------------
+ 1 file changed, 26 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index f35c901..37f0c2e 100644
+index 429fddd..e74b068 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -4139,38 +4139,45 @@ static int add_index_file(struct apply_state *state,
- 	return 0;
+@@ -3889,11 +3889,12 @@ static int preimage_sha1_in_gitlink_patch(struct patch *p, unsigned char sha1[20
  }
  
-+/*
-+ * Returns:
-+ *  -1 if an unrecoverable error happened
-+ *   0 if everything went well
-+ *   1 if a recoverable error happened
-+ */
- static int try_create_file(const char *path, unsigned int mode, const char *buf, unsigned long size)
+ /* Build an index that contains the just the files needed for a 3way merge */
+-static void build_fake_ancestor(struct patch *list, const char *filename)
++static int build_fake_ancestor(struct patch *list, const char *filename)
  {
--	int fd;
-+	int fd, res;
- 	struct strbuf nbuf = STRBUF_INIT;
- 
- 	if (S_ISGITLINK(mode)) {
- 		struct stat st;
- 		if (!lstat(path, &st) && S_ISDIR(st.st_mode))
- 			return 0;
--		return mkdir(path, 0777);
-+		return !!mkdir(path, 0777);
- 	}
- 
- 	if (has_symlinks && S_ISLNK(mode))
- 		/* Although buf:size is counted string, it also is NUL
- 		 * terminated.
- 		 */
--		return symlink(buf, path);
-+		return !!symlink(buf, path);
- 
- 	fd = open(path, O_CREAT | O_EXCL | O_WRONLY, (mode & 0100) ? 0777 : 0666);
- 	if (fd < 0)
--		return -1;
-+		return 1;
- 
- 	if (convert_to_working_tree(path, buf, size, &nbuf)) {
- 		size = nbuf.len;
- 		buf  = nbuf.buf;
- 	}
--	write_or_die(fd, buf, size);
-+	res = !write_or_whine_pipe(fd, buf, size, path);
- 	strbuf_release(&nbuf);
- 
--	if (close(fd) < 0)
--		die_errno(_("closing file '%s'"), path);
--	return 0;
-+	if (close(fd) < 0 && !res)
-+		return error(_("closing file '%s': %s"), path, strerror(errno));
-+
-+	return res ? -1 : 0;
- }
- 
- /*
-@@ -4184,15 +4191,24 @@ static void create_one_file(struct apply_state *state,
- 			    const char *buf,
- 			    unsigned long size)
- {
+ 	struct patch *patch;
+ 	struct index_state result = { NULL };
+ 	static struct lock_file lock;
 +	int res;
-+
- 	if (state->cached)
- 		return;
--	if (!try_create_file(path, mode, buf, size))
-+
-+	res = try_create_file(path, mode, buf, size);
-+	if (res < 0)
-+		exit(1);
-+	if (!res)
- 		return;
  
- 	if (errno == ENOENT) {
- 		if (safe_create_leading_directories(path))
- 			return;
--		if (!try_create_file(path, mode, buf, size))
-+		res = try_create_file(path, mode, buf, size);
-+		if (res < 0)
-+			exit(1);
-+		if (!res)
- 			return;
+ 	/* Once we start supporting the reverse patch, it may be
+ 	 * worth showing the new sha1 prefix, but until then...
+@@ -3911,31 +3912,38 @@ static void build_fake_ancestor(struct patch *list, const char *filename)
+ 			if (!preimage_sha1_in_gitlink_patch(patch, sha1))
+ 				; /* ok, the textual part looks sane */
+ 			else
+-				die("sha1 information is lacking or useless for submodule %s",
+-				    name);
++				return error("sha1 information is lacking or "
++					     "useless for submodule %s", name);
+ 		} else if (!get_sha1_blob(patch->old_sha1_prefix, sha1)) {
+ 			; /* ok */
+ 		} else if (!patch->lines_added && !patch->lines_deleted) {
+ 			/* mode-only change: update the current */
+ 			if (get_current_sha1(patch->old_name, sha1))
+-				die("mode change for %s, which is not "
+-				    "in current HEAD", name);
++				return error("mode change for %s, which is not "
++					     "in current HEAD", name);
+ 		} else
+-			die("sha1 information is lacking or useless "
+-			    "(%s).", name);
++			return error("sha1 information is lacking or useless "
++				     "(%s).", name);
+ 
+ 		ce = make_cache_entry(patch->old_mode, sha1, name, 0, 0);
+ 		if (!ce)
+-			die(_("make_cache_entry failed for path '%s'"), name);
+-		if (add_index_entry(&result, ce, ADD_CACHE_OK_TO_ADD))
+-			die ("Could not add %s to temporary index", name);
++			return error(_("make_cache_entry failed for path '%s'"),
++				     name);
++		if (add_index_entry(&result, ce, ADD_CACHE_OK_TO_ADD)) {
++			free(ce);
++			return error("Could not add %s to temporary index",
++				     name);
++		}
  	}
  
-@@ -4211,7 +4227,10 @@ static void create_one_file(struct apply_state *state,
- 		for (;;) {
- 			char newpath[PATH_MAX];
- 			mksnpath(newpath, sizeof(newpath), "%s~%u", path, nr);
--			if (!try_create_file(newpath, mode, buf, size)) {
-+			res = try_create_file(newpath, mode, buf, size);
-+			if (res < 0)
-+				exit(1);
-+			if (!res) {
- 				if (!rename(newpath, path))
- 					return;
- 				unlink_or_warn(newpath);
+ 	hold_lock_file_for_update(&lock, filename, LOCK_DIE_ON_ERROR);
+-	if (write_locked_index(&result, &lock, COMMIT_LOCK))
+-		die ("Could not write temporary index to %s", filename);
+-
++	res = write_locked_index(&result, &lock, COMMIT_LOCK);
+ 	discard_index(&result);
++
++	if (res)
++		return error("Could not write temporary index to %s", filename);
++
++	return 0;
+ }
+ 
+ static void stat_patch_list(struct apply_state *state, struct patch *patch)
+@@ -4476,8 +4484,11 @@ static int apply_patch(struct apply_state *state,
+ 		goto end;
+ 	}
+ 
+-	if (state->fake_ancestor)
+-		build_fake_ancestor(list, state->fake_ancestor);
++	if (state->fake_ancestor &&
++	    build_fake_ancestor(list, state->fake_ancestor)) {
++		res = -1;
++		goto end;
++	}
+ 
+ 	if (state->diffstat)
+ 		stat_patch_list(state, list);
 -- 
 2.9.0.rc2.362.g3cd93d0
