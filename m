@@ -1,100 +1,118 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG-ish] diff compaction heuristic false positive
-Date: Fri, 10 Jun 2016 04:41:50 -0400
-Message-ID: <20160610084149.GA14592@sigill.intra.peff.net>
-References: <20160610075043.GA13411@sigill.intra.peff.net>
- <575A7AD1.50604@alum.mit.edu>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 00/94] libify apply and use lib in am
+Date: Fri, 10 Jun 2016 10:59:46 +0200
+Message-ID: <CAP8UFD1zSAxyHfZgBbfoF=th0waZWEhvHP+4jUxxVO+rU9N9RA@mail.gmail.com>
+References: <20160511131745.2914-1-chriscool@tuxfamily.org>
+ <5734B805.8020504@kdbg.org> <CAP8UFD1ukOMi_VDKzZErwSu1OBU5h1hVOxd7mPu1ytzFr11VGA@mail.gmail.com>
+ <5759DB31.2000106@kdbg.org> <alpine.DEB.2.20.1606100852550.3039@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <sbeller@google.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Jun 10 10:42:02 2016
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jeff King <peff@peff.net>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 10 10:59:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBI0t-0002tN-Oi
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 10:42:00 +0200
+	id 1bBIIG-0007cm-SH
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 10:59:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559AbcFJIlz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 04:41:55 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52367 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750975AbcFJIlx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 04:41:53 -0400
-Received: (qmail 31165 invoked by uid 102); 10 Jun 2016 08:41:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Jun 2016 04:41:53 -0400
-Received: (qmail 32156 invoked by uid 107); 10 Jun 2016 08:42:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Jun 2016 04:42:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Jun 2016 04:41:50 -0400
-Content-Disposition: inline
-In-Reply-To: <575A7AD1.50604@alum.mit.edu>
+	id S1752693AbcFJI7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2016 04:59:52 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:36492 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751593AbcFJI7u (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 04:59:50 -0400
+Received: by mail-wm0-f49.google.com with SMTP id n184so257590694wmn.1
+        for <git@vger.kernel.org>; Fri, 10 Jun 2016 01:59:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=wgdS57eRNQq/PLZV/Egv+cr7kej068/DQKtdJwIP5TQ=;
+        b=HZLu9WUMuMwIewP1HkapMUVUkbrWCpi9Ms/7qBEEE2k1UA5QhZO03qkD/UXh0B0BBK
+         NOcXwG4q/bCwlD/PJbxBKh3DOwbkUKzFnL9DeyQmOEJd3ZKN/5jmOS74IS+2UELMgQdL
+         lLFmhUegNKMkarUIlljzkv8eNPHlyUXvmSN2j7EymLnsEes3eN0Q7JeYps1tD1vmJgAy
+         Ctwv/mExODj5+EqVwYtxviq2BRcV65evJTknrFnkUSpslyioVnrt/3cjrp3A6J3cg7Jv
+         QnfMgCpRzB6s6iPBOq9dMIyOvLXJZwrggqUKUgzsV+N8FUJ9sUYWWC2pUBuDIYiSQhSR
+         kY2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=wgdS57eRNQq/PLZV/Egv+cr7kej068/DQKtdJwIP5TQ=;
+        b=a9e7bv5XvVh+5/FESZusA1kRYW4hD4UFWR/v1n10dg5tFIsDItZQWJuMJF9S/b81yM
+         4vcJGFzZiPN23SVpR72Pf1xomv07evUWFLvJT3eRnsR35M9j52TnBY6c5O0awRQU3UZ7
+         1J8R1f5D4yL35ZmIFSy/uSlQ6IMCkTpuoxJNL/tvoLJTNvE/8zkDsb+hX62qq4yIh+sY
+         N1GbSFCLfPk6GGBPIFqEwlglmbVz4i7ODi60LbGPiwGzCGxpTEDP7d9OJeCa32hi7sSl
+         FOmCmURd1K2LE3Y/FNpS2B+DKZDt7AxkwGkCwinOqBCuDJCbm6j7kNBmaM+mnBY41mS0
+         Ms7w==
+X-Gm-Message-State: ALyK8tIMRG1tBrw4E1qdHILqj15ijd88TdY+8n2D7CwCGdB/RyOyW3tu92O3FvA9ps+sYH/7RZlSDe2WTxk4KA==
+X-Received: by 10.28.183.8 with SMTP id h8mr1505218wmf.79.1465549187692; Fri,
+ 10 Jun 2016 01:59:47 -0700 (PDT)
+Received: by 10.194.25.197 with HTTP; Fri, 10 Jun 2016 01:59:46 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1606100852550.3039@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296960>
 
-On Fri, Jun 10, 2016 at 10:31:13AM +0200, Michael Haggerty wrote:
+Hi Dscho,
 
-> I've often thought that indentation would be a good, fairly universal
-> signal for diff to use when deciding how to slide hunks around. Most
-> source code is indented in a way that shows its structure.
-> 
-> I propose the following heuristic:
-> 
-> * Prefer to start and end hunks following lines with the least
->   indentation.
-> 
-> * Define the "indentation" of a blank line to be the indentation of
->   the previous non-blank line minus epsilon.
-> 
-> * In the case of a tie, prefer to slide the hunk down as far as
->   possible.
+On Fri, Jun 10, 2016 at 9:01 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Hannes,
+>
+> On Thu, 9 Jun 2016, Johannes Sixt wrote:
+>
+>> Meanwhile, I have retrained my muscle memory to stop before typing "-i" after
+>> "rebase" for an opportunity to consider whether bare rebase can be used.
+>>
+>> What should I say? I am impressed. It's like 100 times faster than rebase -i
+>> (on Windows). I'm now using it whenever I can, and more often than not I plan
+>> my rebase workflow so that I can go ahead without -i.
+>
+> That only means that I have to finalize my rebase--helper work (which I am
+> busy doing, I am at the valgrind stage).
+>
+> I wonder whether that "100x" is a reliable number? ;-) FWIW I can measure
+> something like a 4x speedup of the interactive rebase on Windows when
+> running with the rebase--helper, and it is still noticably faster in my
+> Linux VM, too.
+>
+>> Can't wait to test a re-roll on top of cc/apply-introduce-state!
+>
+> I lost track in the meantime: were those issues with unclosed file handles
+> and unreleased memory in the error code paths addressed systematically? My
+> mail about that seems to have been left unanswered, almost as if my
+> concerns had been hand-waved away...
 
-Hmm. That might help this case, but the original motivation for this
-heuristic was something like:
+Haven't I answered to your email in this thread:
 
-  ##
-  # foo
-  def foo
-    something
-  end
+http://thread.gmane.org/gmane.comp.version-control.git/292403/
 
-  ##
-  # bar
-  def bar
-    something_else
-  end
+?
 
-where we add the first function above the second. We end up with:
+> If those issues have indeed been addressed properly, and a public
+> repository reliably has the newest iteration of that patch series in a
+> branch without a versioned name, I will be happy to test it in Git for
+> Windows' SDK again.
 
-diff --git a/file.rb b/file.rb
-index 1f9b151..f991c76 100644
---- a/file.rb
-+++ b/file.rb
-@@ -1,4 +1,10 @@
- ##
-+# foo
-+def foo
-+  something
-+end
-+
-+##
- # bar
- def bar
-   something else
+This is the newest iteration:
 
-I.e., crediting the "##" to the wrong spot (or in C, the "/*"). I don't
-think indentation helps us there (sliding-up would, but like
-sliding-down, it just depends on the order of the hunks).
+https://github.com/chriscool/git/commits/libify-apply-use-in-am65
 
-So I agree that adding indentation to the mix might help, but I don't
-think it can replace this heuristic.
-
--Peff
+Thanks for testing,
+Christian.
