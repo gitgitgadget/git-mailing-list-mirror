@@ -1,132 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4] Documentation: triangular workflow
-Date: Fri, 10 Jun 2016 09:47:42 -0700
-Message-ID: <xmqqinxhf0sx.fsf@gitster.mtv.corp.google.com>
-References: <1465288693-6295-1-git-send-email-jordan.de-gea@grenoble-inp.org>
-	<1465475708-1912-1-git-send-email-jordan.de-gea@grenoble-inp.org>
-	<E41AB752AE614E189BC5BE289A8AEB2A@PhilipOakley>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 00/94] libify apply and use lib in am
+Date: Fri, 10 Jun 2016 19:04:04 +0200
+Message-ID: <575AF304.8070407@kdbg.org>
+References: <20160511131745.2914-1-chriscool@tuxfamily.org>
+ <5734B805.8020504@kdbg.org>
+ <CAP8UFD1ukOMi_VDKzZErwSu1OBU5h1hVOxd7mPu1ytzFr11VGA@mail.gmail.com>
+ <5759DB31.2000106@kdbg.org> <alpine.DEB.2.20.1606100852550.3039@virtualbox>
+ <CAP8UFD1zSAxyHfZgBbfoF=th0waZWEhvHP+4jUxxVO+rU9N9RA@mail.gmail.com>
+ <alpine.DEB.2.20.1606101307080.3039@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>,
-	<mhagger@alum.mit.edu>, <git@vger.kernel.org>,
-	<erwan.mathoniere@grenoble-inp.org>,
-	<samuel.groot@grenoble-inp.org>, <tom.russello@grenoble-inp.org>,
-	<Matthieu.Moy@grenoble-inp.fr>, <peff@peff.net>,
-	<artagnon@gmail.com>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri Jun 10 18:47:52 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jeff King <peff@peff.net>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 10 19:04:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBPb4-00082w-Pr
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 18:47:51 +0200
+	id 1bBPr2-0005RW-1p
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 19:04:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932608AbcFJQrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 12:47:46 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52549 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932415AbcFJQrq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 12:47:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DD4FA227A6;
-	Fri, 10 Jun 2016 12:47:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cubm6/rg6rZlgbboV9OM4Sb0jBY=; b=kgQ6/O
-	nQhpx+/lzIv88ke/pdM1c3ylCETyDZj49g701jQoUjsCZiouMEQKhcM9KMd4rdkH
-	0tn7qGN19EE8vlhqrpiugtb/B1fmr4Q20T1kcQPl32xI3cmqyqfr6vv5mP+z2LDL
-	4qHPzteIDn9KWoHlIdIeGlqOTynlLZQzH/ooU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VX6SEjxi/VIngBCJXwMyMORkV/RG1kSl
-	wvpNeVbzyRR0C3NQqrnzPIJlM5uLw1Bo7qPb6UiffjBA1IiYBmfbJjMFyKSC5705
-	gMHjq/KO78K77yZOQYViey6eC9n1aXqltz+Bob7RWEbVZHESJ8hb5gzR+bU9oqbk
-	1vIzsBxo9jg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D5DA5227A5;
-	Fri, 10 Jun 2016 12:47:44 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5864D227A4;
-	Fri, 10 Jun 2016 12:47:44 -0400 (EDT)
-In-Reply-To: <E41AB752AE614E189BC5BE289A8AEB2A@PhilipOakley> (Philip Oakley's
-	message of "Thu, 9 Jun 2016 19:19:20 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0DE22E90-2F2B-11E6-8555-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S932989AbcFJREM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2016 13:04:12 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:44074 "EHLO bsmtp3.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752596AbcFJREJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 13:04:09 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3rR7n12CZ6z5tlF;
+	Fri, 10 Jun 2016 19:04:05 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id B3A4952A4;
+	Fri, 10 Jun 2016 19:04:04 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+In-Reply-To: <alpine.DEB.2.20.1606101307080.3039@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297013>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
-
->> +Preparation
->> +~~~~~~~~~~~
->> +
->> +Cloning from **PUBLISH**, which is a fork of **UPSTREAM** or an empty
->> +repository.
+Am 10.06.2016 um 13:11 schrieb Johannes Schindelin:
+> On Fri, 10 Jun 2016, Christian Couder wrote:
+>> On Fri, Jun 10, 2016 at 9:01 AM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>>> I lost track in the meantime: were those issues with unclosed file handles
+>>> and unreleased memory in the error code paths addressed systematically? My
+>>> mail about that seems to have been left unanswered, almost as if my
+>>> concerns had been hand-waved away...
+>>
+>> Haven't I answered to your email in this thread:
+>>
+>> http://thread.gmane.org/gmane.comp.version-control.git/292403/
+>>
+>> ?
 >
-> I agree here. To clone the upstream, to which you have no push access (by 
-> definition), would leave the config badly mis-set for the basic user. It's 
-> better for the user to clone their publish fork (to which they have both 
-> read and write access).
+> Not really. The reply (which I had not quite connected with my mail
+> because they were over a week apart) says this:
+>
+>> I fixed this by moving the "close(fd)" call just after the
+>> "apply_patch()" call.
 
-I do not think I agree.
+This bug in v1 was discovered by the test suite and fixed in v2.
 
-If you apriori know that you do want to hack on a project's code, then
-forking at GitHub first and then cloning the copy would be OK.
+>
+> and this:
+>
+>> I will have another look at the 2 other places where there are
+>> open()/close() or fopen()/fclose() calls.
+>
+> but nothing about a careful, systematic investigation of all error code
+> paths. As a consequence, I fully expect to encounter test failures as soon
+> as I test your patch series again, simply because resources are still in
+> use when they should no longer be used. In other words, my expectations
+> are now lower than they have been before, my concerns are not at all
+> addressed.
 
-But I doubt that would be a common set-up, unless you are focusing
-only on school-like setting where you are told by your instructor to
-"make changes to this public project, and show the result in your
-fork".  In real life you cannot tell if the project is worth your
-time modifying until you see it first, can you?
+Do you trust the test suite to some degree? It passes after the above 
+bug was fixed in v2. In addition, haven't found any problems so far 
+during daily use.
 
-I suspect that the majority of local clones start from something
-like "I want to build and use from the tip", "I want to use a module
-that does X, and there are three candidates, so let's clone them all
-to evaluate", etc.  You do not bother "forking at GitHub" but just
-clone from the upstream for these clones.
+>> This is the newest iteration:
+>>
+>> https://github.com/chriscool/git/commits/libify-apply-use-in-am65
+>
+> And that cute 65 in the name is the revision.
 
-After you build it and try things out, you may start making local
-changes, and you may even record your changes as local commits.  You
-play with your local clone of the upstream.  After doing so, you may
-find that some of the projects do not fit your needs, but for some
-others, you would find that it is worth your time and effort to
-upstream your changes and/or keep working further on the project.
+Yeah, that number is painful. I would appreciate an unversioned branch 
+name, too.
 
-And at that point, you would create a publishing place, push into
-it, and tell others "Hey I did this interesting thing!".  That
-"creat a publishing place" step could be just a one click at GitHub.
-
-Isn't that how you work with other people's projects?  Or do you
-always modify every project you fetch from the outside world?, Do
-you always fork first, just in case you *might* change and you
-*might* have to have a place to push your changes out?
-
-If you tell novices "You fork first and then clone your fork", and
-in the ideal (to you) case they will follow that advice to the
-letter and they will end up with forks of all projects they will
-ever look at, in many of which they make no local commit.
-
-What is more likely to happen is that they will first ignore you and
-start from a local clone of the upstream, and then find this
-document that says "triangular workflow requires you to fork first,
-clone that fork and work in it".  Because they would have to fork
-first and make another clone, this time a clone of the fork, in
-order to follow the instruction of this document, they oblige,
-ending up with two clones.  More importantly, this makes the local
-clone of the upstream they made earlier and the changes they made in
-that clone appear useless.  They need to be told how to transplant
-the work done in the clone to the newly created clone of the fork,
-in order to publish them.
-
-If your instruction begins with "You clone from upstream as usual
-(i.e. just like when you make a "read-only" clone without any
-intention to make changes or push changes out), and add a publish
-place if/when it becomes necessary", the problem described in the
-previous paragraph goes away, no?
+-- Hannes
