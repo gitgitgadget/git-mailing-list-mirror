@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v6 39/44] usage: add get_error_routine() and get_warn_routine()
-Date: Fri, 10 Jun 2016 22:11:13 +0200
-Message-ID: <20160610201118.13813-40-chriscool@tuxfamily.org>
+Subject: [PATCH v6 41/44] am: use be_silent in 'struct apply_state' to shut up applying patches
+Date: Fri, 10 Jun 2016 22:11:15 +0200
+Message-ID: <20160610201118.13813-42-chriscool@tuxfamily.org>
 References: <20160610201118.13813-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -13,51 +13,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 10 22:13:09 2016
+X-From: git-owner@vger.kernel.org Fri Jun 10 22:13:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBSnk-00042I-IS
+	id 1bBSnk-00042I-0M
 	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 22:13:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932668AbcFJUMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 16:12:47 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34608 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932647AbcFJUMp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 16:12:45 -0400
-Received: by mail-wm0-f66.google.com with SMTP id n184so1058352wmn.1
-        for <git@vger.kernel.org>; Fri, 10 Jun 2016 13:12:44 -0700 (PDT)
+	id S932702AbcFJUNB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2016 16:13:01 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36274 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932647AbcFJUMs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 16:12:48 -0400
+Received: by mail-wm0-f68.google.com with SMTP id m124so1037849wme.3
+        for <git@vger.kernel.org>; Fri, 10 Jun 2016 13:12:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qqmLfCD/rM7cGcandiqhYOVtMgxuAopdzDputNbUnVw=;
-        b=axSWz30yjauuicp7b0h2gh1ntSPzbyDI9hQdH/4FbYLfT52MMXO6R85j2YRhlN+5l1
-         UKklSaw72lUGnkSF0vFupGFbvD6KA/hGyhXOEzOccMUgytisDMXxfMd4Vswa6LCD3T3E
-         P6kseh5Zh7SJB9C3+WQ89Er8OeMhNJacQDwc8l7ZvgwywmTpU3E+A5ebpsAj4zpwZ8pp
-         0iqqfU6CkxIS4EQrDf64OvbSnsM0ENUIYsU87TxK0mglilyTZL4P8Bq1osNSyyFZerVj
-         ULxKvKPxXmQ0+69niY4voojfUylrvdHFrcnR9tcX106ldJiodIRH2/Gq2x/bzBbV/YiD
-         uJIg==
+        bh=XqU0wfHiof8QIq2VAM3KvpUIpt4j8swzxei0prcfwak=;
+        b=BUTd4Z+Ve6O+6APN/b6+VT1q+g0ES92sjXUwb4itArM8hvhpTgx5MesL/eo93vETJE
+         XxHFNRFBGRUrdwtKVOIvo5EeDaPXsPtywVljlgwOUW9aVnv0JrH/lznMBH9+1/xRNZKR
+         kFZB/MQKmaWmKg9yTzaZQVkrKYk1MLc+pwfdZEeDS73gWAEGgyVmFvjs+6Z3XaAw+Xk3
+         ws2luSN0F0u//uo/AGgTqS9yNkeTv1QqHPxVqZsXzxPxXio35551w/sLQJpuXKUosJu1
+         imh94fkq+i7goUETGYxArsODe4IuvwVyxYDOmh+9cmlcnuPypjAgyYG7jXEOorEMMVEV
+         LFBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=qqmLfCD/rM7cGcandiqhYOVtMgxuAopdzDputNbUnVw=;
-        b=T1RSngOc4lHvXwzOW1ssC4XZyVF9Tz6QjfcO37Sq4CAyCMR9YjWz0dD1t6J82Pv4aj
-         cHRmpvashyQ4dWVS34+5CUBQkedu3i+oNwYmZME5Kj5iHekW6MRPdBnqKAV6l40VCSId
-         jRnnOWkUr5ISnqhKWENl4JPUij4M/6EieiJ/YmVqanMXzaTWHBtpHG2+pxyMikpSeZdt
-         xUi+w7dguSZ0Cn/+Nyzp3fFvIky/W55y+y0jIX8LBEdGU1WErwliKKwKXF/WgxH9RegR
-         CbFU7JTIt4dNKB/Cahgzo+wHaEAGoZMdJYb/iMi5xBVDgFXVoyZ/HNRFY0Lsep84tFeQ
-         8jRQ==
-X-Gm-Message-State: ALyK8tJprWtJkd0ntLzXdQYFdMXxRUA4Bcjf+eJKlwVGuAYdaj6Em2BcNdSOZrhG9CoawA==
-X-Received: by 10.28.27.81 with SMTP id b78mr635949wmb.19.1465589564133;
-        Fri, 10 Jun 2016 13:12:44 -0700 (PDT)
+        bh=XqU0wfHiof8QIq2VAM3KvpUIpt4j8swzxei0prcfwak=;
+        b=DFVz4AcKPv3WAyrTM/AsMLfMKsPJuTQqGCwC0uYILq02Vp8aSFl6+iHXsgTMOuX52q
+         KFdy2isY7U1Azl7D0IQtgN//Ad+xsKEk8+SvC0DdcZ8sexr14VgQxBI9nVROjUdJHin/
+         77S1t96mMBAMkE48+Y6KwcVUd+uBOAu3B9jsj+8yeXdRMQJAcuhPG/OKLdy/FgWHqqiW
+         6kuDiDTbWyJ9kTh/rVRZw/u/4CUCXDdoO8UU0OEImGa8AqaDBzs+9+WDuZuRRuGjyay8
+         cyVPKf0jGJykFHegz07W2GkmCti69hUp3UQOlQsW/ECYCKTOqLx/z3X17s7m16ki1k+K
+         cx5g==
+X-Gm-Message-State: ALyK8tKW6PKMAwtXtFMcumjXt9E8NefphcHd21diDVpvRdDopH8E9P6hxzRKppj6Fya4ww==
+X-Received: by 10.194.206.39 with SMTP id ll7mr3637348wjc.179.1465589566667;
+        Fri, 10 Jun 2016 13:12:46 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id o129sm689125wmb.17.2016.06.10.13.12.42
+        by smtp.gmail.com with ESMTPSA id o129sm689125wmb.17.2016.06.10.13.12.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 10 Jun 2016 13:12:43 -0700 (PDT)
+        Fri, 10 Jun 2016 13:12:46 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.rc2.362.g3cd93d0
 In-Reply-To: <20160610201118.13813-1-chriscool@tuxfamily.org>
@@ -65,60 +65,73 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297049>
-
-Let's make it possible to get the current error_routine and warn_routine,
-so that we can store them before using set_error_routine() or
-set_warn_routine() to use new ones.
-
-This way we will be able put back the original routines, when we are done
-with using new ones.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297050>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- git-compat-util.h |  2 ++
- usage.c           | 10 ++++++++++
- 2 files changed, 12 insertions(+)
+ builtin/am.c | 29 ++++++++---------------------
+ 1 file changed, 8 insertions(+), 21 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f78706a..92af27d 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -440,7 +440,9 @@ static inline int const_error(void)
+diff --git a/builtin/am.c b/builtin/am.c
+index a16b06c..43f7316 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1525,7 +1525,6 @@ static int run_apply(const struct am_state *state, const char *index_file)
+ 	struct argv_array apply_paths = ARGV_ARRAY_INIT;
+ 	struct argv_array apply_opts = ARGV_ARRAY_INIT;
+ 	struct apply_state apply_state;
+-	int save_stdout_fd, save_stderr_fd;
+ 	int res, opts_left;
+ 	char *save_index_file;
+ 	static struct lock_file lock_file;
+@@ -1559,18 +1558,6 @@ static int run_apply(const struct am_state *state, const char *index_file)
+ 		OPT_END()
+ 	};
  
- extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
- extern void set_error_routine(void (*routine)(const char *err, va_list params));
-+extern void (*get_error_routine(void))(const char *err, va_list params);
- extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
-+extern void (*get_warn_routine(void))(const char *warn, va_list params);
- extern void set_die_is_recursing_routine(int (*routine)(void));
- extern void set_error_handle(FILE *);
+-	/*
+-	 * If we are allowed to fall back on 3-way merge, don't give false
+-	 * errors during the initial attempt.
+-	 */
+-
+-	if (state->threeway && !index_file) {
+-		save_stdout_fd = dup(1);
+-		dup_devnull(1);
+-		save_stderr_fd = dup(2);
+-		dup_devnull(2);
+-	}
+-
+ 	if (index_file) {
+ 		save_index_file = get_index_file();
+ 		set_index_file((char *)index_file);
+@@ -1593,6 +1580,14 @@ static int run_apply(const struct am_state *state, const char *index_file)
+ 	else
+ 		apply_state.check_index = 1;
  
-diff --git a/usage.c b/usage.c
-index 67e5526..2fd3045 100644
---- a/usage.c
-+++ b/usage.c
-@@ -70,11 +70,21 @@ void set_error_routine(void (*routine)(const char *err, va_list params))
- 	error_routine = routine;
- }
- 
-+void (*get_error_routine(void))(const char *err, va_list params)
-+{
-+	return error_routine;
-+}
++	/*
++	 * If we are allowed to fall back on 3-way merge, don't give false
++	 * errors during the initial attempt.
++	 */
 +
- void set_warn_routine(void (*routine)(const char *warn, va_list params))
- {
- 	warn_routine = routine;
- }
- 
-+void (*get_warn_routine(void))(const char *warn, va_list params)
-+{
-+	return warn_routine;
-+}
++	if (state->threeway && !index_file)
++		apply_state.be_silent = 1;
 +
- void set_die_is_recursing_routine(int (*routine)(void))
- {
- 	die_is_recursing = routine;
+ 	if (check_apply_state(&apply_state, 0))
+ 		die("check_apply_state() failed");
+ 
+@@ -1600,14 +1595,6 @@ static int run_apply(const struct am_state *state, const char *index_file)
+ 
+ 	res = apply_all_patches(&apply_state, apply_paths.argc, apply_paths.argv, 0);
+ 
+-	/* Restore stdout and stderr */
+-	if (state->threeway && !index_file) {
+-		dup2(save_stdout_fd, 1);
+-		close(save_stdout_fd);
+-		dup2(save_stderr_fd, 2);
+-		close(save_stderr_fd);
+-	}
+-
+ 	if (index_file)
+ 		set_index_file(save_index_file);
+ 
 -- 
 2.9.0.rc2.362.g3cd93d0
