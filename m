@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v6 40/44] apply: change error_routine when be_silent is set
-Date: Fri, 10 Jun 2016 22:11:14 +0200
-Message-ID: <20160610201118.13813-41-chriscool@tuxfamily.org>
+Subject: [PATCH v6 30/44] apply: make some parsing functions static again
+Date: Fri, 10 Jun 2016 22:11:04 +0200
+Message-ID: <20160610201118.13813-31-chriscool@tuxfamily.org>
 References: <20160610201118.13813-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -13,51 +13,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 10 22:13:15 2016
+X-From: git-owner@vger.kernel.org Fri Jun 10 22:13:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBSnq-000460-P7
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 22:13:15 +0200
+	id 1bBSnw-0004Bg-BR
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 22:13:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228AbcFJUNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 16:13:09 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33760 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932658AbcFJUMq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 16:12:46 -0400
-Received: by mail-wm0-f68.google.com with SMTP id r5so1071597wmr.0
-        for <git@vger.kernel.org>; Fri, 10 Jun 2016 13:12:46 -0700 (PDT)
+	id S1753042AbcFJUMh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2016 16:12:37 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34502 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932296AbcFJUMc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 16:12:32 -0400
+Received: by mail-wm0-f66.google.com with SMTP id n184so1057393wmn.1
+        for <git@vger.kernel.org>; Fri, 10 Jun 2016 13:12:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=571gO7SQLNiG7nITmwBsXEqT4/taESEfqQMzWLX8vVc=;
-        b=r6iAqHNejPpjsfvuSC1kO0K6IOyd59qjly8yY3izaFto51AlM/3tAj0Dpgh07VSlv/
-         ef9/ZY1cEM1ldpue1raQAXPx7Z4Wfuygi4oFfXolIgUPlpRDIms944yhoHyWrm104Mk4
-         zItXuRK7Sk1n5CFkGKjAaHD4HEKzF1UJ9uEb2uoybTgvvP7Hni0MrY5b4ioX42Z/Ge4n
-         BcWoPrDqPB1IQZKeywQZK8264Go8DDc0RY9Lo+Z2SDbQ2iAiSebkbpH87NydO5lbOuqA
-         nsp0WpA0hTDGb1CiMsdd4QxLam9lHgjxEP2g/1ig9PdHzd6gEGOdBTvcRGydJbN34pt4
-         Zsrg==
+        bh=oyDA4O4OISq4mqBoI3k2oeeAH9mx+DnD2cP4iDoQLmw=;
+        b=V4pMkUUYcSNdjK8ODzIqB5c5D9grjd/rnwQbT8SSHzm1bW4CW0qskH0UpVaOgWbdlC
+         FW7cFNkHEDZ0Y7Jhn9NTcgA28zDz62O0yy0zOfhJ2IWTlkvvqAVHSWcJHkBh7pWBqU5I
+         rRDWc+f9RSKvRNyhxbRb6xTNH+8Wf3U6BMsEu4wnvps3+LFYo7DKW7GdLWtKH06q7iqn
+         RbA4/VjrYYl/ODzR0eSQjTiLVs6xM5VpoRppon+vsDWzSF3yW7+P4GW/D+qYgtkdOO95
+         y2pSWqHCLv8P4OZvHx+ql0p+sLw7MLtPtbhxDtliuEd+r+MgUmFR2Sli64w8jQqpHf4P
+         phDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=571gO7SQLNiG7nITmwBsXEqT4/taESEfqQMzWLX8vVc=;
-        b=m51qtpPRSbW4VY43H5VLmpL8mTGJC247PhgLCJHROYRtXudHQRJGzRtDDQpMisLdTI
-         s7tGWEh0SGVcv+bLyuDHd/Fjh66pZjL3lnXfASwRZcisnO8qFFHEssOnAOzhk29o8Mx0
-         B+lg4KAt+rFMC5GZidjsbj7XRBR/scQH/s9hU/Uo+l9nFsDhOdfxPY7ur30zjBeipk0n
-         ZO7Bv/jUGO86Sx1AfhHWj/14NvuzBbReAJyZfD/rfn/E+jMQuc1ts9lfkd1tXOPd1Mn8
-         B7jDxDE2e0oZF+2dK+f4vZVx1zEM8m2jQLOB9uM6s1HSQ/5nZJprWs29Z2g0Hy6f6WzQ
-         oypw==
-X-Gm-Message-State: ALyK8tLBXjUx5WZNUDoYlXhnXLQsWlbBllDRo3QWkd6RYAxS9GAz+bnm/wAnxs3ebp91Sw==
-X-Received: by 10.28.94.194 with SMTP id s185mr702080wmb.62.1465589565407;
-        Fri, 10 Jun 2016 13:12:45 -0700 (PDT)
+        bh=oyDA4O4OISq4mqBoI3k2oeeAH9mx+DnD2cP4iDoQLmw=;
+        b=H4LMXqsreX1qbiSrEzB2GsYSrutbxcYX5Oofzxc5qYtzewsRSSd8yG8xuXYstHZkhx
+         qTE2N5KBnIwBlkSYLnB2BflGo8SNe7XNevFMtFU9txkDjFaro5Zzwj2SgP4PIIUpuHWh
+         BHz97ffjQCS6lxy4LfAQKGbtq4SO6WtO63SChtx7z+K+nMdQsVC8+Bt75b5nuQO2OVxa
+         0jS2L15uP8fNNsiOGSeQCq3Cdfc2VinTq9xiR4pkrMHqgEMgnJBlRtzVjGS7fDtZGiO3
+         mcHwTiBI48Sm6owCGeBaH+d5CH2HBkTAbNIerDsOLOCmrqld2ZcIB4ubowhxY1apHmii
+         GCAw==
+X-Gm-Message-State: ALyK8tJMmvcq3eYqhaqIbBFDkIsBv9txIqjZKtuUEB9Nm3SvVDBUv4s+ad3MfLTNjkbR6g==
+X-Received: by 10.28.21.204 with SMTP id 195mr626501wmv.64.1465589551534;
+        Fri, 10 Jun 2016 13:12:31 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id o129sm689125wmb.17.2016.06.10.13.12.44
+        by smtp.gmail.com with ESMTPSA id o129sm689125wmb.17.2016.06.10.13.12.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 10 Jun 2016 13:12:44 -0700 (PDT)
+        Fri, 10 Jun 2016 13:12:30 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.rc2.362.g3cd93d0
 In-Reply-To: <20160610201118.13813-1-chriscool@tuxfamily.org>
@@ -65,87 +65,57 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297053>
+
+Some parsing functions that were used in both "apply.c" and
+"builtin/apply.c" are now only used in the former, so they
+can be made static to "apply.c".
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- apply.c | 23 +++++++++++++++++++++--
- apply.h |  4 ++++
- 2 files changed, 25 insertions(+), 2 deletions(-)
+ apply.c | 6 +++---
+ apply.h | 5 -----
+ 2 files changed, 3 insertions(+), 8 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index 2529534..ef49709 100644
+index 4920fa8..713d1c0 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -109,6 +109,11 @@ void clear_apply_state(struct apply_state *state)
- 	/* &state->fn_table is cleared at the end of apply_patch() */
+@@ -27,7 +27,7 @@ static void git_apply_config(void)
+ 	git_config(git_default_config, NULL);
  }
  
-+static void mute_routine(const char *bla, va_list params)
-+{
-+	/* do nothing */
-+}
-+
- int check_apply_state(struct apply_state *state, int force_apply)
+-int parse_whitespace_option(struct apply_state *state, const char *option)
++static int parse_whitespace_option(struct apply_state *state, const char *option)
  {
- 	int is_not_gitdir = !startup_info->have_repository;
-@@ -143,6 +148,13 @@ int check_apply_state(struct apply_state *state, int force_apply)
- 	if (!state->lock_file)
- 		return error("BUG: state->lock_file should not be NULL");
- 
-+	if (state->be_silent) {
-+		state->saved_error_routine = get_error_routine();
-+		state->saved_warn_routine = get_warn_routine();
-+		set_error_routine(mute_routine);
-+		set_warn_routine(mute_routine);
-+	}
-+
- 	return 0;
+ 	if (!option) {
+ 		state->ws_error_action = warn_on_ws_error;
+@@ -57,8 +57,8 @@ int parse_whitespace_option(struct apply_state *state, const char *option)
+ 	return error(_("unrecognized whitespace option '%s'"), option);
  }
  
-@@ -4760,6 +4772,7 @@ int apply_all_patches(struct apply_state *state,
+-int parse_ignorewhitespace_option(struct apply_state *state,
+-				  const char *option)
++static int parse_ignorewhitespace_option(struct apply_state *state,
++						 const char *option)
  {
- 	int i;
- 	int res;
-+	int retval = -1;
- 	int errs = 0;
- 	int read_stdin = 1;
- 
-@@ -4838,12 +4851,18 @@ int apply_all_patches(struct apply_state *state,
- 		state->newfd = -1;
- 	}
- 
--	return !!errs;
-+	retval = !!errs;
- 
- rollback_end:
- 	if (state->newfd >= 0) {
- 		rollback_lock_file(state->lock_file);
- 		state->newfd = -1;
- 	}
--	return -1;
-+
-+	if (state->be_silent) {
-+		set_error_routine(state->saved_error_routine);
-+		set_warn_routine(state->saved_warn_routine);
-+	}
-+
-+	return retval;
- }
+ 	if (!option || !strcmp(option, "no") ||
+ 	    !strcmp(option, "false") || !strcmp(option, "never") ||
 diff --git a/apply.h b/apply.h
-index 034541a..c6cf33d 100644
+index 736f818..89e7982 100644
 --- a/apply.h
 +++ b/apply.h
-@@ -89,6 +89,10 @@ struct apply_state {
- 	 */
- 	struct string_list fn_table;
+@@ -97,11 +97,6 @@ struct apply_state {
+ 	int applied_after_fixing_ws;
+ };
  
-+	/* This is to save some reporting routines */
-+	void (*saved_error_routine)(const char *err, va_list params);
-+	void (*saved_warn_routine)(const char *warn, va_list params);
-+
- 	/* These control whitespace errors */
- 	enum ws_error_action ws_error_action;
- 	enum ws_ignore ws_ignore_action;
+-extern int parse_whitespace_option(struct apply_state *state,
+-				   const char *option);
+-extern int parse_ignorewhitespace_option(struct apply_state *state,
+-					 const char *option);
+-
+ extern int apply_option_parse_exclude(const struct option *opt,
+ 				      const char *arg, int unset);
+ extern int apply_option_parse_include(const struct option *opt,
 -- 
 2.9.0.rc2.362.g3cd93d0
