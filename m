@@ -1,99 +1,240 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 00/33] Yet more preparation for reference backends
-Date: Fri, 10 Jun 2016 14:50:31 +0200
-Message-ID: <575AB797.809@alum.mit.edu>
-References: <cover.1462550456.git.mhagger@alum.mit.edu>
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v4 2/3] completion: add __git_get_option_value helper
+Date: Fri, 10 Jun 2016 15:10:20 +0200
+Message-ID: <20160610151020.Horde.AfAwgXgKC_jSSpyr60T85sW@webmail.informatik.kit.edu>
+References: <xmqq8tymp385.fsf@gitster.mtv.corp.google.com>
+ <20160603183426.13140-1-thomas.braun@virtuell-zuhause.de>
+ <20160603183426.13140-3-thomas.braun@virtuell-zuhause.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?Q?y?= 
-	<pclouds@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Jun 10 14:50:41 2016
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: peff@peff.net, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>
+To: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+X-From: git-owner@vger.kernel.org Fri Jun 10 15:10:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBLtY-0002Ix-OA
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 14:50:41 +0200
+	id 1bBMD9-0000ww-A3
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 15:10:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933140AbcFJMug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 08:50:36 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:53091 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932180AbcFJMug (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2016 08:50:36 -0400
-X-AuditID: 12074412-51bff700000009f7-43-575ab79a5dda
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id D9.0E.02551.A97BA575; Fri, 10 Jun 2016 08:50:34 -0400 (EDT)
-Received: from [192.168.69.130] (p508EAFFC.dip0.t-ipconnect.de [80.142.175.252])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u5ACoVBH008167
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 10 Jun 2016 08:50:32 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.8.0
-In-Reply-To: <cover.1462550456.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPKsWRmVeSWpSXmKPExsUixO6iqDtre1S4wZJFShbzN51gtOi60s1k
-	0dB7hdmie8pbRosfLT3MFjOvWjuweeycdZfd41nvHkaPi5eUPfYv3cbmseD5fXaPz5vkAtii
-	uG2SEkvKgjPT8/TtErgz7rx9zFjwnrdi1pl/TA2M57m7GDk5JARMJHZdWcXSxcjFISSwlVFi
-	37ft7BDOBSaJeYufsoFUCQt4StxofMUKYosIREg0vGphBLGFBMwlOtbeAGtgFjjCKHGg6RML
-	SIJNQFdiUU8zE4jNK6Au8ej6ZTCbRUBVYv+kJWA1ogIhEufXbWWFqBGUODnzCVicU8BC4lDv
-	cbB6ZgE9iR3Xf7FC2PIS29/OYZ7AyD8LScssJGWzkJQtYGRexSiXmFOaq5ubmJlTnJqsW5yc
-	mJeXWqRrppebWaKXmlK6iRES4EI7GNeflDvEKMDBqMTDG7ErMlyINbGsuDL3EKMkB5OSKG/i
-	/KhwIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8lzcD5XhTEiurUovyYVLSHCxK4rw/F6v7CQmk
-	J5akZqemFqQWwWRlODiUJHifbwVqFCxKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAdF
-	ZXwxMC5BUjxAe5+CtPMWFyTmAkUhWk8x6nIc2X9vLZMQS15+XqqUOK/tNqAiAZCijNI8uBWw
-	dPaKURzoY2HeApAqHmAqhJv0CmgJE9CS5UfCQZaUJCKkpBoYddakr1t7c07sH55LYdZ/uPQX
-	GJ30OfntvVmsz/KQFOOaiodPj2Xv973EJDsj/eWipF2O14OuzJ1760eV73aRffsd 
+	id S1161083AbcFJNKu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2016 09:10:50 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:55240 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932248AbcFJNKd convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 09:10:33 -0400
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1bBMCj-0001Qo-2i; Fri, 10 Jun 2016 15:10:29 +0200
+Received: from apache by webmail.ira.uka.de with local (Exim 4.84_2)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1bBMCa-00045o-Ao; Fri, 10 Jun 2016 15:10:20 +0200
+Received: from x4db0041d.dyn.telefonica.de (x4db0041d.dyn.telefonica.de
+ [77.176.4.29]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
+ Fri, 10 Jun 2016 15:10:20 +0200
+In-Reply-To: <20160603183426.13140-3-thomas.braun@virtuell-zuhause.de>
+User-Agent: Horde Application Framework 5
+Content-Disposition: inline
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1465564229.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297003>
 
-On 05/06/2016 06:13 PM, Michael Haggerty wrote:
-> [...]
-> This patch series is also available from my GitHub repo [2] as branch
-> "split-under-lock".
-> 
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/292772
-> [2] https://github.com/mhagger/git
 
-I was reading this area of the code again, and I found a problem in this
-patch series. Now that ref_updates can be added to ref_transactions
-while they are being processed, it is not correct to store a pointer to
-transaction->updates in ref_transaction_commit() here [1], because the
-array might be moved by realloc() if it grows during the function. The
-problem wasn't detected during testing because an added commit would
-have to cross an ALLOC_GROW boundary to trigger the bug.
+Hallo Thomas,
 
-The fix is obvious but it is textually quite a few lines. For good
-measure, the same fix should be made in initial_ref_transaction_commit()
-here [2].
+I saw v5 hit my mailbox while writing this.  I glanced it over and it
+seems my comments here apply to that version as well.
 
-The most logical place to fix this is by expanding commit
-"ref_transaction_commit(): remove local variable n" [3], so I've done
-that and force pushed the result to my GitHub account [4] as branch
-"split-under-lock".
+Quoting Thomas Braun <thomas.braun@virtuell-zuhause.de>:
 
-Junio, if you want to incorporate this revised version of the branch in
-your big rewind of next, then we can pretend that the bug was never
-there :-) Otherwise, tell me in what form you would like the fix and I
-will be happy to provide it.
+> This function allows to search the commmand line and config
+> files for an option, long and short, with mandatory value.
+>
+> The function would return e.g. for the command line
+> "git status -uno --untracked-files=3Dall" the result
+> "all" regardless of the config option.
 
-Sorry for finding this problem so late in the process.
+Wow, regarding my earlier remark about bonus points: I didn't realize
+that there were so many bonus point to give away :)
 
-Michael
+> Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+> ---
+> contrib/completion/git-completion.bash | 44 =20
+> ++++++++++++++++++++++++++++++++++
+> 1 file changed, 44 insertions(+)
+>
+> diff --git a/contrib/completion/git-completion.bash =20
+> b/contrib/completion/git-completion.bash
+> index addea89..4bd17aa 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -803,6 +803,50 @@ __git_find_on_cmdline ()
+> 	done
+> }
+>
+> +# Echo the value of an option set on the command line or config
+> +#
+> +# $1: short option name
+> +# $2: long option name including =3D
 
-[1]
-https://github.com/mhagger/git/blob/088c8f756c86581ff25371983ef409044b348bb9/refs/files-backend.c#L3559
-[2]
-https://github.com/mhagger/git/blob/088c8f756c86581ff25371983ef409044b348bb9/refs/files-backend.c#L3725
-[3] http://article.gmane.org/gmane.comp.version-control.git/293801
-[4] https://github.com/mhagger/git
+I'm not sure about requiring the '=3D', the function could just append
+it as necessary.  More on this below.
+
+> +# $3: list of possible values
+> +# $4: config string (optional)
+
+I don't understand why the list of possible values is necessary.
+
+This function will be called when the caller wants to take different
+actions based on different values, so the caller will process the
+function's output with a case statement or an if-else chain, both of
+which would be perfectly capable to ignore whatever invalid value the
+user might have specified.  Therefore, I think this function doesn't
+need the list of possible values, it should just return whatever value
+it found after the option.
+
+> +# example:
+> +# result=3D"$(__git_get_option_value "-d" "--do-something=3D"\
+> +#     "yes no" "core.doSomething")"
+> +#
+> +# result is then either empty (no option set) or "yes" or "no"
+> +#
+> +# __git_get_option_value requires 3 arguments
+> +__git_get_option_value ()
+> +{
+> +	local c short_opt long_opt val
+> +	local result=3D values config_key word
+> +
+> +	short_opt=3D"$1"
+> +	long_opt=3D"$2"
+> +	values=3D"$3"
+> +	config_key=3D"$4"
+
+These can be assigned when the variables are declared, saving a couple
+of lines.
+
+> +	((c =3D $cword - 1))
+> +	while [ $c -ge 0 ]; do
+
+Searching from the end of the command line, so even if someone were to
+do a 'git status -uall -unormal -uno <TAB>', this would still do the
+right thing.  Good!
+
+However ;)
+Just for fun imagine following:
+
+       $ >-uno
+       $ git status -- -uno <TAB>
+
+'git status' treats that '-uno' after the doubledash as a filename,
+but this function interprets it as an option, and on the subsequent
+TAB the completion script won't list untracked files.
+
+I'm tempted to say that this is such a pathological corner case that
+it doesn't worth worrying about.
+
+> +		word=3D"${words[c]}"
+> +		for val in $values; do
+
+Without the possible values argument this inner loop could go away.
+
+> +			if [ "$short_opt$val" =3D "$word" ]
+> +			|| [ "$long_opt$val"  =3D "$word" ]; then
+> +				result=3D"$val"
+> +				break 2
+
+You could just 'echo "$val"' or rather ${word#$short_opt} and return
+here ...
+
+> +			fi
+> +		done
+> +		((c--))
+> +	done
+> +
+> +	if [ -n "$config_key" ] && [ -z "$result" ]; then
+
+=2E.. and that would make the second condition unnecessary here ...
+
+> +		result=3D"$(git --git-dir=3D"$(__gitdir)" config "$config_key")"
+
+=2E.. and this could just be a simple 'git config' execution, without
+command substitution ...
+
+> +	fi
+> +
+> +	echo "$result"
+
+=2E.. and this echo could go away as well.
+
+> +}
+> +
+> __git_has_doubledash ()
+> {
+> 	local c=3D1
+> --
+> 2.8.3.windows.1
+
+
+However, I'm not sure we need or want this helper function _at the
+moment_.  Yes, in general helper functions are good, and in this case
+it makes _git_status() easier to follow, but it has some drawbacks,
+too:
+
+   - It has a single callsite: the upcoming _git_status().  No other
+     existing case springs to mind where it could be used, i.e. where
+     different values of an option would require different actions from
+     the completion script.  Maybe we'll have one in the future, maybe
+     not.
+
+   - This function works only with the "stuck" form of options, i.e.
+     '--opt=3Dval' or '-oval', which is mostly sufficient in this case,
+     because 'git status' understands only this form.  However, it
+     doesn't work with "unstuck" options, i.e. '--opt val' or '-o val'.
+     In many cases git supports only this "unstuck" form, and there are
+     many cases where it supports both for a given option.  We can't kn=
+ow
+     which form a future callsite might need, but requiring the '=3D' a=
+s
+     part of the long option seems to paint us into a corner.
+
+   - I wrote "mostly sufficient" above, because 'git status' does accep=
+t
+     a valueless '-u|--untracked-files' option, too, e.g.:
+
+       $ git config status.showUntrackedFiles no
+       $ git status --untracked-files
+
+     lists untracked files, therefore the completion script should list
+     them as well.  Your function can't cope with this case, and I'm no=
+t
+     sure how it and its caller could differentiate between the presenc=
+e
+     of such a valueless option and no option at all.  Perhaps with an
+     additional optional function parameter holding the default value
+     that should be echo-ed when a valueless option is encountered.
+
+If this function were not a function but its logic were embedded into
+_git_status(), then we wouldn't have to spend any effort _now_ to come
+up with a proper calling convention that can cope with stuck vs.
+unstuck vs. both forms of options and with valueless options.  We would
+deal with all that and the necessary refactorization when (or if ever)
+there's a second potential callsite.  Embedding into _git_status()
+would give you more freedom to deal with the valueless '-u' option,
+too.  If embedded, some of my in-code comments wouldn't apply anymore,
+of course.
+
+I'm in favor of crossing the bridge when we get there.
+
+
+G=C3=A1bor
