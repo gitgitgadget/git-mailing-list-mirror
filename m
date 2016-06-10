@@ -1,118 +1,107 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 00/94] libify apply and use lib in am
-Date: Fri, 10 Jun 2016 10:59:46 +0200
-Message-ID: <CAP8UFD1zSAxyHfZgBbfoF=th0waZWEhvHP+4jUxxVO+rU9N9RA@mail.gmail.com>
-References: <20160511131745.2914-1-chriscool@tuxfamily.org>
- <5734B805.8020504@kdbg.org> <CAP8UFD1ukOMi_VDKzZErwSu1OBU5h1hVOxd7mPu1ytzFr11VGA@mail.gmail.com>
- <5759DB31.2000106@kdbg.org> <alpine.DEB.2.20.1606100852550.3039@virtualbox>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>,
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: [PATCH v5 2/3] completion: add __git_get_option_value helper
+Date: Fri, 10 Jun 2016 12:12:05 +0200
+Message-ID: <20160610101206.5760-3-thomas.braun@virtuell-zuhause.de>
+References: <xmqq8tymp385.fsf@gitster.mtv.corp.google.com>
+ <20160610101206.5760-1-thomas.braun@virtuell-zuhause.de>
+Cc: peff@peff.net, Ramkumar Ramachandra <artagnon@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jeff King <peff@peff.net>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 10 10:59:58 2016
+	John Keeping <john@keeping.me.uk>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 10 12:12:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBIIG-0007cm-SH
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 10:59:57 +0200
+	id 1bBJQU-0005QY-HI
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 12:12:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752693AbcFJI7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 04:59:52 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:36492 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751593AbcFJI7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 04:59:50 -0400
-Received: by mail-wm0-f49.google.com with SMTP id n184so257590694wmn.1
-        for <git@vger.kernel.org>; Fri, 10 Jun 2016 01:59:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wgdS57eRNQq/PLZV/Egv+cr7kej068/DQKtdJwIP5TQ=;
-        b=HZLu9WUMuMwIewP1HkapMUVUkbrWCpi9Ms/7qBEEE2k1UA5QhZO03qkD/UXh0B0BBK
-         NOcXwG4q/bCwlD/PJbxBKh3DOwbkUKzFnL9DeyQmOEJd3ZKN/5jmOS74IS+2UELMgQdL
-         lLFmhUegNKMkarUIlljzkv8eNPHlyUXvmSN2j7EymLnsEes3eN0Q7JeYps1tD1vmJgAy
-         Ctwv/mExODj5+EqVwYtxviq2BRcV65evJTknrFnkUSpslyioVnrt/3cjrp3A6J3cg7Jv
-         QnfMgCpRzB6s6iPBOq9dMIyOvLXJZwrggqUKUgzsV+N8FUJ9sUYWWC2pUBuDIYiSQhSR
-         kY2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wgdS57eRNQq/PLZV/Egv+cr7kej068/DQKtdJwIP5TQ=;
-        b=a9e7bv5XvVh+5/FESZusA1kRYW4hD4UFWR/v1n10dg5tFIsDItZQWJuMJF9S/b81yM
-         4vcJGFzZiPN23SVpR72Pf1xomv07evUWFLvJT3eRnsR35M9j52TnBY6c5O0awRQU3UZ7
-         1J8R1f5D4yL35ZmIFSy/uSlQ6IMCkTpuoxJNL/tvoLJTNvE/8zkDsb+hX62qq4yIh+sY
-         N1GbSFCLfPk6GGBPIFqEwlglmbVz4i7ODi60LbGPiwGzCGxpTEDP7d9OJeCa32hi7sSl
-         FOmCmURd1K2LE3Y/FNpS2B+DKZDt7AxkwGkCwinOqBCuDJCbm6j7kNBmaM+mnBY41mS0
-         Ms7w==
-X-Gm-Message-State: ALyK8tIMRG1tBrw4E1qdHILqj15ijd88TdY+8n2D7CwCGdB/RyOyW3tu92O3FvA9ps+sYH/7RZlSDe2WTxk4KA==
-X-Received: by 10.28.183.8 with SMTP id h8mr1505218wmf.79.1465549187692; Fri,
- 10 Jun 2016 01:59:47 -0700 (PDT)
-Received: by 10.194.25.197 with HTTP; Fri, 10 Jun 2016 01:59:46 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1606100852550.3039@virtualbox>
+	id S1753103AbcFJKM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2016 06:12:28 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:36187 "EHLO
+	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753088AbcFJKM0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2016 06:12:26 -0400
+Received: from p4fc87c53.dip0.t-ipconnect.de ([79.200.124.83] helo=localhost.localdomain); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1bBJQM-00037D-4l; Fri, 10 Jun 2016 12:12:22 +0200
+X-Mailer: git-send-email 2.8.4.windows.1
+In-Reply-To: <20160610101206.5760-1-thomas.braun@virtuell-zuhause.de>
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1465553545;6e6a5725;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296961>
 
-Hi Dscho,
+This function allows to search the commmand line and config
+files for an option, long and short, with mandatory value.
 
-On Fri, Jun 10, 2016 at 9:01 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Hannes,
->
-> On Thu, 9 Jun 2016, Johannes Sixt wrote:
->
->> Meanwhile, I have retrained my muscle memory to stop before typing "-i" after
->> "rebase" for an opportunity to consider whether bare rebase can be used.
->>
->> What should I say? I am impressed. It's like 100 times faster than rebase -i
->> (on Windows). I'm now using it whenever I can, and more often than not I plan
->> my rebase workflow so that I can go ahead without -i.
->
-> That only means that I have to finalize my rebase--helper work (which I am
-> busy doing, I am at the valgrind stage).
->
-> I wonder whether that "100x" is a reliable number? ;-) FWIW I can measure
-> something like a 4x speedup of the interactive rebase on Windows when
-> running with the rebase--helper, and it is still noticably faster in my
-> Linux VM, too.
->
->> Can't wait to test a re-roll on top of cc/apply-introduce-state!
->
-> I lost track in the meantime: were those issues with unclosed file handles
-> and unreleased memory in the error code paths addressed systematically? My
-> mail about that seems to have been left unanswered, almost as if my
-> concerns had been hand-waved away...
+The function would return e.g. for the command line
+"git status -uno --untracked-files=all" the result
+"all" regardless of the config option.
 
-Haven't I answered to your email in this thread:
+Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+---
+ contrib/completion/git-completion.bash | 44 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-http://thread.gmane.org/gmane.comp.version-control.git/292403/
-
-?
-
-> If those issues have indeed been addressed properly, and a public
-> repository reliably has the newest iteration of that patch series in a
-> branch without a versioned name, I will be happy to test it in Git for
-> Windows' SDK again.
-
-This is the newest iteration:
-
-https://github.com/chriscool/git/commits/libify-apply-use-in-am65
-
-Thanks for testing,
-Christian.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index addea89..0bf67c9 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -803,6 +803,50 @@ __git_find_on_cmdline ()
+ 	done
+ }
+ 
++# Echo the value of an option set on the command line or config
++#
++# $1: short option name
++# $2: long option name including =
++# $3: list of possible values
++# $4: config string (optional)
++#
++# example:
++# result="$(__git_get_option_value "-d" "--do-something=" \
++#     "yes no" "core.doSomething")"
++#
++# result is then either empty (no option set) or "yes" or "no"
++#
++# __git_get_option_value requires 3 arguments
++__git_get_option_value ()
++{
++	local c short_opt long_opt val
++	local result= values config_key word
++
++	short_opt="$1"
++	long_opt="$2"
++	values="$3"
++	config_key="$4"
++
++	((c = $cword - 1))
++	while [ $c -ge 0 ]; do
++		word="${words[c]}"
++		for val in $values; do
++			if [ "$short_opt$val" = "$word" ] ||
++			   [ "$long_opt$val"  = "$word" ]; then
++				result="$val"
++				break 2
++			fi
++		done
++		((c--))
++	done
++
++	if [ -n "$config_key" ] && [ -z "$result" ]; then
++		result="$(git --git-dir="$(__gitdir)" config "$config_key")"
++	fi
++
++	echo "$result"
++}
++
+ __git_has_doubledash ()
+ {
+ 	local c=1
+-- 
+2.8.4.windows.1
