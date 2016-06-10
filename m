@@ -1,105 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] diff: disable compaction heuristic for now
-Date: Fri, 10 Jun 2016 13:55:01 -0700
-Message-ID: <xmqqk2hwepcq.fsf@gitster.mtv.corp.google.com>
-References: <20160610075043.GA13411@sigill.intra.peff.net>
-	<20160610083102.GA14192@sigill.intra.peff.net>
-	<xmqqvb1hf35y.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZLT8AfmWTrrW+a-v7aXw5sm68P2H=vT7QZr2hj4Z2gDA@mail.gmail.com>
-	<CA+P7+xp=bTPiwRRTH=h7v5pV8+=he4+789_3PNz227mv1387MA@mail.gmail.com>
-	<xmqqeg84gbex.fsf_-_@gitster.mtv.corp.google.com>
-	<20160610203026.GA21464@sigill.intra.peff.net>
-	<xmqqoa78epmt.fsf_-_@gitster.mtv.corp.google.com>
+From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH v6 43/44] builtin/apply: add a cli option for be_silent
+Date: Fri, 10 Jun 2016 22:59:26 +0200
+Message-ID: <575B2A2E.3000403@web.de>
+References: <20160610201118.13813-1-chriscool@tuxfamily.org>
+ <20160610201118.13813-44-chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jacob Keller <jacob.keller@gmail.com>,
+Content-Type: text/plain; charset=iso-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Stefan Beller <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 10 22:55:19 2016
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 10 22:59:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBTSY-0008Sy-Dg
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 22:55:18 +0200
+	id 1bBTX1-0003D2-UI
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 22:59:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932836AbcFJUzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 16:55:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55809 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932447AbcFJUzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 16:55:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EE0C3245F7;
-	Fri, 10 Jun 2016 16:55:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SLhHNG4o73ChdmkknB55DMAUtFQ=; b=FFwBqS
-	2n+x/jRsgrZZGl67ATWkI8Wd3755E4qAx1HT6ogNImtnxsjBRRv+oNfXVXEcsl5w
-	2cqbXYDKFq7kwIszlG1adzsWYfzI26df9xa3NcpaTfplJOngbP9UQwExRCiWq7ID
-	knWGPFFQDOTmIcR99i/aHrObmQWjxx+VQ4cVU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jCDr0OXhw8MML31NAI/dsXIw1PHnuWuy
-	jq+3yWO1JEOeMLGnxxksXvH7rVu8G9iLFzwXKlCvvei/8MyRmlySwK1htnLeoqFp
-	gkvkMWhOrARKw1ZBHC8IIqIr9isuIs+HrIdM7wFtUAtG8/wEjZ2mExGlo3241tC8
-	sYX96jnrcIE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E5CBB245F6;
-	Fri, 10 Jun 2016 16:55:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6D707245F4;
-	Fri, 10 Jun 2016 16:55:03 -0400 (EDT)
-In-Reply-To: <xmqqoa78epmt.fsf_-_@gitster.mtv.corp.google.com> (Junio
-	C. Hamano's message of "Fri, 10 Jun 2016 13:48:58 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9AA0FF7E-2F4D-11E6-BBE4-89D312518317-77302942!pb-smtp1.pobox.com
+	id S932587AbcFJU7w convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2016 16:59:52 -0400
+Received: from mout.web.de ([212.227.15.4]:61301 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932296AbcFJU7v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 16:59:51 -0400
+Received: from [192.168.178.36] ([79.237.61.24]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0Lxwjk-1bYlev0w0C-015KHW; Fri, 10 Jun 2016 22:59:29
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
+In-Reply-To: <20160610201118.13813-44-chriscool@tuxfamily.org>
+X-Provags-ID: V03:K0:9sEV+/Dyr6ZPRyypdZoJ13ws3IzOASJaQnHJR6hrZ4638KJ4tTa
+ DysThUwDVTuGvnwiyvZ5h3iYCvqjBpNJeZghGjJLzU2Xgza3u/I98IEC5VVLvw7+4PIW3jC
+ Ph2DA+qrkIshMVdVSJUPWHj/Vaw8xLUM4lC+yY21BerF2xvLkeAQZDHFWgTeO6M14Wk7Mu0
+ bVrzOz/f7f6ECB2q8GSJw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ul8QynSqbvQ=:kCAevwHmdpyhCfBVX1T69O
+ IOm5yqHRgZpIhYswBSfiikZwqpIUawke5f75ajamqi0+UVOXh74FKp+DADrCJMjvkPCEQV6jI
+ M4UgBFsniYJDN6LhXQt0d0N6/GSsMZRs1YmU10RTOryyaXphNuwDWtD7r2FGt3sCiMPoUwgDV
+ KIZjjI/Bdkh//G98gf7b+gC+ird4FtKeV2UrMkPd1FH23WU/f/C3M3rjP1fYGWOjX4KtCWma0
+ DAg//5VUnhoeekdT6sRSYH0EfQH+YLj5nOZviR3C9+rV9W6dvIWsbWAiw0jVlErOWMDxYUrRv
+ V7khcS0Icq9ZdYaPcUoyH355ZjvITQR53CizqcebV9lBWkYYVlWlkrY55jTQ9TaMD5K4WFrLU
+ DWhfSqbQNtgsLLFvQs8FdF5Y4D69WFCQOO7QYnbYUQijB5HUxmACN/d19+nwGt4YYziurOQVW
+ sbWC1N5LVMhkuoEyirlrskc4QsTrkYXtciKpT1hu6rAVm/lWZIPRlnMZ97B5qEWKsQHeIHRl+
+ UPhBfaLH0Wy4WB37M+oh+kJe9mc5DvEUffY1Hi2mqLrwH3DZD46XY3pf6uVShWHPAOb6Ilq0+
+ 3t4OUsMwtVKSy3zRSVKXq9bmkb9UWbe8QnaMqfOHT5dGUsFc+PHOxIfQxiTtv8xQQOLaFPx8A
+ nuWxESHzqnaBJl75atRUKqsnOyjuQaUm8R+VKLJL3aYgIlJBtlV+j2XcHvshaG2zpKcudYg8Z
+ Ikt9ccAk5PzlW6mwkFYHkUX68t6tJHiLTIL2QDcVPd1jm6ItoVXevUT0bCRwe1NE6LPJoo29 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297074>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->     Jeff King <peff@peff.net> writes:
+Am 10.06.2016 um 22:11 schrieb Christian Couder:
+> Let's make it possible to request a silent operation on the
+> command line.
 >
->     > We probably want a patch to the release notes to note that it's not on
->     > by default. And we may want to advertise the experimental knob so
->     > that people actually try it (otherwise we won't get feedback from the
->     > masses).
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>   builtin/apply.c | 2 ++
+>   1 file changed, 2 insertions(+)
 >
->     OK, I think that is sensible.  The interdiff is not a strict
->     reversion of 77085a61 (diff: undocument the compaction heuristic
->     knobs for experimentation, 2016-05-02) but stresses that the
->     feature is off by default and is experimental.
+> diff --git a/builtin/apply.c b/builtin/apply.c
+> index ddd61de..93744f8 100644
+> --- a/builtin/apply.c
+> +++ b/builtin/apply.c
+> @@ -74,6 +74,8 @@ int cmd_apply(int argc, const char **argv, const ch=
+ar *prefix)
+>   		OPT_BOOL(0, "allow-overlap", &state.allow_overlap,
+>   			N_("allow overlapping hunks")),
+>   		OPT__VERBOSE(&state.apply_verbosely, N_("be verbose")),
+> +		OPT_BOOL(0, "silent", &state.be_silent,
+> +			N_("do not print any output")),
+>   		OPT_BIT(0, "inaccurate-eof", &options,
+>   			N_("tolerate incorrectly detected missing new-line at the end of=
+ file"),
+>   			APPLY_OPT_INACCURATE_EOF),
 
-This is for 'master' when the topic is merged (will keep it in stash
-for now).
+Why not -q/--quiet as for most other commands?
 
- Documentation/RelNotes/2.9.0.txt | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+=46urthermore, you could use OPT__VERBOSITY, which causes -v and -q to=20
+update the same variable variable and thus lets parseopt handle their=20
+interaction.  Perhaps verbosity =3D=3D 1 could mean verbose, 0 normal, =
+-1 no=20
+infos, -2 no warnings and -3 no errors?
 
-diff --git a/Documentation/RelNotes/2.9.0.txt b/Documentation/RelNotes/2.9.0.txt
-index 927cb9b..79b46e1 100644
---- a/Documentation/RelNotes/2.9.0.txt
-+++ b/Documentation/RelNotes/2.9.0.txt
-@@ -118,9 +118,11 @@ UI, Workflows & Features
-  * HTTP transport clients learned to throw extra HTTP headers at the
-    server, specified via http.extraHeader configuration variable.
- 
-- * Patch output from "git diff" and friends has been tweaked to be
--   more readable by using a blank line as a strong hint that the
--   contents before and after it belong to logically separate units.
-+ * The "--compaction-heuristic" option to "git diff" family of
-+   commands enables a heuristic to make the patch output more readable
-+   by using a blank line as a strong hint that the contents before and
-+   after it belong to logically separate units.  It is still
-+   experimental.
- 
-  * A new configuration variable core.hooksPath allows customizing
-    where the hook directory is.
+And if you add the ability to silence the apply functions before using=20
+them you don't have to export and unexport dup_devnull().
+
+Ren=E9
