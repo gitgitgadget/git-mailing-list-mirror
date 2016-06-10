@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v6 44/44] apply: use error_errno() where possible
-Date: Fri, 10 Jun 2016 22:11:18 +0200
-Message-ID: <20160610201118.13813-45-chriscool@tuxfamily.org>
+Subject: [PATCH v6 39/44] usage: add get_error_routine() and get_warn_routine()
+Date: Fri, 10 Jun 2016 22:11:13 +0200
+Message-ID: <20160610201118.13813-40-chriscool@tuxfamily.org>
 References: <20160610201118.13813-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -13,51 +13,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 10 22:13:03 2016
+X-From: git-owner@vger.kernel.org Fri Jun 10 22:13:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBSnd-0003vF-9y
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 22:13:01 +0200
+	id 1bBSnk-00042I-IS
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 22:13:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753111AbcFJUM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 16:12:58 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:32784 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932730AbcFJUMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 16:12:52 -0400
-Received: by mail-wm0-f67.google.com with SMTP id r5so1071990wmr.0
-        for <git@vger.kernel.org>; Fri, 10 Jun 2016 13:12:51 -0700 (PDT)
+	id S932668AbcFJUMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2016 16:12:47 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34608 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932647AbcFJUMp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 16:12:45 -0400
+Received: by mail-wm0-f66.google.com with SMTP id n184so1058352wmn.1
+        for <git@vger.kernel.org>; Fri, 10 Jun 2016 13:12:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=y1w7zFZgf4NFBvlrS9RboAq5p2/cPzprG6UFqd4sVsE=;
-        b=Ewjylw3uM59N3yZVcWvC0lxHYk5e1MPmDQhKrg8nbMAlNp6zJyTsZs6XWosVIiYLRG
-         qNtYGn7xS4HA5imGsvaNeJbqv8Pfz3xJvSXrc33giAemVkvmsqUNyLCMjOYVeKK+rp7o
-         oR9D+MPUFtTwnGGNXrcdUGFpW9lwChij7vasfR+JVpROq4XDA+YjYt1QHF3q/6PZXwrx
-         hS3wuZhwNH0KTB8nOw7ZiJdQUeGQUOrw3tE1Jxv+CCnNuxMhLP+XPFvDoVf5AmF7kmyF
-         /4ov0iuO0EyKNf2oS24/iKHmysotluGIDTR1ikFEQyKRftRMCkJ2PbqNAy+EFsmUnFNI
-         a+OA==
+        bh=qqmLfCD/rM7cGcandiqhYOVtMgxuAopdzDputNbUnVw=;
+        b=axSWz30yjauuicp7b0h2gh1ntSPzbyDI9hQdH/4FbYLfT52MMXO6R85j2YRhlN+5l1
+         UKklSaw72lUGnkSF0vFupGFbvD6KA/hGyhXOEzOccMUgytisDMXxfMd4Vswa6LCD3T3E
+         P6kseh5Zh7SJB9C3+WQ89Er8OeMhNJacQDwc8l7ZvgwywmTpU3E+A5ebpsAj4zpwZ8pp
+         0iqqfU6CkxIS4EQrDf64OvbSnsM0ENUIYsU87TxK0mglilyTZL4P8Bq1osNSyyFZerVj
+         ULxKvKPxXmQ0+69niY4voojfUylrvdHFrcnR9tcX106ldJiodIRH2/Gq2x/bzBbV/YiD
+         uJIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=y1w7zFZgf4NFBvlrS9RboAq5p2/cPzprG6UFqd4sVsE=;
-        b=NOqY9OuSn8axJYosh4scmI88DD8MVKLToug4MrZHPRY1Ep9VMC+7uQFyCl8VTDJVNs
-         YNf9DJHVQgXhHPSnScRb6F0tqfeCZKEV06haJ+EbNt5s+bXiTxYzAOJVnXv/j13gGGwK
-         MTAQss6l+b9gUd/GuYeF3zixZOgaBFwu3rupECpaStRq+ilNq+Pc+QCZuctnej33dLXw
-         DdlIO6XKmmjt+kwyEFrqz97CeTIqtFn+BJclJrTZRIziRzfqlwS0CESgmh9idNf+tT/H
-         jdhysRuefD5xs2kQ71VyHVAq4qda29Cmpa9YlW7mwAWdmAK22SZ7J9ndTjWPd+fj2em9
-         eFfw==
-X-Gm-Message-State: ALyK8tII8e3TDyaBx0qYSpx99WJHmg/FW1x3qI+MtFbyAUvSNMBiP236SU/cZXmzQBPJbA==
-X-Received: by 10.28.1.151 with SMTP id 145mr596405wmb.25.1465589570693;
-        Fri, 10 Jun 2016 13:12:50 -0700 (PDT)
+        bh=qqmLfCD/rM7cGcandiqhYOVtMgxuAopdzDputNbUnVw=;
+        b=T1RSngOc4lHvXwzOW1ssC4XZyVF9Tz6QjfcO37Sq4CAyCMR9YjWz0dD1t6J82Pv4aj
+         cHRmpvashyQ4dWVS34+5CUBQkedu3i+oNwYmZME5Kj5iHekW6MRPdBnqKAV6l40VCSId
+         jRnnOWkUr5ISnqhKWENl4JPUij4M/6EieiJ/YmVqanMXzaTWHBtpHG2+pxyMikpSeZdt
+         xUi+w7dguSZ0Cn/+Nyzp3fFvIky/W55y+y0jIX8LBEdGU1WErwliKKwKXF/WgxH9RegR
+         CbFU7JTIt4dNKB/Cahgzo+wHaEAGoZMdJYb/iMi5xBVDgFXVoyZ/HNRFY0Lsep84tFeQ
+         8jRQ==
+X-Gm-Message-State: ALyK8tJprWtJkd0ntLzXdQYFdMXxRUA4Bcjf+eJKlwVGuAYdaj6Em2BcNdSOZrhG9CoawA==
+X-Received: by 10.28.27.81 with SMTP id b78mr635949wmb.19.1465589564133;
+        Fri, 10 Jun 2016 13:12:44 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id o129sm689125wmb.17.2016.06.10.13.12.49
+        by smtp.gmail.com with ESMTPSA id o129sm689125wmb.17.2016.06.10.13.12.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 10 Jun 2016 13:12:50 -0700 (PDT)
+        Fri, 10 Jun 2016 13:12:43 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.rc2.362.g3cd93d0
 In-Reply-To: <20160610201118.13813-1-chriscool@tuxfamily.org>
@@ -65,94 +65,60 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297049>
+
+Let's make it possible to get the current error_routine and warn_routine,
+so that we can store them before using set_error_routine() or
+set_warn_routine() to use new ones.
+
+This way we will be able put back the original routines, when we are done
+with using new ones.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- apply.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ git-compat-util.h |  2 ++
+ usage.c           | 10 ++++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/apply.c b/apply.c
-index ef49709..cd4cd01 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3505,7 +3505,7 @@ static int load_current(struct apply_state *state,
- 	ce = active_cache[pos];
- 	if (lstat(name, &st)) {
- 		if (errno != ENOENT)
--			return error(_("%s: %s"), name, strerror(errno));
-+			return error_errno("%s", name);
- 		if (checkout_target(&the_index, ce, &st))
- 			return -1;
- 	}
-@@ -3664,7 +3664,7 @@ static int check_preimage(struct apply_state *state,
- 	} else if (!state->cached) {
- 		stat_ret = lstat(old_name, st);
- 		if (stat_ret && errno != ENOENT)
--			return error(_("%s: %s"), old_name, strerror(errno));
-+			return error_errno("%s", old_name);
- 	}
+diff --git a/git-compat-util.h b/git-compat-util.h
+index f78706a..92af27d 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -440,7 +440,9 @@ static inline int const_error(void)
  
- 	if (state->check_index && !previous) {
-@@ -3686,7 +3686,7 @@ static int check_preimage(struct apply_state *state,
- 	} else if (stat_ret < 0) {
- 		if (patch->is_new < 0)
- 			goto is_new;
--		return error(_("%s: %s"), old_name, strerror(errno));
-+		return error_errno("%s", old_name);
- 	}
+ extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
+ extern void set_error_routine(void (*routine)(const char *err, va_list params));
++extern void (*get_error_routine(void))(const char *err, va_list params);
+ extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
++extern void (*get_warn_routine(void))(const char *warn, va_list params);
+ extern void set_die_is_recursing_routine(int (*routine)(void));
+ extern void set_error_handle(FILE *);
  
- 	if (!state->cached && !previous)
-@@ -3745,7 +3745,7 @@ static int check_to_create(struct apply_state *state,
- 
- 		return EXISTS_IN_WORKTREE;
- 	} else if ((errno != ENOENT) && (errno != ENOTDIR)) {
--		return error("%s: %s", new_name, strerror(errno));
-+		return error_errno("%s", new_name);
- 	}
- 	return 0;
- }
-@@ -4260,9 +4260,9 @@ static int add_index_file(struct apply_state *state,
- 		if (!state->cached) {
- 			if (lstat(path, &st) < 0) {
- 				free(ce);
--				return error(_("unable to stat newly "
--					       "created file '%s': %s"),
--					     path, strerror(errno));
-+				return error_errno(_("unable to stat newly "
-+						     "created file '%s'"),
-+						   path);
- 			}
- 			fill_stat_cache_info(ce, &st);
- 		}
-@@ -4316,7 +4316,7 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
- 	strbuf_release(&nbuf);
- 
- 	if (close(fd) < 0 && !res)
--		return error(_("closing file '%s': %s"), path, strerror(errno));
-+		return error_errno(_("closing file '%s'"), path);
- 
- 	return res ? -1 : 0;
- }
-@@ -4386,8 +4386,8 @@ static int create_one_file(struct apply_state *state,
- 			++nr;
- 		}
- 	}
--	return error(_("unable to write file '%s' mode %o: %s"),
--		     path, mode, strerror(errno));
-+	return error_errno(_("unable to write file '%s' mode %o: %s"),
-+			   path, mode);
+diff --git a/usage.c b/usage.c
+index 67e5526..2fd3045 100644
+--- a/usage.c
++++ b/usage.c
+@@ -70,11 +70,21 @@ void set_error_routine(void (*routine)(const char *err, va_list params))
+ 	error_routine = routine;
  }
  
- static int add_conflicted_stages_file(struct apply_state *state,
-@@ -4514,7 +4514,7 @@ static int write_out_one_reject(struct apply_state *state, struct patch *patch)
++void (*get_error_routine(void))(const char *err, va_list params)
++{
++	return error_routine;
++}
++
+ void set_warn_routine(void (*routine)(const char *warn, va_list params))
+ {
+ 	warn_routine = routine;
+ }
  
- 	rej = fopen(namebuf, "w");
- 	if (!rej)
--		return error(_("cannot open %s: %s"), namebuf, strerror(errno));
-+		return error_errno(_("cannot open %s"), namebuf);
- 
- 	/* Normal git tools never deal with .rej, so do not pretend
- 	 * this is a git patch by saying --git or giving extended
++void (*get_warn_routine(void))(const char *warn, va_list params)
++{
++	return warn_routine;
++}
++
+ void set_die_is_recursing_routine(int (*routine)(void))
+ {
+ 	die_is_recursing = routine;
 -- 
 2.9.0.rc2.362.g3cd93d0
