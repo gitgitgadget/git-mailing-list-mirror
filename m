@@ -1,124 +1,131 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [BUG-ish] diff compaction heuristic false positive
-Date: Fri, 10 Jun 2016 13:00:53 +0200
-Message-ID: <575A9DE5.2020401@alum.mit.edu>
-References: <20160610075043.GA13411@sigill.intra.peff.net>
- <575A7AD1.50604@alum.mit.edu> <20160610084149.GA14592@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 00/94] libify apply and use lib in am
+Date: Fri, 10 Jun 2016 13:11:35 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1606101307080.3039@virtualbox>
+References: <20160511131745.2914-1-chriscool@tuxfamily.org> <5734B805.8020504@kdbg.org> <CAP8UFD1ukOMi_VDKzZErwSu1OBU5h1hVOxd7mPu1ytzFr11VGA@mail.gmail.com> <5759DB31.2000106@kdbg.org> <alpine.DEB.2.20.1606100852550.3039@virtualbox>
+ <CAP8UFD1zSAxyHfZgBbfoF=th0waZWEhvHP+4jUxxVO+rU9N9RA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stefan Beller <sbeller@google.com>,
+Content-Type: text/plain; charset=US-ASCII
+Cc: Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 10 13:01:11 2016
+	=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jeff King <peff@peff.net>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 10 13:12:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBKBa-0002Va-B1
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 13:01:10 +0200
+	id 1bBKMC-00008T-2R
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 13:12:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932604AbcFJLBF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2016 07:01:05 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:46608 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932145AbcFJLBE (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2016 07:01:04 -0400
-X-AuditID: 12074414-62bff700000008e6-1b-575a9de75fa0
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 8C.92.02278.7ED9A575; Fri, 10 Jun 2016 07:00:55 -0400 (EDT)
-Received: from [192.168.69.130] (p508EAFFC.dip0.t-ipconnect.de [80.142.175.252])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u5AB0rnT003361
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 10 Jun 2016 07:00:54 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.8.0
-In-Reply-To: <20160610084149.GA14592@sigill.intra.peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqPtiblS4wbK3LBZdV7qZLBp6rzBb
-	7F7cz2zxo6WH2WLz5nYWB1aPnbPusnss2FTq8ax3D6PHxUvKHp83yQWwRnHbJCWWlAVnpufp
-	2yVwZxzd/5G14AVvxcSPMg2Ma7m6GDk5JARMJCbf38TaxcjFISSwlVFi5elTjBDOBSaJu18b
-	mUGqhAXsJVpXrWICsUUEZCW+H94IVdTJKLF253kmEIdZoJ9RYv61yawgVWwCuhKLeprBOngF
-	tCU2zl/DDmKzCKhKHN+wHaxGVCBE4vy6rawQNYISJ2c+YQGxOQWsJdoWbQWzmQXUJf7Mu8QM
-	YctLNG+dzTyBkX8WkpZZSMpmISlbwMi8ilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXQi83s0Qv
-	NaV0EyMkmEV2MB45KXeIUYCDUYmHN2JXZLgQa2JZcWXuIUZJDiYlUd7Jk6PChfiS8lMqMxKL
-	M+KLSnNSiw8xSnAwK4nw9k0HyvGmJFZWpRblw6SkOViUxHm/LVb3ExJITyxJzU5NLUgtgsnK
-	cHAoSfAemgPUKFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+KyvhiYFyCpHiA9oK1
-	8xYXJOYCRSFaTzHqchzZf28tkxBLXn5eqpQ470eQIgGQoozSPLgVsNT1ilEc6GNh3g8gVTzA
-	tAc36RXQEiagJcuPhIMsKUlESEk1MLqFxz7he/p0ce65m9blH0JlBM9/Yn0tLLpNUGPr/qbF
-	U7SdfFYZ5sqtiTM7O2vOh4U6fhXuit9Y18ZaLGrcNbNi9hZ2Fn+5eWUqFRmPYqy9 
+	id S1752270AbcFJLME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2016 07:12:04 -0400
+Received: from mout.gmx.net ([212.227.17.22]:56156 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750710AbcFJLMD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 07:12:03 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0M6vSj-1bPr6E3SEP-00wmgo; Fri, 10 Jun 2016 13:11:40
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CAP8UFD1zSAxyHfZgBbfoF=th0waZWEhvHP+4jUxxVO+rU9N9RA@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:htV9R7a3Pip1Q56FVZaTt/Ch4Nxari/fKYeuqyuGQ6xvetCMpcD
+ zEP2GKC1PfhTYJgAn0nsPLDWuiwREYzDyvIhkRsS3jH00GmrCS1oN+cbo1yrdqDaQdFnF/2
+ SPw04+jazvJw/JmFOiYh+j7nM3hMXRVsWDaa6OXnBGH6Tr6OlmuQ8RvYJS059P+zB7tGkYB
+ Wsvqs6F1i5/jWmQDuAzuw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9DcGXSwvLxQ=:4L1jAFj258/L4hT7gQnGIQ
+ ee6MDzLp1/rv2o8Vl92W7m1Ex0WynrDPrnQxh6unsHBgOJGhhCeOpljYfpcZtYB5m3jet4CoO
+ goaZwqoKlcaFaqE7MK924R7wOeuNC2bbJpaMdqjTjjoymjQZ15DcYtAx5PXEKjyfw1ifgT5l4
+ JI5DotaQSA6x0Au34SFz9CqSh9N6HLN2tQOIP9AK7FRVuHBgxRcv7IEZcggvoZJgzlsdLYu7Y
+ A2PFgjRxle/ktW/soy5xZ5Bp1cDWe9DF7apt1d4chVJkVFzM518ThSpRfbZhPFGZf6M5hpCdv
+ r/CrVbVsOhysCh5cRPIiRmBjs0b2+9CCfDWcQlJhnPld2UqrzXCEAkHce9DmVJm+J5fyKL79N
+ MsZw9/YfXCuwvBx/cZRIB+WtvkKiQ++OASApd5zy69HI6RVveC+nKWd8pJVuWlrZjMuywroOR
+ YtZhKafFAfLK/RpsiackS9kWRgMpVMmGsaqDQyjf92zi+DBhDLK8Z4h08JjKY6JdXsUe56SeJ
+ k/HHI5wfvazjeJ9txJh9aGrstCrlktQMUG7sWqY2E0PiadE4tqKwStvzFgQJVKM2Bf215h+uZ
+ CClCPJnbfffqTUzVuhusjLrej7dVJ6d1IgP++nqaruUoZIZCXz9EO35itgs5YNddW/ca+luSw
+ 9NlQkDnxo1TVUBmgRmOV7VkwivwB9+XFUwUQATR2e7oKmRP/HwUFyyXnbDu2062F6V0aqGHpF
+ o/DY6XaDsJpxxXLq/rjhrDUGDr6c11BOahUOtm4YACfJivYZDKpfWLVFFkHnoB099zZj8b7O 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/296969>
 
-On 06/10/2016 10:41 AM, Jeff King wrote:
-> On Fri, Jun 10, 2016 at 10:31:13AM +0200, Michael Haggerty wrote:
->=20
->> I've often thought that indentation would be a good, fairly universa=
-l
->> signal for diff to use when deciding how to slide hunks around. Most
->> source code is indented in a way that shows its structure.
->>
->> I propose the following heuristic:
->>
->> * Prefer to start and end hunks following lines with the least
->>   indentation.
->>
->> * Define the "indentation" of a blank line to be the indentation of
->>   the previous non-blank line minus epsilon.
->>
->> * In the case of a tie, prefer to slide the hunk down as far as
->>   possible.
->=20
-> Hmm. That might help this case, but the original motivation for this
-> heuristic was something like:
->=20
->   ##
->   # foo
->   def foo
->     something
->   end
->=20
->   ##
->   # bar
->   def bar
->     something_else
->   end
->=20
-> where we add the first function above the second. We end up with:
->=20
-> diff --git a/file.rb b/file.rb
-> index 1f9b151..f991c76 100644
-> --- a/file.rb
-> +++ b/file.rb
-> @@ -1,4 +1,10 @@
->  ##
-> +# foo
-> +def foo
-> +  something
-> +end
-> +
-> +##
->  # bar
->  def bar
->    something else
->=20
-> I.e., crediting the "##" to the wrong spot (or in C, the "/*"). I don=
-'t
-> think indentation helps us there (sliding-up would, but like
-> sliding-down, it just depends on the order of the hunks).
->=20
-> So I agree that adding indentation to the mix might help, but I don't
-> think it can replace this heuristic.
+Hi Christian,
 
-Ummm, I think the indentation heuristic would work with that example,
-too, as long as we consider there to be an imaginary line "0" of the
-file (i.e., preceding the first real line) that has an indentation of -=
-=CE=B5.
+On Fri, 10 Jun 2016, Christian Couder wrote:
 
-Michael
+> On Fri, Jun 10, 2016 at 9:01 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Thu, 9 Jun 2016, Johannes Sixt wrote:
+> >
+> >> Meanwhile, I have retrained my muscle memory to stop before typing "-i" after
+> >> "rebase" for an opportunity to consider whether bare rebase can be used.
+> >>
+> >> What should I say? I am impressed. It's like 100 times faster than rebase -i
+> >> (on Windows). I'm now using it whenever I can, and more often than not I plan
+> >> my rebase workflow so that I can go ahead without -i.
+> >
+> > That only means that I have to finalize my rebase--helper work (which I am
+> > busy doing, I am at the valgrind stage).
+> >
+> > I wonder whether that "100x" is a reliable number? ;-) FWIW I can measure
+> > something like a 4x speedup of the interactive rebase on Windows when
+> > running with the rebase--helper, and it is still noticably faster in my
+> > Linux VM, too.
+> >
+> >> Can't wait to test a re-roll on top of cc/apply-introduce-state!
+> >
+> > I lost track in the meantime: were those issues with unclosed file handles
+> > and unreleased memory in the error code paths addressed systematically? My
+> > mail about that seems to have been left unanswered, almost as if my
+> > concerns had been hand-waved away...
+> 
+> Haven't I answered to your email in this thread:
+> 
+> http://thread.gmane.org/gmane.comp.version-control.git/292403/
+> 
+> ?
+
+Not really. The reply (which I had not quite connected with my mail
+because they were over a week apart) says this:
+
+> I fixed this by moving the "close(fd)" call just after the
+> "apply_patch()" call.
+
+and this:
+
+> I will have another look at the 2 other places where there are
+> open()/close() or fopen()/fclose() calls.
+
+but nothing about a careful, systematic investigation of all error code
+paths. As a consequence, I fully expect to encounter test failures as soon
+as I test your patch series again, simply because resources are still in
+use when they should no longer be used. In other words, my expectations
+are now lower than they have been before, my concerns are not at all
+addressed.
+
+> > If those issues have indeed been addressed properly, and a public
+> > repository reliably has the newest iteration of that patch series in a
+> > branch without a versioned name, I will be happy to test it in Git for
+> > Windows' SDK again.
+> 
+> This is the newest iteration:
+> 
+> https://github.com/chriscool/git/commits/libify-apply-use-in-am65
+
+And that cute 65 in the name is the revision.
+
+Ciao,
+Johannes
