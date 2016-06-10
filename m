@@ -1,8 +1,10 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v6 02/44] builtin/apply: make apply_patch() return -1 instead of die()ing
-Date: Fri, 10 Jun 2016 22:10:36 +0200
-Message-ID: <20160610201118.13813-3-chriscool@tuxfamily.org>
-References: <20160610201118.13813-1-chriscool@tuxfamily.org>
+Subject: [PATCH v6 00/44] libify apply and use lib in am, part 2
+Date: Fri, 10 Jun 2016 22:10:34 +0200
+Message-ID: <20160610201118.13813-1-chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
@@ -19,196 +21,290 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBSmS-0002zI-VC
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 22:11:49 +0200
+	id 1bBSmR-0002zI-G8
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 22:11:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752908AbcFJULr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 16:11:47 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33189 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751985AbcFJULo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 16:11:44 -0400
-Received: by mail-wm0-f68.google.com with SMTP id r5so1066854wmr.0
-        for <git@vger.kernel.org>; Fri, 10 Jun 2016 13:11:43 -0700 (PDT)
+	id S1752704AbcFJULn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2016 16:11:43 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33172 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751985AbcFJULl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 16:11:41 -0400
+Received: by mail-wm0-f67.google.com with SMTP id r5so1066684wmr.0
+        for <git@vger.kernel.org>; Fri, 10 Jun 2016 13:11:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fMXkgZsDqRtxcyVeAjT13ixfiNDDRR/hT2qyW6DJmWg=;
-        b=hPA+fEj9XI+HmJ8jH2Nx2Fz+7X+vci7BF4R9g4cfQpOp4XXciO7e6gNnutG1Xkak2q
-         QqzmlD1W/CC8LqZNlGMibxzBKtP+nKjbGKX2TM1Ix8EPCZg2saEq5iv9deM7M36xiYdj
-         LOg38ir/ojWp8v4tzRRs4buhgZWzg/I5iZ1+FaPyPuzNeUELNsZ8NWFCudFFlVsIZfvg
-         y2S23tELzwPQ0tOr48K+pWLfUDlj1jCATbzFVuh539T/EcEHKa16g0DpmekxGOXkZu2+
-         iKyC3xsRIOx4Oh3SQ7WwPQmzNr8A+0N+ImrMnPoTIVArt3YWVFUJwt5hwXl0F7q4l446
-         e8fw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Q4zDDwM9mHM7goP4xoBO482zowxGWSHaMYlAuRr5VbI=;
+        b=C3cmDy9LIbxnnQ5pSuONkk0QJ3mC6oKDfKOnV8ZqhmSGG81jT93UzF6GZ9keByLTav
+         cWDAB9Imxhp/o2KNUCnoiBRLE7BQbw1uIGYcrdjFRxWgnSVXa/86KfDGiQJFc+BnRN8j
+         UEFm6O5c2ERaZnhbMeanxD97khTEyLCeye2n6mtg+nqvYQBUX1jR3DkPH+nH8OHlBAOj
+         KQkkJkLjSydKx0oZ/tSl9s7zzB+qGg0T20SeZni6QZc9oga1Z53MqDSO83Y20MIKAIJq
+         jiRyQrmvVW0eXg/1bChKG4UYW0S0KhoAXECzZmR3PQb/2pCcltUEKnREpTP9BmUow9/U
+         oEXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=fMXkgZsDqRtxcyVeAjT13ixfiNDDRR/hT2qyW6DJmWg=;
-        b=YKtWa55SVTwtimbuHPyp3Rr7KdDnX++T3osFlZ3EpjLkJmkiefOpv8wJ/3G6oM9OjO
-         3UV26knlb8BiJ3gnXKARJ7OQPqngc6XUp+vl8VMbLHVkLxrTirWnKZv7CGrIjLse/pHs
-         MUfTVzTxW9NJ+iNaBpTUfF1nw6Hk/gUiGGlYBhKdbs7rl+AOPVeKn6+osGLyMfL/JVuV
-         S9GJwh+7pmZtqH80SIklmA5R+JJYB0NYLjwjh4d2KDP+oCBTzJ1H+rpt/8uFnZ915tLV
-         PcDqqkRoz41Wi59AOa9MVu98XGPmh6/IVmD566Xujz+02fO4QbO3JVdPd7/IFAengYIz
-         oZTw==
-X-Gm-Message-State: ALyK8tLrgvP9hmSFqx35VH1LT4HNHBPpK7GlBdkwydmE6vYd616g5cbuzOR68J/cc7nAuQ==
-X-Received: by 10.28.23.84 with SMTP id 81mr704398wmx.46.1465589502434;
-        Fri, 10 Jun 2016 13:11:42 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Q4zDDwM9mHM7goP4xoBO482zowxGWSHaMYlAuRr5VbI=;
+        b=miZ5jxAqjMuDp81j50nDsEUWPTOhq7pNLA3cobs9/pZy43Gy7CBPKmSImfDEIqJfxJ
+         RwNi96JCjGZWx2LxHGoIPiBY3k9It4BvGBzx8+9ANRp08aXWii4MNt8GxMcFI+xQPhy4
+         kAPcK4980UfKhDOLdc1Px0Q5f7iOWRAuJtLyTW3Y9yxeihiGptQPoEIFt5mjCogTPuh+
+         R4TuR82PEEZB5hOb3QaYfpgMcpr2ij1/02KbSlagAFT6CEMWZPvhOdqRjSQNzylTh+7P
+         boxseWUej6gf/IjwkMXyG4wVRnVeEra3oVSmava0Iex+CAbRib+OTOirAYSYS+7j53yO
+         dtJQ==
+X-Gm-Message-State: ALyK8tLr6hzI03wHI3bILiK+z9l5RJgVLdguHn5PFnzTQjZsfRUUa5J/v4zZObFO+Rv+2w==
+X-Received: by 10.195.12.229 with SMTP id et5mr4162141wjd.22.1465589499535;
+        Fri, 10 Jun 2016 13:11:39 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id o129sm689125wmb.17.2016.06.10.13.11.41
+        by smtp.gmail.com with ESMTPSA id o129sm689125wmb.17.2016.06.10.13.11.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 10 Jun 2016 13:11:41 -0700 (PDT)
+        Fri, 10 Jun 2016 13:11:38 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.rc2.362.g3cd93d0
-In-Reply-To: <20160610201118.13813-1-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297024>
 
-To libify `git apply` functionality we have to signal errors
-to the caller instead of die()ing.
+Goal
+~~~~
 
-As a first step in this direction, let's make apply_patch() return
--1 in case of errors instead of dying. For now its only caller
-apply_all_patches() will exit(1) when apply_patch() return -1.
+This is a patch series about libifying `git apply` functionality, and
+using this libified functionality in `git am`, so that no 'git apply'
+process is spawn anymore. This makes `git am` significantly faster, so
+`git rebase`, when it uses the am backend, is also significantly
+faster.
 
-In a later patch, apply_all_patches() will return -1 too instead of
-exiting.
+Previous discussions and patches series
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/apply.c | 54 +++++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 39 insertions(+), 15 deletions(-)
+This has initially been discussed in the following thread:
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 3a0c53a..598e479 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -4404,6 +4404,14 @@ static struct lock_file lock_file;
- #define INACCURATE_EOF	(1<<0)
- #define RECOUNT		(1<<1)
- 
-+/*
-+ * Try to apply a patch.
-+ *
-+ * Returns:
-+ *  -1 if an error happened
-+ *   0 if the patch applied
-+ *   1 if the patch did not apply
-+ */
- static int apply_patch(struct apply_state *state,
- 		       int fd,
- 		       const char *filename,
-@@ -4413,6 +4421,7 @@ static int apply_patch(struct apply_state *state,
- 	struct strbuf buf = STRBUF_INIT; /* owns the patch text */
- 	struct patch *list = NULL, **listp = &list;
- 	int skipped_patch = 0;
-+	int res = 0;
- 
- 	state->patch_input_file = filename;
- 	read_patch_file(&buf, fd);
-@@ -4445,8 +4454,10 @@ static int apply_patch(struct apply_state *state,
- 		offset += nr;
- 	}
- 
--	if (!list && !skipped_patch)
--		die(_("unrecognized input"));
-+	if (!list && !skipped_patch) {
-+		res = error(_("unrecognized input"));
-+		goto end;
-+	}
- 
- 	if (state->whitespace_error && (state->ws_error_action == die_on_ws_error))
- 		state->apply = 0;
-@@ -4455,21 +4466,22 @@ static int apply_patch(struct apply_state *state,
- 	if (state->update_index && state->newfd < 0)
- 		state->newfd = hold_locked_index(state->lock_file, 1);
- 
--	if (state->check_index) {
--		if (read_cache() < 0)
--			die(_("unable to read index file"));
-+	if (state->check_index && read_cache() < 0) {
-+		res = error(_("unable to read index file"));
-+		goto end;
- 	}
- 
- 	if ((state->check || state->apply) &&
- 	    check_patch_list(state, list) < 0 &&
--	    !state->apply_with_reject)
--		exit(1);
-+	    !state->apply_with_reject) {
-+		res = -1;
-+		goto end;
-+	}
- 
- 	if (state->apply && write_out_results(state, list)) {
--		if (state->apply_with_reject)
--			exit(1);
- 		/* with --3way, we still need to write the index out */
--		return 1;
-+		res = state->apply_with_reject ? -1 : 1;
-+		goto end;
- 	}
- 
- 	if (state->fake_ancestor)
-@@ -4484,10 +4496,11 @@ static int apply_patch(struct apply_state *state,
- 	if (state->summary)
- 		summary_patch_list(list);
- 
-+end:
- 	free_patch_list(list);
- 	strbuf_release(&buf);
- 	string_list_clear(&state->fn_table, 0);
--	return 0;
-+	return res;
- }
- 
- static void git_apply_config(void)
-@@ -4625,6 +4638,7 @@ static int apply_all_patches(struct apply_state *state,
- 			     int options)
- {
- 	int i;
-+	int res;
- 	int errs = 0;
- 	int read_stdin = 1;
- 
-@@ -4633,7 +4647,10 @@ static int apply_all_patches(struct apply_state *state,
- 		int fd;
- 
- 		if (!strcmp(arg, "-")) {
--			errs |= apply_patch(state, 0, "<stdin>", options);
-+			res = apply_patch(state, 0, "<stdin>", options);
-+			if (res < 0)
-+				exit(1);
-+			errs |= res;
- 			read_stdin = 0;
- 			continue;
- 		} else if (0 < state->prefix_length)
-@@ -4646,12 +4663,19 @@ static int apply_all_patches(struct apply_state *state,
- 			die_errno(_("can't open patch '%s'"), arg);
- 		read_stdin = 0;
- 		set_default_whitespace_mode(state);
--		errs |= apply_patch(state, fd, arg, options);
-+		res = apply_patch(state, fd, arg, options);
-+		if (res < 0)
-+			exit(1);
-+		errs |= res;
- 		close(fd);
- 	}
- 	set_default_whitespace_mode(state);
--	if (read_stdin)
--		errs |= apply_patch(state, 0, "<stdin>", options);
-+	if (read_stdin) {
-+		res = apply_patch(state, 0, "<stdin>", options);
-+		if (res < 0)
-+			exit(1);
-+		errs |= res;
-+	}
- 
- 	if (state->whitespace_error) {
- 		if (state->squelch_whitespace_errors &&
--- 
+  http://thread.gmane.org/gmane.comp.version-control.git/287236/
+
+Then the following patch series were sent:
+
+RFC: http://thread.gmane.org/gmane.comp.version-control.git/288489/
+v1: http://thread.gmane.org/gmane.comp.version-control.git/292324/
+v2: http://thread.gmane.org/gmane.comp.version-control.git/294248/
+v3: http://thread.gmane.org/gmane.comp.version-control.git/295429/
+v4: http://thread.gmane.org/gmane.comp.version-control.git/296350/
+v5: http://thread.gmane.org/gmane.comp.version-control.git/296490/
+
+Highlevel view of the patches in the series
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This new patch series is built on top of the above previous work.
+
+More precisely, this is "part 2" of the full patch series which is
+built on top of the "part 1" of the full patch series. And as the
+"part 1" is now in "next", this "part 2" is built on top of "next".
+
+  - Patches 01/44 to 33/44 were in v1 and v2.
+
+They finish libifying the apply functionality that was in
+builtin/apply.c and move it into apply.{c,h}. And they use this
+libified functionality in git am so that it doesn't launch git apply
+processes any more.
+
+=46ollowing great suggestions from Eric and Junio, there are some
+changes in these patches to improve on v2:
+
+      - Many commit messages for patches that make a function return
+        -1 were simplified by removing "by using error()".
+
+      - 'struct lockfile' instance should be managed properly, as
+        rollback_lock_file() should be called in all error paths.
+
+      - The patch that added calls to rollback_lock_file() has been
+        squashed into the patch that make apply_all_patches() return
+        -1 on error. The resulting patch is 13/44.
+
+      - 'struct apply_state' is now moved to apply.h at the beginning
+        of this series.
+
+      - Some useless braces were removed and the commit message was
+        fixed in patch 05/44.
+
+      - error_errno() is now used instead of error() in patch 03/44.
+
+  - Patches 34/44 to 43/44 were new in v2.
+
+They implement a way to make the libified apply silent. It is a new
+feature in the libified apply functionality.
+
+This could be in a separate series, but unfortunately using the
+libified apply in "git am" unmasks the fact that "git am", since it
+was a shell script, has been silencing the apply functionality by
+redirecting file descriptors to /dev/null and it looks like this is
+not acceptable in C.
+
+I am not yet sure that "be_silent" is a good name for the new
+variable added by these patches.
+
+Path 43/44 that adds --silent to `git apply` should probably be
+discarded. I plan to do it in the next version.
+
+I had planned to perhaps add tests for this new feature, but if 43/44
+is discarded it may not be needed anymore.
+
+  - Patch 44/44 is new.
+
+It replaces some calls to error() with calls to error_errno().
+
+General comments
+~~~~~~~~~~~~~~~~
+
+Sorry if this patch series is still long. I can split it into two or
+more series if it is prefered.
+
+I can also send diffs between this version and the previous one, but
+for now I'd rather not send them in this email, as it would make it
+very long.
+
+The benefits are not just related to not creating new processes. When
+`git am` launched a `git apply` process, this new process had to read
+the index from disk. Then after the `git apply`process had terminated,
+`git am` dropped its index and read the index from disk to get the
+index that had been modified by the `git apply`process. This was
+inefficient and also prevented the split-index mechanism to provide
+many performance benefits.
+
+Using this series as rebase material, Duy explains it like this:
+
+ > Without the series, the picture is not so surprising. We run git-app=
+ly
+ > 80+ times, each consists of this sequence
+ >
+ > read index
+ > write index (cache tree updates only)
+ > read index again
+ > optionally initialize name hash (when new entries are added, I guess=
+)
+ > read packed-refs
+ > write index
+ >
+ > With this series, we run a single git-apply which does
+ >
+ > read index (and sharedindex too if in split-index mode)
+ > initialize name hash
+ > write index 80+ times
+
+(See: http://thread.gmane.org/gmane.comp.version-control.git/292324/foc=
+us=3D292460)
+
+Links
+~~~~~
+
+This patch series is available here:
+
+https://github.com/chriscool/git/commits/libify-apply-use-in-am65
+
+The previous versions are available there:
+
+v1: https://github.com/chriscool/git/commits/libify-apply-use-in-am25=20
+v2: https://github.com/chriscool/git/commits/libify-apply-use-in-am54
+
+Performance numbers
+~~~~~~~~~~~~~~~~~~~
+
+Only tests on Linux have been performed using a very early version of
+this series. It could be interesting to test on other platforms
+especially Windows and perhaps OSX too.
+
+  - Around mid April =C3=86var did a huge many-hundred commit rebase on=
+ the
+    kernel with untracked cache.
+
+command: git rebase --onto 1993b17 52bef0c 29dde7c
+
+Vanilla "next" without split index:                1m54.953s
+Vanilla "next" with split index:                   1m22.476s
+This series on top of "next" without split index:  1m12.034s
+This series on top of "next" with split index:     0m15.678s
+
+=C3=86var used his Debian laptop with SSD.
+
+  - Around mid April I tested rebasing 13 commits in Booking.com's
+    monorepo on a Red Hat 6.5 server with split-index and
+    GIT_TRACE_PERFORMANCE=3D1.
+
+With Git v2.8.0, the rebase took 6.375888383 s, with the git am
+command launched by the rebase command taking 3.705677431 s.
+
+With this series on top of next, the rebase took 3.044529494 s, with
+the git am command launched by the rebase command taking 0.583521168
+s.
+
+Christian Couder (44):
+  apply: move 'struct apply_state' to apply.h
+  builtin/apply: make apply_patch() return -1 instead of die()ing
+  builtin/apply: read_patch_file() return -1 instead of die()ing
+  builtin/apply: make find_header() return -1 instead of die()ing
+  builtin/apply: make parse_chunk() return a negative integer on error
+  builtin/apply: make parse_single_patch() return -1 on error
+  builtin/apply: make parse_whitespace_option() return -1 instead of
+    die()ing
+  builtin/apply: make parse_ignorewhitespace_option() return -1 instead
+    of die()ing
+  builtin/apply: move init_apply_state() to apply.c
+  apply: make init_apply_state() return -1 instead of exit()ing
+  builtin/apply: make check_apply_state() return -1 instead of die()ing
+  builtin/apply: move check_apply_state() to apply.c
+  builtin/apply: make apply_all_patches() return -1 on error
+  builtin/apply: make parse_traditional_patch() return -1 on error
+  builtin/apply: make gitdiff_*() return 1 at end of header
+  builtin/apply: make gitdiff_*() return -1 on error
+  builtin/apply: change die_on_unsafe_path() to check_unsafe_path()
+  builtin/apply: make build_fake_ancestor() return -1 on error
+  builtin/apply: make remove_file() return -1 on error
+  builtin/apply: make add_conflicted_stages_file() return -1 on error
+  builtin/apply: make add_index_file() return -1 on error
+  builtin/apply: make create_file() return -1 on error
+  builtin/apply: make write_out_one_result() return -1 on error
+  builtin/apply: make write_out_results() return -1 on error
+  builtin/apply: make try_create_file() return -1 on error
+  builtin/apply: make create_one_file() return -1 on error
+  builtin/apply: rename option parsing functions
+  apply: rename and move opt constants to apply.h
+  Move libified code from builtin/apply.c to apply.{c,h}
+  apply: make some parsing functions static again
+  run-command: make dup_devnull() non static
+  environment: add set_index_file()
+  builtin/am: use apply api in run_apply()
+  write_or_die: use warning() instead of fprintf(stderr, ...)
+  apply: add 'be_silent' variable to 'struct apply_state'
+  apply: make 'be_silent' incompatible with 'apply_verbosely'
+  apply: don't print on stdout when be_silent is set
+  usage: add set_warn_routine()
+  usage: add get_error_routine() and get_warn_routine()
+  apply: change error_routine when be_silent is set
+  am: use be_silent in 'struct apply_state' to shut up applying patches
+  run-command: make dup_devnull() static again
+  builtin/apply: add a cli option for be_silent
+  apply: use error_errno() where possible
+
+ Makefile               |    1 +
+ apply.c                | 4868 ++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ apply.h                |  133 ++
+ builtin/am.c           |   91 +-
+ builtin/apply.c        | 4815 +---------------------------------------=
+-------
+ cache.h                |    1 +
+ environment.c          |   10 +
+ git-compat-util.h      |    3 +
+ run-command.c          |    2 +-
+ t/t4012-diff-binary.sh |    4 +-
+ t/t4254-am-corrupt.sh  |    2 +-
+ usage.c                |   15 +
+ write_or_die.c         |    6 +-
+ 13 files changed, 5132 insertions(+), 4819 deletions(-)
+ create mode 100644 apply.c
+ create mode 100644 apply.h
+
+--=20
 2.9.0.rc2.362.g3cd93d0
