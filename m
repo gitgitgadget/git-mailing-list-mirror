@@ -1,123 +1,132 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [BUG-ish] diff compaction heuristic false positive
-Date: Fri, 10 Jun 2016 09:29:43 -0700
-Message-ID: <CA+P7+xp=bTPiwRRTH=h7v5pV8+=he4+789_3PNz227mv1387MA@mail.gmail.com>
-References: <20160610075043.GA13411@sigill.intra.peff.net> <20160610083102.GA14192@sigill.intra.peff.net>
- <xmqqvb1hf35y.fsf@gitster.mtv.corp.google.com> <CAGZ79kZLT8AfmWTrrW+a-v7aXw5sm68P2H=vT7QZr2hj4Z2gDA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv4] Documentation: triangular workflow
+Date: Fri, 10 Jun 2016 09:47:42 -0700
+Message-ID: <xmqqinxhf0sx.fsf@gitster.mtv.corp.google.com>
+References: <1465288693-6295-1-git-send-email-jordan.de-gea@grenoble-inp.org>
+	<1465475708-1912-1-git-send-email-jordan.de-gea@grenoble-inp.org>
+	<E41AB752AE614E189BC5BE289A8AEB2A@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Jun 10 18:30:18 2016
+Content-Type: text/plain
+Cc: "Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>,
+	<mhagger@alum.mit.edu>, <git@vger.kernel.org>,
+	<erwan.mathoniere@grenoble-inp.org>,
+	<samuel.groot@grenoble-inp.org>, <tom.russello@grenoble-inp.org>,
+	<Matthieu.Moy@grenoble-inp.fr>, <peff@peff.net>,
+	<artagnon@gmail.com>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Jun 10 18:47:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBPK4-0003gq-Lj
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 18:30:17 +0200
+	id 1bBPb4-00082w-Pr
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jun 2016 18:47:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933478AbcFJQaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2016 12:30:07 -0400
-Received: from mail-yw0-f178.google.com ([209.85.161.178]:35213 "EHLO
-	mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932855AbcFJQaE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2016 12:30:04 -0400
-Received: by mail-yw0-f178.google.com with SMTP id z186so52838063ywd.2
-        for <git@vger.kernel.org>; Fri, 10 Jun 2016 09:30:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=bSK8cZoCwkpPu8Ze3t2+eRVrBmQcmczSHjZeemhMs8s=;
-        b=zblbkRWN7db/bncIfOEGKheZQKrXALkK9DvwnZJcOq/+wAWy2eMGOT8q0Ad7CODEKK
-         sKirZyQXpuu6KaDgc4ZeiWf+x60qmbL8us9i5orgAdQrqABWCwVWLerr6LtYNrMLaMwV
-         MwBqf7g6EW3RdcAHSAXXnXuwsWd2rAhbC6l2TKVE4viRAGZR1tHn4iRVCR/bjuGO4G70
-         /er6RhFgEiUFGc/cDicwY8JTQzffm2Y+xmWjtwmaJt+kiFcAvnuUj6xzoHQdTYXrZUEo
-         x8rSKwZ15Lr2FEDYM4mR3zeKoe8e1JTG71NDu1VIG5TR/R+1BS0v6dDc7Awf04zr5sKe
-         1mPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=bSK8cZoCwkpPu8Ze3t2+eRVrBmQcmczSHjZeemhMs8s=;
-        b=MH8mv7wcB0sa8NgV7Nm0ltUw9WIw1ApC7GhCKUyUonHEgt0lOS2rfPEg3dUAKgh4J+
-         VuRDt5oqZWZfE83+AkuDBy3osP4d019SJpS3ws5GrUzrc2A1x8YCaRmCZr3ILipH8EBS
-         V9rxjQ2nRnKu4GJXy6JItW0W8t6DGVgWnRSpkLP0MlrPc8DNfs3P9HcVN/0URbA4bk9f
-         S1JcF1UrYo9/u/wdj0aeVe+zQW0L9uLOMtr0OeMY+UK9Jp36rFMdnemRtQw8Fi7ZyVa2
-         m3ghdmNdQqtAbY7bg3L546SnfGlzheRHtUCzeMsySvXgofvrEvuzUBZaA5SkKvW06Ryl
-         6PSw==
-X-Gm-Message-State: ALyK8tJ73kAP0QA33ITUGGd7F0L/WJQo8KtxUii1LYGhye3yzGyx7wR0up1AZqLBA0Sy1KM8xLEq8NUtmY+TYA==
-X-Received: by 10.13.227.196 with SMTP id m187mr1729935ywe.18.1465576203055;
- Fri, 10 Jun 2016 09:30:03 -0700 (PDT)
-Received: by 10.37.34.133 with HTTP; Fri, 10 Jun 2016 09:29:43 -0700 (PDT)
-In-Reply-To: <CAGZ79kZLT8AfmWTrrW+a-v7aXw5sm68P2H=vT7QZr2hj4Z2gDA@mail.gmail.com>
+	id S932608AbcFJQrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2016 12:47:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52549 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932415AbcFJQrq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 12:47:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DD4FA227A6;
+	Fri, 10 Jun 2016 12:47:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cubm6/rg6rZlgbboV9OM4Sb0jBY=; b=kgQ6/O
+	nQhpx+/lzIv88ke/pdM1c3ylCETyDZj49g701jQoUjsCZiouMEQKhcM9KMd4rdkH
+	0tn7qGN19EE8vlhqrpiugtb/B1fmr4Q20T1kcQPl32xI3cmqyqfr6vv5mP+z2LDL
+	4qHPzteIDn9KWoHlIdIeGlqOTynlLZQzH/ooU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VX6SEjxi/VIngBCJXwMyMORkV/RG1kSl
+	wvpNeVbzyRR0C3NQqrnzPIJlM5uLw1Bo7qPb6UiffjBA1IiYBmfbJjMFyKSC5705
+	gMHjq/KO78K77yZOQYViey6eC9n1aXqltz+Bob7RWEbVZHESJ8hb5gzR+bU9oqbk
+	1vIzsBxo9jg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D5DA5227A5;
+	Fri, 10 Jun 2016 12:47:44 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5864D227A4;
+	Fri, 10 Jun 2016 12:47:44 -0400 (EDT)
+In-Reply-To: <E41AB752AE614E189BC5BE289A8AEB2A@PhilipOakley> (Philip Oakley's
+	message of "Thu, 9 Jun 2016 19:19:20 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0DE22E90-2F2B-11E6-8555-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297012>
 
-On Fri, Jun 10, 2016 at 9:25 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Fri, Jun 10, 2016 at 8:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Jeff King <peff@peff.net> writes:
->>
->>> On Fri, Jun 10, 2016 at 03:50:43AM -0400, Jeff King wrote:
->>>
->>>> I found a false positive with the new compaction heuristic in v2.9:
->>>> [...]
->>>
->>> And by the way, this is less "hey neat, I found a case" and more "wow,
->>> this is a lot worse than I thought".
->>>
->>> I diffed the old and new output for the top 10,000 commits in this
->>> particular ruby code base. There were 45 commits with changed diffs.
->>> Spot-checking them manually, a little over 1/3 of them featured this bad
->>> pattern. The others looked like strict improvements.
->>>
->>> That's a lot worse than the outcomes we saw on other code bases earlier.
->>> 1/3 bad is still a net improvement, so I dunno. Is this worth worrying
->>> about? Should we bring back the documentation for the knob to disable
->>> it? Should we consider making it tunable via gitattributes?
->>>
->>> I don't think that last one really helps; the good cases _and_ the bad
->>> ones are both in ruby code (though certainly the C code we looked at
->>> earlier was all good).
->>>
->>> It may also be possible to make it Just Work by using extra information
->>> like indentation. I haven't thought hard enough about that to say.
->>>
->>> -Peff
->>
->> I recall saying "we'd end up being better in some and worse in
->> others" at the very beginning.  How about toggling the default back
->> for the upcoming release, keeping the experimentation knob in the
->> code, and try different heuristics like the "indentation" during the
->> next cycle?
+"Philip Oakley" <philipoakley@iee.org> writes:
+
+>> +Preparation
+>> +~~~~~~~~~~~
+>> +
+>> +Cloning from **PUBLISH**, which is a fork of **UPSTREAM** or an empty
+>> +repository.
 >
-> Sure. I thought about for a while now and by now I agree with Junio.
-> No matter what kind of heuristic we can come up with it is easy to construct
-> a counter example.
->
-> That said, let's try the indentation thing, though I suspect
-> one of the early motivating examples (an excerpt from a  kernel config file)
-> would not do well with it, as it had not an indentation scheme as programming
-> languages do.
->
-> Thanks,
-> Stefan
+> I agree here. To clone the upstream, to which you have no push access (by 
+> definition), would leave the config badly mis-set for the basic user. It's 
+> better for the user to clone their publish fork (to which they have both 
+> read and write access).
 
-I think we could use the indentation trick and it might help in this
-case. I agree, let's disable this for this cycle and experiment in the
-next one. Good catch, Peff.
+I do not think I agree.
 
-As others have said you will always be able to produce counter
-examples, that's the nature of heuristics. The idea is to see if we
-can come up with something simple that mostly improves the output,
-even if sometimes it might have a negative impact on the outputs. But
-I think we should avoid changing behavior unless it's mostly an
-improvement.
+If you apriori know that you do want to hack on a project's code, then
+forking at GitHub first and then cloning the copy would be OK.
 
-Regards,
-Jake
+But I doubt that would be a common set-up, unless you are focusing
+only on school-like setting where you are told by your instructor to
+"make changes to this public project, and show the result in your
+fork".  In real life you cannot tell if the project is worth your
+time modifying until you see it first, can you?
+
+I suspect that the majority of local clones start from something
+like "I want to build and use from the tip", "I want to use a module
+that does X, and there are three candidates, so let's clone them all
+to evaluate", etc.  You do not bother "forking at GitHub" but just
+clone from the upstream for these clones.
+
+After you build it and try things out, you may start making local
+changes, and you may even record your changes as local commits.  You
+play with your local clone of the upstream.  After doing so, you may
+find that some of the projects do not fit your needs, but for some
+others, you would find that it is worth your time and effort to
+upstream your changes and/or keep working further on the project.
+
+And at that point, you would create a publishing place, push into
+it, and tell others "Hey I did this interesting thing!".  That
+"creat a publishing place" step could be just a one click at GitHub.
+
+Isn't that how you work with other people's projects?  Or do you
+always modify every project you fetch from the outside world?, Do
+you always fork first, just in case you *might* change and you
+*might* have to have a place to push your changes out?
+
+If you tell novices "You fork first and then clone your fork", and
+in the ideal (to you) case they will follow that advice to the
+letter and they will end up with forks of all projects they will
+ever look at, in many of which they make no local commit.
+
+What is more likely to happen is that they will first ignore you and
+start from a local clone of the upstream, and then find this
+document that says "triangular workflow requires you to fork first,
+clone that fork and work in it".  Because they would have to fork
+first and make another clone, this time a clone of the fork, in
+order to follow the instruction of this document, they oblige,
+ending up with two clones.  More importantly, this makes the local
+clone of the upstream they made earlier and the changes they made in
+that clone appear useless.  They need to be told how to transplant
+the work done in the clone to the newly created clone of the fork,
+in order to publish them.
+
+If your instruction begins with "You clone from upstream as usual
+(i.e. just like when you make a "read-only" clone without any
+intention to make changes or push changes out), and add a publish
+place if/when it becomes necessary", the problem described in the
+previous paragraph goes away, no?
