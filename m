@@ -1,74 +1,70 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 00/27] nd/shallow-deepen updates
-Date: Fri, 10 Jun 2016 19:42:12 -0400
-Message-ID: <CAPig+cRfUjpku1Abf=GxrbFeS4txwr=yZsJ7EKo-aWmxYog6Xw@mail.gmail.com>
-References: <20160610122714.3341-1-pclouds@gmail.com>
+From: Eric Wong <e@80x24.org>
+Subject: Re: feature request: git svn dommit --preserve-timestamps
+Date: Sat, 11 Jun 2016 01:39:48 +0000
+Message-ID: <20160611013948.GA5793@dcvr.yhbt.net>
+References: <87a8iy6s4e.fsf@free.fr>
+ <20160607000902.GA4445@dcvr.yhbt.net>
+ <87ziqx5z9h.fsf@free.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 11 01:42:21 2016
+Cc: git@vger.kernel.org
+To: Peter =?utf-8?Q?M=C3=BCnster?= <pmlists@free.fr>
+X-From: git-owner@vger.kernel.org Sat Jun 11 03:40:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBW4A-0007oV-AK
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Jun 2016 01:42:18 +0200
+	id 1bBXu5-00072F-V2
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Jun 2016 03:40:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932521AbcFJXmO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2016 19:42:14 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:36050 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932386AbcFJXmN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2016 19:42:13 -0400
-Received: by mail-io0-f176.google.com with SMTP id n127so78483450iof.3
-        for <git@vger.kernel.org>; Fri, 10 Jun 2016 16:42:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=TkCpPmOrIa+Dlv/88GkCVF9oPDLpdwPGElr2PnKDjXc=;
-        b=0Kmhyd6bpBqtfpvphRL5M6P1b8nRN9Ey/tnkRdheyPJJjRbcCWZy5GesdMkd2buBfc
-         VAet2lm/XelX22h+R2X9DHV6vezSNLYpzSOSib/tpdM3MY2JR/8aFdjYUd3kpLtVAaZM
-         +kLIo27FZLrWO8qvntD6oMM0NsWZZHI2Pw0RRSc7TXSvCSE/ppjB7vbGiv/4gzds0cTK
-         UgyjrFG0OjMEsaKpCwrPrk7yoWZtO/O7rdbUKXcTndIxWDZZskI9OikbE84Iiy/pbRHX
-         jGJGp5SAGGl7flO4NBdH6HYmVIuca7gefHFlaKKcgwnCYF1xDh7VyjccvSjTJw9f9Vgf
-         6ing==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=TkCpPmOrIa+Dlv/88GkCVF9oPDLpdwPGElr2PnKDjXc=;
-        b=EhuUVf7aVuTXQxl9GRDKa90ENY9cH6C81aCxZDWpetHTkZUpWxdXKV56ioCNDGqjhP
-         5iS9WLwNR5vCc5YBa44ikGB3+s29/Q85CcgYyZl0+VFhVWYWZcVZvcm4KdhbcHTNz8fe
-         ZZ4ckhv3Z5WTooUBGMG2QddQsxeX7ghi6A0d6ySiAvmCX6wOOTPCiYispBB7Kf8ofL8p
-         OB6vQii6E3Z1SphdTdwAKVKKn++/vwiGWFDD3mAtcW4wt7nF2pwlgRQjIpziEnugU88g
-         2yHNCE07FMwNeULpdKPCmqBP/OrzUTSx9pMHtGlGHEv4KCtaIyynS1/L9w3jv5G2V2R4
-         B6bQ==
-X-Gm-Message-State: ALyK8tJXzEcgqVrw6ZW88Pm4FyjfEXGiaUOPGlQsknQ8rNUzxx0+ls2XlTdKOMUEp2CrfnA+ggOGr9s1pM5v+g==
-X-Received: by 10.107.47.41 with SMTP id j41mr7705220ioo.168.1465602132633;
- Fri, 10 Jun 2016 16:42:12 -0700 (PDT)
-Received: by 10.79.0.30 with HTTP; Fri, 10 Jun 2016 16:42:12 -0700 (PDT)
-In-Reply-To: <20160610122714.3341-1-pclouds@gmail.com>
-X-Google-Sender-Auth: WE5SDroBzIJ2imsHplqikvyx96Q
+	id S1750836AbcFKBju convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2016 21:39:50 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:60000 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750753AbcFKBju (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2016 21:39:50 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09CBF1FF70;
+	Sat, 11 Jun 2016 01:39:49 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <87ziqx5z9h.fsf@free.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297087>
 
-On Fri, Jun 10, 2016 at 8:26 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> This contains cleanups after Eric's comments (all good points,
-> thanks!). Changed patches have Junio's s-o-b line removed, so it's
-> easy to see which is changed and which is not. 09/27 is a new one,
-> split out of 10/27.
+Peter M=C3=BCnster <pmlists@free.fr> wrote:
+> On Tue, Jun 07 2016, Eric Wong wrote:
+> > Peter M=C3=BCnster <pmlists@free.fr> wrote:
+> >> It would be nice, if timestamps could be preserved when rewriting =
+the
+> >> git-log.
+> >
+> > Unfortunately, last I checked (a long time ago!), explicitly
+> > setting revprops might require SVN administrators to enable the
+> > feature for the repo.
+>=20
+> Not the svn-log, only the git-log.
 
-Thanks, the interdiff looks sensible and I think it covers all the
-points raised by my review of the previous round.
+The git log after dcommit is tied to the SVN log,
+so git-svn can only reflect changes which appear in SVN.
 
-I agree with Junio that moving the sigchain_pop() into the error
-handling code-path, if possible, would be a nice improvement.
+	Sidenote: The convention is reply-to-all on lists like
+	this one which do not require subscription to post.
+	It prevents the list from being a single-point-of-failure
+	or censorship.
+
+> > It's been a while and I'm not up-to-date with the latest SVN.
+> > Maybe there's a newer/easier way you could give us details about :)
+>=20
+> No, sorry. I don't care about the svn-log.
+
+Unfortunately, you would have to care about svn log as long as
+SVN exists in your workflow and you need to interact with SVN
+users.
+
+git svn tries hard to work transparently and as close to the
+behavior of the upstream SVN repo as possible.
