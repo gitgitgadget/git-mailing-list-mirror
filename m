@@ -1,161 +1,301 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH 1/2] bisect--helper: `is_expected_rev` shell function in C
-Date: Sat, 11 Jun 2016 17:48:06 +0530
-Message-ID: <CAFZEwPMqwtw061O0QVRGf+dqpxKjp1jRvFE5CUEayEiUhxWveQ@mail.gmail.com>
-References: <20160608152415.7770-1-pranit.bauva@gmail.com> <CAPig+cRC_y9MBSsrLEs0OxL4=FMfU-=ACwhESUiECrWrDNvaCw@mail.gmail.com>
- <CAFZEwPOhssmTt6TLPhxjzru+B3sWgXWh71yRt9BOvLqc0imq-g@mail.gmail.com> <CAPig+cTECf6JT6+1SWo-eEwKPOAN3eYL20tvFS90Q28gu5vrZw@mail.gmail.com>
+From: =?UTF-8?Q?Florian_Sch=C3=BCller?= <florian.schueller@gmail.com>
+Subject: Re: [PATCH] Gitk Inotify support
+Date: Sat, 11 Jun 2016 16:06:36 +0200
+Message-ID: <CAHdOBFpOm3hf4XPjpSZ0+8rVgyKj+e3qT0cecU4j9ms=+chnDg@mail.gmail.com>
+References: <CAHdOBFrYWxfSXew5wHwcMym9=s+7cu2E9-MJJe29y+3zV89x7g@mail.gmail.com>
+ <CAGZ79kbwrdW=XyPXBNcqBJU1dK8ZvfqyWbgtSt7mvT+m3LQB6g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sat Jun 11 14:18:15 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paul Mackerras <paulus@samba.org>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 11 16:07:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBhri-0005oE-EO
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Jun 2016 14:18:14 +0200
+	id 1bBjZ0-0002XR-1D
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Jun 2016 16:07:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751395AbcFKMSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Jun 2016 08:18:10 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:33508 "EHLO
-	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751173AbcFKMSI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jun 2016 08:18:08 -0400
-Received: by mail-yw0-f195.google.com with SMTP id y6so11352122ywe.0
-        for <git@vger.kernel.org>; Sat, 11 Jun 2016 05:18:07 -0700 (PDT)
+	id S1751486AbcFKOG6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Jun 2016 10:06:58 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:37260 "EHLO
+	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750995AbcFKOG5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Jun 2016 10:06:57 -0400
+Received: by mail-wm0-f53.google.com with SMTP id k204so24984916wmk.0
+        for <git@vger.kernel.org>; Sat, 11 Jun 2016 07:06:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=nK4Ig/QysJGFJf8kZR5yKjtKlW4UVxvrx/2gsyWDmSs=;
-        b=JV6uItrPPjqjFCfZrFBA4mEZxJ4KcugK3jaZRoU+Tsh/7/yrZpPObfYgwIGv2cEV7E
-         Ft6iPMQNF1QQgMoIz4+jCHQv8wyYQTuMMhaTlt7YaUvtLLoJBhhLCcVZoEF5dJWd2yYl
-         Bb7Q19zsOt5EGSPvef3GMAz4AOcO9q2qxdBgvfrzsmVl3jtsmfiOFtqjy/vIqZ+yk79A
-         HEMZNxfyMYAtio2yGSks1vqKYWQq5oLFIqnE/X9PbBcgCh2F+b5cEzJxQXyoFE6lW++K
-         GWzzc6J2O8LGFAh4vuUaHYGVmAduI+rnRJXaRYDD1sPnZwfeHsNZr2PBs3HnJcTqNBTO
-         /D0g==
+         :cc:content-transfer-encoding;
+        bh=KUgaZgPhJ96PFkLXlwAgUN+fdMiYg0xmabz6giyG2Qg=;
+        b=jRbzF7PC6f6KLiSLcJxxgpcav/j68qxD0mjR89BbN9CCaN9chpLgE43LElRzx3z5qa
+         fFuRfahieIza+qN+a4JmQ3lHlSVc7ZdWwlbbVNBtLK6HXx1eHDPmv0MDkkJlVoDOxKz5
+         v9DqaX5rT0MuprR28igQFcnIZWYJOfb6g6QR0YfwS0tWFMvgA89cKBdGHIrwLrekacAL
+         jpRbeaXETBqaEg3GLpWxJtcKzHCn+ru/uCMP8PPzLLswAUALbhIPo6CPBdwJZoM24O6+
+         pJXJlMl2M0FXANRyvrKRUuXRrbFXGy2hX+Hq0dXPpULIx6DfG8jhNhEX8SNvAUz3g+eH
+         hFOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=nK4Ig/QysJGFJf8kZR5yKjtKlW4UVxvrx/2gsyWDmSs=;
-        b=FBpRn4vRfUjzgzT86ujNJb7eJbyDyFfFHZ4lq6vV+0g+3EGCLydLzd83BWl5Lx6BtH
-         NSay6zoAvfS3/mkk+oXCnQ4joLQ6JiCsYphv/5XLhm7uQggoUNfRme8/pVyWEnFF7zPJ
-         DQfbO4zrOG2uYzcsZmDyaJbBhzG+mtxKzP/lJ6y7Xz/7Comfd7fzzwYkEjhzloNE0iwq
-         /uzDjJ2zwf2yHX/evxPTKTjNsIomuOzGlOvyNsYdtZT9PZRCSnvaDYJ7yndN7TsuvrH6
-         232LIFiBHvWWRM6M00Ett2bG4qfICoMw7vSIWZQ0/+NMmuubOVJ8oNw3jcxKwZx9U1gd
-         7Rgg==
-X-Gm-Message-State: ALyK8tL1vbYUFKXyOVGfqxdii6PVedd4Z8OtXhNp13cZvCf1BKj0eRVCjmnbwCuTTv56zuUZrBmeZd4frr5AKQ==
-X-Received: by 10.129.81.144 with SMTP id f138mr3384006ywb.154.1465647487072;
- Sat, 11 Jun 2016 05:18:07 -0700 (PDT)
-Received: by 10.129.124.132 with HTTP; Sat, 11 Jun 2016 05:18:06 -0700 (PDT)
-In-Reply-To: <CAPig+cTECf6JT6+1SWo-eEwKPOAN3eYL20tvFS90Q28gu5vrZw@mail.gmail.com>
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=KUgaZgPhJ96PFkLXlwAgUN+fdMiYg0xmabz6giyG2Qg=;
+        b=hS9wZXajmXTK9VuAyqubnIyj0nhdbYSZT65aMukY0b/qXtZhwfNlzb8agSQ64OrjvW
+         04afk0hnmRTvU3HLR0jELmD+qrMP8VVgfzDVV/M7QGCSQLlNcbOk0PcgoHsJgZ36L/zl
+         ujSOORSbd15FRmxCR08kIX4l9g7a6qK4DDZv3OTEDGqBqSURgfsQydqgtja6wZigCKZT
+         7mlO4wHgys6oE6NVc0AWWe0KdldjZS53SogFmqg1NnFdvon8E2rabW1yPqZLv2ZgaNO4
+         sdSOcJCTwibXU0rF7/6nxfAwbaFZox47yU0pYjD7teS0Ei8pM2i6XHk+U+iwYGy74vu0
+         zmlw==
+X-Gm-Message-State: ALyK8tJu/qPDFzDeOLY6MuTRbAGI64eM5InwzeCihDmfVgqz2htHnnE1VcZHTJs/JdhvQLxLt1Noyuata9YGTw==
+X-Received: by 10.194.216.33 with SMTP id on1mr6504890wjc.153.1465654015559;
+ Sat, 11 Jun 2016 07:06:55 -0700 (PDT)
+Received: by 10.28.182.70 with HTTP; Sat, 11 Jun 2016 07:06:36 -0700 (PDT)
+In-Reply-To: <CAGZ79kbwrdW=XyPXBNcqBJU1dK8ZvfqyWbgtSt7mvT+m3LQB6g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297097>
 
-Hey Eric,
+=46rom 74d2f4c1ec560b358fb50b8b7fe8282e7e1457b0 Mon Sep 17 00:00:00 200=
+1
+=46rom: =3D?UTF-8?q?Florian=3D20Sch=3DC3=3DBCller?=3D <florian.schuelle=
+r@gmail.com>
+Date: Thu, 9 Jun 2016 22:54:43 +0200
+Subject: [PATCH] first support for inotify
+MIME-Version: 1.0
+Content-Type: text/plain; charset=3DUTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sat, Jun 11, 2016 at 12:44 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Fri, Jun 10, 2016 at 9:39 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> On Fri, Jun 10, 2016 at 3:03 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>> On Wed, Jun 8, 2016 at 11:24 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>>> Reimplement `is_expected_rev` shell function in C. This will further be
->>>> called from `check_expected_revs` function. This is a quite small
->>>> function thus subcommand facility is redundant.
->>>
->>> This patch should be squashed into patch 2/2, as it is otherwise
->>> pointless without that patch, and merely adds dead code.
+Just automatically update gitk when working in a terminal on the same r=
+epo
+
+Open points for now:
+ - release watches for deleted directories seems to
+   cause problems in tcl-inotify (so I don't)
+   I'm not sure how often that happens in ".git/"
+ - I only call "updatecommits" and I don't know if there is a usecase
+   where I should be calling "reloadcommits"
+
+Signed-off-by: Florian Sch=C3=BCller <florian.schueller@gmail.com>
+---
+ gitk | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
+
+diff --git a/gitk b/gitk
+index 805a1c7..58e3dca 100755
+--- a/gitk
++++ b/gitk
+@@ -8,6 +8,12 @@ exec wish "$0" -- "$@"
+ # either version 2, or (at your option) any later version.
+
+ package require Tk
++try {
++    package require inotify
++    set have_inotify true
++} on error {em} {
++    set have_inotify false
++}
+
+ proc hasworktree {} {
+     return [expr {[exec git rev-parse --is-bare-repository] =3D=3D "fa=
+lse" &&
+@@ -12363,6 +12369,53 @@ if {$i >=3D [llength $argv] && $revtreeargs ne=
+ {}} {
+     }
+ }
+
++proc inotify_handler { fd } {
++    set events [inotify_watch read]
++    set watch_info [inotify_watch info]
++    set update_view false
++
++    foreach {event} $events {
++        set current_watchid [dict get $event watchid]
++        set flags [dict get $event flags]
++        set event_filename [dict get $event filename]
++
++        foreach {path watchid watch_flags} $watch_info {
++            if {$watchid eq $current_watchid} {
++                set watch_path $path
++            }
++        }
++
++        set full_filename [file join $watch_path $event_filename]
++
++        if {$flags eq "nD"} {
++            set wd [inotify_watch add $full_filename "nwds"]
++        }
++        if {![string match *.lock $event_filename]} {
++            set update_view true
++        }
++    }
++
++    #reloadcommits or updatecommits - depending on file and operation?
++    if {$update_view} {
++        updatecommits
++    }
++}
++
++proc watch_recursive { dir } {
++    inotify_watch add $dir "nwaCmMds"
++
++    foreach i [glob -nocomplain -dir $dir *] {
++        if {[file type $i] eq {directory}} {
++            watch_recursive $i
++        }
++    }
++}
++
++if { $have_inotify } {
++    set fd [inotify create "inotify_watch" "::inotify_handler"]
++    watch_recursive $gitdir
++}
++
+ set nullid "0000000000000000000000000000000000000000"
+ set nullid2 "0000000000000000000000000000000000000001"
+ set nullfile "/dev/null"
+--=20
+2.7.4
+
+On Thu, Jun 9, 2016 at 11:24 PM, Stefan Beller <sbeller@google.com> wro=
+te:
+> On Thu, Jun 9, 2016 at 2:12 PM, Florian Sch=C3=BCller
+> <florian.schueller@gmail.com> wrote:
+>> Hi
+>> Is this correct to send possible gitk patches here? or should I send
+>> them to Paul Mackerras somehow?
+>
+> I cc'd Paul for you :)
+>
 >>
->> Sure I will squash and will explain it in the commit message.
+>> Anyway I just wanted that gitk automatically updates while I'm worki=
+ng
+>> in my terminal
 >
-> Explain what in the commit message? If anything, I'd expect the commit
-> message to shrink since you won't need to explain anymore that this
-> function is split out.
-
-Yes I would remove the part where it is explained that this function
-is split out. I will just explain that 2 functions are converted in 1
-commit.
-
->>>> +       if (!file_exists(git_path_bisect_expected_rev()))
->>>> +               return 0;
->>>
->>> Invoking file_exists() seems unnecessarily redundant when you can
->>> discern effectively the same by checking the return value of
->>> strbuf_read_file() below. I'd drop the file_exists() check altogether.
+> Thanks for coming up with a patch. Welcome to the Git community!
+>
 >>
->> I wanted to imitate the code. But I guess it would actually be better
->> if I drop this file_exists().
->
-> There is a bit of a lesson to be learned by this example. While it's
-> true that the C conversion should retain the behavior of the original
-> shell code, that does not mean blindly mirroring the implementation
-> line for line is a good idea. A couple things to take into
-> consideration:
->
-> There are idiomatic ways of doing things in each language. What is
-> idiomatic in shell is not necessarily so in C. The C conversion should
-> employ C idioms and flow in a way which is natural for C code.
->
-> Consider what the original shell code is doing at a higher level than
-> merely by reading it line-by-line. In the case in question, the code
-> is:
->
->     test -f "$GIT_DIR/BISECT_EXPECTED_REV" &&
->     test "$1" = $(cat "$GIT_DIR/BISECT_EXPECTED_REV")
->
-> While it's true that it's asking "does the file exist and is its value
-> the same as $1", the 'test -f' avoids a "file not found" error from
-> the $(cat ...) invocation. Since the return value of
-> strbuf_read_file() effectively encapsulates the "does the file exist"
-> check, a separate check isn't really needed.
-
-True. I will keep this in mind.
-
->>>> +       if (!strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0))
->>>> +               return 0;
->>>
->>> What exactly is this trying to do? Considering that strbuf_read_file()
->>> returns -1 upon error, otherwise the number of bytes read, if I'm
->>> reading this correctly, is_expected_rev() returns false if
->>> strbuf_read_file() encounters an error (which is fine) but also when
->>> it successfully reads the file and its content length is non-zero
->>> (which is very odd).
->>>
->>>> +       strbuf_trim(&actual_hex);
->>>> +       return !strcmp(actual_hex.buf, expected_hex);
->>>
->>> Thus, it only ever gets to this point if the file exists but is empty,
->>> which is very unlikely to match 'expected_hex'. I could understand it
->>> if you checked the result of strbuf_read_file() with <0 or even <=0,
->>> but the current code doesn't make sense to me.
->>>
->>> Am I misunderstanding?
+>> Are you interrested?
 >>
->> Definitely not. Thanks for pointing it out. :) It went off my head
->> that strbuf_read_file returns the bytes it reads. Also the code
->> comment regarding strbuf_read_file does not mention it which probably
->> misguided me. I should also send a fixing patch so that someone else
->> does not fall into this like I did.
 >
-> Out of curiosity, did the test suite pass with this patch applied?
-> This is such an egregious bug that it's hard to imagine the tests
-> passing, but if they did, then that may be a good indication that
-> coverage is too sparse and ought to be improved.
-
-Yes the test suite passed perfectly. I have inculcated the habit of
-running the whole test suite before sending patches. Yes some parts of
-a test suite seem to be missing. How about I do it in the end? By this
-I won't have to setup yet another coverage tool for shell script. I
-can use the coverage tool by GNU to test the coverage after bisect is
-a C code. Till that time the patches can reside in the pu branch.
-
-Regards,
-Pranit Bauva
+> Also see the section that talks about signing off the patch and how t=
+o
+> send the patch
+> inline. :)
+>
+>
+>> From 785ed6bc1b4a3b9019d3503b066afb2a025a2bc1 Mon Sep 17 00:00:00 20=
+01
+>> From: =3D?UTF-8?q?Florian=3D20Sch=3DC3=3DBCller?=3D <florian.schuell=
+er@gmail.com>
+>> Date: Thu, 9 Jun 2016 22:54:43 +0200
+>> Subject: [PATCH] first support for inotify
+>
+> Here you should describe your change, i.e. what problem is solved in =
+this patch,
+> what are the alternatives, why is this way the best? Also the sign of=
+f
+> goes here.
+>
+>>
+> ---
+>>  gitk | 59 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++
+>>  1 file changed, 59 insertions(+)
+>>
+> diff --git a/gitk b/gitk
+>> index 805a1c7..6e2ead2 100755
+>> --- a/gitk
+>> +++ b/gitk
+>> @@ -8,6 +8,12 @@ exec wish "$0" -- "$@"
+>>  # either version 2, or (at your option) any later version.
+>>
+>>  package require Tk
+>> +try {
+>> +    package require inotify
+>> +    set we_have_inotify true
+>> +} on error {em} {
+>> +    set we_have_inotify false
+>> +}
+>
+> There are quite a few "have_*" variables, so I would drop the leading=
+ "we_"
+>
+>>
+>>  proc hasworktree {} {
+>>      return [expr {[exec git rev-parse --is-bare-repository] =3D=3D =
+"false" &&
+>> @@ -12363,6 +12369,59 @@ if {$i >=3D [llength $argv] && $revtreeargs=
+ ne {}} {
+>>      }
+>>  }
+>>
+>> +proc inotify_handler { fd } {
+>> +    set events [inotify_watch read]
+>> +    set watch_info [inotify_watch info]
+>> +    set update_view false
+>> +
+>> +    foreach {event} $events {
+>> +        set current_watchid [dict get $event watchid]
+>> +        set flags [dict get $event flags]
+>> +        set event_filename [dict get $event filename]
+>> +
+>> +        foreach {path watchid watch_flags} $watch_info {
+>> +            if {$watchid eq $current_watchid} {
+>> +                set watch_path $path
+>> +            }
+>> +        }
+>> +
+>> +        set full_filename [file join $watch_path $event_filename]
+>> +
+>> +#        remove does not seem to work
+>> +#        if {$flags eq "s"} {
+>> +#            puts "Remove watch $full_filename"
+>> +#            set wd [inotify_watch remove $full_filename]
+>> +#        }
+>
+> Why do we want to carry commented code? I'd drop that.
+>
+>> +
+>> +        if {$flags eq "nD"} {
+>> +            set wd [inotify_watch add $full_filename "nwds"]
+>> +        }
+>> +        if {![string match *.lock $event_filename]} {
+>> +            set update_view true
+>> +        }
+>> +    }
+>> +
+>> +    #reloadcommits or updatecommits - depending on file and operati=
+on?
+>> +    if {$update_view} {
+>> +        updatecommits
+>> +    }
+>> +}
+>> +
+>> +proc watch_recursive { dir } {
+>> +    inotify_watch add $dir "nwaCmMds"
+>> +
+>> +    foreach i [glob -nocomplain -dir $dir *] {
+>> +        if {[file type $i] eq {directory}} {
+>> +            watch_recursive $i
+>> +        }
+>> +    }
+>> +}
+>> +
+>> +if { $we_have_inotify } {
+>> +    set fd [inotify create "inotify_watch" "::inotify_handler"]
+>> +    watch_recursive $gitdir
+>> +}
+>> +
+>>  set nullid "0000000000000000000000000000000000000000"
+>>  set nullid2 "0000000000000000000000000000000000000001"
+>>  set nullfile "/dev/null"
+>> --
+>> 2.7.4
+>>
+>
+> Thanks,
+> Stefan
