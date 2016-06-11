@@ -1,154 +1,145 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCHv4] Documentation: triangular workflow
-Date: Sat, 11 Jun 2016 20:31:46 +0100
-Organization: OPDS
-Message-ID: <5A8F8EE0162B49818813DAEFD68F61DA@PhilipOakley>
-References: <1465288693-6295-1-git-send-email-jordan.de-gea@grenoble-inp.org> <1465475708-1912-1-git-send-email-jordan.de-gea@grenoble-inp.org> <xmqqmvmui9d2.fsf@gitster.mtv.corp.google.com> <CALkWK0nJDwH27V9B+X2K=c_X2k82ZXnab1r1zR6_axipxT5gkg@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [GIT PULL] l10n updates for 2.9.0 rc0
+Date: Sun, 12 Jun 2016 06:13:54 +0800
+Message-ID: <CANYiYbG_DaLX1ipRh4To2iPDtuYxRMMtxWrFbEY1GyrrRCbfdA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>,
-	"Michael Haggerty" <mhagger@alum.mit.edu>,
-	"Git List" <git@vger.kernel.org>,
-	<erwan.mathoniere@grenoble-inp.org>,
-	<samuel.groot@grenoble-inp.org>, <tom.russello@grenoble-inp.org>,
-	"Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
-	"Jeff King" <peff@peff.net>
-To: "Ramkumar Ramachandra" <artagnon@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 11 21:31:54 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Changwoo Ryu <cwryu@debian.org>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 12 00:14:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBodN-0004bI-QZ
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Jun 2016 21:31:54 +0200
+	id 1bBrAW-0004Y3-4J
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Jun 2016 00:14:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752110AbcFKTbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Jun 2016 15:31:49 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:64851 "EHLO
-	smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751823AbcFKTbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jun 2016 15:31:48 -0400
-Received: from PhilipOakley ([2.96.201.101])
-	by smtp.talktalk.net with SMTP
-	id BodGbmA4ZwhW1BodGb5mJi; Sat, 11 Jun 2016 20:31:46 +0100
-X-Originating-IP: [2.96.201.101]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=E92PnuVl c=1 sm=1 tr=0 a=Y4v4M/+rR7swj2cHUUnfDA==:117
- a=Y4v4M/+rR7swj2cHUUnfDA==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=TSbVqHtbAAAA:8 a=UHSIfI8_zsccmT7IqMsA:9 a=gt3PgYYCzfyN_ewW:21
- a=Bt_mMEhvqu7TtNGL:21 a=6kGIvZw6iX1k4Y-7sg4_:22 a=NJcUIoPEKLAEIzHnl83t:22
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfMC8dNZLQ4+ax9cpQmAuHeO4LXZ4vAsOuncomiWHrTiqx9Jd3odI6TneRq6sjSJrW4rnmtW2ZqajtlMmqlQ9t82QZl54tsmjctlpOO5+TpAwVgt5ZRQK
- 8+mIPD/TuDJwo8Y95dG7elsVSJftGdKOniuMKJLVe6SWWo4kyKxnE1F1fEtHZyMqBsD2tId8d18eSbkjui0hshUkrOqUXhjz3Bl7zNItnyZLxxNUefPdzXrB
- rPCusck3vTYmct1CK4WHYs+Tk+WZ2uFfkf139Br8i//S2SHS5ZD0R7eM4nZMLLbLMy4BD7zh9LD973LY2fT2pMsv9qvpPhOwCJN3CiSjNeNeoGRIzCXu37Qk
- BIrscuuSE0BPxLhwNqpqD26W5TZ3Lk1l0wVGAhc/rDh7s8jPMm2gatN5wfXbDcHLdQM2zBIzvhuqx3WVDajqfrTJEpBriMXkWXrgJse/2x8pXAFHQBBjVEW0
- 4A2bwD/7qzq08Qj3qCIN2jhCaIyjgt8zK4MQHQ==
+	id S1751924AbcFKWN5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Jun 2016 18:13:57 -0400
+Received: from mail-qg0-f45.google.com ([209.85.192.45]:33371 "EHLO
+	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751651AbcFKWN4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Jun 2016 18:13:56 -0400
+Received: by mail-qg0-f45.google.com with SMTP id l44so51290055qgd.0
+        for <git@vger.kernel.org>; Sat, 11 Jun 2016 15:13:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=QXLaVTUoleOKkAWc/mV2r817nJol/oSSKeOm2bop4+0=;
+        b=BUC+6haSQIJSp5eABX8nnIvuH78q8OXlfldARDJdMmGbFe5sV0/2sL/6OyI0ifmb3l
+         KJL7UFzcfaqrrSvXGGQAmX+7y5YbOL0L9gT29Icl9tEig9HIM0ggQOr+nQ+VaqLZOhE3
+         Wwv+TmEY8StOa0YYCEisJyBsxaCoS8dLGoSGVlf2GEJYs7ShdUcrU83nJFLCGI9GL23N
+         RCzrqzpUoWPYfRDPS7BGb/JGHwdbcYJzMYow2DBY4HXfjJNu83l+ARwtVAPE9KxcMXXT
+         lThu+dvnEbv3Qye4L1XCXxvfBl7hJL1zymYY72t0JMpjMmRCZYDnXay0X++NbdoFgAhb
+         tMyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=QXLaVTUoleOKkAWc/mV2r817nJol/oSSKeOm2bop4+0=;
+        b=jYAhS6IF3wOiRbEuo36YoVzUtKBtskXJg+NCDo4iGeqmYF1WnVnmn5Vm5xiBIQ/RvT
+         l9nb0JMCI3nqBclNurl7iudyHsY/EtD3Gx0ULKoGkewOGmK1BHF1quokFU1ELCccbebA
+         6D2GXiojzs+PyNvcOS+LYVZ7vnxPJ5AwBpV/w/79LguKDhGLEDQQjU3CMqnCvZ3SUvYm
+         muWfmI74hYe4ixfrNhb3+xSJpl1HqSiIZckiOvQ/I7kKEFbKzVUPnlMSA9v7sXmCidX1
+         p6A7A13ao3VNenguDSMSkwwFCFdV5qZ2vXJ9B9V12dp+IL9jC4gpKXmsjic4zcHVgtSS
+         Ntrg==
+X-Gm-Message-State: ALyK8tI5lmetYTmpxzH43VmtslKepeCY93T8zyhwu60dmXROMAzVNlcrOd1jJSU8ixMfEhdq9jrtYolSzxQ/ww==
+X-Received: by 10.140.159.12 with SMTP id f12mr8101840qhf.61.1465683235448;
+ Sat, 11 Jun 2016 15:13:55 -0700 (PDT)
+Received: by 10.55.74.2 with HTTP; Sat, 11 Jun 2016 15:13:54 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297101>
 
-From: "Ramkumar Ramachandra" <artagnon@gmail.com>
-> Junio C Hamano wrote:
->> Jordan DE GEA wrote:
->>
->> > +* Allows contributors to work with Git even though they do not have
->> > +write access to **UPSTREAM**.
->> >
->> > +* Allows maintainers to receive code from contributors they may not
->> > +trust.
->
-> Triangular workflow is the ability to accept changes from contributors
-> without mailing patches back-and-forth. Whether they send a pull
-> request or
+Hi Junio,
 
->       commit directly to the master repository
+Please pull the following git l10n updates.
 
-Surely, if they can do this then they do not need a distinct publish repo.
+The following changes since commit 3a0f269e7c82aa3a87323cb7ae04ac5f129f=
+036b:
 
-The triangle is necessary because of the accessibility 'standoff' between 
-the upstream and local repos when a pull workflow is used.
+  Git 2.9-rc0 (2016-05-23 15:02:48 -0700)
 
-Matthieu had clarified this (to me 
-http://article.gmane.org/gmane.comp.version-control.git/296538) - I was (at 
-that time) confusing the use of the fork as a home vault (with passive 
-publishing) with the need for actively publishing a branch for a PR.
+are available in the git repository at:
 
->   when review is
-> done, is inconsequential. Essentially, they maintain forks of
-> upstream, which they work on at their own pace.
->
->> > +* Code review is more efficient
->>
->> I have no idea what data you have to back this claim up.  More
->> efficient compared to what?
->
-> They're orthogonal. LLVM has one giant SVN server that everyone
-> commits directly to. However, they review process is a lot more
-> efficient than GitHub projects, because they use Phabricator. What
-> does code review tool have to do with triangular workflow?
->
->> > +Preparation
->> > +~~~~~~~~~~~
->> > +
->> > +Cloning from **PUBLISH**, which is a fork of **UPSTREAM** or an empty
->> > +repository.
->> > +
->> > +======================
->> > +`git clone <PUBLISH_url>`
->> > +======================
->> > +
->> > +Setting the behavior of push for the triangular workflow:
->> > +
->> > +===========================
->> > +`git config push.default current`
->> > +===========================
->> > +
->> > +Adding **UPSTREAM** remote:
->> > +
->> > +===================================
->> > +`git remote add upstream <UPSTREAM_url>`
->> > +===================================
->> > +
->> > +With the `remote add` above, using `git pull upstream` pulls there,
->> > +instead of saying its URL. In addition, `git pull` can pull from
->> > +**UPSTREAM** without argument.
->> > +
->> > +For each branch requiring a triangular workflow, set
->> > +`branch.<branch>.remote` and `branch.<branch>.pushRemote`.
->> > +
->> > +Example with master as <branch>:
->> > +===================================
->> > +* `git config branch.master.remote upstream`
->> > +* `git config branch.master.pushRemote origin`
->> > +===================================
->
-> It's much too simple now. Just `git clone <upstream>`, `git remote add
-> mine <fork-url>`, and `git config remote.pushdefault mine`. Only the
-> last line requires an explanation.
+  git://github.com/git-l10n/git-po tags/l10n-2.9.0-rc0
 
-I note that you use 'mine', Jordan was proposing 'me', while I started using 
-'my'. It is useful to see these personal choices, especially as there is no 
-'origin' in the nominal triangular flow diagram.
+for you to fetch changes up to ad583ebe0813c5d6a8e7c263d72d934770083d83=
+:
 
-Whether to use branch configs or remote configs is part of the 
-clarifications.
+  l10n: ko.po: Update Korean translation (2016-06-12 01:25:58 +0900)
 
->
->> Instead you would set default.pushRemote to publish
->> just once, and no matter how many branches you create later, you do
->> not have to do anything special.
->
-> I think you meant remote.pushdefault here?
-> 
+----------------------------------------------------------------
+l10n-2.9.0-rc0
+
+----------------------------------------------------------------
+Alexander Shopov (1):
+      l10n: Updated Bulgarian translation of git (2597t,0f,0u)
+
+Antonin (1):
+      l10n: fr.po Fixed grammar mistake
+
+Changwoo Ryu (1):
+      l10n: ko.po: Update Korean translation
+
+Dimitriy Ryazantcev (1):
+      l10n: ru.po: update Russian translation
+
+Jean-Noel Avila (1):
+      l10n: fr.po v2.9.0rnd1
+
+Jiang Xin (5):
+      l10n: git.pot: v2.9.0 round 1 (104 new, 37 removed)
+      Merge branch 'fix_fr' of git://github.com/jnavila/git
+      Merge branch 'v2.9.0_rnd1_fr' of git://github.com/jnavila/git
+      l10n: zh_CN: for git v2.9.0 l10n round 1
+      Merge branch 'russian-l10n' of https://github.com/DJm00n/git-po-r=
+u
+
+Peter Krefting (1):
+      l10n: sv.po: Update Swedish translation (2597t0f0u)
+
+Ralf Thielow (1):
+      l10n: de.po: translate 104 new messages
+
+Ray Chen (1):
+      l10n: zh_CN: review for git v2.9.0 l10n round 1
+
+Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (1):
+      l10n: Updated Vietnamese translation (2597t)
+
+Vasco Almeida (3):
+      l10n: pt_PT: merge git.pot file
+      l10n: pt_PT: update according to git-gui glossary
+      l10n: pt_PT: update Portuguese translation
+
+ po/bg.po    | 4689 +++++++++++++++++++++++++++++++++------------------=
+--------
+ po/de.po    | 3310 +++++++++++++++++++++++------------------
+ po/fr.po    | 3252 +++++++++++++++++++++++------------------
+ po/git.pot  | 3078 ++++++++++++++++++++++-----------------
+ po/ko.po    | 3192 ++++++++++++++++++++++------------------
+ po/pt_PT.po | 3893 +++++++++++++++++++++++++++----------------------
+ po/ru.po    | 3171 ++++++++++++++++++++++------------------
+ po/sv.po    | 3269 +++++++++++++++++++++++------------------
+ po/vi.po    | 3274 +++++++++++++++++++++++------------------
+ po/zh_CN.po | 3375 ++++++++++++++++++++++--------------------
+ 10 files changed, 19378 insertions(+), 15125 deletions(-)
+
+--
+Jiang Xin
