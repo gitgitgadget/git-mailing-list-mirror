@@ -1,82 +1,161 @@
-From: Eric Wong <e@80x24.org>
-Subject: Re: feature request: git svn dommit --preserve-timestamps
-Date: Sat, 11 Jun 2016 11:43:31 +0000
-Message-ID: <20160611114331.GA1678@dcvr.yhbt.net>
-References: <87a8iy6s4e.fsf@free.fr>
- <20160607000902.GA4445@dcvr.yhbt.net>
- <87ziqx5z9h.fsf@free.fr>
- <20160611013948.GA5793@dcvr.yhbt.net>
- <878tycmejb.fsf@free.fr>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH 1/2] bisect--helper: `is_expected_rev` shell function in C
+Date: Sat, 11 Jun 2016 17:48:06 +0530
+Message-ID: <CAFZEwPMqwtw061O0QVRGf+dqpxKjp1jRvFE5CUEayEiUhxWveQ@mail.gmail.com>
+References: <20160608152415.7770-1-pranit.bauva@gmail.com> <CAPig+cRC_y9MBSsrLEs0OxL4=FMfU-=ACwhESUiECrWrDNvaCw@mail.gmail.com>
+ <CAFZEwPOhssmTt6TLPhxjzru+B3sWgXWh71yRt9BOvLqc0imq-g@mail.gmail.com> <CAPig+cTECf6JT6+1SWo-eEwKPOAN3eYL20tvFS90Q28gu5vrZw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Peter =?utf-8?Q?M=C3=BCnster?= <pmlists@free.fr>
-X-From: git-owner@vger.kernel.org Sat Jun 11 13:43:39 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sat Jun 11 14:18:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bBhKC-0003rb-F1
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Jun 2016 13:43:36 +0200
+	id 1bBhri-0005oE-EO
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Jun 2016 14:18:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751218AbcFKLnc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Jun 2016 07:43:32 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:50964 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751168AbcFKLnc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jun 2016 07:43:32 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38D3F1FF40;
-	Sat, 11 Jun 2016 11:43:31 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <878tycmejb.fsf@free.fr>
+	id S1751395AbcFKMSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Jun 2016 08:18:10 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:33508 "EHLO
+	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751173AbcFKMSI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jun 2016 08:18:08 -0400
+Received: by mail-yw0-f195.google.com with SMTP id y6so11352122ywe.0
+        for <git@vger.kernel.org>; Sat, 11 Jun 2016 05:18:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=nK4Ig/QysJGFJf8kZR5yKjtKlW4UVxvrx/2gsyWDmSs=;
+        b=JV6uItrPPjqjFCfZrFBA4mEZxJ4KcugK3jaZRoU+Tsh/7/yrZpPObfYgwIGv2cEV7E
+         Ft6iPMQNF1QQgMoIz4+jCHQv8wyYQTuMMhaTlt7YaUvtLLoJBhhLCcVZoEF5dJWd2yYl
+         Bb7Q19zsOt5EGSPvef3GMAz4AOcO9q2qxdBgvfrzsmVl3jtsmfiOFtqjy/vIqZ+yk79A
+         HEMZNxfyMYAtio2yGSks1vqKYWQq5oLFIqnE/X9PbBcgCh2F+b5cEzJxQXyoFE6lW++K
+         GWzzc6J2O8LGFAh4vuUaHYGVmAduI+rnRJXaRYDD1sPnZwfeHsNZr2PBs3HnJcTqNBTO
+         /D0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=nK4Ig/QysJGFJf8kZR5yKjtKlW4UVxvrx/2gsyWDmSs=;
+        b=FBpRn4vRfUjzgzT86ujNJb7eJbyDyFfFHZ4lq6vV+0g+3EGCLydLzd83BWl5Lx6BtH
+         NSay6zoAvfS3/mkk+oXCnQ4joLQ6JiCsYphv/5XLhm7uQggoUNfRme8/pVyWEnFF7zPJ
+         DQfbO4zrOG2uYzcsZmDyaJbBhzG+mtxKzP/lJ6y7Xz/7Comfd7fzzwYkEjhzloNE0iwq
+         /uzDjJ2zwf2yHX/evxPTKTjNsIomuOzGlOvyNsYdtZT9PZRCSnvaDYJ7yndN7TsuvrH6
+         232LIFiBHvWWRM6M00Ett2bG4qfICoMw7vSIWZQ0/+NMmuubOVJ8oNw3jcxKwZx9U1gd
+         7Rgg==
+X-Gm-Message-State: ALyK8tL1vbYUFKXyOVGfqxdii6PVedd4Z8OtXhNp13cZvCf1BKj0eRVCjmnbwCuTTv56zuUZrBmeZd4frr5AKQ==
+X-Received: by 10.129.81.144 with SMTP id f138mr3384006ywb.154.1465647487072;
+ Sat, 11 Jun 2016 05:18:07 -0700 (PDT)
+Received: by 10.129.124.132 with HTTP; Sat, 11 Jun 2016 05:18:06 -0700 (PDT)
+In-Reply-To: <CAPig+cTECf6JT6+1SWo-eEwKPOAN3eYL20tvFS90Q28gu5vrZw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297096>
 
-Peter M=C3=BCnster <pmlists@free.fr> wrote:
-> On Sat, Jun 11 2016, Eric Wong wrote:
->=20
-> > The git log after dcommit is tied to the SVN log,
-> > so git-svn can only reflect changes which appear in SVN.
->=20
-> You mean, it's impossible, to keep the original timestamps??
+Hey Eric,
 
-It might be; just not easy; and I haven't looked at the code
-in ages.  But there seems to be similar options for preserving
-authorship in git-only  (see below)
+On Sat, Jun 11, 2016 at 12:44 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Fri, Jun 10, 2016 at 9:39 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> On Fri, Jun 10, 2016 at 3:03 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> On Wed, Jun 8, 2016 at 11:24 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>>>> Reimplement `is_expected_rev` shell function in C. This will further be
+>>>> called from `check_expected_revs` function. This is a quite small
+>>>> function thus subcommand facility is redundant.
+>>>
+>>> This patch should be squashed into patch 2/2, as it is otherwise
+>>> pointless without that patch, and merely adds dead code.
+>>
+>> Sure I will squash and will explain it in the commit message.
+>
+> Explain what in the commit message? If anything, I'd expect the commit
+> message to shrink since you won't need to explain anymore that this
+> function is split out.
 
-> > Unfortunately, you would have to care about svn log as long as
-> > SVN exists in your workflow and you need to interact with SVN
-> > users.
->=20
-> In my case, all development happens on Git, SVN is only some sort of
-> copy. And when the original timestamps are lost, I've sometimes some
-> real problems in finding a specific commit that matches another event=
-=2E
+Yes I would remove the part where it is explained that this function
+is split out. I will just explain that 2 functions are converted in 1
+commit.
 
-I'm sorry for your situation and hoping you migrate off SVN
-entirely, soon :)
+>>>> +       if (!file_exists(git_path_bisect_expected_rev()))
+>>>> +               return 0;
+>>>
+>>> Invoking file_exists() seems unnecessarily redundant when you can
+>>> discern effectively the same by checking the return value of
+>>> strbuf_read_file() below. I'd drop the file_exists() check altogether.
+>>
+>> I wanted to imitate the code. But I guess it would actually be better
+>> if I drop this file_exists().
+>
+> There is a bit of a lesson to be learned by this example. While it's
+> true that the C conversion should retain the behavior of the original
+> shell code, that does not mean blindly mirroring the implementation
+> line for line is a good idea. A couple things to take into
+> consideration:
+>
+> There are idiomatic ways of doing things in each language. What is
+> idiomatic in shell is not necessarily so in C. The C conversion should
+> employ C idioms and flow in a way which is natural for C code.
+>
+> Consider what the original shell code is doing at a higher level than
+> merely by reading it line-by-line. In the case in question, the code
+> is:
+>
+>     test -f "$GIT_DIR/BISECT_EXPECTED_REV" &&
+>     test "$1" = $(cat "$GIT_DIR/BISECT_EXPECTED_REV")
+>
+> While it's true that it's asking "does the file exist and is its value
+> the same as $1", the 'test -f' avoids a "file not found" error from
+> the $(cat ...) invocation. Since the return value of
+> strbuf_read_file() effectively encapsulates the "does the file exist"
+> check, a separate check isn't really needed.
 
-> > git svn tries hard to work transparently and as close to the
-> > behavior of the upstream SVN repo as possible.
->=20
-> That's why I suggest an option, for use cases as mine. Those, who pre=
-fer
-> to keep the current behaviour just won't use it.
->=20
-> If someone could guide me through the code, I could modify it perhaps=
-=2E
+True. I will keep this in mind.
 
-Maybe you could look at how the _use_log_author and
-_add_author_from options work.  I've forgotten their existence
-until now and I've never used them myself; but apparently
-they're still there.
+>>>> +       if (!strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0))
+>>>> +               return 0;
+>>>
+>>> What exactly is this trying to do? Considering that strbuf_read_file()
+>>> returns -1 upon error, otherwise the number of bytes read, if I'm
+>>> reading this correctly, is_expected_rev() returns false if
+>>> strbuf_read_file() encounters an error (which is fine) but also when
+>>> it successfully reads the file and its content length is non-zero
+>>> (which is very odd).
+>>>
+>>>> +       strbuf_trim(&actual_hex);
+>>>> +       return !strcmp(actual_hex.buf, expected_hex);
+>>>
+>>> Thus, it only ever gets to this point if the file exists but is empty,
+>>> which is very unlikely to match 'expected_hex'. I could understand it
+>>> if you checked the result of strbuf_read_file() with <0 or even <=0,
+>>> but the current code doesn't make sense to me.
+>>>
+>>> Am I misunderstanding?
+>>
+>> Definitely not. Thanks for pointing it out. :) It went off my head
+>> that strbuf_read_file returns the bytes it reads. Also the code
+>> comment regarding strbuf_read_file does not mention it which probably
+>> misguided me. I should also send a fixing patch so that someone else
+>> does not fall into this like I did.
+>
+> Out of curiosity, did the test suite pass with this patch applied?
+> This is such an egregious bug that it's hard to imagine the tests
+> passing, but if they did, then that may be a good indication that
+> coverage is too sparse and ought to be improved.
 
-Unfortunately, if you have other users using git-svn;
-it could be tricky to ensure they can see the same timestamps
-you see...
+Yes the test suite passed perfectly. I have inculcated the habit of
+running the whole test suite before sending patches. Yes some parts of
+a test suite seem to be missing. How about I do it in the end? By this
+I won't have to setup yet another coverage tool for shell script. I
+can use the coverage tool by GNU to test the coverage after bisect is
+a C code. Till that time the patches can reside in the pu branch.
+
+Regards,
+Pranit Bauva
