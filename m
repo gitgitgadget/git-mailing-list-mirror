@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 02/27] transport-helper.c: refactor set_helper_option()
-Date: Sun, 12 Jun 2016 17:53:44 +0700
-Message-ID: <20160612105409.22156-3-pclouds@gmail.com>
+Subject: [PATCH v2 03/27] upload-pack: move shallow deepen code out of receive_needs()
+Date: Sun, 12 Jun 2016 17:53:45 +0700
+Message-ID: <20160612105409.22156-4-pclouds@gmail.com>
 References: <20160610122714.3341-1-pclouds@gmail.com>
  <20160612105409.22156-1-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,128 +13,188 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 12 12:55:02 2016
+X-From: git-owner@vger.kernel.org Sun Jun 12 12:55:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bC32j-0002wW-29
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Jun 2016 12:55:01 +0200
+	id 1bC32q-00032V-U0
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Jun 2016 12:55:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752083AbcFLKy6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jun 2016 06:54:58 -0400
-Received: from mail-pa0-f65.google.com ([209.85.220.65]:35396 "EHLO
+	id S1752581AbcFLKzE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jun 2016 06:55:04 -0400
+Received: from mail-pa0-f65.google.com ([209.85.220.65]:36304 "EHLO
 	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751117AbcFLKy5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jun 2016 06:54:57 -0400
-Received: by mail-pa0-f65.google.com with SMTP id hf6so604624pac.2
-        for <git@vger.kernel.org>; Sun, 12 Jun 2016 03:54:57 -0700 (PDT)
+	with ESMTP id S1751117AbcFLKzC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jun 2016 06:55:02 -0400
+Received: by mail-pa0-f65.google.com with SMTP id fg1so8409022pad.3
+        for <git@vger.kernel.org>; Sun, 12 Jun 2016 03:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+7RDa9Sdw4AMqDrXW+tXT5HD4w2HuYQpUSd588n2/Xk=;
-        b=fTCIsgvFZSxdH4I9H2YspsoDtYmyebOEabcwe9C6Q5pYtjTOY9MK/8vPQ23mDBDmMw
-         cgJ5FaCWdPWSXaFDEgAaAvGouMuFjCKDlxwhYv9J4DCTy04NCXPLY5AKbbLr1TJd1FR7
-         eYa/wDcG7lwmJePy+FcMjJ9/QutIqq2YHc/QPzBvpIZlVObkEbrLz4lOHZIC9oQVeFom
-         iGAC+/lm9GdSE2qqnd3NMtiJFnBpU5kqn2fadtOIOwRTgJ1og6kvbOsv5tlBXUGf5nEo
-         rhpSY++HZ+goPFiMtF7m9eiS3wX+UXtUgozIZYiFh2uEn4m16rRnWn78Uy0I/hmEnYv+
-         jMLA==
+        bh=sovsKiQOiCn9/RBO76HCyqQHgctyGic1choKRUle/rE=;
+        b=xp0+KN2ln+I22dXY5CdHHqx8ZqWt5aNIRoyZpuji7WbQXlpqAH54BNx+VB0PMk+qSc
+         00arwI2RznbLAcz3omG7W6qoZdr0kJXQlhGm9BT1Vu0or962HGoORo+Akleby7lwTiv1
+         Z06+PriK54LsaU4gn2AfEcHyV/Q3J6BGcyoWuQhoEg2UB0z0ZdPWJIOjjuaYaWsXCMCn
+         zc+1R7dF7mhM05ZHAn35wGe6Ch6qxIJ6xpJGa5r/uJTmJk9JQTKfLcRBQoFfO6RAbqTM
+         KnDe4pyVByP4PYg9TUKQB8y5q/7LcVtxne2WuD0yWNbMGaIGQKzjX8Cbc9tuqXMmxMEp
+         xQMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+7RDa9Sdw4AMqDrXW+tXT5HD4w2HuYQpUSd588n2/Xk=;
-        b=aZ64Qqg6pUOlSRcmIw4xEky6TEdQb8N6hP0gpN9efCFi2p3/MDYQs6VWRxkmC4idzY
-         ufjzt2Ny3Gqo7lhqIgeAjyZOV1hEerEPvLPZQjOZMfIW9LSGvVE8D5ABNpnzn1FKuTAI
-         EU5pNwuTiE/LwjzgeklnfjE9/OqF5uRagj3gmgoq8vRv703N9fWnY+4FkGtNrVMi2RcL
-         WRyxkSCNQZcPNUg37efsJRSQssTZlhqr6ZYLPgQJWhO+263U/oXOVoImwGGM/9y4ACo/
-         Pjy9KtL+9C4I4gE1HhQ2JlU1DH/Wu3gLdo80Xlz3j/JOtFNfeFmQ0bxZnCJLnTvtRPEV
-         E/WQ==
-X-Gm-Message-State: ALyK8tK1Nq8IR0lQC8Yl174FwJv+Z5B8vlaJdrn5S2Cu7VqJRFDIXM8YHmlrLt4Nr3EukQ==
-X-Received: by 10.66.234.5 with SMTP id ua5mr14668085pac.115.1465728896470;
-        Sun, 12 Jun 2016 03:54:56 -0700 (PDT)
+        bh=sovsKiQOiCn9/RBO76HCyqQHgctyGic1choKRUle/rE=;
+        b=Vao21Jl0Vnc72zodTuc+ScW6vw2Ocgdc+UstQb9msbJyzvYWBonj+QS8hABpg+hBE9
+         SIdyAM2Eb5Ptk1zHeZAoNpqvfXohWoHb1Db7HdX0K3d3gKEYpGbmEBdDkijZ7o64gFsn
+         Kt3AhWWtFQxmDLfcgqYRRVxHJpPNnbBdGy8uAr2j6KIXuOaafrnNxGuIefbkYSamL3yT
+         X4FjMTNRsnY3BwFDw7iS5Ot3yJs3PW3Ih/wTBWaYfG4XreNXCj8bwxo8ShobnGk7sV+7
+         ZYecijVBB4O01bRmEgI8zJKpgM9JCiRWP/l5eZhWkPqGDFfsKN303wppvx2x1MTfyEmx
+         pD5A==
+X-Gm-Message-State: ALyK8tIHWbp3dptsp9c8z9xACacdiDHDlpG6eTycBXdXYcLB6tRWdq3L0CNBfnbaJBmd5g==
+X-Received: by 10.66.141.76 with SMTP id rm12mr14364538pab.129.1465728901299;
+        Sun, 12 Jun 2016 03:55:01 -0700 (PDT)
 Received: from ash ([115.76.211.1])
-        by smtp.gmail.com with ESMTPSA id o193sm10044359pfo.12.2016.06.12.03.54.53
+        by smtp.gmail.com with ESMTPSA id p1sm29819566paz.8.2016.06.12.03.54.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 12 Jun 2016 03:54:55 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 12 Jun 2016 17:54:51 +0700
+        Sun, 12 Jun 2016 03:55:00 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 12 Jun 2016 17:54:56 +0700
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
 In-Reply-To: <20160612105409.22156-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297110>
 
-=46or now we can handle two types, string and boolean, in
-set_helper_option(). Later on we'll add string_list support, which does
-not fit well. The new function strbuf_set_helper_option() can be reused
-for a separate function that handles string-list.
+This is a prep step for further refactoring. Besides reindentation and
+s/shallows\./shallows->/g, no other changes are expected.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- transport-helper.c | 37 +++++++++++++++++++++++--------------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ upload-pack.c | 99 +++++++++++++++++++++++++++++++--------------------=
+--------
+ 1 file changed, 52 insertions(+), 47 deletions(-)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index a6bff8b..27a34e9 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -260,6 +260,28 @@ static const char *boolean_options[] =3D {
- 	TRANS_OPT_FOLLOWTAGS,
- 	};
+diff --git a/upload-pack.c b/upload-pack.c
+index b3f6653..97ed620 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -538,6 +538,55 @@ error:
+ 	}
+ }
 =20
-+static int strbuf_set_helper_option(struct helper_data *data,
-+				    struct strbuf *buf)
++static void deepen(int depth, const struct object_array *shallows)
 +{
-+	int ret;
-+
-+	sendline(data, buf);
-+	if (recvline(data, buf))
-+		exit(128);
-+
-+	if (!strcmp(buf->buf, "ok"))
-+		ret =3D 0;
-+	else if (starts_with(buf->buf, "error"))
-+		ret =3D -1;
-+	else if (!strcmp(buf->buf, "unsupported"))
-+		ret =3D 1;
-+	else {
-+		warning("%s unexpectedly said: '%s'", data->name, buf->buf);
-+		ret =3D 1;
++	struct commit_list *result =3D NULL, *backup =3D NULL;
++	int i;
++	if (depth =3D=3D INFINITE_DEPTH && !is_repository_shallow())
++		for (i =3D 0; i < shallows->nr; i++) {
++			struct object *object =3D shallows->objects[i].item;
++			object->flags |=3D NOT_SHALLOW;
++		}
++	else
++		backup =3D result =3D
++			get_shallow_commits(&want_obj, depth,
++					    SHALLOW, NOT_SHALLOW);
++	while (result) {
++		struct object *object =3D &result->item->object;
++		if (!(object->flags & (CLIENT_SHALLOW|NOT_SHALLOW))) {
++			packet_write(1, "shallow %s",
++				     oid_to_hex(&object->oid));
++			register_shallow(object->oid.hash);
++			shallow_nr++;
++		}
++		result =3D result->next;
 +	}
-+	return ret;
++	free_commit_list(backup);
++	for (i =3D 0; i < shallows->nr; i++) {
++		struct object *object =3D shallows->objects[i].item;
++		if (object->flags & NOT_SHALLOW) {
++			struct commit_list *parents;
++			packet_write(1, "unshallow %s",
++				     oid_to_hex(&object->oid));
++			object->flags &=3D ~CLIENT_SHALLOW;
++			/* make sure the real parents are parsed */
++			unregister_shallow(object->oid.hash);
++			object->parsed =3D 0;
++			parse_commit_or_die((struct commit *)object);
++			parents =3D ((struct commit *)object)->parents;
++			while (parents) {
++				add_object_array(&parents->item->object,
++						 NULL, &want_obj);
++				parents =3D parents->next;
++			}
++			add_object_array(object, NULL, &extra_edge_obj);
++		}
++		/* make sure commit traversal conforms to client */
++		register_shallow(object->oid.hash);
++	}
++	packet_flush(1);
 +}
 +
- static int set_helper_option(struct transport *transport,
- 			  const char *name, const char *value)
+ static void receive_needs(void)
  {
-@@ -291,20 +313,7 @@ static int set_helper_option(struct transport *tra=
-nsport,
- 		quote_c_style(value, &buf, NULL, 0);
- 	strbuf_addch(&buf, '\n');
+ 	struct object_array shallows =3D OBJECT_ARRAY_INIT;
+@@ -630,53 +679,9 @@ static void receive_needs(void)
 =20
--	sendline(data, &buf);
--	if (recvline(data, &buf))
--		exit(128);
--
--	if (!strcmp(buf.buf, "ok"))
--		ret =3D 0;
--	else if (starts_with(buf.buf, "error")) {
--		ret =3D -1;
--	} else if (!strcmp(buf.buf, "unsupported"))
--		ret =3D 1;
--	else {
--		warning("%s unexpectedly said: '%s'", data->name, buf.buf);
--		ret =3D 1;
--	}
-+	ret =3D strbuf_set_helper_option(data, &buf);
- 	strbuf_release(&buf);
- 	return ret;
- }
+ 	if (depth =3D=3D 0 && shallows.nr =3D=3D 0)
+ 		return;
+-	if (depth > 0) {
+-		struct commit_list *result =3D NULL, *backup =3D NULL;
+-		int i;
+-		if (depth =3D=3D INFINITE_DEPTH && !is_repository_shallow())
+-			for (i =3D 0; i < shallows.nr; i++) {
+-				struct object *object =3D shallows.objects[i].item;
+-				object->flags |=3D NOT_SHALLOW;
+-			}
+-		else
+-			backup =3D result =3D
+-				get_shallow_commits(&want_obj, depth,
+-						    SHALLOW, NOT_SHALLOW);
+-		while (result) {
+-			struct object *object =3D &result->item->object;
+-			if (!(object->flags & (CLIENT_SHALLOW|NOT_SHALLOW))) {
+-				packet_write(1, "shallow %s",
+-						oid_to_hex(&object->oid));
+-				register_shallow(object->oid.hash);
+-				shallow_nr++;
+-			}
+-			result =3D result->next;
+-		}
+-		free_commit_list(backup);
+-		for (i =3D 0; i < shallows.nr; i++) {
+-			struct object *object =3D shallows.objects[i].item;
+-			if (object->flags & NOT_SHALLOW) {
+-				struct commit_list *parents;
+-				packet_write(1, "unshallow %s",
+-					oid_to_hex(&object->oid));
+-				object->flags &=3D ~CLIENT_SHALLOW;
+-				/* make sure the real parents are parsed */
+-				unregister_shallow(object->oid.hash);
+-				object->parsed =3D 0;
+-				parse_commit_or_die((struct commit *)object);
+-				parents =3D ((struct commit *)object)->parents;
+-				while (parents) {
+-					add_object_array(&parents->item->object,
+-							NULL, &want_obj);
+-					parents =3D parents->next;
+-				}
+-				add_object_array(object, NULL, &extra_edge_obj);
+-			}
+-			/* make sure commit traversal conforms to client */
+-			register_shallow(object->oid.hash);
+-		}
+-		packet_flush(1);
+-	} else
++	if (depth > 0)
++		deepen(depth, &shallows);
++	else
+ 		if (shallows.nr > 0) {
+ 			int i;
+ 			for (i =3D 0; i < shallows.nr; i++)
 --=20
 2.8.2.524.g6ff3d78
