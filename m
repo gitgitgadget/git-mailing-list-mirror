@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 25/27] upload-pack: split check_unreachable() in two, prep for get_reachable_list()
-Date: Sun, 12 Jun 2016 17:54:07 +0700
-Message-ID: <20160612105409.22156-26-pclouds@gmail.com>
+Subject: [PATCH v2 26/27] upload-pack: add get_reachable_list()
+Date: Sun, 12 Jun 2016 17:54:08 +0700
+Message-ID: <20160612105409.22156-27-pclouds@gmail.com>
 References: <20160610122714.3341-1-pclouds@gmail.com>
  <20160612105409.22156-1-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,186 +13,174 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 12 12:56:54 2016
+X-From: git-owner@vger.kernel.org Sun Jun 12 12:56:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bC34X-0004DI-LT
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Jun 2016 12:56:54 +0200
+	id 1bC34c-0004GS-NK
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Jun 2016 12:56:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753419AbcFLK4u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jun 2016 06:56:50 -0400
-Received: from mail-pa0-f65.google.com ([209.85.220.65]:35637 "EHLO
-	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752050AbcFLK4t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jun 2016 06:56:49 -0400
-Received: by mail-pa0-f65.google.com with SMTP id hf6so606863pac.2
-        for <git@vger.kernel.org>; Sun, 12 Jun 2016 03:56:48 -0700 (PDT)
+	id S932212AbcFLK4z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jun 2016 06:56:55 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:34803 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932096AbcFLK4y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jun 2016 06:56:54 -0400
+Received: by mail-pa0-f66.google.com with SMTP id ug1so8417568pab.1
+        for <git@vger.kernel.org>; Sun, 12 Jun 2016 03:56:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=T6hdMLkGD5e/a0tFO7fD47lUvXFtdievOnJ7N6JjHL8=;
-        b=VAS9Mfr5cn4BMV3qjwUzkDBELiGBhSkv3NEIznu0Nk4pRx0VeINEI5JgXCApXGCbBp
-         8gpgBHf72FSap0xOLhZJetWxEqUqDpFzRIC0swEEodX2V7kz4jE0JeQJXdqppYOCV8pY
-         qBoEU4UmpuIX8PLGVXb1z3TDb+bhcmnKBOUPHsvHlI2b0uLOklzXBwv2MQDr2nNMOnYE
-         wIiQH/ITmqcbzykYpZ9Pg6MVDI9jTtTUl2uFSXskoaeGvNuVaOuJs7ygNMIWb5TkEVM/
-         +biddHEREH8BjheN1GCqztBGGt/h4JF1GyNYOzc1ekWAuAf431r3O+k6rxapwDNNpbW9
-         QLeg==
+        bh=B5iAcE+EkRRUMNO8NY5qIofKoI9G0A1YJmWftzdtzh8=;
+        b=tQ+SCh3f8odEkKgwBsyjE+fy/qMoIHNF5ZeidDUiadCRSIg3Cu+63VYuNiM8D9JbW7
+         8To0oH6aiPGdoTPZqGV1yiHxtFRlF7Z1VPrPAjkE/CfyCsToRJ6SdkQ7QhRs+OCFU8Lb
+         8n/bsklVrJlF1mHX4T3Sqebasmpm3w4ls9XubzRPzx0tH6whWPEB5HhvZwt+tIJAPYWm
+         G046dwC3saCpSMpJejx+iBvSKkp8rOHpzYM91eSCO7bI5pk33yeB+fms4XAvMOfzBofn
+         AUSrwovHjvlr/yVPir4/az1BPN2zC/rUsVEBa9rFGOXKQjSyEVoQpW+loPxOvL0V/TmG
+         TMmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=T6hdMLkGD5e/a0tFO7fD47lUvXFtdievOnJ7N6JjHL8=;
-        b=MaVdKlfRKQtToG+Abj24MtAwGzm7kyFJr/qYYpVbs7QkG8S6C6jKEuNjkK9Qlj2/0C
-         6sAGryP1Uwvo4yZ8Q7GS31whVL6kzBSJYGwH/y8o9khcL01zJg1k+KyJvJSBFpKEyXNp
-         lrh/dYKH85umW7oM5HzVGNycyWythSjp/cTsnIib1st5L0f0UihQmRxC/7HFhMBm3FfM
-         F7bIXrARD+r8GkQ80B9t47VSl/ieDiRvc6RuQkzBO5R98Y1hdtEktA5PxDTkr+SWV7DK
-         2mYxCS79vVVCTW7hYz6jeh38QD870tDEh7c2vIENaAK3pscCtZ1ad0WylNy8pdH0hGSZ
-         vDzQ==
-X-Gm-Message-State: ALyK8tK/wTdZoETsIT8jZy6qVBSfqY5PdNXxp61C2iVX2J3owbCenwpsZEFH3acfWG2VIw==
-X-Received: by 10.66.154.74 with SMTP id vm10mr14825499pab.158.1465729008415;
-        Sun, 12 Jun 2016 03:56:48 -0700 (PDT)
+        bh=B5iAcE+EkRRUMNO8NY5qIofKoI9G0A1YJmWftzdtzh8=;
+        b=V4DQGQYlZmisjPk/TALaYu7weJ1ILrOQBG6q8LmvqEnv0VCow3Cq49f1sngXgA1m+R
+         BgbQ1tM/hFIWiH4zCGzaULmn+vrAPl4g0Jz4sI0lc4Y+D9MNbOeCXXXei3blmmX+c/FQ
+         cKu86e2HFIsuoVhUtAua2eQFsyfd0AyHRh0VStvaHREBBjV9FG4CMW50ztojzqYB3WAt
+         7IS661bV7+Xg8mw+CA23F9HxiohyDsk5nEr7V9vWZyXUqENq6z5xkkX63XE3Bt7aqaME
+         9mIPSJDZ9Ya9HgtS2rA9AmMR++SW9DSpl65bnJwB5BuHTAuNURqBTs/ny4Y2J7CG9OMv
+         /1Lg==
+X-Gm-Message-State: ALyK8tKbBm00BOcrymJEQfFOJHIFv5WBeHUJ4vepmL9qadaqzUrfbKv3cpwl3e7fitLroQ==
+X-Received: by 10.66.47.133 with SMTP id d5mr15096694pan.48.1465729013160;
+        Sun, 12 Jun 2016 03:56:53 -0700 (PDT)
 Received: from ash ([115.76.211.1])
-        by smtp.gmail.com with ESMTPSA id i8sm29759798pao.26.2016.06.12.03.56.45
+        by smtp.gmail.com with ESMTPSA id h6sm17398001pac.46.2016.06.12.03.56.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 12 Jun 2016 03:56:47 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 12 Jun 2016 17:56:43 +0700
+        Sun, 12 Jun 2016 03:56:52 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 12 Jun 2016 17:56:48 +0700
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
 In-Reply-To: <20160612105409.22156-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297133>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- upload-pack.c | 56 ++++++++++++++++++++++++++++++++++++++-------------=
------
- 1 file changed, 38 insertions(+), 18 deletions(-)
+ object.h      |  2 +-
+ upload-pack.c | 52 +++++++++++++++++++++++++++++++++++++++++++++++++--=
+-
+ 2 files changed, 50 insertions(+), 4 deletions(-)
 
+diff --git a/object.h b/object.h
+index f8b6442..614a006 100644
+--- a/object.h
++++ b/object.h
+@@ -31,7 +31,7 @@ struct object_array {
+  * revision.h:      0---------10                                26
+  * fetch-pack.c:    0---4
+  * walker.c:        0-2
+- * upload-pack.c:               11----------------19
++ * upload-pack.c:       4       11----------------19
+  * builtin/blame.c:               12-13
+  * bisect.c:                               16
+  * bundle.c:                               16
 diff --git a/upload-pack.c b/upload-pack.c
-index acc6d97..adb8e33 100644
+index adb8e33..3227df8 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -452,21 +452,24 @@ static int is_our_ref(struct object *o)
- 	return o->flags & ((allow_hidden_ref ? HIDDEN_REF : 0) | OUR_REF);
- }
-=20
--static int has_unreachable(struct object_array *src)
-+/*
-+ * on successful case, it's up to the caller to close cmd->out
-+ */
-+static int do_reachable_revlist(struct child_process *cmd,
-+				struct object_array *src)
+@@ -456,7 +456,8 @@ static int is_our_ref(struct object *o)
+  * on successful case, it's up to the caller to close cmd->out
+  */
+ static int do_reachable_revlist(struct child_process *cmd,
+-				struct object_array *src)
++				struct object_array *src,
++				struct object_array *reachable)
  {
  	static const char *argv[] =3D {
  		"rev-list", "--stdin", NULL,
- 	};
--	static struct child_process cmd =3D CHILD_PROCESS_INIT;
- 	struct object *o;
- 	char namebuf[42]; /* ^ + SHA-1 + LF */
- 	int i;
-=20
--	cmd.argv =3D argv;
--	cmd.git_cmd =3D 1;
--	cmd.no_stderr =3D 1;
--	cmd.in =3D -1;
--	cmd.out =3D -1;
-+	cmd->argv =3D argv;
-+	cmd->git_cmd =3D 1;
-+	cmd->no_stderr =3D 1;
-+	cmd->in =3D -1;
-+	cmd->out =3D -1;
-=20
- 	/*
- 	 * If the next rev-list --stdin encounters an unknown commit,
-@@ -475,7 +478,7 @@ static int has_unreachable(struct object_array *src=
-)
- 	 */
- 	sigchain_push(SIGPIPE, SIG_IGN);
-=20
--	if (start_command(&cmd))
-+	if (start_command(cmd))
- 		goto error;
-=20
- 	namebuf[0] =3D '^';
-@@ -487,7 +490,7 @@ static int has_unreachable(struct object_array *src=
-)
+@@ -487,6 +488,8 @@ static int do_reachable_revlist(struct child_proces=
+s *cmd,
+ 		o =3D get_indexed_object(--i);
+ 		if (!o)
+ 			continue;
++		if (reachable && o->type =3D=3D OBJ_COMMIT)
++			o->flags &=3D ~TMP_MARK;
  		if (!is_our_ref(o))
  			continue;
  		memcpy(namebuf + 1, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
--		if (write_in_full(cmd.in, namebuf, 42) < 0)
-+		if (write_in_full(cmd->in, namebuf, 42) < 0)
- 			goto error;
- 	}
+@@ -496,8 +499,13 @@ static int do_reachable_revlist(struct child_proce=
+ss *cmd,
  	namebuf[40] =3D '\n';
-@@ -496,17 +499,39 @@ static int has_unreachable(struct object_array *s=
-rc)
- 		if (is_our_ref(o))
+ 	for (i =3D 0; i < src->nr; i++) {
+ 		o =3D src->objects[i].item;
+-		if (is_our_ref(o))
++		if (is_our_ref(o)) {
++			if (reachable)
++				add_object_array(o, NULL, reachable);
  			continue;
++		}
++		if (reachable && o->type =3D=3D OBJ_COMMIT)
++			o->flags |=3D TMP_MARK;
  		memcpy(namebuf, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
--		if (write_in_full(cmd.in, namebuf, 41) < 0)
-+		if (write_in_full(cmd->in, namebuf, 41) < 0)
+ 		if (write_in_full(cmd->in, namebuf, 41) < 0)
  			goto error;
- 	}
--	close(cmd.in);
--	cmd.in =3D -1;
-+	close(cmd->in);
-+	cmd->in =3D -1;
-+	sigchain_pop(SIGPIPE);
-+
-+	return 0;
-+
-+error:
-+	sigchain_pop(SIGPIPE);
-+
-+	if (cmd->in >=3D 0)
-+		close(cmd->in);
-+	if (cmd->out >=3D 0)
-+		close(cmd->out);
-+	return -1;
-+}
-+
-+static int has_unreachable(struct object_array *src)
+@@ -518,13 +526,51 @@ error:
+ 	return -1;
+ }
+=20
++static int get_reachable_list(struct object_array *src,
++			      struct object_array *reachable)
 +{
 +	struct child_process cmd =3D CHILD_PROCESS_INIT;
-+	char buf[1];
 +	int i;
++	struct object *o;
++	char namebuf[42]; /* ^ + SHA-1 + LF */
 +
-+	if (do_reachable_revlist(&cmd, src) < 0)
-+		return 1;
++	if (do_reachable_revlist(&cmd, src, reachable) < 0)
++		return -1;
++
++	while ((i =3D read_in_full(cmd.out, namebuf, 41)) =3D=3D 41) {
++		struct object_id sha1;
++
++		if (namebuf[40] !=3D '\n' || get_oid_hex(namebuf, &sha1))
++			break;
++
++		o =3D lookup_object(sha1.hash);
++		if (o && o->type =3D=3D OBJ_COMMIT) {
++			o->flags &=3D ~TMP_MARK;
++		}
++	}
++	for (i =3D get_max_object_index(); 0 < i; i--) {
++		o =3D get_indexed_object(i - 1);
++		if (o && o->type =3D=3D OBJ_COMMIT &&
++		    (o->flags & TMP_MARK)) {
++			add_object_array(o, NULL, reachable);
++				o->flags &=3D ~TMP_MARK;
++		}
++	}
++	close(cmd.out);
++
++	if (finish_command(&cmd))
++		return -1;
++
++	return 0;
++}
++
+ static int has_unreachable(struct object_array *src)
+ {
+ 	struct child_process cmd =3D CHILD_PROCESS_INIT;
+ 	char buf[1];
+ 	int i;
+=20
+-	if (do_reachable_revlist(&cmd, src) < 0)
++	if (do_reachable_revlist(&cmd, src, NULL) < 0)
+ 		return 1;
 =20
  	/*
- 	 * The commits out of the rev-list are not ancestors of
- 	 * our ref.
- 	 */
--	i =3D read_in_full(cmd.out, namebuf, 1);
-+	i =3D read_in_full(cmd.out, buf, 1);
- 	if (i)
- 		goto error;
- 	close(cmd.out);
-@@ -520,16 +545,11 @@ static int has_unreachable(struct object_array *s=
-rc)
- 	if (finish_command(&cmd))
- 		goto error;
-=20
--	sigchain_pop(SIGPIPE);
--
- 	/* All the non-tip ones are ancestors of what we advertised */
- 	return 0;
-=20
- error:
- 	sigchain_pop(SIGPIPE);
--
--	if (cmd.in >=3D 0)
--		close(cmd.in);
- 	if (cmd.out >=3D 0)
- 		close(cmd.out);
- 	return 1;
 --=20
 2.8.2.524.g6ff3d78
