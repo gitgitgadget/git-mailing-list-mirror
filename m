@@ -1,111 +1,100 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] parse-options-cb.c: use string_list_append_nodup in
- OPT_STRING_LIST()
-Date: Sun, 12 Jun 2016 18:03:16 -0400
-Message-ID: <20160612220316.GB5428@sigill.intra.peff.net>
-References: <20160610115726.4805-1-pclouds@gmail.com>
+Subject: Re: Repacking a repository uses up all available disk space
+Date: Sun, 12 Jun 2016 18:13:09 -0400
+Message-ID: <20160612221309.GC5428@sigill.intra.peff.net>
+References: <20160612212514.GA4584@gmail.com>
+ <20160612213804.GA5428@sigill.intra.peff.net>
+ <20160612215436.GB4584@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 13 00:03:25 2016
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+X-From: git-owner@vger.kernel.org Mon Jun 13 00:13:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCDTY-0003uY-F6
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 00:03:24 +0200
+	id 1bCDdB-0001m5-8o
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 00:13:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933130AbcFLWDU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jun 2016 18:03:20 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53529 "HELO cloud.peff.net"
+	id S933311AbcFLWNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Jun 2016 18:13:13 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53533 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932426AbcFLWDT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jun 2016 18:03:19 -0400
-Received: (qmail 5941 invoked by uid 102); 12 Jun 2016 22:03:19 -0000
+	id S932891AbcFLWNM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jun 2016 18:13:12 -0400
+Received: (qmail 6358 invoked by uid 102); 12 Jun 2016 22:13:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 12 Jun 2016 18:03:19 -0400
-Received: (qmail 8624 invoked by uid 107); 12 Jun 2016 22:03:30 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 12 Jun 2016 18:13:12 -0400
+Received: (qmail 8664 invoked by uid 107); 12 Jun 2016 22:13:23 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 12 Jun 2016 18:03:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 12 Jun 2016 18:03:16 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 12 Jun 2016 18:13:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 12 Jun 2016 18:13:09 -0400
 Content-Disposition: inline
-In-Reply-To: <20160610115726.4805-1-pclouds@gmail.com>
+In-Reply-To: <20160612215436.GB4584@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297144>
 
-On Fri, Jun 10, 2016 at 06:57:26PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
+On Sun, Jun 12, 2016 at 05:54:36PM -0400, Konstantin Ryabitsev wrote:
 
-> If the given string list has strdup_strings set (*), the string will =
-be
-> duplicated again. Pointless and leak memory. Ignore that flag.
->=20
-> (*) only interpret-trailers.c does it at the moment
->=20
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  parse-options-cb.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/parse-options-cb.c b/parse-options-cb.c
-> index 239898d..8a1b6e6 100644
-> --- a/parse-options-cb.c
-> +++ b/parse-options-cb.c
-> @@ -144,7 +144,7 @@ int parse_opt_string_list(const struct option *op=
-t, const char *arg, int unset)
->  	if (!arg)
->  		return -1;
-> =20
-> -	string_list_append(v, xstrdup(arg));
-> +	string_list_append_nodup(v, xstrdup(arg));
+> >   git gc --prune=now
+> 
+> You are correct, this solves the problem, however I'm curious. The usual
+> maintenance for these repositories is a regular run of:
+> 
+> - git fsck --full
+> - git repack -Adl -b --pack-kept-objects
+> - git pack-refs --all
+> - git prune
+> 
+> The reason it's split into repack + prune instead of just gc is because
+> we use alternates to save on disk space and try not to prune repos that
+> are used as alternates by other repos in order to avoid potential
+> corruption.
+> 
+> Am I not doing something that needs to be doing in order to avoid the
+> same problem?
 
-Hmm. So I agree this is an improvement, in the sense that we are
-double-allocating when v->strdup_strings is set.  But I think there's a
-deeper issue here. Why are we always allocating in the first place?
+Your approach makes sense; we do the same thing at GitHub for the same
+reasons[1]. The main thing you are missing that gc will do is that it
+knows the prune-time it is going to feed to git-prune[2], and passes
+that along to repack. That's what enables the "don't bother ejecting
+these, because I'm about to delete them" optimization.
 
-If the memory we are getting in "arg" is not stable, then we _do_ need
-to make a copy of it. But in that case, we want "strdup_strings" to be
-set; without it any time we later run string_list_clear(), we leak the
-allocated memory, because the struct has no idea that it is the owner o=
-f
-the memory (and we do call string_list_clear() when we see "--no-foo").
+That option is not documented, because it was always assumed to be an
+internal thing to git-gc, but it is:
 
-If the memory _is_ stable, then we are fine to add a direct reference t=
-o
-it, and can lose the extra xstrdup() here. Only the caller knows for
-sure, so we should be respecting their value of strdup_strings (so lose
-the xstrdup, but keep calling string_list_append()).
+  git repack ... --unpack-unreachable=5.minutes.ago
 
-In practice, I suspect the memory _is_ stable, because we are generally
-parsing command-line arguments. But it does not hurt to stay on the
-conservative side, and always make a copy (in case we are parsing
-something besides the global argv array) . Apparently I am the original
-author of this code, in c8ba163 (parse-options: add OPT_STRING_LIST
-helper, 2011-06-09), but there's no mention of this point there, in the
-list archives, or in my brain.
-
-So if we are doing the conservative thing, then I think the resulting
-code should either look like:
-
-  if (!v->strdup_strings)
-	die("BUG: OPT_STRING_LIST should always use strdup_strings");
-  string_list_append(v, arg);
-
-or:
-
-  /* silently enable for convenience */
-  v->strdup_strings =3D 1;
-  string_list_append(v, arg);
-
-Of the two, I like the top one as it is less magical, but it would
-require adjusting the initialization of the string-list for most of the
-callers.
+or whatever.
 
 -Peff
+
+[1] We don't run the fsck at the front, though, because it's really
+    expensive.  I'm not sure it buys you much, either. The repack
+    will do a full walk of the graph, so it gets you a connectivity
+    check, as well as a full content check of the commits and trees. The
+    blobs are copied as-is from the old pack, but there is a checksum on
+    the pack data (to catch any bit flips by the disk storage). So the
+    only thing the fsck is getting you is that it fully reconstructs the
+    deltas for each blob and checks their sha1. That's more robust than
+    a checksum, but it's a lot more expensive.
+
+[2] It's unclear to me if you're passing any options to git-prune, but
+    you may want to pass "--expire" with a short grace period. Without
+    any options it prunes every unreachable thing, which can lead to
+    races if the repository is actively being used.
+
+    At GitHub we actually have a patch to `repack` that keeps all
+    objects, reachable or not, in the pack, and use it for all of our
+    automated maintenance. Since we don't drop objects at all, we can't
+    ever have such a race. Aside from some pathological cases, it wastes
+    much less space than you'd expect. We turn the flag off for special
+    cases (e.g., somebody has rewound history and wants to expunge a
+    sensitive object).
+
+    I'm happy to share the "keep everything" patch if you're interested.
