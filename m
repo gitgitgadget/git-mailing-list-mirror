@@ -1,58 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] lib-httpd.sh: print error.log on error
-Date: Mon, 13 Jun 2016 13:08:33 -0400
-Message-ID: <20160613170832.GA7283@sigill.intra.peff.net>
-References: <20160613115608.GA5652@sigill.intra.peff.net>
- <20160613123509.22412-1-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/27] nd/shallow-deepen updates
+Date: Mon, 13 Jun 2016 10:10:09 -0700
+Message-ID: <xmqqr3c1c8we.fsf@gitster.mtv.corp.google.com>
+References: <20160610122714.3341-1-pclouds@gmail.com>
+	<CAPig+cRfUjpku1Abf=GxrbFeS4txwr=yZsJ7EKo-aWmxYog6Xw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 13 19:08:44 2016
+Content-Type: text/plain
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Jun 13 19:10:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCVLv-0006vb-O4
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 19:08:44 +0200
+	id 1bCVNT-0008EZ-AY
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 19:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933652AbcFMRIh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jun 2016 13:08:37 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54121 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933027AbcFMRIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2016 13:08:36 -0400
-Received: (qmail 30979 invoked by uid 102); 13 Jun 2016 17:08:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Jun 2016 13:08:35 -0400
-Received: (qmail 18691 invoked by uid 107); 13 Jun 2016 17:08:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Jun 2016 13:08:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Jun 2016 13:08:33 -0400
-Content-Disposition: inline
-In-Reply-To: <20160613123509.22412-1-pclouds@gmail.com>
+	id S933657AbcFMRKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2016 13:10:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58538 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933027AbcFMRKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2016 13:10:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4C28422D1D;
+	Mon, 13 Jun 2016 13:10:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GD2oPiH9Ly6qe4MvZ/KPnhMUNSs=; b=gX7fnx
+	Uh069Wem66fCaVty2vgRtIznNu6XOIvT8IhXOBsMkn0mF59d/Ev4wLPWMLdWySyU
+	pXfm9BK+r1VGRoU2JlGHk1EXG3V6wNls78mE5LPmzHhjnRiDHWeyDwMbCEjB3A7y
+	4rK5sIC0FatL0NSLoCDcvHLXv2hTKrBW7uum4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wVRR9JFmmOEs4DnYQvBdM20LwwdKmlSW
+	P8tXMDfvpIIaYow13QQ70CaJcXp8pmcn9QMwOLV04N+C+k2zsI2ga6i9DeCMMLyA
+	P0CeX7RTs2HVKjbTokjp9tm4EmC7lp48WPFqoe6LDezUUOnA+21oATJ9yj5hgxbo
+	kWl/yau1c1c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 42F7922D1C;
+	Mon, 13 Jun 2016 13:10:11 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CE79B22D1A;
+	Mon, 13 Jun 2016 13:10:10 -0400 (EDT)
+In-Reply-To: <CAPig+cRfUjpku1Abf=GxrbFeS4txwr=yZsJ7EKo-aWmxYog6Xw@mail.gmail.com>
+	(Eric Sunshine's message of "Fri, 10 Jun 2016 19:42:12 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AFA6041C-3189-11E6-A4BE-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297235>
 
-On Mon, Jun 13, 2016 at 07:35:09PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Failure to bring up httpd for testing is not considered an error, so =
-the
-> trash directory, which contains this error.log file, is removed and w=
-e
-> don't know what made httpd fail to start. Improve the situation a bit=
-,
-> print error.log but only in verbose mode.
->=20
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+> I agree with Junio that moving the sigchain_pop() into the error
+> handling code-path, if possible, would be a nice improvement.
 
-Looks good to me. Thanks.
-
--Peff
+Yeah, "if possible" is really what I was not sure about---is it safe
+to do the _push() thing before start_command(), which presumably
+would affect both the main and the forked processes?
