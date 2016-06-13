@@ -1,106 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 02/40] builtin/apply: make apply_patch() return -1 instead of die()ing
-Date: Mon, 13 Jun 2016 15:55:43 -0700
-Message-ID: <xmqq37ogbswg.fsf@gitster.mtv.corp.google.com>
-References: <20160613160942.1806-1-chriscool@tuxfamily.org>
-	<20160613160942.1806-3-chriscool@tuxfamily.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] fetch: document that pruning happens before fetching
+Date: Mon, 13 Jun 2016 19:58:51 -0400
+Message-ID: <20160613235850.GA8009@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 14 00:56:01 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Tom Miller <jackerran@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 14 01:58:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCalx-00074h-Qv
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 00:55:58 +0200
+	id 1bCbkx-0005dP-5U
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 01:58:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753705AbcFMWzu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2016 18:55:50 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63031 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752006AbcFMWzr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2016 18:55:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 74BCA24E88;
-	Mon, 13 Jun 2016 18:55:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pP3QlFbjMNILnW17oVusJnWWmZM=; b=rbXKoW
-	cuoC/fu7eYVEAnY932+cvr0aZExzK3vHOSNsoPi8nXHIfH3oD/xvrq2DuOt6lIHF
-	+sy4gAStNTx/75rXFTFqUkA7tkYATnO7x4YJ71WVSnfOCBSSBUczQ/l9ljIypPQn
-	Eao6sjIN0inp/bgmKsAP5IgYjarDbDgjQ2kyQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GzsIao8KBG5YUIZwK74otHQF62bbEL5/
-	iqQdDiBJm9OyfJHV0dik3/BvgFlde/4gSDLP8I6InhT+hqZTuO8xnHCu7c+71Vml
-	EbHulgJhhBn1FVZ+shc7nxekGqcYDIwkNNBN82rNJ9uKxXp4XCutqP9LIFXeDupw
-	DoW/e4IkWXg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6C0A724E87;
-	Mon, 13 Jun 2016 18:55:45 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E3D6224E85;
-	Mon, 13 Jun 2016 18:55:44 -0400 (EDT)
-In-Reply-To: <20160613160942.1806-3-chriscool@tuxfamily.org> (Christian
-	Couder's message of "Mon, 13 Jun 2016 18:09:04 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F62B17D0-31B9-11E6-9F37-89D312518317-77302942!pb-smtp1.pobox.com
+	id S1422773AbcFMX6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2016 19:58:54 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54310 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1422736AbcFMX6y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2016 19:58:54 -0400
+Received: (qmail 24653 invoked by uid 102); 13 Jun 2016 23:58:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Jun 2016 19:58:53 -0400
+Received: (qmail 22970 invoked by uid 107); 13 Jun 2016 23:59:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Jun 2016 19:59:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Jun 2016 19:58:51 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297259>
 
-Christian Couder <christian.couder@gmail.com> writes:
+This was changed in 10a6cc8 (fetch --prune: Run prune before
+fetching, 2014-01-02), but it seems that nobody in that
+discussion realized we were advertising the "after"
+explicitly.
 
-> +/*
-> + * Try to apply a patch.
-> + *
-> + * Returns:
-> + *  -1 if an error happened
-> + *   0 if the patch applied
-> + *   1 if the patch did not apply
-> + */
->  static int apply_patch(struct apply_state *state,
->  		       int fd,
->  		       const char *filename,
-> @@ -4413,6 +4421,7 @@ static int apply_patch(struct apply_state *state,
->  	struct strbuf buf = STRBUF_INIT; /* owns the patch text */
->  	struct patch *list = NULL, **listp = &list;
->  	int skipped_patch = 0;
-> +	int res = 0;
->  
->  	state->patch_input_file = filename;
->  	read_patch_file(&buf, fd);
-> @@ -4445,8 +4454,10 @@ static int apply_patch(struct apply_state *state,
->  		offset += nr;
->  	}
->  
-> -	if (!list && !skipped_patch)
-> -		die(_("unrecognized input"));
-> +	if (!list && !skipped_patch) {
-> +		res = error(_("unrecognized input"));
-> +		goto end;
-> +	}
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I include myself in that "nobody" of course. :)
 
-Before this patch, the program said "fatal: $message" and exited
-with status = 128.  All these changes in this step modifies the
-external behaviour and make it say "error: $message" and exit with
-status = 1 (at least the caller in apply_all_patches() does so).
+ Documentation/fetch-options.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Will that be an issue for the calling scripts?
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 036edfb..b05a834 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -52,7 +52,7 @@ ifndef::git-pull[]
+ 
+ -p::
+ --prune::
+-	After fetching, remove any remote-tracking references that no
++	Before fetching, remove any remote-tracking references that no
+ 	longer exist on the remote.  Tags are not subject to pruning
+ 	if they are fetched only because of the default tag
+ 	auto-following or due to a --tags option.  However, if tags
+-- 
+2.9.0.150.g8bd4cf6
