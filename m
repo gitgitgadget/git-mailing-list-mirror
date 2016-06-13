@@ -1,157 +1,283 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4] Documentation: triangular workflow
-Date: Mon, 13 Jun 2016 11:35:27 -0700
-Message-ID: <xmqqa8ipc4y8.fsf@gitster.mtv.corp.google.com>
-References: <1465288693-6295-1-git-send-email-jordan.de-gea@grenoble-inp.org>
-	<1465475708-1912-1-git-send-email-jordan.de-gea@grenoble-inp.org>
-	<E41AB752AE614E189BC5BE289A8AEB2A@PhilipOakley>
-	<xmqqinxhf0sx.fsf@gitster.mtv.corp.google.com>
-	<5B90624A6DC7442C94B933A07F0CD08D@PhilipOakley>
+Subject: A note from the maintainer
+Date: Mon, 13 Jun 2016 12:45:21 -0700
+Message-ID: <xmqqy468c1pq.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: "Jordan DE GEA" <jordan.de-gea@grenoble-inp.org>,
-	<mhagger@alum.mit.edu>, "Git List" <git@vger.kernel.org>,
-	"Erwan Mathoniere" <erwan.mathoniere@grenoble-inp.org>,
-	"Samuel Groot" <samuel.groot@grenoble-inp.org>,
-	"Tom Russello" <tom.russello@grenoble-inp.org>,
-	"Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
-	"Jeff King" <peff@peff.net>, <artagnon@gmail.com>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Jun 13 20:35:38 2016
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 13 21:45:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCWi0-0001BQ-UJ
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 20:35:37 +0200
+	id 1bCXno-0001n2-6t
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 21:45:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752047AbcFMSfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2016 14:35:33 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58806 "EHLO
+	id S1753556AbcFMTpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2016 15:45:33 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64775 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751578AbcFMSfb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2016 14:35:31 -0400
+	with ESMTP id S1423227AbcFMTp0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2016 15:45:26 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 22A6B24B20;
-	Mon, 13 Jun 2016 14:35:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5vumnQpJqslxsLQ78gkGYPqOEgs=; b=loLjdk
-	vXpeWzdJhel9zP+jjLcD/SRQ1937Xr6IyjCrJuTPLZBbzUfxT0kPNcmgHrvP9muj
-	HU/9WyvT19i+OQR/G93VEHxXe/Qo1iZAohmWS8S/vsN1w28AM0WARuV2a77z/ZCR
-	xxCGsZcwxZCeq2XwmjqS+HBY+D1DlMMg6axfw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MYUcqj6NPTT+CvHBgNRYm2uzs3URS4jp
-	ZaIzYAmAJkUXtDxjwNVqUZIA6bBMpAx8k45L48ocGGUpI1Mr+zp4wkYa6gfNmCEL
-	zp7UUCr2Ee4IjxtItgpLSDp5MOxYzXHFfxJ7JpmhzjQW8PKEmyIZyREYsxIlplEQ
-	y8KhGISMors=
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 36164254CC;
+	Mon, 13 Jun 2016 15:45:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=H
+	URN9SFqQLlAZl23a3Ohz2quUl4=; b=O4VZopzn7KpJ1Rl1O7iNlg/0RAeTs9Uoq
+	vawbYvft2BzzYIjAtGyj8L9Owg4TLcbooC9WJXnyCk5wePxLgdoBA2fSvknaHdas
+	QoKfHuq+XuZgroy9/6/oLC055OWxk1AnKjRLZF4lEgj4SsmJLnprojOozmvWskfR
+	WBWqA4QF0s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=vBP
+	yHTMzbcDHSAaIjAS/cFzSgoYXleypd/K1n0bmBeZce/VoUkgeuyaxooN1M7aK+uZ
+	RxLL08G7IAVgJwZpO5alHuiRXr7pyj+shf6s59jUafj509Z2VZMeyGVfzS3lXT9k
+	c2DajeeXOj7fQwNECOQ3WjVZRwouX9tq+qr0q87Q=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A5F024B1F;
-	Mon, 13 Jun 2016 14:35:30 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E20E254CB;
+	Mon, 13 Jun 2016 15:45:25 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 83A8824B1E;
-	Mon, 13 Jun 2016 14:35:29 -0400 (EDT)
-In-Reply-To: <5B90624A6DC7442C94B933A07F0CD08D@PhilipOakley> (Philip Oakley's
-	message of "Sat, 11 Jun 2016 20:25:58 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 95CEE254CA;
+	Mon, 13 Jun 2016 15:45:24 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9AAAB5F6-3195-11E6-ADA2-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 5F1671D8-319F-11E6-B688-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297240>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Welcome to the Git development community.
 
-> From: "Junio C Hamano" <gitster@pobox.com>
->> I do not think I agree.
->>
->> If you apriori know that you do want to hack on a project's code, then
->> forking at GitHub first and then cloning the copy would be OK.
->
-> You've clipped my other point:
->
-> -        One issue may be the different expectations of how the fork is
-> -        created (it's only one click on the GitHub..)
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
 
-Not really.  I said the same thing paraphrased:
+* Mailing list and the community
 
-    And at that point, you would create a publishing place, push into
-    it, and tell others "Hey I did this interesting thing!".  That
-    "create a publishing place" step could be just a one click at GitHub.
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
+I am not subscribed".
 
-Anyway, let's step back a bit and agree that your local clone needs
-to be told 4 pieces of information to help you in a triangular
-workflow.  They are:
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
 
- * The URL of the "upstream";
- * The URL of the "publish" (aka "mine");
- * Your push should go to "publish" by default; and
- * Your pull should come from "upstream" by default.
+If you sent a patch and you did not hear any response from anybody for
+several days, it could be that your patch was totally uninteresting,
+but it also is possible that it was simply lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise may be a sign that those who can evaluate
+your patch don't have enough mental/time bandwidth to process them
+right at the moment, and it often helps to wait until the list traffic
+becomes calmer before sending such a reminder.
 
-Are we still on the same page, or have we already diverged?
+The list archive is available at a few public sites:
 
-If you start from a clone of "upstream", then the local clone
-already knows two out of these four, namely, "The URL of the
-'upstream' aka origin" and "Your pull should come from upstream by
-default".  In order to go triangular, you still need to tell the
-other two to your local clone, namely "There is another remote
-called 'publish'" and "Your push should go to 'publish' not to
-'origin'".
+        http://news.gmane.org/gmane.comp.version-control.git/
+        http://marc.info/?l=git
+        http://www.spinics.net/lists/git/
 
-When you start by forking at GitHub and then cloning that fork,
-would it make it easier to go triangular?  I do not think so.  The
-local clone gives you (different) two out of these four, namely "The
-URL of the 'publish' aka origin, which is your own fork" and "Your
-push should go to 'publish'".  You still need to tell the other two,
-"The URL of the 'upstream'" and "Your pull should come from
-'upstream', not from 'origin'" to your local repository.
+For those who prefer to read it over NNTP:
 
-So I really do not see a point in arguing that "forking at GitHub is
-easy with one click" favors "your local clone should start by
-cloning your own fork".  Between starting from a clone of upstream
-and starting from a clone of your own fork, it is the same amount of
-work to go triangular even for people who fork before having any
-clone locally, like you.
+        nntp://news.gmane.org/gmane.comp.version-control.git
 
-And I do not have to repeat myself that it is far more helpful to
-give a recipe to go triangular starting from a clone of upstream for
-people who first clone three similar projects to evaluate them,
-discard two that do not suit their needs, and fork the best one, by
-adding that fork as "publish" aka "mine", than giving a recipe to
-start from a clone of one's own fork.
+When you point at a message in a mailing list archive, using
+gmane is often the easiest to follow by readers, like this:
 
-Having said that, there are indeed two interesting numbers we may
-want to ask GitHub folks to help coming up with.  Take any popular
-project with many public forks at GitHub, say rails with 13k forks.
+        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=217
 
- * How many "clone" from the upstream (i.e. rails/rails in this
-   example) compared to 13k forks it has were made by the users?
+as it also allows people who subscribe to the mailing list as gmane
+newsgroup to "jump to" the article.
 
-   Many of them might be just following along (e.g. they want to
-   build the tip of the tree that is ahead of any tagged released
-   version), but there may be some among these local repositories
-   cloned from upstream without forking that record their own
-   commits.  These are the people who will benefit a version of the
-   documentation under discussion if it describes how to start from
-   a clone of upstream, then add your own fork as the publishing
-   repository so that the user can use a triangular workflow.  I
-   somehow suspect that there are a lot more than 13k (i.e. the
-   number of public forks) of these people, but I do not think
-   https://github.com/rails/rails page gives us the number.
+Some members of the development community can sometimes be found on
+the #git and #git-devel IRC channels on Freenode.  Their logs are
+available at:
+
+        http://colabti.org/irclogger/irclogger_log/git
+        http://colabti.org/irclogger/irclogger_log/git-devel
+
+There is a volunteer-run newsletter to serve our community ("Git Rev
+News" http://git.github.io/rev_news/rev_news.html).
+
+Git is a member project of software freedom conservancy, a non-profit
+organization (https://sfconservancy.org/).  To reach a committee of
+liaisons to the conservancy, contact them at <git@sfconservancy.org>.
 
 
- * What percentage of these 13k public forks are "empty forks",
-   i.e. forked from the main project but has never been pushed into?
+* Reporting bugs
 
-   It matters if the answer to this question is a non-trivial
-   percentage.  It indicates that the owners of these forks did the
-   "fork first and then clone from there", and had to do an extra
-   work of adding the real upstream as another remote and set up to
-   pull from there, if they wanted to just keep up to date; they
-   would have been better off if they started by cloning the
-   upstream first.
+When you think git does not behave as you expect, please do not stop
+your bug report with just "git does not work".  "I used git in this
+way, but it did not work" is not much better, neither is "I used git
+in this way, and X happend, which is broken".  It often is that git is
+correct to cause X happen in such a case, and it is your expectation
+that is broken. People would not know what other result Y you expected
+to see instead of X, if you left it unsaid.
+
+Please remember to always state
+
+ - what you wanted to achieve;
+
+ - what you did (the version of git and the command sequence to reproduce
+   the behavior);
+
+ - what you saw happen (X above);
+
+ - what you expected to see (Y above); and
+
+ - how the last two are different.
+
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.
+
+If you think you found a security-sensitive issue and want to disclose
+it to us without announcing it to wider public, please contact us at
+our security mailing list <git-security@googlegroups.com>.  This is
+a closed list that is limited to people who need to know early about
+vulnerabilities, including:
+
+  - people triaging and fixing reported vulnerabilities
+  - people operating major git hosting sites with many users
+  - people packaging and distributing git to large numbers of people
+
+where these issues are discussed without risk of the information
+leaking out before we're ready to make public announcements.
+
+
+* Repositories and documentation.
+
+My public git.git repositories are at:
+
+  git://git.kernel.org/pub/scm/git/git.git/
+  https://kernel.googlesource.com/pub/scm/git/git
+  git://repo.or.cz/alt-git.git/
+  https://github.com/git/git/
+  git://git.sourceforge.jp/gitroot/git-core/git.git/
+  git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
+
+A few web interfaces are found at:
+
+  http://git.kernel.org/cgit/git/git.git
+  https://kernel.googlesource.com/pub/scm/git/git
+  http://repo.or.cz/w/alt-git.git
+
+Preformatted documentation from the tip of the "master" branch can be
+found in:
+
+  git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
+  git://repo.or.cz/git-{htmldocs,manpages}.git/
+  https://github.com/gitster/git-{htmldocs,manpages}.git/
+
+and rendered in the browser if you visit this page:
+
+  https://git.github.io/htmldocs/git.html
+
+Also GitHub shows the manual pages formatted in HTML (with a
+formatting backend different from the one that is used to create the
+above) at:
+
+  http://git-scm.com/docs/git
+
+* How various branches are used.
+
+There are four branches in git.git repository that track the source tree
+of git: "master", "maint", "next", and "pu".
+
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a
+"feature release" is cut from the tip of this branch.  They used to be
+named with three dotted decimal digits (e.g. "1.8.5"), but recently we
+switched the versioning scheme and "feature releases" are named with
+three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
+
+The last such release was 2.9 done on June 13th, 2016. You can expect
+that the tip of the "master" branch is always more stable than any of
+the released versions.
+
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious and safe fixes after a feature
+release are applied to this branch and maintenance releases are cut
+from it.  Usually the fixes are merged to the "master" branch first,
+several days before merged to the "maint" branch, to reduce the chance
+of last-minute issues.  The maintenance releases used to be named with
+four dotted decimal, named after the feature release they are updates
+to (e.g. "1.8.5.1" was the first maintenance release for "1.8.5"
+feature release).  These days, maintenance releases are named by
+incrementing the last digit of three-dotted decimal name (e.g. "2.8.3"
+is the third maintenance release for the "2.8" series).
+
+New features never go to the 'maint' branch.  This branch is also
+merged into "master" to propagate the fixes forward as needed.
+
+A new development does not usually happen on "master". When you send a
+series of patches, after review on the mailing list, a separate topic
+branch is forked from the tip of "master" and your patches are queued
+there, and kept out of "master" while people test it out. The quality of
+topic branches are judged primarily by the mailing list discussions.
+
+Topic branches that are in good shape are merged to the "next" branch. In
+general, the "next" branch always contains the tip of "master".  It might
+not be quite rock-solid, but is expected to work more or less without major
+breakage. The "next" branch is where new and exciting things take place. A
+topic that is in "next" is expected to be polished to perfection before it
+is merged to "master".  Please help this process by building & using the
+"next" branch for your daily work, and reporting any new bugs you find to
+the mailing list, before the breakage is merged down to the "master".
+
+The "pu" (proposed updates) branch bundles all the remaining topic
+branches the maintainer happens to have seen.  There is no guarantee that
+the maintainer has enough bandwidth to pick up any and all topics that
+are remotely promising from the list traffic, so please do not read
+too much into a topic being on (or not on) the "pu" branch.  This
+branch is mainly to remind the maintainer that the topics in them may
+turn out to be interesting when they are polished, nothing more.  The
+topics on this branch aren't usually complete, well tested, or well
+documented and they often need further work.  When a topic that was
+in "pu" proves to be in a testable shape, it is merged to "next".
+
+You can run "git log --first-parent master..pu" to see what topics are
+currently in flight.  Sometimes, an idea that looked promising turns out
+to be not so good and the topic can be dropped from "pu" in such a case.
+
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
+
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" was reverted from "next" because
+fatal flaws were found in it after it was merged to "next".
+
+
+* Other people's trees.
+
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
+
+Although the following are included in git.git repository, they have their
+own authoritative repository and maintainers:
+
+ - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
+
+        git://repo.or.cz/git-gui.git
+
+ - gitk-git/ comes from Paul Mackerras's gitk project:
+
+        git://ozlabs.org/~paulus/gitk
+
+ - po/ comes from the localization coordinator, Jiang Xin:
+
+	https://github.com/git-l10n/git-po/
+
+When sending proposed updates and fixes to these parts of the system,
+please base your patches on these trees, not git.git (the former two
+even have different directory structures).
