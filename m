@@ -1,70 +1,117 @@
-From: Stefan Tauner <stefan.tauner@gmx.at>
-Subject: Un-paged commit messages in git filter-branch's commit-filter?
-Date: Mon, 13 Jun 2016 08:28:18 +0200
-Message-ID: <0McmFl-1aux6M2oV7-00Hv9A@mail.gmx.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH] Document the 'svn propset' command.
+Date: Mon, 13 Jun 2016 12:29:08 +0530
+Message-ID: <CAFZEwPM5qnzw7RCUwOkJFo+U982kVGU8_3GUTXvHAypKtvEgTQ@mail.gmail.com>
+References: <20160612191550.GA14160@elvis.mu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 13 08:28:54 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Eric Wong <e@80x24.org>, Joseph Pecoraro <pecoraro@apple.com>,
+	David Fraser <davidf@sjsoft.com>
+To: Alfred Perlstein <alfred@freebsd.org>
+X-From: git-owner@vger.kernel.org Mon Jun 13 08:59:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCLMh-0005Fc-Ez
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 08:28:51 +0200
+	id 1bCLq6-0004VJ-UN
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 08:59:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964959AbcFMG2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2016 02:28:49 -0400
-Received: from mout.gmx.net ([212.227.15.15]:56210 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964840AbcFMG2s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2016 02:28:48 -0400
-Received: from misery ([80.109.83.31]) by mail.gmx.com (mrgmx001) with ESMTPSA
- (Nemesis) id 0Lb5nF-1bsb4o2J5t-00kgLk for <git@vger.kernel.org>; Mon, 13 Jun
- 2016 08:28:39 +0200
-X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
-X-Provags-ID: V03:K0:53T7cH2kB8LDiDVprkLT6Ous+TJigvmF88owMCtW4pQcS1UNTqa
- heA678HehF2kIpvcCrr++nyXOEX3N0qnLPPGinL3yy94Ixxdx+elZ4p4sgI3D3lVQiHkdgJ
- dztVHQxRgFuwMVWdnfYydmqjKHEtGQdxU2wwIzGn6lcxk1Pek8/zmDPkh1xoOeTX/12LO9W
- QWlfPgpltuBCbWzAIgdqQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rb6Rl+YLr9A=:ilf2+7ze4Ha68uHE4197g7
- oTLGzvX8y/P4fHrftyH+no62o2hFoQuG/majCrmpCKBjSinFsDxGeyuowDzkiKuFlXrBEJCVd
- Yf0i9Gi9CNJOmsCC8henjCsLr4pC6KtSj1VJznjbeN7CKOtHrmI8MCt8D8aJbGz+osMWCLzOq
- NQ1T1uMlem9c0Y1KBsLcIu9PVfWxVz/D4uGkp2cefPQEOZeJfq/GiOZp1jYTaLahSAQ9EoNm7
- NlOAhqaz1HVAcJrYIKV8DD3WMzgawXMwV0TXA2a1hiL54POBvLUSHU2uDzw+v5ndG0eZoETyi
- 786TrjMzTxcKoICJgxP6xpDCCXClzL5NU5ZLVXPQrlZ+dRCVN8p/WgCacUEizEYaCDbZTNB0T
- 86YTbr3XO0EFZ2e2IbVMj2r4AlvzvjukG2naljvyIVREb8Jjtju3oqSmwUUCgBydL38Ys402h
- cnGwCxBPaJ36ZAzXpgdFOBw4gyQdN6xwkFDqDmRTvIbQNogzVPQw3Kz8EwRjSl4DuV29zAzWI
- yipBXBghglBOIJ/lE0AXOhpuoeB7E1HtrMjRZ/XaqR3H1G54o1zkF8XIVOROLhuUp1i1CDjiN
- IGV0B6c54RlY3+4CogAHnfV9QE+JZ5A0bWVB4g6bbgcrq+MHmqJAw28CSGn8sHAZ2mHEMclvM
- qXCbfj0XNmG/s18a2arKHGJFlB9MJdu3sqN3PqgaZQdhqBMjEukWZdN5cBWmbDWX2c4BV+9Gv
- jgEvVf0NyfnA7yMLvew7tqsl6OkQ+U/LhuQRl8bHxOtPGQMnzUN6+tEhXlePaEmrCOxlbOuU 
+	id S964876AbcFMG7L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2016 02:59:11 -0400
+Received: from mail-yw0-f171.google.com ([209.85.161.171]:36825 "EHLO
+	mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964837AbcFMG7K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2016 02:59:10 -0400
+Received: by mail-yw0-f171.google.com with SMTP id v137so16014281ywa.3
+        for <git@vger.kernel.org>; Sun, 12 Jun 2016 23:59:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=PWuiu0rIikBQCReYazFtJ9iGOkqLrCO38ACCV8/iVpI=;
+        b=sw3AraCjBUeCzqrzp3lYRXYJxTpZk1Rizmbnd99T6OYpWN5b6ZvQhYbG7gOqxAtyF3
+         mnbB8pQmwJhX0HjCxEBefA9p47G0o+/uInFFc5tJ2z+rTn+tdfW2WGNqPDgO2Ci1d4hl
+         yd4uBAzMGBFl9WXAjlyRlc6uPfe6SNGxPTAcujXjvOU4fDCl+zdCosLNU8AgHSyPz7CU
+         MhshRQpPOEH8/BCnmfQEn0FGH1BJps50iRjwR9+0IK/tzbKevMbSEFfuwdpa7K9duYJu
+         8nLsB/DlBtHs5k5dBd5ecyTM2qVPHEju/33nuNcZK2KOyr4JOuQWVAg1LdLZXaySU8KZ
+         7kWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=PWuiu0rIikBQCReYazFtJ9iGOkqLrCO38ACCV8/iVpI=;
+        b=asBfbt+3e2EiHyGx2KMI96sKaH66cQAWnxUkTHACJz7Ll9+Evi2zUDBfDfzuNBjOwe
+         Xz7ezOyuSt6HZHVYXlUZGg4fWGuh9BdzrPHOrQziY+LrG45b/Um3zTgoD+sD79+W1qDa
+         JTIdteOhYfZNokM9vEJD2xq337QtcA2wmtImBT4sYStZoMYQFuRMNpCWEfRhbpm/Qy/v
+         b7kXVh9jRUlbc0XIwFvzW/UNjuaihgByZoyqeQJNV1ah0CLm1ULn3Nw0lYHJGo7j7a4O
+         q1NO07yJzC/jvqmB5itvdATcd/nKHxKmp9lOrngWrwcswDB/sxnq0K1p7CpgnEbvL2Ia
+         N+vA==
+X-Gm-Message-State: ALyK8tKe1rG/4Oj0SHSCJkgiAdVthKhIZ1MP91ZzqpXlliWKKmFh+qtzNZCqmvmlV5fMkDx3Oim+ekMde7srVw==
+X-Received: by 10.13.224.6 with SMTP id j6mr7632678ywe.72.1465801149235; Sun,
+ 12 Jun 2016 23:59:09 -0700 (PDT)
+Received: by 10.129.124.132 with HTTP; Sun, 12 Jun 2016 23:59:08 -0700 (PDT)
+In-Reply-To: <20160612191550.GA14160@elvis.mu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297161>
 
-Hello,
+Hey Alfred,
 
-I am trying to do a major cleanup of the repository in one of my
-projects (and switch from git-svn to native git). I have developed a
-commit-filter script over the last months that massages partially
-dreadful commit messages into something acceptable. While I am not 100%
-sure I think that upgrading git has broken it partially. AFAICT since
-the update the commit-filter does not get the original message anymore
-but at least the subject/first paragraph is run through a pager or
-something similar:
-The first line is broken into multiple lines (i.e. some line breaks are
-inserted about every 72 characters where none have been before).
+On Mon, Jun 13, 2016 at 12:45 AM, Alfred Perlstein <alfred@freebsd.org> wrote:
+> Junio + all,
+>
+> A week ago I was requested to provide documentation for the
+> 'svn propset' command.  I have attached a diff off of the
+> 'maint' branch for this, however it seems to apply cleanly
+> to 'master' as well.
+>
+> Thank you for your patience.
+>
+> This is also available on my github here:
+> https://github.com/splbio/git/tree/document_propset
 
-I have tried to run "git --no-pager filter-branch ..." to no avail. I
-have briefly looked at the source but could not find any proofs...
-Any hints would be appreciated. This is how I run my script:
+I am not particularly sure whether the above could form a good commit
+message. I think you wanted to include this as a comment. git-am picks
+up these patches. The title commit is taken from the subject stripping
+the '[PATCH]'. Then the body before '---' is taken as the rest of the
+commit message. Then the diff is applied. To include comments add them
+after ---. Also please have a look at Documentation/SubmittingPatches.
+Also missing signoff. For the patch to actually be accept you need to
+follow those instructions. Thanks for contributing.
 
-tmpvar="$(</home/.....sh)" ; git --no-pager filter-branch -f --commit-filter "$tmpvar" --tag-name-filter cat -- HEAD
+> ---
+>  Documentation/git-svn.txt | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+>
+> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+> index fb23a98..e104824 100644
+> --- a/Documentation/git-svn.txt
+> +++ b/Documentation/git-svn.txt
+> @@ -459,6 +459,20 @@ Any other arguments are passed directly to 'git log'
+>         Gets the Subversion property given as the first argument, for a
+>         file.  A specific revision can be specified with -r/--revision.
+>
+> +'propset'::
+> +       Sets the Subversion property given as the first argument, to the
+> +       value given as the second argument for the file given as the
+> +       third argument.
+> ++
+> +Example:
+> ++
+> +------------------------------------------------------------------------
+> +git svn propset svn:keywords "FreeBSD=%H" devel/py-tipper/Makefile
+> +------------------------------------------------------------------------
+> ++
+> +This will set the property 'svn:keywords' to 'FreeBSD=%H' for the file
+> +'devel/py-tipper/Makefile'.
+> +
+>  'show-externals'::
+>         Shows the Subversion externals.  Use -r/--revision to specify a
+>         specific revision.
 
--- 
-Kind regards, Stefan Tauner
+Regards,
+Pranit Bauva
