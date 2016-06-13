@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v7 14/40] builtin/apply: make parse_traditional_patch() return -1 on error
-Date: Mon, 13 Jun 2016 18:09:16 +0200
-Message-ID: <20160613160942.1806-15-chriscool@tuxfamily.org>
+Subject: [PATCH v7 19/40] builtin/apply: make remove_file() return -1 on error
+Date: Mon, 13 Jun 2016 18:09:21 +0200
+Message-ID: <20160613160942.1806-20-chriscool@tuxfamily.org>
 References: <20160613160942.1806-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -15,51 +15,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 13 18:11:56 2016
+X-From: git-owner@vger.kernel.org Mon Jun 13 18:11:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCUSw-0004no-Vt
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 18:11:55 +0200
+	id 1bCUSq-0004h1-7C
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 18:11:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1425006AbcFMQLs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2016 12:11:48 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35889 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1424850AbcFMQKR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2016 12:10:17 -0400
-Received: by mail-wm0-f67.google.com with SMTP id m124so15998361wme.3
-        for <git@vger.kernel.org>; Mon, 13 Jun 2016 09:10:16 -0700 (PDT)
+	id S1425002AbcFMQLg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2016 12:11:36 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35954 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1424871AbcFMQKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2016 12:10:24 -0400
+Received: by mail-wm0-f65.google.com with SMTP id m124so15999047wme.3
+        for <git@vger.kernel.org>; Mon, 13 Jun 2016 09:10:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wR6+Cnwgxj0g59AdBs4OhBTGRnxJzHZTXAG/A0WC77I=;
-        b=LNCUUt8ttujG4H6tgUONZqYpfqerQyCJAMcxOFf7HkbFeL3yNez3+fnjkzY9kiEY39
-         f8X1IQO5ctBTumX9Scb/0r3NdrLX0r3oQjD8n0ICcDnlX2+FPi0U6YejVR1jnE/FP3Rv
-         nZwhRJDwpQZwBik/Nb4xLWMrDlJay98meCff8Xx6cDAHhgHksHAWbwvTySY6VIHE688v
-         A06wjwg5sLcgSuyAtz0WzPgUwiHwPCNjs2biLU6UecTuvEO5/b8Ihdio5sHVvMRslN0C
-         3YDYqOHLD9y9ctmemYQE4YYbOjC3DYwaa8gn7IsumcQ2llazL8yOLK1WArH/+hfDu/UM
-         ODkg==
+        bh=J/i6hD7ntnF+zft2wFkj8XpDaYlVuFTdVHisTYMy4Rw=;
+        b=KlIt25zwCVi/VFQ3s9QuXeiSkjNQgEmfhfN4LBigKj9fOBgvwZZsfYd0b8EAZVIqs7
+         /SZCQ5ZDJffDAvQO8lL0KRfpJeMRuOJBxpsv38CaULiiZlWenv0WmIOtkRxNuJz3II9W
+         bmiOlwUEWzvkQggmxr2D0LXnK0VtTSg/KLCujqyFJoHpHdgeez2gufheYZDnqWwdzykO
+         Py1R2lNshv3vZ6Im8VQtyqsXRFnx+SQQFABDID+C4stvl4BomPm2xBv4xRbJU/5Jdenv
+         CmgVcjbNlZVVkUYjAHyEFHuvzVMEAEcUc5PwClG5CG9/no5T2gc+RbInQxOzvGce0Xt8
+         Jf5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=wR6+Cnwgxj0g59AdBs4OhBTGRnxJzHZTXAG/A0WC77I=;
-        b=aFADHEbxdl7LeaG+y12gIGfLIuzS9pda2r4wB66Tdfudm0P8AR2kIS1NedMR9hkgJW
-         kwzsp8iJ9wkyy1V6UYLi+/rDQCQgPCKuAuO05j2JmGmu+ep+y4SumVni0epBkc6cVNMf
-         NRAdgzaaRIz0F2luKzXpT+GqDFaEVbspKDLy1LpYlDuFYdjilecrK5Byq7vB5VD+rg6r
-         Wofefsc/enm+msRMmJDPceqCQyHxjgqLl+VCj3Ne0fUL3qPd4R+7p+MQtftST305osRm
-         0CVCGUf+lz1QJX4LeW/d9sMXCHhFUPQfkIHHy8m3uxcH+23FgzdhZwXnEN4QbRL3F5On
-         rjMw==
-X-Gm-Message-State: ALyK8tKp2WLBxp6Pg4ApCXbORuHj7QF9ofczDF9Zz5IDo7vssS9dRPJ40CC0hzdj71PMqg==
-X-Received: by 10.194.242.163 with SMTP id wr3mr1877957wjc.1.1465834216170;
-        Mon, 13 Jun 2016 09:10:16 -0700 (PDT)
+        bh=J/i6hD7ntnF+zft2wFkj8XpDaYlVuFTdVHisTYMy4Rw=;
+        b=Y2t/kQ9kwtwVmByraWQ4lbNiTiGfA4C+3ASMl8Khc2bDyZJq8JhxHoNZZrxMDOTccB
+         nTL64D2/I00nbv3xvKXMBC8fEqyx6/zOiS+lvJGHXbIygbf7wt4oC5uZxYyvIui6WV3Q
+         iBmRA+CKGvIu0dpb/nfPVICaBhnqHPv0/VkmufgKQ3jNu8+ByMOwcH4Gem+58hOQfA1s
+         DNvyD0KqXc5gGesX8wA+nKAcNHpizD/5ljWl3n4nFI8kyY2D2JR/oZ74Zzz1EEEhYJm/
+         0lpHZk5pW67pwNpS8mTDWyC84lj0k5vRC76UDkD/8ySTuApBrqouEcbnkZQhKbix04EH
+         xrTw==
+X-Gm-Message-State: ALyK8tJDY+7DpkEGWHcAiyrKsZ8hb/Furq5pZ/EdqTpWfLTGseh2+cqUMxHgoGHvGeD1bw==
+X-Received: by 10.194.242.163 with SMTP id wr3mr1878483wjc.1.1465834222739;
+        Mon, 13 Jun 2016 09:10:22 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id g10sm6445369wjl.25.2016.06.13.09.10.14
+        by smtp.gmail.com with ESMTPSA id g10sm6445369wjl.25.2016.06.13.09.10.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 13 Jun 2016 09:10:15 -0700 (PDT)
+        Mon, 13 Jun 2016 09:10:22 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.rc2.411.gcd7457d
 In-Reply-To: <20160613160942.1806-1-chriscool@tuxfamily.org>
@@ -67,59 +67,70 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297228>
 
 To libify `git apply` functionality we have to signal errors to the
 caller instead of die()ing.
 
 To do that in a compatible manner with the rest of the error handling
-in "builtin/apply.c", parse_traditional_patch() should return -1
-instead of calling die().
+in "builtin/apply.c", remove_file() should return -1 instead of
+calling die().
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ builtin/apply.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index c27be35..eb98116 100644
+index e74b068..694c65b 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -755,10 +755,10 @@ static int has_epoch_timestamp(const char *nameline)
-  * files, we can happily check the index for a match, but for creating a
-  * new file we should try to match whatever "patch" does. I have no idea.
-  */
--static void parse_traditional_patch(struct apply_state *state,
--				    const char *first,
--				    const char *second,
--				    struct patch *patch)
-+static int parse_traditional_patch(struct apply_state *state,
-+				   const char *first,
-+				   const char *second,
-+				   struct patch *patch)
- {
- 	char *name;
+@@ -4074,17 +4074,18 @@ static void patch_stats(struct apply_state *state, struct patch *patch)
+ 	}
+ }
  
-@@ -803,7 +803,9 @@ static void parse_traditional_patch(struct apply_state *state,
+-static void remove_file(struct apply_state *state, struct patch *patch, int rmdir_empty)
++static int remove_file(struct apply_state *state, struct patch *patch, int rmdir_empty)
+ {
+ 	if (state->update_index) {
+ 		if (remove_file_from_cache(patch->old_name) < 0)
+-			die(_("unable to remove %s from index"), patch->old_name);
++			return error(_("unable to remove %s from index"), patch->old_name);
+ 	}
+ 	if (!state->cached) {
+ 		if (!remove_or_warn(patch->old_mode, patch->old_name) && rmdir_empty) {
+ 			remove_path(patch->old_name);
  		}
  	}
- 	if (!name)
--		die(_("unable to find filename in patch at line %d"), state->linenr);
-+		return error(_("unable to find filename in patch at line %d"), state->linenr);
-+
 +	return 0;
  }
  
- static int gitdiff_hdrend(struct apply_state *state,
-@@ -1462,7 +1464,8 @@ static int find_header(struct apply_state *state,
- 			continue;
- 
- 		/* Ok, we'll consider it a patch */
--		parse_traditional_patch(state, line, line+len, patch);
-+		if (parse_traditional_patch(state, line, line+len, patch))
-+			return -1;
- 		*hdrsize = len + nextlen;
- 		state->linenr += 2;
- 		return offset;
+ static void add_index_file(struct apply_state *state,
+@@ -4263,8 +4264,10 @@ static void write_out_one_result(struct apply_state *state,
+ 				 int phase)
+ {
+ 	if (patch->is_delete > 0) {
+-		if (phase == 0)
+-			remove_file(state, patch, 1);
++		if (phase == 0) {
++			if (remove_file(state, patch, 1))
++				exit(1);
++		}
+ 		return;
+ 	}
+ 	if (patch->is_new > 0 || patch->is_copy) {
+@@ -4276,8 +4279,10 @@ static void write_out_one_result(struct apply_state *state,
+ 	 * Rename or modification boils down to the same
+ 	 * thing: remove the old, write the new
+ 	 */
+-	if (phase == 0)
+-		remove_file(state, patch, patch->is_rename);
++	if (phase == 0) {
++		if (remove_file(state, patch, patch->is_rename))
++			exit(1);
++	}
+ 	if (phase == 1)
+ 		create_file(state, patch);
+ }
 -- 
 2.9.0.rc2.411.g3e2ca28
