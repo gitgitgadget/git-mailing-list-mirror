@@ -1,123 +1,96 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v4 1/6] worktree.c: add find_worktree()
-Date: Mon, 13 Jun 2016 19:22:29 +0700
-Message-ID: <CACsJy8BC=Fx7f6QAg_u_4HuwkV_-wvm9se5fU-kkp0mnhUpC=A@mail.gmail.com>
-References: <20160530104939.28407-1-pclouds@gmail.com> <20160603121944.28980-1-pclouds@gmail.com>
- <20160603121944.28980-2-pclouds@gmail.com> <57519BA3.207@ramsayjones.plus.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v3] lib-httpd.sh: print error.log on error
+Date: Mon, 13 Jun 2016 19:35:09 +0700
+Message-ID: <20160613123509.22412-1-pclouds@gmail.com>
+References: <20160613115608.GA5652@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?Q?Reto_Habl=C3=BCtzel?= <rethab.ch@gmail.com>,
-	Mike Rappazzo <rappazzo@gmail.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Mon Jun 13 14:23:26 2016
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 13 14:35:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCQtm-0007Jh-VA
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 14:23:23 +0200
+	id 1bCR5l-0007o1-1Y
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 14:35:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422720AbcFMMXM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jun 2016 08:23:12 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:36004 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161242AbcFMMXK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Jun 2016 08:23:10 -0400
-Received: by mail-io0-f193.google.com with SMTP id o127so13723773iod.3
-        for <git@vger.kernel.org>; Mon, 13 Jun 2016 05:22:59 -0700 (PDT)
+	id S1161269AbcFMMfe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jun 2016 08:35:34 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:36034 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161105AbcFMMf3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2016 08:35:29 -0400
+Received: by mail-pa0-f66.google.com with SMTP id fg1so10458515pad.3
+        for <git@vger.kernel.org>; Mon, 13 Jun 2016 05:35:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=G/YRhWfcypCSpXvYDQBD8UXyqaFXVbPHyGCsQL1mwqM=;
-        b=v2FpzA3qQWgM98V13DHiMyi9XRKRkacSFWLlLycVu18dyCO2khNkHPaW4sU9vnikgC
-         7gWawrVgtVswVfEX+09t+C+mNtVuePMfEtpVnBkruf917Bkq8vlRvGYtaHMG/8fe1rjy
-         p8hcPOHSMBZlJW6nSqDChLo268u3bISkyemKzbl0TgFBchUcSwRMaem1BR8DRnvNaOQx
-         9E169Kk6JPUIv13z74t8rilu2zzGi4+dt7+93KY6qS2R8Y7a9EncrdNqNGMml7zldNDV
-         vXD8iA/HWzhT7zFiC6jJAS6QcyjJCxnZT6WJJnLJZq186sfMw167KZKmOkLZtaFR4D+0
-         t3SA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=XCYke/FxZXAcIIs+Gea1xIu/KqcXIfsrG9EhtCbAScA=;
+        b=UsN+EYwALYofrdCD0TXnChZGd0fCyV6ihkbDFsRgBOHg9gTMRPYZGBcexgHt8xfLy6
+         GODlko8WwWxRUnA7cQ6uzGnuqNem4mxBBXxjNAEkpwvBt8RFG+dgSp1XmDOEbO/F7BRM
+         GA2z9mq2CJSqgfRMyYJZG/jF0pNExeMi1YWH3orF213zu1CKpu7ui6TAuZ8SrFBq5yrY
+         vGP9dWHDVp1wwivWiAKhLSejdEuqgLnciqrqsyzJaEf5XhW0odclUPL9ZwYEIqgNKmfV
+         XIdGh9Nh8QaYiAYlqgcaeW+5/UklmWzXwf6mnXj3DxkOl4DSUhUHTMD1Li2RHGHiHI5H
+         Jjeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=G/YRhWfcypCSpXvYDQBD8UXyqaFXVbPHyGCsQL1mwqM=;
-        b=gbmLbxiX+ZgNrC1oNSK3BNs54Qo70u2hT1VCS12PASgl77msa1KWYR+hhO34Qa/RGg
-         nbTIwUrng9PDiJh/TO1gGC/eUNROR+xCAHSnlMMPPaw0JuodObgUXscZMTNyxAkMQdi+
-         a6AVvS0tw4n9ZQjh6zRJy7jglCVTu7YfSWn/t5LqJSl7/9pe4Zi53YE/taj1QnA/EwWp
-         3UL6s2Fc5v+ssJphxh+fso/dQHYrW55yWysz6uUteisDbqbcbei5E4F7tx1xGaF9SWyV
-         5RiAVUd5Hjn0tOjTrE6Y7NnM6sU7cFnIzGEv1G3yOx9uCx9rwRmmle5UGtN8EyRegOEF
-         L/FQ==
-X-Gm-Message-State: ALyK8tK3YXmX0kdrQy5i2o/CK7yJxmV6u7GwrEFpM2WFysEszudw1YfynycMrDtjneLaPjOHhOQ7whLLdyEnww==
-X-Received: by 10.107.22.131 with SMTP id 125mr22090834iow.128.1465820579162;
- Mon, 13 Jun 2016 05:22:59 -0700 (PDT)
-Received: by 10.64.173.167 with HTTP; Mon, 13 Jun 2016 05:22:29 -0700 (PDT)
-In-Reply-To: <57519BA3.207@ramsayjones.plus.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=XCYke/FxZXAcIIs+Gea1xIu/KqcXIfsrG9EhtCbAScA=;
+        b=QY1RYlu+isMOnzeFIQECBXvODmqImOVZCVBC3bHXmL3gJgiFiYq3TgUOibOIdSrxj+
+         FqbL4G36a2WYprlb3/xaXU9Wusjy6D+lkgCNQKlI9R+xXPo/RcgcOPqEj++EuzCf9oCd
+         WQi2CLhzrLT/W0b/O5FZK6P2I1MM0FZmo5hJB20zrBMsH5UgwtAPVU1xS9dNYTZZfJ7g
+         7gysKtI+5+pKgGQJPECi7LRlpJ69eaPzZdiqsH/Q6xDcuz4s8KzDVrGx6svfjR4zvj2g
+         VBFmbv+N2hbZyfkOg4w7iga86FFwNTGbyQkdGeayVRsqBJid79xPl8MlpnPMdCqR54Fd
+         JlVw==
+X-Gm-Message-State: ALyK8tKaYcrOYG6pLIj01n1+udUbvMqwE1DQjSPb7Evb4CgVm0T3LwKa0P96wb4xZaPraQ==
+X-Received: by 10.66.237.175 with SMTP id vd15mr21421307pac.139.1465821328452;
+        Mon, 13 Jun 2016 05:35:28 -0700 (PDT)
+Received: from ash ([115.76.211.1])
+        by smtp.gmail.com with ESMTPSA id 7sm37565348pfn.30.2016.06.13.05.35.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 Jun 2016 05:35:27 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Mon, 13 Jun 2016 19:35:24 +0700
+X-Mailer: git-send-email 2.8.2.524.g6ff3d78
+In-Reply-To: <20160613115608.GA5652@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297189>
 
-On Fri, Jun 3, 2016 at 10:00 PM, Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
->
->
-> On 03/06/16 13:19, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->> So far we haven't needed to identify an existing worktree from comma=
-nd
->> line. Future commands such as lock or move will need it. The current
->> implementation identifies worktrees by path (*). In future, the func=
-tion
->> could learn to identify by $(basename $path) or tags...
->>
->> (*) We could probably go cheaper with comparing inode number (and
->> probably more reliable than paths when unicode enters the game). But=
- not
->> all systems have good inode that so let's stick to something simple =
-for
->> now.
->>
->> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->>  worktree.c | 15 +++++++++++++++
->>  worktree.h |  8 ++++++++
->>  2 files changed, 23 insertions(+)
->>
->> diff --git a/worktree.c b/worktree.c
->> index e2a94e0..554f566 100644
->> --- a/worktree.c
->> +++ b/worktree.c
->> @@ -214,6 +214,21 @@ const char *get_worktree_git_dir(const struct w=
-orktree *wt)
->>               return git_common_path("worktrees/%s", wt->id);
->>  }
->>
->> +struct worktree *find_worktree(struct worktree **list,
->> +                            const char *prefix,
->> +                            const char *arg)
->> +{
->> +     char *path;
->> +
->> +     arg =3D prefix_filename(prefix, strlen(prefix), arg);
->> +     path =3D xstrdup(real_path(arg));
->> +     for (; *list; list++)
->> +             if (!fspathcmp(path, real_path((*list)->path)))
->
-> The results of the call to real_path() should probably be cached
-> in the worktree structure, since real_path() is relatively expensive
-> (it calls chdir(), lstat(), readlink() etc.), so you don't want to
-> re-compute the same result time-after-time ...
+=46ailure to bring up httpd for testing is not considered an error, so =
+the
+trash directory, which contains this error.log file, is removed and we
+don't know what made httpd fail to start. Improve the situation a bit,
+print error.log but only in verbose mode.
 
-Urgh.. I missed this after sending out v5. Because find_worktree is
-probably called once or twice per process, I don't think we need to
-optimize this yet. If nr. worktrees goes up to hundreds then this is
-one of many items we need to do to make worktree list fast.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Redirect stdout to "verbose stderr" instead of testing $verbose.
+
+ t/lib-httpd.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index f9f3e5f..ac2cbee 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -180,6 +180,7 @@ start_httpd() {
+ 	if test $? -ne 0
+ 	then
+ 		trap 'die' EXIT
++		cat "$HTTPD_ROOT_PATH"/error.log >&4 2>/dev/null
+ 		test_skip_or_die $GIT_TEST_HTTPD "web server setup failed"
+ 	fi
+ }
 --=20
-Duy
+2.8.2.524.g6ff3d78
