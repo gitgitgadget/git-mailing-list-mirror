@@ -1,109 +1,148 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Repacking a repository uses up all available disk space
-Date: Mon, 13 Jun 2016 07:24:51 +0700
-Message-ID: <CACsJy8Awd2oCm0puh=bnKu9snOZr85+kVRe0D5DUhP6NhmiwcQ@mail.gmail.com>
-References: <20160612212514.GA4584@gmail.com> <20160612213804.GA5428@sigill.intra.peff.net>
- <20160612215436.GB4584@gmail.com> <20160612221309.GC5428@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GIT PULL] l10n updates for 2.9.0 rc0
+Date: Sun, 12 Jun 2016 18:01:11 -0700
+Message-ID: <xmqqvb1ddhrc.fsf@gitster.mtv.corp.google.com>
+References: <CANYiYbG_DaLX1ipRh4To2iPDtuYxRMMtxWrFbEY1GyrrRCbfdA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 13 02:25:28 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Changwoo Ryu <cwryu@debian.org>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 13 03:01:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCFh2-0000Km-Dz
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 02:25:28 +0200
+	id 1bCGFm-0001Yw-PD
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 03:01:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932968AbcFMAZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Jun 2016 20:25:22 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:33761 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932783AbcFMAZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jun 2016 20:25:22 -0400
-Received: by mail-io0-f174.google.com with SMTP id d2so20316083iof.0
-        for <git@vger.kernel.org>; Sun, 12 Jun 2016 17:25:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=AiU2cmEweDcHfsiWUTd6RCb9YOr/2xx2dE1M77ZFHc0=;
-        b=NEf9idKv+lVnkAiOW+c9OlxGNVk/+mBoueypJ92LkDmSdgkwtmF/H2vardYOHoR5W3
-         eatP9KXFCm5sBLsObeLQ5ss3Ow6qavU99nbkBDCHFxUvK3wAxA5ENCtyYLx0vybi7Kp2
-         utE8OJz1W0NwTUi3An6FCmB9xPXWZa87Fjxx0+YEjsQ0/wuZNtALZ5us5vnlgp9EBsUb
-         LnuwZyEEAxcNVuI6+7H34logaDkls8Kk7tNDJe/ZQRr0O6YbROr5UpMi81EXt248bFf/
-         N9kKNAI+I4JlEey/jc0oCX2t1F6h0OxiX5cxO3WTfw4a8+VjdqGuPrpzndAlnDdGXgvI
-         +FNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=AiU2cmEweDcHfsiWUTd6RCb9YOr/2xx2dE1M77ZFHc0=;
-        b=Xr+u4ANhn3BIDEulGwAV9wowjLp/9Rq/Cooo4C8iNEF1EQef1Mujjf1ueHWVNRLnle
-         sohxPunu+c2ug9Rdd3JX8ed7ZxEaiMFJu7v6ai0D5McG86gEDg7xkz0bHX/xSG3IqfJj
-         RDCwqhea7lOyAqTBxhEDgvchRrGrSyTwKpQxrRBk2ENU6eXTbJ4vrkgg/NVCBpuT2nrk
-         3e7FEY/HJ01myLSqrb3rkoE/DKbSJrhHtemPfdVC14zNtMqpVZbffqDq8lXmCYX5MV8G
-         coydcAVbq+w2vri4QYMfDEL7GL9TsCElLfODRyGYIJd7IcvqEi+Zk3aX1cpneO0UM8UA
-         WPYQ==
-X-Gm-Message-State: ALyK8tKltTM2KI5X0OjdbtkpiTfqOjdx/NNnf8Z33jPcELm3vRuN47z805hFdYVjLKdnBIXxbp04HMHYJusLmA==
-X-Received: by 10.107.159.84 with SMTP id i81mr18172327ioe.29.1465777521010;
- Sun, 12 Jun 2016 17:25:21 -0700 (PDT)
-Received: by 10.64.173.167 with HTTP; Sun, 12 Jun 2016 17:24:51 -0700 (PDT)
-In-Reply-To: <20160612221309.GC5428@sigill.intra.peff.net>
+	id S933097AbcFMBBP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jun 2016 21:01:15 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58706 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932986AbcFMBBP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Jun 2016 21:01:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8078624112;
+	Sun, 12 Jun 2016 21:01:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=orUqZ/Lr62XI
+	j7MupqIWo9hYh6U=; b=ygQMPP5bcMY7XaRLCE/KCpC3iAnUxg5G90qWjY7nZOsY
+	8OPlFWV4HdTcy0D1MOrllYHvrzAU9hYWojh3G1vC068Bpbo1ssEP9Ipw+l4ZPAC5
+	hopvC2K6Wj7NmXTk0Qur25TMVODWbaiWLJ7iWk1qHEJxLKK3QwkhiXbkrKTzmyU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Ya14mE
+	9zBHXjMpfaWm0FjIlwk2RwQINrxXlA500u5TXWfzKOjLQ31QyQ0Nb6W5Y9voECH8
+	yBQ/Rn6W072RJ1CGistWxANyrt1bMt76uJt+ZbrBZvAeZik9/yOph3T5J8Wnn3U2
+	+1dPN/SaLR/Y81ngXgH1HYojGscEDr0qahFlY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6C3DE24111;
+	Sun, 12 Jun 2016 21:01:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DE07224110;
+	Sun, 12 Jun 2016 21:01:12 -0400 (EDT)
+In-Reply-To: <CANYiYbG_DaLX1ipRh4To2iPDtuYxRMMtxWrFbEY1GyrrRCbfdA@mail.gmail.com>
+	(Jiang Xin's message of "Sun, 12 Jun 2016 06:13:54 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 52C72CEE-3102-11E6-8249-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297147>
 
-On Mon, Jun 13, 2016 at 5:13 AM, Jeff King <peff@peff.net> wrote:
-> On Sun, Jun 12, 2016 at 05:54:36PM -0400, Konstantin Ryabitsev wrote:
+Jiang Xin <worldhello.net@gmail.com> writes:
+
+> Please pull the following git l10n updates.
 >
->> >   git gc --prune=now
->>
->> You are correct, this solves the problem, however I'm curious. The usual
->> maintenance for these repositories is a regular run of:
->>
->> - git fsck --full
->> - git repack -Adl -b --pack-kept-objects
->> - git pack-refs --all
->> - git prune
->>
->> The reason it's split into repack + prune instead of just gc is because
->> we use alternates to save on disk space and try not to prune repos that
->> are used as alternates by other repos in order to avoid potential
->> corruption.
-
-Isn't this what extensions.preciousObjects is for? It looks like prune
-just refuses to run in precious objects mode though, and repack is
-skipped by gc, but if that repack command works, maybe we should do
-something like that in git-gc?
-
-BTW Jeff, I think we need more documentation for
-extensions.preciousObjects. It's only documented in technical/ which
-is practically invisible to all users. Maybe
-include::repository-version.txt in config.txt, or somewhere close to
-alternates?
-
-> [2] It's unclear to me if you're passing any options to git-prune, but
->     you may want to pass "--expire" with a short grace period. Without
->     any options it prunes every unreachable thing, which can lead to
->     races if the repository is actively being used.
+> The following changes since commit 3a0f269e7c82aa3a87323cb7ae04ac5f12=
+9f036b:
 >
->     At GitHub we actually have a patch to `repack` that keeps all
->     objects, reachable or not, in the pack, and use it for all of our
->     automated maintenance. Since we don't drop objects at all, we can't
->     ever have such a race. Aside from some pathological cases, it wastes
->     much less space than you'd expect. We turn the flag off for special
->     cases (e.g., somebody has rewound history and wants to expunge a
->     sensitive object).
+>   Git 2.9-rc0 (2016-05-23 15:02:48 -0700)
 >
->     I'm happy to share the "keep everything" patch if you're interested.
+> are available in the git repository at:
+>
+>   git://github.com/git-l10n/git-po tags/l10n-2.9.0-rc0
+>
+> for you to fetch changes up to ad583ebe0813c5d6a8e7c263d72d934770083d=
+83:
+>
+>   l10n: ko.po: Update Korean translation (2016-06-12 01:25:58 +0900)
 
-Ah ok, I guess this is why we just skip repack. I guess '-Adl -b
---pack-kept-objects' is not enough then.
--- 
-Duy
+Thanks, will do.
+
+>
+> ----------------------------------------------------------------
+> l10n-2.9.0-rc0
+>
+> ----------------------------------------------------------------
+> Alexander Shopov (1):
+>       l10n: Updated Bulgarian translation of git (2597t,0f,0u)
+>
+> Antonin (1):
+>       l10n: fr.po Fixed grammar mistake
+>
+> Changwoo Ryu (1):
+>       l10n: ko.po: Update Korean translation
+>
+> Dimitriy Ryazantcev (1):
+>       l10n: ru.po: update Russian translation
+>
+> Jean-Noel Avila (1):
+>       l10n: fr.po v2.9.0rnd1
+>
+> Jiang Xin (5):
+>       l10n: git.pot: v2.9.0 round 1 (104 new, 37 removed)
+>       Merge branch 'fix_fr' of git://github.com/jnavila/git
+>       Merge branch 'v2.9.0_rnd1_fr' of git://github.com/jnavila/git
+>       l10n: zh_CN: for git v2.9.0 l10n round 1
+>       Merge branch 'russian-l10n' of https://github.com/DJm00n/git-po=
+-ru
+>
+> Peter Krefting (1):
+>       l10n: sv.po: Update Swedish translation (2597t0f0u)
+>
+> Ralf Thielow (1):
+>       l10n: de.po: translate 104 new messages
+>
+> Ray Chen (1):
+>       l10n: zh_CN: review for git v2.9.0 l10n round 1
+>
+> Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (1):
+>       l10n: Updated Vietnamese translation (2597t)
+>
+> Vasco Almeida (3):
+>       l10n: pt_PT: merge git.pot file
+>       l10n: pt_PT: update according to git-gui glossary
+>       l10n: pt_PT: update Portuguese translation
+>
+>  po/bg.po    | 4689 +++++++++++++++++++++++++++++++++----------------=
+----------
+>  po/de.po    | 3310 +++++++++++++++++++++++------------------
+>  po/fr.po    | 3252 +++++++++++++++++++++++------------------
+>  po/git.pot  | 3078 ++++++++++++++++++++++-----------------
+>  po/ko.po    | 3192 ++++++++++++++++++++++------------------
+>  po/pt_PT.po | 3893 +++++++++++++++++++++++++++----------------------
+>  po/ru.po    | 3171 ++++++++++++++++++++++------------------
+>  po/sv.po    | 3269 +++++++++++++++++++++++------------------
+>  po/vi.po    | 3274 +++++++++++++++++++++++------------------
+>  po/zh_CN.po | 3375 ++++++++++++++++++++++--------------------
+>  10 files changed, 19378 insertions(+), 15125 deletions(-)
+>
+> --
+> Jiang Xin
