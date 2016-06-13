@@ -1,131 +1,98 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Repacking a repository uses up all available disk space
-Date: Mon, 13 Jun 2016 00:58:31 -0400
-Message-ID: <20160613045831.GA3950@sigill.intra.peff.net>
-References: <20160612212514.GA4584@gmail.com>
- <20160612213804.GA5428@sigill.intra.peff.net>
- <20160612215436.GB4584@gmail.com>
- <20160612221309.GC5428@sigill.intra.peff.net>
- <CACsJy8Awd2oCm0puh=bnKu9snOZr85+kVRe0D5DUhP6NhmiwcQ@mail.gmail.com>
+Subject: [PATCH 0/3] fix parse-opt string_list leaks
+Date: Mon, 13 Jun 2016 01:32:03 -0400
+Message-ID: <20160613053203.GB3950@sigill.intra.peff.net>
+References: <20160610115726.4805-1-pclouds@gmail.com>
+ <20160612220316.GB5428@sigill.intra.peff.net>
+ <CACsJy8C+NtiXRo8NcU3rtgWrMSj8Zv3mYtdYfyvzwYRHifKVCQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 13 06:58:42 2016
+X-From: git-owner@vger.kernel.org Mon Jun 13 07:32:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCJxP-0004Qx-Lv
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 06:58:40 +0200
+	id 1bCKU7-0008Ci-Cj
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 07:32:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932218AbcFME6e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2016 00:58:34 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53613 "HELO cloud.peff.net"
+	id S1751128AbcFMFcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2016 01:32:08 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53618 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753232AbcFME6e (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2016 00:58:34 -0400
-Received: (qmail 24505 invoked by uid 102); 13 Jun 2016 04:58:33 -0000
+	id S1750715AbcFMFcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2016 01:32:07 -0400
+Received: (qmail 26059 invoked by uid 102); 13 Jun 2016 05:32:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Jun 2016 00:58:33 -0400
-Received: (qmail 10133 invoked by uid 107); 13 Jun 2016 04:58:44 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Jun 2016 01:32:06 -0400
+Received: (qmail 10323 invoked by uid 107); 13 Jun 2016 05:32:17 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Jun 2016 00:58:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Jun 2016 00:58:31 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Jun 2016 01:32:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Jun 2016 01:32:03 -0400
 Content-Disposition: inline
-In-Reply-To: <CACsJy8Awd2oCm0puh=bnKu9snOZr85+kVRe0D5DUhP6NhmiwcQ@mail.gmail.com>
+In-Reply-To: <CACsJy8C+NtiXRo8NcU3rtgWrMSj8Zv3mYtdYfyvzwYRHifKVCQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297154>
 
-On Mon, Jun 13, 2016 at 07:24:51AM +0700, Duy Nguyen wrote:
+On Mon, Jun 13, 2016 at 07:08:55AM +0700, Duy Nguyen wrote:
 
-> >> - git fsck --full
-> >> - git repack -Adl -b --pack-kept-objects
-> >> - git pack-refs --all
-> >> - git prune
-> >>
-> >> The reason it's split into repack + prune instead of just gc is because
-> >> we use alternates to save on disk space and try not to prune repos that
-> >> are used as alternates by other repos in order to avoid potential
-> >> corruption.
+> > So if we are doing the conservative thing, then I think the resulting
+> > code should either look like:
+> >
+> >   if (!v->strdup_strings)
+> >         die("BUG: OPT_STRING_LIST should always use strdup_strings");
+> >   string_list_append(v, arg);
 > 
-> Isn't this what extensions.preciousObjects is for? It looks like prune
-> just refuses to run in precious objects mode though, and repack is
-> skipped by gc, but if that repack command works, maybe we should do
-> something like that in git-gc?
+> I agree with the analysis. But this die() would hit all callers
+> (except interpret-trailers) because they all initialize with _NODUP
+> and setting strdup_strings may require auditing all access to the
+> string list in question, e.g. to change string_list_append(v,
+> xstrdup(xxx)) to string_list_append(xxx). it may cause side effects if
+> we are not careful.
 
-Sort of. preciousObjects is a fail-safe so that you do not ever
-accidentally run an object-deleting operation where you shouldn't (e.g.,
-in the shared repository used by others as an alternate). So the
-important step there is that before running "repack", you would want to
-make sure you have taken into account the reachability of anybody
-sharing from you.
+Yep. It is not really fixing anything, so much as alerting us to broken
+callers. We'd still have to fix the callers. :)
 
-So you could do something like (in your shared repository):
+> So far all callers are in builtin/, I think it will not take much time
+> to verify that they all call parse_options() with global argv, then we
+> can just lose extra xstrdup() and stick to string_list_append().
+> OPTION_STRING already assumes that argument strings are stable because
+> they are passed back as-is. Can we go with an easier route, adding a
+> comment on top of parse_options() stating that argv[] pointers may be
+> passed back as-is and it's up to the caller to xstrdup() appropriately
+> before argv[] memory is freed?
 
-  git config core.repositoryFormatVersion 1
-  git config extension.preciousObjects true
+Yeah, the two options I laid out were the "conservative" side, where we
+didn't make any assumptions about what is in passed into parse_options.
+But I agree in practice that it's not likely to be a problem to just
+point to the existing strings, and the fact that OPTION_STRING does so
+already makes me even more confident.
 
-  # this will fail, because it's dangerous!
-  git gc
+So I'd suggest these patches:
 
-  # but we can do it safely if we take into account the other repos
-  for repo in $(somehow_get_list_of_shared_repos); do
-	git fetch $repo +refs/*:refs/shared/$repo/*
-  done
-  git config extension.preciousObjects false
-  git gc
-  git config extension.preciousObjects true
+  [1/3]: parse_opt_string_list: stop allocating new strings
+  [2/3]: interpret-trailers: don't duplicate option strings
+  [3/3]: blame,shortlog: don't make local option variables static
 
-So it really is orthogonal to running the various gc commands yourself;
-it's just here to prevent you shooting yourself in the foot.
+The first one is what we've been discussing, and the others are just
+follow-on cleanups.  I stopped short of a fourth patch to convert more
+cases of:
 
-It may still be useful in such a case to split up the commands in your
-own script, though. In my case, you'll note that the commands above are
-racy (what happens if somebody pushes a reference to a shared object
-between your fetch and the gc invocation?). So we use a custom "repack
--k" to get around that (it just keeps everything).
+  static struct string_list foo;
 
-You _could_ have gc automatically switch to "-k" in a preciousObjects
-repository. That's at least safe. But note that it doesn't really solve
-all of the problems (you do still want to have ref tips from the leaf
-repositories, because it affects things like bitmaps, and packing
-order).
+to:
 
-> BTW Jeff, I think we need more documentation for
-> extensions.preciousObjects. It's only documented in technical/ which
-> is practically invisible to all users. Maybe
-> include::repository-version.txt in config.txt, or somewhere close to
-> alternates?
+  static struct string_list foo = STRING_LIST_INIT_NODUP;
 
-I'm a little hesitant to document it for end users because it's still
-pretty experimental. In fact, even we are not using it at GitHub
-currently. We don't have a big problem with "oops, I accidentally ran
-something destructive in the shared repository", because nothing except
-the maintenance script ever even goes into the shared repository.
-
-The reason I introduced it in the first place is that I was
-experimenting with the idea of actually symlinking "objects/" in the
-leaf repos into the shared repository. That eliminates the object
-writing in the "fetch" step above, which can be a bottleneck in some
-cases (not just the I/O, but the shared repo ends up having a _lot_ of
-refs, and fetch can be pretty slow).
-
-But in that case, anything that deletes an object in one of the leaf
-repos is very dangerous, as it has no idea that its object store is
-shared with other leaf repos. So I really wanted a fail safe so that
-running "git gc" wasn't catastrophic.
-
-I still think that's a viable approach, but my experiments got
-side-tracked and I never produced anything worth looking at. So until
-there's something end users can actually make use of, I'm hesitant to
-push that stuff into the regular-user documentation. Anybody who is
-playing with it at this point probably _should_ be familiar with what's
-in Documentation/technical.
+The two are equivalent (mostly due to historical reasons). I tend to
+think explicit is better than implicit for something like this (not
+because BSS auto-initialization isn't OK, but because there is an
+explicit choice of dup/nodup that the writer made, and it is good to
+communicate that). But maybe people don't want the extra noise.
 
 -Peff
