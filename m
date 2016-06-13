@@ -1,75 +1,123 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 5/6] lock_ref_for_update(): make error handling more
- uniform
-Date: Mon, 13 Jun 2016 09:16:05 +0200
-Message-ID: <575E5DB5.8040109@alum.mit.edu>
-References: <cover.1465544913.git.mhagger@alum.mit.edu>
- <6cc13da6767c5fd9dbf1b372634adf7c3a353464.1465544913.git.mhagger@alum.mit.edu>
- <1465585279.8278.2.camel@frank>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-To: David Turner <novalis@novalis.org>
-X-From: git-owner@vger.kernel.org Mon Jun 13 09:16:20 2016
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [GSOC Update] Week 6
+Date: Mon, 13 Jun 2016 13:36:56 +0530
+Message-ID: <20160613080656.5013-1-pranit.bauva@gmail.com>
+References: <20160606065301.5228-1-pranit.bauva@gmail.com>
+Cc: christian.couder@gmail.com, chriscool@tuxfamily.org,
+	larsxschneider@gmail.com, Pranit Bauva <pranit.bauva@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 13 10:08:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCM6Z-0000MX-BM
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 09:16:15 +0200
+	id 1bCMuz-0007g5-HS
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 10:08:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161181AbcFMHQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2016 03:16:12 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:44287 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1030202AbcFMHQL (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Jun 2016 03:16:11 -0400
-X-AuditID: 12074413-487ff700000008c7-2a-575e5db9bf2c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 0E.7F.02247.9BD5E575; Mon, 13 Jun 2016 03:16:09 -0400 (EDT)
-Received: from [192.168.69.130] (p548D6022.dip0.t-ipconnect.de [84.141.96.34])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u5D7G58X029502
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 13 Jun 2016 03:16:07 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.8.0
-In-Reply-To: <1465585279.8278.2.camel@frank>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAKsWRmVeSWpSXmKPExsUixO6iqLszNi7c4McCK4uuK91MFg29V5gt
-	nsy9y2yx5OFrZovuKW8ZLX609DA7sHnsnHWX3ePhqy52j672I2wez3r3MHpcvKTs8XmTXABb
-	FLdNUmJJWXBmep6+XQJ3xsLp/UwFT5grtl+fxdLA+IOpi5GTQ0LAROLpgqusXYxcHEICWxkl
-	lr1bzQiSEBI4xyTROy8fxBYWCJX4efkGM4gtIqAmseztLzaIhlWMEmt7zrODOMwC1xkljmw7
-	zQZSxSagK7GopxlsBa+AtsT9aW2sIDaLgKpE05V97CC2qECIxPl1W1khagQlTs58wgJicwro
-	SNw5NxnsCmYBdYk/8y4xQ9jyEtvfzmGewMg/C0nLLCRls5CULWBkXsUol5hTmqubm5iZU5ya
-	rFucnJiXl1qka66Xm1mil5pSuokREuLCOxh3nZQ7xCjAwajEw6uxKjZciDWxrLgy9xCjJAeT
-	kiivhE9cuBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR3lu+QDnelMTKqtSifJiUNAeLkjiv2hJ1
-	PyGB9MSS1OzU1ILUIpisDAeHkgTv5higRsGi1PTUirTMnBKENBMHJ8hwLimR4tS8lNSixNKS
-	jHhQVMYXA+MSJMUDtHcSSDtvcUFiLlAUovUUoy7Hgh+31zIJseTl56VKifO6gxQJgBRllObB
-	rYAltFeM4kAfC/P+BKniASZDuEmvgJYwAS3h2BcNsqQkESEl1cDo1iAwKyBcwcFN/OS7O2+N
-	daO2eHwVDvhk/tZBQ9h51WfDeb6V/KUuEsymrMn/DzMnnN0qpSzxZK3W3LKq7A0z 
+	id S965199AbcFMIIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2016 04:08:15 -0400
+Received: from mail-pa0-f67.google.com ([209.85.220.67]:34350 "EHLO
+	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964820AbcFMIIN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2016 04:08:13 -0400
+Received: by mail-pa0-f67.google.com with SMTP id ug1so9998415pab.1
+        for <git@vger.kernel.org>; Mon, 13 Jun 2016 01:08:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=P+dS+L2ukdDG2Gpamk22H+bngtN0XvoYkLpSbJ1M2iY=;
+        b=beQPHPS45XA/mAZs6DKEbIMoGTdONjuRWxUA+qqoV8hJhDb9hJJY6evkXOL0O8dK+f
+         X7r9tuveCC5rtakifXuJSIXqI/1ZviUUBlFra7A7dTJ/x03gnFbENQZfEdFHDfmsIuoZ
+         7skH1OmkHPXBGsBqqM8Ow7ZWMZfdxXpXPcEmx/q5zBU8PjXEnRvWaF1dk9+Fy98aErEd
+         iBdE7z5oDqhmwJgZcWq/eLTFiGQ1Vium27zOf6rqC16k4fXAue9cwl0JBZj5NUM7gDOa
+         IqE2oJ5r0+cC8Pz9PLyodHyqJXPBeHbbC6yeKHgCWpZnxOCs/027bCZEXTowLK30aLXU
+         Leog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=P+dS+L2ukdDG2Gpamk22H+bngtN0XvoYkLpSbJ1M2iY=;
+        b=f4Pt683mJ1eAdxdjeQZ0A1aWtREquRV5sm6t1XIAom5nw9Yw4gFYPUOGcHGgoHnnw6
+         JWoltFPmO2O5+ND6l9Re2KnuKuatb3NBnavAJP9oETQIDctbcDgB3b1jC3eDqFExBFKo
+         OgJxiyWOOTwmUZhst+RBtIP7VsZjaHScN/Bg7SUGC3TeDPmRghLPWI431nuP49CRhafi
+         /ITQAEfUe8RUJVeVqYl0xKA1ZVOYZ8ICwB8ayenQIkaysb3fyL6J7IYmWYudyK0ZYDM5
+         Wo+KcTMfyqJSYKJfseDrRsfD+v89y7iLWA8qZKbOXMcVBwzWS7zmSfK+n7a0nxTo3OpL
+         s4wg==
+X-Gm-Message-State: ALyK8tJ+gbIhK/a9EeLe03E7yLS7Q5nd6B2tvM/l+NXVJS3jbkQ4iUL23rE5CAlR5DYzvg==
+X-Received: by 10.66.126.47 with SMTP id mv15mr20762469pab.74.1465805293029;
+        Mon, 13 Jun 2016 01:08:13 -0700 (PDT)
+Received: from localhost.localdomain ([111.119.199.22])
+        by smtp.gmail.com with ESMTPSA id ut6sm35288827pac.37.2016.06.13.01.08.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 13 Jun 2016 01:08:12 -0700 (PDT)
+X-Mailer: git-send-email 2.8.4
+In-Reply-To: <20160606065301.5228-1-pranit.bauva@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297163>
 
-On 06/10/2016 09:01 PM, David Turner wrote:
-> On Fri, 2016-06-10 at 10:14 +0200, Michael Haggerty wrote:
-> 
->>  /*
->> + * Check whether the REF_HAVE_OLD and old_oid values stored in update
->> + * are consistent with the result read for the reference. error is
->> + * true iff there was an error reading the reference; otherwise, oid
-> 
-> "error" is not a thing here?
+================================= SUMMARY ==================================
+My public git.git is available here[1]. I regularly keep pushing my work so
+anyone interested can track me there. Feel free to participate in the
+discussions going on PRs with my mentors. Your comments are valuable.
 
-You're right; thanks for the feedback. I'll include it in the reroll
-that I'm about to do.
 
-Michael
+=============================== INTRODUCTION  ==============================
+The purpose of this project is to convert the git-bisect utility which partly
+exists in the form of shell scripts to C code so as to make it more portable.
+I plan to do this by converting each function to C and then calling it from
+git-bisect.sh so as to use the existing test suite to test the function which
+is converted.
+
+Mentors:
+Christian Couder <chriscool@tuxfamily.org>
+Lars Schneider <larsxschneider@gmail.com>
+
+
+================================== Updates =================================
+Things which were done in this week:
+
+ * bisect_clean_state() function is converted and sent out to the mailing
+   list which received some useful comments from Eric Sunshine and the
+   updated version can be found on bisect-reset branch[3].
+
+ * I also converted bisect_reset() function and also introduced a file_size()
+   method which received some useful comments from Eric Sunshine and Torsten
+   Bogershausen. You can find the whole branch here[3].
+
+ * I have also converted bisect_write() and will send it to the mailing list
+   soon. The branch can be found here[4].
+
+ * I also converted is_expected_rev() and check_expected_revs(). I sent
+   it to the mailing list which collected some useful reviews from Eric
+   Sunshine. I have updated according to the reviews. I need to confirm it
+   once before I send it out on the mailing list. You can find the branch
+   here[3].
+
+ * My v2[5] on a cleanup patch to use the function macro GIT_PATH_FUNC is
+   yet queued on the pu branch.
+
+================================= NEXT STEPS ================================
+Things which would be done in the coming week:
+
+ * check_and_set_terms(): This function uses the two global variables in the
+   script namely TERM_GOOD TERM_BAD. I have decided to pass then as arguments.
+
+ * get_terms(): This will also introduce a struct to store global variables
+   namely TERM_GOOD and TERM_BAD.
+
+ * bisect_terms().
+
+ * bisect_next_check().
+
+[1]: https://github.com/pranitbauva1997/git
+[3]: https://github.com/pranitbauva1997/git/pull/13
+[4]: https://github.com/pranitbauva1997/git/pull/14
+[5]: http://thread.gmane.org/gmane.comp.version-control.git/295524
+
+
+Regards,
+Pranit Bauva
