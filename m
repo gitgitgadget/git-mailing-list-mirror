@@ -1,9 +1,10 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v5 0/6] worktree lock/unlock
-Date: Mon, 13 Jun 2016 19:18:20 +0700
-Message-ID: <20160613121826.21631-1-pclouds@gmail.com>
+Subject: [PATCH v5 4/6] worktree: add "lock" command
+Date: Mon, 13 Jun 2016 19:18:24 +0700
+Message-ID: <20160613121826.21631-5-pclouds@gmail.com>
 References: <20160603121944.28980-1-pclouds@gmail.com>
+ <20160613121826.21631-1-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -11,197 +12,298 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 13 14:19:23 2016
+X-From: git-owner@vger.kernel.org Mon Jun 13 14:19:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCQpo-0004My-Vj
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 14:19:17 +0200
+	id 1bCQq3-0004bc-Vj
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 14:19:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964994AbcFMMTC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jun 2016 08:19:02 -0400
-Received: from mail-pa0-f65.google.com ([209.85.220.65]:34108 "EHLO
-	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964790AbcFMMTA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2016 08:19:00 -0400
-Received: by mail-pa0-f65.google.com with SMTP id ug1so10442384pab.1
-        for <git@vger.kernel.org>; Mon, 13 Jun 2016 05:19:00 -0700 (PDT)
+	id S965184AbcFMMTW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jun 2016 08:19:22 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36464 "EHLO
+	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965049AbcFMMTU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2016 08:19:20 -0400
+Received: by mail-pf0-f194.google.com with SMTP id 62so10594188pfd.3
+        for <git@vger.kernel.org>; Mon, 13 Jun 2016 05:19:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RoucZDnYarxYOdateYWNTbIpM0aVkpAsr4gUk69zoIQ=;
-        b=LWVfCerHYt0PYvHr/KNetktrDfr2goGWFF444OYQGigbEgMXzDmKgPb/rOS5jZfb7s
-         B3HiRaAhHXBi1j6Rl1R84hSj9B9/enJw4fmvg3PkVND11AwMQB2PXlZ6aHrSQ5e7/3sA
-         YkE38ttNk6/fZaq0wAxiWlckth1BFJECIO5fs4N1BzDNaFoENcL2Dr16uhURXOrB3G3X
-         H5kwA4Z28A8rK4xhp1D1XNwPbSMtWvELmIERbGCZCgtVX9p0Wd2Gj3Rk19MShgSUGn2w
-         C51AZrJzcm9Au6QjAcE5TUUnYsezrify/oflbGSVeEZy1lcvUKIajrfLd7QAvtGQUwQV
-         sUTg==
+        bh=vy54S6gI2uXyEvBp3ojsRueJ4BD4Ler8E3biDhftS/I=;
+        b=YNUE37IP+JEqoRpjc9y//fq7rJKBIPxEyAEKMmPs4ahIFAa1VHghCF+X+ci31DrTu+
+         0FxgwS5OQ31W4lkYQRqZwfNuKm77S7bLqUi6D3fhfrlCuUtcwXrtOQ9z47WgIZGvR5x/
+         cH1FxlCn/EnartLvCU6hIAi9Rwpf09AcY0ssF4bu/uuhaRRVJv2l6C4jPFAD+5qPZIEp
+         ApFwF2O+WCZZSalLB8VbtFFVtVQTKJ/EUnGriIdbu0dfrdwmDi3YIlltAw1vpIKshCXi
+         qA/vt3n8MZ/SXVMeAzaGEJkY0hDqkJoMIT1POTBAVyCp6VrXPOqDeyC+fn5acLildwC7
+         rZpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RoucZDnYarxYOdateYWNTbIpM0aVkpAsr4gUk69zoIQ=;
-        b=Bh5fbV1K3FpnLsymMtLBxjc+WxdBGGq67p4iPhP0EFXcVKq3NMb0WL8JtWNsrnS38c
-         XP9JEwjgAHFlxN+I5f5IHEURtCfP2K7w9iWlZJYBqGXivX1xe4LHEg1YjIYWQuFfE6H9
-         rfZwoMVUj0BgdnIf/1o3Vqh0grX87eC1DmDui0WhdQWb/VnaAGgo7vK87Nw1lbeZxsfG
-         6KU+HZ3WH24LOga7dJMebarfkB7+L4ygDJqo8/fYEpyYyz9B0nLte//ap8mRBgHRhnpT
-         QrRzdxACipVt3XR3Xf2A+YyWKlaTmwLvZWREOKn4xhlX8/6HcpXEC44N6ht40p2f451N
-         jTQw==
-X-Gm-Message-State: ALyK8tLCqeINbORaNBW8SyOnVeVQq0tJ9AWhqDXFzkJMCAzPHU06hQU/Rdwphr2IHSR+Ow==
-X-Received: by 10.66.165.40 with SMTP id yv8mr22245828pab.89.1465820339911;
-        Mon, 13 Jun 2016 05:18:59 -0700 (PDT)
+        bh=vy54S6gI2uXyEvBp3ojsRueJ4BD4Ler8E3biDhftS/I=;
+        b=ARwwmyJiZAr1cBlKkcQNacZCucEop/fMSzQRr9FO8aZktCJtCBDyG33YDA1WiFsTR4
+         O0V7ny0+eoHMirC4EU3zN1juud0fmjLiWIojdycIXYbp0CgA7Lbd9u/P4oO5+vfVMvs2
+         g6eCYeNcpplotNTUUsEGme8B48jhMtyXPPNHz/GA50rPwZfQr6/zmt8DrJeSNMKIV/Ce
+         hXnEW7Ayi2Ove3zkgoErWbPxhIWCXiD+G8g9Lx2HoFbb9nxmkx8f3SEuGDm19/6tQMF5
+         EufCiX3DX3+YJ/lUERCJANmmQiIX1YAVuWeagk0m8adfn6EuUgxU34hG+mZWQ2FjrNE/
+         KjGQ==
+X-Gm-Message-State: ALyK8tJJyGLWcUK6bMUJlLwJg2IHzB24Kq7NJl+sOT44fwYNW9An+JncHER2o8IebMZh5g==
+X-Received: by 10.98.210.66 with SMTP id c63mr21490925pfg.25.1465820359931;
+        Mon, 13 Jun 2016 05:19:19 -0700 (PDT)
 Received: from ash ([115.76.211.1])
-        by smtp.gmail.com with ESMTPSA id x10sm28437339pfd.8.2016.06.13.05.18.56
+        by smtp.gmail.com with ESMTPSA id g63sm15575826pfb.7.2016.06.13.05.19.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Jun 2016 05:18:59 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Mon, 13 Jun 2016 19:18:54 +0700
+        Mon, 13 Jun 2016 05:19:18 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Mon, 13 Jun 2016 19:19:15 +0700
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
-In-Reply-To: <20160603121944.28980-1-pclouds@gmail.com>
+In-Reply-To: <20160613121826.21631-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297185>
 
-v5 fixes some error messages mentioning "working directory" instead of
-"working tree" and split the double use of "lock_reason" field in
-"struct worktree". This series depends on
-nd/worktree-cleanup-post-head-protection.
-
-Diff from v4
-
--- 8< --
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index cb5026d..4877421 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -478,9 +478,9 @@ static int lock_worktree(int ac, const char **av, c=
-onst char *prefix)
- 	worktrees =3D get_worktrees();
- 	wt =3D find_worktree(worktrees, prefix, av[0]);
- 	if (!wt)
--		die(_("'%s' is not a working directory"), av[0]);
-+		die(_("'%s' is not a working tree"), av[0]);
- 	if (is_main_worktree(wt))
--		die(_("'%s' is a main working directory"), av[0]);
-+		die(_("The main working tree cannot be locked or unlocked"));
-=20
- 	old_reason =3D is_worktree_locked(wt);
- 	if (old_reason) {
-@@ -511,9 +511,9 @@ static int unlock_worktree(int ac, const char **av,=
- const char *prefix)
- 	worktrees =3D get_worktrees();
- 	wt =3D find_worktree(worktrees, prefix, av[0]);
- 	if (!wt)
--		die(_("'%s' is not a working directory"), av[0]);
-+		die(_("'%s' is not a working tree"), av[0]);
- 	if (is_main_worktree(wt))
--		die(_("'%s' is a main working directory"), av[0]);
-+		die(_("The main working tree cannot be locked or unlocked"));
- 	if (!is_worktree_locked(wt))
- 		die(_("'%s' is not locked"), av[0]);
- 	ret =3D unlink_or_warn(git_common_path("worktrees/%s/locked", wt->id)=
-);
-diff --git a/worktree.c b/worktree.c
-index b16262b..2107c06 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -5,8 +5,6 @@
- #include "dir.h"
- #include "wt-status.h"
-=20
--static const char *lock_field_uninitialized =3D "value is not importan=
-t";
--
- void free_worktrees(struct worktree **worktrees)
- {
- 	int i =3D 0;
-@@ -15,8 +13,7 @@ void free_worktrees(struct worktree **worktrees)
- 		free(worktrees[i]->path);
- 		free(worktrees[i]->id);
- 		free(worktrees[i]->head_ref);
--		if (worktrees[i]->lock_reason !=3D lock_field_uninitialized)
--			free(worktrees[i]->lock_reason);
-+		free(worktrees[i]->lock_reason);
- 		free(worktrees[i]);
- 	}
- 	free (worktrees);
-@@ -102,7 +99,8 @@ static struct worktree *get_main_worktree(void)
- 	worktree->is_detached =3D is_detached;
- 	worktree->is_current =3D 0;
- 	add_head_info(&head_ref, worktree);
--	worktree->lock_reason =3D (char *)lock_field_uninitialized;
-+	worktree->lock_reason =3D NULL;
-+	worktree->lock_reason_valid =3D 0;
-=20
- done:
- 	strbuf_release(&path);
-@@ -148,7 +146,8 @@ static struct worktree *get_linked_worktree(const c=
-har *id)
- 	worktree->is_detached =3D is_detached;
- 	worktree->is_current =3D 0;
- 	add_head_info(&head_ref, worktree);
--	worktree->lock_reason =3D (char *)lock_field_uninitialized;
-+	worktree->lock_reason =3D NULL;
-+	worktree->lock_reason_valid =3D 0;
-=20
- done:
- 	strbuf_release(&path);
-@@ -271,7 +270,9 @@ int is_main_worktree(const struct worktree *wt)
-=20
- const char *is_worktree_locked(struct worktree *wt)
- {
--	if (wt->lock_reason =3D=3D lock_field_uninitialized) {
-+	assert(!is_main_worktree(wt));
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Documentation/git-worktree.txt         | 26 +++++++++++++-----
+ builtin/worktree.c                     | 38 ++++++++++++++++++++++++++=
 +
-+	if (!wt->lock_reason_valid) {
- 		struct strbuf path =3D STRBUF_INIT;
-=20
- 		strbuf_addstr(&path, worktree_git_path(wt, "locked"));
-@@ -283,6 +284,7 @@ const char *is_worktree_locked(struct worktree *wt)
- 			wt->lock_reason =3D strbuf_detach(&lock_reason, NULL);
- 		} else
- 			wt->lock_reason =3D NULL;
-+		wt->lock_reason_valid =3D 1;
- 		strbuf_release(&path);
- 	}
-=20
-diff --git a/worktree.h b/worktree.h
-index 263b61d..90e1311 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -10,6 +10,7 @@ struct worktree {
- 	int is_detached;
- 	int is_bare;
- 	int is_current;
-+	int lock_reason_valid;
- };
-=20
- /* Functions for acting on the information about worktrees. */
--- >8 --
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (6):
-  worktree.c: add find_worktree()
-  worktree.c: add is_main_worktree()
-  worktree.c: add is_worktree_locked()
-  worktree: add "lock" command
-  worktree: add "unlock" command
-  worktree.c: find_worktree() search by path suffix
-
- Documentation/git-worktree.txt         | 36 +++++++++++++---
- builtin/worktree.c                     | 66 ++++++++++++++++++++++++++=
-+++
- contrib/completion/git-completion.bash |  5 ++-
- t/t2028-worktree-move.sh (new +x)      | 62 ++++++++++++++++++++++++++=
-+
- worktree.c                             | 77 ++++++++++++++++++++++++++=
+ contrib/completion/git-completion.bash |  5 +++-
+ t/t2028-worktree-move.sh (new +x)      | 48 ++++++++++++++++++++++++++=
 ++++++++
- worktree.h                             | 21 ++++++++++
- 6 files changed, 260 insertions(+), 7 deletions(-)
+ 4 files changed, 110 insertions(+), 7 deletions(-)
  create mode 100755 t/t2028-worktree-move.sh
 
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktre=
+e.txt
+index 27feff6..b49b25b 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -11,6 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git worktree add' [-f] [--detach] [--checkout] [-b <new-branch>] <pat=
+h> [<branch>]
+ 'git worktree list' [--porcelain]
++'git worktree lock' [--reason <string>] <worktree>
+ 'git worktree prune' [-n] [-v] [--expire <expire>]
+=20
+ DESCRIPTION
+@@ -38,9 +39,8 @@ section "DETAILS" for more information.
+=20
+ If a linked working tree is stored on a portable device or network sha=
+re
+ which is not always mounted, you can prevent its administrative files =
+from
+-being pruned by creating a file named 'locked' alongside the other
+-administrative files, optionally containing a plain text reason that
+-pruning should be suppressed. See section "DETAILS" for more informati=
+on.
++being pruned by issuing the `git worktree lock` command, optionally
++specifying `--reason` to explain why the working tree is locked.
+=20
+ COMMANDS
+ --------
+@@ -61,6 +61,14 @@ each of the linked worktrees.  The output details in=
+clude if the worktree is
+ bare, the revision currently checked out, and the branch currently che=
+cked out
+ (or 'detached HEAD' if none).
+=20
++lock::
++
++If a working tree is on a portable device or network share which
++is not always mounted, lock it to prevent its administrative
++files from being pruned automatically. This also prevents it from
++being moved or deleted. Optionally, specify a reason for the lock
++with `--reason`.
++
+ prune::
+=20
+ Prune working tree information in $GIT_DIR/worktrees.
+@@ -110,6 +118,13 @@ OPTIONS
+ --expire <time>::
+ 	With `prune`, only expire unused working trees older than <time>.
+=20
++--reason <string>::
++	With `lock`, an explanation why the working tree is locked.
++
++<worktree>::
++	Working trees can be identified by path, either relative or
++	absolute.
++
+ DETAILS
+ -------
+ Each linked working tree has a private sub-directory in the repository=
+'s
+@@ -150,7 +165,8 @@ instead.
+=20
+ To prevent a $GIT_DIR/worktrees entry from being pruned (which
+ can be useful in some situations, such as when the
+-entry's working tree is stored on a portable device), add a file named
++entry's working tree is stored on a portable device), use the
++`git worktree lock` command, which adds a file named
+ 'locked' to the entry's directory. The file contains the reason in
+ plain text. For example, if a linked working tree's `.git` file points
+ to `/path/main/.git/worktrees/test-next` then a file named
+@@ -226,8 +242,6 @@ performed manually, such as:
+ - `remove` to remove a linked working tree and its administrative file=
+s (and
+   warn if the working tree is dirty)
+ - `mv` to move or rename a working tree and update its administrative =
+files
+-- `lock` to prevent automatic pruning of administrative files (for ins=
+tance,
+-  for a working tree on a portable device)
+=20
+ GIT
+ ---
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index f9dac37..3b9220f 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -14,6 +14,7 @@
+ static const char * const worktree_usage[] =3D {
+ 	N_("git worktree add [<options>] <path> [<branch>]"),
+ 	N_("git worktree list [<options>]"),
++	N_("git worktree lock [<options>] <path>"),
+ 	N_("git worktree prune [<options>]"),
+ 	NULL
+ };
+@@ -459,6 +460,41 @@ static int list(int ac, const char **av, const cha=
+r *prefix)
+ 	return 0;
+ }
+=20
++static int lock_worktree(int ac, const char **av, const char *prefix)
++{
++	const char *reason =3D "", *old_reason;
++	struct option options[] =3D {
++		OPT_STRING(0, "reason", &reason, N_("string"),
++			   N_("reason for locking")),
++		OPT_END()
++	};
++	struct worktree **worktrees, *wt;
++
++	ac =3D parse_options(ac, av, prefix, options, worktree_usage, 0);
++	if (ac !=3D 1)
++		usage_with_options(worktree_usage, options);
++
++	worktrees =3D get_worktrees();
++	wt =3D find_worktree(worktrees, prefix, av[0]);
++	if (!wt)
++		die(_("'%s' is not a working tree"), av[0]);
++	if (is_main_worktree(wt))
++		die(_("The main working tree cannot be locked or unlocked"));
++
++	old_reason =3D is_worktree_locked(wt);
++	if (old_reason) {
++		if (*old_reason)
++			die(_("'%s' is already locked, reason: %s"),
++			    av[0], old_reason);
++		die(_("'%s' is already locked"), av[0]);
++	}
++
++	write_file(git_common_path("worktrees/%s/locked", wt->id),
++		   "%s", reason);
++	free_worktrees(worktrees);
++	return 0;
++}
++
+ int cmd_worktree(int ac, const char **av, const char *prefix)
+ {
+ 	struct option options[] =3D {
+@@ -475,5 +511,7 @@ int cmd_worktree(int ac, const char **av, const cha=
+r *prefix)
+ 		return prune(ac - 1, av + 1, prefix);
+ 	if (!strcmp(av[1], "list"))
+ 		return list(ac - 1, av + 1, prefix);
++	if (!strcmp(av[1], "lock"))
++		return lock_worktree(ac - 1, av + 1, prefix);
+ 	usage_with_options(worktree_usage, options);
+ }
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 951a186..f88727d 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2597,7 +2597,7 @@ _git_whatchanged ()
+=20
+ _git_worktree ()
+ {
+-	local subcommands=3D"add list prune"
++	local subcommands=3D"add list lock prune"
+ 	local subcommand=3D"$(__git_find_on_cmdline "$subcommands")"
+ 	if [ -z "$subcommand" ]; then
+ 		__gitcomp "$subcommands"
+@@ -2609,6 +2609,9 @@ _git_worktree ()
+ 		list,--*)
+ 			__gitcomp "--porcelain"
+ 			;;
++		lock,--*)
++			__gitcomp "--reason"
++			;;
+ 		prune,--*)
+ 			__gitcomp "--dry-run --expire --verbose"
+ 			;;
+diff --git a/t/t2028-worktree-move.sh b/t/t2028-worktree-move.sh
+new file mode 100755
+index 0000000..87afc2e
+--- /dev/null
++++ b/t/t2028-worktree-move.sh
+@@ -0,0 +1,48 @@
++#!/bin/sh
++
++test_description=3D'test git worktree move, remove, lock and unlock'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_commit init &&
++	git worktree add source &&
++	git worktree list --porcelain | grep "^worktree" >actual &&
++	cat <<-EOF >expected &&
++	worktree $TRASH_DIRECTORY
++	worktree $TRASH_DIRECTORY/source
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'lock main worktree' '
++	test_must_fail git worktree lock .
++'
++
++test_expect_success 'lock linked worktree' '
++	git worktree lock --reason hahaha source &&
++	echo hahaha >expected &&
++	test_cmp expected .git/worktrees/source/locked
++'
++
++test_expect_success 'lock linked worktree from another worktree' '
++	rm .git/worktrees/source/locked &&
++	git worktree add elsewhere &&
++	git -C elsewhere worktree lock --reason hahaha ../source &&
++	echo hahaha >expected &&
++	test_cmp expected .git/worktrees/source/locked
++'
++
++test_expect_success 'lock worktree twice' '
++	test_must_fail git worktree lock source &&
++	echo hahaha >expected &&
++	test_cmp expected .git/worktrees/source/locked
++'
++
++test_expect_success 'lock worktree twice (from the locked worktree)' '
++	test_must_fail git -C source worktree lock . &&
++	echo hahaha >expected &&
++	test_cmp expected .git/worktrees/source/locked
++'
++
++test_done
 --=20
 2.8.2.524.g6ff3d78
