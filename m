@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v7 35/40] apply: don't print on stdout when be_silent is set
-Date: Mon, 13 Jun 2016 18:09:37 +0200
-Message-ID: <20160613160942.1806-36-chriscool@tuxfamily.org>
+Subject: [PATCH v7 38/40] apply: change error_routine when be_silent is set
+Date: Mon, 13 Jun 2016 18:09:40 +0200
+Message-ID: <20160613160942.1806-39-chriscool@tuxfamily.org>
 References: <20160613160942.1806-1-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -21,45 +21,45 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCUSE-0004Co-ML
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 18:11:11 +0200
+	id 1bCUSG-0004Co-CX
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 18:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1424978AbcFMQLB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1424987AbcFMQLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2016 12:11:08 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34649 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1424915AbcFMQLB (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 13 Jun 2016 12:11:01 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:32777 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1424968AbcFMQK5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2016 12:10:57 -0400
-Received: by mail-wm0-f67.google.com with SMTP id r5so16046859wmr.0
-        for <git@vger.kernel.org>; Mon, 13 Jun 2016 09:10:56 -0700 (PDT)
+Received: by mail-wm0-f65.google.com with SMTP id n184so16055830wmn.1
+        for <git@vger.kernel.org>; Mon, 13 Jun 2016 09:11:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nNTtRvBuRA9x9MR3SBmZKsVAUcmVtCsGQJCuW0qYr2U=;
-        b=GRBeNDiiicQ2uvGe6SU3jTsM9sY9c/L0ZZKKc3eP+tp4pW450E0Mv/Yj0F5OaCO3Y3
-         O6CImcCRKjN/oBFbQisli2na0PdxkzZlv+Yc56ktG+Ug5joVon0AxBe6MQ4Uy/FFaTnT
-         yfDPDjUOvEz88hs6YP1epmiIxJbk2+Rl9Rz3gP3LBD8yRlzaDxoG1ZCm0AoMWqQAeOSc
-         AWGkP262AevTtq74pDTRTCPgHcO5nQaHLj/3p7ZTtK3EDrgAad05Firzm0jNbxoYrXTL
-         DPYfu3knBrVYPIoIZWYu6ZqOPHU8usNK+KPo/WHGJ8HNC0nXAq61k4kzbbkXfgMvPh5/
-         G/vg==
+        bh=NhdhGaZacXKBrzg7t6R5K30y+AZyTzZgew+l2zWDWYk=;
+        b=vTIP1YZ43Dua8TNP9Q8OVBQcz5tERBvePpOqy4ttnM5NdqcExq82yordC6yFRrtKZS
+         EkxbOdu9qIOFGUYzmUWWJ4p4BFFF/ROrix+vb2Gnuic07uzBB5XuJDEMQfDZRpzRut4g
+         Eagz1S+nCPwvvuwKfk8kFRdUse7KedQSP4O8nyIPpKXny5JCNVDUIWjkJHZy8YfCcV23
+         YDxIBBwOFDxoq49nrA71pW/bWGYhgCpm5r3od0+H5mR230CiMJmkmhgIWrLxvm1x3/0C
+         z2tgbJBsMmtXvKo9MofX1cDl5py9T/1zKFtyQgRMXSBjdpfdw+RKTnQv2L5yh/9iCxOF
+         teVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=nNTtRvBuRA9x9MR3SBmZKsVAUcmVtCsGQJCuW0qYr2U=;
-        b=CNKqDvewE+OO41SnW1j0mfaxNweerguZbX/AOUHFLZDES7wLt7qBJ2EWcESzELX84A
-         tplVVeJ8hAU4I5OGKoLNykyqPAW4QYBy487+nf8IMmeALATZDWswFQPCxIS8OQRGg1gA
-         im2ZYvZtG5KCCmKAd0+r05bbjFzhh2k9m8Kix4a/g+JaohxKFqF/K0VXIc+Ef+gvsgYK
-         08soCmUWAaaRvzW4zn+bqxp2m8Vw01ISD5P7yej9RhGCNx0cY0u0J02dWNlAFrn+669e
-         it32IDnKqX/cwLW6uMAQ2zIqyCRchU7AezkA1WTjUeP5z5hVqba4ozQk3lMJ1JWUYtBe
-         8gVQ==
-X-Gm-Message-State: ALyK8tI85uRIU6/0QdVxL/v0dTSpdbL1/xdRuEk2+RqksBDinMkKekkgcYoEJMS/uaESrw==
-X-Received: by 10.28.197.132 with SMTP id v126mr1932737wmf.8.1465834255832;
-        Mon, 13 Jun 2016 09:10:55 -0700 (PDT)
+        bh=NhdhGaZacXKBrzg7t6R5K30y+AZyTzZgew+l2zWDWYk=;
+        b=NGgch+nIsh3ZHEhY2axc92d7X/1mg+O+9nfyyDspMeM5BUQne2QrvMbt1wa2ofmnLx
+         Qbkab/RXwsXXb3O9bx6414DhAvbGYrPYrxLovxYwqobYnKRPakTzGJRSXiD8DtD9arPb
+         CCV/0NWODomp3TA29FXnmBz3XP2zokouIiIJDvJnEIBj/+sO59GekqDgY1HctwiWBaI7
+         RUbzoFFyjWe9uTsnqStUrtwP74czEQ1jCeTvFeEmD/bdagYWNWvwXCfsJwt271AfnwhK
+         aXeUsZIg5olm7ZoxisyZGaUMTmEhtaK8JL665ZM3rpCTPJOPwzRUNlVGRusjTKZA5mIe
+         gmfA==
+X-Gm-Message-State: ALyK8tL6Zm93yq5XQg2eB/D8ALce8+6DPkd1QiquoJURToV5Ff2MX0OusmrSU2WfhH+KGQ==
+X-Received: by 10.194.7.70 with SMTP id h6mr1905309wja.38.1465834259624;
+        Mon, 13 Jun 2016 09:10:59 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id g10sm6445369wjl.25.2016.06.13.09.10.54
+        by smtp.gmail.com with ESMTPSA id g10sm6445369wjl.25.2016.06.13.09.10.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 13 Jun 2016 09:10:55 -0700 (PDT)
+        Mon, 13 Jun 2016 09:10:58 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.rc2.411.gcd7457d
 In-Reply-To: <20160613160942.1806-1-chriscool@tuxfamily.org>
@@ -67,36 +67,93 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297215>
 
-This variable should prevent anything to be printed on both stderr
-and stdout.
+To avoid printing anything when applying with be_silent set,
+let's save the existing warn and error routines before
+applying and replace them with a routine that does nothing.
+
+Then after applying, let's restore the saved routines.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- apply.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ apply.c | 23 +++++++++++++++++++++--
+ apply.h |  4 ++++
+ 2 files changed, 25 insertions(+), 2 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index dd9b301..2529534 100644
+index 2529534..ef49709 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -4679,13 +4679,13 @@ static int apply_patch(struct apply_state *state,
- 		goto end;
+@@ -109,6 +109,11 @@ void clear_apply_state(struct apply_state *state)
+ 	/* &state->fn_table is cleared at the end of apply_patch() */
+ }
+ 
++static void mute_routine(const char *bla, va_list params)
++{
++	/* do nothing */
++}
++
+ int check_apply_state(struct apply_state *state, int force_apply)
+ {
+ 	int is_not_gitdir = !startup_info->have_repository;
+@@ -143,6 +148,13 @@ int check_apply_state(struct apply_state *state, int force_apply)
+ 	if (!state->lock_file)
+ 		return error("BUG: state->lock_file should not be NULL");
+ 
++	if (state->be_silent) {
++		state->saved_error_routine = get_error_routine();
++		state->saved_warn_routine = get_warn_routine();
++		set_error_routine(mute_routine);
++		set_warn_routine(mute_routine);
++	}
++
+ 	return 0;
+ }
+ 
+@@ -4760,6 +4772,7 @@ int apply_all_patches(struct apply_state *state,
+ {
+ 	int i;
+ 	int res;
++	int retval = -1;
+ 	int errs = 0;
+ 	int read_stdin = 1;
+ 
+@@ -4838,12 +4851,18 @@ int apply_all_patches(struct apply_state *state,
+ 		state->newfd = -1;
  	}
  
--	if (state->diffstat)
-+	if (state->diffstat && !state->be_silent)
- 		stat_patch_list(state, list);
+-	return !!errs;
++	retval = !!errs;
  
--	if (state->numstat)
-+	if (state->numstat && !state->be_silent)
- 		numstat_patch_list(state, list);
+ rollback_end:
+ 	if (state->newfd >= 0) {
+ 		rollback_lock_file(state->lock_file);
+ 		state->newfd = -1;
+ 	}
+-	return -1;
++
++	if (state->be_silent) {
++		set_error_routine(state->saved_error_routine);
++		set_warn_routine(state->saved_warn_routine);
++	}
++
++	return retval;
+ }
+diff --git a/apply.h b/apply.h
+index 034541a..c6cf33d 100644
+--- a/apply.h
++++ b/apply.h
+@@ -89,6 +89,10 @@ struct apply_state {
+ 	 */
+ 	struct string_list fn_table;
  
--	if (state->summary)
-+	if (state->summary && !state->be_silent)
- 		summary_patch_list(list);
- 
- end:
++	/* This is to save some reporting routines */
++	void (*saved_error_routine)(const char *err, va_list params);
++	void (*saved_warn_routine)(const char *warn, va_list params);
++
+ 	/* These control whitespace errors */
+ 	enum ws_error_action ws_error_action;
+ 	enum ws_ignore ws_ignore_action;
 -- 
 2.9.0.rc2.411.g3e2ca28
