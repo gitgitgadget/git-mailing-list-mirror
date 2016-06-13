@@ -1,117 +1,75 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH] Document the 'svn propset' command.
-Date: Mon, 13 Jun 2016 12:29:08 +0530
-Message-ID: <CAFZEwPM5qnzw7RCUwOkJFo+U982kVGU8_3GUTXvHAypKtvEgTQ@mail.gmail.com>
-References: <20160612191550.GA14160@elvis.mu.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 5/6] lock_ref_for_update(): make error handling more
+ uniform
+Date: Mon, 13 Jun 2016 09:16:05 +0200
+Message-ID: <575E5DB5.8040109@alum.mit.edu>
+References: <cover.1465544913.git.mhagger@alum.mit.edu>
+ <6cc13da6767c5fd9dbf1b372634adf7c3a353464.1465544913.git.mhagger@alum.mit.edu>
+ <1465585279.8278.2.camel@frank>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Eric Wong <e@80x24.org>, Joseph Pecoraro <pecoraro@apple.com>,
-	David Fraser <davidf@sjsoft.com>
-To: Alfred Perlstein <alfred@freebsd.org>
-X-From: git-owner@vger.kernel.org Mon Jun 13 08:59:17 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+To: David Turner <novalis@novalis.org>
+X-From: git-owner@vger.kernel.org Mon Jun 13 09:16:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCLq6-0004VJ-UN
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 08:59:15 +0200
+	id 1bCM6Z-0000MX-BM
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jun 2016 09:16:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964876AbcFMG7L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2016 02:59:11 -0400
-Received: from mail-yw0-f171.google.com ([209.85.161.171]:36825 "EHLO
-	mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964837AbcFMG7K (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2016 02:59:10 -0400
-Received: by mail-yw0-f171.google.com with SMTP id v137so16014281ywa.3
-        for <git@vger.kernel.org>; Sun, 12 Jun 2016 23:59:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=PWuiu0rIikBQCReYazFtJ9iGOkqLrCO38ACCV8/iVpI=;
-        b=sw3AraCjBUeCzqrzp3lYRXYJxTpZk1Rizmbnd99T6OYpWN5b6ZvQhYbG7gOqxAtyF3
-         mnbB8pQmwJhX0HjCxEBefA9p47G0o+/uInFFc5tJ2z+rTn+tdfW2WGNqPDgO2Ci1d4hl
-         yd4uBAzMGBFl9WXAjlyRlc6uPfe6SNGxPTAcujXjvOU4fDCl+zdCosLNU8AgHSyPz7CU
-         MhshRQpPOEH8/BCnmfQEn0FGH1BJps50iRjwR9+0IK/tzbKevMbSEFfuwdpa7K9duYJu
-         8nLsB/DlBtHs5k5dBd5ecyTM2qVPHEju/33nuNcZK2KOyr4JOuQWVAg1LdLZXaySU8KZ
-         7kWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=PWuiu0rIikBQCReYazFtJ9iGOkqLrCO38ACCV8/iVpI=;
-        b=asBfbt+3e2EiHyGx2KMI96sKaH66cQAWnxUkTHACJz7Ll9+Evi2zUDBfDfzuNBjOwe
-         Xz7ezOyuSt6HZHVYXlUZGg4fWGuh9BdzrPHOrQziY+LrG45b/Um3zTgoD+sD79+W1qDa
-         JTIdteOhYfZNokM9vEJD2xq337QtcA2wmtImBT4sYStZoMYQFuRMNpCWEfRhbpm/Qy/v
-         b7kXVh9jRUlbc0XIwFvzW/UNjuaihgByZoyqeQJNV1ah0CLm1ULn3Nw0lYHJGo7j7a4O
-         q1NO07yJzC/jvqmB5itvdATcd/nKHxKmp9lOrngWrwcswDB/sxnq0K1p7CpgnEbvL2Ia
-         N+vA==
-X-Gm-Message-State: ALyK8tKe1rG/4Oj0SHSCJkgiAdVthKhIZ1MP91ZzqpXlliWKKmFh+qtzNZCqmvmlV5fMkDx3Oim+ekMde7srVw==
-X-Received: by 10.13.224.6 with SMTP id j6mr7632678ywe.72.1465801149235; Sun,
- 12 Jun 2016 23:59:09 -0700 (PDT)
-Received: by 10.129.124.132 with HTTP; Sun, 12 Jun 2016 23:59:08 -0700 (PDT)
-In-Reply-To: <20160612191550.GA14160@elvis.mu.org>
+	id S1161181AbcFMHQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2016 03:16:12 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:44287 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1030202AbcFMHQL (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Jun 2016 03:16:11 -0400
+X-AuditID: 12074413-487ff700000008c7-2a-575e5db9bf2c
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 0E.7F.02247.9BD5E575; Mon, 13 Jun 2016 03:16:09 -0400 (EDT)
+Received: from [192.168.69.130] (p548D6022.dip0.t-ipconnect.de [84.141.96.34])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u5D7G58X029502
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Mon, 13 Jun 2016 03:16:07 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.8.0
+In-Reply-To: <1465585279.8278.2.camel@frank>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAKsWRmVeSWpSXmKPExsUixO6iqLszNi7c4McCK4uuK91MFg29V5gt
+	nsy9y2yx5OFrZovuKW8ZLX609DA7sHnsnHWX3ePhqy52j672I2wez3r3MHpcvKTs8XmTXABb
+	FLdNUmJJWXBmep6+XQJ3xsLp/UwFT5grtl+fxdLA+IOpi5GTQ0LAROLpgqusXYxcHEICWxkl
+	lr1bzQiSEBI4xyTROy8fxBYWCJX4efkGM4gtIqAmseztLzaIhlWMEmt7zrODOMwC1xkljmw7
+	zQZSxSagK7GopxlsBa+AtsT9aW2sIDaLgKpE05V97CC2qECIxPl1W1khagQlTs58wgJicwro
+	SNw5NxnsCmYBdYk/8y4xQ9jyEtvfzmGewMg/C0nLLCRls5CULWBkXsUol5hTmqubm5iZU5ya
+	rFucnJiXl1qka66Xm1mil5pSuokREuLCOxh3nZQ7xCjAwajEw6uxKjZciDWxrLgy9xCjJAeT
+	kiivhE9cuBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR3lu+QDnelMTKqtSifJiUNAeLkjiv2hJ1
+	PyGB9MSS1OzU1ILUIpisDAeHkgTv5higRsGi1PTUirTMnBKENBMHJ8hwLimR4tS8lNSixNKS
+	jHhQVMYXA+MSJMUDtHcSSDtvcUFiLlAUovUUoy7Hgh+31zIJseTl56VKifO6gxQJgBRllObB
+	rYAltFeM4kAfC/P+BKniASZDuEmvgJYwAS3h2BcNsqQkESEl1cDo1iAwKyBcwcFN/OS7O2+N
+	daO2eHwVDvhk/tZBQ9h51WfDeb6V/KUuEsymrMn/DzMnnN0qpSzxZK3W3LKq7A0z 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297162>
 
-Hey Alfred,
+On 06/10/2016 09:01 PM, David Turner wrote:
+> On Fri, 2016-06-10 at 10:14 +0200, Michael Haggerty wrote:
+> 
+>>  /*
+>> + * Check whether the REF_HAVE_OLD and old_oid values stored in update
+>> + * are consistent with the result read for the reference. error is
+>> + * true iff there was an error reading the reference; otherwise, oid
+> 
+> "error" is not a thing here?
 
-On Mon, Jun 13, 2016 at 12:45 AM, Alfred Perlstein <alfred@freebsd.org> wrote:
-> Junio + all,
->
-> A week ago I was requested to provide documentation for the
-> 'svn propset' command.  I have attached a diff off of the
-> 'maint' branch for this, however it seems to apply cleanly
-> to 'master' as well.
->
-> Thank you for your patience.
->
-> This is also available on my github here:
-> https://github.com/splbio/git/tree/document_propset
+You're right; thanks for the feedback. I'll include it in the reroll
+that I'm about to do.
 
-I am not particularly sure whether the above could form a good commit
-message. I think you wanted to include this as a comment. git-am picks
-up these patches. The title commit is taken from the subject stripping
-the '[PATCH]'. Then the body before '---' is taken as the rest of the
-commit message. Then the diff is applied. To include comments add them
-after ---. Also please have a look at Documentation/SubmittingPatches.
-Also missing signoff. For the patch to actually be accept you need to
-follow those instructions. Thanks for contributing.
-
-> ---
->  Documentation/git-svn.txt | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
->
-> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index fb23a98..e104824 100644
-> --- a/Documentation/git-svn.txt
-> +++ b/Documentation/git-svn.txt
-> @@ -459,6 +459,20 @@ Any other arguments are passed directly to 'git log'
->         Gets the Subversion property given as the first argument, for a
->         file.  A specific revision can be specified with -r/--revision.
->
-> +'propset'::
-> +       Sets the Subversion property given as the first argument, to the
-> +       value given as the second argument for the file given as the
-> +       third argument.
-> ++
-> +Example:
-> ++
-> +------------------------------------------------------------------------
-> +git svn propset svn:keywords "FreeBSD=%H" devel/py-tipper/Makefile
-> +------------------------------------------------------------------------
-> ++
-> +This will set the property 'svn:keywords' to 'FreeBSD=%H' for the file
-> +'devel/py-tipper/Makefile'.
-> +
->  'show-externals'::
->         Shows the Subversion externals.  Use -r/--revision to specify a
->         specific revision.
-
-Regards,
-Pranit Bauva
+Michael
