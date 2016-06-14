@@ -1,81 +1,89 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] gpg-interface: check gpg signature for correct header
-Date: Tue, 14 Jun 2016 13:11:19 +0200
-Message-ID: <2f473a993b6bc951dec76d38c11d0e600b59b8d3.1465902530.git.git@drmicha.warpmail.net>
-References: <e129da8e-4e1d-c535-ca62-d2a4c2e23799@drmicha.warpmail.net>
-Cc: Jeff King <peff@peff.net>, ZhenTian <loooseleaves@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 14 13:11:38 2016
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.9.0
+Date: Tue, 14 Jun 2016 13:17:15 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1606141316530.22630@virtualbox>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; BOUNDARY="8323329-1563245596-1465903036=:22630"
+To: git-for-windows@googlegroups.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 14 13:17:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCmFr-0006y4-2R
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 13:11:35 +0200
+	id 1bCmLT-0003c5-Mc
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 13:17:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751466AbcFNLLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2016 07:11:25 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:45310 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751140AbcFNLLW (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2016 07:11:22 -0400
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
-	by mailout.nyi.internal (Postfix) with ESMTP id 0633822098;
-	Tue, 14 Jun 2016 07:11:20 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute7.internal (MEProxy); Tue, 14 Jun 2016 07:11:21 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:date:from:in-reply-to:message-id:references:subject:to
-	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=ZuQKzbSZGUqS8hF03WSdHFTmTMo
-	=; b=B36crNTS2AxVa5ND5ifZp6om7cdJWmkHvF0pqr77v8OYPLOzoj7Iy0/1FWB
-	Gt8vFC8j29Z0RDO0SwTc46krSt5lE4wwLECFPKw/k+HDSAkbWjYh3UpmT7oyCIfA
-	dJd5ZzZ4JhiOQM33bhBo6pMonluu6s8RY9efkSjlSAKHSvvs=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=ZuQK
-	zbSZGUqS8hF03WSdHFTmTMo=; b=eLuoJ2BUHaJA0UaT+T7UvEnyVK6wbu4tkOJF
-	YNAdHk0pojGDc55aouTdfrlbcTSi962qmETxYsRSpCueMEGMT/rPVqBFvH8uu7Hn
-	qSGCLMUXXHqofxyFj47FB21fYJUHPxhI4fqBuviezQPa9RuNVe8WtmJPwSW/NteF
-	cTnY6oQ=
-X-Sasl-enc: +mNVo7+RNH4FSL1vyC6JwZdxUGP0Xm5h2cmDeqoVds4p 1465902680
-Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 7B58AF29EE;
-	Tue, 14 Jun 2016 07:11:20 -0400 (EDT)
-X-Mailer: git-send-email 2.9.0.382.g87fd384
-In-Reply-To: <e129da8e-4e1d-c535-ca62-d2a4c2e23799@drmicha.warpmail.net>
+	id S1751212AbcFNLRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2016 07:17:20 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56079 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751140AbcFNLRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2016 07:17:19 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LmKag-1blHoc0JoQ-00ZuNZ; Tue, 14 Jun 2016 13:17:16
+ +0200
+X-X-Sender: virtualbox@virtualbox
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:/l9nt4VLw0HovMS/XrHajYV4uRJ6sT0uhH5c3LUzGpWQ2OgboQ2
+ rT2wBthffZ30wdJPeT8zyNxjY+ZXktFNx+LxWJfhcmAOUS2U0WF+Td0MWLVbAGDjrqp7szQ
+ iJkQm3QJzKJRu24MyMrnP9DX7toYARwR8lEGTpmOqW0ifMO4sHk7qVMJ3/w1gQi/xFguJzn
+ Lts/GR1bC+LUvGFb61cjQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:V4R15K1D/7I=:YI7HffyGw51xHvuc5lUKp8
+ s0wbOFrQ++OkIwJ3xqM03qOl1y9QVaANwDiaaxIgJbBuzislEe7kd+7LXaeL3S76QTabOeb3p
+ ucxHQ9RMuAizkB9TshJ1UjboTDnk2IdG5zr7nmUVZWAmYc9HsbtWxy4JBYIHbRC51MFh2BsUv
+ fhX3wGzBzEuyQFxi/HS6xRKANhPg1zlasybPC0kDea+HMLOX+N5gysAy2DUQLPPhQTf0wR8y9
+ GbLZ5SY47A2QKZJgA4PPCJFxj7jYXCdKDK34kc3KwjELdj5Bpjos4py4nps5Y6hJOsbvrH8qo
+ jz2ghapjmYII5oQccadUHD9+dLNB62ckfqUquTnwkDh0oCthILLwVHMXIzLrWQSi5PpKCHOc/
+ dy1xEMyl/Ub72Cs86mLYlYJWmPRIuCJWuP9l5wfl4+sONOx0FPJhkeW9hsBs3CHZ5PjuyoRCw
+ rm3TQoa6Vdr4UZGieFSFMSVdLd2tTX/ob6c/nE+GwAtFXGaMVfnD4HrCbT0m3MoZKarQZZO8u
+ MDjCltQ9jbW5ksZPcY1Rcf/5Z75DMlQFPcFgLTtq7HSZ+9K9QspSlWDoo6sAnKENUx0GWjKBT
+ CAzKb5H2MmBfEFEbBSpYQ5CCwim790kpTaJ8Qqc6sIiKHQR+qBtXmplyldbIVQZUDQakyRUHa
+ 9s/EYZRjAby0mDJEv+mtaiKk1NqmcHN8z3bJaER9rrlkE3w4N9XPS/mZgvWib8sPddFRC0JMZ
+ vEGetBfyRKdH5FhH/nBlbAJgmRIHNjv4spZ2h8yM69GkFmu7Ug6qAcpv7r/VVzlCN9SmDgmh 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297287>
 
-When we create a signature, it may happen that gpg returns with
-"success" but not with an actual detached signature on stdout.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Check for the correct header to catch these cases better.
+--8323329-1563245596-1465903036=:22630
+Content-Type: text/plain; charset=X-UNKNOWN
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-This catches at least my echo example.
+Dear Git users,
 
-We could do a full blown gpg signature check, of course.
+It is my pleasure to announce that Git for Windows 2.9.0 is available from:
 
- gpg-interface.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+=09https://git-for-windows.github.io/
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index c4b1e8c..664796f 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -185,7 +185,7 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
- 
- 	sigchain_pop(SIGPIPE);
- 
--	if (finish_command(&gpg) || !len || len < 0)
-+	if (finish_command(&gpg) || !len || len < 0 || strncmp(signature->buf, PGP_SIGNATURE, strlen(PGP_SIGNATURE)))
- 		return error(_("gpg failed to sign the data"));
- 
- 	/* Strip CR from the line endings, in case we are on Windows. */
--- 
-2.9.0.382.g87fd384
+Changes since Git for Windows v2.8.4 (June 7th 2016)
+
+Bug Fixes
+
+  =E2=80=A2 When running git gc --aggressive or git repack -ald in the pres=
+ence
+    of multiple pack files, the command still had open handles to the
+    pack files it wanted to remove. This has been fixed.
+
+Filename | SHA-256
+-------- | -------
+Git-2.9.0-64-bit.exe | 4e736ae188f4b75c2c24282d8a9543726f6cb7e0b2f1e7ad8e37=
+e3b61cfa8d1d
+Git-2.9.0-32-bit.exe | c511db6eb0a23ae53fbf753f688a1a180a371e082c3b202bf8b6=
+4f3bccf9bc95
+PortableGit-2.9.0-64-bit.7z.exe | 566bf55d7a3ba18660e76034d4af3e0cdd985cbb6=
+f73eb881f287aa23a0f6bbc
+PortableGit-2.9.0-32-bit.7z.exe | ed7c648f58decbd70f27e124704e88ac1c9934e78=
+bcc60516aaeddace2275581
+Git-2.9.0-64-bit.tar.bz2 | 85662a8b7d69fa604eb68e337eab3991ef77aa724794b9f2=
+7705190b206a4d7d
+Git-2.9.0-32-bit.tar.bz2 | 33c4e9f75c883c003baf350d16d3ebaad9f93f3789e34c62=
+51e23e9fa98cf659
+
+Ciao,
+Johannes
+--8323329-1563245596-1465903036=:22630--
