@@ -1,120 +1,197 @@
-From: Samuel GROOT <samuel.groot@grenoble-inp.org>
-Subject: Re: [PATCH v4 5/6] send-email: --in-reply-to=<file> populate header
- fields
-Date: Wed, 15 Jun 2016 00:26:27 +0200
-Message-ID: <d576c59b-0196-6d7d-c357-3405fadbe303@grenoble-inp.org>
-References: <20160608130142.29879-1-samuel.groot@grenoble-inp.org>
- <20160608130736.32163-1-samuel.groot@grenoble-inp.org>
- <xmqqvb1jletl.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv3] gpg-interface: check gpg signature creation status
+Date: Tue, 14 Jun 2016 18:26:33 -0400
+Message-ID: <20160614222633.GA32020@sigill.intra.peff.net>
+References: <26353a3d-e495-075f-4f84-b34a2420a6cf@drmicha.warpmail.net>
+ <8e08b63b58302b6e7fe91f0dfb5b476781bfd37d.1465915311.git.git@drmicha.warpmail.net>
+ <xmqq60tbaba5.fsf@gitster.mtv.corp.google.com>
+ <20160614215019.GB22334@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, tom.russello@grenoble-inp.org,
-	erwan.mathoniere@grenoble-inp.org, jordan.de-gea@grenoble-inp.org,
-	matthieu.moy@grenoble-inp.fr, aaron@schrab.com, e@80x24.org
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	ZhenTian <loooseleaves@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 15 00:26:46 2016
+X-From: git-owner@vger.kernel.org Wed Jun 15 00:27:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCwnD-0005aj-Ee
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 00:26:43 +0200
+	id 1bCwoC-0006Yj-Eo
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 00:27:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932180AbcFNW0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2016 18:26:32 -0400
-Received: from zm-smtpout-2.grenet.fr ([130.190.244.98]:39632 "EHLO
-	zm-smtpout-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751289AbcFNW0a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2016 18:26:30 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id B69C520B2;
-	Wed, 15 Jun 2016 00:26:28 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XNy20K4g2qLH; Wed, 15 Jun 2016 00:26:28 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 99A9F20AF;
-	Wed, 15 Jun 2016 00:26:28 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 934D92066;
-	Wed, 15 Jun 2016 00:26:28 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id nYMZi2oWu1WC; Wed, 15 Jun 2016 00:26:28 +0200 (CEST)
-Received: from localhost.localdomain (che44-2-88-185-231-114.fbx.proxad.net [88.185.231.114])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 1E1102064;
-	Wed, 15 Jun 2016 00:26:28 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
-In-Reply-To: <xmqqvb1jletl.fsf@gitster.mtv.corp.google.com>
+	id S932200AbcFNW0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2016 18:26:44 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54924 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751943AbcFNW0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2016 18:26:41 -0400
+Received: (qmail 17039 invoked by uid 102); 14 Jun 2016 22:26:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Jun 2016 18:26:35 -0400
+Received: (qmail 1000 invoked by uid 107); 14 Jun 2016 22:26:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Jun 2016 18:26:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Jun 2016 18:26:33 -0400
+Content-Disposition: inline
+In-Reply-To: <20160614215019.GB22334@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297344>
 
-On 06/08/2016 08:23 PM, Junio C Hamano wrote:
-> Samuel GROOT <samuel.groot@grenoble-inp.org> writes:
->
->> +if ($initial_reply_to && -f $initial_reply_to) {
->> +	my $error = validate_patch($initial_reply_to);
->
-> This call is wrong, isn't it?
->
-> You are not going to send out the message you are responding to (the
-> message may not even be a patch), and you do not want to die with an
-> error message that says "patch contains an overlong line".
+On Tue, Jun 14, 2016 at 05:50:19PM -0400, Jeff King wrote:
 
-We used to handle email files like patch files (with Cc:, To:, From:, 
-... fields, a patch is almost an email, with some trailers).
+> On Tue, Jun 14, 2016 at 11:13:54AM -0700, Junio C Hamano wrote:
+> 
+> > Michael J Gruber <git@drmicha.warpmail.net> writes:
+> > 
+> > >  	bottom = signature->len;
+> > > -	len = strbuf_read(signature, gpg.out, 1024);
+> > > +	strbuf_read(signature, gpg.out, 1024);
+> > > +	strbuf_read(&err, gpg.err, 0);
+> > 
+> > Hmmmm, isn't this asking for a deadlock?  When GPG spews more than
+> > what would fit in a pipe buffer to its standard error (hence gets
+> > blocked), its standard output may not complete, and the we would get
+> > stuck by attempting to read from gpg.out, failing to reach the other
+> > strbuf_read() that would unblock GPG by reading from gpg.err?
+> 
+> Yeah, it definitely is a deadlock. I think we'd need a select loop to
+> read into multiple strbufs at once (we can't use "struct async" because
+> that might happen in another process).
 
-But that `validate_patch` subroutine call is indeed useless here, I will 
-remove it.
+Something like this on top of Michael's patch (only lightly tested).
 
->> +	die "fatal: $initial_reply_to: $error\nwarning: no patches were sent\n"
->> +		if $error;
->> +
->> +	open my $fh, "<", $initial_reply_to or die "can't open file $initial_reply_to";
->> +	my $mail = Git::parse_email($fh);
->> +	close $fh;
->
-> 	my $header = Git::parse_email_header($fh);
->
-> perhaps?
+I'm still undecided on whether it is a better approach than making sure
+the stdout we got looks sane. In particular I'd worry that it would make
+things harder for somebody trying to plug in something gpg-like (e.g.,
+if you wanted to do something exotic like call a program which fetched
+the signature from a remote device or something). But it's probably not
+_that_ hard for such a script to emulate --status-fd.
 
-Git::parse_email will be renamed into Git::parse_email_header in v5.
-
->> +	my $initial_sender = $sender || $repoauthor || $repocommitter || '';
->> +
->> +	my $prefix_re = "";
->> +	my $subject_re = $mail->{"subject"}[0];
->> +	if ($subject_re =~ /^[^Re:]/) {
->> +		$prefix_re = "Re: ";
->> +	}
->> +	$initial_subject = $prefix_re . $subject_re;
->
-> I am not sure what the significance of the fact that the subject
-> happens to begin with a letter other than 'R', 'e', or ':'.
->
-> Did you mean to do something like this instead?
->
-> 	my $subject = $mail->{"subject"}[0];
-> 	$subject =~ s/^(re:\s*)+//i; # strip "Re: Re: ..."
->         $initial_subject = "Re: $subject";
->
-> instead?
-
-That's way cleaner, thanks!
-
-> By the way, this is a good example why your "unfold" implementation
-> in 4/6 is unwieldy for the caller.  Imagine a rather long subject
-> that is folded, i.e.
->
-> 	To: Samuel
->         Subject: Help! I am having a trouble running git-send-email
->             correctly.
-> 	Message-id: <...>
-
-It's a good point. What you suggested in 4/6 reply will be used in v5.
+---
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 850dc81..576e462 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -153,6 +153,7 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
+ 	const char *args[5];
+ 	size_t i, j, bottom;
+ 	struct strbuf err = STRBUF_INIT;
++	struct strbuf_reader readers[2];
+ 
+ 	gpg.argv = args;
+ 	gpg.in = -1;
+@@ -183,8 +184,15 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
+ 	close(gpg.in);
+ 
+ 	bottom = signature->len;
+-	strbuf_read(signature, gpg.out, 1024);
+-	strbuf_read(&err, gpg.err, 0);
++
++	readers[0].buf = signature;
++	readers[0].fd = gpg.out;
++	readers[0].hint = 1024;
++	readers[1].buf = &err;
++	readers[1].fd = gpg.err;
++	readers[1].hint = 1024;
++	strbuf_read_parallel(readers, 2);
++
+ 	close(gpg.out);
+ 	close(gpg.err);
+ 
+diff --git a/strbuf.c b/strbuf.c
+index 1ba600b..f674b23 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -395,6 +395,58 @@ ssize_t strbuf_read_once(struct strbuf *sb, int fd, size_t hint)
+ 	return cnt;
+ }
+ 
++void strbuf_read_parallel(struct strbuf_reader *readers, int nr)
++{
++	int i;
++	struct pollfd *pfd;
++
++	ALLOC_ARRAY(pfd, nr);
++	for (i = 0; i < nr; i++)
++		readers[i].error = 0;
++
++	while (1) {
++		int pollsize = 0;
++		int ret;
++
++		for (i = 0; i < nr; i++) {
++			if (readers[i].fd < 0)
++				continue;
++			pfd[pollsize].fd = readers[i].fd;
++			pfd[pollsize].events = POLLIN;
++			readers[i].pfd = &pfd[pollsize];
++			pollsize++;
++		}
++
++		if (!pollsize)
++			break;
++
++		ret = poll(pfd, pollsize, -1);
++		if (ret < 0) {
++			if (errno == EINTR)
++				continue;
++			/* should never happen? */
++			die_errno("poll failed");
++		}
++
++		for (i = 0; i < nr; i++) {
++			if (readers[i].fd < 0)
++				continue;
++			if (readers[i].pfd->revents &
++			    (POLLIN|POLLHUP|POLLERR|POLLNVAL)) {
++				ret = strbuf_read_once(readers[i].buf,
++						       readers[i].fd,
++						       readers[i].hint);
++				if (ret < 0)
++					readers[i].error = errno;
++				if (ret <= 0)
++					readers[i].fd = -1;
++			}
++		}
++	}
++
++	free(pfd);
++}
++
+ ssize_t strbuf_write(struct strbuf *sb, FILE *f)
+ {
+ 	return sb->len ? fwrite(sb->buf, 1, sb->len, f) : 0;
+diff --git a/strbuf.h b/strbuf.h
+index 7987405..b93822e 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -374,6 +374,25 @@ extern ssize_t strbuf_read(struct strbuf *, int fd, size_t hint);
+  */
+ extern ssize_t strbuf_read_once(struct strbuf *, int fd, size_t hint);
+ 
++/**
++ * Read from several descriptors in parallel, each into its own strbuf.
++ * This can be used, for example, to capture stdout and stderr from a
++ * sub-process without worrying about deadlocks.
++ */
++struct strbuf_reader {
++	/* Initialized by caller */
++	struct strbuf *buf;
++	int fd;
++	size_t hint;
++
++	/* Returned by strbuf_read_parallel */
++	int error; /* 0 for success, otherwise errno */
++
++	/* Internal use */
++	struct pollfd *pfd;
++};
++void strbuf_read_parallel(struct strbuf_reader *readers, int nr);
++
+ /**
+  * Read the contents of a file, specified by its path. The third argument
+  * can be used to give a hint about the file size, to avoid reallocs.
