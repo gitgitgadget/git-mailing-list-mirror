@@ -1,151 +1,75 @@
-From: Samuel GROOT <samuel.groot@grenoble-inp.org>
-Subject: Re: [PATCH v4 6/6] send-email: add option --cite to quote the message
- body
-Date: Wed, 15 Jun 2016 00:53:36 +0200
-Message-ID: <e339c77f-ecb8-b7aa-1c8f-38a1f9eca93e@grenoble-inp.org>
-References: <20160608130142.29879-1-samuel.groot@grenoble-inp.org>
- <20160608130833.32274-1-samuel.groot@grenoble-inp.org>
- <vpqvb1ir38m.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3] gpg-interface: check gpg signature creation status
+Date: Tue, 14 Jun 2016 16:47:35 -0700
+Message-ID: <xmqqporj72p4.fsf@gitster.mtv.corp.google.com>
+References: <26353a3d-e495-075f-4f84-b34a2420a6cf@drmicha.warpmail.net>
+	<8e08b63b58302b6e7fe91f0dfb5b476781bfd37d.1465915311.git.git@drmicha.warpmail.net>
+	<xmqq60tbaba5.fsf@gitster.mtv.corp.google.com>
+	<20160614215019.GB22334@sigill.intra.peff.net>
+	<20160614222633.GA32020@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, tom.russello@grenoble-inp.org,
-	erwan.mathoniere@grenoble-inp.org, jordan.de-gea@grenoble-inp.org,
-	gitster@pobox.com, aaron@schrab.com, e@80x24.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 15 00:53:49 2016
+Content-Type: text/plain
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	ZhenTian <loooseleaves@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 15 01:47:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCxDQ-0003GM-08
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 00:53:48 +0200
+	id 1bCy3g-0007ZX-Bw
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 01:47:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932209AbcFNWxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2016 18:53:42 -0400
-Received: from zm-smtpout-2.grenet.fr ([130.190.244.98]:53426 "EHLO
-	zm-smtpout-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752836AbcFNWxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2016 18:53:40 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 9068020B2;
-	Wed, 15 Jun 2016 00:53:37 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UL8UBu-OSR1Q; Wed, 15 Jun 2016 00:53:37 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 6E2F120AF;
-	Wed, 15 Jun 2016 00:53:37 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id 5D1B82066;
-	Wed, 15 Jun 2016 00:53:37 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HgtYaW0bOPSB; Wed, 15 Jun 2016 00:53:37 +0200 (CEST)
-Received: from localhost.localdomain (che44-2-88-185-231-114.fbx.proxad.net [88.185.231.114])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id EDFC02064;
-	Wed, 15 Jun 2016 00:53:36 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
-In-Reply-To: <vpqvb1ir38m.fsf@anie.imag.fr>
+	id S1751439AbcFNXrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2016 19:47:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60953 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751332AbcFNXrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2016 19:47:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C4CD021470;
+	Tue, 14 Jun 2016 19:47:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=O2Oj4BYCjuOBdEtmm/PMwKLUOcM=; b=bEyhk3
+	QoBq1VQ1ehUhq5MRgQ/iz3FQcg7MxEGB7yZ9W1HTSNrqYwc4VR83B9LjGhF6jNC/
+	hTk9wrIu6wDy857vnqifajhpmOzOAb6W7P1gpLL3oJOirUjcrOoI91HJ50i+eBV3
+	lB9EOIpbNypDIdMMG46cgTvRaUgNN+sIUNzLo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=p30PUGcdl5gScQ2MPyuUONrAvwUT/OA+
+	B+udpnAC3+v5ZYG9+wb1bxlf3JJwBfJo5eH7YkG/RIo6PAgVagjs68lZ+YNOtTRF
+	+Z8LiZVH8PmaroZqFlD6JvrbWxzuNorcY90stjyu9P5fg/UQBMTab+08V+yrCi5K
+	gvUGuFik6sY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id BDEDE2146F;
+	Tue, 14 Jun 2016 19:47:37 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D1DB2146E;
+	Tue, 14 Jun 2016 19:47:37 -0400 (EDT)
+In-Reply-To: <20160614222633.GA32020@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 14 Jun 2016 18:26:33 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5FAACD24-328A-11E6-8B21-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297347>
 
-On 06/09/2016 01:49 PM, Matthieu Moy wrote:
-> Samuel GROOT <samuel.groot@grenoble-inp.org> writes:
->
->> If used with `in-reply-to=<email_file>`, cite the message body of the given
->> email file. Otherwise, do nothing.
->
-> It should at least warn when --in-reply-to=<email_file> is not given
-> (either no --in-reply-to or --in-reply-to=<id>). I don't see any
-> use-case where a user would want --cite on the command-line and not want
-> --in-reply-to=<email_file>. OTOH, it seems a plausible user-error, and
-> the user would appreciate a message saying what's going on.
+Jeff King <peff@peff.net> writes:
 
-We weren't sure how to warn the user.
+> I'm still undecided on whether it is a better approach than making
+> sure the stdout we got looks sane. In particular I'd worry that it
+> would make things harder for somebody trying to plug in something
+> gpg-like (e.g., if you wanted to do something exotic like call a
+> program which fetched the signature from a remote device or
+> something).  But it's probably not _that_ hard for such a script
+> to emulate --status-fd.
 
-If --in-reply-to is not an mail file, should we check it with a regex to 
-make sure it's a message-id?
-
->> @@ -56,6 +57,8 @@ git send-email --dump-aliases
->>      --subject               <str>  * Email "Subject:"
->>      --in-reply-to           <str>  * Email "In-Reply-To:"
->>      --in-reply-to          <file>  * Populate header fields appropriately.
->> +    --cite                         * Quote the message body in the cover if
->> +                                     --compose is set, else in the first patch.
->>      --[no-]xmailer                 * Add "X-Mailer:" header (default).
->>      --[no-]annotate                * Review each patch that will be sent in an editor.
->>      --compose                      * Open an editor for introduction.
->
-> Just wondering: would it make sense to activate --cite by default when
-> --in-reply-to=file is used, and to allow --no-cite to disable this?
->
-> This is something we can easily do now without breaking backward
-> compatibility (--in-reply-to=file doesn't exist yet), but would be more
-> painful to do later.
-
-It's an interesting question.
-
-IMHO we should have `--cite` by default and allow `--no-cite` to disable 
-quoting the message body, because it's easier to remove extra unwanted 
-lines than copying lines from another file and adding "> " before each line.
-
->> @@ -640,6 +644,7 @@ if (@files) {
->>  	usage();
->>  }
->>
->> +my $message_cited;
->
-> Nit: I read "$message_cited" as "Boolean saying whether the message was
-> cited". $cited_message would be clearer to me (but this is to be taken
-> with a grain of salt as I'm not a native speaker), since the variable
-> holds the content of the cited message.
->
->> +sub do_insert_cited_message {
->> +	my $tmp_file = shift;
->> +	my $original_file = shift;
->> +
->> +	open my $c, "<", $original_file
->> +	or die "Failed to open $original_file: " . $!;
->> +
->> +	open my $c2, ">", $tmp_file
->> +		or die "Failed to open $tmp_file: " . $!;
->> +
->> +	# Insertion after the triple-dash
->> +	while (<$c>) {
->> +		print $c2 $_;
->> +		last if (/^---$/);
->> +	}
->> +	print $c2 $message_cited;
->
-> I would add a newline here to get a blank line between the message cited
-> and the diffstat.
-
-A newline here makes it easier to distinguish the different sections in 
-the email file indeed.
-
-> I think non-ascii characters would deserve particular attention here
-> too. For example, if the patch contain only ascii and the cited part
-> contains UTF-8, does the generated patch have a proper Content-type:
-> header?
-
-Non-ascii characters are still an issue, I'll work on that next week.
-
-> I can imagine worse, like a patch containing latin1 character and a
-> cited message with another 8-bit encoding.
->
->> +test_expect_success $PREREQ 'correct cited message with --in-reply-to and --compose' '
->> +	grep "> On Sat, 12 Jun 2010 15:53:58 +0200, author@example.com wrote:" msgtxt3 &&
->
-> I would prefer to have the full address including the real name here (A
-> <author@example.com>) in this example. Actually, after a quick look at
-> the code, I don't understand where the name has gone (what's shown here
-> is extracted from the From: header).
-
-Yep, after a quick look at the code involved, I don't understand either, 
-I will investigate this week.
+I share the same thinking, but at the same time, it already is a
+requirement to give --status-fd output that is close enough on the
+signature verification side, isn't it?
