@@ -1,97 +1,76 @@
-From: Lukas Fleischer <lfleischer@lfos.de>
-Subject: [PATCH 1/2] Make send_sideband() return void
-Date: Tue, 14 Jun 2016 16:49:16 +0200
-Message-ID: <20160614144917.14163-1-lfleischer@lfos.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 14 16:49:52 2016
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] Refactor recv_sideband()
+Date: Tue, 14 Jun 2016 11:04:13 -0400 (EDT)
+Message-ID: <alpine.LFD.2.20.1606141059420.1714@knanqh.ubzr>
+References: <20160613195224.13398-1-lfleischer@lfos.de> <alpine.LFD.2.20.1606131704060.1714@knanqh.ubzr> <alpine.DEB.2.20.1606141542040.22630@virtualbox>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Cc: Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 14 17:19:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCpf4-0007U9-SX
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 16:49:51 +0200
+	id 1bCq7i-00066T-I0
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 17:19:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752112AbcFNOtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2016 10:49:25 -0400
-Received: from elnino.cryptocrack.de ([46.165.227.75]:23458 "EHLO
-	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751256AbcFNOtY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2016 10:49:24 -0400
-Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id 8a4d7bd5
-	TLS version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO
-	for <git@vger.kernel.org>;
-	Tue, 14 Jun 2016 16:49:19 +0200 (CEST)
-X-Mailer: git-send-email 2.8.3
+	id S1751113AbcFNPTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2016 11:19:22 -0400
+Received: from alt32.smtp-out.videotron.ca ([24.53.0.21]:38844 "EHLO
+	alt32.smtp-out.videotron.ca" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750832AbcFNPTW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2016 11:19:22 -0400
+X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Jun 2016 11:19:21 EDT
+Received: from yoda.home ([96.23.157.65])
+	by Videotron with SMTP
+	id CpszbUi5QJE3dCpt0b6aek; Tue, 14 Jun 2016 11:04:15 -0400
+X-Authority-Analysis: v=2.1 cv=DYG30qZW c=1 sm=1 tr=0
+ a=keA3yYpnlypCNW5BNWqu+w==:117 a=keA3yYpnlypCNW5BNWqu+w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
+ a=pD_ry4oyNxEA:10 a=8tHSct8SZZ8Are3vbLsA:9 a=CjuIK1q_8ugA:10
+Received: from xanadu.home (xanadu.home [192.168.2.2])
+	by yoda.home (Postfix) with ESMTPSA id 96D3B2DA01A5;
+	Tue, 14 Jun 2016 11:04:13 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.20.1606141542040.22630@virtualbox>
+User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
+X-CMAE-Envelope: MS4wfB2wEIvykkoRmI8/4HDAjSbnpog32mkDHutPLRQQd2CQbVfRXzkEvDzFxXH/2xpYU9t0wZqxnF2qYEzkp4uEiBHKRNtftMOHNDwzDT9qLMcdWapzxinL
+ tQsa+6xhbZTnfoibuGeqkIWmbpz2PpQLCONY1IycbcO10OJfIIX3zHwi2VlXKqp3JEdxwluMHy+KtgqugogZ0tv/1Gp0RZJHUN0MbmsSlTtQAS/lQnyFSloN
+ cyleTi+9zGlUVe8pTVS2Dg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297298>
 
-The send_sideband() function uses write_or_die() for writing data which
-immediately terminates the process on errors. If no such error occurred,
-send_sideband() always returned the value that was passed as fourth
-parameter prior to this commit. This value is already known to the
-caller in any case, so let's turn send_sideband() into a void function
-instead.
+On Tue, 14 Jun 2016, Johannes Schindelin wrote:
 
-Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
----
- sideband.c    | 4 +---
- sideband.h    | 2 +-
- upload-pack.c | 6 ++++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+> Hi,
+> 
+> On Mon, 13 Jun 2016, Nicolas Pitre wrote:
+> 
+> > On Mon, 13 Jun 2016, Lukas Fleischer wrote:
+> > 
+> > > Improve the readability of recv_sideband() significantly by replacing
+> > > fragile buffer manipulations with more sophisticated format strings.
+> > > Also, reorganize the overall control flow, remove some superfluous
+> > > variables and replace a custom implementation of strpbrk() with a call
+> > > to the standard C library function.
+> > > 
+> > > Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
+> > 
+> > The previous code was a total abomination, even if I happen to know who 
+> > wrote it.
+> 
+> Let's give Junio a break, okay? He does a kick-ass job at maintaining Git.
+> What we see here is simply good software development, nothing more,
+> nothing less: an initial, working code being improved. No need to make the
+> original author feel bad... :-)
 
-diff --git a/sideband.c b/sideband.c
-index 0a078c3..9504429 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -90,9 +90,8 @@ int recv_sideband(const char *me, int in_stream, int out)
-  * fd is connected to the remote side; send the sideband data
-  * over multiplexed packet stream.
-  */
--ssize_t send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_max)
-+void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_max)
- {
--	ssize_t ssz = sz;
- 	const char *p = data;
- 
- 	while (sz) {
-@@ -114,5 +113,4 @@ ssize_t send_sideband(int fd, int band, const char *data, ssize_t sz, int packet
- 		p += n;
- 		sz -= n;
- 	}
--	return ssz;
- }
-diff --git a/sideband.h b/sideband.h
-index e46bed0..7a8146f 100644
---- a/sideband.h
-+++ b/sideband.h
-@@ -5,6 +5,6 @@
- #define SIDEBAND_REMOTE_ERROR -1
- 
- int recv_sideband(const char *me, int in_stream, int out);
--ssize_t send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_max);
-+void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_max);
- 
- #endif
-diff --git a/upload-pack.c b/upload-pack.c
-index 56d101f..cab71b1 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -67,8 +67,10 @@ static void reset_timeout(void)
- 
- static ssize_t send_client_data(int fd, const char *data, ssize_t sz)
- {
--	if (use_sideband)
--		return send_sideband(1, fd, data, sz, use_sideband);
-+	if (use_sideband) {
-+		send_sideband(1, fd, data, sz, use_sideband);
-+		return sz;
-+	}
- 	if (fd == 3)
- 		/* emergency quit */
- 		fd = 2;
--- 
-2.8.3
+In case my sarcasm wasn't clear, _I_ am the author of the alluded 
+abomination.
+
+
+Nicolas
