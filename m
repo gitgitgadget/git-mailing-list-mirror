@@ -1,85 +1,74 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: Re: 'untracked working tree files would be overwritten by merge' on ignored files?
-Date: Tue, 14 Jun 2016 23:35:08 +0200
-Message-ID: <20160614213508.GD30134@inner.h.apk.li>
-References: <20160614160720.GA22675@inner.h.apk.li> <xmqqy467aeev.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [ANNOUNCE] Sharness v1.0.0
+Date: Tue, 14 Jun 2016 17:34:53 -0400
+Message-ID: <20160614213453.GA21560@sigill.intra.peff.net>
+References: <CAP8UFD0uvaB-2_CrXs2ZvoqLRHfCd8efA-S7-tE2Qa6Pn+rAAg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 14 23:35:34 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>,
+	Mathias Lafeldt <mathias.lafeldt@gmail.com>,
+	Alexander Sulfrian <alexander.sulfrian@fu-berlin.de>,
+	Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+	John Keeping <john@keeping.me.uk>,
+	Konstantin Koroviev <kkoroviev@gmail.com>,
+	"Mark A. Grondona" <mark.grondona@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Maxim Bublis <b@codemonkey.ru>,
+	Richard Hansen <rhansen@rhansen.org>,
+	Roman Neuhauser <rneuhauser@suse.cz>,
+	Simon Chiang <simon.a.chiang@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 14 23:35:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCvzW-00030h-Qd
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 23:35:23 +0200
+	id 1bCvzF-0002m5-99
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 23:35:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752087AbcFNVfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2016 17:35:16 -0400
-Received: from continuum.iocl.org ([217.140.74.2]:58757 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751150AbcFNVfO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2016 17:35:14 -0400
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id u5ELZ8a01931;
-	Tue, 14 Jun 2016 23:35:08 +0200
+	id S1752082AbcFNVe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2016 17:34:58 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54845 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751119AbcFNVe5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2016 17:34:57 -0400
+Received: (qmail 14767 invoked by uid 102); 14 Jun 2016 21:34:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Jun 2016 17:34:56 -0400
+Received: (qmail 455 invoked by uid 107); 14 Jun 2016 21:35:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Jun 2016 17:35:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Jun 2016 17:34:53 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqy467aeev.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+In-Reply-To: <CAP8UFD0uvaB-2_CrXs2ZvoqLRHfCd8efA-S7-tE2Qa6Pn+rAAg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297334>
 
-On Tue, 14 Jun 2016 10:06:16 +0000, Junio C Hamano wrote:
-...
-> 
-> IIRC, untracked files are kept during merge and across checking out
-> another branch.  Files that are deliberately marked as ignored by
-> listing them to .gitignore mechanism are considered expendable, and
-> they will be removed as necessary.
+On Tue, Jun 14, 2016 at 09:34:17PM +0200, Christian Couder wrote:
 
-Apparently not. Waitaminute - I can check out the other branch,
-and then the ignored file is replaced by the versioned file there,
-as you say.
+> Version 1.0.0 of Sharness [1] -- the test harness library derived from
+> Git's test lib -- is released.
 
-But when I try to merge the other branch, merge complains as in $subject.
+Cool. Git's test harness is something I really miss having in other
+projects. I'm glad this project exists. :)
 
-That is, 'git merge other' does not work, but 'git checkout out;
-git checkout -; git merge other' works because then the ignored file is
-removed in the first checkout and no longer in the way for the merge:
+> This release contains many upstream fixes and improvements from Git
+> and a lot of specific user contributed features [2].
 
-    $ git status --ignored
-    On branch side
-    Ignored files:
-      (use "git add -f <file>..." to include in what will be committed)
+It looks like it takes some manual work to massage upstream improvements
+into Sharness.
 
-	    a.txt
+I don't think the Git project would ever want to say "sharness is the
+upstream, and we are now just a user of it". But I wonder if we could
+break down test-lib.sh to keep the Git-specific parts separate, which
+would make it easier for sharness to pull the other bits as a whole.
 
-    nothing to commit, working directory clean
-    $ git merge master
-    error: The following untracked working tree files would be overwritten by merge:
-	    a.txt
-    Please move or remove them before you can merge.
-    Aborting
-    $ git checkout master
-    Switched to branch 'master'
-    $ git checkout -
-    Switched to branch 'side'
-    $ git merge master
-    Merge made by the 'recursive' strategy.
-     a.txt | 1 +
-     1 file changed, 1 insertion(+)
-     create mode 100644 a.txt
-    $
+I dunno. I guess it would depend on how invasive the patches were, but I
+would not be opposed to such a thing. I suspect the separation might
+actually make our test setup more clear.
 
-Andreas
-
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+-Peff
