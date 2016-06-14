@@ -1,100 +1,195 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] do not loop around deref_tag()
-Date: Tue, 14 Jun 2016 13:28:39 -0700
-Message-ID: <xmqqfusf8qh4.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Lukas Fleischer <lfleischer@lfos.de>
+Subject: [PATCH v2] Refactor recv_sideband()
+Date: Tue, 14 Jun 2016 23:00:38 +0200
+Message-ID: <20160614210038.31465-1-lfleischer@lfos.de>
+References: <20160613195224.13398-1-lfleischer@lfos.de>
+Cc: Nicolas Pitre <nico@fluxnic.net>, Johannes Sixt <j6t@kdbg.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 14 22:29:03 2016
+X-From: git-owner@vger.kernel.org Tue Jun 14 23:00:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCuxH-000598-9f
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 22:28:59 +0200
+	id 1bCvS7-0007FL-9B
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 23:00:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752867AbcFNU2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2016 16:28:44 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56846 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752184AbcFNU2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2016 16:28:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C5C3F2198E;
-	Tue, 14 Jun 2016 16:28:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=8
-	PSgzkxYxkLPrVgtfqATf8x7tuc=; b=vrQ2i5pqYZ8a9F/4QmHXeYr6H3JsVpQWo
-	3Z5rfOqPmx91rMpCmVDd8d87wxP6y33qUVZBTuaOhhB9b6zRlPCTFJ4rL/SmDbSx
-	o8DNUS/hAygCtC5o/CxZwOENsMVWAWzGKAcF+M+ngjgbYM5Y6sSObxtCfOHFVbRi
-	gNTjEQL13M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=PW/
-	OlEaMJYbtI0IHoAdEBZ1EInRaNwp9A+NZ8ZYQh3PSwON0pe3BrZx44t1qwYOWME2
-	6fznddbhkAjTuBkOXZPS9e0eb3lGz/sIy2N0F3mmr0dZ/LzfM7kild3cpFOiukhC
-	fZln2fMTz9J2nvjwqD+tz6tVTR6GjTBFeBHLhLC0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id BEC942198D;
-	Tue, 14 Jun 2016 16:28:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4E5D42198C;
-	Tue, 14 Jun 2016 16:28:41 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 954289AC-326E-11E6-9F72-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S932322AbcFNVAr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2016 17:00:47 -0400
+Received: from elnino.cryptocrack.de ([46.165.227.75]:48619 "EHLO
+	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932123AbcFNVAq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2016 17:00:46 -0400
+Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id eeea5499
+	TLS version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO;
+	Tue, 14 Jun 2016 23:00:43 +0200 (CEST)
+X-Mailer: git-send-email 2.8.3
+In-Reply-To: <20160613195224.13398-1-lfleischer@lfos.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297328>
 
-These callers appear to expect that deref_tag() is to peel one layer
-of a tag, but the function does not work that way; it has its own
-loop to unwrap tags until an object that is not a tag appears.
+Improve the readability of recv_sideband() significantly by replacing
+fragile buffer manipulations with string buffers and more sophisticated
+format strings. Note that each line is printed using a single write()
+syscall to avoid garbled output when multiple processes write to stderr
+in parallel, see 9ac13ec (atomic write for sideband remote messages,
+2006-10-11) for details.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Also, reorganize the overall control flow, remove some superfluous
+variables and replace a custom implementation of strpbrk() with a call
+to the standard C library function.
+
+Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
 ---
- builtin/blame.c | 6 ++----
- line-log.c      | 3 +--
- 2 files changed, 3 insertions(+), 6 deletions(-)
+Now uses a single write() invocation per line. Thanks to Nicolas and
+Junio for bringing 9ac13ec to my attention.
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 21f42b0..7417edf 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2425,8 +2425,7 @@ static struct commit *find_single_final(struct rev_info *revs,
- 		struct object *obj = revs->pending.objects[i].item;
- 		if (obj->flags & UNINTERESTING)
+ sideband.c | 97 +++++++++++++++++++++-----------------------------------------
+ 1 file changed, 33 insertions(+), 64 deletions(-)
+
+diff --git a/sideband.c b/sideband.c
+index fde8adc..8340a1b 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -13,103 +13,72 @@
+  * the remote died unexpectedly.  A flush() concludes the stream.
+  */
+ 
+-#define PREFIX "remote:"
++#define PREFIX "remote: "
+ 
+ #define ANSI_SUFFIX "\033[K"
+ #define DUMB_SUFFIX "        "
+ 
+-#define FIX_SIZE 10  /* large enough for any of the above */
+-
+ int recv_sideband(const char *me, int in_stream, int out)
+ {
+-	unsigned pf = strlen(PREFIX);
+-	unsigned sf;
+-	char buf[LARGE_PACKET_MAX + 2*FIX_SIZE];
+-	char *suffix, *term;
+-	int skip_pf = 0;
++	const char *term, *suffix;
++	char buf[LARGE_PACKET_MAX + 1];
++	struct strbuf outbuf = STRBUF_INIT;
++	const char *b, *brk;
+ 
+-	memcpy(buf, PREFIX, pf);
++	strbuf_addf(&outbuf, "%s", PREFIX);
+ 	term = getenv("TERM");
+ 	if (isatty(2) && term && strcmp(term, "dumb"))
+ 		suffix = ANSI_SUFFIX;
+ 	else
+ 		suffix = DUMB_SUFFIX;
+-	sf = strlen(suffix);
+ 
+ 	while (1) {
+ 		int band, len;
+-		len = packet_read(in_stream, NULL, NULL, buf + pf, LARGE_PACKET_MAX, 0);
++		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
+ 		if (len == 0)
+ 			break;
+ 		if (len < 1) {
+ 			fprintf(stderr, "%s: protocol error: no band designator\n", me);
+ 			return SIDEBAND_PROTOCOL_ERROR;
+ 		}
+-		band = buf[pf] & 0xff;
++		band = buf[0] & 0xff;
++		buf[len] = '\0';
+ 		len--;
+ 		switch (band) {
+ 		case 3:
+-			buf[pf] = ' ';
+-			buf[pf+1+len] = '\0';
+-			fprintf(stderr, "%s\n", buf);
++			fprintf(stderr, "%s%s\n", PREFIX, buf + 1);
+ 			return SIDEBAND_REMOTE_ERROR;
+ 		case 2:
+-			buf[pf] = ' ';
+-			do {
+-				char *b = buf;
+-				int brk = 0;
+-
+-				/*
+-				 * If the last buffer didn't end with a line
+-				 * break then we should not print a prefix
+-				 * this time around.
+-				 */
+-				if (skip_pf) {
+-					b += pf+1;
+-				} else {
+-					len += pf+1;
+-					brk += pf+1;
+-				}
++			b = buf + 1;
+ 
+-				/* Look for a line break. */
+-				for (;;) {
+-					brk++;
+-					if (brk > len) {
+-						brk = 0;
+-						break;
+-					}
+-					if (b[brk-1] == '\n' ||
+-					    b[brk-1] == '\r')
+-						break;
+-				}
++			/*
++			 * Append a suffix to each nonempty line to clear the
++			 * end of the screen line.
++			 */
++			while ((brk = strpbrk(b, "\n\r"))) {
++				int linelen = brk - b;
+ 
+-				/*
+-				 * Let's insert a suffix to clear the end
+-				 * of the screen line if a line break was
+-				 * found.  Also, if we don't skip the
+-				 * prefix, then a non-empty string must be
+-				 * present too.
+-				 */
+-				if (brk > (skip_pf ? 0 : (pf+1 + 1))) {
+-					char save[FIX_SIZE];
+-					memcpy(save, b + brk, sf);
+-					b[brk + sf - 1] = b[brk - 1];
+-					memcpy(b + brk - 1, suffix, sf);
+-					fprintf(stderr, "%.*s", brk + sf, b);
+-					memcpy(b + brk, save, sf);
+-					len -= brk;
++				if (linelen > 0) {
++					strbuf_addf(&outbuf, "%.*s%s%c",
++						    linelen, b, suffix, *brk);
+ 				} else {
+-					int l = brk ? brk : len;
+-					fprintf(stderr, "%.*s", l, b);
+-					len -= l;
++					strbuf_addf(&outbuf, "%c", *brk);
+ 				}
++				xwrite(STDERR_FILENO, outbuf.buf, outbuf.len);
++				strbuf_reset(&outbuf);
++				strbuf_addf(&outbuf, "%s", PREFIX);
++
++				b = brk + 1;
++			}
+ 
+-				skip_pf = !brk;
+-				memmove(buf + pf+1, b + brk, len);
+-			} while (len);
++			if (*b) {
++				xwrite(STDERR_FILENO, outbuf.buf, outbuf.len);
++				/* Incomplete line, skip the next prefix. */
++				strbuf_reset(&outbuf);
++			}
  			continue;
--		while (obj->type == OBJ_TAG)
--			obj = deref_tag(obj, NULL, 0);
-+		obj = deref_tag(obj, NULL, 0);
- 		if (obj->type != OBJ_COMMIT)
- 			die("Non commit %s?", revs->pending.objects[i].name);
- 		if (found)
-@@ -2461,8 +2460,7 @@ static char *prepare_initial(struct scoreboard *sb)
- 		struct object *obj = revs->pending.objects[i].item;
- 		if (!(obj->flags & UNINTERESTING))
+ 		case 1:
+-			write_or_die(out, buf + pf+1, len);
++			write_or_die(out, buf + 1, len);
  			continue;
--		while (obj->type == OBJ_TAG)
--			obj = deref_tag(obj, NULL, 0);
-+		obj = deref_tag(obj, NULL, 0);
- 		if (obj->type != OBJ_COMMIT)
- 			die("Non commit %s?", revs->pending.objects[i].name);
- 		if (sb->final)
-diff --git a/line-log.c b/line-log.c
-index bbe31ed..1fbbe4f 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -480,8 +480,7 @@ static struct commit *check_single_commit(struct rev_info *revs)
- 		struct object *obj = revs->pending.objects[i].item;
- 		if (obj->flags & UNINTERESTING)
- 			continue;
--		while (obj->type == OBJ_TAG)
--			obj = deref_tag(obj, NULL, 0);
-+		obj = deref_tag(obj, NULL, 0);
- 		if (obj->type != OBJ_COMMIT)
- 			die("Non commit %s?", revs->pending.objects[i].name);
- 		if (commit)
+ 		default:
+ 			fprintf(stderr, "%s: protocol error: bad band #%d\n",
+-- 
+2.8.3
