@@ -1,151 +1,111 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] blame: dwim "blame --reverse OLD" as "blame --reverse OLD.."
-Date: Tue, 14 Jun 2016 11:41:11 -0700
-Message-ID: <xmqqziqn8vg8.fsf_-_@gitster.mtv.corp.google.com>
-References: <xmqqtwgvadru.fsf@gitster.mtv.corp.google.com>
-	<xmqqporjackh.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v2 1/1] Don't free remote->name after fetch
+Date: Tue, 14 Jun 2016 11:49:11 -0700
+Message-ID: <xmqqvb1b8v2w.fsf@gitster.mtv.corp.google.com>
+References: <1465928936-68866-1-git-send-email-kmcguigan@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 14 20:41:27 2016
+Cc: git@vger.kernel.org
+To: kmcguigan@twopensource.com
+X-From: git-owner@vger.kernel.org Tue Jun 14 20:49:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCtHB-0006bX-5l
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 20:41:25 +0200
+	id 1bCtOv-0004pP-Jw
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 20:49:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752984AbcFNSlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2016 14:41:21 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64777 "EHLO
+	id S1752362AbcFNStV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2016 14:49:21 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56718 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752948AbcFNSlU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2016 14:41:20 -0400
+	with ESMTP id S1751364AbcFNStU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2016 14:49:20 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 91AF023490;
-	Tue, 14 Jun 2016 14:41:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id AE2CF209E2;
+	Tue, 14 Jun 2016 14:49:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Whlc/6PyZ0MWKBwEluQou8Q8Rxs=; b=ahtyjA
-	ZfoywBpRq8IY6NfHJjIO4RYT9FrCXrG4J5/JLEtN9nffeWgBvQXEnBD68BkJ65g/
-	NJhH07Xkh0sE0j1ogJ3NtwjKNNKKksoDpdTc9267w1ErvL+JlTeirP8s6EmBKzJk
-	B/+xKNH3SPPJV2B4celuhg28YNalRufDp5VLU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Yxyl+cR/CWJfew2YLyeya6Q1+sZwDMDG
-	XZOaThhD1E1avsJuabVR4b4nG5xNXWsz0fOsLD7XsCIok43Do1f6tiEBEfykxBRx
-	W2eyrp09LqFWplbOZ28vYikXbeMewWYpLxG23tgYMIahQdyZwTbmVTuaTQoTymYA
-	Zl7ALPbxH00=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 89B342348F;
-	Tue, 14 Jun 2016 14:41:13 -0400 (EDT)
+	:content-type; s=sasl; bh=pXLOLa+HJk0FbhdjGIFNhpIOckc=; b=SN6XI+
+	x6hOspjiar9NdEf41YeiZsJ4XDKI8Sto/IMZ8F67x9DPxtwscBR8eQqFjNJ5x5g0
+	uiPmQNkfAtAYvyT2tWayfFdEppwkWiJ1J/DUDGLo9pY714hi8MT4LfLi8nR1hhfU
+	QUZJNqYHMYGAxwTu+In7hWWPoFV6op5DxL/dM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B0ujj6OoK+ZIRUy4txxYhc0RtQgAEt0v
+	Lw4SPWk4a6o5xNR6OCdy5ctrc67NwZ9u33fN1yXs7o3i06G/SazIB1GFaTMNPYNh
+	JpuFKQnk0HUZYX+/nbG81GfUDyyMLlZoSre4ogn8XDfToS0pSbPbmqCW7l7EoZ2m
+	dintdVGWqGA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A6D1C209E1;
+	Tue, 14 Jun 2016 14:49:13 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 120A92348E;
-	Tue, 14 Jun 2016 14:41:13 -0400 (EDT)
-In-Reply-To: <xmqqporjackh.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 14 Jun 2016 10:46:06 -0700")
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 306D3209E0;
+	Tue, 14 Jun 2016 14:49:13 -0400 (EDT)
+In-Reply-To: <1465928936-68866-1-git-send-email-kmcguigan@twopensource.com>
+	(kmcguigan@twopensource.com's message of "Tue, 14 Jun 2016 14:28:56
+	-0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 91CDB7CE-325F-11E6-B26F-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: AFFAFA9E-3260-11E6-9065-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297319>
 
-Instead of always requiring both ends of a range, we could DWIM
-"OLD", which could be a misspelt "OLD..", to be a range that ends at
-the current commit.
+kmcguigan@twopensource.com writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+> From: Keith McGuigan <kmcguigan@twopensource.com>
+>
+> Make fetch's string_list of remote names owns all of its string items
+> (strdup'ing when necessary) so that it can deallocate them safely when
+> clearing.
+>
+> ---
 
- * I am not convinced that this is a good change, though.  It is
-   true that there is no other sensible interpretation of the user's
-   intent when --reverse is given a single positive commit without
-   any other revision, but at the same time, this feels a bit too
-   much special casing that could hurt casual users when they are
-   still forming their mental world model by learning from examples.
+OK.
 
- Documentation/blame-options.txt |  5 +++--
- builtin/blame.c                 | 38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+), 2 deletions(-)
+When I pointed out the call to string_list_append() in
+get_remote_group() as one example, I did not check if there are
+others that need similar adjustment.  I just skimmed through the
+file again and it seems there is none, so this change looks good.
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index 02cb684..6c6c78f 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -28,12 +28,13 @@ include::line-range-format.txt[]
- -S <revs-file>::
- 	Use revisions from revs-file instead of calling linkgit:git-rev-list[1].
- 
----reverse::
-+--reverse <rev>..<rev>::
- 	Walk history forward instead of backward. Instead of showing
- 	the revision in which a line appeared, this shows the last
- 	revision in which a line has existed. This requires a range of
- 	revision like START..END where the path to blame exists in
--	START.
-+	START.  `git blame --reverse START` is taken as `git blame
-+	--reverse START..HEAD` for convenience.
- 
- -p::
- --porcelain::
-diff --git a/builtin/blame.c b/builtin/blame.c
-index a027b8a..574b47d 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2447,6 +2447,41 @@ static char *prepare_final(struct scoreboard *sb)
- 	return xstrdup_or_null(name);
- }
- 
-+static const char *dwim_reverse_initial(struct scoreboard *sb)
-+{
-+	/*
-+	 * DWIM "git blame --reverse ONE -- PATH" as
-+	 * "git blame --reverse ONE..HEAD -- PATH" but only do so
-+	 * when it makes sense.
-+	 */
-+	struct object *obj;
-+	struct commit *head_commit;
-+	unsigned char head_sha1[20];
-+
-+	if (sb->revs->pending.nr != 1)
-+		return NULL;
-+
-+	/* Is that sole rev a committish? */
-+	obj = sb->revs->pending.objects[0].item;
-+	obj = deref_tag(obj, NULL, 0);
-+	if (obj->type != OBJ_COMMIT)
-+		return NULL;
-+
-+	/* Do we have HEAD? */
-+	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_sha1, NULL))
-+		return NULL;
-+	head_commit = lookup_commit_reference_gently(head_sha1, 1);
-+	if (!head_commit)
-+		return NULL;
-+
-+	/* Turn "ONE" into "ONE..HEAD" then */
-+	obj->flags |= UNINTERESTING;
-+	add_pending_object(sb->revs, &head_commit->object, "HEAD");
-+
-+	sb->final = (struct commit *)obj;
-+	return sb->revs->pending.objects[0].name;
-+}
-+
- static char *prepare_initial(struct scoreboard *sb)
- {
- 	int i;
-@@ -2472,6 +2507,9 @@ static char *prepare_initial(struct scoreboard *sb)
- 		sb->final = (struct commit *) obj;
- 		final_commit_name = revs->pending.objects[i].name;
- 	}
-+
-+	if (!final_commit_name)
-+		final_commit_name = dwim_reverse_initial(sb);
- 	if (!final_commit_name)
- 		die("No commit to dig up from?");
- 	return xstrdup(final_commit_name);
+I assume you meant to sign this off, too?
+
+>  builtin/fetch.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 630ae6a1bb78..1b4e924bd222 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1071,7 +1071,7 @@ static int get_remote_group(const char *key, const char *value, void *priv)
+>  			size_t wordlen = strcspn(value, " \t\n");
+>  
+>  			if (wordlen >= 1)
+> -				string_list_append(g->list,
+> +				string_list_append_nodup(g->list,
+>  						   xstrndup(value, wordlen));
+>  			value += wordlen + (value[wordlen] != '\0');
+>  		}
+> @@ -1261,7 +1261,7 @@ done:
+>  int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  {
+>  	int i;
+> -	struct string_list list = STRING_LIST_INIT_NODUP;
+> +	struct string_list list = STRING_LIST_INIT_DUP;
+>  	struct remote *remote;
+>  	int result = 0;
+>  	struct argv_array argv_gc_auto = ARGV_ARRAY_INIT;
+> @@ -1347,8 +1347,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  		argv_array_clear(&options);
+>  	}
+>  
+> -	/* All names were strdup()ed or strndup()ed */
+> -	list.strdup_strings = 1;
+>  	string_list_clear(&list, 0);
+>  
+>  	close_all_packs();
