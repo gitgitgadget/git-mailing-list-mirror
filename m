@@ -1,312 +1,106 @@
-From: Keith McGuigan <kmcguigan@twopensource.com>
-Subject: Re: [PATCH 1/1] Don't free remote->name after fetch
-Date: Mon, 13 Jun 2016 20:14:43 -0400
-Message-ID: <CALnYDJNS9QAtu37a76Q6N3C=GRbfgU8Xq3g7F1q7vX+b=rwOOA@mail.gmail.com>
-References: <1465841837-31604-1-git-send-email-kmcguigan@twopensource.com>
-	<xmqqbn34buak.fsf@gitster.mtv.corp.google.com>
-	<CALnYDJO=_hfcQf+=+XuHQwmH4XewqHo4qggzB0rM79WVt+e6nQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/3] blame,shortlog: don't make local option variables static
+Date: Tue, 14 Jun 2016 00:32:15 -0400
+Message-ID: <CAPig+cQudTwT6H35YgEvxdK9AAn0BwvUC8bi8-DxGYNh9rb_Lw@mail.gmail.com>
+References: <20160613053203.GB3950@sigill.intra.peff.net> <20160613053928.GC23880@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 14 02:15:12 2016
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 14 06:32:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCc0d-00010B-3b
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 02:15:11 +0200
+	id 1bCg1f-0005yI-Ac
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 06:32:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423136AbcFNAOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2016 20:14:45 -0400
-Received: from mail-it0-f42.google.com ([209.85.214.42]:37744 "EHLO
-	mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423055AbcFNAOo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2016 20:14:44 -0400
-Received: by mail-it0-f42.google.com with SMTP id e5so55401024ith.0
-        for <git@vger.kernel.org>; Mon, 13 Jun 2016 17:14:43 -0700 (PDT)
+	id S1422709AbcFNEcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2016 00:32:23 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:33300 "EHLO
+	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933196AbcFNEcW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2016 00:32:22 -0400
+Received: by mail-io0-f195.google.com with SMTP id 5so19264806ioy.0
+        for <git@vger.kernel.org>; Mon, 13 Jun 2016 21:32:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=K0RqYv/3mw+L6CNFz8iNhY7kIpKGUngPNcZwzQ4ymsw=;
-        b=MHoLJ5+f1cnatKJpEoAdA1J9dOPGaAxFNjILq1IqC5P10KNabMP+c0voxp9hns+MKk
-         /9z7foBoKVwyfmPpc6EvIcX+nSkoRSyENR5QFeNYuK3LgXX6Z0ZVx3hXIYH+QRcqFkne
-         Oey39/oTla3/5hHkNE43xWLuPg2MbkLIG2ew6NgiOCPfb5UGNg/K/t+gcUl2DNXXoacO
-         WHBETikfTIpOCRUEepwEHmpxcXkAmaviKwBQm9nZFgeQRH4UNUA4joAk/gWEalHto6ia
-         Ojs8uzOTm9D5+EY0jTnljfWnkq+oj9mSBKQ5lVzFzypH35EE5EI45abI8VVcPzfNwrMS
-         Fsdg==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=mkU5j/y3ZNjWI67NJiTZ5gHb8Mb6E5GKx6yBQsZyZns=;
+        b=cSo8EieI0fgja8wgBuB9vgPQfF2Ap/Ln8LInezwg8NwMjB3DmAD1lzGBE9cDouYbG3
+         ictoKw53hQocsqYOlelmjkMInQxX3LXfdqUr+H+nkf0JfGT+MCxvi/c89emq5XygUs7M
+         VikJJsVk2TqYMxnVI5MVylCpH3AHrFQxAJ2lkBs9zfc+CxuyQlEtxYoasE+55eSs0T1x
+         ZIqM3PGq+yvJhIj09yL0W0WBMmNW2UF90rKw4qIVBLx/H9DIjM7KbKF09Qi0WV0VDjKz
+         I48xBgf0CIwCExxIGTvuYGjQlTpdr+leu1Xr8GdxHTnakN6+kZ3YFxj98sxi3ckvCcdO
+         bO2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=K0RqYv/3mw+L6CNFz8iNhY7kIpKGUngPNcZwzQ4ymsw=;
-        b=JTUJ0TgDP3of7EQinNmF/p5MlgiNzHPHFyf+u4EgoU5gt20hF1UjIcMR4LFlZpLrZ/
-         XkxB6tkyplX6XTriRYOKjP+4RH3RjXlm/nG0LOqBWthwcTfLv6l0ux3s5QUo9rRY7M9/
-         ul3ekwDsmpo5O5l21r2aNWvfu/bObvcm/SPJVB/QNM7xxQf2J4OrvuVlsE8OzIZu3ove
-         /EYsROkEWsVMM9w45YwPa+ZQOC/eEfXAyxtXT1G8HpA8yPvbTkqabVmvd34+biO54WOP
-         VnOmjR1Pgyd5lt5IH554TrzgQ2MyW1Le8FboXnlIcaN18veuUGE1w7EsLjzk+n0DUobi
-         C4bw==
-X-Gm-Message-State: ALyK8tLVayfvsgEQPhACISobfJUP3VBjB/OWhcekQ33gcyel4hn4oP/4xj9+HjAtgwgsrrubgZuV4ajc1p+ZYg==
-X-Received: by 10.36.9.14 with SMTP id 14mr3852546itm.68.1465863283105; Mon,
- 13 Jun 2016 17:14:43 -0700 (PDT)
-Received: by 10.50.152.67 with HTTP; Mon, 13 Jun 2016 17:14:43 -0700 (PDT)
-In-Reply-To: <CALnYDJO=_hfcQf+=+XuHQwmH4XewqHo4qggzB0rM79WVt+e6nQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=mkU5j/y3ZNjWI67NJiTZ5gHb8Mb6E5GKx6yBQsZyZns=;
+        b=jN1xB+/LkfWacYKephSRuM6Up+Oxmf/H/sQZs6VWVJlB223wabPI/TXQgXNAGDHu5H
+         1nabsyu7kpaOB/KIu5SZtQ58sl6hgpzGHPi4UpQkHM8PGne4mYLle/FsQ6pJJORWmrW+
+         Co3qpEvOuuVpOSknKA5rF54SMx5fcRBfVy9IgsmXZzHbU6cVyKBpcA1KRj9vEEwx+8RV
+         zh+vE/j7duTxVwBIDKm9fc43/7MzEmi/n07D25e391JiPPxijfItgiqYLVXlz3paF3z5
+         tf0JER7SULDYPohwe5m7eq3tYuJO8l+bEgagm5SxeEQH0UgAVMaGTWiahiTgbNDQqBCD
+         H4AA==
+X-Gm-Message-State: ALyK8tLYcP9pRAzMUtd9VfN+8TbGx41l8ZATYp9hsQd/Oy/lcLF+RBc3caUt2ALqhvHNV04URIZCixaH8DelSQ==
+X-Received: by 10.107.47.41 with SMTP id j41mr27390055ioo.168.1465878736249;
+ Mon, 13 Jun 2016 21:32:16 -0700 (PDT)
+Received: by 10.79.0.30 with HTTP; Mon, 13 Jun 2016 21:32:15 -0700 (PDT)
+In-Reply-To: <20160613053928.GC23880@sigill.intra.peff.net>
+X-Google-Sender-Auth: C5loWS2w4H8YonnmHUO1EvPNEt0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297261>
 
-Right.  The string_list ends up getting (potentially) populated with a
-mix of dup'd
-and borrowed values.  I figured it was safer to leak here (especially
-as we're on
-the way out anyway), than free memory that shouldn't be freed.
+On Mon, Jun 13, 2016 at 1:39 AM, Jeff King <peff@peff.net> wrote:
+> There's no need for these option variables to be static,
+> except that they are referenced by the options array itself,
+> which is static. But having all of this static is simply
+> unnecessary and confusing (and inconsistent with most other
+> commands, which either use a static global option list or a
+> true function-local one).
+>
+> Note that in some cases we may need to actually initialize
+> the variables (since we cannot rely on BSS to do so). This
+> is a net improvement to readability, though, as we can use
+> the more verbose initializers for our string_lists.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> @@ -2522,12 +2522,12 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+> -       static struct string_list range_list;
+> -       static int output_option = 0, opt = 0;
+> -       static int show_stats = 0;
+> -       static const char *revs_file = NULL;
+> -       static const char *contents_from = NULL;
+> -       static const struct option options[] = {
+> +       struct string_list range_list = STRING_LIST_INIT_NODUP;
 
-Actually, what motivates this (and I apologize that I didn't say this
-earlier) is that
-we added (in our repo) a bit of stats collection code that executes after the
-string_list_clear(), and calls remote_get() which goes all sideways when some of
-its memory has been freed.
+Related to this series, there's an additional "fix" which ought to be
+made, probably as a separate patch. In particular, in cmd_blame():
 
-As an alternative, I could xstrdup each instance where remote->name is appended,
-which would make the string_list a homogenous dup'd list, which we
-could then free.
-If you prefer that I'll do a re-roll in that style (it just seemed to
-me at the time like
-it would be doing some useless allocations).  I don't much mind either way.
+    if (lno && !range_list.nr)
+        string_list_append(&range_list, xstrdup("1"));
 
---
-- Keith
+which supplies a default range ("line 1 through end of file") if -L
+was not specified. I used xstrdup() on the literal "1" in 58dbfa2
+(blame: accept multiple -L ranges, 2013-08-06) to be consistent with
+parse_opt_string_list() which was unconditionally xstrdup'ing the
+argument (but no longer does as of patch 1/3 of this series).
 
-On Mon, Jun 13, 2016 at 6:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> kmcguigan@twopensource.com writes:
->
-> > From: Keith McGuigan <kmcguigan@twopensource.com>
-> >
-> > The string_list gets populated with the names from the remotes[] array,
-> > which are not dup'd and the list does not own.
-> >
-> > Signed-of-by: Keith McGuigan <kmcguigan@twopensource.com>
-> > ---
->
-> For names that come from remote_get()->name, e.g.
->
->     static int get_one_remote_for_fetch(struct remote *remote, void *priv)
->     {
->             struct string_list *list = priv;
->             if (!remote->skip_default_update)
->                     string_list_append(list, remote->name);
->             return 0;
->     }
->
-> you are correct that this is borrowed memory we are not allowed to
-> free.  But is borrowing from remote->name the only way this list is
-> populated?  For example, what happens in add_remote_or_group(),
-> which does this?
->
->     struct remote_group_data {
->             const char *name;
->             struct string_list *list;
->     };
->
->     static int get_remote_group(const char *key, const char *value, void *priv)
->     {
->             struct remote_group_data *g = priv;
->
->             if (skip_prefix(key, "remotes.", &key) && !strcmp(key, g->name)) {
->                     /* split list by white space */
->                     while (*value) {
->                             size_t wordlen = strcspn(value, " \t\n");
->
->                             if (wordlen >= 1)
->                                     string_list_append(g->list,
->                                                        xstrndup(value, wordlen));
->
-> This newly allocated piece of memory is held by g->list, which was...
->
->                             value += wordlen + (value[wordlen] != '\0');
->                     }
->             }
->
->             return 0;
->     }
->
->     static int add_remote_or_group(const char *name, struct string_list *list)
->     {
->             int prev_nr = list->nr;
->             struct remote_group_data g;
->             g.name = name; g.list = list;
->
-> ... passed as a callback parameter from here.
->
->             git_config(get_remote_group, &g);
->             if (list->nr == prev_nr) {
->                     struct remote *remote = remote_get(name);
->                     if (!remote_is_configured(remote))
->                             return 0;
->                     string_list_append(list, remote->name);
->
-> This makes remote->name borrowed, which we cannot free() as you
-> point out.
->
->             }
->             return 1;
->     }
->
-> So, while I agree that many should not be freed, this change makes
-> the code leak some at the same time.
->
->
->
-> >  builtin/fetch.c | 2 --
-> >  1 file changed, 2 deletions(-)
-> >
-> > diff --git a/builtin/fetch.c b/builtin/fetch.c
-> > index 630ae6a1bb78..181da5a2e7a3 100644
-> > --- a/builtin/fetch.c
-> > +++ b/builtin/fetch.c
-> > @@ -1347,8 +1347,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
-> >               argv_array_clear(&options);
-> >       }
-> >
-> > -     /* All names were strdup()ed or strndup()ed */
-> > -     list.strdup_strings = 1;
-> >       string_list_clear(&list, 0);
-> >
-> >       close_all_packs();
-
-On Mon, Jun 13, 2016 at 8:11 PM, Keith McGuigan
-<kmcguigan@twopensource.com> wrote:
-> Right.  The string_list ends up getting (potentially) populated with a mix
-> of dup'd
-> and borrowed values.  I figured it was safer to leak here (especially as
-> we're on
-> the way out anyway), than free memory that shouldn't be freed.
->
-> Actually, what motivates this, and I apologize that I didn't say this
-> earlier, is that
-> we added (in our repo) a bit of stats collection code that executes after
-> the
-> string_list_clear(), and calls remote_get() which goes all sideways when
-> some of
-> its memory has been freed.
->
-> As an alternative, I could xstrdup each instance where remote->name is
-> appended,
-> which would make the string_list a homogenous dup'd list, which we could
-> then free.
-> If you prefer that I'll do a re-roll in that style (it just seemed to me at
-> the time like
-> it would be doing some useless allocations).  I don't much mind either way.
->
-> --
-> - Keith
->
-> On Mon, Jun 13, 2016 at 6:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> kmcguigan@twopensource.com writes:
->>
->> > From: Keith McGuigan <kmcguigan@twopensource.com>
->> >
->> > The string_list gets populated with the names from the remotes[] array,
->> > which are not dup'd and the list does not own.
->> >
->> > Signed-of-by: Keith McGuigan <kmcguigan@twopensource.com>
->> > ---
->>
->> For names that come from remote_get()->name, e.g.
->>
->>     static int get_one_remote_for_fetch(struct remote *remote, void *priv)
->>     {
->>             struct string_list *list = priv;
->>             if (!remote->skip_default_update)
->>                     string_list_append(list, remote->name);
->>             return 0;
->>     }
->>
->> you are correct that this is borrowed memory we are not allowed to
->> free.  But is borrowing from remote->name the only way this list is
->> populated?  For example, what happens in add_remote_or_group(),
->> which does this?
->>
->>     struct remote_group_data {
->>             const char *name;
->>             struct string_list *list;
->>     };
->>
->>     static int get_remote_group(const char *key, const char *value, void
->> *priv)
->>     {
->>             struct remote_group_data *g = priv;
->>
->>             if (skip_prefix(key, "remotes.", &key) && !strcmp(key,
->> g->name)) {
->>                     /* split list by white space */
->>                     while (*value) {
->>                             size_t wordlen = strcspn(value, " \t\n");
->>
->>                             if (wordlen >= 1)
->>                                     string_list_append(g->list,
->>                                                        xstrndup(value,
->> wordlen));
->>
->> This newly allocated piece of memory is held by g->list, which was...
->>
->>                             value += wordlen + (value[wordlen] != '\0');
->>                     }
->>             }
->>
->>             return 0;
->>     }
->>
->>     static int add_remote_or_group(const char *name, struct string_list
->> *list)
->>     {
->>             int prev_nr = list->nr;
->>             struct remote_group_data g;
->>             g.name = name; g.list = list;
->>
->> ... passed as a callback parameter from here.
->>
->>             git_config(get_remote_group, &g);
->>             if (list->nr == prev_nr) {
->>                     struct remote *remote = remote_get(name);
->>                     if (!remote_is_configured(remote))
->>                             return 0;
->>                     string_list_append(list, remote->name);
->>
->> This makes remote->name borrowed, which we cannot free() as you
->> point out.
->>
->>             }
->>             return 1;
->>     }
->>
->> So, while I agree that many should not be freed, this change makes
->> the code leak some at the same time.
->>
->>
->>
->> >  builtin/fetch.c | 2 --
->> >  1 file changed, 2 deletions(-)
->> >
->> > diff --git a/builtin/fetch.c b/builtin/fetch.c
->> > index 630ae6a1bb78..181da5a2e7a3 100644
->> > --- a/builtin/fetch.c
->> > +++ b/builtin/fetch.c
->> > @@ -1347,8 +1347,6 @@ int cmd_fetch(int argc, const char **argv, const
->> > char *prefix)
->> >               argv_array_clear(&options);
->> >       }
->> >
->> > -     /* All names were strdup()ed or strndup()ed */
->> > -     list.strdup_strings = 1;
->> >       string_list_clear(&list, 0);
->> >
->> >       close_all_packs();
->
->
+> +       int output_option = 0, opt = 0;
+> +       int show_stats = 0;
+> +       const char *revs_file = NULL;
+> +       const char *contents_from = NULL;
+> +       const struct option options[] = {
+>                 OPT_BOOL(0, "incremental", &incremental, N_("Show blame entries as we find them, incrementally")),
+>                 OPT_BOOL('b', NULL, &blank_boundary, N_("Show blank SHA-1 for boundary commits (Default: off)")),
+>                 OPT_BOOL(0, "root", &show_root, N_("Do not treat root commits as boundaries (Default: off)")),
