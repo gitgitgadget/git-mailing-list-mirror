@@ -1,100 +1,151 @@
-From: kmcguigan@twopensource.com
-Subject: [PATCH v2 1/1] Don't free remote->name after fetch
-Date: Tue, 14 Jun 2016 14:28:56 -0400
-Message-ID: <1465928936-68866-1-git-send-email-kmcguigan@twopensource.com>
-Cc: Keith McGuigan <kmcguigan@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] blame: dwim "blame --reverse OLD" as "blame --reverse OLD.."
+Date: Tue, 14 Jun 2016 11:41:11 -0700
+Message-ID: <xmqqziqn8vg8.fsf_-_@gitster.mtv.corp.google.com>
+References: <xmqqtwgvadru.fsf@gitster.mtv.corp.google.com>
+	<xmqqporjackh.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 14 20:29:14 2016
+X-From: git-owner@vger.kernel.org Tue Jun 14 20:41:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCt5O-00054i-4J
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 20:29:14 +0200
+	id 1bCtHB-0006bX-5l
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 20:41:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932185AbcFNS3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2016 14:29:09 -0400
-Received: from mail-qg0-f42.google.com ([209.85.192.42]:35117 "EHLO
-	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932091AbcFNS3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2016 14:29:08 -0400
-Received: by mail-qg0-f42.google.com with SMTP id v48so71589658qgd.2
-        for <git@vger.kernel.org>; Tue, 14 Jun 2016 11:29:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id;
-        bh=pRCq/KHgMpGzOPD/c4jfqimc4MS9aHoHZ7uWqOnu060=;
-        b=gIkI9nquXutiT0KdmVY/HmuZag+8txAtljYZrLTiZsbYXz1J3bcqaqAEa33CyBJd2r
-         TSMc62mGYYThaUEd1gOLAC5zNixE51uuVQ40Dj6wTh32HbFioZ7QruQFjIw6m0WRgrGv
-         hywgXAf41CihHRVwXTNWA0hb6k95HLPaeH3IBMpD44lQWelOmDSGbOWv4rvjqHkHQa7B
-         ItDpYWEs8A7B/B/eThjdLV21jgG0/Y8AGm+q50GLHg13NHqtZ5S6CYieGFeWyu+oBxxP
-         jnIu6yUkZX9Y56qFViEfyFHZDO6nymeBqFfBnpoYhRriDn543RNGRNybxM1u4DZu13OT
-         Y/kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=pRCq/KHgMpGzOPD/c4jfqimc4MS9aHoHZ7uWqOnu060=;
-        b=WfcLMfzMq2SG7rPAMNmgWwG2P3Pr2R4GjabSsKVshBtMiGQbVsy913COR0hSNatQIn
-         c7n6gdLW6jcrqmZdi15pGgNa64JKWwPcAufXMevvrO50LfqDJukVNpCA6dI35yMSPc7M
-         +WZjJhmYovrj+sg//oHI0k5djg9dqJCP64xpWETL0t6DrohC1875NTY6ykc0J+1FEo1G
-         6e5UguE0UbrtL34S3gVLkUfeI1OWHKm+fUBcn5WGUUSbr1HepH/gH3z96GAMxNRiegW4
-         1FJ2cNBfwnz/Fcu9/IuJSer+IXnHZx5SewcRuphvyxV35VWo2qEfwMBdU9smGs7C+kPH
-         N7xw==
-X-Gm-Message-State: ALyK8tI+bvGY9ZvtuO6GZxCAheDfvpIGechnJH9E0L76IfNHqmCFez4ugUq/ojzZg7uORg==
-X-Received: by 10.140.81.213 with SMTP id f79mr20702126qgd.35.1465928947106;
-        Tue, 14 Jun 2016 11:29:07 -0700 (PDT)
-Received: from tw-mbp-kmcguigan.twitter.corp (d-216-246-147-91.cpe.metrocast.net. [216.246.147.91])
-        by smtp.gmail.com with ESMTPSA id o34sm8541361qte.48.2016.06.14.11.29.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 14 Jun 2016 11:29:06 -0700 (PDT)
-X-Mailer: git-send-email 2.8.0.rc3.94.g2dc3105.dirty
+	id S1752984AbcFNSlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2016 14:41:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64777 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752948AbcFNSlU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2016 14:41:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 91AF023490;
+	Tue, 14 Jun 2016 14:41:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Whlc/6PyZ0MWKBwEluQou8Q8Rxs=; b=ahtyjA
+	ZfoywBpRq8IY6NfHJjIO4RYT9FrCXrG4J5/JLEtN9nffeWgBvQXEnBD68BkJ65g/
+	NJhH07Xkh0sE0j1ogJ3NtwjKNNKKksoDpdTc9267w1ErvL+JlTeirP8s6EmBKzJk
+	B/+xKNH3SPPJV2B4celuhg28YNalRufDp5VLU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Yxyl+cR/CWJfew2YLyeya6Q1+sZwDMDG
+	XZOaThhD1E1avsJuabVR4b4nG5xNXWsz0fOsLD7XsCIok43Do1f6tiEBEfykxBRx
+	W2eyrp09LqFWplbOZ28vYikXbeMewWYpLxG23tgYMIahQdyZwTbmVTuaTQoTymYA
+	Zl7ALPbxH00=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 89B342348F;
+	Tue, 14 Jun 2016 14:41:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 120A92348E;
+	Tue, 14 Jun 2016 14:41:13 -0400 (EDT)
+In-Reply-To: <xmqqporjackh.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 14 Jun 2016 10:46:06 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 91CDB7CE-325F-11E6-B26F-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297318>
 
-From: Keith McGuigan <kmcguigan@twopensource.com>
+Instead of always requiring both ends of a range, we could DWIM
+"OLD", which could be a misspelt "OLD..", to be a range that ends at
+the current commit.
 
-Make fetch's string_list of remote names owns all of its string items
-(strdup'ing when necessary) so that it can deallocate them safely when
-clearing.
-
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/fetch.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 630ae6a1bb78..1b4e924bd222 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1071,7 +1071,7 @@ static int get_remote_group(const char *key, const char *value, void *priv)
- 			size_t wordlen = strcspn(value, " \t\n");
+ * I am not convinced that this is a good change, though.  It is
+   true that there is no other sensible interpretation of the user's
+   intent when --reverse is given a single positive commit without
+   any other revision, but at the same time, this feels a bit too
+   much special casing that could hurt casual users when they are
+   still forming their mental world model by learning from examples.
+
+ Documentation/blame-options.txt |  5 +++--
+ builtin/blame.c                 | 38 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index 02cb684..6c6c78f 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -28,12 +28,13 @@ include::line-range-format.txt[]
+ -S <revs-file>::
+ 	Use revisions from revs-file instead of calling linkgit:git-rev-list[1].
  
- 			if (wordlen >= 1)
--				string_list_append(g->list,
-+				string_list_append_nodup(g->list,
- 						   xstrndup(value, wordlen));
- 			value += wordlen + (value[wordlen] != '\0');
- 		}
-@@ -1261,7 +1261,7 @@ done:
- int cmd_fetch(int argc, const char **argv, const char *prefix)
+---reverse::
++--reverse <rev>..<rev>::
+ 	Walk history forward instead of backward. Instead of showing
+ 	the revision in which a line appeared, this shows the last
+ 	revision in which a line has existed. This requires a range of
+ 	revision like START..END where the path to blame exists in
+-	START.
++	START.  `git blame --reverse START` is taken as `git blame
++	--reverse START..HEAD` for convenience.
+ 
+ -p::
+ --porcelain::
+diff --git a/builtin/blame.c b/builtin/blame.c
+index a027b8a..574b47d 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2447,6 +2447,41 @@ static char *prepare_final(struct scoreboard *sb)
+ 	return xstrdup_or_null(name);
+ }
+ 
++static const char *dwim_reverse_initial(struct scoreboard *sb)
++{
++	/*
++	 * DWIM "git blame --reverse ONE -- PATH" as
++	 * "git blame --reverse ONE..HEAD -- PATH" but only do so
++	 * when it makes sense.
++	 */
++	struct object *obj;
++	struct commit *head_commit;
++	unsigned char head_sha1[20];
++
++	if (sb->revs->pending.nr != 1)
++		return NULL;
++
++	/* Is that sole rev a committish? */
++	obj = sb->revs->pending.objects[0].item;
++	obj = deref_tag(obj, NULL, 0);
++	if (obj->type != OBJ_COMMIT)
++		return NULL;
++
++	/* Do we have HEAD? */
++	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_sha1, NULL))
++		return NULL;
++	head_commit = lookup_commit_reference_gently(head_sha1, 1);
++	if (!head_commit)
++		return NULL;
++
++	/* Turn "ONE" into "ONE..HEAD" then */
++	obj->flags |= UNINTERESTING;
++	add_pending_object(sb->revs, &head_commit->object, "HEAD");
++
++	sb->final = (struct commit *)obj;
++	return sb->revs->pending.objects[0].name;
++}
++
+ static char *prepare_initial(struct scoreboard *sb)
  {
  	int i;
--	struct string_list list = STRING_LIST_INIT_NODUP;
-+	struct string_list list = STRING_LIST_INIT_DUP;
- 	struct remote *remote;
- 	int result = 0;
- 	struct argv_array argv_gc_auto = ARGV_ARRAY_INIT;
-@@ -1347,8 +1347,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		argv_array_clear(&options);
+@@ -2472,6 +2507,9 @@ static char *prepare_initial(struct scoreboard *sb)
+ 		sb->final = (struct commit *) obj;
+ 		final_commit_name = revs->pending.objects[i].name;
  	}
- 
--	/* All names were strdup()ed or strndup()ed */
--	list.strdup_strings = 1;
- 	string_list_clear(&list, 0);
- 
- 	close_all_packs();
--- 
-2.8.0.rc3.94.g2dc3105.dirty
++
++	if (!final_commit_name)
++		final_commit_name = dwim_reverse_initial(sb);
+ 	if (!final_commit_name)
+ 		die("No commit to dig up from?");
+ 	return xstrdup(final_commit_name);
