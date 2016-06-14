@@ -1,109 +1,77 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2] gpg-interface: check gpg signature for correct header
-Date: Tue, 14 Jun 2016 14:05:05 +0200
-Message-ID: <b057610446674c3323fbba09494229621ec4c032.1465905749.git.git@drmicha.warpmail.net>
-References: <26353a3d-e495-075f-4f84-b34a2420a6cf@drmicha.warpmail.net>
-Cc: Jeff King <peff@peff.net>, ZhenTian <loooseleaves@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 14 14:06:15 2016
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Refactor recv_sideband()
+Date: Tue, 14 Jun 2016 15:44:24 +0200 (CEST)
+Message-ID: <alpine.DEB.2.20.1606141542040.22630@virtualbox>
+References: <20160613195224.13398-1-lfleischer@lfos.de> <alpine.LFD.2.20.1606131704060.1714@knanqh.ubzr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Cc: Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Tue Jun 14 15:33:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCn5t-0001Iv-0M
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 14:05:21 +0200
+	id 1bCoTP-0005na-U6
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 15:33:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752408AbcFNMFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2016 08:05:11 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:50472 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752376AbcFNMFI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2016 08:05:08 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 58ED5200C6;
-	Tue, 14 Jun 2016 08:05:07 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 14 Jun 2016 08:05:07 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:date:from:in-reply-to:message-id:references:subject:to
-	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=E5T+6f/o5KiUoiTPXD0+h2m0vHQ
-	=; b=XFdllYER6J6gq8PYQWHL9D7ZABHkcc+DJjLubIZu2eLQSgOPeMNdH9fjTul
-	yoOs8UwkNkcqlAxEzduff626TUYB1szkEme4/ls9fOfoAH9mBUR49zY+baBHKfA+
-	dOArxDNmIgkny1lKSm57+9Iq13ytF/1a6UNRJ7nb/FsnskY4=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=E5T+
-	6f/o5KiUoiTPXD0+h2m0vHQ=; b=kUweIP3+zCsOQ/Oy1TC5wUV3uxZiFen3gNGp
-	ScdyIccbQwuJU/uXjcsl10KDy3tuD2ep3xZ47eLE98HHuElQv6PK2uuIqfRHLnGa
-	8lybYZxN1LyBWQjsvDwCO1/oV7GuzROwUZH0P+hq7dVSscbzuSb8aSG1hwNdy4Ud
-	JkzJ+ms=
-X-Sasl-enc: A7ArshdM31f4ikIB7AUmN+qQyLQb7koLl3zgtlbAatqt 1465905906
-Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id D5137CCDAD;
-	Tue, 14 Jun 2016 08:05:06 -0400 (EDT)
-X-Mailer: git-send-email 2.9.0.382.g87fd384
-In-Reply-To: <26353a3d-e495-075f-4f84-b34a2420a6cf@drmicha.warpmail.net>
+	id S1752068AbcFNNdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2016 09:33:40 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49966 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751863AbcFNNdj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2016 09:33:39 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M2cYX-1bVzHV2bY5-00sOxq; Tue, 14 Jun 2016 15:33:32
+ +0200
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <alpine.LFD.2.20.1606131704060.1714@knanqh.ubzr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:r9ZnRyXYRwC2bQk712iNGmrL3ZsFZZKqQoIhk0ZP7HXlGfB4Mc7
+ ZuogsythMOfZd5CEMyf0TwlvtpxxhrOY5oo+7QJZlU91guXemtHz2VI8g0aYQdEWSt20gBn
+ Q8J4kEjcG8/WU5NP3doh5EUqJJ7fQE31ckw7lMzsmx+MgUDK/5Y/n98GXpqKZ35kRhck9J5
+ SFPKgKY16tScctLbyzeOQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:maSf0gAX52k=:vCiXMLW9Y2wQTv+/QswQF3
+ 0WFoyYOjPvyGAB+5oECMvj0PVD9bV9/+edN7Jrf9tFFMRqe3XWdnmTcmbX4ZQzzT/OGmDAB/1
+ Aj5tlB7AQrAu+ja4na4Za6SvotjHuaLPXgbhQ6gDAdA4KWxD22ibIfgTAvz5rB1IKYQxsvZBi
+ 0ocNASwojlfFS7kZ/xPk21etZs1uWxVEB8iQqhbWg0n6XlzhFAgtHttwwUpyscr/F62a5RRvF
+ T7n4gMQuH9H8Ev9/KXYaMYbs1uN/kuxSjVngt4nkX/tbkLJWkWGwDv17iW4FI4F5P4/IZ4QH/
+ dBK1nI4Va4B34qEgfFLEBipZ0OxeUPu4LMm0M0eF7fx4LRx9CzHaRR0CyMyl+z0Oakmqpj7DC
+ XtxZ8y6ltwkJbOUtwdlNcrq5wL60vi9lXnDtQzLKUzwLslEI3lS2mufOgBvCWvSabBx+Y2QuN
+ TSCLd3VAo8tnk1dMNrB6iuoAM1HdpcyQJeV/viDiQfOf0hPi+Lva188t2u4Zv6IRIYlUjydDv
+ ZMW+nzE8Nws817aAd92U3MwzE3WWSMXO7jKFUQ5ndDOwyuFp7Ccb5kJT9FWoPZZB3FQDokIFk
+ MHhih+TRsu23BJ2RF5l89dAXSezkA0qCL2Y8nQjG6N1uwthQHQGs/Li1p6Vb72UTJdKBaQXi3
+ TwK0lvdaESUIBDc7oTmYXwNhgC/5HksV+1fr7rpRP1sSQYwSUQ2OuOzXaGE040v7CrqjDAKCo
+ Atu1Q8cpKcImSrcyTAI7unS/+rlyDST21XfotqMY71987CBIoQqWB2yIs/dQ725y1BI2Fw/A 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297293>
 
-When we create a signature, it may happen that gpg returns with
-"success" but not with an actual detached signature on stdout.
+Hi,
 
-Check for the correct header to catch these cases better. We use the
-same parse_signature function for that that we use otherwise, so that
-gpg specifics are localised there.
+On Mon, 13 Jun 2016, Nicolas Pitre wrote:
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-So, this is the real thing.
+> On Mon, 13 Jun 2016, Lukas Fleischer wrote:
+> 
+> > Improve the readability of recv_sideband() significantly by replacing
+> > fragile buffer manipulations with more sophisticated format strings.
+> > Also, reorganize the overall control flow, remove some superfluous
+> > variables and replace a custom implementation of strpbrk() with a call
+> > to the standard C library function.
+> > 
+> > Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
+> 
+> The previous code was a total abomination, even if I happen to know who 
+> wrote it.
 
-Between you and me: parse_signature in fact is more lenient, but hey - it's
-exactly as lenient as we are otherwise, bar running gpg --verify.
+Let's give Junio a break, okay? He does a kick-ass job at maintaining Git.
+What we see here is simply good software development, nothing more,
+nothing less: an initial, working code being improved. No need to make the
+original author feel bad... :-)
 
- gpg-interface.c |  2 +-
- t/t7004-tag.sh  | 10 +++++++++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/gpg-interface.c b/gpg-interface.c
-index c4b1e8c..784953c 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -185,7 +185,7 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
- 
- 	sigchain_pop(SIGPIPE);
- 
--	if (finish_command(&gpg) || !len || len < 0)
-+	if (finish_command(&gpg) || !len || len < 0 || parse_signature(signature->buf, signature->len) == signature->len)
- 		return error(_("gpg failed to sign the data"));
- 
- 	/* Strip CR from the line endings, in case we are on Windows. */
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index f9b7d79..467e968 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1202,10 +1202,18 @@ test_expect_success GPG,RFC1991 \
- # try to sign with bad user.signingkey
- git config user.signingkey BobTheMouse
- test_expect_success GPG \
--	'git tag -s fails if gpg is misconfigured' \
-+	'git tag -s fails if gpg is misconfigured (bad key)' \
- 	'test_must_fail git tag -s -m tail tag-gpg-failure'
- git config --unset user.signingkey
- 
-+# try to produce invalid signature
-+git config gpg.program echo
-+test_expect_success GPG \
-+	'git tag -s fails if gpg is misconfigured (bad signature format)' \
-+	'test_must_fail git tag -s -m tail tag-gpg-failure'
-+git config --unset gpg.program
-+
-+
- # try to verify without gpg:
- 
- rm -rf gpghome
--- 
-2.9.0.382.g87fd384
+Ciao,
+Dscho
