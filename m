@@ -1,88 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Refactor recv_sideband()
-Date: Tue, 14 Jun 2016 17:30:13 +0200 (CEST)
-Message-ID: <alpine.DEB.2.20.1606141729080.22630@virtualbox>
-References: <20160613195224.13398-1-lfleischer@lfos.de> <alpine.LFD.2.20.1606131704060.1714@knanqh.ubzr> <alpine.DEB.2.20.1606141542040.22630@virtualbox> <alpine.LFD.2.20.1606141059420.1714@knanqh.ubzr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue Jun 14 17:19:43 2016
+From: Maria Jose Fernandez <mjose.fernandezj@gmail.com>
+Subject: problems installing GIT on my MAC OS X 10.11.5
+Date: Tue, 14 Jun 2016 16:56:15 +0100
+Message-ID: <1F59C8B7-AF53-4C84-9428-5A4AB80DB295@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 14 17:56:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCq7y-0006ME-1s
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 17:19:42 +0200
+	id 1bCqhU-0002vZ-9S
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 17:56:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751268AbcFNPTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2016 11:19:37 -0400
-Received: from mout.gmx.net ([212.227.17.20]:51558 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751221AbcFNPTh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2016 11:19:37 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Mcyxq-1avrTC3YFm-00ICgM; Tue, 14 Jun 2016 17:19:24
- +0200
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <alpine.LFD.2.20.1606141059420.1714@knanqh.ubzr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:FE3zDvHR140jjhUfnMBV3YZ2U581IMvJHzVYwQn8lMa2crhkXrL
- CLZm99pm47mFgC3lmP0bzHgjUav+U7b8K9rQErutOB7ZYJAYQvIXRBR1/eVxBSS/Vyw4tQt
- ftgumXgbR7Dgd5nhjidNZChGRCdWme2B2hm6dZ+2lmiEeT7pnTtsm/mfcWOIIKze9SUkhv7
- qlkfBZhM4CeyE2xcN0cnQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/PJEUEsiv0Y=:XFss9PokJprL7d088C0eUZ
- DAHbudB2jBt4CXGMWIc8dWP3A+S734EUoUEWcEs9l7j9tWe+YewoQ3wVLH0tV5J9R3utz22zD
- +eD9RsKd8N7J9RwH+4QFJlYHIaSpNzQw9G2aEKpNgK5/O6gbKCxnPzJBBoxp4DU41ke/NqAv+
- w8S4mA2Xs9Rpt0kIxkUI14szYWqPSa7tLUVRL5vnvYQX3FryFiBpnJqcHK6KqJpdUujJlix+y
- D6QHn/cr6UlcpHBsSA7eeImkqVGXw2aoDaSmt27v3zxbwWY/ADnRUCAEgcKL9zWHuSCPpoNUm
- KvqMq34+zCZaMQreW7EudukpiTXpvlA1AHYwadVx+AZXZ9289Hdfiy6Bw9PuM9qRTgvKkERIO
- h0upXQrA/cXAvY740v/rE7gzgW6Ix0MjKAkYHWG28Wf3RFG+59w8MwzODb+TPu5qFJTkiZ9eP
- 5nzIfgsGXDgZ5xibcNxWZtUNNbs6XpWRES4GBxEG2W82YQUFEoMEs461XgQlCV+EFlFNNWQH9
- 7ues59Xsmw6HLFLgSj592NApNliSXNjXOw9/sSbcilH0jPrmSpQD8ATGE6vbObbubXnaJP7eX
- uJhuXv6b9fAH0s/CPuM4UD+zDpq9RERo2DomKOhxWL0UyKRhuSuD/r7JhjXTi+3yVqiz81SDF
- JI/ory3BNnl9iq6g5OozsRpn94+lDq+eggI5sRVuwBGBStKea//OK/uCl3LgzjK3h1sUED4DV
- 8JYyjAjG7VQXqJsgJ6FSoAaTvCZQ5zFldaloCaVoKwYaoUKBIxTZkGt9nhoOj1X26oIap7pX 
+	id S1751332AbcFNP4T convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jun 2016 11:56:19 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:35233 "EHLO
+	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751049AbcFNP4T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2016 11:56:19 -0400
+Received: by mail-wm0-f50.google.com with SMTP id v199so127643819wmv.0
+        for <git@vger.kernel.org>; Tue, 14 Jun 2016 08:56:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:content-transfer-encoding:subject:message-id:date:to
+         :mime-version;
+        bh=UPrkYWv+zNLQHnAy+52G8dQR9enyK9AHxXOcg3TApLo=;
+        b=oxe8OGLS6OB5ieqTfONRFNXlKBqzMUa7n5PRAWM7vittTw69DngcnalSVjnCyWC7St
+         cVziyc3NXvZINTN4plE6VUAnlIzuqPGst2HMCzam6SFwEEMfn/23ZKPlTxHdhcTfpt6P
+         l8WW6rmqb32fe2vCCAuGLtM416mPW2qOCVEKyGiovHRgiQg07iqwMQQjYWT/Ih/lTOKF
+         QNNNQnLnOmjxoiuZyGKYokWKsJNxhFviBvMBCu0pOVB9Y39gXD82TDwaT/T3T93XYEtU
+         0f13nTR3NzXCvSWDq8Wsh9Ng019Cl8VOqvdTSnAVDH9UfHbg68r/PQIx62m+C+/1MdKO
+         s/bA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:content-transfer-encoding:subject
+         :message-id:date:to:mime-version;
+        bh=UPrkYWv+zNLQHnAy+52G8dQR9enyK9AHxXOcg3TApLo=;
+        b=kuUYe7EkHDv4kKQmAfFy7XkVf/PVsc7D3hRMDpFQRl+oNmqMHOLRfwR/tIUs3ArLPw
+         8+K3l16kBu/rWjHYjH2dZeR5W4iPbwmq4cUWvy1V5S+oYneJ/fpNzHnMNn531chQIRGg
+         QwcDciY1TNgwqfwU7t3Cz44OqwkxaPGgZLTvK3RfNOcpUaPLBs/dlbe/VRmhyvZN+bQT
+         P+wJabTDTsscrn9J6OPJnSHbqmXZWSQTPQ2DfAmTXGeSW0cM2EHvby4+twJNWXGYuMOV
+         ywjIm5hafAHxKWjzIbrTR2cILGqnn69JT+xRCIBMXlB/fptVVHBUtv3Tj+ByxioczQGQ
+         blxw==
+X-Gm-Message-State: ALyK8tI+HqqxMBMRPSCQ9c3Ksv9SXHeU0pogD3pVc3T8x+FTZf3HK4n2kxbn+MTJKyqaWg==
+X-Received: by 10.194.21.39 with SMTP id s7mr7111844wje.24.1465919777415;
+        Tue, 14 Jun 2016 08:56:17 -0700 (PDT)
+Received: from [192.168.0.8] (cpc75192-slam8-2-0-cust379.2-4.cable.virginm.net. [82.28.141.124])
+        by smtp.gmail.com with ESMTPSA id db6sm33590462wjb.2.2016.06.14.08.56.16
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 14 Jun 2016 08:56:16 -0700 (PDT)
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297300>
 
-Hi Nico,
+Hello,=20
+I am doing a data science course and need to download GIT but for some =
+reason I can=E2=80=99t installed it. I called Apple but they couldn=E2=80=
+=99t help and suggested me to contact you guys.=20
 
-On Tue, 14 Jun 2016, Nicolas Pitre wrote:
+I hope you can help me.
+Thank you very much,
 
-> On Tue, 14 Jun 2016, Johannes Schindelin wrote:
-> 
-> > On Mon, 13 Jun 2016, Nicolas Pitre wrote:
-> > 
-> > > On Mon, 13 Jun 2016, Lukas Fleischer wrote:
-> > > 
-> > > > Improve the readability of recv_sideband() significantly by
-> > > > replacing fragile buffer manipulations with more sophisticated
-> > > > format strings.  Also, reorganize the overall control flow, remove
-> > > > some superfluous variables and replace a custom implementation of
-> > > > strpbrk() with a call to the standard C library function.
-> > > > 
-> > > > Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
-> > > 
-> > > The previous code was a total abomination, even if I happen to know
-> > > who wrote it.
-> > 
-> > Let's give Junio a break, okay? He does a kick-ass job at maintaining
-> > Git.  What we see here is simply good software development, nothing
-> > more, nothing less: an initial, working code being improved. No need
-> > to make the original author feel bad... :-)
-> 
-> In case my sarcasm wasn't clear, _I_ am the author of the alluded
-> abomination.
-
-Sorry, I did not catch that. I just looked at
-583b7ea31b7c16f872b178d541591ab816d16f85 and felt that we could be nicer
-to Junio...
-
-Ciao,
-Johannes
+Maria Jose Freeman
