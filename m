@@ -1,10 +1,9 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v7 02/40] builtin/apply: make apply_patch() return -1
- instead of die()ing
-Date: Tue, 14 Jun 2016 13:06:09 +0200
-Message-ID: <CAP8UFD1zPUZQTY_rdMwK8vQBd7M5d8gPdTaEmfrg_Q74Y5B2Ew@mail.gmail.com>
+Subject: Re: [PATCH v7 01/40] apply: move 'struct apply_state' to apply.h
+Date: Tue, 14 Jun 2016 13:07:35 +0200
+Message-ID: <CAP8UFD2uoQy9eNvMiBXvfk0g0kA_Nn6ekoRxEWCRwKbMSwDMsA@mail.gmail.com>
 References: <20160613160942.1806-1-chriscool@tuxfamily.org>
- <20160613160942.1806-3-chriscool@tuxfamily.org> <xmqq37ogbswg.fsf@gitster.mtv.corp.google.com>
+ <20160613160942.1806-2-chriscool@tuxfamily.org> <xmqq7fdsbt6z.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
@@ -19,98 +18,113 @@ Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
 	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 14 13:06:18 2016
+X-From: git-owner@vger.kernel.org Tue Jun 14 13:07:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCmAi-00029T-9T
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 13:06:16 +0200
+	id 1bCmC7-0003Sc-RZ
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 13:07:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075AbcFNLGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2016 07:06:12 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35878 "EHLO
+	id S1751029AbcFNLHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2016 07:07:38 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33535 "EHLO
 	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750939AbcFNLGL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2016 07:06:11 -0400
-Received: by mail-wm0-f65.google.com with SMTP id m124so21454070wme.3
-        for <git@vger.kernel.org>; Tue, 14 Jun 2016 04:06:10 -0700 (PDT)
+	with ESMTP id S1751140AbcFNLHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2016 07:07:37 -0400
+Received: by mail-wm0-f65.google.com with SMTP id r5so21525356wmr.0
+        for <git@vger.kernel.org>; Tue, 14 Jun 2016 04:07:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=BKgh+rXETRJJoSR1Bayb3wir/wR7OI7np0tJe/yoFWg=;
-        b=G+amxFDVpfC1PORKWqLs/fKr2HFOHr1ZA1hTo8/CqL03R/DCrnzF8t1jojC2lAaYS2
-         8ZNzXmuQ9y9TnqTt1fl7mnkYKgJAd0MOpM0KQAdXk3y3cldjrgh21rJ4VvqRkZn87kh6
-         Fxrnc0zRCgVl7iWuj79mkBdLNs/NR79+195qh2F+x2mOYOjujrACccX/wnk2tqxp9e9a
-         Encp2SAHscnyujk2BGoxe9jD3f0z/skZxqySaPC/AxDThzOd3gBZ0jXnOw989AdSY3w0
-         SInCPBi1mllZifH+RgPI7YCTyci2unnek/8ZYmPJDUECEVEmsYmtM6J/Tt9Zg9LcrlK4
-         MUJQ==
+        bh=YoWCsCR2TwV7l6CqA8rd8EFLPBKRWihtx9B4TnNcuBw=;
+        b=Q3wO3lMg+KmUv2OXX0vQMUSxpgOwpI5Q4+P3OLP7MzEE0+1t6kkWYeZKbnt8Yw8qii
+         TVGY0IkfuQ7goTpnTQy5fOQ9x0pSRwxgyQlix9Cl4mh84ldAeRyXSWC4alSeiIgRGHJ0
+         nCmMoROeGnpjBt8V9qCNuu4nBMvMz6f9E4q/oOpwq6MKebuKJ5N2g51M/QXWSP2nKQUK
+         mYZqCzNguZf8MM2wGHhLKD0Jg5VxeOPTNQ1+BgjoRyscJt7f3xF6rAg7otqBCzPrAsu0
+         0TU57KqJOquW3yDe3i9mit8s2DW4TPtPPWVXpSQHDXtY+zQlMz13LgbVwCmb0ax7IAUy
+         3oyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=BKgh+rXETRJJoSR1Bayb3wir/wR7OI7np0tJe/yoFWg=;
-        b=GPGmsGKyDgLC+Cu8SLRzDiNtkgv+WLtWgDHHHmBLL+EWICOmJ57JP7EB8KP7R+Cu1H
-         FNxkk1Ksx2N4aFwWN8ICCd2kmhNLX6d9eMDhupfcb5ArAtPzHm07AoocZ4vt81BBjCZe
-         xl9MnqP/XZIFcit76F2mjRYzKGiXM8hvCVpuBx8TBHGz+sA0xHlEXB8T7PAIpF4tAbJt
-         OWxZxWielc4hYTdJWGVSDhdqGF9UTyuBjpu2ePgdy/g1srbp9jmIYCkwhpMAGn+I7BWW
-         akiyjDBqNx2JV0d3T8vyDOt4o2KTigHdiOWKYdUMLvv2sErNa+1iJelqn8lDT0wEtYcS
-         hwKg==
-X-Gm-Message-State: ALyK8tKcec5/JBi2IicLgmNhAFFQ2wMAYUB2zTXv6CkprA2YmoUhr8p6XKto423ThmpnGzfLJAEBv3QqrTztwQ==
-X-Received: by 10.194.239.163 with SMTP id vt3mr5554210wjc.78.1465902369939;
- Tue, 14 Jun 2016 04:06:09 -0700 (PDT)
-Received: by 10.194.25.197 with HTTP; Tue, 14 Jun 2016 04:06:09 -0700 (PDT)
-In-Reply-To: <xmqq37ogbswg.fsf@gitster.mtv.corp.google.com>
+        bh=YoWCsCR2TwV7l6CqA8rd8EFLPBKRWihtx9B4TnNcuBw=;
+        b=MWxxm1t3WosnyxOGu0u9HSi8v6iq1sdJ8kOnljO71TbevpLQWRxJuJv8ZD1P93pbvT
+         1Y6L01vCgZoRwzRD9xbRbIPJdqjMb9rizVvsSc+tOhdn11J0GHVMrKtb5tlGNptv9aIc
+         Xh7PXluOiJ0TeI1QuncOvyVVxYGm+/unl3FcKUcHUjKDmHu0I7pA4y3tZIY/7cr6paqt
+         n0pus1YgYxwDmB3NKar/hjKni5+gJSofPkHMi3mt5Iaou9nPRqDIiqTsAsvvIs2U90ah
+         SN1yN5hFzFdHwCz7tPWQyIXqtDzkuB+1dhIU5o2DoMm5AQ1Alr49blQzMCGRuxMkeZZs
+         FC0A==
+X-Gm-Message-State: ALyK8tLgPPF0OTVFt7gk4blfTnBlvlySlrJ2gVIe5EQl0qeCYqEisV5+jzuDOO4fMbds64vTAjcDsyL6ETvPLA==
+X-Received: by 10.194.239.163 with SMTP id vt3mr5561412wjc.78.1465902456588;
+ Tue, 14 Jun 2016 04:07:36 -0700 (PDT)
+Received: by 10.194.25.197 with HTTP; Tue, 14 Jun 2016 04:07:35 -0700 (PDT)
+In-Reply-To: <xmqq7fdsbt6z.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297285>
 
-On Tue, Jun 14, 2016 at 12:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Jun 14, 2016 at 12:49 AM, Junio C Hamano <gitster@pobox.com> wrote:
 > Christian Couder <christian.couder@gmail.com> writes:
 >
+>> To libify `git apply` functionality we must make 'struct apply_state'
+>> usable outside "builtin/apply.c".
+>>
+>> Let's do that by creating a new "apply.h" and moving
+>> 'struct apply_state' there.
+>>
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>>  apply.h         | 100 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>>  builtin/apply.c |  98 +-----------------------------------------------------
+>>  2 files changed, 101 insertions(+), 97 deletions(-)
+>>  create mode 100644 apply.h
+>>
+>> diff --git a/apply.h b/apply.h
+>> new file mode 100644
+>> index 0000000..9a98eae
+>> --- /dev/null
+>> +++ b/apply.h
+>> @@ -0,0 +1,100 @@
+>> +#ifndef APPLY_H
+>> +#define APPLY_H
+>> +
+>> +enum ws_error_action {
+>> +     nowarn_ws_error,
+>> +     warn_on_ws_error,
+>> +     die_on_ws_error,
+>> +     correct_ws_error
+>> +};
+>> +
+>> +enum ws_ignore {
+>> +     ignore_ws_none,
+>> +     ignore_ws_change
+>> +};
+>> +
 >> +/*
->> + * Try to apply a patch.
+>> + * We need to keep track of how symlinks in the preimage are
+>> + * manipulated by the patches.  A patch to add a/b/c where a/b
+>> + * is a symlink should not be allowed to affect the directory
+>> + * the symlink points at, but if the same patch removes a/b,
+>> + * it is perfectly fine, as the patch removes a/b to make room
+>> + * to create a directory a/b so that a/b/c can be created.
 >> + *
->> + * Returns:
->> + *  -1 if an error happened
->> + *   0 if the patch applied
->> + *   1 if the patch did not apply
+>> + * See also "struct string_list symlink_changes" in "struct
+>> + * apply_state".
 >> + */
->>  static int apply_patch(struct apply_state *state,
->>                      int fd,
->>                      const char *filename,
->> @@ -4413,6 +4421,7 @@ static int apply_patch(struct apply_state *state,
->>       struct strbuf buf = STRBUF_INIT; /* owns the patch text */
->>       struct patch *list = NULL, **listp = &list;
->>       int skipped_patch = 0;
->> +     int res = 0;
->>
->>       state->patch_input_file = filename;
->>       read_patch_file(&buf, fd);
->> @@ -4445,8 +4454,10 @@ static int apply_patch(struct apply_state *state,
->>               offset += nr;
->>       }
->>
->> -     if (!list && !skipped_patch)
->> -             die(_("unrecognized input"));
->> +     if (!list && !skipped_patch) {
->> +             res = error(_("unrecognized input"));
->> +             goto end;
->> +     }
+>> +#define SYMLINK_GOES_AWAY 01
+>> +#define SYMLINK_IN_RESULT 02
 >
-> Before this patch, the program said "fatal: $message" and exited
-> with status = 128.  All these changes in this step modifies the
-> external behaviour and make it say "error: $message" and exit with
-> status = 1 (at least the caller in apply_all_patches() does so).
->
-> Will that be an issue for the calling scripts?
+> Everything below is agreeable, but all the names that are made
+> public above by this change do not sound specific enough to "apply".
+> I wonder if they should get "apply" somewhere in their names to
+> avoid confusion coming from the namespace contamination...
 
-Hopefully the scripts don't check the specific error code and message.
+Yeah, I will add "apply" in the names.
 
-I will add something about this in the commit message.
-
-Do you think something else that should be done about this?
+Thanks,
+Christian.
