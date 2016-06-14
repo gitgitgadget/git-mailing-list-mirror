@@ -1,150 +1,99 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv3] gpg-interface: check gpg signature creation status
-Date: Tue, 14 Jun 2016 16:44:18 +0200
-Message-ID: <8e08b63b58302b6e7fe91f0dfb5b476781bfd37d.1465915311.git.git@drmicha.warpmail.net>
-References: <26353a3d-e495-075f-4f84-b34a2420a6cf@drmicha.warpmail.net>
-Cc: Jeff King <peff@peff.net>, ZhenTian <loooseleaves@gmail.com>
+From: Lukas Fleischer <lfleischer@lfos.de>
+Subject: [PATCH 2/2] Make send_client_data() return void
+Date: Tue, 14 Jun 2016 16:49:17 +0200
+Message-ID: <20160614144917.14163-2-lfleischer@lfos.de>
+References: <20160614144917.14163-1-lfleischer@lfos.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 14 16:44:31 2016
+X-From: git-owner@vger.kernel.org Tue Jun 14 16:49:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCpZu-00036a-TM
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 16:44:31 +0200
+	id 1bCpf5-0007U9-FV
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 16:49:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751259AbcFNOo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2016 10:44:27 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:42182 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751035AbcFNOo0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2016 10:44:26 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 7880D20794;
-	Tue, 14 Jun 2016 10:44:20 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute4.internal (MEProxy); Tue, 14 Jun 2016 10:44:20 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:date:from:in-reply-to:message-id:references:subject:to
-	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=nDGopZaLT3bn1RXhYXYLBT2ouTw
-	=; b=i/pxhnRfGgqEvDdhLeFUAXoXP2hlU0pQE1UPd4nH5dZhfIMM8IULYI7E1x/
-	43itGKgnKTuevGUKWcIX6ua16vP95haQnaRqxKjPGWDc2isnxoo1o4C+q8FjOTc1
-	hCUKXBnwJkxcKtRmgovbu1WcD7Rndd0BR2ptl0uDT7Yr9hyY=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=nDGo
-	pZaLT3bn1RXhYXYLBT2ouTw=; b=O+AdeYs/kBFK9KEjDy1uWDcCQBCWbGNeuXmc
-	GmGqFVr/t2l1zUU8XIfKWioV13rip6jx42LkWxBFeDaQjBC+IEZS2coF09qQo15/
-	6cmLz8WnlRz6rc+Anyc6Z+sWMVPuCA1RPHuxaEFuNUDtERg1vYiP1RS68N9YvCj7
-	p6gZofQ=
-X-Sasl-enc: QiLiWU1tcnpFo5S2T9PuGT0+ndSlJCygYU4lNPiefWLV 1465915459
-Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id E1A50CCDB2;
-	Tue, 14 Jun 2016 10:44:19 -0400 (EDT)
-X-Mailer: git-send-email 2.9.0.382.g87fd384
-In-Reply-To: <26353a3d-e495-075f-4f84-b34a2420a6cf@drmicha.warpmail.net>
+	id S1752250AbcFNOt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2016 10:49:29 -0400
+Received: from elnino.cryptocrack.de ([46.165.227.75]:23458 "EHLO
+	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751773AbcFNOt1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2016 10:49:27 -0400
+Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id ed4a09f5
+	TLS version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO
+	for <git@vger.kernel.org>;
+	Tue, 14 Jun 2016 16:49:20 +0200 (CEST)
+X-Mailer: git-send-email 2.8.3
+In-Reply-To: <20160614144917.14163-1-lfleischer@lfos.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297296>
 
-When we create a signature, it may happen that gpg returns with
-"success" but not with an actual detached signature on stdout.
+The send_client_data() function uses write_or_die() for writing data
+which immediately terminates the process on errors. If no such error
+occurred, send_client_data() always returned the value that was passed
+as third parameter prior to this commit. This value is already known to
+the caller in any case, so let's turn send_client_data() into a void
+function instead.
 
-Check for the correct signature creation status to catch these cases
-better. Really, --status-fd parsing is the only way to check gpg status
-reliably. We do the same for verify already.
-
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
 ---
-That must be the real real thing now...
+ upload-pack.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
- gpg-interface.c | 22 +++++++++++++++-------
- t/t7004-tag.sh  | 10 +++++++++-
- 2 files changed, 24 insertions(+), 8 deletions(-)
-
-diff --git a/gpg-interface.c b/gpg-interface.c
-index c4b1e8c..850dc81 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -150,17 +150,19 @@ const char *get_signing_key(void)
- int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *signing_key)
+diff --git a/upload-pack.c b/upload-pack.c
+index cab71b1..432d585 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -65,11 +65,11 @@ static void reset_timeout(void)
+ 	alarm(timeout);
+ }
+ 
+-static ssize_t send_client_data(int fd, const char *data, ssize_t sz)
++static void send_client_data(int fd, const char *data, ssize_t sz)
  {
- 	struct child_process gpg = CHILD_PROCESS_INIT;
--	const char *args[4];
--	ssize_t len;
-+	const char *args[5];
- 	size_t i, j, bottom;
-+	struct strbuf err = STRBUF_INIT;
- 
- 	gpg.argv = args;
- 	gpg.in = -1;
- 	gpg.out = -1;
-+	gpg.err = -1;
- 	args[0] = gpg_program;
--	args[1] = "-bsau";
--	args[2] = signing_key;
--	args[3] = NULL;
-+	args[1] = "--status-fd=2";
-+	args[2] = "-bsau";
-+	args[3] = signing_key;
-+	args[4] = NULL;
- 
- 	if (start_command(&gpg))
- 		return error(_("could not run gpg."));
-@@ -174,19 +176,25 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
- 	if (write_in_full(gpg.in, buffer->buf, buffer->len) != buffer->len) {
- 		close(gpg.in);
- 		close(gpg.out);
-+		close(gpg.err);
- 		finish_command(&gpg);
- 		return error(_("gpg did not accept the data"));
+ 	if (use_sideband) {
+ 		send_sideband(1, fd, data, sz, use_sideband);
+-		return sz;
++		return;
  	}
- 	close(gpg.in);
+ 	if (fd == 3)
+ 		/* emergency quit */
+@@ -77,10 +77,9 @@ static ssize_t send_client_data(int fd, const char *data, ssize_t sz)
+ 	if (fd == 2) {
+ 		/* XXX: are we happy to lose stuff here? */
+ 		xwrite(fd, data, sz);
+-		return sz;
++		return;
+ 	}
+ 	write_or_die(fd, data, sz);
+-	return sz;
+ }
  
- 	bottom = signature->len;
--	len = strbuf_read(signature, gpg.out, 1024);
-+	strbuf_read(signature, gpg.out, 1024);
-+	strbuf_read(&err, gpg.err, 0);
- 	close(gpg.out);
-+	close(gpg.err);
+ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
+@@ -245,9 +244,7 @@ static void create_pack_file(void)
+ 			}
+ 			else
+ 				buffered = -1;
+-			sz = send_client_data(1, data, sz);
+-			if (sz < 0)
+-				goto fail;
++			send_client_data(1, data, sz);
+ 		}
  
- 	sigchain_pop(SIGPIPE);
- 
--	if (finish_command(&gpg) || !len || len < 0)
-+	if (finish_command(&gpg) || !strstr(err.buf, "\n[GNUPG:] SIG_CREATED ")) {
-+		strbuf_release(&err);
- 		return error(_("gpg failed to sign the data"));
-+	}
-+	strbuf_release(&err);
- 
- 	/* Strip CR from the line endings, in case we are on Windows. */
- 	for (i = j = bottom; i < signature->len; i++)
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index f9b7d79..467e968 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1202,10 +1202,18 @@ test_expect_success GPG,RFC1991 \
- # try to sign with bad user.signingkey
- git config user.signingkey BobTheMouse
- test_expect_success GPG \
--	'git tag -s fails if gpg is misconfigured' \
-+	'git tag -s fails if gpg is misconfigured (bad key)' \
- 	'test_must_fail git tag -s -m tail tag-gpg-failure'
- git config --unset user.signingkey
- 
-+# try to produce invalid signature
-+git config gpg.program echo
-+test_expect_success GPG \
-+	'git tag -s fails if gpg is misconfigured (bad signature format)' \
-+	'test_must_fail git tag -s -m tail tag-gpg-failure'
-+git config --unset gpg.program
-+
-+
- # try to verify without gpg:
- 
- rm -rf gpghome
+ 		/*
+@@ -274,9 +271,7 @@ static void create_pack_file(void)
+ 	/* flush the data */
+ 	if (0 <= buffered) {
+ 		data[0] = buffered;
+-		sz = send_client_data(1, data, 1);
+-		if (sz < 0)
+-			goto fail;
++		send_client_data(1, data, 1);
+ 		fprintf(stderr, "flushed.\n");
+ 	}
+ 	if (use_sideband)
 -- 
-2.9.0.382.g87fd384
+2.8.3
