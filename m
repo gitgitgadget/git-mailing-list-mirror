@@ -1,90 +1,86 @@
-From: Maria Jose Fernandez <mjose.fernandezj@gmail.com>
-Subject: Re: problems installing GIT on my MAC OS X 10.11.5
-Date: Tue, 14 Jun 2016 17:49:50 +0100
-Message-ID: <ADD00034-0B8C-4CBA-87C9-E3F50AA408A2@gmail.com>
-References: <1F59C8B7-AF53-4C84-9428-5A4AB80DB295@gmail.com> <20160614190641.0d0ba5344e52304e16ca4f52@domain007.com> <f4c72626-1bd5-0b26-a18a-49feed67a742@web.de> <E9D8E5F7-BBD1-4384-A6D6-B9184AEDE881@gmail.com> <e88e33b0-5443-0517-370e-5b0b76a4df5b@web.de>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Konstantin Khomoutov <kostix+git@007spb.ru>, git@vger.kernel.org
-To: =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Jun 14 18:55:00 2016
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] Refactor recv_sideband()
+Date: Tue, 14 Jun 2016 12:43:56 -0400 (EDT)
+Message-ID: <alpine.LFD.2.20.1606141242480.1714@knanqh.ubzr>
+References: <20160613195224.13398-1-lfleischer@lfos.de> <alpine.LFD.2.20.1606131704060.1714@knanqh.ubzr> <alpine.DEB.2.20.1606141542040.22630@virtualbox> <alpine.LFD.2.20.1606141059420.1714@knanqh.ubzr> <Cq7rbYgOpb0CVCq7sbGmpL@videotron.ca>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Cc: Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 14 18:56:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bCrXW-0004kr-8Y
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 18:50:10 +0200
+	id 1bCrRc-0007sG-TG
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jun 2016 18:44:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752780AbcFNQuA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jun 2016 12:50:00 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:35133 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751727AbcFNQt6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2016 12:49:58 -0400
-Received: by mail-wm0-f51.google.com with SMTP id v199so129692116wmv.0
-        for <git@vger.kernel.org>; Tue, 14 Jun 2016 09:49:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=i9uORGelPapE2YAaDk4V02O1mSBqyiaRJ44KQlg3lDQ=;
-        b=xaW2hsA2KGzYhsvZAt1G6RRMHypJkIqI0C+NXg1YOV6DBkMhdV2yKzfbEIb6s3zm4/
-         Wen6ybkmG1xkvxPk41RuMRN+UI/qTW6zV9eZ58ZhZ7NJKkTxjbej+X9Z9m5vOMniCGvC
-         DId4vinH/flxEG13KkAGPnneHIwypLu4nC2lY/D4IxRh9qkGtPNS72pWh+sEchnhjd5d
-         STnsv4fiMbYf0463SWz7eksrA8Aq8rCiKXB6K3KbREXXdDLJCWHcxjPKMYZCWLFrHhYw
-         de8t1BqVvTHvguFr89VpipJiQTgeFgZ61aeGah7AJbWY5njjbBdTrzNy9kadqERKzT85
-         r2wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=i9uORGelPapE2YAaDk4V02O1mSBqyiaRJ44KQlg3lDQ=;
-        b=hTC9XlxY6FE9uuqjIbEwinlkmNmlRmh7kFeJc2k+nnohX3XKyPT0BxTIlaypsBlzR1
-         i5qwOemZ+SlYe1JHqEq215pKdespaBYYdYaOTNqIaTSwmMTaUeneYLkjCyXnGag8nLx0
-         YGgzk3NNe3Y8Du9GNJIbrygA6CDxMizBGW+KUi27aoLNtmTfHsWNxmos/6Zo3rzMQfPo
-         cFFyRiUcAUrJ5B3pj2R6Z4Dy7J40r2/ZBThrWIc25xaK9+RSQOT59DcnIaohVgK29XOo
-         s2fPb1pRHnpBT+C2QwM1cCZEU8C09iwaqE+gadHXNDRT1RSakhja1Xb6/BQdPz7OeGVc
-         am7Q==
-X-Gm-Message-State: ALyK8tKvlyjqGol47hTe8qgVzdAhmXspcox4cZvJABa82izE0gAt+A+fmgP6mNFucihMXg==
-X-Received: by 10.28.158.17 with SMTP id h17mr7791714wme.1.1465922991663;
-        Tue, 14 Jun 2016 09:49:51 -0700 (PDT)
-Received: from [192.168.0.8] (cpc75192-slam8-2-0-cust379.2-4.cable.virginm.net. [82.28.141.124])
-        by smtp.gmail.com with ESMTPSA id u71sm5008549wmu.13.2016.06.14.09.49.50
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 14 Jun 2016 09:49:51 -0700 (PDT)
-In-Reply-To: <e88e33b0-5443-0517-370e-5b0b76a4df5b@web.de>
-X-Mailer: Apple Mail (2.3124)
+	id S1751395AbcFNQoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2016 12:44:00 -0400
+Received: from alt32.smtp-out.videotron.ca ([24.53.0.21]:61975 "EHLO
+	alt32.smtp-out.videotron.ca" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751364AbcFNQn7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2016 12:43:59 -0400
+Received: from yoda.home ([96.23.157.65])
+	by Videotron with SMTP
+	id CrRUbV23ZJE3dCrRVb6lYu; Tue, 14 Jun 2016 12:43:58 -0400
+X-Authority-Analysis: v=2.1 cv=DYG30qZW c=1 sm=1 tr=0
+ a=keA3yYpnlypCNW5BNWqu+w==:117 a=keA3yYpnlypCNW5BNWqu+w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
+ a=pD_ry4oyNxEA:10 a=dfl5SRnfqdFPOpq08UoA:9 a=CjuIK1q_8ugA:10
+Received: from xanadu.home (xanadu.home [192.168.2.2])
+	by yoda.home (Postfix) with ESMTPSA id 26FC82DA01A5;
+	Tue, 14 Jun 2016 12:43:56 -0400 (EDT)
+In-Reply-To: <Cq7rbYgOpb0CVCq7sbGmpL@videotron.ca>
+User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
+X-CMAE-Envelope: MS4wfKL0fQSGKBg/D02pZZPx7AcVi9bXnlpS87HDvvoBJzZiSOcOOeLsimIRQIC4HHsDQgdM2yxXABaAUNd73/VRfIKvbTibw4/qBpcmKoGwfIg4+0TPU615
+ ZM+DKWloUbHbDsAoB6Xh64EMmuKqJ5XmsIWJaxyTKMPYYMJwQPqkw/irhaPDDWoXt+54j9nPNEDR3NsjJXLSKOkdRoljtn782ZiahLTSi6HmX+Tb6K/i1d7p
+ bj8CXrLAEIOB0v9flEl8Cg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297306>
 
-I am very sorry but I am not understanding what you are saying.=20
-I will try with homebrew and see if it works that way.
+On Tue, 14 Jun 2016, Johannes Schindelin wrote:
 
-> On 14 Jun 2016, at 17:48, Torsten B=C3=B6gershausen <tboegi@web.de> w=
-rote:
->=20
-> On 14.06.16 18:45, Maria Jose Fernandez wrote:
->> From http://git-scm.com/download/mac I clicked to download manually.
->> Then it goes to https://sourceforge.net/projects/git-osx-installer/f=
-iles/git-2.8.1-intel-universal-mavericks.dmg/download?use_mirror=3Dauto=
-select
->> I found the git - 2.8.1-intel-universal-mavericks.dmg <https://sourc=
-eforge.net/projects/git-osx-installer/files/git-2.8.1-intel-universal-m=
-avericks.dmg/download?use_mirror=3Dautoselect> downloaded on my desktop=
-=2E I open that and go through the installation process and then it say=
-s is installed but not found anywhere on my computer.=20
->>=20
->>=20
-> It says ?
->=20
-> Do you think that you open a terminal and type
-> which git
-> git --version
-> and post the output here ?
->=20
->=20
+> Hi Nico,
+> 
+> On Tue, 14 Jun 2016, Nicolas Pitre wrote:
+> 
+> > On Tue, 14 Jun 2016, Johannes Schindelin wrote:
+> > 
+> > > On Mon, 13 Jun 2016, Nicolas Pitre wrote:
+> > > 
+> > > > On Mon, 13 Jun 2016, Lukas Fleischer wrote:
+> > > > 
+> > > > > Improve the readability of recv_sideband() significantly by
+> > > > > replacing fragile buffer manipulations with more sophisticated
+> > > > > format strings.  Also, reorganize the overall control flow, remove
+> > > > > some superfluous variables and replace a custom implementation of
+> > > > > strpbrk() with a call to the standard C library function.
+> > > > > 
+> > > > > Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
+> > > > 
+> > > > The previous code was a total abomination, even if I happen to know
+> > > > who wrote it.
+> > > 
+> > > Let's give Junio a break, okay? He does a kick-ass job at maintaining
+> > > Git.  What we see here is simply good software development, nothing
+> > > more, nothing less: an initial, working code being improved. No need
+> > > to make the original author feel bad... :-)
+> > 
+> > In case my sarcasm wasn't clear, _I_ am the author of the alluded
+> > abomination.
+> 
+> Sorry, I did not catch that. I just looked at
+> 583b7ea31b7c16f872b178d541591ab816d16f85 and felt that we could be nicer
+> to Junio...
+
+Oh, the initial code from Junio was sane enough. I made a mess of it 
+afterwards.
+
+
+Nicolas
