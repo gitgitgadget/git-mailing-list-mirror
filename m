@@ -1,119 +1,113 @@
-From: Joseph Pecoraro <pecoraro@apple.com>
-Subject: Re: [PATCH] Document the 'svn propset' command.
-Date: Wed, 15 Jun 2016 13:32:07 -0700
-Message-ID: <BD0842E2-2AA2-40EB-B1FC-2097A1B7BF39@apple.com>
-References: <20160612191550.GA14160@elvis.mu.org>
- <20160615051950.GA93388@elvis.mu.org> <20160615201556.GA6303@dcvr.yhbt.net>
- <xmqqvb1a5hlf.fsf@gitster.mtv.corp.google.com>
- <FBF1CB04-C2EE-4675-8FC0-69A48410BB48@freebsd.org>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-	git@vger.kernel.org, David Fraser <davidf@sjsoft.com>,
-	Pranit Bauva <pranit.bauva@gmail.com>
-To: Alfred Perlstein <alfred@freebsd.org>
-X-From: git-owner@vger.kernel.org Wed Jun 15 22:32:38 2016
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 4/6] bisect--helper: `bisect_reset` shell function in C
+Date: Wed, 15 Jun 2016 17:05:11 -0400
+Message-ID: <CAPig+cTf72M2iaZr3bZj+0V_0VHXJahpusY6zwT_B5uJx0BP1g@mail.gmail.com>
+References: <20160607205454.22576-1-pranit.bauva@gmail.com>
+ <20160615140026.10519-1-pranit.bauva@gmail.com> <20160615140026.10519-5-pranit.bauva@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 15 23:05:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bDHUK-0002NN-Ow
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 22:32:37 +0200
+	id 1bDHzx-0002kp-Gf
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 23:05:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932893AbcFOUcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2016 16:32:18 -0400
-Received: from mail-out6.apple.com ([17.151.62.28]:51364 "EHLO
-	mail-in6.apple.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753767AbcFOUcO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jun 2016 16:32:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; d=apple.com; s=mailout2048s; c=relaxed/simple;
-	q=dns/txt; i=@apple.com; t=1466022731; x=2329936331;
-	h=From:Sender:Reply-To:Subject:Date:Message-id:To:Cc:MIME-version:Content-type:
-	Content-transfer-encoding:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-reply-to:References:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=22f0+6hWahprSboICsDLMftWEXvjf2ujlzigW72OttY=;
-	b=1WD0fg+bWFPP4vIKqVY6r0WOdVNdOqn6NzJ3NTqa3FTAu6HNkmsoX18bnsID0ZTL
-	gIoiBaGtmAPJG226JUaBsKFZXc9T50fcezwDL3SU08yaXkihby0f8VM5fhBd9kNt
-	DGBIBJvNp8kGjVKCBWSLhJjvH2fpZjHRI5P7Olcen79DYMT/CWT07bucILgf/TKr
-	V2tbHQuJperYWSPl9pE1DsUQ3AqMobWoSfoFZkiHi5GQHoZywBKw9vUCrj/rfl7a
-	A6MZ15u6qMksLoHzJYtdQc8ckvQYW5Hgu2jvlqRDewgOeOSPRXVXBMLwMp/d6uTi
-	78GR2di/xqNS0Twq4vAMcg==;
-Received: from relay6.apple.com (relay6.apple.com [17.128.113.90])
-	by mail-in6.apple.com (Apple Secure Mail Relay) with SMTP id BF.AA.27179.A4BB1675; Wed, 15 Jun 2016 13:32:11 -0700 (PDT)
-X-AuditID: 11973e15-f79686d000006a2b-38-5761bb4a5cc9
-Received: from chive.apple.com (chive.apple.com [17.128.115.15])
-	(using TLS with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(Client did not present a certificate)
-	by relay6.apple.com (Apple SCV relay) with SMTP id 05.B3.28643.84BB1675; Wed, 15 Jun 2016 13:32:09 -0700 (PDT)
-Received: from pecoraro.apple.com ([17.202.44.84])
- by chive.apple.com (Oracle Communications Messaging Server 7.0.5.35.0 64bit
- (built Mar 31 2015)) with ESMTPSA id <0O8T006QYYDKGP40@chive.apple.com> for
- git@vger.kernel.org; Wed, 15 Jun 2016 13:32:08 -0700 (PDT)
-In-reply-to: <FBF1CB04-C2EE-4675-8FC0-69A48410BB48@freebsd.org>
-X-Mailer: Apple Mail (2.3124)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLLMWRmVeSWpSXmKPExsUi2FAYpeu9OzHc4O90douuK91MDowenzfJ
-	BTBGcdmkpOZklqUW6dslcGWsmCxd8IWjYuP8x+wNjHPZuxg5OSQETCRufz3IDGGLSVy4t54N
-	xBYS2MsoceFVLkzNuQcfgGq4gOLTmCQa1t9lhHC6mSQu/VrBClIlLCAlsX1aCxOIzSygJbF+
-	53Ewm1dAT2Ly0QY2iBoLiR1X94NtYwOqebChEayGU8BeomfzPjCbRUBVYub/WywgC5gFFjJK
-	LLm8AWqotsSTdxdYIYbaSFx+95sJ4oqnjBJ9t/eBbRAR0JQ4tXMvG8TdshJPTi5igbC/skr8
-	7NCbwCgyC8mBs5AcOAvJjgWMzKsYhXITM3N0M/PM9BILCnJS9ZLzczcxgsJ7up3oDsYzq6wO
-	MQpwMCrx8AqsTwwXYk0sK67MPcQozcGiJM77chpQSCA9sSQ1OzW1ILUovqg0J7X4ECMTB6dU
-	AyOvzPMa9ygP9tpT9Vv1Q8z2XXhasnT77C+zxQ7nX3oZ2aN057DxuqypNk89deP2Nzjk3S9+
-	2torJ+jJGukX1GVpM9HnaP1RseNn5n5WWuMR8/T2sWuHNsZ6+zrdv7kzd/7qLQ2fZvR53WxY
-	yiTsNq3l2ZIjEwqlY6VdJb5OKe6+sdCbVeCVxiUlluKMREMt5qLiRADnAEkxUAIAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrELMWRmVeSWpSXmKPExsUi2FDMr+u5OzHcYMUPa4uuK91MDowenzfJ
-	BTBGcdmkpOZklqUW6dslcGWsmCxd8IWjYuP8x+wNjHPZuxg5OSQETCTOPfjADGGLSVy4t56t
-	i5GLQ0hgGpNEw/q7jBBON5PEpV8rWEGqhAWkJLZPa2ECsZkFtCTW7zwOZvMK6ElMPtrABlFj
-	IbHj6n6wqWxANQ82NILVcArYS/Rs3gdmswioSsz8f4sFZAGzwEJGiSWXN0AN1ZZ48u4CK8RQ
-	G4nL734zQVzxlFGi7/Y+sA0iApoSp3buZYO4W1biyclFLBMYBWchOWoWkqNmIZm7gJF5FaNA
-	UWpOYqWZXmJBQU6qXnJ+7iZGcEgWRu1gbFhudYhRgINRiYdXYH1iuBBrYllxZe4hRgkOZiUR
-	3q+bgEK8KYmVValF+fFFpTmpxYcYpTlYlMR553sDpQTSE0tSs1NTC1KLYLJMHJxSDYxSRWHx
-	q83m3WFUX+YRa8JxMcDM9NNiz9jVi2+FMla7qwhVyBktTz/UvW2m2pwjGyaZLLn6OLm1d+rZ
-	Y4dVTuZUt/rMvH3wCYddoMah/+41kSuKPxy4c2OCkNOG/senJ5cHfLcR4r3Zvb/l4vfJusd3
-	SjXuu61hIqNUynKBZaXvr3P2ver3+N4psRRnJBpqMRcVJwIAmoLSQ0UCAAA=
+	id S1753234AbcFOVFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2016 17:05:13 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:35233 "EHLO
+	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932321AbcFOVFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2016 17:05:12 -0400
+Received: by mail-io0-f194.google.com with SMTP id n127so4399295iof.2
+        for <git@vger.kernel.org>; Wed, 15 Jun 2016 14:05:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=Yi5fOy0PtT2mOjj+K8Pp4ES1+6K74+8ytUXcq6MIa2o=;
+        b=0xQdDomXdvhjWH6JXcz/2JfiiScdxTiQ1JEd7gCD+vxx6Rbggv8+VKh82PknSuudYr
+         5xM0jDe0IDqkD9Rs6DkDNa9CyiSNMvOAPA/dwxn7KhvbyBjFEJqtr2M8d//UycrUtRTq
+         pKKinPsGkbCNZOe27nUiK6I8yDlvsPwHmEoOtUQC8TmjeDCLpG5Y4KGjOcg+47LdIDbt
+         69cLKC2DyVH3ErBsqIpZVipdqsXJuqIIuFilCzgHiL7df+fmPdkbU8i9yWSJi4njQi3U
+         rrK/d1qLUg0QZ46W2nlP9TJjYgxhgN1CsB+gxYAzdFjhl+c3k3LaMs2vIDxBd2D+whqu
+         r2+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=Yi5fOy0PtT2mOjj+K8Pp4ES1+6K74+8ytUXcq6MIa2o=;
+        b=U9SfN3kewV8PEmSn9vhY3oI/tFBMxt4JlZDUQOMlciBbv0wdTpgi4CqzEsxCcu5qBH
+         9zq8UxySt92i0LvN9A/Jfq1oVMRnZzw+Q18ZHkczzvsj6ElkNESoh98tgPfMqDBWIkT9
+         I409M8302SZLUHdbrN0HeBOjwcrBzuBWVa/d0Dcc8PmacXq74uHRAndasBvOP40iFJNv
+         qT5bAc/P1wl1cJc/D2+0BPcA39FlqvQchNkBME+7lMj3Xxvrnz6Mf3ID2NTD10QrXzfw
+         GJOZCaqkPpWbUIA0AjjyvN5o0VIH0nzviV6fvh4KnDv/GnYr/slQyi4sc9GnctWc/mUM
+         HuBw==
+X-Gm-Message-State: ALyK8tIRlHSEERkHRsGsv7cCu7QbViRbPZ5y7zWcOyZn6NugiR2wxCCqnucy4zwKPX+r/DSbR4y2a3yqomKssw==
+X-Received: by 10.107.197.70 with SMTP id v67mr2678459iof.34.1466024711489;
+ Wed, 15 Jun 2016 14:05:11 -0700 (PDT)
+Received: by 10.79.0.30 with HTTP; Wed, 15 Jun 2016 14:05:11 -0700 (PDT)
+In-Reply-To: <20160615140026.10519-5-pranit.bauva@gmail.com>
+X-Google-Sender-Auth: 3LRpdeUjWa0TFLxA1E_Qq4G-H_g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297401>
 
-> On Jun 15, 2016, at 1:24 PM, Alfred Perlstein <alfred@freebsd.org> wrote:
-> 
->> On Jun 15, 2016, at 1:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> 
->> Eric Wong <e@80x24.org> writes:
->> 
->>> Thanks Alfred,
->>> 
->>> I've removed the '.' from the commit subject, signed-off,
->>> and pushed to my repo for Junio:
->>> 
->>> The following changes since commit 05219a1276341e72d8082d76b7f5ed394b7437a4:
->>> 
->>> Git 2.9 (2016-06-13 10:42:13 -0700)
->>> 
->>> are available in the git repository at:
->>> 
->>> git://bogomips.org/git-svn.git svn-propset-doc
->>> 
->>> for you to fetch changes up to f3961b2eba8ba6aa2fddc827ddf5c26b41391872:
->>> 
->>> Document the 'svn propset' command (2016-06-15 20:11:22 +0000)
->> 
->> I actually queued it directly on top of v2.3.0-rc0~32^2 (git-svn:
->> support for git-svn propset, 2014-12-07) so that it could go to
->> older maintenance tracks.
->> 
->> I will pick up your Reviewed-by: and redo it.  Thanks.
->> 
-> 
-> Thank you, always great working with the git project!  
-> 
-> -Alfred 
+On Wed, Jun 15, 2016 at 10:00 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> Reimplement `bisect_reset` shell function in C and add a `--bisect-reset`
+> subcommand to `git bisect--helper` to call it from git-bisect.sh .
+> [...]
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> ---
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> @@ -123,12 +127,48 @@ static int bisect_clean_state(void)
+> +static int bisect_reset(const char *commit)
+> +{
+> +       struct strbuf branch = STRBUF_INIT;
+> +
+> +       if (!commit) {
+> +               if (strbuf_read_file(&branch, git_path_bisect_start(), 0) < 1) {
+> +                       printf("We are not bisecting.\n");
+> +                       return 0;
+> +               }
+> +               strbuf_rtrim(&branch);
+> +
 
-Thanks for addressing this!
+Style: unnecessary blank line
 
-- Joe
+> +       } else {
+> +               struct object_id oid;
+> +               if (get_oid(commit, &oid))
+> +                       return error(_("'%s' is not a valid commit"), commit);
+> +               strbuf_addf(&branch, "%s", commit);
+
+strbuf_addstr(&branch, commit);
+
+> +       }
+> +
+> +       if (!file_exists(git_path_bisect_head())) {
+> +               struct argv_array argv = ARGV_ARRAY_INIT;
+> +               argv_array_pushl(&argv, "checkout", branch.buf, "--", NULL);
+> +               if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
+> +                       error(_("Could not check out original HEAD '%s'. Try"
+> +                                       "'git bisect reset <commit>'."), branch.buf);
+> +                       strbuf_release(&branch);
+> +                       argv_array_clear(&argv);
+> +                       return -1;
+> +               }
+> +               argv_array_clear(&argv);
+> +       }
+> +
+> +       strbuf_release(&branch);
+> +       return bisect_clean_state();
+> +}
