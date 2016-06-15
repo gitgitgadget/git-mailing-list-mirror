@@ -1,133 +1,88 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 3/6] wrapper: move is_empty_file() from builtin/am.c
-Date: Wed, 15 Jun 2016 14:22:50 -0400
-Message-ID: <CAPig+cTu1msxkjBZgLfy9g3+_VF5OzKNDbR0E0zVvopTNe2Q=g@mail.gmail.com>
-References: <20160607205454.22576-1-pranit.bauva@gmail.com>
- <20160615140026.10519-1-pranit.bauva@gmail.com> <20160615140026.10519-4-pranit.bauva@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jun 2016, #04; Tue, 14)
+Date: Wed, 15 Jun 2016 11:32:39 -0700
+Message-ID: <xmqqd1ni716g.fsf@gitster.mtv.corp.google.com>
+References: <xmqqtwgv77az.fsf@gitster.mtv.corp.google.com>
+	<20160615023658.GA21270@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 15 20:23:02 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Wed Jun 15 20:33:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bDFSu-0000Ay-SQ
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 20:23:01 +0200
+	id 1bDFcv-000080-MG
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 20:33:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932251AbcFOSWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2016 14:22:53 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:35754 "EHLO
-	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932141AbcFOSWw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2016 14:22:52 -0400
-Received: by mail-io0-f196.google.com with SMTP id n127so3874712iof.2
-        for <git@vger.kernel.org>; Wed, 15 Jun 2016 11:22:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=cfd/8M+3gyZaErrHxKGhDKNtvrZetbbEzWZS8sSvKTw=;
-        b=k6nLSEmvpZcsf8FLGfhGSpt8XON6zs1r8erIKtPHpcWqWhklfY7/RcxE3Wd2ja5YZm
-         pNNm+Ja/aut1RXD0PWfrGhDZY+ZcKGr1L494s9OLeGjY1EcSuAq55UixFYZV33IBj5v+
-         PoIhOMwnRuR0iExrvs7Cz2JtK+0tQ5PLr2H1eCslwzvG61krQYc6PwhWyA0pa/BVbS/X
-         PWE2K5/dbbavqrmCMv2rlfJGG2GPUmt9mFwJ+myEDm+Zsr+6OVvrp4SjdRtFdyDDXvG5
-         vN7Z5EjwyInI02jnboxVhKI2O53eIxLXbQam67atUJlJZf0w3dOkcBvSttBj78vPIaVo
-         A9/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=cfd/8M+3gyZaErrHxKGhDKNtvrZetbbEzWZS8sSvKTw=;
-        b=QEZnVVASbH2WprVyJB9fq+CklHEsbN+b75LT9f6o4XYgRGf9N0jURZAEE87RPc57bA
-         1yGxsIPA75rJ/5Xz4WaL7xz6xs7swAUXITlg/opYZ2NLMFW+WhvuL/NHCxJl6z2bR7CA
-         FC91VHmKum5aMaNGFzmLZF1fa9JPnT80yWdSXcFOy6K8OhCYlk7ex3LGZOrtOYXnLRAr
-         oOWdvq9hvsOBvAgcCoUayVm7Pb2d6Jovi5Eg8uZ0oWQ33kRJc3xNb3R9ZcVdK/7nBTHm
-         SctkMfaD85cdHQCaHm7lL1veUFrRARBTntL+Zd/Zh6g2Eb8f/uJPEYhZP401MYjjgy4H
-         Cdpw==
-X-Gm-Message-State: ALyK8tKE8e3lmvLbqauiojdbCmiSjFvyGkGX0BZK/eTVagL4KYAjbQZXkgCilp5pxGRaGGxMm0GQ0X48/R2WDQ==
-X-Received: by 10.107.47.41 with SMTP id j41mr1335563ioo.168.1466014970833;
- Wed, 15 Jun 2016 11:22:50 -0700 (PDT)
-Received: by 10.79.0.30 with HTTP; Wed, 15 Jun 2016 11:22:50 -0700 (PDT)
-In-Reply-To: <20160615140026.10519-4-pranit.bauva@gmail.com>
-X-Google-Sender-Auth: gO1tB7P779_sZgwL_kh3hOktca8
+	id S932883AbcFOSdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2016 14:33:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60712 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933012AbcFOScx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2016 14:32:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C1D321521;
+	Wed, 15 Jun 2016 14:32:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pgkSXWMJpcYKFpqqaZC4lFyGUfU=; b=HX/UjP
+	8Ym6Ap5Z0MYYZC9VDSjSv+FRzu4z//yz6sQ3zGtsmOaqqzhjWoaoQ+dhjz5vnWPb
+	ZLUqtzXFnsHEAUkqwuJnRsb/STUHl4epiI8+WnjrGR5uwq0uoJLhAZNnB7NStlbj
+	UzdCgtjLqfu8EuYKkUbGUMGv+R60aPQ2ErSEM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LYjXE5BqerM+mw5WmqM0uk/CvaSv1Xk4
+	q2T0ltGfKPiEpOuhcopJm8sK8AhlQ8eMPf7ngXmPfk40y8g6vjd44YhYTAqRqcVn
+	cNkHcZVHxC/xo8ppJoVHlUpKMCARJ2zu59+eumq4rfPLPsYOdobmW7W7d4l1e35Y
+	upU6U+69VyM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 83CFB21520;
+	Wed, 15 Jun 2016 14:32:41 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C57A2151E;
+	Wed, 15 Jun 2016 14:32:40 -0400 (EDT)
+In-Reply-To: <20160615023658.GA21270@glandium.org> (Mike Hommey's message of
+	"Wed, 15 Jun 2016 11:36:58 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8B06E1E0-3327-11E6-B5E0-89D312518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297387>
 
-On Wed, Jun 15, 2016 at 10:00 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> is_empty_file() can help to refactor a lot of code. Also it is quite
-> helpful while converting shell scripts which use `test -s`. Since
+Mike Hommey <mh@glandium.org> writes:
 
-As justification, "can help to refactor a lot of code" is very
-nebulous. It would be better to give a concrete reason for moving the
-function, such as explaining that the functionality will be needed by
-the "git bisect" port to C.
+> On Tue, Jun 14, 2016 at 03:08:04PM -0700, Junio C Hamano wrote:
 
-> is_empty_file() is now a "library" function, its inappropriate to die() so
-> instead error_errno() is used to convey the message to stderr while the
-> appropriate boolean value is returned.
+>> * mh/connect (2016-06-06) 10 commits
+>>  - connect: [host:port] is legacy for ssh
+>> ...
+>>  - connect: document why we sometimes call get_port after get_host_and_port
+>> 
+>>  Ok, folks, is everybody happy with this version?
 >
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> ---
-> diff --git a/builtin/am.c b/builtin/am.c
-> @@ -30,22 +30,6 @@
->  /**
-> - * Returns 1 if the file is empty or does not exist, 0 otherwise.
-> - */
-> -static int is_empty_file(const char *filename)
-> -{
-> -       struct stat st;
-> -
-> -       if (stat(filename, &st) < 0) {
-> -               if (errno == ENOENT)
-> -                       return 1;
-> -               die_errno(_("could not stat %s"), filename);
-> -       }
-> -
-> -       return !st.st_size;
-> -}
+> $gmane/296609
+> $gmane/296610
 
-So, the original function die()'d for unexpected errors, but the
-rewrite does not. This is a big behavior change. To account for such a
-change in behavior I'd expect to see git-am updated to die() on its
-own for such failures, but no such changes are present in this patch.
-More about this below...
+Oh, I have seen these, and I know you two are happy.
 
-> diff --git a/wrapper.c b/wrapper.c
-> @@ -696,3 +696,16 @@ void sleep_millisec(int millisec)
-> +int is_empty_file(const char *filename)
-> +{
-> +       struct stat st;
-> +
-> +       if (stat(filename, &st) < 0) {
-> +               if (errno == ENOENT)
-> +                       return 1;
-> +               error_errno(_("could not stat %s"), filename);
+But I am having a hard time coming up with a few-line summary for
+this topic.  I can write the beginning part, i.e. "Git-URL parsing
+routine has been rewritten", but the concluding part of the sentence
+cannot be "... has been rewritten for no good reason." if I were to
+mark the topic as "Will merge to 'next'".  The best I can come up
+with is "... has been rewritten (hopefully) without changing the
+benaviour.", but that is not a strong-enough justificaiton to make
+the change to the codebase, either.
 
-Mental note: There is no 'return' in front of error_errno(), so the
-function does not exit here...
+In short, while the update may not introduce new bugs, why would we
+want to have this change in the first place?
 
-> +       }
-> +
-> +       return !st.st_size;
-> +}
-
-If stat() returns some error other than ENOENT, then the value of 'st'
-will be undefined, yet this return statement accesses its 'st_size'
-field, which is clearly a bad thing to do.
-
-You either need to return a designated value (such as -1) upon errors
-other than ENOENT (and update the documentation to mention -1) so that
-the caller can decided what to do, or die() as the original did. While
-it's true that die()'ing is not necessarily friendly in library code,
-it may be acceptable until such time that you find a caller which
-needs different behavior.
+By the way, please do not quote the whole thing when you are
+responding to a tiny part of the original message.
