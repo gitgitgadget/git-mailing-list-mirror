@@ -1,75 +1,92 @@
-From: Mathias Lafeldt <mathias.lafeldt@gmail.com>
-Subject: Re: [ANNOUNCE] Sharness v1.0.0
-Date: Wed, 15 Jun 2016 11:03:51 +0200
-Message-ID: <CAMFa-2gKpm2jLiYGVrdkrhvo5uzqdq+rNJhuyFrWL+LbnhHSWg@mail.gmail.com>
-References: <CAP8UFD0uvaB-2_CrXs2ZvoqLRHfCd8efA-S7-tE2Qa6Pn+rAAg@mail.gmail.com>
- <CAGZ79kYaQTdVoXOGpKbQmWsdRftY10TBZTTf_Ya-fdegykU-QQ@mail.gmail.com> <CAP8UFD2wT0Qoxksza1uU1GMTWRD4GcfdYzDTrNh+JLtfT9h3rA@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2016, #04; Tue, 14)
+Date: Wed, 15 Jun 2016 17:12:41 +0700
+Message-ID: <CACsJy8BqDYrjzvaYJC1sBcqLw+5NAONE0Txo24BVS1Gz+ZmFjw@mail.gmail.com>
+References: <xmqqtwgv77az.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 15 11:04:02 2016
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 15 12:13:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bD6jw-0002yl-00
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 11:04:00 +0200
+	id 1bD7oy-0003qu-AN
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 12:13:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752183AbcFOJDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2016 05:03:54 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:36667 "EHLO
-	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751429AbcFOJDx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2016 05:03:53 -0400
-Received: by mail-wm0-f53.google.com with SMTP id f126so12241165wma.1
-        for <git@vger.kernel.org>; Wed, 15 Jun 2016 02:03:53 -0700 (PDT)
+	id S1751889AbcFOKNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2016 06:13:12 -0400
+Received: from mail-io0-f178.google.com ([209.85.223.178]:36683 "EHLO
+	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750882AbcFOKNL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2016 06:13:11 -0400
+Received: by mail-io0-f178.google.com with SMTP id n127so18390529iof.3
+        for <git@vger.kernel.org>; Wed, 15 Jun 2016 03:13:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ExXGh1OWirS9rtgxEyGy9nwUVT/xrtAeLJ4uCfPlI5U=;
-        b=ZE1meeqt/KVLfvur+f7G7UfDvjJNt307JZNd9ldDO22TT5qyffVPHDLk+x3g37Y8wE
-         uDuNB2blw4atZV9R/P0Fg3mHDTRFX5srpQesO18xt9D5/9hHVMSCZFGmraDLPG1Kovxc
-         6J8ZyDUZonAKFSku9pywTu0hiD083CKj5TRw4/Uaq6yViHrlLU3gptRT1gfRiiQpycjK
-         ac98USE7qqTG5qtkoBD7NPGxzHE+mPfdwKE0mCwOdl1ucVuksaNBXBjN8qxwtBSN8cUk
-         lB48gPZIBgGKxUODyzJu1hq4Xp7nS8BWR8JupRQ5k+MLQwSoNIauMeZlUKPBYn9Z9nC6
-         kxtw==
+        bh=SQ5aK4pw0QW/kNXklHvdZZ5tB4CLop6LYuTbxd9RZ7A=;
+        b=B7MAQQBR+5kAprFSZ4dHbtFd37CPn/qrurJBRfBFQJdyGR0P5M3gbbL8GP4CR0GZ70
+         tg3yZqPBVRAA355XQWOfOAk0aiF4Oujm37//t4L2P/UTcQ4crk/VLTnro+QFtT20ct6M
+         Vm5EJ3SEQOqha/vHInNwKQGRyT1dZCcRaX8KQ5yMpCENTr8ipXzl4rvZy7S0ixRmjT81
+         og8U5xp91S0Tns1L1/VOXDsGUNVyq/LRTKI54XXf1/sXHz0kZMYRQYOwA3A7vo179l+5
+         y2hYl4SGUnUvr3z+HKKSHclPkpcQ6Zg9Spb/IJtyOb4eldL2lFtqa/QQtQxACHjvj5fI
+         m5yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=ExXGh1OWirS9rtgxEyGy9nwUVT/xrtAeLJ4uCfPlI5U=;
-        b=AOHNuZ6oXDY2UXOFn64K76/qFI9eO9jRL4M9zHhbThfVkKDrIo7kGzmmt10PykXmpq
-         3+moGLTMRl9oRNMC3y1DMT31StPG+zkIS3mYDAQVjZ5lTIPe4unh7ewW3FhE+tPdXnt1
-         ozphSyyGgTDzKT3/pp3MEsLqkB8ueCXtl5+22MnWj4sGCoeJiz8DP3hxSMhhMQ/HUOPz
-         W9KxnWy7E2kYPFfgGJWzttzMId5SsjuJA3z+oycfpnF5xOktmJpObHxJMyOd7KXoeLG/
-         GqrNA89CGN5+hpV5f4k/F0MlPA0Yx3ECYCEtTDRLulTF05kkkC+Gv9ZWrhuA0nr9rj0i
-         BFCA==
-X-Gm-Message-State: ALyK8tJBsSgXciY9KkDAbgWzYt+pa5RGyzGN+lYztkm+8ucaR3rN6Ncb5XCr63hDErx4l4/seR2DsS4dFyswqA==
-X-Received: by 10.28.48.15 with SMTP id w15mr9046584wmw.28.1465981432544; Wed,
- 15 Jun 2016 02:03:52 -0700 (PDT)
-Received: by 10.28.230.209 with HTTP; Wed, 15 Jun 2016 02:03:51 -0700 (PDT)
-In-Reply-To: <CAP8UFD2wT0Qoxksza1uU1GMTWRD4GcfdYzDTrNh+JLtfT9h3rA@mail.gmail.com>
+        bh=SQ5aK4pw0QW/kNXklHvdZZ5tB4CLop6LYuTbxd9RZ7A=;
+        b=BfHWQ5ChuNJZdMoIsvw5pfpb7hLHNnSf7lUR4lT6nMoca4SYEMTSQCO4LM18A1wFOZ
+         sgN8kLlfj3J3pRGk8SsRRWQmP4hizR5s6nSSBsaiVQmCyqh3Bd0Pv5TysXyF89kwxmfl
+         bUMpRcSvF31+cfTbf0/xQoN78J3vqyKw7l+takdXsyXttF7s6H/dY1qsoFqiwIg7ppcw
+         Y5xKTE6l+MFO/SM3t2LRA65lrsAabyaC9yqRua23b/VDikeFs8q3Se39IOaN8Kral2sH
+         0aKq0zniTNPQCDTDQXXgG+HCmTQ95JQQCXX6XO4G6HuWSQ/08cJ3cRdUr+2jLx3Fq7UP
+         YzCA==
+X-Gm-Message-State: ALyK8tLr3yJ4ZlljXg4DzjXc3qyfxGwcz8z4cZsI940Y+zW4WADddB/xBNShfDOM7B9Ac0GIdvgicr5j4QpU9Q==
+X-Received: by 10.107.22.131 with SMTP id 125mr38303492iow.128.1465985590562;
+ Wed, 15 Jun 2016 03:13:10 -0700 (PDT)
+Received: by 10.64.173.167 with HTTP; Wed, 15 Jun 2016 03:12:41 -0700 (PDT)
+In-Reply-To: <xmqqtwgv77az.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297362>
 
->> Is there any word out there from Mathias on making you the designated
->> new maintainer? (I cannot tell if this is a genuine maintainer change, or
->> a [hostile] fork by reading this email, and I don't know much of the context,
+On Wed, Jun 15, 2016 at 5:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> * nd/i-t-a-commitable (2016-06-06) 3 commits
+>  - commit: don't count i-t-a entries when checking if the new commit is empty
+>  - Resurrect "diff-lib.c: adjust position of i-t-a entries in diff"
+>  - diff.h: extend "flags" field to 64 bits because we're out of bits
+>
+>  "rm .git/index && git add -N * && git commit" allows you to create
+>  an empty commit without --allow-empty; attempt to forbid it.
+>
+>  Breaks many tests by completely butchering "git commit", it seems.
 
-Yes, it's 100% genuine. I handed over maintenance to Christian Couder.
+Not surprising. I did run some basic tests, but not the test suite. It
+was more an excuse to bring up the topic again. Please drop it. I will
+probably resend (with more or less the same idea, since you haven't
+given a loud and clear "NO").
 
-Here's a signed commit to prove the transfer:
-https://github.com/chriscool/sharness/pull/55
+> * nd/worktree-cleanup-post-head-protection (2016-05-24) 6 commits
+>  - worktree: simplify prefixing paths
+>  - worktree: avoid 0{40}, too many zeroes, hard to read
+>  - worktree.c: use is_dot_or_dotdot()
+>  - git-worktree.txt: keep subcommand listing in alphabetical order
+>  - worktree.c: rewrite mark_current_worktree() to avoid strbuf
+>  - completion: support git-worktree
+>  (this branch is used by nd/worktree-lock.)
+>
+>  Further preparatory clean-up for "worktree" feature.
+>
+>  Expecting a reroll.
+>  ($gmane/294136, etc.)
 
-(Sorry for double posting, the mailing list didn't like my first email.)
-
+Hmm.. I think what's in 'pu' (which is v2, $gmane/295260) is ok now.
 -- 
--Mathias
-https://tinyletter.com/production-ready
+Duy
