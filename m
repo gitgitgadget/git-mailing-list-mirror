@@ -1,61 +1,94 @@
-From: Brian Lalor <blalor@bravo5.org>
-Subject: bug: compactionheuristic config var case issue
-Date: Wed, 15 Jun 2016 06:39:32 -0400
-Message-ID: <8C006106-EED2-48B5-B9A5-6FCEB64597C1@bravo5.org>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: Re: [PATCH] hooks--pre-commit.sample: check for chars, that are not
+ allowed for a windows file name
+Date: Wed, 15 Jun 2016 13:15:36 +0200
+Message-ID: <5c02cc24-f68d-6eb3-9759-ffff328a0c2f@virtuell-zuhause.de>
+References: <0102015553154cde-5c798c87-87c1-4acf-919a-c824dce01fae-000000@eu-west-1.amazonses.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 15 12:39:40 2016
+Content-Transfer-Encoding: 7bit
+To: dexteritas <dexteritas1@gmx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 15 13:15:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bD8EV-00009e-JD
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 12:39:39 +0200
+	id 1bD8nT-0005Iu-4R
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 13:15:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932084AbcFOKjg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jun 2016 06:39:36 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:60571 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753203AbcFOKje convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2016 06:39:34 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id A122120DA5
-	for <git@vger.kernel.org>; Wed, 15 Jun 2016 06:39:33 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute5.internal (MEProxy); Wed, 15 Jun 2016 06:39:33 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=PHFwHDAx5HmxGNHhOVIbGsXS+xI=; b=cP9Dk
-	ju2aXClDEboPz1mJDuX+C03J8A9AFFAKtqWEqFDFMz5P/jkpb7tcb4B0dHfeFZrC
-	4J5LSajiflaZkwLBLhiuBaBOHCPVTjfqP9aTsmIJGBvDx/AQ7Y2GD32Uz1fT/hlF
-	G809l7ZsT14gLaT1i2DfNk2Tqsx7+hxaVg5L+g=
-X-Sasl-enc: 9rF0StY2RujUFx983B/GbE22j5NzbXE9gWb9l8Wwfstt 1465987173
-Received: from [192.168.1.209] (pool-74-110-148-216.rcmdva.fios.verizon.net [74.110.148.216])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 56B1BCCDAB
-	for <git@vger.kernel.org>; Wed, 15 Jun 2016 06:39:33 -0400 (EDT)
-X-Mailer: Apple Mail (2.3124)
+	id S1753472AbcFOLPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2016 07:15:43 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:56746 "EHLO
+	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750976AbcFOLPm (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Jun 2016 07:15:42 -0400
+Received: from p4fc87c53.dip0.t-ipconnect.de ([79.200.124.83] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	id 1bD8nM-0002C9-FJ; Wed, 15 Jun 2016 13:15:40 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
+In-Reply-To: <0102015553154cde-5c798c87-87c1-4acf-919a-c824dce01fae-000000@eu-west-1.amazonses.com>
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1465989342;b698a78f;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297365>
 
-I=E2=80=99m very happy to see the new compaction heuristic option; it=E2=
-=80=99s the way I always thought diffs should read! =20
+Am 15.06.2016 um 10:02 schrieb dexteritas:
+> After the ASCII-check, test the windows compatibility of file names.
+> Can be disabled by:
+> git config hooks.allownonwindowschars true
+> ---
+>  templates/hooks--pre-commit.sample | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+> 
+> diff --git a/templates/hooks--pre-commit.sample b/templates/hooks--pre-commit.sample
+> index 68d62d5..120daf1 100755
+> --- a/templates/hooks--pre-commit.sample
+> +++ b/templates/hooks--pre-commit.sample
+> @@ -17,6 +17,7 @@ fi
+>  
+>  # If you want to allow non-ASCII filenames set this variable to true.
+>  allownonascii=$(git config --bool hooks.allownonascii)
+> +allownonwindowschars=$(git config --bool hooks.allownonwindowschars)
+>  
+>  # Redirect output to stderr.
+>  exec 1>&2
+> @@ -43,6 +44,27 @@ If you know what you are doing you can disable this check using:
+>    git config hooks.allownonascii true
+>  EOF
+>  	exit 1
+> +elif [ "$allownonwindowschars" != "true" ] &&
+> +	# If you work with linux and windows, there is a problem, if you use
+> +	# chars like \ / : * ? " < > |
+> +	# Check if there are used only windows compatible chars
+> +	test $(git diff --cached --name-only --diff-filter=A -z $against |
+> +	  LC_ALL=C tr -d '[0-9A-Za-z\[\]\{\}_ -)+-.]\0' | wc -c) != 0
+> +then
+> +	cat <<\EOF
+> +Error: Attempt to add a chars that are not allowed for a windows file name.
+> +
+> +This can cause problems if you want to work with people on other platforms.
+> +
+> +To be portable it is advisable to rename the file.
+> +
+> +Check your filenames for: \ / : * ? " < > |
+> +
+> +If you know what you are doing you can disable this check using:
+> +
+> +  git config hooks.allownonwindowschars true
+> +EOF
+> +	exit 2
+>  fi
+>  
+>  # If there are whitespace errors, print the offending file names and fail.
 
-The config option in the documentation references =E2=80=9Cdiff.compact=
-ionHeuristic=E2=80=9D, but diff.c does a case-sensitive comparison on =E2=
-=80=9Cdiff.compactionheuristic=E2=80=9D (note the case of the =E2=80=9C=
-h=E2=80=9D in =E2=80=9Cheuristic=E2=80=9D) and `git diff` does not hono=
-r the config.  Confusingly, `git config diff.compactionheuristic` retur=
-ns true when diff.compactionHeuristic is set in ~/.gitconfig.  When dif=
-f.compactionheuristic is set to true in ~/.gitconfig, the desired behav=
-ior is achieved.
+There are some cases of illegal file names missing. E.g. reserved names,
+trailing period and space. My trial with a precommit hook for avoiding
+illegal filenames on windows can be found at [1]. Feel free to loot my
+version for a reroll.
 
-Thank you all for Git: it=E2=80=99s hard to remember the terrible world=
- we lived in before it existed. :-)
+[1]:
+https://github.com/t-b/git-pre-commit-hook-windows-filenames/blob/master/pre-commit
