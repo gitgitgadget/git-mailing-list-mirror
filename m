@@ -1,10 +1,9 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/6] bisect--helper: `bisect_clean_state` shell
- function in C
-Date: Wed, 15 Jun 2016 14:04:12 -0400
-Message-ID: <CAPig+cRfYS4FX+z4Yn-He_LctWdh7Ua56JU2HJs2C2+nTi5YyA@mail.gmail.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v2 0/6] convert various shell functions in git-bisect to C
+Date: Wed, 15 Jun 2016 23:39:06 +0530
+Message-ID: <CAFZEwPO3z6FPwigM3GUecp95wBHaMetvHStj01oeOfSfgG84-A@mail.gmail.com>
 References: <20160607205454.22576-1-pranit.bauva@gmail.com>
- <20160615140026.10519-1-pranit.bauva@gmail.com> <20160615140026.10519-2-pranit.bauva@gmail.com>
+ <20160615140026.10519-1-pranit.bauva@gmail.com> <CAPig+cTV8Mum1b7XxUit4Kn5WBX2kukWvvjkhOCqxnFtcjfp0w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>,
@@ -12,104 +11,76 @@ Cc: Git List <git@vger.kernel.org>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Lars Schneider <larsxschneider@gmail.com>,
 	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-To: Pranit Bauva <pranit.bauva@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 15 20:04:21 2016
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Jun 15 20:09:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bDFAp-0001p3-Sk
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 20:04:20 +0200
+	id 1bDFFe-0005q3-IP
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 20:09:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753263AbcFOSEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2016 14:04:15 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:34112 "EHLO
-	mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752819AbcFOSEO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2016 14:04:14 -0400
-Received: by mail-it0-f67.google.com with SMTP id d71so4359388ith.1
-        for <git@vger.kernel.org>; Wed, 15 Jun 2016 11:04:13 -0700 (PDT)
+	id S932620AbcFOSJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2016 14:09:10 -0400
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:36625 "EHLO
+	mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752726AbcFOSJI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2016 14:09:08 -0400
+Received: by mail-qk0-f177.google.com with SMTP id p10so31233448qke.3
+        for <git@vger.kernel.org>; Wed, 15 Jun 2016 11:09:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=iet2TJoPF2q1JHZuvlMEFra2UMmpDhLNyWI6ctNS1+Y=;
-        b=PXRr+8jHuRDGNTPWPpQ6yX8zxhYpCXcbi2lpdRJ3qa3HxhzDVa8lZWH59FQ7It1FLS
-         4NVQLLxydVELT/M1HJKRrUtEbPCuCVuXcZ/aPrHrXWYkbQeSUQz9wapxgxJrNkVFiJrx
-         qfWqKjpiA0bMwQjMmfrupug2prFa0AOalsD7FFWAfSFbazpra5B6r8pHHWS9uVXTWwBF
-         swI5Pmm2mH1OHdnmmzsRVY0oadRD6eUDdew1+mu6oSMs+CNkNQzfQiJ5dp1ZcwzHdFPn
-         orODZhfBQWObi5MvMZsU8P1Mjhtp8wRfRYJOzUxvt0++M9+C/x1sO1u18K11I8KKX5UH
-         1N6g==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=oQvvFHxb1Dj/IeRPD2oIvY3otEg540drP+rFi1qLHgw=;
+        b=AykdwSu5/qi4lcUdLojAbOmsadqJS1/p0DJkhsLAil39/FARAcJHJH8SiKOrzJZHUQ
+         38mvuZ34RYfChdvBNMoi6baLJdms2sPUS+uLJ5f/DDp1SVArFtmLcToHS8wclZik41tq
+         XzQ6+3F1TzeZ4oxoNrt+pWQ0mgmfv5XOiUgy7SBwU9++dVfExJ+jXipcmdnYE0XBcxON
+         GtaWmoY0RRuComUhBYW+ZncfdJxHRcp8WaIp4pLUGrR9TGuJ1eefzdAMzBebTyF5Mg9l
+         GdB0iKAAjxL/QSCOCdIb88Px2TxX6mmaPY7tI9TSsU/IihvuB5HKoVabltAwy+sQIbjM
+         ax0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=iet2TJoPF2q1JHZuvlMEFra2UMmpDhLNyWI6ctNS1+Y=;
-        b=FZ1+PQEJwgTkr/ydxJ+Hp6Xc1EaO9csQx9LYS/sEG/T+BhLkTAjiouEYdo3mu857A8
-         10MneW52037HJY7W4T/VaSSw7t0AMuWDbJOf5sVX2YRwRpr6ycIpgFrTO9TacI7YoI1Q
-         nRSkzBGzmpx6Qmzxwl2xWKP4UCRQ14qT80+bsOsNuTiM6hEY0R6V9bVIhj9KMs8zgOJE
-         fBDx538uK9eN0dc1FWya9Z68vk88qo64pdOeeU4ZjKht2lGo9vj/Sshq1TcQKHSrYDMO
-         nkl2R8iAAAB+hjCEMQoHFnKFhxZKC6aDeyBDbXdf8+Jp435wefQNNEIAm+sAGtwJhTwi
-         Sdvg==
-X-Gm-Message-State: ALyK8tLOUTJ09eE6tz8Y/kNq7s/y0j20eYWOX3q+aKF6eex36FJpvPYvC5IT1EpLCS3Jdwy+o9DnQyGrRge6zA==
-X-Received: by 10.36.55.15 with SMTP id r15mr1150347itr.73.1466013853246; Wed,
- 15 Jun 2016 11:04:13 -0700 (PDT)
-Received: by 10.79.0.30 with HTTP; Wed, 15 Jun 2016 11:04:12 -0700 (PDT)
-In-Reply-To: <20160615140026.10519-2-pranit.bauva@gmail.com>
-X-Google-Sender-Auth: MSIjrEA-G3KlLDmuq_Tagl9oExQ
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=oQvvFHxb1Dj/IeRPD2oIvY3otEg540drP+rFi1qLHgw=;
+        b=k3mn8QlIj48Uv4c97JiCY0bK1H00hPPraP6a7y5Q+fGDwUIK3NhLH0kQVP5ml2QmF1
+         iQhccSdF0u1Fk2u7H1TGbwKFzEV5CnHj9T0ZJtLFYT6WNIDQuUDwGSGxIpbMm8GRfn2D
+         yCCe5Tx0i4WFCOgxJ5gvvGz9Z0nIsMXyVo4WO2zXOVnKYzzKcCEAirGe5g0uUQkOP5qs
+         DeNVvJodstnOUvrnIaxKdTQYtwvsbc55ABJ3DbhAxNyd/LQMiJlm8T87T8+h7qcgVQSR
+         8hKUsa0TbVjaG3yCogqEOMtu9m6I3wqjqrRgRGWwK0r4FEzDBDkbv3++/PouxSpuCEdC
+         89CA==
+X-Gm-Message-State: ALyK8tJrZm6x/F8ufDbd3zY/v00J4XHJXb4YoXwvK9WG9U6DUfdSMcR4fZxB9yNBTvmLRhR9k4W6itAy075j4A==
+X-Received: by 10.37.231.137 with SMTP id e131mr23939ybh.7.1466014146861; Wed,
+ 15 Jun 2016 11:09:06 -0700 (PDT)
+Received: by 10.129.116.193 with HTTP; Wed, 15 Jun 2016 11:09:06 -0700 (PDT)
+In-Reply-To: <CAPig+cTV8Mum1b7XxUit4Kn5WBX2kukWvvjkhOCqxnFtcjfp0w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297383>
 
-On Wed, Jun 15, 2016 at 10:00 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> Reimplement `bisect_clean_state` shell function in C and add a
-> `bisect-clean-state` subcommand to `git bisect--helper` to call it from
-> git-bisect.sh .
-> [...]
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> ---
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> +static int mark_for_removal(const char *refname, const struct object_id *oid,
-> +                           int flag, void *cb_data)
-> +{
-> +       struct string_list *refs = cb_data;
-> +       char *ref = xstrfmt("refs/bisect/%s", refname);
-> +       string_list_append(refs, ref);
-> +       return 0;
-> +}
-> +
-> +static int bisect_clean_state(void)
-> +{
-> +       int result = 0;
-> +
-> +       /* There may be some refs packed during bisection */
-> +       struct string_list refs_for_removal = STRING_LIST_INIT_NODUP;
-> +       for_each_ref_in("refs/bisect/", mark_for_removal, (void *) &refs_for_removal);
-> +       string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
-> +       result = delete_refs(&refs_for_removal);
-> +       string_list_clear(&refs_for_removal, 0);
+Hey Eric,
 
-This is leaking all the strings added to 'refs_for_removal', isn't it?
-Either you need to loop over the items and free the strings manually,
-or (if it's not too ugly), set 'strdup_strings' before invoking
-string_list_clear().
+On Wed, Jun 15, 2016 at 11:23 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Jun 15, 2016 at 10:00 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> Changes wrt previous version:
+>>  * Use STRING_LIST_INIT_NODUP to avoid leaks in bisect_clean_state()
+>>  * Use test_path_is_missing in the patch 2/6
+>>  * drop file_size()
+>>  * move is_empty_file() method from builtin/am.c to wrapper.c
+>>  * use static for methods
+>>  * remove the variable status in bisect_reset() altogether and put the whole
+>>    thing inside the if block.
+>>  * one more method converted namely bisect_write().
+>
+> As an aid to reviewers, in the future, please also include in the
+> cover letter an interdiff between the previous and current version of
+> the patch series. Thanks.
 
-> +       remove_path(git_path_bisect_expected_rev());
-> +       remove_path(git_path_bisect_ancestors_ok());
-> +       remove_path(git_path_bisect_log());
-> +       remove_path(git_path_bisect_names());
-> +       remove_path(git_path_bisect_run());
-> +       remove_path(git_path_bisect_write_terms());
-> +       /* Cleanup head-name if it got left by an old version of git-bisect */
-> +       remove_path(git_path_head_name());
-> +       /*
-> +        * Cleanup BISECT_START last to support the --no-checkout option
-> +        * introduced in the commit 4796e823a.
-> +        */
-> +       remove_path(git_path_bisect_start());
-> +
-> +       return result;
-> +}
+Sure!
+
+Regards,
+Pranit Bauva
