@@ -1,88 +1,149 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] verify-tag: allow to verify signed blob objects
-Date: Wed, 15 Jun 2016 11:39:29 -0700
-Message-ID: <xmqq8ty670v2.fsf@gitster.mtv.corp.google.com>
-References: <a6557333316c6f7996fa54eebc75abdf988ed9f9.1465991212.git.git@drmicha.warpmail.net>
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH v2 3/6] wrapper: move is_empty_file() from builtin/am.c
+Date: Thu, 16 Jun 2016 00:10:03 +0530
+Message-ID: <CAFZEwPOkojqvivXpP7vq6WuMWPAjE1uXruoxsxH76LGT+1Eu4A@mail.gmail.com>
+References: <20160607205454.22576-1-pranit.bauva@gmail.com>
+ <20160615140026.10519-1-pranit.bauva@gmail.com> <20160615140026.10519-4-pranit.bauva@gmail.com>
+ <CAPig+cTu1msxkjBZgLfy9g3+_VF5OzKNDbR0E0zVvopTNe2Q=g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jun 15 20:39:38 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Jun 15 20:40:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bDFiz-0005AL-W1
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 20:39:38 +0200
+	id 1bDFja-0005iV-7r
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jun 2016 20:40:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752739AbcFOSje (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2016 14:39:34 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58377 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751907AbcFOSjd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2016 14:39:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 31EDA2533C;
-	Wed, 15 Jun 2016 14:39:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wxempbO+5YT9rXgQCZ7e2HWkLAs=; b=hOuP7K
-	4aVT2nZ5Ruayezdef9hhLA7DhJNWWhi/zmnHzXkobAPPNC2cta6pvIfb0r4Iqfzb
-	vp90x6wXT+pvpIXrer8rKzlygcukTS6FogAWbkvNikpTJjuJX5/GNMO9m5on53X9
-	raia1J6ttD5MyrSOibvfkI9vDA4oX5NCoLKgc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=D4V/sPdk8PL1eEmKz2AUrYUIS4z0CHh9
-	1zow/OZmFXu3g5Cp8CzBw6I+FGm9Y8C4iwnvktPkKPTWU1MU0JOhdfqOaxy6a+5K
-	BYTojpEQSNab2Mfc1uzHcNS8LnEeqxxkXoVysUidvjUJwzdZVIigQ1MJdlafjULI
-	VrVSxLkRacU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2B2DF2533B;
-	Wed, 15 Jun 2016 14:39:32 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A163A2533A;
-	Wed, 15 Jun 2016 14:39:31 -0400 (EDT)
-In-Reply-To: <a6557333316c6f7996fa54eebc75abdf988ed9f9.1465991212.git.git@drmicha.warpmail.net>
-	(Michael J. Gruber's message of "Wed, 15 Jun 2016 13:51:54 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7FC519EA-3328-11E6-8156-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1753598AbcFOSkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2016 14:40:08 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:35043 "EHLO
+	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751867AbcFOSkF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2016 14:40:05 -0400
+Received: by mail-yw0-f193.google.com with SMTP id v137so2736386ywa.2
+        for <git@vger.kernel.org>; Wed, 15 Jun 2016 11:40:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=D0JJTdPDTv24Kg4RABZ9e57T6tavbou3xr9o4whcOxU=;
+        b=hM1sP70cLUnByicA803jxasCzzUzh2GCOpg2tS+KliYJCmifBAFLkt9Yoc3iebFHdu
+         KA5VaMWOj8+RBM+axE/XSiapPY5UOQ8V0vVHsw+8sWWA+G6PvKXYmFK5AG+86sZyVX7F
+         MaH9vAFAJSipfTtrbRHcvyLJw7CENn8NkZvuQLQgXzRHLgheHiLnAnxB/P44QN+ow+LS
+         RPeCpuH7lj4cptqootGU71z7gXeKrtBcVu4HaksnR8el1JZkhooo8COsUcmE9PcTJD9/
+         8R+1liQmcwMjWTGkZwZ3moXNus4fomlr0aPQX24P/jQw8E5OAY8UsfpLz41zas8MeEOf
+         0lGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=D0JJTdPDTv24Kg4RABZ9e57T6tavbou3xr9o4whcOxU=;
+        b=RCAiDiPA5YdUv3wLs2W4LVoc8A3IsU9iJOfl2zMHwg8sc9bB4MLpbDhl2idC3D/ND0
+         MAlIkwQfZE5JPVBQZDCa012/s9e4u2eK514wuxTqrfHYlPf9ehLh1xPda1cLJJbObe4I
+         iCHj9hXD5yje7ER33e9bK/kt2o1i9E9QoyWspszupyMpOpxTfknJm8SdhNkEDYexsdd3
+         Atw7dtrUmabnEBqmohlpFW+2YF1nYdzskbuWraxClebIw+eAzya6662lC+UwETzsyR5F
+         e13vPGFCyvEZ6Ql2eANbnM/WTyX3oUU9EQof4yxnzKcUjFAYDG0KptRac2vmWalNWDSx
+         W6kg==
+X-Gm-Message-State: ALyK8tKDUnzNwdKpIhCnvZwpRx3DOSf0MQBSek49+OFr9Ve602RxwRNfG/KE/NZv97SadxI+fV9J+1STq/Ai0Q==
+X-Received: by 10.13.254.130 with SMTP id o124mr126737ywf.30.1466016004257;
+ Wed, 15 Jun 2016 11:40:04 -0700 (PDT)
+Received: by 10.129.116.193 with HTTP; Wed, 15 Jun 2016 11:40:03 -0700 (PDT)
+In-Reply-To: <CAPig+cTu1msxkjBZgLfy9g3+_VF5OzKNDbR0E0zVvopTNe2Q=g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297389>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Hey Eric,
 
-> diff --git a/tag.c b/tag.c
-> index d1dcd18..d5f090b 100644
-> --- a/tag.c
-> +++ b/tag.c
-> @@ -39,7 +39,7 @@ int gpg_verify_tag(const unsigned char *sha1, const char *name_to_report,
->  	int ret;
->  
->  	type = sha1_object_info(sha1, NULL);
-> -	if (type != OBJ_TAG)
-> +	if ((type != OBJ_TAG) && ((type != OBJ_BLOB) || !(flags & GPG_VERIFY_BLOB)))
->  		return error("%s: cannot verify a non-tag object of type %s.",
->  				name_to_report ?
->  				name_to_report :
+On Wed, Jun 15, 2016 at 11:52 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Jun 15, 2016 at 10:00 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> is_empty_file() can help to refactor a lot of code. Also it is quite
+>> helpful while converting shell scripts which use `test -s`. Since
+>
+> As justification, "can help to refactor a lot of code" is very
+> nebulous. It would be better to give a concrete reason for moving the
+> function, such as explaining that the functionality will be needed by
+> the "git bisect" port to C.
 
-The double negation is very hard to read.  I wonder
+Sure I can include that.
 
-	if ((type != OBJ_TAG) &&
-            !((type == OBJ_BLOB) && (flags & GPG_VERIFY_BLOB)))
+>> is_empty_file() is now a "library" function, its inappropriate to die() so
+>> instead error_errno() is used to convey the message to stderr while the
+>> appropriate boolean value is returned.
+>>
+>> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+>> ---
+>> diff --git a/builtin/am.c b/builtin/am.c
+>> @@ -30,22 +30,6 @@
+>>  /**
+>> - * Returns 1 if the file is empty or does not exist, 0 otherwise.
+>> - */
+>> -static int is_empty_file(const char *filename)
+>> -{
+>> -       struct stat st;
+>> -
+>> -       if (stat(filename, &st) < 0) {
+>> -               if (errno == ENOENT)
+>> -                       return 1;
+>> -               die_errno(_("could not stat %s"), filename);
+>> -       }
+>> -
+>> -       return !st.st_size;
+>> -}
+>
+> So, the original function die()'d for unexpected errors, but the
+> rewrite does not. This is a big behavior change. To account for such a
+> change in behavior I'd expect to see git-am updated to die() on its
+> own for such failures, but no such changes are present in this patch.
+> More about this below...
+>
+>> diff --git a/wrapper.c b/wrapper.c
+>> @@ -696,3 +696,16 @@ void sleep_millisec(int millisec)
+>> +int is_empty_file(const char *filename)
+>> +{
+>> +       struct stat st;
+>> +
+>> +       if (stat(filename, &st) < 0) {
+>> +               if (errno == ENOENT)
+>> +                       return 1;
+>> +               error_errno(_("could not stat %s"), filename);
+>
+> Mental note: There is no 'return' in front of error_errno(), so the
+> function does not exit here...
 
-is easier to follow?  "It is not a tag object, and it's not like we
-were asked to verify blob and the user gave us a blob, either, so
-let's complain" is easier to follow, at least for me.
+This is purposely as I want to keep this function to return only
+boolean values ( 0 or 1).
 
-Or even
+>> +       }
+>> +
+>> +       return !st.st_size;
+>> +}
+>
+> If stat() returns some error other than ENOENT, then the value of 'st'
+> will be undefined, yet this return statement accesses its 'st_size'
+> field, which is clearly a bad thing to do.
+>
+> You either need to return a designated value (such as -1) upon errors
+> other than ENOENT (and update the documentation to mention -1) so that
+> the caller can decided what to do, or die() as the original did. While
+> it's true that die()'ing is not necessarily friendly in library code,
+> it may be acceptable until such time that you find a caller which
+> needs different behavior.
 
-	if ((flags & GPG_VERIFY_BLOB) && (type != OBJ_BLOB))
-               	"you told me to check blob but didn't give me one";
-	} else if (type != OBJ_TAG)
-		"you didn't give me a tag";
+I didn't realize the complexity the patch carried with itself before.
+I probably shouldn't fidget with am code right now, its a work better
+left to who are converting the code to library code. I think its the
+best fit for this situation to leave it as die()'ing.
+
+Regards,
+Pranit Bauva
