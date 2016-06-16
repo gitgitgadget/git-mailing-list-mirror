@@ -2,160 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.2 required=5.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-7.0 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6719320193
-	for <e@80x24.org>; Thu, 16 Jun 2016 20:47:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5F201FE4C
+	for <e@80x24.org>; Thu, 16 Jun 2016 20:55:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754381AbcFPUrs (ORCPT <rfc822;e@80x24.org>);
-	Thu, 16 Jun 2016 16:47:48 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33282 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754022AbcFPUrr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2016 16:47:47 -0400
-Received: by mail-wm0-f66.google.com with SMTP id r5so14171977wmr.0
-        for <git@vger.kernel.org>; Thu, 16 Jun 2016 13:47:46 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Dz4wBqIjJjDa4/zAvh9xQaPZaPvEUFAiWXvTh3gd3R8=;
-        b=TqSSkX49jHzWIQp+rhTQrTScwFMLrIFWsnFWxDacBFunaJ9sBhRsZ6F7XHPLQOY2WZ
-         SybO0TugSJeMaQxJUkff0JH8b2sauuwZZiuYH1A+TUK42bQH3LRaTvYZa9uyPlhryn+t
-         lOCv77t23f4bZryNXrd/wj7i2rr6dQe6I4BJAV7BQZuWjyH76znUSptxytohLT8ltm1F
-         q94cEKg5oSge5GRKE8Z1UIn23hCS15hKoiZChbrvy7i0PbRy/Jyq5MTbfXdnmWruAXAH
-         qzR0NkppGVhOBfgRY1kaudBj/ejYqOnLz3Nn/EYEX2UTxW87XjjsPCListZ/H/H4OY4u
-         WSWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Dz4wBqIjJjDa4/zAvh9xQaPZaPvEUFAiWXvTh3gd3R8=;
-        b=BWOCuwlix9murX8YloaqYmbRXmLwdB61a3TXMe3aJyQhYVN4TbaHkTOTjUqQaKNSSV
-         UznqmW02pOlHojfAS+Z5LNKIhN0ofaRTHw+1YYVDfQd2PsaW9EZRorFKfX6LPYQDs+gT
-         xkhFTBVh1HI7PhDOpNw25CCZjIhQPMMGy9z6cQP0od+X5skCr7+vRfSX6Dl/MCk4Q8gA
-         xIeWhZrfSw3UpOUBmXpnnv2D9f4ev7YkCmiV/E1YShW1IsiWAMz8YpsBqwCEzBO4x6TX
-         p88ONVG+9gPbbddM4oocEvO3iHI+X+QpcRL/zSQF0oXGNk/rlwR4YANNBSaecekToUf1
-         tuyg==
-X-Gm-Message-State: ALyK8tJ3ULSrEDkTSu/7m/uuT83JBFnw3yEXW5jJ48Dni1BHQQEatkvYdvuguprcbCojCtxn0u7tPjxpEK+Z/Q==
-X-Received: by 10.195.17.138 with SMTP id ge10mr1529775wjd.94.1466110065586;
- Thu, 16 Jun 2016 13:47:45 -0700 (PDT)
+	id S1754421AbcFPUzy (ORCPT <rfc822;e@80x24.org>);
+	Thu, 16 Jun 2016 16:55:54 -0400
+Received: from kitenet.net ([66.228.36.95]:45632 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754238AbcFPUzy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2016 16:55:54 -0400
+Received: by kitenet.net (Postfix, from userid 1000)
+	id 525E01C5B6; Thu, 16 Jun 2016 16:55:53 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+	t=1466110553; bh=Y/PWFE/2XOC0Q4a7BQgeDm6f4fe2N1wPruBDET/gQlE=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=k5r4LUjJAfHWfze0uUptl8f7rekgwnWwjmGa/Bnlnbwt6+ESq7lc0tPCGWVtPeVy2
+	 oD7mHm+z/jYlLorqdKY17xSheY2zjObWKVecqBWP35qisEFrjzF3IoIVUFuAgqMEO4
+	 dDUl5Zt59EWKnHxzHk5C4hXgyfnPo43V/s7Z6FNQ=
+Date:	Thu, 16 Jun 2016 16:55:53 -0400
+From:	Joey Hess <id@joeyh.name>
+To:	git@vger.kernel.org
+Subject: Re: [PATCH 4/4] use smudge-to-file in git checkout etc
+Message-ID: <20160616205553.GA23176@kitenet.net>
+References: <20160616203259.5886-1-joeyh@joeyh.name>
+ <20160616203259.5886-5-joeyh@joeyh.name>
 MIME-Version: 1.0
-Received: by 10.194.25.197 with HTTP; Thu, 16 Jun 2016 13:47:45 -0700 (PDT)
-In-Reply-To: <CAFZEwPPBTd6o7qg96cet8RAp5wY1shzQ=jU8dEK1irXSiMAxQg@mail.gmail.com>
-References: <20160607205454.22576-1-pranit.bauva@gmail.com>
- <20160615140026.10519-1-pranit.bauva@gmail.com> <20160615140026.10519-6-pranit.bauva@gmail.com>
- <CAPig+cRNcg496Ty2SJ1ojm1n3OpHzX0obMAD2bY3AzoyrKdA9w@mail.gmail.com>
- <CAFZEwPP0-9rHOKFZBoE55pv4V-+okSLh4M5grNKWnq831Ug4+w@mail.gmail.com>
- <CAPig+cS1=bv588H6yrOy1oFvArjJNbetdTS7+ZhfGn-GtVp4qw@mail.gmail.com> <CAFZEwPPBTd6o7qg96cet8RAp5wY1shzQ=jU8dEK1irXSiMAxQg@mail.gmail.com>
-From:	Christian Couder <christian.couder@gmail.com>
-Date:	Thu, 16 Jun 2016 22:47:45 +0200
-Message-ID: <CAP8UFD0YNNzF4qqdvDbrONaMm8B8G_amePq2g58TYrjm+9W6Vw@mail.gmail.com>
-Subject: Re: [PATCH v2 5/6] bisect--helper: `is_expected_rev` &
- `check_expected_revs` shell function in C
-To:	Pranit Bauva <pranit.bauva@gmail.com>
-Cc:	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160616203259.5886-5-joeyh@joeyh.name>
+User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jun 16, 2016 at 9:25 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> Hey Eric,
->
-> On Fri, Jun 17, 2016 at 12:46 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Thu, Jun 16, 2016 at 3:05 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>> On Thu, Jun 16, 2016 at 2:44 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>>> On Wed, Jun 15, 2016 at 10:00 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>>>> Reimplement `is_expected_rev` & `check_expected_revs` shell function in
->>>>> C and add a `--check-expected-revs` subcommand to `git bisect--helper` to
->>>>> call it from git-bisect.sh .
->>>>> [...]
->>>>> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
->>>>> ---
->>>>> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
->>>>> @@ -162,13 +162,44 @@ static int bisect_reset(const char *commit)
->>>>> +static int is_expected_rev(const char *expected_hex)
->>>>> +{
->>>>> +       struct strbuf actual_hex = STRBUF_INIT;
->>>>> +       int res;
->>>>> +
->>>>> +       if (strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0) < 0) {
->>>>> +               strbuf_release(&actual_hex);
->>>>> +               return 0;
->>>>> +       }
->>>>> +
->>>>> +       strbuf_trim(&actual_hex);
->>>>> +       res = !strcmp(actual_hex.buf, expected_hex);
->>>>> +       strbuf_release(&actual_hex);
->>>>> +       return res;
->>>>> +}
->>>>
->>>> Not worth a re-roll, but this could be re-structured to avoid having
->>>> to remember to release the strbuf at all exits:
->>>>
->>>>     struct strbuf actual_hex = ...;
->>>>     int res = 0;
->>>>
->>>>     if (strbuf_read_file(...) >= 0) {
->>>>         strbuf_trim(...);
->>>>         res = !strcmp(...);
->>>>     }
->>>>     strbuf_release(...);
->>>>     return res;
->>>>
->>>> Alternately:
->>>>
->>>>     if (strbuf_read_file(...) < 0)
->>>>         goto done;
->>>>
->>>>     strbuf_trim(...);
->>>>     res = !strcmp(...);
->>>>
->>>> done:
->>>>     strbuf_release(...);
->>>>     return res;
->>>>
->>>> which is a bit less compact.
->>>
->>> I will avoid this for the reason that I will have to create a label
->>> for a lot of functions. If I choose to do this for one function, I
->>> think it would be more appropriate to do the same for other functions.
->>> There would be a lot of functions in future which would be in the same
->>> scenario and creating a separate label for each of them would be quite
->>> tedious. What do you think?
->>
->> Not sure what you're talking about. Label names are not shared across
->> functions. Anyhow, the first suggestion I presented above is more
->> concise than the 'goto' version.
->
-> Yes I am aware of the fact that labels aren't shared across functions.
-> What I meant by "separate label" was that I will have to make a label
-> "fail" in each function. But I recently noticed that its used quite a
-> lot so I think it would be okay to use it. Will re-roll with using
-> labels and goto.
+Joey Hess wrote:
+> +		int smudge_to_file = can_smudge_to_file(ce->name);
+>  		if (ce_mode_s_ifmt == S_IFREG &&
+> +		    ! smudge_to_file &&
+>  		    convert_to_working_tree(ce->name, new, size, &buf)) {
+>  			free(new);
+>  			new = strbuf_detach(&buf, &newsize);
+> @@ -189,13 +193,29 @@ static int write_entry(struct cache_entry *ce,
 
-My opinion is that if there is a more concise version without labels
-and gotos, it's better to use it, so I would suggest Eric's first
-suggestion which is:
+> +		if (! can_smudge_to_file(ce->name)) {
+> +		}
+> +		else {
+> +			close(fd);
+> +			convert_to_working_tree_filter_to_file(ce->name, path, new, size);
 
->     struct strbuf actual_hex = ...;
->     int res = 0;
->
->     if (strbuf_read_file(...) >= 0) {
->         strbuf_trim(...);
->         res = !strcmp(...);
->     }
->     strbuf_release(...);
->     return res;
+Oops, I had meant to avoid using smudge-to-file when
+e_mode_s_ifmt != S_IFREG, and forgot it in this patch, so it does the
+wrong thing for symlinks.
 
-Thanks,
-Christian.
+I'll send an updated patch set fixing this after any other review.
+
+-- 
+see shy jo
