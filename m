@@ -1,166 +1,117 @@
-From: Tom Russello <tom.russello@grenoble-inp.org>
-Subject: Re: [PATCH v4 6/6] send-email: add option --cite to quote the message
- body
-Date: Thu, 16 Jun 2016 00:21:47 +0200
-Message-ID: <f049d7cd-d178-8a8e-3672-98e5113afd3a@grenoble-inp.org>
-References: <20160608130142.29879-1-samuel.groot@grenoble-inp.org>
- <20160608130833.32274-1-samuel.groot@grenoble-inp.org>
- <vpqvb1ir38m.fsf@anie.imag.fr>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: Easiest way to clone over an existing directory?
+Date: Thu, 16 Jun 2016 02:44:34 +0000
+Message-ID: <20160616024434.GB371617@vauxhall.crustytoothpaste.net>
+References: <20160615155133.GA13168@x>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, erwan.mathoniere@grenoble-inp.org,
-	jordan.de-gea@grenoble-inp.org, gitster@pobox.com,
-	aaron@schrab.com, e@80x24.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Samuel GROOT <samuel.groot@grenoble-inp.org>
-X-From: git-owner@vger.kernel.org Thu Jun 16 00:21:58 2016
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="rJwd6BRFiFCcLxzm"
+Cc: git@vger.kernel.org
+To: Josh Triplett <josh@joshtriplett.org>
+X-From: git-owner@vger.kernel.org Thu Jun 16 04:44:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bDJC9-0003ZV-CG
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jun 2016 00:21:57 +0200
+	id 1bDNIY-00034T-9A
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Jun 2016 04:44:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932321AbcFOWVx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jun 2016 18:21:53 -0400
-Received: from zm-smtpout-2.grenet.fr ([130.190.244.98]:37639 "EHLO
-	zm-smtpout-2.grenet.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932141AbcFOWVw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2016 18:21:52 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id F1F0520AD;
-	Thu, 16 Jun 2016 00:21:48 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id O7h9ihLkoMHL; Thu, 16 Jun 2016 00:21:48 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr (zm-smtpauth-2.grenet.fr [130.190.244.123])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id D597820A7;
-	Thu, 16 Jun 2016 00:21:48 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTP id C99AF2066;
-	Thu, 16 Jun 2016 00:21:48 +0200 (CEST)
-Received: from zm-smtpauth-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpauth-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Mp8wVQ5IaykC; Thu, 16 Jun 2016 00:21:48 +0200 (CEST)
-Received: from [192.168.1.14] (LFbn-1-1723-208.w90-65.abo.wanadoo.fr [90.65.92.208])
-	by zm-smtpauth-2.grenet.fr (Postfix) with ESMTPSA id 58AA02064;
-	Thu, 16 Jun 2016 00:21:48 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.0
-In-Reply-To: <vpqvb1ir38m.fsf@anie.imag.fr>
+	id S932346AbcFPCop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2016 22:44:45 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:48440 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753172AbcFPCop (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Jun 2016 22:44:45 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id CD44C282AA;
+	Thu, 16 Jun 2016 02:44:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+	s=default; t=1466045080;
+	bh=F527nrKvcMsQRrhI/rEFjRJ4Eo4dUi7hM5prK1p0RdE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=032wF/3AnkU6+jp9/SkKAAJC6mpOt7ltkKooSAIKdqkM9dRLnN30gFsKT6o7NefWY
+	 4B0COgs/5hY9WIhbeX6eJF51ziiqg3xgpSZW4sg5LXcMLit9jCaa6OpghNt+J/Tr1f
+	 gJOH/lGNpIbQmk7Gbi5FPc00Yj/Rr39F0izalhNjDjYNvnGs9HxGqRgskIY/cF1jbr
+	 02E4y43Bf6ORHDqOpSxSrGGUi2H3q4xIAQ8rGfazUTHxkqIM8gr+jUM/dN1OJOnMXy
+	 FbwAQ01eQvqh6F4EDUBCPwRwfx8kyCX6crpV/rIkbLhvyDq8/GP9rTjfnyacVIVFfw
+	 lHjsEmRt+uQZSo+7BS/kHqlIrdXoeRfRPZMAG8QAn3uz/1HpsKAbcb+F7X4v39bOW9
+	 4eu/sq/Q22Z334unu1OPjkuLqSFRnIjEfCe6L5o7xCjP3RGRRstjI8q4jIsMG4+FKq
+	 viXCvHtsVjSjXmBjuuHwKTUIjDAqeNLJSbJjiRPuGyVSobRj/gn
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Josh Triplett <josh@joshtriplett.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20160615155133.GA13168@x>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 4.6.0-trunk-amd64)
+User-Agent: Mutt/1.6.0 (2016-04-01)
+X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297406>
 
-Le 09/06/2016 =C3=A0 13:49, Matthieu Moy a =C3=A9crit :
-> Samuel GROOT <samuel.groot@grenoble-inp.org> writes:
+
+--rJwd6BRFiFCcLxzm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Jun 15, 2016 at 08:51:34AM -0700, Josh Triplett wrote:
+> Currently, every time I set up a new system, I run the following:
 >=20
->> If used with `in-reply-to=3D<email_file>`, cite the message body of =
-the given
->> email file. Otherwise, do nothing.
+> git clone $MY_HOMEDIR
+> mv home/.git .
+> rm -r home
+> git checkout -f
 >=20
-> It should at least warn when --in-reply-to=3D<email_file> is not give=
-n
-> (either no --in-reply-to or --in-reply-to=3D<id>). I don't see any
-> use-case where a user would want --cite on the command-line and not w=
-ant
-> --in-reply-to=3D<email_file>. OTOH, it seems a plausible user-error, =
-and
-> the user would appreciate a message saying what's going on.
-
-You're right. We'll warn the user with the next version.
-
->> @@ -56,6 +57,8 @@ git send-email --dump-aliases
->>      --subject               <str>  * Email "Subject:"
->>      --in-reply-to           <str>  * Email "In-Reply-To:"
->>      --in-reply-to          <file>  * Populate header fields appropr=
-iately.
->> +    --cite                         * Quote the message body in the =
-cover if
->> +                                     --compose is set, else in the =
-first patch.
->>      --[no-]xmailer                 * Add "X-Mailer:" header (defaul=
-t).
->>      --[no-]annotate                * Review each patch that will be=
- sent in an editor.
->>      --compose                      * Open an editor for introductio=
-n.
+> This seems like an odd dance to go through.  But I can't just git clone
+> into ~ directly, because git clone will not clone into an existing
+> non-empty directory.
 >=20
-> Just wondering: would it make sense to activate --cite by default whe=
-n
-> --in-reply-to=3Dfile is used, and to allow --no-cite to disable this?
-> This is something we can easily do now without breaking backward
-> compatibility (--in-reply-to=3Dfile doesn't exist yet), but would be =
-more
-> painful to do later.
-
-Indeed, it can be more intuitive especially for a user who is used to
-cite messages.
-
->> @@ -640,6 +644,7 @@ if (@files) {
->>  	usage();
->>  }
->> =20
->> +my $message_cited;
+> (I could use "git clone -n" to avoid the unnecessary checkout, but the
+> files are small, and it wouldn't remove the need to rmdir so the number
+> of commands would remain the same.)
 >=20
-> Nit: I read "$message_cited" as "Boolean saying whether the message w=
-as
-> cited". $cited_message would be clearer to me (but this is to be take=
-n
-> with a grain of salt as I'm not a native speaker), since the variable
-> holds the content of the cited message.
+> Does some better way exist to handle this?  And if not, would it make
+> sense for git clone to have an option to clone into an existing
+> directory (which should also avoid setting junk_work_tree)?
 
-Sorry, French habits.. :-)
+My typical technique is something like the following:
 
->> +sub do_insert_cited_message {
->> +	my $tmp_file =3D shift;
->> +	my $original_file =3D shift;
->> +
->> +	open my $c, "<", $original_file
->> +	or die "Failed to open $original_file: " . $!;
->> +
->> +	open my $c2, ">", $tmp_file
->> +		or die "Failed to open $tmp_file: " . $!;
->> +
->> +	# Insertion after the triple-dash
->> +	while (<$c>) {
->> +		print $c2 $_;
->> +		last if (/^---$/);
->> +	}
->> +	print $c2 $message_cited;
->=20
-> I would add a newline here to get a blank line between the message ci=
-ted
-> and the diffstat.
+  git init
+  git remote add origin https://git.crustytoothpaste.net/git/bmc/homedir.git
+  git pull origin master
 
-Agreed.
+I'm not sure if that's the officially sanctioned way to do it, but it
+does work reliably.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-> I think non-ascii characters would deserve particular attention here
-> too. For example, if the patch contain only ascii and the cited part
-> contains UTF-8, does the generated patch have a proper Content-type:
-> header?
->=20
-> I can imagine worse, like a patch containing latin1 character and a
-> cited message with another 8-bit encoding.
+--rJwd6BRFiFCcLxzm
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I tried to manage them with the built-in Base64 module but there is
-still work in progress.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.12 (GNU/Linux)
 
->> +test_expect_success $PREREQ 'correct cited message with --in-reply-=
-to and --compose' '
->> +	grep "> On Sat, 12 Jun 2010 15:53:58 +0200, author@example.com wro=
-te:" msgtxt3 &&
->=20
-> I would prefer to have the full address including the real name here =
-(A
-> <author@example.com>) in this example. Actually, after a quick look a=
-t
-> the code, I don't understand where the name has gone (what's shown he=
-re
-> is extracted from the From: header).
+iQIcBAEBCgAGBQJXYhKSAAoJEL9TXYEfUvaLyh0P/1tdigIM5PiSJR4dFybETBNH
+LAFe8+jOR1pz8S86gwA3TlrDusqckx6+r5HL9Ia1UcxXDucXZ1Kg/Oc2q/uAbjVw
+WnD2yN8EF7JAz7cWnbZO6k5bGpmSIzqRoTl+y6gryFw2RiJTxe3P41MZHJwnyrQm
+dmqe4b3d8vfZYC/CnsH4mhzWLfJKnktojd7cSyAtF1OnM3yVs1//Wl7yAA9frAFd
+URKGbVxdu/xihnzsGh/Bl2wOKZgLjiHR+yfo+1yhqNew0MIaFb84bj2iOQv2MOp7
+GX9cEh2V0vD3ZCoVr4hTGv1rpZBtxcBft9MpXuxcLE+llxIvvpNZKm8uGjyNV+GO
+ySKFpQz5ppo2cn4q726bEnSjv3oY85tmjzkmsIaFFqlPCEtJcxdmKBZHGUxok/2p
+wsc+gb+z2taBfwccMIWNvJqt9WhxKi5pTzX1aMUJz9lc7ohxcCZV7vxcYcn0G0Bj
+mJ91Mn4OJeJQrJl1ujmQGL1tWiiFZRGmaZRz37/N+ryt3WQrrRWpKZ04bKfImcd2
+QhbKfW98eNwwIyqqtG77XDDFruBCZE/aShu7TX3pa1gjtGpidqQVo0IZe5VHRu8j
+ZPRPN0gxRlqg355odBoUgymyJvr+g7r2ToGmS1nJyCmM/G1ecKXpflGyUwhqJLbN
+Bb058c6W4QjwGxfjgmy6
+=pxJZ
+-----END PGP SIGNATURE-----
 
-Agreed, I'll figure out where the problem is.
+--rJwd6BRFiFCcLxzm--
