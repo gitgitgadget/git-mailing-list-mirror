@@ -6,90 +6,100 @@ X-Spam-Status: No, score=-7.0 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 392FA1FE4D
-	for <e@80x24.org>; Thu, 16 Jun 2016 17:06:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CCDB1FE4D
+	for <e@80x24.org>; Thu, 16 Jun 2016 17:27:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754879AbcFPRGr (ORCPT <rfc822;e@80x24.org>);
-	Thu, 16 Jun 2016 13:06:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57006 "EHLO
+	id S1754736AbcFPR1h (ORCPT <rfc822;e@80x24.org>);
+	Thu, 16 Jun 2016 13:27:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55991 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754839AbcFPRGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2016 13:06:46 -0400
+	with ESMTP id S1754020AbcFPR1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2016 13:27:37 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id BA10723CAC;
-	Thu, 16 Jun 2016 13:06:44 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 972C424D8A;
+	Thu, 16 Jun 2016 13:27:35 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JNCfh9h0to+2HD/TFh3psJa68d0=; b=kuHrbl
-	x5c6E/Wkyd2cmzuZfy+mjEGJboibsPD6Htg+niDICL2i+UBdKkd1CB947MuywXYx
-	pWTFkWxx8w9buRtGoos51f4xXte2drnnXDe3xRpNR3uPWUficCXVN+c22Iuo026I
-	9pFN0+9Tffd9EY3iv0RdNIrlzpBOKPG5Hxlqk=
+	:content-type; s=sasl; bh=HoVrPgPD9UUy1wdFP6mF3KMH0Cw=; b=C0fDBo
+	kQJjQxmBuV5zQEe1Jhf15Osxz+4B5mxwhTBvhGu5FTBuIxHrBdJYos3DTq7vM+Lm
+	05rWPHcQDCZV5lkwOp1JESN4yf1DNTD6A0jgMxZa/ivySMzdr8yem/eK5UAfZpVr
+	IWzQzvehWMrIV46ws1ygtq7FOaVtU+hLSO8ZU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VRuL1pPKi4b1FJ4VIFAU5NsrX6udfC5W
-	OIh+Mlu/kCcrHia8VnLyxZBxixk+M0bDlkiOWahUSyoEqfVZNWwRoSXSi+EyDH/v
-	J1P7U6JsXD1vhuAC6BHaLDVGQZ6gRQda8n0KPOBpugR6KBp91heZGmCwmRAQZCVh
-	YLs6+8KVKGc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B28B823CAB;
-	Thu, 16 Jun 2016 13:06:44 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=fWWA2RaP9q+mCExfmFGiDoFykUwtgy5V
+	ddJIhF3bLXOdczlTNOOeKQl3V0R8ikXkbkgX1/M5wAUB6OyS2i+lKuJZFm/OvdMQ
+	SMTJ7tiaCZ8/40NYHrj2tpT2dCTnqrSFd9S73+NcsBLXXlElw+dAHEskUofZ+FIt
+	UJ/mnSiLokc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9040A24D89;
+	Thu, 16 Jun 2016 13:27:35 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3B3B623CAA;
-	Thu, 16 Jun 2016 13:06:44 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 17F5224D87;
+	Thu, 16 Jun 2016 13:27:35 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Michael J Gruber <git@drmicha.warpmail.net>,
-	ZhenTian <loooseleaves@gmail.com>, git@vger.kernel.org
-Subject: Re: I lost my commit signature
-References: <CAGrdoOrrpc7OiU74fa-qpjLNxOtm4upAOAfWPG6VbWUjyE0C2Q@mail.gmail.com>
-	<20160614075824.GB12563@sigill.intra.peff.net>
-	<CAGrdoOp=dDkiTr+Sb-uZWx66b4hoZCYAiRjfgYqoE8H4-kXJvg@mail.gmail.com>
-	<20160614081854.GA13457@sigill.intra.peff.net>
-	<CAGrdoOqfcacG488u-MA7UiapgvJEGNX2QaRq8BMmycEWg-BGWg@mail.gmail.com>
-	<20160614094121.GA13971@sigill.intra.peff.net>
-	<e129da8e-4e1d-c535-ca62-d2a4c2e23799@drmicha.warpmail.net>
-	<CAGrdoOoxphU0tRjV22yduXrhmOSyCc_zVnhuO9fFA6UPRd9WiA@mail.gmail.com>
-	<20160615043450.GA3975@sigill.intra.peff.net>
-	<be771366-00a7-6c20-2623-5fa54b8e19b7@drmicha.warpmail.net>
-	<20160616073410.GA651@sigill.intra.peff.net>
-Date:	Thu, 16 Jun 2016 10:06:42 -0700
-In-Reply-To: <20160616073410.GA651@sigill.intra.peff.net> (Jeff King's message
-	of "Thu, 16 Jun 2016 03:34:10 -0400")
-Message-ID: <xmqqr3bx5ahp.fsf@gitster.mtv.corp.google.com>
+To:	Michael J Gruber <git@drmicha.warpmail.net>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH] verify-tag: allow to verify signed blob objects
+References: <a6557333316c6f7996fa54eebc75abdf988ed9f9.1465991212.git.git@drmicha.warpmail.net>
+Date:	Thu, 16 Jun 2016 10:27:33 -0700
+In-Reply-To: <a6557333316c6f7996fa54eebc75abdf988ed9f9.1465991212.git.git@drmicha.warpmail.net>
+	(Michael J. Gruber's message of "Wed, 15 Jun 2016 13:51:54 +0200")
+Message-ID: <xmqqk2hp59iy.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B3BE43D6-33E4-11E6-A360-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 9D4F7F0E-33E7-11E6-A584-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> But why does somebody run "commit -S" for a single commit, but not all
-> the time? Is it because that commit is special? Or is that particular
-> moment special? One implies that it's important for the signature to be
-> retained during a rebase, and one does not.
+> Currently, there is no easy way to verify push certificates. They have
+> the same structure as signed tags: "attached detached signatures", that
+> is: the concatenation of the signed material and its detached signature.
 >
-> So I dunno. I would not be opposed to such a feature, but I'm having
-> trouble figuring out why it would be useful (though for the most part, I
-> do not see why anything but per-project commit.gpgSign config is
-> particularly useful. Maybe I just lack imagination).
+> Introduce a `--blob` option to verify-tag so that it allows to verify
+> tags and blobs.
+>
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+> The first outcome of my long announced project to describe our signature
+> formats in Documentation/technical.... (progress underway)
+>
+> In fact, that whole area is in need of refactoring: gpg related bits are
+> all over the place, including tag.c. The proposed patch neither improves
+> nor worsens the situation in that respect. But, since we make it
+> unnecessarily hard to verify signatures (git cat-file | gpg --verify fails)
+> it's only fair to provide a tool for pre-receive hook writers.
 
-I am not so imaginative, either. One remotely plausible use case may
-be a project that has two classes of paths (let's call these classes
-sensitive and others), and requires its participants to sign commits
-that touch sensitive paths.  The user needs something finter grained
-than per-project commit.gpgSign there.
 
-But even in such a case, the fact that an original commit is with a
-signature should not be a good indication that the rewritten version
-of that commit in the new history still touches the sensitive paths
-that required the original to be signed (i.e. the history the user
-is rebasing onto may already have the necessary changes to these
-paths).
+Another (orthogonal) thing to think about is "is it sensible to add
+a new feature to verify blob objects that has signature?"
 
-So, I dunno, either.
+That is, if we are adding one new feature, isn't it more sensible
+for it to accept a stream of bytes from the standard input and run
+verify-signed-bufter on it?  That way, if you already happen to have
+a blob, you can feed it "cat-file blob" output to get the new
+feature you added in this patch.
+
+But you cannot go in the other direction without incurring downside.
+
+If you start from "verify signature in blob" interface, and if all
+you have is a log of push certificates in a flat text file [1], you
+would need to do "hash-objects -w" first only to be able to use that
+interface (which in turn means that you would need write access to
+the object store of the repository.
+
+
+[Footnote]
+
+*1* push certificate is first written as a blob in the object store
+    only so that we can safely run multiple receive-pack instances
+    without them stepping on each others' toes; it is expected that
+    they are collected by the server operator in chronological order
+    and published in a human readable log form, so that outside
+    people can verify honesty of the server operator.
