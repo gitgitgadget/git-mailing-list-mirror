@@ -2,73 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.2 required=5.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-7.5 required=5.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0EB41FE4E
-	for <e@80x24.org>; Thu, 16 Jun 2016 09:48:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F7191FE4E
+	for <e@80x24.org>; Thu, 16 Jun 2016 09:49:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754127AbcFPJsU (ORCPT <rfc822;e@80x24.org>);
-	Thu, 16 Jun 2016 05:48:20 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55547 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754022AbcFPJsS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2016 05:48:18 -0400
-Received: (qmail 10529 invoked by uid 102); 16 Jun 2016 09:48:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Jun 2016 05:48:18 -0400
-Received: (qmail 14560 invoked by uid 107); 16 Jun 2016 09:48:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Jun 2016 05:48:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Jun 2016 05:48:16 -0400
-Date:	Thu, 16 Jun 2016 05:48:16 -0400
-From:	Jeff King <peff@peff.net>
+	id S1754194AbcFPJsi (ORCPT <rfc822;e@80x24.org>);
+	Thu, 16 Jun 2016 05:48:38 -0400
+Received: from avasout06.plus.net ([212.159.14.18]:42635 "EHLO
+	avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753975AbcFPJsf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2016 05:48:35 -0400
+Received: from hashpling.plus.com ([212.159.69.125])
+	by avasout06 with smtp
+	id 7Mnp1t0072iA9hg01MnqQl; Thu, 16 Jun 2016 10:47:51 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=Rr04V3SK c=1 sm=1 tr=0
+ a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
+ a=pD_ry4oyNxEA:10 a=4UT5_vqeN27ffPB_2Q8A:9 a=CjuIK1q_8ugA:10
+Received: from charles by hashpling.plus.com with local (Exim 4.84_2)
+	(envelope-from <charles@hashpling.org>)
+	id 1bDTtt-0005P5-QI; Thu, 16 Jun 2016 10:47:49 +0100
+Date:	Thu, 16 Jun 2016 10:47:49 +0100
+From:	Charles Bailey <charles@hashpling.org>
 To:	Duy Nguyen <pclouds@gmail.com>
-Cc:	Brian Lalor <blalor@bravo5.org>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: bug: compactionheuristic config var case issue
-Message-ID: <20160616094815.GH15851@sigill.intra.peff.net>
-References: <8C006106-EED2-48B5-B9A5-6FCEB64597C1@bravo5.org>
- <CACsJy8Dp_s9avkkA4x=EfTjkObBNF8sB3zhkdgXmjkipDNdvNw@mail.gmail.com>
+Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] grep: fix grepping for "intent to add" files
+Message-ID: <20160616094749.GA20681@hashpling.org>
+References: <20160616065324.GA14967@hashpling.org>
+ <20160616074709.GA24412@duynguyen-vnpc.vn.dektech.internal>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACsJy8Dp_s9avkkA4x=EfTjkObBNF8sB3zhkdgXmjkipDNdvNw@mail.gmail.com>
+In-Reply-To: <20160616074709.GA24412@duynguyen-vnpc.vn.dektech.internal>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jun 15, 2016 at 07:33:31PM +0700, Duy Nguyen wrote:
+On Thu, Jun 16, 2016 at 02:47:09PM +0700, Duy Nguyen wrote:
+> I don't think revert is right. It rather needs a re-fix like below.
+> Basically we want grep_file() to run as normal, but grep_sha1()
+> (i.e. git grep --cached) should ignore i-t-a entries, because empty
+> SHA-1 is not the right content to grep. It does not matter in positive
+> matching, sure, but it may in -v cache.
 
-> On Wed, Jun 15, 2016 at 5:39 PM, Brian Lalor <blalor@bravo5.org> wrote:
-> > I’m very happy to see the new compaction heuristic option; it’s the way I always thought diffs should read!
-> >
-> > The config option in the documentation references
-> > “diff.compactionHeuristic”, but diff.c does a case-sensitive
-> > comparison on “diff.compactionheuristic” (note the case of the “h”
-> > in “heuristic”)
-> 
-> I think this misled you. All configuration variable names are
-> lower-cased before they reach that strcmp() call, the whole picture is
-> more like strcmp(tolower(var), "diff.compactionheuristic"), which I
-> believe is correct.
+You don't think the revert is correct or you don't think the revert is
+sufficient? (I wasn't able to find a test case which proved that the
+change to line 399 was necessary, so perhaps I don't understand.)
 
-Yep, that is correct. Config keys are case-insensitive (except for the
-middle portion "Y" of a key like "X.Y.Z"), and the downcasing happens
-before they even hit the config callbacks.
+I would have thought that grepping the empty SHA-1 would be correct for
+with or without -v. An "intent to add" file has no content in the index
+so I would expect it to have zero matching and zero non-matching lines
+for any grep --cached query?
 
-> > and `git diff` does not honor the config.  Confusingly, `git config
-> > diff.compactionheuristic` returns true when diff.compactionHeuristic
-> > is set in ~/.gitconfig.  When diff.compactionheuristic is set to
-> > true in ~/.gitconfig, the desired behavior is achieved.
+Or is this an efficiency and not a correctness concern?
 
-Brian, do you have a case you can share where it is not working as
-expected?
-
-Config isn't enabled automatically for plumbing commands like diff-tree.
-So some commands may not respect it, but "git diff" definitely should.
-
--Peff
+Charles.
