@@ -2,129 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.5 required=5.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-7.0 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB74C1FE4E
-	for <e@80x24.org>; Thu, 16 Jun 2016 07:02:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B3B51FE4C
+	for <e@80x24.org>; Thu, 16 Jun 2016 20:27:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751530AbcFPHCd (ORCPT <rfc822;e@80x24.org>);
-	Thu, 16 Jun 2016 03:02:33 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:53233 "EHLO
-	avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750991AbcFPHCc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2016 03:02:32 -0400
-X-Greylist: delayed 498 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Jun 2016 03:02:31 EDT
-Received: from hashpling.plus.com ([212.159.69.125])
-	by avasout06 with smtp
-	id 7JtQ1t0032iA9hg01JtR1i; Thu, 16 Jun 2016 07:53:29 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=Rr04V3SK c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
- a=pD_ry4oyNxEA:10 a=BNFp--SqAAAA:8 a=TSbVqHtbAAAA:8 a=pWMgPhmuWYeNdMPjUCoA:9
- a=CjuIK1q_8ugA:10 a=wCHOS_8tIzIYXQCUOVd6:22 a=NJcUIoPEKLAEIzHnl83t:22
-Received: from charles by hashpling.plus.com with local (Exim 4.84_2)
-	(envelope-from <charles@hashpling.org>)
-	id 1bDRB6-0004D3-JA; Thu, 16 Jun 2016 07:53:24 +0100
-Date:	Thu, 16 Jun 2016 07:53:24 +0100
-From:	Charles Bailey <charles@hashpling.org>
-To:	git@vger.kernel.org
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH] grep: fix grepping for "intent to add" files
-Message-ID: <20160616065324.GA14967@hashpling.org>
+	id S1754227AbcFPU1y (ORCPT <rfc822;e@80x24.org>);
+	Thu, 16 Jun 2016 16:27:54 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59503 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753900AbcFPU1x (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2016 16:27:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 33B13239C1;
+	Thu, 16 Jun 2016 16:27:52 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/5Or+SjCina2VKXNoTlj8Ad6H28=; b=o+3JRv
+	MJGwHhRDNyrpOkoy1pYvdJCnNZbs7/M3rSIuXCJupHq4hsq39lZNTf3EHHhcx//D
+	4l7ItMEYf8HYqnclExygtMBAk6LB744dPe+/pNpGe6HE5XB+yRViF+ov97WQr9v3
+	NeRKcCGgmEwQhuwlepwPPkTQX4V9oxlP1Ay3Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CbYWHAnOZDPbvHzlstj9Iigd/7V9uaXX
+	gIN2ns9tac3CW2obIzcazs+PNWQ1ZaijagYmDnTgwhfEN/sCBaV1F6vlt44vV1BW
+	f+8T4uNW0T4s1hdPrdpuSFZYlAABi11d3964KAqvo1oHwVUZASi2iEDaaCMqJN2Z
+	QWINUx68Jhc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2AD03239C0;
+	Thu, 16 Jun 2016 16:27:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A5215239BF;
+	Thu, 16 Jun 2016 16:27:51 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	peff@peff.net, git@vger.kernel.org, jacob.keller@gmail.com,
+	mhagger@alum.mit.edu
+Subject: Re: [PATCH] diff compaction heuristic: favor shortest neighboring blank lines
+References: <20160616174620.1011-1-sbeller@google.com>
+Date:	Thu, 16 Jun 2016 13:27:49 -0700
+In-Reply-To: <20160616174620.1011-1-sbeller@google.com> (Stefan Beller's
+	message of "Thu, 16 Jun 2016 10:46:20 -0700")
+Message-ID: <xmqqlh24516i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Content-Type: text/plain
+X-Pobox-Relay-ID: CC7F0A42-3400-11E6-AF28-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Charles Bailey <cbailey32@bloomberg.net>
+Stefan Beller <sbeller@google.com> writes:
 
-This reverts commit 4d552005323034c1d6311796ac1074e9a4b4b57e.
+> +        def bal
+> +                do_bal_stuff()
+> +
+> +                common_ending()
+> +        end
+> +
+>          def baz
+>                  do_baz_stuff()
+>
+>                  common_ending()
+>          end
+>
+> whereas before we had:
+>
+>   WIP (TODO: ask peff to provide an example that actually triggers, I seem to be
+>        unable to write one, though I thought the above was one)
+>
+>
+> The way we do it, is by inspecting the neighboring lines and see how
+> much indent there is and we choose the line that has the shortest amount
+> of blanks in the neighboring lines.
+> ...
+> because there is less space between line start and {end, def bal}
+> than for {do_bal_stuff, common_ending}.
 
-This commit caused 'git grep' to no longer find matches in new files in
-the working tree where the corresponding index entry had the "intent to
-add" bit set.
+I haven't thought this carefully yet, but would this equally work
+well for Python, where it does not have the "end" or does the lack
+of "end" pose a problem?  You'll still find "def bal" is a good
+boundary (but you cannot tell if it is the beginning or the end of a
+block, unless you understand the language), though.
 
-Add tests to cover this case and a few related cases which previously
-lacked coverage.
+> +static unsigned int leading_blank(const char *line)
+> +{
+> +	unsigned int ret = 0;
+> +	while (*line) {
+> +		if (*line == '\t')
+> +			ret += 8;
 
-Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
----
+This will be broken with a line with space-before-tab whitespace
+breakage, I suspect...
 
-Originally discussed:
-
-http://thread.gmane.org/gmane.comp.version-control.git/272363/focus=276358
-
-http://thread.gmane.org/gmane.comp.version-control.git/283001/focus=283002
-
-Unless I've misunderstood the conversation and commit message, the
-referenced commit was supposed to be a "code as a comment" commit with
-no change in observable behavior however a user was surprised that 'git
-grep' couldn't find something that regular grep could, despite the file
-being tracked - albeit new and "intended to add".
-
- builtin/grep.c  |  2 +-
- t/t7810-grep.sh | 29 +++++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 462e607..d5aacba 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -386,7 +386,7 @@ static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec, int
- 
- 	for (nr = 0; nr < active_nr; nr++) {
- 		const struct cache_entry *ce = active_cache[nr];
--		if (!S_ISREG(ce->ce_mode) || ce_intent_to_add(ce))
-+		if (!S_ISREG(ce->ce_mode))
- 			continue;
- 		if (!ce_path_match(ce, pathspec, NULL))
- 			continue;
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 1e72971..eae731a 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -1364,4 +1364,33 @@ test_expect_success 'grep --color -e A --and -e B -p with context' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'grep can find things only in the work tree' '
-+	touch work-tree-only &&
-+	git add work-tree-only &&
-+	echo "find in work tree" >work-tree-only &&
-+	git grep --quiet "find in work tree" &&
-+	test_must_fail git grep --quiet --cached "find in work tree" &&
-+	test_must_fail git grep --quiet "find in work tree" HEAD &&
-+	git rm -f work-tree-only
-+'
-+
-+test_expect_success 'grep can find things only in the work tree (i-t-a)' '
-+	echo "intend to add this" >intend-to-add &&
-+	git add -N intend-to-add &&
-+	git grep --quiet "intend to add this" &&
-+	test_must_fail git grep --quiet --cached "intend to add this" &&
-+	test_must_fail git grep --quiet "intend to add this" HEAD &&
-+	git rm -f intend-to-add
-+'
-+
-+test_expect_success 'grep can find things only in the index' '
-+	echo "only in the index" >cache-this &&
-+	git add cache-this &&
-+	rm cache-this &&
-+	test_must_fail git grep --quiet "only in the index" &&
-+	git grep --quiet --cached "only in the index" &&
-+	test_must_fail git grep --quiet "only in the index" HEAD &&
-+	git rm --cached cache-this
-+'
-+
- test_done
--- 
-2.8.2.311.gee88674
-
+> +		else if (*line == ' ')
+> +			ret ++;
+> +		else
+> +			break;
+> +		line++;
+> +	}
+> +	return ret;
+> +}
+> +
+> +static unsigned int surrounding_leading_blank(xrecord_t **recs, long ix,
+> +		long flags, long nrec)
+> +{
+> +	unsigned int i, ret = UINT_MAX;
+> +	if (ix > 0)
+> +		ret = leading_blank(recs[ix - 1]->ptr);
+> +	if (ix < nrec - 1) {
+> +		i = leading_blank(recs[ix + 1]->ptr);
+> +		if (i < ret)
+> +			ret = i;
+> +	}
+> +	return ret;
+> +}
+> +
+>  static int recs_match(xrecord_t **recs, long ixs, long ix, long flags)
+>  {
+>  	return (recs[ixs]->ha == recs[ix]->ha &&
+> @@ -416,7 +445,7 @@ static int recs_match(xrecord_t **recs, long ixs, long ix, long flags)
+>  int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+>  	long ix, ixo, ixs, ixref, grpsiz, nrec = xdf->nrec;
+>  	char *rchg = xdf->rchg, *rchgo = xdfo->rchg;
+> -	unsigned int blank_lines;
+> +	unsigned int blank_lines, min_bl_neigh_indent;
+>  	xrecord_t **recs = xdf->recs;
+>  
+>  	/*
+> @@ -451,6 +480,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+>  		do {
+>  			grpsiz = ix - ixs;
+>  			blank_lines = 0;
+> +			min_bl_neigh_indent = UINT_MAX;
+>  
+>  			/*
+>  			 * If the line before the current change group, is equal to
+> @@ -485,7 +515,13 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+>  			 * the group.
+>  			 */
+>  			while (ix < nrec && recs_match(recs, ixs, ix, flags)) {
+> -				blank_lines += is_blank_line(recs, ix, flags);
+> +				if (is_blank_line(recs, ix, flags)) {
+> +					unsigned int bl_neigh_indent =
+> +						surrounding_leading_blank(recs, ix, flags, nrec);
+> +					if (min_bl_neigh_indent > bl_neigh_indent)
+> +						min_bl_neigh_indent = min_bl_neigh_indent;
+> +					blank_lines++;
+> +				}
+>  
+>  				rchg[ixs++] = 0;
+>  				rchg[ix++] = 1;
+> @@ -525,6 +561,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+>  		if ((flags & XDF_COMPACTION_HEURISTIC) && blank_lines) {
+>  			while (ixs > 0 &&
+>  			       !is_blank_line(recs, ix - 1, flags) &&
+> +			       surrounding_leading_blank(recs, ix - 1, flags, nrec) > min_bl_neigh_indent &&
+>  			       recs_match(recs, ixs - 1, ix - 1, flags)) {
+>  				rchg[--ixs] = 1;
+>  				rchg[--ix] = 0;
