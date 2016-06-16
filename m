@@ -7,52 +7,55 @@ X-Spam-Status: No, score=-7.2 required=5.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E1271FE4C
-	for <e@80x24.org>; Thu, 16 Jun 2016 20:38:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6719320193
+	for <e@80x24.org>; Thu, 16 Jun 2016 20:47:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753900AbcFPUii (ORCPT <rfc822;e@80x24.org>);
-	Thu, 16 Jun 2016 16:38:38 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:37397 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752655AbcFPUih (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2016 16:38:37 -0400
-Received: by mail-wm0-f45.google.com with SMTP id a66so74100591wme.0
-        for <git@vger.kernel.org>; Thu, 16 Jun 2016 13:38:37 -0700 (PDT)
+	id S1754381AbcFPUrs (ORCPT <rfc822;e@80x24.org>);
+	Thu, 16 Jun 2016 16:47:48 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33282 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754022AbcFPUrr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2016 16:47:47 -0400
+Received: by mail-wm0-f66.google.com with SMTP id r5so14171977wmr.0
+        for <git@vger.kernel.org>; Thu, 16 Jun 2016 13:47:46 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=89XU/rNs70mIH6hE07GcOL6Y38dWIh82ANYfwVDmviY=;
-        b=POIXfmm4sn7NOYX3eZHEGF+CBewIeTBBAcWEqETyWPiYu8uL1NOByGvrnklj5ByB8Y
-         qAckVRi6K4OJyoP2Qc2tztqDvLYiHKOlX6eS/OPI7NIoMcBrttChuy1xKjGJXZe9mduu
-         rRQNibVjV1QPgNNPbYLX9AqU8U0VNhUZckCYNdU1wtaqQPAGJqOaE49h3GJmPSJmcJOp
-         Vc8HZPFqZjBG/t61Bhj5brK3PD+CJbsIhHEeQYa05cQOU8QVZ8TyiySU/LeT4qNlHIn/
-         YdwnUChiI3aPm5Q7D7psH8KS7I9gIecCKzZKpaHZsOrEFiEIz2e/r7CN17mWZgq4aDr5
-         HYdw==
+        bh=Dz4wBqIjJjDa4/zAvh9xQaPZaPvEUFAiWXvTh3gd3R8=;
+        b=TqSSkX49jHzWIQp+rhTQrTScwFMLrIFWsnFWxDacBFunaJ9sBhRsZ6F7XHPLQOY2WZ
+         SybO0TugSJeMaQxJUkff0JH8b2sauuwZZiuYH1A+TUK42bQH3LRaTvYZa9uyPlhryn+t
+         lOCv77t23f4bZryNXrd/wj7i2rr6dQe6I4BJAV7BQZuWjyH76znUSptxytohLT8ltm1F
+         q94cEKg5oSge5GRKE8Z1UIn23hCS15hKoiZChbrvy7i0PbRy/Jyq5MTbfXdnmWruAXAH
+         qzR0NkppGVhOBfgRY1kaudBj/ejYqOnLz3Nn/EYEX2UTxW87XjjsPCListZ/H/H4OY4u
+         WSWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=89XU/rNs70mIH6hE07GcOL6Y38dWIh82ANYfwVDmviY=;
-        b=ZLolR5H1pTu+kIsLkGwlezrrfZZv0jx5VbRKvjZIbQp4CwIwdhRTy49Rhr93YnR0/D
-         PurR5QI2Kh0Iqci80/u+9PcLG3G7u3IHU/bNedP74VdqNG3gFHixHBkn7/4hutcEo++y
-         KYGfZFIcWZD1M7GA0HC9YO88Klm7Et6QE4NvpeIqGyr0GOqdJNgqupSfd5DUpGcPhUQh
-         3p4VMQKDEetGJaIWQQZ0yad0+dU2Wd5z2Z5WcwCxTNy1D8MfeIn3TCsmpK0gekUD6qjf
-         pdbNZEHptgW74CmLdXxFH9ngdt8aGGXOQGFL0WDcVHA95+L7YH4SQfVDQuUfCpnaXk7o
-         Yudw==
-X-Gm-Message-State: ALyK8tKfCZ3APX8hiyQV2H7RM0vpYzoWMKIohzTTc59R9b9k1DValirqYiOTpiFhlC6cxfUw+NO/GwAy+BnusA==
-X-Received: by 10.28.16.193 with SMTP id 184mr7011725wmq.62.1466109516044;
- Thu, 16 Jun 2016 13:38:36 -0700 (PDT)
+        bh=Dz4wBqIjJjDa4/zAvh9xQaPZaPvEUFAiWXvTh3gd3R8=;
+        b=BWOCuwlix9murX8YloaqYmbRXmLwdB61a3TXMe3aJyQhYVN4TbaHkTOTjUqQaKNSSV
+         UznqmW02pOlHojfAS+Z5LNKIhN0ofaRTHw+1YYVDfQd2PsaW9EZRorFKfX6LPYQDs+gT
+         xkhFTBVh1HI7PhDOpNw25CCZjIhQPMMGy9z6cQP0od+X5skCr7+vRfSX6Dl/MCk4Q8gA
+         xIeWhZrfSw3UpOUBmXpnnv2D9f4ev7YkCmiV/E1YShW1IsiWAMz8YpsBqwCEzBO4x6TX
+         p88ONVG+9gPbbddM4oocEvO3iHI+X+QpcRL/zSQF0oXGNk/rlwR4YANNBSaecekToUf1
+         tuyg==
+X-Gm-Message-State: ALyK8tJ3ULSrEDkTSu/7m/uuT83JBFnw3yEXW5jJ48Dni1BHQQEatkvYdvuguprcbCojCtxn0u7tPjxpEK+Z/Q==
+X-Received: by 10.195.17.138 with SMTP id ge10mr1529775wjd.94.1466110065586;
+ Thu, 16 Jun 2016 13:47:45 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.194.25.197 with HTTP; Thu, 16 Jun 2016 13:38:35 -0700 (PDT)
-In-Reply-To: <CAFZEwPNpeD3+6kzY7HDH_ZXcL-Nu0B7jGeM5GMjH7PT0eSTLBw@mail.gmail.com>
+Received: by 10.194.25.197 with HTTP; Thu, 16 Jun 2016 13:47:45 -0700 (PDT)
+In-Reply-To: <CAFZEwPPBTd6o7qg96cet8RAp5wY1shzQ=jU8dEK1irXSiMAxQg@mail.gmail.com>
 References: <20160607205454.22576-1-pranit.bauva@gmail.com>
- <20160615140026.10519-1-pranit.bauva@gmail.com> <20160615140026.10519-7-pranit.bauva@gmail.com>
- <CAPig+cQV3FTGJBvS0Kuc3CNPiwZMZtApT6r8+Ojhw3y7O2VTiw@mail.gmail.com> <CAFZEwPNpeD3+6kzY7HDH_ZXcL-Nu0B7jGeM5GMjH7PT0eSTLBw@mail.gmail.com>
+ <20160615140026.10519-1-pranit.bauva@gmail.com> <20160615140026.10519-6-pranit.bauva@gmail.com>
+ <CAPig+cRNcg496Ty2SJ1ojm1n3OpHzX0obMAD2bY3AzoyrKdA9w@mail.gmail.com>
+ <CAFZEwPP0-9rHOKFZBoE55pv4V-+okSLh4M5grNKWnq831Ug4+w@mail.gmail.com>
+ <CAPig+cS1=bv588H6yrOy1oFvArjJNbetdTS7+ZhfGn-GtVp4qw@mail.gmail.com> <CAFZEwPPBTd6o7qg96cet8RAp5wY1shzQ=jU8dEK1irXSiMAxQg@mail.gmail.com>
 From:	Christian Couder <christian.couder@gmail.com>
-Date:	Thu, 16 Jun 2016 22:38:35 +0200
-Message-ID: <CAP8UFD1Fi53am5O+RBS4XfHOEF1rdYiNSbWBvhaAUv_9fgJ3Zg@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] bisect--helper: `bisect_write` shell function in C
+Date:	Thu, 16 Jun 2016 22:47:45 +0200
+Message-ID: <CAP8UFD0YNNzF4qqdvDbrONaMm8B8G_amePq2g58TYrjm+9W6Vw@mail.gmail.com>
+Subject: Re: [PATCH v2 5/6] bisect--helper: `is_expected_rev` &
+ `check_expected_revs` shell function in C
 To:	Pranit Bauva <pranit.bauva@gmail.com>
 Cc:	Eric Sunshine <sunshine@sunshineco.com>,
 	Git List <git@vger.kernel.org>,
@@ -65,35 +68,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jun 16, 2016 at 9:01 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+On Thu, Jun 16, 2016 at 9:25 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
 > Hey Eric,
 >
-> On Fri, Jun 17, 2016 at 12:25 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Wed, Jun 15, 2016 at 10:00 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> On Fri, Jun 17, 2016 at 12:46 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Thu, Jun 16, 2016 at 3:05 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>>> On Thu, Jun 16, 2016 at 2:44 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>>> On Wed, Jun 15, 2016 at 10:00 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>>>>> Reimplement `is_expected_rev` & `check_expected_revs` shell function in
+>>>>> C and add a `--check-expected-revs` subcommand to `git bisect--helper` to
+>>>>> call it from git-bisect.sh .
+>>>>> [...]
+>>>>> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+>>>>> ---
+>>>>> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+>>>>> @@ -162,13 +162,44 @@ static int bisect_reset(const char *commit)
+>>>>> +static int is_expected_rev(const char *expected_hex)
+>>>>> +{
+>>>>> +       struct strbuf actual_hex = STRBUF_INIT;
+>>>>> +       int res;
+>>>>> +
+>>>>> +       if (strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0) < 0) {
+>>>>> +               strbuf_release(&actual_hex);
+>>>>> +               return 0;
+>>>>> +       }
+>>>>> +
+>>>>> +       strbuf_trim(&actual_hex);
+>>>>> +       res = !strcmp(actual_hex.buf, expected_hex);
+>>>>> +       strbuf_release(&actual_hex);
+>>>>> +       return res;
+>>>>> +}
+>>>>
+>>>> Not worth a re-roll, but this could be re-structured to avoid having
+>>>> to remember to release the strbuf at all exits:
+>>>>
+>>>>     struct strbuf actual_hex = ...;
+>>>>     int res = 0;
+>>>>
+>>>>     if (strbuf_read_file(...) >= 0) {
+>>>>         strbuf_trim(...);
+>>>>         res = !strcmp(...);
+>>>>     }
+>>>>     strbuf_release(...);
+>>>>     return res;
+>>>>
+>>>> Alternately:
+>>>>
+>>>>     if (strbuf_read_file(...) < 0)
+>>>>         goto done;
+>>>>
+>>>>     strbuf_trim(...);
+>>>>     res = !strcmp(...);
+>>>>
+>>>> done:
+>>>>     strbuf_release(...);
+>>>>     return res;
+>>>>
+>>>> which is a bit less compact.
 >>>
->>> Note: bisect_write() uses two variables namely TERM_GOOD and TERM_BAD
->>> from the global shell script thus we need to pass it to the subcommand
->>> using the arguments. After the whole conversion, we can remove the extra
->>> arguments and make the method use the two variables from the global scope
->>> within the C code.
+>>> I will avoid this for the reason that I will have to create a label
+>>> for a lot of functions. If I choose to do this for one function, I
+>>> think it would be more appropriate to do the same for other functions.
+>>> There would be a lot of functions in future which would be in the same
+>>> scenario and creating a separate label for each of them would be quite
+>>> tedious. What do you think?
 >>
->> You could do this now rather than waiting for later. Instead of
->> passing these arguments to bisect_write(), create global variables in
->> this patch and assign them in the BISECT_WRITE case of
->> cmd_bisect__helper() before calling bisect_write().
->>
->> Not necessarily worth a re-roll, but would save you the effort of
->> having to explain it here and then change it in some later patch.
+>> Not sure what you're talking about. Label names are not shared across
+>> functions. Anyhow, the first suggestion I presented above is more
+>> concise than the 'goto' version.
 >
-> I have actually done it in my next conversion which is converting
-> check_and_set_terms()[1] which also sets those variables to some value
-> so its more appropriate there.
+> Yes I am aware of the fact that labels aren't shared across functions.
+> What I meant by "separate label" was that I will have to make a label
+> "fail" in each function. But I recently noticed that its used quite a
+> lot so I think it would be okay to use it. Will re-roll with using
+> labels and goto.
 
-My opinion about this is that using global variables would go against
-a possible future libification of the bisect functionality and might
-be less safe than just adding 2 parameters to a small number of
-functions.
+My opinion is that if there is a more concise version without labels
+and gotos, it's better to use it, so I would suggest Eric's first
+suggestion which is:
 
-If we think that 2 parameters are too much or that there could be more
-parameters to pass like this, we could just pass a pointer to a
-'struct bisect_state' or something like that ;-)
+>     struct strbuf actual_hex = ...;
+>     int res = 0;
+>
+>     if (strbuf_read_file(...) >= 0) {
+>         strbuf_trim(...);
+>         res = !strcmp(...);
+>     }
+>     strbuf_release(...);
+>     return res;
+
+Thanks,
+Christian.
