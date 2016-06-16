@@ -1,74 +1,66 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [bug] assertion in 2.8.4 triggering on old-ish worktree
-Date: Thu, 16 Jun 2016 17:02:02 +1200
-Message-ID: <CAFOYHZArnE6vJ0U1zJAxytCBJJU5M-VtHbct6Qq4VPfw7-T-2A@mail.gmail.com>
-References: <CAFOYHZDw-P0ST8WKoSVxBpbFCiACZpgiDPMfw5MRtFTMosO0rg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 16 07:02:13 2016
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1bDPRS-0003Mv-IF
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jun 2016 07:02:10 +0200
+Return-Path: <git-owner@vger.kernel.org>
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
+X-Spam-Level: 
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 196A91FE4E
+	for <e@80x24.org>; Thu, 16 Jun 2016 09:04:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751605AbcFPFCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jun 2016 01:02:07 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:35512 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750984AbcFPFCE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2016 01:02:04 -0400
-Received: by mail-io0-f176.google.com with SMTP id f30so31833846ioj.2
-        for <git@vger.kernel.org>; Wed, 15 Jun 2016 22:02:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=omI+LCWEFXfNv5yMYGE9LgEns79DayBGVNiRSwUbCv0=;
-        b=F717MtB/6uv9/m6kHiqRuOj0lcd5f8ZSz5XmDdx31GddmQi+Xk0aV09vMfpWoCKfdL
-         g5Maii/XRTUhFqZyt3uwbcGOOhWYe3uw95FPLkpz9GrAYhHUy4sEpTz8ZaaOCEB1XpU+
-         tI9v7B1HLKjJUAmqmmtNRLpOIdJ7p8ZCyF6GWOjyegHoSfKnIR6Tg/FVN8AHpLiGoH0v
-         vFL6nLJ6c8sH48q2Gy7THjKEVhj4R//bC10Qcbke2lMvoXmdCkOH2+S7Qh1prisuef6m
-         4f6LuTY0F6Kxne/JnYYrs9mbG1Rrzj67tXsQ0qqvRFRbZ/BwUAtqWeFHDkzVrY2mzzsY
-         uaiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=omI+LCWEFXfNv5yMYGE9LgEns79DayBGVNiRSwUbCv0=;
-        b=LQS3SIRxctBmnHixGbDc3yx/Sfg5jfhnnr/Y6YlK4C36RRGHFTGluCxXHScu9BHU9n
-         MdoB6C9RH9zVPy2RoXMLliH29mMFYtEOdIgcl6fXbuqDFAsYZ6+/zp2YqCnlgEBKLfzm
-         zgT/s8T/YiGMzB5xfHFzUWEKipGA6V1nyl608I6tl8oNXSqktnZsnNpXmAuFsclgp0IY
-         ZBjqSiDZ2aDsJcei4WEunvBu4+AubSBC+Du90uS+uuBBpF0KXMT6c2ozP/yXL+GCI/LL
-         wAqxieUDKLqbO0TFNUVM/uJqtQnZ9mkOjGKsn1YIpsae6A7hZbdF3YA3Gn16pFP+4kF5
-         9rjg==
-X-Gm-Message-State: ALyK8tLdFbWwBczzZP1TvHIVNSzSTxJcWxRvyqoTX/iFxTGxrmG7niSiGUUqU0nSATJWHuYdtMBEiCWAQIweFA==
-X-Received: by 10.107.135.137 with SMTP id r9mr4865700ioi.133.1466053323198;
- Wed, 15 Jun 2016 22:02:03 -0700 (PDT)
-Received: by 10.79.86.134 with HTTP; Wed, 15 Jun 2016 22:02:02 -0700 (PDT)
-In-Reply-To: <CAFOYHZDw-P0ST8WKoSVxBpbFCiACZpgiDPMfw5MRtFTMosO0rg@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+	id S1753929AbcFPJER (ORCPT <rfc822;e@80x24.org>);
+	Thu, 16 Jun 2016 05:04:17 -0400
+Received: from mout01.posteo.de ([185.67.36.65]:46914 "EHLO mout01.posteo.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751683AbcFPJEO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Jun 2016 05:04:14 -0400
+Received: from dovecot03.posteo.de (dovecot03.posteo.de [172.16.0.13])
+	by mout01.posteo.de (Postfix) with ESMTPS id 9E69620B7D
+	for <git@vger.kernel.org>; Thu, 16 Jun 2016 11:04:11 +0200 (CEST)
+Received: from mail.posteo.de (localhost [127.0.0.1])
+	by dovecot03.posteo.de (Postfix) with ESMTPSA id 3rVcrN6NZLz5vN9
+	for <git@vger.kernel.org>; Thu, 16 Jun 2016 11:04:04 +0200 (CEST)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8BIT
+Date:	Thu, 16 Jun 2016 11:04:04 +0200
+From:	Sven <sven@sand.rocks>
+To:	git@vger.kernel.org
+Subject: core.fscache on Windows trashes system
+Message-ID: <52c5ee4f39701784bc451684a175f0c9@posteo.de>
+X-Sender: sven@sand.rocks
+User-Agent: Posteo Webmail
+Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/297414>
+X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jun 16, 2016 at 4:59 PM, Chris Packham <judge.packham@gmail.com> wrote:
-> Hi All,
->
-> I have the git-sh-prompt configured in my .bashrc today I visited an
-> old worktree that I haven't really touched in a few years (sorry can't
-> remember the git version I was using back then). I received the
-> following output when changing to the directory
->
-> git: pathspec.c:317: prefix_pathspec: Assertion `item->nowildcard_len
-> <= item->len && item->prefix <= item->len' failed.
->
-> I assume it's one of the git invocations in git-sh-prompt that's
-> hitting the assertion. Any thoughts on what might be triggering it?
-> Any debug I can gather?
+Hello List,
 
-A bit more info. The directory in question is a uninitialised
-submodule. It doesn't trigger in the root of the parent project.
+We use git in our company and found a problem with the version 2.8.3 
+(x64 and x86). After installing git, with activated file system caching 
+on Windows 8.1 Enterprise, on the first use of git there a git.exe 
+processes started again and again. Multiple thousands instances are 
+generated and do not stop until I renamed the git.exe and piece by piece 
+the processes vanish. Renaming the executable to git.exe again, open git 
+bash, same procedure.
+
+I tried to let it go over night and kept the pc running (the processes 
+used nearly all RAM (8GB) and the system swapped all the time. Next day 
+everything went fine. After a reboot, it happens again. Only workaround 
+till now for us is to uninstall git and install again with “Enable 
+Filesystem cache” disabled.
+
+Any other occurrences of this behavior? It does not happen on all pcs 
+but we had 5 pcs until now with this strange behavior.
+
+We have Kaspersky Endpoint Security 10 running that quarantines git.exe 
+from time to time, maybe this could cause issues.
+
+
+-- 
+Ciao,
+
+Sven
