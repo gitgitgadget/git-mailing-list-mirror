@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-6.7 required=5.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97B8C1FE4D
-	for <e@80x24.org>; Thu, 16 Jun 2016 19:01:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C14F61FE4D
+	for <e@80x24.org>; Thu, 16 Jun 2016 19:05:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754038AbcFPTBJ (ORCPT <rfc822;e@80x24.org>);
-	Thu, 16 Jun 2016 15:01:09 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:33493 "EHLO
-	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754022AbcFPTBH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2016 15:01:07 -0400
-Received: by mail-yw0-f193.google.com with SMTP id d137so521006ywe.0
-        for <git@vger.kernel.org>; Thu, 16 Jun 2016 12:01:07 -0700 (PDT)
+	id S1753945AbcFPTFJ (ORCPT <rfc822;e@80x24.org>);
+	Thu, 16 Jun 2016 15:05:09 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:34483 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752587AbcFPTFI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2016 15:05:08 -0400
+Received: by mail-yw0-f194.google.com with SMTP id b75so6422761ywe.1
+        for <git@vger.kernel.org>; Thu, 16 Jun 2016 12:05:07 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=GEsMlOA4ZBdoThDpQ9SZZ6sliUPXLQ6WQaOn1G12COY=;
-        b=m8tU+9MprakW7Yw0pXhwN9t7oCtyR9UNvQxcjXRaz2w4E97CT+KhOW/PVZLf+f1CLH
-         5tU1Ec9O9Shu0Mk0wmWMtaKIiBe46aq41JO2UuS9CP4D0LH0ThRXEEcjn+by601YYgJ9
-         TT5NRGUg+awKR6XSrBNgRL1gIfIM+T93ozDNHnkG7JzM2liXDpgiC7QkPdtHZwDOROrX
-         vjGRh/LxxOaki7K7fLzcxpn0ApM89D5VeKadnkbb5O6ZKgHFQGS9IF5b2VhmZtCYSpAU
-         mT9p847+pUXjn9885Gf3lvvbKDUWlHagLcG8ouK5l3Stq58xiKGFytmatb+MUSpaBuld
-         uovg==
+        bh=efcxKr90llWxIV+EZj6XezCjVROyzsF3rqb6kbLOp1o=;
+        b=rogsdGyl4ky1chJkme4P+J7rWwlAUkaLeu6pDboAlfvBXn+80UxfrjaZWDRsmcWv9j
+         7lmRRT316u2n7q1MItiroaI0MCSYMiqBslPNpm3a2yK1FozvpUVduuk8RNGatXvkBVVK
+         L97FbPF48Ax8wvmqaeplvRBkMI7+s15v5KRQseOnNzFNGeSC4RW0vrYpEP6P4DOztI+H
+         m+RMuP+fhki/OshVbzOHnR5LdLc5u51CTxB8U0QJvYyDdCKkism3l21Ksp4IrEBABrYI
+         7/stntTg27vxM84Mpq74SkOoAD65N5bkWKzF3l3M6TW4J4iF6pxm7ReHhYUiwsx6IudU
+         SOPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=GEsMlOA4ZBdoThDpQ9SZZ6sliUPXLQ6WQaOn1G12COY=;
-        b=WDDYN7w4ROgFojUO8sopCy2p+kQIFvXJevIQCcTqEo9RRnZE/f3rl4Wt9OnqpB50je
-         slCBmTyTqtgFPlVDKcM3bv2lgGnjt1A7LjIXv1KfGcm4Jlxgn2muHJBaDlxl42+Oy3l2
-         x05xuslOmc7Q7pVa18AEj+Ic/Vb90ZUQm/RMK7xGe8DVqXUuyKAHjo0uyp5Gugr9/dpS
-         qofcdpSsNv++Uf1N+o0x6y9A7zZRi+9hLy7yDbQKWJlO1szPYjGyqHJBec9yFtNFxYel
-         3+q28lEDTJMlvordYLxy50py4rssH5uQokjN11EwhrIsCctQG1dH0Xqg9d9gOmEPhLdz
-         nbvg==
-X-Gm-Message-State: ALyK8tLF59DfLOPcdIMOIqx+MKjjKmXLqKwj8MZlP47lmnEPnY/ItqYMPjbP0WnEVcdvhOQvTUh+Lq7V16agfw==
-X-Received: by 10.129.50.83 with SMTP id y80mr3536330ywy.305.1466103666701;
- Thu, 16 Jun 2016 12:01:06 -0700 (PDT)
+        bh=efcxKr90llWxIV+EZj6XezCjVROyzsF3rqb6kbLOp1o=;
+        b=A/PPJfqpH/3lTlPkSH7YdiXttF1vz7uxvct+EOfxFa9CHd0g/fX5grJORUkc5vghCl
+         8gROJ4jALbRkqSmxA0BWoM452mxApCl++NHp2/1QGYCOIn3TUIz4/64/YqoAMBX4H4kK
+         AGfRnISTDG77zEg4nfwZGqiPhrCFu/fOBEAkdHs9HGl68kywQzfTmkIKlpakNrruYhu4
+         XJuPryZwCeAkxJ8qojHHQ7EKkyK8ux3cSwVUslBU/jUfMI4hMVDLxEZ3TW1Y63W8AccF
+         Ft33CYAs9OO/qeCGnYmAjq12Fr6NEAWEl0kmuKVbg2pE54NH/sIKJ+T60kqa2C5CiPOK
+         QoRA==
+X-Gm-Message-State: ALyK8tIw+JRjW/w2zpjwFGJ81ljpEeLHM5bWtJUbU7krpvPJxe1s+W3RQSAMYmIQIf09ISAuu3V5su4EEnngdw==
+X-Received: by 10.13.227.69 with SMTP id m66mr3695874ywe.302.1466103906548;
+ Thu, 16 Jun 2016 12:05:06 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.129.116.193 with HTTP; Thu, 16 Jun 2016 12:01:06 -0700 (PDT)
-In-Reply-To: <CAPig+cQV3FTGJBvS0Kuc3CNPiwZMZtApT6r8+Ojhw3y7O2VTiw@mail.gmail.com>
+Received: by 10.129.116.193 with HTTP; Thu, 16 Jun 2016 12:05:06 -0700 (PDT)
+In-Reply-To: <CAPig+cRNcg496Ty2SJ1ojm1n3OpHzX0obMAD2bY3AzoyrKdA9w@mail.gmail.com>
 References: <20160607205454.22576-1-pranit.bauva@gmail.com>
- <20160615140026.10519-1-pranit.bauva@gmail.com> <20160615140026.10519-7-pranit.bauva@gmail.com>
- <CAPig+cQV3FTGJBvS0Kuc3CNPiwZMZtApT6r8+Ojhw3y7O2VTiw@mail.gmail.com>
+ <20160615140026.10519-1-pranit.bauva@gmail.com> <20160615140026.10519-6-pranit.bauva@gmail.com>
+ <CAPig+cRNcg496Ty2SJ1ojm1n3OpHzX0obMAD2bY3AzoyrKdA9w@mail.gmail.com>
 From:	Pranit Bauva <pranit.bauva@gmail.com>
-Date:	Fri, 17 Jun 2016 00:31:06 +0530
-Message-ID: <CAFZEwPNpeD3+6kzY7HDH_ZXcL-Nu0B7jGeM5GMjH7PT0eSTLBw@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] bisect--helper: `bisect_write` shell function in C
+Date:	Fri, 17 Jun 2016 00:35:06 +0530
+Message-ID: <CAFZEwPP0-9rHOKFZBoE55pv4V-+okSLh4M5grNKWnq831Ug4+w@mail.gmail.com>
+Subject: Re: [PATCH v2 5/6] bisect--helper: `is_expected_rev` &
+ `check_expected_revs` shell function in C
 To:	Eric Sunshine <sunshine@sunshineco.com>
 Cc:	Git List <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
@@ -67,120 +68,85 @@ X-Mailing-List:	git@vger.kernel.org
 
 Hey Eric,
 
-On Fri, Jun 17, 2016 at 12:25 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Thu, Jun 16, 2016 at 2:44 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
 > On Wed, Jun 15, 2016 at 10:00 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> Reimplement the `bisect_write` shell function in C and add a
->> `bisect-write` subcommand to `git bisect--helper` to call it from
->> git-bisect.sh
->>
->> Using `--bisect-write` subcommand is a temporary measure to port shell
->> function in C so as to use the existing test suite. As more functions
->> are ported, this subcommand will be retired and will be called by some
->> other methods.
->>
->> Note: bisect_write() uses two variables namely TERM_GOOD and TERM_BAD
->> from the global shell script thus we need to pass it to the subcommand
->> using the arguments. After the whole conversion, we can remove the extra
->> arguments and make the method use the two variables from the global scope
->> within the C code.
->
-> You could do this now rather than waiting for later. Instead of
-> passing these arguments to bisect_write(), create global variables in
-> this patch and assign them in the BISECT_WRITE case of
-> cmd_bisect__helper() before calling bisect_write().
->
-> Not necessarily worth a re-roll, but would save you the effort of
-> having to explain it here and then change it in some later patch.
-
-I have actually done it in my next conversion which is converting
-check_and_set_terms()[1] which also sets those variables to some value
-so its more appropriate there.
-
+>> Reimplement `is_expected_rev` & `check_expected_revs` shell function in
+>> C and add a `--check-expected-revs` subcommand to `git bisect--helper` to
+>> call it from git-bisect.sh .
+>> [...]
 >> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 >> ---
 >> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
->> @@ -192,6 +193,55 @@ static int check_expected_revs(const char **revs, int rev_nr)
->> +static int bisect_write(const char *state, const char *rev,
->> +                       const char *term_good, const char *term_bad,
->> +                       int nolog)
+>> @@ -162,13 +162,44 @@ static int bisect_reset(const char *commit)
+>> +static int is_expected_rev(const char *expected_hex)
 >> +{
->> +       struct strbuf tag = STRBUF_INIT;
->> +       struct strbuf commit_name = STRBUF_INIT;
->> +       struct object_id oid;
->> +       struct commit *commit;
->> +       struct pretty_print_context pp = {0};
->> +       FILE *fp;
+>> +       struct strbuf actual_hex = STRBUF_INIT;
+>> +       int res;
 >> +
->> +       if (!strcmp(state, term_bad))
->> +               strbuf_addf(&tag, "refs/bisect/%s", state);
->> +       else if(one_of(state, term_good, "skip", NULL))
->> +               strbuf_addf(&tag, "refs/bisect/%s-%s", state, rev);
->> +       else
->> +               return error(_("Bad bisect_write argument: %s"), state);
->> +
->> +       if (get_oid(rev, &oid)) {
->> +               strbuf_release(&tag);
->> +               return error(_("couldn't get the oid of the rev '%s'"), rev);
+>> +       if (strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0) < 0) {
+>> +               strbuf_release(&actual_hex);
+>> +               return 0;
 >> +       }
+>> +
+>> +       strbuf_trim(&actual_hex);
+>> +       res = !strcmp(actual_hex.buf, expected_hex);
+>> +       strbuf_release(&actual_hex);
+>> +       return res;
+>> +}
 >
-> Minor: If you move the get_oid() conditional before the one above it,
-> then you won't have to worry about releasing 'strbuf tag' at this
-> point.
-
-Nice. I will do that. :)
-
->> +       if (update_ref(NULL, tag.buf, oid.hash, NULL, 0,
->> +                      UPDATE_REFS_MSG_ON_ERR)) {
->> +               strbuf_release(&tag);
->> +               return -1;
->> +       }
+> Not worth a re-roll, but this could be re-structured to avoid having
+> to remember to release the strbuf at all exits:
 >
-> If you release 'strbuf tag' right here, after it's final use, then you
-> won't have to worry about releasing it anywhere below (particularly in
-> the error cases).
+>     struct strbuf actual_hex = ...;
+>     int res = 0;
+>
+>     if (strbuf_read_file(...) >= 0) {
+>         strbuf_trim(...);
+>         res = !strcmp(...);
+>     }
+>     strbuf_release(...);
+>     return res;
+>
+> Alternately:
+>
+>     if (strbuf_read_file(...) < 0)
+>         goto done;
+>
+>     strbuf_trim(...);
+>     res = !strcmp(...);
+>
+> done:
+>     strbuf_release(...);
+>     return res;
+>
+> which is a bit less compact.
 
-True.
+I will avoid this for the reason that I will have to create a label
+for a lot of functions. If I choose to do this for one function, I
+think it would be more appropriate to do the same for other functions.
+There would be a lot of functions in future which would be in the same
+scenario and creating a separate label for each of them would be quite
+tedious. What do you think?
 
->> +       fp = fopen(git_path_bisect_log(), "a");
->> +       if (!fp) {
->> +               strbuf_release(&tag);
->> +               return error_errno(_("couldn't open the file '%s'"), git_path_bisect_log());
+>> +static int check_expected_revs(const char **revs, int rev_nr)
+>> +{
+>> +       int i;
+>> +
+>> +       for (i = 0; i < rev_nr; i++) {
+>> +               if (!is_expected_rev(revs[i])) {
+>> +                       remove_path(git_path_bisect_ancestors_ok());
+>> +                       remove_path(git_path_bisect_expected_rev());
+>> +                       return 0;
+>> +               }
 >> +       }
->> +
->> +       commit = lookup_commit_reference(oid.hash);
->> +       format_commit_message(commit, "%s", &commit_name, &pp);
->> +       fprintf(fp, "# %s: [%s] %s\n", state, sha1_to_hex(oid.hash),
->> +               commit_name.buf);
->> +
->> +       if (!nolog)
->> +               fprintf(fp, "git bisect %s %s\n", state, rev);
->> +
->> +       strbuf_release(&commit_name);
->> +       strbuf_release(&tag);
->> +       fclose(fp);
 >> +       return 0;
 >> +}
->> @@ -241,6 +295,11 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->> +       case BISECT_WRITE:
->> +               if (argc != 4 && argc != 5)
->> +                       die(_("--bisect-write requires either 4 or 5 arguments"));
->> +               nolog = (argc == 5) && !strcmp(argv[4], "nolog");
 >
-> This is minor and won't matter in the long run when this code goes
-> away later in the C conversion, but this differs from the shell code
-> which only cared that a (non-empty) fifth argument was provided but
-> didn't care about the actual value, whereas this code expects the
-> argument to be exactly "nolog".
+> Hmm, all execution paths return 0, so it feels a bit pointless to have
+> this function return a value at all.
+>
+> You could also use a 'break' inside the loop rather than 'return'
+> since the return value is the same inside or outside the loop and
+> nothing else happens after the loop.
 
-We currently have tight control over the arguments we are passing as
-they are only programmer defined.
-
->> +               return bisect_write(argv[0], argv[1], argv[2], argv[3], nolog);
->>         default:
->>                 die("BUG: unknown subcommand '%d'", cmdmode);
->>         }
-
-[1]: https://github.com/pranitbauva1997/git/pull/16
-
-Regards,
-Pranit Bauva
+Sure!
