@@ -2,64 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.5 required=5.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-7.2 required=5.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F7191FE4E
-	for <e@80x24.org>; Thu, 16 Jun 2016 09:49:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F23941FE4E
+	for <e@80x24.org>; Thu, 16 Jun 2016 09:50:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754194AbcFPJsi (ORCPT <rfc822;e@80x24.org>);
-	Thu, 16 Jun 2016 05:48:38 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:42635 "EHLO
-	avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753975AbcFPJsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2016 05:48:35 -0400
-Received: from hashpling.plus.com ([212.159.69.125])
-	by avasout06 with smtp
-	id 7Mnp1t0072iA9hg01MnqQl; Thu, 16 Jun 2016 10:47:51 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=Rr04V3SK c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
- a=pD_ry4oyNxEA:10 a=4UT5_vqeN27ffPB_2Q8A:9 a=CjuIK1q_8ugA:10
-Received: from charles by hashpling.plus.com with local (Exim 4.84_2)
-	(envelope-from <charles@hashpling.org>)
-	id 1bDTtt-0005P5-QI; Thu, 16 Jun 2016 10:47:49 +0100
-Date:	Thu, 16 Jun 2016 10:47:49 +0100
-From:	Charles Bailey <charles@hashpling.org>
-To:	Duy Nguyen <pclouds@gmail.com>
-Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] grep: fix grepping for "intent to add" files
-Message-ID: <20160616094749.GA20681@hashpling.org>
-References: <20160616065324.GA14967@hashpling.org>
- <20160616074709.GA24412@duynguyen-vnpc.vn.dektech.internal>
+	id S1754037AbcFPJuF (ORCPT <rfc822;e@80x24.org>);
+	Thu, 16 Jun 2016 05:50:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55554 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751690AbcFPJuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2016 05:50:04 -0400
+Received: (qmail 10623 invoked by uid 102); 16 Jun 2016 09:50:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Jun 2016 05:50:04 -0400
+Received: (qmail 14595 invoked by uid 107); 16 Jun 2016 09:50:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Jun 2016 05:50:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Jun 2016 05:50:01 -0400
+Date:	Thu, 16 Jun 2016 05:50:01 -0400
+From:	Jeff King <peff@peff.net>
+To:	Heiko Becker <heirecka@exherbo.org>
+Cc:	git@vger.kernel.org, drafnel@gmail.com
+Subject: Re: [PATCH] gnome-keyring: Don't hard-code pkg-config executable
+Message-ID: <20160616095001.GI15851@sigill.intra.peff.net>
+References: <20160614112705.7162-1-heirecka@exherbo.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20160616074709.GA24412@duynguyen-vnpc.vn.dektech.internal>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+In-Reply-To: <20160614112705.7162-1-heirecka@exherbo.org>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jun 16, 2016 at 02:47:09PM +0700, Duy Nguyen wrote:
-> I don't think revert is right. It rather needs a re-fix like below.
-> Basically we want grep_file() to run as normal, but grep_sha1()
-> (i.e. git grep --cached) should ignore i-t-a entries, because empty
-> SHA-1 is not the right content to grep. It does not matter in positive
-> matching, sure, but it may in -v cache.
+On Tue, Jun 14, 2016 at 01:27:05PM +0200, Heiko Becker wrote:
 
-You don't think the revert is correct or you don't think the revert is
-sufficient? (I wasn't able to find a test case which proved that the
-change to line 399 was necessary, so perhaps I don't understand.)
+> Helpful if your pkg-config executable has a prefix based on the
+> architecture, for example.
+> 
+> Signed-off-by: Heiko Becker <heirecka@exherbo.org>
 
-I would have thought that grepping the empty SHA-1 would be correct for
-with or without -v. An "intent to add" file has no content in the index
-so I would expect it to have zero matching and zero non-matching lines
-for any grep --cached query?
+Sounds like a reasonable thing to want to do...
 
-Or is this an efficiency and not a correctness concern?
+> diff --git a/contrib/credential/gnome-keyring/Makefile b/contrib/credential/gnome-keyring/Makefile
+> index c3c7c98..22c19df 100644
+> --- a/contrib/credential/gnome-keyring/Makefile
+> +++ b/contrib/credential/gnome-keyring/Makefile
+> @@ -4,12 +4,13 @@ all:: $(MAIN)
+>  CC = gcc
+>  RM = rm -f
+>  CFLAGS = -g -O2 -Wall
+> +PKG_CONFIG = pkg-config
+>  
+>  -include ../../../config.mak.autogen
+>  -include ../../../config.mak
+>  
+> -INCS:=$(shell pkg-config --cflags gnome-keyring-1 glib-2.0)
+> -LIBS:=$(shell pkg-config --libs gnome-keyring-1 glib-2.0)
+> +INCS:=$(shell $(PKG_CONFIG) --cflags gnome-keyring-1 glib-2.0)
+> +LIBS:=$(shell $(PKG_CONFIG) --libs gnome-keyring-1 glib-2.0)
 
-Charles.
+...and the implementation looks obviously correct.
+
+Thanks.
+
+-Peff
