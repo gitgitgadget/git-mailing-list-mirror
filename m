@@ -2,93 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.2 required=5.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-6.7 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C0371FE4E
-	for <e@80x24.org>; Thu, 16 Jun 2016 10:57:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DE7B1FE4E
+	for <e@80x24.org>; Thu, 16 Jun 2016 11:31:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753850AbcFPK5t (ORCPT <rfc822;e@80x24.org>);
-	Thu, 16 Jun 2016 06:57:49 -0400
-Received: from mail-it0-f54.google.com ([209.85.214.54]:35784 "EHLO
-	mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752568AbcFPK5t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2016 06:57:49 -0400
-Received: by mail-it0-f54.google.com with SMTP id z189so132666400itg.0
-        for <git@vger.kernel.org>; Thu, 16 Jun 2016 03:57:48 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=CGYBLimnW/EdRx9L7wZBwDp3jL1TNzuIAagGPp8HwOs=;
-        b=gCq9hNQumktcxobR5F1IZedjWQ7y/2I/qCUcgCxJsmgVai3RUHdCwZ6j2PAgjDt6Ab
-         QiKDmR+Pee0M53WyMF3EvH92daULpkRNsIU02jyHyjSFFY9BWBUBzcOuyNJrc75ocM9F
-         PHtXxJL+n1UqIytCvbDaqYQQAospoGtQeChfWFzmFQzPUL6IlBULOrGfUqGbd8gHKz6j
-         nQNmuURIQqF9fx5pVcsbdrLfGOsqNQMoFlBg23Adg+xZ/imjGBBhGLomKrGa6CI1r1h5
-         SBfCHtdiIB/XSrU+t278pw1I0uMFZhYmJUh4xLdjnRMKx+r4tJ8r6OKbBw/1GsyQc+Ub
-         1c7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=CGYBLimnW/EdRx9L7wZBwDp3jL1TNzuIAagGPp8HwOs=;
-        b=YL6HQZYKZGZH71eQGzo/0g9q0EMtVG3yFtgXXILZ/hcP/batAMUS3Fk8t2ujb/GhLO
-         dcTsEOj0m4nMg3RpdyoUPZwKjJClFvsbMi7KQhpCV7LhOngWFJxpu4ihbdOj7P0Fcem+
-         V4cb7iV2KWqmvZbJGHiEcnbGLOWfiYSoNsgP527xCHWeZeSEy8RgNE4Eb3+xaMmLYToe
-         3lby687mEH7lci240uVKiUrxIzB6+HoYRhRQfiPUV5U3fCaRjgjOkydXnM8sKGGVi67z
-         tkccoTCUqNONQUZPwomK/nrlp3UaZlWawqOuXDGfZIcTvMgymxbqZhr8t96x0AF9M8Og
-         r9BQ==
-X-Gm-Message-State: ALyK8tKQpCTUXF3Z84h/3gCNreGV438b2JThdOwqia9js3aYldKyOVoY4pv8IG/jPwp5xxK2cVvEfECBQNFo2Q==
-X-Received: by 10.36.123.199 with SMTP id q190mr1780051itc.42.1466074668086;
- Thu, 16 Jun 2016 03:57:48 -0700 (PDT)
+	id S1752339AbcFPLbA (ORCPT <rfc822;e@80x24.org>);
+	Thu, 16 Jun 2016 07:31:00 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:60078 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751490AbcFPLa7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Jun 2016 07:30:59 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id CDB2820887;
+	Thu, 16 Jun 2016 07:30:58 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute6.internal (MEProxy); Thu, 16 Jun 2016 07:30:58 -0400
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=EafcuO2ynHn2T/Cd+M5q3MhTaUQ=; b=Gg8u0C
+	c63AWtH9NLPKMo4EHZKwHGtwKV+c4JHWgELawbFv9YzfEWTlEsvNXOzUZEGNFTSu
+	CEI3nI/RIkD06aCp7JeahrWArSqMfphB8Kechm45GFAAbTGHxaBKiYHtqhlYXFoJ
+	2TMIhjp+YF1d0kEVh6kgCBzUPQe1ED1RPzEQg=
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=EafcuO2ynHn2T/C
+	d+M5q3MhTaUQ=; b=CUXBz0LdYHDrzFZLLinOFjKk/Kb/EM+r3IOAT3ukyxkAqSs
+	jRkSYM4hqy+P+BsCVAWyCOe7DZrZTYxm6desa0pjfTDVEhUPrSLvwLxIvOkNi+1p
+	GWgBmuwA4OFx4PhgORybqxE9aaIILgi1kBUCJ7RPUDI3YPcGY2C9mTj45Ajc=
+X-Sasl-enc: pvLCMG25Uvk7HP9iviNVFpXi8X7SySkYBJNLoI7iBM4G 1466076658
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 27B2FF29FA;
+	Thu, 16 Jun 2016 07:30:58 -0400 (EDT)
+Subject: Re: [PATCHv3] gpg-interface: check gpg signature creation status
+To:	Jeff King <peff@peff.net>
+References: <26353a3d-e495-075f-4f84-b34a2420a6cf@drmicha.warpmail.net>
+ <8e08b63b58302b6e7fe91f0dfb5b476781bfd37d.1465915311.git.git@drmicha.warpmail.net>
+ <xmqq60tbaba5.fsf@gitster.mtv.corp.google.com>
+ <20160614215019.GB22334@sigill.intra.peff.net>
+ <20160614222633.GA32020@sigill.intra.peff.net>
+ <xmqqporj72p4.fsf@gitster.mtv.corp.google.com>
+ <20160615005614.GB32601@sigill.intra.peff.net>
+ <75709ea6-b2bb-fddf-1175-cb8aae66629a@drmicha.warpmail.net>
+ <20160616092535.GA29954@sigill.intra.peff.net>
+Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	ZhenTian <loooseleaves@gmail.com>
+From:	Michael J Gruber <git@drmicha.warpmail.net>
+Message-ID: <0a9d4b3b-6fc9-a539-0256-3eb09c4791c0@drmicha.warpmail.net>
+Date:	Thu, 16 Jun 2016 13:30:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.0
 MIME-Version: 1.0
-Received: by 10.64.173.167 with HTTP; Thu, 16 Jun 2016 03:57:18 -0700 (PDT)
-In-Reply-To: <20160616094749.GA20681@hashpling.org>
-References: <20160616065324.GA14967@hashpling.org> <20160616074709.GA24412@duynguyen-vnpc.vn.dektech.internal>
- <20160616094749.GA20681@hashpling.org>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Thu, 16 Jun 2016 17:57:18 +0700
-Message-ID: <CACsJy8Bp6Mv2D1QCsR6MWhW2XMedo2svQKHBrx8AgA1Le56Grw@mail.gmail.com>
-Subject: Re: [PATCH] grep: fix grepping for "intent to add" files
-To:	Charles Bailey <charles@hashpling.org>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20160616092535.GA29954@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jun 16, 2016 at 4:47 PM, Charles Bailey <charles@hashpling.org> wrote:
-> On Thu, Jun 16, 2016 at 02:47:09PM +0700, Duy Nguyen wrote:
->> I don't think revert is right. It rather needs a re-fix like below.
->> Basically we want grep_file() to run as normal, but grep_sha1()
->> (i.e. git grep --cached) should ignore i-t-a entries, because empty
->> SHA-1 is not the right content to grep. It does not matter in positive
->> matching, sure, but it may in -v cache.
->
-> You don't think the revert is correct or you don't think the revert is
-> sufficient? (I wasn't able to find a test case which proved that the
-> change to line 399 was necessary, so perhaps I don't understand.)
+Jeff King venit, vidit, dixit 16.06.2016 11:25:
+> On Wed, Jun 15, 2016 at 09:17:54AM +0200, Michael J Gruber wrote:
+> 
+>> As for the flexibility:
+>> We do code specifically for gpg, which happens to work for gpg2 also.
+>> The patch doesn't add any gpg ui requirements that we don't require
+>> elsewhere already.
+>> More flexibility requires a completely pluggable approach - gpgsm
+>> already fails to meet the gpg command line ui.
+> 
+> Does it? I haven't run it in production, but I did some tests with gpgsm
+> a few months ago and found it to be a drop-in replacement, at least with
+> respect to git. Though I don't think that matters one way or the other
+> for the current discussion; it _does_ do --status-fd.
 
-OK insufficient.
+You are right!
 
-> I would have thought that grepping the empty SHA-1 would be correct for
-> with or without -v. An "intent to add" file has no content in the index
-> so I would expect it to have zero matching and zero non-matching lines
-> for any grep --cached query?
->
-> Or is this an efficiency and not a correctness concern?
+I solely trusted in the documentation rather than simply trying it out.
+gpgsm even supports the undocumented short options.
 
-"git grep --cached" searches file content that will be committed by
-"git commit" (no -a). An i-t-a entry will not be committed (you would
-need "git add" first, or do "git commit -a"). So if I say "search
-among the to-be-committed file content, list files that do not match
-abc" (git grep -l -v --cached abc), the i-t-a entry will show up
-because its fake content is empty (i.e. not contain "abc"), even
-though it's not in the "to-be-committed" list. So yeah, correctness
-issue.
--- 
-Duy
+Only the resulting header is different (plus the fact that I have to
+turn of crl checks for whatever reason).
+
+>> In any case, "status-fd" is *the* way to interface with gpg reliably
+>> just like plumbing commands are *the* way to interface with git reliably.
+> 
+> Fair enough. I've generally found its exit code pretty reliable. It's
+> unclear to me if the problem you saw was because gpg was exiting 0 but
+> producing no signature, or if your debugging was masking its exit code.
+> 
+> Either way, I do not mind using --status-fd; it seems like it should be
+> more robust in general. It's the tip commit in the series I'm about to
+> post.
+> 
+>> As for the read locking:
+>> I'm sorry I have no idea about that area at all. I thought that I'm
+>> doing the same that we do for verify, but apparently not. My
+>> strbuf_read-fu is not that strong either (read: copy&paste). I trust
+>> your assessment completely, though.
+> 
+> Yeah, you're right that the deadlock thing is also a possibility on the
+> verification side. I'm not sure whether it's possible to trigger in
+> practice or not. See the analysis in the series.
+
+With great admiration I've looked at your series which solves this
+problem at the root. Way above my head (the solution, not the root,
+fortunately).
+
+>> As for the original problem:
+>> That had a different cause, as we know now (rebase dropping signatures
+>> without hint). I still think we should check gpg status codes properly.
+> 
+> Yep, I agree.
+> 
+> -Peff
+> 
+
