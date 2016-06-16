@@ -2,144 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.8 required=5.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=5.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4474C1FE4C
-	for <e@80x24.org>; Thu, 16 Jun 2016 19:25:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1119B1FE4C
+	for <e@80x24.org>; Thu, 16 Jun 2016 19:48:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754196AbcFPTZ5 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 16 Jun 2016 15:25:57 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:35946 "EHLO
-	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754031AbcFPTZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2016 15:25:56 -0400
-Received: by mail-yw0-f195.google.com with SMTP id w195so6464127ywd.3
-        for <git@vger.kernel.org>; Thu, 16 Jun 2016 12:25:56 -0700 (PDT)
+	id S1754091AbcFPTsN (ORCPT <rfc822;e@80x24.org>);
+	Thu, 16 Jun 2016 15:48:13 -0400
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:34748 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751931AbcFPTsN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2016 15:48:13 -0400
+Received: by mail-qg0-f48.google.com with SMTP id k6so31509944qgk.1
+        for <git@vger.kernel.org>; Thu, 16 Jun 2016 12:48:12 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ttUphSOtTVT8G7It8gJ0Gpof6gdmkuVo1yh2UTowH50=;
-        b=JZ6EDD9p72/U8Pt82SB4Z4CYhfmoSHZRmwd1jy6HcNCj0xwBQgNl41oefqF7vzjub5
-         Tq4Mu7KTZ9I7F2PZEkJRtQdAJIzdoB8WDxR03H1MmlkiUpkyT5EMN/ocZfEGJXlOXs2p
-         Uahgqoj3lDmu/8ppAO8C1AlXnnMgyy9kZ9G/0nRLJPasB0bezxcQ2678BtGYfcAOlvjU
-         uRMSl0PCRWw8Qujak79pvO0YqvGGIuFwhv/2BfTtfLqVnPxGzXE/b63cmkzqIQZGu7JA
-         MxF9QhNHWrrHRa65KyBa0QIZEJnXVgde4zs+8eg7tQ8mSUSfFQYDdn/Gtybecx0+Le+U
-         XV7w==
+        bh=RiI8FKyvWRrpB75JWwvNjYfJhZnka2mHMhl+ikdJI5I=;
+        b=GjEC3jbmPmvdukbidNbUGcp4gXC/EIWBFgZsas3OqcAI3w0gM/GL7kgtHt0NihAVHz
+         11+yldIa4GnAJpmYA8aJMJinr0nz9QYUkZXcW41OfuIGO2XaMp0+L0V91ApROfNGeOLf
+         OlT/ZIMLAeNx0dAAN3RcqVeRz740Qyoxi90cNwRmlAji5ncWquY6Qdk7280trqUmUWbX
+         KB4pHMwNIkMnU96bKJbqi7oofNalswu/xD6mDiE9/7jx5p3yv+pGAhl2P9K9UPfTfw+h
+         mAGv6etiQWeTx0QFIyIVmVblP2R2QozVXRTP9WPIJTtDSC394thoJyw9WeaOcDadoRxp
+         xw6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=ttUphSOtTVT8G7It8gJ0Gpof6gdmkuVo1yh2UTowH50=;
-        b=blOMdIwQWjIPWTTXcvk/+PxtTrp/dD+ZknjBwJ2SvbbzXgieinvljTQ03sNnXRHQtY
-         brds9dxRqEV1gG3zbHn7T/NlppZTmgoJ0ove52nsc9QZfr2bMUtY964lS9eNgZ2s+vPL
-         zZZV5Y31Zj/WZsC+vY5q2B81dNnjXOIjU8zi32MXX1ksVVUjwabheYR6MGlXLMGhnZOe
-         R47UKHh6CUuYbgXabWdv7ibFL6gBWR42VWddupT3wIc8rMn+orZZVQ96kmhAY+6urU9r
-         8zneQ+66k/V/cZrI+RAf1w9lmIByOhAEhDyspHlOWP23SehXR5CVvMCXAUgcPr9OzIlM
-         3Y8A==
-X-Gm-Message-State: ALyK8tKTCR5iGX8IdvDY00pKfZJdn3dTP6T3yf1YkF2HNf6+XIH16Qsom7bSb1c94cCgk6PWbKe7+AxPqtsn3w==
-X-Received: by 10.129.92.193 with SMTP id q184mr3506741ywb.33.1466105155317;
- Thu, 16 Jun 2016 12:25:55 -0700 (PDT)
+        bh=RiI8FKyvWRrpB75JWwvNjYfJhZnka2mHMhl+ikdJI5I=;
+        b=DHPm5r5vmmnqudIK5yz9ItEFFNzExqAFgBfwAIvLzEauXyQlMi6gQCVK/wBMYcFhTe
+         f3H8MojXGlVGupi0YOJECk99aYRlAppyLavQIt+gWhyvngUtDEXe7ASTpoaafpnA20mw
+         hOKAyaH56EjVlbGx0MqjqqLdyN27Q01VjTWX5d200qmR8D7Cf/GWonHfue0SVE5UEjeL
+         RpyBGRuOYUZh7baOhkVuA7trBrLUOWhLZHOOhvkYvb+ZOJC3glEI8GGaAovZs1abNxcz
+         jDrOiHjLnhEnwpLN0M1bn2m8X3sX7r6bwaeVM+6uFHAmwnEepVnDbyU0HcLxsofPspId
+         ypkA==
+X-Gm-Message-State: ALyK8tJ8B4/yWDyX4UADQWiCVyu0PV9z04Y4sRc1IA1T6tUECEe5kM+pPc059S2/qS1l1mnPQxrb2RwyVn76ojY5
+X-Received: by 10.140.92.116 with SMTP id a107mr6585311qge.88.1466106491734;
+ Thu, 16 Jun 2016 12:48:11 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.129.116.193 with HTTP; Thu, 16 Jun 2016 12:25:54 -0700 (PDT)
-In-Reply-To: <CAPig+cS1=bv588H6yrOy1oFvArjJNbetdTS7+ZhfGn-GtVp4qw@mail.gmail.com>
-References: <20160607205454.22576-1-pranit.bauva@gmail.com>
- <20160615140026.10519-1-pranit.bauva@gmail.com> <20160615140026.10519-6-pranit.bauva@gmail.com>
- <CAPig+cRNcg496Ty2SJ1ojm1n3OpHzX0obMAD2bY3AzoyrKdA9w@mail.gmail.com>
- <CAFZEwPP0-9rHOKFZBoE55pv4V-+okSLh4M5grNKWnq831Ug4+w@mail.gmail.com> <CAPig+cS1=bv588H6yrOy1oFvArjJNbetdTS7+ZhfGn-GtVp4qw@mail.gmail.com>
-From:	Pranit Bauva <pranit.bauva@gmail.com>
-Date:	Fri, 17 Jun 2016 00:55:54 +0530
-Message-ID: <CAFZEwPPBTd6o7qg96cet8RAp5wY1shzQ=jU8dEK1irXSiMAxQg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/6] bisect--helper: `is_expected_rev` &
- `check_expected_revs` shell function in C
-To:	Eric Sunshine <sunshine@sunshineco.com>
-Cc:	Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Received: by 10.237.42.226 with HTTP; Thu, 16 Jun 2016 12:48:11 -0700 (PDT)
+In-Reply-To: <xmqqbn31581d.fsf@gitster.mtv.corp.google.com>
+References: <CAFOYHZDw-P0ST8WKoSVxBpbFCiACZpgiDPMfw5MRtFTMosO0rg@mail.gmail.com>
+ <CAFOYHZArnE6vJ0U1zJAxytCBJJU5M-VtHbct6Qq4VPfw7-T-2A@mail.gmail.com> <xmqqbn31581d.fsf@gitster.mtv.corp.google.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Thu, 16 Jun 2016 12:48:11 -0700
+Message-ID: <CAGZ79kZaZCwZ-cesB_voq0s0Qt+ipcgb6TkdzLE+EWSF_qRj7A@mail.gmail.com>
+Subject: Re: [bug] assertion in 2.8.4 triggering on old-ish worktree
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Chris Packham <judge.packham@gmail.com>, GIT <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hey Eric,
-
-On Fri, Jun 17, 2016 at 12:46 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Thu, Jun 16, 2016 at 3:05 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->> On Thu, Jun 16, 2016 at 2:44 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>> On Wed, Jun 15, 2016 at 10:00 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->>>> Reimplement `is_expected_rev` & `check_expected_revs` shell function in
->>>> C and add a `--check-expected-revs` subcommand to `git bisect--helper` to
->>>> call it from git-bisect.sh .
->>>> [...]
->>>> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
->>>> ---
->>>> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
->>>> @@ -162,13 +162,44 @@ static int bisect_reset(const char *commit)
->>>> +static int is_expected_rev(const char *expected_hex)
->>>> +{
->>>> +       struct strbuf actual_hex = STRBUF_INIT;
->>>> +       int res;
->>>> +
->>>> +       if (strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0) < 0) {
->>>> +               strbuf_release(&actual_hex);
->>>> +               return 0;
->>>> +       }
->>>> +
->>>> +       strbuf_trim(&actual_hex);
->>>> +       res = !strcmp(actual_hex.buf, expected_hex);
->>>> +       strbuf_release(&actual_hex);
->>>> +       return res;
->>>> +}
->>>
->>> Not worth a re-roll, but this could be re-structured to avoid having
->>> to remember to release the strbuf at all exits:
->>>
->>>     struct strbuf actual_hex = ...;
->>>     int res = 0;
->>>
->>>     if (strbuf_read_file(...) >= 0) {
->>>         strbuf_trim(...);
->>>         res = !strcmp(...);
->>>     }
->>>     strbuf_release(...);
->>>     return res;
->>>
->>> Alternately:
->>>
->>>     if (strbuf_read_file(...) < 0)
->>>         goto done;
->>>
->>>     strbuf_trim(...);
->>>     res = !strcmp(...);
->>>
->>> done:
->>>     strbuf_release(...);
->>>     return res;
->>>
->>> which is a bit less compact.
->>
->> I will avoid this for the reason that I will have to create a label
->> for a lot of functions. If I choose to do this for one function, I
->> think it would be more appropriate to do the same for other functions.
->> There would be a lot of functions in future which would be in the same
->> scenario and creating a separate label for each of them would be quite
->> tedious. What do you think?
+On Thu, Jun 16, 2016 at 10:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Chris Packham <judge.packham@gmail.com> writes:
 >
-> Not sure what you're talking about. Label names are not shared across
-> functions. Anyhow, the first suggestion I presented above is more
-> concise than the 'goto' version.
+>> On Thu, Jun 16, 2016 at 4:59 PM, Chris Packham <judge.packham@gmail.com> wrote:
+>>> Hi All,
+>>>
+>>> I have the git-sh-prompt configured in my .bashrc today I visited an
+>>> old worktree that I haven't really touched in a few years (sorry can't
+>>> remember the git version I was using back then). I received the
+>>> following output when changing to the directory
+>>>
+>>> git: pathspec.c:317: prefix_pathspec: Assertion `item->nowildcard_len
+>>> <= item->len && item->prefix <= item->len' failed.
+>>>
+>>> I assume it's one of the git invocations in git-sh-prompt that's
+>>> hitting the assertion. Any thoughts on what might be triggering it?
+>>> Any debug I can gather?
+>>
+>> A bit more info. The directory in question is a uninitialised
+>> submodule. It doesn't trigger in the root of the parent project.
+>
+>
+> Sounds like
+> http://article.gmane.org/gmane.comp.version-control.git/283549
+>
 
-Yes I am aware of the fact that labels aren't shared across functions.
-What I meant by "separate label" was that I will have to make a label
-"fail" in each function. But I recently noticed that its used quite a
-lot so I think it would be okay to use it. Will re-roll with using
-labels and goto.
+I looked into this. In pathspec.c#prefix_pathspec (the function
+that has this assertion at the end), the assertion can only
+trigger if PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE
+or PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP was given
+as these are the only places that reduce item->len.
 
-Regards,
-Pranit Bauva
+I converted the example test case to follow our test syntax
+(module tab/whitespace issues):
+
+test_expect_success 'remove submodule and add its files' '
+    mkdir test &&
+    (
+        cd test &&
+        git init sub &&
+        (
+            cd sub &&
+            touch foo &&
+            git add foo &&
+            git commit -m "foo"
+        ) &&
+        git init &&
+        git add sub &&
+        rm -rf sub/.git &&
+        (
+            cd sub &&
+            git add .
+        )
+    )
+'
+
+And the issue here is that the submodule $GIT_DIR
+was removed, so that the "git add ." was called with
+the parents $GIT_DIR, and a prefix of sub/
+(the slash will be removed in PATHSPEC_STRIP_SUBMODULE_SLASH...)
+such that the length will be 3 ("sub") and the other
+(prefix, nowildcard_len) are still 4.
+
+One fix would be to adjust prefix and nowildcard_len
+as well (in case they were as long as len, and now are
+overlength, if they were shorter, no need to cut off one)
+
+However I think that is missleading.
+
+So let's step back a bit and think about what should happen
+in the test case above. I think the users intent may be
+
+    "remove the submodule and add the files
+    directly to the regular tree".
+
+However this would not happen in case we do the quickfix
+of cutting one off prefix and nowildcard_len, because
+we have similar thing as a D/F (directory/file) conflict,
+just that it is a TREE/SUBMODULE conflict.
+
+In the parent project there is still a submodule recorded for
+sub/ but the user wants it to be a tree, so we would have
+to rewrite that.
+
+Using "rm -rf sub/.git" is a bad UI for saying " I want this to be
+a native tree/blobs instead of a submodule", so I would expect
+that we need to have another command there eventually
+(git submodule convert-to-subtree ?)
+
+Regarding the assert:
+We are sure it's a submodule related thing, so we can
+have a quite narrow warning there, roughly:
+
+diff --git a/pathspec.c b/pathspec.c
+index c9e9b6c..d0ea87a 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -313,8 +313,11 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
+        }
+
+        /* sanity checks, pathspec matchers assume these are sane */
+-       assert(item->nowildcard_len <= item->len &&
+-              item->prefix         <= item->len);
++       if (item->nowildcard_len <= item->len &&
++           item->prefix         <= item->len)
++               die (_("Path leads inside submodule '%s', but the submodule "
++                      "was not recognized, i.e. not initialized or deleted"),
++                      ce->name);
+        return magic;
+ }
