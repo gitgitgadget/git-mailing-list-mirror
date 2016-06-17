@@ -7,95 +7,162 @@ X-Spam-Status: No, score=-6.8 required=5.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08ABA20179
-	for <e@80x24.org>; Fri, 17 Jun 2016 12:48:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A786B20179
+	for <e@80x24.org>; Fri, 17 Jun 2016 12:49:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753318AbcFQMsu (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 08:48:50 -0400
-Received: from mail-yw0-f172.google.com ([209.85.161.172]:33711 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751757AbcFQMst (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2016 08:48:49 -0400
-Received: by mail-yw0-f172.google.com with SMTP id g20so70478301ywb.0
-        for <git@vger.kernel.org>; Fri, 17 Jun 2016 05:48:49 -0700 (PDT)
+	id S1753428AbcFQMtl (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 08:49:41 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:33628 "EHLO
+	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752359AbcFQMtk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2016 08:49:40 -0400
+Received: by mail-yw0-f196.google.com with SMTP id d137so2809728ywe.0
+        for <git@vger.kernel.org>; Fri, 17 Jun 2016 05:49:40 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=o4VkVh3QrdEnLKcEcnqYazyQjhSYlMM5H6ycO1J0MsU=;
-        b=jv5Iy66I3NCTcerj3tgGKpS+06kc2442/JSSNjuBfF3t5SFr2IXU0XGoIJvgikICm0
-         cOcPWboyPBLZvLlb4JxJ82Nvwua13GMVlDmfC0YrFtv8g2urV0pwcR4AmMOycKnvCpWK
-         QDjtbqyGGpmtKsfxxUKHZc19N7MVwL+zvfNWJmu4Ndg+1F7r6+R16nrYwtnFXaYR7Wv+
-         Lyyc9QXX4MnxLjIdt8eYkgdwV3E0SrSC7Y54wdD2/c4pxDOw5N5W90h5DOBhYcn8H48A
-         aeKOxllYcroRcYycgXvyCRv8i99wG2ghGmXh3/8QbA2azLx9HiQIigDuKDX98J9PqdtY
-         aikg==
+        bh=EJbb4w7f8oiJM1JEmJlAdN/fLkSaH5vHN2K0hZPYJY4=;
+        b=Z78jafec86tA+dcwfehGt6f+ANYHKWondIVvwiPH+9yCHIQ8eUXLpYN9F4vRcDrkRz
+         5Cb7j92IsiwO+MBteZSdx4tMccx1bEEFxeBX59JM5LZx8CJoWxbLKIjf79QlGEY1cjjh
+         phz+3JsWPmGnq7hB2x2C3zsZrQvREQ+SBuLCvFN479fFYBot3k9hz/JVnQC801aVD06r
+         kSmXd1OVTFtyPoYQ5zKB0Ztum/RaLjFeJUVmjtXip1nGA4uoGF+5cFrNIAQweL5Atxbv
+         HYuovPIK6/UftRGqaCw25XltSbxiJpZHm3kwMsfhXmnXYKg4zyUgjFcfUg2EMD43yWj9
+         kWTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=o4VkVh3QrdEnLKcEcnqYazyQjhSYlMM5H6ycO1J0MsU=;
-        b=T7awrkgKG4eANQCe2FSafZWZIsU+WW21Fo7daq5BuWK3AVnqGSB4lODLGzw3MdnXHu
-         cs3mNGfp60hvAvTTFY9TJgKkcy93Wcaoe7S9hjyPj6ayWfbAetrFOuP5HqrMKwODiJLx
-         sj8nvgVmVJzGeqaz9weByq4mtO6/QAiL49htYYRWNIkMbDjM6imPxd3ZMFcJcd7f82xE
-         KpkJGrbaFj6wIb2xVeRIckWbyaVd29qDoCT5MsI65PA0W2G8uNv2WstrdqPS0sC8HQzs
-         ItmpbGyNBbCr57t3gJaM8i2dNaXqinrQx4tGHD76vX6n9OsdGXZwO8Dv0RgZUj+93R23
-         EmEw==
-X-Gm-Message-State: ALyK8tKQl3uQPPM2L9Jro9hLTC2fHlXg44ZRizhnNrSScWoIUuFXfqIROFmtFQpeCB1RpGSWVys2LfM7Atf9KQ==
-X-Received: by 10.13.254.130 with SMTP id o124mr1059911ywf.30.1466167728565;
- Fri, 17 Jun 2016 05:48:48 -0700 (PDT)
+        bh=EJbb4w7f8oiJM1JEmJlAdN/fLkSaH5vHN2K0hZPYJY4=;
+        b=T1fo7qfT2qUJRHk4nouAi+tpnk/aMPGFnaSjNV4TfYkAt+KyYEVoo+fJ0cyWx2ditX
+         OceTrO9qvxb7ZaLBPW8nMydhzpoUf8tpoWMRxrAgngr6unLHM6YrJqT+1hHZUly0dXbP
+         79fFKkRoDesMfXbvwXOv/mLmz7tqBEjOwaFR3sAXOLt8DmOZ3vELSZ6UIGbK+X/kcPQB
+         TQBj5klY7Zk2zaUCcrhBrwiWhObPNBRTLaVOm/fDABi3+Ns7NExOCE3n+Bt1cQ9F5C1d
+         lutwdaIl/ua1M+cWHFxMVMkh/Q3/+r6kFzKR5s3P1dWW7og6p1MWu32vY2nLMPXmFkDR
+         FQxA==
+X-Gm-Message-State: ALyK8tL1nZkmZdeQksdgtYIaH+1TmQ1m7Ii75fmaKgdYKRlc9nOH0jPbZLwoAnkglAYnhDElqTtNLc/xQvyjFw==
+X-Received: by 10.37.198.133 with SMTP id k127mr934450ybf.53.1466167779612;
+ Fri, 17 Jun 2016 05:49:39 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.129.116.193 with HTTP; Fri, 17 Jun 2016 05:48:48 -0700 (PDT)
-In-Reply-To: <B8F28BE0-B43A-489F-9BCC-B40712C450D3@gmail.com>
-References: <20160524072124.2945-1-pranit.bauva@gmail.com> <20160524072124.2945-3-pranit.bauva@gmail.com>
- <B8F28BE0-B43A-489F-9BCC-B40712C450D3@gmail.com>
+Received: by 10.129.116.193 with HTTP; Fri, 17 Jun 2016 05:49:39 -0700 (PDT)
+In-Reply-To: <CAP8UFD0YNNzF4qqdvDbrONaMm8B8G_amePq2g58TYrjm+9W6Vw@mail.gmail.com>
+References: <20160607205454.22576-1-pranit.bauva@gmail.com>
+ <20160615140026.10519-1-pranit.bauva@gmail.com> <20160615140026.10519-6-pranit.bauva@gmail.com>
+ <CAPig+cRNcg496Ty2SJ1ojm1n3OpHzX0obMAD2bY3AzoyrKdA9w@mail.gmail.com>
+ <CAFZEwPP0-9rHOKFZBoE55pv4V-+okSLh4M5grNKWnq831Ug4+w@mail.gmail.com>
+ <CAPig+cS1=bv588H6yrOy1oFvArjJNbetdTS7+ZhfGn-GtVp4qw@mail.gmail.com>
+ <CAFZEwPPBTd6o7qg96cet8RAp5wY1shzQ=jU8dEK1irXSiMAxQg@mail.gmail.com> <CAP8UFD0YNNzF4qqdvDbrONaMm8B8G_amePq2g58TYrjm+9W6Vw@mail.gmail.com>
 From:	Pranit Bauva <pranit.bauva@gmail.com>
-Date:	Fri, 17 Jun 2016 18:18:48 +0530
-Message-ID: <CAFZEwPNJLk3Y2KQopsc6AC4-LHUeam-ts5sHn4qdhbKM8UWiGA@mail.gmail.com>
-Subject: Re: [PATCH v8 2/3] bisect: rewrite `check_term_format` shell function
- in C
-To:	Lars Schneider <larsxschneider@gmail.com>
-Cc:	Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
+Date:	Fri, 17 Jun 2016 18:19:39 +0530
+Message-ID: <CAFZEwPPUX16omOgk4V87UYheJH_+kBueGd4OzAJsit=j2Q6mNg@mail.gmail.com>
+Subject: Re: [PATCH v2 5/6] bisect--helper: `is_expected_rev` &
+ `check_expected_revs` shell function in C
+To:	Christian Couder <christian.couder@gmail.com>
+Cc:	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
 	Christian Couder <chriscool@tuxfamily.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	Lars Schneider <larsxschneider@gmail.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hey Lars,
-Hope you enjoyed your vacations. :)
+Hey Christian,
 
-On Thu, Jun 16, 2016 at 12:40 PM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
->
-> On 24 May 2016, at 09:21, Pranit Bauva <pranit.bauva@gmail.com> wrote:
->
->> Reimplement the `check_term_format` shell function in C and add
->> a `--check-term-format` subcommand to `git bisect--helper` to call it
->> from git-bisect.sh
+On Fri, Jun 17, 2016 at 2:17 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Thu, Jun 16, 2016 at 9:25 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> Hey Eric,
 >>
->> Using `--check-term-format` subcommand is a temporary measure to port
->> shell function to C so as to use the existing test suite. As more
->> functions are ported, this subcommand will be retired and will
->> be called by some other method/subcommand. For eg. In conversion of
->> write_terms() of git-bisect.sh, the subcommand will be removed and
->> instead check_term_format() will be called in its C implementation while
->> a new subcommand will be introduced for write_terms().
+>> On Fri, Jun 17, 2016 at 12:46 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> On Thu, Jun 16, 2016 at 3:05 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>>>> On Thu, Jun 16, 2016 at 2:44 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>>>> On Wed, Jun 15, 2016 at 10:00 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>>>>>> Reimplement `is_expected_rev` & `check_expected_revs` shell function in
+>>>>>> C and add a `--check-expected-revs` subcommand to `git bisect--helper` to
+>>>>>> call it from git-bisect.sh .
+>>>>>> [...]
+>>>>>> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+>>>>>> ---
+>>>>>> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+>>>>>> @@ -162,13 +162,44 @@ static int bisect_reset(const char *commit)
+>>>>>> +static int is_expected_rev(const char *expected_hex)
+>>>>>> +{
+>>>>>> +       struct strbuf actual_hex = STRBUF_INIT;
+>>>>>> +       int res;
+>>>>>> +
+>>>>>> +       if (strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0) < 0) {
+>>>>>> +               strbuf_release(&actual_hex);
+>>>>>> +               return 0;
+>>>>>> +       }
+>>>>>> +
+>>>>>> +       strbuf_trim(&actual_hex);
+>>>>>> +       res = !strcmp(actual_hex.buf, expected_hex);
+>>>>>> +       strbuf_release(&actual_hex);
+>>>>>> +       return res;
+>>>>>> +}
+>>>>>
+>>>>> Not worth a re-roll, but this could be re-structured to avoid having
+>>>>> to remember to release the strbuf at all exits:
+>>>>>
+>>>>>     struct strbuf actual_hex = ...;
+>>>>>     int res = 0;
+>>>>>
+>>>>>     if (strbuf_read_file(...) >= 0) {
+>>>>>         strbuf_trim(...);
+>>>>>         res = !strcmp(...);
+>>>>>     }
+>>>>>     strbuf_release(...);
+>>>>>     return res;
+>>>>>
+>>>>> Alternately:
+>>>>>
+>>>>>     if (strbuf_read_file(...) < 0)
+>>>>>         goto done;
+>>>>>
+>>>>>     strbuf_trim(...);
+>>>>>     res = !strcmp(...);
+>>>>>
+>>>>> done:
+>>>>>     strbuf_release(...);
+>>>>>     return res;
+>>>>>
+>>>>> which is a bit less compact.
+>>>>
+>>>> I will avoid this for the reason that I will have to create a label
+>>>> for a lot of functions. If I choose to do this for one function, I
+>>>> think it would be more appropriate to do the same for other functions.
+>>>> There would be a lot of functions in future which would be in the same
+>>>> scenario and creating a separate label for each of them would be quite
+>>>> tedious. What do you think?
+>>>
+>>> Not sure what you're talking about. Label names are not shared across
+>>> functions. Anyhow, the first suggestion I presented above is more
+>>> concise than the 'goto' version.
 >>
->> Helped-by: Johannes Schindelein <Johannes.Schindelein@gmx.de>
->> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
->> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+>> Yes I am aware of the fact that labels aren't shared across functions.
+>> What I meant by "separate label" was that I will have to make a label
+>> "fail" in each function. But I recently noticed that its used quite a
+>> lot so I think it would be okay to use it. Will re-roll with using
+>> labels and goto.
 >
-> Hi Pranit,
+> My opinion is that if there is a more concise version without labels
+> and gotos, it's better to use it, so I would suggest Eric's first
+> suggestion which is:
 >
-> please drop my Mentored-by until I contribute something
-> useful. I feel bad being mentioned in the same way as
-> Christian although he does all the work.
+>>     struct strbuf actual_hex = ...;
+>>     int res = 0;
+>>
+>>     if (strbuf_read_file(...) >= 0) {
+>>         strbuf_trim(...);
+>>         res = !strcmp(...);
+>>     }
+>>     strbuf_release(...);
+>>     return res;
 
-Sure! I will looking forward for you to comment more!
+Sure I could do that!
 
 Regards,
 Pranit Bauva
