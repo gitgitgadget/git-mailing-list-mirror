@@ -1,109 +1,83 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB75B1FEAA
-	for <e@80x24.org>; Fri, 17 Jun 2016 22:24:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E21D1FEAA
+	for <e@80x24.org>; Fri, 17 Jun 2016 22:29:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754380AbcFQWYV (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 18:24:21 -0400
-Received: from mout.gmx.net ([212.227.17.22]:55037 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754038AbcFQWYU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2016 18:24:20 -0400
-Received: from [192.168.178.27] ([88.70.210.132]) by mail.gmx.com (mrgmx102)
- with ESMTPSA (Nemesis) id 0MZwYd-1ayI5W10M3-00Loa8; Sat, 18 Jun 2016 00:24:17
- +0200
-Subject: Re: [PATCH] hooks--pre-commit.sample: check for chars, that are not
- allowed for a windows file name
-To:	Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-	git@vger.kernel.org
-References: <0102015553154cde-5c798c87-87c1-4acf-919a-c824dce01fae-000000@eu-west-1.amazonses.com>
- <5c02cc24-f68d-6eb3-9759-ffff328a0c2f@virtuell-zuhause.de>
-From:	dex teritas <dexteritas1@gmx.de>
-Date:	Sat, 18 Jun 2016 00:24:04 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.1
+	id S1751219AbcFQW3x (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 18:29:53 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56139 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750840AbcFQW3w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2016 18:29:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DB84125C89;
+	Fri, 17 Jun 2016 18:29:50 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=00/eun4ea1uFz2jYISe56OQLhjk=; b=PZBv/x
+	C9tFcKi3z0YcRyQxIlCYfsAyYByxMidbYjzm30og5f3Wk+O+bfGhtt0F/OEJIFo8
+	i1V5urE6mPCBwdF5B70JR8it1h4o49Gy/8fYIiwPmUVgTpN8+kkU08LtZrB1lpw0
+	PZf1w1ZqrorA8wOPnERQWS7KCg6yHrgngqGZw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=li41siXVutS6yr6qnUgzLdOil3mAHQvH
+	n4xyiE90DxlkHBH4TrLsC1zMzW77R/wf5PqG8Vp49YmeUZxMp7sQyoOwxK/+LOJy
+	Nco3963Z1QfGVVhODKqAytT6Xs/d7UG6XaPyqeiFIAQXz8cSUwt1RrUDXOeBFhDh
+	CkOFUjhk9iE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D339D25C88;
+	Fri, 17 Jun 2016 18:29:50 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6CF1825C87;
+	Fri, 17 Jun 2016 18:29:50 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Vasco Almeida <vascomalmeida@sapo.pt>
+Cc:	git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 00/38] i18n and test updates
+References: <1466194887-18236-1-git-send-email-vascomalmeida@sapo.pt>
+	<xmqqoa6zzf3g.fsf@gitster.mtv.corp.google.com>
+Date:	Fri, 17 Jun 2016 15:29:48 -0700
+In-Reply-To: <xmqqoa6zzf3g.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 17 Jun 2016 14:21:23 -0700")
+Message-ID: <xmqqbn2zzbxf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <5c02cc24-f68d-6eb3-9759-ffff328a0c2f@virtuell-zuhause.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Message-ID: <0Lyj4F-1bQz0I1R2N-016Asy@mail.gmx.com>
-X-Provags-ID: V03:K0:DYae4kQaUsDfKS0aT+pQnYf2fqp58LoKKDxpOAv+B37iqSVPUhl
- 00g4EhvZdQ3sK6YP5fQfQqId+EcnypI2gDfKNCfpOkz9hmEYgazJeGVL0oxccTNQjpPGDWn
- /3tAz+wcR/fbw1DqG2fBofBY+yM2L1xpOqQLEQsop4DTNIVGdY2U6hwKsk+w9lo1cKjXNYF
- n/ciCK/FT8s06Z4PvaHPQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:29mmsDJFNQ0=:GFQdkXwL7Kv6CUVvMyqBq7
- uEhy844yPrq9cSuqC0TgnYYL4btGCBzCIbyvVshVyuyonvvEy9V/oCDKdyU2wBB4kl0xwyidt
- X+SAGB6XO6mbt1MuHL8T9CdxdMjzU+Kx3Z6ZiIP6CDvCN3lJuKzY2WUMqgwIDdeC6XuOtKiLV
- c1x3jNtjW4/FBBh1/Bx506QV5+x/yLEUL+xn/waJ4pYbKcORo7i698+KaLSa7/f5zuBruWIXf
- 753ff8NvzI4xrsPm7QjIU0yg8JGZnNL2PZVH4hAL0edTsYdG9CY+GNgD5PE+iLh+bOYXPv0iG
- HvE5GKVqitPmy51IDCitCaLVnnhMe8c0vsOooC+NqfE5oI/mpXUfxxhBhaHApAL6/T2EMyg2d
- 8YAez5VSABlmiURjJZCfZOiMgT64AmZFSb9YioIRUASnL4crDz5wddDC3rKTLwjf787oHtjq/
- Qj97D8aLNIQauDTKUsaLaXpXiTrTqsQmiEPRhzobazUNW6c/8TbJL5A0+K8bfOmG9Kw2hY/CJ
- GuttQXOy9VxSFTGLwHeW0l+9uTsel68qk985BhieB1tZAdDQuSygVnJdqE8M8wbcEuf2pn1XA
- 2uKJcs+/CK0rswMOQByXqp7SvGg52EeeUf2OP/wGsjLTsGz/sCl6sizsu3078gC9pkHXnOaDT
- 10zb0m4P1912t517sD8d9YMrdL7277ceBaQjXgpExMou1lZ3oKyhLz4+OkznZ+ab3UqfCsu19
- X1RAM44KACHNRLbfxeRvljZSUJykoFRQDxCMXsMGOieSSL2ptrcdaFhOWmGhv/KCfEu9Lksy0
- nyEa+Hr
+Content-Type: text/plain
+X-Pobox-Relay-ID: 013C019C-34DB-11E6-9E84-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Am 15.06.2016 um 13:15 schrieb Thomas Braun:
-> Am 15.06.2016 um 10:02 schrieb dexteritas:
->> After the ASCII-check, test the windows compatibility of file names.
->> Can be disabled by:
->> git config hooks.allownonwindowschars true
->> ---
->>  templates/hooks--pre-commit.sample | 22 ++++++++++++++++++++++
->>  1 file changed, 22 insertions(+)
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Vasco Almeida <vascomalmeida@sapo.pt> writes:
+>
+>> Interdiff included below.
 >>
->> diff --git a/templates/hooks--pre-commit.sample b/templates/hooks--pre-commit.sample
->> index 68d62d5..120daf1 100755
->> --- a/templates/hooks--pre-commit.sample
->> +++ b/templates/hooks--pre-commit.sample
->> @@ -17,6 +17,7 @@ fi
->>  
->>  # If you want to allow non-ASCII filenames set this variable to true.
->>  allownonascii=$(git config --bool hooks.allownonascii)
->> +allownonwindowschars=$(git config --bool hooks.allownonwindowschars)
->>  
->>  # Redirect output to stderr.
->>  exec 1>&2
->> @@ -43,6 +44,27 @@ If you know what you are doing you can disable this check using:
->>    git config hooks.allownonascii true
->>  EOF
->>  	exit 1
->> +elif [ "$allownonwindowschars" != "true" ] &&
->> +	# If you work with linux and windows, there is a problem, if you use
->> +	# chars like \ / : * ? " < > |
->> +	# Check if there are used only windows compatible chars
->> +	test $(git diff --cached --name-only --diff-filter=A -z $against |
->> +	  LC_ALL=C tr -d '[0-9A-Za-z\[\]\{\}_ -)+-.]\0' | wc -c) != 0
->> +then
->> +	cat <<\EOF
->> +Error: Attempt to add a chars that are not allowed for a windows file name.
->> +
->> +This can cause problems if you want to work with people on other platforms.
->> +
->> +To be portable it is advisable to rename the file.
->> +
->> +Check your filenames for: \ / : * ? " < > |
->> +
->> +If you know what you are doing you can disable this check using:
->> +
->> +  git config hooks.allownonwindowschars true
->> +EOF
->> +	exit 2
->>  fi
->>  
->>  # If there are whitespace errors, print the offending file names and fail.
-> There are some cases of illegal file names missing. E.g. reserved names,
-> trailing period and space. My trial with a precommit hook for avoiding
-> illegal filenames on windows can be found at [1]. Feel free to loot my
-> version for a reroll.
+>> Vasco Almeida (38):
+>>   i18n: builtin/remote.c: fix mark for translation
+>>   i18n: advice: mark string about detached head for translation
+>>   i18n: advice: internationalize message for conflicts
+>>   i18n: transport: mark strings for translation
+>>   i18n: sequencer: mark entire sentences for translation
+>>   i18n: sequencer: mark string for translation
+>>   i18n: merge-octopus: mark messages for translation
+>>   merge-octupus: use die shell function from git-sh-setup.sh
 >
-> [1]:
-> https://github.com/t-b/git-pre-commit-hook-windows-filenames/blob/master/pre-commit
+> octopus.
+
+> The last 5 patches seem to have been lost...
 >
-You're right. Thanks for the example.
+>>   i18n: init-db: join message pieces
+>>   i18n: submodule: join strings marked for translation
+>>   i18n: submodule: escape shell variables inside eval_gettext
+>>   i18n: unmark die messages for translation
+>>   i18n: branch: mark comment when editing branch description for
+>>     translation
+
+Now we see them ;-)  Thanks.
