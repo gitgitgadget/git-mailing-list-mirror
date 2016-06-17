@@ -1,20 +1,20 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 706C81FEAA
-	for <e@80x24.org>; Fri, 17 Jun 2016 20:24:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7376D1FEAA
+	for <e@80x24.org>; Fri, 17 Jun 2016 20:24:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932930AbcFQUYH (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 16:24:07 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:52061 "EHLO sapo.pt"
+	id S964789AbcFQUYJ (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 16:24:09 -0400
+Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:35319 "EHLO sapo.pt"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S932065AbcFQUYG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2016 16:24:06 -0400
-Received: (qmail 23516 invoked from network); 17 Jun 2016 20:24:04 -0000
-Received: (qmail 1223 invoked from network); 17 Jun 2016 20:24:04 -0000
+	id S932065AbcFQUYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2016 16:24:08 -0400
+Received: (qmail 2103 invoked from network); 17 Jun 2016 20:24:06 -0000
+Received: (qmail 1864 invoked from network); 17 Jun 2016 20:24:06 -0000
 Received: from unknown (HELO linux-omuo.lan) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 17 Jun 2016 20:23:58 -0000
+          for <git@vger.kernel.org>; 17 Jun 2016 20:24:04 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -25,9 +25,9 @@ Cc:	Vasco Almeida <vascomalmeida@sapo.pt>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>, Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 04/38] i18n: transport: mark strings for translation
-Date:	Fri, 17 Jun 2016 20:20:53 +0000
-Message-Id: <1466194887-18236-5-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v5 05/38] i18n: sequencer: mark entire sentences for translation
+Date:	Fri, 17 Jun 2016 20:20:54 +0000
+Message-Id: <1466194887-18236-6-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.6.6
 In-Reply-To: <1466194887-18236-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1466194887-18236-1-git-send-email-vascomalmeida@sapo.pt>
@@ -36,63 +36,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Mark one printf string and one error string for translation.
+Mark entire sentences of error message rather than assembling one using
+placeholders (e.g. "Cannot %s during a %s").
+
+That would facilitate translation work because it is easier to translate
+a entire sentence than translating pieces. We would have better
+translations at the expense of source code verbosity.
+
+Moreover, translators can now 1) translate the terms "revert" and
+"cherry-pick" if they please 2) have more leeway to adapt their
+translations.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- transport.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ sequencer.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/transport.c b/transport.c
-index 095e61f..59b911e 100644
---- a/transport.c
-+++ b/transport.c
-@@ -59,7 +59,7 @@ static void set_upstreams(struct transport *transport, struct ref *refs,
- 				localname + 11, transport->remote->name,
- 				remotename);
- 		else
--			printf("Would set upstream of '%s' to '%s' of '%s'\n",
-+			printf(_("Would set upstream of '%s' to '%s' of '%s'\n"),
- 				localname + 11, remotename + 11,
- 				transport->remote->name);
+diff --git a/sequencer.c b/sequencer.c
+index 4687ad4..88a7c78 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -697,9 +697,14 @@ static struct commit *parse_insn_line(char *bol, char *eol, struct replay_opts *
+ 	 * opts; we don't support arbitrary instructions
+ 	 */
+ 	if (action != opts->action) {
+-		const char *action_str;
+-		action_str = action == REPLAY_REVERT ? "revert" : "cherry-pick";
+-		error(_("Cannot %s during a %s"), action_str, action_name(opts));
++		if (action == REPLAY_REVERT)
++		      error((opts->action == REPLAY_REVERT)
++			    ? _("Cannot revert during a another revert.")
++			    : _("Cannot revert during a cherry-pick."));
++		else
++		      error((opts->action == REPLAY_REVERT)
++			    ? _("Cannot cherry-pick during a revert.")
++			    : _("Cannot cherry-pick during another cherry-pick."));
+ 		return NULL;
  	}
-@@ -148,7 +148,7 @@ static int set_git_option(struct git_transport_options *opts,
- 			char *end;
- 			opts->depth = strtol(value, &end, 0);
- 			if (*end)
--				die("transport: invalid depth option '%s'", value);
-+				die(_("transport: invalid depth option '%s'"), value);
- 		}
- 		return 0;
- 	}
-@@ -767,19 +767,19 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
- {
- 	int i;
  
--	fprintf(stderr, "The following submodule paths contain changes that can\n"
--			"not be found on any remote:\n");
-+	fprintf(stderr, _("The following submodule paths contain changes that can\n"
-+			"not be found on any remote:\n"));
- 	for (i = 0; i < needs_pushing->nr; i++)
- 		printf("  %s\n", needs_pushing->items[i].string);
--	fprintf(stderr, "\nPlease try\n\n"
--			"	git push --recurse-submodules=on-demand\n\n"
--			"or cd to the path and use\n\n"
--			"	git push\n\n"
--			"to push them to a remote.\n\n");
-+	fprintf(stderr, _("\nPlease try\n\n"
-+			  "	git push --recurse-submodules=on-demand\n\n"
-+			  "or cd to the path and use\n\n"
-+			  "	git push\n\n"
-+			  "to push them to a remote.\n\n"));
- 
- 	string_list_clear(needs_pushing, 0);
- 
--	die("Aborting.");
-+	die(_("Aborting."));
- }
- 
- static int run_pre_push_hook(struct transport *transport,
 -- 
 2.6.6
 
