@@ -6,42 +6,42 @@ X-Spam-Status: No, score=-6.9 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 477CD2018A
-	for <e@80x24.org>; Fri, 17 Jun 2016 07:46:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B97361F744
+	for <e@80x24.org>; Fri, 17 Jun 2016 07:46:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932122AbcFQHqW (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 03:46:22 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:42800 "EHLO
+	id S1755324AbcFQHq0 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 03:46:26 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:56439 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755075AbcFQHqT (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2016 03:46:19 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 1D409209EC;
-	Fri, 17 Jun 2016 03:46:18 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Fri, 17 Jun 2016 03:46:18 -0400
+	by vger.kernel.org with ESMTP id S1755350AbcFQHqV (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2016 03:46:21 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 9468A20A80;
+	Fri, 17 Jun 2016 03:46:20 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute5.internal (MEProxy); Fri, 17 Jun 2016 03:46:20 -0400
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
 	date:from:in-reply-to:message-id:references:subject:to
-	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=d5WSS8X1w9OoMMe0UnekJV6aY3k
-	=; b=Pytht3NHUUMaEElQBOSYfcVHxAc6o8fwzqOEt0s2AaCJ8ZuQneyqEWSo4Bs
-	OVjJj4p0mO4/crTAcQ+30WezaH53NE+6Ns0ZCKNaNpAKIPnkZZ93AnKvSJRXnj2c
-	sUVKYLFDOrE8y74KrwjijpENy7P89MB3BpHjQTbBoCCJJ7Ho=
+	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=ywc1+RMSdAUiO3ICKELxz/07Voc
+	=; b=HLGJCxfvhg0KHfgMCkA+RTF1Ic6HY6QBoybQCEK4KrFwCH4lzOg7s2oVb3u
+	48tG2l4qK/qnlufCyb+kzNwPBcCW+j/9/aIjnTLjMKwXRCQZvLvaRiqJsi9aPuKg
+	rRMv2muvzZOu+9cPMMI4/on796Rj9xHxnwcskjT1KLVCXi6o=
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=d5WS
-	S8X1w9OoMMe0UnekJV6aY3k=; b=UPQTUTEPK90aKpEvVAaZQG0uD9yjSpbNT26t
-	BriaqsyyJeFrU3Gwajf5IPBDH2j+eNenckNBQhU5WBfQjUbGUg/Hq4/NRP9NIxaa
-	PejJl3WWw8uXbcuUJHnI1bnZMmDpZhlbIkTP+sDkmsLvJjBa2V8WtGDiArwJ9TMi
-	dKk0Hg8=
-X-Sasl-enc: b08W8mnLjyXUhIEQ7732uQfwdnhdI7j8jU0FQ4KyRB+Z 1466149577
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=ywc1
+	+RMSdAUiO3ICKELxz/07Voc=; b=HQOoWUs2EsC5FyYj1h+GQaKbAgIrpV2mUQYV
+	meclrOFS0WwBzZlsIyVxG94rRstmamJYRQ1v4vrgLGmDcCOs5/lIXLl9UdzBvHba
+	L9bzwEyHdKW98x19jb9Kpb99pWhR/fUIHMR/9fDpVY2rms6wb4v6CBam0C+EXWP0
+	FK9nAk8=
+X-Sasl-enc: ccoBS28UBPljL1EP8zJUCxd1Oa7hLrtfpE/GDCA+4hb0 1466149580
 Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id A3162F29F3;
-	Fri, 17 Jun 2016 03:46:17 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 1C91DCCD34;
+	Fri, 17 Jun 2016 03:46:20 -0400 (EDT)
 From:	Michael J Gruber <git@drmicha.warpmail.net>
 To:	git@vger.kernel.org
-Subject: [PATCH 3/5] Documentation/technical: signed commit format
-Date:	Fri, 17 Jun 2016 09:46:10 +0200
-Message-Id: <d2e095403e10e128c79cfb3421151c2e3acd79bb.1466148698.git.git@drmicha.warpmail.net>
+Subject: [PATCH 5/5] Documentation/technical: push certificate format
+Date:	Fri, 17 Jun 2016 09:46:12 +0200
+Message-Id: <b2557387aeea4b34da4a5b28e87063d1f2c9ff69.1466148698.git.git@drmicha.warpmail.net>
 X-Mailer: git-send-email 2.9.0.382.g87fd384
 In-Reply-To: <cover.1466148698.git.git@drmicha.warpmail.net>
 References: <cover.1466148698.git.git@drmicha.warpmail.net>
@@ -52,64 +52,72 @@ X-Mailing-List:	git@vger.kernel.org
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- Documentation/technical/signature-format.txt | 48 ++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ Documentation/technical/signature-format.txt | 56 ++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
 diff --git a/Documentation/technical/signature-format.txt b/Documentation/technical/signature-format.txt
-index 833afff..8ae1dc3 100644
+index 7afd403..c50602f 100644
 --- a/Documentation/technical/signature-format.txt
 +++ b/Documentation/technical/signature-format.txt
-@@ -62,3 +62,51 @@ signed tag
- 
- signed tag message body
+@@ -184,3 +184,59 @@ Date:   Wed Jun 15 09:13:29 2016 +0000
+     # gpg:          There is no indication that the signature belongs to the owner.
+     # Primary key fingerprint: D4BE 2231 1AD3 131E 5EDA  29A4 6109 2E85 B722 7189
  ----
 +
-+== Commit signatures
++== Push certificates
 +
-+- created by: `git commit -S`
-+- payload: commit object
-+- embedding: header entry `gpgsig`
-+  (content is preceded by a space)
-+- example: commit with subject `signed commit`
-+
-+----
-+tree eebfed94e75e7760540d1485c740902590a00332
-+parent 04b871796dc0420f8e7561a895b52484b701d51a
-+author A U Thor <author@example.com> 1465981137 +0000
-+committer C O Mitter <committer@example.com> 1465981137 +0000
-+gpgsig -----BEGIN PGP SIGNATURE-----
-+ Version: GnuPG v1
-+ 
-+ iQEcBAABAgAGBQJXYRjRAAoJEGEJLoW3InGJ3IwIAIY4SA6GxY3BjL60YyvsJPh/
-+ HRCJwH+w7wt3Yc/9/bW2F+gF72kdHOOs2jfv+OZhq0q4OAN6fvVSczISY/82LpS7
-+ DVdMQj2/YcHDT4xrDNBnXnviDO9G7am/9OE77kEbXrp7QPxvhjkicHNwy2rEflAA
-+ zn075rtEERDHr8nRYiDh8eVrefSO7D+bdQ7gv+7GsYMsd2auJWi1dHOSfTr9HIF4
-+ HJhWXT9d2f8W+diRYXGh4X0wYiGg6na/soXc+vdtDYBzIxanRqjg8jCAeo1eOTk1
-+ EdTwhcTZlI0x5pvJ3H0+4hA2jtldVtmPM4OTB0cTrEWBad7XV6YgiyuII73Ve3I=
-+ =jKHM
-+ -----END PGP SIGNATURE-----
-+
-+signed commit
-+
-+signed commit message body
-+----
-+
-+- verify with: `git verify-commit [-v]` (or `git show --show-signature`)
++- created by: `git push --signed`
++- payload: a push certificate header followed by the push transcript
++  (see pack-protocol.txt and below)
++- embedding: append the signature to the push transcript and pass it to receive hooks
++  via the environment (see below)
++- example: push of commit `dd1416f` updating `master` on `.` from `d36de3d`,
++  resulting in push certificate object `d4169b9`:
 +
 +----
-+gpg: Signature made Wed Jun 15 10:58:57 2016 CEST using RSA key ID B7227189
-+gpg: Good signature from "Eris Discordia <discord@example.net>"
-+gpg: WARNING: This key is not certified with a trusted signature!
-+gpg:          There is no indication that the signature belongs to the owner.
-+Primary key fingerprint: D4BE 2231 1AD3 131E 5EDA  29A4 6109 2E85 B722 7189
-+tree eebfed94e75e7760540d1485c740902590a00332
-+parent 04b871796dc0420f8e7561a895b52484b701d51a
-+author A U Thor <author@example.com> 1465981137 +0000
-+committer C O Mitter <committer@example.com> 1465981137 +0000
++certificate version 0.1
++pusher C O Mitter <committer@example.com> 1465983405 +0000
++pushee .
++nonce 1465983405-07421dc1515c6f4d76d4
 +
-+signed commit
++d36de3db9b6a83076477254a3186b721a7bfaab7 dd1416f2cd1ec85957a9520a33e9053a133a775d refs/heads/master
++-----BEGIN PGP SIGNATURE-----
++Version: GnuPG v1
 +
-+signed commit message body
++iEYEABECAAYFAldhIa0ACgkQE7b1Hs3eQw2pGwCgmJs98xETSDZb6rooh/X7af3V
++zWgAn08ctVNga27jRkIdhFNetJy3x8De
++=WH0m
++-----END PGP SIGNATURE-----
++----
++
++- verify with: `git verify-tag --blob [-v]`
++
++----
++gpg: Signature made Wed Jun 15 11:36:45 2016 CEST using DSA key ID CDDE430D
++gpg: Good signature from "C O Mitter <committer@example.com>"
++certificate version 0.1
++pusher C O Mitter <committer@example.com> 1465983405 +0000
++pushee .
++nonce 1465983405-07421dc1515c6f4d76d4
++
++d36de3db9b6a83076477254a3186b721a7bfaab7 dd1416f2cd1ec85957a9520a33e9053a133a775d refs/heads/master
++----
++
++- pre- and post-receive hook input:
++
++----
++d36de3db9b6a83076477254a3186b721a7bfaab7 dd1416f2cd1ec85957a9520a33e9053a133a775d refs/heads/master
++----
++
++- pre- and post-receive hook environment:
++
++----
++GIT_PUSH_CERT_NONCE_STATUS=OK
++GIT_PUSH_CERT_KEY=13B6F51ECDDE430D
++GIT_PUSH_CERT=d4169b9a3c2674458f9656796132c145bbc5ba74
++GIT_PUSH_CERT_STATUS=G
++GIT_PUSH_CERT_SIGNER=C O Mitter <committer@example.com>
++GIT_PUSH_CERT_NONCE=1465983405-07421dc1515c6f4d76d4
 +----
 -- 
 2.9.0.382.g87fd384
