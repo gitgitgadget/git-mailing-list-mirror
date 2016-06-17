@@ -2,97 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.0 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.8 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AA751FF40
-	for <e@80x24.org>; Fri, 17 Jun 2016 03:25:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFB2A1FF40
+	for <e@80x24.org>; Fri, 17 Jun 2016 06:05:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755004AbcFQDZV (ORCPT <rfc822;e@80x24.org>);
-	Thu, 16 Jun 2016 23:25:21 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62843 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754091AbcFQDZU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2016 23:25:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9364E24BAA;
-	Thu, 16 Jun 2016 23:25:19 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SyYWkKEdpVOI2GPnDvbpiTsRExA=; b=CJBRV5
-	cp28qGAyE7W4ORBho7M7vsrp0cwJoRde3rash7QaUnTdKTFXrX/2msqKoV1m/rgI
-	ykY527APoOt+XpIf/uvZvcHG2vJWZSoaJOV+mLGBrjz9rcqA4K0+A0nuGDyG/Lx4
-	oCQbxo0KMengsSreu4Nzn6L7IuJNAZtQGdnzs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s2bP5kM8J1bO2uu9xSmEFKDGZfBvYIHj
-	xnZH9iEwhiPQwyo4P9rgTyoQg9KJTagYtkD5dv1+tuvER16ewVvDiDn5QpEYXCy8
-	ZLnOxe71lvXYlRjRrg2mdsQSQB/QfV8CG6t/1Y/pyktbh1nKpVTgS40EvQidX2mj
-	P2kmYV/Umkk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C1B424BA9;
-	Thu, 16 Jun 2016 23:25:19 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1192324BA7;
-	Thu, 16 Jun 2016 23:25:19 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Joey Hess <id@joeyh.name>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH 1/4] clarify %f documentation
-References: <20160616203259.5886-1-joeyh@joeyh.name>
-	<20160616203259.5886-2-joeyh@joeyh.name>
-	<xmqq8ty44y4t.fsf@gitster.mtv.corp.google.com>
-	<20160617024803.GB17088@kitenet.net>
-Date:	Thu, 16 Jun 2016 20:25:17 -0700
-In-Reply-To: <20160617024803.GB17088@kitenet.net> (Joey Hess's message of
-	"Thu, 16 Jun 2016 22:48:03 -0400")
-Message-ID: <xmqqfusc33aa.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754013AbcFQGFp (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 02:05:45 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:33850 "EHLO
+	mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752176AbcFQGFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2016 02:05:44 -0400
+Received: by mail-it0-f67.google.com with SMTP id f6so894625ith.1
+        for <git@vger.kernel.org>; Thu, 16 Jun 2016 23:05:44 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=Vxdq+EITT55dXHwRMRkm/DQVpwv2foQcsot+TvvLxHg=;
+        b=j5d9I3JQ0gxmdMmTKnEi5XNTTsjACUGM89+yxY/RJNLJv3atVpvCzDSPUJzQu/nlkP
+         FJhh2HmzeE9bJCBYKHGR8Kf5H/te/SuWx0U35TQ/TZ3dazdePjit607SyTAPm08/USbZ
+         Jq/QYXll47ZisfwDuKTygCjvI9lcFmRs6QeoSZfZorhYTXRgrRFsCsg5CLF7DkTVwlVT
+         Y09qSe2eNyY6hmKfYLQm3G9AN+W7dVGR7AEfqSuCUjgU4YUw5rv0Ca3JREeAHLiWPw9G
+         YNEsDyYFo9/rWsjoXQ3aErKJWt5X8h4rtYSD2e/REo/MqE0/kmpkTme38x3tj6wNWFyn
+         eQmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=Vxdq+EITT55dXHwRMRkm/DQVpwv2foQcsot+TvvLxHg=;
+        b=Fohm/bNmUD7FX4URROXp0re53JN4eX9dzIrnLTEp4pOsNnUyIA2G8J2sR9ZW4fNOD0
+         5aL5VkUWNOUJ0nY5hRUKuKs4mL9zJUbMuvKMv6blT1IsaCcvxIgHsaCSyfj2r4XU4qRs
+         I2G/FblidMRkE0BFLLqEQOoht77nV700tEvXtxyCNXxd9TMJPV6UZ2Dq/leYgSFGOiy/
+         SWGMD6SqHbEvKHpP2evSrEPW3upwENS3noK+w5hzKzq3yx8Av3KDi3qIiUGoesh7xYY3
+         fwd/3AdisukqjHfF8iMl5vjsdJmrtVSGFwzohwVGvTuvMTLa5DbKSMezrv/XmOuoaa6p
+         0znA==
+X-Gm-Message-State: ALyK8tKsYdRt7d8V5rhSEUjPJEq1VrTBcsaQr7jPT6irCLx3VjeY/sVFwyfvYxiQGAmgQ8qJwVpyxOBmO+a38A==
+X-Received: by 10.36.210.198 with SMTP id z189mr601403itf.32.1466143543718;
+ Thu, 16 Jun 2016 23:05:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1DE81038-343B-11E6-B2C6-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.79.0.30 with HTTP; Thu, 16 Jun 2016 23:05:43 -0700 (PDT)
+In-Reply-To: <20160616203259.5886-3-joeyh@joeyh.name>
+References: <20160616203259.5886-1-joeyh@joeyh.name> <20160616203259.5886-3-joeyh@joeyh.name>
+From:	Eric Sunshine <sunshine@sunshineco.com>
+Date:	Fri, 17 Jun 2016 02:05:43 -0400
+X-Google-Sender-Auth: 9mHvnwcoBpL9MifbCXM2hCPvmCM
+Message-ID: <CAPig+cTk8NkNKRcDCWpOhh_g4kXUhHHfFdfPeeq1-zJTzxXt6w@mail.gmail.com>
+Subject: Re: [PATCH 2/4] add smudge-to-file and clean-from-file filter configuration
+To:	Joey Hess <joeyh@joeyh.name>
+Cc:	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Joey Hess <id@joeyh.name> writes:
+On Thu, Jun 16, 2016 at 4:32 PM, Joey Hess <joeyh@joeyh.name> wrote:
+> This adds new smudge-to-file and clean-from-file filter commands,
+> which are similar to smudge and clean but allow direct access to files on
+> disk.
+> [...]
+> Signed-off-by: Joey Hess <joeyh@joeyh.name>
+> ---
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> @@ -1299,14 +1299,29 @@ format.useAutoBase::
+> +filter.<driver>.clean-from-file::
+> +       Optional command which is used on checkin to convert the content
+> +       of a worktree file, which can be read from disk, to a blob
+> +       (written to stdout).
+> +       Only used when filter.<driver>.clean is also configured.
+> +       See linkgit:gitattributes[5] for details.
+> +
+> +filter.<driver>.smudge-to-file::
+> +       Optional command which is used to convert the content of a blob
+> +       object (provided on stdin) to a worktree file, writing directly
+> +       to the file.
+> +       Only used when filter.<driver>.clean is also configured.
 
-> Junio C Hamano wrote:
->> I agree that "the name of the file" can be interpreted in many ways,
->> and I agree that it would be a good idea to find a better phrase to
->> name the path that is being worked on, but I do not think "the file
->> in the git repository" is that phrase.
->
->> I think using the word "path" somewhere in the updated description
->> is more likely to have the effect you desire.
->
-> "path" is also very ambiguous. I see that "tracked" is often used to
-> describe what %f is, so how about:
->  
-> + Note that "%f" is the name of a file tracked by Git. Depending on the
-> + version that is being filtered, the corresponding file on disk may not
-> + exist, or may have different contents. So, smudge and clean commands should
-> + not try to access the file on disk.
+s/clean/smudge/
 
-I think that places stress on a wrong point.
-
-I do have a preference between "file" or "path", merely because, as
-I showed already (go back and read what you are responding to), the
-preceding paragraphs all talk in terms of "paths".  But that is not
-the important part.  
-
-"tracked by Git" is not all that interesting, compared to the fact
-that your filter needs to give contents relevant to that path
-because that is what the command line argument Git gives you with
-'%f' means.  It is not a random filename "tracked by Git".  Among 47
-other files tracked by Git, the single one being given is the one
-the code that drives the filter is WORKING ON, and I think that
-needs to be written in the description, hence "the path that is
-being worked on" was my suggestion.
-
-
-
+> +       See linkgit:gitattributes[5] for details.
