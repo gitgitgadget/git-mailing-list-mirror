@@ -6,81 +6,81 @@ X-Spam-Status: No, score=-6.8 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFB2A1FF40
-	for <e@80x24.org>; Fri, 17 Jun 2016 06:05:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9832B1F744
+	for <e@80x24.org>; Fri, 17 Jun 2016 07:46:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754013AbcFQGFp (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 02:05:45 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:33850 "EHLO
-	mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752176AbcFQGFo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2016 02:05:44 -0400
-Received: by mail-it0-f67.google.com with SMTP id f6so894625ith.1
-        for <git@vger.kernel.org>; Thu, 16 Jun 2016 23:05:44 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=Vxdq+EITT55dXHwRMRkm/DQVpwv2foQcsot+TvvLxHg=;
-        b=j5d9I3JQ0gxmdMmTKnEi5XNTTsjACUGM89+yxY/RJNLJv3atVpvCzDSPUJzQu/nlkP
-         FJhh2HmzeE9bJCBYKHGR8Kf5H/te/SuWx0U35TQ/TZ3dazdePjit607SyTAPm08/USbZ
-         Jq/QYXll47ZisfwDuKTygCjvI9lcFmRs6QeoSZfZorhYTXRgrRFsCsg5CLF7DkTVwlVT
-         Y09qSe2eNyY6hmKfYLQm3G9AN+W7dVGR7AEfqSuCUjgU4YUw5rv0Ca3JREeAHLiWPw9G
-         YNEsDyYFo9/rWsjoXQ3aErKJWt5X8h4rtYSD2e/REo/MqE0/kmpkTme38x3tj6wNWFyn
-         eQmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=Vxdq+EITT55dXHwRMRkm/DQVpwv2foQcsot+TvvLxHg=;
-        b=Fohm/bNmUD7FX4URROXp0re53JN4eX9dzIrnLTEp4pOsNnUyIA2G8J2sR9ZW4fNOD0
-         5aL5VkUWNOUJ0nY5hRUKuKs4mL9zJUbMuvKMv6blT1IsaCcvxIgHsaCSyfj2r4XU4qRs
-         I2G/FblidMRkE0BFLLqEQOoht77nV700tEvXtxyCNXxd9TMJPV6UZ2Dq/leYgSFGOiy/
-         SWGMD6SqHbEvKHpP2evSrEPW3upwENS3noK+w5hzKzq3yx8Av3KDi3qIiUGoesh7xYY3
-         fwd/3AdisukqjHfF8iMl5vjsdJmrtVSGFwzohwVGvTuvMTLa5DbKSMezrv/XmOuoaa6p
-         0znA==
-X-Gm-Message-State: ALyK8tKsYdRt7d8V5rhSEUjPJEq1VrTBcsaQr7jPT6irCLx3VjeY/sVFwyfvYxiQGAmgQ8qJwVpyxOBmO+a38A==
-X-Received: by 10.36.210.198 with SMTP id z189mr601403itf.32.1466143543718;
- Thu, 16 Jun 2016 23:05:43 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.79.0.30 with HTTP; Thu, 16 Jun 2016 23:05:43 -0700 (PDT)
-In-Reply-To: <20160616203259.5886-3-joeyh@joeyh.name>
-References: <20160616203259.5886-1-joeyh@joeyh.name> <20160616203259.5886-3-joeyh@joeyh.name>
-From:	Eric Sunshine <sunshine@sunshineco.com>
-Date:	Fri, 17 Jun 2016 02:05:43 -0400
-X-Google-Sender-Auth: 9mHvnwcoBpL9MifbCXM2hCPvmCM
-Message-ID: <CAPig+cTk8NkNKRcDCWpOhh_g4kXUhHHfFdfPeeq1-zJTzxXt6w@mail.gmail.com>
-Subject: Re: [PATCH 2/4] add smudge-to-file and clean-from-file filter configuration
-To:	Joey Hess <joeyh@joeyh.name>
-Cc:	Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+	id S1754810AbcFQHqQ (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 03:46:16 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:35341 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754006AbcFQHqP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2016 03:46:15 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 4529B20A77;
+	Fri, 17 Jun 2016 03:46:14 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 17 Jun 2016 03:46:14 -0400
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	date:from:message-id:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp;
+	 bh=BF9BkuqkruKf5aV9B5I+3dd0Ns4=; b=dLPNgpy8Alh/5xJOK+R4pN4PK2H+
+	Ic/wHQHPj+XAFZW/QNfgj4YJ+++IEIGy3+0z+1C7sTcjapR2ryFsNLyXiciDHxT7
+	TdIT6hAz23iWLxW7Qyat6yXSfo0OWhlT2Uac2f8K2SJ/xzakHIl4XXeSUX8HpMWH
+	ZuGigysNb2GbhWE=
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=date:from:message-id:subject:to
+	:x-sasl-enc:x-sasl-enc; s=smtpout; bh=BF9BkuqkruKf5aV9B5I+3dd0Ns
+	4=; b=aj03oQcGeiC2lp4kgeLbxexMSMN2rgA44ssRvkzmcP7cI41mb8BN0TKP0b
+	FvhE4iiedQzOCdXKkbFLGgBsiutbkxAN38bLraECR4E4+k+/1NpA9lf577ysM1DO
+	RSKrL2BU4b3hn7iNDLUrpLb5D6Zm8+bSDS2Kp7UoHzNNGEnuQ=
+X-Sasl-enc: dWlQle407h6+zSTdPSWlr+H4nMOd2mrWToPpfvsXo0tT 1466149573
+Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id B71D9CC021;
+	Fri, 17 Jun 2016 03:46:13 -0400 (EDT)
+From:	Michael J Gruber <git@drmicha.warpmail.net>
+To:	git@vger.kernel.org
+Subject: [PATCH 0/5] Documentation/technical: describe signature formats
+Date:	Fri, 17 Jun 2016 09:46:07 +0200
+Message-Id: <cover.1466148698.git.git@drmicha.warpmail.net>
+X-Mailer: git-send-email 2.9.0.382.g87fd384
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jun 16, 2016 at 4:32 PM, Joey Hess <joeyh@joeyh.name> wrote:
-> This adds new smudge-to-file and clean-from-file filter commands,
-> which are similar to smudge and clean but allow direct access to files on
-> disk.
-> [...]
-> Signed-off-by: Joey Hess <joeyh@joeyh.name>
-> ---
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> @@ -1299,14 +1299,29 @@ format.useAutoBase::
-> +filter.<driver>.clean-from-file::
-> +       Optional command which is used on checkin to convert the content
-> +       of a worktree file, which can be read from disk, to a blob
-> +       (written to stdout).
-> +       Only used when filter.<driver>.clean is also configured.
-> +       See linkgit:gitattributes[5] for details.
-> +
-> +filter.<driver>.smudge-to-file::
-> +       Optional command which is used to convert the content of a blob
-> +       object (provided on stdin) to a worktree file, writing directly
-> +       to the file.
-> +       Only used when filter.<driver>.clean is also configured.
+As promised a while ago, here is a little series that describes the signature
+formats that we use in Git. The series sets up the the basic structure first
+and then describes each format in one patch.
 
-s/clean/smudge/
+The series grew out of my own efforts to get an overview and structure my
+understanding before I can set about refactoring what we have. Things
+that became apparent immediately:
 
-> +       See linkgit:gitattributes[5] for details.
+- We don't support verifying push certificates, although they fit in with
+  git verify-tag. Patch has been submitted, and this series documents the
+  result already (git verify-tag --blob).
+
+- We don' support verifying signed merge tags other than by using log/show,
+  which is not quite fit for scripting.
+
+- We have signature parsing code all over the place, including places that
+  should probably abstract more, such as tag.c and log-tree.c.
+
+- We may want to give more support for deciding about the trustworthiness
+  of signatures, the same way we export information to receive hooks
+  in the presence of push certificates. (Give information, don't decide.)
+
+Michael J Gruber (5):
+  Documentation/technical: describe signature formats
+  Documentation/technical: signed tag format
+  Documentation/technical: signed commit format
+  Documentation/technical: signed merge tag format
+  Documentation/technical: push certificate format
+
+ Documentation/Makefile                       |   1 +
+ Documentation/technical/signature-format.txt | 242 +++++++++++++++++++++++++++
+ 2 files changed, 243 insertions(+)
+ create mode 100644 Documentation/technical/signature-format.txt
+
+-- 
+2.9.0.382.g87fd384
+
