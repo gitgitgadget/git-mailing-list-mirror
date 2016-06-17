@@ -1,20 +1,20 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA51D1FEAA
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0008920179
 	for <e@80x24.org>; Fri, 17 Jun 2016 20:24:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964926AbcFQUYj (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 16:24:39 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:52161 "EHLO sapo.pt"
+	id S964934AbcFQUYl (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 16:24:41 -0400
+Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:35432 "EHLO sapo.pt"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S964917AbcFQUYi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2016 16:24:38 -0400
-Received: (qmail 23823 invoked from network); 17 Jun 2016 20:24:36 -0000
-Received: (qmail 9427 invoked from network); 17 Jun 2016 20:24:36 -0000
+	id S964922AbcFQUYj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2016 16:24:39 -0400
+Received: (qmail 2450 invoked from network); 17 Jun 2016 20:24:38 -0000
+Received: (qmail 9813 invoked from network); 17 Jun 2016 20:24:38 -0000
 Received: from unknown (HELO linux-omuo.lan) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 17 Jun 2016 20:24:36 -0000
+          for <git@vger.kernel.org>; 17 Jun 2016 20:24:38 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -25,9 +25,9 @@ Cc:	Vasco Almeida <vascomalmeida@sapo.pt>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>, Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 28/38] i18n: merge: mark messages for translation
-Date:	Fri, 17 Jun 2016 20:21:17 +0000
-Message-Id: <1466194887-18236-29-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v5 31/38] i18n: standardise messages
+Date:	Fri, 17 Jun 2016 20:21:20 +0000
+Message-Id: <1466194887-18236-32-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.6.6
 In-Reply-To: <1466194887-18236-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1466194887-18236-1-git-send-email-vascomalmeida@sapo.pt>
@@ -36,60 +36,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Mark messages shown to the user for translation.
+Standardise messages in order to save translators some work.
+
+Nuances fixed in this commit:
+"failed to read %s"
+"read of %s failed"
+
+"detach the HEAD at named commit"
+"detach HEAD at named commit"
+
+"removing '%s' failed"
+"failed to remove '%s'"
+
+"index file corrupt"
+"corrupt index file"
+
+"failed to read %s"
+"read of %s failed"
+
+"detach the HEAD at named commit"
+"detach HEAD at named commit"
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/merge.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/apply.c    | 6 +++---
+ builtin/checkout.c | 6 +++---
+ builtin/repack.c   | 2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index b555a1b..961def5 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1014,7 +1014,7 @@ static int default_edit_option(void)
- 	if (e) {
- 		int v = git_config_maybe_bool(name, e);
- 		if (v < 0)
--			die("Bad value '%s' in environment '%s'", e, name);
-+			die(_("Bad value '%s' in environment '%s'"), e, name);
- 		return v;
+diff --git a/builtin/apply.c b/builtin/apply.c
+index c770d7d..a741274 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -3226,7 +3226,7 @@ static int load_patch_target(struct strbuf *buf,
+ {
+ 	if (cached || check_index) {
+ 		if (read_file_or_gitlink(ce, buf))
+-			return error(_("read of %s failed"), name);
++			return error(_("failed to read %s"), name);
+ 	} else if (name) {
+ 		if (S_ISGITLINK(expected_mode)) {
+ 			if (ce)
+@@ -3237,7 +3237,7 @@ static int load_patch_target(struct strbuf *buf,
+ 			return error(_("reading from '%s' beyond a symbolic link"), name);
+ 		} else {
+ 			if (read_old_data(st, name, buf))
+-				return error(_("read of %s failed"), name);
++				return error(_("failed to read %s"), name);
+ 		}
+ 	}
+ 	return 0;
+@@ -3282,7 +3282,7 @@ static int load_preimage(struct image *image,
+ 			free_fragment_list(patch->fragments);
+ 			patch->fragments = NULL;
+ 		} else if (status) {
+-			return error(_("read of %s failed"), patch->old_name);
++			return error(_("failed to read %s"), patch->old_name);
+ 		}
  	}
  
-@@ -1115,7 +1115,7 @@ static void handle_fetch_head(struct commit_list **remotes, struct strbuf *merge
- 		if (!commit) {
- 			if (ptr)
- 				*ptr = '\0';
--			die("not something we can merge in %s: %s",
-+			die(_("not something we can merge in %s: %s"),
- 			    filename, merge_names->buf + pos);
- 		}
- 		remotes = &commit_list_insert(commit, remotes)->next;
-@@ -1149,7 +1149,7 @@ static struct commit_list *collect_parents(struct commit *head_commit,
- 			struct commit *commit = get_merge_parent(argv[i]);
- 			if (!commit)
- 				help_unknown_ref(argv[i], "merge",
--						 "not something we can merge");
-+						 _("not something we can merge"));
- 			remotes = &commit_list_insert(commit, remotes)->next;
- 		}
- 		remoteheads = reduce_parents(head_commit, head_subsumed, remoteheads);
-@@ -1421,7 +1421,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		 * If head can reach all the merge then we are up to date.
- 		 * but first the most common case of merging one remote.
- 		 */
--		finish_up_to_date("Already up-to-date.");
-+		finish_up_to_date(_("Already up-to-date."));
- 		goto done;
- 	} else if (fast_forward != FF_NO && !remoteheads->next &&
- 			!common->next &&
-@@ -1506,7 +1506,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 			}
- 		}
- 		if (up_to_date) {
--			finish_up_to_date("Already up-to-date. Yeeah!");
-+			finish_up_to_date(_("Already up-to-date. Yeeah!"));
- 			goto done;
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 3398c61..05c7b71 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -276,7 +276,7 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 
+ 	hold_locked_index(lock_file, 1);
+ 	if (read_cache_preload(&opts->pathspec) < 0)
+-		return error(_("corrupt index file"));
++		return error(_("index file corrupt"));
+ 
+ 	if (opts->source_tree)
+ 		read_tree_some(opts->source_tree, &opts->pathspec);
+@@ -470,7 +470,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 
+ 	hold_locked_index(lock_file, 1);
+ 	if (read_cache_preload(NULL) < 0)
+-		return error(_("corrupt index file"));
++		return error(_("index file corrupt"));
+ 
+ 	resolve_undo_clear();
+ 	if (opts->force) {
+@@ -1138,7 +1138,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING('B', NULL, &opts.new_branch_force, N_("branch"),
+ 			   N_("create/reset and checkout a branch")),
+ 		OPT_BOOL('l', NULL, &opts.new_branch_log, N_("create reflog for new branch")),
+-		OPT_BOOL(0, "detach", &opts.force_detach, N_("detach the HEAD at named commit")),
++		OPT_BOOL(0, "detach", &opts.force_detach, N_("detach HEAD at named commit")),
+ 		OPT_SET_INT('t', "track",  &opts.track, N_("set upstream info for new branch"),
+ 			BRANCH_TRACK_EXPLICIT),
+ 		OPT_STRING(0, "orphan", &opts.new_orphan_branch, N_("new-branch"), N_("new unparented branch")),
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 858db38..0108819 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -378,7 +378,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 					  item->string,
+ 					  exts[ext].name);
+ 			if (remove_path(fname))
+-				warning(_("removing '%s' failed"), fname);
++				warning(_("failed to remove '%s'"), fname);
+ 			free(fname);
  		}
  	}
 -- 
