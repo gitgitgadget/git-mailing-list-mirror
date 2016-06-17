@@ -1,31 +1,33 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C1151FEAA
-	for <e@80x24.org>; Fri, 17 Jun 2016 20:31:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFFA61FEAA
+	for <e@80x24.org>; Fri, 17 Jun 2016 20:32:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755113AbcFQUb4 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 16:31:56 -0400
-Received: from kitenet.net ([66.228.36.95]:59132 "EHLO kitenet.net"
+	id S1755369AbcFQUcD (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 16:32:03 -0400
+Received: from kitenet.net ([66.228.36.95]:59142 "EHLO kitenet.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752024AbcFQUb4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2016 16:31:56 -0400
+	id S1755142AbcFQUcB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2016 16:32:01 -0400
 X-Question: 42
 Authentication-Results:	kitenet.net;
-	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=P4wx/8nx;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=SQc+D406;
 	dkim-atps=neutral
 DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-	t=1466195489; bh=sOB15VP0IzDLMMTOGYAQjBSLRaKRASX8Lat93JqE9L0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=P4wx/8nxrVTe55cr0KDcHaWEJLU0FHm5P+GG04Hh1pEDIp2EjIzwUOolMba12p7tE
-	 Pa0l/eYSniAjRqsJjFJ0wM15nNseA2uNYKM3EODUPyB4lKSgff7moRHRQXUwrtM5SU
-	 n+AnICnE71rcHE3ny0c0xHleMYN3lZ8pIwjwDCus=
+	t=1466195489; bh=YpH44+PHGRKQXiLvoiKcnt2MKQwqG+zgZkC5THHiW/4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=SQc+D406N8NaAkH0Qks4knJNUPQPTI2EVwEA90Dzo0n++AprlRJkecZnojjt0h2vh
+	 bXy4VAg5K4mTevZ96zJP5WAJgUV0yG/gBBhngqYCm52srFKGOdQxDaB/Cagvc7voXD
+	 97aq8cLmO7J+U64pmAy6R5NUSFljJ3IN0qkmP8As=
 From:	Joey Hess <joeyh@joeyh.name>
 To:	git@vger.kernel.org
 Cc:	Joey Hess <joeyh@joeyh.name>
-Subject: [PATCH v2 0/4] extend smudge/clean filters with direct file access
-Date:	Fri, 17 Jun 2016 16:31:17 -0400
-Message-Id: <1466195481-23209-1-git-send-email-joeyh@joeyh.name>
+Subject: [PATCH v2 4/4] warn on unusable smudgeToFile/cleanFromFile config
+Date:	Fri, 17 Jun 2016 16:31:21 -0400
+Message-Id: <1466195481-23209-5-git-send-email-joeyh@joeyh.name>
 X-Mailer: git-send-email 2.8.1
+In-Reply-To: <1466195481-23209-1-git-send-email-joeyh@joeyh.name>
+References: <1466195481-23209-1-git-send-email-joeyh@joeyh.name>
 X-Spam-Status: No, score=-93.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_PBL,RCVD_IN_RP_RNBL,
 	RCVD_IN_SORBS_DUL,RDNS_DYNAMIC,SPF_SOFTFAIL,URIBL_BLOCKED,USER_IN_WHITELIST
@@ -36,39 +38,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Reroll of this patch set with changes:
+Let the user know when they have a smudgeToFile/cleanFromFile config
+that cannot be used because the corresponding smudge/clean config
+is missing.
 
-* Renamed the new filter drivers for consistency with other configs.
-* Improved documentation with feedback from Junio and others.
-* Eliminated %p and instead append the filename to the commands
-  (separated by a space).
-* Fixed an FD leak and a space leak.
-* Only use smudgeToFile with regular files, not symlinks.
-* After running the smudgeToFile command, double-check that the
-  expected file is present, in case the command was buggy and deleted it.
-* Added a warning message when the new filter commands are configured
-  but the old ones are not, so that the user knows it's refusing to use
-  their configuration.
+The warning is only displayed a maximum of once per git invocation,
+and only when doing an operation that would use the filter.
 
-There's been good and helpful documentation and interface review,
-but some more code review would be good! Also, git-annex has a
-improved-smudge-filters branch now that demonstrates this interface.
+Signed-off-by: Joey Hess <joeyh@joeyh.name>
+---
+ convert.c | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
-Joey Hess (4):
-  add smudgeToFile and cleanFromFile filter configs
-  use cleanFromFile in git add
-  use smudgeToFile in git checkout etc
-  warn on unusable smudgeToFile/cleanFromFile config
-
- Documentation/config.txt        |  18 +++++-
- Documentation/gitattributes.txt |  37 ++++++++++++
- convert.c                       | 126 +++++++++++++++++++++++++++++++++++-----
- convert.h                       |  10 ++++
- entry.c                         |  37 +++++++++---
- sha1_file.c                     |  42 ++++++++++++--
- t/t0021-conversion.sh           |  64 ++++++++++++++++++++
- 7 files changed, 304 insertions(+), 30 deletions(-)
-
+diff --git a/convert.c b/convert.c
+index bf63ba0..84f6bc5 100644
+--- a/convert.c
++++ b/convert.c
+@@ -847,32 +847,50 @@ int would_convert_to_git_filter_fd(const char *path)
+ 	return apply_filter(path, NULL, NULL, 0, -1, NULL, ca.drv->clean);
+ }
+ 
++static int can_filter_file(const char *filefilter, const char *filefiltername,
++			   const char *stdiofilter, const char *stdiofiltername,
++			   const struct conv_attrs *ca,
++			   int *warncount)
++{
++	if (! filefilter)
++		return 0;
++
++	if (stdiofilter)
++		return 1;
++
++	if (*warncount == 0)
++		warning("Not running your configured filter.%s.%s command, because filter.%s.%s is not configured",
++			ca->drv->name, filefiltername,
++			ca->drv->name, stdiofiltername);
++		*warncount=*warncount+1;
++	
++	return 0;
++}
++
+ int can_clean_from_file(const char *path)
+ {
+ 	struct conv_attrs ca;
++	static int warncount = 0;
+ 
+ 	convert_attrs(&ca, path);
+ 	if (!ca.drv)
+ 		return 0;
+ 
+-	/* Only use the cleanFromFile filter when the clean filter is also
+-	 * configured.
+-	 */
+-	return (ca.drv->clean_from_file && ca.drv->clean);
++	return can_filter_file(ca.drv->clean_from_file, "cleanFromFile",
++			       ca.drv->clean, "clean", &ca, &warncount);
+ }
+ 
+ int can_smudge_to_file(const char *path)
+ {
+ 	struct conv_attrs ca;
++	static int warncount = 0;
+ 
+ 	convert_attrs(&ca, path);
+ 	if (!ca.drv)
+ 		return 0;
+ 
+-	/* Only use the smudgeToFile filter when the smudge filter is also
+-	 * configured.
+-	 */
+-	return (ca.drv->smudge_to_file && ca.drv->smudge);
++	return can_filter_file(ca.drv->smudge_to_file, "smudgeToFile",
++			       ca.drv->smudge, "smudge", &ca, &warncount);
+ }
+ 
+ const char *get_convert_attr_ascii(const char *path)
 -- 
 2.8.1
 
