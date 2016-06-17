@@ -2,76 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.2 required=5.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-7.0 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF00720179
-	for <e@80x24.org>; Fri, 17 Jun 2016 16:19:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79FE820179
+	for <e@80x24.org>; Fri, 17 Jun 2016 16:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755347AbcFQQS6 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 12:18:58 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36337 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752190AbcFQQS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2016 12:18:57 -0400
-Received: by mail-wm0-f65.google.com with SMTP id m124so854964wme.3
-        for <git@vger.kernel.org>; Fri, 17 Jun 2016 09:18:57 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DtEklnHFyCrjDEUxojY8acbIN+ZZm4Zx+LMcqxSBAT8=;
-        b=fyd6b+LTqNsdcf+6yd34ehKPEpm5hXFs9/2UqQqaXldGtJg6eCqWP+eGk6uG7nAPz4
-         0PDuU3UfwTZEILBx4i+ubK7QLqpwFBiQiewGrInjPttrtW5Q8UsiTvxV0bYSpYfYoWZ0
-         LcbMpP+LfOUXfu10BQlMp4yV4doC0yyykSsYZKuJvzD7MpxzKekPw4AAxm69Y3qHbNyI
-         CSyTf+7OytWPh7z4hdGli6tDvXFwesnlgOO4pr2V38GD1cK1+wVdoAh9Eut/dtytIR62
-         yjyvhAOjfvHznZFrQhtocl5tNthZ1KmuJOKbdMqR37aa5n16hO4Ieb8tHLQrTFXdDSC7
-         BsiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DtEklnHFyCrjDEUxojY8acbIN+ZZm4Zx+LMcqxSBAT8=;
-        b=nDrcRdzmboUtor443QuehqQB9egJFTFiD54CGj6A8zpUgBavfS9cCOTjCDC+gAwQbp
-         2QU7BTPthCE/pB41lH0X7fEm5CrYXSlNNwUWwjUrylOEmTFJVr0nndxo3n8ZrbwaJ5Cj
-         9SQDosTN/y9Cxb/fq26826oI+x2pvcQJKRxGqSTeefegklx2oeurQqGFdq4SWks6fgi1
-         vNCe0qprQklHgoOl80a5ncmX4Q5XsiRKDji1DoUYzwMLWb3yBaeVUEXJHW9uCDle50IR
-         GUpis42bMrUCghS2UjlImqlxXMH2gqTvpXZ954qol22XXqixwS7gsL15KMvmtjkXktg7
-         omzA==
-X-Gm-Message-State: ALyK8tJH91sOcCraKmk5z7hijVH8vkHRikL80zcfonpYYxau6y+gBBhd9DmoToLicIdV8iV4kdkw0llHpkYitQ==
-X-Received: by 10.195.17.166 with SMTP id gf6mr3129500wjd.124.1466180336620;
- Fri, 17 Jun 2016 09:18:56 -0700 (PDT)
+	id S1755458AbcFQQkF (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 12:40:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63281 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751511AbcFQQkB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2016 12:40:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 052102468B;
+	Fri, 17 Jun 2016 12:40:00 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PwsYtilO3FYYlpWO60pkVKkbp9E=; b=Gw2LRe
+	YBxjPo0VgoaHhLU7SkUPinBUQqFIPBhC6vzwq68TEFShoupgnkzde090vbJNVqmE
+	sNW7nLhr9HIevhSg3Iqgc8RaKMElP61h08dtOjx64FO7j27PMt9sFSbtwW5z6h66
+	CFXnYQWPDdnrlnj0rnnvXytIEpElT7nDg5jfY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dpBoy6Get9HVWK3RXPHS0HTNVaxukjnC
+	OvH2B8V/wYGJMLty7GxeaAdLHQUWNonjCbv0gG5v8E4ET2vDB92SDJ9kSIPA1H9r
+	CE+1R/UG7mzLXsw5dlRlnYJ2HlYocPnnvd70iCsaNVQP+x/GaJTDMZdMLF/WCkht
+	70AallzJaeE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F17DE2468A;
+	Fri, 17 Jun 2016 12:39:59 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7576124688;
+	Fri, 17 Jun 2016 12:39:59 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Michael J Gruber <git@drmicha.warpmail.net>
+Cc:	Jeff King <peff@peff.net>, ZhenTian <loooseleaves@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: I lost my commit signature
+References: <CAGrdoOrrpc7OiU74fa-qpjLNxOtm4upAOAfWPG6VbWUjyE0C2Q@mail.gmail.com>
+	<20160614075824.GB12563@sigill.intra.peff.net>
+	<CAGrdoOp=dDkiTr+Sb-uZWx66b4hoZCYAiRjfgYqoE8H4-kXJvg@mail.gmail.com>
+	<20160614081854.GA13457@sigill.intra.peff.net>
+	<CAGrdoOqfcacG488u-MA7UiapgvJEGNX2QaRq8BMmycEWg-BGWg@mail.gmail.com>
+	<20160614094121.GA13971@sigill.intra.peff.net>
+	<e129da8e-4e1d-c535-ca62-d2a4c2e23799@drmicha.warpmail.net>
+	<CAGrdoOoxphU0tRjV22yduXrhmOSyCc_zVnhuO9fFA6UPRd9WiA@mail.gmail.com>
+	<20160615043450.GA3975@sigill.intra.peff.net>
+	<be771366-00a7-6c20-2623-5fa54b8e19b7@drmicha.warpmail.net>
+	<20160616073410.GA651@sigill.intra.peff.net>
+	<xmqqr3bx5ahp.fsf@gitster.mtv.corp.google.com>
+	<171543e4-a343-c6d2-aa9a-2098db5b42ec@drmicha.warpmail.net>
+Date:	Fri, 17 Jun 2016 09:39:57 -0700
+In-Reply-To: <171543e4-a343-c6d2-aa9a-2098db5b42ec@drmicha.warpmail.net>
+	(Michael J. Gruber's message of "Fri, 17 Jun 2016 10:18:04 +0200")
+Message-ID: <xmqq1t3v3h2a.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.194.25.197 with HTTP; Fri, 17 Jun 2016 09:18:56 -0700 (PDT)
-In-Reply-To: <1463694357-6503-17-git-send-email-dturner@twopensource.com>
-References: <1463694357-6503-1-git-send-email-dturner@twopensource.com> <1463694357-6503-17-git-send-email-dturner@twopensource.com>
-From:	Christian Couder <christian.couder@gmail.com>
-Date:	Fri, 17 Jun 2016 18:18:56 +0200
-Message-ID: <CAP8UFD0qW3Xja2F3CyXzeA+-mVCAQ40iGcx6+xuvQnA2BBa3tA@mail.gmail.com>
-Subject: Re: [PATCH v12 16/20] index-helper: don't run if already running
-To:	David Turner <dturner@twopensource.com>
-Cc:	git <git@vger.kernel.org>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 21A4D26E-34AA-11E6-B91D-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, May 19, 2016 at 11:45 PM, David Turner <dturner@twopensource.com> wrote:
->
-> diff --git a/index-helper.c b/index-helper.c
-> index 4a171e6..ddc641a 100644
-> --- a/index-helper.c
-> +++ b/index-helper.c
-> @@ -438,6 +438,13 @@ int main(int argc, char **argv)
->                 return 0;
->         }
->
-> +       /* check that no other copy is running */
-> +       fd = unix_stream_connect(git_path("index-helper.sock"));
-> +       if (fd > 0)
-> +               die(_("Already running"));
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-I wonder is we should also die if fd == 0.
+> Junio C Hamano venit, vidit, dixit 16.06.2016 19:06:
+>
+>> I am not so imaginative, either. One remotely plausible use case may
+>> be a project that has two classes of paths (let's call these classes
+>> sensitive and others), and requires its participants to sign commits
+>> that touch sensitive paths.  The user needs something finter grained
+>> than per-project commit.gpgSign there.
+>>  ...
+>> So, I dunno, either.
+>
+> While I follow both of your lines of argumentation, I tend to claim that
+> they imply: there is no reason to blindly sign any commit... We should
+> dump that config :)
+
+... no reason to blindly sign any commit IN SUCH A PROJECT that
+wants you to selectively sign commits.
+
+That does not lead to "we should dump that config" that all, does
+it?
