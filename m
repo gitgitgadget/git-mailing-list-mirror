@@ -2,46 +2,46 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.8 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.9 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24A001F744
+	by dcvr.yhbt.net (Postfix) with ESMTP id 357C120189
 	for <e@80x24.org>; Fri, 17 Jun 2016 07:46:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755340AbcFQHqT (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 03:46:19 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:60741 "EHLO
+	id S1755440AbcFQHqV (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 03:46:21 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:49814 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754013AbcFQHqQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2016 03:46:16 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 7F72720A87;
-	Fri, 17 Jun 2016 03:46:15 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1754013AbcFQHqU (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2016 03:46:20 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 5363D20A76;
+	Fri, 17 Jun 2016 03:46:19 -0400 (EDT)
 Received: from frontend2 ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 17 Jun 2016 03:46:15 -0400
+  by compute4.internal (MEProxy); Fri, 17 Jun 2016 03:46:19 -0400
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
 	date:from:in-reply-to:message-id:references:subject:to
-	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=xBzYKCwL1+8fEUhvRMczDwRyayc
-	=; b=g9PuSujlKAI6Hy7yA+0BgHiXDCVMsyyr+h/dQsaG9GXjs5e1a1xoUxnZUdi
-	VrkTRf+SwBcNdZ/em0ggxOIxsCa+9xmpaUbKrgyJKaHODOLytCI2Ou2Ef4dVgwRN
-	W7DFCDwqWuzvU/nEovzuRr3B3gpA3TOiTaRn4xhxwfiCL0mI=
+	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=wlMRi0z9Zj6RBVcHon798w9GezE
+	=; b=YA6jauvRIqjQIoi/VH1lKSKKf72Ip8FHBzDB7yypwrMO5Co/AP5querJVgT
+	IhptFUeFQeU0gYrm2DqV94UfIXaRck+uORq7mIJj01NuV2gR+UtfsOSuMRjI9IqE
+	j8wzT7YixVnksJN3/08gVp7dxcIXCjbL/qZ7o5Rdffgxld/4=
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=xBzY
-	KCwL1+8fEUhvRMczDwRyayc=; b=pUT2O8YY1d91MrRmtPFqW+pG9QNV2//Bb76O
-	gAmLies681Jfc3OkcwbHlxXyQiEM2ZWF1Qir2Dz248kKjnIn3dEEQnbPnu2Rbtk9
-	c6oqbx6lT4Yv+q+eklgymW3lSb2MDwklvo3qL6GsTqZkGYto/upfEYOJALztmRqZ
-	bIUdRYo=
-X-Sasl-enc: mTCo/xvkIvYIC32w3hKE0PzYEyrEjQJ1VCQFiztnmylX 1466149575
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=wlMR
+	i0z9Zj6RBVcHon798w9GezE=; b=W5vML+12M1z41RS5I5e4f0S+WJvbjSGDlruk
+	0k7bHAxp1A2+9Sk9cSToOmsL3bdMEXo2rsAMbPAksi7xwhTUnuFhF35wx9MvtBJK
+	FQsY9rWMwcC/dbIA4kwY40DVWCw8AZh9yk45ZwXN7+8g4uq4pnqVV6zsM6g4cdKB
+	4dwU2us=
+X-Sasl-enc: kAtmiA5PIjMBBiMvOOmLUTNKa5VyouZvXG6ap+zVUeRI 1466149578
 Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 06C06CC021;
-	Fri, 17 Jun 2016 03:46:14 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id D77A0CCD34;
+	Fri, 17 Jun 2016 03:46:18 -0400 (EDT)
 From:	Michael J Gruber <git@drmicha.warpmail.net>
 To:	git@vger.kernel.org
-Subject: [PATCH 1/5] Documentation/technical: describe signature formats
-Date:	Fri, 17 Jun 2016 09:46:08 +0200
-Message-Id: <e1291ccb031f5da1935d7d0b8db57fe6ea951b2b.1466148698.git.git@drmicha.warpmail.net>
+Subject: [PATCH 4/5] Documentation/technical: signed merge tag format
+Date:	Fri, 17 Jun 2016 09:46:11 +0200
+Message-Id: <70e8fcb0e9cb73976b643aad1f72f1f0f41c553b.1466148698.git.git@drmicha.warpmail.net>
 X-Mailer: git-send-email 2.9.0.382.g87fd384
 In-Reply-To: <cover.1466148698.git.git@drmicha.warpmail.net>
 References: <cover.1466148698.git.git@drmicha.warpmail.net>
@@ -50,52 +50,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-We use different types of signature formats in different places.
-Set up the infrastructure and overview to describe them systematically
-in our technical documentation.
-
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- Documentation/Makefile                       |  1 +
- Documentation/technical/signature-format.txt | 17 +++++++++++++++++
- 2 files changed, 18 insertions(+)
- create mode 100644 Documentation/technical/signature-format.txt
+ Documentation/technical/signature-format.txt | 74 ++++++++++++++++++++++++++++
+ 1 file changed, 74 insertions(+)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 35c1385..b43d66e 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -76,6 +76,7 @@ TECH_DOCS += technical/protocol-common
- TECH_DOCS += technical/racy-git
- TECH_DOCS += technical/send-pack-pipeline
- TECH_DOCS += technical/shallow
-+TECH_DOCS += technical/signature-format
- TECH_DOCS += technical/trivial-merge
- SP_ARTICLES += $(TECH_DOCS)
- SP_ARTICLES += technical/api-index
 diff --git a/Documentation/technical/signature-format.txt b/Documentation/technical/signature-format.txt
-new file mode 100644
-index 0000000..fda4fb8
---- /dev/null
+index 8ae1dc3..7afd403 100644
+--- a/Documentation/technical/signature-format.txt
 +++ b/Documentation/technical/signature-format.txt
-@@ -0,0 +1,17 @@
-+Git signature format
-+====================
+@@ -110,3 +110,77 @@ signed commit
+ 
+ signed commit message body
+ ----
 +
-+== Overview
++== Mergetag signatures
 +
-+Git uses cryptographic signatures in various places, currently objects (tags,
-+commits, mergetags) and transactions (pushes). In every case, the command which
-+is about to create an object or transaction determines a payload from that,
-+calls gpg to obtain a detached signature for the payload (`gpg -bsa`) and
-+embeds the signature into the object or transaction.
++- created by: `git merge` on signed tag
++- payload/embedding: the whole signed tag object is embedded into
++  the (merge) commit object as header entry `mergetag`
++- example: merge of the signed tag `signedtag` as above
 +
-+Signatures always begin with `-----BEGIN PGP SIGNATURE-----`
-+and end with `-----END PGP SIGNATURE-----`, unless gpg is told to
-+produce RFC1991 signatures which use `MESSAGE` instead of `SIGNATURE`.
++----
++tree c7b1cff039a93f3600a1d18b82d26688668c7dea
++parent c33429be94b5f2d3ee9b0adad223f877f174b05d
++parent 04b871796dc0420f8e7561a895b52484b701d51a
++author A U Thor <author@example.com> 1465982009 +0000
++committer C O Mitter <committer@example.com> 1465982009 +0000
++mergetag object 04b871796dc0420f8e7561a895b52484b701d51a
++ type commit
++ tag signedtag
++ tagger C O Mitter <committer@example.com> 1465981006 +0000
++ 
++ signed tag
++ 
++ signed tag message body
++ -----BEGIN PGP SIGNATURE-----
++ Version: GnuPG v1
++ 
++ iQEcBAABAgAGBQJXYRhOAAoJEGEJLoW3InGJklkIAIcnhL7RwEb/+QeX9enkXhxn
++ rxfdqrvWd1K80sl2TOt8Bg/NYwrUBw/RWJ+sg/hhHp4WtvE1HDGHlkEz3y11Lkuh
++ 8tSxS3qKTxXUGozyPGuE90sJfExhZlW4knIQ1wt/yWqM+33E9pN4hzPqLwyrdods
++ q8FWEqPPUbSJXoMbRPw04S5jrLtZSsUWbRYjmJCHzlhSfFWW4eFd37uquIaLUBS0
++ rkC3Jrx7420jkIpgFcTI2s60uhSQLzgcCwdA2ukSYIRnjg/zDkj8+3h/GaROJ72x
++ lZyI6HWixKJkWw8lE9aAOD9TmTW9sFJwcVAzmAuFX2kUreDUKMZduGcoRYGpD7E=
++ =jpXa
++ -----END PGP SIGNATURE-----
 +
-+The signed payload and the way the signature is embedded depends
-+on the type of the object resp. transaction.
++Merge tag 'signedtag' into downstream
++
++signed tag
++
++signed tag message body
++
++# gpg: Signature made Wed Jun 15 08:56:46 2016 UTC using RSA key ID B7227189
++# gpg: Good signature from "Eris Discordia <discord@example.net>"
++# gpg: WARNING: This key is not certified with a trusted signature!
++# gpg:          There is no indication that the signature belongs to the owner.
++# Primary key fingerprint: D4BE 2231 1AD3 131E 5EDA  29A4 6109 2E85 B722 7189
++----
++
++- verify with: verification is embedded in merge commit message by default,
++  alternatively with `git show --show-signature`:
++
++----
++commit 9863f0c76ff78712b6800e199a46aa56afbcbd49
++merged tag 'signedtag'
++gpg: Signature made Wed Jun 15 10:56:46 2016 CEST using RSA key ID B7227189
++gpg: Good signature from "Eris Discordia <discord@example.net>"
++gpg: WARNING: This key is not certified with a trusted signature!
++gpg:          There is no indication that the signature belongs to the owner.
++Primary key fingerprint: D4BE 2231 1AD3 131E 5EDA  29A4 6109 2E85 B722 7189
++Merge: c33429b 04b8717
++Author: A U Thor <author@example.com>
++Date:   Wed Jun 15 09:13:29 2016 +0000
++
++    Merge tag 'signedtag' into downstream
++    
++    signed tag
++    
++    signed tag message body
++    
++    # gpg: Signature made Wed Jun 15 08:56:46 2016 UTC using RSA key ID B7227189
++    # gpg: Good signature from "Eris Discordia <discord@example.net>"
++    # gpg: WARNING: This key is not certified with a trusted signature!
++    # gpg:          There is no indication that the signature belongs to the owner.
++    # Primary key fingerprint: D4BE 2231 1AD3 131E 5EDA  29A4 6109 2E85 B722 7189
++----
 -- 
 2.9.0.382.g87fd384
 
