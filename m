@@ -1,113 +1,157 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E2821FEAA
-	for <e@80x24.org>; Fri, 17 Jun 2016 21:54:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 261831FEAA
+	for <e@80x24.org>; Fri, 17 Jun 2016 21:54:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755571AbcFQVyc (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 17:54:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51798 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752644AbcFQVyb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2016 17:54:31 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D05A425EE6;
-	Fri, 17 Jun 2016 17:54:29 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=X88ryFQTYVa2
-	/WJUhGiuxT1/Fac=; b=ClB/qV+Ju8pvZmRZiKA8z9H7ph2qzFP2zLP7JM9wc9A2
-	umxmEuAkFzZLLkpYiIDM/VbxcbY/6PPtMetLiuL9WBtdOYeR9Ss23gbrWKcQ/PRR
-	5IvlBiTdb5XtQ5K073+KdYiO3R/37RSYbLSdU/ShluUNza66BLyltGQUVRLB3Bs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=NnYxGA
-	3ptVvZ9dyYqBU1RRq8KN68f77u/gsIUsny8CgY9s4vyVgXlSu/D/X4G14idWsgOY
-	aZGovIK4GNvMToPFuhgVFDx4UrCfko9AQE4lEYgo3rSGndXAvn7WDifgouIaMxjB
-	IYykZhmABqTdxT5kx2mf0G1dKGriWcYBsC5n8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C5AFD25EE5;
-	Fri, 17 Jun 2016 17:54:29 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4A7DF25EE3;
-	Fri, 17 Jun 2016 17:54:29 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH v6 01/11] grep: allow -F -i combination
-References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
-	<1454724190-14063-1-git-send-email-pclouds@gmail.com>
-	<1454724190-14063-2-git-send-email-pclouds@gmail.com>
-Date:	Fri, 17 Jun 2016 14:54:27 -0700
-In-Reply-To: <1454724190-14063-2-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 6 Feb
- 2016 09:03:00 +0700")
-Message-ID: <xmqqk2hnzdkc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755669AbcFQVyl (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 17:54:41 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:38371 "EHLO sapo.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752780AbcFQVyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2016 17:54:39 -0400
+Received: (qmail 1360 invoked from network); 17 Jun 2016 21:54:36 -0000
+Received: (qmail 30380 invoked from network); 17 Jun 2016 21:54:36 -0000
+Received: from unknown (HELO linux-omuo.lan) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
+          for <git@vger.kernel.org>; 17 Jun 2016 21:54:36 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+From:	Vasco Almeida <vascomalmeida@sapo.pt>
+To:	git@vger.kernel.org
+Cc:	Vasco Almeida <vascomalmeida@sapo.pt>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v5 34/38] i18n: init-db: join message pieces
+Date:	Fri, 17 Jun 2016 21:54:11 +0000
+Message-Id: <1466200455-16951-5-git-send-email-vascomalmeida@sapo.pt>
+X-Mailer: git-send-email 2.6.6
+In-Reply-To: <1466194887-18236-1-git-send-email-vascomalmeida@sapo.pt>
+References: <1466194887-18236-1-git-send-email-vascomalmeida@sapo.pt>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 10F96D9A-34D6-11E6-BCB9-89D312518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+Join message displayed during repository initialization in one entire
+sentence.  That would improve translations since it's easier translate
+an entire sentence than translating each piece.
 
-> -F means "no regex", not "case sensitive" so it should not override -i
+Update Icelandic translation to reflect the changes.  The Icelandic
+translation of these messages is used with test
+t0204-gettext-reencode-sanity.sh and not updating the translation would
+fail the test.
 
-That logic is flawed, isn't it?
+Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+---
+ builtin/init-db.c | 17 ++++++++++-------
+ po/is.po          | 46 ++++++++++++++++++++++++++++------------------
+ 2 files changed, 38 insertions(+), 25 deletions(-)
 
-"-F" means "no regex", so it should not touch opt.regflags at all.
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index b2d8d40..3a45f0b 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -397,13 +397,16 @@ int init_db(const char *template_dir, unsigned int flags)
+ 	if (!(flags & INIT_DB_QUIET)) {
+ 		int len = strlen(git_dir);
+ 
+-		/* TRANSLATORS: The first '%s' is either "Reinitialized
+-		   existing" or "Initialized empty", the second " shared" or
+-		   "", and the last '%s%s' is the verbatim directory name. */
+-		printf(_("%s%s Git repository in %s%s\n"),
+-		       reinit ? _("Reinitialized existing") : _("Initialized empty"),
+-		       get_shared_repository() ? _(" shared") : "",
+-		       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
++		if (reinit)
++			printf(get_shared_repository()
++			       ? _("Reinitialized existing shared Git repository in %s%s\n")
++			       : _("Reinitialized existing Git repository in %s%s\n"),
++			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
++		else
++			printf(get_shared_repository()
++			       ? _("Initialized empty shared Git repository in %s%s\n")
++			       : _("Initialized empty Git repository in %s%s\n"),
++			       git_dir, len && git_dir[len-1] != '/' ? "/" : "");
+ 	}
+ 
+ 	return 0;
+diff --git a/po/is.po b/po/is.po
+index 8692a8b..b8b34fd 100644
+--- a/po/is.po
++++ b/po/is.po
+@@ -7,14 +7,15 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: Git\n"
+ "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
+-"POT-Creation-Date: 2010-09-20 14:44+0000\n"
+-"PO-Revision-Date: 2010-06-05 19:06 +0000\n"
+-"Last-Translator: Ævar Arnfjörð Bjarmason <avarab@gmail.com>\n"
++"POT-Creation-Date: 2016-06-17 18:55+0000\n"
++"PO-Revision-Date: 2016-06-17 19:17+0000\n"
++"Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
+ "Language-Team: Git Mailing List <git@vger.kernel.org>\n"
+ "Language: is\n"
+ "MIME-Version: 1.0\n"
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
++"X-Generator: Poedit 1.8.5\n"
+ 
+ #. TRANSLATORS: This is a test. You don't need to translate it.
+ #: t/t0200/test.c:5
+@@ -72,22 +73,31 @@ msgstr "TILRAUN: Perl tilraunastrengur"
+ msgid "TEST: A Perl test variable %s"
+ msgstr "TILRAUN: Perl tilraunastrengur með breytunni %s"
+ 
+-#. TRANSLATORS: The first '%s' is either "Reinitialized
+-#. existing" or "Initialized empty", the second " shared" or
+-#. "", and the last '%s%s' is the verbatim directory name.
+-#: builtin/init-db.c:355
++#: builtin/init-db.c:402
+ #, c-format
+-msgid "%s%s Git repository in %s%s\n"
+-msgstr "%s%s Git lind í %s%s\n"
++msgid "Reinitialized existing shared Git repository in %s%s\n"
++msgstr "Endurgerði Git lind í %s%s\n"
+ 
+-#: builtin/init-db.c:356
+-msgid "Reinitialized existing"
+-msgstr "Endurgerði"
++#: builtin/init-db.c:403
++#, c-format
++msgid "Reinitialized existing Git repository in %s%s\n"
++msgstr "Endurgerði Git lind í %s%s\n"
++
++#: builtin/init-db.c:407
++#, c-format
++msgid "Initialized empty shared Git repository in %s%s\n"
++msgstr "Bjó til tóma sameiginlega Git lind í %s%s\n"
++
++#: builtin/init-db.c:408
++#, c-format
++msgid "Initialized empty Git repository in %s%s\n"
++msgstr "Bjó til tóma Git lind í %s%s\n"
++
++#~ msgid "Reinitialized existing"
++#~ msgstr "Endurgerði"
+ 
+-#: builtin/init-db.c:356
+-msgid "Initialized empty"
+-msgstr "Bjó til tóma"
++#~ msgid "Initialized empty"
++#~ msgstr "Bjó til tóma"
+ 
+-#: builtin/init-db.c:357
+-msgid " shared"
+-msgstr " sameiginlega"
++#~ msgid " shared"
++#~ msgstr " sameiginlega"
+-- 
+2.6.6
 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  builtin/grep.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 5526fd7..4be0df5 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -809,7 +809,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->  
->  	if (!opt.pattern_list)
->  		die(_("no pattern given."));
-> -	if (!opt.fixed && opt.ignore_case)
-> +	if (opt.ignore_case)
->  		opt.regflags |= REG_ICASE;
->  
->  	compile_grep_patterns(&opt);
-
-In grep.c, we do this:
-
-static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
-{
-	int err;
-
-	p->word_regexp = opt->word_regexp;
-	p->ignore_case = opt->ignore_case;
-
-	if (opt->fixed || is_fixed(p->pattern, p->patternlen))
-		p->fixed = 1;
-	else
-		p->fixed = 0;
-
-	if (p->fixed) {
-		if (opt->regflags & REG_ICASE || p->ignore_case)
-			p->kws = kwsalloc(tolower_trans_tbl);
-		else
-
-It is possible that your later changes _depend_ on having REG_ICASE
-set in opt->regflags, but if that is why this commit is needed, then
-you are going in a wrong direction.
-
-I liked the overall objective of making "-i" work better on
-non-ASCII, and I wanted to like this whole series, but at least this
-change needs to be dropped (and the remainder of the series fixed if
-they depend on this change).
-
-Thanks.
