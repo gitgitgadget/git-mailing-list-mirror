@@ -6,110 +6,110 @@ X-Spam-Status: No, score=-7.0 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 559901F744
-	for <e@80x24.org>; Fri, 17 Jun 2016 07:46:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B3431F744
+	for <e@80x24.org>; Fri, 17 Jun 2016 08:18:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755404AbcFQHqc (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 03:46:32 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:42772 "EHLO
+	id S1755315AbcFQISK (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 04:18:10 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:53456 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754006AbcFQHqR (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2016 03:46:17 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id DF4CF20A87;
-	Fri, 17 Jun 2016 03:46:16 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute6.internal (MEProxy); Fri, 17 Jun 2016 03:46:16 -0400
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-	date:from:in-reply-to:message-id:references:subject:to
-	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=JgfkFUegOQ2uQ/IG/SPgqeXpkv0
-	=; b=HEhaQFfwtrbR0ZOGNPysgWT5WVQXG80rk+4dfDpfMh1cjy4cCjuFVE9zFso
-	gCLMCGm+I14dstF9yo78goa8lmBDK2n8k1VVI38Aghhzy9AfbNGaboQ9y19l2Jw+
-	qUqXPiikPp/AEJpZXFx/D6avbqkySmKtBBaqMHrbuHCjw1XU=
+	by vger.kernel.org with ESMTP id S1753942AbcFQISH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2016 04:18:07 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 2356C20819;
+	Fri, 17 Jun 2016 04:18:06 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 17 Jun 2016 04:18:06 -0400
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=uiZleATJGIlsO1K6oRY0DGiuHZ0=; b=m8LPvY
+	RmqowcYybJhqiPAhN4QRGlm/dgth8gVXAS168kU0LS4T2buNgpdIfXa+NUdbFbIV
+	PlRse5XPWknnK9ISrEQDOXmxZzdHSillaXI66ZBJoonN0y7d2Fq3r0nmxft3fRYT
+	PPNTnmL4O5SUie7VeIxrfR+nb27kGZyNn0jFU=
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=Jgfk
-	FUegOQ2uQ/IG/SPgqeXpkv0=; b=uDvCsttH4whulpaN1r3O6Z/zZ9CWXxxkgEZI
-	zzlA3UiwnsDNXs8fXsL5AycvjmXAKi+Fpm4c97wv/opmORQoCNmo1SZTOzdHUnU3
-	ksEZ85Db5vR0pMZgw50NzCosfdYzq9atI6TMJ9jFmnOKz9BN7vWTFGOrdSJavKUI
-	kwXwkTA=
-X-Sasl-enc: /NDfOe6sjkI0W7onqVms5FOblnYM/aDheMN5AiaBtXQD 1466149576
-Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 5AFB0F29F3;
-	Fri, 17 Jun 2016 03:46:16 -0400 (EDT)
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=uiZleATJGIlsO1K
+	6oRY0DGiuHZ0=; b=GuHprRCUvV0/MfDyPJtBfaB15PMATsNI3cce95Tq8jaV4vE
+	z+54l0Ao8Jo8mVaMHAUiYbml0AuoTSxegxLdqMhjNbldI3aqPTyDYI8Rn5AtV7+o
+	LonoW1ZjmLfBfFyygXaoGVRoeNEqvs/EnBkh67egqU3OHTV0DrI6NdESadO8=
+X-Sasl-enc: 1zEXTY7uIOhpYaqSFzp8GMVRiWLGfIXs76oSObAZpaZh 1466151485
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 67689CCDA6;
+	Fri, 17 Jun 2016 04:18:05 -0400 (EDT)
+Subject: Re: I lost my commit signature
+To:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <CAGrdoOrrpc7OiU74fa-qpjLNxOtm4upAOAfWPG6VbWUjyE0C2Q@mail.gmail.com>
+ <20160614075824.GB12563@sigill.intra.peff.net>
+ <CAGrdoOp=dDkiTr+Sb-uZWx66b4hoZCYAiRjfgYqoE8H4-kXJvg@mail.gmail.com>
+ <20160614081854.GA13457@sigill.intra.peff.net>
+ <CAGrdoOqfcacG488u-MA7UiapgvJEGNX2QaRq8BMmycEWg-BGWg@mail.gmail.com>
+ <20160614094121.GA13971@sigill.intra.peff.net>
+ <e129da8e-4e1d-c535-ca62-d2a4c2e23799@drmicha.warpmail.net>
+ <CAGrdoOoxphU0tRjV22yduXrhmOSyCc_zVnhuO9fFA6UPRd9WiA@mail.gmail.com>
+ <20160615043450.GA3975@sigill.intra.peff.net>
+ <be771366-00a7-6c20-2623-5fa54b8e19b7@drmicha.warpmail.net>
+ <20160616073410.GA651@sigill.intra.peff.net>
+ <xmqqr3bx5ahp.fsf@gitster.mtv.corp.google.com>
+Cc:	ZhenTian <loooseleaves@gmail.com>, git@vger.kernel.org
 From:	Michael J Gruber <git@drmicha.warpmail.net>
-To:	git@vger.kernel.org
-Subject: [PATCH 2/5] Documentation/technical: signed tag format
-Date:	Fri, 17 Jun 2016 09:46:09 +0200
-Message-Id: <353d5207e2e080b50a0262be8d29353c42a51097.1466148698.git.git@drmicha.warpmail.net>
-X-Mailer: git-send-email 2.9.0.382.g87fd384
-In-Reply-To: <cover.1466148698.git.git@drmicha.warpmail.net>
-References: <cover.1466148698.git.git@drmicha.warpmail.net>
+Message-ID: <171543e4-a343-c6d2-aa9a-2098db5b42ec@drmicha.warpmail.net>
+Date:	Fri, 17 Jun 2016 10:18:04 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
+MIME-Version: 1.0
+In-Reply-To: <xmqqr3bx5ahp.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- Documentation/technical/signature-format.txt | 47 ++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+Junio C Hamano venit, vidit, dixit 16.06.2016 19:06:
+> Jeff King <peff@peff.net> writes:
+> 
+>> But why does somebody run "commit -S" for a single commit, but not all
+>> the time? Is it because that commit is special? Or is that particular
+>> moment special? One implies that it's important for the signature to be
+>> retained during a rebase, and one does not.
+>>
+>> So I dunno. I would not be opposed to such a feature, but I'm having
+>> trouble figuring out why it would be useful (though for the most part, I
+>> do not see why anything but per-project commit.gpgSign config is
+>> particularly useful. Maybe I just lack imagination).
+> 
+> I am not so imaginative, either. One remotely plausible use case may
+> be a project that has two classes of paths (let's call these classes
+> sensitive and others), and requires its participants to sign commits
+> that touch sensitive paths.  The user needs something finter grained
+> than per-project commit.gpgSign there.
+> 
+> But even in such a case, the fact that an original commit is with a
+> signature should not be a good indication that the rewritten version
+> of that commit in the new history still touches the sensitive paths
+> that required the original to be signed (i.e. the history the user
+> is rebasing onto may already have the necessary changes to these
+> paths).
+> 
+> So, I dunno, either.
+> 
 
-diff --git a/Documentation/technical/signature-format.txt b/Documentation/technical/signature-format.txt
-index fda4fb8..833afff 100644
---- a/Documentation/technical/signature-format.txt
-+++ b/Documentation/technical/signature-format.txt
-@@ -15,3 +15,50 @@ produce RFC1991 signatures which use `MESSAGE` instead of `SIGNATURE`.
- 
- The signed payload and the way the signature is embedded depends
- on the type of the object resp. transaction.
-+
-+== Tag signatures
-+
-+- created by: `git tag -s`
-+- payload: annotated tag object
-+- embedding: append the signature to the unsigned tag object
-+- example: tag `signedtag` with subject `signed tag`
-+
-+----
-+object 04b871796dc0420f8e7561a895b52484b701d51a
-+type commit
-+tag signedtag
-+tagger C O Mitter <committer@example.com> 1465981006 +0000
-+
-+signed tag
-+
-+signed tag message body
-+-----BEGIN PGP SIGNATURE-----
-+Version: GnuPG v1
-+
-+iQEcBAABAgAGBQJXYRhOAAoJEGEJLoW3InGJklkIAIcnhL7RwEb/+QeX9enkXhxn
-+rxfdqrvWd1K80sl2TOt8Bg/NYwrUBw/RWJ+sg/hhHp4WtvE1HDGHlkEz3y11Lkuh
-+8tSxS3qKTxXUGozyPGuE90sJfExhZlW4knIQ1wt/yWqM+33E9pN4hzPqLwyrdods
-+q8FWEqPPUbSJXoMbRPw04S5jrLtZSsUWbRYjmJCHzlhSfFWW4eFd37uquIaLUBS0
-+rkC3Jrx7420jkIpgFcTI2s60uhSQLzgcCwdA2ukSYIRnjg/zDkj8+3h/GaROJ72x
-+lZyI6HWixKJkWw8lE9aAOD9TmTW9sFJwcVAzmAuFX2kUreDUKMZduGcoRYGpD7E=
-+=jpXa
-+-----END PGP SIGNATURE-----
-+----
-+
-+- verify with: `git verify-tag [-v]` or `git tag -v`
-+
-+----
-+gpg: Signature made Wed Jun 15 10:56:46 2016 CEST using RSA key ID B7227189
-+gpg: Good signature from "Eris Discordia <discord@example.net>"
-+gpg: WARNING: This key is not certified with a trusted signature!
-+gpg:          There is no indication that the signature belongs to the owner.
-+Primary key fingerprint: D4BE 2231 1AD3 131E 5EDA  29A4 6109 2E85 B722 7189
-+object 04b871796dc0420f8e7561a895b52484b701d51a
-+type commit
-+tag signedtag
-+tagger C O Mitter <committer@example.com> 1465981006 +0000
-+
-+signed tag
-+
-+signed tag message body
-+----
--- 
-2.9.0.382.g87fd384
+While I follow both of your lines of argumentation, I tend to claim that
+they imply: there is no reason to blindly sign any commit... We should
+dump that config :)
 
+Since it's not possible to sign commits after the fact without rebasing
+(they are not "notes" attached to a commit but part of the commit) it is
+very conceivable to me that you build up your work with fine-grained
+commits and then, at some point where everything is ready and carefully
+inspected, you sign it. There are various possible reasons why you may
+not be able to rebase at that point. (I don't know why one wouldn't want
+to use signed tags here, but I never understood the need for signed
+commits in the first place.)
+
+I guess users of signed commits with rebase should speak up so that we
+can serve them well.
+
+Michael
