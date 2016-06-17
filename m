@@ -2,125 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.5 required=5.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID,
+	T_TVD_MIME_EPI shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D7511FF40
-	for <e@80x24.org>; Fri, 17 Jun 2016 02:41:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41DAA1FF40
+	for <e@80x24.org>; Fri, 17 Jun 2016 02:48:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754514AbcFQClS (ORCPT <rfc822;e@80x24.org>);
-	Thu, 16 Jun 2016 22:41:18 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:32903 "EHLO
-	mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754458AbcFQClR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2016 22:41:17 -0400
-Received: by mail-it0-f67.google.com with SMTP id i6so9339071ith.0
-        for <git@vger.kernel.org>; Thu, 16 Jun 2016 19:41:17 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Ws6t5YEipEdb5RjQJif2lmKT8sKoNDnBWqrMI6he8Tg=;
-        b=Q8R3B0W4SFZsIPRegF2jgv4eky4ixy1o0DboXk4y3dL5JoRrlr0fNKA/h3XU0Ae6Kr
-         e0XLortGRH3zyutsSKLSuhi5wDpo3g+ImwZpO4TpceYnB/Fd7datRjv57+9ULvQRwJKE
-         ADoUwxZNAv4fld5zYJUZJESMa/JHKUg6GIGq3UL2RxReBc2KzAdV4+STPY/0mkrQaoFP
-         r/Jd3YgSf2MkGE5EFh1Hv9vPjlzwPgFNooSzhWCF1E4zkHdS/9yMvSWI5Ud3GSAYurBR
-         ZcM26Palp8GXrT7Ul5X8yyFeUFCMh2QPhENIKC1OhNXlnHwWtenCp8PQ8bRZSn2ewO64
-         G90Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Ws6t5YEipEdb5RjQJif2lmKT8sKoNDnBWqrMI6he8Tg=;
-        b=NgqPiJe2W1+AQpnUIrf5QtIaLlCCr4Q2OBq41ohabVVH2NcOgiRxIjVdDjta+0VDMh
-         /KElkFwlOOXhRoCgNbA9GeC/Ods2u1As2LxCXxCD4OLh0HnTZ48YEp5eeNl/URcj+GmT
-         iashQsWk/85SFcYVNsCrwLfuHrjQo7YnmLVC9l4P8clkOzIw6gsRsvHgOoYmYlbeRgnf
-         hJexx8qWJIklFXYBkzSO9sqT6obERKPx1LPpdtUsgJ11EO8CwfF6Fs/nhzegaOV35tzM
-         MRhjqeIFeC2weo/MLkROq1JRrrLDpWa6Qg/Nb/e+BHpkS3NxbO7d78dgQ0kRzlJrjEfa
-         0G1w==
-X-Gm-Message-State: ALyK8tJcDpdwP67lTRAiS8SOOcZlp4XiGEF5w7/fIub5Vylb46Ad8j/uKrJ8lS8r/4XIOlLTzxr13sr77MIFtA==
-X-Received: by 10.36.129.130 with SMTP id q124mr7780405itd.41.1466131276907;
- Thu, 16 Jun 2016 19:41:16 -0700 (PDT)
+	id S1754695AbcFQCsR (ORCPT <rfc822;e@80x24.org>);
+	Thu, 16 Jun 2016 22:48:17 -0400
+Received: from kitenet.net ([66.228.36.95]:55060 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754466AbcFQCsQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2016 22:48:16 -0400
+X-Question: 42
+Authentication-Results:	kitenet.net;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=bB97qRRT;
+	dkim-atps=neutral
+DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+	t=1466131683; bh=2yW5a+J5NlUwXXPnyWM5LwhPme8QXuOEdwyro0YckCI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bB97qRRTfFxHsSsODlgDzEfvRXUmlKByFv+CVhxzkq0JsyCVv8e/kXZClEJvyf2Ru
+	 oY6IN3reJH8g5sScTJBZI2W9K87GOniWPwcxH3RFavMosUHmUUcPqkQ1rdL34b/KEj
+	 aiIc6/bLt+PlBFtWNHmn1PgJkCf1qwAudrDLdsBQ=
+Date:	Thu, 16 Jun 2016 22:48:03 -0400
+From:	Joey Hess <id@joeyh.name>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH 1/4] clarify %f documentation
+Message-ID: <20160617024803.GB17088@kitenet.net>
+References: <20160616203259.5886-1-joeyh@joeyh.name>
+ <20160616203259.5886-2-joeyh@joeyh.name>
+ <xmqq8ty44y4t.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.79.86.134 with HTTP; Thu, 16 Jun 2016 19:41:16 -0700 (PDT)
-In-Reply-To: <CAGZ79kZaZCwZ-cesB_voq0s0Qt+ipcgb6TkdzLE+EWSF_qRj7A@mail.gmail.com>
-References: <CAFOYHZDw-P0ST8WKoSVxBpbFCiACZpgiDPMfw5MRtFTMosO0rg@mail.gmail.com>
- <CAFOYHZArnE6vJ0U1zJAxytCBJJU5M-VtHbct6Qq4VPfw7-T-2A@mail.gmail.com>
- <xmqqbn31581d.fsf@gitster.mtv.corp.google.com> <CAGZ79kZaZCwZ-cesB_voq0s0Qt+ipcgb6TkdzLE+EWSF_qRj7A@mail.gmail.com>
-From:	Chris Packham <judge.packham@gmail.com>
-Date:	Fri, 17 Jun 2016 14:41:16 +1200
-Message-ID: <CAFOYHZAnx-sg41OdFnbfgOkggfKCdAKXuMRXuKcbzaJibwR2Rw@mail.gmail.com>
-Subject: Re: [bug] assertion in 2.8.4 triggering on old-ish worktree
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Junio C Hamano <gitster@pobox.com>, GIT <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="RASg3xLB4tUQ4RcS"
+Content-Disposition: inline
+In-Reply-To: <xmqq8ty44y4t.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jun 17, 2016 at 7:48 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Thu, Jun 16, 2016 at 10:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Chris Packham <judge.packham@gmail.com> writes:
->>
->>> On Thu, Jun 16, 2016 at 4:59 PM, Chris Packham <judge.packham@gmail.com> wrote:
->>>> Hi All,
->>>>
->>>> I have the git-sh-prompt configured in my .bashrc today I visited an
->>>> old worktree that I haven't really touched in a few years (sorry can't
->>>> remember the git version I was using back then). I received the
->>>> following output when changing to the directory
->>>>
->>>> git: pathspec.c:317: prefix_pathspec: Assertion `item->nowildcard_len
->>>> <= item->len && item->prefix <= item->len' failed.
->>>>
->>>> I assume it's one of the git invocations in git-sh-prompt that's
->>>> hitting the assertion. Any thoughts on what might be triggering it?
->>>> Any debug I can gather?
->>>
->>> A bit more info. The directory in question is a uninitialised
->>> submodule. It doesn't trigger in the root of the parent project.
 
-The command that fails appears to be 'git check-ignore -q .'
+--RASg3xLB4tUQ4RcS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->>
->>
->> Sounds like
->> http://article.gmane.org/gmane.comp.version-control.git/283549
->>
->
-> I looked into this. In pathspec.c#prefix_pathspec (the function
-> that has this assertion at the end), the assertion can only
-> trigger if PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE
-> or PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP was given
-> as these are the only places that reduce item->len.
->
-<snip>
+Junio C Hamano wrote:
+> I agree that "the name of the file" can be interpreted in many ways,
+> and I agree that it would be a good idea to find a better phrase to
+> name the path that is being worked on, but I do not think "the file
+> in the git repository" is that phrase.
 
-> Regarding the assert:
-> We are sure it's a submodule related thing, so we can
-> have a quite narrow warning there, roughly:
->
-> diff --git a/pathspec.c b/pathspec.c
-> index c9e9b6c..d0ea87a 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -313,8 +313,11 @@ static unsigned prefix_pathspec(struct pathspec_item *item,
->         }
->
->         /* sanity checks, pathspec matchers assume these are sane */
-> -       assert(item->nowildcard_len <= item->len &&
-> -              item->prefix         <= item->len);
-> +       if (item->nowildcard_len <= item->len &&
-> +           item->prefix         <= item->len)
-> +               die (_("Path leads inside submodule '%s', but the submodule "
-> +                      "was not recognized, i.e. not initialized or deleted"),
-> +                      ce->name);
+> I think using the word "path" somewhere in the updated description
+> is more likely to have the effect you desire.
 
-This certainly would have pointed out the uninitialised state of my
-setup in this case.
+"path" is also very ambiguous. I see that "tracked" is often used to
+describe what %f is, so how about:
+=20
++ Note that "%f" is the name of a file tracked by Git. Depending on the
++ version that is being filtered, the corresponding file on disk may not
++ exist, or may have different contents. So, smudge and clean commands shou=
+ld
++ not try to access the file on disk.
 
->         return magic;
->  }
+--=20
+see shy jo
+
+--RASg3xLB4tUQ4RcS
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIVAwUBV2Nk48kQ2SIlEuPHAQJNig/+JpzGGYmTOrjyixNa6VNZmr+4vwDonRHR
+qu8c8Mkg+6j/JXZofMaSuseghEi701tnpHAAn4Yu+uBgXxA8xE/n4qpLK+050tD9
+XrmYrR/hr+sK4Y2wzwbmtWYyb7XIdwC28URDP23ReRhcwf7fIFilFoYpKtCw0IZA
+fW6yhfoVLLzYCS7PyjqSQ1DWatJxp9QqekmuWtdo1h59MJvF4txFaxu0HnQU5LwX
+flC83An88T1gaQSdAAfL7WkYvR8BNSDFUOG1YDMj3bA4+hm6zon1A4wj69vTGUdB
+giWCYeITGyrnOLESTcIZ8YnirIo9/kmHKydzE9dm9Kprm3Qf7l05XvXaZdozCMkX
+ms1c5Hf+sbI6gWPuxZ45zSnBrujajALWwEKr0ExSUUBIAU8hnUi7A+jHcAXfq+z5
+MIWmiKP27gzw8+SQepM7r9/qGQHTjS7eEVSQWP9evS/ufr+vLy7DUsEbOZsQ9NPx
+FufzNuQsK7IdOu0BgExe1HYRNDlgKZxMr+E2lKiaa3uUn8f28GPFHvU20ejbMtkS
+qNI5aGWjVBUQZv+O5ABwoH1muE1MqLEaSL3LWaAp2aXnd22rruN2xW0l+4dS0sLT
+qSCcTxpjvlnPX3Z8PcxZq9GraqNYQK4Jap7jVgb++3XGb4Wzx6iMnT0WtwkLJGLC
+Mg4U/gb5i/c=
+=NvW2
+-----END PGP SIGNATURE-----
+
+--RASg3xLB4tUQ4RcS--
