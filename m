@@ -6,110 +6,117 @@ X-Spam-Status: No, score=-7.0 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B3431F744
-	for <e@80x24.org>; Fri, 17 Jun 2016 08:18:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 194E81F744
+	for <e@80x24.org>; Fri, 17 Jun 2016 08:55:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755315AbcFQISK (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 04:18:10 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:53456 "EHLO
+	id S1755217AbcFQIzF (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 04:55:05 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:60072 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753942AbcFQISH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2016 04:18:07 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by mailout.nyi.internal (Postfix) with ESMTP id 2356C20819;
-	Fri, 17 Jun 2016 04:18:06 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Fri, 17 Jun 2016 04:18:06 -0400
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=uiZleATJGIlsO1K6oRY0DGiuHZ0=; b=m8LPvY
-	RmqowcYybJhqiPAhN4QRGlm/dgth8gVXAS168kU0LS4T2buNgpdIfXa+NUdbFbIV
-	PlRse5XPWknnK9ISrEQDOXmxZzdHSillaXI66ZBJoonN0y7d2Fq3r0nmxft3fRYT
-	PPNTnmL4O5SUie7VeIxrfR+nb27kGZyNn0jFU=
+	by vger.kernel.org with ESMTP id S1753942AbcFQIzD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2016 04:55:03 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 5777420B99;
+	Fri, 17 Jun 2016 04:55:01 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute5.internal (MEProxy); Fri, 17 Jun 2016 04:55:01 -0400
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	date:from:in-reply-to:message-id:references:subject:to
+	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=w8io0xhYuVOsElg6dBdqgHw4tvw
+	=; b=EvXf/7tAZQUt9f7GsONEonRjAeYoSapotpRXApFBPFN8IsMH9hkRSQTj0LM
+	hZb7Rrq1MgkaK/F3NwIkNyIB5hr7jP9axSen1PQFw1CZMi24uUqbCme4oH+NiHeI
+	HFGX5xtdDl8ZEioEuXUHon1JzNKfXokNjKgs1UTGO0lYI6EU=
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=uiZleATJGIlsO1K
-	6oRY0DGiuHZ0=; b=GuHprRCUvV0/MfDyPJtBfaB15PMATsNI3cce95Tq8jaV4vE
-	z+54l0Ao8Jo8mVaMHAUiYbml0AuoTSxegxLdqMhjNbldI3aqPTyDYI8Rn5AtV7+o
-	LonoW1ZjmLfBfFyygXaoGVRoeNEqvs/EnBkh67egqU3OHTV0DrI6NdESadO8=
-X-Sasl-enc: 1zEXTY7uIOhpYaqSFzp8GMVRiWLGfIXs76oSObAZpaZh 1466151485
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 67689CCDA6;
-	Fri, 17 Jun 2016 04:18:05 -0400 (EDT)
-Subject: Re: I lost my commit signature
-To:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <CAGrdoOrrpc7OiU74fa-qpjLNxOtm4upAOAfWPG6VbWUjyE0C2Q@mail.gmail.com>
- <20160614075824.GB12563@sigill.intra.peff.net>
- <CAGrdoOp=dDkiTr+Sb-uZWx66b4hoZCYAiRjfgYqoE8H4-kXJvg@mail.gmail.com>
- <20160614081854.GA13457@sigill.intra.peff.net>
- <CAGrdoOqfcacG488u-MA7UiapgvJEGNX2QaRq8BMmycEWg-BGWg@mail.gmail.com>
- <20160614094121.GA13971@sigill.intra.peff.net>
- <e129da8e-4e1d-c535-ca62-d2a4c2e23799@drmicha.warpmail.net>
- <CAGrdoOoxphU0tRjV22yduXrhmOSyCc_zVnhuO9fFA6UPRd9WiA@mail.gmail.com>
- <20160615043450.GA3975@sigill.intra.peff.net>
- <be771366-00a7-6c20-2623-5fa54b8e19b7@drmicha.warpmail.net>
- <20160616073410.GA651@sigill.intra.peff.net>
- <xmqqr3bx5ahp.fsf@gitster.mtv.corp.google.com>
-Cc:	ZhenTian <loooseleaves@gmail.com>, git@vger.kernel.org
+	messagingengine.com; h=date:from:in-reply-to:message-id
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=w8io
+	0xhYuVOsElg6dBdqgHw4tvw=; b=sCO9qWBtpo2d3joFjuDdIEi51QGsLls1/FjN
+	BCOyRuAasPz3G0nkUVMRgytF+Tzi21gPf73b0gYS6QEuOXNJbni0O30J4HmqCH0d
+	p1r13/zY0zg7qZht2jCpvYHE9+UCcdPXtFE9OLQX3GtFmiCv9b21w9m1IICzZ5TI
+	O0soAg8=
+X-Sasl-enc: Q4XKkwnrNMNLCcu9TWKGORnHevipjGO8Fd+voQi3ZQZc 1466153700
+Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id CC38EF29FE;
+	Fri, 17 Jun 2016 04:55:00 -0400 (EDT)
 From:	Michael J Gruber <git@drmicha.warpmail.net>
-Message-ID: <171543e4-a343-c6d2-aa9a-2098db5b42ec@drmicha.warpmail.net>
-Date:	Fri, 17 Jun 2016 10:18:04 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.1
-MIME-Version: 1.0
-In-Reply-To: <xmqqr3bx5ahp.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
+To:	git@vger.kernel.org
+Subject: [PATCHv2] Documentation/technical: push certificate format
+Date:	Fri, 17 Jun 2016 10:54:59 +0200
+Message-Id: <358c097f88671847e5003696a65d3a107aa2f59b.1466153557.git.git@drmicha.warpmail.net>
+X-Mailer: git-send-email 2.9.0.382.g87fd384
+In-Reply-To: <b2557387aeea4b34da4a5b28e87063d1f2c9ff69.1466148698.git.git@drmicha.warpmail.net>
+References: <b2557387aeea4b34da4a5b28e87063d1f2c9ff69.1466148698.git.git@drmicha.warpmail.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano venit, vidit, dixit 16.06.2016 19:06:
-> Jeff King <peff@peff.net> writes:
-> 
->> But why does somebody run "commit -S" for a single commit, but not all
->> the time? Is it because that commit is special? Or is that particular
->> moment special? One implies that it's important for the signature to be
->> retained during a rebase, and one does not.
->>
->> So I dunno. I would not be opposed to such a feature, but I'm having
->> trouble figuring out why it would be useful (though for the most part, I
->> do not see why anything but per-project commit.gpgSign config is
->> particularly useful. Maybe I just lack imagination).
-> 
-> I am not so imaginative, either. One remotely plausible use case may
-> be a project that has two classes of paths (let's call these classes
-> sensitive and others), and requires its participants to sign commits
-> that touch sensitive paths.  The user needs something finter grained
-> than per-project commit.gpgSign there.
-> 
-> But even in such a case, the fact that an original commit is with a
-> signature should not be a good indication that the rewritten version
-> of that commit in the new history still touches the sensitive paths
-> that required the original to be signed (i.e. the history the user
-> is rebasing onto may already have the necessary changes to these
-> paths).
-> 
-> So, I dunno, either.
-> 
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+This is the version describing the current state, not assuming any new
+verify command for blobs.
 
-While I follow both of your lines of argumentation, I tend to claim that
-they imply: there is no reason to blindly sign any commit... We should
-dump that config :)
+ Documentation/technical/signature-format.txt | 51 ++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
-Since it's not possible to sign commits after the fact without rebasing
-(they are not "notes" attached to a commit but part of the commit) it is
-very conceivable to me that you build up your work with fine-grained
-commits and then, at some point where everything is ready and carefully
-inspected, you sign it. There are various possible reasons why you may
-not be able to rebase at that point. (I don't know why one wouldn't want
-to use signed tags here, but I never understood the need for signed
-commits in the first place.)
+diff --git a/Documentation/technical/signature-format.txt b/Documentation/technical/signature-format.txt
+index 7afd403..1c21379 100644
+--- a/Documentation/technical/signature-format.txt
++++ b/Documentation/technical/signature-format.txt
+@@ -184,3 +184,54 @@ Date:   Wed Jun 15 09:13:29 2016 +0000
+     # gpg:          There is no indication that the signature belongs to the owner.
+     # Primary key fingerprint: D4BE 2231 1AD3 131E 5EDA  29A4 6109 2E85 B722 7189
+ ----
++
++== Push certificates
++
++- created by: `git push --signed`
++- payload: a push certificate header followed by the push transcript
++  (see pack-protocol.txt and below)
++- embedding: append the signature to the push transcript and pass it to receive hooks
++  via the environment (see below)
++- example: push of commit `dd1416f` updating `master` on `.` from `d36de3d`,
++  resulting in push certificate object `d4169b9`:
++
++----
++certificate version 0.1
++pusher C O Mitter <committer@example.com> 1465983405 +0000
++pushee .
++nonce 1465983405-07421dc1515c6f4d76d4
++
++d36de3db9b6a83076477254a3186b721a7bfaab7 dd1416f2cd1ec85957a9520a33e9053a133a775d refs/heads/master
++-----BEGIN PGP SIGNATURE-----
++Version: GnuPG v1
++
++iEYEABECAAYFAldhIa0ACgkQE7b1Hs3eQw2pGwCgmJs98xETSDZb6rooh/X7af3V
++zWgAn08ctVNga27jRkIdhFNetJy3x8De
++=WH0m
++-----END PGP SIGNATURE-----
++----
++
++- verify with: `gpg --verify <(git cat-file -p pushcert | sed -n '/-----BEGIN PGP/,$p') <(git cat-file -p pushcert | sed  '/-----BEGIN PGP/Q')`
++  (assuming the push certificate is stored in the blob tagged `pushcert`)
++
++----
++gpg: Signature made Wed Jun 15 11:36:45 2016 CEST using DSA key ID CDDE430D
++gpg: Good signature from "C O Mitter <committer@example.com>"
++----
++
++- pre- and post-receive hook input:
++
++----
++d36de3db9b6a83076477254a3186b721a7bfaab7 dd1416f2cd1ec85957a9520a33e9053a133a775d refs/heads/master
++----
++
++- pre- and post-receive hook environment:
++
++----
++GIT_PUSH_CERT_NONCE_STATUS=OK
++GIT_PUSH_CERT_KEY=13B6F51ECDDE430D
++GIT_PUSH_CERT=d4169b9a3c2674458f9656796132c145bbc5ba74
++GIT_PUSH_CERT_STATUS=G
++GIT_PUSH_CERT_SIGNER=C O Mitter <committer@example.com>
++GIT_PUSH_CERT_NONCE=1465983405-07421dc1515c6f4d76d4
++----
+-- 
+2.9.0.382.g87fd384
 
-I guess users of signed commits with rebase should speak up so that we
-can serve them well.
-
-Michael
