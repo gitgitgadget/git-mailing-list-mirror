@@ -1,30 +1,30 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C90E1FEAA
-	for <e@80x24.org>; Fri, 17 Jun 2016 20:32:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAA531FEAA
+	for <e@80x24.org>; Fri, 17 Jun 2016 20:32:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755458AbcFQUcH (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 16:32:07 -0400
-Received: from kitenet.net ([66.228.36.95]:59146 "EHLO kitenet.net"
+	id S932486AbcFQUcK (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 16:32:10 -0400
+Received: from kitenet.net ([66.228.36.95]:59156 "EHLO kitenet.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755142AbcFQUcF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2016 16:32:05 -0400
+	id S1755429AbcFQUcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2016 16:32:07 -0400
 X-Question: 42
 Authentication-Results:	kitenet.net;
-	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=nPC4GCDc;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=Zoc59Peo;
 	dkim-atps=neutral
 DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-	t=1466195489; bh=FIsiDfRksnMbhvk/bv8oty3HUgjNW/2Owz0s/GeHOAc=;
+	t=1466195489; bh=9kZC4GOBRRM4/eheK48jvD9NlCn7D+j59yIsowv3TIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nPC4GCDceD0PjbAOjH4qpE9eHONsRJgTCkyhQEPu126TVKfFt30G2o6T+K+YFk8Yx
-	 HbyFVZREQtuq9w/Jw1QYsqPc6sEQUoeLM+KL6NVGxBvK9hxlZRI0+RGyx9ZgDCen9r
-	 tlTnwxC45WfOJUFGLQjGtatg+LJLC8+zDiBqYawk=
+	b=Zoc59PeoG/+kn7k0Q0/bHCpyGMEOjVrLgA3SWoPR51uqrM92TMX6pe8lHwzEPjMap
+	 b9TLc0tisfYRKecGfVBLvdGM+ZsMyn1xEyvGL3wUgx5mgVo66QJBHTglQYyRaAQj+P
+	 TTBPP7xyqgRpdJwA/J9KQnTsptvNKvv4Wx52uC0Q=
 From:	Joey Hess <joeyh@joeyh.name>
 To:	git@vger.kernel.org
 Cc:	Joey Hess <joeyh@joeyh.name>
-Subject: [PATCH v2 3/4] use smudgeToFile in git checkout etc
-Date:	Fri, 17 Jun 2016 16:31:20 -0400
-Message-Id: <1466195481-23209-4-git-send-email-joeyh@joeyh.name>
+Subject: [PATCH v2 1/4] add smudgeToFile and cleanFromFile filter configs
+Date:	Fri, 17 Jun 2016 16:31:18 -0400
+Message-Id: <1466195481-23209-2-git-send-email-joeyh@joeyh.name>
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <1466195481-23209-1-git-send-email-joeyh@joeyh.name>
 References: <1466195481-23209-1-git-send-email-joeyh@joeyh.name>
@@ -38,142 +38,370 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This makes git checkout, git reset, etc use smudgeToFile.
+This adds new smudgeToFile and cleanFromFile filter commands,
+which are similar to smudge and clean but allow direct access to files on
+disk.
 
-Includes test cases.
+This interface can be much more efficient when operating on large files,
+because the whole file content does not need to be streamed through the
+filter. It even allows for things like cleanFromFile commands that avoid
+reading the whole content of the file, and for smudgeToFile commands that
+populate a work tree file using an efficient Copy On Write operation.
 
-(There's a call to convert_to_working_tree in merge-recursive.c
-that could also be made to use smudgeToFile as well.)
+The new filter commands will not be used for all filtering. They are
+efficient to use when git add is adding a file, or when the work tree is
+being updated, but not a good fit when git is internally filtering blob
+objects in memory for eg, a diff.
+
+So, a user who wants to use smudgeToFile should also provide a smudge
+command to be used in cases where smudgeToFile is not used. And ditto
+with cleanFromFile and clean. To avoid foot-shooting configurations, the
+new commands are not used unless the old commands are also configured.
+
+That also ensures that a filter driver configuration that includes these
+new commands will work, although less efficiently, when used with an older
+version of git that does not support them.
 
 Signed-off-by: Joey Hess <joeyh@joeyh.name>
 ---
- entry.c               | 37 +++++++++++++++++++++++++++++--------
- t/t0021-conversion.sh | 38 +++++++++++++++++++++++++++++++++-----
- 2 files changed, 62 insertions(+), 13 deletions(-)
+ Documentation/config.txt        |  18 ++++++-
+ Documentation/gitattributes.txt |  37 ++++++++++++++
+ convert.c                       | 108 ++++++++++++++++++++++++++++++++++------
+ convert.h                       |  10 ++++
+ 4 files changed, 157 insertions(+), 16 deletions(-)
 
-diff --git a/entry.c b/entry.c
-index 519e042..97975e5 100644
---- a/entry.c
-+++ b/entry.c
-@@ -175,8 +175,13 @@ static int write_entry(struct cache_entry *ce,
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2e1b2e4..38f54c1 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1299,15 +1299,29 @@ format.useAutoBase::
+ 	format-patch by default.
  
- 		/*
- 		 * Convert from git internal format to working tree format
-+		 * unless the smudgeToFile filter can write to the
-+		 * file directly.
- 		 */
--		if (ce_mode_s_ifmt == S_IFREG &&
-+		int regular_file = ce_mode_s_ifmt == S_IFREG;
-+		int smudge_to_file = regular_file
-+			&& can_smudge_to_file(ce->name);
-+		if (regular_file && ! smudge_to_file &&
- 		    convert_to_working_tree(ce->name, new, size, &buf)) {
- 			free(new);
- 			new = strbuf_detach(&buf, &newsize);
-@@ -189,13 +194,29 @@ static int write_entry(struct cache_entry *ce,
- 			return error_errno("unable to create file %s", path);
+ filter.<driver>.clean::
+-	The command which is used to convert the content of a worktree
++	The command which is used as a filter to convert the content of a worktree
+ 	file to a blob upon checkin.  See linkgit:gitattributes[5] for
+ 	details.
+ 
+ filter.<driver>.smudge::
+-	The command which is used to convert the content of a blob
++	The command which is used as a filter to convert the content of a blob
+ 	object to a worktree file upon checkout.  See
+ 	linkgit:gitattributes[5] for details.
+ 
++filter.<driver>.cleanFromFile::
++	Similar to filter.<driver>.clean but the specified command 
++	directly accesses a worktree file on disk, rather than
++	receiving the file content from standard input. 
++	Only used when filter.<driver>.clean is also configured.
++	See linkgit:gitattributes[5] for details.
++
++filter.<driver>.smudgeToFile::
++	Similar to filter.<driver>.smudge but the specified command
++	writes the content of a blob directly to a worktree file,
++	rather than to standard output.
++	Only used when filter.<driver>.smudge is also configured.
++	See linkgit:gitattributes[5] for details.
++
+ fsck.<msg-id>::
+ 	Allows overriding the message type (error, warn or ignore) of a
+ 	specific message ID such as `missingEmail`.
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 145dd10..5ae0783 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -380,6 +380,43 @@ not exist, or may have different contents. So, smudge and clean commands
+ should not try to access the file on disk, but only act as filters on the
+ content provided to them on standard input.
+ 
++There are two extra commands "cleanFromFile" and "smudgeToFile", which
++can optionally be set in a filter driver. These are similar to the "clean"
++and "smudge" commands, but avoid needing to pipe the contents of files
++through the filters, and instead read/write files in the filesystem.
++This can be more efficient when using filters with large files that are not
++directly stored in the repository.
++
++Both "cleanFromFile" and "smudgeToFile" are provided a path as an
++added parameter after the configured command line.
++
++The "cleanFromFile" command is provided the path to the file that
++it should clean. Like the "clean" command, it should output the cleaned
++version to standard output.
++
++The "smudgeToFile" command is provided a path to the file that it
++should write to. (This file will already exist, as an empty file that can
++be written to or replaced.) Like the "smudge" command, "smudgeToFile"
++is fed the blob object from its standard input.
++
++Some git operations that need to apply filters cannot use "cleanFromFile"
++and "smudgeToFile", since the files are not present to disk. So, to avoid
++inconsistent behavior, "cleanFromFile" will only be used if "clean" is
++also configured, and "smudgeToFile" will only be used if "smudge" is also
++configured.
++
++An example large file storage filter driver using cleanFromFile and
++smudgeToFile follows:
++
++------------------------
++[filter "bigfiles"]
++	clean = store-bigfile --from-stdin
++	cleanFromFile = store-bigfile --from-file
++	smudge = retrieve-bigfile --to-stdout
++	smudgeToFile = retrieve-bigfile --to-file
++	required
++------------------------
++
+ Interaction between checkin/checkout attributes
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+diff --git a/convert.c b/convert.c
+index b1614bf..bf63ba0 100644
+--- a/convert.c
++++ b/convert.c
+@@ -360,7 +360,8 @@ struct filter_params {
+ 	unsigned long size;
+ 	int fd;
+ 	const char *cmd;
+-	const char *path;
++	const char *path; /* Path within the git repository */
++	const char *fspath; /* Path to file on disk */
+ };
+ 
+ static int filter_buffer_or_fd(int in, int out, void *data)
+@@ -389,6 +390,15 @@ static int filter_buffer_or_fd(int in, int out, void *data)
+ 	strbuf_expand(&cmd, params->cmd, strbuf_expand_dict_cb, &dict);
+ 	strbuf_release(&path);
+ 
++	/* append fspath to the command if it's set, separated with a space */
++	if (params->fspath) {
++		struct strbuf fspath = STRBUF_INIT;
++		sq_quote_buf(&fspath, params->fspath);
++		strbuf_addstr(&cmd, " ");
++		strbuf_addbuf(&cmd, &fspath);
++		strbuf_release(&fspath);
++	}
++
+ 	argv[0] = cmd.buf;
+ 
+ 	child_process.argv = argv;
+@@ -427,7 +437,8 @@ static int filter_buffer_or_fd(int in, int out, void *data)
+ 	return (write_err || status);
+ }
+ 
+-static int apply_filter(const char *path, const char *src, size_t len, int fd,
++static int apply_filter(const char *path, const char *fspath,
++			const char *src, size_t len, int fd,
+                         struct strbuf *dst, const char *cmd)
+ {
+ 	/*
+@@ -456,6 +467,7 @@ static int apply_filter(const char *path, const char *src, size_t len, int fd,
+ 	params.fd = fd;
+ 	params.cmd = cmd;
+ 	params.path = path;
++	params.fspath = fspath;
+ 
+ 	fflush(NULL);
+ 	if (start_async(&async))
+@@ -486,6 +498,8 @@ static struct convert_driver {
+ 	struct convert_driver *next;
+ 	const char *smudge;
+ 	const char *clean;
++	const char *smudge_to_file;
++	const char *clean_from_file;
+ 	int required;
+ } *user_convert, **user_convert_tail;
+ 
+@@ -512,8 +526,9 @@ static int read_convert_config(const char *var, const char *value, void *cb)
+ 	}
+ 
+ 	/*
+-	 * filter.<name>.smudge and filter.<name>.clean specifies
+-	 * the command line:
++	 * filter.<name>.smudge, filter.<name>.clean,
++	 * filter.<name>.smudgeToFile, filter.<name>.cleanFromFile
++	 * specifies the command line:
+ 	 *
+ 	 *	command-line
+ 	 *
+@@ -526,6 +541,12 @@ static int read_convert_config(const char *var, const char *value, void *cb)
+ 	if (!strcmp("clean", key))
+ 		return git_config_string(&drv->clean, var, value);
+ 
++	if (!strcmp("smudgetofile", key))
++		return git_config_string(&drv->smudge_to_file, var, value);
++
++	if (!strcmp("cleanfromfile", key))
++		return git_config_string(&drv->clean_from_file, var, value);
++
+ 	if (!strcmp("required", key)) {
+ 		drv->required = git_config_bool(var, value);
+ 		return 0;
+@@ -823,7 +844,35 @@ int would_convert_to_git_filter_fd(const char *path)
+ 	if (!ca.drv->required)
+ 		return 0;
+ 
+-	return apply_filter(path, NULL, 0, -1, NULL, ca.drv->clean);
++	return apply_filter(path, NULL, NULL, 0, -1, NULL, ca.drv->clean);
++}
++
++int can_clean_from_file(const char *path)
++{
++	struct conv_attrs ca;
++
++	convert_attrs(&ca, path);
++	if (!ca.drv)
++		return 0;
++
++	/* Only use the cleanFromFile filter when the clean filter is also
++	 * configured.
++	 */
++	return (ca.drv->clean_from_file && ca.drv->clean);
++}
++
++int can_smudge_to_file(const char *path)
++{
++	struct conv_attrs ca;
++
++	convert_attrs(&ca, path);
++	if (!ca.drv)
++		return 0;
++
++	/* Only use the smudgeToFile filter when the smudge filter is also
++	 * configured.
++	 */
++	return (ca.drv->smudge_to_file && ca.drv->smudge);
+ }
+ 
+ const char *get_convert_attr_ascii(const char *path)
+@@ -866,7 +915,7 @@ int convert_to_git(const char *path, const char *src, size_t len,
+ 		required = ca.drv->required;
+ 	}
+ 
+-	ret |= apply_filter(path, src, len, -1, dst, filter);
++	ret |= apply_filter(path, NULL, src, len, -1, dst, filter);
+ 	if (!ret && required)
+ 		die("%s: clean filter '%s' failed", path, ca.drv->name);
+ 
+@@ -891,14 +940,33 @@ void convert_to_git_filter_fd(const char *path, int fd, struct strbuf *dst,
+ 	assert(ca.drv);
+ 	assert(ca.drv->clean);
+ 
+-	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv->clean))
++	if (!apply_filter(path, NULL, NULL, 0, fd, dst, ca.drv->clean))
+ 		die("%s: clean filter '%s' failed", path, ca.drv->name);
+ 
+ 	crlf_to_git(path, dst->buf, dst->len, dst, ca.crlf_action, checksafe);
+ 	ident_to_git(path, dst->buf, dst->len, dst, ca.ident);
+ }
+ 
+-static int convert_to_working_tree_internal(const char *path, const char *src,
++void convert_to_git_filter_from_file(const char *path, struct strbuf *dst,
++				   enum safe_crlf checksafe)
++{
++	struct conv_attrs ca;
++	convert_attrs(&ca, path);
++
++	assert(ca.drv);
++	assert(ca.drv->clean);
++	assert(ca.drv->clean_from_file);
++
++	if (!apply_filter(path, path, "", 0, -1, dst, ca.drv->clean_from_file))
++		die("%s: cleanFromFile filter '%s' failed", path, ca.drv->name);
++
++	crlf_to_git(path, dst->buf, dst->len, dst, ca.crlf_action, checksafe);
++	ident_to_git(path, dst->buf, dst->len, dst, ca.ident);
++}
++
++static int convert_to_working_tree_internal(const char *path,
++					    const char *destpath,
++					    const char *src,
+ 					    size_t len, struct strbuf *dst,
+ 					    int normalizing)
+ {
+@@ -909,7 +977,10 @@ static int convert_to_working_tree_internal(const char *path, const char *src,
+ 
+ 	convert_attrs(&ca, path);
+ 	if (ca.drv) {
+-		filter = ca.drv->smudge;
++		if (destpath)
++			filter = ca.drv->smudge_to_file;
++		else
++			filter = ca.drv->smudge;
+ 		required = ca.drv->required;
+ 	}
+ 
+@@ -920,7 +991,7 @@ static int convert_to_working_tree_internal(const char *path, const char *src,
+ 	}
+ 	/*
+ 	 * CRLF conversion can be skipped if normalizing, unless there
+-	 * is a smudge filter.  The filter might expect CRLFs.
++	 * is a filter.  The filter might expect CRLFs.
+ 	 */
+ 	if (filter || !normalizing) {
+ 		ret |= crlf_to_worktree(path, src, len, dst, ca.crlf_action);
+@@ -930,21 +1001,30 @@ static int convert_to_working_tree_internal(const char *path, const char *src,
  		}
+ 	}
  
--		wrote = write_in_full(fd, new, size);
--		if (!to_tempfile)
--			fstat_done = fstat_output(fd, state, &st);
--		close(fd);
--		free(new);
--		if (wrote != size)
--			return error("unable to write file %s", path);
-+		if (! smudge_to_file) {
-+			wrote = write_in_full(fd, new, size);
-+			if (!to_tempfile)
-+				fstat_done = fstat_output(fd, state, &st);
-+			close(fd);
-+			free(new);
-+			if (wrote != size)
-+				return error("unable to write file %s", path);
-+		}
-+		else {
-+			close(fd);
-+			convert_to_working_tree_filter_to_file(ce->name, path, new, size);
-+			free(new);
-+			/* The smudgeToFile filter may have replaced the
-+			 * file; open it to make sure that the file
-+			 * exists. */
-+			fd = open(path, O_RDONLY);
-+			if (fd < 0)
-+				return error_errno("unable to create file %s", path);
-+			if (!to_tempfile)
-+				fstat_done = fstat_output(fd, state, &st);
-+			close(fd);
-+		}
- 		break;
- 	case S_IFGITLINK:
- 		if (to_tempfile)
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 399f92b..a8042d1 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -14,12 +14,20 @@ chmod +x rot13.sh
+-	ret_filter = apply_filter(path, src, len, -1, dst, filter);
++	ret_filter = apply_filter(path, destpath, src, len, -1, dst, filter);
+ 	if (!ret_filter && required)
+-		die("%s: smudge filter %s failed", path, ca.drv->name);
++		die("%s: %s filter %s failed", path, destpath ? "smudgeToFile" : "smudge", ca.drv->name);
  
- cat <<EOF >rot13-from-file.sh
- #!$SHELL_PATH
--fsfile="\$1"
-+srcfile="\$1"
- touch rot13-from-file.ran
--cat "\$fsfile" | ./rot13.sh
-+cat "\$srcfile" | ./rot13.sh
- EOF
- chmod +x rot13-from-file.sh
+ 	return ret | ret_filter;
+ }
  
-+cat <<EOF >rot13-to-file.sh
-+#!$SHELL_PATH
-+destfile="\$1"
-+touch rot13-to-file.ran
-+./rot13.sh > "\$destfile"
-+EOF
-+chmod +x rot13-to-file.sh
+ int convert_to_working_tree(const char *path, const char *src, size_t len, struct strbuf *dst)
+ {
+-	return convert_to_working_tree_internal(path, src, len, dst, 0);
++	return convert_to_working_tree_internal(path, NULL, src, len, dst, 0);
++}
 +
- test_expect_success setup '
- 	git config filter.rot13.smudge ./rot13.sh &&
- 	git config filter.rot13.clean ./rot13.sh &&
-@@ -291,6 +299,17 @@ test_expect_success 'cleanFromFile filter is used when adding a file' '
- 	cmp test.t fstest.t
- '
++int convert_to_working_tree_filter_to_file(const char *path, const char *destpath, const char *src, size_t len)
++{
++	struct strbuf output = STRBUF_INIT;
++	int ret = convert_to_working_tree_internal(path, destpath, src, len, &output, 0);
++	/* The smudgeToFile filter stdout is not used. */
++	strbuf_release(&output);
++	return ret;
+ }
  
-+test_expect_success 'smudgeToFile filter is used when checking out a file' '
-+	test_config filter.rot13.smudgeToFile ./rot13-to-file.sh &&
-+
-+	rm -f fstest.t &&
-+	git checkout -- fstest.t &&
-+	cmp test.t fstest.t &&
-+
-+	test -e rot13-to-file.ran &&
-+	rm -f rot13-to-file.ran
-+'
-+
- test_expect_success 'cleanFromFile filter is not used when clean filter is not configured' '
- 	test_config filter.noclean.smudge ./rot13.sh &&
- 	test_config filter.noclean.cleanFromFile ./rot13-from-file.sh &&
-@@ -299,9 +318,18 @@ test_expect_success 'cleanFromFile filter is not used when clean filter is not c
+ int renormalize_buffer(const char *path, const char *src, size_t len, struct strbuf *dst)
+ {
+-	int ret = convert_to_working_tree_internal(path, src, len, dst, 1);
++	int ret = convert_to_working_tree_internal(path, NULL, src, len, dst, 1);
+ 	if (ret) {
+ 		src = dst->buf;
+ 		len = dst->len;
+diff --git a/convert.h b/convert.h
+index ccf436b..53e1474 100644
+--- a/convert.h
++++ b/convert.h
+@@ -41,6 +41,10 @@ extern int convert_to_git(const char *path, const char *src, size_t len,
+ 			  struct strbuf *dst, enum safe_crlf checksafe);
+ extern int convert_to_working_tree(const char *path, const char *src,
+ 				   size_t len, struct strbuf *dst);
++extern int convert_to_working_tree_filter_to_file(const char *path,
++						  const char *destpath,
++						  const char *src,
++						  size_t len);
+ extern int renormalize_buffer(const char *path, const char *src, size_t len,
+ 			      struct strbuf *dst);
+ static inline int would_convert_to_git(const char *path)
+@@ -52,6 +56,12 @@ extern void convert_to_git_filter_fd(const char *path, int fd,
+ 				     struct strbuf *dst,
+ 				     enum safe_crlf checksafe);
+ extern int would_convert_to_git_filter_fd(const char *path);
++/* Precondition: can_clean_from_file(path) == true */
++extern void convert_to_git_filter_from_file(const char *path,
++					    struct strbuf *dst,
++					    enum safe_crlf checksafe);
++extern int can_clean_from_file(const char *path);
++extern int can_smudge_to_file(const char *path);
  
- 	cat test.t >test.no &&
- 	git add test.no &&
--	test ! -e rot13-from-file.ran &&
--	git cat-file blob :test.no >actual &&
--	cmp test.t actual
-+	test ! -e rot13-from-file.ran
-+'
-+
-+test_expect_success 'smudgeToFile filter is not used when smudge filter is not configured' '
-+	test_config filter.nosmudge.clean ./rot13.sh &&
-+	test_config filter.nosmudge.smudgeToFile ./rot13-to-file.sh &&
-+
-+	echo "*.no filter=nosmudge" >.gitattributes &&
-+
-+	rm -f fstest.t &&
-+	git checkout -- fstest.t &&
-+	test ! -e rot13-to-file.ran
- '
- 
- test_done
+ /*****************************************************************
+  *
 -- 
 2.8.1
 
