@@ -2,86 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.2 required=5.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.8 required=5.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3675920179
-	for <e@80x24.org>; Fri, 17 Jun 2016 13:03:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2117320179
+	for <e@80x24.org>; Fri, 17 Jun 2016 13:10:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752665AbcFQNDP (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 09:03:15 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:35628 "EHLO
-	mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751309AbcFQNDO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2016 09:03:14 -0400
-Received: by mail-it0-f67.google.com with SMTP id e5so10676890ith.2
-        for <git@vger.kernel.org>; Fri, 17 Jun 2016 06:03:14 -0700 (PDT)
+	id S1752847AbcFQNK5 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 09:10:57 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:34196 "EHLO
+	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751386AbcFQNK4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2016 09:10:56 -0400
+Received: by mail-yw0-f193.google.com with SMTP id b75so8764359ywe.1
+        for <git@vger.kernel.org>; Fri, 17 Jun 2016 06:10:55 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Mvi6TdQzfDW4YlJbyYmBdHWdIULUp3zul6s0ujq1al0=;
-        b=rNTiD3L87E6mh+o5gWdOThzAbLJ5CVgvDYAxMcQGcAoKiLx5vJP45WiX8SH83WEJjM
-         BWsu4GstO0xKtfKoAnqKuwAyuaY2RA91HM0OyL+wIkjfppCmvPHxNDi1DPMplYnzoIgo
-         2cVQyO/lEj1BfjZ3lR5kXKUeNIrnA/On59QO/UAzPEeqX/ndpT3iyZHTD2XVJLd4aivo
-         X4gsfIUIYcP2uWQozoNwEkqoJb38NIe6P0LOlpZ0v9NzzYYBzTlBnCFK6OA4+J/y9mze
-         k3WuLqMtf5FIQ9oG4gzA4yfGnI/f82Wmp4LPQteKE7ozIP0HnJmaNnrP4j9Rb/zzFCGf
-         kl5A==
+        bh=ZcWBznAN5UW5ItRY3oVscLc35hsoWRj2Fvj/R3rTFQI=;
+        b=jkZD32ozOFjthI/OIa2BFeiEDRBlVXsWhVieeIp4CNy0J0EilF5Ww3s2NlKqhvdiml
+         rF3zyp+AIIvOBERCNCxaDxc7hotgszyql6KPnuvjbrF7TVS2AKR+vLFrDy5Qi6e5Gcv8
+         bjx4IG3X3uYOCDgLML6wGmy8UOisgP9rzSO5xC0R9/J5MGAjvv7TPbI7uDn/7ceM1UHh
+         cTjCijS1WxPmJXls9mesc7aAkiO1kB8QvDnY6qiAOL1+D5S+SIrKNocmfZLE9RST2/3I
+         p9khCpQnzto5MfKqyVxkmz1P8zOnw7xmMVko5+05YcmwdBGTp1Xf5W4m7vV+dmtkw41X
+         N9xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Mvi6TdQzfDW4YlJbyYmBdHWdIULUp3zul6s0ujq1al0=;
-        b=gisXSOoNYLNSXbGx+FoeOJrkG96li5WJB4hduO99wyPQnzQD9TRggztG1MlQVOQ4Yf
-         6nnzVOuz8Li9Z7jXRNOyzPvpXLrg+oD2vicwO/6hhHT/MV6j+6aq/jD62s72DOZkGiEt
-         HyhGFTqDR8gyJEVJkpxMXyU+r8nl5F8JU9WHFu2l+ZyW3TpZ8IfdC4J/pmQe47DZpgGu
-         Lm+XsI78cjpZ6jOu2yvQUtJvnUwfOt6cNE0Vz2XCj/5E+CIab0LP6sW3bQVk0EyBmNHi
-         uSCG+kCD3OwwsYQCD6499lcG1Z7aVxGXJDhjrZTvdL5wX4ZmAORO3DN7aEFC1wKCEx2I
-         HOig==
-X-Gm-Message-State: ALyK8tLnq6kUCZXNOTQL6G/mDjhwJv3MQNCFbgtow8KLIA5o9VqnZJEjkY0BHbLY8m5kchDSNGX2GLTzKzrvvw==
-X-Received: by 10.36.80.139 with SMTP id m133mr3138780itb.63.1466168593456;
- Fri, 17 Jun 2016 06:03:13 -0700 (PDT)
+        bh=ZcWBznAN5UW5ItRY3oVscLc35hsoWRj2Fvj/R3rTFQI=;
+        b=FT2w+NUsrmO0MotAll6a0mV7TCB21vLXwi5TUcEcd4f5ylhXH0jZy54ml+uFpQ6l/5
+         h1ZfoS1lblvZkXQf+AmSXX4iXSntwZstZcRRqNtJnfgSsl50wX5jRtZgRrARucwBxeQY
+         wSAZJPDWDM7hBwu3/7+QPFzwq2NORxkY4u9udEe0YRPDn2fjXWhs9uTUs7V2RJNgOAzV
+         kfwphSiTRhcWmEFUUoyAWD2ophNfJdIdhT5X5KngEf0ByI7qbKO+lpHo5K+2npPdqtqM
+         G1R/SOND/SAfk7jChMgBoFf7seMrSCKLE+Is9U8i/1QRifIHAWisP8ghUql2lioVIhXL
+         8iDA==
+X-Gm-Message-State: ALyK8tL3OIJStQeMrNhgbvvg35+4C4kfXm3IA3KF7C7JqkpOKpqcSTaE4TE/ANIltBWWGZOrkHl8JCUQMaTc4w==
+X-Received: by 10.13.254.130 with SMTP id o124mr1136350ywf.30.1466169055281;
+ Fri, 17 Jun 2016 06:10:55 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.173.167 with HTTP; Fri, 17 Jun 2016 06:02:43 -0700 (PDT)
-In-Reply-To: <1463694357-6503-12-git-send-email-dturner@twopensource.com>
-References: <1463694357-6503-1-git-send-email-dturner@twopensource.com> <1463694357-6503-12-git-send-email-dturner@twopensource.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Fri, 17 Jun 2016 20:02:43 +0700
-Message-ID: <CACsJy8DzyvFOHU_8xoWUcjej=Ws7_v475=Q2iZmwKhkzYaZ7sg@mail.gmail.com>
-Subject: Re: [PATCH v12 11/20] index-helper: use watchman to avoid refreshing
- index with lstat()
-To:	David Turner <dturner@twopensource.com>
-Cc:	Git Mailing List <git@vger.kernel.org>
+Received: by 10.129.116.193 with HTTP; Fri, 17 Jun 2016 06:10:54 -0700 (PDT)
+In-Reply-To: <CAP8UFD1Fi53am5O+RBS4XfHOEF1rdYiNSbWBvhaAUv_9fgJ3Zg@mail.gmail.com>
+References: <20160607205454.22576-1-pranit.bauva@gmail.com>
+ <20160615140026.10519-1-pranit.bauva@gmail.com> <20160615140026.10519-7-pranit.bauva@gmail.com>
+ <CAPig+cQV3FTGJBvS0Kuc3CNPiwZMZtApT6r8+Ojhw3y7O2VTiw@mail.gmail.com>
+ <CAFZEwPNpeD3+6kzY7HDH_ZXcL-Nu0B7jGeM5GMjH7PT0eSTLBw@mail.gmail.com> <CAP8UFD1Fi53am5O+RBS4XfHOEF1rdYiNSbWBvhaAUv_9fgJ3Zg@mail.gmail.com>
+From:	Pranit Bauva <pranit.bauva@gmail.com>
+Date:	Fri, 17 Jun 2016 18:40:54 +0530
+Message-ID: <CAFZEwPNnHC=ii=qkR1-i+FM5oPw9JRS5MYOfaEvpsKUO5vwyQw@mail.gmail.com>
+Subject: Re: [PATCH v2 6/6] bisect--helper: `bisect_write` shell function in C
+To:	Christian Couder <christian.couder@gmail.com>
+Cc:	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, May 20, 2016 at 4:45 AM, David Turner <dturner@twopensource.com> wrote:
-> diff --git a/read-cache.c b/read-cache.c
-> index 1719f5a..8ec4be3 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -1235,7 +1235,7 @@ int refresh_index(struct index_state *istate, unsigned int flags,
->                 if (!new) {
->                         const char *fmt;
+Hey Christian,
+
+On Fri, Jun 17, 2016 at 2:08 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Thu, Jun 16, 2016 at 9:01 PM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>> Hey Eric,
+>>
+>> On Fri, Jun 17, 2016 at 12:25 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> On Wed, Jun 15, 2016 at 10:00 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+>>>>
+>>>> Note: bisect_write() uses two variables namely TERM_GOOD and TERM_BAD
+>>>> from the global shell script thus we need to pass it to the subcommand
+>>>> using the arguments. After the whole conversion, we can remove the extra
+>>>> arguments and make the method use the two variables from the global scope
+>>>> within the C code.
+>>>
+>>> You could do this now rather than waiting for later. Instead of
+>>> passing these arguments to bisect_write(), create global variables in
+>>> this patch and assign them in the BISECT_WRITE case of
+>>> cmd_bisect__helper() before calling bisect_write().
+>>>
+>>> Not necessarily worth a re-roll, but would save you the effort of
+>>> having to explain it here and then change it in some later patch.
+>>
+>> I have actually done it in my next conversion which is converting
+>> check_and_set_terms()[1] which also sets those variables to some value
+>> so its more appropriate there.
 >
-> -                       if (really && cache_errno == EINVAL) {
-> +                       if (really || cache_errno == EINVAL) {
->                                 /* If we are doing --really-refresh that
->                                  * means the index is not valid anymore.
->                                  */
+> My opinion about this is that using global variables would go against
+> a possible future libification of the bisect functionality and might
+> be less safe than just adding 2 parameters to a small number of
+> functions.
+>
+> If we think that 2 parameters are too much or that there could be more
+> parameters to pass like this, we could just pass a pointer to a
+> 'struct bisect_state' or something like that ;-)
 
-This looks really odd. I don't see why we would need this. It seems
-first appeared in your "do not apply" patch [1]. Maybe leftover?
+I had in mind something about 'struct bisect_state'.
 
-I found this while re-reading the series and I have not put much time
-in studying this code yet. So I may be wrong. I'll post again if I
-find that it's true after some more staring.
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/288567
--- 
-Duy
+Regards,
+Pranit Bauva
