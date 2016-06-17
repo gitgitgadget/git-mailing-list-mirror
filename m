@@ -6,42 +6,42 @@ X-Spam-Status: No, score=-6.9 required=5.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 357C120189
+	by dcvr.yhbt.net (Postfix) with ESMTP id 477CD2018A
 	for <e@80x24.org>; Fri, 17 Jun 2016 07:46:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755440AbcFQHqV (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 03:46:21 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:49814 "EHLO
+	id S932122AbcFQHqW (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 03:46:22 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:42800 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754013AbcFQHqU (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2016 03:46:20 -0400
+	by vger.kernel.org with ESMTP id S1755075AbcFQHqT (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2016 03:46:19 -0400
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 5363D20A76;
-	Fri, 17 Jun 2016 03:46:19 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute4.internal (MEProxy); Fri, 17 Jun 2016 03:46:19 -0400
+	by mailout.nyi.internal (Postfix) with ESMTP id 1D409209EC;
+	Fri, 17 Jun 2016 03:46:18 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute4.internal (MEProxy); Fri, 17 Jun 2016 03:46:18 -0400
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
 	date:from:in-reply-to:message-id:references:subject:to
-	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=wlMRi0z9Zj6RBVcHon798w9GezE
-	=; b=YA6jauvRIqjQIoi/VH1lKSKKf72Ip8FHBzDB7yypwrMO5Co/AP5querJVgT
-	IhptFUeFQeU0gYrm2DqV94UfIXaRck+uORq7mIJj01NuV2gR+UtfsOSuMRjI9IqE
-	j8wzT7YixVnksJN3/08gVp7dxcIXCjbL/qZ7o5Rdffgxld/4=
+	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=d5WSS8X1w9OoMMe0UnekJV6aY3k
+	=; b=Pytht3NHUUMaEElQBOSYfcVHxAc6o8fwzqOEt0s2AaCJ8ZuQneyqEWSo4Bs
+	OVjJj4p0mO4/crTAcQ+30WezaH53NE+6Ns0ZCKNaNpAKIPnkZZ93AnKvSJRXnj2c
+	sUVKYLFDOrE8y74KrwjijpENy7P89MB3BpHjQTbBoCCJJ7Ho=
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=wlMR
-	i0z9Zj6RBVcHon798w9GezE=; b=W5vML+12M1z41RS5I5e4f0S+WJvbjSGDlruk
-	0k7bHAxp1A2+9Sk9cSToOmsL3bdMEXo2rsAMbPAksi7xwhTUnuFhF35wx9MvtBJK
-	FQsY9rWMwcC/dbIA4kwY40DVWCw8AZh9yk45ZwXN7+8g4uq4pnqVV6zsM6g4cdKB
-	4dwU2us=
-X-Sasl-enc: kAtmiA5PIjMBBiMvOOmLUTNKa5VyouZvXG6ap+zVUeRI 1466149578
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=d5WS
+	S8X1w9OoMMe0UnekJV6aY3k=; b=UPQTUTEPK90aKpEvVAaZQG0uD9yjSpbNT26t
+	BriaqsyyJeFrU3Gwajf5IPBDH2j+eNenckNBQhU5WBfQjUbGUg/Hq4/NRP9NIxaa
+	PejJl3WWw8uXbcuUJHnI1bnZMmDpZhlbIkTP+sDkmsLvJjBa2V8WtGDiArwJ9TMi
+	dKk0Hg8=
+X-Sasl-enc: b08W8mnLjyXUhIEQ7732uQfwdnhdI7j8jU0FQ4KyRB+Z 1466149577
 Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id D77A0CCD34;
-	Fri, 17 Jun 2016 03:46:18 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id A3162F29F3;
+	Fri, 17 Jun 2016 03:46:17 -0400 (EDT)
 From:	Michael J Gruber <git@drmicha.warpmail.net>
 To:	git@vger.kernel.org
-Subject: [PATCH 4/5] Documentation/technical: signed merge tag format
-Date:	Fri, 17 Jun 2016 09:46:11 +0200
-Message-Id: <70e8fcb0e9cb73976b643aad1f72f1f0f41c553b.1466148698.git.git@drmicha.warpmail.net>
+Subject: [PATCH 3/5] Documentation/technical: signed commit format
+Date:	Fri, 17 Jun 2016 09:46:10 +0200
+Message-Id: <d2e095403e10e128c79cfb3421151c2e3acd79bb.1466148698.git.git@drmicha.warpmail.net>
 X-Mailer: git-send-email 2.9.0.382.g87fd384
 In-Reply-To: <cover.1466148698.git.git@drmicha.warpmail.net>
 References: <cover.1466148698.git.git@drmicha.warpmail.net>
@@ -52,90 +52,64 @@ X-Mailing-List:	git@vger.kernel.org
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- Documentation/technical/signature-format.txt | 74 ++++++++++++++++++++++++++++
- 1 file changed, 74 insertions(+)
+ Documentation/technical/signature-format.txt | 48 ++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
 diff --git a/Documentation/technical/signature-format.txt b/Documentation/technical/signature-format.txt
-index 8ae1dc3..7afd403 100644
+index 833afff..8ae1dc3 100644
 --- a/Documentation/technical/signature-format.txt
 +++ b/Documentation/technical/signature-format.txt
-@@ -110,3 +110,77 @@ signed commit
+@@ -62,3 +62,51 @@ signed tag
  
- signed commit message body
+ signed tag message body
  ----
 +
-+== Mergetag signatures
++== Commit signatures
 +
-+- created by: `git merge` on signed tag
-+- payload/embedding: the whole signed tag object is embedded into
-+  the (merge) commit object as header entry `mergetag`
-+- example: merge of the signed tag `signedtag` as above
++- created by: `git commit -S`
++- payload: commit object
++- embedding: header entry `gpgsig`
++  (content is preceded by a space)
++- example: commit with subject `signed commit`
 +
 +----
-+tree c7b1cff039a93f3600a1d18b82d26688668c7dea
-+parent c33429be94b5f2d3ee9b0adad223f877f174b05d
++tree eebfed94e75e7760540d1485c740902590a00332
 +parent 04b871796dc0420f8e7561a895b52484b701d51a
-+author A U Thor <author@example.com> 1465982009 +0000
-+committer C O Mitter <committer@example.com> 1465982009 +0000
-+mergetag object 04b871796dc0420f8e7561a895b52484b701d51a
-+ type commit
-+ tag signedtag
-+ tagger C O Mitter <committer@example.com> 1465981006 +0000
-+ 
-+ signed tag
-+ 
-+ signed tag message body
-+ -----BEGIN PGP SIGNATURE-----
++author A U Thor <author@example.com> 1465981137 +0000
++committer C O Mitter <committer@example.com> 1465981137 +0000
++gpgsig -----BEGIN PGP SIGNATURE-----
 + Version: GnuPG v1
 + 
-+ iQEcBAABAgAGBQJXYRhOAAoJEGEJLoW3InGJklkIAIcnhL7RwEb/+QeX9enkXhxn
-+ rxfdqrvWd1K80sl2TOt8Bg/NYwrUBw/RWJ+sg/hhHp4WtvE1HDGHlkEz3y11Lkuh
-+ 8tSxS3qKTxXUGozyPGuE90sJfExhZlW4knIQ1wt/yWqM+33E9pN4hzPqLwyrdods
-+ q8FWEqPPUbSJXoMbRPw04S5jrLtZSsUWbRYjmJCHzlhSfFWW4eFd37uquIaLUBS0
-+ rkC3Jrx7420jkIpgFcTI2s60uhSQLzgcCwdA2ukSYIRnjg/zDkj8+3h/GaROJ72x
-+ lZyI6HWixKJkWw8lE9aAOD9TmTW9sFJwcVAzmAuFX2kUreDUKMZduGcoRYGpD7E=
-+ =jpXa
++ iQEcBAABAgAGBQJXYRjRAAoJEGEJLoW3InGJ3IwIAIY4SA6GxY3BjL60YyvsJPh/
++ HRCJwH+w7wt3Yc/9/bW2F+gF72kdHOOs2jfv+OZhq0q4OAN6fvVSczISY/82LpS7
++ DVdMQj2/YcHDT4xrDNBnXnviDO9G7am/9OE77kEbXrp7QPxvhjkicHNwy2rEflAA
++ zn075rtEERDHr8nRYiDh8eVrefSO7D+bdQ7gv+7GsYMsd2auJWi1dHOSfTr9HIF4
++ HJhWXT9d2f8W+diRYXGh4X0wYiGg6na/soXc+vdtDYBzIxanRqjg8jCAeo1eOTk1
++ EdTwhcTZlI0x5pvJ3H0+4hA2jtldVtmPM4OTB0cTrEWBad7XV6YgiyuII73Ve3I=
++ =jKHM
 + -----END PGP SIGNATURE-----
 +
-+Merge tag 'signedtag' into downstream
++signed commit
 +
-+signed tag
-+
-+signed tag message body
-+
-+# gpg: Signature made Wed Jun 15 08:56:46 2016 UTC using RSA key ID B7227189
-+# gpg: Good signature from "Eris Discordia <discord@example.net>"
-+# gpg: WARNING: This key is not certified with a trusted signature!
-+# gpg:          There is no indication that the signature belongs to the owner.
-+# Primary key fingerprint: D4BE 2231 1AD3 131E 5EDA  29A4 6109 2E85 B722 7189
++signed commit message body
 +----
 +
-+- verify with: verification is embedded in merge commit message by default,
-+  alternatively with `git show --show-signature`:
++- verify with: `git verify-commit [-v]` (or `git show --show-signature`)
 +
 +----
-+commit 9863f0c76ff78712b6800e199a46aa56afbcbd49
-+merged tag 'signedtag'
-+gpg: Signature made Wed Jun 15 10:56:46 2016 CEST using RSA key ID B7227189
++gpg: Signature made Wed Jun 15 10:58:57 2016 CEST using RSA key ID B7227189
 +gpg: Good signature from "Eris Discordia <discord@example.net>"
 +gpg: WARNING: This key is not certified with a trusted signature!
 +gpg:          There is no indication that the signature belongs to the owner.
 +Primary key fingerprint: D4BE 2231 1AD3 131E 5EDA  29A4 6109 2E85 B722 7189
-+Merge: c33429b 04b8717
-+Author: A U Thor <author@example.com>
-+Date:   Wed Jun 15 09:13:29 2016 +0000
++tree eebfed94e75e7760540d1485c740902590a00332
++parent 04b871796dc0420f8e7561a895b52484b701d51a
++author A U Thor <author@example.com> 1465981137 +0000
++committer C O Mitter <committer@example.com> 1465981137 +0000
 +
-+    Merge tag 'signedtag' into downstream
-+    
-+    signed tag
-+    
-+    signed tag message body
-+    
-+    # gpg: Signature made Wed Jun 15 08:56:46 2016 UTC using RSA key ID B7227189
-+    # gpg: Good signature from "Eris Discordia <discord@example.net>"
-+    # gpg: WARNING: This key is not certified with a trusted signature!
-+    # gpg:          There is no indication that the signature belongs to the owner.
-+    # Primary key fingerprint: D4BE 2231 1AD3 131E 5EDA  29A4 6109 2E85 B722 7189
++signed commit
++
++signed commit message body
 +----
 -- 
 2.9.0.382.g87fd384
