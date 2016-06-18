@@ -1,135 +1,117 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DDD11FEAA
-	for <e@80x24.org>; Sat, 18 Jun 2016 05:36:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5528B1F744
+	for <e@80x24.org>; Sat, 18 Jun 2016 10:03:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750977AbcFRFgo (ORCPT <rfc822;e@80x24.org>);
-	Sat, 18 Jun 2016 01:36:44 -0400
-Received: from mail-lf0-f42.google.com ([209.85.215.42]:35672 "EHLO
-	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750886AbcFRFgn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jun 2016 01:36:43 -0400
-Received: by mail-lf0-f42.google.com with SMTP id l188so9627302lfe.2
-        for <git@vger.kernel.org>; Fri, 17 Jun 2016 22:36:42 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ieee-org.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=bWPB5B8SOeWZwg6FblNH6hYA0Jb1I9ZLRN4q7XvFkGQ=;
-        b=vtLQgDMd/iq/A0r0rvPoXh9/UEhF60HR7qqW4PGv+ODM7eQEzbm39r2lAw17kW2exs
-         rkDb8otc5U9EyEgj9KuG2dS9Y8ET9vXCpyoP339NkL56DcVBB7GCICi46PdyvWualVvn
-         +K3td1He777u6SvBj94Rmc8m0stIVeVmtpRD50CjZZEW2aJiwyNpC9Ht/VQFN4ianwr+
-         9USk05LkRfB1ezRQQZ/pKbD/oij7IlCOHBFrhaXYwK7CsesYduv9lJZ9AhEvftYOBomI
-         HTKUPnCCSztDy3CHkt6S2tqD/I8nAAPC3itHapZFTXpzNzjBEM4GTY4UZbQj5KkrDUJU
-         +1Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=bWPB5B8SOeWZwg6FblNH6hYA0Jb1I9ZLRN4q7XvFkGQ=;
-        b=CmbUTAGMKhe7Al6I8yF4cw8triPqpRgXGAj50n4W2b8VuYUsllICxCrlsLFvrGubUW
-         pjuBEdhND/XbBNwnkVESM12fCy6gHDZongctqbM2xo4GfLRbXx6sUNjlV6lzInvBTvyS
-         BCgIhv72v3bhH81AgROIcpGY7rNDaHq+QR3/dVX+w1o3e2wvu0N2TvAFrefn2BCQV1bW
-         K4qUBPg9woGG1JYrvFt42zm0pEByS1xsunMFh+CGe89GoYn4WIx6Ta+1ihLmCXJIZqSM
-         vCoZXF7Yon5JYSTF4NXoBGcv5Zox6uP/BRJ/A1Zdr1h+P0k+pPo6uu/a0YRv0oP2iw2c
-         XsQw==
-X-Gm-Message-State: ALyK8tI30mVqitFIBZyr9aKY6VDPiEw1jr1jz3LSK9rU+I3isZ7X0JJL4qAs3pJAhBocegbT/9IEb3xImmvZWRUi
+	id S1751061AbcFRKDx (ORCPT <rfc822;e@80x24.org>);
+	Sat, 18 Jun 2016 06:03:53 -0400
+Received: from mout.gmx.net ([212.227.15.19]:51867 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750883AbcFRKDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jun 2016 06:03:52 -0400
+Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M3S2C-1bW10D0bbs-00r1NV; Sat, 18 Jun 2016 12:03:45
+ +0200
+Date:	Sat, 18 Jun 2016 12:03:44 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	git@vger.kernel.org
+cc:	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/5] Let log-tree and friends respect diffopt's `file`
+ field
+Message-ID: <cover.1466244194.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-X-Received: by 10.25.168.202 with SMTP id r193mr1845371lfe.85.1466228201120;
- Fri, 17 Jun 2016 22:36:41 -0700 (PDT)
-Received: by 10.25.156.83 with HTTP; Fri, 17 Jun 2016 22:36:41 -0700 (PDT)
-In-Reply-To: <20160617150137.GA9197@sigill.intra.peff.net>
-References: <CABYP2JZU5wqxCK1B7b_fDB0Lqz4-7a_Erb5dHKReZHQecxC8QQ@mail.gmail.com>
-	<20160616121353.GB15988@sigill.intra.peff.net>
-	<CABYP2JZ5nNHh_cRkgpRMkn7Qfs4zAjy+wfaputJ0CvZ-M4FW6w@mail.gmail.com>
-	<20160617150137.GA9197@sigill.intra.peff.net>
-Date:	Sat, 18 Jun 2016 11:06:41 +0530
-Message-ID: <CABYP2JZ7jek5kWqx+1CZQB0AQCngwtEYr2YJc6QiOMdGFMgUOw@mail.gmail.com>
-Subject: Re: URL rewrite in local config unable to override global config rule
-From:	Saksham Saxena <saksham.saxena.1994@ieee.org>
-To:	Jeff King <peff@peff.net>
-Cc:	git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:T44PDr+1BjgxvpnzYSg8lQoJwDyed3qKzhafxbWVreRlHzzbYZ5
+ Mk+F+4NGdcuxYxKW2NP8GLZMhzZC6AXaZXiU+bNGOFhKhxArUtwS2hcrYhG3K5bgHR3Qa0I
+ Fqo+xNb0RvIp5s831B6qCtj+hKJH/WLV+aj6eQBxMb9xM8jrXqhMboxuAOpaWrVuF+6VAlP
+ ZOoeABZuR5G5lK1EIyYxA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:jvFc/Lp70ig=:ij1+ORnjW4Podz7HgWZtZr
+ Jnkty4ELAOvSbiyJ5AA96XuYBQ6RO85b9BitkYnd+Wsuh1EvmG6jwdhbbicBeQZJaXixgbCej
+ jtFLjUKGIb13Km1qMbgL1oFAo0JFzhmaKYfadaqZR/MW+aWXhT/lBIUs0JjjvDZUkdEfKDoDo
+ wfkf6adNEC+0gbxkwx+VfrS3km6bio6slDjPtOOhUgKcl46PMV4nQ0GmRU2S6tYHGCqhFa1CZ
+ seGPzuJR5BReuwZ6ymPMkxqXy6hobGyzqUxZMXa+Gwq6gnF4Yzh/CkfzsDPKpPxjX9sxPTDvw
+ oVn7i8mUSXhXV6i8CU7TmcYti2dlxQMID2+x2IoX2Mcvu5Fs4qUefWgo9RBNlecpJusKcqEP3
+ E5PhjstHPIRmYOmV0b+3XYUm64PNaF8NmzotWKqrd2fH7DSL2AkfhFBfyGv1TcPJ0Mn3eOwIv
+ 97nqN+prORzunnE0BD/T6yywHaCrQmbIYpOXJ33erG+CjTWL2S/brSF7pbnRbZNI3dCcI3+Hy
+ 0HH1CIV0SvBuUYhHzx+dVGR2xNXSh0MLD0x0nQe7jSnMt/ElBL86DYtS0pQ5zgZXzWe8JSk9S
+ 18T9WeMJqK0eBONA55N0ML2OKwUvazRm9iPQSEl6U330A6IbUIYki6KpQBoUGOTfTovZ6lJSQ
+ CjgsJte+SeCun4hGNRx4gtV+zwVaEhbudvTgINCgXQxCZBd6o9pPiFW9fDv890YWwSBagCVj+
+ oNwytxWvIiIQSV3EMUQEZGdHjrSusoY/mc8ybH5Y8pUPL6cxEKqxFcGfqUTwjs9yiNEPg9R6a
+ kjt/IlD
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Thanks a lot Peff. This cleared a lot of things. Would it be okay if I
-cite some parts of this conversation on my personal blog?
+The idea is to allow callers to redirect log-tree's output to a file
+without having to freopen() stdout (which would modify global state,
+a big no-no-no for library functions).
 
-On Fri, Jun 17, 2016 at 8:31 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Jun 17, 2016 at 08:05:47PM +0530, Saksham Saxena wrote:
->
->> > ..even if I have an existing "url.git://.insteadOf=https://". But I
->> > could believe that having other config confuses things. The
->> > url-rewriting is not "last one wins", but rather that we try all of
->> >
->> > > them, and the longest match wins.
->>
->> Longest? Could you elaborate please?
->
-> The one that matches the longest number of characters. So
-> "https://example.com" is a preferred match over "https://".
->
-> I don't think that's what's going on here, though.
->
->> Here you go (https://gist.github.com/sakshamsaxena/a1cee9c39ddc127ae659e92d02d58f0b).
->> The commands are run in that sequence.
->
-> OK, so you have:
->
->   url.git://.insteadof=https://
->
-> in your initial config, to convert https URLs to git.
->
-> Later you add:
->
->   url.https://.insteadof=git://
->
-> to do the opposite.
->
-> The URL in your config uses http:
->
->   remote.origin.url=https://github.com/sakshamsaxena/sails-hook-jbvcs.wiki.git
->
-> And when you push, this gets converted to "git://".
->
-> I think this is the expected behavior, due to the first insteadOf, which
-> converts https to git. Both rules are "active", in the sense that the
-> later one does not replace the former; together they make a list of
-> rules to try applying.
->
-> Git doesn't recursively apply insteadOf transformations. So the "convert
-> https to git" rule triggers, and we stop. The "convert git to https" one
-> doesn't trigger initially (because we are already https). And if we were
-> to apply rules recursively in this case, it would loop infinitely.
->
-> So I this is all operating as intended. And what you really want is a
-> way to say "erase any earlier rewrite rules; I do not want them applied
-> in this repository". There's currently not any way to do that.
->
-> For other "multi-valued configs" like this one (i.e., ones that form a
-> list rather than overriding earlier values), we have started using the
-> convention that assigning the empty value resets the list. But this
-> particular config key has not learned that trick yet, so it would
-> require a patch to git.
->
->> > You should be able to clone, fetch, or push wiki repositories using any
->> > of the normal protocols. So:
->> >
->> >   git@github.com:username/repo.wiki.git
->> >
->> > should work. Likewise, git:// will work if the repository is public, but
->> >
->> > > you cannot push over it.
->>
->> True. Can't push over git:// and that's why I'm limited to https://
->
-> You can over ssh, though (which I thought you said earlier was your
-> preferred protocol).
->
-> -Peff
+I reviewed log-tree.c, graph.c, line-log.c, builtin/shortlog.c and
+builtin/log.c line by line to ensure that all calls that assumed stdout
+previously now use the `file` field instead, of course. I would
+welcome additional eyes to go over the code to confirm that I did not
+miss anything.
 
-Thanks and Regards
-Saksham Saxena
+This patch series ends up removing the freopen() call in the
+format-patch command, but that is only a by-product. The ulterior motive
+behind this series is to allow the sequencer to write a `patch` file as
+part of my endeavor to move large chunks of rebase -i into a builtin.
+
+Speaking of said endeavor: it is going a lot slower than I would like,
+but I really need rebase -i to be robust. To that end, I not only review
+and re-review my patches frequently, I also use a cross-validation
+technique inspired by my original ll-merge validation as well as
+GitHub's Scientist library: I taught rebase -i to run every interactive
+rebase twice, once with the original shell script's code, and once with
+the builtin rebase--helper, and then to verify that the end result is as
+similar as can be expected (the commit dates will differ most of the
+time, of course).
+
+It is a bit tedious, of course, because I have to resolve every merge
+conflict twice, I have to reword everything twice (identically!), and I
+have to wait longer for the rebase to finish. It is worth it, though,
+because I really need rebase -i to be robust, as it is the center piece
+of almost all of my workflows.
+
+I organized the patch series into a thicket of branches, to make it
+easier to review them; In addition to this here patch series, I plan to
+submit 11 separate, partially interdependent series, resubmit another
+one, and I already submitted a couple of patches earlier that were
+integrated or replaced by superior solutions (thanks, Peff!). Skipping
+the temporary patches (e.g. for cross-validation), that leaves me with
+99 patches to submit in total (sing with me: "99 patches of code to
+submit, 99 patches of code, ...").
+
+I was curious just how much these patches could accelerate rebase -i, so
+I disabled the cross-validation temprarily and let Travis measure the
+performance improvements via the t/perf test that was already merged to
+`master`. Look for "3404.2" in this build's logs:
+https://travis-ci.org/git/git/builds/138277774
+
+It looks like a 3x speedup on Linux, a 4x speedup on MacOSX and my local
+measurements suggest a >5x speed-up on Windows.
+
+
+Johannes Schindelin (5):
+  log-tree: respect diffopt's configured output file stream
+  line-log: respect diffopt's configured output file stream
+  graph: respect the diffopt.file setting
+  shortlog: support outputting to streams other than stdout
+  format-patch: avoid freopen()
+
+ builtin/log.c      | 71 +++++++++++++++++++++++++++---------------------------
+ builtin/shortlog.c | 13 ++++++----
+ graph.c            | 30 +++++++++++++----------
+ line-log.c         | 34 +++++++++++++-------------
+ log-tree.c         | 65 +++++++++++++++++++++++++------------------------
+ shortlog.h         |  1 +
+ 6 files changed, 111 insertions(+), 103 deletions(-)
+
+Published-As: https://github.com/dscho/git/releases/tag/diffopt.file-v1
+-- 
+2.9.0.118.gce770ba.dirty
+
+base-commit: 05219a1276341e72d8082d76b7f5ed394b7437a4
