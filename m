@@ -1,23 +1,23 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4057320179
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5094B1FEAA
 	for <e@80x24.org>; Sat, 18 Jun 2016 04:15:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751243AbcFREPl (ORCPT <rfc822;e@80x24.org>);
-	Sat, 18 Jun 2016 00:15:41 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:64356 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751239AbcFREPk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Jun 2016 00:15:40 -0400
-X-AuditID: 12074411-e3fff70000000955-8c-5764caebe86c
+	id S1751250AbcFREPn (ORCPT <rfc822;e@80x24.org>);
+	Sat, 18 Jun 2016 00:15:43 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:52499 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751239AbcFREPm (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Jun 2016 00:15:42 -0400
+X-AuditID: 12074414-62bff700000008e6-c7-5764caed45ce
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 07.9A.02389.BEAC4675; Sat, 18 Jun 2016 00:15:39 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id D0.B9.02278.DEAC4675; Sat, 18 Jun 2016 00:15:41 -0400 (EDT)
 Received: from michael.fritz.box (p4FEEA991.dip0.t-ipconnect.de [79.238.169.145])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u5I4FLJi029401
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u5I4FLJj029401
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 18 Jun 2016 00:15:37 -0400
+	Sat, 18 Jun 2016 00:15:39 -0400
 From:	Michael Haggerty <mhagger@alum.mit.edu>
 To:	Junio C Hamano <gitster@pobox.com>,
 	David Turner <dturner@twopensource.com>
@@ -27,68 +27,86 @@ Cc:	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 07/13] entry_resolves_to_object(): rename function from ref_resolves_to_object()
-Date:	Sat, 18 Jun 2016 06:15:13 +0200
-Message-Id: <97f6e114a1c7efa96c915b4e3d99326bd62c1609.1466222921.git.mhagger@alum.mit.edu>
+Subject: [PATCH v3 08/13] ref_resolves_to_object(): new function
+Date:	Sat, 18 Jun 2016 06:15:14 +0200
+Message-Id: <c83216533b1411628922762117ee8312593c53b5.1466222921.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <cover.1466222921.git.mhagger@alum.mit.edu>
 References: <cover.1466222921.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNIsWRmVeSWpSXmKPExsUixO6iqPv6VEq4wdt5ihbzN51gtOi60s1k
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrDIsWRmVeSWpSXmKPExsUixO6iqPv2VEq4wclTohbzN51gtOi60s1k
 	0dB7hdni9or5zBbdU94yWvxo6WG2mHnV2uLMm0ZGBw6Pv+8/MHnsnHWX3eNZ7x5Gj4uXlD32
-	L93G5rH4gZfHguf32T0+b5IL4IjitklKLCkLzkzP07dL4M7Yu1K1oJG7on/yfaYGxk8cXYyc
-	HBICJhK3dy9i62Lk4hAS2MoosfV3MxtIQkjgJJPEtadgRWwCuhKLepqZQGwRgQiJhlctjCAN
-	zAJzmCRuP+xkBkkICyRLvNr2nB3EZhFQlZj6fTYriM0rECVx9McnRohtchKXpz8AW8ApYCGx
-	YMs+oKEcQMvMJfYuNpzAyLOAkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka6pXm5miV5qSukm
-	RkjACe5gnHFS7hCjAAejEg9vgH1KuBBrYllxZe4hRkkOJiVR3iuVQCG+pPyUyozE4oz4otKc
-	1OJDjBIczEoivFtOAOV4UxIrq1KL8mFS0hwsSuK8fEvU/YQE0hNLUrNTUwtSi2CyMhwcShK8
-	FieBGgWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJB4R9fDIwAkBQP0F59kHbe4oLE
-	XKAoROspRkUpcd4FIAcJgCQySvPgxsLSyCtGcaAvhXnXgbTzAFMQXPcroMFMQIM15yWDDC5J
-	REhJNTAGW5WuluOqe7ep291a7+bkCcK6x9f4Bl+ae0PYMoFjydZHG2y/9M+oDpy5MrReuzay
-	mNWF4+ryt5ZrLXmP6d40VCnaNsf1xSKjwEz+jgevuGKLplVYbOYpSrjPV62s0FyfJjI1f6HN
-	1MxS/0WTOX2DtPdVXWLQYsiV/KvaPU2r+YeqZTtvnRJLcUaioRZzUXEiAKu3izP+AgAA
+	L93G5rH4gZfHguf32T0+b5IL4IjitklKLCkLzkzP07dL4M7YtzGo4DFvxaqLkxkbGP9ydTFy
+	ckgImEjM+rqWrYuRi0NIYCujxO8bPVDOSSaJjsmnWECq2AR0JRb1NDOB2CICERINr1oYQYqY
+	BeYwSdx+2MkMkhAWcJDoWbUCrIFFQFVi1bE9YA28AlESm86sZoFYJydxefoDNhCbU8BCYsGW
+	fUA1HEDbzCX2LjacwMizgJFhFaNcYk5prm5uYmZOcWqybnFyYl5eapGuhV5uZoleakrpJkZI
+	yInsYDxyUu4QowAHoxIPb4B9SrgQa2JZcWXuIUZJDiYlUd4rlUAhvqT8lMqMxOKM+KLSnNTi
+	Q4wSHMxKIrxbTgDleFMSK6tSi/JhUtIcLErivN8Wq/sJCaQnlqRmp6YWpBbBZGU4OJQkeJee
+	BGoULEpNT61Iy8wpQUgzcXCCDOeSEilOzUtJLUosLcmIB0VAfDEwBkBSPEB7N4G08xYXJOYC
+	RSFaTzEqSonzLgA5SAAkkVGaBzcWlkheMYoDfSnM+wKknQeYhOC6XwENZgIarDkvGWRwSSJC
+	SqqBMTX02Aq3h867dn3jMZ7JGNmldWjRxpv+QTqc5xYzMdbtf71zhQ3DhLMTJJp2rrBm6n+q
+	ztGwbVOcjGHTtkzzJddCWG/3hx1U/hzlnur0gPG/wLaWu6vcGvumLe7VyrxUYLb/zcFZDSfY
+	Ixe/4q558zs18EX4n42VyjlVbxbf6Jy995CnzpobCUosxRmJhlrMRcWJABw7poH/AgAA
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Free up the old name for a more general purpose.
+Extract new function ref_resolves_to_object() from
+entry_resolves_to_object(). It can be used even if there is no ref_entry
+at hand.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ refs/files-backend.c | 33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index b563a7e..c24a78e 100644
+index c24a78e..62280b5 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -517,7 +517,7 @@ static void sort_ref_dir(struct ref_dir *dir)
-  * an object in the database.  Emit a warning if the referred-to
-  * object does not exist.
+@@ -513,19 +513,32 @@ static void sort_ref_dir(struct ref_dir *dir)
+ }
+ 
+ /*
+- * Return true iff the reference described by entry can be resolved to
+- * an object in the database.  Emit a warning if the referred-to
+- * object does not exist.
++ * Return true if refname, which has the specified oid and flags, can
++ * be resolved to an object in the database. If the referred-to object
++ * does not exist, emit a warning and return false.
++ */
++static int ref_resolves_to_object(const char *refname,
++				  const struct object_id *oid,
++				  unsigned int flags)
++{
++	if (flags & REF_ISBROKEN)
++		return 0;
++	if (!has_sha1_file(oid->hash)) {
++		error("%s does not point to a valid object!", refname);
++		return 0;
++	}
++	return 1;
++}
++
++/*
++ * Return true if the reference described by entry can be resolved to
++ * an object in the database; otherwise, emit a warning and return
++ * false.
   */
--static int ref_resolves_to_object(struct ref_entry *entry)
-+static int entry_resolves_to_object(struct ref_entry *entry)
+ static int entry_resolves_to_object(struct ref_entry *entry)
  {
- 	if (entry->flag & REF_ISBROKEN)
- 		return 0;
-@@ -563,7 +563,7 @@ static int do_one_ref(struct ref_entry *entry, void *cb_data)
- 		return 0;
+-	if (entry->flag & REF_ISBROKEN)
+-		return 0;
+-	if (!has_sha1_file(entry->u.value.oid.hash)) {
+-		error("%s does not point to a valid object!", entry->name);
+-		return 0;
+-	}
+-	return 1;
++	return ref_resolves_to_object(entry->name,
++				      &entry->u.value.oid, entry->flag);
+ }
  
- 	if (!(data->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
--	      !ref_resolves_to_object(entry))
-+	      !entry_resolves_to_object(entry))
- 		return 0;
- 
- 	/* Store the old value, in case this is a recursive call: */
-@@ -2228,7 +2228,7 @@ static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
- 		return 0;
- 
- 	/* Do not pack symbolic or broken refs: */
--	if ((entry->flag & REF_ISSYMREF) || !ref_resolves_to_object(entry))
-+	if ((entry->flag & REF_ISSYMREF) || !entry_resolves_to_object(entry))
- 		return 0;
- 
- 	/* Add a packed ref cache entry equivalent to the loose entry. */
+ /*
 -- 
 2.8.1
 
