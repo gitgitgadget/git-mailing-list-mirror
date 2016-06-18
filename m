@@ -1,85 +1,73 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E5371FEAA
-	for <e@80x24.org>; Sat, 18 Jun 2016 00:27:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A90781FEAA
+	for <e@80x24.org>; Sat, 18 Jun 2016 00:58:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754991AbcFRA1Z (ORCPT <rfc822;e@80x24.org>);
-	Fri, 17 Jun 2016 20:27:25 -0400
-Received: from mail-it0-f52.google.com ([209.85.214.52]:38617 "EHLO
-	mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754000AbcFRA1Y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2016 20:27:24 -0400
-Received: by mail-it0-f52.google.com with SMTP id h190so4861825ith.1
-        for <git@vger.kernel.org>; Fri, 17 Jun 2016 17:27:24 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=37949nHc8J6u56vOMgMm11NnTbfQm+YoTV0ZwW4Ul2k=;
-        b=g/htYziacSrkZQCVpdn59NIPTJxRnJD2GSvBtbgb5pAp/M6kYvjSz4Tv8RVrLWwvEC
-         4++7i26/JzZni4Q5uOAifkBOd31G70jEtIU522MrNtqK+hGb71zsLVbGtDwukqIto33P
-         mBjFG7DaOf7SNI9nSQM52rnfeO4Fr2qqOs4KUcJcvjKS72q4+DY1eHGxiu7x7TsMvc2e
-         KqshLK3gtXLa5W7gkpzpCKQu4gHhI1jfvMLzWGBb7H8dKq3ftRznpykwFoWqHYUDMm3w
-         gH2LqrV+Egk0lG6EP+xt+A/x5CpzXWlLvu3scH77zNJfhaDHPnCEVJtniknBmoyIaIbQ
-         hkgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=37949nHc8J6u56vOMgMm11NnTbfQm+YoTV0ZwW4Ul2k=;
-        b=eWF1SxXGPYYVId/IeWe1pEJO72QDBW8xaSD3q8VeZyguHKC4h6NivjQA5xDkAtpy53
-         UY4NwQM3teC9LWH69mEc3HVMg2Ea1DFBlVvl/+wuhMSBxTzrWWylDmNb02TcmD1+AmBU
-         4s53Bq4Cnp8g2SEEX7shrXtHMgS6sqyTvHW+M6PaFOsjo4gB/aet0ZlYZRpHf67vnjqU
-         cDF7BzRVRV5ax7VyV36NbNpshruyu/ZSLi/Pwa51bvSZBm9/UHw734Sk56p/aHNAoOhV
-         byTmeu6qgli0iUXP27nB/gj5WAuVXv/fTx0LlobpoYD1wp0I3vwKvuSGA4rIiKFX218+
-         0fBA==
-X-Gm-Message-State: ALyK8tLwmDUuLUEUYJvL5XiSpiauPjHis5J9PWEJWaqyxpVHBFW4O0o9iU9ZxoXPy1DXElPaYdHysEfEVwPzvA==
-X-Received: by 10.36.130.130 with SMTP id t124mr1764407itd.42.1466209643872;
- Fri, 17 Jun 2016 17:27:23 -0700 (PDT)
+	id S1752024AbcFRA6P (ORCPT <rfc822;e@80x24.org>);
+	Fri, 17 Jun 2016 20:58:15 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:41051 "EHLO
+	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751103AbcFRA6P (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2016 20:58:15 -0400
+Received: from [10.0.2.15] ([84.92.139.254])
+	by avasout04 with smtp
+	id 80yB1t0015VX2mk010yCLK; Sat, 18 Jun 2016 01:58:13 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=K//fZHiI c=1 sm=1 tr=0
+ a=RCQFcU9wfaUQolwYLdiqXg==:117 a=RCQFcU9wfaUQolwYLdiqXg==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=9FqDv352sWjqah6v6PIA:9 a=QEXdDO2ut3YA:10
+X-AUTH:	ramsayjones@:2500
+Subject: Re: [PATCH] run-command: mark file-local symbols static
+To:	Jeff King <peff@peff.net>
+References: <57646524.7040708@ramsayjones.plus.com>
+ <20160617233309.GB26564@sigill.intra.peff.net>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+From:	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <57649CA1.8010109@ramsayjones.plus.com>
+Date:	Sat, 18 Jun 2016 01:58:09 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
 MIME-Version: 1.0
-Received: by 10.64.173.167 with HTTP; Fri, 17 Jun 2016 17:26:54 -0700 (PDT)
-In-Reply-To: <xmqq4m8rz9qr.fsf@gitster.mtv.corp.google.com>
-References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
- <1454724190-14063-1-git-send-email-pclouds@gmail.com> <xmqq4m8rz9qr.fsf@gitster.mtv.corp.google.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Sat, 18 Jun 2016 07:26:54 +0700
-Message-ID: <CACsJy8CSVvZfwjG+zAEpG6tAWYAWVkrkz4RP32Hrr9O1A_8ZMg@mail.gmail.com>
-Subject: Re: [PATCH v6 00/11] Fix icase grep on non-ascii
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <20160617233309.GB26564@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sat, Jun 18, 2016 at 6:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
->
->> v6 fixes comments from Ramsay and Eric. Interdiff below.
->
-> Another thing I noticed with this is that the non-ascii test breaks
-> when run under dash (but passes under bash).  You need to have is_IS
-> locale on the system to see the breakage, it seems (which is why I
-> didn't see it so far).
 
-Is it a special version, maybe from debian? It works for me on gentoo.
 
-> ~/w/git/temp/t $ equery  --quiet list dash
-app-shells/dash-0.5.8.2
-> ~/w/git/temp/t $ dash ./t7812-grep-icase-non-ascii.sh
-# lib-gettext: Found 'is_IS.utf8' as an is_IS UTF-8 locale
-# lib-gettext: Found 'is_IS.iso88591' as an is_IS ISO-8859-1 locale
-ok 1 - setup
-ok 2 - grep literal string, no -F
-ok 3 - grep pcre utf-8 icase
-ok 4 - grep pcre utf-8 string with "+"
-ok 5 - grep literal string, with -F
-ok 6 - grep string with regex, with -F
-ok 7 - pickaxe -i on non-ascii
-# passed all 7 test(s)
-1..7
--- 
-Duy
+On 18/06/16 00:33, Jeff King wrote:
+> On Fri, Jun 17, 2016 at 10:01:24PM +0100, Ramsay Jones wrote:
+> 
+>> If you need to re-roll your 'jk/gpg-interface-cleanup' branch, could
+>> you please squash this into the relevant patch (commit 74287e34,
+>> "run-command: add pipe_command helper", 16-06-2016).
+> 
+> Thanks, yes.
+> 
+>> BTW, also on that branch, commit 6fec0a89 ("verify_signed_buffer: use
+>> tempfile object", 16-06-2016) removes the last use of the git_mkstemp()
+>> function. Should it be removed?
+> 
+> I think so. We still have git_mkstemp_mode and friends, so in that sense
+> this is part of a family of commands that somebody might use again. But:
+> 
+>   1. Unlike the others in the family, where we implement mkstemp
+>      ourselves, this one uses the system mkstemp. Which probably behaves
+>      in totally the same way, but it's kind of weird and oddball.
+> 
+>   2. I think we should be steering people towards tempfile.c anyway, for
+>      its auto-cleanup properties.
+> 
+> Want to do a patch on top?
+
+OK, will do. (tomorrow, it is 2am here ...)
+
+ATB,
+Ramsay Jones
+
+
