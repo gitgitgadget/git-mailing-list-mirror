@@ -1,95 +1,80 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B47B51F744
-	for <e@80x24.org>; Sat, 18 Jun 2016 10:50:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2CD920189
+	for <e@80x24.org>; Sat, 18 Jun 2016 12:25:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751204AbcFRKtS (ORCPT <rfc822;e@80x24.org>);
-	Sat, 18 Jun 2016 06:49:18 -0400
-Received: from mout.gmx.net ([212.227.15.19]:61061 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751067AbcFRKtR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jun 2016 06:49:17 -0400
-Received: from virtualbox ([37.24.143.84]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LiDKt-1bjPcx256x-00nUcb; Sat, 18 Jun 2016 12:49:12
- +0200
-Date:	Sat, 18 Jun 2016 12:49:11 +0200 (CEST)
-From:	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+	id S1751559AbcFRMZY (ORCPT <rfc822;e@80x24.org>);
+	Sat, 18 Jun 2016 08:25:24 -0400
+Received: from mail-pa0-f67.google.com ([209.85.220.67]:33916 "EHLO
+	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751129AbcFRMZX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jun 2016 08:25:23 -0400
+Received: by mail-pa0-f67.google.com with SMTP id us13so7557057pab.1
+        for <git@vger.kernel.org>; Sat, 18 Jun 2016 05:25:23 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=chP+cDa2Cb3VaqrkBnBkUzl4wMKEdKgnAsOtPkHFbkY=;
+        b=aKgvR4bwVbCosb/TbtpV1XXAsIJ0kzQaC6JuKHAtJMj24rw876SlTa9SoL6rQjzQm+
+         VXgFB9j/3nXbzwCCHLcGUwPIomdTR6udrTMF/f+PRLnYmuX0QzegYFL/5D/6Dnpl83+T
+         KZqnaOG38QrbfLwnjDTMHikta0qhhPlkJ+484u0o9FeBqVFIIbc+9Uhz3MJljrabTVzT
+         fJKEhpxZWnL/s9giCMTcucyZYAV8g7Xx2A8iPVxLGSTElX1eYbRQgO9Hvv3kkH1Xgl+8
+         tAg0r8O2YqQMsLM+iVU36buzouX/NFSrYLRxHtvmSowwU3xsYs1BrxGw1g5XNZtw/LJc
+         AXFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=chP+cDa2Cb3VaqrkBnBkUzl4wMKEdKgnAsOtPkHFbkY=;
+        b=ZtWi9W7/+wT4+nyNM4XXYjlfToRHx9a2jU807hEfEgaxscjB4fKse5vHWjuKJ+xt7B
+         M1qBI66LlW+nCwS2gxeALAEQplDAt3yyrf/Rn0P/1gOarDZHAYnC58b68o05Rrc7NFPD
+         zu1TrNjfvFs61l9gOqRI3c10QptIOw31wN5FGu8ZmVLY67bWS/iijhxhbT6eSgr/q5BM
+         cPOKtqwOBsy7X25LTcTy+aKT11Ej3iraLVwEZJHLLU5vPJOB185bAHJFWeE5eB0sN3O8
+         YQGkH2IKeqAQ3Loh0WmgmZbbExEz47K5rx3V+qM2aOOLec9Qm6MjRw/9zjdhSjmrQRFK
+         +WZg==
+X-Gm-Message-State: ALyK8tJ7aRr5OpF5cq5GGMQD8Ftgz0HNMP0FQUUmfOCojQXZLlxDt+hE+9Af1k0TypoVUQ==
+X-Received: by 10.66.101.136 with SMTP id fg8mr8751360pab.144.1466252723001;
+        Sat, 18 Jun 2016 05:25:23 -0700 (PDT)
+Received: from localhost.localdomain ([223.176.148.194])
+        by smtp.gmail.com with ESMTPSA id y63sm48966279pfb.13.2016.06.18.05.25.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 18 Jun 2016 05:25:22 -0700 (PDT)
+From:	Mehul Jain <mehul.jain2029@gmail.com>
 To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/1] mingw: work around t2300's assuming non-Windows paths
-In-Reply-To: <cover.1466246919.git.johannes.schindelin@gmx.de>
-Message-ID: <a8bebe126bcd047720a13e90b85b8dccb7231187.1466246919.git.johannes.schindelin@gmx.de>
-References: <cover.1466246919.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:6sZBr7qQ+7MkjbEMbQcsefWZe1pz4Cj3xO8ffOHnVpEqABVa2Up
- wVoEKZgDF+FbLyS0yyn9xGxGxdJKHsAd0iftnBuTsp4TBPFMssXe4Jqx9+vlGqlgmHLa3B5
- aMzaBReBlR5RrUNfISyMbkO43vr2KloJ+wKiIqKuNQzo692HiG4coIVqvLjmH11a3jdxULl
- d7aHEp8TEbUia8vXz0FOg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:J8tew/GgOy0=:3A+XwXbqq7VlSCddgZAuBo
- sjbsjemCMJcInJR8qDQ5TV2C6VLYXlqbPkPTBV95yHFyHnYwQ3EqrerU+Os3mYp6lk25XWPpP
- GvDp7+1zcldLC1SjUCN2Og4auswh1tKb17bUSV2v9CdmUO3AJFI5hJqbAvj8Llgag2IsaLTLW
- n4YNXf3bTcAS6xK5hZ/A/PqQFAEedo47gFxv92JuZAuczLZCBlMocHdKqMHEFFK76QPnAd1P2
- IMPl5cqzxNsSsYh61H3qTXGOs9r0mt6Jj8BKVlvMEmCK2i/HVKIKmEps/d0Xi66ObPWz1rq3I
- Pn4ivk12SaitAzJmJfMABtbbFWQlkdGCE6eBhtzv5lYq8yhp86hXClFwe/fWFD9DO56r1I27f
- ISlMZ5XLOhWDAaSbNYFci4HahLMY7u02KFcK3bNdGSsWBJJnVEzAoFrMIav9wDlS+fm4Qb9MP
- m+zl87vN+iwz9u9JxbyPLkVSk54Pv6hRMw0zXqmipGsdrVTJ1x1C9lkQiFxGFL+W4jy4mWSdY
- 9JFWJJghiq1ARjeIzjhnwe1aOyMS4NemEGnU61ytIwtNCX2bf3Vr/wywsRe9dxzoPNuyyrHKV
- QxXhel0VjFsjCO1J71rMmWLuZjDf9JsCyUq3WAAaLxjHuS6V7eQTz5i/hcsjDbXcJZILJrsnu
- 2o/LOsO7Ii/SxuWDtqpBs8W83orF0r0N9U4Z3ZvhYej3Zdj6QG/5KNVyfwY1r1HwI7b2nfYIl
- k4zHQ0TJvOZd0n4zzwLXBzLHnZqtXKWA1lYKKdeFG7ogWQQ53rx7PXt/29NLftv0/9BJCzb8D
- ZM5o2/o
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Mehul Jain <mehul.jain2029@gmail.com>
+Subject: [PATCH v2 0/2] Introduce log.showSignature config variable
+Date:	Sat, 18 Jun 2016 17:55:08 +0530
+Message-Id: <20160618122510.5105-1-mehul.jain2029@gmail.com>
+X-Mailer: git-send-email 2.9.0.rc0.dirty
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Windows, we have to juggle two different schemes of representing
-paths: the native, Windows paths (the only ones known to the main
-Git executable) on the one hand, and POSIX-ish ones used by the Bash
-through MSYS2's POSIX emulation layer on the other hand.
+Add a new configuratation variable "log.showSignature" for git-log and
+related commands. "log.showSignature=true" will enable user to see GPG signature
+by default for git-log and related commands.
 
-A Windows path looks like this: C:\git-sdk-64\usr\src\git. In modern
-Windows, it is almost always legal to use forward slashes as directory
-separators, which is the reason why the Git executable itself would use
-the path C:/git-sdk-64/usr/src/git instead. The equivalent POSIX-ish
-path would be: /c/git-sdk-64/usr/src/git.
+Changes:
+	* Order of patches is reversed as suggested by Junio[1].
+	* A new test has been introduced for "--no-show-signature"
+	  option.
 
-This patch works around the assumption of t2300-cd-to-toplevel.sh that
-`git --exec-path` spits out a POSIX-ish path, by converting the output
-accordingly.
+Previous patch: http://thread.gmane.org/gmane.comp.version-control.git/296474
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t2300-cd-to-toplevel.sh | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/296474/focus=296476
 
-diff --git a/t/t2300-cd-to-toplevel.sh b/t/t2300-cd-to-toplevel.sh
-index cccd7d9..c8de6d8 100755
---- a/t/t2300-cd-to-toplevel.sh
-+++ b/t/t2300-cd-to-toplevel.sh
-@@ -4,11 +4,19 @@ test_description='cd_to_toplevel'
- 
- . ./test-lib.sh
- 
-+EXEC_PATH="$(git --exec-path)"
-+test_have_prereq !MINGW ||
-+case "$EXEC_PATH" in
-+[A-Za-z]:/*)
-+	EXEC_PATH="/${EXEC_PATH%%:*}${EXEC_PATH#?:}"
-+	;;
-+esac
-+
- test_cd_to_toplevel () {
- 	test_expect_success $3 "$2" '
- 		(
- 			cd '"'$1'"' &&
--			PATH="$(git --exec-path):$PATH" &&
-+			PATH="$EXEC_PATH:$PATH" &&
- 			. git-sh-setup &&
- 			cd_to_toplevel &&
- 			[ "$(pwd -P)" = "$TOPLEVEL" ]
+Mehul Jain (2):
+  log: add "--no-show-signature" command line option
+  log: add log.showSignature configuration variable
+
+ Documentation/git-log.txt |  4 ++++
+ builtin/log.c             |  6 ++++++
+ revision.c                |  2 ++
+ t/t4202-log.sh            | 35 +++++++++++++++++++++++++++++++++++
+ t/t7510-signed-commit.sh  |  7 +++++++
+ 5 files changed, 54 insertions(+)
+
 -- 
-2.9.0.118.gce770ba.dirty
+2.9.0.rc0.dirty
+
