@@ -1,85 +1,106 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6D4420189
-	for <e@80x24.org>; Sat, 18 Jun 2016 17:10:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1B7A20189
+	for <e@80x24.org>; Sat, 18 Jun 2016 18:21:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751434AbcFRRJN (ORCPT <rfc822;e@80x24.org>);
-	Sat, 18 Jun 2016 13:09:13 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:56100 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751404AbcFRRJL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Jun 2016 13:09:11 -0400
-X-AuditID: 12074414-62bff700000008e6-35-576580367cdf
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 7B.7F.02278.63085675; Sat, 18 Jun 2016 13:09:10 -0400 (EDT)
-Received: from [192.168.69.130] (p4FEEA991.dip0.t-ipconnect.de [79.238.169.145])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u5IH977v030150
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sat, 18 Jun 2016 13:09:09 -0400
+	id S1751964AbcFRSUQ (ORCPT <rfc822;e@80x24.org>);
+	Sat, 18 Jun 2016 14:20:16 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62005 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751959AbcFRSUN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jun 2016 14:20:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3186524331;
+	Sat, 18 Jun 2016 14:20:12 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vAsKXsuuVBA5/I6yQKobBcihvtk=; b=ENJQAh
+	8KONeWTMSvND1qHijFwENg7ovLeiBbhnlH4+w9wRLZILlv3lmKWrkG/kacXB5BjA
+	k6wxmmTZAVuUAUhprCk01dUzGuoZue96qd87UIqRTibCQbbzoWMh/vTl2QA8tvWo
+	w2JPmxDEJF0LeLaM6xCEJU7IsW1eqzrlKUAh4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qNQNvdRZvG1AwnWvXs1K6gP0DOVRVElG
+	1MGtM/b2grxLagaNRreiTslzP/ea9V8nO+OkyTvdBQFKv9VmGvzCYEC2DaklK8ym
+	gWg/5BXbu1lPPkAlucT9qopCFcfEgDbP2XP4E2XmOrh0z1KBeBZcL5gmz8RDL2/c
+	kx8RjRWGQJQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A16C24330;
+	Sat, 18 Jun 2016 14:20:12 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A72342432F;
+	Sat, 18 Jun 2016 14:20:11 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Michael Haggerty <mhagger@alum.mit.edu>
+Cc:	git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Jun 2016, #05; Thu, 16)
-To:	Lars Schneider <larsxschneider@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
 References: <xmqqk2ho33ig.fsf@gitster.mtv.corp.google.com>
- <1634E84E-5260-4F7B-A74F-AF5D3A7C0181@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Luke Diamand <luke@diamand.org>
-From:	Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <57658033.7060402@alum.mit.edu>
-Date:	Sat, 18 Jun 2016 19:09:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.8.0
+	<5764CBA8.5070303@alum.mit.edu>
+Date:	Sat, 18 Jun 2016 11:20:09 -0700
+In-Reply-To: <5764CBA8.5070303@alum.mit.edu> (Michael Haggerty's message of
+	"Sat, 18 Jun 2016 06:18:48 +0200")
+Message-ID: <xmqqziqixsti.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <1634E84E-5260-4F7B-A74F-AF5D3A7C0181@gmail.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqGvWkBpucOeRgkXXlW4mi4beK8wW
-	jx8uYbU4PusauwOLx4MrWxg9ds66y+5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGYsfb2Eu
-	eMZR8fvXcvYGxi72LkZODgkBE4n9036wdjFycQgJbGWUWNS7iw3CucAkcWfpPjaQKmEBe4nF
-	e3ezgNgiAlESjTt/gsWFBHIlnpxYw9jFyMHBLOAtce6zCEiYTUBXYlFPMxOIzSugLfF22ilm
-	EJtFQFWie8UTsMWiAiES59dtZYWoEZQ4OfMJ2HhOAVuJJ1c3gsWZBfQkdlz/BWXLS2x/O4d5
-	AiP/LCQts5CUzUJStoCReRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRroVebmaJXmpK6SZGSNiK
-	7GA8clLuEKMAB6MSD2+AfUq4EGtiWXFl7iFGSQ4mJVFe5mdAIb6k/JTKjMTijPii0pzU4kOM
-	EhzMSiK8idWp4UK8KYmVValF+TApaQ4WJXHeb4vV/YQE0hNLUrNTUwtSi2CyMhwcShK8W+qA
-	GgWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJBERlfDIxJkBQP0N5XIO28xQWJuUBR
-	iNZTjLoc6+beWMskxJKXn5cqJc57G6RIAKQoozQPbgUsSb1iFAf6WJhXqh6oigeY4OAmvQJa
-	wgS0RHNeMsiSkkSElFQD4/rotvTjXRmcOb/tApSOyHFbJYntup5X6/nHcdH+8I0F0+L4JvA1
-	Zz2/9n+BZZpgZERI67un1+O46wQCdsZdSaupctP1OH4m8cCBZ9qShztWNL5Sn/L5yzzt0LOm
-	qVrSO7ddjtESXsthdDSUZ4/whY2G3xr2XOKMWq1cnFPM8MW9461OmuUnJZbijERDLeai4kQA
-	8avtWC0DAAA=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4B9BF9C6-3581-11E6-B5B5-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 06/18/2016 12:05 AM, Lars Schneider wrote:
-> 
->> On 17 Jun 2016, at 05:20, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> ...
->>
->> * mh/split-under-lock (2016-05-13) 33 commits
->>  (merged to 'next' on 2016-06-03 at 2e71330)
+Michael Haggerty <mhagger@alum.mit.edu> writes:
+
+> On 06/17/2016 05:20 AM, Junio C Hamano wrote:
 >> [...]
-> 
-> This topic seems break two git-p4 tests (t9801 and t9803) on next:
-> https://travis-ci.org/git/git/jobs/137333785
-> 
-> According to git bisect the commit "ref_transaction_update(): 
-> check refname_is_safe() at a minimum" (3da1f3) introduces the problem: 
-> https://s3.amazonaws.com/archive.travis-ci.org/jobs/138457628/log.txt
-> (scroll all the way down to see the bisecting)
+>> * mh/ref-iterators (2016-06-03) 13 commits
+>>   (merged to 'next' on 2016-06-06 at c8e79dc)
+>>  + ...
+>>  (this branch is used by mh/ref-store; uses mh/split-under-lock; is tangled with mh/update-ref-errors.)
+>> 
+>>  The API to iterate over all the refs (i.e. for_each_ref(), etc.)
+>>  has been revamped.
+>> 
+>>  Will merge to 'master'.
+>
+> It would be preferable (though not critical) to use the promised v3,
+> which I just sent [1]. This includes some minor improvements, described
+> here [2]. This is also available from my GitHub fork [3] as branch
+> "ref-iterators".
+>
+>> * mh/split-under-lock (2016-05-13) 33 commits
+>>   (merged to 'next' on 2016-06-03 at 2e71330)
+>>  + lock_ref_sha1_basic(): only handle REF_NODEREF mode
+>>  + ...
+>>  Will merge to 'master'.
+>
+> Please make sure to pick up the important bugfix discussed here [4],
+> which is integrated into branch "split-under-lock" on my GitHub fork [3].
 
-Thanks for the bug report. I'll look into this as soon as I have the chance.
+Good timing. I was planning to kick split-under-lock and any of its
+dependents temporarily out of 'next', so that fixes can choose not
+to be incremental, and dependent topics can be rebased on top of the
+fixed fondation.  Even if we do incremental, [4] is not sufficient
+material for me to write a log message for.
 
-Do you happen to know if there is a way to get a copy of p4 without
-paying for it so that I can run the tests locally?
+So people who reviewed what has been in 'next' can revisit [4] and
+give review comments, while I could just pick up the history
+mentioned there, i.e.
 
-Given the commit that you bisected to, one likely possibility is that
-the test is trying to create a reference with an unsafe name, in the
-sense of `refname_is_safe()`. Is that possible? Do you happen to know
-what Git reference names that test case wants to create?
+    git checkout pu
+    git pull git://github.com/mhagger/git +split-under-lock:mh/split-under-lock
 
-Michael
+and we can start from there?
 
+Thanks.
+
+>
+> Michael
+>
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/297625
+> [2]
+> http://thread.gmane.org/gmane.comp.version-control.git/296322/focus=296883
+> [3] https://github.com/mhagger/git
+> [4] http://article.gmane.org/gmane.comp.version-control.git/297174
