@@ -1,158 +1,74 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1327A2018C
-	for <e@80x24.org>; Sat, 18 Jun 2016 22:14:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEB7720189
+	for <e@80x24.org>; Sat, 18 Jun 2016 23:20:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751313AbcFRWOe (ORCPT <rfc822;e@80x24.org>);
-	Sat, 18 Jun 2016 18:14:34 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37412 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751119AbcFRWOQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Jun 2016 18:14:16 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [72.20.141.51])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	id S1751114AbcFRXUx (ORCPT <rfc822;e@80x24.org>);
+	Sat, 18 Jun 2016 19:20:53 -0400
+Received: from hapkido.dreamhost.com ([66.33.216.122]:53344 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751074AbcFRXUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jun 2016 19:20:53 -0400
+Received: from homiemail-a44.g.dreamhost.com (sub5.mail.dreamhost.com [208.113.200.129])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id 941728F5F2
+	for <git@vger.kernel.org>; Sat, 18 Jun 2016 16:20:52 -0700 (PDT)
+Received: from homiemail-a44.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a44.g.dreamhost.com (Postfix) with ESMTP id 981C3118057
+	for <git@vger.kernel.org>; Sat, 18 Jun 2016 16:20:51 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=eagerm.com; h=from:subject
+	:to:message-id:date:mime-version:content-type:
+	content-transfer-encoding; s=eagerm.com; bh=T2+eFC8iDqn5mtptg7Wp
+	udIVNLc=; b=KVTMaEnDx0i1NJlBfgfcmfoM6xWJaFnNaHwRiy2epb3XE0QORsIX
+	MB9JKWgKSCeyMxPi8EMXfW/1nBCZBRJpAhrh+s7Wq9BZf5HeqMQSOA+NzRBaXWCd
+	sXn+41AQVmkRFA95brSktI5T45H+nOkSrwGz6o2qsZPfXI4AUjFoAIA=
+Received: from vm-fedora21.eagercon.com (c-71-202-23-94.hsd1.ca.comcast.net [71.202.23.94])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 07A9C280A0;
-	Sat, 18 Jun 2016 22:14:12 +0000 (UTC)
-DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1466288053;
-	bh=VsiwXyDdB+tELNNjEmVWjOK/JBmf7fIn5dIFDp6rH0g=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cI125OZ+5JFBYBPghT7D7/J8FABxFb7WpOJLHp00PSjNdVidkSmYD56+2svSa9jdo
-	 gMyircNutit+KH4oevS0yBXxLTziK2NIVJskSHmZpxH/2QoPnlmIq3L4Uv17l+wo7S
-	 iwwprPwutdefYcE+4tOXsL2nAgEcZujLPHJl8u/wtp9odrMPykrxQ6P6uu2WDSaaog
-	 Q2+WQc5ciMtWqVk3zJtu/2S2gtoPBSJYrwuMsd7bo9uXgCc3aAlRGaaOD/rHyL49P0
-	 Iq8ebgwOGiUEUalZK9SfHNf2Okf+LAjWF1dFNx4mr5o7YF1Oo325f/hrerPAACgRZD
-	 kX50iJnL1uFxAEYmmyHhheUL/HCQUBXQa0LDXYuCmAOaL9ge1baXb8nrCaOdsnC9d/
-	 oNsHE9Wqoxqkdtfo4WAqFG2040yngeOFBx81tFcEwyRaH28QD4iR4Ryc5QAld9fGdG
-	 wTZ67YQoU0CxC6V2upBbrpfCt2M9v4tHi47yIbAQxrL5jCJGrhz
-From:	"brian m. carlson" <sandals@crustytoothpaste.net>
-To:	git@vger.kernel.org
-Cc:	Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 1/8] Add basic Coccinelle transforms.
-Date:	Sat, 18 Jun 2016 22:14:00 +0000
-Message-Id: <20160618221407.1046188-2-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.9.0
-In-Reply-To: <20160618221407.1046188-1-sandals@crustytoothpaste.net>
-References: <20160618221407.1046188-1-sandals@crustytoothpaste.net>
-X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
+	(Authenticated sender: eager@eagerm.com)
+	by homiemail-a44.g.dreamhost.com (Postfix) with ESMTPSA id 87FBA118056
+	for <git@vger.kernel.org>; Sat, 18 Jun 2016 16:20:51 -0700 (PDT)
+From:	Michael Eager <eager@eagerm.com>
+Subject: Managing sub-projects
+To:	Git Mailing List <git@vger.kernel.org>
+Message-ID: <5765D752.4000404@eagerm.com>
+Date:	Sat, 18 Jun 2016 16:20:50 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Coccinelle (http://coccinelle.lip6.fr/) is a program which performs
-mechanical transformations on C programs using semantic patches.  These
-semantic patches can be used to implement automatic refactoring and
-maintenance tasks.
+I'm trying to create a git repository for a tool chain for a proprietary
+processor.  I'd like to create a private repo with documentation, build
+scripts, etc., which includes several sub-projects: binutils, gcc, newlib,
+etc.  Each of the sub-projects will have a branch which has support for
+the new processor.  These branches need to be maintained in my repo, not
+in the upstream repo.  I want to be able to periodically rebase these
+branches from the upstream repo.
 
-Add a set of basic semantic patches to convert common patterns related
-to the struct object_id transformation, as well as a README.
+I've looked at several schemes, but each one seems to do something other
+than what I want.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- contrib/examples/coccinelle/README          |  2 +
- contrib/examples/coccinelle/object_id.cocci | 83 +++++++++++++++++++++++++++++
- 2 files changed, 85 insertions(+)
- create mode 100644 contrib/examples/coccinelle/README
- create mode 100644 contrib/examples/coccinelle/object_id.cocci
+Git submodule:  Branches created in the sub-projects are pushed to the
+upstream repo, not to my repo.  I tried to change origin and created an
+upstream reference, but was not able to get changes pushed to my repo.
 
-diff --git a/contrib/examples/coccinelle/README b/contrib/examples/coccinelle/README
-new file mode 100644
-index 00000000..9c2f8879
---- /dev/null
-+++ b/contrib/examples/coccinelle/README
-@@ -0,0 +1,2 @@
-+This directory provides examples of Coccinelle (http://coccinelle.lip6.fr/)
-+semantic patches that might be useful to developers.
-diff --git a/contrib/examples/coccinelle/object_id.cocci b/contrib/examples/coccinelle/object_id.cocci
-new file mode 100644
-index 00000000..0f068252
---- /dev/null
-+++ b/contrib/examples/coccinelle/object_id.cocci
-@@ -0,0 +1,83 @@
-+@@
-+expression E1;
-+@@
-+- is_null_sha1(E1.hash)
-++ is_null_oid(&E1)
-+
-+@@
-+expression E1;
-+@@
-+- is_null_sha1(E1->hash)
-++ is_null_oid(E1)
-+
-+@@
-+expression E1;
-+@@
-+- sha1_to_hex(E1.hash)
-++ oid_to_hex(&E1)
-+
-+@@
-+expression E1;
-+@@
-+- sha1_to_hex(E1->hash)
-++ oid_to_hex(E1)
-+
-+@@
-+expression E1;
-+@@
-+- hashclr(E1.hash)
-++ oidclr(&E1)
-+
-+@@
-+expression E1;
-+@@
-+- hashclr(E1->hash)
-++ oidclr(E1)
-+
-+@@
-+expression E1, E2;
-+@@
-+- hashcmp(E1.hash, E2.hash)
-++ oidcmp(&E1, &E2)
-+
-+@@
-+expression E1, E2;
-+@@
-+- hashcmp(E1->hash, E2->hash)
-++ oidcmp(E1, E2)
-+
-+@@
-+expression E1, E2;
-+@@
-+- hashcmp(E1->hash, E2.hash)
-++ oidcmp(E1, &E2)
-+
-+@@
-+expression E1, E2;
-+@@
-+- hashcmp(E1.hash, E2->hash)
-++ oidcmp(&E1, E2)
-+
-+@@
-+expression E1, E2;
-+@@
-+- hashcpy(E1.hash, E2.hash)
-++ oidcpy(&E1, &E2)
-+
-+@@
-+expression E1, E2;
-+@@
-+- hashcpy(E1->hash, E2->hash)
-++ oidcpy(E1, E2)
-+
-+@@
-+expression E1, E2;
-+@@
-+- hashcpy(E1->hash, E2.hash)
-++ oidcpy(E1, &E2)
-+
-+@@
-+expression E1, E2;
-+@@
-+- hashcpy(E1.hash, E2->hash)
-++ oidcpy(&E1, E2)
+git subtree:  Does not maintain sub-project history or allow rebase.
+
+git slave:  Requires multiple private repos.  Appears to require the
+same branch names in each sub-project.
+
+repo: Appears to work a bit like git submodules, where pushes on the
+sub-projects go to the upstream repo, not to the private repo.
+
+Any other ways to do what I want without creating a separate forked
+repo for each of the sub-projects?  Or have I misunderstood one of
+these schemes?
+
+-- 
+Michael Eager	 eager@eagercon.com
+1960 Park Blvd., Palo Alto, CA 94306  650-325-8077
