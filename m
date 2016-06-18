@@ -1,23 +1,23 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5094B1FEAA
-	for <e@80x24.org>; Sat, 18 Jun 2016 04:15:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 618C71FEAA
+	for <e@80x24.org>; Sat, 18 Jun 2016 04:15:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751250AbcFREPn (ORCPT <rfc822;e@80x24.org>);
-	Sat, 18 Jun 2016 00:15:43 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:52499 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751239AbcFREPm (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Jun 2016 00:15:42 -0400
-X-AuditID: 12074414-62bff700000008e6-c7-5764caed45ce
+	id S1751283AbcFREPq (ORCPT <rfc822;e@80x24.org>);
+	Sat, 18 Jun 2016 00:15:46 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:54716 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751239AbcFREPq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Jun 2016 00:15:46 -0400
+X-AuditID: 1207440d-bb3ff7000000090b-47-5764cae7e18e
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id D0.B9.02278.DEAC4675; Sat, 18 Jun 2016 00:15:41 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id D3.2C.02315.7EAC4675; Sat, 18 Jun 2016 00:15:35 -0400 (EDT)
 Received: from michael.fritz.box (p4FEEA991.dip0.t-ipconnect.de [79.238.169.145])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u5I4FLJj029401
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u5I4FLJg029401
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 18 Jun 2016 00:15:39 -0400
+	Sat, 18 Jun 2016 00:15:33 -0400
 From:	Michael Haggerty <mhagger@alum.mit.edu>
 To:	Junio C Hamano <gitster@pobox.com>,
 	David Turner <dturner@twopensource.com>
@@ -27,86 +27,67 @@ Cc:	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 08/13] ref_resolves_to_object(): new function
-Date:	Sat, 18 Jun 2016 06:15:14 +0200
-Message-Id: <c83216533b1411628922762117ee8312593c53b5.1466222921.git.mhagger@alum.mit.edu>
+Subject: [PATCH v3 05/13] remote rm: handle symbolic refs correctly
+Date:	Sat, 18 Jun 2016 06:15:11 +0200
+Message-Id: <e039bde30ed4481c8ac4266807ec3e660fadaeb5.1466222921.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <cover.1466222921.git.mhagger@alum.mit.edu>
 References: <cover.1466222921.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrDIsWRmVeSWpSXmKPExsUixO6iqPv2VEq4wclTohbzN51gtOi60s1k
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrLIsWRmVeSWpSXmKPExsUixO6iqPv8VEq4weJz/BbzN51gtOi60s1k
 	0dB7hdni9or5zBbdU94yWvxo6WG2mHnV2uLMm0ZGBw6Pv+8/MHnsnHWX3eNZ7x5Gj4uXlD32
-	L93G5rH4gZfHguf32T0+b5IL4IjitklKLCkLzkzP07dL4M7YtzGo4DFvxaqLkxkbGP9ydTFy
-	ckgImEjM+rqWrYuRi0NIYCujxO8bPVDOSSaJjsmnWECq2AR0JRb1NDOB2CICERINr1oYQYqY
-	BeYwSdx+2MkMkhAWcJDoWbUCrIFFQFVi1bE9YA28AlESm86sZoFYJydxefoDNhCbU8BCYsGW
-	fUA1HEDbzCX2LjacwMizgJFhFaNcYk5prm5uYmZOcWqybnFyYl5eapGuhV5uZoleakrpJkZI
-	yInsYDxyUu4QowAHoxIPb4B9SrgQa2JZcWXuIUZJDiYlUd4rlUAhvqT8lMqMxOKM+KLSnNTi
-	Q4wSHMxKIrxbTgDleFMSK6tSi/JhUtIcLErivN8Wq/sJCaQnlqRmp6YWpBbBZGU4OJQkeJee
-	BGoULEpNT61Iy8wpQUgzcXCCDOeSEilOzUtJLUosLcmIB0VAfDEwBkBSPEB7N4G08xYXJOYC
-	RSFaTzEqSonzLgA5SAAkkVGaBzcWlkheMYoDfSnM+wKknQeYhOC6XwENZgIarDkvGWRwSSJC
-	SqqBMTX02Aq3h867dn3jMZ7JGNmldWjRxpv+QTqc5xYzMdbtf71zhQ3DhLMTJJp2rrBm6n+q
-	ztGwbVOcjGHTtkzzJddCWG/3hx1U/hzlnur0gPG/wLaWu6vcGvumLe7VyrxUYLb/zcFZDSfY
-	Ixe/4q558zs18EX4n42VyjlVbxbf6Jy995CnzpobCUosxRmJhlrMRcWJABw7poH/AgAA
+	L93G5rH4gZfHguf32T0+b5IL4IjitklKLCkLzkzP07dL4M64eHMmY0EPZ0X3s3+sDYyr2LsY
+	OTkkBEwkNv6YAGRzcQgJbGWUmLFjJyOEc5JJYs+a2WwgVWwCuhKLepqZQGwRgQiJhlctYEXM
+	AnOYJG4/7GQGSQgLOEs0bzoJVsQioCrx8sEnFhCbVyBKYlf7DxaIdXISl6c/ABvKKWAhsWDL
+	PqB6DqBt5hJ7FxtOYORZwMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXSC83s0QvNaV0EyMk
+	6Hh3MP5fJ3OIUYCDUYmHN8A+JVyINbGsuDL3EKMkB5OSKO+VSqAQX1J+SmVGYnFGfFFpTmrx
+	IUYJDmYlEd4tJ4ByvCmJlVWpRfkwKWkOFiVxXrUl6n5CAumJJanZqakFqUUwWRkODiUJ3qUn
+	gRoFi1LTUyvSMnNKENJMHJwgw7mkRIpT81JSixJLSzLiQTEQXwyMApAUD9DeTSDtvMUFiblA
+	UYjWU4yKUuK8C0AOEgBJZJTmwY2FpZJXjOJAXwrzvgBp5wGmIbjuV0CDmYAGa85LBhlckoiQ
+	kmpgZHlxeVW2w5sHCVqTEyIV9nT2MzeXmUu+irg6Y+GTyIWSAsVu4VsXXij+H5F+9+83rQdB
+	8uLv1tsX/l7uZDA5+EVhspqR5t3jlYnxvGXT54WXHZcRzXjyaPEOu8vbT9Y8sNB4v68inzMy
+	5baj2lx1P7Vnwu1sRtOj5mtMqgvievZy1fbi8IeSSizFGYmGWsxFxYkAX1+bSgADAAA=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Extract new function ref_resolves_to_object() from
-entry_resolves_to_object(). It can be used even if there is no ref_entry
-at hand.
+In the modern world of reference backends, it is not OK to delete a
+symref by unlink()ing the file directly. This must be done via the refs
+API.
+
+We do so by adding the symref to the list of references to delete along
+with the non-symbolic references, then calling delete_refs() with the
+new flags option set to REF_NODEREF.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 33 +++++++++++++++++++++++----------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+ builtin/remote.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index c24a78e..62280b5 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -513,19 +513,32 @@ static void sort_ref_dir(struct ref_dir *dir)
- }
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 1bbf9b4..c4b4d67 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -539,10 +539,6 @@ static int add_branch_for_removal(const char *refname,
+ 		return 0;
+ 	}
  
- /*
-- * Return true iff the reference described by entry can be resolved to
-- * an object in the database.  Emit a warning if the referred-to
-- * object does not exist.
-+ * Return true if refname, which has the specified oid and flags, can
-+ * be resolved to an object in the database. If the referred-to object
-+ * does not exist, emit a warning and return false.
-+ */
-+static int ref_resolves_to_object(const char *refname,
-+				  const struct object_id *oid,
-+				  unsigned int flags)
-+{
-+	if (flags & REF_ISBROKEN)
-+		return 0;
-+	if (!has_sha1_file(oid->hash)) {
-+		error("%s does not point to a valid object!", refname);
-+		return 0;
-+	}
-+	return 1;
-+}
-+
-+/*
-+ * Return true if the reference described by entry can be resolved to
-+ * an object in the database; otherwise, emit a warning and return
-+ * false.
-  */
- static int entry_resolves_to_object(struct ref_entry *entry)
- {
--	if (entry->flag & REF_ISBROKEN)
--		return 0;
--	if (!has_sha1_file(entry->u.value.oid.hash)) {
--		error("%s does not point to a valid object!", entry->name);
--		return 0;
--	}
--	return 1;
-+	return ref_resolves_to_object(entry->name,
-+				      &entry->u.value.oid, entry->flag);
- }
+-	/* make sure that symrefs are deleted */
+-	if (flags & REF_ISSYMREF)
+-		return unlink(git_path("%s", refname));
+-
+ 	string_list_append(branches->branches, refname);
  
- /*
+ 	return 0;
+@@ -788,7 +784,7 @@ static int rm(int argc, const char **argv)
+ 	strbuf_release(&buf);
+ 
+ 	if (!result)
+-		result = delete_refs(&branches, 0);
++		result = delete_refs(&branches, REF_NODEREF);
+ 	string_list_clear(&branches, 0);
+ 
+ 	if (skipped.nr) {
 -- 
 2.8.1
 
