@@ -1,103 +1,110 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA59B20189
-	for <e@80x24.org>; Sat, 18 Jun 2016 20:26:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C296B20189
+	for <e@80x24.org>; Sat, 18 Jun 2016 22:14:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751320AbcFRU0P (ORCPT <rfc822;e@80x24.org>);
-	Sat, 18 Jun 2016 16:26:15 -0400
-Received: from mail-pa0-f65.google.com ([209.85.220.65]:32834 "EHLO
-	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751073AbcFRU0O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jun 2016 16:26:14 -0400
-Received: by mail-pa0-f65.google.com with SMTP id ts6so8065602pac.0
-        for <git@vger.kernel.org>; Sat, 18 Jun 2016 13:26:14 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qy3rd6vWymkTCBIHysWmA1YVBDc7tAz+IuqpA1rjYvY=;
-        b=rUrPV2dd0CLKQZMJTMIV/DZLnJj0keX0eQIQWqA8bR64RXyZF+6BOf2z2MGL3FyEgy
-         EhNgWDQZQyzVLDPjE2hnl+jGcolbrOuAs0prvsfKI+32/z7fmYYY5kpbeTiXdAKy7hMa
-         8dKSAxoR2Ygv3Sf2IHedOLcbjLo81Pd2OlCTBhvupU1l5uiMeZaPPaTrN1l6QJbh/WOw
-         Rrkm9XFsdaBQF3ZIDVOtYHuJwXSqK2cTLE6JzEUKAQJ8X8/uB8/Uh8jHtsIN3ry6z/0x
-         2FYMYKwRQWbSolhtGSmmVAv3R/AWGUP1xhijQ0Ms33JjdfJyl2k18rVH//qyklZcYlJO
-         5zNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=qy3rd6vWymkTCBIHysWmA1YVBDc7tAz+IuqpA1rjYvY=;
-        b=cIkHQepa1p/8JL2/gD/Z1Ah8a/E1EboiBK1W46KlOkICsJxzd+FVI9x4Dca5a+gFwV
-         j/9M/NlTr2r9vUeHKqq5wGmqWnpvtzo1Z33QadNPt4PXCMlEEYo/sKTgH7jW9o+/fmjE
-         fusgeN6uFf7U87j0xKzTPKICT4AQMHQ4DwW4DQbUdvnQJY0snK10o4a+qtnV3tzRaxsg
-         ivLR2G/JTatGCTTtXmsIkVF8jaXDo/WGxI/65vxOBTmal2mhcg/DY7Xw1AF/dfiT2fUm
-         YFeZ1qtuPT+pg01PtlFOYHv/pGR4/YxDF+bbegCnFx0ePDJbx1Xda2q+rWV3Ew7rjeD7
-         yGMg==
-X-Gm-Message-State: ALyK8tKkT8qi/n/iZ65ely7sLw4ZW6uFXHhr/oLEnYiYLqwUxBXrAfXDErdNURcNDY88vA==
-X-Received: by 10.66.63.98 with SMTP id f2mr10922245pas.123.1466281573997;
-        Sat, 18 Jun 2016 13:26:13 -0700 (PDT)
-Received: from localhost.localdomain ([118.71.221.47])
-        by smtp.gmail.com with ESMTPSA id v62sm47676301pfv.50.2016.06.18.13.26.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Jun 2016 13:26:12 -0700 (PDT)
-From:	LE Manh Cuong <cuong.manhle.vn@gmail.com>
+	id S1751224AbcFRWOS (ORCPT <rfc822;e@80x24.org>);
+	Sat, 18 Jun 2016 18:14:18 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37414 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751114AbcFRWOQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Jun 2016 18:14:16 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [72.20.141.51])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5F83F2809F;
+	Sat, 18 Jun 2016 22:14:12 +0000 (UTC)
+DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+	s=default; t=1466288052;
+	bh=r4gg8mMBtw9D0fNfQAeMdNHot2ci/5panGl/jDqRyu0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=PR3iGfM3vme5mXhA2ftODehOYE9dyGh7T5hakHTPjm14LX3VaH36uy7OHj/pJ6UNa
+	 l+aK51Lq9Mc+bqiAiutG+dplqlMIOeHihckFVOQDQcE1DeS3cVdJ8JwjR77sUXQCse
+	 M4KlndN3ew6Lh8D9Txc/vSIU+VooNGkbxVG9rsiPMKxknS0MCYWKwvPamhXHIn5YP+
+	 1sqETWb6Q3p+Xu1oNsW6YLKPlirgS3pNI0kScSu5lm6IqI9yhTt07PhEd0iqoG9iLf
+	 ttN6fj3duZeAvY2ProjTYKmgDAcjvotMO5JijLEG44hyvDdPn5YoU+aKnDCO3v9glW
+	 3wnUnHnQ0x8mhtRLLo2ZKmaHQ1yY1hUYH5E9RHeEUA1BZoIiCMDvJLQSNR0cHtkpRL
+	 IuWlwXfBzoboyPIiLbhYFICbeYlqQDCc4vsOC1z0UDgpOWcBah94DF1NDHyE42iKFR
+	 L+Bqb1i5Itw//zATo61H3W6FeyyWOAoYMsPEDcXNJ4RcaRcdU0x
+From:	"brian m. carlson" <sandals@crustytoothpaste.net>
 To:	git@vger.kernel.org
-Cc:	LE Manh Cuong <cuong.manhle.vn@gmail.com>
-Subject: [PATCH] git-sh-setup.sh: fix missing double quotes variables
-Date:	Sun, 19 Jun 2016 03:26:03 +0700
-Message-Id: <20160618202603.1962-1-cuong.manhle.vn@gmail.com>
+Cc:	Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
+Subject: [PATCH v2 0/8] object_id part 4
+Date:	Sat, 18 Jun 2016 22:13:59 +0000
+Message-Id: <20160618221407.1046188-1-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.9.0
-In-Reply-To: <20160618193710.32265-1-cuong.manhle.vn@gmail.com>
-References: <20160618193710.32265-1-cuong.manhle.vn@gmail.com>
+X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Leaving shell variables un-quotes can lead to security vulnerabilities. In:
+This series is part 4 in a series of conversions to replace instances of
+unsigned char [20] with struct object_id.  Most of this series touches
+the merge-recursive code.
 
-    : ${x=.}
+New in this series is the use of Coccinelle (http://coccinelle.lip6.fr/)
+semantic patches.  These semantic patches can make automatic
+transformations to C source code for cleanup or refactoring reasons.
 
-`$x` is always expanded, cause `glob+split` on its result. There're some
-globs is too expensive to expand, like:
+This series introduces a set of transforms for the struct object_id
+transition, cleans up some existing code with them, and applies a small
+number of semantic patches to transform parts of the merge-recursive
+code.  Some manual refactoring work follows.
 
-    x='/*/*/*/*/../../../../*/*/*/*/../../../../*/*/*/*' sh -c ': ${x=.}'
+Note that in the patches created with the semantic patches, the only manual
+change was the definition of the struct member.  Opinions on whether this is a
+viable technique for further work to ease both the creation and review of
+patches are of course welcomed.
 
-Run it and our machine will hang/crash (especially in Linux).
+The testsuite continues to pass at each step, and this series rebases
+cleanly on both pu and next.
 
-`LESS`, `LV` and `GIT_OBJECT_DIRECTORY` variables in `git-sh-setup` are
-vulnerable with this case.
+I moved the Coccinelle transforms to contrib/examples/coccinelle, but if
+it's decided that the Coccinelle transforms simply don't belong in the
+repository, it's fine to simply drop the first patch (and maybe fix up
+the commit messages).  I can create a GitHub Gist and let reviewers
+refer to that at their convenience.
 
-Fix this vulnerability  by quoting those variables.
+Changes from v1:
+* Move the object ID transformations to contrib/examples/coccinelle.
+* Add a README to that folder explaining what they are.
+* Adjust the Coccinelle patches to transform plain structs before
+  pointers to structs to avoid misconversions.  This addresses the issue
+  that Peff caught originally.
 
-Signed-off-by: LE Manh Cuong <cuong.manhle.vn@gmail.com>
----
- git-sh-setup.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+brian m. carlson (8):
+  Add basic Coccinelle transforms.
+  Apply object_id Coccinelle transformations.
+  Convert struct diff_filespec to struct object_id
+  Rename struct diff_filespec's sha1_valid member.
+  merge-recursive: convert struct stage_data to use object_id
+  merge-recursive: convert struct merge_file_info to object_id
+  merge-recursive: convert leaf functions to use struct object_id
+  merge-recursive: convert merge_recursive_generic to object_id
 
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index c48139a..85db5f1 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -160,8 +160,8 @@ git_pager() {
- 	else
- 		GIT_PAGER=cat
- 	fi
--	: ${LESS=-FRX}
--	: ${LV=-c}
-+	: "${LESS=-FRX}"
-+	: "${LV=-c}"
- 	export LESS LV
- 
- 	eval "$GIT_PAGER" '"$@"'
-@@ -344,7 +344,7 @@ git_dir_init () {
- 		echo >&2 "Unable to determine absolute path of git directory"
- 		exit 1
- 	}
--	: ${GIT_OBJECT_DIRECTORY="$(git rev-parse --git-path objects)"}
-+	: "${GIT_OBJECT_DIRECTORY="$(git rev-parse --git-path objects)"}"
- }
- 
- if test -z "$NONGIT_OK"
--- 
-2.9.0
-
+ bisect.c                                    |   2 +-
+ builtin/blame.c                             |   6 +-
+ builtin/fast-export.c                       |  10 +-
+ builtin/merge-recursive.c                   |  20 +-
+ builtin/merge.c                             |  13 +-
+ builtin/reset.c                             |   4 +-
+ combine-diff.c                              |  14 +-
+ contrib/examples/coccinelle/README          |   2 +
+ contrib/examples/coccinelle/object_id.cocci |  83 ++++++++
+ diff.c                                      |  95 +++++----
+ diffcore-break.c                            |   4 +-
+ diffcore-rename.c                           |  16 +-
+ diffcore.h                                  |   4 +-
+ line-log.c                                  |  12 +-
+ merge-recursive.c                           | 310 ++++++++++++++--------------
+ merge-recursive.h                           |   6 +-
+ notes-merge.c                               |  42 ++--
+ refs/files-backend.c                        |   4 +-
+ submodule.c                                 |   4 +-
+ wt-status.c                                 |   3 +-
+ 20 files changed, 378 insertions(+), 276 deletions(-)
+ create mode 100644 contrib/examples/coccinelle/README
+ create mode 100644 contrib/examples/coccinelle/object_id.cocci
