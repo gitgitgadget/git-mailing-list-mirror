@@ -1,105 +1,63 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B6CB1FEAA
-	for <e@80x24.org>; Sun, 19 Jun 2016 08:48:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B99D1FEAA
+	for <e@80x24.org>; Sun, 19 Jun 2016 08:50:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbcFSIsm (ORCPT <rfc822;e@80x24.org>);
-	Sun, 19 Jun 2016 04:48:42 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:47810 "EHLO dcvr.yhbt.net"
+	id S1751690AbcFSIuX (ORCPT <rfc822;e@80x24.org>);
+	Sun, 19 Jun 2016 04:50:23 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:58987 "EHLO bsmtp3.bon.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751506AbcFSIsk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2016 04:48:40 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8EFAF1FEAA;
-	Sun, 19 Jun 2016 08:48:37 +0000 (UTC)
-Date:	Sun, 19 Jun 2016 08:48:37 +0000
-From:	Eric Wong <e@80x24.org>
-To:	Andreas Schwab <schwab@linux-m68k.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] prune: keep files created after process start
-Message-ID: <20160619084837.GA22090@dcvr.yhbt.net>
-References: <20160619031338.GA5161@dcvr.yhbt.net>
- <m2wpllhcut.fsf@linux-m68k.org>
+	id S1751497AbcFSIuW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2016 04:50:22 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3rXSP338rjz5tlM;
+	Sun, 19 Jun 2016 10:50:15 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 5015852C0;
+	Sun, 19 Jun 2016 10:50:14 +0200 (CEST)
+Subject: Re: [PATCH v2 0/8] object_id part 4
+To:	"brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20160618221407.1046188-1-sandals@crustytoothpaste.net>
+Cc:	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
+From:	Johannes Sixt <j6t@kdbg.org>
+Message-ID: <57665CC6.6070208@kdbg.org>
+Date:	Sun, 19 Jun 2016 10:50:14 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <m2wpllhcut.fsf@linux-m68k.org>
+In-Reply-To: <20160618221407.1046188-1-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Andreas Schwab <schwab@linux-m68k.org> wrote:
-> Eric Wong <e@80x24.org> writes:
-> 
-> > @@ -21,7 +22,7 @@ static int prune_tmp_file(const char *fullpath)
-> >  	struct stat st;
-> >  	if (lstat(fullpath, &st))
-> >  		return error("Could not stat '%s'", fullpath);
-> > -	if (st.st_mtime > expire)
-> > +	if (st.st_mtime > expire || st.st_ctime >= start)
-> 
-> That will also mean objects created (or their inode changed) up to a
-> second before the start of prune will not be removed.  For example,
-> objects ejected out of a pack by a previous repack may be affected.
+Am 19.06.2016 um 00:13 schrieb brian m. carlson:
+> * Adjust the Coccinelle patches to transform plain structs before
+>    pointers to structs to avoid misconversions.  This addresses the issue
+>    that Peff caught originally.
 
-True, but I prefer to err on the side of keeping data rather than
-removing it.   But keeping it can also be a liability (as it was
-in my case :)  So, perhaps warn users instead:
+To avoid future mistakes, can you write down how "transform plain 
+structs before pointers to structs" looks like? Is it a particular order 
+of Coccinelle rules? Which part of the interdiff between the previous 
+round and this round makes the difference?
 
-diff --git a/builtin/prune.c b/builtin/prune.c
-index d4cd054..c1642d1 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -16,14 +16,22 @@ static int verbose;
- static unsigned long expire;
- static time_t start;
- static int show_progress = -1;
-+static unsigned long ctime_matches;
- 
- static int prune_tmp_file(const char *fullpath)
- {
- 	struct stat st;
- 	if (lstat(fullpath, &st))
- 		return error("Could not stat '%s'", fullpath);
--	if (st.st_mtime > expire || st.st_ctime >= start)
-+	if (st.st_mtime > expire || st.st_ctime > start)
- 		return 0;
-+
-+	if (st.st_ctime == start) {
-+		ctime_matches++;
-+		warning("Keeping %s since it changed as we started", fullpath);
-+		return 0;
-+	}
-+
- 	if (show_only || verbose)
- 		printf("Removing stale temporary file %s\n", fullpath);
- 	if (!show_only)
-@@ -48,8 +56,13 @@ static int prune_object(const unsigned char *sha1, const char *fullpath,
- 		error("Could not stat '%s'", fullpath);
- 		return 0;
- 	}
--	if (st.st_mtime > expire || st.st_ctime >= start)
-+	if (st.st_mtime > expire || st.st_ctime > start)
- 		return 0;
-+	if (st.st_ctime == start) {
-+		ctime_matches++;
-+		warning("Keeping %s since it changed as we started", fullpath);
-+		return 0;
-+	}
- 	if (show_only || verbose) {
- 		enum object_type type = sha1_object_info(sha1, NULL);
- 		printf("%s %s\n", sha1_to_hex(sha1),
-@@ -155,5 +168,12 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 	if (is_repository_shallow())
- 		prune_shallow(show_only);
- 
-+	if (ctime_matches) {
-+		warning("%lu files kept since they changed as prune started",
-+			ctime_matches);
-+		warning("rerun prune after %s",
-+			show_date(start, 0, DATE_MODE(NORMAL)));
-+	}
-+
- 	return 0;
- }
+On a tangent, I wondered recently, why we need oidcpy() and oidclr(). 
+After all, in place of, e.g.,
+
+	oidcpy(&pair->two->oid, &p->oid);
+	oidclr(&one->oid);
+
+we can write
+
+	pair->two->oid = p->oid;
+	one->oid = null_oid;
+
+Is there a particular reason *not* to make this transition? I find the 
+latter less cluttered with equal clarity.
+
+-- Hannes
+
