@@ -1,73 +1,87 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A73C1FE4E
-	for <e@80x24.org>; Sun, 19 Jun 2016 10:10:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76F711FE4E
+	for <e@80x24.org>; Sun, 19 Jun 2016 10:48:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751656AbcFSKKs (ORCPT <rfc822;e@80x24.org>);
-	Sun, 19 Jun 2016 06:10:48 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56882 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751578AbcFSKKr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2016 06:10:47 -0400
-Received: (qmail 32203 invoked by uid 102); 19 Jun 2016 10:10:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 19 Jun 2016 06:10:47 -0400
-Received: (qmail 6491 invoked by uid 107); 19 Jun 2016 10:11:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 19 Jun 2016 06:11:00 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 19 Jun 2016 06:10:44 -0400
-Date:	Sun, 19 Jun 2016 06:10:44 -0400
-From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2016, #08; Thu, 26)
-Message-ID: <20160619101044.GA12994@sigill.intra.peff.net>
-References: <xmqqeg8otowp.fsf@gitster.mtv.corp.google.com>
- <20160527003621.GB26262@sigill.intra.peff.net>
- <xmqqy462x9es.fsf@gitster.mtv.corp.google.com>
+	id S1751695AbcFSKs0 (ORCPT <rfc822;e@80x24.org>);
+	Sun, 19 Jun 2016 06:48:26 -0400
+Received: from elnino.cryptocrack.de ([46.165.227.75]:5607 "EHLO
+	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751461AbcFSKs0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Jun 2016 06:48:26 -0400
+Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id 0dd32947
+	TLS version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO;
+	Sun, 19 Jun 2016 12:48:21 +0200 (CEST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqy462x9es.fsf@gitster.mtv.corp.google.com>
+Content-Transfer-Encoding: 8BIT
+To:	Junio C Hamano <gitster@pobox.com>
+From:	Lukas Fleischer <lfleischer@lfos.de>
+In-Reply-To: <146597489449.32143.1327156804178869158@s-8d3a2dc3.on.site.uni-stuttgart.de>
+Cc:	git@vger.kernel.org, "Nicolas Pitre" <nico@fluxnic.net>,
+	"Johannes Sixt" <j6t@kdbg.org>
+References: <20160613195224.13398-1-lfleischer@lfos.de>
+ <20160614210038.31465-1-lfleischer@lfos.de>
+ <xmqqbn338nu1.fsf@gitster.mtv.corp.google.com>
+ <146597489449.32143.1327156804178869158@s-8d3a2dc3.on.site.uni-stuttgart.de>
+Message-ID: <146633329934.562.6352514848469017860@typhoon>
+User-Agent: alot/0.3.7
+Subject: Re: [PATCH v2] Refactor recv_sideband()
+Date:	Sun, 19 Jun 2016 12:48:19 +0200
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sat, Jun 18, 2016 at 06:19:23PM -0700, Junio C Hamano wrote:
+On Wed, 15 Jun 2016 at 09:14:54, Lukas Fleischer wrote:
+> What we could do is reintroduce the local prefix variable I had in v1
+> and use that to store whether a prefix needs to be prepended or not. If
+> we do that and if we are fine with strbuf memory being (potentially)
+> allocated and re-allocated multiple times during a single
+> recv_sideband() invocation, the strbuf could be made local to the part
+> that actually needs it and could be used as in asprintf().
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Thu, May 26, 2016 at 03:50:14PM -0700, Junio C Hamano wrote:
-> >
-> >> * jk/upload-pack-hook (2016-05-24) 6 commits
-> >>  - upload-pack: provide a hook for running pack-objects
-> >>  - config: add a notion of "scope"
-> >>  - config: return configset value for current_config_ functions
-> >>  - config: set up config_source for command-line config
-> >>  - git_config_parse_parameter: refactor cleanup code
-> >>  - git_config_with_options: drop "found" counting
-> >> 
-> >>  Allow a custom "git upload-pack" replacement to respond to
-> >>  "fetch/clone" request.
-> >> 
-> >>  Will merge to 'next'.
-> >
-> > I just sent a replacement for the fourth patch that avoids the t/helper
-> > problem. It's probably worth dealing with before even hitting "next" so
-> > as not to break bisection.
-> >
-> > You should probably hold off on merging the top one. The discussion
-> > stalled because I was on vacation, but it has resumed now (the earlier
-> > refactoring bits are uncontroversial, I think).
-> 
-> And then it seems nothing happened.  Can we settle this soonish?
+When I revamped the patch and looked at similar code I had another idea
+that I did not want to keep to myself:
 
-I am OK with what you have queued; I was mostly giving Ævar a chance to
-respond to my final response in the thread[1].
+In contexts similar to this patch, we often seem to use statically
+allocated string buffers as follows:
 
--Peff
+-- 8< --
+diff --git a/sideband.c b/sideband.c
+index 8340a1b..08b75e2 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -22,9 +22,10 @@ int recv_sideband(const char *me, int in_stream, int out)
+ {
+ 	const char *term, *suffix;
+ 	char buf[LARGE_PACKET_MAX + 1];
+-	struct strbuf outbuf = STRBUF_INIT;
++	static struct strbuf outbuf = STRBUF_INIT;
+ 	const char *b, *brk;
+ 
++	strbuf_reset(&outbuf);
+ 	strbuf_addf(&outbuf, "%s", PREFIX);
+ 	term = getenv("TERM");
+ 	if (isatty(2) && term && strcmp(term, "dumb"))
+-- 8< --
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/295634
+The benefits are obvious: No memory (re-)allocation overhead and no need
+to take care of freeing on every return path. The downside is that the
+function becomes non-thread-safe. After looking at the call sites, it
+seems like we do not seem to call recv_sideband() from different threads
+yet -- but do we want to rely on that?
+
+The other two options are:
+
+1. As I suggested earlier, introduce a wrapper that could be named
+   xwritef() or fprintf_atomic() and allocate a new buffer (i.e., use a
+   fresh strbuf) each time something is printed.
+
+2. Keep using a fixed-size buffer size we already know the maximum size
+   each of the strings can have.
+
+Which one do you prefer?
+
+Regards,
+Lukas
