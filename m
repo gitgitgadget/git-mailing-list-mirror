@@ -1,105 +1,157 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26A8120189
-	for <e@80x24.org>; Sun, 19 Jun 2016 17:05:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D635120189
+	for <e@80x24.org>; Sun, 19 Jun 2016 17:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751455AbcFSRFK (ORCPT <rfc822;e@80x24.org>);
-	Sun, 19 Jun 2016 13:05:10 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35598 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751286AbcFSRFI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Jun 2016 13:05:08 -0400
-Received: by mail-wm0-f66.google.com with SMTP id a66so3746471wme.2
-        for <git@vger.kernel.org>; Sun, 19 Jun 2016 10:05:07 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Gw4sQQ0YheReb0a77JfgE2hIZjsvPkkUC82szF1A1a0=;
-        b=LOjl50q27mF8Om22lRsbUsqcbAmeT999rpX/cQyJD+yy5K4JAe7BD/8AaT5euM1rSv
-         9AwVTepqdUNxxYMgoVCs/aZEaCyjKt0PD9lK5LbQ8z0IGDIMc3I+OxPsH2CPRg0nwpJ8
-         PuOlgXVl8iOnIgN7xhSVvdV+YLi6bgk/kMhLTY/Jb+ToUQD9OyjYO+pJ44jmSLyRspl9
-         vflh+gVEnIJGvO0iE3usYlLaWKr9cCYQGg6zYr4N1GHoj9tFLY+MGU6URu16ZslLSTB3
-         2PgqkvYuH1McSmiHZP/0J5UmF2QHEKu/VV0JqH7whxxa0leT3NqVasTD+MSOVNBQxx6d
-         kbLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Gw4sQQ0YheReb0a77JfgE2hIZjsvPkkUC82szF1A1a0=;
-        b=R0hMINI+8lhHVXdnc1MX16jmSAG/8RPsYOhMvQe6+hxlxCiLpqzFNtMg5sMJUsVsUe
-         UVg8e+Yz4yvl2hlwwM1rFTaI9Tv5tTM6KW3rdFaD7ODlo1pBJ+DvtG+Ce5Ux88FEK0pK
-         dqpFidj9npbs19zd1IaWGOifV71VbYKrK7w2AOctbp1g5j1RKqZv2S44KNzdpkoxmmgC
-         cmVsRspwiz+c6RSbpww3zy+DPGVZnEzPYgAO8iOqu1cHE2n6e8GjXNSOow00dUQ+Mnt7
-         /J4egi0qZbtGu5ODKTGmXHaZ8rijTYoNyMlduT72LOK6JrpplRzA7HtYDk2zLcUrCSnO
-         s6XQ==
-X-Gm-Message-State: ALyK8tKKF17yWnqgrYrkZICXUKkhs4R/J0DxBKPgrADNSMkvW+QeS1lfKklDBIjuEXifqw==
-X-Received: by 10.194.52.74 with SMTP id r10mr10650725wjo.50.1466355906171;
-        Sun, 19 Jun 2016 10:05:06 -0700 (PDT)
-Received: from neu4sfhg12.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id 124sm4336182wml.12.2016.06.19.10.05.05
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 19 Jun 2016 10:05:05 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v1] travis-ci: enable web server tests t55xx on Linux
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <1463647511-54811-1-git-send-email-larsxschneider@gmail.com>
-Date:	Sun, 19 Jun 2016 19:05:04 +0200
-Cc:	Git Mailing List <git@vger.kernel.org>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <6C0F6649-C238-475E-BAA5-5F3A0EC5DA2D@gmail.com>
-References: <1463647511-54811-1-git-send-email-larsxschneider@gmail.com>
-To:	Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+	id S1751541AbcFSRZs (ORCPT <rfc822;e@80x24.org>);
+	Sun, 19 Jun 2016 13:25:48 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37990 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751191AbcFSRZs (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Jun 2016 13:25:48 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [64.134.182.77])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4DFBA2809F;
+	Sun, 19 Jun 2016 17:25:45 +0000 (UTC)
+DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+	s=default; t=1466357145;
+	bh=zEPBr4xrKVtIaDRU+KHsmgGOVshGaC7H0lsycMYFpHA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tTxIXI70G/0mm5LYKL+8s9a9XTndYOzaXE4jB574+taYe3KEMMzg58Y//BlVKrN98
+	 EX5jwG9HHxaf5v8PwXAa6WZTTRwYsMLjpBgKGWe5fUf3IyaoDFbg9tpCH3o7LXXdLK
+	 nqHze1Vigm8N121nwJjrIOAMNav94lQw65pm99ggfQnSPe8by91D6wNdup/BxjN6Tk
+	 +lc1yh2ffP0wAmaotgnrkZAoffdMD6Yo1vDnWJm4+hbO86wp5tkDY3716ptXaR+O8E
+	 dRPhNMnVA8XraRVb6LelecwHj7KWz9Ux9kXNWDTmCnVdFE+vmhmPqF2+khr65xJpiH
+	 a9zwEoK676o+Wph5wU68CREvfU+UYnKx752pHUr4oHQNs8wXEG/9NOv2elanBgwNyP
+	 tzE28pymJlw2QfMFfqVDJWTEuohDgMRnV0gyTvs1tjJpmUje8kWeGK5MxW0o0AvTck
+	 4qfuwcsdTFLOTUINxmJalhAA+I1sByqshMn+8rnudDcmFqfEF0J
+Date:	Sun, 19 Jun 2016 17:25:39 +0000
+From:	"brian m. carlson" <sandals@crustytoothpaste.net>
+To:	Jeff King <peff@peff.net>
+Cc:	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+	Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2 0/8] object_id part 4
+Message-ID: <20160619172538.GA16194@vauxhall.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>
+References: <20160618221407.1046188-1-sandals@crustytoothpaste.net>
+ <57665CC6.6070208@kdbg.org>
+ <20160619092448.GA12221@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="k+w/mQv8wyuph6w0"
+Content-Disposition: inline
+In-Reply-To: <20160619092448.GA12221@sigill.intra.peff.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 4.6.0-trunk-amd64)
+User-Agent: Mutt/1.6.0 (2016-04-01)
+X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
 
-> On 19 May 2016, at 10:45, larsxschneider@gmail.com wrote:
-> 
-> From: Lars Schneider <larsxschneider@gmail.com>
-> 
-> Install the "apache" package to run the Git web server tests on
-> Travis-CI Linux build machines. The tests are already executed on OS X
-> build machines since the apache web server is installed by default.
-> 
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
-> .travis.yml | 2 ++
-> 1 file changed, 2 insertions(+)
-> 
-> diff --git a/.travis.yml b/.travis.yml
-> index adab5b8..3c54080 100644
-> --- a/.travis.yml
-> +++ b/.travis.yml
-> @@ -18,6 +18,7 @@ addons:
->   apt:
->     packages:
->     - language-pack-is
-> +    - apache2
-> 
-> env:
->   global:
-> @@ -30,6 +31,7 @@ env:
->     - DEFAULT_TEST_TARGET=prove
->     - GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
->     - GIT_TEST_OPTS="--verbose --tee"
-> +    - GIT_TEST_HTTPD=true
->     - GIT_TEST_CLONE_2GB=YesPlease
->     # t9810 occasionally fails on Travis CI OS X
->     # t9816 occasionally fails with "TAP out of sequence errors" on Travis CI OS X
-> --
-> 2.5.1
-> 
+--k+w/mQv8wyuph6w0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi Junio,
+On Sun, Jun 19, 2016 at 05:24:48AM -0400, Jeff King wrote:
+> On Sun, Jun 19, 2016 at 10:50:14AM +0200, Johannes Sixt wrote:
+> > To avoid future mistakes, can you write down how "transform plain struc=
+ts
+> > before pointers to structs" looks like? Is it a particular order of
+> > Coccinelle rules? Which part of the interdiff between the previous roun=
+d and
+> > this round makes the difference?
+>=20
+> Yeah, I'd also like a better understanding of what went wrong in the
+> original (just to be able to better evaluate the tool).
 
-is there any chance to pick this up? It would enable the web server
-tests on Travis CI.
+I'm not completely clear on why Coccinelle made the transform that it
+did.  If you look at the commit messages, the new patch is this:
 
-Thanks,
-Lars
+  @@
+  struct diff_filespec o;
+  @@
+  - o.sha1
+  + o.oid.hash
 
+  @@
+  struct diff_filespec *p;
+  @@
+  - p->sha1
+  + p->oid.hash
+
+whereas the two pieces were reversed before.  This fixes the problem
+because it's never possible for the second transform to match after the
+first has transformed a given piece of code.  The functional interdiff
+shows that only the issues the two of you found are changed.
+
+> Also, for the record, the issue was noticed by Johannes originally, not
+> me, as indicated above (I just found a similar case after seeing his
+> report).
+
+I apologize for the misattribution.
+
+> > On a tangent, I wondered recently, why we need oidcpy() and oidclr(). A=
+fter
+> > all, in place of, e.g.,
+> >=20
+> > 	oidcpy(&pair->two->oid, &p->oid);
+> > 	oidclr(&one->oid);
+> >=20
+> > we can write
+> >=20
+> > 	pair->two->oid =3D p->oid;
+> > 	one->oid =3D null_oid;
+> >=20
+> > Is there a particular reason *not* to make this transition? I find the
+> > latter less cluttered with equal clarity.
+>=20
+> I think traditionally we've avoided struct assignment because some
+> ancient compilers didn't do it. But it's in C89, and I suspect it's
+> crept into the code base anyway over the years without anyone
+> complaining.
+
+I asked about this earlier and Junio felt that struct assignment was
+less desirable.
+
+Also, if we do struct assignment, if we add a new hash, we may copy more
+than necessary (e.g. 64 bytes when we're only using SHA-1); however,
+this may be offset by the ability of the compiler to compute the offset
+at compile time.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--k+w/mQv8wyuph6w0
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.13 (GNU/Linux)
+
+iQIcBAEBCgAGBQJXZtWSAAoJEL9TXYEfUvaLkvgP/jHZiXSu3A97tt971pGP3GK3
+o4+E+7dXS9xioEINKnYCiljrYqDrIatlujE8fb+xxteDe7ZT6SAfmB1WUsKSC8CI
+T044oTpLG4hVKoxSyaPQxe9UwR8p5E7JLFfNWEa8XyyFU+3D3bAD3oiEaxzdhZwy
+hKeP2d/njpaj9PyE5zqd7cj8sl/Q2np5pZ2aJ4YVUle09E6Z6Gvx1raKMyjgnJXo
+7kdr/Rp7qCYkJqLrzJKvyYXeAjFnZ+g39FPyM1rszfAJpWcUHnhQkdmCAODuhSIF
+R2ddm3zVa/TF+blRlRMlyUL8j0orUcPYsh8gIrtrg2Y6dC3AfBHMtggThqaHQ7c/
+jb/nmB18nf+FDGfFU8fUan1sp8Xdo2MghBMxGpP8rnwRq08Q+1Um80WzL7cj3NKq
+PxgjKC5ZVi/7lJkGI0KULo/kJUky/VpNhw2/UMbAQxM9D6xtyJugRT7fQ2hYgeqJ
+yDK4EoFfkTTZo6lU76nWVO0iEoH2mJtOuEwMq7JWHJiQMieHLxVtxzuvY2G5uwnD
+frXsp4Ln2po7VzOG39HmE2u0WOQTRJGG/x3uS0M6Y+odBs6LBC3W22406yROt4zm
+1v05bHUhxS6yQtBvXrpHScdRsQwfWij8JU4y3/3ZP+jy+nO3Ws+qU2qXh7ljL8zd
+1266rEYQs3B0vZPSBtgM
+=tFcz
+-----END PGP SIGNATURE-----
+
+--k+w/mQv8wyuph6w0--
