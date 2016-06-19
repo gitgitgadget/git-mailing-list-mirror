@@ -1,96 +1,75 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7021920189
-	for <e@80x24.org>; Sun, 19 Jun 2016 18:54:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50C2120189
+	for <e@80x24.org>; Sun, 19 Jun 2016 20:02:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751310AbcFSSyF (ORCPT <rfc822;e@80x24.org>);
-	Sun, 19 Jun 2016 14:54:05 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:37177 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751269AbcFSSyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2016 14:54:03 -0400
-Received: by mail-wm0-f50.google.com with SMTP id a66so51255378wme.0
-        for <git@vger.kernel.org>; Sun, 19 Jun 2016 11:54:02 -0700 (PDT)
+	id S1751726AbcFSUCK (ORCPT <rfc822;e@80x24.org>);
+	Sun, 19 Jun 2016 16:02:10 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:34886 "EHLO
+	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751473AbcFSUCB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2016 16:02:01 -0400
+Received: by mail-io0-f194.google.com with SMTP id n127so16153932iof.2
+        for <git@vger.kernel.org>; Sun, 19 Jun 2016 13:02:00 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=AI9IiW1njF4pzl3CyupfU1a/UNyQzA+5hanpzJX1K+0=;
-        b=1Jq9LQBMQVwwty41on9FeHkvx8x7ESCBT6t/qVGmxXgYrAWKJCU6gb3nTFum18SCRc
-         OuiqVNQKyOko/BOn8olc9Gb3+9oFyGfHZqiJqt49wrxDPli1vSkeQO7zIJz3CtIkmVRW
-         jb51iE/g4jVCN+39caPR9JxuGRe18/hAzh5GY+7BGdwKUWeUe8Fua35JQLYNL8zQVy5Z
-         nP2GzU0xaLtMamW/qyaDajXWWfX8ZCRhi+3zkQ2goShsJEgpdd5KCqOPXDA1qgS6AfDa
-         Ast3fJtEex65TXgJE0B7y/fs9aPh2aoM9DqnQfGygt1EhphdRKH8OKRV7rJ5/Bf4NtLw
-         kdkA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=ZBpDUFXTIJN3GGtpZIeMs4u8OaAjNlSc6hwdaxYI8tw=;
+        b=fNvYLecLyLx9ZhZKi6ZQz034k2rbTS/sZm1sEk/0wfIeHvbrH0xpKzSQ32Nyi85W7m
+         qRq2fxpJwHnEywZurxunI5+N3bmLvNb7erYfHjSSZfoNsf6jBIpZIoXipFSa4lczoO4U
+         +VRNS03A+SxCJmSij1S5NgJMVW9ouWejc+iQ/VcVh/rB/LB3oi7liUN7W0p06VkhtAFK
+         h6ylGkP7H89D8qONSqtR5Qi6K+Q3D36lDJByR+/4h6Zsz6OM4k1f4Ta5jd7KlV/Ca4SO
+         R60l66N7ZnxFWf737hPT0hVDPW727X4IAKacBgqWetXDL99X1X+RadZQsoAsapXeclEW
+         70sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=AI9IiW1njF4pzl3CyupfU1a/UNyQzA+5hanpzJX1K+0=;
-        b=Rs1vL8/n8Ijv/q1vYHBL+OtucCoX14a+LECKiwg9j1YVURF7JvJot8BYoJpXd3pdaC
-         XrFbg2U30bKwktZq4R189AUL/J8q4sCG5pUGjtg94Cdd6hsmPHvWAqk/wBR0c2EYpXTN
-         nx8CgLTwIEjB+RtBS7ycG2O01F1Lj9EHuSsp66sYdNYYpPLcGSAW5+tJrXxs959RrA/T
-         6WJ4j02FQcp/zZ3plggYbO7HBg+Vo+rKoNbawUL0RyGNx7vSAeL86m95AxbnUQm0xfY0
-         FxOL66b99rm034xdt34cefvgqnRW4WfDl5F/QiK7QFU2tJGN0i+4EO8Wz6AxY55SwnQ+
-         9XaQ==
-X-Gm-Message-State: ALyK8tKySVPdnYEf2tGz6DDY/swBZ6hIH3ORTBGWtu9OQ4rG5LVQvVoV9orZsJoVaoT77w==
-X-Received: by 10.28.158.132 with SMTP id h126mr7254023wme.43.1466362441735;
-        Sun, 19 Jun 2016 11:54:01 -0700 (PDT)
-Received: from neu4sfhg12.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id a4sm37058968wjq.40.2016.06.19.11.54.00
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 19 Jun 2016 11:54:01 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: What's cooking in git.git (Jun 2016, #05; Thu, 16)
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <D0F4EDD7-43BB-4311-A8C9-7A83E45CACC6@gmail.com>
-Date:	Sun, 19 Jun 2016 20:53:59 +0200
-Cc:	Michael Haggerty <mhagger@alum.mit.edu>,
-	Git Mailing List <git@vger.kernel.org>,
-	Luke Diamand <luke@diamand.org>
-Content-Transfer-Encoding: 7bit
-Message-Id: <CD2C5DC4-C11B-4D80-8C6F-254DCD30CD02@gmail.com>
-References: <xmqqk2ho33ig.fsf@gitster.mtv.corp.google.com> <1634E84E-5260-4F7B-A74F-AF5D3A7C0181@gmail.com> <576650E7.70107@alum.mit.edu> <3E132EEE-CEBA-4C0D-A5C4-62F587A02225@gmail.com> <BC5163B8-7CF2-4106-9FBE-8CCD096252A2@gmail.com> <xmqqinx5vyg5.fsf@gitster.mtv.corp.google.com> <D0F4EDD7-43BB-4311-A8C9-7A83E45CACC6@gmail.com>
-To:	Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=ZBpDUFXTIJN3GGtpZIeMs4u8OaAjNlSc6hwdaxYI8tw=;
+        b=AS0tSIpWU6pkNWPrVnpJ+iTEewpngqDVotQnM3Ets+eAmF5UakpHmDrrfVm5oi1BzS
+         RFMI0vwBhT68ahsvCEL53pLF1cyz5mOU30q7ziLRizEEmihogC9fweh/eNuHnwAj2pVB
+         HVPh7lq7T6Ih6rQSBkwKYu5tpZ03B2gGh3PomoBePvkZBieR3fw8VuisKrK4prhMfbTC
+         dj+1kvfl5se4POMvlLjjP4CH3Ou2rp5K0ArwqmEdC2G5EIs0TUUsqdiXpG2WyF5v32gc
+         j3TwLamXUDjpJAQQJ2Lwe6rmzMw/dBZnAORe8UbFsDCTVrDyERhfkvictwZwt8P3Ojcp
+         YnHg==
+X-Gm-Message-State: ALyK8tLH76oRrhg5ak0pEg50+DEE2fYChavBVespHHPYxfXn8208IBpdStcZlirnHgfJR5F8gdaBiyFWpmbBTg==
+X-Received: by 10.107.47.41 with SMTP id j41mr17047400ioo.168.1466366520255;
+ Sun, 19 Jun 2016 13:02:00 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.79.0.30 with HTTP; Sun, 19 Jun 2016 13:01:59 -0700 (PDT)
+In-Reply-To: <de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de>
+References: <cover.1466244194.git.johannes.schindelin@gmx.de> <de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de>
+From:	Eric Sunshine <sunshine@sunshineco.com>
+Date:	Sun, 19 Jun 2016 16:01:59 -0400
+X-Google-Sender-Auth: rfIEoGUaPR1IJDcSkHbvvuu7b-Y
+Message-ID: <CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com>
+Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
+To:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+On Sat, Jun 18, 2016 at 6:04 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> We just taught the relevant functions to respect the diffopt.file field,
+> to allow writing somewhere else than stdout. Let's make use of it.
+> [...]
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> diff --git a/builtin/log.c b/builtin/log.c
+> @@ -1569,6 +1570,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>                 setup_pager();
+>
+>         if (output_directory) {
+> +               rev.diffopt.use_color = 0;
 
-> On 19 Jun 2016, at 20:49, Lars Schneider <larsxschneider@gmail.com> wrote:
-> 
-> 
->> On 19 Jun 2016, at 20:13, Junio C Hamano <gitster@pobox.com> wrote:
->> 
->> Lars Schneider <larsxschneider@gmail.com> writes:
->> 
->>> This seems to fix the issue:
->>> 
->>> --- a/git-p4.py
->>> +++ b/git-p4.py
->>> @@ -2274,7 +2274,7 @@ class P4Sync(Command, P4UserMap):
->>>        self.useClientSpec_from_options = False
->>>        self.clientSpecDirs = None
->>>        self.tempBranches = []
->>> -        self.tempBranchLocation = "git-p4-tmp"
->>> +        self.tempBranchLocation = "refs/heads/git-p4-tmp"
->>>        self.largeFileSystem = None
->>> 
->>>        if gitConfig('git-p4.largeFileSystem'):
->> 
->> Anywhere in refs/ would be OK, but don't you need to adjust the
->> test, too?
->> 
->> Even though I do not use git-p4, I'd imagine that I would be upset
->> if temporary refs that are used only during sync contaminated the
->> set of local branches I have, if I were a user of git-p4.  Would it
->> make sense to use "refs/git-p4-tmp" or something instead?
-> Yes, "refs/git-p4-tmp" would work equally well.
+What is this change about? It doesn't seem to be related to anything
+else in the patch.
 
-Plus, you are right. A minor test adjustment is necessary (although
-the tests pass without adjustment). I will post a full patch.
-
-- Lars
+>                 if (use_stdout)
+>                         die(_("standard output, or directory, which one?"));
+>                 if (mkdir(output_directory, 0777) < 0 && errno != EEXIST)
