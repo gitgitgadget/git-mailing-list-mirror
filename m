@@ -1,157 +1,101 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D635120189
-	for <e@80x24.org>; Sun, 19 Jun 2016 17:25:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 861EC20189
+	for <e@80x24.org>; Sun, 19 Jun 2016 18:00:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751541AbcFSRZs (ORCPT <rfc822;e@80x24.org>);
-	Sun, 19 Jun 2016 13:25:48 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37990 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751191AbcFSRZs (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Jun 2016 13:25:48 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [64.134.182.77])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	id S1751676AbcFSSAb (ORCPT <rfc822;e@80x24.org>);
+	Sun, 19 Jun 2016 14:00:31 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55327 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751454AbcFSSAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2016 14:00:30 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F1DF24B23;
+	Sun, 19 Jun 2016 13:59:32 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=C1395NG3LiXDOdeW0fQsiUz9biM=; b=b7Xlhd
+	SxjHQAfOs3itMEPoKwe/O0mFenJ7fMWH0CFhC8GfjRxL7Icx4KZ0GjmYIv+o5SEf
+	GrwZGLpbAZ67XYJ85/zMY6v7amsBXJxCup01wZfsi4i4G1HyGK4kKMeWJLsdAGBt
+	RloGs8ihZH6//ft1NU3PU5p1QH/O33oQp8HFs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eKJDjC8S1AHqBVQvjcqD6SAeTkfhBHB/
+	BDqzbd7IcU386o2AZAVTfhPBwfHUDfb+uQoA47snuboPj43zuFZGZKv3aVaVfaMZ
+	AIxQYz2ewmKy4GAEzMWtQOEfGdoaDa+OVrDPVMOnwTDXSiO0b2YDPvYdNW10veIw
+	+IsvpF/GKHo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B6ED24B22;
+	Sun, 19 Jun 2016 13:59:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4DFBA2809F;
-	Sun, 19 Jun 2016 17:25:45 +0000 (UTC)
-DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1466357145;
-	bh=zEPBr4xrKVtIaDRU+KHsmgGOVshGaC7H0lsycMYFpHA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tTxIXI70G/0mm5LYKL+8s9a9XTndYOzaXE4jB574+taYe3KEMMzg58Y//BlVKrN98
-	 EX5jwG9HHxaf5v8PwXAa6WZTTRwYsMLjpBgKGWe5fUf3IyaoDFbg9tpCH3o7LXXdLK
-	 nqHze1Vigm8N121nwJjrIOAMNav94lQw65pm99ggfQnSPe8by91D6wNdup/BxjN6Tk
-	 +lc1yh2ffP0wAmaotgnrkZAoffdMD6Yo1vDnWJm4+hbO86wp5tkDY3716ptXaR+O8E
-	 dRPhNMnVA8XraRVb6LelecwHj7KWz9Ux9kXNWDTmCnVdFE+vmhmPqF2+khr65xJpiH
-	 a9zwEoK676o+Wph5wU68CREvfU+UYnKx752pHUr4oHQNs8wXEG/9NOv2elanBgwNyP
-	 tzE28pymJlw2QfMFfqVDJWTEuohDgMRnV0gyTvs1tjJpmUje8kWeGK5MxW0o0AvTck
-	 4qfuwcsdTFLOTUINxmJalhAA+I1sByqshMn+8rnudDcmFqfEF0J
-Date:	Sun, 19 Jun 2016 17:25:39 +0000
-From:	"brian m. carlson" <sandals@crustytoothpaste.net>
-To:	Jeff King <peff@peff.net>
-Cc:	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 0/8] object_id part 4
-Message-ID: <20160619172538.GA16194@vauxhall.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>
-References: <20160618221407.1046188-1-sandals@crustytoothpaste.net>
- <57665CC6.6070208@kdbg.org>
- <20160619092448.GA12221@sigill.intra.peff.net>
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C887D24B21;
+	Sun, 19 Jun 2016 13:59:31 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	LE Manh Cuong <cuong.manhle.vn@gmail.com>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH] git-sh-setup.sh: fix missing double quotes variables
+References: <xmqqshwax8ah.fsf@gitster.mtv.corp.google.com>
+	<20160619024554.2983-1-cuong.manhle.vn@gmail.com>
+	<xmqqinx5yijm.fsf@gitster.mtv.corp.google.com>
+Date:	Sun, 19 Jun 2016 10:59:29 -0700
+In-Reply-To: <xmqqinx5yijm.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Sat, 18 Jun 2016 20:16:45 -0700")
+Message-ID: <xmqqvb15vz3y.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="k+w/mQv8wyuph6w0"
-Content-Disposition: inline
-In-Reply-To: <20160619092448.GA12221@sigill.intra.peff.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.6.0-trunk-amd64)
-User-Agent: Mutt/1.6.0 (2016-04-01)
-X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
+Content-Type: text/plain
+X-Pobox-Relay-ID: 93017874-3647-11E6-9B33-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---k+w/mQv8wyuph6w0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> LE Manh Cuong <cuong.manhle.vn@gmail.com> writes:
+>
+>> It's not only people shooting their foot, but also from malicious user.
+>> Given that `curl url | sudo sh/bash` is often found in many instructions,
+>> an end user may not be noticed about the environment variable injection
+>> from their side.
+>>
+>> IMHO, it's better if  git can protect the end users in this situation.
+>
+> Huh?  For those who run `curl url | sudo sh`, I do not think the
+> incoming script setting and exporting LV to an arbitrary value and
+> runing Git is not the top thing they need worry about.
+>
+> While I think enclosing the string in dq is an improvement (as I
+> said already), I still do think your use of the v-word is making a
+> mountain out of an anthill.
 
-On Sun, Jun 19, 2016 at 05:24:48AM -0400, Jeff King wrote:
-> On Sun, Jun 19, 2016 at 10:50:14AM +0200, Johannes Sixt wrote:
-> > To avoid future mistakes, can you write down how "transform plain struc=
-ts
-> > before pointers to structs" looks like? Is it a particular order of
-> > Coccinelle rules? Which part of the interdiff between the previous roun=
-d and
-> > this round makes the difference?
->=20
-> Yeah, I'd also like a better understanding of what went wrong in the
-> original (just to be able to better evaluate the tool).
+I failed to say why I found the dq is an improvement, but that
+should be in the log message of this commit.  Off the top of my
+head, something like:
 
-I'm not completely clear on why Coccinelle made the transform that it
-did.  If you look at the commit messages, the new patch is this:
+	We often make sure an environment variable is set to
+	something, either set by the user (in which case we do not
+	molest it) or set it to our default value (otherwise), with
 
-  @@
-  struct diff_filespec o;
-  @@
-  - o.sha1
-  + o.oid.hash
+		: ${VAR=default value}
 
-  @@
-  struct diff_filespec *p;
-  @@
-  - p->sha1
-  + p->oid.hash
+	i.e. running the no-op command ":" with ${VAR} as its
+	parameters (or the default value we supply), relying on that
+	":" is a no-op.
 
-whereas the two pieces were reversed before.  This fixes the problem
-because it's never possible for the second transform to match after the
-first has transformed a given piece of code.  The functional interdiff
-shows that only the issues the two of you found are changed.
+	This pattern, even though it is no-op from correctness point
+	of view, still can be expensive if the existing value in VAR
+	has shell glob (because they will be expanded against
+	filesystem entities) and IFS whitespaces (because the value
+	need to be split into multiple parameters).  Our invocation
+	of ":" command does not care if the parameter given to it is
+	after the value in VAR goes through these processing.
 
-> Also, for the record, the issue was noticed by Johannes originally, not
-> me, as indicated above (I just found a similar case after seeing his
-> report).
+	Enclosing the whole thing in double-quote, i.e.
 
-I apologize for the misattribution.
+		: "${VAR=default value}"
 
-> > On a tangent, I wondered recently, why we need oidcpy() and oidclr(). A=
-fter
-> > all, in place of, e.g.,
-> >=20
-> > 	oidcpy(&pair->two->oid, &p->oid);
-> > 	oidclr(&one->oid);
-> >=20
-> > we can write
-> >=20
-> > 	pair->two->oid =3D p->oid;
-> > 	one->oid =3D null_oid;
-> >=20
-> > Is there a particular reason *not* to make this transition? I find the
-> > latter less cluttered with equal clarity.
->=20
-> I think traditionally we've avoided struct assignment because some
-> ancient compilers didn't do it. But it's in C89, and I suspect it's
-> crept into the code base anyway over the years without anyone
-> complaining.
+	avoids paying the unnecessary cost, so let's do so.
 
-I asked about this earlier and Junio felt that struct assignment was
-less desirable.
-
-Also, if we do struct assignment, if we add a new hash, we may copy more
-than necessary (e.g. 64 bytes when we're only using SHA-1); however,
-this may be offset by the ability of the compiler to compute the offset
-at compile time.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---k+w/mQv8wyuph6w0
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.13 (GNU/Linux)
-
-iQIcBAEBCgAGBQJXZtWSAAoJEL9TXYEfUvaLkvgP/jHZiXSu3A97tt971pGP3GK3
-o4+E+7dXS9xioEINKnYCiljrYqDrIatlujE8fb+xxteDe7ZT6SAfmB1WUsKSC8CI
-T044oTpLG4hVKoxSyaPQxe9UwR8p5E7JLFfNWEa8XyyFU+3D3bAD3oiEaxzdhZwy
-hKeP2d/njpaj9PyE5zqd7cj8sl/Q2np5pZ2aJ4YVUle09E6Z6Gvx1raKMyjgnJXo
-7kdr/Rp7qCYkJqLrzJKvyYXeAjFnZ+g39FPyM1rszfAJpWcUHnhQkdmCAODuhSIF
-R2ddm3zVa/TF+blRlRMlyUL8j0orUcPYsh8gIrtrg2Y6dC3AfBHMtggThqaHQ7c/
-jb/nmB18nf+FDGfFU8fUan1sp8Xdo2MghBMxGpP8rnwRq08Q+1Um80WzL7cj3NKq
-PxgjKC5ZVi/7lJkGI0KULo/kJUky/VpNhw2/UMbAQxM9D6xtyJugRT7fQ2hYgeqJ
-yDK4EoFfkTTZo6lU76nWVO0iEoH2mJtOuEwMq7JWHJiQMieHLxVtxzuvY2G5uwnD
-frXsp4Ln2po7VzOG39HmE2u0WOQTRJGG/x3uS0M6Y+odBs6LBC3W22406yROt4zm
-1v05bHUhxS6yQtBvXrpHScdRsQwfWij8JU4y3/3ZP+jy+nO3Ws+qU2qXh7ljL8zd
-1266rEYQs3B0vZPSBtgM
-=tFcz
------END PGP SIGNATURE-----
-
---k+w/mQv8wyuph6w0--
