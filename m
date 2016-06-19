@@ -1,101 +1,91 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 861EC20189
-	for <e@80x24.org>; Sun, 19 Jun 2016 18:00:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD0C320189
+	for <e@80x24.org>; Sun, 19 Jun 2016 18:08:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676AbcFSSAb (ORCPT <rfc822;e@80x24.org>);
-	Sun, 19 Jun 2016 14:00:31 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55327 "EHLO
+	id S1751335AbcFSSIs (ORCPT <rfc822;e@80x24.org>);
+	Sun, 19 Jun 2016 14:08:48 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50479 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751454AbcFSSAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2016 14:00:30 -0400
+	with ESMTP id S1750768AbcFSSIr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2016 14:08:47 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F1DF24B23;
-	Sun, 19 Jun 2016 13:59:32 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 99BD522E1D;
+	Sun, 19 Jun 2016 14:07:33 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=C1395NG3LiXDOdeW0fQsiUz9biM=; b=b7Xlhd
-	SxjHQAfOs3itMEPoKwe/O0mFenJ7fMWH0CFhC8GfjRxL7Icx4KZ0GjmYIv+o5SEf
-	GrwZGLpbAZ67XYJ85/zMY6v7amsBXJxCup01wZfsi4i4G1HyGK4kKMeWJLsdAGBt
-	RloGs8ihZH6//ft1NU3PU5p1QH/O33oQp8HFs=
+	:content-type; s=sasl; bh=YZ8I/Yx+1XPw/Pi+wxYwQJjH+Qo=; b=enRlLM
+	yBy29egLB3Hzb+Tb78ENuRiEfxX3Jmh2JWExgZGKkKHj1u98HKOwZNrnTIZ7jg7N
+	ZFjOuntmHN5n3f/fO31B1jwc/yGaGO0M8F2EncWHCRuXmhkniRAiCFDIoL0NjYSN
+	br/eGW35dEK53cuaY8i2tJEC12dwA9n1OP3JQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eKJDjC8S1AHqBVQvjcqD6SAeTkfhBHB/
-	BDqzbd7IcU386o2AZAVTfhPBwfHUDfb+uQoA47snuboPj43zuFZGZKv3aVaVfaMZ
-	AIxQYz2ewmKy4GAEzMWtQOEfGdoaDa+OVrDPVMOnwTDXSiO0b2YDPvYdNW10veIw
-	+IsvpF/GKHo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B6ED24B22;
-	Sun, 19 Jun 2016 13:59:32 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=FacPrblCjdYa7m1YO8xlsrtIusTMd6dd
+	zcfTRovqhbLytrMn2yTqzlfOghutA4LaNNWeLeZ4voy4nIEci7NLdNsW3fXu7Tfk
+	F2NT5NHTDOPlc94kWWDwU7z780lA61eKo/5p57tV9F6CEX967GOueZ7tMYX1CioH
+	V0siGcTI1jA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 924F522E1C;
+	Sun, 19 Jun 2016 14:07:33 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C887D24B21;
-	Sun, 19 Jun 2016 13:59:31 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 204F422E19;
+	Sun, 19 Jun 2016 14:07:33 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	LE Manh Cuong <cuong.manhle.vn@gmail.com>
+To:	Michael Haggerty <mhagger@alum.mit.edu>
 Cc:	git@vger.kernel.org
-Subject: Re: [PATCH] git-sh-setup.sh: fix missing double quotes variables
-References: <xmqqshwax8ah.fsf@gitster.mtv.corp.google.com>
-	<20160619024554.2983-1-cuong.manhle.vn@gmail.com>
-	<xmqqinx5yijm.fsf@gitster.mtv.corp.google.com>
-Date:	Sun, 19 Jun 2016 10:59:29 -0700
-In-Reply-To: <xmqqinx5yijm.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Sat, 18 Jun 2016 20:16:45 -0700")
-Message-ID: <xmqqvb15vz3y.fsf@gitster.mtv.corp.google.com>
+Subject: Re: What's cooking in git.git (Jun 2016, #05; Thu, 16)
+References: <xmqqk2ho33ig.fsf@gitster.mtv.corp.google.com>
+	<5764CBA8.5070303@alum.mit.edu>
+	<xmqqziqixsti.fsf@gitster.mtv.corp.google.com>
+	<57665497.3060100@alum.mit.edu>
+Date:	Sun, 19 Jun 2016 11:07:31 -0700
+In-Reply-To: <57665497.3060100@alum.mit.edu> (Michael Haggerty's message of
+	"Sun, 19 Jun 2016 10:15:19 +0200")
+Message-ID: <xmqqr3btvyqk.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 93017874-3647-11E6-9B33-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B1E42704-3648-11E6-8EFC-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> LE Manh Cuong <cuong.manhle.vn@gmail.com> writes:
+>> Good timing. I was planning to kick split-under-lock and any of its
+>> dependents temporarily out of 'next', so that fixes can choose not
+>> to be incremental, and dependent topics can be rebased on top of the
+>> fixed fondation.  Even if we do incremental, [4] is not sufficient
+>> material for me to write a log message for.
+>> 
+>> So people who reviewed what has been in 'next' can revisit [4] and
+>> give review comments, while I could just pick up the history
+>> mentioned there, i.e.
+>> 
+>>     git checkout pu
+>>     git pull git://github.com/mhagger/git +split-under-lock:mh/split-under-lock
+>> 
+>> and we can start from there?
 >
->> It's not only people shooting their foot, but also from malicious user.
->> Given that `curl url | sudo sh/bash` is often found in many instructions,
->> an end user may not be noticed about the environment variable injection
->> from their side.
->>
->> IMHO, it's better if  git can protect the end users in this situation.
+> Sure. The branches in my GitHub fork already include all of the
+> improvements and fixes that I know of, and the only outstanding issue is
+> the one that Lars mentioned in this thread (which I believe to be a
+> problem in git-p4).
 >
-> Huh?  For those who run `curl url | sudo sh`, I do not think the
-> incoming script setting and exporting LV to an arbitrary value and
-> runing Git is not the top thing they need worry about.
->
-> While I think enclosing the string in dq is an improvement (as I
-> said already), I still do think your use of the v-word is making a
-> mountain out of an anthill.
+> BTW, there are still no conflicts between these branches
+> (split-under-lock, update-ref-errors, ref-iterators, and ref-store) and
+> current master. Therefore, I don't see a need to rebase them onto
+> master. But if you would prefer that I do so, just let me know.
 
-I failed to say why I found the dq is an improvement, but that
-should be in the log message of this commit.  Off the top of my
-head, something like:
+If the updated split-under-lock itself can build on the same
+upstream commit, then there is no reason to rebase it on top of v2.9
+or anything newer.
 
-	We often make sure an environment variable is set to
-	something, either set by the user (in which case we do not
-	molest it) or set it to our default value (otherwise), with
-
-		: ${VAR=default value}
-
-	i.e. running the no-op command ":" with ${VAR} as its
-	parameters (or the default value we supply), relying on that
-	":" is a no-op.
-
-	This pattern, even though it is no-op from correctness point
-	of view, still can be expensive if the existing value in VAR
-	has shell glob (because they will be expanded against
-	filesystem entities) and IFS whitespaces (because the value
-	need to be split into multiple parameters).  Our invocation
-	of ":" command does not care if the parameter given to it is
-	after the value in VAR goes through these processing.
-
-	Enclosing the whole thing in double-quote, i.e.
-
-		: "${VAR=default value}"
-
-	avoids paying the unnecessary cost, so let's do so.
-
+Your other topics queued in my tree build on the version of
+split-under-lock I have (e.g. mh/ref-store uses ref-iterators and
+split-under-lock).  When split-under-lock gets updated, they need to
+be rebuilt on top of the updated version, and that is what I meant
+by "dependent topics can be rebased on top".
