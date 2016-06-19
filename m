@@ -1,75 +1,81 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50C2120189
-	for <e@80x24.org>; Sun, 19 Jun 2016 20:02:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 376E820189
+	for <e@80x24.org>; Sun, 19 Jun 2016 20:33:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751726AbcFSUCK (ORCPT <rfc822;e@80x24.org>);
-	Sun, 19 Jun 2016 16:02:10 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:34886 "EHLO
-	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751473AbcFSUCB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2016 16:02:01 -0400
-Received: by mail-io0-f194.google.com with SMTP id n127so16153932iof.2
-        for <git@vger.kernel.org>; Sun, 19 Jun 2016 13:02:00 -0700 (PDT)
+	id S1751450AbcFSUd3 (ORCPT <rfc822;e@80x24.org>);
+	Sun, 19 Jun 2016 16:33:29 -0400
+Received: from mail-vk0-f43.google.com ([209.85.213.43]:36032 "EHLO
+	mail-vk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751364AbcFSUd1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2016 16:33:27 -0400
+Received: by mail-vk0-f43.google.com with SMTP id u64so173916692vkf.3
+        for <git@vger.kernel.org>; Sun, 19 Jun 2016 13:32:58 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=ZBpDUFXTIJN3GGtpZIeMs4u8OaAjNlSc6hwdaxYI8tw=;
-        b=fNvYLecLyLx9ZhZKi6ZQz034k2rbTS/sZm1sEk/0wfIeHvbrH0xpKzSQ32Nyi85W7m
-         qRq2fxpJwHnEywZurxunI5+N3bmLvNb7erYfHjSSZfoNsf6jBIpZIoXipFSa4lczoO4U
-         +VRNS03A+SxCJmSij1S5NgJMVW9ouWejc+iQ/VcVh/rB/LB3oi7liUN7W0p06VkhtAFK
-         h6ylGkP7H89D8qONSqtR5Qi6K+Q3D36lDJByR+/4h6Zsz6OM4k1f4Ta5jd7KlV/Ca4SO
-         R60l66N7ZnxFWf737hPT0hVDPW727X4IAKacBgqWetXDL99X1X+RadZQsoAsapXeclEW
-         70sw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=iqw+ml6gssVpT209PzHl0CuPdX6W1nWIRNZo1XvrcZg=;
+        b=DIYStrbyDsMVKijHJW4vOeFUeTuodoI32Mf/qMskDFXCraqtMIvlUyMtJh8uC4TN/h
+         gUmNQuFBjeS/YL7HxDM6xPj1JZnakwUxDhsTHxyapKiIZf/bT5AhJQ3UXsfivBYjN3Fr
+         Y3V7wxf2zIVu7ANg3n+yw0nBhdk+D+s4CP7569MBBNQ3u4GuM8X6E9N+FlVsoJCCz8v8
+         ZID4nfm5VTCq49xvcvfF/377oN6OmLNEZoIzKLSNffJVSEC+u09R7o66e6n2mPqBKM/F
+         SSQV72vaYpYtQGNl863bGCCE4PxHG76SjKr0xCLJQSNAT44w1yg/jxLNNlp2Vd2TmO3y
+         pkrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=ZBpDUFXTIJN3GGtpZIeMs4u8OaAjNlSc6hwdaxYI8tw=;
-        b=AS0tSIpWU6pkNWPrVnpJ+iTEewpngqDVotQnM3Ets+eAmF5UakpHmDrrfVm5oi1BzS
-         RFMI0vwBhT68ahsvCEL53pLF1cyz5mOU30q7ziLRizEEmihogC9fweh/eNuHnwAj2pVB
-         HVPh7lq7T6Ih6rQSBkwKYu5tpZ03B2gGh3PomoBePvkZBieR3fw8VuisKrK4prhMfbTC
-         dj+1kvfl5se4POMvlLjjP4CH3Ou2rp5K0ArwqmEdC2G5EIs0TUUsqdiXpG2WyF5v32gc
-         j3TwLamXUDjpJAQQJ2Lwe6rmzMw/dBZnAORe8UbFsDCTVrDyERhfkvictwZwt8P3Ojcp
-         YnHg==
-X-Gm-Message-State: ALyK8tLH76oRrhg5ak0pEg50+DEE2fYChavBVespHHPYxfXn8208IBpdStcZlirnHgfJR5F8gdaBiyFWpmbBTg==
-X-Received: by 10.107.47.41 with SMTP id j41mr17047400ioo.168.1466366520255;
- Sun, 19 Jun 2016 13:02:00 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=iqw+ml6gssVpT209PzHl0CuPdX6W1nWIRNZo1XvrcZg=;
+        b=mXUXvUjQtcVEPSiT2K++zRPSJUiEqiqK0JcYawmdDE17gw+Ki2fdoPnFzcNJpkrj98
+         3NOkDvxCXcU1eZ95kJhfbwSKoQ8jwsHPesC3pU/BUHw/07yW528ju59bzZM5koGWMBW3
+         mL50jNCIsvNNrDNLw3Yng6RmyiUE1V5Vr7y4dU5lZMTjmd+55MfJGTZuhQDQbdoNN8Vr
+         X9J6nlCsUMeIYt6z54psRBn5EwgSY9uWgssYSLHt4IOiS3SKv0S2gpKpPvvPf6uTqB31
+         UCq9czCvN3eNoWfKOOY07JHh2eLfPSnbuZBHtkaHBBiFzKKKA3b5yhIfF2wSMLNB5tvv
+         VLSg==
+X-Gm-Message-State: ALyK8tIPIwC5ETzTrtNmDhFx+9V7YLkJGOXhnEiC7rAePLMC7Yy/nobA411wTdPOVGfLSdZdftAAinEYc+mAMg==
+X-Received: by 10.176.5.2 with SMTP id 2mr5256996uax.76.1466368377546; Sun, 19
+ Jun 2016 13:32:57 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.79.0.30 with HTTP; Sun, 19 Jun 2016 13:01:59 -0700 (PDT)
-In-Reply-To: <de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de>
-References: <cover.1466244194.git.johannes.schindelin@gmx.de> <de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de>
-From:	Eric Sunshine <sunshine@sunshineco.com>
-Date:	Sun, 19 Jun 2016 16:01:59 -0400
-X-Google-Sender-Auth: rfIEoGUaPR1IJDcSkHbvvuu7b-Y
-Message-ID: <CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com>
-Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Received: by 10.103.15.65 with HTTP; Sun, 19 Jun 2016 13:32:18 -0700 (PDT)
+In-Reply-To: <xmqq60t5ya55.fsf@gitster.mtv.corp.google.com>
+References: <20160619005704.1771-1-emilyxxie@gmail.com> <xmqqmvmhyiut.fsf@gitster.mtv.corp.google.com>
+ <576623F7.3020700@novalis.org> <xmqq60t5ya55.fsf@gitster.mtv.corp.google.com>
+From:	Emily Xie <emilyxxie@gmail.com>
+Date:	Sun, 19 Jun 2016 16:32:18 -0400
+Message-ID: <CAAin2AQjEUdE4Di1FJPHOFmwWEJX8-zCq_fRHiF=9RZ5S28XsQ@mail.gmail.com>
+Subject: Re: [PATCH] pathspec: prevent empty strings as pathspecs
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	David Turner <novalis@novalis.org>, git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sat, Jun 18, 2016 at 6:04 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> We just taught the relevant functions to respect the diffopt.file field,
-> to allow writing somewhere else than stdout. Let's make use of it.
-> [...]
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/builtin/log.c b/builtin/log.c
-> @@ -1569,6 +1570,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->                 setup_pager();
->
->         if (output_directory) {
-> +               rev.diffopt.use_color = 0;
+Thanks for the quick responses on this patch!
 
-What is this change about? It doesn't seem to be related to anything
-else in the patch.
+In response to Junio:
 
->                 if (use_stdout)
->                         die(_("standard output, or directory, which one?"));
->                 if (mkdir(output_directory, 0777) < 0 && errno != EEXIST)
+> "At least you would need two-step process to introduce a change like
+> this to warn the people whose tools and workflows you are breaking.
+> That is, (1) in one release, you add code to only detect the case
+> you will be changing the behaviour in a later version and give
+> warning messages, and (2) in another release that is several release
+> cycles later, stop warning and actually change the behaviour....
+
+> I do not mind a two-step breaking of compatibility to address this
+> issue; I would also understand if the author thinks it is not worth
+> the hassle to do so.  The sudden behaviour change with this patch
+> alone is however not acceptable, I would think."
+
+I understand your hesitance with the original method. If the agreed
+solution is a two-step implementation, I think it would definitely be
+worth my time and hassle----in part because I'm particularly excited
+about the prospect of contributing to Git, but mostly because I do
+believe that it would be a good improvement.
+
+Given this, I'll edit the patch and re-submit to only emit warning
+messages for now.
+
+- Emily
