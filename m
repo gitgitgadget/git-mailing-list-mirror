@@ -1,128 +1,155 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BABB1FEAA
-	for <e@80x24.org>; Sun, 19 Jun 2016 07:17:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE14E1FEAA
+	for <e@80x24.org>; Sun, 19 Jun 2016 08:00:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511AbcFSHRr (ORCPT <rfc822;e@80x24.org>);
-	Sun, 19 Jun 2016 03:17:47 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1]:63335 "EHLO
-	mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751478AbcFSHRq convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2016 03:17:46 -0400
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.16.0.11/8.16.0.11) with SMTP id u5J7Dpq5022384
-	for <git@vger.kernel.org>; Sun, 19 Jun 2016 03:17:45 -0400
-Received: from e06smtp16.uk.ibm.com (e06smtp16.uk.ibm.com [195.75.94.112])
-	by mx0a-001b2d01.pphosted.com with ESMTP id 23n2t90bpb-1
-	(version=TLSv1.2 cipher=AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Sun, 19 Jun 2016 03:17:45 -0400
-Received: from localhost
-	by e06smtp16.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
-	for <git@vger.kernel.org> from <VADIME@il.ibm.com>;
-	Sun, 19 Jun 2016 08:17:42 +0100
-Received: from d06dlp03.portsmouth.uk.ibm.com (9.149.20.15)
-	by e06smtp16.uk.ibm.com (192.168.101.146) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
-	Sun, 19 Jun 2016 08:17:41 +0100
-X-IBM-Helo: d06dlp03.portsmouth.uk.ibm.com
-X-IBM-MailFrom:	VADIME@il.ibm.com
-X-IBM-RcptTo: git@vger.kernel.org
-Received: from b06cxnps4074.portsmouth.uk.ibm.com (d06relay11.portsmouth.uk.ibm.com [9.149.109.196])
-	by d06dlp03.portsmouth.uk.ibm.com (Postfix) with ESMTP id CCBC91B08069
-	for <git@vger.kernel.org>; Sun, 19 Jun 2016 08:18:51 +0100 (BST)
-Received: from d06av07.portsmouth.uk.ibm.com (d06av07.portsmouth.uk.ibm.com [9.149.37.248])
-	by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id u5J7HfYR23724384
-	for <git@vger.kernel.org>; Sun, 19 Jun 2016 07:17:41 GMT
-Received: from d06av07.portsmouth.uk.ibm.com (localhost [127.0.0.1])
-	by d06av07.portsmouth.uk.ibm.com (8.14.4/8.14.4/NCO v10.0 AVout) with ESMTP id u5J7Hfoa007556
-	for <git@vger.kernel.org>; Sun, 19 Jun 2016 03:17:41 -0400
-Received: from d50lp32.co.us.ibm.com (d50lp32.boulder.ibm.com [9.17.249.36])
-	by d06av07.portsmouth.uk.ibm.com (8.14.4/8.14.4/NCO v10.0 AVin) with ESMTP id u5J7HdaW007542
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
-	for <git@vger.kernel.org>; Sun, 19 Jun 2016 03:17:41 -0400
-Received: from localhost
-	by d50lp32.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
-	for <git@vger.kernel.org> from <VADIME@il.ibm.com>;
-	Sun, 19 Jun 2016 01:17:39 -0600
-Received: from smtp.notes.na.collabserv.com (192.155.248.74)
-	by d50lp32.co.us.ibm.com (192.168.2.143) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
-	(version=TLSv1/SSLv3 cipher=AES128-GCM-SHA256 bits=128/128)
-	Sun, 19 Jun 2016 01:17:37 -0600
-X-IBM-Helo: smtp.notes.na.collabserv.com
-X-IBM-MailFrom:	VADIME@il.ibm.com
-X-IBM-RcptTo: git@vger.kernel.org
-Received: from localhost
-	by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
-	for <git@vger.kernel.org> from <VADIME@il.ibm.com>;
-	Sun, 19 Jun 2016 07:17:37 -0000
-Received: from us1a3-smtp04.a3.dal06.isc4sb.com (10.106.154.237)
-	by smtp.notes.na.collabserv.com (10.106.227.92) with smtp.notes.na.collabserv.com ESMTP;
-	Sun, 19 Jun 2016 07:17:35 -0000
-X-IBM-Helo: us1a3-smtp04.a3.dal06.isc4sb.com
-X-IBM-MailFrom:	VADIME@il.ibm.com
-X-IBM-RcptTo: git@vger.kernel.org
-Received: from us1a3-mail106.a3.dal06.isc4sb.com ([10.146.45.214])
-          by us1a3-smtp04.a3.dal06.isc4sb.com
-          with ESMTP id 2016061907173549-21479 ;
-          Sun, 19 Jun 2016 07:17:35 +0000 
-In-Reply-To: <OFC76C15DC.FC882C57-ONC2257FD7.00261552-C2257FD7.002660FC@LocalDomain>
-To:	git@vger.kernel.org
-Subject: [BUG REPORT] git 2.9.0 clone --recursive fails on cloning a submodule
-From:	"Vadim Eisenberg" <VADIME@il.ibm.com>
-Date:	Sun, 19 Jun 2016 10:17:36 +0300
-References: <OFC76C15DC.FC882C57-ONC2257FD7.00261552-C2257FD7.002660FC@LocalDomain>
+	id S1751667AbcFSH7w (ORCPT <rfc822;e@80x24.org>);
+	Sun, 19 Jun 2016 03:59:52 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:47962 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751613AbcFSH7l (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Jun 2016 03:59:41 -0400
+X-AuditID: 12074411-e2bff70000000955-d5-576650eb113e
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 44.BE.02389.BE056675; Sun, 19 Jun 2016 03:59:39 -0400 (EDT)
+Received: from [192.168.69.130] (p4FEEA82D.dip0.t-ipconnect.de [79.238.168.45])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u5J7xaXr005433
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sun, 19 Jun 2016 03:59:38 -0400
+Subject: Re: What's cooking in git.git (Jun 2016, #05; Thu, 16)
+To:	Lars Schneider <larsxschneider@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+References: <xmqqk2ho33ig.fsf@gitster.mtv.corp.google.com>
+ <1634E84E-5260-4F7B-A74F-AF5D3A7C0181@gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Luke Diamand <luke@diamand.org>
+From:	Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <576650E7.70107@alum.mit.edu>
+Date:	Sun, 19 Jun 2016 09:59:35 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.8.0
 MIME-Version: 1.0
-X-KeepSent: E09D48F2:D1D14F49-C2257FD7:00280736;
- type=4; name=$KeepSent
-X-Mailer: IBM Notes Release 9.0.1EXT September 15, 2015
-X-LLNOutbound: False
-X-Disclaimed: 47235
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: 8BIT
-Content-Type: text/plain; charset="US-ASCII"
-x-cbid:	16061907-0024-0000-0000-0000021D01FE
-X-IBM-ISS-SpamDetectors: Score=0.49; BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.49; ST=0; TS=0; UL=0; ISC=
-X-IBM-ISS-DetailInfo: BY=3.00005403; HX=3.00000240; KW=3.00000007;
- PH=3.00000004; SC=3.00000170; SDB=6.00718376; UDB=6.00335028; UTC=2016-06-19
- 07:17:36
-x-cbparentid: 16061907-2432-0000-0000-000000181D30
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-X-TM-AS-MML: disable
-X-Content-Scanned: Fidelis XPS MAILER
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-Message-Id: <OFE09D48F2.D1D14F49-ONC2257FD7.00280736-C2257FD7.0028245A@notes.na.collabserv.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2016-06-19_04:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=12
- malwarescore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam
- adjust=0 reason=mlx scancount=1 engine=8.0.1-1604210000
- definitions=main-1606190085
+In-Reply-To: <1634E84E-5260-4F7B-A74F-AF5D3A7C0181@gmail.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqPs6IC3coHO2skXXlW4mi4beK8wW
+	jx8uYbU4PusauwOLx4MrWxg9ds66y+5x8ZKyx+dNcgEsUdw2SYklZcGZ6Xn6dgncGe2/HjIV
+	LFauODb3PHsD417ZLkZODgkBE4krR3eydjFycQgJbGWUOHr5KJRznknie+tFRpAqYQF7icV7
+	d7OA2CICURKNO3+ygdhCArkST06sAarh4GAW8JY491kEJMwmoCuxqKeZCcTmFdCU+PlgGzOI
+	zSKgKvHrzw12EFtUIETi/LqtrBA1ghInZz4BG88pYCvx5OpGsDizgJ7Ejuu/oGx5ie1v5zBP
+	YOSfhaRlFpKyWUjKFjAyr2KUS8wpzdXNTczMKU5N1i1OTszLSy3SNdXLzSzRS00p3cQICVvB
+	HYwzTsodYhTgYFTi4V2xIzVciDWxrLgy9xCjJAeTkijvnm6gEF9SfkplRmJxRnxRaU5q8SFG
+	CQ5mJRHe035p4UK8KYmVValF+TApaQ4WJXFeviXqfkIC6YklqdmpqQWpRTBZGQ4OJQleTmB8
+	CgkWpaanVqRl5pQgpJk4OEGGc0mJFKfmpaQWJZaWZMSDIjK+GBiTICkeoL1H/EH2Fhck5gJF
+	IVpPMepyrJt7Yy2TEEtefl6qlDjvHJAiAZCijNI8uBWwJPWKURzoY2HevSBVPMAEBzfpFdAS
+	JqAlmvOSQZaUJCKkpBoYtSRlHYUcjqp4/j5zQOfkvDKnE7GKEbzfOUNemR/ysLRS+sf6yczj
+	a8bUp/NFdafcSWP9+dRF+tm9mEOsrhoqDiu+NBfw/elhCjXc2qnq2at0eeLsRP8bbgK9cTUi
+	ATmW0/gbw37P/3zhzqaZNdOFPs18vlLrud3CFX//P1l23Pb05SgWxRtWSizFGYmGWsxFxYkA
+	cR/7BC0DAAA=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-/usr/local/bin/git clone --recursive --depth 10 
-https://github.com/IBM-Swift/Kitura-net.git
-Cloning into 'Kitura-net'...
-remote: Counting objects: 253, done.
-remote: Compressing objects: 100% (142/142), done.
-remote: Total 253 (delta 134), reused 188 (delta 86), pack-reused 0
-Receiving objects: 100% (253/253), 63.28 KiB | 0 bytes/s, done.
-Resolving deltas: 100% (134/134), done.
-Checking connectivity... done.
-Submodule 'Kitura-Build' (https://github.com/IBM-Swift/Kitura-Build.git) 
-registered for path 'Kitura-Build'
-Cloning into '/home/vadime/Kitura-net/Kitura-Build'...
-error: no such remote ref d0d9d6c739a79627641e6438fe4f39bd0eba83bb
-Fetched in submodule path 'Kitura-Build', but it did not contain 
-d0d9d6c739a79627641e6438fe4f39bd0eba83bb. Direct fetching of that commit 
-failed.
+On 06/18/2016 12:05 AM, Lars Schneider wrote:
+> 
+>> On 17 Jun 2016, at 05:20, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> ...
+>>
+>> * mh/split-under-lock (2016-05-13) 33 commits
+>>  (merged to 'next' on 2016-06-03 at 2e71330)
+>> + lock_ref_sha1_basic(): only handle REF_NODEREF mode
+>> + commit_ref_update(): remove the flags parameter
+>> + lock_ref_for_update(): don't resolve symrefs
+>> + lock_ref_for_update(): don't re-read non-symbolic references
+>> + refs: resolve symbolic refs first
+>> + ref_transaction_update(): check refname_is_safe() at a minimum
+>> + unlock_ref(): move definition higher in the file
+>> + lock_ref_for_update(): new function
+>> + add_update(): initialize the whole ref_update
+>> + verify_refname_available(): adjust constness in declaration
+>> + refs: don't dereference on rename
+>> + refs: allow log-only updates
+>> + delete_branches(): use resolve_refdup()
+>> + ref_transaction_commit(): correctly report close_ref() failure
+>> + ref_transaction_create(): disallow recursive pruning
+>> + refs: make error messages more consistent
+>> + lock_ref_sha1_basic(): remove unneeded local variable
+>> + read_raw_ref(): move docstring to header file
+>> + read_raw_ref(): improve docstring
+>> + read_raw_ref(): rename symref argument to referent
+>> + read_raw_ref(): clear *type at start of function
+>> + read_raw_ref(): rename flags argument to type
+>> + ref_transaction_commit(): remove local variable n
+>> + rename_ref(): remove unneeded local variable
+>> + commit_ref_update(): write error message to *err, not stderr
+>> + refname_is_safe(): insist that the refname already be normalized
+>> + refname_is_safe(): don't allow the empty string
+>> + refname_is_safe(): use skip_prefix()
+>> + remove_dir_recursively(): add docstring
+>> + safe_create_leading_directories(): improve docstring
+>> + read_raw_ref(): don't get confused by an empty directory
+>> + commit_ref(): if there is an empty dir in the way, delete it
+>> + t1404: demonstrate a bug resolving references
+>> (this branch is used by mh/ref-iterators, mh/ref-store and mh/update-ref-errors.)
+>>
+>> Further preparatory work on the refs API before the pluggable
+>> backend series can land.
+>>
+>> Will merge to 'master'.
+> 
+> This topic seems break two git-p4 tests (t9801 and t9803) on next:
+> https://travis-ci.org/git/git/jobs/137333785
+> 
+> According to git bisect the commit "ref_transaction_update(): 
+> check refname_is_safe() at a minimum" (3da1f3) introduces the problem: 
+> https://s3.amazonaws.com/archive.travis-ci.org/jobs/138457628/log.txt
+> (scroll all the way down to see the bisecting)
+> 
+> - Lars
+> 
 
-Linux version:
-4.2.0-25-generic #30-Ubuntu SMP Mon Jan 18 12:31:50 UTC 2016 x86_64 x86_64 
-x86_64 GNU/Linux
+Lars,
 
+According to [1], something in that test seems to have been trying to run
 
+    git update-ref -d git-p4-tmp/6
+
+Similarly in the other failed test.
+
+Because `update-ref` doesn't do DWIM for reference names, this is *not*
+expanded to `refs/heads/git-p4-tmp/6` or something. Previously this
+command would have quietly failed to do anything. But after
+"ref_transaction_update(): check refname_is_safe() at a minimum", `git
+update-ref` notices that `git/p4/tmp/6` is not a safe refname (according
+to `refname_is_safe()` [2]), and correctly fails with an error message.
+
+Even before this change, Git didn't allow such references to be created
+or updated. So I think this test failure is revealing an error in `git
+p4 clone` that went undetected before this change.
+
+Please let me know whether you agree. If so, it is realistic to fix
+`git-p4` promptly? This failure is currently blocking
+mh/split-under-lock, so if `git-p4` can't be fixed, then I'd have to
+either disable t9801 and t9803 in this patch series, or omit the
+`refname_is_safe()` check.
+
+In the interest of backwards compatibility, I considered making `git
+update-ref -d` continue to fail silently for NOOP operations with unsafe
+refnames (one of the requirements being that no old_oid is specified).
+But I think that would be giving the wrong signal to scripts that are
+doing something that is invalid but pausible, like trying to delete the
+reference `../$(basename $PWD)/refs/heads/foo`. Such scripts would be
+misled into thinking the deletion was successful. And yet treating
+plausibly-sensible requests differently than obviously bogus requests
+seems like a path to madness.
+
+Michael
+
+[1] https://travis-ci.org/git/git/jobs/137333785#L2025-L2026
+[2]
+https://github.com/mhagger/git/blob/7a418f3a17b95746eb94cfd55f4fe0385d058777/refs.c#L121-L151
 
