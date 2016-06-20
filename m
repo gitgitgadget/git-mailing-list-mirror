@@ -1,77 +1,75 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4C5D1FF40
-	for <e@80x24.org>; Mon, 20 Jun 2016 19:47:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 938F71FF40
+	for <e@80x24.org>; Mon, 20 Jun 2016 19:48:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932667AbcFTTrH (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 15:47:07 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57429 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754504AbcFTTrE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 15:47:04 -0400
-Received: (qmail 5875 invoked by uid 102); 20 Jun 2016 19:46:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 15:46:51 -0400
-Received: (qmail 17511 invoked by uid 107); 20 Jun 2016 19:47:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 15:47:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jun 2016 15:46:49 -0400
-Date:	Mon, 20 Jun 2016 15:46:49 -0400
-From:	Jeff King <peff@peff.net>
-To:	Norbert Kiesel <nkiesel@gmail.com>
-Cc:	Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: unable to pull from remote if commit date is in the future
-Message-ID: <20160620194648.GB3631@sigill.intra.peff.net>
-References: <CAM+g_NswH8fd8aFPEHfSLYnZWptNU2GX=xTWpehzjTJfJM_GfQ@mail.gmail.com>
- <CAGZ79kZL-ZY_0hZx9uA-ObPvMiD+EWvJYQa+OfCeQe2RLOPECA@mail.gmail.com>
- <CAM+g_NtNAWpLkbErL5-BUyH_3X4rYGfZwO0o-Hfu8zyam8pw7Q@mail.gmail.com>
- <20160620193928.GA3631@sigill.intra.peff.net>
+	id S1754519AbcFTTsM (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 15:48:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61968 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754504AbcFTTsK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 15:48:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E29A626238;
+	Mon, 20 Jun 2016 15:48:08 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=f+4tmocg/SZKNnNjLPU91abLjWI=; b=Tuykln
+	GFvgP6qX7gCH269MJexN573G+WcJTlNGkSNxdZNvxjwgCJ9tn6hNN7p+2LehyeGO
+	NOHIFbrCx/yeOimvJ/UvBfnH7EAu2BuEcY3VUWovQFy6jW/X6GYYtq3SFvKBq6Fp
+	W5wdj4Cn37Pa8efDJUNmpBjLy2eVFuYx3p0LE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eDtP8ZqqgZ0UlbK5uQbgHNXnFWQRI2KA
+	ZgUPAFfbIWtbGn9GxNleBXCNLyPMyJDyNMtMRSGg8OSRKbQGreu7LGk7kC/NpK6E
+	WDBk1YmAaXwn9fWtsVCNRQvc9iooQCnfuH6udCiFD8VVxR928SQp5KajezkRSELr
+	j/cbs1MpVlI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D8F0326237;
+	Mon, 20 Jun 2016 15:48:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 60F8726236;
+	Mon, 20 Jun 2016 15:48:08 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Lars Schneider <larsxschneider@gmail.com>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Subject: Re: [PATCH] perf: accommodate for MacOSX
+References: <ae429d2481111f7ad1927ef22e3a691d4c99ebd7.1466254995.git.johannes.schindelin@gmx.de>
+	<9A11C3D1-3DAC-489F-BDF9-F4D409E8D3F7@gmail.com>
+	<alpine.DEB.2.20.1606200840350.22630@virtualbox>
+Date:	Mon, 20 Jun 2016 12:48:06 -0700
+In-Reply-To: <alpine.DEB.2.20.1606200840350.22630@virtualbox> (Johannes
+	Schindelin's message of "Mon, 20 Jun 2016 08:45:29 +0200 (CEST)")
+Message-ID: <xmqqa8iftzex.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160620193928.GA3631@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: E99A3634-371F-11E6-94F1-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 20, 2016 at 03:39:28PM -0400, Jeff King wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Mon, Jun 20, 2016 at 12:05:07PM -0700, Norbert Kiesel wrote:
-> 
-> > Hmm.  On closer inspection that commit 23c07cc that github shows with
-> > date 2152-06-19 is already in my local branch.  I got confused because
-> > locally it is shown with a different date: `git log -1 --format='%ci'
-> > 23c07cc` shows "2106-02-07 06:28:56 -40643156" which is invalid.
-> > 
-> > My system is running Debian unstable 64bit.  Is git using the time
-> > rendering methods from the C library (glibc 2.22-12)?
-> 
-> No, git's time code is (mostly) internal routines. Can you show us the
-> output of:
-> 
->     git cat-file commit 23c07cc | egrep '^author|committer'
-> 
-> Note also that some interfaces (like "git log", and GitHub) will show
-> the author date by default, which might be different than the committer
-> date. The "-40643156" timezone definitely looks suspicious, though. I'm
-> curious if it is bad handling in the time code, or if the commit has
-> corrupt ident lines.
+> On Sun, 19 Jun 2016, Lars Schneider wrote:
+>
+>> > On 18 Jun 2016, at 15:03, Johannes Schindelin
+>> > <johannes.schindelin@gmx.de> wrote:
+>> > 
+>> > As this developer has no access to MacOSX developer setups anymore,
+>> > Travis becomes the best bet to run performance tests on that OS.
+>>
+>> We don't run the performance tests on Travis CI right now.
+>> Maybe we should? With your patch below it should work, right?
+> ...
+>
+> Yeah, well, I should have been clearer in my commit message: this patch
+> allows the perf tests to *run*, not to *pass*... ;-)
 
-Actually, I just noticed in your earlier message a link to the public
-GitHub repository.
-
-So to answer my own questions:
-
-  $ git cat-file commit 23c07cc | egrep '^author|committer'
-  author Sean D'Epagnier <seandepagnier@gmail.com> 5758122296 -40643156
-  committer Sean D'Epagnier <seandepagnier@gmail.com> 5758122296 -40643156
-
-Yes, the timezone really is that ridiculous value. No, the author and
-committer aren't different. According to GNU date, the correct timestamp
-is actually in 2152. Offhand, I'd guess that the timestamp exceeding
-2^32 is getting converted somewhere inside git to a bogus value, and
-that's how we end up with 2106.
-
--Peff
+OK, Lars, do we still want to take this patch?  I am leaning towards
+taking it, if only to motivate interested others with OS X to look
+into making the perf tests to actually run.
