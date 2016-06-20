@@ -1,84 +1,92 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B344320189
-	for <e@80x24.org>; Sun, 19 Jun 2016 23:51:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8B4820189
+	for <e@80x24.org>; Mon, 20 Jun 2016 00:20:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423AbcFSXvv (ORCPT <rfc822;e@80x24.org>);
-	Sun, 19 Jun 2016 19:51:51 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63797 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751359AbcFSXvv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2016 19:51:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DC71226754;
-	Sun, 19 Jun 2016 19:51:45 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SQGlwWkLsIctqk0+oIkuYvizTRg=; b=HviYWJ
-	nPZGNwbLU8F4gzriBH97mOXgTHdfnJrG7EykooskQ2/UXMiNd79CAI40bVaRHmhE
-	bB7jgkQUPBngBnP6JdH8UxUfH+XKXUPlPJT1NDFwOO75ATqSNARqeo49GxbWKydT
-	goRmxGXF6KP1HdFkZFuXb0imdYM6+oD/yUiCw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Fkt5BFZBAQ2z4qlmBVaV8jE0vMjmFzdT
-	FFZNbyJg2v2MyYs6cYa1xxWjDcROdBLJyjhyA/akUDynmrdxfBET42LhVkKUF02B
-	YQ3PEzI88qyDvZlvR3je8NGmE3/f+IKIz7xd3WE1Naw7DT0caS6O9E3XgY0Nb2G/
-	c643qvk2ie8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D4C4326753;
-	Sun, 19 Jun 2016 19:51:45 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5CC7C26752;
-	Sun, 19 Jun 2016 19:51:45 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Michael Haggerty <mhagger@alum.mit.edu>
-Cc:	Lars Schneider <larsxschneider@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Luke Diamand <luke@diamand.org>
-Subject: Re: What's cooking in git.git (Jun 2016, #05; Thu, 16)
-References: <xmqqk2ho33ig.fsf@gitster.mtv.corp.google.com>
-	<1634E84E-5260-4F7B-A74F-AF5D3A7C0181@gmail.com>
-	<576650E7.70107@alum.mit.edu>
-	<xmqqmvmhvyn5.fsf@gitster.mtv.corp.google.com>
-Date:	Sun, 19 Jun 2016 16:51:43 -0700
-In-Reply-To: <xmqqmvmhvyn5.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 19 Jun 2016 11:09:34 -0700")
-Message-ID: <xmqqd1ncvisw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751555AbcFTAUR (ORCPT <rfc822;e@80x24.org>);
+	Sun, 19 Jun 2016 20:20:17 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57090 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751379AbcFTAUQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2016 20:20:16 -0400
+Received: (qmail 19353 invoked by uid 102); 20 Jun 2016 00:13:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 19 Jun 2016 20:13:35 -0400
+Received: (qmail 11459 invoked by uid 107); 20 Jun 2016 00:13:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 19 Jun 2016 20:13:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 19 Jun 2016 20:13:32 -0400
+Date:	Sun, 19 Jun 2016 20:13:32 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Stefan Beller <sbeller@google.com>,
+	Vadim Eisenberg <VADIME@il.ibm.com>, git@vger.kernel.org
+Subject: Re: [BUG REPORT] git 2.9.0 clone --recursive fails on cloning a
+ submodule
+Message-ID: <20160620001332.GA10101@sigill.intra.peff.net>
+References: <OFC76C15DC.FC882C57-ONC2257FD7.00261552-C2257FD7.002660FC@LocalDomain>
+ <OFE09D48F2.D1D14F49-ONC2257FD7.00280736-C2257FD7.0028245A@notes.na.collabserv.com>
+ <20160619100051.GA14584@sigill.intra.peff.net>
+ <xmqq7fdkx5oz.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C796F10A-3678-11E6-B79C-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq7fdkx5oz.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sun, Jun 19, 2016 at 01:51:56PM -0700, Junio C Hamano wrote:
 
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
->
->> According to [1], something in that test seems to have been trying to run
->>
->>     git update-ref -d git-p4-tmp/6
->>
->> Similarly in the other failed test.
->
-> Ah, OK, that would try mucking with .git/git-p4-tmp/6 but that is
-> not a place to have a ref.  It will not participate in reachability
-> analysis and will end up losing the referents.
->
-> Perhaps placing it under refs/git-p4-tmp would fix it (both in
-> git-p4 and in tests)?
+> Yup, something like this on top of d22eb04 to be merged before
+> v2.9.1 for the maintenance track would be necessary.
+> 
+> -- >8 --
+> Subject: clone: do not let --depth imply --shallow-submodules
+> 
+> In v2.9.0, we prematurely flipped the default to force cloning
+> submodules shallowly, when the superproject is getting cloned
+> shallowly.  This is likely to fail when the upstream repositories
+> submodules are cloned from a repository that is not prepared to
+> serve histories that ends at a commit that is not at the tip of a
+> branch, and we know the world is not yet ready.
+> 
+> Use a safer default to clone the submodules fully, unless the user
+> tells us that she knows that the upstream repository of the
+> submodules are willing to cooperate with "--shallow-submodules"
+> option.
 
-Oh, another thing.  If these refs are meant to be transient, they
-are likely to be per worktree, if "git worktree" managed multiple
-worktrees that share the same set of branches and tags are in use.
+Yeah, this looks good. To minor comments:
 
-I recall we carved out one hierarchy under refs/ as "not shared
-across worktrees" (was that refs/worktree/ hierarchy?  I didn't
-check but please do so when the patch actually is written), and
-that hierarchy is the appropriate thing to use for this, I think.
+> @@ -730,8 +730,7 @@ static int checkout(void)
+>  		struct argv_array args = ARGV_ARRAY_INIT;
+>  		argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
+>  
+> -		if (option_shallow_submodules == 1
+> -		    || (option_shallow_submodules == -1 && option_depth))
+> +		if (option_shallow_submodules == 1)
+>  			argv_array_push(&args, "--depth=1");
 
-Thanks.
+I hadn't paid much attention to this topic originally, but was surprised
+that "--depth 10" in the clone implies "--depth 1" in the submodule.
+This is not really related to your patch (in fact, your patch makes the
+logic go away). But maybe something to consider if it's ever resurrected
+(or possibly if somebody runs "--shallow-submodules --depth 5" we should
+pass --depth=1; I dunno).
+
+> -test_expect_success 'shallow clone implies shallow submodule' '
+> +test_expect_success 'shallow clone does not imply shallow submodule' '
+>  	test_when_finished "rm -rf super_clone" &&
+> -	git clone --recurse-submodules --depth 2 "file://$pwd/." super_clone &&
+> +	git clone --recurse-submodules --depth 2 --shallow-submodules "file://$pwd/." super_clone &&
+>  	(
+>  		cd super_clone &&
+>  		git log --oneline >lines &&
+
+We are not really testing "does not imply" here, but "passing
+--shallow-submodules works". The "does not imply" test would be cloning
+without the option and checking that the resulting submodules are not
+shallow.
+
+-Peff
