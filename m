@@ -1,85 +1,63 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BF761FF40
-	for <e@80x24.org>; Mon, 20 Jun 2016 16:12:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 131891FF40
+	for <e@80x24.org>; Mon, 20 Jun 2016 16:47:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754556AbcFTQEM (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 12:04:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50766 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754375AbcFTQDf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 12:03:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2764E24C6B;
-	Mon, 20 Jun 2016 12:03:34 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pNyDNzDhW3uejsxj7R9amLttGkM=; b=OHIcTx
-	P7SC9eCxEbTo5SG83ctnkrkHx5P5arMC9TKGwfMbm8eGJsG9vBryIDrbOrUMg6gW
-	CGsRfgs0+iqZy3IvuIV0b20WWFP9bOOJxbx7KF1HkG7EHYvlp4qJ3gQkcgRQmFuQ
-	ylWjZ999UuHoAYB/2wbYvMGXYy+LZlG2C+/Jo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ycntj2xYLATQwwpEqlAWM8R7PbQbA8ui
-	wBct12wYntsyscNOjeAbjaq5pT7FYnPcke0Y0iMolb+ZjcGYYWJjrUdpH3ReRI7J
-	p812+eRggQQjo976QtJ+Qdt8uvT2WfthsKC0cdT50mZlWUQuu6HctMNK9WgGCsrj
-	L1F0qMnHbYk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F32C24C6A;
-	Mon, 20 Jun 2016 12:03:34 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9C3AB24C68;
-	Mon, 20 Jun 2016 12:03:33 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
-References: <cover.1466244194.git.johannes.schindelin@gmx.de>
-	<de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de>
-	<CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com>
-	<alpine.DEB.2.20.1606200814510.22630@virtualbox>
-Date:	Mon, 20 Jun 2016 09:03:31 -0700
-In-Reply-To: <alpine.DEB.2.20.1606200814510.22630@virtualbox> (Johannes
-	Schindelin's message of "Mon, 20 Jun 2016 08:26:01 +0200 (CEST)")
-Message-ID: <xmqq4m8nvodo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753366AbcFTQqm (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 12:46:42 -0400
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:34472 "EHLO
+	mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753003AbcFTQqk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 12:46:40 -0400
+Received: by mail-qk0-f177.google.com with SMTP id t127so47929986qkf.1
+        for <git@vger.kernel.org>; Mon, 20 Jun 2016 09:46:04 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=AKnAtq/43cBdQxyO4dd12OmYqyH5eY/YDl5LyqQTToQ=;
+        b=AnlgYNSR3GXnmk/SDjps5bZWm1PHi/cU3VV9FLZD7EIdetgsHGTTzuyz3Pv6Bsw9ug
+         HMUwE6D+yUe3t5PJadK5NAgro5fEhnsR3bfuDBGAHgAk+TYBE/7cFHkk4TQ1UCaUxLwl
+         0jd/q/hvankugBahhDOn6nh/HrOMf767N3lPh66UNwrxhK4qIEr0oZKXhrdsINL9UKSL
+         Ub+CmIVs1Sq5/qgPdKWLi2RxCthvxXIS4hHLuxHwrihR2HjWXH4qbS3nEwFb/sSWfsb2
+         ldiOVRvZEvAAIwZ+PigyWB6/SP+ub1Wy8SfYaa9dE5XeJ2BuotJMpdt3PEPVvtDa7MTW
+         D2Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=AKnAtq/43cBdQxyO4dd12OmYqyH5eY/YDl5LyqQTToQ=;
+        b=Jm6ey61K8TgNymQ+U9hA1ZII9GMvzXKSfIylpFsAbX5vhEugFvOn53EybGDUrYu1Y6
+         Qo+YqhzBR4dNyCVWAbAv8GTte02qh2XDMVkCPT/y1x20XwKM61NW7ScTrYvSSmb+tl2P
+         160KrabX/b/QiZxqBp9aIG05JyGRIsg8Rv0c8AKotgv4qD33Riaw2TieBBbm7TU9teK+
+         ZdfeygWv8plRbTW30wJF+oq7B6usThkDf1VmkCnPxaJ8i+OH6HFTf2hA9WZ4WqoVxNUS
+         k/NV2XlJvitTYmp5vLI0gMVLx12HSPkcfHZri0h5jHvedZWZY3JQWtG9Zm0ePjdiPozq
+         lN4g==
+X-Gm-Message-State: ALyK8tKlfqeVMPufGQlTnOajm3XhDOQ/Mocw7StgejQUp7jg8P9hJ9pVoXNJDND2RwOq8+AQJJgdswvrkOqrsbOE
+X-Received: by 10.55.10.147 with SMTP id 141mr23433064qkk.91.1466441163391;
+ Mon, 20 Jun 2016 09:46:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8A055678-3700-11E6-85C5-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.237.42.226 with HTTP; Mon, 20 Jun 2016 09:46:02 -0700 (PDT)
+In-Reply-To: <xmqqh9covlkb.fsf@gitster.mtv.corp.google.com>
+References: <xmqqh9covlkb.fsf@gitster.mtv.corp.google.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Mon, 20 Jun 2016 09:46:02 -0700
+Message-ID: <CAGZ79kaHRz2GZN4FmQBA1wz4FhBWDwVifWX_bN09TAHAxF-wQA@mail.gmail.com>
+Subject: Re: Short-term plans for the post 2.9 cycle
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> When format-patch calls the diff machinery, want_color() is used to
-> determine whether to use ANSI color sequences or not. If use_color is not
-> set explicitly, isatty(1) is used to determine whether or not the user
-> wants color. When stdout was freopen()ed, this isatty(1) call naturally
-> looked at the file descriptor that was reopened, and determined correctly
-> that no color was desired.
+On Sun, Jun 19, 2016 at 3:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Here are the list of topics that are in the "private edition" I use
+> for every day work, grouped by where they sit in the the near-term
+> plan of merging them up to 'next' and then to 'master'.
 >
-> With the freopen() call gone, stdout may very well be the terminal. But we
-> still do not want color because the output is intended to go to a file (at
-> least if output_directory is set).
+> These will be merged to 'master' soonish.
+>
 
-How does this interact with --color=... that is given from the
-command line at the same time?  Currently --color=always would
-give you a coloured output.
-
-I personally do not think of a sensible reason why anybody wants a
-colored format-patch output, but Git's userbase has grown large
-enough and you can no longer expect that only sensible people use it
-;-)
-
-You can probably sell "when giving out put to file, we will never
-color the output" as an improved new world order, but if that is
-what this change wants to do, it probably deserves a separate patch.
-
-I however think you can avoid breaking expectations by people who
-are not so sensible by overriding only when use_color is set to
-GIT_COLOR_AUTO, perhaps?
+Thanks for such an overview!
