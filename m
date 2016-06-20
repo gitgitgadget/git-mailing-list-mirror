@@ -1,126 +1,112 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74E021FEAA
-	for <e@80x24.org>; Mon, 20 Jun 2016 21:38:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 174E61FF40
+	for <e@80x24.org>; Mon, 20 Jun 2016 21:52:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752591AbcFTViQ (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 17:38:16 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57510 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752060AbcFTViN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 17:38:13 -0400
-Received: (qmail 9423 invoked by uid 102); 20 Jun 2016 21:10:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 17:10:32 -0400
-Received: (qmail 18090 invoked by uid 107); 20 Jun 2016 21:10:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 17:10:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jun 2016 17:10:29 -0400
-Date:	Mon, 20 Jun 2016 17:10:29 -0400
-From:	Jeff King <peff@peff.net>
-To:	Norbert Kiesel <nkiesel@gmail.com>
-Cc:	Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH 1/3] t0006: rename test-date's "show" to "relative"
-Message-ID: <20160620211029.GA31229@sigill.intra.peff.net>
-References: <20160620210901.GE3631@sigill.intra.peff.net>
+	id S1752441AbcFTVwy (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 17:52:54 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:39636 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751235AbcFTVwy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 17:52:54 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DD691FEAA;
+	Mon, 20 Jun 2016 21:52:53 +0000 (UTC)
+Date:	Mon, 20 Jun 2016 21:52:53 +0000
+From:	Eric Wong <e@80x24.org>
+To:	=?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCe0LLRh9C40L3QvdC40LrQvtCy?= 
+	<proff@proff.email>
+Cc:	git@vger.kernel.org, Jakob Stoklund Olesen <stoklund@2pi.dk>,
+	Sam Vilain <sam@vilain.net>,
+	Steven Walter <stevenrwalter@gmail.com>,
+	Peter Baumann <waste.manager@gmx.de>,
+	Andrew Myrick <amyrick@apple.com>,
+	Michael Contreras <michael@inetric.com>
+Subject: Re: may be bug in svn fetch no-follow-parent
+Message-ID: <20160620215253.GA16566@dcvr.yhbt.net>
+References: <4094761466408188@web24o.yandex.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20160620210901.GE3631@sigill.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4094761466408188@web24o.yandex.ru>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The "show" tests are really only checking relative formats;
-we should make that more clear.
++Cc: a bunch of folks who may know better how mergeinfo works in git-svn
 
-This also frees up the "show" name to later check other
-formats. We could later fold "relative" into a more generic
-"show" command, but it's not worth it.  Relative times are a
-special case already because we have to munge the concept of
-"now" in our tests.
+Александр Овчинников <proff@proff.email> wrote:
+> Why git svn fetch try to handle mergeinfo changes when
+> no-follow-parent is enabled?
 
-Signed-off-by: Jeff King <peff@peff.net>
+It probably should not...  --no-follow-parent isn't a common
+config, though.  Can you try the patch below?
+
+> Git try to follow parents regardless of this option value.
+> If branch created without this option then git will follow
+> parent succesfully
+> If branch created with this option then git try to follow and
+> fail with "cannot find common ancestor" error
+> If branch does not exists (ignored) then git try to follow and
+> fail with "couldn't find revmap" error. It is very long
+> operation
+
+Do you have an example repo you could share with us?
+
+Thanks.
+
+I still don't think I've encountered a repo which uses
+mergeinfo myself.
+Hopefully the following patch works for you:
+
+---------8<--------
+Subject: [PATCH] git-svn: skip mergeinfo with --no-follow-parent
+
+For repositories without parent following enabled, computing
+mergeinfo can be expensive and pointless.
+
+Note: Only tested on existing test cases.
 ---
- t/helper/test-date.c |  8 ++++----
- t/t0006-date.sh      | 26 +++++++++++++-------------
- 2 files changed, 17 insertions(+), 17 deletions(-)
+ perl/Git/SVN.pm | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/t/helper/test-date.c b/t/helper/test-date.c
-index 63f3735..8ebcded 100644
---- a/t/helper/test-date.c
-+++ b/t/helper/test-date.c
-@@ -1,11 +1,11 @@
- #include "cache.h"
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index d94d01c..bee1e7d 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -1905,15 +1905,22 @@ sub make_log_entry {
  
- static const char *usage_msg = "\n"
--"  test-date show [time_t]...\n"
-+"  test-date relative [time_t]...\n"
- "  test-date parse [date]...\n"
- "  test-date approxidate [date]...\n";
+ 	my @parents = @$parents;
+ 	my $props = $ed->{dir_prop}{$self->path};
+-	if ( $props->{"svk:merge"} ) {
+-		$self->find_extra_svk_parents($props->{"svk:merge"}, \@parents);
+-	}
+-	if ( $props->{"svn:mergeinfo"} ) {
+-		my $mi_changes = $self->mergeinfo_changes
+-			($parent_path, $parent_rev,
+-			 $self->path, $rev,
+-			 $props->{"svn:mergeinfo"});
+-		$self->find_extra_svn_parents($mi_changes, \@parents);
++	if ($self->follow_parent) {
++		my $tickets = $props->{"svk:merge"};
++		if ($tickets) {
++			$self->find_extra_svk_parents($tickets, \@parents);
++		}
++
++		my $mergeinfo_prop = $props->{"svn:mergeinfo"};
++		if ($mergeinfo_prop) {
++			my $mi_changes = $self->mergeinfo_changes(
++						$parent_path,
++						$parent_rev,
++						$self->path,
++						$rev,
++						$mergeinfo_prop);
++			$self->find_extra_svn_parents($mi_changes, \@parents);
++		}
+ 	}
  
--static void show_dates(char **argv, struct timeval *now)
-+static void show_relative_dates(char **argv, struct timeval *now)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 
-@@ -61,8 +61,8 @@ int main(int argc, char **argv)
- 	argv++;
- 	if (!*argv)
- 		usage(usage_msg);
--	if (!strcmp(*argv, "show"))
--		show_dates(argv+1, &now);
-+	if (!strcmp(*argv, "relative"))
-+		show_relative_dates(argv+1, &now);
- 	else if (!strcmp(*argv, "parse"))
- 		parse_dates(argv+1, &now);
- 	else if (!strcmp(*argv, "approxidate"))
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index fac0986..fa05269 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -6,26 +6,26 @@ test_description='test date parsing and printing'
- # arbitrary reference time: 2009-08-30 19:20:00
- TEST_DATE_NOW=1251660000; export TEST_DATE_NOW
- 
--check_show() {
-+check_relative() {
- 	t=$(($TEST_DATE_NOW - $1))
- 	echo "$t -> $2" >expect
- 	test_expect_${3:-success} "relative date ($2)" "
--	test-date show $t >actual &&
-+	test-date relative $t >actual &&
- 	test_i18ncmp expect actual
- 	"
- }
- 
--check_show 5 '5 seconds ago'
--check_show 300 '5 minutes ago'
--check_show 18000 '5 hours ago'
--check_show 432000 '5 days ago'
--check_show 1728000 '3 weeks ago'
--check_show 13000000 '5 months ago'
--check_show 37500000 '1 year, 2 months ago'
--check_show 55188000 '1 year, 9 months ago'
--check_show 630000000 '20 years ago'
--check_show 31449600 '12 months ago'
--check_show 62985600 '2 years ago'
-+check_relative 5 '5 seconds ago'
-+check_relative 300 '5 minutes ago'
-+check_relative 18000 '5 hours ago'
-+check_relative 432000 '5 days ago'
-+check_relative 1728000 '3 weeks ago'
-+check_relative 13000000 '5 months ago'
-+check_relative 37500000 '1 year, 2 months ago'
-+check_relative 55188000 '1 year, 9 months ago'
-+check_relative 630000000 '20 years ago'
-+check_relative 31449600 '12 months ago'
-+check_relative 62985600 '2 years ago'
- 
- check_parse() {
- 	echo "$1 -> $2" >expect
+ 	open my $un, '>>', "$self->{dir}/unhandled.log" or croak $!;
 -- 
-2.9.0.167.g9e4667c
-
+EW
