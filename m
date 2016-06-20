@@ -1,58 +1,68 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27B871FEAA
-	for <e@80x24.org>; Mon, 20 Jun 2016 20:35:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75DA21FEAA
+	for <e@80x24.org>; Mon, 20 Jun 2016 20:52:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933696AbcFTUeq (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 16:34:46 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:41462 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932660AbcFTUej (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 16:34:39 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3rYMqZ6Xx6z3hjYH;
-	Mon, 20 Jun 2016 22:27:54 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3rYMqZ6GylzvjNC;
-	Mon, 20 Jun 2016 22:27:54 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id 1DkNky2qa_zw; Mon, 20 Jun 2016 22:27:53 +0200 (CEST)
-X-Auth-Info: Hp3sc9y49gM3iioAdyrku+9kISRREg4yx/wn1zmAgaVEInPeJivJabSq5jYSYnVt
-Received: from igel.home (ppp-88-217-7-154.dynamic.mnet-online.de [88.217.7.154])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Mon, 20 Jun 2016 22:27:53 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 6481F2C346B; Mon, 20 Jun 2016 22:27:53 +0200 (CEST)
-From:	Andreas Schwab <schwab@linux-m68k.org>
-To:	Norbert Kiesel <nkiesel@gmail.com>
-Cc:	git@vger.kernel.org
-Subject: Re: unable to pull from remote if commit date is in the future
-References: <CAM+g_NswH8fd8aFPEHfSLYnZWptNU2GX=xTWpehzjTJfJM_GfQ@mail.gmail.com>
-X-Yow:	My haircut is totally traditional!
-Date:	Mon, 20 Jun 2016 22:27:53 +0200
-In-Reply-To: <CAM+g_NswH8fd8aFPEHfSLYnZWptNU2GX=xTWpehzjTJfJM_GfQ@mail.gmail.com>
-	(Norbert Kiesel's message of "Mon, 20 Jun 2016 11:41:40 -0700")
-Message-ID: <87porbip12.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.95 (gnu/linux)
+	id S1753298AbcFTUwa (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 16:52:30 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:41163 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752525AbcFTUw2 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 16:52:28 -0400
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id 55C24203F9
+	for <git@vger.kernel.org>; Mon, 20 Jun 2016 16:43:39 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute7.internal (MEProxy); Mon, 20 Jun 2016 16:43:39 -0400
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:message-id:mime-version:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=nfEALjR2eUrHE1wqR7LX9HuisPo=; b=HUPfu
+	ao5vFj7Jk8Oe8KXsZOOOUqbgqCSOar+XSC1bVItMznivH4i8GQ7FvWbFRBaOt/C+
+	AlldB4mzac7TlMHCPAH1wR1+d/cX8WQdvG4qBOZBcvHUquD7XQFMMNdGG7qkDbjy
+	GLZdQW0pA8iyvsBbeJX1dix0973EzGx0IF+1tU=
+X-Sasl-enc: tWyuuf/OcpfemtTSYH5Fe8jCigc53IjnXSegm3bRyONT 1466455419
+Received: from ebox.rath.org (ebox.rath.org [45.79.69.51])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 0DFA9F29EE
+	for <git@vger.kernel.org>; Mon, 20 Jun 2016 16:43:39 -0400 (EDT)
+Received: from thinkpad.rath.org (thinkpad [192.168.12.2])
+	by ebox.rath.org (Postfix) with ESMTPS id 4B58F3001AC
+	for <git@vger.kernel.org>; Mon, 20 Jun 2016 20:43:37 +0000 (UTC)
+Received: by thinkpad.rath.org (Postfix, from userid 1000)
+	id DBEEEBFF93; Mon, 20 Jun 2016 13:43:37 -0700 (PDT)
+From:	Nikolaus Rath <Nikolaus@rath.org>
+To:	git@vger.kernel.org
+Subject: How to find commits unique to a branch
+Mail-Copies-To:	never
+Mail-Followup-To: git@vger.kernel.org
+Date:	Mon, 20 Jun 2016 13:43:37 -0700
+Message-ID: <878txz8ubq.fsf@thinkpad.rath.org>
+User-Agent: Gnus/5.130014 (Ma Gnus v0.14) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Norbert Kiesel <nkiesel@gmail.com> writes:
+Hello,
 
-> For the record: the faulty commit is
-> https://github.com/seandepagnier/weather_routing_pi/commit/23c07cc5d2be7ce68349f4b3719b6fa6fe90e0bf
+What's the best way to find all commits in a branch A that have not been
+cherry-picked from (or to) another branch B?
 
-That commit is part of master.  Are you sure you don't have it already?
+I think I could format-patch all commits in every branch into separate
+files, hash the Author and Date of each files, and then compare the two
+lists. But I'm hoping there's a way to instead have git do the
+heavy-lifting?
 
-Andreas.
+
+Best,
+-Nikolaus
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+GPG encrypted emails preferred. Key id: 0xD113FCAC3C4E599F
+Fingerprint: ED31 791B 2C5C 1613 AF38 8B8A D113 FCAC 3C4E 599F
+
+             »Time flies like an arrow, fruit flies like a Banana.«
