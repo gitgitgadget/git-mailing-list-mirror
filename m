@@ -1,112 +1,79 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 174E61FF40
-	for <e@80x24.org>; Mon, 20 Jun 2016 21:52:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 368311FEAA
+	for <e@80x24.org>; Mon, 20 Jun 2016 22:12:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752441AbcFTVwy (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 17:52:54 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:39636 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751235AbcFTVwy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 17:52:54 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DD691FEAA;
-	Mon, 20 Jun 2016 21:52:53 +0000 (UTC)
-Date:	Mon, 20 Jun 2016 21:52:53 +0000
-From:	Eric Wong <e@80x24.org>
-To:	=?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCe0LLRh9C40L3QvdC40LrQvtCy?= 
-	<proff@proff.email>
-Cc:	git@vger.kernel.org, Jakob Stoklund Olesen <stoklund@2pi.dk>,
-	Sam Vilain <sam@vilain.net>,
-	Steven Walter <stevenrwalter@gmail.com>,
-	Peter Baumann <waste.manager@gmx.de>,
-	Andrew Myrick <amyrick@apple.com>,
-	Michael Contreras <michael@inetric.com>
-Subject: Re: may be bug in svn fetch no-follow-parent
-Message-ID: <20160620215253.GA16566@dcvr.yhbt.net>
-References: <4094761466408188@web24o.yandex.ru>
+	id S932085AbcFTWLn (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 18:11:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59597 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752898AbcFTWLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 18:11:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1100425B38;
+	Mon, 20 Jun 2016 18:11:26 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Gmq2oJUHZ8VHKex/nYxd4lq/x/w=; b=rVmTye
+	M2kLKoczY4l8R1UneORGDVx2whts6H3oWY0TNi9cCDRyQpF0Q+pq0WaHSAgZFdr6
+	t6d3YLYwciuP+ULorSGUrVo5G3GRfYbA0t+4ctq7wo97vyp3VENpzXGgMF6IL2hH
+	E4mk44xDtfqeW0owai9GD3V2Ks0f+Tv3ntYZk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=thZrCaTvRWfBxHhazj4TsjP8k/uRDIzQ
+	7tgaxUsmm61EAQVqpWngGOZFzeOOWs2u7GeVtcxgK9ttIcdTUMqOKNOldpNB/g4B
+	TSDCztfeh8ZUKy8TJatYdmiCvNzESW8xtm/ZfxMETJbBvJnGGa9Za5Rc/DCdGRBw
+	q94SeQOMj48=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0884B25B37;
+	Mon, 20 Jun 2016 18:11:26 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8974125B36;
+	Mon, 20 Jun 2016 18:11:25 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	Norbert Kiesel <nkiesel@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 0/3] fix local_tzoffset with far-in-future dates
+References: <CAM+g_NswH8fd8aFPEHfSLYnZWptNU2GX=xTWpehzjTJfJM_GfQ@mail.gmail.com>
+	<CAGZ79kZL-ZY_0hZx9uA-ObPvMiD+EWvJYQa+OfCeQe2RLOPECA@mail.gmail.com>
+	<CAM+g_NtNAWpLkbErL5-BUyH_3X4rYGfZwO0o-Hfu8zyam8pw7Q@mail.gmail.com>
+	<20160620193928.GA3631@sigill.intra.peff.net>
+	<20160620194648.GB3631@sigill.intra.peff.net>
+	<20160620200011.GC3631@sigill.intra.peff.net>
+	<20160620210901.GE3631@sigill.intra.peff.net>
+Date:	Mon, 20 Jun 2016 15:11:23 -0700
+In-Reply-To: <20160620210901.GE3631@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 20 Jun 2016 17:09:01 -0400")
+Message-ID: <xmqqy45zse7o.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4094761466408188@web24o.yandex.ru>
+Content-Type: text/plain
+X-Pobox-Relay-ID: EDE9ACBA-3733-11E6-ABF4-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-+Cc: a bunch of folks who may know better how mergeinfo works in git-svn
+Jeff King <peff@peff.net> writes:
 
-Александр Овчинников <proff@proff.email> wrote:
-> Why git svn fetch try to handle mergeinfo changes when
-> no-follow-parent is enabled?
+> I still don't know how that screwed-up timestamp got _into_
+> a commit, so perhaps there is another bug lurking.  I couldn't convince
+> git to parse anything beyond 2100, and committing with
+> GIT_AUTHOR_DATE='@5758122296 +0000' works just fine.
 
-It probably should not...  --no-follow-parent isn't a common
-config, though.  Can you try the patch below?
+Interesting.  The weirdest I could come up with was with
 
-> Git try to follow parents regardless of this option value.
-> If branch created without this option then git will follow
-> parent succesfully
-> If branch created with this option then git try to follow and
-> fail with "cannot find common ancestor" error
-> If branch does not exists (ignored) then git try to follow and
-> fail with "couldn't find revmap" error. It is very long
-> operation
+    GIT_AUTHOR_DATE='@5758122296 -9999
 
-Do you have an example repo you could share with us?
+which gets turned into the same timestamp but with -10039 timezone
+(simply because 99 minutes is an hour and 39 minutes).
 
-Thanks.
+>   [1/3]: t0006: rename test-date's "show" to "relative"
+>   [2/3]: t0006: test various date formats
+>   [3/3]: local_tzoffset: detect errors from tm_to_time_t
 
-I still don't think I've encountered a repo which uses
-mergeinfo myself.
-Hopefully the following patch works for you:
-
----------8<--------
-Subject: [PATCH] git-svn: skip mergeinfo with --no-follow-parent
-
-For repositories without parent following enabled, computing
-mergeinfo can be expensive and pointless.
-
-Note: Only tested on existing test cases.
----
- perl/Git/SVN.pm | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
-
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index d94d01c..bee1e7d 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -1905,15 +1905,22 @@ sub make_log_entry {
- 
- 	my @parents = @$parents;
- 	my $props = $ed->{dir_prop}{$self->path};
--	if ( $props->{"svk:merge"} ) {
--		$self->find_extra_svk_parents($props->{"svk:merge"}, \@parents);
--	}
--	if ( $props->{"svn:mergeinfo"} ) {
--		my $mi_changes = $self->mergeinfo_changes
--			($parent_path, $parent_rev,
--			 $self->path, $rev,
--			 $props->{"svn:mergeinfo"});
--		$self->find_extra_svn_parents($mi_changes, \@parents);
-+	if ($self->follow_parent) {
-+		my $tickets = $props->{"svk:merge"};
-+		if ($tickets) {
-+			$self->find_extra_svk_parents($tickets, \@parents);
-+		}
-+
-+		my $mergeinfo_prop = $props->{"svn:mergeinfo"};
-+		if ($mergeinfo_prop) {
-+			my $mi_changes = $self->mergeinfo_changes(
-+						$parent_path,
-+						$parent_rev,
-+						$self->path,
-+						$rev,
-+						$mergeinfo_prop);
-+			$self->find_extra_svn_parents($mi_changes, \@parents);
-+		}
- 	}
- 
- 	open my $un, '>>', "$self->{dir}/unhandled.log" or croak $!;
--- 
-EW
+Thanks, will queue.
