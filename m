@@ -1,121 +1,160 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD23F20179
-	for <e@80x24.org>; Mon, 20 Jun 2016 10:58:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17FF220179
+	for <e@80x24.org>; Mon, 20 Jun 2016 10:59:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932363AbcFTK6l (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 06:58:41 -0400
-Received: from mout.gmx.net ([212.227.17.22]:64543 "EHLO mout.gmx.net"
+	id S932367AbcFTK66 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 06:58:58 -0400
+Received: from mout.gmx.net ([212.227.15.18]:60880 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754563AbcFTK6f (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 06:58:35 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Lu3J4-1bLvPy1VpO-011P6h; Mon, 20 Jun 2016 12:58:24
+	id S1754545AbcFTK64 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 06:58:56 -0400
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Lug4m-1bNZph0My0-00zmm0; Mon, 20 Jun 2016 12:58:49
  +0200
-Date:	Mon, 20 Jun 2016 12:55:02 +0200 (CEST)
+Date:	Mon, 20 Jun 2016 12:55:26 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/7] Let log-tree and friends respect diffopt's `file`
- field
-In-Reply-To: <cover.1466244194.git.johannes.schindelin@gmx.de>
-Message-ID: <cover.1466420060.git.johannes.schindelin@gmx.de>
-References: <cover.1466244194.git.johannes.schindelin@gmx.de>
+cc:	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 2/7] line-log: respect diffopt's configured output file
+ stream
+In-Reply-To: <cover.1466420060.git.johannes.schindelin@gmx.de>
+Message-ID: <30c24f0e22085a4ba2fbfd16f8ba176e31420d5d.1466420060.git.johannes.schindelin@gmx.de>
+References: <cover.1466244194.git.johannes.schindelin@gmx.de> <cover.1466420060.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:55sIRCVxml4yCzBqoRuwFh6fr0u8K384RrBW537pJDWiyQGXJhP
- +Us1OpLnh3XN+Ev8hzLtSWO/09uJaxNi3ufWNbr31uw4JMd5IuP+sOqNfI+sIvu9b77B38g
- 3Gp+n4fwR3pdV7uQ1s+pGkDkTV00Dp9fj4Tm76HjKZ2PHPBLMPPqkPQ1xsZoCzNFotZlsL3
- CJCuNwMvtRQf+7Wa0FTnw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:zS4cMjcUb20=:hMCE+nuuNQFZja3Dhw/Rp/
- +H9T5MCjHxVNmWpcY1n6Rpmhxi/3FDl8ouqW8/cgSfhnSQxqEW73wohXfiljqlkDTKQPu3nSt
- YksmDVyM6cUo878sDJlmLe9LPlncC02fk5XT7djY1LzLskYH9+a/9ENB6vIlW2cRKbLg1oiug
- Pi6BfoYYMWcaqq+rcqRXs98ODgOoMyNFroOOOu7cno2iG2++wztTfCoZp2lTirsJyM9gUItWn
- 1w4rISwlKkKMmcTSEDOky0Lc/mTH+rtqYPW3NSms/62tc+uG3r5D5rDjO+flyAzalh89O4p3M
- 0atVt9BTbhFIsSuVLqAqsqRjVEwbfEXtckYXUpphtbcEEiR6VLCJ65jnVNqD/ZR2XolfTanpw
- RJT46sDy/+Bwim9g/Uq/zRZtMZJ7i/PGPcRhMNCnHBc1mna1I1SX81d+nO4eDQIOSmy8dpyf4
- KugyjXCWmg6QezjCR3FdBVFGGzikjOWmWyOGQqRD8heq4jB8L7v9O7DpsZkAO8I3GqWrCnwbY
- fCPqzXWue+xFwlJ+iCqKf/vvXoDJnVV3wNJ7qxNtD3FKtL79WiPLKITEtfGsvi8K8jh3J3sCF
- bpw9a0fAxSCljl3jRlApmyNmjCK9tXq/TnTOe7fNaUnGa0CMYwhmO4/LUABjTdCT+EUPZD3L7
- 1JWGhLFKC0pmRp4jjRBAuggJLAFhYAH8SVZYhMXLw6WJMFDPu1bD5IrdKRSDkqycfZOghn6f7
- YMF6j9Djnc8u6OJw8bVC+5NWeBavtLF6LsPFre1/spJ5NZjQ53lKbzfS1/vHaf/FZP6qsBYVl
- Gov1p7C
+X-Provags-ID: V03:K0:J90cda2KvtPdm2RW1gA0VJ0SNlHQWyxvGSDMCOijEZJslVm9xIL
+ 31l30iq5uqH9/d4cUEhJtdmJ1O+yyeMgI9h9AAX7hKWzphAQhbl+6/Fd1tIW+WKKfjiCgyV
+ U208ghbaybPvSHOTQ9qpJcO5UnvNTf/dPloaSQUKz136gbEfJWEEH5NDqH5gRFkxw6VPxJ1
+ QQ7drD/i0S7W0z4KElIDA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:XhAJyXjQGxQ=:yJ4T9lK+/0wPzcHzSl6a6u
+ tyrHK09IvATbOcLnhxymmVKO/anXFQ/kKuEpXLQTlVCgNiMvt4Dy8N2xm0E2hNWS0LtVc8UtG
+ +KD1P+XFv8apEex+a2DIzD3C8cILv3oemI8NuoWNh9kVx7VajKCpyoT1DLu+Vo/VwYv9hrVVG
+ ZYNrDvG1WVcdWwQpurtThj+BozKS0dgntEjMkmAqrafceESEPF8ePB9Haoek9G4M/XRr6nHrg
+ CnbGGBtB/1EroyAMunavjuheQJYs7DbhLY2EYzHevQwdYtny4HM7A/Iubn88JQrImOH6yL3ax
+ IW0n8F7X8q1+01iiHhoC/tUHfkfH6vta4Zw9DSfNCNU3C9PrB1tx2n2C17FEwvSvsqaNVprVW
+ rLFUr7P9TmnafKSMzJ+eY9hQ6Qi3ENwpOM0I7Qsb79ytE1zdZOT580EAiLDKQW/mhWobTg595
+ cU4EOb0j9htjjspYQ/GKap66SdJsvpVPHrj0lPqooWIQwRX9dRuQdn2Dh5I8zBc3HfKlyy5JR
+ 7FYcHB95Rc2UKKY3rfu7QiP+3vjkDSPgOs5Ubuogqlio7GvRy8T7N20lLWSKH/yQdUaolSeG3
+ H/4Y+IBfcLLo1DVpEdjqBLmS/zajZyA6xCF2uCo6aXQaqYGXZRYB53Ii1lMiuM4/uT5JfegRc
+ QnnxPfXUAyRfJnfoNDZaATte0ednLU/HXH9b0przbvh/7w2Uz2wth6B8EPa37F1XEb8T2K8ub
+ Askz1TMcutVCB8s7MyXW9cWd97W66SeHSBH3pg9SfziMQ1DEoKRg/qKT6LSw532274zpiB3sy
+ qEc7mbr
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The idea is to allow callers to redirect log-tree's output to a file
-without having to freopen() stdout (which would modify global state,
-a big no-no-no for library functions).
+The diff machinery can optionally output to a file stream other than
+stdout, by overriding diffopt.file. In such a case, the rest of the
+log tree machinery should also write to that stream.
 
-I reviewed log-tree.c, graph.c, line-log.c, builtin/shortlog.c and
-builtin/log.c line by line to ensure that all calls that assumed stdout
-previously now use the `file` field instead, of course. I would
-welcome additional eyes to go over the code to confirm that I did not
-miss anything.
+Currently, there is no user of the line level log that wants to
+redirect output to a file. Therefore, one might argue that it is
+superfluous to support that now. However, it is better to be
+consistent now, rather than to face hard-to-debug problems later.
 
-This patch series ends up removing the freopen() call in the
-format-patch command, but that is only a by-product. The ulterior motive
-behind this series is to allow the sequencer to write a `patch` file as
-part of my endeavor to move large chunks of rebase -i into a builtin.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ line-log.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-Speaking of said endeavor: it is going a lot slower than I would like,
-but I really need rebase -i to be robust. To that end, I not only review
-and re-review my patches frequently, I also use a cross-validation
-technique inspired by my original ll-merge validation as well as
-GitHub's Scientist library: I taught rebase -i to run every interactive
-rebase twice, once with the original shell script's code, and once with
-the builtin rebase--helper, and then to verify that the end result is as
-similar as can be expected (the commit dates will differ most of the
-time, of course).
-
-It is a bit tedious, of course, because I have to resolve every merge
-conflict twice, I have to reword everything twice (identically!), and I
-have to wait longer for the rebase to finish. It is worth it, though,
-because I really need rebase -i to be robust, as it is the center piece
-of almost all of my workflows.
-
-I organized the patch series into a thicket of branches, to make it
-easier to review them; In addition to this here patch series, I plan to
-submit 11 separate, partially interdependent series, resubmit another
-one, and I already submitted a couple of patches earlier that were
-integrated or replaced by superior solutions (thanks, Peff!). Skipping
-the temporary patches (e.g. for cross-validation), that leaves me with
-99 patches to submit in total (sing with me: "99 patches of code to
-submit, 99 patches of code, ...").
-
-I was curious just how much these patches could accelerate rebase -i, so
-I disabled the cross-validation temprarily and let Travis measure the
-performance improvements via the t/perf test that was already merged to
-`master`. Look for "3404.2" in this build's logs:
-https://travis-ci.org/git/git/builds/138277774
-
-It looks like a 3x speedup on Linux, a 4x speedup on MacOSX and my local
-measurements suggest a >5x speed-up on Windows.
-
-
-Johannes Schindelin (7):
-  log-tree: respect diffopt's configured output file stream
-  line-log: respect diffopt's configured output file stream
-  graph: respect the diffopt.file setting
-  shortlog: support outputting to streams other than stdout
-  format-patch: explicitly switch off color when writing to files
-  format-patch: avoid freopen()
-  format-patch: use stdout directly
-
- builtin/log.c      | 71 +++++++++++++++++++++++++++---------------------------
- builtin/shortlog.c | 13 ++++++----
- graph.c            | 30 +++++++++++++----------
- line-log.c         | 34 +++++++++++++-------------
- log-tree.c         | 65 +++++++++++++++++++++++++------------------------
- shortlog.h         |  1 +
- 6 files changed, 111 insertions(+), 103 deletions(-)
-
-Published-As: https://github.com/dscho/git/releases/tag/diffopt.file-v2
+diff --git a/line-log.c b/line-log.c
+index bbe31ed..c3b8563 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -841,7 +841,7 @@ static char *get_nth_line(long line, unsigned long *ends, void *data)
+ 
+ static void print_line(const char *prefix, char first,
+ 		       long line, unsigned long *ends, void *data,
+-		       const char *color, const char *reset)
++		       const char *color, const char *reset, FILE *file)
+ {
+ 	char *begin = get_nth_line(line, ends, data);
+ 	char *end = get_nth_line(line+1, ends, data);
+@@ -852,14 +852,14 @@ static void print_line(const char *prefix, char first,
+ 		had_nl = 1;
+ 	}
+ 
+-	fputs(prefix, stdout);
+-	fputs(color, stdout);
+-	putchar(first);
+-	fwrite(begin, 1, end-begin, stdout);
+-	fputs(reset, stdout);
+-	putchar('\n');
++	fputs(prefix, file);
++	fputs(color, file);
++	fputc(first, file);
++	fwrite(begin, 1, end-begin, file);
++	fputs(reset, file);
++	fputc('\n', file);
+ 	if (!had_nl)
+-		fputs("\\ No newline at end of file\n", stdout);
++		fputs("\\ No newline at end of file\n", file);
+ }
+ 
+ static char *output_prefix(struct diff_options *opt)
+@@ -898,12 +898,12 @@ static void dump_diff_hacky_one(struct rev_info *rev, struct line_log_data *rang
+ 		fill_line_ends(pair->one, &p_lines, &p_ends);
+ 	fill_line_ends(pair->two, &t_lines, &t_ends);
+ 
+-	printf("%s%sdiff --git a/%s b/%s%s\n", prefix, c_meta, pair->one->path, pair->two->path, c_reset);
+-	printf("%s%s--- %s%s%s\n", prefix, c_meta,
++	fprintf(opt->file, "%s%sdiff --git a/%s b/%s%s\n", prefix, c_meta, pair->one->path, pair->two->path, c_reset);
++	fprintf(opt->file, "%s%s--- %s%s%s\n", prefix, c_meta,
+ 	       pair->one->sha1_valid ? "a/" : "",
+ 	       pair->one->sha1_valid ? pair->one->path : "/dev/null",
+ 	       c_reset);
+-	printf("%s%s+++ b/%s%s\n", prefix, c_meta, pair->two->path, c_reset);
++	fprintf(opt->file, "%s%s+++ b/%s%s\n", prefix, c_meta, pair->two->path, c_reset);
+ 	for (i = 0; i < range->ranges.nr; i++) {
+ 		long p_start, p_end;
+ 		long t_start = range->ranges.ranges[i].start;
+@@ -945,7 +945,7 @@ static void dump_diff_hacky_one(struct rev_info *rev, struct line_log_data *rang
+ 		}
+ 
+ 		/* Now output a diff hunk for this range */
+-		printf("%s%s@@ -%ld,%ld +%ld,%ld @@%s\n",
++		fprintf(opt->file, "%s%s@@ -%ld,%ld +%ld,%ld @@%s\n",
+ 		       prefix, c_frag,
+ 		       p_start+1, p_end-p_start, t_start+1, t_end-t_start,
+ 		       c_reset);
+@@ -953,18 +953,18 @@ static void dump_diff_hacky_one(struct rev_info *rev, struct line_log_data *rang
+ 			int k;
+ 			for (; t_cur < diff->target.ranges[j].start; t_cur++)
+ 				print_line(prefix, ' ', t_cur, t_ends, pair->two->data,
+-					   c_context, c_reset);
++					   c_context, c_reset, opt->file);
+ 			for (k = diff->parent.ranges[j].start; k < diff->parent.ranges[j].end; k++)
+ 				print_line(prefix, '-', k, p_ends, pair->one->data,
+-					   c_old, c_reset);
++					   c_old, c_reset, opt->file);
+ 			for (; t_cur < diff->target.ranges[j].end && t_cur < t_end; t_cur++)
+ 				print_line(prefix, '+', t_cur, t_ends, pair->two->data,
+-					   c_new, c_reset);
++					   c_new, c_reset, opt->file);
+ 			j++;
+ 		}
+ 		for (; t_cur < t_end; t_cur++)
+ 			print_line(prefix, ' ', t_cur, t_ends, pair->two->data,
+-				   c_context, c_reset);
++				   c_context, c_reset, opt->file);
+ 	}
+ 
+ 	free(p_ends);
+@@ -977,7 +977,7 @@ static void dump_diff_hacky_one(struct rev_info *rev, struct line_log_data *rang
+  */
+ static void dump_diff_hacky(struct rev_info *rev, struct line_log_data *range)
+ {
+-	puts(output_prefix(&rev->diffopt));
++	fprintf(rev->diffopt.file, "%s\n", output_prefix(&rev->diffopt));
+ 	while (range) {
+ 		dump_diff_hacky_one(rev, range);
+ 		range = range->next;
 -- 
 2.9.0.119.g370c5a9
 
-base-commit: 05219a1276341e72d8082d76b7f5ed394b7437a4
+
