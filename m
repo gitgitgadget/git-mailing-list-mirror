@@ -1,84 +1,121 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A85E520179
-	for <e@80x24.org>; Mon, 20 Jun 2016 10:12:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD23F20179
+	for <e@80x24.org>; Mon, 20 Jun 2016 10:58:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752047AbcFTKMp (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 06:12:45 -0400
-Received: from mout.gmx.net ([212.227.15.18]:56874 "EHLO mout.gmx.net"
+	id S932363AbcFTK6l (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 06:58:41 -0400
+Received: from mout.gmx.net ([212.227.17.22]:64543 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754417AbcFTKMj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 06:12:39 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MaIsi-1azTjo2Nb6-00Jtny; Mon, 20 Jun 2016 12:12:28
+	id S1754563AbcFTK6f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 06:58:35 -0400
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Lu3J4-1bLvPy1VpO-011P6h; Mon, 20 Jun 2016 12:58:24
  +0200
-Date:	Mon, 20 Jun 2016 12:09:04 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:	Mon, 20 Jun 2016 12:55:02 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Eric Sunshine <sunshine@sunshineco.com>
-cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
-In-Reply-To: <CAPig+cQqworFpRvd-U9sgnyitQEzy6zAKc_091b9fzjuzsFnpA@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1606201208260.22630@virtualbox>
-References: <cover.1466244194.git.johannes.schindelin@gmx.de> <de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de> <CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com> <alpine.DEB.2.20.1606200814510.22630@virtualbox>
- <CAPig+cQqworFpRvd-U9sgnyitQEzy6zAKc_091b9fzjuzsFnpA@mail.gmail.com>
+To:	git@vger.kernel.org
+cc:	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/7] Let log-tree and friends respect diffopt's `file`
+ field
+In-Reply-To: <cover.1466244194.git.johannes.schindelin@gmx.de>
+Message-ID: <cover.1466420060.git.johannes.schindelin@gmx.de>
+References: <cover.1466244194.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:lF/cWnfZnj3+0LPzFa/bnpq0VkMiWgWNr3ugNVTm9aQj31fNOgR
- 3FpPMzUf3ew667hPod91zZYSGCZCv/HJCmIeHZY97T798JL/H++IQeR6/+wuJDrLXmwmxyZ
- rF0yd9u2ZuGM0+fNJi8SGzv/xs5pJUY73L5UygEZifQXrvs3l8Y9afesjkAmDe7xWZx+t9p
- xNHNoP/DP8IMhHT95I9ww==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:kFTp6tcNXnE=:/qUw+w7AwevyeN9hGoS24M
- KcEHDnwqiq3oUiFg7CxokCu77vsjwXWY6jKFsW060Un5psmSelZ4zKUN2jdPZ1XeXMtUT2BgU
- 0lf+QdBaUDxLPb6ZWHqF31thNCIoNyqRUxc1utjTpBDGcHeYvX4ieSVS8dE3GbCBZNURXlYIx
- QZQDUlEE0qKb0IMNmA+O+lJ10a10kkBZutt7eue6+CYVDN3i1PspFbBUxP08yCtyofJvEIoKG
- rEqmgKcuAzCrpwUNCk2ivLIfpl1IE7p8t+QG/v7SmPucwtca5NvGlxVv79u+f9PXaXuoO+n9J
- 89lhdiWKvewkbQhOc3ltzgWUfn5JYppjTP68gxinjqORWOZZTBy92X1aIcHfqOerEHY4JElsp
- rFGglP9FFfBre24fcs8wCPTpRuqagW7uXrFDasYngB7y+06IxL8vbjosf/v6JTWfU4qASTbix
- 7wzqtEXV3IVcq55RSyUB4kgqaOm/mtkxftukx01CM2f9XpUj+3jXv9UkvzvKzMhAF55DuMsG9
- o0Ll2F2I/pLkUdALnMf79+BfYgZu+5G6lMNyhcDxGa6rl2fWRqbDeUA8lZuuSb9Grdj/K3eBJ
- afX4HMDfO4bh0Sqne1UQP3MogEIEXSVw53Ml4UyRT0rYBmlsETsCotnBer4EGhMclDBIBlFVj
- legQX/Vns2snpDdRv/+o5001cDRBdX23+L0wJ7no7foIGMcxtghO4s109Ayv4av5meVzSN0FN
- v46vBVP6sRui+hM0y4/trc7N0O4r88uw3t1wNyFEh4XuRFtzda8WTPBXD/NfbmQaDlTAz44LK
- Wd2S7G+
+X-Provags-ID: V03:K0:55sIRCVxml4yCzBqoRuwFh6fr0u8K384RrBW537pJDWiyQGXJhP
+ +Us1OpLnh3XN+Ev8hzLtSWO/09uJaxNi3ufWNbr31uw4JMd5IuP+sOqNfI+sIvu9b77B38g
+ 3Gp+n4fwR3pdV7uQ1s+pGkDkTV00Dp9fj4Tm76HjKZ2PHPBLMPPqkPQ1xsZoCzNFotZlsL3
+ CJCuNwMvtRQf+7Wa0FTnw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:zS4cMjcUb20=:hMCE+nuuNQFZja3Dhw/Rp/
+ +H9T5MCjHxVNmWpcY1n6Rpmhxi/3FDl8ouqW8/cgSfhnSQxqEW73wohXfiljqlkDTKQPu3nSt
+ YksmDVyM6cUo878sDJlmLe9LPlncC02fk5XT7djY1LzLskYH9+a/9ENB6vIlW2cRKbLg1oiug
+ Pi6BfoYYMWcaqq+rcqRXs98ODgOoMyNFroOOOu7cno2iG2++wztTfCoZp2lTirsJyM9gUItWn
+ 1w4rISwlKkKMmcTSEDOky0Lc/mTH+rtqYPW3NSms/62tc+uG3r5D5rDjO+flyAzalh89O4p3M
+ 0atVt9BTbhFIsSuVLqAqsqRjVEwbfEXtckYXUpphtbcEEiR6VLCJ65jnVNqD/ZR2XolfTanpw
+ RJT46sDy/+Bwim9g/Uq/zRZtMZJ7i/PGPcRhMNCnHBc1mna1I1SX81d+nO4eDQIOSmy8dpyf4
+ KugyjXCWmg6QezjCR3FdBVFGGzikjOWmWyOGQqRD8heq4jB8L7v9O7DpsZkAO8I3GqWrCnwbY
+ fCPqzXWue+xFwlJ+iCqKf/vvXoDJnVV3wNJ7qxNtD3FKtL79WiPLKITEtfGsvi8K8jh3J3sCF
+ bpw9a0fAxSCljl3jRlApmyNmjCK9tXq/TnTOe7fNaUnGa0CMYwhmO4/LUABjTdCT+EUPZD3L7
+ 1JWGhLFKC0pmRp4jjRBAuggJLAFhYAH8SVZYhMXLw6WJMFDPu1bD5IrdKRSDkqycfZOghn6f7
+ YMF6j9Djnc8u6OJw8bVC+5NWeBavtLF6LsPFre1/spJ5NZjQ53lKbzfS1/vHaf/FZP6qsBYVl
+ Gov1p7C
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Eric,
+The idea is to allow callers to redirect log-tree's output to a file
+without having to freopen() stdout (which would modify global state,
+a big no-no-no for library functions).
 
-On Mon, 20 Jun 2016, Eric Sunshine wrote:
+I reviewed log-tree.c, graph.c, line-log.c, builtin/shortlog.c and
+builtin/log.c line by line to ensure that all calls that assumed stdout
+previously now use the `file` field instead, of course. I would
+welcome additional eyes to go over the code to confirm that I did not
+miss anything.
 
-> On Mon, Jun 20, 2016 at 2:26 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > On Sun, 19 Jun 2016, Eric Sunshine wrote:
-> >> On Sat, Jun 18, 2016 at 6:04 AM, Johannes Schindelin
-> >> <johannes.schindelin@gmx.de> wrote:
-> >> >         if (output_directory) {
-> >> > +               rev.diffopt.use_color = 0;
-> >>
-> >> What is this change about? It doesn't seem to be related to anything
-> >> else in the patch.
-> >
-> > Good point, I completely forgot to mention this is the commit message.
-> >
-> > When format-patch calls the diff machinery, want_color() is used to
-> > determine whether to use ANSI color sequences or not. If use_color is not
-> > set explicitly, isatty(1) is used to determine whether or not the user
-> > wants color. When stdout was freopen()ed, this isatty(1) call naturally
-> > looked at the file descriptor that was reopened, and determined correctly
-> > that no color was desired.
-> >
-> > With the freopen() call gone, stdout may very well be the terminal. But we
-> > still do not want color because the output is intended to go to a file (at
-> > least if output_directory is set).
-> 
-> Would it make sense to do this as a separate preparatory patch, or is
-> it just too minor?
+This patch series ends up removing the freopen() call in the
+format-patch command, but that is only a by-product. The ulterior motive
+behind this series is to allow the sequencer to write a `patch` file as
+part of my endeavor to move large chunks of rebase -i into a builtin.
 
-That's a good point. It *is* a change in its own right. Will reroll.
+Speaking of said endeavor: it is going a lot slower than I would like,
+but I really need rebase -i to be robust. To that end, I not only review
+and re-review my patches frequently, I also use a cross-validation
+technique inspired by my original ll-merge validation as well as
+GitHub's Scientist library: I taught rebase -i to run every interactive
+rebase twice, once with the original shell script's code, and once with
+the builtin rebase--helper, and then to verify that the end result is as
+similar as can be expected (the commit dates will differ most of the
+time, of course).
 
-Thanks,
-Dscho
+It is a bit tedious, of course, because I have to resolve every merge
+conflict twice, I have to reword everything twice (identically!), and I
+have to wait longer for the rebase to finish. It is worth it, though,
+because I really need rebase -i to be robust, as it is the center piece
+of almost all of my workflows.
+
+I organized the patch series into a thicket of branches, to make it
+easier to review them; In addition to this here patch series, I plan to
+submit 11 separate, partially interdependent series, resubmit another
+one, and I already submitted a couple of patches earlier that were
+integrated or replaced by superior solutions (thanks, Peff!). Skipping
+the temporary patches (e.g. for cross-validation), that leaves me with
+99 patches to submit in total (sing with me: "99 patches of code to
+submit, 99 patches of code, ...").
+
+I was curious just how much these patches could accelerate rebase -i, so
+I disabled the cross-validation temprarily and let Travis measure the
+performance improvements via the t/perf test that was already merged to
+`master`. Look for "3404.2" in this build's logs:
+https://travis-ci.org/git/git/builds/138277774
+
+It looks like a 3x speedup on Linux, a 4x speedup on MacOSX and my local
+measurements suggest a >5x speed-up on Windows.
+
+
+Johannes Schindelin (7):
+  log-tree: respect diffopt's configured output file stream
+  line-log: respect diffopt's configured output file stream
+  graph: respect the diffopt.file setting
+  shortlog: support outputting to streams other than stdout
+  format-patch: explicitly switch off color when writing to files
+  format-patch: avoid freopen()
+  format-patch: use stdout directly
+
+ builtin/log.c      | 71 +++++++++++++++++++++++++++---------------------------
+ builtin/shortlog.c | 13 ++++++----
+ graph.c            | 30 +++++++++++++----------
+ line-log.c         | 34 +++++++++++++-------------
+ log-tree.c         | 65 +++++++++++++++++++++++++------------------------
+ shortlog.h         |  1 +
+ 6 files changed, 111 insertions(+), 103 deletions(-)
+
+Published-As: https://github.com/dscho/git/releases/tag/diffopt.file-v2
+-- 
+2.9.0.119.g370c5a9
+
+base-commit: 05219a1276341e72d8082d76b7f5ed394b7437a4
