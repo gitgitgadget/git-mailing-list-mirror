@@ -1,68 +1,83 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF85F20189
-	for <e@80x24.org>; Mon, 20 Jun 2016 10:07:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93B9B20179
+	for <e@80x24.org>; Mon, 20 Jun 2016 10:10:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754361AbcFTKHn (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 06:07:43 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:56190 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754357AbcFTKHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 06:07:42 -0400
-Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
-	by mailhub.007spb.ru (8.14.4/8.14.4/Debian-4) with SMTP id u2ACtM3f015404;
-	Thu, 10 Mar 2016 15:55:23 +0300
-Date:	Thu, 10 Mar 2016 15:55:22 +0300
-From:	Konstantin Khomoutov <kostix+git@007spb.ru>
-To:	Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Problem with git-http-backend.exe as iis cgi
-Message-Id: <20160310155522.1dee53cf95fead8cfd4e178a@domain007.com>
-In-Reply-To: <F0F5A56A22F20D4CB4A03BB8D6658797E260E0E3@SERVER2011.CS-SOFTWARE.local>
-References: <F0F5A56A22F20D4CB4A03BB8D6658797E260E0E3@SERVER2011.CS-SOFTWARE.local>
-X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+	id S1752662AbcFTKKv (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 06:10:51 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57194 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751701AbcFTKKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 06:10:50 -0400
+Received: (qmail 13244 invoked by uid 102); 20 Jun 2016 10:03:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 06:03:00 -0400
+Received: (qmail 13291 invoked by uid 107); 20 Jun 2016 10:03:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 06:03:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jun 2016 06:02:57 -0400
+Date:	Mon, 20 Jun 2016 06:02:57 -0400
+From:	Jeff King <peff@peff.net>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Vadim Eisenberg <VADIME@il.ibm.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [BUG REPORT] git 2.9.0 clone --recursive fails on cloning a
+ submodule
+Message-ID: <20160620100256.GA14058@sigill.intra.peff.net>
+References: <OFC76C15DC.FC882C57-ONC2257FD7.00261552-C2257FD7.002660FC@LocalDomain>
+ <OFE09D48F2.D1D14F49-ONC2257FD7.00280736-C2257FD7.0028245A@notes.na.collabserv.com>
+ <20160619100051.GA14584@sigill.intra.peff.net>
+ <xmqq7fdkx5oz.fsf@gitster.mtv.corp.google.com>
+ <20160620001332.GA10101@sigill.intra.peff.net>
+ <CAGZ79kZ9NF57EyEZ4PgOhJw50ujt=QmHs+w1ZNFeDO4zitksVQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZ9NF57EyEZ4PgOhJw50ujt=QmHs+w1ZNFeDO4zitksVQ@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, 10 Mar 2016 07:28:50 +0000
-Florian Manschwetus <manschwetus@cs-software-gmbh.de> wrote:
+On Sun, Jun 19, 2016 at 06:09:28PM -0700, Stefan Beller wrote:
 
-> I tried to setup git-http-backend with iis, as iis provides proper
-> impersonation for cgi under windows, which leads to have the
-> filesystem access performed with the logon user, therefore the
-> webserver doesn't need generic access to the files. I stumbled across
-> a problem, ending up with post requests hanging forever. After some
-> investigation I managed to get it work by wrapping the http-backend
-> into a bash script, giving a lot of control about the environmental
-> things, I was unable to solve within IIS configuration. The
-> workaround, I use currently, is to use "/bin/head -c
-> ${CONTENT_LENGTH} | ./git-http-backend.exe", which directly shows the
-> issue. Git http-backend should check if CONTENT_LENGTH is set to
-> something reasonable (e.g. >0) and should in this case read only
-> CONTENT_LENGTH bytes from stdin, instead of reading till EOF what I
-> suspect it is doing currently.
+> > I hadn't paid much attention to this topic originally, but was surprised
+> > that "--depth 10" in the clone implies "--depth 1" in the submodule.
+> > This is not really related to your patch (in fact, your patch makes the
+> > logic go away). But maybe something to consider if it's ever resurrected
+> > (or possibly if somebody runs "--shallow-submodules --depth 5" we should
+> > pass --depth=1; I dunno).
+> 
+> How often do we see a depth != 1 in practice?
+> I have the impression (and no data to back up my claim) that a binary
+> switch for nonshallow or depth 1 would serve us just as good, which is why
+> I did not want to ad complexity to the submodule depth.
+> (What if you want submodule A with depth 2 and B with 5? In that
+> case get them all shallow and deepen as appropriate, would be my answer)
 
-The rfc [1] states in its section 4.2:
+To be honest, I don't know why people use anything except --depth=1, but
+it's clear from my experience that they do. This example has --depth=10,
+and on the server side at GitHub I have seen similar numbers from clients,
+especially CI services.
 
-| A request-body is supplied with the request if the CONTENT_LENGTH is
-| not NULL.  The server MUST make at least that many bytes available
-| for the script to read.  The server MAY signal an end-of-file
-| condition after CONTENT_LENGTH bytes have been read or it MAY supply
-| extension data.  Therefore, the script MUST NOT attempt to read more
-| than CONTENT_LENGTH bytes, even if more data is available.  However,
-| it is not obliged to read any of the data.
+(I take special note of such cases because --shallow quite often causes
+performance problems on the server side, though generally --depth=10 is
+not any worse than --depth=1. The worst case is really
+"--no-single-branch --depth=1", which wants a ton of objects but has to
+throw away all of the on-disk deltas).
 
-So yes, if Git currently reads until EOF, it's an error.
-The correct way would be:
+> > We are not really testing "does not imply" here, but "passing
+> > --shallow-submodules works". The "does not imply" test would be cloning
+> > without the option and checking that the resulting submodules are not
+> > shallow.
+> 
+> In case we want to be sure that it works for 2.9.1, i.e. we treat it
+> as a regression,
+> we need to test the "does not imply" a bit more I would think. I can send that
+> test on top tomorrow if you'd like to.
 
-1) Check to see if the CONTENT_LENGTH variable is available in the
-   environment.  If no, read nothing.
+I think it's worth doing (and testing both: the default behavior, and
+that the --shallow-submodules feature works). Thanks.
 
-2) Otherwise read as many bytes it specifies, and no more.
-
-1. https://www.ietf.org/rfc/rfc3875
+-Peff
