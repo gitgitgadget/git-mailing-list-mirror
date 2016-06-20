@@ -1,105 +1,64 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB9552018B
-	for <e@80x24.org>; Mon, 20 Jun 2016 17:46:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DD4D1FF40
+	for <e@80x24.org>; Mon, 20 Jun 2016 18:42:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756282AbcFTRqM (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 13:46:12 -0400
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:35162 "EHLO
-	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753308AbcFTRqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 13:46:09 -0400
-Received: by mail-qk0-f170.google.com with SMTP id c73so172056789qkg.2
-        for <git@vger.kernel.org>; Mon, 20 Jun 2016 10:46:09 -0700 (PDT)
+	id S1752902AbcFTSly (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 14:41:54 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:33454 "EHLO
+	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753782AbcFTSlm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 14:41:42 -0400
+Received: by mail-io0-f175.google.com with SMTP id t74so130933678ioi.0
+        for <git@vger.kernel.org>; Mon, 20 Jun 2016 11:41:41 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=E5xU+ynu/GYGw837Q1Su1UPs0NxeTONDhAHOHtNUc2A=;
-        b=QcQRMXh+XUpJgZh3w36T7TiNCw5iIiirF3avLjdJu+d2snv0UOCvqIEYhIB6RX1jtr
-         XVSckLh+oZ4TO4a0Kwgz3yh07w27couFebSA08jlvZPfeklARbI6hARDhWfzL8aSCOdX
-         zMyqw8RXkxRwiSp4GiYSeoVcOnj1p6mAGZgm4EiZjCZuEb1ECsvnGw4At7tqcD1luwmQ
-         6rurBLF+Rv34yytuCygxqITkpDABL8f9bt1IxZ07dQc4NrHX26IsflSiZvwclK51QnCN
-         JoT2U6sJVU7pEbpCEMbxnSkPPQWzdAGH78HexcjHTrN3PygRIjiLJpTHhQTp9xkeS3dT
-         2RRg==
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=89SkdAV9fOqwz0aKv1sHXIlDhhqPzOnBfiUkv8aNcl8=;
+        b=ut8QMQCjqJOxz8cXRAtUXDsKS47jR2BPafgD0BdkB4sCfMzQ6M3CSRTpGSSeOFnv8a
+         bx05O1goLstUhKS5KIzoUX4b8PnWfeod4ax4Gfc2BI9gvyqRmK4sGH9AOSo4CHfX8dV2
+         SY+5iTbKI2eFUgWUC/JDARaSzC5qOJI5tqkXhacYPcUQfHhFBCrNoJS4LuXvfAsAyJ1U
+         De727rywSQF7I94Db7TTTHjXVxopEl1UCFsehVJQXTFQHhMlhhKTK8qD2yn5NsYFtMPm
+         f1fyMKqQWEppufBGjJJOhBpByn67yIIaqmFNs/O5ITmkF/p5mY/JPk673knMnyGNh0ig
+         HfHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=E5xU+ynu/GYGw837Q1Su1UPs0NxeTONDhAHOHtNUc2A=;
-        b=iwj3XjDje3PhpVMBUgMGcu46ncRagA2ftcF32NQxRHZERN6bEx4H3IJZpChoSMiiwy
-         KxyuW7oNszO6ZDCqVAYeYvzsI82PMnjLAUPDge+A1hHMQR3w69vUdTkXVOTkpBQvFa9A
-         d2KfKervgXm4jmiNmSqK9d2GTfSwfZ2D/I2Z8vaOXMekL+QpcG6gvFMbz40q4jHbiiNs
-         rCg73iQo+tVuzTDlbRnhS5lMjU9DyX0yTAR1qmq7KYn8G8nf9OgmnW/tzEM/Wqnej5YC
-         RmE3qGnC5qt4f3ipz5qxuuqflJ+8QEsGJmnHyIYnNvSP414E2xaPnzXRN+BVswaC8r+o
-         OHpw==
-X-Gm-Message-State: ALyK8tJTn41XmobTg2t8MxDqZwOOnKouHwfsDWXplOyc8n0UCzRF7oBV3RLxOrjqLSmkJdAwaOTh2VN2vw4wij/a
-X-Received: by 10.233.223.5 with SMTP id t5mr22505697qkf.35.1466444758274;
- Mon, 20 Jun 2016 10:45:58 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=89SkdAV9fOqwz0aKv1sHXIlDhhqPzOnBfiUkv8aNcl8=;
+        b=WToAdb+wFItF3tYSbSrEZ+NiYQujZt8xdbUyP/uRz8RPb3TmZI57DFW27IMFHS209A
+         09lqnybfZxXvmJJWD+4+FNF8bEcL5sHHpA326Q+QtbREhytQTtL5u/ZdlGzNDM+JpHnA
+         ZgqsZoH8PvqWbVSXpzhIFW2uDTq/a9wdvSe67Da1X2Hf/Wnxw6D2J3QhbbrRva0S8TnN
+         YFG9pBSZsCwGfvw/JbVJ928rzds4+S8CDXvQ0WTwp9bAlfJbxm5TA18rxwAEI1/HXKW4
+         7FiqIRU8/73VLQLzvJTHrWl4eS3PiGFPJDNTgXCN7FpUuf/QGSFSEAYyghyqyQ1nRQ96
+         9WIw==
+X-Gm-Message-State: ALyK8tIOxEc50ccbfjg/oG0+mfCjB3FKNPSR3F/K4aXFhbSjVJV+I5Xv5atUBj9gAwBbEEHwo/NHzoyvG6xifw==
+X-Received: by 10.107.134.140 with SMTP id q12mr25013308ioi.25.1466448100431;
+ Mon, 20 Jun 2016 11:41:40 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.237.42.226 with HTTP; Mon, 20 Jun 2016 10:45:57 -0700 (PDT)
-In-Reply-To: <loom.20160620T145755-931@post.gmane.org>
-References: <loom.20160620T145755-931@post.gmane.org>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Mon, 20 Jun 2016 10:45:57 -0700
-Message-ID: <CAGZ79kZyEzp92JP_Bp2te1XO=PB0+fwFn57MrBPuWe25PQKOog@mail.gmail.com>
-Subject: Re: Problem with --shallow-submodules option
-To:	Istvan Zakar <istvan.zakar@gmail.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.107.175.104 with HTTP; Mon, 20 Jun 2016 11:41:40 -0700 (PDT)
+From:	Norbert Kiesel <nkiesel@gmail.com>
+Date:	Mon, 20 Jun 2016 11:41:40 -0700
+Message-ID: <CAM+g_NswH8fd8aFPEHfSLYnZWptNU2GX=xTWpehzjTJfJM_GfQ@mail.gmail.com>
+Subject: unable to pull from remote if commit date is in the future
+To:	git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 20, 2016 at 6:06 AM, Istvan Zakar <istvan.zakar@gmail.com> wrote:
-> Hello,
->
-> I'm working on a relatively big project with many submodules. During
-> cloning for testing I tried to decrease the amount of data need to be
-> fetched from the server by using --shallow-submodules option in the clone
-> command. It seems to check out the tip of the remote repo, and if it's not
-> the commit registered in the superproject the submodule update fails
-> (obviously).
+Hi,
 
-Yes that is broken as the depth of a submodule is counted from its own HEAD
-not from the superprojects sha1 as it should.
+I'm following an upstream repo on github.  Today morning I saw a new
+commit there, but a `git pull` in my clone did not fetch it and
+instead said "Already up-to-date.".  On closer inspection, github
+reports commit time as 2152-06-19. The same project has some other
+commits with commit time in the future that were fetched.  My guess is
+that happened when those commits got a child with commit date in the
+past.
 
-So it does
+Is there any way to force git pulling that request?  (Perhaps I should
+try to tell git that it's really 2152?)
 
-    git clone --depth=1 <submodule-url> <submodule-path>
-
-    if HEAD != recorded gitlink sha1,
-        git fetch <recorded gitlink sha1>
-
-    git checkout <recorded gitlink sha1>
-
-> Can I somehow tell to fetch that exact commit I need for my
-> superproject?
-
-Some servers support fetching by direct sha1, which is what we make use
-of here, then it sort-of works.
-
-If the server doesn't support the capability to fetch an arbitrary sha1,
-the submodule command fails, with a message such as
-
-    error: no such remote ref $sha1
-    Fetched in submodule path '<submodule>', but it did not contain
-$sha1. Direct fetching of that commit failed.
-
-So if it breaks for you now, I would suggest not using that switch, I
-don't think there is a quick
-workaround.
-
->
-> Thanks,
->    Istvan
-
-Thanks,
-Stefan
-
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+For the record: the faulty commit is
+https://github.com/seandepagnier/weather_routing_pi/commit/23c07cc5d2be7ce68349f4b3719b6fa6fe90e0bf
