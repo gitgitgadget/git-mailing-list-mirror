@@ -1,73 +1,85 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E755D1FF40
-	for <e@80x24.org>; Mon, 20 Jun 2016 16:01:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BF761FF40
+	for <e@80x24.org>; Mon, 20 Jun 2016 16:12:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753747AbcFTQBP (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 12:01:15 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53726 "EHLO
+	id S1754556AbcFTQEM (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 12:04:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50766 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753708AbcFTP7x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 11:59:53 -0400
+	with ESMTP id S1754375AbcFTQDf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 12:03:35 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EADC424AC2;
-	Mon, 20 Jun 2016 11:53:18 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2764E24C6B;
+	Mon, 20 Jun 2016 12:03:34 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QOQGnWZpnvE6e/p8DZfuYQ8dZmg=; b=AK8yfx
-	KvKKupLFNK7cP7DAwbL/+/n4iEHNgKHsBtk3wF3JUBo0v+T4kwxgCDkem53rv+hi
-	OKlUIbMc1nYcnT8Nry0RJMEVRBW4qJ8bP01aPeiLUrmMZmsxqNt5Cw2LWut1HRWZ
-	+eCQ5qhv/RbSxZqduXhSUgnO7X6SzwnYOF5Ts=
+	:content-type; s=sasl; bh=pNyDNzDhW3uejsxj7R9amLttGkM=; b=OHIcTx
+	P7SC9eCxEbTo5SG83ctnkrkHx5P5arMC9TKGwfMbm8eGJsG9vBryIDrbOrUMg6gW
+	CGsRfgs0+iqZy3IvuIV0b20WWFP9bOOJxbx7KF1HkG7EHYvlp4qJ3gQkcgRQmFuQ
+	ylWjZ999UuHoAYB/2wbYvMGXYy+LZlG2C+/Jo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=odVrXjZwFaKZujcsnTngKZCROPYVzLc7
-	WLBGruZNv+itNaF+ZowzV+yUJ8zqT9oNl8QFfmCpQl9k18GW/jcqjKFQ+ZBTqjC3
-	7MaKuqvfh7uX/unkI99XR3HdO7Z3zHhe+bYB5Wf+15AHU5+0ap7evpCRtmg1aQNO
-	tf8OTVXRBxs=
+	:content-type; q=dns; s=sasl; b=ycntj2xYLATQwwpEqlAWM8R7PbQbA8ui
+	wBct12wYntsyscNOjeAbjaq5pT7FYnPcke0Y0iMolb+ZjcGYYWJjrUdpH3ReRI7J
+	p812+eRggQQjo976QtJ+Qdt8uvT2WfthsKC0cdT50mZlWUQuu6HctMNK9WgGCsrj
+	L1F0qMnHbYk=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CCF9F24AC1;
-	Mon, 20 Jun 2016 11:53:18 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F32C24C6A;
+	Mon, 20 Jun 2016 12:03:34 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 41C1D24AC0;
-	Mon, 20 Jun 2016 11:53:18 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9C3AB24C68;
+	Mon, 20 Jun 2016 12:03:33 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j6t@kdbg.org>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 0/8] object_id part 4
-References: <20160618221407.1046188-1-sandals@crustytoothpaste.net>
-	<57665CC6.6070208@kdbg.org>
-	<20160619092448.GA12221@sigill.intra.peff.net>
-	<alpine.DEB.2.20.1606200853580.22630@virtualbox>
-	<20160620100522.GB14058@sigill.intra.peff.net>
-Date:	Mon, 20 Jun 2016 08:53:16 -0700
-In-Reply-To: <20160620100522.GB14058@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 20 Jun 2016 06:05:23 -0400")
-Message-ID: <xmqq8txzvour.fsf@gitster.mtv.corp.google.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
+References: <cover.1466244194.git.johannes.schindelin@gmx.de>
+	<de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de>
+	<CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com>
+	<alpine.DEB.2.20.1606200814510.22630@virtualbox>
+Date:	Mon, 20 Jun 2016 09:03:31 -0700
+In-Reply-To: <alpine.DEB.2.20.1606200814510.22630@virtualbox> (Johannes
+	Schindelin's message of "Mon, 20 Jun 2016 08:26:01 +0200 (CEST)")
+Message-ID: <xmqq4m8nvodo.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1B3B9564-36FF-11E6-B5ED-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8A055678-3700-11E6-85C5-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I am on the fence regarding oidcpy/oidclr. I agree they _could_ be
-> struct assignments, but it is also convenient to have concept wrapped up
-> in a function, in case we ever want to do anything more complicated.
+> When format-patch calls the diff machinery, want_color() is used to
+> determine whether to use ANSI color sequences or not. If use_color is not
+> set explicitly, isatty(1) is used to determine whether or not the user
+> wants color. When stdout was freopen()ed, this isatty(1) call naturally
+> looked at the file descriptor that was reopened, and determined correctly
+> that no color was desired.
+>
+> With the freopen() call gone, stdout may very well be the terminal. But we
+> still do not want color because the output is intended to go to a file (at
+> least if output_directory is set).
 
-Also dedicated functions have documenation value.  There are some
-things that currently use the same 40-hex that is the result of
-running SHA-1 but are not object names (e.g.  patch id, and rerere
-id).  They use the same hashcpy()/hashcmp() helpers as object names
-do, but the code that use them probably do not want to be converted
-to struct oid and oidcpy().
+How does this interact with --color=... that is given from the
+command line at the same time?  Currently --color=always would
+give you a coloured output.
 
+I personally do not think of a sensible reason why anybody wants a
+colored format-patch output, but Git's userbase has grown large
+enough and you can no longer expect that only sensible people use it
+;-)
+
+You can probably sell "when giving out put to file, we will never
+color the output" as an improved new world order, but if that is
+what this change wants to do, it probably deserves a separate patch.
+
+I however think you can avoid breaking expectations by people who
+are not so sensible by overriding only when use_color is set to
+GIT_COLOR_AUTO, perhaps?
