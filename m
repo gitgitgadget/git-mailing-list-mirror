@@ -1,169 +1,309 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 277D820179
-	for <e@80x24.org>; Mon, 20 Jun 2016 10:59:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C734220189
+	for <e@80x24.org>; Mon, 20 Jun 2016 10:59:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754574AbcFTK7H (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 06:59:07 -0400
-Received: from mout.gmx.net ([212.227.15.19]:51791 "EHLO mout.gmx.net"
+	id S1754584AbcFTK7j (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 06:59:39 -0400
+Received: from mout.gmx.net ([212.227.15.15]:57063 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932370AbcFTK7C (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 06:59:02 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0McDl1-1avM6J2fqR-00JY15; Mon, 20 Jun 2016 12:58:56
+	id S1754575AbcFTK7g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 06:59:36 -0400
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MUI8w-1any9n02UM-00QzLQ; Mon, 20 Jun 2016 12:59:17
  +0200
-Date:	Mon, 20 Jun 2016 12:55:34 +0200 (CEST)
+Date:	Mon, 20 Jun 2016 12:55:55 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 3/7] graph: respect the diffopt.file setting
+Subject: [PATCH v2 6/7] format-patch: avoid freopen()
 In-Reply-To: <cover.1466420060.git.johannes.schindelin@gmx.de>
-Message-ID: <f2b1795827bcb055028332cfdf04d996d8b6e0e6.1466420060.git.johannes.schindelin@gmx.de>
+Message-ID: <8b1f13155c7ba6dde7994c920fbff7019be51054.1466420060.git.johannes.schindelin@gmx.de>
 References: <cover.1466244194.git.johannes.schindelin@gmx.de> <cover.1466420060.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Zrvw+4FAwAggKS0WavzlCI9unpJX97degdJVEeslQdU0v0MdomX
- H/esYl3BYTfYFNH4NyfhrVBWBU5c20NDu9KACMI8d2KTKLCri2cro5p2KG6J26euodCRDbS
- piyZz4YbRQfG1wOpI/1nY1xRKvYK3bGeFve4/NZkXuWdMU/BromEYcmiWUy/kCWztdtlJME
- H+clMhy/f3/c72R2B7CDQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:CDz5q1VB3ZE=:QL5pbBYEQU1Apr7Jk4RKy1
- 7ZhriRLp3EMo8nD8eIvPdhtp1DGCKhsDkARomJCRSmxQee6CPXIQjLVu9d6ZpXQdCNWi1TIQZ
- K++ztSjutHuQBCw/Kexsip3ODxhA7+Csfl5Mfg8PbuTCzdfjVM7p62uOO2fvanTh36+tayME2
- LlovJuIpmlyR/+EiTBZV8WgGP3U2ICvy+HbW1+JwJrNhKVi/rSvF3KlojM3mGZuo05QduspQ1
- yzJQ0Zw0WKHjdlzl5kLmq7+XYPzpdVYpSgzlFG9Ngo3XuvAii0mu5PUnPd0wb2Ek/QWqAqgcr
- g0D16bpz7v3qOms03nwwfDBqEdWoacrQ50pZfRPyTKwRKCc3ElnApc3Dm/cAalhPL6GPU5iiv
- 7fbhv3WIgCzw8GWxIsHBC9Ji+Zo/2TM0nLCj6v/lBPCwvQlykxIrTwsbZY0fkmneIOFl586Zv
- ydHvd9FpivI0md7NWzf1rDHI4fbQdvdOuF5G2jYE3ZXJy66pOZxxqvN6AmSUf/sT8NwfSVgvC
- wdl/aBTsdAlkJvYjbJFl+euDIDq+eizRGkRM+shojQJBaB4K0WPH7eYxzGdR6gJEBe8KRhEoO
- 9S7eQwD5GZtVFk0ze+UKLkAkl8rR1oQpuxeCsjeXQ3kZSUqIr4vvCvZqCkY2g7FNr47c8NZsi
- 5U80kB8T6Bj/MyxFE4KCbVQthj5ky3hdhDxM8/2fathLjOBYGBL3zE+66XH4fCZJspG+9LtGB
- 2fWuzKVHvx7J1zkG+Rdrk+qjF7SkuD5anksToUBpTz840EdKrvn7I5VVOkpz+mHFTWl1+pkFv
- koUcA+k
+X-Provags-ID: V03:K0:Ixii51TYkxPtBoLgUFdCxaqxeDbcQHRWTBhZDA9O2ask64leHin
+ 3x6qY9f2b1MRfObS21J2j8NM+RLn2ZQt93WmEEVRwjQeautNeXRKpkFXfj0/sLtyw3rX48z
+ OPlamK2cAAEMUuHYka/ozQzgAcNZlBdbcSjCRKG41ny577WW1TrAuUOIP025WjP94ak2c5O
+ m6QuZM39KsMVYpqO/KO2w==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:YzKhS9kxdYU=:mlHNPJX7++R821rw1TFrS+
+ 18CjXWeUiF8Ceio9x6iGjINeJorNNlDnvoa2GTFpS0O0juNrnT0nGqfOZfF01fHQ+r1lTpSzu
+ IPumFpQrnDlVctteXLd5DQJL9VW70iNL9VMPdPrrm9klre2Xw/XWM/bZeE6OSC9Vjwxjym3RI
+ Dla+YXx1m7YkxO2YcXhnxG8tqhYEzAsorsdTN8IuzlMDqJ/ORu7Q5rPCZBR/NBuDH5Ba8pVKO
+ EH4lfsdugEE5HDRirw3Yyc8OXFLYO6nYa4vB74M1AIrZhpO96BD0ReNbgiRmyZOxuvxKmU004
+ up1hdMQjNFIZp4MelvCudTK9WxzdWM03FpYLC9kvBFBU+kQUxvKJ0kqCJ46cAplSC36dVPfFK
+ +jvcA0XegphV3l/QbM1u0e8ByZur9dL0fwKe3iKls20sHyed/RuJ2Z5FVexNAT7pjbXmxxhCI
+ FpxQl2cOI9WPebPWSAcqsE6iEQmxCBTSrYqoCiHesoEOLUmFt5Cy+hmV0hqbTiO+qxp5oRtqt
+ H5uIOuj+UdhgRlg/4gdQ51kV/z0AlgtuhMuOeCrd/KA8UyU9/q6hXQwqJ88IKW1owbwqiwVBA
+ Kd/4ZwNKR2TP8amBLM03Tm4Xs4RrzyTLbs2WraZMRNFXhZH1O8mPj1MqkyASBZIjKoXdBCJPP
+ uziVkSXFpbuLUKsh99Fc1Hw15rVB65W0XBjn2pTz5OO71MM+5Ip8XZqLeMQPsnQIDmqoAjuRh
+ eoWzzrf+VSP9dYoT6CTrAN9nG7qbsO4GrYOpFooT8X3A92t0c0ur5bZtdHgp9jCeVo1/NUUhL
+ 7RhuWRi
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When the caller overrides diffopt.file (which defaults to stdout),
-the diff machinery already redirects its output, and the graph display
-should also write to that file.
+We just taught the relevant functions to respect the diffopt.file field,
+to allow writing somewhere else than stdout. Let's make use of it.
+
+Technically, we do not need to avoid that call in a builtin: we assume
+that builtins (as opposed to library functions) are stand-alone programs
+that may do with their (global) state. Yet, we want to be able to reuse
+that code in properly lib-ified code, e.g. when converting scripts into
+builtins.
+
+Further, while we did not *have* to touch the cmd_show() and cmd_cherry()
+code paths (because they do not want to write anywhere but stdout as of
+yet), it just makes sense to be consistent, making it easier and safer to
+move the code later.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- graph.c | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+ builtin/log.c | 64 ++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 33 insertions(+), 31 deletions(-)
 
-diff --git a/graph.c b/graph.c
-index 1350bdd..8ae56bc 100644
---- a/graph.c
-+++ b/graph.c
-@@ -17,8 +17,8 @@
- static void graph_padding_line(struct git_graph *graph, struct strbuf *sb);
+diff --git a/builtin/log.c b/builtin/log.c
+index abd889b..db034a8 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -236,7 +236,7 @@ static void show_early_header(struct rev_info *rev, const char *stage, int nr)
+ 		if (rev->commit_format != CMIT_FMT_ONELINE)
+ 			putchar(rev->diffopt.line_termination);
+ 	}
+-	printf(_("Final output: %d %s\n"), nr, stage);
++	fprintf(rev->diffopt.file, _("Final output: %d %s\n"), nr, stage);
+ }
  
- /*
-- * Print a strbuf to stdout.  If the graph is non-NULL, all lines but the
-- * first will be prefixed with the graph output.
-+ * Print a strbuf.  If the graph is non-NULL, all lines but the first will be
-+ * prefixed with the graph output.
-  *
-  * If the strbuf ends with a newline, the output will end after this
-  * newline.  A new graph line will not be printed after the final newline.
-@@ -1193,9 +1193,10 @@ void graph_show_commit(struct git_graph *graph)
+ static struct itimerval early_output_timer;
+@@ -445,7 +445,7 @@ static void show_tagger(char *buf, int len, struct rev_info *rev)
+ 	pp.fmt = rev->commit_format;
+ 	pp.date_mode = rev->date_mode;
+ 	pp_user_info(&pp, "Tagger", &out, buf, get_log_output_encoding());
+-	printf("%s", out.buf);
++	fprintf(rev->diffopt.file, "%s", out.buf);
+ 	strbuf_release(&out);
+ }
  
- 	while (!shown_commit_line && !graph_is_commit_finished(graph)) {
- 		shown_commit_line = graph_next_line(graph, &msgbuf);
--		fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
-+		fwrite(msgbuf.buf, sizeof(char), msgbuf.len,
-+			graph->revs->diffopt.file);
- 		if (!shown_commit_line)
--			putchar('\n');
-+			fputc('\n', graph->revs->diffopt.file);
- 		strbuf_setlen(&msgbuf, 0);
+@@ -456,7 +456,7 @@ static int show_blob_object(const unsigned char *sha1, struct rev_info *rev, con
+ 	char *buf;
+ 	unsigned long size;
+ 
+-	fflush(stdout);
++	fflush(rev->diffopt.file);
+ 	if (!DIFF_OPT_TOUCHED(&rev->diffopt, ALLOW_TEXTCONV) ||
+ 	    !DIFF_OPT_TST(&rev->diffopt, ALLOW_TEXTCONV))
+ 		return stream_blob_to_fd(1, sha1, NULL, 0);
+@@ -496,7 +496,7 @@ static int show_tag_object(const unsigned char *sha1, struct rev_info *rev)
  	}
  
-@@ -1210,7 +1211,7 @@ void graph_show_oneline(struct git_graph *graph)
- 		return;
- 
- 	graph_next_line(graph, &msgbuf);
--	fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
-+	fwrite(msgbuf.buf, sizeof(char), msgbuf.len, graph->revs->diffopt.file);
- 	strbuf_release(&msgbuf);
+ 	if (offset < size)
+-		fwrite(buf + offset, size - offset, 1, stdout);
++		fwrite(buf + offset, size - offset, 1, rev->diffopt.file);
+ 	free(buf);
+ 	return 0;
+ }
+@@ -505,7 +505,8 @@ static int show_tree_object(const unsigned char *sha1,
+ 		struct strbuf *base,
+ 		const char *pathname, unsigned mode, int stage, void *context)
+ {
+-	printf("%s%s\n", pathname, S_ISDIR(mode) ? "/" : "");
++	FILE *file = context;
++	fprintf(file, "%s%s\n", pathname, S_ISDIR(mode) ? "/" : "");
+ 	return 0;
  }
  
-@@ -1222,7 +1223,7 @@ void graph_show_padding(struct git_graph *graph)
- 		return;
+@@ -565,7 +566,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
  
- 	graph_padding_line(graph, &msgbuf);
--	fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
-+	fwrite(msgbuf.buf, sizeof(char), msgbuf.len, graph->revs->diffopt.file);
- 	strbuf_release(&msgbuf);
- }
- 
-@@ -1239,12 +1240,13 @@ int graph_show_remainder(struct git_graph *graph)
- 
- 	for (;;) {
- 		graph_next_line(graph, &msgbuf);
--		fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
-+		fwrite(msgbuf.buf, sizeof(char), msgbuf.len,
-+			graph->revs->diffopt.file);
- 		strbuf_setlen(&msgbuf, 0);
- 		shown = 1;
- 
- 		if (!graph_is_commit_finished(graph))
--			putchar('\n');
-+			fputc('\n', graph->revs->diffopt.file);
- 		else
+ 			if (rev.shown_one)
+ 				putchar('\n');
+-			printf("%stag %s%s\n",
++			fprintf(rev.diffopt.file, "%stag %s%s\n",
+ 					diff_get_color_opt(&rev.diffopt, DIFF_COMMIT),
+ 					t->tag,
+ 					diff_get_color_opt(&rev.diffopt, DIFF_RESET));
+@@ -584,12 +585,12 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+ 		case OBJ_TREE:
+ 			if (rev.shown_one)
+ 				putchar('\n');
+-			printf("%stree %s%s\n\n",
++			fprintf(rev.diffopt.file, "%stree %s%s\n\n",
+ 					diff_get_color_opt(&rev.diffopt, DIFF_COMMIT),
+ 					name,
+ 					diff_get_color_opt(&rev.diffopt, DIFF_RESET));
+ 			read_tree_recursive((struct tree *)o, "", 0, 0, &match_all,
+-					show_tree_object, NULL);
++					show_tree_object, rev.diffopt.file);
+ 			rev.shown_one = 1;
  			break;
- 	}
-@@ -1259,7 +1261,8 @@ static void graph_show_strbuf(struct git_graph *graph, struct strbuf const *sb)
- 	char *p;
+ 		case OBJ_COMMIT:
+@@ -799,7 +800,7 @@ static FILE *realstdout = NULL;
+ static const char *output_directory = NULL;
+ static int outdir_offset;
  
- 	if (!graph) {
--		fwrite(sb->buf, sizeof(char), sb->len, stdout);
-+		fwrite(sb->buf, sizeof(char), sb->len,
-+			graph->revs->diffopt.file);
+-static int reopen_stdout(struct commit *commit, const char *subject,
++static int open_next_file(struct commit *commit, const char *subject,
+ 			 struct rev_info *rev, int quiet)
+ {
+ 	struct strbuf filename = STRBUF_INIT;
+@@ -823,7 +824,7 @@ static int reopen_stdout(struct commit *commit, const char *subject,
+ 	if (!quiet)
+ 		fprintf(realstdout, "%s\n", filename.buf + outdir_offset);
+ 
+-	if (freopen(filename.buf, "w", stdout) == NULL)
++	if ((rev->diffopt.file = fopen(filename.buf, "w")) == NULL)
+ 		return error(_("Cannot open patch file %s"), filename.buf);
+ 
+ 	strbuf_release(&filename);
+@@ -882,15 +883,15 @@ static void gen_message_id(struct rev_info *info, char *base)
+ 	info->message_id = strbuf_detach(&buf, NULL);
+ }
+ 
+-static void print_signature(void)
++static void print_signature(FILE *file)
+ {
+ 	if (!signature || !*signature)
  		return;
- 	}
  
-@@ -1277,7 +1280,7 @@ static void graph_show_strbuf(struct git_graph *graph, struct strbuf const *sb)
- 		} else {
- 			len = (sb->buf + sb->len) - p;
- 		}
--		fwrite(p, sizeof(char), len, stdout);
-+		fwrite(p, sizeof(char), len, graph->revs->diffopt.file);
- 		if (next_p && *next_p != '\0')
- 			graph_show_oneline(graph);
- 		p = next_p;
-@@ -1297,7 +1300,8 @@ void graph_show_commit_msg(struct git_graph *graph,
- 		 * CMIT_FMT_USERFORMAT are already missing a terminating
- 		 * newline.  All of the other formats should have it.
- 		 */
--		fwrite(sb->buf, sizeof(char), sb->len, stdout);
-+		fwrite(sb->buf, sizeof(char), sb->len,
-+			graph->revs->diffopt.file);
+-	printf("-- \n%s", signature);
++	fprintf(file, "-- \n%s", signature);
+ 	if (signature[strlen(signature)-1] != '\n')
+-		putchar('\n');
+-	putchar('\n');
++		fputc('\n', file);
++	fputc('\n', file);
+ }
+ 
+ static void add_branch_description(struct strbuf *buf, const char *branch_name)
+@@ -959,7 +960,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	committer = git_committer_info(0);
+ 
+ 	if (!use_stdout &&
+-	    reopen_stdout(NULL, rev->numbered_files ? NULL : "cover-letter", rev, quiet))
++	    open_next_file(NULL, rev->numbered_files ? NULL : "cover-letter", rev, quiet))
  		return;
- 	}
  
-@@ -1318,7 +1322,7 @@ void graph_show_commit_msg(struct git_graph *graph,
- 		 * new line.
- 		 */
- 		if (!newline_terminated)
--			putchar('\n');
-+			fputc('\n', graph->revs->diffopt.file);
+ 	log_write_email_headers(rev, head, &pp.subject, &pp.after_subject,
+@@ -982,7 +983,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	pp_title_line(&pp, &msg, &sb, encoding, need_8bit_cte);
+ 	pp_remainder(&pp, &msg, &sb, 0);
+ 	add_branch_description(&sb, branch_name);
+-	printf("%s\n", sb.buf);
++	fprintf(rev->diffopt.file, "%s\n", sb.buf);
  
- 		graph_show_remainder(graph);
+ 	strbuf_release(&sb);
  
-@@ -1326,6 +1330,6 @@ void graph_show_commit_msg(struct git_graph *graph,
- 		 * If sb ends with a newline, our output should too.
- 		 */
- 		if (newline_terminated)
--			putchar('\n');
-+			fputc('\n', graph->revs->diffopt.file);
+@@ -991,6 +992,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	log.wrap = 72;
+ 	log.in1 = 2;
+ 	log.in2 = 4;
++	log.file = rev->diffopt.file;
+ 	for (i = 0; i < nr; i++)
+ 		shortlog_add_commit(&log, list[i]);
+ 
+@@ -1013,8 +1015,8 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	diffcore_std(&opts);
+ 	diff_flush(&opts);
+ 
+-	printf("\n");
+-	print_signature();
++	fprintf(rev->diffopt.file, "\n");
++	print_signature(rev->diffopt.file);
+ }
+ 
+ static const char *clean_message_id(const char *msg_id)
+@@ -1324,7 +1326,7 @@ static void prepare_bases(struct base_tree_info *bases,
  	}
  }
+ 
+-static void print_bases(struct base_tree_info *bases)
++static void print_bases(struct base_tree_info *bases, FILE *file)
+ {
+ 	int i;
+ 
+@@ -1333,11 +1335,11 @@ static void print_bases(struct base_tree_info *bases)
+ 		return;
+ 
+ 	/* Show the base commit */
+-	printf("base-commit: %s\n", oid_to_hex(&bases->base_commit));
++	fprintf(file, "base-commit: %s\n", oid_to_hex(&bases->base_commit));
+ 
+ 	/* Show the prerequisite patches */
+ 	for (i = bases->nr_patch_id - 1; i >= 0; i--)
+-		printf("prerequisite-patch-id: %s\n", oid_to_hex(&bases->patch_id[i]));
++		fprintf(file, "prerequisite-patch-id: %s\n", oid_to_hex(&bases->patch_id[i]));
+ 
+ 	free(bases->patch_id);
+ 	bases->nr_patch_id = 0;
+@@ -1694,7 +1696,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			gen_message_id(&rev, "cover");
+ 		make_cover_letter(&rev, use_stdout,
+ 				  origin, nr, list, branch_name, quiet);
+-		print_bases(&bases);
++		print_bases(&bases, rev.diffopt.file);
+ 		total++;
+ 		start_number--;
+ 	}
+@@ -1740,7 +1742,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		}
+ 
+ 		if (!use_stdout &&
+-		    reopen_stdout(rev.numbered_files ? NULL : commit, NULL, &rev, quiet))
++		    open_next_file(rev.numbered_files ? NULL : commit, NULL, &rev, quiet))
+ 			die(_("Failed to create output files"));
+ 		shown = log_tree_commit(&rev, commit);
+ 		free_commit_buffer(commit);
+@@ -1755,15 +1757,15 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			rev.shown_one = 0;
+ 		if (shown) {
+ 			if (rev.mime_boundary)
+-				printf("\n--%s%s--\n\n\n",
++				fprintf(rev.diffopt.file, "\n--%s%s--\n\n\n",
+ 				       mime_boundary_leader,
+ 				       rev.mime_boundary);
+ 			else
+-				print_signature();
+-			print_bases(&bases);
++				print_signature(rev.diffopt.file);
++			print_bases(&bases, rev.diffopt.file);
+ 		}
+ 		if (!use_stdout)
+-			fclose(stdout);
++			fclose(rev.diffopt.file);
+ 	}
+ 	free(list);
+ 	free(branch_name);
+@@ -1795,15 +1797,15 @@ static const char * const cherry_usage[] = {
+ };
+ 
+ static void print_commit(char sign, struct commit *commit, int verbose,
+-			 int abbrev)
++			 int abbrev, FILE *file)
+ {
+ 	if (!verbose) {
+-		printf("%c %s\n", sign,
++		fprintf(file, "%c %s\n", sign,
+ 		       find_unique_abbrev(commit->object.oid.hash, abbrev));
+ 	} else {
+ 		struct strbuf buf = STRBUF_INIT;
+ 		pp_commit_easy(CMIT_FMT_ONELINE, commit, &buf);
+-		printf("%c %s %s\n", sign,
++		fprintf(file, "%c %s %s\n", sign,
+ 		       find_unique_abbrev(commit->object.oid.hash, abbrev),
+ 		       buf.buf);
+ 		strbuf_release(&buf);
+@@ -1884,7 +1886,7 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
+ 		commit = list->item;
+ 		if (has_commit_patch_id(commit, &ids))
+ 			sign = '-';
+-		print_commit(sign, commit, verbose, abbrev);
++		print_commit(sign, commit, verbose, abbrev, revs.diffopt.file);
+ 		list = list->next;
+ 	}
+ 
 -- 
 2.9.0.119.g370c5a9
 
