@@ -1,58 +1,73 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F8131FF40
-	for <e@80x24.org>; Mon, 20 Jun 2016 13:59:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E755D1FF40
+	for <e@80x24.org>; Mon, 20 Jun 2016 16:01:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754837AbcFTN7l (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 09:59:41 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:34105 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754817AbcFTN7k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 09:59:40 -0400
-Received: by mail-wm0-f46.google.com with SMTP id 187so7012040wmz.1
-        for <git@vger.kernel.org>; Mon, 20 Jun 2016 06:59:39 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=+b3aU5jFNZZbIDESnHrAAw3Ofm8aUOA6oNUCWhspbp8=;
-        b=EzlEaK++Judc1q6llD1OZuyF1faL/wDQ0h/zJEglqoK+cupnRUehGIHNmWyY7BxuJD
-         NJxfBRTl1nAKxZbEyCCmhwuzE0Pw2zFNvRJXGp/jGKtjidcx9inl9aqY6ZA1J8YbAjhh
-         wZgubp8swBXvex9n8edWuFs1ChjfvP8kC2qSHU+7fdKIjIXrFTighY82cNhYXKCN7TGe
-         IkqbIvJ5sskEkunZT7X1emyhEEUgBRICWWOZDPdloe7ibCVLwrUkUwyd8QYORnTEAMO/
-         jkxub7tbkVoZ7L6xRGwdKb1yQ78lJd69xS9Q8Jl+4NxVZ02tvore1N+8FkawySMTYE2G
-         JjcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=+b3aU5jFNZZbIDESnHrAAw3Ofm8aUOA6oNUCWhspbp8=;
-        b=jOSFKXc5eqe/SLQstZEawg57LVAVZSAxp62Edv6Msu1JfIJ/i65awuSFz79BSNHB0U
-         VfPZbLuKUyhG1eO+uS6s6+jtCZp0P48im0qohw6AzFMnbsDc0gTT2oZr/bqvfwS/UtOV
-         7Ox66FvnwrzXyB5yeKoaoBpfHFmyj9aH2mIM0GArhnHaEEFTJGpy5VSyHL44QecTbmTg
-         8uSR0gX/MuUJ4tVhE0sWjqjHjg2GiUk6Qk1qI2TPLvmo1F6OY9wEv7nEYOVgRl/l7n2B
-         5bK7O+8Xub//+NoFjSrT/EkPi518IkbYBww0jPFbRFjpZRr2CixZDMhOWw1kAjDXoDcW
-         jXAw==
-X-Gm-Message-State: ALyK8tLdSOpnRSBVNXzgX2syKNj5fbeehmoPtb5fqfWlFPFVGXVBV7UHzJ2Du309r2/CIGiPN4dwyiZez+GWOQ==
-X-Received: by 10.195.2.228 with SMTP id br4mr17063417wjd.59.1466431178554;
- Mon, 20 Jun 2016 06:59:38 -0700 (PDT)
+	id S1753747AbcFTQBP (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 12:01:15 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53726 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753708AbcFTP7x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 11:59:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EADC424AC2;
+	Mon, 20 Jun 2016 11:53:18 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QOQGnWZpnvE6e/p8DZfuYQ8dZmg=; b=AK8yfx
+	KvKKupLFNK7cP7DAwbL/+/n4iEHNgKHsBtk3wF3JUBo0v+T4kwxgCDkem53rv+hi
+	OKlUIbMc1nYcnT8Nry0RJMEVRBW4qJ8bP01aPeiLUrmMZmsxqNt5Cw2LWut1HRWZ
+	+eCQ5qhv/RbSxZqduXhSUgnO7X6SzwnYOF5Ts=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=odVrXjZwFaKZujcsnTngKZCROPYVzLc7
+	WLBGruZNv+itNaF+ZowzV+yUJ8zqT9oNl8QFfmCpQl9k18GW/jcqjKFQ+ZBTqjC3
+	7MaKuqvfh7uX/unkI99XR3HdO7Z3zHhe+bYB5Wf+15AHU5+0ap7evpCRtmg1aQNO
+	tf8OTVXRBxs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CCF9F24AC1;
+	Mon, 20 Jun 2016 11:53:18 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 41C1D24AC0;
+	Mon, 20 Jun 2016 11:53:18 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2 0/8] object_id part 4
+References: <20160618221407.1046188-1-sandals@crustytoothpaste.net>
+	<57665CC6.6070208@kdbg.org>
+	<20160619092448.GA12221@sigill.intra.peff.net>
+	<alpine.DEB.2.20.1606200853580.22630@virtualbox>
+	<20160620100522.GB14058@sigill.intra.peff.net>
+Date:	Mon, 20 Jun 2016 08:53:16 -0700
+In-Reply-To: <20160620100522.GB14058@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 20 Jun 2016 06:05:23 -0400")
+Message-ID: <xmqq8txzvour.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.194.113.74 with HTTP; Mon, 20 Jun 2016 06:59:19 -0700 (PDT)
-From:	Mathieu Giorgino <mathieu.giorgino@gmail.com>
-Date:	Mon, 20 Jun 2016 14:59:19 +0100
-Message-ID: <CAGdHL45Sw7FFsja5Xnvc5jh1E1v3x3Rgaq6GPTiT3NjrZUPmaA@mail.gmail.com>
-Subject: git stash doesn't always save work dir as-is: bug?
-To:	git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1B3B9564-36FF-11E6-B5ED-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Is there a reason this e-mail never received an answer ?
+Jeff King <peff@peff.net> writes:
 
-http://permalink.gmane.org/gmane.comp.version-control.git/234153
+> I am on the fence regarding oidcpy/oidclr. I agree they _could_ be
+> struct assignments, but it is also convenient to have concept wrapped up
+> in a function, in case we ever want to do anything more complicated.
 
-Isn't this a bug ?
+Also dedicated functions have documenation value.  There are some
+things that currently use the same 40-hex that is the result of
+running SHA-1 but are not object names (e.g.  patch id, and rerere
+id).  They use the same hashcpy()/hashcmp() helpers as object names
+do, but the code that use them probably do not want to be converted
+to struct oid and oidcpy().
 
-Thanks,
-
--- Mathieu
