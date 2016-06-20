@@ -1,79 +1,80 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 368311FEAA
-	for <e@80x24.org>; Mon, 20 Jun 2016 22:12:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBE371FEAA
+	for <e@80x24.org>; Mon, 20 Jun 2016 22:16:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932085AbcFTWLn (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 18:11:43 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59597 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752898AbcFTWLj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 18:11:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1100425B38;
-	Mon, 20 Jun 2016 18:11:26 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Gmq2oJUHZ8VHKex/nYxd4lq/x/w=; b=rVmTye
-	M2kLKoczY4l8R1UneORGDVx2whts6H3oWY0TNi9cCDRyQpF0Q+pq0WaHSAgZFdr6
-	t6d3YLYwciuP+ULorSGUrVo5G3GRfYbA0t+4ctq7wo97vyp3VENpzXGgMF6IL2hH
-	E4mk44xDtfqeW0owai9GD3V2Ks0f+Tv3ntYZk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=thZrCaTvRWfBxHhazj4TsjP8k/uRDIzQ
-	7tgaxUsmm61EAQVqpWngGOZFzeOOWs2u7GeVtcxgK9ttIcdTUMqOKNOldpNB/g4B
-	TSDCztfeh8ZUKy8TJatYdmiCvNzESW8xtm/ZfxMETJbBvJnGGa9Za5Rc/DCdGRBw
-	q94SeQOMj48=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0884B25B37;
-	Mon, 20 Jun 2016 18:11:26 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8974125B36;
-	Mon, 20 Jun 2016 18:11:25 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Norbert Kiesel <nkiesel@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 0/3] fix local_tzoffset with far-in-future dates
-References: <CAM+g_NswH8fd8aFPEHfSLYnZWptNU2GX=xTWpehzjTJfJM_GfQ@mail.gmail.com>
-	<CAGZ79kZL-ZY_0hZx9uA-ObPvMiD+EWvJYQa+OfCeQe2RLOPECA@mail.gmail.com>
-	<CAM+g_NtNAWpLkbErL5-BUyH_3X4rYGfZwO0o-Hfu8zyam8pw7Q@mail.gmail.com>
-	<20160620193928.GA3631@sigill.intra.peff.net>
-	<20160620194648.GB3631@sigill.intra.peff.net>
-	<20160620200011.GC3631@sigill.intra.peff.net>
-	<20160620210901.GE3631@sigill.intra.peff.net>
-Date:	Mon, 20 Jun 2016 15:11:23 -0700
-In-Reply-To: <20160620210901.GE3631@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 20 Jun 2016 17:09:01 -0400")
-Message-ID: <xmqqy45zse7o.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752159AbcFTWQa (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 18:16:30 -0400
+Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:39502 "EHLO
+	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751646AbcFTWQ3 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 18:16:29 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 4D5F825F5;
+	Tue, 21 Jun 2016 00:16:25 +0200 (CEST)
+Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
+	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9ebJaJBpWLzF; Tue, 21 Jun 2016 00:16:25 +0200 (CEST)
+Received: from zm-int-mbx6.grenet.fr (zm-int-mbx6.grenet.fr [130.190.242.145])
+	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 3566825F1;
+	Tue, 21 Jun 2016 00:16:25 +0200 (CEST)
+Date:	Tue, 21 Jun 2016 00:25:17 +0200 (CEST)
+From:	Antoine Queru <antoine.queru@ensimag.grenoble-inp.fr>
+To:	Lars Schneider <larsxschneider@gmail.com>
+Cc:	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Antoine Queru <Antoine.Queru@grenoble-inp.org>,
+	git@vger.kernel.org,
+	william duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
+	rsbecker@nexbridge.com, aaron@schrab.com,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, peff@peff.net
+Message-ID: <1599012395.707458.1466461517473.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+In-Reply-To: <3899461F-44B4-407F-ACCE-793E65486554@gmail.com>
+References: <20160604145101.21928-1-Antoine.Queru@grenoble-inp.org> <998280064.353519.1465213163063.JavaMail.zimbra@ensimag.grenoble-inp.fr> <2104102670.380496.1465220639026.JavaMail.zimbra@ensimag.grenoble-inp.fr> <3899461F-44B4-407F-ACCE-793E65486554@gmail.com>
+Subject: Re: [RFC/PATCH] push: deny policy to prevent pushes to unwanted
+ remotes.
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EDE9ACBA-3733-11E6-ABF4-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+X-Originating-IP: [130.190.242.136]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF46 (Linux)/8.0.9_GA_6191)
+Thread-Topic: push: deny policy to prevent pushes to unwanted remotes.
+Thread-Index: L7rHZ7FEDIj4f3gNtFY4ciI871yoHQ==
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> I still don't know how that screwed-up timestamp got _into_
-> a commit, so perhaps there is another bug lurking.  I couldn't convince
-> git to parse anything beyond 2100, and committing with
-> GIT_AUTHOR_DATE='@5758122296 +0000' works just fine.
+> 
+> >> ...
+> >> 
+> > 
+> > Hello Rémi, thanks you for your input ! I'll make the appropriate changes
+> > and send a new version as soon as i can !
+> 
+> Hi Antoine,
+> 
+> do you have an updated version already or is this the one I should look at?
+> http://article.gmane.org/gmane.comp.version-control.git/296445
+> 
+> Thanks,
+> Lars
 
-Interesting.  The weirdest I could come up with was with
+Hello Lars ! I'm actually in holidays, but I will try to send a new
+version by the end of the week, it's nearly done. The code has been
+refactored with what Matthieu and Remi told, so don't bother to read
+the last version.
 
-    GIT_AUTHOR_DATE='@5758122296 -9999
+However, in the last version, if we want to deny an website,
+including all schemes, we can blacklist the url without the
+scheme. For example, "pushBlacklist = github.com". By doing so, this
+remote is not an url anymore, and it can't be differenced with a local
+relative path. It's a problem because these two have a different
+treatement. The choice we made to solve this is to force the user to
+put the scheme "file://" before any local relative path. What do you
+think ?
 
-which gets turned into the same timestamp but with -10039 timezone
-(simply because 99 minutes is an hour and 39 minutes).
-
->   [1/3]: t0006: rename test-date's "show" to "relative"
->   [2/3]: t0006: test various date formats
->   [3/3]: local_tzoffset: detect errors from tm_to_time_t
-
-Thanks, will queue.
+Antoine
