@@ -1,81 +1,115 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C24020179
-	for <e@80x24.org>; Mon, 20 Jun 2016 10:59:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 999FD20179
+	for <e@80x24.org>; Mon, 20 Jun 2016 10:59:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932086AbcFTK7l (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 06:59:41 -0400
-Received: from mout.gmx.net ([212.227.17.22]:64120 "EHLO mout.gmx.net"
+	id S1754586AbcFTK7n (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 06:59:43 -0400
+Received: from mout.gmx.net ([212.227.17.20]:58824 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754564AbcFTK7g (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754545AbcFTK7g (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 20 Jun 2016 06:59:36 -0400
 Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LzXTy-1bRRiX19WM-014gcf; Mon, 20 Jun 2016 12:59:11
+ ESMTPSA (Nemesis) id 0MWwp6-1arpS11OL6-00Vu80; Mon, 20 Jun 2016 12:59:05
  +0200
-Date:	Mon, 20 Jun 2016 12:55:49 +0200 (CEST)
+Date:	Mon, 20 Jun 2016 12:55:43 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 5/7] format-patch: explicitly switch off color when writing
- to files
+Subject: [PATCH v2 4/7] shortlog: support outputting to streams other than
+ stdout
 In-Reply-To: <cover.1466420060.git.johannes.schindelin@gmx.de>
-Message-ID: <2abbf428b42795f930c2338233b71f0f299e1d41.1466420060.git.johannes.schindelin@gmx.de>
+Message-ID: <c9990c2ac84f43e76afc52e5cca5d8876715e004.1466420060.git.johannes.schindelin@gmx.de>
 References: <cover.1466244194.git.johannes.schindelin@gmx.de> <cover.1466420060.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:XItD81mBy0t62uFRN1n+vyvm/eK3zUE1cSYguyJVwjP0j9sZEv6
- ZBjds3Y1uQfmFakSEF++HAlY+Ce86iSVhTyUVfYSn4uezvjmjAr9ydmfoyBVk/65K1KCHwB
- jtQskBEjBz22+PI+YWLsIZ3ZCcBCszOjpXiF153C2zjEOpcS97MvPKWYKXFBZ3NhZLDlq2b
- wZ2ObQgeS3bz262a4VcIg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:AI0XucdQmWo=:5cQ8CGvNjhBlcRiAES+X/O
- 1yTlR2+1dO8xEKFLPgD1egapmPPiT+o/cpptNzunu0XnmX51RhPySgkemXOV0yrHqxtCapCxh
- cuw8KiG2z+ch/usY2ZpPh+hHD8tjfb6NNQ3abVvvPjhxeN76I36b8WZoH3AizNe8tSWfi3JNc
- JIudILCPp13HPsBhMNOKeMMeVZ9/wJsrUWgLA1HxgMcOYJ4s4MWGDEU7iZk0NEbplWkQANl71
- temoo8BnW0EVD2YilVnNSItBP/PG7pcAJL0JNkE4CQ7mRJvwG/tqQ+5Z4uX0ILpOl1sU+ZAPj
- WE6v93SqIA/2HP/MvTznfC/yqDTukTK42TPT763UgYgw/DIYPMFfXPyLz8g+WzNlOAoZUar7C
- uFsEn0o2vDnu6e6pgO8xOF54aM/A32WnxiwmyBfsp+rcraQTvyXu6/6TuEVy/AUZVuNxqwTT3
- Q3DY2f2Mc5gLh/a4VmaPjYJB7C3N9QXcrGqFzjSXBlXV5RXJdz12FGwJkxOaaMUzxRZSyuKvF
- X912pNZe5Er7WCnrRZs3fqR/kqySnpXT/byZLCghTihUuLVx7svmDrBh55fUMWLupgh3shBuC
- rLXR5wmSUglZpC7AUoxLgcf0X0cNV+shZd+6yP9jaS2472tYo5aoTJFO322nv6wt9z9HU1OJE
- MquuiLty9VL70ZShBkBFheqyI4STR9HCN4PvycPXYhKrNLsPj0mlDYwArlUS4Gc7lPJTWBG4n
- gQycpePxbTF8UeKGvhYlzuwWo08S0YOojI8/0UAguUaFB1Y5YheybNBtSSHEhM6AXSRa9kURP
- KGbCgoE
+X-Provags-ID: V03:K0:SWIYeH4i0G4xqRqwcv55l8ZPa8IWzhLNQ0cQKRWRmrsZs+RMPI+
+ fFquKODbxcZMKteBxDoAanJP1WP8NXl1eAePCaniRkDIJ936/83hpc974xKlIr/g1KjDAK6
+ Wu9OeFT+nA6dG6c+Dc/FGPnVf6Rw+PWOeeXW79wW1rTwMuSoryl5CWODk+xLjM5kZb6CBLb
+ FpjiWfJ6kYuLrxdz7Xt9g==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:uMEmgsd0X20=:6kA9K5fKJ3lRVgpFgWffjR
+ DGHiklK4fz3uRxDXvKzKC/fC+gSICy7jBqgoZUF3ij2BljcA4rBNXwqoj+NckKAv6yq1ut66V
+ HwNsBnMoBoysaK3pFkBs7Ed2TQImK97v0X92i9xtQM+mgt1JKJ+CT/aqKYO8NC627DcRCYuSx
+ L7pWMa6jHHID+e4GkvGpupOmM5Ihf9s8fP3boARrOvUuF32ycFOFA9KJAiSl32hQjTdeLb14f
+ ZCjS5FFiTq5oDbwGTWhvqRNoQGG/vZfqBrI1fsnXzhhjVnD8U52/9mUOvJxSv7NSbyD9YG5Yo
+ oW4z1c4FKoad8IMeMS222aY1DBJVzI64fKKDtBg7V8HRoTKzQ+9dwdZmYGdF6JZEwhsa3sv/b
+ 9k+ZkGCSDJru0UhRwvAwP7WbLLejycdrDeAZeZvedEN8lwOs/5dIuETFEt0KZzvHwSJnLFYS0
+ wqAURAEnpveZxdClFXKcbOnFps88xyfjv5aL4MYS6A9sc1BNCZNFFPbQUENmuYZmkTt9Uv7tD
+ HvabOowzWQ7vY7iqUDPxa+4tTmMbfVwAkmlKcFZlHl2lSURFHZhZ2Yh4u2GZqanjyoRR4mKQy
+ 9+jGXJYH9KnQOkOt5r9RVlDaAfBVHSGbAOWhmCaiMFAaTSJICbUt9+aZGpl6fpYD2pi9mkgZW
+ BSoKqtuiVOVe+lY2vI2Jq00XVtb9iqQvM0Q8UAp8zIldzp5djoiYN8houk8sGxeH4fONlkUOY
+ GOg5OKSOqcJDITkRUkY1QoNjExHXgwvb/PZzVcTZKHDQfoX1uzOnm8Os7UY+/YuQyy1xi8z+T
+ bdMmM6Z
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-We rely on the auto-detection ("is stdout a terminal?") to determine
-whether to use color in the output of format-patch or not. That happens
-to work because we freopen() stdout when redirecting the output to files.
-
-However, we are about to fix that work-around, in which case the
-auto-detection has no chance to guess whether to use color or not.
-
-But then, we do not need to guess to begin with. We know that we do not
-want to use ANSI color sequences in the output files. So let's just be
-explicit about our wishes.
+This will be needed to avoid freopen() in `git format-patch`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/log.c | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/shortlog.c | 13 ++++++++-----
+ shortlog.h         |  1 +
+ 2 files changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 099f4f7..abd889b 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1569,6 +1569,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		setup_pager();
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index bfc082e..4c68ba7 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -229,6 +229,7 @@ void shortlog_init(struct shortlog *log)
+ 	log->wrap = DEFAULT_WRAPLEN;
+ 	log->in1 = DEFAULT_INDENT1;
+ 	log->in2 = DEFAULT_INDENT2;
++	log->file = stdout;
+ }
  
- 	if (output_directory) {
-+		rev.diffopt.use_color = 0;
- 		if (use_stdout)
- 			die(_("standard output, or directory, which one?"));
- 		if (mkdir(output_directory, 0777) < 0 && errno != EEXIST)
+ int cmd_shortlog(int argc, const char **argv, const char *prefix)
+@@ -310,22 +311,24 @@ void shortlog_output(struct shortlog *log)
+ 	for (i = 0; i < log->list.nr; i++) {
+ 		const struct string_list_item *item = &log->list.items[i];
+ 		if (log->summary) {
+-			printf("%6d\t%s\n", (int)UTIL_TO_INT(item), item->string);
++			fprintf(log->file, "%6d\t%s\n",
++				(int)UTIL_TO_INT(item), item->string);
+ 		} else {
+ 			struct string_list *onelines = item->util;
+-			printf("%s (%d):\n", item->string, onelines->nr);
++			fprintf(log->file, "%s (%d):\n",
++				item->string, onelines->nr);
+ 			for (j = onelines->nr - 1; j >= 0; j--) {
+ 				const char *msg = onelines->items[j].string;
+ 
+ 				if (log->wrap_lines) {
+ 					strbuf_reset(&sb);
+ 					add_wrapped_shortlog_msg(&sb, msg, log);
+-					fwrite(sb.buf, sb.len, 1, stdout);
++					fwrite(sb.buf, sb.len, 1, log->file);
+ 				}
+ 				else
+-					printf("      %s\n", msg);
++					fprintf(log->file, "      %s\n", msg);
+ 			}
+-			putchar('\n');
++			fputc('\n', log->file);
+ 			onelines->strdup_strings = 1;
+ 			string_list_clear(onelines, 0);
+ 			free(onelines);
+diff --git a/shortlog.h b/shortlog.h
+index de4f86f..5a326c6 100644
+--- a/shortlog.h
++++ b/shortlog.h
+@@ -17,6 +17,7 @@ struct shortlog {
+ 	char *common_repo_prefix;
+ 	int email;
+ 	struct string_list mailmap;
++	FILE *file;
+ };
+ 
+ void shortlog_init(struct shortlog *log);
 -- 
 2.9.0.119.g370c5a9
 
