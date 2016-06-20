@@ -1,134 +1,102 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 774B81FF40
-	for <e@80x24.org>; Mon, 20 Jun 2016 17:09:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C82811FF40
+	for <e@80x24.org>; Mon, 20 Jun 2016 17:15:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756112AbcFTRJK (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 13:09:10 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59368 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756106AbcFTRJH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 13:09:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 95640238AC;
-	Mon, 20 Jun 2016 13:01:43 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=f4DgMRH01Ju5hvBhm67P8UyjKoI=; b=jwX4Oi
-	+zCGwbWTHbUIgrBCZ43Pr6kG3ro2DNhmuSnw+e1kxxPEgAjPuLonlA+AiWn8/L/e
-	UxosuI4fGNHQEfFWZW6W5FmCE0piGyYgiPnVqpYbh6irRb9/yjn6zfC5vfclYh+V
-	UUQKhDHcRrNgtGMRLJjQnpQx+3QWjaXNgnkqE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=spQy3+8phe5MfyGz7I7Y6IKX5I3o/aMu
-	NO55MJ3yOhdociyjmuyC4HsacpfMhLq1/euuUzj3yV6i7ZltCh2M0yA0D1IaVJiT
-	11d/gxbNmHUijQdEToCYDR1PsJI13JeLzh1/9ca39609Lm5yYjwqYlfvPbEN0ks2
-	5zHZl6P7F3w=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8E9DF238AB;
-	Mon, 20 Jun 2016 13:01:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 13A24238AA;
-	Mon, 20 Jun 2016 13:01:43 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/7] log-tree: respect diffopt's configured output file stream
-References: <cover.1466244194.git.johannes.schindelin@gmx.de>
-	<cover.1466420060.git.johannes.schindelin@gmx.de>
-	<babf95df5f610feb6c2ae7f2ed3cff98bab47fe2.1466420060.git.johannes.schindelin@gmx.de>
-Date:	Mon, 20 Jun 2016 10:01:41 -0700
-In-Reply-To: <babf95df5f610feb6c2ae7f2ed3cff98bab47fe2.1466420060.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Mon, 20 Jun 2016 12:55:13 +0200
-	(CEST)")
-Message-ID: <xmqqwplju74a.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932372AbcFTRPX (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 13:15:23 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:33027 "EHLO
+	mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754551AbcFTRPT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 13:15:19 -0400
+Received: by mail-qk0-f173.google.com with SMTP id a186so170733432qkf.0
+        for <git@vger.kernel.org>; Mon, 20 Jun 2016 10:14:53 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=kpi+RXJ6PfcefYppJNwBTgoT2TMc3gAsHUUObcMwISc=;
+        b=IrhoAYIQvGN5iV/4aGJ742ti23w65MrscKXcS+LdwNU/fSTx8CXE1A0HFs1vS92DIL
+         4gKekBSKtkzuOdP9k+IlIeWRPzFrhOSJ2ZFSvLQC62KZzq8Ger/nJCHpogm8za47Fu/J
+         6ARVXAYFPiNjsS3zccoUAAtsTvTlnXVf59rvooeOpzK4rBDO6Hs8DpbZCCgHfu8fWaSX
+         0RFj8xB3gnWOXVlBvmDpAtZldMSlSQbphmx3Mz+LGlarFqODoT1UsG3+bJCabgyCzDSD
+         RglSrw1GXC7K4SADp8yYHvEQvaPgB/iqwCX0byalAsp0IrwAieWvfRxhgGhxGdeO10IW
+         Li6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=kpi+RXJ6PfcefYppJNwBTgoT2TMc3gAsHUUObcMwISc=;
+        b=L35DjJeW5Pxp3a1wTRGdcQcHhf5UlpNeZy0qEWyi+VyY8jW3aFlb9NC/41EFiqG+kd
+         EYAw0t3eP6FqJtv2VlCPg86W5POhX/9/oOKMdSfyV9XLrd0u7tZqNfinWI2yPovwMlfM
+         F8fBCxyo6bZt9Z3JwYm42AGDBUzeKzJTFqiLV6uUeuILAG+4AIUS3RYDoxeG8bg4+2lP
+         iys3XROBXfCB7FsoXiacerquQngYqVJT3Mu3Bm1Xk72L3L3H4xWjSnswitMvaVVoaWjl
+         WtSZrndJV94UWKObKenZH5CpdRXhXdIQwsSAmnDjYW/ctQAw8KpsnpdqsINJbJ+rnsd7
+         IA0Q==
+X-Gm-Message-State: ALyK8tLR30w0D+BabLCQZayy+ySkrIyqzjkphuoVTcJz3+15Vn3N35pBKwcGEe/TDPUrFJavrBX9SKTATFgInJhy
+X-Received: by 10.55.207.74 with SMTP id e71mr23767303qkj.64.1466442888161;
+ Mon, 20 Jun 2016 10:14:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A9E3A924-3708-11E6-B4FA-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.237.42.226 with HTTP; Mon, 20 Jun 2016 10:14:47 -0700 (PDT)
+In-Reply-To: <20160620171312.GA1880@sigill.intra.peff.net>
+References: <xmqq7fdkx5oz.fsf@gitster.mtv.corp.google.com> <1466441998-18896-1-git-send-email-sbeller@google.com>
+ <20160620171312.GA1880@sigill.intra.peff.net>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Mon, 20 Jun 2016 10:14:47 -0700
+Message-ID: <CAGZ79kbKoch0odOOz2QWhoGoSOBOgYyQ_QgbxPXy2iJJVqP6Vw@mail.gmail.com>
+Subject: Re: [PATCH] shallow clone to not imply shallow submodules
+To:	Jeff King <peff@peff.net>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Vadim Eisenberg <VADIME@il.ibm.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Mon, Jun 20, 2016 at 10:13 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jun 20, 2016 at 09:59:58AM -0700, Stefan Beller wrote:
+>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>
+>> Hi Junio, Peff,
+>>
+>> I thought about this patch squashed into
+>> "clone: do not let --depth imply --shallow-submodules" will actually test
+>> for the regression.
+>
+> Yep, it looks good to me.
+>
+>> +test_expect_success 'shallow clone does not imply shallow submodule' '
+>> +     test_when_finished "rm -rf super_clone" &&
+>> +     git clone --recurse-submodules --depth 2 "file://$pwd/." super_clone &&
+>> +     (
+>> +             cd super_clone &&
+>> +             git log --oneline >lines &&
+>> +             test_line_count = 2 lines
+>> +     ) &&
+>> +     (
+>> +             cd super_clone/sub &&
+>> +             git log --oneline >lines &&
+>> +             test_line_count = 3 lines
+>> +     )
+>> +'
+>
+> This follows the style of the other tests, so it's the right thing here.
+> But as a style suggestion, I think:
+>
+>   git -C super_clone/sub log --oneline >lines &&
+>   test_line_count = 3 lines
+>
+> is nicer than the subshell. It's more succinct, and it saves a process.
 
-> The diff options already know how to print the output anywhere else
-> than stdout. The same is needed for log output in general, e.g.
-> when writing patches to files in `git format-patch`. Let's allow
-> users to use log_tree_commit() *without* changing global state via
-> freopen().
+which we would want to refactor to in a follow up, but not merge it
+through to 2.9.1.
 
-I wonder if this change is actually fixing existing bugs.  Are there
-cases where diffopt.file is set, i.e. the user expects the output to
-be sent elsewhere, but the code here unconditionally emits to the
-standard output?  I suspect that such a bug can be demonstratable in
-a test or two, if that were the case.
+Thanks,
+Stefan
 
-I am sort-of surprised that we didn't do this already even though we
-had diffopt.file for a long time since c0c77734 (Write diff output
-to a file in struct diff_options, 2008-03-09).
-
-Use of freopen() to always write patches through stdout may have
-been done as a lazy workaround of the issue this patch fixes, but
-what is surprising to me is that doing it the right way like this
-patch does is not that much of work.  Perhaps that was done long
-before c0c77734 was done, which would mean doing it the right way
-back then when we started using freopen() it would have been a lot
-more work and we thought taking a short-cut was warranted.
-
-In any case, this is a change in the good direction.  Thanks for
-cleaning things up.
-
->  		if (opt->children.name)
->  			show_children(opt, commit, abbrev_commit);
->  		show_decorations(opt, commit);
->  		if (opt->graph && !graph_is_commit_finished(opt->graph)) {
-> -			putchar('\n');
-> +			fputc('\n', opt->diffopt.file);
-
-Hmph.  putc() is the "to the given stream" equivalent of putchar()
-in the "send to stdout" world, not fputc().  I do not see a reason
-to force the call to go to a function avoiding a possible macro here.
-
-Likewise for all the new fputc() calls in this series that were
-originally putchar().
-
-> @@ -880,8 +880,9 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
->  		shown = 1;
->  	}
->  	if (opt->track_linear && !opt->linear && opt->reverse_output_stage)
-> -		printf("\n%s\n", opt->break_bar);
-> +		fprintf(opt->diffopt.file, "\n%s\n", opt->break_bar);
->  	opt->loginfo = NULL;
-> -	maybe_flush_or_die(stdout, "stdout");
-> +	if (opt->diffopt.file == stdout)
-> +		maybe_flush_or_die(stdout, "stdout");
->  	return shown;
->  }
-
-This one looks fishy.
-
-Back when we freopen()'ed to write patches only through stdout, we
-always called maybe_flush_or_die() to make sure that the output is
-flushed correctly after processing each commit.  This change makes
-it not to care, which I doubt was what you intended.  Instead, my
-suspicion is that you didn't want to say "stdout" when writing into
-a file.
-
-But even when writing to on-disk files, the code before your series
-would have said "stdout" when it had trouble flushing, so I do not
-think this new "if()" condition is making things better.  If "it
-said stdout when having trouble flushing to a file" were a problem
-to be fixed, "let's not say stdout by not even attempting to flush
-and catch errors when writing to a file" would not be the right
-solution, no?
-
-Personally, I do not think it hurts if we kept saying 'stdout' here,
-even when we flush opt->diffopt.file and found a problem.
-
-Thanks.
-
-
+>
+> -Peff
