@@ -1,76 +1,58 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 189DC1FF40
-	for <e@80x24.org>; Mon, 20 Jun 2016 20:10:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27B871FEAA
+	for <e@80x24.org>; Mon, 20 Jun 2016 20:35:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933483AbcFTUKc (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 16:10:32 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57455 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933445AbcFTUK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 16:10:26 -0400
-Received: (qmail 6542 invoked by uid 102); 20 Jun 2016 20:02:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 16:02:12 -0400
-Received: (qmail 17671 invoked by uid 107); 20 Jun 2016 20:02:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 16:02:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jun 2016 16:02:09 -0400
-Date:	Mon, 20 Jun 2016 16:02:09 -0400
-From:	Jeff King <peff@peff.net>
-To:	Eric Deplagne <Eric@Deplagne.name>
-Cc:	Norbert Kiesel <nkiesel@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+	id S933696AbcFTUeq (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 16:34:46 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:41462 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932660AbcFTUej (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 16:34:39 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3rYMqZ6Xx6z3hjYH;
+	Mon, 20 Jun 2016 22:27:54 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3rYMqZ6GylzvjNC;
+	Mon, 20 Jun 2016 22:27:54 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id 1DkNky2qa_zw; Mon, 20 Jun 2016 22:27:53 +0200 (CEST)
+X-Auth-Info: Hp3sc9y49gM3iioAdyrku+9kISRREg4yx/wn1zmAgaVEInPeJivJabSq5jYSYnVt
+Received: from igel.home (ppp-88-217-7-154.dynamic.mnet-online.de [88.217.7.154])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Mon, 20 Jun 2016 22:27:53 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 6481F2C346B; Mon, 20 Jun 2016 22:27:53 +0200 (CEST)
+From:	Andreas Schwab <schwab@linux-m68k.org>
+To:	Norbert Kiesel <nkiesel@gmail.com>
+Cc:	git@vger.kernel.org
 Subject: Re: unable to pull from remote if commit date is in the future
-Message-ID: <20160620200209.GD3631@sigill.intra.peff.net>
 References: <CAM+g_NswH8fd8aFPEHfSLYnZWptNU2GX=xTWpehzjTJfJM_GfQ@mail.gmail.com>
- <CAGZ79kZL-ZY_0hZx9uA-ObPvMiD+EWvJYQa+OfCeQe2RLOPECA@mail.gmail.com>
- <CAM+g_NtNAWpLkbErL5-BUyH_3X4rYGfZwO0o-Hfu8zyam8pw7Q@mail.gmail.com>
- <20160620193928.GA3631@sigill.intra.peff.net>
- <20160620194947.GE24553@mail.eric.deplagne.name>
+X-Yow:	My haircut is totally traditional!
+Date:	Mon, 20 Jun 2016 22:27:53 +0200
+In-Reply-To: <CAM+g_NswH8fd8aFPEHfSLYnZWptNU2GX=xTWpehzjTJfJM_GfQ@mail.gmail.com>
+	(Norbert Kiesel's message of "Mon, 20 Jun 2016 11:41:40 -0700")
+Message-ID: <87porbip12.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.95 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160620194947.GE24553@mail.eric.deplagne.name>
+Content-Type: text/plain
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 20, 2016 at 09:49:47PM +0200, Eric Deplagne wrote:
+Norbert Kiesel <nkiesel@gmail.com> writes:
 
-> On Mon, 20 Jun 2016 15:39:28 -0400, Jeff King wrote:
-> > On Mon, Jun 20, 2016 at 12:05:07PM -0700, Norbert Kiesel wrote:
-> > 
-> > > Hmm.  On closer inspection that commit 23c07cc that github shows with
-> > > date 2152-06-19 is already in my local branch.  I got confused because
-> > > locally it is shown with a different date: `git log -1 --format='%ci'
-> > > 23c07cc` shows "2106-02-07 06:28:56 -40643156" which is invalid.
-> > > 
-> > > My system is running Debian unstable 64bit.  Is git using the time
-> > > rendering methods from the C library (glibc 2.22-12)?
-> > 
-> > No, git's time code is (mostly) internal routines. Can you show us the
-> > output of:
-> > 
-> >     git cat-file commit 23c07cc | egrep '^author|committer'
-> > 
-> > Note also that some interfaces (like "git log", and GitHub) will show
-> > the author date by default, which might be different than the committer
-> > date. The "-40643156" timezone definitely looks suspicious, though. I'm
-> > curious if it is bad handling in the time code, or if the commit has
-> > corrupt ident lines.
-> > 
-> > -Peff
-> 
->   2106 is the year of unsigned 32-bit unix time bug, would there be any relation ?
+> For the record: the faulty commit is
+> https://github.com/seandepagnier/weather_routing_pi/commit/23c07cc5d2be7ce68349f4b3719b6fa6fe90e0bf
 
-In an extremely roundabout way, yes. That -40643156 time zone really is
-"minus 46 years", but it was generated by _different_ code trying to
-compute the author timezone on the fly and using a stray "-1". So I
-suspect that no matter what time you ask for in the year 2152 (or
-later), the same process would end up with the 2106 time, as the
-timezone is custom-computed to end up back at the same error point.
+That commit is part of master.  Are you sure you don't have it already?
 
--Peff
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
