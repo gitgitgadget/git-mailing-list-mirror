@@ -1,64 +1,133 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31DD51FEAA
-	for <e@80x24.org>; Mon, 20 Jun 2016 21:00:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FA511FEAA
+	for <e@80x24.org>; Mon, 20 Jun 2016 21:12:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754911AbcFTVAH (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 17:00:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54633 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755381AbcFTVAD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2016 17:00:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C3676264A9;
-	Mon, 20 Jun 2016 16:06:24 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=xfmj4oQgWcG1
-	FzSoJZw2VARk3YQ=; b=up8CdDcsY/+6bCLmH5O4ZLYDptx97ZS8ztKDo0fQ7/RO
-	NNB/hPi1MgBvVRKCK0wBJIf9F9zgBt1gPj09Aok0aSNKoC0fwiiT9GhNq2NKaMRz
-	O4N74k+zGUKbnc6ejn9fJDLmMIDhPxxRiXuyTGDo/EFWKZg7LdUJhsCB5ovhl8w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Y2+dXL
-	S+k81yjaeP3P9GwcYrKo7cZ3KjD7KOZa85NnAGrVJ1JzvlfH67DIpt/RUx5kr+oT
-	Aex9UuHKZnfHGDBPBikKWY2oN9SrnExWuapui6QZbzxB7lgYNg/AVoOey1bPOKk/
-	wq8pukbQTpGNGZo2cLXx2pDu2dSTc3ogNaZF4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B93F4264A8;
-	Mon, 20 Jun 2016 16:06:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 36D5B264A7;
-	Mon, 20 Jun 2016 16:06:24 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:	git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jun 2016, #05; Thu, 16)
-References: <xmqqk2ho33ig.fsf@gitster.mtv.corp.google.com>
-	<18617acb-bcdb-607d-007e-552dabd352cb@web.de>
-Date:	Mon, 20 Jun 2016 13:06:22 -0700
-In-Reply-To: <18617acb-bcdb-607d-007e-552dabd352cb@web.de> ("Torsten
-	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Mon, 20 Jun 2016 08:06:29
- +0200")
-Message-ID: <xmqq60t3tykh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752824AbcFTVMd (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 17:12:33 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57483 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751596AbcFTVMb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 17:12:31 -0400
+Received: (qmail 9479 invoked by uid 102); 20 Jun 2016 21:12:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 17:12:01 -0400
+Received: (qmail 18103 invoked by uid 107); 20 Jun 2016 21:12:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 17:12:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jun 2016 17:11:59 -0400
+Date:	Mon, 20 Jun 2016 17:11:59 -0400
+From:	Jeff King <peff@peff.net>
+To:	Norbert Kiesel <nkiesel@gmail.com>
+Cc:	Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: [PATCH 2/3] t0006: test various date formats
+Message-ID: <20160620211158.GA15521@sigill.intra.peff.net>
+References: <20160620210901.GE3631@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 76C3E922-3722-11E6-879B-89D312518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: 8BIT
+Content-Disposition: inline
+In-Reply-To: <20160620210901.GE3631@sigill.intra.peff.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Torsten Bögershausen <tboegi@web.de> writes:
+We ended up testing some of these date formats throughout
+the rest of the suite (e.g., via for-each-ref's
+"$(authordate:...)" format), but we never did so
+systematically. t0006 is the right place for unit-testing of
+our date-handling code.
 
-> There is a conflict in pu:
-> "jh/clean-smudge-annex" does not work together with "tb/convert-peek-in-index"
->
-> (And currently pu didn't compile)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/helper/test-date.c | 26 ++++++++++++++++++++++++++
+ t/t0006-date.sh      | 21 +++++++++++++++++++++
+ 2 files changed, 47 insertions(+)
 
-Thanks for a report, but didn't I mention this breakage in the
-What's cooking report already?
+diff --git a/t/helper/test-date.c b/t/helper/test-date.c
+index 8ebcded..d9ab360 100644
+--- a/t/helper/test-date.c
++++ b/t/helper/test-date.c
+@@ -2,6 +2,7 @@
+ 
+ static const char *usage_msg = "\n"
+ "  test-date relative [time_t]...\n"
++"  test-date show:<format> [time_t]...\n"
+ "  test-date parse [date]...\n"
+ "  test-date approxidate [date]...\n";
+ 
+@@ -17,6 +18,29 @@ static void show_relative_dates(char **argv, struct timeval *now)
+ 	strbuf_release(&buf);
+ }
+ 
++static void show_dates(char **argv, const char *format)
++{
++	struct date_mode mode;
++
++	parse_date_format(format, &mode);
++	for (; *argv; argv++) {
++		char *arg = *argv;
++		time_t t;
++		int tz;
++
++		/*
++		 * Do not use our normal timestamp parsing here, as the point
++		 * is to test the formatting code in isolation.
++		 */
++		t = strtol(arg, &arg, 10);
++		while (*arg == ' ')
++			arg++;
++		tz = atoi(arg);
++
++		printf("%s -> %s\n", *argv, show_date(t, tz, &mode));
++	}
++}
++
+ static void parse_dates(char **argv, struct timeval *now)
+ {
+ 	struct strbuf result = STRBUF_INIT;
+@@ -63,6 +87,8 @@ int main(int argc, char **argv)
+ 		usage(usage_msg);
+ 	if (!strcmp(*argv, "relative"))
+ 		show_relative_dates(argv+1, &now);
++	else if (skip_prefix(*argv, "show:", &x))
++		show_dates(argv+1, x);
+ 	else if (!strcmp(*argv, "parse"))
+ 		parse_dates(argv+1, &now);
+ 	else if (!strcmp(*argv, "approxidate"))
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index fa05269..57033dd 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -27,6 +27,27 @@ check_relative 630000000 '20 years ago'
+ check_relative 31449600 '12 months ago'
+ check_relative 62985600 '2 years ago'
+ 
++check_show () {
++	format=$1
++	time=$2
++	expect=$3
++	test_expect_${4:-success} "show date ($format:$time)" '
++		echo "$time -> $expect" >expect &&
++		test-date show:$format "$time" >actual &&
++		test_cmp expect actual
++	'
++}
++
++# arbitrary but sensible time for examples
++TIME='1466000000 +0200'
++check_show iso8601 "$TIME" '2016-06-15 16:13:20 +0200'
++check_show iso8601-strict "$TIME" '2016-06-15T16:13:20+02:00'
++check_show rfc2822 "$TIME" 'Wed, 15 Jun 2016 16:13:20 +0200'
++check_show short "$TIME" '2016-06-15'
++check_show default "$TIME" 'Wed Jun 15 16:13:20 2016 +0200'
++check_show raw "$TIME" '1466000000 +0200'
++check_show iso-local "$TIME" '2016-06-15 14:13:20 +0000'
++
+ check_parse() {
+ 	echo "$1 -> $2" >expect
+ 	test_expect_${4:-success} "parse date ($1${3:+ TZ=$3})" "
+-- 
+2.9.0.167.g9e4667c
+
