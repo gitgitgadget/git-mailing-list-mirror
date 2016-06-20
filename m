@@ -1,95 +1,80 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A01020179
-	for <e@80x24.org>; Mon, 20 Jun 2016 06:32:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CA2D20179
+	for <e@80x24.org>; Mon, 20 Jun 2016 06:53:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751796AbcFTGck (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 02:32:40 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:36505 "EHLO
-	mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751428AbcFTGci (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 02:32:38 -0400
-Received: by mail-it0-f68.google.com with SMTP id h190so5734391ith.3
-        for <git@vger.kernel.org>; Sun, 19 Jun 2016 23:32:38 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=kzUYmKbYvj8DarhKoNPFCjJtbLix6T5E4HU5a141heo=;
-        b=n9Ve4NdvRUrr7qfoZHOxdvJzlZU7nsnTF0OuJOx1CD/eSvxgqW4Bfrg8g2nBTikdnQ
-         wIh+jmXC5+Ou1q0HJ0VdqBzuEUG2grJ+Lr9S4nC/2ZdMh/Lkny4QPBx8kVMY2ZpqkfpZ
-         R5xdkdfqwLyMdWHWJiW8/NXa4mimrUq/fidSTGNR42/Fg0xwHMY4UFuZH0rHN5Ca0kiD
-         pdX+qnZM6DpqIW5lKlF5S8OOo4vf65Ct+zqkO5pHWQfmzq06VJwQ9mAbrs9x+NlGoQlB
-         wpJlcj6Pu1nvOgjOdzuDGqfmbJVnSQaKsruWaqngZlI/PRpz9r/9Cgyn3sLe56sE90ry
-         UcLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=kzUYmKbYvj8DarhKoNPFCjJtbLix6T5E4HU5a141heo=;
-        b=AlgMfIIn0vm3p3F7qvbG7DswwhVvWKSm5fGpThpze0MbRKQF9R0K/nUVGPezgg8T2Z
-         spnAjo1RelyDBf3Ik2RsNj0XTbqaugGlh7Z+ZC83lZoIpwNi5WYeuaObYecy1WDArrO4
-         MMosEQ9/iInnL422OGMMzFTchgUUexMiMnPbL9VjDpvBGvM75hcPthzgK7rd2Xr67rBR
-         KSTuXRh2uaK+My9qYyyX0TtPobWMsxYCrGSxEmlAsVpKsGzASd9m2tzbXcZT/TRv6jBF
-         64hVjaT4dsudsj/m7CtO0BHVjgKKxWkmLbQM7b18huZWzoFLYhSzTx6h5dGmqXqyGoN4
-         4rHQ==
-X-Gm-Message-State: ALyK8tLUCBe6zRYJTX1FPg+HyRuu5k7NPDdiMS2BHo/4xnZysKa7XO6M6uBXlISFLex24BrLTQP3zs9vcroxlg==
-X-Received: by 10.36.55.15 with SMTP id r15mr14828693itr.73.1466404357731;
- Sun, 19 Jun 2016 23:32:37 -0700 (PDT)
+	id S1751594AbcFTGxe (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 02:53:34 -0400
+Received: from mout.gmx.net ([212.227.15.15]:50646 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750701AbcFTGxc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 02:53:32 -0400
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M0y47-1bWhnA0kTH-00v4P1; Mon, 20 Jun 2016 08:45:31
+ +0200
+Date:	Mon, 20 Jun 2016 08:45:29 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Lars Schneider <larsxschneider@gmail.com>
+cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] perf: accommodate for MacOSX
+In-Reply-To: <9A11C3D1-3DAC-489F-BDF9-F4D409E8D3F7@gmail.com>
+Message-ID: <alpine.DEB.2.20.1606200840350.22630@virtualbox>
+References: <ae429d2481111f7ad1927ef22e3a691d4c99ebd7.1466254995.git.johannes.schindelin@gmx.de> <9A11C3D1-3DAC-489F-BDF9-F4D409E8D3F7@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.79.0.30 with HTTP; Sun, 19 Jun 2016 23:32:37 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1606200814510.22630@virtualbox>
-References: <cover.1466244194.git.johannes.schindelin@gmx.de>
- <de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de>
- <CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com> <alpine.DEB.2.20.1606200814510.22630@virtualbox>
-From:	Eric Sunshine <sunshine@sunshineco.com>
-Date:	Mon, 20 Jun 2016 02:32:37 -0400
-X-Google-Sender-Auth: c4UR-2Ptg7RqDKsNyyB8bGR9Cfg
-Message-ID: <CAPig+cQqworFpRvd-U9sgnyitQEzy6zAKc_091b9fzjuzsFnpA@mail.gmail.com>
-Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:YHSsa7kp1JDXDXm98Ry/Dlo9tDdERMfQnLRp5L9ydmXm5W8Z5gY
+ rI1QfJ6kEnMlA5JLbwmlJxjOFFzMDnk0pafRbKqsVWdYalwz+3+Nt2M8QeoI4+caz0PQ5IY
+ lO0HlinhRqjzqhsGN45s7AHsizCbWwGzJIrefzoPo8b1RD+UjXTT3UchamUYVBtva86hzd8
+ 15DZPV2Dbv5tZaoTZ1h2Q==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:CTfJMSSx4wk=:vN4YuW0fPuOQzXzightOzd
+ TrKxWvbmcsLy4g5+Z6wh8PZ8Te7/miX7tkfk1yT39yWFdGaJr21tmQnlglpxfWOugLnWd1Lc9
+ 75UxNCTqwrcTFuggBiUFk3kTrzhy2KhObtHz794bKD4Ayzop+QDKpAQtBuBCjLTPWATxjum1a
+ 3DHmnrbiJ7mKdY3iMkkLWyYz13dtExd7k8Tt1iesE/M6zBf4D5beu/9/37SZb8JiWhqhS+HrV
+ JI2LpZRjMrk6nNc3Sjhq/se87gsgo05tOB7xtBhbBYyzUkx9QT0vyZhlJ2Ctxse+3YRYfizDs
+ qfm9d+iUREV1B5jq/BD0NNL5kmh05o2QoHT77tBwjy96zhPeu6vCwovoGylfc5HCLqEThGIcc
+ ywf6jEgX6iEU3bCvyyfhggTSc6CtlCFGGuWklyAauthQS4QXmviD2enYBPXGrje8JZ5EEB1ZX
+ obDmRGcHbJ+IyiMEKHJP/GIy0jpcP59r9xEOwo1iIwvDOw+QL2P5Fox/Mw9D6jhTv9P8qT/PF
+ f9LZBWTtSA24PgzMbXDggyEJdIiglnmUv8JFsZo8iUYuINXfKCoQTa/3zo/kMIGEps7Xcrb+W
+ 9eOiTiFp21Kk0cquHM/XtxQmXI+Wf2q+hZ6aQZbWPtKBldazT6PdG0X39UnMKqYph0clAZ/QC
+ N/IGueSaevZyqjaKb8SHUby+msXVCtRgoX8Yn7assmy93QKg4H2oOYCXiAUbCcctJplX9tJ/w
+ fFaTnNOgL58sP/IyCmtM9GowBYhS+ZBuu3RDLX8GkLQ6SMWn2P/enuBwBc3SmFYRAy+hMTBzE
+ dsWJhFz
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 20, 2016 at 2:26 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Sun, 19 Jun 2016, Eric Sunshine wrote:
->> On Sat, Jun 18, 2016 at 6:04 AM, Johannes Schindelin
->> <johannes.schindelin@gmx.de> wrote:
->> >         if (output_directory) {
->> > +               rev.diffopt.use_color = 0;
->>
->> What is this change about? It doesn't seem to be related to anything
->> else in the patch.
->
-> Good point, I completely forgot to mention this is the commit message.
->
-> When format-patch calls the diff machinery, want_color() is used to
-> determine whether to use ANSI color sequences or not. If use_color is not
-> set explicitly, isatty(1) is used to determine whether or not the user
-> wants color. When stdout was freopen()ed, this isatty(1) call naturally
-> looked at the file descriptor that was reopened, and determined correctly
-> that no color was desired.
->
-> With the freopen() call gone, stdout may very well be the terminal. But we
-> still do not want color because the output is intended to go to a file (at
-> least if output_directory is set).
+Hi Lars,
 
-Would it make sense to do this as a separate preparatory patch, or is
-it just too minor?
+On Sun, 19 Jun 2016, Lars Schneider wrote:
 
-> So how about this commit message (I inserted the "Note: ..." paragraph)?
+> > On 18 Jun 2016, at 15:03, Johannes Schindelin
+> > <johannes.schindelin@gmx.de> wrote:
+> > 
+> > As this developer has no access to MacOSX developer setups anymore,
+> > Travis becomes the best bet to run performance tests on that OS.
 >
-> -- snipsnap --
-> format-patch: avoid freopen()
-> [...]
-> Note: we now have to set use_color = 0 explicitly when writing to files,
-> as the auto-detection whether to colorify the output *still* looks at
-> stdout (which is no longer freopen()ed, and therefore might still be
-> printing to the terminal).
+> We don't run the performance tests on Travis CI right now.
+> Maybe we should? With your patch below it should work, right?
 
-Thanks.
+It *should* work, but I'd be reluctant to run them as part of the CI: we
+have no real chance to catch perf regressions as of now. So all it would
+do would be to add load to Travis.
+
+> I only saw one error on my local OS X machine here:
+> https://github.com/git/git/blob/05219a1276341e72d8082d76b7f5ed394b7437a4/t/perf/p0000-perf-lib-sanity.sh#L26
+
+Yeah, well, I should have been clearer in my commit message: this patch
+allows the perf tests to *run*, not to *pass*... ;-)
+
+> Does the export of foo not work properly on OS X? "$foo" is empty...
+
+Sorry, as I said: I no longer have access to a dev setup running MacOSX.
+
+Ciao,
+Dscho
+
+P.S.: Please save me time by deleting the remainder of the quoted mail
+when it is irrelevant to your reply. Thanks!
