@@ -1,80 +1,70 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBE371FEAA
-	for <e@80x24.org>; Mon, 20 Jun 2016 22:16:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04CC41FEAA
+	for <e@80x24.org>; Mon, 20 Jun 2016 22:22:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752159AbcFTWQa (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 18:16:30 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:39502 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751646AbcFTWQ3 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 18:16:29 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 4D5F825F5;
-	Tue, 21 Jun 2016 00:16:25 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9ebJaJBpWLzF; Tue, 21 Jun 2016 00:16:25 +0200 (CEST)
-Received: from zm-int-mbx6.grenet.fr (zm-int-mbx6.grenet.fr [130.190.242.145])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id 3566825F1;
-	Tue, 21 Jun 2016 00:16:25 +0200 (CEST)
-Date:	Tue, 21 Jun 2016 00:25:17 +0200 (CEST)
-From:	Antoine Queru <antoine.queru@ensimag.grenoble-inp.fr>
-To:	Lars Schneider <larsxschneider@gmail.com>
-Cc:	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Antoine Queru <Antoine.Queru@grenoble-inp.org>,
-	git@vger.kernel.org,
-	william duclot <william.duclot@ensimag.grenoble-inp.fr>,
-	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
-	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
-	rsbecker@nexbridge.com, aaron@schrab.com,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, peff@peff.net
-Message-ID: <1599012395.707458.1466461517473.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-In-Reply-To: <3899461F-44B4-407F-ACCE-793E65486554@gmail.com>
-References: <20160604145101.21928-1-Antoine.Queru@grenoble-inp.org> <998280064.353519.1465213163063.JavaMail.zimbra@ensimag.grenoble-inp.fr> <2104102670.380496.1465220639026.JavaMail.zimbra@ensimag.grenoble-inp.fr> <3899461F-44B4-407F-ACCE-793E65486554@gmail.com>
-Subject: Re: [RFC/PATCH] push: deny policy to prevent pushes to unwanted
- remotes.
+	id S1752494AbcFTWVz (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 18:21:55 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57556 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751235AbcFTWVx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 18:21:53 -0400
+Received: (qmail 12444 invoked by uid 102); 20 Jun 2016 22:21:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 18:21:15 -0400
+Received: (qmail 18916 invoked by uid 107); 20 Jun 2016 22:21:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 18:21:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jun 2016 18:21:12 -0400
+Date:	Mon, 20 Jun 2016 18:21:12 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Norbert Kiesel <nkiesel@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 0/3] fix local_tzoffset with far-in-future dates
+Message-ID: <20160620222112.GB6431@sigill.intra.peff.net>
+References: <CAM+g_NswH8fd8aFPEHfSLYnZWptNU2GX=xTWpehzjTJfJM_GfQ@mail.gmail.com>
+ <CAGZ79kZL-ZY_0hZx9uA-ObPvMiD+EWvJYQa+OfCeQe2RLOPECA@mail.gmail.com>
+ <CAM+g_NtNAWpLkbErL5-BUyH_3X4rYGfZwO0o-Hfu8zyam8pw7Q@mail.gmail.com>
+ <20160620193928.GA3631@sigill.intra.peff.net>
+ <20160620194648.GB3631@sigill.intra.peff.net>
+ <20160620200011.GC3631@sigill.intra.peff.net>
+ <20160620210901.GE3631@sigill.intra.peff.net>
+ <xmqqy45zse7o.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF46 (Linux)/8.0.9_GA_6191)
-Thread-Topic: push: deny policy to prevent pushes to unwanted remotes.
-Thread-Index: L7rHZ7FEDIj4f3gNtFY4ciI871yoHQ==
+Content-Disposition: inline
+In-Reply-To: <xmqqy45zse7o.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+On Mon, Jun 20, 2016 at 03:11:23PM -0700, Junio C Hamano wrote:
 
+> Jeff King <peff@peff.net> writes:
 > 
-> >> ...
-> >> 
-> > 
-> > Hello Rémi, thanks you for your input ! I'll make the appropriate changes
-> > and send a new version as soon as i can !
+> > I still don't know how that screwed-up timestamp got _into_
+> > a commit, so perhaps there is another bug lurking.  I couldn't convince
+> > git to parse anything beyond 2100, and committing with
+> > GIT_AUTHOR_DATE='@5758122296 +0000' works just fine.
 > 
-> Hi Antoine,
+> Interesting.  The weirdest I could come up with was with
 > 
-> do you have an updated version already or is this the one I should look at?
-> http://article.gmane.org/gmane.comp.version-control.git/296445
+>     GIT_AUTHOR_DATE='@5758122296 -9999
 > 
-> Thanks,
-> Lars
+> which gets turned into the same timestamp but with -10039 timezone
+> (simply because 99 minutes is an hour and 39 minutes).
 
-Hello Lars ! I'm actually in holidays, but I will try to send a new
-version by the end of the week, it's nearly done. The code has been
-refactored with what Matthieu and Remi told, so don't bother to read
-the last version.
+Yeah, as weird as that is, I think it's reasonable. We _could_ turn
+nonsense timezones into "+0000". That doesn't necessarily help the user
+much, but at least it's less bizarre than making a 46-year timezone
+offset.
 
-However, in the last version, if we want to deny an website,
-including all schemes, we can blacklist the url without the
-scheme. For example, "pushBlacklist = github.com". By doing so, this
-remote is not an url anymore, and it can't be differenced with a local
-relative path. It's a problem because these two have a different
-treatement. The choice we made to solve this is to force the user to
-put the scheme "file://" before any local relative path. What do you
-think ?
+I also looked for other uses of tm_to_time_t without checking for an
+error return. Most of them do check. The exception is datestamp(), but
+is calling it on the output of localtime(time()), which should generally
+be sensible.
 
-Antoine
+-Peff
