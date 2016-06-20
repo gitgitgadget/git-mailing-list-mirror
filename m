@@ -1,70 +1,64 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04CC41FEAA
-	for <e@80x24.org>; Mon, 20 Jun 2016 22:22:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F9FB1FEAA
+	for <e@80x24.org>; Mon, 20 Jun 2016 22:22:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752494AbcFTWVz (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 18:21:55 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57556 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751235AbcFTWVx (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753158AbcFTWWC (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 18:22:02 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54068 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751646AbcFTWVx (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 20 Jun 2016 18:21:53 -0400
-Received: (qmail 12444 invoked by uid 102); 20 Jun 2016 22:21:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 18:21:15 -0400
-Received: (qmail 18916 invoked by uid 107); 20 Jun 2016 22:21:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Jun 2016 18:21:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jun 2016 18:21:12 -0400
-Date:	Mon, 20 Jun 2016 18:21:12 -0400
-From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Norbert Kiesel <nkiesel@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 0/3] fix local_tzoffset with far-in-future dates
-Message-ID: <20160620222112.GB6431@sigill.intra.peff.net>
-References: <CAM+g_NswH8fd8aFPEHfSLYnZWptNU2GX=xTWpehzjTJfJM_GfQ@mail.gmail.com>
- <CAGZ79kZL-ZY_0hZx9uA-ObPvMiD+EWvJYQa+OfCeQe2RLOPECA@mail.gmail.com>
- <CAM+g_NtNAWpLkbErL5-BUyH_3X4rYGfZwO0o-Hfu8zyam8pw7Q@mail.gmail.com>
- <20160620193928.GA3631@sigill.intra.peff.net>
- <20160620194648.GB3631@sigill.intra.peff.net>
- <20160620200011.GC3631@sigill.intra.peff.net>
- <20160620210901.GE3631@sigill.intra.peff.net>
- <xmqqy45zse7o.fsf@gitster.mtv.corp.google.com>
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A02B27868;
+	Mon, 20 Jun 2016 18:21:23 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:cc:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Lx79qQJNgDyhZQ5F20IR/HZjZug=; b=sIQ+76
+	hQC8PZwsZjT5mnuTz4sIk5L1HalYWmoV8S6CQ+TWGGP7ri6nwpnWt8u5JpSeSi6f
+	mKqjEYjwvC008xbLyWysTHkBeNxIJ+r+wkhj4LQUai0vdwHKM/cVZ+bobawKoTCm
+	XmM54PK0ElewF73Az5Rh2/kvA8BR8qNdw4wZY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:cc:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LJTUPIg2WLy1vCmGnRwaOdrczQQToelP
+	UpUAqWrRq8Bqmke1GZCcREVLyULKHcDgWE2G6/VzHafZ1YDF9jaQ9zRKzZPIEo+b
+	KijdqhXuo3WEqmaC7fRcFn0HT7p+Nf0GMBybSJ50BwC8bVAq3+LtmAaQlQTzYqvi
+	I10+08uZCts=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2249227867;
+	Mon, 20 Jun 2016 18:21:23 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9A6D927866;
+	Mon, 20 Jun 2016 18:21:22 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Nikolaus Rath <Nikolaus@rath.org>
+Subject: Re: How to find commits unique to a branch
+References: <878txz8ubq.fsf@thinkpad.rath.org>
+cc:	git@vger.kernel.org
+Date:	Mon, 20 Jun 2016 15:21:20 -0700
+In-Reply-To: <878txz8ubq.fsf@thinkpad.rath.org> (Nikolaus Rath's message of
+	"Mon, 20 Jun 2016 13:43:37 -0700")
+Message-ID: <xmqqtwgnsdr3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy45zse7o.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 51CAD172-3735-11E6-AF4A-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 20, 2016 at 03:11:23PM -0700, Junio C Hamano wrote:
+Nikolaus Rath <Nikolaus@rath.org> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I still don't know how that screwed-up timestamp got _into_
-> > a commit, so perhaps there is another bug lurking.  I couldn't convince
-> > git to parse anything beyond 2100, and committing with
-> > GIT_AUTHOR_DATE='@5758122296 +0000' works just fine.
-> 
-> Interesting.  The weirdest I could come up with was with
-> 
->     GIT_AUTHOR_DATE='@5758122296 -9999
-> 
-> which gets turned into the same timestamp but with -10039 timezone
-> (simply because 99 minutes is an hour and 39 minutes).
+> What's the best way to find all commits in a branch A that have not been
+> cherry-picked from (or to) another branch B?
+>
+> I think I could format-patch all commits in every branch into separate
+> files, hash the Author and Date of each files, and then compare the two
+> lists. But I'm hoping there's a way to instead have git do the
+> heavy-lifting?
 
-Yeah, as weird as that is, I think it's reasonable. We _could_ turn
-nonsense timezones into "+0000". That doesn't necessarily help the user
-much, but at least it's less bizarre than making a 46-year timezone
-offset.
+"git cherry" perhaps?
 
-I also looked for other uses of tm_to_time_t without checking for an
-error return. Most of them do check. The exception is datestamp(), but
-is calling it on the output of localtime(time()), which should generally
-be sensible.
-
--Peff
