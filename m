@@ -1,108 +1,95 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39F6520179
-	for <e@80x24.org>; Mon, 20 Jun 2016 06:26:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A01020179
+	for <e@80x24.org>; Mon, 20 Jun 2016 06:32:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751822AbcFTG0o (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 02:26:44 -0400
-Received: from mout.gmx.net ([212.227.15.19]:60572 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751665AbcFTG0n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 02:26:43 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MHXXo-1bFy3L1vbw-003Oj1; Mon, 20 Jun 2016 08:26:03
- +0200
-Date:	Mon, 20 Jun 2016 08:26:01 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Eric Sunshine <sunshine@sunshineco.com>
-cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
-In-Reply-To: <CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1606200814510.22630@virtualbox>
-References: <cover.1466244194.git.johannes.schindelin@gmx.de> <de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de> <CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1751796AbcFTGck (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 02:32:40 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:36505 "EHLO
+	mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751428AbcFTGci (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 02:32:38 -0400
+Received: by mail-it0-f68.google.com with SMTP id h190so5734391ith.3
+        for <git@vger.kernel.org>; Sun, 19 Jun 2016 23:32:38 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=kzUYmKbYvj8DarhKoNPFCjJtbLix6T5E4HU5a141heo=;
+        b=n9Ve4NdvRUrr7qfoZHOxdvJzlZU7nsnTF0OuJOx1CD/eSvxgqW4Bfrg8g2nBTikdnQ
+         wIh+jmXC5+Ou1q0HJ0VdqBzuEUG2grJ+Lr9S4nC/2ZdMh/Lkny4QPBx8kVMY2ZpqkfpZ
+         R5xdkdfqwLyMdWHWJiW8/NXa4mimrUq/fidSTGNR42/Fg0xwHMY4UFuZH0rHN5Ca0kiD
+         pdX+qnZM6DpqIW5lKlF5S8OOo4vf65Ct+zqkO5pHWQfmzq06VJwQ9mAbrs9x+NlGoQlB
+         wpJlcj6Pu1nvOgjOdzuDGqfmbJVnSQaKsruWaqngZlI/PRpz9r/9Cgyn3sLe56sE90ry
+         UcLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=kzUYmKbYvj8DarhKoNPFCjJtbLix6T5E4HU5a141heo=;
+        b=AlgMfIIn0vm3p3F7qvbG7DswwhVvWKSm5fGpThpze0MbRKQF9R0K/nUVGPezgg8T2Z
+         spnAjo1RelyDBf3Ik2RsNj0XTbqaugGlh7Z+ZC83lZoIpwNi5WYeuaObYecy1WDArrO4
+         MMosEQ9/iInnL422OGMMzFTchgUUexMiMnPbL9VjDpvBGvM75hcPthzgK7rd2Xr67rBR
+         KSTuXRh2uaK+My9qYyyX0TtPobWMsxYCrGSxEmlAsVpKsGzASd9m2tzbXcZT/TRv6jBF
+         64hVjaT4dsudsj/m7CtO0BHVjgKKxWkmLbQM7b18huZWzoFLYhSzTx6h5dGmqXqyGoN4
+         4rHQ==
+X-Gm-Message-State: ALyK8tLUCBe6zRYJTX1FPg+HyRuu5k7NPDdiMS2BHo/4xnZysKa7XO6M6uBXlISFLex24BrLTQP3zs9vcroxlg==
+X-Received: by 10.36.55.15 with SMTP id r15mr14828693itr.73.1466404357731;
+ Sun, 19 Jun 2016 23:32:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+T75A0EDo4V3Xz38QHwvCsQOy0tzUbsOYdhMZEBNN2+BKouAvmI
- pZQ1hhmxo3+Q99aZUbSPLAb9o9PsSqphzgBiqY1+SH+IpqZJJ8TWwHWyzdZmDEybaxyR4fM
- OOl2SLkHBlHDs/CI68SuPjFe3vHL0e+NHLw7qVxaEbSNAIaiaXbrGVV6fdzmqrcosK7SNGV
- iPn5wSPehmoDtUk7I/Z4A==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:3MNwFpzmA1Y=:AWRE97TXODUYR/076CUxxE
- TFEw1YcBqh1eT4JMkKml694XEK7t7/CFYoLdDQRL98UztwMbYX3hIZCSCXgZd8WS43Wfg+46t
- 4lkzzySv5ACOyKr0kgnt50GAWjzWOnQCjQtHGTKKHg9CkLPlBJgOvNdIjluU1BGGpKvv+mEEC
- MR1LzuhQ61TPGKf3hCkb0nd4badRJB5GcmPmNrIanDw2blIhyOx984Xe/UuRIOcA0hab536X6
- VrF8hHayR+5kEGZx66WUSZfVeGYa+9+BBGcDzG8ZnjgmhEcY+tIS8sF0CVOOhNeDdIENnfgQv
- D/P97AY/MEvNmkb2RxDP+97c1PqN1AUiem6hTIJeHBOmb0d00k8O7HbTkYXRrJUNt1lFW5rnc
- bjqAhI1gaB+ApYYWVs5NfiAD5uzWxdjUFEsbxqd0H2TGjaKfZOimma/e+bNMKk1HTyBnKdsik
- MiHBLSGCHLGi0AqjebL38ftQ7YsNTQZkJv5Nv3edn99JSrVBldDaIDVxunbfiFS3d816xEKj8
- q2dJOaCjjtRPG9Fd7iCOcg/q4oLPv97F1ij124kFOkfWsm6cbqwHIRr5ZuM14746XQOGac7Xm
- 6zgAceXRoJCk7rWTRvsAsUgHoNG0Pa4g7gP/VPSKDWYfkRJktYaI+GqubvksyuGVWnebBiNHc
- GzFK48DKAfKaEWwxlVewbceSRC9pjbeHaoGG3/+FVn+uJuC6xZETJPIb0bawAM2zKns94boJn
- ROYnBk/Z6QEyKHI9L2R04uoBLpQoEGyAwVxWD5puJ84UuY5mfm4WCAF1N+FxTHXfXnB0eZ9eV
- 1LiBght
+Received: by 10.79.0.30 with HTTP; Sun, 19 Jun 2016 23:32:37 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1606200814510.22630@virtualbox>
+References: <cover.1466244194.git.johannes.schindelin@gmx.de>
+ <de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de>
+ <CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com> <alpine.DEB.2.20.1606200814510.22630@virtualbox>
+From:	Eric Sunshine <sunshine@sunshineco.com>
+Date:	Mon, 20 Jun 2016 02:32:37 -0400
+X-Google-Sender-Auth: c4UR-2Ptg7RqDKsNyyB8bGR9Cfg
+Message-ID: <CAPig+cQqworFpRvd-U9sgnyitQEzy6zAKc_091b9fzjuzsFnpA@mail.gmail.com>
+Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Eric,
+On Mon, Jun 20, 2016 at 2:26 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Sun, 19 Jun 2016, Eric Sunshine wrote:
+>> On Sat, Jun 18, 2016 at 6:04 AM, Johannes Schindelin
+>> <johannes.schindelin@gmx.de> wrote:
+>> >         if (output_directory) {
+>> > +               rev.diffopt.use_color = 0;
+>>
+>> What is this change about? It doesn't seem to be related to anything
+>> else in the patch.
+>
+> Good point, I completely forgot to mention this is the commit message.
+>
+> When format-patch calls the diff machinery, want_color() is used to
+> determine whether to use ANSI color sequences or not. If use_color is not
+> set explicitly, isatty(1) is used to determine whether or not the user
+> wants color. When stdout was freopen()ed, this isatty(1) call naturally
+> looked at the file descriptor that was reopened, and determined correctly
+> that no color was desired.
+>
+> With the freopen() call gone, stdout may very well be the terminal. But we
+> still do not want color because the output is intended to go to a file (at
+> least if output_directory is set).
 
-On Sun, 19 Jun 2016, Eric Sunshine wrote:
+Would it make sense to do this as a separate preparatory patch, or is
+it just too minor?
 
-> On Sat, Jun 18, 2016 at 6:04 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > We just taught the relevant functions to respect the diffopt.file field,
-> > to allow writing somewhere else than stdout. Let's make use of it.
-> > [...]
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/builtin/log.c b/builtin/log.c
-> > @@ -1569,6 +1570,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> >                 setup_pager();
-> >
-> >         if (output_directory) {
-> > +               rev.diffopt.use_color = 0;
-> 
-> What is this change about? It doesn't seem to be related to anything
-> else in the patch.
+> So how about this commit message (I inserted the "Note: ..." paragraph)?
+>
+> -- snipsnap --
+> format-patch: avoid freopen()
+> [...]
+> Note: we now have to set use_color = 0 explicitly when writing to files,
+> as the auto-detection whether to colorify the output *still* looks at
+> stdout (which is no longer freopen()ed, and therefore might still be
+> printing to the terminal).
 
-Good point, I completely forgot to mention this is the commit message.
-
-When format-patch calls the diff machinery, want_color() is used to
-determine whether to use ANSI color sequences or not. If use_color is not
-set explicitly, isatty(1) is used to determine whether or not the user
-wants color. When stdout was freopen()ed, this isatty(1) call naturally
-looked at the file descriptor that was reopened, and determined correctly
-that no color was desired.
-
-With the freopen() call gone, stdout may very well be the terminal. But we
-still do not want color because the output is intended to go to a file (at
-least if output_directory is set).
-
-So how about this commit message (I inserted the "Note: ..." paragraph)?
-
--- snipsnap --
-format-patch: avoid freopen()
-
-We just taught the relevant functions to respect the diffopt.file field,
-to allow writing somewhere else than stdout. Let's make use of it.
-
-Technically, we do not need to avoid that call in a builtin: we assume
-that builtins (as opposed to library functions) are stand-alone programs
-that may do with their (global) state. Yet, we want to be able to reuse
-that code in properly lib-ified code, e.g. when converting scripts into
-builtins.
-
-Note: we now have to set use_color = 0 explicitly when writing to files,
-as the auto-detection whether to colorify the output *still* looks at
-stdout (which is no longer freopen()ed, and therefore might still be
-printing to the terminal).
-
-Further, while we did not *have* to touch the cmd_show() and cmd_cherry()
-code paths (because they do not want to write anywhere but stdout as of
-yet), it just makes sense to be consistent, making it easier and safer to
-move the code later.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-
+Thanks.
