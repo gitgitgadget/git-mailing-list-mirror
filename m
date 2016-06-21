@@ -1,85 +1,70 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F15851FF40
-	for <e@80x24.org>; Tue, 21 Jun 2016 16:47:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D912B1FF40
+	for <e@80x24.org>; Tue, 21 Jun 2016 16:48:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752693AbcFUQqp (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 12:46:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51450 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752036AbcFUQqo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 12:46:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AB91824A75;
-	Tue, 21 Jun 2016 12:46:42 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+imV8Xe2SoAOZZIpsfDRdBGkXwI=; b=S1UCmL
-	XHFwZVrw5l43aMvKcnFoFYCY2P+lWvuCBOPWFFQazFquofLUcWt6SoSIsvkF5PBl
-	rFcWvbl/N8sTRNgkqY2UA5QQb1qQ73WWBLfoaiRd50N5aEswc/jKhuE35rZQAgRA
-	ymjT7nm/73ecf2b0kGUx7wvXV6SL6KLiMEJr4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hdAteafNo/7FuUZOhrUcVcpmpmAMyPXg
-	SakV+drbKYCdRQwDYnM3V30jgkBSCmcQmyIem9xdcLaP/Ket2g6qCfChmguohXMX
-	HgtaeOz8pNXwTkN8QCyRfZK9vbcbK606RcQZAs+GYft7SYz/UxHy+2+WFlRCK99f
-	hA2vlU0v6PY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A132F24A74;
-	Tue, 21 Jun 2016 12:46:42 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1D76E24A73;
-	Tue, 21 Jun 2016 12:46:42 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Konstantin Khomoutov <kostix+git@007spb.ru>
-Cc:	Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Problem with git-http-backend.exe as iis cgi
-References: <F0F5A56A22F20D4CB4A03BB8D6658797E260E0E3@SERVER2011.CS-SOFTWARE.local>
-	<20160310155522.1dee53cf95fead8cfd4e178a@domain007.com>
-Date:	Tue, 21 Jun 2016 09:46:39 -0700
-In-Reply-To: <20160310155522.1dee53cf95fead8cfd4e178a@domain007.com>
-	(Konstantin Khomoutov's message of "Thu, 10 Mar 2016 15:55:22 +0300")
-Message-ID: <xmqq60t2sd5c.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752382AbcFUQsu (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 12:48:50 -0400
+Received: from mail-io0-f179.google.com ([209.85.223.179]:36018 "EHLO
+	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752036AbcFUQst (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 12:48:49 -0400
+Received: by mail-io0-f179.google.com with SMTP id s63so17334203ioi.3
+        for <git@vger.kernel.org>; Tue, 21 Jun 2016 09:48:49 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=rmG/zuXkFOhRALVrg0ihF+tLHxnSqawAFt1L9HRKpZk=;
+        b=lGFu1MbI/OX61UUOJGCBrrnGxaCX9XqgNzNAjW71mn61FRQgXHu+2yWmwlMUYAZwUD
+         wgw4hoxN26ymhTW39AfkvnaZaVObsisuliGjJVOeEdbAb49mDxJsxYTrp2pqLDCTdY8v
+         /J3HLVUrGXpzBfpr/UddK4AQVSjE6WqvJudNYnmRhd21wWlrVlKlwIKxf/xAXFO3ooUU
+         hwFQc1ipOr4fVvRBLZDS64aqiOcyAWw6aXnvhh20g6hZQjy6t+JGGlw+bfjgkamnMq/m
+         j9w20FM7yxRc6MBIhzZ8pRI1guvfePA++3VmLUbNSUFIEDJzoQmUWJQ/qnQ5WGRu8t9P
+         kjzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=rmG/zuXkFOhRALVrg0ihF+tLHxnSqawAFt1L9HRKpZk=;
+        b=fnn8vlf0rMgRL7izmhGucbVSs04QcUyPke2r8TC/QjZCCVdUDZUND8GILlhOKt54Qm
+         RyuE4Z19VBHdX7vNEFS/qng3VZmA8GSIgMc5FDZ50yCcwVV+TcPGYGOtzNHtw7Pied1V
+         gK567YTf2+dgp62PoylKnh0XBNFb25E2RIGkJxxV4vphLF8uO5xrJLdSYE5aY+N8Nq+n
+         yVoGmO5mhTjVtKVwnI2pNNPuLg9ZETgjEF46Nu2W3Pa7X4f9OJLEKhgoFu9JmUaM7RIV
+         0qjSE6zEfCyxhZor5eh0NVp9JGlE3MeEBlEUXLAfQDQXL9i4pz4mpKwJqHz0sxXCmNuz
+         7HjA==
+X-Gm-Message-State: ALyK8tIdooyz52EOGAhMeGKlkVtDEGHILJDoUPOUip6bfeUEaRR8Pf2ySLJ5FiO2g9Lu6WndxnyzcHYgoqqbEg==
+X-Received: by 10.107.8.220 with SMTP id h89mr33478021ioi.95.1466527728811;
+ Tue, 21 Jun 2016 09:48:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BB49C910-37CF-11E6-9B41-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.64.225.235 with HTTP; Tue, 21 Jun 2016 09:48:19 -0700 (PDT)
+In-Reply-To: <20160619100051.GA14584@sigill.intra.peff.net>
+References: <OFC76C15DC.FC882C57-ONC2257FD7.00261552-C2257FD7.002660FC@LocalDomain>
+ <OFE09D48F2.D1D14F49-ONC2257FD7.00280736-C2257FD7.0028245A@notes.na.collabserv.com>
+ <20160619100051.GA14584@sigill.intra.peff.net>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Tue, 21 Jun 2016 18:48:19 +0200
+Message-ID: <CACsJy8DZ8jR=jZoC9F6k+WKr4mvZHMHtvLpT5+Mt9shX5-Wj8g@mail.gmail.com>
+Subject: Re: [BUG REPORT] git 2.9.0 clone --recursive fails on cloning a submodule
+To:	Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>
+Cc:	Vadim Eisenberg <VADIME@il.ibm.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Konstantin Khomoutov <kostix+git@007spb.ru> writes:
+On Sun, Jun 19, 2016 at 12:00 PM, Jeff King <peff@peff.net> wrote:
+> Stefan, I think it might be worth revisiting the default set by d22eb04
+> to propagate shallowness from the super-project clone. In an ideal
+> world, we would be asking each submodule for the actual commit we are
+> interested in, and shallowness would not matter. But until
+> uploadpack.allowReachableSHA1InWant works everywhere, I suspect this is
+> going to be a problem.
 
-> On Thu, 10 Mar 2016 07:28:50 +0000
-> Florian Manschwetus <manschwetus@cs-software-gmbh.de> wrote:
->
->> I tried to setup git-http-backend with iis, as iis provides proper
->> impersonation for cgi under windows, which leads to have the
->> filesystem access performed with the logon user, therefore the
->> webserver doesn't need generic access to the files. I stumbled across
->> a problem, ending up with post requests hanging forever. After some
->> investigation I managed to get it work by wrapping the http-backend
->> into a bash script, giving a lot of control about the environmental
->> things, I was unable to solve within IIS configuration. The
->> workaround, I use currently, is to use "/bin/head -c
->> ${CONTENT_LENGTH} | ./git-http-backend.exe", which directly shows the
->> issue. Git http-backend should check if CONTENT_LENGTH is set to
->> something reasonable (e.g. >0) and should in this case read only
->> CONTENT_LENGTH bytes from stdin, instead of reading till EOF what I
->> suspect it is doing currently.
-> ...
-> So yes, if Git currently reads until EOF, it's an error.
-
-This sounded vaguely familiar.  Isn't this responding to a stale
-thread?
-
-http://thread.gmane.org/gmane.comp.version-control.git/290114
-proposed a patch along the line, and corrections to the patch was
-suggested in the review, but it was not followed through, it seems.
-
-
-
+Maybe we can pass an option to subsequent clones that say "if
+allow-...-sha1-in-want is advertised, do a shallow clone, otherwise
+fall back to full clone"?
+-- 
+Duy
