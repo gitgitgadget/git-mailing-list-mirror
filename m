@@ -1,84 +1,166 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04FFF1FF40
-	for <e@80x24.org>; Tue, 21 Jun 2016 12:03:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2A191FF40
+	for <e@80x24.org>; Tue, 21 Jun 2016 12:17:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751437AbcFUMDm (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 08:03:42 -0400
-Received: from mout.gmx.net ([212.227.15.18]:61638 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751537AbcFUMDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 08:03:41 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LymHf-1bU5ZP24Wt-01668i; Tue, 21 Jun 2016 14:03:28
- +0200
-Date:	Tue, 21 Jun 2016 14:03:27 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
-Subject: Re: [PATCH] Make find_commit_subject() more robust
-In-Reply-To: <xmqqeg7ru00i.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1606211402320.22630@virtualbox>
-References: <34ef85eb4e2aef0b342ef5d3bce9e468c8339486.1466255489.git.johannes.schindelin@gmx.de> <xmqqeg7ru00i.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1751936AbcFUMRe (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 08:17:34 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57814 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751719AbcFUMRd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 08:17:33 -0400
+Received: (qmail 15221 invoked by uid 102); 21 Jun 2016 12:10:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Jun 2016 08:10:46 -0400
+Received: (qmail 23705 invoked by uid 107); 21 Jun 2016 12:11:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Jun 2016 08:11:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Jun 2016 08:10:42 -0400
+Date:	Tue, 21 Jun 2016 08:10:42 -0400
+From:	Jeff King <peff@peff.net>
+To:	Eric Wong <e@80x24.org>
+Cc:	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: http-backend fatal error message on shallow clone
+Message-ID: <20160621121041.GA29156@sigill.intra.peff.net>
+References: <20160621112303.GA21973@dcvr.yhbt.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:r88QgPsM3Gl7yA5W2aGHWWRoZq3+ZcFKO5Od+J5Ypj/Trt05+Iy
- A6TRigrwdvj5v1d5OWRwP9qCsAKUGUcVri+t2Ti9qg1Sk2R13amnQ94hPH1ulqukEzP96LW
- x/7rgWMpwkW0QL5sNKQPR8Cb+Hz73utqeJFBKNm2dfTHVu9iT//eduGsVidYmX2B5D5j/Ed
- wcOsRMh2q0I/irbzAXJ3g==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:Rbt2G44j5Ow=:kMEZ212rYSHBbkBaaMwq7B
- hJCIQR6fbWJqPMDAIOgmp4AX5IO7s9RpcYfE7KacsVwRGl9WvT3SRkhMxjxB2oC62ZoZNgK2r
- Lduo0UzpC4Q+46HRzyMO3tDu3kM3tPvocJObH7eHUxwtPCvr1W82MmCvn/0ztEfZ9OV9mx8x0
- GZPg0FImho7BosQJuaT4a/wP8wAxM8Ikdxct+sUX1CUbXXPd8o6zp3FQsGN2REyhnHaHolNhK
- dTkQoiMsldAthPfrZ1xdcft7FFsLlch+iqVDEAL1lUW66vqIU5FtUeStLPgptQk/s2x1g1RHX
- j+ihbBQalBurZXZOdgYBQAIowaP4RnbGg0jXDN9HKeXbF/Ykq73qz5LRvya1e+OiHV4aR6nbv
- wQNO7uQ8/G5gGmp/WGoUiuY89C3w9hMjIyDr3L7eMHQxdkd5sKWM1QiW8BkuB9Vh9UjaPbeWm
- Ii6WI2OvUyzValLx1011x8nnGYJZxMKhT8wKqg+fblFchKeuMc8hl//Scm/Z9csEzBZR0mpWF
- bSREEiDzhhx+kfcW8svbm+/58qC9qDh6+WkLHVjLvLm1/eL/HL+zck1jfpATkqUq69dgNnqIu
- FcFNiGh+RP4plIUOZQ1faGZfiss6LTiE9OodxUoiFNAvCacAC4FVrjMRNHIsAXJh6G+xYz4oK
- oVYKpv47/tSl0k6wpBrMCCTzKzsh372eSlfxPznH7gA6Bv9HAKlPZmIEPF9oHm5BBPrL5nhA6
- 8GeBIG2MNF3cT1u1EV3QtSV9NRwRvIS7cfOo4DNATqSErEvcdjbbFKkurpD9YbZAKzKo54lZ2
- M1UqDHR
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160621112303.GA21973@dcvr.yhbt.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+On Tue, Jun 21, 2016 at 11:23:03AM +0000, Eric Wong wrote:
 
-On Mon, 20 Jun 2016, Junio C Hamano wrote:
-
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> I noticed "fatal: The remote end hung up unexpectedly" in server
+> logs from shallow clones.  Totally reproducible in the test
+> cases, too.  The following change shows it:
+> [...]
+> [Tue Jun 21 11:07:41.391269 2016] [cgi:error] [pid 21589] [client 127.0.0.1:37518] AH01215: fatal: The remote end hung up unexpectedly
 > 
-> > Just like the pretty printing machinery, we should simply ignore empty
-> > lines at the beginning of the commit messages.
-> >
-> > This discrepancy was noticed when an early version of the rebase--helper
-> > produced commit objects with more than one empty line between the header
-> > and the commit message.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > Published-As: https://github.com/dscho/git/releases/tag/leading-empty-lines-v1
-> >
-> > 	Aaaaand another patch from the rebase--helper front. I guess I'll
-> > 	call it a day with this one.
+> It doesn't show above, but I think http-backend exits
+> with a non-zero status, too, which might cause some CGI
+> implementations to complain or break.
 > 
-> Makes sense.  This has a trivial textual conflict with cleanup
-> patches in flight, I think, but that is not a big problem.
+> Not sure if it's just a corner case that wasn't tested
+> or something else, but the clone itself seems successful...
 
-I will gladly resend rebased to `next`, if you wish.
+The dying process is actually upload-pack. If we instrument it like
+this:
 
-> It does hint that we might want to find a library function that can
-> replace a hand-rolled while loop we are adding here, though ;-)
+diff --git a/upload-pack.c b/upload-pack.c
+index 9e03c27..a1da676 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -820,6 +820,14 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
+ 	return parse_hide_refs_config(var, value, "uploadpack");
+ }
+ 
++NORETURN
++static void custom_die(const char *err, va_list params)
++{
++	vreportf("fatal: ", err, params);
++	warning("aborting");
++	abort();
++}
++
+ int main(int argc, const char **argv)
+ {
+ 	const char *dir;
+@@ -836,6 +844,9 @@ int main(int argc, const char **argv)
+ 		OPT_END()
+ 	};
+ 
++	warning("running upload-pack");
++	set_die_routine(custom_die);
++
+ 	git_setup_gettext();
+ 
+ 	packet_trace_identity("upload-pack");
 
-Heh. I cannot help you with that ;-)
+we can see two things. One is we can get a backtrace from the core file:
 
-> Perhaps cast this new behaviour in stone by adding a test?
+#0  0x00007f04aef51458 in __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:55
+#1  0x00007f04aef528da in __GI_abort () at abort.c:89
+#2  0x0000000000406009 in custom_die (err=0x4ede60 "The remote end hung up unexpectedly", 
+    params=0x7ffe15858758) at upload-pack.c:828
+#3  0x000000000045ec63 in die (err=0x4ede60 "The remote end hung up unexpectedly") at usage.c:108
+#4  0x000000000041e016 in get_packet_data (fd=0, src_buf=0x0, src_size=0x0, dst=0x7ffe158588b0, 
+    size=4, options=2) at pkt-line.c:167
+#5  0x000000000041e0ea in packet_read (fd=0, src_buf=0x0, src_len=0x0, 
+    buffer=0x73cc40 <packet_buffer> "deepen 1", size=65520, options=2) at pkt-line.c:204
+#6  0x000000000041e22b in packet_read_line_generic (fd=0, src=0x0, src_len=0x0, dst_len=0x0)
+    at pkt-line.c:234
+#7  0x000000000041e27c in packet_read_line (fd=0, len_p=0x0) at pkt-line.c:244
+#8  0x0000000000404dc9 in get_common_commits () at upload-pack.c:384
+#9  0x0000000000405eb4 in upload_pack () at upload-pack.c:798
+#10 0x0000000000406229 in main (argc=1, argv=0x7ffe15858c28) at upload-pack.c:872
 
-Will do.
+So we expected to read a packet but didn't get one. Not surprising. The
+interesting thing is that we are in get_common_commits(), and if we were
+to get a flush packet in stateless-rpc mode, we would simply exit(0).
+But we get EOF instead, which provokes packet_read_line() to die.
 
-Ciao,
-Dscho
+The other interesting thing is that we can see in httpd's error.log that
+it is the penultimate upload-pack that dies (I trimmed the log lines for
+readability):
+
+AH01215: warning: running upload-pack
+AH01215: fatal: The remote end hung up unexpectedly
+AH01215: warning: aborting
+AH01215: error: git-upload-pack died of signal 6
+AH01215: warning: running upload-pack
+
+So this request actually takes _two_ upload-pack instances to serve
+(which is not uncommon when we need multiple rounds of
+get_common_commits(), though I am a little surprised that would be the
+case for a clone). And the first one seems to be missing a closing
+"0000" flush packet from the client to end it.
+
+If that analysis is correct, this isn't affecting operation in any way;
+it's just giving a useless message from upload-pack (and as you note,
+that could trigger http-backend to exit(1), which may make the webserver
+unhappy).
+
+If we further instrument upload-pack to set GIT_TRACE_PACKET on the
+server side, we can see the two requests:
+
+packet:  upload-pack< want 379518c0c94e3b1a0710129d03d5560814a0ba6f multi_ack_detailed no-done side-band-64k thin-pack include-tag ofs-delta agent=git/2.9.0.37.gb3ad8ab.dirty
+packet:  upload-pack< deepen 1
+packet:  upload-pack< 0000
+packet:  upload-pack> shallow 379518c0c94e3b1a0710129d03d5560814a0ba6f
+packet:  upload-pack> 0000
+
+packet:  upload-pack< want 379518c0c94e3b1a0710129d03d5560814a0ba6f multi_ack_detailed no-done side-band-64k thin-pack include-tag ofs-delta agent=git/2.9.0.37.gb3ad8ab.dirty
+packet:  upload-pack< deepen 1
+packet:  upload-pack< 0000
+packet:  upload-pack> shallow 379518c0c94e3b1a0710129d03d5560814a0ba6f
+packet:  upload-pack> 0000
+packet:  upload-pack< done
+packet:  upload-pack> NAK
+packet:  upload-pack> 0000
+
+I think in the first one we would get "deepen 1" from the client in
+receive_needs(), and similarly write out our "shallow" line. But then we
+go into get_common_commits() and the client has hung up, which causes
+the message. Whereas in the second line it gives us a "done", which
+completes the negotiation.
+
+So my not-very-educated thoughts are:
+
+  1. The client should probably be sending an extra flush in the first
+     request. Alternatively, in the stateless-rpc case we should just
+     accept the lack of flush as an acceptable end to the request.
+
+  2. Presumably the shallowness is what causes the double-request, as
+     fetch-pack wants to see the shallow list before proceeding. But
+     since it has no actual commits to negotiate, the negotiation is a
+     noop. So probably this case could actually happen in a single
+     request.
+
+     I suspect that other fetches could not, though, so I'm not sure how
+     much effort is worth putting into optimizing.
+
+-Peff
