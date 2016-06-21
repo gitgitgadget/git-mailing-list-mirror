@@ -1,98 +1,78 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 617D71F744
-	for <e@80x24.org>; Tue, 21 Jun 2016 06:38:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2320F1F744
+	for <e@80x24.org>; Tue, 21 Jun 2016 07:15:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677AbcFUGiw (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 02:38:52 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:37051 "EHLO
-	mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751625AbcFUGiv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 02:38:51 -0400
-Received: by mail-it0-f44.google.com with SMTP id f6so7179445ith.0
-        for <git@vger.kernel.org>; Mon, 20 Jun 2016 23:37:51 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=+UybmM21/N0k9xI9xI4UA3ZKbU4z5o4vR49dasmFyDk=;
-        b=OJbTP3xdYxfhQFL3Eq8fRZAraRNllt/T0BtXiWqlF8NaZ5FBLyHQzWPIlqgyWOmdGn
-         q/Ysk3FJEUFrb83KjBdr0lj0I67ReJuP+xJkHUK+FiUKE4SxbAd2HSbIq90kTu3Zbdsn
-         37+kdwMQ6qX1RTpmFiUEKR5s/WeBLqeOTv77AaDnRw3Quaa8MtnhGk4NcjQ0LBdjBTR9
-         DitpVAMZ3xe4E+X5ikHRMmY/KS7e5l2ZSrlrpqBzD69FR2YDYT5zLmzwpwxjgYMXt+n7
-         6Kygr3A3v7xLPH/W7esFJNERJ4U9fuHLfXJuyOMjwoZHEv3kuXlhSV1DtbfLqC1YXYRs
-         RGOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+UybmM21/N0k9xI9xI4UA3ZKbU4z5o4vR49dasmFyDk=;
-        b=Rot5oB0lkklJdVK4gqqi5UEbBF/X0ew9TMkHd6UxguZZX3O4+ioSQpt+AY/bHtl0mz
-         zWWoAV9WU300w/uvAa1gdtTfUpNkakB3HOEIVUwxRijTTxudifux4Ha9Qt+fWZ19MnUn
-         6ZWs3ppFvDxCeTZi2vhAzhNM6Vxb9Z5+JlJYW19uzKnSCOnmKqlPNGGcYwhWpm0fyHIJ
-         pmC3FtHHJzZyO07j2gHlbluWavyhU3nZY7dEU7MgFCf17pHlnHKO7QLZCcfR0CTkGJwT
-         Yy7nIzlimbPxKyi4wAO/ZzIorLxEmbzhxzM44G/6mjelpAB3kU0eILxfS3PMSvmYfZSk
-         mDjg==
-X-Gm-Message-State: ALyK8tJB5M/VkMMDnygRz9Cxx+dEMPYUJwVkUrfd6eNdV5yqqJLoQpWE0+K1hsZtFtpHasKxsW2JpuD3jWKtVA==
-X-Received: by 10.36.125.74 with SMTP id b71mr2920859itc.2.1466491070759; Mon,
- 20 Jun 2016 23:37:50 -0700 (PDT)
+	id S932384AbcFUHPu (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 03:15:50 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50350 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753466AbcFUHPP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 03:15:15 -0400
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Lu2F0-1bPTFS3ZQc-011VJW; Tue, 21 Jun 2016 09:15:08
+ +0200
+Date:	Tue, 21 Jun 2016 09:15:05 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
+In-Reply-To: <xmqq4m8nvodo.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1606210906190.22630@virtualbox>
+References: <cover.1466244194.git.johannes.schindelin@gmx.de> <de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de> <CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com> <alpine.DEB.2.20.1606200814510.22630@virtualbox>
+ <xmqq4m8nvodo.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.107.175.104 with HTTP; Mon, 20 Jun 2016 23:37:50 -0700 (PDT)
-In-Reply-To: <20160620222112.GB6431@sigill.intra.peff.net>
-References: <CAM+g_NswH8fd8aFPEHfSLYnZWptNU2GX=xTWpehzjTJfJM_GfQ@mail.gmail.com>
- <CAGZ79kZL-ZY_0hZx9uA-ObPvMiD+EWvJYQa+OfCeQe2RLOPECA@mail.gmail.com>
- <CAM+g_NtNAWpLkbErL5-BUyH_3X4rYGfZwO0o-Hfu8zyam8pw7Q@mail.gmail.com>
- <20160620193928.GA3631@sigill.intra.peff.net> <20160620194648.GB3631@sigill.intra.peff.net>
- <20160620200011.GC3631@sigill.intra.peff.net> <20160620210901.GE3631@sigill.intra.peff.net>
- <xmqqy45zse7o.fsf@gitster.mtv.corp.google.com> <20160620222112.GB6431@sigill.intra.peff.net>
-From:	Norbert Kiesel <nkiesel@gmail.com>
-Date:	Mon, 20 Jun 2016 23:37:50 -0700
-Message-ID: <CAM+g_NtGWRCqaNz1DauZRReem0YPC6CaunHSwfhnB5LpvdGGcQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] fix local_tzoffset with far-in-future dates
-To:	Jeff King <peff@peff.net>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:gj8WrO8mixALwBk9umu8gs2AeQe/rDI15t50Pj1Up3pWCXyS1xo
+ ieHsVP6N5smfOeDm5BTXGhOjdaUaZArdFniPcxo19Mg0yEXAg5ZRORC3RSO8LjYGTVEeXSY
+ Y4l3lOCTJiaerjZFqseFdrbrWBZ75dWH8uNraBVfU00AowqPyyqUL4LhwJX9clqm5MeDeuL
+ SU6tj2GNJtgUfmoAe2nzQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:WLu8FK4Z4Tw=:4cm68Qxw7mmY2iai9LHKhY
+ H0gnIpHpCex/UoQoc5nxLV3bf0T6hFHKZCOeONZf41+WwA7IPC1gftZP6Y1LChO5U5YRdIpRz
+ 60nczNT8bcc6Ko8jkrXy1RkhbORDx5qae1HsyuL0FSmb0wPswAr19B+OT599BxX9FylPLhYO+
+ SkpMnvCekiiXzX+WKvLjmcldfbVSMlCVfxIF7mu2OA71a7MAdACBIad0xYYqN9Zn7nRPN2yWP
+ uMl1zvAk54Yg2n4e+Oto9YX/1pv3TGKwo1UIqMAdNw5nq1XvhWCRwLv6wNm+n/ITm1BZTVstK
+ FSYOVUKFDcmcCtkBTNnLh13O+u7ebg0RWh6JIQuXDn1DMqNmMHXhf2DxMdHFFp8WV86xJRk0d
+ nFHK6+jM70aPPSlwcvHJ2vPK0S35qMmxNc+gdlsdKSGm4IPSuNqT4dVkwzSp/Tmtl9VsM0Quq
+ cJo9foAFvqj0Zvz16H1O6Qqpr0DZyKDmkpFIHJluqUZoxMs/eBEXiH+e4hBa9SxPKQw+kqBFJ
+ yS45p6AHb0RD67NHvGcWIWSEn3csoIEpfcp0qW1W3fwM1mSQA4F4DO3MHYvrYqyqRBWLIG9eR
+ C/hT+DPrcyCMlpbxEbYA+DgI7vBQ1BWK6kzKXvjMM0SvRLMEOWL6Lj+DvqiFs3Q9U8/55evRi
+ 6WQnU1oLHj2qRT8EqgzM8IlJrlBKiOdW7n5dooripC7qTBGETyl2FBAEMT4/KlassUu+H72f+
+ CTM35KBAH6WYcfd6oDmJOXqIt0sNoKB/r38ixH982eDC6G7dJL4bzq5GsatFX3u+I+dWUfWcF
+ lkDBQ94
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-There are more strange things happening with dates.  One example is
-that `git commit --date=@4102444799` produces a commit with the
-correct author date "Thu Dec 31 15:59:59 2099 -0800" (for my local
-timezone which is Americas/Los_Angeles), while `git commit
---date=@4102444800` produces a commit with "now" as author date, as
-does any other larger number. `date --date=@4102444800` results in
-"Thu Dec 31 16:00:00 PST 2099". So seems 2100-01-01T00:00:00Z is a
-hard limit for git when using this format.
+Hi Junio,
 
-On Mon, Jun 20, 2016 at 3:21 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Jun 20, 2016 at 03:11:23PM -0700, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->>
->> > I still don't know how that screwed-up timestamp got _into_
->> > a commit, so perhaps there is another bug lurking.  I couldn't convince
->> > git to parse anything beyond 2100, and committing with
->> > GIT_AUTHOR_DATE='@5758122296 +0000' works just fine.
->>
->> Interesting.  The weirdest I could come up with was with
->>
->>     GIT_AUTHOR_DATE='@5758122296 -9999
->>
->> which gets turned into the same timestamp but with -10039 timezone
->> (simply because 99 minutes is an hour and 39 minutes).
->
-> Yeah, as weird as that is, I think it's reasonable. We _could_ turn
-> nonsense timezones into "+0000". That doesn't necessarily help the user
-> much, but at least it's less bizarre than making a 46-year timezone
-> offset.
->
-> I also looked for other uses of tm_to_time_t without checking for an
-> error return. Most of them do check. The exception is datestamp(), but
-> is calling it on the output of localtime(time()), which should generally
-> be sensible.
->
-> -Peff
+On Mon, 20 Jun 2016, Junio C Hamano wrote:
+
+> You can probably sell "when giving out put to file, we will never color
+> the output" as an improved new world order, but if that is what this
+> change wants to do, it probably deserves a separate patch.
+> 
+> I however think you can avoid breaking expectations by people who are
+> not so sensible by overriding only when use_color is set to
+> GIT_COLOR_AUTO, perhaps?
+
+That is a very convincing argument. So convincing that I wanted to change
+the patch to guard behind `diff_use_color_default == GIT_COLOR_AUTO`. But
+that is the wrong variable: the variable that *has* that default value is
+git_use_color_default, and is private to color.c.
+
+But then I dug further to determine under which circumstances that
+variable can be reset to any different value. It turns out that in
+format-patch's case, it cannot:
+
+	787570c (format-patch: ignore ui.color, 2011-09-13)
+
+I hope you agree that it will be enough to augment the commit message with
+this analysis and keep the patch as-is (as per v2, that is)?
+
+Ciao,
+Dscho
