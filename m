@@ -1,109 +1,164 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83C9A1FF40
-	for <e@80x24.org>; Tue, 21 Jun 2016 20:58:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EB081FF40
+	for <e@80x24.org>; Tue, 21 Jun 2016 21:01:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751513AbcFUU6I (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 16:58:08 -0400
-Received: from mout.web.de ([217.72.192.78]:53693 "EHLO mout.web.de"
+	id S1751788AbcFUVBl (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 17:01:41 -0400
+Received: from mout.web.de ([217.72.192.78]:59126 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751380AbcFUU6F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 16:58:05 -0400
+	id S1751647AbcFUVBk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 17:01:40 -0400
 Received: from [192.168.178.36] ([79.237.51.68]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MYO45-1atF2S0Yj3-00V7Dy; Tue, 21 Jun 2016 22:57:49
+ with ESMTPSA (Nemesis) id 0MgO8g-1b40ON2Pna-00Nf6Q; Tue, 21 Jun 2016 22:54:57
  +0200
 Subject: Re: [PATCH 1/2] archive-tar: write extended headers for file sizes >=
  8GB
 To:	Jeff King <peff@peff.net>
 References: <20160616043523.GA13615@sigill.intra.peff.net>
  <20160616043733.GA18323@sigill.intra.peff.net> <57687413.3030609@web.de>
- <20160621155920.GA7549@sigill.intra.peff.net> <5769A6CC.9030001@web.de>
+ <20160621155920.GA7549@sigill.intra.peff.net>
 Cc:	git@vger.kernel.org
 From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <5769AA47.4020806@web.de>
-Date:	Tue, 21 Jun 2016 22:57:43 +0200
+Message-ID: <5769A99A.9040508@web.de>
+Date:	Tue, 21 Jun 2016 22:54:50 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
  Thunderbird/38.7.2
 MIME-Version: 1.0
-In-Reply-To: <5769A6CC.9030001@web.de>
+In-Reply-To: <20160621155920.GA7549@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:+qW7Id4EBhPL4chJ8dq5YHIDhw/FOjl8NMHf92BEE/T6irO88Np
- k2JlJy0J+99q7AGtb2WLqvcoijIoo2oGzVAVHsVZ9GkP3Z1WrnYruXvTe5PzaLBK+UzUbnA
- tTiWGqw1KNSgMJzTuGPyd4lC3Vu4Y57WcVTvesln2gCiAsUq433FcGbR56YcGRP1qA/iWAW
- dijb3NyYkNOfuWCRECQ2w==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:pVr8/JuTVJ4=:saZe23xOSx5hWyogix8FPU
- yOocoTGIRR9Q9JND454G5KR0zawDhLqtKy2YBGr9iFIdxKILHqV9jgbyghQOYRhtpcBQ04Sht
- u14/xRqaWmyrOnKWioqTEBYAwX9XiwH/hT/M2rVUlFR/VPsgoomVoV/bE+a5fgkcdk700Q+sn
- CGdcDuAa/8WEvPQ6WQuzkm1s10BfN9xR6xUKcU2VWJN7MHVANHgVrNCkgOLLjFjnsPupNBMN2
- C/pxgeIW+B1YvNVbjcO1yR/re0eaMcAz3m16fZ0dPXNt1K+M1au/PRED+69UJRvXUIeBf2y+F
- Is/p75eDSXtVntXTBerLktOy5iagdb6Z2PYnDoxFeeXaDE2G5olJWfLKWP07g2VkAia67lrPk
- OMZNMh9I5oqswEV52loRfxhWla+DToa7krPrp3amrE+2X8Fe4KWq0Sj25onNJc3HzsDclBAWQ
- 6UxMlXeldKW7M2C9VmIktaJj2X0+r0/kYk+mqEV1GH8K+TFSDXklN5xMag0z7EBni7RMmX04u
- 2T8vfSqNPS33LmIQPNCch3KFWnTTeEFT3a51xyDoZWn4j3Gw7aVfjFhgkKTrQSsnOxKUX6v2c
- c38ow+Pp3e1YxiEMTxrphlOjqMSVQoQH+k84xTXOfvAo961D8oTaMeeRfC4LCT4ib31gkRf75
- 54E71e2G3bG0YDhdY/RlVdHl6uz9B+TJNGaVlR2CgVqb1EU5PAWQv7fXV+PPBcvA0sieNKEQ0
- fwYbFXH8WXrgKWCAfq6GrfvY2T1kxQILT/dmGqxJ5KlUMcTaGmtcqCfghyYhsM9INPYCQBp5w
- TflzOpp
+X-Provags-ID: V03:K0:iJWdS/sYJXAqrC0ClYnilLPdqM+zxrFkOI7eLm0rwcOUHye1o20
+ w5DEjxvfqsmCSdzQ2U56yWTUSwcFVGzWs3p6G9tMhPBM80UoZSgKT8NC3g26uRHj0BpSAEZ
+ lGQ6+SjWFCFpn7SmRU85hELjphLd1x5pGkea4fGUVcuZ9ZFC0J0EIJj7lyuGE9/PGfuT7xe
+ LPBDcG1kbl9QVdewoTDOg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:qLbX/UDQkL0=:yfcEx+slXr70VOwWz0BGyt
+ n4bqobJOLBglBWz6mgPZ7EUD6PqVhjZhiI150XPmA3hQD8XUEsMVGN+UJOM6YZCDwTOl7X3BB
+ x0uZ1rKjb5LOORfYVbE6eJGjrhKG9CnEiUIVNMutxUHq542FsucgJWzkENSbhKydTVaLatIYd
+ afTjpki7JN1LFKHJ8nemnBIKsBMh7NTRn98JMN18jZzw677Eg5j3YttlUGpyQYDNYukZTpMp/
+ S1sTbWu0GBDBif39RXBl0P7cHxrBgPunXAxFVYCnToy3hanjzK/c+MmpmvGRIOjvu+urJrbvy
+ ob6I1ib5RssrURc4fWIsF1qR2jGHTLV/jK3EK2anwYgiUFf2gYrMlSPFr0JP9Abg/pCQcRRiA
+ u8hnAD8SygXJzqk/YWmw3phWVrJRWgtDaDYguX7F9q6Ealo2fMnHBj87wzh9kq26xql4ocbBK
+ 1Y5V1XakKfgjQEJ5us31AwpyQr031in2zkmyh4JS1lvOcUxHJ+itcnDPvK2BychsEaL2O+AYH
+ ePBHm13n3crCiECYUau16IGCArfmjllgQw61D525d0TPaKaOtCcXz2MuiOudHRdxgjyJpMs66
+ qxx4842TsEdA6ryLl/YNDkYimwdr2lXqua7VzvqP25NA4K8oo8EuAIM8YszVY4WOEhzGVAEev
+ OJI9HXBNQV46tXMRsR5OA3Y5A2IbZrYIRdsfdn1GNtQiKdR2ONzGyh6C+hB/kT+tlXCB9FBwZ
+ UzTqAXcWzrteewZaAjj5nig/TJSd7HFMymKym8La4dqxj7G8QpkSsPz7R1t3395fbh0JDaScN
+ pIToZva
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Am 21.06.2016 um 22:42 schrieb René Scharfe:
-> The value 120 is magic; we need it to pass the tests.  That's
-> because prepare_header() is used for building extended header
-> records as well and we don't create extended headers for extended
-> headers (not sure if that would work anyway), so they simply
-> vanish when they're over the limit as their size field is set to
-> zero.
+Am 21.06.2016 um 17:59 schrieb Jeff King:
+> On Tue, Jun 21, 2016 at 12:54:11AM +0200, René Scharfe wrote:
+>
+>>> Unfortunately, it's quite an expensive test to run. For one
+>>> thing, unless your filesystem supports files with holes, it
+>>> takes 64GB of disk space (you might think piping straight to
+>>> `hash-object --stdin` would be better, but it's not; that
+>>> tries to buffer all 64GB in RAM!). Furthermore, hashing and
+>>> compressing the object takes several minutes of CPU time.
+>>>
+>>> We could ship just the resulting compressed object data as a
+>>> loose object, but even that takes 64MB. So sadly, this code
+>>> path remains untested in the test suite.
+>>
+>> If we could set the limit to a lower value than 8GB for testing then we
+>> could at least check if the extended header is written, e.g. if ustar_size()
+>> could be convinced to return 0 every time using a hidden command line
+>> parameter or an environment variable or something better.
+>
+> Yes, we could do that, though I think it loses most of the value of the
+> test. We can check that if we hit an arbitrary value we generate the pax
+> header, but I think what we _really_ care about is: did we generate an
+> output that somebody else's tar implementation can handle.
 
-So how about something like this to make sure extended headers are
-only written for regular files and not for other extended headers?
+I agree with the last point, but don't see how that diminishes the
+value of such a test.  If we provide file sizes only through extended
+headers (the normal header field being set to 0) and we can extract
+files with correct sizes then tar must have interpreted those header
+as intended, right?
+
+(Or it just guessed the sizes by searching for the next header magic,
+but such a fallback won't be accurate for files ending with NUL
+characters due to NUL-padding, so we just have to add such a file.)
+
+René
+
+
+-- >8 --
+Subject: archive-tar: test creation of pax extended size headers
+
 ---
- archive-tar.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+The value 120 is magic; we need it to pass the tests.  That's
+because prepare_header() is used for building extended header
+records as well and we don't create extended headers for extended
+headers (not sure if that would work anyway), so they simply
+vanish when they're over the limit as their size field is set to
+zero.
+
+ archive-tar.c       | 7 ++++++-
+ t/t5000-tar-tree.sh | 7 +++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/archive-tar.c b/archive-tar.c
-index ed562d4..f53e61c 100644
+index f53e61c..fbbc4cc 100644
 --- a/archive-tar.c
 +++ b/archive-tar.c
-@@ -199,7 +199,7 @@ static void prepare_header(struct archiver_args *args,
+@@ -14,6 +14,7 @@ static char block[BLOCKSIZE];
+ static unsigned long offset;
+ 
+ static int tar_umask = 002;
++static unsigned long ustar_size_max = 077777777777UL;
+ 
+ static int write_tar_filter_archive(const struct archiver *ar,
+ 				    struct archiver_args *args);
+@@ -179,7 +180,7 @@ static size_t get_path_prefix(const char *path, size_t pathlen, size_t maxlen)
+ 
+ static inline unsigned long ustar_size(uintmax_t size)
  {
- 	xsnprintf(header->mode, sizeof(header->mode), "%07o", mode & 07777);
- 	xsnprintf(header->size, sizeof(header->size), "%011lo",
--		  S_ISREG(mode) ? ustar_size(size) : 0);
-+		  S_ISREG(mode) ? size : 0);
- 	xsnprintf(header->mtime, sizeof(header->mtime), "%011lo",
- 		  ustar_mtime(args->time));
- 
-@@ -240,7 +240,7 @@ static int write_tar_entry(struct archiver_args *args,
- 	struct ustar_header header;
- 	struct strbuf ext_header = STRBUF_INIT;
- 	unsigned int old_mode = mode;
--	unsigned long size;
-+	unsigned long size, size_in_header;
- 	void *buffer;
- 	int err = 0;
- 
-@@ -299,12 +299,14 @@ static int write_tar_entry(struct archiver_args *args,
- 			memcpy(header.linkname, buffer, size);
+-	if (size <= 077777777777UL)
++	if (size <= ustar_size_max)
+ 		return size;
+ 	else
+ 		return 0;
+@@ -412,6 +413,10 @@ static int git_tar_config(const char *var, const char *value, void *cb)
+ 		}
+ 		return 0;
  	}
++	if (!strcmp(var, "tar.ustarsizemax")) {
++		ustar_size_max = git_config_ulong(var, value);
++		return 0;
++	}
  
--	if (S_ISREG(mode) && ustar_size(size) != size)
-+	size_in_header = S_ISREG(mode) ? ustar_size(size) : size;
-+	if (size_in_header != size)
- 		strbuf_append_ext_header_uint(&ext_header, "size", size);
+ 	return tar_filter_config(var, value, cb);
+ }
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 4b68bba..03bb4c7 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -102,6 +102,7 @@ test_expect_success \
+      echo long filename >a/four$hundred &&
+      mkdir a/bin &&
+      test-genrandom "frotz" 500000 >a/bin/sh &&
++     printf "\0\0\0" >>a/bin/sh &&
+      printf "A\$Format:%s\$O" "$SUBSTFORMAT" >a/substfile1 &&
+      printf "A not substituted O" >a/substfile2 &&
+      if test_have_prereq SYMLINKS; then
+@@ -157,6 +158,12 @@ test_expect_success 'git-archive --prefix=olde-' '
+ 
+ check_tar with_olde-prefix olde-
+ 
++test_expect_success !TAR_NEEDS_PAX_FALLBACK 'pax extended size headers' '
++	git -c tar.ustarsizemax=120 archive HEAD >extended_size_header.tar
++'
 +
- 	if (ustar_mtime(args->time) != args->time)
- 		strbuf_append_ext_header_uint(&ext_header, "mtime", args->time);
- 
--	prepare_header(args, &header, mode, size);
-+	prepare_header(args, &header, mode, size_in_header);
- 
- 	if (ext_header.len > 0) {
- 		err = write_extended_header(args, sha1, ext_header.buf,
++check_tar extended_size_header
++
+ test_expect_success 'git archive on large files' '
+     test_config core.bigfilethreshold 1 &&
+     git archive HEAD >b3.tar &&
 -- 
 2.9.0
-
 
