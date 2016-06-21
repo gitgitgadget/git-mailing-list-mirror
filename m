@@ -1,109 +1,145 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D4D11FF40
-	for <e@80x24.org>; Tue, 21 Jun 2016 20:30:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D1AC1FF40
+	for <e@80x24.org>; Tue, 21 Jun 2016 20:42:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751919AbcFUUah (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 16:30:37 -0400
-Received: from mout.web.de ([212.227.17.12]:57802 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751483AbcFUUad (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 16:30:33 -0400
-Received: from [192.168.2.149] ([79.223.114.6]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0LwYs7-1bRkjh1moh-018IdR; Tue, 21 Jun 2016 22:30:25
- +0200
-Subject: Re: [PATCH] t7800 readlink not found
-To:	Junio C Hamano <gitster@pobox.com>,
-	Armin Kunaschik <megabreit@googlemail.com>
-References: <CALR6jEiJwx14zAyond9ggz29Q64Fz84URtjr8zaddjnrdY7TjA@mail.gmail.com>
- <vpqk2ijs8p2.fsf@anie.imag.fr> <xmqq1t4r75sv.fsf@gitster.mtv.corp.google.com>
- <CALR6jEj67MA7CCHQ_jfdtAuGoo9wjPie0+a=e-BqJjoYtJ9oHw@mail.gmail.com>
- <xmqqfut75peg.fsf@gitster.mtv.corp.google.com>
- <CALR6jEixZitA1CTE_kDkDEHv59ALT9zkCOgd28unMhLUZKt48Q@mail.gmail.com>
- <20160527041944.GA17438@gmail.com> <574CDA24.1020906@googlemail.com>
- <574D1BEA.5020409@web.de> <xmqqzir67p1y.fsf@gitster.mtv.corp.google.com>
- <CALR6jEgAtvuecJ4OPOAcDGh3o02oM_WP5_CM8Y52eW2hjuLDNg@mail.gmail.com>
- <xmqqy45ypesl.fsf@gitster.mtv.corp.google.com>
-Cc:	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	David Aguilar <davvid@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-From:	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <5769A3D4.5060506@web.de>
-Date:	Tue, 21 Jun 2016 22:30:12 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.8.0
+	id S1752077AbcFUUmE (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 16:42:04 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51609 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750998AbcFUUkl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 16:40:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 42DB5270D2;
+	Tue, 21 Jun 2016 16:35:03 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MKjQKDrjsurZqOED7ZuNfM9WwlI=; b=kLHK6d
+	NuUgPA4sNT2FJuGcZ3IJ3aiBsDvtqBIxLmtw5Wj4ADGzevj26vk0fsK9rX1xYa0x
+	GYltKIYYsbIxAPHuiy9LbpMGIktcOZ+efEnwSx5XL3h8CenS9iTUeXUGxywYPkuB
+	gsi74jsdVkrYm1PjDuE2v3wVjrchnIUdJrQMU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DLo8kWXn/h4MSfW6df+QtZ7FHWwH9MpU
+	NGTiEI6+sNCzh6yXIbrYUujUZuIGoFcpVjd10sZHWDiLBSX6yv+uZkrOF4p6FZ/s
+	ggWwcM9t068teC3Eb6MX3dxpmIXF94RPU3gQYZ+4+fwxuG24EY3TpPxFi08SPlZx
+	g26vC1C4Usk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 39A36270D1;
+	Tue, 21 Jun 2016 16:35:03 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A22E0270D0;
+	Tue, 21 Jun 2016 16:35:02 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH v2] Make find_commit_subject() more robust
+References: <34ef85eb4e2aef0b342ef5d3bce9e468c8339486.1466255489.git.johannes.schindelin@gmx.de>
+	<901b24554eb4d0381d74ceb31f7bd08709d5eb25.1466512959.git.johannes.schindelin@gmx.de>
+Date:	Tue, 21 Jun 2016 13:34:59 -0700
+In-Reply-To: <901b24554eb4d0381d74ceb31f7bd08709d5eb25.1466512959.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Tue, 21 Jun 2016 14:43:22 +0200
+	(CEST)")
+Message-ID: <xmqq60t2p9fw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqy45ypesl.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:ocvs0PmywVjc8HjN2/Fke9eHifbwCbKUhkKACJnfUKAshOJfR+T
- ZJMWZWfQ8VqeZJynjS2SO9YkJT5veQeXxmi1yYOhdMY3FQoErolxCmYS/P4q/UGZDbr4ybY
- +65fc6XkJ9QuxWBSiSoturW2FBW6Np7DpTItxL3eOc3IHp+CHaILR6df1dstDf7r/5Q0fbd
- U3z1ZYvJBAMk33ueAz/PA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:9MPzf91CDig=:lLL85ER2n43UgKXm6Dm/pe
- rXX5cWOZhMI3+McqxLNtyPc5qbXxTRlzU3bGsyz7VDQ132k9q6Jd5fU2Z41fgIULBFmhTD6MO
- AJvqSzXmw2Rnu4btO3iAba9rOuXrg+VHeeXDP0GcjAXPHVTqUFkd7y9n+IdtLTaYekCZKB9uo
- AT1iA5rwA2nT8soSfqRQD8PHGvw3bdzaUt/6FYSpnvhgotNsAdYwIp9v0mt5JzLNj6uydcko2
- C/pA/r1ghX7MoRQ7EIXGXYJC/FvXcAz0Q2hZP45laTpE2BU1q7l5RPM38xo0VTQukpD9pSG9R
- WHIN/XdHvL/4Or7rfDAeOR2T6OaaU991TmRtHf3OFmS6fG8UOQdi16xPJIPz+jjmb0kUNa975
- GHDwXSGBq8awypzTj7GwS3oJX+4bCb2/+J3cDBbCOUzacOuVXucAKZZ9Uw1O+ome2gtAzXNGf
- xrKkaHPIMya6VzSiuyFuCPKxUv4pcsDPjBmIx3XrpXHYe/dO4aAf9A4JHeNdnSjzCsRoFC/j6
- gaY01WP+7/lnn4h+PCCZaO13O5OTBJaOkT1G7Iv11GobsRy0MfTRgEjNDoI+BuWAYD3lNqiBL
- l+0UbXl0zBCMw0w0jON3GIBlqfKsfLxxOziOXxIy7uqSVOHWK5d/hLzbDltJLGIgS6kh90Dkj
- zfAbIQzexsLUTCl6pn6XRe2UUG0R5NYSretuCKctF+iGU/w7MktqSat22DWHNxi+1J5svjbVc
- v9WNCsA+PAhLXRJNTDKaXgsC/tWHG+KvEoUxMvWwPnIZwyxBQfeI0bESqIg57WS1rEmX9VeV/
- +zCkivd
+Content-Type: text/plain
+X-Pobox-Relay-ID: A17323E0-37EF-11E6-9591-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 06/21/2016 08:39 PM, Junio C Hamano wrote:
-> Armin Kunaschik <megabreit@googlemail.com> writes:
->
->> On Tue, May 31, 2016 at 7:51 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Torsten Bögershausen <tboegi@web.de> writes:
->>>
->>>>> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
->>>>> index 7ce4cd7..905035c 100755
->>>>> --- a/t/t7800-difftool.sh
->>>>> +++ b/t/t7800-difftool.sh
->>>>> @@ -446,7 +446,7 @@ write_script .git/CHECK_SYMLINKS <<\EOF
->>>>>    for f in file file2 sub/sub
->>>>>    do
->>>>>       echo "$f"
->>>>> -    readlink "$2/$f"
->>>>> +    ls -ld "$2/$f" | sed -e 's/.* -> //'
->>>>>    done >actual
->>>>>    EOF
->>>>>
->>>> I don't know how portable #ls -ld" really is.
->>> The parts with mode bits, nlinks, uid, gid, size, and date part do
->>> have some variations.  For example, we have been burned on ACL
->>> enabled systems having some funny suffix after the usual mode bits
->>> stuff.
->>>
->>> However, as far as this test is concerned, I do not think "how
->>> portable is the output from ls -ld" is an especially relevant
->>> question.  None of the things we expect early in the output (the
->>> fields I enumerated in the previous paragraph) would contain " -> ".
->>> And we know that we do not use a filename that has " -> " (or "->")
->>> as a substring in our tests.
->>>
->>> We don't have to use readlink, even on platforms where we do have
->>> readlink.  Building the conditional to be checked at runtime and
->>> providing a shell function read_link that uses "ls -ld | sed" or
->>> "readlink" depending on the runtime check is wasteful.
->> Just a short, curious question: Is this patch to be accepted/included some time?
->> I didn't see it in 2.8.4 nor 2.9.0. Maybe it just fell off the table...
-> Yes, I think this fell off the table as I was waiting for some kind
-> of agreement or counter-proposal, neither of which came and the
-> thread was forgotten.
->
-> Unless Torsten still has strong objections (or better yet, a better
-> implementation), I am inclined to queue it as-is.
->
-I just double-checked the man pages for Mac OS and opengroup:
-No better implementation from my side -> No objections
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
+> Just like the pretty printing machinery, we should simply ignore empty
+> lines at the beginning of the commit messages.
+
+Thanks.
+
+>
+> This discrepancy was noticed when an early version of the rebase--helper
+> produced commit objects with more than one empty line between the header
+> and the commit message.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> Published-As: https://github.com/dscho/git/releases/tag/leading-empty-lines-v2
+>
+> 	git blame seemed to be the most accessible user of
+> 	find_commit_subject()...
+>
+>  commit.c                 |  2 ++
+>  t/t8008-blame-formats.sh | 17 +++++++++++++++++
+>  2 files changed, 19 insertions(+)
+> Interdiff vs v1:
+>
+>  diff --git a/t/t8008-blame-formats.sh b/t/t8008-blame-formats.sh
+>  index 29f84a6..03bd313 100755
+>  --- a/t/t8008-blame-formats.sh
+>  +++ b/t/t8008-blame-formats.sh
+>  @@ -87,4 +87,21 @@ test_expect_success 'blame --line-porcelain output' '
+>   	test_cmp expect actual
+>   '
+>   
+>  +test_expect_success '--porcelain detects first non-empty line as subject' '
+>  +	(
+>  +		GIT_INDEX_FILE=.git/tmp-index &&
+>  +		export GIT_INDEX_FILE &&
+>  +		echo "This is it" >single-file &&
+>  +		git add single-file &&
+>  +		tree=$(git write-tree) &&
+>  +		commit=$(printf "%s\n%s\n%s\n\n\noneline\n\nbody\n" \
+>  +			"tree $tree" \
+>  +			"author A <a@b.c> 123456789 +0000" \
+>  +			"committer C <c@d.e> 123456789 +0000" |
+>  +		git hash-object -w -t commit --stdin) &&
+>  +		git blame --porcelain $commit -- single-file >output &&
+>  +		grep "^summary oneline$" output
+>  +	)
+>  +'
+>  +
+>   test_done
+>
+>
+> diff --git a/commit.c b/commit.c
+> index 3f4f371..7b00989 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -415,6 +415,8 @@ int find_commit_subject(const char *commit_buffer, const char **subject)
+>  		p++;
+>  	if (*p) {
+>  		p += 2;
+> +		while (*p == '\n')
+> +			p++;
+>  		for (eol = p; *eol && *eol != '\n'; eol++)
+>  			; /* do nothing */
+>  	} else
+> diff --git a/t/t8008-blame-formats.sh b/t/t8008-blame-formats.sh
+> index 29f84a6..03bd313 100755
+> --- a/t/t8008-blame-formats.sh
+> +++ b/t/t8008-blame-formats.sh
+> @@ -87,4 +87,21 @@ test_expect_success 'blame --line-porcelain output' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success '--porcelain detects first non-empty line as subject' '
+> +	(
+> +		GIT_INDEX_FILE=.git/tmp-index &&
+> +		export GIT_INDEX_FILE &&
+> +		echo "This is it" >single-file &&
+> +		git add single-file &&
+> +		tree=$(git write-tree) &&
+> +		commit=$(printf "%s\n%s\n%s\n\n\noneline\n\nbody\n" \
+> +			"tree $tree" \
+> +			"author A <a@b.c> 123456789 +0000" \
+> +			"committer C <c@d.e> 123456789 +0000" |
+> +		git hash-object -w -t commit --stdin) &&
+> +		git blame --porcelain $commit -- single-file >output &&
+> +		grep "^summary oneline$" output
+> +	)
+> +'
+> +
+>  test_done
