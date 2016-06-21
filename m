@@ -1,73 +1,127 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDEC31FF40
-	for <e@80x24.org>; Tue, 21 Jun 2016 13:53:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 684971FF40
+	for <e@80x24.org>; Tue, 21 Jun 2016 13:55:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160AbcFUNxk (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 09:53:40 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:36516 "EHLO
-	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751576AbcFUNxC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jun 2016 09:53:02 -0400
-Received: by mail-it0-f66.google.com with SMTP id h190so2293581ith.3
-        for <git@vger.kernel.org>; Tue, 21 Jun 2016 06:53:02 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=2Eo5toRLlCPBZKplu8kstPDnOyarROwzVHSS9nN9TIg=;
-        b=iLRDNxme+tKpIbyKpuSXzmNa1vADEvjEXMeCKHtEClrEKeHrL75oE0GbjJKpOD03pT
-         BnrtE1t4hazpbf55BM6qOm3XhriiWbMaMi9JcqGScAm+pukgkYww2Z2QqQfOqoxxZxCg
-         PLaL/0yRQW6Kv/QZFGUZBZ9GK6+v6Nqp6a7lCO37k95YudgimLqd6ikglgOemM4FBsr7
-         2o/PHi872l1skRlbdoDfMIE5dyRdbAT3w4hegTdbxNTY/BiRXOQ9Vc+Kpm/+kUyspVcR
-         buxbOKA2iQ1MTXKpZxJ7jL8CSys/MRXgaeE9a3NuftOzjDJ5DxQwN1oOz1d+dZxdiwTc
-         uQtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=2Eo5toRLlCPBZKplu8kstPDnOyarROwzVHSS9nN9TIg=;
-        b=hCkDXNWNgAQV2XBgS/0/FhaS0SRzpVNzCKxyN5CMdWcMDCT3XwMwDKVPv25jqf/ktF
-         4J9sqNyxpVXf7la0INi1YZMJPukoeWNeUcsMSnIz5qnNFs2hkFuBSpPZzkUNHhEuG/Hv
-         jo4x+O0yxcDrFJfqWTZFeEgm6sZ8Sn/yKobV8A+QSqr5r7/I8Tpt5pPIWiTnWHupcyCC
-         hrqqE1edOE2Db86OEq8DGPqdbPblBfMMiU5Z/25Coqjcsl7ocXUyGz1hBl2Ky1rxNlf3
-         lCTC4TfZhoYqZ7x2o2CBegStXp/Hbg9eq2QuKW9jNc4uz8S3kB4aDOX3QvlKhT2suymz
-         /A7A==
-X-Gm-Message-State: ALyK8tLvpPddbYsa7Suj0bWnUztdLuqB/JhWAgM9E/XloS4D+yW6O+xSHO1XusQ+qWDKXThazrh3mB7Te2k+Yw==
-X-Received: by 10.36.73.3 with SMTP id z3mr5881737ita.68.1466517181515; Tue,
- 21 Jun 2016 06:53:01 -0700 (PDT)
+	id S1751586AbcFUNzW (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 09:55:22 -0400
+Received: from mout.gmx.net ([212.227.15.19]:60896 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751568AbcFUNzV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 09:55:21 -0400
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MGAdz-1bCNRd3wxT-00FEW6; Tue, 21 Jun 2016 15:53:47
+ +0200
+Date:	Tue, 21 Jun 2016 15:53:43 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	git@vger.kernel.org
+cc:	Junio C Hamano <gitster@pobox.com>,
+	Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH v2] perf: accommodate for MacOSX
+In-Reply-To: <ae429d2481111f7ad1927ef22e3a691d4c99ebd7.1466254995.git.johannes.schindelin@gmx.de>
+Message-ID: <fa788ff09727fc37d8e799dbf1a92e4bba4152c9.1466517188.git.johannes.schindelin@gmx.de>
+References: <ae429d2481111f7ad1927ef22e3a691d4c99ebd7.1466254995.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.79.102.5 with HTTP; Tue, 21 Jun 2016 06:53:00 -0700 (PDT)
-From:	Robert Gepor <robertgepor10@gmail.com>
-Date:	Tue, 21 Jun 2016 15:53:00 +0200
-Message-ID: <CAGEWZ4LWrckGMjMrCUALWcwsaSXm1jzqcSicOPWvTCw9BbwjRg@mail.gmail.com>
-Subject: =?UTF-8?Q?BONJOUR_=28=28_AVEZ=2DVOUS_RE=C3=87U_MON_PREMIER_MESSAGE_=29=29?=
-To:	undisclosed-recipients:;
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:MoYw1/i4i2qD5MVb4vmHHEY64mzrXi1YuEbYTgp6d1yzrBmOBHD
+ igTCCrb8yeaV+OzTmcZH2/Q2zBc+vekAKIKyBk7V16REzms8vlWbytzG2xJXgAZBMCxQIzP
+ 9PnTn79vNZ+9TnM7ltjdOr1jmzfCDHa9N51jWv9i+lghbCNeE2zkxCz0NApJnna8e8PPcvp
+ D06Ll58m22La1u4gSDjyw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:mxduDDfB6hU=:pK3Oqj60CnvFmUgbsrTrfO
+ 9dYJz5dJ8enBZApfbFCK0Esq8PsW4P+APoNQvczlPglJK3NVnTbJfEfjODSi5b84f5QYJpRRI
+ rlkzfW7QHyxQeXzXeU/7yLuwSexwVEzALgOLFCOoo9tDvg9K5DzoOCSXubH2/bKIOOVUtnk52
+ 6osmcSG4iiEb92SKXhUd32oP0ssGsEzmk+GJmKJCD4ZyGKB/lMs2jvN65Fxfs+WOyB2QKrILv
+ yG4euVYkIbT4deCNmWoMhP+xUw3Nhr+OFhaH+j7OQUwVWvRkZuU275/yTM5GviHVtSyLfircc
+ gW7H8OD1r+JlQuV368JJJO6EMih2V63FOM4BWm7OKNNrck3MsAUEJ8Z+jJEA3y5MVKcFLvvf5
+ oLTArz2cv/mnDdN4nfPcDlhqYLCINyfGCETsaehjoLjoNPkKgh2ro6iwKXFE+TVBzHVYVXL33
+ v4BbxWEw2Jdz6KWN7Msa3TGNZFKqwxeBlm2762kw3Nox7q41UeTJVt1/QboSD8KG6wl7JVPsZ
+ hmKaALbocvnsIXmgImtPH/L9IUQcKwIUtOQlbaquKSC75Ar59vlBS2zYLRy52LaB2VnIbzhDQ
+ LtnvNVu9C0fqn+O5MtHaQBfK4E8ErXMow9GIjAEhhQRAubrJjMFcPrDcGudxGxxGsE4MPRjii
+ oRh6P/+MNO+T5lGpRUB51RnJbNUUTRP+hUTY747xhogE0f3Zo72V6bKdFAxlNNCsdGGcgoGN2
+ y+ajUKHOI355txPs8nnIwt6RVseL15tbbQf1O4nLLqgINwaPiu1dQqPJE7NNuMWktB9DGKn7m
+ lztQxHB
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-SALUT
-Je veux vous demander votre avis sur la façon d'investir dans votre
-pays ?? nos principaux bailleurs  sommes prêts à financer des projets
-rentables et offrir des prêts pour des projets privés, nos Partenaire
-( chef financer )  est en Europe, en Asie, Emirats Arabes Unis et
-l'Afrique Même si votre propres projets est confrontée à la faillite
-et a la  recherche de financement ou si votre société est confrontée à
-la faillite, notre bailleur de fonds est prêt à vous satisfaire.Une
-fois que nous recevons la confirmation de l'intérêt, nous vous
-mettrons en contact direct avec le propriétaire du fond  nos
-principaux bailleurs  ( chef financer ) .
-    Il est très impératif que nous répondons à notre adresse  privé au
-( robertgepor10@gmail.com), qui nous permet de recevoir et répondre
-vous dès que possible.
+As this developer has no access to MacOSX developer setups anymore,
+Travis becomes the best bet to run performance tests on that OS.
 
-Cordialement,
+However, on MacOSX /usr/bin/time is that good old BSD executable that
+no Linux user cares about, as demonstrated by the perf-lib.sh's use
+of GNU-ish extensions. And by the hard-coded path.
 
-Mr ROBERT GEPOR.
-Email:robertgepor10@gmail.com
-Paris, France
-Tel.   Privé:      0033787844139
+Let's just work around this issue by using gtime on MacOSX, the
+Homebrew-provided GNU implementation onto which pretty much every
+MacOSX power user falls back anyway.
+
+To help other developers use Travis to run performance tests on
+MacOSX, the .travis.yml file now sports a commented-out line that
+installs GNU time via Homebrew.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Published-As: https://github.com/dscho/git/releases/tag/perf-macosx-v2
+ .travis.yml        | 2 ++
+ t/perf/perf-lib.sh | 6 +++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+Interdiff vs v1:
+
+ diff --git a/.travis.yml b/.travis.yml
+ index 0e569bc..c2b76f9 100644
+ --- a/.travis.yml
+ +++ b/.travis.yml
+ @@ -82,7 +82,9 @@ before_install:
+        brew tap homebrew/binary --quiet
+        brew_force_set_latest_binary_hash perforce
+        brew_force_set_latest_binary_hash perforce-server
+ -      brew install git-lfs perforce-server perforce gettext gnu-time
+ +      # Uncomment this if you want to run perf tests:
+ +      # brew install gnu-time
+ +      brew install git-lfs perforce-server perforce gettext
+        brew link --force gettext
+        ;;
+      esac;
+
+
+diff --git a/.travis.yml b/.travis.yml
+index c20ec54..c2b76f9 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -82,6 +82,8 @@ before_install:
+       brew tap homebrew/binary --quiet
+       brew_force_set_latest_binary_hash perforce
+       brew_force_set_latest_binary_hash perforce-server
++      # Uncomment this if you want to run perf tests:
++      # brew install gnu-time
+       brew install git-lfs perforce-server perforce gettext
+       brew link --force gettext
+       ;;
+diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+index 18c363e..773f955 100644
+--- a/t/perf/perf-lib.sh
++++ b/t/perf/perf-lib.sh
+@@ -127,11 +127,15 @@ test_checkout_worktree () {
+ # Performance tests should never fail.  If they do, stop immediately
+ immediate=t
+ 
++# Perf tests require GNU time
++case "$(uname -s)" in Darwin) GTIME="${GTIME:-gtime}";; esac
++GTIME="${GTIME:-/usr/bin/time}"
++
+ test_run_perf_ () {
+ 	test_cleanup=:
+ 	test_export_="test_cleanup"
+ 	export test_cleanup test_export_
+-	/usr/bin/time -f "%E %U %S" -o test_time.$i "$SHELL" -c '
++	"$GTIME" -f "%E %U %S" -o test_time.$i "$SHELL" -c '
+ . '"$TEST_DIRECTORY"/test-lib-functions.sh'
+ test_export () {
+ 	[ $# != 0 ] || return 0
+-- 
+2.9.0.118.g0e1a633
+
+base-commit: ab7797dbe95fff38d9265869ea367020046db118
