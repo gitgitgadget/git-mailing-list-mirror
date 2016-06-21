@@ -1,75 +1,95 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5416E1F744
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70DCA1F744
 	for <e@80x24.org>; Tue, 21 Jun 2016 07:57:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754843AbcFUH5c (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 03:57:32 -0400
-Received: from parmail04.iap.socgen.com ([207.45.249.188]:11108 "EHLO
-	parmail04.iap.socgen.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751369AbcFUH53 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jun 2016 03:57:29 -0400
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Jun 2016 03:57:28 EDT
-X-IronPort-AV: E=Sophos;i="5.26,502,1459807200"; 
-   d="scan'208";a="387296796"
-Received: from unknown (HELO fedher-ext.hermes.si.socgen) ([175.128.206.141])
-  by parmail04.iap.socgen.com with ESMTP; 21 Jun 2016 09:50:44 +0200
-Received: from unknown (HELO HUBSEC666.hermes.si.socgen) ([175.128.206.34])
-  by fedher-ext.hermes.si.socgen with ESMTP/TLS/AES128-SHA; 21 Jun 2016 09:50:47 +0200
-Received: from MMXDC2640.hermes.si.socgen (175.128.14.28) by
- HUBSEC666.hermes.si.socgen (175.128.206.34) with Microsoft SMTP Server (TLS)
- id 14.3.235.1; Tue, 21 Jun 2016 09:50:47 +0200
-Received: from MMXDC2642.hermes.si.socgen ([169.254.4.63]) by
- MMXDC2640.hermes.si.socgen ([175.128.14.28]) with mapi id 14.03.0235.001;
- Tue, 21 Jun 2016 09:50:47 +0200
-From:	"LUCAS Thomas (EXT)" <thomas.lucas-ext@sgcib.com>
-To:	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Filters should be parallelized if needed
-Thread-Topic: Filters should be parallelized if needed
-Thread-Index: AdHLkZ45NC7KHPYQTCymoWxWKkp2Jg==
-Date:	Tue, 21 Jun 2016 07:50:46 +0000
-Message-ID: <ABCC694798EF214E91DB2ACCA61703690BBADA33@MMXDC2642.hermes.si.socgen>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [175.0.0.27]
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
+	id S1755135AbcFUH5n (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 03:57:43 -0400
+Received: from mail-lb0-f182.google.com ([209.85.217.182]:33323 "EHLO
+	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755058AbcFUH5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 03:57:40 -0400
+Received: by mail-lb0-f182.google.com with SMTP id xp5so5027384lbb.0
+        for <git@vger.kernel.org>; Tue, 21 Jun 2016 00:57:39 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=5KAy6rmhzFjaxiNMV2Il/dvpATPy+Gr+wAgOYaptcBk=;
+        b=ZB+XPHIEwZdMBc5P9nIujssZXhFw0AS3VxVwRnE+Bn1maqw2LVmdl12EwP/4fuxCix
+         wnHnPgDtPFg25o+3oqGWljmuu4IYAdFZtm7Bst/nAw999I+zzfbasZrVbh7a0173ixt2
+         eFZqKfGRo6TTRwWmjTg8twKTXkNs3YEQ2MmicMoceF1nbEsuqgrtSUMaRjwu2DVeKe4V
+         PKpzV36TnalqTrrfpShRk9SYj7XkdNunkhG7T5/oxKV9deZOStr0F9ov6U9c8+1i7SCv
+         it+e7u0gWXhm0SwIQ5SJcPoTHvZbFk9Yt8TKX9v+8YnoGYwk2huyTBSp1LVGPBgG4Ngb
+         Hh0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=5KAy6rmhzFjaxiNMV2Il/dvpATPy+Gr+wAgOYaptcBk=;
+        b=cKCB3qymNt0Qvx67/MnFTMOd3dlaE+UrW9BAfE4T+ip83aIrgIlZd4qpiFWf2ISUpa
+         fBGrIy5CNPGFTpSPswDxPYHWjlrA/8/ifzZTdfeBt+NalsVJncQjLG6x8Djpaj8BlIHy
+         EajU+DlDrf3deDX5guXBdtRVxyg/KWqABHrp39VKxeePsnHCNIoTZ+IsfowFdaWYDctw
+         WtEaR37wjAqGVtjFzXc56yq0EKbv9FHLcZecGe+dEfxhV/Wx0M7RQSECEPMoZHSG04qj
+         6vXdkUpQlz6HRWvVd72uFEO3PxOa/IRAb4SIgn0GXGKzxDhLPgRFUB35emrVyWKCnIEx
+         9J/A==
+X-Gm-Message-State: ALyK8tLHUTjWzWSeTtiqCcHvviTNQMISBf8gD5D8IgxbqUTe/Rb/D4xNtmnsaKQCsJ5K1w==
+X-Received: by 10.194.78.147 with SMTP id b19mr18279332wjx.31.1466495858070;
+        Tue, 21 Jun 2016 00:57:38 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB4933.dip0.t-ipconnect.de. [93.219.73.51])
+        by smtp.gmail.com with ESMTPSA id s67sm1653389wmf.3.2016.06.21.00.57.37
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 21 Jun 2016 00:57:37 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH] perf: accommodate for MacOSX
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqa8iftzex.fsf@gitster.mtv.corp.google.com>
+Date:	Tue, 21 Jun 2016 09:57:36 +0200
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <F67587B5-0EA8-4F2F-AADB-4343B4FEEA21@gmail.com>
+References: <ae429d2481111f7ad1927ef22e3a691d4c99ebd7.1466254995.git.johannes.schindelin@gmx.de> <9A11C3D1-3DAC-489F-BDF9-F4D409E8D3F7@gmail.com> <alpine.DEB.2.20.1606200840350.22630@virtualbox> <xmqqa8iftzex.fsf@gitster.mtv.corp.google.com>
+To:	Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Setup:
-- 2.9.0.windows.1 x64 on a windows 7 16g ram, ssd
-- No particular installation settings, default.
 
-Details:
-- Running git from either a cmd or GitExtensions,  I encountered an issue while staging or checkout of lfs files. I am processing 3000 files for a total of 500MB.
-Files are proccessed sequentially which is too slow for this amount of files, while lfs offer in some cases a way to run it from the command line in parallel, I think the git filters should be run in parallel. I think there is no need (or I am forgetting something) to run it sequentially.
+> On 20 Jun 2016, at 21:48, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+>> On Sun, 19 Jun 2016, Lars Schneider wrote:
+>> 
+>>>> On 18 Jun 2016, at 15:03, Johannes Schindelin
+>>>> <johannes.schindelin@gmx.de> wrote:
+>>>> 
+>>>> As this developer has no access to MacOSX developer setups anymore,
+>>>> Travis becomes the best bet to run performance tests on that OS.
+>>> 
+>>> We don't run the performance tests on Travis CI right now.
+>>> Maybe we should? With your patch below it should work, right?
+>> ...
+>> 
+>> Yeah, well, I should have been clearer in my commit message: this patch
+>> allows the perf tests to *run*, not to *pass*... ;-)
+> 
+> OK, Lars, do we still want to take this patch?  I am leaning towards
+> taking it, if only to motivate interested others with OS X to look
+> into making the perf tests to actually run.
 
-If I were to use a filter processing files in a parallel way, I would have my time to checkout these files be reduced from 1h30min to 1min30s.
+I think we definitively should take the "perf-lib.sh" part of the patch
+as this makes the perf test run on OSX and therefore is a strict
+improvement.
 
-What actually happened instead?
-- This is a no go for our enterprise to use git-lfs because this is too slow.
+If we don't run any perf tests by default on Travis CI then I wouldn't 
+take the ".travis.yml" part of the patch just to keep our Travis CI
+setup as lean as possible. Running perf tests on Travis CI is probably
+bogus anyways because we never know on what hardware our jobs run
+and what other jobs run in parallel on that hardware.
 
-I can't give you my repository because it is confidential.
-
-Anyway, I hope you can do something about it.
-*************************************************************************
-This message and any attachments (the "message") are confidential, intended solely for the addresse(s), and may contain legally privileged information.
-Any unauthorized use or dissemination is prohibited. E-mails are susceptible to alteration.   
-Neither SOCIETE GENERALE nor any of its subsidiaries or affiliates shall be liable for the message if altered, changed or
-falsified.
-Please visit http://swapdisclosure.sgcib.com for important information with respect to derivative products.
-                              ************
-Ce message et toutes les pieces jointes (ci-apres le "message") sont confidentiels et susceptibles de contenir des informations couvertes 
-par le secret professionnel. 
-Ce message est etabli a l'intention exclusive de ses destinataires. Toute utilisation ou diffusion non autorisee est interdite.
-Tout message electronique est susceptible d'alteration. 
-La SOCIETE GENERALE et ses filiales declinent toute responsabilite au titre de ce message s'il a ete altere, deforme ou falsifie.
-Veuillez consulter le site http://swapdisclosure.sgcib.com afin de recueillir d'importantes informations sur les produits derives.
-*************************************************************************
-
+- Lars
