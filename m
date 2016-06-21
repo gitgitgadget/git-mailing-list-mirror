@@ -1,100 +1,123 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0373D1FE4E
-	for <e@80x24.org>; Tue, 21 Jun 2016 03:59:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB1901FE4E
+	for <e@80x24.org>; Tue, 21 Jun 2016 04:53:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751804AbcFUD7X (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 23:59:23 -0400
-Received: from mail-vk0-f48.google.com ([209.85.213.48]:34622 "EHLO
-	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752719AbcFUD7W (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 23:59:22 -0400
-Received: by mail-vk0-f48.google.com with SMTP id t129so5018539vka.1
-        for <git@vger.kernel.org>; Mon, 20 Jun 2016 20:58:22 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=FhW8Z7qkOOUDLGu278sphoIpGAi58329wcHfRhh2AGA=;
-        b=D7dyu31VEPVzwQBx0rST+TEDFiaAnH1Y9zOCpe5arp0G2ZRpkW39+hqssw14qlmDuz
-         L5po9vn5VlVVs7kZLaseHVZ+IZPt068sDqy48r6qgSp+Wl4bCXF0Smo2KA8DWawcT0OV
-         LV7ypI96GwxspVE8B1pYd0mbnm9iukXxZO8wp3LBaMwLxheqUAzcBsEv35eY8kGZI2iQ
-         iV+hFk16xHGpVLd+sznFLOm1nUc1SfUdq38kn+m/U3XG08YqULr1mB8x4jmH9v+gv6PD
-         e0/UNry5m1IqNBq6DZvy9TO/EIPIsQD2RU4R3uiXSKPVl0ttmdjXnWYPCl58M1ZPSakR
-         BKnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=FhW8Z7qkOOUDLGu278sphoIpGAi58329wcHfRhh2AGA=;
-        b=OsqlaJO1Xi6g7IzR6Btw65sZr4+pGEP/CtF6q+TFj7N19vLhcYXGehj4LdWDlQmDM1
-         IpryPPAyap3yPfG55v0lj1XXBfSQWceEGzppNEShqK161ZI1NxWvq3Ved41yjqWPGysK
-         G7Ev+E93mJH7NVy3ONcvJkTnWZ5jEIu76UxGzWphGJeuJiGlaLbFjkbpCQ42hX980aAQ
-         AWHjlfaxWLIxnKqbo8dna7XpbAkk25rQvnIBnDIKk+6dyCFHVQXM2NA/h3Rp3sWtx8eM
-         /0qZvdhm8K/2aUDi45Z6BKTnSandKqOhKfOERr2H88hNekATv0S0Bh3FIHO2i1FJ14BQ
-         yftg==
-X-Gm-Message-State: ALyK8tKiePfmc8aqNOw1RXQ0MdhtnR7h2J4kDcwkIeueThbGCQD9HIMsoitHv5Dbw8I3MflN/jUnZwo8DePulw==
-X-Received: by 10.31.188.80 with SMTP id m77mr8377251vkf.30.1466481501192;
- Mon, 20 Jun 2016 20:58:21 -0700 (PDT)
+	id S1753332AbcFUExW (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 00:53:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55271 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752385AbcFUExV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 00:53:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 62C1726FA9;
+	Tue, 21 Jun 2016 00:51:23 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DgD/gu9udM4gTFIVBqEit3f/zLo=; b=StP2rC
+	9pCJBCquXAvmLJISt7i8vRIv1Le6oNeLa9fyBY2wOlLcTAbhRmwlFqZmPmwF+Vby
+	kFZ/8/PWU89IVjkpWD0Kg3HuvBTZJIGzi8JMHm6bZw5kLy4dD2IWsyldJHJsZNbQ
+	ribmgRLIZPLPCtFySz1RT5SJCZ6wU4I5h1BIY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bd+UcVArMKiMelAZhLcLxdT4WgSnZ9NW
+	2MlglV0fo7msSwDrxc7kiy+d+EiGyZziBJc5HWo11qFBw36I7MIrpaVDS3KfGgKG
+	cWKuLUVDT8RhGWJtMXKxQAfz9E0lIbO60dqX0aemnFmRq5bROxRTQ0MJS6qgYOuN
+	8yjjdfRiFB0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5C4B126FA8;
+	Tue, 21 Jun 2016 00:51:23 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ED2F626FA7;
+	Tue, 21 Jun 2016 00:51:22 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	David Lightle <dlightle@gmail.com>
+Cc:	git@vger.kernel.org
+Subject: Re: Fast-forward able commit, otherwise fail
+References: <CAP4gbxqjHzqHhPuNK8UOwPMa46g2=vcNSk1AvGjxN8s+ou-0Dw@mail.gmail.com>
+Date:	Mon, 20 Jun 2016 21:51:21 -0700
+In-Reply-To: <CAP4gbxqjHzqHhPuNK8UOwPMa46g2=vcNSk1AvGjxN8s+ou-0Dw@mail.gmail.com>
+	(David Lightle's message of "Mon, 20 Jun 2016 22:58:20 -0500")
+Message-ID: <xmqqh9cnrvp2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.103.2.70 with HTTP; Mon, 20 Jun 2016 20:58:20 -0700 (PDT)
-From:	David Lightle <dlightle@gmail.com>
-Date:	Mon, 20 Jun 2016 22:58:20 -0500
-Message-ID: <CAP4gbxqjHzqHhPuNK8UOwPMa46g2=vcNSk1AvGjxN8s+ou-0Dw@mail.gmail.com>
-Subject: Fast-forward able commit, otherwise fail
-To:	git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: CD7B26A6-376B-11E6-B216-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hello,
+David Lightle <dlightle@gmail.com> writes:
 
-I am trying to build a git workflow in our enterprise and am almost
-evenly torn between a "rebase workflow" and git-flow (which uses merge
-instead of rebase, obviously).  We are using Bitbucket for pull
-requests as code reviews (right or wrong).
+> I know that I have read that --ff-only and --no-ff are contradictory,
+> but I believe that is somewhat ambiguously correct -- I believe the
+> two flags contradict in the sense of "what to do with the merge
+> commit", but not necessarily on the "when it can be done".
 
-I apologize if my inexperience with git shows through, but I'm wanting
-to achieve the following --
+Traditionally we have mildly suggested against making otherwise
+needless merge commit with "--no-ff".  We also have suggested
+against keeping the history too linear, not because linear history
+is bad, but because it will require rebasing soon before pushing out
+your changes [*1*].
 
-Maintain two long-running branches (develop as a stable pre-release,
-master as a deployed version), with short-term feature branches off of
-develop and short-term release branches that are based on develop and
-merge into master eventually (ie. a lightweight git-flow).
+I personally would feel that what you seem to be aiming for is the
+worst of both worlds in the sense that contributors are still forced
+to rebase immediately before pushing out, which leads to
+insufficiently tested version landing on truck, and at the same time
+forcing the resulting history to have otherwise needless merges (the
+latter is probably a much lessor of the two sins).
 
-However, as part of this, I would prefer to require/ensure that each
-feature branch is up-to-date and otherwise able to be fast-forwarded;
-we currently have this with the bitbucket server setting requiring
---ff-only.
+However, Git as a tool is not opinionated strongly enough to make it
+hard to do these two things (independently).  I do not think it is
+unreasonable to add a new mode of "merge" that rejects a resulting
+history that is not shaped the way you like.  So far the command
+rejected --ff-only and --no-ff given together, so if an updated Git
+starts taking them together and creating a needless real merge and
+failing only when the first parent does not fast-forward to the
+second parent, nobody's existing workflow would be broken.
 
-The other half of what I would prefer is to still perform the merge
-commit, though, to ensure separate tracking of the feature branches
-(ie. --no-ff).
+Having said that, you need to think things through.  Sample
+questions you would want to be asking yourself are (not exhaustive):
 
-I know that I have read that --ff-only and --no-ff are contradictory,
-but I believe that is somewhat ambiguously correct -- I believe the
-two flags contradict in the sense of "what to do with the merge
-commit", but not necessarily on the "when it can be done".
+ - What is your plan to _enforce_ your project participants to use
+   this new mode of operation?
 
-I read an ancient post about on this list (which predates the
-tri-state of fast-forward) that I believe could have allowed this to
-work.
+ - Do you _require_ your project participants to always pass a new
+   option to "git merge" or "git pull"?
 
-I have also read a few articles and posts that achieve this more as a
-matter of practice than a workflow enforcement via git flags; for this
-to be something to potentially get absorbed into a Bitbucket workflow,
-I suspect it would need to a git flag (they now support merging via
---ff, --no-ff, --ff-only, --squash, and --squash-ff-only for their
-hosted solution, for example).
+ - Do you force them to set some new configuration variables?  
 
-Here are a few articles that say they prefer this approach (rebase and
-then merge --no-ff):
-https://walkingthestack.blogspot.com/2012/05/why-you-should-use-git-merge-no-ff-when.html
-http://blog.differential.com/best-way-to-merge-a-github-pull-request/
-http://victorlin.me/tags/rebase
+ - Do you trust them once you tell them what to do?  
 
-Can anyone share their thoughts on workflows that might achieve what
-I'm looking at here or opinions on adding the functionality I'm
-describing?
+ - How will your project's trunk get their changes?
 
-Thanks!
+ - How you prevent some participants who misunderstood your
+   instructions from pushing an incorrectly shaped history to your
+   project?
+
+If they are eventually pushing the result to a central repository
+and that is how the project's overall history advances, then the
+most reliable mechanism that is least limiting to your users is
+pre-receive hook at that central repository that ensures the shape
+of the history being pushed to update the branches.  You walk the
+first-parent chain of the commits and ensure all the commits are
+merges, and for each of these merges, its second parent is a
+descendant of its first parent.  Otherwise you reject their push.
+
+That way, your users can make normal merges while trying their
+changes locally all they want without straightjacket.  Only when
+they prepare the final history to be placed at the tip of the
+project's official history, they need to make sure that the history
+is shaped as you specified.
+
+
+[Footnote]
+
+*1* Your changes before rebasing may have seen enough
+testing in one context (i.e. built on older base), but "rebase
+immediately before push to ensure fast-forward" will force you to
+publish a version that by definition will have little or no testing,
+which may or may not work well with a different context.
