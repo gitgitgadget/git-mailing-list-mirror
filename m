@@ -1,70 +1,80 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D912B1FF40
-	for <e@80x24.org>; Tue, 21 Jun 2016 16:48:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CF1D1FF40
+	for <e@80x24.org>; Tue, 21 Jun 2016 16:50:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752382AbcFUQsu (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 12:48:50 -0400
-Received: from mail-io0-f179.google.com ([209.85.223.179]:36018 "EHLO
-	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752036AbcFUQst (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 12:48:49 -0400
-Received: by mail-io0-f179.google.com with SMTP id s63so17334203ioi.3
-        for <git@vger.kernel.org>; Tue, 21 Jun 2016 09:48:49 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=rmG/zuXkFOhRALVrg0ihF+tLHxnSqawAFt1L9HRKpZk=;
-        b=lGFu1MbI/OX61UUOJGCBrrnGxaCX9XqgNzNAjW71mn61FRQgXHu+2yWmwlMUYAZwUD
-         wgw4hoxN26ymhTW39AfkvnaZaVObsisuliGjJVOeEdbAb49mDxJsxYTrp2pqLDCTdY8v
-         /J3HLVUrGXpzBfpr/UddK4AQVSjE6WqvJudNYnmRhd21wWlrVlKlwIKxf/xAXFO3ooUU
-         hwFQc1ipOr4fVvRBLZDS64aqiOcyAWw6aXnvhh20g6hZQjy6t+JGGlw+bfjgkamnMq/m
-         j9w20FM7yxRc6MBIhzZ8pRI1guvfePA++3VmLUbNSUFIEDJzoQmUWJQ/qnQ5WGRu8t9P
-         kjzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=rmG/zuXkFOhRALVrg0ihF+tLHxnSqawAFt1L9HRKpZk=;
-        b=fnn8vlf0rMgRL7izmhGucbVSs04QcUyPke2r8TC/QjZCCVdUDZUND8GILlhOKt54Qm
-         RyuE4Z19VBHdX7vNEFS/qng3VZmA8GSIgMc5FDZ50yCcwVV+TcPGYGOtzNHtw7Pied1V
-         gK567YTf2+dgp62PoylKnh0XBNFb25E2RIGkJxxV4vphLF8uO5xrJLdSYE5aY+N8Nq+n
-         yVoGmO5mhTjVtKVwnI2pNNPuLg9ZETgjEF46Nu2W3Pa7X4f9OJLEKhgoFu9JmUaM7RIV
-         0qjSE6zEfCyxhZor5eh0NVp9JGlE3MeEBlEUXLAfQDQXL9i4pz4mpKwJqHz0sxXCmNuz
-         7HjA==
-X-Gm-Message-State: ALyK8tIdooyz52EOGAhMeGKlkVtDEGHILJDoUPOUip6bfeUEaRR8Pf2ySLJ5FiO2g9Lu6WndxnyzcHYgoqqbEg==
-X-Received: by 10.107.8.220 with SMTP id h89mr33478021ioi.95.1466527728811;
- Tue, 21 Jun 2016 09:48:48 -0700 (PDT)
+	id S1752527AbcFUQuY (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 12:50:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65153 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751661AbcFUQuW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 12:50:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B891249D4;
+	Tue, 21 Jun 2016 12:50:20 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=De2KQIhO6PaNwfpsvJcCdQ1r2u0=; b=U4ztnc
+	Z1bHxv8hUo/vJFBjr+w997nx+5hjqNWZ/tBHwGww2T6kZeRLDvkCmsUrwDpatXJj
+	F2pKGtK6TfANstHmHbKJPdYHkQnlj+jsuyArIMc4fo2mDozfXUhXvjkx+5l3qtnx
+	xqFzbT/Em3YCoxPmoM36bSyycOJs0rwAFE6oo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DVAX8mGGsX22dLXTJ5VWKqww8nf0JXrD
+	G3KeftlXJAmcSXmF5vzjZNI0aH4mAPu3Zb6h4EI4IIqwDJOQyNZIym65Gz/vzkGS
+	zbTA39RwwDs1QpAYJ8UxOz/omjDn6bjzbqRkzR359TF8SMwHyY7k8v85hZqfm9au
+	aqQM4Yv6BkM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 43913249D3;
+	Tue, 21 Jun 2016 12:50:20 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C3743249D2;
+	Tue, 21 Jun 2016 12:50:19 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
+References: <cover.1466244194.git.johannes.schindelin@gmx.de>
+	<de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de>
+	<CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com>
+	<alpine.DEB.2.20.1606200814510.22630@virtualbox>
+	<xmqq4m8nvodo.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1606210906190.22630@virtualbox>
+Date:	Tue, 21 Jun 2016 09:50:17 -0700
+In-Reply-To: <alpine.DEB.2.20.1606210906190.22630@virtualbox> (Johannes
+	Schindelin's message of "Tue, 21 Jun 2016 09:15:05 +0200 (CEST)")
+Message-ID: <xmqqvb12qyeu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Tue, 21 Jun 2016 09:48:19 -0700 (PDT)
-In-Reply-To: <20160619100051.GA14584@sigill.intra.peff.net>
-References: <OFC76C15DC.FC882C57-ONC2257FD7.00261552-C2257FD7.002660FC@LocalDomain>
- <OFE09D48F2.D1D14F49-ONC2257FD7.00280736-C2257FD7.0028245A@notes.na.collabserv.com>
- <20160619100051.GA14584@sigill.intra.peff.net>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Tue, 21 Jun 2016 18:48:19 +0200
-Message-ID: <CACsJy8DZ8jR=jZoC9F6k+WKr4mvZHMHtvLpT5+Mt9shX5-Wj8g@mail.gmail.com>
-Subject: Re: [BUG REPORT] git 2.9.0 clone --recursive fails on cloning a submodule
-To:	Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>
-Cc:	Vadim Eisenberg <VADIME@il.ibm.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3D0901FA-37D0-11E6-9C43-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sun, Jun 19, 2016 at 12:00 PM, Jeff King <peff@peff.net> wrote:
-> Stefan, I think it might be worth revisiting the default set by d22eb04
-> to propagate shallowness from the super-project clone. In an ideal
-> world, we would be asking each submodule for the actual commit we are
-> interested in, and shallowness would not matter. But until
-> uploadpack.allowReachableSHA1InWant works everywhere, I suspect this is
-> going to be a problem.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Maybe we can pass an option to subsequent clones that say "if
-allow-...-sha1-in-want is advertised, do a shallow clone, otherwise
-fall back to full clone"?
--- 
-Duy
+> That is a very convincing argument. So convincing that I wanted to change
+> the patch to guard behind `diff_use_color_default == GIT_COLOR_AUTO`.
+
+I actually was expecting, instead of your:
+
+ 	if (output_directory) {
++		rev.diffopt.use_color = 0;
+ 		if (use_stdout)
+ 			die(_("standard output, or directory, which one?"));
+
+an update would say
+
+ 	if (output_directory) {
+		if (rev.diffopt.use_color == GIT_COLOR_AUTO)
+                	rev.diffopt.use_color = 0;
+ 		if (use_stdout)
+ 			die(_("standard output, or directory, which one?"));
+
+I didn't expect you to check diff_use_color_default exactly for the
+reason why you say "But that is the wrong variable".
