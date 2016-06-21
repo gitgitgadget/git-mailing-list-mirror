@@ -1,149 +1,99 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDFD91F744
-	for <e@80x24.org>; Tue, 21 Jun 2016 07:32:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD08A1F744
+	for <e@80x24.org>; Tue, 21 Jun 2016 07:46:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932549AbcFUHcF (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 03:32:05 -0400
-Received: from mout.gmx.net ([212.227.17.21]:51355 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753105AbcFUHcD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 03:32:03 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MVIva-1asc8b28MQ-00Yf1Y; Tue, 21 Jun 2016 09:31:47
- +0200
-Date:	Tue, 21 Jun 2016 09:31:45 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/7] log-tree: respect diffopt's configured output
- file stream
-In-Reply-To: <xmqqwplju74a.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1606210920510.22630@virtualbox>
-References: <cover.1466244194.git.johannes.schindelin@gmx.de> <cover.1466420060.git.johannes.schindelin@gmx.de> <babf95df5f610feb6c2ae7f2ed3cff98bab47fe2.1466420060.git.johannes.schindelin@gmx.de> <xmqqwplju74a.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:l9pp/mcn7E4SqGnYSSoSGok8rJN5Vs9C2z+kPea16nV9HVOKAh8
- 3yr+MGraRC0BOvaXSzYod8P57qR37N53kE/6rW0Ar45PVizBskjX/Pb/5VpkKIMTXx8TEQL
- T+/k/5upyKL2wuitALJDeXI/Y3Iz7O9c8GOiY5s7Z0cO4832xEvM7jswjSbbj1GkIE4Cvax
- 9RFV/klGg5ivt/D5/2WBA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:XfDZiufM8Uw=:0cdy4wgrgTVhii0PFbgp/H
- KVa6tWHztniFd2sAGUufbjHt06gHiVO0FuNxdcxg1Gg4AxdNwaxi8ZISHjyd6FYTQNGKyyxnW
- eSAEjzyEna5W2V+rvbJk5QZu5BQcHxpy56rKKbpyC2Lr4wxD7JuZvBTCih8OzKLt1vte7lP2p
- K1xHofkx1ti7o9yKv1kzsM7DaHgac4rVMHnssUnQiUQpRKVxLlmGWkOYTLGA4QX10ofbBSR5R
- K+ph4U57oalPNSldXIbkKvQIGB9yZc7qonhXdAdQ/E6j0Lzi7vRNOWXUrlRecQjsJZhrW8kzV
- coeVGiH/K06qZRoeL8Y2AmcwUrDBrpIs8Vak1kWWUfAHAZl68OsWRyoB5zk82leQVwuKYTHab
- 3Ip6AjG6pKR07YRf6TV+F9+jgzBZxZ6oFfVfUm+VONPjB4CVzLo46xUw8+KOBtQIVB3VujsXf
- eI8jqWrkFrB13A5JKROw+FQPsyzUtxHCdMurvCJ9at3bSVe0R6zikuwMp0CPbmBaYf750skCA
- dj7XwW/dRinamMQlcNBx2H+z2uT0cRBtk8PS0IRsjVzljYwDiBj68IQsmOEdKCwMUkWmR0a2p
- +X7iwhHNcXhJGKnBQFQD2IQnbRoQJpiN5Fa+28VCWZKCN4D7f6R3rvoaOcUgt94n2PWkW78/R
- vo1MtGFvDr6NLdEK1SiiFgPckA02W3RUS1BkLUGd6qIAFvlCcW3628g0PPdj6ZAB3rzXIGa38
- JhoBgHLcbzH0uaRN3aHpqt85EFI7S82AjZvDNI2s4goYu35/j9oRbeBusRQ0NOKR2+CARL1fN
- JdnX/uG
+	id S1754995AbcFUHpw (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 03:45:52 -0400
+Received: from mail-lf0-f49.google.com ([209.85.215.49]:35073 "EHLO
+	mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754972AbcFUHpu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jun 2016 03:45:50 -0400
+Received: by mail-lf0-f49.google.com with SMTP id l188so10412514lfe.2
+        for <git@vger.kernel.org>; Tue, 21 Jun 2016 00:45:49 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=gNe1MRTPlaLl7jpt+I7dZrJlmRuUEubkGa8BNqktF2c=;
+        b=VhcnnvQ2USAjKWj7Jj7P+tf6KL2ClX80Zs/KbC5QxBl29tgOsiI/GbcIGxBXNhDO5K
+         lkuqVFKlKTA9fsV6PFG5K72fDRk/vz/ek3JtZY4XXq8y57RwoQsnr6p1uuGN/ruMeCA3
+         pBzqvtUHXudD/yQPllX5h9Yll+VXzGmcd/fFT+pY72ocS5Hu+ZZSo9vhuydLTMTAakbk
+         GdupvfaHPXuQohnNuRabt306Ha7RMsHLF8hyl/5QKH9SWCJMa8Jht9n9EP/IuZFL7/jf
+         Hminyf5VLnEdHFapkxu4E4kh4HCqOrS0159LiwbyB/wFKZZGBEyDuO9Vj7Fc6fVJCPku
+         d3eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=gNe1MRTPlaLl7jpt+I7dZrJlmRuUEubkGa8BNqktF2c=;
+        b=kD8uo/UMKOLbqgYIjgCypB+8UKbKH6jOrNbhQyuFPV2Oo/YkfPcxTZ8VYhUDVa4cif
+         KRlBjSIxLr0vAPZwC0KWOfQ7/J+rdGHXkgICrXKIXnewqUISlHspJShGK+AXyUI/tZm0
+         TgA4q7NSQSmRkCCG2NefNhsynPBpT4f6sjyIdEkWaWKAKBkWLIjabl1OYMZCpDSjJ5pT
+         LReayX35OzpXF93HRiExMwg3jhVMEqBDmb3CmMInclvb1zGHWSmVHcafkuVCbryTXpgW
+         eveRbOqTs5yl+cNYj14cgY7uJD6b3H0zPYnSoZMoPfzjGs0/0VK7u6kXy9Mdtcoyecye
+         KXiA==
+X-Gm-Message-State: ALyK8tLnZmws6h5fKRnRc18/gf2bG51SsTGkYUVORJOD2qkW8OcQZEJLyYQKdur0lIdQ8g==
+X-Received: by 10.28.146.9 with SMTP id u9mr1829659wmd.52.1466495147947;
+        Tue, 21 Jun 2016 00:45:47 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB4933.dip0.t-ipconnect.de. [93.219.73.51])
+        by smtp.gmail.com with ESMTPSA id a84sm1628561wma.0.2016.06.21.00.45.46
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 21 Jun 2016 00:45:47 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [RFC/PATCH] push: deny policy to prevent pushes to unwanted remotes.
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <vpqfus7jc59.fsf@anie.imag.fr>
+Date:	Tue, 21 Jun 2016 09:45:45 +0200
+Cc:	Antoine Queru <antoine.queru@ensimag.grenoble-inp.fr>,
+	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Antoine Queru <Antoine.Queru@grenoble-inp.org>,
+	git@vger.kernel.org,
+	william duclot <william.duclot@ensimag.grenoble-inp.fr>,
+	simon rabourg <simon.rabourg@ensimag.grenoble-inp.fr>,
+	francois beutin <francois.beutin@ensimag.grenoble-inp.fr>,
+	rsbecker@nexbridge.com, aaron@schrab.com, peff@peff.net
+Content-Transfer-Encoding: 8BIT
+Message-Id: <827DA549-F046-4B52-90C2-ADB5BC72C16F@gmail.com>
+References: <20160604145101.21928-1-Antoine.Queru@grenoble-inp.org> <998280064.353519.1465213163063.JavaMail.zimbra@ensimag.grenoble-inp.fr> <2104102670.380496.1465220639026.JavaMail.zimbra@ensimag.grenoble-inp.fr> <3899461F-44B4-407F-ACCE-793E65486554@gmail.com> <1599012395.707458.1466461517473.JavaMail.zimbra@ensimag.grenoble-inp.fr> <vpqfus7jc59.fsf@anie.imag.fr>
+To:	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
 
-On Mon, 20 Jun 2016, Junio C Hamano wrote:
-
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> On 21 Jun 2016, at 08:20, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
 > 
-> > The diff options already know how to print the output anywhere else
-> > than stdout. The same is needed for log output in general, e.g.  when
-> > writing patches to files in `git format-patch`. Let's allow users to
-> > use log_tree_commit() *without* changing global state via freopen().
+> Antoine Queru <antoine.queru@ensimag.grenoble-inp.fr> writes:
 > 
-> I wonder if this change is actually fixing existing bugs.  Are there
-> cases where diffopt.file is set, i.e. the user expects the output to be
-> sent elsewhere, but the code here unconditionally emits to the standard
-> output?  I suspect that such a bug can be demonstratable in a test or
-> two, if that were the case.
-
-It is conceivable, but I did not have time to chase those cases down yet.
-
-> I am sort-of surprised that we didn't do this already even though we
-> had diffopt.file for a long time since c0c77734 (Write diff output
-> to a file in struct diff_options, 2008-03-09).
+>> However, in the last version, if we want to deny an website,
+>> including all schemes, we can blacklist the url without the
+>> scheme. For example, "pushBlacklist = github.com". By doing so, this
+>> remote is not an url anymore, and it can't be differenced with a local
+>> relative path. It's a problem because these two have a different
+>> treatement. The choice we made to solve this is to force the user to
+>> put the scheme "file://" before any local relative path. What do you
+>> think ?
 > 
-> Use of freopen() to always write patches through stdout may have
-> been done as a lazy workaround of the issue this patch fixes, but
-> what is surprising to me is that doing it the right way like this
-> patch does is not that much of work.  Perhaps that was done long
-> before c0c77734 was done, which would mean doing it the right way
-> back then when we started using freopen() it would have been a lot
-> more work and we thought taking a short-cut was warranted.
-
-Back when I implemented the feature to write to individual files, I indeed
-used freopen() out of laziness: 0377db7 (Teach fmt-patch to write
-individual files., 2006-05-05). I could not have used diffopt.file at that
-stage, anyway: that field still was almost two years in the future.
-
-> >  		if (opt->children.name)
-> >  			show_children(opt, commit, abbrev_commit);
-> >  		show_decorations(opt, commit);
-> >  		if (opt->graph && !graph_is_commit_finished(opt->graph)) {
-> > -			putchar('\n');
-> > +			fputc('\n', opt->diffopt.file);
+> file:// URL can not be relative (well, you can invent a syntax where
+> they are, but that would be weird).
 > 
-> Hmph.  putc() is the "to the given stream" equivalent of putchar()
-> in the "send to stdout" world, not fputc().  I do not see a reason
-> to force the call to go to a function avoiding a possible macro here.
-
-TBH I did not even *know* putc(). It is amazing how you can learn new
-things about the POSIX API after decades of working with it.
-
-> Likewise for all the new fputc() calls in this series that were
-> originally putchar().
-
-Goes without saying.
-
-> > @@ -880,8 +880,9 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
-> >  		shown = 1;
-> >  	}
-> >  	if (opt->track_linear && !opt->linear && opt->reverse_output_stage)
-> > -		printf("\n%s\n", opt->break_bar);
-> > +		fprintf(opt->diffopt.file, "\n%s\n", opt->break_bar);
-> >  	opt->loginfo = NULL;
-> > -	maybe_flush_or_die(stdout, "stdout");
-> > +	if (opt->diffopt.file == stdout)
-> > +		maybe_flush_or_die(stdout, "stdout");
-> >  	return shown;
-> >  }
+> I think you can just forbid relative path in whitelist/blacklist, hence
+> consider that anything that is neither a full URL nor an absolute path
+> is a protocol-less URL:
 > 
-> This one looks fishy.
+> * http://github.com = github.com with HTTP protocol
 > 
-> Back when we freopen()'ed to write patches only through stdout, we
-> always called maybe_flush_or_die() to make sure that the output is
-> flushed correctly after processing each commit.  This change makes
-> it not to care, which I doubt was what you intended.  Instead, my
-> suspicion is that you didn't want to say "stdout" when writing into
-> a file.
+> * github.com = github.com with any protocol
 > 
-> But even when writing to on-disk files, the code before your series
-> would have said "stdout" when it had trouble flushing, so I do not
-> think this new "if()" condition is making things better.  If "it
-> said stdout when having trouble flushing to a file" were a problem
-> to be fixed, "let's not say stdout by not even attempting to flush
-> and catch errors when writing to a file" would not be the right
-> solution, no?
-> 
-> Personally, I do not think it hurts if we kept saying 'stdout' here,
-> even when we flush opt->diffopt.file and found a problem.
+> * /path/to/file or file:///path/to/file = local path
 
-Okay, I changed it back to be unconditional.
+I agree. Ignoring relative paths (and mentioning that in the docs)
+sounds reasonable to me. I don't think that would be a limitation as
+I can't think of a white/blacklist use case for relative URLs.
 
-My original thinking was that we will fclose() the file (if it is not
-stdout) anyway, which implies flushing. But the more I think about it,
-the more I come to the conclusion that this is more of a side effect,
-based on deep knowledge of the current code. So I now agree with you that
-it would be "too clever".
-
-Expect v3 in a moment.
-
-Ciao,
-Dscho
+Thanks,
+Lars
