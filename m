@@ -1,107 +1,102 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C6081F744
-	for <e@80x24.org>; Tue, 21 Jun 2016 11:57:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8C0E1F744
+	for <e@80x24.org>; Tue, 21 Jun 2016 12:01:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752154AbcFUL45 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 07:56:57 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53541 "EHLO mout.gmx.net"
+	id S1752197AbcFUMBk (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 08:01:40 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49381 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751537AbcFUL4H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 07:56:07 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LorB9-1br8rG34F1-00gsGm; Tue, 21 Jun 2016 13:55:01
+	id S1751525AbcFUMBj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 08:01:39 -0400
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MNZgw-1bI5WI1ErK-007EFp; Tue, 21 Jun 2016 14:01:32
  +0200
-Date:	Tue, 21 Jun 2016 13:55:00 +0200 (CEST)
+Date:	Tue, 21 Jun 2016 14:01:31 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Lars Schneider <larsxschneider@gmail.com>
-cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] perf: accommodate for MacOSX
-In-Reply-To: <F67587B5-0EA8-4F2F-AADB-4343B4FEEA21@gmail.com>
-Message-ID: <alpine.DEB.2.20.1606211350470.22630@virtualbox>
-References: <ae429d2481111f7ad1927ef22e3a691d4c99ebd7.1466254995.git.johannes.schindelin@gmx.de> <9A11C3D1-3DAC-489F-BDF9-F4D409E8D3F7@gmail.com> <alpine.DEB.2.20.1606200840350.22630@virtualbox> <xmqqa8iftzex.fsf@gitster.mtv.corp.google.com>
- <F67587B5-0EA8-4F2F-AADB-4343B4FEEA21@gmail.com>
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	git@vger.kernel.org
+Subject: Re: [PATCH 1/1] mingw: work around t2300's assuming non-Windows
+ paths
+In-Reply-To: <xmqqmvmfu17f.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1606211356170.22630@virtualbox>
+References: <cover.1466246919.git.johannes.schindelin@gmx.de> <a8bebe126bcd047720a13e90b85b8dccb7231187.1466246919.git.johannes.schindelin@gmx.de> <xmqqmvmfu17f.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:p//CPgTpfgV5JpjbHKyXNPok1Q90qB21u1fzWwiIKEUabhy1KC7
- XNyX7Nks2AO5N8rjvfyWG17/H/32YYWJ6+hh2OI5kFK6xY4LXUoUElyT8mSMpWWScd5cP8D
- k1wYl4Trf6Zm9BIjMzxx+q7NsovN/jV/1Ig1Z+/F22Q0Ma0SRQBllUwBJBHRI1hkzbGwWRE
- 8hRn/JkVjLwuZ0r7LayAw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:M96XdbJ+x7I=:cBIk4etTSHeKaFs1eAOF0s
- 25h/H4EoceYMF4Y7CP1fh8SawM26tfO3tmz7b2k3xa6bqB9pe1q/7FXfyr5+PDCeDchMBal5m
- jveWKhJzonQmV3xbBdvFHIJvl4Whrp+5iu76A06UyhABmu8KquiO0CBvHK4OeKL7zlUTdd5or
- jie3vp/kp4CPiy00TpOSsf2cuv5BtbVG+O1RDzukyleZMny0Gv6IQuDYIjzgoryeYD/MsHb0j
- PBh9njOhKDZDVG6QPofzZS3bbntHSxQhzuIq7Hu0LTXWAzYfhpHtMhRqKbVi3WBkvfHjPHKy9
- PrPzg2xqy4Us+vfVBxiHp6/lTY7U3RbrAQTkbt3l10vc5qIy75mGK8WHTDt/PtxS1Ff0VWum4
- abi37fQLWNDVm1ckFCZOhlX0pP15kCjfYj2bvBjrkqt8fo0NRNAQS65xBzyJ+7InNUjVFVSiJ
- tTaJfDEqQ2wm4h4rYDGTC7mMOWosAi4yH/yB3z0jlycSkno1hfq+B8PglwGNhdvWXB5S7ttxx
- 22fv+OLOGdmAmxG7UuYxyDJWhI/4/RSIwKTA5wSSOu6GWQEEe0zW4+elossh9jlW4t5U4mQaF
- FQTRZnCbeV6JKAl0ieQ0E2bJ/O0ofkSrlCDel02JLbXkaPbOvR1gNt1FZlSV+eMgs+lvqxYu1
- YHG0VJqpc7SAVz+Q8J1y0oe3CBZF8DzzOjrDACyNxzx6418+5Ku+lQcg0WneF20FOxCKLJOTR
- pbBpO+8l3swJRqqMiCbnfqfctMz2p7VI9rMkYEi74yavBkZZiOOWOCyC54HPLfmJ2QA/5eXUm
- WLh5jRO
+X-Provags-ID: V03:K0:1smwX0cSodb1+Gsi2aTXnEW1EuX3G4iG+bUGafoqA30aPhW8w93
+ dP8jDWB6icP5Iq6B0k/aqEr24lQlJcA4CIWPto07U9AiGmGgmo9LfGTLZzvyZdRYz+g3O+F
+ Lhw4TVOxf5FQ1o8c/xHY39UZS1FQo/4owqAFr1SMGD3qct+6fdxW24JzPlFsk++VdILMhWg
+ WEeuU8mw4ukVZXQa61I9g==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:fzUzuORRX80=:7/2VXJpGpbTBps1OODW5ci
+ gbYZwKEwYuAMUl2MymdG4XoZwcJi5uiCD7WFr7pxgvnD8XjRBdeFz3UXzQqHJhbf+15FziBej
+ eANTZTwo9ZXlhMACn3UC8REGqz9VtsFccjvBD6tYOPS8Sd1QTNkowlWg23ikYydYi7IJSWz9J
+ XMYgZ3vn3utkfeORC2XdogujPO8aik7brId/svuSUOxyGakufHJh9vugI0vcHk1MzPX3aknCf
+ m7z4qBN1Q3g1w9T1hUX9Im//APNE+L298SU2Y9hNB14HgiGlpKlel1V37Ww4hhCXKwc7cQyyY
+ axQzv+aKMar7gzwoloTXJAqIqIj9qYh46cHCmKXkX2wtNqRRIb/PxMKlbdYCFpCAv9Z0U6ho1
+ 8WXNBLKZ2cWc3ztgprQ0U57YvOG+ZxwYqVPRjsS9SiCPDZ+N+IJA1NcGq/Sap1skyQUdqr8uq
+ hO2FG5S34yWb9+/PcO66lh+fgKJqOEDo59MmM2dGWrphLKCJ2WT6zK0bg9BVQx6WruGmPusrv
+ gRVtXR5OePGN50uN6sHYMdy8okqULWDKgOWHQGnKzons+YsqjY103LE+rF+zDPIEqtqBQ5Jkh
+ cIL93M0370PMJVhkMmflZci3JDIDEsXL/oL/rMWNNafuYCUKlxNstA+vbjrdPhtayZS1SpZS2
+ aM8LgzaYdZ2/6P0YX/sY4Ltk05nCpjbkDx3LQ916DfixABMSRhjG9LWWNCulvtK3zdEP1WY/D
+ O9pOFuwUotwMbWk85a+GfgF3Ov26REqf2Ge8/ky3YmMnOyw8ajtvfpipL2GMGQksGVv87Dc4z
+ KSMz0UP
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Lars,
+Hi Junio,
 
-On Tue, 21 Jun 2016, Lars Schneider wrote:
+On Mon, 20 Jun 2016, Junio C Hamano wrote:
 
-> > On 20 Jun 2016, at 21:48, Junio C Hamano <gitster@pobox.com> wrote:
-> > 
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > 
-> >> On Sun, 19 Jun 2016, Lars Schneider wrote:
-> >> 
-> >>>> On 18 Jun 2016, at 15:03, Johannes Schindelin
-> >>>> <johannes.schindelin@gmx.de> wrote:
-> >>>> 
-> >>>> As this developer has no access to MacOSX developer setups anymore,
-> >>>> Travis becomes the best bet to run performance tests on that OS.
-> >>> 
-> >>> We don't run the performance tests on Travis CI right now.
-> >>> Maybe we should? With your patch below it should work, right?
-> >> ...
-> >> 
-> >> Yeah, well, I should have been clearer in my commit message: this patch
-> >> allows the perf tests to *run*, not to *pass*... ;-)
-> > 
-> > OK, Lars, do we still want to take this patch?  I am leaning towards
-> > taking it, if only to motivate interested others with OS X to look
-> > into making the perf tests to actually run.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> I think we definitively should take the "perf-lib.sh" part of the patch
-> as this makes the perf test run on OSX and therefore is a strict
-> improvement.
+> > On Windows, we have to juggle two different schemes of representing
+> > paths: the native, Windows paths (the only ones known to the main Git
+> > executable) on the one hand, and POSIX-ish ones used by the Bash
+> > through MSYS2's POSIX emulation layer on the other hand.
+> >
+> > A Windows path looks like this: C:\git-sdk-64\usr\src\git. In modern
+> > Windows, it is almost always legal to use forward slashes as directory
+> > separators, which is the reason why the Git executable itself would
+> > use the path C:/git-sdk-64/usr/src/git instead. The equivalent
+> > POSIX-ish path would be: /c/git-sdk-64/usr/src/git.
+> >
+> > This patch works around the assumption of t2300-cd-to-toplevel.sh that
+> > `git --exec-path` spits out a POSIX-ish path, by converting the output
+> > accordingly.
+> 
+> Hmm, I am confused.  `git --exec-path` _is_ meant to "spit out" a
+> path that is usable when prepended/appended to $PATH [1], and it
+> does _not_ have to be POSIX-ish path.  It is totally up to the port
+> to adjust it to the platform's convention how the $PATH environment
+> variable is understood.
 
-Yes, it was meant as the starting point to get more things to run on
-MacOSX.
+The port does exactly what it is supposed to do: the output of `git
+--exec-path` can be prepended/appended to %PATH%. The point here is:
+%PATH% is *semicolon*-delimited.
 
-> If we don't run any perf tests by default on Travis CI then I wouldn't
-> take the ".travis.yml" part of the patch just to keep our Travis CI
-> setup as lean as possible.
+All problems start when we do not use scripting native to Windows, but the
+Bash. In the Bash, we *assume* that $PATH is *colon*-delimited. All the
+time. And that is part of what makes a POSIX emulation layer on Windows so
+challenging.
 
-Maybe commented-out, so that people like me have a chance to use Travis
-for MacOSX perf testing?
+> If $PATH cannot take C:/git-sdk-64/usr/src/git but does understand
+> /c/git-sdk-64/usr/src/git, perhaps "git --exec-path" should be
+> emitting the latter in the first place?
 
-> Running perf tests on Travis CI is probably bogus anyways because we
-> never know on what hardware our jobs run and what other jobs run in
-> parallel on that hardware.
+Again, %PATH% can take C:/... just fine. But the Bash gets the
+POSIX-layer-munged $PATH which has POSIX-ish paths so that it can
+colon-delimit its PATH and all shell scripts can continue to work.
 
-While I agree that the absolute timings cannot be trusted, I have to point
-out that the relative timings on Linux at least are consistent with what I
-could test locally.
+So the root cause for the problem which requires this work-around is that
+our test suite is written in shell script, which is inherently not as
+portable as we think it is.
 
-Could you let me know whether a commented-out
-
-	# Uncomment this if you want to run perf tests:
-	# brew install gnu-time
-
-would be acceptable? I will reroll the patch accordingly.
+Does that address your puzzlement? If so, would you kindly advise how to
+improve the commit message (or the patch)?
 
 Ciao,
 Dscho
