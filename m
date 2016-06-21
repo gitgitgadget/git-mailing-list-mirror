@@ -1,116 +1,87 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 580D01FF40
-	for <e@80x24.org>; Tue, 21 Jun 2016 19:32:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CDAD1FF40
+	for <e@80x24.org>; Tue, 21 Jun 2016 19:39:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751782AbcFUTcj (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 15:32:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53331 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751002AbcFUTci (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 15:32:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id BD802245C5;
-	Tue, 21 Jun 2016 15:32:36 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ATgg96GKzOSb2eDObQJPtAxTBKw=; b=oTeLxh
-	0Mu+Qz4T4s8DHqVdxy6IQPXweYtPbA6z1Fy5R3rdj0rKS7k9D3yj9BQQVjUJkhlk
-	YrzXujd22niB0wUQ3+2uNlQivkFks+FGQAFmRWSyn1kkRuB2LKZDXwBXcBlrkAYt
-	bDu0rDfR9irb3lJBNAv4e7C6O7kYdEfH4QwSI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NFlOVyK6nLN6J1FCJaUbp8Gt7xws099q
-	2y+FeiKS0zS8LgH87Fkma6L+bO8tD4bZP0soU0cL8BtC/8vv7h2uIXHhn040uFkX
-	5F+Ey/+lyfjjbvuzGOtQnfXhFDP86KDenL4PmRjfvvNcxPVkaAyihFcRtbYwvJt4
-	jYXl8wHm1UA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B5DC1245C4;
-	Tue, 21 Jun 2016 15:32:36 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3D28C245C2;
-	Tue, 21 Jun 2016 15:32:36 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH v3 2/9] Disallow diffopt.close_file when using the log_tree machinery
-References: <cover.1466420060.git.johannes.schindelin@gmx.de>
-	<cover.1466505222.git.johannes.schindelin@gmx.de>
-	<973f9f676225aa98377f607ced1ff474f39b863f.1466505222.git.johannes.schindelin@gmx.de>
-	<xmqqfus6quii.fsf@gitster.mtv.corp.google.com>
-	<xmqqlh1ypdk8.fsf@gitster.mtv.corp.google.com>
-Date:	Tue, 21 Jun 2016 12:32:34 -0700
-In-Reply-To: <xmqqlh1ypdk8.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 21 Jun 2016 12:05:59 -0700")
-Message-ID: <xmqqa8iepcbx.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751286AbcFUTiq (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 15:38:46 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58090 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751504AbcFUTip (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 15:38:45 -0400
+Received: (qmail 2532 invoked by uid 102); 21 Jun 2016 19:38:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Jun 2016 15:38:26 -0400
+Received: (qmail 27864 invoked by uid 107); 21 Jun 2016 19:38:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Jun 2016 15:38:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Jun 2016 15:38:24 -0400
+Date:	Tue, 21 Jun 2016 15:38:24 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] t5614: don't use subshells
+Message-ID: <20160621193824.GA22183@sigill.intra.peff.net>
+References: <1466443278-21591-1-git-send-email-sbeller@google.com>
+ <xmqqh9cmpcze.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E8696EDE-37E6-11E6-AC4B-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh9cmpcze.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Jun 21, 2016 at 12:18:29PM -0700, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->>
->>> We are about to teach the log_tree machinery to reuse the diffopt.file
->>> setting to output to a file stream different from stdout.
->>>
->>> This means that builtin am can no longer ask the diff machinery to
->>> close the file when actually calling the log_tree machinery (which
->>> wants to flush the very same file stream that would then already be
->>> closed).
->>
->> Sorry for being slow, but I am not sure why the first paragraph has
->> to mean the second paragraph.  This existing caller opens a new
->> stream, sets .fp to it, and expects that the log_tree_commit() to
->> close it if told by setting .close_file to true, all of which sounds
->> sensible.
->>
->> If a codepath wants to use the same stream for two or more calls to
->> log_tree by pointing the stream with .fp, it would be of course a
->> problem for the caller to set .close_file to true in its first call,
->> as .fp will be closed and no longer usable for second and subsequent
->> call, and that would be a bug, but for a single-shot call it feels
->> entirely a sensible request to make, no?
->>
->> Obviously you have looked at the codepaths involved a lot longer
->> than I did, and I do not doubt your conclusion, but I cannot quite
->> convince myself with the above explanation.
->>
->> The option parser of "git diff" family sets ->close_file to true
->> when the --output option is given.
->>
->> Wouldn't this patch break "git log --output=foo -3"?
->
-> I wonder if the right approach is to stop using .close_file
-> everywhere.
->
-> With this "do not set .close_file if you use log_tree_commit()",
-> "git log --output=/dev/stdout -3" gets broken, but removing that
-> check is not sufficient to correct the same command with "-p", as
-> letting .close_file to close the output file after finishing a
-> single diff would mean that subsequent write to the same file
-> descriptor will trigger a failure.
+> Stefan Beller <sbeller@google.com> writes:
+> 
+> >  Unlike the prior patch we would not want this patch to fall through
+> >  to origin/maint fast, but allow cooking?
+> 
+> I do not see anything that makes this treated differently from the
+> other fix.  The only difference in behaviour is that "lines" file is
+> now created at the root level of the trash repository's working tree
+> instead of tested clones', and I do not think any test depends on
+> the number of untracked paths in the trash working tree or tries to
+> make sure a file called "lines" is not in there.
 
-We could say "git log --output=foo -3 [-p]" without any of your
-patches is already broken, and it is a valid excuse to take this
-change that we are not making things worse with it.
+I think it is only that the other patch is actually fixing something,
+whereas this is cleanup. So the cost/benefit equation is different. I
+agree neither is high-risk and a test cleanup is generally OK for maint
+(the other is a serious-ish regression IMHO).
 
-It is just 3/9 is a logical first step to correct that exact
-problem, i.e. some codepaths, even though there is a place that
-holds the output stream and command line parser does prepare one for
-"foo" when --output=foo is given, ignore it and send thigns to the
-standard output stream.  You might not have written 3/9 in order to
-fix that "git log --output=foo" problem, but a fix for it should
-look exactly like your 3/9, I would think.
+> Having said that, I wonder if we want further reduction of the
+> repetition.  Each test except "setup" in this script does an
+> identical thing with very small set of parameters:
+> 
+>     - make sure super_clone will be removed when done.
+>     - clone file://$pwd/. to super_clone but with different set of options.
+>     - check the commits in super_clone and super_clone/sub.
+> 
+> So, the above would ideally become something like
+> 
+> do_test 3 3 --recurse-submodules
+> 
+> where the helper would look like
+> 
+> do_test () {
+> 	cnt_super=$1 cnt_sub=$2 &&
+>         shift 2 &&
+>         test_when_finished "rm -fr super_clone" &&
+>         git clone "$@" "file://$pwd/." super_clone &&
+>         git -C super_clone log --oneline >lines &&
+>         test_line_count = $cnt_super lines &&
+>         git -C super_clone/sub log --oneline >lines &&
+>         test_line_count = $cnt_sub lines
+> }
+> 
+> Would it rob too much flexibility from future tests to be added to
+> this script if we did it that way?
 
-And it is sad that this step makes that fix impossible.
+I think that's an improvement, too. Even if we add further tests, they
+don't have to follow the same format. I would give the function a better
+name than "do_test" though. :P
+
+-Peff
