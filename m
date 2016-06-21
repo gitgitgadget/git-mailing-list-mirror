@@ -1,127 +1,100 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D755A1FF40
-	for <e@80x24.org>; Tue, 21 Jun 2016 02:15:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0373D1FE4E
+	for <e@80x24.org>; Tue, 21 Jun 2016 03:59:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753121AbcFUCPU (ORCPT <rfc822;e@80x24.org>);
-	Mon, 20 Jun 2016 22:15:20 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:34947 "EHLO
-	mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752054AbcFUCPT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2016 22:15:19 -0400
-Received: by mail-qk0-f194.google.com with SMTP id b136so479361qkg.2
-        for <git@vger.kernel.org>; Mon, 20 Jun 2016 19:15:19 -0700 (PDT)
+	id S1751804AbcFUD7X (ORCPT <rfc822;e@80x24.org>);
+	Mon, 20 Jun 2016 23:59:23 -0400
+Received: from mail-vk0-f48.google.com ([209.85.213.48]:34622 "EHLO
+	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752719AbcFUD7W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2016 23:59:22 -0400
+Received: by mail-vk0-f48.google.com with SMTP id t129so5018539vka.1
+        for <git@vger.kernel.org>; Mon, 20 Jun 2016 20:58:22 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=MkMI4XauBFQgVoKJK26gulH3u9WjPCv3zD/Ku0Tsexo=;
-        b=frYVjLX7uVFhWT5xHZ4sYp5fnFHqw3AxnQ4Vu9YMiV3s10aHuQlLUGTzExbJLMVTsZ
-         NC72MaKvUjBKXeaBe/qb1uuVUjCevG1wW1er9Ar+kTcRgvwfxuQn/YVAFA1HL7VdFMVq
-         MuGwAytJDdLFrY4kp3/mPtZj1nJ/pfxGmBsEgXlqX8vz2D3em86i95/HE4naK5KSj6Tx
-         YpkM1sjqEdg1O6+xRQqiNePmp9ozPOjrqvkOLGQHtLCfcRPKLVOyLlUOWRjihvsG3DjJ
-         BrH0Aou8GUdUri5Epv0fGS1g0OdOq4Ge7iN6LcL13mK/tiK4zfXWvHM4L8cc04RBQhSZ
-         knGg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=FhW8Z7qkOOUDLGu278sphoIpGAi58329wcHfRhh2AGA=;
+        b=D7dyu31VEPVzwQBx0rST+TEDFiaAnH1Y9zOCpe5arp0G2ZRpkW39+hqssw14qlmDuz
+         L5po9vn5VlVVs7kZLaseHVZ+IZPt068sDqy48r6qgSp+Wl4bCXF0Smo2KA8DWawcT0OV
+         LV7ypI96GwxspVE8B1pYd0mbnm9iukXxZO8wp3LBaMwLxheqUAzcBsEv35eY8kGZI2iQ
+         iV+hFk16xHGpVLd+sznFLOm1nUc1SfUdq38kn+m/U3XG08YqULr1mB8x4jmH9v+gv6PD
+         e0/UNry5m1IqNBq6DZvy9TO/EIPIsQD2RU4R3uiXSKPVl0ttmdjXnWYPCl58M1ZPSakR
+         BKnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=MkMI4XauBFQgVoKJK26gulH3u9WjPCv3zD/Ku0Tsexo=;
-        b=UxuonEh+ouZvWLHJLP6qclGbj96YL82dkTdK/urECuHkis8E6SEe/noaEv609zUsT9
-         oxP5uJq9kP6PyrHVl5YbFDFPLMPKcuoJ9hlxP0qw3PAX1O54d6AhNc8lxMITmsuJMPgW
-         1rQBKaoWb9phhA3JNgYGOEGW9xHqP2F4WRhKg5pkpLL7qdaEZefajuijvEWxHjKyo2/f
-         y8suRqKIr7LFd7T4v9BMcclOMIkTor1g5uvTLKz9kVjaaL1f2XoiaBK5kGzT+2w//x4U
-         elz29TgR2jUC2pVUfiKmOyqh0AzFsStKY3TUNMpDklOkTHG1jX7axqjeWSz2ARICi2mZ
-         N41Q==
-X-Gm-Message-State: ALyK8tK8ftpimu/Fyw98YjRn3V3cCJ89qNXzODBDixASEzAukqnF9la5avRgbfoZzeTanQ==
-X-Received: by 10.55.167.19 with SMTP id q19mr5013268qke.7.1466475318733;
-        Mon, 20 Jun 2016 19:15:18 -0700 (PDT)
-Received: from Emily-Xies-MacBook-Pro-2.local.com ([207.251.103.46])
-        by smtp.gmail.com with ESMTPSA id l37sm12160479qte.41.2016.06.20.19.15.17
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 20 Jun 2016 19:15:18 -0700 (PDT)
-From:	Emily Xie <emilyxxie@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=FhW8Z7qkOOUDLGu278sphoIpGAi58329wcHfRhh2AGA=;
+        b=OsqlaJO1Xi6g7IzR6Btw65sZr4+pGEP/CtF6q+TFj7N19vLhcYXGehj4LdWDlQmDM1
+         IpryPPAyap3yPfG55v0lj1XXBfSQWceEGzppNEShqK161ZI1NxWvq3Ved41yjqWPGysK
+         G7Ev+E93mJH7NVy3ONcvJkTnWZ5jEIu76UxGzWphGJeuJiGlaLbFjkbpCQ42hX980aAQ
+         AWHjlfaxWLIxnKqbo8dna7XpbAkk25rQvnIBnDIKk+6dyCFHVQXM2NA/h3Rp3sWtx8eM
+         /0qZvdhm8K/2aUDi45Z6BKTnSandKqOhKfOERr2H88hNekATv0S0Bh3FIHO2i1FJ14BQ
+         yftg==
+X-Gm-Message-State: ALyK8tKiePfmc8aqNOw1RXQ0MdhtnR7h2J4kDcwkIeueThbGCQD9HIMsoitHv5Dbw8I3MflN/jUnZwo8DePulw==
+X-Received: by 10.31.188.80 with SMTP id m77mr8377251vkf.30.1466481501192;
+ Mon, 20 Jun 2016 20:58:21 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.103.2.70 with HTTP; Mon, 20 Jun 2016 20:58:20 -0700 (PDT)
+From:	David Lightle <dlightle@gmail.com>
+Date:	Mon, 20 Jun 2016 22:58:20 -0500
+Message-ID: <CAP4gbxqjHzqHhPuNK8UOwPMa46g2=vcNSk1AvGjxN8s+ou-0Dw@mail.gmail.com>
+Subject: Fast-forward able commit, otherwise fail
 To:	git@vger.kernel.org
-Cc:	novalis@novalis.org, gitster@pobox.com,
-	Emily Xie <emilyxxie@gmail.com>
-Subject: [PATCH] pathspec: warn on empty strings as pathspec
-Date:	Mon, 20 Jun 2016 22:15:15 -0400
-Message-Id: <20160621021515.64964-1-emilyxxie@gmail.com>
-X-Mailer: git-send-email 2.8.4
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-For any command that takes a pathspec, passing an empty string will
-execute the command on all files in the current directory. This
-results in unexpected behavior. For example, git add "" adds all
-files to staging, while git rm -rf "" recursively removes all files
-from the working tree and index. A two-step implemetation will
-prevent such cases.
+Hello,
 
-This patch, as step one, invokes a warning whenever an empty
-string is detected as a pathspec, introducing users to the upcoming
-change. For step two, a follow-up patch several release cycles later
-will remove the warnings and actually implement the change by
-throwing an error instead.
+I am trying to build a git workflow in our enterprise and am almost
+evenly torn between a "rebase workflow" and git-flow (which uses merge
+instead of rebase, obviously).  We are using Bitbucket for pull
+requests as code reviews (right or wrong).
 
-Signed-off-by: Emily Xie <emilyxxie@gmail.com>
-Reported-by: David Turner <novalis@novalis.org>
-Mentored-by: Michail Denchev <mdenchev@gmail.com>
-Thanks-to: Sarah Sharp <sarah@thesharps.us> and James Sharp <jamey@minilop.net>
----
- pathspec.c     | 6 +++++-
- t/t3600-rm.sh  | 6 +++++-
- t/t3700-add.sh | 4 ++++
- 3 files changed, 14 insertions(+), 2 deletions(-)
+I apologize if my inexperience with git shows through, but I'm wanting
+to achieve the following --
 
-diff --git a/pathspec.c b/pathspec.c
-index c9e9b6c..79e370e 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -402,8 +402,12 @@ void parse_pathspec(struct pathspec *pathspec,
- 	}
- 
- 	n = 0;
--	while (argv[n])
-+	while (argv[n]) {
-+		if (*argv[n] == '\0')
-+			warning(_("empty strings are not valid pathspecs and will no longer "
-+			          "be supported in upcoming releases"));
- 		n++;
-+	}
- 
- 	pathspec->nr = n;
- 	ALLOC_ARRAY(pathspec->items, n);
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index d046d98..4503a14 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -881,4 +881,8 @@ test_expect_success 'rm files with two different errors' '
- 	test_i18ncmp expect actual
- '
- 
--test_done
-+test_expect_success 'rm empty string should invoke warning' '
-+	git rm -rf "" 2>&1 | grep "warning: empty string"
-+'
-+
-+test_done
-\ No newline at end of file
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index f14a665..5dbe8c2 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -207,6 +207,10 @@ test_expect_success POSIXPERM,SANITY 'git add should fail atomically upon an unr
- 	! ( git ls-files foo1 | grep foo1 )
- '
- 
-+test_expect_success 'git add empty string should invoke warning' '
-+	git add "" 2>&1 | grep "warning: empty string"
-+'
-+
- rm -f foo2
- 
- test_expect_success POSIXPERM,SANITY 'git add --ignore-errors' '
--- 
-2.8.4
+Maintain two long-running branches (develop as a stable pre-release,
+master as a deployed version), with short-term feature branches off of
+develop and short-term release branches that are based on develop and
+merge into master eventually (ie. a lightweight git-flow).
 
+However, as part of this, I would prefer to require/ensure that each
+feature branch is up-to-date and otherwise able to be fast-forwarded;
+we currently have this with the bitbucket server setting requiring
+--ff-only.
+
+The other half of what I would prefer is to still perform the merge
+commit, though, to ensure separate tracking of the feature branches
+(ie. --no-ff).
+
+I know that I have read that --ff-only and --no-ff are contradictory,
+but I believe that is somewhat ambiguously correct -- I believe the
+two flags contradict in the sense of "what to do with the merge
+commit", but not necessarily on the "when it can be done".
+
+I read an ancient post about on this list (which predates the
+tri-state of fast-forward) that I believe could have allowed this to
+work.
+
+I have also read a few articles and posts that achieve this more as a
+matter of practice than a workflow enforcement via git flags; for this
+to be something to potentially get absorbed into a Bitbucket workflow,
+I suspect it would need to a git flag (they now support merging via
+--ff, --no-ff, --ff-only, --squash, and --squash-ff-only for their
+hosted solution, for example).
+
+Here are a few articles that say they prefer this approach (rebase and
+then merge --no-ff):
+https://walkingthestack.blogspot.com/2012/05/why-you-should-use-git-merge-no-ff-when.html
+http://blog.differential.com/best-way-to-merge-a-github-pull-request/
+http://victorlin.me/tags/rebase
+
+Can anyone share their thoughts on workflows that might achieve what
+I'm looking at here or opinions on adding the functionality I'm
+describing?
+
+Thanks!
