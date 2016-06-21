@@ -1,48 +1,47 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2320F1F744
-	for <e@80x24.org>; Tue, 21 Jun 2016 07:15:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDFD91F744
+	for <e@80x24.org>; Tue, 21 Jun 2016 07:32:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932384AbcFUHPu (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 03:15:50 -0400
-Received: from mout.gmx.net ([212.227.17.21]:50350 "EHLO mout.gmx.net"
+	id S932549AbcFUHcF (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 03:32:05 -0400
+Received: from mout.gmx.net ([212.227.17.21]:51355 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753466AbcFUHPP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 03:15:15 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Lu2F0-1bPTFS3ZQc-011VJW; Tue, 21 Jun 2016 09:15:08
+	id S1753105AbcFUHcD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 03:32:03 -0400
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MVIva-1asc8b28MQ-00Yf1Y; Tue, 21 Jun 2016 09:31:47
  +0200
-Date:	Tue, 21 Jun 2016 09:15:05 +0200 (CEST)
+Date:	Tue, 21 Jun 2016 09:31:45 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	Junio C Hamano <gitster@pobox.com>
-cc:	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
-In-Reply-To: <xmqq4m8nvodo.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1606210906190.22630@virtualbox>
-References: <cover.1466244194.git.johannes.schindelin@gmx.de> <de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de> <CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com> <alpine.DEB.2.20.1606200814510.22630@virtualbox>
- <xmqq4m8nvodo.fsf@gitster.mtv.corp.google.com>
+cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 1/7] log-tree: respect diffopt's configured output
+ file stream
+In-Reply-To: <xmqqwplju74a.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1606210920510.22630@virtualbox>
+References: <cover.1466244194.git.johannes.schindelin@gmx.de> <cover.1466420060.git.johannes.schindelin@gmx.de> <babf95df5f610feb6c2ae7f2ed3cff98bab47fe2.1466420060.git.johannes.schindelin@gmx.de> <xmqqwplju74a.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:gj8WrO8mixALwBk9umu8gs2AeQe/rDI15t50Pj1Up3pWCXyS1xo
- ieHsVP6N5smfOeDm5BTXGhOjdaUaZArdFniPcxo19Mg0yEXAg5ZRORC3RSO8LjYGTVEeXSY
- Y4l3lOCTJiaerjZFqseFdrbrWBZ75dWH8uNraBVfU00AowqPyyqUL4LhwJX9clqm5MeDeuL
- SU6tj2GNJtgUfmoAe2nzQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:WLu8FK4Z4Tw=:4cm68Qxw7mmY2iai9LHKhY
- H0gnIpHpCex/UoQoc5nxLV3bf0T6hFHKZCOeONZf41+WwA7IPC1gftZP6Y1LChO5U5YRdIpRz
- 60nczNT8bcc6Ko8jkrXy1RkhbORDx5qae1HsyuL0FSmb0wPswAr19B+OT599BxX9FylPLhYO+
- SkpMnvCekiiXzX+WKvLjmcldfbVSMlCVfxIF7mu2OA71a7MAdACBIad0xYYqN9Zn7nRPN2yWP
- uMl1zvAk54Yg2n4e+Oto9YX/1pv3TGKwo1UIqMAdNw5nq1XvhWCRwLv6wNm+n/ITm1BZTVstK
- FSYOVUKFDcmcCtkBTNnLh13O+u7ebg0RWh6JIQuXDn1DMqNmMHXhf2DxMdHFFp8WV86xJRk0d
- nFHK6+jM70aPPSlwcvHJ2vPK0S35qMmxNc+gdlsdKSGm4IPSuNqT4dVkwzSp/Tmtl9VsM0Quq
- cJo9foAFvqj0Zvz16H1O6Qqpr0DZyKDmkpFIHJluqUZoxMs/eBEXiH+e4hBa9SxPKQw+kqBFJ
- yS45p6AHb0RD67NHvGcWIWSEn3csoIEpfcp0qW1W3fwM1mSQA4F4DO3MHYvrYqyqRBWLIG9eR
- C/hT+DPrcyCMlpbxEbYA+DgI7vBQ1BWK6kzKXvjMM0SvRLMEOWL6Lj+DvqiFs3Q9U8/55evRi
- 6WQnU1oLHj2qRT8EqgzM8IlJrlBKiOdW7n5dooripC7qTBGETyl2FBAEMT4/KlassUu+H72f+
- CTM35KBAH6WYcfd6oDmJOXqIt0sNoKB/r38ixH982eDC6G7dJL4bzq5GsatFX3u+I+dWUfWcF
- lkDBQ94
+X-Provags-ID: V03:K0:l9pp/mcn7E4SqGnYSSoSGok8rJN5Vs9C2z+kPea16nV9HVOKAh8
+ 3yr+MGraRC0BOvaXSzYod8P57qR37N53kE/6rW0Ar45PVizBskjX/Pb/5VpkKIMTXx8TEQL
+ T+/k/5upyKL2wuitALJDeXI/Y3Iz7O9c8GOiY5s7Z0cO4832xEvM7jswjSbbj1GkIE4Cvax
+ 9RFV/klGg5ivt/D5/2WBA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:XfDZiufM8Uw=:0cdy4wgrgTVhii0PFbgp/H
+ KVa6tWHztniFd2sAGUufbjHt06gHiVO0FuNxdcxg1Gg4AxdNwaxi8ZISHjyd6FYTQNGKyyxnW
+ eSAEjzyEna5W2V+rvbJk5QZu5BQcHxpy56rKKbpyC2Lr4wxD7JuZvBTCih8OzKLt1vte7lP2p
+ K1xHofkx1ti7o9yKv1kzsM7DaHgac4rVMHnssUnQiUQpRKVxLlmGWkOYTLGA4QX10ofbBSR5R
+ K+ph4U57oalPNSldXIbkKvQIGB9yZc7qonhXdAdQ/E6j0Lzi7vRNOWXUrlRecQjsJZhrW8kzV
+ coeVGiH/K06qZRoeL8Y2AmcwUrDBrpIs8Vak1kWWUfAHAZl68OsWRyoB5zk82leQVwuKYTHab
+ 3Ip6AjG6pKR07YRf6TV+F9+jgzBZxZ6oFfVfUm+VONPjB4CVzLo46xUw8+KOBtQIVB3VujsXf
+ eI8jqWrkFrB13A5JKROw+FQPsyzUtxHCdMurvCJ9at3bSVe0R6zikuwMp0CPbmBaYf750skCA
+ dj7XwW/dRinamMQlcNBx2H+z2uT0cRBtk8PS0IRsjVzljYwDiBj68IQsmOEdKCwMUkWmR0a2p
+ +X7iwhHNcXhJGKnBQFQD2IQnbRoQJpiN5Fa+28VCWZKCN4D7f6R3rvoaOcUgt94n2PWkW78/R
+ vo1MtGFvDr6NLdEK1SiiFgPckA02W3RUS1BkLUGd6qIAFvlCcW3628g0PPdj6ZAB3rzXIGa38
+ JhoBgHLcbzH0uaRN3aHpqt85EFI7S82AjZvDNI2s4goYu35/j9oRbeBusRQ0NOKR2+CARL1fN
+ JdnX/uG
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -52,27 +51,99 @@ Hi Junio,
 
 On Mon, 20 Jun 2016, Junio C Hamano wrote:
 
-> You can probably sell "when giving out put to file, we will never color
-> the output" as an improved new world order, but if that is what this
-> change wants to do, it probably deserves a separate patch.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> I however think you can avoid breaking expectations by people who are
-> not so sensible by overriding only when use_color is set to
-> GIT_COLOR_AUTO, perhaps?
+> > The diff options already know how to print the output anywhere else
+> > than stdout. The same is needed for log output in general, e.g.  when
+> > writing patches to files in `git format-patch`. Let's allow users to
+> > use log_tree_commit() *without* changing global state via freopen().
+> 
+> I wonder if this change is actually fixing existing bugs.  Are there
+> cases where diffopt.file is set, i.e. the user expects the output to be
+> sent elsewhere, but the code here unconditionally emits to the standard
+> output?  I suspect that such a bug can be demonstratable in a test or
+> two, if that were the case.
 
-That is a very convincing argument. So convincing that I wanted to change
-the patch to guard behind `diff_use_color_default == GIT_COLOR_AUTO`. But
-that is the wrong variable: the variable that *has* that default value is
-git_use_color_default, and is private to color.c.
+It is conceivable, but I did not have time to chase those cases down yet.
 
-But then I dug further to determine under which circumstances that
-variable can be reset to any different value. It turns out that in
-format-patch's case, it cannot:
+> I am sort-of surprised that we didn't do this already even though we
+> had diffopt.file for a long time since c0c77734 (Write diff output
+> to a file in struct diff_options, 2008-03-09).
+> 
+> Use of freopen() to always write patches through stdout may have
+> been done as a lazy workaround of the issue this patch fixes, but
+> what is surprising to me is that doing it the right way like this
+> patch does is not that much of work.  Perhaps that was done long
+> before c0c77734 was done, which would mean doing it the right way
+> back then when we started using freopen() it would have been a lot
+> more work and we thought taking a short-cut was warranted.
 
-	787570c (format-patch: ignore ui.color, 2011-09-13)
+Back when I implemented the feature to write to individual files, I indeed
+used freopen() out of laziness: 0377db7 (Teach fmt-patch to write
+individual files., 2006-05-05). I could not have used diffopt.file at that
+stage, anyway: that field still was almost two years in the future.
 
-I hope you agree that it will be enough to augment the commit message with
-this analysis and keep the patch as-is (as per v2, that is)?
+> >  		if (opt->children.name)
+> >  			show_children(opt, commit, abbrev_commit);
+> >  		show_decorations(opt, commit);
+> >  		if (opt->graph && !graph_is_commit_finished(opt->graph)) {
+> > -			putchar('\n');
+> > +			fputc('\n', opt->diffopt.file);
+> 
+> Hmph.  putc() is the "to the given stream" equivalent of putchar()
+> in the "send to stdout" world, not fputc().  I do not see a reason
+> to force the call to go to a function avoiding a possible macro here.
+
+TBH I did not even *know* putc(). It is amazing how you can learn new
+things about the POSIX API after decades of working with it.
+
+> Likewise for all the new fputc() calls in this series that were
+> originally putchar().
+
+Goes without saying.
+
+> > @@ -880,8 +880,9 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
+> >  		shown = 1;
+> >  	}
+> >  	if (opt->track_linear && !opt->linear && opt->reverse_output_stage)
+> > -		printf("\n%s\n", opt->break_bar);
+> > +		fprintf(opt->diffopt.file, "\n%s\n", opt->break_bar);
+> >  	opt->loginfo = NULL;
+> > -	maybe_flush_or_die(stdout, "stdout");
+> > +	if (opt->diffopt.file == stdout)
+> > +		maybe_flush_or_die(stdout, "stdout");
+> >  	return shown;
+> >  }
+> 
+> This one looks fishy.
+> 
+> Back when we freopen()'ed to write patches only through stdout, we
+> always called maybe_flush_or_die() to make sure that the output is
+> flushed correctly after processing each commit.  This change makes
+> it not to care, which I doubt was what you intended.  Instead, my
+> suspicion is that you didn't want to say "stdout" when writing into
+> a file.
+> 
+> But even when writing to on-disk files, the code before your series
+> would have said "stdout" when it had trouble flushing, so I do not
+> think this new "if()" condition is making things better.  If "it
+> said stdout when having trouble flushing to a file" were a problem
+> to be fixed, "let's not say stdout by not even attempting to flush
+> and catch errors when writing to a file" would not be the right
+> solution, no?
+> 
+> Personally, I do not think it hurts if we kept saying 'stdout' here,
+> even when we flush opt->diffopt.file and found a problem.
+
+Okay, I changed it back to be unconditional.
+
+My original thinking was that we will fclose() the file (if it is not
+stdout) anyway, which implies flushing. But the more I think about it,
+the more I come to the conclusion that this is more of a side effect,
+based on deep knowledge of the current code. So I now agree with you that
+it would be "too clever".
+
+Expect v3 in a moment.
 
 Ciao,
 Dscho
