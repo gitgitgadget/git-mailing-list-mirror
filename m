@@ -1,126 +1,164 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3349C1FF40
-	for <e@80x24.org>; Tue, 21 Jun 2016 20:42:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A3641FF40
+	for <e@80x24.org>; Tue, 21 Jun 2016 20:51:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751871AbcFUUmx (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 16:42:53 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:36270 "EHLO
-	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751710AbcFUUmu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 16:42:50 -0400
-Received: by mail-io0-f171.google.com with SMTP id s63so23289856ioi.3
-        for <git@vger.kernel.org>; Tue, 21 Jun 2016 13:42:50 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=jg9up6n4yVNc9Zd9WKNtb81WDSptrXEYqRyGaqoXedg=;
-        b=Zpi5buxNHUFj5IIPM6VKWcfhFaEuvqT+6ra4fcUXMf7K+Wzvf/dEwHcTgqxUv+5wHo
-         umuoCgkQHTYyYdEYXKUljha9g1dxWwP5qAncXb7KbNgFYjJU5i4O+B92p3ZzwvpD33Ln
-         WyF3L/a9T8DYgiXRrLzF8ab3n5e7EQgCtiEqQ9cHwgV6L8bJ448PkWwKF3fHlo2cUXeo
-         Jl7jZ50iDsUYBQcG3JD9AWrg1dhARHPChOuJrZba8s4e/o5ia5symkD8G9eafERyVpsP
-         AzVKu8X5jqf8N/mGukqbdMbRvXgk5eG8awQBwmilxOcwlWdNTfCu0kW1xJAWtP33FT/d
-         ZF6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=jg9up6n4yVNc9Zd9WKNtb81WDSptrXEYqRyGaqoXedg=;
-        b=eyUcChycTz7C2gyukZci50/ODqpG4SvVhomMDgGbJ7f4viQW9QHZhSQ0218d3hZIu9
-         LSZ2M4g1UHIyTkgU0YS7rY0vNuNuf0E87fyh4QxoIVhaRkuVaQm/fG999kcqSIrB699Y
-         73SMRd0b0cS5Z4zyH+y9rn/u2AIsuQe/DtD9fSMHoTvJCmkkwSqPIRRc3Joul+XbwpKf
-         yX1kcTZJ5+35K8+gfh652WGscftucyET24H2IJvuCPkUNYsJ6FclVciRhAt/hyM4cqCU
-         qEUby7F7L9bX38Ky+a2tEJ2N7xiP/KTDBYwsG6eL5osbUnBGcfPFeSQIyLNKAAAIG17l
-         apOQ==
-X-Gm-Message-State: ALyK8tJilCsFM+dkaiEhn9kS8TjD9FQ0cOh4lYm2b58nbeinwclwRktnuAdSyDhrv3ovyVui7wvXsbwVd00V0Nxe
-X-Received: by 10.107.186.196 with SMTP id k187mr35662121iof.173.1466541340940;
- Tue, 21 Jun 2016 13:35:40 -0700 (PDT)
+	id S1751764AbcFUUvd (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 16:51:33 -0400
+Received: from mout.web.de ([217.72.192.78]:64357 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751853AbcFUUvb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 16:51:31 -0400
+Received: from [192.168.178.36] ([79.237.51.68]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0M7bQ3-1bcm5D0J2F-00xLgk; Tue, 21 Jun 2016 22:43:00
+ +0200
+Subject: Re: [PATCH 1/2] archive-tar: write extended headers for file sizes >=
+ 8GB
+To:	Jeff King <peff@peff.net>
+References: <20160616043523.GA13615@sigill.intra.peff.net>
+ <20160616043733.GA18323@sigill.intra.peff.net> <57687413.3030609@web.de>
+ <20160621155920.GA7549@sigill.intra.peff.net>
+Cc:	git@vger.kernel.org
+From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <5769A6CC.9030001@web.de>
+Date:	Tue, 21 Jun 2016 22:42:52 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
 MIME-Version: 1.0
-Received: by 10.107.136.16 with HTTP; Tue, 21 Jun 2016 13:35:40 -0700 (PDT)
-In-Reply-To: <CAPV8XuZvDkcEwxRB0HwaihVo7QzqsoHTRCdV7sqxkT31-RWkmA@mail.gmail.com>
-References: <loom.20160620T145755-931@post.gmane.org> <CAGZ79kZyEzp92JP_Bp2te1XO=PB0+fwFn57MrBPuWe25PQKOog@mail.gmail.com>
- <CAPV8XuZvDkcEwxRB0HwaihVo7QzqsoHTRCdV7sqxkT31-RWkmA@mail.gmail.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Tue, 21 Jun 2016 13:35:40 -0700
-Message-ID: <CAGZ79kYvMjDaPnet1J_QrHARYtNqLwRhs7f08cDZ7P6dT8Rs6A@mail.gmail.com>
-Subject: Re: Problem with --shallow-submodules option
-To:	Istvan Zakar <istvan.zakar@gmail.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20160621155920.GA7549@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:UvY4Fw240yKgk+DvRihwVSv1BLpod6uJgaIvDn8PkJ1wU/fBOrC
+ Cp5HO0yJra0zZ/CVrGZpF0o8ct0PTA6j3qXh+Kyb5bLWYmR30krRD7b+UXr/iDXXoSfnctA
+ 9x4pmAUL+lZX98ZYihBd6Q6D6gXfu93CbP2zMQgtwRdp5GLC7Q33LbVwwXG6y8TTJOgay6C
+ x1LRu4SaKhK6TTsW7fasg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:BBc2/Z4r348=:jewN8oc8X1joU+5aBXKr0a
+ 0KtYBDyJqal8oKqdQEUWa0Gwon/dcyM6lapRy86atQHoAmVYhHuG4P3X4sGLOx73dcGunx5Gg
+ HfAA761rD3g/w+o5HOs39UqTlBpxn60cbu5rVAV/hmxgThVrbeZKEGSsWLbMEmzZNwbxHXaO0
+ ypxtHC/dyCbO0rtm4p7M8V1kVgy+APLLPSO7AjxdYUuhbmirBllKuRiy4fS1cRXPJ9avuJhF+
+ FaX9fp6d4jVwEyQOtlcC/WyfW11lS9VMTXu9LSp8hVFh2wSvbrHgyFr8cMV8BpqTGj3i7XySa
+ yYmpsaLLvyD8cp4cWl95fqHfy2mNEVAyGglLp0Lmp25NFoFuCpDeSLZbecwzFb9FgSmHCJYY1
+ n95LmpMswOkUWVwnpTkWFdLyrHqMVEgcKN6g9aP4h5x8MJpmRH9POiZni/nJIflXfHfosf+Pr
+ ZATdtXPX4Omsr0ZHvr4nne/w+Rnyj3bZ5CRTGi+7Hf71edE3uSvplIfxj3fzEXyjxKqHkoG/i
+ BChbfBHOiuqNQZnBEKIYSKmpcZ1xxR80MSNoaJqUmRdxKYrZ8v5hJ7RcEaObvxlqP5cUuqxLx
+ jRmlWS/wHvcYUk30HkDWbz1h9yd8QK0xTL6C1sDDVqEjFUJ2d1TnIvVJCSFNl326IEIH8SPv1
+ bKtfP+DZ2Rw1+ZTw6/CIirf67P47BXeCrQNNe0f+6VdEftiI5bfH086iLSzVjbCxvOcSwb6NK
+ uzWG7PvkOWlwl1o1awC4Ma3XctzppOK1SNEzNKT7fisbHJSsYFWa+I8KFsvLYA5Ty8vlQz50S
+ s9MBKpl
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 20, 2016 at 11:32 PM, Istvan Zakar <istvan.zakar@gmail.com> wrote:
-> Hi,
->
-> Thanks for the answer.
-> So it means that it is a setting on the server side which can be
-> activated? (I guess it depends on the version of the server)
-> I did some reading in the topic. Are you talking about this setting
-> "uploadpack.allowReachableSHA1InWant", or did I misunderstood what I
-> read?
-
-No that's exactly what I meant; sorry for not spelling that out.
-
-Thanks,
-Stefan
-
->
-> Thanks,
->     Istvan
->
-> On 20 June 2016 at 19:45, Stefan Beller <sbeller@google.com> wrote:
->> On Mon, Jun 20, 2016 at 6:06 AM, Istvan Zakar <istvan.zakar@gmail.com> wrote:
->>> Hello,
+Am 21.06.2016 um 17:59 schrieb Jeff King:
+> On Tue, Jun 21, 2016 at 12:54:11AM +0200, René Scharfe wrote:
+> 
+>>> Unfortunately, it's quite an expensive test to run. For one
+>>> thing, unless your filesystem supports files with holes, it
+>>> takes 64GB of disk space (you might think piping straight to
+>>> `hash-object --stdin` would be better, but it's not; that
+>>> tries to buffer all 64GB in RAM!). Furthermore, hashing and
+>>> compressing the object takes several minutes of CPU time.
 >>>
->>> I'm working on a relatively big project with many submodules. During
->>> cloning for testing I tried to decrease the amount of data need to be
->>> fetched from the server by using --shallow-submodules option in the clone
->>> command. It seems to check out the tip of the remote repo, and if it's not
->>> the commit registered in the superproject the submodule update fails
->>> (obviously).
+>>> We could ship just the resulting compressed object data as a
+>>> loose object, but even that takes 64MB. So sadly, this code
+>>> path remains untested in the test suite.
 >>
->> Yes that is broken as the depth of a submodule is counted from its own HEAD
->> not from the superprojects sha1 as it should.
->>
->> So it does
->>
->>     git clone --depth=1 <submodule-url> <submodule-path>
->>
->>     if HEAD != recorded gitlink sha1,
->>         git fetch <recorded gitlink sha1>
->>
->>     git checkout <recorded gitlink sha1>
->>
->>> Can I somehow tell to fetch that exact commit I need for my
->>> superproject?
->>
->> Some servers support fetching by direct sha1, which is what we make use
->> of here, then it sort-of works.
->>
->> If the server doesn't support the capability to fetch an arbitrary sha1,
->> the submodule command fails, with a message such as
->>
->>     error: no such remote ref $sha1
->>     Fetched in submodule path '<submodule>', but it did not contain
->> $sha1. Direct fetching of that commit failed.
->>
->> So if it breaks for you now, I would suggest not using that switch, I
->> don't think there is a quick
->> workaround.
->>
->>>
->>> Thanks,
->>>    Istvan
->>
->> Thanks,
->> Stefan
->>
->>>
->>> --
->>> To unsubscribe from this list: send the line "unsubscribe git" in
->>> the body of a message to majordomo@vger.kernel.org
->>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>> If we could set the limit to a lower value than 8GB for testing then we
+>> could at least check if the extended header is written, e.g. if ustar_size()
+>> could be convinced to return 0 every time using a hidden command line
+>> parameter or an environment variable or something better.
+> 
+> Yes, we could do that, though I think it loses most of the value of the
+> test. We can check that if we hit an arbitrary value we generate the pax
+> header, but I think what we _really_ care about is: did we generate an
+> output that somebody else's tar implementation can handle.
+
+I agree with the last point, but don't see how that diminishes the
+value of such a test.  If we provide file sizes only through extended
+headers (the normal header field being set to 0) and we can extract
+files with correct sizes then tar must have interpreted those header
+as intended, right?
+
+(Or it just guessed the sizes by searching for the next header magic,
+but such a fallback won't be accurate for files ending with NUL
+characters due to NUL-padding, so we just have to add such a file.)
+
+René
+
+
+-- >8 --
+Subject: archive-tar: test creation of pax extended size headers
+
+---
+The value 120 is magic; we need it to pass the tests.  That's
+because prepare_header() is used for building extended header
+records as well and we don't create extended headers for extended
+headers (not sure if that would work anyway), so they simply
+vanish when they're over the limit as their size field is set to
+zero.
+
+ archive-tar.c       | 7 ++++++-
+ t/t5000-tar-tree.sh | 7 +++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/archive-tar.c b/archive-tar.c
+index f53e61c..fbbc4cc 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -14,6 +14,7 @@ static char block[BLOCKSIZE];
+ static unsigned long offset;
+ 
+ static int tar_umask = 002;
++static unsigned long ustar_size_max = 077777777777UL;
+ 
+ static int write_tar_filter_archive(const struct archiver *ar,
+ 				    struct archiver_args *args);
+@@ -179,7 +180,7 @@ static size_t get_path_prefix(const char *path, size_t pathlen, size_t maxlen)
+ 
+ static inline unsigned long ustar_size(uintmax_t size)
+ {
+-	if (size <= 077777777777UL)
++	if (size <= ustar_size_max)
+ 		return size;
+ 	else
+ 		return 0;
+@@ -412,6 +413,10 @@ static int git_tar_config(const char *var, const char *value, void *cb)
+ 		}
+ 		return 0;
+ 	}
++	if (!strcmp(var, "tar.ustarsizemax")) {
++		ustar_size_max = git_config_ulong(var, value);
++		return 0;
++	}
+ 
+ 	return tar_filter_config(var, value, cb);
+ }
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 4b68bba..03bb4c7 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -102,6 +102,7 @@ test_expect_success \
+      echo long filename >a/four$hundred &&
+      mkdir a/bin &&
+      test-genrandom "frotz" 500000 >a/bin/sh &&
++     printf "\0\0\0" >>a/bin/sh &&
+      printf "A\$Format:%s\$O" "$SUBSTFORMAT" >a/substfile1 &&
+      printf "A not substituted O" >a/substfile2 &&
+      if test_have_prereq SYMLINKS; then
+@@ -157,6 +158,12 @@ test_expect_success 'git-archive --prefix=olde-' '
+ 
+ check_tar with_olde-prefix olde-
+ 
++test_expect_success !TAR_NEEDS_PAX_FALLBACK 'pax extended size headers' '
++	git -c tar.ustarsizemax=120 archive HEAD >extended_size_header.tar
++'
++
++check_tar extended_size_header
++
+ test_expect_success 'git archive on large files' '
+     test_config core.bigfilethreshold 1 &&
+     git archive HEAD >b3.tar &&
+-- 
+2.9.0
+
