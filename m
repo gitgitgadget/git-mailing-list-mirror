@@ -1,180 +1,181 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48A5A1FE4E
-	for <e@80x24.org>; Tue, 21 Jun 2016 04:57:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8AFE41FE4E
+	for <e@80x24.org>; Tue, 21 Jun 2016 05:14:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754674AbcFUE46 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 00:56:58 -0400
-Received: from [61.176.221.2] ([61.176.221.2]:3780 "EHLO mail.yun151.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1753532AbcFUE4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 00:56:55 -0400
-Received: from localhost by mail.yun151.com (MDaemon PRO v10.1.1)
-	with ESMTP id md50090178694.msg
-	for <git@vger.kernel.org>; Tue, 21 Jun 2016 12:55:08 +0800
-X-Spam-Processed: mail.yun151.com, Tue, 21 Jun 2016 12:55:08 +0800
-	(not processed: spam filter heuristic analysis disabled)
-X-MDHeloLookup-Result: hardfail smtp.helo=localhost (does not match 14.219.184.25) (mail.yun151.com)
-X-Authenticated-Sender:	cj001@yun151.com
-X-MDRemoteIP: 14.219.184.25
-X-Return-Path: cj001@yun151.com
-X-Envelope-From: cj001@yun151.com
-X-MDaemon-Deliver-To: git@vger.kernel.org
-Reply-To: <haochenghk1987@163.com>
-Message-ID: <20160621125128565622@yun151.com>
-From:	"Paul Tsang" <haochenghk1987@163.com>
-To:	<git@vger.kernel.org>
-Subject: =?utf-8?B?UmXvvJvot6jlooPnlLXlrZDllYbliqHnianmtYHkvpvlupTllYbvvIzlpKnlpKnmnInmuK/ou4o=?=
-	=?utf-8?B?55u05rS+6aaZ5riv5Zub6Jmf56K86aCt6YKm5aiB5a6J6IiN5YCJ5bqrLg==?=
-Date:	Tue, 21 Jun 2016 12:51:18 +0800
+	id S1754634AbcFUFOI (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 01:14:08 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52799 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751628AbcFUFOG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 01:14:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D72871E231;
+	Tue, 21 Jun 2016 01:11:22 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JLIHcUsxG/qUshfffyztSF9Sng4=; b=hH3GT7
+	kG0UUY1jRu1n+szPsEIrzdhlJweJmRaEpzeYh5ZLMbyrVdCGFYqNXXfPSkG4IYJ/
+	AEdtQhfpZBq7Mwz+WCc0Ej+TOqlC+dBcEMSZtNFLUPz4IdxTNo/uNTKaknI8PsDg
+	jxmsJ9nemX7PMEw0miMiY9eE+w0LVD+zoypgE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YUcz3Mb9vVaLmWAlaSu7oKru90zgUkMv
+	AnbH2pwyLwJ99WSahtPEDqA0097hrFDCqhIf3EBdlhBQ+75p6M3iddu7beAV0Plv
+	Kyv3D516J7MSijMX0AeUeyV+EMsRvtk02hagENW3a9OPz18suju/FNBWRL/Ao2RK
+	OgTRu2p+xy4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D040B1E230;
+	Tue, 21 Jun 2016 01:11:22 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6669D1E22F;
+	Tue, 21 Jun 2016 01:11:22 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Emily Xie <emilyxxie@gmail.com>
+Cc:	git@vger.kernel.org, novalis@novalis.org
+Subject: Re: [PATCH] pathspec: warn on empty strings as pathspec
+References: <20160621021515.64964-1-emilyxxie@gmail.com>
+Date:	Mon, 20 Jun 2016 22:11:20 -0700
+In-Reply-To: <20160621021515.64964-1-emilyxxie@gmail.com> (Emily Xie's message
+	of "Mon, 20 Jun 2016 22:15:15 -0400")
+Message-ID: <xmqqd1nbrurr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-X-mailer: Zqnjrspdf 1
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9868BAC0-376E-11E6-AB46-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-RGVhciAgU2lyL01pc3MNCuacrOWFrOWPuOWwiOalreWBmuS4reWwj+W+ruS8gealreWHuuWPo+mA
-gOeojuWSjOWNleivgeWgsemXnOWHuuWPo+eJqea1gei/kOi+k++8jOWPquimgei0teWPuOaLpeac
-ieS4gOiIrOe6s+eojuS6uui1hOi0qOWSjOiDveW8gDE3JeeahOWinuWAvOeojuS4k+eUqOWPkeel
-qO+8jOaIkeWPuOS+v+iDveS4uui0teWPuOWBmumAgOeoju+8m+aXoOiuuuaCqOacieaXoOi/m+WH
-uuWPo+e7j+iQpeadg++8jOaIkeWPuOmDveWPr+W4ruaCqOWBmuWNleivge+8jA0K5a6i5oi35peg
-6ZyA5o+Q5L6b5Y2V6K+B77yM5Y+q6ZyA5o+Q5L6b6LSn54mp5riF5Y2V77yM5Y2z5Y+v5Yqe55CG
-6LSn54mp5Lit5Zu95oql5YWz5ZKM6aaZ5riv5riF5YWz77yb5om/6L+Q5ZWG5ZOB77ya546p5YW3
-57G777yM5pyN6KOF57G777yM5LqU6YeR57G777yM55Sf5rS755So5ZOB57G777yM5a625YW357G7
-562J5ZCE56eN5pmu6YCa6LSn54mp77yM5pWP5oSf6LSn54mp6YO95Y+v5Lul5om/5o6l44CCDQrk
-u6XkuIvloLHlg7nngrrluLjopovnianmtYHkuqTosqjloLHlg7nvvIzlpoLmnInpnIDopoHvvIzm
-raHov47kvobpm7voqaLlg7kNCjHvvInmlaPmnYLosqjkuIDoiKzosr/mmJPpgIDnqIXloLHpl5zv
-vIjljZXor4HloLHpl5zvvInlh7rlj6PpppnmuK/loLHlg7nvvJsNCu+8iOS4gO+8ieS4rea4r+aV
-o+iyqOaUtui0ue+8miBSTUIwLjYva2fvvIjmnIDkvY7mlLZSTUIyMDAv5Zau77yJDQrvvIjkuozv
-vInloLHpl5zotLnvvJpSTUIyNTANCu+8iOS4ie+8ieajgOeWq+i0ueWPiuWFtuadgui0ueWHreel
-qOaNruWunuaKpeWunumUgOOAgu+8iOaXoOWVhuajgOWImeaXoOatpOi0ueeUqO+8iQ0K77yI5Zub
-77yJ5ZWG5qOA5o2i6K+B5Yet5p2h6LS555So77yaUk1CMTAwICDvvIjml6DllYbmo4DliJnml6Dm
-raTotLnnlKjvvIkNCuazqO+8muS7peS4iuiyu+eUqOS4jeWMheWQq+mmmea4r+mAgeWuouOAgeWF
-peS7k+aUtuiyuy4NCuaVo+iyqOmmmea4r+a0vumAgeaUtuiyu+aomea6ljoNCkHvvJrkuZ3pvo3l
-jYDvvJogUk1CMTgwIO+8m0I65paw55WM5Y2A77yaIFJNQjIwMCAgQzog6aaZ5riv5Y2A77yaIFJN
-QjMwMA0K5pWj6LKo6aaZ5riv5YWl5LuT5pS26LK75qiZ5rqWOg0K6aaZ5riv5YWl5LuT6LS577yb
-Uk1CMzEw77yI55m76K6w6LS544CB5YGc6L2m6LS5562J5p2C6LS55a6e5oql5a6e6ZSA77yJDQrm
-s6jvvJoxLuS7peS4iummmea4r+a0vumAgeaIlummmea4r+WFpeS7k+mmlumHjTUwMEtn77yM6LaF
-5Ye65LmY5LulUk1CMC4zL0tnLg0K5omA6ZyA6LWE5paZ77yaMS4g5LiA6Iis6LS45piT5Ye65Y+j
-6ZSA5ZSu5ZCI5ZCM77yI6ZyA6KaB55uW5YWs56ug5ZKM562+5a2X77yJ77yM5Yqg5bel6LS45piT
-5ZCI5ZCM5Ye65Y+j6ZyA6KaB5rW35YWz5aSH5qGI55m76K6w5omL5YaMDQoyLiDlh7rlj6PmiqXl
-hbPlp5TmiZjkuabvvIjpnIDmnInlnKjmjIflrprnm5bnq6DnmoTkuKTlpITnm5blhaznq6DvvIkN
-CjMu5Ye65Y+j6ZSA5ZSu5Y+R56Wo77yI6ZyA5pyJ55uW56ug55qE5Y6f5Lu2LOS4gOW8j+S4pOS7
-ve+8iSA0LuWHuuWPo+ijheeuseWNle+8iOmcgOacieeblueroOeahOWOn+S7tizkuIDlvI/kuKTk
-u73vvIkNCuaTjeS9nOaXtumXtO+8miDlkajml6XliLDlkajkupTmmZrkuIoxMueCueWJjeaUtui0
-p++8jOaKpeWFs+i1hOaWmeS4gOWumuimgeaMieinhOWumumaj+i0p+S4gOi1t+S6pOm9kOWFqC7n
-rKzkuozlpKnkuIvljYjliLDmuK/vvIznrKzkuInlpKnmtL7pgIEv5YWl5LuT5a6M5q+VLg0K5aaC
-5pyJ54m55q6K5oOF5Ya177yM5YaN5L2c5a6J5o6SLg0KDQoy77yJ5pWj6LKo6YCf6YGe6aaZ5riv
-5aCx5YO5DQrkuIDjgIHlub/kuJzmsZ/pl6gv5L2b5bGxL+S4reWxseaVo++8iOadgu+8iei0p++8
-iOiyt+WWru+8iemAn+mAkummmea4r+iHquaPkOWDue+8m1JNQjAuOS9LR+aIllJNQjIwMC9DQk0N
-CiAgICDlub/kuJzmuIXov5wv5rKz5rqQL+aDoOW3nuaVo++8iOadgu+8iei0p++8iOiyt+WWru+8
-iemAn+mAkummmea4r+iHquaPkOWDue+8m1JNQjAuOS9LR+aIllJNQjIwMC9DQk0NCiAgICDlub/k
-uJzmsZXlpLTmlaPvvIjmnYLvvInotKfvvIjosrfllq7vvInpgJ/pgJLpppnmuK/oh6rmj5Dlg7nv
-vJtSTUIxL0tH5oiWUk1CMjAwL0NCTQ0KICAgIOa1meaxny/msZ/oi48v5LiK5rW3L+emj+W7uuaV
-o++8iOadgu+8iei0p++8iOiyt+WWru+8iemAn+mAkummmea4r+iHquaPkOWDue+8m1JNQjEuNS9L
-R+aIllJNQjI1MC9DQk0NCuS6jOOAgemmmea4r+a0vumAgemmlumHjTUwMEtH5oiW6aaW5pa5M+aW
-ue+8jFJNQjIwMO+8jOe7remHjVJNQjAuMy9LR+aIlue7reaWuVJNQjUwL0NCTe+8iOadgui0ueWu
-nuaKpeWunumUgO+8iQ0K5LiJ44CB6aaZ5riv5YWl5LuT6aaW6YeNNTAwS0fmiJbpppbmlrkz5pa5
-77yMUk1CMzEw77yM57ut6YeNUk1CMC4zL0tH5oiW57ut5pa5Uk1CNTAvQ0JN77yI55m76K6w6LS5
-44CB5YGc6L2m6LS5562J5p2C6LS55a6e5oql5a6e6ZSA77yJDQrms6jvvJvku6XkuIrloLHlg7nl
-jIXloLHpl5zosrvjgIHmuIXpl5zosrvjgIHmtL7pgIHosrvjgIHlhaXlgInosrsu5oiR5Y+45YyF
-5omA5Lul5oql5YWz5Y2V6K+B5paH5Lu2DQoNCjPvvInmlaPosqjpgJ/pgZ7mvrPpl6jloLHlg7kN
-CuS4gOOAgeacgOS9jua2iOi0ue+8mlJNQjI1MC/llq4NCiAgICDkuK3mvrPoh6rmj5Dku7fvvJpS
-TUIyLjUvS0cg5oiWUk1CMjUwL0NCTQ0K5LqM44CB5r6z6Zeo5rS+6YCB6aaW6YeNNTAwS0fmiJbp
-ppbmlrkz5pa577yMUk1CMjAw77yM57ut6YeNUk1CMC4zL0tH5oiW57ut5pa5Uk1CNTAvQ0JN77yI
-5p2C6LS55a6e5oql5a6e6ZSA77yJDQrms6jvvJvku6XkuIrloLHlg7nljIXloLHpl5zosrvjgIHm
-uIXpl5zosrvjgIHmtL7pgIHosrvjgIHlhaXlgInosrsu5Y+K5omA5Lul5oql5YWz5Y2V6K+B5paH
-5Lu2DQoNCjTvvInmlaPvvIjmnYLvvInosqjkuqTmt7HlnLPnm5DnlLDmuK/lgInjgIHkuK3lpJbp
-gYvvvIzlhavovr7ku5PjgIHph5Hov5Dovr7nrYnlpJbpgYvlgInloLHlg7nvvJsNCuS4gOOAgeac
-gOS9jua2iOiyu++8m1JNQjgwMC/llq4g77yI55m76K6w6LS5562J5LuT5bqT5p2C6LS55a6e5oql
-5a6e6ZSA77yJDQrms6jvvJvmjInlhazmlqToqIjnrpfvvIzljIU1MDBLR++8jOi2heWHulJNQjAu
-NS9LRzvmjInmlrnoqIjnrpfvvIzljIUzQ0JN77yM6LaF5Ye6Uk1CNjUvQ0JNKOWPluWkp+S8mOWF
-iCkNCg0KNe+8ieWbveWGhei/kOi+k+aKpeS7t++8mw0K54+g5LiJ6KeS6L+Q6L6T5oql5Lu377ya
-Uk1CNzAvQ0JN5oiWUk1CMC40L0tHK+mAgei0p+S4iumXqOi0ueeUqFJNQjIwMA0K5rex5ZyzL+S4
-nOiOnuWIsOemj+W7uuaKpeS7tzpSTUIxMjAvQ0JN5oiWUk1CMC42L0tHK+mAgei0p+S4iumXqOi0
-ueeUqFJNQjIwMA0K5rex5ZyzL+S4nOiOnuWIsOa1meaxn+aKpeS7tzpSTUIxNjAvQ0JN5oiWUk1C
-MC43L0tHK+mAgei0p+S4iumXqOi0ueeUqFJNQjIwMA0K5rex5ZyzL+S4nOiOnuWIsOaxn+iLj+aK
-peS7tzpSTUIxNzAvQ0JN5oiWUk1CMC44L0tHK+mAgei0p+S4iumXqOi0ueeUqFJNQjIwMA0K5rex
-5ZyzL+S4nOiOnuWIsOS4iua1t+aKpeS7tzpSTUIxNzAvQ0JN5oiWUk1CMC44L0tHK+mAgei0p+S4
-iumXqOi0ueeUqFJNQjIwMA0K5rex5ZyzL+S4nOiOnuWIsOS6rOa0pee/vOaKpeS7tzpSTUIxODAv
-Q0JN5oiWUk1CMC45L0tHK+mAgei0p+S4iumXqOi0ueeUqFJNQjIwMA0KDQo277yJ6aaZ5riv5pmu
-6LKo77yM5Lit5qqU6LKo5Yiw5YWn5Zyw5ZCE55yB5biC5aCx5YO577ybDQrlv6vku7bljIXnqIXl
-oLHpl5zlhaXlj6Pnibnpu57lpoLkuIsNCkEu5omL57qM57Ch5ZauLOa1t+mXnOebo+euoeaineS7
-tuewoeWWrizkuI3nlKjllq7orYnkuI3nlKjmibnmlocs5LiA5Lqb6Zu75a2Q6Kit5YKZ5Y+v5Lul
-5LiN6ZyAM0PorYnmmI7kuZ/lj6/lhaXlj6MuIA0KQi7pgJ/luqblv6ss5qyh5pel5Yiw6LKoLOmA
-guWQiOe3iuaApeiyqOeJqemAmumXnC4NCkMu5aaC5p6c6LKo6YeP6LyD5aSnLOWPr+S7pemHh+eU
-qOavj+WkqeWIhuaJueWgsemXnOaWueW8jy4gDQpELuW/q+S7tuWMheeoheWgsemXnOS4jeaPkOS+
-m+eoheelqCzmspLms5XpgLLooYznqIXnpajmirXmiaMuDQpBIOexuw0K5qqU77yM55m957q477yM
-57q46KKL77yM57q4566x77yM57q455uS77yM5ZCN54mH77yM5pel5Y6G77yM6Imy5Y2h77yM5ZCK
-54mM77yM6K+05piO5Lmm77yM55uu5b2V77yM5qCH6LS077yM5rW35oql77yM6IO257q477yM6LS0
-57q477yM6IO25p2h562JDQrvv6U5L2tnDQpCIOexuw0K5aGR5paZ5o6l5aS077yM6ZOB6Iqv77yM
-6ZOB6ZKI77yM56OB6ZOB77yM5by557Cn77yM6ZSh57q/77yM6ZKi57q/77yM5biD5paZ77yM57qx
-57q/77yM57q/55CD77yM6Iqx6L6577yM6aWw5omj77yM5ouJ6ZO+77yM6IO25biD77yM5rW357u1
-562JDQrvv6UxMS9rZw0KQyDnsbsNCuWNpOi9ru+8jOa7mui9ru+8jOa7kei9ru+8jOeUtee6v++8
-jOm8k+e6uO+8jOeggui9ru+8jOefs+adkO+8jOeBr+Wjs++8jOeBr+e9qe+8jOWPkemlsOWTge+8
-jCBQVkMg55qu77yM56Oo55+z77yM6JW+5Lid77yM56Oo6L2u77yM5ryG5YyF57q/562JDQrvv6Ux
-My9rZw0KRCDnsbsNCueJm+earu+8jOe+iuearu+8jOa/gOWFiee6uO+8jOearuWFiee6uO+8jOeD
-q+mHkee6uO+8jOi9tOW/g++8jOiJsueyie+8jOminOaWme+8jOiDtuawtO+8jOaWh+WFt++8jOe7
-kuavm+eOqeWFt++8jOiDjOWMhe+8jOWwvOm+meiii+etiQ0K77+lMTUva2cNCkUg57G7DQrkvY7k
-u7flgLzov5DliqjnlKjlk4HvvIznlLXnrZLvvIzkvY7ku7flgLznga/ppbDvvIzooaPmnI3vvIzp
-novmoLfvvIzmqKHlhbfvvIznga/lhbfvvIzlnLDmr6/vvIzorqHnrpfmnLrmjqXnur/vvIzmu6To
-lYrvvIznga/nrrHvvIzmtqbmu5HmsrnnrYkNCu+/pTE2L2tnDQpGIOexuw0K5Yqg54Ot5qOS77yM
-5L2O5YC85Y+Y5Y6L5Zmo77yM55S16KGo77yM6ICz562S77yM6ICz5py66YWN5Lu277yM5rCU5Y6L
-6YWN5Lu277yM5rO177yM56m65Y6L6KGo77yM5rS75aGe546v77yM55S154Ot566h77yM5Lid5be+
-77yM6aKG5bim562JDQrvv6UyMS9rZw0KRyDnsbsNCuS6jOaegeeuoe+8jOS4ieaegeeuoe+8jOeU
-teWuue+8jOeUtemYu++8jOeUteWKqOi1t+WtkO+8jOa4qeW6puiuoSDvvIzpo47miYfvvIznorPn
-sonvvIzlubLmiYvmnLrvvIzogLPlkqrnur/vvIzmipXluIHlmajphY3ku7bvvIzmuLjmiI/mnLrm
-jqfliLbmnYbnrYkNCu+/pTM2L2tnDQpIIOexuw0K5L2O5YC85ray5pm25pi+56S654mH77yM5rip
-5o6n5Zmo77yM54Of6Zu+5oSf5bqU5Zmo77yM6Z+z566x77yM5a6a5pe25Zmo77yM5L2O5YC857yd
-57qr5py677yM5Yqp5ZCs5Zmo77yM5o6i5aS077yM5oSf5bqU5Zmo77yM5Y+Y6aKR5Zmo77yM5Y+Y
-6YCf5Zmo562JDQrvv6U0MS9rZw0KSSDnsbsNCuaJk+WNsOacuu+8jOaJq+eehOS7qu+8jOiuoeeu
-l+acuuacuueuse+8jOaYvuekuuWZqO+8jOi3r+eUseWZqO+8jOmbhue6v+WZqO+8jOaOpee6v+eb
-ku+8jOi9rOaNouWZqO+8jOmBpeaOp+WZqO+8jOS8oOecn+acuu+8jOmSruaJo+eUteaxoO+8jOiP
-sueQs+etiQ0K77+lNTMtODMva2cNCuazqO+8m+WWruS7tuiyqOWAvOS4jeimgei2hemBjlJNQjUw
-MDAu5aaC5p6c5a6i5oi26KyK5aCx6LOH5paZ5Ye654++5ZWP6aGM77yM55Sx5a6i5oi26Ieq6KGM
-5om/5pOU6LKs5Lu7Lg0KDQo377yJMjDlsLovNDDlsLo0NeWwuuiyqOafnOWIsOmmmea4r+WgseWD
-ue+8mw0K5buj5p2x5rex5ZyzLemmmea4r++8iDIw5bC6LzQw5bC6NDXlsLrvvIk6Uk1CMjYwMA0K
-5buj5p2x5p2x6I6eLemmmea4r++8iDIw5bC6LzQw5bC6NDXlsLrvvIk6Uk1CMjkwMA0K5buj5p2x
-5oOg5beeLemmmea4r++8iDIw5bC6LzQw5bC6NDXlsLrvvIk6Uk1CMzUwMA0K5buj5p2x5buj5bee
-Lemmmea4r++8iDIw5bC6LzQw5bC6NDXlsLrvvIk6Uk1CNTcwMA0K5p2C6LS577yaDQoxLiAg56ef
-5p+c6LS577yaMjDlsLo0MOWwujMwMOa4r+W4gS/mn5zvvIzlkKsy5aSp77yM6LaF6L+H5oyJMTAw
-5riv5biBL+Wkqeiuoeeul+OAgjQ15bC6MzUw5riv5biBL+afnO+8jOi2hei/h+aMiTE1MOa4r+W4
-gS/lpKnorqHnrpfjgIINCjYuICDotoXml7botLnvvJrml6DorrrlpKflsI/mn5zoo4XljbjotKfn
-u5/kuIDmjInovabliLDlkI7orqHml7bvvIzotoUz5Liq5bCP5pe277yM5oyJMTAw5riv5biBL+Ww
-j+aXtuiuoeeul+OAgg0KNy4gIOi2hemHje+8mjIwLzQw5bC65p+c77yM6LSn6YeN5LiN6LaFMTjl
-kKjvvIzotoXov4fmjIkzMDAtODAw5riv5biB5Yqg5pS26LaF6YeN6LS544CCDQo4LiAg5Y6L6L2m
-6LS577ya5Lul5qyh5pel5Lit5Y2IMTLngrnkuLrpmZDlgZrlrozljovovabmn5zvvIwxMueCueWJ
-jeWOi+WknDYwJe+8jDEy54K55ZCO5Y6L5pelODAl77yM5L+d5bqV5Y6L5aScMTYwMOa4r+W4ge+8
-jOWOi+aXpTIwMDDmuK/luIHjgIINCjkuICDov5TnqbrotLnvvJrovabovobliLDovr7lt6XljoLl
-kI7mjInlrozmlbTov5DotLnmlLblj5bvvIzlpoLmnpzovabmnKrliLDlt6XljoLvvIzmjInov5Do
-tLnnmoQ4MCXmlLblj5bjgILlpoLmnpzov5TnqbrlkI7otKfmn5zopoHkuqTov5jnoIHlpLQNCiAg
-ICDpgKDmiJDnmoTlkIrmn5zotLnvvIzlrZjmn5zotLnlrp7miqXvvIzlm6Dov5Tnqbrmn5zpnIDo
-poHlip7nkIbmlofku7bvvIznrYnlip7lpb3mlofku7blkI7lnKjljrvkuqTmn5zlip7ljZXotLkx
-NTDvvIzpnIDmlK/ku5jmnKzlnLDmi5bovabotLk2MDDmuK/luIEv5p+c44CCDQoxMS4gIOi9rOWF
-s+mcgOWKoDEwMOa4r+W4geKAlDUwMOa4r+W4gSDovazlhbPotLnvvIzlhbfkvZPmoLnmja7lrp7p
-mYXmtbflhbPmnaXlrprjgIINCjEyLiAg5ZCM5Yy65Yqg6LSnMzAw5riv5biBL+eCue+8jOi3qOWM
-uuWKoOi0p+agueaNruWunumZheaDheWGteWumuOAgg0KMTMuICDooaXmlpnotLnvvJo2MDDmuK/l
-uIHlkKsy5aSp5a2Y5LuT6LS577yM6LaF5Ye65q+P5aSp5Yqg5pS25a2Y5LuT6LS5MTAw5riv5biB
-44CCDQoxNC4gIOi/m+WPo+mcgOaIkeWPuOaNouaWh+S7tu+8jOaUtuaWh+S7tui0uTE1MOa4r+W4
-gS/ljZXvvIzmiJHlj7jkuI3ku6PlnqvotLnnlKjjgIINCg0KOO+8ieS6p+WcsOivgeaWh+S7tu+8
-m1JNQjIwMC/ljZUNCuS4gOiIrOWOn+S6p+WcsOivgUNPDQrmma7mg6DliLbkuqflnLDor4FGb3Jt
-QQ0K5Lic55uf5Y6f5Lqn5Zyw6K+BRm9ybUUNCuaZuuWIqeS6p+WcsOivgUZvcm1GDQrkuK3np5jk
-uqflnLDor4FGb3JtUg0K5Lit55Ge5Lqn5Zyw6K+BRm9ybVMNCuS6muWkquS6p+WcsOivgUZvcm1N
-DQrkuK3lt7Tljp/kuqflnLDor4FGVEENCuS4reWTpeS6p+WcsOivgUZPUk1MDQoNCjnvvInmlaPv
-vIjmnYLvvInotKfpgJ/pgJLvvIjnqbrpgYvvvInlj7DngaPloLHlg7nvvJsNCuS4gOOAgemmlumH
-jVJNQjMw77yM57qM6YeNUk1CMjANCuazqO+8m+S7peS4iuWgseWDueWMheWgsemXnOiyu+OAgea4
-hemXnOiyu+OAgea0vumAgeiyu+OAgeWFpeWAieiyuy7lj4rmiYDku6XmiqXlhbPljZXor4Hmlofk
-u7YNCuacrOWFrOWPuOmChOaPkOS+m0RITOWbvemZheS7tuacjeWKoe+8mue7j+iQpee7j+mmmea4
-r0RITOS4rei9rOWIsOS4lueVjOWQhOWcsOeahOW/q+S7tu+8jOWFrOWPuOaLpeaciURITOaPkOS+
-m+eahOaTjeS9nOezu+e7n++8jOS4rei9rOaXtuaViOW/q++8jOafpeivouaWueS+v+OAgeWuieWF
-qOWPr+mdoOOAgg0KDQpCRVNUIFJFR0FSRFMNCuabvueUnyAgDQpIQU9DSElORyBJTlQnTCBMT0dJ
-U1RJQ1MgTFREDQpNLlA6ODYtMTM0MzA4NzMxMTcNClRFTDogODUyLTMxNzYzODkxDQpXRUNIQVQ7
-MTM0MzA4NzMxMTcNClFR77ybMjU0MDMxMzg5MQ0KU0tZUEXvvJpIQU9DSEVOR0hLMTk4Nw0KRS1N
-QUlMOiBIQU9DSEVOR0hLMTk4N0AxNjMuQ09NDQo=
+Emily Xie <emilyxxie@gmail.com> writes:
+
+> For any command that takes a pathspec, passing an empty string will
+> execute the command on all files in the current directory.
+
+OK.
+
+> This
+> results in unexpected behavior.
+
+Technically speaking, your expectation is what is wrong here.  An
+empty string as a pathspec matches all paths.
+
+> For example, git add "" adds all
+> files to staging, while git rm -rf "" recursively removes all files
+> from the working tree and index.
+
+That is a logical consequence that an empty string is a pathspec
+that matches everything.  If somebody wants to add everything in
+their current directory, they can say 'git add ""'.  If you do not
+want to do so, don't say 'git add ""'.
+
+You need to argue why these are bad things to convince those who are
+used to the current behaviour that it is OK to break them.
+
+Here is my attempt.
+
+	An pathspec that is an empty string has been interpreted to
+	match any path, as pathspec match is a leading substring
+	match that honours directory boundary.  Just like pathspec
+	"dir/" (or "dir") matches "dir/file", "" matches "file".
+
+	However, a carelessly-written script may result in an empty
+	string assigned to a variable (perhaps caused by a bug in
+	it), and may end up passing an empty string to a Git command
+	invocation, i.e.
+
+        	git rm "$path"
+        	git add "$path"
+		
+	which would affect all paths in the current directory.
+
+	We cannot simply reject an empty string given as a pathspec
+	to prevent this kind of mistake.  Because there surely are
+	existing scripts that take advantage of the fact that an
+	empty string matches all paths, such a change will break
+	scripts that legitimately have been using an empty string
+	for that purpose.
+
+	Instead, we need two step approach.  The first step is to
+	notice that the caller used an empty string as a pathspec,
+	give a warning to (1) declare that the use of an empty
+	string as "match all" will become invalid and (2) ask them
+	to use "." instead if they mean "match all".
+
+	After some release cycles, we can remove the warning and
+	turn an empty string used as a pathspec element as an error.
+
+	This patch is the first step.
 
 
+> A two-step implemetation will
+> prevent such cases.
 
+There is some leap/gap in logic here.  
+
+> This patch, as step one, invokes a warning whenever an empty
+> string is detected as a pathspec, introducing users to the upcoming
+> change. For step two, a follow-up patch several release cycles later
+> will remove the warnings and actually implement the change by
+> throwing an error instead.
+
+This paragraph is OK, but I think I ended up covering the whole
+thing in my attempt ;-).
+
+
+> Signed-off-by: Emily Xie <emilyxxie@gmail.com>
+> Reported-by: David Turner <novalis@novalis.org>
+> Mentored-by: Michail Denchev <mdenchev@gmail.com>
+> Thanks-to: Sarah Sharp <sarah@thesharps.us> and James Sharp <jamey@minilop.net>
+> ---
+>  pathspec.c     | 6 +++++-
+>  t/t3600-rm.sh  | 6 +++++-
+>  t/t3700-add.sh | 4 ++++
+>  3 files changed, 14 insertions(+), 2 deletions(-)
+>
+> diff --git a/pathspec.c b/pathspec.c
+> index c9e9b6c..79e370e 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -402,8 +402,12 @@ void parse_pathspec(struct pathspec *pathspec,
+>  	}
+>  
+>  	n = 0;
+> -	while (argv[n])
+> +	while (argv[n]) {
+> +		if (*argv[n] == '\0')
+> +			warning(_("empty strings are not valid pathspecs and will no longer "
+> +			          "be supported in upcoming releases"));
+>  		n++;
+
+Three issues:
+
+ * if argv[1] and argv[2] are both emtpy, the user will see the same
+   message twice.  Is it intended?  Is it acceptable?
+
+ * "Empty strings are not valid pathspecs" is just plain wrong.  It
+   has been valid, but the warning message notifies that we are
+   going to make it invalid what has been valid.
+
+ * "Will no longer be supported" is just plain useless.  We are
+   notifying that we will turn what they have been using as a valid
+   feature invalid.  What needs to accompany that notification is
+   how to update their script that have been happily working, which
+   we are going to break with the future change, in a way that will
+   keep working, i.e. "please use . instead if you meant to match
+   all".
+
+
+> +test_expect_success 'rm empty string should invoke warning' '
+> +	git rm -rf "" 2>&1 | grep "warning: empty string"
+> +'
+
+As your warning is in _("..."), you would need test_i18grep here, I think.
+
+> +test_done
+> \ No newline at end of file
+
+Oops.
