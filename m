@@ -1,125 +1,109 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44EA71FF40
-	for <e@80x24.org>; Tue, 21 Jun 2016 20:22:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D4D11FF40
+	for <e@80x24.org>; Tue, 21 Jun 2016 20:30:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751519AbcFUUWJ (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 16:22:09 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:33024 "EHLO
-	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751088AbcFUUWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 16:22:07 -0400
-Received: by mail-io0-f171.google.com with SMTP id t74so26800356ioi.0
-        for <git@vger.kernel.org>; Tue, 21 Jun 2016 13:21:52 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Kto/TTnvUoqgnh9taRU3+Zr/kOtWSDbGSJ8kUcinggI=;
-        b=U3LPHtQFjR3+xrKfA5HCRFx++U8w9oKJwQ4AfD6LR1n3bRysarDN2GnF3fX8A1Mwtg
-         MRHKXBJMWp+I3scPNwRF39+DmXCBHIYs6uEG06/4oUyGQuOJcd4Nw8AH4UqkRQipukYQ
-         wvd1G9aSzhtYGN3vPUZW+60VzPEhU8nJ5E7V4lLMNFgdQYB8vA3tZO6GYySgatmt+JB2
-         PxNUPP+8Cd6eg8kzMabTtoZljmNjs0M6qiIo/kQDcJbeLuBiEnyF/N9SKlIpz3sKn4+3
-         tS6XpOs27K5q/fUSWQJgWt+YPID7hfC70qqfnLw3dhEsKT/30S8fiCU1ruxas+SFJAld
-         GoHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Kto/TTnvUoqgnh9taRU3+Zr/kOtWSDbGSJ8kUcinggI=;
-        b=b7+N50TkaBGDRmizXF3T8w0uVD6TRGSHlRs5YubT4JytJDyCOPyIHAIk1h/2aF59Wc
-         jzBMAr+aqSehAsOkr4qhPEpjtukkMXHWkXZRmpvZrTyxYJwypZiAP5i2EM6yCdISuZyh
-         bC6RH2OgWsdqLm92WZeSttqawpbxzIJLUOUDc5uDaYZKch1HNhX0hQ1ObHWfWkcWOu8h
-         u6kJbyb+LvzdeYVKDYHV79nxp5rsDnVeIsqJRyHoFEKdWIktcVw303+uT+xolD+EX7QW
-         tTYOS7fm5syfGtKjkSzUo3fuQWu84wgP8HB0qxRBz0GbEKj6Vkt/LKwFgvKuQ/Bk2ZTR
-         ZXDg==
-X-Gm-Message-State: ALyK8tKhy0VWI8xB+zGITycRx+Nupq3KqBXGJBkvRkLBGkKNNE1MH2deBdG4orw5Pow9O1LGDx0UV+nkvfqEdIqI
-X-Received: by 10.107.186.196 with SMTP id k187mr35532142iof.173.1466540058335;
- Tue, 21 Jun 2016 13:14:18 -0700 (PDT)
+	id S1751919AbcFUUah (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 16:30:37 -0400
+Received: from mout.web.de ([212.227.17.12]:57802 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751483AbcFUUad (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 16:30:33 -0400
+Received: from [192.168.2.149] ([79.223.114.6]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0LwYs7-1bRkjh1moh-018IdR; Tue, 21 Jun 2016 22:30:25
+ +0200
+Subject: Re: [PATCH] t7800 readlink not found
+To:	Junio C Hamano <gitster@pobox.com>,
+	Armin Kunaschik <megabreit@googlemail.com>
+References: <CALR6jEiJwx14zAyond9ggz29Q64Fz84URtjr8zaddjnrdY7TjA@mail.gmail.com>
+ <vpqk2ijs8p2.fsf@anie.imag.fr> <xmqq1t4r75sv.fsf@gitster.mtv.corp.google.com>
+ <CALR6jEj67MA7CCHQ_jfdtAuGoo9wjPie0+a=e-BqJjoYtJ9oHw@mail.gmail.com>
+ <xmqqfut75peg.fsf@gitster.mtv.corp.google.com>
+ <CALR6jEixZitA1CTE_kDkDEHv59ALT9zkCOgd28unMhLUZKt48Q@mail.gmail.com>
+ <20160527041944.GA17438@gmail.com> <574CDA24.1020906@googlemail.com>
+ <574D1BEA.5020409@web.de> <xmqqzir67p1y.fsf@gitster.mtv.corp.google.com>
+ <CALR6jEgAtvuecJ4OPOAcDGh3o02oM_WP5_CM8Y52eW2hjuLDNg@mail.gmail.com>
+ <xmqqy45ypesl.fsf@gitster.mtv.corp.google.com>
+Cc:	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	David Aguilar <davvid@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>
+From:	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <5769A3D4.5060506@web.de>
+Date:	Tue, 21 Jun 2016 22:30:12 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.8.0
 MIME-Version: 1.0
-Received: by 10.107.136.16 with HTTP; Tue, 21 Jun 2016 13:14:17 -0700 (PDT)
-In-Reply-To: <20160621193824.GA22183@sigill.intra.peff.net>
-References: <1466443278-21591-1-git-send-email-sbeller@google.com>
- <xmqqh9cmpcze.fsf@gitster.mtv.corp.google.com> <20160621193824.GA22183@sigill.intra.peff.net>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Tue, 21 Jun 2016 13:14:17 -0700
-Message-ID: <CAGZ79kZ4nVeJ6qi9LED-HOxYeP6Scg9j7+nYa4yJYyFxFT-WEA@mail.gmail.com>
-Subject: Re: [PATCH] t5614: don't use subshells
-To:	Jeff King <peff@peff.net>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqqy45ypesl.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:ocvs0PmywVjc8HjN2/Fke9eHifbwCbKUhkKACJnfUKAshOJfR+T
+ ZJMWZWfQ8VqeZJynjS2SO9YkJT5veQeXxmi1yYOhdMY3FQoErolxCmYS/P4q/UGZDbr4ybY
+ +65fc6XkJ9QuxWBSiSoturW2FBW6Np7DpTItxL3eOc3IHp+CHaILR6df1dstDf7r/5Q0fbd
+ U3z1ZYvJBAMk33ueAz/PA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:9MPzf91CDig=:lLL85ER2n43UgKXm6Dm/pe
+ rXX5cWOZhMI3+McqxLNtyPc5qbXxTRlzU3bGsyz7VDQ132k9q6Jd5fU2Z41fgIULBFmhTD6MO
+ AJvqSzXmw2Rnu4btO3iAba9rOuXrg+VHeeXDP0GcjAXPHVTqUFkd7y9n+IdtLTaYekCZKB9uo
+ AT1iA5rwA2nT8soSfqRQD8PHGvw3bdzaUt/6FYSpnvhgotNsAdYwIp9v0mt5JzLNj6uydcko2
+ C/pA/r1ghX7MoRQ7EIXGXYJC/FvXcAz0Q2hZP45laTpE2BU1q7l5RPM38xo0VTQukpD9pSG9R
+ WHIN/XdHvL/4Or7rfDAeOR2T6OaaU991TmRtHf3OFmS6fG8UOQdi16xPJIPz+jjmb0kUNa975
+ GHDwXSGBq8awypzTj7GwS3oJX+4bCb2/+J3cDBbCOUzacOuVXucAKZZ9Uw1O+ome2gtAzXNGf
+ xrKkaHPIMya6VzSiuyFuCPKxUv4pcsDPjBmIx3XrpXHYe/dO4aAf9A4JHeNdnSjzCsRoFC/j6
+ gaY01WP+7/lnn4h+PCCZaO13O5OTBJaOkT1G7Iv11GobsRy0MfTRgEjNDoI+BuWAYD3lNqiBL
+ l+0UbXl0zBCMw0w0jON3GIBlqfKsfLxxOziOXxIy7uqSVOHWK5d/hLzbDltJLGIgS6kh90Dkj
+ zfAbIQzexsLUTCl6pn6XRe2UUG0R5NYSretuCKctF+iGU/w7MktqSat22DWHNxi+1J5svjbVc
+ v9WNCsA+PAhLXRJNTDKaXgsC/tWHG+KvEoUxMvWwPnIZwyxBQfeI0bESqIg57WS1rEmX9VeV/
+ +zCkivd
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jun 21, 2016 at 12:38 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Jun 21, 2016 at 12:18:29PM -0700, Junio C Hamano wrote:
+On 06/21/2016 08:39 PM, Junio C Hamano wrote:
+> Armin Kunaschik <megabreit@googlemail.com> writes:
 >
->> Stefan Beller <sbeller@google.com> writes:
->>
->> >  Unlike the prior patch we would not want this patch to fall through
->> >  to origin/maint fast, but allow cooking?
->>
->> I do not see anything that makes this treated differently from the
->> other fix.  The only difference in behaviour is that "lines" file is
->> now created at the root level of the trash repository's working tree
->> instead of tested clones', and I do not think any test depends on
->> the number of untracked paths in the trash working tree or tries to
->> make sure a file called "lines" is not in there.
+>> On Tue, May 31, 2016 at 7:51 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Torsten Bögershausen <tboegi@web.de> writes:
+>>>
+>>>>> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+>>>>> index 7ce4cd7..905035c 100755
+>>>>> --- a/t/t7800-difftool.sh
+>>>>> +++ b/t/t7800-difftool.sh
+>>>>> @@ -446,7 +446,7 @@ write_script .git/CHECK_SYMLINKS <<\EOF
+>>>>>    for f in file file2 sub/sub
+>>>>>    do
+>>>>>       echo "$f"
+>>>>> -    readlink "$2/$f"
+>>>>> +    ls -ld "$2/$f" | sed -e 's/.* -> //'
+>>>>>    done >actual
+>>>>>    EOF
+>>>>>
+>>>> I don't know how portable #ls -ld" really is.
+>>> The parts with mode bits, nlinks, uid, gid, size, and date part do
+>>> have some variations.  For example, we have been burned on ACL
+>>> enabled systems having some funny suffix after the usual mode bits
+>>> stuff.
+>>>
+>>> However, as far as this test is concerned, I do not think "how
+>>> portable is the output from ls -ld" is an especially relevant
+>>> question.  None of the things we expect early in the output (the
+>>> fields I enumerated in the previous paragraph) would contain " -> ".
+>>> And we know that we do not use a filename that has " -> " (or "->")
+>>> as a substring in our tests.
+>>>
+>>> We don't have to use readlink, even on platforms where we do have
+>>> readlink.  Building the conditional to be checked at runtime and
+>>> providing a shell function read_link that uses "ls -ld | sed" or
+>>> "readlink" depending on the runtime check is wasteful.
+>> Just a short, curious question: Is this patch to be accepted/included some time?
+>> I didn't see it in 2.8.4 nor 2.9.0. Maybe it just fell off the table...
+> Yes, I think this fell off the table as I was waiting for some kind
+> of agreement or counter-proposal, neither of which came and the
+> thread was forgotten.
 >
-> I think it is only that the other patch is actually fixing something,
-> whereas this is cleanup. So the cost/benefit equation is different. I
-> agree neither is high-risk and a test cleanup is generally OK for maint
-> (the other is a serious-ish regression IMHO).
-
-I agree on the cost/benefit equation being different. I considered this patch
-a "normal risk" thing, which by our standards is not going through to maint
-directly, but is cooked at various heat levels before.
-
+> Unless Torsten still has strong objections (or better yet, a better
+> implementation), I am inclined to queue it as-is.
 >
->> Having said that, I wonder if we want further reduction of the
->> repetition.  Each test except "setup" in this script does an
->> identical thing with very small set of parameters:
->>
->>     - make sure super_clone will be removed when done.
->>     - clone file://$pwd/. to super_clone but with different set of options.
->>     - check the commits in super_clone and super_clone/sub.
->>
->> So, the above would ideally become something like
->>
->> do_test 3 3 --recurse-submodules
->>
->> where the helper would look like
->>
->> do_test () {
->>       cnt_super=$1 cnt_sub=$2 &&
->>         shift 2 &&
->>         test_when_finished "rm -fr super_clone" &&
->>         git clone "$@" "file://$pwd/." super_clone &&
->>         git -C super_clone log --oneline >lines &&
->>         test_line_count = $cnt_super lines &&
->>         git -C super_clone/sub log --oneline >lines &&
->>         test_line_count = $cnt_sub lines
->> }
->>
->> Would it rob too much flexibility from future tests to be added to
->> this script if we did it that way?
->
-> I think that's an improvement, too. Even if we add further tests, they
-> don't have to follow the same format. I would give the function a better
-> name than "do_test" though. :P
+I just double-checked the man pages for Mac OS and opengroup:
+No better implementation from my side -> No objections
 
-I thought about implementing this, but I was unsure how much flexibility it
-is robbing, as we don't know in which direction we're going to extend the
-tests if at all. (Are we testing more options or do we want to inject more
-commands like "git submodule update --keep-configured-depth" ?
-That kept me away from doing the super short do_test)
-
-Thanks,
-Stefan
-
-
->
-> -Peff
