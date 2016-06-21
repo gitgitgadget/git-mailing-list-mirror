@@ -1,85 +1,148 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC2201FF40
-	for <e@80x24.org>; Tue, 21 Jun 2016 21:03:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28E4A1FF40
+	for <e@80x24.org>; Tue, 21 Jun 2016 21:15:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751536AbcFUVDN (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 17:03:13 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58148 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751516AbcFUVDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 17:03:11 -0400
-Received: (qmail 6109 invoked by uid 102); 21 Jun 2016 21:02:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Jun 2016 17:02:36 -0400
-Received: (qmail 28733 invoked by uid 107); 21 Jun 2016 21:02:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Jun 2016 17:02:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Jun 2016 17:02:34 -0400
-Date:	Tue, 21 Jun 2016 17:02:34 -0400
-From:	Jeff King <peff@peff.net>
-To:	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+	id S1752018AbcFUVPW (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 17:15:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63351 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750731AbcFUVPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 17:15:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3CB5225718;
+	Tue, 21 Jun 2016 17:15:16 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LqWrtbWuMJWq1DkRywyrAPrdqOA=; b=TUvUeA
+	gtSZtPXh+ax+shKM1VrpBUfRsLwYzdvDCL2t12x95N+OctgGWcvTaWFf+D8fV2Co
+	Nnc9UD0QkShQm21UEcV9TPjMuzSqQ69VRdFIB+hRx0GuANiOPkfd9Aa94/D9+kx2
+	pq+jKtwxC2BkzasXKTuhsJuyqOurKZxvtUb50=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FgZ7wH1Tq4aYJZG7slr54UQRoeBQodi1
+	iqrljaWnqpVeTeJqJ6c/ngiOI83pyDiAhT4uwGXgaLcstSTpmibumYXc1uCqgNrX
+	rrH9cJ3aztEw199IwS68e1Q0MfnjjoJjRKAnFe2wxP33nRDW7vMiCJlzaCqm4qb+
+	CeuH6orrA2A=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 33A0225717;
+	Tue, 21 Jun 2016 17:15:16 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AA5202570F;
+	Tue, 21 Jun 2016 17:15:15 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:	git@vger.kernel.org
-Subject: Re: [PATCH 1/2] archive-tar: write extended headers for file sizes
- >= 8GB
-Message-ID: <20160621210234.GB4747@sigill.intra.peff.net>
-References: <20160616043523.GA13615@sigill.intra.peff.net>
- <20160616043733.GA18323@sigill.intra.peff.net>
- <57687413.3030609@web.de>
- <20160621155920.GA7549@sigill.intra.peff.net>
- <5769A6CC.9030001@web.de>
+Subject: Re: [PATCH] Make find_commit_subject() more robust
+References: <34ef85eb4e2aef0b342ef5d3bce9e468c8339486.1466255489.git.johannes.schindelin@gmx.de>
+	<xmqqeg7ru00i.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1606211402320.22630@virtualbox>
+Date:	Tue, 21 Jun 2016 14:15:13 -0700
+In-Reply-To: <alpine.DEB.2.20.1606211402320.22630@virtualbox> (Johannes
+	Schindelin's message of "Tue, 21 Jun 2016 14:03:27 +0200 (CEST)")
+Message-ID: <xmqqziqent0e.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5769A6CC.9030001@web.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3FBA8232-37F5-11E6-B4C1-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jun 21, 2016 at 10:42:52PM +0200, René Scharfe wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> >> If we could set the limit to a lower value than 8GB for testing then we
-> >> could at least check if the extended header is written, e.g. if ustar_size()
-> >> could be convinced to return 0 every time using a hidden command line
-> >> parameter or an environment variable or something better.
-> > 
-> > Yes, we could do that, though I think it loses most of the value of the
-> > test. We can check that if we hit an arbitrary value we generate the pax
-> > header, but I think what we _really_ care about is: did we generate an
-> > output that somebody else's tar implementation can handle.
-> 
-> I agree with the last point, but don't see how that diminishes the
-> value of such a test.  If we provide file sizes only through extended
-> headers (the normal header field being set to 0) and we can extract
-> files with correct sizes then tar must have interpreted those header
-> as intended, right?
+> Hi Junio,
+>
+> On Mon, 20 Jun 2016, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>> 
+>> > Just like the pretty printing machinery, we should simply ignore empty
+>> > lines at the beginning of the commit messages.
+>> >
+>> > This discrepancy was noticed when an early version of the rebase--helper
+>> > produced commit objects with more than one empty line between the header
+>> > and the commit message.
+>> >
+>> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> > ---
+>> > Published-As: https://github.com/dscho/git/releases/tag/leading-empty-lines-v1
+>> >
+>> > 	Aaaaand another patch from the rebase--helper front. I guess I'll
+>> > 	call it a day with this one.
+>> 
+>> Makes sense.  This has a trivial textual conflict with cleanup
+>> patches in flight, I think, but that is not a big problem.
+>
+> I will gladly resend rebased to `next`, if you wish.
 
-The diminished value is:
+No, I'd prefer a patch that applies to 'master' for a new feature;
+there is no need to deliberately get taken hostage by other topics.
 
-  1. This is a situation that doesn't actually happen in real life.
+>> It does hint that we might want to find a library function that can
+>> replace a hand-rolled while loop we are adding here, though ;-)
+>
+> Heh. I cannot help you with that ;-)
 
-  2. Now we're carrying extra code inside git only for the sake of
-     testing (which can have its own bugs, etc).
+The reason it hints such a thing is because the line nearby that
+does this:
 
-Still, it may be better than nothing.
+  		for (eol = p; *eol && *eol != '\n'; eol++)
+  			; /* do nothing */
 
-> -- >8 --
-> Subject: archive-tar: test creation of pax extended size headers
-> 
-> ---
-> The value 120 is magic; we need it to pass the tests.  That's
-> because prepare_header() is used for building extended header
-> records as well and we don't create extended headers for extended
-> headers (not sure if that would work anyway), so they simply
-> vanish when they're over the limit as their size field is set to
-> zero.
+gets rewritten to
 
-Right, so this is sort of what I meant in (2). Now we have a
-tar.ustarsizemax setting shipped in git that is totally broken if you
-set it to "1".
+		eol = strchrnul(p, '\n');
 
-I can live with it as a tradeoff, but it is definitely a negative IMHO.
+i.e. "give me the pointer to the first byte that is '\n', or EOS".
 
--Peff
+Your patch introduces a similar loop with similar (but different)
+purpose:
+
+		while (*p == '\n')
+			p++;
+
+which would have been helped if there were a helper with an
+opposite function, i.e.
+
+		p = strcchrnul(p, '\n');
+
+i.e. "give me the pointer to the first byte that is not '\n', or EOS".
+
+But there is no such thing.  Although p += strcspn(p, "\n") is a
+possibility, that somehow feels a bit odd.  And that is why I did
+not hint any existing function and said "might want to find".
+
+HOWEVER.
+
+Stepping back a bit, I think what we actually want is
+
+		p = skip_blank_lines(p);
+
+that skips any and all blank lines, including an empty line that
+consists of all whitespace.
+
+For example
+
+	(
+		# grab the header lines
+		git cat-file commit HEAD | sed -e '/^$/q'
+                # throw in random blank lines
+		echo
+                echo " "
+                echo "  "
+                echo "   "
+                echo
+                echo "Title line"
+	) | git hash-object -w -t commit --stdin
+
+would mint a commit object that has many blank lines in the front,
+some have whitespace and are not empty.  If you give it to
+
+	git show -s | cat -e
+        git show -s --oneline | cat -e
+
+I think you would see what I mean.
