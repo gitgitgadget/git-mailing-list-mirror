@@ -1,138 +1,101 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1A121FF40
-	for <e@80x24.org>; Tue, 21 Jun 2016 12:45:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25FAF1FF40
+	for <e@80x24.org>; Tue, 21 Jun 2016 12:49:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751427AbcFUMo6 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 08:44:58 -0400
-Received: from mout.gmx.net ([212.227.15.18]:64422 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751189AbcFUMo6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 08:44:58 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0M5tU1-1bZ3pt1sbJ-00xpzB; Tue, 21 Jun 2016 14:43:24
- +0200
-Date:	Tue, 21 Jun 2016 14:43:22 +0200 (CEST)
-From:	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] Make find_commit_subject() more robust
-In-Reply-To: <34ef85eb4e2aef0b342ef5d3bce9e468c8339486.1466255489.git.johannes.schindelin@gmx.de>
-Message-ID: <901b24554eb4d0381d74ceb31f7bd08709d5eb25.1466512959.git.johannes.schindelin@gmx.de>
-References: <34ef85eb4e2aef0b342ef5d3bce9e468c8339486.1466255489.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:eLC5UU7XJHAgMJJDOuvYyrABm9n6/zsILbfSSaUIdVqKrGHQGSo
- 1S1MPSTSRFZGm10XpuATPt9QYX8ccocdkMWUgoEMopGltTAf22dd/WsjSDl7FV2vMjLwlA1
- ehUpSS9Hb17Ixp9CSyM2p5nu6GPrY/4qR9FjCckLIjtpoZZm3uwmMs6wSqUd6eTt6teDReB
- wbBxQLRsun3brUKFZARcw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:PsWt0DzjYeU=:oopXVeNd84jGLL1LAomHtA
- ZKgNjUIrp5kZY6wyThC5lcxOcDEv+QNEuaRM6eXjBwmeM3FeSj1mB4wy3ouxrljTVftVO5MzS
- hc73zBmeiEjYuwovgWDcfcuM/bT6QSX1D3VtJEohn7AsQrSqwegmvRv9XVmdh076wJTx6wNbs
- cAv+SpJc3UjZtNBHsxC8tnYB+hJ48jvJjTj8SLBscmCUpShUlXikOZYT0UDv1JtxempoEfVEl
- +LEfRWT0Xk1jLCZo8rafIIaKgvUymyK57Ger+mWUJEpN2Qrg3VdbaYkKQUx2jk4wvpjAvaKhD
- qhzkvivEkyfhKfQmCGaO/JIdNit/1sDLfwFksx8wprJjeSpm+06eE0G+6OWkthq8WiAvbEpds
- vCXMqJb7qB1AaZmyrvmC/WjsT3K6XONZiozBVx9iXkWp9S2GmDPJVnQ3f63QjUZ9LEu5f118Z
- RoN9e7OX86GX0KfetfUQczfRgfUjMZe93M6ju+WQAXxu390HumCien30jgGojmMZeP39SBF4t
- fn0spCwkEcGTeRh+qR0kX7/G3BNRe20h3CXkT6l+OQZdnipDEy6by+vFPhMKvhg/R+29/kqwg
- C2l+i1p3F1hQk/ov3uWNDS6OB0CFKom3a3wed1ZprQEZlENaOaQJE58kPAvvHI7Yp5x3DSnC/
- wgsufMD8SAgh70QopZ2slvWBvsXJ3bzQI8lxuv90Uwxdsj4pPvrxCkqtfAA0dpl/CSol1w5RR
- ZsFxPx0QHNgzGQINe5Wbk2jR7A7qkutOBmu0dVDscngu6IeYHSSbxamkfDGxtCMG84FvspXs9
- UUk/lqT
+	id S1751608AbcFUMtH (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 08:49:07 -0400
+Received: from mail-lb0-f193.google.com ([209.85.217.193]:34081 "EHLO
+	mail-lb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750907AbcFUMtE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jun 2016 08:49:04 -0400
+Received: by mail-lb0-f193.google.com with SMTP id w10so1753587lbo.1
+        for <git@vger.kernel.org>; Tue, 21 Jun 2016 05:49:03 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=J3qrdDIykEBVimx4PHxWc+iqc8IEVr7lI/aUiY9c2a0=;
+        b=hpH9IFa7ysn9oxQr5sqxmbbirVObAEhjDmk29IVFEv9YSKrA12i+5/w8fusJWDP0lH
+         yIMn6fRBtTbuWUjssWSNkXbilI5F93gJpzncLxGnm6Frefm1LrmYaIcZw56WsNOKeM2u
+         G8LoNcVHgdbZDkVSne2zIImmm474AyABGE40ie57RSCVQSkSczKGQC5+jvWRZ+0D++ml
+         nkrx5kgUfs0/3vZf1YTXBA9EjqF7qaULNb3UAEvjSPtzx+1hgakZtdhS6S7eWajbdSus
+         vqU43Z/TqQ5udlxeAUTqUpRGnrbPjqVcpr0ORnW4QaKK38s78z4Gr16pz+R3pkbZYhrV
+         SygQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=J3qrdDIykEBVimx4PHxWc+iqc8IEVr7lI/aUiY9c2a0=;
+        b=MkirvvgnGfWBljjZg2oFBxfog5iQFO8VpkJVqZAA/n4dcWVKzccka0s3UkDyZjvmL6
+         FdDlU6bF38DampH39jtjDb3WUYU1TOMHHxhOYXO01YG41fDa5q1brsvKEpAmscGW66lQ
+         AeBs8KPmSWqfpo3AYlZOAFdGsEs2xpK+Pk3XtkHKNjNVgzpWIkXZFcU1pDSUmx+BOXtr
+         ETIzBMBmo9LTAW5we+d/QIAafLnAlSwqYSAhww76uXMNzD8vu925Xz/Cppt3Wia9Gq6a
+         P7Q31zyPgOZ8iHixEt50w3Ip+FRwO5PhprYnvax0pdAj2URnso/HyuqkBF0KANHF4ZPu
+         qTBw==
+X-Gm-Message-State: ALyK8tLrbkT2OjrSW7xBzlvZTyS5ZHzI2ZiQhjVQ9tOAQm2ZV0c07F0xOX9ZtctKLevAhg==
+X-Received: by 10.194.109.232 with SMTP id hv8mr19832571wjb.115.1466513342801;
+        Tue, 21 Jun 2016 05:49:02 -0700 (PDT)
+Received: from par3bztk12.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id k6sm3568836wjz.28.2016.06.21.05.49.01
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 21 Jun 2016 05:49:02 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH] perf: accommodate for MacOSX
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <alpine.DEB.2.20.1606211350470.22630@virtualbox>
+Date:	Tue, 21 Jun 2016 14:49:00 +0200
+Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <CD0404AE-529B-44B7-AE05-022D3062E596@gmail.com>
+References: <ae429d2481111f7ad1927ef22e3a691d4c99ebd7.1466254995.git.johannes.schindelin@gmx.de> <9A11C3D1-3DAC-489F-BDF9-F4D409E8D3F7@gmail.com> <alpine.DEB.2.20.1606200840350.22630@virtualbox> <xmqqa8iftzex.fsf@gitster.mtv.corp.google.com> <F67587B5-0EA8-4F2F-AADB-4343B4FEEA21@gmail.com> <alpine.DEB.2.20.1606211350470.22630@virtualbox>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Just like the pretty printing machinery, we should simply ignore empty
-lines at the beginning of the commit messages.
 
-This discrepancy was noticed when an early version of the rebase--helper
-produced commit objects with more than one empty line between the header
-and the commit message.
+> On 21 Jun 2016, at 13:55, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> 
+>> ...
+>> I think we definitively should take the "perf-lib.sh" part of the patch
+>> as this makes the perf test run on OSX and therefore is a strict
+>> improvement.
+> 
+> Yes, it was meant as the starting point to get more things to run on
+> MacOSX.
+> 
+>> If we don't run any perf tests by default on Travis CI then I wouldn't
+>> take the ".travis.yml" part of the patch just to keep our Travis CI
+>> setup as lean as possible.
+> 
+> Maybe commented-out, so that people like me have a chance to use Travis
+> for MacOSX perf testing?
+> 
+>> Running perf tests on Travis CI is probably bogus anyways because we
+>> never know on what hardware our jobs run and what other jobs run in
+>> parallel on that hardware.
+> 
+> While I agree that the absolute timings cannot be trusted, I have to point
+> out that the relative timings on Linux at least are consistent with what I
+> could test locally.
+> 
+> Could you let me know whether a commented-out
+> 
+> 	# Uncomment this if you want to run perf tests:
+> 	# brew install gnu-time
+> 
+> would be acceptable? I will reroll the patch accordingly.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/leading-empty-lines-v2
+Commented-out would be fine with me!
 
-	git blame seemed to be the most accessible user of
-	find_commit_subject()...
+Independent of your patch:
+Given that the relative timings are consistent for you. Maybe there is
+value to run the performance tests (e.g. only on the master branch)
+in a separate Travis job. Then we could chart the timings over releases.
+I dunno.
 
- commit.c                 |  2 ++
- t/t8008-blame-formats.sh | 17 +++++++++++++++++
- 2 files changed, 19 insertions(+)
-Interdiff vs v1:
-
- diff --git a/t/t8008-blame-formats.sh b/t/t8008-blame-formats.sh
- index 29f84a6..03bd313 100755
- --- a/t/t8008-blame-formats.sh
- +++ b/t/t8008-blame-formats.sh
- @@ -87,4 +87,21 @@ test_expect_success 'blame --line-porcelain output' '
-  	test_cmp expect actual
-  '
-  
- +test_expect_success '--porcelain detects first non-empty line as subject' '
- +	(
- +		GIT_INDEX_FILE=.git/tmp-index &&
- +		export GIT_INDEX_FILE &&
- +		echo "This is it" >single-file &&
- +		git add single-file &&
- +		tree=$(git write-tree) &&
- +		commit=$(printf "%s\n%s\n%s\n\n\noneline\n\nbody\n" \
- +			"tree $tree" \
- +			"author A <a@b.c> 123456789 +0000" \
- +			"committer C <c@d.e> 123456789 +0000" |
- +		git hash-object -w -t commit --stdin) &&
- +		git blame --porcelain $commit -- single-file >output &&
- +		grep "^summary oneline$" output
- +	)
- +'
- +
-  test_done
-
-
-diff --git a/commit.c b/commit.c
-index 3f4f371..7b00989 100644
---- a/commit.c
-+++ b/commit.c
-@@ -415,6 +415,8 @@ int find_commit_subject(const char *commit_buffer, const char **subject)
- 		p++;
- 	if (*p) {
- 		p += 2;
-+		while (*p == '\n')
-+			p++;
- 		for (eol = p; *eol && *eol != '\n'; eol++)
- 			; /* do nothing */
- 	} else
-diff --git a/t/t8008-blame-formats.sh b/t/t8008-blame-formats.sh
-index 29f84a6..03bd313 100755
---- a/t/t8008-blame-formats.sh
-+++ b/t/t8008-blame-formats.sh
-@@ -87,4 +87,21 @@ test_expect_success 'blame --line-porcelain output' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--porcelain detects first non-empty line as subject' '
-+	(
-+		GIT_INDEX_FILE=.git/tmp-index &&
-+		export GIT_INDEX_FILE &&
-+		echo "This is it" >single-file &&
-+		git add single-file &&
-+		tree=$(git write-tree) &&
-+		commit=$(printf "%s\n%s\n%s\n\n\noneline\n\nbody\n" \
-+			"tree $tree" \
-+			"author A <a@b.c> 123456789 +0000" \
-+			"committer C <c@d.e> 123456789 +0000" |
-+		git hash-object -w -t commit --stdin) &&
-+		git blame --porcelain $commit -- single-file >output &&
-+		grep "^summary oneline$" output
-+	)
-+'
-+
- test_done
--- 
-2.9.0.118.g0e1a633
-
-base-commit: ab7797dbe95fff38d9265869ea367020046db118
+- Lars
