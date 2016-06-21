@@ -1,287 +1,107 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0D991F744
-	for <e@80x24.org>; Tue, 21 Jun 2016 11:48:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C6081F744
+	for <e@80x24.org>; Tue, 21 Jun 2016 11:57:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752060AbcFULsX (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 07:48:23 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:51978 "EHLO sapo.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752083AbcFULp0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 07:45:26 -0400
-Received: (qmail 9859 invoked from network); 21 Jun 2016 11:45:24 -0000
-Received: (qmail 27785 invoked from network); 21 Jun 2016 11:45:24 -0000
-Received: from unknown (HELO linux-omuo.lan) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 21 Jun 2016 11:45:22 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-From:	Vasco Almeida <vascomalmeida@sapo.pt>
-To:	git@vger.kernel.org
-Cc:	Vasco Almeida <vascomalmeida@sapo.pt>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH 01/11] i18n: add--interactive: mark strings for translation
-Date:	Tue, 21 Jun 2016 11:44:03 +0000
-Message-Id: <20160621114413.9467-1-vascomalmeida@sapo.pt>
-X-Mailer: git-send-email 2.9.0.47.g9ba0c31
+	id S1752154AbcFUL45 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 07:56:57 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53541 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751537AbcFUL4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 07:56:07 -0400
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LorB9-1br8rG34F1-00gsGm; Tue, 21 Jun 2016 13:55:01
+ +0200
+Date:	Tue, 21 Jun 2016 13:55:00 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Lars Schneider <larsxschneider@gmail.com>
+cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] perf: accommodate for MacOSX
+In-Reply-To: <F67587B5-0EA8-4F2F-AADB-4343B4FEEA21@gmail.com>
+Message-ID: <alpine.DEB.2.20.1606211350470.22630@virtualbox>
+References: <ae429d2481111f7ad1927ef22e3a691d4c99ebd7.1466254995.git.johannes.schindelin@gmx.de> <9A11C3D1-3DAC-489F-BDF9-F4D409E8D3F7@gmail.com> <alpine.DEB.2.20.1606200840350.22630@virtualbox> <xmqqa8iftzex.fsf@gitster.mtv.corp.google.com>
+ <F67587B5-0EA8-4F2F-AADB-4343B4FEEA21@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:p//CPgTpfgV5JpjbHKyXNPok1Q90qB21u1fzWwiIKEUabhy1KC7
+ XNyX7Nks2AO5N8rjvfyWG17/H/32YYWJ6+hh2OI5kFK6xY4LXUoUElyT8mSMpWWScd5cP8D
+ k1wYl4Trf6Zm9BIjMzxx+q7NsovN/jV/1Ig1Z+/F22Q0Ma0SRQBllUwBJBHRI1hkzbGwWRE
+ 8hRn/JkVjLwuZ0r7LayAw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:M96XdbJ+x7I=:cBIk4etTSHeKaFs1eAOF0s
+ 25h/H4EoceYMF4Y7CP1fh8SawM26tfO3tmz7b2k3xa6bqB9pe1q/7FXfyr5+PDCeDchMBal5m
+ jveWKhJzonQmV3xbBdvFHIJvl4Whrp+5iu76A06UyhABmu8KquiO0CBvHK4OeKL7zlUTdd5or
+ jie3vp/kp4CPiy00TpOSsf2cuv5BtbVG+O1RDzukyleZMny0Gv6IQuDYIjzgoryeYD/MsHb0j
+ PBh9njOhKDZDVG6QPofzZS3bbntHSxQhzuIq7Hu0LTXWAzYfhpHtMhRqKbVi3WBkvfHjPHKy9
+ PrPzg2xqy4Us+vfVBxiHp6/lTY7U3RbrAQTkbt3l10vc5qIy75mGK8WHTDt/PtxS1Ff0VWum4
+ abi37fQLWNDVm1ckFCZOhlX0pP15kCjfYj2bvBjrkqt8fo0NRNAQS65xBzyJ+7InNUjVFVSiJ
+ tTaJfDEqQ2wm4h4rYDGTC7mMOWosAi4yH/yB3z0jlycSkno1hfq+B8PglwGNhdvWXB5S7ttxx
+ 22fv+OLOGdmAmxG7UuYxyDJWhI/4/RSIwKTA5wSSOu6GWQEEe0zW4+elossh9jlW4t5U4mQaF
+ FQTRZnCbeV6JKAl0ieQ0E2bJ/O0ofkSrlCDel02JLbXkaPbOvR1gNt1FZlSV+eMgs+lvqxYu1
+ YHG0VJqpc7SAVz+Q8J1y0oe3CBZF8DzzOjrDACyNxzx6418+5Ku+lQcg0WneF20FOxCKLJOTR
+ pbBpO+8l3swJRqqMiCbnfqfctMz2p7VI9rMkYEi74yavBkZZiOOWOCyC54HPLfmJ2QA/5eXUm
+ WLh5jRO
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Mark simple strings (without interpolation) for translation.
+Hi Lars,
 
-Brackets around first parameter of ternary operator is necessary because
-otherwise xgettext fails to extract strings marked for translation from
-the rest of the file.
+On Tue, 21 Jun 2016, Lars Schneider wrote:
 
-Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
----
- git-add--interactive.perl | 68 +++++++++++++++++++++++++----------------------
- 1 file changed, 36 insertions(+), 32 deletions(-)
+> > On 20 Jun 2016, at 21:48, Junio C Hamano <gitster@pobox.com> wrote:
+> > 
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> >> On Sun, 19 Jun 2016, Lars Schneider wrote:
+> >> 
+> >>>> On 18 Jun 2016, at 15:03, Johannes Schindelin
+> >>>> <johannes.schindelin@gmx.de> wrote:
+> >>>> 
+> >>>> As this developer has no access to MacOSX developer setups anymore,
+> >>>> Travis becomes the best bet to run performance tests on that OS.
+> >>> 
+> >>> We don't run the performance tests on Travis CI right now.
+> >>> Maybe we should? With your patch below it should work, right?
+> >> ...
+> >> 
+> >> Yeah, well, I should have been clearer in my commit message: this patch
+> >> allows the perf tests to *run*, not to *pass*... ;-)
+> > 
+> > OK, Lars, do we still want to take this patch?  I am leaning towards
+> > taking it, if only to motivate interested others with OS X to look
+> > into making the perf tests to actually run.
+> 
+> I think we definitively should take the "perf-lib.sh" part of the patch
+> as this makes the perf test run on OSX and therefore is a strict
+> improvement.
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 822f857..fb8e5de 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -4,6 +4,7 @@ use 5.008;
- use strict;
- use warnings;
- use Git;
-+use Git::I18N;
- 
- binmode(STDOUT, ":raw");
- 
-@@ -252,7 +253,7 @@ sub list_untracked {
- }
- 
- my $status_fmt = '%12s %12s %s';
--my $status_head = sprintf($status_fmt, 'staged', 'unstaged', 'path');
-+my $status_head = sprintf($status_fmt, __('staged'), __('unstaged'), __('path'));
- 
- {
- 	my $initial;
-@@ -678,7 +679,7 @@ sub update_cmd {
- 	my @mods = list_modified('file-only');
- 	return if (!@mods);
- 
--	my @update = list_and_choose({ PROMPT => 'Update',
-+	my @update = list_and_choose({ PROMPT => __('Update'),
- 				       HEADER => $status_head, },
- 				     @mods);
- 	if (@update) {
-@@ -690,7 +691,7 @@ sub update_cmd {
- }
- 
- sub revert_cmd {
--	my @update = list_and_choose({ PROMPT => 'Revert',
-+	my @update = list_and_choose({ PROMPT => __('Revert'),
- 				       HEADER => $status_head, },
- 				     list_modified());
- 	if (@update) {
-@@ -724,13 +725,13 @@ sub revert_cmd {
- }
- 
- sub add_untracked_cmd {
--	my @add = list_and_choose({ PROMPT => 'Add untracked' },
-+	my @add = list_and_choose({ PROMPT => __('Add untracked') },
- 				  list_untracked());
- 	if (@add) {
- 		system(qw(git update-index --add --), @add);
- 		say_n_paths('added', @add);
- 	} else {
--		print "No untracked files.\n";
-+		print __("No untracked files.\n");
- 	}
- 	print "\n";
- }
-@@ -1159,8 +1160,11 @@ sub edit_hunk_loop {
- 		}
- 		else {
- 			prompt_yesno(
--				'Your edited hunk does not apply. Edit again '
--				. '(saying "no" discards!) [y/n]? '
-+				# TRANSLATORS: do not translate [y/n]
-+				# The program will only accept that input
-+				# at this point.
-+				__('Your edited hunk does not apply. Edit again '
-+				   . '(saying "no" discards!) [y/n]? ')
- 				) or return undef;
- 		}
- 	}
-@@ -1206,11 +1210,11 @@ sub apply_patch_for_checkout_commit {
- 		run_git_apply 'apply '.$reverse, @_;
- 		return 1;
- 	} elsif (!$applies_index) {
--		print colored $error_color, "The selected hunks do not apply to the index!\n";
--		if (prompt_yesno "Apply them to the worktree anyway? ") {
-+		print colored $error_color, __("The selected hunks do not apply to the index!\n");
-+		if (prompt_yesno __("Apply them to the worktree anyway? ")) {
- 			return run_git_apply 'apply '.$reverse, @_;
- 		} else {
--			print colored $error_color, "Nothing was applied.\n";
-+			print colored $error_color, __("Nothing was applied.\n");
- 			return 0;
- 		}
- 	} else {
-@@ -1230,9 +1234,9 @@ sub patch_update_cmd {
- 
- 	if (!@mods) {
- 		if (@all_mods) {
--			print STDERR "Only binary files changed.\n";
-+			print STDERR __("Only binary files changed.\n");
- 		} else {
--			print STDERR "No changes.\n";
-+			print STDERR __("No changes.\n");
- 		}
- 		return 0;
- 	}
-@@ -1390,12 +1394,12 @@ sub patch_update_file {
- 				my $response = $1;
- 				my $no = $ix > 10 ? $ix - 10 : 0;
- 				while ($response eq '') {
--					my $extra = "";
- 					$no = display_hunks(\@hunk, $no);
- 					if ($no < $num) {
--						$extra = " (<ret> to see more)";
-+						print __("go to which hunk (<ret> to see more)? ");
-+					} else {
-+						print __("go to which hunk? ");
- 					}
--					print "go to which hunk$extra? ";
- 					$response = <STDIN>;
- 					if (!defined $response) {
- 						$response = '';
-@@ -1432,7 +1436,7 @@ sub patch_update_file {
- 			elsif ($line =~ m|^/(.*)|) {
- 				my $regex = $1;
- 				if ($1 eq "") {
--					print colored $prompt_color, "search for regex? ";
-+					print colored $prompt_color, __("search for regex? ");
- 					$regex = <STDIN>;
- 					if (defined $regex) {
- 						chomp $regex;
-@@ -1455,7 +1459,7 @@ sub patch_update_file {
- 					$iy++;
- 					$iy = 0 if ($iy >= $num);
- 					if ($ix == $iy) {
--						error_msg "No hunk matches the given pattern\n";
-+						error_msg __("No hunk matches the given pattern\n");
- 						last;
- 					}
- 				}
-@@ -1467,7 +1471,7 @@ sub patch_update_file {
- 					$ix--;
- 				}
- 				else {
--					error_msg "No previous hunk\n";
-+					error_msg __("No previous hunk\n");
- 				}
- 				next;
- 			}
-@@ -1476,7 +1480,7 @@ sub patch_update_file {
- 					$ix++;
- 				}
- 				else {
--					error_msg "No next hunk\n";
-+					error_msg __("No next hunk\n");
- 				}
- 				next;
- 			}
-@@ -1489,13 +1493,13 @@ sub patch_update_file {
- 					}
- 				}
- 				else {
--					error_msg "No previous hunk\n";
-+					error_msg __("No previous hunk\n");
- 				}
- 				next;
- 			}
- 			elsif ($line =~ /^j/) {
- 				if ($other !~ /j/) {
--					error_msg "No next hunk\n";
-+					error_msg __("No next hunk\n");
- 					next;
- 				}
- 			}
-@@ -1553,18 +1557,18 @@ sub diff_cmd {
- 	my @mods = list_modified('index-only');
- 	@mods = grep { !($_->{BINARY}) } @mods;
- 	return if (!@mods);
--	my (@them) = list_and_choose({ PROMPT => 'Review diff',
-+	my (@them) = list_and_choose({ PROMPT => __('Review diff'),
- 				     IMMEDIATE => 1,
- 				     HEADER => $status_head, },
- 				   @mods);
- 	return if (!@them);
--	my $reference = is_initial_commit() ? get_empty_tree() : 'HEAD';
-+	my $reference = (is_initial_commit()) ? get_empty_tree() : 'HEAD';
- 	system(qw(git diff -p --cached), $reference, '--',
- 		map { $_->{VALUE} } @them);
- }
- 
- sub quit_cmd {
--	print "Bye.\n";
-+	print __("Bye.\n");
- 	exit(0);
- }
- 
-@@ -1587,32 +1591,32 @@ sub process_args {
- 			if ($1 eq 'reset') {
- 				$patch_mode = 'reset_head';
- 				$patch_mode_revision = 'HEAD';
--				$arg = shift @ARGV or die "missing --";
-+				$arg = shift @ARGV or die __("missing --");
- 				if ($arg ne '--') {
- 					$patch_mode_revision = $arg;
- 					$patch_mode = ($arg eq 'HEAD' ?
- 						       'reset_head' : 'reset_nothead');
--					$arg = shift @ARGV or die "missing --";
-+					$arg = shift @ARGV or die __("missing --");
- 				}
- 			} elsif ($1 eq 'checkout') {
--				$arg = shift @ARGV or die "missing --";
-+				$arg = shift @ARGV or die __("missing --");
- 				if ($arg eq '--') {
- 					$patch_mode = 'checkout_index';
- 				} else {
- 					$patch_mode_revision = $arg;
- 					$patch_mode = ($arg eq 'HEAD' ?
- 						       'checkout_head' : 'checkout_nothead');
--					$arg = shift @ARGV or die "missing --";
-+					$arg = shift @ARGV or die __("missing --");
- 				}
- 			} elsif ($1 eq 'stage' or $1 eq 'stash') {
- 				$patch_mode = $1;
--				$arg = shift @ARGV or die "missing --";
-+				$arg = shift @ARGV or die __("missing --");
- 			} else {
- 				die "unknown --patch mode: $1";
- 			}
- 		} else {
- 			$patch_mode = 'stage';
--			$arg = shift @ARGV or die "missing --";
-+			$arg = shift @ARGV or die __("missing --");
- 		}
- 		die "invalid argument $arg, expecting --"
- 		    unless $arg eq "--";
-@@ -1634,10 +1638,10 @@ sub main_loop {
- 		   [ 'help', \&help_cmd, ],
- 	);
- 	while (1) {
--		my ($it) = list_and_choose({ PROMPT => 'What now',
-+		my ($it) = list_and_choose({ PROMPT => __('What now'),
- 					     SINGLETON => 1,
- 					     LIST_FLAT => 4,
--					     HEADER => '*** Commands ***',
-+					     HEADER => __('*** Commands ***'),
- 					     ON_EOF => \&quit_cmd,
- 					     IMMEDIATE => 1 }, @cmd);
- 		if ($it) {
--- 
-2.6.6
+Yes, it was meant as the starting point to get more things to run on
+MacOSX.
 
+> If we don't run any perf tests by default on Travis CI then I wouldn't
+> take the ".travis.yml" part of the patch just to keep our Travis CI
+> setup as lean as possible.
+
+Maybe commented-out, so that people like me have a chance to use Travis
+for MacOSX perf testing?
+
+> Running perf tests on Travis CI is probably bogus anyways because we
+> never know on what hardware our jobs run and what other jobs run in
+> parallel on that hardware.
+
+While I agree that the absolute timings cannot be trusted, I have to point
+out that the relative timings on Linux at least are consistent with what I
+could test locally.
+
+Could you let me know whether a commented-out
+
+	# Uncomment this if you want to run perf tests:
+	# brew install gnu-time
+
+would be acceptable? I will reroll the patch accordingly.
+
+Ciao,
+Dscho
