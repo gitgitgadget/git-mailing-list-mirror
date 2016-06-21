@@ -1,81 +1,105 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E85341F744
-	for <e@80x24.org>; Tue, 21 Jun 2016 08:26:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BE2B1F744
+	for <e@80x24.org>; Tue, 21 Jun 2016 08:30:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752100AbcFUI0d (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 04:26:33 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33040 "EHLO
-	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752009AbcFUI03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 04:26:29 -0400
-Received: by mail-pf0-f195.google.com with SMTP id c74so886353pfb.0
-        for <git@vger.kernel.org>; Tue, 21 Jun 2016 01:26:28 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=EgDTxehC67bmK6QMRChMWy1+KWFdErTtLSykxOw7kCg=;
-        b=JUdRN36IzRZwl8Pb00g+nQyNesUj3mg0oxOG/18rKZCYcK7Stdwgh00ZP3ViYqyYow
-         jDC0SWeJU2oVPVlcU50jSYKT6nKkK6FkdC+0DD15rS3Kp76YqW2mRo0KwLVuLfkF6eaE
-         h+o61iyQLeMQ6RG2UEHSgxz9IPqbVYOXwHFJHszEr2OXGbc2BksjBkL1yGsGID9NkHfV
-         m0j8j0Y55LUPZ9byR2EtBBHnXQ2rtxhsUXIgTP8XkKR3C+XmhY9ekO0YZcpgSLFvxak/
-         KqqIOSS/RCW7BaZB2JTGSz2Qs+0cGVfvLGDE4hliE2nZBWbf81/woLxrCTpdeYFEdRL2
-         lXAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=EgDTxehC67bmK6QMRChMWy1+KWFdErTtLSykxOw7kCg=;
-        b=M5jey1H27h60V+In/k3aiZZFuo4rhg7i0d3P3W6NZSIcfCEDJjM8Hq2Ahvge0bDS3Q
-         opPPz+uo7Qhgrl7LUnuCzBr96c9bKI0qX0KMzoBaYjXcQcWUh76XEOu0dHdq/0ceHmEd
-         Oqfs998vkUfrhzGNwyNUs8BSBmKh56dr+PPbCoGW0kgXzLvXqeqSkvNgwXEYS6VQXUKn
-         095VzmhbtF6w1mNOBgQ1QnfMflzE3Q0rQgiswZlayWgcRwWNr5ITtdpQielAE3XXIQFz
-         ss8nTb1r3+mtHYOq3NMIu1VitR3CLO5MtF2MruAqRWHO8659ZcxKdW/BkgjaQm4SWnE2
-         vgwA==
-X-Gm-Message-State: ALyK8tIK44nyyn7gj0x0J988rm0h7xMdh4fn62/u7qJqq9NGfSAgrw4eORpI6q9w0Gu6mg==
-X-Received: by 10.98.130.65 with SMTP id w62mr26257708pfd.5.1466488641334;
-        Mon, 20 Jun 2016 22:57:21 -0700 (PDT)
-Received: from localhost.localdomain (124-149-99-253.dyn.iinet.net.au. [124.149.99.253])
-        by smtp.googlemail.com with ESMTPSA id i68sm38584603pfe.64.2016.06.20.22.57.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 20 Jun 2016 22:57:20 -0700 (PDT)
-From:	Brett Randall <javabrett@gmail.com>
-To:	gitster@pobox.com, git@vger.kernel.org
-Cc:	Brett Randall <javabrett@gmail.com>
-Subject: [PATCH] Improved example "To move the whole tree into a subdirectory..." to not fail when early commits are empty.
-Date:	Tue, 21 Jun 2016 15:57:02 +1000
-Message-Id: <20160621055702.28044-1-javabrett@gmail.com>
-X-Mailer: git-send-email 2.8.4
+	id S1752151AbcFUI3s (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 04:29:48 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:38565 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752102AbcFUI3m (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jun 2016 04:29:42 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 556382026B;
+	Tue, 21 Jun 2016 04:28:55 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 21 Jun 2016 04:28:55 -0400
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=doPwcDQebeydb+oKfOiB4xQO8gQ=; b=YrwV9K
+	5V0WAzX7+aZUNbwGkeWXuDBVcrTaqEP9euv2rwoG48f54IzgYSiwkEU2THPuBoqZ
+	KRqZ/XG+ssKV0IWN8Fg1CXTK0gjj2X5i5zLomT1GDMqxP3yr5jFXWMw3TllNXOCT
+	SFwrqnYMlUuKKAVrF6qQoLV0TrHDzjXmELkGA=
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=doPwcDQebeydb+o
+	KfOiB4xQO8gQ=; b=kvd3XOvUmU/4CyA9L8e38SzNYGUPZXl5wZ0muYt45PDk5X9
+	+khw+GdLZFCSABisco3clDeW7JEpbAIPjNaVcdjEM7Wq8sltK6jdvjafytoug0k/
+	0NLs1wRVzSXxip/5BLYh2RndiYj05Y41yGMaJoaOnVwpGIdr1w4d27KDD76Y=
+X-Sasl-enc: BPICK8BvpVsdhStZe36eJXQoLpBGWdjG1jN9qFUsY4hN 1466497734
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 4EC8BF29EE;
+	Tue, 21 Jun 2016 04:28:54 -0400 (EDT)
+Subject: Re: How to find commits unique to a branch
+To:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Nikolaus Rath <Nikolaus@rath.org>
+References: <878txz8ubq.fsf@thinkpad.rath.org>
+ <xmqqtwgnsdr3.fsf@gitster.mtv.corp.google.com>
+ <87lh1z78fr.fsf@thinkpad.rath.org>
+From:	Michael J Gruber <git@drmicha.warpmail.net>
+Message-ID: <8a97003e-fa74-2d9b-f2a8-946614be649c@drmicha.warpmail.net>
+Date:	Tue, 21 Jun 2016 10:28:53 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
+MIME-Version: 1.0
+In-Reply-To: <87lh1z78fr.fsf@thinkpad.rath.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Previously this example would fail if the oldest commit(s) in any filtered branch is/are empty (no files) because the index would not change, and the mv would fail with:
+Nikolaus Rath venit, vidit, dixit 21.06.2016 01:21:
+> On Jun 20 2016, Junio C Hamano <gitster@pobox.com> wrote:
+>> Nikolaus Rath <Nikolaus@rath.org> writes:
+>>
+>>> What's the best way to find all commits in a branch A that have not been
+>>> cherry-picked from (or to) another branch B?
+>>>
+>>> I think I could format-patch all commits in every branch into separate
+>>> files, hash the Author and Date of each files, and then compare the two
+>>> lists. But I'm hoping there's a way to instead have git do the
+>>> heavy-lifting?
+>>
+>> "git cherry" perhaps?
+> 
+> That seems to work only the "wrong way around". I have a tag
+> fuse_3_0_start, which is the common ancestor to "master" and
+> "fuse_2_9_bugfix". I'd like to find all the commits from fuse_3_0_start
+> to master that have not been cherry-picked into fuse_2_9_bugfix.
+> 
+> However:
+> 
+> * "git cherry fuse_3_0_start master release2.9" tells me nothing has
+>   been cherry-picked at all (only lines with +)
+> 
+> * "git cherry fuse_3_0_start release2.9 master" also tells me nothing
+>   has been cherry picked, but somehow shows a smaller total number of
+>   commits.
+> 
+> * "git cherry master release2.9 fuse_3_0_start" gives me the commits
+>   from fuse_2_9_bugfix that have not been cherry-picked into master
+>   (which seems to be in contradiction to the two earlier commands).
+> 
+> 
+> Am I missing something obvious?
 
-	mv: cannot stat <redacted>/index.new': No such file or directory
+There is always
 
-This commonly occurs with histories created from git-svn-clone.  The updated example checks whether the index file has been created before attempting the mv.  The empty commit is retained.
+git log --left-right --cherry-mark A...B
 
-See http://stackoverflow.com/questions/7798142/error-combining-git-repositories-into-subdirs for an example and explanation.
+to give you a good overview of the situation.
 
-Signed-off-by: Brett Randall <javabrett@gmail.com>
----
- Documentation/git-filter-branch.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+"--cherry-pick" instead of "--cherry-mark" will leave out the
+"="-commits (equivalent ones), and the description of "git log --cherry"
+in the log man page gives you a good idea of how you can combine
+"--cherry-pick" with "--left-only" etc. to give you exactly what you want.
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index 003731f..271d5b0 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -385,7 +385,7 @@ git filter-branch --index-filter \
- 	'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
- 		GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
- 			git update-index --index-info &&
--	 mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"' HEAD
-+	 if [ -f "$GIT_INDEX_FILE.new" ]; then mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"; fi' HEAD
- ---------------------------------------------------------------
- 
- 
--- 
-2.8.4
+For script-usage, you can finally replace "git log" by "git rev-list"
+with the same rev selecting options.
+
+Michael
 
