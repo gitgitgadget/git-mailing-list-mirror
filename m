@@ -1,145 +1,126 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D1AC1FF40
-	for <e@80x24.org>; Tue, 21 Jun 2016 20:42:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3349C1FF40
+	for <e@80x24.org>; Tue, 21 Jun 2016 20:42:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077AbcFUUmE (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 16:42:04 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51609 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750998AbcFUUkl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 16:40:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 42DB5270D2;
-	Tue, 21 Jun 2016 16:35:03 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MKjQKDrjsurZqOED7ZuNfM9WwlI=; b=kLHK6d
-	NuUgPA4sNT2FJuGcZ3IJ3aiBsDvtqBIxLmtw5Wj4ADGzevj26vk0fsK9rX1xYa0x
-	GYltKIYYsbIxAPHuiy9LbpMGIktcOZ+efEnwSx5XL3h8CenS9iTUeXUGxywYPkuB
-	gsi74jsdVkrYm1PjDuE2v3wVjrchnIUdJrQMU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DLo8kWXn/h4MSfW6df+QtZ7FHWwH9MpU
-	NGTiEI6+sNCzh6yXIbrYUujUZuIGoFcpVjd10sZHWDiLBSX6yv+uZkrOF4p6FZ/s
-	ggWwcM9t068teC3Eb6MX3dxpmIXF94RPU3gQYZ+4+fwxuG24EY3TpPxFi08SPlZx
-	g26vC1C4Usk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 39A36270D1;
-	Tue, 21 Jun 2016 16:35:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A22E0270D0;
-	Tue, 21 Jun 2016 16:35:02 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH v2] Make find_commit_subject() more robust
-References: <34ef85eb4e2aef0b342ef5d3bce9e468c8339486.1466255489.git.johannes.schindelin@gmx.de>
-	<901b24554eb4d0381d74ceb31f7bd08709d5eb25.1466512959.git.johannes.schindelin@gmx.de>
-Date:	Tue, 21 Jun 2016 13:34:59 -0700
-In-Reply-To: <901b24554eb4d0381d74ceb31f7bd08709d5eb25.1466512959.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Tue, 21 Jun 2016 14:43:22 +0200
-	(CEST)")
-Message-ID: <xmqq60t2p9fw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751871AbcFUUmx (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 16:42:53 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:36270 "EHLO
+	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751710AbcFUUmu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 16:42:50 -0400
+Received: by mail-io0-f171.google.com with SMTP id s63so23289856ioi.3
+        for <git@vger.kernel.org>; Tue, 21 Jun 2016 13:42:50 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=jg9up6n4yVNc9Zd9WKNtb81WDSptrXEYqRyGaqoXedg=;
+        b=Zpi5buxNHUFj5IIPM6VKWcfhFaEuvqT+6ra4fcUXMf7K+Wzvf/dEwHcTgqxUv+5wHo
+         umuoCgkQHTYyYdEYXKUljha9g1dxWwP5qAncXb7KbNgFYjJU5i4O+B92p3ZzwvpD33Ln
+         WyF3L/a9T8DYgiXRrLzF8ab3n5e7EQgCtiEqQ9cHwgV6L8bJ448PkWwKF3fHlo2cUXeo
+         Jl7jZ50iDsUYBQcG3JD9AWrg1dhARHPChOuJrZba8s4e/o5ia5symkD8G9eafERyVpsP
+         AzVKu8X5jqf8N/mGukqbdMbRvXgk5eG8awQBwmilxOcwlWdNTfCu0kW1xJAWtP33FT/d
+         ZF6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=jg9up6n4yVNc9Zd9WKNtb81WDSptrXEYqRyGaqoXedg=;
+        b=eyUcChycTz7C2gyukZci50/ODqpG4SvVhomMDgGbJ7f4viQW9QHZhSQ0218d3hZIu9
+         LSZ2M4g1UHIyTkgU0YS7rY0vNuNuf0E87fyh4QxoIVhaRkuVaQm/fG999kcqSIrB699Y
+         73SMRd0b0cS5Z4zyH+y9rn/u2AIsuQe/DtD9fSMHoTvJCmkkwSqPIRRc3Joul+XbwpKf
+         yX1kcTZJ5+35K8+gfh652WGscftucyET24H2IJvuCPkUNYsJ6FclVciRhAt/hyM4cqCU
+         qEUby7F7L9bX38Ky+a2tEJ2N7xiP/KTDBYwsG6eL5osbUnBGcfPFeSQIyLNKAAAIG17l
+         apOQ==
+X-Gm-Message-State: ALyK8tJilCsFM+dkaiEhn9kS8TjD9FQ0cOh4lYm2b58nbeinwclwRktnuAdSyDhrv3ovyVui7wvXsbwVd00V0Nxe
+X-Received: by 10.107.186.196 with SMTP id k187mr35662121iof.173.1466541340940;
+ Tue, 21 Jun 2016 13:35:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A17323E0-37EF-11E6-9591-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.136.16 with HTTP; Tue, 21 Jun 2016 13:35:40 -0700 (PDT)
+In-Reply-To: <CAPV8XuZvDkcEwxRB0HwaihVo7QzqsoHTRCdV7sqxkT31-RWkmA@mail.gmail.com>
+References: <loom.20160620T145755-931@post.gmane.org> <CAGZ79kZyEzp92JP_Bp2te1XO=PB0+fwFn57MrBPuWe25PQKOog@mail.gmail.com>
+ <CAPV8XuZvDkcEwxRB0HwaihVo7QzqsoHTRCdV7sqxkT31-RWkmA@mail.gmail.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Tue, 21 Jun 2016 13:35:40 -0700
+Message-ID: <CAGZ79kYvMjDaPnet1J_QrHARYtNqLwRhs7f08cDZ7P6dT8Rs6A@mail.gmail.com>
+Subject: Re: Problem with --shallow-submodules option
+To:	Istvan Zakar <istvan.zakar@gmail.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Mon, Jun 20, 2016 at 11:32 PM, Istvan Zakar <istvan.zakar@gmail.com> wrote:
+> Hi,
+>
+> Thanks for the answer.
+> So it means that it is a setting on the server side which can be
+> activated? (I guess it depends on the version of the server)
+> I did some reading in the topic. Are you talking about this setting
+> "uploadpack.allowReachableSHA1InWant", or did I misunderstood what I
+> read?
 
-> Just like the pretty printing machinery, we should simply ignore empty
-> lines at the beginning of the commit messages.
+No that's exactly what I meant; sorry for not spelling that out.
 
-Thanks.
+Thanks,
+Stefan
 
 >
-> This discrepancy was noticed when an early version of the rebase--helper
-> produced commit objects with more than one empty line between the header
-> and the commit message.
+> Thanks,
+>     Istvan
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> Published-As: https://github.com/dscho/git/releases/tag/leading-empty-lines-v2
->
-> 	git blame seemed to be the most accessible user of
-> 	find_commit_subject()...
->
->  commit.c                 |  2 ++
->  t/t8008-blame-formats.sh | 17 +++++++++++++++++
->  2 files changed, 19 insertions(+)
-> Interdiff vs v1:
->
->  diff --git a/t/t8008-blame-formats.sh b/t/t8008-blame-formats.sh
->  index 29f84a6..03bd313 100755
->  --- a/t/t8008-blame-formats.sh
->  +++ b/t/t8008-blame-formats.sh
->  @@ -87,4 +87,21 @@ test_expect_success 'blame --line-porcelain output' '
->   	test_cmp expect actual
->   '
->   
->  +test_expect_success '--porcelain detects first non-empty line as subject' '
->  +	(
->  +		GIT_INDEX_FILE=.git/tmp-index &&
->  +		export GIT_INDEX_FILE &&
->  +		echo "This is it" >single-file &&
->  +		git add single-file &&
->  +		tree=$(git write-tree) &&
->  +		commit=$(printf "%s\n%s\n%s\n\n\noneline\n\nbody\n" \
->  +			"tree $tree" \
->  +			"author A <a@b.c> 123456789 +0000" \
->  +			"committer C <c@d.e> 123456789 +0000" |
->  +		git hash-object -w -t commit --stdin) &&
->  +		git blame --porcelain $commit -- single-file >output &&
->  +		grep "^summary oneline$" output
->  +	)
->  +'
->  +
->   test_done
->
->
-> diff --git a/commit.c b/commit.c
-> index 3f4f371..7b00989 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -415,6 +415,8 @@ int find_commit_subject(const char *commit_buffer, const char **subject)
->  		p++;
->  	if (*p) {
->  		p += 2;
-> +		while (*p == '\n')
-> +			p++;
->  		for (eol = p; *eol && *eol != '\n'; eol++)
->  			; /* do nothing */
->  	} else
-> diff --git a/t/t8008-blame-formats.sh b/t/t8008-blame-formats.sh
-> index 29f84a6..03bd313 100755
-> --- a/t/t8008-blame-formats.sh
-> +++ b/t/t8008-blame-formats.sh
-> @@ -87,4 +87,21 @@ test_expect_success 'blame --line-porcelain output' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success '--porcelain detects first non-empty line as subject' '
-> +	(
-> +		GIT_INDEX_FILE=.git/tmp-index &&
-> +		export GIT_INDEX_FILE &&
-> +		echo "This is it" >single-file &&
-> +		git add single-file &&
-> +		tree=$(git write-tree) &&
-> +		commit=$(printf "%s\n%s\n%s\n\n\noneline\n\nbody\n" \
-> +			"tree $tree" \
-> +			"author A <a@b.c> 123456789 +0000" \
-> +			"committer C <c@d.e> 123456789 +0000" |
-> +		git hash-object -w -t commit --stdin) &&
-> +		git blame --porcelain $commit -- single-file >output &&
-> +		grep "^summary oneline$" output
-> +	)
-> +'
-> +
->  test_done
+> On 20 June 2016 at 19:45, Stefan Beller <sbeller@google.com> wrote:
+>> On Mon, Jun 20, 2016 at 6:06 AM, Istvan Zakar <istvan.zakar@gmail.com> wrote:
+>>> Hello,
+>>>
+>>> I'm working on a relatively big project with many submodules. During
+>>> cloning for testing I tried to decrease the amount of data need to be
+>>> fetched from the server by using --shallow-submodules option in the clone
+>>> command. It seems to check out the tip of the remote repo, and if it's not
+>>> the commit registered in the superproject the submodule update fails
+>>> (obviously).
+>>
+>> Yes that is broken as the depth of a submodule is counted from its own HEAD
+>> not from the superprojects sha1 as it should.
+>>
+>> So it does
+>>
+>>     git clone --depth=1 <submodule-url> <submodule-path>
+>>
+>>     if HEAD != recorded gitlink sha1,
+>>         git fetch <recorded gitlink sha1>
+>>
+>>     git checkout <recorded gitlink sha1>
+>>
+>>> Can I somehow tell to fetch that exact commit I need for my
+>>> superproject?
+>>
+>> Some servers support fetching by direct sha1, which is what we make use
+>> of here, then it sort-of works.
+>>
+>> If the server doesn't support the capability to fetch an arbitrary sha1,
+>> the submodule command fails, with a message such as
+>>
+>>     error: no such remote ref $sha1
+>>     Fetched in submodule path '<submodule>', but it did not contain
+>> $sha1. Direct fetching of that commit failed.
+>>
+>> So if it breaks for you now, I would suggest not using that switch, I
+>> don't think there is a quick
+>> workaround.
+>>
+>>>
+>>> Thanks,
+>>>    Istvan
+>>
+>> Thanks,
+>> Stefan
+>>
+>>>
+>>> --
+>>> To unsubscribe from this list: send the line "unsubscribe git" in
+>>> the body of a message to majordomo@vger.kernel.org
+>>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
