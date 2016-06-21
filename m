@@ -1,269 +1,117 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D4E420189
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DA9B1F744
 	for <e@80x24.org>; Tue, 21 Jun 2016 10:41:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751608AbcFUKlF (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 06:41:05 -0400
-Received: from mout.gmx.net ([212.227.15.19]:63660 "EHLO mout.gmx.net"
+	id S1752095AbcFUKlH (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 06:41:07 -0400
+Received: from mout.gmx.net ([212.227.15.15]:51904 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751741AbcFUKgC (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751642AbcFUKgC (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 21 Jun 2016 06:36:02 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LwJFG-1bSB0k3Zy2-0182yC; Tue, 21 Jun 2016 12:35:00
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M2cYX-1bXwQo2NMb-00sOWT; Tue, 21 Jun 2016 12:34:51
  +0200
-Date:	Tue, 21 Jun 2016 12:34:59 +0200 (CEST)
+Date:	Tue, 21 Jun 2016 12:34:50 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 3/9] log-tree: respect diffopt's configured output file
- stream
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Paul Tan <pyokagan@gmail.com>
+Subject: [PATCH v3 1/9] am: stop ignoring errors reported by
+ log_tree_diff()
 In-Reply-To: <cover.1466505222.git.johannes.schindelin@gmx.de>
-Message-ID: <eb881db815d04bc48b4bb86161890f52d9ba14fa.1466505222.git.johannes.schindelin@gmx.de>
+Message-ID: <e1d68fa14e7938f7e3a07bb85db28aa84017710d.1466505222.git.johannes.schindelin@gmx.de>
 References: <cover.1466420060.git.johannes.schindelin@gmx.de> <cover.1466505222.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:5FiOSQDKHv9Sp/xGcvBBBpqsEqCgtdVMy20m1Mfnt/spp2FmFiP
- u+xPHGvSM4p71VZaeK/1HBOes4nzEl6tKskQTmHUVc57qNa/UQPUZIa4Mgfr1b8aN6B0y/M
- 1waIDx/g5sa0ucnx6AJjn2VxHdblYDDnuxwohk9FYJP/GXwTjDo74/lyjD9RFJ75Rej294T
- NnzCtHMDYyOefIKWr2J8Q==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:6XENib3CXsQ=:YtGzmJXO+sUExpfX1NT1GK
- aXf3oeIxJDN8z5HuGwRCVBVYp9nn7cvmIhF4uoVD3aCxIlmXZsbPnJ8RWTFsM/l/8pbqmRp/I
- XE2zzveZsf5+4QCSlpMOud2k7LEXHRsVO2bQlzpHnneiLhU550H5fjaSTrjhA1U2lzzYeD+g4
- aZegJJiCcd0wO0v4mQkG6Q6cCJ7PrUCDxC+5twBRY3M8cKnadfRgK4bjYxBYt21klTdoPlZ49
- 2RiP3PTq80WC/sBsw/2K8mU2UCS+zv2uWqRrxuEEuy8fTHzQGz5CgVOdnh3Zk5K1w4dI1WGH1
- SMgG1+TXBA6QCjkdQ9eAXIqy/sIfXZ5LX5ovLC7dpfxsZ5BPppGwJiBkngdtjII36G8kbYz9y
- OAZ4PPUU9Mu6ortRPTi1SMH0gfuE1tW7/O7UDxnK+YGJJcdZjztHab2lclDyqhoXP8+SVxPcR
- QIUREG0V/L/gMZUD2dhfPgIa/NJwstWz1M4jvKTw/l8zdrn13JMlSKUedhjn+RA0+3XnM1L/w
- WRz29f5/Xna8nqRdFbAMSzjipCfSrM+spD087aZDh/9mhnJ2F4tfRBouQttpEaXv5nC75y25Y
- dKKqSwTa9r/CwDG6Ig+4S0fIJfH0b52dmn3Yc/LWeiyxeF76dyxueDgIQevVd8Aqy9Q3iNhxu
- otAUKl3yzZwld3ec/E5+ypYPrUNYdH2DKVjzYVhT0Q8QVk85SAY5O9GgorHYM2h5FffvoEaTs
- gUORWzh9hVaH7U8jc68yiYpIP8DgtOvc7Ao9O+LeYNg5Q5H+DKPM6qpF6u4tSPeunKhAAwCL0
- HSXh9fX
+X-Provags-ID: V03:K0:YdA4d4+8hOfZQUmQtQmCkD6xW5R0C3ZbS9q2JiNMu9WOtHQS8nI
+ 4EE5dE1zzKMKjZFOmM051eKNALP5zdf9NNgf1gbXS3H4WpwlXQvkY8DU6ubL38mXRaB3DwU
+ sJEOnRq38X3HDgGi4Z2T5vzByCWJ4tsuJzdR4cKGY91VecFitrR2jojQbLdhVpB84ONg+rm
+ 5gMuEbh/ufEMreL3oVisA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:/NvWwUpWC4w=:5sFlEazl2pTvbaQvqhOeHu
+ njQVj80QumBPBhh9C4W2VYFElSes7YPZbQ2vqhwbkNF+3h9uKlowDCv8+HiHs2Dm1+gMQUp+I
+ wplvQ2pBRUVb4UsLQxw/p1Ihqfpj83d2hhcU/8IM8ofPb6dDqG8Oy/pYqtrWLfHNWbdGyjVrb
+ 2GaYFKTqTZYOK2jPOVfPJ1c1fKI9eMsH1R0oLYZjlohuLxsUpNTFUz5IpCRh7u8nkTnP/yziw
+ 4vj8S90eyZaegGINWeH/RDBmL+NNUAlSud9XSQMwHqMR3plzOHTLf28O/RflD+yfauca+859z
+ dobvFzpPFxiwEFlm8ESEe/QD57mG2gdhp1dG2QjEps2enHsC2+sCfGsNble1m3+nluJT/m+4n
+ ej4aRAqkxORxJCHFKSy5nQgBpoJidl9rwHZ/E1HhA+R7I8rCudrupWOcD+jAcUdAT8DfuY2zq
+ nhPfUjwD+f6cFy5PkxmdcnJSTVAN2E1GTXHay+DMyk+oZMWMEthOlb7SqA3fJpGRIqWvcvKkf
+ AsKlGMurBtKJ/QTHmIlTjrsCmzKcNgiu09oTMVYQdDoy6rkxoQYWXQX0JfoicKEsI4sZSDtNB
+ oJTuJny1Oy2KUYSkLhaZCoLnuWTVYS9tIQY2YcczAWvKo3fIJyoRyxbpO2SVonm/W3BiZyz3L
+ kdu9Rk+xEmbz6rUvxfouKuFnLu4/chXUaDtvZ8Kf6mG8+4mKTRL4tIEPB1HOPpLRx8MTNWMpk
+ 40GJSGOzCZMh0Kr2UGY4fxrwEf1SBCA18zS/HO4RD1DIleeDOw08mDpZrFgo0JjhkTpk+EfD7
+ 2xE7lW0
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The diff options already know how to print the output anywhere else
-than stdout. The same is needed for log output in general, e.g.
-when writing patches to files in `git format-patch`. Let's allow
-users to use log_tree_commit() *without* changing global state via
-freopen().
+It is never a good idea to ignore errors, so let's handle them.
 
+While at it, handle fopen() errors more gently (i.e. give the caller a
+chance to do something about it rather than die()ing).
+
+Note: there are more places in the builtin am code that ignore
+errors returned from library functions. Fixing those is outside the
+purview of the current patch series, though.
+
+Cc: Paul Tan <pyokagan@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- log-tree.c | 64 +++++++++++++++++++++++++++++++-------------------------------
- 1 file changed, 32 insertions(+), 32 deletions(-)
+ builtin/am.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/log-tree.c b/log-tree.c
-index dc0180d..530297d 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -159,12 +159,12 @@ void load_ref_decorations(int flags)
- 	}
- }
- 
--static void show_parents(struct commit *commit, int abbrev)
-+static void show_parents(struct commit *commit, int abbrev, FILE *file)
+diff --git a/builtin/am.c b/builtin/am.c
+index 3dfe70b..0e28a62 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1433,12 +1433,15 @@ static void get_commit_info(struct am_state *state, struct commit *commit)
+ /**
+  * Writes `commit` as a patch to the state directory's "patch" file.
+  */
+-static void write_commit_patch(const struct am_state *state, struct commit *commit)
++static int write_commit_patch(const struct am_state *state, struct commit *commit)
  {
- 	struct commit_list *p;
- 	for (p = commit->parents; p ; p = p->next) {
- 		struct commit *parent = p->item;
--		printf(" %s", find_unique_abbrev(parent->object.oid.hash, abbrev));
-+		fprintf(file, " %s", find_unique_abbrev(parent->object.oid.hash, abbrev));
- 	}
+ 	struct rev_info rev_info;
+ 	FILE *fp;
+ 
+-	fp = xfopen(am_path(state, "patch"), "w");
++	fp = fopen(am_path(state, "patch"), "w");
++	if (!fp)
++		return error(_("Could not open %s for writing"),
++			am_path(state, "patch"));
+ 	init_revisions(&rev_info, NULL);
+ 	rev_info.diff = 1;
+ 	rev_info.abbrev = 0;
+@@ -1453,7 +1456,7 @@ static void write_commit_patch(const struct am_state *state, struct commit *comm
+ 	rev_info.diffopt.close_file = 1;
+ 	add_pending_object(&rev_info, &commit->object, "");
+ 	diff_setup_done(&rev_info.diffopt);
+-	log_tree_commit(&rev_info, commit);
++	return log_tree_commit(&rev_info, commit);
  }
  
-@@ -172,7 +172,7 @@ static void show_children(struct rev_info *opt, struct commit *commit, int abbre
- {
- 	struct commit_list *p = lookup_decoration(&opt->children, &commit->object);
- 	for ( ; p; p = p->next) {
--		printf(" %s", find_unique_abbrev(p->item->object.oid.hash, abbrev));
-+		fprintf(opt->diffopt.file, " %s", find_unique_abbrev(p->item->object.oid.hash, abbrev));
- 	}
- }
+ /**
+@@ -1501,13 +1504,14 @@ static int parse_mail_rebase(struct am_state *state, const char *mail)
+ 	unsigned char commit_sha1[GIT_SHA1_RAWSZ];
  
-@@ -286,11 +286,11 @@ void show_decorations(struct rev_info *opt, struct commit *commit)
- 	struct strbuf sb = STRBUF_INIT;
+ 	if (get_mail_commit_sha1(commit_sha1, mail) < 0)
+-		die(_("could not parse %s"), mail);
++		return error(_("could not parse %s"), mail);
  
- 	if (opt->show_source && commit->util)
--		printf("\t%s", (char *) commit->util);
-+		fprintf(opt->diffopt.file, "\t%s", (char *) commit->util);
- 	if (!opt->show_decorations)
- 		return;
- 	format_decorations(&sb, commit, opt->diffopt.use_color);
--	fputs(sb.buf, stdout);
-+	fputs(sb.buf, opt->diffopt.file);
- 	strbuf_release(&sb);
- }
+ 	commit = lookup_commit_or_die(commit_sha1, mail);
  
-@@ -364,18 +364,18 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 		subject = "Subject: ";
- 	}
+ 	get_commit_info(state, commit);
  
--	printf("From %s Mon Sep 17 00:00:00 2001\n", name);
-+	fprintf(opt->diffopt.file, "From %s Mon Sep 17 00:00:00 2001\n", name);
- 	graph_show_oneline(opt->graph);
- 	if (opt->message_id) {
--		printf("Message-Id: <%s>\n", opt->message_id);
-+		fprintf(opt->diffopt.file, "Message-Id: <%s>\n", opt->message_id);
- 		graph_show_oneline(opt->graph);
- 	}
- 	if (opt->ref_message_ids && opt->ref_message_ids->nr > 0) {
- 		int i, n;
- 		n = opt->ref_message_ids->nr;
--		printf("In-Reply-To: <%s>\n", opt->ref_message_ids->items[n-1].string);
-+		fprintf(opt->diffopt.file, "In-Reply-To: <%s>\n", opt->ref_message_ids->items[n-1].string);
- 		for (i = 0; i < n; i++)
--			printf("%s<%s>\n", (i > 0 ? "\t" : "References: "),
-+			fprintf(opt->diffopt.file, "%s<%s>\n", (i > 0 ? "\t" : "References: "),
- 			       opt->ref_message_ids->items[i].string);
- 		graph_show_oneline(opt->graph);
- 	}
-@@ -432,7 +432,7 @@ static void show_sig_lines(struct rev_info *opt, int status, const char *bol)
- 	reset = diff_get_color_opt(&opt->diffopt, DIFF_RESET);
- 	while (*bol) {
- 		eol = strchrnul(bol, '\n');
--		printf("%s%.*s%s%s", color, (int)(eol - bol), bol, reset,
-+		fprintf(opt->diffopt.file, "%s%.*s%s%s", color, (int)(eol - bol), bol, reset,
- 		       *eol ? "\n" : "");
- 		graph_show_oneline(opt->graph);
- 		bol = (*eol) ? (eol + 1) : eol;
-@@ -553,17 +553,17 @@ void show_log(struct rev_info *opt)
+-	write_commit_patch(state, commit);
++	if (write_commit_patch(state, commit) < 0)
++		return -1;
  
- 		if (!opt->graph)
- 			put_revision_mark(opt, commit);
--		fputs(find_unique_abbrev(commit->object.oid.hash, abbrev_commit), stdout);
-+		fputs(find_unique_abbrev(commit->object.oid.hash, abbrev_commit), opt->diffopt.file);
- 		if (opt->print_parents)
--			show_parents(commit, abbrev_commit);
-+			show_parents(commit, abbrev_commit, opt->diffopt.file);
- 		if (opt->children.name)
- 			show_children(opt, commit, abbrev_commit);
- 		show_decorations(opt, commit);
- 		if (opt->graph && !graph_is_commit_finished(opt->graph)) {
--			putchar('\n');
-+			putc('\n', opt->diffopt.file);
- 			graph_show_remainder(opt->graph);
- 		}
--		putchar(opt->diffopt.line_termination);
-+		putc(opt->diffopt.line_termination, opt->diffopt.file);
- 		return;
- 	}
- 
-@@ -589,7 +589,7 @@ void show_log(struct rev_info *opt)
- 		if (opt->diffopt.line_termination == '\n' &&
- 		    !opt->missing_newline)
- 			graph_show_padding(opt->graph);
--		putchar(opt->diffopt.line_termination);
-+		putc(opt->diffopt.line_termination, opt->diffopt.file);
- 	}
- 	opt->shown_one = 1;
- 
-@@ -607,28 +607,28 @@ void show_log(struct rev_info *opt)
- 		log_write_email_headers(opt, commit, &ctx.subject, &extra_headers,
- 					&ctx.need_8bit_cte);
- 	} else if (opt->commit_format != CMIT_FMT_USERFORMAT) {
--		fputs(diff_get_color_opt(&opt->diffopt, DIFF_COMMIT), stdout);
-+		fputs(diff_get_color_opt(&opt->diffopt, DIFF_COMMIT), opt->diffopt.file);
- 		if (opt->commit_format != CMIT_FMT_ONELINE)
--			fputs("commit ", stdout);
-+			fputs("commit ", opt->diffopt.file);
- 
- 		if (!opt->graph)
- 			put_revision_mark(opt, commit);
- 		fputs(find_unique_abbrev(commit->object.oid.hash, abbrev_commit),
--		      stdout);
-+		      opt->diffopt.file);
- 		if (opt->print_parents)
--			show_parents(commit, abbrev_commit);
-+			show_parents(commit, abbrev_commit, opt->diffopt.file);
- 		if (opt->children.name)
- 			show_children(opt, commit, abbrev_commit);
- 		if (parent)
--			printf(" (from %s)",
-+			fprintf(opt->diffopt.file, " (from %s)",
- 			       find_unique_abbrev(parent->object.oid.hash,
- 						  abbrev_commit));
--		fputs(diff_get_color_opt(&opt->diffopt, DIFF_RESET), stdout);
-+		fputs(diff_get_color_opt(&opt->diffopt, DIFF_RESET), opt->diffopt.file);
- 		show_decorations(opt, commit);
- 		if (opt->commit_format == CMIT_FMT_ONELINE) {
--			putchar(' ');
-+			putc(' ', opt->diffopt.file);
- 		} else {
--			putchar('\n');
-+			putc('\n', opt->diffopt.file);
- 			graph_show_oneline(opt->graph);
- 		}
- 		if (opt->reflog_info) {
-@@ -702,7 +702,7 @@ void show_log(struct rev_info *opt)
- 	}
- 
- 	if (opt->show_log_size) {
--		printf("log size %i\n", (int)msgbuf.len);
-+		fprintf(opt->diffopt.file, "log size %i\n", (int)msgbuf.len);
- 		graph_show_oneline(opt->graph);
- 	}
- 
-@@ -718,11 +718,11 @@ void show_log(struct rev_info *opt)
- 	if (opt->graph)
- 		graph_show_commit_msg(opt->graph, &msgbuf);
- 	else
--		fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
-+		fwrite(msgbuf.buf, sizeof(char), msgbuf.len, opt->diffopt.file);
- 	if (opt->use_terminator && !commit_format_is_empty(opt->commit_format)) {
- 		if (!opt->missing_newline)
- 			graph_show_padding(opt->graph);
--		putchar(opt->diffopt.line_termination);
-+		putc(opt->diffopt.line_termination, opt->diffopt.file);
- 	}
- 
- 	strbuf_release(&msgbuf);
-@@ -759,7 +759,7 @@ int log_tree_diff_flush(struct rev_info *opt)
- 				struct strbuf *msg = NULL;
- 				msg = opt->diffopt.output_prefix(&opt->diffopt,
- 					opt->diffopt.output_prefix_data);
--				fwrite(msg->buf, msg->len, 1, stdout);
-+				fwrite(msg->buf, msg->len, 1, opt->diffopt.file);
- 			}
- 
- 			/*
-@@ -774,8 +774,8 @@ int log_tree_diff_flush(struct rev_info *opt)
- 			 */
- 			if (!opt->shown_dashes &&
- 			    (pch & opt->diffopt.output_format) == pch)
--				printf("---");
--			putchar('\n');
-+				fprintf(opt->diffopt.file, "---");
-+			putc('\n', opt->diffopt.file);
- 		}
- 	}
- 	diff_flush(&opt->diffopt);
-@@ -875,7 +875,7 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
- 		return line_log_print(opt, commit);
- 
- 	if (opt->track_linear && !opt->linear && !opt->reverse_output_stage)
--		printf("\n%s\n", opt->break_bar);
-+		fprintf(opt->diffopt.file, "\n%s\n", opt->break_bar);
- 	shown = log_tree_diff(opt, commit, &log);
- 	if (!shown && opt->loginfo && opt->always_show_header) {
- 		log.parent = NULL;
-@@ -883,8 +883,8 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
- 		shown = 1;
- 	}
- 	if (opt->track_linear && !opt->linear && opt->reverse_output_stage)
--		printf("\n%s\n", opt->break_bar);
-+		fprintf(opt->diffopt.file, "\n%s\n", opt->break_bar);
- 	opt->loginfo = NULL;
--	maybe_flush_or_die(stdout, "stdout");
-+	maybe_flush_or_die(opt->diffopt.file, "stdout");
- 	return shown;
- }
+ 	hashcpy(state->orig_commit, commit_sha1);
+ 	write_state_text(state, "original-commit", sha1_to_hex(commit_sha1));
 -- 
 2.9.0.118.g0e1a633
 
