@@ -1,95 +1,81 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70DCA1F744
-	for <e@80x24.org>; Tue, 21 Jun 2016 07:57:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E85341F744
+	for <e@80x24.org>; Tue, 21 Jun 2016 08:26:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755135AbcFUH5n (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 03:57:43 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:33323 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755058AbcFUH5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2016 03:57:40 -0400
-Received: by mail-lb0-f182.google.com with SMTP id xp5so5027384lbb.0
-        for <git@vger.kernel.org>; Tue, 21 Jun 2016 00:57:39 -0700 (PDT)
+	id S1752100AbcFUI0d (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 04:26:33 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33040 "EHLO
+	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752009AbcFUI03 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 04:26:29 -0400
+Received: by mail-pf0-f195.google.com with SMTP id c74so886353pfb.0
+        for <git@vger.kernel.org>; Tue, 21 Jun 2016 01:26:28 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=5KAy6rmhzFjaxiNMV2Il/dvpATPy+Gr+wAgOYaptcBk=;
-        b=ZB+XPHIEwZdMBc5P9nIujssZXhFw0AS3VxVwRnE+Bn1maqw2LVmdl12EwP/4fuxCix
-         wnHnPgDtPFg25o+3oqGWljmuu4IYAdFZtm7Bst/nAw999I+zzfbasZrVbh7a0173ixt2
-         eFZqKfGRo6TTRwWmjTg8twKTXkNs3YEQ2MmicMoceF1nbEsuqgrtSUMaRjwu2DVeKe4V
-         PKpzV36TnalqTrrfpShRk9SYj7XkdNunkhG7T5/oxKV9deZOStr0F9ov6U9c8+1i7SCv
-         it+e7u0gWXhm0SwIQ5SJcPoTHvZbFk9Yt8TKX9v+8YnoGYwk2huyTBSp1LVGPBgG4Ngb
-         Hh0g==
+        h=from:to:cc:subject:date:message-id;
+        bh=EgDTxehC67bmK6QMRChMWy1+KWFdErTtLSykxOw7kCg=;
+        b=JUdRN36IzRZwl8Pb00g+nQyNesUj3mg0oxOG/18rKZCYcK7Stdwgh00ZP3ViYqyYow
+         jDC0SWeJU2oVPVlcU50jSYKT6nKkK6FkdC+0DD15rS3Kp76YqW2mRo0KwLVuLfkF6eaE
+         h+o61iyQLeMQ6RG2UEHSgxz9IPqbVYOXwHFJHszEr2OXGbc2BksjBkL1yGsGID9NkHfV
+         m0j8j0Y55LUPZ9byR2EtBBHnXQ2rtxhsUXIgTP8XkKR3C+XmhY9ekO0YZcpgSLFvxak/
+         KqqIOSS/RCW7BaZB2JTGSz2Qs+0cGVfvLGDE4hliE2nZBWbf81/woLxrCTpdeYFEdRL2
+         lXAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=5KAy6rmhzFjaxiNMV2Il/dvpATPy+Gr+wAgOYaptcBk=;
-        b=cKCB3qymNt0Qvx67/MnFTMOd3dlaE+UrW9BAfE4T+ip83aIrgIlZd4qpiFWf2ISUpa
-         fBGrIy5CNPGFTpSPswDxPYHWjlrA/8/ifzZTdfeBt+NalsVJncQjLG6x8Djpaj8BlIHy
-         EajU+DlDrf3deDX5guXBdtRVxyg/KWqABHrp39VKxeePsnHCNIoTZ+IsfowFdaWYDctw
-         WtEaR37wjAqGVtjFzXc56yq0EKbv9FHLcZecGe+dEfxhV/Wx0M7RQSECEPMoZHSG04qj
-         6vXdkUpQlz6HRWvVd72uFEO3PxOa/IRAb4SIgn0GXGKzxDhLPgRFUB35emrVyWKCnIEx
-         9J/A==
-X-Gm-Message-State: ALyK8tLHUTjWzWSeTtiqCcHvviTNQMISBf8gD5D8IgxbqUTe/Rb/D4xNtmnsaKQCsJ5K1w==
-X-Received: by 10.194.78.147 with SMTP id b19mr18279332wjx.31.1466495858070;
-        Tue, 21 Jun 2016 00:57:38 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB4933.dip0.t-ipconnect.de. [93.219.73.51])
-        by smtp.gmail.com with ESMTPSA id s67sm1653389wmf.3.2016.06.21.00.57.37
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 21 Jun 2016 00:57:37 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH] perf: accommodate for MacOSX
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqa8iftzex.fsf@gitster.mtv.corp.google.com>
-Date:	Tue, 21 Jun 2016 09:57:36 +0200
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <F67587B5-0EA8-4F2F-AADB-4343B4FEEA21@gmail.com>
-References: <ae429d2481111f7ad1927ef22e3a691d4c99ebd7.1466254995.git.johannes.schindelin@gmx.de> <9A11C3D1-3DAC-489F-BDF9-F4D409E8D3F7@gmail.com> <alpine.DEB.2.20.1606200840350.22630@virtualbox> <xmqqa8iftzex.fsf@gitster.mtv.corp.google.com>
-To:	Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=EgDTxehC67bmK6QMRChMWy1+KWFdErTtLSykxOw7kCg=;
+        b=M5jey1H27h60V+In/k3aiZZFuo4rhg7i0d3P3W6NZSIcfCEDJjM8Hq2Ahvge0bDS3Q
+         opPPz+uo7Qhgrl7LUnuCzBr96c9bKI0qX0KMzoBaYjXcQcWUh76XEOu0dHdq/0ceHmEd
+         Oqfs998vkUfrhzGNwyNUs8BSBmKh56dr+PPbCoGW0kgXzLvXqeqSkvNgwXEYS6VQXUKn
+         095VzmhbtF6w1mNOBgQ1QnfMflzE3Q0rQgiswZlayWgcRwWNr5ITtdpQielAE3XXIQFz
+         ss8nTb1r3+mtHYOq3NMIu1VitR3CLO5MtF2MruAqRWHO8659ZcxKdW/BkgjaQm4SWnE2
+         vgwA==
+X-Gm-Message-State: ALyK8tIK44nyyn7gj0x0J988rm0h7xMdh4fn62/u7qJqq9NGfSAgrw4eORpI6q9w0Gu6mg==
+X-Received: by 10.98.130.65 with SMTP id w62mr26257708pfd.5.1466488641334;
+        Mon, 20 Jun 2016 22:57:21 -0700 (PDT)
+Received: from localhost.localdomain (124-149-99-253.dyn.iinet.net.au. [124.149.99.253])
+        by smtp.googlemail.com with ESMTPSA id i68sm38584603pfe.64.2016.06.20.22.57.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 20 Jun 2016 22:57:20 -0700 (PDT)
+From:	Brett Randall <javabrett@gmail.com>
+To:	gitster@pobox.com, git@vger.kernel.org
+Cc:	Brett Randall <javabrett@gmail.com>
+Subject: [PATCH] Improved example "To move the whole tree into a subdirectory..." to not fail when early commits are empty.
+Date:	Tue, 21 Jun 2016 15:57:02 +1000
+Message-Id: <20160621055702.28044-1-javabrett@gmail.com>
+X-Mailer: git-send-email 2.8.4
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Previously this example would fail if the oldest commit(s) in any filtered branch is/are empty (no files) because the index would not change, and the mv would fail with:
 
-> On 20 Jun 2016, at 21:48, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
->> On Sun, 19 Jun 2016, Lars Schneider wrote:
->> 
->>>> On 18 Jun 2016, at 15:03, Johannes Schindelin
->>>> <johannes.schindelin@gmx.de> wrote:
->>>> 
->>>> As this developer has no access to MacOSX developer setups anymore,
->>>> Travis becomes the best bet to run performance tests on that OS.
->>> 
->>> We don't run the performance tests on Travis CI right now.
->>> Maybe we should? With your patch below it should work, right?
->> ...
->> 
->> Yeah, well, I should have been clearer in my commit message: this patch
->> allows the perf tests to *run*, not to *pass*... ;-)
-> 
-> OK, Lars, do we still want to take this patch?  I am leaning towards
-> taking it, if only to motivate interested others with OS X to look
-> into making the perf tests to actually run.
+	mv: cannot stat <redacted>/index.new': No such file or directory
 
-I think we definitively should take the "perf-lib.sh" part of the patch
-as this makes the perf test run on OSX and therefore is a strict
-improvement.
+This commonly occurs with histories created from git-svn-clone.  The updated example checks whether the index file has been created before attempting the mv.  The empty commit is retained.
 
-If we don't run any perf tests by default on Travis CI then I wouldn't 
-take the ".travis.yml" part of the patch just to keep our Travis CI
-setup as lean as possible. Running perf tests on Travis CI is probably
-bogus anyways because we never know on what hardware our jobs run
-and what other jobs run in parallel on that hardware.
+See http://stackoverflow.com/questions/7798142/error-combining-git-repositories-into-subdirs for an example and explanation.
 
-- Lars
+Signed-off-by: Brett Randall <javabrett@gmail.com>
+---
+ Documentation/git-filter-branch.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index 003731f..271d5b0 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -385,7 +385,7 @@ git filter-branch --index-filter \
+ 	'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
+ 		GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
+ 			git update-index --index-info &&
+-	 mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"' HEAD
++	 if [ -f "$GIT_INDEX_FILE.new" ]; then mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"; fi' HEAD
+ ---------------------------------------------------------------
+ 
+ 
+-- 
+2.8.4
+
