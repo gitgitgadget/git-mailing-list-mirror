@@ -1,67 +1,58 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0A7620189
-	for <e@80x24.org>; Wed, 22 Jun 2016 20:06:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01C3B20189
+	for <e@80x24.org>; Wed, 22 Jun 2016 20:06:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751432AbcFVUGL (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 16:06:11 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58745 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750835AbcFVUGL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 16:06:11 -0400
-Received: (qmail 8525 invoked by uid 102); 22 Jun 2016 20:06:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Jun 2016 16:06:10 -0400
-Received: (qmail 5142 invoked by uid 107); 22 Jun 2016 20:06:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Jun 2016 16:06:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Jun 2016 16:06:08 -0400
-Date:	Wed, 22 Jun 2016 16:06:08 -0400
-From:	Jeff King <peff@peff.net>
+	id S1751437AbcFVUG2 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 16:06:28 -0400
+Received: from mout.gmx.net ([212.227.17.22]:50485 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750835AbcFVUG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 16:06:27 -0400
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MAkkB-1b4UXJ0qp1-00BtED; Wed, 22 Jun 2016 22:06:10
+ +0200
+Date:	Wed, 22 Jun 2016 22:06:08 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Jonathan Nieder <jrnieder@gmail.com>,
-	Andrea Stacchiotti <andreastacchiotti@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] doc: git-htmldocs.googlecode.com is no more
-Message-ID: <20160622200607.GD1697@sigill.intra.peff.net>
-References: <146652690896.29270.13813898006180324611.reportbug@duelitri>
- <20160622024151.GA20206@google.com>
- <xmqq60t1noon.fsf@gitster.mtv.corp.google.com>
+cc:	git@vger.kernel.org
+Subject: Re: [PATCH 1/1] mingw: work around t2300's assuming non-Windows
+ paths
+In-Reply-To: <xmqqa8idnpj9.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1606222103410.10382@virtualbox>
+References: <cover.1466246919.git.johannes.schindelin@gmx.de> <a8bebe126bcd047720a13e90b85b8dccb7231187.1466246919.git.johannes.schindelin@gmx.de> <xmqqmvmfu17f.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1606211356170.22630@virtualbox>
+ <xmqqr3bqqxhc.fsf@gitster.mtv.corp.google.com> <xmqqk2hiqwpb.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1606220927350.10382@virtualbox> <xmqqa8idnpj9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq60t1noon.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:5KP/aWDiRqlszYBFnVvZUqOFmYZfFqcG1FJ79oiFMimAypdMrrZ
+ FZEyrtDOsDQH1M8rMJ54mg732/37aZHQHMT1q2xue+rysQH18wNy1NW9Yseg5G7/yPRSoFQ
+ w76rsvY6esWaKY8PhaMH2gcKqsuzu7qpj9pc05A4v+g7dmnbkgRx/8p1/UNymnjhA15WeS2
+ SCahi9wzfdGcBN9cSWJBw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:TeHCB00dmIs=:8JaTPs9HvJ6XtcbxTgAelK
+ 4KzSKTF2X7/23ry3rVwPIo+7LYaqtlGbS4Cyyxwlbc97RwTk22uEOTg+4ANDI1qGT+5AyDlsw
+ jVHQcsB6x8bV38CC03F+q4trbxpwePxHNk66JEmB1Gkwelh0bffLoch9L7SCOpGjJVza0WNiH
+ 3iT3BrXC7nU8Gdk/c3e6bNUvpZsOJ1WJXQOf+j9NedxbUVLvk38CkZLTiQRUDRJFRvBTcBcAT
+ 44bJq0PwmFF3naBPFTkY53E3FRyVDJttO0kLQaDZx8Qv5G4x70YBsXEYIt6JUuyE5OZelpL8A
+ FQEN8dhsDldmL9xmZbTs9JhiNgnX1FrE7o6lv5MeL6qIe+LShT55Kfg8e9FOySbQbR6lZSyAn
+ XRtrYtpN4FRYiT9EL5bWo058PQCb7IUf6eWzfiMMorrBDzYL6hQihjn2LQnRGmfuKtyM/CP6c
+ ulzOQyBuGbqvxFKHAKCOIwzff0leEV62f1vuedaJ6F6O6eaxzNX+DMKVBAeptfTHjdHBOl2HB
+ xJmfxaAaMbW3367bdI5CMKjh1fVL2+g/XT6ExIWsPZ7klepSN8s3+LNnIoTTZkH2hwJ6hm6so
+ dJfANY4UgA6bmcYVyw9AndHT9wTv68807nBNJqb1RSfcXp4YhReLtlsXnnjAsyO/7yAwdd1FW
+ JYTKQHCqPttS+slVNMs/5vTtGvYzt4c41FZVHzt1ppH8YGB/xEQxFawD7T+eHW8fMesY5nJAq
+ /SzRjXmDiqqhlOHSkFZWiuufF+Y4W8hfDOVHtQ9eoAw+GxOe+J+OZDXbcgcLGC9csQQILPXrw
+ CXdGBvQ
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jun 22, 2016 at 10:00:56AM -0700, Junio C Hamano wrote:
+Hi Junio,
 
-> Peff suggested to use the github pages that are connected to the
-> "git" org, and helped its initial set-up.  When I update the
-> prebuilt docs, in addition to the listed locations, I also push to
-> the gh-pages branch of https://github.com/git/htmldocs repository
-> and the result appears in https://git.github.io/htmldocs/git.html
-> 
-> Even though we do have index.html -> git.html, gh-pages does not
-> seem to let you follow it, so you need to start from git.html, and I
-> suspect that it is why the below says "I wasn't able to find it" for
-> (5).
+On Wed, 22 Jun 2016, Junio C Hamano wrote:
 
-Yeah, I looked into this a little back then, and I think it is simply
-that the Pages builder does not handle symlinks at all. You could push
-out index.html as a true copy rather than a symlink, but I think just
-pointing to "git.html" as the entry page of the site is reasonable, too
-(we could even make index.html a true overview page later if we want).
+> So let's take that "if Windows do this" change to t2300 as-is.
 
-> So perhaps list both?  I do not know how beefy repo.or.cz is, or how
-> well connected it is to the rest of the world, but if I have to pick
-> only one, I'd feel safer if we didn't have to exploit the "blob_plain/:"
-> backdoor.
-
-Beefiness aside, the GitHub version will be served out of a CDN, which
-means it should perform way better for the user, as it will often get
-served from a geographically local cache.
-
--Peff
+Thanks!
+Dscho
