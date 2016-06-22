@@ -1,170 +1,328 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76A1E20189
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FFF52018B
 	for <e@80x24.org>; Wed, 22 Jun 2016 15:03:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752027AbcFVPDD (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 11:03:03 -0400
-Received: from mout.gmx.net ([212.227.15.18]:59818 "EHLO mout.gmx.net"
+	id S1752800AbcFVPDE (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 11:03:04 -0400
+Received: from mout.gmx.net ([212.227.15.19]:65229 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751648AbcFVPCH (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751315AbcFVPCH (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 22 Jun 2016 11:02:07 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LskfZ-1bMV2x37er-012LHo; Wed, 22 Jun 2016 17:01:46
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MEnX8-1b8Yvv0Les-00G5EP; Wed, 22 Jun 2016 17:01:25
  +0200
-Date:	Wed, 22 Jun 2016 17:01:44 +0200 (CEST)
+Date:	Wed, 22 Jun 2016 17:01:22 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v4 04/10] graph: respect the diffopt.file setting
-In-Reply-To: <cover.1466607667.git.johannes.schindelin@gmx.de>
-Message-ID: <ac66b20d0b78e6002c4b38525a47ba8afd09c5c0.1466607667.git.johannes.schindelin@gmx.de>
-References: <cover.1466505222.git.johannes.schindelin@gmx.de> <cover.1466607667.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v4 00/10] Let log-tree and friends respect diffopt's `file`
+ field
+In-Reply-To: <cover.1466505222.git.johannes.schindelin@gmx.de>
+Message-ID: <cover.1466607667.git.johannes.schindelin@gmx.de>
+References: <cover.1466505222.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:AML0kTTkd4UmHkO9HQ/gg2HLF62YS8X2nr1gJoT8c48yZ8fdQ2c
- EMtPqSJTJ5wfI9ItF8DOsoWfrpKhvVk3eh9jJJ6rhj29q6C0Tc5I8J9VkbBSmeduP0UO8Q7
- e+unrPxfGz4rWfXVWSdv/0b/hlz5sEjCKZASdLx1CJ0MmD3/VPSTO6ocs4BEIQzGwbSbv2v
- ci0MltN3v7HMRF2yu19ng==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:TZiu8HOR4OA=:rB/l/hx2kEeWFLCF86/BUN
- 6vLm8QJnrodnmwKzKXZDW1zBkmzI1jUlPn1z2rxPjRu/RgZzxInvMbGqAOOrDj2U7ZlsqFPhP
- 0IpDgyRfPJ0L611rG2FrS18Y/SWpFDHQn7cBLonnppwAd0fw2lmPdr4TczdK06+zK5Sk4e4hS
- QcCbCTKpM0sh8F6pIaJBX7AC0RHb+AVH8gieeARYLISZDpnYD8WvW3LlkbxcyRMup+DbaMGZC
- rAJdfCc1xCSCgckio4BETBcUEasCB9kM4fc+fobLA5ULI1HluCV6rcQ5I5milkyedxe7+nwT7
- ByAQmwQgCuIRsW79VBagVd1oXwnmB7rLgdo8hDvLWigjUmgG9ocU1b/d2HgPEBfLQcOgOmxkh
- n998uTxHitWQMDP34ll4RgbfUMvP2Zy7k2UG2oMfr8/5Xo+1sU1PmdjjBvWDg0YqVnOVyRNAd
- D2PlThsJTfw5pyq57CyIApojW7hyo0TqGZuI86DjopcIIWHd7BQ3Fnuf0h1LNDxymHLFhBXci
- OLwlMbXEUeY8ji64oLu8cCRraFKb1u2YHsVO/mFzpDfSbe3K8Vhfu0wdhwPdpPVcrq9jHcJKa
- p7Hdg4Yi8QEqudApxuk1h7PLS3aUK/DZXiQGISfV4dMetQ0NX/aNoH+0HRnBHphLGdiGvMo3q
- qaF7tCCe7wCKHCpKZz2ZZSvIU+c8lAyM5AG0GaufbRr1Ba1KlHg6GNlaBYufjVokEjNNFYBdH
- 7sOpPGkpUw8+wwzfXnfGmeHgGvWzu3UZDutvyRD4vyfNHmEq3sWezYe97wFvuYTWaVtmGlq6N
- /J0Fwl6
+X-Provags-ID: V03:K0:rckI8Xsv0/E4TqdUxQEYzAk1iGck21Gku+Fg9XN4cn2QgC5PN1c
+ fiiEXQD/jkih6fMG1PqMetWZEksKEIhYgHYJFwFdQo6gxGHTjlX/CKviKFEiv3WKd6ov2jH
+ tB9zcH87RdwdI0ZliwImcrGaouSyx13XfkQP9M57GbWNdXvopVlbcL31/kAJtb/ZRcNy0NL
+ LFIvZpVlpQo9Rfc3SYX8A==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:OydStnSXn40=:qkNIqH4C99JNv5LYwB3QXR
+ uOheiaccgj3lwryV1SdYYD5XIsx3Nv5aboPdQLBv/qT3L5nDNiQwk7IhCsbF00Vlm1ECg1360
+ EGits7IOlwnFlHwFTgQBnxm3pCP1GEuFMqlkAZ8/AUlohDb3qQkcXuB248318XEVc4xzP+zkr
+ zRMqMJId9Q6vLrTMzwsaX4OrpneP0Kl6cK7O3IW2ZOkIlETtOQQuf0LWZm9SG8p61LTCufDru
+ EeZh+JwUC7yOcMZ1P3+Wzr3qa5IS2Xuv7Ex+QGSkhku+YIM7GKZLD/uv/vrdAKudRGQuO0N68
+ QgdAHPvyfuc/P5q1BsGAYidP+l3vQ7Eif1aNvPhBqVOSAAyXAb3HS8OVnr6lMBP/7ckkQs1Qz
+ lLM7FdEKmgeJc3qQ/9XzAmX02qyOwnnU73GseSouW3BfYMBZ2rjjJFla5Bk9ME+cQD3O1zz84
+ mDJGCcd0WmbXryPV8Gw+P31Z8rmPXn34HddbK9cb/la2quzGvV0L6WgDmpRvOPtBZMhyzirc8
+ +GIxADk8lCU8ugXtttvm9mBg+/ZX1s07jLdgHF5uyj9G7kHXOoZIr3SH5H+rd/hKJ1HQ97LNb
+ QTiAtYQnNZGiDXJ50ojBUCcqBZpm+2595bV5qdvNnCT/VH30+S+6QS3SoA9Qt12goqIG27YoH
+ GRM/FriKJ7cs72bhDKG3aexZCIyuiXIPgC1dARHNcn95P1sReb04wOkQAWnbptnT1SE413QBk
+ ikQmH1TS1tnOi3C+FMmXZiBjv8goPUaPA7w9ZKK2Io+4qcQPe7lCHMLmehFiS8YPWxRSBYqd8
+ d1ZB6m0
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When the caller overrides diffopt.file (which defaults to stdout),
-the diff machinery already redirects its output, and the graph display
-should also write to that file.
+The idea is to allow callers to redirect log-tree's output to a file
+without having to freopen() stdout (which would modify global state,
+a big no-no-no for library functions).
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- graph.c | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+I reviewed log-tree.c, graph.c, line-log.c, builtin/shortlog.c and
+builtin/log.c line by line to ensure that all calls that assumed stdout
+previously now use the `file` field instead, of course. I would
+welcome additional eyes to go over the code to confirm that I did not
+miss anything.
 
-diff --git a/graph.c b/graph.c
-index 1350bdd..8ad8ba3 100644
---- a/graph.c
-+++ b/graph.c
-@@ -17,8 +17,8 @@
- static void graph_padding_line(struct git_graph *graph, struct strbuf *sb);
- 
- /*
-- * Print a strbuf to stdout.  If the graph is non-NULL, all lines but the
-- * first will be prefixed with the graph output.
-+ * Print a strbuf.  If the graph is non-NULL, all lines but the first will be
-+ * prefixed with the graph output.
-  *
-  * If the strbuf ends with a newline, the output will end after this
-  * newline.  A new graph line will not be printed after the final newline.
-@@ -1193,9 +1193,10 @@ void graph_show_commit(struct git_graph *graph)
- 
- 	while (!shown_commit_line && !graph_is_commit_finished(graph)) {
- 		shown_commit_line = graph_next_line(graph, &msgbuf);
--		fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
-+		fwrite(msgbuf.buf, sizeof(char), msgbuf.len,
-+			graph->revs->diffopt.file);
- 		if (!shown_commit_line)
--			putchar('\n');
-+			putc('\n', graph->revs->diffopt.file);
- 		strbuf_setlen(&msgbuf, 0);
- 	}
- 
-@@ -1210,7 +1211,7 @@ void graph_show_oneline(struct git_graph *graph)
- 		return;
- 
- 	graph_next_line(graph, &msgbuf);
--	fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
-+	fwrite(msgbuf.buf, sizeof(char), msgbuf.len, graph->revs->diffopt.file);
- 	strbuf_release(&msgbuf);
- }
- 
-@@ -1222,7 +1223,7 @@ void graph_show_padding(struct git_graph *graph)
- 		return;
- 
- 	graph_padding_line(graph, &msgbuf);
--	fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
-+	fwrite(msgbuf.buf, sizeof(char), msgbuf.len, graph->revs->diffopt.file);
- 	strbuf_release(&msgbuf);
- }
- 
-@@ -1239,12 +1240,13 @@ int graph_show_remainder(struct git_graph *graph)
- 
- 	for (;;) {
- 		graph_next_line(graph, &msgbuf);
--		fwrite(msgbuf.buf, sizeof(char), msgbuf.len, stdout);
-+		fwrite(msgbuf.buf, sizeof(char), msgbuf.len,
-+			graph->revs->diffopt.file);
- 		strbuf_setlen(&msgbuf, 0);
- 		shown = 1;
- 
- 		if (!graph_is_commit_finished(graph))
--			putchar('\n');
-+			putc('\n', graph->revs->diffopt.file);
- 		else
- 			break;
- 	}
-@@ -1259,7 +1261,8 @@ static void graph_show_strbuf(struct git_graph *graph, struct strbuf const *sb)
- 	char *p;
- 
- 	if (!graph) {
--		fwrite(sb->buf, sizeof(char), sb->len, stdout);
-+		fwrite(sb->buf, sizeof(char), sb->len,
-+			graph->revs->diffopt.file);
- 		return;
- 	}
- 
-@@ -1277,7 +1280,7 @@ static void graph_show_strbuf(struct git_graph *graph, struct strbuf const *sb)
- 		} else {
- 			len = (sb->buf + sb->len) - p;
- 		}
--		fwrite(p, sizeof(char), len, stdout);
-+		fwrite(p, sizeof(char), len, graph->revs->diffopt.file);
- 		if (next_p && *next_p != '\0')
- 			graph_show_oneline(graph);
- 		p = next_p;
-@@ -1297,7 +1300,8 @@ void graph_show_commit_msg(struct git_graph *graph,
- 		 * CMIT_FMT_USERFORMAT are already missing a terminating
- 		 * newline.  All of the other formats should have it.
- 		 */
--		fwrite(sb->buf, sizeof(char), sb->len, stdout);
-+		fwrite(sb->buf, sizeof(char), sb->len,
-+			graph->revs->diffopt.file);
- 		return;
- 	}
- 
-@@ -1318,7 +1322,7 @@ void graph_show_commit_msg(struct git_graph *graph,
- 		 * new line.
- 		 */
- 		if (!newline_terminated)
--			putchar('\n');
-+			putc('\n', graph->revs->diffopt.file);
- 
- 		graph_show_remainder(graph);
- 
-@@ -1326,6 +1330,6 @@ void graph_show_commit_msg(struct git_graph *graph,
- 		 * If sb ends with a newline, our output should too.
- 		 */
- 		if (newline_terminated)
--			putchar('\n');
-+			putc('\n', graph->revs->diffopt.file);
- 	}
- }
+This patch series ends up removing the freopen() call in the
+format-patch command, but that is only a by-product. The ulterior motive
+behind this series is to allow the sequencer to write a `patch` file as
+part of my endeavor to move large chunks of rebase -i into a builtin.
+
+In contrast to the previous iteration of this patch series,
+
+- the use_color = 0 setting was made contingent on use_color != ALWAYS
+
+- close_file = 1 was made to work in more circumstances, most notably
+  when calling log_commit_tree() (and in builtin/log.c, where this
+  function is called in a loop)
+
+- the changes to builtin/am.c were backed out completely (this is a can
+  of worms I am not prepared to open for now)
+
+- I also taught shortlog to respect the --output=<file> option, because
+  it was so easy to do
+
+- I added a test case to ensure that `log --output=<file>` works
+
+
+Johannes Schindelin (10):
+  Prepare log/log-tree to reuse the diffopt.close_file attribute
+  log-tree: respect diffopt's configured output file stream
+  line-log: respect diffopt's configured output file stream
+  graph: respect the diffopt.file setting
+  shortlog: support outputting to streams other than stdout
+  format-patch: explicitly switch off color when writing to files
+  format-patch: avoid freopen()
+  format-patch: use stdout directly
+  shortlog: respect the --output=<file> setting
+  Ensure that log respects --output=<file>
+
+ builtin/log.c       | 87 +++++++++++++++++++++++++++++------------------------
+ builtin/shortlog.c  | 15 ++++++---
+ graph.c             | 30 ++++++++++--------
+ line-log.c          | 34 ++++++++++-----------
+ log-tree.c          | 69 ++++++++++++++++++++++--------------------
+ shortlog.h          |  1 +
+ t/t4201-shortlog.sh |  6 ++++
+ t/t4211-line-log.sh |  7 +++++
+ 8 files changed, 142 insertions(+), 107 deletions(-)
+
+Published-As: https://github.com/dscho/git/releases/tag/diffopt.file-v4
+Interdiff vs v3:
+
+ diff --git a/builtin/am.c b/builtin/am.c
+ index 47d78aa..3dfe70b 100644
+ --- a/builtin/am.c
+ +++ b/builtin/am.c
+ @@ -1433,16 +1433,12 @@ static void get_commit_info(struct am_state *state, struct commit *commit)
+  /**
+   * Writes `commit` as a patch to the state directory's "patch" file.
+   */
+ -static int write_commit_patch(const struct am_state *state, struct commit *commit)
+ +static void write_commit_patch(const struct am_state *state, struct commit *commit)
+  {
+  	struct rev_info rev_info;
+  	FILE *fp;
+ -	int res;
+  
+ -	fp = fopen(am_path(state, "patch"), "w");
+ -	if (!fp)
+ -		return error(_("Could not open %s for writing"),
+ -			am_path(state, "patch"));
+ +	fp = xfopen(am_path(state, "patch"), "w");
+  	init_revisions(&rev_info, NULL);
+  	rev_info.diff = 1;
+  	rev_info.abbrev = 0;
+ @@ -1454,11 +1450,10 @@ static int write_commit_patch(const struct am_state *state, struct commit *commi
+  	DIFF_OPT_SET(&rev_info.diffopt, FULL_INDEX);
+  	rev_info.diffopt.use_color = 0;
+  	rev_info.diffopt.file = fp;
+ +	rev_info.diffopt.close_file = 1;
+  	add_pending_object(&rev_info, &commit->object, "");
+  	diff_setup_done(&rev_info.diffopt);
+ -	res = log_tree_commit(&rev_info, commit);
+ -	fclose(fp);
+ -	return res;
+ +	log_tree_commit(&rev_info, commit);
+  }
+  
+  /**
+ @@ -1506,14 +1501,13 @@ static int parse_mail_rebase(struct am_state *state, const char *mail)
+  	unsigned char commit_sha1[GIT_SHA1_RAWSZ];
+  
+  	if (get_mail_commit_sha1(commit_sha1, mail) < 0)
+ -		return error(_("could not parse %s"), mail);
+ +		die(_("could not parse %s"), mail);
+  
+  	commit = lookup_commit_or_die(commit_sha1, mail);
+  
+  	get_commit_info(state, commit);
+  
+ -	if (write_commit_patch(state, commit) < 0)
+ -		return -1;
+ +	write_commit_patch(state, commit);
+  
+  	hashcpy(state->orig_commit, commit_sha1);
+  	write_state_text(state, "original-commit", sha1_to_hex(commit_sha1));
+ diff --git a/builtin/log.c b/builtin/log.c
+ index 2bfcc43..2a42216 100644
+ --- a/builtin/log.c
+ +++ b/builtin/log.c
+ @@ -243,9 +243,10 @@ static struct itimerval early_output_timer;
+  
+  static void log_show_early(struct rev_info *revs, struct commit_list *list)
+  {
+ -	int i = revs->early_output;
+ +	int i = revs->early_output, close_file = revs->diffopt.close_file;
+  	int show_header = 1;
+  
+ +	revs->diffopt.close_file = 0;
+  	sort_in_topological_order(&list, revs->sort_order);
+  	while (list && i) {
+  		struct commit *commit = list->item;
+ @@ -262,14 +263,19 @@ static void log_show_early(struct rev_info *revs, struct commit_list *list)
+  		case commit_ignore:
+  			break;
+  		case commit_error:
+ +			if (close_file)
+ +				fclose(revs->diffopt.file);
+  			return;
+  		}
+  		list = list->next;
+  	}
+  
+  	/* Did we already get enough commits for the early output? */
+ -	if (!i)
+ +	if (!i) {
+ +		if (close_file)
+ +			fclose(revs->diffopt.file);
+  		return;
+ +	}
+  
+  	/*
+  	 * ..if no, then repeat it twice a second until we
+ @@ -331,7 +337,7 @@ static int cmd_log_walk(struct rev_info *rev)
+  {
+  	struct commit *commit;
+  	int saved_nrl = 0;
+ -	int saved_dcctc = 0;
+ +	int saved_dcctc = 0, close_file = rev->diffopt.close_file;
+  
+  	if (rev->early_output)
+  		setup_early_output(rev);
+ @@ -347,6 +353,7 @@ static int cmd_log_walk(struct rev_info *rev)
+  	 * and HAS_CHANGES being accumulated in rev->diffopt, so be careful to
+  	 * retain that state information if replacing rev->diffopt in this loop
+  	 */
+ +	rev->diffopt.close_file = 0;
+  	while ((commit = get_revision(rev)) != NULL) {
+  		if (!log_tree_commit(rev, commit) && rev->max_count >= 0)
+  			/*
+ @@ -367,6 +374,8 @@ static int cmd_log_walk(struct rev_info *rev)
+  	}
+  	rev->diffopt.degraded_cc_to_c = saved_dcctc;
+  	rev->diffopt.needed_rename_limit = saved_nrl;
+ +	if (close_file)
+ +		fclose(rev->diffopt.file);
+  
+  	if (rev->diffopt.output_format & DIFF_FORMAT_CHECKDIFF &&
+  	    DIFF_OPT_TST(&rev->diffopt, CHECK_FAILED)) {
+ @@ -1570,7 +1579,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+  		setup_pager();
+  
+  	if (output_directory) {
+ -		rev.diffopt.use_color = 0;
+ +		if (rev.diffopt.use_color != GIT_COLOR_ALWAYS)
+ +			rev.diffopt.use_color = 0;
+  		if (use_stdout)
+  			die(_("standard output, or directory, which one?"));
+  		if (mkdir(output_directory, 0777) < 0 && errno != EEXIST)
+ diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+ index 39d74fe..be80547 100644
+ --- a/builtin/shortlog.c
+ +++ b/builtin/shortlog.c
+ @@ -229,7 +229,6 @@ void shortlog_init(struct shortlog *log)
+  	log->wrap = DEFAULT_WRAPLEN;
+  	log->in1 = DEFAULT_INDENT1;
+  	log->in2 = DEFAULT_INDENT2;
+ -	log->file = stdout;
+  }
+  
+  int cmd_shortlog(int argc, const char **argv, const char *prefix)
+ @@ -277,6 +276,7 @@ parse_done:
+  
+  	log.user_format = rev.commit_format == CMIT_FMT_USERFORMAT;
+  	log.abbrev = rev.abbrev;
+ +	log.file = rev.diffopt.file;
+  
+  	/* assume HEAD if from a tty */
+  	if (!nongit && !rev.pending.nr && isatty(0))
+ @@ -290,6 +290,8 @@ parse_done:
+  		get_from_rev(&rev, &log);
+  
+  	shortlog_output(&log);
+ +	if (log.file != stdout)
+ +		fclose(log.file);
+  	return 0;
+  }
+  
+ diff --git a/log-tree.c b/log-tree.c
+ index 530297d..cf24027 100644
+ --- a/log-tree.c
+ +++ b/log-tree.c
+ @@ -862,14 +862,12 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+  int log_tree_commit(struct rev_info *opt, struct commit *commit)
+  {
+  	struct log_info log;
+ -	int shown;
+ -
+ -	if (opt->diffopt.close_file)
+ -		die("BUG: close_file is incompatible with log_tree_commit()");
+ +	int shown, close_file = opt->diffopt.close_file;
+  
+  	log.commit = commit;
+  	log.parent = NULL;
+  	opt->loginfo = &log;
+ +	opt->diffopt.close_file = 0;
+  
+  	if (opt->line_level_traverse)
+  		return line_log_print(opt, commit);
+ @@ -886,5 +884,7 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
+  		fprintf(opt->diffopt.file, "\n%s\n", opt->break_bar);
+  	opt->loginfo = NULL;
+  	maybe_flush_or_die(opt->diffopt.file, "stdout");
+ +	if (close_file)
+ +		fclose(opt->diffopt.file);
+  	return shown;
+  }
+ diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+ index a977365..bd699e1 100755
+ --- a/t/t4201-shortlog.sh
+ +++ b/t/t4201-shortlog.sh
+ @@ -184,4 +184,10 @@ test_expect_success 'shortlog with revision pseudo options' '
+  	git shortlog --exclude=refs/heads/m* --all
+  '
+  
+ +test_expect_success 'shortlog with --output=<file>' '
+ +	git shortlog --output=shortlog master >output &&
+ +	test ! -s output &&
+ +	test_line_count = 7 shortlog
+ +'
+ +
+  test_done
+ diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+ index 4451127..9d87777 100755
+ --- a/t/t4211-line-log.sh
+ +++ b/t/t4211-line-log.sh
+ @@ -99,4 +99,11 @@ test_expect_success '-L with --first-parent and a merge' '
+  	git log --first-parent -L 1,1:b.c
+  '
+  
+ +test_expect_success '-L with --output' '
+ +	git checkout parallel-change &&
+ +	git log --output=log -L :main:b.c >output &&
+ +	test ! -s output &&
+ +	test_line_count = 70 log
+ +'
+ +
+  test_done
+
 -- 
 2.9.0.118.g0e1a633
 
-
+base-commit: ab7797dbe95fff38d9265869ea367020046db118
