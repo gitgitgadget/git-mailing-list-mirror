@@ -1,78 +1,79 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC02C20189
-	for <e@80x24.org>; Wed, 22 Jun 2016 18:37:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5428F20189
+	for <e@80x24.org>; Wed, 22 Jun 2016 18:38:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751726AbcFVShJ (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 14:37:09 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:36243 "EHLO
-	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498AbcFVShI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 14:37:08 -0400
-Received: by mail-yw0-f195.google.com with SMTP id f75so7465340ywb.3
-        for <git@vger.kernel.org>; Wed, 22 Jun 2016 11:37:07 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=Pwkuq8o3vpcbfhJIdalFhUK3nbyt2ibxAdDs1DbTY2o=;
-        b=t0cCDiNjElTof4HvkNHwFY6xubukqCne17RMvCzl462YPKp7CgirL+FRMoNkFZ4kiL
-         5O1gCWfJ4Cx06sI+X8xNrpC5VnLg7DV19kLJnOwz4nMd0fbWo+sJ11SwDsn4fbCragzH
-         U3FaSWCLkXFcxcIur4lZxJ25vyMQmYsuVPxaHtgJdReHv0PwObtd64399oFYO/XA7Gyd
-         C1NSFVxr8FQPS8d7Vgn0Nqe9Wb/+/eLaXDVK82TH8sE3HMlhmqJ69sGkbejqbxO48BQ3
-         7OUK1FRopi4XmSvfn3YiqXB97wOX+I6lEY/bidN3COe4Lr6hX+GVC7knVMv04dwj5Bbb
-         StLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=Pwkuq8o3vpcbfhJIdalFhUK3nbyt2ibxAdDs1DbTY2o=;
-        b=Od85xvDOyOwIOoKENdbJaxfakmh7zvkWbajSkadjlDp3NdeXDezy5gON9bqWe2OirJ
-         srHQDNmRMv9f9lmZt0efV0b9K/1LQFj1ZdVeIqqDWXt3xERPrJfmVmJ/keE2WdGCxM+t
-         mVNaSTcYVKouY32OQVpAPSatdC8BlmLX8zH7a4obZPC1pPRnjfqj7WV2u3Rm7l3Y88k6
-         qPknG2Ax0SKynX66X79S6CWfa2rD3IN+rMdzQnuksjH7pfTI52DhV1Q45fInfseyWcBp
-         Evmyy8DenhjJUyBkoz1YG2TYmNnN/7BM4EN/LOUVtiG1bQiaXpvUVG2hyTVwD0lDh9Hi
-         BRYw==
-X-Gm-Message-State: ALyK8tIxpH9DCWToTMWMIj1Sb+uLU9/+Ltoc8CDE1oW5A9XkCtbFqhrP1fMAE0ETcN1c1GbU5C0LXK/lOiiqdA==
-X-Received: by 10.37.114.9 with SMTP id n9mr16307572ybc.80.1466620626252; Wed,
- 22 Jun 2016 11:37:06 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.13.251.71 with HTTP; Wed, 22 Jun 2016 11:36:46 -0700 (PDT)
-In-Reply-To: <CACsJy8BQxAkpoT7GVNgtM-0n1pMZeV5TRCiSn6TsYeATWeU=EA@mail.gmail.com>
-References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
- <1454724190-14063-1-git-send-email-pclouds@gmail.com> <xmqq4m8rz9qr.fsf@gitster.mtv.corp.google.com>
- <CACsJy8CSVvZfwjG+zAEpG6tAWYAWVkrkz4RP32Hrr9O1A_8ZMg@mail.gmail.com> <CACsJy8BQxAkpoT7GVNgtM-0n1pMZeV5TRCiSn6TsYeATWeU=EA@mail.gmail.com>
+	id S1751674AbcFVSiZ (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 14:38:25 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50072 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750957AbcFVSiY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 14:38:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E494265E1;
+	Wed, 22 Jun 2016 14:38:18 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=x436DWjwvrhLfTpqbmE0Ildzwbo=; b=NBBP0b
+	BhOMPCQ2t6lx0Y1SFuuUwsj8hQMi6jJVeQGLLLfjHZytwmzSaLapx0s+1ipDp1PQ
+	NkbeIKto4aZSWlFjRYF02OCCAklBm6ViqM/spDNxSqQiW757YTGF7MGW2M+G5NBJ
+	BcmgpTjYfineTJNZdi2Ji3Eecubf8VrXpM6I4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=L7quEfvNBzhhvPH65D9ZojBROi6WDa7C
+	eajWbmiY0iWniaIK2ihrgD5+0q8Qdxb+pgWu6x7NsrQXnVLHF4wja6GbTsU2DBN/
+	KFVSlJi/Jq/mhOSxmRYC4oPufS/4jgC/bGwEAcpFfBSuowF8A9CV+tQAduWMvZ8/
+	cR0byUNlupQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5728D265E0;
+	Wed, 22 Jun 2016 14:38:18 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D6BCF265DF;
+	Wed, 22 Jun 2016 14:38:17 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-Date:	Wed, 22 Jun 2016 11:36:46 -0700
-X-Google-Sender-Auth: utxn5mDGu9SJ6GIum8_naOxm_vs
-Message-ID: <CAPc5daWEoK4Gp138VPstqwCAX+2K=_gSW98brHjmJYNWK4dkZw@mail.gmail.com>
-Subject: Re: [PATCH v6 00/11] Fix icase grep on non-ascii
-To:	Duy Nguyen <pclouds@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset=UTF-8
+To:	Andrew Oakley <aoakley@roku.com>
+Cc:	<git@vger.kernel.org>, <larsxschneider@gmail.com>,
+	<luke@diamand.org>
+Subject: Re: [PATCH 1/1] git-p4: correct hasBranchPrefix verbose output
+References: <xmqqbn2uqufj.fsf@gitster.mtv.corp.google.com>
+	<1466587571-18532-1-git-send-email-aoakley@roku.com>
+Date:	Wed, 22 Jun 2016 11:38:15 -0700
+In-Reply-To: <1466587571-18532-1-git-send-email-aoakley@roku.com> (Andrew
+	Oakley's message of "Wed, 22 Jun 2016 10:26:11 +0100")
+Message-ID: <xmqqd1n9m5m0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7CAF504C-38A8-11E6-8609-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jun 22, 2016 at 11:29 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->
-> Can any shell wizards explain this to me? With this code
->
-> BS=\\
-> echo ${BS}${BS}
->
-> Debian's dash returns a single backslash while bash returns two
-> backslashes. Section 2.2.1 [1] does not say anything about one
-> backslash (hidden behind a variable!) after escaping the following one
-> and still eats the one after that..
->
-> [1] http://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html
+Andrew Oakley <aoakley@roku.com> writes:
 
-I am not a wizard, but is the difference between the shell syntax, or just their
-implementation of builtin-echo?  IOW, how do these three compare?
+> The logic here was inverted, you got a message saying the file is
+> ignored for each file that is not ignored.
+>
+> Signed-off-by: Andrew Oakley <aoakley@roku.com>
+> ---
 
-printf "%s\n" "${BS}${BS}"
-echo "${BS}${BS}"
-echo ${BS}$BS}
+Thanks.
+
+>  git-p4.py | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index b6593cf..b123aa2 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -2674,7 +2674,7 @@ class P4Sync(Command, P4UserMap):
+>              return True
+>          hasPrefix = [p for p in self.branchPrefixes
+>                          if p4PathStartsWith(path, p)]
+> -        if hasPrefix and self.verbose:
+> +        if not hasPrefix and self.verbose:
+>              print('Ignoring file outside of prefix: {0}'.format(path))
+>          return hasPrefix
