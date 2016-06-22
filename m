@@ -1,138 +1,121 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 128BA1FF40
-	for <e@80x24.org>; Wed, 22 Jun 2016 01:13:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9460C1FF40
+	for <e@80x24.org>; Wed, 22 Jun 2016 03:39:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751710AbcFVBNN (ORCPT <rfc822;e@80x24.org>);
-	Tue, 21 Jun 2016 21:13:13 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:33625 "EHLO
-	mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751485AbcFVBNM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jun 2016 21:13:12 -0400
-Received: by mail-it0-f68.google.com with SMTP id y93so3815294ita.0
-        for <git@vger.kernel.org>; Tue, 21 Jun 2016 18:13:11 -0700 (PDT)
+	id S1752070AbcFVDjn (ORCPT <rfc822;e@80x24.org>);
+	Tue, 21 Jun 2016 23:39:43 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:34007 "EHLO
+	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751768AbcFVDjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2016 23:39:42 -0400
+Received: by mail-pf0-f194.google.com with SMTP id 66so2823051pfy.1
+        for <git@vger.kernel.org>; Tue, 21 Jun 2016 20:39:42 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=hhzkCYHELeXyku+psl1/0Zk1Zo+dBcBLiqhu6QIGuX0=;
-        b=c9qJ4/32EfwO8hz0npPh8LTRZDiP+NBR5rtaPoDwc//d7V+NKwQb6Wx5t7OIPOVf+2
-         pUohZy/VIvzYE/HqgKc0B/2MXEMORQmis6dR4mc5mJT1PC36hadSPjALXRFPvpAwCCvx
-         AYQ7Ulb4Ipu1NbYDaGg02K9BnMwAnJjOjwVtNc9msM32b/J+H72dpp625kQiqMyBxTxz
-         WdhyvLVC+ByZfCi+uGQEjld6jxjoJ9iT7k0GL2hPnAkDCXrCFTDWoOGhyJQUrRgHPr10
-         qktPJUskdPiGcARK1hSdxqRc9h4QeYDXWojCEcL0XtdhxzSdflMpokgT3U9Iz1IIu2Vi
-         ksGw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=YrW8M2RVjG1j4EM2iKFMnvSg71QImnPFtDnifiE2TmE=;
+        b=NUL2/6hm0wRe44Vz3WNMMSsy+j1sWXNB67CnD1A71A0xL9JgYiLlWr6ZBKM2Qov5aT
+         K8h4ZxHZUBZUjK6NIWJhHZNCq+KxLKjZ6tR32AW7ICta+rBRjvr1bDjKGnIJgHjVIX2M
+         6ArWewIUUZGkJetoabCxUnO2EeBdULjyBtwsF2RjfE1+Le5kENn6cKc3K/DsfPdwSMzL
+         97mS6ArZf8vIy3veAfeQOfyX0ugHmSwjjrN9FOFC8LPNipFoqkFoDpDSpoRTGCnv/Sjg
+         cPLjXq3G8Zb+Xlozcn4AE/ZBVzf/l8Jzn8cf3bUbht3WKSfB1HdpWvpf7QwgkZBflY4s
+         uOrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=hhzkCYHELeXyku+psl1/0Zk1Zo+dBcBLiqhu6QIGuX0=;
-        b=ZxQZwTTL8oeEuP0rQGjNUgoLKC6D1lxKb95UC11YZjtTL434JDBAPdm3lPNnYVGHJA
-         W7XjPj2faguEzwltJnPQMDToS/zSQhYanUz0hFBdg/pETV7KVlt0GEcoBGtYVIwXlGRh
-         6QFrHHPVFqQVpANeKfrEhwWHSZU5X56+McoL642uVUOOUo99TFvTkfFjH+U5VUBgPXlK
-         u8rLbWoOv6oWGjw+3aM8zYhuZksouh+emz6Y/eMYu4zObGFJm/a1i1gRvFbv34emozaS
-         Rb49XecqY5/wzMWnlsV+qsaIBa4HWlycg8DStmRrPlb+GTkt9QQM7Z6NZbskoaiBDYT6
-         WeOw==
-X-Gm-Message-State: ALyK8tLvcB+35tOlolblKjulHe/G3Rm8VpKU2NjaK0aGXWnsm4ql/Zr0mYzHe0tnTM6KhzMltY4c6wHDBOxeoQ==
-X-Received: by 10.36.55.138 with SMTP id r132mr10563337itr.73.1466557990869;
- Tue, 21 Jun 2016 18:13:10 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=YrW8M2RVjG1j4EM2iKFMnvSg71QImnPFtDnifiE2TmE=;
+        b=Os9+pofzAyk+hR8KsVOmdoJntaNxsrscw5BrbZTF9QPEK1OYYOI9Tox66T8UcxWZbe
+         RR8zTn7QQaRhSGEya09gnv3oVgQE5kMhP7guF7XsQJGiGb7QDeTm3aeWVKLvpHygYFHs
+         eWnsKjrASFaQ1AyKHSiZleJSR2JF4MfKubk750AX8lL+0Y4FEUKP7coiTC5RXnA2yBxg
+         4XpnGPQqR/pg98cxJiyXOeb4uoq8Kwi+81FxviqKMKyqry5FUTVZmWqD+6TlxiXVT87o
+         Gr+ax4tcdcnW5RPwGKa5zXM615u6fr0RKc5CPE4p2AYOxgGGhuDVB/e65O1ZMQjJ4Jj8
+         Z9lQ==
+X-Gm-Message-State: ALyK8tJZVeRtj/nGei0oZ66T/qZUzHH4B9LhZJm7GaXTg5bvOcqS4hx3u+yo2wKwCf6Hlg==
+X-Received: by 10.98.68.84 with SMTP id r81mr32111058pfa.26.1466563345603;
+        Tue, 21 Jun 2016 19:42:25 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:283a:27bd:7d15:7c1c])
+        by smtp.gmail.com with ESMTPSA id 4sm36392702pfi.24.2016.06.21.19.42.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 21 Jun 2016 19:42:24 -0700 (PDT)
+Date:	Tue, 21 Jun 2016 19:41:52 -0700
+From:	Jonathan Nieder <jrnieder@gmail.com>
+To:	Andrea Stacchiotti <andreastacchiotti@gmail.com>
+Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] doc: git-htmldocs.googlecode.com is no more
+Message-ID: <20160622024151.GA20206@google.com>
+References: <146652690896.29270.13813898006180324611.reportbug@duelitri>
 MIME-Version: 1.0
-Received: by 10.79.0.30 with HTTP; Tue, 21 Jun 2016 18:13:10 -0700 (PDT)
-In-Reply-To: <20160621211412.28752-2-charles@hashpling.org>
-References: <20160621211412.28752-1-charles@hashpling.org> <20160621211412.28752-2-charles@hashpling.org>
-From:	Eric Sunshine <sunshine@sunshineco.com>
-Date:	Tue, 21 Jun 2016 21:13:10 -0400
-X-Google-Sender-Auth: OHjnVNnRRs9HE5kh0BTtMM6-uvA
-Message-ID: <CAPig+cQ4CxRo460dcTJJtV_dPH8i5HC76_gpTv8attEZ8sdMZw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] grep: fix grepping for "intent to add" files
-To:	Charles Bailey <charles@hashpling.org>
-Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <146652690896.29270.13813898006180324611.reportbug@duelitri>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jun 21, 2016 at 5:14 PM, Charles Bailey <charles@hashpling.org> wrote:
-> From: Charles Bailey <cbailey32@bloomberg.net>
->
-> This reverts commit 4d552005323034c1d6311796ac1074e9a4b4b57e and adds an
-> alternative fix to maintain the -L --cached behavior.
+http://git-htmldocs.googlecode.com/git/git.html says
 
-It is common to provide some context along with the (shortened) commit
-ID. For instance:
+ There was no service found for the uri requested.
 
-    This reverts 4d55200 (grep: make it clear i-t-a entries are
-    ignored, 2015-12-27) and adds ...
+Link to the HTML documentation on repo.or.cz instead.
 
-> 4d5520053 caused 'git grep' to no longer find matches in new files in
-> the working tree where the corresponding index entry had the "intent to
-> add" bit set, despite the fact that these files are tracked.
-> [...]
-> Helped-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
-> ---
->
-> Is "Helped-by" an appropriate attribution in this case?
+I'd rather use an up-to-date https link for the rendered
+documentation, but I wasn't able to find one.  According to the 'todo'
+branch, prebuilt documentation is pushed to
 
-Very much so.
+ 1. https://kernel.googlesource.com/pub/scm/git/git-htmldocs
+ 2. git://repo.or.cz/git-htmldocs
+ 3. somewhere on git.sourceforge.jp and git.sourceforge.net?
+ 4. https://github.com/gitster/git-htmldocs
+ 5. https://github.com/git/htmldocs
 
-> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-> @@ -1364,4 +1364,42 @@ test_expect_success 'grep --color -e A --and -e B -p with context' '
-> +test_expect_success 'grep can find things only in the work tree' '
-> +       touch work-tree-only &&
+Of these, (1) and (4) don't provide a raw view with content-type
+text/html.  (5) might be available as HTML through Jekyll, but I
+wasn't able to find it --- e.g., https://git.github.io/htmldocs does
+not show those pages.  I wasn't able to find (3) at all.  That leaves
+(2).
 
-Avoid 'touch' if the timestamp of the file has no significance. Use '>' instead:
+Reported-by: Andrea Stacchiotti <andreastacchiotti@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Hi Andrea,
 
-    >work-tree-only &&
+Andrea Stacchiotti wrote[1]:
 
-> +       git add work-tree-only &&
-> +       echo "find in work tree" >work-tree-only &&
-> +       git grep --quiet "find in work tree" &&
-> +       test_must_fail git grep --quiet --cached "find in work tree" &&
-> +       test_must_fail git grep --quiet "find in work tree" HEAD &&
-> +       git rm -f work-tree-only
+> In the git manual (`man git`), the documentation link:
+> > http://git-htmldocs.googlecode.com/git/git.html
+> is broken.
 
-If any statement before this cleanup code fails, then the cleanup will
-never take place (due to the &&-chain). To ensure cleanup regardless
-of test outcome, instead use test_when_finished() at the beginning of
-the test:
+Thanks for reporting.  How about this patch?
 
-    test_when_finished "git rm -f work-tree-only" &&
+Thanks,
+Jonathan
 
-Same applies to other added tests.
+[1] http://bugs.debian.org/827844
 
-> +'
-> +
-> +test_expect_success 'grep can find things only in the work tree (i-t-a)' '
-> +       echo "intend to add this" >intend-to-add &&
-> +       git add -N intend-to-add &&
-> +       git grep --quiet "intend to add this" &&
-> +       test_must_fail git grep --quiet --cached "intend to add this" &&
-> +       test_must_fail git grep --quiet "intend to add this" HEAD &&
-> +       git rm -f intend-to-add
-> +'
-> +
-> +test_expect_success 'grep can find things only in the index' '
-> +       echo "only in the index" >cache-this &&
-> +       git add cache-this &&
-> +       rm cache-this &&
-> +       test_must_fail git grep --quiet "only in the index" &&
-> +       git grep --quiet --cached "only in the index" &&
-> +       test_must_fail git grep --quiet "only in the index" HEAD &&
-> +       git rm --cached cache-this
-> +'
-> +
-> +test_expect_success 'grep does not report i-t-a with -L --cached' '
-> +       echo "intend to add this" >intend-to-add &&
-> +       git add -N intend-to-add &&
-> +       git ls-files | grep -v "^intend-to-add\$" >expected &&
-> +       git grep -L --cached "nonexistent_string" >actual &&
-> +       test_cmp expected actual &&
-> +       git rm -f intend-to-add
-> +'
-> +
->  test_done
+-- >8 --
+Subject: doc: git-htmldocs.googlecode.com is no more
+
+ Documentation/git.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 5490d3c..de923db 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -31,8 +31,8 @@ page to learn what commands Git offers.  You can learn more about
+ individual Git commands with "git help command".  linkgit:gitcli[7]
+ manual page gives you an overview of the command-line command syntax.
+ 
+-Formatted and hyperlinked version of the latest Git documentation
+-can be viewed at `http://git-htmldocs.googlecode.com/git/git.html`.
++A formatted and hyperlinked copy of the latest Git documentation
++can be viewed at `http://repo.or.cz/git-htmldocs.git/blob_plain/:/git.html`.
+ 
+ ifdef::stalenotes[]
+ [NOTE]
+-- 
