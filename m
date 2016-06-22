@@ -1,91 +1,82 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1063420189
-	for <e@80x24.org>; Wed, 22 Jun 2016 15:34:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1A6320189
+	for <e@80x24.org>; Wed, 22 Jun 2016 15:49:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752466AbcFVPel (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 11:34:41 -0400
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:33627 "EHLO
-	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751601AbcFVPeh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 11:34:37 -0400
-Received: by mail-lf0-f51.google.com with SMTP id f6so76616229lfg.0
-        for <git@vger.kernel.org>; Wed, 22 Jun 2016 08:33:18 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Qdv+aFAG4ZkTSPXQe/Y2CwqFsr/7AebTPDZjO3hggCI=;
-        b=AvG9DuOiUtr6naRJUXzJjbE8GdrN8PvoQ44vtY4QglVa2LLpRgPqgcsY2Kgr+3OZat
-         F1WVJ4it6MciTXPIcrmZ9H04pVY0xJldgugyqrsJKxR7j9WC/kLql4QZFuZfgoacXzN3
-         ndhNV5thosPdU+eJGwpWdsha92kAJy1pq/9OvBsgnT5vU9BDQFtaNp9c5wxzwbA/85c/
-         r0mQzeU9mWybjek9Bqws4m67p1OwtzRMn6/OUXrINtoU73Ep5vDpkK4ctK57m4Zy+HNg
-         HX66iNawlWbIi3J63kHIP88Yzxb8HnkTZ2hKjNcFoxuTJ3pVU+KyMmMrzypNRBChwaj9
-         dIGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Qdv+aFAG4ZkTSPXQe/Y2CwqFsr/7AebTPDZjO3hggCI=;
-        b=EXZRZCvwGcMlat/VaGCQTvoSdJwZbvT41gCHxZx57hx+DzJKZ3ZrJRvXS6Mo792qLK
-         CQ2zafgLD3+1N/tEm8/WUqGoGVmRJKLKPZsmtIBlbsjYnZii3Uq6VCr6rR08HO3hENnH
-         gFiCuYCJjOCEBhmFjkTuy6/275QFl+JUiYgb8AObFBPiPt4AmdXi3iEknq5fPWDFD2MT
-         eF7VKKRcOBWhsg3ajgyf0tDMWrbspaJea2Jm4CQJ1DpI7nKQStD+NuEtpmw8Dd9JYtVR
-         mi5sKn06AYg0/pWGCbvj0RwacmKrW6Snr1N9kNOYNfEUZtj2NARwwnEzwIQLIoTJF1Wi
-         KO9A==
-X-Gm-Message-State: ALyK8tLBQbTM+S//qfepI85RBaviMBOitY82bbBrNGakUQzzyUfEoUyUtKMQEWtfCwXe7A==
-X-Received: by 10.25.83.80 with SMTP id h77mr6358057lfb.83.1466609244166;
-        Wed, 22 Jun 2016 08:27:24 -0700 (PDT)
-Received: from debian (c83-249-17-125.bredband.comhem.se. [83.249.17.125])
-        by smtp.gmail.com with ESMTPSA id bd7sm89696lbc.27.2016.06.22.08.27.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Jun 2016 08:27:22 -0700 (PDT)
-Received: from iveqy by debian with local (Exim 4.84)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1bFk81-00040Y-R3; Wed, 22 Jun 2016 17:31:45 +0200
-Date:	Wed, 22 Jun 2016 17:31:45 +0200
-From:	Fredrik Gustafsson <iveqy@iveqy.com>
-To:	Istvan Zakar <istvan.zakar@gmail.com>
-Cc:	git@vger.kernel.org
-Subject: Re: Problem with --shallow-submodules option
-Message-ID: <20160622153145.GB16644@paksenarrion.iveqy.com>
-References: <loom.20160620T145755-931@post.gmane.org>
+	id S1752657AbcFVPtQ (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 11:49:16 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55075 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752151AbcFVPtN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 11:49:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 63D52232EA;
+	Wed, 22 Jun 2016 11:49:12 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=90rMh7Ib4aGzHOj64+j2erBeqUc=; b=h7189O
+	Gg9XEpCJ/9jYT3lR1IMFIoBe1EoW4E0KDOYE1pKM2+VN6GTmjXFi1DEddacWfQUy
+	f9ZU8KI9F81yESwfXqIteFzw21a/YIuajj4RusacbT/4bqtbmzoyuYxB9FB8MtNJ
+	CMFJfS7KCp/bb65k/qQe1XMYhg+7YAyvuSg3k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vltBRdoFezvXn46gB1aTBsWaOAHJ0gFM
+	NU7XYyJa0C9DcXyAXxoA7FOK0gdxxmeJsYxN9ev6rb6C5VwZofmklhWVGIPf21BD
+	Eo3MQif1aFl4v3EBM74JXj/UEjik8a6k4EH1qQtS1N8CESTmwzcMVbAc4eGYhV1B
+	wuaeXTbUkv8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5AD49232E9;
+	Wed, 22 Jun 2016 11:49:12 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D3B3C232E7;
+	Wed, 22 Jun 2016 11:49:11 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
+References: <cover.1466244194.git.johannes.schindelin@gmx.de>
+	<de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de>
+	<CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com>
+	<alpine.DEB.2.20.1606200814510.22630@virtualbox>
+	<xmqq4m8nvodo.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1606210906190.22630@virtualbox>
+	<xmqqvb12qyeu.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1606220849480.10382@virtualbox>
+Date:	Wed, 22 Jun 2016 08:49:09 -0700
+In-Reply-To: <alpine.DEB.2.20.1606220849480.10382@virtualbox> (Johannes
+	Schindelin's message of "Wed, 22 Jun 2016 09:24:07 +0200 (CEST)")
+Message-ID: <xmqqeg7pns0a.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <loom.20160620T145755-931@post.gmane.org>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Content-Type: text/plain
+X-Pobox-Relay-ID: DD30948E-3890-11E6-AB1E-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 20, 2016 at 01:06:39PM +0000, Istvan Zakar wrote:
-> I'm working on a relatively big project with many submodules. During 
-> cloning for testing I tried to decrease the amount of data need to be 
-> fetched from the server by using --shallow-submodules option in the clone 
-> command. It seems to check out the tip of the remote repo, and if it's not 
-> the commit registered in the superproject the submodule update fails 
-> (obviously). Can I somehow tell to fetch that exact commit I need for my 
-> superproject?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Maybe. http://stackoverflow.com/questions/2144406/git-shallow-submodules
-gives a good overview of this problem.
+> But there's a rub... If you specify --color *explicitly*, use_color is set
+> to GIT_COLOR_ALWAYS and the file indeed contains ANSI sequences (i.e. my
+> analysis above left out the command-line part).
 
-git fetches a branch and is shallow from that branch, which might be an
-other sha1 than the one the submodule points to, (as you say). This
-is/was one of the drawbacks with this method. However the since git 2.8,
-git will try to fetch the sha1 direct (and not the branch). So then it
-will work, if(!), the server supports direct access to sha1. This was
-previously not allowed due to security concerns (if I recall correctly).
+Heh, the command-line is the _ONLY_ thing I raised, as we knew
+ui.color is not an issue in this codepath, in $gmane/297757.
 
-So the answer is, yes this will work if you've a recent version of git
-and support on the server side for doing this. Unfortunately I'm not
-sure which git version is needed on the server side for this to work.
+Going back to that and reading again, I suggested to check with
+GIT_COLOR_AUTO (i.e. if it is left to "auto", disable it) because I
+think the former is a much more future-proof way (imagine that we
+may add --color=<some new setting> in the future) than checking with
+GIT_COLOR_ALWAYS (i.e. if it is not explicitly set to "always",
+disable it).
 
--- 
-Fredrik Gustafsson
+> In short, I think you're right, I have to guard the assignment, with the
+> minor adjustment to test use_color != GIT_COLOR_ALWAYS.
 
-phone: +46 733-608274
-e-mail: iveqy@iveqy.com
-website: http://www.iveqy.com
+So I am not sure if you said "use_color != GIT_COLOR_ALWAYS" only to
+be different from what I suggested (you seem to have a tendency to
+do so whenever you can), or there was some other reason.
