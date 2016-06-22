@@ -1,82 +1,77 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1A6320189
-	for <e@80x24.org>; Wed, 22 Jun 2016 15:49:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D60B20189
+	for <e@80x24.org>; Wed, 22 Jun 2016 16:02:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752657AbcFVPtQ (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 11:49:16 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55075 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752151AbcFVPtN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 11:49:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 63D52232EA;
-	Wed, 22 Jun 2016 11:49:12 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=90rMh7Ib4aGzHOj64+j2erBeqUc=; b=h7189O
-	Gg9XEpCJ/9jYT3lR1IMFIoBe1EoW4E0KDOYE1pKM2+VN6GTmjXFi1DEddacWfQUy
-	f9ZU8KI9F81yESwfXqIteFzw21a/YIuajj4RusacbT/4bqtbmzoyuYxB9FB8MtNJ
-	CMFJfS7KCp/bb65k/qQe1XMYhg+7YAyvuSg3k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vltBRdoFezvXn46gB1aTBsWaOAHJ0gFM
-	NU7XYyJa0C9DcXyAXxoA7FOK0gdxxmeJsYxN9ev6rb6C5VwZofmklhWVGIPf21BD
-	Eo3MQif1aFl4v3EBM74JXj/UEjik8a6k4EH1qQtS1N8CESTmwzcMVbAc4eGYhV1B
-	wuaeXTbUkv8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5AD49232E9;
-	Wed, 22 Jun 2016 11:49:12 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D3B3C232E7;
-	Wed, 22 Jun 2016 11:49:11 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
-References: <cover.1466244194.git.johannes.schindelin@gmx.de>
-	<de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de>
-	<CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com>
-	<alpine.DEB.2.20.1606200814510.22630@virtualbox>
-	<xmqq4m8nvodo.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1606210906190.22630@virtualbox>
-	<xmqqvb12qyeu.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1606220849480.10382@virtualbox>
-Date:	Wed, 22 Jun 2016 08:49:09 -0700
-In-Reply-To: <alpine.DEB.2.20.1606220849480.10382@virtualbox> (Johannes
-	Schindelin's message of "Wed, 22 Jun 2016 09:24:07 +0200 (CEST)")
-Message-ID: <xmqqeg7pns0a.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752553AbcFVQCQ (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 12:02:16 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:33369 "EHLO
+	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751726AbcFVQCP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 12:02:15 -0400
+Received: by mail-io0-f195.google.com with SMTP id t74so7106800ioi.0
+        for <git@vger.kernel.org>; Wed, 22 Jun 2016 09:02:14 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8hNDgWY/Vq/yqDyQa75KFYJk2Ppr+jstE6XoVknS4iI=;
+        b=MTPVB3+4Ngs9KDtx/a/PAnelzxlZ8EkyQ1sSpx/0h1K0A6JIe1iHHqABUgHJbA4QFt
+         BvHUsCz/EfKxMHgwA+6N+oEC7pKEA6/jJc7UIKmleMwkOJnC83OL3BkxLoZ5fteAmc11
+         Xl3Ph4yFJh8eQMJs6gmrwHtwZhLBzsQPGWWazLglx++ZUNBeYG55CJElpfX3r31Ck2Uz
+         TOjlGHO3BG0x6rhFeH4NOmOwMCPZaNW0Db5SAJHZciVLAPdYWJjV3u+EDUZP5Sg7Y8dy
+         9p7HcE7V+jQNIuWEuhwwRAn8b7f5Dz7rUljoWI76XecujB/lqxlszs3KRF4DEmvRCyfO
+         JKww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8hNDgWY/Vq/yqDyQa75KFYJk2Ppr+jstE6XoVknS4iI=;
+        b=h1XltG4gINPaAwoR7DchE7+I3JqUM0vy/csK4v4VuhI2LuXBuSaeOtu4QBpys/blTs
+         kzCcTPCzjGoUZRm/hZutIf38ojnytB/1Lox5fF8pIp57fJAt6lM7gRuVars314OD4QXg
+         KHLGuhzUJTaovZRyQlEZLaC56SkPfblA+GoNDb5pgTGaFywEtkKlrkUuwOWc6xOys+a+
+         Zne4wg7SS+xW0jGzCF7THlFkHqgsEGhZwv28lKN3RdjNuo9Ao9R5FK1y2q+rydcs14Hg
+         hIgMJHqkfrnbKdcHUs3hT6QurXt6okXnygQ9uP2ot2x2BQPk9xxeCTKR2ZZGAjASrydc
+         qSXg==
+X-Gm-Message-State: ALyK8tJFT881CpbetmvYESr0k856nNZzsGC/TXEBG2HCJnqb6Qw2Sv33RFgNeKOUTnE1iaEeiJDBRJjVBcXqvg==
+X-Received: by 10.107.22.131 with SMTP id 125mr40846365iow.128.1466611334273;
+ Wed, 22 Jun 2016 09:02:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DD30948E-3890-11E6-AB1E-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.64.225.235 with HTTP; Wed, 22 Jun 2016 09:01:44 -0700 (PDT)
+In-Reply-To: <CAPig+cQ4CxRo460dcTJJtV_dPH8i5HC76_gpTv8attEZ8sdMZw@mail.gmail.com>
+References: <20160621211412.28752-1-charles@hashpling.org> <20160621211412.28752-2-charles@hashpling.org>
+ <CAPig+cQ4CxRo460dcTJJtV_dPH8i5HC76_gpTv8attEZ8sdMZw@mail.gmail.com>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Wed, 22 Jun 2016 18:01:44 +0200
+Message-ID: <CACsJy8Biaowr-XoaJgOCXjDGre==CzeSyADftCAdzxFHoxrZAQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] grep: fix grepping for "intent to add" files
+To:	Eric Sunshine <sunshine@sunshineco.com>
+Cc:	Charles Bailey <charles@hashpling.org>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, Jun 22, 2016 at 3:13 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Tue, Jun 21, 2016 at 5:14 PM, Charles Bailey <charles@hashpling.org> wrote:
+>> From: Charles Bailey <cbailey32@bloomberg.net>
+>>
+>> This reverts commit 4d552005323034c1d6311796ac1074e9a4b4b57e and adds an
+>> alternative fix to maintain the -L --cached behavior.
+>
+> It is common to provide some context along with the (shortened) commit
+> ID. For instance:
+>
+>     This reverts 4d55200 (grep: make it clear i-t-a entries are
+>     ignored, 2015-12-27) and adds ...
 
-> But there's a rub... If you specify --color *explicitly*, use_color is set
-> to GIT_COLOR_ALWAYS and the file indeed contains ANSI sequences (i.e. my
-> analysis above left out the command-line part).
+And that could be produced with some git alias like
 
-Heh, the command-line is the _ONLY_ thing I raised, as we knew
-ui.color is not an issue in this codepath, in $gmane/297757.
+git config alias.one 'show -s --date=short --pretty='format:%h (%s - %ad)'
 
-Going back to that and reading again, I suggested to check with
-GIT_COLOR_AUTO (i.e. if it is left to "auto", disable it) because I
-think the former is a much more future-proof way (imagine that we
-may add --color=<some new setting> in the future) than checking with
-GIT_COLOR_ALWAYS (i.e. if it is not explicitly set to "always",
-disable it).
-
-> In short, I think you're right, I have to guard the assignment, with the
-> minor adjustment to test use_color != GIT_COLOR_ALWAYS.
-
-So I am not sure if you said "use_color != GIT_COLOR_ALWAYS" only to
-be different from what I suggested (you seem to have a tendency to
-do so whenever you can), or there was some other reason.
+No point in manually copy/pasting the context.
+-- 
+Duy
