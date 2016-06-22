@@ -1,70 +1,123 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1FD420189
-	for <e@80x24.org>; Wed, 22 Jun 2016 19:32:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1341D20189
+	for <e@80x24.org>; Wed, 22 Jun 2016 19:33:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751501AbcFVTcJ (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 15:32:09 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63355 "EHLO
+	id S1751808AbcFVTdJ (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 15:33:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63323 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750885AbcFVTcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 15:32:08 -0400
+	with ESMTP id S1751726AbcFVTdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 15:33:08 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3319D26DDB;
-	Wed, 22 Jun 2016 15:32:07 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 00C07263AF;
+	Wed, 22 Jun 2016 15:33:07 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=foWzGyaTNIJ1gsMevRoFVAkrEXY=; b=x9CzSu
-	ClxJXGAqr3BCrOg9j4D2gmSFgv+1nQT8g5jP6qJ6g+Ar0BuuNUVyGoxAyClp6Lgr
-	g7y3V7GTJuviYLQ7WOXcE4+/F76DORGyMUAeOP+qPhe9P4yTmYiFac4luCvrNKYM
-	o9bF2/sBEEED8lxEWxjKSgZuIlbwjlt/X1nVQ=
+	:content-type; s=sasl; bh=MFDH1foOMdJDWtFfOPwX6U0QPxY=; b=suohTu
+	U7qyah6nQ4ApFNKuPGDNC/0+QkKE0ttSCQYHJzUw1p9pTQcvZZwqe/LE1nqY6QJN
+	PkQSfH+Jq+tAq92l2tqKZkytHWKLpinwWl5PI1g1+Pk+zGI2iLIuF9IySNRp9PT6
+	vkQwS3HCls6iuSa+4g70xLkLPfkzQfPpOdhoc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DLwFpwbrG/iJ1Fl/9ez2R/STSMfufSaT
-	ahQjfd9rae9YzS7fpcf7UxKfuIFioXXnulQTtxOv+RnLlViy3fn6Z6HCePwXXhTH
-	Esu9JGZxsy3jFWJEw45g30QmwdIkaXVnD3ZolsL6BL/bMvQNrklm8aEGaKgQgY6a
-	zWLnsuTSoTY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2C21926DDA;
-	Wed, 22 Jun 2016 15:32:07 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=uchweTbkcEPIiABED3Ip3J25aW8qoB8n
+	SGPhbMAU73rU1MxLBUNS/JUqXBrQP8k0VE67nUQRf0x2TJoUw5atUcbUV8ZSToQH
+	458uWG8PODe/7qhtU6lfT3at7KT9/59yur6kSE67rQr/RrdIApopkgEtA8cs9G+L
+	2xXUCQKJ0uM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EDE34263AE;
+	Wed, 22 Jun 2016 15:33:06 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A1E5C26DD9;
-	Wed, 22 Jun 2016 15:32:06 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 79532263AD;
+	Wed, 22 Jun 2016 15:33:06 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
 To:	Duy Nguyen <pclouds@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v6 00/11] Fix icase grep on non-ascii
-References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
-	<1454724190-14063-1-git-send-email-pclouds@gmail.com>
-	<xmqq4m8rz9qr.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8CSVvZfwjG+zAEpG6tAWYAWVkrkz4RP32Hrr9O1A_8ZMg@mail.gmail.com>
-	<CACsJy8BQxAkpoT7GVNgtM-0n1pMZeV5TRCiSn6TsYeATWeU=EA@mail.gmail.com>
-	<CAPc5daWEoK4Gp138VPstqwCAX+2K=_gSW98brHjmJYNWK4dkZw@mail.gmail.com>
-	<CACsJy8BMCjjX7_d73LX8+SiYWA4UUFyU3GGzxSVXMK4xubsKNg@mail.gmail.com>
-	<CAPc5daU4K85a883sR0u87fTObakCvv6Z41qxx1WOT2=QdDjZeA@mail.gmail.com>
-Date:	Wed, 22 Jun 2016 12:32:04 -0700
-In-Reply-To: <CAPc5daU4K85a883sR0u87fTObakCvv6Z41qxx1WOT2=QdDjZeA@mail.gmail.com>
-	(Junio C. Hamano's message of "Wed, 22 Jun 2016 11:59:40 -0700")
-Message-ID: <xmqq4m8lm34b.fsf@gitster.mtv.corp.google.com>
+Cc:	git@vger.kernel.org
+Subject: Re: Use docker for _some_ testing?
+References: <20160622190154.GA17442@duynguyen>
+Date:	Wed, 22 Jun 2016 12:33:04 -0700
+In-Reply-To: <20160622190154.GA17442@duynguyen> (Duy Nguyen's message of "Wed,
+	22 Jun 2016 21:01:55 +0200")
+Message-ID: <xmqqziqdkoi7.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0130F288-38B0-11E6-861F-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 24DA3AE6-38B0-11E6-B008-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> I think somebody's implementation of "echo" is not POSIX kosher.
+> The story started with my problem on Debian, which I didn't have and
+> didn't want to install a Debian VM just for that problem. So I made a
+> docker image with the following script.
+>
+> Which makes me think, could we use something like this to make sure
+> people (on Linux) can test more obscure cases? Sometimes there are
+> featues that require some dependencies that are not always present on
+> the developer's machine (http server is a big one, locales come close
+> second, then there will be lmdb and watchman in future...). With this,
+> said developer can do a final test run in docker covering as much as
+> possible.
+>
+> Of course it can't cover everything. Different compiler versions are
+> out. OS-specific changes are out (but wine would be still good to test
+> some aspect of Windows port, or at least make sure it builds)
+>
+> Comments?
 
-Oops, I misspoke.  s/POSIX/XSI/; obviously.
+Nice.
 
-But the conclusion is the same.  echo '\\\tA' may say \\\tA or
-backslash HT A, depending on the system, so we cannot rely on that
-in tests that are meant to be portable.
-
+> -- 8< --
+> diff --git a/contrib/docker/locale.gen b/contrib/docker/locale.gen
+> new file mode 100644
+> index 0000000..ef08e00
+> --- /dev/null
+> +++ b/contrib/docker/locale.gen
+> @@ -0,0 +1,2 @@
+> +is_IS.UTF-8 UTF-8
+> +is_IS ISO-8859-1
+> \ No newline at end of file
+> diff --git a/contrib/docker/run.sh b/contrib/docker/run.sh
+> new file mode 100755
+> index 0000000..83e5679
+> --- /dev/null
+> +++ b/contrib/docker/run.sh
+> @@ -0,0 +1,30 @@
+> +#!/bin/sh
+> +
+> +die() {
+> +	echo "$@" >&2
+> +	exit 1
+> +}
+> +
+> +build_debian() {
+> +	cat >Dockerfile <<-EOF
+> +	FROM debian:latest
+> +	RUN apt-get update && \
+> +		apt-get install -y libcurl4-gnutls-dev libexpat1-dev \
+> +		gettext libz-dev libssl-dev build-essential
+> +	RUN apt-get install -y locales
+> +	COPY locale.gen /etc/locale.gen
+> +	RUN locale-gen
+> +	RUN groupadd -r $(id -gn) -g $(id -g) && \
+> +		useradd -u $(id -u) -r -d "$HOME" -g $(id -g) -s /sbin/nologin $(id -un)
+> +	USER $(id -un)
+> +	EOF
+> +	docker build -t $IMAGE .  || die "failed to build docker image"
+> +}
+> +
+> +DISTRO=debian
+> +IMAGE=git-$DISTRO-$(id -un)
+> +ROOT="$(realpath $(git rev-parse --show-cdup))"
+> +
+> +test "$(docker images --format='{{.Repository}}' $IMAGE)" = $IMAGE || \
+> +	build_$DISTRO
+> +docker run -it --rm -v "$ROOT":"$ROOT" -w "$(pwd)" $IMAGE bash
+> -- 8< --
+> --
+> Duy
