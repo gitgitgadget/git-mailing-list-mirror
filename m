@@ -1,30 +1,30 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9015F20189
-	for <e@80x24.org>; Wed, 22 Jun 2016 20:22:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 178D020189
+	for <e@80x24.org>; Wed, 22 Jun 2016 20:22:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751854AbcFVUWW (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 16:22:22 -0400
-Received: from kitenet.net ([66.228.36.95]:57494 "EHLO kitenet.net"
+	id S1752491AbcFVUW0 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 16:22:26 -0400
+Received: from kitenet.net ([66.228.36.95]:57496 "EHLO kitenet.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750833AbcFVUWV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 16:22:21 -0400
+	id S1750833AbcFVUWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 16:22:24 -0400
 X-Question: 42
 Authentication-Results:	kitenet.net;
-	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=EeFTSobp;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=VPuJUIfN;
 	dkim-atps=neutral
 DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-	t=1466626900; bh=dVMnkdD6PUhBXnKXSgxdfqdzolNDmZA6qNGBd2Qfet8=;
+	t=1466626900; bh=WiW6HBxFN1TDTTGXhKnu3+hyuq4Tg0okqxFdCAIYSgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EeFTSobpJdTIjZ7tw+I4adrTEZ9w7RizzAVU3xcHfJo5YTJ81o0zextnyB7HbrsF6
-	 VST0s7n/T0rLnRbTWxvlvTPidkUPIX2e4jxnfR2czAFDnB9tKNZCddk7XEMp5WesYY
-	 wF64WhTOlcXx9OqjTIdLUIKuIAuIYWgURWfsoApc=
+	b=VPuJUIfNwCzHkRtEkuKaGwDfnG0zyayyEa/+DF2x2QV59iyug4jPiS06dcbCv22/L
+	 GWCvxMaxrkbLVCro51pV57H4/gkDraCA+g0reyV2DujYBtzKx4fdvBHFOKwHfXfo1F
+	 /tF0DjQkaFl33dn+je4RFSeUaQ1ohbgoQ7cnmQHw=
 From:	Joey Hess <joeyh@joeyh.name>
 To:	git@vger.kernel.org
 Cc:	Joey Hess <joeyh@joeyh.name>
-Subject: [PATCH v3 4/8] use smudgeToFile in git checkout etc
-Date:	Wed, 22 Jun 2016 16:21:29 -0400
-Message-Id: <20160622202133.23565-5-joeyh@joeyh.name>
+Subject: [PATCH v3 7/8] use smudgeToFile filter in git am
+Date:	Wed, 22 Jun 2016 16:21:32 -0400
+Message-Id: <20160622202133.23565-8-joeyh@joeyh.name>
 X-Mailer: git-send-email 2.9.0.8.gf959b2a
 In-Reply-To: <20160622202133.23565-1-joeyh@joeyh.name>
 References: <20160622202133.23565-1-joeyh@joeyh.name>
@@ -38,142 +38,140 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This makes git checkout, git reset, etc use smudgeToFile.
+git am updates the work tree and so should use the smudgeToFile filter.
 
-Includes test cases.
-
-(There's a call to convert_to_working_tree in merge-recursive.c
-that could also be made to use smudgeToFile as well.)
+This includes some refactoring into convert_to_working_tree_filter_to_file
+to make it check the file after running the smudgeToFile command, and clean
+up from a failing command.
 
 Signed-off-by: Joey Hess <joeyh@joeyh.name>
 ---
- entry.c               | 37 +++++++++++++++++++++++++++++--------
- t/t0021-conversion.sh | 38 +++++++++++++++++++++++++++++++++-----
- 2 files changed, 62 insertions(+), 13 deletions(-)
+ builtin/apply.c       | 16 ++++++++++++++++
+ convert.c             | 19 +++++++++++++++++--
+ entry.c               | 15 +++------------
+ t/t0021-conversion.sh | 13 +++++++++++++
+ 4 files changed, 49 insertions(+), 14 deletions(-)
 
-diff --git a/entry.c b/entry.c
-index 519e042..97975e5 100644
---- a/entry.c
-+++ b/entry.c
-@@ -175,8 +175,13 @@ static int write_entry(struct cache_entry *ce,
+diff --git a/builtin/apply.c b/builtin/apply.c
+index c770d7d..acd7c3e 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -4109,6 +4109,22 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
+ 	if (fd < 0)
+ 		return -1;
  
- 		/*
- 		 * Convert from git internal format to working tree format
-+		 * unless the smudgeToFile filter can write to the
-+		 * file directly.
- 		 */
--		if (ce_mode_s_ifmt == S_IFREG &&
-+		int regular_file = ce_mode_s_ifmt == S_IFREG;
-+		int smudge_to_file = regular_file
-+			&& can_smudge_to_file(ce->name);
-+		if (regular_file && ! smudge_to_file &&
- 		    convert_to_working_tree(ce->name, new, size, &buf)) {
- 			free(new);
- 			new = strbuf_detach(&buf, &newsize);
-@@ -189,13 +194,29 @@ static int write_entry(struct cache_entry *ce,
- 			return error_errno("unable to create file %s", path);
- 		}
- 
--		wrote = write_in_full(fd, new, size);
--		if (!to_tempfile)
--			fstat_done = fstat_output(fd, state, &st);
--		close(fd);
--		free(new);
--		if (wrote != size)
--			return error("unable to write file %s", path);
-+		if (! smudge_to_file) {
-+			wrote = write_in_full(fd, new, size);
-+			if (!to_tempfile)
-+				fstat_done = fstat_output(fd, state, &st);
-+			close(fd);
-+			free(new);
-+			if (wrote != size)
-+				return error("unable to write file %s", path);
++	if (can_smudge_to_file(path)) {
++		close(fd);
++		fd = convert_to_working_tree_filter_to_file(path, path, buf, size);
++		if (fd < 0) {
++			/* smudgeToFile filter failed; continue
++			 * with regular file creation. */
++			fd = open(path, O_CREAT | O_EXCL | O_WRONLY, (mode & 0100) ? 0777 : 0666);
++			if (fd < 0)
++				return -1;
 +		}
 +		else {
 +			close(fd);
-+			convert_to_working_tree_filter_to_file(ce->name, path, new, size);
-+			free(new);
-+			/* The smudgeToFile filter may have replaced the
-+			 * file; open it to make sure that the file
-+			 * exists. */
-+			fd = open(path, O_RDONLY);
-+			if (fd < 0)
-+				return error_errno("unable to create file %s", path);
-+			if (!to_tempfile)
-+				fstat_done = fstat_output(fd, state, &st);
-+			close(fd);
++			return 0;
 +		}
- 		break;
- 	case S_IFGITLINK:
- 		if (to_tempfile)
++	}
++
+ 	if (convert_to_working_tree(path, buf, size, &nbuf)) {
+ 		size = nbuf.len;
+ 		buf  = nbuf.buf;
+diff --git a/convert.c b/convert.c
+index b6a76a9..948b52f 100644
+--- a/convert.c
++++ b/convert.c
+@@ -1031,13 +1031,28 @@ int convert_to_working_tree(const char *path, const char *src, size_t len, struc
+ 	return convert_to_working_tree_internal(path, NULL, src, len, dst, 0);
+ }
+ 
++/* Returns fd open to read the worktree file on success.
++ * On failure, the worktree file will not exist. */
+ int convert_to_working_tree_filter_to_file(const char *path, const char *destpath, const char *src, size_t len)
+ {
+ 	struct strbuf output = STRBUF_INIT;
+-	int ret = convert_to_working_tree_internal(path, destpath, src, len, &output, 0);
++	int ok = convert_to_working_tree_internal(path, destpath, src, len, &output, 0);
+ 	/* The smudgeToFile filter stdout is not used. */
+ 	strbuf_release(&output);
+-	return ret;
++	if (ok) {
++		/* Open the file to make sure that it's present
++		 * (and readable) after the command populated it. */
++		int fd = open(path, O_RDONLY);
++		if (fd < 0)
++			unlink(path);
++		return fd;
++	}
++	else {
++		/* The command could have created the file before failing,
++		 * so delete it. */
++		unlink(path);
++		return -1;
++	}
+ }
+ 
+ int renormalize_buffer(const char *path, const char *src, size_t len, struct strbuf *dst)
+diff --git a/entry.c b/entry.c
+index 8322127..2f7c4fd 100644
+--- a/entry.c
++++ b/entry.c
+@@ -190,13 +190,10 @@ static int write_entry(struct cache_entry *ce,
+ 
+ 		if (smudge_to_file) {
+ 			close(fd);
+-			if (! convert_to_working_tree_filter_to_file(ce->name, path, new, size)) {
++			fd = convert_to_working_tree_filter_to_file(ce->name, path, new, size);
++			if (fd < 0) {
+ 				smudge_to_file = 0;
+-				/* The failing smudgeToFile filter may have
+-				 * deleted or replaced the file; delete
+-				 * the file and re-open for recovery write.
+-				 */
+-				unlink(path);
++				/* re-open for recovery write */
+ 				fd = open_output_fd(path, ce, to_tempfile);
+ 				if (fd < 0) {
+ 					free(new);
+@@ -205,12 +202,6 @@ static int write_entry(struct cache_entry *ce,
+ 			}
+ 			else {
+ 				free(new);
+-				/* The smudgeToFile filter may have replaced
+-				 * or deleted the file; reopen it to make sure
+-				 * that the file exists. */
+-				fd = open(path, O_RDONLY);
+-				if (fd < 0)
+-					return error_errno("unable to create file %s", path);
+ 				if (!to_tempfile)
+ 					fstat_done = fstat_output(fd, state, &st);
+ 				close(fd);
 diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 407d5d6..cba03fd 100755
+index c0b4709..fd07bd6 100755
 --- a/t/t0021-conversion.sh
 +++ b/t/t0021-conversion.sh
-@@ -14,12 +14,20 @@ chmod +x rot13.sh
- 
- cat <<EOF >rot13-from-file.sh
- #!$SHELL_PATH
--fsfile="\$1"
-+srcfile="\$1"
- touch rot13-from-file.ran
--cat "\$fsfile" | ./rot13.sh
-+cat "\$srcfile" | ./rot13.sh
- EOF
- chmod +x rot13-from-file.sh
- 
-+cat <<EOF >rot13-to-file.sh
-+#!$SHELL_PATH
-+destfile="\$1"
-+touch rot13-to-file.ran
-+./rot13.sh > "\$destfile"
-+EOF
-+chmod +x rot13-to-file.sh
-+
- test_expect_success setup '
- 	git config filter.rot13.smudge ./rot13.sh &&
- 	git config filter.rot13.clean ./rot13.sh &&
-@@ -291,6 +299,17 @@ test_expect_success 'cleanFromFile filter is used when adding a file' '
+@@ -334,6 +334,19 @@ test_expect_success 'recovery from failure of smudgeToFile filter that deletes t
  	cmp test fstest.t
  '
  
-+test_expect_success 'smudgeToFile filter is used when checking out a file' '
++test_expect_success 'smudgeToFile filter is used by git am' '
 +	test_config filter.rot13.smudgeToFile ./rot13-to-file.sh &&
 +
-+	rm -f fstest.t &&
-+	git checkout -- fstest.t &&
-+	cmp test fstest.t &&
++	git commit fstest.t -m "added fstest.t" &&
++	git format-patch HEAD^ --stdout > fstest.patch &&
++	git reset --hard HEAD^ &&
++	git am < fstest.patch &&
 +
 +	test -e rot13-to-file.ran &&
-+	rm -f rot13-to-file.ran
++	rm -f rot13-to-file.ran &&
++	cmp test fstest.t
 +'
 +
  test_expect_success 'cleanFromFile filter is not used when clean filter is not configured' '
  	test_config filter.noclean.smudge ./rot13.sh &&
  	test_config filter.noclean.cleanFromFile ./rot13-from-file.sh &&
-@@ -299,9 +318,18 @@ test_expect_success 'cleanFromFile filter is not used when clean filter is not c
- 
- 	cat test >test.no &&
- 	git add test.no &&
--	test ! -e rot13-from-file.ran &&
--	git cat-file blob :test.no >actual &&
--	cmp test actual
-+	test ! -e rot13-from-file.ran
-+'
-+
-+test_expect_success 'smudgeToFile filter is not used when smudge filter is not configured' '
-+	test_config filter.nosmudge.clean ./rot13.sh &&
-+	test_config filter.nosmudge.smudgeToFile ./rot13-to-file.sh &&
-+
-+	echo "*.no filter=nosmudge" >.gitattributes &&
-+
-+	rm -f fstest.t &&
-+	git checkout -- fstest.t &&
-+	test ! -e rot13-to-file.ran
- '
- 
- test_done
 -- 
 2.9.0.8.g973eabb.dirty
 
