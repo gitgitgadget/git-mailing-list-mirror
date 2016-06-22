@@ -1,126 +1,91 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0085D20189
-	for <e@80x24.org>; Wed, 22 Jun 2016 15:18:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1063420189
+	for <e@80x24.org>; Wed, 22 Jun 2016 15:34:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752553AbcFVPSP (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 11:18:15 -0400
-Received: from mout.gmx.net ([212.227.15.15]:52280 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751768AbcFVPSM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 11:18:12 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MIu7d-1bDo6e1hxR-002YZv; Wed, 22 Jun 2016 17:17:57
- +0200
-Date:	Wed, 22 Jun 2016 17:17:56 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH v3 2/9] Disallow diffopt.close_file when using the log_tree
- machinery
-In-Reply-To: <xmqqa8iepcbx.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1606221716180.10382@virtualbox>
-References: <cover.1466420060.git.johannes.schindelin@gmx.de> <cover.1466505222.git.johannes.schindelin@gmx.de> <973f9f676225aa98377f607ced1ff474f39b863f.1466505222.git.johannes.schindelin@gmx.de> <xmqqfus6quii.fsf@gitster.mtv.corp.google.com>
- <xmqqlh1ypdk8.fsf@gitster.mtv.corp.google.com> <xmqqa8iepcbx.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1752466AbcFVPel (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 11:34:41 -0400
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:33627 "EHLO
+	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751601AbcFVPeh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 11:34:37 -0400
+Received: by mail-lf0-f51.google.com with SMTP id f6so76616229lfg.0
+        for <git@vger.kernel.org>; Wed, 22 Jun 2016 08:33:18 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Qdv+aFAG4ZkTSPXQe/Y2CwqFsr/7AebTPDZjO3hggCI=;
+        b=AvG9DuOiUtr6naRJUXzJjbE8GdrN8PvoQ44vtY4QglVa2LLpRgPqgcsY2Kgr+3OZat
+         F1WVJ4it6MciTXPIcrmZ9H04pVY0xJldgugyqrsJKxR7j9WC/kLql4QZFuZfgoacXzN3
+         ndhNV5thosPdU+eJGwpWdsha92kAJy1pq/9OvBsgnT5vU9BDQFtaNp9c5wxzwbA/85c/
+         r0mQzeU9mWybjek9Bqws4m67p1OwtzRMn6/OUXrINtoU73Ep5vDpkK4ctK57m4Zy+HNg
+         HX66iNawlWbIi3J63kHIP88Yzxb8HnkTZ2hKjNcFoxuTJ3pVU+KyMmMrzypNRBChwaj9
+         dIGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Qdv+aFAG4ZkTSPXQe/Y2CwqFsr/7AebTPDZjO3hggCI=;
+        b=EXZRZCvwGcMlat/VaGCQTvoSdJwZbvT41gCHxZx57hx+DzJKZ3ZrJRvXS6Mo792qLK
+         CQ2zafgLD3+1N/tEm8/WUqGoGVmRJKLKPZsmtIBlbsjYnZii3Uq6VCr6rR08HO3hENnH
+         gFiCuYCJjOCEBhmFjkTuy6/275QFl+JUiYgb8AObFBPiPt4AmdXi3iEknq5fPWDFD2MT
+         eF7VKKRcOBWhsg3ajgyf0tDMWrbspaJea2Jm4CQJ1DpI7nKQStD+NuEtpmw8Dd9JYtVR
+         mi5sKn06AYg0/pWGCbvj0RwacmKrW6Snr1N9kNOYNfEUZtj2NARwwnEzwIQLIoTJF1Wi
+         KO9A==
+X-Gm-Message-State: ALyK8tLBQbTM+S//qfepI85RBaviMBOitY82bbBrNGakUQzzyUfEoUyUtKMQEWtfCwXe7A==
+X-Received: by 10.25.83.80 with SMTP id h77mr6358057lfb.83.1466609244166;
+        Wed, 22 Jun 2016 08:27:24 -0700 (PDT)
+Received: from debian (c83-249-17-125.bredband.comhem.se. [83.249.17.125])
+        by smtp.gmail.com with ESMTPSA id bd7sm89696lbc.27.2016.06.22.08.27.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 Jun 2016 08:27:22 -0700 (PDT)
+Received: from iveqy by debian with local (Exim 4.84)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1bFk81-00040Y-R3; Wed, 22 Jun 2016 17:31:45 +0200
+Date:	Wed, 22 Jun 2016 17:31:45 +0200
+From:	Fredrik Gustafsson <iveqy@iveqy.com>
+To:	Istvan Zakar <istvan.zakar@gmail.com>
+Cc:	git@vger.kernel.org
+Subject: Re: Problem with --shallow-submodules option
+Message-ID: <20160622153145.GB16644@paksenarrion.iveqy.com>
+References: <loom.20160620T145755-931@post.gmane.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:RZEvPdMVKMHeAGAAgWQTfN6kGn/ROzsT2yO1xP9l7y53nQNSfdL
- m/fn2nqJNQBIjBKNpca1yly5qfabA7Mg15W7q2xOZhGmRCHymXnr+YtDl3Pi/W2YR5uDM1n
- YeRENeai/qPSHkKsxn4FDgymMZCi1+kTbb/fyeVNOs3Al+ATPd0eszRHs5/78tJ/e+Vd24z
- z8LTPHHUccsbzTiURccrA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:efNNz6BkgDE=:Vq3qOASaOfi9qA5vNoF8Uh
- jw7RcS0pYlCX+dqBjps9K3kF04qnUwQ4w9ZLkOaMjTNT3dUsRfI5Fj0xdvR8w2uc3ATbvpk59
- 7Ur8syUpY3Q1ify4USCYkvSIdrtyMqQli5/aFeho1tXX2cSPzle1H7R3S47/8o70EkhfTFhUK
- 7rGEKnTV5J0PkEbIdi+zaii8SRy8YjgAGVdLEoF7PWaesa5o6RLnffxGeJLqRtUfhy51F0o8L
- XYOQAWi64Z57ufjSB8ATIIuzcvrtcoTI0pBwAF87TCUgzLZiJMKqN3JZEf628SK/yPZRca3We
- kN36n9NHPXL+i0m7w/l6cWEjxP+w80YHcbv5+Z3IHC8AA9pmOdkeG7VDNLqVuuBhJx1g02Zs2
- 2BPtjL1uNx9qb5ydURHbmOJRwlNF5tMQJ2nIggUySAtyhKhG5iycCqoty68sgoQShQ3+WTb09
- rj2fkTPwKh0BQEjTF6ZnsYtrtMhq64nkin8Hegec9687H2iS3o5rrpKOaIKQaX7IUi4md1LPk
- 8VRfimr+6Pc3569QnmMyN2YoY4TNgOK8o3mmn0EzAc8VM90J5qYzD4sqiE+RYs45u+/wBu7Q7
- WfdAyHgViwHmCA0BgWO49PlQ1YcKuYyZZRsWHML2sdJnEHgYgTunAewVebHIgqebWN/40gmp5
- 7uRlXUVYaGKJMTkmclgEotM+S2JcsEgiGCbT8CXtm0kuob2KuyJUm170NUw3uW4VuANmjwPZ3
- QKQAQHsJCFT1LceIwRXWf0zjALxaDdtE1sMR5JDDqKlg6tMIJjDHPTqRMOpNfVruu5lT51Feb
- lO0TMFg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <loom.20160620T145755-931@post.gmane.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+On Mon, Jun 20, 2016 at 01:06:39PM +0000, Istvan Zakar wrote:
+> I'm working on a relatively big project with many submodules. During 
+> cloning for testing I tried to decrease the amount of data need to be 
+> fetched from the server by using --shallow-submodules option in the clone 
+> command. It seems to check out the tip of the remote repo, and if it's not 
+> the commit registered in the superproject the submodule update fails 
+> (obviously). Can I somehow tell to fetch that exact commit I need for my 
+> superproject?
 
-On Tue, 21 Jun 2016, Junio C Hamano wrote:
+Maybe. http://stackoverflow.com/questions/2144406/git-shallow-submodules
+gives a good overview of this problem.
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >
-> >> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> >>
-> >>> We are about to teach the log_tree machinery to reuse the diffopt.file
-> >>> setting to output to a file stream different from stdout.
-> >>>
-> >>> This means that builtin am can no longer ask the diff machinery to
-> >>> close the file when actually calling the log_tree machinery (which
-> >>> wants to flush the very same file stream that would then already be
-> >>> closed).
-> >>
-> >> Sorry for being slow, but I am not sure why the first paragraph has
-> >> to mean the second paragraph.  This existing caller opens a new
-> >> stream, sets .fp to it, and expects that the log_tree_commit() to
-> >> close it if told by setting .close_file to true, all of which sounds
-> >> sensible.
-> >>
-> >> If a codepath wants to use the same stream for two or more calls to
-> >> log_tree by pointing the stream with .fp, it would be of course a
-> >> problem for the caller to set .close_file to true in its first call,
-> >> as .fp will be closed and no longer usable for second and subsequent
-> >> call, and that would be a bug, but for a single-shot call it feels
-> >> entirely a sensible request to make, no?
-> >>
-> >> Obviously you have looked at the codepaths involved a lot longer
-> >> than I did, and I do not doubt your conclusion, but I cannot quite
-> >> convince myself with the above explanation.
-> >>
-> >> The option parser of "git diff" family sets ->close_file to true
-> >> when the --output option is given.
-> >>
-> >> Wouldn't this patch break "git log --output=foo -3"?
-> >
-> > I wonder if the right approach is to stop using .close_file
-> > everywhere.
-> >
-> > With this "do not set .close_file if you use log_tree_commit()",
-> > "git log --output=/dev/stdout -3" gets broken, but removing that
-> > check is not sufficient to correct the same command with "-p", as
-> > letting .close_file to close the output file after finishing a
-> > single diff would mean that subsequent write to the same file
-> > descriptor will trigger a failure.
-> 
-> We could say "git log --output=foo -3 [-p]" without any of your
-> patches is already broken, and it is a valid excuse to take this
-> change that we are not making things worse with it.
-> 
-> It is just 3/9 is a logical first step to correct that exact
-> problem, i.e. some codepaths, even though there is a place that
-> holds the output stream and command line parser does prepare one for
-> "foo" when --output=foo is given, ignore it and send thigns to the
-> standard output stream.  You might not have written 3/9 in order to
-> fix that "git log --output=foo" problem, but a fix for it should
-> look exactly like your 3/9, I would think.
-> 
-> And it is sad that this step makes that fix impossible.
+git fetches a branch and is shallow from that branch, which might be an
+other sha1 than the one the submodule points to, (as you say). This
+is/was one of the drawbacks with this method. However the since git 2.8,
+git will try to fetch the sha1 direct (and not the branch). So then it
+will work, if(!), the server supports direct access to sha1. This was
+previously not allowed due to security concerns (if I recall correctly).
 
-Okay, I ended up seeing that there is no way I can avoid Doing The Right
-Thing.
+So the answer is, yes this will work if you've a recent version of git
+and support on the server side for doing this. Unfortunately I'm not
+sure which git version is needed on the server side for this to work.
 
-It is not quite as pretty as I hoped it would be (callers of
-log_tree_commit() that want to call it in a loop still have to override
-close_file manually), but it does produce a nicer story.
+-- 
+Fredrik Gustafsson
 
-Please see the fixes in the latest iteration I just sent out.
-
-Ciao,
-Dscho
+phone: +46 733-608274
+e-mail: iveqy@iveqy.com
+website: http://www.iveqy.com
