@@ -1,67 +1,81 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D127920189
-	for <e@80x24.org>; Wed, 22 Jun 2016 19:02:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A05A20189
+	for <e@80x24.org>; Wed, 22 Jun 2016 19:17:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751577AbcFVTCo (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 15:02:44 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:35178 "EHLO
-	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751286AbcFVTCo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 15:02:44 -0400
-Received: by mail-yw0-f193.google.com with SMTP id v77so7556874ywg.2
-        for <git@vger.kernel.org>; Wed, 22 Jun 2016 12:02:43 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=xIp05wZF+XBabH9wolaYHuj1pxrvR3gtV2EytVKcleo=;
-        b=Rz5bszrdNYuUeq9229al6GB3fr3Ml87CfUPd0XpUq6Bv50pH+8dbaCn0IgqTYnwzfQ
-         OzfPDjbzG5Q1gG6JaWbDs5sxFqeiPTOQrqqSdBAPa/80ZUrMhy2ksiAjt2qdw2haVCN3
-         Xl2pSjIyxy0EGcHNpt7eGHond2To+N+48/uvM6/+l9XVPayIdy+6gJ/QZc9N/foPufGB
-         k47rYxyArXy+PqenRLrn5Pwkg2Rh9zt0Ay2Goi5RjhR5XuJKuzzZcdsBE2z7wW2g4PF4
-         B/700UOX8RVN6ylbiWH2elXt/wcspYSx7e0CUD7llF5j/eQBJMZbwWP4fyp1+tZbWnkI
-         G2uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=xIp05wZF+XBabH9wolaYHuj1pxrvR3gtV2EytVKcleo=;
-        b=XRF5zlyqTqVzWPuCDS+GU6iw345O9p/XeNVwZAF8w4aOn0hpIpL0APFugCLI8Uwqwt
-         sZwnm16B+SRWBbCSmideou89XE+jXRIQ3egmXsbCmmu0DS6xyrXwCvZuwlAaGHD3WYpm
-         90YYd+Zhoa1Y+M/CrIqKWyhd5++qFz1HusWwsw8tignxLZYkq1q9+nC8ouoe1N0Jd2MH
-         U3D1i3vuBNXNb78s2nx3rfva80pIRSad88Cwl32ye8VRUB9uQ7Jxx3qAxeHfYdOI026r
-         1wHpkx1cMP60IcwS0NwQaB6j8uwZX8q2uV/pO9zBqcCCuBXjWSHOPT5sBhKOcrWSt0xK
-         KepQ==
-X-Gm-Message-State: ALyK8tItAXyn4QfpjZIX2PhNh9tqVxzOxKxDtvgw5R8DlG4d3aPcWXadB5lUMhJBMYyuJyWXjk7Qgjm/K3yIgg==
-X-Received: by 10.37.11.199 with SMTP id 190mr15880625ybl.151.1466622158191;
- Wed, 22 Jun 2016 12:02:38 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.13.251.71 with HTTP; Wed, 22 Jun 2016 12:02:18 -0700 (PDT)
-In-Reply-To: <20160622190018.GA786@dcvr.yhbt.net>
-References: <146652690896.29270.13813898006180324611.reportbug@duelitri>
- <20160622024151.GA20206@google.com> <20160622190018.GA786@dcvr.yhbt.net>
+	id S1752078AbcFVTR2 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 15:17:28 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55692 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751286AbcFVTR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 15:17:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4A32626B42;
+	Wed, 22 Jun 2016 15:17:26 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ffZZ6dJ78YQFcg6hMnyF9NwgXi0=; b=DL4AxO
+	U9GfRB29jdbK6RHhBx+6iCCLVtn31HDEXjI/EDEsKdLh1l/Are0dl1By/97VbXIX
+	aSvdsNOI7BkVuqyMN4kt6zIC3xbMRhizpwQD1zzhkrO8NFZOR3lP0Jeuc2AAdJO9
+	6y7j4IlcVt4uY3I51WZkQgBIUiQMRq4dLZZnY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mKwe38q6ATezIqGVv6Hv3cngLHKTC/G0
+	Hu1Hbi6NIjK31jwxWZSVLaMsAqOyFJDPZI+R0DaJ54bw1NqPHms+z4yD/vsLrl4j
+	vuf6sUPFXq6Dn6KbZ7TC2AeTLVTm91hRwTSHvICB+staKM75e5ZnwBsjuEhro/4H
+	WIRNZF2LG+8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4081E26B41;
+	Wed, 22 Jun 2016 15:17:26 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B7FF826B40;
+	Wed, 22 Jun 2016 15:17:25 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-Date:	Wed, 22 Jun 2016 12:02:18 -0700
-X-Google-Sender-Auth: ZbkDsjBX9qUnKsxnXDJav6Oh5uY
-Message-ID: <CAPc5daUiUv-EEv7ouQ=K+Q8S64QVV5wn4H6+TuF0wLeo123K5Q@mail.gmail.com>
-Subject: Re: [PATCH] doc: git-htmldocs.googlecode.com is no more
-To:	Eric Wong <e@80x24.org>
-Cc:	Jonathan Nieder <jrnieder@gmail.com>,
-	Andrea Stacchiotti <andreastacchiotti@gmail.com>,
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	Charles Bailey <charles@hashpling.org>,
 	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v2 2/2] grep: fix grepping for "intent to add" files
+References: <20160621211412.28752-1-charles@hashpling.org>
+	<20160621211412.28752-2-charles@hashpling.org>
+	<xmqqinx2nonl.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8C9Dh_Owr3UFJnCtvXserG4V-e1ws8ZY52ME1yr+fefOw@mail.gmail.com>
+	<xmqqlh1xm7c5.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8Acb+Hx1R66hcHQ7gNQ6TmKoUzC7Ar2PpSPkQeKM1EY8w@mail.gmail.com>
+Date:	Wed, 22 Jun 2016 12:17:23 -0700
+In-Reply-To: <CACsJy8Acb+Hx1R66hcHQ7gNQ6TmKoUzC7Ar2PpSPkQeKM1EY8w@mail.gmail.com>
+	(Duy Nguyen's message of "Wed, 22 Jun 2016 20:32:42 +0200")
+Message-ID: <xmqq8txxm3ss.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: F420C016-38AD-11E6-B405-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jun 22, 2016 at 12:00 PM, Eric Wong <e@80x24.org> wrote:
->
-> Just wondering, who updates
-> https://kernel.org/pub/software/scm/git/docs/
-> and why hasn't it been updated in a while?
-> (currently it says Last updated 2015-06-06 at the bottom)
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Nobody. It is too cumbersome to use their upload tool to update many
-files (it is geared towards updating a handful of tarballs at a time).
+>>> If cached is false and ce_ita() is true and either CE_VALID or
+>>> CE_SKIP_WORKTREE is set, we would continue to grep an _empty_ SHA-1.
+>>> But I think we should grep_file() instead, at least for CE_VALID.
+>>
+>> Yes, that is the breakage I noticed in the patch under discussion
+>> and that I wanted to fix in the "I wonder if a better change would
+>> be..." version.
+>
+> Heh.. I did guess that. Since neither solution is complete, I'm in
+> favor of Charles's and assume that i-t-a forces to ignore CE_SKIP and
+> CE_SKIP_WORKTREE. I could wait for people to come back complaining,
+> then we know there are real users in very obscure cases and will fix
+> it then.
+
+I said something that can be misunderstood.  I meant "I wonder if ..."
+version is correct.  Charles's has the bugs you mentioned and I
+wanted to fix them by sending the "I wonder if..." version out.
+
+But you seem to have misread my statement as "A bug is in my version
+and I want to fix that bug in my version".  That is not what I
+meant.
