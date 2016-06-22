@@ -1,74 +1,99 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEAAE20189
-	for <e@80x24.org>; Wed, 22 Jun 2016 18:20:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C3E920189
+	for <e@80x24.org>; Wed, 22 Jun 2016 18:30:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751357AbcFVSUf (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 14:20:35 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54196 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751242AbcFVSUe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 14:20:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C8E82634D;
-	Wed, 22 Jun 2016 14:20:33 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NXywXKVZ2Z/DAdOElkyLHTnaTBg=; b=mnYDSb
-	XN+8rhYdsnzYCYdQx/LTraNKBAaUjbPw9L4o/Khqy0fbgpFbfGUDF5hxtDdhDtRA
-	nix8iGuIkI2ZrFNL9KtdeIEbaVY9BJITvdDPl844GvupLUYLZbB7tW90TvsArQcQ
-	r3Bss3kmF14orbCfNPzaOhMg7cUmQT7/aZRkQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qkxTN12HjRbH7EMZ0MBkOFXuJqzmqesW
-	WnySDostPGWkWm+76xFA3O9kNbwm8gg/EzUrrwaBNTJhlS61xYQpFGeEyBGjF0Px
-	YR4IxfrnU8vXIQC5KOlFQninaf7L7goRrRR6a+kCnfT+o2e9YKxMnym05rAQJR77
-	dIvYD3u2G2g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F24E2634C;
-	Wed, 22 Jun 2016 14:20:33 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 87C5D2634A;
-	Wed, 22 Jun 2016 14:20:32 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	git@vger.kernel.org
-Subject: Re: How to find commits unique to a branch
-References: <878txz8ubq.fsf@thinkpad.rath.org>
-	<xmqqtwgnsdr3.fsf@gitster.mtv.corp.google.com>
-	<87lh1z78fr.fsf@thinkpad.rath.org> <87oa6ubeq4.fsf@thinkpad.rath.org>
-	<xmqq7fdiqtqv.fsf@gitster.mtv.corp.google.com>
-	<87mvmdgowj.fsf@thinkpad.rath.org>
-Date:	Wed, 22 Jun 2016 11:20:30 -0700
-In-Reply-To: <87mvmdgowj.fsf@thinkpad.rath.org> (Nikolaus Rath's message of
-	"Wed, 22 Jun 2016 09:38:04 -0700")
-Message-ID: <xmqqh9clm6fl.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752033AbcFVSaK (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 14:30:10 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:34505 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751673AbcFVSaI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2016 14:30:08 -0400
+Received: by mail-io0-f172.google.com with SMTP id g13so44807172ioj.1
+        for <git@vger.kernel.org>; Wed, 22 Jun 2016 11:30:08 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=D8Lo3vqVasSZTJPlky+ngaPt2KPJWerMZi15G2zR6IM=;
+        b=jdxoubJqGacuE/PpfEwpzF0AT07vt0wLIt22eqe/gED1PVVSatDtnway6qKg3Vh7aV
+         AB6cmtoWB3rkTHJCCD4HzEjIQQT8SZjp8vfYHL+WxmtJ2AT23z7QCoNdqSfyPA6q98TZ
+         eCPhdwbCh4D2wbvRyHZOQVVOaXmGpLB/5bvBZ0xxGZcbtRZpZm0+9VTLUZSVIFSG50jO
+         Cz3iFIuiEsdQZVYcuKeLgklmTJpo6wzfIloTGE15Z9Xhw1p25flBUJmWKvKZWy8EQwo6
+         SwKJEZ8bvLczZ0vBu4fzCirafX/ZbVUC0v/RITEvAO5sfG+XJ/Z71BjsCQFltIeQVHMT
+         EstA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=D8Lo3vqVasSZTJPlky+ngaPt2KPJWerMZi15G2zR6IM=;
+        b=cxH2N5vtQy0WVrL7BS7Emkgf9Ieq0X2jeq3XuhjQHGdZ9BOiQrIzZbHYFOq63vXL82
+         4ivaKCP2CTNxG4ob4/sDVPyGJwAw/PNjpm9cmN5PK3eP679kjQHsfq5Eg7HzUXjoxOuE
+         cSXanLZKKYvqbEGovTaJ4lMj9fgxNDDZHTV5P/f3vpVR+tudtKWgOMaNj+g7KVuF9AM2
+         veoe8n/e8MZItzNRGfX0zlWuPKVoI1Ov0WMCnlvO5pzTN4v524GsUK6nKGXe+UEdd5Qk
+         x9cs3WmoLWPcmzARNjGNiA/96+3iNcZMIEgxrgaU3vjqEohiJjqhZpba39kbC6stq/3i
+         bfoA==
+X-Gm-Message-State: ALyK8tL3QV0AONhuIyx3l6GnD3w5RWs8RT007nMa3/uDsDWmjOc2ck1WqipnxAMMU7qKjWYEv8QC8eRAPqwIzA==
+X-Received: by 10.107.22.131 with SMTP id 125mr41857953iow.128.1466620207805;
+ Wed, 22 Jun 2016 11:30:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 01B39A30-38A6-11E6-A87E-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.64.225.235 with HTTP; Wed, 22 Jun 2016 11:29:38 -0700 (PDT)
+In-Reply-To: <CACsJy8CSVvZfwjG+zAEpG6tAWYAWVkrkz4RP32Hrr9O1A_8ZMg@mail.gmail.com>
+References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
+ <1454724190-14063-1-git-send-email-pclouds@gmail.com> <xmqq4m8rz9qr.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8CSVvZfwjG+zAEpG6tAWYAWVkrkz4RP32Hrr9O1A_8ZMg@mail.gmail.com>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Wed, 22 Jun 2016 20:29:38 +0200
+Message-ID: <CACsJy8BQxAkpoT7GVNgtM-0n1pMZeV5TRCiSn6TsYeATWeU=EA@mail.gmail.com>
+Subject: Re: [PATCH v6 00/11] Fix icase grep on non-ascii
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Nikolaus Rath <Nikolaus@rath.org> writes:
-
-> On Jun 21 2016, Junio C Hamano <gitster@pobox.com> wrote:
+On Sat, Jun 18, 2016 at 2:26 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sat, Jun 18, 2016 at 6:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 >>
->> I find that the first sentence of the description is fuzzy
->> ("Determine whether" would imply that you would get "Yes/No" but
->> what we want is "here are the commits that do not have counterpart
->> in 2fix"),...
+>>> v6 fixes comments from Ramsay and Eric. Interdiff below.
+>>
+>> Another thing I noticed with this is that the non-ascii test breaks
+>> when run under dash (but passes under bash).  You need to have is_IS
+>> locale on the system to see the breakage, it seems (which is why I
+>> didn't see it so far).
 >
-> This works, thanks! I don't quite understand why though. I started by
-> saying that I want to know which commits in master are have been cherry
-> picked after 3start was branched to 2fix, so <limit>..<head> must be
-> 3start..2fix, which only leaves "master" as <upstream>.  What's wrong
-> with that thought?
+> Is it a special version, maybe from debian? It works for me on gentoo.
+>
+>> ~/w/git/temp/t $ equery  --quiet list dash
+> app-shells/dash-0.5.8.2
+>> ~/w/git/temp/t $ dash ./t7812-grep-icase-non-ascii.sh
+> # lib-gettext: Found 'is_IS.utf8' as an is_IS UTF-8 locale
+> # lib-gettext: Found 'is_IS.iso88591' as an is_IS ISO-8859-1 locale
+> ok 1 - setup
+> ok 2 - grep literal string, no -F
+> ok 3 - grep pcre utf-8 icase
+> ok 4 - grep pcre utf-8 string with "+"
+> ok 5 - grep literal string, with -F
+> ok 6 - grep string with regex, with -F
+> ok 7 - pickaxe -i on non-ascii
+> # passed all 7 test(s)
+> 1..7
 
-The only thing that is wrong in that is it does not match what
-happens, but that is not the fault of the "thought"; as I said, I
-think the description is fuzzy and has room for improvement to avoid
-being read in such a way that leads to a wrong conclusion.
+Can any shell wizards explain this to me? With this code
+
+BS=\\
+echo ${BS}${BS}
+
+Debian's dash returns a single backslash while bash returns two
+backslashes. Section 2.2.1 [1] does not say anything about one
+backslash (hidden behind a variable!) after escaping the following one
+and still eats the one after that..
+
+[1] http://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html
+-- 
+Duy
