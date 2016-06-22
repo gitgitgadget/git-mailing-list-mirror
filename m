@@ -1,30 +1,30 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0223A2018B
-	for <e@80x24.org>; Wed, 22 Jun 2016 21:09:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1D8220189
+	for <e@80x24.org>; Wed, 22 Jun 2016 21:09:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752230AbcFVVJq (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 17:09:46 -0400
-Received: from kitenet.net ([66.228.36.95]:59258 "EHLO kitenet.net"
+	id S1752276AbcFVVJx (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 17:09:53 -0400
+Received: from kitenet.net ([66.228.36.95]:59272 "EHLO kitenet.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751990AbcFVVJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 17:09:45 -0400
+	id S1752233AbcFVVJx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 17:09:53 -0400
 X-Question: 42
 Authentication-Results:	kitenet.net;
-	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=faHDzPFG;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=G6cha5uV;
 	dkim-atps=neutral
 DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-	t=1466629760; bh=ZJ3EzSnJlxnwVSR0JLXOBChtz8XM7zALW+eNGklAdig=;
+	t=1466629760; bh=OWvQ91NlP/tpe3mCEG0zeWlTMJFHcZJ0zbEUMQCU7bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=faHDzPFGouIOj+/QvULr/hxeE3SFs5pMDNVYYA8ahr2LFO/1FBLOTpbjwo1ZQqeL2
-	 XiZI37st20NAXJUsvGFDp5VioH7ZWo8f1ONTSpn4xrOjF94KcY8UESZlchRp4ryZhJ
-	 uCE30oYqs7EfaEb6u6o9K8y5BIwQIDmF+NGrksMQ=
+	b=G6cha5uVIkGXrye3zthdMlZSd7XdnnR7gDouMjKfCJfWOm5cavrpCHpDbp/qkD9+f
+	 dPrRRYdAqoMbBRy0/0Y0o3lFgivfzxfOP6rtaox6fRKJCwadF4a6PeAOf9eK1ebdYu
+	 q60zu7oUSjFVyxDbEIY8u0K3KIGa6cBA2G9kSsGs=
 From:	Joey Hess <joeyh@joeyh.name>
 To:	git@vger.kernel.org
 Cc:	Joey Hess <joeyh@joeyh.name>
-Subject: [PATCH v4 3/8] use cleanFromFile in git add
-Date:	Wed, 22 Jun 2016 17:09:13 -0400
-Message-Id: <1466629758-8035-4-git-send-email-joeyh@joeyh.name>
+Subject: [PATCH v4 5/8] warn on unusable smudgeToFile/cleanFromFile config
+Date:	Wed, 22 Jun 2016 17:09:15 -0400
+Message-Id: <1466629758-8035-6-git-send-email-joeyh@joeyh.name>
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <1466629758-8035-1-git-send-email-joeyh@joeyh.name>
 References: <1466629758-8035-1-git-send-email-joeyh@joeyh.name>
@@ -38,128 +38,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Includes test cases.
+Let the user know when they have a smudgeToFile/cleanFromFile config
+that cannot be used because the corresponding smudge/clean config
+is missing.
+
+The warning is only displayed a maximum of once per git invocation,
+and only when doing an operation that would use the filter.
 
 Signed-off-by: Joey Hess <joeyh@joeyh.name>
 ---
- sha1_file.c           | 44 ++++++++++++++++++++++++++++++++++++++------
- t/t0021-conversion.sh | 36 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 74 insertions(+), 6 deletions(-)
+ convert.c | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 55604b6..df62eaf 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3339,6 +3339,31 @@ static int index_stream_convert_blob(unsigned char *sha1, int fd,
- 	return ret;
+diff --git a/convert.c b/convert.c
+index 9dde406..378a3bd 100644
+--- a/convert.c
++++ b/convert.c
+@@ -859,32 +859,50 @@ int would_convert_to_git_filter_fd(const char *path)
+ 	return apply_filter(path, NULL, NULL, 0, -1, NULL, ca.drv->clean);
  }
  
-+static int index_from_file_convert_blob(unsigned char *sha1,
-+				      const char *path, unsigned flags)
++static int can_filter_file(const char *filefilter, const char *filefiltername,
++			   const char *stdiofilter, const char *stdiofiltername,
++			   const struct conv_attrs *ca,
++			   int *warncount)
 +{
-+	int ret;
-+	const int write_object = flags & HASH_WRITE_OBJECT;
-+	const int valid_sha1 = flags & HASH_USE_SHA_NOT_PATH;
-+	struct strbuf sbuf = STRBUF_INIT;
++	if (! filefilter)
++		return 0;
 +
-+	assert(path);
-+	assert(can_clean_from_file(path));
++	if (stdiofilter)
++		return 1;
 +
-+	convert_to_git_filter_from_file(path, &sbuf,
-+				 write_object ? safe_crlf : SAFE_CRLF_FALSE,
-+				 valid_sha1 ? sha1 : NULL);
++	if (*warncount == 0)
++		warning("Not running your configured filter.%s.%s command, because filter.%s.%s is not configured",
++			ca->drv->name, filefiltername,
++			ca->drv->name, stdiofiltername);
++		*warncount=*warncount+1;
 +
-+	if (write_object)
-+		ret = write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
-+				      sha1);
-+	else
-+		ret = hash_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
-+				     sha1);
-+	strbuf_release(&sbuf);
-+	return ret;
++	return 0;
 +}
 +
- static int index_pipe(unsigned char *sha1, int fd, enum object_type type,
- 		      const char *path, unsigned flags)
+ int can_clean_from_file(const char *path)
  {
-@@ -3433,12 +3458,19 @@ int index_path(unsigned char *sha1, const char *path, struct stat *st, unsigned
+ 	struct conv_attrs ca;
++	static int warncount = 0;
  
- 	switch (st->st_mode & S_IFMT) {
- 	case S_IFREG:
--		fd = open(path, O_RDONLY);
--		if (fd < 0)
--			return error_errno("open(\"%s\")", path);
--		if (index_fd(sha1, fd, st, OBJ_BLOB, path, flags) < 0)
--			return error("%s: failed to insert into database",
--				     path);
-+		if (can_clean_from_file(path)) {
-+			if (index_from_file_convert_blob(sha1, path, flags) < 0)
-+				return error("%s: failed to insert into database",
-+					     path);
-+		}
-+		else {
-+			fd = open(path, O_RDONLY);
-+			if (fd < 0)
-+				return error_errno("open(\"%s\")", path);
-+			if (index_fd(sha1, fd, st, OBJ_BLOB, path, flags) < 0)
-+				return error("%s: failed to insert into database",
-+					     path);
-+		}
- 		break;
- 	case S_IFLNK:
- 		if (strbuf_readlink(&sb, path, st->st_size))
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 7bac2bc..407d5d6 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -12,6 +12,14 @@ tr \
- EOF
- chmod +x rot13.sh
+ 	convert_attrs(&ca, path);
+ 	if (!ca.drv)
+ 		return 0;
  
-+cat <<EOF >rot13-from-file.sh
-+#!$SHELL_PATH
-+fsfile="\$1"
-+touch rot13-from-file.ran
-+cat "\$fsfile" | ./rot13.sh
-+EOF
-+chmod +x rot13-from-file.sh
-+
- test_expect_success setup '
- 	git config filter.rot13.smudge ./rot13.sh &&
- 	git config filter.rot13.clean ./rot13.sh &&
-@@ -268,4 +276,32 @@ test_expect_success 'disable filter with empty override' '
- 	test_must_be_empty err
- '
+-	/* Only use the cleanFromFile filter when the clean filter is also
+-	 * configured.
+-	 */
+-	return (ca.drv->clean_from_file && ca.drv->clean);
++	return can_filter_file(ca.drv->clean_from_file, "cleanFromFile",
++			       ca.drv->clean, "clean", &ca, &warncount);
+ }
  
-+test_expect_success 'cleanFromFile filter is used when adding a file' '
-+	test_config filter.rot13.cleanFromFile ./rot13-from-file.sh &&
-+
-+	echo "*.t filter=rot13" >.gitattributes &&
-+
-+	cat test >fstest.t &&
-+	git add fstest.t &&
-+	test -e rot13-from-file.ran &&
-+	rm -f rot13-from-file.ran &&
-+
-+	rm -f fstest.t &&
-+	git checkout -- fstest.t &&
-+	cmp test fstest.t
-+'
-+
-+test_expect_success 'cleanFromFile filter is not used when clean filter is not configured' '
-+	test_config filter.noclean.smudge ./rot13.sh &&
-+	test_config filter.noclean.cleanFromFile ./rot13-from-file.sh &&
-+
-+	echo "*.no filter=noclean" >.gitattributes &&
-+
-+	cat test >test.no &&
-+	git add test.no &&
-+	test ! -e rot13-from-file.ran &&
-+	git cat-file blob :test.no >actual &&
-+	cmp test actual
-+'
-+
- test_done
+ int can_smudge_to_file(const char *path)
+ {
+ 	struct conv_attrs ca;
++	static int warncount = 0;
+ 
+ 	convert_attrs(&ca, path);
+ 	if (!ca.drv)
+ 		return 0;
+ 
+-	/* Only use the smudgeToFile filter when the smudge filter is also
+-	 * configured.
+-	 */
+-	return (ca.drv->smudge_to_file && ca.drv->smudge);
++	return can_filter_file(ca.drv->smudge_to_file, "smudgeToFile",
++			       ca.drv->smudge, "smudge", &ca, &warncount);
+ }
+ 
+ const char *get_convert_attr_ascii(const char *path)
 -- 
 2.9.0.587.ga3bedf2
 
