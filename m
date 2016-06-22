@@ -1,67 +1,125 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FBD02018B
-	for <e@80x24.org>; Wed, 22 Jun 2016 22:50:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97528201CE
+	for <e@80x24.org>; Wed, 22 Jun 2016 22:58:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752523AbcFVWtw (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 18:49:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60591 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752448AbcFVWtv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 18:49:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F2D9227DCF;
-	Wed, 22 Jun 2016 18:45:24 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tHmgCcst34L3hMTD2sZtOg4YRrw=; b=i5h8lF
-	Y3qMEhIJk89abv0iqtrTQSuEPnihwVoS/kUfAcgg16Aw2P7OJPiXv0s8jesGDC4o
-	GvyVDL/i3rK0I6G7fzQrfJhaTm9QoXLXBhVqRiJUsbkM9LbP4FLos+J7WEZUP1Ey
-	yDczCvjA+6gk2Du6PmsYWnyh6n98un4oY3g8Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lasTLjbb2P02hCWaYGvg4OhouJt88w9Y
-	t27NVS/7oie9obB4ngW4Aihw8F8oPDpmscPOLyOFbJPiCXQFLYL8fRkUNZgEUjoI
-	7f8fEpn+EC8BjbBOIJa3/d28LyIvCb7/VMrDQ0FK/egz91KOotwEUBlqiWp2hfFm
-	hQUudusKtMM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA38827DCD;
-	Wed, 22 Jun 2016 18:45:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6E57327DCC;
-	Wed, 22 Jun 2016 18:45:24 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Joey Hess <joeyh@joeyh.name>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH v4 8/8] use smudgeToFile filter in recursive merge
-References: <1466629758-8035-1-git-send-email-joeyh@joeyh.name>
-	<1466629758-8035-9-git-send-email-joeyh@joeyh.name>
-	<xmqq7fdglx83.fsf@gitster.mtv.corp.google.com>
-Date:	Wed, 22 Jun 2016 15:45:22 -0700
-In-Reply-To: <xmqq7fdglx83.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 22 Jun 2016 14:39:24 -0700")
-Message-ID: <xmqqy45wkflp.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752967AbcFVW6n (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 18:58:43 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:45666 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752452AbcFVW6k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 18:58:40 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 106B3201B4;
+	Wed, 22 Jun 2016 22:58:40 +0000 (UTC)
+Date:	Wed, 22 Jun 2016 22:58:39 +0000
+From:	Eric Wong <e@80x24.org>
+To:	=?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCe0LLRh9C40L3QvdC40LrQvtCy?= 
+	<proff@proff.email>, Junio C Hamano <gitster@pobox.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jakob Stoklund Olesen <stoklund@2pi.dk>,
+	Sam Vilain <sam@vilain.net>,
+	Steven Walter <stevenrwalter@gmail.com>,
+	Peter Baumann <waste.manager@gmx.de>,
+	Andrew Myrick <amyrick@apple.com>,
+	Michael Contreras <michael@inetric.com>
+Subject: Re: may be bug in svn fetch no-follow-parent
+Message-ID: <20160622225839.GA30828@dcvr.yhbt.net>
+References: <4094761466408188@web24o.yandex.ru>
+ <20160620215253.GA16566@dcvr.yhbt.net>
+ <2518541466501215@web27h.yandex.ru>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 020288FA-38CB-11E6-8C1D-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2518541466501215@web27h.yandex.ru>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Александр Овчинников <proff@proff.email> wrote:
+> Unfortunately this is not open source repository. I agree that it is pointless try to handle mergeinfo (because it always fails).
+> Cases when it is expensive:
+> 1. delete and restore mergeinfo property
+> 2. merge trunk to very old branch
+> 3. create, delete, create branch with --no-follow-parent. All records in mergeinfo will be hadled like new.
+> 
+> I already patched like this and this is helpfull, works fine and fast.
 
->> +			int smudge_to_file = can_smudge_to_file(path);
->
-> This does not compile with decl-after-statement.  I suspect other
-> patches in this series have the same issue but I did not check.  Do
-> you say "make DEVELOPER=1"?
+Thanks for the info.  Patch + pull request below for Junio.
 
-As a tentative workaround, I've queued a squashable compilation fix
-at the tip of the topic after queuing.  Please find it in 'pu' when
-it gets pushed out sometime later today.
+> I can share only mergeinfo property
 
-Thanks.
+Oops, looks like your zip attachment got flagged as spam for
+my mailbox and swallowed by vger.kernel.org :x
+
+---------8<--------
+Subject: [PATCH] git-svn: skip mergeinfo handling with --no-follow-parent
+
+For repositories without parent following enabled, finding
+git parents through svn:mergeinfo or svk::parents can be
+expensive and pointless.
+
+Reported-by: Александр Овчинников <proff@proff.email>
+	http://mid.gmane.org/4094761466408188@web24o.yandex.ru
+
+Signed-off-by: Eric Wong <e@80x24.org>
+---
+  The following changes since commit ab7797dbe95fff38d9265869ea367020046db118:
+
+    Start the post-2.9 cycle (2016-06-20 11:06:49 -0700)
+
+  are available in the git repository at:
+
+    git://bogomips.org/git-svn.git svn-nfp-mergeinfo
+
+  for you to fetch changes up to 6d523a3ab76cfa4ed9ae0ed9da7af43efcff3f07:
+
+    git-svn: skip mergeinfo handling with --no-follow-parent (2016-06-22 22:48:54 +0000)
+
+  ----------------------------------------------------------------
+  Eric Wong (1):
+        git-svn: skip mergeinfo handling with --no-follow-parent
+
+ perl/Git/SVN.pm | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
+
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index d94d01c..bee1e7d 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -1905,15 +1905,22 @@ sub make_log_entry {
+ 
+ 	my @parents = @$parents;
+ 	my $props = $ed->{dir_prop}{$self->path};
+-	if ( $props->{"svk:merge"} ) {
+-		$self->find_extra_svk_parents($props->{"svk:merge"}, \@parents);
+-	}
+-	if ( $props->{"svn:mergeinfo"} ) {
+-		my $mi_changes = $self->mergeinfo_changes
+-			($parent_path, $parent_rev,
+-			 $self->path, $rev,
+-			 $props->{"svn:mergeinfo"});
+-		$self->find_extra_svn_parents($mi_changes, \@parents);
++	if ($self->follow_parent) {
++		my $tickets = $props->{"svk:merge"};
++		if ($tickets) {
++			$self->find_extra_svk_parents($tickets, \@parents);
++		}
++
++		my $mergeinfo_prop = $props->{"svn:mergeinfo"};
++		if ($mergeinfo_prop) {
++			my $mi_changes = $self->mergeinfo_changes(
++						$parent_path,
++						$parent_rev,
++						$self->path,
++						$rev,
++						$mergeinfo_prop);
++			$self->find_extra_svn_parents($mi_changes, \@parents);
++		}
+ 	}
+ 
+ 	open my $un, '>>', "$self->{dir}/unhandled.log" or croak $!;
+-- 
+EW
