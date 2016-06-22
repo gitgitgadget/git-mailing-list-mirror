@@ -1,97 +1,89 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9763120189
-	for <e@80x24.org>; Wed, 22 Jun 2016 17:53:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 746C520189
+	for <e@80x24.org>; Wed, 22 Jun 2016 18:01:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751854AbcFVRxw (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 13:53:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63871 "EHLO
+	id S1751940AbcFVSBE (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 14:01:04 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59516 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751396AbcFVRxv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 13:53:51 -0400
+	with ESMTP id S1751927AbcFVSBD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 14:01:03 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8ED5D25E7E;
-	Wed, 22 Jun 2016 13:53:50 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D24A2256B2;
+	Wed, 22 Jun 2016 14:01:01 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=udkmveEYXRXaOkB/TIz5/3tsoMs=; b=xEf0kG
-	dLOVv1zFhzDPnABV7bfh2NMicZIFFDnrciANVZ/64pTAZI4P9zgK2043KHCHD7j4
-	vKxJDm4K/ywWWCa4ZB2otYbeAricA5eIij5whDQKkdGzpU2BX7vn8bC+QCV89oFC
-	mMUEuNNyYljlpfs9SLjEegU1cmpQr8Rb0P6nA=
+	:content-type; s=sasl; bh=XaiHNOQCSbcgTwP8OLm6PhCROe4=; b=jJD2nH
+	eHRcYoXe59ZvnYwHskH6JutQFAetodNeN9krxvHelI8ClJ5djkLpaVVGJtWVZSzU
+	8JSnzxqWDGmg+elMsX51PSrmCfty/vRM/7u5mJoqSXP2ik/EnQY8MutosRQOyYr5
+	d80HZT3ORd6sHEGTRw4CeRF7COwJsWTQdab3s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JX8mwgaGa/qz+bwF7ZrufwV3BcjRCfTj
-	m20fIpNberXpKj1Vm+n04O0geRL3/kkc/Gb/+dmacHDquSTSeBFHgROWgg7Wb6h2
-	BYhd042bq75uB4YUGWUkkMJ0wcQ5gO0DvQxtSCDpkob2f7RxQ4GpHhtjmB6gpEeF
-	y4Zc7o5wyXc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8686B25E7D;
-	Wed, 22 Jun 2016 13:53:50 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=XsVsbTsZv29KbYGXt7zqtUN7hAnHE7Tn
+	N+WwdcCayDOph4H5nXl0/cbyTdEQCc2sSxxNeVP3HPY6SZUBPXta7FjJiIsI3MKD
+	VEz4EX0BsBPwdS6zOYHoWqRVGac9HSnFlfaZCsNq2BcWTPr88eEMcrGkoFvgmHAG
+	cODZzf3/SSc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CAB81256B1;
+	Wed, 22 Jun 2016 14:01:01 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0E0C525E7C;
-	Wed, 22 Jun 2016 13:53:49 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AF83C256AF;
+	Wed, 22 Jun 2016 14:01:00 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 5/5] format-patch: avoid freopen()
-References: <cover.1466244194.git.johannes.schindelin@gmx.de>
-	<de218a6cc529b3f5c33dc4b8282f16fd8a5329a8.1466244194.git.johannes.schindelin@gmx.de>
-	<CAPig+cTiexRhzS3MwMEntGYxKms-XQvtoc7HOnUGJvDaBSK7JA@mail.gmail.com>
-	<alpine.DEB.2.20.1606200814510.22630@virtualbox>
-	<xmqq4m8nvodo.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1606210906190.22630@virtualbox>
-	<xmqqvb12qyeu.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1606220849480.10382@virtualbox>
-	<xmqqeg7pns0a.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1606221811300.10382@virtualbox>
-Date:	Wed, 22 Jun 2016 10:53:47 -0700
-In-Reply-To: <alpine.DEB.2.20.1606221811300.10382@virtualbox> (Johannes
-	Schindelin's message of "Wed, 22 Jun 2016 18:14:43 +0200 (CEST)")
-Message-ID: <xmqqpor9m7o4.fsf@gitster.mtv.corp.google.com>
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	Charles Bailey <charles@hashpling.org>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 2/2] grep: fix grepping for "intent to add" files
+References: <20160621211412.28752-1-charles@hashpling.org>
+	<20160621211412.28752-2-charles@hashpling.org>
+	<xmqqinx2nonl.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8C9Dh_Owr3UFJnCtvXserG4V-e1ws8ZY52ME1yr+fefOw@mail.gmail.com>
+Date:	Wed, 22 Jun 2016 11:00:58 -0700
+In-Reply-To: <CACsJy8C9Dh_Owr3UFJnCtvXserG4V-e1ws8ZY52ME1yr+fefOw@mail.gmail.com>
+	(Duy Nguyen's message of "Wed, 22 Jun 2016 18:11:35 +0200")
+Message-ID: <xmqqlh1xm7c5.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 468A1BE2-38A2-11E6-A706-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 47422204-38A3-11E6-8368-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Well, if I change `rev.diffopt.use_color != GIT_COLOR_ALWAYS` to
-> `rev.diffopt.use_color == GIT_COLOR_AUTO`, then the files will contain
-> ugly ANSI color sequences if I run `git format-patch -o . -3`.
+>> So I wonder if a better change would be more like
+>>
+>>         for (...) {
+>>                 if (!S_ISREG(ce->ce_mode))
+>>                         continue; /* not a regular file */
+>>                 if (!ce_path_match(ce, pathspec, NULL)
+>>                         continue; /* uninteresting */
+>> +               if (cached && ce_intent_to_add(ce))
+>> +                       continue; /* path not yet in the index */
+>>
+>>                 if (cached || ...)
+>>                         UNCHANGED FROM THE ORIGINAL
+>>
+>> perhaps?
 >
-> The reason is, as I tried to explain, that the use_color field is *not*
-> initialized to GIT_COLOR_AUTO (which is equivalent to 2), but to -1.
+> I did wonder a bit about these cases. But, can i-t-a really be
+> combined with CE_VALID or CE_SKIP_WORKTREE? CE_SKIP_... is
+> automatically set and should not cover i-t-a entries imo (I didn't
+> check the implementation). CE_VALID is about real entries, yes you
+> could do "git update-index --assume-unchanged <ita-path>" but it does
+> not feel right to me.
 
-OK.  I thought forcing no-color only when it is set to COLOR_AUTO or
-it is set to -1 (the default) would be safer, but I changed my mind.
+Yeah but we know people are stupid^W^Wdo unexpected things ;-)
 
-"when we add a new --color=<something.we.do.not.know.yet>,
-overriding that end-user wish with the unconditional no-color is
-likely to be seen as bug." was the implicit bias behind that
-suggestion, but that is not substanticated and substatiatable.
+> If cached is false and ce_ita() is true and either CE_VALID or
+> CE_SKIP_WORKTREE is set, we would continue to grep an _empty_ SHA-1.
+> But I think we should grep_file() instead, at least for CE_VALID.
 
-If we write
-
-	if (rev.diffopt.use_color != GIT_COLOR_ALWAYS)
-        	rev.diffopt.use_color = 0;
-
-and if a user of --color=<something.we.do.not.know.yet> wonders why
-her output is not colored, it is clear in the code above that we
-disable unless it is set with --color=always, so it won't make
-fixing such a future breakage harder.  In fact, if we did
-
-	if (rev.diffopt.use_color == GIT_COLOR_AUTO ||
-            rev.diffopt.use_color < 0)
-        	rev.diffopt.use_color = 0;
-
-it would make it _harder_ to spot where use_color is turned off when
-the person who debugs such an issue.
-
-Thanks.
+Yes, that is the breakage I noticed in the patch under discussion
+and that I wanted to fix in the "I wonder if a better change would
+be..." version.
