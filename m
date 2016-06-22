@@ -1,71 +1,65 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77C141FF40
-	for <e@80x24.org>; Wed, 22 Jun 2016 05:46:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3A671FE4E
+	for <e@80x24.org>; Wed, 22 Jun 2016 07:00:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751520AbcFVFqn (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 01:46:43 -0400
-Received: from mout.web.de ([217.72.192.78]:56469 "EHLO mout.web.de"
+	id S1752064AbcFVG7e (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 02:59:34 -0400
+Received: from mout.gmx.net ([212.227.17.20]:63922 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751084AbcFVFqn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 01:46:43 -0400
-Received: from [192.168.178.36] ([79.237.51.220]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0LlF9O-1bpTVm46Mw-00b5Qq; Wed, 22 Jun 2016 07:46:33
+	id S1750897AbcFVG6E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 02:58:04 -0400
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0M9fLX-1b5PUI2vHz-00D1eN; Wed, 22 Jun 2016 08:49:17
  +0200
-Subject: Re: [PATCH 2/2] archive-tar: write extended headers for far-future
- mtime
-To:	Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20160616043523.GA13615@sigill.intra.peff.net>
- <20160616043758.GB18323@sigill.intra.peff.net> <57687417.4020009@web.de>
-From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <576A2631.2000608@web.de>
-Date:	Wed, 22 Jun 2016 07:46:25 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
+Date:	Wed, 22 Jun 2016 08:49:16 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	Konstantin Khomoutov <kostix+git@007spb.ru>,
+	Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Problem with git-http-backend.exe as iis cgi
+In-Reply-To: <xmqq60t2sd5c.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1606220846030.10382@virtualbox>
+References: <F0F5A56A22F20D4CB4A03BB8D6658797E260E0E3@SERVER2011.CS-SOFTWARE.local> <20160310155522.1dee53cf95fead8cfd4e178a@domain007.com> <xmqq60t2sd5c.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <57687417.4020009@web.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:LMbBbTKk0s5zPd2i9k+mHoJFPOOAkswWcESeaoLLthF6c7eD50V
- K6Rbe6LF+Ed57z8p4X0n/687MYoTSovcmI02cfsImWKOnOpdVgVnrXuWSop3lgXPqLu0szr
- wbaFb/9VDWgaTdkmhBZxy3MkAIvtguWSnNmeKFWYUfZpI1yrfxqoqOef3JSVzkAK36z0Tf0
- MPSalQa99158s3by079eQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:WPolvWo9iA0=:2JPr3ScY0ugS3WTAyzj7J6
- U+oB53AgDSmMBtVsjAHzLmg84fKm9dy2t1gxuT2vL7Z3d6nMNO8/+Zvhc6q5A+VKspdOStDIE
- HjYbh2o2Rf05KdahD11p01CAQz6yroOdKCL3n/VADJ4b1vNz5jBJuB/5XXIdXocC/ya8IXwod
- 7w5cyafr+iv4GesQgAJWSaKwFLQ6mgBnnvKShRYRVG/XnuUOx9DREgWuIjxE1MHnWi7bZb+eK
- oOScQPoEKFNW5Nd40/MK1GqlTvKlXkw7bU2rnynPsBcosin4IUy6e/LOSs5qWiN9R+l2w2U5i
- fcryFdL72CHWfopnKqh2JGN0H0SUxhuVIUV4wA3cpIvuZHsS6GJZUBCLWyngKpvRbZci1JhrE
- zNdwKbiYizkny3ubl5VPpquQg4MOiF7HnXtwWdpg1V9hzb6T6xL8W24IARnv8KG6oPILVrkEb
- y47yZbH4cLLZyfhfnoyeCjNEijuZmkUpu+iUwLZogQ1CVCAgcenpGPvGWg7M2gjOJFSZHFzsR
- eY0mi7LLMN2EXqUEcrDl49w4fewL6IkzZMDTdzozQMt2UjY8nh9ftfwaAJ3R0f9PzNRKesAij
- 8o4lPg6HMCrKQcN7MCa21xqOP/3mjM/TH65v6JaLVfLvcAmoe1P6EB9n3Y5dWMm/33NZ+mxdv
- q7T6ZzHOqGI1MRRxQl0gCRf/qSdrh3y3vZ1ZSfe6GV6axul+QdjWpVJOdcj+MprflFFRjKcsn
- Fowr1FP3cXBmRvnjauqjJiLKwSbW+JkRjmzIUak56IUdNpodlXcr8FpjXEDawtrrYUQ1lP4gY
- lcj2toZ
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:0ePAJtN5zyk91bXrV4XHOSpYcDEJgS5Kmm6d6SOcKe8dvqdd1vZ
+ o4jr2x34/9njLIzozIB79ZI+A50yGWaj0uph0YITSlpYxF/uKXPun2dCjfDmpSTd/puJeau
+ Y5yhYGQjJHYMmLFtYr5nkpovVR05WOTsOSC4a8pQtubLIxFPGsBZQGUynG3gw6QX+dS7Tbi
+ OEsyxMryQGB48jfBvLDfg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:7x62X5zJNA4=:eDj00iS+PPQ2AwIhRONMU7
+ 7sT5AK+0tUG9xI89YrZJTN/bKZZZNe7whzres1oWsBiPCeoRJaR/fk0I2mUDu4ljxjOhFUdW3
+ JSpPlCMZPtzubuQNKdbPDPyJBDefl3JnOLZwNhTs3yb7FfUJNKm7deantUZt73ZVuoC0B/XSE
+ iIw4tIizkUo6Mtq7AbgO5V54q6vlwjipU/qOmIcAE1OKzCN9mYzB7qU05chnP6mciQaocZu28
+ P29SqvX/Hm5oZWHBNu5izBrMllyKZKvTR0ek5tbArgAEBTvEDVmtT6c8/C1hF2k+iG5V1KnzZ
+ MwYkQQzwGBOkuAZJ2iwK+EE/x+UeZ9FvkoZ6BaAJwH/oN2TepEoWHiyP0yMqZ/7j3mve/hw52
+ cFJnDCAjr9a+RDKeMAtjb1+PJJrrxjBObMIzZzdObCaAmLY+QnmgrzoIloVZKM9a0jW8DkJYW
+ dY7YoCI55DnpNVu0fivQvbDTAh5rmQM7eg7SB7WeMzrzY51vOXaqdxg6mM//l+sIv0DYGB8ml
+ V+nLGKnhSBHifVaUrERqIA0hbK9Hi+hA3I0Z+Zjw0bl0jr27xiRvvdEDYpH284mk7SDkJmcQN
+ +CM7MozluM3XWETckOqnltImFKOAFHilRDo3e7pM9TdqEYcX/Qk41WxuDgl1pmhEgca06xdrF
+ QEswL+a8CzN2H2g1vf9LdFe8uMSS5RCwicbQumpRnu01xZmAsKeajhv2mLOk1EU+k5wxYIxdw
+ rK3NFQr6xuSQ4hzQN84cTyPHvHqS5GegFGwDatlP09iyJYlu1X+QeXE42AUYBEdNp6Kfm/TEG
+ /vFkPel
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Am 21.06.2016 um 00:54 schrieb René Scharfe:
-> Am 16.06.2016 um 06:37 schrieb Jeff King:
->>    2. System tars that cannot handle pax headers.
->
-> In t5000 there is a simple interpreter for path headers for systems
-> whose tar doesn't handle them.  Adding one for mtime headers may be
-> feasible.
->
-> It's just a bit complicated to link a pax header file to the file it
-> applies to when it doesn't also contain a path header.  But we know that
-> the mtime of all entries in tar files created by git archive are is the
-> same, so we could simply read one header and then adjust the mtime of
-> all files accordingly.
+Hi Junio,
 
-This brings me to the idea of using a single global pax header for mtime 
-instead of one per entry.  It reduces the size of the archive and allows 
-for slightly easier testing -- it just fits better since we know that 
-all our mtimes are the same.
+On Tue, 21 Jun 2016, Junio C Hamano wrote:
 
-René
+> Konstantin Khomoutov <kostix+git@007spb.ru> writes:
 
+[purportedly on 10 Mar 13:55 2016, see $gmane/297739]
+
+> Isn't this responding to a stale thread?
+
+I was puzzled, too. I think the mail somehow got re-sent (and another one
+by Konst, too).
+
+Ciao,
+Dscho
