@@ -1,99 +1,78 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D9B620189
-	for <e@80x24.org>; Wed, 22 Jun 2016 18:33:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC02C20189
+	for <e@80x24.org>; Wed, 22 Jun 2016 18:37:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752133AbcFVSdN (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 14:33:13 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:35928 "EHLO
-	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751357AbcFVSdM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 14:33:12 -0400
-Received: by mail-io0-f195.google.com with SMTP id s63so8613944ioi.3
-        for <git@vger.kernel.org>; Wed, 22 Jun 2016 11:33:12 -0700 (PDT)
+	id S1751726AbcFVShJ (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 14:37:09 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:36243 "EHLO
+	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751498AbcFVShI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 14:37:08 -0400
+Received: by mail-yw0-f195.google.com with SMTP id f75so7465340ywb.3
+        for <git@vger.kernel.org>; Wed, 22 Jun 2016 11:37:07 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=NfIMNA/v847kM44+FRGLgOfHPDuVFRU+qPDo6F4hi3c=;
-        b=U4m6RkTKH/eCWh4BASoyIM42qaWV74Rep0wXBEPMBrodbtinEGAMFJ40oX2imqKGSu
-         7XphT4grvUz6wJFVi6PqAHjXqcUM3OVB+7iSH0FTP3eTpWKHD70MSADiGwftTGzGqxp3
-         vHsDZlRsIciSEIj1YyGSNklxiR9Ddh7iqcr9duUCtTe9IPUdBJTeKbI8iVaMBXWKtwDB
-         N4nxbQxz9083IRK4EMO7XqkYkzhJYveL/DXkyu76vliyWj2yMXbpodszcfBKTYU5qfSr
-         f+CePQtWDn4RcH0oPuiN+k4UcJPDf6TiWq/ddZKC/A3sROA+f7XWR16NfTRoYPC4jDwm
-         itbQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=Pwkuq8o3vpcbfhJIdalFhUK3nbyt2ibxAdDs1DbTY2o=;
+        b=t0cCDiNjElTof4HvkNHwFY6xubukqCne17RMvCzl462YPKp7CgirL+FRMoNkFZ4kiL
+         5O1gCWfJ4Cx06sI+X8xNrpC5VnLg7DV19kLJnOwz4nMd0fbWo+sJ11SwDsn4fbCragzH
+         U3FaSWCLkXFcxcIur4lZxJ25vyMQmYsuVPxaHtgJdReHv0PwObtd64399oFYO/XA7Gyd
+         C1NSFVxr8FQPS8d7Vgn0Nqe9Wb/+/eLaXDVK82TH8sE3HMlhmqJ69sGkbejqbxO48BQ3
+         7OUK1FRopi4XmSvfn3YiqXB97wOX+I6lEY/bidN3COe4Lr6hX+GVC7knVMv04dwj5Bbb
+         StLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=NfIMNA/v847kM44+FRGLgOfHPDuVFRU+qPDo6F4hi3c=;
-        b=GR4k1qj8Ai6HVHo3eF8hhDgRMaGAYRZyucEpxj3EBcSRd5Gvh2pbh8XEmS17FA43ub
-         4oYaWCqpS8LQZzAhii+805uAaAAEb/n5hJzf22X1aYs46tYCy/SzGwajlA377xxm54/e
-         1Y3rsonfArzjisHJzyIASk42dNYofkTkZKuzJTn3ZkUlJg9OTJ5iiPEU/mzUMNKGbaDg
-         vnD7FoGMIyVGAvS5Lao9UA/WeJzGn9NoaCxJwxPBXrtALFnc4rUeoewNNraBkQFRDA8d
-         8VGBHIWJEpekL25hq3hHcQwPw0sxXYpjdv1z5qhbfjaTdtYiAb5N3QbG2PV0enioXtmr
-         hKLA==
-X-Gm-Message-State: ALyK8tLFi5QSta9ge3/Tb75VH2ZElQhbxc1jVgDadjIB0eblN/eBrnOuh2ysQ9FysqCALaFz0O5krjxMXN7qQg==
-X-Received: by 10.107.22.131 with SMTP id 125mr41871431iow.128.1466620391698;
- Wed, 22 Jun 2016 11:33:11 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=Pwkuq8o3vpcbfhJIdalFhUK3nbyt2ibxAdDs1DbTY2o=;
+        b=Od85xvDOyOwIOoKENdbJaxfakmh7zvkWbajSkadjlDp3NdeXDezy5gON9bqWe2OirJ
+         srHQDNmRMv9f9lmZt0efV0b9K/1LQFj1ZdVeIqqDWXt3xERPrJfmVmJ/keE2WdGCxM+t
+         mVNaSTcYVKouY32OQVpAPSatdC8BlmLX8zH7a4obZPC1pPRnjfqj7WV2u3Rm7l3Y88k6
+         qPknG2Ax0SKynX66X79S6CWfa2rD3IN+rMdzQnuksjH7pfTI52DhV1Q45fInfseyWcBp
+         Evmyy8DenhjJUyBkoz1YG2TYmNnN/7BM4EN/LOUVtiG1bQiaXpvUVG2hyTVwD0lDh9Hi
+         BRYw==
+X-Gm-Message-State: ALyK8tIxpH9DCWToTMWMIj1Sb+uLU9/+Ltoc8CDE1oW5A9XkCtbFqhrP1fMAE0ETcN1c1GbU5C0LXK/lOiiqdA==
+X-Received: by 10.37.114.9 with SMTP id n9mr16307572ybc.80.1466620626252; Wed,
+ 22 Jun 2016 11:37:06 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Wed, 22 Jun 2016 11:32:42 -0700 (PDT)
-In-Reply-To: <xmqqlh1xm7c5.fsf@gitster.mtv.corp.google.com>
-References: <20160621211412.28752-1-charles@hashpling.org> <20160621211412.28752-2-charles@hashpling.org>
- <xmqqinx2nonl.fsf@gitster.mtv.corp.google.com> <CACsJy8C9Dh_Owr3UFJnCtvXserG4V-e1ws8ZY52ME1yr+fefOw@mail.gmail.com>
- <xmqqlh1xm7c5.fsf@gitster.mtv.corp.google.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Wed, 22 Jun 2016 20:32:42 +0200
-Message-ID: <CACsJy8Acb+Hx1R66hcHQ7gNQ6TmKoUzC7Ar2PpSPkQeKM1EY8w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] grep: fix grepping for "intent to add" files
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Charles Bailey <charles@hashpling.org>,
-	Git Mailing List <git@vger.kernel.org>
+Received: by 10.13.251.71 with HTTP; Wed, 22 Jun 2016 11:36:46 -0700 (PDT)
+In-Reply-To: <CACsJy8BQxAkpoT7GVNgtM-0n1pMZeV5TRCiSn6TsYeATWeU=EA@mail.gmail.com>
+References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
+ <1454724190-14063-1-git-send-email-pclouds@gmail.com> <xmqq4m8rz9qr.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8CSVvZfwjG+zAEpG6tAWYAWVkrkz4RP32Hrr9O1A_8ZMg@mail.gmail.com> <CACsJy8BQxAkpoT7GVNgtM-0n1pMZeV5TRCiSn6TsYeATWeU=EA@mail.gmail.com>
+From:	Junio C Hamano <gitster@pobox.com>
+Date:	Wed, 22 Jun 2016 11:36:46 -0700
+X-Google-Sender-Auth: utxn5mDGu9SJ6GIum8_naOxm_vs
+Message-ID: <CAPc5daWEoK4Gp138VPstqwCAX+2K=_gSW98brHjmJYNWK4dkZw@mail.gmail.com>
+Subject: Re: [PATCH v6 00/11] Fix icase grep on non-ascii
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jun 22, 2016 at 8:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
+On Wed, Jun 22, 2016 at 11:29 AM, Duy Nguyen <pclouds@gmail.com> wrote:
 >
->>> So I wonder if a better change would be more like
->>>
->>>         for (...) {
->>>                 if (!S_ISREG(ce->ce_mode))
->>>                         continue; /* not a regular file */
->>>                 if (!ce_path_match(ce, pathspec, NULL)
->>>                         continue; /* uninteresting */
->>> +               if (cached && ce_intent_to_add(ce))
->>> +                       continue; /* path not yet in the index */
->>>
->>>                 if (cached || ...)
->>>                         UNCHANGED FROM THE ORIGINAL
->>>
->>> perhaps?
->>
->> I did wonder a bit about these cases. But, can i-t-a really be
->> combined with CE_VALID or CE_SKIP_WORKTREE? CE_SKIP_... is
->> automatically set and should not cover i-t-a entries imo (I didn't
->> check the implementation). CE_VALID is about real entries, yes you
->> could do "git update-index --assume-unchanged <ita-path>" but it does
->> not feel right to me.
+> Can any shell wizards explain this to me? With this code
 >
-> Yeah but we know people are stupid^W^Wdo unexpected things ;-)
+> BS=\\
+> echo ${BS}${BS}
 >
->> If cached is false and ce_ita() is true and either CE_VALID or
->> CE_SKIP_WORKTREE is set, we would continue to grep an _empty_ SHA-1.
->> But I think we should grep_file() instead, at least for CE_VALID.
+> Debian's dash returns a single backslash while bash returns two
+> backslashes. Section 2.2.1 [1] does not say anything about one
+> backslash (hidden behind a variable!) after escaping the following one
+> and still eats the one after that..
 >
-> Yes, that is the breakage I noticed in the patch under discussion
-> and that I wanted to fix in the "I wonder if a better change would
-> be..." version.
+> [1] http://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html
 
-Heh.. I did guess that. Since neither solution is complete, I'm in
-favor of Charles's and assume that i-t-a forces to ignore CE_SKIP and
-CE_SKIP_WORKTREE. I could wait for people to come back complaining,
-then we know there are real users in very obscure cases and will fix
-it then.
--- 
-Duy
+I am not a wizard, but is the difference between the shell syntax, or just their
+implementation of builtin-echo?  IOW, how do these three compare?
+
+printf "%s\n" "${BS}${BS}"
+echo "${BS}${BS}"
+echo ${BS}$BS}
