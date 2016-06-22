@@ -1,74 +1,159 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB61020189
-	for <e@80x24.org>; Wed, 22 Jun 2016 21:26:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C005920189
+	for <e@80x24.org>; Wed, 22 Jun 2016 21:39:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752502AbcFVV0k (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 17:26:40 -0400
-Received: from mout.gmx.net ([212.227.15.15]:62751 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751462AbcFVV0k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 17:26:40 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MGBdv-1bBlJV3ZeJ-00FFQx; Wed, 22 Jun 2016 23:26:18
- +0200
-Date:	Wed, 22 Jun 2016 23:26:18 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
-Subject: Re: [PATCH 1/1] mingw: work around t2300's assuming non-Windows
- paths
-In-Reply-To: <xmqqvb11kmog.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1606222325560.10382@virtualbox>
-References: <cover.1466246919.git.johannes.schindelin@gmx.de> <a8bebe126bcd047720a13e90b85b8dccb7231187.1466246919.git.johannes.schindelin@gmx.de> <xmqqmvmfu17f.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1606211356170.22630@virtualbox>
- <xmqqr3bqqxhc.fsf@gitster.mtv.corp.google.com> <xmqqk2hiqwpb.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1606220927350.10382@virtualbox> <xmqqa8idnpj9.fsf@gitster.mtv.corp.google.com> <xmqqvb11kmog.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1750829AbcFVVj2 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 17:39:28 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60211 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750718AbcFVVj2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 17:39:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9849727532;
+	Wed, 22 Jun 2016 17:39:26 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RBU/ukH8vePjfSDxWPo+8g9xoY4=; b=RCQWRk
+	zIOz4WbYy1S1yirI+4uiBDby3d8bOGs2vkaqNUN1Mlb5k9PIOndf9M0zoX/YFiAW
+	hgP4FXhswv96ZkSAOEGtcnyoOub0je21zjxMouv0PxpFmYX6iVO63+Lr5wCvj68Q
+	Xk8FKWEIDaKv/2D9giRMg8T78OXJ2L7jjuvvM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aa6s0BKTTeauCtTw9mUwyUdE9qZqVKXn
+	ZqdF4TS14gm+XJswFpTZg+DUZmyl0V6KvpZ4+DE0umVxh9U4WSbFfMwGyOe5B4lL
+	8A2g1Bm5cx6Pm8FKQFkXmWPMQ3kFEACpPgrJBpNKnejMpJ6DknsxkRhx8owQicX4
+	wufgfZJ2jQ8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9132A27531;
+	Wed, 22 Jun 2016 17:39:26 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1AFE02752F;
+	Wed, 22 Jun 2016 17:39:26 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Joey Hess <joeyh@joeyh.name>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH v4 8/8] use smudgeToFile filter in recursive merge
+References: <1466629758-8035-1-git-send-email-joeyh@joeyh.name>
+	<1466629758-8035-9-git-send-email-joeyh@joeyh.name>
+Date:	Wed, 22 Jun 2016 14:39:24 -0700
+In-Reply-To: <1466629758-8035-9-git-send-email-joeyh@joeyh.name> (Joey Hess's
+	message of "Wed, 22 Jun 2016 17:09:18 -0400")
+Message-ID: <xmqq7fdglx83.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:blc+Zp5SeY1qFRIU/IAFvK9goB7tsmNSQ9lT9pXq3Ee9BJRVy7u
- tweHDwei6IiZeypzuPJJ+89gEjQWDvRIMYjbHhQuA3bBc2IoL/J3QV9/N5GylqlnsGD4HY7
- vMNwK3C/D+l8mxK/xTNfRWXYbMg/HEF2a6r6KsHasEppBxE8Cv9t9Uwt7RUkKuXW95ESoaz
- GBTZLtqyXje0b8hm8PrJA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:A83xB2cV4NA=:/rseWvCeYGZcCLZP2BKBc7
- 8vIWqFdEA/Cw7pLeRDKvh4+EzYC+kuUAhTqkaQoGcjaMZqPpAXxFIvZpJ7SQf/whkDZkdtXkR
- SrX2/Q1ptTquZg3Wk1UWD0nteoHRVSh6v+G2ikR7iw3ANG5KKW7avSiCDi/eQMi0pc7BVsnEO
- Z2N+sdsIiJ8WhzefLoCkYM8DcWzHAl5kR4cpOvSZFvx3SpSFDkUHXuz4jVLvZKEM/+LTi7j1X
- JV/jNOIvRs3NeO+hxdHyC6kmEBW1iyxymtt0MAb/iZRxygFZDTehIBuPHX+LwDEzrESaVv80W
- 0S9tU3pj4jgpiIAuL72DoHiqWwunRmYFJDlUhLnbBq6sWW2M9/kIARYsGIlhfogV+Wj8Mdc37
- ZfLh0+s3lWCnbyHi3B5aPCWxl7EW6J/t76/V7mhyhdJ6OPEsdVVlMWF2714BJaR6+q8llRKPl
- jRLFm+46pd4z1jT0CvDEC2/C9y4koqHy9Duj9qPD7tU40aBpZFeu9xZJqtwBoYdsAoZHFAsHY
- iSuGReWLdqBuAlyyERfAp4Rqg86GiUL1QctA1r/WUqBejNS0FYRhZhWNYARXC6cSnvWIsLsQN
- qYfZF7mdTbICHbdGKuRM+D8gMeszEv3R37nssXwNyfgS8Q5jeixip5WXEaMuWOBVOEBi92Zgi
- e5WKYChMzYS9jV/aq4l57bZqWyXaUmpH5tagEk+WCTTL43nvxl2KLfpT/XhbxI7fI4Tle5n8l
- LKfWoI+bycKSaL7nbQ3cVyHSuR4AApJ87eM9wKzi2DocZT4FlA8EQJS5+4Gzk/UbXhGpnFbNb
- uMNikh6
+Content-Type: text/plain
+X-Pobox-Relay-ID: CAA7813E-38C1-11E6-BF78-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Joey Hess <joeyh@joeyh.name> writes:
 
-On Wed, 22 Jun 2016, Junio C Hamano wrote:
+> @@ -781,6 +773,7 @@ static void update_file_flags(struct merge_options *o,
+>  		}
+>  		if (S_ISREG(mode) || (!has_symlinks && S_ISLNK(mode))) {
+>  			int fd;
+> +			int isreg = S_ISREG(mode);
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > I think I know that well enough; please sanity check.  My
-> > understanding is:
-> > ...
-> > The patch under discussion is the only door left for that test, and
-> > a similar trickery is needed for any end-user scripts used for hooks
-> > and aliases that use 'git --exec-path', if they ever want to be
-> > cross-platform.
-> >
-> > So let's take that "if Windows do this" change to t2300 as-is.
-> 
-> Assuming that the sanity check passes, here is a suggested rewrite
-> to explain the real problem better.
+You probably want to move this isreg business up one scope
+(i.e. inside "if (update_wd) {").  Then the if () condition
+for this block can use it already.
 
-Yes, the sanity check passes, and your commit message is much better than
-mine.
+>  			if (mode & 0100)
+>  				mode = 0777;
+>  			else
+> @@ -788,8 +781,37 @@ static void update_file_flags(struct merge_options *o,
+>  			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
+>  			if (fd < 0)
+>  				die_errno(_("failed to open '%s'"), path);
+> -			write_in_full(fd, buf, size);
+> -			close(fd);
+> +
+> +			int smudge_to_file = can_smudge_to_file(path);
 
-Thanks!
-Dscho
+This does not compile with decl-after-statement.  I suspect other
+patches in this series have the same issue but I did not check.  Do
+you say "make DEVELOPER=1"?
+
+> +			if (smudge_to_file) {
+> +				close(fd);
+> +				fd = convert_to_working_tree_filter_to_file(path, path, buf, size);
+> +				if (fd < 0) {
+> +					/* smudgeToFile filter failed;
+> +					 * continue with regular file
+> +					 * creation. */
+
+/*
+ * Style: We format our multi-line
+ * comments like this.
+ */
+
+> +					smudge_to_file = 0;
+
+Ahh, I was wondering why this is not "if (smudge_to_file) ... else ...".
+
+> +					fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
+> +					if (fd < 0)
+> +						die_errno(_("failed to open '%s'"), path);
+> +				}
+> +				else {
+> +					close(fd);
+> +				}
+> +			}
+> +
+> +			if (! smudge_to_file) {
+
+Style: if (!smudge_to_file) {
+
+> +test_expect_success 'smudgeToFile filter is used in merge' '
+> +	test_config filter.rot13.smudgeToFile ./rot13-to-file.sh &&
+> +
+> +	git commit -m "added fstest.t" fstest.t &&
+> +	git checkout -b old &&
+> +	git reset --hard HEAD^ &&
+> +	git merge master &&
+> +
+> +	test -e rot13-to-file.ran &&
+> +	rm -f rot13-to-file.ran &&
+> +
+> +	cmp test fstest.t &&
+
+"test_cmp test fstest.t"?  The difference matters when running the
+test with -v option.
+
+> +	git checkout master
+
+What happens if any of the previous steps failed?  Does the next
+test get confused because you would fail to go back to the master
+branch?
+
+> +'
+> +
+>  test_expect_success 'smudgeToFile filter is used by git am' '
+>  	test_config filter.rot13.smudgeToFile ./rot13-to-file.sh &&
+>  
+> -	git commit fstest.t -m "added fstest.t" &&
+>  	git format-patch HEAD^ --stdout > fstest.patch &&
+
+Style: 
+
+	git format-patch HEAD^ --stdout >fstest.patch &&
+
+>  	git reset --hard HEAD^ &&
+>  	git am < fstest.patch &&
+
+Style: 
+
+	git am <fstest.patch &&
+
+but in this case you do not even need to redirect, i.e.
+
+	git am fstest.patch &&
+
+is enough.
+
+Thanks.
