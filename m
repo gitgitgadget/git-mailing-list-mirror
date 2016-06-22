@@ -1,30 +1,30 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF82D20189
-	for <e@80x24.org>; Wed, 22 Jun 2016 20:22:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89A8C20189
+	for <e@80x24.org>; Wed, 22 Jun 2016 20:22:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752033AbcFVUWO (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 16:22:14 -0400
-Received: from kitenet.net ([66.228.36.95]:57474 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752141AbcFVUWN (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752478AbcFVUWN (ORCPT <rfc822;e@80x24.org>);
 	Wed, 22 Jun 2016 16:22:13 -0400
+Received: from kitenet.net ([66.228.36.95]:57470 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751940AbcFVUWM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 16:22:12 -0400
 X-Question: 42
 Authentication-Results:	kitenet.net;
-	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=O764ySKK;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=YY++R9yR;
 	dkim-atps=neutral
 DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-	t=1466626900; bh=tZKTza6j5Bgb+MetOZlihKbjqJkwh636uFG94s8yMqo=;
+	t=1466626900; bh=Rh8zs+cplBoMbbQeMv/jInheGqUEBCqjTTSIh7W19/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O764ySKKLMoyvYyu6U3Rr1PCLR24UkPIyfDYrd20aUJ3KmE1Lch9lR8mgd3k8BkwI
-	 rMjcR1dKLyJ4Tmy26kuIeChHwlpE+waTyVQWVFEAAW8NGTNW40aeh16IrbYh9r4+FV
-	 kHNNW6iL71KW9lXxr3W5SeTl63u24mYGOmtmravk=
+	b=YY++R9yR162PS3hx2LQKc8oBPO89qze5bzCJYNTv65Vs03T9Oo/ayET4/9WVEt5LV
+	 NdQ6hZZ9f+4ySt3KXZUszEu1hlqcfzrNsTpeja6tCP2+ZAESOQN02ZbyjD+gV7rfIz
+	 pYBvBqRifluG+26nhnGJpLpKaF3z+zsTxm63R59E=
 From:	Joey Hess <joeyh@joeyh.name>
 To:	git@vger.kernel.org
 Cc:	Joey Hess <joeyh@joeyh.name>
-Subject: [PATCH v3 8/8] use smudgeToFile filter in recursive merge
-Date:	Wed, 22 Jun 2016 16:21:33 -0400
-Message-Id: <20160622202133.23565-9-joeyh@joeyh.name>
+Subject: [PATCH v3 5/8] warn on unusable smudgeToFile/cleanFromFile config
+Date:	Wed, 22 Jun 2016 16:21:30 -0400
+Message-Id: <20160622202133.23565-6-joeyh@joeyh.name>
 X-Mailer: git-send-email 2.9.0.8.gf959b2a
 In-Reply-To: <20160622202133.23565-1-joeyh@joeyh.name>
 References: <20160622202133.23565-1-joeyh@joeyh.name>
@@ -38,115 +38,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Recursive merge updates the work tree and so should use the smudgeToFile
-filter.
+Let the user know when they have a smudgeToFile/cleanFromFile config
+that cannot be used because the corresponding smudge/clean config
+is missing.
 
-At this point, smudgeToFile is run by everything that updates work
-tree files.
+The warning is only displayed a maximum of once per git invocation,
+and only when doing an operation that would use the filter.
 
 Signed-off-by: Joey Hess <joeyh@joeyh.name>
 ---
- merge-recursive.c     | 42 ++++++++++++++++++++++++++++++++----------
- t/t0021-conversion.sh | 16 +++++++++++++++-
- 2 files changed, 47 insertions(+), 11 deletions(-)
+ convert.c | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 65cb5d6..012fe38 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -765,14 +765,6 @@ static void update_file_flags(struct merge_options *o,
- 			die(_("cannot read object %s '%s'"), sha1_to_hex(sha), path);
- 		if (type != OBJ_BLOB)
- 			die(_("blob expected for %s '%s'"), sha1_to_hex(sha), path);
--		if (S_ISREG(mode)) {
--			struct strbuf strbuf = STRBUF_INIT;
--			if (convert_to_working_tree(path, buf, size, &strbuf)) {
--				free(buf);
--				size = strbuf.len;
--				buf = strbuf_detach(&strbuf, NULL);
--			}
--		}
+diff --git a/convert.c b/convert.c
+index bf63ba0..b6a76a9 100644
+--- a/convert.c
++++ b/convert.c
+@@ -847,32 +847,50 @@ int would_convert_to_git_filter_fd(const char *path)
+ 	return apply_filter(path, NULL, NULL, 0, -1, NULL, ca.drv->clean);
+ }
  
- 		if (make_room_for_path(o, path) < 0) {
- 			update_wd = 0;
-@@ -781,6 +773,7 @@ static void update_file_flags(struct merge_options *o,
- 		}
- 		if (S_ISREG(mode) || (!has_symlinks && S_ISLNK(mode))) {
- 			int fd;
-+			int isreg = S_ISREG(mode);
- 			if (mode & 0100)
- 				mode = 0777;
- 			else
-@@ -788,8 +781,37 @@ static void update_file_flags(struct merge_options *o,
- 			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
- 			if (fd < 0)
- 				die_errno(_("failed to open '%s'"), path);
--			write_in_full(fd, buf, size);
--			close(fd);
++static int can_filter_file(const char *filefilter, const char *filefiltername,
++			   const char *stdiofilter, const char *stdiofiltername,
++			   const struct conv_attrs *ca,
++			   int *warncount)
++{
++	if (! filefilter)
++		return 0;
 +
-+			int smudge_to_file = can_smudge_to_file(path);
-+			if (smudge_to_file) {
-+				close(fd);
-+				fd = convert_to_working_tree_filter_to_file(path, path, buf, size);
-+				if (fd < 0) {
-+					/* smudgeToFile filter failed;
-+					 * continue with regular file
-+					 * creation. */
-+					smudge_to_file = 0;
-+					fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
-+					if (fd < 0)
-+						die_errno(_("failed to open '%s'"), path);
-+				}
-+				else {
-+					close(fd);
-+				}
-+			}
++	if (stdiofilter)
++		return 1;
 +
-+			if (! smudge_to_file) {
-+				if (isreg) {
-+					struct strbuf strbuf = STRBUF_INIT;
-+					if (convert_to_working_tree(path, buf, size, &strbuf)) {
-+						free(buf);
-+						size = strbuf.len;
-+						buf = strbuf_detach(&strbuf, NULL);
-+					}
-+				}
-+				write_in_full(fd, buf, size);
-+				close(fd);
-+			}
- 		} else if (S_ISLNK(mode)) {
- 			char *lnk = xmemdupz(buf, size);
- 			safe_create_leading_directories_const(path);
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index fd07bd6..2722013 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -334,10 +334,24 @@ test_expect_success 'recovery from failure of smudgeToFile filter that deletes t
- 	cmp test fstest.t
- '
++	if (*warncount == 0)
++		warning("Not running your configured filter.%s.%s command, because filter.%s.%s is not configured",
++			ca->drv->name, filefiltername,
++			ca->drv->name, stdiofiltername);
++		*warncount=*warncount+1;
++
++	return 0;
++}
++
+ int can_clean_from_file(const char *path)
+ {
+ 	struct conv_attrs ca;
++	static int warncount = 0;
  
-+test_expect_success 'smudgeToFile filter is used in merge' '
-+	test_config filter.rot13.smudgeToFile ./rot13-to-file.sh &&
-+
-+	git commit -m "added fstest.t" fstest.t &&
-+	git checkout -b old &&
-+	git reset --hard HEAD^ &&
-+	git merge master &&
-+
-+	test -e rot13-to-file.ran &&
-+	rm -f rot13-to-file.ran &&
-+
-+	cmp test fstest.t &&
-+	git checkout master
-+'
-+
- test_expect_success 'smudgeToFile filter is used by git am' '
- 	test_config filter.rot13.smudgeToFile ./rot13-to-file.sh &&
+ 	convert_attrs(&ca, path);
+ 	if (!ca.drv)
+ 		return 0;
  
--	git commit fstest.t -m "added fstest.t" &&
- 	git format-patch HEAD^ --stdout > fstest.patch &&
- 	git reset --hard HEAD^ &&
- 	git am < fstest.patch &&
+-	/* Only use the cleanFromFile filter when the clean filter is also
+-	 * configured.
+-	 */
+-	return (ca.drv->clean_from_file && ca.drv->clean);
++	return can_filter_file(ca.drv->clean_from_file, "cleanFromFile",
++			       ca.drv->clean, "clean", &ca, &warncount);
+ }
+ 
+ int can_smudge_to_file(const char *path)
+ {
+ 	struct conv_attrs ca;
++	static int warncount = 0;
+ 
+ 	convert_attrs(&ca, path);
+ 	if (!ca.drv)
+ 		return 0;
+ 
+-	/* Only use the smudgeToFile filter when the smudge filter is also
+-	 * configured.
+-	 */
+-	return (ca.drv->smudge_to_file && ca.drv->smudge);
++	return can_filter_file(ca.drv->smudge_to_file, "smudgeToFile",
++			       ca.drv->smudge, "smudge", &ca, &warncount);
+ }
+ 
+ const char *get_convert_attr_ascii(const char *path)
 -- 
 2.9.0.8.g973eabb.dirty
 
