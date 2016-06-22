@@ -1,51 +1,51 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F28A120189
-	for <e@80x24.org>; Wed, 22 Jun 2016 16:53:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB2A720189
+	for <e@80x24.org>; Wed, 22 Jun 2016 16:53:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752648AbcFVQxh (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 12:53:37 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:32930 "EHLO
-	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752578AbcFVQxg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 12:53:36 -0400
-Received: by mail-pf0-f195.google.com with SMTP id c74so4497867pfb.0
-        for <git@vger.kernel.org>; Wed, 22 Jun 2016 09:53:36 -0700 (PDT)
+	id S1752852AbcFVQxo (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 12:53:44 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35462 "EHLO
+	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752722AbcFVQxm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 12:53:42 -0400
+Received: by mail-pf0-f194.google.com with SMTP id t190so4494758pfb.2
+        for <git@vger.kernel.org>; Wed, 22 Jun 2016 09:53:42 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+BIiObjsJsxSBbAvRQUQ1szFakfCZkK3SC+argcpUZ4=;
-        b=k72VJpm8okPmHO84SNsgOAQfZqQW1ifDFlVJ/kPXygxWF+r4FlgbCHdoc7iQpQlWOV
-         XMHcqDHrklPObFeeL6QsKI1vjVI4jYIc+qKeZH3P9AHdfNVAcx0pOjeQHC1ZYA335fim
-         ZSCqaTl4226A3eVM9DJPFiWqNj5cX0gvNj1d+vMLH7iK6O2TML4nABO0//eeXMPeFY87
-         c77tTRqe4Z9EdIJ8J6gLhS5yt55jzKOfyeWS2Ej5nU2EPaTg1hfiAzgLosjA2CPchNLs
-         xUO0a4UIMSd77YhNlA9IJ/vDGSBx+8MJaT1wzo3fsC/jo0MyMewFIgxgPv8CO48lIk8E
-         A7BQ==
+        bh=pRNsD6wk7HWRW/WocP4moNxFvFOblTrAVB4JzOuc0o8=;
+        b=abjE8XlXgk8Y3TuUeUFtlblLcgo9ox5k23ZU2N/YMeWh//bSdh1eHxnyfFRRGYreHy
+         2VHYXozKqLt54WRsGbj9Abnkkf9AVfnUGcDwuQzjJM9TQ9L8TZf8CDfM2fpMpzdxWltT
+         5MvpsJQaU0IyhFbH3dylsiPYED5KybTjeVi2BvLXUTlobfOQU6K1G0beLDy95gF6LmcE
+         XrGdMsva37L0v2UD8nfKN3O+ZtgvVYMdaYdScr3s1NRDYVGf1fmThP9wt+BZWArcdUJ8
+         BmcWYLYZHfsJHmD4CccCnpShCygWcyybZ566x1Lbc+CU53qPY2z7jjSLOituaT4ju1Nl
+         7ZUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=+BIiObjsJsxSBbAvRQUQ1szFakfCZkK3SC+argcpUZ4=;
-        b=c2fN/RJOCUVsXdnyWl5OQVGGCVg0cZDm1ret0CWWh3/aC85BhxXUp1CqMOFnkYzAa4
-         RfdfjvCHur3q6q0zOquBQG3kx/Ry96uQLH0qRtdS9ZnDTAgfbQn9Gnqz4JZuJ6FPfgRT
-         oCg1dP3zxPK9L0u4DohZ9LH6RLGChC3pOnTGgxa1WmdfppZ+7xPATFQUuFilm0wfT4vL
-         LOy/ui0WLA9dJP4Vk+zFQ04Qsto7JYfFL47MCFOIpycTpMmF5gvr8bbmOMdlnYPQvQE8
-         AZ6cE1TVg9HWocSyX0Tj9muQa58qRQNeTBCWk7QK+5D5M8om9tU8JBDBmDhEhvipJO2z
-         f+HA==
-X-Gm-Message-State: ALyK8tJaYDmdtn/p+fO00WeLw2FA2wD1iKD4pPBPKnCCFs1sBahhuU9+jEbnHLmkkcbLsA==
-X-Received: by 10.98.32.65 with SMTP id g62mr35490161pfg.12.1466614415950;
-        Wed, 22 Jun 2016 09:53:35 -0700 (PDT)
+        bh=pRNsD6wk7HWRW/WocP4moNxFvFOblTrAVB4JzOuc0o8=;
+        b=T+qwkLxISsqjbkR9Y5r9A9DqjlcWJerIJaGqTcYV+ho77Af5txUyfErhM1R9v5kTXz
+         WYzlWNiSPvhSvv31sVa7RRwoKZDY4dTeBK5ontmHkG3pdX8giKkhKKK6VDKahmXY8/9F
+         Rds7XkTQB339EDwxzM4bBis5PZVFfVSFN9Jqbso5VdRq6BUE9E22ps7/NUhYJQmmCqmL
+         JrxcGmhLK3wZIEAINowfZ7oXJVeQ6oZl2D/NJbHAwwPI3yBoam1fO6MiRV6ZxLJ24Mc1
+         wXZto8Am5p+r/V0n6/votpaFfeh8iDifL5ruIncZuqPsIkPlRJFMsTMECKmE3bLeIu8Y
+         8uPg==
+X-Gm-Message-State: ALyK8tKnIaUxb2IwREiRsX05eXGVhf2nrcNeUaDdNZePI9ErvD79IMOUJcFXU5OqatuO4A==
+X-Received: by 10.98.5.2 with SMTP id 2mr22030239pff.58.1466614421759;
+        Wed, 22 Jun 2016 09:53:41 -0700 (PDT)
 Received: from localhost.localdomain ([106.218.86.37])
-        by smtp.gmail.com with ESMTPSA id sz7sm1132865pab.23.2016.06.22.09.53.32
+        by smtp.gmail.com with ESMTPSA id sz7sm1132865pab.23.2016.06.22.09.53.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 22 Jun 2016 09:53:35 -0700 (PDT)
+        Wed, 22 Jun 2016 09:53:41 -0700 (PDT)
 From:	Mehul Jain <mehul.jain2029@gmail.com>
 To:	git@vger.kernel.org
 Cc:	Eric Sunshine <sunshine@sunshineco.com>,
 	Mehul Jain <mehul.jain2029@gmail.com>
-Subject: [PATCH v3 2/3] log: add "--no-show-signature" command line option
-Date:	Wed, 22 Jun 2016 22:21:25 +0530
-Message-Id: <20160622165126.12786-3-mehul.jain2029@gmail.com>
+Subject: [PATCH v3 3/3] log: add log.showSignature configuration variable
+Date:	Wed, 22 Jun 2016 22:21:26 +0530
+Message-Id: <20160622165126.12786-4-mehul.jain2029@gmail.com>
 X-Mailer: git-send-email 2.9.0.rc0.dirty
 In-Reply-To: <20160622165126.12786-1-mehul.jain2029@gmail.com>
 References: <20160622165126.12786-1-mehul.jain2029@gmail.com>
@@ -54,51 +54,117 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-If an user creates an alias with "--show-signature" early in command
-line, e.g.
-	[alias] logss = log --show-signature
+Users may want to always use "--show-signature" while using git-log and
+related commands.
 
-then there is no way to countermand it through command line.
+When log.showSignature is set to true, git-log and related commands will
+behave as if "--show-signature" was given to them.
 
-Teach git-log and related commands about "--no-show-signature" command
-line option. This will make "git logss --no-show-signature" run
-without showing GPG signature.
+Note that this config variable is meant to affect git-log, git-show,
+git-whatchanged and git-reflog. Other commands like git-format-patch,
+git-rev-list are not to be affected by this config variable.
 
 Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
 ---
- revision.c     | 2 ++
- t/t4202-log.sh | 5 +++++
- 2 files changed, 7 insertions(+)
+ Documentation/git-log.txt |  4 ++++
+ builtin/log.c             |  6 ++++++
+ t/t4202-log.sh            | 20 ++++++++++++++++++++
+ t/t7510-signed-commit.sh  |  7 +++++++
+ 4 files changed, 37 insertions(+)
 
-diff --git a/revision.c b/revision.c
-index d30d1c4..3546ff9 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1871,6 +1871,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->notes_opt.use_default_notes = 1;
- 	} else if (!strcmp(arg, "--show-signature")) {
- 		revs->show_signature = 1;
-+	} else if (!strcmp(arg, "--no-show-signature")) {
-+		revs->show_signature = 0;
- 	} else if (!strcmp(arg, "--show-linear-break") ||
- 		   starts_with(arg, "--show-linear-break=")) {
- 		if (starts_with(arg, "--show-linear-break="))
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 03f9580..bbb5adc 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -196,6 +196,10 @@ log.showRoot::
+ 	`git log -p` output would be shown without a diff attached.
+ 	The default is `true`.
+ 
++log.showSignature::
++	If `true`, `git log` and related commands will act as if the
++	`--show-signature` option was passed to them.
++
+ mailmap.*::
+ 	See linkgit:git-shortlog[1].
+ 
+diff --git a/builtin/log.c b/builtin/log.c
+index 099f4f7..7103217 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -33,6 +33,7 @@ static const char *default_date_mode = NULL;
+ static int default_abbrev_commit;
+ static int default_show_root = 1;
+ static int default_follow;
++static int default_show_signature;
+ static int decoration_style;
+ static int decoration_given;
+ static int use_mailmap_config;
+@@ -119,6 +120,7 @@ static void cmd_log_init_defaults(struct rev_info *rev)
+ 	rev->abbrev_commit = default_abbrev_commit;
+ 	rev->show_root_diff = default_show_root;
+ 	rev->subject_prefix = fmt_patch_subject_prefix;
++	rev->show_signature = default_show_signature;
+ 	DIFF_OPT_SET(&rev->diffopt, ALLOW_TEXTCONV);
+ 
+ 	if (default_date_mode)
+@@ -409,6 +411,10 @@ static int git_log_config(const char *var, const char *value, void *cb)
+ 		use_mailmap_config = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "log.showsignature")) {
++		default_show_signature = git_config_bool(var, value);
++		return 0;
++	}
+ 
+ 	if (grep_config(var, value, cb) < 0)
+ 		return -1;
 diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index ab66ee0..93a82e9 100755
+index 93a82e9..ecac186 100755
 --- a/t/t4202-log.sh
 +++ b/t/t4202-log.sh
-@@ -893,6 +893,11 @@ test_expect_success GPG 'log --graph --show-signature for merged tag' '
- 	grep "^| | gpg: Good signature" actual
+@@ -898,6 +898,26 @@ test_expect_success GPG '--no-show-signature overrides --show-signature' '
+ 	! grep "^gpg:" actual
  '
  
-+test_expect_success GPG '--no-show-signature overrides --show-signature' '
-+	git log -1 --show-signature --no-show-signature signed >actual &&
++test_expect_success GPG 'log.showsignature=true behaves like --show-signature' '
++	test_config log.showsignature true &&
++	git log -1 signed >actual &&
++	grep "gpg: Signature made" actual &&
++	grep "gpg: Good signature" actual
++'
++
++test_expect_success GPG '--no-show-signature overrides log.showsignature=true' '
++	test_config log.showsignature true &&
++	git log -1 --no-show-signature signed >actual &&
 +	! grep "^gpg:" actual
++'
++
++test_expect_success GPG '--show-signature overrides log.showsignature=false' '
++	test_config log.showsignature false &&
++	git log -1 --show-signature signed >actual &&
++	grep "gpg: Signature made" actual &&
++	grep "gpg: Good signature" actual
 +'
 +
  test_expect_success 'log --graph --no-walk is forbidden' '
  	test_must_fail git log --graph --no-walk
  '
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 4177a86..6e839f5 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -210,4 +210,11 @@ test_expect_success GPG 'show lack of signature with custom format' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success GPG 'log.showsignature behaves like --show-signature' '
++	test_config log.showsignature true &&
++	git show initial >actual &&
++	grep "gpg: Signature made" actual &&
++	grep "gpg: Good signature" actual
++'
++
+ test_done
 -- 
 2.9.0.rc0.dirty
 
