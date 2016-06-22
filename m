@@ -1,30 +1,30 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5A1520189
-	for <e@80x24.org>; Wed, 22 Jun 2016 21:09:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0223A2018B
+	for <e@80x24.org>; Wed, 22 Jun 2016 21:09:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751630AbcFVVJl (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 17:09:41 -0400
-Received: from kitenet.net ([66.228.36.95]:59238 "EHLO kitenet.net"
+	id S1752230AbcFVVJq (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 17:09:46 -0400
+Received: from kitenet.net ([66.228.36.95]:59258 "EHLO kitenet.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751454AbcFVVJk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 17:09:40 -0400
+	id S1751990AbcFVVJp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 17:09:45 -0400
 X-Question: 42
 Authentication-Results:	kitenet.net;
-	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=mg1eyg1Q;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=faHDzPFG;
 	dkim-atps=neutral
 DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-	t=1466629760; bh=WzlFR/Fq+JjErnTxjwXdctZQ9oUxhdv7jiKLx+KAxsI=;
+	t=1466629760; bh=ZJ3EzSnJlxnwVSR0JLXOBChtz8XM7zALW+eNGklAdig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mg1eyg1QBRMPxAs7JkBZk763MxlJQtVpEs0js6Jntr/SlYRSFweFXTfgwqRXdUH5A
-	 2LHX9els/GLsyKLl8+/FTJHFG0lKbrXatEfhVXvSnJrhEzoklb77bFSGSV0RcMfbPA
-	 KC7wJ9UK9jIFZLCDQH2vs/9egY6Kl9mCPlDLhlZY=
+	b=faHDzPFGouIOj+/QvULr/hxeE3SFs5pMDNVYYA8ahr2LFO/1FBLOTpbjwo1ZQqeL2
+	 XiZI37st20NAXJUsvGFDp5VioH7ZWo8f1ONTSpn4xrOjF94KcY8UESZlchRp4ryZhJ
+	 uCE30oYqs7EfaEb6u6o9K8y5BIwQIDmF+NGrksMQ=
 From:	Joey Hess <joeyh@joeyh.name>
 To:	git@vger.kernel.org
 Cc:	Joey Hess <joeyh@joeyh.name>
-Subject: [PATCH v4 1/8] clarify %f documentation
-Date:	Wed, 22 Jun 2016 17:09:11 -0400
-Message-Id: <1466629758-8035-2-git-send-email-joeyh@joeyh.name>
+Subject: [PATCH v4 3/8] use cleanFromFile in git add
+Date:	Wed, 22 Jun 2016 17:09:13 -0400
+Message-Id: <1466629758-8035-4-git-send-email-joeyh@joeyh.name>
 X-Mailer: git-send-email 2.8.1
 In-Reply-To: <1466629758-8035-1-git-send-email-joeyh@joeyh.name>
 References: <1466629758-8035-1-git-send-email-joeyh@joeyh.name>
@@ -38,30 +38,128 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-It's natural to expect %f to be an actual file on disk; help avoid that
-mistake.
+Includes test cases.
 
 Signed-off-by: Joey Hess <joeyh@joeyh.name>
 ---
- Documentation/gitattributes.txt | 5 +++++
- 1 file changed, 5 insertions(+)
+ sha1_file.c           | 44 ++++++++++++++++++++++++++++++++++++++------
+ t/t0021-conversion.sh | 36 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 74 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index f2afdb6..197ece8 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -379,6 +379,11 @@ substitution.  For example:
- 	smudge = git-p4-filter --smudge %f
- ------------------------
+diff --git a/sha1_file.c b/sha1_file.c
+index 55604b6..df62eaf 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -3339,6 +3339,31 @@ static int index_stream_convert_blob(unsigned char *sha1, int fd,
+ 	return ret;
+ }
  
-+Note that "%f" is the name of the path that is being worked on. Depending
-+on the version that is being filtered, the corresponding file on disk may
-+not exist, or may have different contents. So, smudge and clean commands
-+should not try to access the file on disk, but only act as filters on the
-+content provided to them on standard input.
++static int index_from_file_convert_blob(unsigned char *sha1,
++				      const char *path, unsigned flags)
++{
++	int ret;
++	const int write_object = flags & HASH_WRITE_OBJECT;
++	const int valid_sha1 = flags & HASH_USE_SHA_NOT_PATH;
++	struct strbuf sbuf = STRBUF_INIT;
++
++	assert(path);
++	assert(can_clean_from_file(path));
++
++	convert_to_git_filter_from_file(path, &sbuf,
++				 write_object ? safe_crlf : SAFE_CRLF_FALSE,
++				 valid_sha1 ? sha1 : NULL);
++
++	if (write_object)
++		ret = write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
++				      sha1);
++	else
++		ret = hash_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
++				     sha1);
++	strbuf_release(&sbuf);
++	return ret;
++}
++
+ static int index_pipe(unsigned char *sha1, int fd, enum object_type type,
+ 		      const char *path, unsigned flags)
+ {
+@@ -3433,12 +3458,19 @@ int index_path(unsigned char *sha1, const char *path, struct stat *st, unsigned
  
- Interaction between checkin/checkout attributes
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 	switch (st->st_mode & S_IFMT) {
+ 	case S_IFREG:
+-		fd = open(path, O_RDONLY);
+-		if (fd < 0)
+-			return error_errno("open(\"%s\")", path);
+-		if (index_fd(sha1, fd, st, OBJ_BLOB, path, flags) < 0)
+-			return error("%s: failed to insert into database",
+-				     path);
++		if (can_clean_from_file(path)) {
++			if (index_from_file_convert_blob(sha1, path, flags) < 0)
++				return error("%s: failed to insert into database",
++					     path);
++		}
++		else {
++			fd = open(path, O_RDONLY);
++			if (fd < 0)
++				return error_errno("open(\"%s\")", path);
++			if (index_fd(sha1, fd, st, OBJ_BLOB, path, flags) < 0)
++				return error("%s: failed to insert into database",
++					     path);
++		}
+ 		break;
+ 	case S_IFLNK:
+ 		if (strbuf_readlink(&sb, path, st->st_size))
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 7bac2bc..407d5d6 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -12,6 +12,14 @@ tr \
+ EOF
+ chmod +x rot13.sh
+ 
++cat <<EOF >rot13-from-file.sh
++#!$SHELL_PATH
++fsfile="\$1"
++touch rot13-from-file.ran
++cat "\$fsfile" | ./rot13.sh
++EOF
++chmod +x rot13-from-file.sh
++
+ test_expect_success setup '
+ 	git config filter.rot13.smudge ./rot13.sh &&
+ 	git config filter.rot13.clean ./rot13.sh &&
+@@ -268,4 +276,32 @@ test_expect_success 'disable filter with empty override' '
+ 	test_must_be_empty err
+ '
+ 
++test_expect_success 'cleanFromFile filter is used when adding a file' '
++	test_config filter.rot13.cleanFromFile ./rot13-from-file.sh &&
++
++	echo "*.t filter=rot13" >.gitattributes &&
++
++	cat test >fstest.t &&
++	git add fstest.t &&
++	test -e rot13-from-file.ran &&
++	rm -f rot13-from-file.ran &&
++
++	rm -f fstest.t &&
++	git checkout -- fstest.t &&
++	cmp test fstest.t
++'
++
++test_expect_success 'cleanFromFile filter is not used when clean filter is not configured' '
++	test_config filter.noclean.smudge ./rot13.sh &&
++	test_config filter.noclean.cleanFromFile ./rot13-from-file.sh &&
++
++	echo "*.no filter=noclean" >.gitattributes &&
++
++	cat test >test.no &&
++	git add test.no &&
++	test ! -e rot13-from-file.ran &&
++	git cat-file blob :test.no >actual &&
++	cmp test actual
++'
++
+ test_done
 -- 
 2.9.0.587.ga3bedf2
 
