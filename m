@@ -1,96 +1,86 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A53220189
-	for <e@80x24.org>; Wed, 22 Jun 2016 21:10:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B18F920189
+	for <e@80x24.org>; Wed, 22 Jun 2016 21:24:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752579AbcFVVKK (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 17:10:10 -0400
-Received: from kitenet.net ([66.228.36.95]:59316 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752542AbcFVVKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 17:10:05 -0400
-X-Question: 42
-Authentication-Results:	kitenet.net;
-	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=Pv48g4eq;
-	dkim-atps=neutral
-DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-	t=1466629798; bh=35ZfiO1syFxmkcVq/J3RAfwo9VI1PHgshdMF/H+5dvg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Pv48g4eqLTpxCX6eiuiVrueXk4nMSMp7S17nnYI3uZxr8XisUha8FD95n38hOlhWg
-	 oauiZn+s1/Jt5NVFIC45UbaByhybvZmybd8WRjeqQ5YNoHATc2PKn6I+hQpGckDIZy
-	 ZfwDfddYjJYiSYGNBSzWR4m0SdXw55uZTNDmyHBE=
-Date:	Wed, 22 Jun 2016 17:09:58 -0400
-From:	Joey Hess <id@joeyh.name>
-To:	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jun 2016, #05; Thu, 16)
-Message-ID: <20160622210958.GA24618@kitenet.net>
-References: <xmqqk2ho33ig.fsf@gitster.mtv.corp.google.com>
- <18617acb-bcdb-607d-007e-552dabd352cb@web.de>
+	id S1751726AbcFVVYb (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 17:24:31 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57139 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751400AbcFVVYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 17:24:30 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4EE0226CDE;
+	Wed, 22 Jun 2016 17:23:31 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZLOGzV7B44Haq3RHiZIS3P5GXuY=; b=yeVkmH
+	C6tklj60laZMAYyBQIO+YnlQ0G5xH/v8x1DoJKycwyxu3otvP29FQkyBda/GnKAZ
+	1mBNsCWIL98J6PpB5a4fCpJ+wfW60zJ9IeoLYnqra16AHau38j2ne3jz2LltlDSz
+	s3lKPbB8fVm3mZNUGSkRDfajXuDL0VTishwJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OgUlGnI0fsQKjNL2zvAO/UhLOMWF4HKJ
+	tcqDHzN49fqEWZi3zE1ffnySKe0zqusQ57lkYQTETWoXtb06Zrhcwcx2CpFekPIS
+	jnouAL/nHiGPcDIjqLsQR4EpxskeQYP/ATd7TgW7eQnNM+sjdWnjQv0uD9Ctn8GC
+	MK6VZ0xEu7Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4164C26CDD;
+	Wed, 22 Jun 2016 17:23:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B8B0226CDC;
+	Wed, 22 Jun 2016 17:23:30 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Joey Hess <joeyh@joeyh.name>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH v4 0/8] extend smudge/clean filters with direct file access (for pu)
+References: <1466629758-8035-1-git-send-email-joeyh@joeyh.name>
+Date:	Wed, 22 Jun 2016 14:23:28 -0700
+In-Reply-To: <1466629758-8035-1-git-send-email-joeyh@joeyh.name> (Joey Hess's
+	message of "Wed, 22 Jun 2016 17:09:10 -0400")
+Message-ID: <xmqqeg7olxyn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="GvXjxJ+pjyke8COw"
-Content-Disposition: inline
-In-Reply-To: <18617acb-bcdb-607d-007e-552dabd352cb@web.de>
-User-Agent: Mutt/1.6.0 (2016-04-01)
-X-Spam-Status: No, score=-95.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_PBL,RCVD_IN_SORBS_DUL,
-	RDNS_DYNAMIC,SPF_SOFTFAIL,URIBL_BLOCKED,USER_IN_WHITELIST autolearn=no
-	autolearn_force=no version=3.4.1
-X-Spam-Checker-Version:	SpamAssassin 3.4.1 (2015-04-28) on kite.kitenet.net
+Content-Type: text/plain
+X-Pobox-Relay-ID: 913843FE-38BF-11E6-8F52-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Joey Hess <joeyh@joeyh.name> writes:
 
---GvXjxJ+pjyke8COw
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> This is the same as v3, except rebased on top of tb/convert-peek-in-index
+> to fix a build failure in pu.
 
-Torsten B=F6gershausen wrote:
-> There is a conflict in pu:
-> "jh/clean-smudge-annex" does not work together with "tb/convert-peek-in-i=
-ndex"
->=20
-> (And currently pu didn't compile)
+This is somewhat unfortunate, as tb/convert-peek-in-index probably
+needs further rerolls after getting reviewed by somebody (other than
+me) and this topic will have to be rebased every time.
 
-I'm sending a v4 of jh/clean-smudge-annex that is rebased on top of
-tb/convert-peek-in-index to fix this.
+Let's see how it goes.
 
-> (I will hopefully be able to do a separate review of the smudge/clean pat=
-ch)
+Thanks.
 
-Would be appreciated. It'll be 2 weeks until I can work on this any more.
-
-> (And joeyh@joeyh.name is not reachable from web.de)
-
-I'd like to fix whatever's broken; you could send details out of band to
-joeyhess@gmail.com
-
---=20
-see shy jo
-
---GvXjxJ+pjyke8COw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIVAwUBV2r+pckQ2SIlEuPHAQKOOBAAoIud0JuoVBoo24GLb1rx306OAJnGI073
-C4kR6kExINvN/Cp5YDQUY39RW+C+7YedZ0fgEBwIJun7WvRkioCaX65UeBnkz0Zo
-biurYMXx3g3z6rLWYzWD+UDXY82zdz/m3LO7PDs7Q7AbgyRZuq8XYBD1Rw2f0rw9
-3ZiXeB5OneKiUerOTug9L8cfxj0Yz1GF/r3Jc8P44JcgwEAnRWpJDG2d+GvCtfEl
-uFtAT34dYF1PcHtTqF6lL4wNttQVTNizTWsDO0EdzS4+MCr2RfJAN0iHKoIjDPuF
-/Mf1eI1kgwt8eM+k5JeYvibGXehfPV+ficVVwP6KtQ25WaEKIElvxxbnXmX+E3AG
-uryI7VMIyu8g0vdKQCUK+IBjMysjAehdC/8bojl0mCMQDVCl0LCDLzvlsox0qBtZ
-1mriAJgQX+pR6r9qYkAgJDycxZIlXlKcSkXcZcz/u+BErNHpxdo5+z/s1zP0sSUr
-Gf4O6yyMnAN1TvSCb97R3GwbvtpsZHPFVcTbTpoZyn74TnqEvEOGK6d7XK7JR9Ct
-omukChbXQI+4VEjqB3moLD4JFoyPBGZERIau46UkD4k2Zx97dAtU5ftlz3Igf5/G
-ny83kjX7eQ1bvfbdoT1YBDbAVDVdyz1qswX/pIKxcRh59rP13MWlybCYs3dhKBOq
-F4bwz2JaTY8=
-=CrDr
------END PGP SIGNATURE-----
-
---GvXjxJ+pjyke8COw--
+>
+> Joey Hess (8):
+>   clarify %f documentation
+>   add smudgeToFile and cleanFromFile filter configs
+>   use cleanFromFile in git add
+>   use smudgeToFile in git checkout etc
+>   warn on unusable smudgeToFile/cleanFromFile config
+>   better recovery from failure of smudgeToFile filter
+>   use smudgeToFile filter in git am
+>   use smudgeToFile filter in recursive merge
+>
+>  Documentation/config.txt        |  18 ++++-
+>  Documentation/gitattributes.txt |  42 ++++++++++++
+>  builtin/apply.c                 |  16 +++++
+>  convert.c                       | 147 +++++++++++++++++++++++++++++++++++-----
+>  convert.h                       |  11 +++
+>  entry.c                         |  53 +++++++++++----
+>  merge-recursive.c               |  42 +++++++++---
+>  sha1_file.c                     |  44 ++++++++++--
+>  t/t0021-conversion.sh           | 115 +++++++++++++++++++++++++++++++
+>  9 files changed, 441 insertions(+), 47 deletions(-)
