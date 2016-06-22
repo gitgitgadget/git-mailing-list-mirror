@@ -1,95 +1,115 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55D342018B
+	by dcvr.yhbt.net (Postfix) with ESMTP id 674252018C
 	for <e@80x24.org>; Wed, 22 Jun 2016 15:03:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752786AbcFVPCy (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 11:02:54 -0400
-Received: from mout.gmx.net ([212.227.15.18]:50056 "EHLO mout.gmx.net"
+	id S1752788AbcFVPCz (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 11:02:55 -0400
+Received: from mout.gmx.net ([212.227.17.22]:63124 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751973AbcFVPCJ (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751759AbcFVPCJ (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 22 Jun 2016 11:02:09 -0400
-Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MAyVY-1b80QC42HU-009xSq; Wed, 22 Jun 2016 17:02:05
+Received: from virtualbox ([37.24.143.194]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MgoiC-1b2ccZ21p2-00M2Bs; Wed, 22 Jun 2016 17:01:51
  +0200
-Date:	Wed, 22 Jun 2016 17:02:04 +0200 (CEST)
+Date:	Wed, 22 Jun 2016 17:01:49 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v4 08/10] format-patch: use stdout directly
+Subject: [PATCH v4 05/10] shortlog: support outputting to streams other than
+ stdout
 In-Reply-To: <cover.1466607667.git.johannes.schindelin@gmx.de>
-Message-ID: <35a00cad311766d2bc64dada92e14c163e5a5806.1466607667.git.johannes.schindelin@gmx.de>
+Message-ID: <3cc264b716f84b764e2fc1eef6bb8d8d65bfed67.1466607667.git.johannes.schindelin@gmx.de>
 References: <cover.1466505222.git.johannes.schindelin@gmx.de> <cover.1466607667.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ZHKadIQe9cabkbKvcKu/BfS5ZrGgkf921kFBneIkqszrbM5869w
- M1uFPdHgeFZ5YnXP9ju4HCuShJ0nVZE/OI+YHpCk1A0C91rZMABNvrMnPRRRbbSlKhTukU1
- bDk4xBDj7+eHOyRxds8Oj2z4J2mTtqsFQvYTWtI/GF0536PBZRPi9Y7pGNkr4TTqYtNSccS
- a3i9ukWtTFxcsQ5f9VXQg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:Lzh0AFt6hIk=:GDJJSLDlhtRAbwdrVXkLt0
- u1u4anNZ4MFe4Nk7KDEzxfUomqMef4A7uPiX079MVkjWxpzx9oA9yaR8/5TlgdZLKweOAZxB6
- 9I60Y5M4ZMaZqlhkZjGnlkiXLBspCq7vwV4lv6velh7m6a6lATbWfS7GQiUUSFfxPAA904CLk
- J457vSELSAkltWXoju/rlQP5NgL8IxgqqW8UF/xfWlY4XqweDXzWPn1yG95IUqyxcQuzILHQS
- 9xJiqTrIKQ28mPlsHB6ldiIstfpXkHCI1Vo6TQpqIYIawU9x+2AwQRVhAXMikVvdj8JaOhQrY
- RbzJCrKAn6SY0xVphUgF8W2CUkGbSDr+CDBF4pfERYH9tHhoSGIxW7lwLx2pF2ooQhk2uddDk
- W+ep/PxZzBugHv0X1o6B2MDbZalcAmhC4NMalMhaFWRgu09wDCDLFwzZZG6sGNkQX6O4otAj5
- Q40qn5FceNiiJLFMxtWZ4t0nPmeIIv0QBqd119Js43yzn+n8JTHxvUrQglMTMEfT2B8piwC0e
- 5dVQlpjSYEk540OiVEudEJVPCwWfygtxPAkesSBLFq+s7pTHCqu1Rz/YnZ+XAt8Dr1uf/z7KY
- /MfiicemWWOi32c+gb14qJ4qyNe/ocGhQkcGb6mPpiY0LUajpjGERwUHDl/ovmJ9xpUIxKmsJ
- plWtnnoH2N2jFy86fSjXYZl3xXCP5xniFDo7DR4rvIFBCFZnsMzEhNUgyUM7Rxv1z/C6P7ONw
- 9V/udPdU2BD+4Iemsl0isHjuuXvTc5RzHRI0PJXHQeU8z2iPuHYhS1B+F9ZTwHpW5bPwqNUDT
- VZF8GpG
+X-Provags-ID: V03:K0:P3PusNfkiPhihJy3zN0cnIJZH1atNHH3no5LjDAULhjImkiwOH3
+ KVddHx5RnzfLoCysoUlNFInpS+WtzbQZTunpSxErurvKRW7zPSsM/ttUnEzzrx0aqfeDbjg
+ NID5N6nfQa/dNy3sRY8Y9GNmJx5VOfdphTSD/CAW6wmwmCloZmLjvaHtn17vHiTQb4G7CfI
+ Yj/srZqupXZw7of+JQ5oA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:x36EDvSMwJQ=:nI0DQ5LemJ9vpqEK3i0ph9
+ Fj3BMfJBdkvoom/CSGFnDnceItc5kzfjPZiY2gKjfuCCNZjGxt4dHGC5S9v+vfCOvCOheRoQs
+ /ewoXYd6V22imutXYE5cn7INeOU61fKjB4DwLWFa8+KVSP9Eb4MfgZ3RAbVwpklm9sblS3Xk+
+ 5MeZVncrRaziSLWTdODwRWzScZF2AC0Nc9lM/oLgkzIgUmvR7Thq8Ujsr05IDPprEfY0qZH74
+ KkGOkBiDR5MXG0MayXsN/v2OYSlUccLOxxiJMEzHMOMBk/NfXsVKEMH9Z98uWy+cBHtXEe2Lw
+ yXjR4kO6J/hwTXttdSD2L1M5Xv2IswgR/4VNZOr3pWkKjkIbfytkmBvt4ld2VhOi7q8y5R/Bu
+ jWAJ48xPluCHX36ATcbArERH/vTadF0vDNMp9y/4L0OprQEPuK3wj1C2ku8tXa75FHVV8pMd/
+ WaqD3zFsdSzJSmE61PVWi2eEKw4FQqr7ESjiemW1c9htO9ukYXfY7IWrOxyAAqK+B5IT1NNJ7
+ eeUuXfoB48ne3X+5Xr4UuTho70Azhy6gth9pccSAiA5hw70aKEDAcsu9IC7z5JYVM5pnmLiIb
+ YIsBxIch3P4y3UBNKaWbpCazf+UWdFFO8mfBbsysfADKQ8lCMB64ni+uSZ04MOF8HBfUiRIuH
+ o7EzVtatYdFj9zwWXk6T55a+LU4L+E7LMEsydA5yPXio8lWwGZGJoA1+1OBPM1GCnEcJn0Wkb
+ jbGqFD5uzOY3lKieO42Bt93rLvP49x3dcILV3nUu9Jpgn5yzLZ8O99YOzSiOIX6hrI6vPQXg0
+ AD4EZy/
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Earlier, we freopen()ed stdout in order to write patches to files.
-That forced us to duplicate stdout (naming it "realstdout") because we
-*still* wanted to be able to report the file names.
-
-As we do not abuse stdout that way anymore, we no longer need to
-duplicate stdout, either.
+This will be needed to avoid freopen() in `git format-patch`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/log.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ builtin/shortlog.c | 13 ++++++++-----
+ shortlog.h         |  1 +
+ 2 files changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 869c23b..2a42216 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -805,7 +805,6 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 	return git_log_config(var, value, cb);
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index bfc082e..39d74fe 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -229,6 +229,7 @@ void shortlog_init(struct shortlog *log)
+ 	log->wrap = DEFAULT_WRAPLEN;
+ 	log->in1 = DEFAULT_INDENT1;
+ 	log->in2 = DEFAULT_INDENT2;
++	log->file = stdout;
  }
  
--static FILE *realstdout = NULL;
- static const char *output_directory = NULL;
- static int outdir_offset;
+ int cmd_shortlog(int argc, const char **argv, const char *prefix)
+@@ -310,22 +311,24 @@ void shortlog_output(struct shortlog *log)
+ 	for (i = 0; i < log->list.nr; i++) {
+ 		const struct string_list_item *item = &log->list.items[i];
+ 		if (log->summary) {
+-			printf("%6d\t%s\n", (int)UTIL_TO_INT(item), item->string);
++			fprintf(log->file, "%6d\t%s\n",
++				(int)UTIL_TO_INT(item), item->string);
+ 		} else {
+ 			struct string_list *onelines = item->util;
+-			printf("%s (%d):\n", item->string, onelines->nr);
++			fprintf(log->file, "%s (%d):\n",
++				item->string, onelines->nr);
+ 			for (j = onelines->nr - 1; j >= 0; j--) {
+ 				const char *msg = onelines->items[j].string;
  
-@@ -831,7 +830,7 @@ static int open_next_file(struct commit *commit, const char *subject,
- 		fmt_output_subject(&filename, subject, rev);
+ 				if (log->wrap_lines) {
+ 					strbuf_reset(&sb);
+ 					add_wrapped_shortlog_msg(&sb, msg, log);
+-					fwrite(sb.buf, sb.len, 1, stdout);
++					fwrite(sb.buf, sb.len, 1, log->file);
+ 				}
+ 				else
+-					printf("      %s\n", msg);
++					fprintf(log->file, "      %s\n", msg);
+ 			}
+-			putchar('\n');
++			putc('\n', log->file);
+ 			onelines->strdup_strings = 1;
+ 			string_list_clear(onelines, 0);
+ 			free(onelines);
+diff --git a/shortlog.h b/shortlog.h
+index de4f86f..5a326c6 100644
+--- a/shortlog.h
++++ b/shortlog.h
+@@ -17,6 +17,7 @@ struct shortlog {
+ 	char *common_repo_prefix;
+ 	int email;
+ 	struct string_list mailmap;
++	FILE *file;
+ };
  
- 	if (!quiet)
--		fprintf(realstdout, "%s\n", filename.buf + outdir_offset);
-+		printf("%s\n", filename.buf + outdir_offset);
- 
- 	if ((rev->diffopt.file = fopen(filename.buf, "w")) == NULL)
- 		return error(_("Cannot open patch file %s"), filename.buf);
-@@ -1639,9 +1638,6 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		get_patch_ids(&rev, &ids);
- 	}
- 
--	if (!use_stdout)
--		realstdout = xfdopen(xdup(1), "w");
--
- 	if (prepare_revision_walk(&rev))
- 		die(_("revision walk setup failed"));
- 	rev.boundary = 1;
+ void shortlog_init(struct shortlog *log);
 -- 
 2.9.0.118.g0e1a633
 
