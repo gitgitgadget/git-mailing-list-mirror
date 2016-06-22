@@ -1,159 +1,82 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C005920189
-	for <e@80x24.org>; Wed, 22 Jun 2016 21:39:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A39120189
+	for <e@80x24.org>; Wed, 22 Jun 2016 21:48:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750829AbcFVVj2 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 22 Jun 2016 17:39:28 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60211 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750718AbcFVVj2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2016 17:39:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9849727532;
-	Wed, 22 Jun 2016 17:39:26 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RBU/ukH8vePjfSDxWPo+8g9xoY4=; b=RCQWRk
-	zIOz4WbYy1S1yirI+4uiBDby3d8bOGs2vkaqNUN1Mlb5k9PIOndf9M0zoX/YFiAW
-	hgP4FXhswv96ZkSAOEGtcnyoOub0je21zjxMouv0PxpFmYX6iVO63+Lr5wCvj68Q
-	Xk8FKWEIDaKv/2D9giRMg8T78OXJ2L7jjuvvM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aa6s0BKTTeauCtTw9mUwyUdE9qZqVKXn
-	ZqdF4TS14gm+XJswFpTZg+DUZmyl0V6KvpZ4+DE0umVxh9U4WSbFfMwGyOe5B4lL
-	8A2g1Bm5cx6Pm8FKQFkXmWPMQ3kFEACpPgrJBpNKnejMpJ6DknsxkRhx8owQicX4
-	wufgfZJ2jQ8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9132A27531;
-	Wed, 22 Jun 2016 17:39:26 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1AFE02752F;
-	Wed, 22 Jun 2016 17:39:26 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Joey Hess <joeyh@joeyh.name>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH v4 8/8] use smudgeToFile filter in recursive merge
-References: <1466629758-8035-1-git-send-email-joeyh@joeyh.name>
-	<1466629758-8035-9-git-send-email-joeyh@joeyh.name>
-Date:	Wed, 22 Jun 2016 14:39:24 -0700
-In-Reply-To: <1466629758-8035-9-git-send-email-joeyh@joeyh.name> (Joey Hess's
-	message of "Wed, 22 Jun 2016 17:09:18 -0400")
-Message-ID: <xmqq7fdglx83.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1750997AbcFVVsN (ORCPT <rfc822;e@80x24.org>);
+	Wed, 22 Jun 2016 17:48:13 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:40730 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750950AbcFVVsM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2016 17:48:12 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4F6C20189;
+	Wed, 22 Jun 2016 21:48:11 +0000 (UTC)
+Date:	Wed, 22 Jun 2016 21:48:11 +0000
+From:	Eric Wong <e@80x24.org>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Jonathan Nieder <jrnieder@gmail.com>,
+	Andrea Stacchiotti <andreastacchiotti@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] doc: git-htmldocs.googlecode.com is no more
+Message-ID: <20160622214811.GA19633@dcvr.yhbt.net>
+References: <146652690896.29270.13813898006180324611.reportbug@duelitri>
+ <20160622024151.GA20206@google.com>
+ <20160622190018.GA786@dcvr.yhbt.net>
+ <CAPc5daUiUv-EEv7ouQ=K+Q8S64QVV5wn4H6+TuF0wLeo123K5Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CAA7813E-38C1-11E6-BF78-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPc5daUiUv-EEv7ouQ=K+Q8S64QVV5wn4H6+TuF0wLeo123K5Q@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Joey Hess <joeyh@joeyh.name> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> On Wed, Jun 22, 2016 at 12:00 PM, Eric Wong <e@80x24.org> wrote:
+> >
+> > Just wondering, who updates
+> > https://kernel.org/pub/software/scm/git/docs/
+> > and why hasn't it been updated in a while?
+> > (currently it says Last updated 2015-06-06 at the bottom)
+> 
+> Nobody. It is too cumbersome to use their upload tool to update many
+> files (it is geared towards updating a handful of tarballs at a time).
 
-> @@ -781,6 +773,7 @@ static void update_file_flags(struct merge_options *o,
->  		}
->  		if (S_ISREG(mode) || (!has_symlinks && S_ISLNK(mode))) {
->  			int fd;
-> +			int isreg = S_ISREG(mode);
+Alright, I've setup https://git-htmldocs.bogomips.org/ for my own
+usage, at least.  It should check for updates twice an hour(*),
+and plain HTTP is also available in case Let's Encrypt goes away.
 
-You probably want to move this isreg business up one scope
-(i.e. inside "if (update_wd) {").  Then the if () condition
-for this block can use it already.
+Can't hurt to have more mirrors:
+----------------------8<---------------------
+#!/bin/sh
+set -e
+DST=/path/to/server-docroot/git-htmldocs
+# my mirror of git://git.kernel.org/pub/scm/git/git-htmldocs.git:
+GIT_DIR=/path/to/mirrors/git-htmldocs.git
+export GIT_DIR
 
->  			if (mode & 0100)
->  				mode = 0777;
->  			else
-> @@ -788,8 +781,37 @@ static void update_file_flags(struct merge_options *o,
->  			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
->  			if (fd < 0)
->  				die_errno(_("failed to open '%s'"), path);
-> -			write_in_full(fd, buf, size);
-> -			close(fd);
-> +
-> +			int smudge_to_file = can_smudge_to_file(path);
+# rsync from a temporary dir for atomicity so nobody fetches
+# a partially written file
+tmp="$(mktemp -t -d htmldocs.XXXXXXX)"
+git archive --format=tar HEAD | tar x -C "$tmp"
+chmod 755 "$tmp"
+rsync -a "$tmp/" "$DST/"
+rm -rf "$tmp"
 
-This does not compile with decl-after-statement.  I suspect other
-patches in this series have the same issue but I did not check.  Do
-you say "make DEVELOPER=1"?
-
-> +			if (smudge_to_file) {
-> +				close(fd);
-> +				fd = convert_to_working_tree_filter_to_file(path, path, buf, size);
-> +				if (fd < 0) {
-> +					/* smudgeToFile filter failed;
-> +					 * continue with regular file
-> +					 * creation. */
-
-/*
- * Style: We format our multi-line
- * comments like this.
- */
-
-> +					smudge_to_file = 0;
-
-Ahh, I was wondering why this is not "if (smudge_to_file) ... else ...".
-
-> +					fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
-> +					if (fd < 0)
-> +						die_errno(_("failed to open '%s'"), path);
-> +				}
-> +				else {
-> +					close(fd);
-> +				}
-> +			}
-> +
-> +			if (! smudge_to_file) {
-
-Style: if (!smudge_to_file) {
-
-> +test_expect_success 'smudgeToFile filter is used in merge' '
-> +	test_config filter.rot13.smudgeToFile ./rot13-to-file.sh &&
-> +
-> +	git commit -m "added fstest.t" fstest.t &&
-> +	git checkout -b old &&
-> +	git reset --hard HEAD^ &&
-> +	git merge master &&
-> +
-> +	test -e rot13-to-file.ran &&
-> +	rm -f rot13-to-file.ran &&
-> +
-> +	cmp test fstest.t &&
-
-"test_cmp test fstest.t"?  The difference matters when running the
-test with -v option.
-
-> +	git checkout master
-
-What happens if any of the previous steps failed?  Does the next
-test get confused because you would fail to go back to the master
-branch?
-
-> +'
-> +
->  test_expect_success 'smudgeToFile filter is used by git am' '
->  	test_config filter.rot13.smudgeToFile ./rot13-to-file.sh &&
->  
-> -	git commit fstest.t -m "added fstest.t" &&
->  	git format-patch HEAD^ --stdout > fstest.patch &&
-
-Style: 
-
-	git format-patch HEAD^ --stdout >fstest.patch &&
-
->  	git reset --hard HEAD^ &&
->  	git am < fstest.patch &&
-
-Style: 
-
-	git am <fstest.patch &&
-
-but in this case you do not even need to redirect, i.e.
-
-	git am fstest.patch &&
-
-is enough.
-
-Thanks.
+# for servers which support pre-gzipped files (e.g. gzip_static in nginx)
+find "$DST" -type f -name '*.html' -o -name '*.txt' | while read file
+do
+	gz="$file.gz"
+	if ! test -e "$gz" || test "$gz" -ot "$file"
+	then
+		gztmp="$gz.$$.tmp"
+		gzip -9 <"$file" >"$gztmp"
+		touch -r "$file" "$gztmp"
+		mv "$gztmp" "$gz"
+	fi
+done
+---
+(*) On a side note, It would be nice to something like IMAP IDLE
+    for real-time updates of mirrors.
