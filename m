@@ -1,134 +1,65 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10F5B1FF40
-	for <e@80x24.org>; Thu, 23 Jun 2016 13:58:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61E971FF40
+	for <e@80x24.org>; Thu, 23 Jun 2016 14:43:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750983AbcFWN6E (ORCPT <rfc822;e@80x24.org>);
-	Thu, 23 Jun 2016 09:58:04 -0400
-Received: from relay6-d.mail.gandi.net ([217.70.183.198]:42524 "EHLO
-	relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750954AbcFWN6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2016 09:58:03 -0400
-X-Greylist: delayed 9498 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Jun 2016 09:58:03 EDT
-Received: from mfilter40-d.gandi.net (mfilter40-d.gandi.net [217.70.178.171])
-	by relay6-d.mail.gandi.net (Postfix) with ESMTP id 2703FFB8CE;
-	Thu, 23 Jun 2016 15:58:00 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter40-d.gandi.net
-Received: from relay6-d.mail.gandi.net ([IPv6:::ffff:217.70.183.198])
-	by mfilter40-d.gandi.net (mfilter40-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id H3VgrOXiAX1O; Thu, 23 Jun 2016 15:57:58 +0200 (CEST)
-X-Originating-IP: 90.127.150.110
-Received: from Lumpy.local.mail (LFbn-1-3387-110.w90-127.abo.wanadoo.fr [90.127.150.110])
-	(Authenticated sender: scourtois@cubyx.fr)
-	by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 7F9E2FB8A1;
-	Thu, 23 Jun 2016 15:57:58 +0200 (CEST)
-Date:	Thu, 23 Jun 2016 15:57:58 +0200
-From:	Simon Courtois <scourtois@cubyx.fr>
-To:	Jeff King <peff@peff.net>
-Cc:	git@vger.kernel.org
-Message-ID: <etPan.576beae6.5440514e.9bf5@cubyx.fr>
-In-Reply-To: <20160623131028.GB12653@sigill.intra.peff.net>
-References: <20160623130828.GA25209@sigill.intra.peff.net>
- <20160623131028.GB12653@sigill.intra.peff.net>
-Subject: Re: [PATCH 2/2] color: support "italic" attribute
-X-Mailer: Airmail Beta (369)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+	id S1751089AbcFWOnS (ORCPT <rfc822;e@80x24.org>);
+	Thu, 23 Jun 2016 10:43:18 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:38470 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750866AbcFWOnR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2016 10:43:17 -0400
+Received: by mail-wm0-f52.google.com with SMTP id r201so53354223wme.1
+        for <git@vger.kernel.org>; Thu, 23 Jun 2016 07:43:16 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spinlet-com.20150623.gappssmtp.com; s=20150623;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=jDFnlHGE33c4zApDqWUCC96+oS0TkMsJJ9gYyYsRWbY=;
+        b=NH9O6czOwXb0sIIS3i0i8W4bhBJsWQtnYBd/LlVOf+1Njz49Oaq6HRsQknXDH4e0cp
+         1h+SUZh5MakYFP6/uqDv0aBhi2XWmjg1XGdEOONOY1r3GONjVTKJrGOqOwXYLvdZ6h6L
+         WSF1sThlqo+McyvmYlkndtlO9AIz4wTIzwRWnNqKDsgAP8ud4C19bG2pxbIuKjw5E7rj
+         TKS64KHAza/BbAlcmrWmDmwjWos2GLL0TzF4uJz/SWxovzspFN4QS6NW0MRP9id31Y01
+         2YsGkdfESWKXnQ4mx4oFoGKgOlXZnmkOlWozg6/01K23b6K1Zgg1JpmLC+3vhh+nt6Bq
+         snTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=jDFnlHGE33c4zApDqWUCC96+oS0TkMsJJ9gYyYsRWbY=;
+        b=WPDBKvxGQ/pgzx7+2+Ce9k3/cr9Tdxb/kQcIvLKmh3VaN7NvzHhg9tMY/z1VBfZgyJ
+         ajrxkRu7I9OO5/VWwWcYE874YZ1MV4ZglraDe5EaNvOUrI1/GDPVAgICpSVeZPZWTKXK
+         xP9ge3IPDE+HLWKNhHerLPFd2oJQ4Q+QNoniLySQem/coDOvyNwR/uC9UIS+fIKYVfbY
+         xlcOP7+Tha3pPxvWxRkIEoLOtauZK3+MswCs817Oblk+XWfeEnn7rYHO3D++9kJV+FEy
+         Mudob/BetM74m6v05dAhVhddtHOK3gaMi2fns1+Y6wtAIawsVq2G1AYlFN4oeAVN44SU
+         onfA==
+X-Gm-Message-State: ALyK8tLkkSZ7y9bQ6g46VqwNl5GpWAIJSIW9EJ84ZuIt8tizqbkY0sff2sUXutUxqcSs3FsE
+X-Received: by 10.194.87.42 with SMTP id u10mr32421308wjz.152.1466692995855;
+        Thu, 23 Jun 2016 07:43:15 -0700 (PDT)
+Received: from [10.205.72.242] ([197.211.53.28])
+        by smtp.gmail.com with ESMTPSA id d192sm4225830wmd.14.2016.06.23.07.43.14
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 23 Jun 2016 07:43:15 -0700 (PDT)
+From:	john@spinlet.com
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Mime-Version: 1.0 (1.0)
+Subject: GIT admin access 
+Message-Id: <E9A37D7D-AA14-48CD-83CA-819766313D78@spinlet.com>
+Date:	Thu, 23 Jun 2016 15:43:09 +0100
+To:	git@vger.kernel.org
+X-Mailer: iPhone Mail (13F69)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Wow I wasn't expecting such a rapid response, you're awesome! :-D
+Hi, 
 
-Simon Courtois
+We need some help accessing our private Git as admin. The admin is currently unavailable and we need to provide access to a new Git user.
 
-On 23 June 2016 at 15:10:33, Jeff King (peff@peff.net) wrote:
-> We already support bold, underline, and similar attributes.
-> Let's add italic to the mix. According to the Wikipedia
-> page on ANSI colors, this attribute is "not widely
-> supported", but it does seem to work on my xterm.
-> 
-> We don't have to bump the maximum color size because we were
-> already over-allocating it (but we do adjust the comment
-> appropriately).
-> 
-> Requested-by: Simon Courtois 
-> Signed-off-by: Jeff King 
-> ---
-> Documentation/config.txt | 2 +-
-> color.c | 8 ++++----
-> color.h | 3 ++-
-> t/t4026-color.sh | 4 ++--
-> 4 files changed, 9 insertions(+), 8 deletions(-)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 58673cf..4b97d8d 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -154,7 +154,7 @@ color::
-> colors (at most two) and attributes (at most one), separated
-> by spaces. The colors accepted are `normal`, `black`,
-> `red`, `green`, `yellow`, `blue`, `magenta`, `cyan` and
-> - `white`; the attributes are `bold`, `dim`, `ul`, `blink` and
-> + `white`; the attributes are `bold`, `dim`, `italic`, `ul`, `blink` and
-> `reverse`. The first color given is the foreground; the
-> second is the background. The position of the attribute, if
-> any, doesn't matter. Attributes may be turned off specifically
-> diff --git a/color.c b/color.c
-> index 8f85153..698682c 100644
-> --- a/color.c
-> +++ b/color.c
-> @@ -125,11 +125,11 @@ static int parse_color(struct color *out, const char *name, int 
-> len)
-> 
-> static int parse_attr(const char *name, int len)
-> {
-> - static const int attr_values[] = { 1, 2, 4, 5, 7,
-> - 22, 22, 24, 25, 27 };
-> + static const int attr_values[] = { 1, 2, 3, 4, 5, 7,
-> + 22, 22, 23, 24, 25, 27 };
-> static const char * const attr_names[] = {
-> - "bold", "dim", "ul", "blink", "reverse",
-> - "nobold", "nodim", "noul", "noblink", "noreverse"
-> + "bold", "dim", "italic", "ul", "blink", "reverse",
-> + "nobold", "nodim", "noitalic", "noul", "noblink", "noreverse"
-> };
-> int i;
-> for (i = 0; i < ARRAY_SIZE(attr_names); i++) {
-> diff --git a/color.h b/color.h
-> index e24fa0b..3af01a6 100644
-> --- a/color.h
-> +++ b/color.h
-> @@ -16,7 +16,8 @@ struct strbuf;
-> *
-> * The space for attributes is also slightly overallocated, as
-> * the negation for some attributes is the same (e.g., nobold and nodim).
-> - * We also allocate space for 6 attributes (even though we have only 5).
-> + *
-> + * We allocate space for 6 attributes.
-> */
-> #define COLOR_MAXLEN 70
-> 
-> diff --git a/t/t4026-color.sh b/t/t4026-color.sh
-> index 2b32c4f..05625c5 100755
-> --- a/t/t4026-color.sh
-> +++ b/t/t4026-color.sh
-> @@ -56,8 +56,8 @@ test_expect_success 'long color specification' '
-> 
-> test_expect_success 'absurdly long color specification' '
-> color \
-> - "#ffffff #ffffff bold nobold dim nodim ul noul blink noblink reverse noreverse" \
-> - "[1;2;4;5;7;22;24;25;27;38;2;255;255;255;48;2;255;255;255m"
-> + "#ffffff #ffffff bold nobold dim nodim italic noitalic ul noul blink noblink reverse 
-> noreverse" \
-> + "[1;2;3;4;5;7;22;23;24;25;27;38;2;255;255;255;48;2;255;255;255m"
-> '
-> 
-> test_expect_success '0-7 are aliases for basic ANSI color names' '
-> --
-> 2.9.0.209.g845fbc1
-> 
+Thanks & best regards,
 
+John AJAH
