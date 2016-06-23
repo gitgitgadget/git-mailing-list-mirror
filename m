@@ -1,82 +1,102 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95B4C1F728
-	for <e@80x24.org>; Thu, 23 Jun 2016 06:24:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 397AF1FEAA
+	for <e@80x24.org>; Thu, 23 Jun 2016 06:32:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751080AbcFWGYp (ORCPT <rfc822;e@80x24.org>);
-	Thu, 23 Jun 2016 02:24:45 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:43381 "EHLO
-	homiemail-a76.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750925AbcFWGYo (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2016 02:24:44 -0400
-Received: from homiemail-a76.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a76.g.dreamhost.com (Postfix) with ESMTP id E5A21458081;
-	Wed, 22 Jun 2016 23:24:43 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=subject:to
-	:references:from:message-id:date:mime-version:in-reply-to
-	:content-type:content-transfer-encoding; s=novalis.org; bh=qnidh
-	0OtjgL3r7pIclgOwOPoVMQ=; b=cLwKza5nn4aCLt7FQkoxzRPK+OalAKqYt+fvy
-	GdMo4XuUICq5lnLtKvLY/Nh5jvJjaazeTrKZk2TQPIPnQTZxC5oXuktbU/N/PEAj
-	WRU6H+dum4Vgs039guHdSmNIV5MdPUL3+iZBcyq60lj/nZhTItrxwuxzFGgX0DYx
-	oEUUzU=
-Received: from [10.0.1.180] (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1751122AbcFWGcT (ORCPT <rfc822;e@80x24.org>);
+	Thu, 23 Jun 2016 02:32:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53143 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751000AbcFWGcT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2016 02:32:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 24624248F5;
+	Thu, 23 Jun 2016 02:32:18 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gYHSYP3kgcgVRa2CpqPWDJmemP8=; b=l0J/QR
+	nR28c2EQnLaXfZfa3GXbMg3dlDtf0VfGivLiM9ED789JSx1mzYyQFMAZRXl1cntH
+	EEmfEFxmah9JSyylmICopvUPxLCwC9zJZZgv7IjD7C0I5FTY0fzbU74gsdV4Ypqg
+	orN2U87/UwNnQqNAO/MHC50Lpzo+UCr19u0CQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nLy+kBKlMMdM/gOa8N+TRWEK9G/H3pcE
+	Ps3Sy318PmSZ0sILSXBk4kmFoBT8FaF/sQC0NAbwH3jG6ZJUXaiPLw9RZHJEl5k/
+	kjCT+x/CA3QeugWRznzY9Ch+m2sVaFulCCFmikn2Mee9fp8T+jLmgdOf1Kajo0Ug
+	QRA1sfX3Alk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D116248F3;
+	Thu, 23 Jun 2016 02:32:18 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	(Authenticated sender: novalis@novalis.org)
-	by homiemail-a76.g.dreamhost.com (Postfix) with ESMTPSA id A5C6345807B;
-	Wed, 22 Jun 2016 23:24:43 -0700 (PDT)
-Subject: Re: [PATCH v12 11/20] index-helper: use watchman to avoid refreshing,
- index with lstat()
-To:	git@vger.kernel.org, pclouds@gmail.com
-References: <57662876.3070209@novalis.org>
-From:	David Turner <novalis@novalis.org>
-Message-ID: <576B80AA.4040508@novalis.org>
-Date:	Thu, 23 Jun 2016 02:24:42 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 95448248F2;
+	Thu, 23 Jun 2016 02:32:17 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Mehul Jain <mehul.jain2029@gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 0/3] Introduce log.showSignature config variable
+References: <20160622165126.12786-1-mehul.jain2029@gmail.com>
+	<xmqqr3bpklsd.fsf@gitster.mtv.corp.google.com>
+	<CA+DCAeQUJ4D4kjR6FtTibwPO8o+wv-hQNDDj2ysJaBHGTPkHgA@mail.gmail.com>
+Date:	Wed, 22 Jun 2016 23:32:15 -0700
+In-Reply-To: <CA+DCAeQUJ4D4kjR6FtTibwPO8o+wv-hQNDDj2ysJaBHGTPkHgA@mail.gmail.com>
+	(Mehul Jain's message of "Thu, 23 Jun 2016 11:14:27 +0530")
+Message-ID: <xmqqd1n8jtzk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <57662876.3070209@novalis.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3B279486-390C-11E6-A4C3-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 06/19/2016 01:07 AM, David Turner wrote:
-> Duy Nguyen <pclouds@gmail.com> wrote:
->  > On Fri, May 20, 2016 at 4:45 AM, David Turner
-> <dturner@twopensource.com> wrote:
->  > > diff --git a/read-cache.c b/read-cache.c
->  > > index 1719f5a..8ec4be3 100644
->  > > --- a/read-cache.c
->  > >  +++ b/read-cache.c
->  > > @@ -1235,7 +1235,7 @@ int refresh_index(struct index_state *istate,
-> unsigned int flags,
->  > >                 if (!new) {
->  > >                         const char *fmt;
->  > >
->  > > -                       if (really && cache_errno == EINVAL) {
->  > > +                       if (really || cache_errno == EINVAL) {
->  > >                                 /* If we are doing --really-refresh
-> that
->  > >                                  * means the index is not valid
-> anymore.
->  > >                                  */
->  >
->  > This looks really odd. I don't see why we would need this. It seems
->  > first appeared in your "do not apply" patch [1]. Maybe leftover?
->  >
->  > I found this while re-reading the series and I have not put much time
->  > in studying this code yet. So I may be wrong. I'll post again if I
->  > find that it's true after some more staring.
+Mehul Jain <mehul.jain2029@gmail.com> writes:
+
+> In patch 2/3 and 3/3, there are many tests which requires a branch
+> similar to that of "signed" branch, i.e. a branch with a commit having
+> GPG signature. So previously in v2, I created two new branches,
+> "test_sign" and "no_sign", which are identical to that of "signed"
+> branch. And with these branches, I wrote the tests in patch 2/3
+> and 3/3.
 >
-> I don't remember the exact details here, but I think we needed this so
-> that we would ever refresh a file that watchman told us had been
-> modified.  We definitely were missing some invalidation if we didn't
-> have it.
+> As suggested by Eric [1], rather than creating new branches, I
+> can take advantage of "signed" branch which already exists.
 
-... and now I can't repro the problem.  So I'll remove it and re-roll 
-(with some other changes)
+Yeah, I understand that part.  But you do not _need_ to do the split
+you do in 1/3 in order to reuse "signed".
 
+The first 'log --graph --signature' test may fail, but it is not
+like that the test without 1/3 removes the "signed" branch when
+"log" command or the signature tests of its output fail, so "I
+didn't want the later tests to depend on the first test being
+successful" does not quite justify the split.  If "commit -S" step,
+which 1/3 splits into the earlier one of the two, fails, then you
+won't have a signed commit to use in the later tests, even though
+you have "signed" branch.  The split of the tests done by 1/3 does
+not make the tests more robust.  If the commands in the original
+in the part of the first test in the original that you keep in the
+first half with 1/3 fail, subsequent tests will be affected with or
+without 1/3.
 
+If 1/3 justifies the change a bit differently, it would become a
+good one.
+
+    In 2/3 and 3/3, we will use the same 'signed' branch that the
+    first test for 'log --graph --show-signature' uses.  This branch
+    is currently created in that 'log --graph --show-signature' test
+    itself.
+
+    Split the set-up part into a test of its own, and make the
+    existing first test into a separate one that only inspects the
+    history on the 'signed' branch.  That way, it would become
+    clearer that later tests added by 2/3 and 3/3 reuse the 'signed'
+    branch in the same way this 'log --graph --show-signature' uses
+    that same branch.
+
+Of course, you would need to keep GPG prerequisite for both halves
+1/3 creates.
+
+Thanks.
