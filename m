@@ -1,79 +1,78 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5F691FF40
-	for <e@80x24.org>; Thu, 23 Jun 2016 18:57:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 825741FF40
+	for <e@80x24.org>; Thu, 23 Jun 2016 18:59:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751244AbcFWS5K (ORCPT <rfc822;e@80x24.org>);
-	Thu, 23 Jun 2016 14:57:10 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:49267 "EHLO
-	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750729AbcFWS5J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2016 14:57:09 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-	id 59BB361388; Thu, 23 Jun 2016 18:57:08 +0000 (UTC)
-X-Spam-Checker-Version:	SpamAssassin 3.4.0 (2014-02-07) on
-	pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham autolearn_force=no version=3.4.0
-Received: from mfick1-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: mfick@smtp.codeaurora.org)
-	by smtp.codeaurora.org (Postfix) with ESMTPSA id 1823161378;
-	Thu, 23 Jun 2016 18:57:08 +0000 (UTC)
-From:	Martin Fick <mfick@codeaurora.org>
-To:	John Ajah <john@spinlet.com>, git@vger.kernel.org
-Subject: Re: GIT admin access
-Date:	Thu, 23 Jun 2016 12:57:06 -0600
-Message-ID: <4246181.WMWZBxU0cj@mfick1-lnx>
-User-Agent: KMail/4.8.5 (Linux/3.2.0-97-generic; KDE/4.8.5; x86_64; ; )
-In-Reply-To: <CAMoxcSXTVUBAECoNk0ePzWLZ2ShRXz5uZ8mHNgEcu0FqZMADSg@mail.gmail.com>
-References: <E9A37D7D-AA14-48CD-83CA-819766313D78@spinlet.com> <1707153.Ui0LYF9gxZ@mfick1-lnx> <CAMoxcSXTVUBAECoNk0ePzWLZ2ShRXz5uZ8mHNgEcu0FqZMADSg@mail.gmail.com>
+	id S1751272AbcFWS7m (ORCPT <rfc822;e@80x24.org>);
+	Thu, 23 Jun 2016 14:59:42 -0400
+Received: from alt32.smtp-out.videotron.ca ([24.53.0.21]:9347 "EHLO
+	alt32.smtp-out.videotron.ca" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750863AbcFWS7m (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2016 14:59:42 -0400
+Received: from yoda.home ([96.23.157.65])
+	by Videotron with SMTP
+	id G9qlb8r7BYOXTG9qmbWBYX; Thu, 23 Jun 2016 14:59:40 -0400
+X-Authority-Analysis: v=2.1 cv=Gfm35VjL c=1 sm=1 tr=0
+ a=keA3yYpnlypCNW5BNWqu+w==:117 a=keA3yYpnlypCNW5BNWqu+w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
+ a=pD_ry4oyNxEA:10 a=GHbuC2Uv-WSV5FR99nYA:9 a=CjuIK1q_8ugA:10
+Received: from xanadu.home (xanadu.home [192.168.2.2])
+	by yoda.home (Postfix) with ESMTPSA id 05A6A2DA017F;
+	Thu, 23 Jun 2016 14:59:39 -0400 (EDT)
+Date:	Thu, 23 Jun 2016 14:59:38 -0400 (EDT)
+From:	Nicolas Pitre <nico@fluxnic.net>
+To:	Lukas Fleischer <lfleischer@lfos.de>
+cc:	git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3] Refactor recv_sideband()
+In-Reply-To: <146670333753.555.4852543207010532908@typhoon.lan>
+Message-ID: <alpine.LFD.2.20.1606231453400.2550@knanqh.ubzr>
+References: <20160613195224.13398-1-lfleischer@lfos.de> <20160622052951.8402-1-lfleischer@lfos.de> <alpine.LFD.2.20.1606221053150.2550@knanqh.ubzr> <alpine.LFD.2.20.1606221831100.2550@knanqh.ubzr> <146670333753.555.4852543207010532908@typhoon.lan>
+User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=US-ASCII
+X-CMAE-Envelope: MS4wfOFPmxMjnTDJz626AVxyGanDRzyEKWNL/qLR+vV2DlSHjWy2vS/8NBwc/Ahe9OwTQEI85NAtr8pLmm2UcZBNg505uGcrmrJ/+b/bCHQ8mqsM2kN5iAir
+ Sb5JvDs1SyuWprjCzr9T/uKnA1YbwvdG9+OTPl+7X+bylZKLDJuiCMl0h4IpcTXe4CJTFSHvXFYNRp6cjzv73zeilZl2cwKWg0Y=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Brigning this back on list so that someone else can help...
+On Thu, 23 Jun 2016, Lukas Fleischer wrote:
 
-On Thursday, June 23, 2016 05:01:18 PM John Ajah wrote:
-> I'm on a private git, installed on a work server. Now the
-> guy who set it up is not available and I want to give
-> access to someone working for me, but I don't know how to
-> do that.
-
-I don't know what type of setup a "private git" means?  Is 
-this a machine with ssh access, is it git-daemon, git-hub, 
-git-olite, gerrit, ...?
-
-
-> This is the error the developer got when he tried cloning:
+> On Thu, 23 Jun 2016 at 00:47:39, Nicolas Pitre wrote:
+> > On Wed, 22 Jun 2016, Nicolas Pitre wrote:
+> > [...]
+> > >                 if (*b) {
+> > >                         xwrite(STDERR_FILENO, outbuf.buf, outbuf.len);
+> > >                         /* Incomplete line, skip the next prefix. */
+> > >                         strbuf_reset(&outbuf);
+> > >                 }
+> > >                 continue;
+> > > 
+> > > You are probably missing a strbuf_addf() before the last xwrite().
+> > 
+> > In fact, you could simply append the partial line to the strbuf and make 
+> > it the prefix for the next packet rather than writing a partial line.  
+> > You'd only have to write a partial line before leaving the function if 
+> > the strbuf is not empty at that point.
 > 
-> FATAL ERROR: Network error: Connection timed out
-> fatal: Could not read from remote repository.
+> True. And I like that solution.
 > 
-> Please make sure you have the correct access rights
-> and the repository exists.
-> 
-> My partner wants to set up another Git server and transfer
-> our content to the new server from the one we're
-> currently using. I think this is very risky and I also
-> think there has to be a way to provide access without
-> doing this.
+> Thinking about your last sentence, do we care about printing an
+> incomplete line at the end of the communication at all?
 
-We need to know what product you are running to help.  
+I'd think so. This is very unlikely to happen in practice, but that 
+might be useful to diagnose potential problems.
 
-What risks are you concerned with setting up another server?  
-And what kind of server would you be setting up?
+> If so, do we need to print such a line on every return path (i.e. on 
+> protocol and remote errors as well)? If we do, and if we want to 
+> implement partial line handling the way you suggested, we should 
+> probably print that final line from a common return path. And if we 
+> add such a path, we could reconsider using a non-static strbuf as 
+> well, since we could simply strbuf_release() the output buffer in that 
+> common code block. Opinions?
 
--Martin
+That makes sense to me.
 
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
-
+Nicolas
