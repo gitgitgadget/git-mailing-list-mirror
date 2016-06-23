@@ -1,75 +1,105 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 504CB1FF40
-	for <e@80x24.org>; Thu, 23 Jun 2016 19:11:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44D7E1FF40
+	for <e@80x24.org>; Thu, 23 Jun 2016 19:16:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751390AbcFWTLm (ORCPT <rfc822;e@80x24.org>);
-	Thu, 23 Jun 2016 15:11:42 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57007 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750876AbcFWTLl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2016 15:11:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E8E9258F8;
-	Thu, 23 Jun 2016 15:11:40 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CpNpc02PFCrxjwI2P4OqsJRHM5g=; b=faSQdS
-	99hUY5xiyhCInebZaLuW+RxJ1Fs0EwAPzku3S9vPFcZDabaOH0tattWOY06f6arT
-	2oeUJeZsdQSg42sPj6AAA/8DHIrsVpRWeBcHU6dN1nMjVgDnUbPgcbMgNaZDV5hi
-	KN7JIFEVSSMKrMxXwqhMS5dteh3HgbW3+hxkQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nPIkwSevgcIWxWIbgIm+/xoIlXQXCVhd
-	432f5NOtmlC8ETzxFlMNB6F3Lz1SmTOfI9KaUljCh5U3mZiTyrzrton9oUQ3Lk7e
-	AzPiaTd81KT7pdge1p65bzEggtW3NAjaj4awhKy2zktinm47qwIBzDU0c8XfdtCP
-	KvNaO1x0OvQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 36954258EE;
-	Thu, 23 Jun 2016 15:11:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B108A258ED;
-	Thu, 23 Jun 2016 15:11:39 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	git@vger.kernel.org, Simon Courtois <scourtois@cubyx.fr>
-Subject: Re: [PATCH v2 7/7] color: support strike-through attribute
-References: <20160623173048.GA19923@sigill.intra.peff.net>
-	<20160623174015.GG15774@sigill.intra.peff.net>
-	<xmqqpor7iwgo.fsf@gitster.mtv.corp.google.com>
-	<20160623183907.GA32368@sigill.intra.peff.net>
-	<xmqqlh1vivp8.fsf@gitster.mtv.corp.google.com>
-	<20160623190414.GA568@sigill.intra.peff.net>
-Date:	Thu, 23 Jun 2016 12:11:37 -0700
-In-Reply-To: <20160623190414.GA568@sigill.intra.peff.net> (Jeff King's message
-	of "Thu, 23 Jun 2016 15:04:14 -0400")
-Message-ID: <xmqqd1n7iuty.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751255AbcFWTQS (ORCPT <rfc822;e@80x24.org>);
+	Thu, 23 Jun 2016 15:16:18 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59288 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750890AbcFWTQR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2016 15:16:17 -0400
+Received: (qmail 1822 invoked by uid 102); 23 Jun 2016 19:16:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jun 2016 15:16:16 -0400
+Received: (qmail 13995 invoked by uid 107); 23 Jun 2016 19:16:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jun 2016 15:16:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Jun 2016 15:16:14 -0400
+Date:	Thu, 23 Jun 2016 15:16:14 -0400
+From:	Jeff King <peff@peff.net>
+To:	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 09/11] diffcore-pickaxe: "share" regex error handling code
+Message-ID: <20160623191614.GA1841@sigill.intra.peff.net>
+References: <20160623162907.23295-1-pclouds@gmail.com>
+ <20160623162907.23295-10-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 504A893A-3976-11E6-A0E1-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20160623162907.23295-10-pclouds@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Jun 23, 2016 at 06:29:05PM +0200, Nguyễn Thái Ngọc Duy wrote:
 
-> Hmm. I see the same thing screen and with tmux, as well (though I don't
-> usually use either myself). I suspect they have to filter ANSI codes
-> because they're using the codes themselves (so anything that moves the
-> cursor is going to be a definite problem), and strike-through probably
-> just isn't common enough to have been added to the whitelist.
+> diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+> index 7715c13..69c6567 100644
+> --- a/diffcore-pickaxe.c
+> +++ b/diffcore-pickaxe.c
+> @@ -204,20 +204,13 @@ void diffcore_pickaxe(struct diff_options *o)
+>  	int opts = o->pickaxe_opts;
+>  	regex_t regex, *regexp = NULL;
+>  	kwset_t kws = NULL;
+> +	int err = 0;
+>  
+>  	if (opts & (DIFF_PICKAXE_REGEX | DIFF_PICKAXE_KIND_G)) {
+> -		int err;
+>  		int cflags = REG_EXTENDED | REG_NEWLINE;
+>  		if (DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE))
+>  			cflags |= REG_ICASE;
+>  		err = regcomp(&regex, needle, cflags);
+> -		if (err) {
+> -			/* The POSIX.2 people are surely sick */
+> -			char errbuf[1024];
+> -			regerror(err, &regex, errbuf, 1024);
+> -			regfree(&regex);
+> -			die("invalid regex: %s", errbuf);
+> -		}
+>  		regexp = &regex;
+>  	} else {
+>  		kws = kwsalloc(DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE)
+> @@ -225,6 +218,13 @@ void diffcore_pickaxe(struct diff_options *o)
+>  		kwsincr(kws, needle, strlen(needle));
+>  		kwsprep(kws);
+>  	}
+> +	if (err) {
+> +		/* The POSIX.2 people are surely sick */
+> +		char errbuf[1024];
+> +		regerror(err, &regex, errbuf, 1024);
+> +		regfree(&regex);
+> +		die("invalid regex: %s", errbuf);
+> +	}
 
-screen needs to do a full emulation, not working as a passthru.  It
-pretends to be a VT100/ANSI and attempt to show on non-VT100/ANSI
-terminal via termcap/terminfo ;-)
+Hrm. I wondered what happens if we see an error in the kwset code block,
+which did not put anything useful in "regex" at all.
 
-So it is understandable that the omitted support for less common
-ones.
+It's OK right now, because "err" is newly promoted to the top of the
+function, and so we know that kwset cannot call it. But it seems like
+an accident waiting to happen. Calling it "regex_err" or something might
+help.
 
-But we are straying deep into an uninteresting (to the list)
-tangent, so let's stop it here.
+But I also wonder if a function wouldn't be better. You could even roll
+it up with regcomp, like:
 
+  static void regcomp_or_die(regex_t *regex, const char *pattern, int flags)
+  {
+	int err = regcomp(regex, pattern, flags);
+	if (err) {
+		char buf[1024];
+		regerror(err, &regex, buf, sizeof(buf));
+		regfree(&regex);
+		die("invalid regex: %s", buf);
+	}
+  }
+
+I think you could also skip the regfree(), since we are about to die. I
+also think the error message would probably be better if it mentioned
+the text of "pattern" itself (since it might be coming from config, or
+you might have provided several patterns, or you might have thought
+something was supposed to be a non-regex).
+
+-Peff
