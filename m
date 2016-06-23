@@ -1,89 +1,63 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0AE41FF40
-	for <e@80x24.org>; Thu, 23 Jun 2016 17:34:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8D081FF40
+	for <e@80x24.org>; Thu, 23 Jun 2016 17:35:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751454AbcFWReA (ORCPT <rfc822;e@80x24.org>);
-	Thu, 23 Jun 2016 13:34:00 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59197 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750919AbcFWReA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2016 13:34:00 -0400
-Received: (qmail 29938 invoked by uid 102); 23 Jun 2016 17:33:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jun 2016 13:33:59 -0400
-Received: (qmail 12802 invoked by uid 107); 23 Jun 2016 17:34:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jun 2016 13:34:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Jun 2016 13:33:57 -0400
-Date:	Thu, 23 Jun 2016 13:33:57 -0400
-From:	Jeff King <peff@peff.net>
-To:	git@vger.kernel.org
-Cc:	Simon Courtois <scourtois@cubyx.fr>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/7] add skip_prefix_mem helper
-Message-ID: <20160623173357.GC15774@sigill.intra.peff.net>
-References: <20160623173048.GA19923@sigill.intra.peff.net>
+	id S1751990AbcFWRfm (ORCPT <rfc822;e@80x24.org>);
+	Thu, 23 Jun 2016 13:35:42 -0400
+Received: from elnino.cryptocrack.de ([46.165.227.75]:4358 "EHLO
+	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751784AbcFWRfl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2016 13:35:41 -0400
+Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id fb6caf66
+	TLS version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO;
+	Thu, 23 Jun 2016 19:35:38 +0200 (CEST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160623173048.GA19923@sigill.intra.peff.net>
+Content-Transfer-Encoding: 8BIT
+To:	Nicolas Pitre <nico@fluxnic.net>
+From:	Lukas Fleischer <lfleischer@lfos.de>
+In-Reply-To: <alpine.LFD.2.20.1606221831100.2550@knanqh.ubzr>
+Cc:	git@vger.kernel.org, "Johannes Sixt" <j6t@kdbg.org>
+References: <20160613195224.13398-1-lfleischer@lfos.de>
+ <20160622052951.8402-1-lfleischer@lfos.de>
+ <alpine.LFD.2.20.1606221053150.2550@knanqh.ubzr>
+ <alpine.LFD.2.20.1606221831100.2550@knanqh.ubzr>
+Message-ID: <146670333753.555.4852543207010532908@typhoon.lan>
+User-Agent: alot/0.3.7
+Subject: Re: [PATCH v3] Refactor recv_sideband()
+Date:	Thu, 23 Jun 2016 19:35:37 +0200
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The skip_prefix function has been very useful for
-simplifying pointer arithmetic and avoiding repeated magic
-numbers, but we have no equivalent for length-limited
-buffers. So we're stuck with:
+On Thu, 23 Jun 2016 at 00:47:39, Nicolas Pitre wrote:
+> On Wed, 22 Jun 2016, Nicolas Pitre wrote:
+> [...]
+> >                 if (*b) {
+> >                         xwrite(STDERR_FILENO, outbuf.buf, outbuf.len);
+> >                         /* Incomplete line, skip the next prefix. */
+> >                         strbuf_reset(&outbuf);
+> >                 }
+> >                 continue;
+> > 
+> > You are probably missing a strbuf_addf() before the last xwrite().
+> 
+> In fact, you could simply append the partial line to the strbuf and make 
+> it the prefix for the next packet rather than writing a partial line.  
+> You'd only have to write a partial line before leaving the function if 
+> the strbuf is not empty at that point.
 
-  if (3 <= len && skip_prefix(buf, "foo", &buf))
-	  len -= 3;
+True. And I like that solution.
 
-That's not that complicated, but it needs to use magic
-numbers for the length of the prefix (or else write out
-strlen("foo"), repeating the string). By using a helper, we
-can get the string length behind the scenes (and often at
-compile time for string literals).
+Thinking about your last sentence, do we care about printing an
+incomplete line at the end of the communication at all? If so, do we
+need to print such a line on every return path (i.e. on protocol and
+remote errors as well)? If we do, and if we want to implement partial
+line handling the way you suggested, we should probably print that final
+line from a common return path. And if we add such a path, we could
+reconsider using a non-static strbuf as well, since we could simply
+strbuf_release() the output buffer in that common code block. Opinions?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Obviously a helper to be used later in the series. I didn't hunt around
-for other places that could make use of it, but I suspect there are
-some.
-
- git-compat-util.h | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 49d4029..c99cddc 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -473,6 +473,23 @@ static inline int skip_prefix(const char *str, const char *prefix,
- 	return 0;
- }
- 
-+/*
-+ * Like skip_prefix, but promises never to read past "len" bytes of the input
-+ * buffer, and returns the remaining number of bytes in "out" via "outlen".
-+ */
-+static inline int skip_prefix_mem(const char *buf, size_t len,
-+				  const char *prefix,
-+				  const char **out, size_t *outlen)
-+{
-+	size_t prefix_len = strlen(prefix);
-+	if (prefix_len <= len && !memcmp(buf, prefix, prefix_len)) {
-+		*out = buf + prefix_len;
-+		*outlen = len - prefix_len;
-+		return 1;
-+	}
-+	return 0;
-+}
-+
- /*
-  * If buf ends with suffix, return 1 and subtract the length of the suffix
-  * from *len. Otherwise, return 0 and leave *len untouched.
--- 
-2.9.0.209.g845fbc1
-
+I will wait for more comments and submit v4 in a couple of days.
