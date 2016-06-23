@@ -1,86 +1,79 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE0D41FF40
-	for <e@80x24.org>; Thu, 23 Jun 2016 18:52:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5F691FF40
+	for <e@80x24.org>; Thu, 23 Jun 2016 18:57:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751587AbcFWSwz (ORCPT <rfc822;e@80x24.org>);
-	Thu, 23 Jun 2016 14:52:55 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57057 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751390AbcFWSwz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2016 14:52:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E8752570F;
-	Thu, 23 Jun 2016 14:52:54 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0xCzS4hwDeakiZaIxPDS32sVh8A=; b=Kl1QMl
-	gVmWcT8N23/b1s50bgLmSU07UfptAlJQ8W8F4rLqM0t6VfoO0sx8THvQdeU9py18
-	oooLV8P23Ty18yqjXDohaKxaduD1KKIhvMhHjtjL+sI7YqknFswbeYu789FsUQzf
-	Q+XwF14ytwrrhJIOZDtUgNeO2Z8w+P5E5F15M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Yo1ezBop9Ik2hZ0DkMJVBgOOaUUvI2t5
-	OIKSSVRh8QKKOGIAaBagk3EgycMXIxJI48HeAKUIwVuelOi60ImQcN5UxyTXVoqk
-	/LaqWQthf9CZE0tkA2xMjKDuMZIUVow40DSYz6PfWoN5v6qGmP8VTdbQVwuW+ZPm
-	gT1r6w7OQek=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 15EFF2570E;
-	Thu, 23 Jun 2016 14:52:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1751244AbcFWS5K (ORCPT <rfc822;e@80x24.org>);
+	Thu, 23 Jun 2016 14:57:10 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:49267 "EHLO
+	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750729AbcFWS5J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2016 14:57:09 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+	id 59BB361388; Thu, 23 Jun 2016 18:57:08 +0000 (UTC)
+X-Spam-Checker-Version:	SpamAssassin 3.4.0 (2014-02-07) on
+	pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham autolearn_force=no version=3.4.0
+Received: from mfick1-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8EEF825709;
-	Thu, 23 Jun 2016 14:52:53 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	git@vger.kernel.org, Simon Courtois <scourtois@cubyx.fr>
-Subject: Re: [PATCH v2 7/7] color: support strike-through attribute
-References: <20160623173048.GA19923@sigill.intra.peff.net>
-	<20160623174015.GG15774@sigill.intra.peff.net>
-	<xmqqpor7iwgo.fsf@gitster.mtv.corp.google.com>
-	<20160623183907.GA32368@sigill.intra.peff.net>
-Date:	Thu, 23 Jun 2016 11:52:51 -0700
-In-Reply-To: <20160623183907.GA32368@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 23 Jun 2016 14:39:08 -0400")
-Message-ID: <xmqqlh1vivp8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	(Authenticated sender: mfick@smtp.codeaurora.org)
+	by smtp.codeaurora.org (Postfix) with ESMTPSA id 1823161378;
+	Thu, 23 Jun 2016 18:57:08 +0000 (UTC)
+From:	Martin Fick <mfick@codeaurora.org>
+To:	John Ajah <john@spinlet.com>, git@vger.kernel.org
+Subject: Re: GIT admin access
+Date:	Thu, 23 Jun 2016 12:57:06 -0600
+Message-ID: <4246181.WMWZBxU0cj@mfick1-lnx>
+User-Agent: KMail/4.8.5 (Linux/3.2.0-97-generic; KDE/4.8.5; x86_64; ; )
+In-Reply-To: <CAMoxcSXTVUBAECoNk0ePzWLZ2ShRXz5uZ8mHNgEcu0FqZMADSg@mail.gmail.com>
+References: <E9A37D7D-AA14-48CD-83CA-819766313D78@spinlet.com> <1707153.Ui0LYF9gxZ@mfick1-lnx> <CAMoxcSXTVUBAECoNk0ePzWLZ2ShRXz5uZ8mHNgEcu0FqZMADSg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B10F4A1A-3973-11E6-8985-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Brigning this back on list so that someone else can help...
 
-> On Thu, Jun 23, 2016 at 11:36:23AM -0700, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > This is the only remaining attribute that is commonly
->> > supported (at least by xterm) that we don't support. Let's
->> > add it for completeness.
->> >
->> > Signed-off-by: Jeff King <peff@peff.net>
->> > ---
->> > This was mostly for fun.  I can't think of a way in which it would be
->> > useful, and I'm not sure how compelling completionism is as an argument
->> > for inclusion. I'm OK if we drop this one.
->> 
->> It indeed is fun and it even makes sense in this context:
->> 
->>     $ ./git -c diff.color.old='red strike' show
->
-> Ooh, I hadn't thought of that. It's a bit noisy for my tastes in a
-> line-oriented diff, but with --color-words, it actually helps quite a
-> bit (try it on the documentation patch from this series, for example).
+On Thursday, June 23, 2016 05:01:18 PM John Ajah wrote:
+> I'm on a private git, installed on a work server. Now the
+> guy who set it up is not available and I want to give
+> access to someone working for me, but I don't know how to
+> do that.
 
-What I usually use is diff.color.old='red reverse' because I cannot
-easily tell between black and dark red in small font on my white
-background.  s/reverse/strike/ makes it much less noisy.
+I don't know what type of setup a "private git" means?  Is 
+this a machine with ssh access, is it git-daemon, git-hub, 
+git-olite, gerrit, ...?
 
-What is sad for me is that I usually work in GNU screen, displaying
-on either xterm or gnome-terminal.  Without screen, strike shows but
-inside it I cannot seem to be able to get strike-thru in effect.
+
+> This is the error the developer got when he tried cloning:
+> 
+> FATAL ERROR: Network error: Connection timed out
+> fatal: Could not read from remote repository.
+> 
+> Please make sure you have the correct access rights
+> and the repository exists.
+> 
+> My partner wants to set up another Git server and transfer
+> our content to the new server from the one we're
+> currently using. I think this is very risky and I also
+> think there has to be a way to provide access without
+> doing this.
+
+We need to know what product you are running to help.  
+
+What risks are you concerned with setting up another server?  
+And what kind of server would you be setting up?
+
+-Martin
+
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code 
+Aurora Forum, hosted by The Linux Foundation
+
