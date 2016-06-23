@@ -1,68 +1,117 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D6661FF40
-	for <e@80x24.org>; Thu, 23 Jun 2016 19:22:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A7DA1FF40
+	for <e@80x24.org>; Thu, 23 Jun 2016 19:56:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752024AbcFWTWz (ORCPT <rfc822;e@80x24.org>);
-	Thu, 23 Jun 2016 15:22:55 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59296 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751605AbcFWTWy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2016 15:22:54 -0400
-Received: (qmail 2164 invoked by uid 102); 23 Jun 2016 19:22:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jun 2016 15:22:54 -0400
-Received: (qmail 14087 invoked by uid 107); 23 Jun 2016 19:23:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jun 2016 15:23:08 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Jun 2016 15:22:51 -0400
-Date:	Thu, 23 Jun 2016 15:22:51 -0400
-From:	Jeff King <peff@peff.net>
-To:	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH 2/2] archive-tar: write extended headers for far-future
- mtime
-Message-ID: <20160623192251.GB32745@sigill.intra.peff.net>
-References: <20160616043523.GA13615@sigill.intra.peff.net>
- <20160616043758.GB18323@sigill.intra.peff.net>
- <57687417.4020009@web.de>
- <576A2631.2000608@web.de>
+	id S1751713AbcFWT4N (ORCPT <rfc822;e@80x24.org>);
+	Thu, 23 Jun 2016 15:56:13 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62215 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751380AbcFWT4M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2016 15:56:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C719125F8E;
+	Thu, 23 Jun 2016 15:56:10 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7Mg20SNfWQv+j/NAo6l+MHY+Na4=; b=qqizwZ
+	RaSSJ07l+JWOKmwHSVqwKedAFBkQM/l4WpSBnL5L6D5nCi8odtXyFXDsHb/CloK6
+	Vo5aL6j6IPQQYylBk2aZCWkfePjNRCGE1P2JT6o4W+ZQSWs+t4qsBZGsyrM4azG9
+	7gr2EsSVGdUi/VuoyngALIYgVF58jMJTbY8DI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Fa8dqXEqbvjlRWhxpGNLJNjDjYc4FD6c
+	kq1QYmtfuw6E5XaaTWfoiC/ZGKN9UgELD6as1NEvzLDDTDuv+0n4QSP1ZIcWmxPB
+	6begLqRXc1aFOscOyrK19LS3RMK4NeK5nc9wwJkmbr4bRY+5LetMQpBZdX0qro6e
+	6+huuLdTF7c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id BFB4025F8D;
+	Thu, 23 Jun 2016 15:56:10 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4A0CE25F8C;
+	Thu, 23 Jun 2016 15:56:10 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org, Simon Courtois <scourtois@cubyx.fr>
+Subject: Re: [PATCH v2 7/7] color: support strike-through attribute
+References: <20160623173048.GA19923@sigill.intra.peff.net>
+	<20160623174015.GG15774@sigill.intra.peff.net>
+	<xmqqpor7iwgo.fsf@gitster.mtv.corp.google.com>
+	<20160623183907.GA32368@sigill.intra.peff.net>
+Date:	Thu, 23 Jun 2016 12:56:08 -0700
+In-Reply-To: <20160623183907.GA32368@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 23 Jun 2016 14:39:08 -0400")
+Message-ID: <xmqq7fdfisrr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <576A2631.2000608@web.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 88149F12-397C-11E6-9760-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jun 22, 2016 at 07:46:25AM +0200, René Scharfe wrote:
+Jeff King <peff@peff.net> writes:
 
-> Am 21.06.2016 um 00:54 schrieb René Scharfe:
-> > Am 16.06.2016 um 06:37 schrieb Jeff King:
-> > >    2. System tars that cannot handle pax headers.
-> > 
-> > In t5000 there is a simple interpreter for path headers for systems
-> > whose tar doesn't handle them.  Adding one for mtime headers may be
-> > feasible.
-> > 
-> > It's just a bit complicated to link a pax header file to the file it
-> > applies to when it doesn't also contain a path header.  But we know that
-> > the mtime of all entries in tar files created by git archive are is the
-> > same, so we could simply read one header and then adjust the mtime of
-> > all files accordingly.
-> 
-> This brings me to the idea of using a single global pax header for mtime
-> instead of one per entry.  It reduces the size of the archive and allows for
-> slightly easier testing -- it just fits better since we know that all our
-> mtimes are the same.
+> ... but with --color-words, it actually helps quite a
+> bit (try it on the documentation patch from this series, for example).
 
-Yeah, I had a similar thought while writing it, but wasn't quite sure
-how that was supposed to be formatted. I modeled my output after what
-GNU tar writes, but of course they are expecting a different mtime for
-each file.
+This gets me back to another tangent, but this time a one that is
+quite a lot more relevant to Git.
 
-I'll look into how global pax headers should look.
+There is this change in "git show --word-diff" for the "italic"
+patch:
 
--Peff
+    The accepted attributes are `bold`, `dim`, `ul`, `blink`,
+    {+`reverse`,+} and [-`reverse`.-]{+`italic`.+}
+
+If we imagine that the pre- and post- image expressed in "one token
+per line" format, the text before and after the patch would have
+read like this:
+
+    preimage		postimage
+    -----------         ------------
+    ...			...
+    blink		blink
+    ,			,
+    and			reverse
+    reverse		,
+    .			and
+    			reverse
+                        .
+
+And the current output is showing an equivalent of this diff:
+
+	...
+        blink
+        ,
+       +reverse
+       +,
+        and
+       -reverse
+       -.
+       +italic
+       +.
+
+But if we were doing line-level diff for the above two, I would
+think this is much easier to read:
+
+	...
+        blink
+        ,
+       -and
+        reverse
+       +,
+       +and
+       +italic
+       +.
+
+That would give us a word-diff more like this, I would imagine,
+
+    The accepted attributes are `bold`, `dim`, `ul`, `blink`,
+    [-and-] reverse[-,-] {+and `italic`}.
+
+and that would be much easier to read than the current --word-diff
+output.
