@@ -1,105 +1,58 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44D7E1FF40
-	for <e@80x24.org>; Thu, 23 Jun 2016 19:16:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A95211FF40
+	for <e@80x24.org>; Thu, 23 Jun 2016 19:21:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751255AbcFWTQS (ORCPT <rfc822;e@80x24.org>);
-	Thu, 23 Jun 2016 15:16:18 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59288 "HELO cloud.peff.net"
+	id S1752143AbcFWTV2 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 23 Jun 2016 15:21:28 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59292 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750890AbcFWTQR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2016 15:16:17 -0400
-Received: (qmail 1822 invoked by uid 102); 23 Jun 2016 19:16:16 -0000
+	id S1750876AbcFWTV1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2016 15:21:27 -0400
+Received: (qmail 2107 invoked by uid 102); 23 Jun 2016 19:21:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jun 2016 15:16:16 -0400
-Received: (qmail 13995 invoked by uid 107); 23 Jun 2016 19:16:31 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jun 2016 15:21:26 -0400
+Received: (qmail 14068 invoked by uid 107); 23 Jun 2016 19:21:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jun 2016 15:16:31 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Jun 2016 15:16:14 -0400
-Date:	Thu, 23 Jun 2016 15:16:14 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Jun 2016 15:21:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Jun 2016 15:21:24 -0400
+Date:	Thu, 23 Jun 2016 15:21:24 -0400
 From:	Jeff King <peff@peff.net>
-To:	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 09/11] diffcore-pickaxe: "share" regex error handling code
-Message-ID: <20160623191614.GA1841@sigill.intra.peff.net>
-References: <20160623162907.23295-1-pclouds@gmail.com>
- <20160623162907.23295-10-pclouds@gmail.com>
+To:	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH 1/2] archive-tar: write extended headers for file sizes
+ >= 8GB
+Message-ID: <20160623192124.GA32745@sigill.intra.peff.net>
+References: <20160616043523.GA13615@sigill.intra.peff.net>
+ <20160616043733.GA18323@sigill.intra.peff.net>
+ <57687413.3030609@web.de>
+ <20160621155920.GA7549@sigill.intra.peff.net>
+ <5769A6CC.9030001@web.de>
+ <20160621210234.GB4747@sigill.intra.peff.net>
+ <576A2625.8010706@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20160623162907.23295-10-pclouds@gmail.com>
+In-Reply-To: <576A2625.8010706@web.de>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jun 23, 2016 at 06:29:05PM +0200, Nguyễn Thái Ngọc Duy wrote:
+On Wed, Jun 22, 2016 at 07:46:13AM +0200, René Scharfe wrote:
 
-> diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-> index 7715c13..69c6567 100644
-> --- a/diffcore-pickaxe.c
-> +++ b/diffcore-pickaxe.c
-> @@ -204,20 +204,13 @@ void diffcore_pickaxe(struct diff_options *o)
->  	int opts = o->pickaxe_opts;
->  	regex_t regex, *regexp = NULL;
->  	kwset_t kws = NULL;
-> +	int err = 0;
->  
->  	if (opts & (DIFF_PICKAXE_REGEX | DIFF_PICKAXE_KIND_G)) {
-> -		int err;
->  		int cflags = REG_EXTENDED | REG_NEWLINE;
->  		if (DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE))
->  			cflags |= REG_ICASE;
->  		err = regcomp(&regex, needle, cflags);
-> -		if (err) {
-> -			/* The POSIX.2 people are surely sick */
-> -			char errbuf[1024];
-> -			regerror(err, &regex, errbuf, 1024);
-> -			regfree(&regex);
-> -			die("invalid regex: %s", errbuf);
-> -		}
->  		regexp = &regex;
->  	} else {
->  		kws = kwsalloc(DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE)
-> @@ -225,6 +218,13 @@ void diffcore_pickaxe(struct diff_options *o)
->  		kwsincr(kws, needle, strlen(needle));
->  		kwsprep(kws);
->  	}
-> +	if (err) {
-> +		/* The POSIX.2 people are surely sick */
-> +		char errbuf[1024];
-> +		regerror(err, &regex, errbuf, 1024);
-> +		regfree(&regex);
-> +		die("invalid regex: %s", errbuf);
-> +	}
+> Yes, it's only useful as a debug flag, but the fact that it breaks
+> highlights a (admittedly mostly theoretical) shortcoming: The code doesn't
+> handle extended headers that are over the size limit as nicely as it could.
+> So the test was already worth it, even if won't land in master. :)
 
-Hrm. I wondered what happens if we see an error in the kwset code block,
-which did not put anything useful in "regex" at all.
+Kind of. It was impossible to trigger in the original (and we still
+don't actually handle it in the revised version; we just die in
+xsnprintf).
 
-It's OK right now, because "err" is newly promoted to the top of the
-function, and so we know that kwset cannot call it. But it seems like
-an accident waiting to happen. Calling it "regex_err" or something might
-help.
-
-But I also wonder if a function wouldn't be better. You could even roll
-it up with regcomp, like:
-
-  static void regcomp_or_die(regex_t *regex, const char *pattern, int flags)
-  {
-	int err = regcomp(regex, pattern, flags);
-	if (err) {
-		char buf[1024];
-		regerror(err, &regex, buf, sizeof(buf));
-		regfree(&regex);
-		die("invalid regex: %s", buf);
-	}
-  }
-
-I think you could also skip the regfree(), since we are about to die. I
-also think the error message would probably be better if it mentioned
-the text of "pattern" itself (since it might be coming from config, or
-you might have provided several patterns, or you might have thought
-something was supposed to be a non-regex).
+But still, I'll go with the simpler thing we've discussed here. The
+symmetry with ustar_mtime isn't worth it, and doubly so if we just write
+a single pax header.
 
 -Peff
