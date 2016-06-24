@@ -1,96 +1,105 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64CC62018A
-	for <e@80x24.org>; Fri, 24 Jun 2016 17:45:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A4AE2018A
+	for <e@80x24.org>; Fri, 24 Jun 2016 18:07:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751599AbcFXRpU (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 13:45:20 -0400
-Received: from mout.gmx.net ([212.227.15.15]:55215 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751394AbcFXRpT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2016 13:45:19 -0400
-Received: from virtualbox ([87.193.220.130]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MCtql-1b7wZc0Q31-009jWO; Fri, 24 Jun 2016 19:45:07
- +0200
-Date:	Fri, 24 Jun 2016 19:45:04 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Jeff King <peff@peff.net>
-cc:	Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
-	Nicolas Pitre <nico@fluxnic.net>, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2] Refactor recv_sideband()
-In-Reply-To: <20160624153121.GA2494@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1606241942220.12947@virtualbox>
-References: <20160613195224.13398-1-lfleischer@lfos.de> <20160614210038.31465-1-lfleischer@lfos.de> <20160624153121.GA2494@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1751742AbcFXSHI (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 14:07:08 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36090 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751394AbcFXSHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2016 14:07:06 -0400
+Received: by mail-wm0-f68.google.com with SMTP id c82so7079383wme.3
+        for <git@vger.kernel.org>; Fri, 24 Jun 2016 11:07:05 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ShVe6kHuExaqUpumqmNUDYdV1KWCrzdEgweOVv7j8lI=;
+        b=qEoEXzT8NN1J1U2e44blXIxM384qqAiI8he4/5MfiosLIWwhAwWRwXz3dM//HS41BC
+         0vg2GqLi2Rjr0OGTXY+dKcCmPF8s6P8VqhiRbLqFZA+RH7fKHVAS+1RRVxFkJZzOOR9d
+         ANhGCZzIp0QZo1TMLmYz0bish0307sSXuR5EP1GH9r3wiwuN5J6ULcNJvBggWzbrCZ9s
+         wzFDT3JoBMoTaU+EfGf8cOESiRQVwBWXQbmDhkCUlz4pX6jlifeV0G8DYxxII1QgASr8
+         ITxzvRRniHb7BzLdnDfWhZzp3hb+ZZ0rFbMYKSyctTYOv3WlkmraMBZrq7W2wAKa3nKm
+         SfiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ShVe6kHuExaqUpumqmNUDYdV1KWCrzdEgweOVv7j8lI=;
+        b=TkkMN5iY6CIdAfLaZww9eeV5Mp60Bg7TUyCFETCQ6IHr2JHlYTjVcEQ6vwy6DsV8k6
+         rFoy+dxQLemZIznjx8txwSnsjL/KapAeKvTtJPCcRJM3YhT0A1elY6cZaJviW2ffebCl
+         sbjE09z9ihZwW4Ev/jQVCvfMIjp/3fy7EMcwxupuE+1DHgJ3qyfCy6oWme8UTmltz40n
+         71D0dmwhVKaCNDQ+HV930v9GExSXRDlwx8oANov07mtQrWbqxHyIciKfDSBIyLFaa9NF
+         NPu5lyRs65Xet+hGQCycj0gDs8i0Ei38a0pKfbkwZuW8itlIJPaTpMi4mbPzgZr2DpCI
+         PsJQ==
+X-Gm-Message-State: ALyK8tJBQFTBoGG5cdqUwt7yppoYq/jEdaqJOb76s2m6Y733vRuAm8JsDz1XDwvWCsbHwQ==
+X-Received: by 10.28.73.86 with SMTP id w83mr19716603wma.83.1466791624569;
+        Fri, 24 Jun 2016 11:07:04 -0700 (PDT)
+Received: from localhost (cable-62-117-30-12.cust.telecolumbus.net. [62.117.30.12])
+        by smtp.gmail.com with ESMTPSA id a198sm4210780wme.16.2016.06.24.11.07.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 24 Jun 2016 11:07:03 -0700 (PDT)
+From:	Ralf Thielow <ralf.thielow@gmail.com>
+To:	git@vger.kernel.org
+Cc:	tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	phillip.szelat@gmail.com, matthias.ruester@gmail.com,
+	magnus.goerlitz@googlemail.com,
+	Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] l10n: de.po: fix translation of autostash
+Date:	Fri, 24 Jun 2016 20:07:00 +0200
+Message-Id: <20160624180700.11685-1-ralf.thielow@gmail.com>
+X-Mailer: git-send-email 2.9.0.129.g44ae68f
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:4fCCRhEEpy+AGR9fn1K+s/JCD+3BD+2gu0tXSS0PvH4AeMPUPeT
- 8dHlEVM4FYvAQiR0ylqzo+fLlhazbRlWz3NQ18Np9kFz1IYqH5XbztNCnHvFSlCctOwJv7L
- 2R8kD59pQSJmdLX5gmKlSa5Y9DAg1ZbsdlrkC30A1/Q2Wi9swO5PA7QTSYuzjjMv5yMpjPC
- d9o8YT5jaFudjD19985dw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:eso4kYeEmU0=:B/RzTTZVqRcCyV59mQ5cOq
- aKyC6u/Gm9O8dcDGWyl0ofWv7OatA5jeCiNzBtxiTaxEviBKdQn2o8DS+4MEi7VvGld6NIvmo
- +KA1g55G7P4fLLy8MJRhUazHWme4Se+Dq8duBBm/aRNyHP4e/U3aPb41OZxvV8SV0eb1fd9L8
- DB97xDHW222oDz67AqEKnc5FxNvoAJbSO12j33mO/yPtrPI0UE3CmjUC6lzZljuSVERv/L+TF
- 7aPnI4rd675zoXTuUjirJ2y8GLFAttCaAkc58w6kp29ImWjRfzh3K6z6sgTPAq26+Fa5LqhPF
- e5bGSU+7EvHBkxKLCjrk4thBs6nrGXXoGc6i5erEc8LBX12ookjs/wxGtTju4mazQH0U6pQH6
- dxA01d/6k7HS60VqLZZk2cINZDOd2w3qQEqfh1n3qL8cugL1vmHiuxQQr+YmMfdDahnpBpzX4
- IjKjTYW9uVmt85lfbyW2gNDSe95ccaPjX1U6GXgGhrTMiW8nju6XuRBsHDBtX6xLDNoBRO5WK
- Ot2TLxdCFIFQblSPHdCAwGUTFIXbxDqK7qMoA/5BcNvSH5uBU+MmzmGBGZXUj4rZdd5liOK3s
- XrUCwlCsyrVYXHwj7DE5QxKOTLYuCctqBtuEpNjKnmugV0eSc7BybBiKdaqzaOXc5jtOZNYm1
- Kautlhn4sX+4JJP8zSptx73dKVq90mh/O1CYi0i9cSly946a6X7HFyVI/ztW2VgyfTLtmS8hx
- vbaJDd2kW83CigYmgAzGGqtvnxuDI5k6E8MaoQNabxsZZrbHhD26hgiuiZKy7iO27cHxrI95Y
- lYpnhdu
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Peff,
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ po/de.po | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-On Fri, 24 Jun 2016, Jeff King wrote:
+diff --git a/po/de.po b/po/de.po
+index d50cb1b..fdf4d92 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -12408,7 +12408,7 @@ msgstr ""
+ 
+ #: git-rebase.sh:168
+ msgid "Applied autostash."
+-msgstr "\"autostash\" angewendet."
++msgstr "Automatischen Stash angewendet."
+ 
+ #: git-rebase.sh:171
+ #, sh-format
+@@ -12421,7 +12421,7 @@ msgid ""
+ "Your changes are safe in the stash.\n"
+ "You can run \"git stash pop\" or \"git stash drop\" at any time.\n"
+ msgstr ""
+-"Anwendung von \"autostash\" resultierte in Konflikten.\n"
++"Anwendung des automatischen Stash resultierte in Konflikten.\n"
+ "Ihre Änderungen sind im Stash sicher.\n"
+ "Sie können jederzeit \"git stash pop\" oder \"git stash drop\" ausführen.\n"
+ 
+@@ -12508,12 +12508,12 @@ msgstr "fatal: Branch $branch_name nicht gefunden"
+ 
+ #: git-rebase.sh:558
+ msgid "Cannot autostash"
+-msgstr "Kann \"autostash\" nicht ausführen."
++msgstr "Kann automatischen Stash nicht anwenden."
+ 
+ #: git-rebase.sh:563
+ #, sh-format
+ msgid "Created autostash: $stash_abbrev"
+-msgstr "\"autostash\" erzeugt: $stash_abbrev"
++msgstr "Automatischen Stash erzeugt: $stash_abbrev"
+ 
+ #: git-rebase.sh:567
+ msgid "Please commit or stash them."
+-- 
+2.9.0.129.g44ae68f
 
-> On Tue, Jun 14, 2016 at 11:00:38PM +0200, Lukas Fleischer wrote:
-> 
-> > Improve the readability of recv_sideband() significantly by replacing
-> > fragile buffer manipulations with string buffers and more sophisticated
-> > format strings. Note that each line is printed using a single write()
-> > syscall to avoid garbled output when multiple processes write to stderr
-> > in parallel, see 9ac13ec (atomic write for sideband remote messages,
-> > 2006-10-11) for details.
-> > 
-> > Also, reorganize the overall control flow, remove some superfluous
-> > variables and replace a custom implementation of strpbrk() with a call
-> > to the standard C library function.
-> 
-> I happened to be looking at the color-printing code yesterday, and was
-> reminded that on Windows, fprintf is responsible for converting ANSI
-> codes into colors the terminal can show:
-
-Thanks for remembering!
-
->   $ git grep -A2 IMPORTANT color.h
->   color.h: * IMPORTANT: Due to the way these color codes are emulated on Windows,
->   color.h- * write them only using printf(), fprintf(), and fputs(). In particular,
->   color.h- * do not use puts() or write().
-> 
-> Your patch converts some fprintf calls to write. What does this mean
-> on Windows for:
-> 
->   1. Remote servers which send ANSI codes and expect them to look
->      reasonable (this might be a losing proposition already, as the
->      server won't know anything about the user's terminal, or whether
->      output is going to a file).
-> 
->   2. The use of ANSI_SUFFIX in this function, which uses a similar
->      escape code.
-
-Wow, I did not even think that a remote server would send color codes,
-what with the server being unable to query the local terminal via
-isatty().
-
-Do we *actually* send color via the sideband, like, ever?
-
-Ciao,
-Dscho
