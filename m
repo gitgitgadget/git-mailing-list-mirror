@@ -1,63 +1,68 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 916C82018A
-	for <e@80x24.org>; Fri, 24 Jun 2016 13:13:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 132522018A
+	for <e@80x24.org>; Fri, 24 Jun 2016 13:29:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751376AbcFXNNa (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 09:13:30 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59646 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751315AbcFXNNa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2016 09:13:30 -0400
-Received: (qmail 14631 invoked by uid 102); 24 Jun 2016 13:13:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 09:13:29 -0400
-Received: (qmail 19158 invoked by uid 107); 24 Jun 2016 13:13:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 09:13:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jun 2016 09:13:25 -0400
-Date:	Fri, 24 Jun 2016 09:13:25 -0400
-From:	Jeff King <peff@peff.net>
-To:	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	"Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH v3 4/4] archive-tar: drop return value
-Message-ID: <20160624131325.GA28941@sigill.intra.peff.net>
-References: <20160623231512.GA27683@sigill.intra.peff.net>
- <20160623232158.GD3668@sigill.intra.peff.net>
- <1865881092.716701.1466768964884.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+	id S1751569AbcFXN3l (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 09:29:41 -0400
+Received: from mout.gmx.net ([212.227.15.19]:63407 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751374AbcFXN3k (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2016 09:29:40 -0400
+Received: from virtualbox ([87.193.220.130]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MFtf4-1bBQx01vp0-00ExTq; Fri, 24 Jun 2016 15:29:32
+ +0200
+Date:	Fri, 24 Jun 2016 15:29:30 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	UberBooster <info@uberbooster.com>
+cc:	git@vger.kernel.org
+Subject: Re: Git Bash Slow in Windows (possible fix)
+In-Reply-To: <CAB-vh3v1v4+jfs1cyDS-Ft5_1ibGqLzzzmJK-s7MHjVPR3uYaQ@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1606241525450.12947@virtualbox>
+References: <CAB-vh3v1v4+jfs1cyDS-Ft5_1ibGqLzzzmJK-s7MHjVPR3uYaQ@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1865881092.716701.1466768964884.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:lddMMk/Vu1rxRhLUGtxEcP058cUdoBycWgFG9Rxt5C8EeXMFjG+
+ opzPKmHSZaAYozsLP2gvruo5l2qJ9ZMh1JpSjwxMZb3iHr72id+lcE6eGyOXL7nfQOT0XKy
+ zsXIxArDDk/J8jwz/jKFrm9pZdLprE88HXhyHmRdYmIXzlhfAzF6Xbk+Mq3peHLyadVBs6c
+ T1aRebY6de0iN7bviDOuA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:k3FkaL3gnsQ=:l2rhPoQjBbU3KzHsjIWEIf
+ Kw2r7e8eXO/JtLK+Ri8Bz7HIukLg3dDpiH4MwLilZsw4PTCwcUGLMNny9ew5QsNhorNZMc/dF
+ uf8MFUZdw9aCLEd9erowTSK3nrRi2YMR1DjERijvyPBS3+ayphftTBuDeL+T0N1QoOfU9ZFku
+ ZiCWB98peUMMjdqb2fhQc49auNQbK3yWEfbuSAbh4uOyvRYk5uhrJlKfgheNXLDJRpuqTcpcb
+ ZR+W1RSUK4AW26BWX+WcPPO3MYutmSPJhFzFHrynQc20p/OZp+oU6zmsgulbLXamxTiEyCZKU
+ Jlc/W//3bmUe0iIoZRohbgBks/2dEa0lSeBxUGapwdW5+OV8ond+J2I8Z++Nzsy13r7xd/GPS
+ 4VI2hgDbXyBG80s0P0svr/sX0fG9kdhyumYPRz6adgVLqvvXyc4tkWxjBQMBoL8v3+iiICLl9
+ eG1XqJh05L/NnUJ5RsC7WNmVDdIIW2QyjkoCmxClX6HuXUVmjfo9VXmQg19yuuS1MYxFje1x8
+ K9iZflcbPUssgiSw+pqbSo1OqvPfANnZvhsjYQ0kJkaNAE/7X1opbKAkA8c3THvCfKZe3oVAB
+ oCQUKI8mu7bdJwdH25u4vZJnHWVuGRRNG3V/Li6ZPrMOsNjGXHGM4GdpXR/AsHWBX4QNFfYVN
+ hHbmEEDGhbKozPwSnuRnVVKg8xau0a6WhXckYRFTIEOSpVbc473RMSsaGntrzFwaZG9vH8/4t
+ zsq2uqg6r/ngk4GOWHqyA5UJ6Gm41CPp9c+BApzmy2NYdDeFze66JCkoVqyG2XNrA+2eGyEPe
+ m2l2lr7
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jun 24, 2016 at 01:49:24PM +0200, Remi Galan Alfonso wrote:
+Hi,
 
-> Hi Peff,
-> 
-> Jeff King <peff@peff.net> writes:
-> > @@ -413,7 +411,7 @@ static int write_tar_archive(const struct archiver *ar,
-> >  {
-> >          int err = 0;
-> >  
-> > -        err = write_global_extended_header(args);
-> > +        write_global_extended_header(args);
-> >          if (!err)
-> >                  err = write_archive_entries(args, write_tar_entry);
-> 
-> If we drop the error code from 'write_global_extended_header' then the
-> above 'if (!err)' becomes useless (always evaluates to 'true' since
-> 'err' is set to '0').
+On Thu, 23 Jun 2016, UberBooster wrote:
 
-Thanks, you're right.
+> [...] and I also installed MS Office 360.  AFTER installing this
+> software, Git-Bash was AMAZINGLY fast.
 
-I wondered if we could drop "err" entirely, but write_archive_entries()
-does indeed have some error code paths (everybody uses write_or_die, but
-we return an error for things like unknown file types).
+I suspect you mean Office 365.
 
--Peff
+In any case, it is next to impossible to diagnose slowness after it
+dissipated.
+
+For the record, we do have a wiki page that describes how to find out more
+about why Git Bash's startup might be slow (it should not be slow, of
+course, yet we had enough cases where we needed to find out more):
+
+https://github.com/git-for-windows/git/wiki/Diagnosing-performance-issues
+
+Ciao,
+Johannes
