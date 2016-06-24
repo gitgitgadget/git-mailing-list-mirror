@@ -2,71 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 714F01FEAA
-	for <e@80x24.org>; Fri, 24 Jun 2016 21:33:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDF761FEAA
+	for <e@80x24.org>; Fri, 24 Jun 2016 22:02:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751682AbcFXVcs (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 17:32:48 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:47009 "EHLO bsmtp3.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751609AbcFXVcq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2016 17:32:46 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3rbs4X1qq5z5tlL;
-	Fri, 24 Jun 2016 23:32:44 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id A424629B1;
-	Fri, 24 Jun 2016 23:32:43 +0200 (CEST)
-Subject: Re: [PATCH 1/4] tests: factor portable signal check out of t0005
-To:	Jeff King <peff@peff.net>
-References: <20160624193924.GA6282@sigill.intra.peff.net>
- <20160624194357.GA6441@sigill.intra.peff.net> <576D9D90.3070605@kdbg.org>
- <20160624210541.GC6282@sigill.intra.peff.net>
-Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-	"Robin H. Johnson" <robbat2@gentoo.org>
-From:	Johannes Sixt <j6t@kdbg.org>
-Message-ID: <576DA6FB.1050108@kdbg.org>
-Date:	Fri, 24 Jun 2016 23:32:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
+	id S1751565AbcFXWB5 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 18:01:57 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53533 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751185AbcFXWBt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2016 18:01:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8AB9C27C07;
+	Fri, 24 Jun 2016 18:01:48 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ax9dx51b4ca+kVbB9nkoKUripbQ=; b=hE45Je
+	dl8BLijWBa66y0E9Y9/ZShHA+RtvVC2WuLNxdtb4aPp2GviWwJl5A+rdeUKEHkLv
+	A9uw5qPaxLmxSkD+txVxm5w1kuXBxwrUwu8+VRsoXlQLCWI/mzID828WzOXbNYub
+	xIhZpiEQXRhDiEejtPHeaPxbRbfGRnl4Gx2KM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iM1ZtfHDSKU78JzmCjs61YSE5jfGu9nQ
+	T6VPeTN7i82Fmc0pUcRD3fwF25AbuXHEysHw/uVmUWs59EPfsD5Fg61gc6THV2i8
+	UKaUEXADZo165ppEJ0KOogL+FmRmkytGOK/ihvcUSc07sP0Tn+1pPVFP0cGVGOZJ
+	UHPLLUBeAjs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 82CB927C06;
+	Fri, 24 Jun 2016 18:01:48 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0FE4D27C05;
+	Fri, 24 Jun 2016 18:01:47 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 06/10] format-patch: explicitly switch off color when writing to files
+References: <cover.1466505222.git.johannes.schindelin@gmx.de>
+	<cover.1466607667.git.johannes.schindelin@gmx.de>
+	<c0fdb78fbb7b19e4b367c50a9c0c570193e98fa3.1466607667.git.johannes.schindelin@gmx.de>
+Date:	Fri, 24 Jun 2016 15:01:45 -0700
+In-Reply-To: <c0fdb78fbb7b19e4b367c50a9c0c570193e98fa3.1466607667.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Wed, 22 Jun 2016 17:01:54 +0200
+	(CEST)")
+Message-ID: <xmqq1t3mfdpy.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20160624210541.GC6282@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3F590DFE-3A57-11E6-968C-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Am 24.06.2016 um 23:05 schrieb Jeff King:
-> On Fri, Jun 24, 2016 at 10:52:32PM +0200, Johannes Sixt wrote:
->> The Windows behavior is most closely described as having signal(SIGPIPE,
->> SIG_IGN) at the very beginning of the program.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+
+> We rely on the auto-detection ("is stdout a terminal?") to determine
+> whether to use color in the output of format-patch or not. That happens
+> to work because we freopen() stdout when redirecting the output to files.
 >
-> Right, but then we would get EPIPE. So what does git do in such cases?
-> I'd expect it generally to either hit the check_pipe() part of
-> write_or_die(), or to end up complaining via die() that the write didn't
-> go as expected.
-
-Ah, I have forgotten about this code path. Looks like it will trigger 
-exactly the same raise() as test_sigchain. Then the check for exit code 
-3 makes a bit more sense. But I'm sure we have code paths that do not go 
-through checK_pipe(). Those would proceed through whatever error 
-handling we have and most likely die().
-
->> IMO there is too much danger to trigger a false positive if exit code 3 is
->> treated special in this generality.
+> However, we are about to fix that work-around, in which case the
+> auto-detection has no chance to guess whether to use color or not.
 >
-> Yeah, I agree. But what _should_ it do? E.g., what happens to git-daemon
-> when it is killed via TERM?
+> But then, we do not need to guess to begin with. As argued in the commit
+> message of 7787570c (format-patch: ignore ui.color, 2011-09-13), we do not
+> allow the ui.color setting to affect format-patch's output. The only time,
+> therefore, that we allow color sequences to be written to the output files
+> is when the user specified the --color command-line option explicitly.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
 
-Frankly, I don't know how bash's 'kill -TERM' and a Windows program 
-interact. I've avoided this topic like the plague so far.
+The right fix in the longer term (long after this series lands, that
+is) is probably to update the world view that the codepath from
+want_color_auto() to check_auto_color() has always held.  In their
+world view, when they are asked to make --color=auto decision, the
+output always goes the standard output, and that is why they
+hardcode isatty(1) to decide.  The existing freopen() was a part of
+that world view.
 
--- Hannes
+We'd need a workaround like this patch if we want to leave the
+want_color_auto() as-is, and as a workaround I think this is the
+least invasive one, so let's queue it as-is.
 
+If the codepaths that use diffopt.file (not just this one that is
+about output directory hence known to be writing to a file, but all
+the log/diff family of commands after this series up to 5/10 has
+been applied) have a way to tell want_color_auto() that the output
+is going to fileno(diffopt.file), and have check_auto_color() use
+that fd instead of the hardcoded 1, the problem this step is trying
+to address goes away, and I think that would be the longer-term fix.
+
+Thanks.
+
+>  builtin/log.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 27bc88d..5683a42 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -1578,6 +1578,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  		setup_pager();
+>  
+>  	if (output_directory) {
+> +		if (rev.diffopt.use_color != GIT_COLOR_ALWAYS)
+> +			rev.diffopt.use_color = 0;
+>  		if (use_stdout)
+>  			die(_("standard output, or directory, which one?"));
+>  		if (mkdir(output_directory, 0777) < 0 && errno != EEXIST)
