@@ -1,102 +1,135 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAD732018A
-	for <e@80x24.org>; Fri, 24 Jun 2016 19:07:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECE512018A
+	for <e@80x24.org>; Fri, 24 Jun 2016 19:07:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751210AbcFXTHF (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 15:07:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63032 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750923AbcFXTHE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Jun 2016 15:07:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 47C4325141;
-	Fri, 24 Jun 2016 15:07:02 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=4b1SAX4Of7lZ
-	mcainkF6XVZEgh4=; b=yU58Jd5vRUVOFj4XVRS1Aeojq33ZQmoj99EipXxqy8t7
-	PDD0XW7Q8jKsOIN2J490wZDHULecTmaihSge33/6yv9rf1Pq3yWMtcIRkp1kHRCa
-	2bPoaiNht+pfAFhedkOrzFJZDKD+Pn1QR5lyzQYvr345vXGhOP8cNcrbCul3Kf8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OGYc0V
-	aTjF36DcriynwaopwpeOivGrD0NdPNEK7R6iIcGKJRV8oN0WgZlzTz4jrZ6Wvzss
-	cstDRfT0avHyu4/wsCOl7s1yUq6WaK9tRNwNv10JVB6VHr1lc9+4G6YqUVdwjQOs
-	PkiVwIWIAFi9yhS5tZV4x1Rf8MAmjP7ELe1Bs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 409E225140;
-	Fri, 24 Jun 2016 15:07:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B535E2513F;
-	Fri, 24 Jun 2016 15:07:01 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	id S1751082AbcFXTHs (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 15:07:48 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59884 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750876AbcFXTHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2016 15:07:47 -0400
+Received: (qmail 29712 invoked by uid 102); 24 Jun 2016 19:07:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 15:07:47 -0400
+Received: (qmail 21691 invoked by uid 107); 24 Jun 2016 19:08:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 15:08:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jun 2016 15:07:45 -0400
+Date:	Fri, 24 Jun 2016 15:07:44 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	"Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH v3 3/4] archive-tar: write extended headers for far-future mtime
+Subject: Re: [PATCH v3 1/4] t5000: test tar files that overflow ustar headers
+Message-ID: <20160624190744.GA32118@sigill.intra.peff.net>
 References: <20160623231512.GA27683@sigill.intra.peff.net>
-	<20160623232112.GC3668@sigill.intra.peff.net>
-Date:	Fri, 24 Jun 2016 12:06:59 -0700
-In-Reply-To: <20160623232112.GC3668@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 23 Jun 2016 19:21:13 -0400")
-Message-ID: <xmqqshw2flt8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+ <20160623232041.GA3668@sigill.intra.peff.net>
+ <xmqq1t3mh0vg.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D503C7FE-3A3E-11E6-9EE8-EE617A1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: 8BIT
+Content-Disposition: inline
+In-Reply-To: <xmqq1t3mh0vg.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Jun 24, 2016 at 11:56:19AM -0700, Junio C Hamano wrote:
 
-> There's a slight bit of trickiness there. We may already be
-> ...
-> After writing the extended header, we munge the timestamp in
-> the ustar headers to the maximum-allowable size. This is
-> wrong, but it's the least-wrong thing we can provide to a
-> tar implementation that doesn't understand pax headers (it's
-> also what GNU tar does).
+> Jeff King <peff@peff.net> writes:
+> 
+> > The ustar format only has room for 11 (or 12, depending on
+> > some implementations) octal digits for the size and mtime of
+> > each file. After this, we have to add pax extended headers
+> > to specify the real data, and git does not yet know how to
+> > do so.
+> 
+> I am not a native speaker but "After" above made me hiccup.  I think
+> I am correct to understand that it means "after passing this limit",
+> aka "to represent files bigger or newer than these", but still it
+> felt somewhat strange.
 
-The above looks very sensible design, and its implementation is
-surprisingly compact.  Very nicely done.
+Yeah, I agree that it reads badly. I'm not sure what I was thinking.
+I'll tweak it in the re-roll.
 
-> Helped-by: René Scharfe <l.s.r@web.de>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  archive-tar.c       | 16 +++++++++++++---
->  t/t5000-tar-tree.sh |  4 ++--
->  2 files changed, 15 insertions(+), 5 deletions(-)
->
-> diff --git a/archive-tar.c b/archive-tar.c
-> index 274bdfa..0bb164c 100644
-> --- a/archive-tar.c
-> +++ b/archive-tar.c
-> @@ -317,7 +317,18 @@ static int write_global_extended_header(struct archiver_args *args)
->  	unsigned int mode;
->  	int err = 0;
->  
-> -	strbuf_append_ext_header(&ext_header, "comment", sha1_to_hex(sha1), 40);
-> +	if (sha1)
-> +		strbuf_append_ext_header(&ext_header, "comment",
-> +					 sha1_to_hex(sha1), 40);
-> +	if (args->time > 077777777777UL) {
-> +		strbuf_append_ext_header_uint(&ext_header, "mtime",
-> +					      args->time);
-> +		args->time = 077777777777UL;
-> +	}
-> +
-> +	if (!ext_header.len)
-> +		return 0;
+> > +# See if our system tar can handle a tar file with huge sizes and dates far in
+> > +# the future, and that we can actually parse its output.
+> > +#
+> > +# The reference file was generated by GNU tar, and the magic time and size are
+> > +# both octal 01000000000001, which overflows normal ustar fields.
+> > +#
+> > +# When parsing, we'll pull out only the year from the date; that
+> > +# avoids any question of timezones impacting the result. 
+> 
+> ... as long as the month-day part is not close to the year boundary.
+> So this explanation is insuffucient to convince the reader that
+> "that avoids any question" is correct, without saying that it is in
+> August of year 4147.
 
-Another symbolic constant to explain this, e.g. TAR_TIME_LIMIT, may
-want to exist.
+I thought that part didn't need to be said, but I can say it
+(technically we can include the month, too, but I don't think that level
+of accuracy is really important for these tests).
 
-Thanks.
+> > +tar_info () {
+> > +	"$TAR" tvf "$1" | awk '{print $3 " " $4}' | cut -d- -f1
+> > +}
+> 
+> A blank after the shell function to make it easier to see the
+> boundary.
 
+I was intentionally trying to couple it with prereq below, as the
+comment describes both of them.
 
+> Seeing an awk piped into cut always makes me want to suggest a
+> single sed/awk/perl invocation.
+
+I want the auto-splitting of awk, but then to auto-split the result
+using a different delimiter. Is there a not-painful way to do that in
+awk?
+
+I could certainly come up with a regex to do it in sed, but I wanted to
+keep the parsing as liberal and generic as possible.
+
+Certainly I could do it in perl, but I had the general impression that
+we prefer to keep the dependency on perl to a minimum. Maybe it doesn't
+matter.
+
+> > +# We expect git to die with SIGPIPE here (otherwise we
+> > +# would generate the whole 64GB).
+> > +test_expect_failure BUNZIP 'generate tar with huge size' '
+> > +	{
+> > +		git archive HEAD
+> > +		echo $? >exit-code
+> > +	} | head -c 4096 >huge.tar &&
+> > +	echo 141 >expect &&
+> > +	test_cmp expect exit-code
+> > +'
+> 
+> "head -c" is GNU-ism, isn't it?
+
+You're right; for some reason I thought it was in POSIX.
+
+We do have a couple instances of it, but they are all in the valgrind
+setup code (which I guess most people don't ever run).
+
+> "dd bs=1 count=4096" is hopefully more portable.
+
+Hmm. I always wonder whether dd is actually very portable, but we do use
+it already, at least.
+
+Perhaps the perl monstrosity in t9300 could be replaced with that, too.
+
+> ksh signal death you already know about.  I wonder if we want to
+> expose something like list_contains as a friend of test_cmp.
+> 
+> 	list_contains 141,269 $(cat exit-code)
+
+I think we would want something more like:
+
+  test_signal_match 13 $(cat exit-code)
+
+Each call site should not have to know about every signal convention
+(and in your example, the magic "3" of Windows is left out).
+
+-Peff
