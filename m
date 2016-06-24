@@ -1,60 +1,74 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B5322018A
-	for <e@80x24.org>; Fri, 24 Jun 2016 19:48:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A56E22018A
+	for <e@80x24.org>; Fri, 24 Jun 2016 20:06:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751525AbcFXTsW (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 15:48:22 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59982 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751465AbcFXTsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2016 15:48:22 -0400
-Received: (qmail 31609 invoked by uid 102); 24 Jun 2016 19:48:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 15:48:21 -0400
-Received: (qmail 22272 invoked by uid 107); 24 Jun 2016 19:48:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 15:48:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jun 2016 15:48:19 -0400
-Date:	Fri, 24 Jun 2016 15:48:19 -0400
-From:	Jeff King <peff@peff.net>
-To:	Johannes Sixt <j6t@kdbg.org>
-Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	"Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH 0/4] portable signal-checking in tests
-Message-ID: <20160624194819.GB6282@sigill.intra.peff.net>
-References: <20160623231512.GA27683@sigill.intra.peff.net>
- <20160623232041.GA3668@sigill.intra.peff.net>
- <576D621F.1030000@kdbg.org>
- <20160624164603.GA13789@sigill.intra.peff.net>
- <576D684A.6030406@kdbg.org>
- <20160624193924.GA6282@sigill.intra.peff.net>
+	id S1751244AbcFXUGH (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 16:06:07 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:46154 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750979AbcFXUGG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2016 16:06:06 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id F21F52018A;
+	Fri, 24 Jun 2016 20:06:03 +0000 (UTC)
+Date:	Fri, 24 Jun 2016 20:06:03 +0000
+From:	Eric Wong <e@80x24.org>
+To:	Jacob Godserv <jacobgodserv@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Cc:	git@vger.kernel.org
+Subject: Re: git-svn aborts with "Use of uninitialized value $u" when a
+ non-svn-backed branch is present in remote
+Message-ID: <20160624200603.GA28498@dcvr.yhbt.net>
+References: <CALi1mtc8zmOzk-qv4XAg6N=ENasnMAENdJSLHK7EcpxRUk1nTw@mail.gmail.com>
+ <CALi1mtdtNF_GtzyPTbfb7N51wwxsFY7zm8hsgwxr3tHcZZboyg@mail.gmail.com>
+ <20160624193548.GA22070@dcvr.yhbt.net>
+ <CALi1mtc6Byb39kbAv16vmkUVu3JDdGG4-yVrLroDVraPDxGFng@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20160624193924.GA6282@sigill.intra.peff.net>
+In-Reply-To: <CALi1mtc6Byb39kbAv16vmkUVu3JDdGG4-yVrLroDVraPDxGFng@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jun 24, 2016 at 03:39:24PM -0400, Jeff King wrote:
+Please don't drop Cc:, re-adding git@vger and Christian
 
-> Anyway. Here's a series that I think makes things better, and it is not
-> too painful to do.
+Jacob Godserv <jacobgodserv@gmail.com> wrote:
+> > Christian (Cc-ed) also noticed the problem a few weeks ago
+> > and took a more drastic approach by having git-svn die
+> > instead of warning:
+> > http://mid.gmane.org/1462604323-18545-1-git-send-email-chriscool@tuxfamily.org
+> > which landed as commit 523a33ca17c76bee007d7394fb3930266c577c02
+> > in git.git: https://bogomips.org/mirrors/git.git/patch?id=523a33ca17c7
+> >
+> > Is dying here too drastic and maybe warn is preferable?
 > 
->   [1/4]: tests: factor portable signal check out of t0005
->   [2/4]: t0005: use test_match_signal as appropriate
->   [3/4]: test_must_fail: use test_match_signal
->   [4/4]: t/lib-git-daemon: use test_match_signal
+> In my opinion this is too drastic. It keeps me from storing
+> git-specific data on a git-svn mirror.
 
-Oh, and I meant to mention: this covers everything I found grepping for
-"141" and "143" in the test suite (though you have to filter the results
-a bit for false positives).
+I tend to agree, but will wait to see what Christian thinks.
 
-It doesn't fix the case newly added in the tar series that started this
-discussion. I don't want to hold either topic hostage to the other, so
-I'll prepare a patch to go on top.
-
--Peff
+> Here's my setup:
+>  - My git-svn mirror uses git-svn to create a git repo that mirrors
+> svn history. This repository is then pushed to a clean bare
+> repository. So far so good. Only svn-sourced branches exist.
+>  - The git-svn mirror script also saves a copy of the git-svn
+> configuration used to generate the git mirror repository in an
+> "orphaned" branch called something like 'git-svn-conf'. This is
+> completely separate from the svn history, and exists only for my
+> git-svn purposes.
+>  - On the "client" side, another script I wrote knows how to parse the
+> git-svn configuration in that 'git-svn-conf' branch to properly
+> reconfigure git-svn on the local machine, so I can use 'git svn'
+> themselves to commit, etc., and still generate the same hashes so
+> there's no forked history during the next mirror fetch.
+> 
+> Long story short: I have branches which aren't in SVN history for
+> automated git-svn purposes.
+> 
+> It appears that simply skipping the branch in that loop fixes the
+> issue. However, I don't know how the metadata is stored and what
+> exactly that loop does, so I may be creating hidden side effects I
+> have been lucky enough to not trigger yet.
