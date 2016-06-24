@@ -1,65 +1,97 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAEA31F728
-	for <e@80x24.org>; Fri, 24 Jun 2016 11:39:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9866C2018A
+	for <e@80x24.org>; Fri, 24 Jun 2016 12:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751188AbcFXLj3 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 07:39:29 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:52505 "EHLO sapo.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750951AbcFXLj2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2016 07:39:28 -0400
-Received: (qmail 22127 invoked from network); 24 Jun 2016 11:39:25 -0000
-Received: (qmail 19549 invoked from network); 24 Jun 2016 11:39:25 -0000
-Received: from unknown (HELO [192.168.1.66]) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 24 Jun 2016 11:39:23 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-Subject: Re: [PATCH] unpack-trees: fix English grammar in do-this-before-that
- messages
-To:	Alex Henrie <alexhenrie24@gmail.com>
-References: <20160624053135.7848-1-alexhenrie24@gmail.com>
-From:	Vasco Almeida <vascomalmeida@sapo.pt>
-X-Enigmail-Draft-Status: N1110
-Cc:	gitster@pobox.com, diane.gasselin@ensimag.imag.fr,
-	Matthieu.Moy@imag.fr, git@vger.kernel.org
-Message-ID: <576D1BEA.8020509@sapo.pt>
-Date:	Fri, 24 Jun 2016 11:39:22 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
+	id S1751445AbcFXMZq (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 08:25:46 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:35907 "EHLO
+	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751089AbcFXMZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2016 08:25:45 -0400
+Received: by mail-it0-f66.google.com with SMTP id h190so2046023ith.3
+        for <git@vger.kernel.org>; Fri, 24 Jun 2016 05:25:45 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=3oSh5Ik5oiWulhhGsi3KI2AtrBbU56gBGB88CuRbo78=;
+        b=v0b3cipTgEeO5nk2mZPHBNciCOO1+r/Xg/ilrML5et+xMlN0uxGRZWQe1gMgKpcui1
+         WJUJyQ0ejzOhPZOTFoCWRpKvqZCK5WnmaFBaKA4HR5OJRyBwfhI8Bp/9DR1mhsCt7ByW
+         V2n2YcBCd26DbUnnakBNy7p4O+uF8w0GwR+32AOORKCNlP2UvoyYGqDvq3GzOk78U48q
+         +3gZY2l47tZ+s/D/Mt5OSz+l0FqpqceLIQ42/QvmrwEh2YQWxpfT7JvvoR0T2LY0X6q6
+         Ozv8iZNeskkmv5/ax3CTSmUUq75lOUeSqVaVB5hOfrwaQkM0ErsSLjdZb6wc/X3hprTe
+         n2IQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=3oSh5Ik5oiWulhhGsi3KI2AtrBbU56gBGB88CuRbo78=;
+        b=VcmmtE1EyjF/px3KIpOy+bo/uZ/E0UHwb4koXK0G1rVuYEm6jeknyTKv4DSPmRoSVw
+         Q9/DrB9DQByfX6CrU4WPdkHnEo4jh/0MmPNargMs1ZDa4Ah6mKiLKQPAfb+2d6q6o+wh
+         kW1nwhdrzFmg4uM3HAuHagrnZ9hA6T/jXtgV1FFszOn7/aKMpU2WprYT/1oz5CT01rYg
+         TgexLHmboMpDe+drKKIVxbJcg0HrAuTB06KkNnTWIIiDD5i7eYiPWXSzmaYTDDDWBLxJ
+         b7A1MGJNnnKmIMg1J8WVQLO/fmuGFameYbORLA07UhrS7RCtFX6wEYAOOcEtGsWYZpub
+         xg0w==
+X-Gm-Message-State: ALyK8tLKaKjCHLUwZ1etA3Ra9DH2yDeRGCF6v/g8OfPtzpCelnIhGehhI4yAWYJ9blJgYpyEAPTOP3YPTZUiiA==
+X-Received: by 10.36.98.136 with SMTP id d130mr25010692itc.84.1466771144582;
+ Fri, 24 Jun 2016 05:25:44 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20160624053135.7848-1-alexhenrie24@gmail.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
+Received: by 10.79.0.30 with HTTP; Fri, 24 Jun 2016 05:25:44 -0700 (PDT)
+In-Reply-To: <CA+DCAeSvb14W5CoEa72DQtM+FHQ+jppSVvoTmQ7rX0EHQAMy6g@mail.gmail.com>
+References: <20160622165126.12786-1-mehul.jain2029@gmail.com>
+ <xmqqr3bpklsd.fsf@gitster.mtv.corp.google.com> <CA+DCAeQUJ4D4kjR6FtTibwPO8o+wv-hQNDDj2ysJaBHGTPkHgA@mail.gmail.com>
+ <xmqqd1n8jtzk.fsf@gitster.mtv.corp.google.com> <CA+DCAeSvb14W5CoEa72DQtM+FHQ+jppSVvoTmQ7rX0EHQAMy6g@mail.gmail.com>
+From:	Eric Sunshine <sunshine@sunshineco.com>
+Date:	Fri, 24 Jun 2016 08:25:44 -0400
+X-Google-Sender-Auth: sE670adxvN7SYyzaT6HdN9c425E
+Message-ID: <CAPig+cSHRWHUJ+P9nxQXz5YGigD7XOT24oUJs=JSR5L+xDoc0A@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Introduce log.showSignature config variable
+To:	Mehul Jain <mehul.jain2029@gmail.com>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Às 05:31 de 24-06-2016, Alex Henrie escreveu:
-> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-> ---
->  unpack-trees.c | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
-> 
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 6bc9512..11c37fb 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -62,17 +62,17 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
->  	if (!strcmp(cmd, "checkout"))
->  		msg = advice_commit_before_merge
->  		      ? _("Your local changes to the following files would be overwritten by checkout:\n%%s"
-> -			  "Please commit your changes or stash them before you can switch branches.")
-> +			  "Please commit your changes or stash them before you switch branches.")
->  		      : _("Your local changes to the following files would be overwritten by checkout:\n%%s");
+On Fri, Jun 24, 2016 at 5:21 AM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
+> On Thu, Jun 23, 2016 at 12:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Mehul Jain <mehul.jain2029@gmail.com> writes:
+>>> In patch 2/3 and 3/3, there are many tests which requires a branch
+>>> similar to that of "signed" branch, i.e. a branch with a commit having
+>>> GPG signature. So previously in v2, I created two new branches,
+>>> "test_sign" and "no_sign", which are identical to that of "signed"
+>>> branch. And with these branches, I wrote the tests in patch 2/3
+>>> and 3/3.
+>>>
+>>> As suggested by Eric [1], rather than creating new branches, I
+>>> can take advantage of "signed" branch which already exists.
+>>
+>> Yeah, I understand that part.  But you do not _need_ to do the split
+>> you do in 1/3 in order to reuse "signed".
+>
+> If it's fine, then I think it would be OK to drop this 1/3. Without splitting
+> the 'log --graph --show-signature' in two test will also serve the
+> purpose for the new test to use the signed branch.
 
-The only downside I can tell about this is translator are going to have
-to update those strings on their translations, but that is a normal
-thing to do on an active project like Git.
+My understanding of Junio's response is that the missing PGP
+prerequisite along with a weak commit message make for poor
+justification of patch 1/3, however, if you add the prerequisite and
+use the commit message he proposed (reproduced below) then it becomes
+sensible to retain 1/3.
 
-I'm not a native speak either, but I think I have translated that as if
-the sentences were like this patch introduces. I agree with this change.
+    --->8---
+    In 2/3 and 3/3, we will use the same 'signed' branch that the
+    first test for 'log --graph --show-signature' uses.  This branch
+    is currently created in that 'log --graph --show-signature' test
+    itself.
+
+    Split the set-up part into a test of its own, and make the
+    existing first test into a separate one that only inspects the
+    history on the 'signed' branch.  That way, it would become
+    clearer that later tests added by 2/3 and 3/3 reuse the 'signed'
+    branch in the same way this 'log --graph --show-signature' uses
+    that same branch.
+    --->8---
