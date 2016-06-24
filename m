@@ -2,69 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_50,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52FC61FEAA
-	for <e@80x24.org>; Fri, 24 Jun 2016 22:28:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38EBC1FEAA
+	for <e@80x24.org>; Fri, 24 Jun 2016 22:38:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751132AbcFXW2M (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 18:28:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52114 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751019AbcFXW2L (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2016 18:28:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DFB6A27F4C;
-	Fri, 24 Jun 2016 18:28:09 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JvSBqIz1XoHzTtzKa4cJxIjBuCw=; b=Rp0w+p
-	Ud9rXQ4xLeYAf7ndRWgPYsWbh3MKRArZuvpsTlX3OFTMOxCRQyn+Yjs+iL7Ombe1
-	hPss8LnE3l+t2txBOfWg8EpqVqwBaynsZNAj/sxmEgmoAxUSrmSgWqH+FwVZS+JY
-	+g41HVXQvK10eXNRGO6UcWU7OsJgi/Es5+fgU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=i0dr6p1Pc5ZrrnenyxQBE7a3p1GmWmvK
-	XDSyUQOb0lm78GF1Hg+WgoN0ushgDG1LKZxnQaV+tCKRwx2QzM5vZZZp/CD2zSFk
-	yJb/O3nU9BXb6Wu1eClw9tKqJbvjxPDZsAZkiwte7Cjk7+BT8ynvASz3y7l2yUX+
-	7EbYgE2vHj0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D7D0327F4B;
-	Fri, 24 Jun 2016 18:28:09 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5C8C927F4A;
-	Fri, 24 Jun 2016 18:28:09 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Vasco Almeida <vascomalmeida@sapo.pt>
-Cc:	Alex Henrie <alexhenrie24@gmail.com>,
-	diane.gasselin@ensimag.imag.fr, Matthieu.Moy@imag.fr,
-	git@vger.kernel.org
-Subject: Re: [PATCH] unpack-trees: fix English grammar in do-this-before-that messages
-References: <20160624053135.7848-1-alexhenrie24@gmail.com>
-	<576D1BEA.8020509@sapo.pt>
-Date:	Fri, 24 Jun 2016 15:28:07 -0700
-In-Reply-To: <576D1BEA.8020509@sapo.pt> (Vasco Almeida's message of "Fri, 24
-	Jun 2016 11:39:22 +0000")
-Message-ID: <xmqqoa6qdxxk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EDE2C9FC-3A5A-11E6-9867-89D312518317-77302942!pb-smtp1.pobox.com
+	id S1751053AbcFXWi1 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 18:38:27 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:35323 "EHLO
+	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751010AbcFXWi0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2016 18:38:26 -0400
+Received: by mail-wm0-f53.google.com with SMTP id v199so37358118wmv.0
+        for <git@vger.kernel.org>; Fri, 24 Jun 2016 15:38:25 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:subject:from:to:date:mime-version
+         :content-transfer-encoding;
+        bh=pxAcpeCkLfX5ZKC8OMVU5xJmkDDI9QGWfGCsYGJYA8s=;
+        b=w6OfM62jaq1yI2BXoBHa/hmBfiiY9S6Muy/M4T2mMb9gDtQ/aAywMNj3WImX8jaXUE
+         3bVf7A3wTZOLeJeyYZVnKSGXKz//ZLJOkQ2mScueX6o4AVqH5dFpqvrybFN5hw+jPVZ/
+         aQoKyQbCYacBmY6UJ8mdHpvRLNpzz0nXM0UzpMJehZXskdZcpECEYas3lKwGaXphV6qp
+         kelYdnYgZoAArjfxei5BhPCt88Kgi9gJ3XsjGrXbtUjRrUWqA3kulkrsbFVH9kaNMy5Y
+         YyLcVqlWo/uLV0mS6rONB5zI2uyDHwCMZ6RhU05k9gMINmr5Tki4c0P17nM21oAnjelc
+         jaZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
+         :content-transfer-encoding;
+        bh=pxAcpeCkLfX5ZKC8OMVU5xJmkDDI9QGWfGCsYGJYA8s=;
+        b=AhGyiC/2jEh6z5N0lhawnLJ4J1a7/Fryvo51fSmrHkGVq7/PS15cFWq9z0Ir0kdjyT
+         4nKgQfFTThnmpJfuAtg+9I/B9hpQ0ULKK/lInxfxvQ/gUZfkdbkLwBwjJFVH0bQhlYdJ
+         ReZVjVGcpqWfYn7su5uQ5nDurUrwBNw4Xy/Xab5bElnBvuH/QmCV73SCkzflcPyli/tF
+         QsJlMvc9DDcQ5UDj+9mTzYr8dUsNSAqqVCf4p9j4FtoZqI6tN0l8YDqGWliefeWVnSEr
+         Cj7TaPd5vyXIos2gWDX473jyZ7Vfzp2P8GuxN2tl0ikjAEgpdru1OD78LWsyNIsFyyAG
+         r2yg==
+X-Gm-Message-State: ALyK8tL6SKHyABNoHkcSoGtT5UG5859XVZakO9Mu6Q6/V+bXOC8xJmhNkCmB9M6DtVxcAQ==
+X-Received: by 10.28.69.134 with SMTP id l6mr339622wmi.80.1466807904683;
+        Fri, 24 Jun 2016 15:38:24 -0700 (PDT)
+Received: from christoph-laptop-16-04 (ip-103-010-005-185.cpe.my-wire.de. [185.5.10.103])
+        by smtp.googlemail.com with ESMTPSA id g10sm7102573wjl.25.2016.06.24.15.38.23
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 24 Jun 2016 15:38:23 -0700 (PDT)
+Message-ID: <1466807902.28869.8.camel@gmail.com>
+Subject: [bug] Reliably Reproducible Bad Packing of Objects
+From:	Christoph Michelbach <michelbach94@gmail.com>
+To:	git@vger.kernel.org
+Date:	Sat, 25 Jun 2016 00:38:22 +0200
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.18.5.2-0ubuntu3 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Vasco Almeida <vascomalmeida@sapo.pt> writes:
+Hi,
 
-> The only downside I can tell about this is translator are going to have
-> to update those strings on their translations, but that is a normal
-> thing to do on an active project like Git.
+when run on a 32 bit system (Linux system, don't know about other
+systems),
 
-A larger issue is this fails to update tests that check these
-messages.
+mkdir test && cd test && git init && touch someFile && git add someFile
+&& git commit -m "Initial commit." && dd if=/dev/urandom
+of=bigBinaryFile bs=1MB count=4294 && git add bigBinaryFile && git
+commit -m "Introduced big biary file."
+
+reliably produces this error message: "error: bad packed object CRC
+for"
+
+Since git counts sizes in byte and uses ints for it, it can't handle
+files bigger than (2^32 - 1) byte. That's 4'294.967296 MB. If you give
+git a file bigger than it can handle, it usually just says "fatal:
+Cannot handle files this big" without corrupting the repository. Btw.:
+It'd be nice if the error message stated that this only occurs on 32
+bit system and only with files 4 GiB in size or bigger.
+
+To provoke the bug, the commands above creates a file which cannot be
+compressed slightly less than (2^32 - 1) byte big, probably resulting
+in a commit more than (2^32 - 1) byte big.
+
+I was able to reproduce the bug on a Raspberry Pi Model 3 (ARMv7 CPU)
+and a virtual machine running Ubuntu 16.04 32 bit (which was
+specifically set up to test this, so it was a clean installation) on a
+host running Ubuntu 16.04 64 bit on an ARM 64 bit x86 CPU (i7-4720HQ).
+
+Output on raspi: https://gist.github.com/m1cm1c/d874f03be5b12cbd8b86ced
+79fa456d1
+Output on virt. machine: https://gist.github.com/m1cm1c/d0dd47828386bb0
+f1e001b9f750416e0
+
+Note that on the raspi I concatenated `git gc` to the end to show that
+the object exists but is corrupt but you can already see that something
+went wrong before `git gc` is executed.
+
+If you look at the output on the virtual machine, however, you will not
+see that something wrong until you read the part where I typed in `git
+gc` which I find particularly worrying.
+
+When checking whether you get the same result, please make sure to use
+git 1.7.6 or newer. If you use an older version of git (older versions
+are still being distributed, for example for Ubuntu 14.04), git will
+try to memory-map a too big file resulting in a different error.
+
+-- 
+With kind regards
+Christoph Michelbach
 
