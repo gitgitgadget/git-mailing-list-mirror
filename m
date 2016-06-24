@@ -2,129 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E038F1FEAA
-	for <e@80x24.org>; Fri, 24 Jun 2016 23:10:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5D271FEAA
+	for <e@80x24.org>; Fri, 24 Jun 2016 23:10:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751445AbcFXXJj (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 19:09:39 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:52518 "EHLO
+	id S1751591AbcFXXJ7 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 19:09:59 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:52604 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750876AbcFXXJi (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Jun 2016 19:09:38 -0400
+	by vger.kernel.org with ESMTP id S1751463AbcFXXJn (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Jun 2016 19:09:43 -0400
 Received: from vauxhall.crustytoothpaste.net (unknown [107.18.82.227])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 0FD9B2809F;
-	Fri, 24 Jun 2016 23:09:35 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id DC6D1280A6;
+	Fri, 24 Jun 2016 23:09:41 +0000 (UTC)
 DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1466809776;
-	bh=9TOj/Llzl2QB+ZaWIbNyP2toklg2v11J0rVzyKLP3ls=;
-	h=From:To:Cc:Subject:Date:From;
-	b=xYK4y0xMmqsYu9VIhccepaPPs5pWADi6brD+7R4WUkGeJQMJRTX+eqPAbIp1QJpO/
-	 CZ7uEJHrnVKKwuRNgPU4JaY+2/Tiqzu77k9qn1beX45B0ItAzFh7Oe91gedeAsoV3q
-	 dn5H2M/IQiDh9s3hQHR4m9DQ+hYaeRaoIvpSV9uby0P8S3LEpBKPSjDE/sEIUfV4rj
-	 fax2yk7jDG4VyN1t1QZJL+Ihltv3GFTXvG0f15SVIi5uHWoelEyHGGW+k/NVqtNH43
-	 Ghm2oFCQW5QdDaJHGNTM7NbXOkqwIR0KCptL8qkK2ouCCQUfNgd0DghxklOdu6YF9o
-	 BShfn6ZfDSy2FqaZ9TJE5OI6hMrJJrB+8X4Ky83k6PdHKWbSCgK/oRYecdhxqyz2Cg
-	 a0A1UzZiL9aJJesK/fZq+UfGrrUiyxXzmNWcyBUrz1TUK1QGbQWto9+5JveM1yRL7E
-	 A4p6wtUqlC90GZmR2n+Cu3fEN78/oVfboYUOvhRdBzO0wyoWvXH
+	s=default; t=1466809782;
+	bh=9UuIGjKD31SXVUHj3QWu3YNys2NigbOp/Wh8JmBFQrk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=wICbTNWXv1euqe8lUH9QcXovFQnLEAc680s/jjbfXKTp/QklWscmPLdsKNiH2EVUZ
+	 12uALZPK6IFBLpq8rXGtXuYGKicsCjP7BhqLbxamjGxzryyzCcbHSXWCnz4oAzxWvN
+	 00NcMTTgxtmCbMAJ3zrHtX52hRSgEAHAHCpFfEUltz1JiAKmA5CChuseasWN+B9ler
+	 km3R4/NpV6tbnHl76RZ229nasRtpcwvwv/lKhNMNeGdXw+OjRtrE53MjpLArMUlioM
+	 ym4iho76jVszpjqOX69CZdGjD/fDs3Mlrll6Sq4AZKsD5zGUfhd00rkkE696tkkPRR
+	 upMOE4nwpOFc9itKM1rUWhKOzW7OtYQMwv3E+B5K+2PF/QiUhAHabCm1vSMP3tSi96
+	 cwblHitxwmPHUfGDe2C7B10ejxWlfJSiQ1XGLtAVc8TrXwt/RpLKvY1QBx1lnal5Th
+	 p33I7L+PImtNAhENFMybulhH5ymGg7Dx4MMPNMyv7cufTFbt00W
 From:	"brian m. carlson" <sandals@crustytoothpaste.net>
 To:	git@vger.kernel.org
 Cc:	Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v3 00/11] struct object_id, Part 4
-Date:	Fri, 24 Jun 2016 23:09:18 +0000
-Message-Id: <20160624230929.82222-1-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 07/11] merge-recursive: convert struct stage_data to use object_id
+Date:	Fri, 24 Jun 2016 23:09:25 +0000
+Message-Id: <20160624230929.82222-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.9.0
+In-Reply-To: <20160624230929.82222-1-sandals@crustytoothpaste.net>
+References: <20160624230929.82222-1-sandals@crustytoothpaste.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This series is part 4 in a series of conversions to replace instances of
-unsigned char [20] with struct object_id.  Most of this series touches
-the merge-recursive code.
+Convert the anonymous struct within struct stage_data to use struct
+object_id.  The following Coccinelle semantic patch was used to
+implement this, followed by the transformations in object_id.cocci:
 
-New in this series is the use of Coccinelle (http://coccinelle.lip6.fr/)
-semantic patches.  These semantic patches can make automatic
-transformations to C source code for cleanup or refactoring reasons.
+@@
+struct stage_data o;
+expression E1;
+@@
+- o.stages[E1].sha
++ o.stages[E1].oid.hash
 
-This series introduces a set of transforms for the struct object_id
-transition, cleans up some existing code with them, and applies a small
-number of semantic patches to transform parts of the merge-recursive
-code.  Some manual refactoring work follows.
+@@
+struct stage_data *p;
+expression E1;
+@@
+- p->stages[E1].sha
++ p->stages[E1].oid.hash
 
-Note that in the patches created with the semantic patches, the only
-manual change was the definition of the struct member.  Opinions on
-whether this is a viable technique for further work to ease both the
-creation and review of patches are of course welcomed.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ merge-recursive.c | 38 ++++++++++++++++++--------------------
+ 1 file changed, 18 insertions(+), 20 deletions(-)
 
-The testsuite continues to pass at each step, and this series rebases
-cleanly on next.
-
-I picked up Junio's change from sha_eq to oid_eq, but didn't convert the
-calls to oidcmp.  I think the current version (with oid_eq) is actually
-more readable than using oidcmp, if slightly less efficient.
-
-Changes from v2:
-* Pick up improvements from Junio's version on pu.
-* Add oid_to_hex_r.
-* Add oid_to_hex_r to object_id.cocci.
-* Convert prep_temp_blob as suggested by Junio.
-* Converted hashcpy(.*, null_sha1) to hashclr.
-
-Changes from v1:
-* Move the object ID transformations to contrib/examples/coccinelle.
-* Add a README to that folder explaining what they are.
-* Adjust the Coccinelle patches to transform plain structs before
-  pointers to structs to avoid misconversions.  This addresses the issue
-  that Johannes Sixt caught originally.
-
-brian m. carlson (11):
-  hex: add oid_to_hex_r.
-  contrib/coccinelle: add basic Coccinelle transforms
-  Convert hashcpy with null_sha1 to hashclr.
-  coccinelle: apply object_id Coccinelle transformations
-  diff: convert struct diff_filespec to struct object_id
-  diff: rename struct diff_filespec's sha1_valid member
-  merge-recursive: convert struct stage_data to use object_id
-  merge-recursive: convert struct merge_file_info to object_id
-  merge-recursive: convert leaf functions to use struct object_id
-  merge-recursive: convert merge_recursive_generic to object_id
-  diff: convert prep_temp_blob to struct object_id.
-
- bisect.c                           |   2 +-
- builtin/blame.c                    |   6 +-
- builtin/fast-export.c              |  10 +-
- builtin/merge-recursive.c          |  20 +--
- builtin/merge.c                    |  15 +-
- builtin/reset.c                    |   4 +-
- builtin/unpack-objects.c           |   4 +-
- cache.h                            |   1 +
- combine-diff.c                     |  14 +-
- contrib/coccinelle/README          |   2 +
- contrib/coccinelle/object_id.cocci |  95 ++++++++++++
- diff.c                             |  99 ++++++------
- diffcore-break.c                   |   4 +-
- diffcore-rename.c                  |  16 +-
- diffcore.h                         |   4 +-
- hex.c                              |   5 +
- line-log.c                         |  12 +-
- merge-recursive.c                  | 310 +++++++++++++++++++------------------
- merge-recursive.h                  |   6 +-
- notes-merge.c                      |  42 ++---
- refs/files-backend.c               |   4 +-
- submodule-config.c                 |   2 +-
- submodule.c                        |   4 +-
- t/helper/test-submodule-config.c   |   2 +-
- wt-status.c                        |   3 +-
- 25 files changed, 403 insertions(+), 283 deletions(-)
- create mode 100644 contrib/coccinelle/README
- create mode 100644 contrib/coccinelle/object_id.cocci
-
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1e802097..a07050cd 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -90,7 +90,7 @@ struct rename_conflict_info {
+ struct stage_data {
+ 	struct {
+ 		unsigned mode;
+-		unsigned char sha[20];
++		struct object_id oid;
+ 	} stages[4];
+ 	struct rename_conflict_info *rename_conflict_info;
+ 	unsigned processed:1;
+@@ -134,13 +134,11 @@ static inline void setup_rename_conflict_info(enum rename_type rename_type,
+ 		int ostage2 = ostage1 ^ 1;
+ 
+ 		ci->ren1_other.path = pair1->one->path;
+-		hashcpy(ci->ren1_other.oid.hash,
+-			src_entry1->stages[ostage1].sha);
++		oidcpy(&ci->ren1_other.oid, &src_entry1->stages[ostage1].oid);
+ 		ci->ren1_other.mode = src_entry1->stages[ostage1].mode;
+ 
+ 		ci->ren2_other.path = pair2->one->path;
+-		hashcpy(ci->ren2_other.oid.hash,
+-			src_entry2->stages[ostage2].sha);
++		oidcpy(&ci->ren2_other.oid, &src_entry2->stages[ostage2].oid);
+ 		ci->ren2_other.mode = src_entry2->stages[ostage2].mode;
+ 	}
+ }
+@@ -316,11 +314,11 @@ static struct stage_data *insert_stage_data(const char *path,
+ 	struct string_list_item *item;
+ 	struct stage_data *e = xcalloc(1, sizeof(struct stage_data));
+ 	get_tree_entry(o->object.oid.hash, path,
+-			e->stages[1].sha, &e->stages[1].mode);
++			e->stages[1].oid.hash, &e->stages[1].mode);
+ 	get_tree_entry(a->object.oid.hash, path,
+-			e->stages[2].sha, &e->stages[2].mode);
++			e->stages[2].oid.hash, &e->stages[2].mode);
+ 	get_tree_entry(b->object.oid.hash, path,
+-			e->stages[3].sha, &e->stages[3].mode);
++			e->stages[3].oid.hash, &e->stages[3].mode);
+ 	item = string_list_insert(entries, path);
+ 	item->util = e;
+ 	return e;
+@@ -351,7 +349,7 @@ static struct string_list *get_unmerged(void)
+ 		}
+ 		e = item->util;
+ 		e->stages[ce_stage(ce)].mode = ce->ce_mode;
+-		hashcpy(e->stages[ce_stage(ce)].sha, ce->sha1);
++		hashcpy(e->stages[ce_stage(ce)].oid.hash, ce->sha1);
+ 	}
+ 
+ 	return unmerged;
+@@ -574,9 +572,9 @@ static void update_entry(struct stage_data *entry,
+ 	entry->stages[1].mode = o->mode;
+ 	entry->stages[2].mode = a->mode;
+ 	entry->stages[3].mode = b->mode;
+-	hashcpy(entry->stages[1].sha, o->oid.hash);
+-	hashcpy(entry->stages[2].sha, a->oid.hash);
+-	hashcpy(entry->stages[3].sha, b->oid.hash);
++	oidcpy(&entry->stages[1].oid, &o->oid);
++	oidcpy(&entry->stages[2].oid, &a->oid);
++	oidcpy(&entry->stages[3].oid, &b->oid);
+ }
+ 
+ static int remove_file(struct merge_options *o, int clean,
+@@ -1111,7 +1109,7 @@ static struct diff_filespec *filespec_from_entry(struct diff_filespec *target,
+ 						 struct stage_data *entry,
+ 						 int stage)
+ {
+-	unsigned char *sha = entry->stages[stage].sha;
++	unsigned char *sha = entry->stages[stage].oid.hash;
+ 	unsigned mode = entry->stages[stage].mode;
+ 	if (mode == 0 || is_null_sha1(sha))
+ 		return NULL;
+@@ -1425,11 +1423,11 @@ static int process_renames(struct merge_options *o,
+ 			remove_file(o, 1, ren1_src,
+ 				    renamed_stage == 2 || !was_tracked(ren1_src));
+ 
+-			hashcpy(src_other.oid.hash,
+-				ren1->src_entry->stages[other_stage].sha);
++			oidcpy(&src_other.oid,
++			       &ren1->src_entry->stages[other_stage].oid);
+ 			src_other.mode = ren1->src_entry->stages[other_stage].mode;
+-			hashcpy(dst_other.oid.hash,
+-				ren1->dst_entry->stages[other_stage].sha);
++			oidcpy(&dst_other.oid,
++			       &ren1->dst_entry->stages[other_stage].oid);
+ 			dst_other.mode = ren1->dst_entry->stages[other_stage].mode;
+ 			try_merge = 0;
+ 
+@@ -1703,9 +1701,9 @@ static int process_entry(struct merge_options *o,
+ 	unsigned o_mode = entry->stages[1].mode;
+ 	unsigned a_mode = entry->stages[2].mode;
+ 	unsigned b_mode = entry->stages[3].mode;
+-	unsigned char *o_sha = stage_sha(entry->stages[1].sha, o_mode);
+-	unsigned char *a_sha = stage_sha(entry->stages[2].sha, a_mode);
+-	unsigned char *b_sha = stage_sha(entry->stages[3].sha, b_mode);
++	unsigned char *o_sha = stage_sha(entry->stages[1].oid.hash, o_mode);
++	unsigned char *a_sha = stage_sha(entry->stages[2].oid.hash, a_mode);
++	unsigned char *b_sha = stage_sha(entry->stages[3].oid.hash, b_mode);
+ 
+ 	entry->processed = 1;
+ 	if (entry->rename_conflict_info) {
