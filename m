@@ -1,66 +1,128 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CD032018B
-	for <e@80x24.org>; Fri, 24 Jun 2016 18:32:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77D2B2018A
+	for <e@80x24.org>; Fri, 24 Jun 2016 18:56:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbcFXScu (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 14:32:50 -0400
-Received: from mail-yw0-f182.google.com ([209.85.161.182]:35235 "EHLO
-	mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750988AbcFXSct (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2016 14:32:49 -0400
-Received: by mail-yw0-f182.google.com with SMTP id l125so106138529ywb.2
-        for <git@vger.kernel.org>; Fri, 24 Jun 2016 11:32:48 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=eqzEeuRi2tduamHnRTRUftyyQUyw6uafCNpqZEXQ0Ig=;
-        b=v2Wx1BQNUeqDZX/5fFyMkDr7Cji1zt+yK5Xo7y4cjYOmb0k45wHfFqYJPwSwRAcigq
-         3iL+RLX5+wK0Waj19Vt98lEAuYqE8XtG54XsQ+vGLIuzBY4kFwlhKBJGvj2rAE2gbsDh
-         8dZGxx7EtHXUd+X0CEPtJwjD8lSqKBfs/NLQekUMHNHf2vQUwjiUUaoMLHOaeQFT2xvi
-         DBbzfKsEDlFBSUOl83o9vQkDFli/+TYs2/HnJQwVDXGoJq0FFyLKMgu6+EIklrDIdztn
-         9SMTDS1YiV7fqkN3EgWnh5ut6lsg7Qn5viZmS+4nIHVCe2ydc11GqxZsVYp5zp7lEZJf
-         Oi8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=eqzEeuRi2tduamHnRTRUftyyQUyw6uafCNpqZEXQ0Ig=;
-        b=g1dYhFhoUz84jXN8z3PRuxjO8FDstAeAfMvmKhxL4ZPytpkqo1CLJ5sI1MfyuMvCra
-         /3jzm+yatLTzUZLGGV9XgB5/nkxYYopmrgJ+i9UjrlO7WIOlF+OlTfRTFJzLcybxCsIj
-         N5zxd4D2addJuH0ox2ynB2w+Wx1G74Y6zX+8ZZurW56furjPxr3kuycB7CTw/mFftDWL
-         zcyX/3yAwysqnVXPv2IBfS9DK9Sj88Pa7l4gWhqks84RNy9lh1CefrrvSIQUEEv0hcX9
-         kqTfE97+Ob1iq9q+K988d9rsRVMjJ3NSZeuPqifIblXVEa3km2/fNbFVHwprr3lzP79Z
-         hdZA==
-X-Gm-Message-State: ALyK8tI9u/4pZMri9sSS5o2+mqixlyrqP5D7mBVIG4aAXcWalqFSCPTnxxxYc0FOlMXeLv7aa5k/+HxmPzvl9w==
-X-Received: by 10.37.114.9 with SMTP id n9mr3827480ybc.80.1466793168319; Fri,
- 24 Jun 2016 11:32:48 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.13.251.71 with HTTP; Fri, 24 Jun 2016 11:32:28 -0700 (PDT)
-In-Reply-To: <20160624181414.GA25768@sigill.intra.peff.net>
-References: <20160613195224.13398-1-lfleischer@lfos.de> <20160614210038.31465-1-lfleischer@lfos.de>
- <20160624153121.GA2494@sigill.intra.peff.net> <alpine.DEB.2.20.1606241942220.12947@virtualbox>
- <20160624181414.GA25768@sigill.intra.peff.net>
+	id S1751081AbcFXS4Y (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 14:56:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52319 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751002AbcFXS4X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2016 14:56:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F79E255A9;
+	Fri, 24 Jun 2016 14:56:22 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4BRGFW81ADb6nVr/o1o3iG+/WKk=; b=kJK/a3
+	lIInWX+YQjGuiwj2TiAx2oel8a/lawyW5YABmCobrCfA5eJst7jaKcqLTTkC1PJV
+	ZrOLouFlK1sOYr8Pqeondx84/aao0ZcJXNPvQCeXAIAr+MV5OozaQOL234N1U3S3
+	KsV1kPnQa+aZNvr7Tq+WY5WKt6+iOP3aH380s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NchjqQqn7nca4adCSI2J/BFt84k2L2eJ
+	KYxG9KerR7qtPha2EyvnIvTj+rp8j+8IWhdbvNzfGmgMlfzWQG1u6SOOgKScz2oq
+	UHVya7JEEXaBOaYHVeCGdu4n/L8ZfZ2keYPxBysschgfbGA73sQG8kB+Z/rl2tVb
+	oFtUxd3XN6c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 00F75255A8;
+	Fri, 24 Jun 2016 14:56:22 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 738C4255A7;
+	Fri, 24 Jun 2016 14:56:21 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-Date:	Fri, 24 Jun 2016 11:32:28 -0700
-X-Google-Sender-Auth: _rmEQnOGn4uvyXEAAChij7svpus
-Message-ID: <CAPc5daWxWpMe4ob4zu0tMK4uWpLPDxC7GS8KTb4+3g5=ztv71A@mail.gmail.com>
-Subject: Re: [PATCH v2] Refactor recv_sideband()
 To:	Jeff King <peff@peff.net>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Lukas Fleischer <lfleischer@lfos.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nicolas Pitre <nico@fluxnic.net>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:	git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	"Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: [PATCH v3 1/4] t5000: test tar files that overflow ustar headers
+References: <20160623231512.GA27683@sigill.intra.peff.net>
+	<20160623232041.GA3668@sigill.intra.peff.net>
+Date:	Fri, 24 Jun 2016 11:56:19 -0700
+In-Reply-To: <20160623232041.GA3668@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 23 Jun 2016 19:20:45 -0400")
+Message-ID: <xmqq1t3mh0vg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5761EA98-3A3D-11E6-9586-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jun 24, 2016 at 11:14 AM, Jeff King <peff@peff.net> wrote:
->
-> I do wonder about the ANSI_SUFFIX thing, though.
+Jeff King <peff@peff.net> writes:
 
-compat/winansi.c seems to have a provision for 'K' (and obviously 'm'
-for colors).
+> The ustar format only has room for 11 (or 12, depending on
+> some implementations) octal digits for the size and mtime of
+> each file. After this, we have to add pax extended headers
+> to specify the real data, and git does not yet know how to
+> do so.
+
+I am not a native speaker but "After" above made me hiccup.  I think
+I am correct to understand that it means "after passing this limit",
+aka "to represent files bigger or newer than these", but still it
+felt somewhat strange.
+
+> So as a prerequisite, we can feed the system tar a reference
+> tarball to make sure it can handle these features. The
+> reference tar here was created with:
+>
+>   dd if=/dev/zero seek=64G bs=1 count=1 of=huge
+>   touch -d @68719476737 huge
+>   tar cf - --format=pax |
+>   head -c 2048
+>
+> using GNU tar. Note that this is not a complete tarfile, but
+> it's enough to contain the headers we want to examine.
+
+Cute.  I didn't remember they had @<seconds-since-epoch> format,
+even though I must have seen what they do while working on 2c733fb2
+(parse_date(): '@' prefix forces git-timestamp, 2012-02-02).
+
+> +# See if our system tar can handle a tar file with huge sizes and dates far in
+> +# the future, and that we can actually parse its output.
+> +#
+> +# The reference file was generated by GNU tar, and the magic time and size are
+> +# both octal 01000000000001, which overflows normal ustar fields.
+> +#
+> +# When parsing, we'll pull out only the year from the date; that
+> +# avoids any question of timezones impacting the result. 
+
+... as long as the month-day part is not close to the year boundary.
+So this explanation is insuffucient to convince the reader that
+"that avoids any question" is correct, without saying that it is in
+August of year 4147.
+
+> +tar_info () {
+> +	"$TAR" tvf "$1" | awk '{print $3 " " $4}' | cut -d- -f1
+> +}
+
+A blank after the shell function to make it easier to see the
+boundary.
+
+Seeing an awk piped into cut always makes me want to suggest a
+single sed/awk/perl invocation.
+
+> +# We expect git to die with SIGPIPE here (otherwise we
+> +# would generate the whole 64GB).
+> +test_expect_failure BUNZIP 'generate tar with huge size' '
+> +	{
+> +		git archive HEAD
+> +		echo $? >exit-code
+> +	} | head -c 4096 >huge.tar &&
+> +	echo 141 >expect &&
+> +	test_cmp expect exit-code
+> +'
+
+"head -c" is GNU-ism, isn't it?
+
+"dd bs=1 count=4096" is hopefully more portable.
+
+ksh signal death you already know about.  I wonder if we want to
+expose something like list_contains as a friend of test_cmp.
+
+	list_contains 141,269 $(cat exit-code)
+
+Thanks.
