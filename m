@@ -1,52 +1,52 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77D2B2018A
-	for <e@80x24.org>; Fri, 24 Jun 2016 18:56:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 187C92018A
+	for <e@80x24.org>; Fri, 24 Jun 2016 19:01:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751081AbcFXS4Y (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 14:56:24 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52319 "EHLO
+	id S1751005AbcFXTBV (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 15:01:21 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64164 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751002AbcFXS4X (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2016 14:56:23 -0400
+	with ESMTP id S1750923AbcFXTBU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2016 15:01:20 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F79E255A9;
-	Fri, 24 Jun 2016 14:56:22 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D26742507A;
+	Fri, 24 Jun 2016 15:01:18 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4BRGFW81ADb6nVr/o1o3iG+/WKk=; b=kJK/a3
-	lIInWX+YQjGuiwj2TiAx2oel8a/lawyW5YABmCobrCfA5eJst7jaKcqLTTkC1PJV
-	ZrOLouFlK1sOYr8Pqeondx84/aao0ZcJXNPvQCeXAIAr+MV5OozaQOL234N1U3S3
-	KsV1kPnQa+aZNvr7Tq+WY5WKt6+iOP3aH380s=
+	:content-type; s=sasl; bh=aJSURX6aq6Ya9frOBq657YlI1aI=; b=MiBd+Q
+	8jzTkMrY9EeeiaOsfrJ7D6jvu/6Xx9V5OK8aQ7ShObSOY1dui2shr0pzBu5faHVE
+	NgbEBPw7wCXPJEduz+48sN15lMyqFaAfgCa8TmcdzIF5IeCwsd3pXvhTECgAlIgR
+	N0pspreGoU6USgPiuNA879TUAASrCDie5aarw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NchjqQqn7nca4adCSI2J/BFt84k2L2eJ
-	KYxG9KerR7qtPha2EyvnIvTj+rp8j+8IWhdbvNzfGmgMlfzWQG1u6SOOgKScz2oq
-	UHVya7JEEXaBOaYHVeCGdu4n/L8ZfZ2keYPxBysschgfbGA73sQG8kB+Z/rl2tVb
-	oFtUxd3XN6c=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 00F75255A8;
-	Fri, 24 Jun 2016 14:56:22 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=x3LYi4DFtdQOg7wpcCQjUasbldebIH1J
+	cGdj8sB+4DlWingOz/t1ucQ/IgU6kFSCDUF3BbSFvXYRrpWehc5+SEPCoOrhfsA3
+	fNgwPPO+Bv1VQgoA1CR/JDt3c1mIuOs9QzfBLHtw/uCqFOonajMF7kRpfA3YlIhY
+	ve6tR3cfJY8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CA53D25079;
+	Fri, 24 Jun 2016 15:01:18 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 738C4255A7;
-	Fri, 24 Jun 2016 14:56:21 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4F90325078;
+	Fri, 24 Jun 2016 15:01:18 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
 To:	Jeff King <peff@peff.net>
 Cc:	git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
 	"Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH v3 1/4] t5000: test tar files that overflow ustar headers
+Subject: Re: [PATCH v3 2/4] archive-tar: write extended headers for file sizes >= 8GB
 References: <20160623231512.GA27683@sigill.intra.peff.net>
-	<20160623232041.GA3668@sigill.intra.peff.net>
-Date:	Fri, 24 Jun 2016 11:56:19 -0700
-In-Reply-To: <20160623232041.GA3668@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 23 Jun 2016 19:20:45 -0400")
-Message-ID: <xmqq1t3mh0vg.fsf@gitster.mtv.corp.google.com>
+	<20160623232104.GB3668@sigill.intra.peff.net>
+Date:	Fri, 24 Jun 2016 12:01:16 -0700
+In-Reply-To: <20160623232104.GB3668@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 23 Jun 2016 19:21:05 -0400")
+Message-ID: <xmqqwplefm2r.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5761EA98-3A3D-11E6-9586-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 085BF604-3A3E-11E6-BE70-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -54,75 +54,65 @@ X-Mailing-List:	git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> The ustar format only has room for 11 (or 12, depending on
-> some implementations) octal digits for the size and mtime of
-> each file. After this, we have to add pax extended headers
-> to specify the real data, and git does not yet know how to
-> do so.
+> If the size was 64GB or greater, then we actually overflowed
+> digits into the mtime field, meaning our value was was
 
-I am not a native speaker but "After" above made me hiccup.  I think
-I am correct to understand that it means "after passing this limit",
-aka "to represent files bigger or newer than these", but still it
-felt somewhat strange.
+was was
 
-> So as a prerequisite, we can feed the system tar a reference
-> tarball to make sure it can handle these features. The
-> reference tar here was created with:
->
->   dd if=/dev/zero seek=64G bs=1 count=1 of=huge
->   touch -d @68719476737 huge
->   tar cf - --format=pax |
->   head -c 2048
->
-> using GNU tar. Note that this is not a complete tarfile, but
-> it's enough to contain the headers we want to examine.
+> effectively right-shifted by those lost octal digits. And
+> this patch is again a strict improvement over that.
 
-Cute.  I didn't remember they had @<seconds-since-epoch> format,
-even though I must have seen what they do while working on 2c733fb2
-(parse_date(): '@' prefix forces git-timestamp, 2012-02-02).
-
-> +# See if our system tar can handle a tar file with huge sizes and dates far in
-> +# the future, and that we can actually parse its output.
-> +#
-> +# The reference file was generated by GNU tar, and the magic time and size are
-> +# both octal 01000000000001, which overflows normal ustar fields.
-> +#
-> +# When parsing, we'll pull out only the year from the date; that
-> +# avoids any question of timezones impacting the result. 
-
-... as long as the month-day part is not close to the year boundary.
-So this explanation is insuffucient to convince the reader that
-"that avoids any question" is correct, without saying that it is in
-August of year 4147.
-
-> +tar_info () {
-> +	"$TAR" tvf "$1" | awk '{print $3 " " $4}' | cut -d- -f1
+> diff --git a/archive-tar.c b/archive-tar.c
+> index cb99df2..274bdfa 100644
+> --- a/archive-tar.c
+> +++ b/archive-tar.c
+> @@ -137,6 +137,20 @@ static void strbuf_append_ext_header(struct strbuf *sb, const char *keyword,
+>  	strbuf_addch(sb, '\n');
+>  }
+>  
+> +/*
+> + * Like strbuf_append_ext_header, but for numeric values.
+> + */
+> +static void strbuf_append_ext_header_uint(struct strbuf *sb,
+> +					  const char *keyword,
+> +					  uintmax_t value)
+> +{
+> +	char buf[40]; /* big enough for 2^128 in decimal, plus NUL */
+> +	int len;
+> +
+> +	len = xsnprintf(buf, sizeof(buf), "%"PRIuMAX, value);
+> +	strbuf_append_ext_header(sb, keyword, buf, len);
 > +}
+> +
+>  static unsigned int ustar_header_chksum(const struct ustar_header *header)
+>  {
+>  	const unsigned char *p = (const unsigned char *)header;
+> @@ -208,7 +222,7 @@ static int write_tar_entry(struct archiver_args *args,
+>  	struct ustar_header header;
+>  	struct strbuf ext_header = STRBUF_INIT;
+>  	unsigned int old_mode = mode;
+> -	unsigned long size;
+> +	unsigned long size, size_in_header;
+>  	void *buffer;
+>  	int err = 0;
+>  
+> @@ -267,7 +281,13 @@ static int write_tar_entry(struct archiver_args *args,
+>  			memcpy(header.linkname, buffer, size);
+>  	}
+>  
+> -	prepare_header(args, &header, mode, size);
+> +	size_in_header = size;
+> +	if (S_ISREG(mode) && size > 077777777777UL) {
 
-A blank after the shell function to make it easier to see the
-boundary.
+Want a symbolic constant with a comment that says why you have
+eleven 7's?
 
-Seeing an awk piped into cut always makes me want to suggest a
-single sed/awk/perl invocation.
+> +		size_in_header = 0;
+> +		strbuf_append_ext_header_uint(&ext_header, "size", size);
+> +	}
+> +
+> +	prepare_header(args, &header, mode, size_in_header);
 
-> +# We expect git to die with SIGPIPE here (otherwise we
-> +# would generate the whole 64GB).
-> +test_expect_failure BUNZIP 'generate tar with huge size' '
-> +	{
-> +		git archive HEAD
-> +		echo $? >exit-code
-> +	} | head -c 4096 >huge.tar &&
-> +	echo 141 >expect &&
-> +	test_cmp expect exit-code
-> +'
-
-"head -c" is GNU-ism, isn't it?
-
-"dd bs=1 count=4096" is hopefully more portable.
-
-ksh signal death you already know about.  I wonder if we want to
-expose something like list_contains as a friend of test_cmp.
-
-	list_contains 141,269 $(cat exit-code)
+The change itself makes sense.
 
 Thanks.
