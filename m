@@ -2,79 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_20,
+X-Spam-Status: No, score=-7.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A76DA1FEAA
-	for <e@80x24.org>; Fri, 24 Jun 2016 20:59:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D30801FEAA
+	for <e@80x24.org>; Fri, 24 Jun 2016 21:05:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751705AbcFXU7D (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 16:59:03 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60059 "HELO cloud.peff.net"
+	id S1751744AbcFXVFo (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 17:05:44 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60078 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751652AbcFXU7B (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2016 16:59:01 -0400
-Received: (qmail 3684 invoked by uid 102); 24 Jun 2016 20:59:00 -0000
+	id S1751462AbcFXVFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2016 17:05:44 -0400
+Received: (qmail 4113 invoked by uid 102); 24 Jun 2016 21:05:43 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 16:59:00 -0400
-Received: (qmail 22791 invoked by uid 107); 24 Jun 2016 20:59:16 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 17:05:43 -0400
+Received: (qmail 22974 invoked by uid 107); 24 Jun 2016 21:05:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 16:59:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jun 2016 16:58:58 -0400
-Date:	Fri, 24 Jun 2016 16:58:58 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 17:05:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jun 2016 17:05:41 -0400
+Date:	Fri, 24 Jun 2016 17:05:41 -0400
 From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+To:	Johannes Sixt <j6t@kdbg.org>
+Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	"Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH v3 1/4] t5000: test tar files that overflow ustar headers
-Message-ID: <20160624205858.GA23315@sigill.intra.peff.net>
-References: <20160623231512.GA27683@sigill.intra.peff.net>
- <20160623232041.GA3668@sigill.intra.peff.net>
- <xmqq1t3mh0vg.fsf@gitster.mtv.corp.google.com>
- <20160624190744.GA32118@sigill.intra.peff.net>
+Subject: Re: [PATCH 1/4] tests: factor portable signal check out of t0005
+Message-ID: <20160624210541.GC6282@sigill.intra.peff.net>
+References: <20160624193924.GA6282@sigill.intra.peff.net>
+ <20160624194357.GA6441@sigill.intra.peff.net>
+ <576D9D90.3070605@kdbg.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20160624190744.GA32118@sigill.intra.peff.net>
+In-Reply-To: <576D9D90.3070605@kdbg.org>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jun 24, 2016 at 03:07:44PM -0400, Jeff King wrote:
+On Fri, Jun 24, 2016 at 10:52:32PM +0200, Johannes Sixt wrote:
 
-> > "dd bs=1 count=4096" is hopefully more portable.
+> Am 24.06.2016 um 21:43 schrieb Jeff King:
+> > In POSIX shells, a program which exits due to a signal
+> > generally has an exit code of 128 plus the signal number.
+> > However, some platforms do other things. ksh uses 256 plus
+> > the signal number, and on Windows, all signals are just "3".
 > 
-> Hmm. I always wonder whether dd is actually very portable, but we do use
-> it already, at least.
+> That's not true, see below.
+
+I was worried about that. Git for Windows seems like a labyrinth of
+bizarre special cases.
+
+> > I didn't get into the weirdness of SIGPIPE on Windows here, but I think
+> > this is probably a first step toward handling it better. E.g., it may be
+> > that test_match_signal should respect 128 (or even any code) when we are
+> > checking for SIGPIPE.
 > 
-> Perhaps the perl monstrosity in t9300 could be replaced with that, too.
+> The Windows behavior is most closely described as having signal(SIGPIPE,
+> SIG_IGN) at the very beginning of the program.
 
-Hrm. So I wrote a patch for t9300 for this. But I wanted to flip the
-order to:
+Right, but then we would get EPIPE. So what does git do in such cases?
+I'd expect it generally to either hit the check_pipe() part of
+write_or_die(), or to end up complaining via die() that the write didn't
+go as expected.
 
-  dd bs=4096 count=1
+> > +# Returns true if the numeric exit code in "$2" represents the expected signal
+> > +# in "$1". Signals should be given numerically.
+> > +test_match_signal () {
+> > +	if test "$2" = "$((128 + $1))"
+> > +	then
+> > +		# POSIX
+> > +		return 0
+> > +	elif test "$2" = "$((256 + $1))"
+> > +	then
+> > +		# ksh
+> > +		return 0
+> > +	elif test "$2" = "3"; then
+> > +		# Windows
+> 
+> You meant well here, but this is close to pointless as a general check. We
+> check for this exit code in t0005 because there program termination happens
+> via raise(), which on Window just calls exit(3). This exit code is not an
+> indication that something related to SIGPIPE (or any signal) happened.
+> 
+> IMO there is too much danger to trigger a false positive if exit code 3 is
+> treated special in this generality.
 
-because otherwise, dd will call read() 4096 times, for 1 byte each.
-
-But it's not safe to do that on a pipe. For example:
-
-  {
-	echo 1
-	sleep 1
-	echo 2
-  } | dd bs=4 count=1
-
-will copy only 2 bytes. So it's racily wrong, depending on how the
-writer feeds the data to write().
-
-The 1-byte reads do work (assuming blocking descriptors and that dd
-restarts a read after a signal, which mine seems to). But yuck.
-
-The difference in time between the two is measurable on my system, but
-it's only a few milliseconds (for 4096 bytes). So maybe it's not worth
-worrying about (though as a general technique, it does make me worry
-that it's easy to get wrong in a way that will fail racily).
+Yeah, I agree. But what _should_ it do? E.g., what happens to git-daemon
+when it is killed via TERM?
 
 -Peff
