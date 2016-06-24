@@ -1,75 +1,71 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65FF72018A
-	for <e@80x24.org>; Fri, 24 Jun 2016 15:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4AD12018A
+	for <e@80x24.org>; Fri, 24 Jun 2016 15:48:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751432AbcFXPgv (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 11:36:51 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59733 "HELO cloud.peff.net"
+	id S1751505AbcFXPsG (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 11:48:06 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59744 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751104AbcFXPgu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2016 11:36:50 -0400
-Received: (qmail 20788 invoked by uid 102); 24 Jun 2016 15:36:50 -0000
+	id S1751249AbcFXPsE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2016 11:48:04 -0400
+Received: (qmail 21295 invoked by uid 102); 24 Jun 2016 15:48:03 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 11:36:50 -0400
-Received: (qmail 20165 invoked by uid 107); 24 Jun 2016 15:37:05 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 11:48:03 -0400
+Received: (qmail 20248 invoked by uid 107); 24 Jun 2016 15:48:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 11:37:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jun 2016 11:36:47 -0400
-Date:	Fri, 24 Jun 2016 11:36:47 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 11:48:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jun 2016 11:48:01 -0400
+Date:	Fri, 24 Jun 2016 11:48:01 -0400
 From:	Jeff King <peff@peff.net>
-To:	Philip Oakley <philipoakley@iee.org>
-Cc:	Ovatta Bianca <ovattabianca@gmail.com>, git@vger.kernel.org
-Subject: Re: what is a snapshot?
-Message-ID: <20160624153647.GA2448@sigill.intra.peff.net>
-References: <CAHWPVgNrTEw9FmW6K7QucgA74QWsTKfxZGt+mGd099k+O7O+rw@mail.gmail.com>
- <CAHWPVgMWeHoD5vTiFJ1gsm2hS74LK7j4npVVbOZeR43cX3qWXw@mail.gmail.com>
- <F6172B8DA802476C863849DEA02684A7@PhilipOakley>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org
+Subject: Re: Short-term plans for the post 2.9 cycle
+Message-ID: <20160624154800.GB2448@sigill.intra.peff.net>
+References: <xmqqh9covlkb.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <F6172B8DA802476C863849DEA02684A7@PhilipOakley>
+In-Reply-To: <xmqqh9covlkb.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sun, Jun 19, 2016 at 04:20:14PM +0100, Philip Oakley wrote:
+On Sun, Jun 19, 2016 at 03:52:04PM -0700, Junio C Hamano wrote:
 
-> From: "Ovatta Bianca" <ovattabianca@gmail.com>
-> > I read in every comparison of git vs other version control systems,
-> > that git does not record differences but takes "snapshots"
-> > I was wondering what a "snapshot" is ? Does git store at every commit
-> > the entire files which have been modified even if only a few bytes
-> > were changed out of a large file?
-> > 
-> A snaphot is like a tar or zip of all your tracked files. This means it is
-> easier to determine (compared to lots of diffs) the current content.
-> 
-> Keeping all the snapshots as separate loose items, when the majority of
-> their content is unchanged would be very inefficient, so git then uses, at
-> the right time, an efficient (and obviously lossless) compression technique
-> to 'zip' all the snapshots together so that the final repository is
-> 'packed'. The overall effect is a very efficient storage scheme.
-> 
-> There are some good explanations on the web, such as the
-> https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain
-> though you may want to scan from the beginning ;-)
+> Here are the list of topics that are in the "private edition" I use
+> for every day work, grouped by where they sit in the the near-term
+> plan of merging them up to 'next' and then to 'master'.
 
-I think the delta compression is only half the story.
+By the way, I wondered if you had thoughts on the number of the upcoming
+version. We are looking at v2.10 in the current scheme. It was at the
+v1.9/v1.10 boundary that we jumped to v2.0 last time.
 
-Each commit is a snapshot in that it points to the sha1 of the root
-tree, which points to the sha1 of other trees and blobs. And following
-that chain gives you the whole state of the tree, without having to care
-about other commits.
+Certainly it is nice to avoid bumping into double digits (if only to
+prevent bugs created by lexical sorting). But it feels rather quick to
+be jumping to v3.0. And indeed it is much quicker, as the v1.x series
+had an extra level of versioning which meant that the second-biggest
+number advanced ten times more slowly.
 
-And if the next commit changes only a few files, the sha1 for all the
-other files will remain unchanged, and git does not need to store them
-again. So already, before any explicit compression has happened, we get
-de-duplication of identical content from commit to commit, at the file
-and tree level.
+I know some people's opinion is that versions do not matter, are just
+numbers, etc, but I am not sure I agree. If you have dots in your
+version number, then bumping the one before the first dot seems like a
+bigger change than usual, and I think we should reserve it for a moment
+where we have bigger changes in the code.
 
-And then when a file does change, we store the whole new version, then
-delta compress it during "git gc", etc, as you describe.
+And I am not at all sure that we have given much thought to what such
+changes would be, or that such things would be ready in this cycle. Off
+the top of my head, the repository-format bump for pluggable ref
+backends, and protocol v2 support seem like possible candidates.  It's
+not a flag day for either, of course; we'll build in all of the usual
+backwards-compatibility flags. But it's convenient for users to remember
+that "3.0" is the minimum to support a new slate of
+backwards-incompatible features.
+
+So my inclination is that the next version is simply v2.10. And maybe
+you thought of all of this already, and that's why you didn't even
+bother mentioning it. :) I'm just curious to hear any thoughts on the
+matter.
 
 -Peff
