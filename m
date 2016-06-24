@@ -1,119 +1,65 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BED8E2018A
-	for <e@80x24.org>; Fri, 24 Jun 2016 19:10:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B773F2018A
+	for <e@80x24.org>; Fri, 24 Jun 2016 19:16:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751038AbcFXTKt (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 15:10:49 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65525 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750876AbcFXTKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2016 15:10:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B6DEF2575A;
-	Fri, 24 Jun 2016 15:10:46 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BhskyRK6HeKQ0OxNhAwC871U9QE=; b=MFVdCw
-	tA6U8tdY7BVpE3zeNZ0EjnHEA34enwqV0mYpgDLg5debTqNYBwnrVXNhjU/+77JT
-	9ptSfhg5MKYbT8ZrXOL5bxdO0SZQW1H3f9hWfYeyo7Rg8Qxk6WAcn6O3opm3sGNy
-	cDIyHQRX1LEO21EajdfvF46sMGM8xlS7pPLbU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jDcsVXIwsXK1untkQ/FHfAAiD3nzASDZ
-	hFLMuEevgTMX+q5KX7Igd8yuNqbLt68ubRdFSq17r5UtFc8TR9vA7Uuq9Dq8mP46
-	/mgjH+KcIx30rSE8e9FHQMzqKx91NklsNCMqKFcOCaTxTncvP0nHJ6UI0nn6RUCr
-	+qCS6NgH5ig=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AC49525759;
-	Fri, 24 Jun 2016 15:10:46 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3319025758;
-	Fri, 24 Jun 2016 15:10:46 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	id S1751132AbcFXTQv (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 15:16:51 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59906 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751037AbcFXTQv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2016 15:16:51 -0400
+Received: (qmail 30132 invoked by uid 102); 24 Jun 2016 19:16:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 15:16:50 -0400
+Received: (qmail 21813 invoked by uid 107); 24 Jun 2016 19:17:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 15:17:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jun 2016 15:16:48 -0400
+Date:	Fri, 24 Jun 2016 15:16:48 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	"Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH v3 4/4] archive-tar: drop return value
+Subject: Re: [PATCH v3 3/4] archive-tar: write extended headers for
+ far-future mtime
+Message-ID: <20160624191648.GC32118@sigill.intra.peff.net>
 References: <20160623231512.GA27683@sigill.intra.peff.net>
-	<20160623232158.GD3668@sigill.intra.peff.net>
-	<1865881092.716701.1466768964884.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-	<20160624131325.GA28941@sigill.intra.peff.net>
-Date:	Fri, 24 Jun 2016 12:10:44 -0700
-In-Reply-To: <20160624131325.GA28941@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 24 Jun 2016 09:13:25 -0400")
-Message-ID: <xmqqoa6qflmz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+ <20160623232112.GC3668@sigill.intra.peff.net>
+ <xmqqshw2flt8.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5AD8159C-3A3F-11E6-8234-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqshw2flt8.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Jun 24, 2016 at 12:06:59PM -0700, Junio C Hamano wrote:
 
-> On Fri, Jun 24, 2016 at 01:49:24PM +0200, Remi Galan Alfonso wrote:
->
->> Hi Peff,
->> 
->> Jeff King <peff@peff.net> writes:
->> > @@ -413,7 +411,7 @@ static int write_tar_archive(const struct archiver *ar,
->> >  {
->> >          int err = 0;
->> >  
->> > -        err = write_global_extended_header(args);
->> > +        write_global_extended_header(args);
->> >          if (!err)
->> >                  err = write_archive_entries(args, write_tar_entry);
->> 
->> If we drop the error code from 'write_global_extended_header' then the
->> above 'if (!err)' becomes useless (always evaluates to 'true' since
->> 'err' is set to '0').
->
-> Thanks, you're right.
->
-> I wondered if we could drop "err" entirely, but write_archive_entries()
-> does indeed have some error code paths (everybody uses write_or_die, but
-> we return an error for things like unknown file types).
+> > +	if (args->time > 077777777777UL) {
+> > +		strbuf_append_ext_header_uint(&ext_header, "mtime",
+> > +					      args->time);
+> > +		args->time = 077777777777UL;
+> > +	}
+> > +
+> > +	if (!ext_header.len)
+> > +		return 0;
+> 
+> Another symbolic constant to explain this, e.g. TAR_TIME_LIMIT, may
+> want to exist.
 
-You could if you did this ;-)
+This one at least appears twice. I think one of the reasons I am
+slightly resistant to a symbolic constant is that it tempts people to
+think that it's OK to change it. It's not. These values are mandated by
+POSIX, and must match the size of the ustar header field.
 
-Which I do not necessarily think is a good idea.
+So the least-repetitive thing would be to define it as:
 
-This may be easier to read
+  (1UL << (1 + (3 * (sizeof(ustar_header.mtime) - 1)))) - 1
 
-	write_global_extended_header(args)
-        err = write_archive_entries(args, write_tar_entry);
-        if (!err)
-		write_trailer();
-	return err;
+That's pretty horrible to read, but if wrapped in a symbolic constant,
+at least people would think twice before touching it. ;)
 
-though.
-
- archive-tar.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/archive-tar.c b/archive-tar.c
-index 903b74d..eed2c96 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -412,11 +412,9 @@ static int write_tar_archive(const struct archiver *ar,
- 	int err = 0;
- 
- 	write_global_extended_header(args);
--	if (!err)
--		err = write_archive_entries(args, write_tar_entry);
--	if (!err)
--		write_trailer();
--	return err;
-+
-+	return (write_archive_entries(args, write_tar_entry) ||
-+		write_trailer());
- }
- 
- static int write_tar_filter_archive(const struct archiver *ar,
+-Peff
