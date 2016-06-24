@@ -1,116 +1,99 @@
 Return-Path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAAA72018A
-	for <e@80x24.org>; Fri, 24 Jun 2016 19:44:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2F992018A
+	for <e@80x24.org>; Fri, 24 Jun 2016 19:44:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751054AbcFXToC (ORCPT <rfc822;e@80x24.org>);
-	Fri, 24 Jun 2016 15:44:02 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59940 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750876AbcFXToA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2016 15:44:00 -0400
-Received: (qmail 31296 invoked by uid 102); 24 Jun 2016 19:44:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 15:44:00 -0400
-Received: (qmail 22043 invoked by uid 107); 24 Jun 2016 19:44:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Jun 2016 15:44:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jun 2016 15:43:58 -0400
-Date:	Fri, 24 Jun 2016 15:43:58 -0400
-From:	Jeff King <peff@peff.net>
-To:	Johannes Sixt <j6t@kdbg.org>
-Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	id S1751101AbcFXToJ (ORCPT <rfc822;e@80x24.org>);
+	Fri, 24 Jun 2016 15:44:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54075 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751082AbcFXToI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2016 15:44:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AF1EB25B91;
+	Fri, 24 Jun 2016 15:44:06 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/zfBbFJIMMqKM2xMjkORJJS8Muo=; b=h0U+Bl
+	dqb47xVag2Tg91CieHK/PHwrlcNoKOKfAW/1OC3/sSINkuS3/XSjkooaRKVGnNto
+	qCZPNxi/+0IghIK59P7vr9YGSsDX7I3/XWHlCqGIAjPrbPhpH5Sn16EzzpMbAWT2
+	z80bAXaJVY0Yj+lUyJyNHyk2vl5zoJ3L6VYkQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LDiE3BrOWgoY3m1jkJQVT7pVPNnGKj5E
+	Zsj6M+siPliyRviwNEzpMN/7fdYUjOusppU/8rWUSpr8hTLQazueDtC+NFDkhpxq
+	mmSgWfiMnxRyMwr94U/Tqt9xgBd/zxYm3onm4tFu7K1fpvffYUiSgvh/WJG6AGdN
+	n3JSS6M4LTw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A7B9425B8F;
+	Fri, 24 Jun 2016 15:44:06 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2FEDF25B8D;
+	Fri, 24 Jun 2016 15:44:06 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
 	"Robin H. Johnson" <robbat2@gentoo.org>
-Subject: [PATCH 1/4] tests: factor portable signal check out of t0005
-Message-ID: <20160624194357.GA6441@sigill.intra.peff.net>
-References: <20160624193924.GA6282@sigill.intra.peff.net>
+Subject: Re: [PATCH v3 1/4] t5000: test tar files that overflow ustar headers
+References: <20160623231512.GA27683@sigill.intra.peff.net>
+	<20160623232041.GA3668@sigill.intra.peff.net>
+	<xmqq1t3mh0vg.fsf@gitster.mtv.corp.google.com>
+	<20160624190744.GA32118@sigill.intra.peff.net>
+Date:	Fri, 24 Jun 2016 12:44:04 -0700
+In-Reply-To: <20160624190744.GA32118@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 24 Jun 2016 15:07:44 -0400")
+Message-ID: <xmqqk2hefk3f.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160624193924.GA6282@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 02E4540E-3A44-11E6-8AE3-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-In POSIX shells, a program which exits due to a signal
-generally has an exit code of 128 plus the signal number.
-However, some platforms do other things. ksh uses 256 plus
-the signal number, and on Windows, all signals are just "3".
+Jeff King <peff@peff.net> writes:
 
-We've accounted for that in t0005, but not in other tests.
-Let's pull out the logic so we can use it elsewhere.
+>> > +# When parsing, we'll pull out only the year from the date; that
+>> > +# avoids any question of timezones impacting the result. 
+>> 
+>> ... as long as the month-day part is not close to the year boundary.
+>> So this explanation is insuffucient to convince the reader that
+>> "that avoids any question" is correct, without saying that it is in
+>> August of year 4147.
+>
+> I thought that part didn't need to be said, but I can say it
+> (technically we can include the month, too, but I don't think that level
+> of accuracy is really important for these tests).
 
-It would be nice for debugging if this additionally printed
-errors to stderr, like our other test_* helpers. But we're
-going to need to use it in other places besides the innards
-of a test_expect block. So let's leave it as generic as
-possible.
+Oh, I wasn't suggesting to include the month in the comparison.  But
+to understand why it is safe from TZ jitters to test only year, the
+reader needs to know (or do the math herself) that the timestamp is
+away from the year boundary, so mentioning August in the justifying
+comment is needed.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I didn't get into the weirdness of SIGPIPE on Windows here, but I think
-this is probably a first step toward handling it better. E.g., it may be
-that test_match_signal should respect 128 (or even any code) when we are
-checking for SIGPIPE.
+>> Seeing an awk piped into cut always makes me want to suggest a
+>> single sed/awk/perl invocation.
+>
+> I want the auto-splitting of awk, but then to auto-split the result
+> using a different delimiter. Is there a not-painful way to do that in
+> awk?
+>
+> I could certainly come up with a regex to do it in sed, but I wanted to
+> keep the parsing as liberal and generic as possible.
+>
+> Certainly I could do it in perl, but I had the general impression that
+> we prefer to keep the dependency on perl to a minimum. Maybe it doesn't
+> matter.
 
-I also didn't bother with symbolic names. We could make:
+Heh.  It was merely "makes me want to suggest", not "I suggest".  If
+I were doing this myself, I would have done a single sed but it does
+not matter.
 
-  test_match_signal sigterm $?
+> I think we would want something more like:
+>
+>   test_signal_match 13 $(cat exit-code)
 
-work, but I didn't think it was worth the effort. While numbers for some
-obscure signals do vary on platforms, sigpipe and sigterm are standard
-enough to rely on.
-
- t/t0005-signals.sh      |  7 +------
- t/test-lib-functions.sh | 18 ++++++++++++++++++
- 2 files changed, 19 insertions(+), 6 deletions(-)
-
-diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
-index e7f27eb..2d96265 100755
---- a/t/t0005-signals.sh
-+++ b/t/t0005-signals.sh
-@@ -11,12 +11,7 @@ EOF
- 
- test_expect_success 'sigchain works' '
- 	{ test-sigchain >actual; ret=$?; } &&
--	case "$ret" in
--	143) true ;; # POSIX w/ SIGTERM=15
--	271) true ;; # ksh w/ SIGTERM=15
--	  3) true ;; # Windows
--	  *) false ;;
--	esac &&
-+	test_match_signal 15 "$ret" &&
- 	test_cmp expect actual
- '
- 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 48884d5..51d3775 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -961,3 +961,21 @@ test_env () {
- 		done
- 	)
- }
-+
-+# Returns true if the numeric exit code in "$2" represents the expected signal
-+# in "$1". Signals should be given numerically.
-+test_match_signal () {
-+	if test "$2" = "$((128 + $1))"
-+	then
-+		# POSIX
-+		return 0
-+	elif test "$2" = "$((256 + $1))"
-+	then
-+		# ksh
-+		return 0
-+	elif test "$2" = "3"; then
-+		# Windows
-+		return 0
-+	fi
-+	return 1
-+}
--- 
-2.9.0.215.gc5c4261
-
+I like that.
