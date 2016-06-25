@@ -2,156 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67FCD1FE4E
-	for <e@80x24.org>; Sat, 25 Jun 2016 05:23:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E16F81FE4E
+	for <e@80x24.org>; Sat, 25 Jun 2016 05:24:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751286AbcFYFX2 (ORCPT <rfc822;e@80x24.org>);
-	Sat, 25 Jun 2016 01:23:28 -0400
-Received: from [104.236.5.163] ([104.236.5.163]:44141 "EHLO brennie.ca"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751002AbcFYFX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2016 01:23:27 -0400
-X-Greylist: delayed 435 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Jun 2016 01:23:27 EDT
-Received: from localhost.localdomain (142-165-34-81.sktn.hsdb.sasknet.sk.ca [142.165.34.81])
-	by brennie.ca (Postfix) with ESMTPSA id AC767400A9;
-	Fri, 24 Jun 2016 23:16:10 -0600 (CST)
-From:	Barret Rennie <barret@brennie.ca>
+	id S1751357AbcFYFYI (ORCPT <rfc822;e@80x24.org>);
+	Sat, 25 Jun 2016 01:24:08 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:33060 "EHLO
+	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002AbcFYFYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jun 2016 01:24:06 -0400
+Received: by mail-lf0-f68.google.com with SMTP id l188so23746706lfe.0
+        for <git@vger.kernel.org>; Fri, 24 Jun 2016 22:24:04 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=mefTUAaVBYpFwJK/OR1XCtTP+DToqtE+SHj8+Q4rnt0=;
+        b=GnGUOcdp4OKueNVKJqNnMaljUuNnXq0sGbSKDAxQhdE5uLMGW+mehgR26oA3g56WLg
+         J9IVQv78+vWSoJXMjKWLybZcwRx2fZijaxsqEwmbmVCWxRqj3I6R+CtgveVcpBwjip2r
+         GLLO3CquGZp+WsIuBKvsSatkVgfnGSlY2tT0Zm1EbGQj/a6BF52i2hCJhyPNUYrUKU/x
+         NrFT7b5H3vlna8SKjMm2pyYQ1OlYSs7aPJGTN2mr4mZzZzOBGQEXE4rA2KySNct9rqnh
+         C8vI0f4ZNdQPxKyMwoLpCkKZnS0aQMOXe+CX8Xl4cCY/LvacJYCgDwZiCwMJg3nVw+1X
+         ZIRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=mefTUAaVBYpFwJK/OR1XCtTP+DToqtE+SHj8+Q4rnt0=;
+        b=FQI+UNvrxJ1eUgnS9frjiEvrFZ4/UCRlcgLGDwPYdw6Be1lbVVqi6DroyLYiqF8XQv
+         +jBtRP8zz2mClzxHZdb4mFxeg0rEwp2Ye0lDGBpQI1QSdu8TAPmQeCdkSDDBJPLL27R/
+         8I/ityF6RR2elMahlnxI/kNoWISJ6QFafMHXMrYeYmVmPK3KLotcG/07c+5e3Bc/H3gO
+         nyUuSll8Hp1zlpLaw3wB9Xz89kDQctedqTcdT+FHvSpQFZvhpHOg7vqPpG6x42NaduQD
+         TAum0zdWbkIxBTaoGDZRR3aBRj5uyxSSrBONl1vRBsmZ93D7/aep383SAkk0kgy7/lJ5
+         u7Yw==
+X-Gm-Message-State: ALyK8tKSwWSj/Tr1f41/jfZOFKX7BSqIAH8hIxTyKh5t0rcRXJS0hJMvUkxhleNWBVe3/g==
+X-Received: by 10.25.5.3 with SMTP id 3mr2426319lff.6.1466832243151;
+        Fri, 24 Jun 2016 22:24:03 -0700 (PDT)
+Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
+        by smtp.gmail.com with ESMTPSA id s87sm1450921lfg.46.2016.06.24.22.24.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 24 Jun 2016 22:24:01 -0700 (PDT)
+From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To:	git@vger.kernel.org
-Cc:	Eric Sunshine <sunshine@sunshineco.com>,
+Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Michael Rappazzo <rappazzo@gmail.com>,
-	Barret Rennie <barret@brennie.ca>
-Subject: [PATCH] builtin/worktree.c: add option for setting worktree name
-Date:	Fri, 24 Jun 2016 23:15:48 -0600
-Message-Id: <20160625051548.95564-1-barret@brennie.ca>
-X-Mailer: git-send-email 2.9.0
+	<pclouds@gmail.com>
+Subject: [PATCH v2 00/12] nd/icase updates
+Date:	Sat, 25 Jun 2016 07:22:26 +0200
+Message-Id: <20160625052238.13615-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.8.2.526.g02eed6d
+In-Reply-To: <20160623162907.23295-1-pclouds@gmail.com>
+References: <20160623162907.23295-1-pclouds@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Add the --name parameter to git worktree add that allows the user to set
-the name of the created worktree directory. A worktree must not already
-exist with the current name or creation will fail.
+v2 fixes Junio's and Jeff's comments (both good). The sharing "!icase
+|| ascii_only" is made a separate commit (6/12) because I think it
+takes some seconds to realize that the conversion is correct and it's
+technically not needed in 5/12 (and it's sort of the opposite of 1/12)
 
-Signed-off-by: Barret Rennie <barret@brennie.ca>
----
- Documentation/git-worktree.txt |  6 +++++-
- builtin/worktree.c             | 24 ++++++++++++++++++------
- t/t2025-worktree-add.sh        | 16 ++++++++++++++++
- 3 files changed, 39 insertions(+), 7 deletions(-)
+Interdiff
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 23d8d2a..2af0ee4 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -9,7 +9,7 @@ git-worktree - Manage multiple working trees
- SYNOPSIS
- --------
- [verse]
--'git worktree add' [-f] [--detach] [--checkout] [-b <new-branch>] <path> [<branch>]
-+'git worktree add' [-f] [--detach] [--checkout] [-b <new-branch>] [--name <name>] <path> [<branch>]
- 'git worktree prune' [-n] [-v] [--expire <expire>]
- 'git worktree list' [--porcelain]
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index 0a5f877..55067ca 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -200,19 +200,30 @@ static void pickaxe(struct diff_queue_struct *q, struct diff_options *o,
+ 	*q = outq;
+ }
  
-@@ -88,6 +88,10 @@ OPTIONS
- 	With `add`, detach HEAD in the new working tree. See "DETACHED HEAD"
- 	in linkgit:git-checkout[1].
- 
-+--name::
-+	Set the name for the worktree. If there is already a worktree with this
-+	name, the command will fail.
-+
- --[no-]checkout::
- 	By default, `add` checks out `<branch>`, however, `--no-checkout` can
- 	be used to suppress checkout in order to make customizations,
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index e3199a2..ed071b2 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -24,6 +24,7 @@ struct add_opts {
- 	int checkout;
- 	const char *new_branch;
- 	int force_new_branch;
-+	const char *name;
- };
- 
- static int show_only;
-@@ -212,19 +213,29 @@ static int add_worktree(const char *path, const char *refname,
- 			die(_("invalid reference: %s"), refname);
- 	}
- 
--	name = worktree_basename(path, &len);
-+	if (opts->name) {
-+		name = opts->name;
-+		len = strlen(name);
-+	} else {
-+		name = worktree_basename(path, &len);
++static void regcomp_or_die(regex_t *regex, const char *needle, int cflags)
++{
++	int err = regcomp(regex, needle, cflags);
++	if (err) {
++		/* The POSIX.2 people are surely sick */
++		char errbuf[1024];
++		regerror(err, regex, errbuf, 1024);
++		regfree(regex);
++		die("invalid regex: %s", errbuf);
 +	}
++}
 +
- 	strbuf_addstr(&sb_repo,
- 		      git_path("worktrees/%.*s", (int)(path + len - name), name));
-+
- 	len = sb_repo.len;
- 	if (safe_create_leading_directories_const(sb_repo.buf))
- 		die_errno(_("could not create leading directories of '%s'"),
- 			  sb_repo.buf);
--	while (!stat(sb_repo.buf, &st)) {
--		counter++;
--		strbuf_setlen(&sb_repo, len);
--		strbuf_addf(&sb_repo, "%d", counter);
-+
-+	if (!opts->name) {
-+		while (!stat(sb_repo.buf, &st)) {
-+			counter++;
-+			strbuf_setlen(&sb_repo, len);
-+			strbuf_addf(&sb_repo, "%d", counter);
-+		}
-+		name = strrchr(sb_repo.buf, '/') + 1;
+ void diffcore_pickaxe(struct diff_options *o)
+ {
+ 	const char *needle = o->pickaxe;
+ 	int opts = o->pickaxe_opts;
+ 	regex_t regex, *regexp = NULL;
+ 	kwset_t kws = NULL;
+-	int err = 0;
+ 
+ 	if (opts & (DIFF_PICKAXE_REGEX | DIFF_PICKAXE_KIND_G)) {
+ 		int cflags = REG_EXTENDED | REG_NEWLINE;
+ 		if (DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE))
+ 			cflags |= REG_ICASE;
+-		err = regcomp(&regex, needle, cflags);
++		regcomp_or_die(&regex, needle, cflags);
+ 		regexp = &regex;
+ 	} else if (DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE) &&
+ 		   has_non_ascii(needle)) {
+@@ -220,7 +231,7 @@ void diffcore_pickaxe(struct diff_options *o)
+ 		int cflags = REG_NEWLINE | REG_ICASE;
+ 
+ 		basic_regex_quote_buf(&sb, needle);
+-		err = regcomp(&regex, sb.buf, cflags);
++		regcomp_or_die(&regex, sb.buf, cflags);
+ 		strbuf_release(&sb);
+ 		regexp = &regex;
+ 	} else {
+@@ -229,13 +240,6 @@ void diffcore_pickaxe(struct diff_options *o)
+ 		kwsincr(kws, needle, strlen(needle));
+ 		kwsprep(kws);
  	}
--	name = strrchr(sb_repo.buf, '/') + 1;
+-	if (err) {
+-		/* The POSIX.2 people are surely sick */
+-		char errbuf[1024];
+-		regerror(err, &regex, errbuf, 1024);
+-		regfree(&regex);
+-		die("invalid regex: %s", errbuf);
+-	}
  
- 	junk_pid = getpid();
- 	atexit(remove_junk);
-@@ -326,6 +337,7 @@ static int add(int ac, const char **av, const char *prefix)
- 			   N_("create or reset a branch")),
- 		OPT_BOOL(0, "detach", &opts.detach, N_("detach HEAD at named commit")),
- 		OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
-+		OPT_STRING(0, "name", &opts.name, N_("name"), N_("set name for working tree")),
- 		OPT_END()
- 	};
+ 	/* Might want to warn when both S and G are on; I don't care... */
+ 	pickaxe(&diff_queued_diff, o, regexp, kws,
+diff --git a/grep.c b/grep.c
+index cb058a5..92587a8 100644
+--- a/grep.c
++++ b/grep.c
+@@ -432,15 +432,8 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ 	icase	       = opt->regflags & REG_ICASE || p->ignore_case;
+ 	ascii_only     = !has_non_ascii(p->pattern);
  
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index 4bcc335..9abcf8e 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -63,6 +63,22 @@ test_expect_success '"add" worktree' '
- 	)
- '
+-	if (opt->fixed) {
++	if (opt->fixed || is_fixed(p->pattern, p->patternlen))
+ 		p->fixed = !icase || ascii_only;
+-		if (!p->fixed) {
+-			compile_fixed_regexp(p, opt);
+-			return;
+-		}
+-	} else if ((!icase || ascii_only) &&
+-		   is_fixed(p->pattern, p->patternlen))
+-		p->fixed = 1;
+ 	else
+ 		p->fixed = 0;
  
-+test_expect_success '"add" worktree with name' '
-+	git worktree add --detach --name custom-name another-worktree master &&
-+	(
-+		cd here &&
-+		test_cmp ../init.t init.t
-+	) &&
-+	(
-+		cd .git/worktrees &&
-+		test -d custom-name
-+	)
-+'
-+
-+test_expect_success '"add" worktree with name that already exists' '
-+	test_must_fail git worktree add --name custom-name --detach yet-another-worktree master
-+'
-+
- test_expect_success '"add" worktree from a subdir' '
- 	(
- 		mkdir sub &&
+@@ -449,6 +442,9 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ 		kwsincr(p->kws, p->pattern, p->patternlen);
+ 		kwsprep(p->kws);
+ 		return;
++	} else if (opt->fixed) {
++		compile_fixed_regexp(p, opt);
++		return;
+ 	}
+ 
+ 	if (opt->pcre) {
+
+Nguyễn Thái Ngọc Duy (12):
+  grep: break down an "if" stmt in preparation for next changes
+  test-regex: isolate the bug test code
+  test-regex: expose full regcomp() to the command line
+  grep/icase: avoid kwsset on literal non-ascii strings
+  grep/icase: avoid kwsset when -F is specified
+  grep: rewrite an if/else condition to avoid duplicate expression
+  grep/pcre: prepare locale-dependent tables for icase matching
+  gettext: add is_utf8_locale()
+  grep/pcre: support utf-8
+  diffcore-pickaxe: Add regcomp_or_die()
+  diffcore-pickaxe: support case insensitive match on non-ascii
+  grep.c: reuse "icase" variable
+
+ diffcore-pickaxe.c                       | 33 +++++++++++----
+ gettext.c                                | 24 ++++++++++-
+ gettext.h                                |  1 +
+ grep.c                                   | 43 +++++++++++++++----
+ grep.h                                   |  1 +
+ quote.c                                  | 37 +++++++++++++++++
+ quote.h                                  |  1 +
+ t/t0070-fundamental.sh                   |  2 +-
+ t/t7812-grep-icase-non-ascii.sh (new +x) | 71 ++++++++++++++++++++++++++++++++
+ t/t7813-grep-icase-iso.sh (new +x)       | 19 +++++++++
+ test-regex.c                             | 59 +++++++++++++++++++++++++-
+ 11 files changed, 270 insertions(+), 21 deletions(-)
+ create mode 100755 t/t7812-grep-icase-non-ascii.sh
+ create mode 100755 t/t7813-grep-icase-iso.sh
+
 -- 
-2.9.0
+2.8.2.526.g02eed6d
 
