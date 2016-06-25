@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C3D01FEAA
-	for <e@80x24.org>; Sat, 25 Jun 2016 05:24:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBE4B1FE4E
+	for <e@80x24.org>; Sat, 25 Jun 2016 05:24:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751415AbcFYFYM (ORCPT <rfc822;e@80x24.org>);
-	Sat, 25 Jun 2016 01:24:12 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:36101 "EHLO
-	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751317AbcFYFYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2016 01:24:10 -0400
-Received: by mail-lf0-f68.google.com with SMTP id a2so23666996lfe.3
-        for <git@vger.kernel.org>; Fri, 24 Jun 2016 22:24:09 -0700 (PDT)
+	id S1751508AbcFYFYV (ORCPT <rfc822;e@80x24.org>);
+	Sat, 25 Jun 2016 01:24:21 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:34320 "EHLO
+	mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751317AbcFYFYN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jun 2016 01:24:13 -0400
+Received: by mail-lf0-f65.google.com with SMTP id l184so23684435lfl.1
+        for <git@vger.kernel.org>; Fri, 24 Jun 2016 22:24:12 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=s/ZyM6K2BSjFAmhDw48CiY66cxKjEkmTv4uz46BZns4=;
-        b=oBsAT166HeWku2il+3nl5xYoP31WWWdiNUgGukl1BSRpDP7PTmtji4GIs7RtlmshQR
-         Na79BzrVLf6/d4L//px8rRkJRdtM4CIbSmEL9ZZSX+x8HBY2WbZjsBXbiwstaynKehKt
-         AjRvBuNC/9S+ReclmgnC+OHanlbfNYItTMF40aFhNmHagAWcXzmC7NRFk9NUyV9zjnr9
-         MLY7ZDIVCHTiLVrQ7JGrJg7RBgADvWOBFYMk9I3jaRG+EDCfhD8HpIy99UKbSDOaSmBS
-         CouXc5FBNlhCrUOZnw5KS2jutRQkJke7D2iEfbjEO/UakTaXeVWidB33MIih02kXwymS
-         sL0A==
+        bh=P0FcbDLKkajulJsbg6rFd3+M/F+y336AgiNEhOuP6H4=;
+        b=jYKUDhDSMQABakoaIHyq2yZ4w1ZuWsmVXTksV/aa6AB30iK2AMamznng+XJCG0t7wo
+         yGePtNWZ3Z6ei5CueGzl8VLH/9xXG0wwf8yArXayd2Wfkg4ccddVdPjd1v6eXXXWLUx5
+         QgYR4rx6tIx3EqroqBmYbubKOBef6V75P+stPrHJD2CguZoCUW5GMhQRbwBAvDQb+69X
+         0CMhOwjD2kXl+YGaa2yP0nh4V6Cg+xSJtO5tLmQZF3kCMXYnYarz3lmuWbttvpb7nNp7
+         WlfG9Ihj5kTz+vRepYkMshy3g3VcAjdVt4cYlpHPU5QMipiIsBCCTw/+2MXDYOIkUBNq
+         eNgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=s/ZyM6K2BSjFAmhDw48CiY66cxKjEkmTv4uz46BZns4=;
-        b=m9zmfu6KwVeF729MCFYhTxplfUGwFxVVmhn7i4NPTibG3rAvmDCDGkA4DoJEQAKixZ
-         6nSw7sMSMy+ee6MjcyEBvvOW4/X/d400jLVSx1IoJfKbhMXBaLw4Ny1qxK0w3gi1/hbj
-         u/zH3wM2KNQdw+5x3za1TFaSzHogKo7KeFF1yAHWBKfuLyVIe9XWZdDQti2WdmmyJE3u
-         uZo0bc+lY7eW+1tICZom08SJvQ/rIxGNel1mQ0J+3p/D0kIvvuhFC4yvkAAaRzz4MxVq
-         XLc3JAZsHLiGTFos5GTo4BSORzX72HJS92uHuyd9dDuAF9cRCN62pwyLgXQpXB/lHXHO
-         4T3Q==
-X-Gm-Message-State: ALyK8tKY1qbE+vl0g2oLEw/AjnIzPG/Y8dip4NdhYLPJNLQe1kn7evYO9Hy2mK0uRSL7Ww==
-X-Received: by 10.25.160.135 with SMTP id j129mr1959218lfe.231.1466832248401;
-        Fri, 24 Jun 2016 22:24:08 -0700 (PDT)
+        bh=P0FcbDLKkajulJsbg6rFd3+M/F+y336AgiNEhOuP6H4=;
+        b=elrrUyXVAD58wd+qbjpfn0ZDzU7dcR1Tno55pWO04neF9YK5yzbbCKts4dflW3g1ib
+         fJoAab51dyugcJnNcBroKCp4AmOEp611HFk9SrZ3yX3ULCbWiDYzEpB+bb4gclJbatoF
+         YjtVryOOj+4FAAe+gB0ZVYv0CJ8jY9Ogo9wLLtAE3JOAv2wvLr4fSxyvM8kHA8Ednfep
+         1RVf+QANFjuNZBXeGt9PxuAkpuBhR6jHbUSBB+2Hoqh1p/MucGBWY5tpfEMY6j2Po3dU
+         jTt+RL6yHoyhWCgfnvWwg8CDauoZA/K0tOqf6tnmXNIf+lr9mFfRvwhmHXIM2m8QRM0U
+         9Y+w==
+X-Gm-Message-State: ALyK8tIbCxNjfSneYdptBePDX/gF7rRcw6CEvgUi5HtufbM7Pc5lSL8ZSHtV2J0Fog5q3Q==
+X-Received: by 10.46.71.206 with SMTP id u197mr2148171lja.16.1466832251621;
+        Fri, 24 Jun 2016 22:24:11 -0700 (PDT)
 Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id s87sm1450921lfg.46.2016.06.24.22.24.06
+        by smtp.gmail.com with ESMTPSA id s87sm1450921lfg.46.2016.06.24.22.24.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 24 Jun 2016 22:24:07 -0700 (PDT)
+        Fri, 24 Jun 2016 22:24:10 -0700 (PDT)
 From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To:	git@vger.kernel.org
 Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 04/12] grep/icase: avoid kwsset on literal non-ascii strings
-Date:	Sat, 25 Jun 2016 07:22:30 +0200
-Message-Id: <20160625052238.13615-5-pclouds@gmail.com>
+Subject: [PATCH v2 07/12] grep/pcre: prepare locale-dependent tables for icase matching
+Date:	Sat, 25 Jun 2016 07:22:33 +0200
+Message-Id: <20160625052238.13615-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.8.2.526.g02eed6d
 In-Reply-To: <20160625052238.13615-1-pclouds@gmail.com>
 References: <20160623162907.23295-1-pclouds@gmail.com>
@@ -68,81 +68,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When we detect the pattern is just a literal string, we avoid heavy
-regex engine and use fast substring search implemented in kwsset.c.
-But kws uses git-ctype which is locale-independent so it does not know
-how to fold case properly outside ascii range. Let regcomp or pcre
-take care of this case instead. Slower, but accurate.
+The default tables are usually built with C locale and only suitable
+for LANG=C or similar.  This should make case insensitive search work
+correctly for all single-byte charsets.
 
-Noticed-by: Plamen Totev <plamen.totev@abv.bg>
-Helped-by: René Scharfe <l.s.r@web.de>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- grep.c                                   |  7 ++++++-
- t/t7812-grep-icase-non-ascii.sh (new +x) | 23 +++++++++++++++++++++++
- 2 files changed, 29 insertions(+), 1 deletion(-)
- create mode 100755 t/t7812-grep-icase-non-ascii.sh
+ grep.c                             |  8 ++++++--
+ grep.h                             |  1 +
+ t/t7813-grep-icase-iso.sh (new +x) | 19 +++++++++++++++++++
+ 3 files changed, 26 insertions(+), 2 deletions(-)
+ create mode 100755 t/t7813-grep-icase-iso.sh
 
 diff --git a/grep.c b/grep.c
-index f430d7e..451275d 100644
+index 4b6b7bc..8cf4247 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -4,6 +4,7 @@
- #include "xdiff-interface.h"
- #include "diff.h"
- #include "diffcore.h"
-+#include "commit.h"
+@@ -324,11 +324,14 @@ static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ 	int erroffset;
+ 	int options = PCRE_MULTILINE;
  
- static int grep_source_load(struct grep_source *gs);
- static int grep_source_is_binary(struct grep_source *gs);
-@@ -398,14 +399,18 @@ static int is_fixed(const char *s, size_t len)
+-	if (opt->ignore_case)
++	if (opt->ignore_case) {
++		if (has_non_ascii(p->pattern))
++			p->pcre_tables = pcre_maketables();
+ 		options |= PCRE_CASELESS;
++	}
  
- static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ 	p->pcre_regexp = pcre_compile(p->pattern, options, &error, &erroffset,
+-			NULL);
++				      p->pcre_tables);
+ 	if (!p->pcre_regexp)
+ 		compile_regexp_failed(p, error);
+ 
+@@ -362,6 +365,7 @@ static void free_pcre_regexp(struct grep_pat *p)
  {
-+	int icase, ascii_only;
- 	int err;
- 
- 	p->word_regexp = opt->word_regexp;
- 	p->ignore_case = opt->ignore_case;
-+	icase	       = opt->regflags & REG_ICASE || p->ignore_case;
-+	ascii_only     = !has_non_ascii(p->pattern);
- 
- 	if (opt->fixed)
- 		p->fixed = 1;
--	else if (is_fixed(p->pattern, p->patternlen))
-+	else if ((!icase || ascii_only) &&
-+		 is_fixed(p->pattern, p->patternlen))
- 		p->fixed = 1;
- 	else
- 		p->fixed = 0;
-diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-ascii.sh
+ 	pcre_free(p->pcre_regexp);
+ 	pcre_free(p->pcre_extra_info);
++	pcre_free((void *)p->pcre_tables);
+ }
+ #else /* !USE_LIBPCRE */
+ static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
+diff --git a/grep.h b/grep.h
+index 95f197a..cee4357 100644
+--- a/grep.h
++++ b/grep.h
+@@ -48,6 +48,7 @@ struct grep_pat {
+ 	regex_t regexp;
+ 	pcre *pcre_regexp;
+ 	pcre_extra *pcre_extra_info;
++	const unsigned char *pcre_tables;
+ 	kwset_t kws;
+ 	unsigned fixed:1;
+ 	unsigned ignore_case:1;
+diff --git a/t/t7813-grep-icase-iso.sh b/t/t7813-grep-icase-iso.sh
 new file mode 100755
-index 0000000..b78a774
+index 0000000..efef7fb
 --- /dev/null
-+++ b/t/t7812-grep-icase-non-ascii.sh
-@@ -0,0 +1,23 @@
++++ b/t/t7813-grep-icase-iso.sh
+@@ -0,0 +1,19 @@
 +#!/bin/sh
 +
 +test_description='grep icase on non-English locales'
 +
 +. ./lib-gettext.sh
 +
-+test_expect_success GETTEXT_LOCALE 'setup' '
-+	test_write_lines "TILRAUN: Halló Heimur!" >file &&
++test_expect_success GETTEXT_ISO_LOCALE 'setup' '
++	printf "TILRAUN: Hall� Heimur!" >file &&
 +	git add file &&
-+	LC_ALL="$is_IS_locale" &&
++	LC_ALL="$is_IS_iso_locale" &&
 +	export LC_ALL
 +'
 +
-+test_have_prereq GETTEXT_LOCALE &&
-+test-regex "HALLÓ" "Halló" ICASE &&
-+test_set_prereq REGEX_LOCALE
-+
-+test_expect_success REGEX_LOCALE 'grep literal string, no -F' '
-+	git grep -i "TILRAUN: Halló Heimur!" &&
-+	git grep -i "TILRAUN: HALLÓ HEIMUR!"
++test_expect_success GETTEXT_ISO_LOCALE,LIBPCRE 'grep pcre string' '
++	git grep --perl-regexp -i "TILRAUN: H.ll� Heimur!" &&
++	git grep --perl-regexp -i "TILRAUN: H.LL� HEIMUR!"
 +'
 +
 +test_done
