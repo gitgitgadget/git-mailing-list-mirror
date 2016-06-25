@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BFA61FE4E
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F4231FEAA
 	for <e@80x24.org>; Sat, 25 Jun 2016 05:24:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbcFYFYR (ORCPT <rfc822;e@80x24.org>);
-	Sat, 25 Jun 2016 01:24:17 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:36119 "EHLO
-	mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751424AbcFYFYO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2016 01:24:14 -0400
-Received: by mail-lf0-f67.google.com with SMTP id a2so23667088lfe.3
-        for <git@vger.kernel.org>; Fri, 24 Jun 2016 22:24:13 -0700 (PDT)
+	id S1751347AbcFYFYH (ORCPT <rfc822;e@80x24.org>);
+	Sat, 25 Jun 2016 01:24:07 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:33064 "EHLO
+	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751026AbcFYFYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jun 2016 01:24:06 -0400
+Received: by mail-lf0-f68.google.com with SMTP id l188so23746734lfe.0
+        for <git@vger.kernel.org>; Fri, 24 Jun 2016 22:24:05 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qAxaui0iu007NHWdbv4DgTLXkiybkzQYgCtu2RpIaS8=;
-        b=fpGzrqGvWx7hf+plnYxojosmlXF36Szbmr24rk/0+cU8hIFkjx8qRYjtrGfKFasYzD
-         oZX5i0+l+4BqasfNBrf9turNGUSFOy+jHQq9YqYlRIYOqK4iVYBJQnnaSCVg6LkU1oL9
-         fWjZIEGQBcPpJygamBuieDwgUjcWzwMWEiGgxoylcdiWkQE8kPtPXpx5zISB/A5hEVtQ
-         V4e1Zfp2BXqY+lXMZk6xwK+La+YGznE8DJOPir6bcTsIafct307RFJFy/C5qHYEckk/P
-         c4bECzdVJ1djKQS5FtLG9KtnRMAPTWCs8RMORK1QkfPX6CH8c7Ps141AhGCovs+N5U/g
-         H4SQ==
+        bh=K7Pty/see6/KF0hwmGIMWBW/zeDIPCw0EWVSqfP+Gqk=;
+        b=OTgF0BTcckuUbMSZrVCJFqibMQrkmRubzvwzpSG6hgCKEk1nhg8hbOgECEPPO0GhP1
+         WxrvipW2ttkGrNCaXsSROdlKEpAwJO7zNFwa4rc4U5HPkgzOz9Ukq3fVdVa8bj8nnPDk
+         UNDta6RwJwxQ9JkAcvAd2DVG0QLORCdyJia0djjChPhr6/iZQvE4joX7q+ISH8OQPWL7
+         9TYzb+w/Nf0424NQr1jpdKb5B/YJCg78gjAWly6YrRqTauZiGlO8+S0WX7RzxdZijQB+
+         I+MIu+zLTSW9zokX7MRysAPqEP4mHWhZybk69aUvaK5gS52U6RS/FvFEQjwR9j1ZfJAA
+         rDBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qAxaui0iu007NHWdbv4DgTLXkiybkzQYgCtu2RpIaS8=;
-        b=RDPIKhjgNSxhz3aoa+p7swsTE2iQ44/6nroVQv5Cc4qL+ZBsvAI3rE4CVj6jzcmVJA
-         ERnERBrTu0nwq6mDZRVVC/HQM/EDvRu88rL/TWsM6po6FwFJwdfA04JwpjhULqfbF5E7
-         WeY0MITSnodHpxJxHikQzkjqJwMRqDXSzUSViZE+H8Yd8YFhJXZeOX6alJg58iojgkiO
-         9L7uK9LUv3NgmTwm9Myk10onVBwK9c0MxfXkFhDrTwBnCZ/TfmjV0HuKEOPaKlKmqjFe
-         dXV2Bbds2uppFDDFauX0JqRVEW4umUdylXfXjRLo5mryT+3qwQyAZX4yX0mqckld230t
-         gtdA==
-X-Gm-Message-State: ALyK8tIgyOXYS7JBXIkp1c/HbfGnTZ4OwP1Yc3FRYXwoIpEv60ROL9J028QxEiLj/O12ow==
-X-Received: by 10.46.71.83 with SMTP id u80mr2178814lja.15.1466832252687;
-        Fri, 24 Jun 2016 22:24:12 -0700 (PDT)
+        bh=K7Pty/see6/KF0hwmGIMWBW/zeDIPCw0EWVSqfP+Gqk=;
+        b=bdnbnIxuIv+VlqfYKY+zRZcmP7ozq3VmdmstYEFsiKdfbicDxQ0QpwlLcrcMHXHiX7
+         xC5Xj4O4qG3X2k0vJlCbo72/SmIIozyPKSU9UGrg86q2Bq5yuJ78zgH4FPceCID0Cmhf
+         YQGPuw6YMsC1wLVjr3gteiCuroFXz+5cKqbf4ezNgBRJFnQySqD1F0dc8MLpncTKVnkI
+         ts0KubqLqrcWeSy1Xvc8uEPauVFyyHGqZYE9ztYt0Erlt4UdatshPx0dk4Rk1XjC26Hd
+         NftpJYTpox/5g++0+lPcaKdFy0s8EsKBgA5xg2JR4sXTTHHjDPyH99wjziuGlTsRtopI
+         cRfw==
+X-Gm-Message-State: ALyK8tJhUlv0PsE8hxfbz53B7HKSOQZM6MzLKJJjn1S7wAJQd1D4QLRoZEKcXo+tXGjFBQ==
+X-Received: by 10.25.4.202 with SMTP id 193mr2590667lfe.204.1466832244228;
+        Fri, 24 Jun 2016 22:24:04 -0700 (PDT)
 Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id s87sm1450921lfg.46.2016.06.24.22.24.11
+        by smtp.gmail.com with ESMTPSA id s87sm1450921lfg.46.2016.06.24.22.24.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 24 Jun 2016 22:24:12 -0700 (PDT)
+        Fri, 24 Jun 2016 22:24:03 -0700 (PDT)
 From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To:	git@vger.kernel.org
 Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 08/12] gettext: add is_utf8_locale()
-Date:	Sat, 25 Jun 2016 07:22:34 +0200
-Message-Id: <20160625052238.13615-9-pclouds@gmail.com>
+Subject: [PATCH v2 01/12] grep: break down an "if" stmt in preparation for next changes
+Date:	Sat, 25 Jun 2016 07:22:27 +0200
+Message-Id: <20160625052238.13615-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.8.2.526.g02eed6d
 In-Reply-To: <20160625052238.13615-1-pclouds@gmail.com>
 References: <20160623162907.23295-1-pclouds@gmail.com>
@@ -68,86 +68,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This function returns true if git is running under an UTF-8
-locale. pcre in the next patch will need this.
-
-is_encoding_utf8() is used instead of strcmp() to catch both "utf-8"
-and "utf8" suffixes.
-
-When built with no gettext support, we peek in several env variables
-to detect UTF-8. pcre library might support utf-8 even if libc is
-built without locale support.. The peeking code is a copy from
-compat/regex/regcomp.c
-
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- gettext.c | 24 ++++++++++++++++++++++--
- gettext.h |  1 +
- 2 files changed, 23 insertions(+), 2 deletions(-)
+ grep.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/gettext.c b/gettext.c
-index a268a2c..db727ea 100644
---- a/gettext.c
-+++ b/gettext.c
-@@ -18,6 +18,8 @@
- #	endif
- #endif
+diff --git a/grep.c b/grep.c
+index 7b2b96a..f430d7e 100644
+--- a/grep.c
++++ b/grep.c
+@@ -403,7 +403,9 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ 	p->word_regexp = opt->word_regexp;
+ 	p->ignore_case = opt->ignore_case;
  
-+static const char *charset;
-+
- /*
-  * Guess the user's preferred languages from the value in LANGUAGE environment
-  * variable and LC_MESSAGES locale category if NO_GETTEXT is not defined.
-@@ -65,7 +67,6 @@ static int test_vsnprintf(const char *fmt, ...)
- 	return ret;
- }
- 
--static const char *charset;
- static void init_gettext_charset(const char *domain)
- {
- 	/*
-@@ -172,8 +173,27 @@ int gettext_width(const char *s)
- {
- 	static int is_utf8 = -1;
- 	if (is_utf8 == -1)
--		is_utf8 = !strcmp(charset, "UTF-8");
-+		is_utf8 = is_utf8_locale();
- 
- 	return is_utf8 ? utf8_strwidth(s) : strlen(s);
- }
- #endif
-+
-+int is_utf8_locale(void)
-+{
-+#ifdef NO_GETTEXT
-+	if (!charset) {
-+		const char *env = getenv("LC_ALL");
-+		if (!env || !*env)
-+			env = getenv("LC_CTYPE");
-+		if (!env || !*env)
-+			env = getenv("LANG");
-+		if (!env)
-+			env = "";
-+		if (strchr(env, '.'))
-+			env = strchr(env, '.') + 1;
-+		charset = xstrdup(env);
-+	}
-+#endif
-+	return is_encoding_utf8(charset);
-+}
-diff --git a/gettext.h b/gettext.h
-index 33696a4..7eee64a 100644
---- a/gettext.h
-+++ b/gettext.h
-@@ -90,5 +90,6 @@ const char *Q_(const char *msgid, const char *plu, unsigned long n)
- #endif
- 
- const char *get_preferred_languages(void);
-+extern int is_utf8_locale(void);
- 
- #endif
+-	if (opt->fixed || is_fixed(p->pattern, p->patternlen))
++	if (opt->fixed)
++		p->fixed = 1;
++	else if (is_fixed(p->pattern, p->patternlen))
+ 		p->fixed = 1;
+ 	else
+ 		p->fixed = 0;
 -- 
 2.8.2.526.g02eed6d
 
