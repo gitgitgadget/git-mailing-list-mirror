@@ -2,73 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7706C1FEAA
-	for <e@80x24.org>; Sat, 25 Jun 2016 14:02:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82B0F1FEAA
+	for <e@80x24.org>; Sat, 25 Jun 2016 14:16:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751426AbcFYOCs (ORCPT <rfc822;e@80x24.org>);
-	Sat, 25 Jun 2016 10:02:48 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:36496 "EHLO
-	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751308AbcFYOCr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2016 10:02:47 -0400
-Received: by mail-io0-f180.google.com with SMTP id s63so116800490ioi.3
-        for <git@vger.kernel.org>; Sat, 25 Jun 2016 07:02:20 -0700 (PDT)
+	id S1751525AbcFYOQE (ORCPT <rfc822;e@80x24.org>);
+	Sat, 25 Jun 2016 10:16:04 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:32800 "EHLO
+	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751308AbcFYOQD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Jun 2016 10:16:03 -0400
+Received: by mail-it0-f66.google.com with SMTP id y93so5639269ita.0
+        for <git@vger.kernel.org>; Sat, 25 Jun 2016 07:16:02 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ogmm/GWGke/bW82XODQ2SIP3zrNV1nvpr5WBB5BDUK8=;
-        b=ijD+uUH2+/6xTjf+7/XRm8q5EIrFQ05kwB79/ANHdOrh8KdOuyIRxeaw9youwqhLUb
-         v1KoXKdKZJT/okjvQ5AC5+DBesGBiDKurfiAw0jpYNifAkZ3fVbiTXG5SQvBnesKp0mU
-         mKmKJN6cigsLp6CkLm9k7aWHLWeCbxB++oZSYyPhQGP4lgn/G21iY+OO3frF3aY6El2P
-         dbgyrh467+y4PF/PpBJRBt6ibSW7jCcU5G4uSD+kNuKy5BrF2XUGEBb5ygaCS93EByj9
-         xqmTHI11iKM2qrdngq7QP9jCSBLhmTn+n7HeqI9S9qw5qaKojEdIBBXmXPA3vIA4L9qR
-         BsVA==
+         :cc:content-transfer-encoding;
+        bh=apClHiVG2QllXUfqfyvtRoolLh7tPo2ESBvd4e36ATc=;
+        b=IUsrjOCX7XE+3zwJK3s0uf5dv11P8qlp0zSNqOIIMNlJrf6BC1VZlHbg6Q6E8tCIK4
+         Wwe6JfUzIk5E8tciMuw1j4Bz/ouHJsKq2Eujd8cfzMdIVkfnF0gRIuFwpvooqMbsTdBx
+         tI0dazPsyWRl0HeHdHB8d4PV/t41sH/A9tPfmx3JrT3vBI4XHQdDkl7QzHB1o2wGpHey
+         UUjRXmQtCyDAaXaKIJ263TmJRSyzb0D1qc1DJgpvKPulOaVX/im7X2CbywcUEBQTm1Zg
+         FhykpDAUuO1vQLE6A0AxkROkRjmtm4uVXVq7yPrsZ26Uns8TKLy3dx9UpirUs5l4WBzp
+         TQtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ogmm/GWGke/bW82XODQ2SIP3zrNV1nvpr5WBB5BDUK8=;
-        b=dk1nZUzXJECkTzEPtOu1fPvZgohOEHKSWSDfYi19hTJnoRtaVlQF2YSgCgWqIKE27P
-         InuzY2ZJ6m+eRojps/gBOkPsokpqtuv6HOGRCC6vHBt3983MwDwGORNPEj8/MLde/yVe
-         jiFgvVGGntxs5QUvRdxobCvpTSfNltRYf4K7bJt3H7HAAjI1eRqi9S1+vD9QHL3tKFKm
-         yavzTBylMCiVHHC3zSqQZE0CBdk/qHLgylCmFzMmhSMKFQ/O8w87Hkm8wRwSaRvoGrr2
-         yDpG5iow5ZcZES2MUco16MXOFduELxfSlIT/9Vlb85YaEMxuz+L5Rj2hc5a++npLy6By
-         jYXw==
-X-Gm-Message-State: ALyK8tL8WC06NdvVyAxTS3wTFvCRrHD8anH2aYeYgjW7dnAFVzKDyLViMh0ZzUPPTOWhCUQjKj17xKk1OYQPtg==
-X-Received: by 10.107.8.220 with SMTP id h89mr10034674ioi.95.1466863340294;
- Sat, 25 Jun 2016 07:02:20 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=apClHiVG2QllXUfqfyvtRoolLh7tPo2ESBvd4e36ATc=;
+        b=IP/Ttxzo9HbwoQ3Dmi8eUu+8YUjuzDRNa+tnRXiuDn5G3j45rILcE6ock+6YzKjJpx
+         YhnnfJiJLgjYrOqOgZAN97Hb2t7v/BgTtQ7qvOMMcQwnUauUYIjVgfs7lG8LJ4R3ENf4
+         Br1Eaom4QOn2TRIZuFwy2z4kf870HV/i9o1N50sFJ20EJnVMfFTw2HAh3GoeBq5OClfD
+         85eyk5V+p4FO1Gv3Hoq9upsr7whnKX/xE4zTPYWgT0dDxax9qkdru7xngyY1bvZ/toXG
+         z6W/TelzQGBaVTouhUnCWumqt70bZH2lzc8ljn9YuuVYclS34pckRBD4qxVd7y4wtht9
+         9stA==
+X-Gm-Message-State: ALyK8tKwEm5Glt4VcGRrAeHPz0wEr3iPK3LFhiPhdPZ/HmmNLvIeEMnMgxCiEK7BieorbKZacIo8ro44Zi9rYw==
+X-Received: by 10.36.43.5 with SMTP id h5mr2483252ita.57.1466864162260; Sat,
+ 25 Jun 2016 07:16:02 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Sat, 25 Jun 2016 07:01:50 -0700 (PDT)
-In-Reply-To: <1463694357-6503-4-git-send-email-dturner@twopensource.com>
-References: <1463694357-6503-1-git-send-email-dturner@twopensource.com> <1463694357-6503-4-git-send-email-dturner@twopensource.com>
+Received: by 10.64.225.235 with HTTP; Sat, 25 Jun 2016 07:15:32 -0700 (PDT)
+In-Reply-To: <CAP8UFD0RAgUmKr4tG7xHcz75vpXAeuWi9t1+9mvbGOVzOcHcFA@mail.gmail.com>
+References: <1463694357-6503-1-git-send-email-dturner@twopensource.com>
+ <1463694357-6503-5-git-send-email-dturner@twopensource.com> <CAP8UFD0RAgUmKr4tG7xHcz75vpXAeuWi9t1+9mvbGOVzOcHcFA@mail.gmail.com>
 From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Sat, 25 Jun 2016 16:01:50 +0200
-Message-ID: <CACsJy8C82KMjPUdYA-QHz7zCx_pXtSUCL8O4nWJY2Jyit9Q3hw@mail.gmail.com>
-Subject: Re: [PATCH v12 03/20] pkt-line: add gentle version of packet_write
-To:	David Turner <novalis@novalis.org>
-Cc:	Git Mailing List <git@vger.kernel.org>
+Date:	Sat, 25 Jun 2016 16:15:32 +0200
+Message-ID: <CACsJy8A6C8i_XbXRRBBmT5iqq=mSovVGhFqe0d9WroyMVKf5RA@mail.gmail.com>
+Subject: Re: [PATCH v12 04/20] index-helper: new daemon for caching index and
+ related stuff
+To:	Christian Couder <christian.couder@gmail.com>
+Cc:	git <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	David Turner <novalis@novalis.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, May 19, 2016 at 11:45 PM, David Turner <dturner@twopensource.com> wrote:
-> +int packet_flush_gently(int fd)
-> +{
-> +       packet_trace("0000", 4, 1);
-> +       return write_in_full(fd, "0000", 4) != 4;
-> +}
+On Fri, Jun 17, 2016 at 6:43 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Thu, May 19, 2016 at 11:45 PM, David Turner <dturner@twopensource.com> wrote:
+>> From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+>>
+>> +static void loop(int fd, int idle_in_seconds)
+>> +{
+>> +       assert(idle_in_seconds < INT_MAX / 1000);
+>
+> This assert may not be very nice to users setting the value using --exit-after.
 
-The return value convention here is a bit weird, isn't it? Usually we
-have "zero good, minus one  (or negative) bad" or "zero bad, positive
-good". This one goes "zero good, one bad". Same goes for the other
-_gently() function.
+Yeah. We could catch this after parsing --exit-after (and before
+forking to background, losing stderr) for invalid values and forget
+about this assert.
 -- 
 Duy
