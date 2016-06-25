@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E6D71FE4E
-	for <e@80x24.org>; Sat, 25 Jun 2016 05:24:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07D851FE4E
+	for <e@80x24.org>; Sat, 25 Jun 2016 05:24:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751540AbcFYFYe (ORCPT <rfc822;e@80x24.org>);
-	Sat, 25 Jun 2016 01:24:34 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:35388 "EHLO
-	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751447AbcFYFYR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2016 01:24:17 -0400
-Received: by mail-lf0-f68.google.com with SMTP id w130so23688270lfd.2
-        for <git@vger.kernel.org>; Fri, 24 Jun 2016 22:24:16 -0700 (PDT)
+	id S1751556AbcFYFYj (ORCPT <rfc822;e@80x24.org>);
+	Sat, 25 Jun 2016 01:24:39 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:34297 "EHLO
+	mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751295AbcFYFYH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jun 2016 01:24:07 -0400
+Received: by mail-lf0-f65.google.com with SMTP id l184so23684322lfl.1
+        for <git@vger.kernel.org>; Fri, 24 Jun 2016 22:24:06 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bZRG+Dxj5GmWrKGlUo6WrdqQyhK7HfbEJiOVpPGz2bk=;
-        b=a61VRcXnuL6XSkWsd8FRMiIZKYx6WcEDfgrTkcHyuPwAqSVlgP7EaHEHMV/8EkGdNm
-         EhN4sx++1RpaNQimg6RxYrmk3Ct9ZmBqwhSG0QRI6L5Szbd5Wn5UgeflXwxamkHhL7o3
-         sbFo/aT4h+WEkRKdSAg4NQCOqDwNtBn4wcED/wapyE/URK6DrQmPEe1/Wi1d1cC+lAZ2
-         WIjGXoA63VT33yJYKD4yRBVbXJkRNR9WVHCV2QIpjk7+VKBDqksn8UGWsVg7Xjqhk/dG
-         WG0A66J50KBxplPOuX2hdma+qAB5jaRU+dRaAWd+ZxKIIPaDzovkZjZQFXg41SWUWXi7
-         1w4Q==
+        bh=wEnt+3D/n68T6V8UTjtIg6ll8nlT1SIPw/yPiHMmAVg=;
+        b=npHKhFdSoq/aKVX9FFAVPEYwYpoDkCdbRYCFK9cr4R8uwQMXbx8Rxgfj3ANw8iuL9U
+         5z2rCuiaxrcwKu3KaGri4ImK9xTCWuoTA8CPKsux3fycsVoBrJqWsZ4JuQnl8dLZv51o
+         kfTWHvluteuFYTW/t4Pbp+yZugGb/pGQO0MMkD521UTt6LJ6ru0dB5P8egJ4EZZ7Pcjz
+         eirtJYAmwjpqz57NGLHiPYzTe0+oOg15Y7Sm8hJOtnluUpXW/960D8jXbI+Pn99+Bmpx
+         Oik53lfCywssx10bZmG5hQO34BIWvti6BWKZURp+eK1/hLqtiHep6PWl0dcFrdeE52Sn
+         4mog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bZRG+Dxj5GmWrKGlUo6WrdqQyhK7HfbEJiOVpPGz2bk=;
-        b=Y8hYrccQm+ndHKBl7nRV6FIrGKFo+rXKbRCJc6FIvWkH4YZiIo+9vejx1mE8KNeM4M
-         zzjtt3b7KgQ1YbHFL32N4Ptgi5yHjUfUP7PtqHGcuI69b6KJAJvK6iZv+pe0E1rwOoBK
-         EUq3FARMfn1jmaxQUx2T7Ekad2xNODnYRUrXUXvSK63/3FLDpNjn/XM7U/ssHiUh5n0n
-         hEPGyE5H0O7gYs+V+hOMrMv3bksSbkJ285Me4Zh1NQcgwVgNQx4B6alHQdHxivwNVB2g
-         dhIpG9IF/cF1m5abDnS3NILBCnxDl1GqyO19nYO/bpfyEs5ktYsi11UE4/R06ctpmMSD
-         wx6Q==
-X-Gm-Message-State: ALyK8tIR4SjyWqdrWxuIQ8URoOsYD3/YQZXUUFCXn2gUaO4bPLTA7EHTirHzPjHt0t4rcg==
-X-Received: by 10.25.3.12 with SMTP id 12mr2005783lfd.110.1466832255597;
-        Fri, 24 Jun 2016 22:24:15 -0700 (PDT)
+        bh=wEnt+3D/n68T6V8UTjtIg6ll8nlT1SIPw/yPiHMmAVg=;
+        b=CiMw63T1b2EtXKwMifBR9MlMO8zsaT9dcjbd5jnKQ4bOaqCThLGeqnZOFgyBT/CCdT
+         Nk8uZwuapSUPJCstRm3uMJqKxYBj6mT+d9Xkg4LKQKZaY7xUBMVsYwbRdzG3jO2bSdoS
+         7dCk7S2p/wrinZ46fpWK1EjZWJhtthZ7OFrwEkf/JYtBv+qhiW9j8wypJ7OYwxqVKT3o
+         7SarHak9n0YdoAjceLG89LceJpezg0baWPsoPRUU3QGwZJAepnqnwVKJmZUHORCujo7y
+         wzOv4VCf75DokF/4ur6nSlF6RIfY1Z5HJuaYZ9dGBoCVyhRycuNLJeXZeiYUdtLZ++C9
+         q9Hg==
+X-Gm-Message-State: ALyK8tLYQvX/G4SZvEiDCom+xrsh/fde0J7JrGMpeBSkHKnNawr2OAuxIwtf4yBHwqHzAA==
+X-Received: by 10.25.143.149 with SMTP id r143mr2461670lfd.165.1466832245200;
+        Fri, 24 Jun 2016 22:24:05 -0700 (PDT)
 Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id s87sm1450921lfg.46.2016.06.24.22.24.14
+        by smtp.gmail.com with ESMTPSA id s87sm1450921lfg.46.2016.06.24.22.24.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 24 Jun 2016 22:24:14 -0700 (PDT)
+        Fri, 24 Jun 2016 22:24:04 -0700 (PDT)
 From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To:	git@vger.kernel.org
 Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 11/12] diffcore-pickaxe: support case insensitive match on non-ascii
-Date:	Sat, 25 Jun 2016 07:22:37 +0200
-Message-Id: <20160625052238.13615-12-pclouds@gmail.com>
+Subject: [PATCH v2 02/12] test-regex: isolate the bug test code
+Date:	Sat, 25 Jun 2016 07:22:28 +0200
+Message-Id: <20160625052238.13615-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.8.2.526.g02eed6d
 In-Reply-To: <20160625052238.13615-1-pclouds@gmail.com>
 References: <20160623162907.23295-1-pclouds@gmail.com>
@@ -68,65 +68,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Similar to the "grep -F -i" case, we can't use kws on icase search
-outside ascii range, so we quote the string and pass it to regcomp as
-a basic regexp and let regex engine deal with case sensitivity.
+This is in preparation to turn test-regex into some generic regex
+testing command.
 
-The new test is put in t7812 instead of t4209-log-pickaxe because
-lib-gettext.sh might cause problems elsewhere, probably.
-
-Noticed-by: Plamen Totev <plamen.totev@abv.bg>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diffcore-pickaxe.c              | 11 +++++++++++
- t/t7812-grep-icase-non-ascii.sh |  7 +++++++
- 2 files changed, 18 insertions(+)
+ t/t0070-fundamental.sh |  2 +-
+ test-regex.c           | 12 ++++++++++--
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index 2093b6a..55067ca 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -7,6 +7,8 @@
- #include "diffcore.h"
- #include "xdiff-interface.h"
- #include "kwset.h"
-+#include "commit.h"
-+#include "quote.h"
+diff --git a/t/t0070-fundamental.sh b/t/t0070-fundamental.sh
+index 5ed69a6..991ed2a 100755
+--- a/t/t0070-fundamental.sh
++++ b/t/t0070-fundamental.sh
+@@ -31,7 +31,7 @@ test_expect_success 'git_mkstemps_mode does not fail if fd 0 is not open' '
  
- typedef int (*pickaxe_fn)(mmfile_t *one, mmfile_t *two,
- 			  struct diff_options *o,
-@@ -223,6 +225,15 @@ void diffcore_pickaxe(struct diff_options *o)
- 			cflags |= REG_ICASE;
- 		regcomp_or_die(&regex, needle, cflags);
- 		regexp = &regex;
-+	} else if (DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE) &&
-+		   has_non_ascii(needle)) {
-+		struct strbuf sb = STRBUF_INIT;
-+		int cflags = REG_NEWLINE | REG_ICASE;
-+
-+		basic_regex_quote_buf(&sb, needle);
-+		regcomp_or_die(&regex, sb.buf, cflags);
-+		strbuf_release(&sb);
-+		regexp = &regex;
- 	} else {
- 		kws = kwsalloc(DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE)
- 			       ? tolower_trans_tbl : NULL);
-diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-ascii.sh
-index 08ae4c9..169fd8d 100755
---- a/t/t7812-grep-icase-non-ascii.sh
-+++ b/t/t7812-grep-icase-non-ascii.sh
-@@ -61,4 +61,11 @@ test_expect_success REGEX_LOCALE 'grep string with regex, with -F' '
- 	test_cmp expect2 debug2
+ test_expect_success 'check for a bug in the regex routines' '
+ 	# if this test fails, re-build git with NO_REGEX=1
+-	test-regex
++	test-regex --bug
  '
  
-+test_expect_success REGEX_LOCALE 'pickaxe -i on non-ascii' '
-+	git commit -m first &&
-+	git log --format=%f -i -S"TILRAUN: HALLÓ HEIMUR!" >actual &&
-+	echo first >expected &&
-+	test_cmp expected actual
-+'
-+
  test_done
+diff --git a/test-regex.c b/test-regex.c
+index 0dc598e..67a1a65 100644
+--- a/test-regex.c
++++ b/test-regex.c
+@@ -1,6 +1,6 @@
+ #include "git-compat-util.h"
+ 
+-int main(int argc, char **argv)
++static int test_regex_bug(void)
+ {
+ 	char *pat = "[^={} \t]+";
+ 	char *str = "={}\nfred";
+@@ -16,5 +16,13 @@ int main(int argc, char **argv)
+ 	if (m[0].rm_so == 3) /* matches '\n' when it should not */
+ 		die("regex bug confirmed: re-build git with NO_REGEX=1");
+ 
+-	exit(0);
++	return 0;
++}
++
++int main(int argc, char **argv)
++{
++	if (argc == 2 && !strcmp(argv[1], "--bug"))
++		return test_regex_bug();
++	else
++		usage("test-regex --bug");
+ }
 -- 
 2.8.2.526.g02eed6d
 
