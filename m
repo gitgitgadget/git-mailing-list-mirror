@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A02D21FF40
-	for <e@80x24.org>; Sat, 25 Jun 2016 08:08:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4E941FF40
+	for <e@80x24.org>; Sat, 25 Jun 2016 08:08:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751141AbcFYIIj (ORCPT <rfc822;e@80x24.org>);
-	Sat, 25 Jun 2016 04:08:39 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:34484 "EHLO
-	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751081AbcFYIIh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2016 04:08:37 -0400
-Received: by mail-lf0-f66.google.com with SMTP id l184so23915709lfl.1
-        for <git@vger.kernel.org>; Sat, 25 Jun 2016 01:08:36 -0700 (PDT)
+	id S1751209AbcFYIIs (ORCPT <rfc822;e@80x24.org>);
+	Sat, 25 Jun 2016 04:08:48 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:33404 "EHLO
+	mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751166AbcFYIIp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jun 2016 04:08:45 -0400
+Received: by mail-lf0-f67.google.com with SMTP id l188so23978983lfe.0
+        for <git@vger.kernel.org>; Sat, 25 Jun 2016 01:08:44 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3Hv3Qj8wO68oKP6vwOF5SlaQoEEegAeG0q/pZQU9oo0=;
-        b=FhK+/HV0ppzsKrbEjvBgPFNHsvMIO+NxBOJtaTbC1l0HCPA6f2SEtCyeywyPB/kU+Q
-         OUDvtr9LpsrLz4EgHhQvT0QRnGbLnAf8g3WFnN10BUBMyZwVRn8Aoyuc3l0EUlRgh2Qu
-         tbJhyYp9USrbArjo0oM8dhrkOKzZFxy+0d9pKXQuzZwB3RpPUvZfcn+ncf6VymTXg7AF
-         6IUidnuLpG2XnTi+Z1ZLWGsEFzAJsLtz2buG5cYe9Jn+zm8MuiE1wTLxqgV5Jluq1rbz
-         VYOGu30LnMLEtv9gotVRcnr9TUM4IoyMBgj9eeS2WXlmhVo67bB0Lchjd9YisMc71uyT
-         H70Q==
+        bh=gMLDNVRR0Kol+Qqo+S4wjkeWzTQ+PTizec0AXVk5OmU=;
+        b=DeCniGz0HEyHmz75yVCD1eSUfcYMjsr9ibcLCz2ewN0NGO/xlSyOVOG01BeiFKt966
+         5xWXF0etcbibRdR5uSL1/30Sq2PauCiVFFZBmZGG/iS7+bJpnNzN7Kq19k3jbvlnWgEi
+         I9Rj5qAeLiT++IpsMWLYh2jG0j/dMSEP3553H3f27sVp2t41FfAIf5ZMWAR8jxkiRJKy
+         3sDCs9ThuYyba7DYqkZ8xzJCpevB2H+3DcuOjPxiKyjJMxuDMaIprr53BHPR/u80Il/S
+         Hxp2GYVybw1JI9ALASPNi3wCqYd+7dXAxNnb/KfUso87Q/sz88+mErOnKB4Es9P/ed5C
+         2irQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3Hv3Qj8wO68oKP6vwOF5SlaQoEEegAeG0q/pZQU9oo0=;
-        b=gF97GL0yWlqmNsLP5GDPB9VA5M+KVDKp4mQpxxhjF94mP0m/JgOFWt2mgWIoo9OC6q
-         n/6icTfPxmUI83WPpdSDPdt8swtJwe7RHv53obFD5gFAUo32C4Rn2unCvBEgjl72xlxj
-         A21RnUvtMrofSK/dKZ9EG4+dyRh/404ZpDWPlHpeL7iG4EiZQQyPSX1AhKdP1pV04ZsS
-         m6RwqfYItL0b0grxE4XzrvQk61BGQg2RRXZPKXSHrZ+mJQQlAVmXBX8bA2oOsSeuYyAK
-         6rqHuoq61YXu96XgAjRu+S25BXA70Kg+eN3Bq3Ety6g+mO1Jm5mY+Wtsn3I5Dh010kkJ
-         QcBA==
-X-Gm-Message-State: ALyK8tJMqPXvTH+pxPTMrBy3uSdegnc+UAwrFJuWLR0Jwaicp5z7xIxrOF22RQiZuszJUg==
-X-Received: by 10.25.141.135 with SMTP id p129mr2203005lfd.194.1466841289129;
-        Sat, 25 Jun 2016 00:54:49 -0700 (PDT)
+        bh=gMLDNVRR0Kol+Qqo+S4wjkeWzTQ+PTizec0AXVk5OmU=;
+        b=T2mo6tFmO/bT6eo5QBZGN+cDQwEB2SEy4Hhm6pmepwP6nI4RBIofxd9WK5hZdZQSmf
+         mDeaCgevCxKe4KWXhgMmc+9PewJquIi1YaKwA/tkmyRCedFwrrYOkYVKLm8GV+hy6FUB
+         1wHI+v8e1RZ2hrAuFYFvMxRgNwMqysBsjpLx8hjYdVVKmphmNbNgxSbGuWkwv4fbWsUJ
+         gzUQ27cBFKvWZlJkIGVb6Ws1j65MYw7PQT9ZEZa0+gkuDND/xqg9vsDBQJ17XHB/GY8+
+         o3xWMW6Oce4+1FpO+iyvIiOgieAgj/fULzhZ96NVrHAldGPj2Si981N+U4mqTGgPlIl6
+         mFow==
+X-Gm-Message-State: ALyK8tJiVxrdg+W+V32H6zfIu8bYI5aQ3dQim+dw7BPFkTdMgu2s7E7956JFKXaO5jRs8Q==
+X-Received: by 10.25.170.134 with SMTP id t128mr2592004lfe.133.1466841285404;
+        Sat, 25 Jun 2016 00:54:45 -0700 (PDT)
 Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id g79sm1536122ljg.26.2016.06.25.00.54.48
+        by smtp.gmail.com with ESMTPSA id g79sm1536122ljg.26.2016.06.25.00.54.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 25 Jun 2016 00:54:48 -0700 (PDT)
+        Sat, 25 Jun 2016 00:54:44 -0700 (PDT)
 From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To:	git@vger.kernel.org
 Cc:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 09/10] worktree move: accept destination as directory
-Date:	Sat, 25 Jun 2016 09:54:32 +0200
-Message-Id: <20160625075433.4608-10-pclouds@gmail.com>
+Subject: [PATCH 05/10] copy.c: convert copy_file() to copy_dir_recursively()
+Date:	Sat, 25 Jun 2016 09:54:28 +0200
+Message-Id: <20160625075433.4608-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.8.2.526.g02eed6d
 In-Reply-To: <20160625075433.4608-1-pclouds@gmail.com>
 References: <20160625075433.4608-1-pclouds@gmail.com>
@@ -66,52 +66,345 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Similar to "mv a b/", which is actually "mv a b/a", we extract basename
-of source worktree and create a directory of the same name at
-destination if dst path is a directory.
+This finally enables busybox's copy_file() code under a new name
+(because "copy_file" is already taken in Git code base). Because this
+comes from busybox, POSIXy (or even Linuxy) behavior is expected. More
+changes may be needed for Windows support.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/worktree.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ cache.h |   1 +
+ copy.c  | 216 ++++++++++++++++++++++++++++++++++++++++++++++++++++------------
+ 2 files changed, 179 insertions(+), 38 deletions(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 5d7ca27..443a5ae 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -541,7 +541,13 @@ static int move_worktree(int ac, const char **av, const char *prefix)
- 	strbuf_addstr(&dst, prefix_filename(prefix,
- 					    strlen(prefix),
- 					    av[1]));
--	if (file_exists(dst.buf))
-+	if (is_directory(dst.buf))
-+		/*
-+		 * keep going, dst will be appended after we get the
-+		 * source's absolute path
-+		 */
-+		;
-+	else if (file_exists(dst.buf))
- 		die(_("target '%s' already exists"), av[1]);
+diff --git a/cache.h b/cache.h
+index 6049f86..34062f7 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1719,6 +1719,7 @@ extern void fprintf_or_die(FILE *, const char *fmt, ...);
+ extern int copy_fd(int ifd, int ofd);
+ extern int copy_file(const char *dst, const char *src, int mode);
+ extern int copy_file_with_time(const char *dst, const char *src, int mode);
++extern int copy_dir_recursively(const char *source, const char *dest);
  
- 	worktrees = get_worktrees();
-@@ -558,6 +564,17 @@ static int move_worktree(int ac, const char **av, const char *prefix)
- 	if (validate_worktree(wt, 0))
- 		return -1;
+ extern void write_or_die(int fd, const void *buf, size_t count);
+ extern int write_or_whine(int fd, const void *buf, size_t count, const char *msg);
+diff --git a/copy.c b/copy.c
+index 60c7d8a..8471f7f 100644
+--- a/copy.c
++++ b/copy.c
+@@ -1,4 +1,6 @@
+ #include "cache.h"
++#include "dir.h"
++#include "hashmap.h"
  
-+	if (is_directory(dst.buf)) {
-+		const char *sep = find_last_dir_sep(wt->path);
+ int copy_fd(int ifd, int ofd)
+ {
+@@ -66,21 +68,126 @@ int copy_file_with_time(const char *dst, const char *src, int mode)
+ 	return status;
+ }
+ 
+-#if 0
+-/* Return:
+- * -1 error, copy not made
+- *  0 copy is made or user answered "no" in interactive mode
+- *    (failures to preserve mode/owner/times are not reported in exit code)
++struct inode_key {
++	struct hashmap_entry entry;
++	ino_t ino;
++	dev_t dev;
++	/*
++	 * Reportedly, on cramfs a file and a dir can have same ino.
++	 * Need to also remember "file/dir" bit:
++	 */
++	char isdir; /* bool */
++};
 +
-+		if (!sep)
-+			die(_("could not figure out destination name from '%s'"),
-+			    wt->path);
-+		strbuf_addstr(&dst, sep);
-+		if (file_exists(dst.buf))
-+			die(_("target '%s' already exists"), dst.buf);
++struct inode_value {
++	struct inode_key key;
++	char name[FLEX_ARRAY];
++};
++
++#define HASH_SIZE      311u   /* Should be prime */
++static inline unsigned hash_inode(ino_t i)
++{
++	return i % HASH_SIZE;
++}
++
++static int inode_cmp(const void *entry, const void *entry_or_key,
++		     const void *keydata)
++{
++	const struct inode_value *inode = entry;
++	const struct inode_key   *key   = entry_or_key;
++
++	return !(inode->key.ino   == key->ino &&
++		 inode->key.dev   == key->dev &&
++		 inode->key.isdir == key->isdir);
++}
++
++static const char *is_in_ino_dev_hashtable(const struct hashmap *map,
++					   const struct stat *st)
++{
++	struct inode_key key;
++	struct inode_value *value;
++
++	key.entry.hash = hash_inode(st->st_ino);
++	key.ino	       = st->st_ino;
++	key.dev	       = st->st_dev;
++	key.isdir      = !!S_ISDIR(st->st_mode);
++	value	       = hashmap_get(map, &key, NULL);
++	return value ? value->name : NULL;
++}
++
++static void add_to_ino_dev_hashtable(struct hashmap *map,
++				     const struct stat *st,
++				     const char *path)
++{
++	struct inode_value *v;
++	int len = strlen(path);
++
++	v = xmalloc(offsetof(struct inode_value, name) + len + 1);
++	v->key.entry.hash = hash_inode(st->st_ino);
++	v->key.ino	  = st->st_ino;
++	v->key.dev	  = st->st_dev;
++	v->key.isdir      = !!S_ISDIR(st->st_mode);
++	memcpy(v->name, path, len + 1);
++	hashmap_add(map, v);
++}
++
++/*
++ * Find out if the last character of a string matches the one given.
++ * Don't underrun the buffer if the string length is 0.
+  */
+-int FAST_FUNC copy_file(const char *source, const char *dest, int flags)
++static inline char *last_char_is(const char *s, int c)
++{
++	if (s && *s) {
++		size_t sz = strlen(s) - 1;
++		s += sz;
++		if ( (unsigned char)*s == c)
++			return (char*)s;
 +	}
++	return NULL;
++}
 +
- 	/*
- 	 * First try. Atomically move, and probably cheaper, if both
- 	 * source and target are on the same file system.
++static inline char *concat_path_file(const char *path, const char *filename)
++{
++	struct strbuf sb = STRBUF_INIT;
++	char *lc;
++
++	if (!path)
++		path = "";
++	lc = last_char_is(path, '/');
++	while (*filename == '/')
++		filename++;
++	strbuf_addf(&sb, "%s%s%s", path, (lc==NULL ? "/" : ""), filename);
++	return strbuf_detach(&sb, NULL);
++}
++
++static char *concat_subpath_file(const char *path, const char *f)
++{
++	if (f && is_dot_or_dotdot(f))
++		return NULL;
++	return concat_path_file(path, f);
++}
++
++static int do_unlink(const char *dest)
++{
++	int e = errno;
++
++	if (unlink(dest) < 0) {
++		errno = e; /* do not use errno from unlink */
++		return error_errno(_("can't create '%s'"), dest);
++	}
++	return 0;
++}
++
++static int copy_dir_1(struct hashmap *inode_map,
++		      const char *source,
++		      const char *dest)
+ {
+ 	/* This is a recursive function, try to minimize stack usage */
+-	/* NB: each struct stat is ~100 bytes */
+ 	struct stat source_stat;
+ 	struct stat dest_stat;
+-	smallint retval = 0;
+-	smallint dest_exists = 0;
+-	smallint ovr;
++	int retval = 0;
++	int dest_exists = 0;
++	int ovr;
+ 
+ 	if (lstat(source, &source_stat) < 0)
+ 		return error_errno(_("can't stat '%s'"), source);
+@@ -102,7 +209,7 @@ int FAST_FUNC copy_file(const char *source, const char *dest, int flags)
+ 		mode_t saved_umask = 0;
+ 
+ 		/* Did we ever create source ourself before? */
+-		tp = is_in_ino_dev_hashtable(&source_stat);
++		tp = is_in_ino_dev_hashtable(inode_map, &source_stat);
+ 		if (tp)
+ 			/* We did! it's a recursion! man the lifeboats... */
+ 			return error(_("recursion detected, omitting directory '%s'"),
+@@ -132,11 +239,12 @@ int FAST_FUNC copy_file(const char *source, const char *dest, int flags)
+ 			if (lstat(dest, &dest_stat) < 0)
+ 				return error_errno(_("can't stat '%s'"), dest);
+ 		}
++
+ 		/*
+ 		 * remember (dev,inode) of each created dir. name is
+ 		 * not remembered
+ 		 */
+-		add_to_ino_dev_hashtable(&dest_stat, NULL);
++		add_to_ino_dev_hashtable(inode_map, &dest_stat, "");
+ 
+ 		/* Recursively copy files in SOURCE */
+ 		dp = opendir(source);
+@@ -152,7 +260,7 @@ int FAST_FUNC copy_file(const char *source, const char *dest, int flags)
+ 			if (!new_source)
+ 				continue;
+ 			new_dest = concat_path_file(dest, d->d_name);
+-			if (copy_file(new_source, new_dest, flags & ~FILEUTILS_DEREFERENCE_L0) < 0)
++			if (copy_dir_1(inode_map, new_source, new_dest) < 0)
+ 				retval = -1;
+ 			free(new_source);
+ 			free(new_dest);
+@@ -177,53 +285,57 @@ int FAST_FUNC copy_file(const char *source, const char *dest, int flags)
+ 			goto dont_cat;
+ 		}
+ 
+-		if (ENABLE_FEATURE_PRESERVE_HARDLINKS) {
++		if (1 /*ENABLE_FEATURE_PRESERVE_HARDLINKS*/) {
+ 			const char *link_target;
+-			link_target = is_in_ino_dev_hashtable(&source_stat);
++			link_target = is_in_ino_dev_hashtable(inode_map, &source_stat);
+ 			if (link_target) {
+ 				if (link(link_target, dest) < 0) {
+-					ovr = ask_and_unlink(dest, flags);
+-					if (ovr <= 0)
++					ovr = do_unlink(dest);
++					if (ovr < 0)
+ 						return ovr;
+ 					if (link(link_target, dest) < 0)
+ 						return error_errno(_("can't create link '%s'"), dest);
+ 				}
+ 				return 0;
+ 			}
+-			add_to_ino_dev_hashtable(&source_stat, dest);
++			add_to_ino_dev_hashtable(inode_map, &source_stat, dest);
+ 		}
+ 
+-		src_fd = open_or_warn(source, O_RDONLY);
++		src_fd = open(source, O_RDONLY);
+ 		if (src_fd < 0)
+-			return -1;
++			return error_errno(_("can't open '%s'"), source);
+ 
+ 		/* Do not try to open with weird mode fields */
+ 		new_mode = source_stat.st_mode;
+ 		if (!S_ISREG(source_stat.st_mode))
+ 			new_mode = 0666;
+ 
+-		/* POSIX way is a security problem versus (sym)link attacks */
+-		if (!ENABLE_FEATURE_NON_POSIX_CP) {
+-			dst_fd = open(dest, O_WRONLY|O_CREAT|O_TRUNC, new_mode);
+-		} else { /* safe way: */
+-			dst_fd = open(dest, O_WRONLY|O_CREAT|O_EXCL, new_mode);
+-		}
++		dst_fd = open(dest, O_WRONLY|O_CREAT|O_EXCL, new_mode);
+ 		if (dst_fd == -1) {
+-			ovr = ask_and_unlink(dest, flags);
+-			if (ovr <= 0) {
++			ovr = do_unlink(dest);
++			if (ovr < 0) {
+ 				close(src_fd);
+ 				return ovr;
+ 			}
+ 			/* It shouldn't exist. If it exists, do not open (symlink attack?) */
+-			dst_fd = open3_or_warn(dest, O_WRONLY|O_CREAT|O_EXCL, new_mode);
++			dst_fd = open(dest, O_WRONLY|O_CREAT|O_EXCL, new_mode);
+ 			if (dst_fd < 0) {
+ 				close(src_fd);
+-				return -1;
++				return error_errno(_("can't open '%s'"), dest);
+ 			}
+ 		}
+ 
+-		if (bb_copyfd_eof(src_fd, dst_fd) == -1)
++		switch (copy_fd(src_fd, dst_fd)) {
++		case COPY_READ_ERROR:
++			error(_("copy-fd: read returned %s"), strerror(errno));
+ 			retval = -1;
++			break;
++		case COPY_WRITE_ERROR:
++			error(_("copy-fd: write returned %s"), strerror(errno));
++			retval = -1;
++			break;
++		}
++
+ 		/* Careful with writing... */
+ 		if (close(dst_fd) < 0)
+ 			retval = error_errno(_("error writing to '%s'"), dest);
+@@ -243,19 +355,28 @@ dont_cat:
+ 	/* We are lazy here, a bit lax with races... */
+ 	if (dest_exists) {
+ 		errno = EEXIST;
+-		ovr = ask_and_unlink(dest, flags);
+-		if (ovr <= 0)
++		ovr = do_unlink(dest);
++		if (ovr < 0)
+ 			return ovr;
+ 	}
+ 	if (S_ISLNK(source_stat.st_mode)) {
+-		char *lpath = xmalloc_readlink_or_warn(source);
+-		if (lpath) {
+-			int r = symlink(lpath, dest);
+-			free(lpath);
++		struct strbuf lpath = STRBUF_INIT;
++		if (!strbuf_readlink(&lpath, source, 0)) {
++			int r = symlink(lpath.buf, dest);
++			strbuf_release(&lpath);
+ 			if (r < 0)
+ 				return error_errno(_("can't create symlink '%s'"), dest);
+ 			if (lchown(dest, source_stat.st_uid, source_stat.st_gid) < 0)
+ 				error_errno(_("can't preserve %s of '%s'"), "ownership", dest);
++		} else {
++			/* EINVAL => "file: Invalid argument" => puzzled user */
++			const char *errmsg = _("not a symlink");
++			int err = errno;
++
++			if (err != EINVAL)
++				errmsg = strerror(err);
++			error(_("%s: cannot read link: %s"), source, errmsg);
++			strbuf_release(&lpath);
+ 		}
+ 		/*
+ 		 * _Not_ jumping to preserve_mode_ugid_time: symlinks
+@@ -293,4 +414,23 @@ preserve_mode_ugid_time:
+ 
+ 	return retval;
+ }
+-#endif
++
++/*
++ * Return:
++ * -1 error, copy not made
++ *  0 copy is made
++ *
++ * Failures to preserve mode/owner/times are not reported in exit
++ * code. No support for preserving SELinux security context. Symlinks
++ * and hardlinks are preserved.
++ */
++int copy_dir_recursively(const char *source, const char *dest)
++{
++	int ret;
++	struct hashmap inode_map;
++
++	hashmap_init(&inode_map, inode_cmp, 1024);
++	ret = copy_dir_1(&inode_map, source, dest);
++	hashmap_free(&inode_map, 1);
++	return ret;
++}
 -- 
 2.8.2.526.g02eed6d
 
