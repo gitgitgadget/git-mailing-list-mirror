@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-9.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8C411FEAA
-	for <e@80x24.org>; Sat, 25 Jun 2016 16:36:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2CAD1FEAA
+	for <e@80x24.org>; Sat, 25 Jun 2016 16:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751443AbcFYQgS (ORCPT <rfc822;e@80x24.org>);
-	Sat, 25 Jun 2016 12:36:18 -0400
-Received: from mail-it0-f48.google.com ([209.85.214.48]:36010 "EHLO
-	mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750872AbcFYQgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2016 12:36:17 -0400
-Received: by mail-it0-f48.google.com with SMTP id a5so37443659ita.1
-        for <git@vger.kernel.org>; Sat, 25 Jun 2016 09:36:17 -0700 (PDT)
+	id S1751669AbcFYQjI (ORCPT <rfc822;e@80x24.org>);
+	Sat, 25 Jun 2016 12:39:08 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:34743 "EHLO
+	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751652AbcFYQjH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jun 2016 12:39:07 -0400
+Received: by mail-io0-f182.google.com with SMTP id g13so115407321ioj.1
+        for <git@vger.kernel.org>; Sat, 25 Jun 2016 09:39:06 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=xNSe8HYS6qIb7Ysw5MuzSQQDAB7pUu2h0yOUi1G0Scc=;
-        b=kVhD10ckjW8vsFr3iVrjZn4TqtWYqdTxwp++EkaLypDSP8vZG+jFHBa4Ard1LCgtHB
-         J/hCW/Jj/pfsGtYY+qe326yp/7NypFwqN5KaKXsGLKdry4ZDNKsd8Kkq4Cq0CoeXkiPv
-         iGwz9dTiBg72nTYq/yExZcK9eUaU22YYm+uCdA2ZcL9dyjzz3eA7evcCYcsGMdgBR2DH
-         8N0kBBEDlbCWVXkAy8qwAD7ItlfgS5ezL4V+uuoTbjTehj5SifVeGGTbQyFAv9mR58re
-         mnmd6AdTeW+F4cxiUtmsktDYy6PUSxUO/quAZk2QmxekHtTSP1yJp4VohQSxJOmL5QdF
-         AZVg==
+        bh=il1zn95H2ym/9pbzPnGq2AVyp8w0g2jH2Ir2TpHM6xU=;
+        b=0E1+ySFkTa0ATBHCx1ceEIqJxGkmwTKRJ7bj4t9p2OQ7CKq/AAl/Lh/7wt7PmlcZxn
+         iq8xIttZF3ojZQ6n/CXVLRqcEayQ0DrKLCvaxcPg14pbVNI52KisVYwtSTH6gXA8FDV2
+         Hb5LDOS4pbckZvccgaQnboJX0zipjFkQAfvcP7A2RJPUSFu1n85zcafeGdVMLkBhwuZh
+         7Djxm/Q4o5t6Wymy/wEmPgueoxuMb4DfxKQBoRMtUHG8LrRMrJgwErGDoTD7RQGsPftw
+         cKj4IqVk94fDGIjHip3hEz1jZktsXiQ2umWK4zsDZrBVvbhAUKCQ0KpwQmqeTdsowe/V
+         DcEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=xNSe8HYS6qIb7Ysw5MuzSQQDAB7pUu2h0yOUi1G0Scc=;
-        b=cCHjILcFXHgdnXGTJVYiSwQggEpdMYGl/wz5bdRfKJC7VstBQT6Zvi9Lf8Slyf0ymD
-         GwBOiTjrBWhHaiuewvSxM7WMRyPM0rAaqUTZnEl0GzgipsF1V17QIFSwg7obYUMexkHU
-         M8ujzXmnfmJqmKufoZ/sWMtWAX+hfUfs89L0k+FBkLNBbAMSKz/Bv1juarw5yYzDFcoP
-         WjL/IpaZmEQ0jmadtBi8uVeFazGu7aJVHkr31bMaHs3icNyA7KrcEXnAhhtKlqgMYpHf
-         ++D3LQYfzVWUycYX/rIB6T5nqTlYse0gAq6fZSMDUzMc6I7lVCYBG4CbQFDADu+bFsch
-         V+yQ==
-X-Gm-Message-State: ALyK8tL8m0leTIr9e3DTcx9UgQcBPMM4CNXS+RN7s/dfcG03Hq+DWVceGAlpFIO2ZCV0fkVI/m1+tmcJ1D3s4Q==
-X-Received: by 10.36.43.5 with SMTP id h5mr2879708ita.57.1466872577075; Sat,
- 25 Jun 2016 09:36:17 -0700 (PDT)
+        bh=il1zn95H2ym/9pbzPnGq2AVyp8w0g2jH2Ir2TpHM6xU=;
+        b=bzD73MNDxVpRX0xFronWecaQq4K0/RJbqe9rmFTKpHBB3BUhY1oUA2Ej2Ds1isAgoV
+         7feb8maPNis8aYtB8ig94rsMqXLjqOjX0I2m2LkjTMdwT4NHOna2jTZYjO8gmaS5GrS1
+         H6EmlwCyfnULVMG++u00oR/ELE06WwacUgxwikjk+1sEliAY2K6gghgwc6qOo0DXtRRD
+         pJKMae59srmT6BzeMZgT546jOCLGCObbU128Fs3mPYLbjcVBhzJxhaVeQiE9Vzaex3s7
+         +igzOw5sdXez5XnkWVbOTPynDl0VTCqeb3iLA2+h68i5mriVZOOO7hmcc8ou2Y98wjei
+         hZBA==
+X-Gm-Message-State: ALyK8tJ0/FXz6SA4bUFwyfGZ/45kDQmPFsIENcvW6MpaIG6MgrANyELojHSfvkMlrhSU463f5w9vyBfEPoC1ag==
+X-Received: by 10.107.8.220 with SMTP id h89mr10462953ioi.95.1466872745712;
+ Sat, 25 Jun 2016 09:39:05 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Sat, 25 Jun 2016 09:35:47 -0700 (PDT)
-In-Reply-To: <1463694357-6503-18-git-send-email-dturner@twopensource.com>
-References: <1463694357-6503-1-git-send-email-dturner@twopensource.com> <1463694357-6503-18-git-send-email-dturner@twopensource.com>
+Received: by 10.64.225.235 with HTTP; Sat, 25 Jun 2016 09:38:36 -0700 (PDT)
+In-Reply-To: <1463694357-6503-19-git-send-email-dturner@twopensource.com>
+References: <1463694357-6503-1-git-send-email-dturner@twopensource.com> <1463694357-6503-19-git-send-email-dturner@twopensource.com>
 From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Sat, 25 Jun 2016 18:35:47 +0200
-Message-ID: <CACsJy8BRQdWygX1Cp9d_2K7jUx0R5e0EiExmY0_wOA_Hi8TfuQ@mail.gmail.com>
-Subject: Re: [PATCH v12 17/20] index-helper: autorun mode
+Date:	Sat, 25 Jun 2016 18:38:36 +0200
+Message-ID: <CACsJy8CaN4fkd9tzvR8NeqpVHmKH5p6S151-A+SN0_LtrU3_fw@mail.gmail.com>
+Subject: Re: [PATCH v12 18/20] index-helper: optionally automatically run
 To:	David Turner <novalis@novalis.org>
 Cc:	Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
@@ -60,16 +60,21 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
 On Thu, May 19, 2016 at 11:45 PM, David Turner <dturner@twopensource.com> wrote:
-> @@ -417,6 +418,7 @@ int main(int argc, char **argv)
->                          "verify shared memory after creating"),
->                 OPT_BOOL(0, "detach", &detach, "detach the process"),
->                 OPT_BOOL(0, "kill", &kill, "request that existing index helper processes exit"),
-> +               OPT_BOOL(0, "autorun", &autorun, "this is an automatic run of git index-helper, so certain errors can be solved by silently exiting"),
+> +static void autorun_index_helper(void)
+> +{
+> +       const char *argv[] = {"git-index-helper", "--detach", "--autorun", NULL};
+> +       if (want_auto_index_helper() <= 0)
+> +               return;
+> +
+> +       trace_argv_printf(argv, "trace: auto index-helper:");
 
-I just noticed (lately) that all options since --strict has been added
-without _N() wrapped around the help string and they won't be
-translated as a result. If autorun, for instance, is meant for
-internal use only (which does not make sense since you document it in
-index-helper.txt), you can hide it away and not worry about N_().
+I'm pretty sure run_command() does call this (with "trace:
+run_command:" prefix instead, maybe drop this line?
+
+> +
+> +       if (run_command_v_opt(argv,
+> +                             RUN_SILENT_EXEC_FAILURE | RUN_CLEAN_ON_EXIT))
+> +               warning(_("You specified indexhelper.autorun, but running git-index-helper failed."));
+> +}
 -- 
 Duy
