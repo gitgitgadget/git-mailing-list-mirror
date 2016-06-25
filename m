@@ -4,31 +4,31 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=unavailable autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9147D1FF40
-	for <e@80x24.org>; Sat, 25 Jun 2016 07:29:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 002511FF40
+	for <e@80x24.org>; Sat, 25 Jun 2016 07:33:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751232AbcFYH3y (ORCPT <rfc822;e@80x24.org>);
-	Sat, 25 Jun 2016 03:29:54 -0400
-Received: from [104.236.5.163] ([104.236.5.163]:44156 "EHLO brennie.ca"
+	id S1751197AbcFYHdB (ORCPT <rfc822;e@80x24.org>);
+	Sat, 25 Jun 2016 03:33:01 -0400
+Received: from [104.236.5.163] ([104.236.5.163]:44159 "EHLO brennie.ca"
 	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751175AbcFYH3w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2016 03:29:52 -0400
+	id S1751133AbcFYHdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jun 2016 03:33:01 -0400
 Received: from [192.168.1.38] (142-165-34-81.sktn.hsdb.sasknet.sk.ca [142.165.34.81])
-	by brennie.ca (Postfix) with ESMTPSA id 4021140303;
-	Sat, 25 Jun 2016 01:29:51 -0600 (CST)
+	by brennie.ca (Postfix) with ESMTPSA id 32353403D0;
+	Sat, 25 Jun 2016 01:32:32 -0600 (CST)
 Content-Type: text/plain; charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
 Subject: Re: [PATCH] builtin/worktree.c: add option for setting worktree name
 From:	Barret Rennie <barret@brennie.ca>
 In-Reply-To: <576E2FA9.7070008@kdbg.org>
-Date:	Sat, 25 Jun 2016 01:29:49 -0600
+Date:	Sat, 25 Jun 2016 01:32:31 -0600
 Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
 	=?utf-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
 	<pclouds@gmail.com>, Michael Rappazzo <rappazzo@gmail.com>
 Content-Transfer-Encoding: 7bit
-Message-Id: <1FEF5F90-6534-4D91-B27C-16FE6D16EC3F@brennie.ca>
+Message-Id: <77A9E927-84CD-40F0-B7E1-077EC8B70313@brennie.ca>
 References: <20160625051548.95564-1-barret@brennie.ca> <576E2FA9.7070008@kdbg.org>
 To:	Johannes Sixt <j6t@kdbg.org>
 X-Mailer: Apple Mail (2.3124)
@@ -37,32 +37,6 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-> What is "the name for the worktree"? Is it the directory where it lives in?
->Is it how it is listed with 'git worktree list'?
+Sorry for replying to that message twice. I hit a bug in Apple Mail.
 
-The name of the worktree is the name of the created directory in
-`.git/worktrees`.
-
-> How is --name different from the <path> argument?
-
-Currently, if you run:
-	
-	git worktree add /my/worktree/checkout <branch>
-
-you get a worktree "named" checkout, i.e., `.git/worktrees/checkout`. The
-idea with this patch is to allow you use a more specific name when you would
-otherwise have mulitiple worktrees of the form `checkout`, `checkout1`, etc.
-
-That is, you could do
-
-	git worktree add --name branch1 /worktrees/branch1/src branch1
-	git worktree add --name branch2 /worktrees/branch2/src branch2
-	git worktree add --name branch3 /worktrees/branch3/src branch3
-
-and have `.git/worktrees/branch1`, `.git/worktrees/branch2` and
-`.git/worktrees/branch3` instead of `.git/worktrees/src`,
-`.git/worktrees/src1`, `.git/worktrees/src2`. That way, it becomes more clear
-when poking inside `.git/worktrees` which directory points to which checkout.
-
-Perhaps "worktree name" isn't the most clear nomenclature for this feature.
-Would "worktree directory name" be better?
+--Barret
