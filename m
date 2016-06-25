@@ -2,33 +2,33 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C04971FEAA
-	for <e@80x24.org>; Sat, 25 Jun 2016 16:47:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EF541FEAA
+	for <e@80x24.org>; Sat, 25 Jun 2016 16:47:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751589AbcFYQrI (ORCPT <rfc822;e@80x24.org>);
-	Sat, 25 Jun 2016 12:47:08 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:6337 "EHLO
+	id S1751585AbcFYQrH (ORCPT <rfc822;e@80x24.org>);
+	Sat, 25 Jun 2016 12:47:07 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:47150 "EHLO
 	smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751543AbcFYQrG (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751508AbcFYQrG (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 25 Jun 2016 12:47:06 -0400
 Received: from localhost.localdomain ([92.22.68.35])
 	by smtp.talktalk.net with SMTP
-	id GqjWbvjeqYIiqGqjYbpjXU; Sat, 25 Jun 2016 17:47:04 +0100
+	id GqjWbvjeqYIiqGqjXbpjXR; Sat, 25 Jun 2016 17:47:04 +0100
 X-Originating-IP: [92.22.68.35]
 X-Spam:	0
 X-OAuthority: v=2.2 cv=P/l4vWIu c=1 sm=1 tr=0 a=MvvZD7eUgq4fJAFIMo7fmA==:117
- a=MvvZD7eUgq4fJAFIMo7fmA==:17 a=xtxXYLxNAAAA:8 a=wgAWyCurPUsrivyQAi4A:9
+ a=MvvZD7eUgq4fJAFIMo7fmA==:17 a=xtxXYLxNAAAA:8 a=gt0LKDO9OWbvjQJcSk0A:9
  a=xts0dhWdiJbonKbuqhAr:22
 From:	Philip Oakley <philipoakley@iee.org>
 To:	GitList <git@vger.kernel.org>
 Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] doc: give headings for the two and three dot notations
-Date:	Sat, 25 Jun 2016 17:46:54 +0100
-Message-Id: <20160625164654.5192-3-philipoakley@iee.org>
+Subject: [PATCH 1/2] doc: use 'symmetric difference' consistently
+Date:	Sat, 25 Jun 2016 17:46:53 +0100
+Message-Id: <20160625164654.5192-2-philipoakley@iee.org>
 X-Mailer: git-send-email 2.8.4.windows.1.3.ge328a54
 In-Reply-To: <20160625164654.5192-1-philipoakley@iee.org>
 References: <E61B46FFA8874DD3973AA96BE5B36790@PhilipOakley>
@@ -40,58 +40,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-While there, also break out the other shorthand notations and
-add a title for the revision range summary (which also appears
-in git-rev-parse).
-
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- Documentation/revisions.txt | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ Documentation/gitk.txt             | 2 +-
+ Documentation/rev-list-options.txt | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 19314e3..c7e123a 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -246,12 +246,16 @@ To exclude commits reachable from a commit, a prefix '{caret}'
- notation is used.  E.g. '{caret}r1 r2' means commits reachable
- from 'r2' but exclude the ones reachable from 'r1'.
+diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
+index 6ade002..6c3eb15 100644
+--- a/Documentation/gitk.txt
++++ b/Documentation/gitk.txt
+@@ -70,7 +70,7 @@ linkgit:git-rev-list[1] for a complete list.
  
-+Single-Sided Difference (two dots)
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- This set operation appears so often that there is a shorthand
- for it.  When you have two commits 'r1' and 'r2' (named according
- to the syntax explained in SPECIFYING REVISIONS above), you can ask
- for commits that are reachable from r2 excluding those that are reachable
- from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
+ --left-right::
  
-+Symmetric Difference (three dots)
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- A similar notation 'r1\...r2' is called symmetric difference
- of 'r1' and 'r2' and is defined as
- 'r1 r2 --not $(git merge-base --all r1 r2)'.
-@@ -265,12 +269,17 @@ is a shorthand for 'HEAD..origin' and asks "What did the origin do since
- I forked from them?"  Note that '..' would mean 'HEAD..HEAD' which is an
- empty range that is both reachable and unreachable from HEAD.
+-	Mark which side of a symmetric diff a commit is reachable
++	Mark which side of a symmetric difference a commit is reachable
+ 	from.  Commits from the left side are prefixed with a `<`
+ 	symbol and those from the right with a `>` symbol.
  
-+The '{caret}' Shorthands
-+~~~~~~~~~~~~~~~~~~~~~~~~
- Two other shorthands for naming a set that is formed by a commit
--and its parent commits exist.  The 'r1{caret}@' notation means all
--parents of 'r1'.  'r1{caret}!' includes commit 'r1' but excludes
--all of its parents.
-+and its parent commits exist.
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 4f009d4..6dc0bb0 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -225,7 +225,7 @@ excluded from the output.
  
--To summarize:
-+The 'r1{caret}@' notation means all parents of 'r1'.
-+
-+'r1{caret}!' includes commit 'r1' but excludes all of its parents.
-+
-+Revision Range Summary
-+----------------------
+ --left-only::
+ --right-only::
+-	List only commits on the respective side of a symmetric range,
++	List only commits on the respective side of a symmetric difference,
+ 	i.e. only those which would be marked `<` resp. `>` by
+ 	`--left-right`.
+ +
+@@ -766,7 +766,7 @@ ifdef::git-rev-list[]
+ endif::git-rev-list[]
  
- '<rev>'::
- 	Include commits that are reachable from (i.e. ancestors of)
+ --left-right::
+-	Mark which side of a symmetric diff a commit is reachable from.
++	Mark which side of a symmetric difference a commit is reachable from.
+ 	Commits from the left side are prefixed with `<` and those from
+ 	the right with `>`.  If combined with `--boundary`, those
+ 	commits are prefixed with `-`.
 -- 
 2.8.4.windows.1.3.ge328a54
 
