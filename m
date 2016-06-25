@@ -2,242 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_50,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D2011FEAA
-	for <e@80x24.org>; Sat, 25 Jun 2016 16:13:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C6611FEAA
+	for <e@80x24.org>; Sat, 25 Jun 2016 16:28:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751483AbcFYQNG (ORCPT <rfc822;e@80x24.org>);
-	Sat, 25 Jun 2016 12:13:06 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:32947 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750872AbcFYQNF convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2016 12:13:05 -0400
-Received: from app03.ox.hosteurope.de ([92.51.170.10]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_ARCFOUR_MD5:16)
-	id 1bGqCb-0003SQ-A9; Sat, 25 Jun 2016 18:13:01 +0200
-Date:	Sat, 25 Jun 2016 18:13:01 +0200 (CEST)
-From:	Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Reply-To: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-To:	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-Cc:	git@vger.kernel.org, peff@peff.net,
-	Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	John Keeping <john@keeping.me.uk>
-Message-ID: <1072705888.508793.1466871181310.JavaMail.open-xchange@app03.ox.hosteurope.de>
-In-Reply-To: <20160610151020.Horde.AfAwgXgKC_jSSpyr60T85sW@webmail.informatik.kit.edu>
-References: <xmqq8tymp385.fsf@gitster.mtv.corp.google.com> <20160603183426.13140-1-thomas.braun@virtuell-zuhause.de> <20160603183426.13140-3-thomas.braun@virtuell-zuhause.de> <20160610151020.Horde.AfAwgXgKC_jSSpyr60T85sW@webmail.informatik.kit.edu>
-Subject: Re: [PATCH v4 2/3] completion: add __git_get_option_value helper
+	id S1751372AbcFYQ2T (ORCPT <rfc822;e@80x24.org>);
+	Sat, 25 Jun 2016 12:28:19 -0400
+Received: from mail-it0-f46.google.com ([209.85.214.46]:36566 "EHLO
+	mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750872AbcFYQ2S convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Jun 2016 12:28:18 -0400
+Received: by mail-it0-f46.google.com with SMTP id a5so37357213ita.1
+        for <git@vger.kernel.org>; Sat, 25 Jun 2016 09:28:18 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=9gyOSRObQmN4Adcq22SA+Nd3XE1GkgEpyRhQUaGAjak=;
+        b=KrVjpxJQJSyKgg6hfvUU68JiTZTwRTArcFrZiOB9dD4GHCslAzDgcPWa9kzA0CB7Cf
+         vTKO3LP4X8UITNe8koJeGdfmg2jCNVdioZJ+3BekgPhByjHDQNolxjsDYnapDG91YiMN
+         ZKAwczMngD3gQs646NcN6qRz647BisPsWRAQbLaWTIM4eE/8OQ/6Ybq6mps3Ca2m0qFD
+         pSaB2okUi0EBlNEYlnRdjmMTalZ3m79LEgunYkPYMjdifuEmX8n49H9n+GcrG+Jm3IVA
+         HtFlEITDPrAZgipbCsHQ8xut6Xo5B0xHGTlYIois/CEZTsPLdN7kaPI41CEA5uLYNwD5
+         iE5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=9gyOSRObQmN4Adcq22SA+Nd3XE1GkgEpyRhQUaGAjak=;
+        b=lSlJ7VZ/tkQ8iNFcmaGoaMjIhbfblC5ji8zSovSv6Z+DW975zw0Hnb+EHsIqn8JAse
+         hjnTJ6G9PnlhAZ4sTqw2GhDtR6jWUVWrUsRKoqlJNW+CF64H4/kjMv1E0Iuutr4C6SkR
+         ChvDgrPPvsMgMxJqsZthA62lDb+MzjoV1N2paDF7KKvp8nYvjMnzBrdQF8RSWsk8jA/M
+         WkTPouT5JXRMuIFnCJoiuZ2nCLuPLgMf+YRyhH59V2ethakk8qwEF5jCzKElmaN9IL/I
+         EQC7MuA2ktw49elqvW0iQLau/uyFaNZJwv2P1g7c1Qzy20P13dNRw91HYJzuUR4gYuvb
+         7rtQ==
+X-Gm-Message-State: ALyK8tJY01KvqWfHoPxgJ2m1ho8bIQkmR/iOI6yoMm6TDJAEoTkcJxKQv12MhiR8mjvU926cLQ6fhAHz/j67Mw==
+X-Received: by 10.36.130.130 with SMTP id t124mr2833821itd.42.1466872098231;
+ Sat, 25 Jun 2016 09:28:18 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.64.225.235 with HTTP; Sat, 25 Jun 2016 09:27:48 -0700 (PDT)
+In-Reply-To: <1463694357-6503-12-git-send-email-dturner@twopensource.com>
+References: <1463694357-6503-1-git-send-email-dturner@twopensource.com> <1463694357-6503-12-git-send-email-dturner@twopensource.com>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Sat, 25 Jun 2016 18:27:48 +0200
+Message-ID: <CACsJy8DYTcF_W+5K9uAHuqqBFu8J=xj7VRx-aqM6Dtc2+GmS1Q@mail.gmail.com>
+Subject: Re: [PATCH v12 11/20] index-helper: use watchman to avoid refreshing
+ index with lstat()
+To:	David Turner <novalis@novalis.org>
+Cc:	Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8BIT
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v7.6.2-Rev55
-X-Originating-Client: com.openexchange.ox.gui.dhtml
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1466871185;003eac5c;
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-> SZEDER Gábor <szeder@ira.uka.de> hat am 10. Juni 2016 um 15:10 geschrieben:
-> 
-> Hallo Thomas,
-> 
-> I saw v5 hit my mailbox while writing this.  I glanced it over and it
-> seems my comments here apply to that version as well.
+On Thu, May 19, 2016 at 11:45 PM, David Turner <dturner@twopensource.com> wrote:
+> From: Nguyễn Thái Ngọc Duy <pclouds@g
+> +"poke <path>":
 
-Hi Gábor,
+The new format is "poke <pid> <capabilities>".
 
-thanks for your comments.
-I plan to send a reroll in the near future adressing your remarks.
-
-Bye,
-Thomas
-
-> Quoting Thomas Braun <thomas.braun@virtuell-zuhause.de>:
-> 
-> > This function allows to search the commmand line and config
-> > files for an option, long and short, with mandatory value.
-> >
-> > The function would return e.g. for the command line
-> > "git status -uno --untracked-files=all" the result
-> > "all" regardless of the config option.
-> 
-> Wow, regarding my earlier remark about bonus points: I didn't realize
-> that there were so many bonus point to give away :)
-> 
-> > Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-> > ---
-> > contrib/completion/git-completion.bash | 44  
-> > ++++++++++++++++++++++++++++++++++
-> > 1 file changed, 44 insertions(+)
-> >
-> > diff --git a/contrib/completion/git-completion.bash  
-> > b/contrib/completion/git-completion.bash
-> > index addea89..4bd17aa 100644
-> > --- a/contrib/completion/git-completion.bash
-> > +++ b/contrib/completion/git-completion.bash
-> > @@ -803,6 +803,50 @@ __git_find_on_cmdline ()
-> > 	done
-> > }
-> >
-> > +# Echo the value of an option set on the command line or config
-> > +#
-> > +# $1: short option name
-> > +# $2: long option name including =
-> 
-> I'm not sure about requiring the '=', the function could just append
-> it as necessary.  More on this below.
-> 
-> > +# $3: list of possible values
-> > +# $4: config string (optional)
-> 
-> I don't understand why the list of possible values is necessary.
-> 
-> This function will be called when the caller wants to take different
-> actions based on different values, so the caller will process the
-> function's output with a case statement or an if-else chain, both of
-> which would be perfectly capable to ignore whatever invalid value the
-> user might have specified.  Therefore, I think this function doesn't
-> need the list of possible values, it should just return whatever value
-> it found after the option.
-> 
-> > +# example:
-> > +# result="$(__git_get_option_value "-d" "--do-something="\
-> > +#     "yes no" "core.doSomething")"
-> > +#
-> > +# result is then either empty (no option set) or "yes" or "no"
-> > +#
-> > +# __git_get_option_value requires 3 arguments
-> > +__git_get_option_value ()
-> > +{
-> > +	local c short_opt long_opt val
-> > +	local result= values config_key word
-> > +
-> > +	short_opt="$1"
-> > +	long_opt="$2"
-> > +	values="$3"
-> > +	config_key="$4"
-> 
-> These can be assigned when the variables are declared, saving a couple
-> of lines.
-> 
-> > +	((c = $cword - 1))
-> > +	while [ $c -ge 0 ]; do
-> 
-> Searching from the end of the command line, so even if someone were to
-> do a 'git status -uall -unormal -uno <TAB>', this would still do the
-> right thing.  Good!
-> 
-> However ;)
-> Just for fun imagine following:
-> 
->        $ >-uno
->        $ git status -- -uno <TAB>
-> 
-> 'git status' treats that '-uno' after the doubledash as a filename,
-> but this function interprets it as an option, and on the subsequent
-> TAB the completion script won't list untracked files.
-> 
-> I'm tempted to say that this is such a pathological corner case that
-> it doesn't worth worrying about.
-> 
-> > +		word="${words[c]}"
-> > +		for val in $values; do
-> 
-> Without the possible values argument this inner loop could go away.
-> 
-> > +			if [ "$short_opt$val" = "$word" ]
-> > +			|| [ "$long_opt$val"  = "$word" ]; then
-> > +				result="$val"
-> > +				break 2
-> 
-> You could just 'echo "$val"' or rather ${word#$short_opt} and return
-> here ...
-> 
-> > +			fi
-> > +		done
-> > +		((c--))
-> > +	done
-> > +
-> > +	if [ -n "$config_key" ] && [ -z "$result" ]; then
-> 
-> ... and that would make the second condition unnecessary here ...
-> 
-> > +		result="$(git --git-dir="$(__gitdir)" config "$config_key")"
-> 
-> ... and this could just be a simple 'git config' execution, without
-> command substitution ...
-> 
-> > +	fi
-> > +
-> > +	echo "$result"
-> 
-> ... and this echo could go away as well.
-> 
-> > +}
-> > +
-> > __git_has_doubledash ()
-> > {
-> > 	local c=1
-> > --
-> > 2.8.3.windows.1
-> 
-> 
-> However, I'm not sure we need or want this helper function _at the
-> moment_.  Yes, in general helper functions are good, and in this case
-> it makes _git_status() easier to follow, but it has some drawbacks,
-> too:
-> 
->    - It has a single callsite: the upcoming _git_status().  No other
->      existing case springs to mind where it could be used, i.e. where
->      different values of an option would require different actions from
->      the completion script.  Maybe we'll have one in the future, maybe
->      not.
-> 
->    - This function works only with the "stuck" form of options, i.e.
->      '--opt=val' or '-oval', which is mostly sufficient in this case,
->      because 'git status' understands only this form.  However, it
->      doesn't work with "unstuck" options, i.e. '--opt val' or '-o val'.
->      In many cases git supports only this "unstuck" form, and there are
->      many cases where it supports both for a given option.  We can't know
->      which form a future callsite might need, but requiring the '=' as
->      part of the long option seems to paint us into a corner.
-> 
->    - I wrote "mostly sufficient" above, because 'git status' does accept
->      a valueless '-u|--untracked-files' option, too, e.g.:
-> 
->        $ git config status.showUntrackedFiles no
->        $ git status --untracked-files
-> 
->      lists untracked files, therefore the completion script should list
->      them as well.  Your function can't cope with this case, and I'm not
->      sure how it and its caller could differentiate between the presence
->      of such a valueless option and no option at all.  Perhaps with an
->      additional optional function parameter holding the default value
->      that should be echo-ed when a valueless option is encountered.
-> 
-> If this function were not a function but its logic were embedded into
-> _git_status(), then we wouldn't have to spend any effort _now_ to come
-> up with a proper calling convention that can cope with stuck vs.
-> unstuck vs. both forms of options and with valueless options.  We would
-> deal with all that and the necessary refactorization when (or if ever)
-> there's a second potential callsite.  Embedding into _git_status()
-> would give you more freedom to deal with the valueless '-u' option,
-> too.  If embedded, some of my in-code comments wouldn't apply anymore,
-> of course.
-> 
-> I'm in favor of crossing the bridge when we get there.
-> 
-> 
-> Gábor
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+> +       Like "poke", but replies with "OK".  If the index has the
+> +       watchman extension, index-helper queries watchman, then
+> +       prepares a shared memory object with the watchman index
+> +       extension before replying.
+> +
+-- 
+Duy
