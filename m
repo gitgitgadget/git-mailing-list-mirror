@@ -2,73 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77C2E1FE4E
-	for <e@80x24.org>; Sat, 25 Jun 2016 06:17:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F4431FF40
+	for <e@80x24.org>; Sat, 25 Jun 2016 06:29:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751141AbcFYGR4 (ORCPT <rfc822;e@80x24.org>);
-	Sat, 25 Jun 2016 02:17:56 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53840 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751053AbcFYGRz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2016 02:17:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 73BAC2064B;
-	Sat, 25 Jun 2016 02:17:54 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=epdee7SsgBkCShNfq47YK5fFYGQ=; b=lCdY2G
-	KRW9nhOgh3mHuuJQUwxD9J33QV0X+PVK0HiiwTxWD/GyXEtMlx4kFJ+uvqs0Qhew
-	8oKXxFYXtZrmQCrzbZq5J4/XfxQJEb6caQtO6ZgZOtQqVwAnB9ffXXSsaEOqENno
-	XhS/vKbkvYs6uyBFDlLVQKj/Rpa7Gpzk+M4Rc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IAphLuJqdi1i1oHeSWEtbrEHrzG6qinT
-	lYB2FoRZW/NkoK1MopC4ZCpQ86PbCJszhtfqLzn3Z8hiI0OUVwdur1WOoCycmxiZ
-	JD+zc5M64ZEz7Gb4UWmbhB33ePdp50xZkIUryxDnBdE7b2KTOy67/MnMJVTfQtWk
-	cRDmk3j/q1w=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6AEC62064A;
-	Sat, 25 Jun 2016 02:17:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E6FE820649;
-	Sat, 25 Jun 2016 02:17:53 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Barret Rennie <barret@brennie.ca>
-Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Michael Rappazzo <rappazzo@gmail.com>
+	id S1751166AbcFYG24 (ORCPT <rfc822;e@80x24.org>);
+	Sat, 25 Jun 2016 02:28:56 -0400
+Received: from [104.236.5.163] ([104.236.5.163]:44146 "EHLO brennie.ca"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751053AbcFYG24 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Jun 2016 02:28:56 -0400
+Received: from [192.168.1.38] (142-165-34-81.sktn.hsdb.sasknet.sk.ca [142.165.34.81])
+	by brennie.ca (Postfix) with ESMTPSA id 89EAF400DC;
+	Sat, 25 Jun 2016 00:28:54 -0600 (CST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
 Subject: Re: [PATCH] builtin/worktree.c: add option for setting worktree name
-References: <20160625051548.95564-1-barret@brennie.ca>
-Date:	Fri, 24 Jun 2016 23:17:51 -0700
-In-Reply-To: <20160625051548.95564-1-barret@brennie.ca> (Barret Rennie's
-	message of "Fri, 24 Jun 2016 23:15:48 -0600")
-Message-ID: <xmqq60sxeqr4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8D3304AE-3A9C-11E6-AE55-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+From:	Barret Rennie <barret@brennie.ca>
+In-Reply-To: <xmqq60sxeqr4.fsf@gitster.mtv.corp.google.com>
+Date:	Sat, 25 Jun 2016 00:28:53 -0600
+Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	=?utf-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>, Michael Rappazzo <rappazzo@gmail.com>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <58A7F9CA-05A1-4BD1-A664-5B8302BFDE2F@brennie.ca>
+References: <20160625051548.95564-1-barret@brennie.ca> <xmqq60sxeqr4.fsf@gitster.mtv.corp.google.com>
+To:	Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Barret Rennie <barret@brennie.ca> writes:
+This is really to scratch an itch I have when I break my worktrees and can’t figure out which worktree dir is the one I’ve broken. For example, I organize my code as follows:
 
-> Add the --name parameter to git worktree add that allows the user to set
-> the name of the created worktree directory. A worktree must not already
-> exist with the current name or creation will fail.
+projects/reviewboard/branches/<branch-name>/src/
+	django/
+	djblets/  
+	reviewboard/
 
-Hmph.  This strongly smells like "because we can add this feature",
-not "because we need to add this feature".
+for each release branch I maintain (4 or 5 of them), where each of the above is a worktree checkout of the correct branch. This is so I have all my dependencies for the project at the right development version.
 
-What problem does it solve?  Please do not give me "currently we
-cannot give a name and instead live with the automatically given
-one, and with this patch we can give arbitrary name" as the answer.
-That is what I called "because we can".  Why is it bad that you have
-to live with the name automatically given to your new worktree?
+However, when I inevitably break a worktree for, e.g., Review Board, I have to figure out which of reviewboard, reviewboard1, reviewboard2, etc. it is that I’ve broken, instead of being able to just go into the worktree named for the release branch.
+
+Hope this clarifies things.
+
+> On Jun 25, 2016, at 12:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Barret Rennie <barret@brennie.ca> writes:
+> 
+>> Add the --name parameter to git worktree add that allows the user to set
+>> the name of the created worktree directory. A worktree must not already
+>> exist with the current name or creation will fail.
+> 
+> Hmph.  This strongly smells like "because we can add this feature",
+> not "because we need to add this feature".
+> 
+> What problem does it solve?  Please do not give me "currently we
+> cannot give a name and instead live with the automatically given
+> one, and with this patch we can give arbitrary name" as the answer.
+> That is what I called "because we can".  Why is it bad that you have
+> to live with the name automatically given to your new worktree?
+
