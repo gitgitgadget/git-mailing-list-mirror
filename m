@@ -7,85 +7,83 @@ X-Spam-Status: No, score=-9.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68EFF1F744
-	for <e@80x24.org>; Sun, 26 Jun 2016 04:28:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 745B61F744
+	for <e@80x24.org>; Sun, 26 Jun 2016 05:58:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751997AbcFZE2S (ORCPT <rfc822;e@80x24.org>);
-	Sun, 26 Jun 2016 00:28:18 -0400
-Received: from mail-it0-f47.google.com ([209.85.214.47]:34692 "EHLO
-	mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751936AbcFZE2R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jun 2016 00:28:17 -0400
-Received: by mail-it0-f47.google.com with SMTP id g127so11935219ith.1
-        for <git@vger.kernel.org>; Sat, 25 Jun 2016 21:28:16 -0700 (PDT)
+	id S1751935AbcFZF6Y (ORCPT <rfc822;e@80x24.org>);
+	Sun, 26 Jun 2016 01:58:24 -0400
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:35898 "EHLO
+	mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751788AbcFZF6Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jun 2016 01:58:24 -0400
+Received: by mail-lf0-f54.google.com with SMTP id q132so138086809lfe.3
+        for <git@vger.kernel.org>; Sat, 25 Jun 2016 22:58:23 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=edDMic3blpCxZKumSUn9lQkKWfpaHxYyMZ4InEqtc4o=;
-        b=ytZjfP6VWZ4jO7V5PoTlmbKGEHca6nj7PPp338F5+TJp+UPcNSC/41cYp0bPxlL2oL
-         ckLOyg/xvtO85IrDB8EeDdt0jAF7GnhhXMnuWBaeei+PFcliZPAl4biZOZA8ZAkpVLL/
-         /GL4QgFFyvhNYcdaCsRumRMIqdOayQJXZyFHC0UiEF0eVwFRCIINjPblfLnJTTe2CpIJ
-         UkecNMBO+Xlw1auJz8Xypq045rdsDTF/2uK+h1lb7uVntkqRrtrY6cRebTDnloeC2jut
-         B5oLNgL3oVcnT3uo4KNkp7IgVVGyPAmFIEiXSPWG0BAEvhXVaevqSxjbLQJe8s+lrGT+
-         05rg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=d2Fw1nGlutmcxnnQ4Wyt7SCd5eHPkiFh96SI5m6be/c=;
+        b=F4YFQyVbMcP+l3re4l3DS+E6r4LCyifMsB8f72/44QdrcoQTzHUD/X0uSXniLYvsfO
+         GonjkfteL4mZqxL/qih0MvDdoArm4vlncOValuVhN1hdn2lw3Lu921vb1zeQWPG4wyYt
+         rSKl5x4P/v17OmGgLveQjr3+eXO28cPVwYpebJFnitI/Ea3uMT+5D408QBippPww+/Ui
+         gPYMCj3I1nrsxQdoFyzs1HWIQ9tSJdNTT7KEh5iL0SIkQQ549wPYm60TYCtvqiQNmS/6
+         3mDsl/0AjUTNV+w2BJIJd0KW2OYUvqZo2FpJlol08K7hmc6LBmV2/fBVhxQQKTBJHgYd
+         gPPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=edDMic3blpCxZKumSUn9lQkKWfpaHxYyMZ4InEqtc4o=;
-        b=cgFFaEg9ZCzxOG1JgpfCLLF/HFyr435sBcQQpNQlxBH/phgbQL2OS64XgexYXeC8uP
-         zL7s7xfIj9lPliaAmsImuqjYX4v8uFLMEZKnaugP/L1XrzKFzi613Boj+GcWS1G4NaBq
-         AKDCUIePYIAAtkdvBPT9QcHgyz3YWEkSz/ttnAEfpG9jpTbdmEkUPf8x2hDmAwJfuQk2
-         461H/sWf1sqfH1+9TKu+dyQhCotZRP5//6NUozGhSvscDEQaz7kKNgX+QLAb+sq1HEs4
-         ++px1InQPUVFDhaLrTz09+cLWbfjTa3b1OEZqI1NV2Clvki0WJSqCdOXEt25QKvM/RlS
-         JYNA==
-X-Gm-Message-State: ALyK8tK69BM7DsCdwSF8aID3tAZCLRJTdzaFjG2OBseFUc4IbjggdJXTyCdB7akrBKWeLb/WSD1x3c89kNTOag==
-X-Received: by 10.36.80.139 with SMTP id m133mr4120726itb.63.1466915296319;
- Sat, 25 Jun 2016 21:28:16 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=d2Fw1nGlutmcxnnQ4Wyt7SCd5eHPkiFh96SI5m6be/c=;
+        b=SNAxn5vbZtLkC2gP2eNTAGja4dLrXdSh5eqwnuQ/z3Pzbs1IpYARMJGzJCSM8gbeS+
+         +k2oRUHygNsutcsm7IXiQzAB//i99oEwsZK8QgS7PlDkocoT7VeTF81Hhs8iO438n8cl
+         qWkMEPgs5DX3Xv4pv1/KwdSiy0M3FR/MtMBKJejyamZ/d+oOI9uUB6ow2fUxRuHaIe3X
+         hoJdfLagQC5hlDiESJQFDJGGA8F9H+7At2fAyMGKTun3VthPqG86UWJITQUbv9EOb2KX
+         X80Nunc/A0ohtYOLRzLENdagjBHz2S0XOngnQU0AZ95r4Kqcpt6wGyAb7BrWcgL6FxNw
+         U+8w==
+X-Gm-Message-State: ALyK8tKosLQ0xj5jU9+Mn5OdnbvCZ2SGVZRVgFZlpx5Pzz28u1ZWHi355ZR0yExE3uedJw==
+X-Received: by 10.25.138.65 with SMTP id m62mr4000950lfd.16.1466920702633;
+        Sat, 25 Jun 2016 22:58:22 -0700 (PDT)
+Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
+        by smtp.gmail.com with ESMTPSA id g24sm2123775ljg.20.2016.06.25.22.58.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 25 Jun 2016 22:58:21 -0700 (PDT)
+From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To:	git@vger.kernel.org
+Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	marcnarc@xiplink.com,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v4 0/5] Better ref summary alignment in "git fetch"
+Date:	Sun, 26 Jun 2016 07:58:05 +0200
+Message-Id: <20160626055810.26960-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.8.2.526.g02eed6d
+In-Reply-To: <20160605031141.23513-1-pclouds@gmail.com>
+References: <20160605031141.23513-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Sat, 25 Jun 2016 21:27:46 -0700 (PDT)
-In-Reply-To: <576ED9A2.8070202@novalis.org>
-References: <1463694357-6503-1-git-send-email-dturner@twopensource.com>
- <1463694357-6503-5-git-send-email-dturner@twopensource.com>
- <CACsJy8CftPGmrKP8Yeok90T9=whzj69bfE3_X6wHyWOEp6vRzg@mail.gmail.com> <576ED9A2.8070202@novalis.org>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Sun, 26 Jun 2016 06:27:46 +0200
-Message-ID: <CACsJy8Dqvv-Ty-wG0qkenyvLNLyqVueJmhjiQXnr0zVUGFvDeA@mail.gmail.com>
-Subject: Re: [PATCH v12 04/20] index-helper: new daemon for caching index and
- related stuff
-To:	David Turner <novalis@novalis.org>
-Cc:	Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sat, Jun 25, 2016 at 9:21 PM, David Turner <novalis@novalis.org> wrote:
-> On 06/25/2016 10:33 AM, Duy Nguyen wrote:
->>>
->>> +               /*
->>> +                * Our connection to the client is blocking since a
->>> client
->>> +                * can always be killed by SIGINT or similar.
->>> +                */
->>> +               set_socket_blocking_flag(client_fd, 0);
->>
->>
->> Out of curiosity, do we really need this? I thought default behavior
->> was always blocking (and checked linux kernel, it seemed to agree with
->> me). Maybe for extra safety because other OSes may default to
->> something else?
->
->
-> Yes -- see this bug report for details:
-> https://bugs.python.org/issue7995
->
+v4 is a cleaned up version of v3. Tests are added. Typos in
+git-fetch.txt are corrected. The "{ -> origin/}master" format is
+dropped.
 
-I think we should refer to this issue in the comment block right
-before set_socket_blocking_flag() call. Imagine a year from now, I may
-read the code, decide this code is useless and try to remove it.
+Nguyễn Thái Ngọc Duy (5):
+  git-fetch.txt: document fetch output
+  fetch: refactor ref update status formatting code
+  fetch: change flag code for displaying tag update and deleted ref
+  fetch: align all "remote -> local" output
+  fetch: reduce duplicate in ref update status lines with placeholder
 
+ Documentation/config.txt    |   5 ++
+ Documentation/git-fetch.txt |  51 ++++++++++++
+ builtin/fetch.c             | 194 +++++++++++++++++++++++++++++++++++---------
+ t/t5510-fetch.sh            |  30 +++++++
+ 4 files changed, 240 insertions(+), 40 deletions(-)
 -- 
-Duy
+2.8.2.526.g02eed6d
+
