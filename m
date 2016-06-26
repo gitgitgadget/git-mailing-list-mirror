@@ -2,73 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DABB91F744
-	for <e@80x24.org>; Sun, 26 Jun 2016 04:14:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 002E51FEAA
+	for <e@80x24.org>; Sun, 26 Jun 2016 04:14:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751666AbcFZEOf (ORCPT <rfc822;e@80x24.org>);
-	Sun, 26 Jun 2016 00:14:35 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:38869 "EHLO
+	id S1751782AbcFZEOi (ORCPT <rfc822;e@80x24.org>);
+	Sun, 26 Jun 2016 00:14:38 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:38882 "EHLO
 	homiemail-a17.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750940AbcFZEOe convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jun 2016 00:14:34 -0400
+	by vger.kernel.org with ESMTP id S1750940AbcFZEOf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Jun 2016 00:14:35 -0400
 Received: from homiemail-a17.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a17.g.dreamhost.com (Postfix) with ESMTP id CE4592B206A;
-	Sat, 25 Jun 2016 21:14:33 -0700 (PDT)
+	by homiemail-a17.g.dreamhost.com (Postfix) with ESMTP id 63ABD2B206E;
+	Sat, 25 Jun 2016 21:14:35 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type:
-	content-transfer-encoding; s=novalis.org; bh=fknsGv4cnFRIhMzXdUH
-	b7z9Bq3E=; b=s6Ku75w2cdJ791MLqk2671ylHiYwESb2rIJO0jmNe7YUd/2bQ/Q
-	56V5/TbTfyP/WnvQe8MIPf9fKEciqxgpfTgzp1M7+qy4svFoDe9bUQZU8yB56S1p
-	252J74wAQvANmoov4ag9LcAI1dE5SXUpZItWPz3KLeNoe2HA1VIice5U=
+	:subject:date:message-id:in-reply-to:references; s=novalis.org;
+	 bh=mZEFoge9BJ2/pSK2u0oyrhQ+Q6A=; b=N9Z6qz7m6CUktOszmKvhm7MaJUOT
+	jGuS7UCux/9SCCN0wwLdh/4T7NCfiG3dlTATIWI69kSk3jejMaBGMbWwOYLRK3Qr
+	1oD8MBCVp6Tn+lzvptezizq123jJ9fsLungabewwmRnNt/fPR2b1QcK47+gDCqiB
+	rPiNfiMK1q/86pM=
 Received: from frank.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
 	(Authenticated sender: novalis@novalis.org)
-	by homiemail-a17.g.dreamhost.com (Postfix) with ESMTPSA id 38FCC2B205C;
-	Sat, 25 Jun 2016 21:14:33 -0700 (PDT)
+	by homiemail-a17.g.dreamhost.com (Postfix) with ESMTPSA id BFC012B205C;
+	Sat, 25 Jun 2016 21:14:34 -0700 (PDT)
 From:	David Turner <novalis@novalis.org>
 To:	git@vger.kernel.org, pclouds@gmail.com, kamggg@gmail.com
 Cc:	David Turner <dturner@twopensource.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v13 01/20] read-cache.c: fix constness of verify_hdr()
-Date:	Sun, 26 Jun 2016 00:14:05 -0400
-Message-Id: <1466914464-10358-1-git-send-email-novalis@novalis.org>
+Subject: [PATCH v13 03/20] pkt-line: add gentle version of packet_write
+Date:	Sun, 26 Jun 2016 00:14:07 -0400
+Message-Id: <1466914464-10358-3-git-send-email-novalis@novalis.org>
 X-Mailer: git-send-email 2.8.0.rc4.20.g1d4f562
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <1466914464-10358-1-git-send-email-novalis@novalis.org>
+References: <1466914464-10358-1-git-send-email-novalis@novalis.org>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+From: David Turner <dturner@twopensource.com>
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+packet_write calls write_or_die, which dies with a sigpipe even if
+calling code has explicitly blocked that signal.
+
+Add packet_write_gently and packet_flush_gently, which don't.  Soon,
+we will use this for communication with git index-helper, which, being
+merely an optimization, should be permitted to die without disrupting
+clients.
+
 Signed-off-by: David Turner <dturner@twopensource.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- read-cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ pkt-line.c | 18 ++++++++++++++++++
+ pkt-line.h |  2 ++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/read-cache.c b/read-cache.c
-index d9fb78b..16cc487 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1345,7 +1345,7 @@ struct ondisk_cache_entry_extended {
- 			    ondisk_cache_entry_extended_size(ce_namelen(ce)) : \
- 			    ondisk_cache_entry_size(ce_namelen(ce)))
+diff --git a/pkt-line.c b/pkt-line.c
+index 62fdb37..f964446 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -91,6 +91,12 @@ void packet_flush(int fd)
+ 	write_or_die(fd, "0000", 4);
+ }
  
--static int verify_hdr(struct cache_header *hdr, unsigned long size)
-+static int verify_hdr(const struct cache_header *hdr, unsigned long size)
++int packet_flush_gently(int fd)
++{
++	packet_trace("0000", 4, 1);
++	return write_in_full(fd, "0000", 4) != 4;
++}
++
+ void packet_buf_flush(struct strbuf *buf)
  {
- 	git_SHA_CTX c;
- 	unsigned char sha1[20];
+ 	packet_trace("0000", 4, 1);
+@@ -130,6 +136,18 @@ void packet_write(int fd, const char *fmt, ...)
+ 	write_or_die(fd, buf.buf, buf.len);
+ }
+ 
++int packet_write_gently(int fd, const char *fmt, ...)
++{
++	static struct strbuf buf = STRBUF_INIT;
++	va_list args;
++
++	strbuf_reset(&buf);
++	va_start(args, fmt);
++	format_packet(&buf, fmt, args);
++	va_end(args);
++	return write_in_full(fd, buf.buf, buf.len) != buf.len;
++}
++
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ {
+ 	va_list args;
+diff --git a/pkt-line.h b/pkt-line.h
+index 3cb9d91..deffcb5 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -20,7 +20,9 @@
+  * side can't, we stay with pure read/write interfaces.
+  */
+ void packet_flush(int fd);
++int packet_flush_gently(int fd);
+ void packet_write(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++int packet_write_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ 
 -- 
 1.9.1
 
