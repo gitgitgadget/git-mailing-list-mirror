@@ -2,96 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE5981FE4E
-	for <e@80x24.org>; Sun, 26 Jun 2016 06:57:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4FF61FE4E
+	for <e@80x24.org>; Sun, 26 Jun 2016 07:07:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751926AbcFZG5i (ORCPT <rfc822;e@80x24.org>);
-	Sun, 26 Jun 2016 02:57:38 -0400
-Received: from mout.gmx.net ([212.227.17.20]:61245 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751675AbcFZG5h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jun 2016 02:57:37 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MN748-1bJEnL2HWa-006bBz; Sun, 26 Jun 2016 08:57:31
- +0200
-Date:	Sun, 26 Jun 2016 08:57:32 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
-Subject: Re: [PATCH] diff: let --output=<file> default to --no-color
-In-Reply-To: <xmqqshw2dyks.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1606260856480.12947@virtualbox>
-References: <100cea0edf4f0986c000eb945a5e5955b8b59787.1466604435.git.johannes.schindelin@gmx.de> <xmqqshw2dyks.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1751917AbcFZHHK (ORCPT <rfc822;e@80x24.org>);
+	Sun, 26 Jun 2016 03:07:10 -0400
+Received: from mail-lf0-f48.google.com ([209.85.215.48]:33973 "EHLO
+	mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751675AbcFZHHJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jun 2016 03:07:09 -0400
+Received: by mail-lf0-f48.google.com with SMTP id h129so138784898lfh.1
+        for <git@vger.kernel.org>; Sun, 26 Jun 2016 00:07:08 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BLmE8WFTSZIR2rZ+YiiyQpzfqES0r8wS8lwAdCTe8Kg=;
+        b=RDDUfBp/OXp+6sfufRYkWBzQqz8dV1HXVlTqimyHaJOJL1JlfPVGKpzWo+yhK9MII2
+         r3KdJyvMDXkDs2jSSXvAWdndlXR/sYUDtmbegNEOe/uqmt3+uu5UBOIkWq/Q/Cx2o6+7
+         Q1lkR146Go7D2xPLejqnp0AEK24pztLhYrzyfJ/E7OHvyNUE/ht5Jxf7zr4gPn+o0efV
+         EYiqF6RdCahIu1irleU6cC/odCznZDsuUaDsEKnAAdXFWMV/zGOofmUu3lu9ONOgqU9z
+         alJW+hMh11jTK7HAdqfA/cG+Cy9cIIqWt5lqn4tZzMp04Y0NSWyK2oKVgBc4ddi66FUt
+         hU0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BLmE8WFTSZIR2rZ+YiiyQpzfqES0r8wS8lwAdCTe8Kg=;
+        b=Maro+6slTYlfl+ewTRMQ68GSxiNBVBjW8YWlmUC1QTjm2FFFem81ykBW8Rpad/N+MO
+         4oVy76SU/0+gvY7fDvX5jBAoNg3JGJ4/3s1gC9w6/dQ+u0LEv+MKEXU/0jSjfuJyxdTw
+         cDAYw0R+nl4Gj7Zta3sgauSoaNYzFM+VqJMedOo8bIxaxpFR9M0Mc3rQ7O2Xu1w8Jt8l
+         Ac4BigvxGQVSDpuBQOTO56fYDKGVSKDDRJURv6aEMWrtPNysKVsPoAoggEKQIqxlICAM
+         mBQM6CJ4Cqq0psFz1YsJcOC7ERxFq7v32vGlK4A/kxdkcqXqvDDLwpZ53nyrXOwEMHPG
+         /vrQ==
+X-Gm-Message-State: ALyK8tKtHJdd2VyjhMoncj6Fg2gsUV5rNNKVAVqqNg1BRLYp7QbCDwTtYGKfUNlprMYGQw==
+X-Received: by 10.25.41.83 with SMTP id p80mr3872566lfp.32.1466924827306;
+        Sun, 26 Jun 2016 00:07:07 -0700 (PDT)
+Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
+        by smtp.gmail.com with ESMTPSA id s18sm2231965lfd.30.2016.06.26.00.07.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 26 Jun 2016 00:07:06 -0700 (PDT)
+From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To:	git@vger.kernel.org
+Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	sschuberth@gmail.com,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] config: add conditional include
+Date:	Sun, 26 Jun 2016 09:06:17 +0200
+Message-Id: <20160626070617.30211-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.8.2.526.g02eed6d
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:9/rFXPIWSdMY/QCPsqJXs5H+l94iKdPb1VpUy6dvm4fDipjlrDy
- qhPShBrAKGCcnOlpcEg/keOn3NtN9dNoQbsZ/eqIb/Ry47DkaO9Ea2dU/hUr2L6VNn1j+pr
- R8Y0FW2uLgjSav2iBBIggyUFLGUh1wEw63NUviLtIZ1+24kyhKHjKAzVNIdjvS65ymKla8J
- N7nFDQNkzXqL/UPMzDHpA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:1iDu/R53slU=:9Ct/cfsRYuvE6kYWRIUNem
- iZUT/V9gvHBUbHPPl3qlNkURq4LqLhNUwU/ToNtzcSqUzP7t3vE2mKuFUyFz5BmyZvDq0Y/aX
- OB8QrVn+6O52TOjEq5LJTwYV1a3p7t354kRlEU/11PJLpRI+Q9sQ9gaZkdzGy1iedkINtWxKq
- 6XRtZd0wcRC+L/A+0JvRMFRv+NJ3avPrGeN9QTmaUoi24NGb9fEirgI4pmYDT7eHLeNI26qWv
- Z/98SJVV3hjgxiNXIxVlnzp2CUn/aoloIn0CQPJ+gAoRmVWqv18HFXAMIFgS7OLR58S6NmBaw
- Dmi6ZBOUcB+TI4E62kUJLt+BBrOluhjNm6smn+kdwTAr7qpjKaPtokA+fq4ww6yWicjVf0LXm
- oB7Ce781FRr7vhmm/WsD4nJlloxWdiTOyK6zQaIsnwTfH+I05m3J9LXFlvkGxepP4B5Uyez07
- CSKM1VbYNMzzCqV3BtpJZo0Sn8lWlTK2l3Cn3QsW8A3Ze37HVA0RHYxXVgxV8O/DM80W6qMoL
- lspQokGMC6oByv+bcY3YaujrCotBEiMRPKp9W6yjm6jyDSS7Ye5hVLztrPgpyY97u4JgJAm3X
- cRQgB7HCP9+8Pk67YnbFMgbi2hVvTo73ycwzmD2GgNPhAv6dz0RYer6tl2oE5akZJt67waQhe
- N7Sz+sfSi1kBE8VMlWOAPpOPPdgyg/umIMafZJvj+jGefO7EZC+07FcpnezIJ4Sg6ukBJ0CPS
- Rg4QvjJupVgOpHXJ0CYe61EiMuoHIqAZizxEsNeJZ29DEh1cfVLpGslc1lW4Y5oL8Z5Da4NAS
- mvQX+am
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+If the path argument in "include" starts with "gitdir:", it is
+followed by a wildmatch pattern. The include is only effective if
+$GIT_DIR matches the pattern. This is very useful to add configuration
+to a group of repositories.
 
-On Fri, 24 Jun 2016, Junio C Hamano wrote:
+For convenience
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > It is highly unlikely that any user would want to see ANSI color
-> > sequences in a file. So let's stop doing that by default.
-> >
-> > This is a backwards-incompatible change.
-> >
-> > The reason this was not caught earlier is most likely that either
-> > --output=<file> is not used, or only when stdout is redirected
-> > anyway.
-> >
-> > Technically, we do not default to --no-color here. Instead, we try to
-> > override the GIT_COLOR_AUTO default because it would let want_color()
-> > test whether stdout (instead of the specified file) is connected to a
-> > terminal. Practically, we require the user to require color "always"
-> > to force writing ANSI color sequences to the output file.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > Published-As: https://github.com/dscho/git/releases/tag/diff-o-v1
-> >
-> > 	Just something I noted while working on a bit more consistency
-> > 	with the diffopt.file patches.
-> >
-> > 	This is a backwards-incompatible change, though. So I extracted it
-> > 	from the patch series.
-> 
-> I think this is a bugfix.
+ - "~" is expanded to $USER
 
-Okay.
+ - if the pattern ends with '/', "**" will be appended (e.g. foo/
+   becomes foo/**). In other words, "foo/" automatically matches
+   everything in starting with "foo/".
 
-> Perhaps I should tweak 06/10 to assign GIT_COLOR_NEVER not 0 while
-> queuing it.
+ - if the pattern contains no slashes, it's wrapped around by "**/"
+   and "/**" (e.g. "foo" becomes "**/foo/**"). In other words, "foo"
+   matches any directory component in $GIT_DIR.
 
-Good point.
+The combination of the first two is used to group repositories by
+path. While the last one could be used to match worktree's basename.
 
-Thanks,
-Dscho
+This code is originally written by Jeff King [1]. All genius designs
+are his. All bugs are mine (claiming bugs is just more fun :).
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/273811/focus=273825
+
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Original thread is [1]. Sebastian may not need it but I do and not
+ just for user.* stuff. So I'm bringing it back. I deleted Jeff's
+ de-anchoring and replaced with something a bit more restrictive. Once
+ we settle that, I'll add tests and stuff.
+
+ config.c | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 55 insertions(+), 2 deletions(-)
+
+diff --git a/config.c b/config.c
+index f51c56b..dd55a5f 100644
+--- a/config.c
++++ b/config.c
+@@ -140,9 +140,58 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+ 	return ret;
+ }
+ 
++static int include_condition_is_true(const char *cond, int cond_len)
++{
++	const char *value;
++
++	/* no condition (i.e., "include.path") is always true */
++	if (!cond)
++		return 1;
++
++	/*
++	 * It's OK to run over cond_len in our checks here, as that just pushes
++	 * us past the final ".", which cannot match any of our prefixes.
++	 */
++	if (skip_prefix(cond, "gitdir:", &value)) {
++		struct strbuf text = STRBUF_INIT;
++		struct strbuf pattern = STRBUF_INIT;
++		char *buf;
++		int ret;
++
++		strbuf_add_absolute_path(&text, get_git_dir());
++
++		strbuf_add(&pattern, value, cond_len - (value - cond));
++		buf = expand_user_path(pattern.buf);
++		if (buf) {
++			strbuf_reset(&pattern);
++			strbuf_addstr(&pattern, buf);
++			free(buf);
++		}
++
++		if (pattern.len && pattern.buf[pattern.len - 1] == '/') {
++			/* foo/ matches recursively */
++			strbuf_addstr(&pattern, "**");
++		} else if (!strchr(pattern.buf, '/')) {
++			/* no slashes match one directory component */
++			strbuf_insert(&pattern, 0, "**/", 3);
++			strbuf_addstr(&pattern, "/**");
++		}
++
++		ret = !wildmatch(pattern.buf, text.buf, 0, NULL);
++		strbuf_release(&pattern);
++		strbuf_release(&text);
++		return ret;
++	}
++
++	/* unknown conditionals are always false */
++	return 0;
++}
++
+ int git_config_include(const char *var, const char *value, void *data)
+ {
+ 	struct config_include_data *inc = data;
++	const char *cond, *key;
++	int cond_len;
+ 	int ret;
+ 
+ 	/*
+@@ -153,8 +202,12 @@ int git_config_include(const char *var, const char *value, void *data)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	if (!strcmp(var, "include.path"))
+-		ret = handle_path_include(value, inc);
++	if (!parse_config_key(var, "include", &cond, &cond_len, &key) &&
++	    include_condition_is_true(cond, cond_len)) {
++		if (!strcmp(key, "path"))
++			ret = handle_path_include(value, inc);
++		/* else we do not know about this type of include; ignore */
++	}
+ 	return ret;
+ }
+ 
+-- 
+2.8.2.526.g02eed6d
+
