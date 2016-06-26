@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99B6A1F744
-	for <e@80x24.org>; Sun, 26 Jun 2016 04:15:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 981F41F744
+	for <e@80x24.org>; Sun, 26 Jun 2016 04:16:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751955AbcFZEOy (ORCPT <rfc822;e@80x24.org>);
-	Sun, 26 Jun 2016 00:14:54 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:38928 "EHLO
+	id S1751909AbcFZEOs (ORCPT <rfc822;e@80x24.org>);
+	Sun, 26 Jun 2016 00:14:48 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:38904 "EHLO
 	homiemail-a17.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751852AbcFZEOm convert rfc822-to-8bit
+	by vger.kernel.org with ESMTP id S1750940AbcFZEOj convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jun 2016 00:14:42 -0400
+	Sun, 26 Jun 2016 00:14:39 -0400
 Received: from homiemail-a17.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a17.g.dreamhost.com (Postfix) with ESMTP id D64192B206A;
-	Sat, 25 Jun 2016 21:14:41 -0700 (PDT)
+	by homiemail-a17.g.dreamhost.com (Postfix) with ESMTP id B5C962B2070;
+	Sat, 25 Jun 2016 21:14:38 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-type:content-transfer-encoding; s=novalis.org; bh=0hXqu
-	cqTMYLE4/qSpX1ZQtH+k2E=; b=rE/3WP94WKPdvCzkUFDL/fsUydWT6zT33zb0o
-	AgTe8pRufa36TcMCXaamiSiThjom2D31sWgA+Eeh1+f6REH8MqjvU6LRyTRk9uXe
-	NakiaOQ0hFqGsy3PHO1sgzBc8VW5GA2YClJCEsO4xAlGVxURsHcDErVrN1Tzv2na
-	MtgBtY=
+	:content-type:content-transfer-encoding; s=novalis.org; bh=OPFnj
+	odd7+iyck3sgFGZA26Mjdk=; b=mtfdvUyWYcBrrlFgqyUPCmz8vb46EfMBHGC9v
+	sQN1jgKBuRmruvRixlsbbXXrLfk+fhWNQvlIB1ka2yLnN6s2cNc6lVlf/NbL74b+
+	HOBN7fG05vIghP9p8EP6bVgMkDX8JGHbs6E1AnaJmUbvrz9OCtYGmiAKOQTFX/H1
+	4zeK1Y=
 Received: from frank.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
 	(Authenticated sender: novalis@novalis.org)
-	by homiemail-a17.g.dreamhost.com (Postfix) with ESMTPSA id 33CE72B205C;
-	Sat, 25 Jun 2016 21:14:41 -0700 (PDT)
+	by homiemail-a17.g.dreamhost.com (Postfix) with ESMTPSA id 2173A2B205C;
+	Sat, 25 Jun 2016 21:14:38 -0700 (PDT)
 From:	David Turner <novalis@novalis.org>
 To:	git@vger.kernel.org, pclouds@gmail.com, kamggg@gmail.com
 Cc:	David Turner <dturner@twopensource.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v13 11/20] index-helper: use watchman to avoid refreshing index with lstat()
-Date:	Sun, 26 Jun 2016 00:14:15 -0400
-Message-Id: <1466914464-10358-11-git-send-email-novalis@novalis.org>
+Subject: [PATCH v13 07/20] index-helper: add --detach
+Date:	Sun, 26 Jun 2016 00:14:11 -0400
+Message-Id: <1466914464-10358-7-git-send-email-novalis@novalis.org>
 X-Mailer: git-send-email 2.8.0.rc4.20.g1d4f562
 In-Reply-To: <1466914464-10358-1-git-send-email-novalis@novalis.org>
 References: <1466914464-10358-1-git-send-email-novalis@novalis.org>
@@ -52,649 +52,80 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 
-Watchman is hidden behind index-helper. Before git tries to read the
-index from shm, it notifies index-helper through the socket and waits
-for index-helper to prepare a file for sharing memory (with
-MAP_SHARED). index-helper then contacts watchman, updates 'WAMA'
-extension and put it in a separate file and wakes git up with a reply
-to git's socket.
+We detach after creating and opening the socket, because otherwise
+we might return control to the shell before index-helper is ready to
+accept commands.  This might lead to flaky tests.
 
-Git uses this extension to not lstat unchanged entries. Git only
-trusts the 'WAMA' extension when it's received from the separate file,
-not from disk. Unmarked entries are "clean". Marked entries are dirty
-from watchman point of view. If it finds out some entries are
-'watchman-dirty', but are really unchanged (e.g. the file was changed,
-then reverted back), then Git will clear the marking in 'WAMA' before
-writing it down.
-
-Hiding watchman behind index-helper means you need both daemons. You
-can't run watchman alone. Not so good. But on the other hand, 'git'
-binary is not linked to watchman/json libraries, which is good for
-packaging. Core git package will run fine without watchman-related
-packages. If they need watchman, they can install git-index-helper and
-dependencies.
-
-This also lets us trust anything in the untracked cache that we haven't
-marked invalid, saving those stat() calls.
-
-Another reason for tying watchman to index-helper is, when used with
-untracked cache, we need to keep track of $GIT_WORK_TREE file
-listing. That kind of list can be kept in index-helper.
-
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-index-helper.txt |  11 ++
- cache.h                            |   2 +
- dir.c                              |  23 +++-
- dir.h                              |   3 +
- index-helper.c                     | 107 +++++++++++++++--
- pkt-line.c                         |   2 +-
- read-cache.c                       | 239 ++++++++++++++++++++++++++++++++++---
- 7 files changed, 361 insertions(+), 26 deletions(-)
+ Documentation/git-index-helper.txt | 3 +++
+ index-helper.c                     | 9 +++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-index-helper.txt b/Documentation/git-index-helper.txt
-index 3d2c829..2982e03 100644
+index ca5a9de..228b1df 100644
 --- a/Documentation/git-index-helper.txt
 +++ b/Documentation/git-index-helper.txt
-@@ -55,6 +55,17 @@ command. The following commands are used to control the daemon:
- 	Let the daemon know the index is to be read. It keeps the
- 	daemon alive longer, unless `--exit-after=0` is used.
+@@ -34,6 +34,9 @@ OPTIONS
+ 	for reading an index, but because it will happen in the
+ 	background, it's not noticable. `--strict` is enabled by default.
  
-+"poke <pid> <capabilities>":
-+	Like "poke", but replies with "OK".  If the "watchman"
-+	capability is requested, and git is built with watchman, and
-+	the index has the watchman extension, then index-helper
-+	queries watchman.  When watchman replies, index-helper
-+	prepares a shared memory object with the watchman index
-+	extension, then replies "OK watchman".  If git was built
-+	without watchman, "NAK watchman" is sent.  This shouldn't
-+	happen very often, since a git built without watchman won't
-+	request the watchman capability.
++--detach::
++	Detach from the shell.
 +
- All commands and replies are in pkt-line format.
+ NOTES
+ -----
  
- In the event of an error, messages may be written to
-diff --git a/cache.h b/cache.h
-index 452aea2..633e1dd 100644
---- a/cache.h
-+++ b/cache.h
-@@ -567,6 +567,7 @@ extern int daemonize(int *);
- 
- /* Initialize and use the cache information */
- struct lock_file;
-+extern int verify_index(const struct index_state *);
- extern int read_index(struct index_state *);
- extern int read_index_preload(struct index_state *, const struct pathspec *pathspec);
- extern int do_read_index(struct index_state *istate, const char *path,
-@@ -574,6 +575,7 @@ extern int do_read_index(struct index_state *istate, const char *path,
- extern int read_index_from(struct index_state *, const char *path);
- extern int is_index_unborn(struct index_state *);
- extern int read_index_unmerged(struct index_state *);
-+extern void write_watchman_ext(struct strbuf *sb, struct index_state *istate);
- #define COMMIT_LOCK		(1 << 0)
- #define CLOSE_LOCK		(1 << 1)
- extern int write_locked_index(struct index_state *, struct lock_file *lock, unsigned flags);
-diff --git a/dir.c b/dir.c
-index a4a9d9f..850d4fb 100644
---- a/dir.c
-+++ b/dir.c
-@@ -592,9 +592,9 @@ static void trim_trailing_spaces(char *buf)
-  *
-  * If "name" has the trailing slash, it'll be excluded in the search.
-  */
--static struct untracked_cache_dir *lookup_untracked(struct untracked_cache *uc,
--						    struct untracked_cache_dir *dir,
--						    const char *name, int len)
-+struct untracked_cache_dir *lookup_untracked(struct untracked_cache *uc,
-+					     struct untracked_cache_dir *dir,
-+					     const char *name, int len)
- {
- 	int first, last;
- 	struct untracked_cache_dir *d;
-@@ -1559,6 +1559,17 @@ static int valid_cached_dir(struct dir_struct *dir,
- 	if (!untracked)
- 		return 0;
- 
-+	if (dir->untracked->use_watchman) {
-+		/*
-+		 * With watchman, we can trust the untracked cache's
-+		 * valid field.
-+		 */
-+		if (untracked->valid)
-+			goto skip_stat;
-+		else
-+			invalidate_directory(dir->untracked, untracked);
-+	}
-+
- 	if (stat(path->len ? path->buf : ".", &st)) {
- 		invalidate_directory(dir->untracked, untracked);
- 		memset(&untracked->stat_data, 0, sizeof(untracked->stat_data));
-@@ -1572,6 +1583,7 @@ static int valid_cached_dir(struct dir_struct *dir,
- 		return 0;
- 	}
- 
-+skip_stat:
- 	if (untracked->check_only != !!check_only) {
- 		invalidate_directory(dir->untracked, untracked);
- 		return 0;
-@@ -2427,8 +2439,10 @@ static void free_untracked(struct untracked_cache_dir *ucd)
- 
- void free_untracked_cache(struct untracked_cache *uc)
- {
--	if (uc)
-+	if (uc) {
- 		free_untracked(uc->root);
-+		string_list_clear(&uc->invalid_untracked, 0);
-+	}
- 	free(uc);
- }
- 
-@@ -2577,6 +2591,7 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
- 		return NULL;
- 
- 	uc = xcalloc(1, sizeof(*uc));
-+	string_list_init(&uc->invalid_untracked, 1);
- 	strbuf_init(&uc->ident, ident_len);
- 	strbuf_add(&uc->ident, ident, ident_len);
- 	load_sha1_stat(&uc->ss_info_exclude, &ouc->info_exclude_stat,
-diff --git a/dir.h b/dir.h
-index 896b64a..ed16746 100644
---- a/dir.h
-+++ b/dir.h
-@@ -312,4 +312,7 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
- void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
- void add_untracked_cache(struct index_state *istate);
- void remove_untracked_cache(struct index_state *istate);
-+struct untracked_cache_dir *lookup_untracked(struct untracked_cache *uc,
-+					     struct untracked_cache_dir *dir,
-+					     const char *name, int len);
- #endif
 diff --git a/index-helper.c b/index-helper.c
-index 142af7a..bb39326 100644
+index d1e9287..7cc8166 100644
 --- a/index-helper.c
 +++ b/index-helper.c
-@@ -8,15 +8,18 @@
- #include "cache.h"
- #include "unix-socket.h"
- #include "pkt-line.h"
-+#include "watchman-support.h"
- 
- struct shm {
- 	unsigned char sha1[20];
- 	void *shm;
- 	size_t size;
-+	pid_t pid;
- };
+@@ -17,7 +17,7 @@ struct shm {
  
  static struct shm shm_index;
  static struct shm shm_base_index;
-+static struct shm shm_watchman;
- static int daemonized, to_verify = 1;
+-static int to_verify = 1;
++static int daemonized, to_verify = 1;
  
  static void release_index_shm(struct shm *is)
-@@ -28,10 +31,21 @@ static void release_index_shm(struct shm *is)
- 	is->shm = NULL;
- }
- 
-+static void release_watchman_shm(struct shm *is)
-+{
-+	if (!is->shm)
-+		return;
-+	munmap(is->shm, is->size);
-+	unlink(git_path("shm-watchman-%s-%" PRIuMAX,
-+			sha1_to_hex(is->sha1), (uintmax_t)is->pid));
-+	is->shm = NULL;
-+}
-+
- static void cleanup_shm(void)
  {
- 	release_index_shm(&shm_index);
- 	release_index_shm(&shm_base_index);
-+	release_watchman_shm(&shm_watchman);
- }
+@@ -36,6 +36,8 @@ static void cleanup_shm(void)
  
  static void cleanup(void)
-@@ -174,9 +188,10 @@ static void share_the_index(void)
- 	if (the_index.split_index && the_index.split_index->base)
- 		share_index(the_index.split_index->base, &shm_base_index);
- 	share_index(&the_index, &shm_index);
--	if (to_verify && !verify_shm())
-+	if (to_verify && !verify_shm()) {
- 		cleanup_shm();
--	discard_index(&the_index);
-+		discard_index(&the_index);
-+	}
- }
- 
- static void set_socket_blocking_flag(int fd, int make_nonblocking)
-@@ -209,6 +224,80 @@ static void refresh(void)
- 
- #ifndef NO_MMAP
- 
-+#ifdef USE_WATCHMAN
-+static void share_watchman(struct index_state *istate,
-+			   struct shm *is, pid_t pid)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	void *shm;
-+
-+	write_watchman_ext(&sb, istate);
-+	if (!shared_mmap_create(sb.len + 20, &shm,
-+				git_path("shm-watchman-%s-%" PRIuMAX,
-+					 sha1_to_hex(istate->sha1),
-+					 (uintmax_t)pid))) {
-+		is->size = sb.len + 20;
-+		is->shm = shm;
-+		is->pid = pid;
-+		hashcpy(is->sha1, istate->sha1);
-+
-+		memcpy(shm, sb.buf, sb.len);
-+		hashcpy((unsigned char *)shm + is->size - 20, is->sha1);
-+	}
-+	strbuf_release(&sb);
-+}
-+
-+
-+static void prepare_with_watchman(pid_t pid)
-+{
-+	/*
-+	 * TODO: with the help of watchman, maybe we could detect if
-+	 * $GIT_DIR/index is updated.
-+	 */
-+	if (!verify_index(&the_index))
-+		refresh();
-+
-+	if (check_watchman(&the_index))
+ {
++	if (daemonized)
 +		return;
-+
-+	share_watchman(&the_index, &shm_watchman, pid);
-+}
-+
-+static void prepare_index(pid_t pid)
-+{
-+	if (shm_index.shm == NULL)
-+		refresh();
-+	release_watchman_shm(&shm_watchman);
-+	if (the_index.last_update)
-+		prepare_with_watchman(pid);
-+}
-+
-+#endif
-+
-+static void reply_to_poke(int client_fd, const char *pid_buf)
-+{
-+	char *capabilities;
-+	struct strbuf sb = STRBUF_INIT;
-+
-+#ifdef USE_WATCHMAN
-+	pid_t client_pid = strtoull(pid_buf, NULL, 10);
-+
-+	prepare_index(client_pid);
-+#endif
-+	capabilities = strchr(pid_buf, ' ');
-+
-+	if (capabilities && !strcmp(capabilities, " watchman"))
-+#ifdef USE_WATCHMAN
-+		packet_buf_write(&sb, "OK watchman");
-+#else
-+		packet_buf_write(&sb, "NAK watchman");
-+#endif
-+	else
-+		packet_buf_write(&sb, "OK");
-+	if (write_in_full(client_fd, sb.buf, sb.len) != sb.len)
-+		warning(_("client write failed"));
-+}
-+
- static void loop(int fd, int idle_in_seconds)
+ 	unlink(git_path("index-helper.sock"));
+ 	cleanup_shm();
+ }
+@@ -298,7 +300,7 @@ static const char * const usage_text[] = {
+ int main(int argc, char **argv)
  {
- 	assert(idle_in_seconds < INT_MAX / 1000);
-@@ -263,11 +352,15 @@ static void loop(int fd, int idle_in_seconds)
- 			buf[bytes_read] = 0;
- 			if (!strcmp(buf, "refresh")) {
- 				refresh();
--			} else if (!strcmp(buf, "poke")) {
--				/*
--				 * Just a poke to keep us
--				 * alive, nothing to do.
--				 */
-+			} else if (starts_with(buf, "poke")) {
-+				if (buf[4] == ' ') {
-+					reply_to_poke(client_fd, buf + 5);
-+				} else {
-+					/*
-+					 * Just a poke to keep us
-+					 * alive, nothing to do.
-+					 */
-+				}
- 			} else {
- 				warning("BUG: Bogus command %s", buf);
- 			}
-diff --git a/pkt-line.c b/pkt-line.c
-index f964446..8aa6c09 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -94,7 +94,7 @@ void packet_flush(int fd)
- int packet_flush_gently(int fd)
- {
- 	packet_trace("0000", 4, 1);
--	return write_in_full(fd, "0000", 4) != 4;
-+	return write_in_full(fd, "0000", 4) == 4 ? 0 : -1;
- }
- 
- void packet_buf_flush(struct strbuf *buf)
-diff --git a/read-cache.c b/read-cache.c
-index e0fc634..8521e85 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1385,11 +1385,75 @@ static int verify_hdr(const struct cache_header *hdr, unsigned long size)
- 	return 0;
- }
- 
-+static struct untracked_cache_dir *find_untracked_cache_dir(
-+	struct untracked_cache *uc, struct untracked_cache_dir *ucd,
-+	const char *name)
-+{
-+	int component_len;
-+	const char *end;
-+	struct untracked_cache_dir *dir;
-+
-+	if (!*name)
-+		return ucd;
-+
-+	end = strchr(name, '/');
-+	if (end)
-+		component_len = end - name;
-+	else
-+		component_len = strlen(name);
-+
-+	dir = lookup_untracked(uc, ucd, name, component_len);
-+	if (dir)
-+		return find_untracked_cache_dir(uc, dir, name + component_len + 1);
-+
-+	return NULL;
-+}
-+
- static void mark_no_watchman(size_t pos, void *data)
- {
- 	struct index_state *istate = data;
-+	struct cache_entry *ce = istate->cache[pos];
-+	struct strbuf sb = STRBUF_INIT;
-+	char *c;
-+	struct untracked_cache_dir *dir;
-+
- 	assert(pos < istate->cache_nr);
--	istate->cache[pos]->ce_flags |= CE_WATCHMAN_DIRTY;
-+	ce->ce_flags |= CE_WATCHMAN_DIRTY;
-+
-+	if (!istate->untracked || !istate->untracked->root)
-+		return;
-+
-+	strbuf_add(&sb, ce->name, ce_namelen(ce));
-+
-+	for (c = sb.buf + sb.len - 1; c > sb.buf; c--) {
-+		if (*c == '/') {
-+			strbuf_setlen(&sb, c - sb.buf);
-+			break;
-+		}
-+	}
-+
-+	if (c == sb.buf)
-+		strbuf_setlen(&sb, 0);
-+
-+	dir = find_untracked_cache_dir(istate->untracked,
-+				       istate->untracked->root, sb.buf);
-+	if (dir)
-+		dir->valid = 0;
-+
-+	strbuf_release(&sb);
-+}
-+
-+static int mark_untracked_invalid(struct string_list_item *item, void *uc)
-+{
-+	struct untracked_cache *untracked = uc;
-+	struct untracked_cache_dir *dir;
-+
-+	dir = find_untracked_cache_dir(untracked, untracked->root,
-+				       item->string);
-+	if (dir)
-+		dir->valid = 0;
-+
-+	return 0;
- }
- 
- static int read_watchman_ext(struct index_state *istate, const void *data,
-@@ -1419,10 +1483,24 @@ static int read_watchman_ext(struct index_state *istate, const void *data,
- 	ewah_each_bit(bitmap, mark_no_watchman, istate);
- 	ewah_free(bitmap);
- 
--	/*
--	 * TODO: update the untracked cache from the untracked data in this
--	 * extension.
--	 */
-+	if (istate->untracked && istate->untracked->root) {
-+		int i;
-+		const char *untracked;
-+
-+		untracked = (const char *)data + len + 8 + bitmap_size;
-+		for (i = 0; i < untracked_nr; ++i) {
-+			int len = strlen(untracked);
-+			string_list_append(&istate->untracked->invalid_untracked,
-+					   untracked);
-+			untracked += len + 1;
-+		}
-+
-+		for_each_string_list(&istate->untracked->invalid_untracked,
-+			 mark_untracked_invalid, istate->untracked);
-+
-+		if (untracked_nr)
-+			istate->cache_changed |= WATCHMAN_CHANGED;
-+	}
- 	return 0;
- }
- 
-@@ -1655,27 +1733,88 @@ static void post_read_index_from(struct index_state *istate)
- 	tweak_untracked_cache(istate);
- }
- 
-+/* in ms */
-+#define WATCHMAN_TIMEOUT 1000
-+
-+static int poke_and_wait_for_reply(int fd)
-+{
-+	int ret = -1;
-+	struct pollfd pollfd;
-+	int bytes_read;
-+	char reply_buf[4096];
-+	const char *requested_capabilities = "";
-+
-+#ifdef USE_WATCHMAN
-+	requested_capabilities = "watchman";
-+#endif
-+
-+	if (fd < 0)
-+		return -1;
-+
-+	if (packet_write_gently(fd, "poke %d %s", getpid(), requested_capabilities))
-+		return -1;
-+	if (packet_flush_gently(fd))
-+		return -1;
-+
-+	/* Now wait for a reply */
-+	pollfd.fd = fd;
-+	pollfd.events = POLLIN;
-+	if (poll(&pollfd, 1, WATCHMAN_TIMEOUT) <= 0)
-+		/* No reply or error, giving up */
-+		goto done_poke;
-+
-+	bytes_read = packet_read(fd, NULL, NULL, reply_buf, sizeof(reply_buf),
-+				 PACKET_READ_GENTLE_ON_EOF |
-+				 PACKET_READ_CHOMP_NEWLINE);
-+
-+	if (bytes_read < 0)
-+		goto done_poke;
-+
-+	if (!strcmp(reply_buf, "NAK watchman")
-+#ifdef USE_WATCHMAN
-+	    || !ends_with(reply_buf, "watchman")
-+#endif
-+		) {
-+		warning("We requested watchman support from index-helper, but "
-+			"it doesn't support it. Please use a version of git "
-+			"index-helper with watchman support.");
-+		goto done_poke;
-+	}
-+
-+	if (!starts_with(reply_buf, "OK"))
-+		goto done_poke;
-+
-+	ret = 0;
-+done_poke:
-+	close(fd);
-+	return ret;
-+}
-+
- static int poke_daemon(struct index_state *istate,
- 		       const struct stat *st, int refresh_cache)
- {
+ 	const char *prefix;
+-	int idle_in_seconds = 600;
++	int idle_in_seconds = 600, detach = 0;
  	int fd;
--	int ret = 0;
--	const char *socket_path;
-+	int ret = -1;
+ 	struct strbuf socket_path = STRBUF_INIT;
+ 	struct option options[] = {
+@@ -306,6 +308,7 @@ int main(int argc, char **argv)
+ 			    N_("exit if not used after some seconds")),
+ 		OPT_BOOL(0, "strict", &to_verify,
+ 			 N_("verify shared memory after creating")),
++		OPT_BOOL(0, "detach", &detach, N_("detach the process")),
+ 		OPT_END()
+ 	};
  
- 	/* if this is from index-helper, do not poke itself (recursively) */
- 	if (istate->to_shm)
- 		return 0;
+@@ -333,6 +336,8 @@ int main(int argc, char **argv)
+ 		die("--exit-after value must be less than %d seconds",
+ 		    INT_MAX / 1000);
  
--	socket_path = git_path("index-helper.sock");
--
--	fd = unix_stream_connect(socket_path);
-+	fd = unix_stream_connect(git_path("index-helper.sock"));
-+	if (fd < 0) {
-+		warning("Failed to connect to index-helper socket");
-+		unlink(git_path("index-helper.sock"));
-+		return -1;
-+	}
- 	sigchain_push(SIGPIPE, SIG_IGN);
-+
- 	if (refresh_cache) {
- 		packet_write_gently(fd, "refresh");
-+		packet_flush_gently(fd);
-+		ret = 0;
- 	} else {
--		packet_write_gently(fd, "poke");
-+		ret = poke_and_wait_for_reply(fd);
- 	}
--	packet_flush_gently(fd);
++	if (detach && daemonize(&daemonized))
++		die_errno(_("unable to detach"));
+ 	loop(fd, idle_in_seconds);
  
  	close(fd);
- 	sigchain_pop(SIGPIPE);
-@@ -1745,6 +1884,74 @@ fail:
- 	return -1;
- }
- 
-+static void refresh_by_watchman(struct index_state *istate)
-+{
-+	void *shm = NULL;
-+	int length;
-+	int i;
-+	struct stat st;
-+	int fd = -1;
-+	const char *path = git_path("shm-watchman-%s-%"PRIuMAX,
-+				    sha1_to_hex(istate->sha1),
-+				    (uintmax_t)getpid());
-+
-+	fd = open(path, O_RDONLY);
-+	if (fd < 0)
-+		return;
-+
-+	/*
-+	 * This watchman data is just for us -- no need to keep it
-+	 * around once we've got it open.
-+	 */
-+	unlink(path);
-+
-+	if (fstat(fd, &st) < 0)
-+		goto done;
-+
-+	length = st.st_size;
-+	shm = mmap(NULL, length, PROT_READ, MAP_SHARED, fd, 0);
-+
-+	if (shm == MAP_FAILED)
-+		goto done;
-+
-+	close(fd);
-+	fd = -1;
-+
-+	if (length <= 20 ||
-+	    hashcmp(istate->sha1, (unsigned char *)shm + length - 20) ||
-+	    /*
-+	     * No need to clear CE_WATCHMAN_DIRTY set by 'WAMA' on
-+	     * disk. Watchman can only set more, not clear any, so
-+	     * this is OR mask.
-+	     */
-+	    read_watchman_ext(istate, shm, length - 20))
-+		goto done;
-+
-+	/*
-+	 * Now that we've marked the invalid entries in the
-+	 * untracked-cache itself, we can erase them from the list of
-+	 * entries to be processed and mark the untracked cache for
-+	 * watchman usage.
-+	 */
-+	if (istate->untracked) {
-+		string_list_clear(&istate->untracked->invalid_untracked, 0);
-+		istate->untracked->use_watchman = 1;
-+	}
-+
-+	for (i = 0; i < istate->cache_nr; i++) {
-+		struct cache_entry *ce = istate->cache[i];
-+		if (ce_stage(ce) || (ce->ce_flags & CE_WATCHMAN_DIRTY))
-+			continue;
-+		ce_mark_uptodate(ce);
-+	}
-+done:
-+	if (shm)
-+		munmap(shm, length);
-+
-+	if (fd >= 0)
-+		close(fd);
-+}
-+
- /* remember to discard_cache() before reading a different cache! */
- int do_read_index(struct index_state *istate, const char *path, int must_exist)
- {
-@@ -1864,7 +2071,7 @@ int read_index_from(struct index_state *istate, const char *path)
- 	split_index = istate->split_index;
- 	if (!split_index || is_null_sha1(split_index->base_sha1)) {
- 		post_read_index_from(istate);
--		return ret;
-+		goto done;
- 	}
- 
- 	if (split_index->base)
-@@ -1885,6 +2092,10 @@ int read_index_from(struct index_state *istate, const char *path)
- 		    sha1_to_hex(split_index->base->sha1));
- 	merge_base_index(istate);
- 	post_read_index_from(istate);
-+
-+done:
-+	if (ret > 0 && istate->from_shm && istate->last_update)
-+		refresh_by_watchman(istate);
- 	return ret;
- }
- 
-@@ -2186,7 +2397,7 @@ out:
- 	return 0;
- }
- 
--static int verify_index(const struct index_state *istate)
-+int verify_index(const struct index_state *istate)
- {
- 	return verify_index_from(istate, get_index_file());
- }
 -- 
 1.9.1
 
