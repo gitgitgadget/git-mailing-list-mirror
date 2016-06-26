@@ -6,89 +6,103 @@ X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CBAC20179
-	for <e@80x24.org>; Sun, 26 Jun 2016 17:50:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8B7E20179
+	for <e@80x24.org>; Sun, 26 Jun 2016 17:54:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751308AbcFZRuA (ORCPT <rfc822;e@80x24.org>);
-	Sun, 26 Jun 2016 13:50:00 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:53429 "EHLO
-	homiemail-a75.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751141AbcFZRt7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Jun 2016 13:49:59 -0400
-Received: from homiemail-a75.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a75.g.dreamhost.com (Postfix) with ESMTP id 266215EC079;
-	Sun, 26 Jun 2016 10:49:59 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=subject:to
-	:references:cc:from:message-id:date:mime-version:in-reply-to
-	:content-type:content-transfer-encoding; s=novalis.org; bh=PogX7
-	sEQGKaYWDYFBcLzGHAJpdM=; b=NjeF1Ewv5un1YzVS3+0odVJ1Df0gjtHFckEBA
-	gKWc7y2ONNBhBrXWbEzkqE9Q73dhMs3xC4tewObsXl4FRx5RT2AQJXJDQh6D2slq
-	83YlnU9XcDiVaa2T/XExrRQGt8ns4WoGqb6RwgC83klYrg0HgLaP1xCpxQbe1oRA
-	Bdb7a0=
-Received: from [10.0.1.180] (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1751536AbcFZRyy (ORCPT <rfc822;e@80x24.org>);
+	Sun, 26 Jun 2016 13:54:54 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:54162 "EHLO
+	homiemail-a76.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751141AbcFZRyy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Jun 2016 13:54:54 -0400
+Received: from homiemail-a76.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a76.g.dreamhost.com (Postfix) with ESMTP id 860B045807B;
+	Sun, 26 Jun 2016 10:54:53 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=from:to:cc
+	:subject:date:message-id; s=novalis.org; bh=MwkFnH899/c6XdFnR5Zr
+	cV0eh0o=; b=b1O/lzU+1VynXLKN4juYpUGTDctu3QeFyO9r1xVry3nHu77/mZrx
+	iOqwSgY2VIDbaKxx8p+YDwA3oCYPTbUXEWWvJ4xHMmQBa6eBUW3h8FfVmErwbcqp
+	h9GBuEdaIGlcs5DmE+IybrgIelqTBp0siyPUjZ7RZoOYM9JIcb673dQ=
+Received: from frank.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
 	(Authenticated sender: novalis@novalis.org)
-	by homiemail-a75.g.dreamhost.com (Postfix) with ESMTPSA id AF7625EC072;
-	Sun, 26 Jun 2016 10:49:58 -0700 (PDT)
-Subject: Re: [PATCH v12 04/20] index-helper: new daemon for caching index and
- related stuff
-To:	Eric Wong <e@80x24.org>
-References: <1463694357-6503-1-git-send-email-dturner@twopensource.com>
- <1463694357-6503-5-git-send-email-dturner@twopensource.com>
- <CACsJy8CftPGmrKP8Yeok90T9=whzj69bfE3_X6wHyWOEp6vRzg@mail.gmail.com>
- <576ED9A2.8070202@novalis.org> <20160626085347.GA4053@dcvr.yhbt.net>
-Cc:	Duy Nguyen <pclouds@gmail.com>, kamggg@gmail.com,
-	git@vger.kernel.org
+	by homiemail-a76.g.dreamhost.com (Postfix) with ESMTPSA id EBD59458071;
+	Sun, 26 Jun 2016 10:54:52 -0700 (PDT)
 From:	David Turner <novalis@novalis.org>
-Message-ID: <577015C5.8070407@novalis.org>
-Date:	Sun, 26 Jun 2016 13:49:57 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-MIME-Version: 1.0
-In-Reply-To: <20160626085347.GA4053@dcvr.yhbt.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:	git@vger.kernel.org, pclouds@gmail.com, kamggg@gmail.com
+Cc:	David Turner <dturner@twopensource.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v13 20/20] index-helper: indexhelper.exitafter config
+Date:	Sun, 26 Jun 2016 13:54:39 -0400
+Message-Id: <1466963679-9947-1-git-send-email-novalis@novalis.org>
+X-Mailer: git-send-email 2.8.0.rc4.20.g1d4f562
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 06/26/2016 04:53 AM, Eric Wong wrote:
-> David Turner <novalis@novalis.org> wrote:
->> On 06/25/2016 10:33 AM, Duy Nguyen wrote:
->>>> +               /*
->>>> +                * Our connection to the client is blocking since a client
->>>> +                * can always be killed by SIGINT or similar.
->>>> +                */
->>>> +               set_socket_blocking_flag(client_fd, 0);
->>>
->>> Out of curiosity, do we really need this? I thought default behavior
->>> was always blocking (and checked linux kernel, it seemed to agree with
->>> me). Maybe for extra safety because other OSes may default to
->>> something else?
->>
->> Yes -- see this bug report for details:
->> https://bugs.python.org/issue7995
->
-> I realize it's an issue with BSDs, but it still seems
-> unnecessary, here:
->
-> 1) the packet_read => get_packet_data => read_in_full => xread
->     call chain already poll()s on EAGAIN/EWOULDBLOCK.
->     write_in_full => xwrite busy loops on EAGAIN/EWOULDBLOCK.
->     xwrite should probably poll, too; but I guess EAGAIN is
->     uncommon with small writes.
+From: David Turner <dturner@twopensource.com>
 
-That is a CPU-burning busy loop on a non-blocking socket.
+Add a configuration variable, indexhelper.exitafter, which provides a
+default time to keep the index-helper alive.  This is useful with
+indexhelper.autorun; some users will want to keep the
+automatically-run index-helper alive across their lunch break and will
+thus set indexhelper.exitafter to a high value.
 
-> 2) you create the listen fd you call accept on and never set
->     non-blocking on it.  It might be an issue one day if
->     we use socket activation and inherit a socket, but the
->     retries mentioned in 1) should cover that case.
+Signed-off-by: David Turner <dturner@twopensource.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/config.txt | 4 ++++
+ index-helper.c           | 2 ++
+ t/t7900-index-helper.sh  | 8 ++++++++
+ 3 files changed, 14 insertions(+)
 
-Hm.  I wonder why I thought I had made it non-blocking.
-
-I'm sort of reluctant to change this as I no longer have a Mac to test 
-on.  Does someone else have a Mac that they can use to test this?
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 385ea66..336d5a2 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1860,6 +1860,10 @@ indexhelper.autorun::
+ 	Automatically run git index-helper when any builtin git
+ 	command is run inside a repository.
+ 
++indexhelper.exitafter::
++	When no exit-after argument is given, git index-helper defaults
++	to this number of seconds. Specify 0 to wait forever. Default is 600.
++
+ init.templateDir::
+ 	Specify the directory from which templates will be copied.
+ 	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
+diff --git a/index-helper.c b/index-helper.c
+index f57fc14..a8071ae 100644
+--- a/index-helper.c
++++ b/index-helper.c
+@@ -433,6 +433,8 @@ int main(int argc, char **argv)
+ 	git_extract_argv0_path(argv[0]);
+ 	git_setup_gettext();
+ 
++	git_config_get_int("indexhelper.exitafter", &idle_in_seconds);
++
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage_with_options(usage_text, options);
+ 
+diff --git a/t/t7900-index-helper.sh b/t/t7900-index-helper.sh
+index 3cfdf63..6c9b4dd 100755
+--- a/t/t7900-index-helper.sh
++++ b/t/t7900-index-helper.sh
+@@ -66,4 +66,12 @@ test_expect_success 'index-helper autorun works' '
+ 	test_path_is_missing .git/index-helper.sock
+ '
+ 
++test_expect_success 'indexhelper.exitafter config works' '
++	test_when_finished "git index-helper --kill" &&
++	test_config indexhelper.exitafter 1 &&
++	git index-helper --detach &&
++	sleep 3 &&
++	test_path_is_missing .git/index-helper.sock
++'
++
+ test_done
+-- 
+1.9.1
 
