@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50B9F1FE4E
-	for <e@80x24.org>; Sun, 26 Jun 2016 06:49:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 923F91FE4E
+	for <e@80x24.org>; Sun, 26 Jun 2016 06:56:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751807AbcFZGtx (ORCPT <rfc822;e@80x24.org>);
-	Sun, 26 Jun 2016 02:49:53 -0400
-Received: from mout.gmx.net ([212.227.15.19]:65399 "EHLO mout.gmx.net"
+	id S1752013AbcFZG4Q (ORCPT <rfc822;e@80x24.org>);
+	Sun, 26 Jun 2016 02:56:16 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49265 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751667AbcFZGtw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jun 2016 02:49:52 -0400
+	id S1751675AbcFZG4Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jun 2016 02:56:16 -0400
 Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0M4Gup-1bXtyu0GAN-00rlV4; Sun, 26 Jun 2016 08:49:43
+ ESMTPSA (Nemesis) id 0Llm9w-1bqOjm3h7w-00ZPHm; Sun, 26 Jun 2016 08:56:06
  +0200
-Date:	Sun, 26 Jun 2016 08:49:43 +0200 (CEST)
+Date:	Sun, 26 Jun 2016 08:56:08 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	Junio C Hamano <gitster@pobox.com>
 cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 06/10] format-patch: explicitly switch off color when
- writing to files
-In-Reply-To: <xmqq1t3mfdpy.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1606260847590.12947@virtualbox>
-References: <cover.1466505222.git.johannes.schindelin@gmx.de> <cover.1466607667.git.johannes.schindelin@gmx.de> <c0fdb78fbb7b19e4b367c50a9c0c570193e98fa3.1466607667.git.johannes.schindelin@gmx.de> <xmqq1t3mfdpy.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v4 01/10] Prepare log/log-tree to reuse the diffopt.close_file
+ attribute
+In-Reply-To: <xmqq60syfgqf.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1606260853030.12947@virtualbox>
+References: <cover.1466505222.git.johannes.schindelin@gmx.de> <cover.1466607667.git.johannes.schindelin@gmx.de> <044f3c6359b63eaa18229cd73e6815e8e15c9778.1466607667.git.johannes.schindelin@gmx.de> <xmqq60syfgqf.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:u0KkG23DI8x6KKGJ9y09b1i54Ww4wUkf6iFvzrqbh2Z6aNYUUma
- 6Yj2ql+CzcRAAJ5BxgP6oCUM+1K7MieLPJJowNvpk96/cqwsplMxpwHpHzS6xfWyzlrOj+Z
- DMViJpMndByORdGijWcZDN83nI1mV7iYiEtX2lkGqJEypqv6wLCELw/jR1kwyREIB17khIs
- n+WKOn+0h9PXnxEPwXabg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:v4+unuvhTVM=:UoK26LFGCxCpri7+kIIp8q
- XJbf8ykEavQ0h5uujK5MIutzpqoxY/NORAlBjj3u0NqGDGQIBWuvxqsugH910CWAZP/xCPoni
- zdNon7n5MDRiotD1yNW2UhbealrMhrw/2cLIZMneP9JpD+3bCHTQfyJT22zeQY4kW6KzKEYCT
- UXvOrNYx9RQ03JqWp+GoPBI3BAEoPFcn5LkOSxCpdhwoldQC7uhoAzOk3sgzvCJ2fsWYI/E99
- bPGf46aNpC5luww94wSQnM7tJ+c2fbvOnAsqVmE6b7G+3SK+S9+bkGlp3+vHX05Z3J50ABUDz
- BFIvXYIDuo/EPsEF4q1Geqp0ZViFceVZMlz3bgA7Lg7rSKRNBDjC1SPDfoFk7OTylKuU85Fex
- SKenNIhHqBAQdBKG5ZQys5Nn/3zYPik5EEFHKcGsZ8IiUvs0Z19ps+pwuHGHkMrMt7c5DbAMU
- HgRbgsJalPE6CkyFUHo9Eoh6RCNbk0EVgq8BSiNRY8+/mfE3zyhF1d8REytviE7IXHoEreByh
- zYIU9n5r4DYkCwgEUkOy4Tr3n12R93Avhvj5pnZvfnY4Kaq3V+ebIPVLgke28awogNh2c3avV
- JGHp9DgrHypSTk8CredGHQ6Eb0f9yn6WThaspTNAchWmb1GonsgeYqXDmUJ7zCqxX1zbw0BFg
- g87MxpWDD47TPKWODLJZChO6gdse/Sf63fv9/SzzlSLRC4S+IzATDG40x4LkEsrQR6N82troJ
- 4Jz0RbyR6SEVbT38CWS30T1IH59fjhZuFcvBssUJ44ASIiv1Q/u7svEgHx49eW9M/NTHLo/Cf
- peCBqWk
+X-Provags-ID: V03:K0:/O4fm61ZNV7g8ArhPtT0OXN6FUBzOYJlPjZNDATk016oAuVPb6S
+ KKMZyJBkU9eVN4+hJGUQiW526xAoquIQWZ7NOH5zcsqV4UCEk9gJZCaxVglvN3G/ttB5Jrs
+ wxXrBUViJZneVV9wLCYEHAxcwwEq070+FgINlDB8eObkciOa8RUAj0bBhxXueEQ20kQo0wn
+ Z25gY2Fel5W33jSeh8FnQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:TqGGPzUDgxM=:a/jsFRQBi2IpaCmoU5bD8m
+ hcaXzECmdsFISbmWUb75V2gKYBIHCFX+3okEs4ynQR7jJhWFHJ755N5I1jMyGPUXcmh+p42hV
+ HesPijnrFbd4+WKXTeoBLRis+sB3k8vkCJRCISpfbGMj/GIpg3Z3zjCwO6jWBbTdnGPUwhc2i
+ 14JtTcfbp+waVJlVj9+xacfVQL9Ca2Ao6rW9jYl5mEwp/FsJceqd8K/wB2EBON2QHw7cIDcZu
+ dq32fzkUBztWPiUk91PcbQky8mljWgkjLzNonyppUK4NOXy99YA4XmCdtOqoc5XolxeUerggK
+ QggaeaU85Y45NazWLohbO/K5V7ifNXnfMWDjXrgEOCYBgMY3jzGZZupcJa0iRRNtgx102lcDx
+ eJT63QNf4qy03b5T48Dpz+2PStIvlXRRgvslOwApIbZGcrB7aM0w6jpO/ztNtb9Ru81VoEaIt
+ PsGMmj2p/a5e7aog663wG2cSgwIIqenVpOb7ptRBsMTg2rdD31HYGbNRo6wrgcPv78Hx0stUi
+ 7PG+DzL36EZxJ3nKliTNIuQ1GntkePUamphXxQvpLg+gEEgPOHrFNYMExURR1ngM9SGKtf1Rb
+ GrkBPLMbwJFS6gjjofVbQS/P/SusEW1TfcR+es0QrzRFPpUbwGeVYfQLftwObHi18UP/AIUQE
+ aC024VY2kXocQldZPWrGGbk1oP1MoAP8+Q1mmNnR1v9+i7fNQKxiZ4HVy45WTYa+8eNb+eN2U
+ 4k6HaTo57uF54XEbCCARpdj7JWA/SLvjHt7N+P7zctPkO4MS1zctdgFzeKUO6bq+qGzV347aL
+ 2W+iklJ
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,39 +60,42 @@ On Fri, 24 Jun 2016, Junio C Hamano wrote:
 
 > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> > We rely on the auto-detection ("is stdout a terminal?") to determine
-> > whether to use color in the output of format-patch or not. That
-> > happens to work because we freopen() stdout when redirecting the
-> > output to files.
-> >
-> > However, we are about to fix that work-around, in which case the
-> > auto-detection has no chance to guess whether to use color or not.
-> >
-> > But then, we do not need to guess to begin with. As argued in the
-> > commit message of 7787570c (format-patch: ignore ui.color,
-> > 2011-09-13), we do not allow the ui.color setting to affect
-> > format-patch's output. The only time, therefore, that we allow color
-> > sequences to be written to the output files is when the user specified
-> > the --color command-line option explicitly.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
+> > diff --git a/builtin/log.c b/builtin/log.c
+> > index 099f4f7..27bc88d 100644
+> > --- a/builtin/log.c
+> > +++ b/builtin/log.c
+> > @@ -243,9 +243,10 @@ static struct itimerval early_output_timer;
+> >  
+> >  static void log_show_early(struct rev_info *revs, struct commit_list *list)
+> >  {
+> > -	int i = revs->early_output;
+> > +	int i = revs->early_output, close_file = revs->diffopt.close_file;
 > 
-> The right fix in the longer term (long after this series lands, that
-> is) is probably to update the world view that the codepath from
-> want_color_auto() to check_auto_color() has always held.  In their
-> world view, when they are asked to make --color=auto decision, the
-> output always goes the standard output, and that is why they
-> hardcode isatty(1) to decide.  The existing freopen() was a part of
-> that world view.
+> Probably not worth a reroll, but I find this kind of thing easier to
+> read as two separate definitions.
+> 
+> >  	int show_header = 1;
+> 
+> And this was separate from "int i = ...;" for the same reason.  It
+> is OK to write "int i, j, k;" but "show_header" is something that
+> keeps track of the more important state during the control flow and
+> it is easier to read if we make it stand out.  close_file falls into
+> the same category, I would think.
 
-I agree, and I briefly looked into this. It looks a bit more involved than
-I am prepared for, what with my real goal being the rebase--helper, not
-clean-ups ;-)
+Makes sense. I changed it locally, in case this patch series needs a
+re-roll.
 
-> We'd need a workaround like this patch if we want to leave the
-> want_color_auto() as-is, and as a workaround I think this is the
-> least invasive one, so let's queue it as-is.
+> >  		case commit_error:
+> > +			if (close_file)
+> > +				fclose(revs->diffopt.file);
+> 
+> I wondered if we want to also clear, i.e. revs->diffopt.file = NULL, 
+> but I do not think .close_file does that either, so this is good.
 
-Thanks!
+Indeed, the current code in diff_flush() just fclose()s the stream, but
+does not reset the "file" field:
+
+	https://github.com/git/git/blob/v2.9.0/diff.c#L4715-L4716
+
+Ciao,
 Dscho
