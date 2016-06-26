@@ -2,130 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17D7920179
-	for <e@80x24.org>; Sun, 26 Jun 2016 18:28:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43ADF20179
+	for <e@80x24.org>; Sun, 26 Jun 2016 19:30:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751757AbcFZS17 (ORCPT <rfc822;e@80x24.org>);
-	Sun, 26 Jun 2016 14:27:59 -0400
-Received: from cloud.peff.net ([50.56.180.127]:32882 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751648AbcFZS17 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jun 2016 14:27:59 -0400
-Received: (qmail 5339 invoked by uid 102); 26 Jun 2016 18:27:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Jun 2016 14:27:19 -0400
-Received: (qmail 3368 invoked by uid 107); 26 Jun 2016 18:27:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Jun 2016 14:27:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Jun 2016 14:27:16 -0400
-Date:	Sun, 26 Jun 2016 14:27:16 -0400
-From:	Jeff King <peff@peff.net>
-To:	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	sschuberth@gmail.com
-Subject: Re: [PATCH] config: add conditional include
-Message-ID: <20160626182715.GA12546@sigill.intra.peff.net>
-References: <20160626070617.30211-1-pclouds@gmail.com>
+	id S1751427AbcFZT36 (ORCPT <rfc822;e@80x24.org>);
+	Sun, 26 Jun 2016 15:29:58 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:55774 "EHLO
+	homiemail-a12.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751330AbcFZT35 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Jun 2016 15:29:57 -0400
+Received: from homiemail-a12.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a12.g.dreamhost.com (Postfix) with ESMTP id B13771030063;
+	Sun, 26 Jun 2016 12:29:52 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=subject:to
+	:references:cc:from:message-id:date:mime-version:in-reply-to
+	:content-type:content-transfer-encoding; s=novalis.org; bh=unCDL
+	ap0/v4LxwZblNx5JZoR6Io=; b=Mg3cD+pKTERMXQ6oNEkpPIWL50ATSs1fSmP9w
+	vDvsMbnsveYYvBdzVWD7qkdmi7CKatnEaJ3XeEScG8l/dLMgSe3Avoyhi6W4eOxh
+	AYieo4AdRopkX3LbgLh1I5157SHI6EbuioWWoBvPHntuedLei8zcaqShLpNLGsFn
+	ue/rMM=
+Received: from [10.0.1.180] (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: novalis@novalis.org)
+	by homiemail-a12.g.dreamhost.com (Postfix) with ESMTPSA id 6F4351030062;
+	Sun, 26 Jun 2016 12:29:52 -0700 (PDT)
+Subject: Re: [PATCH v12 04/20] index-helper: new daemon for caching index and
+ related stuff
+To:	Duy Nguyen <pclouds@gmail.com>
+References: <1463694357-6503-1-git-send-email-dturner@twopensource.com>
+ <1463694357-6503-5-git-send-email-dturner@twopensource.com>
+ <CACsJy8CftPGmrKP8Yeok90T9=whzj69bfE3_X6wHyWOEp6vRzg@mail.gmail.com>
+ <576ED9A2.8070202@novalis.org>
+ <CACsJy8Dqvv-Ty-wG0qkenyvLNLyqVueJmhjiQXnr0zVUGFvDeA@mail.gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>
+From:	David Turner <novalis@novalis.org>
+Message-ID: <57702D2F.9080306@novalis.org>
+Date:	Sun, 26 Jun 2016 15:29:51 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20160626070617.30211-1-pclouds@gmail.com>
+In-Reply-To: <CACsJy8Dqvv-Ty-wG0qkenyvLNLyqVueJmhjiQXnr0zVUGFvDeA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sun, Jun 26, 2016 at 09:06:17AM +0200, Nguyễn Thái Ngọc Duy wrote:
-
-> If the path argument in "include" starts with "gitdir:", it is
-> followed by a wildmatch pattern. The include is only effective if
-> $GIT_DIR matches the pattern. This is very useful to add configuration
-> to a group of repositories.
-
-I think this needs some more introduction to the concept. When you say
-"path argument" here, I assumed you meant the value of include.path. But
-you really mean: we are introducing a new concept for the "subsection"
-field of include.*, which is to provide restrictions for conditional
-includes.
-
-It also may be worth discussing the motivation or examples.
-
-> For convenience
-> 
->  - "~" is expanded to $USER
-> 
->  - if the pattern ends with '/', "**" will be appended (e.g. foo/
->    becomes foo/**). In other words, "foo/" automatically matches
->    everything in starting with "foo/".
-> 
->  - if the pattern contains no slashes, it's wrapped around by "**/"
->    and "/**" (e.g. "foo" becomes "**/foo/**"). In other words, "foo"
->    matches any directory component in $GIT_DIR.
+On 06/26/2016 12:27 AM, Duy Nguyen wrote:
+> On Sat, Jun 25, 2016 at 9:21 PM, David Turner <novalis@novalis.org> wrote:
+>> On 06/25/2016 10:33 AM, Duy Nguyen wrote:
+>>>>
+>>>> +               /*
+>>>> +                * Our connection to the client is blocking since a
+>>>> client
+>>>> +                * can always be killed by SIGINT or similar.
+>>>> +                */
+>>>> +               set_socket_blocking_flag(client_fd, 0);
+>>>
+>>>
+>>> Out of curiosity, do we really need this? I thought default behavior
+>>> was always blocking (and checked linux kernel, it seemed to agree with
+>>> me). Maybe for extra safety because other OSes may default to
+>>> something else?
+>>
+>>
+>> Yes -- see this bug report for details:
+>> https://bugs.python.org/issue7995
+>>
 >
-> The combination of the first two is used to group repositories by
-> path. While the last one could be used to match worktree's basename.
+> I think we should refer to this issue in the comment block right
+> before set_socket_blocking_flag() call. Imagine a year from now, I may
+> read the code, decide this code is useless and try to remove it.
 
-This is a nice description, but it probably belongs in the
-documentation.
+Assuming that we do keep this (see Eric Wong's note), I do not think we 
+need a comment.  It is documented in the man page for accept[1], and it 
+is the reader's responsibility to understand standard POSIX APIs.
 
-I don't have any real opinion on the rules themselves, though they seem
-reasonable to me (though in the first one I assume you mean $HOME).
 
-> This code is originally written by Jeff King [1]. All genius designs
-> are his. All bugs are mine (claiming bugs is just more fun :).
 
-Heh. I have written this code in a "something like this" form at least 3
-times over the years.  Conditional includes were always something I
-planned into the original scheme, but had never actually found a good
-use for it. ;)
+[1] "On Linux, the new socket returned by accept()  does  not  inherit 
+file status  flags such as O_NONBLOCK and O_ASYNC from the listening 
+socket. This behavior differs from the canonical  BSD  sockets 
+implementation."
 
-> +	/*
-> +	 * It's OK to run over cond_len in our checks here, as that just pushes
-> +	 * us past the final ".", which cannot match any of our prefixes.
-> +	 */
-> +	if (skip_prefix(cond, "gitdir:", &value)) {
 
-This would benefit from the skip_prefix_mem I proposed in:
-
-  http://article.gmane.org/gmane.comp.version-control.git/298050
-
-(and which is ae989a61dad98debe9899823ca987305f8e8020d in Junio's tree,
-though it is only in pu so far, I think).
-
-That eliminates the need for the comment, and auto-update cond_len, so
-that later:
-
-> +		strbuf_add(&pattern, value, cond_len - (value - cond));
-
-...you do not have to do extra computation to get the correct length.
-
-This is a tangent, but I wonder if expand_user_path() should take a
-buf/len. It always puts the result into a new strbuf anyway, so it would
-not be a big deal to do so. Skimming the output of grep, though, it
-looks like this might be the only caller that would be helped.
-
-> +		buf = expand_user_path(pattern.buf);
-> +		if (buf) {
-> +			strbuf_reset(&pattern);
-> +			strbuf_addstr(&pattern, buf);
-> +			free(buf);
-> +		}
-
-Maybe strbuf_attach() would be shorter here?
-
-> +		} else if (!strchr(pattern.buf, '/')) {
-> +			/* no slashes match one directory component */
-> +			strbuf_insert(&pattern, 0, "**/", 3);
-> +			strbuf_addstr(&pattern, "/**");
-> +		}
-
-I guess it's a little funny that "foo" and "foo/bar" are matched quite
-differently. I wonder if a simpler rule would just be: relative paths
-are unanchored.
-
--Peff
