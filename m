@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 086761F744
-	for <e@80x24.org>; Sun, 26 Jun 2016 04:15:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C82A1F744
+	for <e@80x24.org>; Sun, 26 Jun 2016 04:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751984AbcFZEOz (ORCPT <rfc822;e@80x24.org>);
-	Sun, 26 Jun 2016 00:14:55 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:38934 "EHLO
+	id S1751945AbcFZEOw (ORCPT <rfc822;e@80x24.org>);
+	Sun, 26 Jun 2016 00:14:52 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:38916 "EHLO
 	homiemail-a17.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751855AbcFZEOn convert rfc822-to-8bit
+	by vger.kernel.org with ESMTP id S1751828AbcFZEOl convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jun 2016 00:14:43 -0400
+	Sun, 26 Jun 2016 00:14:41 -0400
 Received: from homiemail-a17.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a17.g.dreamhost.com (Postfix) with ESMTP id 99BF52B2070;
-	Sat, 25 Jun 2016 21:14:42 -0700 (PDT)
+	by homiemail-a17.g.dreamhost.com (Postfix) with ESMTP id 453A52B206D;
+	Sat, 25 Jun 2016 21:14:40 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-type:content-transfer-encoding; s=novalis.org; bh=d6wJu
-	A9v0qqTCPJjwgLxRELn9VQ=; b=lfnbPzv//yl3SsCPHjBQabR7rPfhSRG/nlWgp
-	9q01+zWP5WtFT/XwaNdjUM9PuGxmU1zFU/gOept8Vz/empvaNGpGSu+rP1UOwEf4
-	iRujDbDqRkzGegkxIuz8I4HLjurreebUSQxzmyZNlrQkPq7ywVP5I1+ZT4nvIdJ5
-	kICtG0=
+	:content-type:content-transfer-encoding; s=novalis.org; bh=A44pk
+	kuAR7QStqdxY2ZyweN3JyQ=; b=Ts+ZxNDAJgjjFn3nEr0xUq98LtIb0u3SUppkP
+	nWxVXwqATslp06+wFqcRkrooVk07xu1YAorRvjXPFiY/5WrPuIUd7ljrVy/cW4k9
+	teRew1Gvs/9KISftDhtkpQuku5abSIYnSlkM76uCgF665X5tyqK3lWyfLzTrgxsR
+	a+VqHE=
 Received: from frank.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
 	(Authenticated sender: novalis@novalis.org)
-	by homiemail-a17.g.dreamhost.com (Postfix) with ESMTPSA id 0B06F2B205C;
-	Sat, 25 Jun 2016 21:14:41 -0700 (PDT)
+	by homiemail-a17.g.dreamhost.com (Postfix) with ESMTPSA id AAEAD2B205C;
+	Sat, 25 Jun 2016 21:14:39 -0700 (PDT)
 From:	David Turner <novalis@novalis.org>
 To:	git@vger.kernel.org, pclouds@gmail.com, kamggg@gmail.com
 Cc:	David Turner <dturner@twopensource.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v13 12/20] update-index: enable/disable watchman support
-Date:	Sun, 26 Jun 2016 00:14:16 -0400
-Message-Id: <1466914464-10358-12-git-send-email-novalis@novalis.org>
+Subject: [PATCH v13 09/20] read-cache: add watchman 'WAMA' extension
+Date:	Sun, 26 Jun 2016 00:14:13 -0400
+Message-Id: <1466914464-10358-9-git-send-email-novalis@novalis.org>
 X-Mailer: git-send-email 2.8.0.rc4.20.g1d4f562
 In-Reply-To: <1466914464-10358-1-git-send-email-novalis@novalis.org>
 References: <1466914464-10358-1-git-send-email-novalis@novalis.org>
@@ -52,93 +52,286 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 
+The extension contains a bitmap, one bit for each entry in the
+index. If the n-th bit is zero, the n-th entry is considered
+unchanged, we can ce_mark_uptodate() it without refreshing. If the bit
+is non-zero and we found out the corresponding file is clean after
+refresh, we can clear the bit.
+
+In addition, there's a list of directories in the untracked-cache
+to invalidate (because they have new or modified entries).
+
+The 'skipping refresh' bit is not in this patch yet as we would need
+watchman. More details in later patches.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-index-helper.txt |  3 +++
- Documentation/git-update-index.txt |  6 ++++++
- builtin/update-index.c             | 15 +++++++++++++++
- 3 files changed, 24 insertions(+)
+ Documentation/technical/index-format.txt |  22 ++++++
+ cache.h                                  |   4 +
+ dir.h                                    |   3 +
+ read-cache.c                             | 127 ++++++++++++++++++++++++++++++-
+ 4 files changed, 154 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-index-helper.txt b/Documentation/git-index-helper.txt
-index 2982e03..b2ca511 100644
---- a/Documentation/git-index-helper.txt
-+++ b/Documentation/git-index-helper.txt
-@@ -18,6 +18,9 @@ each with a submodule, you might need four index-helpers.  (In practice,
- this is only worthwhile for large indexes, so only use it if you notice
- that git status is slow).
+diff --git a/Documentation/technical/index-format.txt b/Documentation/technical/index-format.txt
+index ade0b0c..86ed3a6 100644
+--- a/Documentation/technical/index-format.txt
++++ b/Documentation/technical/index-format.txt
+@@ -295,3 +295,25 @@ The remaining data of each directory block is grouped by type:
+     in the previous ewah bitmap.
  
-+If you want the index-helper to accelerate untracked file checking,
-+run git update-index --watchman before using it.
+   - One NUL.
 +
- OPTIONS
- -------
- 
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index c6cbed1..6736487 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -19,6 +19,7 @@ SYNOPSIS
- 	     [--ignore-submodules]
- 	     [--[no-]split-index]
- 	     [--[no-|test-|force-]untracked-cache]
-+	     [--[no-]watchman]
- 	     [--really-refresh] [--unresolve] [--again | -g]
- 	     [--info-only] [--index-info]
- 	     [-z] [--stdin] [--index-version <n>]
-@@ -176,6 +177,11 @@ may not support it yet.
- --no-untracked-cache::
- 	Enable or disable untracked cache feature. Please use
- 	`--test-untracked-cache` before enabling it.
++== Watchman cache
 +
-+--watchman::
-+--no-watchman::
-+	Enable or disable watchman support. This is, at present,
-+	only useful with git index-helper.
- +
- These options take effect whatever the value of the `core.untrackedCache`
- configuration variable (see linkgit:git-config[1]). But a warning is
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 1c94ca5..55722b9 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -914,6 +914,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- {
- 	int newfd, entries, has_errors = 0, nul_term_line = 0;
- 	enum uc_mode untracked_cache = UC_UNSPECIFIED;
-+	int use_watchman = -1;
- 	int read_from_stdin = 0;
- 	int prefix_length = prefix ? strlen(prefix) : 0;
- 	int preferred_index_format = 0;
-@@ -1012,6 +1013,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 			    N_("test if the filesystem supports untracked cache"), UC_TEST),
- 		OPT_SET_INT(0, "force-untracked-cache", &untracked_cache,
- 			    N_("enable untracked cache without testing the filesystem"), UC_FORCE),
-+		OPT_BOOL(0, "watchman", &use_watchman,
-+			N_("use or not use watchman to reduce refresh cost")),
- 		OPT_END()
- 	};
++  The watchman cache tracks files for which watchman has told us about
++  changes.  The signature for this extension is { 'W', 'A', 'M', 'A' }.
++
++  The extension starts with
++
++  - A NUL-terminated string: the watchman vector clock at the last
++    time we heard from watchman.
++
++  - 32-bit bitmap size: the size of the CE_WATCHMAN_DIRTY bitmap
++
++  - 32-bit untracked cache entry count: the number of dirty untracked
++    cache entries
++
++  - An ewah bitmap, the n-th bit indicates whether the n-th index entry
++    is CE_WATCHMAN_DIRTY.
++
++  - a list of N NUL-terminated strings.  Each is a directory that should
++    be marked dirty in the untracked cache because watchman has told us
++    about an update to a file in it.
+diff --git a/cache.h b/cache.h
+index 4c1529a..f10992d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -182,6 +182,8 @@ struct cache_entry {
+ #define CE_VALID     (0x8000)
+ #define CE_STAGESHIFT 12
  
-@@ -1149,6 +1152,18 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		die("Bug: bad untracked_cache value: %d", untracked_cache);
- 	}
++#define CE_WATCHMAN_DIRTY  (0x0001)
++
+ /*
+  * Range 0xFFFF0FFF in ce_flags is divided into
+  * two parts: in-memory flags and on-disk ones.
+@@ -320,6 +322,7 @@ static inline unsigned int canon_mode(unsigned int mode)
+ #define CACHE_TREE_CHANGED	(1 << 5)
+ #define SPLIT_INDEX_ORDERED	(1 << 6)
+ #define UNTRACKED_CHANGED	(1 << 7)
++#define WATCHMAN_CHANGED	(1 << 8)
  
-+	if (use_watchman > 0) {
-+		the_index.last_update    = xstrdup("");
-+		the_index.cache_changed |= WATCHMAN_CHANGED;
-+#ifndef USE_WATCHMAN
-+		warning(_("git was built without watchman support, so this "
-+			  "command will probably not result in any speedup."));
-+#endif
-+	} else if (!use_watchman) {
-+		the_index.last_update    = NULL;
-+		the_index.cache_changed |= WATCHMAN_CHANGED;
+ struct split_index;
+ struct untracked_cache;
+@@ -353,6 +356,7 @@ struct index_state {
+ 	struct untracked_cache *untracked;
+ 	void *mmap;
+ 	size_t mmap_size;
++	char *last_update;
+ };
+ 
+ extern struct index_state the_index;
+diff --git a/dir.h b/dir.h
+index cd46f30..896b64a 100644
+--- a/dir.h
++++ b/dir.h
+@@ -139,6 +139,9 @@ struct untracked_cache {
+ 	int gitignore_invalidated;
+ 	int dir_invalidated;
+ 	int dir_opened;
++	/* watchman invalidation data */
++	unsigned int use_watchman : 1;
++	struct string_list invalid_untracked;
+ };
+ 
+ struct dir_struct {
+diff --git a/read-cache.c b/read-cache.c
+index befc499..e0fc634 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -21,6 +21,7 @@
+ #include "unix-socket.h"
+ #include "pkt-line.h"
+ #include "sigchain.h"
++#include "ewah/ewok.h"
+ 
+ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
+ 					       unsigned int options);
+@@ -43,11 +44,13 @@ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
+ #define CACHE_EXT_RESOLVE_UNDO 0x52455543 /* "REUC" */
+ #define CACHE_EXT_LINK 0x6c696e6b	  /* "link" */
+ #define CACHE_EXT_UNTRACKED 0x554E5452	  /* "UNTR" */
++#define CACHE_EXT_WATCHMAN 0x57414D41	  /* "WAMA" */
+ 
+ /* changes that can be kept in $GIT_DIR/index (basically all extensions) */
+ #define EXTMASK (RESOLVE_UNDO_CHANGED | CACHE_TREE_CHANGED | \
+ 		 CE_ENTRY_ADDED | CE_ENTRY_REMOVED | CE_ENTRY_CHANGED | \
+-		 SPLIT_INDEX_ORDERED | UNTRACKED_CHANGED)
++		 SPLIT_INDEX_ORDERED | UNTRACKED_CHANGED | \
++		 WATCHMAN_CHANGED)
+ 
+ struct index_state the_index;
+ static const char *alternate_index_output;
+@@ -1222,8 +1225,23 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 			continue;
+ 
+ 		new = refresh_cache_ent(istate, ce, options, &cache_errno, &changed);
+-		if (new == ce)
++		if (new == ce) {
++			if (ce->ce_flags & CE_WATCHMAN_DIRTY) {
++				/* The rule is index-helper sets
++				 * CE_WATCHMAN_DIRTY when a file is changed,
++				 * then git clears it when it has verified
++				 * that the in-index entry now matches the
++				 * worktree version. index-helper does not
++				 * clear the bit and git does not set it. We
++				 * have verified here that stat info (and even
++				 * content) matches, so it's safe to clear
++				 * CE_WATCHMAN_DIRTY now.
++				 */
++				ce->ce_flags          &= ~CE_WATCHMAN_DIRTY;
++				istate->cache_changed |= WATCHMAN_CHANGED;
++			}
+ 			continue;
++		}
+ 		if (!new) {
+ 			const char *fmt;
+ 
+@@ -1367,6 +1385,94 @@ static int verify_hdr(const struct cache_header *hdr, unsigned long size)
+ 	return 0;
+ }
+ 
++static void mark_no_watchman(size_t pos, void *data)
++{
++	struct index_state *istate = data;
++	assert(pos < istate->cache_nr);
++	istate->cache[pos]->ce_flags |= CE_WATCHMAN_DIRTY;
++}
++
++static int read_watchman_ext(struct index_state *istate, const void *data,
++			     unsigned long sz)
++{
++	struct ewah_bitmap *bitmap;
++	int ret, len;
++	uint32_t bitmap_size;
++	uint32_t untracked_nr;
++
++	if (memchr(data, 0, sz) == NULL)
++		return error("invalid extension");
++
++	len = strlen(data) + 1;
++	memcpy(&bitmap_size, (const char *)data + len, 4);
++	memcpy(&untracked_nr, (const char *)data + len + 4, 4);
++	untracked_nr = ntohl(untracked_nr);
++	bitmap_size = ntohl(bitmap_size);
++
++	bitmap = ewah_new();
++	ret = ewah_read_mmap(bitmap, (const char *)data + len + 8, bitmap_size);
++	if (ret != bitmap_size) {
++		ewah_free(bitmap);
++		return error("failed to parse ewah bitmap reading watchman index extension");
++	}
++	istate->last_update = xstrdup(data);
++	ewah_each_bit(bitmap, mark_no_watchman, istate);
++	ewah_free(bitmap);
++
++	/*
++	 * TODO: update the untracked cache from the untracked data in this
++	 * extension.
++	 */
++	return 0;
++}
++
++static int untracked_entry_append(struct string_list_item *item, void *sbvoid)
++{
++	struct strbuf *sb = sbvoid;
++
++	strbuf_addstr(sb, item->string);
++	strbuf_addch(sb, 0);
++	return 0;
++}
++
++void write_watchman_ext(struct strbuf *sb, struct index_state *istate)
++{
++	struct ewah_bitmap *bitmap;
++	int i;
++	int ewah_start;
++	int ewah_size = 0;
++	int fixup = 0;
++
++	strbuf_add(sb, istate->last_update, strlen(istate->last_update) + 1);
++	fixup = sb->len;
++	strbuf_add(sb, &ewah_size, 4); /* we'll fix this up later */
++	if (istate->untracked) {
++		uint32_t nr = istate->untracked->invalid_untracked.nr;
++		nr = htonl(nr);
++		strbuf_add(sb, &nr, 4);
++	} else {
++		/* zero */
++		strbuf_add(sb, &ewah_size, 4);
 +	}
 +
- 	if (active_cache_changed) {
- 		if (newfd < 0) {
- 			if (refresh_args.flags & REFRESH_QUIET)
++	ewah_start = sb->len;
++	bitmap = ewah_new();
++	for (i = 0; i < istate->cache_nr; i++)
++		if (istate->cache[i]->ce_flags & CE_WATCHMAN_DIRTY)
++			ewah_set(bitmap, i);
++	ewah_serialize_strbuf(bitmap, sb);
++	ewah_free(bitmap);
++
++	/* fix up size field */
++	ewah_size = sb->len - ewah_start;
++	ewah_size = htonl(ewah_size);
++	memcpy(sb->buf + fixup, &ewah_size, 4);
++
++	if (istate->untracked)
++		for_each_string_list(&istate->untracked->invalid_untracked,
++				     untracked_entry_append, sb);
++}
++
+ static int read_index_extension(struct index_state *istate,
+ 				const char *ext, void *data, unsigned long sz)
+ {
+@@ -1384,6 +1490,11 @@ static int read_index_extension(struct index_state *istate,
+ 	case CACHE_EXT_UNTRACKED:
+ 		istate->untracked = read_untracked_extension(data, sz);
+ 		break;
++
++	case CACHE_EXT_WATCHMAN:
++		read_watchman_ext(istate, data, sz);
++		break;
++
+ 	default:
+ 		if (*ext < 'A' || 'Z' < *ext)
+ 			return error("index uses %.4s extension, which we do not understand",
+@@ -1815,6 +1926,8 @@ int discard_index(struct index_state *istate)
+ 	istate->untracked = NULL;
+ 	istate->from_shm = 0;
+ 	istate->to_shm   = 0;
++	free(istate->last_update);
++	istate->last_update = NULL;
+ 	return 0;
+ }
+ 
+@@ -2212,6 +2325,16 @@ static int do_write_index(struct index_state *istate, int newfd,
+ 		if (err)
+ 			return -1;
+ 	}
++	if (!strip_extensions && istate->last_update) {
++		struct strbuf sb = STRBUF_INIT;
++
++		write_watchman_ext(&sb, istate);
++		err = write_index_ext_header(&c, newfd, CACHE_EXT_WATCHMAN, sb.len) < 0
++			|| ce_write(&c, newfd, sb.buf, sb.len) < 0;
++		strbuf_release(&sb);
++		if (err)
++			return -1;
++	}
+ 
+ 	if (ce_flush(&c, newfd, istate->sha1) || fstat(newfd, &st))
+ 		return -1;
 -- 
 1.9.1
 
