@@ -2,119 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C01320179
-	for <e@80x24.org>; Sun, 26 Jun 2016 18:16:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17D7920179
+	for <e@80x24.org>; Sun, 26 Jun 2016 18:28:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751810AbcFZSP7 (ORCPT <rfc822;e@80x24.org>);
-	Sun, 26 Jun 2016 14:15:59 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64650 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751763AbcFZSP6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jun 2016 14:15:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 898D12780B;
-	Sun, 26 Jun 2016 14:15:56 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CZkVRxy9Z4ahTElzLqH/jjbDs84=; b=nMtJQG
-	1vURLVJ7vXx5An+NwCE9g3ldb7dzoEw5d1FG0fi1dcVj5Ib4pqB+NE/ixRDt2Kds
-	inDBtCTrv3lFQyRdV6qnVeyaETG6AGxYfimSV1nSspcDsMsrHZVCjSvuXqPEzd5U
-	jCD8E9d+Apt5PStjJ0n33ZDeFsjqQ5IDv/sXI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VGS6SqIdfPNcn43TGOhyBEg/jW0NAfS0
-	PkL6ypIZWgSdqFkvvP11cbrjyzFn2KQbhBwlqNnMmR7u/PTIwOROEk7+xXLiUAYj
-	yii8kg0lUdE8Vek0lpBlKzhwY5m82CCrNztZoNR1oBNgLIoBJLEmWZzRA09uMWX4
-	mClJm27HCQs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 806A927809;
-	Sun, 26 Jun 2016 14:15:56 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0182D27808;
-	Sun, 26 Jun 2016 14:15:56 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Barret Rennie <barret@brennie.ca>
-Cc:	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Michael Rappazzo <rappazzo@gmail.com>
-Subject: Re: [PATCH] builtin/worktree.c: add option for setting worktree name
-References: <20160625051548.95564-1-barret@brennie.ca>
-	<576E2FA9.7070008@kdbg.org>
-	<1FEF5F90-6534-4D91-B27C-16FE6D16EC3F@brennie.ca>
-	<xmqq1t3ldpdl.fsf@gitster.mtv.corp.google.com>
-Date:	Sun, 26 Jun 2016 11:15:54 -0700
-In-Reply-To: <xmqq1t3ldpdl.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Sat, 25 Jun 2016 12:45:10 -0700")
-Message-ID: <xmqqshvzddet.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751757AbcFZS17 (ORCPT <rfc822;e@80x24.org>);
+	Sun, 26 Jun 2016 14:27:59 -0400
+Received: from cloud.peff.net ([50.56.180.127]:32882 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751648AbcFZS17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jun 2016 14:27:59 -0400
+Received: (qmail 5339 invoked by uid 102); 26 Jun 2016 18:27:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Jun 2016 14:27:19 -0400
+Received: (qmail 3368 invoked by uid 107); 26 Jun 2016 18:27:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Jun 2016 14:27:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Jun 2016 14:27:16 -0400
+Date:	Sun, 26 Jun 2016 14:27:16 -0400
+From:	Jeff King <peff@peff.net>
+To:	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	sschuberth@gmail.com
+Subject: Re: [PATCH] config: add conditional include
+Message-ID: <20160626182715.GA12546@sigill.intra.peff.net>
+References: <20160626070617.30211-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 068E3886-3BCA-11E6-ADB6-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20160626070617.30211-1-pclouds@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sun, Jun 26, 2016 at 09:06:17AM +0200, Nguyễn Thái Ngọc Duy wrote:
 
-> Now, if you do the worktree, you may still want the relative
-> structure between these two, i.e. if you want to work on two
-> different branch combinations of the whole thing, you would want to
-> do this:
+> If the path argument in "include" starts with "gitdir:", it is
+> followed by a wildmatch pattern. The include is only effective if
+> $GIT_DIR matches the pattern. This is very useful to add configuration
+> to a group of repositories.
+
+I think this needs some more introduction to the concept. When you say
+"path argument" here, I assumed you meant the value of include.path. But
+you really mean: we are introducing a new concept for the "subsection"
+field of include.*, which is to provide restrictions for conditional
+includes.
+
+It also may be worth discussing the motivation or examples.
+
+> For convenience
+> 
+>  - "~" is expanded to $USER
+> 
+>  - if the pattern ends with '/', "**" will be appended (e.g. foo/
+>    becomes foo/**). In other words, "foo/" automatically matches
+>    everything in starting with "foo/".
+> 
+>  - if the pattern contains no slashes, it's wrapped around by "**/"
+>    and "/**" (e.g. "foo" becomes "**/foo/**"). In other words, "foo"
+>    matches any directory component in $GIT_DIR.
 >
->     $HOME/xyzzy-1/frotz       - borrow from $HOME/xyzzy/frotz
->     $HOME/xyzzy-1/libs/nitfol - likewise for nitfol
->
->     $HOME/xyzzy-2/frotz       - borrow from $HOME/xyzzy/frotz
->     $HOME/xyzzy-2/libs/nitfol - likewise for nitfol
->
-> where xyzzy-$n may be for topic-$n branch both in frotz and nitfol.
->
-> And explained that way, it becomes clearer that you would want to
-> name $HOME/xyzzy-1/frotz worktree after "topic-1", not the default
-> name you would get "frotz" (because the default gives you the leaf
-> level name of the newly created worktree).
->
-> After the discussion above (which may or may not match what you
-> raised this topic for), I think a feature to let you override the
-> default name makes sense.
->
-> It just needs to be explained better to help the users when the
-> feature eventually becomes part of Git.  Also, others (especially
-> Duy) may have even better ideas (e.g. instead of having to always
-> use --name to give custom name for all worktrees, set a "hint" just
-> once to help the logic that comes up with the default name give a
-> better name), so while the feature may be desirable, your exact
-> implementation may or may not be what we eventually want to adopt.
+> The combination of the first two is used to group repositories by
+> path. While the last one could be used to match worktree's basename.
 
-For example, the "frotz" and "nitfol" repositories (i.e. where their
-worktrees borrow their refs and object stores from) could have a
-single configuration variable each, i.e.
+This is a nice description, but it probably belongs in the
+documentation.
 
-	(in $HOME/xyzzy/frotz/.git/config)
-        [worktree] location = "~/*/frotz"
+I don't have any real opinion on the rules themselves, though they seem
+reasonable to me (though in the first one I assume you mean $HOME).
 
-	(in $HOME/xyzzy/libs/nitfol/.git/config)
-        [worktree] location = "~/*/libs/nitfol"
+> This code is originally written by Jeff King [1]. All genius designs
+> are his. All bugs are mine (claiming bugs is just more fun :).
 
-and then the user could do in each of these two repositories
+Heh. I have written this code in a "something like this" form at least 3
+times over the years.  Conditional includes were always something I
+planned into the original scheme, but had never actually found a good
+use for it. ;)
 
-	$ git -C ~/xyzzy/frotz worktree add --by-name xyzzy-1 topic-1
-	$ git -C ~/xyzzy/lib/nitfol worktree add --by-name xyzzy-1 topic-1
+> +	/*
+> +	 * It's OK to run over cond_len in our checks here, as that just pushes
+> +	 * us past the final ".", which cannot match any of our prefixes.
+> +	 */
+> +	if (skip_prefix(cond, "gitdir:", &value)) {
 
-to get the desired layout instead.
+This would benefit from the skip_prefix_mem I proposed in:
 
-The traditional way may be "create one HERE", and your patch tries
-to tweak it to "create one at HERE with this NAME".  The above
-attempts to remove the need for specifying the exact location every
-time a new worktree is created, and instead let you specify the
-systematic way in which you lay out your worktrees based on their
-names.
+  http://article.gmane.org/gmane.comp.version-control.git/298050
 
+(and which is ae989a61dad98debe9899823ca987305f8e8020d in Junio's tree,
+though it is only in pu so far, I think).
+
+That eliminates the need for the comment, and auto-update cond_len, so
+that later:
+
+> +		strbuf_add(&pattern, value, cond_len - (value - cond));
+
+...you do not have to do extra computation to get the correct length.
+
+This is a tangent, but I wonder if expand_user_path() should take a
+buf/len. It always puts the result into a new strbuf anyway, so it would
+not be a big deal to do so. Skimming the output of grep, though, it
+looks like this might be the only caller that would be helped.
+
+> +		buf = expand_user_path(pattern.buf);
+> +		if (buf) {
+> +			strbuf_reset(&pattern);
+> +			strbuf_addstr(&pattern, buf);
+> +			free(buf);
+> +		}
+
+Maybe strbuf_attach() would be shorter here?
+
+> +		} else if (!strchr(pattern.buf, '/')) {
+> +			/* no slashes match one directory component */
+> +			strbuf_insert(&pattern, 0, "**/", 3);
+> +			strbuf_addstr(&pattern, "/**");
+> +		}
+
+I guess it's a little funny that "foo" and "foo/bar" are matched quite
+differently. I wonder if a simpler rule would just be: relative paths
+are unanchored.
+
+-Peff
