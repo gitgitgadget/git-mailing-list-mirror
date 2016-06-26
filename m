@@ -7,141 +7,162 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 276452018B
-	for <e@80x24.org>; Sun, 26 Jun 2016 20:46:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E609F20179
+	for <e@80x24.org>; Sun, 26 Jun 2016 20:46:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480AbcFZUqE (ORCPT <rfc822;e@80x24.org>);
-	Sun, 26 Jun 2016 16:46:04 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35513 "EHLO
+	id S1751491AbcFZUqM (ORCPT <rfc822;e@80x24.org>);
+	Sun, 26 Jun 2016 16:46:12 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35870 "EHLO
 	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751449AbcFZUqD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jun 2016 16:46:03 -0400
-Received: by mail-pf0-f194.google.com with SMTP id t190so14044124pfb.2
-        for <git@vger.kernel.org>; Sun, 26 Jun 2016 13:46:02 -0700 (PDT)
+	with ESMTP id S1751449AbcFZUqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jun 2016 16:46:11 -0400
+Received: by mail-pf0-f194.google.com with SMTP id i123so14019820pfg.3
+        for <git@vger.kernel.org>; Sun, 26 Jun 2016 13:46:10 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=pkI70OzaBY7hZQmmZAasaOg0ihQiPD/ajHKO5RoRSyw=;
-        b=jc84Bwtv4IbBXge0O6x3Go6B+M4IBF1LSaSy9Np5rljbo8VdHmzI1gUSPFU3QIn3tH
-         B8EUy/UOQazvH5sEASnMM94dKBMHEIl0HKCPkFZ02r/JpuMXKSVVyHvMbzra5KOAsXiV
-         gZDNnqF4chHiyRbGQ8XWk8PV2JKBGuFWGyjXNCxoTNE4DeFNLu2m4n1eIF6XpjBJjIwA
-         3+tWKJWUDeSh+ZhQDIRjWMIag/BmfAKXOiRivZQXKtYKKDKZAG0JeFef6LQAjnbzpuNa
-         NYFGQd4BfeYk9Nw7dDtk6+J85+24k7raygTjnrYCk0j90dXLzoYk4nwnhq6mzzuMx9tO
-         OGqg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=vhCx+azYtZ3/Qg7Dm/5RStaiNb1fr0VNd7ztAgL1QrU=;
+        b=R8t53Q8zVE03kP1qWen0Q/nadBu2NmHsrGcDblyRnNbrRGI+P+OZ7qn2aKCB0qWGBC
+         uJXrfKhX9J3PHecDvX4hH9FPQ+CeQs3Wkx5fnhefE1YnLIzqIWdMpcz6QCXH1yPAqQgI
+         XwKora5Q4SNFbVCLLtGsLBv6qgt2r0Y9oZq1B7WRrT6Mpa8sE7R6Z3xLzPdzH/ybnc8z
+         KxVJguNC1Z2jOHoOF+N6POMbCsSe6LCZV2pial1vCom0cq6DtHwIbnfqOOnXP7UmEZyK
+         xF6DLSZgyeIIC1Xz7LGrrZRQnz1ynzYMoR9ws59iVoVA3qa8aDRBOfvNBiioV5xd84pU
+         D2eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=pkI70OzaBY7hZQmmZAasaOg0ihQiPD/ajHKO5RoRSyw=;
-        b=PyFz8hjrUeDtmKZldqlEfbobf6rEINIFnh25V0EZQaymy9DvFGPVWcTEjHpFcCQcF5
-         BYH/2sNX+S4tRO5vRC5cD+v1Pv34deoRrl/QJM/Joga5vhJgIUgQ+d19G5B/tHif1b7e
-         EFBA6pDQw5SFv3EEd/QpkX4oDrQTTMXvbrDmfFF2lDYy+t/4cGH/P/b8Ycv9BlRk9Y58
-         aEnrojH6ZKdBBKlXO+4xF9fEPIxh4K2WiuBQof8+secP9nyTzBV+tut0JLjbowbmRmaI
-         WIxMQ+pGAY/CG58Y/WoUb+Ecv0L5ppviC0VTLzF0tebh6B/7jfEHZ6KQpUlJ+oaiT2O9
-         vyPw==
-X-Gm-Message-State: ALyK8tK3PLPVrEVU15wJ1gCouTThFfnA5KOgkkX/nVfMsIAlny1ZP7vlr5NQBATwlz6YFA==
-X-Received: by 10.98.47.129 with SMTP id v123mr26998060pfv.71.1466973961477;
-        Sun, 26 Jun 2016 13:46:01 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=vhCx+azYtZ3/Qg7Dm/5RStaiNb1fr0VNd7ztAgL1QrU=;
+        b=MTcMiJ2Y4WF600SWl49tIrdmV09srMm4B1Ifle1SnW7tj7sVLJ/zI9uJcHi+mjAny7
+         aEtCNkSnJ2FKIClYLobwS1qV7ToJuan3mODahTlJHnsW0v3d9Wqlpt2LY9tDBGNLTwrZ
+         ZkC5DmqEq1CUo3C+7+oCuFtUTmIEL4wb6w+KIsnUeueDzlmyzI1Jku7YoF2jqHkA/Eva
+         2537gq06DIM/+h/61pYo4zOZDRZToU5C+FtBaBOoLp7lVx0YBpOZs8s+QjYbIHCn9xAS
+         qa9R+UALgnGFlrS4m/FnD1XvVG3Ej6vni1Q5n2qQAuGfKibbbQUZqicO80YbVOr04isj
+         vwJw==
+X-Gm-Message-State: ALyK8tKjbR7Ed3BJy0obXMwvqTOpevEUNyVujDk66OYnR39DmLbEssM1HfooxSOaRd5CVg==
+X-Received: by 10.98.108.5 with SMTP id h5mr27446525pfc.22.1466973970264;
+        Sun, 26 Jun 2016 13:46:10 -0700 (PDT)
 Received: from localhost.localdomain ([111.119.199.22])
-        by smtp.gmail.com with ESMTPSA id ot2sm1591749pac.29.2016.06.26.13.45.53
+        by smtp.gmail.com with ESMTPSA id ot2sm1591749pac.29.2016.06.26.13.46.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 26 Jun 2016 13:46:00 -0700 (PDT)
+        Sun, 26 Jun 2016 13:46:09 -0700 (PDT)
 From:	Pranit Bauva <pranit.bauva@gmail.com>
 To:	git@vger.kernel.org
 Cc:	Pranit Bauva <pranit.bauva@gmail.com>, Matthie.Moy@grenoble-inp.fr,
 	christian.couder@gmail.com, chriscool@tuxfamily.org,
 	gitster@pobox.com
-Subject: [RFC/PATCH 1/3] bisect--helper: `check_and_set_terms` shell function in C
-Date:	Mon, 27 Jun 2016 02:14:09 +0530
-Message-Id: <20160626204411.19919-1-pranit.bauva@gmail.com>
+Subject: [RFC/PATCH 2/3] bisect--helper: `bisect_next_check` shell function in C
+Date:	Mon, 27 Jun 2016 02:14:10 +0530
+Message-Id: <20160626204411.19919-2-pranit.bauva@gmail.com>
 X-Mailer: git-send-email 2.9.0
+In-Reply-To: <20160626204411.19919-1-pranit.bauva@gmail.com>
+References: <20160626204411.19919-1-pranit.bauva@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Reimplement the `check_and_set_terms` shell function in C and add
-`check-and-set-terms` subcommand to `git bisect--helper` to call it from
-git-bisect.sh
+Reimplement `bisect_next_check` shell function in C and add
+`bisect-next-check` subcommand to `git bisect--helper` to call it from
+git-bisect.sh .
 
-Using `--check-and-set-terms` subcommand is a temporary measure to port
-shell function in C so as to use the existing test suite. As more
-functions are ported, this subcommand will be retired and will be called
-by some other methods.
+Using `--bisect-next-check` is a temporary measure to port shell
+function to C so as to use the existing test suite. As more functions
+are ported, this subcommand will be retired and will be called by some
+other methods.
 
-check_and_set_terms() sets and receives two global variables namely
-TERM_GOOD and TERM_BAD in the shell script. Luckily the file BISECT_TERMS
-also contains the value of those variables so its appropriate to evoke the
-method get_terms() after calling the subcommand so that it retrieves the
-value of TERM_GOOD and TERM_BAD from the file BISECT_TERMS. The two
-global variables are passed as arguments to the subcommand.
+bisect_voc() is removed as it is redundant and does not serve any useful
+purpose. We are better off specifying "bad|new" "good|old" as and when
+we require in bisect_next_check().
 
-Also introduce bisect_terms_reinit() to release the previous memory of
-struct bisect_terms and allocate new memory for it thus flushing out the
-previous contents.
-
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 ---
-This series applies on top of my previous patch series[1].
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/298263
-
- builtin/bisect--helper.c | 53 +++++++++++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 36 ++++----------------------------
- 2 files changed, 56 insertions(+), 33 deletions(-)
+ builtin/bisect--helper.c | 80 +++++++++++++++++++++++++++++++++++++++++++++++-
+ git-bisect.sh            | 60 +++---------------------------------
+ 2 files changed, 83 insertions(+), 57 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index e946ba9..c387697 100644
+index c387697..9a289a1 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -45,6 +45,13 @@ static int bisect_terms_release(struct bisect_terms *term)
+@@ -6,6 +6,7 @@
+ #include "dir.h"
+ #include "argv-array.h"
+ #include "run-command.h"
++#include "prompt.h"
+ 
+ static GIT_PATH_FUNC(git_path_bisect_write_terms, "BISECT_TERMS")
+ static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
+@@ -23,6 +24,7 @@ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --bisect-clean-state"),
+ 	N_("git bisect--helper --bisect-reset [<commit>]"),
+ 	N_("git bisect--helper --bisect-write <state> <revision> <TERM_GOOD> <TERM_BAD> [<nolog>]"),
++	N_("git bisect--helper --bisect-next-check [<term>] <TERM_GOOD> <TERM_BAD"),
+ 	NULL
+ };
+ 
+@@ -295,6 +297,68 @@ static int check_and_set_terms(const char *cmd, struct bisect_terms *term)
  	return 0;
  }
  
-+static int bisect_terms_reinit(struct bisect_terms *term)
++static int mark_good(const char *refname, const struct object_id *oid,
++		     int flag, void *cb_data)
 +{
-+	bisect_terms_release(term);
-+	bisect_terms_init(term);
++	int *m_good = (int *)cb_data;
++	*m_good = 0;
 +	return 0;
 +}
 +
- /*
-  * Check whether the string `term` belongs to the set of strings
-  * included in the variable arguments.
-@@ -254,6 +261,40 @@ static int bisect_write(const char *state, const char *rev,
- 	return 0;
- }
- 
-+static int check_and_set_terms(const char *cmd, struct bisect_terms *term)
++static int bisect_next_check(const struct bisect_terms *state, const char *term)
 +{
-+	if (one_of(cmd, "skip", "start", "terms", NULL))
++	int missing_good = 1, missing_bad = 1;
++	char *bad_ref = xstrfmt("refs/bisect/%s", state->term_bad.buf);
++	char *good_ref = xstrfmt("%s*", state->term_good.buf);
++	if (ref_exists(bad_ref))
++		missing_bad = 0;
++
++	for_each_glob_ref_in(mark_good, good_ref, "refs/bisect/",
++			     (void *) &missing_good);
++	free(good_ref);
++	free(bad_ref);
++
++	if (!missing_good && !missing_bad)
 +		return 0;
 +
-+	if (!is_empty_or_missing_file(git_path_bisect_write_terms()) &&
-+	    strcmp(cmd, term->term_bad.buf) && strcmp(cmd, term->term_good.buf))
-+		return error(_("Invalid command: you're currently in a"
-+				"'%s' '%s' bisect"), term->term_bad.buf,
-+				term->term_good.buf);
++	if (!term)
++		return -1;
 +
-+	if (one_of(cmd, "bad", "good", NULL)) {
-+		if (is_empty_or_missing_file(git_path_bisect_write_terms())) {
-+			bisect_terms_reinit(term);
-+			strbuf_addstr(&term->term_bad, "bad");
-+			strbuf_addstr(&term->term_good, "good");
-+			return write_terms(term->term_bad.buf,
-+					   term->term_good.buf);
-+		}
++	if (missing_good && !missing_bad && term && !strcmp(term, state->term_good.buf)) {
++		char *yesno;
++		/*
++		 * have bad (or new) but not good (or old). We could bisect
++		 * although this is less optimum.
++		 */
++		fprintf(stderr, "Warning: bisecting only with a %s commit\n",
++			state->term_bad.buf);
++		if (!isatty(0))
++			return 0;
++		/*
++		 * TRANSLATORS: Make sure to include [Y] and [n] in your
++		 * translation. The program will only accept English input
++		 * at this point.
++		 */
++		yesno = git_prompt(_("Are you sure [Y/n]? "), PROMPT_ECHO);
++		if (starts_with(yesno, "N") || starts_with(yesno, "n"))
++			return -1;
++		return 0;
 +	}
-+
-+	if (one_of(cmd, "new", "old", NULL)) {
-+		if (is_empty_or_missing_file(git_path_bisect_write_terms())) {
-+			bisect_terms_reinit(term);
-+			strbuf_addstr(&term->term_bad, "new");
-+			strbuf_addstr(&term->term_good, "old");
-+			return write_terms(term->term_bad.buf,
-+					   term->term_good.buf);
-+		}
-+	}
++	if (!is_empty_or_missing_file(git_path_bisect_start()))
++		return error(_("You need to give me at least one good|old and "
++				"bad|new revision. You can use \"git bisect "
++				"bad|new\" and \"git bisect good|old\" for "
++				"that. \n"));
++	else
++		return error(_("You need to start by \"git bisect start\". "
++				"You then need to give me at least one good|"
++				"old and bad|new revision. You can use \"git "
++				"bisect bad|new\" and \"git bisect good|old\" "
++				" for that.\n"));
 +
 +	return 0;
 +}
@@ -149,100 +170,141 @@ index e946ba9..c387697 100644
  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  {
  	enum {
-@@ -262,7 +303,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		BISECT_CLEAN_STATE,
+@@ -304,7 +368,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  		BISECT_RESET,
  		CHECK_EXPECTED_REVS,
--		BISECT_WRITE
-+		BISECT_WRITE,
-+		CHECK_AND_SET_TERMS
+ 		BISECT_WRITE,
+-		CHECK_AND_SET_TERMS
++		CHECK_AND_SET_TERMS,
++		BISECT_NEXT_CHECK
  	} cmdmode = 0;
  	int no_checkout = 0, res = 0;
  	struct option options[] = {
-@@ -278,6 +320,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
- 		OPT_CMDMODE(0, "bisect-write", &cmdmode,
+@@ -322,6 +387,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  			 N_("write out the bisection state in BISECT_LOG"), BISECT_WRITE),
-+		OPT_CMDMODE(0, "check-and-set-terms", &cmdmode,
-+			 N_("check and set terms in a bisection state"), CHECK_AND_SET_TERMS),
+ 		OPT_CMDMODE(0, "check-and-set-terms", &cmdmode,
+ 			 N_("check and set terms in a bisection state"), CHECK_AND_SET_TERMS),
++		OPT_CMDMODE(0, "bisect-next-check", &cmdmode,
++			 N_("check whether bad or good terms exist"), BISECT_NEXT_CHECK),
  		OPT_BOOL(0, "no-checkout", &no_checkout,
  			 N_("update BISECT_HEAD instead of checking out the current commit")),
  		OPT_END()
-@@ -321,6 +365,13 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		strbuf_addstr(&state.term_bad, argv[3]);
- 		res = bisect_write(argv[0], argv[1], &state, nolog);
+@@ -372,6 +439,17 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		strbuf_addstr(&state.term_bad, argv[2]);
+ 		res = check_and_set_terms(argv[0], &state);
  		break;
-+	case CHECK_AND_SET_TERMS:
-+		if (argc != 3)
-+			die(_("--check-and-set-terms requires 3 arguments"));
-+		strbuf_addstr(&state.term_good, argv[1]);
-+		strbuf_addstr(&state.term_bad, argv[2]);
-+		res = check_and_set_terms(argv[0], &state);
++	case BISECT_NEXT_CHECK:
++		if (argc != 2 && argc != 3)
++			die(_("--bisect-next-check requires 2 or 3 arguments"));
++		strbuf_addstr(&state.term_good, argv[0]);
++		strbuf_addstr(&state.term_bad, argv[1]);
++		if (argc == 2) {
++			res = bisect_next_check(&state, NULL);
++			break;
++		}
++		res = bisect_next_check(&state, argv[2]);
 +		break;
  	default:
  		die("BUG: unknown subcommand '%d'", cmdmode);
  	}
 diff --git a/git-bisect.sh b/git-bisect.sh
-index b9896a4..63ae742 100755
+index 63ae742..51b0a6b 100755
 --- a/git-bisect.sh
 +++ b/git-bisect.sh
-@@ -239,7 +239,8 @@ bisect_skip() {
- bisect_state() {
- 	bisect_autostart
- 	state=$1
--	check_and_set_terms $state
-+	git bisect--helper --check-and-set-terms $state $TERM_GOOD $TERM_BAD
-+	get_terms
- 	case "$#,$state" in
- 	0,*)
- 		die "$(gettext "Please call 'bisect_state' with at least one argument.")" ;;
-@@ -390,7 +391,8 @@ bisect_replay () {
- 			command="$bisect"
- 		fi
- 		get_terms
--		check_and_set_terms "$command"
-+		git bisect--helper --check-and-set-terms "$command" "$TERM_GOOD" "$TERM_BAD" || exit
-+		get_terms
- 		case "$command" in
- 		start)
- 			cmd="bisect_start $rev"
-@@ -480,36 +482,6 @@ get_terms () {
- 	fi
+@@ -271,59 +271,14 @@ bisect_state() {
+ 	bisect_auto_next
  }
  
--check_and_set_terms () {
--	cmd="$1"
--	case "$cmd" in
--	skip|start|terms) ;;
--	*)
--		if test -s "$GIT_DIR/BISECT_TERMS" && test "$cmd" != "$TERM_BAD" && test "$cmd" != "$TERM_GOOD"
+-bisect_next_check() {
+-	missing_good= missing_bad=
+-	git show-ref -q --verify refs/bisect/$TERM_BAD || missing_bad=t
+-	test -n "$(git for-each-ref "refs/bisect/$TERM_GOOD-*")" || missing_good=t
+-
+-	case "$missing_good,$missing_bad,$1" in
+-	,,*)
+-		: have both $TERM_GOOD and $TERM_BAD - ok
+-		;;
+-	*,)
+-		# do not have both but not asked to fail - just report.
+-		false
+-		;;
+-	t,,"$TERM_GOOD")
+-		# have bad (or new) but not good (or old).  we could bisect although
+-		# this is less optimum.
+-		eval_gettextln "Warning: bisecting only with a \$TERM_BAD commit." >&2
+-		if test -t 0
 -		then
--			die "$(eval_gettext "Invalid command: you're currently in a \$TERM_BAD/\$TERM_GOOD bisect.")"
+-			# TRANSLATORS: Make sure to include [Y] and [n] in your
+-			# translation. The program will only accept English input
+-			# at this point.
+-			gettext "Are you sure [Y/n]? " >&2
+-			read yesno
+-			case "$yesno" in [Nn]*) exit 1 ;; esac
 -		fi
--		case "$cmd" in
--		bad|good)
--			if ! test -s "$GIT_DIR/BISECT_TERMS"
--			then
--				TERM_BAD=bad
--				TERM_GOOD=good
--				git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD" || exit
--			fi
--			;;
--		new|old)
--			if ! test -s "$GIT_DIR/BISECT_TERMS"
--			then
--				TERM_BAD=new
--				TERM_GOOD=old
--				git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD" || exit
--			fi
--			;;
--		esac ;;
+-		: bisect without $TERM_GOOD...
+-		;;
+-	*)
+-		bad_syn=$(bisect_voc bad)
+-		good_syn=$(bisect_voc good)
+-		if test -s "$GIT_DIR/BISECT_START"
+-		then
+-
+-			eval_gettextln "You need to give me at least one \$bad_syn and one \$good_syn revision.
+-(You can use \"git bisect \$bad_syn\" and \"git bisect \$good_syn\" for that.)" >&2
+-		else
+-			eval_gettextln "You need to start by \"git bisect start\".
+-You then need to give me at least one \$good_syn and one \$bad_syn revision.
+-(You can use \"git bisect \$bad_syn\" and \"git bisect \$good_syn\" for that.)" >&2
+-		fi
+-		exit 1 ;;
 -	esac
 -}
 -
- bisect_voc () {
- 	case "$1" in
- 	bad) echo "bad|new" ;;
+ bisect_auto_next() {
+-	bisect_next_check && bisect_next || :
++	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD && bisect_next || :
+ }
+ 
+ bisect_next() {
+ 	case "$#" in 0) ;; *) usage ;; esac
+ 	bisect_autostart
+-	bisect_next_check $TERM_GOOD
++	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD $TERM_GOOD|| exit
+ 
+ 	# Perform all bisection computation, display and checkout
+ 	git bisect--helper --next-all $(test -f "$GIT_DIR/BISECT_HEAD" && echo --no-checkout)
+@@ -355,7 +310,7 @@ bisect_next() {
+ }
+ 
+ bisect_visualize() {
+-	bisect_next_check fail
++	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD fail || exit
+ 
+ 	if test $# = 0
+ 	then
+@@ -409,7 +364,7 @@ bisect_replay () {
+ }
+ 
+ bisect_run () {
+-	bisect_next_check fail
++	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD fail || exit
+ 
+ 	while true
+ 	do
+@@ -482,13 +437,6 @@ get_terms () {
+ 	fi
+ }
+ 
+-bisect_voc () {
+-	case "$1" in
+-	bad) echo "bad|new" ;;
+-	good) echo "good|old" ;;
+-	esac
+-}
+-
+ bisect_terms () {
+ 	get_terms
+ 	if ! test -s "$GIT_DIR/BISECT_TERMS"
 -- 
 2.9.0
 
