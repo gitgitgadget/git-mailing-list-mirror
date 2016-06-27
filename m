@@ -3,87 +3,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 614A82018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 16:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A33312018E
+	for <e@80x24.org>; Mon, 27 Jun 2016 17:28:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751742AbcF0Q50 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 12:57:26 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:34149 "EHLO
-	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751644AbcF0Q5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 12:57:25 -0400
-Received: by mail-io0-f180.google.com with SMTP id g13so150294256ioj.1
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 09:57:25 -0700 (PDT)
+	id S1751978AbcF0R20 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 13:28:26 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:36233 "EHLO
+	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751913AbcF0R2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 13:28:24 -0400
+Received: by mail-wm0-f47.google.com with SMTP id f126so109345486wma.1
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 10:28:23 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=etDg3MsGqV7uj6GFF/aTnVEM7I+ncDiHuSiZSDq1O9o=;
-        b=U2iTtuw/wRf1Ov2OMTFFAZbdA51LApHCVm0EuMOugplekrJYcyussn1YoF9t3Gnj1D
-         FUkNiJv2GuYLdBAkmfbvL4dxHccH4oM3GJ6jXQI392bOw6iJMTRHalXNQaZ4IAxdcEZq
-         Wgk8j45Sb8cmKfk6HCiLZEcgqY5uTuUU/g+MRfjJjzQ2wkmjb9MILoQ5qsVFYNsKJG9H
-         +Tf8yX27fSQE+qn6QgYsB+b2wR6IrVwMAqGMx7qsOYPOTmNAUXFTVM2pqxgqrP7CrIcT
-         MAOuDFX7ywLM1sluGSn99JSI3Dg7A82IeU/CLXofXnyVDbvLCl0RstjwL/je85gR8qrt
-         28Jw==
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=HSrTc/0jQuuA59e/X5T/UmW/3nlyAEXzD3T81T2K0zw=;
+        b=vTE9J4Tw+xHQ0q9jGrl7xO1C3qXOZA3G56rvJ79wFZlgisoTTt0yQErySAForrs68H
+         nv5pLgjuDypD+8ZyDwHitvUjqtOmkr/5dwV2pWvzJlWz3p5qKQofk+/a0w1AhgWL9lxS
+         w+o8lXLW+L+oyr05G5x+CVaGpkJs9KxjPaimQLCY5tcXvRFbj3/EO6B1j1aXYoSfU/FP
+         LQZF46rCnmO+H/lCkCZtyeoDtIrZOUcn1Yn4359N7U3hhz1AoGSM/yM4QVzZ8PEcTl7r
+         aeDjIm+UewBIS9QlnLpTEehKGE+peaNAqZXla0IbnZM5Cje8X5idUt8BQJKfnJMF4Wlu
+         0rlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=etDg3MsGqV7uj6GFF/aTnVEM7I+ncDiHuSiZSDq1O9o=;
-        b=aOj9PW3OTxJ9Lbmhoag/MsCf+8iwAvJzEvoSVz3eMxy2+LSJ5swesLPz/HOMcitbsu
-         CMdQYo1cNxm2rJsCgdFVP96IQRSSvpyZ3/OvoT9UTptWvBtMoIxm1v6X246Y1kawrsNW
-         eFosjU5GvDAf9JK6+y+qFWU/5USczy03K9KfsC0UTRt2QDGAzBRkHSa8xKwo6tJdr3qh
-         pSVpBrUDQW3T2UuRGunxWz5NvBg+m4AVruTvDpqkxleQCWNyB/ooXIeR6NnHRap37QPy
-         BQ/niq2QKGDd/30auPx6sQ8RnMz9dIjNKlcyyA4HYGiklJoBFN8oKseINAHfWzArWGaE
-         FGhg==
-X-Gm-Message-State: ALyK8tLaOQ+jNpMqC80GQhzu6bsF52sb/fBreCWz9gceNLJDwKS5+dRbhUdnYQZRoJL+rVVDOcV5a0zzt0nxeL99
-X-Received: by 10.107.178.4 with SMTP id b4mr1779062iof.83.1467046644732; Mon,
- 27 Jun 2016 09:57:24 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=HSrTc/0jQuuA59e/X5T/UmW/3nlyAEXzD3T81T2K0zw=;
+        b=bb2x0fc95/UbAMRFhPa+HWfNvw4/6jlxKDsrUUKEGVMLb+FSrs10qdgtehC+Q4bGOs
+         RH2dog8BbnGRo+eOYaZZbvNVrEpSk1r6PEO5aDswh2qDsfm3zJyTM+oA6tjMQ+YDHTpj
+         FH3JxCx5nBO5t38bgx2cZJKnumr8HQlJ28cR7VpnRg+9GttYcnMkminRm6cTqrgyNjQi
+         GNkT+gqF/LUVIML+9q8TiBsTjBn9zfTDEaOCRO0Q11IQS8ZpkO9jX9BKCcxPchGhR8+r
+         2jfcTmXZIrHdL1eJHvQ6NQSKYTYk3BO3aukgcHrfknoCyMydax7IakM/wlRI0CbSkqjR
+         NgnA==
+X-Gm-Message-State: ALyK8tIro3lOaSPAzo0EzVLTscOYvIQKkgXmWeyvqMZ0uhVRm5APdXjVNzk3qDv0IzRlNA==
+X-Received: by 10.28.188.137 with SMTP id m131mr11458504wmf.4.1467048502288;
+        Mon, 27 Jun 2016 10:28:22 -0700 (PDT)
+Received: from [192.168.1.34] (afj108.neoplus.adsl.tpnet.pl. [83.25.139.108])
+        by smtp.googlemail.com with ESMTPSA id c142sm4728818wme.18.2016.06.27.10.28.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 27 Jun 2016 10:28:21 -0700 (PDT)
+Subject: Re: [PATCH 1/2] Support for $FILENAMES in tool definitions
+To:	Alex Riesen <alexander.riesen@cetitec.com>, git@vger.kernel.org
+References: <20160627132137.GC4194@pflmari>
+Cc:	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Junio C Hamano <gitster@pobox.com>
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <57716227.1030104@gmail.com>
+Date:	Mon, 27 Jun 2016 19:28:07 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
 MIME-Version: 1.0
-Received: by 10.107.136.16 with HTTP; Mon, 27 Jun 2016 09:57:24 -0700 (PDT)
-In-Reply-To: <CAOG-3GJdH5q9fdj+7zdEv-UUZMTAnunZu1PRJYjFNV360r6+sQ@mail.gmail.com>
-References: <CAOG-3GJdH5q9fdj+7zdEv-UUZMTAnunZu1PRJYjFNV360r6+sQ@mail.gmail.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Mon, 27 Jun 2016 09:57:24 -0700
-Message-ID: <CAGZ79kYKBxL4xLyySALBv_-gqkss9_iCk-qSc4T7u7fKDMOFWw@mail.gmail.com>
-Subject: Re: Git mv -- submodule -- recursive
-To:	Bart Bogaerts <bartbogaerts@gmail.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20160627132137.GC4194@pflmari>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sun, Jun 26, 2016 at 11:01 PM, Bart Bogaerts <bartbogaerts@gmail.com> wrote:
-> With a repo structured as follows
->
-> main-files
-> |- submod
->     |- subsubmodule
->
-> git mv submod newlocation
->
-> does not do what it is supposed to do. It actually breaks the git repository.
-> It can be fixed easily.
-> A complete description of the bug, including a workaround, can be found on
-> http://stackoverflow.com/q/32782382/2274140
+On 2016-06-27, Alex Riesen wrote:
 
-Which version of Git are you using?
-I think this is fixed in a127331cd81233 (mv: allow moving nested
-submodules, 2016-04-19), which is first included in v2.8.3
-(or v2.9 and later).
+> This adds a FILENAMES environment variable, which contains the repository
+> pathnames of all selected files the list.
+> The variable contains the names separated by spaces.
 
-Thanks,
-Stefan
+Why not separate filenames with end-of-line character (LF)? It would still
+be broken for some filenames, but only for unportable ones.  Filenames with
+internal space (common on MS Windows) would work then.
 
->
-> --
-> Bart Bogaerts
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+  http://www.dwheeler.com/essays/filenames-in-shell.html
+ 
+If Tcl allows it, you could separate filenames in FILENAMES environment
+variable with NUL ("\0") character...
+
+> Similar to the FILENAME it is broken yet, if the names contain spaces.
+
+Could you clarify? Did you meant that FILENAMES environment variable is
+similar to existing FILENAME variable, but broken for filenames which contain
+spaces, or did you mean that both FILENAME (how?) and FILENAMES are broken
+for filenames with spaces in them?
+
+> 
+> Note that the file marked and diffed immediately after starting the GUI up,
+> is not actually selected. One must click on it once to really select it.
+
+I'm not that familiar with git-gui / gitk; what do you mean by this sentence?
+Could you summarize how FILENAME and FILENAMES work, please?
+
+> 
+> Signed-off-by: Alex Riesen <alexander.riesen@cetitec.com>
+> ---
+
