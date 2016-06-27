@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A33312018E
-	for <e@80x24.org>; Mon, 27 Jun 2016 17:28:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E3892018B
+	for <e@80x24.org>; Mon, 27 Jun 2016 17:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751978AbcF0R20 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 13:28:26 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:36233 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751913AbcF0R2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 13:28:24 -0400
-Received: by mail-wm0-f47.google.com with SMTP id f126so109345486wma.1
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 10:28:23 -0700 (PDT)
+	id S1751850AbcF0Rcm (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 13:32:42 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36758 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751713AbcF0Rcl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 13:32:41 -0400
+Received: by mail-wm0-f68.google.com with SMTP id c82so26529280wme.3
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 10:32:40 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding;
-        bh=HSrTc/0jQuuA59e/X5T/UmW/3nlyAEXzD3T81T2K0zw=;
-        b=vTE9J4Tw+xHQ0q9jGrl7xO1C3qXOZA3G56rvJ79wFZlgisoTTt0yQErySAForrs68H
-         nv5pLgjuDypD+8ZyDwHitvUjqtOmkr/5dwV2pWvzJlWz3p5qKQofk+/a0w1AhgWL9lxS
-         w+o8lXLW+L+oyr05G5x+CVaGpkJs9KxjPaimQLCY5tcXvRFbj3/EO6B1j1aXYoSfU/FP
-         LQZF46rCnmO+H/lCkCZtyeoDtIrZOUcn1Yn4359N7U3hhz1AoGSM/yM4QVzZ8PEcTl7r
-         aeDjIm+UewBIS9QlnLpTEehKGE+peaNAqZXla0IbnZM5Cje8X5idUt8BQJKfnJMF4Wlu
-         0rlg==
+        bh=7zINLD1mUfUlS7zUjJzVoEu7sk/JhvS9GLlQWLfr0jI=;
+        b=acKeaP+CiIuecTyP1sWrAsLm0CfFh5MpW+E53HW6oXmP884q8VmuLwMpAlf6QkbVwq
+         AH3y7Yr/ecew7TWNi1K2+1o54fJ2Efuc357v+6CvKCqfhXi8M6BmjE49E2SNbDt4krZV
+         jqmX/04KyLYsWvKBCyyY0eFVbqw2CcrVvccoFJ6T3iWKfxGr75V2fvRgnkX27oVPgazt
+         BxVMUjKKaEGs0/iEMIlhbBmq2hlhS2LceR4VI5Rie9UHgEDkr64tNQHdtaJRCUb1NC8J
+         h0r3V1Yw0jxi42j3tLmjNTmBrjvthMSCFyaAcVoVWOVivoBcV24Cg241RXXYQRvprJte
+         hu3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:subject:to:references:cc:newsgroups:from
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-transfer-encoding;
-        bh=HSrTc/0jQuuA59e/X5T/UmW/3nlyAEXzD3T81T2K0zw=;
-        b=bb2x0fc95/UbAMRFhPa+HWfNvw4/6jlxKDsrUUKEGVMLb+FSrs10qdgtehC+Q4bGOs
-         RH2dog8BbnGRo+eOYaZZbvNVrEpSk1r6PEO5aDswh2qDsfm3zJyTM+oA6tjMQ+YDHTpj
-         FH3JxCx5nBO5t38bgx2cZJKnumr8HQlJ28cR7VpnRg+9GttYcnMkminRm6cTqrgyNjQi
-         GNkT+gqF/LUVIML+9q8TiBsTjBn9zfTDEaOCRO0Q11IQS8ZpkO9jX9BKCcxPchGhR8+r
-         2jfcTmXZIrHdL1eJHvQ6NQSKYTYk3BO3aukgcHrfknoCyMydax7IakM/wlRI0CbSkqjR
-         NgnA==
-X-Gm-Message-State: ALyK8tIro3lOaSPAzo0EzVLTscOYvIQKkgXmWeyvqMZ0uhVRm5APdXjVNzk3qDv0IzRlNA==
-X-Received: by 10.28.188.137 with SMTP id m131mr11458504wmf.4.1467048502288;
-        Mon, 27 Jun 2016 10:28:22 -0700 (PDT)
+        bh=7zINLD1mUfUlS7zUjJzVoEu7sk/JhvS9GLlQWLfr0jI=;
+        b=AXQ+Knsz0LVaty22X4MMlUjZ0lUJpaKOwyzGUPToIn3RExwfrJRk5QQ8G6Jg3NvZHx
+         hHg/ByNIcYGKcmQYhja9Jg6IYbSRPy3qy+oDyQFZn/bCNNRuOYVOgZgC2ceSKFC/DmcH
+         yKh95p5Iwz0S4Ef6n6ngod82R14Ld+9MWf8o1x1gIA9EnRvDuliDQzf2GtuG/zeJfkc4
+         wUy7LW9JoDRvl9J8ULhwlnpJZcvTn7ZEVKh34xnIe+G+ydms38uJOkWo7Ysa7Efpxebc
+         S3YUTvOz5ZLWUD3MGeWSHX2yR9hLGxyZpcSjH7SpRefZokC/v+ugQaXwfRjMzTlGA26u
+         e4nw==
+X-Gm-Message-State: ALyK8tJJK1yQxMC8Z3cN5vgkpPJ//5LL3LF+UVcNoIeFQDrKbEvHbL1AjZUtQdmBJsr5oQ==
+X-Received: by 10.195.9.200 with SMTP id du8mr2009081wjd.89.1467048760005;
+        Mon, 27 Jun 2016 10:32:40 -0700 (PDT)
 Received: from [192.168.1.34] (afj108.neoplus.adsl.tpnet.pl. [83.25.139.108])
-        by smtp.googlemail.com with ESMTPSA id c142sm4728818wme.18.2016.06.27.10.28.20
+        by smtp.googlemail.com with ESMTPSA id b200sm6747123wmb.9.2016.06.27.10.32.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 27 Jun 2016 10:28:21 -0700 (PDT)
-Subject: Re: [PATCH 1/2] Support for $FILENAMES in tool definitions
+        Mon, 27 Jun 2016 10:32:39 -0700 (PDT)
+Subject: Re: [PATCH 2/2] Ensure the file in the diff pane is always in the
+ list of selected files
 To:	Alex Riesen <alexander.riesen@cetitec.com>, git@vger.kernel.org
-References: <20160627132137.GC4194@pflmari>
+References: <20160627132137.GC4194@pflmari> <20160627132308.GD4194@pflmari>
 Cc:	Pat Thoyts <patthoyts@users.sourceforge.net>,
 	Junio C Hamano <gitster@pobox.com>
 Newsgroups: gmane.comp.version-control.git
 From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <57716227.1030104@gmail.com>
-Date:	Mon, 27 Jun 2016 19:28:07 +0200
+Message-ID: <57716329.8000809@gmail.com>
+Date:	Mon, 27 Jun 2016 19:32:25 +0200
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
  Thunderbird/38.1.0
 MIME-Version: 1.0
-In-Reply-To: <20160627132137.GC4194@pflmari>
+In-Reply-To: <20160627132308.GD4194@pflmari>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
@@ -68,36 +69,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 2016-06-27, Alex Riesen wrote:
-
-> This adds a FILENAMES environment variable, which contains the repository
-> pathnames of all selected files the list.
-> The variable contains the names separated by spaces.
-
-Why not separate filenames with end-of-line character (LF)? It would still
-be broken for some filenames, but only for unportable ones.  Filenames with
-internal space (common on MS Windows) would work then.
-
-  http://www.dwheeler.com/essays/filenames-in-shell.html
- 
-If Tcl allows it, you could separate filenames in FILENAMES environment
-variable with NUL ("\0") character...
-
-> Similar to the FILENAME it is broken yet, if the names contain spaces.
-
-Could you clarify? Did you meant that FILENAMES environment variable is
-similar to existing FILENAME variable, but broken for filenames which contain
-spaces, or did you mean that both FILENAME (how?) and FILENAMES are broken
-for filenames with spaces in them?
-
+W dniu 2016-06-27 o 15:23, Alex Riesen pisze:
+> It is very confusing that the file, diff of which is displayed and which is
+> marked as selected in the file list, is not, in fact, selected. I.e. the array
+> of selected files does not contain an entry for it.
 > 
-> Note that the file marked and diffed immediately after starting the GUI up,
-> is not actually selected. One must click on it once to really select it.
+> Fixing this also improves the use of $FILENAMES in custom defined tools: one
+> does not have to click the file in the list to make it selected.
 
-I'm not that familiar with git-gui / gitk; what do you mean by this sentence?
-Could you summarize how FILENAME and FILENAMES work, please?
+Could you improve the readability of the commit message, please? Perhaps
+something like the following:
 
-> 
-> Signed-off-by: Alex Riesen <alexander.riesen@cetitec.com>
+  It is very confusing that the file which diff is displayed is marked as
+  selected, but it is not in fact selected (that means the array of selected
+  files does not include the file in question).
+
+  ...
+
+This patch lacks sign-off.
+
 > ---
+>  lib/diff.tcl | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/lib/diff.tcl b/lib/diff.tcl
+> index 0d56986..30bdd69 100644
+> --- a/lib/diff.tcl
+> +++ b/lib/diff.tcl
+> @@ -127,6 +127,9 @@ proc show_diff {path w {lno {}} {scroll_pos {}} {callback {}}} {
+>  	} else {
+>  		start_show_diff $cont_info
+>  	}
+> +
+> +	global current_diff_path selected_paths
+> +	set selected_paths($current_diff_path) 1
+>  }
+>  
+>  proc show_unmerged_diff {cont_info} {
+> 
 
