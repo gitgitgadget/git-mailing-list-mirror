@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3957A2018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 18:26:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F6C62018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 18:26:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752124AbcF0S0F (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 14:26:05 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36209 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752065AbcF0S0A (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:26:00 -0400
-Received: by mail-wm0-f65.google.com with SMTP id c82so26942172wme.3
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:46 -0700 (PDT)
+	id S1751831AbcF0S0N (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:26:13 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35520 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751846AbcF0S0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 14:26:10 -0400
+Received: by mail-wm0-f67.google.com with SMTP id a66so26935608wme.2
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:56 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1BcntlTPr7texX4XNv/w6Cp1aTe2f6WLKTOAjdx6WeY=;
-        b=wL9AHaml0pAYVrZykwMOGCqJKGgrCZWocJGLgS75Oei+x1lSoo13qEW5e5rzEKDPSr
-         tMg1hCqQgulpCWiHyVR0UbvoDcYfFXVXPGw07CbNaZLvKlG2WHatYxuPksoTr3ncPcvj
-         e/lOvvgK6oLvROs9WElbyJuTZOZANA44nWIBY9R+rd0w3T2ix2OR9BIrV+G8haZdLhvJ
-         gmzPNTS01mNk1jiNul79/59xnRkHnyfZLR4c0tS+pk0dwLQU9zGxgt6ec4zMykaKdlwh
-         gO6STmaY7ZYdV3UbqxUBypuQ3gL11Hi0S+xOYYKxtjowr9rC4quL4/hFcyKEovh2XEdr
-         msZw==
+        bh=NVLL9Nqh+UMkNwUIBvIJLjfLp5PE6fPvvyBa/fwyQuQ=;
+        b=UcNnGM2/UTDwX+aXAKO13VVWMyVKWtjKQ60wI45/lYy/ggy5KnNnxNT1aMvqDvpztg
+         xDaTeAEFzA75veNpIQg/0LEOKIWywyeG2pXusic0FjJKgCl52b9amKU5hLhjqZTvgZV1
+         9ywTn5XcTR+Q06XvWWmYkWbX22CEcux6GH7C+y8vtLSKbgXEdVYJuIM5/Dff9Eh3f9YF
+         gfu7e/XJV/ADvp62OokHTuApnjhmxfOxwb76XMY2uU67VnTi9lEGG/SHr6rBtO+jdYn+
+         m+dBtQ4gu0Gbk454ust1rp0Fh+7/znmj9dJ2gJdjrxIoMzmLJPXW07dLAuwqT1zkHiKQ
+         uyfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=1BcntlTPr7texX4XNv/w6Cp1aTe2f6WLKTOAjdx6WeY=;
-        b=CgHN1Kce+ZkC4mJ1mSBcdMaDC/HHjhZcqHfKaUJOQaodJ67lTV5NIeukgSbGpMh8G6
-         AggFQ0vYHZYF0+hqDIsH2ShhnmTDTXcRB/pGZDD3HGXtn0/SIttPSo02O0ToCDQs0k2b
-         RMbOTlxYjXN0ESooUOpw9IXt4OqZNcumlSNlrHChIXLvQ7NZcqbYTPbLVUimRwQKOWcO
-         KMB48C8QN9YyJqKhYY22eVfL/XGZnDG0mY/NQuNpgsg2Vkqf9VPoc9VINOiRdXs73ftS
-         Qloe99QjkWnqtOyYudvHRkJi6+q4kJzd/lPh7zqcf4iMYku5MX5k814Wul3aXb4HvvXA
-         X2BA==
-X-Gm-Message-State: ALyK8tKiPhgH13VMm+to0y/+E5xaUX1LHLmZaICjMIaoeZespmPOK5OHDp1KBpIku4RJTQ==
-X-Received: by 10.28.68.67 with SMTP id r64mr11464411wma.57.1467051945854;
-        Mon, 27 Jun 2016 11:25:45 -0700 (PDT)
+        bh=NVLL9Nqh+UMkNwUIBvIJLjfLp5PE6fPvvyBa/fwyQuQ=;
+        b=ROJAkfOgISSZorGEgiJy8tX3y/qKD+pUFvRdDCgmIAMb6X2igh6Kma13p3/mtuFTIa
+         5Nra5gYIEGXn8pADlxK+GjvRWgKItCUnrf4K+NkMFwVKCPAdHHWiEM9mr2oi6FLbMyyr
+         kFwVXmfbaOUnitdDqLrUheEwv/35BDTLTf9h+wPgug0Ce+JDutuh2QbnD1sTC4BMPEND
+         dklzp/j55nYDI4QzLHtZqutqWScZ+XlJ1vDenfpSkUnm8Ex2wzkj9PX2pB1SotI1/Yya
+         ZhsDdn74KlHpXe9gJWdRuHB5x2Onlzvv/R0d3nIhc/GHi/OIcrriH2wclCNQDbZ2Yd7m
+         Q8Dg==
+X-Gm-Message-State: ALyK8tKxvPMJLQsjYPgcNilp4bcZIYyVy/p5vlTC7Whqh6hWVVNwtr2Dm4OR0My+kUoYnw==
+X-Received: by 10.194.38.4 with SMTP id c4mr2212205wjk.20.1467051955884;
+        Mon, 27 Jun 2016 11:25:55 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.44
+        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 11:25:44 -0700 (PDT)
+        Mon, 27 Jun 2016 11:25:55 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 34/41] apply: add 'be_silent' variable to 'struct apply_state'
-Date:	Mon, 27 Jun 2016 20:24:22 +0200
-Message-Id: <20160627182429.31550-35-chriscool@tuxfamily.org>
+Subject: [PATCH v8 41/41] apply: use error_errno() where possible
+Date:	Mon, 27 Jun 2016 20:24:29 +0200
+Message-Id: <20160627182429.31550-42-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.172.g48843e9
 In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
 References: <20160627182429.31550-1-chriscool@tuxfamily.org>
@@ -70,143 +70,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This variable should prevent anything to be printed on both stderr
-and stdout.
-
-Let's not take care of stdout and apply_verbosely for now though,
-as that will be taken care of in following patches.
+To avoid possible mistakes and to uniformly show the errno
+related messages, let's use error_errno() where possible.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- apply.c | 43 +++++++++++++++++++++++++++++--------------
- apply.h |  1 +
- 2 files changed, 30 insertions(+), 14 deletions(-)
+ apply.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index 7bf12a7..802fa79 100644
+index de86f40..2ac22d3 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -1617,8 +1617,9 @@ static void record_ws_error(struct apply_state *state,
- 		return;
- 
- 	err = whitespace_error_string(result);
--	fprintf(stderr, "%s:%d: %s.\n%.*s\n",
--		state->patch_input_file, linenr, err, len, line);
-+	if (!state->be_silent)
-+		fprintf(stderr, "%s:%d: %s.\n%.*s\n",
-+			state->patch_input_file, linenr, err, len, line);
- 	free(err);
- }
- 
-@@ -1813,7 +1814,7 @@ static int parse_single_patch(struct apply_state *state,
- 		return error(_("new file %s depends on old contents"), patch->new_name);
- 	if (0 < patch->is_delete && newlines)
- 		return error(_("deleted file %s still has contents"), patch->old_name);
--	if (!patch->is_delete && !newlines && context)
-+	if (!patch->is_delete && !newlines && context && !state->be_silent)
- 		fprintf_ln(stderr,
- 			   _("** warning: "
- 			     "file %s becomes empty but is not deleted"),
-@@ -3038,8 +3039,8 @@ static int apply_one_fragment(struct apply_state *state,
- 		 * Warn if it was necessary to reduce the number
- 		 * of context lines.
- 		 */
--		if ((leading != frag->leading) ||
--		    (trailing != frag->trailing))
-+		if ((leading != frag->leading ||
-+		     trailing != frag->trailing) && !state->be_silent)
- 			fprintf_ln(stderr, _("Context reduced to (%ld/%ld)"
- 					     " to apply fragment at %d"),
- 				   leading, trailing, applied_pos+1);
-@@ -3536,7 +3537,8 @@ static int try_threeway(struct apply_state *state,
- 		 read_blob_object(&buf, pre_sha1, patch->old_mode))
- 		return error("repository lacks the necessary blob to fall back on 3-way merge.");
- 
--	fprintf(stderr, "Falling back to three-way merge...\n");
-+	if (!state->be_silent)
-+		fprintf(stderr, "Falling back to three-way merge...\n");
- 
- 	img = strbuf_detach(&buf, &len);
- 	prepare_image(&tmp_image, img, len, 1);
-@@ -3566,7 +3568,9 @@ static int try_threeway(struct apply_state *state,
- 	status = three_way_merge(image, patch->new_name,
- 				 pre_sha1, our_sha1, post_sha1);
- 	if (status < 0) {
--		fprintf(stderr, "Failed to fall back on three-way merge...\n");
-+		if (!state->be_silent)
-+			fprintf(stderr,
-+				"Failed to fall back on three-way merge...\n");
- 		return status;
+@@ -3512,7 +3512,7 @@ static int load_current(struct apply_state *state,
+ 	ce = active_cache[pos];
+ 	if (lstat(name, &st)) {
+ 		if (errno != ENOENT)
+-			return error(_("%s: %s"), name, strerror(errno));
++			return error_errno("%s", name);
+ 		if (checkout_target(&the_index, ce, &st))
+ 			return -1;
+ 	}
+@@ -3671,7 +3671,7 @@ static int check_preimage(struct apply_state *state,
+ 	} else if (!state->cached) {
+ 		stat_ret = lstat(old_name, st);
+ 		if (stat_ret && errno != ENOENT)
+-			return error(_("%s: %s"), old_name, strerror(errno));
++			return error_errno("%s", old_name);
  	}
  
-@@ -3578,9 +3582,15 @@ static int try_threeway(struct apply_state *state,
- 			hashcpy(patch->threeway_stage[0].hash, pre_sha1);
- 		hashcpy(patch->threeway_stage[1].hash, our_sha1);
- 		hashcpy(patch->threeway_stage[2].hash, post_sha1);
--		fprintf(stderr, "Applied patch to '%s' with conflicts.\n", patch->new_name);
-+		if (!state->be_silent)
-+			fprintf(stderr,
-+				"Applied patch to '%s' with conflicts.\n",
-+				patch->new_name);
- 	} else {
--		fprintf(stderr, "Applied patch to '%s' cleanly.\n", patch->new_name);
-+		if (!state->be_silent)
-+			fprintf(stderr,
-+				"Applied patch to '%s' cleanly.\n",
-+				patch->new_name);
+ 	if (state->check_index && !previous) {
+@@ -3693,7 +3693,7 @@ static int check_preimage(struct apply_state *state,
+ 	} else if (stat_ret < 0) {
+ 		if (patch->is_new < 0)
+ 			goto is_new;
+-		return error(_("%s: %s"), old_name, strerror(errno));
++		return error_errno("%s", old_name);
+ 	}
+ 
+ 	if (!state->cached && !previous)
+@@ -3752,7 +3752,7 @@ static int check_to_create(struct apply_state *state,
+ 
+ 		return EXISTS_IN_WORKTREE;
+ 	} else if ((errno != ENOENT) && (errno != ENOTDIR)) {
+-		return error("%s: %s", new_name, strerror(errno));
++		return error_errno("%s", new_name);
  	}
  	return 0;
  }
-@@ -4483,7 +4493,8 @@ static int write_out_one_reject(struct apply_state *state, struct patch *patch)
- 			    "Applying patch %%s with %d rejects...",
- 			    cnt),
- 		    cnt);
--	say_patch_name(stderr, sb.buf, patch);
-+	if (!state->be_silent)
-+		say_patch_name(stderr, sb.buf, patch);
- 	strbuf_release(&sb);
- 
- 	cnt = strlen(patch->new_name);
-@@ -4510,10 +4521,12 @@ static int write_out_one_reject(struct apply_state *state, struct patch *patch)
- 	     frag;
- 	     cnt++, frag = frag->next) {
- 		if (!frag->rejected) {
--			fprintf_ln(stderr, _("Hunk #%d applied cleanly."), cnt);
-+			if (!state->be_silent)
-+				fprintf_ln(stderr, _("Hunk #%d applied cleanly."), cnt);
- 			continue;
+@@ -4271,9 +4271,9 @@ static int add_index_file(struct apply_state *state,
+ 		if (!state->cached) {
+ 			if (lstat(path, &st) < 0) {
+ 				free(ce);
+-				return error(_("unable to stat newly "
+-					       "created file '%s': %s"),
+-					     path, strerror(errno));
++				return error_errno(_("unable to stat newly "
++						     "created file '%s'"),
++						   path);
+ 			}
+ 			fill_stat_cache_info(ce, &st);
  		}
--		fprintf_ln(stderr, _("Rejected hunk #%d."), cnt);
-+		if (!state->be_silent)
-+			fprintf_ln(stderr, _("Rejected hunk #%d."), cnt);
- 		fprintf(rej, "%.*s", frag->size, frag->patch);
- 		if (frag->patch[frag->size-1] != '\n')
- 			fputc('\n', rej);
-@@ -4562,8 +4575,10 @@ static int write_out_results(struct apply_state *state, struct patch *list)
- 		struct string_list_item *item;
+@@ -4327,7 +4327,7 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
+ 	strbuf_release(&nbuf);
  
- 		string_list_sort(&cpath);
--		for_each_string_list_item(item, &cpath)
--			fprintf(stderr, "U %s\n", item->string);
-+		if (!state->be_silent) {
-+			for_each_string_list_item(item, &cpath)
-+				fprintf(stderr, "U %s\n", item->string);
-+		}
- 		string_list_clear(&cpath, 0);
+ 	if (close(fd) < 0 && !res)
+-		return error(_("closing file '%s': %s"), path, strerror(errno));
++		return error_errno(_("closing file '%s'"), path);
  
- 		rerere(0);
-diff --git a/apply.h b/apply.h
-index df44b51..44bed19 100644
---- a/apply.h
-+++ b/apply.h
-@@ -52,6 +52,7 @@ struct apply_state {
- 	int apply_in_reverse;
- 	int apply_with_reject;
- 	int apply_verbosely;
-+	int be_silent;
- 	int no_add;
- 	int threeway;
- 	int unidiff_zero;
+ 	return res ? -1 : 0;
+ }
+@@ -4525,7 +4525,7 @@ static int write_out_one_reject(struct apply_state *state, struct patch *patch)
+ 
+ 	rej = fopen(namebuf, "w");
+ 	if (!rej)
+-		return error(_("cannot open %s: %s"), namebuf, strerror(errno));
++		return error_errno(_("cannot open %s"), namebuf);
+ 
+ 	/* Normal git tools never deal with .rej, so do not pretend
+ 	 * this is a git patch by saying --git or giving extended
 -- 
 2.9.0.172.gfb57a78
 
