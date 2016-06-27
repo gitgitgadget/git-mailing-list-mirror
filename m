@@ -2,89 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03C991FE4E
-	for <e@80x24.org>; Mon, 27 Jun 2016 21:20:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC71D1FE4E
+	for <e@80x24.org>; Mon, 27 Jun 2016 21:49:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752232AbcF0VU1 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 17:20:27 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:35285 "EHLO
-	mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751936AbcF0VU0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 17:20:26 -0400
-Received: by mail-it0-f49.google.com with SMTP id g127so75329581ith.0
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 14:20:26 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=UIzFbM32BBJScctCMhH5kd9bojHDgrJuO9xKmxvYOm0=;
-        b=mOKPFsvsAd7IpmMq8CJGhHpPFzbNbbNL7I7K3E1+VKHEEqJlieW7D+z210sEqKIQlf
-         u8UTbhXEONjnO91lEN+qFx3zX0pYKpsIO+9om/5i5IjzPtfA8nlWKcgSfQLYFrwPfaFK
-         o51N2Qjmwr4YdtR+d1djKrYlIqwFLesuQVou9o7KhrqLaAAA09XBMVmDqQB59FhL/wyB
-         KlAB2gZax2VyZqVp5aTgdPyCSWHiO7s69oR3ThtkbTgtGcjlmrw2jqEsEZF8GmRXdS79
-         dq9x1XKtodzL4N4c0LSmetwkTbRUggC8ULM76EAa3yIqXWAw6aXxZy8AmuxaHb/4u/dt
-         GSpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=UIzFbM32BBJScctCMhH5kd9bojHDgrJuO9xKmxvYOm0=;
-        b=WZwDm07Sm7Rt8eNMzrxjiZ1Mn7rRQZ5b/Vzzvxt1cO21pTgfGzdtjm4QKEncugOVZc
-         dHDNgsl9BmlqsCTirXEeP282V25tT4b0M7oO4cr7TiyAOFj+qt/WVVe6DW5b4acUhrAv
-         Mg2TVg6UEQvM17YJ1UA5Wxul/4+gGLnyWx90ZRiZnHIHFj8nhEdfpYzvEWA233eyzyDY
-         mg5TmFZoRtgpLCLW1y6OIFreyan3798OuE0DXBA4YdGK5KNpXf4o/vfCu1ln0pcXMDED
-         ga3vQZ4IAPUIDFnru+oZUzg/RENBdcxF4rE7CBNryZwnKOTlKnL4TM6vrDLiFYmdxEYX
-         zSUw==
-X-Gm-Message-State: ALyK8tIUl5FPzAL81FU1H2VeQLTyNl69FHtI6629bFn5y/P8li2qBQEd+zTpa2VKzPZVgKRQgSWzZXjG5WYaiddv
-X-Received: by 10.36.91.80 with SMTP id g77mr6538390itb.46.1467062425426; Mon,
- 27 Jun 2016 14:20:25 -0700 (PDT)
+	id S1751869AbcF0Vtv (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 17:49:51 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33719 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751639AbcF0Vtv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 17:49:51 -0400
+Received: (qmail 9960 invoked by uid 102); 27 Jun 2016 21:49:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 17:49:50 -0400
+Received: (qmail 13810 invoked by uid 107); 27 Jun 2016 21:50:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 17:50:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Jun 2016 17:49:48 -0400
+Date:	Mon, 27 Jun 2016 17:49:48 -0400
+From:	Jeff King <peff@peff.net>
+To:	Eric Wong <e@80x24.org>
+Cc:	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 1/2] xread: retry after poll on EAGAIN/EWOULDBLOCK
+Message-ID: <20160627214947.GA17149@sigill.intra.peff.net>
+References: <20160626232112.721-1-e@80x24.org>
+ <20160626232112.721-2-e@80x24.org>
+ <20160626234251.GA21668@sigill.intra.peff.net>
+ <xmqqoa6mdbu3.fsf@gitster.mtv.corp.google.com>
+ <20160627143648.GA2618@sigill.intra.peff.net>
+ <CAGZ79kZ94PaOfq3GimWiHULbTE7ihMzL9S=Y+npQ4F5gGwFrsA@mail.gmail.com>
+ <20160627201311.GA7039@dcvr.yhbt.net>
 MIME-Version: 1.0
-Received: by 10.107.136.16 with HTTP; Mon, 27 Jun 2016 14:20:24 -0700 (PDT)
-In-Reply-To: <CAOG-3GJ5arRRixEAjMt00jp3A+ZQQ3bGXa+ZUQrpffJyAOP_4w@mail.gmail.com>
-References: <CAOG-3GJdH5q9fdj+7zdEv-UUZMTAnunZu1PRJYjFNV360r6+sQ@mail.gmail.com>
- <CAGZ79kYKBxL4xLyySALBv_-gqkss9_iCk-qSc4T7u7fKDMOFWw@mail.gmail.com> <CAOG-3GJ5arRRixEAjMt00jp3A+ZQQ3bGXa+ZUQrpffJyAOP_4w@mail.gmail.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Mon, 27 Jun 2016 14:20:24 -0700
-Message-ID: <CAGZ79kbdb39NAF4wC35aH6kY7QGTjqkg=Q1RWmOzcO_d9-ZMHA@mail.gmail.com>
-Subject: Re: Git mv -- submodule -- recursive
-To:	Bart Bogaerts <bartbogaerts@gmail.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160627201311.GA7039@dcvr.yhbt.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 27, 2016 at 1:07 PM, Bart Bogaerts <bartbogaerts@gmail.com> wrote:
-> Hi,
->
-> I tested this on git version 2.9 and it still fails (exactly the same
-> behaviour as on the stackoverflow post; also the workarounded I posted
-> there still works).
+On Mon, Jun 27, 2016 at 08:13:11PM +0000, Eric Wong wrote:
 
-I see. the commit I referenced was solving a slightly different problem, than
-what we do here. That commit only fixed the issue for submodules in a nested
-directory.
+> > Quite a while ago, when I started doing code reviews professionally, I wondered
+> > if the code review procedure can be semi-automated, as automation helps keeping
+> > the error rate low. By that I mean having a check list which I can
+> > check off each point
+> 
+> Maybe a test case or even a small unit test would've helped.
+> I didn't notice the problem in xread until:
+> 
+> 1) I copied the code into xwrite
+> 2) s/POLLIN/POLLOUT/;
+> 3) forced EAGAIN using a patched, home-baked HTTP server
+> 
+> The biggish comment before the poll() obscured the missing
+> "continue" for me.  I read xread() before and did not notice
+> the missing "continue".
 
-The important detail what is different in this case is having another
-nested submodule.
+Here's an easier reproduction:
 
-If you only had
+	nonblock () {
+		perl -e '
+			use Fcntl;
+			fcntl(STDIN, F_SETFL, Fcntl::O_NONBLOCK);
+			exec @ARGV;
+		' "$@"
+	}
+	{
+	  sleep 1
+	  git pack-objects --all --stdout </dev/null
+	} | nonblock git index-pack --stdin
 
-- git-repo a
--- subdirectory 2015
---- git-submodule b
--- git-submodule c
+Or even simpler:
 
-(quoted from SO)
+        sleep 1 | nonblock git index-pack --stdin
 
-then `git mv c 2015/` is expected to work as well as
-`mkdir d && git mv 2015 d/` with submodule b being nested in 2015.
+The first one is nicer because it shows in the working case that we
+actually do eventually read the input, as opposed to just getting EOF.
+Prior to v2.8.0, or current master with your patch applied, it works
+fine.
 
-but as you have a submodule inside of c, moving c is buggy.
+It turned out to be harder than I thought to find somebody who calls
+xread() on stdin.  My first attempt was:
 
-Stefan
+	{
+		printf 'HE'
+		sleep 1
+		printf 'AD\n'
+	} |
+	nonblock git cat-file --batch-check
+
+but this ends up in strbuf_getwholeline(), which uses getdelim(). Much to
+my disappointment, getdelim() does not handle this case transparently;
+it will quietly return the first two bytes (though with errno set to
+EAGAIN), and we process bogus input.
+
+So in general I would say that handing non-blocking descriptors to git
+is not safe. I think it's possible to loop on getdelim() when we see
+EAGAIN, but I'm not sure if it's worth it.
+
+> Maybe the following optional patch on top of this series
+> improves readability:
+> 
+> ----------8<--------
+> Subject: [PATCH 3/2] hoist out io_wait function for xread and xwrite
+> 
+> At least for me, this improves the readability of xread and
+> xwrite; hopefully allowing missing "continue" statements to
+> be spotted more easily.
+
+IMHO the end result is much nicer with this patch.
+
+-Peff
