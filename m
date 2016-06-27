@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27FE92018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 18:26:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 316302018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 18:26:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752131AbcF0S0V (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 14:26:21 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:32845 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752018AbcF0SZt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:25:49 -0400
-Received: by mail-wm0-f67.google.com with SMTP id r201so26999293wme.0
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:49 -0700 (PDT)
+	id S1752012AbcF0SZY (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:25:24 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33229 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751973AbcF0SZW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 14:25:22 -0400
+Received: by mail-wm0-f68.google.com with SMTP id r201so26995689wme.0
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:21 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=D6PcAJa4uGY6EqzWkO2Xo6t2sMhtFZmE/9MBZi1u0oI=;
-        b=T3qrHUIJU1uFS7B6aO5citnARsx+ZvyIQilcmEGdSuieRKtwSOUpvaakDF0ZHBRonq
-         FcSPGEPpaHziiUXhC6PWcSTa7EaTh+sycDUIylSQkM9T0pLGjRV+3/4SCRzIgeIk8aB5
-         EAFxug/57aYxvT/Z3FGcczfUJYHOO3ZlCQuHnZz7ChiBDQLGINKQR/UNxHVKHsSUjV1S
-         amIip8X+PMXa1ESr5e2mEubNQh9hJm1eRar9hMeDW/GFcz9BbFHTft7fO01Bc9B5xf0t
-         toPSL8FaPVv/dKRYNG2J5boIpIyMGvWSL8o9+Zxqj4O5Afj4d8/S4tvGQ0gYdXXL3EhW
-         HTWg==
+        bh=ELiRcM5s+jMUO9x92pV02dP3gK7WnZ+8o6G+ZGRGeng=;
+        b=yoAGMyw8WQcw5XtsXkaTnuSIAp9+KD1ocbQQ1TROg4hUl3PcZOdz6krtQ6UJHExRds
+         qboFEdiiL9Rh4pBsjTXCxcRAUUgAPfVyK5q8oTu431grLlnSbdsopgL8d9vmcnfxk4X6
+         1BsXwdMdke9lyvAynm4tHOJR3I6cIVqgG6mtCPOrKhlqdzuqSfIXcy8JDHBMXGwdUxLT
+         n7RmaeT6uJdtUWWiVXdBUp7L4DMHu4MrUnJvlTnbSSORcKEiEWbKLNL9c+Xd8WpXvf69
+         lG+EVlDZgL7nMMG/m/bRP0lvU9JxJuoR9nmBa255zyRWzPSRLfSDqVrOwY+HT3LlM7/6
+         S5ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=D6PcAJa4uGY6EqzWkO2Xo6t2sMhtFZmE/9MBZi1u0oI=;
-        b=fz3TMScnJFV9AfxYdEbJo+uJ/gnSqczN0r0iv2BD08r77KNHKiG0iFfA+XHMnAzd9o
-         etkr4SfApbZAPXwm88Piz+r9E4d15DlnKaD2lWR78qvfliZ04qBObnelxX+cdT1AzAro
-         AYmZxPDW5QkvxlhXbnffCciBv2W+zPK+Ty/3+ka48oRzqiLjuwOhjOcEpVMIpO+Djs2R
-         AfQEFd0YAcRfK+4/gi+iq/5LFpm8Z+LyEAURPak2apo7G35v2iWz0nrxTXDNTz+DDCHF
-         +SHN2gWsaXKNvADgpGbt3C0Xiz4a7/u92kAdvWCgh8eBZS/WEELlK56IF7Exdx0HJvuZ
-         8OLw==
-X-Gm-Message-State: ALyK8tLzgqIMwswqtG+xjdtD5bS5lkpug6C8LjnZRKh+Oz+TTcug0coHhRPFuu2WRRQ9yw==
-X-Received: by 10.194.2.44 with SMTP id 12mr2134388wjr.61.1467051948462;
-        Mon, 27 Jun 2016 11:25:48 -0700 (PDT)
+        bh=ELiRcM5s+jMUO9x92pV02dP3gK7WnZ+8o6G+ZGRGeng=;
+        b=WuMWXcQmExtyDD1zcO8x8KFCV7pzKdDXEMtfSStzmy7sf+0bxrYvHNI2Cgfdw6dt/a
+         chrFmA9f7StvSM7VxoRScFwl0WYM4efzxXL3YChCEIbERRaOSbCVGeCRGOcc/F3STgLK
+         sp9jeFBFBhtq5cCjmgub5ih+cpzE5IW88FbmlhEG0YtpRSI3uXt6Mdgp9BYm1bAM8qSD
+         k36jf52YyBLVCDRhRlySaGhALY4I4nYfJTxJLbBlCXpcLFL/2YBVQVdmIsmKMPa7ueKt
+         1OBje6vFbyA+LpvanG6xyc7BJvekR99IHAUrRLRQJrTdWIb+RA0dLXpPVQj/pG1MQSg5
+         s47g==
+X-Gm-Message-State: ALyK8tKEZ1FsE0Mx3hdL1eYN1sQASJ23sBAiKwfQbHUgOMiAyZJR3qTSLkmIYuAakH8wNg==
+X-Received: by 10.194.239.163 with SMTP id vt3mr2133879wjc.78.1467051920615;
+        Mon, 27 Jun 2016 11:25:20 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.47
+        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 11:25:47 -0700 (PDT)
+        Mon, 27 Jun 2016 11:25:19 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 36/41] apply: don't print on stdout when be_silent is set
-Date:	Mon, 27 Jun 2016 20:24:24 +0200
-Message-Id: <20160627182429.31550-37-chriscool@tuxfamily.org>
+Subject: [PATCH v8 22/41] builtin/apply: make add_index_file() return -1 on error
+Date:	Mon, 27 Jun 2016 20:24:10 +0200
+Message-Id: <20160627182429.31550-23-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.172.g48843e9
 In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
 References: <20160627182429.31550-1-chriscool@tuxfamily.org>
@@ -70,35 +70,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This variable should prevent anything to be printed on both stderr
-and stdout.
+To libify `git apply` functionality we have to signal errors to the
+caller instead of die()ing.
+
+To do that in a compatible manner with the rest of the error handling
+in "builtin/apply.c", add_index_file() should return -1 instead of
+calling die().
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- apply.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/apply.c | 48 +++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 31 insertions(+), 17 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index 1435f85..e2acc18 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4698,13 +4698,13 @@ static int apply_patch(struct apply_state *state,
- 		goto end;
+diff --git a/builtin/apply.c b/builtin/apply.c
+index b0fd5f7..eadff4d 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -4099,11 +4099,11 @@ static int remove_file(struct apply_state *state, struct patch *patch, int rmdir
+ 	return 0;
+ }
+ 
+-static void add_index_file(struct apply_state *state,
+-			   const char *path,
+-			   unsigned mode,
+-			   void *buf,
+-			   unsigned long size)
++static int add_index_file(struct apply_state *state,
++			  const char *path,
++			  unsigned mode,
++			  void *buf,
++			  unsigned long size)
+ {
+ 	struct stat st;
+ 	struct cache_entry *ce;
+@@ -4111,7 +4111,7 @@ static void add_index_file(struct apply_state *state,
+ 	unsigned ce_size = cache_entry_size(namelen);
+ 
+ 	if (!state->update_index)
+-		return;
++		return 0;
+ 
+ 	ce = xcalloc(1, ce_size);
+ 	memcpy(ce->name, path, namelen);
+@@ -4122,20 +4122,32 @@ static void add_index_file(struct apply_state *state,
+ 		const char *s;
+ 
+ 		if (!skip_prefix(buf, "Subproject commit ", &s) ||
+-		    get_sha1_hex(s, ce->sha1))
+-			die(_("corrupt patch for submodule %s"), path);
++		    get_sha1_hex(s, ce->sha1)) {
++			free(ce);
++			return error(_("corrupt patch for submodule %s"), path);
++		}
+ 	} else {
+ 		if (!state->cached) {
+-			if (lstat(path, &st) < 0)
+-				die_errno(_("unable to stat newly created file '%s'"),
+-					  path);
++			if (lstat(path, &st) < 0) {
++				free(ce);
++				return error(_("unable to stat newly "
++					       "created file '%s': %s"),
++					     path, strerror(errno));
++			}
+ 			fill_stat_cache_info(ce, &st);
+ 		}
+-		if (write_sha1_file(buf, size, blob_type, ce->sha1) < 0)
+-			die(_("unable to create backing store for newly created file %s"), path);
++		if (write_sha1_file(buf, size, blob_type, ce->sha1) < 0) {
++			free(ce);
++			return error(_("unable to create backing store "
++				       "for newly created file %s"), path);
++		}
  	}
+-	if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD) < 0)
+-		die(_("unable to add cache entry for %s"), path);
++	if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD) < 0) {
++		free(ce);
++		return error(_("unable to add cache entry for %s"), path);
++	}
++
++	return 0;
+ }
  
--	if (state->diffstat)
-+	if (state->diffstat && !state->be_silent)
- 		stat_patch_list(state, list);
+ static int try_create_file(const char *path, unsigned int mode, const char *buf, unsigned long size)
+@@ -4271,8 +4283,10 @@ static void create_file(struct apply_state *state, struct patch *patch)
+ 	if (patch->conflicted_threeway) {
+ 		if (add_conflicted_stages_file(state, patch))
+ 			exit(128);
+-	} else
+-		add_index_file(state, path, mode, buf, size);
++	} else {
++		if (add_index_file(state, path, mode, buf, size))
++			exit(128);
++	}
+ }
  
--	if (state->numstat)
-+	if (state->numstat && !state->be_silent)
- 		numstat_patch_list(state, list);
- 
--	if (state->summary)
-+	if (state->summary && !state->be_silent)
- 		summary_patch_list(list);
- 
- end:
+ /* phase zero is to remove, phase one is to create */
 -- 
 2.9.0.172.gfb57a78
 
