@@ -2,72 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12F482018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 15:31:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D2A72018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 15:39:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751696AbcF0Pbb (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 11:31:31 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56958 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751385AbcF0Pbb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 11:31:31 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 101CE27D93;
-	Mon, 27 Jun 2016 11:31:30 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eq+IQbDDJnbrWJFGjvmkK2DXSPs=; b=mt/WPh
-	od1c0ygs5sem8fEZAmvrODxhvTmRQg+b3ywdfFEEgOkF0z5VCcvjhtT1RAo/T7JI
-	3DoiYAKhNiVtkNXzi7gD30jgwBJprsokkMiq52aNQMawUmNeV7UObOwhBA3VxEUs
-	7nO/4/Iv4p1AKEEbcC8S+Bom/5ivKLq/TYAiw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BO4nbOI1ZQb/89KFczSoHnPg+zKw2MHe
-	mrlrQp4DNdaw4kL0687KMHjP93LhflEYUHGhXY7QF1Oi2cWwp+A7nge73vEHMm6x
-	7LGj3R7GqM6HDwSsAWpMfRpebfZj4TVhIBt+ucn923937IPsJVngq0T5H3lbIp5U
-	jwa2m9eyoR4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 06CE227D91;
-	Mon, 27 Jun 2016 11:31:30 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7FD1B27D8C;
-	Mon, 27 Jun 2016 11:31:29 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Eric Sunshine <sunshine@sunshineco.com>
-Cc:	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH v4 5/5] fetch: reduce duplicate in ref update status lines with placeholder
-References: <20160605031141.23513-1-pclouds@gmail.com>
-	<20160626055810.26960-1-pclouds@gmail.com>
-	<20160626055810.26960-6-pclouds@gmail.com>
-	<CAPig+cT=BAuAbEmS5G1v2yGNczA+-WvW0bBZz_hrLcYi0bpO4g@mail.gmail.com>
-Date:	Mon, 27 Jun 2016 08:31:27 -0700
-In-Reply-To: <CAPig+cT=BAuAbEmS5G1v2yGNczA+-WvW0bBZz_hrLcYi0bpO4g@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 27 Jun 2016 00:33:28 -0400")
-Message-ID: <xmqqvb0ubqcw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751964AbcF0PjY (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 11:39:24 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:59067 "EHLO
+	smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751878AbcF0PjW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 11:39:22 -0400
+Received: from PhilipOakley ([92.22.77.210])
+	by smtp.talktalk.net with SMTP
+	id HYd5baA0oWqMCHYd5bBeT8; Mon, 27 Jun 2016 16:39:20 +0100
+X-Originating-IP: [92.22.77.210]
+X-Spam:	0
+X-OAuthority: v=2.2 cv=PNpNwriC c=1 sm=1 tr=0 a=cCrl+6OZiP8jn5MmZEBMUQ==:117
+ a=cCrl+6OZiP8jn5MmZEBMUQ==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=xtxXYLxNAAAA:8 a=iuTkAwPzMwEpf_tTGaUA:9 a=0RhZnL1DYvcuLYC8JZ5M:22
+ a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <276137126E354C29A6F472556B76B3D6@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:	"Philip Oakley" <philipoakley@iee.org>
+To:	"Junio C Hamano" <gitster@pobox.com>
+Cc:	"Jeff King" <peff@peff.net>, "Git List" <git@vger.kernel.org>
+References: <0648000B273C412AB7140AE959EBC99A@PhilipOakley><20160624160943.GA3170@sigill.intra.peff.net><xmqqh9cih6ym.fsf@gitster.mtv.corp.google.com><E61B46FFA8874DD3973AA96BE5B36790@PhilipOakley><xmqqwpldcamb.fsf@gitster.mtv.corp.google.com><8001594309A04A42859024BAEB8FF188@PhilipOakley> <xmqq4m8ed5zu.fsf@gitster.mtv.corp.google.com>
+Subject: Re: name for A..B ranges?
+Date:	Mon, 27 Jun 2016 16:39:19 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 380C7712-3C7C-11E6-816E-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfLWeyRL5zNNZGJ3qv19kfvLFeK/M0xSrRH8w+FDWnc5+RLVZlC/6joP9b3eyZq5GjQ/NItvxQYhKDCb/kI20DVG0bh4ZPE3QslglWMrO/Y1SGSNvW44G
+ 90wvY6s5deOL6sIsirQ+A13N/WEe8r6OjnFqAzGbR6NyDX3sx5bKqtfdqN7KadLBb/u0pt/KTkbwAsUuGqNCtAJhF7Mit/vstZV3Mt0FTFD9c/S1XwiVo3S7
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+From: "Junio C Hamano" <gitster@pobox.com>
+> "Philip Oakley" <philipoakley@iee.org> writes:
+> 
+>> ..., I was wondering
+>> if an alternative would be to refer to it via [use the headings of]
+>> it's notation, i.e. "the 'two-dot' range notation" (or 'syntax' is
+>> that is preferred), and the "three-dot symmetric difference notation".
+> 
+> That's a lot more sensible pair of headings, I would think.
+> 
+>> The existing explanatory text can stand as is, but they would now have
+>> a section for readers to find.
+>>
+>> Or should I just drop this?
+> 
+> I like the approach to separate them into clearly marked sections.
+> I primarily was reacting to the "single-sided" which nobody would
+> understand.
+> --
 
-> In my brain, at least, '$' is associated so strongly with regex that
-> "origin/$" is interpreted automatically as anchoring "origin/" at the
-> end of string, and "refs/$/head" just feels weird.
->
-> On the other hand, given the familiarity of shell globbing, "origin/*"
-> and "refs/*/head" feel quite natural and intuitive.
-
-I had the same thought ;-)
+Thanks, I'll update the patches (probably tomorrow)
+Philip
