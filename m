@@ -2,69 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4711D2018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 16:54:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 614A82018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 16:57:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751961AbcF0Qx6 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 12:53:58 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:53428 "EHLO
-	homiemail-a19.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751831AbcF0Qx5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2016 12:53:57 -0400
-Received: from homiemail-a19.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a19.g.dreamhost.com (Postfix) with ESMTP id AACDC604069;
-	Mon, 27 Jun 2016 09:53:51 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=subject:to
-	:references:cc:from:message-id:date:mime-version:in-reply-to
-	:content-type:content-transfer-encoding; s=novalis.org; bh=TWzoT
-	2VJ8VEs3dzueB3TeHl5OrY=; b=Bcf90fmuxGff5ilkIUiI9Uoi7ZlXVeQ8FzAD+
-	nzn+ULr5NVWEQvAeRDWD74fFQUSuI2TQCjwKJcoojfrzky45I0JeWdEAIYqdEmbt
-	pXFMhEewBGv1Y4ckh8bV7ElzAYACBHIh6Dvj4qN39+em5ZZ2WbR7NJR0g7AYOv7W
-	f8zOuI=
-Received: from [10.0.1.180] (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: novalis@novalis.org)
-	by homiemail-a19.g.dreamhost.com (Postfix) with ESMTPSA id 04A8B604061;
-	Mon, 27 Jun 2016 09:53:50 -0700 (PDT)
-Subject: Re: [PATCH v13 04/20] index-helper: new daemon for caching index and
- related stuff
-To:	Keith McGuigan <kamggg@gmail.com>, git@vger.kernel.org,
-	pclouds@gmail.com
-References: <1466914464-10358-1-git-send-email-novalis@novalis.org>
- <1466914464-10358-4-git-send-email-novalis@novalis.org>
- <CAFUO74nENapwVsM3CUst9AHqy5LcKTFBCnJxGXPk8E952t+X5Q@mail.gmail.com>
-Cc:	David Turner <dturner@twopensource.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Junio C Hamano <gitster@pobox.com>
-From:	David Turner <novalis@novalis.org>
-Message-ID: <57715A1D.3030705@novalis.org>
-Date:	Mon, 27 Jun 2016 12:53:49 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
+	id S1751742AbcF0Q50 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 12:57:26 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:34149 "EHLO
+	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751644AbcF0Q5Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 12:57:25 -0400
+Received: by mail-io0-f180.google.com with SMTP id g13so150294256ioj.1
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 09:57:25 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=etDg3MsGqV7uj6GFF/aTnVEM7I+ncDiHuSiZSDq1O9o=;
+        b=U2iTtuw/wRf1Ov2OMTFFAZbdA51LApHCVm0EuMOugplekrJYcyussn1YoF9t3Gnj1D
+         FUkNiJv2GuYLdBAkmfbvL4dxHccH4oM3GJ6jXQI392bOw6iJMTRHalXNQaZ4IAxdcEZq
+         Wgk8j45Sb8cmKfk6HCiLZEcgqY5uTuUU/g+MRfjJjzQ2wkmjb9MILoQ5qsVFYNsKJG9H
+         +Tf8yX27fSQE+qn6QgYsB+b2wR6IrVwMAqGMx7qsOYPOTmNAUXFTVM2pqxgqrP7CrIcT
+         MAOuDFX7ywLM1sluGSn99JSI3Dg7A82IeU/CLXofXnyVDbvLCl0RstjwL/je85gR8qrt
+         28Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=etDg3MsGqV7uj6GFF/aTnVEM7I+ncDiHuSiZSDq1O9o=;
+        b=aOj9PW3OTxJ9Lbmhoag/MsCf+8iwAvJzEvoSVz3eMxy2+LSJ5swesLPz/HOMcitbsu
+         CMdQYo1cNxm2rJsCgdFVP96IQRSSvpyZ3/OvoT9UTptWvBtMoIxm1v6X246Y1kawrsNW
+         eFosjU5GvDAf9JK6+y+qFWU/5USczy03K9KfsC0UTRt2QDGAzBRkHSa8xKwo6tJdr3qh
+         pSVpBrUDQW3T2UuRGunxWz5NvBg+m4AVruTvDpqkxleQCWNyB/ooXIeR6NnHRap37QPy
+         BQ/niq2QKGDd/30auPx6sQ8RnMz9dIjNKlcyyA4HYGiklJoBFN8oKseINAHfWzArWGaE
+         FGhg==
+X-Gm-Message-State: ALyK8tLaOQ+jNpMqC80GQhzu6bsF52sb/fBreCWz9gceNLJDwKS5+dRbhUdnYQZRoJL+rVVDOcV5a0zzt0nxeL99
+X-Received: by 10.107.178.4 with SMTP id b4mr1779062iof.83.1467046644732; Mon,
+ 27 Jun 2016 09:57:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAFUO74nENapwVsM3CUst9AHqy5LcKTFBCnJxGXPk8E952t+X5Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: by 10.107.136.16 with HTTP; Mon, 27 Jun 2016 09:57:24 -0700 (PDT)
+In-Reply-To: <CAOG-3GJdH5q9fdj+7zdEv-UUZMTAnunZu1PRJYjFNV360r6+sQ@mail.gmail.com>
+References: <CAOG-3GJdH5q9fdj+7zdEv-UUZMTAnunZu1PRJYjFNV360r6+sQ@mail.gmail.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Mon, 27 Jun 2016 09:57:24 -0700
+Message-ID: <CAGZ79kYKBxL4xLyySALBv_-gqkss9_iCk-qSc4T7u7fKDMOFWw@mail.gmail.com>
+Subject: Re: Git mv -- submodule -- recursive
+To:	Bart Bogaerts <bartbogaerts@gmail.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 06/27/2016 08:58 AM, Keith McGuigan wrote:
+On Sun, Jun 26, 2016 at 11:01 PM, Bart Bogaerts <bartbogaerts@gmail.com> wrote:
+> With a repo structured as follows
 >
-> If 'indexhelper.exitafter' is set to 0, then loop is called with
-> idle_in_seconds == 0.  It gets converted to -1, but then
-> 'idle_in_seconds * 1000' is passed to poll(), so poll gets an argument
-> of -1000, which it EINVALs on.
+> main-files
+> |- submod
+>     |- subsubmodule
+>
+> git mv submod newlocation
+>
+> does not do what it is supposed to do. It actually breaks the git repository.
+> It can be fixed easily.
+> A complete description of the bug, including a workaround, can be found on
+> http://stackoverflow.com/q/32782382/2274140
 
-Silly OS X!
+Which version of Git are you using?
+I think this is fixed in a127331cd81233 (mv: allow moving nested
+submodules, 2016-04-19), which is first included in v2.8.3
+(or v2.9 and later).
 
-Will squash when I re-roll thanks.
+Thanks,
+Stefan
 
-
-
+>
+> --
+> Bart Bogaerts
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
