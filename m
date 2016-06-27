@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D789A2018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 18:25:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83AD82018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 18:25:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751865AbcF0SZC (ORCPT <rfc822;e@80x24.org>);
+	id S1751878AbcF0SZF (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:25:05 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:32780 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751770AbcF0SZC (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 27 Jun 2016 14:25:02 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33759 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751749AbcF0SZA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:25:00 -0400
-Received: by mail-wm0-f67.google.com with SMTP id r201so26992915wme.0
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:24:59 -0700 (PDT)
+Received: by mail-wm0-f68.google.com with SMTP id r201so26993160wme.0
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:01 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=60o13a0Uk2WHlweNEip8W40bYC9M3A9kD0Dr/Dh2uN4=;
-        b=IBO/M76VyqEgDYwC+sCilQiCS0WFByQmbN3Y7scFduVzt1JGEas/DCvVpwne7w01u2
-         5rHF8eSqjkV/CeUbQ+8MI+QVQHmTF8P7eQJCO6lCVpxmg242Xe1TNbp+C+rQ32iBvD0O
-         NEZ5+/+LLSA16jLDEcW/2zOkcOmZM28Z7qzhN3tvcOi10B36eoGVMvoztDpxbt4lp1l5
-         AgAvpvg/8WF7AbsMj0PHImDudE5/6fiT7fi4Ms8pnU9qIdmDRKA4JQ0t7fuCGKDv0dJN
-         SBYlv/Tvj1p/yWEDvZVthFxKySUomjUSfnj+V+HoGwcenjr9YKVwci9yBIHdBC9eQZD1
-         z2nA==
+        bh=hq2Dn4eh8ij0g8su6Y3SF5GEpJpdim3BlmFavw5Uiho=;
+        b=gvaSoPmiFqlsXzR+DFH18GSGrmqs6nhWLK6RyMc0nKFMPDDgogHmgz2M7wZi78uSiA
+         XmdgrEUlDXymG+AS1K3456YykhipRL79FlH76qJZpcNg9Xmek7NVcG56keceNm9C0HvD
+         MHuvxDUlvo914cacJOpFHWR12M9cUEDXqmrmqKJD5P9kZgQ7oOm4MpEECyO1lLKh6VSW
+         LGOquJaGmajYMlKiCyY2cfLz4XOqQMepcfP7inHRsiu7X1P2H8yRd2k033Amxf0Jjftc
+         OazKkB4L5/P0sdjWzcETJjmwHviDqCNFKoIK0S2vJH6OOunCeQLq961al6wKkqadb2KE
+         sl8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=60o13a0Uk2WHlweNEip8W40bYC9M3A9kD0Dr/Dh2uN4=;
-        b=F/FADVvHNTLWBHk+eDonRqfTZel/riPgv9wXqw8go+uIWKs7X6cqnKMlLpBsKhRa3z
-         zXlBVW5QpIIfEzBJGmYXVyp5uQaBKKG2kw0eijfknOFT9HVSoRiipRBJKvCEd8MFFvz9
-         9TE1F1xwKmL92wKexyzY6PKU6G7e0zbubNoao7n3/9ksVBFuu9MMyz3Vgu9bYCgSI2rM
-         lTj8ecgl5/qfjkrPugyOtzBZTtTK5Ew2XMh95z+YtqFwv8f1HsXgfxDfm2YkN6vs+lI/
-         pUjs74u8WyacYDGSU39xidrEKKA0ONuF/2GBOKE6KnRxXoJEYM6XTYgIBNutqdX9BKj0
-         PKPg==
-X-Gm-Message-State: ALyK8tLRYv1eiudH/NwURtC/m0cY5Ti5FWq6KD1PCx29XA1VCBGcujY9RnPuuSrsDBi6FQ==
-X-Received: by 10.28.23.79 with SMTP id 76mr9773397wmx.93.1467051899193;
-        Mon, 27 Jun 2016 11:24:59 -0700 (PDT)
+        bh=hq2Dn4eh8ij0g8su6Y3SF5GEpJpdim3BlmFavw5Uiho=;
+        b=Y9y8FvWfuvgtkTBT3odM/ndR88mPhFuhGTEvJjYK1cnhUfmWred4FleA+10jALTB14
+         jm4bGe109d3smeSrLtAeS3F6eKAGPDUk4XguSKqWCC4Bp27sWya5Oo+/ZNco2fE+R/uP
+         Pwv4mCQqt7LiiR/h2qg7F+8B2AZ2i6evbD9j4tjLaGSZHrZJI0MrLkIt3ZGaAyIr11wF
+         srINdwQ0NqtOoF1hNd0tMBeGKux7dQsF4Yw8LPqyYXlAnYeMVxhwsV+5/cRzzLxE9GvT
+         vFfse0mM+aSqtdhh7OBm94OqfPapksVY0ZtghS2kdXxqhR6f2L5kW6Zh2/zs55ggr/V0
+         tkNg==
+X-Gm-Message-State: ALyK8tKnS7Dke0e83QKBbtJXd14mwZ/PoAGd5bpUNqlD2UTPDNflazqfNtDVspqZGHN7EQ==
+X-Received: by 10.28.9.213 with SMTP id 204mr12589926wmj.88.1467051900754;
+        Mon, 27 Jun 2016 11:25:00 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.24.57
+        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.24.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 11:24:58 -0700 (PDT)
+        Mon, 27 Jun 2016 11:24:59 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 06/41] builtin/apply: make parse_chunk() return a negative integer on error
-Date:	Mon, 27 Jun 2016 20:23:54 +0200
-Message-Id: <20160627182429.31550-7-chriscool@tuxfamily.org>
+Subject: [PATCH v8 07/41] builtin/apply: make parse_single_patch() return -1 on error
+Date:	Mon, 27 Jun 2016 20:23:55 +0200
+Message-Id: <20160627182429.31550-8-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.172.g48843e9
 In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
 References: <20160627182429.31550-1-chriscool@tuxfamily.org>
@@ -71,82 +71,93 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
 To libify `git apply` functionality we have to signal errors to the
-caller instead of die()ing or exit()ing.
+caller instead of die()ing.
 
 To do that in a compatible manner with the rest of the error handling
-in builtin/apply.c, parse_chunk() should return a negative integer
-instead of calling die() or exit().
+in builtin/apply.c, parse_single_patch() should return a negative
+integer instead of calling die().
 
-As parse_chunk() is called only by apply_patch() which already
-returns either -1 or -128 when an error happened, let's make it also
-return -1 or -128.
+Let's do that by using error() and let's adjust the related test
+cases accordingly.
 
-This makes it compatible with what find_header() and parse_binary()
-already return.
-
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ builtin/apply.c        | 17 +++++++++++++----
+ t/t4012-diff-binary.sh |  4 ++--
+ 2 files changed, 15 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index aff0d66..b10a7e3 100644
+index b10a7e3..65927f1 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -1996,22 +1996,22 @@ static int use_patch(struct apply_state *state, struct patch *p)
- 	return !state->has_include;
- }
- 
--
- /*
-  * Read the patch text in "buffer" that extends for "size" bytes; stop
-  * reading after seeing a single patch (i.e. changes to a single file).
-  * Create fragments (i.e. patch hunks) and hang them to the given patch.
-- * Return the number of bytes consumed, so that the caller can call us
-- * again for the next patch.
+@@ -1671,6 +1671,10 @@ static int parse_fragment(struct apply_state *state,
+  *
+  * The (fragment->patch, fragment->size) pair points into the memory given
+  * by the caller, not a copy, when we return.
 + *
 + * Returns:
-+ *   -1 if no header was found or parse_binary() failed,
-+ *   -128 on another error,
-+ *   the number of bytes consumed otherwise,
-+ *     so that the caller can call us again for the next patch.
++ *   -1 in case of error,
++ *   the number of bytes in the patch otherwise.
   */
- static int parse_chunk(struct apply_state *state, char *buffer, unsigned long size, struct patch *patch)
- {
- 	int hdrsize, patchsize;
- 	int offset = find_header(state, buffer, size, &hdrsize, patch);
- 
--	if (offset == -128)
--		exit(128);
--
- 	if (offset < 0)
- 		return offset;
- 
-@@ -2071,8 +2071,10 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
- 		 * empty to us here.
- 		 */
- 		if ((state->apply || state->check) &&
--		    (!patch->is_binary && !metadata_changes(patch)))
--			die(_("patch with only garbage at line %d"), state->linenr);
-+		    (!patch->is_binary && !metadata_changes(patch))) {
-+			error(_("patch with only garbage at line %d"), state->linenr);
-+			return -128;
+ static int parse_single_patch(struct apply_state *state,
+ 			      const char *line,
+@@ -1688,8 +1692,10 @@ static int parse_single_patch(struct apply_state *state,
+ 		fragment = xcalloc(1, sizeof(*fragment));
+ 		fragment->linenr = state->linenr;
+ 		len = parse_fragment(state, line, size, patch, fragment);
+-		if (len <= 0)
+-			die(_("corrupt patch at line %d"), state->linenr);
++		if (len <= 0) {
++			free(fragment);
++			return error(_("corrupt patch at line %d"), state->linenr);
 +		}
- 	}
+ 		fragment->patch = line;
+ 		fragment->size = len;
+ 		oldlines += fragment->oldlines;
+@@ -1725,9 +1731,9 @@ static int parse_single_patch(struct apply_state *state,
+ 		patch->is_delete = 0;
  
- 	return offset + hdrsize + patchsize;
-@@ -4455,6 +4457,10 @@ static int apply_patch(struct apply_state *state,
- 		nr = parse_chunk(state, buf.buf + offset, buf.len - offset, patch);
- 		if (nr < 0) {
- 			free_patch(patch);
-+			if (nr == -128) {
-+				res = -128;
-+				goto end;
-+			}
- 			break;
- 		}
- 		if (state->apply_in_reverse)
+ 	if (0 < patch->is_new && oldlines)
+-		die(_("new file %s depends on old contents"), patch->new_name);
++		return error(_("new file %s depends on old contents"), patch->new_name);
+ 	if (0 < patch->is_delete && newlines)
+-		die(_("deleted file %s still has contents"), patch->old_name);
++		return error(_("deleted file %s still has contents"), patch->old_name);
+ 	if (!patch->is_delete && !newlines && context)
+ 		fprintf_ln(stderr,
+ 			   _("** warning: "
+@@ -2029,6 +2035,9 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
+ 				       size - offset - hdrsize,
+ 				       patch);
+ 
++	if (patchsize < 0)
++		return -128;
++
+ 	if (!patchsize) {
+ 		static const char git_binary[] = "GIT binary patch\n";
+ 		int hd = hdrsize + offset;
+diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
+index 643d729..0a8af76 100755
+--- a/t/t4012-diff-binary.sh
++++ b/t/t4012-diff-binary.sh
+@@ -68,7 +68,7 @@ test_expect_success C_LOCALE_OUTPUT 'apply detecting corrupt patch correctly' '
+ 	sed -e "s/-CIT/xCIT/" <output >broken &&
+ 	test_must_fail git apply --stat --summary broken 2>detected &&
+ 	detected=$(cat detected) &&
+-	detected=$(expr "$detected" : "fatal.*at line \\([0-9]*\\)\$") &&
++	detected=$(expr "$detected" : "error.*at line \\([0-9]*\\)\$") &&
+ 	detected=$(sed -ne "${detected}p" broken) &&
+ 	test "$detected" = xCIT
+ '
+@@ -77,7 +77,7 @@ test_expect_success C_LOCALE_OUTPUT 'apply detecting corrupt patch correctly' '
+ 	git diff --binary | sed -e "s/-CIT/xCIT/" >broken &&
+ 	test_must_fail git apply --stat --summary broken 2>detected &&
+ 	detected=$(cat detected) &&
+-	detected=$(expr "$detected" : "fatal.*at line \\([0-9]*\\)\$") &&
++	detected=$(expr "$detected" : "error.*at line \\([0-9]*\\)\$") &&
+ 	detected=$(sed -ne "${detected}p" broken) &&
+ 	test "$detected" = xCIT
+ '
 -- 
 2.9.0.172.gfb57a78
 
