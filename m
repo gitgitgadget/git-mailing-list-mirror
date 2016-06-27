@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AAEF2018A
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9130A2018B
 	for <e@80x24.org>; Mon, 27 Jun 2016 18:25:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752073AbcF0SZn (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 14:25:43 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33337 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752039AbcF0SZj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:25:39 -0400
-Received: by mail-wm0-f66.google.com with SMTP id r201so26996359wme.0
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:26 -0700 (PDT)
+	id S1752094AbcF0SZw (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:25:52 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35178 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752039AbcF0SZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 14:25:44 -0400
+Received: by mail-wm0-f68.google.com with SMTP id a66so26933861wme.2
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:43 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gTswT3AoZqCxsjRxRF41r5uChN4eyUvH+iKAnGaCtnw=;
-        b=IpgmMib9g3jAccpUzQdqOAwRbwWBnkZ/qZ0g7NP933xdBfAWL/pXA/1z5Adp6VSHx3
-         ExNFwAK+IpCxK7kDB/8HrLFDTE+etjFYH6pbOqUUx5Kd8L6AnLOcu9Zy2LstetcgVUXO
-         eV0iiMHFbOaWOz5h+uTIZSIw4ZME/33wqWiu6THawn6rLao2CbTwSiWumT50Gw6EuGBj
-         Heq4dFHsy8wvRHNsaeBdM/0ckp8fDfKP0PTWvTuyJ4iPgX8d1FQtxe4jsmU9ZKYKW6Ec
-         Ubw8LW23LvPL7UADRNE02rkerNjiP2bhxv9zfI6MVqUBBp1gYxbkjvJNh292Cav+MlLX
-         5Dog==
+        bh=e+hejxlibFPecMU+zdx+FG4PJl3Kp6F7oiW8Hk60ULU=;
+        b=BnoLuJBPbWNxWxrWvsArTkkHJ+MY1h5tVR8vabqrO4JNPpi7rW9jAAR+n2NM4GdGyj
+         Yc2KfuZ5507at5QxiErifTHSw9Idd1CQVHBxRcAbLabqA3keZ/Ml19YPuadIk+rD2aZ2
+         IF8Dpfo7EsUN6Z4FTKo8nwuM27Hxv4FiLqg8XeDNgagAj04MxL3vCAyKq7J+U3Hw+L3J
+         CJ+sipJ3rvnJhtEfPWeB8X1S7PStfefEWmlIxTE9n1+3OFiSSZQn4kO6qLbuLZpcgmzq
+         6CHu7hfChwCrl94dQVDtycOSAqVaUbHjDqQwh8YxDzmCnTR5zFI3HBi7r7r1Lhkhn3r5
+         QxIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=gTswT3AoZqCxsjRxRF41r5uChN4eyUvH+iKAnGaCtnw=;
-        b=ENl68uSC4O/0kpKSIayaOsv1b2gslTPosfLu0k1GjbZi1XR6ZYBNPvYj1RKzFJpzhC
-         4iFDxIeGueY5kG9mRasQmLCESMpdJJqmetENLjHcQyGVy9nee8evsCzVIcoShU+6ypyl
-         bI36A05thMyMpQTtLg73OmL1ta5mTUm3hxe8Oj31xXyqig8LU0OHB7MwZAAGk2LI1ci7
-         NrmWyz0Xm9/o5Aqc+LsWBd4id1LK5vnTpVOUy/y5eSOwwVZ9avgMBmAGoR9iAUHwyX+n
-         sF0OTWCkb5Bat043SQL/0hPxSe8csG/CeSTwm0BbYWganEhC4Zd/64UN8x4wfb+kputo
-         fPYQ==
-X-Gm-Message-State: ALyK8tIyqYgxBvkMdk4TE1mdQBdT+xe5+VyiawyMxZhwdTLgi5vy8PxC7BQgEncXREnBcQ==
-X-Received: by 10.194.178.199 with SMTP id da7mr2136358wjc.123.1467051925735;
-        Mon, 27 Jun 2016 11:25:25 -0700 (PDT)
+        bh=e+hejxlibFPecMU+zdx+FG4PJl3Kp6F7oiW8Hk60ULU=;
+        b=EA1UfxomvndyyKvqMGqKAoLlSexcvqYgmdWM8uyBsX+XtLXoUDNmwWDaH0AFlvec/W
+         paTu4GjJaRcZaE7NoaWIONsgnyz1E5mQ6Mu2iHtrWLZorY+Zm3cNDCnJHY6dNXVFwmai
+         DZdFcpGY3vK9dtbxg4EIurU3TfQGLGraZh0iDMXnsaFkAYhqq/BbI21fI8yEKDLwyaxJ
+         e+ewJWQoaQMahk6Q920pdcCenilUZWy+/p7qwj34cHpaZmpmi4n+TOrU8MYjOfJBBpfU
+         09hbLjHmBsUoDl6XFaDivdpwVxAigs8B+v9TTBstII25S3ddb8yPaZ6KUbe5OkiUZmnz
+         yzNg==
+X-Gm-Message-State: ALyK8tJOJ0c5PqmAh7tBpD7F4rp7cSlej1KRYOEeOY4XBqP7dbHGLJOChLqJ6S2ZzLDEcA==
+X-Received: by 10.28.188.137 with SMTP id m131mr11662584wmf.4.1467051943135;
+        Mon, 27 Jun 2016 11:25:43 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.24
+        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 11:25:25 -0700 (PDT)
+        Mon, 27 Jun 2016 11:25:42 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 26/41] builtin/apply: make try_create_file() return -1 on error
-Date:	Mon, 27 Jun 2016 20:24:14 +0200
-Message-Id: <20160627182429.31550-27-chriscool@tuxfamily.org>
+Subject: [PATCH v8 32/41] environment: add set_index_file()
+Date:	Mon, 27 Jun 2016 20:24:20 +0200
+Message-Id: <20160627182429.31550-33-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.172.g48843e9
 In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
 References: <20160627182429.31550-1-chriscool@tuxfamily.org>
@@ -70,120 +70,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-To libify `git apply` functionality we have to signal errors to the
-caller instead of die()ing.
+Introduce set_index_file() to be able to temporarily change the index file.
 
-To do that in a compatible manner with the rest of the error handling
-in "builtin/apply.c", try_create_file() should return -1 in case of
-error.
+It should be used like this:
 
-Unfortunately try_create_file() currently returns -1 to signal a
-recoverable error. To fix that, let's make it return 1 in case of
-a recoverable error and -1 in case of an unrecoverable error.
+    /* Save current index file */
+    old_index_file = get_index_file();
+    set_index_file((char *)tmp_index_file);
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+    /* Do stuff that will use tmp_index_file as the index file */
+    ...
+
+    /* When finished reset the index file */
+    set_index_file(old_index_file);
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 41 ++++++++++++++++++++++++++++++-----------
- 1 file changed, 30 insertions(+), 11 deletions(-)
+ cache.h       |  1 +
+ environment.c | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index f54b8c5..651a057 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -4150,38 +4150,45 @@ static int add_index_file(struct apply_state *state,
- 	return 0;
+diff --git a/cache.h b/cache.h
+index c73becb..8854365 100644
+--- a/cache.h
++++ b/cache.h
+@@ -461,6 +461,7 @@ extern int is_inside_work_tree(void);
+ extern const char *get_git_dir(void);
+ extern const char *get_git_common_dir(void);
+ extern char *get_object_directory(void);
++extern void set_index_file(char *index_file);
+ extern char *get_index_file(void);
+ extern char *get_graft_file(void);
+ extern int set_git_dir(const char *path);
+diff --git a/environment.c b/environment.c
+index ca72464..7a53799 100644
+--- a/environment.c
++++ b/environment.c
+@@ -292,6 +292,16 @@ int odb_pack_keep(char *name, size_t namesz, const unsigned char *sha1)
+ 	return open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
  }
  
 +/*
-+ * Returns:
-+ *  -1 if an unrecoverable error happened
-+ *   0 if everything went well
-+ *   1 if a recoverable error happened
++ * Temporarily change the index file.
++ * Please save the current index file using get_index_file() before changing
++ * the index file. And when finished, reset it to the saved value.
 + */
- static int try_create_file(const char *path, unsigned int mode, const char *buf, unsigned long size)
++void set_index_file(char *index_file)
++{
++	git_index_file = index_file;
++}
++
+ char *get_index_file(void)
  {
--	int fd;
-+	int fd, res;
- 	struct strbuf nbuf = STRBUF_INIT;
- 
- 	if (S_ISGITLINK(mode)) {
- 		struct stat st;
- 		if (!lstat(path, &st) && S_ISDIR(st.st_mode))
- 			return 0;
--		return mkdir(path, 0777);
-+		return !!mkdir(path, 0777);
- 	}
- 
- 	if (has_symlinks && S_ISLNK(mode))
- 		/* Although buf:size is counted string, it also is NUL
- 		 * terminated.
- 		 */
--		return symlink(buf, path);
-+		return !!symlink(buf, path);
- 
- 	fd = open(path, O_CREAT | O_EXCL | O_WRONLY, (mode & 0100) ? 0777 : 0666);
- 	if (fd < 0)
--		return -1;
-+		return 1;
- 
- 	if (convert_to_working_tree(path, buf, size, &nbuf)) {
- 		size = nbuf.len;
- 		buf  = nbuf.buf;
- 	}
--	write_or_die(fd, buf, size);
-+	res = !write_or_whine_pipe(fd, buf, size, path);
- 	strbuf_release(&nbuf);
- 
--	if (close(fd) < 0)
--		die_errno(_("closing file '%s'"), path);
--	return 0;
-+	if (close(fd) < 0 && !res)
-+		return error(_("closing file '%s': %s"), path, strerror(errno));
-+
-+	return res ? -1 : 0;
- }
- 
- /*
-@@ -4195,15 +4202,24 @@ static void create_one_file(struct apply_state *state,
- 			    const char *buf,
- 			    unsigned long size)
- {
-+	int res;
-+
- 	if (state->cached)
- 		return;
--	if (!try_create_file(path, mode, buf, size))
-+
-+	res = try_create_file(path, mode, buf, size);
-+	if (res < 0)
-+		exit(128);
-+	if (!res)
- 		return;
- 
- 	if (errno == ENOENT) {
- 		if (safe_create_leading_directories(path))
- 			return;
--		if (!try_create_file(path, mode, buf, size))
-+		res = try_create_file(path, mode, buf, size);
-+		if (res < 0)
-+			exit(128);
-+		if (!res)
- 			return;
- 	}
- 
-@@ -4222,7 +4238,10 @@ static void create_one_file(struct apply_state *state,
- 		for (;;) {
- 			char newpath[PATH_MAX];
- 			mksnpath(newpath, sizeof(newpath), "%s~%u", path, nr);
--			if (!try_create_file(newpath, mode, buf, size)) {
-+			res = try_create_file(newpath, mode, buf, size);
-+			if (res < 0)
-+				exit(128);
-+			if (!res) {
- 				if (!rename(newpath, path))
- 					return;
- 				unlink_or_warn(newpath);
+ 	if (!git_index_file)
 -- 
 2.9.0.172.gfb57a78
 
