@@ -2,72 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7433D2018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 16:36:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EE332018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 16:49:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752049AbcF0QgD (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 12:36:03 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33324 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751784AbcF0QgC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 12:36:02 -0400
-Received: (qmail 28715 invoked by uid 102); 27 Jun 2016 16:36:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 12:36:01 -0400
-Received: (qmail 9087 invoked by uid 107); 27 Jun 2016 16:36:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 12:36:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Jun 2016 12:35:59 -0400
-Date:	Mon, 27 Jun 2016 12:35:59 -0400
-From:	Jeff King <peff@peff.net>
-To:	Duy Nguyen <pclouds@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH] config: add conditional include
-Message-ID: <20160627163559.GA5296@sigill.intra.peff.net>
-References: <20160626070617.30211-1-pclouds@gmail.com>
- <20160626182715.GA12546@sigill.intra.peff.net>
- <CACsJy8DAMe3YH-f_Qm8FEmanXepnwF2z1L6DDGoJf1eysmW2xQ@mail.gmail.com>
- <20160627162052.GA4532@sigill.intra.peff.net>
- <CACsJy8D6TxkMWJTUCeDd8tuMyTRXcvWdMw4VL3nO7jbLEgjE-A@mail.gmail.com>
+	id S1751830AbcF0QtJ (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 12:49:09 -0400
+Received: from mail-it0-f46.google.com ([209.85.214.46]:35461 "EHLO
+	mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751713AbcF0QtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 12:49:07 -0400
+Received: by mail-it0-f46.google.com with SMTP id g127so69383350ith.0
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 09:49:07 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=virdVk5OM8zsj8SW0J/WvmjqQ5WMhXKrjCUuK9qYOqQ=;
+        b=iOMv+2ASGMwdUtz6muyQHBjY9qee8YSoEIDsKHwWE3cwyYEFGU2CncQ9vGa/aRB9Jf
+         S0qQXAmp8bS/aD5ebp0Z01W5S++7QeF5l1GzFE9FZMrpV491uZYQcZNco4TxjweTlK4m
+         Je/zcxlYiIPizNKvvpqh4NNV8yi+zWClKQphQ6wcCKFxArH7EIfiiNHwNplIEF5Dc9E8
+         3hCqk6a4ZHuAIoX19XIAnKT4l1DDOqK+P8uYFQ6JioLWIizdbcoxc112Y9XUInmQKiy0
+         FYmcqtfRb+QBR6vQ0vuJ/FFPgQYNZ4a8E4XBAR1vDLq96wsp8hmauqUb/k4cTjC9rmki
+         InLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=virdVk5OM8zsj8SW0J/WvmjqQ5WMhXKrjCUuK9qYOqQ=;
+        b=WIpWWy73ZgHM4egNMDXOp6divItgE3m3QpDXAzjWCygGQ4s2kUWfpXx62YMq07yNPb
+         lbItrOh4S1aAjY5Dm1890C/tKZ8GN2/aiLcJ/f+gYKO+NAtDf+AApjEg0sXLSqo7IfMe
+         7H1h6RdbpUCcxc9Zb/yyqB2Z6kI0KVLMrjnzRY8wbXmt3gns3w0TxjVXv4iYWI8d4P4c
+         Zj/0YgdtBwygUD7rnoCDhxa88alsSm66uwwu0XoxxzrtMxZGuI7fJsOwQeDoLHFBQ4Rs
+         2nizaukvrS6Bh9pGjAAs3KXEHLItLSDyA5Z6USoJozpMosudx8GI4Tux/sLC/WYw81i2
+         TMzQ==
+X-Gm-Message-State: ALyK8tLuOBvqM0COt2ndA/F3Ak0+JwBREMpL9wD9ApCZJUkjwL63dpnLrDako85J74/Wxw8BMDRIxYJJO5m5HMJ7
+X-Received: by 10.36.29.81 with SMTP id 78mr9176014itj.97.1467046146636; Mon,
+ 27 Jun 2016 09:49:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACsJy8D6TxkMWJTUCeDd8tuMyTRXcvWdMw4VL3nO7jbLEgjE-A@mail.gmail.com>
+Received: by 10.107.136.16 with HTTP; Mon, 27 Jun 2016 09:49:06 -0700 (PDT)
+In-Reply-To: <20160627143648.GA2618@sigill.intra.peff.net>
+References: <20160626232112.721-1-e@80x24.org> <20160626232112.721-2-e@80x24.org>
+ <20160626234251.GA21668@sigill.intra.peff.net> <xmqqoa6mdbu3.fsf@gitster.mtv.corp.google.com>
+ <20160627143648.GA2618@sigill.intra.peff.net>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Mon, 27 Jun 2016 09:49:06 -0700
+Message-ID: <CAGZ79kZ94PaOfq3GimWiHULbTE7ihMzL9S=Y+npQ4F5gGwFrsA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] xread: retry after poll on EAGAIN/EWOULDBLOCK
+To:	Jeff King <peff@peff.net>
+Cc:	Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 27, 2016 at 06:32:39PM +0200, Duy Nguyen wrote:
+On Mon, Jun 27, 2016 at 7:36 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jun 27, 2016 at 06:02:12AM -0700, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>>
+>> > I also wondered how we managed to miss such an obvious point in review
+>> > of the original patch. Sadly, we _did_ notice it[1] but it looks like we
+>> > never fixed the problem. That is even more disturbing.
+>>
+>> Yes indeed.
+>>
+>> I try to pay attention to "this is broken because..."  comments in
+>> discussions to make a note in my copy of "What's cooking" report for
+>> a problematic topic, as that is where I work from when merging
+>> topics down, but apparently that procedure failed work in this case.
+>> There needs a stronger mechanism to stop a known-buggy patch from
+>> going thru, but I am not sure offhand what that should be.
+>
+> I was the one who saw the bug. I could have followed the series more
+> closely to make sure my concern was addressed. Or possibly pointed out
+> the bug more prominently than an in a "PS" as part of the discussion.
 
-> On Mon, Jun 27, 2016 at 6:20 PM, Jeff King <peff@peff.net> wrote:
-> > You do allow distinguishing the suffix thing with "/" at the end in the
-> > rule above, though. So between the two rules:
-> >
-> >   - slash at the end is a shorthand for "/**"
-> >
-> >   - no-slash at the beginning (i.e., a non-absolute path) is a shorthand
-> >     for "**/" at the beginning
-> 
-> Neither slash or "./" at the beginning...
-> 
-> > you should be able to specify anything.
-> 
-> ...then yeah it looks pretty good. With the exception of  "./" we can
-> still have paths relative to where the the config file is. For
-> $HOME/.gitconfig that  eliminates the need for expanding "~"
-> ($HOME/.config/git/config may still need it, unless we allow "../"
-> too, but that complicates matching).
+I thought I would have fixed that bug, but apparently I did not.
+(I agreed on the bug being there at the time of discussion [1], so I
+guess I can be
+blamed most for this failure)
 
-Yeah, I didn't think actual relative paths were that interesting, but if
-we declare that they are relative to the config file, I agree that
-works pretty well. And I agree that "./" is a convenient way to anchor
-them.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/282514/focus=282694
 
--Peff
+>
+> I think part of the problem was that this particular series was
+> large-ish and involved a lot of re-rolls, and I got sick of looking at
+> it. I dunno.
+
+I haven't send patches to git for quite a while now, but writing smaller patches
+is the way to go for me. (I am currently looking at the repo tool,
+that has no test
+suite, so there too I try to make very small patches.)
+
+>
+> It's also true that our error rate will never be 0%. So some bugs will
+> always slip through, some review comments will be forgotten, etc. Eric
+> did find and fix the bug just now, so the "many eyes" theory did work
+> here eventually.
+
+Eric, thanks for catching and fixing the bug!
+
+Quite a while ago, when I started doing code reviews professionally, I wondered
+if the code review procedure can be semi-automated, as automation helps keeping
+the error rate low. By that I mean having a check list which I can
+check off each point
+for each patch. That seems to be very good in theory, but when trying
+it I was finding
+myself doing a lot of unneeded work as some points of such a check
+list just do not
+apply for a specific patch. So I did not follow through with that.
+
+Thanks,
+Stefan
