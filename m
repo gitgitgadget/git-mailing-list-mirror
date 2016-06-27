@@ -2,91 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-9.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 812252018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 16:17:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 531C42018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 16:20:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752000AbcF0QRB (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 12:17:01 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:33662 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751673AbcF0QRA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2016 12:17:00 -0400
-Received: by mail-io0-f193.google.com with SMTP id t74so24089533ioi.0
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 09:16:59 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7qP8G2qPKbvYYUcITBRwwDi+cKywlOBoBBdPOSc8Fxg=;
-        b=T0y6nsSyLVIobqnqaFnJ9vg/7p6vOiWb5LB643PZs0trTBCHBCVnE8zmUvPyTvgCIw
-         XKmM53SuTxT4jO19mzk6o5fDbZ5jkUK/kBuxi77j24RS0ciASSrzlDmaQBfDLLc4gw2P
-         ZNu7FEq0d6yWydQ+3OjjircS6z/moq5BFEKIyiIh/qJWpjCbyzX0BoH8KKrIvE4ip2ae
-         RJMJj9slZ7LUdGlmM3saCOHCfnNZZPOqRpkg03tFNsY7qUewx65PxtJlRl7GrRVNjw6j
-         iMR1U1ljjfBx+U8/8tMJgK7KxqCsPMR/EaN5BwaZDJaD6WY8ONzlCvzDLfJYxcfnuCLD
-         QFpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7qP8G2qPKbvYYUcITBRwwDi+cKywlOBoBBdPOSc8Fxg=;
-        b=g7o1iN6WS3CLJbp+iBkhJEk+8cX9CY9WdjIukysg6dpb4fcGLhRozqvy6bniZKSG2z
-         AFYQ1uHf1/d1F2Wdn6z6OSBGYY/8PdwWG/+a7q25KadSVxHEnP3IO5FuQ7YYaWPMIXRU
-         S7quzPsb5YLXDr4bkbfPv78cZpq5OnGWe3lYxjccMSWANoGx67NvnDKOiDbsCJYe52PS
-         5KG/nVXBGX5f4JamZqqKxPGHiBKVYjSg1CW2u3L7NmcU0U21CkqrFqXUar5hfXTWiPnc
-         1pj4JmzemFEG9D8x7UzSf9pWR52na4jHS01CLszjBaszxk+n/ERGLoBf8pbA7gq2hqmI
-         T2+Q==
-X-Gm-Message-State: ALyK8tIqQIIeYoUs2idSCropb3BMqO0HvxelYYycYfRPME/Zp2zf9gF4UG4z5Dw7IHjEmbK7avTzd+Iy9OConA==
-X-Received: by 10.107.159.16 with SMTP id i16mr1536716ioe.29.1467044219420;
- Mon, 27 Jun 2016 09:16:59 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Mon, 27 Jun 2016 09:16:29 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1606271413350.12947@virtualbox>
-References: <1466914464-10358-19-git-send-email-novalis@novalis.org>
- <20160626120928.14950-1-pclouds@gmail.com> <alpine.DEB.2.20.1606271413350.12947@virtualbox>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Mon, 27 Jun 2016 18:16:29 +0200
-Message-ID: <CACsJy8A2i9enBUtK+jcJmnChTddJBjd6O9LZfU9Tj2ikn8JqRg@mail.gmail.com>
-Subject: Re: [PATCH v13 21/20] unix-socket.c: add stub implementation when
- unix sockets are not supported
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S1751968AbcF0QU4 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 12:20:56 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33304 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751863AbcF0QUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 12:20:55 -0400
+Received: (qmail 28018 invoked by uid 102); 27 Jun 2016 16:20:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 12:20:55 -0400
+Received: (qmail 8913 invoked by uid 107); 27 Jun 2016 16:21:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 12:21:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Jun 2016 12:20:53 -0400
+Date:	Mon, 27 Jun 2016 12:20:53 -0400
+From:	Jeff King <peff@peff.net>
+To:	Duy Nguyen <pclouds@gmail.com>
 Cc:	Git Mailing List <git@vger.kernel.org>,
-	David Turner <novalis@novalis.org>,
 	Junio C Hamano <gitster@pobox.com>,
-	Keith McGuigan <kamggg@gmail.com>,
-	David Turner <dturner@twopensource.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+	Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] config: add conditional include
+Message-ID: <20160627162052.GA4532@sigill.intra.peff.net>
+References: <20160626070617.30211-1-pclouds@gmail.com>
+ <20160626182715.GA12546@sigill.intra.peff.net>
+ <CACsJy8DAMe3YH-f_Qm8FEmanXepnwF2z1L6DDGoJf1eysmW2xQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACsJy8DAMe3YH-f_Qm8FEmanXepnwF2z1L6DDGoJf1eysmW2xQ@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 27, 2016 at 2:14 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Duy,
->
-> On Sun, 26 Jun 2016, Nguyễn Thái Ngọc Duy wrote:
->
->> This keeps #ifdef at the callee instead of caller, it's less messier.
->>
->> The caller in question is in read-cache.c which, unlike other
->> unix-socket callers so far, is always built regardless of unix socket
->> support. No extra handling (for ENOSYS) is needed because in this
->> build, index-helper does not exist, $GIT_DIR/index-helper.sock does
->> not exist, so no unix socket call is made by read-cache.c in the first
->> place.
->>
->> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
->> ---
->
-> Heh, I made something very similar (although I did not update the errno as
-> your patch does): https://github.com/git-for-windows/git/commit/919cb1d79
+On Mon, Jun 27, 2016 at 06:14:17PM +0200, Duy Nguyen wrote:
 
-Yours lacks the important "else" line in Makefile, so pick mine! :-D
--- 
-Duy
+> >> +             } else if (!strchr(pattern.buf, '/')) {
+> >> +                     /* no slashes match one directory component */
+> >> +                     strbuf_insert(&pattern, 0, "**/", 3);
+> >> +                     strbuf_addstr(&pattern, "/**");
+> >> +             }
+> >
+> > I guess it's a little funny that "foo" and "foo/bar" are matched quite
+> > differently. I wonder if a simpler rule would just be: relative paths
+> > are unanchored.
+> 
+> I modeled it after .gitignore patterns, but that's probably not a good
+> fit here. Making all relative paths un-anchored means I can't say
+> "paths that end with this suffix". How useful that statement is, I
+> can't say though. Or if you mean only prepend "**/" to relative paths,
+> not "/**" then that door is still open.
+
+I didn't really mean anything, as I had not thought about it that
+carefully. :)
+
+You do allow distinguishing the suffix thing with "/" at the end in the
+rule above, though. So between the two rules:
+
+  - slash at the end is a shorthand for "/**"
+
+  - no-slash at the beginning (i.e., a non-absolute path) is a shorthand
+    for "**/" at the beginning
+
+you should be able to specify anything.
+
+I do agree that there's value in trying to make the rules consistent
+with other parts of git, though. I don't know the corner cases of
+gitignore and gitattributes well enough to compare off the top of my
+head, though (though I suspect you do. :) ).
+
+-Peff
