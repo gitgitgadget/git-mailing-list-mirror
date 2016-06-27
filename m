@@ -2,117 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 664B41FF40
-	for <e@80x24.org>; Mon, 27 Jun 2016 05:50:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C52501FF40
+	for <e@80x24.org>; Mon, 27 Jun 2016 05:52:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564AbcF0Fup (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 01:50:45 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:35609 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751207AbcF0Fuo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 01:50:44 -0400
-Received: by mail-io0-f176.google.com with SMTP id f30so143815238ioj.2
-        for <git@vger.kernel.org>; Sun, 26 Jun 2016 22:50:44 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6WJWBU0fWYkSDsf3fQZXCdA/iSWMbxJmtqwgKhZysMY=;
-        b=mfkZ/uZqiAZYcdeg4uoKWVMWPxgLkkgUE2x9aoLU41gx+yD08ut/0R/taIIbmTSLZh
-         deMlE6HMSc20r/rfKJYTn4aajrwRJ57GTL4LjoTMkn1+l+Z3olMxDRk54/6c9GDd+jBM
-         Q1JtIxvQYgv5W7hgfrKg6or78ADerhMpOBlVLoKlCMPe4upJUGP4M1XpvismC/FGP8X+
-         I9TBHEJQVpSQZ4Ob3DkSO5vzk3R+ghKqxxzV5fA/GGb8N4UCKBYeQfrQ/+9ySBKqt0hv
-         MMofXPiICI1q8EWldSv8g63zMwyupaqffEIOv3GwhHwIENyO/LIYeUvBSgYBgAjgdASk
-         pkLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6WJWBU0fWYkSDsf3fQZXCdA/iSWMbxJmtqwgKhZysMY=;
-        b=cM5swMUTOQZPsdBsAY1LnohovLkYUPxKb/2Qi2MzLphqXY40cTX60ANI2sjJ0svyku
-         tGGjECJE6OGzBELZ9iVi8l6sv5s1ASZvMv+8S8Eb7Yg6Tdtw9xxTRyUmlS6TafwIy+5q
-         q7sQzbJPMLlqyfMmFgxYa1Zju8kIEVjuXtqKJi777qjtcY4V7fZh8tFQ3jLOjJzZfVKY
-         LwS0PvmgXlmkYn3PaGdMCVdoor9+6iLWA35MQ1NdbtxGFl+Iys5Z9YZxHEeJpRyS5nJM
-         5fwQaJbNeTC8yk/CsLXDy+3pfVdx1sviAzMkcy65ZjJKMC8t86N4yozAQX4TpjAfF1nk
-         EN2A==
-X-Gm-Message-State: ALyK8tJeZHtkRbCRiNzjS9h5ksc6sKTzN6o630YfbN+BpboFZgCJBA/V+o/pmQ/qrxX7zGa2h3pWfNtq5yi2BA==
-X-Received: by 10.107.8.220 with SMTP id h89mr14849290ioi.95.1467006643812;
- Sun, 26 Jun 2016 22:50:43 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Sun, 26 Jun 2016 22:50:14 -0700 (PDT)
-In-Reply-To: <57702D2F.9080306@novalis.org>
-References: <1463694357-6503-1-git-send-email-dturner@twopensource.com>
- <1463694357-6503-5-git-send-email-dturner@twopensource.com>
- <CACsJy8CftPGmrKP8Yeok90T9=whzj69bfE3_X6wHyWOEp6vRzg@mail.gmail.com>
- <576ED9A2.8070202@novalis.org> <CACsJy8Dqvv-Ty-wG0qkenyvLNLyqVueJmhjiQXnr0zVUGFvDeA@mail.gmail.com>
- <57702D2F.9080306@novalis.org>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Mon, 27 Jun 2016 07:50:14 +0200
-Message-ID: <CACsJy8Au47OpLcK14=gqkSXMhmeHXRCKRR8rQaBbBxVBLgWo6Q@mail.gmail.com>
-Subject: Re: [PATCH v12 04/20] index-helper: new daemon for caching index and
- related stuff
-To:	David Turner <novalis@novalis.org>
-Cc:	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+	id S1751868AbcF0FwI (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 01:52:08 -0400
+Received: from [104.236.5.163] ([104.236.5.163]:44776 "EHLO brennie.ca"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751638AbcF0FwG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 01:52:06 -0400
+Received: from [192.168.1.38] (142-165-34-81.sktn.hsdb.sasknet.sk.ca [142.165.34.81])
+	by brennie.ca (Postfix) with ESMTPSA id DFEF440384;
+	Sun, 26 Jun 2016 23:52:04 -0600 (CST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH] builtin/worktree.c: add option for setting worktree name
+From:	Barret Rennie <barret@brennie.ca>
+In-Reply-To: <CAPig+cRNUZZBw=F-Q2f3Ehc-8T2iBp4kvDusNRGv4ea5nihQVQ@mail.gmail.com>
+Date:	Sun, 26 Jun 2016 23:52:03 -0600
+Cc:	Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	Git List <git@vger.kernel.org>,
+	=?utf-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= 
+	<pclouds@gmail.com>, Michael Rappazzo <rappazzo@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <A2F194FC-281D-44DF-88CA-E0B8221A3E68@brennie.ca>
+References: <20160625051548.95564-1-barret@brennie.ca> <576E2FA9.7070008@kdbg.org> <1FEF5F90-6534-4D91-B27C-16FE6D16EC3F@brennie.ca> <xmqq1t3ldpdl.fsf@gitster.mtv.corp.google.com> <CAPig+cRNUZZBw=F-Q2f3Ehc-8T2iBp4kvDusNRGv4ea5nihQVQ@mail.gmail.com>
+To:	Eric Sunshine <sunshine@sunshineco.com>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sun, Jun 26, 2016 at 9:29 PM, David Turner <novalis@novalis.org> wrote:
-> On 06/26/2016 12:27 AM, Duy Nguyen wrote:
->>
->> On Sat, Jun 25, 2016 at 9:21 PM, David Turner <novalis@novalis.org> wrote:
->>>
->>> On 06/25/2016 10:33 AM, Duy Nguyen wrote:
->>>>>
->>>>>
->>>>> +               /*
->>>>> +                * Our connection to the client is blocking since a
->>>>> client
->>>>> +                * can always be killed by SIGINT or similar.
->>>>> +                */
->>>>> +               set_socket_blocking_flag(client_fd, 0);
->>>>
->>>>
->>>>
->>>> Out of curiosity, do we really need this? I thought default behavior
->>>> was always blocking (and checked linux kernel, it seemed to agree with
->>>> me). Maybe for extra safety because other OSes may default to
->>>> something else?
->>>
->>>
->>>
->>> Yes -- see this bug report for details:
->>> https://bugs.python.org/issue7995
->>>
->>
->> I think we should refer to this issue in the comment block right
->> before set_socket_blocking_flag() call. Imagine a year from now, I may
->> read the code, decide this code is useless and try to remove it.
->
->
-> Assuming that we do keep this (see Eric Wong's note), I do not think we need
-> a comment.  It is documented in the man page for accept[1], and it is the
-> reader's responsibility to understand standard POSIX APIs.
->
->
->
-> [1] "On Linux, the new socket returned by accept()  does  not  inherit file
-> status  flags such as O_NONBLOCK and O_ASYNC from the listening socket. This
-> behavior differs from the canonical  BSD  sockets implementation."
 
-But we do not ever set O_NONBLOCK on listening socket, and the default
-should be no O_NONBLOCK at socket creation even on BSDs, right? If we
-know where this O_NONBLOCK comes from then we can clear it at that
-place (maybe with #if BSD to emphasize) instead of after accept(). The
-bug report actually confuses me because "timeout is set" then
-O_NONBLOCK is also set, but I don't know exactly what "timeout is set"
-is, on poll()? I'll check out socketmodule.c later.
--- 
-Duy
+> On Jun 26, 2016, at 5:00 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> 
+> On Sat, Jun 25, 2016 at 3:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> [...snip...]
+>> And explained that way, it becomes clearer that you would want to
+>> name $HOME/xyzzy-1/frotz worktree after "topic-1", not the default
+>> name you would get "frotz" (because the default gives you the leaf
+>> level name of the newly created worktree).
+>> 
+>> After the discussion above (which may or may not match what you
+>> raised this topic for), I think a feature to let you override the
+>> default name makes sense.
+> 
+> One thing which hasn't been explained, and about which I'm still
+> confused even after reading this thread in its entirety, is what
+> Barret means when he says that he "breaks" his worktrees. What is the
+> nature of this breakage? Depending upon that answer, would "git
+> rev-parse --git-dir" be sufficient for your needs? Or, would "git
+> worktree list" be able to give you the desired information? (As
+> envisioned, "git worktree list" was intended to provide much more
+> information than it currently does, such as the .git/worktree dir
+> name, and such an enhancement might be welcome.)
+
+My worktree breakages are usually the result of my reorganizing my projects,
+usually because a branch changes name (for example, if branch release-1 gets
+pushed back to release-2). Then I go and rename all my directories and git 
+gets unhappy and I have to manually fix them or re-create the worktrees.
+
+Having `git worktree list` give the worktree directory would be very useful,
+but I still would like the ability to change the name of a worktree.
