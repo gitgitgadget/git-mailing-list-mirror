@@ -2,117 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_50,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F6982018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 13:18:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A17E52018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 13:22:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751907AbcF0NR6 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 09:17:58 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60212 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751706AbcF0NR4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 09:17:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DB6C8262DD;
-	Mon, 27 Jun 2016 09:17:54 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ei8LEw0LFysPOAH8FruexAu1c+4=; b=l6M23F
-	WtaK4sqy+ibyK4JXnN/tOjNjYWalKgwn5O6t4fzCUTvNWezhYaw1l+svh/kCl8HG
-	G00cE8JBOSAdTra+Fezs2gp3Qu5EPxBWUqO90+QcFNPyXVWtpc6uRC25G0KA4iyv
-	Kz9gdxIk8QQWh8mv+5iipobUN9cqD8afMuhg0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fhlr5W34tq5IW6ypSKiWgLf5CEFGwyZb
-	zU9m/losSBiBl1cjgfcpSs6sEli9i7dtQ1AHECYo8vKMbL9tSDkz19KKMihVLUFz
-	jho0XJ8XxmKbT6NFo4zBqmIzKIgoJRnI+qat7ejWqmUX10ojWFAUVgKJ6AY9Ubsi
-	sO8UkNNCJLE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D3B6F262DC;
-	Mon, 27 Jun 2016 09:17:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5AB13262D3;
-	Mon, 27 Jun 2016 09:17:54 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Barret Rennie <barret@brennie.ca>
-Cc:	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Michael Rappazzo <rappazzo@gmail.com>
-Subject: Re: [PATCH] builtin/worktree.c: add option for setting worktree name
-References: <20160625051548.95564-1-barret@brennie.ca>
-	<576E2FA9.7070008@kdbg.org>
-	<1FEF5F90-6534-4D91-B27C-16FE6D16EC3F@brennie.ca>
-	<xmqq1t3ldpdl.fsf@gitster.mtv.corp.google.com>
-	<xmqqshvzddet.fsf@gitster.mtv.corp.google.com>
-	<036C19B4-5941-43E4-AE2A-8782797D9523@brennie.ca>
-Date:	Mon, 27 Jun 2016 06:17:52 -0700
-In-Reply-To: <036C19B4-5941-43E4-AE2A-8782797D9523@brennie.ca> (Barret
-	Rennie's message of "Sun, 26 Jun 2016 23:40:15 -0600")
-Message-ID: <xmqqk2hadb3z.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751828AbcF0NV7 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 09:21:59 -0400
+Received: from mout.kundenserver.de ([212.227.126.135]:58301 "EHLO
+	mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751673AbcF0NV6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2016 09:21:58 -0400
+Received: from pflsmail.localdomain ([37.123.123.67]) by
+ mrelayeu.kundenserver.de (mreue004) with ESMTPSA (Nemesis) id
+ 0LjODj-1buQrz46VL-00dZMU; Mon, 27 Jun 2016 15:21:41 +0200
+Received: from localhost (localhost [127.0.0.1])
+	by pflsmail.localdomain (Postfix) with ESMTP id 4D15BB00E5D;
+	Mon, 27 Jun 2016 15:21:40 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at pflsmail.corp.cetitec.com
+Received: from pflsmail.localdomain ([127.0.0.1])
+	by localhost (pflsmail.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9NTmpW9qCE18; Mon, 27 Jun 2016 15:21:38 +0200 (CEST)
+Received: from pfwsexchange.corp.cetitec.com (unknown [10.10.1.99])
+	by pflsmail.localdomain (Postfix) with ESMTPS id 2DBE7B00E58;
+	Mon, 27 Jun 2016 15:21:38 +0200 (CEST)
+Received: from pflmari.corp.cetitec.com (10.10.11.230) by
+ PFWSEXCHANGE.corp.cetitec.com (10.10.1.99) with Microsoft SMTP Server (TLS)
+ id 15.0.847.32; Mon, 27 Jun 2016 15:21:37 +0200
+Received: by pflmari.corp.cetitec.com (Postfix, from userid 1000)	id
+ A38C6804B0; Mon, 27 Jun 2016 15:21:37 +0200 (CEST)
+Date:	Mon, 27 Jun 2016 15:21:37 +0200
+From:	Alex Riesen <alexander.riesen@cetitec.com>
+To:	<git@vger.kernel.org>
+CC:	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] Support for $FILENAMES in tool definitions
+Message-ID: <20160627132137.GC4194@pflmari>
+Reply-To: Alex Riesen <alexander.riesen@cetitec.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8EAF74E2-3C69-11E6-A401-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Originating-IP: [10.10.11.230]
+X-ClientProxiedBy: PFWSEXCHANGE.corp.cetitec.com (10.10.1.99) To
+ PFWSEXCHANGE.corp.cetitec.com (10.10.1.99)
+Content-Transfer-Encoding: 8BIT
+X-Antivirus: avast! (VPS 160627-0, 27.06.2016), Outbound message
+X-Antivirus-Status: Clean
+X-Provags-ID: V03:K0:0AUlVSjikolu0mKW6aa16TOzeh/dI96BLyYdNkxHqnIL+F3H6/U
+ hyfPZFEOnNeJlpRIKA+CWgzh6MD30xMcsOiVhZCDvsN320OEOQ39uZuUlVfn+HpMuCf3zcJ
+ Xt+nK2UNTl69/hDgki0IWinUp/Q3WVHiPQHXgwJTlxEF9y8xy1vvVC4EgGSrSoW9Hx4kALK
+ zPhIPKmpNjb3dR+h76u1A==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:bgOpt7ZLpFE=:aNpqEJgMphZqSv4v9D1iva
+ z4//aLM9/h8DA/+RYeSAWIpvKjMtzTHuWsI3ty+XrVDbzfUrI9zYeCnzW1eDEbZxYrqk+tK6H
+ f2lBkPFpoUEmZr76Vc+HsHUYa/MSgtHnAOM9eFBUchPowLWrnlldjgh8SpLwJKQoF0aL/MpHi
+ 5mvvrO5EIYW+VOn2vTBzedHkSI/xpsfHwDLWj1/ahU9ZvoRCwJXMGeUn0kNCGki8OTXcB3F0l
+ dpU5sM8nlzMir2fmZxMArEyxdjjGfDqNTttKb+iXNEDWlxM8Y3pitIj5DKBod+pFBLWNeHW/B
+ xFGhkl7BR5m32DS5ZcuWdtXYXKVFLFLvtGukXZyOcEUdPRlBMlese0tXjcEN9N5KkR3Q1w9tz
+ FqaZG3p17k/AJWcahLHf522ZA67cfZXEAhURPHzOYwSjcgTa2DBwlt4QHIf0fZnD6U/3LKigQ
+ A2Mc5RyX9FnneypBXO+1apHqigc1IhJv9/AKiMVmM7n5+ggTUUv7ZdmIBGfQ+QbzWfJ+FMRPu
+ LPfvA851uixEZsvro+C+cgDD+PvhPF+AYKuvPMtTyX5FStiWESq5SLPi8vX35I3KuOnRR0Stl
+ WFcjcRB0AkosG6Fu7vA5StG761z/ic3R7V0hQRFaru62dHB5MwDxp7YUP9W1IPf4Q0NZYJTm1
+ cG2vWMObUA3UWXO+eYd1nEfMLhZKij5fh7IU+iou+3J8vG93UCM+s2+BCY3v5zGY1MEE=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Barret Rennie <barret@brennie.ca> writes:
+This adds a FILENAMES environment variable, which contains the repository
+pathnames of all selected files the list.
+The variable contains the names separated by spaces.
 
->> For example, the "frotz" and "nitfol" repositories (i.e. where their
->> worktrees borrow their refs and object stores from) could have a
->> single configuration variable each, i.e.
->> 
->> 	(in $HOME/xyzzy/frotz/.git/config)
->>        [worktree] location = "~/*/frotz"
->> 
->> 	(in $HOME/xyzzy/libs/nitfol/.git/config)
->>        [worktree] location = "~/*/libs/nitfol"
->> 
->> and then the user could do in each of these two repositories
->> 
->> 	$ git -C ~/xyzzy/frotz worktree add --by-name xyzzy-1 topic-1
->> 	$ git -C ~/xyzzy/lib/nitfol worktree add --by-name xyzzy-1 topic-1
->> 
->> to get the desired layout instead.
->> 
->> The traditional way may be "create one HERE", and your patch tries
->> to tweak it to "create one at HERE with this NAME".  The above
->> attempts to remove the need for specifying the exact location every
->> time a new worktree is created, and instead let you specify the
->> systematic way in which you lay out your worktrees based on their
->> names.
->
-> Are you proposing that `--by-name` creates a worktree in the current working
-> directory or that the default behaviour of `git worktree add` is changed to
-> to create the worktree in the current working directory when executed with
-> only one argument (the branch)?
+Similar to the FILENAME it is broken yet, if the names contain spaces.
 
-It is not a proposal but an illustration of what I meant by "hint".
+Note that the file marked and diffed immediately after starting the GUI up,
+is not actually selected. One must click on it once to really select it.
 
-What I am envisioning is that we may enhance the "worktree add"
-subcommand to take two forms.  In addition to traditional
+Signed-off-by: Alex Riesen <alexander.riesen@cetitec.com>
+---
 
-    $ git worktree add [opts] <path> [<branch>]
+One day the FILENAME and FILENAMES will have to be fixed to properly pass the
+file names with spaces. Sorry, I couldn't find how to do it this time around.
 
-when worktree.location configuration is present, you could say
+ lib/tools.tcl | 3 +++
+ 1 file changed, 3 insertions(+)
 
-    $ git worktree add [opts] --by-name <name> [<branch>]
+diff --git a/lib/tools.tcl b/lib/tools.tcl
+index 6ec9411..14d556f 100644
+--- a/lib/tools.tcl
++++ b/lib/tools.tcl
+@@ -69,6 +69,7 @@ proc tools_populate_one {fullname} {
+ proc tools_exec {fullname} {
+ 	global repo_config env current_diff_path
+ 	global current_branch is_detached
++	global selected_paths
+ 
+ 	if {[is_config_true "guitool.$fullname.needsfile"]} {
+ 		if {$current_diff_path eq {}} {
+@@ -100,6 +101,7 @@ proc tools_exec {fullname} {
+ 
+ 	set env(GIT_GUITOOL) $fullname
+ 	set env(FILENAME) $current_diff_path
++	set env(FILENAMES) [array names selected_paths]
+ 	if {$is_detached} {
+ 		set env(CUR_BRANCH) ""
+ 	} else {
+@@ -121,6 +123,7 @@ proc tools_exec {fullname} {
+ 
+ 	unset env(GIT_GUITOOL)
+ 	unset env(FILENAME)
++	unset env(FILENAMES)
+ 	unset env(CUR_BRANCH)
+ 	catch { unset env(ARGS) }
+ 	catch { unset env(REVISION) }
+-- 
+2.9.0.45.g28c608e.dirty
 
-omitting <path> and instead giving <name>.  Use the <name> to
-substitute the wildcard in the pattern given by worktree.location,
-i.e. with the above example for "frotz",
 
-    $ git worktree add --by-name xyzzy-1 topic-1
+---
+Diese E-Mail wurde von Avast Antivirus-Software auf Viren geprüft.
+https://www.avast.com/antivirus
 
-because the worktree.location configuration is set to "~/*/frotz",
-that would act as if <path> was given as ~/xyzzy-1/frotz.  Name is
-set to xyzzy-1, and the newly created worktree would initially check
-out topic-1 branch.
