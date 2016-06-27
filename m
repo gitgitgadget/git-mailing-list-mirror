@@ -2,82 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF4FA2018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 16:09:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 959552018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 16:14:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751919AbcF0QJL (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 12:09:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58000 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751745AbcF0QJK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 12:09:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B8AB427AE5;
-	Mon, 27 Jun 2016 12:09:08 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Kv7T3WoRVBo6BBQmWz/7CvO2teY=; b=AM5/6l
-	FSLKffJqGpct6GwkPreKdTqNBHubazGMm8l91rG8IQbfKmcSqOF2Ax9ruGCJpalj
-	io9X0PfU1CntDqADhohYJVLikjBsSGtW2m7DJYUx1Q8gVPFDgjBkJsyuYAOQF6q5
-	4hcyfjyr+cJ6to0m/4A4VvtXdrYjr6qkqKB3Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Xlfk6/Nbc241io01Kcu0A7kj9szWXRC6
-	jw0uIeZ4BhEsd//S2o/OZqvppRhVOdRe06Ft4YlYF2sGezl6oK2DaPM3aOiKjdP3
-	nTYUIstGPsxKFODVsidNRmTTD7RD0neyOlnjBD9zSF9SkWFrJHTL5Fi2XypFV7d0
-	Dae4L+1O6Dw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B142827AE4;
-	Mon, 27 Jun 2016 12:09:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3373527AE3;
-	Mon, 27 Jun 2016 12:09:08 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	larsxschneider@gmail.com
-Cc:	git@vger.kernel.org
-Subject: Re: [RFC] Native access to Git LFS cache
-References: <1467005913-6503-1-git-send-email-larsxschneider@gmail.com>
-Date:	Mon, 27 Jun 2016 09:09:06 -0700
-In-Reply-To: <1467005913-6503-1-git-send-email-larsxschneider@gmail.com>
-	(larsxschneider@gmail.com's message of "Mon, 27 Jun 2016 07:38:33
-	+0200")
-Message-ID: <xmqqmvm6bom5.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752004AbcF0QOv (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 12:14:51 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:32995 "EHLO
+	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751938AbcF0QOu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2016 12:14:50 -0400
+Received: by mail-io0-f180.google.com with SMTP id t74so156593665ioi.0
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 09:14:47 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=GgQVUElfHXDAPmWUzGJ4sS5BmSZBjd0Tj57gWoGpOek=;
+        b=tqJ6CL8yPbBPx1qU1TGOsG/bHnJPXPHp4PkNTd/z0M+IFo+merCimuscozd8bqN2PR
+         0JfajFPA2BRSS+l12JmHB6B0Re+tlbOIMOKUwAEiMt5r3nbZtBiSxJRADgdInjDE6fR0
+         nliFLmvwNIJqglXDZ230wH6BrYDjTJJsMtTgk8vQxlDzF0nOl7ESP9uVBxLQZc4EzPjx
+         ZL7+UZvtm8nVZ4qgU6Mzoh8LfYk55Km2Wf+K8shsA+gvlJ0/V7tx8FhJPhTbaBydJeqr
+         fiLHCU1z4pvaizIrWk8rRfasU8y5UrFgBIJSoEgcEH4C4CDs0cI8p2uM06GIT9zMlhaw
+         7OQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GgQVUElfHXDAPmWUzGJ4sS5BmSZBjd0Tj57gWoGpOek=;
+        b=S5/rpM4iAsMBIsU0Dde3y7gUSWkLwBp6yzE3TQ46SRYoCYbhWTVKIWwBBY+ioALzr4
+         6zHfbro+QVxuEY2VFx4cwQSkATiQR2eCpT52ZGluCqosSJGRBbzNXx7Jwq6KOefvb9l4
+         x4IhytyFO8i8qCZPLSV3ZDh6ZDQdps6Rc4YvHLZ4r4ohgjVM+LPtO2OaHSsxz5JY/Fyy
+         fD/vvGbxEi88fF74Mr0Oq+UiU7i3b5qsgycPduOGYUBatVdkqXFNpgT8lqL8wosV9Gfd
+         rH/3TlC3zNNIcBWwkooNxTTtNVdWYxC/4lHxB6C/EdDIglPOy392LTwif9ySMLU89www
+         vOqw==
+X-Gm-Message-State: ALyK8tLvQL7MD0BdQRUBoqneBzP3Hx2mOEAFhab9ZX9yxXgObMQY7IPmU/81diGcOcO0qXFW9OJ+85Gd4jCcdQ==
+X-Received: by 10.107.22.6 with SMTP id 6mr1572726iow.128.1467044087003; Mon,
+ 27 Jun 2016 09:14:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7A554342-3C81-11E6-8810-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.64.225.235 with HTTP; Mon, 27 Jun 2016 09:14:17 -0700 (PDT)
+In-Reply-To: <20160626182715.GA12546@sigill.intra.peff.net>
+References: <20160626070617.30211-1-pclouds@gmail.com> <20160626182715.GA12546@sigill.intra.peff.net>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Mon, 27 Jun 2016 18:14:17 +0200
+Message-ID: <CACsJy8DAMe3YH-f_Qm8FEmanXepnwF2z1L6DDGoJf1eysmW2xQ@mail.gmail.com>
+Subject: Re: [PATCH] config: add conditional include
+To:	Jeff King <peff@peff.net>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-larsxschneider@gmail.com writes:
+On Sun, Jun 26, 2016 at 8:27 PM, Jeff King <peff@peff.net> wrote:
+> On Sun, Jun 26, 2016 at 09:06:17AM +0200, Nguyễn Thái Ngọc Duy wrote:
+>
+>> If the path argument in "include" starts with "gitdir:", it is
+>> followed by a wildmatch pattern. The include is only effective if
+>> $GIT_DIR matches the pattern. This is very useful to add configuration
+>> to a group of repositories.
+>
+> I think this needs some more introduction to the concept. When you say
+> "path argument" here, I assumed you meant the value of include.path. But
+> you really mean: we are introducing a new concept for the "subsection"
+> field of include.*, which is to provide restrictions for conditional
+> includes.
 
-> Unfortunately that fix helps only with cloning. Any local Git operation
-> that invokes the clean/smudge filter (e.g. switching branches) is still
-> slow.
+Yep.
 
-Do you know where the slowness comes from?  Does Joey's new
-clean/smudge interface help GitLFS?
+>
+> It also may be worth discussing the motivation or examples.
+>
+>> For convenience
+>>
+>>  - "~" is expanded to $USER
+>>
+>>  - if the pattern ends with '/', "**" will be appended (e.g. foo/
+>>    becomes foo/**). In other words, "foo/" automatically matches
+>>    everything in starting with "foo/".
+>>
+>>  - if the pattern contains no slashes, it's wrapped around by "**/"
+>>    and "/**" (e.g. "foo" becomes "**/foo/**"). In other words, "foo"
+>>    matches any directory component in $GIT_DIR.
+>>
+>> The combination of the first two is used to group repositories by
+>> path. While the last one could be used to match worktree's basename.
+>
+> This is a nice description, but it probably belongs in the
+> documentation.
 
-You are not likely to get anything that knows that a blob object may
-be named as anything other than SHA-1("blob <len>" + <contents>) to
-Git core.  The remote-object-store idea that was floated by Peff and
-Christian started running with at least maintains that object naming
-property and has a better chance of interacting better with the core,
-but LFS, Annex or anything that would not preserve the object naming
-would not.
+Yeah.. just too lazy for proper documentation at this stage.
 
-Personally, I view a surrogate blob left by LFS in the tree object
-and filtered via clean/smudge a "smarter" kind of symbolic link that
-points outside what Git controls.  The area outside what Git
-controls is left to be managed by whatever the add-on does; Git
-shouldn't even be aware of how they are structured and/or managed.
+>
+> I don't have any real opinion on the rules themselves, though they seem
+> reasonable to me (though in the first one I assume you mean $HOME).
 
+Yep $HOME, what was I thinking...
 
+(skipping all the technical suggestions, will do.. most likely)
+
+>> +             } else if (!strchr(pattern.buf, '/')) {
+>> +                     /* no slashes match one directory component */
+>> +                     strbuf_insert(&pattern, 0, "**/", 3);
+>> +                     strbuf_addstr(&pattern, "/**");
+>> +             }
+>
+> I guess it's a little funny that "foo" and "foo/bar" are matched quite
+> differently. I wonder if a simpler rule would just be: relative paths
+> are unanchored.
+
+I modeled it after .gitignore patterns, but that's probably not a good
+fit here. Making all relative paths un-anchored means I can't say
+"paths that end with this suffix". How useful that statement is, I
+can't say though. Or if you mean only prepend "**/" to relative paths,
+not "/**" then that door is still open.
+
+(after a couple more minutes..) hmm.. I think that "paths that end
+with ..." may have its use. The degenerated case is "match $(basename
+<path>)", not very useful for gitdir when most of the time $(basename)
+is ".git". It could be useful for "worktree:" matching and would
+reduce false positives a bit (compared to un-anchoring both ends).
+Conditionally including some config per worktree this way is also an
+interesting way to deal with per-worktree config, but I need more time
+to think about that...
+-- 
+Duy
