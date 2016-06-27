@@ -2,77 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3C342018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 15:59:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF4FA2018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 16:09:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751671AbcF0P7F (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 11:59:05 -0400
-Received: from mout.gmx.net ([212.227.17.21]:64286 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751601AbcF0P7E (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 11:59:04 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Ll0tl-1briYw412b-00apwG; Mon, 27 Jun 2016 17:58:36
- +0200
-Date:	Mon, 27 Jun 2016 17:49:30 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Alex Riesen <alexander.riesen@cetitec.com>
-cc:	git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Support for $FILENAMES in tool definitions
-In-Reply-To: <20160627132137.GC4194@pflmari>
-Message-ID: <alpine.DEB.2.20.1606271748250.12947@virtualbox>
-References: <20160627132137.GC4194@pflmari>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1751919AbcF0QJL (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 12:09:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58000 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751745AbcF0QJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 12:09:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B8AB427AE5;
+	Mon, 27 Jun 2016 12:09:08 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Kv7T3WoRVBo6BBQmWz/7CvO2teY=; b=AM5/6l
+	FSLKffJqGpct6GwkPreKdTqNBHubazGMm8l91rG8IQbfKmcSqOF2Ax9ruGCJpalj
+	io9X0PfU1CntDqADhohYJVLikjBsSGtW2m7DJYUx1Q8gVPFDgjBkJsyuYAOQF6q5
+	4hcyfjyr+cJ6to0m/4A4VvtXdrYjr6qkqKB3Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Xlfk6/Nbc241io01Kcu0A7kj9szWXRC6
+	jw0uIeZ4BhEsd//S2o/OZqvppRhVOdRe06Ft4YlYF2sGezl6oK2DaPM3aOiKjdP3
+	nTYUIstGPsxKFODVsidNRmTTD7RD0neyOlnjBD9zSF9SkWFrJHTL5Fi2XypFV7d0
+	Dae4L+1O6Dw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B142827AE4;
+	Mon, 27 Jun 2016 12:09:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3373527AE3;
+	Mon, 27 Jun 2016 12:09:08 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	larsxschneider@gmail.com
+Cc:	git@vger.kernel.org
+Subject: Re: [RFC] Native access to Git LFS cache
+References: <1467005913-6503-1-git-send-email-larsxschneider@gmail.com>
+Date:	Mon, 27 Jun 2016 09:09:06 -0700
+In-Reply-To: <1467005913-6503-1-git-send-email-larsxschneider@gmail.com>
+	(larsxschneider@gmail.com's message of "Mon, 27 Jun 2016 07:38:33
+	+0200")
+Message-ID: <xmqqmvm6bom5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Gx0cuV/JI0Mg42uEJlDNIUFiSJDHfg1X++axyoFigF3EUlj1E75
- +I5ZG9xmhc0S/JuBD/kk/mRnK2Q/w1xK6rSnzkRiu6aBdFqwZ4ZBlJmjG4Wdy5AckQ2MQlj
- +CKsTQwqLiX9AurDQMv8TVreO8x+I/LD8h3O7/V4OAfO4Zc6V5IIEGylFV+Nig/TVMx5JgD
- 8Un4IwvD9fDseaOdsSCvg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:yo3gFegLr5c=:TLSwjHVe4rFrAnlVq7sjH8
- jEZRyP64ejCdpMG+1+Cps87Pyx+S9y8ruyj35XE5FSGO5vCk0PiqTayJk9Z1n3DzoDAIXnQfd
- oSr73G9QVoVQpfUCYs62oktE3QxtOcWTrO0WgrUHvhPKfM5Szc6W0YIMYsTnhSI5cfpVoFWAQ
- A83APCtbEu8QfPHFRQTS1mK6jodyeyFjZDEXEJh82PvFP+0ntZd93uh9gaSD3dOsUH0yJQ/CD
- lG/GywZqY2qZbZQDH4yK28W2b761CJRA70l6oXQKV1yfOzfBDzVwSrdnycFqvCOSW8INI7gCE
- HKBfJ4P53CcqOOBBo9ChRRsdn/ylmjtBwSxiAk/6Ni3iiP9qQlpDmTDU7eEcM8zQm02F065S1
- QVLqd1vjlCSbTCWQJht4m985kd2yQ6miZthYgQkxljWc/F7TKlHjEcBg7ERP351gQptiGOH01
- KTNKm5lRSnQ9n5V/X9oh9BRM93INBvOQyoDyU0vvZXjjmwhbah67sO6o93ST1LTr2tss0xXH6
- Sx4MN8BgSCZ1QJKOHHtNMKC/WP1LYSzHecN+3djLbJkNq3ApVseDgCS6bq7NYkJI5vEg4mPtV
- jIzQunMl6wK/ds1O3d6NXShkePVGAlCDTfWxeQH0rgHIcFVHHB8GRMcQeHAN7crTXc8MCGvTU
- XguKOTP2qiH+8dNTdb6wobUjxIJlPtDmrwneH7ev7Eplo/eKMJ894lK3pwhYjlMgxulWL2Vr7
- K/heIRYfyie3Q5C25LAK/9wKwUSulVR9/DXmgqGqMI1sBDhJ8MItuvX0gmyt4PLhkeGAd+xZT
- 8XZkRDB
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7A554342-3C81-11E6-8810-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Alex,
+larsxschneider@gmail.com writes:
 
-On Mon, 27 Jun 2016, Alex Riesen wrote:
+> Unfortunately that fix helps only with cloning. Any local Git operation
+> that invokes the clean/smudge filter (e.g. switching branches) is still
+> slow.
 
-> This adds a FILENAMES environment variable, which contains the repository
-> pathnames of all selected files the list.
-> The variable contains the names separated by spaces.
-> 
-> Similar to the FILENAME it is broken yet, if the names contain spaces.
-> 
-> Note that the file marked and diffed immediately after starting the GUI up,
-> is not actually selected. One must click on it once to really select it.
-> 
-> Signed-off-by: Alex Riesen <alexander.riesen@cetitec.com>
+Do you know where the slowness comes from?  Does Joey's new
+clean/smudge interface help GitLFS?
 
-Maybe prefix the subject with `git-gui: ` to indicate that this is for the
-git-gui.git repository?
+You are not likely to get anything that knows that a blob object may
+be named as anything other than SHA-1("blob <len>" + <contents>) to
+Git core.  The remote-object-store idea that was floated by Peff and
+Christian started running with at least maintains that object naming
+property and has a better chance of interacting better with the core,
+but LFS, Annex or anything that would not preserve the object naming
+would not.
 
-Also, please muster some patience, Pat seems to be super busy these days.
+Personally, I view a surrogate blob left by LFS in the tree object
+and filtered via clean/smudge a "smarter" kind of symbolic link that
+points outside what Git controls.  The area outside what Git
+controls is left to be managed by whatever the add-on does; Git
+shouldn't even be aware of how they are structured and/or managed.
 
-Ciao,
-Dscho
+
