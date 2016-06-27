@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A24092018A
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC4222018B
 	for <e@80x24.org>; Mon, 27 Jun 2016 18:25:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752100AbcF0SZx (ORCPT <rfc822;e@80x24.org>);
+	id S1752114AbcF0SZz (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:25:55 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34774 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752039AbcF0SZx (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 27 Jun 2016 14:25:53 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36119 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752065AbcF0SZn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:25:43 -0400
-Received: by mail-wm0-f66.google.com with SMTP id c82so26941651wme.3
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:42 -0700 (PDT)
+Received: by mail-wm0-f65.google.com with SMTP id 187so26966814wmz.1
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:52 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=O6c6NNH5TmxmUuxMnzPv8ZPbdCKNndmhlc1+i6v8EMw=;
-        b=fgH8LMBsVB/v4j2lLsXjDd8cpqbHWBKo6HsIglNQk1PIuK6mhunOcnWGs2QSG77MB1
-         1PtoYkLeDxhRnN+82B7ECFMNkV4UN/E+IQyaz1TtRHF96Hn3eNZ16iklfHcJa/fF3trO
-         t8bsRGwI4R0Q52sBLf0q2wkDcZRaCx7Ll8yV6tJ5Ifl8jZXK5nLjOueRonNj1DQQQgJJ
-         U/AdGDceyRgTNgPHiyXG0pkJZJTvMAABHfodzcxA9zE3Ttt+WdZp1caQ9OvW5dCPTwIA
-         m47QQeYGZZ+f4DibERIljZEKz5oCaJ/flbNakOvKFC14C7tycm80fdX64f4auWdiW7UE
-         9dcg==
+        bh=lwAYETzypETVMGiFV6A8Y83qc7kgq4atQVmZY13v6PU=;
+        b=HAjKjIykHbIJV4M/T2Gs0CkfSvWsEOgiJ3xiCrl2KsT6wKg5Aec0sYt8SVRysYDaUD
+         9wDyaCEVj3d90Nn/0FAQhds2ovqZaaPN141mXZXhMSfzeAEQzsYmmUDDqlsjcWdSavne
+         ywupy1vnmmTL/5qNjvL4RW/h55dW2MVTtD4dEdO/MLyNZ0WynMnOskL4Z0jr0qyWdVdO
+         JwajrVC3fRJwiVH+J/fjZyZ9jiHm6+CMpM8+xJGrnzarwfqHeARgoiJhazmzdh5SXqwH
+         9RuR9cuIuyB62GpPo9pyFFM0jbPY4a1/DBtjILzMTtk7lv7ua/qpi2UUxDo+TSZjFcyg
+         yOnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=O6c6NNH5TmxmUuxMnzPv8ZPbdCKNndmhlc1+i6v8EMw=;
-        b=I6A6ZqwB5HddK/OuIbO4XmAdqSW6n683lWHuArA9T1O9LBNNMvnOt73lxaIbQZVTB+
-         uUvdNy3bE7T31JqYVpQRNHPHCyj8EEtLYGWU3ouxIX4n4KJf0lX+GCzeOnzEBQBpCzVu
-         JA/C5BzW9+OfaQYLtt5kOllwwsqAjCLPVRHMl9cg1RHIHaTuAwMJbbJDt3Sq2Ae7oS6A
-         9iggs9wKn9qTE/YNkWemj1dkMQl7n9kC4iDMHJ1zj5tvu+x9xPXvxN2ylCdHDv4CQnKC
-         pfl0mw464VuiTPC0IoEVgTmf1ZwZsMu7fXfroPo1SsXAcBA0lGWM6n+ZEIimZWRpgx1V
-         U6zw==
-X-Gm-Message-State: ALyK8tKddOt6tyNHDJziqQdXteMzGCJEAJYyedKnfsOb5nJRwpxOkb2cboKyt+EQ1gvW0g==
-X-Received: by 10.28.140.202 with SMTP id o193mr12772237wmd.55.1467051941857;
-        Mon, 27 Jun 2016 11:25:41 -0700 (PDT)
+        bh=lwAYETzypETVMGiFV6A8Y83qc7kgq4atQVmZY13v6PU=;
+        b=dGHHkwvqoVwysslhbOckv9oDz6j0Kk2jdcMvFMVnu/absCT8Wokl9ZlsuXSJuMyg4E
+         hZsrtYCTE7HcTrxb+q6edwqov6sZlXx+lIPBRk8d0DkaZvk2FE25JGMoszzfgjAy5G7T
+         /Bvzz0UgVo4l/FTzyoJk3gnlSGy2Zknhv99gj8mIHFp7xxZAXyHHhPQZWIcPcGuvu0s2
+         TMI5/V22rzdzVR3dEVv4/ebYvtphStQLYL7TzyYgiooWzBVT+CmpIwqqtEquPAZ+aX+i
+         F8Y8Yh/zQ9FmHp7f2B0diPQVkYCBJxN54XuTIm/ChNq4WJS1yFa3s6pERb9y/XJm2s0/
+         Janw==
+X-Gm-Message-State: ALyK8tLeo0qDtxM6oJV6/PT6/BJKHE04TNGY9TSLJBH0Y7SuXOWTcDW9kXrQjZkwUqHPTA==
+X-Received: by 10.28.166.150 with SMTP id p144mr11444575wme.57.1467051951904;
+        Mon, 27 Jun 2016 11:25:51 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.40
+        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 11:25:41 -0700 (PDT)
+        Mon, 27 Jun 2016 11:25:51 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 31/41] apply: make some parsing functions static again
-Date:	Mon, 27 Jun 2016 20:24:19 +0200
-Message-Id: <20160627182429.31550-32-chriscool@tuxfamily.org>
+Subject: [PATCH v8 38/41] usage: add get_error_routine() and get_warn_routine()
+Date:	Mon, 27 Jun 2016 20:24:26 +0200
+Message-Id: <20160627182429.31550-39-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.172.g48843e9
 In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
 References: <20160627182429.31550-1-chriscool@tuxfamily.org>
@@ -70,56 +70,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Some parsing functions that were used in both "apply.c" and
-"builtin/apply.c" are now only used in the former, so they
-can be made static to "apply.c".
+Let's make it possible to get the current error_routine and warn_routine,
+so that we can store them before using set_error_routine() or
+set_warn_routine() to use new ones.
+
+This way we will be able put back the original routines, when we are done
+with using new ones.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- apply.c | 6 +++---
- apply.h | 5 -----
- 2 files changed, 3 insertions(+), 8 deletions(-)
+ git-compat-util.h |  2 ++
+ usage.c           | 10 ++++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/apply.c b/apply.c
-index ababc9a..7bf12a7 100644
---- a/apply.c
-+++ b/apply.c
-@@ -27,7 +27,7 @@ static void git_apply_config(void)
- 	git_config(git_default_config, NULL);
+diff --git a/git-compat-util.h b/git-compat-util.h
+index f78706a..92af27d 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -440,7 +440,9 @@ static inline int const_error(void)
+ 
+ extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
+ extern void set_error_routine(void (*routine)(const char *err, va_list params));
++extern void (*get_error_routine(void))(const char *err, va_list params);
+ extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
++extern void (*get_warn_routine(void))(const char *warn, va_list params);
+ extern void set_die_is_recursing_routine(int (*routine)(void));
+ extern void set_error_handle(FILE *);
+ 
+diff --git a/usage.c b/usage.c
+index 67e5526..2fd3045 100644
+--- a/usage.c
++++ b/usage.c
+@@ -70,11 +70,21 @@ void set_error_routine(void (*routine)(const char *err, va_list params))
+ 	error_routine = routine;
  }
  
--int parse_whitespace_option(struct apply_state *state, const char *option)
-+static int parse_whitespace_option(struct apply_state *state, const char *option)
++void (*get_error_routine(void))(const char *err, va_list params)
++{
++	return error_routine;
++}
++
+ void set_warn_routine(void (*routine)(const char *warn, va_list params))
  {
- 	if (!option) {
- 		state->ws_error_action = warn_on_ws_error;
-@@ -57,8 +57,8 @@ int parse_whitespace_option(struct apply_state *state, const char *option)
- 	return error(_("unrecognized whitespace option '%s'"), option);
+ 	warn_routine = routine;
  }
  
--int parse_ignorewhitespace_option(struct apply_state *state,
--				  const char *option)
-+static int parse_ignorewhitespace_option(struct apply_state *state,
-+						 const char *option)
++void (*get_warn_routine(void))(const char *warn, va_list params)
++{
++	return warn_routine;
++}
++
+ void set_die_is_recursing_routine(int (*routine)(void))
  {
- 	if (!option || !strcmp(option, "no") ||
- 	    !strcmp(option, "false") || !strcmp(option, "never") ||
-diff --git a/apply.h b/apply.h
-index 5ec022c..df44b51 100644
---- a/apply.h
-+++ b/apply.h
-@@ -97,11 +97,6 @@ struct apply_state {
- 	int applied_after_fixing_ws;
- };
- 
--extern int parse_whitespace_option(struct apply_state *state,
--				   const char *option);
--extern int parse_ignorewhitespace_option(struct apply_state *state,
--					 const char *option);
--
- extern int apply_option_parse_exclude(const struct option *opt,
- 				      const char *arg, int unset);
- extern int apply_option_parse_include(const struct option *opt,
+ 	die_is_recursing = routine;
 -- 
 2.9.0.172.gfb57a78
 
