@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D29782018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 19:04:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CCAE2018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 19:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752194AbcF0TEZ (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 15:04:25 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33588 "HELO cloud.peff.net"
+	id S1752197AbcF0TKO (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 15:10:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33603 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751832AbcF0TEZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 15:04:25 -0400
-Received: (qmail 2913 invoked by uid 102); 27 Jun 2016 19:04:24 -0000
+	id S1751940AbcF0TKN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 15:10:13 -0400
+Received: (qmail 3148 invoked by uid 102); 27 Jun 2016 19:10:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 15:04:24 -0400
-Received: (qmail 12400 invoked by uid 107); 27 Jun 2016 19:04:41 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 15:10:07 -0400
+Received: (qmail 12438 invoked by uid 107); 27 Jun 2016 19:10:24 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 15:04:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Jun 2016 15:04:22 -0400
-Date:	Mon, 27 Jun 2016 15:04:22 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 15:10:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Jun 2016 15:10:05 -0400
+Date:	Mon, 27 Jun 2016 15:10:05 -0400
 From:	Jeff King <peff@peff.net>
 To:	Matthieu Moy <Matthieu.Moy@imag.fr>
 Cc:	gitster@pobox.com, git@vger.kernel.org,
@@ -30,51 +30,39 @@ Cc:	gitster@pobox.com, git@vger.kernel.org,
 	Samuel GROOT <samuel.groot@ensimag.grenoble-inp.fr>,
 	Erwan MATHONIERE <erwan.mathoniere@ensimag.grenoble-inp.fr>,
 	Tom RUSSELLO <tom.russello@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH 2/6] doc: typeset long command-line options as literal
-Message-ID: <20160627190422.GC9594@sigill.intra.peff.net>
+Subject: Re: [PATCH 3/6] doc: typeset -- as litteral
+Message-ID: <20160627191005.GD9594@sigill.intra.peff.net>
 References: <20160627174623.11084-1-Matthieu.Moy@imag.fr>
- <20160627174623.11084-2-Matthieu.Moy@imag.fr>
+ <20160627174623.11084-3-Matthieu.Moy@imag.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20160627174623.11084-2-Matthieu.Moy@imag.fr>
+In-Reply-To: <20160627174623.11084-3-Matthieu.Moy@imag.fr>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 27, 2016 at 07:46:19PM +0200, Matthieu Moy wrote:
+On Mon, Jun 27, 2016 at 07:46:20PM +0200, Matthieu Moy wrote:
 
-> Similarly to the previous commit, use backquotes instead of
-> forward-quotes, for long options.
-> 
-> This was obtained with:
-> 
->   perl -pi -e "s/'(--[a-z][a-z=<>-]*)'/\`\$1\`/g" *.txt
-> 
-> and manual tweak to remove false positive in ascii-art (o'--o'--o' to
-> describe rewritten history).
+> Subject: Re: [PATCH 3/6] doc: typeset -- as litteral
 
-These mostly looked good, but:
+s/litteral/literal/
 
->  grep.extendedRegexp::
-> -	If set to true, enable '--extended-regexp' option by default. This
-> -	option is ignored when the `grep.patternType` option is set to a value
-> +	If set to true, enable `--extended-regexp` option by default. This
-> +	option is ignored when the 'grep.patternType' option is set to a value
+I can hardly blame you, though. I think English stole the word from
+French and then switched its spelling. :)
 
-What's going on in the second line here? We remove the backticks from
-grep.patternType (which is not even a thing that should be touched by
-your pattern).
+You may also want put quotes around "--" to make it clear that you are
+talking about it as punctuation, not using it as such in your sentence.
 
-> @@ -1916,7 +1916,7 @@ log.decorate::
->  	command. If 'short' is specified, the ref name prefixes 'refs/heads/',
->  	'refs/tags/' and 'refs/remotes/' will not be printed. If 'full' is
->  	specified, the full ref name (including prefix) will be printed.
-> -	This is the same as the log commands '--decorate' option.
-> +	This is the same as the log commands `--decorate` option.
+I read all the way through patch 6, and they all look good to me (though
+the "litteral" typo appears again later). I won't bother responding to
+each separately.
 
-This one conflicts applying on top of master, but the resolution is
-fairly straightforward.
+I do notice that your patterns are finding existing items marked with
+single-quotes. We may have other cases lurking that are not quoted at
+all (but should be). I think those could be a separate series, but if
+anybody wants to look for them, I think searching for "\--" will help (a
+literal double-dash needs that to avoid becoming an emdash).
 
 -Peff
