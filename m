@@ -2,119 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2774B1F744
-	for <e@80x24.org>; Mon, 27 Jun 2016 07:20:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CD031F744
+	for <e@80x24.org>; Mon, 27 Jun 2016 07:26:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751716AbcF0HUS (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 03:20:18 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36418 "EHLO
-	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751510AbcF0HUQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 03:20:16 -0400
-Received: by mail-pf0-f196.google.com with SMTP id i123so15080096pfg.3
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 00:20:16 -0700 (PDT)
+	id S1751825AbcF0H0m (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 03:26:42 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36108 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751713AbcF0H0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 03:26:41 -0400
+Received: by mail-wm0-f66.google.com with SMTP id c82so22124110wme.3
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 00:26:40 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wDR2bRnQU/B9iLFkWIRDCWmk648a4BzGD7Ic+GF7+wE=;
-        b=A3xoRB1Bp9u781XpPR8JBej+pFruKl7t2FavKkps29OX+y889T8JMtpgkoohYnXOV7
-         WoJ9Nc3epz5loQCCVajO70jPGV1pTk+/JuMJnll+Y9hDCNl7Ylq54ViirR2g9Jp1WTg9
-         O+ul0U6PtIQMfV9YfesnrfpWaJIjDRr4adPAnpF3KpQOTIYflrT5L8775b0edo/G4R+f
-         4dHxKyAMU//1/zauX4MMzX4hdrwXJ0JLeMyT9SyqqlWdiLkr40wsmy82bJ2nCaD42Q+X
-         +0p7CFXNzpWIatOkqhHsOlkOMenL5qF0uCyNQ9AeXEptPLqN42bKbQDeny1doJHiGy9T
-         65jQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=Azvo6b5KP/y8PpkavoCZ4ZvzYQwAcXFriqvuxBhtzMM=;
+        b=x+Ukdwb28oNeAGW3OTS3KaT+wsT6cqYCJZTOtQvehb5Yy6Uc8J/NJ9RysrMSwkADVZ
+         /Upg2U64m9ARhnJp7KrCYE5HNqAmA/0llQ3hKRe7Y0YWD9wuM9Agxl7qGWN7AxoZ293j
+         y8DBk2vXGnb3hoNmsxiUl/PXJ9T04wOKxthSXjErzEsi4YMApEOWilyD0bjq0f9tIlyB
+         x9kt91BH97LDN0a14RDr13Wld5U7wl4HtHUCqpunXMTUzpZZ0Or/Vmq8d/dFK2ZnA3rI
+         DXGeBWpCgUKiiU5FwaJHq9lqCmzP3PJPEN+XLXRRKPmMhldVOlgMGPoyAFo1VsSvYi4X
+         VjSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=wDR2bRnQU/B9iLFkWIRDCWmk648a4BzGD7Ic+GF7+wE=;
-        b=LB7eBLvMgPmmmAiEuBX68sHfIm15FhlWavZevD7USaCaiZr+LcFRGWDTN8vwkIq40K
-         JYAnQf0ZG1Wke9Qer2KwoXHc6+qANY+PJrtQfnP4XXVUx63U25fj1xSYG5e7gj0yOVmj
-         YkCORquALLIivFnaKeKDS2zZI8oh9AAnCqmVN58VddkP3m33ivdWVMV8Yado0RAltvYy
-         bVeWMuAva09G24xl+szbIu+G93krE7f7cj2qMwv5SUWXE6FQ6ViqpLgySOFwMi1xKiu4
-         rW4CN8QT0kQZAKwXrk0YYNMcgOOiR4DVayvEXVNberecSw8hIEDzuSAncM9DAKHGsEO5
-         Ulsg==
-X-Gm-Message-State: ALyK8tKkFKRP2kN62mg6yosAzSTluHeUwij4rEihoZ0cGy8st5xl5md8+5On4nxgf8hs+w==
-X-Received: by 10.98.41.198 with SMTP id p189mr30109918pfp.18.1467012015785;
-        Mon, 27 Jun 2016 00:20:15 -0700 (PDT)
-Received: from localhost.localdomain ([27.106.101.190])
-        by smtp.gmail.com with ESMTPSA id y10sm4250982pas.24.2016.06.27.00.20.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 00:20:15 -0700 (PDT)
-From:	Pranit Bauva <pranit.bauva@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Azvo6b5KP/y8PpkavoCZ4ZvzYQwAcXFriqvuxBhtzMM=;
+        b=MhxIBvL1VgJ6+rEQMyGuubzYH9FDLEFTRFCAnkqG/dc+T8W3P8+V4QpwjPcj7Qgvom
+         y4XfwHR5m5P08A1xruu2UQdTuBsgPhGJtW7vOv5pBHnqLaoM1C8BKpe2FroAYokA7htE
+         jxjHcKVH/0cso1q3ZDIr5N6ZeEry9Z7cuhcRxkn680zUajR0qMKIGXHwLdc1AYROdAOf
+         ZF1DLlowPAyY75N/rHMnk76LUTcLngaSKvSL5PWDGB7Jhzb+VLWzsw5S9TtoVMKyrnwy
+         WxGkBO0DW7wrohS9MfdJhtDPpA7ZhMKgwracOQC5QxpVGHbdBMIUutFpzcLt+rnMDcgZ
+         QQ0g==
+X-Gm-Message-State: ALyK8tKNoHCcaomewYTa2Zjz0pAQSZZAUpxumDOSCgD7CMiYiLIRFOIWGc6ikbr3e6K+vg==
+X-Received: by 10.28.129.197 with SMTP id c188mr9597366wmd.46.1467012400194;
+        Mon, 27 Jun 2016 00:26:40 -0700 (PDT)
+Received: from slxBook3.fritz.box (p5DDB4A71.dip0.t-ipconnect.de. [93.219.74.113])
+        by smtp.gmail.com with ESMTPSA id bh7sm2517121wjb.22.2016.06.27.00.26.39
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Mon, 27 Jun 2016 00:26:39 -0700 (PDT)
+From:	larsxschneider@gmail.com
 To:	git@vger.kernel.org
-Cc:	larsxschneider@gmail.com, christian.couder@gmail.com,
-	chriscool@tuxfamily.org, Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [GSOC Update] Week 8
-Date:	Mon, 27 Jun 2016 12:49:01 +0530
-Message-Id: <20160627071901.4294-1-pranit.bauva@gmail.com>
-X-Mailer: git-send-email 2.9.0
-In-Reply-To: <20160620073755.2934-1-pranit.bauva@gmail.com>
-References: <20160620073755.2934-1-pranit.bauva@gmail.com>
+Cc:	mhagger@alum.mit.edu, luke@diamand.org, vitor.hda@gmail.com,
+	Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH v1] git-p4: place temporary refs used for branch import under ref/git-p4-tmp
+Date:	Mon, 27 Jun 2016 09:26:38 +0200
+Message-Id: <1467012398-7357-1-git-send-email-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.5.1
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-================================= SUMMARY ==================================
-My public git.git is available here[1]. I regularly keep pushing my work so
-anyone interested can track me there. Feel free to participate in the
-discussions going on PRs with my mentors. Your comments are valuable.
+From: Lars Schneider <larsxschneider@gmail.com>
+
+Git-P4 used to place temporary refs under "git-p4-tmp". Since 3da1f37
+Git checks that all refs are placed under "ref". Instruct Git-P4 to
+place temporary refs under "ref/git-p4-tmp". There are no backwards
+compatibility considerations as these refs are transient.
+
+All refs under "ref" are shared across all worktrees. This is not
+desired for temporary Git-P4 refs and will be adressed in a later patch.
+
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+
+Please note: As mentioned in $gmane/297703 I am no expert for the Git-P4
+branch import. I post this patch to make the Git-P4 unit tests working,
+again. Critical review highly appreciated :-)
+
+Thanks,
+Lars
 
 
-=============================== INTRODUCTION  ==============================
-The purpose of this project is to convert the git-bisect utility which partly
-exists in the form of shell scripts to C code so as to make it more portable.
-I plan to do this by converting each function to C and then calling it from
-git-bisect.sh so as to use the existing test suite to test the function which
-is converted.
+ git-p4.py                | 2 +-
+ t/t9801-git-p4-branch.sh | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Mentors:
-Christian Couder <chriscool@tuxfamily.org>
-Lars Schneider <larsxschneider@gmail.com>
+diff --git a/git-p4.py b/git-p4.py
+index b6593cf..6b252df 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -2274,7 +2274,7 @@ class P4Sync(Command, P4UserMap):
+         self.useClientSpec_from_options = False
+         self.clientSpecDirs = None
+         self.tempBranches = []
+-        self.tempBranchLocation = "git-p4-tmp"
++        self.tempBranchLocation = "refs/git-p4-tmp"
+         self.largeFileSystem = None
 
+         if gitConfig('git-p4.largeFileSystem'):
+diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
+index 0aafd03..8f28ed2 100755
+--- a/t/t9801-git-p4-branch.sh
++++ b/t/t9801-git-p4-branch.sh
+@@ -300,7 +300,7 @@ test_expect_success 'git p4 clone complex branches' '
+ 		test_path_is_file file2 &&
+ 		test_path_is_file file3 &&
+ 		! grep update file2 &&
+-		test_path_is_missing .git/git-p4-tmp
++		test_path_is_missing .git/ref/git-p4-tmp
+ 	)
+ '
 
-================================== Updates =================================
-Things which were done in this week:
+@@ -352,7 +352,7 @@ test_expect_success 'git p4 sync changes to two branches in the same changelist'
+ 		test_path_is_file file2 &&
+ 		test_path_is_file file3 &&
+ 		! grep update file2 &&
+-		test_path_is_missing .git/git-p4-tmp
++		test_path_is_missing .git/ref/git-p4-tmp
+ 	)
+ '
 
- * I have converted check_and_set_terms(), bisect_next_check() and
-   bisect_terms() and have also sent an RFC[7] to the
-   mailing list for discussion which hasn't yet collected any comments. It is
-   kind of important to discuss this as it uses a way to set the global
-   variables in the script by writing it to a file and then reading it.
+--
+2.5.1
 
- * I have almost converted bisect_replay() and would be sending it out soon.
-
- * I have also sent a v3[6] of bisect-write[3] branch which contains
-   bisect_clean_state(), bisect_reset(), bisect_write() functions.
-
-================================= NEXT STEPS ================================
-Things which would be done in the coming week:
-
- * Finish off bisect_replay().
-
- * Start with the elephant function bisect_start().
-
-======================= My Patches (GSoC project only) ======================
-
- * check_term_format patch[5]. This is in pu branch and Junio requires more
-   reviewers to support it so that it can be merged into next.
-
- * bisect_write patch[6]. This is the v3 in the series.
-
- * bisect_terms patch[7]. This is an RFC and open for discussions.
-
-[1]: https://github.com/pranitbauva1997/git
-[3]: https://github.com/pranitbauva1997/git/pull/17
-[4]: http://thread.gmane.org/gmane.comp.version-control.git/297266
-[5]: http://thread.gmane.org/gmane.comp.version-control.git/295518
-[6]: http://thread.gmane.org/gmane.comp.version-control.git/298263
-[7]: http://thread.gmane.org/gmane.comp.version-control.git/298279
-
-Regards,
-Pranit Bauva
