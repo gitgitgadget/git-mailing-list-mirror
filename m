@@ -2,50 +2,50 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 869B92018A
+	by dcvr.yhbt.net (Postfix) with ESMTP id 983962018B
 	for <e@80x24.org>; Mon, 27 Jun 2016 18:25:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752053AbcF0SZc (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 14:25:32 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33437 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752018AbcF0SZb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:25:31 -0400
-Received: by mail-wm0-f68.google.com with SMTP id r201so26996995wme.0
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:30 -0700 (PDT)
+	id S1752064AbcF0SZi (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:25:38 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35675 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752039AbcF0SZf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 14:25:35 -0400
+Received: by mail-wm0-f67.google.com with SMTP id a66so26930923wme.2
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:22 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=do0YY7eYgJbLZu2vfa075H6dUZP6kahbZRTErEGjRlI=;
-        b=WRcIAaaBUtZph4H2JFID4Wkis0ZFYdutWzIwC80ADbLQpumvh31M2+o/MDvFkjFD2F
-         LB+bUwl/LkVZQ28OsZl0viVmo8sfHpdzJ51qg1Ckf2QyUvd+UEIjEieb4RJzS53RAdRy
-         V67hhu+Aaur7JuWX2u+hQhPy/4R5ykH3TFYnmRKCGIVv5eHUzrXc0Dv7FBqGMy65czMJ
-         7OAsKFZ1WPparGZZv4XYCvO7vGVQQcpEBfCQDJVKRmSEsCItFQUPBMSGhgdQGz0mqSsu
-         27vuIs/emT7NB8EMcGp2fyBYdBZ8ZSk+vREguoYBvDGzHTO9R//U6lamaUkU6uW9j64b
-         YFFQ==
+        bh=K9babPsFcnumEDYtCW1wk3t+0xqIDE9L5NSAHtLCBbs=;
+        b=h+q07Zha9Ps1AayjiwpOfplDrJjN0vlNO3SeUPapQaoOcxQV/EM2K0T1FTHzmEVG+z
+         G5oVPcRJG3QWYjjRMlv95ImsFhwweudUUjQyKShVVQqZBXXc24gDcbf+uHeOyKRYlmij
+         TkT9OEaGj6kTpfN0YfxU1VvGGM1carTWqUXE2ucHTyZ82JBXBG13i9nyG0lngoZkmzAP
+         Sov6CEpUKRFy5FSe/gSpWpZr9wi+UpOUK6Jh9DRUnNu3jBOWHPDsGYGEvLMx6I9B6N8K
+         0EToMYi3oPJ20WCo5d5DxYiKMQFf07ghjgRtlWan0GzZAFs7IY8o6CrTtoHiABVT7Oh7
+         5k1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=do0YY7eYgJbLZu2vfa075H6dUZP6kahbZRTErEGjRlI=;
-        b=PPQN0sthX98fbKLvc7T0Z4vJLoAjyfI044Wcde6TXIjyxNc7hZWhK6aaNWPjsTO1wv
-         Y8LKyOnwluc+a2+Gzo0qdJQKVCr5N69U1fN9Qr4lBajXaVFQFEy7+/GPQ6l9J9pSU4Cn
-         PRF8xILGR5t/dSauCiOy3NCCIQrfix8LEuNIJiHt+TozTPT0SaJgeyiteOxK0dQGOLtz
-         640Wkuh42++GS+CO1927We4lX32j4uZesFIXgYERBxPLAsMnWLPuozr48JDWkRogv4Zo
-         qKJzyNNL7qyZqld0Aiz+U+QNynkbvVFeG8+4sebZXrocf+QKpvr18AFSAd1w4IR9CQ24
-         JgHw==
-X-Gm-Message-State: ALyK8tLBNeFCKP0/mJViGawoYk9raBLHlVt0Os3cXA4iVjM0lVumaQr/q3nNkS8gMXWuzw==
-X-Received: by 10.28.215.139 with SMTP id o133mr11752480wmg.74.1467051929787;
-        Mon, 27 Jun 2016 11:25:29 -0700 (PDT)
+        bh=K9babPsFcnumEDYtCW1wk3t+0xqIDE9L5NSAHtLCBbs=;
+        b=j4NegewR7vC3hYa7P9dEyWqHE/iC77PGqekUyRX+5MaoP9iLd7qpJGa1TEPh+QHTSy
+         83Ugf7238e+k8mrk45KCdy3bG4QnEgRPLHs1tyfG1hYS8VJCkzzgcXNpYHRpRzSi/YTu
+         p7FTd/hm8AxzJeduvASY/UsTcLLPoBPKpNd7hbLLzXQ9rerTQQqy7Me5AbQi9+hwDgMV
+         +lfDDbxaARiQo1F2RZoeUTxjvDU94ZB4FSnZnuyCC1sSdMTpcG+pmQqLu/GQQ2bfQUtH
+         jm7eecoX4BO5XoENcpqKyHngsVb2bcsUpNfC0CGSpQRQC7HkrNxtV/vzab8b3QLNCOyg
+         Y4+A==
+X-Gm-Message-State: ALyK8tIC1Pv9oMvlDsGSHEjs4FZK15siIS20CZjOHl6PxLHJKpf/HbLFMQw8q/AOZBHuNg==
+X-Received: by 10.194.78.147 with SMTP id b19mr2156262wjx.31.1467051921844;
+        Mon, 27 Jun 2016 11:25:21 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.28
+        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 11:25:28 -0700 (PDT)
+        Mon, 27 Jun 2016 11:25:21 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 29/41] apply: rename and move opt constants to apply.h
-Date:	Mon, 27 Jun 2016 20:24:17 +0200
-Message-Id: <20160627182429.31550-30-chriscool@tuxfamily.org>
+Subject: [PATCH v8 23/41] builtin/apply: make create_file() return -1 on error
+Date:	Mon, 27 Jun 2016 20:24:11 +0200
+Message-Id: <20160627182429.31550-24-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.172.g48843e9
 In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
 References: <20160627182429.31550-1-chriscool@tuxfamily.org>
@@ -70,67 +70,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The constants for the "inaccurate-eof" and the "recount" options will
-be used in both "apply.c" and "builtin/apply.c", so they need to go
-into "apply.h", and therefore they need a name that is more specific
-to the API they belong to.
+To libify `git apply` functionality we have to signal errors to the
+caller instead of exit()ing.
+
+To do that in a compatible manner with the rest of the error handling
+in "builtin/apply.c", create_file() should just return what
+add_conflicted_stages_file() and add_index_file() are returning
+instead of calling exit().
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- apply.h         |  3 +++
- builtin/apply.c | 11 ++++-------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ builtin/apply.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/apply.h b/apply.h
-index 53f09b5..ca1dcee 100644
---- a/apply.h
-+++ b/apply.h
-@@ -108,4 +108,7 @@ extern int init_apply_state(struct apply_state *state,
- extern void clear_apply_state(struct apply_state *state);
- extern int check_apply_state(struct apply_state *state, int force_apply);
- 
-+#define APPLY_OPT_INACCURATE_EOF	(1<<0)
-+#define APPLY_OPT_RECOUNT		(1<<1)
-+
- #endif
 diff --git a/builtin/apply.c b/builtin/apply.c
-index c08ecde..467b31f 100644
+index eadff4d..bce3988 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -4460,9 +4460,6 @@ static int write_out_results(struct apply_state *state, struct patch *list)
+@@ -4269,7 +4269,7 @@ static int add_conflicted_stages_file(struct apply_state *state,
+ 	return 0;
+ }
  
- static struct lock_file lock_file;
+-static void create_file(struct apply_state *state, struct patch *patch)
++static int create_file(struct apply_state *state, struct patch *patch)
+ {
+ 	char *path = patch->new_name;
+ 	unsigned mode = patch->new_mode;
+@@ -4280,13 +4280,10 @@ static void create_file(struct apply_state *state, struct patch *patch)
+ 		mode = S_IFREG | 0644;
+ 	create_one_file(state, path, mode, buf, size);
  
--#define INACCURATE_EOF	(1<<0)
--#define RECOUNT		(1<<1)
--
- /*
-  * Try to apply a patch.
-  *
-@@ -4492,8 +4489,8 @@ static int apply_patch(struct apply_state *state,
- 		int nr;
+-	if (patch->conflicted_threeway) {
+-		if (add_conflicted_stages_file(state, patch))
+-			exit(128);
+-	} else {
+-		if (add_index_file(state, path, mode, buf, size))
+-			exit(128);
+-	}
++	if (patch->conflicted_threeway)
++		return add_conflicted_stages_file(state, patch);
++	else
++		return add_index_file(state, path, mode, buf, size);
+ }
  
- 		patch = xcalloc(1, sizeof(*patch));
--		patch->inaccurate_eof = !!(options & INACCURATE_EOF);
--		patch->recount =  !!(options & RECOUNT);
-+		patch->inaccurate_eof = !!(options & APPLY_OPT_INACCURATE_EOF);
-+		patch->recount =  !!(options & APPLY_OPT_RECOUNT);
- 		nr = parse_chunk(state, buf.buf + offset, buf.len - offset, patch);
- 		if (nr < 0) {
- 			free_patch(patch);
-@@ -4808,10 +4805,10 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
- 		OPT__VERBOSE(&state.apply_verbosely, N_("be verbose")),
- 		OPT_BIT(0, "inaccurate-eof", &options,
- 			N_("tolerate incorrectly detected missing new-line at the end of file"),
--			INACCURATE_EOF),
-+			APPLY_OPT_INACCURATE_EOF),
- 		OPT_BIT(0, "recount", &options,
- 			N_("do not trust the line counts in the hunk headers"),
--			RECOUNT),
-+			APPLY_OPT_RECOUNT),
- 		{ OPTION_CALLBACK, 0, "directory", &state, N_("root"),
- 			N_("prepend <root> to all filenames"),
- 			0, apply_option_parse_directory },
+ /* phase zero is to remove, phase one is to create */
+@@ -4302,8 +4299,10 @@ static void write_out_one_result(struct apply_state *state,
+ 		return;
+ 	}
+ 	if (patch->is_new > 0 || patch->is_copy) {
+-		if (phase == 1)
+-			create_file(state, patch);
++		if (phase == 1) {
++			if (create_file(state, patch))
++				exit(128);
++		}
+ 		return;
+ 	}
+ 	/*
+@@ -4314,8 +4313,10 @@ static void write_out_one_result(struct apply_state *state,
+ 		if (remove_file(state, patch, patch->is_rename))
+ 			exit(128);
+ 	}
+-	if (phase == 1)
+-		create_file(state, patch);
++	if (phase == 1) {
++		if (create_file(state, patch))
++			exit(128);
++	}
+ }
+ 
+ static int write_out_one_reject(struct apply_state *state, struct patch *patch)
 -- 
 2.9.0.172.gfb57a78
 
