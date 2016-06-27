@@ -2,94 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 001C82018B
-	for <e@80x24.org>; Mon, 27 Jun 2016 19:51:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 186E82018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 20:07:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752284AbcF0Tvm (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 15:51:42 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33666 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752187AbcF0Tvl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 15:51:41 -0400
-Received: (qmail 5011 invoked by uid 102); 27 Jun 2016 19:51:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 15:51:40 -0400
-Received: (qmail 12936 invoked by uid 107); 27 Jun 2016 19:51:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 15:51:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Jun 2016 15:51:38 -0400
-Date:	Mon, 27 Jun 2016 15:51:38 -0400
-From:	Jeff King <peff@peff.net>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 1/2] xread: retry after poll on EAGAIN/EWOULDBLOCK
-Message-ID: <20160627195138.GA15147@sigill.intra.peff.net>
-References: <20160626232112.721-1-e@80x24.org>
- <20160626232112.721-2-e@80x24.org>
- <20160626234251.GA21668@sigill.intra.peff.net>
- <xmqqoa6mdbu3.fsf@gitster.mtv.corp.google.com>
- <20160627143648.GA2618@sigill.intra.peff.net>
- <CAGZ79kZ94PaOfq3GimWiHULbTE7ihMzL9S=Y+npQ4F5gGwFrsA@mail.gmail.com>
- <20160627191720.GE9594@sigill.intra.peff.net>
- <CAGZ79kZWfGJG=qHtdpuLvQY5XK5P3L0UW7RJ=9ui=PgX+AjErQ@mail.gmail.com>
+	id S1751973AbcF0UHs (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 16:07:48 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:38302 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751876AbcF0UHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 16:07:47 -0400
+Received: by mail-wm0-f41.google.com with SMTP id r201so130356102wme.1
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 13:07:46 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Jcde9NGhKcPmdYjHVef3WYzxO2M0HlAejT9vw1ZwPBw=;
+        b=eEViudZfR4/+Ia3M8yKw+w05PqKjGO9u3io3V0v0GM12Y9AuTXRzkKJa45iEpaoEUO
+         99v0M7t8MwRUsKIVYjrMd9b/avOIuRfWcM0rkeFWXOiuse1brHvACctWOgNqHnF0LJjg
+         dlbEVnZz6ocklweJyshzBB9hEp9EosFNYYturNfa+Xci2noV2OrqQExxZZ3TdnhCYMXk
+         nwII6gOyliXZeoH78+NzXqXY7Jh4r3ZC4q/JUqrg9/Twad0XHKQPmGsjzbUrivOnjNck
+         VUX1S2nzplVlTQlsZeOoMhV9JaqWWKz9dDGYF/0j7vyCry3m2oHSDA5/nDmBDgKPNmQg
+         4bHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Jcde9NGhKcPmdYjHVef3WYzxO2M0HlAejT9vw1ZwPBw=;
+        b=T9ZDcsfsM54FVJVLLqLQ/Wkb3zXm44xR1uav3zGqmWl2gVvCwXuyJ7m1TVscvvjMfK
+         BAZX0OYsv3FwC6VEvCFpgrQzomm54ugyMpZPcdG8wc7V3T6JG7hStPLXIIH47dUGJBf+
+         2kJiZcu/TkdcFCaS9X3BQkGoRONEjcZGlYK2WF+yO5Lm+MpZ9j8l1XAX5oABprrRUjCS
+         3TWOusf/3V4r43kHtf7BBEmHNrZQAkhy/F9DHGEpXklze63nzANSK/MjWV6MHGvG2REd
+         t1snQxoVnl34MjrETS5lyGYfrzlYjI+ICaKoCc4ACnqNrjfDS3PDeVFFssjo0Lt4bpzv
+         8OiQ==
+X-Gm-Message-State: ALyK8tLc3yzk7H44AStRMd3Lq6ig9BtE0p5Vf7hmNefbuY6jTRoMdqNjdxaXC0Ga/MemPCExjqNeprXk5HcFmw==
+X-Received: by 10.194.109.199 with SMTP id hu7mr2501965wjb.6.1467058065931;
+ Mon, 27 Jun 2016 13:07:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZWfGJG=qHtdpuLvQY5XK5P3L0UW7RJ=9ui=PgX+AjErQ@mail.gmail.com>
+Received: by 10.194.107.170 with HTTP; Mon, 27 Jun 2016 13:07:06 -0700 (PDT)
+In-Reply-To: <CAGZ79kYKBxL4xLyySALBv_-gqkss9_iCk-qSc4T7u7fKDMOFWw@mail.gmail.com>
+References: <CAOG-3GJdH5q9fdj+7zdEv-UUZMTAnunZu1PRJYjFNV360r6+sQ@mail.gmail.com>
+ <CAGZ79kYKBxL4xLyySALBv_-gqkss9_iCk-qSc4T7u7fKDMOFWw@mail.gmail.com>
+From:	Bart Bogaerts <bartbogaerts@gmail.com>
+Date:	Mon, 27 Jun 2016 23:07:06 +0300
+Message-ID: <CAOG-3GJ5arRRixEAjMt00jp3A+ZQQ3bGXa+ZUQrpffJyAOP_4w@mail.gmail.com>
+Subject: Re: Git mv -- submodule -- recursive
+To:	Stefan Beller <sbeller@google.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 27, 2016 at 12:43:32PM -0700, Stefan Beller wrote:
+Hi,
 
-> There are a few issues:
-> 
->     1) How did you spot the bug? ("Experience/Logical thinking" is the hand
->       wavy answer, but if you had a list like
->       [ ] check for mem leak
->       [ ] check for futureproof design
->       [ ] check for failure modes (What if a syscall fails?")
->       [ ] ... List is not complete, but has some made up points
+I tested this on git version 2.9 and it still fails (exactly the same
+behaviour as on the stackoverflow post; also the workarounded I posted
+there still works).
+Some output showing the bug follows below:
 
-I use the hand-wavy approach to reviews, and I'm pretty sure that's how
-I saw your bug (just thinking about what the code would do, how I would
-write it, and then noticing a discrepancy).
 
-I suspect a checklist could make things more thorough, but I think it
-can also discourage deep thinking. Ideally we have some reviewers who
-are checklist-oriented looking for those sorts of details and some who
-are not.
+bartb@EB-Latitude-E5450 ~/Documents/papers $ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+bartb@EB-Latitude-E5450 ~/Documents/papers $ git --version
+git version 2.9.0
+bartb@EB-Latitude-E5450 ~/Documents/papers $ git mv fo-c-revisited/ 2016
+bartb@EB-Latitude-E5450 ~/Documents/papers $ git status
+fatal: Not a git repository:
+idp-latex/../../.git/modules/fo-c-revisited/modules/idp-latex
+fatal: 'git status --porcelain' failed in submodule 2016/fo-c-revisited
+bartb@EB-Latitude-E5450 ~/Documents/papers $ rm
+2016/fo-c-revisited/idp-latex/.git
+bartb@EB-Latitude-E5450 ~/Documents/papers $ git submodule update
+bartb@EB-Latitude-E5450 ~/Documents/papers $ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
 
->     2) I used to send out only "done"s, i.e. when I already fixed the
->     issue, instead of acknowledging the problem and postponing the fix
->     for later.  I'll revert to that.
+modified:   .gitmodules
+renamed:    fo-c-revisited -> 2016/fo-c-revisited
 
-Yes, I tend to use the review thread as a todo list, and do a single
-session where I read over all of the review mails again (even if I've
-read and responded to them already), fixing or adjusting the code. Sort
-of a human version of the automated tool I described. :)
+bartb@EB-Latitude-E5450 ~/Documents/papers $
 
-> > Of course, none of that would have helped my comment, which was in a
-> > "PS" several emails deep in a discussion thread. ;)
-> 
-> Maybe a "P.S." would get its own point in the todo list not associated
-> with code?  Then it would still be on the radar.
+2016-06-27 19:57 GMT+03:00 Stefan Beller <sbeller@google.com>:
+> On Sun, Jun 26, 2016 at 11:01 PM, Bart Bogaerts <bartbogaerts@gmail.com> wrote:
+>> With a repo structured as follows
+>>
+>> main-files
+>> |- submod
+>>     |- subsubmodule
+>>
+>> git mv submod newlocation
+>>
+>> does not do what it is supposed to do. It actually breaks the git repository.
+>> It can be fixed easily.
+>> A complete description of the bug, including a workaround, can be found on
+>> http://stackoverflow.com/q/32782382/2274140
+>
+> Which version of Git are you using?
+> I think this is fixed in a127331cd81233 (mv: allow moving nested
+> submodules, 2016-04-19), which is first included in v2.8.3
+> (or v2.9 and later).
+>
+> Thanks,
+> Stefan
+>
+>>
+>> --
+>> Bart Bogaerts
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-Yes, there are definitely design points that are not about a specific
-part of the code, and you would want to somehow represent them in your
-todo list.
 
-There is a danger, though, of having a bunch of false positives added to
-your list: tangent discussion that distracts you from the actual review.
-And I think the bug here being in a PS is less relevant than being
-buried amidst other discussion. That made it hard for a tool _or_ a
-human to find.
 
--Peff
+-- 
+Bart Bogaerts
