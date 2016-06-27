@@ -2,72 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3B092018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 19:39:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4676A2018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 19:39:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752132AbcF0Tir (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 15:38:47 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33646 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751639AbcF0Tip (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 15:38:45 -0400
-Received: (qmail 4428 invoked by uid 102); 27 Jun 2016 19:38:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 15:38:45 -0400
-Received: (qmail 12729 invoked by uid 107); 27 Jun 2016 19:39:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 15:39:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Jun 2016 15:38:42 -0400
-Date:	Mon, 27 Jun 2016 15:38:42 -0400
-From:	Jeff King <peff@peff.net>
-To:	Eric Wong <e@80x24.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] gc: fix off-by-one error with gc.autoPackLimit
-Message-ID: <20160627193842.GD10877@sigill.intra.peff.net>
-References: <20160625011450.GA14293@dcvr.yhbt.net>
- <20160625020620.GA31290@sigill.intra.peff.net>
- <20160625025300.GA29053@dcvr.yhbt.net>
- <xmqqa8i9eqwn.fsf@gitster.mtv.corp.google.com>
- <20160625064647.GA20659@dcvr.yhbt.net>
+	id S1751993AbcF0Tjw (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 15:39:52 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:35986 "EHLO
+	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751639AbcF0Tjv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2016 15:39:51 -0400
+Received: by mail-io0-f170.google.com with SMTP id s63so157539876ioi.3
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 12:39:51 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=2SFcQANL6yiZmbw3cofZ2XkY+xUW0bOdPdS2tsF7SzQ=;
+        b=JHYF7Z2XDmpm4FnTxKOcFjgEAUAwWhEQBwYBMreozySao6VjkykToFdACvx07pnas2
+         DTQZgVrK0MO8oP8DDWRGBmaBBQx7OG+eYMLHOzs1ABk9yTvyhZyHo2uL403bbbJXdS3p
+         JJCcx2Af4lG11RLoy2BXF5R2K5TvWEZReIhAciAMsGS4YRb+YuiJo9p8a1DJlu2rAW6k
+         yKJjeDK/OAmq3jSGOuFSkJRtb4Pdw1DU6ogMklhyh8AqJyBzY6t8JqNcH1eQneBxKX0p
+         G3FuPf0kVO4qMHu9Ju1AvLl7OcRfch4nkGtpD/kVwm3dgLWjbbdvwsDYGqj9bhRncYyK
+         1gwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=2SFcQANL6yiZmbw3cofZ2XkY+xUW0bOdPdS2tsF7SzQ=;
+        b=VG9/fAE8DVss3h0GKwXv2vQExNTbCUJnfRlfg3YWOB0LtDZeaBNk/aO9jSivrIN9QG
+         +UU2XPzs5dPfRkKpXbiNpl/3lbBgVqSfb1BJBP7+dwiXcxqPrD1hCHJE/ov8jeB22N+b
+         cpEibYOMSzx3aeqbJLIxJW3+QSHZbK9hLZ3f98BQcHlKXlivZONOm9s3cdGzW/2ZJSqS
+         0GpyJ31LiJYbPaVtec18rZerxMeAOAWHH4BVXI8bF0JLe+JMSOqhO9qFwrNHUQbbt2/e
+         XQxEReIz8wjcnYK8er0sPQWSkj6RTuP4UpHpb5Fn2JUpWRog/bvolK7bdKQbG6Z2tmPt
+         fdkA==
+X-Gm-Message-State: ALyK8tJ5GihmUgo4LGq1ibRDCZa414JqWIHSJ+pigFLSUVUIphaUE2vXOeNN7jwtBJPIZJjWvIlY6IpQlinucg==
+X-Received: by 10.107.22.6 with SMTP id 6mr2438015iow.128.1467056390922; Mon,
+ 27 Jun 2016 12:39:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160625064647.GA20659@dcvr.yhbt.net>
+Received: by 10.64.225.235 with HTTP; Mon, 27 Jun 2016 12:39:21 -0700 (PDT)
+In-Reply-To: <20160627193542.GC10877@sigill.intra.peff.net>
+References: <20160626171616.27948-1-pclouds@gmail.com> <20160626171616.27948-4-pclouds@gmail.com>
+ <20160627192426.GA10877@sigill.intra.peff.net> <CACsJy8BYsPCLiEM2syrGUa_VOCHnR3W+sSiG3sNFme1L0Hx7XA@mail.gmail.com>
+ <20160627193542.GC10877@sigill.intra.peff.net>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Mon, 27 Jun 2016 21:39:21 +0200
+Message-ID: <CACsJy8AQt5SLBufuzGwjoAQVWjTZ3oSvTB+Yz4Kp8hKAy0sD9A@mail.gmail.com>
+Subject: Re: [PATCH/RFC 3/3] diff.c: add --relative-names to be used with --name-only
+To:	Jeff King <peff@peff.net>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sat, Jun 25, 2016 at 06:46:47AM +0000, Eric Wong wrote:
+On Mon, Jun 27, 2016 at 9:35 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jun 27, 2016 at 09:33:18PM +0200, Duy Nguyen wrote:
+>
+>> On Mon, Jun 27, 2016 at 9:24 PM, Jeff King <peff@peff.net> wrote:
+>> > On Sun, Jun 26, 2016 at 07:16:16PM +0200, Nguyễn Thái Ngọc Duy wrote:
+>> >
+>> >> The difference with --relative option is, this option does not filter
+>> >> paths outside cwd. You can add two more chars " ." on your command
+>> >> line for that.
+>> >
+>> > Another difference seems to be that it applies only to --name-only, and
+>> > not to other forms. I can see how "-p --relative-names" might be weird,
+>> > because you'll get:
+>> >
+>> >   diff --git a/../foo/bar b/../foo/bar
+>> >
+>> > or something. But surely things like --name-status would want to support
+>> > it?
+>>
+>> That's my plan :) Anything that does not start with a/ or b/ should
+>> respect this new option.
+>
+> I guess it seems a bit unfortunate that:
+>
+>   git log -p --relative-names .
+>
+> would not be equivalent to:
+>
+>   git log -p --relative
+>
+> I am not entirely convinced that "a/../Documentation/git.txt" is that
+> unreasonable. Sure, it looks weird, and probably nobody will be able to
+> apply the patch. But it is what the user asked for.
 
-> This matches the documentation and allows gc.autoPackLimit=1
-> to maintain a single pack without attempting a repack on every
-> "git gc --auto" invocation.
-> 
-> Signed-off-by: Eric Wong <e@80x24.org>
-> ---
->  builtin/gc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index c583aad..332bcf7 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -177,7 +177,7 @@ static int too_many_packs(void)
->  		 */
->  		cnt++;
->  	}
-> -	return gc_auto_pack_limit <= cnt;
-> +	return gc_auto_pack_limit < cnt;
->  }
-
-Looks good, and I cannot think of any real downside. "0" is special for
-"do not use this limit", so you now have no way of asking to gc every
-time. But why would you want to? Asking for 1 pack is effectively "gc if
-something happened, otherwise do nothing".
-
--Peff
+If we go that far I would drop a/ and b/ because this is already
+un-patchable, and without the prefix, the user can  happily copy and
+paste again. Gaah lots more work..
+-- 
+Duy
