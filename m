@@ -7,46 +7,45 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBF392018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 18:26:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3957A2018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 18:26:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752126AbcF0S0H (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 14:26:07 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33826 "EHLO
+	id S1752124AbcF0S0F (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:26:05 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36209 "EHLO
 	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752096AbcF0SZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:25:56 -0400
-Received: by mail-wm0-f65.google.com with SMTP id 187so26967197wmz.1
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:55 -0700 (PDT)
+	with ESMTP id S1752065AbcF0S0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 14:26:00 -0400
+Received: by mail-wm0-f65.google.com with SMTP id c82so26942172wme.3
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:46 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=svU5JBEV4A7Y2x5fuwj9HWvmpBPOB6EwTrRIUOLH+2o=;
-        b=rjyZZwF/NQkzpC78g8uvIB2a8ql2hJlWHCRMRLtlLCqUBLs46oHw5nWf6VpO1RNTYv
-         6Whvd7Woj0HLiR/66EDCieMDI6CEtevfR6qVP+WFNkMUPaQIb6q2PaATrv381+bcfHz9
-         4YU2XrZCIqAdSHtMflIR5yJQDhJM93vgaAat4QJAA0NwKX6vZE+/MJpGY+uEocl0/Rph
-         00CLAi2CFNU/Hqc+d0Y7fTuHooo4X8ISl0Y03JccoFLDeTOfT1Ih3YtqPfZThcKKIVMw
-         yNMxgvlRzhrSTqXEqfiexDzsjnS6rGoQQqZarND0v/UKE0nj0xHqJKIG7BCk+m3BpzB/
-         KO8g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=1BcntlTPr7texX4XNv/w6Cp1aTe2f6WLKTOAjdx6WeY=;
+        b=wL9AHaml0pAYVrZykwMOGCqJKGgrCZWocJGLgS75Oei+x1lSoo13qEW5e5rzEKDPSr
+         tMg1hCqQgulpCWiHyVR0UbvoDcYfFXVXPGw07CbNaZLvKlG2WHatYxuPksoTr3ncPcvj
+         e/lOvvgK6oLvROs9WElbyJuTZOZANA44nWIBY9R+rd0w3T2ix2OR9BIrV+G8haZdLhvJ
+         gmzPNTS01mNk1jiNul79/59xnRkHnyfZLR4c0tS+pk0dwLQU9zGxgt6ec4zMykaKdlwh
+         gO6STmaY7ZYdV3UbqxUBypuQ3gL11Hi0S+xOYYKxtjowr9rC4quL4/hFcyKEovh2XEdr
+         msZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=svU5JBEV4A7Y2x5fuwj9HWvmpBPOB6EwTrRIUOLH+2o=;
-        b=NeTbpDRuOCUjihA4VcBJRCVGIrz42Hw7E0qwJSOO2FWI3c1yZYmgBm40H7iMADalnM
-         84N1IM4Gz+RhmLC55FNFAQoQTP1VwFpaWZsNpjkbmSHvFNMrkr99yPbnWsRBjL4G799w
-         dFJaWhya2EKbqwWR3vI0PsQ3md9+SEo+/4RkEx1hAW77ZBlRb1IbXOPEaZhOcQrLtOnq
-         4HbWd33+zsQEGAbSUn9vyoKtnrpB6oaE4ZIcLLKappjZKnuiP1KUrodyWxSTgPNMITFI
-         KP0v8m3/UfkVNLCeMbH7YvWNQRnd60Ij6ZQVjc331IST19Bd6iVawWIxUWL/B7Kf291i
-         KQBw==
-X-Gm-Message-State: ALyK8tIowM1yCeLJkvq9mCd9lpgPxvs7k5rc0Y2lDShXXty6ZIegoyf/88G7Bh9+fFacPQ==
-X-Received: by 10.28.224.5 with SMTP id x5mr11333986wmg.11.1467051954527;
-        Mon, 27 Jun 2016 11:25:54 -0700 (PDT)
+         :references;
+        bh=1BcntlTPr7texX4XNv/w6Cp1aTe2f6WLKTOAjdx6WeY=;
+        b=CgHN1Kce+ZkC4mJ1mSBcdMaDC/HHjhZcqHfKaUJOQaodJ67lTV5NIeukgSbGpMh8G6
+         AggFQ0vYHZYF0+hqDIsH2ShhnmTDTXcRB/pGZDD3HGXtn0/SIttPSo02O0ToCDQs0k2b
+         RMbOTlxYjXN0ESooUOpw9IXt4OqZNcumlSNlrHChIXLvQ7NZcqbYTPbLVUimRwQKOWcO
+         KMB48C8QN9YyJqKhYY22eVfL/XGZnDG0mY/NQuNpgsg2Vkqf9VPoc9VINOiRdXs73ftS
+         Qloe99QjkWnqtOyYudvHRkJi6+q4kJzd/lPh7zqcf4iMYku5MX5k814Wul3aXb4HvvXA
+         X2BA==
+X-Gm-Message-State: ALyK8tKiPhgH13VMm+to0y/+E5xaUX1LHLmZaICjMIaoeZespmPOK5OHDp1KBpIku4RJTQ==
+X-Received: by 10.28.68.67 with SMTP id r64mr11464411wma.57.1467051945854;
+        Mon, 27 Jun 2016 11:25:45 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.53
+        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 11:25:53 -0700 (PDT)
+        Mon, 27 Jun 2016 11:25:44 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -60,187 +59,154 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 40/41] builtin/am: use apply api in run_apply()
-Date:	Mon, 27 Jun 2016 20:24:28 +0200
-Message-Id: <20160627182429.31550-41-chriscool@tuxfamily.org>
+Subject: [PATCH v8 34/41] apply: add 'be_silent' variable to 'struct apply_state'
+Date:	Mon, 27 Jun 2016 20:24:22 +0200
+Message-Id: <20160627182429.31550-35-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.172.g48843e9
 In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
 References: <20160627182429.31550-1-chriscool@tuxfamily.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This replaces run_apply() implementation with a new one that
-uses the apply api that has been previously prepared in
-apply.c and apply.h.
+This variable should prevent anything to be printed on both stderr
+and stdout.
 
-This shoud improve performance a lot in certain cases.
+Let's not take care of stdout and apply_verbosely for now though,
+as that will be taken care of in following patches.
 
-As the previous implementation was creating a new `git apply`
-process to apply each patch, it could be slow on systems like
-Windows where it is costly to create new processes.
-
-Also the new `git apply` process had to read the index from
-disk, and when the process was done the calling process
-discarded its own index and read back from disk the new
-index that had been created by the `git apply` process.
-
-This could be very inefficient with big repositories that
-have big index files, especially when the system decided
-that it was a good idea to run the `git apply` processes on
-a different processor core.
-
-Also eliminating index reads enables further performance
-improvements by using:
-
-`git update-index --split-index`
-
-For example here is a benchmark of a multi hundred commit
-rebase on the Linux kernel on a Debian laptop with SSD:
-
-command: git rebase --onto 1993b17 52bef0c 29dde7c
-
-Vanilla "next" without split index:                1m54.953s
-Vanilla "next" with split index:                   1m22.476s
-This series on top of "next" without split index:  1m12.034s
-This series on top of "next" with split index:     0m15.678s
-
-(using branch "next" from mid April 2016.)
-
-Benchmarked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/am.c | 91 ++++++++++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 73 insertions(+), 18 deletions(-)
+ apply.c | 43 +++++++++++++++++++++++++++++--------------
+ apply.h |  1 +
+ 2 files changed, 30 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 3dfe70b..8647298 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -28,6 +28,7 @@
- #include "rerere.h"
- #include "prompt.h"
- #include "mailinfo.h"
-+#include "apply.h"
+diff --git a/apply.c b/apply.c
+index 7bf12a7..802fa79 100644
+--- a/apply.c
++++ b/apply.c
+@@ -1617,8 +1617,9 @@ static void record_ws_error(struct apply_state *state,
+ 		return;
  
- /**
-  * Returns 1 if the file is empty or does not exist, 0 otherwise.
-@@ -1521,39 +1522,93 @@ static int parse_mail_rebase(struct am_state *state, const char *mail)
-  */
- static int run_apply(const struct am_state *state, const char *index_file)
- {
--	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct argv_array apply_paths = ARGV_ARRAY_INIT;
-+	struct argv_array apply_opts = ARGV_ARRAY_INIT;
-+	struct apply_state apply_state;
-+	int res, opts_left;
-+	char *save_index_file;
-+	static struct lock_file lock_file;
-+
-+	struct option am_apply_options[] = {
-+		{ OPTION_CALLBACK, 0, "whitespace", &apply_state, N_("action"),
-+			N_("detect new or modified lines that have whitespace errors"),
-+			0, apply_option_parse_whitespace },
-+		{ OPTION_CALLBACK, 0, "ignore-space-change", &apply_state, NULL,
-+			N_("ignore changes in whitespace when finding context"),
-+			PARSE_OPT_NOARG, apply_option_parse_space_change },
-+		{ OPTION_CALLBACK, 0, "ignore-whitespace", &apply_state, NULL,
-+			N_("ignore changes in whitespace when finding context"),
-+			PARSE_OPT_NOARG, apply_option_parse_space_change },
-+		{ OPTION_CALLBACK, 0, "directory", &apply_state, N_("root"),
-+			N_("prepend <root> to all filenames"),
-+			0, apply_option_parse_directory },
-+		{ OPTION_CALLBACK, 0, "exclude", &apply_state, N_("path"),
-+			N_("don't apply changes matching the given path"),
-+			0, apply_option_parse_exclude },
-+		{ OPTION_CALLBACK, 0, "include", &apply_state, N_("path"),
-+			N_("apply changes matching the given path"),
-+			0, apply_option_parse_include },
-+		OPT_INTEGER('C', NULL, &apply_state.p_context,
-+				N_("ensure at least <n> lines of context match")),
-+		{ OPTION_CALLBACK, 'p', NULL, &apply_state, N_("num"),
-+			N_("remove <num> leading slashes from traditional diff paths"),
-+			0, apply_option_parse_p },
-+		OPT_BOOL(0, "reject", &apply_state.apply_with_reject,
-+			N_("leave the rejected hunks in corresponding *.rej files")),
-+		OPT_END()
-+	};
+ 	err = whitespace_error_string(result);
+-	fprintf(stderr, "%s:%d: %s.\n%.*s\n",
+-		state->patch_input_file, linenr, err, len, line);
++	if (!state->be_silent)
++		fprintf(stderr, "%s:%d: %s.\n%.*s\n",
++			state->patch_input_file, linenr, err, len, line);
+ 	free(err);
+ }
  
--	cp.git_cmd = 1;
-+	if (index_file) {
-+		save_index_file = get_index_file();
-+		set_index_file((char *)index_file);
-+	}
-+
-+	if (init_apply_state(&apply_state, NULL, &lock_file))
-+		die("init_apply_state() failed");
-+
-+	argv_array_push(&apply_opts, "apply");
-+	argv_array_pushv(&apply_opts, state->git_apply_opts.argv);
-+
-+	opts_left = parse_options(apply_opts.argc, apply_opts.argv,
-+				  NULL, am_apply_options, NULL, 0);
-+
-+	if (opts_left != 0)
-+		die("unknown option passed thru to git apply");
+@@ -1813,7 +1814,7 @@ static int parse_single_patch(struct apply_state *state,
+ 		return error(_("new file %s depends on old contents"), patch->new_name);
+ 	if (0 < patch->is_delete && newlines)
+ 		return error(_("deleted file %s still has contents"), patch->old_name);
+-	if (!patch->is_delete && !newlines && context)
++	if (!patch->is_delete && !newlines && context && !state->be_silent)
+ 		fprintf_ln(stderr,
+ 			   _("** warning: "
+ 			     "file %s becomes empty but is not deleted"),
+@@ -3038,8 +3039,8 @@ static int apply_one_fragment(struct apply_state *state,
+ 		 * Warn if it was necessary to reduce the number
+ 		 * of context lines.
+ 		 */
+-		if ((leading != frag->leading) ||
+-		    (trailing != frag->trailing))
++		if ((leading != frag->leading ||
++		     trailing != frag->trailing) && !state->be_silent)
+ 			fprintf_ln(stderr, _("Context reduced to (%ld/%ld)"
+ 					     " to apply fragment at %d"),
+ 				   leading, trailing, applied_pos+1);
+@@ -3536,7 +3537,8 @@ static int try_threeway(struct apply_state *state,
+ 		 read_blob_object(&buf, pre_sha1, patch->old_mode))
+ 		return error("repository lacks the necessary blob to fall back on 3-way merge.");
  
- 	if (index_file)
--		argv_array_pushf(&cp.env_array, "GIT_INDEX_FILE=%s", index_file);
-+		apply_state.cached = 1;
-+	else
-+		apply_state.check_index = 1;
+-	fprintf(stderr, "Falling back to three-way merge...\n");
++	if (!state->be_silent)
++		fprintf(stderr, "Falling back to three-way merge...\n");
  
- 	/*
- 	 * If we are allowed to fall back on 3-way merge, don't give false
- 	 * errors during the initial attempt.
- 	 */
--	if (state->threeway && !index_file) {
--		cp.no_stdout = 1;
--		cp.no_stderr = 1;
--	}
-+	if (state->threeway && !index_file)
-+		apply_state.be_silent = 1;
+ 	img = strbuf_detach(&buf, &len);
+ 	prepare_image(&tmp_image, img, len, 1);
+@@ -3566,7 +3568,9 @@ static int try_threeway(struct apply_state *state,
+ 	status = three_way_merge(image, patch->new_name,
+ 				 pre_sha1, our_sha1, post_sha1);
+ 	if (status < 0) {
+-		fprintf(stderr, "Failed to fall back on three-way merge...\n");
++		if (!state->be_silent)
++			fprintf(stderr,
++				"Failed to fall back on three-way merge...\n");
+ 		return status;
+ 	}
  
--	argv_array_push(&cp.args, "apply");
-+	if (check_apply_state(&apply_state, 0))
-+		die("check_apply_state() failed");
- 
--	argv_array_pushv(&cp.args, state->git_apply_opts.argv);
-+	argv_array_push(&apply_paths, am_path(state, "patch"));
-+
-+	res = apply_all_patches(&apply_state, apply_paths.argc, apply_paths.argv, 0);
- 
- 	if (index_file)
--		argv_array_push(&cp.args, "--cached");
--	else
--		argv_array_push(&cp.args, "--index");
-+		set_index_file(save_index_file);
- 
--	argv_array_push(&cp.args, am_path(state, "patch"));
-+	argv_array_clear(&apply_paths);
-+	argv_array_clear(&apply_opts);
-+	clear_apply_state(&apply_state);
- 
--	if (run_command(&cp))
--		return -1;
-+	if (res)
-+		return res;
- 
--	/* Reload index as git-apply will have modified it. */
--	discard_cache();
--	read_cache_from(index_file ? index_file : get_index_file());
-+	if (index_file) {
-+		/* Reload index as apply_all_patches() will have modified it. */
-+		discard_cache();
-+		read_cache_from(index_file);
-+	}
- 
+@@ -3578,9 +3582,15 @@ static int try_threeway(struct apply_state *state,
+ 			hashcpy(patch->threeway_stage[0].hash, pre_sha1);
+ 		hashcpy(patch->threeway_stage[1].hash, our_sha1);
+ 		hashcpy(patch->threeway_stage[2].hash, post_sha1);
+-		fprintf(stderr, "Applied patch to '%s' with conflicts.\n", patch->new_name);
++		if (!state->be_silent)
++			fprintf(stderr,
++				"Applied patch to '%s' with conflicts.\n",
++				patch->new_name);
+ 	} else {
+-		fprintf(stderr, "Applied patch to '%s' cleanly.\n", patch->new_name);
++		if (!state->be_silent)
++			fprintf(stderr,
++				"Applied patch to '%s' cleanly.\n",
++				patch->new_name);
+ 	}
  	return 0;
  }
+@@ -4483,7 +4493,8 @@ static int write_out_one_reject(struct apply_state *state, struct patch *patch)
+ 			    "Applying patch %%s with %d rejects...",
+ 			    cnt),
+ 		    cnt);
+-	say_patch_name(stderr, sb.buf, patch);
++	if (!state->be_silent)
++		say_patch_name(stderr, sb.buf, patch);
+ 	strbuf_release(&sb);
+ 
+ 	cnt = strlen(patch->new_name);
+@@ -4510,10 +4521,12 @@ static int write_out_one_reject(struct apply_state *state, struct patch *patch)
+ 	     frag;
+ 	     cnt++, frag = frag->next) {
+ 		if (!frag->rejected) {
+-			fprintf_ln(stderr, _("Hunk #%d applied cleanly."), cnt);
++			if (!state->be_silent)
++				fprintf_ln(stderr, _("Hunk #%d applied cleanly."), cnt);
+ 			continue;
+ 		}
+-		fprintf_ln(stderr, _("Rejected hunk #%d."), cnt);
++		if (!state->be_silent)
++			fprintf_ln(stderr, _("Rejected hunk #%d."), cnt);
+ 		fprintf(rej, "%.*s", frag->size, frag->patch);
+ 		if (frag->patch[frag->size-1] != '\n')
+ 			fputc('\n', rej);
+@@ -4562,8 +4575,10 @@ static int write_out_results(struct apply_state *state, struct patch *list)
+ 		struct string_list_item *item;
+ 
+ 		string_list_sort(&cpath);
+-		for_each_string_list_item(item, &cpath)
+-			fprintf(stderr, "U %s\n", item->string);
++		if (!state->be_silent) {
++			for_each_string_list_item(item, &cpath)
++				fprintf(stderr, "U %s\n", item->string);
++		}
+ 		string_list_clear(&cpath, 0);
+ 
+ 		rerere(0);
+diff --git a/apply.h b/apply.h
+index df44b51..44bed19 100644
+--- a/apply.h
++++ b/apply.h
+@@ -52,6 +52,7 @@ struct apply_state {
+ 	int apply_in_reverse;
+ 	int apply_with_reject;
+ 	int apply_verbosely;
++	int be_silent;
+ 	int no_add;
+ 	int threeway;
+ 	int unidiff_zero;
 -- 
 2.9.0.172.gfb57a78
 
