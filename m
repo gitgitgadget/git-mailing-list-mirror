@@ -6,79 +6,73 @@ X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB7742018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 18:44:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 183312018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 18:57:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751872AbcF0Sn6 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 14:43:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33570 "HELO cloud.peff.net"
+	id S1751896AbcF0S5T (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:57:19 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33579 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751644AbcF0Sn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:43:58 -0400
-Received: (qmail 2020 invoked by uid 102); 27 Jun 2016 18:43:57 -0000
+	id S1751644AbcF0S5S (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 14:57:18 -0400
+Received: (qmail 2614 invoked by uid 102); 27 Jun 2016 18:57:18 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 14:43:57 -0400
-Received: (qmail 12321 invoked by uid 107); 27 Jun 2016 18:44:13 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 14:57:18 -0400
+Received: (qmail 12367 invoked by uid 107); 27 Jun 2016 18:57:34 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 14:44:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Jun 2016 14:43:54 -0400
-Date:	Mon, 27 Jun 2016 14:43:54 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 14:57:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Jun 2016 14:57:15 -0400
+Date:	Mon, 27 Jun 2016 14:57:15 -0400
 From:	Jeff King <peff@peff.net>
-To:	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	marcnarc@xiplink.com
-Subject: Re: [PATCH v4 0/5] Better ref summary alignment in "git fetch"
-Message-ID: <20160627184354.GA9594@sigill.intra.peff.net>
-References: <20160605031141.23513-1-pclouds@gmail.com>
- <20160626055810.26960-1-pclouds@gmail.com>
+To:	Matthieu Moy <Matthieu.Moy@imag.fr>
+Cc:	gitster@pobox.com, git@vger.kernel.org,
+	Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>,
+	Samuel GROOT <samuel.groot@ensimag.grenoble-inp.fr>,
+	Erwan MATHONIERE <erwan.mathoniere@ensimag.grenoble-inp.fr>,
+	Tom RUSSELLO <tom.russello@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH 1/6] doc: typeset short command-line options as literal
+Message-ID: <20160627185715.GB9594@sigill.intra.peff.net>
+References: <20160627174623.11084-1-Matthieu.Moy@imag.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20160626055810.26960-1-pclouds@gmail.com>
+In-Reply-To: <20160627174623.11084-1-Matthieu.Moy@imag.fr>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sun, Jun 26, 2016 at 07:58:05AM +0200, Nguyễn Thái Ngọc Duy wrote:
+On Mon, Jun 27, 2016 at 07:46:18PM +0200, Matthieu Moy wrote:
 
-> v4 is a cleaned up version of v3. Tests are added. Typos in
-> git-fetch.txt are corrected. The "{ -> origin/}master" format is
-> dropped.
+> It was common in our documentation to surround short option names with
+> forward quotes, which renders as italic in HTML. Instead, use backquotes
+> which renders as monospace. This is one more step toward conformance to
+> Documentation/CodingGuidelines.
+> 
+> This was obtained with:
+> 
+>   perl -pi -e "s/'(-[a-z])'/\`\$1\`/g" *.txt
 
-Thanks for continuing to look into this.
+I think this is an improvement, assuming everyone is happy with the new
+MAN_BOLD_LITERAL default.
 
-I tried it on my most-horrible example case, and the results were...just
-OK. Because the variable-length part of each line comes first, the
-alignment code means that the "origin/$" bit of every line gets bumped
-out. And if you have a single large branch name, then everybody gets
-bumped out very far, even to the point of wrapping. E.g., I get
-something like (with fetch.output=compact, obviously):
+I skimmed the diff and it looks there were no mis-conversions (I
+recommend diff-highlight for this, as it makes it much easier to spot,
+though perhaps --color-words would help, too).
 
-  From ...
-   * [new branch]      branch1                      -> origin/$
-   * [new branch]      branch2                      -> origin/$
-   * [new branch]      some-really-long-branch-name -> origin/$
-   + 1234abc..5678def  branch3                      -> origin/$ (forced
-    update)
-   * [new branch]      branch4                      -> origin/$
+> diff --git a/Documentation/git-mv.txt b/Documentation/git-mv.txt
+> index e453132..cbae886 100644
+> --- a/Documentation/git-mv.txt
+> +++ b/Documentation/git-mv.txt
+> @@ -35,7 +35,7 @@ OPTIONS
+>          Skip move or rename actions which would lead to an error
+>  	condition. An error happens when a source is neither existing nor
+>  	controlled by Git, or when it would overwrite an existing
+> -        file unless '-f' is given.
+> +        file unless `-f` is given.
 
-I've shrunk it a bit to fit in the email; my actual "long" name was much
-larger. And the average length for the shorter ones is, too, but the
-overall effect is the same; almost every line has a huge run of
-whitespace. And some lines wrap that would not have even under the
-normal, duplicated scheme.
-
-One of the nice things about Junio's "{ -> origin/}" suggestion is that
-it puts the variable-length part at the end, so there's no extra
-alignment required. And you'd get something like:
-
-  From ...
-   * [new branch]      { -> origin/}branch1
-   * [new branch]      { -> origin/}branch2
-   * [new branch]      { -> origin/}some-really-long-branch-name
-   + 1234abc..5678def  { -> origin/}branch3 (forced update)
-   * [new branch]      { -> origin/}branch4
+git-am complains about the space indentation in the post-image. I know
+it was there before your patch, but the indentation for that paragraph
+is off. I wonder if it makes sense to fix it as a preliminary patch.
 
 -Peff
