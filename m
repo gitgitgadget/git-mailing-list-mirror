@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DFEA2018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 18:26:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27FE92018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 18:26:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752135AbcF0S0W (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 14:26:22 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:32886 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752088AbcF0SZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:25:51 -0400
-Received: by mail-wm0-f68.google.com with SMTP id r201so26999539wme.0
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:50 -0700 (PDT)
+	id S1752131AbcF0S0V (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:26:21 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:32845 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752018AbcF0SZt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 14:25:49 -0400
+Received: by mail-wm0-f67.google.com with SMTP id r201so26999293wme.0
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:49 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wOKxrvglJxy/MwJWHsT74wgP0d9q2IlCtWti3WIiLmU=;
-        b=viixun99Y68sCq8VIS0q3kv7nWPVgXwhANwNZW52mejWhX1o/NLGKZttco7eNJxhJi
-         fpwPV4BuTyYyGcYsa5M+xt4yO8JxelWmn5cnn6lZgBjQbtup27Dg53zNxkcUjzeHXKnQ
-         /KbqNluzuaCf/UNlZiq5zwtbJhpEvcoR6ShCNZm9jgoHurV3V/O0c1Xir0CXY0y2Ag7V
-         pVLs8ZHs6BGNyMOOdhvl8+7wBi7V7RBbp5CwA9v36tAf1mO4RMhjEMNPtgSYOcVzhbOn
-         c8dq/8/TUXiqWj8/L86oHZI6+WtdyTuL3wDpZbpnPG289lvrV9K3XhvVhRM7NuEZcIwu
-         uvEQ==
+        bh=D6PcAJa4uGY6EqzWkO2Xo6t2sMhtFZmE/9MBZi1u0oI=;
+        b=T3qrHUIJU1uFS7B6aO5citnARsx+ZvyIQilcmEGdSuieRKtwSOUpvaakDF0ZHBRonq
+         FcSPGEPpaHziiUXhC6PWcSTa7EaTh+sycDUIylSQkM9T0pLGjRV+3/4SCRzIgeIk8aB5
+         EAFxug/57aYxvT/Z3FGcczfUJYHOO3ZlCQuHnZz7ChiBDQLGINKQR/UNxHVKHsSUjV1S
+         amIip8X+PMXa1ESr5e2mEubNQh9hJm1eRar9hMeDW/GFcz9BbFHTft7fO01Bc9B5xf0t
+         toPSL8FaPVv/dKRYNG2J5boIpIyMGvWSL8o9+Zxqj4O5Afj4d8/S4tvGQ0gYdXXL3EhW
+         HTWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=wOKxrvglJxy/MwJWHsT74wgP0d9q2IlCtWti3WIiLmU=;
-        b=AlPQbZlpXk/PGdhoAx9giDhDyIM3Y3TKVbIvDf6wmC2wAuKGNPgtWrxV7+LiUlTsTx
-         zQeoVEnJWYNDhBZBJuzr+86Y0ErmCEokmNvbYcBYQvHWVibUAig6a4GpvHkfz54xqToT
-         k92n1puI5i6rr44wPLz7dcd9fuIK1gQ4QjfDGU3JcAmA/4tRzE1Z+eBxY3WBcGBGIncv
-         ntnxAfxINRT7AwmqGIBtiHbKrRLVw9AKHQaGs7CleLMtJMjcEFwxXIn4xrQs2p/bMF+r
-         Vzwp813ngfdb0S+z4JAuimNkVoYPzAm9w5+LIAmVOQ+jhheVrFENP77kUQQVblatf3Ub
-         DcLw==
-X-Gm-Message-State: ALyK8tI4bkeK179yERYVHLUxSwfyWGcyVB3L+yzyG8t9iTOeO2hyMRb3wfRNd1rhXZVlhw==
-X-Received: by 10.194.88.65 with SMTP id be1mr2222884wjb.46.1467051950225;
-        Mon, 27 Jun 2016 11:25:50 -0700 (PDT)
+        bh=D6PcAJa4uGY6EqzWkO2Xo6t2sMhtFZmE/9MBZi1u0oI=;
+        b=fz3TMScnJFV9AfxYdEbJo+uJ/gnSqczN0r0iv2BD08r77KNHKiG0iFfA+XHMnAzd9o
+         etkr4SfApbZAPXwm88Piz+r9E4d15DlnKaD2lWR78qvfliZ04qBObnelxX+cdT1AzAro
+         AYmZxPDW5QkvxlhXbnffCciBv2W+zPK+Ty/3+ka48oRzqiLjuwOhjOcEpVMIpO+Djs2R
+         AfQEFd0YAcRfK+4/gi+iq/5LFpm8Z+LyEAURPak2apo7G35v2iWz0nrxTXDNTz+DDCHF
+         +SHN2gWsaXKNvADgpGbt3C0Xiz4a7/u92kAdvWCgh8eBZS/WEELlK56IF7Exdx0HJvuZ
+         8OLw==
+X-Gm-Message-State: ALyK8tLzgqIMwswqtG+xjdtD5bS5lkpug6C8LjnZRKh+Oz+TTcug0coHhRPFuu2WRRQ9yw==
+X-Received: by 10.194.2.44 with SMTP id 12mr2134388wjr.61.1467051948462;
+        Mon, 27 Jun 2016 11:25:48 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.48
+        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 11:25:49 -0700 (PDT)
+        Mon, 27 Jun 2016 11:25:47 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 37/41] usage: add set_warn_routine()
-Date:	Mon, 27 Jun 2016 20:24:25 +0200
-Message-Id: <20160627182429.31550-38-chriscool@tuxfamily.org>
+Subject: [PATCH v8 36/41] apply: don't print on stdout when be_silent is set
+Date:	Mon, 27 Jun 2016 20:24:24 +0200
+Message-Id: <20160627182429.31550-37-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.172.g48843e9
 In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
 References: <20160627182429.31550-1-chriscool@tuxfamily.org>
@@ -70,44 +70,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-There are already set_die_routine() and set_error_routine(),
-so let's add set_warn_routine() as this will be needed in a
-following commit.
+This variable should prevent anything to be printed on both stderr
+and stdout.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- git-compat-util.h | 1 +
- usage.c           | 5 +++++
- 2 files changed, 6 insertions(+)
+ apply.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 49d4029..f78706a 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -440,6 +440,7 @@ static inline int const_error(void)
+diff --git a/apply.c b/apply.c
+index 1435f85..e2acc18 100644
+--- a/apply.c
++++ b/apply.c
+@@ -4698,13 +4698,13 @@ static int apply_patch(struct apply_state *state,
+ 		goto end;
+ 	}
  
- extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
- extern void set_error_routine(void (*routine)(const char *err, va_list params));
-+extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
- extern void set_die_is_recursing_routine(int (*routine)(void));
- extern void set_error_handle(FILE *);
+-	if (state->diffstat)
++	if (state->diffstat && !state->be_silent)
+ 		stat_patch_list(state, list);
  
-diff --git a/usage.c b/usage.c
-index 1dad03f..67e5526 100644
---- a/usage.c
-+++ b/usage.c
-@@ -70,6 +70,11 @@ void set_error_routine(void (*routine)(const char *err, va_list params))
- 	error_routine = routine;
- }
+-	if (state->numstat)
++	if (state->numstat && !state->be_silent)
+ 		numstat_patch_list(state, list);
  
-+void set_warn_routine(void (*routine)(const char *warn, va_list params))
-+{
-+	warn_routine = routine;
-+}
-+
- void set_die_is_recursing_routine(int (*routine)(void))
- {
- 	die_is_recursing = routine;
+-	if (state->summary)
++	if (state->summary && !state->be_silent)
+ 		summary_patch_list(list);
+ 
+ end:
 -- 
 2.9.0.172.gfb57a78
 
