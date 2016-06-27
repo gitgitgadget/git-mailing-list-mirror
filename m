@@ -7,45 +7,46 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98FEF2018B
-	for <e@80x24.org>; Mon, 27 Jun 2016 18:26:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E5D72018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 18:27:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160AbcF0S0w (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 14:26:52 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33110 "EHLO
+	id S1752161AbcF0S04 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:26:56 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33915 "EHLO
 	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751749AbcF0SZQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:25:16 -0400
-Received: by mail-wm0-f66.google.com with SMTP id r201so26994949wme.0
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:15 -0700 (PDT)
+	with ESMTP id S1751913AbcF0SZP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 14:25:15 -0400
+Received: by mail-wm0-f66.google.com with SMTP id 187so26961916wmz.1
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:14 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VXf0cngDFYDDoaVMVShf3SOCUfPG/sUB4a47IgkRjeo=;
-        b=tQh6sml0RltMNl3f4j5RCdJaUgWdeuT4biYHzBglZpb3AyujYKb4T9GUnHaLPGpKBq
-         Ku/OgMRTnje7Hv5bJyH5PLJOHTpOyRi15IDmeTTDbvnrGwvtiD9OxQ6FdRffIyyJZAzb
-         5i7T5Bfl1A3Soi8FwKt732dKN0iRT4vxV7umbC/ZEO0MKgpH7dpgonzlYQ83ahNIM0aV
-         4IPhGJb9ggLzs7d8u7nHzmuuyVoGuJe6VkQZlDcE/vpeh/XFfUieO0zYOxxLbPaV8+ao
-         0JRaOylidpTwQiEihD8XCLKAXCD8sBA0pyTKILnJdpqo20ZI8VE/7bIliTKzfJqqOIsx
-         6juw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=uoz3x1IStxF482NdQY2ZeE1EDKEO3gzwGAwI8/jOnkM=;
+        b=W6UtKaHz2M19G42KLM3qp9dpsrf+fZze1u43K/1ZgRhp8GggZqbMyX1pBxQzlhXoaz
+         cBCDqWVIr3xsAAgU9LBGNmY6JcLLJ/pdXTmPtC40RE4H/tVoedmBpKO98XkT7LqtYYcM
+         uRwWyn5m5g7U0CI8inR88s0Co80pEciBfZdv4lCL0MLoh/zpD+69UIkSXybEI2QXQ0In
+         UIIdtVOJEVygcuZkQWA1kXwDBedm85V9KHgHhZ5heM0jSOLbEmMLCtOpL129fXy7w7Gq
+         3FcUUvV5xeMuhfufIDxlvc2PpQ1LqcU1mux3YsjfSR9ZcVeR19QgixlKttsJVRG1DUOF
+         wdlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=VXf0cngDFYDDoaVMVShf3SOCUfPG/sUB4a47IgkRjeo=;
-        b=GC21pGW0xZMphXrvmaHVV/Nltw+VaIn/Fx23hwewc8YGYu2Ip39aorPqKHQNbGsjDW
-         ay9HFtZCwyDX497JrEil4ON6LlAeWFttnL6ZLifk4mBzuNQcLarNN0wtv1TLbIGQ89RS
-         T5nsgOf05MZ9NpFSHwqyrORcgLD82T/f7Jv+VW5689ouebPVrjo80B+hjbIWs6QpBWxJ
-         26REWO+90tSAf5JaaRGN4U0wfnWndJ2PEXDM2nI+OOe7AaMqbnoBPlEBDYq4AgKsQOQA
-         w1E9BzjwN42lTLwzX231uLvnBJZWPbYlP26zgU0Q6joey96A2nYY8U4Ry7HmMnkisqXN
-         OjMQ==
-X-Gm-Message-State: ALyK8tJDRPf7bjdMuTKO4EX2Dz3NM/ZtHdkqnvrihMSqTTPTeK5ICJJwwr8rtx0gfHYNnw==
-X-Received: by 10.28.209.13 with SMTP id i13mr12734094wmg.93.1467051915063;
-        Mon, 27 Jun 2016 11:25:15 -0700 (PDT)
+         :references:mime-version:content-transfer-encoding;
+        bh=uoz3x1IStxF482NdQY2ZeE1EDKEO3gzwGAwI8/jOnkM=;
+        b=D2WrumzNLxXyNwaZATor5yF32QgLc3JpX3kudjINWnENfE8mf6MjApTOwWZSyudQaw
+         4h7tlzJiNghpDMajsxMpLYk/UHYK/EQ7dhHySIaNVa5L6dY32GDu8L/rvc9iEgpoHDhV
+         jQQnrShsHc7zDgIjmGY41mv3xrjB64aFD01cMxq4Ud+amVaWB7I0YYjtmIjUDd8eQEie
+         H39CVzui4uSac40kyME62aIqDydx6uU1NjiM9K4lL6iOv7hiYd6jZ77p20D1ZSedu2uC
+         hV0h0vN1gfKlgmzTmSk4A8BTdy/LqeBrCZkXbFH8eorRsgsWnHSYbRYoNazdc32t0Tr9
+         /8iw==
+X-Gm-Message-State: ALyK8tKqykqARU6pqbAz7PGN3yfKPpkz8Ci8GhP8LVZck3cIJbOTctvYzoO1D6a2Yas0PA==
+X-Received: by 10.28.189.215 with SMTP id n206mr12307389wmf.76.1467051913717;
+        Mon, 27 Jun 2016 11:25:13 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.13
+        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 11:25:14 -0700 (PDT)
+        Mon, 27 Jun 2016 11:25:12 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,12 +60,15 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 18/41] builtin/apply: change die_on_unsafe_path() to check_unsafe_path()
-Date:	Mon, 27 Jun 2016 20:24:06 +0200
-Message-Id: <20160627182429.31550-19-chriscool@tuxfamily.org>
+Subject: [PATCH v8 17/41] builtin/apply: make gitdiff_*() return -1 on error
+Date:	Mon, 27 Jun 2016 20:24:05 +0200
+Message-Id: <20160627182429.31550-18-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.172.g48843e9
 In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
 References: <20160627182429.31550-1-chriscool@tuxfamily.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -74,90 +78,101 @@ To libify `git apply` functionality we have to signal errors to the
 caller instead of die()ing.
 
 To do that in a compatible manner with the rest of the error handling
-in "builtin/apply.c", die_on_unsafe_path() should return a negative
-integer instead of calling die(), so while doing that let's change
-its name to check_unsafe_path().
+in "builtin/apply.c", gitdiff_*() functions should return -1 instead
+of calling die().
 
+A previous patch made it possible for gitdiff_*() functions to
+return -1 in case of error. Let's take advantage of that to
+make gitdiff_verify_name() return -1 on error, and to have
+gitdiff_oldname() and gitdiff_newname() directly return
+what gitdiff_verify_name() returns.
+
+Helped-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 32 +++++++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ builtin/apply.c | 40 +++++++++++++++++++++-------------------
+ 1 file changed, 21 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index b48b526..d3a9da2 100644
+index 0bed352..b48b526 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -3704,7 +3704,7 @@ static int path_is_beyond_symlink(struct apply_state *state, const char *name_)
- 	return ret;
- }
+@@ -827,54 +827,56 @@ static int gitdiff_hdrend(struct apply_state *state,
+ #define DIFF_OLD_NAME 0
+ #define DIFF_NEW_NAME 1
  
--static void die_on_unsafe_path(struct patch *patch)
-+static int check_unsafe_path(struct patch *patch)
+-static void gitdiff_verify_name(struct apply_state *state,
+-				const char *line,
+-				int isnull,
+-				char **name,
+-				int side)
++static int gitdiff_verify_name(struct apply_state *state,
++			       const char *line,
++			       int isnull,
++			       char **name,
++			       int side)
  {
- 	const char *old_name = NULL;
- 	const char *new_name = NULL;
-@@ -3716,9 +3716,10 @@ static void die_on_unsafe_path(struct patch *patch)
- 		new_name = patch->new_name;
+ 	if (!*name && !isnull) {
+ 		*name = find_name(state, line, NULL, state->p_value, TERM_TAB);
+-		return;
++		return 0;
+ 	}
  
- 	if (old_name && !verify_path(old_name))
--		die(_("invalid path '%s'"), old_name);
-+		return error(_("invalid path '%s'"), old_name);
- 	if (new_name && !verify_path(new_name))
--		die(_("invalid path '%s'"), new_name);
-+		return error(_("invalid path '%s'"), new_name);
+ 	if (*name) {
+ 		int len = strlen(*name);
+ 		char *another;
+ 		if (isnull)
+-			die(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
+-			    *name, state->linenr);
++			return error(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
++				     *name, state->linenr);
+ 		another = find_name(state, line, NULL, state->p_value, TERM_TAB);
+-		if (!another || memcmp(another, *name, len + 1))
+-			die((side == DIFF_NEW_NAME) ?
++		if (!another || memcmp(another, *name, len + 1)) {
++			free(another);
++			return error((side == DIFF_NEW_NAME) ?
+ 			    _("git apply: bad git-diff - inconsistent new filename on line %d") :
+ 			    _("git apply: bad git-diff - inconsistent old filename on line %d"), state->linenr);
++		}
+ 		free(another);
+ 	} else {
+ 		/* expect "/dev/null" */
+ 		if (memcmp("/dev/null", line, 9) || line[9] != '\n')
+-			die(_("git apply: bad git-diff - expected /dev/null on line %d"), state->linenr);
++			return error(_("git apply: bad git-diff - expected /dev/null on line %d"), state->linenr);
+ 	}
++
 +	return 0;
  }
  
- /*
-@@ -3808,8 +3809,8 @@ static int check_patch(struct apply_state *state, struct patch *patch)
- 		}
- 	}
+ static int gitdiff_oldname(struct apply_state *state,
+ 			   const char *line,
+ 			   struct patch *patch)
+ {
+-	gitdiff_verify_name(state, line,
+-			    patch->is_new, &patch->old_name,
+-			    DIFF_OLD_NAME);
+-	return 0;
++	return gitdiff_verify_name(state, line,
++				   patch->is_new, &patch->old_name,
++				   DIFF_OLD_NAME);
+ }
  
--	if (!state->unsafe_paths)
--		die_on_unsafe_path(patch);
-+	if (!state->unsafe_paths && check_unsafe_path(patch))
-+		return -128;
+ static int gitdiff_newname(struct apply_state *state,
+ 			   const char *line,
+ 			   struct patch *patch)
+ {
+-	gitdiff_verify_name(state, line,
+-			    patch->is_delete, &patch->new_name,
+-			    DIFF_NEW_NAME);
+-	return 0;
++	return gitdiff_verify_name(state, line,
++				   patch->is_delete, &patch->new_name,
++				   DIFF_NEW_NAME);
+ }
  
- 	/*
- 	 * An attempt to read from or delete a path that is beyond a
-@@ -3837,10 +3838,14 @@ static int check_patch_list(struct apply_state *state, struct patch *patch)
- 	prepare_symlink_changes(state, patch);
- 	prepare_fn_table(state, patch);
- 	while (patch) {
-+		int res;
- 		if (state->apply_verbosely)
- 			say_patch_name(stderr,
- 				       _("Checking patch %s..."), patch);
--		err |= check_patch(state, patch);
-+		res = check_patch(state, patch);
-+		if (res == -128)
-+			return -128;
-+		err |= res;
- 		patch = patch->next;
- 	}
- 	return err;
-@@ -4472,11 +4477,16 @@ static int apply_patch(struct apply_state *state,
- 		goto end;
- 	}
- 
--	if ((state->check || state->apply) &&
--	    check_patch_list(state, list) < 0 &&
--	    !state->apply_with_reject) {
--		res = -1;
--		goto end;
-+	if (state->check || state->apply) {
-+		int r = check_patch_list(state, list);
-+		if (r == -128) {
-+			res = -128;
-+			goto end;
-+		}
-+		if (r < 0 && !state->apply_with_reject) {
-+			res = -1;
-+			goto end;
-+		}
- 	}
- 
- 	if (state->apply && write_out_results(state, list)) {
+ static int gitdiff_oldmode(struct apply_state *state,
 -- 
 2.9.0.172.gfb57a78
 
