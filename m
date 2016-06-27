@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9130A2018B
+	by dcvr.yhbt.net (Postfix) with ESMTP id A24092018A
 	for <e@80x24.org>; Mon, 27 Jun 2016 18:25:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752094AbcF0SZw (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 14:25:52 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35178 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752039AbcF0SZo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:25:44 -0400
-Received: by mail-wm0-f68.google.com with SMTP id a66so26933861wme.2
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:43 -0700 (PDT)
+	id S1752100AbcF0SZx (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:25:53 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36119 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752065AbcF0SZn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 14:25:43 -0400
+Received: by mail-wm0-f66.google.com with SMTP id c82so26941651wme.3
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:42 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=e+hejxlibFPecMU+zdx+FG4PJl3Kp6F7oiW8Hk60ULU=;
-        b=BnoLuJBPbWNxWxrWvsArTkkHJ+MY1h5tVR8vabqrO4JNPpi7rW9jAAR+n2NM4GdGyj
-         Yc2KfuZ5507at5QxiErifTHSw9Idd1CQVHBxRcAbLabqA3keZ/Ml19YPuadIk+rD2aZ2
-         IF8Dpfo7EsUN6Z4FTKo8nwuM27Hxv4FiLqg8XeDNgagAj04MxL3vCAyKq7J+U3Hw+L3J
-         CJ+sipJ3rvnJhtEfPWeB8X1S7PStfefEWmlIxTE9n1+3OFiSSZQn4kO6qLbuLZpcgmzq
-         6CHu7hfChwCrl94dQVDtycOSAqVaUbHjDqQwh8YxDzmCnTR5zFI3HBi7r7r1Lhkhn3r5
-         QxIw==
+        bh=O6c6NNH5TmxmUuxMnzPv8ZPbdCKNndmhlc1+i6v8EMw=;
+        b=fgH8LMBsVB/v4j2lLsXjDd8cpqbHWBKo6HsIglNQk1PIuK6mhunOcnWGs2QSG77MB1
+         1PtoYkLeDxhRnN+82B7ECFMNkV4UN/E+IQyaz1TtRHF96Hn3eNZ16iklfHcJa/fF3trO
+         t8bsRGwI4R0Q52sBLf0q2wkDcZRaCx7Ll8yV6tJ5Ifl8jZXK5nLjOueRonNj1DQQQgJJ
+         U/AdGDceyRgTNgPHiyXG0pkJZJTvMAABHfodzcxA9zE3Ttt+WdZp1caQ9OvW5dCPTwIA
+         m47QQeYGZZ+f4DibERIljZEKz5oCaJ/flbNakOvKFC14C7tycm80fdX64f4auWdiW7UE
+         9dcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=e+hejxlibFPecMU+zdx+FG4PJl3Kp6F7oiW8Hk60ULU=;
-        b=EA1UfxomvndyyKvqMGqKAoLlSexcvqYgmdWM8uyBsX+XtLXoUDNmwWDaH0AFlvec/W
-         paTu4GjJaRcZaE7NoaWIONsgnyz1E5mQ6Mu2iHtrWLZorY+Zm3cNDCnJHY6dNXVFwmai
-         DZdFcpGY3vK9dtbxg4EIurU3TfQGLGraZh0iDMXnsaFkAYhqq/BbI21fI8yEKDLwyaxJ
-         e+ewJWQoaQMahk6Q920pdcCenilUZWy+/p7qwj34cHpaZmpmi4n+TOrU8MYjOfJBBpfU
-         09hbLjHmBsUoDl6XFaDivdpwVxAigs8B+v9TTBstII25S3ddb8yPaZ6KUbe5OkiUZmnz
-         yzNg==
-X-Gm-Message-State: ALyK8tJOJ0c5PqmAh7tBpD7F4rp7cSlej1KRYOEeOY4XBqP7dbHGLJOChLqJ6S2ZzLDEcA==
-X-Received: by 10.28.188.137 with SMTP id m131mr11662584wmf.4.1467051943135;
-        Mon, 27 Jun 2016 11:25:43 -0700 (PDT)
+        bh=O6c6NNH5TmxmUuxMnzPv8ZPbdCKNndmhlc1+i6v8EMw=;
+        b=I6A6ZqwB5HddK/OuIbO4XmAdqSW6n683lWHuArA9T1O9LBNNMvnOt73lxaIbQZVTB+
+         uUvdNy3bE7T31JqYVpQRNHPHCyj8EEtLYGWU3ouxIX4n4KJf0lX+GCzeOnzEBQBpCzVu
+         JA/C5BzW9+OfaQYLtt5kOllwwsqAjCLPVRHMl9cg1RHIHaTuAwMJbbJDt3Sq2Ae7oS6A
+         9iggs9wKn9qTE/YNkWemj1dkMQl7n9kC4iDMHJ1zj5tvu+x9xPXvxN2ylCdHDv4CQnKC
+         pfl0mw464VuiTPC0IoEVgTmf1ZwZsMu7fXfroPo1SsXAcBA0lGWM6n+ZEIimZWRpgx1V
+         U6zw==
+X-Gm-Message-State: ALyK8tKddOt6tyNHDJziqQdXteMzGCJEAJYyedKnfsOb5nJRwpxOkb2cboKyt+EQ1gvW0g==
+X-Received: by 10.28.140.202 with SMTP id o193mr12772237wmd.55.1467051941857;
+        Mon, 27 Jun 2016 11:25:41 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.41
+        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 11:25:42 -0700 (PDT)
+        Mon, 27 Jun 2016 11:25:41 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 32/41] environment: add set_index_file()
-Date:	Mon, 27 Jun 2016 20:24:20 +0200
-Message-Id: <20160627182429.31550-33-chriscool@tuxfamily.org>
+Subject: [PATCH v8 31/41] apply: make some parsing functions static again
+Date:	Mon, 27 Jun 2016 20:24:19 +0200
+Message-Id: <20160627182429.31550-32-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.172.g48843e9
 In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
 References: <20160627182429.31550-1-chriscool@tuxfamily.org>
@@ -70,59 +70,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Introduce set_index_file() to be able to temporarily change the index file.
-
-It should be used like this:
-
-    /* Save current index file */
-    old_index_file = get_index_file();
-    set_index_file((char *)tmp_index_file);
-
-    /* Do stuff that will use tmp_index_file as the index file */
-    ...
-
-    /* When finished reset the index file */
-    set_index_file(old_index_file);
+Some parsing functions that were used in both "apply.c" and
+"builtin/apply.c" are now only used in the former, so they
+can be made static to "apply.c".
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- cache.h       |  1 +
- environment.c | 10 ++++++++++
- 2 files changed, 11 insertions(+)
+ apply.c | 6 +++---
+ apply.h | 5 -----
+ 2 files changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index c73becb..8854365 100644
---- a/cache.h
-+++ b/cache.h
-@@ -461,6 +461,7 @@ extern int is_inside_work_tree(void);
- extern const char *get_git_dir(void);
- extern const char *get_git_common_dir(void);
- extern char *get_object_directory(void);
-+extern void set_index_file(char *index_file);
- extern char *get_index_file(void);
- extern char *get_graft_file(void);
- extern int set_git_dir(const char *path);
-diff --git a/environment.c b/environment.c
-index ca72464..7a53799 100644
---- a/environment.c
-+++ b/environment.c
-@@ -292,6 +292,16 @@ int odb_pack_keep(char *name, size_t namesz, const unsigned char *sha1)
- 	return open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
+diff --git a/apply.c b/apply.c
+index ababc9a..7bf12a7 100644
+--- a/apply.c
++++ b/apply.c
+@@ -27,7 +27,7 @@ static void git_apply_config(void)
+ 	git_config(git_default_config, NULL);
  }
  
-+/*
-+ * Temporarily change the index file.
-+ * Please save the current index file using get_index_file() before changing
-+ * the index file. And when finished, reset it to the saved value.
-+ */
-+void set_index_file(char *index_file)
-+{
-+	git_index_file = index_file;
-+}
-+
- char *get_index_file(void)
+-int parse_whitespace_option(struct apply_state *state, const char *option)
++static int parse_whitespace_option(struct apply_state *state, const char *option)
  {
- 	if (!git_index_file)
+ 	if (!option) {
+ 		state->ws_error_action = warn_on_ws_error;
+@@ -57,8 +57,8 @@ int parse_whitespace_option(struct apply_state *state, const char *option)
+ 	return error(_("unrecognized whitespace option '%s'"), option);
+ }
+ 
+-int parse_ignorewhitespace_option(struct apply_state *state,
+-				  const char *option)
++static int parse_ignorewhitespace_option(struct apply_state *state,
++						 const char *option)
+ {
+ 	if (!option || !strcmp(option, "no") ||
+ 	    !strcmp(option, "false") || !strcmp(option, "never") ||
+diff --git a/apply.h b/apply.h
+index 5ec022c..df44b51 100644
+--- a/apply.h
++++ b/apply.h
+@@ -97,11 +97,6 @@ struct apply_state {
+ 	int applied_after_fixing_ws;
+ };
+ 
+-extern int parse_whitespace_option(struct apply_state *state,
+-				   const char *option);
+-extern int parse_ignorewhitespace_option(struct apply_state *state,
+-					 const char *option);
+-
+ extern int apply_option_parse_exclude(const struct option *opt,
+ 				      const char *arg, int unset);
+ extern int apply_option_parse_include(const struct option *opt,
 -- 
 2.9.0.172.gfb57a78
 
