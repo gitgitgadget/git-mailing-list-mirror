@@ -2,153 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AFEB2018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 20:13:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3B1B2018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 20:34:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751827AbcF0UNL (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 16:13:11 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:35356 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751638AbcF0UNK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 16:13:10 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FBA12018A;
-	Mon, 27 Jun 2016 20:13:09 +0000 (UTC)
-Date:	Mon, 27 Jun 2016 20:13:11 +0000
-From:	Eric Wong <e@80x24.org>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 1/2] xread: retry after poll on EAGAIN/EWOULDBLOCK
-Message-ID: <20160627201311.GA7039@dcvr.yhbt.net>
-References: <20160626232112.721-1-e@80x24.org>
- <20160626232112.721-2-e@80x24.org>
- <20160626234251.GA21668@sigill.intra.peff.net>
- <xmqqoa6mdbu3.fsf@gitster.mtv.corp.google.com>
- <20160627143648.GA2618@sigill.intra.peff.net>
- <CAGZ79kZ94PaOfq3GimWiHULbTE7ihMzL9S=Y+npQ4F5gGwFrsA@mail.gmail.com>
+	id S1751908AbcF0Uee (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 16:34:34 -0400
+Received: from elnino.cryptocrack.de ([46.165.227.75]:1919 "EHLO
+	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751770AbcF0Uee convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2016 16:34:34 -0400
+Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id 8b86f769
+	TLS version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO;
+	Mon, 27 Jun 2016 22:34:28 +0200 (CEST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZ94PaOfq3GimWiHULbTE7ihMzL9S=Y+npQ4F5gGwFrsA@mail.gmail.com>
+Content-Transfer-Encoding: 8BIT
+To:	Junio C Hamano <gitster@pobox.com>, "Jeff King" <peff@peff.net>
+From:	Lukas Fleischer <lfleischer@lfos.de>
+In-Reply-To: <xmqqbn2mbjxm.fsf@gitster.mtv.corp.google.com>
+Cc:	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Nicolas Pitre" <nico@fluxnic.net>, "Johannes Sixt" <j6t@kdbg.org>
+References: <20160613195224.13398-1-lfleischer@lfos.de>
+ <20160614210038.31465-1-lfleischer@lfos.de>
+ <20160624153121.GA2494@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1606241942220.12947@virtualbox>
+ <20160624181414.GA25768@sigill.intra.peff.net>
+ <CAPc5daWxWpMe4ob4zu0tMK4uWpLPDxC7GS8KTb4+3g5=ztv71A@mail.gmail.com>
+ <146702508453.24123.590646528169139972@s-8d3a37fa.on.site.uni-stuttgart.de>
+ <xmqqr3bibpap.fsf@gitster.mtv.corp.google.com>
+ <20160627161616.GA4430@sigill.intra.peff.net>
+ <xmqqbn2mbjxm.fsf@gitster.mtv.corp.google.com>
+Message-ID: <146705966655.11886.6547584744094511110@typhoon>
+User-Agent: alot/0.3.7
+Subject: Re: [PATCH v2] Refactor recv_sideband()
+Date:	Mon, 27 Jun 2016 22:34:27 +0200
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> wrote:
-> On Mon, Jun 27, 2016 at 7:36 AM, Jeff King <peff@peff.net> wrote:
-> > It's also true that our error rate will never be 0%. So some bugs will
-> > always slip through, some review comments will be forgotten, etc. Eric
-> > did find and fix the bug just now, so the "many eyes" theory did work
-> > here eventually.
+On Mon, 27 Jun 2016 at 19:50:13, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 > 
-> Eric, thanks for catching and fixing the bug!
+> > On Mon, Jun 27, 2016 at 08:54:22AM -0700, Junio C Hamano wrote:
+> >
+> >> It's just you used xwrite() there that introduced a different issue.
+> >> Wouldn't replacing it with fwrite(stderr) without changing anything
+> >> else solve that?
 
-No problem :)  I only noticed it because I was scanning emails
-randomly and Duy and David's index-helper thread turned up.
+I do not see how using fwrite() buys us anything. Neither fwrite() nor
+fputs() nor fprintf() guarantee to call write() only once. Each of these
+three functions is buffered when printing to stdout and unbuffered when
+printing to stderr. I do not think there is any serious implementation
+of any of those functions that performs segmented write() calls (but I
+might be mistaken). According to POSIX, write() can take up to SSIZE_MAX
+bytes which is guaranteed to be at least 32767 but is actually much
+larger on most systems (2^32 - 1 here). It is very unlikely that this
+limit will ever be reached by a single line of a diagnostic error
+message.
 
-> Quite a while ago, when I started doing code reviews professionally, I wondered
-> if the code review procedure can be semi-automated, as automation helps keeping
-> the error rate low. By that I mean having a check list which I can
-> check off each point
+Frankly, there is a small benefit to fwrite() because we already know
+the string length from the strbuf and most fputs() implementations
+probably do something equivalent to
 
-Maybe a test case or even a small unit test would've helped.
-I didn't notice the problem in xread until:
+    fwrite(s, 1, strlen(s), stream);
 
-1) I copied the code into xwrite
-2) s/POLLIN/POLLOUT/;
-3) forced EAGAIN using a patched, home-baked HTTP server
+I can switch to using fwrite() instead of fputs() in v4 if you prefer
+that.
 
-The biggish comment before the poll() obscured the missing
-"continue" for me.  I read xread() before and did not notice
-the missing "continue".
+> >
+> > I am having trouble actually seeing how the ANSI-emulation code gets
+> > triggered, but the comment in color.h implies that it is only printf,
+> > fprintf, and fputs that have the desired effect. So fwrite() may not be
+> > sufficient, and we may need fprintf("%.*s", len, buf) or something.
+> 
+> I have no idea how, either X-<.  But you're probably right about the
+> magic being limited to the printf family of functions---I do recall
+> hearing something like that in the past.
 
-Maybe the following optional patch on top of this series
-improves readability:
-
-----------8<--------
-Subject: [PATCH 3/2] hoist out io_wait function for xread and xwrite
-
-At least for me, this improves the readability of xread and
-xwrite; hopefully allowing missing "continue" statements to
-be spotted more easily.
-
-Signed-off-by: Eric Wong <e@80x24.org>
----
- wrapper.c | 40 ++++++++++++++++------------------------
- 1 file changed, 16 insertions(+), 24 deletions(-)
-
-diff --git a/wrapper.c b/wrapper.c
-index d973f86..04bb952 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -227,6 +227,20 @@ int xopen(const char *path, int oflag, ...)
- 	}
- }
- 
-+static void io_wait(int fd, short poll_events)
-+{
-+	struct pollfd pfd;
-+
-+	pfd.fd = fd;
-+	pfd.events = poll_events;
-+
-+	/*
-+	 * no need to check for errors, here;
-+	 * a subsequent read/write will detect unrecoverable errors
-+	 */
-+	poll(&pfd, 1, -1);
-+}
-+
- /*
-  * xread() is the same a read(), but it automatically restarts read()
-  * operations with a recoverable error (EAGAIN and EINTR). xread()
-@@ -243,18 +257,7 @@ ssize_t xread(int fd, void *buf, size_t len)
- 			if (errno == EINTR)
- 				continue;
- 			if (errno == EAGAIN || errno == EWOULDBLOCK) {
--				struct pollfd pfd;
--				pfd.events = POLLIN;
--				pfd.fd = fd;
--				/*
--				 * it is OK if this poll() failed; we
--				 * want to leave this infinite loop
--				 * only when read() returns with
--				 * success, or an expected failure,
--				 * which would be checked by the next
--				 * call to read(2).
--				 */
--				poll(&pfd, 1, -1);
-+				io_wait(fd, POLLIN);
- 				continue;
- 			}
- 		}
-@@ -278,18 +281,7 @@ ssize_t xwrite(int fd, const void *buf, size_t len)
- 			if (errno == EINTR)
- 				continue;
- 			if (errno == EAGAIN || errno == EWOULDBLOCK) {
--				struct pollfd pfd;
--				pfd.events = POLLOUT;
--				pfd.fd = fd;
--				/*
--				 * it is OK if this poll() failed; we
--				 * want to leave this infinite loop
--				 * only when write() returns with
--				 * success, or an expected failure,
--				 * which would be checked by the next
--				 * call to write(2).
--				 */
--				poll(&pfd, 1, -1);
-+				io_wait(fd, POLLOUT);
- 				continue;
- 			}
- 		}
--- 
-EW
-
+I do not know anything about the emulation code as well but from a
+cursory read of winansi_init(), it looks like there is some magic that
+hooks into the stdout and stderr streams, redirects them to a named
+pipe, then replaces ANSI control codes and actually prints to the
+console from console_thread(). So it should work with any of the
+stream-based functions but not with write(), puts(), etc.
