@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A6C72018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 18:25:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 869B92018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 18:25:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752057AbcF0SZe (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 14:25:34 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34244 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752039AbcF0SZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:25:29 -0400
-Received: by mail-wm0-f67.google.com with SMTP id 187so26963962wmz.1
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:29 -0700 (PDT)
+	id S1752053AbcF0SZc (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:25:32 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33437 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752018AbcF0SZb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 14:25:31 -0400
+Received: by mail-wm0-f68.google.com with SMTP id r201so26996995wme.0
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:30 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=srQ432YR2Csjmu9A83rjXp1V6JhnQ96XKrRzzGfC6RU=;
-        b=BTkP9YlIAf7J8zJR+3m5XGxPIHfZZSMMBZfGq8yAoF+lXJ2I+b3ViH2SUFAfstxj0X
-         GHTjEUylfwRQDTXfSgGj1CvjZ2TIyWyt/cfWKN3kujUdSCDkqjvO1rtYQJ8zeOD/T2p+
-         eaugr+OdVroxxQyG529kFWwbSa9PnPcZ6QRYW008aIBoD6+m/0U8hN/p6Afe+iYevh12
-         VzjvK71WbTZtoPBI6YkYSiEN9JhZdnDa47prJR8fnI9REEJSx3rv3fAirNlcDIrpKyEj
-         erP6i6WFm1V6HaSIZxNMhUj3dBod5rv1o4jwpBYWXzuV4Vc1pFeaeC7wXgZw3FK5AH8v
-         u/Kg==
+        bh=do0YY7eYgJbLZu2vfa075H6dUZP6kahbZRTErEGjRlI=;
+        b=WRcIAaaBUtZph4H2JFID4Wkis0ZFYdutWzIwC80ADbLQpumvh31M2+o/MDvFkjFD2F
+         LB+bUwl/LkVZQ28OsZl0viVmo8sfHpdzJ51qg1Ckf2QyUvd+UEIjEieb4RJzS53RAdRy
+         V67hhu+Aaur7JuWX2u+hQhPy/4R5ykH3TFYnmRKCGIVv5eHUzrXc0Dv7FBqGMy65czMJ
+         7OAsKFZ1WPparGZZv4XYCvO7vGVQQcpEBfCQDJVKRmSEsCItFQUPBMSGhgdQGz0mqSsu
+         27vuIs/emT7NB8EMcGp2fyBYdBZ8ZSk+vREguoYBvDGzHTO9R//U6lamaUkU6uW9j64b
+         YFFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=srQ432YR2Csjmu9A83rjXp1V6JhnQ96XKrRzzGfC6RU=;
-        b=P4kvrinm012Fh+10oDonbYFiUfZ3Sy9amzOVocZyjTZS1Z1tushiaVEtj54lpeyYr3
-         mS++qwuOVWOLrpFRcF4Pj/pqV+yTYuXtukdbrZxWUVKBHW03tdgTzZYe1gUuccdX/5HO
-         7blgCd+4yYO0OTaJLmjOdtRLYZ0E2PkxMfJCs47zScR1q6+KABv0e8ngtjd29EXeDfex
-         cOdTSqUAI/apS75O+pGB7lt49u9Cyqh3IKWgcsbC2nlwcjkSyJf8pfGLtwBedvF3Au1Y
-         53JuT5PUOnBHQZOPaQnpOzMGQh8kiZ+Yj1KLHBzS9Iz81qJ52fBbfrD9geJ0jjyQWuSo
-         imQg==
-X-Gm-Message-State: ALyK8tJmqoxStEbhBV9YMqc9GIhpvvhZihn+TEpakKzC5PRKpWGF2uqh113rG+G2tSGzZQ==
-X-Received: by 10.28.209.13 with SMTP id i13mr12734857wmg.93.1467051928296;
-        Mon, 27 Jun 2016 11:25:28 -0700 (PDT)
+        bh=do0YY7eYgJbLZu2vfa075H6dUZP6kahbZRTErEGjRlI=;
+        b=PPQN0sthX98fbKLvc7T0Z4vJLoAjyfI044Wcde6TXIjyxNc7hZWhK6aaNWPjsTO1wv
+         Y8LKyOnwluc+a2+Gzo0qdJQKVCr5N69U1fN9Qr4lBajXaVFQFEy7+/GPQ6l9J9pSU4Cn
+         PRF8xILGR5t/dSauCiOy3NCCIQrfix8LEuNIJiHt+TozTPT0SaJgeyiteOxK0dQGOLtz
+         640Wkuh42++GS+CO1927We4lX32j4uZesFIXgYERBxPLAsMnWLPuozr48JDWkRogv4Zo
+         qKJzyNNL7qyZqld0Aiz+U+QNynkbvVFeG8+4sebZXrocf+QKpvr18AFSAd1w4IR9CQ24
+         JgHw==
+X-Gm-Message-State: ALyK8tLBNeFCKP0/mJViGawoYk9raBLHlVt0Os3cXA4iVjM0lVumaQr/q3nNkS8gMXWuzw==
+X-Received: by 10.28.215.139 with SMTP id o133mr11752480wmg.74.1467051929787;
+        Mon, 27 Jun 2016 11:25:29 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.27
+        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 11:25:27 -0700 (PDT)
+        Mon, 27 Jun 2016 11:25:28 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 28/41] builtin/apply: rename option parsing functions
-Date:	Mon, 27 Jun 2016 20:24:16 +0200
-Message-Id: <20160627182429.31550-29-chriscool@tuxfamily.org>
+Subject: [PATCH v8 29/41] apply: rename and move opt constants to apply.h
+Date:	Mon, 27 Jun 2016 20:24:17 +0200
+Message-Id: <20160627182429.31550-30-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.172.g48843e9
 In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
 References: <20160627182429.31550-1-chriscool@tuxfamily.org>
@@ -70,129 +70,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-As these functions are going to be part of the libified
-apply api, let's give them a name that is more specific
-to the apply api.
+The constants for the "inaccurate-eof" and the "recount" options will
+be used in both "apply.c" and "builtin/apply.c", so they need to go
+into "apply.h", and therefore they need a name that is more specific
+to the API they belong to.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ apply.h         |  3 +++
+ builtin/apply.c | 11 ++++-------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
+diff --git a/apply.h b/apply.h
+index 53f09b5..ca1dcee 100644
+--- a/apply.h
++++ b/apply.h
+@@ -108,4 +108,7 @@ extern int init_apply_state(struct apply_state *state,
+ extern void clear_apply_state(struct apply_state *state);
+ extern int check_apply_state(struct apply_state *state, int force_apply);
+ 
++#define APPLY_OPT_INACCURATE_EOF	(1<<0)
++#define APPLY_OPT_RECOUNT		(1<<1)
++
+ #endif
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 5c67713..c08ecde 100644
+index c08ecde..467b31f 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -4585,16 +4585,16 @@ end:
- 	return res;
- }
+@@ -4460,9 +4460,6 @@ static int write_out_results(struct apply_state *state, struct patch *list)
  
--static int option_parse_exclude(const struct option *opt,
--				const char *arg, int unset)
-+static int apply_option_parse_exclude(const struct option *opt,
-+				      const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	add_name_limit(state, arg, 1);
- 	return 0;
- }
+ static struct lock_file lock_file;
  
--static int option_parse_include(const struct option *opt,
--				const char *arg, int unset)
-+static int apply_option_parse_include(const struct option *opt,
-+				      const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	add_name_limit(state, arg, 0);
-@@ -4602,9 +4602,9 @@ static int option_parse_include(const struct option *opt,
- 	return 0;
- }
+-#define INACCURATE_EOF	(1<<0)
+-#define RECOUNT		(1<<1)
+-
+ /*
+  * Try to apply a patch.
+  *
+@@ -4492,8 +4489,8 @@ static int apply_patch(struct apply_state *state,
+ 		int nr;
  
--static int option_parse_p(const struct option *opt,
--			  const char *arg,
--			  int unset)
-+static int apply_option_parse_p(const struct option *opt,
-+				const char *arg,
-+				int unset)
- {
- 	struct apply_state *state = opt->value;
- 	state->p_value = atoi(arg);
-@@ -4612,8 +4612,8 @@ static int option_parse_p(const struct option *opt,
- 	return 0;
- }
- 
--static int option_parse_space_change(const struct option *opt,
--				     const char *arg, int unset)
-+static int apply_option_parse_space_change(const struct option *opt,
-+					   const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	if (unset)
-@@ -4623,8 +4623,8 @@ static int option_parse_space_change(const struct option *opt,
- 	return 0;
- }
- 
--static int option_parse_whitespace(const struct option *opt,
--				   const char *arg, int unset)
-+static int apply_option_parse_whitespace(const struct option *opt,
-+					 const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	state->whitespace_option = arg;
-@@ -4633,8 +4633,8 @@ static int option_parse_whitespace(const struct option *opt,
- 	return 0;
- }
- 
--static int option_parse_directory(const struct option *opt,
--				  const char *arg, int unset)
-+static int apply_option_parse_directory(const struct option *opt,
-+					const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	strbuf_reset(&state->root);
-@@ -4752,13 +4752,13 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
- 	struct option builtin_apply_options[] = {
- 		{ OPTION_CALLBACK, 0, "exclude", &state, N_("path"),
- 			N_("don't apply changes matching the given path"),
--			0, option_parse_exclude },
-+			0, apply_option_parse_exclude },
- 		{ OPTION_CALLBACK, 0, "include", &state, N_("path"),
- 			N_("apply changes matching the given path"),
--			0, option_parse_include },
-+			0, apply_option_parse_include },
- 		{ OPTION_CALLBACK, 'p', NULL, &state, N_("num"),
- 			N_("remove <num> leading slashes from traditional diff paths"),
--			0, option_parse_p },
-+			0, apply_option_parse_p },
- 		OPT_BOOL(0, "no-add", &state.no_add,
- 			N_("ignore additions made by the patch")),
- 		OPT_BOOL(0, "stat", &state.diffstat,
-@@ -4790,13 +4790,13 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
- 				N_("ensure at least <n> lines of context match")),
- 		{ OPTION_CALLBACK, 0, "whitespace", &state, N_("action"),
- 			N_("detect new or modified lines that have whitespace errors"),
--			0, option_parse_whitespace },
-+			0, apply_option_parse_whitespace },
- 		{ OPTION_CALLBACK, 0, "ignore-space-change", &state, NULL,
- 			N_("ignore changes in whitespace when finding context"),
--			PARSE_OPT_NOARG, option_parse_space_change },
-+			PARSE_OPT_NOARG, apply_option_parse_space_change },
- 		{ OPTION_CALLBACK, 0, "ignore-whitespace", &state, NULL,
- 			N_("ignore changes in whitespace when finding context"),
--			PARSE_OPT_NOARG, option_parse_space_change },
-+			PARSE_OPT_NOARG, apply_option_parse_space_change },
- 		OPT_BOOL('R', "reverse", &state.apply_in_reverse,
- 			N_("apply the patch in reverse")),
- 		OPT_BOOL(0, "unidiff-zero", &state.unidiff_zero,
-@@ -4814,7 +4814,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
- 			RECOUNT),
+ 		patch = xcalloc(1, sizeof(*patch));
+-		patch->inaccurate_eof = !!(options & INACCURATE_EOF);
+-		patch->recount =  !!(options & RECOUNT);
++		patch->inaccurate_eof = !!(options & APPLY_OPT_INACCURATE_EOF);
++		patch->recount =  !!(options & APPLY_OPT_RECOUNT);
+ 		nr = parse_chunk(state, buf.buf + offset, buf.len - offset, patch);
+ 		if (nr < 0) {
+ 			free_patch(patch);
+@@ -4808,10 +4805,10 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 		OPT__VERBOSE(&state.apply_verbosely, N_("be verbose")),
+ 		OPT_BIT(0, "inaccurate-eof", &options,
+ 			N_("tolerate incorrectly detected missing new-line at the end of file"),
+-			INACCURATE_EOF),
++			APPLY_OPT_INACCURATE_EOF),
+ 		OPT_BIT(0, "recount", &options,
+ 			N_("do not trust the line counts in the hunk headers"),
+-			RECOUNT),
++			APPLY_OPT_RECOUNT),
  		{ OPTION_CALLBACK, 0, "directory", &state, N_("root"),
  			N_("prepend <root> to all filenames"),
--			0, option_parse_directory },
-+			0, apply_option_parse_directory },
- 		OPT_END()
- 	};
- 
+ 			0, apply_option_parse_directory },
 -- 
 2.9.0.172.gfb57a78
 
