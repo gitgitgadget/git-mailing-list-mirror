@@ -2,136 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URI_TRY_3LD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 010B52018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 19:27:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7475B2018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 19:33:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752291AbcF0T1j (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 15:27:39 -0400
-Received: from mail-lf0-f41.google.com ([209.85.215.41]:35856 "EHLO
-	mail-lf0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752633AbcF0T1h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 15:27:37 -0400
-Received: by mail-lf0-f41.google.com with SMTP id q132so162985192lfe.3
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 12:27:36 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=atX5k7XRXmW6hhcMn5ijmjAWeWIXba6C+BiZ37q9g08=;
-        b=JsANGIwdhO2HvsipdhU6fJJ9obIN6g1nmfuD9Fz0D7WdR3t8oiWuxPd/hOyqO9V7Xk
-         d3eH0X14757Sej12cdViyHlOfMrVhcYLlMNCWSEM2h5E8M7gOXJpuB1uCyQBCydvaNVp
-         0ErOnTHBS1TO2MFxmUgFg1iQ3BfQcLbXCHSt9gaTAxVKiOhyYoaZMMG4uq3kIDxgXbPH
-         dFj87oTPWrj9c9//2ieY2oGTS7I7BJyrMNF6weUKGR8armB9GAHtAbhwocw9yOo/aPRO
-         S5DWhJkXILcnNl0WDDG0rVRWS90JQ4t/FKTLf8usjJQMMnuwliz2VsOADDJ/ca0sK01H
-         U7QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=atX5k7XRXmW6hhcMn5ijmjAWeWIXba6C+BiZ37q9g08=;
-        b=cYeccE7/wWMLO/H8B7CEFdkwYanbkfy9QolG22OjyTvTO/WlROCyvT8h2HffcZ7ZjC
-         CYLckkSRxT4GjyMzyO3yh9kkyZsPHZKVvndrnTVVl8kaLz3dsyCkIS+WIDnjXgWCMflb
-         fWMpUtAGr+Na5YM9FyoZHhgOYWUMkv+6vVe6cpViZvmZboBCs4ezN81ivTJj3zmrWfQl
-         835/V2u2dTO0JzBryaD2UcgeKaegKIVXV2XHaApc0bYFt3SrlzwvrEOWo13Sc+5KvYhL
-         Doak9RmEHjfilpcvJmV/H0lyFGs6yDUCEyjZV22rhsAPuTznelBqht96nqamHUqQ8A2R
-         /YtA==
-X-Gm-Message-State: ALyK8tIgLu+FH+R/TaFm/NXmOUj5IVjsie1bqiIUFPfbScgOw6WtaTFFVTUdzTCYMA+qYA==
-X-Received: by 10.25.91.76 with SMTP id p73mr720171lfb.181.1467055654865;
-        Mon, 27 Jun 2016 12:27:34 -0700 (PDT)
-Received: from duynguyen (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id k18sm3557546lfg.47.2016.06.27.12.27.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 27 Jun 2016 12:27:34 -0700 (PDT)
-Date:	Mon, 27 Jun 2016 21:27:32 +0200
-From:	Duy Nguyen <pclouds@gmail.com>
-To:	Jeff King <peff@peff.net>
-Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	marcnarc@xiplink.com
-Subject: Re: [PATCH v4 0/5] Better ref summary alignment in "git fetch"
-Message-ID: <20160627192732.GA5774@duynguyen>
-References: <20160605031141.23513-1-pclouds@gmail.com>
- <20160626055810.26960-1-pclouds@gmail.com>
- <20160627184354.GA9594@sigill.intra.peff.net>
+	id S1751981AbcF0Td0 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 15:33:26 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33629 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751639AbcF0TdZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 15:33:25 -0400
+Received: (qmail 4197 invoked by uid 102); 27 Jun 2016 19:33:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 15:33:25 -0400
+Received: (qmail 12626 invoked by uid 107); 27 Jun 2016 19:33:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Jun 2016 15:33:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Jun 2016 15:33:23 -0400
+Date:	Mon, 27 Jun 2016 15:33:23 -0400
+From:	Jeff King <peff@peff.net>
+To:	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+Subject: Re: [PATCH] connect: read $GIT_SSH_COMMAND from config file
+Message-ID: <20160627193322.GB10877@sigill.intra.peff.net>
+References: <20160626111635.6809-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20160627184354.GA9594@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20160626111635.6809-1-pclouds@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 27, 2016 at 02:43:54PM -0400, Jeff King wrote:
-> On Sun, Jun 26, 2016 at 07:58:05AM +0200, Nguyễn Thái Ngọc Duy wrote:
+On Sun, Jun 26, 2016 at 01:16:35PM +0200, Nguyễn Thái Ngọc Duy wrote:
+
+> Similar to $GIT_ASKPASS or $GIT_PROXY_COMMAND, we also read from
+> config file first then fall back to $GIT_SSH_COMMAND.
 > 
-> > v4 is a cleaned up version of v3. Tests are added. Typos in
-> > git-fetch.txt are corrected. The "{ -> origin/}master" format is
-> > dropped.
+> This is useful for selecting different private keys targetting the
+> same host (e.g. github)
 > 
-> Thanks for continuing to look into this.
-> 
-> I tried it on my most-horrible example case, and the results were...just
-> OK. Because the variable-length part of each line comes first, the
-> alignment code means that the "origin/$" bit of every line gets bumped
-> out. And if you have a single large branch name, then everybody gets
-> bumped out very far, even to the point of wrapping. E.g., I get
-> something like (with fetch.output=compact, obviously):
-> 
->   From ...
->    * [new branch]      branch1                      -> origin/$
->    * [new branch]      branch2                      -> origin/$
->    * [new branch]      some-really-long-branch-name -> origin/$
->    + 1234abc..5678def  branch3                      -> origin/$ (forced
->     update)
->    * [new branch]      branch4                      -> origin/$
->
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  core.gitProxy can also be used for my purpose (I need pushing, not
+>  fetching though; the document says for fetching but I guess
+>  core.gitProxy always works for pushing), but then the key file
+>  is hidden behind the script. And writing a script for this seems a
+>  bit overkill.
 
-Yeah, '$' lowers the chances of wrapping but in corner cases, it'll be
-just as bad.
+This patch makes sense to me. The way I have done this in the past is to
+use ssh's config. So I set my remote in one repo to "foo:repo1.git" and
+another to "bar:repo2.git", and then:
 
-Junio's suggestion is one way to go. Another is Marc's idea of
-breaking lines, so we could in theory have something like this
+  Host foo
+    Hostname actual-host.example.com
+    SomeOption ...
 
-   From ...
-    * [new branch]      branch1    -> origin/$
-    * [new branch]      branch2    -> origin/$
-    * [new branch]      some-really-long-branch-name
-                           -> origin/$
-    + 1234abc..5678def  branch3    -> origin/$ (forced update)
-    * [new branch]      branch4    -> origin/$
+  Host bar
+    Hostname actual-host.example.com
+    SomeOption ...
 
-Or, for a very long branch name, we could put replace a big chunk of
-it with an ellipsis. If it's long enough, I guess you can still figure
-the branch name with a big gap in the middle (or left or right).
+(or more likely, most repos are fine with the defaults, and you only
+need one fake host block for the oddball repo).
 
-   From ...
-    * [new branch]      branch1             -> origin/$
-    * [new branch]      branch2             -> origin/$
-    * [new branch]      some-re...anch-name -> origin/$
-    + 1234abc..5678def  branch3             -> origin/$ (forced update)
-    * [new branch]      branch4             -> origin/$
+But I think your solution is a more direct and less confusing way of
+accomplishing the same thing.
 
-And with that we get dangerously close to full customization using
-pretty placeholders :)
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 58673cf..3bf070c 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -443,6 +443,13 @@ specify that no proxy be used for a given domain pattern.
+>  This is useful for excluding servers inside a firewall from
+>  proxy use, while defaulting to a common proxy for external domains.
+>  
+> +core.sshCommand::
+> +	If this variable is set then 'git fetch' and 'git push' will
 
-> One of the nice things about Junio's "{ -> origin/}" suggestion is that
-> it puts the variable-length part at the end, so there's no extra
-> alignment required. And you'd get something like:
-> 
->   From ...
->    * [new branch]      { -> origin/}branch1
->    * [new branch]      { -> origin/}branch2
->    * [new branch]      { -> origin/}some-really-long-branch-name
->    + 1234abc..5678def  { -> origin/}branch3 (forced update)
->    * [new branch]      { -> origin/}branch4
-> 
-> -Peff
+Probably s/set/set,/.
+
+> +	use the specified command instead of 'ssh' when they need to
+> +	connect to a remote system. The command is in the same form as
+> +	'GIT_SSH_COMMAND' environment variable and is overriden when
+> +	the environment variable is set.
+
+Probably s/'GIT_SSH_COMMAND'/the &/.
+
+Are we using backticks for typesetting environment variables now? That
+has always been my preference, but I haven't kept up with the typography
+patches that have been flying lately. +cc Matthieu.
+
+(Similar question for commands like 'git fetch').
+
+> diff --git a/connect.c b/connect.c
+> index c53f3f1..722dc3f 100644
+> --- a/connect.c
+> +++ b/connect.c
+
+The code itself looks obviously correct. :)
+
+-Peff
