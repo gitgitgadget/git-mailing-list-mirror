@@ -2,330 +2,496 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEC1C2018B
-	for <e@80x24.org>; Mon, 27 Jun 2016 18:27:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 853872018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 18:33:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752169AbcF0S05 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 14:26:57 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35291 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751875AbcF0SZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:25:06 -0400
-Received: by mail-wm0-f66.google.com with SMTP id a66so26928732wme.2
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:25:05 -0700 (PDT)
+	id S1751911AbcF0Sdk (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:33:40 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34951 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751639AbcF0Sdj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 14:33:39 -0400
+Received: by mail-wm0-f67.google.com with SMTP id a66so26996310wme.2
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:33:38 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Qhvva8p0RxreZqQ5fo0ktAdMkNExJfqmgGXL7EQ5Jo8=;
-        b=PCaO5Ds81ZhlbcIsx/Ail0/dUwMGzbt3eMxyFXYW0GaQ8xO0ZDIfCkT0tkwELwkW0E
-         G+okaA+13Z5Xvszs/E8RiGgxtlDsFu11Wg/snUrdKdmSNnYDcF3RiJm0kfsSvJ2/8E4Y
-         vmBmljxQaq/+hN4Ghumf6ZniXPD3OO8rHbcivH82lkrEKB4y0oSHJ1z6SlYEqx/YB/K6
-         L1beCLDKPZbLi9JcJb7VgqncTj/SBMzKMfe3j9zyp89ZcrydE6u/lMMTI7ZW7H5hF7PT
-         6d8vWbaBy8gtHGLGIb+2WT0ERTBdSQ4VRefP2OvkSqwiqLgHZl8/nUTuSkoPXibFYS2I
-         V17A==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=z99Lu0SMDeCqQlPsr1PQ/YvLnFl1PN9gU1bWsYP22eU=;
+        b=TaglfljKUQ20f2ocPe1HS35RL8FpTtOnl1stbnWtkJ7NI5HJcdhAVkABUb60qc5fgl
+         2fVP8pmzoVgS+EtI/EAH5rPu61QrL0GQYU8g9MqnU1JPrW6Nab28mG02R9a6u5ZQDvDf
+         4LkqzQ082Cyi+MRVK+6THxd3o93wQlLZjHgcuo81HjRR0heEdcHvNd2m0MVCX/NcvpKG
+         TkGNfwjXaqCCeeKQfmvdkzdkKAvMLHr5GZijc23U7u4IkaCDoIbh1v1+Zhrdr0NGkifc
+         drhGYoIP55gMerxc+0zZiHU5YWLV0muf+qknBHfD0gLkJ5B1Hg+e7O5FTmxGDPJMeIF4
+         r02g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Qhvva8p0RxreZqQ5fo0ktAdMkNExJfqmgGXL7EQ5Jo8=;
-        b=QKetk0sYctkgQ7uT+xvQ0bm5Sik/FkZvTkFaiv7UqMbQPdW4KgunXkslsAvuaIy2gZ
-         BritmR08L1Jvo0eYV4p1eH/AABxR7QfxV+99Z13ULYrCHQ1W810D8qCRV8JSwdR86Ze0
-         drY6sztXfAvKuO5g1zGTQ1GupS2r1nGjrBGBzBqjlWI5tGqOwuudflgsuBQOYxR/9u1d
-         /3tUVmPBGg9efSrY55fxNYYl6o5TM4/T1XP4DmhyhNzdXK9GWrfyVwblgu+xiFKYtPbb
-         Vr82lAcs68JliFlcsUIZjl5bftw9oTB0p6q0JHyaaDXLxCAFlUtNcETb02PFrULUswuI
-         a+wg==
-X-Gm-Message-State: ALyK8tLPS9ldEifipfn4aeoHREGArPDOGlibjwavwhw7Zi2RqzbRRDcFWOoBmGk10MW1oA==
-X-Received: by 10.28.166.150 with SMTP id p144mr11442079wme.57.1467051904753;
-        Mon, 27 Jun 2016 11:25:04 -0700 (PDT)
-Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.25.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 11:25:04 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=z99Lu0SMDeCqQlPsr1PQ/YvLnFl1PN9gU1bWsYP22eU=;
+        b=YgNCifTO22WQpWdmzTEfATbAtIH338mjSHzzm/Y5yxG6lDO7So2JTPREKTMocrcyas
+         Q41E1EM+rk3n12c1k2jxjJuEjhnRMZQ95YOpHd7oq8xUG1uzMVxvwn6EZsQuAmHrT6Ig
+         eLzj/Vay+N+2NeXZv8dsACpzxE6rSabviYx6YKxnK8wxSMJras68vzi3hiRJOPXHffra
+         Ngz7lDwAFydVDKDDgB340hNuwA1SI7kEZq9uflV0vtTOsRjYKUUkU5v0+BDN8wRo9ITX
+         ZTMsAImwS0+yoaxyyIz2GlI+246Df36TCcJV5ENG1YQvGDnLXStazl81AYDhpe2KgXyA
+         iB5A==
+X-Gm-Message-State: ALyK8tKMM6ZSGzp8/4XBhQbxfrAaUYRizSk6MXVIOPYOrQoWTFe4b4K0JKmgYyfXu8STetiGZ5besGDO5VqG2g==
+X-Received: by 10.194.123.166 with SMTP id mb6mr2383206wjb.94.1467052417740;
+ Mon, 27 Jun 2016 11:33:37 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.194.25.197 with HTTP; Mon, 27 Jun 2016 11:33:36 -0700 (PDT)
+In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
+References: <20160627182429.31550-1-chriscool@tuxfamily.org>
 From:	Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
-To:	git@vger.kernel.org
+Date:	Mon, 27 Jun 2016 20:33:36 +0200
+Message-ID: <CAP8UFD2HnDSkEcRaNPiBtuoYz=u9y4YMRc0hB0ZSJGjZxmrnMQ@mail.gmail.com>
+Subject: Re: [PATCH v8 00/41] libify apply and use lib in am, part 2
+To:	git <git@vger.kernel.org>
 Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Stefan Beller <sbeller@google.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Johannes Sixt <j6t@kdbg.org>,
-	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 10/41] builtin/apply: move init_apply_state() to apply.c
-Date:	Mon, 27 Jun 2016 20:23:58 +0200
-Message-Id: <20160627182429.31550-11-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.9.0.172.g48843e9
-In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
-References: <20160627182429.31550-1-chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-To libify `git apply` functionality we must make init_apply_state()
-usable outside "builtin/apply.c".
+On Mon, Jun 27, 2016 at 8:23 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> I will send a diff between this version and the previous one, as a
+> reply to this email.
 
-Let's do that by moving it into a new "apply.c".
+Here is the diff:
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Makefile        |  1 +
- apply.c         | 91 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- apply.h         | 10 +++++++
- builtin/apply.c | 88 -------------------------------------------------------
- 4 files changed, 102 insertions(+), 88 deletions(-)
- create mode 100644 apply.c
-
-diff --git a/Makefile b/Makefile
-index de5a030..51f8583 100644
---- a/Makefile
-+++ b/Makefile
-@@ -680,6 +680,7 @@ LIB_OBJS += abspath.o
- LIB_OBJS += advice.o
- LIB_OBJS += alias.o
- LIB_OBJS += alloc.o
-+LIB_OBJS += apply.o
- LIB_OBJS += archive.o
- LIB_OBJS += archive-tar.o
- LIB_OBJS += archive-zip.o
 diff --git a/apply.c b/apply.c
-new file mode 100644
-index 0000000..1f31bb4
---- /dev/null
+index 777798a..2ac22d3 100644
+--- a/apply.c
 +++ b/apply.c
-@@ -0,0 +1,91 @@
-+#include "cache.h"
-+#include "lockfile.h"
-+#include "apply.h"
-+
-+static void git_apply_config(void)
-+{
-+	git_config_get_string_const("apply.whitespace", &apply_default_whitespace);
-+	git_config_get_string_const("apply.ignorewhitespace", &apply_default_ignorewhitespace);
-+	git_config(git_default_config, NULL);
-+}
-+
-+int parse_whitespace_option(struct apply_state *state, const char *option)
-+{
-+	if (!option) {
-+		state->ws_error_action = warn_on_ws_error;
-+		return 0;
-+	}
-+	if (!strcmp(option, "warn")) {
-+		state->ws_error_action = warn_on_ws_error;
-+		return 0;
-+	}
-+	if (!strcmp(option, "nowarn")) {
-+		state->ws_error_action = nowarn_ws_error;
-+		return 0;
-+	}
-+	if (!strcmp(option, "error")) {
-+		state->ws_error_action = die_on_ws_error;
-+		return 0;
-+	}
-+	if (!strcmp(option, "error-all")) {
-+		state->ws_error_action = die_on_ws_error;
-+		state->squelch_whitespace_errors = 0;
-+		return 0;
-+	}
-+	if (!strcmp(option, "strip") || !strcmp(option, "fix")) {
-+		state->ws_error_action = correct_ws_error;
-+		return 0;
-+	}
-+	return error(_("unrecognized whitespace option '%s'"), option);
-+}
-+
-+int parse_ignorewhitespace_option(struct apply_state *state,
-+				  const char *option)
-+{
-+	if (!option || !strcmp(option, "no") ||
-+	    !strcmp(option, "false") || !strcmp(option, "never") ||
-+	    !strcmp(option, "none")) {
-+		state->ws_ignore_action = ignore_ws_none;
-+		return 0;
-+	}
-+	if (!strcmp(option, "change")) {
-+		state->ws_ignore_action = ignore_ws_change;
-+		return 0;
-+	}
-+	return error(_("unrecognized whitespace ignore option '%s'"), option);
-+}
-+
-+void init_apply_state(struct apply_state *state,
-+		      const char *prefix,
-+		      struct lock_file *lock_file)
-+{
-+	memset(state, 0, sizeof(*state));
-+	state->prefix = prefix;
-+	state->prefix_length = state->prefix ? strlen(state->prefix) : 0;
-+	state->lock_file = lock_file;
-+	state->newfd = -1;
-+	state->apply = 1;
-+	state->line_termination = '\n';
-+	state->p_value = 1;
-+	state->p_context = UINT_MAX;
-+	state->squelch_whitespace_errors = 5;
-+	state->ws_error_action = warn_on_ws_error;
-+	state->ws_ignore_action = ignore_ws_none;
-+	state->linenr = 1;
-+	strbuf_init(&state->root, 0);
-+
-+	git_apply_config();
-+	if (apply_default_whitespace && parse_whitespace_option(state, apply_default_whitespace))
-+		exit(1);
-+	if (apply_default_ignorewhitespace && parse_ignorewhitespace_option(state, apply_default_ignorewhitespace))
-+		exit(1);
-+}
-+
-+void clear_apply_state(struct apply_state *state)
-+{
-+	string_list_clear(&state->limit_by_name, 0);
-+	string_list_clear(&state->symlink_changes, 0);
-+	strbuf_release(&state->root);
-+
-+	/* &state->fn_table is cleared at the end of apply_patch() */
-+}
+@@ -1516,8 +1516,8 @@ static int parse_fragment_header(const char
+*line, int len, struct fragment *fra
+  * Find file diff header
+  *
+  * Returns:
+- *  -1 in case of error
+- *  -2 if no header was found
++ *  -1 if no header was found
++ *  -128 in case of error
+  *   the size of the header in bytes (called "offset") otherwise
+  */
+ static int find_header(struct apply_state *state,
+@@ -1553,8 +1553,9 @@ static int find_header(struct apply_state *state,
+                        struct fragment dummy;
+                        if (parse_fragment_header(line, len, &dummy) < 0)
+                                continue;
+-                       return error(_("patch fragment without header
+at line %d: %.*s"),
++                       error(_("patch fragment without header at line
+%d: %.*s"),
+                                     state->linenr, (int)len-1, line);
++                       return -128;
+                }
+
+                if (size < len + 6)
+@@ -1567,23 +1568,27 @@ static int find_header(struct apply_state *state,
+                if (!memcmp("diff --git ", line, 11)) {
+                        int git_hdr_len = parse_git_header(state,
+line, len, size, patch);
+                        if (git_hdr_len < 0)
+-                               return -1;
++                               return -128;
+                        if (git_hdr_len <= len)
+                                continue;
+                        if (!patch->old_name && !patch->new_name) {
+-                               if (!patch->def_name)
+-                                       return error(Q_("git diff
+header lacks filename information when removing "
++                               if (!patch->def_name) {
++                                       error(Q_("git diff header
+lacks filename information when removing "
+                                                        "%d leading
+pathname component (line %d)",
+                                                        "git diff
+header lacks filename information when removing "
+                                                        "%d leading
+pathname components (line %d)",
+                                                        state->p_value),
+                                                     state->p_value,
+state->linenr);
++                                       return -128;
++                               }
+                                patch->old_name = xstrdup(patch->def_name);
+                                patch->new_name = xstrdup(patch->def_name);
+                        }
+-                       if (!patch->is_delete && !patch->new_name)
+-                               return error("git diff header lacks
+filename information "
++                       if (!patch->is_delete && !patch->new_name) {
++                               error("git diff header lacks filename
+information "
+                                             "(line %d)", state->linenr);
++                               return -128;
++                       }
+                        patch->is_toplevel_relative = 1;
+                        *hdrsize = git_hdr_len;
+                        return offset;
+@@ -1604,12 +1609,12 @@ static int find_header(struct apply_state *state,
+
+                /* Ok, we'll consider it a patch */
+                if (parse_traditional_patch(state, line, line+len, patch))
+-                       return -1;
++                       return -128;
+                *hdrsize = len + nextlen;
+                state->linenr += 2;
+                return offset;
+        }
+-       return -2;
++       return -1;
+ }
+
+ static void record_ws_error(struct apply_state *state,
+@@ -2100,8 +2105,8 @@ static int use_patch(struct apply_state *state,
+struct patch *p)
+  * Create fragments (i.e. patch hunks) and hang them to the given patch.
+  *
+  * Returns:
+- *   -1 on error,
+- *   -2 if no header was found,
++ *   -1 if no header was found or parse_binary() failed,
++ *   -128 on another error,
+  *   the number of bytes consumed otherwise,
+  *     so that the caller can call us again for the next patch.
+  */
+@@ -2128,7 +2133,7 @@ static int parse_chunk(struct apply_state
+*state, char *buffer, unsigned long si
+                                       patch);
+
+        if (patchsize < 0)
+-               return -1;
++               return -128;
+
+        if (!patchsize) {
+                static const char git_binary[] = "GIT binary patch\n";
+@@ -2172,8 +2177,10 @@ static int parse_chunk(struct apply_state
+*state, char *buffer, unsigned long si
+                 * empty to us here.
+                 */
+                if ((state->apply || state->check) &&
+-                   (!patch->is_binary && !metadata_changes(patch)))
+-                       return error(_("patch with only garbage at
+line %d"), state->linenr);
++                   (!patch->is_binary && !metadata_changes(patch))) {
++                       error(_("patch with only garbage at line %d"),
+state->linenr);
++                       return -128;
++               }
+        }
+
+        return offset + hdrsize + patchsize;
+@@ -3781,11 +3788,11 @@ static void prepare_symlink_changes(struct
+apply_state *state, struct patch *pat
+                if ((patch->old_name && S_ISLNK(patch->old_mode)) &&
+                    (patch->is_rename || patch->is_delete))
+                        /* the symlink at patch->old_name is removed */
+-                       register_symlink_changes(state,
+patch->old_name, SYMLINK_GOES_AWAY);
++                       register_symlink_changes(state,
+patch->old_name, APPLY_SYMLINK_GOES_AWAY);
+
+                if (patch->new_name && S_ISLNK(patch->new_mode))
+                        /* the symlink at patch->new_name is created
+or remains */
+-                       register_symlink_changes(state,
+patch->new_name, SYMLINK_IN_RESULT);
++                       register_symlink_changes(state,
+patch->new_name, APPLY_SYMLINK_IN_RESULT);
+        }
+ }
+
+@@ -3800,9 +3807,9 @@ static int path_is_beyond_symlink_1(struct
+apply_state *state, struct strbuf *na
+                        break;
+                name->buf[name->len] = '\0';
+                change = check_symlink_changes(state, name->buf);
+-               if (change & SYMLINK_IN_RESULT)
++               if (change & APPLY_SYMLINK_IN_RESULT)
+                        return 1;
+-               if (change & SYMLINK_GOES_AWAY)
++               if (change & APPLY_SYMLINK_GOES_AWAY)
+                        /*
+                         * This cannot be "return 0", because we may
+                         * see a new one created at a higher level.
+@@ -3944,7 +3951,7 @@ static int check_patch(struct apply_state
+*state, struct patch *patch)
+        }
+
+        if (!state->unsafe_paths && check_unsafe_path(patch))
+-               return -1;
++               return -128;
+
+        /*
+         * An attempt to read from or delete a path that is beyond a
+@@ -3972,10 +3979,14 @@ static int check_patch_list(struct apply_state
+*state, struct patch *patch)
+        prepare_symlink_changes(state, patch);
+        prepare_fn_table(state, patch);
+        while (patch) {
++               int res;
+                if (state->apply_verbosely)
+                        say_patch_name(stderr,
+                                       _("Checking patch %s..."), patch);
+-               err |= check_patch(state, patch);
++               res = check_patch(state, patch);
++               if (res == -128)
++                       return -128;
++               err |= res;
+                patch = patch->next;
+        }
+        return err;
+@@ -4597,9 +4608,10 @@ static int write_out_results(struct apply_state
+*state, struct patch *list)
+  * Try to apply a patch.
+  *
+  * Returns:
+- *  -1 if an error happened
++ *  -128 if a bad error happened (like patch unreadable)
++ *  -1 if patch did not apply and user cannot deal with it
+  *   0 if the patch applied
+- *   1 if the patch did not apply
++ *   1 if the patch did not apply but user might fix it
+  */
+ static int apply_patch(struct apply_state *state,
+                       int fd,
+@@ -4614,7 +4626,7 @@ static int apply_patch(struct apply_state *state,
+
+        state->patch_input_file = filename;
+        if (read_patch_file(&buf, fd))
+-               return -1;
++               return -128;
+        offset = 0;
+        while (offset < buf.len) {
+                struct patch *patch;
+@@ -4626,8 +4638,8 @@ static int apply_patch(struct apply_state *state,
+                nr = parse_chunk(state, buf.buf + offset, buf.len -
+offset, patch);
+                if (nr < 0) {
+                        free_patch(patch);
+-                       if (nr == -1) {
+-                               res = -1;
++                       if (nr == -128) {
++                               res = -128;
+                                goto end;
+                        }
+                        break;
+@@ -4649,7 +4661,8 @@ static int apply_patch(struct apply_state *state,
+        }
+
+        if (!list && !skipped_patch) {
+-               res = error(_("unrecognized input"));
++               error(_("unrecognized input"));
++               res = -128;
+                goto end;
+        }
+
+@@ -4661,21 +4674,27 @@ static int apply_patch(struct apply_state *state,
+                state->newfd = hold_locked_index(state->lock_file, 1);
+
+        if (state->check_index && read_cache() < 0) {
+-               res = error(_("unable to read index file"));
++               error(_("unable to read index file"));
++               res = -128;
+                goto end;
+        }
+
+-       if ((state->check || state->apply) &&
+-           check_patch_list(state, list) < 0 &&
+-           !state->apply_with_reject) {
+-               res = -1;
+-               goto end;
++       if (state->check || state->apply) {
++               int r = check_patch_list(state, list);
++               if (r == -128) {
++                       res = -128;
++                       goto end;
++               }
++               if (r < 0 && !state->apply_with_reject) {
++                       res = -1;
++                       goto end;
++               }
+        }
+
+        if (state->apply) {
+                int write_res = write_out_results(state, list);
+                if (write_res < 0) {
+-                       res = -1;
++                       res = -128;
+                        goto end;
+                }
+                if (write_res > 0) {
+@@ -4687,7 +4706,7 @@ static int apply_patch(struct apply_state *state,
+
+        if (state->fake_ancestor &&
+            build_fake_ancestor(list, state->fake_ancestor)) {
+-               res = -1;
++               res = -128;
+                goto end;
+        }
+
+@@ -4772,7 +4791,6 @@ int apply_all_patches(struct apply_state *state,
+ {
+        int i;
+        int res;
+-       int retval = -1;
+        int errs = 0;
+        int read_stdin = 1;
+
+@@ -4783,7 +4801,7 @@ int apply_all_patches(struct apply_state *state,
+                if (!strcmp(arg, "-")) {
+                        res = apply_patch(state, 0, "<stdin>", options);
+                        if (res < 0)
+-                               goto rollback_end;
++                               goto end;
+                        errs |= res;
+                        read_stdin = 0;
+                        continue;
+@@ -4795,21 +4813,22 @@ int apply_all_patches(struct apply_state *state,
+                fd = open(arg, O_RDONLY);
+                if (fd < 0) {
+                        error(_("can't open patch '%s': %s"), arg,
+strerror(errno));
+-                       goto rollback_end;
++                       res = -128;
++                       goto end;
+                }
+                read_stdin = 0;
+                set_default_whitespace_mode(state);
+                res = apply_patch(state, fd, arg, options);
+                close(fd);
+                if (res < 0)
+-                       goto rollback_end;
++                       goto end;
+                errs |= res;
+        }
+        set_default_whitespace_mode(state);
+        if (read_stdin) {
+                res = apply_patch(state, 0, "<stdin>", options);
+                if (res < 0)
+-                       goto rollback_end;
++                       goto end;
+                errs |= res;
+        }
+
+@@ -4828,7 +4847,8 @@ int apply_all_patches(struct apply_state *state,
+                                 "%d lines add whitespace errors.",
+                                 state->whitespace_error),
+                              state->whitespace_error);
+-                       goto rollback_end;
++                       res = -128;
++                       goto end;
+                }
+                if (state->applied_after_fixing_ws && state->apply)
+                        warning("%d line%s applied after"
+@@ -4846,14 +4866,15 @@ int apply_all_patches(struct apply_state *state,
+                res = write_locked_index(&the_index, state->lock_file,
+COMMIT_LOCK);
+                if (res) {
+                        error(_("Unable to write new index file"));
+-                       goto rollback_end;
++                       res = -128;
++                       goto end;
+                }
+                state->newfd = -1;
+        }
+
+-       retval = !!errs;
++       res = !!errs;
+
+-rollback_end:
++end:
+        if (state->newfd >= 0) {
+                rollback_lock_file(state->lock_file);
+                state->newfd = -1;
+@@ -4864,5 +4885,7 @@ rollback_end:
+                set_warn_routine(state->saved_warn_routine);
+        }
+
+-       return retval;
++       if (res > -1)
++               return res;
++       return (res == -1 ? 1 : 128);
+ }
 diff --git a/apply.h b/apply.h
-index 7493a40..08c0a25 100644
+index c6cf33d..51a930a 100644
 --- a/apply.h
 +++ b/apply.h
-@@ -97,4 +97,14 @@ struct apply_state {
- 	int applied_after_fixing_ws;
+@@ -1,14 +1,14 @@
+ #ifndef APPLY_H
+ #define APPLY_H
+
+-enum ws_error_action {
++enum apply_ws_error_action {
+        nowarn_ws_error,
+        warn_on_ws_error,
+        die_on_ws_error,
+        correct_ws_error
  };
- 
-+extern int parse_whitespace_option(struct apply_state *state,
-+				   const char *option);
-+extern int parse_ignorewhitespace_option(struct apply_state *state,
-+					 const char *option);
-+
-+extern void init_apply_state(struct apply_state *state,
-+			     const char *prefix,
-+			     struct lock_file *lock_file);
-+extern void clear_apply_state(struct apply_state *state);
-+
- #endif
+
+-enum ws_ignore {
++enum apply_ws_ignore {
+        ignore_ws_none,
+        ignore_ws_change
+ };
+@@ -24,8 +24,8 @@ enum ws_ignore {
+  * See also "struct string_list symlink_changes" in "struct
+  * apply_state".
+  */
+-#define SYMLINK_GOES_AWAY 01
+-#define SYMLINK_IN_RESULT 02
++#define APPLY_SYMLINK_GOES_AWAY 01
++#define APPLY_SYMLINK_IN_RESULT 02
+
+ struct apply_state {
+        const char *prefix;
+@@ -94,8 +94,8 @@ struct apply_state {
+        void (*saved_warn_routine)(const char *warn, va_list params);
+
+        /* These control whitespace errors */
+-       enum ws_error_action ws_error_action;
+-       enum ws_ignore ws_ignore_action;
++       enum apply_ws_error_action ws_error_action;
++       enum apply_ws_ignore ws_ignore_action;
+        const char *whitespace_option;
+        int whitespace_error;
+        int squelch_whitespace_errors;
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 7d0bf66..4fbd993 100644
+index ddd61de..066cb29 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -27,52 +27,6 @@ static const char * const apply_usage[] = {
- 	NULL
- };
- 
--static int parse_whitespace_option(struct apply_state *state, const char *option)
--{
--	if (!option) {
--		state->ws_error_action = warn_on_ws_error;
--		return 0;
--	}
--	if (!strcmp(option, "warn")) {
--		state->ws_error_action = warn_on_ws_error;
--		return 0;
--	}
--	if (!strcmp(option, "nowarn")) {
--		state->ws_error_action = nowarn_ws_error;
--		return 0;
--	}
--	if (!strcmp(option, "error")) {
--		state->ws_error_action = die_on_ws_error;
--		return 0;
--	}
--	if (!strcmp(option, "error-all")) {
--		state->ws_error_action = die_on_ws_error;
--		state->squelch_whitespace_errors = 0;
--		return 0;
--	}
--	if (!strcmp(option, "strip") || !strcmp(option, "fix")) {
--		state->ws_error_action = correct_ws_error;
--		return 0;
--	}
--	return error(_("unrecognized whitespace option '%s'"), option);
--}
--
--static int parse_ignorewhitespace_option(struct apply_state *state,
--					 const char *option)
--{
--	if (!option || !strcmp(option, "no") ||
--	    !strcmp(option, "false") || !strcmp(option, "never") ||
--	    !strcmp(option, "none")) {
--		state->ws_ignore_action = ignore_ws_none;
--		return 0;
--	}
--	if (!strcmp(option, "change")) {
--		state->ws_ignore_action = ignore_ws_change;
--		return 0;
--	}
--	return error(_("unrecognized whitespace ignore option '%s'"), option);
--}
--
- static void set_default_whitespace_mode(struct apply_state *state)
- {
- 	if (!state->whitespace_option && !apply_default_whitespace)
-@@ -4539,13 +4493,6 @@ end:
- 	return res;
- }
- 
--static void git_apply_config(void)
--{
--	git_config_get_string_const("apply.whitespace", &apply_default_whitespace);
--	git_config_get_string_const("apply.ignorewhitespace", &apply_default_ignorewhitespace);
--	git_config(git_default_config, NULL);
--}
--
- static int option_parse_exclude(const struct option *opt,
- 				const char *arg, int unset)
- {
-@@ -4604,41 +4551,6 @@ static int option_parse_directory(const struct option *opt,
- 	return 0;
- }
- 
--static void init_apply_state(struct apply_state *state,
--			     const char *prefix,
--			     struct lock_file *lock_file)
--{
--	memset(state, 0, sizeof(*state));
--	state->prefix = prefix;
--	state->prefix_length = state->prefix ? strlen(state->prefix) : 0;
--	state->lock_file = lock_file;
--	state->newfd = -1;
--	state->apply = 1;
--	state->line_termination = '\n';
--	state->p_value = 1;
--	state->p_context = UINT_MAX;
--	state->squelch_whitespace_errors = 5;
--	state->ws_error_action = warn_on_ws_error;
--	state->ws_ignore_action = ignore_ws_none;
--	state->linenr = 1;
--	strbuf_init(&state->root, 0);
--
--	git_apply_config();
--	if (apply_default_whitespace && parse_whitespace_option(state, apply_default_whitespace))
--		exit(1);
--	if (apply_default_ignorewhitespace && parse_ignorewhitespace_option(state, apply_default_ignorewhitespace))
--		exit(1);
--}
--
--static void clear_apply_state(struct apply_state *state)
--{
--	string_list_clear(&state->limit_by_name, 0);
--	string_list_clear(&state->symlink_changes, 0);
--	strbuf_release(&state->root);
--
--	/* &state->fn_table is cleared at the end of apply_patch() */
--}
--
- static void check_apply_state(struct apply_state *state, int force_apply)
- {
- 	int is_not_gitdir = !startup_info->have_repository;
--- 
-2.9.0.172.gfb57a78
+@@ -87,13 +87,13 @@ int cmd_apply(int argc, const char **argv, const
+char *prefix)
+        };
 
+        if (init_apply_state(&state, prefix, &lock_file))
+-               exit(1);
++               exit(128);
+
+        argc = parse_options(argc, argv, state.prefix, builtin_apply_options,
+                        apply_usage, 0);
+
+        if (check_apply_state(&state, force_apply))
+-               exit(1);
++               exit(128);
+
+        ret = apply_all_patches(&state, argc, argv, options);
