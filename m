@@ -2,82 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C7F32018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 17:53:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28F702018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 18:10:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751784AbcF0Rxr (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 13:53:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50133 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751673AbcF0Rxq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2016 13:53:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9011226E35;
-	Mon, 27 Jun 2016 13:53:27 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Y1mQyFLxfujL
-	MPI0NZ8J9J2G3YU=; b=JHPkG9YWCdlXFddY9hgqfCsnIB6jAI+mGdey8wc1I2Ex
-	O0d8F77m/XBzRYYParkIe3KiiCTxWKiI/p01IAlpQY8QANd2jjH9yWwJVTaXoIlG
-	+QRIw2Tzj1BmdkXSW1yffqWWDkGB25url058VJ1tYIrITDEfyb0UHi9Bdv+JlHI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yPNrKo
-	inx3JuxI0doz7U1KYD3HvlV4RfAWD0Q25b3CYUQnJLDnBWvzwzFhvjNMRpIlgSU9
-	LmFKy7rnh+Qi9TDTzyASTAA20bni+2Bep1QnygV1CVCMolG7zk9BSlB8pDJrVwn+
-	QBJyRipofLnomRUUkuqWG2VeeIA/c1trTXQRY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 87CD426E34;
-	Mon, 27 Jun 2016 13:53:27 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 022D526E32;
-	Mon, 27 Jun 2016 13:53:26 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:	Alex Riesen <alexander.riesen@cetitec.com>, git@vger.kernel.org,
-	Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH 1/2] Support for $FILENAMES in tool definitions
-References: <20160627132137.GC4194@pflmari> <57716227.1030104@gmail.com>
-Date:	Mon, 27 Jun 2016 10:53:24 -0700
-In-Reply-To: <57716227.1030104@gmail.com> ("Jakub =?utf-8?Q?Nar=C4=99bski?=
- =?utf-8?Q?=22's?= message of "Mon,
-	27 Jun 2016 19:28:07 +0200")
-Message-ID: <xmqq7fdabjsb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751854AbcF0SKm (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:10:42 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:37962 "EHLO
+	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751748AbcF0SKl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2016 14:10:41 -0400
+Received: by mail-wm0-f53.google.com with SMTP id r201so126538658wme.1
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:10:28 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=R7skDXoDu1RZEjo7p/kK9KzqZulHjEyQWHnsbNKR3Oo=;
+        b=nE2uCg+of5cGV/YdWgp3mM9dOp0thVejy8S+t/EimT3WELMavHoGTjsdEHFq9ipmUH
+         1AfYIGTUq/D7bcpN1k+nqE1Zd1TpB7QtQEyU8Q5FpjHSYn6wcjNFrAdu6+fZ/KCyCbCn
+         P4VGO9aCgDiAK1Pdnwl/JnIua6mjoObovcs0vhX1UVWrLgtT29bg+uvVDuqsbxvjif3i
+         0fxxB1Kq6xdibMv/38seSyeiUuu8FJbcCF92qtLtJMtHzFrclWwJevz8A/h645q8tsro
+         vz31BYjfkBQSxtdMerclGIVwCouLwXLdukeWlVpBIvwCZGdM97rFB2fjT1FS0ptxksJF
+         1m0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=R7skDXoDu1RZEjo7p/kK9KzqZulHjEyQWHnsbNKR3Oo=;
+        b=LWWozOSCfbDksXdfO6cuostPSmO9Sv9Xn1wOlfk47oo8xZrWPEDfoH+sk9aK6Y16md
+         NILWA3fd3TPLZ5WC5LB0W7UZZiOo1VLdkNsqEL9j0dtKDIqL6IslVZ0QKkDiUxWx50hG
+         jdQhg2MUxgth8TVnUJO0XldKPC4l/536xb5s8mgyEEjQjbfXYn+WkpFVvaHWMwr+EUKN
+         4Ad82N7jdQWDeifUip2iIbcEPmGJKw9jGaS23WdVaEyECGKgZkVK92lYBGPL4bDkBkRG
+         3dpFxS9woI924QkwC59bgU8IMZTrBa3arT7AalSD05kT8jAIySc1gAe9hFNjkZjVgULv
+         bPTA==
+X-Gm-Message-State: ALyK8tL0Io1i4RG+sEHYpIMeHarzLS5E5roQvfJgX39Ku8RIhPurT5T2XaoypTpDAdn6CXxk3XRo3jZWEGONLA==
+X-Received: by 10.194.178.199 with SMTP id da7mr2085862wjc.123.1467051026972;
+ Mon, 27 Jun 2016 11:10:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0CDE0AC4-3C90-11E6-823E-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.194.164.169 with HTTP; Mon, 27 Jun 2016 11:09:47 -0700 (PDT)
+In-Reply-To: <xmqq7fdabjsb.fsf@gitster.mtv.corp.google.com>
+References: <20160627132137.GC4194@pflmari> <57716227.1030104@gmail.com> <xmqq7fdabjsb.fsf@gitster.mtv.corp.google.com>
+From:	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Date:	Mon, 27 Jun 2016 20:09:47 +0200
+Message-ID: <CANQwDwcq=O-ZVW2=+EnZnmCZpTjP=soQ_-cQP_n0p-TJ6DFQ-w@mail.gmail.com>
+Subject: Re: [PATCH 1/2] Support for $FILENAMES in tool definitions
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Alex Riesen <alexander.riesen@cetitec.com>,
+	git <git@vger.kernel.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jakub Narębski <jnareb@gmail.com> writes:
-
-> On 2016-06-27, Alex Riesen wrote:
+On 27 June 2016 at 19:53, Junio C Hamano <gitster@pobox.com> wrote:
+> Jakub Narębski <jnareb@gmail.com> writes:
 >
->> This adds a FILENAMES environment variable, which contains the repository
->> pathnames of all selected files the list.
->> The variable contains the names separated by spaces.
+>> On 2016-06-27, Alex Riesen wrote:
+>>
+>>> This adds a FILENAMES environment variable, which contains the repository
+>>> pathnames of all selected files the list.
+>>> The variable contains the names separated by spaces.
+>>
+>> Why not separate filenames with end-of-line character (LF)? It would still
+>> be broken for some filenames, but only for unportable ones.  Filenames with
+>> internal space (common on MS Windows) would work then.
+>>
+>>   http://www.dwheeler.com/essays/filenames-in-shell.html
+>>
+>> If Tcl allows it, you could separate filenames in FILENAMES environment
+>> variable with NUL ("\0") character...
 >
-> Why not separate filenames with end-of-line character (LF)? It would still
-> be broken for some filenames, but only for unportable ones.  Filenames with
-> internal space (common on MS Windows) would work then.
+> Tcl may or may not handle a string with an embedded NUL, but I think
+> it is hard to have an embedded NUL in an environment variable.
 >
->   http://www.dwheeler.com/essays/filenames-in-shell.html
->  
-> If Tcl allows it, you could separate filenames in FILENAMES environment
-> variable with NUL ("\0") character...
+> Use of LF is a good suggestion regardless.
 
-Tcl may or may not handle a string with an embedded NUL, but I think
-it is hard to have an embedded NUL in an environment variable.
+Or be a good citizen, and use $IFS... though then the user would
+need to set it to something sane-ish.
 
-Use of LF is a good suggestion regardless.
-
+-- 
+Jakub Narebski
