@@ -2,122 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CD031F744
-	for <e@80x24.org>; Mon, 27 Jun 2016 07:26:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 336DF1F744
+	for <e@80x24.org>; Mon, 27 Jun 2016 09:58:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751825AbcF0H0m (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 03:26:42 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36108 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751713AbcF0H0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 03:26:41 -0400
-Received: by mail-wm0-f66.google.com with SMTP id c82so22124110wme.3
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 00:26:40 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=Azvo6b5KP/y8PpkavoCZ4ZvzYQwAcXFriqvuxBhtzMM=;
-        b=x+Ukdwb28oNeAGW3OTS3KaT+wsT6cqYCJZTOtQvehb5Yy6Uc8J/NJ9RysrMSwkADVZ
-         /Upg2U64m9ARhnJp7KrCYE5HNqAmA/0llQ3hKRe7Y0YWD9wuM9Agxl7qGWN7AxoZ293j
-         y8DBk2vXGnb3hoNmsxiUl/PXJ9T04wOKxthSXjErzEsi4YMApEOWilyD0bjq0f9tIlyB
-         x9kt91BH97LDN0a14RDr13Wld5U7wl4HtHUCqpunXMTUzpZZ0Or/Vmq8d/dFK2ZnA3rI
-         DXGeBWpCgUKiiU5FwaJHq9lqCmzP3PJPEN+XLXRRKPmMhldVOlgMGPoyAFo1VsSvYi4X
-         VjSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Azvo6b5KP/y8PpkavoCZ4ZvzYQwAcXFriqvuxBhtzMM=;
-        b=MhxIBvL1VgJ6+rEQMyGuubzYH9FDLEFTRFCAnkqG/dc+T8W3P8+V4QpwjPcj7Qgvom
-         y4XfwHR5m5P08A1xruu2UQdTuBsgPhGJtW7vOv5pBHnqLaoM1C8BKpe2FroAYokA7htE
-         jxjHcKVH/0cso1q3ZDIr5N6ZeEry9Z7cuhcRxkn680zUajR0qMKIGXHwLdc1AYROdAOf
-         ZF1DLlowPAyY75N/rHMnk76LUTcLngaSKvSL5PWDGB7Jhzb+VLWzsw5S9TtoVMKyrnwy
-         WxGkBO0DW7wrohS9MfdJhtDPpA7ZhMKgwracOQC5QxpVGHbdBMIUutFpzcLt+rnMDcgZ
-         QQ0g==
-X-Gm-Message-State: ALyK8tKNoHCcaomewYTa2Zjz0pAQSZZAUpxumDOSCgD7CMiYiLIRFOIWGc6ikbr3e6K+vg==
-X-Received: by 10.28.129.197 with SMTP id c188mr9597366wmd.46.1467012400194;
-        Mon, 27 Jun 2016 00:26:40 -0700 (PDT)
-Received: from slxBook3.fritz.box (p5DDB4A71.dip0.t-ipconnect.de. [93.219.74.113])
-        by smtp.gmail.com with ESMTPSA id bh7sm2517121wjb.22.2016.06.27.00.26.39
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 00:26:39 -0700 (PDT)
-From:	larsxschneider@gmail.com
-To:	git@vger.kernel.org
-Cc:	mhagger@alum.mit.edu, luke@diamand.org, vitor.hda@gmail.com,
-	Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v1] git-p4: place temporary refs used for branch import under ref/git-p4-tmp
-Date:	Mon, 27 Jun 2016 09:26:38 +0200
-Message-Id: <1467012398-7357-1-git-send-email-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.5.1
+	id S1751590AbcF0J6I (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 05:58:08 -0400
+Received: from mout.web.de ([212.227.17.12]:60160 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751248AbcF0J6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 05:58:07 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0MCZh8-1b9BpJ08GY-009ToQ; Mon, 27 Jun 2016 11:57:55
+ +0200
+Subject: Re: [PATCH v4 0/6] worktree lock/unlock
+To:	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+References: <20160530104939.28407-1-pclouds@gmail.com>
+ <20160603121944.28980-1-pclouds@gmail.com>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>, rethab.ch@gmail.com,
+	rappazzo@gmail.com
+From:	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <914a6ad8-94d7-d26e-8c6f-f9656d912818@web.de>
+Date:	Mon, 27 Jun 2016 11:57:47 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.1.1
+MIME-Version: 1.0
+In-Reply-To: <20160603121944.28980-1-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:F+qDErAy5Wwq83drgjVEDJeEMHt/zk/WXodCyAV2chZ4c87arwp
+ L45o30JXQL946NG41S7lWL196aRfrtyFkaPPJUcraGqCVOeGPFFThFlzhIuafdiasZaLERN
+ 9cI2P/HX5PvKxnF0OxzJkkSGW+2hvSbhrbmhRiHQXfjoXLEfW7fcLU+G29sNRzuMNsdOuVl
+ W/yKOrGKXclNaEjEiVQhQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:W0vtzjGkERQ=:puRdGEEv4sXtvwfEWkyJCX
+ 1pnVZG22uwyvNLBUnBOlSLbhOP9gHW0R1rYlVVkeV2k3STuVd/KUG68tfnt20Ew59bXhRfVM6
+ qVucmo8FO2LXgX3IqDE6k0ItKZHAKCawaf0tjRlkjhTsrJR3ldh/RfmC14PdV9t2Z3yLoA4Et
+ MtMIuUvTH7wNfYlcXlgQ0h3zt56SXPCO1CmJgUrml2InFVWVOHFwkU+uW0Ws95Q5zDIpAjW0V
+ Gwe2KDEi7/7bCvTWdU9ejZVtF7/r1noTvtLsoB+StTI8uSiIPYZe/ufAAY8WaHRBHMhCU+nFv
+ xEpp9d3GU8wTW0f0B0ijaVNrfHVSotcBTqhF0/bHmF6ywiy3tqqsMQPBi+SRFDkOEs53r5DoO
+ eYbeDNQPbBwn8z6F0/EOhnr6mhvYk+Ew4DCn9e762ojpypnGhNgsUjhq4f5H5cbg3kwJCqYiN
+ 35c5Zgei4WJy+gjmrO406yAV1uPL7wfXKgMDjPgY90BMBomRLq4aT0yoG0PRoCuq3udEptDMk
+ X5gPm8Kiz3I8mAMetnoQ44HkXwpEqjM7tzOG8SLYfLMFF6Mh/MyTfVaSUUunpDW082ANynlqg
+ lcCP73UZCeqJicUuGeTslkk51z2MTosopZDteH42S0XjnNJ7jwLPKj5JXE6JruHNPquAOuzxJ
+ O+SowfTHyDgfITAWb3gko286uS6OKlgGILra7Uudl/7sFh5FyYxEilhazKNTP4bO02vPJVKw5
+ WzKu1H886XdcI7FRLsKOKEdqXJpnmkAskFX0EKHA+1VfV5BSWaOSPoH27gI+vwCyg+CPMaEIE
+ AYjX1bM
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Lars Schneider <larsxschneider@gmail.com>
+>On 03.06.16 14:19, Nguyễn Thái Ngọc Duy wrote:
 
-Git-P4 used to place temporary refs under "git-p4-tmp". Since 3da1f37
-Git checks that all refs are placed under "ref". Instruct Git-P4 to
-place temporary refs under "ref/git-p4-tmp". There are no backwards
-compatibility considerations as these refs are transient.
+Minor problem:
+t2028 fails, when the test is run from a directory that is
 
-All refs under "ref" are shared across all worktrees. This is not
-desired for temporary Git-P4 refs and will be adressed in a later patch.
-
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
-
-Please note: As mentioned in $gmane/297703 I am no expert for the Git-P4
-branch import. I post this patch to make the Git-P4 unit tests working,
-again. Critical review highly appreciated :-)
-
-Thanks,
-Lars
+a softlink.
+(In my case 
+/Users/tb/projects/git/git.pu
+is a softlink to
+/Users/tb/NoBackup/projects/git/git.pu/
 
 
- git-p4.py                | 2 +-
- t/t9801-git-p4-branch.sh | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/git-p4.py b/git-p4.py
-index b6593cf..6b252df 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -2274,7 +2274,7 @@ class P4Sync(Command, P4UserMap):
-         self.useClientSpec_from_options = False
-         self.clientSpecDirs = None
-         self.tempBranches = []
--        self.tempBranchLocation = "git-p4-tmp"
-+        self.tempBranchLocation = "refs/git-p4-tmp"
-         self.largeFileSystem = None
-
-         if gitConfig('git-p4.largeFileSystem'):
-diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
-index 0aafd03..8f28ed2 100755
---- a/t/t9801-git-p4-branch.sh
-+++ b/t/t9801-git-p4-branch.sh
-@@ -300,7 +300,7 @@ test_expect_success 'git p4 clone complex branches' '
- 		test_path_is_file file2 &&
- 		test_path_is_file file3 &&
- 		! grep update file2 &&
--		test_path_is_missing .git/git-p4-tmp
-+		test_path_is_missing .git/ref/git-p4-tmp
- 	)
- '
-
-@@ -352,7 +352,7 @@ test_expect_success 'git p4 sync changes to two branches in the same changelist'
- 		test_path_is_file file2 &&
- 		test_path_is_file file3 &&
- 		! grep update file2 &&
--		test_path_is_missing .git/git-p4-tmp
-+		test_path_is_missing .git/ref/git-p4-tmp
- 	)
- '
-
---
-2.5.1
+[master (root-commit) 2519212] init
+ Author: A U Thor <author@example.com>
+ 1 file changed, 1 insertion(+)
+ create mode 100644 init.t
+Preparing source (identifier source)
+HEAD is now at 2519212 init
+--- expected    2016-06-27 09:50:19.000000000 +0000
++++ actual      2016-06-27 09:50:19.000000000 +0000
+@@ -1,2 +1,2 @@
+-worktree /Users/tb/projects/git/git.pu/t/trash directory.t2028-worktree-move
+-worktree /Users/tb/projects/git/git.pu/t/trash directory.t2028-worktree-move/source
++worktree /Users/tb/NoBackup/projects/git/git.pu/t/trash directory.t2028-worktree-move
++worktree /Users/tb/NoBackup/projects/git/git.pu/t/trash directory.t2028-worktree-move/source
+not ok 1 - setup
+#
 
