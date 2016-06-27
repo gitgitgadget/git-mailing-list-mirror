@@ -2,120 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E9351FE4E
-	for <e@80x24.org>; Mon, 27 Jun 2016 23:11:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8634B1FE4E
+	for <e@80x24.org>; Mon, 27 Jun 2016 23:20:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752030AbcF0XLg (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 19:11:36 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:34046 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751888AbcF0XLf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2016 19:11:35 -0400
-Received: by mail-io0-f193.google.com with SMTP id 100so334379ioh.1
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 16:11:35 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=gtuzsLyDDEKdCJqW6qWvCa8zHiEOpF/4g6g+qYAUJWw=;
-        b=jg4ObmJ8PD0StCsNuQG032YuUY/yn9qu1gLvQXdoZ8g2EQVclA4iduGBdDU+iHK0bM
-         8MpSw41rRSVIDdwm3POAIB0vNE8VbwpqhW5irOWcRCaIy8lxOEmg/4xRcygFZAIfFxsD
-         Fp9mW9jaD1iSlqc/vAp91TdoBgK4QUtM5g2uEjoVnd2YUG/wCJUfJq3P1sLd838KrX3I
-         5ncYh2Ff8lv5Z21fb0H2OCDq2MgGQvb7qFk49+YavnDSZSeD1FSzHeiRHk3wZyMZYZGt
-         0ZaogMo7UD7OlWhH7zdhqr0zuJekRUzxfpS8tIy61+iyEyh5O0c1tx/p1PJzyBrNdqAa
-         g3BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=gtuzsLyDDEKdCJqW6qWvCa8zHiEOpF/4g6g+qYAUJWw=;
-        b=gwWXqzgLumSYAsRMZbu/TPtCyWRqUM/7+83B2dsFHVWMiU+0L+lr4vknfXenRUZuxr
-         e8Gr6X1+0kwanpIGo/ymVH0VVB3rzCDgv0/D5LSTYP9FC8oO6Zb525RvP8R4FTqwcvyT
-         GpnlhUIUjeDLqVR7Dh3qMx012w3um/DQSJFEVI6a7p4SCCijyNcdDPHv1MsuQIG9Ph7f
-         qyNgRFCB2y523KaA3YMIzbUMgaNoEwG2+3VfVnZ0i9Gi/4E9fnFBpjOPSdpNBCp2vcQJ
-         rH7WkJ5SuBO3tOjFgnoWc70shaQoq3rmeDPkXrnAKuH1yOXfD2lZTc/w4ceWZFog1+ZY
-         UmHg==
-X-Gm-Message-State: ALyK8tJwLHBYfYYkzT1+YBDLFxE6+T779FR1S0DLuzLXK1xl8QirJYQvimSg9rcsJTRR7bXHhSuFOLeEWQOEdg==
-X-Received: by 10.107.47.41 with SMTP id j41mr313160ioo.168.1467069095070;
- Mon, 27 Jun 2016 16:11:35 -0700 (PDT)
+	id S1752066AbcF0XTw (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 19:19:52 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:44014 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751874AbcF0XTv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 19:19:51 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB1061FE4E;
+	Mon, 27 Jun 2016 23:19:49 +0000 (UTC)
+Date:	Mon, 27 Jun 2016 23:19:49 +0000
+From:	Eric Wong <e@80x24.org>
+To:	Jeff King <peff@peff.net>
+Cc:	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 1/2] xread: retry after poll on EAGAIN/EWOULDBLOCK
+Message-ID: <20160627231949.GA23661@dcvr.yhbt.net>
+References: <20160626232112.721-1-e@80x24.org>
+ <20160626232112.721-2-e@80x24.org>
+ <20160626234251.GA21668@sigill.intra.peff.net>
+ <xmqqoa6mdbu3.fsf@gitster.mtv.corp.google.com>
+ <20160627143648.GA2618@sigill.intra.peff.net>
+ <CAGZ79kZ94PaOfq3GimWiHULbTE7ihMzL9S=Y+npQ4F5gGwFrsA@mail.gmail.com>
+ <20160627201311.GA7039@dcvr.yhbt.net>
+ <20160627214947.GA17149@sigill.intra.peff.net>
+ <20160627222238.GA23645@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.79.0.30 with HTTP; Mon, 27 Jun 2016 16:11:34 -0700 (PDT)
-In-Reply-To: <A2F194FC-281D-44DF-88CA-E0B8221A3E68@brennie.ca>
-References: <20160625051548.95564-1-barret@brennie.ca> <576E2FA9.7070008@kdbg.org>
- <1FEF5F90-6534-4D91-B27C-16FE6D16EC3F@brennie.ca> <xmqq1t3ldpdl.fsf@gitster.mtv.corp.google.com>
- <CAPig+cRNUZZBw=F-Q2f3Ehc-8T2iBp4kvDusNRGv4ea5nihQVQ@mail.gmail.com> <A2F194FC-281D-44DF-88CA-E0B8221A3E68@brennie.ca>
-From:	Eric Sunshine <sunshine@sunshineco.com>
-Date:	Mon, 27 Jun 2016 19:11:34 -0400
-X-Google-Sender-Auth: gh51K7lYfzOTKegClt9O_a5Nw78
-Message-ID: <CAPig+cSEwib1iFyWE5h8-qTbsAC+zsaSDSYQnv6otWoOOjWAeA@mail.gmail.com>
-Subject: Re: [PATCH] builtin/worktree.c: add option for setting worktree name
-To:	Barret Rennie <barret@brennie.ca>
-Cc:	Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	Michael Rappazzo <rappazzo@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160627222238.GA23645@sigill.intra.peff.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 27, 2016 at 1:52 AM, Barret Rennie <barret@brennie.ca> wrote:
-> On Jun 26, 2016, at 5:00 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> One thing which hasn't been explained, and about which I'm still
->> confused even after reading this thread in its entirety, is what
->> Barret means when he says that he "breaks" his worktrees. What is the
->> nature of this breakage? Depending upon that answer, would "git
->> rev-parse --git-dir" be sufficient for your needs? Or, would "git
->> worktree list" be able to give you the desired information? (As
->> envisioned, "git worktree list" was intended to provide much more
->> information than it currently does, such as the .git/worktree dir
->> name, and such an enhancement might be welcome.)
->
-> My worktree breakages are usually the result of my reorganizing my projects,
-> usually because a branch changes name (for example, if branch release-1 gets
-> pushed back to release-2). Then I go and rename all my directories and git
-> gets unhappy and I have to manually fix them or re-create the worktrees.
+Jeff King <peff@peff.net> wrote:
+> On Mon, Jun 27, 2016 at 05:49:48PM -0400, Jeff King wrote:
+> 
+> > So in general I would say that handing non-blocking descriptors to git
+> > is not safe.
 
-Quoting from your earlier email justifying why you consider this patch
-desirable:
+Indeed.  This also makes me wonder if our output to stdout/stderr
+suffer from the same theoretical problems if given non-blocking
+outputs; I suspect they do.
 
-    ...when I break my worktrees and can’t figure out
-    which worktree dir is the one I’ve broken.
+>>  I think it's possible to loop on getdelim() when we see
+>> EAGAIN, but I'm not sure if it's worth it.
 
-But, doesn't "git rev-parse --git-dir" from within a "broken" worktree
-answer that question? Or, wouldn't an enhanced "git worktree list"
-answer the question from the opposite side?
+> The patch for that is below, for the curious. It works with even this:
+> 
+>   {
+>     for i in H E A D; do
+>       sleep 1
+>       printf $i
+>     done
+>     printf "\n"
+>   } | nonblock git cat-file --batch-check
+> 
+> Note that I folded the "did we see EAGAIN" check into my sub-function
+> (which is the equivalent of your io_wait). You might want to do that in
+> the xread() code path, too, as it makes the resulting code there a very
+> nice:
+> 
+>   if (errno == EINTR)
+> 	continue;
+>   if (handle_nonblock(fd, POLLIN))
+> 	continue;
 
-> Having `git worktree list` give the worktree directory would be very useful,
-> but I still would like the ability to change the name of a worktree.
+Yes :)
 
-My knee-jerk reaction is that the directory name under .git/worktrees
-is an implementation detail (and could easily have been an arbitrary
-ID, such as .git/worktrees/7ba84ec0) and rather than exposing it
-further and encouraging people to muck around in it manually, we
-should be providing higher-level solutions so that they don't have to.
+> +int handle_nonblock(FILE *fp, short poll_events)
+> +{
+> +	if (ferror(fp) && (errno == EAGAIN || errno == EWOULDBLOCK)) {
 
-Even without the higher-level solutions, it seems like "git rev-parse
---git-dir" should satisfy your needs, and if someone enhances "git
-worktree list" to provide the additional worktree tag name (as
-envisioned all along), then you'd likewise have sufficient information
-to "fix" your worktrees.
+<snip>
 
-As an example of higher-level solutions, Duy's "git worktree move"
-series[1] would, I think, be exactly what you need to avoid such
-breakage in the first place (assuming you can retrain your fingers or
-fix your scripts, if they are doing the worktree renaming).
+> +		clearerr(fp);
+> +		return 1;
+> +	}
+> +	return 0;
+> +}
+> +
+> +static int getline_stdio_loop(struct strbuf *sb, FILE *fp, int term)
+> +{
+> +	int ch;
+> +	do {
+> +		errno = 0;
+> +		flockfile(fp);
+> +		while ((ch = getc_unlocked(fp)) != EOF) {
 
-I don't know how Duy and Junio feel about it, but my response to this
-patch and what it wants to accomplish (even with Junio's input) is
-fairly negative. I'd much rather see more missing high-level worktree
-features implemented rather than see patches further exposing
-git-worktree's internals.
+<snip>
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/298194
+> +		}
+> +		funlockfile(fp);
+> +	} while (handle_nonblock(fp, POLLIN));
+
+I haven't used stdio in a while and I'm glad :)
+Error handling with ferror + clearerr + errno checking is
+difficult and error-prone.
+
+Linus said this back in 2006, too:
+http://mid.gmane.org/Pine.LNX.4.64.0609141023130.4388@g5.osdl.org
+
+So I wonder if we're better off relying entirely on xread/xwrite
++ strbuf for all our buffering.
