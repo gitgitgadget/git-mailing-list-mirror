@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6A5C2018A
-	for <e@80x24.org>; Mon, 27 Jun 2016 18:24:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D789A2018A
+	for <e@80x24.org>; Mon, 27 Jun 2016 18:25:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751860AbcF0SY5 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 27 Jun 2016 14:24:57 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35036 "EHLO
+	id S1751865AbcF0SZC (ORCPT <rfc822;e@80x24.org>);
+	Mon, 27 Jun 2016 14:25:02 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33759 "EHLO
 	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751749AbcF0SY4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2016 14:24:56 -0400
-Received: by mail-wm0-f67.google.com with SMTP id a66so26927251wme.2
-        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:24:55 -0700 (PDT)
+	with ESMTP id S1751749AbcF0SZA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2016 14:25:00 -0400
+Received: by mail-wm0-f67.google.com with SMTP id r201so26992915wme.0
+        for <git@vger.kernel.org>; Mon, 27 Jun 2016 11:24:59 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Wc4boseiUuWhBZHhyh8oOup1BDMMv3II6kIwQ8Ejx1E=;
-        b=Olo7q3F8RLISeoTOUMA9OedeQvGPSca/Ww1KIm6E3yLbf4iFkM13mq0RfdYhjaW31d
-         MPXJZbGvdOAJsyuTH5HmTo7GxTyB46gG4MdkeqITd6Yu4EOIxQ9H90TkqoNttDJGcUOF
-         3ksZKVLGXZi3g9kOLHAqeqLvZYpBUNV/3nxeBKQQrl4T+NKAo4NFrDyPnFA4i3lYuuYz
-         lzIPlJKZWxRMXjHgFFmI+pbDb6OKp6zwYQq4OgSKyFx71LvSDAadUnb5gBtDqm8fiZky
-         BOo9be4uR+x3/175yGa7tRve95PfXVbzLzZOB3Z5CO/ppogRSVAetc8OZdJ1u25ws6Je
-         K9nA==
+        bh=60o13a0Uk2WHlweNEip8W40bYC9M3A9kD0Dr/Dh2uN4=;
+        b=IBO/M76VyqEgDYwC+sCilQiCS0WFByQmbN3Y7scFduVzt1JGEas/DCvVpwne7w01u2
+         5rHF8eSqjkV/CeUbQ+8MI+QVQHmTF8P7eQJCO6lCVpxmg242Xe1TNbp+C+rQ32iBvD0O
+         NEZ5+/+LLSA16jLDEcW/2zOkcOmZM28Z7qzhN3tvcOi10B36eoGVMvoztDpxbt4lp1l5
+         AgAvpvg/8WF7AbsMj0PHImDudE5/6fiT7fi4Ms8pnU9qIdmDRKA4JQ0t7fuCGKDv0dJN
+         SBYlv/Tvj1p/yWEDvZVthFxKySUomjUSfnj+V+HoGwcenjr9YKVwci9yBIHdBC9eQZD1
+         z2nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Wc4boseiUuWhBZHhyh8oOup1BDMMv3II6kIwQ8Ejx1E=;
-        b=FT7yXuCOqow+h/Zme0GgdxrIwjleLgkTrF1ZaGOw65/e94FZLXc0ZcFkoFmZCywwYM
-         HNQA+M47FDvqlmQWzngdgjDBcx7SYRiQB/XD4NgZuCj8vlmzhkM47QeUli3uURN9LodK
-         zF/GXmSFmf4fRW2w2HqOyOfs4Uh+1I0qxS6IMHuOhJ8HANVAa9S3V1zaoemlmdWeoOFv
-         7mAE2P3uwWyg8Di81OAqKC3ijNehIfWlscMDgW6EhJ7oYpc8SOyjXBVXS1bjl/mxzvzb
-         PxByc3slOhbtgdhbZZPDack7Jw4OPVuCFmN34oIl3JA5wr7/5mYcyYmdfQvVBNDVMr0q
-         ZVZA==
-X-Gm-Message-State: ALyK8tI5947EDj+/DlSkEcTw539MQJ67yPylLt2FiTkO9POZ/3wIglca8yEl7BfWFfZyEg==
-X-Received: by 10.194.38.4 with SMTP id c4mr2208819wjk.20.1467051894158;
-        Mon, 27 Jun 2016 11:24:54 -0700 (PDT)
+        bh=60o13a0Uk2WHlweNEip8W40bYC9M3A9kD0Dr/Dh2uN4=;
+        b=F/FADVvHNTLWBHk+eDonRqfTZel/riPgv9wXqw8go+uIWKs7X6cqnKMlLpBsKhRa3z
+         zXlBVW5QpIIfEzBJGmYXVyp5uQaBKKG2kw0eijfknOFT9HVSoRiipRBJKvCEd8MFFvz9
+         9TE1F1xwKmL92wKexyzY6PKU6G7e0zbubNoao7n3/9ksVBFuu9MMyz3Vgu9bYCgSI2rM
+         lTj8ecgl5/qfjkrPugyOtzBZTtTK5Ew2XMh95z+YtqFwv8f1HsXgfxDfm2YkN6vs+lI/
+         pUjs74u8WyacYDGSU39xidrEKKA0ONuF/2GBOKE6KnRxXoJEYM6XTYgIBNutqdX9BKj0
+         PKPg==
+X-Gm-Message-State: ALyK8tLRYv1eiudH/NwURtC/m0cY5Ti5FWq6KD1PCx29XA1VCBGcujY9RnPuuSrsDBi6FQ==
+X-Received: by 10.28.23.79 with SMTP id 76mr9773397wmx.93.1467051899193;
+        Mon, 27 Jun 2016 11:24:59 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.24.52
+        by smtp.gmail.com with ESMTPSA id s67sm1536707wmf.3.2016.06.27.11.24.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jun 2016 11:24:53 -0700 (PDT)
+        Mon, 27 Jun 2016 11:24:58 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 03/41] builtin/apply: make apply_patch() return -1 or -128 instead of die()ing
-Date:	Mon, 27 Jun 2016 20:23:51 +0200
-Message-Id: <20160627182429.31550-4-chriscool@tuxfamily.org>
+Subject: [PATCH v8 06/41] builtin/apply: make parse_chunk() return a negative integer on error
+Date:	Mon, 27 Jun 2016 20:23:54 +0200
+Message-Id: <20160627182429.31550-7-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.0.172.g48843e9
 In-Reply-To: <20160627182429.31550-1-chriscool@tuxfamily.org>
 References: <20160627182429.31550-1-chriscool@tuxfamily.org>
@@ -70,164 +70,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-To libify `git apply` functionality we have to signal errors
-to the caller instead of die()ing.
+To libify `git apply` functionality we have to signal errors to the
+caller instead of die()ing or exit()ing.
 
-As a first step in this direction, let's make apply_patch() return
--1 or -128 in case of errors instead of dying. For now its only
-caller apply_all_patches() will exit(128) when apply_patch()
-return -128 and it will exit(1) when it returns -1.
+To do that in a compatible manner with the rest of the error handling
+in builtin/apply.c, parse_chunk() should return a negative integer
+instead of calling die() or exit().
 
-We exit() with code 128 because that was what die() was doing
-and we want to keep the distinction between exiting with code 1
-and exiting with code 128.
+As parse_chunk() is called only by apply_patch() which already
+returns either -1 or -128 when an error happened, let's make it also
+return -1 or -128.
+
+This makes it compatible with what find_header() and parse_binary()
+already return.
 
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 60 ++++++++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 45 insertions(+), 15 deletions(-)
+ builtin/apply.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index ad216d3..2aea203 100644
+index aff0d66..b10a7e3 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -4404,6 +4404,15 @@ static struct lock_file lock_file;
- #define INACCURATE_EOF	(1<<0)
- #define RECOUNT		(1<<1)
+@@ -1996,22 +1996,22 @@ static int use_patch(struct apply_state *state, struct patch *p)
+ 	return !state->has_include;
+ }
  
-+/*
-+ * Try to apply a patch.
+-
+ /*
+  * Read the patch text in "buffer" that extends for "size" bytes; stop
+  * reading after seeing a single patch (i.e. changes to a single file).
+  * Create fragments (i.e. patch hunks) and hang them to the given patch.
+- * Return the number of bytes consumed, so that the caller can call us
+- * again for the next patch.
 + *
 + * Returns:
-+ *  -128 if a bad error happened (like patch unreadable)
-+ *  -1 if patch did not apply and user cannot deal with it
-+ *   0 if the patch applied
-+ *   1 if the patch did not apply but user might fix it
-+ */
- static int apply_patch(struct apply_state *state,
- 		       int fd,
- 		       const char *filename,
-@@ -4413,6 +4422,7 @@ static int apply_patch(struct apply_state *state,
- 	struct strbuf buf = STRBUF_INIT; /* owns the patch text */
- 	struct patch *list = NULL, **listp = &list;
- 	int skipped_patch = 0;
-+	int res = 0;
- 
- 	state->patch_input_file = filename;
- 	read_patch_file(&buf, fd);
-@@ -4445,8 +4455,11 @@ static int apply_patch(struct apply_state *state,
- 		offset += nr;
- 	}
- 
--	if (!list && !skipped_patch)
--		die(_("unrecognized input"));
-+	if (!list && !skipped_patch) {
-+		error(_("unrecognized input"));
-+		res = -128;
-+		goto end;
-+	}
- 
- 	if (state->whitespace_error && (state->ws_error_action == die_on_ws_error))
- 		state->apply = 0;
-@@ -4455,21 +4468,23 @@ static int apply_patch(struct apply_state *state,
- 	if (state->update_index && state->newfd < 0)
- 		state->newfd = hold_locked_index(state->lock_file, 1);
- 
--	if (state->check_index) {
--		if (read_cache() < 0)
--			die(_("unable to read index file"));
-+	if (state->check_index && read_cache() < 0) {
-+		error(_("unable to read index file"));
-+		res = -128;
-+		goto end;
- 	}
- 
- 	if ((state->check || state->apply) &&
- 	    check_patch_list(state, list) < 0 &&
--	    !state->apply_with_reject)
--		exit(1);
-+	    !state->apply_with_reject) {
-+		res = -1;
-+		goto end;
-+	}
- 
- 	if (state->apply && write_out_results(state, list)) {
--		if (state->apply_with_reject)
--			exit(1);
- 		/* with --3way, we still need to write the index out */
--		return 1;
-+		res = state->apply_with_reject ? -1 : 1;
-+		goto end;
- 	}
- 
- 	if (state->fake_ancestor)
-@@ -4484,10 +4499,11 @@ static int apply_patch(struct apply_state *state,
- 	if (state->summary)
- 		summary_patch_list(list);
- 
-+end:
- 	free_patch_list(list);
- 	strbuf_release(&buf);
- 	string_list_clear(&state->fn_table, 0);
--	return 0;
-+	return res;
- }
- 
- static void git_apply_config(void)
-@@ -4625,6 +4641,7 @@ static int apply_all_patches(struct apply_state *state,
- 			     int options)
++ *   -1 if no header was found or parse_binary() failed,
++ *   -128 on another error,
++ *   the number of bytes consumed otherwise,
++ *     so that the caller can call us again for the next patch.
+  */
+ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long size, struct patch *patch)
  {
- 	int i;
-+	int res;
- 	int errs = 0;
- 	int read_stdin = 1;
+ 	int hdrsize, patchsize;
+ 	int offset = find_header(state, buffer, size, &hdrsize, patch);
  
-@@ -4633,7 +4650,10 @@ static int apply_all_patches(struct apply_state *state,
- 		int fd;
+-	if (offset == -128)
+-		exit(128);
+-
+ 	if (offset < 0)
+ 		return offset;
  
- 		if (!strcmp(arg, "-")) {
--			errs |= apply_patch(state, 0, "<stdin>", options);
-+			res = apply_patch(state, 0, "<stdin>", options);
-+			if (res < 0)
+@@ -2071,8 +2071,10 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
+ 		 * empty to us here.
+ 		 */
+ 		if ((state->apply || state->check) &&
+-		    (!patch->is_binary && !metadata_changes(patch)))
+-			die(_("patch with only garbage at line %d"), state->linenr);
++		    (!patch->is_binary && !metadata_changes(patch))) {
++			error(_("patch with only garbage at line %d"), state->linenr);
++			return -128;
++		}
+ 	}
+ 
+ 	return offset + hdrsize + patchsize;
+@@ -4455,6 +4457,10 @@ static int apply_patch(struct apply_state *state,
+ 		nr = parse_chunk(state, buf.buf + offset, buf.len - offset, patch);
+ 		if (nr < 0) {
+ 			free_patch(patch);
++			if (nr == -128) {
++				res = -128;
 +				goto end;
-+			errs |= res;
- 			read_stdin = 0;
- 			continue;
- 		} else if (0 < state->prefix_length)
-@@ -4646,12 +4666,19 @@ static int apply_all_patches(struct apply_state *state,
- 			die_errno(_("can't open patch '%s'"), arg);
- 		read_stdin = 0;
- 		set_default_whitespace_mode(state);
--		errs |= apply_patch(state, fd, arg, options);
-+		res = apply_patch(state, fd, arg, options);
-+		if (res < 0)
-+			goto end;
-+		errs |= res;
- 		close(fd);
- 	}
- 	set_default_whitespace_mode(state);
--	if (read_stdin)
--		errs |= apply_patch(state, 0, "<stdin>", options);
-+	if (read_stdin) {
-+		res = apply_patch(state, 0, "<stdin>", options);
-+		if (res < 0)
-+			goto end;
-+		errs |= res;
-+	}
- 
- 	if (state->whitespace_error) {
- 		if (state->squelch_whitespace_errors &&
-@@ -4687,6 +4714,9 @@ static int apply_all_patches(struct apply_state *state,
- 	}
- 
- 	return !!errs;
-+
-+end:
-+	exit(res == -1 ? 1 : 128);
- }
- 
- int cmd_apply(int argc, const char **argv, const char *prefix)
++			}
+ 			break;
+ 		}
+ 		if (state->apply_in_reverse)
 -- 
 2.9.0.172.gfb57a78
 
