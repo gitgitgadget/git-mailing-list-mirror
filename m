@@ -2,121 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D13A2018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 13:23:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC7CE2018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 13:32:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752833AbcF1NXI (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 09:23:08 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:35219 "EHLO
-	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752786AbcF1NXF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 09:23:05 -0400
-Received: by mail-wm0-f54.google.com with SMTP id v199so139704869wmv.0
-        for <git@vger.kernel.org>; Tue, 28 Jun 2016 06:23:04 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=rLBNZSZr+tefGYySXW+5oh1MrvvyxaX6lkE8h/uq+rQ=;
-        b=uwUEmgNO5YPlFjYXAPZrMAR6/NrQExfsktCYhFWnu/v2oqOl4+xnxA5tLezEN8QquG
-         Wo1KFx+sVL5pyyc2LUMV7v5l7doTsdkDemae1tbNZtONQkiPT7e12qmJrANJOgWP0dP9
-         pndwdW/RQWFtAGwmtwq9qhZ43to8krY8XwIRHM0PMmUcCnGHyHVjMl3Pk3TmA/iLu1Yq
-         NaoK+ht0kJpFCf9gaXCYaH7TX7N9xeM/WHcmiwy9wEokbJwTBZ3guoo8fRAmjl93Nwn/
-         XdcmTYLOtVzI2ClZNFCfKCfKOESEyHP99eiY1tVEmA4cGtKgNn+/YOZbJL+ctnnJ2FH1
-         ZKog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=rLBNZSZr+tefGYySXW+5oh1MrvvyxaX6lkE8h/uq+rQ=;
-        b=Wfq7P1M9ehRJmBGaEChGHyIVt584PftrlinLRK8gQUX1fUNqIfFiEDDZ1WnOT2zDWf
-         HTGVMWJWt8wzH0VX8i0Luu1iV943INtbcRAbVCImB+Dv1QHRC7fMgJV/ixy4byDunCkQ
-         YCovqCw2KnlnDBKVWXXZ4swF5yr6OGqDC8T7wxOsltFFPVv94unW2gLXzi9NyzTxEMMC
-         laJ2nXW0LKGynviQuOsgqIV5MU3ZPOesqVKiMm4LXrPVA95TICyLVOljUjbAQYVT4WuF
-         bPd7ZLlp4eUV+tSOUL331+9JUSEtWam3kn/cx2dgt3GKVWdeyf6dkOMkQSgYVG/4mL0C
-         JXnA==
-X-Gm-Message-State: ALyK8tLwVXWitpLTmmLjWI2TW3kQm6VGvDKcQjON3UP4/FxBt/11q/cDVbUeX5ESOji/jw==
-X-Received: by 10.194.222.137 with SMTP id qm9mr3490815wjc.80.1467120183959;
-        Tue, 28 Jun 2016 06:23:03 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id r130sm5020140wmf.20.2016.06.28.06.23.01
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 28 Jun 2016 06:23:03 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [RFC] Native access to Git LFS cache
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqmvm6bom5.fsf@gitster.mtv.corp.google.com>
-Date:	Tue, 28 Jun 2016 15:22:59 +0200
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Jeff King <peff@peff.net>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <9603B6F9-3BEF-4779-84C3-6DC61D7FBC46@gmail.com>
-References: <1467005913-6503-1-git-send-email-larsxschneider@gmail.com> <xmqqmvm6bom5.fsf@gitster.mtv.corp.google.com>
-To:	Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+	id S1752593AbcF1NcQ (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 09:32:16 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53993 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752486AbcF1NcP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 09:32:15 -0400
+Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0Lhf3N-1beFVz3UQ5-00moFc; Tue, 28 Jun 2016 15:32:10
+ +0200
+Date:	Tue, 28 Jun 2016 15:32:09 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Ioannis.Kappas@rbs.com
+cc:	git@vger.kernel.org
+Subject: Re: git svn clone segmentation faul issue
+In-Reply-To: <alpine.DEB.2.20.1606281334450.12947@virtualbox>
+Message-ID: <alpine.DEB.2.20.1606281530420.12947@virtualbox>
+References: <0BCA1E695085C645B9CD4A27DD59F6FA39AAD5CF@GBWGCEUHUBD0101.rbsres07.net> <alpine.DEB.2.20.1606281334450.12947@virtualbox>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:eEqj+LFIT33vpdM7tPf1FOBzEYTl14nKxHdasPVAF4V1JDjTcAE
+ day3as+yxCRz+T+iMIMUfYDQF/Ao7xlyPIlBHAAuDGEGWejWmxFcUTGT2qWosGLVrUPi9T4
+ Ycob04K4VzUqxuXnDNB+i/7CrqPPaZE/W96DZZk7c0NIztvK0vitdsI2ksLkDlmwBwQn0DX
+ j+926KB0rG6doxjuo/8Mw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:jOaHTSNdGeU=:xSfsoniLHMt+MRkFEe9qZO
+ x8lX1J+fktzHAqt0YXXKn/aT0LBCLdl+bIKh92NveVK3xjbX0nKlq7mbq+wV194h9Glr+ViXg
+ jlgSoKY+sHUrSth4+hhhmfL/KV4JKvxL/MY8iOrantQLHOzCdZ7oGoHkqYFSf1vlnbMKkSfJ+
+ rrFK2BLQ6LzddIQnnYDks3nj44haaWU7i8e2fNBPmbXe81/e7xVaI+RfTUnqHnFhoAffOkHWf
+ Aor13L9TMS6iulbBJH7LojkOxNINEw9cGntI/PoXOojODCiEsLs4sUmf+J7siMVEPjebWg7jE
+ wYOw9BM4fo+0dk2vWvUBmVCaOPQvos7WTcEabRGwlqFsUQHJtycLZUvVVxc6NW2CrS80t2eeQ
+ O/ECpm12g6wH2rTOlx/4sBpiXu/7wOmnFW0y3LwCvFu6P+XVayhcJUegDCFNhPnOetkwXOVMI
+ E+hzRxT6b6x/mJau8qhnIQnHYAjK+iGOYYvNUWGjzJaKoQt5nHLPQ8g6fKbbQJKfpX7AEhE1K
+ aON2GqsE9eWFgK+dXXCg1Vj5rOBM2nt+ohO5KNCPgBMSi6FpLucL711byRt8FwO0KUPX4JDtM
+ UumfFwormXArKfNVZjsIiuv5dWL+CHB24/jG6F0IiSe2Vi1CprCLDeV31KsrXefLc0x93XmhB
+ bigmMW0EErAlapTOfD+a/1tOMM53mEw2zRh92CZsPOvMJndN9Wae2ROHFGuQKr5u1sE6jalIZ
+ yJixMOx/iNmnBIJ92SpYh2HzNdCc3nPScE/01nWyh99sW9is/wwYj0c52LFYAQ9V9uzfGjXxn
+ xyUVvIx
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Hi Ioannis,
 
-> On 27 Jun 2016, at 18:09, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, 28 Jun 2016, Johannes Schindelin wrote:
+
+> On Tue, 28 Jun 2016, Ioannis.Kappas@rbs.com wrote:
 > 
-> larsxschneider@gmail.com writes:
+> > Git can fail with a "malformed index nnn" error or cause a segmentation
+> > fault when executing the "git svn clone" command. 
+> >
+> > [...]
+> >
+> > Fortunately, a patch has already been submitted to subversion with
+> > (github) revision a074af86c8764404b28ce99d0bedcb668a321408 (at
+> > https://github.com/apache/subversion/commit/a074af86c8) on the trunk to
+> > handle this and a couple of other similar cases. But by the looks of it
+> > has not been picked up yet in the latest subversion 1.9.4 release or the
+> > 1.9.x branch, perhaps because this patch was identified in sanity checks
+> > rather than coming out from a perceivable production issue?
 > 
->> Unfortunately that fix helps only with cloning. Any local Git operation
->> that invokes the clean/smudge filter (e.g. switching branches) is still
->> slow.
+> This is an excellent analysis and a silver lining on the horizon to
+> resolve those vexing git svn issues we keep having in Git for Windows.
 > 
-> Do you know where the slowness comes from?  Does Joey's new
-> clean/smudge interface help GitLFS?
+> Do you have a test case that is reliably reproducing the issue?
 
-I am pretty sure the startup time of the external clean/smudge process
-causes the slowness and consequently I don't think Joey's patch would help. 
-The following tests makes me believe that:
+I hope you do! I patched the MSYS2 build script to apply a074af86c8 before
+compiling, and uploaded the resulting packages for i686 and x86_64
+architectures to
 
-I ran the same test as in my original email using the repo with 15,000 
-LFS files. Instead of the LFS binary I use the fast and simple shell 
-built-in `true` command:
+	https://github.com/dscho/MSYS2-packages/releases/tag/subversion-1.9.4-2
 
-$ git -c filter.lfs.smudge=true -c filter.lfs.clean=true clone https://github.com/larsxschneider/lfstest-manyfiles.git
-$ cd lfstest-manyfiles/
-$ time git -c filter.lfs.smudge=true -c filter.lfs.clean=true checkout removed-files
-
-real	0m47.030s
-user	0m29.521s
-sys	0m16.993s
-
-It still takes 47 seconds to switch the branch. Does this test prove my
-point or do you see a flaw in the test?
-
-
-> You are not likely to get anything that knows that a blob object may
-> be named as anything other than SHA-1("blob <len>" + <contents>) to
-> Git core.  The remote-object-store idea that was floated by Peff and
-> Christian started running with at least maintains that object naming
-> property and has a better chance of interacting better with the core,
-> but LFS, Annex or anything that would not preserve the object naming
-> would not.
-> 
-> Personally, I view a surrogate blob left by LFS in the tree object
-> and filtered via clean/smudge a "smarter" kind of symbolic link that
-> points outside what Git controls.  The area outside what Git
-> controls is left to be managed by whatever the add-on does; Git
-> shouldn't even be aware of how they are structured and/or managed.
-
-I understand and somewhat anticipated your point of view. I will try
-to find a less intrusive solution.
-
-@Christian/Peff: 
-Is there a place to look for more info about your remote-object-store idea? 
+Would you mind giving them a whirl?
 
 Thanks,
-Lars
+Johannes
