@@ -2,101 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26A932018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 21:15:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D81C2018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 21:39:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752516AbcF1VPf (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 17:15:35 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:38664 "EHLO
-	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752510AbcF1VPe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 17:15:34 -0400
-Received: by mail-wm0-f44.google.com with SMTP id r201so45528168wme.1
-        for <git@vger.kernel.org>; Tue, 28 Jun 2016 14:15:33 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=knZX+WqJAfK51rKD/2YG/j0N/vT0TCo9g3bU+vSLt6E=;
-        b=MQzEdcCAZMK8cuKrUALIdQTAfTpXA5CmhYzAODxQd0Q9SlPpw1C93WdLocM8RE7okk
-         DmvDmzNswzHsK4G37Y+RlsVcp/JbJi2inEskPcJXizoI+o5f/rT43aaK5njjaHyNac1M
-         OE/ROQFnMJJwusvygRHJVXO6RwaxfnQwyzWZWo7G1KkWTZ0dguciL4y48UzRIKHfg4OA
-         BPcFu5j1PAPqxCQxBMHGmEIcCtblXeDrsf1cmZ5YptKD0rCq5T3H58dyXlvBVNe6vTzZ
-         issjG0sO1vJY6Io/ocgMDj6DD0uilbD6RIirCvdqcTCXu7n+N+P/YiqV3bSDZylz7Utt
-         ZH/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=knZX+WqJAfK51rKD/2YG/j0N/vT0TCo9g3bU+vSLt6E=;
-        b=GvFGSCMxr9It+RPvhP8VQCR0yIWCvexhyHvHgX9tNdVsrWc4DLAVosd+UrP7auRhrv
-         T3lE+w7ZiYPm+x1ZGQUr+jllp4oOU07cwcSpE303cLD+QJVtgQk08qyFyxqML8pdwreY
-         RxVJme1gvATEhdpohSxB3Ze7yxjHdI3hOSP1FlfNyo2ysYCdY1+HpnqBrNEcTH9NBUy7
-         QpgZwoj8/U1mFKorOUMeXQEldeEKNa4pGfTtXJgc3XFgUAS7RH1Y5igEvnzkTuY+c8Yu
-         wZTwwrfeIMQR8ZFXc/fTyHfZPXQj7C0qCR70OFXwmByRSkZBNxjrrmTu3I6ZMAw6GKi0
-         +j1w==
-X-Gm-Message-State: ALyK8tLkD9wkOFtl2LAqArT18JLVi656SGXbuHQvR7UNzFDt9ZhPM2qRe7C7tB7ArCi1/PGqjh3k8IH1A07tuQ==
-X-Received: by 10.28.9.213 with SMTP id 204mr18928630wmj.88.1467148533075;
- Tue, 28 Jun 2016 14:15:33 -0700 (PDT)
+	id S1752411AbcF1Vjp (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 17:39:45 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58179 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751952AbcF1Vjp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 17:39:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D03829CEC;
+	Tue, 28 Jun 2016 17:39:44 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oTphP0PviYXWU4OLJmpI4O6FWQc=; b=Z+zs2x
+	hM1JWbuTLdQXMVHzej4Wj47o4AZSTJzkk+YF/nC9ZsvhpgpBj3uclI5M4KDy7JCZ
+	pFI3tDoxSlWVWFxgJUUCh2PzQVqdQQO1dUCq9z0lFwTQsOI6clxVPAuMEhyC26W3
+	Er6AzkPSKxo5ewTaAciVwdzfJ772w87Xzkf0o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nWrDbFw+n5PRYzLlkJ+kCg6X3he937qn
+	M9U4s4PJQd9hySZIg4dd5c9B4xS4OTbs1rBZUJoEifqQkgA3AIp29BVLUa/8wwUH
+	Ok5gLnKmDTGefTTP0U4BMsqm5TKa/Uu5Nw3Gy1BMbj5V2RCOWdAiXbLk2jELyNKx
+	9bmAuMeYTW8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2486629CEB;
+	Tue, 28 Jun 2016 17:39:44 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 97CB429CEA;
+	Tue, 28 Jun 2016 17:39:43 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Christian Couder <christian.couder@gmail.com>
+Cc:	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v8 33/41] write_or_die: use warning() instead of fprintf(stderr, ...)
+References: <20160627182429.31550-1-chriscool@tuxfamily.org>
+	<20160627182429.31550-34-chriscool@tuxfamily.org>
+Date:	Tue, 28 Jun 2016 14:39:41 -0700
+In-Reply-To: <20160627182429.31550-34-chriscool@tuxfamily.org> (Christian
+	Couder's message of "Mon, 27 Jun 2016 20:24:21 +0200")
+Message-ID: <xmqqoa6l6lia.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.28.218.19 with HTTP; Tue, 28 Jun 2016 14:15:32 -0700 (PDT)
-From:	Christian Zommerfelds <christian.zommerfelds@gmail.com>
-Date:	Tue, 28 Jun 2016 23:15:32 +0200
-Message-ID: <CAMS9jjwUmDi=oAi7Ew-b4+ywTLOGSuGx=YPyokpKHMqioNdmRg@mail.gmail.com>
-Subject: subtree bug: removing and re-adding a subtree screws up the push
-To:	git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: D39CACC2-3D78-11E6-BB95-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+Christian Couder <christian.couder@gmail.com> writes:
 
-Today I realized that when you add a subtree with `git subtree add`,
-then remove it with `git rm -r`, then re-add it again, pushing to the
-subtree behaves weirdly: it adds the whole history of the main
-repository to the sub repository.
+> diff --git a/write_or_die.c b/write_or_die.c
+> index 49e80aa..c29f677 100644
+> --- a/write_or_die.c
+> +++ b/write_or_die.c
+> @@ -87,8 +87,7 @@ int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg)
+>  {
+>  	if (write_in_full(fd, buf, count) < 0) {
+>  		check_pipe(errno);
+> -		fprintf(stderr, "%s: write error (%s)\n",
+> -			msg, strerror(errno));
+> +		warning("%s: write error (%s)\n", msg, strerror(errno));
+>  		return 0;
+>  	}
+>  
+> @@ -98,8 +97,7 @@ int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg)
+>  int write_or_whine(int fd, const void *buf, size_t count, const char *msg)
+>  {
+>  	if (write_in_full(fd, buf, count) < 0) {
+> -		fprintf(stderr, "%s: write error (%s)\n",
+> -			msg, strerror(errno));
+> +		warning("%s: write error (%s)\n", msg, strerror(errno));
+>  		return 0;
+>  	}
 
-Below is a list of commands to reproduce the issue:
-
-```
-mkdir myproj
-mkdir mylib
-
-cd mylib
-touch mylib-file1
-git init
-git add mylib-file1
-git commit -m "mylib initial commit"
-
-cd ../myproj
-touch myproj-file1
-git init
-git add myproj-file1
-git commit -m "myproj initial commit"
-git subtree add --squash -P contrib/mylib -m "added lib" ../mylib master
-git rm -r contrib/mylib
-git commit -m "removed lib"
-git subtree add --squash -P contrib/mylib -m "re-adding lib" ../mylib master
-
-git subtree push -P contrib/mylib ../mylib test
-
-cd ../mylib
-git checkout test
-git log | cat
-# expected: only "mylib initial commit"
-# actual: full history of myproj
-```
-
-If you replace the last two occurrences of contrib/mylib by a
-different folder such as contrib2/mylib, the push works as usual. I
-suspect that subtree splits using the first commit in the subfolder in
-the whole history, rather than the first commit after the folder was
-last added.
-
-Best regards,
-Christian Zommerfelds
+I do not think you call write_or_whine() at all.  As another topic
+in flight removes the last caller of this function, this hunk is
+very much unwelcome.  The only effect of it is to force me resolve
+unnecessary merge conflicts.
