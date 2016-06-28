@@ -2,210 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 152A02018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 21:44:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E89C52018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 22:12:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752465AbcF1Vou (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 17:44:50 -0400
-Received: from alt13.smtp-out.videotron.ca ([135.19.0.26]:64074 "EHLO
-	alt12.smtp-out.videotron.ca" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752508AbcF1Vop (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 17:44:45 -0400
-Received: from yoda.home ([96.23.157.65])
-	by Videotron with SMTP
-	id I0o2baoexq3HFI0o5bUVfQ; Tue, 28 Jun 2016 17:44:34 -0400
-X-Authority-Analysis: v=2.1 cv=Q9lym9Ca c=1 sm=1 tr=0
- a=keA3yYpnlypCNW5BNWqu+w==:117 a=keA3yYpnlypCNW5BNWqu+w==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
- a=pD_ry4oyNxEA:10 a=dg4UtMH5AAAA:8 a=fOC3hCqT-krO7fYxbDwA:9
- a=k2jzDucoAzBJoNO0:21 a=tyS9515zN_iOTHfO:21 a=CjuIK1q_8ugA:10
- a=byNfn09xH3PuSfgbYLsR:22
-Received: from xanadu.home (xanadu.home [192.168.2.2])
-	by yoda.home (Postfix) with ESMTPSA id 76AE52DA0200;
-	Tue, 28 Jun 2016 17:44:30 -0400 (EDT)
-Date:	Tue, 28 Jun 2016 17:44:30 -0400 (EDT)
-From:	Nicolas Pitre <nico@fluxnic.net>
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4] Refactor recv_sideband()
-In-Reply-To: <xmqqwpl96mvv.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.LFD.2.20.1606281726330.24439@knanqh.ubzr>
-References: <20160613195224.13398-1-lfleischer@lfos.de> <20160628043526.19403-1-lfleischer@lfos.de> <xmqqa8i59rph.fsf@gitster.mtv.corp.google.com> <xmqq60st9qg5.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1606281334030.24439@knanqh.ubzr>
- <xmqqlh1p89mo.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1606281422500.24439@knanqh.ubzr> <xmqq60st853d.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1606281629280.24439@knanqh.ubzr> <xmqqwpl96mvv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
+	id S1752434AbcF1WMX (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 18:12:23 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50203 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752508AbcF1WMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 18:12:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9374C27102;
+	Tue, 28 Jun 2016 18:11:15 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nA4FBTuVxFKsObB8qHwCmSfe43w=; b=O5hNxY
+	WxXvsG8xhaPKWp0h9CBYt057ISVQvBHkzbBS26D6TAcXP9OWyOtucPzNWaYAqCk7
+	H39imXP/huzDQT4D+Ap+A/YmjqaeXamvkBqk46/D2asVUSZ2oShdCsanStAiFQJC
+	wIb0We9cfa7eU5juVFeDHUoTDoVcSDr/lx7RI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EXZFdYQf6toYwi7X/+eyCvM9dd0j53Zj
+	5b/xi0uQCt3vTmmISvB9VaW+M54wvq+MT/pLMsxjFRU/3490TpvDKVa4M8cUERaw
+	WTq0fjy14qQDkgmF0x976WgLKz/nOCzO4fW1FmwzHLOVufk74QcB8TzrGCH0y67h
+	3ypzuE3F0z4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A72927101;
+	Tue, 28 Jun 2016 18:11:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0FAC827100;
+	Tue, 28 Jun 2016 18:11:14 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	sschuberth@gmail.com
+Subject: Re: [PATCH v2 0/2] Config conditional include
+References: <20160626070617.30211-1-pclouds@gmail.com>
+	<20160628172641.26381-1-pclouds@gmail.com>
+Date:	Tue, 28 Jun 2016 15:11:13 -0700
+In-Reply-To: <20160628172641.26381-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+	Duy"'s message of "Tue, 28 Jun 2016 19:26:39 +0200")
+Message-ID: <xmqqk2h96k1q.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-CMAE-Envelope: MS4wfNV7dxsqVgUxKcGcmqIf85sKjZrK6+pE1l5Xq08jR59TXRtFssqZfbgj/vdjgzp6+q9MaWb+Ae696TlIV5lDG1gX+gEJENstEslMR3oc3Ds4+0KRppA6
- Sjyfu2qOLGHj9+IgUHdSog/88aaPX+xdmaE/OMB+u7gSBTeFkujCZNnMxYzEQYah1fHSQ8lJiShzayATHguQ0YHgm0VuXlX4qvDU8BNsM0gzB+3J23N3vEDN
- dDEZVg/h0ubEH7tMsHX8GwFhtFlCS205HSw48PkZGkI=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3AF5569A-3D7D-11E6-AF20-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, 28 Jun 2016, Junio C Hamano wrote:
+Honestly, I'd really prefer to see those with topics in 'pu' that
+has seen reviews but not yet updated to go back to and polish them
+to help move things forward, with the goal to have them in 'next'
+sooner so that we can have fixes and features that are sufficiently
+vetted and tested in the next release, before starting yet another
+new topic that will be left hanging in 'pu'.
 
-> Nicolas Pitre <nico@fluxnic.net> writes:
-> 
-> >> There is something else going on.  I cannot quite explain why I am
-> >> getting this failure from t5401-update-hooks.sh, for example:
-> >> 
-> >>     --- expect      2016-06-28 19:46:24.564937075 +0000
-> >>     +++ actual      2016-06-28 19:46:24.564937075 +0000
-> >>     @@ -9,3 +9,4 @@
-> >>      remote: STDERR post-receive
-> >>      remote: STDOUT post-update
-> >>      remote: STDERR post-update
-> >>     +remote: To ./victim.git
-> >>     not ok 12 - send-pack stderr contains hook messages
-> >> 
-> >> ... goes and looks what v2.9.0 produces, which ends like this:
-> >> 
-> >>     ...
-> >>     remote: STDERR post-receive        
-> >>     remote: STDOUT post-update        
-> >>     remote: STDERR post-update        
-> >>     To ./victim.git
-> >>        e4822ab..2b65bd1  master -> master
-> >>      ! [remote rejected] tofail -> tofail (hook declined)
-> >> 
-> >> The test checks if lines prefixed with "remote: " match the expected
-> >> output, and the difference is an indication that the new code is
-> >> showing an extra incomplete-line "remote: " before other parts of
-> >> the code says "To ./victim.git" to report where the push is going.
-> >
-> > Ah...  I think I know what's going on.
-> >
-> > The leftover data in the strbuf is normally (when there is no errors) an 
-> > unterminated line. So instead of doing:
-> >
-> > -                       fprintf(stderr, "%s: protocol error: no band designator\n", me);
-> > +                       strbuf_addf(&outbuf,
-> > +                                   "\n%s: protocol error: no band designator\n",
-> > +                                   me);
-> >
-> > you could omit the final \n in the format string and:
-> >
-> > -       if (outbuf.len > 0)
-> > -               fprintf(stderr, "%.*s", (int)outbuf.len, outbuf.buf);
-> > +       if (outbuf.len)
-> > +               fwrite(outbuf.buf, 1, outbuf.len, stderr);
-> >         strbuf_release(&outbuf);
-> >
-> > and here a \n could be added before writing out the buffer.
-> 
-> Unfortunately, that is not it.
-> 
-> The basic structure of the code (without the "SQUASH" we discussed)
-> looks like this:
-> 
-> 	strbuf_addf(&outbuf, "%s", PREFIX);
-> 	while (retval == 0) {
-> 		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
-> 		...
-> 		band = buf[0] & 0xff;
-> 		switch (band) {
-> 		case 3:
-> 			... /* emergency exit */
-> 		case 2:
-> 			while ((brk = strpbrk(b, "\n\r"))) {
-> 				int linelen = brk - b;
-> 
-> 				if (linelen > 0) {
-> 					strbuf_addf(&outbuf, "%.*s%s%c",
-> 						    linelen, b, suffix, *brk);
-> 				} else {
-> 					strbuf_addf(&outbuf, "%c", *brk);
-> 				}
-> 				fprintf(stderr, "%.*s", (int)outbuf.len,
-> 					outbuf.buf);
-> 				strbuf_reset(&outbuf);
-> 				strbuf_addf(&outbuf, "%s", PREFIX);
-> 				b = brk + 1;
-> 			}
-> 			if (*b)
-> 				strbuf_addf(&outbuf, "%s", b);
-> 			break;
-> 		...
-> 		}
-> 	}
-> 
-> 	if (outbuf.len > 0)
-> 		fprintf(stderr, "%.*s", (int)outbuf.len, outbuf.buf);
-> 
-> Imagine we are reading from band #2 and we find a complete line.  We
-> concatenate the payload up to the LF at the end of the line to the
-> PREFIX we prepared outside the loop and emit it, and then we ASSUME
-> that we further have something after strpbrk() and add PREFIX to the
-> buffer, before going to the next line in the payload.
-> 
-> But there may not be anything after the LF.  outbuf.len is still
-> counting the PREFIX and we end up showing it, without termination.
+In your case, I am talking about nd/icase, nd/fetch-ref-summary, and
+nd/connect-ssh-command-config topics.
 
-You're right.  Although my previous observations still apply.
-
-> This takes us back to what I said in my review of an earlier round,
-> in $gmane/297332, where I said:
-> 
->     Instead of doing "we assume outbuf already has PREFIX when we add
->     contents from buf[]", the code structure would be better if you:
-> 
->      * make outbuf.buf contain PREFIX at the beginning of this innermost
->        loop; lose the reset/addf from here.
-> 
->      * move strbuf_reset(&outbuf) at the end of the next if (*b) block
->        to just before "continue;"
-> 
->     perhaps?
-> 
-> I think the strbuf_addf(PREFIX) above the loop should be removed,
-> and instead the code should use the PREFIX only when it decides that
-> there is something worth emitting, i.e.
-> 
-> 	while (!retval) {
->         	len = packet_read();
->                 ...
->                 band = buf[0] & 0xff;
->                 switch (band) {
->                 case 3:
->                 	... /* emergency exit */
-> 		case 2:
->                 	while ((brk = ...)) {
->                         	/* we have something to say */
-> 				strbuf_reset(&outbuf);
->                                 strbuf_addstr(&outbuf, PREFIX);
-
-That won't work. If at this point there is the beginning of a partial 
-line queued in the buffer from the previous round waiting to see its 
-line break, you just deleted the beginning of that line.
-
-Furthermore, that partial line won't get a prefix if it doesn't have at 
-least one line break in the packet data.
-
-Rather the prefix should be added whenever the buffer is empty before 
-every addition.
-
->                                 if (linelen)
->                                 	strbuf_addf(...);
-> 				else
->                                 	strbuf_addch(*brk);
-> 				fwrite(outbuf.buf, 1, outbuf.len, stderr);
-> 				b = brk + 1;
-> 			}
->                         if (*b) {
->                         	/* we still have something to say */
-> 				strbuf_reset(&outbuf);
->                                 strbuf_addstr(&outbuf, PREFIX);
->                                	strbuf_addf(...);
-
-This is also wrong.  If the middle part of a partial line is received, 
-you just deleted its queued beginning.
-
-
-Nicolas
+Thanks.
