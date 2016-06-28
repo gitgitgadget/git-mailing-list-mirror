@@ -2,93 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE4352018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 22:50:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B87B2018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 22:55:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752529AbcF1Wt6 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 18:49:58 -0400
-Received: from mailout.micron.com ([137.201.242.129]:26049 "EHLO
-	mailout.micron.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752251AbcF1Wt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 18:49:58 -0400
-Received: from mail.micron.com (bowex17a.micron.com [137.201.21.209])
-	by mailout.micron.com (8.14.4/8.14.6) with ESMTP id u5SMnpN5015731;
-	Tue, 28 Jun 2016 16:49:51 -0600
-Received: from bowex17b.micron.com (137.201.21.210) by bowex17a.micron.com
- (137.201.21.209) with Microsoft SMTP Server (TLS) id 15.0.1178.4; Tue, 28 Jun
- 2016 16:49:51 -0600
-Received: from bowex17b.micron.com ([fe80::c4b6:ba92:bbc7:49e8]) by
- bowex17b.micron.com ([fe80::c4b6:ba92:bbc7:49e8%21]) with mapi id
- 15.00.1178.000; Tue, 28 Jun 2016 16:49:51 -0600
-From:	"Andy Falanga (afalanga)" <afalanga@micron.com>
-To:	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-CC:	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: What's happening to the index
-Thread-Topic: What's happening to the index
-Thread-Index: AQHR0UmpYyKI5mtRV0y4jBNtBkclFJ/+/g1dgADitQA=
-Date:	Tue, 28 Jun 2016 22:49:51 +0000
-Message-ID: <5772FF0E.6030503@micron.com>
-References: <57728A17.3010207@micron.com> <vpq60stuyv5.fsf@anie.imag.fr>
-In-Reply-To: <vpq60stuyv5.fsf@anie.imag.fr>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [137.201.20.7]
-x-tm-as-product-ver: SMEX-12.0.0.1220-8.000.1202-22418.005
-x-tm-as-result:	No--44.042600-0.000000-31
-x-tm-as-matchedid: 147014-150567-701625-704425-700685-700075-139010-703731-7
-	01053-707451-700057-706737-702020-700970-711139-187236-702057-701461-188019
-	-705861-701005-700274-707760-701914-707078-136070-707119-701594-701590-7006
-	93-703788-700008-188198-709584-863828-706891-148004-148133-20043-42000-42003
-x-tm-as-user-approved-sender: Yes
-x-tm-as-user-blocked-sender: No
-x-mt-checkinternalsenderrule: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <E66ED5E837950C4C9B416ABBF5B71437@micron.com>
-Content-Transfer-Encoding: base64
+	id S1752558AbcF1WzV (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 18:55:21 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63240 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752570AbcF1WzR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 18:55:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 016F926FCB;
+	Tue, 28 Jun 2016 18:47:55 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=31V2QRbHx3ao3XJOMhiIGHPJql8=; b=NDDXvR
+	GVKN/1q6GdIsGbCRA4PUhRu7CeDbKqylOrCduKRNcdzBk8u73xHp8Ijhs0AkkobQ
+	Pc3+V4Jdku/o9w+9QZuImaQ12yFp8yL/1rg4uyzzO+cgVSTZFMwkzAtUTPeEASXJ
+	nxkcdu88prtuqLoYlDcNCapUTVwp+SdDGm2ZE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=COLqUQmC+lmqKmf5n6ZwDvVzoRMLq/T1
+	op0JKF4I3fHiv8Q8FclkKzMat6ycdz3hQH7JlqzJ2T96yFCaF+D9HWG6tPB2/sw7
+	Q40Y90doacBDFsBGxiwuh24Ku20PGtCQI1VgtJPsgHEuXTTTqL+p+QLJYyehH7w1
+	xwlQGjRJa+o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id ED28F26FCA;
+	Tue, 28 Jun 2016 18:47:54 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6FE1326FC8;
+	Tue, 28 Jun 2016 18:47:54 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Nicolas Pitre <nico@fluxnic.net>
+Cc:	Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4] Refactor recv_sideband()
+References: <20160613195224.13398-1-lfleischer@lfos.de>
+	<20160628043526.19403-1-lfleischer@lfos.de>
+	<xmqqa8i59rph.fsf@gitster.mtv.corp.google.com>
+	<xmqq60st9qg5.fsf@gitster.mtv.corp.google.com>
+	<alpine.LFD.2.20.1606281334030.24439@knanqh.ubzr>
+	<xmqqlh1p89mo.fsf@gitster.mtv.corp.google.com>
+	<alpine.LFD.2.20.1606281422500.24439@knanqh.ubzr>
+	<xmqq60st853d.fsf@gitster.mtv.corp.google.com>
+	<alpine.LFD.2.20.1606281629280.24439@knanqh.ubzr>
+	<xmqqwpl96mvv.fsf@gitster.mtv.corp.google.com>
+	<alpine.LFD.2.20.1606281726330.24439@knanqh.ubzr>
+	<xmqqfurx6j16.fsf@gitster.mtv.corp.google.com>
+Date:	Tue, 28 Jun 2016 15:47:52 -0700
+In-Reply-To: <xmqqfurx6j16.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 28 Jun 2016 15:33:09 -0700")
+Message-ID: <xmqq8txp6icn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.78 on 137.201.130.65
+Content-Type: text/plain
+X-Pobox-Relay-ID: 59E6C5D4-3D82-11E6-81E5-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-T24gMDYvMjgvMjAxNiAwOToxNyBBTSwgTWF0dGhpZXUgTW95IHdyb3RlOg0KPiAiQW5keSBGYWxh
-bmdhIChhZmFsYW5nYSkiIDxhZmFsYW5nYUBtaWNyb24uY29tPiB3cml0ZXM6DQo+DQo+PiBBZnRl
-ciB0aGUgbGluZSBjYWxsaW5nIGluY3JlbG51bSBpcyBleGVjdXRlZCwgSSBvZnRlbiBoYXZlIGlz
-c3VlcyB3aXRoDQo+PiBtYWtlIHVuYWJsZSB0byBzcGF3biB0aGUgbmV4dCBjb21tYW5kIGJlY2F1
-c2UgaXQgY2FuJ3QgcmVhZCB0aGUgY3VycmVudA0KPj4gZGlyZWN0b3J5IGluZm8uDQo+IFRoaXMg
-bWF5IGhhcHBlbiBpZiB5b3UgZGVsZXRlIHRoZSBjdXJyZW50IGRpcmVjdG9yeSwgZXZlbiBpZiB5
-b3VyDQo+IHJlLWNyZWF0ZSBpdCBhZnRlcndhcmRzLiBGb3IgZXhhbXBsZToNCj4NCj4gL3RtcC90
-ZXN0JCBybSAtZnIgL3RtcC90ZXN0ICYmIG1rZGlyIC90bXAvdGVzdA0KPiAvdG1wL3Rlc3QkIHRv
-dWNoIGZvbw0KPiB0b3VjaDogY2Fubm90IHRvdWNoIOKAmGZvb+KAmTogTm8gc3VjaCBmaWxlIG9y
-IGRpcmVjdG9yeQ0KPiAvdG1wL3Rlc3QkIGNkIC90bXAvdGVzdA0KPiAvdG1wL3Rlc3QkIHRvdWNo
-IGZvbw0KPiAvdG1wL3Rlc3QkDQo+DQo+IFRoaXMgaXMgdW5yZWxhdGVkIGZyb20gR2l0LCBidXQg
-bWF5YmUgeW91IGFza2VkIEdpdCB0byBkZWxldGUgYQ0KPiBkaXJlY3RvcnkgKGJ5IHN3aXRjaGlu
-ZyB0byBhIGJyYW5jaCB3aGljaCBkb2Vzbid0IGNvbnRhaW4gYSBkaXJlY3RvcnkNCj4gZm9yIGV4
-YW1wbGUpLg0KPg0KPj4gSWYgSSBkbzogY2QgLi4gJiYgY2QgLTsgYWxsIGlzIHdlbGwuDQo+IFRo
-aXMgaXMgYSB0eXBpY2FsIHN5bXB0b20gb2YgdGhlIGlzc3VlIGFib3ZlLg0KPg0KVGhhbmsgeW91
-IGZvciB0aGUgaW5zaWdodDogdmVyeSBpbnRlcmVzdGluZy4gIEFmdGVyIGFza2luZyBhbm90aGVy
-IA0KY29sbGVhZ3VlIGhvdyBoZSBzb2x2ZWQgdGhpcyBpc3N1ZSwgSSd2ZSByZS13cml0dGVuIG15
-IGluY3JlbG51bSBzY3JpcHQgDQp0bywgaW5zdGVhZCBvZiB3b3JraW5nIHdpdGhpbiBteSB3b3Jr
-aW5nIHRyZWUsIGNsb25lIGEgdGVtcG9yYXJ5IG9mIHRoaXMgDQpvbmUgYnJhbmNoIG9ubHkuICBU
-aGVuLCBpdCBpbmNyZW1lbnRzIHRoZSBudW1iZXIgYW5kIHB1c2hlcyBiYWNrIHRvIHRoZSANCm9y
-aWdpbi4gIE9uY2UgY29tcGxldGVkLCB0aGUgdGVtcG9yYXJ5IGNsb25lIGlzIGRlbGV0ZWQuDQoN
-ClRoZSBzdHJhbmdlIHRoaW5nIG5vdyBpcywgYWZ0ZXIgdGhlIHNjcmlwdCBleGl0cywgSSB0aGVu
-IGNhbGwgImdpdCANCmZldGNoIiBpbiB0aGUgcmVjaXBlLiAgSSBjYW4gc2VlIGZyb20gdGhlIG91
-dHB1dCBvZiBtYWtlIHRoYXQgdGhlIHJlbW90ZSANCmRiIGlzIGZldGNoZWQuICBIb3dldmVyLCB3
-aGVuIEkgY2FsbCAiZ2l0IHNob3cgDQpvcmlnaW4vcnBtOnBhdGgvdG8vcnBtX2J1aWxkX251bSIg
-ZnJvbSB0aGUgbWFrZWZpbGUgSSBnZXQgdGhlICpwcmV2aW91cyogDQpudW1iZXIuICBZZXQsIGFz
-IHNvb24gYXMgdGhlIG1ha2UgcHJvY2VzcyBleGl0cywgSSBjYWxsICJnaXQgc2hvdyANCm9yaWdp
-bi9ycG06cGF0aC90by9ycG1fYnVpbGRfbnVtIiBhbmQgaXQgc2hvd3MgdGhlIGNvcnJlY3QgbnVt
-YmVyISAgV2hhdCANCmdpdmVzPyAgSXMgdGhlcmUgc29tZSBzb3J0IG9mIHN0cmFuZ2UgZmlsZSBj
-YWNoaW5nIHRoYXQgaGFwcGVuaW5nIHdoZW4gDQptYWtlIHN0YXJ0cyB0aGF0LCBhbHRob3VnaCB0
-aGUgbG9jYWwgZGIgaXMgdXBkYXRlZCwgSSBkb24ndCBnZXQgd2hhdCBJJ20gDQphZnRlcj8NCg0K
-QW5keQ==
+Junio C Hamano <gitster@pobox.com> writes:
+
+> But then my observation still holds, no?
+>
+> ...
+>         if (outbuf.len) {
+>         	/* we still have something to say */
+>                 strbuf_splice(&outbuf, 0, 0, PREFIX,
+>         	strlen(PREFIX));
+>                 fwrite(...);
+> 	}
+
+I guess these two are more or less equivalent.
+
+I view "outbuf" more as "holdbuf", i.e. the payload that has been
+received and yet to be shown, and from that point of view, having
+and keeping PREFIX which is not something we received in there while
+looping to grab more input makes me feel dirty.  IOW, I consider
+"empty" is the correct base state of the hold buffer before anything
+happens.
+
+I understand that you view "outbuf" as what has been prepared to be
+shown but not ready to be shown due to lack of LF, and from that
+point of view, the base state of the out buffer before anything
+happens could be "it has PREFIX and nothing else".
+
+It's just that if you take the latter, then the conditional after
+the loop exits (i.e. the last transmission was an incomplete line)
+cannot be "is outbuf empty?", as your base state is "has PREFIX and
+can never be empty".  I was working back from that if statement.
+
+
