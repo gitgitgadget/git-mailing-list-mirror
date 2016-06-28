@@ -6,91 +6,230 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F0CF1FE4E
-	for <e@80x24.org>; Tue, 28 Jun 2016 04:01:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D9C31FE4E
+	for <e@80x24.org>; Tue, 28 Jun 2016 04:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750828AbcF1EBT (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 00:01:19 -0400
-Received: from elnino.cryptocrack.de ([46.165.227.75]:4333 "EHLO
+	id S1752322AbcF1Efv (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 00:35:51 -0400
+Received: from elnino.cryptocrack.de ([46.165.227.75]:36772 "EHLO
 	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750704AbcF1EBS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 00:01:18 -0400
-Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id 949bdf5b
+	with ESMTP id S1752039AbcF1Efv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 00:35:51 -0400
+Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id 89e0359f
 	TLS version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO;
-	Tue, 28 Jun 2016 06:01:13 +0200 (CEST)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-To:	Nicolas Pitre <nico@fluxnic.net>
+	Tue, 28 Jun 2016 06:35:41 +0200 (CEST)
 From:	Lukas Fleischer <lfleischer@lfos.de>
-In-Reply-To: <alpine.LFD.2.20.1606271640230.2550@knanqh.ubzr>
-Cc:	"Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Johannes Sixt" <j6t@kdbg.org>
+To:	git@vger.kernel.org
+Cc:	Nicolas Pitre <nico@fluxnic.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: [PATCH v4] Refactor recv_sideband()
+Date:	Tue, 28 Jun 2016 06:35:26 +0200
+Message-Id: <20160628043526.19403-1-lfleischer@lfos.de>
+X-Mailer: git-send-email 2.9.0
+In-Reply-To: <20160613195224.13398-1-lfleischer@lfos.de>
 References: <20160613195224.13398-1-lfleischer@lfos.de>
- <alpine.DEB.2.20.1606241942220.12947@virtualbox>
- <20160624181414.GA25768@sigill.intra.peff.net>
- <CAPc5daWxWpMe4ob4zu0tMK4uWpLPDxC7GS8KTb4+3g5=ztv71A@mail.gmail.com>
- <146702508453.24123.590646528169139972@s-8d3a37fa.on.site.uni-stuttgart.de>
- <xmqqr3bibpap.fsf@gitster.mtv.corp.google.com>
- <20160627161616.GA4430@sigill.intra.peff.net>
- <xmqqbn2mbjxm.fsf@gitster.mtv.corp.google.com>
- <146705966655.11886.6547584744094511110@typhoon>
- <alpine.LFD.2.20.1606271640230.2550@knanqh.ubzr>
-Message-ID: <146708647010.14433.5732305874810138274@typhoon>
-User-Agent: alot/0.3.7
-Subject: Re: [PATCH v2] Refactor recv_sideband()
-Date:	Tue, 28 Jun 2016 06:01:10 +0200
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, 27 Jun 2016 at 22:47:59, Nicolas Pitre wrote:
-> On Mon, 27 Jun 2016, Lukas Fleischer wrote:
-> 
-> > On Mon, 27 Jun 2016 at 19:50:13, Junio C Hamano wrote:
-> > > Jeff King <peff@peff.net> writes:
-> > > 
-> > > > On Mon, Jun 27, 2016 at 08:54:22AM -0700, Junio C Hamano wrote:
-> > > >
-> > > >> It's just you used xwrite() there that introduced a different issue.
-> > > >> Wouldn't replacing it with fwrite(stderr) without changing anything
-> > > >> else solve that?
-> > 
-> > I do not see how using fwrite() buys us anything. Neither fwrite() nor
-> > fputs() nor fprintf() guarantee to call write() only once. Each of these
-> > three functions is buffered when printing to stdout and unbuffered when
-> > printing to stderr.
-> 
-> You are right.  However, in practice:
-> 
-> - fprintf(stderr, "%s", buffer) is likely to call write() only once 
->   given there is only one string specifier, and
-> 
-> - On Windows the ANSI escape sequences are interpreted by fprintf() and 
->   not by write() nor by the actual display console code. Insane but such 
->   is life sometimes.
-> 
-> So the point is simply to replace your call to write() by a call to 
-> fprintf(..., "%*s", ...) in your patch which should provide the same 
-> end result as before.
+Before this patch, we used character buffer manipulations to split
+messages from the sideband at line breaks and insert "remote: " at the
+beginning of each line, using the packet size to determine the end of a
+message. However, since it is safe to assume that diagnostic messages
+from the sideband never contain NUL characters, we can also
+NUL-terminate the buffer, use strpbrk() for splitting lines and use
+format strings to insert the prefix.
 
-Well, this is essentially what I tried to make clear in my previous
-email. In practice, each of the following lines should work:
+A strbuf is used for accumulating the output which is then printed using
+a single fprintf() call with a single conversion specifier per line,
+such that the atomicity of the output is preserved. See 9ac13ec (atomic
+write for sideband remote messages, 2006-10-11) for details.
 
-    fwrite(outbuf.buf, 1, outbuf.len, stderr);
-    fputs(outbuf.buf, stderr);
-    fprintf("%s", outbuf.buf, stderr);
-    fprintf("%.*s", outbuf.len, outbuf.buf, stderr);
+Helped-by: Jeff King <peff@peff.net>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Nicolas Pitre <nico@fluxnic.net>
+Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
+---
+Changes since v3:
+* The new code always frees the strbuf used for the output.
+* Switched back to fprintf() to support ANSI codes under Windows.
+* Added a comment on the tradeoff between atomicity and Windows support.
 
-The first version is probably to most "efficient" one and I personally
-find the fputs() line to be the one that is easiest to read. However, I
-think it does not make sense to start another bikeshedding discussion at
-this point. I will make a defensive choice and use fprintf() with "%.*s"
-since that is what we used before, so it is tested well enough.
+ sideband.c | 125 ++++++++++++++++++++++++++-----------------------------------
+ 1 file changed, 54 insertions(+), 71 deletions(-)
 
-Given the amount of discussion required to get this right, I also
-strongly believe this code deserves a comment with a short explanation
-on why things are done this way...
+diff --git a/sideband.c b/sideband.c
+index fde8adc..835d77d 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -13,111 +13,94 @@
+  * the remote died unexpectedly.  A flush() concludes the stream.
+  */
+ 
+-#define PREFIX "remote:"
++#define PREFIX "remote: "
+ 
+ #define ANSI_SUFFIX "\033[K"
+ #define DUMB_SUFFIX "        "
+ 
+-#define FIX_SIZE 10  /* large enough for any of the above */
+-
+ int recv_sideband(const char *me, int in_stream, int out)
+ {
+-	unsigned pf = strlen(PREFIX);
+-	unsigned sf;
+-	char buf[LARGE_PACKET_MAX + 2*FIX_SIZE];
+-	char *suffix, *term;
+-	int skip_pf = 0;
++	const char *term, *suffix;
++	char buf[LARGE_PACKET_MAX + 1];
++	struct strbuf outbuf = STRBUF_INIT;
++	const char *b, *brk;
++	int retval = 0;
+ 
+-	memcpy(buf, PREFIX, pf);
++	strbuf_addf(&outbuf, "%s", PREFIX);
+ 	term = getenv("TERM");
+ 	if (isatty(2) && term && strcmp(term, "dumb"))
+ 		suffix = ANSI_SUFFIX;
+ 	else
+ 		suffix = DUMB_SUFFIX;
+-	sf = strlen(suffix);
+ 
+-	while (1) {
++	while (retval == 0) {
+ 		int band, len;
+-		len = packet_read(in_stream, NULL, NULL, buf + pf, LARGE_PACKET_MAX, 0);
++		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
+ 		if (len == 0)
+ 			break;
+ 		if (len < 1) {
+ 			fprintf(stderr, "%s: protocol error: no band designator\n", me);
+-			return SIDEBAND_PROTOCOL_ERROR;
++			retval = SIDEBAND_PROTOCOL_ERROR;
++			break;
+ 		}
+-		band = buf[pf] & 0xff;
++		band = buf[0] & 0xff;
++		buf[len] = '\0';
+ 		len--;
+ 		switch (band) {
+ 		case 3:
+-			buf[pf] = ' ';
+-			buf[pf+1+len] = '\0';
+-			fprintf(stderr, "%s\n", buf);
+-			return SIDEBAND_REMOTE_ERROR;
++			fprintf(stderr, "%s%s\n", PREFIX, buf + 1);
++			retval = SIDEBAND_REMOTE_ERROR;
++			break;
+ 		case 2:
+-			buf[pf] = ' ';
+-			do {
+-				char *b = buf;
+-				int brk = 0;
+-
+-				/*
+-				 * If the last buffer didn't end with a line
+-				 * break then we should not print a prefix
+-				 * this time around.
+-				 */
+-				if (skip_pf) {
+-					b += pf+1;
+-				} else {
+-					len += pf+1;
+-					brk += pf+1;
+-				}
++			b = buf + 1;
+ 
+-				/* Look for a line break. */
+-				for (;;) {
+-					brk++;
+-					if (brk > len) {
+-						brk = 0;
+-						break;
+-					}
+-					if (b[brk-1] == '\n' ||
+-					    b[brk-1] == '\r')
+-						break;
+-				}
++			/*
++			 * Append a suffix to each nonempty line to clear the
++			 * end of the screen line.
++			 *
++			 * The output is accumulated in a buffer and each line
++			 * is printed to stderr using fprintf() with a single
++			 * conversion specifier. This is a "best effort"
++			 * approach to supporting both inter-process atomicity
++			 * (single conversion specifiers are likely to end up
++			 * in single atomic write() system calls) and the ANSI
++			 * control code emulation under Windows.
++			 */
++			while ((brk = strpbrk(b, "\n\r"))) {
++				int linelen = brk - b;
+ 
+-				/*
+-				 * Let's insert a suffix to clear the end
+-				 * of the screen line if a line break was
+-				 * found.  Also, if we don't skip the
+-				 * prefix, then a non-empty string must be
+-				 * present too.
+-				 */
+-				if (brk > (skip_pf ? 0 : (pf+1 + 1))) {
+-					char save[FIX_SIZE];
+-					memcpy(save, b + brk, sf);
+-					b[brk + sf - 1] = b[brk - 1];
+-					memcpy(b + brk - 1, suffix, sf);
+-					fprintf(stderr, "%.*s", brk + sf, b);
+-					memcpy(b + brk, save, sf);
+-					len -= brk;
++				if (linelen > 0) {
++					strbuf_addf(&outbuf, "%.*s%s%c",
++						    linelen, b, suffix, *brk);
+ 				} else {
+-					int l = brk ? brk : len;
+-					fprintf(stderr, "%.*s", l, b);
+-					len -= l;
++					strbuf_addf(&outbuf, "%c", *brk);
+ 				}
++				fprintf(stderr, "%.*s", (int)outbuf.len,
++					outbuf.buf);
++				strbuf_reset(&outbuf);
++				strbuf_addf(&outbuf, "%s", PREFIX);
++
++				b = brk + 1;
++			}
+ 
+-				skip_pf = !brk;
+-				memmove(buf + pf+1, b + brk, len);
+-			} while (len);
+-			continue;
++			if (*b)
++				strbuf_addf(&outbuf, "%s", b);
++			break;
+ 		case 1:
+-			write_or_die(out, buf + pf+1, len);
+-			continue;
++			write_or_die(out, buf + 1, len);
++			break;
+ 		default:
+ 			fprintf(stderr, "%s: protocol error: bad band #%d\n",
+ 				me, band);
+-			return SIDEBAND_PROTOCOL_ERROR;
++			retval = SIDEBAND_PROTOCOL_ERROR;
++			break;
+ 		}
+ 	}
+-	return 0;
++
++	if (outbuf.len > 0)
++		fprintf(stderr, "%.*s", (int)outbuf.len, outbuf.buf);
++	strbuf_release(&outbuf);
++	return retval;
+ }
+ 
+ /*
+-- 
+2.9.0
+
