@@ -2,104 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A30242018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 15:43:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3189C2018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 15:50:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752290AbcF1Pmi (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 11:42:38 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58409 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752157AbcF1Pmh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 11:42:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5195223B63;
-	Tue, 28 Jun 2016 11:42:36 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eBfyKOtumkshTt7PD0K7QmRhJ0g=; b=sXhETg
-	0uySUV6p7kVWDmny7ROcVVhF55RRlBxJcCuHkshpH+cfaOgqrw0QOmhBSkboY6yU
-	tl8gYnbXKeDvWUoPLlIH4ndbz4BbLHWCxZTEwJZ4Gf5WvFerdShVnVNOy7Bwi/SA
-	m8C0zESJj6gaaP6fgjBBYF9gJ4YWrdLnOAgjs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QyCaYmbaG90KLymCbDJcgjQEBj+B41M/
-	ZSGhmayvR8eYO5kPI0t2WWye8F+/sj62qf8dLf5fyI7rXQhvjELLIVoviSdIAfem
-	0KZLTBnfyj2h62JzRVzmGuXn9GpegUk6eg6njfGNPomSm8dBkZ3/6txawpIwZ6LP
-	Gcf5eNDQXts=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 489EB23B61;
-	Tue, 28 Jun 2016 11:42:36 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C7DD123B5D;
-	Tue, 28 Jun 2016 11:42:35 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-	Karsten Blees <blees@dcon.de>, Stepan Kasal <kasal@ucw.cz>,
-	Jeff King <peff@peff.net>, Lukas Fleischer <lfleischer@lfos.de>
-Subject: Re: [PATCH] Remove obsolete comment from color.h
-References: <16f3d3edb03c2cb9a6c11b745eda9fb2274af182.1467108142.git.johannes.schindelin@gmx.de>
-Date:	Tue, 28 Jun 2016 08:42:33 -0700
-In-Reply-To: <16f3d3edb03c2cb9a6c11b745eda9fb2274af182.1467108142.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Tue, 28 Jun 2016 12:02:49 +0200
-	(CEST)")
-Message-ID: <xmqqinwt9v6e.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752121AbcF1Pup (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 11:50:45 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:33527 "EHLO
+	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752020AbcF1Puo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 11:50:44 -0400
+Received: by mail-io0-f196.google.com with SMTP id t74so2482119ioi.0
+        for <git@vger.kernel.org>; Tue, 28 Jun 2016 08:50:44 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Uq3LHeowp6+76QISCAyTF8qvrlUZlB2UBV3NvG41q3c=;
+        b=03pl3zmp28dmh1jHpEJn6CkyOnhKiYlVm7kBJTPiqykEy7I6FjEkmW1GwckTtzkL1r
+         Lwz7SuVHyg7VW4gd0r2be+sez5IHaim4EId8q1t1K29IXaHte1Ca363wN9TWOLTC0kN4
+         kQPTdOACYWatuoWFBAytPD1HBFW/zOGFlraawkC6naNJstV7L33HBwuE0BA0emmxmpZG
+         Co9onWHRl6sVEqHicjK9Tzz3D85Q9UHaPkOg6BdDOF3RgDrmtV0twBDWkub3u2xWOPbT
+         FXJfFhHo27fUFWSmGRAGKw3yrGLgHTGEYUjQJdcPNtT1Y5oqPFNxZvK/O7TuMwiidiw2
+         IPxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Uq3LHeowp6+76QISCAyTF8qvrlUZlB2UBV3NvG41q3c=;
+        b=U/glQqr71CZOXvIHMXUT/4vwfyQZ54Eif4g+fp6dYE/BTrZtU3AuK/Pt9FFzPbg/z1
+         MSYfmD2EWz5efs4ggqBHjoPiB3hdN/QMT2ayhqavKne2YB6U8LmlFKHYpVXQpVy8SMXG
+         idtIYErc2Bxn7q8hpXEauRfUiYZ8TN8HRhuL5GeNjdxYqVDlOyGm075v2ex2rHvIVqtr
+         JWzpXPWSjmHABzMZYKFpvxRbTdVltzXIWSg0RHS7aveu/ss5QYfY/zydxZuL+Yu449YO
+         12oS9awrCzg4pgB6d/3RobCMhYjziXPa8+FKY9AzA3OBSKTdBGLLlBE8cWyi+jLNoEWF
+         fVQA==
+X-Gm-Message-State: ALyK8tJF2KqgJio8u5oF01PJCcDcAoYRKlHc7y6VYxpOIta6Y82SEE3aA5Vs720gbgjyIjtLA8Arlw/XFDs0tg==
+X-Received: by 10.107.159.16 with SMTP id i16mr4112132ioe.29.1467129043990;
+ Tue, 28 Jun 2016 08:50:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EFA4B86A-3D46-11E6-B073-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.64.225.235 with HTTP; Tue, 28 Jun 2016 08:50:14 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1606281513380.12947@virtualbox>
+References: <1467005913-6503-1-git-send-email-larsxschneider@gmail.com>
+ <CACsJy8B7ie_oQRZ7Pw3NTo4YyXwZOer-iDUVxDPSY_uhrQi1bw@mail.gmail.com>
+ <alpine.DEB.2.20.1606281139490.12947@virtualbox> <CACsJy8DCovHoutyEYwaxdCTU4K-h8u_JTOwt8GUiNTkkXzGz3w@mail.gmail.com>
+ <alpine.DEB.2.20.1606281513380.12947@virtualbox>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Tue, 28 Jun 2016 17:50:14 +0200
+Message-ID: <CACsJy8BLhO3R=8rAqLwAXc3LGLVVr4KGtWOm4MAh7bKDMn+uPw@mail.gmail.com>
+Subject: Re: [RFC] Native access to Git LFS cache
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Lars Schneider <larsxschneider@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
-> Originally, ANSI color sequences were supported on Windows only by
-> overriding the printf() and fprintf() functions, as mentioned in e7821d7
-> (Add a notice that only certain functions can print color escape codes,
-> 2009-11-27).
+On Tue, Jun 28, 2016 at 3:14 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Duy,
 >
-> As of eac14f8 (Win32: Thread-safe windows console output, 2012-01-14),
-> however, this is no longer the case, as the ANSI color sequence support
-> code needed to be replaced with a thread-safe version, one side effect
-> being that stdout and stderr handled no matter which function is used to
-> write to it.
-
-So as long as we write via stdio to stdout/stderr, you can show
-colors?  Or is it now stronger, in that as long as we do anything
-that ends up writing to file descriptors 1 or 2, you can show
-colors?
-
-> So let's just remove the comment that is now obsolete.
-
-Thanks.
-
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> Published-As: https://github.com/dscho/git/releases/tag/winansi-color-v1
->  color.h | 5 -----
->  1 file changed, 5 deletions(-)
+> On Tue, 28 Jun 2016, Duy Nguyen wrote:
 >
-> diff --git a/color.h b/color.h
-> index e155d13..b9ead16 100644
-> --- a/color.h
-> +++ b/color.h
-> @@ -18,11 +18,6 @@ struct strbuf;
->   */
->  #define COLOR_MAXLEN 70
->  
-> -/*
-> - * IMPORTANT: Due to the way these color codes are emulated on Windows,
-> - * write them only using printf(), fprintf(), and fputs(). In particular,
-> - * do not use puts() or write().
-> - */
->  #define GIT_COLOR_NORMAL	""
->  #define GIT_COLOR_RESET		"\033[m"
->  #define GIT_COLOR_BOLD		"\033[1m"
+>> On Tue, Jun 28, 2016 at 11:40 AM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>> >
+>> > On Mon, 27 Jun 2016, Duy Nguyen wrote:
+>> >
+>> >> On Mon, Jun 27, 2016 at 7:38 AM,  <larsxschneider@gmail.com> wrote:
+>> >> > ## Proposed solution
+>> >> > Git LFS caches its objects under .git/lfs/objects. Most of the time
+>> >> > Git LFS objects are already available in the cache (e.g. if you
+>> >> > switch branches back and forth). I implemented these "cache hits"
+>> >> > natively in Git.  Please note that this implementation is just a
+>> >> > quick and dirty proof of concept. If the Git community agrees that
+>> >> > this kind of approach would be acceptable then I will start to work
+>> >> > on a proper patch series with cross platform support and unit
+>> >> > tests.
+>> >>
+>> >> Would it be possible to move all this code to a separate daemon?
+>> >> Instead of spawning a new process to do the filtering, you send a
+>> >> command "convert this" over maybe unix socket and either receive the
+>> >> whole result over the socket, or receive a path of the result.
+>> >
+>> > Unix sockets are not really portable...
+>>
+>> It's the same situation as index-helper. I expect you guys will
+>> replace the transport with named pipe or similar.
+>
+> Yes, I will have to work on that. But I might need to ask for a change in
+> the design if I hit some obstacle there: named pipes are not the same at
+> all as Unix sockets.
+>
+> Read: it will be painful, and not a general solution. So every new Unix
+> socket that you introduce will introduce new problems for me.
+
+I thought we could have a drop-in replacement (or maybe a higher
+abstraction that would be sufficient for git). Thanks for pointing it
+out.
+-- 
+Duy
