@@ -2,102 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B87B2018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 22:55:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C5B92018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 23:18:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752558AbcF1WzV (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 18:55:21 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63240 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752570AbcF1WzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 18:55:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 016F926FCB;
-	Tue, 28 Jun 2016 18:47:55 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=31V2QRbHx3ao3XJOMhiIGHPJql8=; b=NDDXvR
-	GVKN/1q6GdIsGbCRA4PUhRu7CeDbKqylOrCduKRNcdzBk8u73xHp8Ijhs0AkkobQ
-	Pc3+V4Jdku/o9w+9QZuImaQ12yFp8yL/1rg4uyzzO+cgVSTZFMwkzAtUTPeEASXJ
-	nxkcdu88prtuqLoYlDcNCapUTVwp+SdDGm2ZE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=COLqUQmC+lmqKmf5n6ZwDvVzoRMLq/T1
-	op0JKF4I3fHiv8Q8FclkKzMat6ycdz3hQH7JlqzJ2T96yFCaF+D9HWG6tPB2/sw7
-	Q40Y90doacBDFsBGxiwuh24Ku20PGtCQI1VgtJPsgHEuXTTTqL+p+QLJYyehH7w1
-	xwlQGjRJa+o=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id ED28F26FCA;
-	Tue, 28 Jun 2016 18:47:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6FE1326FC8;
-	Tue, 28 Jun 2016 18:47:54 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Nicolas Pitre <nico@fluxnic.net>
-Cc:	Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4] Refactor recv_sideband()
-References: <20160613195224.13398-1-lfleischer@lfos.de>
-	<20160628043526.19403-1-lfleischer@lfos.de>
-	<xmqqa8i59rph.fsf@gitster.mtv.corp.google.com>
-	<xmqq60st9qg5.fsf@gitster.mtv.corp.google.com>
-	<alpine.LFD.2.20.1606281334030.24439@knanqh.ubzr>
-	<xmqqlh1p89mo.fsf@gitster.mtv.corp.google.com>
-	<alpine.LFD.2.20.1606281422500.24439@knanqh.ubzr>
-	<xmqq60st853d.fsf@gitster.mtv.corp.google.com>
-	<alpine.LFD.2.20.1606281629280.24439@knanqh.ubzr>
-	<xmqqwpl96mvv.fsf@gitster.mtv.corp.google.com>
-	<alpine.LFD.2.20.1606281726330.24439@knanqh.ubzr>
-	<xmqqfurx6j16.fsf@gitster.mtv.corp.google.com>
-Date:	Tue, 28 Jun 2016 15:47:52 -0700
-In-Reply-To: <xmqqfurx6j16.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 28 Jun 2016 15:33:09 -0700")
-Message-ID: <xmqq8txp6icn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752404AbcF1XS4 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 19:18:56 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:36097 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752362AbcF1XSz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 19:18:55 -0400
+Received: by mail-io0-f172.google.com with SMTP id s63so31028773ioi.3
+        for <git@vger.kernel.org>; Tue, 28 Jun 2016 16:18:55 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=mdnSf5dNJpFDC2QteAzH2m02mLeV7tgGwRoXgkrDMcQ=;
+        b=GmJXQVdTcxMVujehiMlHHi2PHQKjJKBBZ3rsZPPCVjcbIiv0n5BSmM7BBZI6LsEv/w
+         qpi+2PoUrVGuzKIQJ7dmaGt8lzutc7JEbFS9FBnjJITF9naA7T8/QZsIiPPEGnJMc31w
+         8/aMNfGRHK2aIlVcIVQU3+ZjDFjenZR49H06L3rQzbDEIHzLPDR+NzyuEHI592RLffdg
+         gpLo0ut6tRGwjpuYqkGVtju1cX7jWl5tAzS6a+R/ndzoE2h/oiA7156lwYBl78BgVyCx
+         tOKwCCnyVI4+OuJ6ysfUDGvTFleX7W/saPqV7lSTEuJhYDVWSmPsj4XwbCHuv5Ez7Xqo
+         7AEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=mdnSf5dNJpFDC2QteAzH2m02mLeV7tgGwRoXgkrDMcQ=;
+        b=ACFu9vOBADo+kA/n1GYbaI2pCORY5SS97n/oMDf7MWgIhPS/MEyQ59MRV4CWH4QQHV
+         Eovkjj8tG1fvMTwDuERiFiWq+LEx4lSLnfHefFOuJ0KumpOPzkMkLFO0MkL+BVCOEjON
+         Eid1kK3V3ZBvSiV0bKqETF6Kq2hM0qCqFV0q0f06xgRdqAIRyw/f+x1/D2VEMTkCKoVU
+         8MrwgfN576HC1R3HnrZLBKLj1f91zwN347nwHVB2Et6D99H4ANKvGctAMI8m3jL4+1g+
+         ccxHyxy2UXJYSCN6UYtZ+O+c2ZQ0gcfkvVNRrhJf8P2O7l4dI5hgLOE4/KNf1iuGQuuJ
+         2IjA==
+X-Gm-Message-State: ALyK8tJ12h4D2ED2RvHKOmlGKU8Hj3skNKyfbrfhTBb1Pz2E7gp+JSc156UOvsU7h19a/S1kAMJYHyVVWSE+cg==
+X-Received: by 10.107.47.41 with SMTP id j41mr6124981ioo.168.1467155485428;
+ Tue, 28 Jun 2016 16:11:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 59E6C5D4-3D82-11E6-81E5-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.79.0.30 with HTTP; Tue, 28 Jun 2016 16:11:25 -0700 (PDT)
+In-Reply-To: <20160628172641.26381-3-pclouds@gmail.com>
+References: <20160626070617.30211-1-pclouds@gmail.com> <20160628172641.26381-1-pclouds@gmail.com>
+ <20160628172641.26381-3-pclouds@gmail.com>
+From:	Eric Sunshine <sunshine@sunshineco.com>
+Date:	Tue, 28 Jun 2016 19:11:25 -0400
+X-Google-Sender-Auth: qnTFqa94oyCO-Sf50DAw752QKx8
+Message-ID: <CAPig+cRFZg1z5mhKiO7=0a+bCbdhJ07FubUstNrHYmKUrTc6nA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] config: add conditional include
+To:	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Jun 28, 2016 at 1:26 PM, Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+> diff --git a/config.c b/config.c
+> @@ -140,9 +141,89 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+> +static int include_condition_is_true(const char *cond, int cond_len)
+> +{
+> +       const char *value;
+> +       size_t value_len;
+> +
+> +       /* no condition (i.e., "include.path") is always true */
+> +       if (!cond)
+> +               return 1;
+> +
+> +       if (skip_prefix_mem(cond, cond_len, "gitdir:", &value, &value_len)) {
+> +               struct strbuf text = STRBUF_INIT;
+> +               struct strbuf pattern = STRBUF_INIT;
+> +               int ret, prefix;
+> +
+> +               strbuf_add_absolute_path(&text, get_git_dir());
+> +               strbuf_add(&pattern, value, value_len);
+> +               prefix = prepare_include_condition_pattern(&pattern);
+> +
+> +               if (prefix < 0)
+> +                       return 0;
+> +
+> +               if (prefix > 0 &&
+> +                   (text.len < prefix ||
+> +                    fspathncmp(pattern.buf, text.buf, prefix)))
+> +                       return 0;
 
-> But then my observation still holds, no?
->
-> ...
->         if (outbuf.len) {
->         	/* we still have something to say */
->                 strbuf_splice(&outbuf, 0, 0, PREFIX,
->         	strlen(PREFIX));
->                 fwrite(...);
-> 	}
+Are the above two "return"s leaking 'text' and 'pattern' strbufs?
 
-I guess these two are more or less equivalent.
-
-I view "outbuf" more as "holdbuf", i.e. the payload that has been
-received and yet to be shown, and from that point of view, having
-and keeping PREFIX which is not something we received in there while
-looping to grab more input makes me feel dirty.  IOW, I consider
-"empty" is the correct base state of the hold buffer before anything
-happens.
-
-I understand that you view "outbuf" as what has been prepared to be
-shown but not ready to be shown due to lack of LF, and from that
-point of view, the base state of the out buffer before anything
-happens could be "it has PREFIX and nothing else".
-
-It's just that if you take the latter, then the conditional after
-the loop exits (i.e. the last transmission was an incomplete line)
-cannot be "is outbuf empty?", as your base state is "has PREFIX and
-can never be empty".  I was working back from that if statement.
-
-
+> +
+> +               ret = !wildmatch(pattern.buf + prefix, text.buf + prefix,
+> +                                ignore_case ? WM_CASEFOLD : 0,
+> +                                NULL);
+> +               strbuf_release(&pattern);
+> +               strbuf_release(&text);
+> +               return ret;
+> +       }
+> +
+> +       error(_("unrecognized include condition: %.*s"), cond_len, cond);
+> +       /* unknown conditionals are always false */
+> +       return 0;
+> +}
