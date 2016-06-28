@@ -7,65 +7,96 @@ X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C23211FF40
-	for <e@80x24.org>; Tue, 28 Jun 2016 10:06:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CEDB1FF40
+	for <e@80x24.org>; Tue, 28 Jun 2016 10:07:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752171AbcF1KGB (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 06:06:01 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58173 "EHLO mout.gmx.net"
+	id S1752299AbcF1KHG (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 06:07:06 -0400
+Received: from mout.gmx.net ([212.227.17.21]:63587 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752154AbcF1KGA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 06:06:00 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0Lz3JU-1bMM4p1Fui-014Clr; Tue, 28 Jun 2016 12:05:39
+	id S1752229AbcF1KHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 06:07:05 -0400
+Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MRjd7-1ats4d2GLZ-00T0cz; Tue, 28 Jun 2016 12:06:46
  +0200
-Date:	Tue, 28 Jun 2016 12:05:36 +0200 (CEST)
+Date:	Tue, 28 Jun 2016 12:06:44 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Jeff King <peff@peff.net>
-cc:	Junio C Hamano <gitster@pobox.com>,
-	Lukas Fleischer <lfleischer@lfos.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nicolas Pitre <nico@fluxnic.net>, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2] Refactor recv_sideband()
-In-Reply-To: <alpine.DEB.2.20.1606281203000.12947@virtualbox>
-Message-ID: <alpine.DEB.2.20.1606281204330.12947@virtualbox>
-References: <20160613195224.13398-1-lfleischer@lfos.de> <20160614210038.31465-1-lfleischer@lfos.de> <20160624153121.GA2494@sigill.intra.peff.net> <alpine.DEB.2.20.1606241942220.12947@virtualbox> <20160624181414.GA25768@sigill.intra.peff.net>
- <CAPc5daWxWpMe4ob4zu0tMK4uWpLPDxC7GS8KTb4+3g5=ztv71A@mail.gmail.com> <146702508453.24123.590646528169139972@s-8d3a37fa.on.site.uni-stuttgart.de> <xmqqr3bibpap.fsf@gitster.mtv.corp.google.com> <20160627161616.GA4430@sigill.intra.peff.net>
- <alpine.DEB.2.20.1606281203000.12947@virtualbox>
+To:	Duy Nguyen <pclouds@gmail.com>
+cc:	Git Mailing List <git@vger.kernel.org>,
+	David Turner <novalis@novalis.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Keith McGuigan <kamggg@gmail.com>,
+	David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v13 21/20] unix-socket.c: add stub implementation when
+ unix sockets are not supported
+In-Reply-To: <CACsJy8A2i9enBUtK+jcJmnChTddJBjd6O9LZfU9Tj2ikn8JqRg@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1606281206100.12947@virtualbox>
+References: <1466914464-10358-19-git-send-email-novalis@novalis.org> <20160626120928.14950-1-pclouds@gmail.com> <alpine.DEB.2.20.1606271413350.12947@virtualbox> <CACsJy8A2i9enBUtK+jcJmnChTddJBjd6O9LZfU9Tj2ikn8JqRg@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:eHc1Lhm1eS2Pg/ZXGN8eRRqbrE7XOmiFiHbsGyCZWJua8J/eLBs
- dbPPc7VWLmmg3iHdp5acFFcA4tJH7keQkHLt8/SeOTKiWEO7W6Gl2BU9OB8CMw5+ED52xHf
- qxz2dqOTeP/qpGqc+9zUrDhW2pZZW3ANRNSUX0xRlBEGc2rDVh2k+lUikMKYnyf2Tw7fO0u
- 7SVWMs01TDZwaKe+ClcTg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:g0CpUFiN8A0=:lYkIb3Yp93wl+OkrXALvde
- n34XQMZHU7a9NyCUhAHMLUhCmTxYkYO3RnJNjgKWfjBR4WI9sqpRSHaK3A4LrbxC3apjDxzsz
- 0F2yoKhoQULz9g8+cGQav2vDUxYBuyFwjMwXjBURRKfe2HqWeDVD2sB+AZN7/4I7ktAjHDpgp
- DnGS0k0zip5QTV8iayGztJcdXwbqgK+8+trIW4W6yb8HPphv1hIlFvpvmGThUW0i9FHn9qO8E
- NWb0x05S6kq8kuJIVcmcQi9hCWHkikI7amqYudV/0xBFJ16yMAfjVNkv6TilglwgQyhcxj+k0
- i1WL2flOaDIQRma/suH6iJEZ0zWj+AnCbP6SSc0+wzvDOOg01Kui/qs5f4+9X2wxyThpOlAA4
- OgcFynb/dzdXvG4jJcjoVngxGkTjRquRctpLc3mL17YyGdFQd+l1aDjFs+OU/6n9fCRf/p+w8
- KFXxLcnoRln5ZBwbxjyIqpmQ5oJyIr4xWhNhlLKzTHzpPF4mESkZOLhuVX3kKy7epR6vbJ5wV
- k4WSAgbNNBffzi75JuZ69y+V91Sj93DqxvjIAAcmgoiahQ+ViRKQ43xLq2VOHEWnezUNTGoEP
- RviZKD65/snQSkbB+mbmf1wVKZQyTZE5ih1vn99Q9VLjq3LwdeKYcume3kDTC8F/dhpjtPidk
- vcPCvgCKeDu+A57ackT4T+9xoSDn62jSVTeaed3ftERGFyMboInY/W0nxmAE2iX1oQk3gig2f
- V5RtVeJ7iUumWP2T95kjjo3yV0p9o/of5TzRtkMxNiYr0gKLjmd+BvJ8fZa1IR6qEWC8DhAQI
- KmlWWzY
+Content-Type: multipart/mixed; BOUNDARY="8323329-1050725386-1467108406=:12947"
+X-Provags-ID: V03:K0:4o+8maJcUnpN9Yq2tZpQ4Q9DN5VWcLwGvl5Nh0NuTU/5nokorV6
+ 3vuxN7F0tqk2Wg5OpnauTq67pa74L2DAxcuWaTiCN0qqkVRseD/+BLoDVJw+vU+TYx+ZpXE
+ vyCKMluekYELy07iEH74UuH0cXCI0BxqLiYXfmWj5hrx+HXCcPk99eOv/huK4cO8fC1mzRE
+ 2vG5YDZudueQ8Ej2VnS4g==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:QMGVMIXirHc=:ojvbkNl6btKt/l4h/Equ+t
+ LYx58zK9Km6a6JM8xtYw1bIYryLyuZtLO6TXMnj5uPLcC5b5vhgk0PVsZ8zAJ0Bk2czF9BxD/
+ 8m5CCDOutPeAUCL2/R93ctmJ6sAWBgmIEM9N2EqNSWvORA6TpS0mbsyeiTnbJiX0FTydzhNvt
+ TNf7eO8RZ65umdwdhKAHDittN6NxfIJlccUpcI4wqD/8NH/RIxUa1Vcygu0bG15hjonGDnq4S
+ wd3Fo8ZUiv9E0RHX831ca6JmqLyXb7muWGVFhtQzmLVRiizsev/3UhOJ3JzQ9lJeS92oq7gjS
+ 3SwgPgzwG9DFYrz3vG4n5MTxh4UBHV/OII0oSbtQ2NiYemdWNJaC9rvtzdi4/4NyqmWijmr9Z
+ rY5zdxmi6qHDiZkvBY4V4L1SnjXDKdK0ncSCXmAt8DiNU4vGsWS7WD5X79inB/Q7pUvhuOapb
+ 29PtFtPTXFCruXwe9Vn0UPd+2/2+4QC+RR0aK1OOPWBdCl/RGJ49xXKobuAMhm68EIOHHlklb
+ EK2LarR6cFJfGKeBEVJ+XfB0FZ5j4C0+/TeD8aWcS1jWfxhttkssnlFtcG/hz5BEqqPPQuBTE
+ lu39GXLiQ0jEFf4zyKE8Zud+6jRCbOfeDkpvNW0UB/YAI/93GYCBYJ6Xg8RVdRI348FTVh4nB
+ tzIcYEPZZs6IJGOjPfBbNZL9P05hKnnAywj4DXxIaE30R8kZrut2DA7hCOcwi9k1mtdGl9mIC
+ nvVLKqeopBNWkk/EzacFhnmdLh0Hs+0f6JLz7WhELzzxj6iL+Sso8HtD94l0uJHdLPey6jiaZ
+ gKmPuJF
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Erm, sorry...
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, 28 Jun 2016, Johannes Schindelin wrote:
+--8323329-1050725386-1467108406=:12947
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> [...] we actually do not override fprintf() at all anymore [*1*] [...]
+Hi Duym
 
-... forgot the
+On Mon, 27 Jun 2016, Duy Nguyen wrote:
 
-Footnote *1*: In Git for Windows, we actually *do* override fprintf(),
-thanks to using gettext, but it is *gettext* that is doing the overriding
-now, not Git.
+> On Mon, Jun 27, 2016 at 2:14 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Sun, 26 Jun 2016, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> >
+> >> This keeps #ifdef at the callee instead of caller, it's less messier.
+> >>
+> >> The caller in question is in read-cache.c which, unlike other
+> >> unix-socket callers so far, is always built regardless of unix socket
+> >> support. No extra handling (for ENOSYS) is needed because in this
+> >> build, index-helper does not exist, $GIT_DIR/index-helper.sock does
+> >> not exist, so no unix socket call is made by read-cache.c in the first
+> >> place.
+> >>
+> >> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmai=
+l.com>
+> >> ---
+> >
+> > Heh, I made something very similar (although I did not update the errno=
+ as
+> > your patch does): https://github.com/git-for-windows/git/commit/919cb1d=
+79
+>=20
+> Yours lacks the important "else" line in Makefile, so pick mine! :-D
+
+Oh, I definitely prefer your patch over mine. I just meant to concur that
+this needs fixing.
+
+Ciao,
+Dscho
+--8323329-1050725386-1467108406=:12947--
