@@ -6,22 +6,22 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD2311FF40
-	for <e@80x24.org>; Tue, 28 Jun 2016 08:09:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 500F31FF40
+	for <e@80x24.org>; Tue, 28 Jun 2016 08:27:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751237AbcF1IJM (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 04:09:12 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50124 "EHLO mx1.imag.fr"
+	id S1752264AbcF1I1U (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 04:27:20 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50633 "EHLO mx1.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750753AbcF1IJG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 04:09:06 -0400
+	id S1752077AbcF1I1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 04:27:18 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u5S88pKT008751
+	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u5S8QvJg012645
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 28 Jun 2016 10:08:51 +0200
+	Tue, 28 Jun 2016 10:26:57 +0200
 Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u5S88qh6014590;
-	Tue, 28 Jun 2016 10:08:52 +0200
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u5S8QwZV015056;
+	Tue, 28 Jun 2016 10:26:58 +0200
 From:	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To:	Jeff King <peff@peff.net>
 Cc:	gitster@pobox.com, git@vger.kernel.org,
@@ -29,24 +29,24 @@ Cc:	gitster@pobox.com, git@vger.kernel.org,
 	Samuel GROOT <samuel.groot@ensimag.grenoble-inp.fr>,
 	Erwan MATHONIERE <erwan.mathoniere@ensimag.grenoble-inp.fr>,
 	Tom RUSSELLO <tom.russello@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH 2/6] doc: typeset long command-line options as literal
+Subject: Re: [PATCH 3/6] doc: typeset -- as litteral
 References: <20160627174623.11084-1-Matthieu.Moy@imag.fr>
-	<20160627174623.11084-2-Matthieu.Moy@imag.fr>
-	<20160627190422.GC9594@sigill.intra.peff.net>
-Date:	Tue, 28 Jun 2016 10:08:52 +0200
-In-Reply-To: <20160627190422.GC9594@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 27 Jun 2016 15:04:22 -0400")
-Message-ID: <vpqr3bhzqej.fsf@anie.imag.fr>
+	<20160627174623.11084-3-Matthieu.Moy@imag.fr>
+	<20160627191005.GD9594@sigill.intra.peff.net>
+Date:	Tue, 28 Jun 2016 10:26:58 +0200
+In-Reply-To: <20160627191005.GD9594@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 27 Jun 2016 15:10:05 -0400")
+Message-ID: <vpqa8i5zpkd.fsf@anie.imag.fr>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Tue, 28 Jun 2016 10:08:52 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Tue, 28 Jun 2016 10:26:57 +0200 (CEST)
 X-IMAG-MailScanner-Information:	Please contact MI2S MIM  for more information
-X-MailScanner-ID: u5S88pKT008751
+X-MailScanner-ID: u5S8QvJg012645
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check:	1467706135.4885@8v21C7aHMHSBB5mFIKSkNA
+MailScanner-NULL-Check:	1467707221.8257@XAhv2urA5GNb7u5C8DI55g
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -54,37 +54,62 @@ X-Mailing-List:	git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> On Mon, Jun 27, 2016 at 07:46:19PM +0200, Matthieu Moy wrote:
+> On Mon, Jun 27, 2016 at 07:46:20PM +0200, Matthieu Moy wrote:
 >
->>  grep.extendedRegexp::
->> -	If set to true, enable '--extended-regexp' option by default. This
->> -	option is ignored when the `grep.patternType` option is set to a value
->> +	If set to true, enable `--extended-regexp` option by default. This
->> +	option is ignored when the 'grep.patternType' option is set to a value
+>> Subject: Re: [PATCH 3/6] doc: typeset -- as litteral
 >
-> What's going on in the second line here? We remove the backticks from
-> grep.patternType (which is not even a thing that should be touched by
-> your pattern).
-
-Nice catch. What happened was that I initially wrote the series on top
-of master, then rebased it on top of tr/doc-tt to avoid conflicts when
-Junio merges both. I did check that re-applying the perl substitution
-was leading to the same patch, but apparently I did something wrong.
-
-I re-rechecked, re-found this instance and no other. Fixed in v2.
-
->> @@ -1916,7 +1916,7 @@ log.decorate::
->>  	command. If 'short' is specified, the ref name prefixes 'refs/heads/',
->>  	'refs/tags/' and 'refs/remotes/' will not be printed. If 'full' is
->>  	specified, the full ref name (including prefix) will be printed.
->> -	This is the same as the log commands '--decorate' option.
->> +	This is the same as the log commands `--decorate` option.
+> s/litteral/literal/
 >
-> This one conflicts applying on top of master, but the resolution is
-> fairly straightforward.
+> I can hardly blame you, though. I think English stole the word from
+> French and then switched its spelling. :)
 
-Sorry, I forgot to mention when sending the series: this is to be
-applied on top of tr/doc-tt (in next, marked "will merge to master").
+I never remember about double consonent, and indeed the fact that French
+and English have different spelling for the same words doesn't help
+(addition Vs adition, traffic Vs trafic, ...) ;-).
+
+Fixed in v2.
+
+> You may also want put quotes around "--" to make it clear that you are
+> talking about it as punctuation, not using it as such in your
+> sentence.
+
+Done.
+
+> I read all the way through patch 6, and they all look good to me (though
+> the "litteral" typo appears again later). I won't bother responding to
+> each separately.
+
+Should all be fixed now.
+
+> I do notice that your patterns are finding existing items marked with
+> single-quotes. We may have other cases lurking that are not quoted at
+> all (but should be).
+
+Yes, this series (and tr/doc-tt) clearly catch just the low-hanging
+fruits. Having forward quotes in the existing text makes it clear that
+the author wanted some kind of formatting, and hence make regex-based
+replacement rather reliable (very few false positive).
+
+Unquoted stuff are more problematic since you can have for example
+
+  You should run `git foo --bar boz`
+
+or multi-lines formatted code blocks, and a naive regex would match
+--bar.
+
+> I think those could be a separate series, but if anybody wants to look
+> for them, I think searching for "\--" will help (a literal double-dash
+> needs that to avoid becoming an emdash).
+
+The rule seems to be more complex than this, for example "Implies
+--porcelain" in https://git-scm.com/docs/git-blame is properly typeset,
+although the source code has no escaping or quoting.
+
+I'll keep these out of the series for now, I've added more ideas to
+
+  https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#Fix_asciidoc_formatting_in_documentation
+
+I may come back to this later.
 
 -- 
 Matthieu Moy
