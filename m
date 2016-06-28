@@ -2,95 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DBAC2018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 13:15:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D13A2018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 13:23:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752429AbcF1NP3 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 09:15:29 -0400
-Received: from mout.gmx.net ([212.227.15.19]:53413 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752279AbcF1NP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 09:15:28 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LymHf-1bN8L54BrL-0167QA; Tue, 28 Jun 2016 15:14:45
- +0200
-Date:	Tue, 28 Jun 2016 15:14:43 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Duy Nguyen <pclouds@gmail.com>
-cc:	Lars Schneider <larsxschneider@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+	id S1752833AbcF1NXI (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 09:23:08 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:35219 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752786AbcF1NXF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 09:23:05 -0400
+Received: by mail-wm0-f54.google.com with SMTP id v199so139704869wmv.0
+        for <git@vger.kernel.org>; Tue, 28 Jun 2016 06:23:04 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=rLBNZSZr+tefGYySXW+5oh1MrvvyxaX6lkE8h/uq+rQ=;
+        b=uwUEmgNO5YPlFjYXAPZrMAR6/NrQExfsktCYhFWnu/v2oqOl4+xnxA5tLezEN8QquG
+         Wo1KFx+sVL5pyyc2LUMV7v5l7doTsdkDemae1tbNZtONQkiPT7e12qmJrANJOgWP0dP9
+         pndwdW/RQWFtAGwmtwq9qhZ43to8krY8XwIRHM0PMmUcCnGHyHVjMl3Pk3TmA/iLu1Yq
+         NaoK+ht0kJpFCf9gaXCYaH7TX7N9xeM/WHcmiwy9wEokbJwTBZ3guoo8fRAmjl93Nwn/
+         XdcmTYLOtVzI2ClZNFCfKCfKOESEyHP99eiY1tVEmA4cGtKgNn+/YOZbJL+ctnnJ2FH1
+         ZKog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=rLBNZSZr+tefGYySXW+5oh1MrvvyxaX6lkE8h/uq+rQ=;
+        b=Wfq7P1M9ehRJmBGaEChGHyIVt584PftrlinLRK8gQUX1fUNqIfFiEDDZ1WnOT2zDWf
+         HTGVMWJWt8wzH0VX8i0Luu1iV943INtbcRAbVCImB+Dv1QHRC7fMgJV/ixy4byDunCkQ
+         YCovqCw2KnlnDBKVWXXZ4swF5yr6OGqDC8T7wxOsltFFPVv94unW2gLXzi9NyzTxEMMC
+         laJ2nXW0LKGynviQuOsgqIV5MU3ZPOesqVKiMm4LXrPVA95TICyLVOljUjbAQYVT4WuF
+         bPd7ZLlp4eUV+tSOUL331+9JUSEtWam3kn/cx2dgt3GKVWdeyf6dkOMkQSgYVG/4mL0C
+         JXnA==
+X-Gm-Message-State: ALyK8tLwVXWitpLTmmLjWI2TW3kQm6VGvDKcQjON3UP4/FxBt/11q/cDVbUeX5ESOji/jw==
+X-Received: by 10.194.222.137 with SMTP id qm9mr3490815wjc.80.1467120183959;
+        Tue, 28 Jun 2016 06:23:03 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id r130sm5020140wmf.20.2016.06.28.06.23.01
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 28 Jun 2016 06:23:03 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
 Subject: Re: [RFC] Native access to Git LFS cache
-In-Reply-To: <CACsJy8DCovHoutyEYwaxdCTU4K-h8u_JTOwt8GUiNTkkXzGz3w@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1606281513380.12947@virtualbox>
-References: <1467005913-6503-1-git-send-email-larsxschneider@gmail.com> <CACsJy8B7ie_oQRZ7Pw3NTo4YyXwZOer-iDUVxDPSY_uhrQi1bw@mail.gmail.com> <alpine.DEB.2.20.1606281139490.12947@virtualbox>
- <CACsJy8DCovHoutyEYwaxdCTU4K-h8u_JTOwt8GUiNTkkXzGz3w@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:YIBOyZGnsz1YzYEg6TRTg7xOhRR+4isH6wZuA83A9cu9M7U8leH
- 8erLn1s7shY7rWNxoQcumqww9FDlDwk4NM/C1ZdUPA2QSI/VUrY2JmtO/M74vazeucYeloo
- 8XhOpuZfsobGqxx4JKHm2dtNvgAfJj1nhzqUJGsY4EYu0lJtZZ1FMrIUDBrrs7tzYYv0yh9
- 9WVfg9aAbjM8fog5+JYXQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:+iIK62ma7PM=:JzJm2Esk/GbYiS3gALo0U8
- EN0hUaERaaEU6y5CNrC2o2tvFssAGBisZSPOKLdwM5JRUenFFpwtgJ3B76y4Qm5NgUAR3zakr
- 772MHqvTd066JtROtocDgeURB2Y9cyndArdztlBRNZuhJMQfncWSnhcJzt82cWjrDiLizoaom
- UHUfspcv9AOsgi5RMQT8iRBlRT62JTUNsyD5C5Tf+WUC+cUjk+QjHG+u8ct5cCDl10rhevXwI
- HjzRjT9YndvJlcbI7qIfzBWLqDKGwyqkRtvZ41VISi6gjxv8y+by0QFenbGv3cyqpG8dXbooW
- 48oivBbUmx9vNSgkuSr/PptTUJDO7o4FZsi6Y87U8y2tPKhit2vmLBRTlWkUDwDNpWi9X1C9y
- X/R02fpvVNF/tLisB893n3mPdh5AZydIYQg4RlawND2Y0PxgwO/EPEnQZLxLGgS+rHx/JWvPC
- +fcxkSj86OyaNJVJz7hxvjvY1X8sgj0WAHCyNGww1gySzIuisawCJeFEDybMHJvy3oSBBwdzh
- 9nkNnwmIn2G0GDhbSM3enlYuJVhLG+dhkNGAg44FOyA1b9FEkpY5c930DeaV0GIa15hYvDMxd
- 7ZafNhPtC3VKpUQbqi3DCY+hYLjzwyLg6UGiC1cRXscrfuRl9fl5ezxHUJi+8KUW1g0fVhM0A
- v3JGVO/lE5K2uNaZfzdIMSO1coopgsQ9rWj6kuDFss4HC1a24hxTZ6l6c0btZDndt8JHZkZHv
- kivdmNI2ELCC7ajTVSaHD1zFbqshqr//V0RHNL6GvXIDW34WTMTzEA0/9CHktlUsyLgPPbPwc
- 3t/zMrq
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqmvm6bom5.fsf@gitster.mtv.corp.google.com>
+Date:	Tue, 28 Jun 2016 15:22:59 +0200
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Jeff King <peff@peff.net>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <9603B6F9-3BEF-4779-84C3-6DC61D7FBC46@gmail.com>
+References: <1467005913-6503-1-git-send-email-larsxschneider@gmail.com> <xmqqmvm6bom5.fsf@gitster.mtv.corp.google.com>
+To:	Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Duy,
 
-On Tue, 28 Jun 2016, Duy Nguyen wrote:
-
-> On Tue, Jun 28, 2016 at 11:40 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Mon, 27 Jun 2016, Duy Nguyen wrote:
-> >
-> >> On Mon, Jun 27, 2016 at 7:38 AM,  <larsxschneider@gmail.com> wrote:
-> >> > ## Proposed solution
-> >> > Git LFS caches its objects under .git/lfs/objects. Most of the time
-> >> > Git LFS objects are already available in the cache (e.g. if you
-> >> > switch branches back and forth). I implemented these "cache hits"
-> >> > natively in Git.  Please note that this implementation is just a
-> >> > quick and dirty proof of concept. If the Git community agrees that
-> >> > this kind of approach would be acceptable then I will start to work
-> >> > on a proper patch series with cross platform support and unit
-> >> > tests.
-> >>
-> >> Would it be possible to move all this code to a separate daemon?
-> >> Instead of spawning a new process to do the filtering, you send a
-> >> command "convert this" over maybe unix socket and either receive the
-> >> whole result over the socket, or receive a path of the result.
-> >
-> > Unix sockets are not really portable...
+> On 27 Jun 2016, at 18:09, Junio C Hamano <gitster@pobox.com> wrote:
 > 
-> It's the same situation as index-helper. I expect you guys will
-> replace the transport with named pipe or similar.
+> larsxschneider@gmail.com writes:
+> 
+>> Unfortunately that fix helps only with cloning. Any local Git operation
+>> that invokes the clean/smudge filter (e.g. switching branches) is still
+>> slow.
+> 
+> Do you know where the slowness comes from?  Does Joey's new
+> clean/smudge interface help GitLFS?
 
-Yes, I will have to work on that. But I might need to ask for a change in
-the design if I hit some obstacle there: named pipes are not the same at
-all as Unix sockets.
+I am pretty sure the startup time of the external clean/smudge process
+causes the slowness and consequently I don't think Joey's patch would help. 
+The following tests makes me believe that:
 
-Read: it will be painful, and not a general solution. So every new Unix
-socket that you introduce will introduce new problems for me.
+I ran the same test as in my original email using the repo with 15,000 
+LFS files. Instead of the LFS binary I use the fast and simple shell 
+built-in `true` command:
 
-Ciao,
-Dscho
+$ git -c filter.lfs.smudge=true -c filter.lfs.clean=true clone https://github.com/larsxschneider/lfstest-manyfiles.git
+$ cd lfstest-manyfiles/
+$ time git -c filter.lfs.smudge=true -c filter.lfs.clean=true checkout removed-files
+
+real	0m47.030s
+user	0m29.521s
+sys	0m16.993s
+
+It still takes 47 seconds to switch the branch. Does this test prove my
+point or do you see a flaw in the test?
+
+
+> You are not likely to get anything that knows that a blob object may
+> be named as anything other than SHA-1("blob <len>" + <contents>) to
+> Git core.  The remote-object-store idea that was floated by Peff and
+> Christian started running with at least maintains that object naming
+> property and has a better chance of interacting better with the core,
+> but LFS, Annex or anything that would not preserve the object naming
+> would not.
+> 
+> Personally, I view a surrogate blob left by LFS in the tree object
+> and filtered via clean/smudge a "smarter" kind of symbolic link that
+> points outside what Git controls.  The area outside what Git
+> controls is left to be managed by whatever the add-on does; Git
+> shouldn't even be aware of how they are structured and/or managed.
+
+I understand and somewhat anticipated your point of view. I will try
+to find a less intrusive solution.
+
+@Christian/Peff: 
+Is there a place to look for more info about your remote-object-store idea? 
+
+Thanks,
+Lars
