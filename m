@@ -2,168 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_50,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-8.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA0911FF40
-	for <e@80x24.org>; Tue, 28 Jun 2016 08:50:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E53501FF40
+	for <e@80x24.org>; Tue, 28 Jun 2016 08:55:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752243AbcF1Ium (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 04:50:42 -0400
-Received: from mail11.rbs.com ([155.136.80.61]:43132 "EHLO
-	remlvdmzma03.rbs.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751419AbcF1Iuj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 04:50:39 -0400
-DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple;
-  d=rbs.com; i=@rbs.com; q=dns/txt; s=mail;
-  t=1467103839; x=1498639839;
-  h=from:to:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=4qU2vm7Cs75f4N/n0+5rb/mXfMFzYh+NzO19GJbwuBM=;
-  b=IiZAGqhjRB9DKIF4dz+4tFpZq7FskcNZ6iFxNaTn0eooNrQf7oj7738v
-   6qg+JcXm7Q9WAuqYDgWXzXisU2SmskSPxkfTwn6fC9E7Rp0cNf+wpQjc7
-   6ZbyUFKyuDqR9BKmE7Wp1bm3P87QjkECKaqyb4yDxIKbs/zMVgFvSv6YE
-   Y=;
-X-GBM:	True
-X-IronPort-AV: E=Sophos;i="5.26,540,1459810800"; 
-   d="scan'208";a="248002907"
-Received: from unknown (HELO lonix03001.fm.rbsgrp.net) ([11.160.46.101])
-  by remlvdmzma03.rbs.com with ESMTP; 28 Jun 2016 09:50:36 +0100
-X-IronPort-AV: E=Sophos;i="5.26,540,1459810800"; 
-   d="scan'208";a="1387838655"
-X-RBS-Disclaimer: True
-Received: from lonms12853.rbsres07.net ([11.161.40.240])
-  by lonix03001.fm.rbsgrp.net with ESMTP; 28 Jun 2016 09:50:36 +0100
-Received: from LONMS10812.rbsres07.net (11.161.33.187) by
- LONMS12853.rbsres07.net (11.161.40.240) with Microsoft SMTP Server (TLS) id
- 14.3.266.1; Tue, 28 Jun 2016 09:50:35 +0100
-Received: from GBROMEUHUBD0107.rbsres07.net (11.191.100.73) by
- LONMS10812.rbsres07.net (11.161.33.187) with Microsoft SMTP Server (TLS) id
- 8.3.444.0; Tue, 28 Jun 2016 09:50:35 +0100
-Received: from GBWGCEUHUBD0101.rbsres07.net ([169.254.1.46]) by
- GBROMEUHUBD0107.rbsres07.net ([169.254.7.13]) with mapi id 14.03.0266.001;
- Tue, 28 Jun 2016 09:50:35 +0100
-From:	<Ioannis.Kappas@rbs.com>
-To:	<git@vger.kernel.org>
-Subject: git svn clone segmentation faul issue
-Thread-Topic: git svn clone segmentation faul issue
-Thread-Index: AdHRFizUNzqjuxhBT2iXB4SW7Alfsg==
-Date:	Tue, 28 Jun 2016 08:50:34 +0000
-Message-ID: <0BCA1E695085C645B9CD4A27DD59F6FA39AAD5CF@GBWGCEUHUBD0101.rbsres07.net>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [11.161.18.43]
-Content-Type: text/plain; charset="iso-8859-1"
+	id S1752521AbcF1IzK (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 04:55:10 -0400
+Received: from mout.kundenserver.de ([217.72.192.73]:62403 "EHLO
+	mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751193AbcF1IzG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 04:55:06 -0400
+Received: from pflsmail.localdomain ([37.123.123.67]) by
+ mrelayeu.kundenserver.de (mreue104) with ESMTPSA (Nemesis) id
+ 0M25kJ-1bbXKq38eJ-00u1p3; Tue, 28 Jun 2016 10:54:43 +0200
+Received: from localhost (localhost [127.0.0.1])
+	by pflsmail.localdomain (Postfix) with ESMTP id CEAAFB00EA4;
+	Tue, 28 Jun 2016 10:54:42 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at pflsmail.corp.cetitec.com
+Received: from pflsmail.localdomain ([127.0.0.1])
+	by localhost (pflsmail.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4P62m4CCE-+F; Tue, 28 Jun 2016 10:54:40 +0200 (CEST)
+Received: from pfwsexchange.corp.cetitec.com (unknown [10.10.1.99])
+	by pflsmail.localdomain (Postfix) with ESMTPS id 48790B00E5D;
+	Tue, 28 Jun 2016 10:54:40 +0200 (CEST)
+Received: from pflmari.corp.cetitec.com (10.10.11.230) by
+ PFWSEXCHANGE.corp.cetitec.com (10.10.1.99) with Microsoft SMTP Server (TLS)
+ id 15.0.847.32; Tue, 28 Jun 2016 10:54:22 +0200
+Received: by pflmari.corp.cetitec.com (Postfix, from userid 1000)	id
+ CAC13804B0; Tue, 28 Jun 2016 10:54:21 +0200 (CEST)
+Date:	Tue, 28 Jun 2016 10:54:21 +0200
+From:	Alex Riesen <alexander.riesen@cetitec.com>
+To:	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+CC:	<git@vger.kernel.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Support for $FILENAMES in tool definitions
+Message-ID: <20160628085421.GC3710@pflmari>
+Reply-To: Alex Riesen <alexander.riesen@cetitec.com>
+References: <20160627132137.GC4194@pflmari>
+ <57716227.1030104@gmail.com>
 MIME-Version: 1.0
-X-WiganSS: 01000000010017LONMS12853.rbsres07.net
-	ID0047<0BCA1E695085C645B9CD4A27DD59F6FA39AAD5CF@GBWGCEUHUBD0101.rbsres07.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <57716227.1030104@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Originating-IP: [10.10.11.230]
+X-ClientProxiedBy: PFWSEXCHANGE.corp.cetitec.com (10.10.1.99) To
+ PFWSEXCHANGE.corp.cetitec.com (10.10.1.99)
+X-Antivirus: avast! (VPS 160627-1, 27.06.2016), Outbound message
+X-Antivirus-Status: Clean
 Content-Transfer-Encoding: 8BIT
+X-Provags-ID: V03:K0:DQc+EFYF5P78TkxP0diN5zzW7SlQlcZrOZvaNVpJTYEfwzIWDXV
+ BYQLIRliJGzXFBaLvl5dpQ+LKKKvMhqrEOPhPlyPSVhW+6G835t4/CAfPwnO6kMUFsyhyY8
+ knf+fAU0yNmnI/NP+6+Yezh6AFdcjfPKgjYuF9wg16hPg+fbXSmOgipqyySjgYyTNgQF4AS
+ 1Wlad9Xm947tztDrqS5HQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:sgu2zMednpY=:fTJotndMCLNdwfIYJ7Cwt/
+ 35Jyc1oj6f/ZSH+IMfTw7QY4xcqU5iW8j5amrMjBFxL33KQhpxdqu5vE0lcjQyh6GB55PLa5y
+ WJtrAyXs3bIM21GOscsnR6lckP+VenpVRw+NZR2V+pX1jXGdLJYaOmy7N7ANRb8kmYTtmdkec
+ eUHS42ivRBjYnAlBZyqFk3mLIBRuN90cDrWDPt0beNnwySgnay5kH8znqSFy82Uhh6fbA/gpS
+ DJpMiZebp2XMSCMjxbwY2ySW3UukDtYJqM3tkY6iPXh/xW7CzKRPLD2YWA6xHHkeY4tZGSzai
+ wzUOr0Af9s/AIoaqAdJea1H7jIOR8d+eqaDD3f5/dm8R0mKjh9Ts1kl1vfb3XTNW1huINktFj
+ icvXLBoUBQoGjQT8nvYqePBLmPoXARdOTuKe0ncLPgkS57h0dkJ8P+anEj436vNUzorGy5C/E
+ dFWwqWGonMqUpomzrExffgx40UJeyeBwM9utn/AH3Y5hIm8d4Wy399kO2JVxrMaK9eqMjGRgr
+ gUaAhC/9nOYuzjHAELlzdqSO6DbPlBOt5iuGrEZDXTGflkJW3mv62pOghUtnupFM+wKfEXu4V
+ U4yAYywTSlV/wxOKp8hjl9bB1uemtxXfhsnnoXxyXiWRAejisE25Bt8Rpea07ND5Tt5AYsXW9
+ mpyCBTxMfGYM6Xe/Gc2Z3s2HHucfboghKfQTmKircEmp3eYPgPDFR4s7dERfuqHdMmPw=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hello,
+Jakub Narƒôbski, Mon, Jun 27, 2016 19:28:07 +0200:
+> On 2016-06-27, Alex Riesen wrote:
+> 
+> > This adds a FILENAMES environment variable, which contains the repository
+> > pathnames of all selected files the list.
+> > The variable contains the names separated by spaces.
+> 
+> Why not separate filenames with end-of-line character (LF)? It would still
+> be broken for some filenames, but only for unportable ones.  Filenames with
+> internal space (common on MS Windows) would work then.
+> 
+>   http://www.dwheeler.com/essays/filenames-in-shell.html
+>  
 
-Git can fail with a "malformed index nnn" error or cause a segmentation fault when executing the "git svn clone" command. 
+Done. Thanks for the reference, BTW.
 
-This is because the git-svn perl script calling into the external subversion library during fetch, wherein a bug exists that can corrupt the Perl Interpreter's stack maintained on the heap. The bug is in a custom swig typemap around the "result_digest" argument which is not handled in a safe manner: An absolute address on the perl stack is calculated beforehand to store the result of svn_swig_pl_from_md5(), but the function can trigger the stack to be reallocated elsewhere in memory (i.e. when trying to grow it but there is not enough space left) thus invaliding the address calculated earlier, causing memory corruption or segmentation fault.
+> If Tcl allows it, you could separate filenames in FILENAMES environment
+> variable with NUL ("\0") character...
 
-This call is made once for each file retrieved from subversion. The fault is caused when the free available perl stack size is very small at the call, triggering a realloc() moving it elsewhere in memory. In my test environment --MSYS2 on windows 7--, this was caused when the available stack size left was 24 SV* slots. This means that a subversion repository with many file entries has a higher probability to fail while cloning than one with only a few file entries big.
+It allows using of NUL to join the file names. The problem is that the shell
+does not know that the variable $FILENAMES doesn't end at the first NUL.
 
-Perl stack trace to the entry point of the offending code is:
+Looks like the script should do the expansion (and quoting!) on its own for
+this. Or implement another syntax for custom tools, which will allow for, i.e.
+passing the list of files on stdin. LF or NUL separated than.
 
+> > Similar to the FILENAME it is broken yet, if the names contain spaces.
+> 
+> Could you clarify? Did you meant that FILENAMES environment variable is
+> similar to existing FILENAME variable, but broken for filenames which contain
+> spaces, or did you mean that both FILENAME (how?) and FILENAMES are broken
+> for filenames with spaces in them?
 
-††††††† SVN::TxDelta::apply(GLOB(0x60107ece8), GLOB(0x6011ee3a0), undef, SVN::Pool=REF(0x6011ee268)) called at /usr/share/perl5/site_perl/Git/SVN/Fetcher.pm line 368
-††††††† Git::SVN::Fetcher::apply_textdelta(Git::SVN::Fetcher=HASH(0x6010236a0), HASH(0x6011ee2e0), undef, _p_apr_pool_t=SCALAR(0x60113e510)) called at /usr/lib/perl5/vendor_perl/SVN/Ra.pm line 623
-††††††† SVN::Ra::Reporter::AUTOLOAD(SVN::Ra::Reporter=ARRAY(0x6010e9ee0), SVN::Pool=REF(0x6010ea228)) called at /usr/share/perl5/site_perl/Git/SVN/Ra.pm line 312
-††††††† Git::SVN::Ra::gs_do_update(Git::SVN::Ra=HASH(0x60101f4f0), 384103, 384103, Git::SVN=HASH(0x60101fc58), Git::SVN::Fetcher=HASH(0x6010236a0)) called at /usr/share/perl5/site_perl/Git/SVN.pm line 1205
-††††††† Git::SVN::do_fetch(Git::SVN=HASH(0x60101fc58), HASH(0x6010e9b20), 384103) called at /usr/share/perl5/site_perl/Git/SVN/Ra.pm line 475
-††††††† Git::SVN::Ra::gs_fetch_loop_common(Git::SVN::Ra=HASH(0x60101f4f0), 384103, 384103, ARRAY(0x600788cc8), ARRAY(0x600788ce0)) called at /usr/share/perl5/site_perl/Git/SVN.pm line 179
-††††††† Git::SVN::fetch_all("svn") called at /usr/lib/git-core/git-svn line 522
-††††††† main::cmd_clone("http://...", "debug") called at /usr/lib/git-core/git-svn line 386
-††††††† eval {...} called at /usr/lib/git-core/git-svn line 384
+Passing a filename with spaces plainly $FILENAME into the command (i.e.
+without quoting) produces multiple arguments instead of one.
+The new $FILENAMES produces incorrect number of arguments for files with
+spaces for the same reason.
 
-The solution is to change the swig typemap in subversion to delay calculating the stack address where the result is stored after the call to the md5 function:
+> > Note that the file marked and diffed immediately after starting the GUI up,
+> > is not actually selected. One must click on it once to really select it.
+> 
+> I'm not that familiar with git-gui / gitk; what do you mean by this sentence?
 
-In subversion's subversion/subversion/bindings/swig/include/svn_types.swg, one can change
+The git-gui (its completely different from gitk) keeps two variables for
+current files: a scalar variable for the file diff of which is displayed in
+the lower right pane, and a Tcl array (more like a string-to-int map, if I
+understand the code) with the names of the files selected in the file list.
+The array is populated every time you click on a name in the file list, and
+can contain multiple entries if you hold "Ctrl" while clicking.
 
-From 
+> Could you summarize how FILENAME and FILENAMES work, please?
 
-%typemap(argout) unsigned char *result_digest {
-††††%append_output($1);
-}
+These are just environment variables set before running the tool command. They
+are unset immediately after starting the command.
 
-To
+The tool command is unconditionally run using "sh -c <command>", so the
+references to the environment variables are expanded by "sh".
 
-%typemap(argout) unsigned char *result_digest {
-††† SV* ucrdTemp = svn_swig_pl_from_md5($1);†††††††††††† 
-††††%append_output(ucrdTemp);
-}
+Regards,
+Alex
 
-
-Swig will translate the above typemap in subversion/subversion/bindings/swig/perl/native/svn_delta.c
-
-From
-
-††††† if (argvi >= items) EXTEND(sp,1);† ST(argvi) = svn_swig_pl_from_md5(arg3); argvi++† ;
-
-
-to
-
-††††† SV* ucrdTemp = svn_swig_pl_from_md5(arg3);†††††††††††† 
-††††††if (argvi >= items) EXTEND(sp,1);† ST(argvi) = ucrdTemp; argvi++† ;
-
-(The stack address calculation is the results of calling the macro ST(argvi) ).
-
-I am not a Perl expert, but ST(n) = any_function() seems to be a dangerous idiom because of the potential of any_function() to cause a Perl stack reallocation invaliding the address calculated beforehand by ST(n).
-
-
-The above patch has been tested to work in my codebase both on windows 7 (with MSYS2) and on Arch Linux, where it would have caused a segmentation fault otherwise.
-
-
-Fortunately, a patch has already been submitted to subversion with (github) revision a074af86c8764404b28ce99d0bedcb668a321408 (at https://github.com/apache/subversion/commit/a074af86c8764404b28ce99d0bedcb668a321408 ) on the trunk to handle this and a couple of other similar cases. But by the looks of it has not been picked up yet in the latest subversion 1.9.4 release or the 1.9.x branch, perhaps because this patch was identified in sanity checks rather than coming out from a perceivable production issue?
-
-Although this issue is not in the Git source code, I thought reporting this error here first since it is Git that stresses the subversion perl bindings in such a level to cause the failure. Perhaps the patch can be applied first in those git binary releases that include subversion (I believe Git for windows is such a case) while in the mean time I submit this case for consideration in the subversion bug tracking system.
-
-Yannis
-
-*********************************************************************************** 
-The Royal Bank of Scotland plc. Registered in Scotland No 90312. 
-Registered Office: 36 St Andrew Square, Edinburgh EH2 2YB. 
-Authorised by the Prudential Regulation Authority and regulated 
-by the Financial Conduct Authority and Prudential Regulation Authority. 
-The Royal Bank of Scotland N.V. is authorised and regulated by the 
-De Nederlandsche Bank and has its seat at Amsterdam, the 
-Netherlands, and is registered in the Commercial Register under 
-number 33002587. Registered Office: Gustav Mahlerlaan 350, 
-Amsterdam, The Netherlands. The Royal Bank of Scotland N.V. and 
-The Royal Bank of Scotland plc are authorised to act as agent for each 
-other in certain jurisdictions. 
-  
-This e-mail message is confidential and for use by the addressee only. 
-If the message is received by anyone other than the addressee, please 
-return the message to the sender by replying to it and then delete the 
-message from your computer. Internet e-mails are not necessarily 
-secure. The Royal Bank of Scotland plc and The Royal Bank of Scotland 
-N.V. including its affiliates ("RBS group") does not accept responsibility 
-for changes made to this message after it was sent. For the protection
-of RBS group and its clients and customers, and in compliance with
-regulatory requirements, the contents of both incoming and outgoing
-e-mail communications, which could include proprietary information and
-Non-Public Personal Information, may be read by authorised persons
-within RBS group other than the intended recipient(s). 
-
-Whilst all reasonable care has been taken to avoid the transmission of 
-viruses, it is the responsibility of the recipient to ensure that the onward 
-transmission, opening or use of this message and any attachments will 
-not adversely affect its systems or data. No responsibility is accepted 
-by the RBS group in this regard and the recipient should carry out such 
-virus and other checks as it considers appropriate. 
-
-Visit our website at www.rbs.com 
-***********************************************************************************  
+---
+Diese E-Mail wurde von Avast Antivirus-Software auf Viren gepr√ºft.
+https://www.avast.com/antivirus
 
