@@ -2,88 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC7CE2018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 13:32:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFB392018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 13:43:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752593AbcF1NcQ (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 09:32:16 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53993 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752486AbcF1NcP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 09:32:15 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0Lhf3N-1beFVz3UQ5-00moFc; Tue, 28 Jun 2016 15:32:10
- +0200
-Date:	Tue, 28 Jun 2016 15:32:09 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Ioannis.Kappas@rbs.com
-cc:	git@vger.kernel.org
-Subject: Re: git svn clone segmentation faul issue
-In-Reply-To: <alpine.DEB.2.20.1606281334450.12947@virtualbox>
-Message-ID: <alpine.DEB.2.20.1606281530420.12947@virtualbox>
-References: <0BCA1E695085C645B9CD4A27DD59F6FA39AAD5CF@GBWGCEUHUBD0101.rbsres07.net> <alpine.DEB.2.20.1606281334450.12947@virtualbox>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:eEqj+LFIT33vpdM7tPf1FOBzEYTl14nKxHdasPVAF4V1JDjTcAE
- day3as+yxCRz+T+iMIMUfYDQF/Ao7xlyPIlBHAAuDGEGWejWmxFcUTGT2qWosGLVrUPi9T4
- Ycob04K4VzUqxuXnDNB+i/7CrqPPaZE/W96DZZk7c0NIztvK0vitdsI2ksLkDlmwBwQn0DX
- j+926KB0rG6doxjuo/8Mw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:jOaHTSNdGeU=:xSfsoniLHMt+MRkFEe9qZO
- x8lX1J+fktzHAqt0YXXKn/aT0LBCLdl+bIKh92NveVK3xjbX0nKlq7mbq+wV194h9Glr+ViXg
- jlgSoKY+sHUrSth4+hhhmfL/KV4JKvxL/MY8iOrantQLHOzCdZ7oGoHkqYFSf1vlnbMKkSfJ+
- rrFK2BLQ6LzddIQnnYDks3nj44haaWU7i8e2fNBPmbXe81/e7xVaI+RfTUnqHnFhoAffOkHWf
- Aor13L9TMS6iulbBJH7LojkOxNINEw9cGntI/PoXOojODCiEsLs4sUmf+J7siMVEPjebWg7jE
- wYOw9BM4fo+0dk2vWvUBmVCaOPQvos7WTcEabRGwlqFsUQHJtycLZUvVVxc6NW2CrS80t2eeQ
- O/ECpm12g6wH2rTOlx/4sBpiXu/7wOmnFW0y3LwCvFu6P+XVayhcJUegDCFNhPnOetkwXOVMI
- E+hzRxT6b6x/mJau8qhnIQnHYAjK+iGOYYvNUWGjzJaKoQt5nHLPQ8g6fKbbQJKfpX7AEhE1K
- aON2GqsE9eWFgK+dXXCg1Vj5rOBM2nt+ohO5KNCPgBMSi6FpLucL711byRt8FwO0KUPX4JDtM
- UumfFwormXArKfNVZjsIiuv5dWL+CHB24/jG6F0IiSe2Vi1CprCLDeV31KsrXefLc0x93XmhB
- bigmMW0EErAlapTOfD+a/1tOMM53mEw2zRh92CZsPOvMJndN9Wae2ROHFGuQKr5u1sE6jalIZ
- yJixMOx/iNmnBIJ92SpYh2HzNdCc3nPScE/01nWyh99sW9is/wwYj0c52LFYAQ9V9uzfGjXxn
- xyUVvIx
+	id S1752248AbcF1Nnp (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 09:43:45 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:37473 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752148AbcF1Nno convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 09:43:44 -0400
+Received: by mail-wm0-f51.google.com with SMTP id a66so28604808wme.0
+        for <git@vger.kernel.org>; Tue, 28 Jun 2016 06:43:44 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=l+INCJkGjqv3SxpJiZfn0Szmu1JUJK9AY/ZbSx5V6lk=;
+        b=PqUfDDZd8MHoh8r/BAJP0eMggfD66XrQcr3OnCMK1q2oo4bC5eh+CM2Rf9aMVqQ1n4
+         RolMQyMZxvSrOoeY3S3wrJCpRUTn5DCBpSlzo+aU7A0MFqrHf5PAtqrLSjTxq6ay0izc
+         AYmKayZHXwQRqMW/mc8ckfTHC3U7JDmgTxW58rixuoyU7EPyZJwC4AF9EJSFx1UyCXu+
+         ctcHwshgZopCqtRlzuwBeqCgheswAwZ+s05zi9ecjTCKxkhMslVVD9Iz256KnSUpqn+7
+         7mc2a8t/2goYRYuQipN+hwHvU0Ab2tcv93qjnNCxARRebm/3f7ZynwVImfrFuvoNgx4A
+         t7bA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=l+INCJkGjqv3SxpJiZfn0Szmu1JUJK9AY/ZbSx5V6lk=;
+        b=kS+OcUXxaOLp8Zk3Q8eyUf5w5znlLvjh0Wg7XtV4g8HcWViWZCVVAae6YEaz7rzD4Q
+         9BLm8uzMsRgLmvu3MUTY6tC7C9TgOGiDtBTZSreaj+Oj9d66j5fhmSz+hzouHwR4+6EC
+         M/lL04pBLfhKj/TNGQbCgQGuZqWPjX81R4wG6DvPM7G5XT/AKEHuKz3OlomK+B9WXyyB
+         9RQhxlIzlmBwS3vra+31bWfBIFu5JZkq3JLgI3/9QedslQp6+7AuMnHhlHeyXP8Mxxfy
+         Ly2ySd475Fkn1MUHeNsAKJ4qFrBnU+vGbKFcJ85Z5eN0duyAiig37xBSmDKsG1/UNKmh
+         APVQ==
+X-Gm-Message-State: ALyK8tK/ej2053k/zKH88t+q/f9v9N5tWwhVWa9ws+9zXzyh4vf/H4mrl0EDaBkwa29gKA==
+X-Received: by 10.194.109.232 with SMTP id hv8mr3254367wjb.115.1467121422290;
+        Tue, 28 Jun 2016 06:43:42 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id wo9sm3717175wjb.8.2016.06.28.06.43.40
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 28 Jun 2016 06:43:41 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [RFC] Native access to Git LFS cache
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <alpine.DEB.2.20.1606281513380.12947@virtualbox>
+Date:	Tue, 28 Jun 2016 15:43:38 +0200
+Cc:	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	technoweenie@github.com
+Content-Transfer-Encoding: 8BIT
+Message-Id: <5491DA7A-4B1E-4015-879F-F01FF7481143@gmail.com>
+References: <1467005913-6503-1-git-send-email-larsxschneider@gmail.com> <CACsJy8B7ie_oQRZ7Pw3NTo4YyXwZOer-iDUVxDPSY_uhrQi1bw@mail.gmail.com> <alpine.DEB.2.20.1606281139490.12947@virtualbox> <CACsJy8DCovHoutyEYwaxdCTU4K-h8u_JTOwt8GUiNTkkXzGz3w@mail.gmail.com> <alpine.DEB.2.20.1606281513380.12947@virtualbox>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Ioannis,
 
-On Tue, 28 Jun 2016, Johannes Schindelin wrote:
-
-> On Tue, 28 Jun 2016, Ioannis.Kappas@rbs.com wrote:
+> On 28 Jun 2016, at 15:14, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 > 
-> > Git can fail with a "malformed index nnn" error or cause a segmentation
-> > fault when executing the "git svn clone" command. 
-> >
-> > [...]
-> >
-> > Fortunately, a patch has already been submitted to subversion with
-> > (github) revision a074af86c8764404b28ce99d0bedcb668a321408 (at
-> > https://github.com/apache/subversion/commit/a074af86c8) on the trunk to
-> > handle this and a couple of other similar cases. But by the looks of it
-> > has not been picked up yet in the latest subversion 1.9.4 release or the
-> > 1.9.x branch, perhaps because this patch was identified in sanity checks
-> > rather than coming out from a perceivable production issue?
+> Hi Duy,
 > 
-> This is an excellent analysis and a silver lining on the horizon to
-> resolve those vexing git svn issues we keep having in Git for Windows.
+> On Tue, 28 Jun 2016, Duy Nguyen wrote:
 > 
-> Do you have a test case that is reliably reproducing the issue?
+>> On Tue, Jun 28, 2016 at 11:40 AM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>>> 
+>>> On Mon, 27 Jun 2016, Duy Nguyen wrote:
+>>> 
+>>>> On Mon, Jun 27, 2016 at 7:38 AM,  <larsxschneider@gmail.com> wrote:
+>>>>> ## Proposed solution
+>>>>> Git LFS caches its objects under .git/lfs/objects. Most of the time
+>>>>> Git LFS objects are already available in the cache (e.g. if you
+>>>>> switch branches back and forth). I implemented these "cache hits"
+>>>>> natively in Git.  Please note that this implementation is just a
+>>>>> quick and dirty proof of concept. If the Git community agrees that
+>>>>> this kind of approach would be acceptable then I will start to work
+>>>>> on a proper patch series with cross platform support and unit
+>>>>> tests.
+>>>> 
+>>>> Would it be possible to move all this code to a separate daemon?
+>>>> Instead of spawning a new process to do the filtering, you send a
+>>>> command "convert this" over maybe unix socket and either receive the
+>>>> whole result over the socket, or receive a path of the result.
+>>> 
+>>> Unix sockets are not really portable...
+>> 
+>> It's the same situation as index-helper. I expect you guys will
+>> replace the transport with named pipe or similar.
+> 
+> Yes, I will have to work on that. But I might need to ask for a change in
+> the design if I hit some obstacle there: named pipes are not the same at
+> all as Unix sockets.
+> 
+> Read: it will be painful, and not a general solution. So every new Unix
+> socket that you introduce will introduce new problems for me.
 
-I hope you do! I patched the MSYS2 build script to apply a074af86c8 before
-compiling, and uploaded the resulting packages for i686 and x86_64
-architectures to
+Thanks Duy for your suggestion. I considered a daemon, but a daemon makes
+it always harder for the user as the user needs to ensure the daemon is 
+running! Plus, Dscho's concerns regarding Windows.
 
-	https://github.com/dscho/MSYS2-packages/releases/tag/subversion-1.9.4-2
+I think the core problem is that we invoke the filter for every file:
+https://github.com/git/git/blob/master/convert.c#L461-L475
 
-Would you mind giving them a whirl?
+Couldn't we start the filter executable at the beginning of the Git process
+and communicate with it via stdin/stdout whenever we hit the Git filter 
+code? Would that work?
+
+Alternatively, do you see a way to add a "plugin" system to Git? Where Git
+could be configured to dynamically load a "filter" library?
+
+@Dscho:
+Do you have a recommendation for interprocess communication that works 
+without trouble on Windows? 
 
 Thanks,
-Johannes
+Lars
