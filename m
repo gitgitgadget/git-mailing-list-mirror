@@ -2,104 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEAD82018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 19:51:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01D172018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 20:04:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752215AbcF1TvX (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 15:51:23 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55442 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751946AbcF1TvW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 15:51:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D874B242F1;
-	Tue, 28 Jun 2016 15:51:20 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hKuHYoAutJ13I14+ROcPPpgovzI=; b=qg+TmY
-	USLh+qFVOGNQTuA3SgeECcB9IlRqXh1W7kxr1Hkpny3lgy46OdnXiVk6QPJt3R1i
-	OUp2b7rH/jLbCFqHdSJIvAmqFBsPt5wvJwWg4D6y/YHogFjvGAnK6rgfMmQ4JxAq
-	hJutQsMsDieI8xs2Ly3EUm1zjnFIxLHBr+j6Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KeO45nc93wDnXfeIwxYLqrpt4Z5ngA/q
-	Gy3R1GF6hLMok6DzVIeiBnywZQ/Y0YJGbhHYeReyzNQQhNe6zD3/391bTcd3ip8C
-	q2C5GCvMI9t263wrpSTooJXtHT7NVqHP9Fat5BKO1/aCgXP4FWOnN7gTFjUyeZfk
-	OpyixMxnG8g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D1803242F0;
-	Tue, 28 Jun 2016 15:51:20 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5FA2F242EF;
-	Tue, 28 Jun 2016 15:51:20 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Nicolas Pitre <nico@fluxnic.net>
-Cc:	Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4] Refactor recv_sideband()
-References: <20160613195224.13398-1-lfleischer@lfos.de>
-	<20160628043526.19403-1-lfleischer@lfos.de>
-	<xmqqa8i59rph.fsf@gitster.mtv.corp.google.com>
-	<xmqq60st9qg5.fsf@gitster.mtv.corp.google.com>
-	<alpine.LFD.2.20.1606281334030.24439@knanqh.ubzr>
-	<xmqqlh1p89mo.fsf@gitster.mtv.corp.google.com>
-	<alpine.LFD.2.20.1606281422500.24439@knanqh.ubzr>
-Date:	Tue, 28 Jun 2016 12:51:18 -0700
-In-Reply-To: <alpine.LFD.2.20.1606281422500.24439@knanqh.ubzr> (Nicolas
-	Pitre's message of "Tue, 28 Jun 2016 14:28:56 -0400 (EDT)")
-Message-ID: <xmqq60st853d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751419AbcF1UE3 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 16:04:29 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:36074 "EHLO
+	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752622AbcF1UEM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 16:04:12 -0400
+Received: by mail-io0-f177.google.com with SMTP id s63so27010063ioi.3
+        for <git@vger.kernel.org>; Tue, 28 Jun 2016 13:04:12 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=VuhALvwyqYNAoPSmMwqyZ12HSMGBZ8hdjDhfmU7aBXw=;
+        b=oMO0U4P5XFUdG3ZzCqiqpbfkf61BCT1g4VIQyT82tJHVCbZJZoPzMY8Juyix0JZEGn
+         BsqmHXRPCVMOLrkzAFXlub/SEg5bl1yqmOzQSZlCngriS/9ZSuGcwCsieVwPxKLl7X/q
+         igCW/R5Tmf8M1/02kb1PqOlJCXTI9oR//NSrRbpS93CEpekTy5v5ynsxMG8laWTsHhJN
+         pPmubw6OrjijOAshGZajQjHnVQYg7xMrXkVI04xAQ3ea7HUNHJVrqwS3g+drL19MAVFw
+         WfyOO7MDxZXkX0+xre7uvLEI+4cmJ4lNnA29fC3ggwjLhvhYl6JIf+AKTA17sVS7JdrJ
+         lPPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=VuhALvwyqYNAoPSmMwqyZ12HSMGBZ8hdjDhfmU7aBXw=;
+        b=ICjMP8Dfd2biS/nIAOTtlhwwmLhkwOP5cDORvwxE54xSsvNPXXNrO/V/c6M1pGR+YR
+         ur2CNfuy2sqHj4cXvsesKEx0lnX+pHnYeXlyGeEWpZwu0elaSiXL56/d+a6cpAxlbkjZ
+         65L1jPLPAgFnAn6BjWn/KB1k+a1jtvn4aeNbkLXoSYDC13bTka/Ps16LxkM6JEu4MAW0
+         IY3Nm9XlN3WIG1e3S1CALZ7FHJpd+xsscdYTPlOHA2uYV1wueb/ndYoDnyyDY8qABPUz
+         lUuKejw5gV77anZXWixF3zY0erpvzfE090HlC59onyAm053GcOHQjwSE97fqmNmNb0JT
+         b3EA==
+X-Gm-Message-State: ALyK8tJMJH185QsrWGmPUqTGoG7sLgkXbTn++LFQq9Pqs52bU4jzokv1SqQcVtocg5dlP2WsmzqK+3CQBWAMV0pt
+X-Received: by 10.107.178.4 with SMTP id b4mr5571267iof.83.1467143781081; Tue,
+ 28 Jun 2016 12:56:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AF5823B4-3D69-11E6-98BF-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.107.136.16 with HTTP; Tue, 28 Jun 2016 12:56:20 -0700 (PDT)
+In-Reply-To: <2808201e-130a-55a4-a4ee-70f4d2f428f6@gmx.net>
+References: <f572d4ee-c618-6501-a8e5-717feca3ed7c@gmx.net> <CAGZ79kZQTv=QuuSGeYBQ+J89xQwtMmEsq7rvyFOAfSZfM+0YLA@mail.gmail.com>
+ <2808201e-130a-55a4-a4ee-70f4d2f428f6@gmx.net>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Tue, 28 Jun 2016 12:56:20 -0700
+Message-ID: <CAGZ79kastJyauxh25Re3daQGFAxEC1dQ1bWkaSgzOgHmbY-_FQ@mail.gmail.com>
+Subject: Re: Shallow submodule efficiency
+To:	Martin von Gagern <Martin.vGagern@gmx.net>,
+	Duy Nguyen <pclouds@gmail.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Nicolas Pitre <nico@fluxnic.net> writes:
-
-> Without this, the error and remaining buffer would be reversed as 
-> mentioned previously.  With this, the order is restored, but a newline 
-> is added to unterminated lines whereas the error was simply appended to 
-> the output before Lukas' patch.
+On Tue, Jun 28, 2016 at 12:08 PM, Martin von Gagern
+<Martin.vGagern@gmx.net> wrote:
+> Hi Stefan,
 >
-> In any case the new behavior is probably better and I'd simply adjust 
-> the test expectations.
+> On 28.06.2016 19:20, Stefan Beller wrote:
+>>> I have the feeling that “git submodule update --depth 1” is less clever
+>>> than it could be. Here is one example I observed with git 2.0.0:
+>>
+>> 2.9.0 (as "Direct fetching of " is not part of 2.0.0 IIRC) ?
+>
+> Yes, sorry. I had this tested with 2.8.3 at first, then waited for my
+> update to 2.9.0 to reproduce, and garbled the text while adjusting it.
+>
+>> Makes sense! I think the easiest way forward to implement this will be:
+>>
+>> * `git clone` learns a (maybe undocumented internal) option `--get-sha1`
+>>   `--branch` looks similar to what we want, but doesn't quite fit as we do not
+>>   know, whether we're on a tag or not. The submodule tells us just the
+>>   recorded sha1, not the branch/tag. So maybe we'd end up calling it
+>>   `--detach-at=<sha1>`,
+>
+> That name makes a lot of sense to me.
+>
+>>   that will
+>>   -> inspect the ls-remote for the sha1 being there
+>>   -> if the sha1 is there (at least once) clone as if --branch <tag> was given
+>
+> Clone but detach, to be consistent. Yes.
 
-There is something else going on.  I cannot quite explain why I am
-getting this failure from t5401-update-hooks.sh, for example:
+Oh, right.
 
-    --- expect      2016-06-28 19:46:24.564937075 +0000
-    +++ actual      2016-06-28 19:46:24.564937075 +0000
-    @@ -9,3 +9,4 @@
-     remote: STDERR post-receive
-     remote: STDOUT post-update
-     remote: STDERR post-update
-    +remote: To ./victim.git
-    not ok 12 - send-pack stderr contains hook messages
+>
+>>   -> if not found and the server advertised  allowReachableSHA1InWant,
+>> try again inside the clone
+>
+> All of this has to pass through transport and get-pack, right?
 
-... goes and looks what v2.9.0 produces, which ends like this:
+Yeah we have to go through the transport layer, i.e. from builtin/clone.c we
+manipulate the transport object as defined in transport.h and code in
+transport.c
+What do you mean by get-pack, though?
 
-    ...
-    remote: STDERR post-receive        
-    remote: STDOUT post-update        
-    remote: STDERR post-update        
-    To ./victim.git
-       e4822ab..2b65bd1  master -> master
-     ! [remote rejected] tofail -> tofail (hook declined)
+>
+>> * `submodule--helper update-clone` passes the  `--get-sha1` to the
+>> clones of the submodules
+>>
+>> * cmd_update() in git-submodule.sh will only checkout submodules and
+>> not try again
+>>   to fetch them if `just_cloned` is set as the cloning did the best it could.
+>
+> Sounds like a very reasonable roadmap to me.
+>
+> Do you think there will be someone volunteering to tackle this?
 
-The test checks if lines prefixed with "remote: " match the expected
-output, and the difference is an indication that the new code is
-showing an extra incomplete-line "remote: " before other parts of
-the code says "To ./victim.git" to report where the push is going.
+I have it on my (low priority) TODO list, so if you want it sooner
+than later, go for
+it yourself. Otherwise just wait. Maybe Duy has some interest as well.
 
-It appeasrs that the "Refector"ed logic needs to be a bit more
-careful when relaying an empty payload.
+Thanks,
+Stefan
+
+>
+> Greetings,
+>   Martin
