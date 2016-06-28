@@ -2,80 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FB1D2018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 14:30:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0ACAB2018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 15:13:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752258AbcF1Oau (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 10:30:50 -0400
-Received: from mailout.micron.com ([137.201.242.129]:33249 "EHLO
-	mailout.micron.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752236AbcF1Oat (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 10:30:49 -0400
-Received: from mail.micron.com (bowex36c.micron.com [137.201.84.132])
-	by mailout.micron.com (8.14.4/8.14.6) with ESMTP id u5SEUl7b020073
-	for <git@vger.kernel.org>; Tue, 28 Jun 2016 08:30:48 -0600
-Received: from bowex17b.micron.com (137.201.21.210) by bowex36c.micron.com
- (137.201.84.132) with Microsoft SMTP Server (TLS) id 15.0.1178.4; Tue, 28 Jun
- 2016 08:30:47 -0600
-Received: from bowex17b.micron.com ([fe80::c4b6:ba92:bbc7:49e8]) by
- bowex17b.micron.com ([fe80::c4b6:ba92:bbc7:49e8%21]) with mapi id
- 15.00.1178.000; Tue, 28 Jun 2016 08:30:47 -0600
-From:	"Andy Falanga (afalanga)" <afalanga@micron.com>
-To:	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: What's happening to the index
-Thread-Topic: What's happening to the index
-Thread-Index: AQHR0UmpYyKI5mtRV0y4jBNtBkclFA==
-Date:	Tue, 28 Jun 2016 14:30:47 +0000
-Message-ID: <57728A17.3010207@micron.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [137.201.84.23]
-x-tm-as-product-ver: SMEX-11.0.0.4255-8.000.1202-22418.005
-x-tm-as-result:	No--33.052200-0.000000-31
-x-tm-as-user-approved-sender: Yes
-x-tm-as-user-blocked-sender: No
-x-mt-checkinternalsenderrule: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <F451D34BE577DD45B7D7CF8E7CCBB384@micron.com>
-Content-Transfer-Encoding: base64
+	id S1751999AbcF1PNL (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 11:13:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58122 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751158AbcF1PNL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 11:13:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 776182368B;
+	Tue, 28 Jun 2016 11:13:09 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kW3R520Z9CRs64S7r7HrxFQI+sI=; b=bL0J4q
+	8e8yjsIP/9eC4c13Hw5Qx8YaT4FCOt0aJqfe4u2+OPcBlCX0VpQswv0ASGka5Jmg
+	/ELwS8N6EYZSYp5yn3DtUpQZdqfkVQaTnLjXzxcHQxaswhJK62aCdHR8ZrH1L2HT
+	QK+ZrjvPOlkFR6BzTdNSi9RuxtLpAo2nikNnQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lDmPUQLs0HOvtEsEf/csHDVVybU7E/ql
+	nNs3esMWivqHEoJ7XmFoKaBJhw1btkFjvVESvyoqZ7y0xoJymC4d7EyInWKQYprq
+	mMcgDeM6nHG8iDt4mRfX29W3GVZfAZY6+59ZhcVGp9NpXs1lE5JRPk1jd44mfnHq
+	cUKkPSlOVpM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6F4DC2368A;
+	Tue, 28 Jun 2016 11:13:09 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E72ED23689;
+	Tue, 28 Jun 2016 11:13:08 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Jeff King <peff@peff.net>, Lukas Fleischer <lfleischer@lfos.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@fluxnic.net>, Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] Refactor recv_sideband()
+References: <20160613195224.13398-1-lfleischer@lfos.de>
+	<20160614210038.31465-1-lfleischer@lfos.de>
+	<20160624153121.GA2494@sigill.intra.peff.net>
+	<alpine.DEB.2.20.1606241942220.12947@virtualbox>
+	<20160624181414.GA25768@sigill.intra.peff.net>
+	<CAPc5daWxWpMe4ob4zu0tMK4uWpLPDxC7GS8KTb4+3g5=ztv71A@mail.gmail.com>
+	<146702508453.24123.590646528169139972@s-8d3a37fa.on.site.uni-stuttgart.de>
+	<xmqqr3bibpap.fsf@gitster.mtv.corp.google.com>
+	<20160627161616.GA4430@sigill.intra.peff.net>
+	<alpine.DEB.2.20.1606281203000.12947@virtualbox>
+	<alpine.DEB.2.20.1606281204330.12947@virtualbox>
+Date:	Tue, 28 Jun 2016 08:13:06 -0700
+In-Reply-To: <alpine.DEB.2.20.1606281204330.12947@virtualbox> (Johannes
+	Schindelin's message of "Tue, 28 Jun 2016 12:05:36 +0200 (CEST)")
+Message-ID: <xmqqr3bh9wjh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.78 on 137.201.130.65
+Content-Type: text/plain
+X-Pobox-Relay-ID: D27826CC-3D42-11E6-9335-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-SGksDQoNCkknbSB1c2luZyBnaXQgdmVyc2lvbiAxLjguMy4xLiAgSSBoYXZlIGEgcHJvY2VzcyBm
-b3IgYnVpbGRpbmcgUlBNcyBpbiBteSANCnJlcG9zaXRvcnkuICBUaGUgUlBNcyBhcmUgdmVyc2lv
-bmVkIHVzaW5nIGEgImJ1aWxkIG51bWJlciIuIEluIG9yZGVyIHRvIA0KbWFpbnRhaW4gdW5pcXVl
-bmVzcyBmb3IgdGhpcyBidWlsZCBudW1iZXIsIEkgaGF2ZSBzdG9yZWQgdGhpcyBudW1iZXIgdG8g
-DQphIGZpbGUgd2hpY2ggZXhpc3RzIG9uIG9ubHkgYSB1bmlxdWUgYnJhbmNoLg0KDQpUaGUgYnVp
-bGQgcHJvY2VzcywgZm9yIGFuIGFjdHVhbCByZWxlYXNlLCBpcyBpbnRlbmRlZCB0byBiZSBkb25l
-IGJ5IA0KYnJhbmNoaW5nIG9uIGEgdGFnLiAgRHVyaW5nIHRoYXQgcHJvY2VzcywgYSBCQVNIIHNj
-cmlwdCBpcyBjYWxsZWQgd2l0aCANCmNoZWNrcyBvdXQgInJwbSIsIGZldGNoZXMgdGhlIHJlcG8g
-ZnJvbSByZW1vdGUsIG1lcmdlcyB3aXRoIG9yaWdpbi9ycG0sIA0KaW5jcmVtZW50cyB0aGUgbnVt
-YmVyIGFuZCBwdXNoZXMgYmFjayB0byBvcmlnaW4uICBJdCB0aGVuIHJldHVybnMgdGhlIA0KYnJh
-bmNoIHRvIHRoZSBvcmlnaW5hbCBicmFuY2ggaW4gd2hpY2ggdGhlIHNjcmlwdCB3YXMgY2FsbGVk
-LiAgVGhlIG1ha2UgDQpyZWNpcGUgbG9va3MgbGlrZSB0aGlzOg0KDQoNCnJlbGVhc2U6DQogICAg
-IG1ha2UgY2xlYW4NCiAgICAgY2QgLi4vLi4gICYmIC4uL3Rvb2xzL2luY3JlbG51bSAmJiBjZCAt
-DQogICAgIGlmIFtbICQoVEFHKSA9IC4uLi4uLi4uLiBdXTsgdGhlbiBcDQogICAgICAgICBnaXQg
-Y2hlY2tvdXQgLWIgcnBtX2J1aWxkXyQoVEFHKSAkKFRBRyk7IFwNCiAgICAgZmkNCiAgICAgbWFr
-ZSBycG0gUlBNX0JVSUxEX05VTT0kKHNoZWxsIGdpdCBzaG93IHJwbTouL3JwbV9idWlsZF9udW0p
-DQoNCkFmdGVyIHRoZSBsaW5lIGNhbGxpbmcgaW5jcmVsbnVtIGlzIGV4ZWN1dGVkLCBJIG9mdGVu
-IGhhdmUgaXNzdWVzIHdpdGggDQptYWtlIHVuYWJsZSB0byBzcGF3biB0aGUgbmV4dCBjb21tYW5k
-IGJlY2F1c2UgaXQgY2FuJ3QgcmVhZCB0aGUgY3VycmVudCANCmRpcmVjdG9yeSBpbmZvLiAgTWFr
-ZSBzdG9wcyB3aXRoIGVycm9ycyBhbmQgSSdtIGRvbmUuICBJIGhhdmUgdGhlIGJyYW5jaCANCm5h
-bWUgZGlzcGxheWVkIGluIG15IFBTMSBwcm9tcHQuICBJJ3ZlIG5vdGljZWQgdGhhdCwgd2hlbiBt
-YWtlIGVycm9ycyBhdCANCnRoaXMgcG9pbnQsIHRoZSBicmFuY2ggaXNuJ3QgZGlzcGxheWVkLiAg
-SXQncyBhcyBpZiB0aGUgaW5kZXggaGFzIGJlY29tZSANCnVuc3RhYmxlIChvciBzb21ldGhpbmcg
-c2ltaWxhcikuICBJZiBJIGRvOiBjZCAuLiAmJiBjZCAtOyBhbGwgaXMgd2VsbC4NCg0KV2hhdCBp
-cyB0aGUgcHJvYmxlbSAoSSdkIHJlYWxseSBsaWtlIHRvIHVuZGVyc3RhbmQpIGFuZCB3aGF0IG1p
-Z2h0IEkgZG8gDQp0byBjb3JyZWN0IGl0Pw0KDQpBbmR5
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> Erm, sorry...
+>
+> On Tue, 28 Jun 2016, Johannes Schindelin wrote:
+>
+>> [...] we actually do not override fprintf() at all anymore [*1*] [...]
+>
+> ... forgot the
+>
+> Footnote *1*: In Git for Windows, we actually *do* override fprintf(),
+> thanks to using gettext, but it is *gettext* that is doing the overriding
+> now, not Git.
+
+That's nice to know but is not particularly actionable.  
+
+Do you mean
+
+ - We do color correctly without having to override fprintf() these
+   days, so feel free and safe to use either fwrite() or write()
+
+ - Because we do not override fprintf(), we no longer do colors
+
+ - Or something in between, e.g. "we don't override fprintf()
+   ourselves but gettext does X for us (for unknown value of X), so
+   you will get color as long as you do Y (for unknown value of Y)"?
+
+In other words, based on this piece of knowledge you shared with us,
+what is your recommendation for Lukas's patch to do?
+
+Thanks.
+
