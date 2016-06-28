@@ -2,100 +2,213 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DDF82018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 21:04:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1AAE2018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 21:10:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753047AbcF1VDZ (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 17:03:25 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37256 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752712AbcF1VDX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 17:03:23 -0400
-Received: (qmail 3876 invoked by uid 102); 28 Jun 2016 21:03:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Jun 2016 17:03:13 -0400
-Received: (qmail 12381 invoked by uid 107); 28 Jun 2016 21:03:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Jun 2016 17:03:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Jun 2016 17:03:09 -0400
-Date:	Tue, 28 Jun 2016 17:03:09 -0400
-From:	Jeff King <peff@peff.net>
-To:	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Cc:	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	sschuberth@gmail.com
-Subject: Re: [PATCH v2 0/2] Config conditional include
-Message-ID: <20160628210309.GC21002@sigill.intra.peff.net>
-References: <20160626070617.30211-1-pclouds@gmail.com>
- <20160628172641.26381-1-pclouds@gmail.com>
- <20160628202809.GA21002@sigill.intra.peff.net>
- <vpqk2h9qbp8.fsf@anie.imag.fr>
+	id S1752382AbcF1VKB (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 17:10:01 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59348 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752362AbcF1VKA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 17:10:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7617229965;
+	Tue, 28 Jun 2016 17:09:59 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=e4BVAt24++T+cGBk7RAx+pavd0Q=; b=MZqEok
+	KpknPMOLFHqXQnCCbnxMwYAHzFzotS5puya4Yjw54JH+cwu/foYoIR2dnK4M9edf
+	3QkDb14TfV7Ko7SRuZrqSIAp5+qzwh2m9veuAPoRM0VQa5uY7zgbhVY0HdLtW0vU
+	FYe7/PRJmZlLQ7Ywce9ErlaBqcmoS8FI3o/ao=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=w/pWk7sE+ENslUbFIvkp0N489mjlxrSB
+	80javeChdp313SEw94dzczVCM7crlW3D5crZBmiHN05Ko8JciKNFbsHx7gnKNeyv
+	1L5pupr5S0CJEq22pBltSv89O8uiBtLg6g2NYw0GMkDDixrNjm1g1jnhmCkdMxSO
+	dKA+Ink8aZM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6EB0F29964;
+	Tue, 28 Jun 2016 17:09:59 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DAAB029961;
+	Tue, 28 Jun 2016 17:09:58 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Nicolas Pitre <nico@fluxnic.net>
+Cc:	Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4] Refactor recv_sideband()
+References: <20160613195224.13398-1-lfleischer@lfos.de>
+	<20160628043526.19403-1-lfleischer@lfos.de>
+	<xmqqa8i59rph.fsf@gitster.mtv.corp.google.com>
+	<xmqq60st9qg5.fsf@gitster.mtv.corp.google.com>
+	<alpine.LFD.2.20.1606281334030.24439@knanqh.ubzr>
+	<xmqqlh1p89mo.fsf@gitster.mtv.corp.google.com>
+	<alpine.LFD.2.20.1606281422500.24439@knanqh.ubzr>
+	<xmqq60st853d.fsf@gitster.mtv.corp.google.com>
+	<alpine.LFD.2.20.1606281629280.24439@knanqh.ubzr>
+Date:	Tue, 28 Jun 2016 14:09:56 -0700
+In-Reply-To: <alpine.LFD.2.20.1606281629280.24439@knanqh.ubzr> (Nicolas
+	Pitre's message of "Tue, 28 Jun 2016 16:36:51 -0400 (EDT)")
+Message-ID: <xmqqwpl96mvv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <vpqk2h9qbp8.fsf@anie.imag.fr>
+Content-Type: text/plain
+X-Pobox-Relay-ID: ABCB0454-3D74-11E6-ADE3-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jun 28, 2016 at 10:51:15PM +0200, Matthieu Moy wrote:
+Nicolas Pitre <nico@fluxnic.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Tue, Jun 28, 2016 at 07:26:39PM +0200, Nguyễn Thái Ngọc Duy wrote:
-> >
-> >> There's a surprise about core.ignorecase. We are matching paths, so we
-> >> should match case-insensitively if core.ignorecase tells us so. And it
-> >> gets a bit tricky if core.ignorecase is defined in the same config
-> >> file. I don't think we have ever told the user that keys are processed
-> >> from top down. We do now.
-> >
-> > Hrm. I'm not excited about introducing ordering issues into the config
-> > parsing.
-> 
-> There's already at least one case of ordering-sensitive variables, that
-> we encountered when writting the config cache during Tanay Abhra's GSoC:
-> diff.<driver>.funcname Vs diff.<driver>.xfuncname. Git applies the "last
-> one wins" policy, which is the normal rule for a single-valued variable,
-> but in this case, a "funcname" definition can override an "xfuncname"
-> def. To preserve this behavior we had to introduce ordering in the
-> cache, but to me this was a design mistake to rely on order.
-> 
-> In short: we already have one, but I'm not excited either about
-> introducing new ones.
+>> There is something else going on.  I cannot quite explain why I am
+>> getting this failure from t5401-update-hooks.sh, for example:
+>> 
+>>     --- expect      2016-06-28 19:46:24.564937075 +0000
+>>     +++ actual      2016-06-28 19:46:24.564937075 +0000
+>>     @@ -9,3 +9,4 @@
+>>      remote: STDERR post-receive
+>>      remote: STDOUT post-update
+>>      remote: STDERR post-update
+>>     +remote: To ./victim.git
+>>     not ok 12 - send-pack stderr contains hook messages
+>> 
+>> ... goes and looks what v2.9.0 produces, which ends like this:
+>> 
+>>     ...
+>>     remote: STDERR post-receive        
+>>     remote: STDOUT post-update        
+>>     remote: STDERR post-update        
+>>     To ./victim.git
+>>        e4822ab..2b65bd1  master -> master
+>>      ! [remote rejected] tofail -> tofail (hook declined)
+>> 
+>> The test checks if lines prefixed with "remote: " match the expected
+>> output, and the difference is an indication that the new code is
+>> showing an extra incomplete-line "remote: " before other parts of
+>> the code says "To ./victim.git" to report where the push is going.
+>
+> Ah...  I think I know what's going on.
+>
+> The leftover data in the strbuf is normally (when there is no errors) an 
+> unterminated line. So instead of doing:
+>
+> -                       fprintf(stderr, "%s: protocol error: no band designator\n", me);
+> +                       strbuf_addf(&outbuf,
+> +                                   "\n%s: protocol error: no band designator\n",
+> +                                   me);
+>
+> you could omit the final \n in the format string and:
+>
+> -       if (outbuf.len > 0)
+> -               fprintf(stderr, "%.*s", (int)outbuf.len, outbuf.buf);
+> +       if (outbuf.len)
+> +               fwrite(outbuf.buf, 1, outbuf.len, stderr);
+>         strbuf_release(&outbuf);
+>
+> and here a \n could be added before writing out the buffer.
 
-I still see funcname versus xfuncname as fundamentally a "last one wins"
-scenario; it's just that the two options are sort-of synonyms. But we
-are still talking about the same linear-ish parsing scheme, and I think
-it just makes the implementation a little more complicated.
+Unfortunately, that is not it.
 
-I'm much more worried about something that impacts how we parse the
-config, and is set up in a possibly unrelated config-parsing sequence.
-So whether ignorecase will work depends on more variables:
+The basic structure of the code (without the "SQUASH" we discussed)
+looks like this:
 
- - are we doing our config parse before or after somebody has called
-   git_config() at the start of a program?
+	strbuf_addf(&outbuf, "%s", PREFIX);
+	while (retval == 0) {
+		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
+		...
+		band = buf[0] & 0xff;
+		switch (band) {
+		case 3:
+			... /* emergency exit */
+		case 2:
+			while ((brk = strpbrk(b, "\n\r"))) {
+				int linelen = brk - b;
 
- - if before (or during), does our callback call git_default_core_config()?
+				if (linelen > 0) {
+					strbuf_addf(&outbuf, "%.*s%s%c",
+						    linelen, b, suffix, *brk);
+				} else {
+					strbuf_addf(&outbuf, "%c", *brk);
+				}
+				fprintf(stderr, "%.*s", (int)outbuf.len,
+					outbuf.buf);
+				strbuf_reset(&outbuf);
+				strbuf_addf(&outbuf, "%s", PREFIX);
+				b = brk + 1;
+			}
+			if (*b)
+				strbuf_addf(&outbuf, "%s", b);
+			break;
+		...
+		}
+	}
 
- - if so, did core.ignorecase appear before our include? (Almost
-   certainly not, if our include is in ~/.gitconfig, because we parse
-   from least-specific to most-specific).
+	if (outbuf.len > 0)
+		fprintf(stderr, "%.*s", (int)outbuf.len, outbuf.buf);
 
-So here it is not the implementation that is complicated, but the
-user-facing behavior. It's very difficult to predict when your include
-will kick in, and there is a good chance it will behave differently for
-different programs.
+Imagine we are reading from band #2 and we find a complete line.  We
+concatenate the payload up to the LF at the end of the line to the
+PREFIX we prepared outside the loop and emit it, and then we ASSUME
+that we further have something after strpbrk() and add PREFIX to the
+buffer, before going to the next line in the payload.
 
-In general I think the best bet here is to lazy-load such values from
-the config-cache (so we _know_ that we got a complete parse before we
-look at the value). But that creates a recursion problem when we try to
-lazy-load from inside the config parser itself.
+But there may not be anything after the LF.  outbuf.len is still
+counting the PREFIX and we end up showing it, without termination.
 
--Peff
+This takes us back to what I said in my review of an earlier round,
+in $gmane/297332, where I said:
+
+    Instead of doing "we assume outbuf already has PREFIX when we add
+    contents from buf[]", the code structure would be better if you:
+
+     * make outbuf.buf contain PREFIX at the beginning of this innermost
+       loop; lose the reset/addf from here.
+
+     * move strbuf_reset(&outbuf) at the end of the next if (*b) block
+       to just before "continue;"
+
+    perhaps?
+
+I think the strbuf_addf(PREFIX) above the loop should be removed,
+and instead the code should use the PREFIX only when it decides that
+there is something worth emitting, i.e.
+
+	while (!retval) {
+        	len = packet_read();
+                ...
+                band = buf[0] & 0xff;
+                switch (band) {
+                case 3:
+                	... /* emergency exit */
+		case 2:
+                	while ((brk = ...)) {
+                        	/* we have something to say */
+				strbuf_reset(&outbuf);
+                                strbuf_addstr(&outbuf, PREFIX);
+                                if (linelen)
+                                	strbuf_addf(...);
+				else
+                                	strbuf_addch(*brk);
+				fwrite(outbuf.buf, 1, outbuf.len, stderr);
+				b = brk + 1;
+			}
+                        if (*b) {
+                        	/* we still have something to say */
+				strbuf_reset(&outbuf);
+                                strbuf_addstr(&outbuf, PREFIX);
+                               	strbuf_addf(...);
+			}
+                        break;
+		...
+                }
+	}
+
+
