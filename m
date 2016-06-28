@@ -2,75 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A02D32018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 15:17:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4736A2018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 15:20:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752281AbcF1PRa (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 11:17:30 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:33780 "EHLO mx1.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752018AbcF1PR3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 11:17:29 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u5SFHG0m014387
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 28 Jun 2016 17:17:16 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u5SFHIsC024380;
-	Tue, 28 Jun 2016 17:17:18 +0200
-From:	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:	"Andy Falanga \(afalanga\)" <afalanga@micron.com>
-Cc:	"git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: What's happening to the index
-References: <57728A17.3010207@micron.com>
-Date:	Tue, 28 Jun 2016 17:17:18 +0200
-In-Reply-To: <57728A17.3010207@micron.com> (Andy Falanga's message of "Tue, 28
-	Jun 2016 14:30:47 +0000")
-Message-ID: <vpq60stuyv5.fsf@anie.imag.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+	id S1752279AbcF1PUC (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 11:20:02 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51642 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751944AbcF1PUA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 11:20:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 758C4237D5;
+	Tue, 28 Jun 2016 11:19:49 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/iqFzgjoKJju3mA1xbHYRNZZmFc=; b=eu1fLK
+	jh5i+CYrM3PIJGRmB9hnHDAlAc3040sdQ2QqAV7auMJKIomqbx1VE8NMzhcVR8WR
+	oDqrJQV0F//xPGvh4UjBlScjgId8r2kAJDDo7YlStnMXMUpkxtmVUKdkyrZKn5+3
+	8X/FIGqOZ99cD38swOCS5+Qi3hd/JccsRmB5w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fI4/gZinK2vW+wVmnmjyVqVhcseDH3U6
+	JrSmew3b3Hkh8Hq+ekpK+cfE3JvmjqgB+LgQidZiteN5s/5RaR6uMNaidYkkMf6p
+	KBZoTpURhGi7cgjS+yYXxtOjiEBvOb940uy0nsk6PkjmXd+E5Hkz5SED211cS+H5
+	5vARLnf5VVo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D66A237D4;
+	Tue, 28 Jun 2016 11:19:49 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D4501237D1;
+	Tue, 28 Jun 2016 11:19:48 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Cc:	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Jordan DE GEA <jordan.de-gea@ensimag.grenoble-inp.fr>,
+	Samuel GROOT <samuel.groot@ensimag.grenoble-inp.fr>,
+	Erwan MATHONIERE <erwan.mathoniere@ensimag.grenoble-inp.fr>,
+	Tom RUSSELLO <tom.russello@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH 2/6] doc: typeset long command-line options as literal
+References: <20160627174623.11084-1-Matthieu.Moy@imag.fr>
+	<20160627174623.11084-2-Matthieu.Moy@imag.fr>
+	<20160627190422.GC9594@sigill.intra.peff.net>
+	<vpqr3bhzqej.fsf@anie.imag.fr>
+Date:	Tue, 28 Jun 2016 08:19:46 -0700
+In-Reply-To: <vpqr3bhzqej.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
+	28 Jun 2016 10:08:52 +0200")
+Message-ID: <xmqqmvm59w8d.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Tue, 28 Jun 2016 17:17:16 +0200 (CEST)
-X-IMAG-MailScanner-Information:	Please contact MI2S MIM  for more information
-X-MailScanner-ID: u5SFHG0m014387
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check:	1467731838.88785@NKtlSFmZfzeWXXzkrnWf0g
+Content-Type: text/plain
+X-Pobox-Relay-ID: C0E0B036-3D43-11E6-915D-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-"Andy Falanga (afalanga)" <afalanga@micron.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> After the line calling increlnum is executed, I often have issues with 
-> make unable to spawn the next command because it can't read the current 
-> directory info.
+> Sorry, I forgot to mention when sending the series: this is to be
+> applied on top of tr/doc-tt (in next, marked "will merge to master").
 
-This may happen if you delete the current directory, even if your
-re-create it afterwards. For example:
-
-/tmp/test$ rm -fr /tmp/test && mkdir /tmp/test
-/tmp/test$ touch foo
-touch: cannot touch ‘foo’: No such file or directory
-/tmp/test$ cd /tmp/test
-/tmp/test$ touch foo   
-/tmp/test$ 
-
-This is unrelated from Git, but maybe you asked Git to delete a
-directory (by switching to a branch which doesn't contain a directory
-for example).
-
-> If I do: cd .. && cd -; all is well.
-
-This is a typical symptom of the issue above.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Yup, I figured it out and these are queued there.  tr/doc-tt is part
+of 'master' now.
