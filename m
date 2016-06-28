@@ -2,147 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D48972018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 18:24:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F9142018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 18:29:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170AbcF1SYi (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 14:24:38 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:33757 "EHLO
-	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751158AbcF1SYh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 14:24:37 -0400
-Received: by mail-pf0-f171.google.com with SMTP id i123so9170507pfg.0
-        for <git@vger.kernel.org>; Tue, 28 Jun 2016 11:24:24 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=IbkXN8JJ8+56z1EczzM9SnlZm04bFlr2BI1aSMpLBPg=;
-        b=K6FiOZb0AK4T1h/fQdiQttQEAPZndh8qdhYwS/ZCgM4mrnkQhEkpdH2/SJeyMd+vWN
-         sAcC+/1uJt80Sm7Z7ZY03ZiELfd/+HIxKUBFLdtE2BKpldcZd7QH6v6N/sLbvw19srx3
-         q3mevtsBcrUqS9AigvFyTVrgD8jRydhD1irJ4WTTnzN9mJTkwesJjqT3lMNmF71pXph7
-         FWxDwEYASO5EvZLxQKMV5arMmVu0xh4pJpkrksRvmUhoWTJFwcbdorcq3p5eD6yz2Xig
-         ehoNO1u7ad+e4lc03Ai5Er8ypabysJB2bGqsAdvNXtudQZFu9KWwX/qTC0mgBtNDVZRC
-         36Sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=IbkXN8JJ8+56z1EczzM9SnlZm04bFlr2BI1aSMpLBPg=;
-        b=adf3yHKjqxDdImmUF5T/+2Ykn6fplOKh2nA7hwOGRKqF5rahZwzOo7l0b1ejTy0vJ8
-         VvHJ+Iwiyl8Ur/0qi3L9oq8Y8Bj+QHRTilsXSYHLicfbngCo5zLmMaFHLgpxW9gThZpl
-         b4NwOgaIEH2MdlGmvPAaKfef3zfAs8MDjA9wax0w+Y4iUP+Tykz427TxILajW+oHEIp/
-         hb9g3izOyC1q+nk+vuhoCmNN03+rXE07oRsEqmqHU2iPPyQKN9p6781OWe7PAexZpT5q
-         ouwUmMYiR6N/YmEBXPq8dcep//WmjctTHzwhLYzYGE9hBc64cLSvdxapDSO2IwAz98KF
-         x/ww==
-X-Gm-Message-State: ALyK8tKQIBRA91d4IyQluFPVmyKcUYrWGC8xlCKs43SJVRIRz1+f/ZSkVj2M2PQZBRDm+6H+
-X-Received: by 10.98.55.1 with SMTP id e1mr4125177pfa.107.1467138263890;
-        Tue, 28 Jun 2016 11:24:23 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:dcf7:dd57:931a:7d23])
-        by smtp.gmail.com with ESMTPSA id i8sm1309807pao.26.2016.06.28.11.24.22
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 28 Jun 2016 11:24:22 -0700 (PDT)
-From:	Stefan Beller <sbeller@google.com>
-To:	bartbogaerts@gmail.com
-Cc:	git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2] submodule: test moving recursive submodule
-Date:	Tue, 28 Jun 2016 11:24:19 -0700
-Message-Id: <20160628182419.8023-1-sbeller@google.com>
-X-Mailer: git-send-email 2.9.0.138.g8a4fcb8.dirty
+	id S1752230AbcF1S3A (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 14:29:00 -0400
+Received: from alt13.smtp-out.videotron.ca ([135.19.0.26]:3569 "EHLO
+	alt12.smtp-out.videotron.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751017AbcF1S27 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 14:28:59 -0400
+Received: from yoda.home ([96.23.157.65])
+	by Videotron with SMTP
+	id HxkmbesDjHh2dHxkobtDh7; Tue, 28 Jun 2016 14:28:58 -0400
+X-Authority-Analysis: v=2.1 cv=Lv0ysipc c=1 sm=1 tr=0
+ a=keA3yYpnlypCNW5BNWqu+w==:117 a=keA3yYpnlypCNW5BNWqu+w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
+ a=pD_ry4oyNxEA:10 a=dg4UtMH5AAAA:8 a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8
+ a=m1-BmCBcJ1YEn9BM1NQA:9 a=CjuIK1q_8ugA:10 a=x8gzFH9gYPwA:10
+ a=byNfn09xH3PuSfgbYLsR:22 a=cvBusfyB2V15izCimMoJ:22 a=AjGcO6oz07-iQ99wixmX:22
+Received: from xanadu.home (xanadu.home [192.168.2.2])
+	by yoda.home (Postfix) with ESMTPSA id DB72B2DA0200;
+	Tue, 28 Jun 2016 14:28:56 -0400 (EDT)
+Date:	Tue, 28 Jun 2016 14:28:56 -0400 (EDT)
+From:	Nicolas Pitre <nico@fluxnic.net>
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4] Refactor recv_sideband()
+In-Reply-To: <xmqqlh1p89mo.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.LFD.2.20.1606281422500.24439@knanqh.ubzr>
+References: <20160613195224.13398-1-lfleischer@lfos.de> <20160628043526.19403-1-lfleischer@lfos.de> <xmqqa8i59rph.fsf@gitster.mtv.corp.google.com> <xmqq60st9qg5.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1606281334030.24439@knanqh.ubzr>
+ <xmqqlh1p89mo.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-CMAE-Envelope: MS4wfHapCGIrCY6EJ9o9t8U3AxziuRi2+kSihhXHgj1IJ+YP2ywqxUjORDdlxEt8Hgeu+QO+pc7G+Ca3OZ2ApkZ0mKDUU2xJWy3pdeIz28JJW09oL7/zqT0D
+ tXmHrCKNWS8xFr5dIUN4Nb+2XA+6eMkuTbPNMnOaTNxlMCNh7bDkVoH+6IjU+o5yxv18Ahh+iET0furY3K2C1c1chiPL4tov8O4uKduLWx9UjTLQb4ERQRZG
+ iBcNfszYVALgdqaLRsY5ivyYwe0dWT/Wm8piv+zOO7E=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This reproduces the error as pointed out in [1], but the fix is not easy,
-so punt on it for now and just document what needs to be done.
+On Tue, 28 Jun 2016, Junio C Hamano wrote:
 
-[1] http://stackoverflow.com/questions/32782382/git-moving-submodules-recursively-nested-submodules
+> Nicolas Pitre <nico@fluxnic.net> writes:
+> 
+> >> When we exit the loop because we set retval to a non-zero value,
+> >> should we still drain the outbuf?
+> >
+> > I would think so.  Anything that the remote sent before any error should 
+> > be printed nevertheless.  The clue for the error might be in the pending 
+> > buffer.
+> >
+> > However in this case the actual error printout and the pending buffer 
+> > will appear reversed.
+> >
+> > So what I'd suggest is actually something like this:
+> >
+> >             if (len < 1) {
+> >                     strbuf_addf(&outbuf, "\n%s: protocol error: no band designator\n", me);
+> >                     retval = SIDEBAND_PROTOCOL_ERROR;
+> >                     break;
+> >
+> > And so on for the other error cases.
+> 
+> Makes sense.
+> 
+> Here is what I have as a "SQUASH" on top of Lukas's change to be
+> queued on 'pu'.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+Looks good to me.
 
-  Bart,
-  
-  I don't have the time fixing this properly,
-  so this is the best I can come up with for now. 
-  
-  Thanks,
-  Stefan
+Acked-by: Nicolas Pitre <nico@linaro.org>
 
- builtin/mv.c  |  4 ++++
- t/t7001-mv.sh | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+)
+> It appears that a few tests get their expectations broken, with or
+> without this "SQUASH" change, though X-<.
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index a201426..36dd2fd 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -264,6 +264,10 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 				connect_work_tree_and_git_dir(dst, submodule_gitfile[i]);
- 			if (!update_path_in_gitmodules(src, dst))
- 				gitmodules_modified = 1;
-+			/**
-+			 * NEEDSWORK: We need to recurse into the submodule
-+			 * and fix the nested submodules as well.
-+			 */
- 		}
- 
- 		if (mode == WORKING_DIRECTORY)
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 4a2570e..fe933f1 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -295,6 +295,28 @@ test_expect_success 'setup submodule' '
- 	mkdir -p deep/directory/hierachy &&
- 	git submodule add ./. deep/directory/hierachy/sub &&
- 	git commit -m "added another submodule" &&
-+	mkdir inner_sub &&
-+	(
-+		cd inner_sub &&
-+		git init &&
-+		test_commit initial
-+	) &&
-+	mkdir outer_sub &&
-+	(
-+		cd outer_sub &&
-+		git init &&
-+		test_commit initial &&
-+		git submodule add ../inner_sub &&
-+		git commit -a -m "add an inner submodule"
-+	) &&
-+	git submodule add ./outer_sub ./deep/outer_sub &&
-+	git commit -a -m "add outer sub" &&
-+	git -C deep ls-tree HEAD |cut -f 2 >actual &&
-+	cat >expect <<-EOF &&
-+	directory
-+	outer_sub
-+	EOF
-+	test_cmp expect actual &&
- 	git branch submodule
- '
- 
-@@ -488,6 +510,18 @@ test_expect_success 'moving a submodule in nested directories' '
- 		git config -f ../.gitmodules submodule.deep/directory/hierachy/sub.path >../actual &&
- 		echo "directory/hierachy/sub" >../expect
- 	) &&
-+	test_cmp actual expect &&
-+	git commit -a -m "mv a submodule in nested dir"
-+'
-+
-+test_expect_failure 'moving a submodule with a nested submodule' '
-+	git submodule update --init --recursive &&
-+	git mv deep/outer_sub outer_sub_moved &&
-+	# git status would fail if the update of linking git dir to
-+	# work dir of the submodule failed.
-+	git status &&
-+	git config -f .gitmodules submodule.deep/outer_sub.path >actual &&
-+	echo "outer_sub_moved" >expect &&
- 	test_cmp actual expect
- '
- 
--- 
-2.9.0.138.g8a4fcb8.dirty
+Without this, the error and remaining buffer would be reversed as 
+mentioned previously.  With this, the order is restored, but a newline 
+is added to unterminated lines whereas the error was simply appended to 
+the output before Lukas' patch.
 
+In any case the new behavior is probably better and I'd simply adjust 
+the test expectations.
+
+
+> 
+>  sideband.c | 30 +++++++++++++++---------------
+>  1 file changed, 15 insertions(+), 15 deletions(-)
+> 
+> diff --git a/sideband.c b/sideband.c
+> index 226a8c2..082dfc6 100644
+> --- a/sideband.c
+> +++ b/sideband.c
+> @@ -33,13 +33,15 @@ int recv_sideband(const char *me, int in_stream, int out)
+>  	else
+>  		suffix = DUMB_SUFFIX;
+>  
+> -	while (retval == 0) {
+> +	while (!retval) {
+>  		int band, len;
+>  		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
+>  		if (len == 0)
+>  			break;
+>  		if (len < 1) {
+> -			fprintf(stderr, "%s: protocol error: no band designator\n", me);
+> +			strbuf_addf(&outbuf,
+> +				    "\n%s: protocol error: no band designator\n",
+> +				    me);
+>  			retval = SIDEBAND_PROTOCOL_ERROR;
+>  			break;
+>  		}
+> @@ -48,7 +50,7 @@ int recv_sideband(const char *me, int in_stream, int out)
+>  		len--;
+>  		switch (band) {
+>  		case 3:
+> -			fprintf(stderr, "%s%s\n", PREFIX, buf + 1);
+> +			strbuf_addf(&outbuf, "\n%s%s\n", PREFIX, buf + 1);
+>  			retval = SIDEBAND_REMOTE_ERROR;
+>  			break;
+>  		case 2:
+> @@ -58,13 +60,12 @@ int recv_sideband(const char *me, int in_stream, int out)
+>  			 * Append a suffix to each nonempty line to clear the
+>  			 * end of the screen line.
+>  			 *
+> -			 * The output is accumulated in a buffer and each line
+> -			 * is printed to stderr using fprintf() with a single
+> -			 * conversion specifier. This is a "best effort"
+> -			 * approach to supporting both inter-process atomicity
+> -			 * (single conversion specifiers are likely to end up
+> -			 * in single atomic write() system calls) and the ANSI
+> -			 * control code emulation under Windows.
+> +			 * The output is accumulated in a buffer and
+> +			 * each line is printed to stderr using
+> +			 * fwrite(3).  This is a "best effort"
+> +			 * approach to support inter-process atomicity
+> +			 * (single fwrite(3) call is likely to end up
+> +			 * in single atomic write() system calls).
+>  			 */
+>  			while ((brk = strpbrk(b, "\n\r"))) {
+>  				int linelen = brk - b;
+> @@ -75,8 +76,7 @@ int recv_sideband(const char *me, int in_stream, int out)
+>  				} else {
+>  					strbuf_addf(&outbuf, "%c", *brk);
+>  				}
+> -				fprintf(stderr, "%.*s", (int)outbuf.len,
+> -					outbuf.buf);
+> +				fwrite(outbuf.buf, 1, outbuf.len, stderr);
+>  				strbuf_reset(&outbuf);
+>  				strbuf_addf(&outbuf, "%s", PREFIX);
+>  
+> @@ -90,15 +90,15 @@ int recv_sideband(const char *me, int in_stream, int out)
+>  			write_or_die(out, buf + 1, len);
+>  			break;
+>  		default:
+> -			fprintf(stderr, "%s: protocol error: bad band #%d\n",
+> +			strbuf_addf(&outbuf, "\n%s: protocol error: bad band #%d\n",
+>  				me, band);
+>  			retval = SIDEBAND_PROTOCOL_ERROR;
+>  			break;
+>  		}
+>  	}
+>  
+> -	if (outbuf.len > 0)
+> -		fprintf(stderr, "%.*s", (int)outbuf.len, outbuf.buf);
+> +	if (outbuf.len)
+> +		fwrite(outbuf.buf, 1, outbuf.len, stderr);
+>  	strbuf_release(&outbuf);
+>  	return retval;
+>  }
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
