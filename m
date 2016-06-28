@@ -2,110 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBDF62018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 20:52:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DDF82018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 21:04:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752439AbcF1Uw5 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 16:52:57 -0400
-Received: from alt22.smtp-out.videotron.ca ([70.80.0.73]:55450 "EHLO
-	alt22.smtp-out.videotron.ca" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752165AbcF1Uw5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 16:52:57 -0400
-Received: from yoda.home ([96.23.157.65])
-	by Videotron with SMTP
-	id HzkZbdwxAPTiyHzkabciq0; Tue, 28 Jun 2016 16:36:53 -0400
-X-Authority-Analysis: v=2.1 cv=L469O7n8 c=1 sm=1 tr=0
- a=keA3yYpnlypCNW5BNWqu+w==:117 a=keA3yYpnlypCNW5BNWqu+w==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
- a=pD_ry4oyNxEA:10 a=dg4UtMH5AAAA:8 a=dgnKuqusInU55A-5q-AA:9 a=CjuIK1q_8ugA:10
- a=byNfn09xH3PuSfgbYLsR:22
-Received: from xanadu.home (xanadu.home [192.168.2.2])
-	by yoda.home (Postfix) with ESMTPSA id 43C6C2DA0200;
-	Tue, 28 Jun 2016 16:36:51 -0400 (EDT)
-Date:	Tue, 28 Jun 2016 16:36:51 -0400 (EDT)
-From:	Nicolas Pitre <nico@fluxnic.net>
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4] Refactor recv_sideband()
-In-Reply-To: <xmqq60st853d.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.LFD.2.20.1606281629280.24439@knanqh.ubzr>
-References: <20160613195224.13398-1-lfleischer@lfos.de> <20160628043526.19403-1-lfleischer@lfos.de> <xmqqa8i59rph.fsf@gitster.mtv.corp.google.com> <xmqq60st9qg5.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1606281334030.24439@knanqh.ubzr>
- <xmqqlh1p89mo.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1606281422500.24439@knanqh.ubzr> <xmqq60st853d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
+	id S1753047AbcF1VDZ (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 17:03:25 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37256 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752712AbcF1VDX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 17:03:23 -0400
+Received: (qmail 3876 invoked by uid 102); 28 Jun 2016 21:03:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Jun 2016 17:03:13 -0400
+Received: (qmail 12381 invoked by uid 107); 28 Jun 2016 21:03:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Jun 2016 17:03:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Jun 2016 17:03:09 -0400
+Date:	Tue, 28 Jun 2016 17:03:09 -0400
+From:	Jeff King <peff@peff.net>
+To:	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Cc:	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	sschuberth@gmail.com
+Subject: Re: [PATCH v2 0/2] Config conditional include
+Message-ID: <20160628210309.GC21002@sigill.intra.peff.net>
+References: <20160626070617.30211-1-pclouds@gmail.com>
+ <20160628172641.26381-1-pclouds@gmail.com>
+ <20160628202809.GA21002@sigill.intra.peff.net>
+ <vpqk2h9qbp8.fsf@anie.imag.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-CMAE-Envelope: MS4wfNN2H/f+POBYMUjFZusCre11N0VsVTGxkCgE2IAAAf84hLNeOJ8gHULLJmu9QTq6fsxgi2kh6TWPRABJSIDdlSxZEBGT4tbVg8aPid84M5KMkSOBpyeK
- ctkgEJV1N1gZYq05ar358S1zDFZdbd2dOu8turJ1VOmpLzEe0bO8B4Z5d+trJ/qewx+Uih416R7E17Zq4smRN/ziKsCEZXGs3JYREvAMmrSLWnjj7OJ+VlZQ
- BvbuQDTj9f6kqwed18fNn75KPTxtWcmyonFS1nemnOI=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <vpqk2h9qbp8.fsf@anie.imag.fr>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, 28 Jun 2016, Junio C Hamano wrote:
+On Tue, Jun 28, 2016 at 10:51:15PM +0200, Matthieu Moy wrote:
 
-> Nicolas Pitre <nico@fluxnic.net> writes:
+> Jeff King <peff@peff.net> writes:
 > 
-> > Without this, the error and remaining buffer would be reversed as 
-> > mentioned previously.  With this, the order is restored, but a newline 
-> > is added to unterminated lines whereas the error was simply appended to 
-> > the output before Lukas' patch.
+> > On Tue, Jun 28, 2016 at 07:26:39PM +0200, Nguyễn Thái Ngọc Duy wrote:
 > >
-> > In any case the new behavior is probably better and I'd simply adjust 
-> > the test expectations.
+> >> There's a surprise about core.ignorecase. We are matching paths, so we
+> >> should match case-insensitively if core.ignorecase tells us so. And it
+> >> gets a bit tricky if core.ignorecase is defined in the same config
+> >> file. I don't think we have ever told the user that keys are processed
+> >> from top down. We do now.
+> >
+> > Hrm. I'm not excited about introducing ordering issues into the config
+> > parsing.
 > 
-> There is something else going on.  I cannot quite explain why I am
-> getting this failure from t5401-update-hooks.sh, for example:
+> There's already at least one case of ordering-sensitive variables, that
+> we encountered when writting the config cache during Tanay Abhra's GSoC:
+> diff.<driver>.funcname Vs diff.<driver>.xfuncname. Git applies the "last
+> one wins" policy, which is the normal rule for a single-valued variable,
+> but in this case, a "funcname" definition can override an "xfuncname"
+> def. To preserve this behavior we had to introduce ordering in the
+> cache, but to me this was a design mistake to rely on order.
 > 
->     --- expect      2016-06-28 19:46:24.564937075 +0000
->     +++ actual      2016-06-28 19:46:24.564937075 +0000
->     @@ -9,3 +9,4 @@
->      remote: STDERR post-receive
->      remote: STDOUT post-update
->      remote: STDERR post-update
->     +remote: To ./victim.git
->     not ok 12 - send-pack stderr contains hook messages
-> 
-> ... goes and looks what v2.9.0 produces, which ends like this:
-> 
->     ...
->     remote: STDERR post-receive        
->     remote: STDOUT post-update        
->     remote: STDERR post-update        
->     To ./victim.git
->        e4822ab..2b65bd1  master -> master
->      ! [remote rejected] tofail -> tofail (hook declined)
-> 
-> The test checks if lines prefixed with "remote: " match the expected
-> output, and the difference is an indication that the new code is
-> showing an extra incomplete-line "remote: " before other parts of
-> the code says "To ./victim.git" to report where the push is going.
+> In short: we already have one, but I'm not excited either about
+> introducing new ones.
 
-Ah...  I think I know what's going on.
+I still see funcname versus xfuncname as fundamentally a "last one wins"
+scenario; it's just that the two options are sort-of synonyms. But we
+are still talking about the same linear-ish parsing scheme, and I think
+it just makes the implementation a little more complicated.
 
-The leftover data in the strbuf is normally (when there is no errors) an 
-unterminated line. So instead of doing:
+I'm much more worried about something that impacts how we parse the
+config, and is set up in a possibly unrelated config-parsing sequence.
+So whether ignorecase will work depends on more variables:
 
--                       fprintf(stderr, "%s: protocol error: no band designator\n", me);
-+                       strbuf_addf(&outbuf,
-+                                   "\n%s: protocol error: no band designator\n",
-+                                   me);
+ - are we doing our config parse before or after somebody has called
+   git_config() at the start of a program?
 
-you could omit the final \n in the format string and:
+ - if before (or during), does our callback call git_default_core_config()?
 
--       if (outbuf.len > 0)
--               fprintf(stderr, "%.*s", (int)outbuf.len, outbuf.buf);
-+       if (outbuf.len)
-+               fwrite(outbuf.buf, 1, outbuf.len, stderr);
-        strbuf_release(&outbuf);
+ - if so, did core.ignorecase appear before our include? (Almost
+   certainly not, if our include is in ~/.gitconfig, because we parse
+   from least-specific to most-specific).
 
-and here a \n could be added before writing out the buffer.
+So here it is not the implementation that is complicated, but the
+user-facing behavior. It's very difficult to predict when your include
+will kick in, and there is a good chance it will behave differently for
+different programs.
 
+In general I think the best bet here is to lazy-load such values from
+the config-cache (so we _know_ that we got a complete parse before we
+look at the value). But that creates a recursion problem when we try to
+lazy-load from inside the config parser itself.
 
-Nicolas
+-Peff
