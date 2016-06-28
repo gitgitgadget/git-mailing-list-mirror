@@ -2,88 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 291C62018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 16:24:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A08582018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 16:27:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752316AbcF1QY3 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 12:24:29 -0400
-Received: from mout.gmx.net ([212.227.17.22]:65048 "EHLO mout.gmx.net"
+	id S1752346AbcF1Q1m (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 12:27:42 -0400
+Received: from mout.gmx.net ([212.227.15.18]:58891 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752018AbcF1QY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 12:24:28 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MIiHs-1bK8jA3Ydc-002KXz; Tue, 28 Jun 2016 18:24:08
+	id S1752164AbcF1Q1l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 12:27:41 -0400
+Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LwrPM-1bOSF01vbc-016RoF; Tue, 28 Jun 2016 18:27:38
  +0200
-Date:	Tue, 28 Jun 2016 18:24:05 +0200 (CEST)
+Date:	Tue, 28 Jun 2016 18:27:37 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-	Karsten Blees <blees@dcon.de>, Stepan Kasal <kasal@ucw.cz>,
-	Jeff King <peff@peff.net>, Lukas Fleischer <lfleischer@lfos.de>
-Subject: Re: [PATCH] Remove obsolete comment from color.h
-In-Reply-To: <xmqqinwt9v6e.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1606281822240.12947@virtualbox>
-References: <16f3d3edb03c2cb9a6c11b745eda9fb2274af182.1467108142.git.johannes.schindelin@gmx.de> <xmqqinwt9v6e.fsf@gitster.mtv.corp.google.com>
+To:	Ioannis Kappas <ioannis.kappas@rbs.com>
+cc:	git@vger.kernel.org
+Subject: Re: git svn clone segmentation faul issue
+In-Reply-To: <loom.20160628T175016-898@post.gmane.org>
+Message-ID: <alpine.DEB.2.20.1606281825190.12947@virtualbox>
+References: <0BCA1E695085C645B9CD4A27DD59F6FA39AAD5CF@GBWGCEUHUBD0101.rbsres07.net> <alpine.DEB.2.20.1606281334450.12947@virtualbox> <alpine.DEB.2.20.1606281530420.12947@virtualbox> <loom.20160628T175016-898@post.gmane.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:jLBJsxwq4wSepyFxGBleR2Wz5LhlYsRDnQpf+wjMVVtHdBOaO5h
- nlcaVAbp41t+Hnr8pFFSkXwgFZmMMx+RbUODll59CNoe5L8h+lHaa1g5pveq7e25fm899ap
- ZW0K0f6W/KWe0bUZISasYmWDr3ZxdQdWFkNBfQJHAlFsD3cQw56JNVHgKwjrQWgqB6ePXzx
- tYsV6BZXDuLA2GXn2NnlA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:+OFtcMI4qI4=:r52SVmrODR7qk61NdtDeOM
- F59y9E10fHCynu36eux3HXTQ+XlYttnkpnXwB+sbB8DFpjeJ+4Ve0m3DXr7Qv7jEDhq/EqdbP
- B2kM4r5t2yBwYz0Fetn435GyRbRvXzzVx2vg9K3Oedxm3wj0NvWdh9Lq6pu0sIGtsZiA6SB8P
- 8/HOCHd9PYlr9576mfyz28ZdNwEnZ4EjlSGVsqGxHjdyIHInM54PY/U06tkERyAp4tvfbWxxJ
- kTA45DIyynMppGDHR7M4ZFwiVcxx24Ce/4cEkvh68D+uMOOq0jD5zEvjSTlo2T3GetlZQqJp9
- 3h2t1wYjaYYmncG1RgykPtVEvmfC0Kr4pufG8tmR2zFffpb+DUSHMIjjD/OHzYZe5doELrg9r
- tYpWkhRdtLQ+aUWLXvdHXZvlTgypHmIE1MqJuWzVHPWxAMWZrLyeNo5Fbx3O20pfWlpUiUCq/
- OYRo8T2ZIPBzZNxLbFoodsKJwjHXn/NK6HVWcY7vOQx/3WD2hqv7BjxAZgfeyTJ6qorUgK/YR
- rY9WJqrzFvXPAbZyfgeZ1agBErJctVAFW5VbSSK8Wc2bPiN1MWuCJvyjf7c9NIb5rxprbKNvB
- 0/+HRqR8jYMHu2abu0pZ4n9QnmC2ysg3iRNKIuU/T1vVasHBMcq+etj4+wwRYQnVIkOE1B+KR
- Y+3xHAgzRo/Uxw2MGJuflZYZaT4OWYYyNsQaV5uIyAgXEVTs6UfuVZcwubmsmj8lElw+kKJas
- QojlTvOHaQtoIHbLTFIa74N6le0PX6FI/at63O+gUh7Y7ljlI8sgL+7Mc+8l16wOBfuLGSYMR
- L9FJJgr
+X-Provags-ID: V03:K0:5ZkmUO6ZzaKbxF8inxbIMSgh3vbFRbHBUNd3vKsCM7K81uaMsvz
+ ABmZwthHEjzCKgkleDw9H9EYoD0Djj6qQDnRpKgQy90S7SMKVhAThF5Kpg2byMqKR2YWaxc
+ NgA07F05zVBmMBnql/LVvr5mb+4EJsD6X2Q2Rys9TMRgxknch1B3uuZ6MJx7PgQXZp6aLQP
+ h559L/l/xxZblJwiGqAEw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:pqpgm6SRBq4=:N8e6BfPwJPfufvhY2jjuGd
+ 9F028hdr24sFx4n1iFhTHT0/sk3IvfeEytK2NxfmNw7/UlaXqHlXWvlyZjVxNV1xWW6JmNw+K
+ edjBRwYQ1vFoiOJBehJHhwIF/irIDbxWnkxlYPPH4Cckg0Hz3NYmpt/G8SIyVLorhD46bjlML
+ /RAvTcx5LptP2vAM5mqtK5BkzapB3bo8wR2NDAhxl5tZf9qzWr2WF1NMVgwLIE983y9Fje0XQ
+ qB4koe+NBUdUj0rMkCpYpGq32Yf8bvtokJATSzZW5e2Ix9Yt1xppL5iE7k4ez9pMiGZWjiFaw
+ BX9UOold0zPlc/d0y2wEmS4KipjFC4rCl5U3H+Say6MJX1LFQQ4GRbw812tR4OhsIVt0Dwmy4
+ VEO7j5g+VHCkjJuQShzQEbX/pTkfn+7KsfRelWPNlOwwfza9+vn3RZlORdKjeyQwRi1N9eaRQ
+ izICRxHbpw1bbL2JaTOhmRankF3ZH5S8YCoTsuYZ5S2W7opuxpIAG9Dewiu+ptnN/xv/PZ7K0
+ 492KebSoiL74qC8zh2F0UzkhgQEruZ/e6TDxVobsV5DNZGA+MEY4A7M6oWO/zIeTtjYjcXRw1
+ SGte+PvecckEK+JSNUI0o2HjVte6Xe+CKXyp+Hsq5byGLrxfure3kCiT/O2boYxarYlDHWZn7
+ oFnQAsPXvHXjuqLY73yOpTtIQ58+vo5JF549yfTeXJxnwaj3wHWWA4h+/nFg1O4auL5pLSJRr
+ LAqjbvhJlg9tivb53TtpA1OGLpKYN6hFFERddDsUYHtmuy9euNaoQqtLFkAkCRr8llThYJMGh
+ g3sDsnY
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Hi Yannis,
 
-On Tue, 28 Jun 2016, Junio C Hamano wrote:
+On Tue, 28 Jun 2016, Ioannis Kappas wrote:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> Hi Johanes,
+
+Almost ;-)
+
+> Johannes Schindelin <Johannes.Schindelin <at> gmx.de> writes:
 > 
-> > Originally, ANSI color sequences were supported on Windows only by
-> > overriding the printf() and fprintf() functions, as mentioned in e7821d7
-> > (Add a notice that only certain functions can print color escape codes,
-> > 2009-11-27).
-> >
-> > As of eac14f8 (Win32: Thread-safe windows console output, 2012-01-14),
-> > however, this is no longer the case, as the ANSI color sequence support
-> > code needed to be replaced with a thread-safe version, one side effect
-> > being that stdout and stderr handled no matter which function is used to
-> > write to it.
+> > Would you mind giving them a whirl?
 > 
-> So as long as we write via stdio to stdout/stderr, you can show
-> colors?  Or is it now stronger, in that as long as we do anything
-> that ends up writing to file descriptors 1 or 2, you can show
-> colors?
+> The patch in "source code (zip)" seems to be missing the line in the prepare
+> () section of PKGBUILD to actually apply the fix:
+> 
+> diff --git a/subversion/PKGBUILD b/subversion/PKGBUILD
+> --- a/subversion/PKGBUILD
+> +++ b/subversion/PKGBUILD
+> 
+> @@ -101,6 +103,7 @@ prepare() {
+>    patch -p1 -i ${srcdir}/17-fix-test-link.patch
+>    patch -p1 -i ${srcdir}/18-fix-serf-config.patch
+>    patch -p1 -i ${srcdir}/19-remove-contrib-from-configure.patch
+> +  patch -p1 -i ${srcdir}/20-fix-stack-corruption-in-swig-wrappers.patch
+>    patch -p1 -i ${srcdir}/subversion-1.9.1-msys2.patch
+>    patch -p1 -i ${srcdir}/remove-checking-symlink.patch
+>    patch -p1 -i ${srcdir}/90-use-copy-instead-symlink.patch
+> 
+> 
+> Would you be so kind to add the above and rebuild. 
 
-It means that we override stdout/stderr with a pipe that is parsed for the
-color sequences. If stdout or stderr are reopened later, this color
-handling will not apply to the new file descriptor/stream.
+Oh bummer. Sorry for that! I will fix it and rebuild tomorrow.
 
-Essentially, the caveat in color.h that one should use fprintf() and
-printf() when outputting color sequences to a terminal no longer holds
-true. fwrite() or write() work just as well.
+> I have just tested it locally to work successfully, but I do not mind 
+> retesting if you wish to provide another build :)
+
+Thanks, that would be much appreciated! I'll send a reply when I rebuilt
+the packages.
 
 Ciao,
-Dscho
+Johannes
