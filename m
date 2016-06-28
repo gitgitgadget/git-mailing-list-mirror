@@ -2,178 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42BD92018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 17:20:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E1DF2018B
+	for <e@80x24.org>; Tue, 28 Jun 2016 17:24:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752493AbcF1RUM (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 13:20:12 -0400
-Received: from mail-it0-f45.google.com ([209.85.214.45]:37689 "EHLO
-	mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752457AbcF1RUK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 13:20:10 -0400
-Received: by mail-it0-f45.google.com with SMTP id f6so20685326ith.0
-        for <git@vger.kernel.org>; Tue, 28 Jun 2016 10:20:10 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=yihNFU+GOkYNqd3mRM+iN/LW8F5BvJhcHKwHGNz932s=;
-        b=LU5FDVjU8O5mZLuYjKmsSLpGhEr6bXxBLIH6sHEaCzCikerQScYq3IOtjHFY+Ec30c
-         1Jsj6BPG18Mztz6eKAi1ByKBrhQi3fizY7aG+LvMnacYYnt6jcTXqzqbpKHG6X81hSm7
-         gA1PtauiYaiYQ9IxENFMYSKyWNbQG3zH9ForGYsp2BCg4vJYh+cPWvsUuXIt7GTw+5Bi
-         u0tbsERGNl0oAWvFZjliCFIN6yC7Gsb1BOy5X1pf4rSX/MWgoznqakw9lxMNKsnRG07F
-         x5caAbyhzi2fcOSosoTtdC0dU4dM5faCozAvKWwph9vOjMajhAyAEh9P6kOvUH+fRQJq
-         TPog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=yihNFU+GOkYNqd3mRM+iN/LW8F5BvJhcHKwHGNz932s=;
-        b=c/tvGdVd0pqb+jAoe+puyMN/Mau44UHQq6h8+8w/WF6h8rOWGeGTLBz/eqWMquG7mu
-         41V+kGp3Pt1I5wI1AEAPsmYLNo69IzkOuTriyXxiTs9snWPvIzdhCZX3MLCLxpvxYaf4
-         QPXMUJiLuNdCuaA5tODbo2B0+HVXz/ZTmdaTia684QWrbNG39w3rY1KDFuu2PvedtnOZ
-         K4mVW2iGWbWpJURm/upVgxLj0E4+xaqT4M2fDbwa/Xr2NPY/JeXbP2J7rCeaS/nFRiJv
-         hn5OCmO1kgleIuhBEQoyt1yxxI1IbY9xyOIGOE52rwnLkvVWV2WDMu9Ah1G1dyPZ932L
-         cOPQ==
-X-Gm-Message-State: ALyK8tJO2Mur/3Astz0HknxRalml0kjMAKcexlQWWQu4Bc5a8/PKn4jR8+cTT+fHYmfjW8TwffAl48KWTqXQcnBM
-X-Received: by 10.36.69.4 with SMTP id y4mr15481827ita.49.1467134409506; Tue,
- 28 Jun 2016 10:20:09 -0700 (PDT)
+	id S1752534AbcF1RYw (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 13:24:52 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64600 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752227AbcF1RYv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 13:24:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2318524D0A;
+	Tue, 28 Jun 2016 13:24:45 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DwMYeAhJL1GXMTqdwp1IKIbhRCs=; b=w0h9i7
+	ONwUjK7MoFHdGhnQaXic94ztjoAAkE4wBtHbaABbgGmIgXTQ/SNuKsbg+L7i4AQl
+	BZ/valFWjnE2i47LahXUHdjszHaJR6ySqo8fmIsVelo50jK/hM7UlTSY1FNcjsq0
+	Ql74ATU0VOx6YQeA6gZVhYR8CShFoOrSyPoxo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yCF3NNeSjd2gMbjDP1cROeI+t6246ypb
+	MYepAICvElX9UerPHVL7XLR23NJcKhHdDuob++dRGH6wePll4OlmyJW7JwLh+7Z6
+	2hFMAUCPRfeK8qAB8cVzoQQQs+fDJ/PGtdZ+vXz8A2NqHWS/RCuZrLjnm2XrLXKC
+	lDZ9s+q04s4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1AC5C24D09;
+	Tue, 28 Jun 2016 13:24:45 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A7FF024D08;
+	Tue, 28 Jun 2016 13:24:44 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Lukas Fleischer <lfleischer@lfos.de>
+Cc:	git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4] Refactor recv_sideband()
+References: <20160613195224.13398-1-lfleischer@lfos.de>
+	<20160628043526.19403-1-lfleischer@lfos.de>
+	<xmqqa8i59rph.fsf@gitster.mtv.corp.google.com>
+Date:	Tue, 28 Jun 2016 10:24:42 -0700
+In-Reply-To: <xmqqa8i59rph.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 28 Jun 2016 09:57:30 -0700")
+Message-ID: <xmqq60st9qg5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.136.16 with HTTP; Tue, 28 Jun 2016 10:20:09 -0700 (PDT)
-In-Reply-To: <f572d4ee-c618-6501-a8e5-717feca3ed7c@gmx.net>
-References: <f572d4ee-c618-6501-a8e5-717feca3ed7c@gmx.net>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Tue, 28 Jun 2016 10:20:09 -0700
-Message-ID: <CAGZ79kZQTv=QuuSGeYBQ+J89xQwtMmEsq7rvyFOAfSZfM+0YLA@mail.gmail.com>
-Subject: Re: Shallow submodule efficiency
-To:	Martin von Gagern <Martin.vGagern@gmx.net>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: 34B2533C-3D55-11E6-8FBD-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jun 27, 2016 at 10:39 PM, Martin von Gagern
-<Martin.vGagern@gmx.net> wrote:
-> Hi!
+Junio C Hamano <gitster@pobox.com> writes:
+
+> With input from Dscho that recent Git-for-Windows does the right
+> thing without limiting us to use only a subset of stdio, perhaps we
+> would want to squash something like this in.
 >
-> I have the feeling that “git submodule update --depth 1” is less clever
-> than it could be. Here is one example I observed with git 2.0.0:
+> diff --git a/sideband.c b/sideband.c
+> index 226a8c2..72e2c5c 100644
+> --- a/sideband.c
+> +++ b/sideband.c
+> @@ -58,13 +58,12 @@ int recv_sideband(const char *me, int in_stream, int out)
+>  			 * Append a suffix to each nonempty line to clear the
+>  			 * end of the screen line.
+>  			 *
+> -			 * The output is accumulated in a buffer and each line
+> -			 * is printed to stderr using fprintf() with a single
+> -			 * conversion specifier. This is a "best effort"
+> -			 * approach to supporting both inter-process atomicity
+> -			 * (single conversion specifiers are likely to end up
+> -			 * in single atomic write() system calls) and the ANSI
+> -			 * control code emulation under Windows.
+> +			 * The output is accumulated in a buffer and
+> +			 * each line is printed to stderr using
+> +			 * fwrite(3).  This is a "best effort"
+> +			 * approach to suppor inter-process atomicity
+> +			 * (single fwrite(3) call is likely to end up
+> +			 * in single atomic write() system calls).
+>  			 */
+>  			while ((brk = strpbrk(b, "\n\r"))) {
+>  				int linelen = brk - b;
 
-2.9.0 (as "Direct fetching of " is not part of 2.0.0 IIRC) ?
+That may be good, but the remainder is crap.  Sorry about the typo;
+s/output/outbuf/g is needed at least.
 
->
->   git init foo
->   cd foo
->   git clone --single-branch \
->             -b v0.99 https://github.com/git/git.git git-scm
->   git submodule add https://github.com/git/git.git git-scm
->   git commit -m Submod
->   git clone --dissociate . ../bar
->   cd ../bar
->   git submodule update --init --depth 1 git-scm
->
-> This will download quite a bit of history, then result in an error message:
->
->   error: no such remote ref a3eb250f996bf5e12376ec88622c4ccaabf20ea8
->   Fetched in submodule path 'git-scm', but it did not contain
->   a3eb250f996bf5e12376ec88622c4ccaabf20ea8. Direct fetching of that
->   commit failed.
+> @@ -75,8 +74,7 @@ int recv_sideband(const char *me, int in_stream, int out)
+>  				} else {
+>  					strbuf_addf(&outbuf, "%c", *brk);
+>  				}
+> -				fprintf(stderr, "%.*s", (int)outbuf.len,
+> -					outbuf.buf);
+> +				fwrite(output.buf, 1, output.len, stderr);
+>  				strbuf_reset(&outbuf);
+>  				strbuf_addf(&outbuf, "%s", PREFIX);
+>  
+> @@ -98,7 +96,7 @@ int recv_sideband(const char *me, int in_stream, int out)
+>  	}
+>  
+>  	if (outbuf.len > 0)
+> -		fprintf(stderr, "%.*s", (int)outbuf.len, outbuf.buf);
+> +		fwrite(output.buf, 1, output.len, stderr);
+>  	strbuf_release(&outbuf);
+>  	return retval;
+>  }
 
-Yeah there are a few things going on, which try to cover up an error
-in design IMO.
+But we would be better off using the real write(2), now Windows port
+does not limit us to stdio.
 
-* The depth is measured from the tip of a branch in the submodule,
-   not from the sha1 that the superproject points to.
-* Shallowness is treated separately in the superproject and submodules as they
-  have a strong notion of being independent. It would be cool to have a thing
-  `git clone --recurse-submodules --depth=15
---submodule-depth-as-reachable-from-superproject`
-  which would obtain the submodules as shallow as possible, but it
-includes all versions that
-  the 15 commits in the superproject points to. (may be 1 up to 15
-  different non-sequential versions)
+And then that made me stare at the patch even more.  We still write
+some error messages to stderr in the updated code (without my crap
+SQUASH) inside "while (!retval)" loop:
 
+	while (retval == 0) {
+		int band, len;
+		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
+		if (len == 0)
+			break;
+		if (len < 1) {
+			fprintf(stderr, "%s: protocol error: no band designator\n", me);
+			retval = SIDEBAND_PROTOCOL_ERROR;
+			break;
+		}
+		band = buf[0] & 0xff;
+		buf[len] = '\0';
+		len--;
+		switch (band) {
+		case 3:
+			fprintf(stderr, "%s%s\n", PREFIX, buf + 1);
+			retval = SIDEBAND_REMOTE_ERROR;
+			break;
+		case 2:
+			...
+			while ((brk = strpbrk(b, "\n\r"))) {
+				...
+				write(2, outbuf.buf, outbuf.len);
+				...
+			}
 
->
-> That seems so avoidable, since the commit in question is a tag, so it
-> would be perfectly possible to fetch that specific commit from the
-> server directly. Something like the following commands would do the trick:
->
->   git fetch $url $(git ls-remote $url | \
->                    awk /$sha1/'{print $2}' | sed 's/\^{}//')
->
+			if (*b)
+				strbuf_addf(&outbuf, "%s", b);
+			break;
+		case 1:
+			write_or_die(out, buf + 1, len);
+			break;
+		default:
+			fprintf(stderr, "%s: protocol error: bad band #%d\n",
+				me, band);
+			retval = SIDEBAND_PROTOCOL_ERROR;
+			break;
+		}
+	}
 
-* `git submodule update --init --depth 1` is using clone instead of fetch
-  currently when the submodule doesn't exist yet. The clone is buried in
-  the `submodule--helper update-clone` that is a mixture of listing
-the submodules
-  and cloning multiple submodules in parallel if possible. So I would
-assume it is
-  easier to teach git clone to behave correctly and then stop retrying
-in git-submodule.sh
-  if `just_cloned` is set in the `cmd_update()`.
+	if (outbuf.len > 0)
+		write(2, outbuf.buf, outbuf.len);
 
-> If the commit in question is NOT a ref, then whether asking for it by
-> unlisted SHA1 is supported will probably depend on the server's
-> uploadpack.allowReachableSHA1InWant setting. I guess this is a reason
-> why fb43e31 made the fetch for a specific SHA1 a fallback after the
-> fetch for the default branch. Nevertheless, in case of “--depth 1” I
-> think it would make sense to abort early: if none of the listed refs
-> matches the requested one, and asking by SHA1 isn't supported by the
-> server, then there is no point in fetching anything, since we won't be
-> able to satisfy the submodule requirement either way.
+In general, mixing stdio and raw file descriptor access is not such
+a good idea, but these remaining calls to fprintf(stderr, ...) above
+are for error-exit codepath, so from that point of view, the above
+illustration may be acceptable, but there is still one niggle.
 
-Makes sense! I think the easiest way forward to implement this will be:
+When we exit the loop because we set retval to a non-zero value,
+should we still drain the outbuf?
 
-* `git clone` learns a (maybe undocumented internal) option `--get-sha1`
-  `--branch` looks similar to what we want, but doesn't quite fit as we do not
-  know, whether we're on a tag or not. The submodule tells us just the
-  recorded sha1, not the branch/tag. So maybe we'd end up calling it
-  `--detach-at=<sha1>`, that will
-  -> inspect the ls-remote for the sha1 being there
-  -> if the sha1 is there (at least once) clone as if --branch <tag> was given
-  -> if not found and the server advertised  allowReachableSHA1InWant,
-try again inside the clone
+IOW, shouldn't the if statement after "while (!retval)" loop be more
+like this?
 
-* `submodule--helper update-clone` passes the  `--get-sha1` to the
-clones of the submodules
+	if (!retval && outbuf.len)
+        	write(2, outbuf.buf, outbuf,len);
 
-* cmd_update() in git-submodule.sh will only checkout submodules and
-not try again
-  to fetch them if `just_cloned` is set as the cloning did the best it could.
-
-
->
-> For the case of “--depth n” with n > 1, I was wondering whether it would
-> make sense to prefer the branch listed in submodule.‹name›.branch over
-> the default branch.
-
-Makes sense to me.
-
->
-> I think shallow submodules would be very useful to embed libraries into
-> projects, without too much care for history (and without the download
-> times getting it entails), but with efficient updates to affected files
-> only in case of a change in library version. But not being able to get a
-> specific tag as a shallow submodule is a major showstopper here, I think.
-
-Thanks for taking your time to point this out and start this discussion!
-
-Thanks,
-Stefan
-
->
-> Greetings,
->  Martin von Gagern
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Thanks.
