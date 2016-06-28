@@ -2,137 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 142FA2018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 16:32:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2A9C2018B
+	for <e@80x24.org>; Tue, 28 Jun 2016 16:37:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752138AbcF1Qcb (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 12:32:31 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52873 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752060AbcF1Qca convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 12:32:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D7F0244A4;
-	Tue, 28 Jun 2016 12:32:23 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=qaXv3Df+W0jp
-	2pTtAPSW9mjLVx4=; b=duG4hzsfczq7jA4iB9bPfSsnjRZHkjng6qfqPXkB9qD3
-	eN8g6YgSL5IuXk362CHL7t4j2WP49MJa/yhO/Q3J5qvMrnBZ4Rl8KGZngzF3sTJg
-	tETH614yKcDnwUUufkDIEkOabJAS/oZbzKl4TD3a0paSB8ISv19GxLNi2Qlcxtw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JPsM+h
-	uCsD9GuY6kchf7Z+W59qqboRYGPFwViqk7T3Km/fGlqPr1UhaDxbV3GUs/yJ5zAq
-	3YAF9ZEIEMTBjII0QX96SoS9mHv1VTj04OqaIREXL4nPp+Sy9YfjGwF522PZ3mXJ
-	sWdnkNSxkr8wCZQR1nc4hBGbA1iEDTQS+53iI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 65A07244A3;
-	Tue, 28 Jun 2016 12:32:23 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C0CE1244A2;
-	Tue, 28 Jun 2016 12:32:22 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	=?utf-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
-	<git-dpa@aegee.org>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH] ./configure.ac: Detect SSL in libcurl using curl-config
-References: <20160628120434.28105-1-git-dpa@aegee.org>
-Date:	Tue, 28 Jun 2016 09:32:20 -0700
-In-Reply-To: <20160628120434.28105-1-git-dpa@aegee.org> (=?utf-8?B?ItCU?=
- =?utf-8?B?0LjQu9GP0L0J0J/QsNC70LDRg9C30L7QsiIncw==?= message of "Tue, 28
- Jun 2016 12:04:34 +0000")
-Message-ID: <xmqqeg7h9svf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752082AbcF1QhR (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 12:37:17 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:33369 "EHLO
+	mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751946AbcF1QhQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 12:37:16 -0400
+Received: by mail-qk0-f195.google.com with SMTP id n132so4541908qka.0
+        for <git@vger.kernel.org>; Tue, 28 Jun 2016 09:37:15 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=7q0/5/UuBjgeIrlbaZRXjZI/gYzhm0P4PAKzd1sjNec=;
+        b=OyCT5C4Rfu8Uw+f/9twOKOepUOPpKZXIXtGm+QLJdNT9WPq9QdyY5Wip9v2p2CjfRg
+         Lv4OMUcyQYiwEqd8dRk+2/DoM+masLnilYvR0GZZpsWBygzcj4l9iIlGrGfrtetDKNQV
+         TkQZv19mBhS0N5tskBrJGyWWJ7d81WtnmFfrjxusaURTazCCuHy/ijTFwHQIiDsPXIfZ
+         I7fzkOFvlwa2qVfcZxklWUM31EkvuaPRnEyimDEty9lTAH4IBmatPyepfm/PliQ5p5WM
+         99fzRK1j5oA4DEX5+5R/41wD3HfxxgeHV/atQCIKRQeiQ7ygxSnNw2ChO4DGEDwLKvMO
+         cyDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=7q0/5/UuBjgeIrlbaZRXjZI/gYzhm0P4PAKzd1sjNec=;
+        b=Z8GwdavfoiP43R0rt2wv6Xvq9G2X1O+4XyH7BDQEWQOQGX/gFwphOzspfOUeBY5OKV
+         lCMilR7NDhctSeUsEUpUKGKzANNgo2qyNEzMztvidCnTgT/Elu2d+BvOQ3BHMG5ViEJd
+         onnV+p3I+d4fs4KOWbO9lM9PuS4n9Is2/+KuRm/06Xgemx2y5lZRrxY1ZlgJByp5FvME
+         qp3iljG/iSFHK9Q6Hq+iSp01JI8V+KsMNATV/TbBg4pbWzThpSwY8RQkyc7tO0TPbWDU
+         jApw6mAu35XDjDBozCXkWFEajMNSWwvcXdghStz3Oi3+yj4aBvfsh+IMFg+UYLpvcEVX
+         WD+Q==
+X-Gm-Message-State: ALyK8tI2ii56nMKIeGub+WIRH65e9lkt/TGpHuufBwHOe2p7p0/Vfpmu9TL4X6tQjn4yejeLTEwXbBj8O+tYIQ==
+X-Received: by 10.37.118.198 with SMTP id r189mr1251582ybc.80.1467131830265;
+ Tue, 28 Jun 2016 09:37:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E3FABE36-3D4D-11E6-A63D-EE617A1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: 8BIT
+Received: by 10.13.251.71 with HTTP; Tue, 28 Jun 2016 09:36:50 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1606281822240.12947@virtualbox>
+References: <16f3d3edb03c2cb9a6c11b745eda9fb2274af182.1467108142.git.johannes.schindelin@gmx.de>
+ <xmqqinwt9v6e.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1606281822240.12947@virtualbox>
+From:	Junio C Hamano <gitster@pobox.com>
+Date:	Tue, 28 Jun 2016 09:36:50 -0700
+X-Google-Sender-Auth: GIUDr41yYLOTQIUeq1hFuKDorlE
+Message-ID: <CAPc5daXVxNtx1HTYBToSds92X37Ns4yd3w2hxH08ocJLre8LrA@mail.gmail.com>
+Subject: Re: [PATCH] Remove obsolete comment from color.h
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <j6t@kdbg.org>, Karsten Blees <blees@dcon.de>,
+	Stepan Kasal <kasal@ucw.cz>, Jeff King <peff@peff.net>,
+	Lukas Fleischer <lfleischer@lfos.de>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Дилян Палаузов  <git-dpa@aegee.org> writes:
-
-> The API of libcurl does not mention Curl_ssl_init() and when curl is built
-> with -flto, the Curl_ssl_init symbol is not exported.
+On Tue, Jun 28, 2016 at 9:24 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> https://curl.haxx.se/libcurl/using/ suggests calling
->   curl-config --feature | grep SSL
-> to see, if the installed curl has SSL support.  Another approach would
-> be calling curl_version_info and checking the returned struct.
+> On Tue, 28 Jun 2016, Junio C Hamano wrote:
+>>
+>> So as long as we write via stdio to stdout/stderr, you can show
+>> colors?  Or is it now stronger, in that as long as we do anything
+>> that ends up writing to file descriptors 1 or 2, you can show
+>> colors?
 >
-> This patch removes the check for the Curl_ssl_init exported symbol from
-> libcurl and uses curl-config to detect SSL support in libcurl.
->
-> Signed-Off-By: Дилян Палаузов <git-dpa@aegee.org>
-> ---
+> Essentially, the caveat in color.h that one should use fprintf() and
+> printf() when outputting color sequences to a terminal no longer holds
+> true. fwrite() or write() work just as well.
 
-This is a tangent, but the patch made me notice [*1*] that a user
-cannot build Git without libcurl support if curl is installed on the
-system, with something like:
+In short, the answer is "the latter"? That is a great news. It means that
+Lukas can use write(2) in the recv_sideband() patch to ensure atomicity,
+without having to rely on the observed behaviour of fprintf(stderr, "%s", ...)
+that as long as the output is within reasonable size the call seems to
+result in a single write(2).
 
-	$ ./configure NO_CURL=NoThanks
-
-I do not know if that is a problem (it certainly is NOT a new
-problem introduced by your change).
-
-Anyway, will queue.
-
-Thanks.
-
-[Footnote]
-
-*1* The updated code does not have any branch based on $NO_CURL the
-    original used to have, even though it does branch on
-    $NO_OPENSSL, which is why I got curious.
-
->  configure.ac | 21 +++++++++++----------
->  1 file changed, 11 insertions(+), 10 deletions(-)
->
-> diff --git a/configure.ac b/configure.ac
-> index c279025..5e9ba59 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -528,16 +528,6 @@ AC_CHECK_LIB([curl], [curl_global_init],
->  [NO_CURL=],
->  [NO_CURL=YesPlease])
->  
-> -if test -z "${NO_CURL}" && test -z "${NO_OPENSSL}"; then
-> -
-> -AC_CHECK_LIB([curl], [Curl_ssl_init],
-> -[NEEDS_SSL_WITH_CURL=YesPlease],
-> -[NEEDS_SSL_WITH_CURL=])
-> -
-> -GIT_CONF_SUBST([NEEDS_SSL_WITH_CURL])
-> -
-> -fi
-> -
->  GIT_UNSTASH_FLAGS($CURLDIR)
->  
->  GIT_CONF_SUBST([NO_CURL])
-> @@ -550,6 +540,17 @@ AC_CHECK_PROG([CURL_CONFIG], [curl-config],
->  
->  if test $CURL_CONFIG != no; then
->      GIT_CONF_SUBST([CURL_CONFIG])
-> +    if test -z "${NO_OPENSSL}"; then
-> +      AC_MSG_CHECKING([if Curl supports SSL])
-> +      if test $(curl-config --features|grep SSL) = SSL; then
-> +         NEEDS_SSL_WITH_CURL=YesPlease
-> +         AC_MSG_RESULT([yes])
-> +      else
-> +         NEEDS_SSL_WITH_CURL=
-> +         AC_MSG_RESULT([no])
-> +      fi
-> +      GIT_CONF_SUBST([NEEDS_SSL_WITH_CURL])
-> +    fi
->  fi
->  
->  fi
+Thanks for a clarification.
