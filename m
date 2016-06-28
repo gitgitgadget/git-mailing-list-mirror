@@ -2,183 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F9142018A
-	for <e@80x24.org>; Tue, 28 Jun 2016 18:29:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24EBA2018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 18:49:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752230AbcF1S3A (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 14:29:00 -0400
-Received: from alt13.smtp-out.videotron.ca ([135.19.0.26]:3569 "EHLO
-	alt12.smtp-out.videotron.ca" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751017AbcF1S27 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 14:28:59 -0400
-Received: from yoda.home ([96.23.157.65])
-	by Videotron with SMTP
-	id HxkmbesDjHh2dHxkobtDh7; Tue, 28 Jun 2016 14:28:58 -0400
-X-Authority-Analysis: v=2.1 cv=Lv0ysipc c=1 sm=1 tr=0
- a=keA3yYpnlypCNW5BNWqu+w==:117 a=keA3yYpnlypCNW5BNWqu+w==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
- a=pD_ry4oyNxEA:10 a=dg4UtMH5AAAA:8 a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8
- a=m1-BmCBcJ1YEn9BM1NQA:9 a=CjuIK1q_8ugA:10 a=x8gzFH9gYPwA:10
- a=byNfn09xH3PuSfgbYLsR:22 a=cvBusfyB2V15izCimMoJ:22 a=AjGcO6oz07-iQ99wixmX:22
-Received: from xanadu.home (xanadu.home [192.168.2.2])
-	by yoda.home (Postfix) with ESMTPSA id DB72B2DA0200;
-	Tue, 28 Jun 2016 14:28:56 -0400 (EDT)
-Date:	Tue, 28 Jun 2016 14:28:56 -0400 (EDT)
-From:	Nicolas Pitre <nico@fluxnic.net>
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4] Refactor recv_sideband()
-In-Reply-To: <xmqqlh1p89mo.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.LFD.2.20.1606281422500.24439@knanqh.ubzr>
-References: <20160613195224.13398-1-lfleischer@lfos.de> <20160628043526.19403-1-lfleischer@lfos.de> <xmqqa8i59rph.fsf@gitster.mtv.corp.google.com> <xmqq60st9qg5.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1606281334030.24439@knanqh.ubzr>
- <xmqqlh1p89mo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
+	id S1752396AbcF1Stc (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 14:49:32 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63603 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752165AbcF1Stb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 14:49:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 01C5627504;
+	Tue, 28 Jun 2016 14:49:30 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jBKR0ZDlYzopCj0ZytYQkdkOe58=; b=QqyNS3
+	dtJQLw5RpccT+P3+a9BOwDC0MFF96aV7i3YGB7Sw56Nt7BYjd80/XT+UMhkTrWKf
+	Hu1oitP20tH7YcFXUfkEwLVDYhvPXJ7f9bmnKtkCH5xgjYYUvDh2KoqGjRWgCrNg
+	+fmxCXtm55h5yTdCne3VDRYzQsFQQKydrUkP0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WqkChvYZiRUYJaYa/8+UBoIPPuQIritO
+	eoSoBbwMjcHOlE6jvUHDMQYQvpHohw9FfwUTMzoS40vhZyPgvHtgRb625MJrUrxd
+	wshqnHEUlCJ31jze6zslwvjNU1ol5ykyWKH6eZODJuUC0jHZdTFSQ/7DW3S6aZLa
+	umy2f3H0geE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EC22927502;
+	Tue, 28 Jun 2016 14:49:29 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5C91A27501;
+	Tue, 28 Jun 2016 14:49:29 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Sixt <j6t@kdbg.org>
+Cc:	larsxschneider@gmail.com, git@vger.kernel.org,
+	mhagger@alum.mit.edu, luke@diamand.org, vitor.hda@gmail.com
+Subject: Re: [PATCH v1] git-p4: place temporary refs used for branch import under ref/git-p4-tmp
+References: <1467012398-7357-1-git-send-email-larsxschneider@gmail.com>
+	<5772C00C.6000403@kdbg.org>
+Date:	Tue, 28 Jun 2016 11:49:27 -0700
+In-Reply-To: <5772C00C.6000403@kdbg.org> (Johannes Sixt's message of "Tue, 28
+	Jun 2016 20:21:00 +0200")
+Message-ID: <xmqqeg7h87yg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-CMAE-Envelope: MS4wfHapCGIrCY6EJ9o9t8U3AxziuRi2+kSihhXHgj1IJ+YP2ywqxUjORDdlxEt8Hgeu+QO+pc7G+Ca3OZ2ApkZ0mKDUU2xJWy3pdeIz28JJW09oL7/zqT0D
- tXmHrCKNWS8xFr5dIUN4Nb+2XA+6eMkuTbPNMnOaTNxlMCNh7bDkVoH+6IjU+o5yxv18Ahh+iET0furY3K2C1c1chiPL4tov8O4uKduLWx9UjTLQb4ERQRZG
- iBcNfszYVALgdqaLRsY5ivyYwe0dWT/Wm8piv+zOO7E=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0B6868D4-3D61-11E6-BC75-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, 28 Jun 2016, Junio C Hamano wrote:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> Nicolas Pitre <nico@fluxnic.net> writes:
-> 
-> >> When we exit the loop because we set retval to a non-zero value,
-> >> should we still drain the outbuf?
-> >
-> > I would think so.  Anything that the remote sent before any error should 
-> > be printed nevertheless.  The clue for the error might be in the pending 
-> > buffer.
-> >
-> > However in this case the actual error printout and the pending buffer 
-> > will appear reversed.
-> >
-> > So what I'd suggest is actually something like this:
-> >
-> >             if (len < 1) {
-> >                     strbuf_addf(&outbuf, "\n%s: protocol error: no band designator\n", me);
-> >                     retval = SIDEBAND_PROTOCOL_ERROR;
-> >                     break;
-> >
-> > And so on for the other error cases.
-> 
-> Makes sense.
-> 
-> Here is what I have as a "SQUASH" on top of Lukas's change to be
-> queued on 'pu'.
+> Am 27.06.2016 um 09:26 schrieb larsxschneider@gmail.com:
+>> --- a/git-p4.py
+>> +++ b/git-p4.py
+>> @@ -2274,7 +2274,7 @@ class P4Sync(Command, P4UserMap):
+>>           self.useClientSpec_from_options = False
+>>           self.clientSpecDirs = None
+>>           self.tempBranches = []
+>> -        self.tempBranchLocation = "git-p4-tmp"
+>> +        self.tempBranchLocation = "refs/git-p4-tmp"
+>>           self.largeFileSystem = None
+>>
+>>           if gitConfig('git-p4.largeFileSystem'):
+>> diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
+>> index 0aafd03..8f28ed2 100755
+>> --- a/t/t9801-git-p4-branch.sh
+>> +++ b/t/t9801-git-p4-branch.sh
+>> @@ -300,7 +300,7 @@ test_expect_success 'git p4 clone complex branches' '
+>>   		test_path_is_file file2 &&
+>>   		test_path_is_file file3 &&
+>>   		! grep update file2 &&
+>> -		test_path_is_missing .git/git-p4-tmp
+>> +		test_path_is_missing .git/ref/git-p4-tmp
+>
+> This should be .git/refs/git-p4-tmp, no? Otherwise, this does not test
+> what it should test.
 
-Looks good to me.
+Yes, and it probably should use "git show-ref --verify" to
+future-proof, instead of assuming the file-based ref backend.
 
-Acked-by: Nicolas Pitre <nico@linaro.org>
-
-> It appears that a few tests get their expectations broken, with or
-> without this "SQUASH" change, though X-<.
-
-Without this, the error and remaining buffer would be reversed as 
-mentioned previously.  With this, the order is restored, but a newline 
-is added to unterminated lines whereas the error was simply appended to 
-the output before Lukas' patch.
-
-In any case the new behavior is probably better and I'd simply adjust 
-the test expectations.
-
-
-> 
->  sideband.c | 30 +++++++++++++++---------------
->  1 file changed, 15 insertions(+), 15 deletions(-)
-> 
-> diff --git a/sideband.c b/sideband.c
-> index 226a8c2..082dfc6 100644
-> --- a/sideband.c
-> +++ b/sideband.c
-> @@ -33,13 +33,15 @@ int recv_sideband(const char *me, int in_stream, int out)
->  	else
->  		suffix = DUMB_SUFFIX;
->  
-> -	while (retval == 0) {
-> +	while (!retval) {
->  		int band, len;
->  		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
->  		if (len == 0)
->  			break;
->  		if (len < 1) {
-> -			fprintf(stderr, "%s: protocol error: no band designator\n", me);
-> +			strbuf_addf(&outbuf,
-> +				    "\n%s: protocol error: no band designator\n",
-> +				    me);
->  			retval = SIDEBAND_PROTOCOL_ERROR;
->  			break;
->  		}
-> @@ -48,7 +50,7 @@ int recv_sideband(const char *me, int in_stream, int out)
->  		len--;
->  		switch (band) {
->  		case 3:
-> -			fprintf(stderr, "%s%s\n", PREFIX, buf + 1);
-> +			strbuf_addf(&outbuf, "\n%s%s\n", PREFIX, buf + 1);
->  			retval = SIDEBAND_REMOTE_ERROR;
->  			break;
->  		case 2:
-> @@ -58,13 +60,12 @@ int recv_sideband(const char *me, int in_stream, int out)
->  			 * Append a suffix to each nonempty line to clear the
->  			 * end of the screen line.
->  			 *
-> -			 * The output is accumulated in a buffer and each line
-> -			 * is printed to stderr using fprintf() with a single
-> -			 * conversion specifier. This is a "best effort"
-> -			 * approach to supporting both inter-process atomicity
-> -			 * (single conversion specifiers are likely to end up
-> -			 * in single atomic write() system calls) and the ANSI
-> -			 * control code emulation under Windows.
-> +			 * The output is accumulated in a buffer and
-> +			 * each line is printed to stderr using
-> +			 * fwrite(3).  This is a "best effort"
-> +			 * approach to support inter-process atomicity
-> +			 * (single fwrite(3) call is likely to end up
-> +			 * in single atomic write() system calls).
->  			 */
->  			while ((brk = strpbrk(b, "\n\r"))) {
->  				int linelen = brk - b;
-> @@ -75,8 +76,7 @@ int recv_sideband(const char *me, int in_stream, int out)
->  				} else {
->  					strbuf_addf(&outbuf, "%c", *brk);
->  				}
-> -				fprintf(stderr, "%.*s", (int)outbuf.len,
-> -					outbuf.buf);
-> +				fwrite(outbuf.buf, 1, outbuf.len, stderr);
->  				strbuf_reset(&outbuf);
->  				strbuf_addf(&outbuf, "%s", PREFIX);
->  
-> @@ -90,15 +90,15 @@ int recv_sideband(const char *me, int in_stream, int out)
->  			write_or_die(out, buf + 1, len);
->  			break;
->  		default:
-> -			fprintf(stderr, "%s: protocol error: bad band #%d\n",
-> +			strbuf_addf(&outbuf, "\n%s: protocol error: bad band #%d\n",
->  				me, band);
->  			retval = SIDEBAND_PROTOCOL_ERROR;
->  			break;
->  		}
->  	}
->  
-> -	if (outbuf.len > 0)
-> -		fprintf(stderr, "%.*s", (int)outbuf.len, outbuf.buf);
-> +	if (outbuf.len)
-> +		fwrite(outbuf.buf, 1, outbuf.len, stderr);
->  	strbuf_release(&outbuf);
->  	return retval;
->  }
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+>
+>>   	)
+>>   '
+>>
+>> @@ -352,7 +352,7 @@ test_expect_success 'git p4 sync changes to two branches in the same changelist'
+>>   		test_path_is_file file2 &&
+>>   		test_path_is_file file3 &&
+>>   		! grep update file2 &&
+>> -		test_path_is_missing .git/git-p4-tmp
+>> +		test_path_is_missing .git/ref/git-p4-tmp
+>
+> Same here.
+>
+>>   	)
+>>   '
+>
+> -- Hannes
