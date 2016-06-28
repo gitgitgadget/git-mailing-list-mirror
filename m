@@ -2,180 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E1DF2018B
-	for <e@80x24.org>; Tue, 28 Jun 2016 17:24:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3F6D2018A
+	for <e@80x24.org>; Tue, 28 Jun 2016 17:32:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752534AbcF1RYw (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 13:24:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64600 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752227AbcF1RYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 13:24:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2318524D0A;
-	Tue, 28 Jun 2016 13:24:45 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DwMYeAhJL1GXMTqdwp1IKIbhRCs=; b=w0h9i7
-	ONwUjK7MoFHdGhnQaXic94ztjoAAkE4wBtHbaABbgGmIgXTQ/SNuKsbg+L7i4AQl
-	BZ/valFWjnE2i47LahXUHdjszHaJR6ySqo8fmIsVelo50jK/hM7UlTSY1FNcjsq0
-	Ql74ATU0VOx6YQeA6gZVhYR8CShFoOrSyPoxo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yCF3NNeSjd2gMbjDP1cROeI+t6246ypb
-	MYepAICvElX9UerPHVL7XLR23NJcKhHdDuob++dRGH6wePll4OlmyJW7JwLh+7Z6
-	2hFMAUCPRfeK8qAB8cVzoQQQs+fDJ/PGtdZ+vXz8A2NqHWS/RCuZrLjnm2XrLXKC
-	lDZ9s+q04s4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1AC5C24D09;
-	Tue, 28 Jun 2016 13:24:45 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A7FF024D08;
-	Tue, 28 Jun 2016 13:24:44 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Lukas Fleischer <lfleischer@lfos.de>
-Cc:	git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4] Refactor recv_sideband()
-References: <20160613195224.13398-1-lfleischer@lfos.de>
-	<20160628043526.19403-1-lfleischer@lfos.de>
-	<xmqqa8i59rph.fsf@gitster.mtv.corp.google.com>
-Date:	Tue, 28 Jun 2016 10:24:42 -0700
-In-Reply-To: <xmqqa8i59rph.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 28 Jun 2016 09:57:30 -0700")
-Message-ID: <xmqq60st9qg5.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752594AbcF1Rcf (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 13:32:35 -0400
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:32923 "EHLO
+	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752133AbcF1RcL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 13:32:11 -0400
+Received: by mail-lf0-f43.google.com with SMTP id f6so16445198lfg.0
+        for <git@vger.kernel.org>; Tue, 28 Jun 2016 10:32:06 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=s6GzZGv9NAnsNlaDuZ4dM8nGRbpu6ZAjzpfZWxERALw=;
+        b=bvnqusgEln9sej4jwSeg3dtB7XfNIUvDQLFzyHsKww9WB0QQPG0Wmxmm80IHyd3jJG
+         Tu4CWs6IEARoB8s1KeVbBl2pNT3VHt3Skdwsxu3+IW7xwB2y4xRGSESMwyarkUGLTcE2
+         /UL1emrIzl0J5QHAtFTgAUBu1y1dsilAvb1Gw0DyktbE3oRPEgJ6Q50ZkC5bCDijcFbA
+         P/3AowzHKVwHmDEW+REkybK7+vCZ54vgVEUWwzs/Ms6IGF9WHLZvpDxxR58H2d5GPQ0G
+         SiqH15JQB3QRhlaTS1ujTvcXZDP47xRs7pwL5g0RPCGsi/9cvn8DikIyGVTXhjY5LSyw
+         +YKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=s6GzZGv9NAnsNlaDuZ4dM8nGRbpu6ZAjzpfZWxERALw=;
+        b=jIgrjY5UuJ7cze0DfevWSc2P8/w/+29jcBhrZwIvptJ4h2ww5+Fx+f6p7hhuhjYnLp
+         T2Govimn4ayGOtk2XZTPlw2S4K4GxqAiTQ4vaUFJM2q+mHNrwhXMXs3/R09BWJ6HukGU
+         cpn9rqrFC5UyPgIMFrR8ZSYvpncBQXBLZr3nV9iAd9dDbsyI6IZ5QfPgaEpUybwATkG1
+         2GMluzfH0vyzfQMGzH3zwVK8YjoN2p6uReJgUwofWhVJ47WW7zjd93io8VCkR2axTg1A
+         60rBWxHwYcmO9FOqAW05CDlfRApm7jysPbS4kyc+ysOSEC9VF5fhdkZrFqOm4w1Sy0sW
+         d2fw==
+X-Gm-Message-State: ALyK8tIdZ5h436XCjIFF6WaKSlbWyXAHq3EEfv/FBTkuJjHyZP0KeZnRGAXd6Ia+5cRSlw==
+X-Received: by 10.25.135.4 with SMTP id j4mr1464924lfd.66.1467134809563;
+        Tue, 28 Jun 2016 10:26:49 -0700 (PDT)
+Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
+        by smtp.gmail.com with ESMTPSA id 73sm4409435ljf.8.2016.06.28.10.26.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 28 Jun 2016 10:26:48 -0700 (PDT)
+From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To:	git@vger.kernel.org
+Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	sschuberth@gmail.com,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 0/2] Config conditional include
+Date:	Tue, 28 Jun 2016 19:26:39 +0200
+Message-Id: <20160628172641.26381-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.8.2.531.gd073806
+In-Reply-To: <20160626070617.30211-1-pclouds@gmail.com>
+References: <20160626070617.30211-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 34B2533C-3D55-11E6-8FBD-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Second try. The anchoring rules now look a lot better. I cherry picked
+Jeff's skip_prefix_mem() for now to avoid dependency.
 
-> With input from Dscho that recent Git-for-Windows does the right
-> thing without limiting us to use only a subset of stdio, perhaps we
-> would want to squash something like this in.
->
-> diff --git a/sideband.c b/sideband.c
-> index 226a8c2..72e2c5c 100644
-> --- a/sideband.c
-> +++ b/sideband.c
-> @@ -58,13 +58,12 @@ int recv_sideband(const char *me, int in_stream, int out)
->  			 * Append a suffix to each nonempty line to clear the
->  			 * end of the screen line.
->  			 *
-> -			 * The output is accumulated in a buffer and each line
-> -			 * is printed to stderr using fprintf() with a single
-> -			 * conversion specifier. This is a "best effort"
-> -			 * approach to supporting both inter-process atomicity
-> -			 * (single conversion specifiers are likely to end up
-> -			 * in single atomic write() system calls) and the ANSI
-> -			 * control code emulation under Windows.
-> +			 * The output is accumulated in a buffer and
-> +			 * each line is printed to stderr using
-> +			 * fwrite(3).  This is a "best effort"
-> +			 * approach to suppor inter-process atomicity
-> +			 * (single fwrite(3) call is likely to end up
-> +			 * in single atomic write() system calls).
->  			 */
->  			while ((brk = strpbrk(b, "\n\r"))) {
->  				int linelen = brk - b;
+There's a surprise about core.ignorecase. We are matching paths, so we
+should match case-insensitively if core.ignorecase tells us so. And it
+gets a bit tricky if core.ignorecase is defined in the same config
+file. I don't think we have ever told the user that keys are processed
+from top down. We do now.
 
-That may be good, but the remainder is crap.  Sorry about the typo;
-s/output/outbuf/g is needed at least.
+It makes me wonder if we should allow users the option to match case
+insensitively regardless of filesystem too. Something close to
+pathspec magic. But that probably has little use in real world for a
+lot more work.
 
-> @@ -75,8 +74,7 @@ int recv_sideband(const char *me, int in_stream, int out)
->  				} else {
->  					strbuf_addf(&outbuf, "%c", *brk);
->  				}
-> -				fprintf(stderr, "%.*s", (int)outbuf.len,
-> -					outbuf.buf);
-> +				fwrite(output.buf, 1, output.len, stderr);
->  				strbuf_reset(&outbuf);
->  				strbuf_addf(&outbuf, "%s", PREFIX);
->  
-> @@ -98,7 +96,7 @@ int recv_sideband(const char *me, int in_stream, int out)
->  	}
->  
->  	if (outbuf.len > 0)
-> -		fprintf(stderr, "%.*s", (int)outbuf.len, outbuf.buf);
-> +		fwrite(output.buf, 1, output.len, stderr);
->  	strbuf_release(&outbuf);
->  	return retval;
->  }
+The '/' vs '\\' battle on Windows, I'll leave it to Windows guys again.
 
-But we would be better off using the real write(2), now Windows port
-does not limit us to stdio.
+I'm also not adding "worktree:" condition. If that happens, it
+probably happens in the per-worktree config file series.
 
-And then that made me stare at the patch even more.  We still write
-some error messages to stderr in the updated code (without my crap
-SQUASH) inside "while (!retval)" loop:
+To leave room for future expansion, perhaps we should declare that ':'
+can't appear in the pattern, so we can add more prefix later, and even
+stack them, e.g. "regexp:gitdir:<pattern>". The prefix can't be one char
+long. That should be enough for windows to specify full path
+including the drive letter.
 
-	while (retval == 0) {
-		int band, len;
-		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
-		if (len == 0)
-			break;
-		if (len < 1) {
-			fprintf(stderr, "%s: protocol error: no band designator\n", me);
-			retval = SIDEBAND_PROTOCOL_ERROR;
-			break;
-		}
-		band = buf[0] & 0xff;
-		buf[len] = '\0';
-		len--;
-		switch (band) {
-		case 3:
-			fprintf(stderr, "%s%s\n", PREFIX, buf + 1);
-			retval = SIDEBAND_REMOTE_ERROR;
-			break;
-		case 2:
-			...
-			while ((brk = strpbrk(b, "\n\r"))) {
-				...
-				write(2, outbuf.buf, outbuf.len);
-				...
-			}
+Jeff King (1):
+  add skip_prefix_mem helper
 
-			if (*b)
-				strbuf_addf(&outbuf, "%s", b);
-			break;
-		case 1:
-			write_or_die(out, buf + 1, len);
-			break;
-		default:
-			fprintf(stderr, "%s: protocol error: bad band #%d\n",
-				me, band);
-			retval = SIDEBAND_PROTOCOL_ERROR;
-			break;
-		}
-	}
+Nguyễn Thái Ngọc Duy (1):
+  config: add conditional include
 
-	if (outbuf.len > 0)
-		write(2, outbuf.buf, outbuf.len);
+ Documentation/config.txt  | 40 +++++++++++++++++++++
+ config.c                  | 89 +++++++++++++++++++++++++++++++++++++++++++++--
+ git-compat-util.h         | 17 +++++++++
+ t/t1305-config-include.sh | 45 ++++++++++++++++++++++++
+ 4 files changed, 189 insertions(+), 2 deletions(-)
 
-In general, mixing stdio and raw file descriptor access is not such
-a good idea, but these remaining calls to fprintf(stderr, ...) above
-are for error-exit codepath, so from that point of view, the above
-illustration may be acceptable, but there is still one niggle.
+-- 
+2.8.2.531.gd073806
 
-When we exit the loop because we set retval to a non-zero value,
-should we still drain the outbuf?
-
-IOW, shouldn't the if statement after "while (!retval)" loop be more
-like this?
-
-	if (!retval && outbuf.len)
-        	write(2, outbuf.buf, outbuf,len);
-
-Thanks.
