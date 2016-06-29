@@ -7,90 +7,95 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FDBA1FE4E
-	for <e@80x24.org>; Wed, 29 Jun 2016 07:02:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E2041FE4E
+	for <e@80x24.org>; Wed, 29 Jun 2016 07:13:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751987AbcF2HCq (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 03:02:46 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53061 "EHLO mout.gmx.net"
+	id S1752663AbcF2HNw (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 03:13:52 -0400
+Received: from mout.gmx.net ([212.227.17.22]:60800 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751253AbcF2HCp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 03:02:45 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Ledpu-1bgztA0S9W-00qWAR; Wed, 29 Jun 2016 09:02:38
+	id S1751253AbcF2HNv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 03:13:51 -0400
+Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MGzwE-1b4MB43550-00Dkb7; Wed, 29 Jun 2016 09:13:40
  +0200
-Date:	Wed, 29 Jun 2016 09:02:37 +0200 (CEST)
-From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:	Wed, 29 Jun 2016 09:13:39 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] t/Makefile: add a rule to re-run previously-failed tests
-Message-ID: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de>
+To:	Ioannis Kappas <ioannis.kappas@rbs.com>
+cc:	git@vger.kernel.org
+Subject: Re: git svn clone segmentation faul issue
+In-Reply-To: <alpine.DEB.2.20.1606281825190.12947@virtualbox>
+Message-ID: <alpine.DEB.2.20.1606290911040.12947@virtualbox>
+References: <0BCA1E695085C645B9CD4A27DD59F6FA39AAD5CF@GBWGCEUHUBD0101.rbsres07.net> <alpine.DEB.2.20.1606281334450.12947@virtualbox> <alpine.DEB.2.20.1606281530420.12947@virtualbox> <loom.20160628T175016-898@post.gmane.org>
+ <alpine.DEB.2.20.1606281825190.12947@virtualbox>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:CXku29V2Bh61WZnPHYkwC/Vq9OdHcGmRpRLAN9Ql8Jp5jFu+6pY
- 7wpTzq9nQ7IEGPgcC5o6Fv94stPwYsOxNKgbmJ2kS4Uu4GlWEE0bFESk7Yh45sb7yI7tFG7
- D+ExwvOe3jET8YIjGS5LCXLBxGG6F7Xn3Ov/GNjxNZqoc4OeN6/TYzJjg68LFUZ+YBv4xPy
- rKAQs9bBhfZcFoRTLzcNg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:fX85L9ZWRhc=:caL7nKSQN+QcIiWiLppOI6
- JkQLxZrgUmrVJ+AFuPl1P6TCe35xZtVsD0vxNyp5WysN7U/1ub0QB2DOz8vY/5wm/8c6FLmYL
- 1ZwOVaM/NmJm5udIbq+eZsVlqG++eWW9fRqWMwGwFiytJO8stOZfa37YbPQEMANvVOhe205vC
- PzlGdNm8k9B3uZI0sRvlgadeSeL1B/BqRNYgvv1kqVVi6he9gJluCDTm4bPMYW2sPI/yKAtkG
- kyS2Jr1VDS5pHakBl84xbOvSR9SuKbJMQb89yZE87f6/Fg43cCH5ENt2z9NzMVhnb/oYPUQCh
- dbsP8hVeDXO93c2ewDm2L5L1oBbzUxmCY9C/urg/Irf6JvV5ldJvk0oAq4tj9kaYp7MnEp4qO
- 0XadXD7F5X0uVTWj4g4bxi4SupX54P5tdDNHqJsKY2i4IEw5eMDo9sIjKkmQZ5I4mJ7beqb4G
- jmCaJzEY2od8cVEASq/hPYEy9phhZesGcHeSQ6NvlEfCmK5YPRHl9bGowG3Ek/k5gPZbtLWfQ
- jPn3tO5JnyI1NsXDu1V79owcPmD714PqSO/V2dASyAU5btAcSrQGGboGABJhz3hEHuWDgvIZ+
- mCr5DpQtu51aTpZ0pABA+8ugc+x+NnapHK+OqdefeE5+2YJufIoPItRza28vgk9v75KkU0SQz
- 8O9qoXW4qGnfElYGna5U2F3DgATvbW9dl0KZJwN0KZV+enN5bRclqWTtewEdxQZqme7tl8Rw+
- 4SPoQ4bA3M++dvOjuadluMrLro7lvYrVxu0wmkruOYcqiR5bY6XkH9DBM/XxygB4jdvk+++69
- WUGBXJR
+X-Provags-ID: V03:K0:hWTiBITPQTPeZCgOjTubrqT734N07yLpjldaJrXa2A71q/NPrrC
+ 4VfGHB9lsABySgU0Cvk6Jum13Dmh1FTVhrtQ1vxXW1d1LvBELAWRwkFiX+DA5dl09QyN1EQ
+ euQ4k+c2VHFDfD9qjELLY+49AdTdpSKsfErJNX59twUsjjKV8axi4wFGD1gIKjFz3bgEu+4
+ DOCYtG+2zFQz7ON77kbkg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:YKrpGXCBCuQ=:YMwmq4nenJR0ov9bdiuUXA
+ KuZHyCmmJUCU5MZ5LzLMWEbQs0CCvXjKfIYsxusxHi4PtV09/naPIQHAwLkfbxxj/dFCMBl9f
+ MDVdIXRoLJiZs4d6EVhUICGz5TSedKMFZ8POusKFmP3i5U4f2gvuux3BL8z8rpgPVOA7gPufg
+ DdltY+BUVqmRwcC/SYNe1C1WQuEFuWDh1luSJZINNWyxtvxqI9fxLuWKEAWg7L5k880cCl7ie
+ VXvCyEFX6r1h9fQegobURH8lXzFyqv9bbpSfg99CFEaCiTpn4bpmMvjRiW9D/HtO7q89x89Y9
+ I7oEJ7gE6TKHPq8sw3HpQtymHZJqJ8fI8cSE3x/w+oFznTVxf/fIN0vvkT3Lcoijlab4toQ7X
+ 2CQxYwHH/D0CU5Q+X6fyEGtbDGIE4+pf8ItUGFoUOjEfA2mxCeZi8w+C1EZDGXZuSaYLgTQ68
+ 4r4hY0n7Z+x3rO1WnX/XkRKI3rr4V4tjdnQziJSpvGLHFq0Zx8WLTl2fav45W38DGwiIGTA9/
+ AWs6qTCDnEKnxLLkAfEeA0bE2ftQTwD8QDRqJIfw+1wx6oG9cOyafWxWKlIGnwoWLttjKccfe
+ dM1ums8tXfie7FbRZz/of8Jd5Fi9qQXu7GAe5Zyxm+SrOS0jyI07i0NgPde745+b4Ih5q3JkB
+ C8LevXH5eG1oUjFI43hb7Y6Qh4l3aDdkzsJ+23ByKkl8+lbb759XmEwHnkvL6yeefKJ3LeXhE
+ lfWsRldfHT9sCVMVdt9j57n0tyWXo0s6xW6i501AMJUNTpxBlu6OUQIg2SERfimEpOX55y6Xq
+ QPlAhVO
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-While developing patch series, it is a good practice to run the test
-suite from time to time, just to make sure that obvious bugs are caught
-early. With complex patch series, it is common to run `make -j15 -k
-test`, i.e. run the tests in parallel and not stop at the first failing
-test but continue. This has the advantage of identifying possibly
-multiple problems without having to wait for the complete test suite to
-finish.
+Hi Yannis,
 
-It is particularly important to reduce the turn-around time thusly on
-Windows, where the test suite spends 45 minutes on the computer on which
-this patch was developed.
+On Tue, 28 Jun 2016, Johannes Schindelin wrote:
 
-It is the most convenient way to determine which tests failed after
-running the entire test suite, in parallel, to look for left-over "trash
-directory.t*" subdirectories in the t/ subdirectory.
+> On Tue, 28 Jun 2016, Ioannis Kappas wrote:
+> 
+> > Johannes Schindelin <Johannes.Schindelin <at> gmx.de> writes:
+> > 
+> > > Would you mind giving them a whirl?
+> > 
+> > The patch in "source code (zip)" seems to be missing the line in the prepare
+> > () section of PKGBUILD to actually apply the fix:
+> > 
+> > diff --git a/subversion/PKGBUILD b/subversion/PKGBUILD
+> > --- a/subversion/PKGBUILD
+> > +++ b/subversion/PKGBUILD
+> > 
+> > @@ -101,6 +103,7 @@ prepare() {
+> >    patch -p1 -i ${srcdir}/17-fix-test-link.patch
+> >    patch -p1 -i ${srcdir}/18-fix-serf-config.patch
+> >    patch -p1 -i ${srcdir}/19-remove-contrib-from-configure.patch
+> > +  patch -p1 -i ${srcdir}/20-fix-stack-corruption-in-swig-wrappers.patch
+> >    patch -p1 -i ${srcdir}/subversion-1.9.1-msys2.patch
+> >    patch -p1 -i ${srcdir}/remove-checking-symlink.patch
+> >    patch -p1 -i ${srcdir}/90-use-copy-instead-symlink.patch
+> > 
+> > 
+> > Would you be so kind to add the above and rebuild. 
+> 
+> Oh bummer. Sorry for that! I will fix it and rebuild tomorrow.
+> 
+> > I have just tested it locally to work successfully, but I do not mind 
+> > retesting if you wish to provide another build :)
+> 
+> Thanks, that would be much appreciated! I'll send a reply when I rebuilt
+> the packages.
 
-This patch automates the process of determinig which tests failed
-previously and re-running them; It turned out to be quite convenient
-when trying to squash bugs that crept in during rebases.
+I just re-uploaded new packages, after rebuilding them and making sure
+that the patch was actually applied.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/failing-tests-v1
- t/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+May I ask you to re-test, just to make extra sure that the bug in question
+is fixed?
 
-diff --git a/t/Makefile b/t/Makefile
-index 18e2b28..1459a7f 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -35,6 +35,8 @@ all: $(DEFAULT_TEST_TARGET)
- test: pre-clean $(TEST_LINT)
- 	$(MAKE) aggregate-results-and-cleanup
- 
-+failed: $(patsubst trash,,$(patsubst directory.%,%.sh,$(wildcard trash\ directory.t[0-9]*)))
-+
- prove: pre-clean $(TEST_LINT)
- 	@echo "*** prove ***"; $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
- 	$(MAKE) clean-except-prove-cache
--- 
-2.9.0.118.g0e1a633
-
-base-commit: cf4c2cfe52be5bd973a4838f73a35d3959ce2f43
+Ciao,
+Johannes
