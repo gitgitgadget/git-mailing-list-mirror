@@ -2,82 +2,295 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F35402018E
-	for <e@80x24.org>; Wed, 29 Jun 2016 14:31:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3E6F1FF40
+	for <e@80x24.org>; Wed, 29 Jun 2016 15:10:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752692AbcF2ObP (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 10:31:15 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52846 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752168AbcF2ObN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 10:31:13 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LorB9-1boGt527VD-00gsF9; Wed, 29 Jun 2016 16:31:08
- +0200
-Date:	Wed, 29 Jun 2016 16:31:07 +0200 (CEST)
-From:	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+	id S1752351AbcF2PKW (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 11:10:22 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:57972 "EHLO sapo.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752050AbcF2PKU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 11:10:20 -0400
+Received: (qmail 24377 invoked from network); 29 Jun 2016 15:10:18 -0000
+Received: (qmail 9326 invoked from network); 29 Jun 2016 15:10:18 -0000
+Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
+          for <git@vger.kernel.org>; 29 Jun 2016 15:10:15 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+From:	Vasco Almeida <vascomalmeida@sapo.pt>
 To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] t3404: add a test for the --gpg-sign option
-In-Reply-To: <cover.1467210629.git.johannes.schindelin@gmx.de>
-Message-ID: <0df34c45db5b1500e55262c8948c9140e7ad6cb8.1467210629.git.johannes.schindelin@gmx.de>
-References: <cover.1467210629.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:eElBMFtzweIwPzh36k9FZ1zffmYfsBvEHQEwgGXAX449uxzgWsm
- bNRV1kGXnL+OgUBRkyHYo+QUM5p6LoGyl3T/miKTc9kHyrEZw5Mi2e+Vu76gy4GgZDV+av/
- /PyLsoSF4Ti4pSkImdMgO1vzrs8LXiaWNnCshCT6asHAAOzIZw5AAnzWsJbWyUdx+N62q0O
- OCify6clIY2jpk4qKF+1w==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:AuLUxqjAAhA=:6Xk9/iXfVqg6gqmGeaCocL
- FFe8FmNFiJ5U68Y0rFMMQuxINpT1qfgPuGgF6l0al8zR9H4jVLijwqdOu+fumkr1D6hgr2+NV
- wKYizQhLxUZqYrHrqMsQKER8Me7Jby2msym/eKUlkGEN0Ug6Ghrs4zq62MPSDw1f+wXgom10y
- QNc9NQ04FzUBrGcUb3RRUPloscNgbMT2g49WWYNC1Cm3Tq0RZ7vh66VIB/bwIGnVreweNIAj1
- 8pDPRc83lO+xOgrSH8vUvEJnDUzWy1qq10IQhaIMBm3boSsfX7T8DRC5U10ICVjHxlO3/LuUq
- WzFOzlQVp3VAlLhZJ2kxbIWBlHRgUmNmkWnBUv7sT+cGYSSXQ/E8ZObn6QN7OpTs15+MlzHtK
- s/5WXcYL9ML+n29WpWZhwnfHzUDIJf+Ps7V+jM+boLYa18VNU3gdR7QKv+Ww+P8s0pe+0IagX
- T46l1ZrFoRVt7ABpKPdG0jnsVXV58CXdeEYIFo+ZK3nC6OPeXChaK1Agh5GLX2baqMMLUSMI/
- 5dZB5PIAZqEGFqDgCd4JmusIdXq+S0wbOU4bxE5L89a7jgLTxgP9IzDrcbIk/VuCIED3csgfv
- p4uL1/e1Lpkupv0kPtLnMJ73sSo6+X4akRqP0Q88JeoeqZYRWbUBTwysXVjKjbgVOEM2ziS70
- 5qjdIdhgOg97zeIVUicUDXO2KPeMUirw/FX+L9tlJKALuAslBwwROkYPDWN/nUWvA53wDM/+A
- jabENlGX3dpueVjLUVBwFN2nDFkXc8Jj8UOVLb0TuDaqNli8hksFObRGO+2gxC8Mu4I1l75pT
- szK85Hc
+Cc:	Vasco Almeida <vascomalmeida@sapo.pt>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, David Aguilar <davvid@gmail.com>
+Subject: [PATCH v2 01/11] i18n: add--interactive: mark strings for translation
+Date:	Wed, 29 Jun 2016 15:09:35 +0000
+Message-Id: <20160629150945.15015-2-vascomalmeida@sapo.pt>
+X-Mailer: git-send-email 2.9.0.148.g4ba279b
+In-Reply-To: <20160629150945.15015-1-vascomalmeida@sapo.pt>
+References: <20160629150945.15015-1-vascomalmeida@sapo.pt>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-To keep the time t3404 requires short (in this developer's Windows
-setup, this single test already takes a painful 8 minutes to pass),
-we avoid a full-blown GPG test and cop out by verifying the message
-displayed to the user upon an 'edit' command.
+Mark simple strings (without interpolation) for translation.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Brackets around first parameter of ternary operator is necessary because
+otherwise xgettext fails to extract strings marked for translation from
+the rest of the file.
+
+Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- t/t3404-rebase-interactive.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
+ git-add--interactive.perl | 68 +++++++++++++++++++++++++----------------------
+ 1 file changed, 36 insertions(+), 32 deletions(-)
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index c7ea8ba..4c96075 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1281,4 +1281,11 @@ test_expect_success 'editor saves as CR/LF' '
- 	)
- '
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 822f857..fb8e5de 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -4,6 +4,7 @@ use 5.008;
+ use strict;
+ use warnings;
+ use Git;
++use Git::I18N;
  
-+EPIPHANY="'"
-+test_expect_success 'rebase -i --gpg-sign=<key-id>' '
-+	set_fake_editor &&
-+	FAKE_LINES="edit 1" git rebase -i --gpg-sign=\" HEAD^ >out 2>err &&
-+	grep "$EPIPHANY-S\"$EPIPHANY" err
-+'
-+
- test_done
+ binmode(STDOUT, ":raw");
+ 
+@@ -252,7 +253,7 @@ sub list_untracked {
+ }
+ 
+ my $status_fmt = '%12s %12s %s';
+-my $status_head = sprintf($status_fmt, 'staged', 'unstaged', 'path');
++my $status_head = sprintf($status_fmt, __('staged'), __('unstaged'), __('path'));
+ 
+ {
+ 	my $initial;
+@@ -678,7 +679,7 @@ sub update_cmd {
+ 	my @mods = list_modified('file-only');
+ 	return if (!@mods);
+ 
+-	my @update = list_and_choose({ PROMPT => 'Update',
++	my @update = list_and_choose({ PROMPT => __('Update'),
+ 				       HEADER => $status_head, },
+ 				     @mods);
+ 	if (@update) {
+@@ -690,7 +691,7 @@ sub update_cmd {
+ }
+ 
+ sub revert_cmd {
+-	my @update = list_and_choose({ PROMPT => 'Revert',
++	my @update = list_and_choose({ PROMPT => __('Revert'),
+ 				       HEADER => $status_head, },
+ 				     list_modified());
+ 	if (@update) {
+@@ -724,13 +725,13 @@ sub revert_cmd {
+ }
+ 
+ sub add_untracked_cmd {
+-	my @add = list_and_choose({ PROMPT => 'Add untracked' },
++	my @add = list_and_choose({ PROMPT => __('Add untracked') },
+ 				  list_untracked());
+ 	if (@add) {
+ 		system(qw(git update-index --add --), @add);
+ 		say_n_paths('added', @add);
+ 	} else {
+-		print "No untracked files.\n";
++		print __("No untracked files.\n");
+ 	}
+ 	print "\n";
+ }
+@@ -1159,8 +1160,11 @@ sub edit_hunk_loop {
+ 		}
+ 		else {
+ 			prompt_yesno(
+-				'Your edited hunk does not apply. Edit again '
+-				. '(saying "no" discards!) [y/n]? '
++				# TRANSLATORS: do not translate [y/n]
++				# The program will only accept that input
++				# at this point.
++				__('Your edited hunk does not apply. Edit again '
++				   . '(saying "no" discards!) [y/n]? ')
+ 				) or return undef;
+ 		}
+ 	}
+@@ -1206,11 +1210,11 @@ sub apply_patch_for_checkout_commit {
+ 		run_git_apply 'apply '.$reverse, @_;
+ 		return 1;
+ 	} elsif (!$applies_index) {
+-		print colored $error_color, "The selected hunks do not apply to the index!\n";
+-		if (prompt_yesno "Apply them to the worktree anyway? ") {
++		print colored $error_color, __("The selected hunks do not apply to the index!\n");
++		if (prompt_yesno __("Apply them to the worktree anyway? ")) {
+ 			return run_git_apply 'apply '.$reverse, @_;
+ 		} else {
+-			print colored $error_color, "Nothing was applied.\n";
++			print colored $error_color, __("Nothing was applied.\n");
+ 			return 0;
+ 		}
+ 	} else {
+@@ -1230,9 +1234,9 @@ sub patch_update_cmd {
+ 
+ 	if (!@mods) {
+ 		if (@all_mods) {
+-			print STDERR "Only binary files changed.\n";
++			print STDERR __("Only binary files changed.\n");
+ 		} else {
+-			print STDERR "No changes.\n";
++			print STDERR __("No changes.\n");
+ 		}
+ 		return 0;
+ 	}
+@@ -1390,12 +1394,12 @@ sub patch_update_file {
+ 				my $response = $1;
+ 				my $no = $ix > 10 ? $ix - 10 : 0;
+ 				while ($response eq '') {
+-					my $extra = "";
+ 					$no = display_hunks(\@hunk, $no);
+ 					if ($no < $num) {
+-						$extra = " (<ret> to see more)";
++						print __("go to which hunk (<ret> to see more)? ");
++					} else {
++						print __("go to which hunk? ");
+ 					}
+-					print "go to which hunk$extra? ";
+ 					$response = <STDIN>;
+ 					if (!defined $response) {
+ 						$response = '';
+@@ -1432,7 +1436,7 @@ sub patch_update_file {
+ 			elsif ($line =~ m|^/(.*)|) {
+ 				my $regex = $1;
+ 				if ($1 eq "") {
+-					print colored $prompt_color, "search for regex? ";
++					print colored $prompt_color, __("search for regex? ");
+ 					$regex = <STDIN>;
+ 					if (defined $regex) {
+ 						chomp $regex;
+@@ -1455,7 +1459,7 @@ sub patch_update_file {
+ 					$iy++;
+ 					$iy = 0 if ($iy >= $num);
+ 					if ($ix == $iy) {
+-						error_msg "No hunk matches the given pattern\n";
++						error_msg __("No hunk matches the given pattern\n");
+ 						last;
+ 					}
+ 				}
+@@ -1467,7 +1471,7 @@ sub patch_update_file {
+ 					$ix--;
+ 				}
+ 				else {
+-					error_msg "No previous hunk\n";
++					error_msg __("No previous hunk\n");
+ 				}
+ 				next;
+ 			}
+@@ -1476,7 +1480,7 @@ sub patch_update_file {
+ 					$ix++;
+ 				}
+ 				else {
+-					error_msg "No next hunk\n";
++					error_msg __("No next hunk\n");
+ 				}
+ 				next;
+ 			}
+@@ -1489,13 +1493,13 @@ sub patch_update_file {
+ 					}
+ 				}
+ 				else {
+-					error_msg "No previous hunk\n";
++					error_msg __("No previous hunk\n");
+ 				}
+ 				next;
+ 			}
+ 			elsif ($line =~ /^j/) {
+ 				if ($other !~ /j/) {
+-					error_msg "No next hunk\n";
++					error_msg __("No next hunk\n");
+ 					next;
+ 				}
+ 			}
+@@ -1553,18 +1557,18 @@ sub diff_cmd {
+ 	my @mods = list_modified('index-only');
+ 	@mods = grep { !($_->{BINARY}) } @mods;
+ 	return if (!@mods);
+-	my (@them) = list_and_choose({ PROMPT => 'Review diff',
++	my (@them) = list_and_choose({ PROMPT => __('Review diff'),
+ 				     IMMEDIATE => 1,
+ 				     HEADER => $status_head, },
+ 				   @mods);
+ 	return if (!@them);
+-	my $reference = is_initial_commit() ? get_empty_tree() : 'HEAD';
++	my $reference = (is_initial_commit()) ? get_empty_tree() : 'HEAD';
+ 	system(qw(git diff -p --cached), $reference, '--',
+ 		map { $_->{VALUE} } @them);
+ }
+ 
+ sub quit_cmd {
+-	print "Bye.\n";
++	print __("Bye.\n");
+ 	exit(0);
+ }
+ 
+@@ -1587,32 +1591,32 @@ sub process_args {
+ 			if ($1 eq 'reset') {
+ 				$patch_mode = 'reset_head';
+ 				$patch_mode_revision = 'HEAD';
+-				$arg = shift @ARGV or die "missing --";
++				$arg = shift @ARGV or die __("missing --");
+ 				if ($arg ne '--') {
+ 					$patch_mode_revision = $arg;
+ 					$patch_mode = ($arg eq 'HEAD' ?
+ 						       'reset_head' : 'reset_nothead');
+-					$arg = shift @ARGV or die "missing --";
++					$arg = shift @ARGV or die __("missing --");
+ 				}
+ 			} elsif ($1 eq 'checkout') {
+-				$arg = shift @ARGV or die "missing --";
++				$arg = shift @ARGV or die __("missing --");
+ 				if ($arg eq '--') {
+ 					$patch_mode = 'checkout_index';
+ 				} else {
+ 					$patch_mode_revision = $arg;
+ 					$patch_mode = ($arg eq 'HEAD' ?
+ 						       'checkout_head' : 'checkout_nothead');
+-					$arg = shift @ARGV or die "missing --";
++					$arg = shift @ARGV or die __("missing --");
+ 				}
+ 			} elsif ($1 eq 'stage' or $1 eq 'stash') {
+ 				$patch_mode = $1;
+-				$arg = shift @ARGV or die "missing --";
++				$arg = shift @ARGV or die __("missing --");
+ 			} else {
+ 				die "unknown --patch mode: $1";
+ 			}
+ 		} else {
+ 			$patch_mode = 'stage';
+-			$arg = shift @ARGV or die "missing --";
++			$arg = shift @ARGV or die __("missing --");
+ 		}
+ 		die "invalid argument $arg, expecting --"
+ 		    unless $arg eq "--";
+@@ -1634,10 +1638,10 @@ sub main_loop {
+ 		   [ 'help', \&help_cmd, ],
+ 	);
+ 	while (1) {
+-		my ($it) = list_and_choose({ PROMPT => 'What now',
++		my ($it) = list_and_choose({ PROMPT => __('What now'),
+ 					     SINGLETON => 1,
+ 					     LIST_FLAT => 4,
+-					     HEADER => '*** Commands ***',
++					     HEADER => __('*** Commands ***'),
+ 					     ON_EOF => \&quit_cmd,
+ 					     IMMEDIATE => 1 }, @cmd);
+ 		if ($it) {
 -- 
-2.9.0.270.g810e421
+2.7.4
+
