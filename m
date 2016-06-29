@@ -6,77 +6,109 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B25B1FF40
-	for <e@80x24.org>; Wed, 29 Jun 2016 17:19:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F4501FF40
+	for <e@80x24.org>; Wed, 29 Jun 2016 17:24:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbcF2RSu (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 13:18:50 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54818 "EHLO
+	id S1751935AbcF2RXo (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 13:23:44 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64942 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751449AbcF2RSt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 13:18:49 -0400
+	with ESMTP id S1751701AbcF2RXm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 13:23:42 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 66E1927D45;
-	Wed, 29 Jun 2016 13:18:29 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9428526866;
+	Wed, 29 Jun 2016 13:23:08 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vx7L43APUo5A8x+oZw0sZRoF8t8=; b=oKVunU
-	XXMNNau6TieACCrEdZDgsleGtptd9AaM57Tie4JbiNKAbZyXck3L0cJSvg9hJ3lW
-	G1e1qHTXXkRUPxUcpGQyr2ZWOYAe3OM7pYRHGwSGy0EqFJhOSy/rOCWEl/Ew1Ai3
-	tlkc2JT1zLdmSAUzgspUXPCOKy1g7a/mIcrmU=
+	:content-type; s=sasl; bh=bKkwi6T0WCFA07lItAED7NG26vU=; b=txBtAB
+	A5eTuTuZI2F+4StoFT1DeZXjtTcFRimkP9PWayfDqv4Lr26+KXZG1py7XHDtfI+i
+	t/qcwiwQUTkaeY3jhanhFFm13npakVWFrcgWzvpHbLuhwQWbhsDjstU77CpKU1oH
+	f+JOh6lFBuSheXI/ZYT1PZfbKFKQUib+W8sis=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tYLIQjuwmG6Lv3kvmDAkb5YbwCPkHtVn
-	wN/F8rgXgAYWuuUlNn3XVA/jUwRSby6LtgnDd+87ycBZq6uGNy8ibVPVeQXNEKIa
-	tXtTQnlCuTYBdkXlkpWpkfDdpy/2iYKQzH+FSG9xz+SfZWJkO1XmmuW8IPAwNz4l
-	73hR9zWU9Yg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5FB7327D44;
-	Wed, 29 Jun 2016 13:18:29 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=BMJ6tuuIKlyOM6jUi2Xy8rjivy+LV+pF
+	7YMDmO7DXCzUz82ThffVRZMp1M9lUdPKY3HAxmLCs4hMxhXbyn8o+yhEuuXX90ND
+	su4WVjym+HF3IxiNNzl96uX6PgFG33/zZ2m4OhYFzDufb4q4V0Dj1eEE+wXyX1SC
+	7Ft3ZEVLdCE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8D12A26865;
+	Wed, 29 Jun 2016 13:23:08 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C64F527D43;
-	Wed, 29 Jun 2016 13:18:28 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 128C926864;
+	Wed, 29 Jun 2016 13:23:08 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
+To:	neuling@dakosy.de
 Cc:	git@vger.kernel.org
-Subject: Re: [PATCH] t/Makefile: add a rule to re-run previously-failed tests
-References: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de>
-Date:	Wed, 29 Jun 2016 10:18:26 -0700
-In-Reply-To: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Wed, 29 Jun 2016 09:02:37 +0200
-	(CEST)")
-Message-ID: <xmqqy45n52xp.fsf@gitster.mtv.corp.google.com>
+Subject: Re: git pull --rebase should use fast forward merge if possible
+References: <OF95D98CB6.47969C1C-ONC1257FE1.0058D980-C1257FE1.0059986D@dakosy.de>
+	<xmqqd1n0552i.fsf@gitster.mtv.corp.google.com>
+Date:	Wed, 29 Jun 2016 10:23:05 -0700
+In-Reply-To: <xmqqd1n0552i.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 29 Jun 2016 09:32:21 -0700")
+Message-ID: <xmqqtwgb52py.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7F11B4CC-3E1D-11E6-8E6A-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 2585F232-3E1E-11E6-B9EB-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> While developing patch series, it is a good practice to run the test
-> suite from time to time, just to make sure that obvious bugs are caught
-> early. With complex patch series, it is common to run `make -j15 -k
-> test`, i.e. run the tests in parallel and not stop at the first failing
-> test but continue.
+>> Is it possible to change the behavior of "git pull 
+>> --rebase=true|preserve|interactive" to use a fast forward merge if the 
+>> remote branch is ahead and the local branch contains no new commits? 
+>
+> Interesting.  I do not think of a reason why we shouldn't.
+>
+> If we were still working in scripted Porcelain, it would have been a
+> five minute hack, perhaps like this.
+>
+>  contrib/examples/git-pull.sh | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 
-Hmmm, my tests run in parallel and do not stop at the first one
-without '-k'.  What are we doing differently?
+... and if we have to work with built-ins, it becomes a lot larger
+than a five-minute hack, unfortunately.
 
-> It is the most convenient way to determine which tests failed after
-> running the entire test suite, in parallel, to look for left-over "trash
-> directory.t*" subdirectories in the t/ subdirectory.
+Something like this may have a chance of working ;-)
 
-Good idea, but I'd drop "in the t/ subdirectory" from the
-description.
+ builtin/pull.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-> +failed: $(patsubst trash,,$(patsubst directory.%,%.sh,$(wildcard trash\ directory.t[0-9]*)))
-> +
-
-This would not work if you use --root=<there> in GIT_TEST_OPTS, I am
-afraid.
+diff --git a/builtin/pull.c b/builtin/pull.c
+index bf3fd3f..777ae56 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -878,10 +878,24 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		if (merge_heads.nr > 1)
+ 			die(_("Cannot merge multiple branches into empty head."));
+ 		return pull_into_void(*merge_heads.sha1, curr_head);
+-	} else if (opt_rebase) {
+-		if (merge_heads.nr > 1)
+-			die(_("Cannot rebase onto multiple branches."));
++	}
++	if (opt_rebase && merge_heads.nr > 1)
++		die(_("Cannot rebase onto multiple branches."));
++
++	if (opt_rebase) {
++		struct commit_list *list = NULL;
++		struct commit *merge_head, *head;
++
++		head = lookup_commit_reference(orig_head);
++		commit_list_insert(head, &list);
++		merge_head = lookup_commit_reference(merge_heads.sha1[0]);
++		if (is_descendant_of(merge_head, list)) {
++			/* we can fast-forward this without invoking rebase */
++			opt_ff = "--ff-only";
++			return run_merge();
++		}
+ 		return run_rebase(curr_head, *merge_heads.sha1, rebase_fork_point);
+-	} else
++	}
++	else
+ 		return run_merge();
+ }
