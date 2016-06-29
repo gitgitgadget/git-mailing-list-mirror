@@ -2,83 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E0E81FE4E
-	for <e@80x24.org>; Wed, 29 Jun 2016 11:47:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BD7D1FE4E
+	for <e@80x24.org>; Wed, 29 Jun 2016 11:48:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048AbcF2Lri (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 07:47:38 -0400
-Received: from mout.gmx.net ([212.227.17.20]:56658 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751993AbcF2Lrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 07:47:37 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LrJTs-1bUE12253k-0133yA; Wed, 29 Jun 2016 13:47:32
- +0200
-Date:	Wed, 29 Jun 2016 13:47:31 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
-Subject: Re: preview: What's cooking in git.git (Jun 2016, #10; Tue, 28)
-In-Reply-To: <xmqq4m8c7uo6.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1606291345440.12947@virtualbox>
-References: <xmqq4m8c7uo6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1752082AbcF2Lsf (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 07:48:35 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:36328 "EHLO
+	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751993AbcF2Lsf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 07:48:35 -0400
+Received: by mail-io0-f169.google.com with SMTP id s63so43150111ioi.3
+        for <git@vger.kernel.org>; Wed, 29 Jun 2016 04:48:34 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=archlinux-us.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=ro9GMo6s/Hze6v23zvOs/W6a7rpiodYGqn2aBABfVJk=;
+        b=cT1Nanm1qL0OXpwfrYQFGQiYZnHNlnIAs9Z6Jr7uAkYGKSMC3hraa6h4Q/H+JOuhWo
+         nN6wjneFkNdbtzIZ3+IHnC+XPsxOmyZKCYGpiJGtPLeA6+HgLHL6bI0NJFBpnnAqPUKS
+         HVru/34kZ/GaFbbbHVM8zYyIjMG2JYMCCLEf8wHw1U7gcpf2wPWPMRhsakxKS51H3Kxz
+         tsJVQO85RUgawY7ao5XqcBNljlD8qX64fLe8BkHNUYSzWHrXt20dbEL4AgvmHPGkNmbt
+         qKY8DA//LUfGvnRuhSPOhJ5Ako12cQ3lcjfaIGkwK4xlt1HCDbPCHzBv6c/ie27zoTM3
+         YZDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=ro9GMo6s/Hze6v23zvOs/W6a7rpiodYGqn2aBABfVJk=;
+        b=dUS7nmMiWIkAPHPjZ4nKDU1nLk6yKvLO3j/sNpTIKaOxD+w84iAyTW6moOsbhojKzR
+         IGn5bxAuuFk30e/AWalfXjc4dDr8G1nRlNfaGjVFnEtz4hZn+AKtABTYhydOKNpRMd7S
+         n2T7HOmDnS7XdzKXVnCXOTPUEod54xl0JAKE7SYPvVLHfNTaeP8hEfS5jUNDkM4p3ec8
+         hPWiiVWadzT9V7XJuUWV/U8Jzppu6wni5EIKpbQeD3spMEUCPhzP4xpuiA6cxaZuLat/
+         7/V9Mpbw5UyjcgfyVHiTjY/kgbUrOzf3ENjvaePlhIHwqEnQayyG4i3lzysxZtM7JDq0
+         p2YA==
+X-Gm-Message-State: ALyK8tKTn49dtIPXPZy2n3YnQMQvhyg6Rqant+yfEkgZlpvyIsxYJxs6lMSOKfkKT46jTLd1Fj1r63mE9lA+8A==
+X-Received: by 10.107.8.26 with SMTP id 26mr8499466ioi.85.1467200914317; Wed,
+ 29 Jun 2016 04:48:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:VasHkmrFq06ryMMlXmgAAKx5+xIhoEbQz7kUqnEsjC6WEZ7dVOr
- 73quRw4GX4r6gTfnD1ZjB3fBKA9zOStAUN+goeucMDjR9l/ovYogkzTB5avL4LyY8jZkHWL
- q3x8I47E5Wjy8nZtzIYSEPBbrEyahiLzZ0naYgMCYtQ5g3agT3Mm630KPKWx3vk2/3aLFMZ
- vBxMb/Oa5VplXE9sDAEBQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:ZU2wxt7GB60=:f+j64wFfa/VSxzDgYfTtGC
- OB46byL/X/eMOHiw+kLWF0RT7MbH6+AXTgfiZyzaKLGAfLk2HjGfGUnI1+BrZSR8QeqG7BpV6
- hOyFWRd2LBSBiSlnGrZ2qjTkpougIr7PXIWdO0gkbzKIiBhj9mHn5VMsoGLryNhOHunCb6XGV
- bLGBBUktMsZxx5cyKaT0RtRcVINsncsaih7bTG55QrSVURqft/FecBJHbkbo86H2+Anm34otT
- QyhlAPlC5khyQa8mQKG5sFihVD/meIxVNLeAq6vbGcTywmSWSm1X44Tr4bH+shYumTYFvuHLD
- WBo+WIq1CqdHdSb5UXS4T7M1x2VUyMT5SJTUA3hR7xx1a57QF0M8UAVUWV0xZdYvJT6vJPnP9
- 3UG6JlumY6p0GmqnLX+5sAER6KYiYo2uIU47PQRDVEwnW6tNxAFQuUIVDeznHjsmQMU07oGrQ
- VIV8KzzzsqZXnVSn9mXSSZdPDE9SxhpJY05N0TsPB8UwkDNPjrJymW2AwFJQO+YdzMw4b7/gv
- IECFQNYmsVkL3Q99prUqONsPxNYX/z5z1pSEg0E9qEWU4Ej8eUk3UVnDmQGEp39Am/7jHD9RG
- KqyTlsi0JSAQrQDuS6zzB70V6r11C7VMpl0orDdszkVyzJ2lXrCGwcCnIUvPG1uqjy0cxJyIK
- NV0X/wNB6XNeYONCgudTCnyCYMRJqmWtO7i8WS3OqXn64C+Bcj1jC+gA7M1edawXLWvMHACT+
- cg0duv1Hv8e+oPlCIPDw/hwMI2wM8AndjCme7k5ktN6s+70ZAvEXqaEEYb9SoNSDqSifLiV7S
- tjio0Cl
+Received: by 10.107.137.14 with HTTP; Wed, 29 Jun 2016 04:48:33 -0700 (PDT)
+From:	Laszlo Papp <lpapp@kde.org>
+Date:	Wed, 29 Jun 2016 12:48:33 +0100
+X-Google-Sender-Auth: J4yUq8HZ0I7FNeRUk9WGiF-2k3Y
+Message-ID: <CAOMwXhNp9SwA_oQ8bE6-m72C+po+28maGtsP8wRFRfBLjSb5NA@mail.gmail.com>
+Subject: git tag --contains for cherry-picks
+To:	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Dear List,
 
-On Tue, 28 Jun 2016, Junio C Hamano wrote:
+We have several release branches as well as a master branch where the
+active development happens.
 
-> * jk/ansi-color (2016-06-23) 7 commits
->   (merged to 'next' on 2016-06-28 at 354989c)
->  + color: support strike-through attribute
->  + color: support "italic" attribute
->  + color: allow "no-" for negating attributes
->  + color: refactor parse_attr
->  + add skip_prefix_mem helper
->  + doc: refactor description of color format
->  + color: fix max-size comment
-> 
->  The output coloring scheme learned two new attributes, italic and
->  strike, in addition to existing bold, reverse, etc.
-> 
->  Will merge to 'master'.
+Old releases are maintained with important bug fixes or even new features
+in our case. It sometimes means that we need to cherry-pick commits across
+branches, like from master to a specific release branch.
 
-Please note that those "colors" do not work on Windows, at least as far as
-I know, I only skimmed the code in set_attr():
+Cherry-picking changes the hash of the commit, therefore, this may no
+longer work for cherry-picks:
 
-	https://github.com/git/git/blob/v2.9.0/compat/winansi.c#L175-L314
+git tag --contains
 
-... and it looks as if italic is plainly unsupported, and strike-through
-is not handled.
+I am thinking of having something like:
 
-Ciao,
-Dscho
+git tag --contains-follow
+
+which would follow cherry-picks. I am not sure how easily and/or
+efficiently this can be implemented, but my gut feeling is that in the vast
+majority of the cases, the content check would bail out already at the
+"subject line".
+
+Again, just to recap: I would like to be able to list of releases (i.e.
+tags) in which a commit occurs even if it is cherry-picked because what
+matters for us in the end of the day is whether the feature or bugfix goes
+into a release.
+
+Best Regards,
+Laszlo Papp
