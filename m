@@ -7,78 +7,88 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 490C12018B
-	for <e@80x24.org>; Wed, 29 Jun 2016 14:14:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C0FC1FF40
+	for <e@80x24.org>; Wed, 29 Jun 2016 14:15:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752729AbcF2OO4 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 10:14:56 -0400
-Received: from mout.gmx.net ([212.227.17.21]:57700 "EHLO mout.gmx.net"
+	id S1752737AbcF2OO7 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 10:14:59 -0400
+Received: from mout.gmx.net ([212.227.17.21]:63900 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752677AbcF2OOz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 10:14:55 -0400
+	id S1752677AbcF2OO6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 10:14:58 -0400
 Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Mcxtm-1b02ci34Hi-00IErr; Wed, 29 Jun 2016 16:14:50
+ ESMTPSA (Nemesis) id 0MgYGJ-1awRaK141H-00O0WQ; Wed, 29 Jun 2016 16:14:55
  +0200
-Date:	Wed, 29 Jun 2016 16:14:50 +0200 (CEST)
+Date:	Wed, 29 Jun 2016 16:14:54 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/5] reset --hard: skip blank lines when reporting the commit
- subject
+Subject: [PATCH 4/5] commit -S: avoid invalid pointer with empty message
 In-Reply-To: <cover.1467209576.git.johannes.schindelin@gmx.de>
-Message-ID: <fd3b5aee740e88ceff0fbe77c61a10767c4f8622.1467209576.git.johannes.schindelin@gmx.de>
+Message-ID: <51b87a251ac80177ff7321ec0e182cbda6dd93a1.1467209576.git.johannes.schindelin@gmx.de>
 References: <cover.1467209576.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+XJ2P7i+sWYn2E1xuzwRG0mRnaiBDaYjepAIPNL2fO6o9KTyLP7
- 8PWKtQXUGUZV72tZYqHXrZWg4ZSL9HXvZqYJBMjrscnbO58dGEaXhINlSLR/RXUHwNSfcXL
- MZX2HvGkNjlq5bSLvU28R22HZkFFOEgvvUmamfg11CyiiIkpiqeHS4r389Yvlmu6/0cqkXD
- Op2WdP2AYSRjS8U5b1TGA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:9Nt5/f2bWh4=:H0+tjzLX8hseEitwI5yIDk
- pCWMQw9rSHHMPrawKareCOH5brCK2i0nIdpXWuL6AIT1OOrf2QipzSUOKDqrD3AzxEbfMYEFn
- Z2gSaVzJ9ewNDbH9UQVT5H1nkGqIJcLtAlYrO6ezmdxpfWSiK+geDb8d2kzjoL0qugHSAIb86
- PA2m/1hg9XSFNAgpvVCZ8YZwFBnRPGmXx43gd6OPKceBUa63ssyHrdVCgnvoWyu0kHh9Xqzrh
- fhacVzdfMnOwo1NKj5Nr7P5aengLDQ5ev+XBh32l/+Q6PUDY8tHwk7Y3nMt3h6oUEgh2mHwHn
- Ax9tHc16w1o66bcKfavro7DTEJN7ZF6CQaWtsP305O1PMeS58IK8ssjUcGl0iDGc85/K5XY4o
- fNExvn2ReKoKpQwcPCLzsRvGmAOH5Mtz1gZfd2dfPt5tXhpzqbZBhYmDfJr98aVqt3svTIqFQ
- h3KkAGCurQW4kTDi6+bVPj7znXvyhffpJ5ZWaSvOwbgqN1fFbMJ8UMHmM8JKYE0GBstnjqqvV
- 8XsDAIyMgq+t2dI+nyW8HskkZ/MAaRMSjLIvRhCdB6DX7uVfbDdYPFZsynSr9WrVZAVQmEXv1
- A2lQJni6khUHv4xtd0FxqShWRvhL0+FdY5Np6ZZ7KhuH4tutKSWOaPPmx9Ih2fwLgliFKb9PI
- ocwcRf2CytdFJNOHea4Fl3yUoRMVtQvOKOfI4ilmbmc0YMVCwm0w3uVH5QxaoRcg0K6MhCqgX
- tT7yLnXv5FsSzkL8lh90wqoCnmWW2kUfmfIoN5OhNbdPDKsZ+j/Rr/naBri1EqXUTnjzXxqwj
- pP7eJU5
+X-Provags-ID: V03:K0:suZwnh10Nx2rNtzqgZlelXkbvZxkcBfpM34OXQep6EFATnzussF
+ +pNHaADolPSQdIsbVT7woIc6D+ogkKnl1kPw3Mt16gjwtZqjOkDeMqfy8ajpF2V1aBfyLnD
+ Tx4O+JEFbFUVw2ZoFAIwjLVCX6qaIqQgmqGHYNllEt0QTXVq/b4QnLFv9YIRMTFYlOBvRw/
+ rm3xx6x7kwVwxuvVtwbXg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:HDr68FpkK48=:CqSvB0k0OnA693CX0NsDSn
+ QLgqGMy7GJuX+x9mCS5VjujK2gW7BHi6a7FKlXJ4A+MEHiUAvD/CI35zOXWBBoYoAYwkq/Tm2
+ 8iBhANE7/V861a1v+fRp7lG2S4mOZrvMoMtYzcKldFgo1+r/P/yoqP2qIuZ1YUuZLmTL2QL94
+ 0gW9LSpFNoYPa5dFtsgvDfMn6TTIp9MclcZ22gSMZ5WQ8LdLkGzlSIgmhBtYsM9ROPrI2QUiD
+ iwAfWTOxW5hwJg+BAxIEtfp8yx/uHQvyZvZ35YU6eROTPXz4FZaOVVnH+6vhbQZqoKkeYhWNE
+ M8avFAlmOwyycIReRfLkoCRLbN4q+f/ppgR5xm+gRoWGZoFK2+ELdea4iRAYo0RACcfX2EjkT
+ Ngd8U0rf1CPjIGNXlWDKXZC+Mt1aYZf3Ju3Zgrlgt9Fr+NY3g2aGlqer/jEhTspJaY1nwPaUx
+ zNYLjl9oBTFjpSfNLkma1C8rssXzOwwq/Wkg0+m0xCQvEVr2tkahqUaKeEAmdMr+i7vZJfDAY
+ VAKi/p/vroPlIDht0kJDyRHYYDNzstsjKEbx9UbQqPpCU4rUgtYR5/L2QZoo96ni/t5ShNEOF
+ 3tgQ1BjAtypvXox0iDS4VESE9RkSlnc1YJX7dcv+aPcyt+6j/FLPAfdePlD6jWVhkrWWLZcX8
+ doC33naM7EQwZlPI+6kRKNvuQz4eaZ99dfMbGhdIXFfM6oPmS4pPE4qaLGD+oirZspbDOm1CU
+ De72X415ERlIvIxC8rToIWV7ZtswFj/gifNhJjl3Vq7EaHHrd6gKgRkq3qtfU9zWUXB3njO96
+ bmxnIAI
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When there are blank lines at the beginning of a commit message, the
-pretty printing machinery already skips them when showing a commit
-subject (or the complete commit message). We shall henceforth do the
-same when reporting the commit subject after the user called
+While it is not recommended, `git fsck` says that:
 
-	git reset --hard <commit>
+	Not having a body is not a crime [...]
+
+... which means that we cannot assume that the commit buffer contains an
+empty line to separate header from body (essentially saying that there
+is only a header).
+
+So let's tread carefully here.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/reset.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ commit.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index acd6278..5c6206b 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -103,7 +103,7 @@ static void print_new_head_line(struct commit *commit)
- 	if (body) {
- 		const char *eol;
- 		size_t len;
--		body += 2;
-+		body = skip_blank_lines(body + 2);
- 		eol = strchr(body, '\n');
- 		len = eol ? eol - body : strlen(body);
- 		printf(" %.*s\n", (int) len, body);
+diff --git a/commit.c b/commit.c
+index 24d4715..0bb51a2 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1090,11 +1090,15 @@ static const int gpg_sig_header_len = sizeof(gpg_sig_header) - 1;
+ 
+ static int do_sign_commit(struct strbuf *buf, const char *keyid)
+ {
++	const char *eoh = strstr(buf->buf, "\n\n");
+ 	struct strbuf sig = STRBUF_INIT;
+ 	int inspos, copypos;
+ 
+ 	/* find the end of the header */
+-	inspos = strstr(buf->buf, "\n\n") - buf->buf + 1;
++	if (!eoh)
++		inspos = buf->len;
++	else
++		inspos = eoh - buf->buf + 1;
+ 
+ 	if (!keyid || !*keyid)
+ 		keyid = get_signing_key();
 -- 
 2.9.0.270.g810e421
 
