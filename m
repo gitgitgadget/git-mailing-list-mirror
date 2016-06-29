@@ -7,162 +7,80 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 231691FE4E
-	for <e@80x24.org>; Wed, 29 Jun 2016 11:38:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C159E1FE4E
+	for <e@80x24.org>; Wed, 29 Jun 2016 11:43:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751980AbcF2Lic (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 07:38:32 -0400
-Received: from mout.gmx.net ([212.227.15.18]:58511 "EHLO mout.gmx.net"
+	id S1752050AbcF2Lng (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 07:43:36 -0400
+Received: from mout.gmx.net ([212.227.17.21]:53146 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751767AbcF2Lib (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 07:38:31 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MPUZ7-1bDWr42ybx-004m5i; Wed, 29 Jun 2016 13:38:27
+	id S1751962AbcF2Lnf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 07:43:35 -0400
+Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LeiJ8-1bgn0x13Rm-00qT1N; Wed, 29 Jun 2016 13:43:29
  +0200
-Date:	Wed, 29 Jun 2016 13:38:27 +0200 (CEST)
-From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:	Wed, 29 Jun 2016 13:43:26 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 9/9] am: make a direct call to merge_recursive
-In-Reply-To: <cover.1467199553.git.johannes.schindelin@gmx.de>
-Message-ID: <dc58115e23c8d942b3ff6270b43719bc841becbb.1467199553.git.johannes.schindelin@gmx.de>
-References: <cover.1467199553.git.johannes.schindelin@gmx.de>
+To:	Ioannis Kappas <ioannis.kappas@rbs.com>
+cc:	git@vger.kernel.org
+Subject: Re: git svn clone segmentation faul issue
+In-Reply-To: <loom.20160629T104814-936@post.gmane.org>
+Message-ID: <alpine.DEB.2.20.1606291341530.12947@virtualbox>
+References: <0BCA1E695085C645B9CD4A27DD59F6FA39AAD5CF@GBWGCEUHUBD0101.rbsres07.net> <alpine.DEB.2.20.1606281334450.12947@virtualbox> <alpine.DEB.2.20.1606281530420.12947@virtualbox> <loom.20160628T175016-898@post.gmane.org> <alpine.DEB.2.20.1606281825190.12947@virtualbox>
+ <alpine.DEB.2.20.1606290911040.12947@virtualbox> <loom.20160629T104814-936@post.gmane.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:CA6smonyLPwGAdRsfNhX7agjiHYSe0bv78w5dKLXgt5sq49l8fL
- gsJSMFf81TjAiJJWTKD2GTZuZK/ZyKPjky+B+EkAgbO9OZ3qdQAXOtLYfbbVmlwes45KSRN
- RhSmeZB9Dp21WINy/46GiYbaF4FBGMliNj+zJj6qEoRLOsOGLmCzbCpL0L2aPCS0J0XFW4S
- OdNMmdLegPeAnsiTU5pcQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:YWVI3oLhXps=:Pirky55NpFmgqH19dRJZya
- lvBJ02TybIuiNiyBPuy/yFonYJ/fryuknr/wIXxL3OWHdMZIx0WFQ6kaC4NxTquK7HT2DqKqW
- Bf11Iev4oWukYc+3cgtpZZBcd8NL0R/UwQdSnYbkOKr/sIwYfNReABaw6U2u1Yqb3n9jGMc/4
- tYJaFoJMH0HX+sxAhHPDxEhvGzkGCKruqDM0qp/V0M+4iGk4qs+kGDn9CKFwDV5k9SGC3S02O
- zm2FuM9sk/gJry+1SROLLdShbbCl/xIbvTYlyuguGcmTI3N6a2n8BMfbZvZhFe6f3erBx1CQB
- 8x66EcloR5hPptxf+J0rXZkvqj0i3xbpfKB514Z2gWf+0WneZbngiKDwWbPwEuvF/94mGBShJ
- Onjh1+U2DUpJXP81ZnBRKX+8g0dO7W81zu+di9E8AVw+TiOiUwNVaAR9PKYYBBjExx2fXN+9H
- 1OYV3IBvwVz0GVuYxOnq3+x6V2eoIINTwguKsTYkN+cXtPYnto0Iyff6u23NwMf31E3G5blw6
- xuo6HM3/PUYTV5eSqZa4GgHzeoqjh65jMZxgP2Byac+98Jn81VrKx/P7uYVeV+qIHD7AyQOkH
- j00ZLVfUdAlCytjIU2+WQqbeUx3UYt8xr7W7nDBc97scEbp+iBPAx3Ke3akKzLxjnlpn7ZRbw
- lE4ePHzQ7FPsxrZ5MBP0eSLYiTvGEmyoDAan/2p//xd/lxqHmQaZ8fJitSgzOuBdfP1n1Ds6P
- 6WMd6pak/gDcktbaArrajBP8dqmXR8JKeHtigtzrFc25+AuZacJ2nw6D2924U3QtkDCIQwVT1
- AIT/KuU
+X-Provags-ID: V03:K0:bK1KcHQFffa4KqEQByoH2Ip2oHUk2sbMfTUAMgbGOze8CdmHoO5
+ a/Bx/fVYARe/jPnFtF4eYYKmZBWuaFNI9PLxZVjkPqJwZpwz4Y/1tyei6RBTTEbwZnqibPd
+ Mm6Q30CX6zHHiTQJUVlfXaNz5MW/yOt9dj31UYSmlSSdkD8DcvKzzUHt+z7MiRrN4S0brI5
+ aL5zUoPnXfGb2L0Pac0aw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:j+1UranM7x4=:Mj1JS5nGY1WjqKoRpVXWJh
+ sZ9LhrHRG0UZEA3ddZEqCa9hIoy+zT3c1DnZDsKmWmn/rJhfrDTsv/+LqivJrqCbdoVP8AW7L
+ I8sz2jrGZ059+qevkmuttca9WVw5mX2OwZ/emUgIHT4lUmR6hyAQhLo4gLLthQJIqPwGZAKLO
+ WczNdeLyiOhkAcR2D2AislXiMmrETyo2nZUAqBRdm7aBh3Kdt9343CDXvfuQgYyI5vIfNazqE
+ RSqo6p3usBN4NtOCj9NMtATBO17IetSeflZBIkWOqO3UTws+MsnYgQZxattPpghiJGjTxyxgD
+ Y0nvAe/Sll3bqg0rkUH7g0K9xtNq92xFPLnIvfa+QXx7uan+nuTnD5U4rKTwKvtADEfuuRsyA
+ oAilKaVtxcVna86r9IShvui/kAToqwnErViFayWGoexTj0acs8oS1Q9PmycyGcVc6Kd6bqw/T
+ n5zUSiIj/iuj+/ppTfHi7cdGge2h8FFEDEDVTHPF3nU0H6re3bA5UcQaAkNUaojKgEDx2C6y+
+ 0OTulRxQr3pfPZDOf0+xdlDMLL8ec+LL3APO8VK88TvI9MpclRI+cAys/U5sc/RwRO0SFam5d
+ Mpe0lPORUEXBDweOjGwSqnp3HT8i8HlufQwGSvD4x86G0WzOi3EX8pntokpv/XzFrjTnUeK0M
+ b6M066hfm5v6ldgq4lSoFI8R5CjnhdRibs0Yu3Wd2x+K1V2N9bbmp4yRxRq9tF5+NPyiJXUeM
+ q8BbpyhM6mZvqDsdpdhdqgvwyyNct+Hd7xtUtBXrSXsgjWgRM5hDe3dFye2NFTj3lOhAdCjrc
+ Hza9S2z
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+Hi Yannis,
 
-Instead of spawning merge-recursive via run_command() in
-run_fallback_merge_recursive(), make a direct call to the internal
-merge_recursive_generic().
+On Wed, 29 Jun 2016, Ioannis Kappas wrote:
 
-Here is a quick benchmark result, applying a patch for b4391657
-(merge: drop 'git merge <message> HEAD <commit>' syntax, 2015-03-25)
-that was still cooking in 'next' on 4b1fd356 (git-multimail: update
-to release 1.2.0, 2015-10-11) which was the tip of 'master' at some
-stage, on an x86-64 running Ubuntu:
+> Johannes Schindelin <Johannes.Schindelin <at> gmx.de> writes:
+> 
+> > I just re-uploaded new packages, after rebuilding them and making sure
+> > that the patch was actually applied.
+> > 
+> > May I ask you to re-test, just to make extra sure that the bug in
+> > question is fixed?
+> 
+> I confirm the latest version, built from the 'source files (zip)'
+> package, has resolved the issue.
 
-      real    0m0.169s                      real    0m0.163s
-      user    0m0.108s                      user    0m0.134s
-      sys     0m0.068s                      sys     0m0.033s
+Thank you so much!
 
-      real    0m0.175s                      real    0m0.161s
-      user    0m0.110s                      user    0m0.120s
-      sys     0m0.066s                      sys     0m0.047s
+> Thanks for the prompt response! Next task is to get the patch through to
+> the next subversion official release.
 
-      real    0m0.168s                      real    0m0.162s
-      user    0m0.124s                      user    0m0.114s
-      sys     0m0.045s                      sys     0m0.051s
+My more immediate concern is MSYS2 (the POSIX-emulating basis of Git for
+Windows), and I opened a Pull Request there:
 
-      real    0m0.167s                      real    0m0.152s
-      user    0m0.124s                      user    0m0.122s
-      sys     0m0.045s                      sys     0m0.031s
+	https://github.com/Alexpux/MSYS2-packages/pull/647
 
-      real    0m0.169s                      real    0m0.164s
-      user    0m0.131s                      user    0m0.129s
-      sys     0m0.043s                      sys     0m0.041s
+If this Pull Request is not picked up in time for the next Git for Windows
+version, I plan to use the packages that you tested.
 
-Left-hand side shows the original, right-hand side shows the result
-of this optimization.
-
-Timings on Windows:
-
-original:
-0.00user 0.01system 0:00.29elapsed
-0.00user 0.00system 0:00.25elapsed
-0.01user 0.00system 0:00.24elapsed
-0.01user 0.00system 0:00.26elapsed
-0.00user 0.01system 0:00.23elapsed
-
-with optimization:
-0.00user 0.01system 0:00.22elapsed
-0.00user 0.00system 0:00.25elapsed
-0.00user 0.01system 0:00.22elapsed
-0.00user 0.00system 0:00.22elapsed
-0.01user 0.00system 0:00.21elapsed
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	It feels *slightly* wrong to submit your own patch to review,
-	however, please keep in mind that
-
-	1) I changed the patch (o.gently does not exist anymore, so I do
-	   not set it), and
-
-	2) I added my own timings performed on Windows.
-
- builtin/am.c | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
-
-diff --git a/builtin/am.c b/builtin/am.c
-index 3dfe70b..dd41154 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1587,25 +1587,26 @@ static int run_fallback_merge_recursive(const struct am_state *state,
- 					unsigned char *our_tree,
- 					unsigned char *his_tree)
- {
--	struct child_process cp = CHILD_PROCESS_INIT;
-+	const unsigned char *bases[1] = {orig_tree};
-+	struct merge_options o;
-+	struct commit *result;
-+	char *his_tree_name;
- 	int status;
- 
--	cp.git_cmd = 1;
-+	init_merge_options(&o);
-+
-+	o.branch1 = "HEAD";
-+	his_tree_name = xstrfmt("%.*s", linelen(state->msg), state->msg);
-+	o.branch2 = his_tree_name;
- 
--	argv_array_pushf(&cp.env_array, "GITHEAD_%s=%.*s",
--			 sha1_to_hex(his_tree), linelen(state->msg), state->msg);
- 	if (state->quiet)
--		argv_array_push(&cp.env_array, "GIT_MERGE_VERBOSITY=0");
-+		o.verbosity = 0;
- 
--	argv_array_push(&cp.args, "merge-recursive");
--	argv_array_push(&cp.args, sha1_to_hex(orig_tree));
--	argv_array_push(&cp.args, "--");
--	argv_array_push(&cp.args, sha1_to_hex(our_tree));
--	argv_array_push(&cp.args, sha1_to_hex(his_tree));
-+	status = merge_recursive_generic(&o, our_tree, his_tree, 1, bases, &result);
-+	if (status < 0)
-+		exit(128);
-+	free(his_tree_name);
- 
--	status = run_command(&cp) ? (-1) : 0;
--	discard_cache();
--	read_cache();
- 	return status;
- }
- 
--- 
-2.9.0.268.gcabc8b0
+Thanks,
+Dscho
