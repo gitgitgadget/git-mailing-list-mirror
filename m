@@ -7,68 +7,73 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D5181FF40
-	for <e@80x24.org>; Wed, 29 Jun 2016 14:31:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E23FB2018B
+	for <e@80x24.org>; Wed, 29 Jun 2016 14:31:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752690AbcF2ObN (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 10:31:13 -0400
-Received: from mout.gmx.net ([212.227.17.21]:50722 "EHLO mout.gmx.net"
+	id S1752729AbcF2ObO (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 10:31:14 -0400
+Received: from mout.gmx.net ([212.227.15.15]:62434 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752073AbcF2ObM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 10:31:12 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Mc8Pz-1b0sFw2KT1-00JbrH; Wed, 29 Jun 2016 16:30:59
+	id S1752254AbcF2ObN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 10:31:13 -0400
+Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MZCxA-1b3tSl2rQy-00KtrX; Wed, 29 Jun 2016 16:31:03
  +0200
-Date:	Wed, 29 Jun 2016 16:30:58 +0200 (CEST)
+Date:	Wed, 29 Jun 2016 16:31:03 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/2] Late edits to the rebase -i tests
-Message-ID: <cover.1467210629.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 1/2] t3404: fix another typo
+In-Reply-To: <cover.1467210629.git.johannes.schindelin@gmx.de>
+Message-ID: <2ad336745e1b2a610b20b7cfba169bd3e042c178.1467210629.git.johannes.schindelin@gmx.de>
+References: <cover.1467210629.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:K09mxKZC01CbRo2Pk4xPnm7nrIi6wGJJRLd6n234wjGZlt/1h5c
- nKg/rEXNsN/xB/3llVXkoSQyE3UmeUeQoXucB/FYxI13URCiPj9ACrk7WRr4EeD2E6pvNxn
- AHReWbT69IiufXH7gUG+GrDdb8SIYO+/l8WgJzzDysy8bgfqsmvarlYqE3KPZhPYVbV7nzy
- QCJgV/+96px7kTrYXa2Jg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:UdUAs0A8gGs=:L8YBwiH8rHtZRK73XaCGaZ
- jZZJ2ahANEwOGIXfuMhkstclq4+r7kgP8yFyUaEXqBkz19UrJBTkezMuWzs4qWQA8Ie8yvivw
- OkQajo8QCnUexpX5PrYqMRxdLF3IczBTKPKDvRM+L0pfncPh7L9DErzWIzNNGZ2n1n4WzjD6b
- PU1kgOcRuKb8k0wZWlZSTFIwjV5HA8d9qi9joXXlQsm3ZKtrkMXb4lbSUJz5zc+Oq2cV+biZH
- E+EBbK2Z7L/Q6up0+xf26d6w4sV5f2l6JTiZGH6Say7AJ5Pa7p8W+siV/8Fq0XK3kjXmAZ3hl
- HIjgFLD7MLAKuz5la8rXi1TyZtMEgf8GYAonBLAvjvbdlv7lPoimFWWP5XDE5Vha//do8G+2U
- kckmLZyhZ0XsmsGwd7pJFrVVjBJcMhHlrPjTEaAKbtibsP6PvbFvJYWuj+IhBrsNaUR8dWv+2
- fiEbIISsX2C9S9aq0533r7ywE79Yy4i0B4/L4+OTjoLav3vuV1LHAvXGySyxWrOaZOwWssLbB
- d79ECtbmE1JfDeBEb9AOkCFiIxXm2QFxUaMSHh7+YCtw1r3tzBFL09xJzt24ih3YuK7ff5yCP
- DJZ9e3/FlvQlAmuayP+7Xo/JLL9uRaS7oTRKG8cv/drfJFweWQTdXXlxWLT0N35sIr45OKihc
- v6okeD79/m5hg77Lkm0r8WdyzAivlIgf3Ws7k65OD8P+qv03QEshhST+naQi+5iP663hamkH1
- uK/0VLtqKC4OzHiq50STWDdGnubtWjH7q1+TEYBA66r/+RqnaLVTixaURqNpHbvH/3AX7I5A1
- Zd/3nOJ
+X-Provags-ID: V03:K0:AArEZSUjISUDIv4BjK1C/KgaiWkwqEOj1zjRORt2gCvtlxfRPtL
+ /mr0AB9UcY8AOnyiSBupzJ7pReS7eISGjPS8QswQM7k60f0ABjg+T/ysL2iEAaWY0DzCyd3
+ hNfWhleKtHEkiDiygWWnmcMHe28nBUvOLp4w6qEVwrPbaipNNLlTOKExxmKb7xiKXqHt9v6
+ PAPOIWB4lLAjpDRq75yRQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:Vhmno30aTyc=:/hFNHyXBZQNOSynxxUSSTZ
+ oASPSTySNHEGs7DXycAnNxH+UK/CY4NsfjlKB33I0OPl5aZa2gdEogdzAmCfkA2oQ2lorI2dF
+ y+MOOL+AtlqIZ8LxHwr2A5MXrmP5uXAH7+O30OGTBc1+xdgnMkCyMNeggeE9+mpE/RsBc0WQp
+ 89U7ZJBCAoLh76tWfolu6cGczTQC0f8VKwwogqUhzv9nkLKIIMmLjNPwcGTHZM0lIT9X4Ngn5
+ 55O26SZoswRcMvLw8mGE/6kAYUbdSik+TOXeZ/ol3pC/bmpmWKgJJoYqXDKDIyzQXcjT3aZ7l
+ 7w/E3DdozytJ+0/cc0vskS3wSjBUM3y1opmDl0ejWwyrIQ0xWFyr130QuPG/ZBn3B8c/FjNTa
+ hbEkwzt4ocFzNB1yR8sBNLdQjy7sU7Ylp4Ye5u4urpursVULdMTIVOp+zIRN9e8G9JIKVux8f
+ VmrM3WkpvYmm1ZoGDS6RNKXEHZtua6a5FICzojEFnrWGelWf4IOuiXqQPa6FpCrVUZOD2sK/a
+ 3Ts9sfvu6fbyrjxiNLjelTSVFBU0Y0ENsJHgCqlQlzjMOLl3cuBsYoZrB9QutXAHaZwuinhPd
+ BqfYdoQ2li2rrl6fLK+IstE3IhTH+aqQytMGhGt7G0z3XzpuYgahcSQjF4i7EkJPHt3Y3XRAC
+ Y6M5HvcnwP7a0P6mWXFhybA8q+Ix1E/1cyUdnsB8mFKIwOm4fD+yUHFLjM87kX/IXGlIiEx3B
+ TKPayyQIH0hnu5hMi/q362tyXRxBEtPAWt9Cihv5dGs8B4DAQrf8DwULWliNmf5BbrZvv4o3v
+ NAIteo2
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-I meant to send the first patch much earlier, but got side-tracked
-before I could add the --gpg-sign test.
+The past tense of "to run" is "run", not "ran".
 
-This is just another patch series in preparation for the rebase--helper
-(to be precise, this is the seventh out of fourteen patch series that
-have not yet been merged to master; Six are already in flight, so I will
-stop here until the queue empties a little.)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t3404-rebase-interactive.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-Johannes Schindelin (2):
-  t3404: fix another typo
-  t3404: add a test for the --gpg-sign option
-
- t/t3404-rebase-interactive.sh | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-Published-As: https://github.com/dscho/git/releases/tag/rebase-i-tests-v1
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 66348f1..c7ea8ba 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -60,7 +60,7 @@ test_expect_success 'setup' '
+ 	test_commit P fileP
+ '
+ 
+-# "exec" commands are ran with the user shell by default, but this may
++# "exec" commands are run with the user shell by default, but this may
+ # be non-POSIX. For example, if SHELL=zsh then ">file" doesn't work
+ # to create a file. Unsetting SHELL avoids such non-portable behavior
+ # in tests. It must be exported for it to take effect where needed.
 -- 
 2.9.0.270.g810e421
 
-base-commit: cf4c2cfe52be5bd973a4838f73a35d3959ce2f43
+
