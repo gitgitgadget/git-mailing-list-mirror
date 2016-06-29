@@ -2,86 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BD7D1FE4E
-	for <e@80x24.org>; Wed, 29 Jun 2016 11:48:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B89ED1FE4E
+	for <e@80x24.org>; Wed, 29 Jun 2016 11:51:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752082AbcF2Lsf (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 07:48:35 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:36328 "EHLO
-	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751993AbcF2Lsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 07:48:35 -0400
-Received: by mail-io0-f169.google.com with SMTP id s63so43150111ioi.3
-        for <git@vger.kernel.org>; Wed, 29 Jun 2016 04:48:34 -0700 (PDT)
+	id S1752073AbcF2LvX (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 07:51:23 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:36030 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751544AbcF2LvW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 07:51:22 -0400
+Received: by mail-pa0-f49.google.com with SMTP id wo6so16946398pac.3
+        for <git@vger.kernel.org>; Wed, 29 Jun 2016 04:51:22 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=archlinux-us.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=ro9GMo6s/Hze6v23zvOs/W6a7rpiodYGqn2aBABfVJk=;
-        b=cT1Nanm1qL0OXpwfrYQFGQiYZnHNlnIAs9Z6Jr7uAkYGKSMC3hraa6h4Q/H+JOuhWo
-         nN6wjneFkNdbtzIZ3+IHnC+XPsxOmyZKCYGpiJGtPLeA6+HgLHL6bI0NJFBpnnAqPUKS
-         HVru/34kZ/GaFbbbHVM8zYyIjMG2JYMCCLEf8wHw1U7gcpf2wPWPMRhsakxKS51H3Kxz
-         tsJVQO85RUgawY7ao5XqcBNljlD8qX64fLe8BkHNUYSzWHrXt20dbEL4AgvmHPGkNmbt
-         qKY8DA//LUfGvnRuhSPOhJ5Ako12cQ3lcjfaIGkwK4xlt1HCDbPCHzBv6c/ie27zoTM3
-         YZDQ==
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=uqqZ41UV03Yx0TJ8P8gkLFFuhAYhjThIv9zFO8f5mnQ=;
+        b=Gcj2bDYhMG8keLxgZhiV3w8IVK2YRGGrcbKSWKAlnDoA9Plefn7BNU1M38vg8tN1Z9
+         osT3ZJ/ilUZ7xH5EOOnHY6qI3fr7ck6W363LXO6Edv8qplBzeqCQCyWkjdHQDn7v4DQo
+         C6UQgrAiXAtoQLakOmS/19ggj/dEe6aDCPnfkUt7xHG1ZCwd4m2Cm6VV0OJwbxuojEyj
+         7Lf/XgcCuF9T54esQ3RUQVxYHV/tQ/DJ/LlTWemCwO4mDBZ2CNU+PhZRbi5LgjhCK4wC
+         sUmPjBF+RjarfP03OQx/7/Yy2+NCAD35yaRw2dalmKOTQEXUr0rD7Crso9FgHdXm/OAb
+         83+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=ro9GMo6s/Hze6v23zvOs/W6a7rpiodYGqn2aBABfVJk=;
-        b=dUS7nmMiWIkAPHPjZ4nKDU1nLk6yKvLO3j/sNpTIKaOxD+w84iAyTW6moOsbhojKzR
-         IGn5bxAuuFk30e/AWalfXjc4dDr8G1nRlNfaGjVFnEtz4hZn+AKtABTYhydOKNpRMd7S
-         n2T7HOmDnS7XdzKXVnCXOTPUEod54xl0JAKE7SYPvVLHfNTaeP8hEfS5jUNDkM4p3ec8
-         hPWiiVWadzT9V7XJuUWV/U8Jzppu6wni5EIKpbQeD3spMEUCPhzP4xpuiA6cxaZuLat/
-         7/V9Mpbw5UyjcgfyVHiTjY/kgbUrOzf3ENjvaePlhIHwqEnQayyG4i3lzysxZtM7JDq0
-         p2YA==
-X-Gm-Message-State: ALyK8tKTn49dtIPXPZy2n3YnQMQvhyg6Rqant+yfEkgZlpvyIsxYJxs6lMSOKfkKT46jTLd1Fj1r63mE9lA+8A==
-X-Received: by 10.107.8.26 with SMTP id 26mr8499466ioi.85.1467200914317; Wed,
- 29 Jun 2016 04:48:34 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=uqqZ41UV03Yx0TJ8P8gkLFFuhAYhjThIv9zFO8f5mnQ=;
+        b=S3+f/P4kkEGWWP8AWSxmCVVvr5J3sfuNyzlGd8iGDz2vFlOCzGcHTKboiwyoShnpY2
+         T7n0yFr0EspR3HM8t5weVAnRdE54CkSdl5fAksreijh18gspnnH7H5dztA+SyuioRU0j
+         vy9NZl9uBeykWwC72lnHSjhpDmSgpBiNn49JDmxYrEQUn16wzOWao+pUfdTwAEjuhoHB
+         yirysOYH39uLU6Svd72AjHrzu2YgnF5ZlVA6XIz0q4w8hP4QIxkGXD7A554ZedBu7S4X
+         6nYNOXgE+ahfiEpCYycVyR9yjw/6Gk9C5ILANT4+aROmrCL50tCDSGC4lfv5o98wPOR5
+         u78A==
+X-Gm-Message-State: ALyK8tLl8ebK3mxAR1a80HLVPri1ndQMHZP3wOHSDFLFqWvOfni4ODDaABAAnGNrkRZasg==
+X-Received: by 10.66.25.133 with SMTP id c5mr10873271pag.103.1467201081923;
+        Wed, 29 Jun 2016 04:51:21 -0700 (PDT)
+Received: from [192.168.2.11] ([223.207.72.228])
+        by smtp.googlemail.com with ESMTPSA id ct7sm5493261pac.13.2016.06.29.04.51.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Jun 2016 04:51:21 -0700 (PDT)
+Subject: Re: git gui produces series of commits with exactly the same time
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <37a71a23-ded6-9d48-a873-a05f33e802bd@gmail.com>
+ <alpine.DEB.2.20.1606291344400.12947@virtualbox>
+Cc:	git@vger.kernel.org
+From:	Andrei Faber <andrei.faber@gmail.com>
+Message-ID: <97cb482e-2023-52d7-d8ba-149923c85a3b@gmail.com>
+Date:	Wed, 29 Jun 2016 18:51:15 +0700
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
 MIME-Version: 1.0
-Received: by 10.107.137.14 with HTTP; Wed, 29 Jun 2016 04:48:33 -0700 (PDT)
-From:	Laszlo Papp <lpapp@kde.org>
-Date:	Wed, 29 Jun 2016 12:48:33 +0100
-X-Google-Sender-Auth: J4yUq8HZ0I7FNeRUk9WGiF-2k3Y
-Message-ID: <CAOMwXhNp9SwA_oQ8bE6-m72C+po+28maGtsP8wRFRfBLjSb5NA@mail.gmail.com>
-Subject: git tag --contains for cherry-picks
-To:	Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <alpine.DEB.2.20.1606291344400.12947@virtualbox>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Dear List,
+Hi Johannes,
 
-We have several release branches as well as a master branch where the
-active development happens.
+No.
 
-Old releases are maintained with important bug fixes or even new features
-in our case. It sometimes means that we need to cherry-pick commits across
-branches, like from master to a specific release branch.
+Another thing I've found is that these commits have different timestamp 
+in the "Author" and "Committer" lines. The "Committer" lines have 
+correct timestamps, and the "Author" timestamp is wrong.
 
-Cherry-picking changes the hash of the commit, therefore, this may no
-longer work for cherry-picks:
+Best wishes,
+Andrei Faber
 
-git tag --contains
+On 29/06/2016 18:45, Johannes Schindelin wrote:
+> Hi Andrei,
+>
+> On Wed, 29 Jun 2016, Andrei Faber wrote:
+>
+>> I've noticed that git history contains series of commits with exactly
+>> the same time, despite the real commit time of these commits was
+>> different. All these commit were made using the git gui tool. I'm the
+>> only developer in this project.
+> Is it possible that you played games with your GIT_AUTHOR_DATE environment
+> variable?
+>
+> Ciao,
+> Johannes
+>
 
-I am thinking of having something like:
-
-git tag --contains-follow
-
-which would follow cherry-picks. I am not sure how easily and/or
-efficiently this can be implemented, but my gut feeling is that in the vast
-majority of the cases, the content check would bail out already at the
-"subject line".
-
-Again, just to recap: I would like to be able to list of releases (i.e.
-tags) in which a commit occurs even if it is cherry-picked because what
-matters for us in the end of the day is whether the feature or bugfix goes
-into a release.
-
-Best Regards,
-Laszlo Papp
