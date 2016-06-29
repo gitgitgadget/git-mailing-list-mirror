@@ -2,73 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D79CC20FCF
-	for <e@80x24.org>; Wed, 29 Jun 2016 20:50:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9849920FCF
+	for <e@80x24.org>; Wed, 29 Jun 2016 20:58:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751589AbcF2Uub (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 16:50:31 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58876 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751023AbcF2Uu2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 16:50:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 09AC628012;
-	Wed, 29 Jun 2016 16:50:27 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1hArAGKpmIUWUNyOQqyOluOfPgU=; b=ScGX9F
-	0JvN/CICt0CYXc4jnJ4En87TJRtZNK3DxMjH2YNcXq9qzpSvi2oaumFpVwFEINsr
-	sddrjTC8N/lDFxQ/Uwjop7QJi9kPvw5pwajWuRICpfKgG6Z2iNU9Smcn0jL2s3kB
-	3Y2vRyTGY1lpCNabf1pI0nlStMtyj7WJtKOrU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GZ8vy0L/fFCxbK8+Gl3dji4JfneFbvBr
-	AlJSq1aceEk41F5oCLiSiSKmRzQVwRWsN4TN421BqyuZ7TEbbchWEOw9GzsV1xGr
-	j4V1Pa3EKUqTmrL3nEOQKb6V1ZRx6I5b4IQaiBH3Kogms8+nkTnG2q2qf/a+ylDA
-	GWY9LSjx54k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0154A28011;
-	Wed, 29 Jun 2016 16:50:27 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 680D528010;
-	Wed, 29 Jun 2016 16:50:26 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH 1/9] Report bugs consistently
-References: <cover.1467199553.git.johannes.schindelin@gmx.de>
-	<8615dc276828a3f99a27ff2eda9909548a7d435e.1467199553.git.johannes.schindelin@gmx.de>
-Date:	Wed, 29 Jun 2016 13:50:24 -0700
-In-Reply-To: <8615dc276828a3f99a27ff2eda9909548a7d435e.1467199553.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Wed, 29 Jun 2016 13:36:41 +0200
-	(CEST)")
-Message-ID: <xmqqfurv3ejz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751550AbcF2U6F (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 16:58:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37929 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751504AbcF2U6D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 16:58:03 -0400
+Received: (qmail 31821 invoked by uid 102); 29 Jun 2016 20:56:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Jun 2016 16:56:54 -0400
+Received: (qmail 30331 invoked by uid 107); 29 Jun 2016 20:57:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Jun 2016 16:57:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Jun 2016 16:56:48 -0400
+Date:	Wed, 29 Jun 2016 16:56:48 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Stefan Beller <sbeller@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Marc Strapetz <marc.strapetz@syntevo.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: topological index field for commit objects
+Message-ID: <20160629205647.GA25987@sigill.intra.peff.net>
+References: <f15a14a5-f39d-9c41-16b9-fe0a48d7450b@syntevo.com>
+ <CAPc5daVC-+0Vr30L_pbcL0GN2OmnGm-+V4tE2WTos_vPRb_S1g@mail.gmail.com>
+ <CAGZ79kY6Ry+DfO90wza_RrVbCRAgNB4N=0W6svuJgvGNxeFh5Q@mail.gmail.com>
+ <xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1B5BD980-3E3B-11E6-84A5-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Wed, Jun 29, 2016 at 01:39:17PM -0700, Junio C Hamano wrote:
 
-> The vast majority of error messages in Git's source code which report a
-> bug use the convention to prefix the message with "BUG:".
+> > Would it make sense to refuse creating commits that have a commit date
+> > prior to its parents commit date (except when the user gives a
+> > `--dammit-I-know-I-break-a-wildy-used-heuristic`)?
+> 
+> I think that has also been discussed in the past.  I do not think it
+> would help very much in practice, as projects already have up to 10
+> years (and the ones migrated from CVS, even more) worth of commits
+> they cannot rewrite that may record incorrect committer dates.
 
-Good thing to do.
+Yep, it has been discussed and I agree it runs into a lot of corner
+cases.
 
-But if we were to review and apply a 200+ line patch, I wonder if we
-want to go one step further to allow us to write
+> If the use of generation number can somehow be limited narrowly, we
+> may be able to incrementally introduce it only for new commits, but
+> I haven't thought things through, so let me do so aloud here ;-)
 
-    BUG("killed-file %s not found", name);
+I think the problem is that you really _do_ want generation numbers for
+old commits. One of the most obvious cases is something like "tag
+--contains HEAD", because it has to examine older tags.
 
-instead.
+So your history looks something like:
 
+  A -- B -- ... Z
+        \        \
+	 v1.0     HEAD
+
+Without generation numbers (or some proxy), you have to walk the history
+between B..Z to find the answer. With generation numbers, it is
+immediately obvious.
+
+So this is the ideal case for generation numbers (the worst cases are
+when the things you are looking for are in branchy, close history where
+the generation numbers don't tell you much; but in such cases the
+walking is usually not too bad).
+
+So I think you really do want to be able to generate and store
+generation numbers after the fact. That has an added bonus that you do
+not have to worry about baking incorrect values into your objects; you
+do the topological walk once, and you _know_ it is correct (at least as
+correct as the parent links, but that is our source of truth).
+
+I have patches that generate and store the numbers at pack time, similar
+to the way we do the reachability bitmaps. They're not production ready,
+but they could probably be made so without too much effort. You wouldn't
+have ready-made generation numbers for commits since the last full
+repack, but you can compute them incrementally based on what you do have
+at a cost linear to the unpacked commits (this is the same for bitmaps).
+
+-Peff
