@@ -7,209 +7,162 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A69891FE4E
-	for <e@80x24.org>; Wed, 29 Jun 2016 11:37:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 231691FE4E
+	for <e@80x24.org>; Wed, 29 Jun 2016 11:38:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752411AbcF2LhY (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 07:37:24 -0400
-Received: from mout.gmx.net ([212.227.15.15]:60494 "EHLO mout.gmx.net"
+	id S1751980AbcF2Lic (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 07:38:32 -0400
+Received: from mout.gmx.net ([212.227.15.18]:58511 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752382AbcF2LhX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 07:37:23 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MhiTL-1avRrS35gh-00Mtns; Wed, 29 Jun 2016 13:37:09
+	id S1751767AbcF2Lib (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 07:38:31 -0400
+Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MPUZ7-1bDWr42ybx-004m5i; Wed, 29 Jun 2016 13:38:27
  +0200
-Date:	Wed, 29 Jun 2016 13:37:09 +0200 (CEST)
+Date:	Wed, 29 Jun 2016 13:38:27 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 8/9] merge-recursive: switch to returning errors instead of
- dying
+cc:	Junio C Hamano <gitster@pobox.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 9/9] am: make a direct call to merge_recursive
 In-Reply-To: <cover.1467199553.git.johannes.schindelin@gmx.de>
-Message-ID: <06c09ab4d684c239ae4ae03373c7cc7afb3be60b.1467199553.git.johannes.schindelin@gmx.de>
+Message-ID: <dc58115e23c8d942b3ff6270b43719bc841becbb.1467199553.git.johannes.schindelin@gmx.de>
 References: <cover.1467199553.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:XA4N9vG3OTpYg4q2g+/+xCy956zOEm7Jte4SZ5md40I/2of8YOp
- nuguPOx5Wa+CXVdYxAiJypIaleA6uhqNe0sHPEfYg4iw/yxh9yfad8s+ocNYcpgTHhrrDlt
- 3SCoOI32Ixnjk6b0AtpDOwVFjOht4sa1zLEY0/22e4KlDtZ1OgiyUVsiYfeGwqK3TN3FwPf
- LlscUMbXDD7FgIGMUPpqw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:mXQi6QT+BDQ=:J+TtrTsR4mtpMMV5KcauVu
- NKIf9RZkkMpp0tbGjsM6YbUDNZ5TAHZwrTpfO+5xxp5+qyuzWQfeMN/vzXlKw4O8VZzhG/wV0
- uRdt63ht4B9KSk2XM6yh+w6bgLbar2iz9XYNFIGp7N20emwPIiHnB4e7WVix82DuFEcrXvFdg
- LfqNm+/ckmM1kcaLzfcY9me0xwPbdJwyze8BWsJPFMJl7M0Za7yLPZgEML9pYknON3p1VsezJ
- mEYH1cMhrERP3NGKj9w40vAswdQ1Bj3YZbLcaNzjcIFjAMma+kqo8NNyuJ7q+NiunklpBv/WJ
- 2LF5GGl2aD/P76zlIyMRqbUl4XNOfw2zIbwmfWjKN1QhVuBZ9CZX/ohSPoLbJ4M1RNyD32Peq
- A7WMFV6bN7JoXAKSun4IXyD1yzRIbGeuJKfI4YahiDZ/V2RSCfRvqjTh+xIa9RF0lUyf7C5dT
- W0/aFw9u3tj5sRSkhAWjiTPpLOSqRo/6H/g0sWYEVk33DG5fZjkLd736GZgv1RstdX2ddpFjl
- hLfGn+l1bELsM7B6tr5QQ9fGja08bNMOgpOztlBSM8bQrZg1mMZlmOV3o8kwfiZdL3xXo6lun
- G9xvLVVGWdbMrgJX5oOdH/GnySzqAKVjmrLlJwca4S/0hFdu/ZXT0BrawKRpSSYq8pkA6pc//
- Kh/re+khi4GQ7mTATrf+ViAJqQmvlzagxkFZQ/0il1GBqOSO3y2atEW2kg9uVT+ax/AnuU2l1
- RgKM1WvKfd7Ui9qBXRsZPOZidlJ5Ps0vz1VPSHFya7wsXqTMAycjUBqJ+NWCkGhoSedBB9Swg
- 4KQbZxI
+X-Provags-ID: V03:K0:CA6smonyLPwGAdRsfNhX7agjiHYSe0bv78w5dKLXgt5sq49l8fL
+ gsJSMFf81TjAiJJWTKD2GTZuZK/ZyKPjky+B+EkAgbO9OZ3qdQAXOtLYfbbVmlwes45KSRN
+ RhSmeZB9Dp21WINy/46GiYbaF4FBGMliNj+zJj6qEoRLOsOGLmCzbCpL0L2aPCS0J0XFW4S
+ OdNMmdLegPeAnsiTU5pcQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:YWVI3oLhXps=:Pirky55NpFmgqH19dRJZya
+ lvBJ02TybIuiNiyBPuy/yFonYJ/fryuknr/wIXxL3OWHdMZIx0WFQ6kaC4NxTquK7HT2DqKqW
+ Bf11Iev4oWukYc+3cgtpZZBcd8NL0R/UwQdSnYbkOKr/sIwYfNReABaw6U2u1Yqb3n9jGMc/4
+ tYJaFoJMH0HX+sxAhHPDxEhvGzkGCKruqDM0qp/V0M+4iGk4qs+kGDn9CKFwDV5k9SGC3S02O
+ zm2FuM9sk/gJry+1SROLLdShbbCl/xIbvTYlyuguGcmTI3N6a2n8BMfbZvZhFe6f3erBx1CQB
+ 8x66EcloR5hPptxf+J0rXZkvqj0i3xbpfKB514Z2gWf+0WneZbngiKDwWbPwEuvF/94mGBShJ
+ Onjh1+U2DUpJXP81ZnBRKX+8g0dO7W81zu+di9E8AVw+TiOiUwNVaAR9PKYYBBjExx2fXN+9H
+ 1OYV3IBvwVz0GVuYxOnq3+x6V2eoIINTwguKsTYkN+cXtPYnto0Iyff6u23NwMf31E3G5blw6
+ xuo6HM3/PUYTV5eSqZa4GgHzeoqjh65jMZxgP2Byac+98Jn81VrKx/P7uYVeV+qIHD7AyQOkH
+ j00ZLVfUdAlCytjIU2+WQqbeUx3UYt8xr7W7nDBc97scEbp+iBPAx3Ke3akKzLxjnlpn7ZRbw
+ lE4ePHzQ7FPsxrZ5MBP0eSLYiTvGEmyoDAan/2p//xd/lxqHmQaZ8fJitSgzOuBdfP1n1Ds6P
+ 6WMd6pak/gDcktbaArrajBP8dqmXR8JKeHtigtzrFc25+AuZacJ2nw6D2924U3QtkDCIQwVT1
+ AIT/KuU
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The recursive merge machinery is supposed to be a library function, i.e.
-it should return an error when it fails. Originally the functions were
-part of the builtin "merge-recursive", though, where it was simpler to
-call die() and be done with error handling.
+From: Junio C Hamano <gitster@pobox.com>
 
-The existing callers were already prepared to detect negative return
-values to indicate errors and to behave as previously: exit with code 128
-(which is the same thing that die() does, after printing the message).
+Instead of spawning merge-recursive via run_command() in
+run_fallback_merge_recursive(), make a direct call to the internal
+merge_recursive_generic().
 
+Here is a quick benchmark result, applying a patch for b4391657
+(merge: drop 'git merge <message> HEAD <commit>' syntax, 2015-03-25)
+that was still cooking in 'next' on 4b1fd356 (git-multimail: update
+to release 1.2.0, 2015-10-11) which was the tip of 'master' at some
+stage, on an x86-64 running Ubuntu:
+
+      real    0m0.169s                      real    0m0.163s
+      user    0m0.108s                      user    0m0.134s
+      sys     0m0.068s                      sys     0m0.033s
+
+      real    0m0.175s                      real    0m0.161s
+      user    0m0.110s                      user    0m0.120s
+      sys     0m0.066s                      sys     0m0.047s
+
+      real    0m0.168s                      real    0m0.162s
+      user    0m0.124s                      user    0m0.114s
+      sys     0m0.045s                      sys     0m0.051s
+
+      real    0m0.167s                      real    0m0.152s
+      user    0m0.124s                      user    0m0.122s
+      sys     0m0.045s                      sys     0m0.031s
+
+      real    0m0.169s                      real    0m0.164s
+      user    0m0.131s                      user    0m0.129s
+      sys     0m0.043s                      sys     0m0.041s
+
+Left-hand side shows the original, right-hand side shows the result
+of this optimization.
+
+Timings on Windows:
+
+original:
+0.00user 0.01system 0:00.29elapsed
+0.00user 0.00system 0:00.25elapsed
+0.01user 0.00system 0:00.24elapsed
+0.01user 0.00system 0:00.26elapsed
+0.00user 0.01system 0:00.23elapsed
+
+with optimization:
+0.00user 0.01system 0:00.22elapsed
+0.00user 0.00system 0:00.25elapsed
+0.00user 0.01system 0:00.22elapsed
+0.00user 0.00system 0:00.22elapsed
+0.01user 0.00system 0:00.21elapsed
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- merge-recursive.c | 55 ++++++++++++++++++++++++++++++-------------------------
- 1 file changed, 30 insertions(+), 25 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index bb075e3..d5a593c 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -710,12 +710,10 @@ static int make_room_for_path(struct merge_options *o, const char *path)
- 	/* Make sure leading directories are created */
- 	status = safe_create_leading_directories_const(path);
- 	if (status) {
--		if (status == SCLD_EXISTS) {
-+		if (status == SCLD_EXISTS)
- 			/* something else exists */
--			error(msg, path, _(": perhaps a D/F conflict?"));
--			return -1;
--		}
--		die(msg, path, "");
-+			return error(msg, path, _(": perhaps a D/F conflict?"));
-+		return error(msg, path, "");
- 	}
- 
- 	/*
-@@ -743,6 +741,8 @@ static int update_file_flags(struct merge_options *o,
- 			      int update_cache,
- 			      int update_wd)
+	It feels *slightly* wrong to submit your own patch to review,
+	however, please keep in mind that
+
+	1) I changed the patch (o.gently does not exist anymore, so I do
+	   not set it), and
+
+	2) I added my own timings performed on Windows.
+
+ builtin/am.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
+
+diff --git a/builtin/am.c b/builtin/am.c
+index 3dfe70b..dd41154 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1587,25 +1587,26 @@ static int run_fallback_merge_recursive(const struct am_state *state,
+ 					unsigned char *our_tree,
+ 					unsigned char *his_tree)
  {
-+	int ret = 0;
+-	struct child_process cp = CHILD_PROCESS_INIT;
++	const unsigned char *bases[1] = {orig_tree};
++	struct merge_options o;
++	struct commit *result;
++	char *his_tree_name;
+ 	int status;
+ 
+-	cp.git_cmd = 1;
++	init_merge_options(&o);
 +
- 	if (o->call_depth)
- 		update_wd = 0;
++	o.branch1 = "HEAD";
++	his_tree_name = xstrfmt("%.*s", linelen(state->msg), state->msg);
++	o.branch2 = his_tree_name;
  
-@@ -763,9 +763,11 @@ static int update_file_flags(struct merge_options *o,
+-	argv_array_pushf(&cp.env_array, "GITHEAD_%s=%.*s",
+-			 sha1_to_hex(his_tree), linelen(state->msg), state->msg);
+ 	if (state->quiet)
+-		argv_array_push(&cp.env_array, "GIT_MERGE_VERBOSITY=0");
++		o.verbosity = 0;
  
- 		buf = read_sha1_file(sha, &type, &size);
- 		if (!buf)
--			die(_("cannot read object %s '%s'"), sha1_to_hex(sha), path);
--		if (type != OBJ_BLOB)
--			die(_("blob expected for %s '%s'"), sha1_to_hex(sha), path);
-+			return error(_("cannot read object %s '%s'"), sha1_to_hex(sha), path);
-+		if (type != OBJ_BLOB) {
-+			ret = error(_("blob expected for %s '%s'"), sha1_to_hex(sha), path);
-+			goto free_buf;
-+		}
- 		if (S_ISREG(mode)) {
- 			struct strbuf strbuf = STRBUF_INIT;
- 			if (convert_to_working_tree(path, buf, size, &strbuf)) {
-@@ -786,8 +788,10 @@ static int update_file_flags(struct merge_options *o,
- 			else
- 				mode = 0666;
- 			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
--			if (fd < 0)
--				die_errno(_("failed to open '%s'"), path);
-+			if (fd < 0) {
-+				ret = error_errno(_("failed to open '%s'"), path);
-+				goto free_buf;
-+			}
- 			write_in_full(fd, buf, size);
- 			close(fd);
- 		} else if (S_ISLNK(mode)) {
-@@ -795,18 +799,18 @@ static int update_file_flags(struct merge_options *o,
- 			safe_create_leading_directories_const(path);
- 			unlink(path);
- 			if (symlink(lnk, path))
--				die_errno(_("failed to symlink '%s'"), path);
-+				ret = error_errno(_("failed to symlink '%s'"), path);
- 			free(lnk);
- 		} else
--			die(_("do not know what to do with %06o %s '%s'"),
--			    mode, sha1_to_hex(sha), path);
-+			ret = error_errno(_("do not know what to do with %06o %s '%s'"),
-+				mode, sha1_to_hex(sha), path);
- free_buf:
- 		free(buf);
- 	}
-  update_index:
--	if (update_cache)
-+	if (!ret && update_cache)
- 		add_cacheinfo(mode, sha, path, 0, update_wd, ADD_CACHE_OK_TO_ADD);
--	return 0;
-+	return ret;
+-	argv_array_push(&cp.args, "merge-recursive");
+-	argv_array_push(&cp.args, sha1_to_hex(orig_tree));
+-	argv_array_push(&cp.args, "--");
+-	argv_array_push(&cp.args, sha1_to_hex(our_tree));
+-	argv_array_push(&cp.args, sha1_to_hex(his_tree));
++	status = merge_recursive_generic(&o, our_tree, his_tree, 1, bases, &result);
++	if (status < 0)
++		exit(128);
++	free(his_tree_name);
+ 
+-	status = run_command(&cp) ? (-1) : 0;
+-	discard_cache();
+-	read_cache();
+ 	return status;
  }
  
- static int update_file(struct merge_options *o,
-@@ -932,20 +936,22 @@ static int merge_file_1(struct merge_options *o,
- 			hashcpy(result->sha, a->sha1);
- 		else if (S_ISREG(a->mode)) {
- 			mmbuffer_t result_buf;
--			int merge_status;
-+			int ret = 0, merge_status;
- 
- 			merge_status = merge_3way(o, &result_buf, one, a, b,
- 						  branch1, branch2);
- 
- 			if ((merge_status < 0) || !result_buf.ptr)
--				die(_("Failed to execute internal merge"));
-+				ret = error(_("Failed to execute internal merge"));
- 
--			if (write_sha1_file(result_buf.ptr, result_buf.size,
-+			if (!ret && write_sha1_file(result_buf.ptr, result_buf.size,
- 					    blob_type, result->sha))
--				die(_("Unable to add %s to database"),
--				    a->path);
-+				ret = error(_("Unable to add %s to database"),
-+					a->path);
- 
- 			free(result_buf.ptr);
-+			if (ret)
-+				return ret;
- 			result->clean = (merge_status == 0);
- 		} else if (S_ISGITLINK(a->mode)) {
- 			result->clean = merge_submodule(result->sha,
-@@ -1861,7 +1867,7 @@ static int process_entry(struct merge_options *o,
- 		 */
- 		remove_file(o, 1, path, !a_mode);
- 	} else
--		die(_("Fatal merge failure, shouldn't happen."));
-+		return error(_("Fatal merge failure, shouldn't happen."));
- 
- 	return clean_merge;
- }
-@@ -1889,11 +1895,10 @@ int merge_trees(struct merge_options *o,
- 
- 	if (code != 0) {
- 		if (show(o, 4) || o->call_depth)
--			die(_("merging of trees %s and %s failed"),
-+			error(_("merging of trees %s and %s failed"),
- 			    oid_to_hex(&head->object.oid),
- 			    oid_to_hex(&merge->object.oid));
--		else
--			exit(128);
-+		return -1;
- 	}
- 
- 	if (unmerged_cache()) {
-@@ -2024,7 +2029,7 @@ int merge_recursive(struct merge_options *o,
- 		o->call_depth--;
- 
- 		if (!merged_common_ancestors)
--			die(_("merge returned no commit"));
-+			return error(_("merge returned no commit"));
- 	}
- 
- 	discard_cache();
 -- 
 2.9.0.268.gcabc8b0
-
-
