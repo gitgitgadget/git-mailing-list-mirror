@@ -2,81 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2BAE20FCF
-	for <e@80x24.org>; Wed, 29 Jun 2016 18:12:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C8D520FD0
+	for <e@80x24.org>; Wed, 29 Jun 2016 18:30:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751909AbcF2SMP (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 14:12:15 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:33182 "EHLO
-	mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752053AbcF2SMN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 14:12:13 -0400
-Received: by mail-it0-f68.google.com with SMTP id y93so6181667ita.0
-        for <git@vger.kernel.org>; Wed, 29 Jun 2016 11:12:12 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=LlX+KHUsriqZI83P/E1z+L4R4+nGOp9fk66EeFAqgH4=;
-        b=ZPlnvTFaKNta78gy7heXOLeS9CyHvj/gGztoLe7vjAzTTBH4HCxvEJ4KiRuwY4wL1f
-         4/Oq17aMDSJfXc+JiltUfPWWDxbNaF8CsY2GotLaVX59JhmDUcgjGNJEvbUKUw1YEddG
-         iPYgUbKKizvPZsEYeGROtdMzeKnf1BGdD23RSpbrKucSom1IJcQScgDD6Vq1t21yvFpF
-         ln7sg4k/wIAvV6ermaxARZYhEzfPsXC7/DLTFWsT5XTSFDx/GSsJdKBgf08I81vBRRwr
-         +ebm43Ypg7DLrJBJxgwaOGLbBoI2FmzKyrLh463jrJe4alXJa5BxUbF3f8+zdivBIc+G
-         gTOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=LlX+KHUsriqZI83P/E1z+L4R4+nGOp9fk66EeFAqgH4=;
-        b=l9SB1XvBiOHOtPlmEgFWN/+IDli+V23J0eUBpToL38RXUAQj9P7se1ODIOrs3nSgf9
-         clRMuiy9rkQBN3WksMRCjy3DYpAd9XWuep+CKQduPDiX0+Lmby4UxPXmsXLyfd8Js6p2
-         PZUkTI7ueGsKhSHoDmrhAqBPPhD8MgnGoi/HJ5Mq5S4ajqWai77GWHLR9270qamM33wB
-         qs2l0BEM3DSJM/53XH017zGR30bxiXLpHOqPVkk0yNyIi7+kbpIyLVoqihgWs9Cfgw5z
-         zYChXb65RJzBMqBMtgC0eA3EnOuM4NzxSu1PbH2pHg5ElgUwxJJ5pCIGnjO64zDuEBXs
-         WQaQ==
-X-Gm-Message-State: ALyK8tJNCVYXEsb1PGllLil7D3zDhTnljNraJ9QneYFj+kGk4qfmJVkDFI6mwixIKONTTiJgImclwG0FhA4QQw==
-X-Received: by 10.36.210.198 with SMTP id z189mr11627714itf.32.1467223932003;
- Wed, 29 Jun 2016 11:12:12 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.79.130.7 with HTTP; Wed, 29 Jun 2016 11:12:11 -0700 (PDT)
-In-Reply-To: <8615dc276828a3f99a27ff2eda9909548a7d435e.1467199553.git.johannes.schindelin@gmx.de>
-References: <cover.1467199553.git.johannes.schindelin@gmx.de> <8615dc276828a3f99a27ff2eda9909548a7d435e.1467199553.git.johannes.schindelin@gmx.de>
-From:	Eric Sunshine <sunshine@sunshineco.com>
-Date:	Wed, 29 Jun 2016 14:12:11 -0400
-X-Google-Sender-Auth: BVPUTkbvq-_rLhceCnkrn6isI-Y
-Message-ID: <CAPig+cSHy=2VaNP5gpwqKN4vuCBrOUy39L0i9xcda8m3zx+GPA@mail.gmail.com>
-Subject: Re: [PATCH 1/9] Report bugs consistently
+	id S1751391AbcF2SaU (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 14:30:20 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60869 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751527AbcF2SaS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 14:30:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D3EB271CD;
+	Wed, 29 Jun 2016 14:30:14 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HeCGWiz11l+ADYNsQNECho+HdSg=; b=XBc26z
+	ZlF1nJVLe/aUd5vAP7eiPctvrWPWszhyQyXI86yK8VQRTXTR1FQ2zLDQr0CyQJkH
+	ZaaEW9Pd67Oti+K54EIVg0/K0wNxSSjd91eL/Tsdj6QK2IGp5Jp2ga2W1Ga5w05u
+	mkRr5nu4oE+GxgCJxTKCEwnYFRyNA7/MjoHoo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=l4WxCRwQTJAs05YKlCB2FCBmcIndtWp5
+	kDXxN+5kceEYurFUMIOSUtu/QBFVhZv9DooDrnkGIYVbmXti/KlTu0TK7yzzsEY4
+	BkgE+k3O8fXGuJ9qqGMiRAqCcXb1peTmYRhHRgBqtWbNe+S1Nd3uZ6kD1UQOK79g
+	chsDMfQd7NU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 258F5271CC;
+	Wed, 29 Jun 2016 14:30:14 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BBFAD271C9;
+	Wed, 29 Jun 2016 14:30:12 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
 To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH 2/2] t3404: add a test for the --gpg-sign option
+References: <cover.1467210629.git.johannes.schindelin@gmx.de>
+	<0df34c45db5b1500e55262c8948c9140e7ad6cb8.1467210629.git.johannes.schindelin@gmx.de>
+Date:	Wed, 29 Jun 2016 11:30:10 -0700
+In-Reply-To: <0df34c45db5b1500e55262c8948c9140e7ad6cb8.1467210629.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Wed, 29 Jun 2016 16:31:07 +0200
+	(CEST)")
+Message-ID: <xmqq8txn4zm5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 846E2A72-3E27-11E6-B5B2-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jun 29, 2016 at 7:36 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> The vast majority of error messages in Git's source code which report a
-> bug use the convention to prefix the message with "BUG:".
-> [...]
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+
+> To keep the time t3404 requires short (in this developer's Windows
+> setup, this single test already takes a painful 8 minutes to pass),
+> we avoid a full-blown GPG test and cop out by verifying the message
+> displayed to the user upon an 'edit' command.
+
+This is a tangent, but I wonder if we should be solving it by
+parallelizing the tests even more.  If the script for example
+can be split into part1 and part2 that share the same set-up
+that is prepared by the very first test, we could split this
+into three files (common one that is dot-sourced by two actual
+test scripts that have part1 and part2).
+
+>
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> @@ -1853,7 +1852,7 @@ int merge_trees(struct merge_options *o,
-> -                               die(_("Unprocessed path??? %s"),
-> +                               die(_("BUG: unprocessed path??? %s"),
+>  t/t3404-rebase-interactive.sh | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index c7ea8ba..4c96075 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1281,4 +1281,11 @@ test_expect_success 'editor saves as CR/LF' '
+>  	)
+>  '
+>  
+> +EPIPHANY="'"
 
-This and others downcase the first word (which is consistent with
-modern practice)...
+Why?  If you really need a variable, SQ is probably the way this
+codebase typically spell it.
 
-> diff --git a/sha1_file.c b/sha1_file.c
-> @@ -795,7 +795,7 @@ void close_all_packs(void)
-> -                       die("BUG! Want to close pack marked 'do-not-close'");
-> +                       die("BUG: Want to close pack marked 'do-not-close'");
+> +test_expect_success 'rebase -i --gpg-sign=<key-id>' '
+> +	set_fake_editor &&
+> +	FAKE_LINES="edit 1" git rebase -i --gpg-sign=\" HEAD^ >out 2>err &&
+> +	grep "$EPIPHANY-S\"$EPIPHANY" err
 
-...but this one neglects to.
+I am not sure what is going on here.  You are asking to sign using
+the keyid of a single double-quote, and expecting the message that
+says
+
+	You can amend the commit now, with
+
+		git commit --amend '-S"'
+
+	...
+
+that has a substring '-S"' in it to ensure that the codepath to
+parse --gpg-sign= on the command line of "rebase", and to the
+message we see here are working correctly, without actually checking
+if GPG is invoked at all, or if it is invoked the key given by the
+option is correctly passed to the invocation?
+
+If so, can't you do that without confusing users by using keyid "?
+IOW, wouldn't using --gpg-sign=me work equally well?  For example:
+
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 4c96075..2dd3644 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1281,11 +1281,10 @@ test_expect_success 'editor saves as CR/LF' '
+ 	)
+ '
+ 
+-EPIPHANY="'"
+ test_expect_success 'rebase -i --gpg-sign=<key-id>' '
+ 	set_fake_editor &&
+-	FAKE_LINES="edit 1" git rebase -i --gpg-sign=\" HEAD^ >out 2>err &&
+-	grep "$EPIPHANY-S\"$EPIPHANY" err
++	FAKE_LINES="edit 1" git rebase -i --gpg-sign=me HEAD^ >out 2>err &&
++	grep -e "commit --amend  '\''-Sme'\''" err
+ '
+ 
+ test_done
