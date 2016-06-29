@@ -7,58 +7,56 @@ X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA32320FCF
-	for <e@80x24.org>; Wed, 29 Jun 2016 19:37:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A978C20FCF
+	for <e@80x24.org>; Wed, 29 Jun 2016 19:49:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751449AbcF2ThV (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 15:37:21 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:37099 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750878AbcF2ThV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 15:37:21 -0400
-Received: by mail-wm0-f52.google.com with SMTP id a66so88193397wme.0
-        for <git@vger.kernel.org>; Wed, 29 Jun 2016 12:37:20 -0700 (PDT)
+	id S1752254AbcF2TsV (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 15:48:21 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:38359 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752082AbcF2TsR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 15:48:17 -0400
+Received: by mail-wm0-f48.google.com with SMTP id r201so88589947wme.1
+        for <git@vger.kernel.org>; Wed, 29 Jun 2016 12:48:16 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=Xm3vL7EGxJhq8TfLG97yRlBT6ZxQDlt4LZN8i+XZJrY=;
-        b=UmssYPTZd8VPH0NpUxI3wqEjNJktOMHUdMqcKoSLM5IVgv356IJMCfEiVCOdt3tMdl
-         mb3qbAm415kaCAx8vD4pLVwNYdvLsR/EbNnrls6CUwD/OalBaVQXT2yna2xS1wFSBcBV
-         2mDumKt8vt+pveeybh7m1fYqvXriPSD9cjYYcOFxSgFdmQiYNXYQeetBkjcVmsoNE9CV
-         LrKhWpDTzDxdOLNi6TGnVi2a3Q9h1ZG/jSFklsPKVaUPMUH3Gugyn4CSiZiX+zaE7Yxt
-         bAFgL4iNm3woOZZcS/yRj1mTn2C2Cc56YoRrvQSYqdYzxltdj4A8Zw2PJ1Ai9bCQHD1j
-         FwMQ==
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=5KxWDgNeOgNnMxNyyZ7Vkg8JecF3nM6nS/PTWZJ8cTY=;
+        b=df9u1KSX5xzmZh/6qiz/e86rWA+0QnFGJB6TnuRgRjcyEXZKiye4VZ67C2TsUoRokn
+         9vztEJfgHWsODNn/WYlwdKiaHZI/6mkfDM7We3LCGdHAfme0ci0gq6itOAfMlKZxoqsG
+         1G+a0m5D/RNvz863fJXp8RpphzL/LLKqrJE3Jl9Wo4rL4RAgkL+89SciC64VXLdpiD45
+         dUZI4y+0mett1CYFgG/U2glqA+l6NZoHFLBbeettPjLOJyv1x9AWpgFfWL+6qbT8voPJ
+         7C5FWzySgaYvTjC0YfZXVR+mp04IUjDSTr2tc0ZZxApRVeCije1Dwq9SoylBGhxkIAVf
+         Lp8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:newsgroups:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=Xm3vL7EGxJhq8TfLG97yRlBT6ZxQDlt4LZN8i+XZJrY=;
-        b=BfgIyr3uP+PunyL3xFaCR2swUTxstkOVz/AWEsChoj1T7+GoK/WHtU++J7PxvWqzCD
-         ve86SZN3B6RAP4v4JGumaXOhQHzxDhfaAaooJFeOVvZNMdI8UEiuWaQnt/p0fuh7V6Yr
-         wLmOR5g3Or7IIYqD3py2T9QNJ6bflA6VdNLrRLI9r6kqq9Qcf4exZLLPAaja3Plvm92l
-         v9DiQYsbhTbJ/tbBLEcbZiRhVFkhg1l/Y+H4RjSLsXICuNkW3ONdZMEHo3vrtzlavSDI
-         0ahtEuvqO561qPRs85x2kVXEq6bEWrcApP8F2QcGLvHR/RjI2MHeCXfMex5+Q958VjJX
-         GKiw==
-X-Gm-Message-State: ALyK8tJ9EFs+uU1Pk2ATLCSG0oIGnAH2roSBAUb0Q3nrtt9Wiz2s7d1HFIp8UsqoXD2jyQ==
-X-Received: by 10.194.101.233 with SMTP id fj9mr9903021wjb.54.1467228549213;
-        Wed, 29 Jun 2016 12:29:09 -0700 (PDT)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=5KxWDgNeOgNnMxNyyZ7Vkg8JecF3nM6nS/PTWZJ8cTY=;
+        b=OG3xzeV78n9jjRv3CovYN7zm1ejljNFjf6d4BiTNJ3xtqgU7PXzD+AjjXtTQoqpwZR
+         +coeMu6L1uDXYcKr5VzFRhPYmBbc5O5qMSwynhHRCcnT8Nc/WkzzdRhQw/WcCY+DcgwC
+         2DcbShxILhd94jmxUAMmh+bpoHxsnbUxVURkEy3y8UeVPZUqBGhgOBwyv1iMzrws2F62
+         vQixUsRkYYBLN/3NfzhnNbbXk2rljSz+BlHQwPkcGPeErhPwL8uuEImzZ+01lznRXEi5
+         uWJfia5V9jOcNr6QzRA7Sg9mrUU9spOoWFQ4PQOZipiOLmEvb6VtbXmshvhYwojNuTiN
+         Xnog==
+X-Gm-Message-State: ALyK8tJ7x08jV/9J/655r9E1gFY1/mMPk7SbYelrspdKEwQ4SRtLzMS7Z7cFfp0fjQ48jw==
+X-Received: by 10.194.54.198 with SMTP id l6mr9830840wjp.67.1467229694929;
+        Wed, 29 Jun 2016 12:48:14 -0700 (PDT)
 Received: from [192.168.1.34] (aefh205.neoplus.adsl.tpnet.pl. [79.186.137.205])
-        by smtp.googlemail.com with ESMTPSA id p6sm757897wme.22.2016.06.29.12.29.07
+        by smtp.googlemail.com with ESMTPSA id z5sm239598wme.5.2016.06.29.12.48.13
+        for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Jun 2016 12:29:08 -0700 (PDT)
-Subject: Re: Fwd: what is a snapshot?
-To:	Ovatta Bianca <ovattabianca@gmail.com>, git@vger.kernel.org
-References: <CAHWPVgNrTEw9FmW6K7QucgA74QWsTKfxZGt+mGd099k+O7O+rw@mail.gmail.com>
- <CAHWPVgMWeHoD5vTiFJ1gsm2hS74LK7j4npVVbOZeR43cX3qWXw@mail.gmail.com>
-Newsgroups: gmane.comp.version-control.git
+        Wed, 29 Jun 2016 12:48:14 -0700 (PDT)
+To:	git@vger.kernel.org
 From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <57742174.9020309@gmail.com>
-Date:	Wed, 29 Jun 2016 21:28:52 +0200
+Subject: [RFD] Place to document magic pathspecs like ":/" and pathspec
+ handling
+Message-ID: <577425EF.6030900@gmail.com>
+Date:	Wed, 29 Jun 2016 21:47:59 +0200
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
  Thunderbird/38.1.0
 MIME-Version: 1.0
-In-Reply-To: <CAHWPVgMWeHoD5vTiFJ1gsm2hS74LK7j4npVVbOZeR43cX3qWXw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
@@ -66,31 +64,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-06-19 o 16:15, Ovatta Bianca pisze:
+Hello,
 
-> I read in every comparison of git vs other version control systems,
-> that git does not record differences but takes "snapshots"
-> I was wondering what a "snapshot" is ? Does git store at every commit
-> the entire files which have been modified even if only a few bytes
-> were changed out of a large file?
+123456789012345678901234567890123456789012345678901234567890123456789012345|
 
-There are two things: the conceptual level, and actual storage. On the
-conceptual level, object representing revisions (commit) refer to
-object representing top directory (tree) of a project, that is a snapshot
-of a project state at given revision.
+I have noticed that the magic pathspec ":/" is described only in RelNotes
+for revision 1.7.6:
 
-On the storage level, Git has two types of object storage. In "loose"
-format (used for new objects), each object is stored as a separate
-file. This is not as wasteful as you think: first, there is deduplication,
-that is each version of a file is stored only once. Second, contents
-(usually text) is stored compressed.
+|* A magic pathspec ":/" tells a command that limits its operation to the current directory when ran from a subdirectory to work on the entire working tree. In general, ":/path/to/file" would be relative to the root of the working tree hierarchy. After "git reset --hard; edit Makefile; cd t/", "git add -u" would be a no-op, but "git add -u :/" would add the updated contents of the Makefile at the top level. If you want to name a path in the current subdirectory whose unusual name begins with ":/", you can name it by "./:/that/path" or by "\:/that/path".|
 
-In "packed" format (nowadays Git automatically repacks from "loose"
-to "packed" when it looks like it is needed) there is additional
-libxdiff-like deltafication. In this format Git stores differences
-(well, it also ensures that delta chain doesn't gets too long).
+||
+|I think the reason might be that there was no good place to put that
+information in.  Nowadays we have gitcli(7) manual page, but perhaps
+it would be better to create a separate manpage for issues related
+to pathspec handling (of which ":/" is only one part)... but then
+what should it be named?
 
-HTH
+What do you think?
 -- 
 Jakub Narębski
+|||
 
