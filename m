@@ -2,195 +2,205 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A44F02018A
-	for <e@80x24.org>; Wed, 29 Jun 2016 02:50:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 898452018A
+	for <e@80x24.org>; Wed, 29 Jun 2016 03:00:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752531AbcF2Cuw (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 22:50:52 -0400
-Received: from alt22.smtp-out.videotron.ca ([70.80.0.73]:14585 "EHLO
-	alt22.smtp-out.videotron.ca" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752450AbcF2Cuv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 22:50:51 -0400
-Received: from yoda.home ([96.23.157.65])
-	by Videotron with SMTP
-	id I4q3befk2PTiyI4q4bd93b; Tue, 28 Jun 2016 22:02:53 -0400
-X-Authority-Analysis: v=2.1 cv=L469O7n8 c=1 sm=1 tr=0
- a=keA3yYpnlypCNW5BNWqu+w==:117 a=keA3yYpnlypCNW5BNWqu+w==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
- a=pD_ry4oyNxEA:10 a=dg4UtMH5AAAA:8 a=Wndwbp34r4s3ELBlSEMA:9
- a=7QR2YfpzeocusIPy:21 a=6iGz4vdewQOhZOSG:21 a=CjuIK1q_8ugA:10
- a=byNfn09xH3PuSfgbYLsR:22
-Received: from xanadu.home (xanadu.home [192.168.2.2])
-	by yoda.home (Postfix) with ESMTPSA id E9A452DA0200;
-	Tue, 28 Jun 2016 22:02:50 -0400 (EDT)
-Date:	Tue, 28 Jun 2016 22:02:50 -0400 (EDT)
-From:	Nicolas Pitre <nico@fluxnic.net>
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
+	id S1752537AbcF2DAj (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 23:00:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50303 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752455AbcF2DAi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2016 23:00:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 57BA7270C1;
+	Tue, 28 Jun 2016 23:00:07 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LOx3Knm2SzW8BG7VzNlsiATJhZY=; b=makXNV
+	A2dIiBA6oQufPG4hMXrij7y+cOjSnqvO4VPssM6Qtqj5TNrd51Tdc5KC2mKNsdyz
+	k2eE92Le5D0dGc9KVxrDwr3iwG3ffHRRhFFK8WTMylPbF6MUJ/GBGDA1/QSND2fr
+	UZVNvCzrCyYtyLWucGmxMeOT8P2ktEWPuX0HM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=k98w+f78wh7Y7sRbIh8TPsUFnUPNMfKP
+	6DrDQ9Zt250Zva2ajk3mXw2NPR6RAPsOvI9GwTZ9K+MQvUEgSxyEQ+OK+8+G1q8l
+	4bClWvG4dJwxRXKC3LaHKjEkrV0Kem2uQHlJWlwhpZ6u6eVC2FoEXMvlVH0TlFok
+	byc0KHcMaz0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 501D0270C0;
+	Tue, 28 Jun 2016 23:00:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3D0F3270BB;
+	Tue, 28 Jun 2016 23:00:06 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Nicolas Pitre <nico@fluxnic.net>
+Cc:	Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Jeff King <peff@peff.net>
 Subject: Re: [PATCH v4] Refactor recv_sideband()
-In-Reply-To: <xmqqfurx6j16.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.LFD.2.20.1606282047360.24439@knanqh.ubzr>
-References: <20160613195224.13398-1-lfleischer@lfos.de> <20160628043526.19403-1-lfleischer@lfos.de> <xmqqa8i59rph.fsf@gitster.mtv.corp.google.com> <xmqq60st9qg5.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1606281334030.24439@knanqh.ubzr>
- <xmqqlh1p89mo.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1606281422500.24439@knanqh.ubzr> <xmqq60st853d.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1606281629280.24439@knanqh.ubzr> <xmqqwpl96mvv.fsf@gitster.mtv.corp.google.com>
- <alpine.LFD.2.20.1606281726330.24439@knanqh.ubzr> <xmqqfurx6j16.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
+References: <20160613195224.13398-1-lfleischer@lfos.de>
+	<20160628043526.19403-1-lfleischer@lfos.de>
+	<xmqqa8i59rph.fsf@gitster.mtv.corp.google.com>
+	<xmqq60st9qg5.fsf@gitster.mtv.corp.google.com>
+	<alpine.LFD.2.20.1606281334030.24439@knanqh.ubzr>
+	<xmqqlh1p89mo.fsf@gitster.mtv.corp.google.com>
+	<alpine.LFD.2.20.1606281422500.24439@knanqh.ubzr>
+	<xmqq60st853d.fsf@gitster.mtv.corp.google.com>
+	<alpine.LFD.2.20.1606281629280.24439@knanqh.ubzr>
+	<xmqqwpl96mvv.fsf@gitster.mtv.corp.google.com>
+	<alpine.LFD.2.20.1606281726330.24439@knanqh.ubzr>
+	<xmqqfurx6j16.fsf@gitster.mtv.corp.google.com>
+	<xmqq8txp6icn.fsf@gitster.mtv.corp.google.com>
+Date:	Tue, 28 Jun 2016 20:00:03 -0700
+In-Reply-To: <xmqq8txp6icn.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 28 Jun 2016 15:47:52 -0700")
+Message-ID: <xmqqshvw66oc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-CMAE-Envelope: MS4wfPget0Io4Ksy6Kr2mJTJ6JXLbcTVy5VW5IC7dkmvLL8931m7qRMo3BCHQTpLDAoNl0/xwl+xV2loj5Sa6ssGgwlbPtR/hXSnxafQQj0dVpIDNeoPgwrR
- 6ttBjNs3H7g6TZCDwNm4KIJU8rz6A6sJt79epUaK3ul8qQD7d5pnvH8b8TqiQlbgdjgJmHoxaJA9p+db+vrAzxo1L8Ssl0Fh6ayGSw/hFaiHvT00HUKcpWe/
- j/Jb4U7gAhPsMEmZ7GE2yDNfc+MPvb+YbISDsex+ioE=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 95302702-3DA5-11E6-A20A-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, 28 Jun 2016, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Nicolas Pitre <nico@fluxnic.net> writes:
-> 
-> >> The basic structure of the code (without the "SQUASH" we discussed)
-> >> looks like this:
-> >> 
-> >> 	strbuf_addf(&outbuf, "%s", PREFIX);
-> >> 	while (retval == 0) {
-> >> 		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
-> >> 		...
-> >> 		band = buf[0] & 0xff;
-> >> 		switch (band) {
-> >> 		case 3:
-> >> 			... /* emergency exit */
-> >> 		case 2:
-> >> 			while ((brk = strpbrk(b, "\n\r"))) {
-> >> 				int linelen = brk - b;
-> >> 
-> >> 				if (linelen > 0) {
-> >> 					strbuf_addf(&outbuf, "%.*s%s%c",
-> >> 						    linelen, b, suffix, *brk);
-> >> 				} else {
-> >> 					strbuf_addf(&outbuf, "%c", *brk);
-> >> 				}
-> >> 				fprintf(stderr, "%.*s", (int)outbuf.len,
-> >> 					outbuf.buf);
-> >> 				strbuf_reset(&outbuf);
-> >> 				strbuf_addf(&outbuf, "%s", PREFIX);
-> >> 				b = brk + 1;
-> >> 			}
-> >> 			if (*b)
-> >> 				strbuf_addf(&outbuf, "%s", b);
-> >> 			break;
-> >> 		...
-> >> 		}
-> >> 	}
-> >> 
-> >> 	if (outbuf.len > 0)
-> >> 		fprintf(stderr, "%.*s", (int)outbuf.len, outbuf.buf);
-> >>  ...
-> > That won't work. If at this point there is the beginning of a partial 
-> > line queued in the buffer from the previous round waiting to see its 
-> > line break, you just deleted the beginning of that line.
-> 
-> Ahh, OK, a single logical line split into two and sent in two
-> packets--the first one would not result in any output (just does "if
-> (*b) strbuf_addf(...)" to buffer it) and then the second one finally
-> finds a LF.  Yeah, that won't work if we cleared.
-> 
-> But then my observation still holds, no?
+> It's just that if you take the latter, then the conditional after
+> the loop exits (i.e. the last transmission was an incomplete line)
+> cannot be "is outbuf empty?", as your base state is "has PREFIX and
+> can never be empty".  I was working back from that if statement.
 
-I think it does... but I'm no longer sure of what you meant.
+Let's try this again.  How does this look?
 
-To make it clearer, here's a patch on top of pu that fixes all the 
-issues I think are remaining. All tests pass now.
+In this version:
+
+ - "outbuf" is where we keep the (possibly partial) data collected
+   to be eventually shown;
+
+ - output of pending (possibly partial) data is handled by a helper
+   function drain().  It is responsible for prepending of the
+   PREFIX, which is treated purely as a cosmetic thing.  It also is
+   responsible for completing an incomplete line at the end of the
+   transmission (e.g. flushing of the buffered input upon reception of
+   the emergency exit packet).
+
+ - locally generated errors go directly to fprintf(stderr),
+   bypassing outbuf (hence drain()).
+
+ sideband.c | 43 +++++++++++++++++++++++++------------------
+ 1 file changed, 25 insertions(+), 18 deletions(-)
 
 diff --git a/sideband.c b/sideband.c
-index 36a032f..0e6c6df 100644
+index 226a8c2..6873137 100644
 --- a/sideband.c
 +++ b/sideband.c
-@@ -23,10 +23,8 @@ int recv_sideband(const char *me, int in_stream, int out)
+@@ -18,6 +18,16 @@
+ #define ANSI_SUFFIX "\033[K"
+ #define DUMB_SUFFIX "        "
+ 
++static void drain(struct strbuf *outbuf)
++{
++	if (!outbuf->len)
++		return;
++	strbuf_splice(outbuf, 0, 0, PREFIX, strlen(PREFIX));
++	strbuf_complete_line(outbuf);
++	fwrite(outbuf->buf, 1, outbuf->len, stderr);
++	strbuf_reset(outbuf);
++}
++
+ int recv_sideband(const char *me, int in_stream, int out)
+ {
  	const char *term, *suffix;
- 	char buf[LARGE_PACKET_MAX + 1];
- 	struct strbuf outbuf = STRBUF_INIT;
--	const char *b, *brk;
+@@ -26,20 +36,21 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 	const char *b, *brk;
  	int retval = 0;
  
 -	strbuf_addf(&outbuf, "%s", PREFIX);
  	term = getenv("TERM");
  	if (isatty(2) && term && strcmp(term, "dumb"))
  		suffix = ANSI_SUFFIX;
-@@ -34,14 +32,15 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 	else
  		suffix = DUMB_SUFFIX;
  
- 	while (!retval) {
-+		const char *b, *brk;
+-	while (retval == 0) {
++	while (!retval) {
  		int band, len;
  		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
  		if (len == 0)
  			break;
  		if (len < 1) {
- 			strbuf_addf(&outbuf,
--				    "\n%s: protocol error: no band designator\n",
--				    me);
-+				    "%s%s: protocol error: no band designator",
-+				    outbuf.len ? "\n" : "", me);
+-			fprintf(stderr, "%s: protocol error: no band designator\n", me);
++			drain(&outbuf);
++			fprintf(stderr, "%s: protocol error: no band designator\n",
++				me);
  			retval = SIDEBAND_PROTOCOL_ERROR;
  			break;
  		}
-@@ -50,7 +49,8 @@ int recv_sideband(const char *me, int in_stream, int out)
+@@ -48,7 +59,8 @@ int recv_sideband(const char *me, int in_stream, int out)
  		len--;
  		switch (band) {
  		case 3:
--			strbuf_addf(&outbuf, "\n%s%s\n", PREFIX, buf + 1);
-+			strbuf_addf(&outbuf, "%s%s%s", outbuf.len ? "\n" : "",
-+				    PREFIX, buf + 1);
+-			fprintf(stderr, "%s%s\n", PREFIX, buf + 1);
++			drain(&outbuf);
++			strbuf_addf(&outbuf, "%s\n", buf + 1);
  			retval = SIDEBAND_REMOTE_ERROR;
  			break;
  		case 2:
-@@ -70,6 +70,8 @@ int recv_sideband(const char *me, int in_stream, int out)
+@@ -58,13 +70,12 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 			 * Append a suffix to each nonempty line to clear the
+ 			 * end of the screen line.
+ 			 *
+-			 * The output is accumulated in a buffer and each line
+-			 * is printed to stderr using fprintf() with a single
+-			 * conversion specifier. This is a "best effort"
+-			 * approach to supporting both inter-process atomicity
+-			 * (single conversion specifiers are likely to end up
+-			 * in single atomic write() system calls) and the ANSI
+-			 * control code emulation under Windows.
++			 * The output is accumulated in a buffer and
++			 * each line is printed to stderr using
++			 * fwrite(3).  This is a "best effort"
++			 * approach to support inter-process atomicity
++			 * (single fwrite(3) call is likely to end up
++			 * in single atomic write() system calls).
+ 			 */
  			while ((brk = strpbrk(b, "\n\r"))) {
  				int linelen = brk - b;
- 
-+				if (!outbuf.len)
-+					strbuf_addf(&outbuf, "%s", PREFIX);
- 				if (linelen > 0) {
- 					strbuf_addf(&outbuf, "%.*s%s%c",
- 						    linelen, b, suffix, *brk);
-@@ -78,27 +80,29 @@ int recv_sideband(const char *me, int in_stream, int out)
+@@ -75,11 +86,7 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 				} else {
+ 					strbuf_addf(&outbuf, "%c", *brk);
  				}
- 				fwrite(outbuf.buf, 1, outbuf.len, stderr);
- 				strbuf_reset(&outbuf);
+-				fprintf(stderr, "%.*s", (int)outbuf.len,
+-					outbuf.buf);
+-				strbuf_reset(&outbuf);
 -				strbuf_addf(&outbuf, "%s", PREFIX);
- 
+-
++				drain(&outbuf);
  				b = brk + 1;
  			}
  
- 			if (*b)
--				strbuf_addf(&outbuf, "%s", b);
-+				strbuf_addf(&outbuf, "%s%s",
-+					    outbuf.len ? "" : PREFIX, b);
- 			break;
- 		case 1:
+@@ -90,6 +97,7 @@ int recv_sideband(const char *me, int in_stream, int out)
  			write_or_die(out, buf + 1, len);
  			break;
  		default:
--			strbuf_addf(&outbuf, "\n%s: protocol error: bad band #%d\n",
--				me, band);
-+			strbuf_addf(&outbuf, "%s%s: protocol error: bad band #%d",
-+				    outbuf.len ? "\n" : "", me, band);
++			drain(&outbuf);
+ 			fprintf(stderr, "%s: protocol error: bad band #%d\n",
+ 				me, band);
  			retval = SIDEBAND_PROTOCOL_ERROR;
- 			break;
+@@ -97,8 +105,7 @@ int recv_sideband(const char *me, int in_stream, int out)
  		}
  	}
  
--	if (outbuf.len)
-+	if (outbuf.len) {
-+		strbuf_addf(&outbuf, "\n");
- 		fwrite(outbuf.buf, 1, outbuf.len, stderr);
-+	}
+-	if (outbuf.len > 0)
+-		fprintf(stderr, "%.*s", (int)outbuf.len, outbuf.buf);
++	drain(&outbuf);
  	strbuf_release(&outbuf);
  	return retval;
  }
