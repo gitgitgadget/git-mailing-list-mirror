@@ -2,121 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86D0D20FCF
-	for <e@80x24.org>; Wed, 29 Jun 2016 20:09:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A56E920FCF
+	for <e@80x24.org>; Wed, 29 Jun 2016 20:21:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751610AbcF2UIv (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 16:08:51 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60304 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751672AbcF2UIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 16:08:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id F20B6280BB;
-	Wed, 29 Jun 2016 16:08:21 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=865dQr2EyToADT0YaqC3vZbyurY=; b=cp8gxI
-	hmV139jtkv995r2EsfGDRCPDgti8xREntcJikJh70w7iR8jM7ffTurTDca4LsYIe
-	CKKDAdoTBYay1pPdkubs5NGAks23KbjQp2PRtZHjxzVotmvHeRNYb2xwzt6ecMG2
-	ftWLFGy/qyoxjfJfy/zr3N7DNHMnZDYEfpICo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=woR+3Cw1knLGLMkYWAKO/pnuYFCIu6t3
-	ZSU+d0ASNv8oLqU9tF3fdwukyKp71SiG86oCf5IW2MvwjMWbW15YdcR2OEf3lTLw
-	tgG2XUXljZUYeAeLkNwQfijnqsx60/O9PR6ReXV/iTMRn7m9/V88M8PtME6SoLyU
-	gMBmoUgR9EQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id EB979280BA;
-	Wed, 29 Jun 2016 16:08:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7782F280B8;
-	Wed, 29 Jun 2016 16:08:21 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH 4/9] merge_recursive: abort properly upon errors
-References: <cover.1467199553.git.johannes.schindelin@gmx.de>
-	<81a74b02ac714a4fa3734dfb774cff6dea3a3471.1467199553.git.johannes.schindelin@gmx.de>
-Date:	Wed, 29 Jun 2016 13:08:19 -0700
-In-Reply-To: <81a74b02ac714a4fa3734dfb774cff6dea3a3471.1467199553.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Wed, 29 Jun 2016 13:36:51 +0200
-	(CEST)")
-Message-ID: <xmqqvb0r3gi4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751530AbcF2UVW (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 16:21:22 -0400
+Received: from mail-it0-f53.google.com ([209.85.214.53]:38564 "EHLO
+	mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750932AbcF2UVV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 16:21:21 -0400
+Received: by mail-it0-f53.google.com with SMTP id h190so52331314ith.1
+        for <git@vger.kernel.org>; Wed, 29 Jun 2016 13:20:39 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=+tLNwcoI9iAM5N45zg9enYZJVrezhreFJOvVwu97bOc=;
+        b=YNgsk+XXc6qLYxS+HAJSqTbzlFNGEZXKthqTrKs1MLoh4C4qdGiKyh6wEDUVlfKeOp
+         zc2L+Z2UvJOn4byslr7QFBCxl2/UebEEZ0aUjyuMG+tDN3+qY4m5/ufhdkLu+cTlPNvl
+         J8+SlmLjN1dqSQ8LsXDCc4rcpKeQ0TadFaT4tubczmrHMedvTT6vH0sflHUXO+fuuBu5
+         10VoKy2R3U4nUH+zQQYX1V347qzXuNzl9nqGOZX2e7y4w7csmB5UyOGLjSgAC3oDOGvp
+         30qiPYfkSgobezs6f+kYwr6GRQ3KO1dGHxynUwStitAHX+PmWA2O30D1l8rR9GcZHfnL
+         iAZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=+tLNwcoI9iAM5N45zg9enYZJVrezhreFJOvVwu97bOc=;
+        b=g192W7cyhCfkqgJUb98oGpMplMhqjCZcwD2u/4duYkErQzztYmM1n70hDDD+0t8q8S
+         /hbkmwwIistGHWiZlj2iWYy1aH8iY9Y9MyXjKiijLhBK0OQkQ/GD/EZB8JAvuDtwx5qp
+         ZiGwIEExFni0xOPv+gPxvu/1Diz+hTVXQCu/LxqzZlD07gunIHjBuqT1vtCMxDv01JhH
+         q2ShAiegYxi1HkZJni1FqX+rR1qrOQnEIgaF4Ba1USXUzCtTPb3PLJYVL8jPnE5cWil+
+         zEQlZqWtWW0la3w7iYd6zfSs+sYJ+HUP7S6isSQoENJaRoAIy0duOIDzvpanJNM10z0D
+         N0vg==
+X-Gm-Message-State: ALyK8tKSGcSkPtDfrqtfh0uGljul3Sd6SF9G5xFKpPaI6wmeQ0uuIxhgLgt26N81j9Ca7Td0JIOMysTKykYU2x1j
+X-Received: by 10.107.186.196 with SMTP id k187mr11810797iof.173.1467231638506;
+ Wed, 29 Jun 2016 13:20:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3A612EF8-3E35-11E6-94F8-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.107.136.16 with HTTP; Wed, 29 Jun 2016 13:20:37 -0700 (PDT)
+In-Reply-To: <CAPc5daVC-+0Vr30L_pbcL0GN2OmnGm-+V4tE2WTos_vPRb_S1g@mail.gmail.com>
+References: <f15a14a5-f39d-9c41-16b9-fe0a48d7450b@syntevo.com> <CAPc5daVC-+0Vr30L_pbcL0GN2OmnGm-+V4tE2WTos_vPRb_S1g@mail.gmail.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Wed, 29 Jun 2016 13:20:37 -0700
+Message-ID: <CAGZ79kY6Ry+DfO90wza_RrVbCRAgNB4N=0W6svuJgvGNxeFh5Q@mail.gmail.com>
+Subject: Re: topological index field for commit objects
+To:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Cc:	Marc Strapetz <marc.strapetz@syntevo.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
-> There are a couple of places where return values indicating errors
-> are ignored. Let's teach them manners.
+On Wed, Jun 29, 2016 at 11:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> On Wed, Jun 29, 2016 at 11:31 AM, Marc Strapetz
+> <marc.strapetz@syntevo.com> wrote:
+>> This is no RFE but rather recurring thoughts whenever I'm working with
+>> commit graphs: a topological index attribute for commit objects would be
+>> incredible useful. By "topological index" I mean a simple integer for which
+>> following condition holds true:
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  merge-recursive.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
->
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index bcb53f0..c4ece96 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -1944,8 +1944,9 @@ int merge_recursive(struct merge_options *o,
->  		saved_b2 = o->branch2;
->  		o->branch1 = "Temporary merge branch 1";
->  		o->branch2 = "Temporary merge branch 2";
-> -		merge_recursive(o, merged_common_ancestors, iter->item,
-> -				NULL, &merged_common_ancestors);
-> +		if (merge_recursive(o, merged_common_ancestors, iter->item,
-> +				NULL, &merged_common_ancestors) < 0)
-> +			return -1;
->  		o->branch1 = saved_b1;
->  		o->branch2 = saved_b2;
->  		o->call_depth--;
+> Look for "generation numbers" in the list archive, perhaps?
 
-OK, this early return (and others in this patch) are only for
-negative (i.e. error) cases, and "attempted a merge, resulted in
-conflicts" cases are handled as before.
+Thanks for the pointer to the interesting discussions.
 
-Which is good.
+In http://www.spinics.net/lists/git/msg161363.html
+Linus wrote in a discussion with Jeff:
 
-I wonder if o->branch[12] need to be restored, though.  The only
-sensible thing the caller can do is to punt, but would it expect to
-be able to do some error reporting based on these fields, e.g.
-printf("merge of %s and %s failed", o->branch1, o->branch2) or
-something?  In addition to that kind of "state restoration", we may
-need to watch out for resource leaks, but I think there is none at
-least these three early returns.
+> Right now, we do *have* a "generation number". It's just that it's
+> very easy to corrupt even by mistake. It's called "committer date". We
+> could improve on it.
 
-Thanks.
+Would it make sense to refuse creating commits that have a commit date
+prior to its parents commit date (except when the user gives a
+`--dammit-I-know-I-break-a-wildy-used-heuristic`)?
 
-> @@ -1961,6 +1962,8 @@ int merge_recursive(struct merge_options *o,
->  	o->ancestor = "merged common ancestors";
->  	clean = merge_trees(o, h1->tree, h2->tree, merged_common_ancestors->tree,
->  			    &mrtree);
-> +	if (clean < 0)
-> +		return clean;
->  
->  	if (o->call_depth) {
->  		*result = make_virtual_commit(mrtree, "merged tree");
-> @@ -2017,6 +2020,9 @@ int merge_recursive_generic(struct merge_options *o,
->  	hold_locked_index(lock, 1);
->  	clean = merge_recursive(o, head_commit, next_commit, ca,
->  			result);
-> +	if (clean < 0)
-> +		return clean;
-> +
->  	if (active_cache_changed &&
->  	    write_locked_index(&the_index, lock, COMMIT_LOCK))
->  		return error(_("Unable to write index."));
+With the proposal to refuse an earlier committer date we would avoid
+the corruption by mistake and only allow for corruption by actual
+users intention. And then going forward we could rely more on the
+committer date than we do today (i.e. some algorithms can go faster)?
+For that we'd
+ * need to document, what stuff actually breaks if the user overwrites
+    the committer date to be earlier
+ * and add a switch `--go-slow-because-dates-are-broken`
+
+This seems to be the easiest fix in 2016 to me as that would require
+to make just a very small change in commit creation, and we can postpone
+the second part (relying even more on dates) until someone wants to fix it?
+
+Thanks,
+Stefan
+
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
