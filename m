@@ -2,96 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9849920FCF
-	for <e@80x24.org>; Wed, 29 Jun 2016 20:58:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFF9120FCF
+	for <e@80x24.org>; Wed, 29 Jun 2016 21:00:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751550AbcF2U6F (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 16:58:05 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37929 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751504AbcF2U6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 16:58:03 -0400
-Received: (qmail 31821 invoked by uid 102); 29 Jun 2016 20:56:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Jun 2016 16:56:54 -0400
-Received: (qmail 30331 invoked by uid 107); 29 Jun 2016 20:57:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Jun 2016 16:57:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Jun 2016 16:56:48 -0400
-Date:	Wed, 29 Jun 2016 16:56:48 -0400
-From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Stefan Beller <sbeller@google.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Marc Strapetz <marc.strapetz@syntevo.com>,
-	Git Mailing List <git@vger.kernel.org>
+	id S1751547AbcF2VAe (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 17:00:34 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:36171 "EHLO
+	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751480AbcF2VAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 17:00:33 -0400
+Received: by mail-wm0-f45.google.com with SMTP id f126so196808211wma.1
+        for <git@vger.kernel.org>; Wed, 29 Jun 2016 14:00:32 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=E7toOIZmjkE9WzHNeAYCuhDIU6sogsP/eeAKCsbUaCY=;
+        b=umHB0ZOppBvrs/oxtKx+eIglPb3rZ6RwMWZVSjvNGJVvvLE134EQH+gRFMfbIzANic
+         ZRXpHmVFUIjpLe1aehPP6u6D0BiOau6q+tBRM+UAmXnMcmdKpP5w8dvkNJvJkW6tguFl
+         c0Kct5TKY+/OQuW4F2UxlWDIPlfTH/wycJHgSLHII0JeCpbTgX6u/gSWel7RJ7cxBZn9
+         PLkd8p2FPZbB2qPkQtstfSXNzoTzFR2qxV2QZ/phRyqLonsbBFroYi+Dl477fFrLIjNm
+         hFT7iHn3k8TUrNdPZlQVzR25yBxxpSmNKBBljlGPa0smQswgL+GiYl1/Dbr3DP6u3TTd
+         cwFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=E7toOIZmjkE9WzHNeAYCuhDIU6sogsP/eeAKCsbUaCY=;
+        b=EwPKMSWJ3Vm7Un7GPJaXPVM9muijszLGlqxSjGfFRJ/NKGkK94fQgNU/6Re9LvsXK+
+         qeHNh3LDqSyn48xqcUXGZLtZab48gzorx0qKsTOQmQyygGHYQ05EvMZ/zQHxnLQZJ92t
+         moltQzVoWMT2wED92zln/mBUtPvrxZt4yagJj4fWNADxppv8hE3Cy8sG6+EYQBJASID7
+         EBaQu+VRybw6ozMXy17fYIQriGNLdSdiXRDV3JrQllcW33OkDfsxlE0Qmm+IcW2OlIxO
+         MqPTyReEztM68A3W2US/2DJ8tJQLDfnDOuMZ/sCDEcJiIDRRDq93mLV5/5kzS+zjIxz2
+         sDJw==
+X-Gm-Message-State: ALyK8tJw212bm67LEGAnxsrh+dhA2cYsIxPELqkN1OqjV72zD03o+P4M4jGDzKJP90vyCQ==
+X-Received: by 10.194.38.4 with SMTP id c4mr10296316wjk.20.1467234031341;
+        Wed, 29 Jun 2016 14:00:31 -0700 (PDT)
+Received: from [192.168.1.34] (aefh205.neoplus.adsl.tpnet.pl. [79.186.137.205])
+        by smtp.googlemail.com with ESMTPSA id ag3sm5420345wjc.39.2016.06.29.14.00.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Jun 2016 14:00:30 -0700 (PDT)
 Subject: Re: topological index field for commit objects
-Message-ID: <20160629205647.GA25987@sigill.intra.peff.net>
+To:	Junio C Hamano <gitster@pobox.com>,
+	Marc Strapetz <marc.strapetz@syntevo.com>
 References: <f15a14a5-f39d-9c41-16b9-fe0a48d7450b@syntevo.com>
  <CAPc5daVC-+0Vr30L_pbcL0GN2OmnGm-+V4tE2WTos_vPRb_S1g@mail.gmail.com>
- <CAGZ79kY6Ry+DfO90wza_RrVbCRAgNB4N=0W6svuJgvGNxeFh5Q@mail.gmail.com>
- <xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com>
+Cc:	Git Mailing List <git@vger.kernel.org>
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <577436DD.8050708@gmail.com>
+Date:	Wed, 29 Jun 2016 23:00:13 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
 MIME-Version: 1.0
+In-Reply-To: <CAPc5daVC-+0Vr30L_pbcL0GN2OmnGm-+V4tE2WTos_vPRb_S1g@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com>
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jun 29, 2016 at 01:39:17PM -0700, Junio C Hamano wrote:
-
-> > Would it make sense to refuse creating commits that have a commit date
-> > prior to its parents commit date (except when the user gives a
-> > `--dammit-I-know-I-break-a-wildy-used-heuristic`)?
+W dniu 2016-06-29 o 20:59, Junio C Hamano pisze:
+> On Wed, Jun 29, 2016 at 11:31 AM, Marc Strapetz
+> <marc.strapetz@syntevo.com> wrote:
+>
+>> This is no RFE but rather recurring thoughts whenever I'm working with
+>> commit graphs: a topological index attribute for commit objects would be
+>> incredible useful. By "topological index" I mean a simple integer for which
+>> following condition holds true:
+>> 
+>>  if commit C is part of the history of commit D,
+>>    then C's topological index is smaller than D's index
+>> 
+>> This would allow topological sorting of commits (e.g. in queues) on the fly
+>> and quickly give a "no" answer on the question whether D is part of
+>> C's history. 
 > 
-> I think that has also been discussed in the past.  I do not think it
-> would help very much in practice, as projects already have up to 10
-> years (and the ones migrated from CVS, even more) worth of commits
-> they cannot rewrite that may record incorrect committer dates.
+> Look for "generation numbers" in the list archive, perhaps?
 
-Yep, it has been discussed and I agree it runs into a lot of corner
-cases.
+If I remember correctly the discussion, the problem by adding generation number
+to the commit object format was twofold (at least).
 
-> If the use of generation number can somehow be limited narrowly, we
-> may be able to incrementally introduce it only for new commits, but
-> I haven't thought things through, so let me do so aloud here ;-)
+First there was a problem of backward compatibility, namely what to do with
+existing repositories, where commit objects do not have generation number.
+Objects in Git are immutable (and I think replacements mechanism wasn't
+invented yet - anyway too many replacements would slow down operations
+I guess).
 
-I think the problem is that you really _do_ want generation numbers for
-old commits. One of the most obvious cases is something like "tag
---contains HEAD", because it has to examine older tags.
+Second objection was of philosophical nature: generation numbers duplicate
+(cache) information that is stored in the graph of revisions. Also, what
+if they get out of sync?
 
-So your history looks something like:
+That is, if I remember the summary of that discussion correctly.
 
-  A -- B -- ... Z
-        \        \
-	 v1.0     HEAD
 
-Without generation numbers (or some proxy), you have to walk the history
-between B..Z to find the answer. With generation numbers, it is
-immediately obvious.
+Also, generation numbers (graph level) only help with topological sorting;
+for finding of two commits are connected (two nodes are connected) people
+play with different ideas, for example FELINE index:
+  http://openproceedings.org/EDBT/2014/paper_166.pdf
 
-So this is the ideal case for generation numbers (the worst cases are
-when the things you are looking for are in branchy, close history where
-the generation numbers don't tell you much; but in such cases the
-walking is usually not too bad).
+Nowadays there is also [compressed] bitmap index (if enabled), though I am
+not sure if it is yet used to speed-up reachability queries
+  http://githubengineering.com/counting-objects/
+  https://www.eclipsecon.org/2013/sites/eclipsecon.org.2013/files/Scaling%20Up%20JGit%20-%20EclipseCon%202013.pdf
 
-So I think you really do want to be able to generate and store
-generation numbers after the fact. That has an added bonus that you do
-not have to worry about baking incorrect values into your objects; you
-do the topological walk once, and you _know_ it is correct (at least as
-correct as the parent links, but that is our source of truth).
-
-I have patches that generate and store the numbers at pack time, similar
-to the way we do the reachability bitmaps. They're not production ready,
-but they could probably be made so without too much effort. You wouldn't
-have ready-made generation numbers for commits since the last full
-repack, but you can compute them incrementally based on what you do have
-at a cost linear to the unpacked commits (this is the same for bitmaps).
-
--Peff
+-- 
+Jakub Narębski
