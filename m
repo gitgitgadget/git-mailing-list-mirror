@@ -2,111 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2472C20FCF
-	for <e@80x24.org>; Wed, 29 Jun 2016 21:20:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66C1A20FCF
+	for <e@80x24.org>; Wed, 29 Jun 2016 21:22:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751650AbcF2VT7 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 17:19:59 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62053 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751230AbcF2VT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 17:19:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 300EA28B77;
-	Wed, 29 Jun 2016 17:19:58 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hQbSuZsjX7o7RJCcrrn84leRJbg=; b=h7/zef
-	GQ8UuhNgnhCg/cIs1LpC73hJwB1pmW5J8QbCYuVMSnggtV8VUsRP7NQWNw3Fx421
-	6Uw2VGC1wynMKe7K/iQSIiiVMC/Pbqvi2C9/8U0Rc9XtYuazRoRCsfv1+BvBUV9G
-	lEwCASK5h6iSefwCbgmb773jqN/c0TLRWeoBo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n2ldblgGFfaX9A2MTlM2MDsaLPXRqMaQ
-	Hp8Q6VeUWCa4ehDqeYp1Ymzix3dDoYA2p7MP5gIKEE5+YzjibB+/vzwiZl81KRZD
-	0QjSua3DBsp8UMjSkuKcjL1MOMtL8qzc/rXZOhlFUYgLH5mq7YPoCeXsKDRS2hqL
-	tlMm7eh6G4k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 27DA928B75;
-	Wed, 29 Jun 2016 17:19:58 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9F52028B74;
-	Wed, 29 Jun 2016 17:19:57 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH 8/9] merge-recursive: switch to returning errors instead of dying
-References: <cover.1467199553.git.johannes.schindelin@gmx.de>
-	<06c09ab4d684c239ae4ae03373c7cc7afb3be60b.1467199553.git.johannes.schindelin@gmx.de>
-Date:	Wed, 29 Jun 2016 14:19:55 -0700
-In-Reply-To: <06c09ab4d684c239ae4ae03373c7cc7afb3be60b.1467199553.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Wed, 29 Jun 2016 13:37:09 +0200
-	(CEST)")
-Message-ID: <xmqq7fd73d6s.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751589AbcF2VWr (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 17:22:47 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:36626 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751541AbcF2VWp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 17:22:45 -0400
+Received: by mail-wm0-f54.google.com with SMTP id f126so197393123wma.1
+        for <git@vger.kernel.org>; Wed, 29 Jun 2016 14:22:19 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=sBsxzxLdwG7uBJuYqdkJfI9eM4U+ZM7vhrsdlkZvxSQ=;
+        b=cUHi31NrfqfMhRFZM4gMHAmbgnlTjo9qZ4gylsSv2kLFeW3E6QrQlifL1lzC1y09EV
+         TQy5C8URhlr120njY3nMqyc5xCgeDHZXA+sgzQHhsLhRXZ+lVzQtv+d4muzKzoNUO2LN
+         5WFykPK4v4fOdWRM89tOmWGQZjF/Gqgu899WhFwtR65nNAtYuZY9B9B1qjq4vJK5HRK9
+         xKlqYdywmg8nDQi+GxxtNMBLPV8pCuSFwRQjEoc5uN57amCJ3d/CX+uFWZehDsZnRWgC
+         RaoeykrTHGauQgZxwWhysLZnjZ6ITW9t6RfmLJW09Ck0gHNvlPmyG5513bIOjyHNwoUo
+         6KZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=sBsxzxLdwG7uBJuYqdkJfI9eM4U+ZM7vhrsdlkZvxSQ=;
+        b=ZMxgEfxA1OATiGaMZCtVAEYKy/VxPBscL9P4AQB7xgrrM0i8sv4kH/HGsP8lWc2EZE
+         rGTE/eGufJwmVlDv26FfFFaJaQXQkzBjABkxYwESEtQF2SIGHZ+ulsMf1pi50WdlcrJH
+         xEng9bXrlX34gcuN9omseHJwQkQnGct+39xHBRnTXONFOTKoAltKOVnmzPueItqK72ka
+         fJfEZ5/DaCdmHyZJFQOPS6XaWOoz86FUV6BOh/kTahV7fO1yTWNrWEzo20y/AgTD3FI9
+         Jvg5LNpPoDpoI3mnapTLc9V2aB+CBr4TxNIpYhWqTqP8byr/hUoDG8FA83QTZJWvXlhn
+         FkaA==
+X-Gm-Message-State: ALyK8tJuwctlu3MH8yi3W2a1ZutA+cq7t0/TuU0oQnVP0ZgnNQVAnpbV7MdsBDgIiNHYGw==
+X-Received: by 10.28.182.68 with SMTP id g65mr24743129wmf.12.1467235339039;
+        Wed, 29 Jun 2016 14:22:19 -0700 (PDT)
+Received: from [192.168.1.34] (aefh205.neoplus.adsl.tpnet.pl. [79.186.137.205])
+        by smtp.googlemail.com with ESMTPSA id f140sm620844wmf.22.2016.06.29.14.22.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Jun 2016 14:22:18 -0700 (PDT)
+Subject: Re: [RFD] Place to document magic pathspecs like ":/" and pathspec
+ handling
+To:	Junio C Hamano <gitster@pobox.com>
+References: <577425EF.6030900@gmail.com>
+ <CAPc5daVqjhWrJjNX6monHdMTRwimbjz==j9B2FS-nXNCqPDCYQ@mail.gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <57743BFB.9040709@gmail.com>
+Date:	Wed, 29 Jun 2016 23:22:03 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3B17E8E6-3E3F-11E6-AFF0-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <CAPc5daVqjhWrJjNX6monHdMTRwimbjz==j9B2FS-nXNCqPDCYQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+W dniu 2016-06-29 o 21:51, Junio C Hamano pisze:
+> On Wed, Jun 29, 2016 at 12:47 PM, Jakub Narębski <jnareb@gmail.com> wrote:
+>> I have noticed that the magic pathspec ":/" is described only in RelNotes
+>> for revision 1.7.6:
+>> |I think the reason might be that there was no good place to put that
+>> information in.  Nowadays we have gitcli(7) manual page, but perhaps
+> $ git help glossary
+>
+> look for pathspec.
+Thanks. I haven't noticed that.
 
-> @@ -743,6 +741,8 @@ static int update_file_flags(struct merge_options *o,
->  			      int update_cache,
->  			      int update_wd)
-> ...
-> +			ret = error_errno(_("do not know what to do with %06o %s '%s'"),
-> +				mode, sha1_to_hex(sha), path);
->  free_buf:
+But I think it is not the best place to keep this documentation.
+There are the following issues with it:
 
-OK, with a few more users of this label, it no longer looks so
-strange to me to have this label here.
+* it is hard to find; I did not search _glossary_ for information
+  about how Git handles pathspecs, I would search it if I didn't know
+  what pathspec means.
 
-At least, match the indentation level to the existing one we see
-below, though?
+* it is longest entry in glossary, and the only one with nested
+  list, but
 
->  		free(buf);
->  	}
->   update_index:
-> -	if (update_cache)
-> +	if (!ret && update_cache)
->  		add_cacheinfo(mode, sha, path, 0, update_wd, ADD_CACHE_OK_TO_ADD);
+* it is also too short to describe how Git handles pathspecs in detail,
+  and a bit cryptic; there are no examples (so grepping docs for '":/"'
+  didn't found it).
 
-Unlike my reaction to "if (!ret) do this" in an earlier patch, I do
-think this change is sensible.  We wouldn't have reached here in the
-original code if we saw errors, and some of the variable used to
-call add_cacheinfo() at this point may be garbage when ret is
-non-zero, i.e. we know we earlier saw an error.
-
-> -	return 0;
-> +	return ret;
->  }
-> ...
->  			if ((merge_status < 0) || !result_buf.ptr)
-> -				die(_("Failed to execute internal merge"));
-> +				ret = error(_("Failed to execute internal merge"));
->  
-> -			if (write_sha1_file(result_buf.ptr, result_buf.size,
-> +			if (!ret && write_sha1_file(result_buf.ptr, result_buf.size,
->  					    blob_type, result->sha))
-
-Likewise.
-
-> @@ -1861,7 +1867,7 @@ static int process_entry(struct merge_options *o,
->  		 */
->  		remove_file(o, 1, path, !a_mode);
->  	} else
-> -		die(_("Fatal merge failure, shouldn't happen."));
-> +		return error(_("Fatal merge failure, shouldn't happen."));
-
-Isn't this BUG()?
+-- 
+Jakub Narębski
 
