@@ -2,154 +2,277 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 877C820FCF
-	for <e@80x24.org>; Wed, 29 Jun 2016 21:00:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA06D20FCF
+	for <e@80x24.org>; Wed, 29 Jun 2016 21:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751565AbcF2VA4 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 17:00:56 -0400
-Received: from mail-it0-f43.google.com ([209.85.214.43]:37897 "EHLO
-	mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750878AbcF2VAz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 17:00:55 -0400
-Received: by mail-it0-f43.google.com with SMTP id h190so54001447ith.1
-        for <git@vger.kernel.org>; Wed, 29 Jun 2016 14:00:55 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Sihzs+Hi5o/SamkYV6NjG+lvrt60JORcW15DePB9AXE=;
-        b=NwEPwMAKH4bV0AfVYTIW5VNu9MbWI63trvjW2WC1tgEg5xF1VCMZc/A/N7vmkT659n
-         WIyRFNU394r5lnJC5LO1tj9uRxRlmGBl28LOjl7epBeoMxNoxPjtz6Ds6wDur/loTu1t
-         dtEBVm62uZ0UHY4fOlGLDwcrtiMTD+LbZu0c4PBweke2lXarxlecFPfjXRQMPy0cpiak
-         S9qsOhw2NblgXo0Iw3mV3y3OVXqabO0dLfoUxUh8nanIYubCI9EUgr+zpfotC3H4jw7o
-         e7uSMfPumDxQ7SWygtfFBOcyOvXT1jc1/labXRLufq1hGlS03oA1tO6OGl7rRE+Y84j3
-         kiMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Sihzs+Hi5o/SamkYV6NjG+lvrt60JORcW15DePB9AXE=;
-        b=i/f/seYwNQhGauSoVTmAwPk8V/9ZLEb9KxDgxngJJGBKrWRY+QVmt3lD2Sc4tfd41V
-         5os35zUpt2Bxrdtms5Z32lESunoueA95y7V1ipVvtyyjb60UmdsUhXv3takhNcJ8EPqh
-         U4hHdE9WGvrAp4JwA2tomCUbQG293LO4ig2OCjrq3PQ/l3qyzFrp2aUZ1c8O+ksEGrrp
-         0TpJSf4A+EnZ8PExTRnVOQPp2/XhrIgTyyJGjshIttFJ+SNenVHx1fkiLx2AfBnHKTcV
-         olSZ9vCLib4Pquh52XBFkoe44MAkMEZ9uLZbE09Ire1nDnKSgBBhRtj/OGDx477ri1co
-         w5fg==
-X-Gm-Message-State: ALyK8tKI2G7ayXZfLolT6CrRohtSftWjGc2NWOYxUI+CfjDKidfeFf3OzAVXS8mDV4nCJuKGMsRplEo2Ygno47If
-X-Received: by 10.36.254.195 with SMTP id w186mr11519362ith.49.1467233641950;
- Wed, 29 Jun 2016 13:54:01 -0700 (PDT)
+	id S1751487AbcF2VGj (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 17:06:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60922 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750878AbcF2VGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 17:06:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0804728984;
+	Wed, 29 Jun 2016 17:06:38 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UdvyqXTd/oj5IY+RJeDNz0rGWvc=; b=TKLvgv
+	Nc1GzyJ8L4GDzLGtWN6Oj9h5LNzKg+jp2CxRJDUcxxgvY+gcusJrdugfSGX0pvzG
+	0Q4doRi63CSMUmT8SsifO6+kfp+P0Ir7Fd0qKxIFSHQsl9YisqLKdz15Tr53YaKw
+	FIZIWYgKmUq/A594/4/rIJR1jyp0jgeXowYbE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=czKBrKNtLhBDUhafHGTbueFcNbns02c+
+	HOMr8wj/O86ysuUQ6geVQFSKWeaK28y5ZFaACRfuwp1nTnq39OTK4UNRJ1FS933w
+	Idk6w+rU6msJk6OZpeQLp6f0AnFd5reqPVYv6b0Z9ftVR+p5bhpBIhqOkXPtodlE
+	naUMsQ32LAY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EC4F128983;
+	Wed, 29 Jun 2016 17:06:37 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2C7E228982;
+	Wed, 29 Jun 2016 17:06:37 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH 7/9] merge-recursive: handle return values indicating errors
+References: <cover.1467199553.git.johannes.schindelin@gmx.de>
+	<4f2817208cf2f7d4e839ddb6818bf652b0aa633c.1467199553.git.johannes.schindelin@gmx.de>
+Date:	Wed, 29 Jun 2016 14:06:35 -0700
+In-Reply-To: <4f2817208cf2f7d4e839ddb6818bf652b0aa633c.1467199553.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Wed, 29 Jun 2016 13:37:04 +0200
+	(CEST)")
+Message-ID: <xmqqbn2j3dt0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.136.16 with HTTP; Wed, 29 Jun 2016 13:54:01 -0700 (PDT)
-In-Reply-To: <xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com>
-References: <f15a14a5-f39d-9c41-16b9-fe0a48d7450b@syntevo.com>
- <CAPc5daVC-+0Vr30L_pbcL0GN2OmnGm-+V4tE2WTos_vPRb_S1g@mail.gmail.com>
- <CAGZ79kY6Ry+DfO90wza_RrVbCRAgNB4N=0W6svuJgvGNxeFh5Q@mail.gmail.com> <xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Wed, 29 Jun 2016 13:54:01 -0700
-Message-ID: <CAGZ79kZNnbrKFaKGchZ0r5wKCs7pz4RcyYq=0rnD5qSd8XDKXw@mail.gmail.com>
-Subject: Re: topological index field for commit objects
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Jeff King <peff@peff.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Marc Strapetz <marc.strapetz@syntevo.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5DF9601C-3E3D-11E6-B3BC-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jun 29, 2016 at 1:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> On Wed, Jun 29, 2016 at 11:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> On Wed, Jun 29, 2016 at 11:31 AM, Marc Strapetz
->>> <marc.strapetz@syntevo.com> wrote:
->>>> This is no RFE but rather recurring thoughts whenever I'm working with
->>>> commit graphs: a topological index attribute for commit objects would be
->>>> incredible useful. By "topological index" I mean a simple integer for which
->>>> following condition holds true:
->>>
->>> Look for "generation numbers" in the list archive, perhaps?
->>
->> Thanks for the pointer to the interesting discussions.
->>
->> In http://www.spinics.net/lists/git/msg161363.html
->> Linus wrote in a discussion with Jeff:
->>
->>> Right now, we do *have* a "generation number". It's just that it's
->>> very easy to corrupt even by mistake. It's called "committer date". We
->>> could improve on it.
->>
->> Would it make sense to refuse creating commits that have a commit date
->> prior to its parents commit date (except when the user gives a
->> `--dammit-I-know-I-break-a-wildy-used-heuristic`)?
->
-> I think that has also been discussed in the past.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-I should have guessed that and tried to find it.
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 6ab7dfc..bb075e3 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -266,8 +266,10 @@ struct tree *write_tree_from_memory(struct merge_options *o)
+>  		active_cache_tree = cache_tree();
+>  
+>  	if (!cache_tree_fully_valid(active_cache_tree) &&
+> -	    cache_tree_update(&the_index, 0) < 0)
+> -		die(_("error building trees"));
+> +	    cache_tree_update(&the_index, 0) < 0) {
+> +		error(_("error building trees"));
+> +		return NULL;
+> +	}
 
-> I do not think it
-> would help very much in practice, as projects already have up to 10
-> years (and the ones migrated from CVS, even more) worth of commits
-> they cannot rewrite that may record incorrect committer dates.
+This actually is a BUG(), isn't it?  We have already verified that
+the cache is merged, so cache_tree_update() ought to be able to come
+up with the whole-tree hash.
 
-Chances are that the 10 years of history may be correct time wise as long
-as people don't introduce a bad date malevolently.
+> @@ -548,19 +550,17 @@ static int update_stages(const char *path, const struct diff_filespec *o,
+>  	 */
+>  	int clear = 1;
+>  	int options = ADD_CACHE_OK_TO_ADD | ADD_CACHE_SKIP_DFCHECK;
+> +	int ret = 0;
+> +
+>  	if (clear)
+> -		if (remove_file_from_cache(path))
+> -			return -1;
+> -	if (o)
+> -		if (add_cacheinfo(o->mode, o->sha1, path, 1, 0, options))
+> -			return -1;
+> -	if (a)
+> -		if (add_cacheinfo(a->mode, a->sha1, path, 2, 0, options))
+> -			return -1;
+> -	if (b)
+> -		if (add_cacheinfo(b->mode, b->sha1, path, 3, 0, options))
+> -			return -1;
+> -	return 0;
+> +		ret = remove_file_from_cache(path);
+> +	if (!ret && o)
+> +		ret = add_cacheinfo(o->mode, o->sha1, path, 1, 0, options);
+> +	if (!ret && a)
+> +		ret = add_cacheinfo(a->mode, a->sha1, path, 2, 0, options);
+> +	if (!ret && b)
+> +		ret = add_cacheinfo(b->mode, b->sha1, path, 3, 0, options);
+> +	return ret;
+>  }
 
-> You'd need something like "you can trust committer dates that are
-> newer that this date" per project
+Aren't the preimage and the postimage doing the same thing?  The
+only two differences I spot are (1) it is clear in the original that
+the returned value is -1 in the error case, even if the error
+convention of remove_file_from_cache() and add_cacheinfo() were "0
+is good, others are bad"; and (2) the control flow is easier to
+follow in the original.
 
-and git version as old versions of git can still be used later.
+> @@ -736,7 +736,7 @@ static int make_room_for_path(struct merge_options *o, const char *path)
+>  	return error(msg, path, _(": perhaps a D/F conflict?"));
+>  }
+>  
+> -static void update_file_flags(struct merge_options *o,
+> +static int update_file_flags(struct merge_options *o,
+>  			      const unsigned char *sha,
+>  			      unsigned mode,
+>  			      const char *path,
+> @@ -777,8 +777,7 @@ static void update_file_flags(struct merge_options *o,
+>  
+>  		if (make_room_for_path(o, path) < 0) {
+>  			update_wd = 0;
+> -			free(buf);
+> -			goto update_index;
+> +			goto free_buf;
+>  		}
+>  		if (S_ISREG(mode) || (!has_symlinks && S_ISLNK(mode))) {
+>  			int fd;
+> @@ -801,20 +800,22 @@ static void update_file_flags(struct merge_options *o,
+>  		} else
+>  			die(_("do not know what to do with %06o %s '%s'"),
+>  			    mode, sha1_to_hex(sha), path);
+> +free_buf:
+>  		free(buf);
 
-> to switch between slow path and
-> fast path, with an updated fsck that knows how to compute that
-> number after you pulled from somebody who used that overriding
-> option.
+I somehow find the above change harder to follow than the original.
 
-Well you could have a project setting (`config.sortedDates`)
-that is automatically computed once when cloning a project and
-depending on that setting you can go the fast path.
+>  	}
+>   update_index:
+>  	if (update_cache)
+>  		add_cacheinfo(mode, sha, path, 0, update_wd, ADD_CACHE_OK_TO_ADD);
+> +	return 0;
+>  }
+>  
 
-Additionally when that setting is set, you'd enforce the correct
-dates in committing and merging (read pulling) to carry it on to
-be true.
+This one is in line with the stated goal of the patch.
 
->
-> If the use of generation number can somehow be limited narrowly, we
-> may be able to incrementally introduce it only for new commits, but
-> I haven't thought things through, so let me do so aloud here ;-)
+> @@ -1028,21 +1030,23 @@ static void handle_change_delete(struct merge_options *o,
+>  		 * correct; since there is no true "middle point" between
+>  		 * them, simply reuse the base version for virtual merge base.
+>  		 */
+> -		remove_file_from_cache(path);
+> -		update_file(o, 0, o_sha, o_mode, renamed ? renamed : path);
+> +		ret = remove_file_from_cache(path);
+> +		if (!ret)
+> +			ret = update_file(o, 0, o_sha, o_mode,
+> +					  renamed ? renamed : path);
 
-I think of it as "committer date == generation number", i.e. just a
-special form of noting the generation number with gaps in between.
-This loses the ability to know how many commits there are at maximum
-between 2 given "numbers" though, which I think is minor.
+As you noted in the log message, this does change the behaviour.  If
+remove returns non-zero for whatever reason, we still did update()
+in the original, but we no longer do.  Does this have negative
+effect to the overall codeflow?
 
->
-> Suppose we use it only for this purpose:
->
->  * When we have two commits, C1 and C2, with generation numbers G1
->    and G2, we can say "C1 cannot possibly be an ancestor of C2" if
->    G1 > G2.  We cannot say anything else based on generation
->    numbers (or lack thereof).
->
-> then I think we could just say "A newly created commit must record
-> generation number G that is larger than generation numbers of its
-> parent commits; ignore parents that lack generation number for the
-> purpose of this sentence".
->
-> I am not sure if that limited use is all that useful, though.
+Or, assuming that everybody returns -1 for errors, perhaps
 
-I did *not* propose to introduce the generation number, but
-rather meant:
-* we already have committer date
-* it works pretty well
-* only a tiny patch is required to tighten the heuristic to work even better
-  (going forward) by avoiding accidents in the history that have
-  a committer date earlier than their parents.
-* we postpone drastic changes (i.e. introduction of generation
-  numbers or change of algorithms) for now.
+	ret = remove();
+        ret |= update();
+
+may be a more faithful and safe conversion?
+
+> @@ -1087,21 +1094,22 @@ static void conflict_rename_delete(struct merge_options *o,
+>  		b_mode = dest->mode;
+>  	}
+>  
+> -	handle_change_delete(o,
+> +	ret = handle_change_delete(o,
+>  			     o->call_depth ? orig->path : dest->path,
+>  			     orig->sha1, orig->mode,
+>  			     a_sha, a_mode,
+>  			     b_sha, b_mode,
+>  			     _("rename"), _("renamed"));
+> -
+> -	if (o->call_depth) {
+> -		remove_file_from_cache(dest->path);
+> -	} else {
+> -		update_stages(dest->path, NULL,
+> +	if (ret < 0)
+> +		return ret;
+> +	if (o->call_depth)
+> +		ret = remove_file_from_cache(dest->path);
+> +	else
+> +		ret = update_stages(dest->path, NULL,
+>  			      rename_branch == o->branch1 ? dest : NULL,
+>  			      rename_branch == o->branch1 ? NULL : dest);
+> -	}
+
+Similarly, if handle_change_delete() returns non-zero, we no longer
+call remove() or update().  Is that a good behaviour change?
+
+> -static void handle_file(struct merge_options *o,
+> +static int handle_file(struct merge_options *o,
+>  			struct diff_filespec *rename,
+>  			int stage,
+>  			struct rename_conflict_info *ci)
+
+Likewise.
+
+> -static void conflict_rename_rename_1to2(struct merge_options *o,
+> +static int conflict_rename_rename_1to2(struct merge_options *o,
+>  					struct rename_conflict_info *ci)
+>  {
+> ...
+> -		if (merge_file_one(o, one->path,
+> +		if ((ret = merge_file_one(o, one->path,
+>  				 one->sha1, one->mode,
+>  				 a->sha1, a->mode,
+>  				 b->sha1, b->mode,
+> -				 ci->branch1, ci->branch2, &mfi) < 0)
+> -			return;
+> +				 ci->branch1, ci->branch2, &mfi)))
+> +			return ret;
+
+This does not change behaviour.
+
+> @@ -1194,7 +1208,8 @@ static void conflict_rename_rename_1to2(struct merge_options *o,
+>  		 * pathname and then either rename the add-source file to that
+>  		 * unique path, or use that unique path instead of src here.
+>  		 */
+> -		update_file(o, 0, mfi.sha, mfi.mode, one->path);
+> +		if ((ret = update_file(o, 0, mfi.sha, mfi.mode, one->path)))
+> +			return ret;
+
+But this does.
+
+> @@ -1205,22 +1220,31 @@ static void conflict_rename_rename_1to2(struct merge_options *o,
+>  		 * resolving the conflict at that path in its favor.
+>  		 */
+>  		add = filespec_from_entry(&other, ci->dst_entry1, 2 ^ 1);
+> -		if (add)
+> -			update_file(o, 0, add->sha1, add->mode, a->path);
+> +		if (add) {
+> +			if ((ret = update_file(o, 0, add->sha1, add->mode,
+> +					a->path)))
+> +				return ret;
+> +		}
+
+So does this.
+
+
+>  		else
+>  			remove_file_from_cache(a->path);
+>  		add = filespec_from_entry(&other, ci->dst_entry2, 3 ^ 1);
+> -		if (add)
+> -			update_file(o, 0, add->sha1, add->mode, b->path);
+> +		if (add) {
+> +			if ((ret = update_file(o, 0, add->sha1, add->mode,
+> +					b->path)))
+> +				return ret;
+> +		}
+
+And this.
+
+>  	} else {
+> -		handle_file(o, a, 2, ci);
+> -		handle_file(o, b, 3, ci);
+> +		if ((ret = handle_file(o, a, 2, ci)) ||
+> +		    (ret = handle_file(o, b, 3, ci)))
+> +			return ret;
+
+And this.
