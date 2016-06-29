@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C8D520FD0
-	for <e@80x24.org>; Wed, 29 Jun 2016 18:30:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC41320FCF
+	for <e@80x24.org>; Wed, 29 Jun 2016 18:35:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751391AbcF2SaU (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 14:30:20 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60869 "EHLO
+	id S1752579AbcF2Sfb (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 14:35:31 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54217 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751527AbcF2SaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 14:30:18 -0400
+	with ESMTP id S1751898AbcF2Sfa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 14:35:30 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D3EB271CD;
-	Wed, 29 Jun 2016 14:30:14 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F04C26A09;
+	Wed, 29 Jun 2016 14:35:29 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HeCGWiz11l+ADYNsQNECho+HdSg=; b=XBc26z
-	ZlF1nJVLe/aUd5vAP7eiPctvrWPWszhyQyXI86yK8VQRTXTR1FQ2zLDQr0CyQJkH
-	ZaaEW9Pd67Oti+K54EIVg0/K0wNxSSjd91eL/Tsdj6QK2IGp5Jp2ga2W1Ga5w05u
-	mkRr5nu4oE+GxgCJxTKCEwnYFRyNA7/MjoHoo=
+	:content-type; s=sasl; bh=obCGGbEv9Q9PUN5SDt0cDQHf1eY=; b=LObs8Z
+	wtq5ZMw8Ii4WNjDJ7BicMh/6gLDIKskMhY3gA9mZPmiVKuM9nQBHszVBqVLkNYVi
+	Dknxkgzeq2fshObjayNF8frbsoCqTIqcqHxO/VlvdpkL4vqPahFPP9nhQz+BaKWv
+	eVOhFdm4GmFvBHFJ27pDz0AkZEpRGMC/nZz2s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l4WxCRwQTJAs05YKlCB2FCBmcIndtWp5
-	kDXxN+5kceEYurFUMIOSUtu/QBFVhZv9DooDrnkGIYVbmXti/KlTu0TK7yzzsEY4
-	BkgE+k3O8fXGuJ9qqGMiRAqCcXb1peTmYRhHRgBqtWbNe+S1Nd3uZ6kD1UQOK79g
-	chsDMfQd7NU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 258F5271CC;
-	Wed, 29 Jun 2016 14:30:14 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=Hy5xAqmaWFOI1XtJah2l/JdqkIItzzNy
+	uZqmcKFh+mB1UYlqNO9BKtgX73CfBVM6LFfewFqg59wpcPejyfxWRiGJ44ofCzFM
+	szASgPRqWGVXDW14z3VtIo3RSr1IXICFT4A0CBcsfVB2z5ZQR94hXWKctAFAUEo1
+	MT8JPR+sfzM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 15D3726A08;
+	Wed, 29 Jun 2016 14:35:29 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BBFAD271C9;
-	Wed, 29 Jun 2016 14:30:12 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8411F26A06;
+	Wed, 29 Jun 2016 14:35:28 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
 To:	Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:	git@vger.kernel.org
-Subject: Re: [PATCH 2/2] t3404: add a test for the --gpg-sign option
-References: <cover.1467210629.git.johannes.schindelin@gmx.de>
-	<0df34c45db5b1500e55262c8948c9140e7ad6cb8.1467210629.git.johannes.schindelin@gmx.de>
-Date:	Wed, 29 Jun 2016 11:30:10 -0700
-In-Reply-To: <0df34c45db5b1500e55262c8948c9140e7ad6cb8.1467210629.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Wed, 29 Jun 2016 16:31:07 +0200
+Subject: Re: [PATCH 2/9] merge-recursive: clarify code in was_tracked()
+References: <cover.1467199553.git.johannes.schindelin@gmx.de>
+	<dd3e2cf842fd5e11e31914aa55b8b995e8d3d75c.1467199553.git.johannes.schindelin@gmx.de>
+Date:	Wed, 29 Jun 2016 11:35:26 -0700
+In-Reply-To: <dd3e2cf842fd5e11e31914aa55b8b995e8d3d75c.1467199553.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Wed, 29 Jun 2016 13:36:45 +0200
 	(CEST)")
-Message-ID: <xmqq8txn4zm5.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqq4m8b4zdd.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 846E2A72-3E27-11E6-B5B2-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 40A48812-3E28-11E6-9455-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,76 +60,34 @@ X-Mailing-List:	git@vger.kernel.org
 
 Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> To keep the time t3404 requires short (in this developer's Windows
-> setup, this single test already takes a painful 8 minutes to pass),
-> we avoid a full-blown GPG test and cop out by verifying the message
-> displayed to the user upon an 'edit' command.
-
-This is a tangent, but I wonder if we should be solving it by
-parallelizing the tests even more.  If the script for example
-can be split into part1 and part2 that share the same set-up
-that is prepared by the very first test, we could split this
-into three files (common one that is dot-sourced by two actual
-test scripts that have part1 and part2).
-
+> It can be puzzling to see that was_tracked() tries to match an index
+> entry by name even if cache_name_pos() returned a negative value. Let's
+> clarify that cache_name_pos() implicitly looks for stage 0, while we are
+> also okay with finding other stages.
 >
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  t/t3404-rebase-interactive.sh | 7 +++++++
->  1 file changed, 7 insertions(+)
+>  merge-recursive.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index c7ea8ba..4c96075 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1281,4 +1281,11 @@ test_expect_success 'editor saves as CR/LF' '
->  	)
->  '
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 98f4632..bcb53f0 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -658,6 +658,7 @@ static int was_tracked(const char *path)
+>  {
+>  	int pos = cache_name_pos(path, strlen(path));
 >  
-> +EPIPHANY="'"
+> +	/* cache_name_pos() looks for stage == 0, so pos may be < 0 */
 
-Why?  If you really need a variable, SQ is probably the way this
-codebase typically spell it.
+It returns >= if found at stage #0, or a negative (counting from -1)
+to indicate where the path would be inserted if it were to be added
+at stage #0.
 
-> +test_expect_success 'rebase -i --gpg-sign=<key-id>' '
-> +	set_fake_editor &&
-> +	FAKE_LINES="edit 1" git rebase -i --gpg-sign=\" HEAD^ >out 2>err &&
-> +	grep "$EPIPHANY-S\"$EPIPHANY" err
+The new comment does not explain how "pos may be < 0" leads to
+"hence pos = -1 - pos is the right thing to do here".  It is
+misleading and we probably are better off without.
 
-I am not sure what is going on here.  You are asking to sign using
-the keyid of a single double-quote, and expecting the message that
-says
-
-	You can amend the commit now, with
-
-		git commit --amend '-S"'
-
-	...
-
-that has a substring '-S"' in it to ensure that the codepath to
-parse --gpg-sign= on the command line of "rebase", and to the
-message we see here are working correctly, without actually checking
-if GPG is invoked at all, or if it is invoked the key given by the
-option is correctly passed to the invocation?
-
-If so, can't you do that without confusing users by using keyid "?
-IOW, wouldn't using --gpg-sign=me work equally well?  For example:
-
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 4c96075..2dd3644 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1281,11 +1281,10 @@ test_expect_success 'editor saves as CR/LF' '
- 	)
- '
- 
--EPIPHANY="'"
- test_expect_success 'rebase -i --gpg-sign=<key-id>' '
- 	set_fake_editor &&
--	FAKE_LINES="edit 1" git rebase -i --gpg-sign=\" HEAD^ >out 2>err &&
--	grep "$EPIPHANY-S\"$EPIPHANY" err
-+	FAKE_LINES="edit 1" git rebase -i --gpg-sign=me HEAD^ >out 2>err &&
-+	grep -e "commit --amend  '\''-Sme'\''" err
- '
- 
- test_done
+>  	if (pos < 0)
+>  		pos = -1 - pos;
+>  	while (pos < active_nr &&
