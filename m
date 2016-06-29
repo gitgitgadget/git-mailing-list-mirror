@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-9.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C2E31FF40
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8F971FF40
 	for <e@80x24.org>; Wed, 29 Jun 2016 15:10:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752972AbcF2PKc (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 11:10:32 -0400
-Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:33503 "EHLO sapo.pt"
+	id S1753008AbcF2PKi (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 11:10:38 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:58126 "EHLO sapo.pt"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752912AbcF2PKb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 11:10:31 -0400
-Received: (qmail 23725 invoked from network); 29 Jun 2016 15:10:20 -0000
-Received: (qmail 10139 invoked from network); 29 Jun 2016 15:10:20 -0000
+	id S1753000AbcF2PKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 11:10:37 -0400
+Received: (qmail 24819 invoked from network); 29 Jun 2016 15:10:35 -0000
+Received: (qmail 15277 invoked from network); 29 Jun 2016 15:10:35 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 29 Jun 2016 15:10:18 -0000
+          for <git@vger.kernel.org>; 29 Jun 2016 15:10:29 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -31,9 +31,9 @@ Cc:	Vasco Almeida <vascomalmeida@sapo.pt>,
 	Jiang Xin <worldhello.net@gmail.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>, David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 02/11] i18n: add--interactive: mark simple here documents for translation
-Date:	Wed, 29 Jun 2016 15:09:36 +0000
-Message-Id: <20160629150945.15015-3-vascomalmeida@sapo.pt>
+Subject: [PATCH v2 05/11] i18n: add--interactive: mark message for translation
+Date:	Wed, 29 Jun 2016 15:09:39 +0000
+Message-Id: <20160629150945.15015-6-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.9.0.148.g4ba279b
 In-Reply-To: <20160629150945.15015-1-vascomalmeida@sapo.pt>
 References: <20160629150945.15015-1-vascomalmeida@sapo.pt>
@@ -42,77 +42,156 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Mark messages in here document without interpolation for translation.
+Mark message assembled in place for translation, unfolding each use case
+for each entry in the %patch_modes hash table.
 
-Marking for translation by removing here documents this way, rather than
-take advantage of "print __ << EOF" way, makes other instances of help
-messages in clean.c match the first two in this file.  Otherwise,
-reusing here document would add a trailer newline to the message, making
-them not match 100%, hence creating two entries in pot template for
-translation rather than a single entry.
+Previously, this script relied on whether $patch_mode was set to run the
+command patch_update_cmd() or show status and loop the main loop. Now,
+it uses $cmd to indicate we must run patch_update_cmd() and $patch_mode
+is used to tell which flavor of the %patch_modes are we on.  This is
+introduced in order to be able to mark and unfold the message prompt
+knowing in which context we are.
+
+The tracking of context was done previously by point %patch_mode_flavour
+hash table to the correct entry of %patch_modes, focusing only on value
+of %patch_modes. Now, we are also interested in the key ('staged',
+'stash', 'checkout_head', ...).
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- git-add--interactive.perl | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ git-add--interactive.perl | 91 ++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 83 insertions(+), 8 deletions(-)
 
 diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index fb8e5de..e11a33d 100755
+index 08badfa..5b89b97 100755
 --- a/git-add--interactive.perl
 +++ b/git-add--interactive.perl
-@@ -636,25 +636,25 @@ sub list_and_choose {
+@@ -91,6 +91,7 @@ sub colored {
  }
  
- sub singleton_prompt_help_cmd {
--	print colored $help_color, <<\EOF ;
--Prompt help:
-+	print colored $help_color, __(
-+"Prompt help:
- 1          - select a numbered item
- foo        - select item based on unique prefix
--           - (empty) select nothing
--EOF
-+           - (empty) select nothing"),
-+"\n";
- }
+ # command line options
++my $cmd;
+ my $patch_mode;
+ my $patch_mode_revision;
  
- sub prompt_help_cmd {
--	print colored $help_color, <<\EOF ;
--Prompt help:
-+	print colored $help_color, __(
-+"Prompt help:
- 1          - select a single item
- 3-5        - select a range of items
- 2-3,6-9    - select multiple ranges
- foo        - select item based on unique prefix
- -...       - unselect specified items
- *          - choose all items
--           - (empty) finish selecting
--EOF
-+           - (empty) finish selecting"),
-+"\n";
- }
+@@ -171,7 +172,8 @@ my %patch_modes = (
+ 	},
+ );
  
- sub status_cmd {
-@@ -1573,14 +1573,14 @@ sub quit_cmd {
- }
+-my %patch_mode_flavour = %{$patch_modes{stage}};
++$patch_mode = 'stage';
++my %patch_mode_flavour = %{$patch_modes{$patch_mode}};
  
- sub help_cmd {
--	print colored $help_color, <<\EOF ;
--status        - show paths with changes
-+	print colored $help_color, __(
-+"status        - show paths with changes
- update        - add working tree state to the staged set of changes
- revert        - revert staged set of changes back to the HEAD version
- patch         - pick hunks and update selectively
- diff	      - view diff between HEAD and index
--add untracked - add contents of untracked files to the staged set of changes
--EOF
-+add untracked - add contents of untracked files to the staged set of changes"),
-+"\n";
- }
+ sub run_cmd_pipe {
+ 	if ($^O eq 'MSWin32') {
+@@ -1372,12 +1374,84 @@ sub patch_update_file {
+ 		for (@{$hunk[$ix]{DISPLAY}}) {
+ 			print;
+ 		}
+-		print colored $prompt_color, $patch_mode_flavour{VERB},
+-		  ($hunk[$ix]{TYPE} eq 'mode' ? ' mode change' :
+-		   $hunk[$ix]{TYPE} eq 'deletion' ? ' deletion' :
+-		   ' this hunk'),
+-		  $patch_mode_flavour{TARGET},
+-		  " [y,n,q,a,d,/$other,?]? ";
++		if ($patch_mode eq 'stage') {
++			if ($hunk[$ix]{TYPE} eq 'mode') {
++			  print colored $prompt_color,
++			    sprintf(__("Stage mode change [y,n,q,a,d,/%s,?]? "), $other);
++			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
++			  print colored $prompt_color,
++			    sprintf(__("Stage deletion [y,n,q,a,d,/%s,?]? "), $other);
++			} else {
++			  print colored $prompt_color,
++			    sprintf(__("Stage this hunk [y,n,q,a,d,/%s,?]? "), $other);
++			}
++		} elsif ($patch_mode eq 'stash') {
++			if ($hunk[$ix]{TYPE} eq 'mode') {
++			  print colored $prompt_color,
++			    sprintf(__("Stash mode change [y,n,q,a,d,/%s,?]? "), $other);
++			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
++			  print colored $prompt_color,
++			    sprintf(__("Stash deletion [y,n,q,a,d,/%s,?]? "), $other);
++			} else {
++			  print colored $prompt_color,
++			    sprintf(__("Stash this hunk [y,n,q,a,d,/%s,?]? "), $other);
++			}
++		} elsif ($patch_mode eq 'reset_head') {
++			if ($hunk[$ix]{TYPE} eq 'mode') {
++			  print colored $prompt_color,
++			    sprintf(__("Unstage mode change [y,n,q,a,d,/%s,?]? "), $other);
++			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
++			  print colored $prompt_color,
++			    sprintf(__("Unstage deletion [y,n,q,a,d,/%s,?]? "), $other);
++			} else {
++			  print colored $prompt_color,
++			    sprintf(__("Unstage this hunk [y,n,q,a,d,/%s,?]? "), $other);
++			}
++		} elsif ($patch_mode eq 'reset_nothead') {
++			if ($hunk[$ix]{TYPE} eq 'mode') {
++			  print colored $prompt_color,
++			    sprintf(__("Apply mode change to index [y,n,q,a,d,/%s,?]? "), $other);
++			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
++			  print colored $prompt_color,
++			    sprintf(__("Apply deletion to index [y,n,q,a,d,/%s,?]? "), $other);
++			} else {
++			  print colored $prompt_color,
++			    sprintf(__("Apply this hunk to index [y,n,q,a,d,/%s,?]? "), $other);
++			}
++		} elsif ($patch_mode eq 'checkout_index') {
++			if ($hunk[$ix]{TYPE} eq 'mode') {
++			  print colored $prompt_color,
++			    sprintf(__("Discard mode change from worktree [y,n,q,a,d,/%s,?]? "), $other);
++			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
++			  print colored $prompt_color,
++			    sprintf(__("Discard deletion from worktree [y,n,q,a,d,/%s,?]? "), $other);
++			} else {
++			  print colored $prompt_color,
++			    sprintf(__("Discard this hunk from worktree [y,n,q,a,d,/%s,?]? "), $other);
++			}
++		} elsif ($patch_mode eq 'checkout_head') {
++			if ($hunk[$ix]{TYPE} eq 'mode') {
++			  print colored $prompt_color,
++			    sprintf(__("Discard mode change from index and worktree [y,n,q,a,d,/%s,?]? "), $other);
++			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
++			  print colored $prompt_color,
++			    sprintf(__("Discard deletion from index and worktree [y,n,q,a,d,/%s,?]? "), $other);
++			} else {
++			  print colored $prompt_color,
++			    sprintf(__("Discard this hunk from index and worktree [y,n,q,a,d,/%s,?]? "), $other);
++			}
++		} elsif ($patch_mode eq 'checkout_nothead') {
++			if ($hunk[$ix]{TYPE} eq 'mode') {
++			  print colored $prompt_color,
++			    sprintf(__("Apply mode change to index and worktree [y,n,q,a,d,/%s,?]? "), $other);
++			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
++			  print colored $prompt_color,
++			    sprintf(__("Apply deletion to index and worktree [y,n,q,a,d,/%s,?]? "), $other);
++			} else {
++			  print colored $prompt_color,
++			    sprintf(__("Apply this hunk to index and worktree [y,n,q,a,d,/%s,?]? "), $other);
++			}
++		}
+ 		my $line = prompt_single_character;
+ 		last unless defined $line;
+ 		if ($line) {
+@@ -1631,6 +1705,7 @@ sub process_args {
+ 		die sprintf(__("invalid argument %s, expecting --"),
+ 			       $arg) unless $arg eq "--";
+ 		%patch_mode_flavour = %{$patch_modes{$patch_mode}};
++		$cmd = 1;
+ 	}
+ 	elsif ($arg ne "--") {
+ 		die sprintf(__("invalid argument %s, expecting --"), $arg);
+@@ -1667,7 +1742,7 @@ sub main_loop {
  
- sub process_args {
+ process_args();
+ refresh();
+-if ($patch_mode) {
++if ($cmd) {
+ 	patch_update_cmd();
+ }
+ else {
 -- 
 2.7.4
 
