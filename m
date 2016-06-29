@@ -7,79 +7,78 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3866D1FF40
+	by dcvr.yhbt.net (Postfix) with ESMTP id 490C12018B
 	for <e@80x24.org>; Wed, 29 Jun 2016 14:14:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752723AbcF2OOw (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 10:14:52 -0400
-Received: from mout.gmx.net ([212.227.15.15]:49303 "EHLO mout.gmx.net"
+	id S1752729AbcF2OO4 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 10:14:56 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57700 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752677AbcF2OOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 10:14:50 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LvEZe-1bQKtp0pP8-010P2W; Wed, 29 Jun 2016 16:14:47
+	id S1752677AbcF2OOz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 10:14:55 -0400
+Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Mcxtm-1b02ci34Hi-00IErr; Wed, 29 Jun 2016 16:14:50
  +0200
-Date:	Wed, 29 Jun 2016 16:14:46 +0200 (CEST)
+Date:	Wed, 29 Jun 2016 16:14:50 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/5] sequencer: use skip_blank_lines() to find the commit
+Subject: [PATCH 3/5] reset --hard: skip blank lines when reporting the commit
  subject
 In-Reply-To: <cover.1467209576.git.johannes.schindelin@gmx.de>
-Message-ID: <69bc831064331117141c7153dc72e9e658691155.1467209576.git.johannes.schindelin@gmx.de>
+Message-ID: <fd3b5aee740e88ceff0fbe77c61a10767c4f8622.1467209576.git.johannes.schindelin@gmx.de>
 References: <cover.1467209576.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:tM7dDFm2cMXA6w1IX7XgKuOkmGAmeK46uAdWzHINTGjjYULwm3q
- JBe80+NbdI+2zUJsDdJfjYxrv+g5kpBH02XaDNKa2G9hR52AIlLbPcNp35296LBPGekj6w+
- w/miIVDriTTBqC985EpButn5YGp/4WYcnCQ+7bTx8V7P7VHsUkwAkasCwJ6sNM8eFVimpnB
- wSkyKo5MnL+n6vNMr6eBw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:fTfF1J4uIg4=:fuVnOQPexVqAC6FQwqEsoM
- R3Xu2B0uztRqoSP4vPLNce47j9d04mSKTmv7FxYpJGPmSGlLOkHV/nJ6ZxkHMR4bSuPR1auNI
- eSu6ftF7nC9ThMizfNkpPRwKfFrNIzWUp31t2Q8eizCFUF4CFbkCCsbdB5wQwsmK3C3znycBN
- 7/JTJfcL8hPKE+dXbmsELoG7XxYINrrp+BAaH2FpVmHMtiRf+VHyyKVe/itGv9xFkroPxXv2q
- EhutFjMYzCbdQMto5sx+ViGBZ5zk48H3W8EwUWPE5Z1yyul14B27P4bR7yLAka01YP5aWSXex
- G7SxTmqNmYMI3vsQSy30TFCmBzTNgU0kO/rlKkSPq8Oum3eONZpg8V7CQEG6jFd8RAiU/KTXO
- BvAFXbQJgJLEnft+CbMhNO35HNNtr+Ty2fs9G61ZdxJMTejD6Q/jicD4ucdxYydlFV0OmcT0V
- itZeTuaOUyviR08L036PF8gz9AGoMSvSd77Y1gqQiXxaYxRP4/cCH0QHsK2NshPjuyXtYFN14
- 7tZVEn/FHyPShG9gmFLfNvwnl7fK7yLFImMj2OD4tgCKOCjOPZ2lBBuKufLr//M98Xsy3rzbQ
- pNeA5P80azGepe0/m8N954OcqRZ6M66fhXLJdcOwPnvEkzoDxKlNrJ61vqzJ8FyBInoza2KnN
- jTIrg9PLNUsd466o8I82YigiuC80Ax1dXz7aueZxqrrGmtjWAMck6afxik13WpZCgA36GNDpo
- HU7XJenEq3qJf1E0ecrDSCO/w2NS8t/RGpynBSNtu2HKz7wwYVf/5kQTC2YzIOHU1qcUUbpOg
- m4gKAUi
+X-Provags-ID: V03:K0:+XJ2P7i+sWYn2E1xuzwRG0mRnaiBDaYjepAIPNL2fO6o9KTyLP7
+ 8PWKtQXUGUZV72tZYqHXrZWg4ZSL9HXvZqYJBMjrscnbO58dGEaXhINlSLR/RXUHwNSfcXL
+ MZX2HvGkNjlq5bSLvU28R22HZkFFOEgvvUmamfg11CyiiIkpiqeHS4r389Yvlmu6/0cqkXD
+ Op2WdP2AYSRjS8U5b1TGA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:9Nt5/f2bWh4=:H0+tjzLX8hseEitwI5yIDk
+ pCWMQw9rSHHMPrawKareCOH5brCK2i0nIdpXWuL6AIT1OOrf2QipzSUOKDqrD3AzxEbfMYEFn
+ Z2gSaVzJ9ewNDbH9UQVT5H1nkGqIJcLtAlYrO6ezmdxpfWSiK+geDb8d2kzjoL0qugHSAIb86
+ PA2m/1hg9XSFNAgpvVCZ8YZwFBnRPGmXx43gd6OPKceBUa63ssyHrdVCgnvoWyu0kHh9Xqzrh
+ fhacVzdfMnOwo1NKj5Nr7P5aengLDQ5ev+XBh32l/+Q6PUDY8tHwk7Y3nMt3h6oUEgh2mHwHn
+ Ax9tHc16w1o66bcKfavro7DTEJN7ZF6CQaWtsP305O1PMeS58IK8ssjUcGl0iDGc85/K5XY4o
+ fNExvn2ReKoKpQwcPCLzsRvGmAOH5Mtz1gZfd2dfPt5tXhpzqbZBhYmDfJr98aVqt3svTIqFQ
+ h3KkAGCurQW4kTDi6+bVPj7znXvyhffpJ5ZWaSvOwbgqN1fFbMJ8UMHmM8JKYE0GBstnjqqvV
+ 8XsDAIyMgq+t2dI+nyW8HskkZ/MAaRMSjLIvRhCdB6DX7uVfbDdYPFZsynSr9WrVZAVQmEXv1
+ A2lQJni6khUHv4xtd0FxqShWRvhL0+FdY5Np6ZZ7KhuH4tutKSWOaPPmx9Ih2fwLgliFKb9PI
+ ocwcRf2CytdFJNOHea4Fl3yUoRMVtQvOKOfI4ilmbmc0YMVCwm0w3uVH5QxaoRcg0K6MhCqgX
+ tT7yLnXv5FsSzkL8lh90wqoCnmWW2kUfmfIoN5OhNbdPDKsZ+j/Rr/naBri1EqXUTnjzXxqwj
+ pP7eJU5
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Just like we already taught the find_commit_subject() function (to make
-it consistent with the code in pretty.c), we now simply skip leading
-blank lines of the commit message.
+When there are blank lines at the beginning of a commit message, the
+pretty printing machinery already skips them when showing a commit
+subject (or the complete commit message). We shall henceforth do the
+same when reporting the commit subject after the user called
+
+	git reset --hard <commit>
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ builtin/reset.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 7d7add6..cdfac82 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -544,10 +544,8 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 		 * information followed by "\n\n".
- 		 */
- 		p = strstr(msg.message, "\n\n");
--		if (p) {
--			p += 2;
--			strbuf_addstr(&msgbuf, p);
--		}
-+		if (p)
-+			strbuf_addstr(&msgbuf, skip_blank_lines(p + 2));
- 
- 		if (opts->record_origin) {
- 			if (!has_conforming_footer(&msgbuf, NULL, 0))
+diff --git a/builtin/reset.c b/builtin/reset.c
+index acd6278..5c6206b 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -103,7 +103,7 @@ static void print_new_head_line(struct commit *commit)
+ 	if (body) {
+ 		const char *eol;
+ 		size_t len;
+-		body += 2;
++		body = skip_blank_lines(body + 2);
+ 		eol = strchr(body, '\n');
+ 		len = eol ? eol - body : strlen(body);
+ 		printf(" %.*s\n", (int) len, body);
 -- 
 2.9.0.270.g810e421
 
