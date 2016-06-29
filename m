@@ -7,132 +7,77 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA0A21FE4E
-	for <e@80x24.org>; Wed, 29 Jun 2016 11:37:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5EF3E1FE4E
+	for <e@80x24.org>; Wed, 29 Jun 2016 11:37:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752281AbcF2LhE (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 07:37:04 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53547 "EHLO mout.gmx.net"
+	id S1752312AbcF2LhH (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 07:37:07 -0400
+Received: from mout.gmx.net ([212.227.15.19]:61180 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752187AbcF2Lg7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 07:36:59 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LsCdj-1bTP6U1Qhb-013u4H; Wed, 29 Jun 2016 13:36:49
+	id S1751544AbcF2LhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 07:37:05 -0400
+Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0Lcjgd-1bij3y3F27-00k72L; Wed, 29 Jun 2016 13:37:01
  +0200
-Date:	Wed, 29 Jun 2016 13:36:48 +0200 (CEST)
+Date:	Wed, 29 Jun 2016 13:37:01 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/9] Prepare the builtins for a libified merge_recursive()
+Subject: [PATCH 6/9] merge-recursive: allow write_tree_from_memory() to error
+ out
 In-Reply-To: <cover.1467199553.git.johannes.schindelin@gmx.de>
-Message-ID: <753eabc5193c148c67e64ed5d070b6ff08f51d82.1467199553.git.johannes.schindelin@gmx.de>
+Message-ID: <a9646a7f2ea07ecbe1ef22f7360afc8c0d950535.1467199553.git.johannes.schindelin@gmx.de>
 References: <cover.1467199553.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Rzdk5Jdx+PseuOKoWclzasMMiMofkrPJui8RV+v1w45IrEo5BeR
- +VO4ilIZeSrIeR7qBq3rjUiVcWiRuGdvKDCyKfHRLcOFuBnkp7Hu1mTCiQqzfUcEUxxqtyk
- bCUzJgVOw+DjQwP97yUVckPk2sKsvyT+Vyk0Nsv46EvSuRZ/salGSXtdjo/toGgwtCAy9mx
- 0woZ9uIEv2lY4IZR/EMeg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:8tL/Uj30pB4=:lFDuRPnr1/qEKMviVKLvMy
- abYoTAHIOBKVX/tYlnrkMoNlpOt+xGz0Ze2ea/skCzDRUF8uc2zn9+ZENefvVLGoNQ40/DbY6
- u0T9KKNQJ81pLETLftTsR/XxHy01U/DTzsZeyHddqIRRd9QgYh1gXcog0eJN7FaHHo+B9XM0s
- gFB0uaTUJTPS87C3KE7uOTUOT6zCJH37qdQiQ7XPPA430Ii61kjto6zAQxMiT+Tt8hP4Tgm91
- naYF0iuEME82NUmGLIw8iryBQrjkWy7UiLinfdnMwOow8ajmZEUDXffCIXiRH0N9c+X5/GVHs
- IIkUsiHLtDrAlFRAUmlEvYYDqqSt2okN2ixIFEUSflKWvXY1rpGeQtCyadTrJGhfI31IOo6/g
- QxzdUxSd0nwma7wu+Xt2XsAdwP4dzKLW41u8+b3fhTyLB4KB36ZK8CQZiwIvsTo89njMb7qB2
- nMGCy5RyDLC+1wTdy45gwD66XuIrE1DwPJbekSEZS4I25xlBx2gdzPH+z2f2G0eB3j2l04ZEF
- OX+daEamikkTjHIqm6fNUGCRr5l/kf75LX83UrtwNGYv5xIZEBIIaOAzkzJBi5dIjqsZTl06p
- 56RYsm7yKqeJfUklowsm8fGwb71EaZRNckHvq+4NSOhFCubBwf7mXGQz//jeKp2DJFoyz3JqU
- 0t5izMPNXfcKRTOiREMcf0t/60QjjJxFVWnKo4h2UPZ7wfzJB3GLKHs3/PMV4nIAR9vwS0zTQ
- wHqqq0uWj8PDXZ4XUKpyOet22IMovkPMtuxbzQyWr4HVKtBtXednhpMjM4GkRelWrgwWsMT/Y
- OiTjL5H
+X-Provags-ID: V03:K0:iXHiWTw+8C2mPbmuyP5joYtK1Gu0nkXkw6qB9ytv9bQlBnUU3bd
+ NcDrJAjMOjBiy5EYGZGsry50Nr6rIKtetRg7lekNATq3fiTB5/SXvsCfRK63GkSfS2rPbJY
+ JMmPn4PnHLIrXdNwxL3G6Elj4Dv2Px+ICbjgUamFO82E3K/wlkjxNLoqebKpSfwRyZwCYRC
+ 9bT8TEZFOSWRZGTw7n25w==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:bI+K1EuLnKY=:6z02ERYBXOZ89mzoYbUeyC
+ y30/lpyRwHmeZgKjs0PMc9/mgJ/8n77QLk4DhkndYwGb4lfGsRKiMx74UV+VDd/x8/6DRbvX4
+ PVWRs4tagyADKVAUyHBgXkUgXW1/KP+mCk3O51CgViJG7zB3dhKRVUfUw9/2CXlOIqSTPWbWG
+ dlBD5OmDIRklm1Oq6TWC0K6tWJYV05ZP3hR7846wWpgeFCxtDQVHIsLzBDU5erE/+GQ9FiF7v
+ 3kvM5XQrSkgI2lp/AR167Jkewjtox3L+NIFLZxsuffbP1QiVmAkcBSCqrgIb0unluru7eSKff
+ CXdcq3j3xj94ztfRImSs5FE7JqMItQv3+CtZpWvdhJeTQJrYZAVqzMXsQuY0x4ews24g2rsNt
+ WdAi8AUGwNzqoYZcMWxehvZiX6jRIOYSezRu8WaoLzP3qZzWRhthe7FU5yqYB969SLsrpu/wy
+ lVipXr1yc/a1sBzMEHshjIgUc20ODVnEH2LDtL9WC9leZc9BfoluDvE5kEXNhzzQZXyeqM2E+
+ 1x/b1Opyfb9w7EF+XfSbKS8j7I2CNcTZEN8RzayowtbdPInH6pGHgA4vw3C6GXqbtFK1y6mXb
+ rr9jafWqsSM62nQOtD0gDH5GxGXSaqrWR57TfJ93uGlSU7aF2lEBg+OMZBAfsKsI7cpyeGD+f
+ GOrXrYtBmOAyYYWBEEukC2Pe8H2yJBbcF5qLD9q+bgXOib55qIt1YB92xB8ZCfcZWilLTU8iJ
+ Ie464MC3wPsQsJmOEPj8Gjsv3bzHiqZd6hGZHvCo/q9nnXGzK7sHpP2bkx+B0L+WV8GAo/7IB
+ zIMGCsW
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-A truly libified function does not die() just for fun. As such, the
-recursive merge will convert all die() calls to return -1 instead in the
-next commits, giving the caller a chance at least to print some helpful
-message.
-
-Let's prepare the builtins for this fatal error condition, even if we do
-not really do more than imitating the previous die()'s exit(128): this is
-what callers of e.g. `git merge` have come to expect.
-
-Note that the callers of the sequencer (revert and cherry-pick) already
-fail fast even for the return value -1; The only difference is that they
-now get a chance to say "<command> failed".
+It is possible that a tree cannot be written (think: disk full). We
+will want to give the caller a chance to clean up instead of letting
+the program die() in such a case.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/checkout.c | 4 +++-
- builtin/merge.c    | 4 ++++
- sequencer.c        | 4 ++++
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ merge-recursive.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index c3486bd..14312f7 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -567,8 +567,10 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 			o.ancestor = old->name;
- 			o.branch1 = new->name;
- 			o.branch2 = "local";
--			merge_trees(&o, new->commit->tree, work,
-+			ret = merge_trees(&o, new->commit->tree, work,
- 				old->commit->tree, &result);
-+			if (ret < 0)
-+				exit(128);
- 			ret = reset_tree(new->commit->tree, opts, 0,
- 					 writeout_error);
- 			if (ret)
-diff --git a/builtin/merge.c b/builtin/merge.c
-index b555a1b..133b853 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -682,6 +682,8 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
- 		hold_locked_index(&lock, 1);
- 		clean = merge_recursive(&o, head,
- 				remoteheads->item, reversed, &result);
-+		if (clean < 0)
-+			exit(128);
- 		if (active_cache_changed &&
- 		    write_locked_index(&the_index, &lock, COMMIT_LOCK))
- 			die (_("unable to write %s"), get_index_file());
-@@ -1550,6 +1552,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		ret = try_merge_strategy(use_strategies[i]->name,
- 					 common, remoteheads,
- 					 head_commit, head_arg);
-+		if (ret < 0)
-+			exit(128);
- 		if (!option_commit && !ret) {
- 			merge_was_ok = 1;
- 			/*
-diff --git a/sequencer.c b/sequencer.c
-index c6362d6..13b794a 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -293,6 +293,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 	clean = merge_trees(&o,
- 			    head_tree,
- 			    next_tree, base_tree, &result);
-+	if (clean < 0)
-+		return clean;
+diff --git a/merge-recursive.c b/merge-recursive.c
+index d56651c9..6ab7dfc 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1875,8 +1875,8 @@ int merge_trees(struct merge_options *o,
+ 	else
+ 		clean = 1;
  
- 	if (active_cache_changed &&
- 	    write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
-@@ -561,6 +563,8 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 	if (!opts->strategy || !strcmp(opts->strategy, "recursive") || opts->action == REPLAY_REVERT) {
- 		res = do_recursive_merge(base, next, base_label, next_label,
- 					 head, &msgbuf, opts);
-+		if (res < 0)
-+			return res;
- 		write_message(&msgbuf, git_path_merge_msg());
- 	} else {
- 		struct commit_list *common = NULL;
+-	if (o->call_depth)
+-		*result = write_tree_from_memory(o);
++	if (o->call_depth && !(*result = write_tree_from_memory(o)))
++		return -1;
+ 
+ 	return clean;
+ }
 -- 
 2.9.0.268.gcabc8b0
 
