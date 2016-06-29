@@ -2,197 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C201F20FCF
-	for <e@80x24.org>; Wed, 29 Jun 2016 19:04:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA32320FCF
+	for <e@80x24.org>; Wed, 29 Jun 2016 19:37:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752078AbcF2TEw (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 15:04:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61773 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751391AbcF2TEv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 15:04:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 374C926E05;
-	Wed, 29 Jun 2016 14:56:24 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bP2oRgpeOk/qDMm5TJXiS4j1nTg=; b=q9IMOz
-	JtyFcH9epqE6whANjQfM4PH1LbLdZPOfojsDFc7iFTte35T9s82+3KQf3NQpIH44
-	CLImXZIojNm/yuDGp90X92Wf/bO+ZDFNjUrs5B9tyTOPA+U2SV9tXmpxbG2U+Lfw
-	fn1ITe4u4m7gxcLXps11HyqbGRHDWHB4TFjrM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e/1rcPFe7KRRtSW/Rz42+e611/1iQchg
-	qOmncVxNoWTJ68ziefzbvJc0fT/Jg5T0bmOO8N/fNeoIJeDhIAgnGBdjhA3B5qJW
-	tArCWyytd4u23BITjaN44rwm6Pg/5Dce8qqqBuUZYE6GY78DEZWsb3h8+98as4Za
-	ZIE6+IuKQCY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2DDF026E04;
-	Wed, 29 Jun 2016 14:56:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7CE5026E03;
-	Wed, 29 Jun 2016 14:56:23 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH 3/9] Prepare the builtins for a libified merge_recursive()
-References: <cover.1467199553.git.johannes.schindelin@gmx.de>
-	<753eabc5193c148c67e64ed5d070b6ff08f51d82.1467199553.git.johannes.schindelin@gmx.de>
-Date:	Wed, 29 Jun 2016 11:56:21 -0700
-In-Reply-To: <753eabc5193c148c67e64ed5d070b6ff08f51d82.1467199553.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Wed, 29 Jun 2016 13:36:48 +0200
-	(CEST)")
-Message-ID: <xmqqziq33ju2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751449AbcF2ThV (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 15:37:21 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:37099 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750878AbcF2ThV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 15:37:21 -0400
+Received: by mail-wm0-f52.google.com with SMTP id a66so88193397wme.0
+        for <git@vger.kernel.org>; Wed, 29 Jun 2016 12:37:20 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=Xm3vL7EGxJhq8TfLG97yRlBT6ZxQDlt4LZN8i+XZJrY=;
+        b=UmssYPTZd8VPH0NpUxI3wqEjNJktOMHUdMqcKoSLM5IVgv356IJMCfEiVCOdt3tMdl
+         mb3qbAm415kaCAx8vD4pLVwNYdvLsR/EbNnrls6CUwD/OalBaVQXT2yna2xS1wFSBcBV
+         2mDumKt8vt+pveeybh7m1fYqvXriPSD9cjYYcOFxSgFdmQiYNXYQeetBkjcVmsoNE9CV
+         LrKhWpDTzDxdOLNi6TGnVi2a3Q9h1ZG/jSFklsPKVaUPMUH3Gugyn4CSiZiX+zaE7Yxt
+         bAFgL4iNm3woOZZcS/yRj1mTn2C2Cc56YoRrvQSYqdYzxltdj4A8Zw2PJ1Ai9bCQHD1j
+         FwMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:newsgroups:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=Xm3vL7EGxJhq8TfLG97yRlBT6ZxQDlt4LZN8i+XZJrY=;
+        b=BfgIyr3uP+PunyL3xFaCR2swUTxstkOVz/AWEsChoj1T7+GoK/WHtU++J7PxvWqzCD
+         ve86SZN3B6RAP4v4JGumaXOhQHzxDhfaAaooJFeOVvZNMdI8UEiuWaQnt/p0fuh7V6Yr
+         wLmOR5g3Or7IIYqD3py2T9QNJ6bflA6VdNLrRLI9r6kqq9Qcf4exZLLPAaja3Plvm92l
+         v9DiQYsbhTbJ/tbBLEcbZiRhVFkhg1l/Y+H4RjSLsXICuNkW3ONdZMEHo3vrtzlavSDI
+         0ahtEuvqO561qPRs85x2kVXEq6bEWrcApP8F2QcGLvHR/RjI2MHeCXfMex5+Q958VjJX
+         GKiw==
+X-Gm-Message-State: ALyK8tJ9EFs+uU1Pk2ATLCSG0oIGnAH2roSBAUb0Q3nrtt9Wiz2s7d1HFIp8UsqoXD2jyQ==
+X-Received: by 10.194.101.233 with SMTP id fj9mr9903021wjb.54.1467228549213;
+        Wed, 29 Jun 2016 12:29:09 -0700 (PDT)
+Received: from [192.168.1.34] (aefh205.neoplus.adsl.tpnet.pl. [79.186.137.205])
+        by smtp.googlemail.com with ESMTPSA id p6sm757897wme.22.2016.06.29.12.29.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Jun 2016 12:29:08 -0700 (PDT)
+Subject: Re: Fwd: what is a snapshot?
+To:	Ovatta Bianca <ovattabianca@gmail.com>, git@vger.kernel.org
+References: <CAHWPVgNrTEw9FmW6K7QucgA74QWsTKfxZGt+mGd099k+O7O+rw@mail.gmail.com>
+ <CAHWPVgMWeHoD5vTiFJ1gsm2hS74LK7j4npVVbOZeR43cX3qWXw@mail.gmail.com>
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <57742174.9020309@gmail.com>
+Date:	Wed, 29 Jun 2016 21:28:52 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2CA999DA-3E2B-11E6-9B59-89D312518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <CAHWPVgMWeHoD5vTiFJ1gsm2hS74LK7j4npVVbOZeR43cX3qWXw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+W dniu 2016-06-19 o 16:15, Ovatta Bianca pisze:
 
-> A truly libified function does not die() just for fun.
+> I read in every comparison of git vs other version control systems,
+> that git does not record differences but takes "snapshots"
+> I was wondering what a "snapshot" is ? Does git store at every commit
+> the entire files which have been modified even if only a few bytes
+> were changed out of a large file?
 
-The sentence is wasting bits.  After all, a helper function in
-run-once-and-exit program does not die() just for fun, either.
+There are two things: the conceptual level, and actual storage. On the
+conceptual level, object representing revisions (commit) refer to
+object representing top directory (tree) of a project, that is a snapshot
+of a project state at given revision.
 
-So what's more interesting to know for the readers?
+On the storage level, Git has two types of object storage. In "loose"
+format (used for new objects), each object is stored as a separate
+file. This is not as wasteful as you think: first, there is deduplication,
+that is each version of a file is stored only once. Second, contents
+(usually text) is stored compressed.
 
-> As such, the
-> recursive merge will convert all die() calls to return -1 instead in the
-> next commits, giving the caller a chance at least to print some helpful
-> message.
->
-> Let's prepare the builtins for this fatal error condition, even if we do
-> not really do more than imitating the previous die()'s exit(128): this is
-> what callers of e.g. `git merge` have come to expect.
+In "packed" format (nowadays Git automatically repacks from "loose"
+to "packed" when it looks like it is needed) there is additional
+libxdiff-like deltafication. In this format Git stores differences
+(well, it also ensures that delta chain doesn't gets too long).
 
-One thing missing is your design decision and justification.
+HTH
+-- 
+Jakub Narębski
 
-For example, the above explanation hints that the original code in
-this hunk expected merge_trees() to die() with some useful message
-when there is an error condition, but merge_trees() is going to be
-improved not to die() itself and return -1 instead to signal an
-error, so that the caller can react more flexibly, and this is a
-step to prepare for the version of merge_trees() that no longer
-dies.
-
-> -			merge_trees(&o, new->commit->tree, work,
-> +			ret = merge_trees(&o, new->commit->tree, work,
->  				old->commit->tree, &result);
-> +			if (ret < 0)
-> +				exit(128);
-
-The postimage of the patch tells us that the caller is now
-responsible for exiting with status 128, but neither the proposed
-log message nor the above hunk tells us where the message the
-original code must have given to the end user from die() inside
-merge_trees().  The updated caller just exits, so a natural guess is
-that the calls to die() have been changed to fprintf(stderr) with
-the patch.
-
-But that does not mesh very well with the stated objective of the
-patch.  The callers want flexibility to do their own error handling,
-including giving their own message, so letting merge_trees() to
-still write the same message to the standard error stream would not
-work well for them.  A caller may want to do merge_trees() just to
-see if it succeeds, without wanting to give _any_ indication of that
-is happening to the user, because it has an alternate/fallback code
-if merge_trees() fails, for example (analogy: "am -3" first tries a
-straight patch application before fallking back to 3-way merge; it
-may not want to show the error from the first attempt).
-
-The reader _can_ guess that this step ignores the error-message
-issue, and improving it later (or keep ignoring that issue) might be
-OK in the context of this patch series, but it is necessary to be
-upfront to the readers what the design choices were and which one of
-those choices the proposed patch adopted as its design for them to
-be able to evaluate the patch series correctly.
-
-One design alternative we've seen used in our code to help callers
-who want no default messages is to pass struct strbuf &err down the
-callchain and collect the default messages without emitting them
-directly to the standard error stream when an error is diagnosed.  I
-do not know if that pattern is applicable or should be applied to
-this codepath.
-
-> Note that the callers of the sequencer (revert and cherry-pick) already
-> fail fast even for the return value -1; The only difference is that they
-> now get a chance to say "<command> failed".
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin/checkout.c | 4 +++-
->  builtin/merge.c    | 4 ++++
->  sequencer.c        | 4 ++++
->  3 files changed, 11 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index c3486bd..14312f7 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -567,8 +567,10 @@ static int merge_working_tree(const struct checkout_opts *opts,
->  			o.ancestor = old->name;
->  			o.branch1 = new->name;
->  			o.branch2 = "local";
-> -			merge_trees(&o, new->commit->tree, work,
-> +			ret = merge_trees(&o, new->commit->tree, work,
->  				old->commit->tree, &result);
-> +			if (ret < 0)
-> +				exit(128);
->  			ret = reset_tree(new->commit->tree, opts, 0,
->  					 writeout_error);
->  			if (ret)
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index b555a1b..133b853 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -682,6 +682,8 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
->  		hold_locked_index(&lock, 1);
->  		clean = merge_recursive(&o, head,
->  				remoteheads->item, reversed, &result);
-> +		if (clean < 0)
-> +			exit(128);
->  		if (active_cache_changed &&
->  		    write_locked_index(&the_index, &lock, COMMIT_LOCK))
->  			die (_("unable to write %s"), get_index_file());
-> @@ -1550,6 +1552,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->  		ret = try_merge_strategy(use_strategies[i]->name,
->  					 common, remoteheads,
->  					 head_commit, head_arg);
-> +		if (ret < 0)
-> +			exit(128);
->  		if (!option_commit && !ret) {
->  			merge_was_ok = 1;
->  			/*
-> diff --git a/sequencer.c b/sequencer.c
-> index c6362d6..13b794a 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -293,6 +293,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
->  	clean = merge_trees(&o,
->  			    head_tree,
->  			    next_tree, base_tree, &result);
-> +	if (clean < 0)
-> +		return clean;
->  
->  	if (active_cache_changed &&
->  	    write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
-> @@ -561,6 +563,8 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
->  	if (!opts->strategy || !strcmp(opts->strategy, "recursive") || opts->action == REPLAY_REVERT) {
->  		res = do_recursive_merge(base, next, base_label, next_label,
->  					 head, &msgbuf, opts);
-> +		if (res < 0)
-> +			return res;
->  		write_message(&msgbuf, git_path_merge_msg());
->  	} else {
->  		struct commit_list *common = NULL;
