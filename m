@@ -6,110 +6,69 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA00020FCF
-	for <e@80x24.org>; Wed, 29 Jun 2016 20:45:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D79CC20FCF
+	for <e@80x24.org>; Wed, 29 Jun 2016 20:50:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751698AbcF2UpS (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 16:45:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50260 "EHLO
+	id S1751589AbcF2Uub (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 16:50:31 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58876 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751601AbcF2UpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 16:45:17 -0400
+	with ESMTP id S1751023AbcF2Uu2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 16:50:28 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 749FB2854C;
-	Wed, 29 Jun 2016 16:39:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 09AC628012;
+	Wed, 29 Jun 2016 16:50:27 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U8evB+jC9Yz42yrP7ZhNXT/BD9o=; b=w63E6z
-	ZE8pelTDOZo18TTwwmrgq5hq1yEBc6wohmSu1rH6O9r9gaZ+TwNNCp+IsmVOd881
-	qZp18Fv7jg1bpM7ttPKjk8xeqQUOWY1HVDwtA/JZVEW6Ysb+4vga0fMOsL1NSgzE
-	mXoy1XKPiapm7xWzgoELdjOX6YuJ5L+xxnVUU=
+	:content-type; s=sasl; bh=1hArAGKpmIUWUNyOQqyOluOfPgU=; b=ScGX9F
+	0JvN/CICt0CYXc4jnJ4En87TJRtZNK3DxMjH2YNcXq9qzpSvi2oaumFpVwFEINsr
+	sddrjTC8N/lDFxQ/Uwjop7QJi9kPvw5pwajWuRICpfKgG6Z2iNU9Smcn0jL2s3kB
+	3Y2vRyTGY1lpCNabf1pI0nlStMtyj7WJtKOrU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VDSIfaurc5Tj3H6M91BLDTd4ec+BF5Ut
-	yUYRLlffhy3YK4umgKVRgkN1a8V2zxQRZTQA+vcjY1ixi6Ic3wK5DBLapy7A6Kgh
-	Pq7pWa/DMu8xSUkAMu8oKQBkbXxBoe1GrwTYjuDUzxqf04zIyi52I8quJ9JUsF1R
-	wN+e4O5O24E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D73F2854B;
-	Wed, 29 Jun 2016 16:39:20 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=GZ8vy0L/fFCxbK8+Gl3dji4JfneFbvBr
+	AlJSq1aceEk41F5oCLiSiSKmRzQVwRWsN4TN421BqyuZ7TEbbchWEOw9GzsV1xGr
+	j4V1Pa3EKUqTmrL3nEOQKb6V1ZRx6I5b4IQaiBH3Kogms8+nkTnG2q2qf/a+ylDA
+	GWY9LSjx54k=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0154A28011;
+	Wed, 29 Jun 2016 16:50:27 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E9A4728549;
-	Wed, 29 Jun 2016 16:39:19 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 680D528010;
+	Wed, 29 Jun 2016 16:50:26 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Jeff King <peff@peff.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Marc Strapetz <marc.strapetz@syntevo.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: topological index field for commit objects
-References: <f15a14a5-f39d-9c41-16b9-fe0a48d7450b@syntevo.com>
-	<CAPc5daVC-+0Vr30L_pbcL0GN2OmnGm-+V4tE2WTos_vPRb_S1g@mail.gmail.com>
-	<CAGZ79kY6Ry+DfO90wza_RrVbCRAgNB4N=0W6svuJgvGNxeFh5Q@mail.gmail.com>
-Date:	Wed, 29 Jun 2016 13:39:17 -0700
-In-Reply-To: <CAGZ79kY6Ry+DfO90wza_RrVbCRAgNB4N=0W6svuJgvGNxeFh5Q@mail.gmail.com>
-	(Stefan Beller's message of "Wed, 29 Jun 2016 13:20:37 -0700")
-Message-ID: <xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com>
+To:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH 1/9] Report bugs consistently
+References: <cover.1467199553.git.johannes.schindelin@gmx.de>
+	<8615dc276828a3f99a27ff2eda9909548a7d435e.1467199553.git.johannes.schindelin@gmx.de>
+Date:	Wed, 29 Jun 2016 13:50:24 -0700
+In-Reply-To: <8615dc276828a3f99a27ff2eda9909548a7d435e.1467199553.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Wed, 29 Jun 2016 13:36:41 +0200
+	(CEST)")
+Message-ID: <xmqqfurv3ejz.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8E1CC198-3E39-11E6-9EEB-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 1B5BD980-3E3B-11E6-84A5-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> On Wed, Jun 29, 2016 at 11:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> On Wed, Jun 29, 2016 at 11:31 AM, Marc Strapetz
->> <marc.strapetz@syntevo.com> wrote:
->>> This is no RFE but rather recurring thoughts whenever I'm working with
->>> commit graphs: a topological index attribute for commit objects would be
->>> incredible useful. By "topological index" I mean a simple integer for which
->>> following condition holds true:
->>
->> Look for "generation numbers" in the list archive, perhaps?
->
-> Thanks for the pointer to the interesting discussions.
->
-> In http://www.spinics.net/lists/git/msg161363.html
-> Linus wrote in a discussion with Jeff:
->
->> Right now, we do *have* a "generation number". It's just that it's
->> very easy to corrupt even by mistake. It's called "committer date". We
->> could improve on it.
->
-> Would it make sense to refuse creating commits that have a commit date
-> prior to its parents commit date (except when the user gives a
-> `--dammit-I-know-I-break-a-wildy-used-heuristic`)?
+> The vast majority of error messages in Git's source code which report a
+> bug use the convention to prefix the message with "BUG:".
 
-I think that has also been discussed in the past.  I do not think it
-would help very much in practice, as projects already have up to 10
-years (and the ones migrated from CVS, even more) worth of commits
-they cannot rewrite that may record incorrect committer dates.
-You'd need something like "you can trust committer dates that are
-newer that this date" per project to switch between slow path and
-fast path, with an updated fsck that knows how to compute that
-number after you pulled from somebody who used that overriding
-option.
+Good thing to do.
 
-If the use of generation number can somehow be limited narrowly, we
-may be able to incrementally introduce it only for new commits, but
-I haven't thought things through, so let me do so aloud here ;-)
+But if we were to review and apply a 200+ line patch, I wonder if we
+want to go one step further to allow us to write
 
-Suppose we use it only for this purpose:
+    BUG("killed-file %s not found", name);
 
- * When we have two commits, C1 and C2, with generation numbers G1
-   and G2, we can say "C1 cannot possibly be an ancestor of C2" if
-   G1 > G2.  We cannot say anything else based on generation
-   numbers (or lack thereof).
+instead.
 
-then I think we could just say "A newly created commit must record
-generation number G that is larger than generation numbers of its
-parent commits; ignore parents that lack generation number for the
-purpose of this sentence".
-
-I am not sure if that limited use is all that useful, though.
