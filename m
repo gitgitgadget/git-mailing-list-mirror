@@ -2,73 +2,195 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AE5E2018A
-	for <e@80x24.org>; Wed, 29 Jun 2016 02:39:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A44F02018A
+	for <e@80x24.org>; Wed, 29 Jun 2016 02:50:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752584AbcF2Cjv (ORCPT <rfc822;e@80x24.org>);
-	Tue, 28 Jun 2016 22:39:51 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54715 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752537AbcF2Cju (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2016 22:39:50 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 41A1826DB4;
-	Tue, 28 Jun 2016 22:39:49 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Gq5SglWD8dZXuJqB6seKLhxLfEs=; b=X8SJtM
-	TNe06W+D7K4aZcY1ImHN5+o9j95SI5v276yUzw2xyDB04elXeiREjrNtmaJk+qRC
-	XAGHuvYRYZ9Xs3TgRq9ke1DdQ3SZw873Znv1UVV05NEB0HT6eIjhIXQ8dX3K6KUt
-	KgS9wY2Ehh0/3lscGWLWUTr7YZYRmdcAGk2ow=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OEtm2qalN0ZVIpdy7xlLfnzUJfH/FriC
-	5DNKZYlGEZfzeLmdfI6ZpfwiK7XC1k7cOmrRmpNvKNhEbJLL+NWIZJSIJQZedbxt
-	y6pKclm4SyD+XHzP+p3DC+JdKYERAp4CAsxjTbbhdM7AsacBVpqDQ6DXVe6zhyTM
-	x/V7Cq6346E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 39FF226DB3;
-	Tue, 28 Jun 2016 22:39:49 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BB20826DAF;
-	Tue, 28 Jun 2016 22:39:48 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Subject: Re: preview: What's cooking in git.git (Jun 2016, #10; Tue, 28)
-References: <xmqq4m8c7uo6.fsf@gitster.mtv.corp.google.com>
-	<20160629014342.GA28661@sigill.intra.peff.net>
-Date:	Tue, 28 Jun 2016 19:39:46 -0700
-In-Reply-To: <20160629014342.GA28661@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 28 Jun 2016 21:43:43 -0400")
-Message-ID: <xmqqziq467m5.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752531AbcF2Cuw (ORCPT <rfc822;e@80x24.org>);
+	Tue, 28 Jun 2016 22:50:52 -0400
+Received: from alt22.smtp-out.videotron.ca ([70.80.0.73]:14585 "EHLO
+	alt22.smtp-out.videotron.ca" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752450AbcF2Cuv (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2016 22:50:51 -0400
+Received: from yoda.home ([96.23.157.65])
+	by Videotron with SMTP
+	id I4q3befk2PTiyI4q4bd93b; Tue, 28 Jun 2016 22:02:53 -0400
+X-Authority-Analysis: v=2.1 cv=L469O7n8 c=1 sm=1 tr=0
+ a=keA3yYpnlypCNW5BNWqu+w==:117 a=keA3yYpnlypCNW5BNWqu+w==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
+ a=pD_ry4oyNxEA:10 a=dg4UtMH5AAAA:8 a=Wndwbp34r4s3ELBlSEMA:9
+ a=7QR2YfpzeocusIPy:21 a=6iGz4vdewQOhZOSG:21 a=CjuIK1q_8ugA:10
+ a=byNfn09xH3PuSfgbYLsR:22
+Received: from xanadu.home (xanadu.home [192.168.2.2])
+	by yoda.home (Postfix) with ESMTPSA id E9A452DA0200;
+	Tue, 28 Jun 2016 22:02:50 -0400 (EDT)
+Date:	Tue, 28 Jun 2016 22:02:50 -0400 (EDT)
+From:	Nicolas Pitre <nico@fluxnic.net>
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4] Refactor recv_sideband()
+In-Reply-To: <xmqqfurx6j16.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.LFD.2.20.1606282047360.24439@knanqh.ubzr>
+References: <20160613195224.13398-1-lfleischer@lfos.de> <20160628043526.19403-1-lfleischer@lfos.de> <xmqqa8i59rph.fsf@gitster.mtv.corp.google.com> <xmqq60st9qg5.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1606281334030.24439@knanqh.ubzr>
+ <xmqqlh1p89mo.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1606281422500.24439@knanqh.ubzr> <xmqq60st853d.fsf@gitster.mtv.corp.google.com> <alpine.LFD.2.20.1606281629280.24439@knanqh.ubzr> <xmqqwpl96mvv.fsf@gitster.mtv.corp.google.com>
+ <alpine.LFD.2.20.1606281726330.24439@knanqh.ubzr> <xmqqfurx6j16.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BF796058-3DA2-11E6-BF38-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-CMAE-Envelope: MS4wfPget0Io4Ksy6Kr2mJTJ6JXLbcTVy5VW5IC7dkmvLL8931m7qRMo3BCHQTpLDAoNl0/xwl+xV2loj5Sa6ssGgwlbPtR/hXSnxafQQj0dVpIDNeoPgwrR
+ 6ttBjNs3H7g6TZCDwNm4KIJU8rz6A6sJt79epUaK3ul8qQD7d5pnvH8b8TqiQlbgdjgJmHoxaJA9p+db+vrAzxo1L8Ssl0Fh6ayGSw/hFaiHvT00HUKcpWe/
+ j/Jb4U7gAhPsMEmZ7GE2yDNfc+MPvb+YbISDsex+ioE=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Tue, 28 Jun 2016, Junio C Hamano wrote:
 
-> Johannes pointed out that matching "3" for Windows is overly broad (it
-> only happens due to raise(), not regular signal death).
->
-> What do we want to do there?
->
-> I _think_ matching "3" just makes us slightly less careful, and will not
-> cause false positives (it may cause false negatives in very specific
-> cases, though). So one option is to proceed as-is.
->
-> Another is to just put the posix/ksh schemes into the helper function,
-> and let Windows people sort it out later if they want to.
+> Nicolas Pitre <nico@fluxnic.net> writes:
+> 
+> >> The basic structure of the code (without the "SQUASH" we discussed)
+> >> looks like this:
+> >> 
+> >> 	strbuf_addf(&outbuf, "%s", PREFIX);
+> >> 	while (retval == 0) {
+> >> 		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
+> >> 		...
+> >> 		band = buf[0] & 0xff;
+> >> 		switch (band) {
+> >> 		case 3:
+> >> 			... /* emergency exit */
+> >> 		case 2:
+> >> 			while ((brk = strpbrk(b, "\n\r"))) {
+> >> 				int linelen = brk - b;
+> >> 
+> >> 				if (linelen > 0) {
+> >> 					strbuf_addf(&outbuf, "%.*s%s%c",
+> >> 						    linelen, b, suffix, *brk);
+> >> 				} else {
+> >> 					strbuf_addf(&outbuf, "%c", *brk);
+> >> 				}
+> >> 				fprintf(stderr, "%.*s", (int)outbuf.len,
+> >> 					outbuf.buf);
+> >> 				strbuf_reset(&outbuf);
+> >> 				strbuf_addf(&outbuf, "%s", PREFIX);
+> >> 				b = brk + 1;
+> >> 			}
+> >> 			if (*b)
+> >> 				strbuf_addf(&outbuf, "%s", b);
+> >> 			break;
+> >> 		...
+> >> 		}
+> >> 	}
+> >> 
+> >> 	if (outbuf.len > 0)
+> >> 		fprintf(stderr, "%.*s", (int)outbuf.len, outbuf.buf);
+> >>  ...
+> > That won't work. If at this point there is the beginning of a partial 
+> > line queued in the buffer from the previous round waiting to see its 
+> > line break, you just deleted the beginning of that line.
+> 
+> Ahh, OK, a single logical line split into two and sent in two
+> packets--the first one would not result in any output (just does "if
+> (*b) strbuf_addf(...)" to buffer it) and then the second one finally
+> finds a LF.  Yeah, that won't work if we cleared.
+> 
+> But then my observation still holds, no?
 
-Probably the latter.  Thanks for stopping me ;-)
+I think it does... but I'm no longer sure of what you meant.
+
+To make it clearer, here's a patch on top of pu that fixes all the 
+issues I think are remaining. All tests pass now.
+
+diff --git a/sideband.c b/sideband.c
+index 36a032f..0e6c6df 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -23,10 +23,8 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 	const char *term, *suffix;
+ 	char buf[LARGE_PACKET_MAX + 1];
+ 	struct strbuf outbuf = STRBUF_INIT;
+-	const char *b, *brk;
+ 	int retval = 0;
+ 
+-	strbuf_addf(&outbuf, "%s", PREFIX);
+ 	term = getenv("TERM");
+ 	if (isatty(2) && term && strcmp(term, "dumb"))
+ 		suffix = ANSI_SUFFIX;
+@@ -34,14 +32,15 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 		suffix = DUMB_SUFFIX;
+ 
+ 	while (!retval) {
++		const char *b, *brk;
+ 		int band, len;
+ 		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
+ 		if (len == 0)
+ 			break;
+ 		if (len < 1) {
+ 			strbuf_addf(&outbuf,
+-				    "\n%s: protocol error: no band designator\n",
+-				    me);
++				    "%s%s: protocol error: no band designator",
++				    outbuf.len ? "\n" : "", me);
+ 			retval = SIDEBAND_PROTOCOL_ERROR;
+ 			break;
+ 		}
+@@ -50,7 +49,8 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 		len--;
+ 		switch (band) {
+ 		case 3:
+-			strbuf_addf(&outbuf, "\n%s%s\n", PREFIX, buf + 1);
++			strbuf_addf(&outbuf, "%s%s%s", outbuf.len ? "\n" : "",
++				    PREFIX, buf + 1);
+ 			retval = SIDEBAND_REMOTE_ERROR;
+ 			break;
+ 		case 2:
+@@ -70,6 +70,8 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 			while ((brk = strpbrk(b, "\n\r"))) {
+ 				int linelen = brk - b;
+ 
++				if (!outbuf.len)
++					strbuf_addf(&outbuf, "%s", PREFIX);
+ 				if (linelen > 0) {
+ 					strbuf_addf(&outbuf, "%.*s%s%c",
+ 						    linelen, b, suffix, *brk);
+@@ -78,27 +80,29 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 				}
+ 				fwrite(outbuf.buf, 1, outbuf.len, stderr);
+ 				strbuf_reset(&outbuf);
+-				strbuf_addf(&outbuf, "%s", PREFIX);
+ 
+ 				b = brk + 1;
+ 			}
+ 
+ 			if (*b)
+-				strbuf_addf(&outbuf, "%s", b);
++				strbuf_addf(&outbuf, "%s%s",
++					    outbuf.len ? "" : PREFIX, b);
+ 			break;
+ 		case 1:
+ 			write_or_die(out, buf + 1, len);
+ 			break;
+ 		default:
+-			strbuf_addf(&outbuf, "\n%s: protocol error: bad band #%d\n",
+-				me, band);
++			strbuf_addf(&outbuf, "%s%s: protocol error: bad band #%d",
++				    outbuf.len ? "\n" : "", me, band);
+ 			retval = SIDEBAND_PROTOCOL_ERROR;
+ 			break;
+ 		}
+ 	}
+ 
+-	if (outbuf.len)
++	if (outbuf.len) {
++		strbuf_addf(&outbuf, "\n");
+ 		fwrite(outbuf.buf, 1, outbuf.len, stderr);
++	}
+ 	strbuf_release(&outbuf);
+ 	return retval;
+ }
