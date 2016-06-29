@@ -7,75 +7,68 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD8121FF40
-	for <e@80x24.org>; Wed, 29 Jun 2016 14:15:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D5181FF40
+	for <e@80x24.org>; Wed, 29 Jun 2016 14:31:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752744AbcF2OPH (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 10:15:07 -0400
-Received: from mout.gmx.net ([212.227.15.19]:57635 "EHLO mout.gmx.net"
+	id S1752690AbcF2ObN (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 10:31:13 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50722 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752643AbcF2OPF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 10:15:05 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MSMKx-1atCzm28UN-00TT1V; Wed, 29 Jun 2016 16:15:01
+	id S1752073AbcF2ObM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 10:31:12 -0400
+Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Mc8Pz-1b0sFw2KT1-00JbrH; Wed, 29 Jun 2016 16:30:59
  +0200
-Date:	Wed, 29 Jun 2016 16:15:00 +0200 (CEST)
+Date:	Wed, 29 Jun 2016 16:30:58 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/5] Skip blank lines when matching <commit>^{/foo}
-In-Reply-To: <cover.1467209576.git.johannes.schindelin@gmx.de>
-Message-ID: <7cebdcd80a93d1604258e9dc9cb286cd6ba97ba8.1467209576.git.johannes.schindelin@gmx.de>
-References: <cover.1467209576.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 0/2] Late edits to the rebase -i tests
+Message-ID: <cover.1467210629.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:0qZcqdtg+YC/VexyDqmHIm+1AZnanjhkTVI4vLbkIGd5jImtn+r
- JSxCiGrRks9RYgq7zCdc63OvgeAOaQKRHY8Ia7pjFiXbCdedNINrBVtDNvvjXFNi8gdUs+r
- bCRmor5hpCpKkHbBRxEZv2WTgQezd2/oShcegYa+llO7eek2U//Vb1L1IWKcXHaQUh0lWBJ
- Py8cPj7ok1VvKyg998hYw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:btKpgfkXQXs=:L/mfLAgWzdoxT1aZrwStvI
- 6tH3LhmAUENyWoGEPGURR+3PQklWZoPp9x/k8w4tFb4jkxMyBvbYl3576SFBZloOTvSrs0Veg
- zG4+0yPwKvPOkWecl18gW+PI55WX1MD07O6ToAWJEtT/AkIE4Njntvyp4wGET+2TvYVismrZ/
- qdZnANj39i4N/0hFHhbA4f4nWbBb0s5NI0JrXym5DunsrIEO1939N7W7jo80xsEaOHforCysh
- 2r1CxAfIt9JuoM4C3DXTkXEmWgqY02SdPGJNibH7N1TKEaWj2wk6gSQwc7r7CZPiW9EszRXbA
- J0h3H7X2AmxBsU3tXIfP32rNEph42nf8WH6tRrcDhjSga62q6OKFHbaiJmXA36rQALdYHiQWP
- NTzAA/4HCZf6JSlAMTnXcHGMu45MhY07A9sPcKq9xoRraxzx7UMj8ly0igmE6sGsbQalIzXcs
- ohfZfIyozzmPZ6hc/bz1B6C7VQWeNM4ENHemcQzlLpueTFQ4kmZNmpUgZVMQE998ciAvwuTaQ
- iFI7KIdFziXX7WUGwSugZE03RsffBrJCc65H1lo5UnnWsvmlaltBdqWZqCqM5ErSZjUaFLs9x
- i7LgRlsW1yTRGsJ/juSY8ZFZzmpphKlfX3+LtQsxYgO3tpFHdcZzo9Tvwycu+KuKNTRNxQ93G
- BcWnV5KJf7n+Ddw32pDRD8AxLe/o+9PYvuu3hYc0D65QMvf8zBI+gvwZiZGqiroNhFkcGb39Q
- Yr4UITA7Ko/Oc87TwIANM5PKUF3EYGQTsn8y4LKhCkwdktY8LHXfkuTlksy+pf93UvNNfoiXD
- 7VbQ/ZH
+X-Provags-ID: V03:K0:K09mxKZC01CbRo2Pk4xPnm7nrIi6wGJJRLd6n234wjGZlt/1h5c
+ nKg/rEXNsN/xB/3llVXkoSQyE3UmeUeQoXucB/FYxI13URCiPj9ACrk7WRr4EeD2E6pvNxn
+ AHReWbT69IiufXH7gUG+GrDdb8SIYO+/l8WgJzzDysy8bgfqsmvarlYqE3KPZhPYVbV7nzy
+ QCJgV/+96px7kTrYXa2Jg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:UdUAs0A8gGs=:L8YBwiH8rHtZRK73XaCGaZ
+ jZZJ2ahANEwOGIXfuMhkstclq4+r7kgP8yFyUaEXqBkz19UrJBTkezMuWzs4qWQA8Ie8yvivw
+ OkQajo8QCnUexpX5PrYqMRxdLF3IczBTKPKDvRM+L0pfncPh7L9DErzWIzNNGZ2n1n4WzjD6b
+ PU1kgOcRuKb8k0wZWlZSTFIwjV5HA8d9qi9joXXlQsm3ZKtrkMXb4lbSUJz5zc+Oq2cV+biZH
+ E+EBbK2Z7L/Q6up0+xf26d6w4sV5f2l6JTiZGH6Say7AJ5Pa7p8W+siV/8Fq0XK3kjXmAZ3hl
+ HIjgFLD7MLAKuz5la8rXi1TyZtMEgf8GYAonBLAvjvbdlv7lPoimFWWP5XDE5Vha//do8G+2U
+ kckmLZyhZ0XsmsGwd7pJFrVVjBJcMhHlrPjTEaAKbtibsP6PvbFvJYWuj+IhBrsNaUR8dWv+2
+ fiEbIISsX2C9S9aq0533r7ywE79Yy4i0B4/L4+OTjoLav3vuV1LHAvXGySyxWrOaZOwWssLbB
+ d79ECtbmE1JfDeBEb9AOkCFiIxXm2QFxUaMSHh7+YCtw1r3tzBFL09xJzt24ih3YuK7ff5yCP
+ DJZ9e3/FlvQlAmuayP+7Xo/JLL9uRaS7oTRKG8cv/drfJFweWQTdXXlxWLT0N35sIr45OKihc
+ v6okeD79/m5hg77Lkm0r8WdyzAivlIgf3Ws7k65OD8P+qv03QEshhST+naQi+5iP663hamkH1
+ uK/0VLtqKC4OzHiq50STWDdGnubtWjH7q1+TEYBA66r/+RqnaLVTixaURqNpHbvH/3AX7I5A1
+ Zd/3nOJ
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When trying to match a pattern in the commit subject, simply skip leading
-blank lines in the commit message. This is consistent with the
-pretty-printing machinery: it silently ignores leading blank lines in the
-commit object's body.
+I meant to send the first patch much earlier, but got side-tracked
+before I could add the --gpg-sign test.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- sha1_name.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+This is just another patch series in preparation for the rebase--helper
+(to be precise, this is the seventh out of fourteen patch series that
+have not yet been merged to master; Six are already in flight, so I will
+stop here until the queue empties a little.)
 
-diff --git a/sha1_name.c b/sha1_name.c
-index ca7ddd6..da354a5 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -912,7 +912,8 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
- 			continue;
- 		buf = get_commit_buffer(commit, NULL);
- 		p = strstr(buf, "\n\n");
--		matches = negative ^ (p && !regexec(&regex, p + 2, 0, NULL, 0));
-+		matches = negative ^ (p && !regexec(&regex,
-+			skip_blank_lines(p + 2), 0, NULL, 0));
- 		unuse_commit_buffer(commit, buf);
- 
- 		if (matches) {
+
+Johannes Schindelin (2):
+  t3404: fix another typo
+  t3404: add a test for the --gpg-sign option
+
+ t/t3404-rebase-interactive.sh | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+Published-As: https://github.com/dscho/git/releases/tag/rebase-i-tests-v1
 -- 
 2.9.0.270.g810e421
+
+base-commit: cf4c2cfe52be5bd973a4838f73a35d3959ce2f43
