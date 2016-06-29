@@ -2,26 +2,26 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3E6F1FF40
-	for <e@80x24.org>; Wed, 29 Jun 2016 15:10:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A8231FF40
+	for <e@80x24.org>; Wed, 29 Jun 2016 15:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752351AbcF2PKW (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 11:10:22 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:57972 "EHLO sapo.pt"
+	id S1752692AbcF2PK1 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 11:10:27 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:58001 "EHLO sapo.pt"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752050AbcF2PKU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 11:10:20 -0400
-Received: (qmail 24377 invoked from network); 29 Jun 2016 15:10:18 -0000
-Received: (qmail 9326 invoked from network); 29 Jun 2016 15:10:18 -0000
+	id S1752445AbcF2PK0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 11:10:26 -0400
+Received: (qmail 24468 invoked from network); 29 Jun 2016 15:10:23 -0000
+Received: (qmail 11179 invoked from network); 29 Jun 2016 15:10:23 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 29 Jun 2016 15:10:15 -0000
+          for <git@vger.kernel.org>; 29 Jun 2016 15:10:21 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -31,9 +31,9 @@ Cc:	Vasco Almeida <vascomalmeida@sapo.pt>,
 	Jiang Xin <worldhello.net@gmail.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>, David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 01/11] i18n: add--interactive: mark strings for translation
-Date:	Wed, 29 Jun 2016 15:09:35 +0000
-Message-Id: <20160629150945.15015-2-vascomalmeida@sapo.pt>
+Subject: [PATCH v2 03/11] i18n: add--interactive: mark strings with interpolation for translation
+Date:	Wed, 29 Jun 2016 15:09:37 +0000
+Message-Id: <20160629150945.15015-4-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.9.0.148.g4ba279b
 In-Reply-To: <20160629150945.15015-1-vascomalmeida@sapo.pt>
 References: <20160629150945.15015-1-vascomalmeida@sapo.pt>
@@ -42,255 +42,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Mark simple strings (without interpolation) for translation.
-
-Brackets around first parameter of ternary operator is necessary because
-otherwise xgettext fails to extract strings marked for translation from
-the rest of the file.
+Use of sprintf following die or error_msg is necessary for placeholder
+substitution take place.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- git-add--interactive.perl | 68 +++++++++++++++++++++++++----------------------
- 1 file changed, 36 insertions(+), 32 deletions(-)
+ git-add--interactive.perl | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
 diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 822f857..fb8e5de 100755
+index e11a33d..4e1e857 100755
 --- a/git-add--interactive.perl
 +++ b/git-add--interactive.perl
-@@ -4,6 +4,7 @@ use 5.008;
- use strict;
- use warnings;
- use Git;
-+use Git::I18N;
- 
- binmode(STDOUT, ":raw");
- 
-@@ -252,7 +253,7 @@ sub list_untracked {
- }
- 
- my $status_fmt = '%12s %12s %s';
--my $status_head = sprintf($status_fmt, 'staged', 'unstaged', 'path');
-+my $status_head = sprintf($status_fmt, __('staged'), __('unstaged'), __('path'));
- 
- {
- 	my $initial;
-@@ -678,7 +679,7 @@ sub update_cmd {
- 	my @mods = list_modified('file-only');
- 	return if (!@mods);
- 
--	my @update = list_and_choose({ PROMPT => 'Update',
-+	my @update = list_and_choose({ PROMPT => __('Update'),
- 				       HEADER => $status_head, },
- 				     @mods);
- 	if (@update) {
-@@ -690,7 +691,7 @@ sub update_cmd {
- }
- 
- sub revert_cmd {
--	my @update = list_and_choose({ PROMPT => 'Revert',
-+	my @update = list_and_choose({ PROMPT => __('Revert'),
- 				       HEADER => $status_head, },
- 				     list_modified());
- 	if (@update) {
-@@ -724,13 +725,13 @@ sub revert_cmd {
- }
- 
- sub add_untracked_cmd {
--	my @add = list_and_choose({ PROMPT => 'Add untracked' },
-+	my @add = list_and_choose({ PROMPT => __('Add untracked') },
- 				  list_untracked());
- 	if (@add) {
- 		system(qw(git update-index --add --), @add);
- 		say_n_paths('added', @add);
- 	} else {
--		print "No untracked files.\n";
-+		print __("No untracked files.\n");
- 	}
- 	print "\n";
- }
-@@ -1159,8 +1160,11 @@ sub edit_hunk_loop {
- 		}
- 		else {
- 			prompt_yesno(
--				'Your edited hunk does not apply. Edit again '
--				. '(saying "no" discards!) [y/n]? '
-+				# TRANSLATORS: do not translate [y/n]
-+				# The program will only accept that input
-+				# at this point.
-+				__('Your edited hunk does not apply. Edit again '
-+				   . '(saying "no" discards!) [y/n]? ')
- 				) or return undef;
- 		}
- 	}
-@@ -1206,11 +1210,11 @@ sub apply_patch_for_checkout_commit {
- 		run_git_apply 'apply '.$reverse, @_;
- 		return 1;
- 	} elsif (!$applies_index) {
--		print colored $error_color, "The selected hunks do not apply to the index!\n";
--		if (prompt_yesno "Apply them to the worktree anyway? ") {
-+		print colored $error_color, __("The selected hunks do not apply to the index!\n");
-+		if (prompt_yesno __("Apply them to the worktree anyway? ")) {
- 			return run_git_apply 'apply '.$reverse, @_;
- 		} else {
--			print colored $error_color, "Nothing was applied.\n";
-+			print colored $error_color, __("Nothing was applied.\n");
- 			return 0;
- 		}
- 	} else {
-@@ -1230,9 +1234,9 @@ sub patch_update_cmd {
- 
- 	if (!@mods) {
- 		if (@all_mods) {
--			print STDERR "Only binary files changed.\n";
-+			print STDERR __("Only binary files changed.\n");
- 		} else {
--			print STDERR "No changes.\n";
-+			print STDERR __("No changes.\n");
- 		}
- 		return 0;
- 	}
-@@ -1390,12 +1394,12 @@ sub patch_update_file {
- 				my $response = $1;
- 				my $no = $ix > 10 ? $ix - 10 : 0;
- 				while ($response eq '') {
--					my $extra = "";
- 					$no = display_hunks(\@hunk, $no);
- 					if ($no < $num) {
--						$extra = " (<ret> to see more)";
-+						print __("go to which hunk (<ret> to see more)? ");
-+					} else {
-+						print __("go to which hunk? ");
- 					}
--					print "go to which hunk$extra? ";
- 					$response = <STDIN>;
- 					if (!defined $response) {
- 						$response = '';
-@@ -1432,7 +1436,7 @@ sub patch_update_file {
- 			elsif ($line =~ m|^/(.*)|) {
- 				my $regex = $1;
- 				if ($1 eq "") {
--					print colored $prompt_color, "search for regex? ";
-+					print colored $prompt_color, __("search for regex? ");
- 					$regex = <STDIN>;
- 					if (defined $regex) {
- 						chomp $regex;
-@@ -1455,7 +1459,7 @@ sub patch_update_file {
- 					$iy++;
- 					$iy = 0 if ($iy >= $num);
- 					if ($ix == $iy) {
--						error_msg "No hunk matches the given pattern\n";
-+						error_msg __("No hunk matches the given pattern\n");
- 						last;
- 					}
+@@ -612,12 +612,12 @@ sub list_and_choose {
+ 			else {
+ 				$bottom = $top = find_unique($choice, @stuff);
+ 				if (!defined $bottom) {
+-					error_msg "Huh ($choice)?\n";
++					error_msg sprintf(__("Huh (%s)?\n"), $choice);
+ 					next TOPLOOP;
  				}
-@@ -1467,7 +1471,7 @@ sub patch_update_file {
- 					$ix--;
+ 			}
+ 			if ($opts->{SINGLETON} && $bottom != $top) {
+-				error_msg "Huh ($choice)?\n";
++				error_msg sprintf(__("Huh (%s)?\n"), $choice);
+ 				next TOPLOOP;
+ 			}
+ 			for ($i = $bottom-1; $i <= $top-1; $i++) {
+@@ -1048,7 +1048,7 @@ sub edit_hunk_manually {
+ 	my $hunkfile = $repo->repo_path . "/addp-hunk-edit.diff";
+ 	my $fh;
+ 	open $fh, '>', $hunkfile
+-		or die "failed to open hunk edit file for writing: " . $!;
++		or die sprintf(__("failed to open hunk edit file for writing: %s"), $!);
+ 	print $fh "# Manual hunk edit mode -- see bottom for a quick guide\n";
+ 	print $fh @$oldtext;
+ 	my $participle = $patch_mode_flavour{PARTICIPLE};
+@@ -1075,7 +1075,7 @@ EOF
+ 	}
+ 
+ 	open $fh, '<', $hunkfile
+-		or die "failed to open hunk edit file for reading: " . $!;
++		or die sprintf(__("failed to open hunk edit file for reading: %s"), $!);
+ 	my @newtext = grep { !/^#/ } <$fh>;
+ 	close $fh;
+ 	unlink $hunkfile;
+@@ -1225,7 +1225,7 @@ sub apply_patch_for_checkout_commit {
+ 
+ sub patch_update_cmd {
+ 	my @all_mods = list_modified($patch_mode_flavour{FILTER});
+-	error_msg "ignoring unmerged: $_->{VALUE}\n"
++	error_msg sprintf(__("ignoring unmerged: %s\n"), $_->{VALUE})
+ 		for grep { $_->{UNMERGED} } @all_mods;
+ 	@all_mods = grep { !$_->{UNMERGED} } @all_mods;
+ 
+@@ -1407,11 +1407,13 @@ sub patch_update_file {
+ 					chomp $response;
  				}
- 				else {
--					error_msg "No previous hunk\n";
-+					error_msg __("No previous hunk\n");
+ 				if ($response !~ /^\s*\d+\s*$/) {
+-					error_msg "Invalid number: '$response'\n";
++					error_msg sprintf(__("Invalid number: '%s'\n"),
++							     $response);
+ 				} elsif (0 < $response && $response <= $num) {
+ 					$ix = $response - 1;
+ 				} else {
+-					error_msg "Sorry, only $num hunks available.\n";
++					error_msg sprintf(__("Sorry, only %s hunks available.\n"),
++							     $num);
  				}
  				next;
  			}
-@@ -1476,7 +1480,7 @@ sub patch_update_file {
- 					$ix++;
- 				}
- 				else {
--					error_msg "No next hunk\n";
-+					error_msg __("No next hunk\n");
- 				}
- 				next;
- 			}
-@@ -1489,13 +1493,13 @@ sub patch_update_file {
- 					}
- 				}
- 				else {
--					error_msg "No previous hunk\n";
-+					error_msg __("No previous hunk\n");
- 				}
- 				next;
- 			}
- 			elsif ($line =~ /^j/) {
- 				if ($other !~ /j/) {
--					error_msg "No next hunk\n";
-+					error_msg __("No next hunk\n");
+@@ -1449,7 +1451,7 @@ sub patch_update_file {
+ 				if ($@) {
+ 					my ($err,$exp) = ($@, $1);
+ 					$err =~ s/ at .*git-add--interactive line \d+, <STDIN> line \d+.*$//;
+-					error_msg "Malformed search regexp $exp: $err\n";
++					error_msg sprintf(__("Malformed search regexp %s: %s\n"), $exp, $err);
  					next;
  				}
- 			}
-@@ -1553,18 +1557,18 @@ sub diff_cmd {
- 	my @mods = list_modified('index-only');
- 	@mods = grep { !($_->{BINARY}) } @mods;
- 	return if (!@mods);
--	my (@them) = list_and_choose({ PROMPT => 'Review diff',
-+	my (@them) = list_and_choose({ PROMPT => __('Review diff'),
- 				     IMMEDIATE => 1,
- 				     HEADER => $status_head, },
- 				   @mods);
- 	return if (!@them);
--	my $reference = is_initial_commit() ? get_empty_tree() : 'HEAD';
-+	my $reference = (is_initial_commit()) ? get_empty_tree() : 'HEAD';
- 	system(qw(git diff -p --cached), $reference, '--',
- 		map { $_->{VALUE} } @them);
- }
- 
- sub quit_cmd {
--	print "Bye.\n";
-+	print __("Bye.\n");
- 	exit(0);
- }
- 
-@@ -1587,32 +1591,32 @@ sub process_args {
- 			if ($1 eq 'reset') {
- 				$patch_mode = 'reset_head';
- 				$patch_mode_revision = 'HEAD';
--				$arg = shift @ARGV or die "missing --";
-+				$arg = shift @ARGV or die __("missing --");
- 				if ($arg ne '--') {
- 					$patch_mode_revision = $arg;
- 					$patch_mode = ($arg eq 'HEAD' ?
- 						       'reset_head' : 'reset_nothead');
--					$arg = shift @ARGV or die "missing --";
-+					$arg = shift @ARGV or die __("missing --");
- 				}
- 			} elsif ($1 eq 'checkout') {
--				$arg = shift @ARGV or die "missing --";
-+				$arg = shift @ARGV or die __("missing --");
- 				if ($arg eq '--') {
- 					$patch_mode = 'checkout_index';
- 				} else {
- 					$patch_mode_revision = $arg;
- 					$patch_mode = ($arg eq 'HEAD' ?
- 						       'checkout_head' : 'checkout_nothead');
--					$arg = shift @ARGV or die "missing --";
-+					$arg = shift @ARGV or die __("missing --");
- 				}
- 			} elsif ($1 eq 'stage' or $1 eq 'stash') {
+ 				my $iy = $ix;
+@@ -1612,18 +1614,18 @@ sub process_args {
  				$patch_mode = $1;
--				$arg = shift @ARGV or die "missing --";
-+				$arg = shift @ARGV or die __("missing --");
+ 				$arg = shift @ARGV or die __("missing --");
  			} else {
- 				die "unknown --patch mode: $1";
+-				die "unknown --patch mode: $1";
++				die sprintf(__("unknown --patch mode: %s"), $1);
  			}
  		} else {
  			$patch_mode = 'stage';
--			$arg = shift @ARGV or die "missing --";
-+			$arg = shift @ARGV or die __("missing --");
+ 			$arg = shift @ARGV or die __("missing --");
  		}
- 		die "invalid argument $arg, expecting --"
- 		    unless $arg eq "--";
-@@ -1634,10 +1638,10 @@ sub main_loop {
- 		   [ 'help', \&help_cmd, ],
- 	);
- 	while (1) {
--		my ($it) = list_and_choose({ PROMPT => 'What now',
-+		my ($it) = list_and_choose({ PROMPT => __('What now'),
- 					     SINGLETON => 1,
- 					     LIST_FLAT => 4,
--					     HEADER => '*** Commands ***',
-+					     HEADER => __('*** Commands ***'),
- 					     ON_EOF => \&quit_cmd,
- 					     IMMEDIATE => 1 }, @cmd);
- 		if ($it) {
+-		die "invalid argument $arg, expecting --"
+-		    unless $arg eq "--";
++		die sprintf(__("invalid argument %s, expecting --"),
++			       $arg) unless $arg eq "--";
+ 		%patch_mode_flavour = %{$patch_modes{$patch_mode}};
+ 	}
+ 	elsif ($arg ne "--") {
+-		die "invalid argument $arg, expecting --";
++		die sprintf(__("invalid argument %s, expecting --"), $arg);
+ 	}
+ }
+ 
 -- 
 2.7.4
 
