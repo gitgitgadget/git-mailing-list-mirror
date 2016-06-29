@@ -2,116 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D73E1FE4E
-	for <e@80x24.org>; Wed, 29 Jun 2016 06:27:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FDBA1FE4E
+	for <e@80x24.org>; Wed, 29 Jun 2016 07:02:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751960AbcF2G1n (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 02:27:43 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:48224 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751290AbcF2G1m (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2016 02:27:42 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id C39E221A52;
-	Wed, 29 Jun 2016 02:27:41 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 29 Jun 2016 02:27:41 -0400
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=9MYSwbarRITQDo03F1+0/7Q2q78=; b=Kvclj
-	l54WplgUNiLD9zVSfXWm3Voe0HgVKDK/IG93vjuzx3OoABYTBh6ErYiq/QJzUKlI
-	dgAtIBraGex9MNe+ljSxjI4N0TGvde3qocUl7gJwiDa7vOodloeREHg6asSRX3DP
-	O5DAriM03gAo7XIaq6YpZburVSOWUr68pwllN0=
-X-Sasl-enc: k3QS4wyq9Wf3QSwbhl3rShUWF/wRDfoWn8qsI1kfkALf 1467181661
-Received: from localhost (x4e340075.dyn.telefonica.de [78.52.0.117])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 43A28CCDB2;
-	Wed, 29 Jun 2016 02:27:41 -0400 (EDT)
-Date:	Wed, 29 Jun 2016 08:28:18 +0200
-From:	Patrick Steinhardt <ps@pks.im>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Hahler <git@thequod.de>
-Subject: Re: [PATCH] rebase -i: restore autostash on abort
-Message-ID: <20160629062818.GA416@pks-pc.localdomain>
-References: <20160628175704.26095-1-ps@pks.im>
- <xmqqa8i587cx.fsf@gitster.mtv.corp.google.com>
- <vpqvb0tqc46.fsf@anie.imag.fr>
- <xmqqshvx6mpe.fsf@gitster.mtv.corp.google.com>
+	id S1751987AbcF2HCq (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 03:02:46 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53061 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751253AbcF2HCp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 03:02:45 -0400
+Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0Ledpu-1bgztA0S9W-00qWAR; Wed, 29 Jun 2016 09:02:38
+ +0200
+Date:	Wed, 29 Jun 2016 09:02:37 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	git@vger.kernel.org
+cc:	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] t/Makefile: add a rule to re-run previously-failed tests
+Message-ID: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="dDRMvlgZJXvWKvBx"
-Content-Disposition: inline
-In-Reply-To: <xmqqshvx6mpe.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:CXku29V2Bh61WZnPHYkwC/Vq9OdHcGmRpRLAN9Ql8Jp5jFu+6pY
+ 7wpTzq9nQ7IEGPgcC5o6Fv94stPwYsOxNKgbmJ2kS4Uu4GlWEE0bFESk7Yh45sb7yI7tFG7
+ D+ExwvOe3jET8YIjGS5LCXLBxGG6F7Xn3Ov/GNjxNZqoc4OeN6/TYzJjg68LFUZ+YBv4xPy
+ rKAQs9bBhfZcFoRTLzcNg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:fX85L9ZWRhc=:caL7nKSQN+QcIiWiLppOI6
+ JkQLxZrgUmrVJ+AFuPl1P6TCe35xZtVsD0vxNyp5WysN7U/1ub0QB2DOz8vY/5wm/8c6FLmYL
+ 1ZwOVaM/NmJm5udIbq+eZsVlqG++eWW9fRqWMwGwFiytJO8stOZfa37YbPQEMANvVOhe205vC
+ PzlGdNm8k9B3uZI0sRvlgadeSeL1B/BqRNYgvv1kqVVi6he9gJluCDTm4bPMYW2sPI/yKAtkG
+ kyS2Jr1VDS5pHakBl84xbOvSR9SuKbJMQb89yZE87f6/Fg43cCH5ENt2z9NzMVhnb/oYPUQCh
+ dbsP8hVeDXO93c2ewDm2L5L1oBbzUxmCY9C/urg/Irf6JvV5ldJvk0oAq4tj9kaYp7MnEp4qO
+ 0XadXD7F5X0uVTWj4g4bxi4SupX54P5tdDNHqJsKY2i4IEw5eMDo9sIjKkmQZ5I4mJ7beqb4G
+ jmCaJzEY2od8cVEASq/hPYEy9phhZesGcHeSQ6NvlEfCmK5YPRHl9bGowG3Ek/k5gPZbtLWfQ
+ jPn3tO5JnyI1NsXDu1V79owcPmD714PqSO/V2dASyAU5btAcSrQGGboGABJhz3hEHuWDgvIZ+
+ mCr5DpQtu51aTpZ0pABA+8ugc+x+NnapHK+OqdefeE5+2YJufIoPItRza28vgk9v75KkU0SQz
+ 8O9qoXW4qGnfElYGna5U2F3DgATvbW9dl0KZJwN0KZV+enN5bRclqWTtewEdxQZqme7tl8Rw+
+ 4SPoQ4bA3M++dvOjuadluMrLro7lvYrVxu0wmkruOYcqiR5bY6XkH9DBM/XxygB4jdvk+++69
+ WUGBXJR
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+While developing patch series, it is a good practice to run the test
+suite from time to time, just to make sure that obvious bugs are caught
+early. With complex patch series, it is common to run `make -j15 -k
+test`, i.e. run the tests in parallel and not stop at the first failing
+test but continue. This has the advantage of identifying possibly
+multiple problems without having to wait for the complete test suite to
+finish.
 
---dDRMvlgZJXvWKvBx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It is particularly important to reduce the turn-around time thusly on
+Windows, where the test suite spends 45 minutes on the computer on which
+this patch was developed.
 
-On Tue, Jun 28, 2016 at 02:13:49PM -0700, Junio C Hamano wrote:
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->=20
-> > It is "interesting" if you mean "matches real-life use-case", as it
-> > corresponds to the case where the user killed the editor (as reported by
-> > Daniel Hahler indeed, "Abort with ":cq", which will make Vim exit
-> > non-zero").
->=20
-> Yes.  It is an interesting failure mode in that sense.  But breakage
-> of such a basic mode is something an end-user is likely to notice
-> immediately, so in that sense, having such a test alone is not all
-> that interesting.
+It is the most convenient way to determine which tests failed after
+running the entire test suite, in parallel, to look for left-over "trash
+directory.t*" subdirectories in the t/ subdirectory.
 
-Well, given that the bug has been lingering since autostashing
-has been implemented it seems users didn't catch the breakage as
-fast ;) I guess it's just a little-used feature _or_ the breakage
-is too obscure to regularly happen. At least I have never cause
-my editor to return an error when editing the ISN-sheet.
+This patch automates the process of determinig which tests failed
+previously and re-running them; It turned out to be quite convenient
+when trying to squash bugs that crept in during rebases.
 
-But still, I agree that a test for conflicting autostashes is
-beneficial, even though the scenario is even more unlikely (the
-user's editor has to return an error code as well as that a
-stashed file needs to be modified while editing the ISN-sheet).
-I've just sent out a second version of the patch.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Published-As: https://github.com/dscho/git/releases/tag/failing-tests-v1
+ t/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Thank you both for your input.
+diff --git a/t/Makefile b/t/Makefile
+index 18e2b28..1459a7f 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -35,6 +35,8 @@ all: $(DEFAULT_TEST_TARGET)
+ test: pre-clean $(TEST_LINT)
+ 	$(MAKE) aggregate-results-and-cleanup
+ 
++failed: $(patsubst trash,,$(patsubst directory.%,%.sh,$(wildcard trash\ directory.t[0-9]*)))
++
+ prove: pre-clean $(TEST_LINT)
+ 	@echo "*** prove ***"; $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
+ 	$(MAKE) clean-except-prove-cache
+-- 
+2.9.0.118.g0e1a633
 
-> > If you mean "likely to trigger nasty bugs", then indeed testing the case
-> > when apply_autostash fails is interesting: for example, calling
-> > die_abort when "stash apply" fails is tempting, but would lead to
-> > infinite recursion (it doesn't seem to be the case, but a test would be
-> > nice). Setting the editor to something that modifies uncommited-content
-> > before 'false' should do the trick.
-
---dDRMvlgZJXvWKvBx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAABCAAGBQJXc2qCAAoJEBF8Z7aeq/EshPsP/jg+DFNcMIhcGp3IVEp5oGoz
-LVm5Uf2Opfqz2FFdLpC4n2fgC9XnoaZ/1yAakfrp5e+vsYErLJPxgbBfXcl9pBOe
-sUj6E6kc409hA5o/+xm1VX5SWwH1TEqDpY6DbsoHCUgmkuuDQaA1ElMwlcx0305z
-1Nq9RWtKxVYAWQRQ8KfnnLdG+LPVuBLmtvGzVs+cc4XCQOtMMpn3QVD+qBO+Ew/A
-IQPmdwxuJe/f2kcC2qU6YuC2khLUMvL8eJY9FSH+IyHdn72LbZxW2OoD8j+yL23a
-6GmeI4Igmx+xlB5Be0YN/ZsefThBAcZ07jmrN17x3fhdc6QzvUViCZqDrMs2U6zG
-dRe6h12hqzDJe2NDwDqRiXd3slx+TRfo6U9P9fbWqLxV5OgNClX77GDNu9DXKGB6
-vA51PYSz4VYP4N129tZ03ktmG5bu26fhv9CcCEhOPbrGJ0FK350AE6C2r8un24hl
-kGtCEfP69WZde4/wDN3STfQBWOEaqeIajbIowRxESWv8AwnwAVP+KC6rUCPbKF+V
-TPzvfD4dlj3/vyV5pEdwlPuht93Y2Sjhzvg3W5aNcszwutThgDMyrHu8XZCKDCaY
-lanP78PTquzks1v874FOopWfKOqYw07FY7+rkVDCcNkJ0EVtLNb5UuLDiSpxM0xP
-WI1iKpPIsAwrVE7YLors
-=Uhkm
------END PGP SIGNATURE-----
-
---dDRMvlgZJXvWKvBx--
+base-commit: cf4c2cfe52be5bd973a4838f73a35d3959ce2f43
