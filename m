@@ -2,79 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52C7C20FCF
-	for <e@80x24.org>; Wed, 29 Jun 2016 22:12:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9A0720FCF
+	for <e@80x24.org>; Wed, 29 Jun 2016 22:24:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752316AbcF2WLt (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 18:11:49 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58238 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751527AbcF2WLs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 18:11:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6409A28ECA;
-	Wed, 29 Jun 2016 18:11:42 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BL7UVKDdY+JfDlHatzPzMUYgJ+k=; b=hLxsla
-	me5Wj9Zqz8w1eE3EOtd7xxqvBEAQ3222YRMlDUrr7vDplkowNuwTbDnDOo8JWWte
-	BzH48Qto+hdrhvUNlx/mYauuhDEjEUVK3Ri5Vt4ePJkB/f3flp+fufpqCntI3HN6
-	kGlztGt+zah+yIGTy7DvGogNQi7g+NnQX5S7E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TqtDQ40tdn57fqhkQO6zaMqquaFev6Lt
-	bl/G67iqupg0BU2xtw5rFYSwq7DlLSVSRJNyqi0UUmeW6wlydWTyGqYXjQPEGm4H
-	OFMHEgprVJEHrxy4fy+Yv4wprHRgpaze1w/pnkYqZXQzSDglV8AKeVEj7a6ziiMA
-	JeScAtCMF7Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 42F2628EC8;
-	Wed, 29 Jun 2016 18:11:42 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B07A928EC7;
-	Wed, 29 Jun 2016 18:11:41 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Marc Strapetz <marc.strapetz@syntevo.com>,
-	Git Mailing List <git@vger.kernel.org>
+	id S1752081AbcF2WX5 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 18:23:57 -0400
+Received: from smtprelay01.ispgateway.de ([80.67.31.24]:52872 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751713AbcF2WXz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 18:23:55 -0400
+Received: from [91.113.179.170] (helo=[192.168.92.22])
+	by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
+	(Exim 4.84)
+	(envelope-from <marc.strapetz@syntevo.com>)
+	id 1bINkU-0004zY-Dq; Thu, 30 Jun 2016 00:14:22 +0200
 Subject: Re: topological index field for commit objects
+To:	Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>
 References: <f15a14a5-f39d-9c41-16b9-fe0a48d7450b@syntevo.com>
-	<CAPc5daVC-+0Vr30L_pbcL0GN2OmnGm-+V4tE2WTos_vPRb_S1g@mail.gmail.com>
-	<CAGZ79kY6Ry+DfO90wza_RrVbCRAgNB4N=0W6svuJgvGNxeFh5Q@mail.gmail.com>
-	<xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com>
-	<20160629205647.GA25987@sigill.intra.peff.net>
-	<5774426F.3090000@gmail.com>
-	<20160629220049.GA4416@sigill.intra.peff.net>
-Date:	Wed, 29 Jun 2016 15:11:39 -0700
-In-Reply-To: <20160629220049.GA4416@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 29 Jun 2016 18:00:49 -0400")
-Message-ID: <xmqqlh1n1w84.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+ <CAPc5daVC-+0Vr30L_pbcL0GN2OmnGm-+V4tE2WTos_vPRb_S1g@mail.gmail.com>
+ <CAGZ79kY6Ry+DfO90wza_RrVbCRAgNB4N=0W6svuJgvGNxeFh5Q@mail.gmail.com>
+ <xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com>
+Cc:	Jeff King <peff@peff.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+From:	Marc Strapetz <marc.strapetz@syntevo.com>
+Message-ID: <2fff9bc4-0c40-dc51-1cf6-68b359cb16bf@syntevo.com>
+Date:	Thu, 30 Jun 2016 00:15:36 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7543583C-3E46-11E6-B659-89D312518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 29.06.2016 22:39, Junio C Hamano wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> On Wed, Jun 29, 2016 at 11:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> On Wed, Jun 29, 2016 at 11:31 AM, Marc Strapetz
+>>> <marc.strapetz@syntevo.com> wrote:
+>>>> This is no RFE but rather recurring thoughts whenever I'm working with
+>>>> commit graphs: a topological index attribute for commit objects would be
+>>>> incredible useful. By "topological index" I mean a simple integer for which
+>>>> following condition holds true:
+>>>
+>>> Look for "generation numbers" in the list archive, perhaps?
+>>
+>> Thanks for the pointer to the interesting discussions.
+>>
+>> In http://www.spinics.net/lists/git/msg161363.html
+>> Linus wrote in a discussion with Jeff:
+>>
+>>> Right now, we do *have* a "generation number". It's just that it's
+>>> very easy to corrupt even by mistake. It's called "committer date". We
+>>> could improve on it.
+>>
+>> Would it make sense to refuse creating commits that have a commit date
+>> prior to its parents commit date (except when the user gives a
+>> `--dammit-I-know-I-break-a-wildy-used-heuristic`)?
+>
+> I think that has also been discussed in the past.  I do not think it
+> would help very much in practice, as projects already have up to 10
+> years (and the ones migrated from CVS, even more) worth of commits
+> they cannot rewrite that may record incorrect committer dates.
+> You'd need something like "you can trust committer dates that are
+> newer that this date" per project to switch between slow path and
+> fast path, with an updated fsck that knows how to compute that
+> number after you pulled from somebody who used that overriding
+> option.
+>
+> If the use of generation number can somehow be limited narrowly, we
+> may be able to incrementally introduce it only for new commits, but
+> I haven't thought things through, so let me do so aloud here ;-)
+>
+> Suppose we use it only for this purpose:
+>
+>  * When we have two commits, C1 and C2, with generation numbers G1
+>    and G2, we can say "C1 cannot possibly be an ancestor of C2" if
+>    G1 > G2.  We cannot say anything else based on generation
+>    numbers (or lack thereof).
+>
+> then I think we could just say "A newly created commit must record
+> generation number G that is larger than generation numbers of its
+> parent commits; ignore parents that lack generation number for the
+> purpose of this sentence".
 
-> Yes, though generation numbers can help with more questions (e.g., "what
-> is the merge base").
+ From algorithm perspective, for already existing repositories you would 
+still have to switch from an optimized generation number code to the 
+current commit-time based code. That could things make even more complex 
+and it's possibly expensive to determine whether a repository has full 
+generation number support or not.
 
-Hmm, how?  I have two commits, with generation number 38 and 47,
-respectively.  What generation number does the commit that is the
-merge base of these two commits?
+On the other hand, for new repositories, you could immediately use 
+generation number based algorithms. So it could be "A newly created 
+commit must record generation number G that is larger than generation 
+numbers of its parent commits if all parents commits have a generation 
+number recorded; otherwise do not record a generation number". Something 
+like "git filter-branch" might already be sufficient to convert 
+repositories.
 
-I know we can say that 38 cannot possibly be a descendant of 47, but
-can we say anything else that is useful?
+Git versions released in 2019 may start issuing warnings if HEAD has no 
+generation number assigned and Git versions released in 2025 may 
+completely refuse to work with such repositories.
+
+In the interim period, a local cache as Jeff is proposing could serve as 
+secondary source for generation numbers. This would allow to phase out 
+current algorithms immediately.
+
+-Marc
+
+
 
