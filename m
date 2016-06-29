@@ -2,134 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_50,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97DDE2018A
-	for <e@80x24.org>; Wed, 29 Jun 2016 05:58:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 278A22018A
+	for <e@80x24.org>; Wed, 29 Jun 2016 06:21:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751168AbcF2F6M (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 01:58:12 -0400
-Received: from smtp6-v.fe.bosch.de ([139.15.237.11]:52415 "EHLO
-	smtp6-v.fe.bosch.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750873AbcF2F6K convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2016 01:58:10 -0400
-Received: from vsmta13.fe.internet.bosch.com (unknown [10.4.98.53])
-	by imta23.fe.bosch.de (Postfix) with ESMTP id AD47015801B0
-	for <git@vger.kernel.org>; Wed, 29 Jun 2016 07:56:24 +0200 (CEST)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/simple; d=bosch.com;
-	s=2015-01-21; t=1467179784;
-	bh=dVxL/RmIaS7QiBjg/YqGSM5ntG46EhSxcy1wGwghUD0=; l=10;
-	h=From:From:Reply-To:Sender;
-	b=tkh56hT4qqc6t7gy0FEuHqn0RRnsRbbfrYL0tt2vyCtnfKUxbX0YORUi4FdvADCvU
-	 9MnDvPy9AW82HgW5mdRLlKg+l+sYvNOk1SYXSgGKzqWKCtTaklCIXiCPci9x3+FPjO
-	 X4q39xzRO0GNANZssLn3uwy8NHlLuAWjNIA9GmF0=
-Received: from SGDS00560.zf-lenksysteme.net (vsgw22.fe.internet.bosch.com [10.4.98.11])
-	by vsmta13.fe.internet.bosch.com (Postfix) with ESMTP id 5E5F92E40252
-	for <git@vger.kernel.org>; Wed, 29 Jun 2016 07:56:24 +0200 (CEST)
-Received: from SGDS00759.zf-lenksysteme.net ([fe80::1563:32:9d91:d0e6]) by
- SGDS00560.zf-lenksysteme.net ([fe80::b166:abcb:a645:9cbf%15]) with mapi id
- 14.03.0266.001; Wed, 29 Jun 2016 07:56:24 +0200
-From:	Roessner Silvester SGD AS-ER/QMM1 * <Silvester.Roessner@bosch.com>
-To:	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Git Gui 0.20 messes up UTF-8 author names when amending a commit
-Thread-Topic: Git Gui 0.20 messes up UTF-8 author names when amending a
- commit
-Thread-Index: AdHRyJt5BPZp+vlXTOqa1Jyzs+pAig==
-Date:	Wed, 29 Jun 2016 05:56:23 +0000
-Message-ID: <52E1627956F20E458D872C5961027EDC654FE17C@SGDS00759.zf-lenksysteme.net>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.96.215.164]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
-MIME-Version: 1.0
-X-TM-AS-MML: disable
-X-TM-AS-Product-Ver: IMSS-7.1.0.1679-8.0.0.1202-22418.006
-X-TMASE-MatchedRID: T5h6mHJlcbvxGh/jocyg+S1Hx9UxMGjd+q1Y+/eEAraCsBeCv8CM/a3L
-	5qKkEBJgDXTrAgd0ymXH/DOYtstoBW8BlJMEDE+D05yZiz1u26RQCOsAlaxN74sR/hEH7GRhszI
-	aiGWR/RdoEiT0d+PrPNiRFWPTp2j8QQJJoIdNNmfI89FT1JwQNYYrUBjVTlyzgFn1RZSxn3o7hR
-	NXLmm0eS97OLZjBcrLNDQwhKnS+w3Uu3synNQKJJ4CIKY/Hg3AhGBk0/7pshLEQdG7H66TyH4gK
-	q42LRYkl0DipTxwXR9TsO88fhyb4nCy6WtdsPz6R2MVtz2ytvh+3BndfXUhXQ==
+	id S1750892AbcF2GVI (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 02:21:08 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:56357 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750756AbcF2GVH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2016 02:21:07 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id DFD8F20B4C;
+	Wed, 29 Jun 2016 02:21:05 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute6.internal (MEProxy); Wed, 29 Jun 2016 02:21:06 -0400
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:date:from:in-reply-to:message-id
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=a56h
+	62C3aZOTzB68iJqS+cie2To=; b=ormAKtO4S5DtmHpIAZCQd1QhF7kRwesfFYQw
+	lASQIjDWR7dGn2MMoNfoe3DXLJDi96Rv3pl0ctFG5zJr5vtlllcvMXrGWb47/ITe
+	W5ujQJUzVIopXZbE20l5ZqLStlM9qEWSoarBJob60JwY2BX2+OLWGB1RAmKN43Gb
+	z+CzqMA=
+X-Sasl-enc: QGFvfV642x6WviVpITABydkTedXBlAVm30PnzMX3PIOc 1467181265
+Received: from localhost (x4e340075.dyn.telefonica.de [78.52.0.117])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 48A12F29F3;
+	Wed, 29 Jun 2016 02:21:05 -0400 (EDT)
+From:	Patrick Steinhardt <ps@pks.im>
+To:	git@vger.kernel.org
+Cc:	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Hahler <git@thequod.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: [PATCH v2] rebase -i: restore autostash on abort
+Date:	Wed, 29 Jun 2016 08:21:27 +0200
+Message-Id: <20160629062127.8946-1-ps@pks.im>
+X-Mailer: git-send-email 2.9.0
+In-Reply-To: <20160628175704.26095-1-ps@pks.im>
+References: <20160628175704.26095-1-ps@pks.im>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+When we abort an interactive rebase we do so by calling
+`die_abort`, which cleans up after us by removing the rebase
+state directory. If the user has requested to use the autostash
+feature, though, the state directory may also contain a reference
+to the autostash, which will now be deleted.
 
-first I want to thank all involved in developing git.
-It is really one of the - no! - it is the greatest tool I ever worked with!
+Fix the issue by trying to re-apply the autostash in `die_abort`.
+This will also handle the case where the autostash does not apply
+cleanly anymore by recording it in a user-visible stash.
 
-So I want to help improving it at least with this bug report.
+Reported-by: Daniel Hahler <git@thequod.de>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
 
-Since git version 2.9.0 git git-gui messes up my author name
-- which contains UTF-8 characters: Silvester Rößner -
-when I amend a commit.
+The original bug-report can be found at [1], the previous version
+of this patch at [2].
 
-When I do the same with git-bash it's all ok.
+I've included a second test which now also tests how we fare when
+we actually fail to restore the autostash after the editor has
+been aborted.
 
-git log after first amend:
+Another minor change is fixing of a typo inherited from the
+previous test "abort rebase -i with --autostash" (commited ->
+committed). I don't think there's any benefit in fixing the typo
+in the existing test so I'll just keep it there.
 
-    $ git log
-    commit 8ac8115c3af04bd8f5171452141398b0cfb57f87
-    Author: Silvester RÃ¶Ã?ner <silvester.roessner@bosch.com>
-    Date:   Wed Jun 29 07:31:46 2016 +0200
+[1]: http://article.gmane.org/gmane.comp.version-control.git/297404
+[2]: http://article.gmane.org/gmane.comp.version-control.git/298481
 
-        asdf
+ git-rebase--interactive.sh  |  1 +
+ t/t3420-rebase-autostash.sh | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-    commit ae34f23a9a3d7f673ad3ed57dbea5af302d4f0c1
-    Author: Silvester Rößner <silvester.roessner@bosch.com>
-    Date:   Wed Jun 29 07:31:21 2016 +0200
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 05f22e4..4f499d2 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -212,6 +212,7 @@ exit_with_patch () {
+ }
+ 
+ die_abort () {
++	apply_autostash
+ 	rm -rf "$state_dir"
+ 	die "$1"
+ }
+diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+index 944154b..532ff5c 100755
+--- a/t/t3420-rebase-autostash.sh
++++ b/t/t3420-rebase-autostash.sh
+@@ -192,4 +192,35 @@ test_expect_success 'abort rebase -i with --autostash' '
+ 	test_cmp expected file0
+ '
+ 
++test_expect_success 'restore autostash on editor failure' '
++	test_when_finished "git reset --hard" &&
++	echo uncommitted-content >file0 &&
++	(
++		test_set_editor "false" &&
++		test_must_fail git rebase -i --autostash HEAD^
++	) &&
++	echo uncommitted-content >expected &&
++	test_cmp expected file0
++'
++
++test_expect_success 'autostash is saved on editor failure with conflict' '
++	test_when_finished "git reset --hard" &&
++	echo uncommitted-content >file0 &&
++	(
++		write_script abort-editor.sh <<-\EOF &&
++			echo conflicting-content >file0
++			exit 1
++		EOF
++		test_set_editor "$(pwd)/abort-editor.sh" &&
++		test_must_fail git rebase -i --autostash HEAD^ &&
++		rm -f abort-editor.sh
++	) &&
++	echo conflicting-content >expected &&
++	test_cmp expected file0 &&
++	git checkout file0 &&
++	git stash pop &&
++	echo uncommitted-content >expected &&
++	test_cmp expected file0
++'
++
+ test_done
+-- 
+2.9.0
 
-    test
-
-
-git log after second amend:
-
-    $ git log
-    commit 9240372e8e7336a2c523f27a75b3ac4e07315039
-    Author: Silvester RÃ?Â¶Ã??ner <silvester.roessner@bosch.com>
-    Date:   Wed Jun 29 07:31:46 2016 +0200
-
-        asdf
-
-    commit ae34f23a9a3d7f673ad3ed57dbea5af302d4f0c1
-    Author: Silvester Rößner <silvester.roessner@bosch.com>
-    Date:   Wed Jun 29 07:31:21 2016 +0200
-
-        test
-
-
-To reproduce the bug
-
-    1. create an empty repo,
-    2. set up the author name to "Silvester Rößner"
-    3. commit a file with git gui
-    4. amend the commit with git gui
-
-I use this version
-
-    git-gui version 0.20.GITGUI
-    git version 2.9.0.windows.1
-
-    Tcl/Tk version 8.6.5
-
-The versions I used before just work great!
-
-Mit freundlichen Grüßen / Best regards
-
-Silvester Rößner
-
-Automotive Steering, Electric Power Steering Rack, Quality Processes & Engineering (AS-ER/QMM1)
-Robert Bosch Automotive Steering GmbH | 73527 Schwäbisch Gmünd | GERMANY | www.bosch-automotive-steering.com
-Tel. +49 7171 31-4120 | Fax +49 7171 31-64120 | silvester.roessner@bosch.com
-
---
-Robert Bosch Automotive Steering GmbH, Richard-Bullinger-Str. 77, 73527 Schwäbisch Gmünd, Germany
-Vorsitzender des Aufsichtsrats/Chairman of the Supervisory Board: Dirk Hoheisel
-Geschäftsführung/Management Board: Christian Sobottka (Vorsitz/Chairman), Hanns Bernd Ketteler, Marcus Parche, Henning Wagner
-Sitz der Gesellschaft/Headquarters: Schwäbisch Gmünd - Handelsregistereintrag: Amtsgericht Ulm HRB 701678/Trade register of the municipal court of Ulm HRB 701678
