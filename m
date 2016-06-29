@@ -6,133 +6,112 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 278A22018A
-	for <e@80x24.org>; Wed, 29 Jun 2016 06:21:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D73E1FE4E
+	for <e@80x24.org>; Wed, 29 Jun 2016 06:27:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750892AbcF2GVI (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 02:21:08 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:56357 "EHLO
+	id S1751960AbcF2G1n (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 02:27:43 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:48224 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750756AbcF2GVH (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2016 02:21:07 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id DFD8F20B4C;
-	Wed, 29 Jun 2016 02:21:05 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute6.internal (MEProxy); Wed, 29 Jun 2016 02:21:06 -0400
+	by vger.kernel.org with ESMTP id S1751290AbcF2G1m (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2016 02:27:42 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id C39E221A52;
+	Wed, 29 Jun 2016 02:27:41 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 29 Jun 2016 02:27:41 -0400
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=a56h
-	62C3aZOTzB68iJqS+cie2To=; b=ormAKtO4S5DtmHpIAZCQd1QhF7kRwesfFYQw
-	lASQIjDWR7dGn2MMoNfoe3DXLJDi96Rv3pl0ctFG5zJr5vtlllcvMXrGWb47/ITe
-	W5ujQJUzVIopXZbE20l5ZqLStlM9qEWSoarBJob60JwY2BX2+OLWGB1RAmKN43Gb
-	z+CzqMA=
-X-Sasl-enc: QGFvfV642x6WviVpITABydkTedXBlAVm30PnzMX3PIOc 1467181265
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=9MYSwbarRITQDo03F1+0/7Q2q78=; b=Kvclj
+	l54WplgUNiLD9zVSfXWm3Voe0HgVKDK/IG93vjuzx3OoABYTBh6ErYiq/QJzUKlI
+	dgAtIBraGex9MNe+ljSxjI4N0TGvde3qocUl7gJwiDa7vOodloeREHg6asSRX3DP
+	O5DAriM03gAo7XIaq6YpZburVSOWUr68pwllN0=
+X-Sasl-enc: k3QS4wyq9Wf3QSwbhl3rShUWF/wRDfoWn8qsI1kfkALf 1467181661
 Received: from localhost (x4e340075.dyn.telefonica.de [78.52.0.117])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 48A12F29F3;
-	Wed, 29 Jun 2016 02:21:05 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 43A28CCDB2;
+	Wed, 29 Jun 2016 02:27:41 -0400 (EDT)
+Date:	Wed, 29 Jun 2016 08:28:18 +0200
 From:	Patrick Steinhardt <ps@pks.im>
-To:	git@vger.kernel.org
-Cc:	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Hahler <git@thequod.de>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: [PATCH v2] rebase -i: restore autostash on abort
-Date:	Wed, 29 Jun 2016 08:21:27 +0200
-Message-Id: <20160629062127.8946-1-ps@pks.im>
-X-Mailer: git-send-email 2.9.0
-In-Reply-To: <20160628175704.26095-1-ps@pks.im>
+	Daniel Hahler <git@thequod.de>
+Subject: Re: [PATCH] rebase -i: restore autostash on abort
+Message-ID: <20160629062818.GA416@pks-pc.localdomain>
 References: <20160628175704.26095-1-ps@pks.im>
+ <xmqqa8i587cx.fsf@gitster.mtv.corp.google.com>
+ <vpqvb0tqc46.fsf@anie.imag.fr>
+ <xmqqshvx6mpe.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="dDRMvlgZJXvWKvBx"
+Content-Disposition: inline
+In-Reply-To: <xmqqshvx6mpe.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When we abort an interactive rebase we do so by calling
-`die_abort`, which cleans up after us by removing the rebase
-state directory. If the user has requested to use the autostash
-feature, though, the state directory may also contain a reference
-to the autostash, which will now be deleted.
 
-Fix the issue by trying to re-apply the autostash in `die_abort`.
-This will also handle the case where the autostash does not apply
-cleanly anymore by recording it in a user-visible stash.
+--dDRMvlgZJXvWKvBx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Reported-by: Daniel Hahler <git@thequod.de>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
+On Tue, Jun 28, 2016 at 02:13:49PM -0700, Junio C Hamano wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>=20
+> > It is "interesting" if you mean "matches real-life use-case", as it
+> > corresponds to the case where the user killed the editor (as reported by
+> > Daniel Hahler indeed, "Abort with ":cq", which will make Vim exit
+> > non-zero").
+>=20
+> Yes.  It is an interesting failure mode in that sense.  But breakage
+> of such a basic mode is something an end-user is likely to notice
+> immediately, so in that sense, having such a test alone is not all
+> that interesting.
 
-The original bug-report can be found at [1], the previous version
-of this patch at [2].
+Well, given that the bug has been lingering since autostashing
+has been implemented it seems users didn't catch the breakage as
+fast ;) I guess it's just a little-used feature _or_ the breakage
+is too obscure to regularly happen. At least I have never cause
+my editor to return an error when editing the ISN-sheet.
 
-I've included a second test which now also tests how we fare when
-we actually fail to restore the autostash after the editor has
-been aborted.
+But still, I agree that a test for conflicting autostashes is
+beneficial, even though the scenario is even more unlikely (the
+user's editor has to return an error code as well as that a
+stashed file needs to be modified while editing the ISN-sheet).
+I've just sent out a second version of the patch.
 
-Another minor change is fixing of a typo inherited from the
-previous test "abort rebase -i with --autostash" (commited ->
-committed). I don't think there's any benefit in fixing the typo
-in the existing test so I'll just keep it there.
+Thank you both for your input.
 
-[1]: http://article.gmane.org/gmane.comp.version-control.git/297404
-[2]: http://article.gmane.org/gmane.comp.version-control.git/298481
+> > If you mean "likely to trigger nasty bugs", then indeed testing the case
+> > when apply_autostash fails is interesting: for example, calling
+> > die_abort when "stash apply" fails is tempting, but would lead to
+> > infinite recursion (it doesn't seem to be the case, but a test would be
+> > nice). Setting the editor to something that modifies uncommited-content
+> > before 'false' should do the trick.
 
- git-rebase--interactive.sh  |  1 +
- t/t3420-rebase-autostash.sh | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+--dDRMvlgZJXvWKvBx
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 05f22e4..4f499d2 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -212,6 +212,7 @@ exit_with_patch () {
- }
- 
- die_abort () {
-+	apply_autostash
- 	rm -rf "$state_dir"
- 	die "$1"
- }
-diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index 944154b..532ff5c 100755
---- a/t/t3420-rebase-autostash.sh
-+++ b/t/t3420-rebase-autostash.sh
-@@ -192,4 +192,35 @@ test_expect_success 'abort rebase -i with --autostash' '
- 	test_cmp expected file0
- '
- 
-+test_expect_success 'restore autostash on editor failure' '
-+	test_when_finished "git reset --hard" &&
-+	echo uncommitted-content >file0 &&
-+	(
-+		test_set_editor "false" &&
-+		test_must_fail git rebase -i --autostash HEAD^
-+	) &&
-+	echo uncommitted-content >expected &&
-+	test_cmp expected file0
-+'
-+
-+test_expect_success 'autostash is saved on editor failure with conflict' '
-+	test_when_finished "git reset --hard" &&
-+	echo uncommitted-content >file0 &&
-+	(
-+		write_script abort-editor.sh <<-\EOF &&
-+			echo conflicting-content >file0
-+			exit 1
-+		EOF
-+		test_set_editor "$(pwd)/abort-editor.sh" &&
-+		test_must_fail git rebase -i --autostash HEAD^ &&
-+		rm -f abort-editor.sh
-+	) &&
-+	echo conflicting-content >expected &&
-+	test_cmp expected file0 &&
-+	git checkout file0 &&
-+	git stash pop &&
-+	echo uncommitted-content >expected &&
-+	test_cmp expected file0
-+'
-+
- test_done
--- 
-2.9.0
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
+iQIcBAABCAAGBQJXc2qCAAoJEBF8Z7aeq/EshPsP/jg+DFNcMIhcGp3IVEp5oGoz
+LVm5Uf2Opfqz2FFdLpC4n2fgC9XnoaZ/1yAakfrp5e+vsYErLJPxgbBfXcl9pBOe
+sUj6E6kc409hA5o/+xm1VX5SWwH1TEqDpY6DbsoHCUgmkuuDQaA1ElMwlcx0305z
+1Nq9RWtKxVYAWQRQ8KfnnLdG+LPVuBLmtvGzVs+cc4XCQOtMMpn3QVD+qBO+Ew/A
+IQPmdwxuJe/f2kcC2qU6YuC2khLUMvL8eJY9FSH+IyHdn72LbZxW2OoD8j+yL23a
+6GmeI4Igmx+xlB5Be0YN/ZsefThBAcZ07jmrN17x3fhdc6QzvUViCZqDrMs2U6zG
+dRe6h12hqzDJe2NDwDqRiXd3slx+TRfo6U9P9fbWqLxV5OgNClX77GDNu9DXKGB6
+vA51PYSz4VYP4N129tZ03ktmG5bu26fhv9CcCEhOPbrGJ0FK350AE6C2r8un24hl
+kGtCEfP69WZde4/wDN3STfQBWOEaqeIajbIowRxESWv8AwnwAVP+KC6rUCPbKF+V
+TPzvfD4dlj3/vyV5pEdwlPuht93Y2Sjhzvg3W5aNcszwutThgDMyrHu8XZCKDCaY
+lanP78PTquzks1v874FOopWfKOqYw07FY7+rkVDCcNkJ0EVtLNb5UuLDiSpxM0xP
+WI1iKpPIsAwrVE7YLors
+=Uhkm
+-----END PGP SIGNATURE-----
+
+--dDRMvlgZJXvWKvBx--
