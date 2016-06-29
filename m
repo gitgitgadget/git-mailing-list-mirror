@@ -7,80 +7,79 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE2AE1FF40
-	for <e@80x24.org>; Wed, 29 Jun 2016 14:14:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3866D1FF40
+	for <e@80x24.org>; Wed, 29 Jun 2016 14:14:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752698AbcF2OOu (ORCPT <rfc822;e@80x24.org>);
-	Wed, 29 Jun 2016 10:14:50 -0400
-Received: from mout.gmx.net ([212.227.15.15]:59325 "EHLO mout.gmx.net"
+	id S1752723AbcF2OOw (ORCPT <rfc822;e@80x24.org>);
+	Wed, 29 Jun 2016 10:14:52 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49303 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752498AbcF2OOt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2016 10:14:49 -0400
+	id S1752677AbcF2OOu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2016 10:14:50 -0400
 Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MbgKD-1b1PfS2duf-00J3ne; Wed, 29 Jun 2016 16:14:43
+ ESMTPSA (Nemesis) id 0LvEZe-1bQKtp0pP8-010P2W; Wed, 29 Jun 2016 16:14:47
  +0200
-Date:	Wed, 29 Jun 2016 16:14:42 +0200 (CEST)
+Date:	Wed, 29 Jun 2016 16:14:46 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/5] commit -C: skip blank lines at the beginning of the
- message
+Subject: [PATCH 2/5] sequencer: use skip_blank_lines() to find the commit
+ subject
 In-Reply-To: <cover.1467209576.git.johannes.schindelin@gmx.de>
-Message-ID: <043eafd7ad4128d3a887c224ec6576d96872d1df.1467209576.git.johannes.schindelin@gmx.de>
+Message-ID: <69bc831064331117141c7153dc72e9e658691155.1467209576.git.johannes.schindelin@gmx.de>
 References: <cover.1467209576.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:3+L/I5Z1Y9uQnaFzr6vmCbOxmMtO97Ghoy7E/tFFOVhTYsZUZbn
- OeN7tjivdukGXxeRDrPLaakpoYwYeV72JNKxl0ncnzpLziZBKpN5OCG61HbmqWyqWHmOKUK
- 9UysWbTbo85fJCJdbtUr+KmmOnbnNH5jPgD1OvIU0vN468HooCV+QPPEZtqDTE3ktzkvAit
- R/6jxPYo0ut4EKFomWMuw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:V+JAlf1GlRA=:95qafHebrrNkUgfqikp3Hr
- 1pZnGJTBCdoYojyYqbsjI/r1GqHbZIIN515+4SLu/eD3K0Mxr8lnhZgQX+5i3snjRdG/wf8fr
- lf5Z7tZD6SQvI16A5BzQxT1JKdvKHHfaKIhU6Pun9w8eFj3lXjIXxhQaawo+om9hqriyNZv6p
- ORD6TTQf/CCD4Rm/513Y+V/E14SG/ixnjEN9wB8IbV0h29C35H/vk2NWZO9Gt3twQoPkPsI6s
- VQC3WGESTKsT+MAUXb9MrtUq++TyNNsFkNw+mrQgJ2Cs2CTvFc4tzwyhMk1JeUCB2iEVNdQ/p
- 43IwY/FuBTewHLe6BM9bkaaUec5Tl0vKHMWvkwkmSV69xvshZC9mOj2wU3AaX94L/bw6J4YNa
- SlAZPkR2jp6rNKTOBqmMMHDtXr6sBrW+P4SsDUyEgnIRJhHKZqeGEArvZ7mwkPpvKA7l4AjlU
- fGt9Nixv32eeDH8WmAzxeHEfB/VEgkmrbHH1V+7TNV22lfF4slp185Who4/g01m2O/NUVlns5
- oTJnM8MHrbBPJ6qfmkQIjuTBQ3/boXyywHNTlWiiu65dXbY2bP45IVT94e1P4r6fCInv+dGOm
- Ot5bZdwQ1OJ9BtPgnOz/5OLJ5NJlRTXYT6N/LaFhR5irXHsdCgkhknG+Evtk72X+7o348eUPB
- 8lvDmqK6Y95YQkAcr0IltBaghoOnSuMn+bZYlvXn1fnLVyS2KNwvC7aVyHwmZ0WVCdMY6hgvN
- WoGHyTRz7hs4Mjlb1y3OI3GhPMmclWBKMslPgxH42hdKkAfy7y6MOO857FY1n6TRbDRguAIX1
- 3Xxq7Kd
+X-Provags-ID: V03:K0:tM7dDFm2cMXA6w1IX7XgKuOkmGAmeK46uAdWzHINTGjjYULwm3q
+ JBe80+NbdI+2zUJsDdJfjYxrv+g5kpBH02XaDNKa2G9hR52AIlLbPcNp35296LBPGekj6w+
+ w/miIVDriTTBqC985EpButn5YGp/4WYcnCQ+7bTx8V7P7VHsUkwAkasCwJ6sNM8eFVimpnB
+ wSkyKo5MnL+n6vNMr6eBw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:fTfF1J4uIg4=:fuVnOQPexVqAC6FQwqEsoM
+ R3Xu2B0uztRqoSP4vPLNce47j9d04mSKTmv7FxYpJGPmSGlLOkHV/nJ6ZxkHMR4bSuPR1auNI
+ eSu6ftF7nC9ThMizfNkpPRwKfFrNIzWUp31t2Q8eizCFUF4CFbkCCsbdB5wQwsmK3C3znycBN
+ 7/JTJfcL8hPKE+dXbmsELoG7XxYINrrp+BAaH2FpVmHMtiRf+VHyyKVe/itGv9xFkroPxXv2q
+ EhutFjMYzCbdQMto5sx+ViGBZ5zk48H3W8EwUWPE5Z1yyul14B27P4bR7yLAka01YP5aWSXex
+ G7SxTmqNmYMI3vsQSy30TFCmBzTNgU0kO/rlKkSPq8Oum3eONZpg8V7CQEG6jFd8RAiU/KTXO
+ BvAFXbQJgJLEnft+CbMhNO35HNNtr+Ty2fs9G61ZdxJMTejD6Q/jicD4ucdxYydlFV0OmcT0V
+ itZeTuaOUyviR08L036PF8gz9AGoMSvSd77Y1gqQiXxaYxRP4/cCH0QHsK2NshPjuyXtYFN14
+ 7tZVEn/FHyPShG9gmFLfNvwnl7fK7yLFImMj2OD4tgCKOCjOPZ2lBBuKufLr//M98Xsy3rzbQ
+ pNeA5P80azGepe0/m8N954OcqRZ6M66fhXLJdcOwPnvEkzoDxKlNrJ61vqzJ8FyBInoza2KnN
+ jTIrg9PLNUsd466o8I82YigiuC80Ax1dXz7aueZxqrrGmtjWAMck6afxik13WpZCgA36GNDpo
+ HU7XJenEq3qJf1E0ecrDSCO/w2NS8t/RGpynBSNtu2HKz7wwYVf/5kQTC2YzIOHU1qcUUbpOg
+ m4gKAUi
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Consistent with the pretty-printing machinery, we skip leading blank
-lines (if any) of existing commit messages.
-
-While Git itself only produces commit objects with a single empty line
-between commit header and commit message, it is legal to have more than
-one blank line (i.e. lines containing only white space, or no
-characters) at the beginning of the commit message, and the
-pretty-printing code already handles that.
+Just like we already taught the find_commit_subject() function (to make
+it consistent with the code in pretty.c), we now simply skip leading
+blank lines of the commit message.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/commit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sequencer.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 3f18942..1f6dbcd 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -715,7 +715,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		char *buffer;
- 		buffer = strstr(use_message_buffer, "\n\n");
- 		if (buffer)
--			strbuf_addstr(&sb, buffer + 2);
-+			strbuf_addstr(&sb, skip_blank_lines(buffer + 2));
- 		hook_arg1 = "commit";
- 		hook_arg2 = use_message;
- 	} else if (fixup_message) {
+diff --git a/sequencer.c b/sequencer.c
+index 7d7add6..cdfac82 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -544,10 +544,8 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 		 * information followed by "\n\n".
+ 		 */
+ 		p = strstr(msg.message, "\n\n");
+-		if (p) {
+-			p += 2;
+-			strbuf_addstr(&msgbuf, p);
+-		}
++		if (p)
++			strbuf_addstr(&msgbuf, skip_blank_lines(p + 2));
+ 
+ 		if (opts->record_origin) {
+ 			if (!has_conforming_footer(&msgbuf, NULL, 0))
 -- 
 2.9.0.270.g810e421
 
