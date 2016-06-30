@@ -2,64 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 998C420179
-	for <e@80x24.org>; Thu, 30 Jun 2016 20:42:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61D481FE4E
+	for <e@80x24.org>; Thu, 30 Jun 2016 20:58:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752441AbcF3Ulb (ORCPT <rfc822;e@80x24.org>);
-	Thu, 30 Jun 2016 16:41:31 -0400
-Received: from smtp-d-6.talktalk.net ([78.144.6.134]:31455 "EHLO
-	smtp-d-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023AbcF3UlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2016 16:41:19 -0400
-Received: from localhost.localdomain ([2.96.205.30])
-	by smtp.talktalk.net with SMTP
-	id IiWUbMHWfgKstIiWVbS4Fc; Thu, 30 Jun 2016 21:25:20 +0100
-X-Originating-IP: [2.96.205.30]
-X-Spam:	0
-X-OAuthority: v=2.2 cv=GdBVpkfL c=1 sm=1 tr=0 a=QTrtdgWXx+RZbj7kV87ZQA==:117
- a=QTrtdgWXx+RZbj7kV87ZQA==:17 a=xtxXYLxNAAAA:8 a=4EMVubCEdPEOI01j8WIA:9
- a=xts0dhWdiJbonKbuqhAr:22
-From:	Philip Oakley <philipoakley@iee.org>
-To:	GitList <git@vger.kernel.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 2/4] doc: show the actual left, right, and boundary marks
-Date:	Thu, 30 Jun 2016 21:25:07 +0100
-Message-Id: <20160630202509.4472-3-philipoakley@iee.org>
-X-Mailer: git-send-email 2.8.4.windows.1.3.ge328a54
-In-Reply-To: <20160630202509.4472-1-philipoakley@iee.org>
-References: <20160625164654.5192-1-philipoakley@iee.org>
- <20160630202509.4472-1-philipoakley@iee.org>
-X-CMAE-Envelope: MS4wfN8tXlCD5YYqi+z13Dm9ykjWCOoE2yPbyzTr63XBEKpQfg8BDLnp1eeriPdqf4AtN+n0OLa5PbX+9t9ccif42Hl2p1a4XOFSCTQEtGKObIPc7qy/JY/m
- 5p0CVgT5DI66/JIy5fXsDcWl3eugn8tHcYjEmWS9lUTqiUQfPyFMoAWVikZLuMD4ECvpd6yXnhEraPykbWSLhm8CNWL3KI9OJbl9+OCYvu85Kcaa/guZVcow
+	id S1752972AbcF3U6I (ORCPT <rfc822;e@80x24.org>);
+	Thu, 30 Jun 2016 16:58:08 -0400
+Received: from mail-it0-f49.google.com ([209.85.214.49]:35624 "EHLO
+	mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752957AbcF3U6F (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2016 16:58:05 -0400
+Received: by mail-it0-f49.google.com with SMTP id g127so1956405ith.0
+        for <git@vger.kernel.org>; Thu, 30 Jun 2016 13:57:52 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=lHQnp3FA35Z7BOvbX3uWH4GC5g94x6yhexW0okv+vsI=;
+        b=RpOznUXhcevLpnQSZK3uk784fhHE/NLE4J5VAXM1gihEvutX9Blw+GYZlcdQiTjdK8
+         xGZ0Or7fpKRMjYGXY3tPiAOQKAslRzZN6XewrBA3/6H/5zvqrRQzcAxlXXGZg3u7KbPx
+         gkU+z3VZW/cMk9xFk5QVVO8yHR2k4HNqHFxcPInVZrVqHJH8qJ9UeLwwv85N7Jrm+5Hj
+         NhpM4DN7P+cE5HXkQhwz9SrBnhQq792G0Zux16lYZr0KKP2HLaVhERwqSX1LmV/9iwFJ
+         tSzqFaJIWaSCtGtfz7lElxV3G87xtDNjH+MJIXc2RQAd8QKUnnA245tGCaCZHw6HhH28
+         w+rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=lHQnp3FA35Z7BOvbX3uWH4GC5g94x6yhexW0okv+vsI=;
+        b=P1HLzT+0xnXXB0b0rVlhR/t//RksfzKEm7DFFuIB0yehadpgSJ1XHcheBtkULUf2um
+         ncWpvBWFTfkNZGKIW3hTC6LLysAQ4ygTnN/2Tn8XaqE21BBIF58FiioOmX+uC0cl1wPL
+         ab2q2aQb4+B/h1ERqz2wmnr51NLVjjWxRtOVA8Jg7g0sESdznlZfZk3xoEX4hMrMsydI
+         V+PyLbB13plGwb/FQaYR1zc+im/nifkKiouKXQW+s/bLqWm54JLZZ4CUr5o1AVzQR1qe
+         aQSvL7yMg+rXejT5y//PQuw7sbObbO2t/CLo8jqcy+zQyIVTHmKcvjlEntyEpnSl0Bba
+         CRKw==
+X-Gm-Message-State: ALyK8tIgikGKygBUDYXBY2JvS9T7jlQzf+LfdEWtgM6J8/mxW3SclumXPkdbb/4RaLPhrc8TUihv2zl18VxaXDdt
+X-Received: by 10.36.120.71 with SMTP id p68mr17775897itc.46.1467320271962;
+ Thu, 30 Jun 2016 13:57:51 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.136.16 with HTTP; Thu, 30 Jun 2016 13:57:50 -0700 (PDT)
+In-Reply-To: <CAPV8XuZ4wTWBPkwB4grmx-oznnx2koiCFvVLZ-oG+E2v1ipPBw@mail.gmail.com>
+References: <loom.20160620T145755-931@post.gmane.org> <20160622153145.GB16644@paksenarrion.iveqy.com>
+ <CAPV8XuZ4wTWBPkwB4grmx-oznnx2koiCFvVLZ-oG+E2v1ipPBw@mail.gmail.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Thu, 30 Jun 2016 13:57:50 -0700
+Message-ID: <CAGZ79kZRJ-O3825r-oXn4YG7Xp6+SXmttBxhzjADgRK5yNa=xQ@mail.gmail.com>
+Subject: Re: Problem with --shallow-submodules option
+To:	Istvan Zakar <istvan.zakar@gmail.com>
+Cc:	Fredrik Gustafsson <iveqy@iveqy.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
----
-Found while checking the 'symmetric difference' documentation
----
- Documentation/pretty-formats.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Thu, Jun 30, 2016 at 6:27 AM, Istvan Zakar <istvan.zakar@gmail.com> wrote:
+> Hello,
+>
+> Thanks for your answers. I tested it after the changes were made on
+> the git server, and it seems to be working. But some other issue came
+> up.
+>
+> We have quite many submodules in our project so I did some comaprision:
+>
+> If I do a clone with these parameters:
+> --jobs 20 --recurse-submodules
+>
+> The clone lasts ~53 seconds, and the total size of the folder is around 2 GB.
+>
+> If I add the shallow-submodules option, the size of the folder will be
+> a bit below 1GB, so the size decreased as I expected, but the time of
+> the clone itself increased to 90 seconds. It seems the last step of
+> the command, checking out the submodules is executed one-by-one, and
+> not in parallel, so it seems at this step the jobs parameter does not
+> have effect.
+>
+> Is it intentional, or there is some option I missed?
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 29b19b9..10719e1 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -166,7 +166,7 @@ endif::git-rev-list[]
-   respecting the `auto` settings of the former if we are going to a
-   terminal). `auto` alone (i.e. `%C(auto)`) will turn on auto coloring
-   on the next placeholders until the color is switched again.
--- '%m': left, right or boundary mark
-+- '%m': left (`<`), right (`>`) or boundary (`-`) mark
- - '%n': newline
- - '%%': a raw '%'
- - '%x00': print a byte from a hex code
--- 
-2.8.4.windows.1.3.ge328a54
+It was intentional at the time of submitting the patches.
+The checkout phase is a bit complicated as it combines the
+newly cloned submodules as well as the submodules to incrementally
+fetch into one bucket and treats them the same.
 
+And for submodules that were fetched incrementally you may run into problems
+when combining that with the local state (e.g. rebase or merge configured in
+`submodule.<name>.update` or passed on the command line), which requires
+human interaction (resolving the merge conflict), which we want to present one
+at a time to the user.
+
+The handling for the user is not quite clear, when to stop, see:
+15ffb7cde48b73b3d5ce259443db7d2e0ba13750 (submodule update: continue
+when a checkout fails)
+877449c136539cf8b9b4ed9cfe33a796b7b93f93 (git-submodule.sh: clarify
+the "should we die now" logic)
+
+So we want to die as soon as we see a merge conflict or other
+error that is likely to require some human interaction.
+To do that properly we need to have complicated logic or just update
+one submodule at a time.
+
+For initial checkouts we know that there will be no merge conflicts, i.e.
+it will be a "checkout -f" (with an implicit must_die_on_failure=no)
+So we could run all checkouts of submodules in parallel, too. We'd
+just need to write the patch for that.
+
+As the cloning is already done in parallel, we can hook into the initial
+checkout there easily. I'd build that on top of [1], creating a similar commit.
+In the successful case of `update_clone_task_finished` (the case with
+`!result`  -> return 0;) we would need to add the checkout command to
+the queue instead of just finishing.
+
+[1] https://github.com/gitster/git/commit/665b35eccd39fefd714cb5c332277a6b94fd9386
+
+
+>
+> I'm using git 2.9.0 on client side.
+>
+> Thanks,
+>    Istvan
+>
+> ps: if I update the submodules with --depth 1 parameter in parallel
+> using xargs it lasts about 18 seconds, so it's a workaround for this
+> issue, but it would be nice to do it with a single command.
+>
+>
+>
+>
+> On 22 June 2016 at 17:31, Fredrik Gustafsson <iveqy@iveqy.com> wrote:
+>> On Mon, Jun 20, 2016 at 01:06:39PM +0000, Istvan Zakar wrote:
+>>> I'm working on a relatively big project with many submodules. During
+>>> cloning for testing I tried to decrease the amount of data need to be
+>>> fetched from the server by using --shallow-submodules option in the clone
+>>> command. It seems to check out the tip of the remote repo, and if it's not
+>>> the commit registered in the superproject the submodule update fails
+>>> (obviously). Can I somehow tell to fetch that exact commit I need for my
+>>> superproject?
+>>
+>> Maybe. http://stackoverflow.com/questions/2144406/git-shallow-submodules
+>> gives a good overview of this problem.
+>>
+>> git fetches a branch and is shallow from that branch, which might be an
+>> other sha1 than the one the submodule points to, (as you say). This
+>> is/was one of the drawbacks with this method. However the since git 2.8,
+>> git will try to fetch the sha1 direct (and not the branch). So then it
+>> will work, if(!), the server supports direct access to sha1. This was
+>> previously not allowed due to security concerns (if I recall correctly).
+>>
+>> So the answer is, yes this will work if you've a recent version of git
+>> and support on the server side for doing this. Unfortunately I'm not
+>> sure which git version is needed on the server side for this to work.
+>>
+>> --
+>> Fredrik Gustafsson
+>>
+>> phone: +46 733-608274
+>> e-mail: iveqy@iveqy.com
+>> website: http://www.iveqy.com
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
