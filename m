@@ -6,157 +6,170 @@ X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13D871F744
-	for <e@80x24.org>; Thu, 30 Jun 2016 09:12:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B6E21F744
+	for <e@80x24.org>; Thu, 30 Jun 2016 09:14:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751823AbcF3JKe (ORCPT <rfc822;e@80x24.org>);
-	Thu, 30 Jun 2016 05:10:34 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38266 "HELO cloud.peff.net"
+	id S1751705AbcF3JOk (ORCPT <rfc822;e@80x24.org>);
+	Thu, 30 Jun 2016 05:14:40 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38281 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751383AbcF3JK2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2016 05:10:28 -0400
-Received: (qmail 31630 invoked by uid 102); 30 Jun 2016 09:09:25 -0000
+	id S1751383AbcF3JOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2016 05:14:38 -0400
+Received: (qmail 31479 invoked by uid 102); 30 Jun 2016 09:07:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Jun 2016 05:09:25 -0400
-Received: (qmail 6663 invoked by uid 107); 30 Jun 2016 09:09:40 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Jun 2016 05:07:59 -0400
+Received: (qmail 6644 invoked by uid 107); 30 Jun 2016 09:08:13 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Jun 2016 05:09:40 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Jun 2016 05:09:20 -0400
-Date:	Thu, 30 Jun 2016 05:09:20 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Jun 2016 05:08:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Jun 2016 05:07:54 -0400
+Date:	Thu, 30 Jun 2016 05:07:54 -0400
 From:	Jeff King <peff@peff.net>
 To:	git@vger.kernel.org
 Cc:	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Johannes Sixt <j6t@kdbg.org>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 4/5] archive-tar: write extended headers for far-future
- mtime
-Message-ID: <20160630090920.GD17463@sigill.intra.peff.net>
+Subject: [PATCH v4 1/5] t9300: factor out portable "head -c" replacement
+Message-ID: <20160630090753.GA17463@sigill.intra.peff.net>
 References: <20160630090614.GA16725@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <20160630090614.GA16725@sigill.intra.peff.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The ustar format represents timestamps as seconds since the
-epoch, but only has room to store 11 octal digits.  To
-express anything larger, we need to use an extended header.
-This is exactly the same case we fixed for the size field in
-the previous commit, and the solution here follows the same
-pattern.
+In shell scripts it is sometimes useful to be able to read
+exactly N bytes from a pipe. Doing this portably turns out
+to be surprisingly difficult.
 
-This is even mentioned as an issue in f2f0267 (archive-tar:
-use xsnprintf for trivial formatting, 2015-09-24), but since
-it only affected things far in the future, it wasn't deemed
-worth dealing with. But note that my calculations claiming
-thousands of years were off there; because our xsnprintf
-produces a NUL byte, we only have until the year 2242 to fix
-this.
+We want a solution that:
 
-Given that this is just around the corner (geologically
-speaking, anyway), and because it's easy to fix, let's just
-make it work. Unlike the previous fix for "size", where we
-had to write an individual extended header for each file, we
-can write one global header (since we have only one mtime
-for the whole archive).
+  - is portable
 
-There's a slight bit of trickiness there. We may already be
-writing a global header with a "comment" field for the
-commit sha1. So we need to write our new field into the same
-header. To do this, we push the decision of whether to write
-such a header down into write_global_extended_header(),
-which will now assemble the header as it sees fit, and will
-return early if we have nothing to write (in practice, we'll
-only have a large mtime if it comes from a commit, but this
-makes it also work if you set your system clock ahead such
-that time() returns a huge value).
+  - never reads more than N bytes due to buffering (which
+    would mean those bytes are not available to the next
+    program to read from the same pipe)
 
-Note that we don't (and never did) handle negative
-timestamps (i.e., before 1970). This would probably not be
-too hard to support in the same way, but since git does not
-support negative timestamps at all, I didn't bother here.
+  - handles partial reads by looping until N bytes or read
+    (or we see EOF)
 
-After writing the extended header, we munge the timestamp in
-the ustar headers to the maximum-allowable size. This is
-wrong, but it's the least-wrong thing we can provide to a
-tar implementation that doesn't understand pax headers (it's
-also what GNU tar does).
+  - is resilient to stray signals giving us EINTR while
+    trying to read (even though we don't send them, things
+    like SIGWINCH could cause apparently-random failures)
 
-Helped-by: René Scharfe <l.s.r@web.de>
+Some possible solutions are:
+
+  - "head -c" is not portable, and implementations may
+    buffer (though GNU head does not)
+
+  - "read -N" is a bash-ism, and thus not portable
+
+  - "dd bs=$n count=1" does not handle partial reads. GNU dd
+    has iflags=fullblock, but that is not portable
+
+  - "dd bs=1 count=$n" fixes the partial read problem (all
+    reads are 1-byte, so there can be no partial response).
+    It does make a lot of write() calls, but for our tests
+    that's unlikely to matter.  It's fairly portable. We
+    already use it in our tests, and it's unlikely that
+    implementations would screw up any of our criteria. The
+    most unknown one would be signal handling.
+
+  - perl can do a sysread() loop pretty easily. On my Linux
+    system, at least, it seems to restart the read() call
+    automatically. If that turns out not to be portable,
+    though, it would be easy for us to handle it.
+
+That makes the perl solution the least bad (because we
+conveniently omitted "length of code" as a criterion).
+It's also what t9300 is currently using, so we can just pull
+the implementation from there.
+
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- archive-tar.c       | 19 ++++++++++++++++---
- t/t5000-tar-tree.sh |  4 ++--
- 2 files changed, 18 insertions(+), 5 deletions(-)
+ t/t9300-fast-import.sh  | 23 +++--------------------
+ t/test-lib-functions.sh | 14 ++++++++++++++
+ 2 files changed, 17 insertions(+), 20 deletions(-)
 
-diff --git a/archive-tar.c b/archive-tar.c
-index 57a1540..d671bc3 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -22,8 +22,11 @@ static int write_tar_filter_archive(const struct archiver *ar,
-  * This is the max value that a ustar size header can specify, as it is fixed
-  * at 11 octal digits. POSIX specifies that we switch to extended headers at
-  * this size.
-+ *
-+ * Likewise for the mtime (which happens to use a buffer of the same size).
-  */
- #define USTAR_MAX_SIZE 077777777777UL
-+#define USTAR_MAX_MTIME 077777777777UL
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 74d740d..2e0ba3e 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -7,23 +7,6 @@ test_description='test git fast-import utility'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/diff-lib.sh ;# test-lib chdir's into trash
  
- /* writes out the whole block, but only if it is full */
- static void write_if_needed(void)
-@@ -324,7 +327,18 @@ static int write_global_extended_header(struct archiver_args *args)
- 	unsigned int mode;
- 	int err = 0;
+-# Print $1 bytes from stdin to stdout.
+-#
+-# This could be written as "head -c $1", but IRIX "head" does not
+-# support the -c option.
+-head_c () {
+-	perl -e '
+-		my $len = $ARGV[1];
+-		while ($len > 0) {
+-			my $s;
+-			my $nread = sysread(STDIN, $s, $len);
+-			die "cannot read: $!" unless defined($nread);
+-			print $s;
+-			$len -= $nread;
+-		}
+-	' - "$1"
+-}
+-
+ verify_packs () {
+ 	for p in .git/objects/pack/*.pack
+ 	do
+@@ -2481,7 +2464,7 @@ test_expect_success PIPE 'R: copy using cat-file' '
  
--	strbuf_append_ext_header(&ext_header, "comment", sha1_to_hex(sha1), 40);
-+	if (sha1)
-+		strbuf_append_ext_header(&ext_header, "comment",
-+					 sha1_to_hex(sha1), 40);
-+	if (args->time > USTAR_MAX_MTIME) {
-+		strbuf_append_ext_header_uint(&ext_header, "mtime",
-+					      args->time);
-+		args->time = USTAR_MAX_MTIME;
-+	}
+ 		read blob_id type size <&3 &&
+ 		echo "$blob_id $type $size" >response &&
+-		head_c $size >blob <&3 &&
++		test_copy_bytes $size >blob <&3 &&
+ 		read newline <&3 &&
+ 
+ 		cat <<-EOF &&
+@@ -2524,7 +2507,7 @@ test_expect_success PIPE 'R: print blob mid-commit' '
+ 		EOF
+ 
+ 		read blob_id type size <&3 &&
+-		head_c $size >actual <&3 &&
++		test_copy_bytes $size >actual <&3 &&
+ 		read newline <&3 &&
+ 
+ 		echo
+@@ -2559,7 +2542,7 @@ test_expect_success PIPE 'R: print staged blob within commit' '
+ 		echo "cat-blob $to_get" &&
+ 
+ 		read blob_id type size <&3 &&
+-		head_c $size >actual <&3 &&
++		test_copy_bytes $size >actual <&3 &&
+ 		read newline <&3 &&
+ 
+ 		echo deleteall
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 48884d5..90856d6 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -961,3 +961,17 @@ test_env () {
+ 		done
+ 	)
+ }
 +
-+	if (!ext_header.len)
-+		return 0;
-+
- 	memset(&header, 0, sizeof(header));
- 	*header.typeflag = TYPEFLAG_GLOBAL_HEADER;
- 	mode = 0100666;
-@@ -409,8 +423,7 @@ static int write_tar_archive(const struct archiver *ar,
- {
- 	int err = 0;
- 
--	if (args->commit_sha1)
--		err = write_global_extended_header(args);
-+	err = write_global_extended_header(args);
- 	if (!err)
- 		err = write_archive_entries(args, write_tar_entry);
- 	if (!err)
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index 93c2d34..96d208d 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -383,11 +383,11 @@ test_expect_success 'set up repository with far-future commit' '
- 		git commit -m "tempori parendum"
- '
- 
--test_expect_failure 'generate tar with future mtime' '
-+test_expect_success 'generate tar with future mtime' '
- 	git archive HEAD >future.tar
- '
- 
--test_expect_failure TAR_HUGE 'system tar can read our future mtime' '
-+test_expect_success TAR_HUGE 'system tar can read our future mtime' '
- 	echo 4147 >expect &&
- 	tar_info future.tar | cut -d" " -f2 >actual &&
- 	test_cmp expect actual
++# Read up to "$1" bytes (or to EOF) from stdin and write them to stdout.
++test_copy_bytes () {
++	perl -e '
++		my $len = $ARGV[1];
++		while ($len > 0) {
++			my $s;
++			my $nread = sysread(STDIN, $s, $len);
++			die "cannot read: $!" unless defined($nread);
++			print $s;
++			$len -= $nread;
++		}
++	' - "$1"
++}
 -- 
 2.9.0.317.g65b4e7c
 
