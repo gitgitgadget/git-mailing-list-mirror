@@ -2,111 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBC891F744
-	for <e@80x24.org>; Thu, 30 Jun 2016 10:41:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB4801F744
+	for <e@80x24.org>; Thu, 30 Jun 2016 10:49:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751984AbcF3Klb (ORCPT <rfc822;e@80x24.org>);
-	Thu, 30 Jun 2016 06:41:31 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:37023 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751646AbcF3Kla (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2016 06:41:30 -0400
-Received: by mail-wm0-f50.google.com with SMTP id a66so112223011wme.0
-        for <git@vger.kernel.org>; Thu, 30 Jun 2016 03:41:29 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=3uLGAfpDDIyBYN/zFGX+RNpHF7rZBh0JvT4ICJ1U80k=;
-        b=JFDECTkUaF3YCQtWIGcljWsR8EA2EkMeL35FbQOUFUUCBXQdnvx/fAAasAIW/n/nn6
-         6Qjwuo6HqeAGKp50DzFgoeCsPUJvy/bgnx05ucEWV2OyuBP/01sBRn2YgBNe/n7P6rIs
-         4Em2rkhIpoRZQYqxp0khkaJ2vv9goq8nwCzd8hknmuvn+5FKH8BIErbe3R2mS+RTACWj
-         vZTHNb0okoalVTc9+Qk5198hk83ICJpNXzsNvWV03BjjRNmgAJ/ocEOFaSHMkU6WvZhW
-         pyLJv3xjz+CFa+vsDdcvaF3DNz299gWuKmLvd/JQppWv25PjKTKKhQnbbsWP/u15ywle
-         ZALQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=3uLGAfpDDIyBYN/zFGX+RNpHF7rZBh0JvT4ICJ1U80k=;
-        b=M/rB+lAw0Usx4LNPJy/WUrVErKmBOsUWYfTS6coeFnMVYCy2PTixZnwcWPc6ylBpsX
-         IZLodmOHVC1c1g/iMVVZzIaiy10Hsll6BNgxRlnMm397oy79P9UZjE+ssyxDWxEH+w3t
-         ZcMjjvuzjFiDA7tjBkgLQO0B/IVNdDj+UxM8+wrP+lcPlNKGGDPHTaC0yM6lv8rj8ena
-         QsSJotcb0abeChHI3JGG3g7c9+NUKVcQQ/3hfzSSaPapw/iZBifbNJCx/YUmMPg9GyRn
-         vctoZUdmwyA/wKdBWE77kI7K6HanywOKCtPUXuaAZ0M3zczh5v/PqSli7Fr5GmqEKo62
-         30IQ==
-X-Gm-Message-State: ALyK8tIVCR9xGpGlvmFAOenRNtamIwtPMc1NgRcIJnm69xmUuQfAT+fCZtu91a3LxXC4DA==
-X-Received: by 10.194.200.164 with SMTP id jt4mr13341137wjc.18.1467283288507;
-        Thu, 30 Jun 2016 03:41:28 -0700 (PDT)
-Received: from [192.168.1.34] (daw105.neoplus.adsl.tpnet.pl. [83.23.22.105])
-        by smtp.googlemail.com with ESMTPSA id q6sm2750723wjt.46.2016.06.30.03.41.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 Jun 2016 03:41:27 -0700 (PDT)
-Subject: Re: git tag --contains for cherry-picks
-To:	Jeff King <peff@peff.net>, Laszlo Papp <lpapp@kde.org>
-References: <CAOMwXhNp9SwA_oQ8bE6-m72C+po+28maGtsP8wRFRfBLjSb5NA@mail.gmail.com>
- <20160630062236.GA15380@sigill.intra.peff.net>
-Cc:	Git List <git@vger.kernel.org>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <5774F747.4000700@gmail.com>
-Date:	Thu, 30 Jun 2016 12:41:11 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
+	id S1751919AbcF3Ktr (ORCPT <rfc822;e@80x24.org>);
+	Thu, 30 Jun 2016 06:49:47 -0400
+Received: from host02.zombieandprude.com ([80.82.119.138]:35507 "EHLO
+	host02.zombieandprude.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751858AbcF3Ktp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2016 06:49:45 -0400
+Received: from hashpling.plus.com ([212.159.69.125]:46418)
+	by host02.zombieandprude.com with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA256:128)
+	(Exim 4.80)
+	(envelope-from <charles@hashpling.org>)
+	id 1bIYyo-0007aJ-D6; Thu, 30 Jun 2016 11:13:54 +0100
+From:	Charles Bailey <charles@hashpling.org>
+To:	git@vger.kernel.org
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v3 3/3] grep: fix grepping for "intent to add" files
+Date:	Thu, 30 Jun 2016 11:13:48 +0100
+Message-Id: <20160630101348.15665-4-charles@hashpling.org>
+X-Mailer: git-send-email 2.8.2.311.gee88674
+In-Reply-To: <20160630101348.15665-1-charles@hashpling.org>
+References: <20160630101348.15665-1-charles@hashpling.org>
 MIME-Version: 1.0
-In-Reply-To: <20160630062236.GA15380@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-06-30 o 08:22, Jeff King pisze:
-> On Wed, Jun 29, 2016 at 12:48:33PM +0100, Laszlo Papp wrote:
-> 
->> Old releases are maintained with important bug fixes or even new features
->> in our case. It sometimes means that we need to cherry-pick commits across
->> branches, like from master to a specific release branch.
->>
->> Cherry-picking changes the hash of the commit, therefore, this may no
->> longer work for cherry-picks:
->>
->> git tag --contains
->>
->> I am thinking of having something like:
->>
->> git tag --contains-follow
->>
->> which would follow cherry-picks. I am not sure how easily and/or
->> efficiently this can be implemented, but my gut feeling is that in the vast
->> majority of the cases, the content check would bail out already at the
->> "subject line".
-> 
-> Git generally considers commits "equivalent" based on the patch-id, whic
-> his a sha1 of the diff (modulo some canonicalization).
+From: Charles Bailey <cbailey32@bloomberg.net>
 
-The problem with patch based equivalence is that for cherry-picking
-on old release branches you might need to modify a patch for it to
-apply - and then patch-id might not detect it.
+This reverts commit 4d5520053 (grep: make it clear i-t-a entries are
+ignored, 2015-12-27) and adds an alternative fix to maintain the -L
+--cached behavior.
 
-[...]
-> Of course there are other ways of determining commit equivalence. You
-> could find ones with duplicate commit messages, or duplicate subjects,
-> or whatever. But if you have a cherry-picking workflow, I suspect the
-> easiest thing may be to simply use "git cherry-pick -x", which will
-> write the sha1 of the original commit into the cherry-picked commit
-> message. You can then use that to correlate directly.
+4d5520053 caused 'git grep' to no longer find matches in new files in
+the working tree where the corresponding index entry had the "intent to
+add" bit set, despite the fact that these files are tracked.
 
-"git log --grep=<sha-1>" would help there (or even match the specific
-message that "git cherry-pick -x" adds).
+The content in the index of a file for which the "intent to add" bit is
+set is considered indeterminate and not empty. For most grep queries we
+want these to behave the same, however for -L --cached (files without a
+match) we don't want to respond positively for "intent to add" files as
+their contents are indeterminate. This is in contrast to files with
+empty contents in the index (no lines implies no matches for any grep
+query expression) which should be reported in the output of a grep -L
+--cached invocation.
 
+Add tests to cover this case and a few related cases which previously
+lacked coverage.
+
+Helped-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
+---
+ builtin/grep.c  |  4 ++--
+ t/t7810-grep.sh | 58 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 60 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 462e607..ae73831 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -386,7 +386,7 @@ static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec, int
+ 
+ 	for (nr = 0; nr < active_nr; nr++) {
+ 		const struct cache_entry *ce = active_cache[nr];
+-		if (!S_ISREG(ce->ce_mode) || ce_intent_to_add(ce))
++		if (!S_ISREG(ce->ce_mode))
+ 			continue;
+ 		if (!ce_path_match(ce, pathspec, NULL))
+ 			continue;
+@@ -396,7 +396,7 @@ static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec, int
+ 		 * cache version instead
+ 		 */
+ 		if (cached || (ce->ce_flags & CE_VALID) || ce_skip_worktree(ce)) {
+-			if (ce_stage(ce))
++			if (ce_stage(ce) || ce_intent_to_add(ce))
+ 				continue;
+ 			hit |= grep_sha1(opt, ce->sha1, ce->name, 0, ce->name);
+ 		}
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 6e6eaa4..c18e954 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -1364,4 +1364,62 @@ test_expect_success 'grep --color -e A --and -e B -p with context' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'grep can find things only in the work tree' '
++	: >work-tree-only &&
++	git add work-tree-only &&
++	test_when_finished "git rm -f work-tree-only" &&
++	echo "find in work tree" >work-tree-only &&
++	git grep --quiet "find in work tree" &&
++	test_must_fail git grep --quiet --cached "find in work tree" &&
++	test_must_fail git grep --quiet "find in work tree" HEAD
++'
++
++test_expect_success 'grep can find things only in the work tree (i-t-a)' '
++	echo "intend to add this" >intend-to-add &&
++	git add -N intend-to-add &&
++	test_when_finished "git rm -f intend-to-add" &&
++	git grep --quiet "intend to add this" &&
++	test_must_fail git grep --quiet --cached "intend to add this" &&
++	test_must_fail git grep --quiet "intend to add this" HEAD
++'
++
++test_expect_success 'grep does not search work tree with assume unchanged' '
++	echo "intend to add this" >intend-to-add &&
++	git add -N intend-to-add &&
++	git update-index --assume-unchanged intend-to-add &&
++	test_when_finished "git rm -f intend-to-add" &&
++	test_must_fail git grep --quiet "intend to add this" &&
++	test_must_fail git grep --quiet --cached "intend to add this" &&
++	test_must_fail git grep --quiet "intend to add this" HEAD
++'
++
++test_expect_success 'grep can find things only in the index' '
++	echo "only in the index" >cache-this &&
++	git add cache-this &&
++	rm cache-this &&
++	test_when_finished "git rm --cached cache-this" &&
++	test_must_fail git grep --quiet "only in the index" &&
++	git grep --quiet --cached "only in the index" &&
++	test_must_fail git grep --quiet "only in the index" HEAD
++'
++
++test_expect_success 'grep does not report i-t-a with -L --cached' '
++	echo "intend to add this" >intend-to-add &&
++	git add -N intend-to-add &&
++	test_when_finished "git rm -f intend-to-add" &&
++	git ls-files | grep -v "^intend-to-add\$" >expected &&
++	git grep -L --cached "nonexistent_string" >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'grep does not report i-t-a and assume unchanged with -L' '
++	echo "intend to add this" >intend-to-add-assume-unchanged &&
++	git add -N intend-to-add-assume-unchanged &&
++	test_when_finished "git rm -f intend-to-add-assume-unchanged" &&
++	git update-index --assume-unchanged intend-to-add-assume-unchanged &&
++	git ls-files | grep -v "^intend-to-add-assume-unchanged\$" >expected &&
++	git grep -L "nonexistent_string" >actual &&
++	test_cmp expected actual
++'
++
+ test_done
 -- 
-Jakub Narębski
+2.8.2.311.gee88674
 
