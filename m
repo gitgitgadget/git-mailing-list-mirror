@@ -2,154 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0EBD1F744
-	for <e@80x24.org>; Thu, 30 Jun 2016 08:16:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9536C1F744
+	for <e@80x24.org>; Thu, 30 Jun 2016 08:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751203AbcF3IQ1 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 30 Jun 2016 04:16:27 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38217 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750990AbcF3IQX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2016 04:16:23 -0400
-Received: (qmail 28223 invoked by uid 102); 30 Jun 2016 08:16:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Jun 2016 04:16:25 -0400
-Received: (qmail 6295 invoked by uid 107); 30 Jun 2016 08:16:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Jun 2016 04:16:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Jun 2016 04:16:18 -0400
-Date:	Thu, 30 Jun 2016 04:16:18 -0400
-From:	Jeff King <peff@peff.net>
-To:	Johannes Sixt <j6t@kdbg.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: preview: What's cooking in git.git (Jun 2016, #10; Tue, 28)
-Message-ID: <20160630081618.GA26059@sigill.intra.peff.net>
-References: <xmqq4m8c7uo6.fsf@gitster.mtv.corp.google.com>
- <20160629014342.GA28661@sigill.intra.peff.net>
- <57735F90.1010907@kdbg.org>
+	id S1751827AbcF3ITH (ORCPT <rfc822;e@80x24.org>);
+	Thu, 30 Jun 2016 04:19:07 -0400
+Received: from mout.gmx.net ([212.227.15.18]:51190 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751601AbcF3ITE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2016 04:19:04 -0400
+Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MRoyH-1auaFp3B1N-00Suif; Thu, 30 Jun 2016 10:17:48
+ +0200
+Date:	Thu, 30 Jun 2016 10:17:48 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: [PATCH 1/2] t3404: fix another typo
+In-Reply-To: <xmqqh9cb50p3.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1606301017240.12947@virtualbox>
+References: <cover.1467210629.git.johannes.schindelin@gmx.de> <2ad336745e1b2a610b20b7cfba169bd3e042c178.1467210629.git.johannes.schindelin@gmx.de> <xmqqlh1o584u.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1606291729200.12947@virtualbox>
+ <xmqqh9cb50p3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <57735F90.1010907@kdbg.org>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:/ruxZBcGq3tQ8okJa7UU13Rk0ZW/u1GikOS7PZCYNwmIlKOpSUS
+ StxHQqM4pRuWdzPnPRBmdSP5q+/YYX2ZfjX9XKaFl0lTpqfx6ZMRZcPGxN3zAO/uy6z43IK
+ xIkfPzVZnyh7CXTO6H2ixCF2WlwPHLI0oQQ5k4XnAV0GBw4r7P0M8q2j5W4AWbfB8nGcp8g
+ /BVCwiiBU8Q1489GVI0Pw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:DiAL9V0CFk8=:o8h3Z2z3uZxEmPRA+MzYy0
+ Tfyy2EVyFFs0Q71oKF0m902z0aLVMdTkbCFxNZOctAueLHCkr5OCbPSqxzDAMtO6l4n19m4UC
+ PnMRQxnjRbhHlBV+hE0VR0uuOeTFrR7Bi8jDcKUe0yXXyjyJ1HVwyN7smJ6LxTBriyiOzRhhU
+ /SjKd9+iLZyYTfUlnXKq++7v2ShkLJf1XZfyrZ2zybeG/W0TG+Z5Oi3KgHJxmYLMIde46t2rc
+ 66W+dphBsZZF66/RXhvUl5kLLzBIBdYPsfdoS6hessnpdGpFqACwWrWpMmioZlTLkhklLQoAf
+ w4KA5NagBm1eBzh+Ilf3p+Ho5L1yhgToojkm7XsiYi8BSWpQIWH57rKuXsg77LqpcVz0dcV56
+ 04hTSfxv0KrXNUUyllHFw7XYZhu0ygeCN7c9iLhn9hj9fB4yP5NVjJ7h6xj3w6ehC/0wL0q5o
+ DB0Uo/8YSLWSGbk9v6vtNQMar4retd5ovw18VMf85XCUq3OH/zSxAcLu7pB8bwYwlkC/Trqzy
+ tSwEEoV+bZGGdc2uhQid4WJQzCoiZIfHfg5yGHW7YBwGcok6tXjmWZWN5eyWfBT8bUFPeXeUL
+ aR2pBDg8OcGOJ9vezSm5UNpXNh+kGU3ihevWuAc90BqGnWYALvCTV18XwwDI9F4m4S1uDlk9U
+ CsizENeHGtdoMB8rigjrUC5ZFpUmdQbBPzBMhWc15p1piDCdRqTygRKGMqQIJe25l12+GpXTy
+ u8KpGtVxNmdob1gfyvH3l6Svu8Qmvr06wOfMBUZJi6vDWUT1PlTWtHd7ysCt39XfqisMD4Jq8
+ G8JAbUq
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jun 29, 2016 at 07:41:36AM +0200, Johannes Sixt wrote:
+Hi Junio,
 
-> Am 29.06.2016 um 03:43 schrieb Jeff King:
-> > Another is to just put the posix/ksh schemes into the helper function,
-> > and let Windows people sort it out later if they want to.
+On Wed, 29 Jun 2016, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Let's do this.
+> > On Wed, 29 Jun 2016, Junio C Hamano wrote:
+> >
+> >> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> >> 
+> >> > The past tense of "to run" is "run", not "ran".
+> >> 
+> >> Actually, past tense of the verb "to run" is "ran" ;-) The reason
+> >> why this patch is still correct is because this is writing in
+> >> passive voice, where you want "be + past participle", and the past
+> >> participle of the verb "to run" is "run".
+> >
+> > Embarrassing! ;-)
+> >
+> > Well, I shall fix up the commit message thusly:
+> >
+> >     t3404: fix another typo
+> >
+> >     The passive form of "to run" is "run", not "ran".
+> 
+> If your convention of referring to a verb is to show its infinitive
+> form, i.e. "to run", then you would probably want to say
+> 
+> 	The passive from of "to run" is "to be run", not "to be
+> 	ran".
+> 
+> But I think we do not need any of this if we just retitled it to
+> 
+> 	Subject: t3404: fix a grammo (commands are ran -> commands are run)
+> 
+> without any body.
 
-OK, here's a replacement for the first patch in test-match-signal (the
-others do not need touched at all). It punts on Windows entirely.
+Done. Will be part of v2.
 
-It does retain the existing check for "3" in t0005 (though I note in
-04422c7 you skipped the next test entirely in MINGW, and a similar
-argument could perhaps apply here).
-
-I suspect that supporting Windows in test_match_sigpipe would require
-at least:
-
-  - checking for code 3 to cover cases where we raise (either because of
-    check_pipe(), or because we are doing the pop-and-raise thing in our
-    cleanup handlers)
-
-  - checking for 128 when we want sigpipe, in case we get EPIPE and it
-    caused a die().
-
-  - figuring out what the heck happens when you "kill -15" a git process
-    and mapping that
-
-But those are all just guesses (and we'd probably want to hide them
-behind "if test_have_prerequisite MINGW" to avoid making the tests less
-robust elsewhere).
-
-This patch should change nothing at all for Windows, so at least we are
-not making things worse.
-
--- >8 --
-Subject: [PATCH] tests: factor portable signal check out of t0005
-
-In POSIX shells, a program which exits due to a signal
-generally has an exit code of 128 plus the signal number.
-However, ksh uses 256 plus the signal number.  We've
-accounted for that in t0005, but not in other tests.  Let's
-pull out the logic so we can use it elsewhere.
-
-It would be nice for debugging if this additionally printed
-errors to stderr, like our other test_* helpers. But we're
-going to need to use it in other places besides the innards
-of a test_expect block. So let's leave it as generic as
-possible.
-
-Note that we also leave the magic "3" for Windows out of the
-generic helper. This is an artifact of the way we use
-raise() to kill ourselves in test-sigchain.c, and will not
-necessarily apply to all programs. So it's better to keep it
-out of the helper, to reduce the chance of confusing it with
-a real call to exit(3).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t0005-signals.sh      | 13 +++++++------
- t/test-lib-functions.sh | 15 +++++++++++++++
- 2 files changed, 22 insertions(+), 6 deletions(-)
-
-diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
-index e7f27eb..95f8c05 100755
---- a/t/t0005-signals.sh
-+++ b/t/t0005-signals.sh
-@@ -11,12 +11,13 @@ EOF
- 
- test_expect_success 'sigchain works' '
- 	{ test-sigchain >actual; ret=$?; } &&
--	case "$ret" in
--	143) true ;; # POSIX w/ SIGTERM=15
--	271) true ;; # ksh w/ SIGTERM=15
--	  3) true ;; # Windows
--	  *) false ;;
--	esac &&
-+	{
-+		# Signal death by raise() on Windows acts like exit(3),
-+		# regardless of the signal number. So we must allow that
-+		# as well as the normal signal check.
-+		test_match_signal 15 "$ret" ||
-+		test "$ret" = 3
-+	} &&
- 	test_cmp expect actual
- '
- 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 48884d5..15ef3f8 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -961,3 +961,18 @@ test_env () {
- 		done
- 	)
- }
-+
-+# Returns true if the numeric exit code in "$2" represents the expected signal
-+# in "$1". Signals should be given numerically.
-+test_match_signal () {
-+	if test "$2" = "$((128 + $1))"
-+	then
-+		# POSIX
-+		return 0
-+	elif test "$2" = "$((256 + $1))"
-+	then
-+		# ksh
-+		return 0
-+	fi
-+	return 1
-+}
--- 
-2.9.0.317.g65b4e7c
-
+Ciao,
+Dscho
