@@ -7,48 +7,47 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9536C1F744
-	for <e@80x24.org>; Thu, 30 Jun 2016 08:19:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E9B41F744
+	for <e@80x24.org>; Thu, 30 Jun 2016 08:25:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751827AbcF3ITH (ORCPT <rfc822;e@80x24.org>);
-	Thu, 30 Jun 2016 04:19:07 -0400
-Received: from mout.gmx.net ([212.227.15.18]:51190 "EHLO mout.gmx.net"
+	id S1751621AbcF3IZp (ORCPT <rfc822;e@80x24.org>);
+	Thu, 30 Jun 2016 04:25:45 -0400
+Received: from mout.gmx.net ([212.227.17.22]:55837 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751601AbcF3ITE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2016 04:19:04 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MRoyH-1auaFp3B1N-00Suif; Thu, 30 Jun 2016 10:17:48
+	id S1751182AbcF3IZn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2016 04:25:43 -0400
+Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MFPyK-1b4FX52K3w-00ENGc; Thu, 30 Jun 2016 10:25:31
  +0200
-Date:	Thu, 30 Jun 2016 10:17:48 +0200 (CEST)
+Date:	Thu, 30 Jun 2016 10:25:30 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH 1/2] t3404: fix another typo
-In-Reply-To: <xmqqh9cb50p3.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1606301017240.12947@virtualbox>
-References: <cover.1467210629.git.johannes.schindelin@gmx.de> <2ad336745e1b2a610b20b7cfba169bd3e042c178.1467210629.git.johannes.schindelin@gmx.de> <xmqqlh1o584u.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1606291729200.12947@virtualbox>
- <xmqqh9cb50p3.fsf@gitster.mtv.corp.google.com>
+cc:	git@vger.kernel.org
+Subject: Re: [PATCH 2/2] t3404: add a test for the --gpg-sign option
+In-Reply-To: <xmqq8txn4zm5.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1606301019040.12947@virtualbox>
+References: <cover.1467210629.git.johannes.schindelin@gmx.de> <0df34c45db5b1500e55262c8948c9140e7ad6cb8.1467210629.git.johannes.schindelin@gmx.de> <xmqq8txn4zm5.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:/ruxZBcGq3tQ8okJa7UU13Rk0ZW/u1GikOS7PZCYNwmIlKOpSUS
- StxHQqM4pRuWdzPnPRBmdSP5q+/YYX2ZfjX9XKaFl0lTpqfx6ZMRZcPGxN3zAO/uy6z43IK
- xIkfPzVZnyh7CXTO6H2ixCF2WlwPHLI0oQQ5k4XnAV0GBw4r7P0M8q2j5W4AWbfB8nGcp8g
- /BVCwiiBU8Q1489GVI0Pw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:DiAL9V0CFk8=:o8h3Z2z3uZxEmPRA+MzYy0
- Tfyy2EVyFFs0Q71oKF0m902z0aLVMdTkbCFxNZOctAueLHCkr5OCbPSqxzDAMtO6l4n19m4UC
- PnMRQxnjRbhHlBV+hE0VR0uuOeTFrR7Bi8jDcKUe0yXXyjyJ1HVwyN7smJ6LxTBriyiOzRhhU
- /SjKd9+iLZyYTfUlnXKq++7v2ShkLJf1XZfyrZ2zybeG/W0TG+Z5Oi3KgHJxmYLMIde46t2rc
- 66W+dphBsZZF66/RXhvUl5kLLzBIBdYPsfdoS6hessnpdGpFqACwWrWpMmioZlTLkhklLQoAf
- w4KA5NagBm1eBzh+Ilf3p+Ho5L1yhgToojkm7XsiYi8BSWpQIWH57rKuXsg77LqpcVz0dcV56
- 04hTSfxv0KrXNUUyllHFw7XYZhu0ygeCN7c9iLhn9hj9fB4yP5NVjJ7h6xj3w6ehC/0wL0q5o
- DB0Uo/8YSLWSGbk9v6vtNQMar4retd5ovw18VMf85XCUq3OH/zSxAcLu7pB8bwYwlkC/Trqzy
- tSwEEoV+bZGGdc2uhQid4WJQzCoiZIfHfg5yGHW7YBwGcok6tXjmWZWN5eyWfBT8bUFPeXeUL
- aR2pBDg8OcGOJ9vezSm5UNpXNh+kGU3ihevWuAc90BqGnWYALvCTV18XwwDI9F4m4S1uDlk9U
- CsizENeHGtdoMB8rigjrUC5ZFpUmdQbBPzBMhWc15p1piDCdRqTygRKGMqQIJe25l12+GpXTy
- u8KpGtVxNmdob1gfyvH3l6Svu8Qmvr06wOfMBUZJi6vDWUT1PlTWtHd7ysCt39XfqisMD4Jq8
- G8JAbUq
+X-Provags-ID: V03:K0:nnJ10xeKmTvU4fBkwLqRgaHeJX/iARYFY0PbwDGAh8hQIGCVUTo
+ NMvXEm3ogDtWWssJhh9tEnbp6PigI/kje8fc3xZBR2ZgXJGIThqDzlMG+JHPy1VF4exV3tD
+ vQ6RF4sgixiyPlKqNXV6J5mIJaennEj57DigeHs6MZbHbcgA/pU5T/MuM7tGjNXPiK6T9c7
+ O5LQeYZczp44m7iEW3tsg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:fFnw1HhNoEc=:cIOm63a0fCeeWX8tcDn1eB
+ RbggIfm+rlW1EaTNba7iOBdDd/5tsG+KisSoiFcuxvjIhk6rbYBQX7OmPmiRLW2hG1hKcy3dW
+ dWYWd0PdMw2gup24qz9PhVpPnSv8avrUWTBZnuRAd3BUGpC+puyz2HuEr6tNfbc3x3pHM882j
+ pLagCzcvJ4QZBNFVBTz4q4yhU2YPKa++WdSyEVdYwmi4uninf9rAKE8i3grzScHI6m+UGdwA+
+ Z9kqYW6s20xGRvoa7E870AG0k6V5yMwnc0qAxLOABYD/0CehXD/DtmkffU3thNDQ6UyQ780Rg
+ txrdRtdnqT6zbB9ZvQyOCWwXNIowByFFwuHVFFgPwHIh31gg3xUvP78IWJmCYfVRuWOPIN6CU
+ kkrt1cSz4dvCvTE8m0GicT9Mxv+2M6z1kl/3I9Dg+GG1pgGJwYrYhCNmrw4W/SFn1KZvgUytc
+ GZEXpkFuToHGPDX5t8d1J2KYFd4s6xbzowVcm2IxXurY4aqt+a0j1vMCv9WZJKOC+7jU0AU+x
+ LOXjqut/BopuLaHp2an59HoEKvFHivL4jLN5KSIG5rd1ZFf0NedzVpZOkc+6dldAjHra3A5we
+ nxrvgPQ+D3Aof4bdsvfXbP0t/sPoHHomuhNn1HHIq9GDo20GLYt7UBn0qyIb9aWqhKfHysETM
+ 3E36Zbv/l33fmhPwZesqqMTrhauLCpnS/UrRZ+jjFho8XWpzTtN1aWbB7DCPLhOP35O/2q3l+
+ xTbzCKxW3HfW49WxlXNsWeAbBCdJMxuZ0Hpf/79cpL4IJmgeMwI+tl83b93bBeG94XGyzyc7L
+ CvdWNAv
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,40 +57,75 @@ Hi Junio,
 
 On Wed, 29 Jun 2016, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> > On Wed, 29 Jun 2016, Junio C Hamano wrote:
-> >
-> >> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> >> 
-> >> > The past tense of "to run" is "run", not "ran".
-> >> 
-> >> Actually, past tense of the verb "to run" is "ran" ;-) The reason
-> >> why this patch is still correct is because this is writing in
-> >> passive voice, where you want "be + past participle", and the past
-> >> participle of the verb "to run" is "run".
-> >
-> > Embarrassing! ;-)
-> >
-> > Well, I shall fix up the commit message thusly:
-> >
-> >     t3404: fix another typo
-> >
-> >     The passive form of "to run" is "run", not "ran".
+> > To keep the time t3404 requires short (in this developer's Windows
+> > setup, this single test already takes a painful 8 minutes to pass),
+> > we avoid a full-blown GPG test and cop out by verifying the message
+> > displayed to the user upon an 'edit' command.
 > 
-> If your convention of referring to a verb is to show its infinitive
-> form, i.e. "to run", then you would probably want to say
-> 
-> 	The passive from of "to run" is "to be run", not "to be
-> 	ran".
-> 
-> But I think we do not need any of this if we just retitled it to
-> 
-> 	Subject: t3404: fix a grammo (commands are ran -> commands are run)
-> 
-> without any body.
+> This is a tangent, but I wonder if we should be solving it by
+> parallelizing the tests even more.  If the script for example
+> can be split into part1 and part2 that share the same set-up
+> that is prepared by the very first test, we could split this
+> into three files (common one that is dot-sourced by two actual
+> test scripts that have part1 and part2).
 
-Done. Will be part of v2.
+Sure, that would work around the problem in the short run.
+
+In the long run, the only real solution would be to stop relying on shell
+scripting so much, because the biggest performance hit on Windows stems
+from the fact that our test suite is a big honking shell script.
+
+> > diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> > index c7ea8ba..4c96075 100755
+> > --- a/t/t3404-rebase-interactive.sh
+> > +++ b/t/t3404-rebase-interactive.sh
+> > @@ -1281,4 +1281,11 @@ test_expect_success 'editor saves as CR/LF' '
+> >  	)
+> >  '
+> >  
+> > +EPIPHANY="'"
+> 
+> Why?  If you really need a variable, SQ is probably the way this
+> codebase typically spell it.
+
+Have you ever watched the movie "Hook"?
+
+> > +test_expect_success 'rebase -i --gpg-sign=<key-id>' '
+> > +	set_fake_editor &&
+> > +	FAKE_LINES="edit 1" git rebase -i --gpg-sign=\" HEAD^ >out 2>err &&
+> > +	grep "$EPIPHANY-S\"$EPIPHANY" err
+> 
+> I am not sure what is going on here.  You are asking to sign using
+> the keyid of a single double-quote, and expecting the message that
+> says
+> 
+> 	You can amend the commit now, with
+> 
+> 		git commit --amend '-S"'
+
+Precisely. That way, I not only verified that the key ID was correctly
+passed around, but also that it is quoted properly.
+
+> 	...
+> 
+> that has a substring '-S"' in it to ensure that the codepath to
+> parse --gpg-sign= on the command line of "rebase", and to the
+> message we see here are working correctly, without actually checking
+> if GPG is invoked at all, or if it is invoked the key given by the
+> option is correctly passed to the invocation?
+
+Exactly. I want to test --gpg-sign even when there is no gpg executable
+available.
+
+> If so, can't you do that without confusing users by using keyid "?
+> IOW, wouldn't using --gpg-sign=me work equally well?
+
+Not really, because it is much easier to get quoting of "me" right than of
+"\"".
+
+I guess I could change the test to pass --gpg-sign="\"S I Gner\"".
 
 Ciao,
 Dscho
