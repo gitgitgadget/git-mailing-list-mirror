@@ -7,62 +7,56 @@ X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FCAB1F744
-	for <e@80x24.org>; Thu, 30 Jun 2016 09:50:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2370D1F744
+	for <e@80x24.org>; Thu, 30 Jun 2016 10:04:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832AbcF3Juz (ORCPT <rfc822;e@80x24.org>);
-	Thu, 30 Jun 2016 05:50:55 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36856 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751703AbcF3Jux (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2016 05:50:53 -0400
-Received: by mail-wm0-f67.google.com with SMTP id c82so21352253wme.3
-        for <git@vger.kernel.org>; Thu, 30 Jun 2016 02:50:45 -0700 (PDT)
+	id S1751840AbcF3KD0 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 30 Jun 2016 06:03:26 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35351 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751565AbcF3KDY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2016 06:03:24 -0400
+Received: by mail-wm0-f65.google.com with SMTP id a66so21377886wme.2
+        for <git@vger.kernel.org>; Thu, 30 Jun 2016 03:03:00 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=dD+SgCjTnq+mROr/xNbCqe8DMU3K1t+ovKJHUAy+9Z0=;
-        b=AvFWh3qim0VZeuC0WdIyvZ4+bgrNO+7EeWFNQFvAZGJUYw9HQX7cxG/3xed2T4XBkR
-         sHQYhbZB1u43q/GhqtLtsn1Q1eQRp0otBKJ450ptepvuxT2h0EtsqKoSRCR2ixxx/6HZ
-         VGDsjidmbSN+O8KO6/zaOKr2OwGWD09w8cbAD0908tYsPPunWGnwN/JlsGHAaof+zLJY
-         6v8fD1O9xqLAeANfda42vavvEnsxEwtXlGIysUjQ7w+FPuJ0MUrDri7njQ0tVLJ/yuG/
-         H2lYmkLm2aQAepfCTgmD6Lr3aUYfPMBdmUrldjL7U7uBwX9G+K03hfnf7OdPNubb1G/y
-         HTiQ==
+        bh=2P7wnA6kRMrDLWyQnBUkTRuNRVcyXUx+isZJIOaGUU0=;
+        b=IWC1Gm7QEUrkvNCV1TtHAkM2saH3ZfGGPrIylkifVGJ5olPd/zQEWyjUfi8C0SxIMk
+         wiooaldd4OV5LbKxFlcoOKSxOW+6TGo6Zqki0c4iik86VBP6ms6BBvs229Jpc1DYLSy0
+         BiXOLZtEgW9/t2BZvDTL5PagVEjCRCELQYM10RO1evwwMsx663dCG9NsREdiMUjJ59o2
+         OhNB9uIYYV7KvfuON8J+mvN7iwtitybYrTHuAdH0Vs+ZsM6jcykP6D8iTC+knliZoWjq
+         765CWL0QsW/nF0jFgmWqfJlNDEU/YV4Y43oGswjOo4FCXfpvoRIqLbhDH/ykUCXCPSX2
+         +O3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=dD+SgCjTnq+mROr/xNbCqe8DMU3K1t+ovKJHUAy+9Z0=;
-        b=HUFXWsTAoTMdb8MSxcZPIJB6ZNQ/WTZclSsKWJHUlp4wjASwJQjGlZgjdwAJj55vYK
-         jbIDlP0CxfOIsVveyf9EcVmc9s4/Hj7cfyPbz70cYm36UwD2nUSR0xoSqlIHVI3SrO/p
-         9vEaax0/ZSmIKkZ0KSBSARyBm3wL31J5giC1AS00Q9m9RgZFkzbdh2SrZ65aLvEl4Nlt
-         RIQvAuzOguGUJajNIkgAamcTF88fvhtvJbUB0/8O0/WoLzEAjg0ln9R2k612BfwDoVCi
-         IeWywdcDH7K5sEgf303JlsXAmGNYp5awU6aox19lFaweLlccKCdbD7ANiCCWkWqhkQbs
-         hBhQ==
-X-Gm-Message-State: ALyK8tKxCuRXIJUOOwrnxCFFQbgLwzx31hmcsDQJ8riiF/e2oorQsHTYvzNS1MkjO5hPqlOqCeFXwOICeNsldw==
-X-Received: by 10.194.239.163 with SMTP id vt3mr12480722wjc.78.1467280244781;
- Thu, 30 Jun 2016 02:50:44 -0700 (PDT)
+        bh=2P7wnA6kRMrDLWyQnBUkTRuNRVcyXUx+isZJIOaGUU0=;
+        b=NENOJSZsYdYIwfXvvS8ixLQSNxrmKxx96izZxmLUsKgdVOC+Kz56CMbrXIEBRVkC8m
+         eJpRxXpXq5SaBsjRkFfhAwibPuBVSCbzorngB2wAdBppGeV9YDXYRi2xQClvPqtoyLV8
+         8xVcjyrWIGnQYQycc2DdxbZ86s7EIFFv39V/B9X6Y5R0Ay11UFyunj14dfUvVZHt4cQ9
+         KqU464YE4tZzu2WZATuq1i7otwSv5i/15UjUifW/zjIqgVfG1GNIQO//EMmYV8PnP3gV
+         /Ms6kFiRFBu9K8DJ5VKAfvFEtdfz4VebCq+vbV3BV5yvPKuaLTqUuZqdVbzgF1F7CvXL
+         gIJQ==
+X-Gm-Message-State: ALyK8tK8yseBcpw9ODkqx4B/qm7IO3DT6HWtO4zH1K0Oe2G3tz0E4NM482AIY1KenbQ75+crWdshUtLl9shX2A==
+X-Received: by 10.28.224.69 with SMTP id x66mr14124999wmg.89.1467280161991;
+ Thu, 30 Jun 2016 02:49:21 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.194.25.197 with HTTP; Thu, 30 Jun 2016 02:50:44 -0700 (PDT)
-In-Reply-To: <xmqqoa6l6lia.fsf@gitster.mtv.corp.google.com>
-References: <20160627182429.31550-1-chriscool@tuxfamily.org>
- <20160627182429.31550-34-chriscool@tuxfamily.org> <xmqqoa6l6lia.fsf@gitster.mtv.corp.google.com>
+Received: by 10.194.25.197 with HTTP; Thu, 30 Jun 2016 02:49:21 -0700 (PDT)
+In-Reply-To: <20160629200142.GA17878@dcvr.yhbt.net>
+References: <20160628181933.24620-1-chriscool@tuxfamily.org> <20160629200142.GA17878@dcvr.yhbt.net>
 From:	Christian Couder <christian.couder@gmail.com>
-Date:	Thu, 30 Jun 2016 11:50:44 +0200
-Message-ID: <CAP8UFD2kXp2Ugojq9ktudOB=tpcsm3fxe2XYKtRQ9KdzqTug-g@mail.gmail.com>
-Subject: Re: [PATCH v8 33/41] write_or_die: use warning() instead of
- fprintf(stderr, ...)
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
+Date:	Thu, 30 Jun 2016 11:49:21 +0200
+Message-ID: <CAP8UFD03=fy2hXrZcT_7VP630CqAOHKz61T5GDKsT2f+v5Rnsg@mail.gmail.com>
+Subject: Re: [RFC/PATCH v2 00/10] Add initial experimental external ODB support
+To:	Eric Wong <e@80x24.org>
+Cc:	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Mike Hommey <mh@glandium.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
@@ -70,22 +64,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jun 28, 2016 at 11:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
+On Wed, Jun 29, 2016 at 10:01 PM, Eric Wong <e@80x24.org> wrote:
+> Christian Couder <christian.couder@gmail.com> wrote:
+>> Design discussion about performance
+>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>>
+>> Yeah, it is not efficient to fork/exec a command to just read or write
+>> one object to or from the external ODB. Batch calls and/or using a
+>> daemon and/or RPC should be used instead to be able to store regular
+>> objects in an external ODB. But for now the external ODB would be all
+>> about really big files, where the cost of a fork+exec should not
+>> matter much. If we later want to extend usage of external ODBs, yeah
+>> we will probably need to design other mechanisms.
 >
->> @@ -98,8 +97,7 @@ int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg)
->>  int write_or_whine(int fd, const void *buf, size_t count, const char *msg)
->>  {
->>       if (write_in_full(fd, buf, count) < 0) {
->> -             fprintf(stderr, "%s: write error (%s)\n",
->> -                     msg, strerror(errno));
->> +             warning("%s: write error (%s)\n", msg, strerror(errno));
->>               return 0;
->>       }
->
-> I do not think you call write_or_whine() at all.  As another topic
-> in flight removes the last caller of this function, this hunk is
-> very much unwelcome.  The only effect of it is to force me resolve
-> unnecessary merge conflicts.
+> I would also investigate switching run_command to use vfork+exec
+> or posix_spawn for performance (keeping in mind vfork
+> caveats documented at https://ewontfix.com/7/ )
 
-Ok, sorry about that. I will remove the hunk.
+Thanks Eric for this idea and the test!
