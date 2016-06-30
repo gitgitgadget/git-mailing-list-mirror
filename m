@@ -2,83 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8B9B1F744
-	for <e@80x24.org>; Thu, 30 Jun 2016 08:50:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 128881F744
+	for <e@80x24.org>; Thu, 30 Jun 2016 09:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751835AbcF3IuZ (ORCPT <rfc822;e@80x24.org>);
-	Thu, 30 Jun 2016 04:50:25 -0400
-Received: from mout.gmx.net ([212.227.17.22]:55919 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751575AbcF3IuW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2016 04:50:22 -0400
-Received: from virtualbox ([37.24.143.100]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0M5HZD-1bXQsW1TQd-00zVTt; Thu, 30 Jun 2016 10:45:15
- +0200
-Date:	Thu, 30 Jun 2016 10:45:13 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Johannes Sixt <j6t@kdbg.org>
-cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/9] Report bugs consistently
-In-Reply-To: <5774B039.8080802@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1606301043320.12947@virtualbox>
-References: <cover.1467199553.git.johannes.schindelin@gmx.de> <8615dc276828a3f99a27ff2eda9909548a7d435e.1467199553.git.johannes.schindelin@gmx.de> <5774B039.8080802@kdbg.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1751919AbcF3JGW (ORCPT <rfc822;e@80x24.org>);
+	Thu, 30 Jun 2016 05:06:22 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38248 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751911AbcF3JGS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2016 05:06:18 -0400
+Received: (qmail 31393 invoked by uid 102); 30 Jun 2016 09:06:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Jun 2016 05:06:19 -0400
+Received: (qmail 6606 invoked by uid 107); 30 Jun 2016 09:06:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Jun 2016 05:06:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Jun 2016 05:06:14 -0400
+Date:	Thu, 30 Jun 2016 05:06:14 -0400
+From:	Jeff King <peff@peff.net>
+To:	git@vger.kernel.org
+Cc:	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v4 0/5] friendlier handling of overflows in archive-tar
+Message-ID: <20160630090614.GA16725@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:PJtZBd5WOS079yFp48RRN89OGs7DSkn4Zl5jkbirMdG56s1Joph
- j6c8S9etx9QmdvNs2zOTcpt+kZUvLm6wu3Af4YW5vIkobnDOJtgc6l0RUC7dlKvxrWTOXCQ
- qnqo7uCr49isTcW1/NcBbFvHTVKGzM6tx6ngX/P+3HuTn9/Kt5CnGlvwysipsTMLC3nitlX
- zpJj9tDzNYeW3jktEsHnw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:eWh6SZxtPug=:GXh7xqP1Wd3mVx+dTrNtFx
- 9ugp8NpJn8coThWd8oqOn27/ZatvkBcrG7Sgpdf8nNBwcEq0coHpQPL0E1yuKmcmzk7QvLkRr
- iDLkInxrBa1uyVzg85fLlP6INKlW7JEDHT75snUDyP6FlUvEoBWqN3En0w3gAShJKXSp1U9Vr
- NZ49k9XeXyQkfj3UF1pRh2UCRX/zHjokwZUuFnNmkffAPgcQE7Pc0EasVehHcqOFhsN+2Gz78
- t2kaNvWv5Zul5TjfUgFHaFjlZ46nhd1frbDt5MCFYw3WWM143UAwb4V0jYtYMu/So7g5lQ5HF
- 37sxMLsUXmxRhv8heuXnhfOIK/qFPo1g4Qg9shjcn6+dqacVQlKkZw8e+GciOXe++kaCTZX8e
- rj7ZBRURqM52atfH5Zp59GhNM79l1QECtQFqQvQOml2t/g9DjzQq3C3rHT7hqVXJYVj+aHf1u
- 8wnFAsovJ2NIv7xX+DMD49CAuzxiUnb5o/w1F3DalWR7RRi8wnQfKcZZ1C75fRx5dfNnXyVT7
- zbKPJ8Od95VXUaz3LRDKFO1fzEjusKQio99wICSD8XHumfUJU87iOyat6Zmf+b5+dQT3UhEWa
- /Xka5ETr8yQiJjKxULz0MtQE2U4hushYaJmAqISwvZktTGv67ONBvXaOgiskEvRJgaI39By4T
- p7W1uDm358btOjtS9wpcxwAI9zaIeiQPJ4qNgHnSdZ8frwz+YUXoo0FZ0Cq9MF0kF7UVOuvVB
- V/Q2Cu5K/fBRSpPhANPst6Vjmw8Po+43DiG7W/k9SORN65Gg+s6sHF7pO6onA0PJfn55Zxp5h
- jA1NZKg
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Hannes,
+This is a re-roll of the jk/big-and-future-archive-tar topic. It
+addresses all but one of the review comments, and I hope should be
+pretty polished.
 
-On Thu, 30 Jun 2016, Johannes Sixt wrote:
+The changes are:
 
-> Am 29.06.2016 um 13:36 schrieb Johannes Schindelin:
-> > @@ -955,9 +955,8 @@ static struct merge_file_info merge_file_1(struct
-> > merge_options *o,
-> >
-> >      if (!sha_eq(a->sha1, b->sha1))
-> >   				result.clean = 0;
-> > -		} else {
-> > -			die(_("unsupported object type in the tree"));
-> > -		}
-> > +		} else
-> > +			die(_("BUG: unsupported object type in the tree"));
-> 
-> Would it perhaps make sense to remove the _() markup (here and a few more
-> instances in this patch)? It's simpler for developers to find the code
-> location when a "BUG:" is reported untranslated.
+  - the dependency on bunzip2 is dropped; instead, we just provide a
+    partial object for the 64GB blob. See the first commit message for
+    details.
 
-I would agree, but the purpose of this patch was not to fix that, but to
-fix the inconsistency of the message.
+  - the portable "head -c" replacement from t9300 has been factored out,
+    and we use it in the new tests
 
-Maybe as an add-on patch, with *all* 'die(_("BUG:' instances converted?
-That would be even more outside the purview of my patch series than
-touching the bug reports outside merge-recursive.c, though.
+  - symbolic constants for the giant octal numbers (with a comment
+    warning that the values are set by posix)
 
-Ciao,
-Dscho
+  - the comments for tar_info() and the lazy-prereq were split so the
+    two aren't mashed together
+
+  - uses awk in tar_info() instead of "sed | cut"
+
+  - extra simplification in the final commit, as suggested by review
+
+  - typo and awkwardness fixes in the commit messages
+
+The one thing that isn't fixed is the use of "141" to test for sigpipe
+death. That should use test_match_signal, but that topic just got
+re-rolled, too.
+
+  [1/5]: t9300: factor out portable "head -c" replacement
+  [2/5]: t5000: test tar files that overflow ustar headers
+  [3/5]: archive-tar: write extended headers for file sizes >= 8GB
+  [4/5]: archive-tar: write extended headers for far-future mtime
+  [5/5]: archive-tar: drop return value
+
+-Peff
