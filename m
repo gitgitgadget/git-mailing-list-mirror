@@ -7,91 +7,104 @@ X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A4081FE4E
-	for <e@80x24.org>; Thu, 30 Jun 2016 16:03:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF5281FE4E
+	for <e@80x24.org>; Thu, 30 Jun 2016 16:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932739AbcF3QCO (ORCPT <rfc822;e@80x24.org>);
-	Thu, 30 Jun 2016 12:02:14 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:36513 "EHLO
-	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932505AbcF3QCL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2016 12:02:11 -0400
-Received: by mail-lf0-f66.google.com with SMTP id a2so8851870lfe.3
-        for <git@vger.kernel.org>; Thu, 30 Jun 2016 09:02:10 -0700 (PDT)
+	id S932166AbcF3QRe (ORCPT <rfc822;e@80x24.org>);
+	Thu, 30 Jun 2016 12:17:34 -0400
+Received: from mail-it0-f50.google.com ([209.85.214.50]:36877 "EHLO
+	mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752234AbcF3QRc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2016 12:17:32 -0400
+Received: by mail-it0-f50.google.com with SMTP id f6so73624148ith.0
+        for <git@vger.kernel.org>; Thu, 30 Jun 2016 09:16:39 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wgqHqnXTdIhTD6lu+zIP/CoIyXAxiSasuj8TWS5y+QA=;
-        b=KCOnFi5LYbKurrZIYVpUNUaFzgs8JJa7x3W5Cwvd92iI/zRblrqgpvKgnVfTe7JvYW
-         BVBHLdY0osO51RdHSELuQWRVBB1R9Q5j2oUcDBh4LXDXRgcxFTPlNKvpwkEzSYEl1opS
-         lXs3qie4u7Tj5xCoAupB6upw/tW5EPA8+L/U0uYO9UzPmrY6KUYfkM6lXJgiBU4AIgzA
-         qjvoHwo8BwdoywwaARqObNvOFZ9vuE+mAzZOqUncB83IhIh+fSzMR2egcJ+HGoaV0lMz
-         TLqNaYUV2vgnVgTU/wqouGSICUHO4lQIIvYr81ZMTkPLjLVb3iPg3UDNCKGYXtPgKVId
-         BeCw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=x+nKf9HMdIZjDqDQBRqOKJNKXT1xpbuepMe33TL7u/E=;
+        b=doZ0Gx82RC7egVxD7ieNj+tDUcpsOKFxgN3SDFV65JxIbIOB2rHKK9cR6DrVOhImVY
+         E1R8Wla7gEw0WF5rJL76aMtMfbxJRokSUK7+zSMXc8KaNPQl/mcNONc6/0qw6s6yaLaN
+         TON/7cj/k5/75QCY1PNwawC9MwCYOeJ460CCyN6RvONK+Mj2CyjSHWFbpRT3dcDuvEnh
+         2YQKTqymNrxlFchTkpIZRlHBZLiujdZZhksA1wCuoU3wxAcRq4yhtVE6RfcJINO+pS1n
+         uCR6IGy/8REcsS6xQ/cn3DoTAqjAH6hevAyIczc/CAd4BD7V9OwSJHYqug0U2HK96tZ7
+         Vdrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wgqHqnXTdIhTD6lu+zIP/CoIyXAxiSasuj8TWS5y+QA=;
-        b=CuzVJZAgNOcn3Sym+EOAW83wY+zMtJFveQmsRDTo20xFBrYTbaKRrOK43IvO071scP
-         9/WNuLTsunfRWU/vS5lzqYXSuKKt40DG39m8r3BHhcTgGdgYz1oihBGb2g5ag0Ghat2Q
-         AWUP83J6D97jgHVvqytMoV92FFDujBUfPlOgTMxw2foDIvPrLsOvVoM6i/xE2BKsE2E5
-         2/tqoIs7xCkxi0z/ZdakRa9CruJo3JE8hLYrr86gipjZKNaXhIoiG1mGIerBrOExV09g
-         D+4r02fjBvb12v9BSTIiBcqsV4wRqRGn2aJ3km6tPulRYUp3YB0mbtLTLdaN6EOUkrc8
-         d7Jw==
-X-Gm-Message-State: ALyK8tKhVcdp/Yii5Dy+ECz4ZrA5Um/MDmhnOkkA1D3hpF3ovZMaL6Q6PwK4U7Ugq77Iag==
-X-Received: by 10.25.90.209 with SMTP id o200mr4578348lfb.193.1467302529402;
-        Thu, 30 Jun 2016 09:02:09 -0700 (PDT)
-Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id u124sm1593715lja.11.2016.06.30.09.02.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 30 Jun 2016 09:02:07 -0700 (PDT)
-From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To:	git@vger.kernel.org
-Cc:	tboegi@web.de, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>, rethab.ch@gmail.com,
-	rappazzo@gmail.com,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] fixup! worktree: add "lock" command
-Date:	Thu, 30 Jun 2016 18:01:36 +0200
-Message-Id: <20160630160136.4819-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.8.2.531.gd073806
-In-Reply-To: <914a6ad8-94d7-d26e-8c6f-f9656d912818@web.de>
-References: <914a6ad8-94d7-d26e-8c6f-f9656d912818@web.de>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=x+nKf9HMdIZjDqDQBRqOKJNKXT1xpbuepMe33TL7u/E=;
+        b=mz0IgMu+uK6g87TwhQo4kaIvfM+SZyGuJvTrLN4rXIS3cD1Go+nm7g78Py8SugeTG4
+         5SpMl2P1YQcaTaO6BPGsJFSVeek7MAWxIuPnhmd+mWPUufxAC2p9FmRafWbfHxRMKsUP
+         XqetwUTaoM22yWvXq6a0RVZ6GgiOUOer1NxI0WYG0qQyx8vrZ829TaG6Rr7UYOMXq1a/
+         0Aa+Z2f3EqSCC5MOagJMcMwPjT8wWKP9iLpNnMlXngjBdxVyrbjRuOTRdvhUlWfdEOPZ
+         kiVT1II7DJ2+NKhfFUuG71+hr8TPhPac1yx6pj7ni0HYJCdXFs5fUQXAUvXEdxtbeu2G
+         ptMw==
+X-Gm-Message-State: ALyK8tKiJXKCNjHZDS7v99094TRXh4PXyFiX+fN8FCPS6lb/lyQUqUZV3NCNqOz7UHGAGPLO4SrCDQf3PUfepg==
+X-Received: by 10.36.33.22 with SMTP id e22mr11754998ita.42.1467303399183;
+ Thu, 30 Jun 2016 09:16:39 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.64.225.235 with HTTP; Thu, 30 Jun 2016 09:16:09 -0700 (PDT)
+In-Reply-To: <20160627184354.GA9594@sigill.intra.peff.net>
+References: <20160605031141.23513-1-pclouds@gmail.com> <20160626055810.26960-1-pclouds@gmail.com>
+ <20160627184354.GA9594@sigill.intra.peff.net>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Thu, 30 Jun 2016 18:16:09 +0200
+Message-ID: <CACsJy8DS3n=7sRGztqe16igrsVaKt3Qa-GRVJBMoZvtEJmdmQA@mail.gmail.com>
+Subject: Re: [PATCH v4 0/5] Better ref summary alignment in "git fetch"
+To:	Jeff King <peff@peff.net>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marc Branchaud <marcnarc@xiplink.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Torsten, this seems to fix the symlink problem for me. How many times
- have I got similar reports from you and still managed to forget ...
+On Mon, Jun 27, 2016 at 8:43 PM, Jeff King <peff@peff.net> wrote:
+> I tried it on my most-horrible example case, and the results were...just
+> OK. Because the variable-length part of each line comes first, the
+> alignment code means that the "origin/$" bit of every line gets bumped
+> out. And if you have a single large branch name, then everybody gets
+> bumped out very far, even to the point of wrapping. E.g., I get
+> something like (with fetch.output=compact, obviously):
+>
+>   From ...
+>    * [new branch]      branch1                      -> origin/$
+>    * [new branch]      branch2                      -> origin/$
+>    * [new branch]      some-really-long-branch-name -> origin/$
+>    + 1234abc..5678def  branch3                      -> origin/$ (forced
+>     update)
+>    * [new branch]      branch4                      -> origin/$
+>
+> I've shrunk it a bit to fit in the email; my actual "long" name was much
+> larger. And the average length for the shorter ones is, too, but the
+> overall effect is the same; almost every line has a huge run of
+> whitespace. And some lines wrap that would not have even under the
+> normal, duplicated scheme.
 
- t/t2028-worktree-move.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I was about to resend with s/\$/*/g and ignored this issue (with a
+note) then it occurred to me we can simply ignore these long lines
+from column width calculation. Yeah such a line may still be wrapped
+around, but it will not push every other line to the far right. We
+already have code for that in adjust_refcol_width()
 
-diff --git a/t/t2028-worktree-move.sh b/t/t2028-worktree-move.sh
-index 68d3fe8..8298aaf 100755
---- a/t/t2028-worktree-move.sh
-+++ b/t/t2028-worktree-move.sh
-@@ -9,8 +9,8 @@ test_expect_success 'setup' '
- 	git worktree add source &&
- 	git worktree list --porcelain | grep "^worktree" >actual &&
- 	cat <<-EOF >expected &&
--	worktree $TRASH_DIRECTORY
--	worktree $TRASH_DIRECTORY/source
-+	worktree $(pwd)
-+	worktree $(pwd)/source
- 	EOF
- 	test_cmp expected actual
- '
+        max    = term_columns();
+        ...
+        /*
+        * rough estimation to see if the output line is too long and
+        * should not be counted (we can't do precise calculation
+        * anyway because we don't know if the error explanation part
+        * will be printed in update_local_ref)
+        */
+        if (21 /* flag and summary */ + rlen + 4 /* -> */ + llen >= max)
+                return;
+        ...
+
+we can limit max to, like, term_columns() / 2 (or 2/3 of
+term_columns). There's no perfect number, some people will still find
+the output ugly _often_. But hopefully the majority won't. What do you
+think?
 -- 
-2.8.2.531.gd073806
-
+Duy
