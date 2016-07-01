@@ -2,74 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E3322018A
-	for <e@80x24.org>; Fri,  1 Jul 2016 18:08:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B0962018A
+	for <e@80x24.org>; Fri,  1 Jul 2016 18:11:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751879AbcGASIc (ORCPT <rfc822;e@80x24.org>);
-	Fri, 1 Jul 2016 14:08:32 -0400
-Received: from cloud.peff.net ([50.56.180.127]:39228 "HELO cloud.peff.net"
+	id S1752214AbcGASLM (ORCPT <rfc822;e@80x24.org>);
+	Fri, 1 Jul 2016 14:11:12 -0400
+Received: from cloud.peff.net ([50.56.180.127]:39236 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751036AbcGASIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jul 2016 14:08:32 -0400
-Received: (qmail 22328 invoked by uid 102); 1 Jul 2016 18:01:46 -0000
+	id S1752004AbcGASLL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2016 14:11:11 -0400
+Received: (qmail 22731 invoked by uid 102); 1 Jul 2016 18:11:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 Jul 2016 14:01:46 -0400
-Received: (qmail 20294 invoked by uid 107); 1 Jul 2016 18:02:03 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 Jul 2016 14:11:06 -0400
+Received: (qmail 20478 invoked by uid 107); 1 Jul 2016 18:11:22 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 Jul 2016 14:02:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Jul 2016 14:01:43 -0400
-Date:	Fri, 1 Jul 2016 14:01:43 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 Jul 2016 14:11:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Jul 2016 14:11:02 -0400
+Date:	Fri, 1 Jul 2016 14:11:02 -0400
 From:	Jeff King <peff@peff.net>
 To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v4 1/5] t9300: factor out portable "head -c" replacement
-Message-ID: <20160701180142.GC16235@sigill.intra.peff.net>
-References: <20160630090614.GA16725@sigill.intra.peff.net>
- <20160630090753.GA17463@sigill.intra.peff.net>
- <xmqqd1mxz30m.fsf@gitster.mtv.corp.google.com>
+Cc:	Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Dan Wang <dwwang@google.com>
+Subject: Re: [PATCH 1/4] push options: {pre,post}-receive hook learns about
+ push options
+Message-ID: <20160701181102.GA16695@sigill.intra.peff.net>
+References: <20160630005951.7408-1-sbeller@google.com>
+ <20160630005951.7408-2-sbeller@google.com>
+ <20160701071410.GG5358@sigill.intra.peff.net>
+ <CAGZ79kaDCLm3BBURJKfkYWKKvozkFTGCn0wGiQCtspUvtQBd+g@mail.gmail.com>
+ <20160701175950.GB16235@sigill.intra.peff.net>
+ <CAPc5daWjSW5KM4uUyEBbb+765t50+dUsewF52uPrCiT1HW=NAQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqd1mxz30m.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CAPc5daWjSW5KM4uUyEBbb+765t50+dUsewF52uPrCiT1HW=NAQ@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 01, 2016 at 10:23:05AM -0700, Junio C Hamano wrote:
+On Fri, Jul 01, 2016 at 11:03:06AM -0700, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+> On Fri, Jul 1, 2016 at 10:59 AM, Jeff King <peff@peff.net> wrote:
+> > If you give up on having multiple incarnations of each variable, then I
+> > think:
+> >
+> >   GIT_PUSH_VAR_foo=value_for_foo
+> >   GIT_PUSH_VAR_bar=value_for_bar
+> >
+> > is quite elegant, and easy to use from hooks. It just cannot represent
+> > multiple such "foo" variables.
+> >
+> >> If we did not have a GIT_PUSH_OPTIONS_COUNT and GIT_PUSH_OPTION_<N>
+> >> but rather GIT_PUSH_OPTIONS_VARIABLES that contains the other variables,
+> >> it may be easier to handle, but whether you read from a file or evaluate the
+> >> environment variable is only a minor step, the indirection is there anyway
+> >> and this would be very close to what we have above.
+> >
+> > It makes the server implementation a bit uglier. You have to create the
+> > temporary file, and you have to clean it up. What process is responsible
+> > for cleaning up stale files? Obviously receive-pack would try to clean
+> > up after itself, but what happens when it is "kill -9"'d, or the system
+> > goes down, etc? We clean up stale tmp files like tmp_obj_* in git-gc; I
+> > think we'd want something like that here.
 > 
-> > In shell scripts it is sometimes useful to be able to read
-> > exactly N bytes from a pipe. Doing this portably turns out
-> > to be surprisingly difficult.
-> 
-> I'd rotate the above by three words ;-).
-> 
->     It is sometimes useful to be able to read
->     exactly N bytes from a pipe. Doing this portably turns out
->     to be surprisingly difficult
->     in shell scripts.
+> It still is not clear to me why the option to pass _COUNT and _VAR_<N> is
+> rejected.
 
-Yeah, I'd very much agree with that (feel free to mark it up as you
-apply).
+It's a little more unwieldy to parse in a shell hook, but not too bad, I
+guess:
 
-> >   - "dd bs=1 count=$n" fixes the partial read problem (all
-> >     reads are 1-byte, so there can be no partial response).
-> >     It does make a lot of write() calls, but for our tests
-> >     that's unlikely to matter.
-> 
-> It makes me wonder if it helps to use different ibs and obs if many
-> writes bother you, but because this patch moves us away from dd,
-> that is a moot point.
+  if test -n "$GIT_PUSH_VAR_COUNT"; then
+    i=0
+    while test "$i" -lt "$GIT_PUSH_VAR_COUNT"; do
+      eval "value=\$GIT_PUSH_VAR_$i"
+      case "$value" in
+      force=*)
+	force=${value#*=}
+	;;
+      ... and so on ...
+      esac
+    done
+  fi
 
-Actually, I just mis-spoke (mis-wrote?). I meant to say that it makes a
-lot of read() calls. (It probably also makes a lot of write() calls, but
-that is beside the point).
+  ...
+  if test "$force" = true
+     ...
+
+Compare to:
+
+  if test "$GIT_PUSH_VAR_force" = true
+     ...
+
+The "count" method gives you the flexibility to parse multiple keys as
+lists, last-one-wins, or whatever scheme you want. But it also gives you
+the _responsibility_ to do the parsing yourself, which is a pain when
+you want to do the simple thing.
 
 -Peff
