@@ -2,123 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 978222018A
-	for <e@80x24.org>; Fri,  1 Jul 2016 15:22:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 579812018A
+	for <e@80x24.org>; Fri,  1 Jul 2016 15:35:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752380AbcGAPWX (ORCPT <rfc822;e@80x24.org>);
-	Fri, 1 Jul 2016 11:22:23 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:36350 "EHLO
-	mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751900AbcGAPWW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Jul 2016 11:22:22 -0400
-Received: by mail-it0-f44.google.com with SMTP id a5so20828406ita.1
-        for <git@vger.kernel.org>; Fri, 01 Jul 2016 08:22:17 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=E9aMzbJDnNwBfNxGLBAGRLuHXHvVF7Ft9rnjirXYj9E=;
-        b=QQH9wYUusBt353SFX/xfEllyVnfxwAh2R9V8u0KblL/7UtHzxFj6EVE2hoNF5sg0Uv
-         xSS9FOeUMQNi0c2Y4vNjRkGUJzk353XPz0QEPKXojphDwi2KqC1gh9GKJFhsdYJDBDnf
-         b1Oj0sLXrfBFhvRfruSkTzvDAg/ErsWbveuhx5j7w7rPw9JQpGPnHxOjh2SyE5IPGPKB
-         Agg+tMhvMt2C235R7OHMvpbt+1ll6WLdBJ2wON3ls2WmoEHs8yEyxzOMEcI6n93YiEYq
-         2yYED0u79RL4uQucCciV2niDMXXB6eYiHbm+CXAkqZBa2KSJRfoQG9IdR5N6VaC6PCis
-         d2HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=E9aMzbJDnNwBfNxGLBAGRLuHXHvVF7Ft9rnjirXYj9E=;
-        b=U3DRy+whkUw+e2xRl4NVjPb6149iePG162oL9+GxxEj5irlmD5UUmuR1SLSJJf1YG7
-         14HvhK1FymzqkXfaHLrXVFTmWqGrCjEMe4y+KqPVTG322nF7vjRStIoPMpyiSsODFO7f
-         x2XdsTHyOMFkYfeSBIGJXbLN20SqL3NgYdss7mfmfER/mti8QdJMlgiLZSM8IG6T/tA8
-         TgMTG0TvVJFUlF6V8jvqRo2t2J76631++LK7JfKqVQJxtSm01G8Sa9VTtWJRlSWJrQh0
-         bSSqeKWQtwer6kAuUH+aornmRBYSQ3HbO5Xu8g1bcdc+N4wUgVfPuR6bf+3IiNTmv9cw
-         5Gzw==
-X-Gm-Message-State: ALyK8tIj4Ks815NveNKH8EwSw9HTrksNaHVtL4TcekMGDVcHPeGKqbK8YjGwPLHWZZ3ND4+mVNs4SUDUsTw9hQ==
-X-Received: by 10.36.81.15 with SMTP id s15mr61269ita.57.1467386037193; Fri,
- 01 Jul 2016 08:13:57 -0700 (PDT)
+	id S1752428AbcGAPfT (ORCPT <rfc822;e@80x24.org>);
+	Fri, 1 Jul 2016 11:35:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62613 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751960AbcGAPfR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2016 11:35:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C8D7B25724;
+	Fri,  1 Jul 2016 11:31:38 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MsNso2dnD6/T017aLJZMeYOUYf0=; b=gV4Iut
+	qTJPgyw9nea5i5yy65Nl1P2YO58BsTHNbOSPnzlqPclwrNMI5pEwk6q6UYC8FVOb
+	X810EkSzUjTPzWD3VHr6LtevgQW8+WvimHFJ5DJj4P2TrSGrnpMjNc0rfblc+6fK
+	+K9nMyh0v7iibGJjow/GkiPPvIQdMm8MIv6/8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oRxfaxKlfg+NJuwOsvF9IciU0e1nqPEG
+	ga/D++qsX5yLticebSzJwZiC4Z7i2lkVnOk+Y9zmhH/rgVM75tAOHXkMfQYlfP86
+	c7GX3jvUfkviSYG8rWNE6M4JY1cY2VZUP77BnOKQNDk0tcgIAbZsplvqWN4JHxR8
+	76ytTtPcN7Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C1A9B25722;
+	Fri,  1 Jul 2016 11:31:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4BF6A25721;
+	Fri,  1 Jul 2016 11:31:38 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH 2/9] merge-recursive: clarify code in was_tracked()
+References: <cover.1467199553.git.johannes.schindelin@gmx.de>
+	<dd3e2cf842fd5e11e31914aa55b8b995e8d3d75c.1467199553.git.johannes.schindelin@gmx.de>
+	<xmqq4m8b4zdd.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1607011057180.12947@virtualbox>
+Date:	Fri, 01 Jul 2016 08:31:36 -0700
+In-Reply-To: <alpine.DEB.2.20.1607011057180.12947@virtualbox> (Johannes
+	Schindelin's message of "Fri, 1 Jul 2016 11:23:47 +0200 (CEST)")
+Message-ID: <xmqq7fd51ijr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Fri, 1 Jul 2016 08:13:27 -0700 (PDT)
-In-Reply-To: <a7d7d959-1189-8170-04f4-ab097202ff45@drmicha.warpmail.net>
-References: <20160630163942.8353-1-pclouds@gmail.com> <20160701063129.GC5358@sigill.intra.peff.net>
- <a7d7d959-1189-8170-04f4-ab097202ff45@drmicha.warpmail.net>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Fri, 1 Jul 2016 17:13:27 +0200
-Message-ID: <CACsJy8Df29zR4bJynHvwOFQobVS8X-08D9K1UPs7QYXd_bkCCg@mail.gmail.com>
-Subject: Re: [PATCH] log: decorate HEAD -> branch with the same color for
- branch and HEAD
-To:	Michael J Gruber <git@drmicha.warpmail.net>
-Cc:	Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, j.cretel@umail.ucc.ie
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: E6F0B37A-3FA0-11E6-B9E3-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 1, 2016 at 4:20 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Jeff King venit, vidit, dixit 01.07.2016 08:31:
->> On Thu, Jun 30, 2016 at 06:39:42PM +0200, Nguyễn Thái Ngọc Duy wrote:
->>
->>> Commit 76c61fb (log: decorate HEAD with branch name under
->>> --decorate=full, too - 2015-05-13) adds "HEAD -> branch" decoration to
->>> show current branch vs detached HEAD. The sign of whether HEAD is
->>> detached or not is "->" (vs ", "). It's too subtle for my poor
->>> eyes. If color is used, we can make the branch name's color the same
->>> as HEAD to visually emphasize that it's the current branch.
->>
->> Hmm. I think I like this, as it uses color to make the grouping between
->> HEAD and its referent more clear.
->>
->> We do already use colors to indicate "type", though. Which means:
->>
->>   1. The branch now uses the "symref" color. Probably OK, as that is the
->>      point of the grouping (I wonder if the "->" in the middle should
->>      match in color, too).
->>
->>   2. We used to color based on current_and_HEAD->type, but now that
->>      information isn't conveyed. However, can this really ever have been
->>      anything _except_ a branch?
->>
->> -Peff
->>
->
-> So, I rechecked, and I'm afraid I don't like the proposal.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+> I agree that the comment is not very good currently. But I disagree that
+> we are better off without any comment here.
 
-How about a middle ground: change color of the arrow (easier to catch
-eyes) and leave the associated branch alone.
+I meant we are better off without your particular version of comment
+which is misleading.  I am all for a better comment to help those
+who are new to the codepath.
 
+> I would like to propose this diff instead (it is larger, but with a net
+> savings of one line):
 >
-> Currently, we have a clear color code that colors refs according their
-> type (local branch, remote branch, tag, symref). This also corresponds
-> to status colors, for example.
->
-> Under the proposal, a checked out branch would not be colored like a
-> local branch - note that back then, the result of the discussion was:
->
-> - If a branch foo is checked out, do not decorate by "foo", but amend
-> the HEAD decoration with "foo" and a symbol that denotes the connection.
->
-> So, "HEAD -> foo" is an intentional union of two decorations.
->
-> I wouldn't mind changing the color of "- > foo" if it were just an
-> addition to "HEAD", but it is not - it's the decoration by the local
-> branch foo.
->
-> With git branch, we use "*" as a symbol for the checked out branch...
->
-> Michael
+> -- snipsnap --
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index d5a593c..0eda51a 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -658,24 +658,22 @@ static int was_tracked(const char *path)
+>  {
+>  	int pos = cache_name_pos(path, strlen(path));
+>  
+> -	if (pos < 0)
+> -		pos = -1 - pos;
+> -	while (pos < active_nr &&
+> -	       !strcmp(path, active_cache[pos]->name)) {
+> +	if (pos >= 0)
+> +		return pos < active_nr;
+> +	/*
+> +	 * cache_name_pos() looks for stage == 0, even if we did not ask for
+> +	 * it. Let's look for stage == 2 now.
+> +	 */
 
+I think this keeps the same phrasing from the original that makes
+the comment misleading.  It "looks for stage == 0" is not the whole
+story but only half.  It looks for a place to insert the path at
+stage #0" is.  Your half is used by the "if (0 <= pos)" you split
+out into a separate statement above already, and the untold half is
+needed to explain why this loop is correct.
 
+It returns the place to insert stage #0 entry, so if you are looking
+for stage #1 or higher, you only have to loop while the path
+matches, because the entries are sorted by <path, stage>.
 
--- 
-Duy
+And with that understanding, there is no strong reason to special
+case "ah, we found stage #0 entry" at all.
+
+> +	for (pos = -1 - pos; pos < active_nr &&
+> +	     !strcmp(path, active_cache[pos]->name); pos++)
+>  		/*
+>  		 * If stage #0, it is definitely tracked.
+>  		 * If it has stage #2 then it was tracked
+>  		 * before this merge started.  All other
+>  		 * cases the path was not tracked.
+>  		 */
+> -		switch (ce_stage(active_cache[pos])) {
+> -		case 0:
+> -		case 2:
+> +		if (ce_stage(active_cache[pos]) == 2)
+>  			return 1;
+> -		}
+> -		pos++;
+> -	}
+>  	return 0;
+>  }
+>  
