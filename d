@@ -1,45 +1,45 @@
 From: "Mr.Pt. Lee" <infobank8@aol.com>
 Subject: Hello
-Date: Sat, 19 Mar 2011 17:39:56 +0100
-Message-ID: <201103191642.p2JGg61N027914@auth3.smtp.vt.edu>
+Date: Sun, 20 Mar 2011 04:33:16 +0100
+Message-ID: <201103200335.p2K3Zn8K031597@auth3.smtp.vt.edu>
 Reply-To: <petercleejp@yahoo.cn>
 Mime-Version: 1.0
 Content-Type: text/plain;
 	charset="Windows-1251"
 Content-Transfer-Encoding: 7bit
 To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sat Mar 19 17:44:52 2011
+X-From: git-owner@vger.kernel.org Sun Mar 20 04:38:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q0zGj-0007VD-KT
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Mar 2011 17:44:49 +0100
+	id 1Q19TQ-000286-MB
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 04:38:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756787Ab1CSQoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 12:44:46 -0400
-Received: from lennier.cc.vt.edu ([198.82.162.213]:51872 "EHLO
+	id S1751391Ab1CTDiV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Mar 2011 23:38:21 -0400
+Received: from lennier.cc.vt.edu ([198.82.162.213]:33556 "EHLO
 	lennier.cc.vt.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755277Ab1CSQoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 12:44:44 -0400
-Received: from steiner.cc.vt.edu (steiner.cc.vt.edu [198.82.163.51])
-	by lennier.cc.vt.edu (8.13.8/8.13.8) with ESMTP id p2JGgdAe015645;
-	Sat, 19 Mar 2011 12:42:39 -0400
+	with ESMTP id S1751362Ab1CTDiU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Mar 2011 23:38:20 -0400
+Received: from dagger.cc.vt.edu (dagger.cc.vt.edu [198.82.163.114])
+	by lennier.cc.vt.edu (8.13.8/8.13.8) with ESMTP id p2K3ZJNq027618;
+	Sat, 19 Mar 2011 23:36:02 -0400
 Received: from auth3.smtp.vt.edu (EHLO auth3.smtp.vt.edu) ([198.82.161.152])
-	by steiner.cc.vt.edu (MOS 4.2.2-FCS FastPath queued)
-	with ESMTP id OAR65067;
-	Sat, 19 Mar 2011 12:42:39 -0400 (EDT)
+	by dagger.cc.vt.edu (MOS 4.2.2-FCS FastPath queued)
+	with ESMTP id PZL10172;
+	Sat, 19 Mar 2011 23:35:59 -0400 (EDT)
 Received: from User (d147088.upc-d.chello.nl [213.46.147.88])
 	(authenticated bits=0)
-	by auth3.smtp.vt.edu (8.13.8/8.13.8) with ESMTP id p2JGg61N027914
+	by auth3.smtp.vt.edu (8.13.8/8.13.8) with ESMTP id p2K3Zn8K031597
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 19 Mar 2011 12:42:09 -0400
+	Sat, 19 Mar 2011 23:35:51 -0400
 X-Priority: 3
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Outlook Express 6.00.2800.1081
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
-X-Antivirus: avast! (VPS 110318-1, 03/18/2011), Outbound message
+X-Antivirus: avast! (VPS 110319-1, 03/19/2011), Outbound message
 X-Antivirus-Status: Clean
 X-Mirapoint-Received-SPF: 198.82.161.152 auth3.smtp.vt.edu infobank8@aol.com 1 neutral
 X-Mirapoint-IP-Reputation: reputation=neutral-1,
@@ -47,9 +47,9 @@ X-Mirapoint-IP-Reputation: reputation=neutral-1,
 	refid=n/a,
 	actions=MAILHURDLE SPF TAG
 X-Junkmail: UCE(50)
-X-Junkmail-Status: score=50/50, host=steiner.cc.vt.edu
+X-Junkmail-Status: score=50/50, host=dagger.cc.vt.edu
 X-Junkmail-Signature-Raw: score=bulk(0),
-	refid=str=0001.0A020208.4D84DCFF.0094,ss=3,pt=113349,fgs=0,
+	refid=str=0001.0A020201.4D857621.0080,ss=3,pt=113349,fgs=0,
 	ip=213.46.147.88,
 	so=2010-07-22 22:03:31,
 	dmn=2009-09-10 00:05:08,
@@ -61,7 +61,7 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 X-Spam-Report: 11.3 points;
  *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4979]
+ *      [score: 0.4950]
  *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
  *      [Blocked - see <http://www.spamcop.net/bl.shtml?213.46.147.88>]
  *  1.0 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
@@ -70,7 +70,7 @@ X-Spam-Report: 11.3 points;
  *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
  *  0.6 ADVANCE_FEE_4 Appears to be advance fee fraud (Nigerian 419)
  *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169484>
 
 Hello 
    
