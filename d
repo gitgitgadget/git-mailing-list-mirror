@@ -1,41 +1,50 @@
-From: "Miss. Barbara" <test@iu.nl>
+From: kingsdone403@silvaonline.biz
 Subject: Hello
-Date: Sat, 26 Mar 2016 04:02:33 -1200
-Message-ID: <201603260403.u2Q41eNw003234-u2Q41eO8003234@mail.kathmandu.gov.np>
-Reply-To: barbara.zakara@hotmail.com
+Date: Sat, 14 May 2016 22:48:33 +0000
+Message-ID: <629785.81768.qm@smtp102.biz.mail.gq1.yahoo.com>
+Reply-To: joyeric688@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-To: Barbara <test@iu.nl>
-X-From: git-owner@vger.kernel.org Sun Mar 27 03:17:46 2016
+To: Recipients <kingsdone403@silvaonline.biz>
+X-From: git-owner@vger.kernel.org Sun May 15 00:49:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ajzKm-0006yi-TB
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Mar 2016 03:17:41 +0200
+	id 1b1iMm-00042d-A8
+	for gcvg-git-2@plane.gmane.org; Sun, 15 May 2016 00:49:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754557AbcC0BRe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Mar 2016 21:17:34 -0400
-Received: from mail.kathmandu.gov.np ([202.70.84.121]:48175 "EHLO
-	mail.kathmandu.gov.np" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753924AbcC0BRc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Mar 2016 21:17:32 -0400
-X-Greylist: delayed 76344 seconds by postgrey-1.27 at vger.kernel.org; Sat, 26 Mar 2016 21:17:28 EDT
-Received: from DELLINSPIRON152.Home ([41.208.186.144])
-	(user=test@kathmandu.gov.np mech=LOGIN bits=0)
-	by mail.kathmandu.gov.np  with ESMTP id u2Q41eNw003234-u2Q41eO8003234
-	(version=TLSv1.0 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 26 Mar 2016 09:48:53 +0545
+	id S1753915AbcENWs4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 May 2016 18:48:56 -0400
+Received: from smtp102.biz.mail.gq1.yahoo.com ([98.137.12.177]:35176 "EHLO
+	smtp102.biz.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753810AbcENWsz convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2016 18:48:55 -0400
+Received: (qmail 7519 invoked from network); 14 May 2016 22:48:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1463266134; bh=tDwDjHe+5nIPVhNktHzl5IAgLSzya6OUXHOuwkOd97c=; h=Message-ID:Content-Type:MIME-Version:Content-Transfer-Encoding:Content-Description:Subject:To:From:Date:Reply-To; b=SrJxJAfQC21XgU/wKQhZWdjzL6pO2J6saWIonS2gcPzay2tbIJ7hd5K2ArORGWSOcor+Ut4LqJX1v0FN3qclWVIp0CFX7SWAOgcLxDOwQ76bOlFEFzB6gNb7xBC9mq6PsFVb5PxJR4RUisoMYU0TfWJ9BsmOfcVqQy2MYZRcCRo=
+X-Yahoo-Newman-Property: ymail-3
+X-YMail-OSG: .tjCp1sVM1nIl6EhIevuG0dtj9w8pEsUfykZ22woXFpYiB9
+ .cevxGA6n6n2cwLv7GOP1_iB7nxN3wjYbSydZSs15DNTNouSlgyKERa_WzGU
+ bwdfhtcuDsMLFfhwUvE9O5L2Qy80Qm1Zz4q0GYZSb6uUOyMTnP3.03hfAYJV
+ 8IJ7w_hgBYmtdOkRQlM7He.KK6ICfnM7LWs3uDxYFuB0Estd4mH3UC023vb4
+ X.YdL90iUIhnDWzS6RdbVht0WFJpp2tgazjlGluKijMOhX8nwaxZvKW23V0j
+ 9SmSdwJq1LxXgSghmQKw7X4gjAbYLncyKFSSKBjiS9Q9bM__5nUEVOtAYoZa
+ eKaKc.DgZqnRqR0scFd.fKTLBLSHmSrnfSXCWyFQL_CSQ7cVgFN8moOTmFp3
+ OLQXHmYrotgUqxmu7LjeOyyQumYKfsasBzr2EcK2WRciR7E6CoTNX9Ltrbuy
+ jFpITJOnrRbCN4K47owrz734tSY.4vXYpAbPcuBVLO7cdSlQ.WldAB1Wk4Ef
+ v4ATWQUnPBuXjTcsb9GmOGdkRfa8Upix7H1HaTAWrIdPxxC6NoxKqXV.RMU2
+ 6qa91ZKTqgkiB1rNcloKoyG08YpKVXNIqj4N9nlGROt8aCA5sW11HXxm__U.
+ xLoFhg2N4Bi3ggbZU
+X-Yahoo-SMTP: Lww_C1uswBCuAo7AYka.3CLaZdzvS7VqG8x_QlKWqpfCPl24jGNyyK29lvAUzh08E2Is2yY-
 Content-Description: Mail message body
-X-FEAS-AUTH-USER: test@kathmandu.gov.np
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/289989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/294628>
 
-Hello My dear.
-How are you doing today and how is everything over there together with your health? i hope that you are in good condition of health, i want to use this opportunity to introduce myself to you. My name is Miss barbara.   so i will like you to reply  me  with my contact email address (barbara.zakara@hotmail.com) so that i will show you my photo and also tell you everything about myself and i will also like to know more about you. thanks for your understand and i will be hoping to hear from you soon. Yours barbara.
-(barbara.zakara@hotmail.com)
+Dear nice one
+My name is Joy Eric how are you doing today and how about your health,hope you are fine and good.Any way after going through your profile in this site i became interested in you.I will like to have you as my good friend whom i will like to share my life experience with.Your sex, age, race nor distance does not matter to me rather what matters most in a relationship is the maturity,truth and honest that exist between friends.So i will like you to contact me back through my private mail address(joyeric688@gmail.com )So that i can tell you more about my self and send you more photos of me.Yours Sincerely, 
