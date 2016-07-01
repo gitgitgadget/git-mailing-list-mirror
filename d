@@ -1,75 +1,81 @@
-From: "R.D." <kidcastle@mail.cyccatv.net.tw>
-Subject: hello-geld lening?
-Date: Wed, 22 Apr 2009 06:05:59 +0200
-Message-ID: <20090422040815.77625DEF3DB@mail.cyccatv.net.tw>
-Reply-To: <russell8davies@netscape.net>
+From: "Mr. Peter Lee" <infovan2@aol.com>
+Subject: HELLO FRIEND
+Date: Sat, 02 Oct 2010 18:32:23 +0800
+Message-ID: <20101002183223.20053in2w447j2g4@webmail.stpeter.com.ph>
+Reply-To: peterlee333@aol.com
 Mime-Version: 1.0
 Content-Type: text/plain;
-	charset="Windows-1251"
+	charset=ISO-8859-1;
+	DelSp="Yes";
+	format="flowed"
 Content-Transfer-Encoding: 7bit
 To: undisclosed-recipients:;
-X-From: git-owner@vger.kernel.org Wed Apr 22 20:15:11 2009
+X-From: git-owner@vger.kernel.org Sun Oct 03 22:32:45 2010
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwgyS-0004CB-90
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 20:15:08 +0200
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by lo.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1P2VEi-000189-2P
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 22:32:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753281AbZDVSNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 14:13:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753127AbZDVSNb
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 14:13:31 -0400
-Received: from mail.cyccatv.net.tw ([61.58.31.253]:64037 "EHLO
-	mail.cyccatv.net.tw" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752265AbZDVSNb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 14:13:31 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.cyccatv.net.tw (Postfix) with ESMTP id 081DDDEF3E4;
-	Wed, 22 Apr 2009 12:08:24 +0800 (CST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=cyccatv.net.tw; h=reply-to
-	:from:subject:date:mime-version:content-type
-	:content-transfer-encoding:message-id:to; s=mail; bh=Jxlcib071bQ
-	niH/Y/M/EaBPAPP0=; b=KQV6DRrsdhNnDyq/Bod7Ckz+M0Mep6+QPQ3YtjGfdA9
-	8N5iiDJm0xBDlmNKv9tMtzClTmD5Sc7zIQU7s2Gl8mwfN9kZD+xp+dndKCy4lCdm
-	ZL++0DkM/ILpwO+OOuUCJGRxly+ae1j5wChku6aXOSGBhmqVnz0p9c8kJ4Z//3HI
-	=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=cyccatv.net.tw; h=reply-to
-	:from:subject:date:mime-version:content-type
-	:content-transfer-encoding:message-id:to; q=dns; s=mail; b=VKRH6
-	T2MXIWBRn6MUbKrRrjhXyx7UBX352txuWbHt/47QgLAVv/QwIRBjLpU+NLQ1NbMa
-	7+UpUrgIGqtX3IBkaxpOu0vX3c//e3IhG+FkYkNJHmizvXmaLBlvDnY3czsOSF45
-	xNOdaCA6rzjPaVoEKDA/VDk9aTfbQ1dC/Lt0Tw=
-X-Virus-Scanned: amavisd-new at cyccatv.net.tw
-Received: from mail.cyccatv.net.tw ([127.0.0.1])
-	by localhost (mail.cyccatv.net.tw [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id o3pkoFAWVK7D; Wed, 22 Apr 2009 12:08:20 +0800 (CST)
-Received: from User (unknown [62.140.137.157])
-	by mail.cyccatv.net.tw (Postfix) with ESMTPA id 77625DEF3DB;
-	Wed, 22 Apr 2009 12:08:14 +0800 (CST)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+	id S1755071Ab0JCUcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Oct 2010 16:32:39 -0400
+Received: from pmx.stpeter.com.ph ([122.52.208.90]:43441 "EHLO
+	pmx.stpeter.com.ph" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755056Ab0JCUci (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 16:32:38 -0400
+X-Greylist: delayed 64921 seconds by postgrey-1.27 at vger.kernel.org; Sun, 03 Oct 2010 16:32:37 EDT
+Received: from pmx.stpeter.com.ph (pmx.stpeter.com.ph [127.0.0.1])
+	by localhost (Postfix) with SMTP id 389F91688B6;
+	Sat,  2 Oct 2010 18:05:28 +0800 (PHT)
+Received: from 192.168.1.6 (unknown [192.168.1.8])
+	by pmx.stpeter.com.ph (Postfix) with ESMTP id B8B3A168852;
+	Sat,  2 Oct 2010 18:05:27 +0800 (PHT)
+Received: from d136226.upc-d.chello.nl (d136226.upc-d.chello.nl
+	[213.46.136.226]) by webmail.stpeter.com.ph (Horde Framework) with HTTP;
+	Sat, 02 Oct 2010 18:32:23 +0800
+Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 13.6 points;
- *  1.4 SUB_HELLO Subject starts with "Hello"
- *  1.4 UNDISC_RECIPS Valid-looking To "undisclosed-recipients"
- *  0.8 DEAR_SOMETHING BODY: Contains 'Dear (something)'
+X-Spam-Report: 9.1 points;
+ *  2.1 SUBJ_ALL_CAPS Subject is all capitals
+ *  2.7 DEAR_FRIEND BODY: Dear Friend? That's not very dear!
+ * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
+ *      [score: 0.0000]
  *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?62.140.137.157>]
- *  4.0 RCVD_IN_SBL RBL: Received via a relay in Spamhaus SBL
- *      [62.140.137.157 listed in sbl-xbl.spamhaus.org]
- *  3.0 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117224>
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?213.46.136.226>]
+ *  0.6 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
+ *      [213.46.136.226 listed in dnsbl.sorbs.net]
+ *  1.2 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
+ *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
+ *  0.6 ADVANCE_FEE_4 Appears to be advance fee fraud (Nigerian 419)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157919>
 
-dear sir/madam,
+Dear Friend,
 
-geld lening? (money lending?)
+I am Mr. Peter Lee a South Korean, happily married with children, and  
+i am a Director of Hang Seng Bank Ltd, in charge of the International  
+Remittance department. I have a confidential business suggestion for  
+you. I will need you to assist me in executing a business project from  
+Hong Kong to your country.
 
-kontact russell davies
+It involves the transfer of a large sum of money. Everything  
+concerning this transaction shall be legally done without hitch.  
+Please endeavour to reply me if interested. Here is my private  
+Email:(peterlee333@aol.com)
 
-russell8davies@netscape.net
+Thanks,
+Best Regard,
+Mr. Peter Lee
+
+
+
+
+
+
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
