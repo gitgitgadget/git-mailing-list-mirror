@@ -1,58 +1,51 @@
-From: "Angela" <angelgeorg@gmx.com>
-Subject: Hello.
-Date: Thu, 19 Aug 2010 10:38:47 +0100
-Message-ID: <201008190938.o7J9brdQ022435@levitateyoga.com>
-Reply-To: <angelageorg@gmx.com>
+From: "Shung Hin Hui" <shung9898@yahoo.com.hk>
+Subject: Hello
+Date: Sat, 13 Nov 2010 15:20:10 -0000
+Message-ID: <20101113152010.20390@ms.che.vodafone>
+Reply-To: <hinhuie@yahoo.com.hk>
 Mime-Version: 1.0
 Content-Type: text/plain;
 	charset="Windows-1251"
 Content-Transfer-Encoding: 7bit
-To: angelageorg@gmx.com
-X-From: git-owner@vger.kernel.org Thu Aug 19 11:43:20 2010
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Sat Nov 13 17:35:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Om1eZ-00076Y-SJ
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 11:43:20 +0200
+	id 1PHJ4l-0000ho-Np
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Nov 2010 17:35:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752040Ab0HSJnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Aug 2010 05:43:12 -0400
-Received: from levitateyoga.com ([69.36.178.252]:40868 "EHLO levitateyoga.com"
+	id S1755033Ab0KMQe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Nov 2010 11:34:57 -0500
+Received: from out10.wanadoo.es ([62.36.20.210]:43562 "EHLO out10.wanadoo.es"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750902Ab0HSJnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Aug 2010 05:43:11 -0400
-Received: from User ([218.249.93.76])
-	(authenticated bits=0)
-	by levitateyoga.com (8.13.1/8.13.1) with ESMTP id o7J9brdQ022435;
-	Thu, 19 Aug 2010 03:38:00 -0600
+	id S1754555Ab0KMQe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Nov 2010 11:34:56 -0500
+X-Greylist: delayed 4475 seconds by postgrey-1.27 at vger.kernel.org; Sat, 13 Nov 2010 11:34:56 EST
+Received: from [212.183.132.40] (helo=[10.95.95.86])
+	by out10.wanadoo.es with esmtpa (Exim 4.68)
+	(envelope-from <shung9898@yahoo.com.hk>)
+	id 1PHHtl-0005ia-Bz; Sat, 13 Nov 2010 16:20:13 +0100
 X-Priority: 3
 X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2800.1081
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+X-login: <alianzafrancesa@wanadoo.es>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.6 points;
+X-Spam-Report: 6.8 points;
+ * -0.2 BAYES_40 BODY: Bayesian spam probability is 20 to 40%
+ *      [score: 0.2853]
  *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?218.249.93.76>]
- *  0.6 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
- *      [218.249.93.76 listed in dnsbl.sorbs.net]
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4686]
- *  1.0 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?212.183.132.40>]
  *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
  *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161389>
 
-Hi
-How are you today? I hope everything is moving smoothly.
-my name is Angela,I am a very simple honest and kind girl.
-I am interested to know more about you and if ever,become 
-more than friends because Love is as beautiful as two people 
-choose to make it so if you have the desire with me,I will tell 
-you more about myself as soon as I hear from you.
-Have a nice day.
-Angela.
+Good Day,
+ 
+I am Shung Hin Hui, I have a business of $15.5 million for you contact me for details.
