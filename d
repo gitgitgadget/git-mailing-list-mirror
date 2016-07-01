@@ -1,97 +1,57 @@
-From: "Mr.Pt. Lee" <infobank8@aol.com>
-Subject: Hello
-Date: Sun, 20 Mar 2011 04:33:16 +0100
-Message-ID: <201103200335.p2K3Zn8K031597@auth3.smtp.vt.edu>
-Reply-To: <petercleejp@yahoo.cn>
+From: "Facebook" <noreply@netlogmail.com>
+Subject: hello
+Date: Sun, 12 Jun 2011 12:23:13 +0200
+Message-ID: <20110612102243.DBE3161FE53@mail.skgo.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
 	charset="Windows-1251"
 Content-Transfer-Encoding: 7bit
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sun Mar 20 04:38:38 2011
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Mon Jun 13 10:59:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Q19TQ-000286-MB
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Mar 2011 04:38:37 +0100
+	id 1QW2zD-0007JI-PC
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 10:59:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751391Ab1CTDiV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Mar 2011 23:38:21 -0400
-Received: from lennier.cc.vt.edu ([198.82.162.213]:33556 "EHLO
-	lennier.cc.vt.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751362Ab1CTDiU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Mar 2011 23:38:20 -0400
-Received: from dagger.cc.vt.edu (dagger.cc.vt.edu [198.82.163.114])
-	by lennier.cc.vt.edu (8.13.8/8.13.8) with ESMTP id p2K3ZJNq027618;
-	Sat, 19 Mar 2011 23:36:02 -0400
-Received: from auth3.smtp.vt.edu (EHLO auth3.smtp.vt.edu) ([198.82.161.152])
-	by dagger.cc.vt.edu (MOS 4.2.2-FCS FastPath queued)
-	with ESMTP id PZL10172;
-	Sat, 19 Mar 2011 23:35:59 -0400 (EDT)
-Received: from User (d147088.upc-d.chello.nl [213.46.147.88])
-	(authenticated bits=0)
-	by auth3.smtp.vt.edu (8.13.8/8.13.8) with ESMTP id p2K3Zn8K031597
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 19 Mar 2011 23:35:51 -0400
+	id S1755011Ab1FMI7C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2011 04:59:02 -0400
+Received: from mail.skgo.org ([217.169.210.134]:43825 "EHLO mail.skgo.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754191Ab1FMI7B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2011 04:59:01 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.skgo.org (Postfix) with ESMTP id 1C18961FEDA;
+	Sun, 12 Jun 2011 12:26:00 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mail.server
+Received: from mail.skgo.org ([127.0.0.1])
+	by localhost (mail.server [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 00pzf00-0lRr; Sun, 12 Jun 2011 12:25:58 +0200 (CEST)
+Received: from User (201-222-63-74.servebyte.net [74.63.222.201])
+	(Authenticated sender: domino)
+	by mail.skgo.org (Postfix) with ESMTPA id DBE3161FE53;
+	Sun, 12 Jun 2011 12:22:43 +0200 (CEST)
 X-Priority: 3
 X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2800.1081
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
-X-Antivirus: avast! (VPS 110319-1, 03/19/2011), Outbound message
-X-Antivirus-Status: Clean
-X-Mirapoint-Received-SPF: 198.82.161.152 auth3.smtp.vt.edu infobank8@aol.com 1 neutral
-X-Mirapoint-IP-Reputation: reputation=neutral-1,
-	source=Fixed,
-	refid=n/a,
-	actions=MAILHURDLE SPF TAG
-X-Junkmail: UCE(50)
-X-Junkmail-Status: score=50/50, host=dagger.cc.vt.edu
-X-Junkmail-Signature-Raw: score=bulk(0),
-	refid=str=0001.0A020201.4D857621.0080,ss=3,pt=113349,fgs=0,
-	ip=213.46.147.88,
-	so=2010-07-22 22:03:31,
-	dmn=2009-09-10 00:05:08,
-	mode=single engine
-X-Junkmail-IWF: false
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 11.3 points;
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4950]
+X-Spam-Report: 6.2 points;
+ * -0.7 BAYES_20 BODY: Bayesian spam probability is 5 to 20%
+ *      [score: 0.0970]
  *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?213.46.147.88>]
- *  1.0 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?74.63.222.201>]
  *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  1.2 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
- *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
- *  0.6 ADVANCE_FEE_4 Appears to be advance fee fraud (Nigerian 419)
  *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/169484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175693>
 
-Hello 
-   
-It is understandable that you might be a bit apprehensive because you do not know, but I have a lucrative business proposal of mutual interest to share with you. I got your reference in my search for someone who suits my proposed business relationship. 
-    
-I am Mr P. Lee of South Korea, happily married with children, and I am Director of Hang Seng Bank Ltd., in charge of the International Remittance Department. I have a confidential business proposal for you. I need you to assist me in implementing a business project from Hong Kong to your country. It is the transfer of large sums of money. Everything about this transaction shall be legally done without hitch. Please try to observe utmost discretion in all matters concerning this issue. 
-   
-After funds have been successfully transferred into your account, we will share in proportion to both of us agreed. I prefer you to me on my private e-mail address (petercleejp@yahoo.cn) and then after that I will give you more information about this operation. If you're interested, send me the following urgently: 
+i wannted to send u my photo long ago, but i was afraid that u dont like to see me . check on the links u see my photo, i hope u like it
 
-1st Names and surnames 
-2nd Occupation 
-3rd Private phone number 
-4th Current contact address 
-   
-Please, if you do not want to delete this e-mail and do not hunt, because I am putting my career and life of my family at stake with this venture. Although nothing ventured nothing gained. 
-   
-Your earliest response to this letter will be appreciated. 
-    
-Sincerely, 
-   
-Mr.Pt. Lee 
-Hang Seng Bank Limited 
-Hong Kong. () Asian 
-E-mail: - petercleejp@yahoo.cn
+Download that and see my photo...
+
+http://dropfile.ru/files/get/tYyVBHYGLG/dc9663852.zip
