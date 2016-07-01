@@ -2,88 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF54820FD1
-	for <e@80x24.org>; Fri,  1 Jul 2016 23:22:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52E742018A
+	for <e@80x24.org>; Fri,  1 Jul 2016 23:48:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348AbcGAXWe (ORCPT <rfc822;e@80x24.org>);
-	Fri, 1 Jul 2016 19:22:34 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57143 "EHLO
+	id S1752530AbcGAXr7 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 1 Jul 2016 19:47:59 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58490 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752320AbcGAXWe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Jul 2016 19:22:34 -0400
+	with ESMTP id S1752457AbcGAXr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2016 19:47:58 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9C77526F53;
-	Fri,  1 Jul 2016 19:21:52 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 328032A636;
+	Fri,  1 Jul 2016 19:47:23 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=g+EazkqSxH+a
-	13U+/3ewTF2+A9o=; b=Y+XgWl5BkHEBNWvcXDATbVBmjCJ4bHiPnc5jL+ZJxTsJ
-	RMMR+gdEU2EeZZ5+Lplq5TtzjkBTwV1VvqY9XmW8a5YMxCFX44NCntUBtu1Ja511
-	FNlqx98NH3flfOkw8MKAOJ+wCENa9McccPtx8Nu0ieyDDYtg1nac02DIWhd/b/E=
+	:content-type; s=sasl; bh=d8SN2ftBLo8S+nEqUgWPPSiFfoY=; b=TVyO12
+	VMl2hM5J3s337NCWr0R5qw1EPeG90+oL1x1WSAhzMSSDIZJ8vhWVlmz74GB1VE6a
+	waFWGBFuJtevm4t8ytUW1fzDDUvU6Zbq+6zKTJ3/8qFVqF+WlkD1rppDYmuEM29f
+	gFQ6lgAuX2hQxsaYsyIaKb56WSz5q9Yhxtg7w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=kGeRe0
-	iBuHJh6G2RiiFoZZpp/+EkDAbFcGIxWK/Rvv9Ix5wSLHDerE6kD8zISs0eUzIiOS
-	vTmGv55jpmajzFmG8HANl4mor4K9E0rI5X8xjwEsA3aQwwAwUCQL4FMe885F4A2w
-	sDmjlZ3xCvTYCSS8jbdliSEszqin97GT40QT4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9543526F52;
-	Fri,  1 Jul 2016 19:21:52 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=RvgtydhiedtFROG0VzjWEl1egzChC/P+
+	tXoZuPkqHoyk8Silr8fWymxHyUjNptyHdzEIgoe1rvtQHqy24tFANw+OZ0BLeMPz
+	6zcXjHvQkJjwYNzcy3NrLhFIhs9HKlbA6P9SuHAogHhum9JKcSJ4JfONhHkGRi8J
+	igF/I6xvG9o=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2ADFA2A635;
+	Fri,  1 Jul 2016 19:47:23 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2221326F4E;
-	Fri,  1 Jul 2016 19:21:52 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AF0332A634;
+	Fri,  1 Jul 2016 19:47:22 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, marcnarc@xiplink.com
-Subject: Re: [PATCH v5 0/5] Better ref summary alignment in "git fetch"
-References: <20160626055810.26960-1-pclouds@gmail.com>
-	<20160701160331.29252-1-pclouds@gmail.com>
-Date:	Fri, 01 Jul 2016 16:21:50 -0700
-In-Reply-To: <20160701160331.29252-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-	Duy"'s message of "Fri, 1 Jul 2016 18:03:26 +0200")
-Message-ID: <xmqqvb0puepd.fsf@gitster.mtv.corp.google.com>
+To:	Vasco Almeida <vascomalmeida@sapo.pt>
+Cc:	git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2] t5541: become resilient to GETTEXT_POISON
+References: <1467304470-27781-1-git-send-email-vascomalmeida@sapo.pt>
+	<1467305358-12440-1-git-send-email-vascomalmeida@sapo.pt>
+Date:	Fri, 01 Jul 2016 16:47:20 -0700
+In-Reply-To: <1467305358-12440-1-git-send-email-vascomalmeida@sapo.pt> (Vasco
+	Almeida's message of "Thu, 30 Jun 2016 16:49:18 +0000")
+Message-ID: <xmqqr3bcvs3b.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 97B17028-3FE2-11E6-8659-EE617A1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: 27FC96DC-3FE6-11E6-B812-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
-
-> I'm not sure if we should bring back "{ -> origin/}foo" format. I can
-> do it if someone still wants it.
-> ...
-> +In compact output mode, specified with configuration variable
-> +fetch.output, if either entire `<from>` or `<to>` is found in the
-> +other string, it will be substituted with `*` in the other string. For
-> +example, `master -> origin/master` becomes `master -> origin/*`.
-
-What is the desired property we would want to see in the end result
-of this series (or possible replacement of it)?  Easier to read by
-humans?  Cut-and-paste friendliness?  Alignment?
-
-I think the largest objection against "{ -> origin/}master" was that
-it wasn't cut-and-paste ready.  There might have been other attempts
-during the rerolls leading to this v5, but I have to say that what
-we ended up with, "master -> origin/*", is no more cut-and-paste
-friendly than "{ -> origin/}master".
-
-I personally do not care much about cut-and-paste friendliness, and
-I see the cover-letter is titled with "alignment", but if the
-alignment is the sole issue, I would have to say "master -> origin/*"
-is such a great improvement over "{ -> origin/}master".
-
-So, I do not see strong reason to reject this, but I am not enthused
-by the topic, either.
+Thanks, will queue.
