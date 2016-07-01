@@ -1,48 +1,39 @@
-From: "Facebook" <noreply@netlogmail.com>
-Subject: hello
-Date: Mon, 13 Jun 2011 00:21:40 +0200
-Message-ID: <auto-000088258446@cgp.relan.ru>
+From: "Jabari Vorster" <vjabari@outlook.com>
+Subject: HELLO
+Date: Tue, 25 Mar 2014 08:12:57 -0700
+Message-ID: <SBS2003vIPNTAbAWFsw0000084e@shrewsbury-orthodontics.co.uk>
+Reply-To: jabarivorster@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon Jun 13 00:22:19 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients <vjabari@outlook.com>
+X-From: git-owner@vger.kernel.org Fri Mar 28 03:40:03 2014
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QVt2w-0005tW-IG
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 00:22:18 +0200
+	id 1WTMi9-0006cA-RO
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 03:40:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754542Ab1FLWWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Jun 2011 18:22:14 -0400
-Received: from mail.radatel.ru ([217.148.54.12]:39334 "EHLO cgp.relan.ru"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754455Ab1FLWWN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jun 2011 18:22:13 -0400
-Received: from [74.63.222.201] (account death@radatel.ru HELO User)
-  by cgp.relan.ru (CommuniGate Pro SMTP 5.0.13)
-  with ESMTPA id 88258446; Mon, 13 Jun 2011 04:21:48 +0600
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+	id S1757170AbaC1Cjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 22:39:31 -0400
+Received: from [83.166.182.132] ([83.166.182.132]:47579 "EHLO
+	shrewsbury-orthodontics.co.uk" rhost-flags-FAIL-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755140AbaC1Cja convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2014 22:39:30 -0400
+Received: from [10.103.19.193] ([92.69.229.72]) by shrewsbury-orthodontics.co.uk with Microsoft SMTPSVC(6.0.3790.4675);
+	 Tue, 25 Mar 2014 15:13:24 +0000
+Content-Description: Mail message body
+X-OriginalArrivalTime: 25 Mar 2014 15:13:24.0970 (UTC) FILETIME=[C48AC4A0:01CF483C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.4 points;
- * -0.7 BAYES_20 BODY: Bayesian spam probability is 5 to 20%
- *      [score: 0.0786]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?74.63.222.201>]
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245354>
 
-i wannted to send u my photo long ago, but i was afraid that u dont like to see me . check on the links u see my photo, i hope u like it
+Did you got my earlier message? Let me know please.
 
-Download that and see my photo...
-
-http://dropfile.ru/files/get/tYyVBHYGLG/dc9663852.zip
+Sincerely,
+Jabari
