@@ -2,90 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79DC620FCF
-	for <e@80x24.org>; Fri,  1 Jul 2016 07:15:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14A4D20FCF
+	for <e@80x24.org>; Fri,  1 Jul 2016 07:39:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752554AbcGAHPs (ORCPT <rfc822;e@80x24.org>);
-	Fri, 1 Jul 2016 03:15:48 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38809 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752551AbcGAHPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jul 2016 03:15:47 -0400
-Received: (qmail 26874 invoked by uid 102); 1 Jul 2016 07:09:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 Jul 2016 03:09:08 -0400
-Received: (qmail 14158 invoked by uid 107); 1 Jul 2016 07:09:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 Jul 2016 03:09:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Jul 2016 03:09:03 -0400
-Date:	Fri, 1 Jul 2016 03:09:03 -0400
-From:	Jeff King <peff@peff.net>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Dennis Kaarsemaker <dennis@kaarsemaker.net>, git@vger.kernel.org,
-	dwwang@google.com
-Subject: Re: [RFC PATCHv1 0/4] Push options in C Git
-Message-ID: <20160701070902.GF5358@sigill.intra.peff.net>
-References: <20160630005951.7408-1-sbeller@google.com>
+	id S1752574AbcGAHi7 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 1 Jul 2016 03:38:59 -0400
+Received: from mout.gmx.net ([212.227.17.22]:61432 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752199AbcGAHi6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2016 03:38:58 -0400
+Received: from virtualbox ([37.24.143.238]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MLR30-1bIL4C2xoA-000ZpS; Fri, 01 Jul 2016 09:38:34
+ +0200
+Date:	Fri, 1 Jul 2016 09:38:33 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Jeff King <peff@peff.net>
+cc:	dmh@ucar.edu, git@vger.kernel.org
+Subject: Re: git-credentials-store.exe crash
+In-Reply-To: <20160701040715.GB4832@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1607010938140.12947@virtualbox>
+References: <7210bce6-093b-9fdf-9a9b-94059ad0d4e3@ucar.edu> <20160701040715.GB4832@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160630005951.7408-1-sbeller@google.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:NK7wzpHp3R8pkwUsJrllLGdevIUP9ifeNxp/AfZ2zvr50z5LwEd
+ 25E9eZdki9CdseMt51nvy0jW8SWOTo0C/XQ4sGfhPZukkTkt35cAY/2LKFB2BHroZz1YyaA
+ bhtOxrKjtPdO5R6IagtTmywGddjykmlZwJHfdP0gaGI45NxyMWBF/W5IDTXWe+4VQWR7Lhv
+ gmqKeVpN3BypXJEL1LAcQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:qDRXfH0A2Zs=:w6JGRWa0hcnR+XXwBnLWLh
+ JoJIqplfv/BLUVRWaBkOVZDu6XTe/2Cj+3+CKIJKgkXCmDMwb2/84CgQ17kX5yN9VIBa/SYcR
+ KlJEGQvuWq5Fvg8D/uEr8SPOcFBlMhMm01bQ2MeybidB69Ra8SQLUkSX0v0kJsdJ6VBpkLQ/9
+ TvzKthVDT4CiP1/SSGr22/fm5cgvFnwPPDaePWit1LIPA9KCoFl6zVaGKhExR/Gp/2x7G8E5L
+ b35rxEPUu4fyLn5/isxBjURHCVPGYuK+1etXOumIXGU1ueN/Gop0B8Trlbllc+ytODZeDc9+6
+ 8vC2JnRawvx5t1fde3yfFbfCBvIWP2Dv+vKx6r9a6zZSHSwxODBp52bO01N4HfpF9EwjrZhAt
+ 9DTcOksQK3CPivOCmVP5n0ZEtOSMW4z9AxY8bUkD6q9JodMlXdMzKoM3YDVqlEd2ludpPMPne
+ PZ9jpd+s3lqAdjjDFNTWlG95oHLT3in2wtki4QdL/rZSDjckerdB+3wOG+GKRGC9oXSV5uq7k
+ vV7NbCa9GIqNP4OelxWH/n+79emie9Cy+SKR8Ldd0HA3b6JVO4eRllRYFDDOc5Tzlqe6Otuso
+ FNnVzEGpaMRPQF5cKFGXH/q/ptrchMdQ769xks0FNO4Eh/5E85zZHphNO1HyzqEWfkiQf1cBH
+ FtsLUL7bVMialutQLAnUnI21Jtj+aFIURZqp5iEsPGSFiK/YdaEO7PWbLKFyoZsRdfuU2FcqU
+ J6xoyRqjY4e5YPM2ufBKTRPGARRIAKO8OFIORh/VCZV1hbyGXxxLGDwMgCdunLBPlyvGeNbcu
+ 3x003g7
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jun 29, 2016 at 05:59:47PM -0700, Stefan Beller wrote:
+Hi Peff,
 
-> Allow a user to pass information along a push to the pre/post-receive hook
-> on the remote.
+it is sad when bug reporters simply delete the part of our bug reporting
+template that says: "I searched for existing bug reports but did not find
+any".
 
-Seems like a reasonable thing to want, and related to:
+It saves the reporters a few minutes... and spends the time of you and me
+in the hour range.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/285124
+In this particular case, the bug report is an obvious duplicate of
+https://github.com/git-for-windows/git/issues/766
 
-which was specifically interested in making "--quiet" and "--force"
-available, but stopped short of arbitrary data. (It looks like that
-topic got overlooked, and Dennis never prodded again).
+The saddest part is that I already spent time to investigate this and to
+come up with a work-around, and I already committed and pushed it.
 
-> When using a remote that is more than just a plain Git host (e.g. Gerrit,
-> Git{hub/lab}, etc) this may become more obvious: The (server backend specific)
-> push options can instruct the server to:
-> * open a pull request
+So those hours are now thoroughly wasted.
 
-I know this is just a "for example", but I don't know if we would ever
-support opening a pull request directly via push, if only because a good
-pull request has actual parameters that the user needs to fill out (like
-the cover letter message).
-
-So you'd probably want some client tool to help the user figure out what
-to put in the PR, and of course that already exists, because GitHub has
-an HTTP API that it can talk to. Shoe-horning it into Git doesn't buy
-much.
-
-I'm not sure if your other examples would be better served by just using
-an HTTP API or not. I think Gerrit is funny in this regard because it
-eschews branches entirely. E.g., in a GitHub PR, you push to branch
-"foo", and then you open a PR using "foo" as the source. But with
-Gerrit, you push to the magic refs/for/master, and you have no real way
-to cross-reference that submission later.
-
-Whereas in Dennis's patches, it was about specific information directly
-related to the act of pushing.
-
-> * When pushing to Gerrit you can already attach some of this information by
->   adding a '%' followed by the parameter to the ref, i.e. when interacting with
->   Gerrit it is possible to do things like[1]:
->     
->     git push origin HEAD:refs/for/master%draft%topic=example%cc=jon.doe@example.org
->   
->   This is not appealing to our users as it looks like hacks upon hacks to make
->   it work. It would read better if it was spelled as:
-
-Heh. It _is_ hacks upon hacks, isn't it? ;)
-
--Peff
+Disappointed,
+Dscho
