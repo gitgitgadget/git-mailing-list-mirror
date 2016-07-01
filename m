@@ -2,187 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 360C32018A
-	for <e@80x24.org>; Fri,  1 Jul 2016 13:18:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF68220FD0
+	for <e@80x24.org>; Fri,  1 Jul 2016 13:39:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752179AbcGANSK (ORCPT <rfc822;e@80x24.org>);
-	Fri, 1 Jul 2016 09:18:10 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:38568 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750715AbcGANSI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jul 2016 09:18:08 -0400
-Received: by mail-wm0-f51.google.com with SMTP id r201so28978665wme.1
-        for <git@vger.kernel.org>; Fri, 01 Jul 2016 06:17:37 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=S3RjXj4kc6gpPCjgk1IQSXn0ZrbcwPbJPqTmeY7ddkA=;
-        b=DnMBjQS4MZjnudOWUPcB8UqP5suquMPTV0ewaGH9dKhulsC/pvx5FsZ8kN4L8rDqon
-         4N8XL2KKb6uQIhMfibW01G5KUI3lN6BfhrbLdzuGEwFIVrtQzm2Z5oxS+6UWLi3q09/n
-         wzchhGNh8OEepPZdt853EXfbQpEhIwShKcbDdEPVDgakJ5cmY9Mtp6Tzfaf8/uB/KNxZ
-         6g41xcWrfwE9vHPMscRb90DpZtT8OJNEYu5FZ2lceKPKqIwdTfZViAqAWrGlpcdxwMPT
-         6LxAvSEexhuprZeS0eSHgnLi5kgEnIsOUPgpvIwDrtEbOiS7mxz1Fi++wiY/ReqYl3Ej
-         yFKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=S3RjXj4kc6gpPCjgk1IQSXn0ZrbcwPbJPqTmeY7ddkA=;
-        b=hZ1e19eC2+2cCdTiWxlYTW96QAv11AZ1Wo1ySTTu5uI06UYpGTbvrr/5TtDFUQN7y/
-         v2IbBmEDGr/BKylJXj2sFd3wEdKx4xZg0dyT34dNsNMi1bo8Q7AxDa0dx9Oe0sh/D5g2
-         3a6fbCcScL9L9C98I4SbVooavWE+5u6xyu6CF1bRnl9Mdnywve50BZoXijdPrznBx8fQ
-         8QAR+kCMbL8P03odXEuAulRB4sVpEQXcQMxvHglt+k+YrBdE8RA1fZOfPFlsNL1LdLNq
-         lAjchumb+xlDeOpdv82hpJcPmb5h3Ge/zuBdtyLPn8AZvcqabJgiWrKnZ+Qpy4qKUG2g
-         1QsQ==
-X-Gm-Message-State: ALyK8tJaFVDx+FqwxKghy2LZ79HW8KR5pqfZkKNon6RgY4WkZP1a1UXKEoU5sWUPFmzaMQ==
-X-Received: by 10.194.115.130 with SMTP id jo2mr4121582wjb.82.1467379056256;
-        Fri, 01 Jul 2016 06:17:36 -0700 (PDT)
-Received: from [192.168.1.34] (enw201.neoplus.adsl.tpnet.pl. [83.20.12.201])
-        by smtp.googlemail.com with ESMTPSA id x10sm258797wjj.14.2016.07.01.06.17.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Jul 2016 06:17:34 -0700 (PDT)
-Subject: Re: [RFD] Place to document magic pathspecs like ":/" and pathspec
- handling
-To:	Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-References: <577425EF.6030900@gmail.com>
- <CAPc5daVqjhWrJjNX6monHdMTRwimbjz==j9B2FS-nXNCqPDCYQ@mail.gmail.com>
- <57743BFB.9040709@gmail.com> <xmqqy45n1y8a.fsf@gitster.mtv.corp.google.com>
- <5774E992.7070905@gmail.com>
- <CACsJy8AES0iu341DU6FDYZq6fmssbD3QSZaiwi9BntTnMQS5Gw@mail.gmail.com>
- <20160701064224.GD5358@sigill.intra.peff.net>
-Cc:	Git Mailing List <git@vger.kernel.org>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <57766D5C.3040200@gmail.com>
-Date:	Fri, 1 Jul 2016 15:17:16 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
+	id S1751932AbcGANjP (ORCPT <rfc822;e@80x24.org>);
+	Fri, 1 Jul 2016 09:39:15 -0400
+Received: from mout.gmx.net ([212.227.17.22]:49529 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751193AbcGANjP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2016 09:39:15 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0M6P5z-1bYA1R3INP-00yRPP; Fri, 01 Jul 2016 15:39:06
+ +0200
+Date:	Fri, 1 Jul 2016 15:39:03 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Jeff King <peff@peff.net>
+cc:	"dmh@ucar.edu" <dmh@ucar.edu>, git@vger.kernel.org
+Subject: Re: [PATCH 1/5] add an extra level of indirection to main()
+In-Reply-To: <20160701081919.GA21076@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1607011449380.12947@virtualbox>
+References: <20160701055532.GA4488@sigill.intra.peff.net> <20160701055858.GA4593@sigill.intra.peff.net> <alpine.DEB.2.20.1607010953440.12947@virtualbox> <20160701081919.GA21076@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <20160701064224.GD5358@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; BOUNDARY="8323329-127919728-1467380346=:12947"
+X-Provags-ID: V03:K0:tEe662cniFiJY6sj9iaHWdWyAm6IKwffm8n6aZw87VqTwIg/U+H
+ ESeCnYBGNByr+C3V/zizmMXnqwEVqBLriJBReRQ+CcrBHqfce7IushZUMw7HUaJPB4KPBRt
+ QL+Ul5HqAOhDqvfS6br4IaqVW8X+rcnB+/CZU+NWdZue2IPkf+2CvG0FiLTQB8xtetOfaXT
+ BFGJsf3lit+Vs/aAa/79A==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:FGr6zaTCFYo=:9Rp2fpUh7VemjmZ+9WPu1W
+ 3OJT7acg6zzwlrGUbklqpE3TYDE+Aar5IMDzOcBXgPWk1Nu+x78ykR30BOXakui4sDLYtoYAM
+ kLpajrun7Kimws2CX0LP3Pa2Zxvfz8b7HoTW/vkN+nLpg2jqJptdXGu3GmJ6rf6qrSiZ1iztA
+ Kv8SzMDsHkYd8w2E1w+eVt0aUSN6BbIZIFzTLzES0acjLR1q3vzYO6ujNrkp3AyXKK1K8ejz/
+ bixelX12+a5T7ycxcpbZOGrrYoZduZYmSorPpY2zeT1QROhSLor32fRP/pyy8vw712mlxnhF+
+ OQEFl9A7WnNAwclIyl8gH2KBwoms/dPORCX2Ba8PRIo2HntJiop6D5OuN9Jg/SfjEQDxR3ITk
+ gYrNBjFm7+0ksEaXMrrqrpVDQ7qTm0A1E8y43kp0zVcV1gOzcJLJWl0Uu72bcQ0RGwYkAi1zS
+ 9AgO0VsYoqIPvF6WWQ/9Ym6hXop+QqXM9J083bGu5A0pnMunk01kYrVZLRezLXH7G9Qze2mis
+ 9SxZLbqLruo/J+sGwpfNg+235rSDUsFNjUAQVsCmskzD7vlrohqnyJmA4kW6WcRSHzF7lSucY
+ IJxu6rg9Ja/iNEmWLTPlhUgtuBPcoVBI5ippYh2g750i4w5/m2cO/jkLn0J3/0G0Y9BbetKUP
+ SwAle1ePoAz2GjcS6pOCFP5Zw4HYlFcLc5f85k0yKhc8a31XK7Iuxsi7DGbcjP4vCSLsePX6q
+ w4W7qM3kTzJiqZDcZPR6Td7zVWPdbYSHIoKSw6dZ4nM0OuQblpq72JwngKLyJw3Yk9AxcWyOW
+ G0pjGLW
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-07-01 o 08:42, Jeff King pisze:
-> On Thu, Jun 30, 2016 at 05:14:15PM +0200, Duy Nguyen wrote:
-> 
->>> So we could describe how Git handles pathspecs and pathspec magic
->>> in the new manual page named gitpathspec(7), or gitpaths(7). The
->>> former has the advantage of the name being identical to the entry
->>> in gitglossary(7). The latter has the probable advantage of being
->>> easier for the Git novice to find,
->>
->> git-pathspec(7) is a great idea. It bugs me that all the pathspec
->> details are hidden in that glossary file (though I didn't know it was
->> also available via "git help glossary", which probably just reinforces
->> its invisibility). The closet place I could think of was git(1) but
->> that page is already very long.
->>
->>> and that it could be used to
->>> gather various ways to generate list of files in Git (files in
->>> the working area, files in the staging area aka the index, files
->>> in the revision / tree object, changed files, etc.);
->>
->> You mean the list of commands in this man page? OK. Another thing we
->> could do is the reverse direction, add gitpathspec(7) as a reference
->> to all commands that may need it.
-> 
-> I'll second (third?) this. Some of our manpages are quite unwieldy, and
-> I don't think we are doing any favors to users when we auto-include the
-> same content in multiple places. I think we should instead be splitting
-> concepts into their own pages and referring to them. That helps users
-> build the mental model ("aha, pathspecs; I read that concept page and
-> know how those work!" instead of "here's 3 pages of description on how
-> git-diff handles paths. Is it identical to the 3 pages in git-log?").
-> 
-> I suspect some things like diff options could benefit from a similar
-> split.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I'd rather we keep manpages self-contained; one reason is as you said
-below easier searching.  I also prefer not to have to follow from one
-page to another.
+--8323329-127919728-1467380346=:12947
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-On the contrary, I think it would be good idea to include full list
-of a configuration variables affecting specific command in its manpage.
-Currently almost all configuration variables are in git-config(1)
-manpage, but some are in individual manpages, and only linked there.
+Hi Peff,
 
-Redundancy in reference documentation is not bad, provided that it
-doesn't require duplication in documentation sources, and that the
-documentation itself is not too long, and not too unwieldy.
+On Fri, 1 Jul 2016, Jeff King wrote:
 
->>>  Sidenote: I wonder if people (especially novices) have problem
->>>  finding relevant documentation, and if adding something like
->>>  "git apropos <topic>" command ("apropos", or "man -k"), or
->>>  add the '--apropos' option to "git help" would be useful...
->>>  and if it would be easy to create.
->>
->> I have that problem sometimes and I don't think I can call myself a
->> noob anymore. I usually need to do some grepping. So yeah "git
->> apropos" would be great.
-> 
-> I think better searching would help a lot if we split things into more
-> pages (right now, a legitimate technique is "man git-foo", using search
-> in the pager, and wading through all of the false positives. That sucks,
-> but at least you can find what you want _eventually_).
-> 
-> I'm not sure if "man -k" is all that great, though, for two reasons:
-> 
->   1. AFAIK there isn't an easy way to restrict it only to git manpages
->      (try "man -k git"; oh, hello "isxdigit(3posix)").
+> On Fri, Jul 01, 2016 at 10:04:44AM +0200, Johannes Schindelin wrote:
+>=20
+> > On Fri, 1 Jul 2016, Jeff King wrote:
+> >=20
+> > > I waffled between the two mechanisms. Opinions welcome.
+> >=20
+> > I am happy you took the cmd_main() approach: we do have to play some
+> > tricks on Windows, in particular in some upcoming changes that support
+> > building with MS Visual C++ (we want to ensure that `argv` is in UTF-8,
+> > which means that we actually have to use the UTF-16 versions and conver=
+t
+> > them manually lest argv has the current Windows encoding of strings).
+> > Which means that we still have to use that mingw_startup() trick you
+> > mentioned, and which would have interfered had you chosen a similar
+> > method.
+>=20
+> I actually wondered if it would make sense to get rid of the
+> mingw_main() macro, and do it here as just:
+>=20
+>     #ifdef MINGW
+>     mingw_startup();
+>     #endif
+>=20
+> or something. But I didn't look deeply at it, and anyway I am afraid to
+> touch anything in that area because I can't even compile-test it.
 
-One solution would be to use "apropos" / "man -k" and then filter it
-(e.g. with /^git/) to filter out non-git manpages. 
+Sure. There are a couple of patches in flight to support MSVC better, and
+one part is a duplication of mingw_startup(). I would like to fix that
+before merging, of course, and hope that it will naturally be helped by
+your patch series.
 
-Another would be to search whatis database ourselves. Yet another 
-to create whatis-like database, and put it in /usr/share/doc/*.
-In both of those cases Git would search the 'database' itself.
+> > > diff --git a/common-main.c b/common-main.c
+> > > new file mode 100644
+> > > index 0000000..2b96bbf
+> > > --- /dev/null
+> > > +++ b/common-main.c
+> > > @@ -0,0 +1,12 @@
+> > > +#include "git-compat-util.h"
+> > > +
+> > > +int main(int argc, char **av)
+> > > +{
+> > > +=09/*
+> > > +=09 * This const trickery is explained in
+> > > +=09 * 84d32bf7678259c08406571cd6ce4b7a6724dcba
+> >=20
+> > This commit message says that mingw_main() is declared with char **argv=
+,
+> > and that is the reason why we have to convert. Maybe spell that out her=
+e,
+> > and then in a subsequent commit, we can fix the mingw_main() declaratio=
+n?
+>=20
+> The description was sufficiently long that I didn't want to try
+> repeating it, and opted for a reference instead. If you're planning to
+> fix mingw_main(), I'd be happy to do that as a preparatory patch, and
+> then just skip this trickery entirely. :)
 
->   2. It only searches the title lines. So it's great for finding the
->      pathspec page, but you could probably already do that by guessing
->      it's called "git help pathspecs". But if you're looking for
->      discussion of a particular diff option, say, it would be nice to be
->      able to search for all mentions of "--word-diff-regex", or
->      something.
+Deal:
 
-Well, for apropos-like command to work well we would need better
-description of manpages, isn't it?. It is getting better, but we still
-have a bit to go...
+=C2=BD/5 is in 5c54dff5c54e68a1101d8fe37aefc6158fddd7f2 and the fixup for 1=
+/5
+is in 7b74f7aabb56b428c74f5983c066dc9ea8fe5116 in the 'common-main' branch
+on https://github.com/dscho/git.
 
-If Git was to create a whatis-like database (for future "--apropos" and
-"--whatis" options to "git help"), it could add extra information, for
-example keywords (which would have to be added to manpages sources,
-and embedded in whatis-like database when creating man, html, etc.
-documentaion formats, i.e. when building documentation).
- 
->      There is "man -K", but it kind of sucks (it seems to just dump you
->      in any manpage that matches, in a list).
+(I had to resolve merge conflicts in a couple of the later patches, so
+feel free to just use the branch, but please note that I cherry-picked a
+patch to let me compile with DEVELOPER=3D1 on Windows, so you might want to
+drop 7b74f7aabb56b428c74f5983c066dc9ea8fe5116.)
 
-By default Git installs into /usr/share/doc/git-x.y.z the *.txt and *.html
-documentation formats. We could follow "man -K" / "man --global-apropos"
-example and search sources... but then we would need to follow inclusions
-at least for it to be useful. We could search HTML version of manpages...
-but then we would have to strip formatting codes before performing a search.
- 
-> I don't think those are problems that _git_ should necessarily be
-> solving, though. It's a general problem for manpages. And there may be
-> better "man" implementations than I'm used to (or even options or
-> configuration I don't know about).
-
-I wonder what other version control systems do, like Mercurial, or
-Subversion, or Veracity with providing access to their reference docs...
-
--- 
-Jakub Narębski
-
-
+Ciao,
+Dscho
+--8323329-127919728-1467380346=:12947--
