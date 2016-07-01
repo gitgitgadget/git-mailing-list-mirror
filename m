@@ -2,78 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B3EE2018A
-	for <e@80x24.org>; Fri,  1 Jul 2016 19:40:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F12902018A
+	for <e@80x24.org>; Fri,  1 Jul 2016 19:50:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752539AbcGATkY (ORCPT <rfc822;e@80x24.org>);
-	Fri, 1 Jul 2016 15:40:24 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54866 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752296AbcGATkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jul 2016 15:40:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 15DD427792;
-	Fri,  1 Jul 2016 15:40:12 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Y7/5TnrFd83GhJ5lQmfD1nIgiU0=; b=QT6Zr8
-	vpqdik/pHJIjtSrSwf/6bIUn/7/qUYUEmdH6LoGc/e/0otKhbnjrRObGFYsldJ80
-	42rmFyn9ZFc8ggZtsHSsDA+992KvkU4E1BLOb9HTX/d29L+N3jNKkG1nfLm7yf5M
-	J01YTWXzbJ8FMbsvBM6Uk0wQ3SG3aL0LY6bw0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n3bEsCDUPkp2cupgQzdSWaniImSR1hXd
-	Sl/YmsaIpolocw+aTI8g+rXzP7B0zYOyl2hJBGOEJPEH7gjUAVPzGcR4RvP1LZJC
-	5eT1Q0eybg5SXWvBOHsA6cBGkyanUYDJ6tJwWp2xNHBUT98CPGziRHPLwJIFvN58
-	thTA/eK9jWA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EEBC27791;
-	Fri,  1 Jul 2016 15:40:12 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8D53A27790;
-	Fri,  1 Jul 2016 15:40:11 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Duy Nguyen <pclouds@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 00/12] nd/icase updates
-References: <20160623162907.23295-1-pclouds@gmail.com>
-	<20160625052238.13615-1-pclouds@gmail.com>
-	<xmqqeg7id6ns.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8BU0fDVR54hMpA6qVknj+QxWR9Z-i1gRgpaJ6hp+SB2xQ@mail.gmail.com>
-	<xmqqvb0pxjfi.fsf@gitster.mtv.corp.google.com>
-Date:	Fri, 01 Jul 2016 12:40:09 -0700
-In-Reply-To: <xmqqvb0pxjfi.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 01 Jul 2016 12:11:29 -0700")
-Message-ID: <xmqqk2h5xi3q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752514AbcGATuM (ORCPT <rfc822;e@80x24.org>);
+	Fri, 1 Jul 2016 15:50:12 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:34313 "EHLO
+	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752450AbcGATuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2016 15:50:11 -0400
+Received: by mail-io0-f173.google.com with SMTP id g13so108101407ioj.1
+        for <git@vger.kernel.org>; Fri, 01 Jul 2016 12:50:10 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=LgCAnwTJGIRE9UyJjgAifNrpr7ReqZMAOyJ3RJQ06kc=;
+        b=ZeySoWjn7l2XQFihrW4E8rrSIcgOMd7pkmcals+8loLGbTHKtWp065sKKIPVcZ7OHO
+         9nYfsutwy+fGC/dFPcpPELVdJJxy20rAwb7c7izmoFXmp6NDq1dp0OR3A9jbZx7O/lsg
+         /hhfDpnNqfHpqgndVKAlyLq9vkBM6RrPIDdwjqboB4IHzaWMIQQ/VlP1zEfUptWNrMBI
+         jh/IAPdnnUFbl8/gpt5j0vVY+z1Q0whoMW5PN4yIH/iJOvSl2Lq2Izi5FRLgZ91wdJfT
+         ER3Ux5X0x0E5BU5lVY7fiQ96JsChTXv6wz3f1LugnUBlpAUvOJPbQnE76d3w6cwCS+os
+         Wsdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=LgCAnwTJGIRE9UyJjgAifNrpr7ReqZMAOyJ3RJQ06kc=;
+        b=XLWLjEG1b6iwSRxpclIFfmvjLf2ndwSUyR43c9kFqggHNFYg2afsi88j/FZSshdd8u
+         YRTkdv5+Zcp0A+1PhMrYft1qiRcV24l6zb3R4hnJRRq3JrYk+aMeh1IJCEAlq4IvWITX
+         4cXu3fJmCmysyNB1o7RUau6QF5T8SgtJbsUjA5VjkZ33eQXfhaturNqtV96vInKXTbo9
+         8GqMK+JuCdGswwh9OQEPwIlNUYgQDj8SDjEQp25qehFJjAjO3HM46uwjNCXc9lOJwZ1u
+         kOEuK4s75XfIR8kIoQNBnv2SCrHMzd7XdCFsIj42onOQEVLS7PUVOEGY9kHS/BC3FFZ7
+         73+g==
+X-Gm-Message-State: ALyK8tLaujq7N+r9RaNTV94qI4c6wWZ3d1947QYjqsuN290CthftfoG10BTIhc5T+AkIWwJutOtGVLmq8zk7/Dr6
+X-Received: by 10.107.186.196 with SMTP id k187mr22584425iof.173.1467402609820;
+ Fri, 01 Jul 2016 12:50:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9FF078CA-3FC3-11E6-BC6C-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.136.16 with HTTP; Fri, 1 Jul 2016 12:50:09 -0700 (PDT)
+In-Reply-To: <20160701193909.GA23141@sigill.intra.peff.net>
+References: <20160630005951.7408-1-sbeller@google.com> <20160630005951.7408-2-sbeller@google.com>
+ <20160701071410.GG5358@sigill.intra.peff.net> <CAGZ79kaDCLm3BBURJKfkYWKKvozkFTGCn0wGiQCtspUvtQBd+g@mail.gmail.com>
+ <20160701175950.GB16235@sigill.intra.peff.net> <CAPc5daWjSW5KM4uUyEBbb+765t50+dUsewF52uPrCiT1HW=NAQ@mail.gmail.com>
+ <20160701181102.GA16695@sigill.intra.peff.net> <xmqqr3bdxirw.fsf@gitster.mtv.corp.google.com>
+ <20160701193909.GA23141@sigill.intra.peff.net>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Fri, 1 Jul 2016 12:50:09 -0700
+Message-ID: <CAGZ79kaRG7SOcz1LyOkN8W_dpmK_AjwYyyMrZftZCac9fCo+EQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] push options: {pre,post}-receive hook learns about
+ push options
+To:	Jeff King <peff@peff.net>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Dan Wang <dwwang@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Duy Nguyen <pclouds@gmail.com> writes:
+On Fri, Jul 1, 2016 at 12:39 PM, Jeff King <peff@peff.net> wrote:
 >
->> The rest looks good (after your comment fixup). I see you already have
->> all the changes in your SQUASH??? commit. Do you want me to resend or
->> you will just squash this in locally?
+> That was sort of my question. _Is it_ too bad or not? It's hard to say
+> without knowing the use cases.
 >
-> Squashing in would need to redo this into a few relevant commits,
-> so it won't be "just squash this in locally" I am afraid, but let me
-> try.
+...
+>
+> That's ugly, of course, but not really uglier than the parsing required
+> for the COUNT proposal.
 
-Ok, there was a miniscule conflicts but otherwise the squashed
-material was all coming from a single step in the original, so
-I did so myself.  Let's start merging the result to 'next' ;-)
+ok, I'll try to get the COUNT proposal in good enough shape.
 
-Thanks.
+>
+> I'm assuming that git actually knows about and enforces that things are
+> "key=value". I'm not sure how you'd get by without that (you'd have to
+> infer the meaning of a parameter by its position, which seems like a
+> recipe for mistakes and incompatibilities).
+>
+
+Of course! We could use "a hack" just like in the Git config itself.
+If a boolean parameter is not given, the default is assumed. If it is
+given the opposite is assumed. Same for attributes, that can be set
+by just giving the key (with no "=true").
+
+So I think I can be convinced to go only with key/value pairs for now, but
+it would be easier if you'd just have
+
+    git push -o draft ...
