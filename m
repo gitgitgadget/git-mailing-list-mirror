@@ -7,132 +7,76 @@ X-Spam-Status: No, score=-6.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF68220FD0
-	for <e@80x24.org>; Fri,  1 Jul 2016 13:39:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DD7F2018A
+	for <e@80x24.org>; Fri,  1 Jul 2016 13:41:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751932AbcGANjP (ORCPT <rfc822;e@80x24.org>);
-	Fri, 1 Jul 2016 09:39:15 -0400
-Received: from mout.gmx.net ([212.227.17.22]:49529 "EHLO mout.gmx.net"
+	id S1752168AbcGANl2 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 1 Jul 2016 09:41:28 -0400
+Received: from mout.gmx.net ([212.227.15.19]:61805 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751193AbcGANjP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jul 2016 09:39:15 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0M6P5z-1bYA1R3INP-00yRPP; Fri, 01 Jul 2016 15:39:06
+	id S1750702AbcGANl1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2016 09:41:27 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MbOoG-1b0DOI1phM-00Ii5S; Fri, 01 Jul 2016 15:41:22
  +0200
-Date:	Fri, 1 Jul 2016 15:39:03 +0200 (CEST)
+Date:	Fri, 1 Jul 2016 15:41:21 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Jeff King <peff@peff.net>
-cc:	"dmh@ucar.edu" <dmh@ucar.edu>, git@vger.kernel.org
-Subject: Re: [PATCH 1/5] add an extra level of indirection to main()
-In-Reply-To: <20160701081919.GA21076@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1607011449380.12947@virtualbox>
-References: <20160701055532.GA4488@sigill.intra.peff.net> <20160701055858.GA4593@sigill.intra.peff.net> <alpine.DEB.2.20.1607010953440.12947@virtualbox> <20160701081919.GA21076@sigill.intra.peff.net>
+To:	Ioannis Kappas <ioannis.kappas@rbs.com>
+cc:	git@vger.kernel.org
+Subject: Re: git svn clone segmentation faul issue
+In-Reply-To: <loom.20160701T120539-937@post.gmane.org>
+Message-ID: <alpine.DEB.2.20.1607011540470.12947@virtualbox>
+References: <0BCA1E695085C645B9CD4A27DD59F6FA39AAD5CF@GBWGCEUHUBD0101.rbsres07.net> <alpine.DEB.2.20.1606281334450.12947@virtualbox> <alpine.DEB.2.20.1606281530420.12947@virtualbox> <loom.20160628T175016-898@post.gmane.org> <alpine.DEB.2.20.1606281825190.12947@virtualbox>
+ <alpine.DEB.2.20.1606290911040.12947@virtualbox> <loom.20160629T104814-936@post.gmane.org> <alpine.DEB.2.20.1606291341530.12947@virtualbox> <loom.20160701T120539-937@post.gmane.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-127919728-1467380346=:12947"
-X-Provags-ID: V03:K0:tEe662cniFiJY6sj9iaHWdWyAm6IKwffm8n6aZw87VqTwIg/U+H
- ESeCnYBGNByr+C3V/zizmMXnqwEVqBLriJBReRQ+CcrBHqfce7IushZUMw7HUaJPB4KPBRt
- QL+Ul5HqAOhDqvfS6br4IaqVW8X+rcnB+/CZU+NWdZue2IPkf+2CvG0FiLTQB8xtetOfaXT
- BFGJsf3lit+Vs/aAa/79A==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:FGr6zaTCFYo=:9Rp2fpUh7VemjmZ+9WPu1W
- 3OJT7acg6zzwlrGUbklqpE3TYDE+Aar5IMDzOcBXgPWk1Nu+x78ykR30BOXakui4sDLYtoYAM
- kLpajrun7Kimws2CX0LP3Pa2Zxvfz8b7HoTW/vkN+nLpg2jqJptdXGu3GmJ6rf6qrSiZ1iztA
- Kv8SzMDsHkYd8w2E1w+eVt0aUSN6BbIZIFzTLzES0acjLR1q3vzYO6ujNrkp3AyXKK1K8ejz/
- bixelX12+a5T7ycxcpbZOGrrYoZduZYmSorPpY2zeT1QROhSLor32fRP/pyy8vw712mlxnhF+
- OQEFl9A7WnNAwclIyl8gH2KBwoms/dPORCX2Ba8PRIo2HntJiop6D5OuN9Jg/SfjEQDxR3ITk
- gYrNBjFm7+0ksEaXMrrqrpVDQ7qTm0A1E8y43kp0zVcV1gOzcJLJWl0Uu72bcQ0RGwYkAi1zS
- 9AgO0VsYoqIPvF6WWQ/9Ym6hXop+QqXM9J083bGu5A0pnMunk01kYrVZLRezLXH7G9Qze2mis
- 9SxZLbqLruo/J+sGwpfNg+235rSDUsFNjUAQVsCmskzD7vlrohqnyJmA4kW6WcRSHzF7lSucY
- IJxu6rg9Ja/iNEmWLTPlhUgtuBPcoVBI5ippYh2g750i4w5/m2cO/jkLn0J3/0G0Y9BbetKUP
- SwAle1ePoAz2GjcS6pOCFP5Zw4HYlFcLc5f85k0yKhc8a31XK7Iuxsi7DGbcjP4vCSLsePX6q
- w4W7qM3kTzJiqZDcZPR6Td7zVWPdbYSHIoKSw6dZ4nM0OuQblpq72JwngKLyJw3Yk9AxcWyOW
- G0pjGLW
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:Uy4Mbq/4VMPtktr2mxlnALJ5iYpP5k0TiCuLUIGRqixm8MTlfjy
+ zTTAO1WHRA5v70F83sGJiiPFS47r0GS0QQ8Qinl/M2n5bpaMcC2uby6Rnr+F7ozB235RrpM
+ QpEBiPbvRLr2F/+nIxVVK3YT5rB/ylVAU2NVnhAD3v6zAymYe0R6Rz4LpRC0zywhpZ5GbJl
+ UsDn4z2OfS56M8g+Aabnw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:Q1LhT5OuS5E=:KxygGyZEQfZ1PacBJ7P5xz
+ 4N0PL/y7rXhUPWL3kRCGNbd1uBgVK0ZHgXxMc+G1/aYjAONLWOyKZ+ng1qO7lOiVNGiViT7Jz
+ aDA5oGwCIbV2XkZUJ32Ii9TNeleaqr0tI8i9y2c/iNzZfvKB9lB0FnydO08CLkJEF8l51s89c
+ VwobZze6x+du0wHHuUmtMDXZigEQrKAj5cckAotact1b4Lyr7mFpEmsoS4ZDJ91HFfTXLUyXS
+ Uwglw7NTVdzXJ1o1+sOwnwkjXvMp0OusqXdlEeZUzN2DG+qfZycGB/xLb4UcD/85AISarHB3X
+ d9kOFPffLXq9q/STKcL9bo9rULmMAW1KdKebQCOE8+2+HxxC1Nv8RDFdSveAEo8nE90D3AnZS
+ fz+d7AJWZ7sU7vDpH7/2ktTJPoyhzzVqoXTumWHAzo0ne26Nn1BxM3Vg8S40vDEHPzOtSfGZ/
+ /5KEv65FLvQLGMcHJZ5tNP2PRvhylQC3KO93jr/1iiORhPOuQ2+PNWoICD6Lv0OHPxDOJm+XT
+ W00K+Fo2DQvkei9ZLnIXGfFwFXYgG3o9eKVxaZFznJWRb486eTECVIGU3VXb8IKQvj1cfqmB3
+ jFOR/YT0nRGDIxrciyL4gS2KXwdhJuGlJ5/er/cIBDDJxiLO0QqoT7/s2bgtBfKUuxE+scUOJ
+ Eh5adLmjIHZW9F1C69I+8yb1paRYbxQxCW/zz7lZ5HNyA0Axx3sujr3v2XdxoYnxvpIdfttHU
+ Ntj+WdnqGoCEmlKvJfuToReAwCUyNQm0IwYa+f9js/VQpJHq+G7fMyZZoBm2ATit/nWpibLY1
+ HAHpkJs
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Yannis,
 
---8323329-127919728-1467380346=:12947
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Fri, 1 Jul 2016, Ioannis Kappas wrote:
 
-Hi Peff,
+> Johannes Schindelin <Johannes.Schindelin <at> gmx.de> writes:
+> 
+> > [...]
+> > 
+> > My more immediate concern is MSYS2 (the POSIX-emulating basis of Git
+> > for Windows), and I opened a Pull Request there:
+> > 
+> > 	https://github.com/Alexpux/MSYS2-packages/pull/647
+> > 
+> > If this Pull Request is not picked up in time for the next Git for
+> > Windows version, I plan to use the packages that you tested.
+> 
+> The patch has also been accepted for inclusion in the forthcoming 
+> subversion 1.9.5 release ("barring unexpectancies"):
+> 
+> http://thread.gmane.org/gmane.comp.version-
+> control.subversion.user/120144/focus=120146
 
-On Fri, 1 Jul 2016, Jeff King wrote:
-
-> On Fri, Jul 01, 2016 at 10:04:44AM +0200, Johannes Schindelin wrote:
->=20
-> > On Fri, 1 Jul 2016, Jeff King wrote:
-> >=20
-> > > I waffled between the two mechanisms. Opinions welcome.
-> >=20
-> > I am happy you took the cmd_main() approach: we do have to play some
-> > tricks on Windows, in particular in some upcoming changes that support
-> > building with MS Visual C++ (we want to ensure that `argv` is in UTF-8,
-> > which means that we actually have to use the UTF-16 versions and conver=
-t
-> > them manually lest argv has the current Windows encoding of strings).
-> > Which means that we still have to use that mingw_startup() trick you
-> > mentioned, and which would have interfered had you chosen a similar
-> > method.
->=20
-> I actually wondered if it would make sense to get rid of the
-> mingw_main() macro, and do it here as just:
->=20
->     #ifdef MINGW
->     mingw_startup();
->     #endif
->=20
-> or something. But I didn't look deeply at it, and anyway I am afraid to
-> touch anything in that area because I can't even compile-test it.
-
-Sure. There are a couple of patches in flight to support MSVC better, and
-one part is a duplication of mingw_startup(). I would like to fix that
-before merging, of course, and hope that it will naturally be helped by
-your patch series.
-
-> > > diff --git a/common-main.c b/common-main.c
-> > > new file mode 100644
-> > > index 0000000..2b96bbf
-> > > --- /dev/null
-> > > +++ b/common-main.c
-> > > @@ -0,0 +1,12 @@
-> > > +#include "git-compat-util.h"
-> > > +
-> > > +int main(int argc, char **av)
-> > > +{
-> > > +=09/*
-> > > +=09 * This const trickery is explained in
-> > > +=09 * 84d32bf7678259c08406571cd6ce4b7a6724dcba
-> >=20
-> > This commit message says that mingw_main() is declared with char **argv=
-,
-> > and that is the reason why we have to convert. Maybe spell that out her=
-e,
-> > and then in a subsequent commit, we can fix the mingw_main() declaratio=
-n?
->=20
-> The description was sufficiently long that I didn't want to try
-> repeating it, and opted for a reference instead. If you're planning to
-> fix mingw_main(), I'd be happy to do that as a preparatory patch, and
-> then just skip this trickery entirely. :)
-
-Deal:
-
-=C2=BD/5 is in 5c54dff5c54e68a1101d8fe37aefc6158fddd7f2 and the fixup for 1=
-/5
-is in 7b74f7aabb56b428c74f5983c066dc9ea8fe5116 in the 'common-main' branch
-on https://github.com/dscho/git.
-
-(I had to resolve merge conflicts in a couple of the later patches, so
-feel free to just use the branch, but please note that I cherry-picked a
-patch to let me compile with DEVELOPER=3D1 on Windows, so you might want to
-drop 7b74f7aabb56b428c74f5983c066dc9ea8fe5116.)
+Perfect. Thanks for being diligent and keeping us informed!
 
 Ciao,
 Dscho
---8323329-127919728-1467380346=:12947--
