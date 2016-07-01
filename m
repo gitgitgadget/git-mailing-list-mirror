@@ -7,101 +7,91 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC9172018A
-	for <e@80x24.org>; Fri,  1 Jul 2016 13:57:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9FDC20FD0
+	for <e@80x24.org>; Fri,  1 Jul 2016 14:01:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752614AbcGAN5u (ORCPT <rfc822;e@80x24.org>);
-	Fri, 1 Jul 2016 09:57:50 -0400
-Received: from mout.gmx.net ([212.227.17.21]:59860 "EHLO mout.gmx.net"
+	id S1752505AbcGAOBU (ORCPT <rfc822;e@80x24.org>);
+	Fri, 1 Jul 2016 10:01:20 -0400
+Received: from mout.gmx.net ([212.227.15.18]:64486 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751969AbcGAN5s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jul 2016 09:57:48 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MOSNd-1bDjkY0FFt-005swJ; Fri, 01 Jul 2016 15:57:43
+	id S1751793AbcGAOBT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2016 10:01:19 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LpKKr-1bn4Q52BEL-00fBRb; Fri, 01 Jul 2016 16:01:00
  +0200
-Date:	Fri, 1 Jul 2016 15:57:42 +0200 (CEST)
+Date:	Fri, 1 Jul 2016 16:00:59 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
+To:	Jeff King <peff@peff.net>
+cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] t/Makefile: add a rule to re-run previously-failed
  tests
-In-Reply-To: <xmqqy45n52xp.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607011551550.12947@virtualbox>
-References: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de> <xmqqy45n52xp.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20160630063725.GC15380@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1607011558010.12947@virtualbox>
+References: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de> <20160630063725.GC15380@sigill.intra.peff.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:b42XgTc0lu9k5pRtcgy0viRhSu3tCp7xDRBQ2XeCyzDyttaa7v7
- aaSavqrEKSx6ksf+7HpB0j3rg3LMeGlS+Extmi1pYpdxu+JAGQkmEweIUB3tQZEu/mLLwO3
- MMRjLMczyD8mk/JzfDg5CcExNQOtL7IWecrEkY9sSYAtGbFU0TwWmy7Oe3AoT7EIfBzzWax
- KLAAyBoHQ7feZY4zMu9IQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:Ydc3XeXSV7g=:w+5KwooHE0sLpvki6RxWGB
- 93hmXrr3TcnHf5wLXcOYei5XRJOEcMhCUS0Jbq9P/tqxYbo3Et0uFsO3/nEnhUNx7OheR6NY2
- XvaNAQSZVi1ePt7R9ejgchgNM0mjsptcjZ8ch/wwZfJKDfXN9HbBtoLUG+Hg46sxFQolY01lL
- 88ULIMpLhczkorG95Ck/VMzdhSjRF+16a7kVP/JjTi7P1BDTysEn41WP0bxM1N6M4iOfMo/5N
- PeCpImdFUg4qUBuMjzveyjbfhDPuFQzjJSxmOZkNOxEbLpf8Gih88GEfmPAitEVU8U3T4TuV5
- 9QFl3qtoqMDFKO3jwSUET/arqGR/DnonPI3waUitCt4BBtupF4k8+QUc+q0JE/TQI6xshTZ7T
- EZO9Ak7N1kMjFbVQk9ASf5IjoZjYn1UwfGc9ktVuaoxuEfvVKMTNL8MOwtju0bAEmJNECqfcM
- z1oJcs73yQkeBzxmjDS8acFqxe6oRhmAOEY/2AFeBbANchxB3sJ+pkM6/CTbGhwTsFOYC2msC
- vPjePGyZ2YdD7VFsTtkFk7fgTI6fBbH8TAqHA1oykeV7Io26/tB98EUqnbRvEsfIAUviBsoao
- NFwsdflbvLi8jP+z5ZhvV4ahHbf5M2+JAdjdEs7aN18oYC/lCc8Z5g/CYFKlhiCX3D67Hn0P3
- vJxqnCnuLBAWVkZ8lDkOCyt30w6AuzcexMX7TrsfcyzNphIDA0a2Q5/0ZkddVo+4CsQ89TelD
- 8/ZgDv7F8aF+q64HyvLNGXd24mCM4ZcKUGfXx2VO41WDPcAsis6NDnWxjDanBas1S9TDAR5cb
- LLWG0t0
+X-Provags-ID: V03:K0:9fYGf5PFj1VpB/LEZMS5bjYiWSSbk+JutZPtxNY8np9y/lZcz42
+ 2KZ4aP4o95S3WFz1UrvhBr6iLNL0xqexA2xc4nwNwVN8btVhiglUNfM8wS027BJoutAM5zE
+ fjOS8e5uOs4HSrfg0fwrA/bNZvBtPyJ49sHoNLWt7yOuxDAfiFGPy8JHdz1tnbblaQz+PgE
+ n8VeUmcMm+e8SolOfx76w==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:iCRIcMRySWc=:IzT1JjXzmNP8PBciyhCB4M
+ pArsJ4hJI75eVX3gPc6wZxoPqe//mNp+iPF50TxkRv8BzA6pHCpIIkTMnjUoFlvySgE/fJphb
+ dCGoOk7I+a0zq8JDE2YZzltiMKLDDp/P1MnLROzgvb8h3/JGwDydKmuDjN6/i3z499PivUgM6
+ 3X+bjVxzTTgbo5sle+gohdZGqLAZp5rHe8SfZkq2AUgCMQAMCUicCXNBd9aEU/BHPB6ayoffc
+ i4ErsXRRf2RoOJiuzueCunZnWBfs/+B8cKVSdAJeke3snaXfFuQAo5G3Gmsdv6m+NHbzpc0Vw
+ Sl1t6TVuqA34cDi4RDDv39WVAg6qDioNBTZIL2dMXV/XnGMJfI7j6mu6HlcvlkbGaSHgLxv+R
+ PKJeZvsaEk7SppHn/SWbBJbgGakb0MUTRhFoUmRTWMBlfdZPVendTfWN6HG5n9m3yXMCdB200
+ QG6hSpj7wuowx4k9nBvCBJ7Z1/ileJ9sV72364h/E3coOObUrsYK2ECtmxXp6o84FJ6aUhIma
+ SPP9VBav1SlwYlUFf0vdhtOUsOQ3mw00Y/cLRzyjhxJMkCMsqDevIGqY53wnUffTL+N3W6S+e
+ OrvNp2URkpcux0Bzl3SNiVbhHPfuV7nD01Rh+cbeqksgBz/KGaM/LPhkMJqEQfe3PtF1zk20q
+ LabrWjZ0iF03y461OAfyhGlIJoHXsm929PCyJ/dhM8PYOUTWwks+heWNE6n3VIEkAt7hDfDPE
+ uxwchpW3t38E2Zoc8tzbrDJ7FPyOVEoSz0ZxUKJPOLVaPRatKMw9BleyOerwKtoZd1yMiImu5
+ mvQErs0
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Hi Peff,
 
-On Wed, 29 Jun 2016, Junio C Hamano wrote:
+On Thu, 30 Jun 2016, Jeff King wrote:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> On Wed, Jun 29, 2016 at 09:02:37AM +0200, Johannes Schindelin wrote:
 > 
-> > While developing patch series, it is a good practice to run the test
-> > suite from time to time, just to make sure that obvious bugs are caught
-> > early. With complex patch series, it is common to run `make -j15 -k
-> > test`, i.e. run the tests in parallel and not stop at the first failing
-> > test but continue.
-> 
-> Hmmm, my tests run in parallel and do not stop at the first one
-> without '-k'.  What are we doing differently?
-
-Probably none of your tests are failing... When I run tests with -j15 and
-without -k, as soon as *any* test fails, the other 14 jobs stop after
-running their respective current tests.
-
-This is particularly annoying when some early test fails and a subsequent
-test run reveals that *also* one of those pesky SVN tests failed.
-
 > > It is the most convenient way to determine which tests failed after
 > > running the entire test suite, in parallel, to look for left-over "trash
 > > directory.t*" subdirectories in the t/ subdirectory.
 > 
-> Good idea, but I'd drop "in the t/ subdirectory" from the
-> description.
-
-Okay.
-
-> > +failed: $(patsubst trash,,$(patsubst directory.%,%.sh,$(wildcard trash\ directory.t[0-9]*)))
-> > +
+> As Junio noted, this doesn't work with --root. I have sometimes used:
 > 
-> This would not work if you use --root=<there> in GIT_TEST_OPTS, I am
-> afraid.
+>   grep 'failed [^0]' test-results/*
+> 
+> for this purpose.
 
-Bah. You're correct. Would it be okay with you if I simply punted, like
-this:
+True, I could also do that. Looking for directories rather than spawning a
+full-fledged grep is more light-weight, though.
 
-ifeq (,$(findstring --root,$(GIT_TEST_OPTS)))
-failed: ...
-else
-failed:
-	echo "Sorry, the 'failed' rule is incompatible with --root=..." >&2
-endif
+> > This patch automates the process of determinig which tests failed
+> > previously and re-running them; It turned out to be quite convenient
+> > when trying to squash bugs that crept in during rebases.
+> 
+> I suspect your response will be "perl tools on Windows are too painful
+> to use", but the "prove" tool which comes with perl can do this and more
+> (e.g., running the failed tests first, and then following up with the
+> others to double-check), and our test suite supports it quite well.
 
-? I really do not have time to spend more time on this right now...
+It will surprise you to learn that I did use `prove` extensively. There
+have been enough problems with it, though, that I stopped it.
+
+Modern Windows does not have too many problems with it, but it appears as
+if Windows Server 2008 R2 (which I used for quite some time for my
+principal development) requires too many work-arounds for Perl to work
+reliably so that every once in a while, `prove` hangs without any real
+reason.
+
+That is when I stopped using it.
 
 Ciao,
 Dscho
