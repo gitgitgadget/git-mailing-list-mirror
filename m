@@ -6,66 +6,103 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA1801F744
-	for <e@80x24.org>; Sat,  2 Jul 2016 09:45:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B16911F744
+	for <e@80x24.org>; Sat,  2 Jul 2016 10:42:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751240AbcGBJpJ (ORCPT <rfc822;e@80x24.org>);
-	Sat, 2 Jul 2016 05:45:09 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:48610 "EHLO dcvr.yhbt.net"
+	id S1751923AbcGBKm5 (ORCPT <rfc822;e@80x24.org>);
+	Sat, 2 Jul 2016 06:42:57 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:51342 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751031AbcGBJpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jul 2016 05:45:08 -0400
+	id S1751869AbcGBKm4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jul 2016 06:42:56 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BA501F744;
-	Sat,  2 Jul 2016 09:45:04 +0000 (UTC)
-Date:	Sat, 2 Jul 2016 09:45:04 +0000
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E6111F744;
+	Sat,  2 Jul 2016 10:33:18 +0000 (UTC)
+Date:	Sat, 2 Jul 2016 10:33:18 +0000
 From:	Eric Wong <e@80x24.org>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	git@vger.kernel.org, peff@peff.net, dwwang@google.com,
-	gitster@pobox.com, dennis@kaarsemaker.net
-Subject: Re: [PATCHv2 3/4] push: accept push options
-Message-ID: <20160702094504.GA7476@dcvr.yhbt.net>
-References: <20160702002014.29497-1-sbeller@google.com>
- <20160702002014.29497-4-sbeller@google.com>
+To:	Christian Couder <christian.couder@gmail.com>,
+	Jacob Godserv <jacobgodserv@gmail.com>
+Cc:	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+Subject: [PATCH] git-svn: warn instead of dying when commit data is missing
+Message-ID: <20160702103317.GA6120@dcvr.yhbt.net>
+References: <CALi1mtc8zmOzk-qv4XAg6N=ENasnMAENdJSLHK7EcpxRUk1nTw@mail.gmail.com>
+ <CALi1mtdtNF_GtzyPTbfb7N51wwxsFY7zm8hsgwxr3tHcZZboyg@mail.gmail.com>
+ <20160624193548.GA22070@dcvr.yhbt.net>
+ <CALi1mtc6Byb39kbAv16vmkUVu3JDdGG4-yVrLroDVraPDxGFng@mail.gmail.com>
+ <20160624200603.GA28498@dcvr.yhbt.net>
+ <CAP8UFD0+vG3i26=w7WqjYcpOLj+V6X35_W6DAiMmTpiC2kxRWA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20160702002014.29497-4-sbeller@google.com>
+In-Reply-To: <CAP8UFD0+vG3i26=w7WqjYcpOLj+V6X35_W6DAiMmTpiC2kxRWA@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> wrote:
-> @@ -513,6 +531,17 @@ int send_pack(struct send_pack_args *args,
->  	strbuf_release(&req_buf);
->  	strbuf_release(&cap_buf);
->  
-> +	if (use_push_options) {
-> +		struct string_list_item *item;
-> +		struct strbuf sb = STRBUF_INIT;
-> +
-> +		for_each_string_list_item(item, args->push_options)
-> +			packet_buf_write(&sb, "%s", item->string);
-> +			write_or_die(out, sb.buf, sb.len);
+Christian Couder <christian.couder@gmail.com> wrote:
+> On Fri, Jun 24, 2016 at 10:06 PM, Eric Wong <e@80x24.org> wrote:
+> > Jacob Godserv <jacobgodserv@gmail.com> wrote:
+> >> > Christian (Cc-ed) also noticed the problem a few weeks ago
+> >> > and took a more drastic approach by having git-svn die
+> >> > instead of warning:
+> >> > http://mid.gmane.org/1462604323-18545-1-git-send-email-chriscool@tuxfamily.org
+> >> > which landed as commit 523a33ca17c76bee007d7394fb3930266c577c02
+> >> > in git.git: https://bogomips.org/mirrors/git.git/patch?id=523a33ca17c7
+> >> >
+> >> > Is dying here too drastic and maybe warn is preferable?
+> >>
+> >> In my opinion this is too drastic. It keeps me from storing
+> >> git-specific data on a git-svn mirror.
+> >
+> > I tend to agree, but will wait to see what Christian thinks.
+> 
+> Yeah a warning is probably enough.
 
-write_or_die looks mis-indented.
+OK, patch below.
 
-> +		packet_flush(out);
-> +		strbuf_release(&sb);
-> +	}
-> +
->  	if (use_sideband && cmds_sent) {
->  		memset(&demux, 0, sizeof(demux));
->  		demux.proc = sideband_demux;
+> Another possibility would be to default to an error that tells people
+> about a configuration variable that could let them decide depending on
+> their workflow if this should be an error, a warning or just be
+> ignored.
 
-> @@ -640,6 +641,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
->  	struct transport *ret = xcalloc(1, sizeof(*ret));
->  
->  	ret->progress = isatty(2);
-> +	ret->push_options = NULL;
+I think that's too much.  I'm not a fan of having too many
+configuration variables to throw on users.
 
-Seems unnecessary to set NULL, here, xcalloc is right above.
+------8<------
+Subject: [PATCH] git-svn: warn instead of dying when commit data is missing
 
->  	if (!remote)
->  		die("No remote provided to transport_get()");
+It is possible to have refs globbed by git-svn which stores data
+purely in git; gently skip those instead of dying and assuming
+user error.
+
+ref: http://mid.gmane.org/CALi1mtdtNF_GtzyPTbfb7N51wwxsFY7zm8hsgwxr3tHcZZboyg@mail.gmail.com
+
+Suggested-by: Jacob Godserv <jacobgodserv@gmail.com>
+Cc: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Eric Wong <e@80x24.org>
+---
+ perl/Git/SVN.pm | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index bee1e7d..018beb8 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -97,8 +97,12 @@ sub resolve_local_globs {
+ 				    "existing: $existing\n",
+ 				    " globbed: $refname\n";
+ 			}
+-			my $u = (::cmt_metadata("$refname"))[0] or die
+-			    "$refname: no associated commit metadata\n";
++			my $u = (::cmt_metadata("$refname"))[0];
++			if (!defined($u)) {
++				warn
++"W: $refname: no associated commit metadata from SVN, skipping\n";
++				next;
++			}
+ 			$u =~ s!^\Q$url\E(/|$)!! or die
+ 			  "$refname: '$url' not found in '$u'\n";
+ 			if ($pathname ne $u) {
+-- 
+EW
