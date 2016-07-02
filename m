@@ -2,117 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED46020FD2
-	for <e@80x24.org>; Sat,  2 Jul 2016 07:32:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 254E920FD2
+	for <e@80x24.org>; Sat,  2 Jul 2016 07:32:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751326AbcGBHcf (ORCPT <rfc822;e@80x24.org>);
-	Sat, 2 Jul 2016 03:32:35 -0400
-Received: from mout.gmx.net ([212.227.15.18]:56936 "EHLO mout.gmx.net"
+	id S1751356AbcGBHcq (ORCPT <rfc822;e@80x24.org>);
+	Sat, 2 Jul 2016 03:32:46 -0400
+Received: from mout.gmx.net ([212.227.15.19]:53986 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750846AbcGBHce (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jul 2016 03:32:34 -0400
+	id S1750846AbcGBHcp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jul 2016 03:32:45 -0400
 Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MYg42-1anoPG2362-00VSR9; Sat, 02 Jul 2016 09:32:28
+ ESMTPSA (Nemesis) id 0Md3li-1b11yC0WeI-00IEyu; Sat, 02 Jul 2016 09:25:54
  +0200
-Date:	Sat, 2 Jul 2016 09:32:28 +0200 (CEST)
+Date:	Sat, 2 Jul 2016 09:25:53 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
-Subject: Re: preview: What's cooking in git.git (Jun 2016, #10; Tue, 28)
-In-Reply-To: <xmqq4m8c53wk.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607020926120.12947@virtualbox>
-References: <xmqq4m8c7uo6.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1606291345440.12947@virtualbox> <xmqq4m8c53wk.fsf@gitster.mtv.corp.google.com>
+To:	Duy Nguyen <pclouds@gmail.com>
+cc:	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/9] Report bugs consistently
+In-Reply-To: <CACsJy8A1ZU8VgBYmQAVC6LmXMVgt5CgvC_w0Y7Y6oX88RFO3dw@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1607020924410.12947@virtualbox>
+References: <cover.1467199553.git.johannes.schindelin@gmx.de> <8615dc276828a3f99a27ff2eda9909548a7d435e.1467199553.git.johannes.schindelin@gmx.de> <CACsJy8A1ZU8VgBYmQAVC6LmXMVgt5CgvC_w0Y7Y6oX88RFO3dw@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:dm2JRbroQnhILxJAGjDba1vEdahuh0LRHiYFCjawXXYy14MhugA
- 1Du6Uy+wpyi82a5VKH/XyiCej4oL48KbaXyrQbqMGH5TTEweRJIhVd390MA/CH7R0tHTUdH
- WltWn2Q25I0cjMsRv4lCpFp8xjzmpxi0FZcUO8V4GXJeLuvpM1OooU19BAYaF+xE7isUVq+
- +dPCSXWTUFROrA+iiLOFg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:f+X3BHO/bdM=:nojA+918PJgKuGuemPf/4X
- fXRgAWqspt+53wEahPf+h6yOJyUJbkArEpZ4VEkmZ3anIf2c8DvBbyIY8tmc2pEMxzfOKKCZm
- rE5gyLNlobpKcgJ6Zuco0n4bTi4etVYW+4NNIb0cuNLPlDARKSYL8ssC/XM4A+Dpt2jdTmjz1
- 0rSTXB+69gwuc3GQbCc0nEfGokmI8jhCTRAqG4CxdHECSmhgkjM8waNCAKE4hGqpvBPpONaV4
- /avi0YKZEA582uK/nKUpDsoOtZtqBB92VFlkT7VfAJgFHJbGExXByRyBrgfQB4Rf07u4DlGDH
- R9ol5fWO6oadbMLH2BPjelnA/AFJ92RshTKG73hrl40kOjAjxg9KMYLhtKUD9Rkegmn475Jp4
- ti+ODMUf2LNLHwK0rGN+8UVcvCpBOchKFlSG/oHCMGDoA16CHKwn8zEQ3k9PPTcT9GJqrxhWH
- 9pb9FidBKSTrbzhaR/ufeN+AqW39aOSyuvNppwKyb5m2CzYUTnfICFOghZRIJGjPVzskts6za
- AP4HEaDfARor6OSCeNKQmuUTds7XrIxYNiVY17y3gTR5qkFntZA9nVSurQbYKCt1Whv+TlbsC
- MkiZw3T0rnvAG2h74Qggg66cvX4d1UnQovBEDbjYuS9LCM+4JdO3qAI6Kyr8NzM5Ie45GjqDB
- 0EueAFIUwHgNWXp8FuG2pkrudE+W9/KZ1EVMBQQv4QxNY3j/gHk5dqng5t8/cyVs91x360OjW
- xgijOgWqUor+SgvYUKuTFAggHvo9g7seNQvIwZ7O3ZGqh9DkyxZnajDHyjVAyI37/FUd8lPA2
- AcDy/jg
+X-Provags-ID: V03:K0:15ritBNiKfCS4KuWsfKKafQC44SaguAW0yCt9VWhtcYEaQsJy7X
+ 5pHOjHHy96nqGGz/9+NvJSTry74h1coYEVpW7VZSGNk+bHohp08Hna0w8nroOq71CFSoH6U
+ BsxQxbCJREqeBoaRZGvzcmyGXHoRoyPMm7liDV8xGxzlTfIFpJK3VXg7WXtBrZsWCvP4x+l
+ Q/NXhF9ZDcPvci0bSPxMw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:4oKwFJy8we0=:CxOnogywmd0d4WU9h+SMy8
+ W4KpPH+x7kRjpcntEmLHJ2T0eeeHcZcx6ISv61Tm4e0ygzzJtIXgUBOOSIvjDRHLM4QeNlFSp
+ m0rz8qb2aOv1ReCBFlHl9JX6AsfMnGkeBr09Mf+uKYym6wv0rEBhUe1MOFGuEcpX3qWUdExBW
+ AKifgaUWe8rmAMOTWwdGFZi9czHhhdokTmy546aab4QDoS44KwJfUjVui+Ov9UIa2QUh3Y3QH
+ nF12N6HWl6c/6Wk6XErHBsALt3Ivex4ltJAHI6YxHgtKS/usjTotsgTmvOMhu0hZXMopOV/o1
+ pMCMQkmOZaBR5udXEyM5XuIVqg+6s41XyidxDjQTxQqK67BmvAjB2oq1yKD24Y7Q6yoSOPLDJ
+ FXDHG8DuitvTtuXIWr3Tsnq/GUlQGrLkHw0NBo7e6AuBuJjsUA6/5XYtLUF/rn4TNO4VyxQzB
+ 1NQ+Hl0G4v89/z2ZGwQ20DkNXohw4XzwHEuADxK5kBnHmbetQRFznu5uLwmp8fnBRXbDkTkDM
+ 9m4Dqa7gDHo5jBdBEGaYuwz9YeWDA8RL09NogoTjScgoKbo8NFWvw7/cor4nOuS7Nlfc7Um9O
+ nUm+nAj6I3ocaHEIgWgybiCCu0FHJR/2Cp3aVMQrXZg9Y3LtMpgoafP+BFVkNmOicDwsWZDbF
+ mhT39Z8RULYfzXHwx5YD4HPQ8X7p+Y4mYTDrD1ZD7IOebgMMofFBl/vDBMcFTpti2SK1f6xWp
+ 0SPahXivj8dfsxfxvTgpqHoqfrafK1lKSsFU6pM/CBQC/O+UpSEikCwUejW5cmazh4fmPC3Dz
+ kFSsS1c
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Hi Duy,
 
-On Wed, 29 Jun 2016, Junio C Hamano wrote:
+On Sat, 2 Jul 2016, Duy Nguyen wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Wed, Jun 29, 2016 at 1:36 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > @@ -955,9 +955,8 @@ static struct merge_file_info merge_file_1(struct merge_options *o,
+> >
+> >                         if (!sha_eq(a->sha1, b->sha1))
+> >                                 result.clean = 0;
+> > -               } else {
+> > -                       die(_("unsupported object type in the tree"));
+> > -               }
+> > +               } else
+> > +                       die(_("BUG: unsupported object type in the tree"));
 > 
-> > On Tue, 28 Jun 2016, Junio C Hamano wrote:
-> >
-> >> * jk/ansi-color (2016-06-23) 7 commits
-> >>   (merged to 'next' on 2016-06-28 at 354989c)
-> >>  + color: support strike-through attribute
-> >>  + color: support "italic" attribute
-> >>  + color: allow "no-" for negating attributes
-> >>  + color: refactor parse_attr
-> >>  + add skip_prefix_mem helper
-> >>  + doc: refactor description of color format
-> >>  + color: fix max-size comment
-> >> 
-> >>  The output coloring scheme learned two new attributes, italic and
-> >>  strike, in addition to existing bold, reverse, etc.
-> >> 
-> >>  Will merge to 'master'.
-> >
-> > Please note that those "colors" do not work on Windows, at least as far as
-> > I know, I only skimmed the code in set_attr():
-> >
-> > 	https://github.com/git/git/blob/v2.9.0/compat/winansi.c#L175-L314
-> >
-> > ... and it looks as if italic is plainly unsupported, and strike-through
-> > is not handled.
-> 
-> This hopefully is a low-hanging-fruit for aspiring new developers in
-> the Windows land, perhaps?
+> As a message targeting developers, we do not need to mark this for
+> translation. There are a couple other _() in this patch that should be
+> removed as well.
 
-I think that winansi.c would already implement it if it were possible.
-Probably there are no character attributes to change the font to italic in
-the Win32 Console.
+Yes, Hannes already pointed that out.
 
-*me-goes-and-looks* Yep, that's the case:
-https://msdn.microsoft.com/en-us/library/windows/desktop/ms682013.aspx
-
-> We do not use italic/strike as a built-in default style for
-> anything, so we do not have to wait for Windows support of these two
-> attributes to appear to include this topic in the next release.
-> 
-> After all, users on "screen", or anything that translates these ANSI
-> colors via termcap/terminfo, do not get them, either.  A user may
-> try using these once, notices that her terminal lacks support, and
-> would move on.
-
-Yes, this was what I was getting at: I would appreciate it, along with
-many Windows users, if we did not use any italic nor strike-through styles
-by default, even in future versions.
-
-It is fine, of course, to offer them for users to configure. After all, in
-the default Git for Windows installation, the Win32 Console is not used,
-but MinTTY, which is a full ANSI terminal emulator (so I'd wager a guess
-that italic and strike-through are supported).
-
-Not sure whether a comment in the documentation is warranted, though.
+My answer is the same: it is not the purpose of this patch series to fix
+this, and therefore it retains the previous behavior.
 
 Ciao,
 Dscho
