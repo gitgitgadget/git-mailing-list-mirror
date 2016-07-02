@@ -2,111 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18B481F744
-	for <e@80x24.org>; Sat,  2 Jul 2016 11:30:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB91B2018A
+	for <e@80x24.org>; Sat,  2 Jul 2016 12:43:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbcGBLag (ORCPT <rfc822;e@80x24.org>);
-	Sat, 2 Jul 2016 07:30:36 -0400
-Received: from mout.gmx.net ([212.227.17.21]:62285 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751161AbcGBLaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jul 2016 07:30:35 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MJXEd-1bKgyO0UVH-0039eT; Sat, 02 Jul 2016 13:30:27
- +0200
-Date:	Sat, 2 Jul 2016 13:30:25 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
-Subject: Re: [PATCH 4/9] merge_recursive: abort properly upon errors
-In-Reply-To: <xmqqy45lz708.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607021324330.12947@virtualbox>
-References: <cover.1467199553.git.johannes.schindelin@gmx.de> <81a74b02ac714a4fa3734dfb774cff6dea3a3471.1467199553.git.johannes.schindelin@gmx.de> <xmqqvb0r3gi4.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607011215010.12947@virtualbox>
- <xmqqy45lz708.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1751371AbcGBMny (ORCPT <rfc822;e@80x24.org>);
+	Sat, 2 Jul 2016 08:43:54 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:35081 "EHLO
+	mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751161AbcGBMnx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jul 2016 08:43:53 -0400
+Received: by mail-it0-f68.google.com with SMTP id g4so8200ith.2
+        for <git@vger.kernel.org>; Sat, 02 Jul 2016 05:43:53 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0UXY4AUHDd3WAH469P7VoEiGoEs7ns5133co//ALhK0=;
+        b=eep6+xVYvmrVJAtGNpf8ZBR6tWkVFNaJSKHAIprBdtmT27h6SdNngwgUGCiAXSqO9U
+         ev6HIXeG27nahkGNGnEjnNCGQMDE7mtbVBnhsiFYzhgdeLz+i98QKu42tmyIt9qoGiXA
+         SF1bV/4z0cfH61/neFIzxdFM4xMMeymxoj+f9aZE4qJ1Tu2f7942bfhMP2h/xzULHDSR
+         K5FJC7ouRwxAuXL77JV2ZCAvYxfxA8bufskMWC9FCeEw35D9oovmf01X7EApmolAhuLg
+         meYUAutqRWhdLagFcmeGFgEhPzwGY2uqmNNvU9e/k59wfr3rHb6tR+GNo8xca5fKnQzh
+         shXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0UXY4AUHDd3WAH469P7VoEiGoEs7ns5133co//ALhK0=;
+        b=Pnng1srHbcY6866rXoAo/mEbW5vZNFXqJywcPkrPd2vb5O1pt3l0n6Cbt/vmMrYEYM
+         qgeWRS28K7C/s32+E7UAE212o/ikxpkVk01/v/sJgEQwvjpk83z2zJa18I6yQ+iaEn/+
+         0IfGOhMtrIpfgLMk3+Cw12OeLun2iqfAtLnKnUa0RhJ+gvugb2uV+X3gzUmsSTowXh0W
+         8H1ujraS98JN3ysxP+IM1AYRMy+nSfi7uwKp2VedLAdTGn8GUciixROiRyYxDvtbDHru
+         6S1iORXKZxxLRz6hg2PkGaIaH5FSsJdz6UJKtbw6t55DJnd6zY8kHtaVXU2n4yNaKfH+
+         pLWA==
+X-Gm-Message-State: ALyK8tJDY3P/QSCQzOzy3cXwAqVc6wooyu8sKK7u4vDJG6FizRWT7mjrwJrxO37hmw68gFJKI6hB0KfHM2PhUg==
+X-Received: by 10.36.123.199 with SMTP id q190mr2590614itc.42.1467463432868;
+ Sat, 02 Jul 2016 05:43:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+s4SfE/cztt+qE8J2EcQE2Z413BhJecM1LQCWdaAx12YCm4/933
- k7OGiaWcyxCUYal6gX5k3ppSol+wBBIeQvuqqpK1ME4sXfZ4LmlR502Horpvbpa0m/elLp2
- jRq2z7CO5nvFIZXLPFXFEWlNvNomHTtSwuU12FAGYOPTF2pXkhQJtDRggDpqCBC/TMoMk9j
- seP2Pxte+8mogVFZorytw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:jmjSF30sgQw=:cPA4v1TA4WCaeNQXu1XYLn
- OG+yuU4iofMLM4Zt2sDW17y/rakx+Jk08gfj7XOXWa6QJn6YLgGHZMbFC1XBmBJ8iAkAjS66W
- EaETP8vIkLXpxjzPcwLg9QLGcb/bmcb42B6BvME1foz9dhL36uF4az/T0xoi4Bb+p9dYN+Ia6
- WkVDiiYyNEvDW9CXeIMKMX59dj0soYxgKxz2YDxVJNPIWQPvou7RqMfm8r3rOrdJD7aVojJR/
- 3UVZYmqjfdsaQFcsHxbGrh60cKVgqhuRwJIESEJKzzYfvPTvTKydNbOOkvuCRIwW8ch8VpO7L
- Mg1jDRMeyljLkmz6dUKYeDY1E+9AHiSmseGGQ0pg3OJ7C1CRS4UxyMADimajtoWid2Hkx9GNr
- 3yYXOUQGoesiJ34QTMqGHW7OKCP4KqEHYsjTUaG+oA1JkNVfCzE7O6uysflLORyzBTOV2CuqW
- +M1ss4xMyXQVWPSDzbRvxqthqc+PNppERFQEJ3Gben8SdXhcalMlQ+0vjRLQwLTr68mh8Rp3B
- +use1bu2suQQuSFp2jv7I/mh+ZpehqSm8jmFuUs/wyjYmoY+95srDH7XPgRFSylvgY7hWhdq2
- bkZKpmhTP8Rn3x/xvc8LmIQwSiyH7qiz10yxSy6TbOkpEF1NmfKrPw44cetyMYsk5tLmwlSKp
- K1ctjpskSFb+DEBM0+DfOej2mVkR4dxZe5W1Fe8iW7zOeIqaQVKl349EXvHRCIptF6pQA4Fhc
- Vq3OpudyPCANpVPABjElD/0hdozkImHNv7Z07h4FTVRzayrNZ/3Vd7z7mtS7KJDFlB2qa8fJ3
- 5czlOJU
+Received: by 10.64.225.235 with HTTP; Sat, 2 Jul 2016 05:43:23 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1607021312210.12947@virtualbox>
+References: <1466914464-10358-1-git-send-email-novalis@novalis.org>
+ <1466914464-10358-4-git-send-email-novalis@novalis.org> <alpine.DEB.2.20.1606301457340.12947@virtualbox>
+ <CACsJy8DuTsDAYzRVk=mW7WX5CZb0Z5bAPnzV_2KXK-BcX=tcVg@mail.gmail.com> <alpine.DEB.2.20.1607021312210.12947@virtualbox>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Sat, 2 Jul 2016 14:43:23 +0200
+Message-ID: <CACsJy8Bke0EQ9rOEBmz6BcvcfPe-X_rktaOku9F-wUOrnVMJDw@mail.gmail.com>
+Subject: Re: [PATCH v13 04/20] index-helper: new daemon for caching index and
+ related stuff
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	David Turner <novalis@novalis.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Keith McGuigan <kamggg@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+On Sat, Jul 2, 2016 at 1:20 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>> > -test -n "$NO_MMAP" && {
+>> > -       skip_all='skipping index-helper tests: no mmap'
+>> > +git index-helper -h 2>/dev/null
+>> > +test $? = 129 ||
+>>
+>> So when NO_MMAP is set, "git index-helper -h" will set $? to 1.
+>
+> Not quite.
+>
+> When NO_MMAP is set, index-helper will not be compiled. Or at least it
+> should not be:
+>
+>> +ifndef NO_MMAP
+>> +ifndef NO_UNIX_SOCKETS
+>> +       PROGRAM_OBJS += index-helper.o
+>> +endif
+>> +endif
+>
+> If it is *unset*, *and* if NO_UNIX_SOCKETS is *also* unset, index-helper
+> gets compiled, and -h triggers code in parse-options.c or usage.c that
+> exits with status 129.
+>
+> So I do not think that this is subtle.
 
-On Fri, 1 Jul 2016, Junio C Hamano wrote:
+The question is "whether index-helper is supported?" but you need to
+go through parse-options.c and that strange (to me) exit status 129 to
+conclude that index-helper is in fact built. It's not just as straight
+forwarding from reading the test.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> >  		saved_b2 = o->branch2;
-> >> >  		o->branch1 = "Temporary merge branch 1";
-> >> >  		o->branch2 = "Temporary merge branch 2";
-> >> > -		merge_recursive(o, merged_common_ancestors, iter->item,
-> >> > -				NULL, &merged_common_ancestors);
-> >> > +		if (merge_recursive(o, merged_common_ancestors, iter->item,
-> >> > +				NULL, &merged_common_ancestors) < 0)
-> >> > +			return -1;
-> >> >  		o->branch1 = saved_b1;
-> >> >  		o->branch2 = saved_b2;
-> >> >  		o->call_depth--;
-> >> 
-> >> I wonder if o->branch[12] need to be restored, though.  The only
-> >> sensible thing the caller can do is to punt,...
-> >
-> > I do not think that the caller can do anything sensible with *o after we
-> > return an error...
-> 
-> That is totally up to what this patch does, isn't it?
+> But it just occurred to me that the #ifndef NO_MMAP in index-helper.c is
+> unnecessary and that its #else clause (containing a loop() that fails)
+> contains dead code: we never compile this code with NO_MMAP, and neither
+> should we.
 
-No, not really. We do not really know *where* in the recursive merge the
-failure happened.
+Yeah that's probably old code from POSIX shm time. Back then there
+were calls to shm_open and stuff, not just mmap.
 
-All we know is that it happened while trying to merge the temporary
-branches.
-
-> By deliberately keeping o->branch[12] to point at the temporary
-> names and not restoring, this patch declares "the caller cannot do
-> anything sensible with *o".  If it restores, the caller still can.
-
-But would restoring the branch names not give the false impression that
-the error occurred during a different phase of the recursive merge?
-
-> Even with this step as-is, the caller can tell at which recursion
-> level the merge failed by looking at o->call_depth, for example.
-
-Well, not really:
-
-1) please note the o->call_depth-- that is *also* skipped in case of an
-   error after my patch, and
-
-2) what use is the recursion level if an arbitrary number of merges could
-   happen at the same recursion depth?
-
-In short, I do not think that resetting those values in *o could bring any
-benefit to the caller, short of introducing those fine-grained error
-values I mentioned elsewhere.
-
-Ciao,
-Dscho
+> Dave, would you mind taking that #ifndef NO_MMAP out of "index-helper: new
+> daemon for caching index and related stuff" when you re-roll?
+-- 
+Duy
