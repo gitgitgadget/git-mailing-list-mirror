@@ -7,83 +7,117 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E1331F744
-	for <e@80x24.org>; Sat,  2 Jul 2016 11:09:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA4601F744
+	for <e@80x24.org>; Sat,  2 Jul 2016 11:21:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751031AbcGBLJu (ORCPT <rfc822;e@80x24.org>);
-	Sat, 2 Jul 2016 07:09:50 -0400
-Received: from mout.gmx.net ([212.227.17.21]:54889 "EHLO mout.gmx.net"
+	id S1751332AbcGBLVA (ORCPT <rfc822;e@80x24.org>);
+	Sat, 2 Jul 2016 07:21:00 -0400
+Received: from mout.gmx.net ([212.227.15.15]:57954 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750728AbcGBLJt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jul 2016 07:09:49 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Lqm3a-1bnQov2gCI-00eOCJ; Sat, 02 Jul 2016 13:09:43
+	id S1750939AbcGBLU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jul 2016 07:20:59 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LsTDk-1bUD3u0PdI-011yqw; Sat, 02 Jul 2016 13:20:46
  +0200
-Date:	Sat, 2 Jul 2016 13:09:42 +0200 (CEST)
+Date:	Sat, 2 Jul 2016 13:20:44 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2016, #01; Fri, 1)
-In-Reply-To: <xmqqmvm0vry4.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607021306320.12947@virtualbox>
-References: <xmqqmvm0vry4.fsf@gitster.mtv.corp.google.com>
+To:	Duy Nguyen <pclouds@gmail.com>
+cc:	David Turner <novalis@novalis.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Keith McGuigan <kamggg@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v13 04/20] index-helper: new daemon for caching index
+ and related stuff
+In-Reply-To: <CACsJy8DuTsDAYzRVk=mW7WX5CZb0Z5bAPnzV_2KXK-BcX=tcVg@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1607021312210.12947@virtualbox>
+References: <1466914464-10358-1-git-send-email-novalis@novalis.org> <1466914464-10358-4-git-send-email-novalis@novalis.org> <alpine.DEB.2.20.1606301457340.12947@virtualbox> <CACsJy8DuTsDAYzRVk=mW7WX5CZb0Z5bAPnzV_2KXK-BcX=tcVg@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:LUl1yjWbr5qZUygn4+dIXPoO1eYhwZtUouazblwo+qdtrKf1t5d
- 3KqXA3a5lU9J1AxRYonFtGIVjJHC1fRwGsE82DS+deKU307V3qgKeWYcaTxaVsHV5Y6GL1Q
- 2d/5xnoLj4n/QVcQii0b20R2IGUMHvSENARSsAiPT+FsNPKIZZo7P6jEwecy4hHD+Q8VnXW
- LxGnV8qbikcXAYYb9TeKA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:6Z1cRDYe2yU=:p+34puZgP0DM3oE9foamPU
- xosR00bsOfkyrRt5QqahaqSbj2M96ZGpfD6hCRJ322gp5A/6+tw5KnZPyGVvpPM8IlIvToaL2
- U7roh78SbXm/oYOuTtMaj2Ww6XC0xfK4rJ5NRruiSm6e2UmnaQ//7D+okdoTpMqKwXeV9KR61
- wdT+Ht014KQCp7VY0BmDle3TwQ94v+ESTO5t+LstxwYeURUHGRtohN/Ea+HBCz4ViBf57YtqI
- 9EjA9WSct5gIgyw18OBuex6zu3lQZzmkbXZ0eOrxOTCBG3UMvq9cMRnONHrjH0rRIacbOEEmR
- X4ty4lP+cbRXnrG/W9eXxdZm88vFB1Bv5aA6kgRItTcuv5SaPGawc3JoTwheUGVxDvV6ZJzcU
- t9/YwcfBotSVN0IJg+Pv263Ww9Arvlel6FjXtnpys3DnEMbGag2tKjTAmc2nDkfee5koxYTbI
- kTpSFyLIuu5U6pL/l9O6zJY7bExDzvUTxSwCskUeBMqdMmxOjIsSHAqZfsWydI6imM9O4+puh
- 0K2ViuT1OKqNlijgLfAqclZYx2eHB01JHhoAOSsnklXwZqmjm+9bAaTCY3SGASJM6ByKKmdEv
- 4L1xKdocQYqJDD+sVXRe6EKXwOtXt4utUnt9k2WImoPqhhdz2KaG2ReXd1cr3MWVfXxKXlvF/
- nsU68u2qrwbCtkqURATdg0Y2vI5ouT7Vn7ngteo0t2zkX51HTRimMMo2MAm0GgDjR1eLPmzAj
- jpHg+cCTMdadf8frHuBDAz1XE/mCluDtSEwhowzj55ZLEhFG9peVC62TiwhkcQd+eifGrIjCd
- KECidoL
+X-Provags-ID: V03:K0:VRVz6EP4nj6BgUytRofaC1G+tVipAwmgOWGnB3OLKzSvSAbbUAz
+ fkeufKBssz2+ae1/PUNhfEHWcK4am4/E4Vmli70zkzKyEjinz5wPuGLJ4zvq5+nuxkyA6aG
+ LoAMNSWnB9DK8Wo4zn8sjTyMSD7n+y1unmfI7VYh3Ls5XPvCvmxG2BgT3+8+Cz+0kODyG/e
+ Qq1T+fPTjTmpoISAHL1/g==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:pVN3Sp29cO0=:g1ylGFoL3C6HpQd0sRd4m0
+ x2rD8bt/BrVb42Mab05gfuzayHsAqRwHLD7zXaBMh2eSSk+VCrk95qXrgTO7lWnkZQ1FUhemC
+ BJeDvZI6O2XpsOcN8j/etvepy7QOZY0kNGkh6l07jIIwtEQE5x30Zj+BKxibB/H4PVZ+ZKEA7
+ 2C/a0oLhahZE9/X7kIJOXPYoHXRQMbFznlYm842kzvG/csKn1OlofknsmHEw8YKbWY42k4KO9
+ /DV7wAo8m0lCtBkyklaOX+khmoMJaBsU5K4TWoWEeTDdCOlBF+rdrI+FH6VKFZH4PlXn1EBS+
+ usKTcKWjG3BlGIaqNv+O5zBnANZ/ioKgiisriPGgv4DpOnl3HqAY0vMzVUKaLEyjnBt/kv9uh
+ joquAPsdaHb3FUIEuTXjcywPc8fN0hYhu3H9bWMIRFvlR6K8e3MehwgGvGX17GoPU/uRC8oxv
+ 2evDlaIo6rE+TRGTudBr/Csr/QNY7FofZ0I+dQGBn0HQZ5sn4fhDveJMN2NC5cs3UkBcuRB4/
+ WeuqhkcnI28occDURAMk7GgL2r5jHlKJspC/1+c8g556KcCOJX6b9FPU+cbzOtNNnBYLamtI5
+ aaCl1Jz7LjYvcWv05zo3S1MTZCbEQPyyKgL9rM55Tk6spSmEMmKx1IOtT98WR9oxg3U4jujZh
+ RghBMhJbnozUUewoQjwR8m2Ay61cgBz/QLVkk1jMKZB32R1BfsiZesj+9r/3zrmbyOhCPcrRS
+ urkiQ7xP5VzeaMs9iO/5xH/TJ79+WMdNv+Cnvfi7gBgAfvuXO7FpYHgA5V85SeA0+XGe+M0/9
+ 0NVyEat
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Hi Duy,
 
-On Fri, 1 Jul 2016, Junio C Hamano wrote:
+On Thu, 30 Jun 2016, Duy Nguyen wrote:
 
-> * jc/t2300-setup (2016-06-22) 1 commit
->   (merged to 'next' on 2016-06-28 at 62b902a)
->  + t2300: "git --exec-path" is not usable in $PATH on Windows as-is
+> On Thu, Jun 30, 2016 at 3:06 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > Even when NO_MMAP is empty, there might be no Unix sockets available (such
+> > as is the case on Windows). In any case, you really only want to skip
+> > these tests when index-helper is not available, so would you mind
+> > squashing this patch in?
+> >
+> > -- snipsnap --
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > Subject: [PATCH] fixup! index-helper: new daemon for caching index and related
+> >  stuff
+> >
+> > ---
+> >  t/t7900-index-helper.sh | 6 ++++--
+> >  1 file changed, 4 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/t/t7900-index-helper.sh b/t/t7900-index-helper.sh
+> > index 6c9b4dd..12b5bf7 100755
+> > --- a/t/t7900-index-helper.sh
+> > +++ b/t/t7900-index-helper.sh
+> > @@ -10,8 +10,10 @@ Testing git index-helper
+> >
+> >  . ./test-lib.sh
+> >
+> > -test -n "$NO_MMAP" && {
+> > -       skip_all='skipping index-helper tests: no mmap'
+> > +git index-helper -h 2>/dev/null
+> > +test $? = 129 ||
 > 
->  Portability fix for Windows.
-> 
->  Will merge to 'master'.
+> So when NO_MMAP is set, "git index-helper -h" will set $? to 1.
 
-Would you mind cherry-picking this onto `maint`, too? I just noticed that
-the test suite does not pass here because `maint` has fe17fc0 (t2300: run
-git-sh-setup in an environment that better mimics the real life,
-2016-06-01).
+Not quite.
 
-While at it, it would be nice if this patch:
+When NO_MMAP is set, index-helper will not be compiled. Or at least it
+should not be:
 
-> * js/mingw-parameter-less-c-functions (2016-06-20) 1 commit
->   (merged to 'next' on 2016-06-28 at e673c65)
->  + mingw: let the build succeed with DEVELOPER=1
-> 
->  Some platform-specific code had non-ANSI strict declarations of C
->  functions that do not take any parameters, which has been
->  corrected.
-> 
->  Will merge to 'master'.
+> +ifndef NO_MMAP
+> +ifndef NO_UNIX_SOCKETS
+> +       PROGRAM_OBJS += index-helper.o
+> +endif
+> +endif
 
-... also found its way into maint; This would make it easier for me to
-backport fixes (as I started to rely on DEVELOPER=1 to warn about issues).
+If it is *unset*, *and* if NO_UNIX_SOCKETS is *also* unset, index-helper
+gets compiled, and -h triggers code in parse-options.c or usage.c that
+exits with status 129.
+
+So I do not think that this is subtle.
+
+But it just occurred to me that the #ifndef NO_MMAP in index-helper.c is
+unnecessary and that its #else clause (containing a loop() that fails)
+contains dead code: we never compile this code with NO_MMAP, and neither
+should we.
+
+Dave, would you mind taking that #ifndef NO_MMAP out of "index-helper: new
+daemon for caching index and related stuff" when you re-roll?
 
 Thanks,
 Dscho
