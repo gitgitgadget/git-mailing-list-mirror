@@ -2,78 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_20,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_BCC,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1C512018A
-	for <e@80x24.org>; Sat,  2 Jul 2016 05:12:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94BBC2018A
+	for <e@80x24.org>; Sat,  2 Jul 2016 05:54:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750792AbcGBFMn (ORCPT <rfc822;e@80x24.org>);
-	Sat, 2 Jul 2016 01:12:43 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:34627 "EHLO
-	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750714AbcGBFMm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jul 2016 01:12:42 -0400
-Received: by mail-io0-f180.google.com with SMTP id g13so115257426ioj.1
-        for <git@vger.kernel.org>; Fri, 01 Jul 2016 22:12:10 -0700 (PDT)
+	id S1750808AbcGBFyo (ORCPT <rfc822;e@80x24.org>);
+	Sat, 2 Jul 2016 01:54:44 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:34181 "EHLO
+	mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750789AbcGBFyo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jul 2016 01:54:44 -0400
+Received: by mail-lf0-f65.google.com with SMTP id l102so679693lfi.1
+        for <git@vger.kernel.org>; Fri, 01 Jul 2016 22:54:43 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LRLhsa155+F+r6ikcg7CLK3+Zie4bnLRake0NaBQ3ho=;
-        b=JxTCWdmckqrkp3IaKyo9jSNRDdDeekZdiALzK0RAtF6wP6qQ07OVamtHG7SkYE8vnA
-         nGMV9JKJ2zM0EFsFOdijyhGTXHlsalpjQxN1abjSIAZZyyHhaBOa7WMUmSHIEnCKXT/8
-         zwTLguqEGi9l1a7+e4r9sICtDFf5Eybp2n02OEdY2Me77hiEREt0woM4jqGO/7L6moIK
-         dDHsCECxizyYQfPkrCWCDOGyYzjNnyEFp/OL1vRe29tcgeQvHjtWzwopkj4ujtlKwYlg
-         m6RRXWIk1xNT77Mf7BetYgNcKnmgYgxGbd1xkYwDw3sMX3QIhetQ+K11CoBYEiSy/eqg
-         Pm2w==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=I184uXBL2QZNLwzwr/QjG5bdTi07Nbyv5HmCyEkiOQo=;
+        b=wkZj9N2PvOSBQxp9R3DEwSWiZU9F5okJV7qKtpnki3+woZ2LdSJSi8AWuVqvXM0E8l
+         0dMTeNbqj8HvZegTWWDbaWYtF4tR9b/6OrYUl486+k5d8q74/KETRKrML4ONT0c2wApg
+         8lZrB+C8/Qx2Hpag9PhgJ9P0HEWgWbLSvxjKx7VlC1kHi6FM+V617sOB77FViMT7JrmC
+         o6scNeAHH5IdZM9NfbxezUILMnv5Se+EQUTnKw+BxlNKAs8eU67Wxp+9dSpHAm0I0d3e
+         OL0tzJQFDwEVrVnY5uT0YJB5cXfztjg39P81cI9CnSApziiwRoNJ133E1FKb5CexE4KA
+         K55Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LRLhsa155+F+r6ikcg7CLK3+Zie4bnLRake0NaBQ3ho=;
-        b=DElhT0BXd52CE31ZjZP6DQWVtYgp5bCjp3uNVzgUYs3mOHZ1gmRBKZ/u+IJKKjK5LJ
-         20euz/bUP2GBE7T5axlOaJpiqcJ84aoVGMgNw8Obi6zaiAPCe6CwRi9R+naYyUkvDKwI
-         gIzHKnBZIZOQpG/Z2AXhzA1rEttSkTUa9E03TO7GCRpzUOp0g6jbrKf7z8FUzAPariDx
-         LfRYq94CUbg9O82ks+nz3JK7nMhRfMEheK0lPyQZ6k5vv8UbLIXpyeYyjX3gfwcgmmXl
-         ZC2KizlVrb5IAnMFN9mrYtCAjO51I56GWwKPUmMDZEvdJqNaYrAd6QooYKHEAMpnj0JO
-         2X7A==
-X-Gm-Message-State: ALyK8tJwy3iwxv7g6AQ+gdP3K3P1b4q9I4XURLL+ECB+uYRlP7QBOuI0qlW8kB9PKSrklao+BTeRLot9LRYW2Q==
-X-Received: by 10.107.159.16 with SMTP id i16mr1300805ioe.29.1467436329685;
- Fri, 01 Jul 2016 22:12:09 -0700 (PDT)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=I184uXBL2QZNLwzwr/QjG5bdTi07Nbyv5HmCyEkiOQo=;
+        b=gwdLVcJuENHpV9TB/LCkC8bU6trVHfr1WG6zM1wfYVt1JtXrMfYKjr5cAEGBO0J5R4
+         LAT31/p071Ptc4hrIkplSeolw7CDmujQ9D9rQuQliHfeicH/0yJB8o3ZVrW81d1hkZ2b
+         dQwe/qLnXlLGHmmk5cN5tyGNDZcttj97l9KaW9HBNNlX+nZclSwDz7ADBwt9wzO0tFB3
+         NLYq9NX6mq5rKN/IeOKYE1DLol0T4Zjt9V4MRf5eCUznAgyKaQosJX4dPBhUTcg/szXM
+         3aWq4qedI65bam9zj8ZYGAIb5qgx9ZeU7W9V4UPE28xviKeEcgCUqggE0PgT5Jz1eJWh
+         v8RA==
+X-Gm-Message-State: ALyK8tK8hDNzN/uXmjngS92ZSv3vW6R3EybAgCL6NKN0q9U2ljKH9i/TS871ygX6mf7H5gHKUbQIj3I7dQ6dwg==
+X-Received: by 10.46.32.150 with SMTP id g22mr375595lji.30.1467438882545; Fri,
+ 01 Jul 2016 22:54:42 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Fri, 1 Jul 2016 22:11:40 -0700 (PDT)
-In-Reply-To: <8615dc276828a3f99a27ff2eda9909548a7d435e.1467199553.git.johannes.schindelin@gmx.de>
-References: <cover.1467199553.git.johannes.schindelin@gmx.de> <8615dc276828a3f99a27ff2eda9909548a7d435e.1467199553.git.johannes.schindelin@gmx.de>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Sat, 2 Jul 2016 07:11:40 +0200
-Message-ID: <CACsJy8A1ZU8VgBYmQAVC6LmXMVgt5CgvC_w0Y7Y6oX88RFO3dw@mail.gmail.com>
-Subject: Re: [PATCH 1/9] Report bugs consistently
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
+Received: by 10.114.182.140 with HTTP; Fri, 1 Jul 2016 22:54:41 -0700 (PDT)
+Reply-To: cfifundingltd@hotmail.com
+From:	offer <musaloan@gmail.com>
+Date:	Sat, 2 Jul 2016 11:24:41 +0530
+Message-ID: <CACh1u-nwj91cn4dV_6Fx8g78srpox7graDWqLd2dqOCS-K0wHA@mail.gmail.com>
+Subject: 
+To:	undisclosed-recipients:;
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jun 29, 2016 at 1:36 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> @@ -955,9 +955,8 @@ static struct merge_file_info merge_file_1(struct merge_options *o,
->
->                         if (!sha_eq(a->sha1, b->sha1))
->                                 result.clean = 0;
-> -               } else {
-> -                       die(_("unsupported object type in the tree"));
-> -               }
-> +               } else
-> +                       die(_("BUG: unsupported object type in the tree"));
-
-As a message targeting developers, we do not need to mark this for
-translation. There are a couple other _() in this patch that should be
-removed as well.
--- 
-Duy
+Do You Need Urgent Loan? Contact Us Now: cfifundingltd@hotmail.com
