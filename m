@@ -7,48 +7,49 @@ X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E7FF1FE4E
-	for <e@80x24.org>; Sat,  2 Jul 2016 07:20:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB0E11FE4E
+	for <e@80x24.org>; Sat,  2 Jul 2016 07:24:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750942AbcGBHUd (ORCPT <rfc822;e@80x24.org>);
-	Sat, 2 Jul 2016 03:20:33 -0400
-Received: from mout.gmx.net ([212.227.17.20]:51628 "EHLO mout.gmx.net"
+	id S1750900AbcGBHYZ (ORCPT <rfc822;e@80x24.org>);
+	Sat, 2 Jul 2016 03:24:25 -0400
+Received: from mout.gmx.net ([212.227.15.18]:50859 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750789AbcGBHUc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jul 2016 03:20:32 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MSuYT-1arN6N1Mfd-00RraM; Sat, 02 Jul 2016 09:20:26
+	id S1750789AbcGBHYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jul 2016 03:24:24 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MTTKZ-1aqonV0FoF-00SMKt; Sat, 02 Jul 2016 09:24:18
  +0200
-Date:	Sat, 2 Jul 2016 09:20:24 +0200 (CEST)
+Date:	Sat, 2 Jul 2016 09:24:16 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	Junio C Hamano <gitster@pobox.com>
 cc:	git@vger.kernel.org
-Subject: Re: [PATCH 2/9] merge-recursive: clarify code in was_tracked()
-In-Reply-To: <xmqq7fd51ijr.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607020906560.12947@virtualbox>
-References: <cover.1467199553.git.johannes.schindelin@gmx.de> <dd3e2cf842fd5e11e31914aa55b8b995e8d3d75c.1467199553.git.johannes.schindelin@gmx.de> <xmqq4m8b4zdd.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607011057180.12947@virtualbox>
- <xmqq7fd51ijr.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 3/9] Prepare the builtins for a libified
+ merge_recursive()
+In-Reply-To: <xmqq37nt1i0k.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1607020921200.12947@virtualbox>
+References: <cover.1467199553.git.johannes.schindelin@gmx.de> <753eabc5193c148c67e64ed5d070b6ff08f51d82.1467199553.git.johannes.schindelin@gmx.de> <xmqqziq33ju2.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607011123550.12947@virtualbox>
+ <xmqq37nt1i0k.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:n7IeqM881a1mj55oQ96nSth4zg4JKglGtyRJzaHtjpjRZqgrI+3
- ndQHUJYHQsvDKDiYmJJKJIyf5NGyCq7vMrvYv7SaMwmc/L4+w90IypoSTleZgRccxsplBpC
- ZHegJIGgMavw4wEsbwRKC6sdS+oeZtlaBlC6aB1JXSKMQlTgi72+NyPLR8NBOAXsEQoYYUP
- FbLQTvmlerD+s4fvT0POA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:YxTP189Tdkk=:7vkMa5yyCrYFuQptYnNprb
- NdqhUTLnXVs424hvvA6UeLnC2u6xg2zR/NdhF7YXhk/fG+uKOFfRgqcwn/IS5l7xYDmLtBhjq
- N6bXNEAJAO7ZWgcPZJP5S+ZMDZLtzoEeNlNu2JNQkjb39qkfwWhaSSWD4uOSRnhZc30gQqaLZ
- xKmmT8tXKtRsdBcV0dbgCPZEhe0/i0pCeRxMLhWodLBaBtK/hiwZWHiNgJGG0kNsueJk4SCXz
- 456nyPTu0GKC26h7ePFdJsf+YeMCXxMslG5pXju8rofLRkZwqRYUkDcvUZIYpHPxcnEbTIP1T
- kO1HEj5zvyKj0npacxnatzjLDyyVjaMSkMYbT5Dt+ph5kyy9AF1TxbZ9oxwgsQSh8U3RvAaaL
- Lrz1RRmB6u5xDPlHH8T0B/wSHc15MO/T5wUwOdUssfdald0BntQk1C0TmofwUCo72fETJlJoL
- Aul+NDKccZC1JbpxNeiyr/I4xIuHz06w3XdodlD+l19/+pT3y2ShvAAjT2xaQv3NKhNPJiLST
- rVDDnFj1I18BsKeSsnmiTydVdvj1ufRJKpUa9LFpLhhzmFnf55LuKEAImlubBKkbvAsopVzvs
- 39oeD9kfRNMsYXjjJO4FQjrDJ4XyYPhTEVpeuDRQHenHounoxboxj6oUHzYEEj3vug21wGtmW
- 38DCy1pm6CKRN9JaWTXI0XeEfdnTw8tNhMLcjAwgiauKY+VsBvH1VFA90aDTwZwRNKu/XLV+n
- 4nBMnbP+YrqMObrrfvB11UYxEuTjFBZB9Lu0XBLxWEOzCEFqXJxXVoqUPjYeKUTN/MKqJHxIV
- e9YEe1J
+X-Provags-ID: V03:K0:IsFJpjh9qU4DB54KDl/J26AMTSEiZWrQ2lZsP2wZ5s5Cu7Xgp9I
+ 3Hpx3zvudVxBtW6Yzgc6MCthlVKZTikYnDVGxPDW8nUgQ8DQPRsJVu6bPl80+psamThcxCg
+ ohx9qtwzxg5ydwgD9GkIHra7JG4AKllMJ7EBkJGCCFSCkHngGoW24pZqqFd4TBzrAlR9XNW
+ IP9XUYvHS/Qbw+FlPjn8A==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:FLyZYr7N+Nw=:iwkPh5YM7F5glounxV85hW
+ Zo5rSosT5xq1pDnn8sn8yg0sfe7zU3QoZs5QuypXLjasAUS60VhsgEIIdGumBg8RD1+Jp5Wfg
+ 6BPAdt8xr3eQKBZT2QC8ta0R76gjOB3BJP9dAgrkmyGviyBtpIFEbgl78CxxzYgGFpZDD/gN5
+ KkRO3/cAmPRsC2K2gArIFq0rDmJriheYGOrVNu114EabTwyHFhgSz2bXVnnyI8hEV7/mOWqSx
+ ceexyIiB0NF/6YuLQBl/IlUOxODricvZ6vrn9u/RY4NCuoMalH6pqyFZaqskOTDh0Ht0kKZve
+ nH5sgOBgNiRIo19jiZm9GJpiPRXCs0kTWKFypHCoWrnF2BYtKDcuQL0D1Ejg07RZz5MG2758z
+ 8yldn5aXtIswf25ZFaocB9bDB1uRSZ5NJC+pAZp4iSaH/7eojAarjBEMyXIegQN6ZP9UewtQc
+ mM9a1w/8NWL4/Zqw0ln80ovXFj6DdWCLT5N6HhaPsJt8objvgNT2JeIAvWjM7geVjTNvW4kgi
+ pb0M2su7iJkF5msr5B6EG/AXsoILPkxuUjJ4zOCrUYnXhJayH8Zf8zKs9TsI7g8hhemFgKbsq
+ Ptc/EjYSUV0la5uqVG2fiqVKVwoNNh8sh/aUye2NtGQeGMc7px4bDcQa5+0lcdFA/yVAVpEiA
+ DGB8RHmi9/SHGOpVeYL8/jxwTrDkWnxJjghaJ2VwRhLq+bhRmhBAC+cdThpiUUC2mmCNrayHh
+ wh6CQ9IhLiNuBYZ6Vs0MmRDwvBT0GBdLxeT+PmvQ54bAzcVBxdgjV3/8gxoZK/Ly/M27RyN2I
+ WwArrFX
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,73 +61,43 @@ On Fri, 1 Jul 2016, Junio C Hamano wrote:
 
 > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > I would like to propose this diff instead (it is larger, but with a net
-> > savings of one line):
+> >> > A truly libified function does not die() just for fun.
+> >> 
+> >> The sentence is wasting bits.  After all, a helper function in
+> >> run-once-and-exit program does not die() just for fun, either.
 > >
-> > -- snipsnap --
-> > diff --git a/merge-recursive.c b/merge-recursive.c
-> > index d5a593c..0eda51a 100644
-> > --- a/merge-recursive.c
-> > +++ b/merge-recursive.c
-> > @@ -658,24 +658,22 @@ static int was_tracked(const char *path)
-> >  {
-> >  	int pos = cache_name_pos(path, strlen(path));
-> >  
-> > -	if (pos < 0)
-> > -		pos = -1 - pos;
-> > -	while (pos < active_nr &&
-> > -	       !strcmp(path, active_cache[pos]->name)) {
-> > +	if (pos >= 0)
-> > +		return pos < active_nr;
-> > +	/*
-> > +	 * cache_name_pos() looks for stage == 0, even if we did not ask for
-> > +	 * it. Let's look for stage == 2 now.
-> > +	 */
+> > This sentence does not so much target *you* personally as audience, but
+> > the occasional reader of the log who wonders: "Why don't we just call
+> > die()? We would not have to worry about passing back the return value
+> > through all those long call chains..."
 > 
-> I think this keeps the same phrasing from the original that makes
-> the comment misleading.  It "looks for stage == 0" is not the whole
-> story but only half.
+> I was (and I am still) reacting mostly to "just for fun".
 
-Yes, it is the relevant part of the story to explain why we're not done
-when pos < 0.
+Yeah, sorry, that part was lost on me.
 
-To understand why we're not done yet, the crucial point is *not* that the
-return value encodes the insert position. The crucial point is that
-despite asking for an index entry matching a specific name, we might not
-find one, *even if there is one*. And the reason is that cache_name_pos()
-does not quite do what the name suggests.
-
-I am sorry to disagree with you here: I really find it important to
-document this potential misunderstanding.
-
-> It looks for a place to insert the path at stage #0" is.  Your half is
-> used by the "if (0 <= pos)" you split out into a separate statement
-> above already, and the untold half is needed to explain why this loop is
-> correct.
-
-True. I did not bother to document that part. Because even if I was
-puzzled by the logic handling a negative return value, the assignment "pos
-= -1 - pos" made it very clear to me what was happening. I am not *that*
-easily puzzled.
-
-> It returns the place to insert stage #0 entry, so if you are looking
-> for stage #1 or higher, you only have to loop while the path
-> matches, because the entries are sorted by <path, stage>.
+> > Even more natural is it to guess that the code will call error(), just
+> > like we do almost everywhere else.
+> > ...
+> >> But that does not mesh very well with the stated objective of the
+> >> patch.
+> > ...
+> > I could imagine that you wanted even more fine-grained control, where we
+> > have a range of return values indicating different error conditions.
 > 
-> And with that understanding, there is no strong reason to special
-> case "ah, we found stage #0 entry" at all.
+> I personally don't.  I was pointing out the discrepancy between what
+> the introduction says, i.e. "this way is way more flexible for the
+> callers when they want to do their own error handling", and what the
+> code actually does.  If the explanation said "This series does not
+> give the full flexibility potential callers may desire yet, but at
+> least gives enough flexibility to do 'I do not want the called
+> function to die, but append my own error message before I die
+> myself'.", that is certainly an understandable stance to take, I
+> would say.
 
-There is one, and I mentioned it. In the common case (i.e. we found an
-entry right away because it is in stage 0), the loop unnecessarily
-compares the name *again*: index_name_pos() already performed that
-comparison and if it returned a non-negative value, we know that that
-comparison was successful.
-
-I find the combination of clarification, code reduction, and separation
-between conflated cases (stage 0 does not need that loop at all)
-compelling enough to state that my patch is an improvement overall. We can
-discuss about wording and what details to mention in the comments, of
-course.
+Ah, but the message did not say "error message handling", but "error
+handling". With my limited command of the English language, I tried to
+convey that this patch allows the callers to do something when the called
+operation reported an error. Previously they did not get the chance.
 
 Ciao,
 Dscho
