@@ -2,129 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4540A20179
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5697220FCF
 	for <e@80x24.org>; Sun,  3 Jul 2016 07:58:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069AbcGCH6j (ORCPT <rfc822;e@80x24.org>);
-	Sun, 3 Jul 2016 03:58:39 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:55397 "EHLO
+	id S1751608AbcGCH6b (ORCPT <rfc822;e@80x24.org>);
+	Sun, 3 Jul 2016 03:58:31 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:55374 "EHLO
 	homiemail-a21.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751869AbcGCH6d convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Jul 2016 03:58:33 -0400
+	by vger.kernel.org with ESMTP id S1750849AbcGCH63 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Jul 2016 03:58:29 -0400
 Received: from homiemail-a21.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTP id E357C300080;
-	Sun,  3 Jul 2016 00:58:32 -0700 (PDT)
+	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTP id 496A9300074;
+	Sun,  3 Jul 2016 00:58:29 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-type:content-transfer-encoding; s=novalis.org; bh=utu1x
-	3mqc36npNXPBaMBq6J1hN4=; b=DHIE5SXAe4ouEaCguuwT2BoywO/vqCRIS0Y3z
-	pI2yq3c076wePTX4RUvTutFDwyQ70pYjnvlk+XgSvmHk77VSKB9nqOSmFk3IbfaQ
-	oem6ws1FbWVbkaafQHyjOqmb2qDOC+uGZCQSvy4hisj4ZkD9altffbRXGABwTgB7
-	Jw+gYg=
+	:subject:date:message-id:in-reply-to:references; s=novalis.org;
+	 bh=mZEFoge9BJ2/pSK2u0oyrhQ+Q6A=; b=LKoxMMvVO2YwkzprABf9Oh2UXGLv
+	x484+o8hV0MiWTR0yVqaoF9NUuvh8mZX5poIktH6lVkVbz88T8jotOwgyOdwr7N9
+	I0dZ/DLLyp6bf3554V/0kXVQWyNiziy08ClckwwVDNtEj+aNCFmCJJmm7/pXYCR6
+	HQCorwI3VAUn7s8=
 Received: from frank.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
 	(Authenticated sender: novalis@novalis.org)
-	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTPSA id 4203F300061;
-	Sun,  3 Jul 2016 00:58:32 -0700 (PDT)
+	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTPSA id 8F997300061;
+	Sun,  3 Jul 2016 00:58:28 -0700 (PDT)
 From:	David Turner <novalis@novalis.org>
 To:	git@vger.kernel.org, pclouds@gmail.com, kmaggg@gmail.com
 Cc:	David Turner <dturner@twopensource.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v14 06/21] daemonize(): set a flag before exiting the main process
-Date:	Sun,  3 Jul 2016 03:57:58 -0400
-Message-Id: <1467532693-20017-7-git-send-email-novalis@novalis.org>
+Subject: [PATCH v14 02/21] pkt-line: add gentle version of packet_write
+Date:	Sun,  3 Jul 2016 03:57:54 -0400
+Message-Id: <1467532693-20017-3-git-send-email-novalis@novalis.org>
 X-Mailer: git-send-email 2.8.0.rc4.11.g9232872.dirty
 In-Reply-To: <1467532693-20017-1-git-send-email-novalis@novalis.org>
 References: <1467532693-20017-1-git-send-email-novalis@novalis.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+From: David Turner <dturner@twopensource.com>
 
-This allows signal handlers and atexit functions to realize this
-situation and not clean up.
+packet_write calls write_or_die, which dies with a sigpipe even if
+calling code has explicitly blocked that signal.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Add packet_write_gently and packet_flush_gently, which don't.  Soon,
+we will use this for communication with git index-helper, which, being
+merely an optimization, should be permitted to die without disrupting
+clients.
+
 Signed-off-by: David Turner <dturner@twopensource.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/gc.c | 2 +-
- cache.h      | 2 +-
- daemon.c     | 2 +-
- setup.c      | 4 +++-
- 4 files changed, 6 insertions(+), 4 deletions(-)
+ pkt-line.c | 18 ++++++++++++++++++
+ pkt-line.h |  2 ++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index c583aad..37180de 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -385,7 +385,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 			 * failure to daemonize is ok, we'll continue
- 			 * in foreground
- 			 */
--			daemonized = !daemonize();
-+			daemonized = !daemonize(NULL);
- 		}
- 	} else
- 		add_repack_all_option();
-diff --git a/cache.h b/cache.h
-index 6cb0d02..4c1529a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -539,7 +539,7 @@ extern int set_git_dir_init(const char *git_dir, const char *real_git_dir, int);
- extern int init_db(const char *template_dir, unsigned int flags);
- 
- extern void sanitize_stdfds(void);
--extern int daemonize(void);
-+extern int daemonize(int *);
- 
- #define alloc_nr(x) (((x)+16)*3/2)
- 
-diff --git a/daemon.c b/daemon.c
-index 8d45c33..a5cf954 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -1365,7 +1365,7 @@ int main(int argc, char **argv)
- 		return execute();
- 
- 	if (detach) {
--		if (daemonize())
-+		if (daemonize(NULL))
- 			die("--detach not supported on this platform");
- 	} else
- 		sanitize_stdfds();
-diff --git a/setup.c b/setup.c
-index de1a2a7..9adf13f 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1017,7 +1017,7 @@ void sanitize_stdfds(void)
- 		close(fd);
+diff --git a/pkt-line.c b/pkt-line.c
+index 62fdb37..f964446 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -91,6 +91,12 @@ void packet_flush(int fd)
+ 	write_or_die(fd, "0000", 4);
  }
  
--int daemonize(void)
-+int daemonize(int *daemonized)
++int packet_flush_gently(int fd)
++{
++	packet_trace("0000", 4, 1);
++	return write_in_full(fd, "0000", 4) != 4;
++}
++
+ void packet_buf_flush(struct strbuf *buf)
  {
- #ifdef NO_POSIX_GOODIES
- 	errno = ENOSYS;
-@@ -1029,6 +1029,8 @@ int daemonize(void)
- 		case -1:
- 			die_errno("fork failed");
- 		default:
-+			if (daemonized)
-+				*daemonized = 1;
- 			exit(0);
- 	}
- 	if (setsid() == -1)
+ 	packet_trace("0000", 4, 1);
+@@ -130,6 +136,18 @@ void packet_write(int fd, const char *fmt, ...)
+ 	write_or_die(fd, buf.buf, buf.len);
+ }
+ 
++int packet_write_gently(int fd, const char *fmt, ...)
++{
++	static struct strbuf buf = STRBUF_INIT;
++	va_list args;
++
++	strbuf_reset(&buf);
++	va_start(args, fmt);
++	format_packet(&buf, fmt, args);
++	va_end(args);
++	return write_in_full(fd, buf.buf, buf.len) != buf.len;
++}
++
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ {
+ 	va_list args;
+diff --git a/pkt-line.h b/pkt-line.h
+index 3cb9d91..deffcb5 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -20,7 +20,9 @@
+  * side can't, we stay with pure read/write interfaces.
+  */
+ void packet_flush(int fd);
++int packet_flush_gently(int fd);
+ void packet_write(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++int packet_write_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ 
 -- 
 1.9.1
 
