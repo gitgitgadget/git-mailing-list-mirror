@@ -2,82 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8915320179
-	for <e@80x24.org>; Sun,  3 Jul 2016 08:22:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD22020179
+	for <e@80x24.org>; Sun,  3 Jul 2016 11:51:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752033AbcGCIVI (ORCPT <rfc822;e@80x24.org>);
-	Sun, 3 Jul 2016 04:21:08 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:38808 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750944AbcGCIVG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jul 2016 04:21:06 -0400
-Received: by mail-wm0-f51.google.com with SMTP id r201so78612179wme.1
-        for <git@vger.kernel.org>; Sun, 03 Jul 2016 01:21:05 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6pYLhK65qqfobhqNkKdYx4t83syS2tvlLIXbt20z4D8=;
-        b=K+5U+odTqFfgvcEqv2p3J3BXgCdm8og9Usmqv6FvvpB6giud+y9mdcEcfIcw3gHTze
-         OxBlGOcOyf846rbMOFXvcMlSFHNLK4XmyPrHmB+50PbkWrWPOOZO4DWhHJq2f4BAeOnu
-         LphocoUudqHDOFU7S/eaJqGiqw15Mbn6KZy6t1fb8iHTC0mTbB/PBnF1dqX8MADgJUxk
-         ROkBg40VOs7feZe4oDUAJ47CFs6QeYnJNLDzJdU9VDYm39R6OLDIJuNWROCyfH5EQMRd
-         3y1CESXBH8UgqxdkrTylxeU/E6YklvqHjVzLndfQpEx85G7daB1vCGzdKqKu0a8ALeI/
-         rmRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6pYLhK65qqfobhqNkKdYx4t83syS2tvlLIXbt20z4D8=;
-        b=hIxE7zJRayQIrqnZ5u+t+vdTHbbu6os1Ks+ybjK0xSHcF8wLUBoVZARgXOPCkDllsa
-         yz4l6wDzSPFUsmw5tLjmeOCgT9kOAHODqqF0YqNJRlA5zbob/ECl2xCUuDwJ9xWJzqs4
-         txpSzow9ki/govUeMgQREQOopkdkOw+9A45PETXCx1S+Y7s22qpQt2mcOpvCqHgyMOyX
-         l9N2iogbvjMl/whIns+okcTvVcZBbeE3UfC2xQl1yXUCAQuViJcj/Kd4SYf9n1D059r0
-         taAUtlt2RgBnx9LLqTzkhuGYyB7GOYJURROTO/UkMLXgN0v/XmrFUNKGAFvZBcs3q5Jv
-         CCUA==
-X-Gm-Message-State: ALyK8tIu0nkQ2toG0Wd8lPKC3asoGNMhdpG2QGkMmkn3KPJeWnNF7+TER8Y7hgOrPCbC+7PfnvhHwvASdmu18w==
-X-Received: by 10.28.104.214 with SMTP id d205mr5922544wmc.102.1467534064627;
- Sun, 03 Jul 2016 01:21:04 -0700 (PDT)
+	id S1752120AbcGCLvn (ORCPT <rfc822;e@80x24.org>);
+	Sun, 3 Jul 2016 07:51:43 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59908 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752063AbcGCLvn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jul 2016 07:51:43 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MLunc-1bE95x0SZo-007ndi; Sun, 03 Jul 2016 13:51:37
+ +0200
+Date:	Sun, 3 Jul 2016 13:51:35 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	David Turner <novalis@novalis.org>
+cc:	git@vger.kernel.org, pclouds@gmail.com, kmaggg@gmail.com
+Subject: Re: [PATCH v14 00/21] index-helper/watchman
+In-Reply-To: <1467532693-20017-1-git-send-email-novalis@novalis.org>
+Message-ID: <alpine.DEB.2.20.1607031350440.8378@virtualbox>
+References: <1467532693-20017-1-git-send-email-novalis@novalis.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.194.82.170 with HTTP; Sun, 3 Jul 2016 01:21:03 -0700 (PDT)
-In-Reply-To: <5772FF0E.6030503@micron.com>
-References: <57728A17.3010207@micron.com> <vpq60stuyv5.fsf@anie.imag.fr> <5772FF0E.6030503@micron.com>
-From:	David <bouncingcats@gmail.com>
-Date:	Sun, 3 Jul 2016 18:21:03 +1000
-Message-ID: <CAMPXz=oMhTr0r8CCS-4B0KzfTCps-bHx9CKyrGCAy2nAbUc5HA@mail.gmail.com>
-Subject: Re: What's happening to the index
-To:	"Andy Falanga (afalanga)" <afalanga@micron.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:WsUx5wmUUF/F/kFFTopIICdlKOBHGwr9lZ5ykEJGERtOuEIM4BZ
+ tR+UKuV2Ry2YnfecuaPdXVMmCjHSXxI+yFr0hJ73jFCVDPfx0gGr/BhBMBm0HjczYgS7eSY
+ wa03r0O72ZhL7DYPhwV+Q6iAhxuBkYkQeAQOvIUcIONS8+sBN44K3x7cAFTi9fil6wCeL1d
+ sBxKwvIypL14BSXnsyUPQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:9r1p1yMokcc=:fsYCqglU6BUnlhake+Xp9k
+ LSVFYajh0S8n4sEScXC9YqLE8UbybIfpfYEkveezHwMUsATA28DV9m4mHVDiMK1t5zGyyvLZn
+ P8X8OeLc50eyufMWbHWS9PQiPc8AkPsG2SY2CsOATQZZkqEfmtye0nDo/YQExwujJfIBCtQIj
+ wJYJ7DMPGdieEN/o8cWjQQuGKKsprsiHmPFHouwQOUyPX+X4A0tba/qGBBQCCKSK3AKxAawwB
+ gE9ZrgjwyBdZK/bBhbLfmi03ifIjURszbOlyvKvHvaqA5VDcBzUsC1iK7U5biI9RaA55E1axY
+ 0LNtcM/wDUQ2UVSpsR8n8/KUN/7+3E9n63w3Gh3o/HvdGpHHTcP1Mle2I3TgqZoL6R4aveRdK
+ R8w6qam+gY8fqkGYIfD7glQ3Xows4X5CGVfXVPNtnyC4xddCk3wyDc6PpCia4JWvuoY7iyY0k
+ QdTZUzxsfhILYXr7mnNGPssUowR2l3bQp9RhzW10phQ0o8JocGKB97+kM7c3Aw6Q1bVHdmJ0S
+ TdTJdaWCmuxl0qmvle8MytmVvG/oouyWvJHRiCFR/hr47/mLbFsbH4jEQ4ZHmRfncnhIktn3K
+ X2nMx3D7dA3z1hKQ7X07ftGU5bDn7o4raA1DZD3/dV9ItEOXqyqSfICvlQbw9SBFll5QTuQi1
+ 16fxN84aFxEcuYlYPXrn4PLivf9dX4XSzIcLnMNWZa8mx5Y0MrHiF7umXLJYuSpn/QwdvIBmU
+ oBo2nVon8Gz2nF+sp0IOyuoOW0AAZQoplTwmwRCYY5adDGP78hC5oMcsjOyFEQQo+ri7nrosQ
+ ggbOgmR
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 29 June 2016 at 08:49, Andy Falanga (afalanga) <afalanga@micron.com> wrote:
+Hi Dave,
 
->  Is there some sort of strange file caching that happening when
-> make starts that, although the local db is updated, I don't get what I'm
-> after?
+On Sun, 3 Jul 2016, David Turner wrote:
 
-I don't have time to look at your git issue, but I write this quick
-note just in case it might help you to be aware that 'gnu make'
-apparently does implement internal directory caching.
+> This addresses comments on v13:
+> removed unnecessary no_mmap ifdef
+> add an ifdef in unix-socket
+> OS X fix for select()
+> test improvement
 
-This is known to cause unexpected results in makefiles whose recipes
-change the filesystem in ways that make does not notice.
+Thanks.
 
-See for example:
-http://lists.gnu.org/archive/html/help-make/2015-02/msg00012.html
+Would you mind re-sending 20 & 21, they seem to have gotten lost. Or is
+there a public repository where I can simply fetch the branch? (I am not
+really a fan of applying patches from my mailbox...)
 
-and related bug reports, for example:
-https://savannah.gnu.org/bugs/index.php?41273
-
-You might want to create a simple runnable example and ask on the
-extremely helpful gnu-make mailing list:
-https://lists.gnu.org/mailman/listinfo/help-make
+Thanks,
+Dscho
