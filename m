@@ -2,80 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-6.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE5DF20179
-	for <e@80x24.org>; Sun,  3 Jul 2016 06:56:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B999620179
+	for <e@80x24.org>; Sun,  3 Jul 2016 07:58:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751889AbcGCGzA (ORCPT <rfc822;e@80x24.org>);
-	Sun, 3 Jul 2016 02:55:00 -0400
-Received: from ns1.signalpunk.com ([74.86.59.106]:48316 "EHLO
-	ns1.signalpunk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750801AbcGCGzA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jul 2016 02:55:00 -0400
-X-Greylist: delayed 316 seconds by postgrey-1.27 at vger.kernel.org; Sun, 03 Jul 2016 02:55:00 EDT
-Received: from [192.168.1.3] (ns1.signalpunk.com [74.86.59.106])
-	(Authenticated sender: clayne)
-	by ns1.signalpunk.com (Postfix) with ESMTPSA id 5FFCD58210520;
-	Sun,  3 Jul 2016 06:49:40 +0000 (GMT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH] git-svn: clone: Fail on missing url argument
-From:	Christopher Layne <clayne@anodized.com>
-In-Reply-To: <20160703061553.GA20458@dcvr.yhbt.net>
-Date:	Sat, 2 Jul 2016 23:49:38 -0700
-Cc:	git@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <6A207591-312F-4C62-8C69-2742E44146F4@anodized.com>
-References: <20160703053923.GA12956@ns1.signalpunk.com> <20160703061553.GA20458@dcvr.yhbt.net>
-To:	Eric Wong <e@80x24.org>
-X-Mailer: Apple Mail (2.3124)
+	id S1751739AbcGCH6c (ORCPT <rfc822;e@80x24.org>);
+	Sun, 3 Jul 2016 03:58:32 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:55380 "EHLO
+	homiemail-a21.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751339AbcGCH6a convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Jul 2016 03:58:30 -0400
+Received: from homiemail-a21.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTP id F08A1300080;
+	Sun,  3 Jul 2016 00:58:29 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=from:to
+	:subject:date:message-id:in-reply-to:references:mime-version
+	:content-type:content-transfer-encoding; s=novalis.org; bh=BaY4C
+	ycrSQ7oafYjd795w+Q3VOA=; b=Oy+78WCgHmamKwOQ/aqp+lQzOCngsp845tD5Y
+	Bjxc0M3yOEyisEv6mLlMg2kHz69aOPV6ibl+xG5XbRfBm2AYwUCUopOtetKPJTZ5
+	pQ+pICbNENFn6cu06cp3lpP3eyOxGkZcm7O8z2OaSHsa+MB1YZrhTbDw57sA0EbX
+	eu+OAE=
+Received: from frank.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: novalis@novalis.org)
+	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTPSA id 7729F300061;
+	Sun,  3 Jul 2016 00:58:29 -0700 (PDT)
+From:	David Turner <novalis@novalis.org>
+To:	git@vger.kernel.org, pclouds@gmail.com, kmaggg@gmail.com
+Subject: [PATCH v14 03/21] unix-socket.c: add stub implementation when unix sockets are not supported
+Date:	Sun,  3 Jul 2016 03:57:55 -0400
+Message-Id: <1467532693-20017-4-git-send-email-novalis@novalis.org>
+X-Mailer: git-send-email 2.8.0.rc4.11.g9232872.dirty
+In-Reply-To: <1467532693-20017-1-git-send-email-novalis@novalis.org>
+References: <1467532693-20017-1-git-send-email-novalis@novalis.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 
-> On Jul 2, 2016, at 2315 PT, Eric Wong <e@80x24.org> wrote:
->> sub cmd_clone {
->> 	my ($url, $path) = @_;
->> -	if (!defined $path &&
->> +	if (!$url) {
->> +		die "SVN repository location required ",
->> +		    "as a command-line argument\n";
-> 
-> "as a command-line argument" seems like an unnecessary phrase,
-> but I see we use it elsewhere; so it's fine here.
-> 
-> I might be tempted to queue up a separate patch
-> to eliminate this extra statement from the rest of git-svn,
-> though.  Not sure if others feel the same way.
+This keeps #ifdef at the callee instead of caller, it's less messier.
 
-I basically went with the same logic/error message that cmd_init()
-was using a couple of lines down in an attempt to stay consistent:
+The caller in question is in read-cache.c which, unlike other
+unix-socket callers so far, is always built regardless of unix socket
+support. No extra handling (for ENOSYS) is needed because in this
+build, index-helper does not exist, $GIT_DIR/index-helper.sock does
+not exist, so no unix socket call is made by read-cache.c in the first
+place.
 
- 527 sub cmd_init {
- 528         if (defined $_stdlayout) {
- 529                 $_trunk = 'trunk' if (!defined $_trunk);
- 530                 @_tags = 'tags' if (! @_tags);
- 531                 @_branches = 'branches' if (! @_branches);
- 532         }
- 533         if (defined $_trunk || @_branches || @_tags) {
- 534                 return cmd_multi_init(@_);
- 535         }
- 536         my $url = shift or die "SVN repository location required ",
- 537                                "as a command-line argument\n";
- 538         $url = canonicalize_url($url);
- 539         init_subdir(@_);
- 540         do_git_init_db();
- 541 
- 542         if ($Git::SVN::_minimize_url eq 'unset') {
- 543                 $Git::SVN::_minimize_url = 0;
- 544         }
- 545 
- 546         Git::SVN->init($url);
- 547 }
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Makefile      |  2 ++
+ unix-socket.h | 18 ++++++++++++++++++
+ 2 files changed, 20 insertions(+)
 
--cl
+diff --git a/Makefile b/Makefile
+index 2742a69..7920609 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1341,6 +1341,8 @@ ifndef NO_UNIX_SOCKETS
+ 	LIB_OBJS += unix-socket.o
+ 	PROGRAM_OBJS += credential-cache.o
+ 	PROGRAM_OBJS += credential-cache--daemon.o
++else
++	BASIC_CFLAGS += -DNO_UNIX_SOCKETS
+ endif
+ 
+ ifdef NO_ICONV
+diff --git a/unix-socket.h b/unix-socket.h
+index e271aee..f1cba70 100644
+--- a/unix-socket.h
++++ b/unix-socket.h
+@@ -1,7 +1,25 @@
+ #ifndef UNIX_SOCKET_H
+ #define UNIX_SOCKET_H
+ 
++#ifndef NO_UNIX_SOCKETS
++
+ int unix_stream_connect(const char *path);
+ int unix_stream_listen(const char *path);
+ 
++#else
++
++static inline int unix_stream_connect(const char *path)
++{
++	errno = ENOSYS;
++	return -1;
++}
++
++static inline int unix_stream_listen(const char *path)
++{
++	errno = ENOSYS;
++	return -1;
++}
++
++#endif
++
+ #endif /* UNIX_SOCKET_H */
+-- 
+1.9.1
+
