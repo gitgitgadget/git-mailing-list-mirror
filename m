@@ -6,37 +6,37 @@ X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E920C20179
-	for <e@80x24.org>; Sun,  3 Jul 2016 08:00:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3079F20179
+	for <e@80x24.org>; Sun,  3 Jul 2016 08:00:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752425AbcGCIAg (ORCPT <rfc822;e@80x24.org>);
-	Sun, 3 Jul 2016 04:00:36 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:55589 "EHLO
+	id S1752400AbcGCIAd (ORCPT <rfc822;e@80x24.org>);
+	Sun, 3 Jul 2016 04:00:33 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:55590 "EHLO
 	homiemail-a21.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752206AbcGCIAL (ORCPT
+	by vger.kernel.org with ESMTP id S1751890AbcGCIAL (ORCPT
 	<rfc822;git@vger.kernel.org>); Sun, 3 Jul 2016 04:00:11 -0400
 Received: from homiemail-a21.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTP id 299EF300097;
-	Sun,  3 Jul 2016 00:58:39 -0700 (PDT)
+	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTP id CD0CC300099;
+	Sun,  3 Jul 2016 00:58:40 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; s=novalis.org;
-	 bh=yjZCAT6eLKEARFBozw/DwXYcAwQ=; b=szsevwpfz50cmAFdQ5CpFc6Gr5p+
-	jezpESV5f0HR/5Dc6CqJ6eNdEzYPay/vm22w0Y6k6ZyPaXIBqoYhwpKIHntkZaiH
-	U56ezbn49j2DgjE/3WPrRBoE6H5O3rSpXl0Mom+A0pkQ4QWABIRDCjZRMbmfMZ/2
-	NoVawiwh6RW+G5c=
+	 bh=HgUmEk0dz8YWKwghIdFAa5wkq14=; b=N3g3hgY/XB8U7BZYfonG7X0j4T9f
+	D/1NZoA1xivMHGb0bsqdDYGKK1ouwV3Uwt/xg/ItYOad1pDK6848y0CHB3MJKAEQ
+	CtK3WFI37lj9z+beDJOC1zeBFa4j83E2iXZbfZOFHogSAdNk0e9MYYXdiPqnrRnb
+	TuegHx4NuhR+QAY=
 Received: from frank.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
 	(Authenticated sender: novalis@novalis.org)
-	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTPSA id 75BB230007B;
-	Sun,  3 Jul 2016 00:58:38 -0700 (PDT)
+	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTPSA id 2E0DA30007B;
+	Sun,  3 Jul 2016 00:58:40 -0700 (PDT)
 From:	David Turner <novalis@novalis.org>
 To:	git@vger.kernel.org, pclouds@gmail.com, kmaggg@gmail.com
 Cc:	David Turner <dturner@twopensource.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v14 13/21] unpack-trees: preserve index extensions
-Date:	Sun,  3 Jul 2016 03:58:05 -0400
-Message-Id: <1467532693-20017-14-git-send-email-novalis@novalis.org>
+Subject: [PATCH v14 15/21] index-helper: kill mode
+Date:	Sun,  3 Jul 2016 03:58:07 -0400
+Message-Id: <1467532693-20017-16-git-send-email-novalis@novalis.org>
 X-Mailer: git-send-email 2.8.0.rc4.11.g9232872.dirty
 In-Reply-To: <1467532693-20017-1-git-send-email-novalis@novalis.org>
 References: <1467532693-20017-1-git-send-email-novalis@novalis.org>
@@ -47,115 +47,117 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: David Turner <dturner@twopensource.com>
 
-Make git checkout (and other unpack_tree operations) preserve the
-untracked cache and watchman status. This is valuable for two reasons:
+Add a new command (and command-line arg) to allow index-helpers to
+exit cleanly.
 
-1. Often, an unpack_tree operation will not touch large parts of the
-working tree, and thus most of the untracked cache will continue to be
-valid.
-
-2. Even if the untracked cache were entirely invalidated by such an
-operation, the user has signaled their intention to have such a cache,
-and we don't want to throw it away.
-
-The same logic applies to the watchman state.
+This is mainly useful for tests.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- cache.h                           |  1 +
- read-cache.c                      |  8 ++++++++
- t/t7063-status-untracked-cache.sh | 22 ++++++++++++++++++++++
- t/test-lib-functions.sh           |  4 ++++
- unpack-trees.c                    |  1 +
- 5 files changed, 36 insertions(+)
+ Documentation/git-index-helper.txt |  3 +++
+ index-helper.c                     | 31 ++++++++++++++++++++++++++++++-
+ t/t7900-index-helper.sh            |  9 +++++++++
+ 3 files changed, 42 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index 633e1dd..1b372ed 100644
---- a/cache.h
-+++ b/cache.h
-@@ -580,6 +580,7 @@ extern void write_watchman_ext(struct strbuf *sb, struct index_state *istate);
- #define CLOSE_LOCK		(1 << 1)
- extern int write_locked_index(struct index_state *, struct lock_file *lock, unsigned flags);
- extern int discard_index(struct index_state *);
-+extern void move_index_extensions(struct index_state *dst, struct index_state *src);
- extern int unmerged_index(const struct index_state *);
- extern int verify_path(const char *path);
- extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
-diff --git a/read-cache.c b/read-cache.c
-index 8521e85..bc3c989 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2777,3 +2777,11 @@ void stat_validity_update(struct stat_validity *sv, int fd)
- 		fill_stat_data(sv->sd, &st);
- 	}
- }
+diff --git a/Documentation/git-index-helper.txt b/Documentation/git-index-helper.txt
+index b2ca511..6f63a9e 100644
+--- a/Documentation/git-index-helper.txt
++++ b/Documentation/git-index-helper.txt
+@@ -40,6 +40,9 @@ OPTIONS
+ --detach::
+ 	Detach from the shell.
+ 
++--kill::
++	Kill any running index-helper and clean up the socket
 +
-+void move_index_extensions(struct index_state *dst, struct index_state *src)
+ NOTES
+ -----
+ 
+diff --git a/index-helper.c b/index-helper.c
+index 1edec92..943197e 100644
+--- a/index-helper.c
++++ b/index-helper.c
+@@ -336,6 +336,8 @@ static void loop(int fd, int idle_in_seconds)
+ 					 * alive, nothing to do.
+ 					 */
+ 				}
++			} else if (!strcmp(buf, "die")) {
++				break;
+ 			} else {
+ 				warning("BUG: Bogus command %s", buf);
+ 			}
+@@ -357,10 +359,29 @@ static const char * const usage_text[] = {
+ 	NULL
+ };
+ 
++static void request_kill(void)
 +{
-+	dst->untracked = src->untracked;
-+	src->untracked = NULL;
-+	dst->last_update = src->last_update;
-+	src->last_update = NULL;
++	int fd = unix_stream_connect(git_path("index-helper.sock"));
++
++	if (fd >= 0) {
++		write_in_full(fd, "die", 4);
++		close(fd);
++	}
++
++	/*
++	 * The child will try to do this anyway, but we want to be
++	 * ready to launch a new daemon immediately after this command
++	 * returns.
++	 */
++
++	unlink(git_path("index-helper.sock"));
++	return;
 +}
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index a971884..083516d 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -646,4 +646,26 @@ test_expect_success 'test ident field is working' '
- 	test_cmp ../expect ../err
++
+ int main(int argc, char **argv)
+ {
+ 	const char *prefix;
+-	int idle_in_seconds = 600, detach = 0;
++	int idle_in_seconds = 600, detach = 0, kill = 0;
+ 	int fd;
+ 	struct strbuf socket_path = STRBUF_INIT;
+ 	struct option options[] = {
+@@ -369,6 +390,7 @@ int main(int argc, char **argv)
+ 		OPT_BOOL(0, "strict", &to_verify,
+ 			 N_("verify shared memory after creating")),
+ 		OPT_BOOL(0, "detach", &detach, N_("detach the process")),
++		OPT_BOOL(0, "kill", &kill, N_("request that existing index helper processes exit")),
+ 		OPT_END()
+ 	};
+ 
+@@ -383,6 +405,13 @@ int main(int argc, char **argv)
+ 			  options, usage_text, 0))
+ 		die(_("too many arguments"));
+ 
++	if (kill) {
++		if (detach)
++			die(_("--kill doesn't want any other options"));
++		request_kill();
++		return 0;
++	}
++
+ 	atexit(cleanup);
+ 	sigchain_push_common(cleanup_on_signal);
+ 
+diff --git a/t/t7900-index-helper.sh b/t/t7900-index-helper.sh
+index 3bf19e0..a331125 100755
+--- a/t/t7900-index-helper.sh
++++ b/t/t7900-index-helper.sh
+@@ -22,4 +22,13 @@ test_expect_success 'index-helper smoke test' '
+ 	test_path_is_missing .git/index-helper.sock
  '
  
-+test_expect_success 'untracked cache survives a checkout' '
-+	git commit --allow-empty -m empty &&
-+	test-dump-untracked-cache >../before &&
-+	test_when_finished  "git checkout master" &&
-+	git checkout -b other_branch &&
-+	test-dump-untracked-cache >../after &&
-+	test_cmp ../before ../after &&
-+	test_commit test &&
-+	test-dump-untracked-cache >../before &&
-+	git checkout master &&
-+	test-dump-untracked-cache >../after &&
-+	test_cmp ../before ../after
-+'
-+
-+test_expect_success 'untracked cache survives a commit' '
-+	test-dump-untracked-cache >../before &&
-+	git add done/two &&
-+	git commit -m commit &&
-+	test-dump-untracked-cache >../after &&
-+	test_cmp ../before ../after
++test_expect_success 'index-helper creates usable path file and can be killed' '
++	test_when_finished "git index-helper --kill" &&
++	test_path_is_missing .git/index-helper.sock &&
++	git index-helper --detach &&
++	test -S .git/index-helper.sock &&
++	git index-helper --kill &&
++	test_path_is_missing .git/index-helper.sock
 +'
 +
  test_done
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 8d99eb3..e974b5b 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -186,6 +186,10 @@ test_commit () {
- 		test_tick
- 	fi &&
- 	git commit $signoff -m "$1" &&
-+	if [ "$(git config core.bare)" = false ]
-+	then
-+	    git update-index --force-untracked-cache
-+	fi
- 	git tag "${4:-$1}"
- }
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 9f55cc2..fc90eb3 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1215,6 +1215,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 						  WRITE_TREE_SILENT |
- 						  WRITE_TREE_REPAIR);
- 		}
-+		move_index_extensions(&o->result, o->dst_index);
- 		discard_index(o->dst_index);
- 		*o->dst_index = o->result;
- 	} else {
 -- 
 1.9.1
 
