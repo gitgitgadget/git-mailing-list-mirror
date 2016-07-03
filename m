@@ -3,141 +3,195 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52E3F20179
+	by dcvr.yhbt.net (Postfix) with ESMTP id 427D120FCF
 	for <e@80x24.org>; Sun,  3 Jul 2016 08:00:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752432AbcGCIAf (ORCPT <rfc822;e@80x24.org>);
-	Sun, 3 Jul 2016 04:00:35 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:55588 "EHLO
+	id S1752420AbcGCIAe (ORCPT <rfc822;e@80x24.org>);
+	Sun, 3 Jul 2016 04:00:34 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:55591 "EHLO
 	homiemail-a21.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752202AbcGCIAL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Jul 2016 04:00:11 -0400
+	by vger.kernel.org with ESMTP id S1751867AbcGCIAL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Jul 2016 04:00:11 -0400
 Received: from homiemail-a21.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTP id 482D8300074;
-	Sun,  3 Jul 2016 00:58:38 -0700 (PDT)
+	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTP id 00CB3300098;
+	Sun,  3 Jul 2016 00:58:40 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-type:content-transfer-encoding; s=novalis.org; bh=d6wJu
-	A9v0qqTCPJjwgLxRELn9VQ=; b=SwDhix+7UGiKkzSwQrvDGV1aURmQm/Z7RaW7f
-	zuZtvuJJ9b9leeKR6U8/ppkFjE3ksqxCH/PvAKbPZy0YACWqtQZwdIlZd2pD3hwv
-	uYZuB13eePSpfLc8qZ9Mq6AqjpEdgZbwbRUvDg2AHlm3+ZZKKpo5ICGmm+Qhvk8X
-	OXtyMY=
+	:subject:date:message-id:in-reply-to:references; s=novalis.org;
+	 bh=CSpAcvOV8Tg2Cvd58XC1wwhLRaY=; b=OkcHAHE3+16Wk6+4nMX6N7nTajHL
+	i+26Rqv4ChLdsKKMpgJESLw4wST0i+z1/GtLTV5zMHaZ1eMR9uS5dC1H4VJ14V9V
+	U0aywlwgGWI1zWuARCQNEtbqJpgTtEsGaciK25QsKPlxzAZt++cxD1tqDj+cRYHm
+	wTT9KYNo2jXMGKs=
 Received: from frank.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
 	(Authenticated sender: novalis@novalis.org)
-	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTPSA id 9CD4F30007B;
-	Sun,  3 Jul 2016 00:58:37 -0700 (PDT)
+	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTPSA id 5698130007B;
+	Sun,  3 Jul 2016 00:58:39 -0700 (PDT)
 From:	David Turner <novalis@novalis.org>
 To:	git@vger.kernel.org, pclouds@gmail.com, kmaggg@gmail.com
 Cc:	David Turner <dturner@twopensource.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v14 12/21] update-index: enable/disable watchman support
-Date:	Sun,  3 Jul 2016 03:58:04 -0400
-Message-Id: <1467532693-20017-13-git-send-email-novalis@novalis.org>
+Subject: [PATCH v14 14/21] watchman: add a config option to enable the extension
+Date:	Sun,  3 Jul 2016 03:58:06 -0400
+Message-Id: <1467532693-20017-15-git-send-email-novalis@novalis.org>
 X-Mailer: git-send-email 2.8.0.rc4.11.g9232872.dirty
 In-Reply-To: <1467532693-20017-1-git-send-email-novalis@novalis.org>
 References: <1467532693-20017-1-git-send-email-novalis@novalis.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+From: David Turner <dturner@twopensource.com>
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+For installations that have centrally-managed configuration, it's
+easier to set a config once than to run update-index on every
+repository.
+
 Signed-off-by: David Turner <dturner@twopensource.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-index-helper.txt |  3 +++
- Documentation/git-update-index.txt |  6 ++++++
- builtin/update-index.c             | 15 +++++++++++++++
- 3 files changed, 24 insertions(+)
+ .gitignore                    |  1 +
+ Documentation/config.txt      |  4 ++++
+ Makefile                      |  1 +
+ read-cache.c                  |  6 ++++++
+ t/t1701-watchman-extension.sh | 37 +++++++++++++++++++++++++++++++++++++
+ test-dump-watchman.c          | 16 ++++++++++++++++
+ 6 files changed, 65 insertions(+)
+ create mode 100755 t/t1701-watchman-extension.sh
+ create mode 100644 test-dump-watchman.c
 
-diff --git a/Documentation/git-index-helper.txt b/Documentation/git-index-helper.txt
-index 2982e03..b2ca511 100644
---- a/Documentation/git-index-helper.txt
-+++ b/Documentation/git-index-helper.txt
-@@ -18,6 +18,9 @@ each with a submodule, you might need four index-helpers.  (In practice,
- this is only worthwhile for large indexes, so only use it if you notice
- that git status is slow).
+diff --git a/.gitignore b/.gitignore
+index b92f122..e6a5b2c 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -188,6 +188,7 @@
+ /test-dump-cache-tree
+ /test-dump-split-index
+ /test-dump-untracked-cache
++/test-dump-watchman
+ /test-fake-ssh
+ /test-scrap-cache-tree
+ /test-genrandom
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2cd6bdd..15001ce 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1848,6 +1848,10 @@ imap::
+ 	The configuration variables in the 'imap' section are described
+ 	in linkgit:git-imap-send[1].
  
-+If you want the index-helper to accelerate untracked file checking,
-+run git update-index --watchman before using it.
++index.addwatchmanextension::
++	Automatically add the watchman extension to the index whenever
++	it is written.
 +
- OPTIONS
- -------
+ index.version::
+ 	Specify the version with which new index files should be
+ 	initialized.  This does not affect existing repositories.
+diff --git a/Makefile b/Makefile
+index cbd8daf..99cfddd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -599,6 +599,7 @@ TEST_PROGRAMS_NEED_X += test-delta
+ TEST_PROGRAMS_NEED_X += test-dump-cache-tree
+ TEST_PROGRAMS_NEED_X += test-dump-split-index
+ TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
++TEST_PROGRAMS_NEED_X += test-dump-watchman
+ TEST_PROGRAMS_NEED_X += test-fake-ssh
+ TEST_PROGRAMS_NEED_X += test-genrandom
+ TEST_PROGRAMS_NEED_X += test-hashmap
+diff --git a/read-cache.c b/read-cache.c
+index bc3c989..8141559 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2436,6 +2436,7 @@ static int do_write_index(struct index_state *istate, int newfd,
+ 	int entries = istate->cache_nr;
+ 	struct stat st;
+ 	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
++	int watchman = 0;
  
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index c6cbed1..6736487 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -19,6 +19,7 @@ SYNOPSIS
- 	     [--ignore-submodules]
- 	     [--[no-]split-index]
- 	     [--[no-|test-|force-]untracked-cache]
-+	     [--[no-]watchman]
- 	     [--really-refresh] [--unresolve] [--again | -g]
- 	     [--info-only] [--index-info]
- 	     [-z] [--stdin] [--index-version <n>]
-@@ -176,6 +177,11 @@ may not support it yet.
- --no-untracked-cache::
- 	Enable or disable untracked cache feature. Please use
- 	`--test-untracked-cache` before enabling it.
+ 	for (i = removed = extended = 0; i < entries; i++) {
+ 		if (cache[i]->ce_flags & CE_REMOVE)
+@@ -2459,6 +2460,11 @@ static int do_write_index(struct index_state *istate, int newfd,
+ 	if (istate->version == 3 || istate->version == 2)
+ 		istate->version = extended ? 3 : 2;
+ 
++	if (!git_config_get_bool("index.addwatchmanextension", &watchman) &&
++	    watchman &&
++	    !the_index.last_update)
++		the_index.last_update = xstrdup("");
 +
-+--watchman::
-+--no-watchman::
-+	Enable or disable watchman support. This is, at present,
-+	only useful with git index-helper.
- +
- These options take effect whatever the value of the `core.untrackedCache`
- configuration variable (see linkgit:git-config[1]). But a warning is
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 1c94ca5..55722b9 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -914,6 +914,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- {
- 	int newfd, entries, has_errors = 0, nul_term_line = 0;
- 	enum uc_mode untracked_cache = UC_UNSPECIFIED;
-+	int use_watchman = -1;
- 	int read_from_stdin = 0;
- 	int prefix_length = prefix ? strlen(prefix) : 0;
- 	int preferred_index_format = 0;
-@@ -1012,6 +1013,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 			    N_("test if the filesystem supports untracked cache"), UC_TEST),
- 		OPT_SET_INT(0, "force-untracked-cache", &untracked_cache,
- 			    N_("enable untracked cache without testing the filesystem"), UC_FORCE),
-+		OPT_BOOL(0, "watchman", &use_watchman,
-+			N_("use or not use watchman to reduce refresh cost")),
- 		OPT_END()
- 	};
+ 	hdr_version = istate->version;
  
-@@ -1149,6 +1152,18 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		die("Bug: bad untracked_cache value: %d", untracked_cache);
- 	}
- 
-+	if (use_watchman > 0) {
-+		the_index.last_update    = xstrdup("");
-+		the_index.cache_changed |= WATCHMAN_CHANGED;
-+#ifndef USE_WATCHMAN
-+		warning(_("git was built without watchman support, so this "
-+			  "command will probably not result in any speedup."));
-+#endif
-+	} else if (!use_watchman) {
-+		the_index.last_update    = NULL;
-+		the_index.cache_changed |= WATCHMAN_CHANGED;
-+	}
+ 	hdr.hdr_signature = htonl(CACHE_SIGNATURE);
+diff --git a/t/t1701-watchman-extension.sh b/t/t1701-watchman-extension.sh
+new file mode 100755
+index 0000000..71f1d46
+--- /dev/null
++++ b/t/t1701-watchman-extension.sh
+@@ -0,0 +1,37 @@
++#!/bin/sh
 +
- 	if (active_cache_changed) {
- 		if (newfd < 0) {
- 			if (refresh_args.flags & REFRESH_QUIET)
++test_description='watchman extension smoke tests'
++
++# These don't actually test watchman interaction -- just the
++# index extension
++
++. ./test-lib.sh
++
++test_expect_success 'enable watchman' '
++	test_commit a &&
++	test-dump-watchman .git/index >actual &&
++	echo "last_update: (null)" >expect &&
++	test_cmp expect actual &&
++	git update-index --watchman &&
++	test-dump-watchman .git/index >actual &&
++	echo "last_update: " >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'disable watchman' '
++	git update-index --no-watchman &&
++	test-dump-watchman .git/index >actual &&
++	echo "last_update: (null)" >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'auto-enable watchman' '
++	test_config index.addwatchmanextension true &&
++	test_commit c &&
++	test-dump-watchman .git/index >actual &&
++	echo "last_update: " >expect &&
++	test_cmp expect actual
++'
++
++
++test_done
+diff --git a/test-dump-watchman.c b/test-dump-watchman.c
+new file mode 100644
+index 0000000..0314fa5
+--- /dev/null
++++ b/test-dump-watchman.c
+@@ -0,0 +1,16 @@
++#include "cache.h"
++#include "ewah/ewok.h"
++
++int main(int argc, char **argv)
++{
++	do_read_index(&the_index, argv[1], 1);
++	printf("last_update: %s\n", the_index.last_update ?
++	       the_index.last_update : "(null)");
++
++	/*
++	 * For now, we just dump last_update, since it is not reasonable
++	 * to populate the extension itself in tests.
++	 */
++
++	return 0;
++}
 -- 
 1.9.1
 
