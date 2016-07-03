@@ -2,137 +2,244 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B808202F4
-	for <e@80x24.org>; Sun,  3 Jul 2016 20:28:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E9EE21006
+	for <e@80x24.org>; Sun,  3 Jul 2016 23:58:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932161AbcGCU20 (ORCPT <rfc822;e@80x24.org>);
-	Sun, 3 Jul 2016 16:28:26 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35047 "EHLO
-	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932144AbcGCU2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jul 2016 16:28:25 -0400
-Received: by mail-pf0-f195.google.com with SMTP id t190so14591025pfb.2
-        for <git@vger.kernel.org>; Sun, 03 Jul 2016 13:28:25 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3w6hv1cb62evqmT+a/yfn5c1FFqlPNLPlJTq7Z6h33k=;
-        b=mKWfTC7JXMLG6uiNOFxih44vg6y/xMPfbeDkGnQPdpkGfuoQbLrsch8hMUSwVZ4lNu
-         Zz3j/XKU5Rj1jj/2Tlntat/PHonjfYPyto1iALw7ddonrhRtufAY9ev9yH0KuHX7kVHm
-         F0htX5idVTdGboFqWSpl5RuHH0Ay+SPxGBUC6sulh+S57yNnblc0EIq5N/7Ewpqe1RSH
-         LbOpiUR75O59fT/z08nto6m2QxPeo/Ip9qD31UXo/104g8O/D1vIxtYFyz2NYfRBwtrM
-         p23UzjFaxgxsZDG5A7VVKAJPW1a9GpZMo//+PWwjz1tBRRltBSK2JS6JCAP/BTH63obU
-         2TNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=3w6hv1cb62evqmT+a/yfn5c1FFqlPNLPlJTq7Z6h33k=;
-        b=khuAP9+ScLhJCLOZJeyZe8xr+jEKgHm2E1W8zR2OtiU97GCdxtHm0Q+MS3WI0iOjAf
-         rlSIU/JqbSP+m49Q10mgEkZXik+7cxFEHmDPiIrxe2C0WaWHvnqvGVEss2NXYm7Bbv0n
-         wpXxW4V7OU730fZ+zlm0P2fMgQdsSgZSuUHFRA0yXF2kuGazH3OkPi6rMaG+SBLWRjmf
-         PCwmVnrpEzwXSQDVPswO/KX1pQzXtD+zGGcxfHBzAyHJoQGCsljGtL8CvI4m9hbC7K8z
-         sIrtQt1WalMA/14myLFE3o0ttxpnLG6NsNVS6dOteworg91qQ85JaWSljTiZAQiSTZbX
-         v87w==
-X-Gm-Message-State: ALyK8tKgVfaLY1ZeIe9C6vG7s0PVuVfZN4y4ciZlYM6A4PEPnBFzkrhSuMsypnVSPrIxsQ==
-X-Received: by 10.98.74.157 with SMTP id c29mr16431963pfj.99.1467577704413;
-        Sun, 03 Jul 2016 13:28:24 -0700 (PDT)
-Received: from localhost.localdomain ([27.106.4.228])
-        by smtp.gmail.com with ESMTPSA id x66sm4765486pfi.84.2016.07.03.13.28.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 03 Jul 2016 13:28:23 -0700 (PDT)
-From:	Pranit Bauva <pranit.bauva@gmail.com>
+	id S932309AbcGCX5y (ORCPT <rfc822;e@80x24.org>);
+	Sun, 3 Jul 2016 19:57:54 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:46676 "EHLO
+	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932198AbcGCX5x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jul 2016 19:57:53 -0400
+X-Greylist: delayed 784 seconds by postgrey-1.27 at vger.kernel.org; Sun, 03 Jul 2016 19:57:51 EDT
+Received: from glandium by zenigata with local (Exim 4.87)
+	(envelope-from <glandium@glandium.org>)
+	id 1bJr43-0002K1-Rs; Mon, 04 Jul 2016 08:44:39 +0900
+From:	Mike Hommey <mh@glandium.org>
 To:	git@vger.kernel.org
-Cc:	chriscool@tuxfamily.org, larsxschneider@gmail.com,
-	christian.couder@gmail.com, Pranit Bauva <pranit.bauva@gmail.com>
-Subject: [GSOC Update] Week 9
-Date:	Mon,  4 Jul 2016 01:57:04 +0530
-Message-Id: <20160703202704.9193-1-pranit.bauva@gmail.com>
-X-Mailer: git-send-email 2.9.0
-In-Reply-To: <20160627071901.4294-1-pranit.bauva@gmail.com>
-References: <20160627071901.4294-1-pranit.bauva@gmail.com>
+Cc:	gitster@pobox.com, spearce@spearce.org, jrnieder@gmail.com
+Subject: [PATCH/RFC] fast-import: Keep a fake pack window on the recently written data
+Date:	Mon,  4 Jul 2016 08:44:39 +0900
+Message-Id: <20160703234439.8889-1-mh@glandium.org>
+X-Mailer: git-send-email 2.9.0.dirty
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-================================= SUMMARY ==================================
-My public git.git is available here[1]. I regularly keep pushing my work so
-anyone interested can track me there. Feel free to participate in the
-discussions going on PRs with my mentors. Your comments are valuable.
+The are many ways in which fast-import ends up calling gfi_unpack_entry,
+and fery few work-arounds. I've patched fast-import for it to be smarter
+in corner cases, allowing some additional work-arounds, but it's just
+too easy to fall on gfi_unpack_entry again, so I abandonned that path.
 
+The problem with gfi_unpack_entry is that if something has been written
+to the pack after last time it was used, it closes all pack windows. On
+OSX, this triggers munmap, which shows up in performance profiles.
 
-=============================== INTRODUCTION  ==============================
-The purpose of this project is to convert the git-bisect utility which partly
-exists in the form of shell scripts to C code so as to make it more portable.
-I plan to do this by converting each function to C and then calling it from
-git-bisect.sh so as to use the existing test suite to test the function which
-is converted.
+To give an idea how bad this is, here is how long it takes to clone
+https://hg.mozilla.org/mozilla-unified/ with the master branch of
+git-cinnabar (which uses fast-import) on a mac mini: more than 5 hours.
+I can't actually give the exact number, because it was killed, after
+spending 2 hours importing 1.77M files and 3 hours importing 120k
+manifests.
 
-Mentors:
-Christian Couder <chriscool@tuxfamily.org>
-Lars Schneider <larsxschneider@gmail.com>
+The same clone, with a variant of this patch, *finished* in 2 hours and
+10 minutes, spending 24 minutes importing the same 1.77M files and only
+13 minutes to cover the same 120k manifests. It took an hour and 20
+minutes to cover the remaining 210k manifests. You can imagine how long
+it would have taken without the patch if it hadn't been killed...
 
+Now, this is proof of concept level. There are many things that are not
+right with this patch, starting from the fact it doesn't handle
+checkpoints, and isn't safe for every kind of integer overflows. Or
+malloc'ating exactly packed_git_window_size bytes (which on 64-bits
+systems, is 1GB), etc.
 
-================================== Updates =================================
-Things which were done in this week:
+But it feels to me this kind of fake pack window is a cheap way to
+counter the slowness of munmap on OSX, although the fact that it's a
+hack around the pack code in sha1_file.c is not very nice. Maybe a
+better start to fix the issue would be to add better interfaces to
+the pack code to handle pack writers that can read at the same time.
 
- * I have converted check_and_set_terms(), bisect_next_check() and
-   bisect_terms() and have also sent an RFC[7] to the
-   mailing list for discussion which hasn't yet collected any comments from
-   the list. My mentors have given their reviews on github and I will soon
-   send the final patch series this week.
+Thoughts?
 
- * I have partly converted bisect_start() and a few ending parts are left.
+Past related discussions:
+  $gmane/291717
+  $gmane/273465
+---
+ fast-import.c | 90 +++++++++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 63 insertions(+), 27 deletions(-)
 
- * I have stalled bisect_replay() for now as before I thought I would partly
-   convert it and then call bisect_start() from it but then I realized its
-   not worth the effort. So I will continue work on this after I finish
-   bisect_start().
+diff --git a/fast-import.c b/fast-import.c
+index c504ef7..4e26883 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -316,6 +316,7 @@ static struct atom_str **atom_table;
+ static struct pack_idx_option pack_idx_opts;
+ static unsigned int pack_id;
+ static struct sha1file *pack_file;
++static struct pack_window *pack_win;
+ static struct packed_git *pack_data;
+ static struct packed_git **all_packs;
+ static off_t pack_size;
+@@ -862,6 +863,39 @@ static struct tree_content *dup_tree_content(struct tree_content *s)
+ 	return d;
+ }
+ 
++static void _sha1write(struct sha1file *f, const void *buf, unsigned int count)
++{
++	sha1write(f, buf, count);
++	/* Always last used */
++	pack_win->last_used = -1;
++	pack_win->inuse_cnt = -1;
++
++	pack_data->pack_size += count;
++
++	if (packed_git_window_size - pack_win->len >= count) {
++		memcpy(pack_win->base + pack_win->len - 20, buf, count);
++		pack_win->len += count;
++	} else {
++		struct pack_window *cursor = NULL;
++		/* We're sliding the window, so we don't need to memcpy
++		 * everything. */
++		pack_win->offset += ((pack_win->len - 20 + count)
++			 / packed_git_window_size) * packed_git_window_size;
++		pack_win->len = count % packed_git_window_size -
++			(packed_git_window_size - pack_win->len);
++		memcpy(pack_win->base, buf + count - pack_win->len + 20,
++		       pack_win->len - 20);
++
++		/* Ensure a pack window on the data before that, otherwise,
++		 * use_pack() may try to create a window that overlaps with
++		 * this one, and that won't work because it won't be complete. */
++		sha1flush(f);
++		use_pack(pack_data, &cursor,
++			 pack_win->offset - packed_git_window_size, NULL);
++		unuse_pack(&cursor);
++	}
++}
++
+ static void start_packfile(void)
+ {
+ 	static char tmp_file[PATH_MAX];
+@@ -873,15 +907,22 @@ static void start_packfile(void)
+ 			      "pack/tmp_pack_XXXXXX");
+ 	FLEX_ALLOC_STR(p, pack_name, tmp_file);
+ 	p->pack_fd = pack_fd;
++	p->pack_size = 20;
+ 	p->do_not_close = 1;
+ 	pack_file = sha1fd(pack_fd, p->pack_name);
+ 
++	p->windows = pack_win = xcalloc(1, sizeof(*p->windows));
++	pack_win->offset = 0;
++	pack_win->len = 20;
++	pack_win->base = xmalloc(packed_git_window_size);
++	pack_win->next = NULL;
++
+ 	hdr.hdr_signature = htonl(PACK_SIGNATURE);
+ 	hdr.hdr_version = htonl(2);
+ 	hdr.hdr_entries = 0;
+-	sha1write(pack_file, &hdr, sizeof(hdr));
+-
+ 	pack_data = p;
++	_sha1write(pack_file, &hdr, sizeof(hdr));
++
+ 	pack_size = sizeof(hdr);
+ 	object_count = 0;
+ 
+@@ -954,10 +995,25 @@ static void unkeep_all_packs(void)
+ static void end_packfile(void)
+ {
+ 	static int running;
++	struct pack_window *win, *prev;
+ 
+ 	if (running || !pack_data)
+ 		return;
+ 
++	/* Remove the fake pack window first */
++	for (prev = NULL, win = pack_data->windows; win;
++	     prev = win, win = win->next) {
++		if (win != pack_win)
++			continue;
++		if (prev)
++			prev->next = win->next;
++		else
++			pack_data->windows = win->next;
++		break;
++	}
++	free(pack_win->base);
++	free(pack_win);
++
+ 	running = 1;
+ 	clear_delta_base_cache();
+ 	if (object_count) {
+@@ -1122,22 +1178,22 @@ static int store_object(
+ 		e->depth = last->depth + 1;
+ 
+ 		hdrlen = encode_in_pack_object_header(OBJ_OFS_DELTA, deltalen, hdr);
+-		sha1write(pack_file, hdr, hdrlen);
++		_sha1write(pack_file, hdr, hdrlen);
+ 		pack_size += hdrlen;
+ 
+ 		hdr[pos] = ofs & 127;
+ 		while (ofs >>= 7)
+ 			hdr[--pos] = 128 | (--ofs & 127);
+-		sha1write(pack_file, hdr + pos, sizeof(hdr) - pos);
++		_sha1write(pack_file, hdr + pos, sizeof(hdr) - pos);
+ 		pack_size += sizeof(hdr) - pos;
+ 	} else {
+ 		e->depth = 0;
+ 		hdrlen = encode_in_pack_object_header(type, dat->len, hdr);
+-		sha1write(pack_file, hdr, hdrlen);
++		_sha1write(pack_file, hdr, hdrlen);
+ 		pack_size += hdrlen;
+ 	}
+ 
+-	sha1write(pack_file, out, s.total_out);
++	_sha1write(pack_file, out, s.total_out);
+ 	pack_size += s.total_out;
+ 
+ 	e->idx.crc32 = crc32_end(pack_file);
+@@ -1220,7 +1276,7 @@ static void stream_blob(uintmax_t len, unsigned char *sha1out, uintmax_t mark)
+ 
+ 		if (!s.avail_out || status == Z_STREAM_END) {
+ 			size_t n = s.next_out - out_buf;
+-			sha1write(pack_file, out_buf, n);
++			_sha1write(pack_file, out_buf, n);
+ 			pack_size += n;
+ 			s.next_out = out_buf;
+ 			s.avail_out = out_sz;
+@@ -1295,26 +1351,6 @@ static void *gfi_unpack_entry(
+ {
+ 	enum object_type type;
+ 	struct packed_git *p = all_packs[oe->pack_id];
+-	if (p == pack_data && p->pack_size < (pack_size + 20)) {
+-		/* The object is stored in the packfile we are writing to
+-		 * and we have modified it since the last time we scanned
+-		 * back to read a previously written object.  If an old
+-		 * window covered [p->pack_size, p->pack_size + 20) its
+-		 * data is stale and is not valid.  Closing all windows
+-		 * and updating the packfile length ensures we can read
+-		 * the newly written data.
+-		 */
+-		close_pack_windows(p);
+-		sha1flush(pack_file);
+-
+-		/* We have to offer 20 bytes additional on the end of
+-		 * the packfile as the core unpacker code assumes the
+-		 * footer is present at the file end and must promise
+-		 * at least 20 bytes within any window it maps.  But
+-		 * we don't actually create the footer here.
+-		 */
+-		p->pack_size = pack_size + 20;
+-	}
+ 	return unpack_entry(p, oe->idx.offset, &type, sizep);
+ }
+ 
+-- 
+2.9.0.dirty
 
-================================= NEXT STEPS ================================
-Things which would be done in the coming week:
-
- * Finish off bisect_start().
-
- * Finsh off bisect_start().
-
- * Finish off bisect_autostart() (small one, wouldn't take much time but it
-   depends on bisect_start()).
-
- * Start with bisect_next().
-
-This has been a slow week as I was meeting a few friends before their college
-began and I plan to cover more in the upcoming week as even my semester is
-going to start soon and I wouldn't prefer carrying over the work to my
-college.
-
-My next semester starts on 18th July.
-
-======================= My Patches (GSoC project only) ======================
-
- * check_term_format patch[5]. This is in pu branch. The topic is pb/bisect.
-
- * bisect_write patch[6]. This is the v3 in the series. This has some minor
-   nits as provided by Lars and I will send out a re-roll soon. This is also
-   in the pu branch and is applied on top of pb/bisect.
-
- * bisect_terms patch[7]. This is an RFC and open for discussions. It would
-   be very helpful if you can review it over github[8] as my mentors have also
-   provided some comments.
-
-[1]: https://github.com/pranitbauva1997/git
-[3]: https://github.com/pranitbauva1997/git/pull/17
-[4]: http://thread.gmane.org/gmane.comp.version-control.git/297266
-[5]: http://thread.gmane.org/gmane.comp.version-control.git/295518
-[6]: http://thread.gmane.org/gmane.comp.version-control.git/298263
-[7]: http://thread.gmane.org/gmane.comp.version-control.git/298279
-[8]: 
-
-Regards,
-Pranit Bauva
