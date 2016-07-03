@@ -2,40 +2,42 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B999620179
-	for <e@80x24.org>; Sun,  3 Jul 2016 07:58:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7495420179
+	for <e@80x24.org>; Sun,  3 Jul 2016 07:58:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751739AbcGCH6c (ORCPT <rfc822;e@80x24.org>);
-	Sun, 3 Jul 2016 03:58:32 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:55380 "EHLO
+	id S1751993AbcGCH6d (ORCPT <rfc822;e@80x24.org>);
+	Sun, 3 Jul 2016 03:58:33 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:55391 "EHLO
 	homiemail-a21.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751339AbcGCH6a convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Jul 2016 03:58:30 -0400
+	by vger.kernel.org with ESMTP id S1751339AbcGCH6c convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Jul 2016 03:58:32 -0400
 Received: from homiemail-a21.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTP id F08A1300080;
-	Sun,  3 Jul 2016 00:58:29 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=from:to
+	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTP id 148B230007B;
+	Sun,  3 Jul 2016 00:58:32 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-type:content-transfer-encoding; s=novalis.org; bh=BaY4C
-	ycrSQ7oafYjd795w+Q3VOA=; b=Oy+78WCgHmamKwOQ/aqp+lQzOCngsp845tD5Y
-	Bjxc0M3yOEyisEv6mLlMg2kHz69aOPV6ibl+xG5XbRfBm2AYwUCUopOtetKPJTZ5
-	pQ+pICbNENFn6cu06cp3lpP3eyOxGkZcm7O8z2OaSHsa+MB1YZrhTbDw57sA0EbX
-	eu+OAE=
+	:content-type:content-transfer-encoding; s=novalis.org; bh=1IC1j
+	DSl+//jGBILT0OrGgdbAiQ=; b=HQy3y+lIt1E86hoxpG/j05xu+8xlYQeEvYv2o
+	C9x1/o72iK9g3dcZVNVbZt+3k8DPdJX6gsdCX3Pz64GUwrlXP2wFVfvXvJ7G5wC9
+	DY1YyLtLGF3ADsCsR1sVx3BE+K5/sqS3PnjDx0PMFcZ4ncAxpwtcSmDTEaBCCokZ
+	3VbR8E=
 Received: from frank.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
 	(Authenticated sender: novalis@novalis.org)
-	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTPSA id 7729F300061;
-	Sun,  3 Jul 2016 00:58:29 -0700 (PDT)
+	by homiemail-a21.g.dreamhost.com (Postfix) with ESMTPSA id 559F1300061;
+	Sun,  3 Jul 2016 00:58:31 -0700 (PDT)
 From:	David Turner <novalis@novalis.org>
 To:	git@vger.kernel.org, pclouds@gmail.com, kmaggg@gmail.com
-Subject: [PATCH v14 03/21] unix-socket.c: add stub implementation when unix sockets are not supported
-Date:	Sun,  3 Jul 2016 03:57:55 -0400
-Message-Id: <1467532693-20017-4-git-send-email-novalis@novalis.org>
+Cc:	David Turner <dturner@twopensource.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v14 05/21] index-helper: add --strict
+Date:	Sun,  3 Jul 2016 03:57:57 -0400
+Message-Id: <1467532693-20017-6-git-send-email-novalis@novalis.org>
 X-Mailer: git-send-email 2.8.0.rc4.11.g9232872.dirty
 In-Reply-To: <1467532693-20017-1-git-send-email-novalis@novalis.org>
 References: <1467532693-20017-1-git-send-email-novalis@novalis.org>
@@ -49,64 +51,158 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 
-This keeps #ifdef at the callee instead of caller, it's less messier.
+There are "holes" in the index-helper approach because the shared
+memory is not verified again by git. If $USER is compromised, shared
+memory could be modified. But anyone who could do this could already
+modify $GIT_DIR/index. A more realistic risk is some bugs in
+index-helper that produce corrupt shared memory. --strict is added to
+avoid that.
 
-The caller in question is in read-cache.c which, unlike other
-unix-socket callers so far, is always built regardless of unix socket
-support. No extra handling (for ENOSYS) is needed because in this
-build, index-helper does not exist, $GIT_DIR/index-helper.sock does
-not exist, so no unix socket call is made by read-cache.c in the first
-place.
+Strictly speaking there's still a very small gap where corrupt shared
+memory could still be read by git: after we write the trailing SHA-1 in
+the shared memory (thus signaling "this shm is ready") and before
+verify_shm() detects an error.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: David Turner <dturner@twopensource.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Makefile      |  2 ++
- unix-socket.h | 18 ++++++++++++++++++
- 2 files changed, 20 insertions(+)
+ Documentation/git-index-helper.txt |  9 +++++++
+ cache.h                            |  1 +
+ index-helper.c                     | 48 ++++++++++++++++++++++++++++++++++++++
+ read-cache.c                       |  9 ++++---
+ 4 files changed, 64 insertions(+), 3 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 2742a69..7920609 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1341,6 +1341,8 @@ ifndef NO_UNIX_SOCKETS
- 	LIB_OBJS += unix-socket.o
- 	PROGRAM_OBJS += credential-cache.o
- 	PROGRAM_OBJS += credential-cache--daemon.o
-+else
-+	BASIC_CFLAGS += -DNO_UNIX_SOCKETS
- endif
+diff --git a/Documentation/git-index-helper.txt b/Documentation/git-index-helper.txt
+index fa6e347..ca5a9de 100644
+--- a/Documentation/git-index-helper.txt
++++ b/Documentation/git-index-helper.txt
+@@ -25,6 +25,15 @@ OPTIONS
+ 	Exit if the cached index is not accessed for `<n>`
+ 	seconds. Specify 0 to wait forever. Default is 600.
  
- ifdef NO_ICONV
-diff --git a/unix-socket.h b/unix-socket.h
-index e271aee..f1cba70 100644
---- a/unix-socket.h
-+++ b/unix-socket.h
-@@ -1,7 +1,25 @@
- #ifndef UNIX_SOCKET_H
- #define UNIX_SOCKET_H
- 
-+#ifndef NO_UNIX_SOCKETS
++--strict::
++--no-strict::
++	Strict mode makes index-helper verify the shared memory after
++	it's created. If the result does not match what's read from
++	$GIT_DIR/index, the shared memory is destroyed. This makes
++	index-helper take more than double the amount of time required
++	for reading an index, but because it will happen in the
++	background, it's not noticable. `--strict` is enabled by default.
 +
- int unix_stream_connect(const char *path);
- int unix_stream_listen(const char *path);
+ NOTES
+ -----
  
-+#else
-+
-+static inline int unix_stream_connect(const char *path)
+diff --git a/cache.h b/cache.h
+index 2d7af6f..6cb0d02 100644
+--- a/cache.h
++++ b/cache.h
+@@ -345,6 +345,7 @@ struct index_state {
+ 		  * on it.
+ 		  */
+ 		 to_shm : 1,
++		 always_verify_trailing_sha1 : 1,
+ 		 initialized : 1;
+ 	struct hashmap name_hash;
+ 	struct hashmap dir_hash;
+diff --git a/index-helper.c b/index-helper.c
+index 4672e1a..163586a 100644
+--- a/index-helper.c
++++ b/index-helper.c
+@@ -17,6 +17,7 @@ struct shm {
+ 
+ static struct shm shm_index;
+ static struct shm shm_base_index;
++static int to_verify = 1;
+ 
+ static void release_index_shm(struct shm *is)
+ {
+@@ -122,11 +123,56 @@ static void share_index(struct index_state *istate, struct shm *is)
+ 	hashcpy((unsigned char *)new_mmap + istate->mmap_size - 20, is->sha1);
+ }
+ 
++static int verify_shm(void)
 +{
-+	errno = ENOSYS;
-+	return -1;
++	int i;
++	struct index_state istate;
++	memset(&istate, 0, sizeof(istate));
++	istate.always_verify_trailing_sha1 = 1;
++	istate.to_shm = 1;
++	i = read_index(&istate);
++	if (i != the_index.cache_nr)
++		goto done;
++	for (; i < the_index.cache_nr; i++) {
++		struct cache_entry *base, *ce;
++		/* namelen is checked separately */
++		const unsigned int ondisk_flags =
++			CE_STAGEMASK | CE_VALID | CE_EXTENDED_FLAGS;
++		unsigned int ce_flags, base_flags, ret;
++		base = the_index.cache[i];
++		ce = istate.cache[i];
++		if (ce->ce_namelen != base->ce_namelen ||
++		    strcmp(ce->name, base->name)) {
++			warning("mismatch at entry %d", i);
++			break;
++		}
++		ce_flags = ce->ce_flags;
++		base_flags = base->ce_flags;
++		/* only on-disk flags matter */
++		ce->ce_flags   &= ondisk_flags;
++		base->ce_flags &= ondisk_flags;
++		ret = memcmp(&ce->ce_stat_data, &base->ce_stat_data,
++			     offsetof(struct cache_entry, name) -
++			     offsetof(struct cache_entry, ce_stat_data));
++		ce->ce_flags = ce_flags;
++		base->ce_flags = base_flags;
++		if (ret) {
++			warning("mismatch at entry %d", i);
++			break;
++		}
++	}
++done:
++	discard_index(&istate);
++	return i == the_index.cache_nr;
 +}
 +
-+static inline int unix_stream_listen(const char *path)
-+{
-+	errno = ENOSYS;
-+	return -1;
-+}
-+
-+#endif
-+
- #endif /* UNIX_SOCKET_H */
+ static void share_the_index(void)
+ {
+ 	if (the_index.split_index && the_index.split_index->base)
+ 		share_index(the_index.split_index->base, &shm_base_index);
+ 	share_index(&the_index, &shm_index);
++	if (to_verify && !verify_shm())
++		cleanup_shm();
+ 	discard_index(&the_index);
+ }
+ 
+@@ -224,6 +270,8 @@ int main(int argc, char **argv)
+ 	struct option options[] = {
+ 		OPT_INTEGER(0, "exit-after", &idle_in_seconds,
+ 			    N_("exit if not used after some seconds")),
++		OPT_BOOL(0, "strict", &to_verify,
++			 N_("verify shared memory after creating")),
+ 		OPT_END()
+ 	};
+ 
+diff --git a/read-cache.c b/read-cache.c
+index 10d5465..befc499 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1672,9 +1672,12 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+ 
+ 	istate->mmap = mmap;
+ 	istate->mmap_size = mmap_size;
+-	if (try_shm(istate) &&
+-	    verify_hdr(istate->mmap, istate->mmap_size) < 0)
+-		goto unmap;
++	if (try_shm(istate)) {
++		if (verify_hdr(istate->mmap, istate->mmap_size) < 0)
++			goto unmap;
++	} else if (istate->always_verify_trailing_sha1 &&
++		   verify_hdr(istate->mmap, istate->mmap_size) < 0)
++			goto unmap;
+ 	hdr = mmap = istate->mmap;
+ 	mmap_size = istate->mmap_size;
+ 	if (!istate->keep_mmap)
 -- 
 1.9.1
 
