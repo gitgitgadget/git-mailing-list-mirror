@@ -2,94 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39E1620179
-	for <e@80x24.org>; Mon,  4 Jul 2016 15:53:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 199A820179
+	for <e@80x24.org>; Mon,  4 Jul 2016 16:46:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750808AbcGDPxX (ORCPT <rfc822;e@80x24.org>);
-	Mon, 4 Jul 2016 11:53:23 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:33912 "EHLO
-	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750789AbcGDPxW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Jul 2016 11:53:22 -0400
-Received: by mail-io0-f173.google.com with SMTP id g13so153960764ioj.1
-        for <git@vger.kernel.org>; Mon, 04 Jul 2016 08:53:22 -0700 (PDT)
+	id S1753187AbcGDQqA (ORCPT <rfc822;e@80x24.org>);
+	Mon, 4 Jul 2016 12:46:00 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:35939 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752844AbcGDQp7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2016 12:45:59 -0400
+Received: by mail-pa0-f47.google.com with SMTP id uj8so523402pab.3
+        for <git@vger.kernel.org>; Mon, 04 Jul 2016 09:45:59 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=/A2Qx0uq2vFXfjfmW0L+Khk0cgr/tvXLWa/v9k2HYHA=;
-        b=Yc5HufjoiQ8ynUZH2XpuXheoHKF7Co0draub6eXAxxSpWVb5IsN9xoE6bxV8TS2VLS
-         vQ/O5giaVxSEesC/71KZhwOGofBUDwMqSIft9lIaU8fdSxVG9dZe2vLTgDk/7arE6RP9
-         EJrfRenY4lNaxOZR7AknD4nAKP/SMAlthvrhP2FnfvncRu4ZU3EqUw+SqOeuUx88gvL2
-         SpUZdpElNUUDCPu26WP2cMiqgDf0B3o2/dQvhy6y7V1oCm8ldsQBpxpsLixAfz5lzyhc
-         nfFKMsuawoRFZa1M/WDbVaRflXEgifjBkfMWlMM6eQunwQ2Inx0MtAvw27S0IPDZ3SsI
-         jjsg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=hiuqnx+tVyUEn3AYmjm+/kMNAvofTvE53iyClPGefGc=;
+        b=DGHRKKKP7S+7BLq41OMptO/7oy+53Lp634w3LQkOClna0VF017UX2wb/K44tYqucj9
+         hfGOsWqKqcWsKjq7snvlnJlinb4XZPzkp3fEUFXUinKJWRXz1kUCKfb7k+kAWF62oluu
+         0cLe74DJpJU9GlKLDgVvEDHTCgIA/zyHs6YzbZXUTEdGMKzSRZTdAma7k+GV9nc1RSWU
+         POIdjVxSA1KF14nNeEKafKYJW5DKstzRHZPeXW+V7bWXg19DA0992cuBtjlT+onQ9FYF
+         Ja9rSWDuddkI4spWy8gIYPaHmHchVxFPqoWQU22oQQh0dMK+nxlJWe1JPDss4bOQxS2p
+         /2HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=/A2Qx0uq2vFXfjfmW0L+Khk0cgr/tvXLWa/v9k2HYHA=;
-        b=i+16u2PWLLmJYGLAhgYft3qK6ixit1PytQnXriQsQCbnRj6pi9oysV0xBlxMpxW2D9
-         pnFcPLiNkRE4qSanCcVkJWJ8LGILPbnOiIBzN7ac2TngBuFMS8UtTuKe4poDEzZn98ay
-         rFM/YiCb+jtBmYylp7swCWY/fouRVRqqF+bBppz3Ub9K356kWYanByc3yrQbkOcKSgCn
-         ArskyCI4WMsnMRTl0B5ZLorVG8uBh2E0e4xtZrOJ5TpxFdNbxnO+Brb/sVbWNvOLpiLx
-         jreZK151HAjPYHbIjmJKkUCzazeD/gfuvhw8or5zhiI0ojVDbuFh9GCsgUxZVWkaXQ0h
-         XwyA==
-X-Gm-Message-State: ALyK8tJ8ApWB/G/iK2Wl1qVt4k3SaD7xcIFt1FFhjTxWVDAnbDVIe2dFAqBodiB+RbvX3DYawFF96WG/fPP7fw==
-X-Received: by 10.107.159.16 with SMTP id i16mr8802695ioe.29.1467647581612;
- Mon, 04 Jul 2016 08:53:01 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=hiuqnx+tVyUEn3AYmjm+/kMNAvofTvE53iyClPGefGc=;
+        b=fhbSOFOajrAkB7+LCXlD8StkOePHKcjASo/nzQtA1xHS2xMdV/cNZtSViFaF/wq01f
+         dEP4AXUfHIDL0Xlp5xZG/9IjSLvznG4V8doUQqRk1egeW2UZ/ohQ9Liis+7j5AxhoWMy
+         mjGHPiV90KkG06dqux7kU50B/4cTqrT8gaYhEczcYingJopyij/t7VLdmgwK4kn+h0Rt
+         x+biiGiqE/XgqhJ0omLCk1uzOX65KXbPYQAs+8XVd38fO1DrO4faEwQXvaXe3uhdXQVO
+         gt2Cy/prLJ5P5JgOw9QdtsdI2d/1NnNRtcKNum6EHI+qV7H21kgDr+k8XNhc83yj7h9o
+         3m7A==
+X-Gm-Message-State: ALyK8tILqRHBFZlj5gwUjIWrJl/NFcMLb6AdU1OeFHqR91KqyA6x/UT2PdYsGpKTHb77dqdw2OOr7mMXek+ltA==
+X-Received: by 10.66.25.171 with SMTP id d11mr24135183pag.3.1467650758963;
+ Mon, 04 Jul 2016 09:45:58 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Mon, 4 Jul 2016 08:52:32 -0700 (PDT)
-In-Reply-To: <577A7FFB.6050507@gmail.com>
-References: <20160605031141.23513-1-pclouds@gmail.com> <20160626055810.26960-1-pclouds@gmail.com>
- <20160626055810.26960-2-pclouds@gmail.com> <577A6DBB.2030902@gmail.com>
- <CACsJy8CoSwM9W-HX2X9rA9NbJBVQ8BzySJjp3XjXBK+5r1tXZg@mail.gmail.com> <577A7FFB.6050507@gmail.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Mon, 4 Jul 2016 17:52:32 +0200
-Message-ID: <CACsJy8Crt8d5QdwPP+-ATaseR=gGLb7ri0jOozR==_U0Z1u4YA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/5] git-fetch.txt: document fetch output
-To:	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Marc Branchaud <marcnarc@xiplink.com>
+Received: by 10.66.126.147 with HTTP; Mon, 4 Jul 2016 09:45:39 -0700 (PDT)
+From:	shawn wilson <ag4ve.us@gmail.com>
+Date:	Mon, 4 Jul 2016 12:45:39 -0400
+Message-ID: <CAH_OBieCcx0_=vuZgoJ8GrZhhReEAhnjrz2pQwbwGgPFww4JmQ@mail.gmail.com>
+Subject: split directories into branches
+To:	Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jul 4, 2016 at 5:25 PM, Jakub Narębski <jnareb@gmail.com> wrote:
-> W dniu 2016-07-04 o 17:17, Duy Nguyen pisze:
->> On Mon, Jul 4, 2016 at 4:07 PM, Jakub Narębski <jnareb@gmail.com> wrote:
->>> W dniu 2016-06-26 o 07:58, Nguyễn Thái Ngọc Duy pisze:
->>>> +summary::
->>>> +     For a successfully fetched ref, the summary shows the old and new
->>>> +     values of the ref in a form suitable for using as an argument to
->>>> +     `git log` (this is `<old>..<new>` in most cases, and
->>>> +     `<old>...<new>` for forced non-fast-forward updates).
->>>
->>> It would be nice to have documented here also other <summary> formats,
->>> like "[new branch]", and/or mention that if the <summary> is not usable
->>> for `git log` it is put in brackets [].
->>
->> Can I do it in a separate topic in future? We may want to unify this
->> and the output format in git-pull as well, then include fetch format
->> in git-pull.
->
-> Yes, of course it can be added later.  Though it feels strange for docs
-> to talk about <old>..<new> and <old>...<new> format only (note that it
-> is also suitable for copy'n'paste to `git diff`, not only for `git log`)
-> while having "[new branch]" in examples / later patches.
+I've got a chef cookbook repo where everyone started developing
+cookbooks in a single dev branch (not project specific). Minus a few
+edge cases, it should be fairly simple to split this up into feature
+branches based on /cookbooks/<feature>.
 
-It's because it's copied from git-push.txt and not all
-[<explaination>] are listed there either :) But I think you have
-convinced me I should do it now.
--- 
-Duy
+I tried:
+$ git filter-branch --subdirectory-filter cookbooks/<feature>-- <feature>
+And
+$ git subtree split --prefix cookbooks/<feature> -b <feature>
+
+Which both seem to do the same thing (haven't looked at the subtree
+bash - guessing it does exactly the filter-branch). The issue is that
+it removes the directory tree (so obviously merges wouldn't work). I'm
+thinking some type of filter-branch --index-filter with a cherry pick
+(or similar) should work...?
