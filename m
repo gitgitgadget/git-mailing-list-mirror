@@ -6,55 +6,68 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E1B620179
-	for <e@80x24.org>; Mon,  4 Jul 2016 18:29:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7721320179
+	for <e@80x24.org>; Mon,  4 Jul 2016 18:47:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752844AbcGDS3c (ORCPT <rfc822;e@80x24.org>);
-	Mon, 4 Jul 2016 14:29:32 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:49549 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750713AbcGDS3c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jul 2016 14:29:32 -0400
-Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
-	by mailhub.007spb.ru (8.14.4/8.14.4/Debian-4+deb7u1) with SMTP id u64ITR87008764;
-	Mon, 4 Jul 2016 21:29:28 +0300
-Date:	Mon, 4 Jul 2016 21:29:26 +0300
-From:	Konstantin Khomoutov <kostix+git@007spb.ru>
-To:	shawn wilson <ag4ve.us@gmail.com>
-Cc:	Konstantin Khomoutov <kostix+git@007spb.ru>,
-	Git List <git@vger.kernel.org>
-Subject: Re: split directories into branches
-Message-Id: <20160704212926.919a267706a6fa5791c47726@domain007.com>
-In-Reply-To: <CAH_OBie4dUB8WXfmKhLaezVKi0=LhnFw=wKJO1c3oUMA7VkYdw@mail.gmail.com>
-References: <CAH_OBieCcx0_=vuZgoJ8GrZhhReEAhnjrz2pQwbwGgPFww4JmQ@mail.gmail.com>
-	<20160704203946.3ac8d3205c08bfaee9a93a46@domain007.com>
-	<CAH_OBie4dUB8WXfmKhLaezVKi0=LhnFw=wKJO1c3oUMA7VkYdw@mail.gmail.com>
-X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+	id S1753420AbcGDSri (ORCPT <rfc822;e@80x24.org>);
+	Mon, 4 Jul 2016 14:47:38 -0400
+Received: from mx-out-2.rwth-aachen.de ([134.130.5.187]:54293 "EHLO
+	mx-out-2.rwth-aachen.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750713AbcGDSrh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2016 14:47:37 -0400
+X-Greylist: delayed 595 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Jul 2016 14:47:37 EDT
+X-IronPort-AV: E=Sophos;i="5.26,575,1459807200"; 
+   d="scan'208";a="447612328"
+Received: from rwthex-s2-a.rwth-ad.de ([134.130.26.154])
+  by mx-2.rz.rwth-aachen.de with ESMTP; 04 Jul 2016 20:37:40 +0200
+Received: from [172.16.42.191] (89.0.248.191) by rwthex-s2-a.rwth-ad.de
+ (2002:8682:1a9a::8682:1a9a) with Microsoft SMTP Server (TLS) id 15.0.1178.4;
+ Mon, 4 Jul 2016 20:37:54 +0200
+From:	Bernhard Kirchen <bernhard.kirchen@rwth-aachen.de>
+To:	<git@vger.kernel.org>
+Date:	Mon, 4 Jul 2016 20:37:39 +0200
+Message-ID: <155b7339538.2774.8c011de0e6d4f677db1e190e9d3169b9@rwth-aachen.de>
+In-Reply-To: <OFEE90CED0.0832E3D4-ONC1257FE9.0053D856-C1257FE6.00660366@lancom.de>
+References: <OFEE90CED0.0832E3D4-ONC1257FE9.0053D856-C1257FE6.00660366@lancom.de>
+User-Agent: AquaMail/1.6.2.5 (build: 27000205)
+Subject: --dir-diff not working with partial path limiter
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: rwthex-w1-b.rwth-ad.de (2002:8682:1a9d::8682:1a9d) To
+ rwthex-s2-a.rwth-ad.de (2002:8682:1a9a::8682:1a9a)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, 4 Jul 2016 14:15:58 -0400
-shawn wilson <ag4ve.us@gmail.com> wrote:
+Hello!
 
-[...]
-> > I know Git tracks content, not files (and directory) but still many
-> > folks have "stable" directories for their files, assign certain
-> > semantics to them etc.  I've needed such transfers myself, and this
-> > topic has been raised more than once by folks over there on the
-> > git-users mailing list.
-[...]
-> Thanks for pointing out the users list - didn't notice it and sorry
-> for posting a user question on a dev list.
+Today I started using --dir-diff and noticed a problem when specifying a
+non-full path limiter. My diff tool is setup to be meld (*1).
 
-I don't possess the official stance on this topic but AFAIK user-level
-questions are fine on this list.  The git-users mailing list was
-created -- as I understand it -- because of three reasons: 1) it's
-easier to post to; 2) you don't receive all the bug reports and patch
-traffic irrelevant to mere mortals; 3) you have good chances to get
-even RTFM questions answered (mostly by those who just had RTFM
-recently), though I'd say stackoverflow is better at this one. ;-)
+OK while working directory is repo root; also OK while working directory is
+repo subfolder "actual":
+git difftool --dir-diff HEAD~1 HEAD -- actual/existing/path
+=> meld opens with proper dir-diff.
+
+NOT OK while working directory is repo subfolder "actual":
+git difftool --dir-diff HEAD~1 HEAD -- existing/path
+=> nothing happens, as if using "non/such/path" as the path limiter.
+
+Because "git diff HEAD~1 HEAD -- existing/path" while the working directory
+is the repo subfolder "actual" works, I epxected the difftool to work
+similarly. Is this a bug?
+
+Best,
+Bernhard
+
+(*1)
+[diff]
+tool = mydiffmeld
+[difftool "mydiffmeld"]
+cmd = meld --auto-compare --diff $LOCAL $REMOTE
+[difftool]
+prompt = false
+
+
