@@ -2,83 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1AE920179
-	for <e@80x24.org>; Mon,  4 Jul 2016 13:50:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 651A220179
+	for <e@80x24.org>; Mon,  4 Jul 2016 14:08:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753809AbcGDNul (ORCPT <rfc822;e@80x24.org>);
-	Mon, 4 Jul 2016 09:50:41 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:38070 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753752AbcGDNul (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jul 2016 09:50:41 -0400
-Received: by mail-wm0-f52.google.com with SMTP id r201so116527944wme.1
-        for <git@vger.kernel.org>; Mon, 04 Jul 2016 06:50:40 -0700 (PDT)
+	id S1753692AbcGDOIF (ORCPT <rfc822;e@80x24.org>);
+	Mon, 4 Jul 2016 10:08:05 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:34442 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753025AbcGDOIB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2016 10:08:01 -0400
+Received: by mail-wm0-f51.google.com with SMTP id 187so21897912wmz.1
+        for <git@vger.kernel.org>; Mon, 04 Jul 2016 07:08:00 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=jnC+ar79HuS6khte0jB5xX9Om7f6c3zdrPUuFFUjUpg=;
-        b=MEeuyIVhyApG5mk4M3zgDdTjeqqpK3tmnlxcLSk5BByy5X81RUe0b2RaGH7kqU2seJ
-         RjAA3ZAtndOGNIjZhxAXy/Q5s+Le3uk/AM3j9PzW3637Sr94Vjw2xrbIQI+vZB4xeoK5
-         wSP7JdupX3scf/BPY2Te2l/M8hBGbk9s6e9MngKO8CRXKkJG9PCvHpKVBs7PddV7K9X+
-         +0dSKHsfdl8Y+gbdfbFA2kez3RwqaykbRME7mqUlurzTQko9F0BZun5QCm5HVwU7EchA
-         6E64viIxMRM11GrotoWBDojOHrT7vmO+eiuAdL0XLpTttZKGEvsrH6kCTHcWv27rnZ8n
-         WKqg==
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=8332FVl1+Glk+5XKBq0HpTY8uFij7izeoC66oCJZ68o=;
+        b=jvEmjYy4eZixbswXYJoz7vtE9tegxneNeYYayU2slitRd9P8PoTUblr72ylS5Mw9G8
+         WKguSaQd9m18GPSHDucp1xSpsS4OSFD59HmP/oWnt9DKL4z8RwC44hHbZBOkJR4s3RAW
+         fJcNgM0TeodFlTnADKilofc4WfJ0FSBw2NCiZWYMIOulA4UZDaJNAMZWoOURFWw4sMto
+         4YDNJsIQBoey7ZTlhUDUgTuwl/sKXC3SmcFI5wtbPPE4uo7ov9pkiXq3XaI56OCLeRqO
+         b2VSUyzD3aZis+u+MJoIK0eEYu5y+mEMxYDitcWbVyP8JJFJQNJ3pNN9kX/hANY0729c
+         OnKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=jnC+ar79HuS6khte0jB5xX9Om7f6c3zdrPUuFFUjUpg=;
-        b=TWR7RwWrEAB7TmB4SG48O5tcbiQ97LoIbGD/YjQlG9TBOj/TkGmCuXxZ/8m3GpbgvX
-         dqI4EE1WhHZV2BTvyg+a8AOGaJO+mlmi2NoBv0jO+zFXYvvV2vlLNXJUl9zUENORByCS
-         DzBI8ZTBb1TdvJjK7c2aknPl01kNM24nLLAThFfX3vQBF0/p0TQ8R3ZhJGzgBwHZJbmH
-         uwW4svEq9iY8XFKJXrb2RFVPuhWjNYnbJyrw+PkYCbVZe8alE6ZaqYpnFovhf1YZZlHv
-         JyaGcdQBxvWi4gUkMr8gq5BSGcbw0Q3w1IR7t7CP5traj9SO2DiJdS8XRJukYlJ1a81R
-         L03w==
-X-Gm-Message-State: ALyK8tKhwdjSOn0C7cZnozx3yJ3QCGeyXfKX4aXr6AhT6iSCiFtnoc+L+K/o8KmJqqARCFjG6iYcaK40IM58Lg==
-X-Received: by 10.28.73.86 with SMTP id w83mr10446213wma.83.1467640239496;
- Mon, 04 Jul 2016 06:50:39 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=8332FVl1+Glk+5XKBq0HpTY8uFij7izeoC66oCJZ68o=;
+        b=GexIm0KRDxPYTryVlITAD5aKGtnUm0Hj4fNAckhRp0CrdTfi+bKw+5oVuRaM2Lyqzx
+         sz70wxSMEnZVA1N/XqYLtaSJJI1esk6udPDRO8PYU5zrPYOD5pZSbm+f1tCWrD6/KNEb
+         FLngBsLXplJ7pVKzgerGUibEvLApNbSiDKz1DvYuvj9RJhx6FqI2pSC8lvCtU1eLdZnN
+         sRoXnI/v8C86rHdI6OfKNYL09KVFfVmW3EoLMA5sCW5q+W40X9MWBdrvGbUqod10qSJm
+         b/ZtJYXCFpy4arAhkYJ5QTQyaGgFlIypl21j7YARQ5AG+D9hVqGYL8EAwJ8RjOGCQNiz
+         C9Mg==
+X-Gm-Message-State: ALyK8tIpjV/6BM4sHCmbpD5IrPgBLfWXYFpZeNibkSefoh/qYA3v6JHh4c4x+dB8J8R70g==
+X-Received: by 10.194.112.5 with SMTP id im5mr2333889wjb.89.1467641279669;
+        Mon, 04 Jul 2016 07:07:59 -0700 (PDT)
+Received: from [192.168.1.34] (ewv108.neoplus.adsl.tpnet.pl. [83.20.245.108])
+        by smtp.googlemail.com with ESMTPSA id c74sm2085842wme.1.2016.07.04.07.07.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 04 Jul 2016 07:07:59 -0700 (PDT)
+Subject: Re: [PATCH v4 1/5] git-fetch.txt: document fetch output
+To:	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+References: <20160605031141.23513-1-pclouds@gmail.com>
+ <20160626055810.26960-1-pclouds@gmail.com>
+ <20160626055810.26960-2-pclouds@gmail.com>
+Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	marcnarc@xiplink.com
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <577A6DBB.2030902@gmail.com>
+Date:	Mon, 4 Jul 2016 16:07:55 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
 MIME-Version: 1.0
-Received: by 10.28.164.69 with HTTP; Mon, 4 Jul 2016 06:50:38 -0700 (PDT)
-From:	Yuri Kanivetsky <yuri.kanivetsky@gmail.com>
-Date:	Mon, 4 Jul 2016 16:50:38 +0300
-Message-ID: <CAMhVC3Y9iT9X=JbB5tguXm8MRX4v2fDEqMwrMuDR6TD2+2+HLQ@mail.gmail.com>
-Subject: Git doesn't always add files to a commit (amend)
-To:	git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20160626055810.26960-2-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+W dniu 2016-06-26 o 07:58, Nguyễn Thái Ngọc Duy pisze:
+> +summary::
+> +	For a successfully fetched ref, the summary shows the old and new
+> +	values of the ref in a form suitable for using as an argument to
+> +	`git log` (this is `<old>..<new>` in most cases, and
+> +	`<old>...<new>` for forced non-fast-forward updates).
 
-When intent to add a directory is made (`git add -N`), and then
-contents of any but the first file is staged, `git commit -v --amend`
-doesn't add it to the commit, see for yourself:
+It would be nice to have documented here also other <summary> formats,
+like "[new branch]", and/or mention that if the <summary> is not usable
+for `git log` it is put in brackets [].
 
-    #!/usr/bin/env bash
-    set -eu
-    rm -rf 1
-    mkdir 1
-    cd 1
-    git init
-    echo 1 > 1 && git add 1 && git commit -m 1
-    mkdir 2
-    echo 2/1 > 2/1
-    echo 2/2 > 2/2
-    git add -N 2
-    # git add 2/1   # this file is added
-    git add 2/2   # as opposed to this one
-    git commit --amend -m 1
-    git --no-pager log -p
-    git reset
-    git --no-pager status
+-- 
+Jakub Narębski 
 
-I'm running git-2.9.0.
-
-Regards,
-Yuri
