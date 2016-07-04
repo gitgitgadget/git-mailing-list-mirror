@@ -2,70 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 199A820179
-	for <e@80x24.org>; Mon,  4 Jul 2016 16:46:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27CE820179
+	for <e@80x24.org>; Mon,  4 Jul 2016 17:39:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753187AbcGDQqA (ORCPT <rfc822;e@80x24.org>);
-	Mon, 4 Jul 2016 12:46:00 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:35939 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752844AbcGDQp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jul 2016 12:45:59 -0400
-Received: by mail-pa0-f47.google.com with SMTP id uj8so523402pab.3
-        for <git@vger.kernel.org>; Mon, 04 Jul 2016 09:45:59 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=hiuqnx+tVyUEn3AYmjm+/kMNAvofTvE53iyClPGefGc=;
-        b=DGHRKKKP7S+7BLq41OMptO/7oy+53Lp634w3LQkOClna0VF017UX2wb/K44tYqucj9
-         hfGOsWqKqcWsKjq7snvlnJlinb4XZPzkp3fEUFXUinKJWRXz1kUCKfb7k+kAWF62oluu
-         0cLe74DJpJU9GlKLDgVvEDHTCgIA/zyHs6YzbZXUTEdGMKzSRZTdAma7k+GV9nc1RSWU
-         POIdjVxSA1KF14nNeEKafKYJW5DKstzRHZPeXW+V7bWXg19DA0992cuBtjlT+onQ9FYF
-         Ja9rSWDuddkI4spWy8gIYPaHmHchVxFPqoWQU22oQQh0dMK+nxlJWe1JPDss4bOQxS2p
-         /2HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=hiuqnx+tVyUEn3AYmjm+/kMNAvofTvE53iyClPGefGc=;
-        b=fhbSOFOajrAkB7+LCXlD8StkOePHKcjASo/nzQtA1xHS2xMdV/cNZtSViFaF/wq01f
-         dEP4AXUfHIDL0Xlp5xZG/9IjSLvznG4V8doUQqRk1egeW2UZ/ohQ9Liis+7j5AxhoWMy
-         mjGHPiV90KkG06dqux7kU50B/4cTqrT8gaYhEczcYingJopyij/t7VLdmgwK4kn+h0Rt
-         x+biiGiqE/XgqhJ0omLCk1uzOX65KXbPYQAs+8XVd38fO1DrO4faEwQXvaXe3uhdXQVO
-         gt2Cy/prLJ5P5JgOw9QdtsdI2d/1NnNRtcKNum6EHI+qV7H21kgDr+k8XNhc83yj7h9o
-         3m7A==
-X-Gm-Message-State: ALyK8tILqRHBFZlj5gwUjIWrJl/NFcMLb6AdU1OeFHqR91KqyA6x/UT2PdYsGpKTHb77dqdw2OOr7mMXek+ltA==
-X-Received: by 10.66.25.171 with SMTP id d11mr24135183pag.3.1467650758963;
- Mon, 04 Jul 2016 09:45:58 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.66.126.147 with HTTP; Mon, 4 Jul 2016 09:45:39 -0700 (PDT)
-From:	shawn wilson <ag4ve.us@gmail.com>
-Date:	Mon, 4 Jul 2016 12:45:39 -0400
-Message-ID: <CAH_OBieCcx0_=vuZgoJ8GrZhhReEAhnjrz2pQwbwGgPFww4JmQ@mail.gmail.com>
-Subject: split directories into branches
-To:	Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+	id S1753593AbcGDRjw (ORCPT <rfc822;e@80x24.org>);
+	Mon, 4 Jul 2016 13:39:52 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:48839 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752553AbcGDRjv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2016 13:39:51 -0400
+Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
+	by mailhub.007spb.ru (8.14.4/8.14.4/Debian-4+deb7u1) with SMTP id u64HdkY1006744;
+	Mon, 4 Jul 2016 20:39:47 +0300
+Date:	Mon, 4 Jul 2016 20:39:46 +0300
+From:	Konstantin Khomoutov <kostix+git@007spb.ru>
+To:	shawn wilson <ag4ve.us@gmail.com>
+Cc:	Git List <git@vger.kernel.org>
+Subject: Re: split directories into branches
+Message-Id: <20160704203946.3ac8d3205c08bfaee9a93a46@domain007.com>
+In-Reply-To: <CAH_OBieCcx0_=vuZgoJ8GrZhhReEAhnjrz2pQwbwGgPFww4JmQ@mail.gmail.com>
+References: <CAH_OBieCcx0_=vuZgoJ8GrZhhReEAhnjrz2pQwbwGgPFww4JmQ@mail.gmail.com>
+X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-I've got a chef cookbook repo where everyone started developing
-cookbooks in a single dev branch (not project specific). Minus a few
-edge cases, it should be fairly simple to split this up into feature
-branches based on /cookbooks/<feature>.
+On Mon, 4 Jul 2016 12:45:39 -0400
+shawn wilson <ag4ve.us@gmail.com> wrote:
 
-I tried:
-$ git filter-branch --subdirectory-filter cookbooks/<feature>-- <feature>
-And
-$ git subtree split --prefix cookbooks/<feature> -b <feature>
+> I've got a chef cookbook repo where everyone started developing
+> cookbooks in a single dev branch (not project specific). Minus a few
+> edge cases, it should be fairly simple to split this up into feature
+> branches based on /cookbooks/<feature>.
+> 
+> I tried:
+> $ git filter-branch --subdirectory-filter cookbooks/<feature>--
+> <feature> And
+> $ git subtree split --prefix cookbooks/<feature> -b <feature>
+> 
+> Which both seem to do the same thing (haven't looked at the subtree
+> bash - guessing it does exactly the filter-branch). The issue is that
+> it removes the directory tree (so obviously merges wouldn't work). I'm
+> thinking some type of filter-branch --index-filter with a cherry pick
+> (or similar) should work...?
 
-Which both seem to do the same thing (haven't looked at the subtree
-bash - guessing it does exactly the filter-branch). The issue is that
-it removes the directory tree (so obviously merges wouldn't work). I'm
-thinking some type of filter-branch --index-filter with a cherry pick
-(or similar) should work...?
+To achieve what you're after I used `git subtree split` followed by
+`git filter-branch --tree-filter ...` which moved all the files under
+the directory hierarchy `git subtree split` removes.
+
+I'd love if `git subtree split` had an option to preserve the prefix
+(even better would be to have another option to rewrite the prefix)
+because that would greatly simplify another use case for `git subtree`:
+moving "a directory" with its full history from one repository into
+another.  Presently, the user is able to split that directory out from
+the source repository but when they subtree-merge it back in the new
+repository, they are puzzled by the fact `git log` invoked on the new
+history with the pathname prefix designating the "inserted" directory
+does not traverse past the merge point which brought that directory in.
+
+I know Git tracks content, not files (and directory) but still many
+folks have "stable" directories for their files, assign certain
+semantics to them etc.  I've needed such transfers myself, and this
+topic has been raised more than once by folks over there on the
+git-users mailing list.
