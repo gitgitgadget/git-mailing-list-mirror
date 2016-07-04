@@ -2,64 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A541621007
-	for <e@80x24.org>; Mon,  4 Jul 2016 10:48:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22EB020179
+	for <e@80x24.org>; Mon,  4 Jul 2016 13:18:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753477AbcGDKsp (ORCPT <rfc822;e@80x24.org>);
-	Mon, 4 Jul 2016 06:48:45 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:36382 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752844AbcGDKso (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jul 2016 06:48:44 -0400
-Received: from glandium by zenigata with local (Exim 4.87)
-	(envelope-from <mh@glandium.org>)
-	id 1bK1Qe-0007Zn-3E
-	for git@vger.kernel.org; Mon, 04 Jul 2016 19:48:40 +0900
-Date:	Mon, 4 Jul 2016 19:48:40 +0900
-From:	Mike Hommey <mh@glandium.org>
-To:	git@vger.kernel.org
-Subject: [ANNOUNCE] git-cinnabar 0.4.0 beta 1
-Message-ID: <20160704104840.GA28672@glandium.org>
+	id S1753971AbcGDNR4 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 4 Jul 2016 09:17:56 -0400
+Received: from smtp66.iad3a.emailsrvr.com ([173.203.187.66]:42913 "EHLO
+	smtp66.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753686AbcGDNRy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Jul 2016 09:17:54 -0400
+Received: from smtp25.relay.iad3a.emailsrvr.com (localhost.localdomain [127.0.0.1])
+	by smtp25.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id B00AF1803CD;
+	Mon,  4 Jul 2016 09:17:43 -0400 (EDT)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp25.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 878F71803CB;
+	Mon,  4 Jul 2016 09:17:43 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.5.4);
+	Mon, 04 Jul 2016 09:17:43 -0400
+Subject: Re: [PATCH v5 0/5] Better ref summary alignment in "git fetch"
+To:	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+References: <20160626055810.26960-1-pclouds@gmail.com>
+ <20160701160331.29252-1-pclouds@gmail.com>
+Cc:	Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+From:	Marc Branchaud <marcnarc@xiplink.com>
+Message-ID: <577A61F7.6010109@xiplink.com>
+Date:	Mon, 4 Jul 2016 09:17:43 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.6.0 (2016-04-01)
+In-Reply-To: <20160701160331.29252-1-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Git-cinnabar is a git remote helper to interact with mercurial
-repositories. It allows to clone, pull and push from/to mercurial remote
-repositories, using git.
+On 2016-07-01 12:03 PM, Nguyễn Thái Ngọc Duy wrote:
+> v5 changes the substitute symbol from '$' to '*' in compact mode and
+> makes sure long lines in compact mode will not make the remote ref
+> column too big (it's far from perfect but I think it's still good to
+> do).
 
-Code on https://github.com/glandium/git-cinnabar
-This release on
-https://github.com/glandium/git-cinnabar/releases/tag/0.4.0b1
+I think the first 4 patches are great.
 
-[ Previous announcements:
-  http://marc.info/?l=git&m=146179749105388
-  http://marc.info/?l=git&m=145294370431454
-  http://marc.info/?l=git&m=145284823007354
-  http://marc.info/?l=git&m=142837367709781 (...)]
+I have no opinion on the 5th patch, as I don't expect to use the compact 
+format in any of its proposed forms (and I can't come up with an 
+alternative).
 
-What's new since 0.3.2?
+		M.
 
-- Various bug fixes.
-- Updated git to 2.9 for cinnabar-helper.
-- Now supports bundle2 for both fetch/clone and push
-  (https://www.mercurial-scm.org/wiki/BundleFormat2).
-- Now Supports `git credential` for HTTP authentication.
-- Removed upgrade path from repositories used with version < 0.3.0.
-- Experimental (and partial) support for using git-cinnabar without
-  having mercurial installed.
-- Use a mercurial subprocess to access local mercurial repositories.
-- Cinnabar-helper now handles fast-import, with workarounds for
-  performance issues on macOS.
-
-Mike
