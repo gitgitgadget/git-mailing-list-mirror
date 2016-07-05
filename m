@@ -2,75 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1D402023C
-	for <e@80x24.org>; Tue,  5 Jul 2016 11:45:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75FDE2023C
+	for <e@80x24.org>; Tue,  5 Jul 2016 11:59:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932954AbcGELpO (ORCPT <rfc822;e@80x24.org>);
-	Tue, 5 Jul 2016 07:45:14 -0400
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:33858 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754659AbcGELpN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Jul 2016 07:45:13 -0400
-Received: by mail-vk0-f42.google.com with SMTP id c2so260979443vkg.1
-        for <git@vger.kernel.org>; Tue, 05 Jul 2016 04:45:13 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=OgkLMEYMqbV7SVI3ucyHv0aLkUW6pPCghbXc1Sx2jdk=;
-        b=L9H+4fJofZ7ylDMjMOC13arSfODE6At+Vx3Z0znqNNKfFJaxFljN36ajKSMoJ0rD+o
-         NAy7IIpACyKFOK/fLfiMBWu+9a6YJKG7Zgi5w1+CMi58ynl8vqMcED1yQyyJm6GsFfvw
-         bRXOtn0/MqPMIDdzRmNj7m4sGt6u2Mchaq4mVQDVyZB65egB200TINMOAAI4qcySdHtJ
-         QJiRPNVrHy4wc/Z0ArqKML2x8iVULk8zYihA7RxxVwJuFwQDMI+Y2x1LwTKILflzxRdl
-         iz7LX97tnQl/Y0p/PPswnj4/uEd7OR+w0CJ7bimTsNp6uc6PoPvlC6d/ERzDwZtQ7zqv
-         +Y9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=OgkLMEYMqbV7SVI3ucyHv0aLkUW6pPCghbXc1Sx2jdk=;
-        b=fBdFog9Uda9KOR1C1geOewcsVSnep8PmcqDYFRqocpy3/YqggWjgKrgc/RzQVidbOQ
-         MbOW9unQm84jJxJP1syIn20Wvlk0PylX7+ccdxDQo9YgMjNvDMU7Z894tGxXNgNNcrNc
-         JXXZ7x7/+keg3Juw7CZW90WCbYWXp1ITvMreahszb/i/YD+MwuIu5ZiIy72+NfaEntBg
-         aulJ5HUalrIknjLU2jYLcgxw10cUhkFiwmiY6hBZ9Rehre35zP86fSND2tDRDweGc1GZ
-         UG9j/gcWG5kPsRMtf+YpMg6YmNwb409VDewqZQDycaMyicX6SqKqRQ53/lpX7/qHNMSO
-         +wWw==
-X-Gm-Message-State: ALyK8tLFCEhx44BAlOy3V375yhhIAz57JvFUM7wOpVQAj0OIPr5T24X/zktRaPQrTbROL595xYW8dIy77C4A4g==
-X-Received: by 10.176.0.108 with SMTP id 99mr1402398uai.71.1467719112495; Tue,
- 05 Jul 2016 04:45:12 -0700 (PDT)
-MIME-Version: 1.0
-Reply-To: kpaxton@paxdesigns.com
-Received: by 10.103.110.131 with HTTP; Tue, 5 Jul 2016 04:45:12 -0700 (PDT)
-From:	Kevin Paxton <kpaxton@paxdesigns.com>
-Date:	Tue, 5 Jul 2016 07:45:12 -0400
-X-Google-Sender-Auth: o2_0BMZFTiPdtXtZC0psWCfFsq0
-Message-ID: <CAOkrQrwH=Rj4OS4WphGqzc07hjFBB4B9BFy92qPWdJfB70KPnA@mail.gmail.com>
-Subject: Dependencies required for offline installation
+	id S1754505AbcGEL67 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 5 Jul 2016 07:58:59 -0400
+Received: from mout.gmx.net ([212.227.15.15]:58249 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751599AbcGEL67 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jul 2016 07:58:59 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MIuSH-1bHw9s0kLx-002VJs; Tue, 05 Jul 2016 13:58:53
+ +0200
+Date:	Tue, 5 Jul 2016 13:58:51 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+cc:	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] revert: clarify seemingly bogus OPT_END repetition
+Message-ID: <5b424bad41ca027b39eea4b1fa9d87df0a489e0f.1467719888.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:FV/HGtaHTjnmuzvB0vWBa0R4vtxC4PFvVG2HmTPR73UJ9+lPwiP
+ EMd0geJ3bwOOz4jti57iGEyuZtIcJ5ylnZgx9LET0aGCzFb9w7W0qq5suHovb7HmRGtVO9Z
+ i/5GESv+yRtFE5CIVBpjY6osQdBu+UNnzqQLR93oQAJq/qtD8CPziNvB620ul8DTkiXLFFq
+ ISiRY5MiyyUeMS/VlYCcg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:fMJWgU7lOCw=:5qf2USpYE3bu2QdNjzjTdB
+ Vy0tW861VQTpj9GTDu1/+9Ct4W4d3QYFVNPtlgiH8uCqn/7eIF/dyCWsm92GP7BG5F+yPi1hi
+ +mkPbCTuMxtaisnvC3xRowAt2EhSV0dfJ+GvyNLSoYARpJtIMezPErrq+9srMtWxGYYkOEIl0
+ 1gIjYLogbNOXHGoM0kmDqVm7dVirQjwk2GZlWBTchV6p4ci8smTv6jKHS+zUZi4qmiSZhSsiz
+ H3yI6hbc8pn63sjoR4MsMmGUTM8hrDC03ADZMyVi7LOPo5Rcr4UK7X2ne2gnaLuAIt0sNRwBf
+ PJQal/UAKJ3icumskXRlbjt/F+IaQHXlm1fFSXc1UacBTHUWJg7FnrFVu8ug+sEPlDZA4eIGb
+ i637l+iu4xrMuY0BMEClCZI0hG1qv3ovIquWWE41JfT++0tPQuzSHKir4R35d8qGUUDE+lbAH
+ 3MXEl10PIolG7qRERA3k79UvqpAtxdvJk9OkpDvpwRQ/BgJh0QAGWDiAsi2XhSZu82nokvtXb
+ 4yRFxsGi2rXAGrVXOT/qibxv/Gp6cS7F8N4D93mS23PCIBbGvrckHSqJw0nNbUeEieeOPdunh
+ f2Pou2ZJm/o5/Oh5kO0DRQYQfzIORggIRLOHJIaDCw7SNmWsxsSyzomWC3UypKWRdiQQERkgQ
+ 3HIQxtKu0MSM0PLlg+eYRE++i5eInaCBKldDqr6Emnqesl417U61GCjirvyPScwzIgPd5kE6S
+ E8A33VZI4zmnjeeEQug3q54zZQsw2P7nOtmspbgG4BVMal/H6oNT25xugLQCF9AjegzK3mHnZ
+ jMMF/r8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+This developer stumbled over repeated OPT_END entries and was *so
+close* (almost touches his thumb with his index finger) to collapse
+them into a single one. Only inspecting the file's history with
+`git log -p -SOPT_END` clarified why they are there.
 
-I’m looking to install git on a separate network that is running
-Redhat 5.5. I need to know what is the list of packages that I need to
-download to be able to install git-all? I plan on using git-svn to
-migrate an existing svn repo over to git as well. Svn version we have
-installed is 1.9.3.
+This confusion can be easily prevented by inserting a simple and
+clear comment.
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-Does the tarball contain all dependencies already? Should I go that
-route? Or should I try and find all the rpm's required?
+	Another patch from the rebase--helper queue.
 
+Published-As: https://github.com/dscho/git/releases/tag/clarify-opt-end-v1
+ builtin/revert.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks,
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 56a2c36..b4da1f6 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -92,6 +92,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 		{ OPTION_STRING, 'S', "gpg-sign", &opts->gpg_sign, N_("key-id"),
+ 		  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+ 		OPT_END(),
++		/* place-holders for REPLAY_PICK's extra options, see below */
+ 		OPT_END(),
+ 		OPT_END(),
+ 		OPT_END(),
+-- 
+2.9.0.280.g32e2a70
 
-Kevin Paxton
+base-commit: cf4c2cfe52be5bd973a4838f73a35d3959ce2f43
