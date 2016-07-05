@@ -2,87 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5712103E
-	for <e@80x24.org>; Tue,  5 Jul 2016 09:18:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BE5A2023C
+	for <e@80x24.org>; Tue,  5 Jul 2016 09:56:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754589AbcGEJSD (ORCPT <rfc822;e@80x24.org>);
-	Tue, 5 Jul 2016 05:18:03 -0400
-Received: from mail-oi0-f51.google.com ([209.85.218.51]:35945 "EHLO
-	mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751248AbcGEJSB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2016 05:18:01 -0400
-Received: by mail-oi0-f51.google.com with SMTP id f189so221647197oig.3
-        for <git@vger.kernel.org>; Tue, 05 Jul 2016 02:18:00 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=F8TktG/RQ+MdfV1e1NhnxPrtT+oTXSjAUQcXCQH+GIs=;
-        b=RMfJMOHa4mxeAQqjVZ/56cyIwJUTWbiTJ8QI1R379SpcU65lu4AFq+okl7T9y4/zPq
-         +FK+lDG+TdD11Uz+f0HSnNFvSF40h7ybwv6lZPLO4CEukJd3coEH4FZ/Q6e5NE/ZpA7z
-         uQXwdz7UBsxyhV1j6ztK45lgtqAmHezQ+1/zFIgh9nE1q/AG72Gmmlb/BVPYG+zuGdk0
-         vl6kQQG8b8Dvk4AAP2gcjMZkxlD90AqqbhACJ4OfTebu3u0JnV0xv/Mi4vIWbUGRy/At
-         qz8c3QJjSBnPMvnrbfLSNBc9YDR/5ONqj930HzekRvnzHNTAknNZvdBM5Y1vi0y4ph8S
-         wsQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=F8TktG/RQ+MdfV1e1NhnxPrtT+oTXSjAUQcXCQH+GIs=;
-        b=IbL2kdFHYI4wJR86l7j+OUJ1dS6h8Foi3MK6XogNzbLNc+PrlGgLg/ee0x+XOlO6Q+
-         LWkD4LWE7/AbiY7CCda+pe15qf6H+OBAfQBCbDJEjyV3FI36h+Dw5IkchDWi/KfoqkCm
-         YiPUn05HV9mMBOEPfNRUkKkxZQkTrXn3frvOGOaioSmJBtFDGWL64QeLNAc4hTZLcd+5
-         Rqe3v6/0lZgcimaTNdwXpVzH7RNa6b2p2MZKYhjAE/flOzwuLs9NZzcbwrqWQNOnDYwx
-         7F7qRzXr1zZDmc1ZgqcZmPEL3/KZOhYTawKQtD+0Ej7N7DX0AV4+dfFDcMTWGcHpSawF
-         Ghmw==
-X-Gm-Message-State: ALyK8tKHiuZk6OW+LN0v8D4k9nB2q78yP8pnJ61iMqCvb3RTw7upefpSyraSJFB3pqATc7Wp8uDem4d/WVRunQ==
-X-Received: by 10.157.27.103 with SMTP id l94mr9909284otl.54.1467710280200;
- Tue, 05 Jul 2016 02:18:00 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.157.22.241 with HTTP; Tue, 5 Jul 2016 02:17:59 -0700 (PDT)
-From:	tarun patanwar <patanwar.tarun@gmail.com>
-Date:	Tue, 5 Jul 2016 10:17:59 +0100
-Message-ID: <CAKK2_6ezVLd4ZMa4ToKZYq1Ab0Y5w3VJqj_8-BsUCj8Gf8f+ig@mail.gmail.com>
-Subject: GIT Integration with Siebel
-To:	git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+	id S1754488AbcGEJ43 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 5 Jul 2016 05:56:29 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:35661 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754466AbcGEJ40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jul 2016 05:56:26 -0400
+Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
+	by mailhub.007spb.ru (8.14.4/8.14.4/Debian-4+deb7u1) with SMTP id u659uLt9019834;
+	Tue, 5 Jul 2016 12:56:22 +0300
+Date:	Tue, 5 Jul 2016 12:56:21 +0300
+From:	Konstantin Khomoutov <kostix+git@007spb.ru>
+To:	shawn wilson <ag4ve.us@gmail.com>
+Cc:	Konstantin Khomoutov <kostix+git@007spb.ru>,
+	Git List <git@vger.kernel.org>
+Subject: Re: split directories into branches
+Message-Id: <20160705125621.cfa55e07cedd2853377c4f08@domain007.com>
+In-Reply-To: <CAH_OBieUYZTi+8W-m1TVVDstzF2vg1VuYQsd9Ka_uDoRYRY5rg@mail.gmail.com>
+References: <CAH_OBieCcx0_=vuZgoJ8GrZhhReEAhnjrz2pQwbwGgPFww4JmQ@mail.gmail.com>
+	<20160704203946.3ac8d3205c08bfaee9a93a46@domain007.com>
+	<CAH_OBie4dUB8WXfmKhLaezVKi0=LhnFw=wKJO1c3oUMA7VkYdw@mail.gmail.com>
+	<20160704212926.919a267706a6fa5791c47726@domain007.com>
+	<CAH_OBieUYZTi+8W-m1TVVDstzF2vg1VuYQsd9Ka_uDoRYRY5rg@mail.gmail.com>
+X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Dear GIT Team,
+On Mon, 4 Jul 2016 17:03:46 -0400
+shawn wilson <ag4ve.us@gmail.com> wrote:
 
-We are trying to integrate GIT with Siebel 8.1 for source code
-control. We are not able to progress further since there seems to be
-no documentation available for the same.
+[...]
+> > I don't possess the official stance on this topic but AFAIK
+> > user-level questions are fine on this list.
+> 
+> In that case :)
+> ... still having issues w/ filter-branch:
+[...]
 
-Siebel provides a batch control file (srcctrl.bat) which can be
-amended for Source Control Toll integration.
+I used something along these lines:
 
-In the past we have used Microsoft VSS and SVN for source control,
-Below is a example srcctrl.bat file for reference.
+  git filter-branch -f --tree-filter \
+    'test -e my/new/dir || mkdir -p my/new/dir
+      find . -mindepth 1 -maxdepth 1 \
+      -type d -path ./my -prune -o -print \
+      | xargs -n 30 mv -t ./my/new/dir' master 
 
-Any help on this will be greatly appreciated.
+More background on how it works [1] if you want.
 
-rem=======================================================
-rem =============== User defined parameters ======================
-rem ========================================================
-set PATH=C:\Program Files\TortoiseSVN\bin;%PATH%
-set SVN_URL=svn://svn_ip_address/svn_example
-set SVN_REPOS=trunk
-set SRC_USR=yourusername
-set SRC_PSWD=yourpassword
-set LOGFILE=D:\development\projects\svn_example\svn_integration.log
-set WORKING_DIR=D:\development\projects\svn_example
-rem LOGFILE SHOULD NOT HAVE SPACES IN ITS PATH
-rem ================================================
-rem ====================================================
-
-
-Thanks,
-Tarun Patanwar
-+44-7778471437
+1. https://groups.google.com/d/msg/git-users/hxFmfUZpj_k/9IQAQq40BwAJ
