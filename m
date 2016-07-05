@@ -2,125 +2,280 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93BC120706
-	for <e@80x24.org>; Tue,  5 Jul 2016 13:00:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D590220706
+	for <e@80x24.org>; Tue,  5 Jul 2016 13:02:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754933AbcGENAZ (ORCPT <rfc822;e@80x24.org>);
-	Tue, 5 Jul 2016 09:00:25 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:36852 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754979AbcGEM7r (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2016 08:59:47 -0400
-Received: by mail-wm0-f45.google.com with SMTP id f126so136440698wma.1
-        for <git@vger.kernel.org>; Tue, 05 Jul 2016 05:59:46 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=JvU2/7H5dn/skk3ECGJbuamVvufirndbho0i+pBryHQ=;
-        b=04IQXnRia9UNmFCDBxEVfBFD4+k4mB8awO+wClT2c902JNbylSiESWhuLy/Gb9kJ0g
-         p3kUXQXLUA21vFSZwP+yTePOyK/b7KQ7Kvs3B+Fu+gOa3jNWmyjyDG6/Nv/yVMZODOOj
-         011q45AyIymoWHDGtjkzxzRqzdUn/RcFhP1oeui7WoPXw2rRDdVbDQ/nDQZoxSccv/kw
-         BUk+McHmKIy6u8WQTJ0BviHPxGRjYrGd6kE0RUhDZJ+O5aFXrVNC0tit6BBwTyGbNfaT
-         MA6kfSMa6qQbUu5yDwPNUxDsLUIIYSbVRgVSAnoOq/i83VUZSbDpGwg2SJ9WjaubjCPt
-         gZmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=JvU2/7H5dn/skk3ECGJbuamVvufirndbho0i+pBryHQ=;
-        b=XQIXVxEJ/QJovW3wyBzMsxtnXY0zgT7Aj7Zp7F79NjHq28A6PRWUb3hI3IflUcPX6Y
-         rfumkyQPJp/dP8JWyYnIOFifqDKXbr4IBuSCKEy9GYvEJmZ9mxtU+aNf6WQodN71DK/V
-         sUnNv1+8pl+SqyYc7ELyazSO5kc+1bT4bUeJ35HPbjIZHUJJcfBGOoJli9eKOzec3nAy
-         fN4LAMBK/XazNo9zJ+/+QYvlnW8CcdCzXGEoHvRkY+pSgZIKfaKlI7jNp79STdv2X6lp
-         wFccLOyK7YAGIeQ9jbp+7vQMEExuHhg0TmvDYX70Ttl2n1oMybpgIs8tLfX5o4gDGgsS
-         uqyg==
-X-Gm-Message-State: ALyK8tIiDjyrhYgr0uv7N9PItOrWhHpJ7XDg5ujtCGzIVVHLWA/7tQzUMQtEawTzSxgeYw==
-X-Received: by 10.28.46.129 with SMTP id u123mr15436027wmu.19.1467723586121;
-        Tue, 05 Jul 2016 05:59:46 -0700 (PDT)
-Received: from [192.168.1.34] (acvd198.neoplus.adsl.tpnet.pl. [83.11.109.198])
-        by smtp.googlemail.com with ESMTPSA id ur2sm2102637wjc.33.2016.07.05.05.59.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jul 2016 05:59:45 -0700 (PDT)
-Subject: Re: topological index field for commit objects
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-References: <f15a14a5-f39d-9c41-16b9-fe0a48d7450b@syntevo.com>
- <CAPc5daVC-+0Vr30L_pbcL0GN2OmnGm-+V4tE2WTos_vPRb_S1g@mail.gmail.com>
- <CAGZ79kY6Ry+DfO90wza_RrVbCRAgNB4N=0W6svuJgvGNxeFh5Q@mail.gmail.com>
- <xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com>
- <20160629205647.GA25987@sigill.intra.peff.net> <5774426F.3090000@gmail.com>
- <20160629220049.GA4416@sigill.intra.peff.net>
- <xmqqlh1n1w84.fsf@gitster.mtv.corp.google.com>
- <20160629223007.GA4726@sigill.intra.peff.net>
- <alpine.DEB.2.20.1607051339040.8378@virtualbox>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Marc Strapetz <marc.strapetz@syntevo.com>,
-	Git Mailing List <git@vger.kernel.org>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <577BAF3C.90601@gmail.com>
-Date:	Tue, 5 Jul 2016 14:59:40 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
+	id S932729AbcGENAr (ORCPT <rfc822;e@80x24.org>);
+	Tue, 5 Jul 2016 09:00:47 -0400
+Received: from mail.torek.net ([96.90.199.121]:15057 "EHLO elf.torek.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754979AbcGENAq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Jul 2016 09:00:46 -0400
+X-Greylist: delayed 722 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Jul 2016 09:00:46 EDT
+Received: from elf.torek.net (localhost [127.0.0.1])
+	by elf.torek.net (8.14.9/8.14.9) with ESMTP id u65Cmg1x073897
+	for <git@vger.kernel.org>; Tue, 5 Jul 2016 05:48:42 -0700 (PDT)
+	(envelope-from chris.torek@gmail.com)
+Message-Id: <201607051248.u65Cmg1x073897@elf.torek.net>
+From:	Chris Torek <chris.torek@gmail.com>
+To:	git@vger.kernel.org
+Subject: git diff A...B is both overly forgiving and weird
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1607051339040.8378@virtualbox>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <73895.1467722922.1@elf.torek.net>
+Content-Transfer-Encoding: 8BIT
+Date:	Tue, 05 Jul 2016 05:48:42 -0700
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.4.3 (elf.torek.net [127.0.0.1]); Tue, 05 Jul 2016 05:48:42 -0700 (PDT)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-07-05 o 13:43, Johannes Schindelin pisze:
-> On Wed, 29 Jun 2016, Jeff King wrote:
-> 
->> I haven't thought hard specifically about merge bases computation, so
->> perhaps that is a case that isn't helped at all.
-> 
-> I guess it is not helped by generation numbers.
-> 
-> But then, we often ask: "is commit A an ancestor of commit B" e.g. to
-> check whether we can fast-forward. The way we do it now is to compute the
-> merge base (singular: if there are more than one, we stop at the first one
-> we found) and then look whether commit A is identical to the merge base.
+(This is not a big bug, but it is clearly not right.)
 
-I wonder if this query can be answered faster than finding the merge base
-(the common ancestor) with Git core, and if it would be worth it to expose
-this functionality to shell...
+The problem is mostly described in the patch below.
 
-> If we had generation numbers available, then we would have to change those
-> computations in order to benefit from them when determining ancestry.
+This patch can perhaps be improved a bit by using an abbreviated
+hash for the chosen merge base, in the case of multiple merge
+bases, and/or by removing some of the paranoia-style checking (but
+as I'm not terribly familiar with Git internals, I left these in).
 
-Generation numbers (node level / topological rank) can help with such
-query.  First, if level of A is greater than level of B, then A cannot
-be an ancestor of B.  Second, when following from B we can prune path
-if we get to node with level lower than A.  This is so called "level
-filter" in literature.
+Extra negative references given on the command line, as in "git
+diff master~5...master^^2 ^origin/master^", now pass undetected; I
+am not sure if there is a good way to catch them.  (In the
+original code, they apparently substituted in for the merge-base.)
 
-FELINE indices cut search space even more... though I don't know if
-they would help with finding common ancestors. Perhaps some other
-technique would be better (taking into account Git use of EWAH bitmaps
-for reachability of objects).
+Chris
 
-> 
-> But then, reachability would accelerate that even more than generation
-> numbers.
 
-I wonder if Git uses bitmap indices here, if possible -- they are generated
-sparsely.  They can help both in reachability queries (is A in reachability
-of B, or in reachability of one of ancestors of B?) and in finding merge
-bases (intersection of reachabilities of A and B, or their ancestors...
-or something like that, I think, probably more complicated).
+commit 2b9288cc90175557766ef33e350e0514470b6ad4
+Author: Chris Torek <chris.torek@gmail.com>
+Date:   Tue Jul 5 05:15:23 2016 -0700
 
--- 
-Jakub Narębski
+    git diff: improve A...B merge-base handling
+    
+    When git diff is given a symmetric difference A...B, it chooses
+    some merge base between the two specified commits.
+    
+    This fails, however, if there is *no* merge base: instead, you
+    see the difference between A and B, which is certainly not what
+    is expected:
+    
+        git diff origin/master...origin/todo
+        [same output as "git diff origin/master origin/todo"]
+    
+    Moreover, if additional revisions are specified on the command
+    line:
+    
+        git diff origin/master...origin/todo origin/master^
+        git diff master~5...master^^2 origin/master^
+        git diff master~5...master^^2 ^origin/master^
+    
+    the result gets a bit weird.  If there is a symmetric difference
+    merge base, that will provide the left side of the diff.  An
+    extra positive ref, if given, becomes the right side.  If there
+    is no merge base, the symmetric difference is completely lost:
+    for the Git repository, "origin/master...origin/todo origin/master^"
+    runs a combined diff!  (This follows from treating the lack of
+    a merge base as an ordinary diff of the two specified revisions.)
+    
+    To avoid all this, add a routine to catch the A...B case and
+    verify that there is at least one merge base.  As a side effect,
+    produce a warning showing *which* merge base is being used when
+    there are multiple choices; die if there is no merge base.
 
+diff --git a/builtin/diff.c b/builtin/diff.c
+index b7a9405..c040b47 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -256,6 +256,97 @@ static int builtin_diff_files(struct rev_info *revs, int argc, const char **argv
+ 	return run_diff_files(revs, options);
+ }
+ 
++/*
++ * Check for symmetric-difference arguments, and if present,
++ * convert A...B to $(merge-base A B) B.
++ */
++static int builtin_diff_sdiff(struct rev_info *rev, struct object_array *ent)
++{
++	int i;
++	int on_left = 0, uninteresting = 0, unflagged = 0;
++	int lpos = -1, rpos = -1, upos = -1;
++	char *lname, *rname, *uname;
++	struct object *robj, *uobj;
++
++	/*
++	 * If there were any A...B symmetric differences specified,
++	 * we'll have A marked with SYMMETRIC_LEFT | UNINTERESTING,
++	 * and each merge base marked with UNINTERESTING.  B will
++	 * be unmarked.  If we were given additional revisions they
++	 * may have other markings, so remember the first A and B
++	 * for error messages as well.
++	 *
++	 * The actual order of these are that the merge bases come
++	 * first, then A, then B, but we don't depend on that in
++	 * this code.
++	 *
++	 * If we don't have just one merge base, we pick one
++	 * at (essentially) random (by using the first).
++	 *
++	 * Note that we don't check obj->parsed, since symmetric
++	 * difference objects are always pre-parsed: a non-parsed
++	 * object is by definition not part of a symmetric difference.
++	 */
++	for (i = 0; i < rev->pending.nr; i++) {
++		struct object *obj = rev->pending.objects[i].item;
++
++		if (obj->flags & SYMMETRIC_LEFT) {
++			on_left++;
++			if (lpos < 0)
++				lpos = i;
++		} else if (obj->flags & UNINTERESTING) {
++			uninteresting++;
++			if (upos < 0)
++				upos = i;
++		} else {
++			unflagged++;
++			if (lpos >= 0 && rpos < 0)
++				rpos = i;
++		}
++	}
++
++	if (on_left == 0)	/* no symmetric differences */
++		return (0);
++
++	/*
++	 * N.B.: lname retains the three dots.  The name of
++	 * the right hand side object (there should be one) is
++	 * a subset of this string.
++	 */
++	lname = rev->pending.objects[lpos].name;
++	/* demand exactly 1 on left and 1 unflagged */
++	if (unflagged > 1)
++		die(_("%s: must not list additional revs"), lname);
++	if (unflagged < 1)
++		die(_("%s: internal error: '...' but no unflagged revs"), lname);
++	if (uninteresting == 0)
++		die(_("%s: no merge base"), lname);
++
++	/*
++	 * Pick the tree from an "uninteresting" commit for the left
++	 * side, and the tree from the right hand side commit (rname)
++	 * for the other.  If there is more than one uninteresting
++	 * tree, print a warning.
++	 *
++	 * Note that the two objects (at upos and rpos) are by
++	 * definition commit objects.
++	 */
++	rname = rev->pending.objects[rpos].name;
++	uname = rev->pending.objects[upos].name;
++	if (uninteresting > 1)
++		warning(_("%s: multiple merge bases, using %s"), lname, uname);
++	robj = rev->pending.objects[rpos].item;
++	uobj = rev->pending.objects[upos].item;
++	if (uobj->type != OBJ_COMMIT || robj->type != OBJ_COMMIT)
++		die(_("internal error: uobj type %d, robj type %d"),
++		    uobj->type, robj->type);
++	robj = &((struct commit *)robj)->tree->object;
++	uobj = &((struct commit *)uobj)->tree->object;
++	add_object_array(uobj, uname, ent);
++	add_object_array(robj, rname, ent);
++	return (1);
++}
++
+ int cmd_diff(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+@@ -391,32 +482,40 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
+-	for (i = 0; i < rev.pending.nr; i++) {
+-		struct object_array_entry *entry = &rev.pending.objects[i];
+-		struct object *obj = entry->item;
+-		const char *name = entry->name;
+-		int flags = (obj->flags & UNINTERESTING);
+-		if (!obj->parsed)
+-			obj = parse_object(obj->oid.hash);
+-		obj = deref_tag(obj, NULL, 0);
+-		if (!obj)
+-			die(_("invalid object '%s' given."), name);
+-		if (obj->type == OBJ_COMMIT)
+-			obj = &((struct commit *)obj)->tree->object;
+-
+-		if (obj->type == OBJ_TREE) {
+-			obj->flags |= flags;
+-			add_object_array(obj, name, &ent);
+-		} else if (obj->type == OBJ_BLOB) {
+-			if (2 <= blobs)
+-				die(_("more than two blobs given: '%s'"), name);
+-			hashcpy(blob[blobs].sha1, obj->oid.hash);
+-			blob[blobs].name = name;
+-			blob[blobs].mode = entry->mode;
+-			blobs++;
+-
+-		} else {
+-			die(_("unhandled object '%s' given."), name);
++	/*
++	 * We treat symmetric difference specially.  Check that first;
++	 * if it handled the arguments, it will put exactly two trees
++	 * into ent.  Otherwise go on to convert objects to blobs
++	 * and/or trees, putting any trees into the ent array.
++	 */
++	if (!builtin_diff_sdiff(&rev, &ent)) {
++		for (i = 0; i < rev.pending.nr; i++) {
++			struct object_array_entry *entry = &rev.pending.objects[i];
++			struct object *obj = entry->item;
++			const char *name = entry->name;
++			int flags = (obj->flags & UNINTERESTING);
++			if (!obj->parsed)
++				obj = parse_object(obj->oid.hash);
++			obj = deref_tag(obj, NULL, 0);
++			if (!obj)
++				die(_("invalid object '%s' given."), name);
++			if (obj->type == OBJ_COMMIT)
++				obj = &((struct commit *)obj)->tree->object;
++
++			if (obj->type == OBJ_TREE) {
++				obj->flags |= flags;
++				add_object_array(obj, name, &ent);
++			} else if (obj->type == OBJ_BLOB) {
++				if (2 <= blobs)
++					die(_("more than two blobs given: '%s'"), name);
++				hashcpy(blob[blobs].sha1, obj->oid.hash);
++				blob[blobs].name = name;
++				blob[blobs].mode = entry->mode;
++				blobs++;
++
++			} else {
++				die(_("unhandled object '%s' given."), name);
++			}
+ 		}
+ 	}
+ 	if (rev.prune_data.nr)
+@@ -451,19 +550,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	else if (ent.nr == 2)
+ 		result = builtin_diff_tree(&rev, argc, argv,
+ 					   &ent.objects[0], &ent.objects[1]);
+-	else if (ent.objects[0].item->flags & UNINTERESTING) {
+-		/*
+-		 * diff A...B where there is at least one merge base
+-		 * between A and B.  We have ent.objects[0] ==
+-		 * merge-base, ent.objects[ents-2] == A, and
+-		 * ent.objects[ents-1] == B.  Show diff between the
+-		 * base and B.  Note that we pick one merge base at
+-		 * random if there are more than one.
+-		 */
+-		result = builtin_diff_tree(&rev, argc, argv,
+-					   &ent.objects[0],
+-					   &ent.objects[ent.nr-1]);
+-	} else
++	else
+ 		result = builtin_diff_combined(&rev, argc, argv,
+ 					       ent.objects, ent.nr);
+ 	result = diff_result_code(&rev.diffopt, result);
