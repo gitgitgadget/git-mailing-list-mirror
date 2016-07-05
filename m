@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0437F2023C
-	for <e@80x24.org>; Tue,  5 Jul 2016 11:23:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22DA42023C
+	for <e@80x24.org>; Tue,  5 Jul 2016 11:24:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932861AbcGELXq (ORCPT <rfc822;e@80x24.org>);
-	Tue, 5 Jul 2016 07:23:46 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50089 "EHLO mout.gmx.net"
+	id S932815AbcGELYB (ORCPT <rfc822;e@80x24.org>);
+	Tue, 5 Jul 2016 07:24:01 -0400
+Received: from mout.gmx.net ([212.227.15.15]:62606 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755089AbcGELXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2016 07:23:33 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MeMOx-1awWLL3jRv-00QCZ8; Tue, 05 Jul 2016 13:23:17
+	id S932720AbcGELXt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jul 2016 07:23:49 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MI4yc-1bIk1Z1BnC-003sJY; Tue, 05 Jul 2016 13:23:35
  +0200
-Date:	Tue, 5 Jul 2016 13:23:16 +0200 (CEST)
+Date:	Tue, 5 Jul 2016 13:23:34 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
@@ -27,105 +27,78 @@ cc:	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
 	Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH v2 03/17] Avoid translating bug messages
+Subject: [PATCH v2 06/17] merge_recursive: abort properly upon errors
 In-Reply-To: <cover.1467717729.git.johannes.schindelin@gmx.de>
-Message-ID: <dec17f8412357d5c99cd29f6cc2bd4fefa2971de.1467717729.git.johannes.schindelin@gmx.de>
+Message-ID: <a816492a3b22749849eef64dce279e313709fbe8.1467717730.git.johannes.schindelin@gmx.de>
 References: <cover.1467199553.git.johannes.schindelin@gmx.de> <cover.1467717729.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:AX3+YOgJu0K3jJqu3YtpdVYC65WguXi07EUyNU20Q98AsFumqBe
- LLbWOUKIzpOHukCGO7dooWd4OzfVs+S/8AvDEsIHTYtvmO+vi1Jj9GVBZEdyV+YOZUmy6lH
- ldus2v2+Buq6AB57apYweZKILz7aVBGcoMA1OE7b91UjoL7qkQY7I0bkBi+tbEe237UZ4f/
- cDuSYSXo0t3gzEgjrpA0A==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:UCx3ZB32IEw=:7BUBWEO0cEUsYIk1WMKxGw
- J3aeKvh8LGcEzeBNXaB3oiY4J/HInCVV6OsaXOPahDJTxFu1d6fVl1zuQQdeNo6rEQVJoVjbp
- fHLJt97EroiBc1Ivn0laC2MV0Z/f9A06MBtm6YMhwJrtyP2pY0eM9sirX+AMoUv17FOB0s9jV
- wgH1rV9IYHYJ8mHNLOsw3q7/WR6K3rPq4l+64Fv3DCTTMbJ23Ssa4KqnfQKdTPe4pujkthlnt
- //uaNyGmf6gbkeRWGXNjtLPQl7C71YM6tRUpy+aUzt2O6W4Sm8FK4dhv7nymn5A8GdAaoHGOa
- Im8zUVhd/32mDewZRSufi5hOEASi9Cfg0dojb5IOMJsPLSAu98TWhyLrZbz84n7LEgwlqk7ZW
- g5+8II6JoTkcDF9W2d0js7imw8eG4saW0hZoBLfyS4kjTdcRoS2+4h9UOTQUFU/em1vFSpRTc
- o/EQqsL0DYxQYs4N3gs4ET9Jo9V7WieV9qKcCEpqjHNVpaAxNJw0MeezxWUWHFk45hOm8aX41
- 02PXtHGv9B7HLe/q+Yc8k9/e2N2F+Vh3qIZy5CYU3CZMFfba6WvpbofYgQlXu7q30LqsiKgD9
- Mdnpg8fr32w1nj9R7AcnBFqqYpYtsDt0G2adX03OkmLo0vbAdGyA9StReNlGo5UQNvt5hDHOe
- r/IKb3wS7vpibUfXAsKNZHwZbRJk4HbXWotxv0qB+QadDfs4Xc7pjTsZZTiEjHzodnbluVRx6
- 1UZOMAyC7IC5KnNHw5w6oJ9ycSQtupAzAFA/erx9uJ3oyIp94Sg2eYdeVR2Xwgqx5apzwIDUq
- CPAgaVy
+X-Provags-ID: V03:K0:NKChO6B1jMDfq0sZn3DAP+/aXhQaytj0e81Y0e3vV1SR8Tf/IAF
+ PZrFdmOYeC1QWEMpxq+5JktuNQdxTo0ICyloGH9ngARYmFaOmgz/5/ZyQkGYn7k7zLD2nhv
+ FrxFmShEQySRpVsxuljRlgmu5ueWtgXI+9IF4MrLtpDEx6BcD+NzG+7v/kLY6mLw93qPy/X
+ RteG6YEuQ3HPUVpfXKgxg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:kvuDxnrYyiU=:c4HDqvjEGS3U/c3v3NUOX3
+ bb3Zie0v9UpMGQFhrBmwVVXXjrLu31UwznTRpmgU2MRJt+C4NkKjPI8xnJ1/1NBDwjSYFChAZ
+ mRITaJuGtR5qRLzBoO8v8mkUwQ2c/MbitfWMc4jmFfnjA0Ab2ESYRDsZnCeMXAmPuyaZTnYXu
+ s84slpmiHoOBzenQsiKZgdIi4nFMnLhDeTHq7fqxF5xLd5iUgP8hAIO/0PSOPkVrUbG/ANzIO
+ 321Vmu+AcZjsirpErmYJ+//jjiDP/filb1KYenN9WvmqsvV0NUl5z84II+B+mKuvKb7/Eqh3W
+ EEVDbIRHnYIsHboTCc6ac4hgsqtQ4f1QVHOlNsSprfZ8D0UYWNGOFlvihJC38UngPH2Hst5jb
+ WFoMUzm9P7FF+K+4w/pD4iy1fGSGuB2GPkVpoSZbFbiY5TblfV+5jrMNotfefW9H22pXCIrIm
+ 2EHfaLUDhYXD3oXNEz9jAgYqXYecTVKpNQI4jc62YJzCzlF9K3B5iT02NTMvtBwaA9m4H513E
+ UjGaDqdqFBnMfl9ol9Vy3clfCHGM0chj8Hq9bXUhsvgLi81AUymNFAz1ivqHVHHmAPUuTq6x7
+ pu6YdA87SyPDUlPFOAS4dHU1lnkToxPWcJG1VAhx3rwH+I3cr9E2mAkxrq5LnmNAAE23J2ukM
+ sLJAsTtyqNXpC74a8lxCCdWpt5LR2tiMjlBQnEQ6KvkDp47avCFMJ1PjsFUuvS7s02DGVWW6c
+ ZFhfatBzmQDc2K+g6sMbxI7FHI9MKo8RZeI9qSYES95uQsX61sxmj+TxF5f3iP422QerlvrLN
+ ThDaOW6
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-While working on the patch series that avoids die()ing in recursive
-merges, the issue came up that bug reports (i.e. die("BUG: ...")
-constructs) should never be translated, as the target audience is the
-Git developer community, not necessarily the current user, and hence
-a translated message would make it *harder* to address the problem.
-
-So let's stop translating the obvious ones. As it is really, really
-outside the purview of this patch series to see whether there are more
-die() statements that report bugs and are currently translated, that
-task is left for another day and patch.
+There are a couple of places where return values indicating errors
+are ignored. Let's teach them manners.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- merge-recursive.c | 6 +++---
- wt-status.c       | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ merge-recursive.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 9849439..e51f8fc 100644
+index 66ce27c..716488b 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -956,7 +956,7 @@ static struct merge_file_info merge_file_1(struct merge_options *o,
- 			if (!sha_eq(a->sha1, b->sha1))
- 				result.clean = 0;
- 		} else
--			die(_("BUG: unsupported object type in the tree"));
-+			die("BUG: unsupported object type in the tree");
- 	}
+@@ -1942,8 +1942,9 @@ int merge_recursive(struct merge_options *o,
+ 		saved_b2 = o->branch2;
+ 		o->branch1 = "Temporary merge branch 1";
+ 		o->branch2 = "Temporary merge branch 2";
+-		merge_recursive(o, merged_common_ancestors, iter->item,
+-				NULL, &merged_common_ancestors);
++		if (merge_recursive(o, merged_common_ancestors, iter->item,
++				NULL, &merged_common_ancestors) < 0)
++			return -1;
+ 		o->branch1 = saved_b1;
+ 		o->branch2 = saved_b2;
+ 		o->call_depth--;
+@@ -1959,6 +1960,8 @@ int merge_recursive(struct merge_options *o,
+ 	o->ancestor = "merged common ancestors";
+ 	clean = merge_trees(o, h1->tree, h2->tree, merged_common_ancestors->tree,
+ 			    &mrtree);
++	if (clean < 0)
++		return clean;
  
- 	return result;
-@@ -1794,7 +1794,7 @@ static int process_entry(struct merge_options *o,
- 		 */
- 		remove_file(o, 1, path, !a_mode);
- 	} else
--		die(_("BUG: fatal merge failure, shouldn't happen."));
-+		die("BUG: fatal merge failure, shouldn't happen.");
- 
- 	return clean_merge;
- }
-@@ -1852,7 +1852,7 @@ int merge_trees(struct merge_options *o,
- 		for (i = 0; i < entries->nr; i++) {
- 			struct stage_data *e = entries->items[i].util;
- 			if (!e->processed)
--				die(_("BUG: unprocessed path??? %s"),
-+				die("BUG: unprocessed path??? %s",
- 				    entries->items[i].string);
- 		}
- 
-diff --git a/wt-status.c b/wt-status.c
-index 311ae7c..75c1162 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -263,7 +263,7 @@ static const char *wt_status_unmerged_status_string(int stagemask)
- 	case 7:
- 		return _("both modified:");
- 	default:
--		die(_("BUG: unhandled unmerged status %x"), stagemask);
-+		die("BUG: unhandled unmerged status %x", stagemask);
- 	}
- }
- 
-@@ -388,7 +388,7 @@ static void wt_status_print_change_data(struct wt_status *s,
- 	status_printf(s, color(WT_STATUS_HEADER, s), "\t");
- 	what = wt_status_diff_status_string(status);
- 	if (!what)
--		die(_("BUG: unhandled diff status %c"), status);
-+		die("BUG: unhandled diff status %c", status);
- 	len = label_width - utf8_strwidth(what);
- 	assert(len >= 0);
- 	if (status == DIFF_STATUS_COPIED || status == DIFF_STATUS_RENAMED)
+ 	if (o->call_depth) {
+ 		*result = make_virtual_commit(mrtree, "merged tree");
+@@ -2015,6 +2018,9 @@ int merge_recursive_generic(struct merge_options *o,
+ 	hold_locked_index(lock, 1);
+ 	clean = merge_recursive(o, head_commit, next_commit, ca,
+ 			result);
++	if (clean < 0)
++		return clean;
++
+ 	if (active_cache_changed &&
+ 	    write_locked_index(&the_index, lock, COMMIT_LOCK))
+ 		return error(_("Unable to write index."));
 -- 
 2.9.0.280.g32e2a70
 
