@@ -2,124 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3BD720706
-	for <e@80x24.org>; Tue,  5 Jul 2016 13:11:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2721C20706
+	for <e@80x24.org>; Tue,  5 Jul 2016 13:25:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755184AbcGENLP (ORCPT <rfc822;e@80x24.org>);
-	Tue, 5 Jul 2016 09:11:15 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35558 "EHLO mx1.imag.fr"
+	id S932995AbcGENZF (ORCPT <rfc822;e@80x24.org>);
+	Tue, 5 Jul 2016 09:25:05 -0400
+Received: from plane.gmane.org ([80.91.229.3]:58114 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751986AbcGENKV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2016 09:10:21 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u65D9hFT032269
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 5 Jul 2016 15:09:43 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u65D9irm028736;
-	Tue, 5 Jul 2016 15:09:44 +0200
-From:	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:	Alexandru Zbarcea <alexz@apache.org>
-Cc:	git@vger.kernel.org, Benoit Person <benoit.person@gmail.com>,
-	=?iso-8859-1?Q?C=E9lestin?= Matte <celestin.matte@ensimag.fr>,
-	David Aguilar <davvid@gmail.com>,
-	Elia Pinto <gitter.spiros@gmail.com>,
-	Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>,
-	Jeff King <peff@peff.net>,
-	Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Masanari Iida <standby24x7@gmail.com>,
-	NGUYEN Kim Thuat <Kim-Thuat.Nguyen@ensimag.imag.fr>,
-	Pavel Volek <Pavel.Volek@ensimag.imag.fr>,
-	Simon Cathebras <simon.cathebras@ensimag.imag.fr>,
-	Stefano Lattarini <stefano.lattarini@gmail.com>
-Subject: Re: [PATCH] add documentation to mw-to-git
-References: <CAGycqjyzXg-FNrp8n9QFE8-uF=OecMyXgHerk_RERiMkpdoz9A@mail.gmail.com>
-Date:	Tue, 05 Jul 2016 15:09:44 +0200
-In-Reply-To: <CAGycqjyzXg-FNrp8n9QFE8-uF=OecMyXgHerk_RERiMkpdoz9A@mail.gmail.com>
-	(Alexandru Zbarcea's message of "Mon, 4 Jul 2016 18:27:31 -0400")
-Message-ID: <vpq7fd0jko7.fsf@anie.imag.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Tue, 05 Jul 2016 15:09:44 +0200 (CEST)
-X-IMAG-MailScanner-Information:	Please contact MI2S MIM  for more information
-X-MailScanner-ID: u65D9hFT032269
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check:	1468328985.44989@yIlZBJNq7sTDnHoi46h1gg
+	id S1754491AbcGENYj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jul 2016 09:24:39 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1bKQL7-0006At-MN
+	for git@vger.kernel.org; Tue, 05 Jul 2016 15:24:37 +0200
+Received: from acvd198.neoplus.adsl.tpnet.pl ([83.11.109.198])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jul 2016 15:24:37 +0200
+Received: from jnareb by acvd198.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jul 2016 15:24:37 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To:	git@vger.kernel.org
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Subject: Re: Missing Package in git Installation Instructions (git-scm.com)
+Date:	Tue, 5 Jul 2016 15:24:23 +0200
+Message-ID: <577BB507.1060603@gmail.com>
+References: <1467670411.13990.4.camel@gmail.com>
+ <alpine.DEB.2.20.1607050807320.8378@virtualbox>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Complaints-To: usenet@ger.gmane.org
+Cc:	git@vger.kernel.org
+X-Gmane-NNTP-Posting-Host: acvd198.neoplus.adsl.tpnet.pl
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <alpine.DEB.2.20.1607050807320.8378@virtualbox>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi, and thanks for your contribution.
+W dniu 2016-07-05 o 08:10, Johannes Schindelin pisze:
+> Hi Chris,
+> 
+> On Tue, 5 Jul 2016, Christoph Michelbach wrote:
+> 
+>> Hi, I noticed that the instructions on https://git-scm.com/book/en/v2/G
+>> etting-Started-Installing-Git don't work without dh-autoreconf
+>> installed on an apt-get system which isn't listed on that site. Can you
+>> fix that or tell me whom to tell about this? The website doesn't offer
+>> contact information. Just tried this on a fresh Ubuntu 16.04
+>> installation.
+> 
+> When you follow that link, do you see this text on the left side?
+> 
+> 	The source of this book is hosted on GitHub.
+> 	Patches, suggestions and comments are welcome.
+> 
+> It links to https://github.com/progit/progit2 and I am sure your bug
+> report would make an excellent contribution to the bug tracker ("Issues")
+> in that repository.
+> 
+> It would probably be even better if you cloned said repository, found the
+> respective file via `git grep apt-get`, fixed it, and opened a Pull
+> Request.
 
-Alexandru Zbarcea <alexz@apache.org> writes:
-
-> Signed-off-by: Alexandru Zbarcea <alexz@apache.org>
-> ---
->  contrib/mw-to-git/Makefile                 |  44 ++++++++++++-
->  contrib/mw-to-git/git-mediawiki.txt        | 100 +++++++++++++++++++++++++++++
->  contrib/mw-to-git/git-remote-mediawiki.txt |   7 --
->  3 files changed, 142 insertions(+), 9 deletions(-)
-
-Git-Mediawiki did not contain any in-tree documentation, but already has a
-user manual:
-
-  https://github.com/moy/Git-Mediawiki/wiki/User-manual
-
-I have no objection to moving the documentation in-tree (I even created
-an issue a long time ago but never did it:
-https://github.com/moy/Git-Mediawiki/issues/9 ). However, you patch
-alone does not do that: it partly duplicates the existing user-manual,
-and complements it with (useful) things that did not appear there (doc
-for "git mw" and a recap of config variables). I think this is a step in
-the wrong direction and I'd very much prefer a single documentation.
-
-Two more things to know about Git-Mediawiki:
-
-https://github.com/moy/Git-Mediawiki/issues/34
-Move Git-Mediawiki's code out of git.git's contrib/
-
-Essentially, having the code in git.git's contrib does not bring much
-today, and reduces the number of potential contributors. There seems to
-be a consensus to move it out of git.git and develop it separately.
-
-One consequence is that asciidoc may not be the best choice as a markup
-format. Having a format that renders directly on GitHub probably
-overweights the benefit of using the same system as Git. GitHub can
-render asciidoc, but needs *.asciidoc file names and won't read the
-config file AFAIK.
-
-https://github.com/moy/Git-Mediawiki/issues/33
-Git-Mediawiki is looking for a new maintainer
-
-Git-Mediawiki was a fun experience, but I'm not using it as much as I
-planed, and my time budget for it approaches 0, so a new maintainer
-would be very much welcome (typically to fix issue #34 above).
-
-> +COMMANDS
-> +--------
-> +help::
-> +    Display help information about git mw.
-> +
-> +preview::
-> +    Parse and render local file into HTML. Preview a page without actually pushing it to the wiki.
-
-Better write the commands completely like
-
-git mw help::
-
-to avoid ambiguity with git-remote-mediawiki (which is a separate
-command).
+Or you can even fix it from a web interface, if you have a GitHub account.
+Behind the scene, GitHub would fork a repository, edit file and create
+a commit, then create a pull request.  Very easy for one-off fixes, assuming
+that you have a GitHub account.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Jakub Narębski
+
+
