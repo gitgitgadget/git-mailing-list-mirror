@@ -7,65 +7,77 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E0A92023C
-	for <e@80x24.org>; Tue,  5 Jul 2016 11:32:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38AF12023C
+	for <e@80x24.org>; Tue,  5 Jul 2016 11:43:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932882AbcGELcZ (ORCPT <rfc822;e@80x24.org>);
-	Tue, 5 Jul 2016 07:32:25 -0400
-Received: from mout.gmx.net ([212.227.17.22]:61874 "EHLO mout.gmx.net"
+	id S1754822AbcGELnT (ORCPT <rfc822;e@80x24.org>);
+	Tue, 5 Jul 2016 07:43:19 -0400
+Received: from mout.gmx.net ([212.227.15.18]:60419 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932699AbcGELcZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2016 07:32:25 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0M0smx-1bZzlG2nwF-00v9Y6; Tue, 05 Jul 2016 13:32:01
+	id S1754779AbcGELnS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jul 2016 07:43:18 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M2L2a-1bd1ZD3rXA-00s2tf; Tue, 05 Jul 2016 13:43:04
  +0200
-Date:	Tue, 5 Jul 2016 13:32:00 +0200 (CEST)
+Date:	Tue, 5 Jul 2016 13:43:01 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Duy Nguyen <pclouds@gmail.com>
-cc:	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/9] Report bugs consistently
-In-Reply-To: <CACsJy8CobWYjpjkkaG=wFK+zUyF3Z9CtFku7eprnX=_08y6KpA@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1607051330220.8378@virtualbox>
-References: <cover.1467199553.git.johannes.schindelin@gmx.de> <8615dc276828a3f99a27ff2eda9909548a7d435e.1467199553.git.johannes.schindelin@gmx.de> <CACsJy8A1ZU8VgBYmQAVC6LmXMVgt5CgvC_w0Y7Y6oX88RFO3dw@mail.gmail.com> <alpine.DEB.2.20.1607020924410.12947@virtualbox>
- <CACsJy8CobWYjpjkkaG=wFK+zUyF3Z9CtFku7eprnX=_08y6KpA@mail.gmail.com>
+To:	Jeff King <peff@peff.net>
+cc:	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Marc Strapetz <marc.strapetz@syntevo.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: topological index field for commit objects
+In-Reply-To: <20160629223007.GA4726@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1607051339040.8378@virtualbox>
+References: <f15a14a5-f39d-9c41-16b9-fe0a48d7450b@syntevo.com> <CAPc5daVC-+0Vr30L_pbcL0GN2OmnGm-+V4tE2WTos_vPRb_S1g@mail.gmail.com> <CAGZ79kY6Ry+DfO90wza_RrVbCRAgNB4N=0W6svuJgvGNxeFh5Q@mail.gmail.com> <xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com>
+ <20160629205647.GA25987@sigill.intra.peff.net> <5774426F.3090000@gmail.com> <20160629220049.GA4416@sigill.intra.peff.net> <xmqqlh1n1w84.fsf@gitster.mtv.corp.google.com> <20160629223007.GA4726@sigill.intra.peff.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:WjHHoJUo5UYUzAKpOOngkuIGAHVUvvKEBBtRB1aDo/iYCTQL2fy
- Qd/B0iF94wJL2tXfQ6VUMX+d83+B8lXa+QkfMeL2L5LcpIfBEuwF7sK6h6ZqwIMxi2ii1KJ
- 9qbUsa15J12P/x9Dvo0gCX9RG8EfmY6uQys8ZZiTgaE0azZzoAt00XGQShLx4kG8oHfA2JX
- 3HoS1vm1rxCXUjmT+OCUw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:YO76ocIFsSE=:qcSonw7N1tE47KW7rqpGQ7
- a2RgqUDEWBQpDU0d2UEP9FyN6rMGn9MWyDMWVcGs9g9yAz02qNQywtxCsHVGzRdT8lQqErMm9
- g5CZSjbvNvCtU05BQk3kHXasOna3g2in/W2qFQnXBQ4O1V5UQzJstIjlRWGXn1H4102BNZ5sB
- prh5j8e9yhCtScKuuicfTBLTKeUAkzvW/RVQGZavPe+D4c1yx0nwR4RMXG57YS7D0g3Q16Kjq
- 7Z4Y/fuM89nezZ6LUsoq6QsTdbIt9XVyNEwNoCKFEWTaDffjKApv4VeN4dM3pSpsYeopvsKKq
- BJMinDtYrsItaZeSNmJ+Le3F8FrYduyYSHHHBIdXA99ORU/Q5yfzxh1kj8/608XfCVYUpXOWr
- 1AYXUCXFPajEMMhsLen8csF9HZllIhn4ZnFjvKwmfdZ8SbNRujvRTY80mV/WjQOuOGqiT+VV3
- eUH6pozd0+0lUjSdNtY5qbj2fGs74z3uxs6PDkster5j7R3S/88PbZ8trdBXAgF9cQI+ghwkv
- YOj7vRPCtxvj5TIDPg5T9R6xiMstjXoqDAacLhASOhS1v6uq7HAK1c2/d9ECC2Zw3i7hAtad9
- Rxj7HQ4OSXEgJefiHB1XdaBlffv+NqzK6Eqi+2s1ch0qB4vmWwykb7udP15g6EU5p7px1Jh/m
- eCXV3zO9YIkIuSPhy23i65eSRboJBFw74+q+hfzOOSn7w4P1NbTFTbWohNzx+y4vY9+bLSe9B
- DtsfNcX85FZNYsti5zbnFCFva9xwIMOXu23BPGbl2DzPCt4YTI6rFiGWb8pQDSMQthCsOwWEc
- ae6Tipa
+X-Provags-ID: V03:K0:zDCwenbvbjfuKnwO2obJtgMLc9m3xN/5lOoIsHBxQTVONnEj5WS
+ edpN2TVzc2gLcgUnS4dFQl30XSpkyai3cp2Z/1yidzJ2FC+RJ3k+35BeY+zybLZkm5/UWuw
+ u/ezV7mI6h9LjwaHLd4eKek4d+FtsHGecadFGF8aS1viVfI40P/RaZ5oOKFAogEs0H7sK4a
+ V4tb9PV0Heg4843fnuETQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:ApsJu5hx5nk=:tKNknOlYBuoFh/XJojg2gO
+ MjADH7hUz+tUSomBa4OGEjkHQbTlq7GxvvttxhvagaB5A0TGormgvIMS8lT37FdCzY4HhF2ys
+ 1ad6j9RklukxWCm9vtEq6mTPyWSrhEahvs684e9SPFUomLGzhHCEBaoq/IKnB2rGxDEPBoStA
+ NUBHRz+4bPMmmf8lKUULwyZs85Mh2HX8tEsbUNu+RvfxENnSEGBI4fvsHsoZdmxGi6075oVWd
+ ph0IzfzN5zDU+9qPyW9ixtGg0uDrC82DUEMqOhfDQYmcf2LoJaxtikAJOaVIoiRKTG0DxzHea
+ YuKNEyrVQbIHdhCfv8Vf+3h5yYjfXH0NsLGJbj2ZZHjUXFRXuuv9s47bIUMjuqr8vrRJjeiIs
+ z6pBBwVTg7o9YLw/ypn7JxSr0ToTrgcmn8/870uMl3/Yj67B0TGTDnUf52w7AC2JDKXn1MyYl
+ EAR0nvcY3NHKtNwKO4ldUHnDB2fXhGsJrOBuwckip447M1k5niZvMO1CGvn606X2j3996fMJx
+ cvf8wnp6d/Qa3+dQRCa7c5c71cvOmuxsJFW4ZNhxFFib+Mq9OfTL/0B9J5EhxVve6qd1X6MBr
+ W3Nrr400d4KwdQ+Z3XTxaszDYRZ+ndgrkG29W9HSw1D1sM8wY1sjqSYbet+isUxOrRg+QWelY
+ FbCmJGf8vCWmTQ/4S1qT+nrMpx5hLmtdKn5cYQavvb89opn3+LJ+9h81wlN3rVTGCjTK2o8X4
+ SCOioCJRLZC8pac84EYLZRq93F2BUSCXMPlLgkGZ6rOLR60rUmQmGZ/dDY1ftPpK7xRMkziix
+ dd87CTA
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Duy,
+Hi Peff,
 
-On Sat, 2 Jul 2016, Duy Nguyen wrote:
+On Wed, 29 Jun 2016, Jeff King wrote:
 
-> You're changing the string and adding more work to translators. So
-> either leave the string untouched, or drop _().
+> I haven't thought hard specifically about merge bases computation, so
+> perhaps that is a case that isn't helped at all.
 
-Thanks. I addressed that concern in v2. Could you please now have a look at
-the parts of the patch series which could possibly regress Git's
-functionality? I am quite a bit more interested in having extra pairs of
-eyes look over those.
+I guess it is not helped by generation numbers.
 
-Thanks,
+But then, we often ask: "is commit A an ancestor of commit B" e.g. to
+check whether we can fast-forward. The way we do it now is to compute the
+merge base (singular: if there are more than one, we stop at the first one
+we found) and then look whether commit A is identical to the merge base.
+
+If we had generation numbers available, then we would have to change those
+computations in order to benefit from them when determining ancestry.
+
+But then, reachability would accelerate that even more than generation
+numbers.
+
+Ciao,
 Dscho
