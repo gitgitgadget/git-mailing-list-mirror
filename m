@@ -7,99 +7,76 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BABC2023C
-	for <e@80x24.org>; Tue,  5 Jul 2016 11:24:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CDE92023C
+	for <e@80x24.org>; Tue,  5 Jul 2016 11:28:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932934AbcGELYh (ORCPT <rfc822;e@80x24.org>);
-	Tue, 5 Jul 2016 07:24:37 -0400
-Received: from mout.gmx.net ([212.227.17.20]:51503 "EHLO mout.gmx.net"
+	id S932676AbcGEL22 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 5 Jul 2016 07:28:28 -0400
+Received: from mout.gmx.net ([212.227.15.15]:56697 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932926AbcGELYe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2016 07:24:34 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MRocn-1arcEF0fiT-00Swpi; Tue, 05 Jul 2016 13:24:26
+	id S1752566AbcGEL21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jul 2016 07:28:27 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LzcIM-1bOC6N0jkQ-014nH3; Tue, 05 Jul 2016 13:28:25
  +0200
-Date:	Tue, 5 Jul 2016 13:24:25 +0200 (CEST)
-From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:	Tue, 5 Jul 2016 13:28:24 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH v2 17/17] merge-recursive: flush output buffer even when
- erroring out
-In-Reply-To: <cover.1467717729.git.johannes.schindelin@gmx.de>
-Message-ID: <aa1ceae751000820b6f2f577646bb3db9f165bb0.1467717730.git.johannes.schindelin@gmx.de>
-References: <cover.1467199553.git.johannes.schindelin@gmx.de> <cover.1467717729.git.johannes.schindelin@gmx.de>
+To:	tarun patanwar <patanwar.tarun@gmail.com>
+cc:	git@vger.kernel.org
+Subject: Re: GIT Integration with Siebel
+In-Reply-To: <CAKK2_6dxO9ckW95PqAFOiAYNwG7uHA0bqcXA2Ev-Xn9z-kyGdA@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1607051325270.8378@virtualbox>
+References: <CAKK2_6ezVLd4ZMa4ToKZYq1Ab0Y5w3VJqj_8-BsUCj8Gf8f+ig@mail.gmail.com> <alpine.DEB.2.20.1607051200590.8378@virtualbox> <CAKK2_6dxO9ckW95PqAFOiAYNwG7uHA0bqcXA2Ev-Xn9z-kyGdA@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:MJW0ivxG95jceJ/DAWT78aPICRVp5wdwXO9DsV66v25voE0y7lR
- 5aC6oGg4oDjaX0IP/OHcjENRPKDaCT9NbbboFF6HErTISetihABoymdK4DHC3yKOVqBVoKh
- mBwRTpjYOfmi2GRn/xwaNHBdjZG8Zs92MnKQP3mNtVfqgqvwD0L0G3WpS+ZYoyWbBDaRSy/
- FMGlIboL6IUrE64OGHzAg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:p6fXF8pUsDA=:7Cpe9eqMUkPEEnpY0dflrT
- 2BX+2TOzPAh1zdfHhHETA+dwodNN+bfv6k2/BRYo1I0bw4CzW9f815TZeEo4Zkb7U/90fEdQW
- WdOO92ZanUpVUghvAEs+tJWhObrA0xfjkQadg9uKFQwwGimE/ckM2bQQF8f1AoTIFr5gktmDv
- ifet60Kyc/sS9wSttvFis128l2p/DKBoMFNQgNl86U2Pj/yCS9rdMgMAcKsgOMwR5w0I8P4Iz
- DTPMgCZ4vtxBDlQx13XHRPDswBVGe/O2FixAh+QM7PQzC4+ZmKOobshLD8Vlw3fHeub7gOGuQ
- Pa6mFag6m0x9HdQjrRGsXPvSgZCrgeQY0Dw+OCvDCAlWP02NZKntqsz5Pyze8LF7WRHMAwIBt
- vGT540R8NWopZfhaupdZ1Uw/X/R7UFLQ0Et03vxaKcQtSv12LfB0i+VR3zsTpVmkBsallkYXc
- liHz5jRmgWJZtZwn655bJBTD7PgLvl2gQ6Icxfi99n96CxhBxTxLmjCyLaphlqcv1JFm9T+JE
- thZihomD2KG2OUqlc1rJuJtQuj5q/dh4g8Dho2Ejc6rLNSLrfqcsKOJeDhfEiY5F89rNF/bDS
- LcnZ6yxwYXun+6D45jf9jpY0Ag28yrGoTD4ht84WrFXboXqtKj5okAok+174CUVhZsw5nwsSG
- 3M/bDW2y+Bd5/D8+w2qfJMJlgVqDfUzyV2uVhgcgJ0K54u1N4eh4/dtwkiM+W4zczwn7Cua/u
- h81D85WGnCYXXwf8hIwMACf5IUni/EY2jrvsfAkjjHKWxhGOs0DWpi1CJEY0VAzFBWPcQyrFk
- VIjW3tg
+X-Provags-ID: V03:K0:YjbeWN979byfspABIeH7zbzbhvEoFPneOj0VQJBpnc6YuK6Qd4E
+ RVtj6f5cuZP2lAFFmPR/U8S1O07TTDRx4tTw+ecSlfeZq4aOyy/2GbwO6wXhtY4Q+0pLrgl
+ xybJYNojYSjCFInvYv0Zkr8wJ+z/vTih0m+TEtcijqgimP/JjwV4SB1AVyPqz3fYAqKBHoE
+ pQScIMFqxPciN4FKzxXWw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:A/AJqD7k12s=:GN2FyuNhoJVO/ISNK7aAJf
+ aL/UaWy3Rf3ZWZUsaVAwTDLkO5iH16DIr+O7P6FC4Brf7so7i0RlCIBFf3bDoo0UgQHyDRvzD
+ 3+bhfMd6MiAVuhe3FA7pKegeXQ+NIjMlVeFugb/AM08h3pD7RK8jqiRTVO8mPiuINmjuS4s8T
+ vPZUH9fHpFr7KGQDFqlgUHeg2wL+lwZvGqg6E02eue+/PWidu1GcpeOseJuwukAnGEO0LSPGI
+ H8mBxwLHeRz/xqI+BLPXfuFkCupkc+MEwTGG3i5j3GPym8b5E5wGR/W77ucUOS7IsIphocna6
+ pL71cUBkWMjTfrgF/gr80dwALDP8Na2wEQmZJ1ByGAKiNMHjJrPUKrY1a6nDBJCgC9Kw0Zwts
+ QfFaZHz/xdkyqwzKGTtSInOGj6BlNM4sPkGkyxRU5ycFIruITqbAhwu17tytZlQO3+oX5UU4e
+ I+0q1fpsHhbkMl/nkx/5l1D0e8aD5rROlbdbfSk60VE58gPbMEMTfARHdHB6DczFjGQWKpix0
+ TE+r6J3iPGRWNQ8Vt1Zri/wIHCcCpIO4Y/VuiLplejcyPgiXDgD1s+KnpJi+Lhr+2wTnsFoAm
+ L1KziSDyuzFZYEMBnqMKlXX7VFbT5PSKImlQG53dTCPZWwHhmmkEPTTV/kMsbzKxuIuTlrCUd
+ jVqNL26yWyure+zBoSF0vo7/Jf4r83m5wRa0KxLvzSbYmtV5pyUNumVOWvGOdpoA6YbbpnHiu
+ w1kF04Nt+Sm98tvknkH6KLyXahR2I/ckbyENJTIZUccYXMD84xBsrzREBA8W0vF+58fEW0Try
+ G/BCsYI
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Ever since 66a155b (Enable output buffering in merge-recursive.,
-2007-01-14), we had a problem: When the merge failed in a fatal way, all
-regular output was swallowed because we called die() and did not get a
-chance to drain the output buffers.
+Hi Tarun,
 
-To fix this, several modifications were necessary:
+On Tue, 5 Jul 2016, tarun patanwar wrote:
 
-- we needed to stop die()ing, to give callers a chance to do something
-  when an error occurred (in this case, flush the output buffers),
+> Siebel is a Oracle Product for CRM implementation, just like SAP and
+> SalesForce. So Siebel as a product provides option to integrate any
+> third party Source Control tool with it.
+> 
+> Integration between Siebel and Source Control tool is facilitated by the
+> batch file (srcctrl.bat) which contains configuration details about
+> Source Control tool. While developers checks in/out their code into
+> Siebel Server, this batch file gets triggered and invokes Source Control
+> command line to check in a version into repository.
+> 
+> I'll be happy to provide further information is needed.
 
-- we needed to delay printing the error message so that the caller can
-  print the buffered output before that, and
+I believe that you will find it more productive to try to explain more
+thoroughly what srcctrl.bat is supposed to do, preferably such that
+anybody who has *not* licensed Siebel knows what you can do with
+srcctrl.bat.
 
-- we needed to make sure that the output buffers are flushed even when
-  the return value indicates an error.
+So it is not so much that you need to provide further information. It is
+more that you want to provide further information, in order to entice
+anybody to help you.
 
-The first two changes were introduced through earlier commits in this
-patch series, and this commit addresses the third one.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- merge-recursive.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index fdc624a..d94f853 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2050,6 +2050,7 @@ int merge_recursive(struct merge_options *o,
- 	o->ancestor = "merged common ancestors";
- 	clean = merge_trees(o, h1->tree, h2->tree, merged_common_ancestors->tree,
- 			    &mrtree);
-+	flush_output(o);
- 	if (clean < 0)
- 		return clean;
- 
-@@ -2058,7 +2059,6 @@ int merge_recursive(struct merge_options *o,
- 		commit_list_insert(h1, &(*result)->parents);
- 		commit_list_insert(h2, &(*result)->parents->next);
- 	}
--	flush_output(o);
- 	if (o->buffer_output < 2)
- 		strbuf_release(&o->obuf);
- 	if (show(o, 2))
--- 
-2.9.0.280.g32e2a70
+Ciao,
+Johannes
