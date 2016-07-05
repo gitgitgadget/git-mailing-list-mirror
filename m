@@ -2,103 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8DC520706
-	for <e@80x24.org>; Tue,  5 Jul 2016 18:11:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9359D20706
+	for <e@80x24.org>; Tue,  5 Jul 2016 19:53:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295AbcGESLh (ORCPT <rfc822;e@80x24.org>);
-	Tue, 5 Jul 2016 14:11:37 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:38474 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751622AbcGESLh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2016 14:11:37 -0400
-Received: by mail-wm0-f46.google.com with SMTP id r201so163456445wme.1
-        for <git@vger.kernel.org>; Tue, 05 Jul 2016 11:11:36 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Y0suaZpZOTraGgBjF/xLD9lDsADFBO2BmGo3tmzGzcc=;
-        b=x4r6uKk4K+QH+6jYob2fmULlqZCCQhJRJ0Fvs9okq68cs2uaIakVPSQHVL/E6xwza2
-         ehveK8cg1pFHyTmzPkbpsviGP1kkhE2bXr9CUN89YUIUOwnnqKgOyzV7IZbavRCeP95J
-         KO2a42ossmWBwu3+gaZO4EfmUJorOfSreN6a+cLo2k/oPY51+NnoTzBtScdSD0oZ8CSq
-         wwh1hK0c8vMOudfiyHNLx4lTxQmsgEeyrVaEQi50q9BLen3WP3rHmL0I/Buz0Fsw8p0O
-         uiDodwRi6XBiI9kp0NvuCjxLFhUV1aywoqURyGibV9Nw8hLBi3gxBbQJdCPBvWeAZ3+y
-         aSQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Y0suaZpZOTraGgBjF/xLD9lDsADFBO2BmGo3tmzGzcc=;
-        b=gF8f5fiN7vadoTQy7Zo/vM19WJ19cwdQiV5ujSM+8j84GVdj3/kWgtrRTvm40e7e+9
-         255AY0wxRjZ4sjOln6YnMC4yZGfML59aKyIoQVUhCu3Gwc+dnT5HPfFyCJUcXobg1scF
-         IMuVG5Ey8CsAP/3xIUqjgTq6WTEz1Du7Ap+VowNkdhSZDjTcV5C/qJe8YGPFJlm8QHBM
-         gyXyDj+6RzCIUJQBTIA2aZMBAoz7JWkORofuAT+7oEqum1mE999zK7SYBgJh+iz8X/LH
-         H98HeuHc1PO3UIUuDYsm+Lr3CyY3qKZ2XluCo+OC+tLVZO2urmoogfNelvGvfsq4/5b7
-         UArQ==
-X-Gm-Message-State: ALyK8tIHwJmyqfT4Y6o5ImKvoe7srGEoH6OqAtKODzo/Y2ofNgU+Q2ca2V3u4oVTYQvIDw==
-X-Received: by 10.194.87.42 with SMTP id u10mr18730653wjz.152.1467742295491;
-        Tue, 05 Jul 2016 11:11:35 -0700 (PDT)
-Received: from christoph-laptop-16-04 (ip-103-010-005-185.cpe.my-wire.de. [185.5.10.103])
-        by smtp.googlemail.com with ESMTPSA id f73sm6456644wmg.1.2016.07.05.11.11.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jul 2016 11:11:34 -0700 (PDT)
-Message-ID: <1467742293.3047.3.camel@gmail.com>
-Subject: Re: [PATCH 0/5] Number truncation with 4+ GB files on 32-bit systems
-From:	Christoph Michelbach <michelbach94@gmail.com>
-To:	=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-	<pclouds@gmail.com>, git@vger.kernel.org
-Cc:	Junio C Hamano <gitster@pobox.com>
-Date:	Tue, 05 Jul 2016 20:11:33 +0200
-In-Reply-To: <20160705170558.10906-1-pclouds@gmail.com>
-References: <1466807902.28869.8.camel@gmail.com>
-	 <20160705170558.10906-1-pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.18.5.2-0ubuntu3 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+	id S1753756AbcGETxG (ORCPT <rfc822;e@80x24.org>);
+	Tue, 5 Jul 2016 15:53:06 -0400
+Received: from mta01.prd.rdg.aluminati.org ([94.76.243.214]:39127 "EHLO
+	mta01.prd.rdg.aluminati.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751525AbcGETxD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Jul 2016 15:53:03 -0400
+Received: from mta01.prd.rdg.aluminati.org (localhost [127.0.0.1])
+	by mta.aluminati.local (Postfix) with ESMTP id 94CC8BF229;
+	Tue,  5 Jul 2016 20:53:00 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by mta01.prd.rdg.aluminati.org (Postfix) with ESMTP id 8D99920D0E;
+	Tue,  5 Jul 2016 20:53:00 +0100 (BST)
+X-Quarantine-ID: <fodDgi_Id9Gi>
+X-Virus-Scanned: Debian amavisd-new at mta01.prd.rdg.aluminati.org
+Received: from mta.aluminati.local ([127.0.0.1])
+	by localhost (mta01.prd.rdg.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id fodDgi_Id9Gi; Tue,  5 Jul 2016 20:52:58 +0100 (BST)
+Received: from john.keeping.me.uk (unknown [10.2.0.10])
+	by mta01.prd.rdg.aluminati.org (Postfix) with ESMTPSA id 329F95FD8F;
+	Tue,  5 Jul 2016 20:52:56 +0100 (BST)
+Date:	Tue, 5 Jul 2016 20:52:52 +0100
+From:	John Keeping <john@keeping.me.uk>
+To:	Bernhard Kirchen <bernhard.kirchen@rwth-aachen.de>
+Cc:	git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+Subject: [PATCH] difftool: fix argument handling in subdirs
+Message-ID: <20160705195252.hzf5hvrcub3g32gg@john.keeping.me.uk>
+References: <OFEE90CED0.0832E3D4-ONC1257FE9.0053D856-C1257FE6.00660366@lancom.de>
+ <155b7339538.2774.8c011de0e6d4f677db1e190e9d3169b9@rwth-aachen.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <155b7339538.2774.8c011de0e6d4f677db1e190e9d3169b9@rwth-aachen.de>
+User-Agent: Mutt/1.6.1 (2016-06-11)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Thank you very much!
+On Mon, Jul 04, 2016 at 08:37:39PM +0200, Bernhard Kirchen wrote:
+> Today I started using --dir-diff and noticed a problem when specifying a
+> non-full path limiter. My diff tool is setup to be meld (*1).
+> 
+> OK while working directory is repo root; also OK while working directory is
+> repo subfolder "actual":
+> git difftool --dir-diff HEAD~1 HEAD -- actual/existing/path
+> => meld opens with proper dir-diff.
+> 
+> NOT OK while working directory is repo subfolder "actual":
+> git difftool --dir-diff HEAD~1 HEAD -- existing/path
+> => nothing happens, as if using "non/such/path" as the path limiter.
+> 
+> Because "git diff HEAD~1 HEAD -- existing/path" while the working directory
+> is the repo subfolder "actual" works, I epxected the difftool to work
+> similarly. Is this a bug?
 
+I think it is, yes.  The patch below fixes it for me and doesn't break
+any existing tests, but I still don't understand why the separate
+$diffrepo was needed originally, so I'm not certain this won't break
+some other corner case.
+
+-- >8 --
+When in a subdirectory of a repository, path arguments should be
+interpreted relative to the current directory not the root of the
+working tree.
+
+The Git::repository object passed into setup_dir_diff() is configured to
+handle this correctly but we create a new Git::repository here without
+setting the WorkingSubdir argument.  By simply using the existing
+repository, path arguments are handled relative to the current
+directory.
+
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ git-difftool.perl | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
+
+diff --git a/git-difftool.perl b/git-difftool.perl
+index ebd13ba..c9d3ef8 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -115,16 +115,9 @@ sub setup_dir_diff
+ {
+ 	my ($repo, $workdir, $symlinks) = @_;
+ 
+-	# Run the diff; exit immediately if no diff found
+-	# 'Repository' and 'WorkingCopy' must be explicitly set to insure that
+-	# if $GIT_DIR and $GIT_WORK_TREE are set in ENV, they are actually used
+-	# by Git->repository->command*.
+ 	my $repo_path = $repo->repo_path();
+-	my %repo_args = (Repository => $repo_path, WorkingCopy => $workdir);
+-	my $diffrepo = Git->repository(%repo_args);
+-
+ 	my @gitargs = ('diff', '--raw', '--no-abbrev', '-z', @ARGV);
+-	my $diffrtn = $diffrepo->command_oneline(@gitargs);
++	my $diffrtn = $repo->command_oneline(@gitargs);
+ 	exit(0) unless defined($diffrtn);
+ 
+ 	# Build index info for left and right sides of the diff
+@@ -176,12 +169,12 @@ EOF
+ 
+ 		if ($lmode eq $symlink_mode) {
+ 			$symlink{$src_path}{left} =
+-				$diffrepo->command_oneline('show', "$lsha1");
++				$repo->command_oneline('show', "$lsha1");
+ 		}
+ 
+ 		if ($rmode eq $symlink_mode) {
+ 			$symlink{$dst_path}{right} =
+-				$diffrepo->command_oneline('show', "$rsha1");
++				$repo->command_oneline('show', "$rsha1");
+ 		}
+ 
+ 		if ($lmode ne $null_mode and $status !~ /^C/) {
 -- 
-With kind regards
-Christoph Michelbach
+2.9.0.465.g8850cbc
 
-On Tue, 2016-07-05 at 19:05 +0200, Nguyễn Thái Ngọc Duy wrote:
-> Since I now could reproduce the problem that Christoph showed, I
-> decided to send the good patches out. To sum up, we use "unsigned
-> long" in some places related to file size. On 32-bit systems, it's
-> limited to 32 bits even though the system can handle files larger
-> than
-> that (off_t is 64-bit). This fixes it.
-> 
-> clang -Wshorten-64-to-32 is very helpful to spot these problems. I
-> have a couple more patches to clean all these warnings, but some need
-> more code study to see what is the right way to do.
-> 
-> Most of the rest seems harmless, except for the local variable "size"
-> in builtin/pack-objects.c:write_one(). I might send 6/5 for that one.
-> 
-> Nguyễn Thái Ngọc Duy (5):
->   pack-objects: pass length to check_pack_crc() without truncation
->   sha1_file.c: use type off_t* for object_info->disk_sizep
->   index-pack: correct "len" type in unpack_data()
->   index-pack: report correct bad object offsets even if they are
-> large
->   index-pack: correct "offset" type in unpack_entry_data()
-> 
->  builtin/cat-file.c     |  4 ++--
->  builtin/index-pack.c   | 23 ++++++++++++-----------
->  builtin/pack-objects.c |  2 +-
->  cache.h                |  2 +-
->  sha1_file.c            |  2 +-
->  5 files changed, 17 insertions(+), 16 deletions(-)
-> 
