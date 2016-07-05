@@ -2,89 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4774E2101D
-	for <e@80x24.org>; Tue,  5 Jul 2016 06:11:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5712103E
+	for <e@80x24.org>; Tue,  5 Jul 2016 09:18:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754060AbcGEGKv (ORCPT <rfc822;e@80x24.org>);
-	Tue, 5 Jul 2016 02:10:51 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61728 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754595AbcGEGKt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2016 02:10:49 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MN1C4-1bDivu1J3Q-006c3r; Tue, 05 Jul 2016 08:10:46
- +0200
-Date:	Tue, 5 Jul 2016 08:10:45 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Christoph Michelbach <michelbach94@gmail.com>
-cc:	git@vger.kernel.org
-Subject: Re: Missing Package in git Installation Instructions (git-scm.com)
-In-Reply-To: <1467670411.13990.4.camel@gmail.com>
-Message-ID: <alpine.DEB.2.20.1607050807320.8378@virtualbox>
-References: <1467670411.13990.4.camel@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1754589AbcGEJSD (ORCPT <rfc822;e@80x24.org>);
+	Tue, 5 Jul 2016 05:18:03 -0400
+Received: from mail-oi0-f51.google.com ([209.85.218.51]:35945 "EHLO
+	mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751248AbcGEJSB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jul 2016 05:18:01 -0400
+Received: by mail-oi0-f51.google.com with SMTP id f189so221647197oig.3
+        for <git@vger.kernel.org>; Tue, 05 Jul 2016 02:18:00 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=F8TktG/RQ+MdfV1e1NhnxPrtT+oTXSjAUQcXCQH+GIs=;
+        b=RMfJMOHa4mxeAQqjVZ/56cyIwJUTWbiTJ8QI1R379SpcU65lu4AFq+okl7T9y4/zPq
+         +FK+lDG+TdD11Uz+f0HSnNFvSF40h7ybwv6lZPLO4CEukJd3coEH4FZ/Q6e5NE/ZpA7z
+         uQXwdz7UBsxyhV1j6ztK45lgtqAmHezQ+1/zFIgh9nE1q/AG72Gmmlb/BVPYG+zuGdk0
+         vl6kQQG8b8Dvk4AAP2gcjMZkxlD90AqqbhACJ4OfTebu3u0JnV0xv/Mi4vIWbUGRy/At
+         qz8c3QJjSBnPMvnrbfLSNBc9YDR/5ONqj930HzekRvnzHNTAknNZvdBM5Y1vi0y4ph8S
+         wsQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=F8TktG/RQ+MdfV1e1NhnxPrtT+oTXSjAUQcXCQH+GIs=;
+        b=IbL2kdFHYI4wJR86l7j+OUJ1dS6h8Foi3MK6XogNzbLNc+PrlGgLg/ee0x+XOlO6Q+
+         LWkD4LWE7/AbiY7CCda+pe15qf6H+OBAfQBCbDJEjyV3FI36h+Dw5IkchDWi/KfoqkCm
+         YiPUn05HV9mMBOEPfNRUkKkxZQkTrXn3frvOGOaioSmJBtFDGWL64QeLNAc4hTZLcd+5
+         Rqe3v6/0lZgcimaTNdwXpVzH7RNa6b2p2MZKYhjAE/flOzwuLs9NZzcbwrqWQNOnDYwx
+         7F7qRzXr1zZDmc1ZgqcZmPEL3/KZOhYTawKQtD+0Ej7N7DX0AV4+dfFDcMTWGcHpSawF
+         Ghmw==
+X-Gm-Message-State: ALyK8tKHiuZk6OW+LN0v8D4k9nB2q78yP8pnJ61iMqCvb3RTw7upefpSyraSJFB3pqATc7Wp8uDem4d/WVRunQ==
+X-Received: by 10.157.27.103 with SMTP id l94mr9909284otl.54.1467710280200;
+ Tue, 05 Jul 2016 02:18:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-540508235-1467699046=:8378"
-X-Provags-ID: V03:K0:z1Q4JWdlev6Zs+urjjjMLojlW+xrDWwSDMOrcGst0ZYGjVez2+S
- UUTzvpJKL1eVg+cAwXVcmQg1rAvM7e6JeK1+RkFOYpaFeFfiYkKCpwx3wQxITb2izmCZCp6
- IMQmV2Oj2LwZoW844Kvgr9FBtZZZLq+gH3rv8LvxF796o8GtSrFcfBBZ+fxDcYf1ryn8CC8
- Cpn1b8ENwcLtqTLZWxKWA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:QTdaRoougyA=:Fd0A74FyN84sSvMf0+B72R
- Cdus6wLHKsUgmXkfSoUWMRX8OD8qCofjHKx8pbICfJmB355xDSeV6+FbrOTueH7acnOpIGIiK
- 0d5nERPrzUKpOvNPdV8cvNgvprlOxNMy+yV4MHIsEg7i7sSl8TCCbYF+6gi20XMalTXBej+R3
- 0O0d2uH9cFumd0ez2ywG5LVe/fFISZgdDyhqT715sOoYtFulWyf7qUKKmpLKuPOITHAw+vV96
- vMo/1KAES93plzbmB3DbM12O4koEQ0FLmS8zaDXbeqf7TVBy/iLG3CjgE4AGLH0tCSdEtjdIq
- gwCnr4wCgff5IViXsxvGrYciys9eFeW8dsDmsFiuJJljiBkmDXM8q4yZeLLWEF2+FzZN1D60w
- DLuff0GdKfhnuL+XyMmLEeeHDdzoLtaMKVqk27Q/8JHToL6Xq7aL2qOV7R3aj2+UEdBz4yBPd
- ROhhkFInV42DcvCpDW93INAa0xwpVR8JXcxR5E1XiFdrpwYTUUpgJ+g9FcxP6UfoYXtDJ3ywX
- 05GzVQ7bUVJ14qiQvmECGctjaeNES7S8uhjWRDBoS/Y98HW3RCtE4LqruR5n2b2qfsEvgcenf
- +VVFeU61Ot3plDbYNpjpAadMQJqng/LOgF49ANhkEQtujyGXzyFMdmElGwQy6Zmt+Pwn4L/F/
- icf+COd1N4uBiPln5OUel8n7bOxuxwh923/tqSBFveHsSQcxZTLZdw9ehgZBomYTAx6Afi2F/
- VcCMS7lMfi2383xHQVZro0RVQBvQbAaVnOfnDp6oLAGRQweuVbvbzl8oeGWmMWLLDZNQ3Zond
- P7Zws5O
+Received: by 10.157.22.241 with HTTP; Tue, 5 Jul 2016 02:17:59 -0700 (PDT)
+From:	tarun patanwar <patanwar.tarun@gmail.com>
+Date:	Tue, 5 Jul 2016 10:17:59 +0100
+Message-ID: <CAKK2_6ezVLd4ZMa4ToKZYq1Ab0Y5w3VJqj_8-BsUCj8Gf8f+ig@mail.gmail.com>
+Subject: GIT Integration with Siebel
+To:	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Dear GIT Team,
 
---8323329-540508235-1467699046=:8378
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+We are trying to integrate GIT with Siebel 8.1 for source code
+control. We are not able to progress further since there seems to be
+no documentation available for the same.
 
-Hi Chris,
+Siebel provides a batch control file (srcctrl.bat) which can be
+amended for Source Control Toll integration.
 
-On Tue, 5 Jul 2016, Christoph Michelbach wrote:
+In the past we have used Microsoft VSS and SVN for source control,
+Below is a example srcctrl.bat file for reference.
 
-> Hi, I noticed that the instructions on=C2=A0https://git-scm.com/book/en/v=
-2/G
-> etting-Started-Installing-Git=C2=A0don't work without=C2=A0dh-autoreconf
-> installed on an apt-get system which isn't listed on that site. Can you
-> fix that or tell me whom to tell about this? The website doesn't offer
-> contact information. Just tried this on a fresh Ubuntu 16.04
-> installation.
+Any help on this will be greatly appreciated.
 
-When you follow that link, do you see this text on the left side?
+rem=======================================================
+rem =============== User defined parameters ======================
+rem ========================================================
+set PATH=C:\Program Files\TortoiseSVN\bin;%PATH%
+set SVN_URL=svn://svn_ip_address/svn_example
+set SVN_REPOS=trunk
+set SRC_USR=yourusername
+set SRC_PSWD=yourpassword
+set LOGFILE=D:\development\projects\svn_example\svn_integration.log
+set WORKING_DIR=D:\development\projects\svn_example
+rem LOGFILE SHOULD NOT HAVE SPACES IN ITS PATH
+rem ================================================
+rem ====================================================
 
-=09The source of this book is hosted on GitHub.
-=09Patches, suggestions and comments are welcome.
 
-It links to https://github.com/progit/progit2 and I am sure your bug
-report would make an excellent contribution to the bug tracker ("Issues")
-in that repository.
-
-It would probably be even better if you cloned said repository, found the
-respective file via `git grep apt-get`, fixed it, and opened a Pull
-Request.
-
-Ciao,
-Johannes
---8323329-540508235-1467699046=:8378--
+Thanks,
+Tarun Patanwar
++44-7778471437
