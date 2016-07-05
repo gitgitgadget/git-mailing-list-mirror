@@ -2,61 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_BCC,PYZOR_CHECK,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E63DD2070C
-	for <e@80x24.org>; Tue,  5 Jul 2016 20:40:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58BF72070C
+	for <e@80x24.org>; Tue,  5 Jul 2016 20:44:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752541AbcGEUkS (ORCPT <rfc822;e@80x24.org>);
-	Tue, 5 Jul 2016 16:40:18 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:35279 "EHLO
-	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751880AbcGEUkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2016 16:40:17 -0400
-Received: by mail-yw0-f196.google.com with SMTP id v77so9284572ywg.2
-        for <git@vger.kernel.org>; Tue, 05 Jul 2016 13:40:17 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=kCqvVbnduzUglHqZ8aWuEyn2xbu0y4WlXwV/qH9K1TE=;
-        b=zoTsIUspGw2tvLl3tcZ3RInMJiB9s8K0mUfczoatQOps/5p7V1nX051jfPd5h9obSV
-         sfMIgPGdn4hFzyuIfJiHNS8FmKBqIabeLC10ek3nd7sIZzNahS0WKeBaR+iU7sIyv3Ga
-         54HmCzJZheO6aenYKBs5oW0+Wls+hIgLDGG7WMbJQaQ9brVVRAHosmfqgnbwFGyqf++d
-         9U5uRQzJu2eWwlOq8nw+Zvft0DNF1jBRg/lj4Ao2icYPYNWMN6Vup51Nppj1j9M4qYdt
-         31u1RGy691mJyfBQrRWqe2Zh6lSIcHxe8pdbj6n9x3xsJx5zmO7b3qyQJdPoEizvVvgZ
-         mwXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=kCqvVbnduzUglHqZ8aWuEyn2xbu0y4WlXwV/qH9K1TE=;
-        b=TNWlbZGZ/OI4MbkcJrYrN08ZVsnRedVmnc3gfAWxFk+nmq48jAd4TaoUirE7tvqebk
-         La0O7Uonp4xJ9U0CTa0L013g0LCYvlYuTMG5otWRNik55BZEz+wvLTkeBuJqvG3dPo9Y
-         XMyJJaPWC5T6ikwIbQgS0xSbjMSxq7YTWIbVpOjfiMZ5cDXbeBiarNjGmtF5o1qaE5EM
-         jZfCup9097z1EtOoWtgbz5Fhmvi2qf9gulHLef/dRSzY9KixfSDWBh/8SNzi74+WJ/fG
-         E0sp64VFIpWdnvlVo6xS3Ru+/p6uz8aNcN2JIPT3KclwUskgFJjxYPBxILjR2J5l4rbl
-         1FdQ==
-X-Gm-Message-State: ALyK8tJ0sfpk6PDiBUjOyk1ELJeGPeXwBZpUCztGlKZeAvYpPxvaWgKo75RscFrM1LOVCXGUkd4MUI4PL4nOJA==
-X-Received: by 10.37.82.4 with SMTP id g4mr6873796ybb.103.1467751216904; Tue,
- 05 Jul 2016 13:40:16 -0700 (PDT)
+	id S1754685AbcGEUov (ORCPT <rfc822;e@80x24.org>);
+	Tue, 5 Jul 2016 16:44:51 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40655 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752151AbcGEUou (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jul 2016 16:44:50 -0400
+Received: (qmail 15121 invoked by uid 102); 5 Jul 2016 20:44:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 Jul 2016 16:44:50 -0400
+Received: (qmail 18161 invoked by uid 107); 5 Jul 2016 20:45:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 Jul 2016 16:45:08 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Jul 2016 16:44:47 -0400
+Date:	Tue, 5 Jul 2016 16:44:47 -0400
+From:	Jeff King <peff@peff.net>
+To:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] revert: clarify seemingly bogus OPT_END repetition
+Message-ID: <20160705204447.GB14496@sigill.intra.peff.net>
+References: <5b424bad41ca027b39eea4b1fa9d87df0a489e0f.1467719888.git.johannes.schindelin@gmx.de>
+ <20160705202820.GA14496@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.37.10.195 with HTTP; Tue, 5 Jul 2016 13:40:16 -0700 (PDT)
-Reply-To: Meiritbaby@hotmail.com
-From:	Meirit Leeba <yuippk25@gmail.com>
-Date:	Tue, 5 Jul 2016 20:40:16 +0000
-Message-ID: <CALi-vsmWdfiKNwgACdDgKdbjYVAP7CGihDFjheGUC--Axf==jw@mail.gmail.com>
-Subject: Hello..
-To:	undisclosed-recipients:;
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160705202820.GA14496@sigill.intra.peff.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
--- 
-Hello,
+On Tue, Jul 05, 2016 at 04:28:20PM -0400, Jeff King wrote:
 
-Can i talk with you..?
+> I wonder if parse_options_concat should simply allocate a new list
+> (after computing the total required size). I guess this is the only
+> caller, though, so perhaps it's not the end of the world. In the
+> meantime, your patch is certainly an improvement.
+
+Something like the patch below.
+
+I admit this isn't buggy _now_, so this is potentially just churn. It
+does make further patches look nicer, though (they don't have to add
+apparently meaningless OPT_END() slots).
+
+-- >8 --
+Subject: [PATCH] parse_options: allocate a new array when concatenating
+
+In exactly one callers (builtin/revert.c), we build up the
+options list dynamically from multiple arrays. We do so by
+manually inserting "filler" entries into one array, and then
+copying the other array into the allocated space.
+
+This is tedious and error-prone, as you have to adjust the
+filler any time the second array is modified (although we do
+at least check and die() when the counts do not match up).
+
+Instead, let's just allocate a new array.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/revert.c   | 13 ++++---------
+ parse-options-cb.c | 29 +++++++++++++++++------------
+ parse-options.h    |  2 +-
+ 3 files changed, 22 insertions(+), 22 deletions(-)
+
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 56a2c36..4e69380 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -76,7 +76,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 	const char * const * usage_str = revert_or_cherry_pick_usage(opts);
+ 	const char *me = action_name(opts);
+ 	int cmd = 0;
+-	struct option options[] = {
++	struct option base_options[] = {
+ 		OPT_CMDMODE(0, "quit", &cmd, N_("end revert or cherry-pick sequence"), 'q'),
+ 		OPT_CMDMODE(0, "continue", &cmd, N_("resume revert or cherry-pick sequence"), 'c'),
+ 		OPT_CMDMODE(0, "abort", &cmd, N_("cancel revert or cherry-pick sequence"), 'a'),
+@@ -91,13 +91,9 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 			N_("option for merge strategy"), option_parse_x),
+ 		{ OPTION_STRING, 'S', "gpg-sign", &opts->gpg_sign, N_("key-id"),
+ 		  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+-		OPT_END(),
+-		OPT_END(),
+-		OPT_END(),
+-		OPT_END(),
+-		OPT_END(),
+-		OPT_END(),
++		OPT_END()
+ 	};
++	struct option *options = base_options;
+ 
+ 	if (opts->action == REPLAY_PICK) {
+ 		struct option cp_extra[] = {
+@@ -108,8 +104,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 			OPT_BOOL(0, "keep-redundant-commits", &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
+ 			OPT_END(),
+ 		};
+-		if (parse_options_concat(options, ARRAY_SIZE(options), cp_extra))
+-			die(_("program error"));
++		options = parse_options_concat(options, cp_extra);
+ 	}
+ 
+ 	argc = parse_options(argc, argv, NULL, options, usage_str,
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 239898d..2d87520 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -117,19 +117,24 @@ int parse_opt_tertiary(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
+ 
+-int parse_options_concat(struct option *dst, size_t dst_size, struct option *src)
++struct option *parse_options_concat(struct option *a, struct option *b)
+ {
+-	int i, j;
+-
+-	for (i = 0; i < dst_size; i++)
+-		if (dst[i].type == OPTION_END)
+-			break;
+-	for (j = 0; i < dst_size; i++, j++) {
+-		dst[i] = src[j];
+-		if (src[j].type == OPTION_END)
+-			return 0;
+-	}
+-	return -1;
++	struct option *ret;
++	size_t i, a_len = 0, b_len = 0;
++
++	for (i = 0; a[i].type != OPTION_END; i++)
++		a_len++;
++	for (i = 0; b[i].type != OPTION_END; i++)
++		b_len++;
++
++	ALLOC_ARRAY(ret, st_add3(a_len, b_len, 1));
++	for (i = 0; i < a_len; i++)
++		ret[i] = a[i];
++	for (i = 0; i < b_len; i++)
++		ret[a_len + i] = b[i];
++	ret[a_len + b_len] = b[b_len]; /* final OPTION_END */
++
++	return ret;
+ }
+ 
+ int parse_opt_string_list(const struct option *opt, const char *arg, int unset)
+diff --git a/parse-options.h b/parse-options.h
+index ea4af92..78f8384 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -215,7 +215,7 @@ extern int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 
+ extern int parse_options_end(struct parse_opt_ctx_t *ctx);
+ 
+-extern int parse_options_concat(struct option *dst, size_t, struct option *src);
++extern struct option *parse_options_concat(struct option *a, struct option *b);
+ 
+ /*----- some often used options -----*/
+ extern int parse_opt_abbrev_cb(const struct option *, const char *, int);
+-- 
+2.9.0.320.gd3e6182
+
