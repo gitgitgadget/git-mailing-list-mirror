@@ -2,83 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1842B2070C
-	for <e@80x24.org>; Wed,  6 Jul 2016 13:16:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B3E72070C
+	for <e@80x24.org>; Wed,  6 Jul 2016 14:41:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754040AbcGFNQk (ORCPT <rfc822;e@80x24.org>);
-	Wed, 6 Jul 2016 09:16:40 -0400
-Received: from mout.gmx.net ([212.227.17.20]:60220 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754078AbcGFNQj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2016 09:16:39 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MfmZs-1axleQ1ytQ-00NCxu; Wed, 06 Jul 2016 15:16:10
- +0200
-Date:	Wed, 6 Jul 2016 15:16:08 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Michael J Gruber <git@drmicha.warpmail.net>
-cc:	Jacob Keller <jacob.keller@gmail.com>, Jeff King <peff@peff.net>,
-	Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Over-/underquoting, was Re: [PATCH] revert: clarify seemingly bogus
- OPT_END repetition
-In-Reply-To: <d1e0e688-a309-2a01-4ee2-c1af9d71cea0@drmicha.warpmail.net>
-Message-ID: <alpine.DEB.2.20.1607061514200.6426@virtualbox>
-References: <5b424bad41ca027b39eea4b1fa9d87df0a489e0f.1467719888.git.johannes.schindelin@gmx.de> <20160705202820.GA14496@sigill.intra.peff.net> <20160705204447.GB14496@sigill.intra.peff.net> <CA+P7+xqODaXn2NFY-=Ktr1stzR1mu6_ZO7Lfgj7AEzhzxhLAbw@mail.gmail.com>
- <alpine.DEB.2.20.1607060857240.6426@virtualbox> <d1e0e688-a309-2a01-4ee2-c1af9d71cea0@drmicha.warpmail.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1754017AbcGFOlU (ORCPT <rfc822;e@80x24.org>);
+	Wed, 6 Jul 2016 10:41:20 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62830 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753825AbcGFOlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2016 10:41:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 676BB26758;
+	Wed,  6 Jul 2016 10:41:18 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PzAyBt3ritqlZUk+3MKqSuQ/16c=; b=KWUFhX
+	D0OpGmNJbOlZoR7a7C6bJq6gAHpLXC4cNPAk31AbiVakdCTkRdbA8+7vwPS5DWwj
+	jlzuhRf0MCTor6+rkJ357XnywwiIuehBAnlIzBrIHKFwwqYC34rEuNXzvqXVjOos
+	CZR8ga5phm/CNhtGXpqmCY4PNoTLVm6VzpcXo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gWXEZI1oVcmxC2Tu5xToD+JS0PmMb3Ex
+	3W2ZmjbT+1kjFPJLFODcxlV3R2kdAZXcVT6AvynubjZywRl61xPea+jz/URrn2cX
+	n1exThfWZIm+JyOHNf/hw7ZDvzZFTVv0vTPS/PMMoAs2J29nstthbaRelIT7lAWQ
+	LcH4NP5yq8g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5EA0C26757;
+	Wed,  6 Jul 2016 10:41:18 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D485926756;
+	Wed,  6 Jul 2016 10:41:17 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2016, #01; Fri, 1)
+References: <xmqqmvm0vry4.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1607021306320.12947@virtualbox>
+Date:	Wed, 06 Jul 2016 07:41:15 -0700
+In-Reply-To: <alpine.DEB.2.20.1607021306320.12947@virtualbox> (Johannes
+	Schindelin's message of "Sat, 2 Jul 2016 13:09:42 +0200 (CEST)")
+Message-ID: <xmqqinwivng4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:NkL4xF65SSLiWn598iZBztjcgg46tmtQ/CpPf+nUCpIfkFnO27s
- 1ymdLqVzFpCFLRX2vEjLEUzKeECsFFaBURl9kj24QVu6/N7Jsr9NrBUF0M1VIU2Ig1g2CNA
- QiJDULHsCRR0Dro8X3muKW85sQvKZZYmtWyDoHyTAkJXXq+o2lBytbVUVSoiISRYWSTwa7f
- tRExjow/I3yUq2IeA2Q8g==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:XOPj9NvrWB8=:JD4QjinmQJJo+7rHH3hurl
- oTAR2fyTbIeKKgfOQooChiqv26uMZ+5ih/XupgfigR4EbrbR2PxNtVOqEnOIyMI2dMSAutkIJ
- 9QmdP7TC8Jkj/OhK1skOR6l3jFI57O0DJqj9cT6yyau5ubGnyobQF8K/2J8hBUrhMyT8a2PGS
- yrY23VI39lmI8rYu6J1L3hDi1uT2aP6K9XShpq1Aqr3GydSGMIY8Q137c1r+ypbgbd4rESZGY
- EKMnhL5kdIlI/FeaMRTGUko9unAe3ygIOYwiSrDy1d3iRCjsKLL1vqKRueCR28pRZML+sKgtU
- ygeMG/kbPBT1tkI3TzD1yANZVQeWLaubve07irbEDm9ONIKJL264Lz4KoXy2zPTR0osufffGk
- u2lxmuj/F2SQHxNxbbDSocrrrtzzYIAHRVzAGAKWjGMgNkTxHwpPfC0Q8XAd3jRGE/K62sRDC
- u3gtgs16wniOOUTzWPxDcWYmpcTdFKHdtQ7kyk93fQSMcOrzCXfY9y37/zzqeFuITwfQXQ4l3
- VALE2B3L2FCZujEr84E4jkfUko3qbLlgy0TQmh9ncSICf+d4hWZdJ3GX/WKa/qi+ekvEaXnCY
- dyqesSHiQbeDkKEFM1BZdc+0X6S8P3DLOjYwEG2aSzxm8+23tyeJcfEtJDVPDoxbQNZSMOE/p
- U6csxzhrM5vcSwXBTHGGSTvzbgrLFidBwQI2icl/KtqthwFsPLyv3/eo7bw3tXzqFvCqPIgOk
- 1bicNOAQdI/Hv3o54kKsdwwB3AogefPUFg6tww1wUVtOP+4qGuPX/K1RJkJUzxE7/Oo6PdW7t
- Bj/AeMF
+Content-Type: text/plain
+X-Pobox-Relay-ID: B2AEB2FC-4387-11E6-B04B-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Michael,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Wed, 6 Jul 2016, Michael J Gruber wrote:
+> Hi Junio,
+>
+> On Fri, 1 Jul 2016, Junio C Hamano wrote:
+>
+>> * jc/t2300-setup (2016-06-22) 1 commit
+>>   (merged to 'next' on 2016-06-28 at 62b902a)
+>>  + t2300: "git --exec-path" is not usable in $PATH on Windows as-is
+>> 
+>>  Portability fix for Windows.
+>> 
+>>  Will merge to 'master'.
+>
+> Would you mind cherry-picking this onto `maint`, too? I just noticed that
+> the test suite does not pass here because `maint` has fe17fc0 (t2300: run
+> git-sh-setup in an environment that better mimics the real life,
+> 2016-06-01).
 
-> Johannes Schindelin venit, vidit, dixit 06.07.2016 09:01:
-> 
-> > BTW Jacob, would you terribly mind cutting the quoted parts properly (I
-> > cut 112 lines)? It may not seem like much, but I seem to spend more and
-> > more of my email time budget on skimming unaddressed remainders of quoted
-> > mails, and I would much rather spend that time on something productive.
-> 
-> OTOH, I often have to look up the original message because people cut
-> too much, or because they take one sentence out of context.
+s/cherry-pick/merge/;
 
-And others quote too much. In your case, the reference to Peff's patch was
-not at all what you referred to.
+You'd notice I was prepared if you did "git log maint..jc/t2300-setup" ;-)
 
-> It is not unheard of that a MUA can collapse and expand properly quoted
-> parts on request...
+> While at it, it would be nice if this patch:
+>
+>> * js/mingw-parameter-less-c-functions (2016-06-20) 1 commit
+>>   (merged to 'next' on 2016-06-28 at e673c65)
+>>  + mingw: let the build succeed with DEVELOPER=1
+>> 
+>>  Some platform-specific code had non-ANSI strict declarations of C
+>>  functions that do not take any parameters, which has been
+>>  corrected.
+>> 
+>>  Will merge to 'master'.
+>
+> ... also found its way into maint; This would make it easier for me to
+> backport fixes (as I started to rely on DEVELOPER=1 to warn about issues).
 
-Sure. Show me some kick-ass, scriptable mail client and I will have a
-look.
+Likewise.
 
-Ciao,
-Johannes
+I'm sure I'll forget, so if you can please remind me a few weeks
+after these are merged to 'master'.
+
+Thanks.
