@@ -2,88 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4E192070C
-	for <e@80x24.org>; Wed,  6 Jul 2016 15:26:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97E5A2070C
+	for <e@80x24.org>; Wed,  6 Jul 2016 15:30:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932150AbcGFP0H (ORCPT <rfc822;e@80x24.org>);
-	Wed, 6 Jul 2016 11:26:07 -0400
-Received: from mail-it0-f54.google.com ([209.85.214.54]:37119 "EHLO
-	mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754573AbcGFP0F convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Jul 2016 11:26:05 -0400
-Received: by mail-it0-f54.google.com with SMTP id f6so108512263ith.0
-        for <git@vger.kernel.org>; Wed, 06 Jul 2016 08:25:59 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=kfT+YqMUEcgNZKzFHVRH+WUlg+8Lih70KbOINnUB72o=;
-        b=ndj6FjuK2FwzEEFGDmmTghpWFgoR10lrwTBjasiV2+O7KqWMkgG12BE2+L2aJmxG0u
-         +TbC48ecN+5Ee2BkQDXzvTYh7wH0rHqwCzaBgAWSEim+EVdERjpiLQTlGOiyM2TBtwP0
-         92eCwWYCwG+sX4k7fjieE4365cvIfSKj3f3JecZTdrtwRJFMeqB04ihEb5S7xprDAdUS
-         cAT6PPWaabNU224/kjwSKRKHpMjiYENhpaOtOYOnY3czBGBaKrF4yBtvRio3fZVXLXJI
-         ohnjcoTgJgF/wbplpMbnN7Pv3sLZx97rdcVDRNNUuh/dgUTczQyD5zPEpmQFSxyqSg6q
-         MLDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=kfT+YqMUEcgNZKzFHVRH+WUlg+8Lih70KbOINnUB72o=;
-        b=HfVvw2gqNb1g75UNYRxi723O8ODd2zzcej443I6PIpwxguWywtbDHRsAzqGG6XPEeO
-         Ohsy7OYGWH+S+NInixy/gGkKPEzMD5EwzdyG/Bubxees35zyxFfEJPI8A8kFLJCV+0GU
-         Tr0vTn8TL2g/P+UqH7C1m3YS41gPXxOlCC4Gfe3QhrNSCpprefsc0wxve2yk3bkamA6V
-         0BiSt+4IrcnALbghWu6rHh8ajaMp2ep9fd0ycTSTKpGJY0M3av/6mXfRIU10PgzfZdE2
-         /O4HsxrN7K6405RGJ9HYGfEu7horLC5FVmS19O+j8BVlYPFac3dZzQQ8h8Fjn2OLQmwC
-         MQFg==
-X-Gm-Message-State: ALyK8tJs1vJujT5mu/bE8m4YcWn//gZJFV9qAzaFf3kNE33TCOqo62fU3OwquT2DpnHsI6hpBJZuH3ZBwZaElg==
-X-Received: by 10.36.33.22 with SMTP id e22mr20365248ita.42.1467818759302;
- Wed, 06 Jul 2016 08:25:59 -0700 (PDT)
+	id S1755085AbcGFPaJ (ORCPT <rfc822;e@80x24.org>);
+	Wed, 6 Jul 2016 11:30:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56863 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753840AbcGFPaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2016 11:30:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 138842991E;
+	Wed,  6 Jul 2016 11:30:07 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Bn3EbawL0oJGv9ZJMdeBqWpP8V0=; b=g/QiSz
+	4jXE1BoLBMFtZbliuZeaO/YXbrwmJ77m2+keRUOd8giVsanTXDHfO0FLOs6NfiWb
+	s2/MMh1rGq6rWgy8TAZgSIBvtrY9Jmm/FxYyuePRJF8vUw4cwldFIZL8Qtoe25GS
+	Ze4w67QJSUtbW7FfPQZ+VpfB3MHzqXbpFyEiw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JrfKhoVb+RvlyjFp6SwldWWokurrYasz
+	E7mPIMnSN7HK3RhxvfgZ9r5KefB8aiRMHgsKTpuIXLmtgN/qHFUPPtWjAQ4K0npm
+	GdQ8ysckraSi8gqhZU1vq4GR/oEOI1/chC4liUOlZY5VpZiYl7gKuzEcAo1VPn6q
+	CuCYY/CC63o=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B7452991C;
+	Wed,  6 Jul 2016 11:30:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 822B32991B;
+	Wed,  6 Jul 2016 11:30:06 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH 2/9] merge-recursive: clarify code in was_tracked()
+References: <cover.1467199553.git.johannes.schindelin@gmx.de>
+	<dd3e2cf842fd5e11e31914aa55b8b995e8d3d75c.1467199553.git.johannes.schindelin@gmx.de>
+	<xmqq4m8b4zdd.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1607011057180.12947@virtualbox>
+	<xmqq7fd51ijr.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1607020906560.12947@virtualbox>
+Date:	Wed, 06 Jul 2016 08:30:04 -0700
+In-Reply-To: <alpine.DEB.2.20.1607020906560.12947@virtualbox> (Johannes
+	Schindelin's message of "Sat, 2 Jul 2016 09:20:24 +0200 (CEST)")
+Message-ID: <xmqqr3b6u6mb.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Wed, 6 Jul 2016 08:25:29 -0700 (PDT)
-In-Reply-To: <577C17D4.6080708@kdbg.org>
-References: <1466807902.28869.8.camel@gmail.com> <20160705170558.10906-1-pclouds@gmail.com>
- <20160705170558.10906-4-pclouds@gmail.com> <577C17D4.6080708@kdbg.org>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Wed, 6 Jul 2016 17:25:29 +0200
-Message-ID: <CACsJy8ASYszXU-ErPas99EpW_J_E-FQVk197W7KqURJge_RBRQ@mail.gmail.com>
-Subject: Re: [PATCH 3/5] index-pack: correct "len" type in unpack_data()
-To:	Johannes Sixt <j6t@kdbg.org>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christoph Michelbach <michelbach94@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: 844D3242-438E-11E6-9C71-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 5, 2016 at 10:25 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 05.07.2016 um 19:05 schrieb Nguyễn Thái Ngọc Duy:
->>
->> +                       die(Q_("premature end of pack file, %"PRIuMAX"
->> byte missing",
->> +                              "premature end of pack file, %"PRIuMAX"
->> bytes missing",
->
->
-> I would be surprised if this form of translation worked...
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-What can I say, gettext is smart. In gc.c we already have this
+> To understand why we're not done yet, the crucial point is *not* that the
+> return value encodes the insert position. The crucial point is that
+> despite asking for an index entry matching a specific name, we might not
+> find one, *even if there is one*.
 
-die(_("gc is already running on machine '%s' pid %"PRIuMAX" (use
---force if not)"), name, (uintmax_t)pid);
+I've been wondering why you keep saying "even though we didn't ask,
+we look for stage#0", and now I see why.  The cache_pos() interface
+*is* about finding the stage#0 entry for the given path.
 
-and vi.po shows
+When it finds none, it indicates where a stage#0 entry of that path
+would be inserted, which by the sort-order would give us where
+higher stage entries for the path would be found (if there is any).
+There is no parameter for you to tell it to find stage#2, and "even
+though we didn't ask" is showing (and being the source of) the
+confusion.
 
-#: builtin/gc.c:397
-#, c-format
-msgid ""
-"gc is already running on machine '%s' pid %<PRIuMAX> (use --force if not)"
--- 
-Duy
+And I did not want a misleading comment to spread the confusion;
+that is why I was reacting strongly.
+
+As you pointed out, we can return early without falling into the
+generic "we are still looking at the same path" codepath when we
+find thestage#0 entry, so I wouldn't mind doing something like the
+following.
+
+static int was_tracked(const char *path)
+{
+	int pos = cache_name_pos(path, strlen(path));
+
+        if (0 <= pos)
+	        /* we have been tracking this path */
+        	return 1;
+
+	/*
+         * Look for an unmerged entry for the path,
+         * specifically stage #2, which would indicate
+         * that "our" side before the merge started
+         * had the path tracked (and resulted in a conflict).
+         */
+	for (pos = -1 - pos;
+             pos < active_nr && !strcmp(path, active_cache[pos]->name);
+	     pos++)
+		if (ce_stage(active_cache[pos]) == 2)
+			return 1;
+	return 0;
+}
