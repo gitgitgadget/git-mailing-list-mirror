@@ -2,105 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A87082070C
-	for <e@80x24.org>; Wed,  6 Jul 2016 15:32:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B33D2070C
+	for <e@80x24.org>; Wed,  6 Jul 2016 15:34:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754922AbcGFPcx (ORCPT <rfc822;e@80x24.org>);
-	Wed, 6 Jul 2016 11:32:53 -0400
-Received: from mout.gmx.net ([212.227.15.15]:58854 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754070AbcGFPcx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2016 11:32:53 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MgtWa-1ayuFB2Krw-00M4Xm; Wed, 06 Jul 2016 17:32:46
- +0200
-Date:	Wed, 6 Jul 2016 17:32:42 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2016, #01; Fri, 1)
-In-Reply-To: <xmqqinwivng4.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607061732070.6426@virtualbox>
-References: <xmqqmvm0vry4.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607021306320.12947@virtualbox> <xmqqinwivng4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1755253AbcGFPe0 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 6 Jul 2016 11:34:26 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:32871 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754922AbcGFPeZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2016 11:34:25 -0400
+Received: by mail-io0-f181.google.com with SMTP id t74so203145418ioi.0
+        for <git@vger.kernel.org>; Wed, 06 Jul 2016 08:34:25 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=tdwzEsnaFLper5q1EfYJ/MFMW+AUhy+3S2P+DdQW/HU=;
+        b=MYCV1Fxg+64foFN2LrrNb2j+/CC6V36yzJe5EMSwNINvvYxKZgAaY/CuYgJjqzyQq0
+         8hZdlHw73VGL+aGbUlVCo7zfr8aYfLWgrnm8VXiMh1S//6Y648ZNFt8VBOAcVqIKo4mt
+         a4IGhw5nUW3zn9ldsCIuuTQqDta16M61t/MkwhYb0uFWWiF9mcoF2wBAPIQxWNDZtlme
+         YnPu9FRp9/+kCMyQfx6cw3r65IW29TWmNqhs1+juo5UfWn4bxQb/8FdfdDF7ONLmZ/ne
+         v3IJvl8gB1KnvV8PNdXr+I6IznGdonn3o5ORnJ7k6xFLwQ5PvxAlf2bcZqVzWmwmqD3L
+         zs5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=tdwzEsnaFLper5q1EfYJ/MFMW+AUhy+3S2P+DdQW/HU=;
+        b=bml4W7Pd1bvBgIb6oZR/82QcdjJca0k48jwKfQUpSC/0B5kRDHKXqkpetIJx6LVeKE
+         GtV7bgactjHLXUnk91AaPhVXtRWfGZWFQOT29liEzqn3Wg8MolZxZyHyIk7RQUCL627h
+         OwhvaJt9MKcDMYwzX7uswQlOGQsWfx92WFVeEr9auo/AQzNTYV3kjIwktBc8VrWNYL9N
+         /yC/J0MJHbEjSHD6sV4eHx/SLERNdTDPeZ0wv1EA7AV7RxQ8Zf9kw9SlB2cbPJxnKd8J
+         zYRX5e9/x08m0HSBEXKzNldB2Ig5VHupdb7toS637nZqB3QdHlNIiV+SuoU4o5nLFr/g
+         NK4A==
+X-Gm-Message-State: ALyK8tKwQ3D6oe3r87fNNY8C1RRKCw0BoF+NmFR3HPObwGDVIZDmGLbUsLaEfTI6D1vZgW96bcIDUuuvB7c3bA==
+X-Received: by 10.107.22.6 with SMTP id 6mr19209706iow.128.1467819259934; Wed,
+ 06 Jul 2016 08:34:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:B6fiDvyvs+eALlLt6w1nxmx3AOiKwEMDCXyng52YJGu5WM50AKf
- PxLWhTf00rNy8IXqz1QyUDCZRTlYsThYJzkYWgvs4Tj/xATgYpZEPNqdGiYsdtaYzgLV628
- UsefxwY2mqr3lK8vuH9FoBgMt1+WxRNa+gaua3p7xYspObOouoo0VFuXNPYVyYUm1riz9fT
- ORIjvi1rS3SJ7A7lum/1g==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:kb/I0bv0+r8=:sm6XvQkmnN0TbmDwGSyVIj
- Y3lYqWHnjGmVhnt5xoPv1O+yRJQ3Sh1KjKyntJc8UkuTMdt/DpE+UV6j0J8bZR9wiqI4NbrDQ
- vqgDTaUlSRD8ynwSQXhoiHQI2yEOfSXSRl6Kikw0fgk1lk+09x4hYYOKFHJ5ahbhjwxSRr7eX
- 61KffoF1fG31u6GP4JNswjLB97md0A2g59+xKwB+7HwmownU29HaRKkSHsi96wIVUEVcNDEUF
- nlGYyd/UAS6KZtovn+X4042cTx6ulzdJ6PYUHb8okzt43pMlLgXhsLWweCvQY1tD91Hf8qazF
- +ocXLR1uV8AtYbHd9yuijJe+YnIOkbbP3Vny+awXAT/EcpMEj5ykVeAkEsTutfivHfZhd8AcE
- +A4cICAE1ipLviyYd/qUE9N8NA98LHoRAGdOK74KnYlN/4Au32Yg/dOmAXN+is6UgL5xZFrah
- L8PLFFNU2HXzPleJ5wENq0qi98bSl2cWtptxhg0wtQJV6wkkK+JUBS9V7V/1N/q1zXdBAtclX
- 4rZZtix2k+JZB0UbsVX/Hpcub2M6da2945BgllAPjWq9LwuIimImogT9T7aLVb0V6kiVb19W1
- Pl9YCO5eM7i3oFS+LN7hDXI/RZtHulDnTVrkkykYoifVQIn5RIYoykoW2Y4J7P266izrk/E6g
- 2bzo+Kk2mFcfc2582ByqMBqd5alGWkk2kUKOLowLB67gy5A/E8rMpH4nQ9fp+WK+PhxYjxW+s
- jtnBSEYlSJaFDBqgzMCqNBl5BUZp/FKIm430AGgC2ZH++8eDl71GFj2NJ5O6AgQzf3kDpT/Bg
- /o6PYVZ
+Received: by 10.64.225.235 with HTTP; Wed, 6 Jul 2016 08:33:50 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1607061016330.6426@virtualbox>
+References: <1467532693-20017-1-git-send-email-novalis@novalis.org>
+ <1467532693-20017-16-git-send-email-novalis@novalis.org> <alpine.DEB.2.20.1607061016330.6426@virtualbox>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Wed, 6 Jul 2016 17:33:50 +0200
+Message-ID: <CACsJy8APq+Wz0TDqRdo-MstRKt-ezROB4FhiN3d4UV6qNWrrKA@mail.gmail.com>
+Subject: Re: [PATCH v14 15/21] index-helper: kill mode
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	David Turner <novalis@novalis.org>,
+	Git Mailing List <git@vger.kernel.org>, kmaggg@gmail.com,
+	David Turner <dturner@twopensource.com>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+On Wed, Jul 6, 2016 at 10:20 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> BTW I am in the middle of trying to abstract out a "simple server" that
+> will allow me to back the inter-process communication by a pure Windows
+> solution (named pipes) instead of the Unix sockets. It turns out to be
+> much more difficult than I hoped: the code is really relying on Unix
+> sockets currently.
 
-On Wed, 6 Jul 2016, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Fri, 1 Jul 2016, Junio C Hamano wrote:
-> >
-> >> * jc/t2300-setup (2016-06-22) 1 commit
-> >>   (merged to 'next' on 2016-06-28 at 62b902a)
-> >>  + t2300: "git --exec-path" is not usable in $PATH on Windows as-is
-> >> 
-> >>  Portability fix for Windows.
-> >> 
-> >>  Will merge to 'master'.
-> >
-> > Would you mind cherry-picking this onto `maint`, too? I just noticed
-> > that the test suite does not pass here because `maint` has fe17fc0
-> > (t2300: run git-sh-setup in an environment that better mimics the real
-> > life, 2016-06-01).
-> 
-> s/cherry-pick/merge/;
-> 
-> You'd notice I was prepared if you did "git log maint..jc/t2300-setup" ;-)
-
-I missed that ;-)
-
-> > While at it, it would be nice if this patch:
-> >
-> >> * js/mingw-parameter-less-c-functions (2016-06-20) 1 commit
-> >>   (merged to 'next' on 2016-06-28 at e673c65)
-> >>  + mingw: let the build succeed with DEVELOPER=1
-> >> 
-> >>  Some platform-specific code had non-ANSI strict declarations of C
-> >>  functions that do not take any parameters, which has been
-> >>  corrected.
-> >> 
-> >>  Will merge to 'master'.
-> >
-> > ... also found its way into maint; This would make it easier for me to
-> > backport fixes (as I started to rely on DEVELOPER=1 to warn about issues).
-> 
-> Likewise.
-> 
-> I'm sure I'll forget, so if you can please remind me a few weeks
-> after these are merged to 'master'.
-
-I am sure I will forget, too, but I'll try my best not to!
-
-Thanks,
-Dscho
+Code can change :) Once we have a base line what works on both *nix
+and Windows, I think we can adjust code logic so that it works on
+both. Let me know when the code is ready (or even not ready, just
+publicly available).
+-- 
+Duy
