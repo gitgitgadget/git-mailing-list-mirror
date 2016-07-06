@@ -7,140 +7,148 @@ X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F6C72070E
-	for <e@80x24.org>; Wed,  6 Jul 2016 18:49:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51E0D2070C
+	for <e@80x24.org>; Wed,  6 Jul 2016 18:54:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755468AbcGFStK (ORCPT <rfc822;e@80x24.org>);
-	Wed, 6 Jul 2016 14:49:10 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:36038 "EHLO
-	mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755291AbcGFStE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2016 14:49:04 -0400
-Received: by mail-lf0-f67.google.com with SMTP id a2so23037969lfe.3
-        for <git@vger.kernel.org>; Wed, 06 Jul 2016 11:49:03 -0700 (PDT)
+	id S932174AbcGFSyx (ORCPT <rfc822;e@80x24.org>);
+	Wed, 6 Jul 2016 14:54:53 -0400
+Received: from mail-io0-f178.google.com ([209.85.223.178]:36081 "EHLO
+	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932088AbcGFSyw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2016 14:54:52 -0400
+Received: by mail-io0-f178.google.com with SMTP id l202so1067887ioe.3
+        for <git@vger.kernel.org>; Wed, 06 Jul 2016 11:54:51 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IaBIEArK8v4VMc6Y6Pcbv6UUb3q+8S8dKIGm5agEwGM=;
-        b=tCv1ZnZ9gZZcGRXBnJELr8QVS03kzdsphagB/0iQochIVWinTuwxW7noCpj+HZHqcx
-         8A+0sCz5Dhq3Hs8Dh5f++TQawbo0w5lDkoFJL8P6XXBtW0EzPMGSELEQY18wnU4Fq+MT
-         qbFXVEt3IxTlhwqibORO27pAp4MBfLcijp/G7+pIFFRryvoPzgBJ91jWS8OKjVb+dOm7
-         1i8qWN0HWXYTuu2khgmm5nhNv8GxjHDst1H/bWMDQB9SS0UK/qC0mlUTDDaDxdfqj0Ro
-         4v/kLTnMEUs9MjbuRajQg1ONRvUSQINX/6zyLJAaeJ/Ha12C5E0biC0gh7qlL1BR9O2I
-         Iebw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=QDfpPfHDPUsdgHEpRP7idDZqNfukGhGfYlnn5yjsz2A=;
+        b=x8Zey1drKGkeoLRMJ2tUNUCgg1T8ZcFT0+gROm1laLaFQtKdORaLiK+aKzzmK1VqXQ
+         0PpyphzHlN/et18inSsBWZ7uTImuzjJE54egwHBCM48lHPAm/w1Kvt87xEu27gsBX5E+
+         U6Y4je9eON7PmNQ3rOsi4KyaaOlnEDcbBTibWWHPuOmJSA7a9K+gFtdjI27Uat6gAU0A
+         aAeb8GNriIyrufOjojdDyzObSwva19MhAepoiw7auXzF4NC6YHLFbnCuUWeLb7rKx0cF
+         iKXfiuzrEqwuoxuA/G6PwBWlhgKWWTIDSskScTfCViOs7UdjUiCdg8PCKfX8TLgZ54vH
+         54hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IaBIEArK8v4VMc6Y6Pcbv6UUb3q+8S8dKIGm5agEwGM=;
-        b=QgiqAPQbtBK0Xe4iha/zWWHr33LH3jhmpKq//ET9pKLtUnGyoSIKDM0m5jW7bHJwvy
-         hovcwVLAD3z18ZqeXzLH3qQbaMBzeX1xsTC0/N24srjZxvTRe7l6Hkon4UfdaDsJg14l
-         fAmSXW2iiaD3ixXVIoQGJcNF7hRTkOUV4ps7zDEs3gfSeiCTSvVYEymJKjzx+PalBc1P
-         TU1wMshAa8MZqMrAeGh5ROoqwNokzaW/zz5RSKSZCNhXkMKCEDnosXv36U4ZGN9Kc6E9
-         tHeHV5hiI2Mcoc8VwAIhEpjhL/Ox0lWWjEZ/tiI2NSTngmKqMTmEZmCzPLdbWF9YV/+C
-         GV3Q==
-X-Gm-Message-State: ALyK8tKhFCBRoDz1tEUdXEChwkNy3YMkZwT9BBXMVDM32KwvWSzhcXw0XedWKHwfSj9yUg==
-X-Received: by 10.25.85.75 with SMTP id j72mr7491005lfb.31.1467830942890;
-        Wed, 06 Jul 2016 11:49:02 -0700 (PDT)
-Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id 76sm6686199ljj.3.2016.07.06.11.49.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 06 Jul 2016 11:49:02 -0700 (PDT)
-From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To:	git@vger.kernel.org
-Cc:	Junio C Hamano <gitster@pobox.com>, yuri.kanivetsky@gmail.com,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2 2/2] cache-tree: do not generate empty trees as a result of all i-t-a subentries
-Date:	Wed,  6 Jul 2016 20:48:29 +0200
-Message-Id: <20160706184829.31825-3-pclouds@gmail.com>
-X-Mailer: git-send-email 2.8.2.537.g0965dd9
-In-Reply-To: <20160706184829.31825-1-pclouds@gmail.com>
-References: <20160704174807.6578-1-pclouds@gmail.com>
- <20160706184829.31825-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=QDfpPfHDPUsdgHEpRP7idDZqNfukGhGfYlnn5yjsz2A=;
+        b=hhsfpeBM1PzXa4O2ZOK7lcsfrjVwWYEZkS5Nd15IS46U8Wo3dPTLoMZjZ0sZiY277+
+         FBDDy6TmF8eH2pKflHiacQq5VOFiBZMfp9r/csBax2j6O2YPWlyX/n7tB5W7uQIc4D31
+         a5GALB2Do26Sg3/a/jHZLNwXLr8BvHLZhtXpTd9Oe3z7Px2FfA84kbaRx15TsizLhMZj
+         vjz/YPS2xVTThdnIlQe+npXJSZ79DaiTJLZrEVmMZoR1RlolRpsQk+m9K8YnNWBBP2IK
+         ji8DZEILvLSKh3q0/8RSxdDjhIZGmQAfoIwtySI541ZekcthfRC9XEXRAVxJU72NISNa
+         Re7Q==
+X-Gm-Message-State: ALyK8tI8zqtZiScDKDHO6KT52WqmJ+No84RwZv3Ujw8Q7sEz1Pz3SdJ5JeN8iPApo3a4erNDVz57vFsBnp3c3Q==
+X-Received: by 10.107.8.220 with SMTP id h89mr21382454ioi.95.1467831290872;
+ Wed, 06 Jul 2016 11:54:50 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.64.225.235 with HTTP; Wed, 6 Jul 2016 11:54:21 -0700 (PDT)
+In-Reply-To: <1467828168.6286.5.camel@gmail.com>
+References: <1466807902.28869.8.camel@gmail.com> <20160705170558.10906-1-pclouds@gmail.com>
+ <1467756891.4798.1.camel@gmail.com> <CACsJy8BDQbanGsf=3z3K-OuH0++EuqQFEB22udXJT+WZnFKSBg@mail.gmail.com>
+ <1467828168.6286.5.camel@gmail.com>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Wed, 6 Jul 2016 20:54:21 +0200
+Message-ID: <CACsJy8DxT1=9if3UksTJcvpJS73uCDoAojsBC9Gg4R9DvZHdjQ@mail.gmail.com>
+Subject: Re: [PATCH 0/5] Number truncation with 4+ GB files on 32-bit systems
+To:	Christoph Michelbach <michelbach94@gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-If a subdirectory contains nothing but i-t-a entries, we generate an
-empty tree object and add it to its parent tree. Which is wrong. Such
-a subdirectory should not be added. We ignore i-t-a files _and_
-directories.
+On Wed, Jul 6, 2016 at 8:02 PM, Christoph Michelbach
+<michelbach94@gmail.com> wrote:
+> I now created a repo on a 64 bit system (same command as before), then
+> duplicated it. One copy I applied git gc to on the 64 bit host system,
+> the other copy I gave to my 32 bit virtual machine to apply git gc to
+> it.
+>
+> The 64 bit host uses git from the Ubuntu repositories, the 32 bit
+> virtual machine uses git 2.9 from github with the patches applied.
+>
+> git gc worked without problems on the host but I got
+>
+> frank@frank-virtual-16-04-32-bit:~/g$ git gc
+> Counting objects: 6, done.
+> Compressing objects: 100% (3/3), done.
+> error: bad packed object CRC for
+> f595ad71c1a1ecc312ddcb32a84a4bfc4a2ed1c8
+> Writing objects: 100% (6/6), done.
+> Total 6 (delta 0), reused 0 (delta 0)
+> error: failed to validate delta base reference at offset 342896 from
+> .git/objects/pack/pack-630b5a3f28cd9d02a546462bf0d0bc640ffde784.pack
 
-Note that this has a cascading effect. If subdir 'a/b/c' contains
-nothing but i-t-a entries, we ignore it. But then if 'a/b' contains
-only (the non-existing) 'a/b/c', then we should ignore 'a/b' while
-building 'a' too. And it goes all the way up to top directory.
+Yup. So far I can only say that pack-objects generates incorrect pack
+:-(  I hope it's the possible 6/5 patch I mentioned earlier but I'm
+not sure. Will continue tomorrow.
 
-Noticed-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- cache-tree.c          | 16 ++++++++++++++++
- t/t2203-add-intent.sh | 12 ++++++++++++
- 2 files changed, 28 insertions(+)
+> error: bad offset for revindex
+> error: failed to read object 4246d27f8e0149d45687b0cc23bc29a67f1f0c79
+> at offset 342887 from .git/objects/pack/pack-
+> 630b5a3f28cd9d02a546462bf0d0bc640ffde784.pack
+> fatal: packed object 4246d27f8e0149d45687b0cc23bc29a67f1f0c79 (stored
+> in .git/objects/pack/pack-
+> 630b5a3f28cd9d02a546462bf0d0bc640ffde784.pack) is corrupt
+> error: failed to run prune
+> frank@frank-virtual-16-04-32-bit:~/g$
+>
+> on the virtual machine.
+>
+> Not including the mailing list in CC wasn't intended.
+>
+> --
+> With kind regards
+> Christoph Michelbach
+>
+> On Wed, 2016-07-06 at 17:23 +0200, Duy Nguyen wrote:
+>> On Wed, Jul 6, 2016 at 12:14 AM, Christoph Michelbach
+>> <michelbach94@gmail.com> wrote:
+>> >
+>> > I now tried git gc again and it failed (in a different way, though;
+>> > and
+>> > the error message only appeared once git gc terminated).
+>> >
+>> > Full input and output:
+>> >
+>> > christoph@virt-16-04-32-bit:~$ mkdir test && cd test && git init &&
+>> > touch someFile && git add someFile && git commit -m "Initial
+>> > commit."
+>> > && dd if=/dev/urandom of=bigBinaryFile bs=1MB count=4294 && git add
+>> > bigBinaryFile && git commit -m "Introduced big biary file."
+>> > Initialized empty Git repository in /home/christoph/test/.git/
+>> > [master (root-commit) 20507ef] Initial commit.
+>> >  1 file changed, 0 insertions(+), 0 deletions(-)
+>> >  create mode 100644 someFile
+>> > 4294+0 records in
+>> > 4294+0 records out
+>> > 4294000000 bytes (4.3 GB, 4.0 GiB) copied, 435.236 s, 9.9 MB/s
+>> > [master 88e5dbb] Introduced big biary file.
+>> >  1 file changed, 0 insertions(+), 0 deletions(-)
+>> >  create mode 100644 bigBinaryFile
+>> > christoph@virt-16-04-32-bit:~/test$ git gc
+>> > Counting objects: 6, done.
+>> > Compressing objects: 100% (3/3), done.
+>> > Writing objects: 100% (6/6), done.
+>> > Total 6 (delta 0), reused 1 (delta 0)
+>> > error: inflate: data stream error (incorrect header check)
+>> > error: failed to read object
+>> > 705f438ccb845871ffba9d4b56f16ac763652937
+>> Sigh.. I'll try again :) BTW if you have a 64-bit machine too, try
+>> create the repo with it (so we are sure the repo is not corrupted in
+>> the first place) then you can run tests like this on 32-bit systems.
+>> The previous "bad crc" message was a fault in the code, not the data.
+>>
+>> PS. I have just let gc run till the end (last time I tried
+>> pack-objects, which is only part of gc) and got a(nother) error.
+>> Checking... BTW, you should send these mails to git@ as well, no need
+>> for private message exchange.
 
-diff --git a/cache-tree.c b/cache-tree.c
-index c2676e8..75e73d7 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -380,6 +380,13 @@ static int update_one(struct cache_tree *it,
- 			continue;
- 		}
- 
-+		/*
-+		 * "sub" can be an empty tree if all subentries are i-t-a.
-+		 */
-+		if (sub && sub->cache_tree->entry_count < 0 &&
-+		    !hashcmp(sha1, EMPTY_TREE_SHA1_BIN))
-+			continue;
-+
- 		strbuf_grow(&buffer, entlen + 100);
- 		strbuf_addf(&buffer, "%o %.*s%c", mode, entlen, path + baselen, '\0');
- 		strbuf_add(&buffer, sha1, 20);
-@@ -426,6 +433,15 @@ int cache_tree_update(struct index_state *istate, int flags)
- 	i = update_one(it, cache, entries, "", 0, &skip, flags);
- 	if (i < 0)
- 		return i;
-+	/*
-+	 * Top dir can become empty if all entries are i-t-a (even
-+	 * from subdirs). Note that we do allow to create an empty
-+	 * tree from an empty index. Only error when an empty tree is
-+	 * a result of the i-t-a thing.
-+	 */
-+	if (it->entry_count < 0 &&
-+	    !hashcmp(it->sha1, EMPTY_TREE_SHA1_BIN))
-+		return error(_("cannot build a tree from just intent-to-add entries"));
- 	istate->cache_changed |= CACHE_TREE_CHANGED;
- 	return 0;
- }
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index 24aed2e..a19f06b 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -99,5 +99,17 @@ test_expect_success 'cache-tree does not ignore dir that has i-t-a entries' '
- 	)
- '
- 
-+test_expect_success 'cache-tree does skip dir that becomes empty' '
-+	rm -fr ita-in-dir &&
-+	git init ita-in-dir &&
-+	(
-+		cd ita-in-dir &&
-+		mkdir -p 1/2/3 &&
-+		echo 4 >1/2/3/4 &&
-+		git add -N 1/2/3/4 &&
-+		test_must_fail git commit -m committed
-+	)
-+'
-+
- test_done
- 
+
+
 -- 
-2.8.2.537.g0965dd9
-
+Duy
