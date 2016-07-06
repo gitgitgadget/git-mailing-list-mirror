@@ -2,77 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41E4D2070C
-	for <e@80x24.org>; Wed,  6 Jul 2016 15:31:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A87082070C
+	for <e@80x24.org>; Wed,  6 Jul 2016 15:32:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754934AbcGFPbJ (ORCPT <rfc822;e@80x24.org>);
-	Wed, 6 Jul 2016 11:31:09 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:36786 "EHLO
-	mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754790AbcGFPbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2016 11:31:07 -0400
-Received: by mail-it0-f68.google.com with SMTP id h190so15095626ith.3
-        for <git@vger.kernel.org>; Wed, 06 Jul 2016 08:31:07 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=MG7MJrexH0gnMoYgLgKBPqSLgvg/1vZ9DznhSRbZVZE=;
-        b=QhgE1QdhD93wDncpHGGOzycErgLNyi6Ewx1sQdK9La4TvqnaXCjgpB8A6bgsIeT2Md
-         NqIjRYqHJQYxVeuurXHz5R338Ti1eQGn+R1mN+B2kzk3nCwb9EmkL8KeT7dvjmYaXRPd
-         q8YBuswbmuKn/5JnDYn9mW1sESUFDhp/Jf/xwZ+FPPDJCWPdbPMZ0VZJKoUbOilAT5Rq
-         qm9tXkbEksi1A0Pf+nKrx0fAgkXqO/AhobrCaW/BMuFi1IahM5G4WvitoPY46oIZBae9
-         l32oBHMOK1Q6Y+HyhMwajiFfiKwt2qW+c8Oqai+LJ3okrG2f8qJan1pkW89tO8JlilSB
-         I8/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=MG7MJrexH0gnMoYgLgKBPqSLgvg/1vZ9DznhSRbZVZE=;
-        b=lnWpxCVk5Y+mDPzK19cYE4pLzKDuw6M+8gExQ3hNnjFRyoXZNgBrLrKE3Mbbl+JDNp
-         oYmtd0EPps+o8KrVR2U52BbOOD+UoreM1bP67SN/9ZLr3jaszMF/RHGvk/ATPuel9Yxe
-         8H1kbFiX2lkKNd6/B8u1Biv26CxqxK12crwc/Ef7nnJ72AzLy2wDHwRFGMmOdpEhs41E
-         JCc5Wv0MhKyqjkpuT6z3zuFkZrgo1ndAmAiCA97SdgMdU69mpP/1A1jyAVvLzOQcAKHq
-         TT4d8AUbxlY7Qn2YGj+DGvnyml+T8ut3F1/Dr95Iy2Iw7RLaAsS0iltZIiFwY3++G5kk
-         w4xw==
-X-Gm-Message-State: ALyK8tLFdtKrW8SIaABjXbxFVQfbV5aNPj9qQlwJi7ShgAGUddntfdlc9b+1nfuntRMRMebhlVOVRlVvEEO0Ww==
-X-Received: by 10.36.84.79 with SMTP id t76mr20559357ita.63.1467819066994;
- Wed, 06 Jul 2016 08:31:06 -0700 (PDT)
+	id S1754922AbcGFPcx (ORCPT <rfc822;e@80x24.org>);
+	Wed, 6 Jul 2016 11:32:53 -0400
+Received: from mout.gmx.net ([212.227.15.15]:58854 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754070AbcGFPcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2016 11:32:53 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MgtWa-1ayuFB2Krw-00M4Xm; Wed, 06 Jul 2016 17:32:46
+ +0200
+Date:	Wed, 6 Jul 2016 17:32:42 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2016, #01; Fri, 1)
+In-Reply-To: <xmqqinwivng4.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1607061732070.6426@virtualbox>
+References: <xmqqmvm0vry4.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607021306320.12947@virtualbox> <xmqqinwivng4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Wed, 6 Jul 2016 08:30:37 -0700 (PDT)
-In-Reply-To: <fdb0efbeb0b41c0d9976b2d66df90d2366f81ca1.1467717729.git.johannes.schindelin@gmx.de>
-References: <cover.1467199553.git.johannes.schindelin@gmx.de>
- <cover.1467717729.git.johannes.schindelin@gmx.de> <fdb0efbeb0b41c0d9976b2d66df90d2366f81ca1.1467717729.git.johannes.schindelin@gmx.de>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Wed, 6 Jul 2016 17:30:37 +0200
-Message-ID: <CACsJy8DY=wRfMBZn75fqjM7i4JzRbr70OCykHU_KdjSXnLY6Pg@mail.gmail.com>
-Subject: Re: [PATCH v2 02/17] Report bugs consistently
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:B6fiDvyvs+eALlLt6w1nxmx3AOiKwEMDCXyng52YJGu5WM50AKf
+ PxLWhTf00rNy8IXqz1QyUDCZRTlYsThYJzkYWgvs4Tj/xATgYpZEPNqdGiYsdtaYzgLV628
+ UsefxwY2mqr3lK8vuH9FoBgMt1+WxRNa+gaua3p7xYspObOouoo0VFuXNPYVyYUm1riz9fT
+ ORIjvi1rS3SJ7A7lum/1g==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:kb/I0bv0+r8=:sm6XvQkmnN0TbmDwGSyVIj
+ Y3lYqWHnjGmVhnt5xoPv1O+yRJQ3Sh1KjKyntJc8UkuTMdt/DpE+UV6j0J8bZR9wiqI4NbrDQ
+ vqgDTaUlSRD8ynwSQXhoiHQI2yEOfSXSRl6Kikw0fgk1lk+09x4hYYOKFHJ5ahbhjwxSRr7eX
+ 61KffoF1fG31u6GP4JNswjLB97md0A2g59+xKwB+7HwmownU29HaRKkSHsi96wIVUEVcNDEUF
+ nlGYyd/UAS6KZtovn+X4042cTx6ulzdJ6PYUHb8okzt43pMlLgXhsLWweCvQY1tD91Hf8qazF
+ +ocXLR1uV8AtYbHd9yuijJe+YnIOkbbP3Vny+awXAT/EcpMEj5ykVeAkEsTutfivHfZhd8AcE
+ +A4cICAE1ipLviyYd/qUE9N8NA98LHoRAGdOK74KnYlN/4Au32Yg/dOmAXN+is6UgL5xZFrah
+ L8PLFFNU2HXzPleJ5wENq0qi98bSl2cWtptxhg0wtQJV6wkkK+JUBS9V7V/1N/q1zXdBAtclX
+ 4rZZtix2k+JZB0UbsVX/Hpcub2M6da2945BgllAPjWq9LwuIimImogT9T7aLVb0V6kiVb19W1
+ Pl9YCO5eM7i3oFS+LN7hDXI/RZtHulDnTVrkkykYoifVQIn5RIYoykoW2Y4J7P266izrk/E6g
+ 2bzo+Kk2mFcfc2582ByqMBqd5alGWkk2kUKOLowLB67gy5A/E8rMpH4nQ9fp+WK+PhxYjxW+s
+ jtnBSEYlSJaFDBqgzMCqNBl5BUZp/FKIm430AGgC2ZH++8eDl71GFj2NJ5O6AgQzf3kDpT/Bg
+ /o6PYVZ
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 5, 2016 at 1:23 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> The vast majority of error messages in Git's source code which report a
-> bug use the convention to prefix the message with "BUG:".
->
-> As part of cleaning up merge-recursive to stop die()ing except in case of
-> detected bugs, let's just make the remainder of the bug reports consistent
-> with the de facto rule.
+Hi Junio,
 
-If you search 'die(_("bug:' in this patch,  you'll find 5 instances
-where _() should be gone too.
--- 
-Duy
+On Wed, 6 Jul 2016, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Fri, 1 Jul 2016, Junio C Hamano wrote:
+> >
+> >> * jc/t2300-setup (2016-06-22) 1 commit
+> >>   (merged to 'next' on 2016-06-28 at 62b902a)
+> >>  + t2300: "git --exec-path" is not usable in $PATH on Windows as-is
+> >> 
+> >>  Portability fix for Windows.
+> >> 
+> >>  Will merge to 'master'.
+> >
+> > Would you mind cherry-picking this onto `maint`, too? I just noticed
+> > that the test suite does not pass here because `maint` has fe17fc0
+> > (t2300: run git-sh-setup in an environment that better mimics the real
+> > life, 2016-06-01).
+> 
+> s/cherry-pick/merge/;
+> 
+> You'd notice I was prepared if you did "git log maint..jc/t2300-setup" ;-)
+
+I missed that ;-)
+
+> > While at it, it would be nice if this patch:
+> >
+> >> * js/mingw-parameter-less-c-functions (2016-06-20) 1 commit
+> >>   (merged to 'next' on 2016-06-28 at e673c65)
+> >>  + mingw: let the build succeed with DEVELOPER=1
+> >> 
+> >>  Some platform-specific code had non-ANSI strict declarations of C
+> >>  functions that do not take any parameters, which has been
+> >>  corrected.
+> >> 
+> >>  Will merge to 'master'.
+> >
+> > ... also found its way into maint; This would make it easier for me to
+> > backport fixes (as I started to rely on DEVELOPER=1 to warn about issues).
+> 
+> Likewise.
+> 
+> I'm sure I'll forget, so if you can please remind me a few weeks
+> after these are merged to 'master'.
+
+I am sure I will forget, too, but I'll try my best not to!
+
+Thanks,
+Dscho
