@@ -2,96 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD03F2070D
-	for <e@80x24.org>; Thu,  7 Jul 2016 12:34:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3170F2070D
+	for <e@80x24.org>; Thu,  7 Jul 2016 12:50:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750990AbcGGMeM (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 08:34:12 -0400
-Received: from mout.gmx.net ([212.227.15.19]:59019 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750899AbcGGMeJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 08:34:09 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MFLhE-1b6tJT1qUe-00EQlQ; Thu, 07 Jul 2016 14:27:19
- +0200
-Date:	Thu, 7 Jul 2016 14:27:18 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	David Turner <novalis@novalis.org>, git@vger.kernel.org,
-	pclouds@gmail.com, kmaggg@gmail.com
-Subject: Re: [PATCH v14 21/21] mailmap: use main email address for dturner
-In-Reply-To: <xmqq4m82tzun.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607071426090.6426@virtualbox>
-References: <1467612324-23556-1-git-send-email-novalis@novalis.org> <1467612324-23556-2-git-send-email-novalis@novalis.org> <xmqq4m82tzun.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1752354AbcGGMuI (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 08:50:08 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:60414 "EHLO
+	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751592AbcGGMtt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 08:49:49 -0400
+Received: from glandium by zenigata with local (Exim 4.87)
+	(envelope-from <mh@glandium.org>)
+	id 1bL8kR-0005yr-8Q; Thu, 07 Jul 2016 21:49:43 +0900
+Date:	Thu, 7 Jul 2016 21:49:43 +0900
+From:	Mike Hommey <mh@glandium.org>
+To:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] am: counteract gender bias
+Message-ID: <20160707124943.GA22668@glandium.org>
+References: <d54f8f8b32ecc024eb3a58dd42ef9f855f8e2cb9.1467892022.git.johannes.schindelin@gmx.de>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1452314329-1467894439=:6426"
-X-Provags-ID: V03:K0:TdJGpdOpSO/cAQSsYyaFFZHyLHsdpaOQmR0jPFT1Ri/u5dZ1o7C
- 7/tY23OJV0rgHhQlsxTRxQGJgz+60PShABAY9EiwkvB1YacogDIN8DaGabtQZCYJ47OF+gu
- C9HdEjVuJpkFM0p+8+joknWHAMYgZ/tzk7SmdRRteNhaybuo9IngBs/ZuErrMMRvxiF4+dp
- 8xD4/Z0S66RvgjWPiQq3g==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:xvQL51XbchA=:vFPlWGjWFyjQUCl5iQg0BL
- lvmG6NqHwbSIY8CSOKVpfciRiUkHADJcCP7n3ynb4DEcN1sdUw/HfqF/VRSMziCggDY6d29Xd
- TnsiInf4XvSAr7rfjjs1e6+x8xwuP/O3HDPuFjD+AJRn4Zh/iEDt6d/UDnhmZ5zE4lns8XqxM
- 0AgWxrI2kAtCb2W1Nqt0HnQ+K1sx1LJYXJwD0PEFqXjRIqv5gau+SKVxy8g3Dyp46DcMxDrhD
- Gy498DHVKIlYq/tvcMOl0dFbJOE/YSI2v8uS89GTPUDHG6vofqkpCsHyxFrrRQe9nguR6FXKU
- qXYAy0JCLmQqYllehnZUkWJfRTZjqSwmonvLJciHazqYL5pBQM4iO9vI6oZi/NNwyORB/UBfR
- pAx4egUyzu+lNFcR7grSmIjMv/bF6A4dZv27gJZf8QjuOu55B3F2l0JLsjPYl7G0i7pj9PKnr
- w28ThYUvjFvbOXUzC2pW5J5i7l3PvS5E/iSAwrTcOEO629U5EwaLNgZXtGbYDecWgCa6U6pFo
- YEX55N+rDzJE57bAGy9y5rEIBAP0D1Kyp5Tm3YpYc34GhwKhiU9Fuca9NC9v38OKcSCPiiXjc
- BXm2BECVa5Um4bVgDiOif1+wlKeOlZkgo3w24YJG3Sb74T5rGoLg8wbGlMW8SFSw1qKFc8hwd
- 19n9edhVK1RE/5AjH1uz1G9EiNhQVVIMWXvvBW2urM0qeq5P8LSESQrCEGJGZTAfdjzKS10N+
- Anurz1+l9DlP76K/wmtnW/GFxtwjEl5Wve9g64Tze7+K/b2cmcIYp8LcnfY=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d54f8f8b32ecc024eb3a58dd42ef9f855f8e2cb9.1467892022.git.johannes.schindelin@gmx.de>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu, Jul 07, 2016 at 01:47:19PM +0200, Johannes Schindelin wrote:
+> Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07), i.e. for
+> almost 11 years already, we demonstrated our disrespect to the pioneers
+> of software development like Ada Lovelace, Grace Hopper and Margaret
+> Hamilton, by pretending that each and every software developer is male
+> ("his_tree"). It appears almost as if we weren't fully aware that the
+> first professional software developers were all female.
+> 
+> We know our field to have this unfortunate gender bias that has nothing
+> to do with qualification or biological reasons, and we are very sad
+> about the current gender imbalance of the Git developer community.
+> 
+> Let's start changing that by using the variable name "her_tree" for an
+> equal number of years out of fairness, and change to the gender neutral
+> "their_tree" after that.
 
---8323329-1452314329-1467894439=:6426
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+You make it sound like the decision to use "his" was conscious and on
+purpose. I doubt that was the case, especially 11 years ago, when these
+issues weren't as publicized. Let's not attribute to malice on part of
+the people who wrote those lines what can be attributed to linguistics.
 
-Hi,
-
-On Wed, 6 Jul 2016, Junio C Hamano wrote:
-
-> David Turner <novalis@novalis.org> writes:
->=20
-> > Signed-off-by: David Turner <novalis@novalis.org>
-> > ---
-> >  .mailmap | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/.mailmap b/.mailmap
-> > index e5b4126..edcae89 100644
-> > --- a/.mailmap
-> > +++ b/.mailmap
-> > @@ -46,6 +46,7 @@ David D. Kilzer <ddkilzer@kilzer.net>
-> >  David K=C3=A5gedal <davidk@lysator.liu.se>
-> >  David Reiss <dreiss@facebook.com> <dreiss@dreiss-vmware.(none)>
-> >  David S. Miller <davem@davemloft.net>
-> > +David Turner <novalis@novalis.org> <dturner@twopensource.com>
-> >  Deskin Miller <deskinm@umich.edu>
-> >  Dirk S=C3=BCsserott <newsletter@dirk.my1.cc>
-> >  Eric Blake <eblake@redhat.com> <ebb9@byu.net>
->=20
-> Let me take this separately and directly to the 'master', not as
-> part of this series.
->=20
-> Not that I am rejecting the remainder of the series, though.
-
-Speaking of which... Dave, I see that a lot of the patches in the series
-still use the old mail address. Maybe change that?
-
-Ciao,
-Dscho
---8323329-1452314329-1467894439=:6426--
+Mike
