@@ -2,105 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCE9E2070D
-	for <e@80x24.org>; Thu,  7 Jul 2016 14:36:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF66C2070D
+	for <e@80x24.org>; Thu,  7 Jul 2016 15:03:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752768AbcGGOgf (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 10:36:35 -0400
-Received: from mout.gmx.net ([212.227.15.19]:55309 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752734AbcGGOgd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 10:36:33 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LrNE4-1bQhCR0eom-013AaD; Thu, 07 Jul 2016 16:36:19
- +0200
-Date:	Thu, 7 Jul 2016 16:36:18 +0200 (CEST)
-From:	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+	id S1751457AbcGGPDZ (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 11:03:25 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:36065 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751395AbcGGPDX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 11:03:23 -0400
+Received: by mail-wm0-f48.google.com with SMTP id f126so214352294wma.1
+        for <git@vger.kernel.org>; Thu, 07 Jul 2016 08:03:23 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=newsgroups:to:from:subject:cc:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=d+wqYbv5u8iAagoKIbEa0XxSYzjUkJemKaixqXUUdu8=;
+        b=mD+mvymZtITL5LQs9j4I80toFe/7G0AUvJMf5RDVV7FiPPq73by2B20mwhBwwHLasK
+         zwycXsDxp6cF6WyhddVWH/IjccYVUXM5C6AK3yg82t6XG07Pip9L67m8hm9sBdbnexIZ
+         EPnq5g8+uWGZZ1x7Hi2POIM6VyfGK8PbqhwkQkx9VUoByc9GMUJy11BeSM6JTh4uRQ6j
+         Ttgru3WA0MJ72CBVgGsGEGPYzmffunCgRGT8L5Sq8UfTaPGQQYhfebLo+IyA1c9sGHzl
+         O+KNaHRwhcVWn2qBBGN12f7aHIEg+PgDabBbOkGb3JtIIe4JFWzI5Lq8TkXlHpcKVBsQ
+         w7kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:newsgroups:to:from:subject:cc:message-id:date
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=d+wqYbv5u8iAagoKIbEa0XxSYzjUkJemKaixqXUUdu8=;
+        b=mhgEwkLBCSRpPx/z3VBe0qA0HUcE2jxEN1QU/Rc7y39cAInj7+be4xU6PHPRrG9GXt
+         2ephQf0qHiRXXj7eVhOoPFvfTjBUAi/z0uRrlKTTmjeSUah687Yd4QwBC1OsywxfxwYg
+         BEMXRsWX/k6SngWxveTt7fINLAatCZ1xE//jVl1NNO3PH5uajVfeyxWGyGSYxPjzgFLh
+         9KmyO5mQS+PTfVmqO3BNo+D0QS4AFp6+2+v9TGTaJ9T8bUKrpwkg7moqt1OwE6LnHb0/
+         9CNpVpZWuKr6lqOTY1UgxEv2fihp/7CMexv6iwKvaXbcKMMnsmWbNnkrHZBI+TSr0eZ2
+         lYJQ==
+X-Gm-Message-State: ALyK8tI0eQCebkn42jyoLItH2Dy15x+l0FtlAwEmrKGoNJqcrwofjYwUiiJBvO6XDeVkbg==
+X-Received: by 10.28.195.135 with SMTP id t129mr27800079wmf.78.1467903802152;
+        Thu, 07 Jul 2016 08:03:22 -0700 (PDT)
+Received: from [192.168.1.34] (elp79.neoplus.adsl.tpnet.pl. [83.21.209.79])
+        by smtp.googlemail.com with ESMTPSA id jt1sm4161508wjc.8.2016.07.07.08.03.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 Jul 2016 08:03:21 -0700 (PDT)
+Newsgroups: gmane.comp.version-control.git
+X-Mozilla-News-Host: news://news.gmane.org:119
 To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v3 16/16] merge-recursive: flush output buffer even when
- erroring out
-In-Reply-To: <cover.1467902082.git.johannes.schindelin@gmx.de>
-Message-ID: <bdf1cccf96cd3b9908cf170d6b71f10411ab65bb.1467902083.git.johannes.schindelin@gmx.de>
-References: <cover.1467717729.git.johannes.schindelin@gmx.de> <cover.1467902082.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Subject: [RFC] Questions for "Git User's Survey 2016"
+Cc:	Doug Rathbone <doug@dougrathbone.com>,
+	David Bainbridge <david.bainbridge@gmail.com>
+Message-ID: <577E6F32.7020007@gmail.com>
+Date:	Thu, 7 Jul 2016 17:03:14 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:V2h6tpPQmYdj862VRCuDkC5ZLnzvuQNE63Fs9Ma/sp6tswThXIu
- V3uNp26R2XCeIZXgUssfHP4itfSyCxQsJka5+E8ElaCJzc5yKZ7Ht0ocwmH+0MeJCxsV/iD
- 9xhIIf88OkNyyuurbBLZtW/xvszBPlPYwMPTCG9S0Exxj08U0QotBITG8ZwXg40pF/sezaS
- VnRj5YD65ORFLacn1EQIQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:HbnIWLaWA1Y=:JlpdR80XIhbKyIiBxdurDe
- 6GstmdKlZZyz6rKh3Nc8HpyRkxxo8zjkudXngv5qISVAREaYgyGbGX2B+8xRTnPfLlr5J4qRS
- i+fZM4q88IRGZZWUWAy/b6LNCg20nlOuCooQkIla4vrl3rh8zuW2rzmytxZ1sx30Nw7JuoO6U
- 7lQAJobvqltQr5o8tuo9qHJ5K5myxC5/cFbPvf5etuNs53hn3CBqI4Y5QTLOHbHN3otavFJE1
- sVRDSZJan7tjjI47R00rU5zW6kS9zIJ42qY9DLsRflzmy8lIbe5EmwldMuB8kDFUlSA0Dd79W
- u50xNJOBEl/dsZvCGHMrDzYsFjWP1iEDe9FD3E6OdmgMKK9QFCVGCktVsSTu7hNN6IF/ey2cw
- 68y+nYqKvLHotkP5s0PAFWvB+PONlZZz3N70guaechwUAaFvNK777HgqDyj7ml+LYbVVP9SZO
- uUQB8tpvy2zh9jfGgal1tcHquCl2hhUB7+0atZvzzcbQIau6RCtZBfNH6ImirqY5hDcMtt+2A
- fHEGBV0G0TfnJENi89yPoHXnfqvPUhsTBvfWHNzq79wk5Pxj6zd0ra0r1u854kBowfkU8vixl
- 6fjod/0JRx5GfOWsr7BAocu3rQG1f4vj8qPzPM/DnTTkvtORq1ZtEBdoFf7tSUXjTCt+z5JaG
- WmMJpzpYBSdb562eifCwMzkAfwH7I15MIWUMwz2pBqbWrXtOjNPjzo295niBSORoxAtycYLiM
- 6jQWdNCPXxWGjXXM91Nq1io0A7AZgCOYPQkICZFcsM6GvV5bZ08enYyuWxxC35ZYmdIqvrMf0
- KASSDVk
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Ever since 66a155b (Enable output buffering in merge-recursive.,
-2007-01-14), we had a problem: When the merge failed in a fatal way, all
-regular output was swallowed because we called die() and did not get a
-chance to drain the output buffers.
+I am thinking about returning to doing the Git User's Survey, and
+I'd like to ask for feedback.
 
-To fix this, several modifications were necessary:
+Thanks to generocity of Survs.com, we have been gifted with premium
+annual plan (previous surveys always generated quite a large number
+of responses).  This plan will last (at least; it was usually
+automatically renewed at no cost) till 26 October 2016, so I am
+planning on having the survey for 1 month, in September:
 
-- we needed to stop die()ing, to give callers a chance to do something
-  when an error occurred (in this case, flush the output buffers),
+  1 September -- 30 September 2016
 
-- we needed to delay printing the error message so that the caller can
-  print the buffered output before that, and
+For now I would like to ask what types of questions would you want
+to see in the survey, and what you want to get from it (what would
+be the survey purpose).
 
-- we needed to make sure that the output buffers are flushed even when
-  the return value indicates an error.
+In my opinion, the survey has (at least) threefold purpose:
 
-The first two changes were introduced through earlier commits in this
-patch series, and this commit addresses the third one.
+1. INFORMATIONAL.  We can find out how people use Git, if the range
+of people answering the survey is wide enough and diverse enough.
+We can find out what are their pain points.  It might be different
+from what we here on this mailing list think it is.  Hopefully
+this would help direct Git development to make Git better for all.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- merge-recursive.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+2. EDUCATIONAL.  For example a question about which features do
+one uses, or how one gets help about Git, tends to be educational
+for people taking the survey.
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index c0be0c5..cb701ee 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2083,6 +2083,7 @@ int merge_recursive(struct merge_options *o,
- 	o->ancestor = "merged common ancestors";
- 	clean = merge_trees(o, h1->tree, h2->tree, merged_common_ancestors->tree,
- 			    &mrtree);
-+	flush_output(o);
- 	if (clean < 0)
- 		return clean;
- 
-@@ -2091,7 +2092,6 @@ int merge_recursive(struct merge_options *o,
- 		commit_list_insert(h1, &(*result)->parents);
- 		commit_list_insert(h2, &(*result)->parents->next);
- 	}
--	flush_output(o);
- 	if (o->buffer_output < 2)
- 		strbuf_release(&o->obuf);
- 	if (show(o, 2))
+3. ADVERTISEMENT.  Announcing Git User's Survey might be considered
+advertisement for git mailing list.  Questions about hosting site
+or books can also be considered advertisement for the site in question
+or the book / the author, respectively.
+
+
+What I'd like to see is how people use Git, which features do they
+use and which tools (maybe there is some great unknown tool there?),
+where they go to find help about Git.
+
+What types of questions should there be in this year survey?
+
 -- 
-2.9.0.278.g1caae67
+Jakub Narębski
