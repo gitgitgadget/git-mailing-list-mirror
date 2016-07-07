@@ -2,85 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C81A42070D
-	for <e@80x24.org>; Thu,  7 Jul 2016 15:23:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A975D2070D
+	for <e@80x24.org>; Thu,  7 Jul 2016 15:26:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751550AbcGGPXM (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 11:23:12 -0400
-Received: from mout.gmx.net ([212.227.15.15]:49585 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751074AbcGGPXJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 11:23:09 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M92ZJ-1b9KeJ1InF-00CQxW; Thu, 07 Jul 2016 17:23:02
- +0200
-Date:	Thu, 7 Jul 2016 17:23:00 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
-Subject: Re: [PATCH 2/2] t3404: add a test for the --gpg-sign option
-In-Reply-To: <xmqqmvlusi7v.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607071721590.6426@virtualbox>
-References: <cover.1467210629.git.johannes.schindelin@gmx.de> <0df34c45db5b1500e55262c8948c9140e7ad6cb8.1467210629.git.johannes.schindelin@gmx.de> <xmqq8txn4zm5.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1606301019040.12947@virtualbox>
- <xmqqpoqxz6kp.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607020933080.12947@virtualbox> <xmqqeg76vmzb.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607061733200.6426@virtualbox> <xmqqmvlusi7v.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1752908AbcGGP0h (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 11:26:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50248 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752896AbcGGP0f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 11:26:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 711D428659;
+	Thu,  7 Jul 2016 11:26:34 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6bP6/vK61u4+ZPSl46GUqCXNSUw=; b=mllTKw
+	mONmuSZ93AniCuY0DEVOWEDr51NzNXigca2iUGngum9fQq9teJtrq4qH7L0Ie2JD
+	gvdgVuxKuenk1akOYdCOa80tCb9BXqe5K/hBDhMQfUHYDpCLKtfnr3gCK/bq8x9t
+	H7KhfmyozCUj2zYIYdO4VUhRKKPzUxLbjBYQ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lrn/wEx9JFt9WHGFp4owag1zyxWwpT2A
+	8iatb3MI7AKz/IvRI1x7eNIy0x7a42IPRo24ZFjRpJqpDsdlX6I6tuHNlTBGrzP/
+	XTTJunZ63/nv3296xBFT3OijlcCoHPc915QPPFDUYrOWZZVeo0qpgH1ffpwhHTGE
+	UBuQmdVyqyA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6664A28658;
+	Thu,  7 Jul 2016 11:26:34 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D5CE028656;
+	Thu,  7 Jul 2016 11:26:33 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 11/17] am: counteract gender bias
+References: <cover.1467199553.git.johannes.schindelin@gmx.de>
+	<cover.1467717729.git.johannes.schindelin@gmx.de>
+	<ea23faf258b6e62e770879362869f49eea4db869.1467717730.git.johannes.schindelin@gmx.de>
+	<xmqq1t36sbqt.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1607071323440.6426@virtualbox>
+Date:	Thu, 07 Jul 2016 08:26:31 -0700
+In-Reply-To: <alpine.DEB.2.20.1607071323440.6426@virtualbox> (Johannes
+	Schindelin's message of "Thu, 7 Jul 2016 13:30:36 +0200 (CEST)")
+Message-ID: <xmqqmvltqxjs.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:GkFaB14m+kruF+Q6haVcXS7sPkF4u3LC4XpTO9qfYxvZSrV3dAj
- WcX1Clf6j5dJi1Z5LLquDp2sfqDbaupCQ89+I2IYftrQfLd768ysEigEO+FWiWKgWa8MW+E
- H+GHFE8qeAiowiCbiRWgbQ/Z9N5EsgohdBnWqZnYPKe+PIZUKGel4W1Ikr3UldEwCWu4UiF
- LE9OdP268kxyh4+RMDYAg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:/Ry9unuwpgY=:CzcwkCVAYiSruK11W1UT8u
- d+bq151osKhk5qb+HMv9o4ZjDf8/ZNMm3my8g5IqFmRVbPZ0LZc/CYu5GPVTm241/dSRoD/W/
- oH16i3HQwFlIHmdUlbyOFLxsOCqwLdNcnW6Li+SUCm7Qpl62rV0wyjLP8hqny49IPt4ovIDG2
- w2q95RMPr7NokWpGtxH5syBdbvtoJSiCsC+aRfUmA856071x3TU9iMwzy/JN8o0qBoabQEHwc
- obBhmvSrt+wP2XyX9BQAQwiUqKPVo//bqsiBQfTQaRtmnZ8COQbrxY7sk8v4jgfoDcXetkppb
- h+aYJtIl5lw31xDnph3NSjTopLaXfFAYJw+Pho1Qcrom3+LgK5C5cliV+xltNjIwiomzf7NXa
- l3hyyk9jfPAE5PyXr4+hCoye1RwwFJ7YYICrnhOpYBHg4UEkBwWFqQv2SMk3i/6r7LNSFJ8dX
- w2vvVjfqByahVvZe39XfLWjhpY1pf4ZIcY+ywrcAC8Qsn5MsazD0FECdbKoJNJqcAxkgnWpAt
- DnTLZQV4cOEfguQDz+ekUrfXTwPyYYcDuFrY7dSXMmNgEjcBkwm72w0GLOUBOW4CcqMvI/DAS
- JQyMikV/Edt4fHs30kNI5fkzHGjTi2GMYiCuxbP0sTrI45zsyxJBC7N9UMl9Yj0iWTTLPmRdH
- 1xx/vBxNKUMM7FKA0kNiLrWpzrQP/EC67TFY4QDyZYNI3jzSU8CAZtnVdoIYr09m3M3lWGJrA
- 07YRrSkGFkpzwgauGy3t8j/0EJbwnrQL3IxWsGDSYN+qn+u6WK0BlU8nD2Qs5xE31eIVbYDwo
- 9v6Rs1T
+Content-Type: text/plain
+X-Pobox-Relay-ID: 30001EE2-4457-11E6-B51F-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Wed, 6 Jul 2016, Junio C Hamano wrote:
+>> I doubt this kind fo distraction is desirable in the middle of a
+>> seriously heavy series like this one.  As a standalone clean-up to
+>> turn these directly to "their" that everybody would agree on and can
+>> be merged down quickly to 'master' that does not have to keep the
+>> body of the main topic waiting for the dust to settle might be a
+>> better approach.
+>>  ...
+> I am really curious, though. Has it not been our practice to encourage
+> preparatory patches like white-space or const fixes as part of patch
+> series that touch a certain part of the code that needed fixing?
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Okay, so here is the deal: on the development machine where this was
-> > developed, I do not have gpg installed. So please take this test case just
-> > to make sure that things work as intended for the moment.
-> >
-> > Before sending the last rebase--helper patch series, I will make sure to
-> > add a real test that requires gpg, and submit that, too.
-> >
-> > Deal?
-> 
-> I do not particularly care if the latter one happens.
-> 
-> The only thing I care about is that the earlier round documents that
-> we know we probably should test the real driving of the GPG program,
-> but we deliberately do not do so in the series, and hint that such
-> an enhancement can happen later.
-> 
-> That might even entice others to help writing a test or two ;-)
-
-Okay. I tried my hand at editing the commit message, and threw two more
-tests into the patch series for good measure. Will send out v2 once the
-test suite passed (it's still running).
-
-Thanks,
-Dscho
+Yes, isn't that "preparatory clean-up" what I said "might be a
+better approach"?
