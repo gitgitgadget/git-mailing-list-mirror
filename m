@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DF1F2070D
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FEC72070F
 	for <e@80x24.org>; Thu,  7 Jul 2016 14:36:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752587AbcGGOfy (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 10:35:54 -0400
-Received: from mout.gmx.net ([212.227.17.20]:58619 "EHLO mout.gmx.net"
+	id S1752589AbcGGOf4 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 10:35:56 -0400
+Received: from mout.gmx.net ([212.227.15.15]:54136 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752528AbcGGOfw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 10:35:52 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MOfQw-1bF8mg3pp8-0065bk; Thu, 07 Jul 2016 16:35:33
+	id S1752532AbcGGOfx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 10:35:53 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LfjlS-1beWqK19di-00pQ13; Thu, 07 Jul 2016 16:35:18
  +0200
-Date:	Thu, 7 Jul 2016 16:35:31 +0200 (CEST)
+Date:	Thu, 7 Jul 2016 16:35:15 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
@@ -28,96 +28,82 @@ cc:	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
 	Duy Nguyen <pclouds@gmail.com>,
 	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v3 04/16] merge-recursive: clarify code in was_tracked()
+Subject: [PATCH v3 01/16] Verify that `git pull --rebase` shows the helpful
+ advice when failing
 In-Reply-To: <cover.1467902082.git.johannes.schindelin@gmx.de>
-Message-ID: <e4b7334e4623e9b654ab1c18c4c9d95a75ddb59b.1467902083.git.johannes.schindelin@gmx.de>
+Message-ID: <baa7e840b71e14aa69544ae09d3027453602a539.1467902082.git.johannes.schindelin@gmx.de>
 References: <cover.1467717729.git.johannes.schindelin@gmx.de> <cover.1467902082.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:jDcOMUbRbLoXNgzxdfqTNgnyJ7aUtv/m5UK0ekEvgIaGtL6FNjZ
- TLVQcdayBaKMNgT5MMoS5i45tO30r2qgnFw9I7PwdbJxxVVa4ZbAa0OGVgeU8tjg9hdzvvJ
- F7lggr2481LPTHuukh+1/Y7tvBCMZwV8uVTRXx4XKaygSd/CUEFt1Szsft5JQ4KBMiOf1W+
- QHv+KvXEPxZAspHDPNX/A==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:WIPDX9UpjUs=:uDax671s3m/zfM2xNMCssF
- YHWKDe3SRDL54GL0QnxGspT3si9MIg2GDlScaPbh+HmL6tmd0NAiqcuCpZ23YdmA5oDoKwq8s
- +4SimUxpw8ICIjPVm0kDoDBoMkyl59OvoIXgq63cXRZH2LvprkJ/TLhIjtnkRLSBuSg1uVCnT
- VZDFwV+AiDY8BUYbp24zp9vAI+pgqgWT6t88rCfwTjdAyCOtGuAKdnVuU83rmYoMGQuSaiO5X
- 8egKoJJShbI/kfv6vFGDCS9hchgJ65UI4M9kk6Jka7SkhEcebFXrRsh9pQp2wMzVMM2uRZr9y
- PqAChJoBCqzFER6oVTek/BMniEYnrLNOc9ikVHk6IquRLI5/Iqp7JkCYmuVIfzGnDJJASBMZ/
- bKguTiS0t0pVCISRL+6HPoTT2yrsC4DTI41UoU9ULCteg87aZBAupF5rW4Y09GJXp2qBkF33W
- TN2bVCvOtRr+D6czafQPRAcJwKunU2wEIQdgldXroEVWS7wc2l0IFfUjKp068vmG2gVBeSeU/
- xJcQGt85DYKGvUr3zJCysLnxmSdtQKZ3X6Ue0n3xrC12GL9ykfG1slOHkK6TGAtrkQtD4sRIQ
- fiUQUNcjrUU1y9szQqS3/IbtUORUxr93u/77esWhaU6l5EgX8QMn9n6rtgyt++gTytbIxm6Fh
- fUm5gbgYqwhYF9+FpUV0424nRUebYKXgMRG6QOYe4/zjh0XX4H3ZrVdJ/52sGlbt41SqhEK6p
- DTvjWRALZKbvRk60mQjvsJpul8JMCwZtQuNzn3Lc/F/Nzrbl6QWTCklhlcscZzy4QpIvxlbgr
- kltFIwY
+X-Provags-ID: V03:K0:Qf30ivnJ9yrZFkOW8hyuvvOAiLwavN4+/UmF29rUM/kvVVLBE2R
+ Gx9JcnIr6+am7qgzaSx4O8MnMdOIBKv49Ml8uTVuzRN89E1UXHUDAb3eYjM2Lecx5jGytrv
+ bmogM8WwBNjZm1mLHOgbLJjAOSfmOlDyMY/vYZKS6uqxnOIyWfVOB6nlbnTaIs3znEJwVkf
+ 0R9vXttG3r13uJJ2Mm0/w==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:2pq1m4S3Cv0=:qWLPidOXVyHMhX0Hn3Rt5X
+ 15gddYwXwHx1pZR+48ynEXtWhZh3Ey++r2RnGF4X24Sa30My1AbIzvRQodKBGDGuHmW4wNpUw
+ uyhcfJCrCzeoOZf6Y/1IyR1TG73nZB5/8z9Ufh2qelUX7yHMJQCinPu6avnGI6XVumGZp5IXv
+ sJI9VjD1KGdPmtYni6nih5t76FlgBSeAkVMhI+GMNtao6iqWi5OosJmqo7Lv4ALwnhc4njL1e
+ mVYMF9Vn95ja8jILqNQOfp+OpilGEy7izRoFxlY+SuywN1KoyfTnoKKeE3+ZuAaJNIRqD8213
+ TNj6PWT6xPFkKWL0YlYI9uOF7b2Vie5IM9FuKHeJlxZBETKBZuovavQbcxbiG7BJ+PMuplGNq
+ kMnPu1b6OpXKt2dZ6p9TEXFF2GjmjmO5I7GYyflMVMn4IU2ba3VOoxI1W8WaJletGpbotyALp
+ 3OzENm/LyPv0UwXdL5L3nrNoTXHpfOTO3sHuP9mXZYzgjdlSldg33Glj00Gkg3ISlC8Qpas1L
+ /sgdkdr1epFNsBMuVvTseZG+l0o9C/pdEqFYjmPxYG3xJ96MqSTNHSm/23ZQrwKfjoBKG/1FR
+ t5xNbrUYsYocskOjyn3thcXtQpVCueVrvYGQIxw2rdoLH7jylQR9Emp+fXwHh78qC7/cO02jJ
+ oc3T6vE9tYUiYtBF4WnPGhosNPLh3QD5uKgy9XapobO3DCUN8uREAxjPDAsatcEMZ+wwZou9P
+ MBau3qYue3++C6LAaj4DVmYPKsuKbLfh5862OSeWvjCYvClSRqJNTYguY7nfFkppePCMK9XZI
+ 2yW6P6H
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-It can be puzzling to see that was_tracked() asks to get an index entry
-by name, but does not take a negative return value for an answer.
-
-The reason we have to do this is that cache_name_pos() only looks for
-entries in stage 0, even if nobody asked for any stage in particular.
-
-Let's rewrite the logic a little bit, to handle the easy case early: if
-cache_name_pos() returned a non-negative position, we know it is a match,
-and we do not even have to compare the name again (cache_name_pos() did
-that for us already). We can say right away: yes, this file was tracked.
-
-Only if there was no exact match do we need to look harder for any
-matching entry in stage 2.
-
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- merge-recursive.c | 30 ++++++++++++++----------------
- 1 file changed, 14 insertions(+), 16 deletions(-)
+ t/t5520-pull.sh | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index ea0df22..469741d 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -658,23 +658,21 @@ static int was_tracked(const char *path)
- {
- 	int pos = cache_name_pos(path, strlen(path));
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 5d4880e..217b416 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -255,6 +255,36 @@ test_expect_success '--rebase' '
+ 	test new = "$(git show HEAD:file2)"
+ '
  
--	if (pos < 0)
--		pos = -1 - pos;
--	while (pos < active_nr &&
--	       !strcmp(path, active_cache[pos]->name)) {
--		/*
--		 * If stage #0, it is definitely tracked.
--		 * If it has stage #2 then it was tracked
--		 * before this merge started.  All other
--		 * cases the path was not tracked.
--		 */
--		switch (ce_stage(active_cache[pos])) {
--		case 0:
--		case 2:
-+	if (0 <= pos)
-+		/* we have been tracking this path */
-+		return 1;
++test_expect_success '--rebase with conflicts shows advice' '
++	test_when_finished "git rebase --abort; git checkout -f to-rebase" &&
++	git checkout -b seq &&
++	printf "1\\n2\\n3\\n4\\n5\\n" >seq.txt &&
++	git add seq.txt &&
++	test_tick &&
++	git commit -m "Add seq.txt" &&
++	printf "6\\n" >>seq.txt &&
++	test_tick &&
++	git commit -m "Append to seq.txt" seq.txt &&
++	git checkout -b with-conflicts HEAD^ &&
++	printf "conflicting\\n" >>seq.txt &&
++	test_tick &&
++	git commit -m "Create conflict" seq.txt &&
++	test_must_fail git pull --rebase . seq 2>err >out &&
++	grep "When you have resolved this problem" out
++'
++test_expect_success 'failed --rebase shows advice' '
++	test_when_finished "git rebase --abort; git checkout -f to-rebase" &&
++	git checkout -b diverging &&
++	test_commit attributes .gitattributes "* text=auto" attrs &&
++	sha1="$(printf "1\\r\\n" | git hash-object -w --stdin)" &&
++	git update-index --cacheinfo 0644 $sha1 file &&
++	git commit -m v1-with-cr &&
++	git checkout -f -b fails-to-rebase HEAD^ &&
++	test_commit v2-without-cr file "2" file2-lf &&
++	test_must_fail git pull --rebase . diverging 2>err >out &&
++	grep "When you have resolved this problem" out
++'
 +
-+	/*
-+	 * Look for an unmerged entry for the path,
-+	 * specifically stage #2, which would indicate
-+	 * that "our" side before the merge started
-+	 * had the path tracked (and resulted in a conflict).
-+	 */
-+	for (pos = -1 - pos;
-+	     pos < active_nr && !strcmp(path, active_cache[pos]->name);
-+	     pos++)
-+		if (ce_stage(active_cache[pos]) == 2)
- 			return 1;
--		}
--		pos++;
--	}
- 	return 0;
- }
- 
+ test_expect_success '--rebase fails with multiple branches' '
+ 	git reset --hard before-rebase &&
+ 	test_must_fail git pull --rebase . copy master 2>err &&
 -- 
 2.9.0.278.g1caae67
 
