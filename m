@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D8E72070D
-	for <e@80x24.org>; Thu,  7 Jul 2016 14:36:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C6792070D
+	for <e@80x24.org>; Thu,  7 Jul 2016 14:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752747AbcGGOg0 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 10:36:26 -0400
-Received: from mout.gmx.net ([212.227.17.21]:58039 "EHLO mout.gmx.net"
+	id S1752759AbcGGOgb (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 10:36:31 -0400
+Received: from mout.gmx.net ([212.227.17.20]:52200 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752734AbcGGOgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 10:36:20 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0M4GND-1bcYtw0M1j-00rsFw; Thu, 07 Jul 2016 16:36:07
+	id S1752734AbcGGOg3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 10:36:29 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0M2WgT-1bc0wF24qj-00sPKU; Thu, 07 Jul 2016 16:36:14
  +0200
-Date:	Thu, 7 Jul 2016 16:36:06 +0200 (CEST)
+Date:	Thu, 7 Jul 2016 16:36:13 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
@@ -28,98 +28,96 @@ cc:	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
 	Duy Nguyen <pclouds@gmail.com>,
 	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v3 13/16] merge-recursive: write the commit title in one go
+Subject: [PATCH v3 15/16] Ensure that the output buffer is released after
+ calling merge_trees()
 In-Reply-To: <cover.1467902082.git.johannes.schindelin@gmx.de>
-Message-ID: <12170348e4a9f44cdbcb060ea9505bb7b6c830e8.1467902083.git.johannes.schindelin@gmx.de>
+Message-ID: <9565962533ef1b88cfe33e9ab668ee2c5c531adb.1467902083.git.johannes.schindelin@gmx.de>
 References: <cover.1467717729.git.johannes.schindelin@gmx.de> <cover.1467902082.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:BPXPyQGsH6pGBUGZ4wHRoP1IWRnffa1JHQGP4w6XfnNrSq3m6Qo
- g/xIDIEWq/k5H+C8zEFyvyjsQA5P7B0AaPHudc6Obu+zPrV0oCt3ggfSZbRSJvjCXfwtpao
- ZiO4ebxNP9/Bndxp/D9CL3GHDqZOpVG/3MOcl2cyVpmmfezvojQnY1BQgjr22PvuT2x91wt
- oSny89SGBHkmVcHeEoqdQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:DxvPIEz7UG8=:ljWmjMhcd6FzEcBcdm2AXX
- MqSb7ABoi8Ks+in3sWZlyg3jsdxp5rRK9KVntXauAGQaPgpEtoDx/ESfhSymgSmg7g6EmhpV+
- QcHEkut5izvoaXPptlOVl25+qrKppxoqLvbjUoErPM4/CzvCwloRfsAhVJayDItxPwqlTCTMH
- K7TMRbjrVygnp85twEzaP4frdjQejmNYRW8S2nZ1G5LwYOZFfn1il9f9/Su0mVk7wRlcyoE2I
- 18RSRuKRlXNkOvRUXAfuZqxMUKko7AMhPPY1dLV1CE2uuNSEQQMDJa8wduH29cUHaBV2ILtRK
- Zjm4kSSLaSy7LGmrXgS5e54EQLfWp+bF/nJ2cpzmB5LWqQUivHspQne9MI3i/b1/KPJXajysG
- +plknHh4KYiLNrP1+jPpBs/fBSDChpIWtiQSMPbuewF9THwgMKF1bvge8vStG4VU9HoDspiMA
- SqxuzGVeFWoR/OaGwCSIGoBpUh6fp/3Xuy26j4L3ej3oxzoeDDxiglUICH84gAdvCcrjyPw7I
- DC0ZXFR98pr/YCdjRk1Rrxt/H6xc0IlKuBhlRqBnBP3C5Brgol6Z+GpAU8wKRdc7YPaFjh2eu
- MtcQ+d47aXI7LyBy5bDzWdl7gxZg3kCtLirdYBx/1JZ6Bn4smJgrVe66ym4p1BbKkmmzUF4y1
- KAm/xE6kZfWJDmbcLR6m+yhEp5FMtWBPBtzaubuOVKvVHJivDjaaVBV+lngkl6xmVuAG22FMZ
- zoTdDjzLWhevj8w8+omuUX4dqwVv/C8XhJFQZug0Vaml3E1l/akqqylQElltK3sQIAF2kieWh
- Rxnipe1
+X-Provags-ID: V03:K0:wy7P6TH/P7eH0/aHSTpTFamNewrO0biHvWezcVl4MW3DNOPt9qa
+ BXNYuYMPexTPTSkimozoqmURoo3Li5YN2vRfKR346HLSj6Dm8XhF4CxmmYaiIZPaYmLLXKc
+ fG4kPv4Jr8YaqVdHIIiXtucEpMYV2UzARcG77+eL6EiePO0rr3imMUB1iUvO0EgYQ7+NMlZ
+ xsDPAZZUUZQSgnbcz7FGg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:IQJE0OPhGfQ=:/CaMbdAut3L5tLZ7D6L02R
+ l67Ufkkn3M9z7ipMiD5Uq9rZqvUkdAeMjuPUORluw69ARLzzpdmRnyMf6TYzll+iexYSVUeAg
+ v2tHpLa7gL0nuTSooU0hBoPjmlfwfStnL2ZNRXGIds6KlX6dXnjWZyWB3kwRF4y3vkcgGa+Fx
+ g0YwgFEY+i/VOVh/b1JPVNRdvbgXxL+mJM74tdDGtMXXAPfrLPkNwkHBTBYHpPuNmKvVevgNu
+ 6ULHy9oQbLBHDBSFWIVhKk+c38Io8RCQKj20aeJrVLAvOps5wMFkRwT3yG87V7MKqQdvNAC7U
+ FLSngnq7P/V3Y0GLY7yCBrCsURLNpXBjZHTOPomINf8yo/nHtTAxmCzW2dEeVFgKpXArpLRit
+ h3MhlmwTFUKCbCF0zKa+Ks9n17AElS6fJeP3+z37JMAkDxyWEnQZB+JYWV8eiY7ofKXBm1mal
+ bbvDiS6XUavLxuGxRo5tAmBixJ9M/AE0ZuGt6Df4fXYUPj5oFb8ttNkBcX0VSFI40Jfdi3w71
+ zXhlvCJk6b1Gkg8H3cK8PsPmeHq26bWkHz1/gyktVGWCJwEzwEZLkaTH0dbpAE4IFCffg8+Ma
+ md3WdE3vAyk/MLRG6vuxEaMhylQBF72r3zXBhnuWWNKGxJLUzHweOBRnhR8v/ZBcB/qivnAnP
+ a+qfURkHcbVM6qYwIDahShTbkd6+BREYXRsooHjWmVpBzkggPJunn/ivPuGllbRzWg3gP6ZJj
+ rUlmpzrBZf0XHG94mn90GsONWmio41XqO4y6Y6pF6PTDOWNcwMATnDRBzfo+ieKvUH0WRVCWj
+ afa5C/J
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-In 66a155b (Enable output buffering in merge-recursive., 2007-01-14), we
-changed the code such that it prints the output in one go, to avoid
-interfering with the progress output.
+The recursive merge machinery accumulates its output in an output
+buffer, to be flushed at the end of merge_recursive(). At this point,
+we forgot to release the output buffer.
 
-Let's make sure that the same holds true when outputting the commit
-title: previously, we used several printf() statements to stdout and
-speculated that stdout's buffer is large enough to hold the entire
-commit title.
+When calling merge_trees() (i.e. the non-recursive part of the recursive
+merge) directly, the output buffer is never flushed because the caller
+may be merge_recursive() which wants to flush the output itself.
 
-Apart from making that speculation unnecessary, we change the code to
-add the message to the output buffer before flushing for another reason:
-the next commit will introduce a new level of output buffering, where
-the caller can request the output not to be flushed, but to be retained
-for further processing.
+For the same reason, merge_trees() cannot release the output buffer: it
+may still be needed.
 
-This latter feature will be needed when teaching the sequencer to do
-rebase -i's brunt work: it wants to control the output of the
-cherry-picks (i.e. recursive merges).
+Forgetting to release the output buffer did not matter much when running
+git-checkout, or git-merge-recursive, because we exited after the
+operation anyway. Ever since cherry-pick learned to pick a commit range,
+however, this memory leak had the potential of becoming a problem.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- merge-recursive.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ builtin/checkout.c | 1 +
+ merge-recursive.c  | 2 ++
+ sequencer.c        | 1 +
+ 3 files changed, 4 insertions(+)
 
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 07dea3b..8d852d4 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -573,6 +573,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 				exit(128);
+ 			ret = reset_tree(new->commit->tree, opts, 0,
+ 					 writeout_error);
++			strbuf_release(&o.obuf);
+ 			if (ret)
+ 				return ret;
+ 		}
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 205ea04..ad5b961 100644
+index 10d3355..c0be0c5 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -191,25 +191,26 @@ static void output(struct merge_options *o, int v, const char *fmt, ...)
- 
- static void output_commit_title(struct merge_options *o, struct commit *commit)
- {
--	int i;
--	flush_output(o);
--	for (i = o->call_depth; i--;)
--		fputs("  ", stdout);
-+	strbuf_addchars(&o->obuf, ' ', o->call_depth * 2);
- 	if (commit->util)
--		printf("virtual %s\n", merge_remote_util(commit)->name);
-+		strbuf_addf(&o->obuf, "virtual %s\n",
-+			merge_remote_util(commit)->name);
- 	else {
--		printf("%s ", find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV));
-+		strbuf_addf(&o->obuf, "%s ",
-+			find_unique_abbrev(commit->object.oid.hash,
-+				DEFAULT_ABBREV));
- 		if (parse_commit(commit) != 0)
--			printf(_("(bad commit)\n"));
-+			strbuf_addf(&o->obuf, _("(bad commit)\n"));
- 		else {
- 			const char *title;
- 			const char *msg = get_commit_buffer(commit, NULL);
- 			int len = find_commit_subject(msg, &title);
- 			if (len)
--				printf("%.*s\n", len, title);
-+				strbuf_addf(&o->obuf, "%.*s\n", len, title);
- 			unuse_commit_buffer(commit, msg);
- 		}
+@@ -2092,6 +2092,8 @@ int merge_recursive(struct merge_options *o,
+ 		commit_list_insert(h2, &(*result)->parents->next);
  	}
-+	flush_output(o);
- }
+ 	flush_output(o);
++	if (o->buffer_output < 2)
++		strbuf_release(&o->obuf);
+ 	if (show(o, 2))
+ 		diff_warn_rename_limit("merge.renamelimit",
+ 				       o->needed_rename_limit, 0);
+diff --git a/sequencer.c b/sequencer.c
+index 286a435..ec50519 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -293,6 +293,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	clean = merge_trees(&o,
+ 			    head_tree,
+ 			    next_tree, base_tree, &result);
++	strbuf_release(&o.obuf);
+ 	if (clean < 0)
+ 		return clean;
  
- static int add_cacheinfo(struct merge_options *o,
 -- 
 2.9.0.278.g1caae67
 
