@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED1F42070F
-	for <e@80x24.org>; Thu,  7 Jul 2016 14:35:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A67E20710
+	for <e@80x24.org>; Thu,  7 Jul 2016 14:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752410AbcGGOfo (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 10:35:44 -0400
-Received: from mout.gmx.net ([212.227.15.19]:51585 "EHLO mout.gmx.net"
+	id S1752524AbcGGOfs (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 10:35:48 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60672 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752271AbcGGOfn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 10:35:43 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MNZ9u-1bE1n93Lek-0079qS; Thu, 07 Jul 2016 16:35:29
+	id S1752284AbcGGOfq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 10:35:46 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Lpgew-1boTXT3Kkw-00fOqM; Thu, 07 Jul 2016 16:35:37
  +0200
-Date:	Thu, 7 Jul 2016 16:35:27 +0200 (CEST)
+Date:	Thu, 7 Jul 2016 16:35:35 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
@@ -28,82 +28,129 @@ cc:	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
 	Duy Nguyen <pclouds@gmail.com>,
 	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v3 03/16] Avoid translating bug messages
+Subject: [PATCH v3 05/16] Prepare the builtins for a libified
+ merge_recursive()
 In-Reply-To: <cover.1467902082.git.johannes.schindelin@gmx.de>
-Message-ID: <b5c530404c8bb71e513e9e79a09d8ef7d259b580.1467902083.git.johannes.schindelin@gmx.de>
+Message-ID: <61992e3afb8b9073bc78410c95c6c21a5abfd02b.1467902083.git.johannes.schindelin@gmx.de>
 References: <cover.1467717729.git.johannes.schindelin@gmx.de> <cover.1467902082.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:czZLLmzLBr2TPZkwBz0lAuSkYDw9EnBmdjsMZeN84Nsjcf01RkW
- 8IbiGNiO7xuNElN2anQMR2Gpn+xgBM896tkkmKRaP+CbPUOwEiqvDKqM3QoP4Zu7LOBU3yB
- tdLpieyeDI0WYmoV1s2iINY8yTvQxobZ7sOk6NEQTtBWS0M5DMGh6fDWesBvOVCga/BQf/S
- tQAeNKgQ7l9H6ETcpixVA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:F+gJYz1/ke0=:/5kXzmb5X6b2OT2TmJpQb0
- ItDEevX8GO6caNGW4uXkLCYuUbbBnXdPZFZtIcZkg2BmoZkHh6yDyHpcKK5YJO6wexYB5ydPU
- pNrEko/jJKRCer4Qd60kZnmw3bI3MMH8ubFhYwno7CYGR0YhUQhVpoj/y7uyxTW8XfbNQ8IOX
- sSjiNMSIz6B6B6q5NGPsxr+SW8N2dV2HOwE4g5nOb8bH+Q27nE/994qvFXYhDJ6kIny4eM88h
- 6NpowLBiBfrEM4hUoy0rHFtyQadT67mHhlt7/o2U3b0GSXkFkrH9qW2pLkO2j+kxcNzP4NBE6
- v1yV/Hfse5H6f7N2+o74xZfW+IDpKJu7BZDEfZ9kzyx8L5lbu8kk4qZdAe56jLJZJ+YUrhS89
- 49WaIreXJ3rqQ0jDgUEH9FXlI+TfZCi4pXjoVOzqN4Bl3Pjof5K+zZ2Dzbf+xy2Ffxya+E4vM
- XEwDcBY7KpIJTgFw4aMIa6ZzExhXMasp0tlA7mS9oFBmvlq8AMDuLD7essqMuceIz3Lm6+S5B
- 5eOc9tkd/e0GSNPKQ4/oT9H8RDjpJwEz+tX3m5/edxKmJeclisiZwQyHOcVOtuEe5eB2l8OOh
- qI7Wmk8r4nTjFkP7oTYBl25iOAdCakqdLeyXUMjGTiaHD6PaR5CQf9lmwGg+mqnJMBy3dI0We
- CFYxJWqh3VuaMXwo84vYs2vllhYnR99TMAZs4MpDXisXZEgLRaN+MaoKEz/SHx5XsxuqEG5nm
- NCcds+IwICYw8wlpEWd/VG9omOW2w0GjFXRhffI8YGZjm7JD99lOkEo1qTV/kQX4tvfGoQl8d
- vg7G8r0
+X-Provags-ID: V03:K0:181mzckEdXrm1qd8oNDrF07NhIWXTQRg7Yd98iWo99zJh1biGqk
+ k0N/WKtNLD962Zmd/0HFB0eBrFV0vx2tDWX6jCMby6TgOaAZKEJpvIdtXkhTLh/iIxhy9VO
+ GhOX9lhYz6oKV35jh+AbCtwLUtqtHFs8O+Gt8bWkpqo0fkWZ40+4Cd6zJs5GCkINIqfSNi3
+ zd8veQOlhldyVDH1K4JGA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:/ensSc+JFos=:vyathSjP+i+bO93jdgJBww
+ PZNqkQ1R75EGPZVywXmyE8Aqj0EmzQ5TtPlS/9SN0CYVS2SO8A7OtWXyscRXt5jPkt37IOrt5
+ 7Oyrn8hBQKe4IiV94pqV4a8Ol1g3HLXX9vix1bD6/mihVldYH7ZL5X3iKOZ46c8LfcvL43s8g
+ pM0E8ucmGjSUrZRR6ZLzTLlGoaZRxCSmLWQ2NNmK5b1qxnxWCfi2+n7gQ8W9KnRr9xCiSsmM0
+ WWg4J5Krv1yUrRezdDlXZBPjr5454/FpbluDIILk+uQvKn6kVKQQZjZA7wwqHMT0soshVQ2SF
+ C2Ihk6l/kLyHmVaDyyVy0Gw2YL/DwlzuqdEWbJ4ObKKYUM/6CdeLkKUC1aaBwS0e/J/zoi7pJ
+ mYCMKUL47zeieZqWd52zePg9zYVvs1RXxqxkef2LXvEHMw23eGoTTX90uxAxWX7oJSRKUlyoh
+ BUj3BXeAy4DftCD9SwJzbgFZmCIVXqqCO0mLkDJLPBieoYbcbYKAjoa4HWUb++OMN2nQ2dz9f
+ YaA+M6LDwGM8SeQwagGtEm/b+oIJrxXGfXx/KiG1xmx7ntmeO4+df1TGebgvrIwUPH/6eyCkO
+ Axyr1GPwyhKVYs+gX9Jc0Iys8NWuzYmMk2Hdcn1nxoAzHx59X7MjgJ6fZ4kf0iGSw9eXi0rOC
+ DmGlAyQWPOkfg102V/ZGz9PAw9aNfziA/fggGqvG5KbFDG+tg024nRxHG4rEaN9F7uE8mCAdJ
+ mdVppRU5vHh30wne4IgUu9xIJzHeQm1Bl/iXr7uF28JUJdBhSKDVna3W/UhKn/+Ih3iqJuz9t
+ JjtIr+E
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-While working on the patch series that avoids die()ing in recursive
-merges, the issue came up that bug reports (i.e. die("BUG: ...")
-constructs) should never be translated, as the target audience is the
-Git developer community, not necessarily the current user, and hence
-a translated message would make it *harder* to address the problem.
+Previously, callers of merge_trees() or merge_recursive() expected that
+code to die() with an error message. This used to be okay because we
+called those commands from scripts, and had a chance to print out a
+message in case the command failed fatally (read: with exit code 128).
 
-So let's stop translating the obvious ones. As it is really, really
-outside the purview of this patch series to see whether there are more
-die() statements that report bugs and are currently translated, that
-task is left for another day and patch.
+As scripting incurs its own set of problems (portability, speed,
+idiosynchracies of different shells, limited data structures leading to
+inefficient code), we are converting more and more of these scripts into
+builtins, using library functions directly.
+
+We already tried to use merge_recursive() directly in the builtin
+git-am, for example. Unfortunately, we had to roll it back temporarily
+because some of the code in merge-recursive.c still deemed it okay to
+call die(), when the builtin am code really wanted to print out a useful
+advice after the merge failed fatally. In the next commits, we want to
+fix that.
+
+The code touched by this commit expected merge_trees() to die() with
+some useful message when there is an error condition, but merge_trees()
+is going to be improved by converting all die() calls to return error()
+instead (i.e. return value -1 after printing out the message as before),
+so that the caller can react more flexibly.
+
+This is a step to prepare for the version of merge_trees() that no
+longer dies,  even if we just imitate the previous behavior by calling
+exit(128): this is what callers of e.g. `git merge` have come to expect.
+
+Note that the callers of the sequencer (revert and cherry-pick) already
+fail fast even for the return value -1; The only difference is that they
+now get a chance to say "<command> failed".
+
+A caller of merge_trees() might want handle error messages themselves
+(or even suppress them). As this patch is already complex enough, we
+leave that change for a later patch.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- merge-recursive.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/checkout.c | 4 +++-
+ builtin/merge.c    | 2 ++
+ sequencer.c        | 4 ++++
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 05b9789..ea0df22 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -983,7 +983,7 @@ static struct merge_file_info merge_file_1(struct merge_options *o,
- 			if (!oid_eq(&a->oid, &b->oid))
- 				result.clean = 0;
- 		} else
--			die(_("BUG: unsupported object type in the tree"));
-+			die("BUG: unsupported object type in the tree");
- 	}
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 27c1a05..07dea3b 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -567,8 +567,10 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			o.ancestor = old->name;
+ 			o.branch1 = new->name;
+ 			o.branch2 = "local";
+-			merge_trees(&o, new->commit->tree, work,
++			ret = merge_trees(&o, new->commit->tree, work,
+ 				old->commit->tree, &result);
++			if (ret < 0)
++				exit(128);
+ 			ret = reset_tree(new->commit->tree, opts, 0,
+ 					 writeout_error);
+ 			if (ret)
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 46b88ad..6837e15 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -682,6 +682,8 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 		hold_locked_index(&lock, 1);
+ 		clean = merge_recursive(&o, head,
+ 				remoteheads->item, reversed, &result);
++		if (clean < 0)
++			exit(128);
+ 		if (active_cache_changed &&
+ 		    write_locked_index(&the_index, &lock, COMMIT_LOCK))
+ 			die (_("unable to write %s"), get_index_file());
+diff --git a/sequencer.c b/sequencer.c
+index cdfac82..286a435 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -293,6 +293,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	clean = merge_trees(&o,
+ 			    head_tree,
+ 			    next_tree, base_tree, &result);
++	if (clean < 0)
++		return clean;
  
- 	return result;
-@@ -1827,7 +1827,7 @@ static int process_entry(struct merge_options *o,
- 		 */
- 		remove_file(o, 1, path, !a_mode);
- 	} else
--		die(_("BUG: fatal merge failure, shouldn't happen."));
-+		die("BUG: fatal merge failure, shouldn't happen.");
- 
- 	return clean_merge;
- }
-@@ -1885,7 +1885,7 @@ int merge_trees(struct merge_options *o,
- 		for (i = 0; i < entries->nr; i++) {
- 			struct stage_data *e = entries->items[i].util;
- 			if (!e->processed)
--				die(_("BUG: unprocessed path??? %s"),
-+				die("BUG: unprocessed path??? %s",
- 				    entries->items[i].string);
- 		}
- 
+ 	if (active_cache_changed &&
+ 	    write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
+@@ -559,6 +561,8 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 	if (!opts->strategy || !strcmp(opts->strategy, "recursive") || opts->action == REPLAY_REVERT) {
+ 		res = do_recursive_merge(base, next, base_label, next_label,
+ 					 head, &msgbuf, opts);
++		if (res < 0)
++			return res;
+ 		write_message(&msgbuf, git_path_merge_msg());
+ 	} else {
+ 		struct commit_list *common = NULL;
 -- 
 2.9.0.278.g1caae67
 
