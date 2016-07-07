@@ -2,87 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFE6620705
-	for <e@80x24.org>; Thu,  7 Jul 2016 21:53:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82FC120705
+	for <e@80x24.org>; Thu,  7 Jul 2016 21:57:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752707AbcGGVxh (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 17:53:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50011 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751980AbcGGVxg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 17:53:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D83FD2AFB5;
-	Thu,  7 Jul 2016 17:53:34 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pzwle+FqHTrdAKy91JjvzbUGmIw=; b=U5jWsz
-	fp+geZoNjRe/luMo3lI79P0zYebdEqK9fYPypfLAHsw8l/mmhJGrP0WhSIUnbWDV
-	4NZgt1UTIstmlR4fKMcX+ef9DpnRnplv6ml+sZDCN15QE/s+ff+X9uCKvkerc6xP
-	weZmoWmhQH6OhZHPcGzqqTm5xr/ZWUj5Usvto=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uaD6cDBA9CiyIzsLnK/nuIfbKM2F13wT
-	dB8NRjSag844cb59izlMzgehtAJOCm+KMeqIcQE5wX6QapPlLoABY2BpLOAUQ7of
-	qn1FxfD27EDqAk6bEgYHij1cyXOQttgktRJavVyI8gutwSuhssIj38zd3+6L+G5j
-	JRQu1davDIg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CD6022AFB4;
-	Thu,  7 Jul 2016 17:53:34 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 562A32AFB2;
-	Thu,  7 Jul 2016 17:53:34 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
+	id S1753166AbcGGV5N (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 17:57:13 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41704 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752095AbcGGV5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 17:57:12 -0400
+Received: (qmail 9589 invoked by uid 102); 7 Jul 2016 21:56:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 07 Jul 2016 17:56:41 -0400
+Received: (qmail 8438 invoked by uid 107); 7 Jul 2016 21:56:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 07 Jul 2016 17:56:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Jul 2016 17:56:38 -0400
+Date:	Thu, 7 Jul 2016 17:56:38 -0400
+From:	Jeff King <peff@peff.net>
 To:	Stefan Beller <sbeller@google.com>
-Cc:	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>,
-	Dan Wang <dwwang@google.com>,
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Eric Wong <e@80x24.org>, Dan Wang <dwwang@google.com>,
 	Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH 1/4] push options: {pre,post}-receive hook learns about push options
+Subject: Re: [PATCH 2/4] receive-pack: implement advertising and receiving
+ push options
+Message-ID: <20160707215638.GA27627@sigill.intra.peff.net>
 References: <20160707011218.3690-1-sbeller@google.com>
-	<20160707011218.3690-2-sbeller@google.com>
-	<xmqqeg75p5cn.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kb_oHZUv1=8Q0FSV8yVP5PrwStchXAyhZF=mHhv91APHQ@mail.gmail.com>
-Date:	Thu, 07 Jul 2016 14:53:32 -0700
-In-Reply-To: <CAGZ79kb_oHZUv1=8Q0FSV8yVP5PrwStchXAyhZF=mHhv91APHQ@mail.gmail.com>
-	(Stefan Beller's message of "Thu, 7 Jul 2016 14:50:55 -0700")
-Message-ID: <xmqqlh1dnmhv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+ <20160707011218.3690-3-sbeller@google.com>
+ <xmqqa8htp4kc.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kbkv5P0wP2kKt9gzmZBe1DjLSB8JpZD66DT_Xd4NKqmKQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4071D654-448D-11E6-BA9F-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbkv5P0wP2kKt9gzmZBe1DjLSB8JpZD66DT_Xd4NKqmKQ@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Thu, Jul 07, 2016 at 02:41:37PM -0700, Stefan Beller wrote:
 
-> But your first patch (2/4) would not yet advertise the capability?
-> Or advertise and then just ignoring it?
+> >> +     /* NEEDSWORK: expose the limitations to be configurable. */
+> >> +     int max_options = 32;
+> >> +
+> >> +     /*
+> >> +      * NEEDSWORK: expose the limitations to be configurable;
+> >> +      * Once the limit can be lifted, include a way for payloads
+> >> +      * larger than one pkt, e.g allow a payload of up to
+> >> +      * LARGE_PACKET_MAX - 1 only, and reserve the last byte
+> >> +      * to indicate whether the next pkt continues with this
+> >> +      * push option.
+> >> +      */
+> >> +     int max_size = 1024;
+> >
+> > Good NEEDSWORK comments; perhaps also hint that the configuration
+> > must not come from the repository level configuration file (i.e.
+> > Peff's "scoped configuration" from jk/upload-pack-hook topic)?
+> 
+> Ok, I reviewed that series. It is unclear to me how the attack would
+> actually look like in that case.
+> 
+> In 20b20a22f8f Jeff writes:
+> > Because we promise that
+> > upload-pack is safe to run in an untrusted repository, we
+> > cannot execute arbitrary code or commands found in the
+> > repository (neither in hooks/, nor in the config).
+> 
+> I agree on this for all content that can be modified by the user
+> (e.g. files in the work tree such as .gitmodules), but the .git/config
+> file cannot be changed remotely. So I wonder how an attack would
+> look like for a hosting provider or anyone else?
+> We still rely on a sane system and trust /etc/gitconfig
+> so we do trust the host/admin but not the user?
 
-As I wrote...
+The problem is for hosting sites which serve repositories via git-daemon
+from untrusted users who have real shell accounts (e.g., you set up
+git-daemon to run as the "daemon" user serving repositories out of
+people's home directories; you don't want users to escalate their shell
+access into running arbitrary code as "daemon").
 
->> If I were doing this series, I
->> would probably have done 2/4 first without plumbing it through
->> (i.e. it is sent and accumulated in a string list at the receiver,
->> and then cleared and freed without being used), and then added the
->> processing (i.e. this step) as the second patch.
+But I don't think that case applies here. That is about running
+upload-pack on an untrusted repository, but your changes here are part
+of receive-pack. In such a scenario, users should be pushing as
+themselves via ssh. And if they are not (e.g., the admin set up
+push-over-smart-http centrally), they are already screwed, as a
+malicious user could just set up a pre-receive hook.
 
-... I would imagine it would advertise, allow the other side to send,
-receive and collect, and then discard (properly) without using.
+IOW, we promise only that upload-pack is safe to run an untrusted repo,
+but not receive-pack.
 
-> It is better for documentation purposes in this patch though. It makes
-> the other patch harder as "it allows transmitting push options, but
-> in that patch nothing of value is done with them."
->
-> So I'll see if I can reorder easily.
-
-It does not matter too much. Let's not spend too much time on the
-ordering.
+-Peff
