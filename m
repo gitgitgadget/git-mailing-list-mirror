@@ -6,70 +6,67 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C19520705
-	for <e@80x24.org>; Thu,  7 Jul 2016 21:10:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE2E520705
+	for <e@80x24.org>; Thu,  7 Jul 2016 21:14:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751299AbcGGVKS (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 17:10:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55275 "EHLO
+	id S1752580AbcGGVOy (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 17:14:54 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65269 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751206AbcGGVKQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 17:10:16 -0400
+	with ESMTP id S1752299AbcGGVOx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 17:14:53 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8009A2B9C7;
-	Thu,  7 Jul 2016 17:10:15 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 295512BA2B;
+	Thu,  7 Jul 2016 17:14:52 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XftVp24MZ5uvLKIuHenjLqVx3+s=; b=WRcAD6
-	gdOw1glr1RO+PPym0ED2j7HdZziyzopJ90zWvhxWHxH2lzd2lcPdAlIKbrzmdaKn
-	+/ss8ekg54x94tW1MA24d+sB3Tihl1QJWvuLtsqohqFoFb/FSTzIKAmvUJSyZO/o
-	Up3ghwjUAxl6gXaL26RHVgfYKm+ra2kaJ7QC8=
+	:content-type; s=sasl; bh=rW723BPVqsoc1iX4T9axDmkf294=; b=CHGeLo
+	lqGhXc5SXOete4U8NG4No6HcpCigRWe6DwxtLqgWpxvTtVHiiusA6B3Ks0OWwuev
+	/1vj+QD3TA3BAzEVX1dJHyvBXuYeX5wUFZPNj5JS3Rabyq/QWxQE9TSBcxEAtDea
+	ukxtWUJ8DzD1SUl2nwct9hc8tdgaSiUj9sD64=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qaiM0pv0w0lWCl1DkSaDFo0mSS/tE0Mw
-	3nFYNzDMBPGlTYDnnNxNS6xx2fpcMp61W8aG+Fx3ItkFxQGqNJrBTTC7OYeMOf9F
-	wOjshPZ58Sf/s8913L0slZ8+9WyO2ZyBU8GFA2RhdlH/SLygi2siMor11aOw2slv
-	PpICxA9DNIo=
+	:content-type; q=dns; s=sasl; b=kZEO1RASuDLxXbYni3qYD5aOF910vIoa
+	Mic4mZC+sbtoIVhm8qg0Q/7PlusKzyyJpXJyMc5Cfglssop0LOLfRsQzCpfMlMi4
+	3rh8BdhBekz1gpKCIJ9Zj/FGdzfCKfXR5QU5PaNjFnbG1Cw8JJFQy8BdkdBQ+h8F
+	6BDQKeDMzR0=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7897B2B9C6;
-	Thu,  7 Jul 2016 17:10:15 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2097E2BA2A;
+	Thu,  7 Jul 2016 17:14:52 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EF4C72B9C5;
-	Thu,  7 Jul 2016 17:10:14 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9CF9E2BA28;
+	Thu,  7 Jul 2016 17:14:51 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] notes-merge: use O_EXCL to avoid overwriting existing files
-References: <577EB6BE.6090504@web.de>
-	<20160707203822.GB11804@sigill.intra.peff.net>
-Date:	Thu, 07 Jul 2016 14:10:12 -0700
-In-Reply-To: <20160707203822.GB11804@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 7 Jul 2016 16:38:22 -0400")
-Message-ID: <xmqq1t35p32j.fsf@gitster.mtv.corp.google.com>
+To:	Ronald Wampler <rdwampler@gmail.com>
+Cc:	git@vger.kernel.org, mackyle@gmail.com, reubenhwk@gmail.com,
+	sunshine@sunshineco.com
+Subject: Re: [PATCH] Makefile: add NEEDS_LIBRT to optionally link with librt
+References: <20160707204554.14961-1-rdwampler@gmail.com>
+Date:	Thu, 07 Jul 2016 14:14:49 -0700
+In-Reply-To: <20160707204554.14961-1-rdwampler@gmail.com> (Ronald Wampler's
+	message of "Thu, 7 Jul 2016 16:45:54 -0400")
+Message-ID: <xmqqwpkxnoae.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3318E6E2-4487-11E6-AA82-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: D8002A3A-4487-11E6-B7E1-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Ronald Wampler <rdwampler@gmail.com> writes:
 
-> Why do we care that the file exists? Should we instead be using the
-> lockfile code to get exclusive access to it? That would also switch us
-> to doing the write-to-tempfile-and-rename dance, but that seems like it
-> would be a good thing. If we hit a write() error in the code now, we
-> leave a partially-written file in the notes worktree.
+> I am not sure if this the correction solution. Another option I
+> considered was to wrap the EXTLIBS += -lrt is an ifndef NO_RT and only
+> defining NO_RT for Mac OS X in config.mak.uname.
 
-Yeah, I had the same thought when I saw the change.
+That alternative would make the resulting code noisier/uglier with
+nested ifdef, I would imagine, but it would be of less impact to the
+existing users.  But my gut feeling is that the patch you sent is
+probably a better solution for the longer term.
 
-> I dunno. From my cursory reading of the code, it seems like we'd never
-> really expect this file_exists() to trigger in the first place, so
-> perhaps it's not worth thinking too hard about it.
+Thanks.
 
-Perhaps.
