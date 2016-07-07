@@ -2,56 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B9442070F
-	for <e@80x24.org>; Thu,  7 Jul 2016 01:12:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC40B2070F
+	for <e@80x24.org>; Thu,  7 Jul 2016 01:12:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753387AbcGGBMo (ORCPT <rfc822;e@80x24.org>);
-	Wed, 6 Jul 2016 21:12:44 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:35847 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752359AbcGGBMn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2016 21:12:43 -0400
-Received: by mail-pa0-f41.google.com with SMTP id uj8so1257880pab.3
-        for <git@vger.kernel.org>; Wed, 06 Jul 2016 18:12:43 -0700 (PDT)
+	id S1753650AbcGGBMr (ORCPT <rfc822;e@80x24.org>);
+	Wed, 6 Jul 2016 21:12:47 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35046 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752359AbcGGBMp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2016 21:12:45 -0400
+Received: by mail-pa0-f54.google.com with SMTP id dx3so1265947pab.2
+        for <git@vger.kernel.org>; Wed, 06 Jul 2016 18:12:45 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Hy/KzoLf7GNTRGjyv+Q0jjw9t1sbcbDrp6v2gJ1oIJw=;
-        b=QzQiuicKeiiu0R7z0O31CUjQE7Z3lDfian9pyEeO+o+cprzf5RCJ2izckQoIKvKI2c
-         gJ/3lLbTWl7ZkprNa+2qEKLTS/Q/ne4NtdvAFbQyv0UNPP7GHFHBVFzc3R2MA861Chbm
-         r1m2pfGMQb+snTluX01p/BBN1YNPoLzvlSwJcr3Xgd3tciSWo0KQD74sZCTit83baBYm
-         6D6PZwCaVbfpBfF9qkfAEdbWHXqbM9tBL512yACB/umBBer6sOSFKM6Y7J6twRhPakmL
-         YffwubxbgbiZYB76vzKkMPeXo5Z4whifmD8M/SmdMT993oxbDhsMyk7KZ2JPYMeXKe1/
-         A0QA==
+        bh=NMavaj+ygXEpLLQlbSwbPehSVfSpHiDTp0G+flXIFQ8=;
+        b=JsUofVGdxuwHhFWZRsWqDoE+x6tm8syrbqZ4QH6WirlW40zb+RD9SwAE/JQtjtZtSR
+         bPjd2Ta0lmdhvboSVeQw8J8V8c1ulmAf0+4Ik6MPJ0ye7FBHv6hDk/9gtC/RpsrtYZx2
+         dK4o8ERk8pwDGetfxY32EHD8jyc4eLdOxQiWkNjeaoXVWzvGSrkLTnPbGrN295oQQhqS
+         c4BD2fbsoOhP6c9UiYZn9BuaGGmUXHYUo4zVJkhlBLBnYWhyLmlEFHAYWhGMVdwY8jTv
+         v8NgXSUstlphzqy+6FGqgRwghzrbiwBsugxZMHBY+r6TP6TZnB/8Z4ZXSLns9VReTtYO
+         tLsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Hy/KzoLf7GNTRGjyv+Q0jjw9t1sbcbDrp6v2gJ1oIJw=;
-        b=keYPAZ59WEM7aS2h8Oy/XGjb6oSIRePAZ83WY+7EQbiYY5DmKXzKPfRAE/qm/1v5+r
-         GNeb7dTH2zwEGHDKmCv+x0bsF+z6X3hBUN3+0QyqRCvWNzfT4QSScsBcEXotD9inzpWo
-         Sd8dpwRhWG30qtHAQsynT6t6WQc1bFm3KIrZL95gVPd1XiYZYcrlYDHsA8B309r5X863
-         tYFk9tQDtnQurqjWp6mOxOieWdpkMg36IA8cHXf/Fr6MCw0JdJgng3K6NygUeIwpU/sg
-         lHV7/+AZFGfJreyTTQhJlCo8Oo22P4+yhLDsXv+2109NilbLdrytEjTl1mVVrbWzAZ9W
-         pQRw==
-X-Gm-Message-State: ALyK8tLjvVFlnSQO36DeXloL7VbvUWeSewiymvM0NnS3Z7gb02ojxB2UR1rfEcYsrpoFo5Cl
-X-Received: by 10.66.134.52 with SMTP id ph20mr19377093pab.72.1467853962432;
-        Wed, 06 Jul 2016 18:12:42 -0700 (PDT)
+        bh=NMavaj+ygXEpLLQlbSwbPehSVfSpHiDTp0G+flXIFQ8=;
+        b=KgAtnOgEePnF1HSqaKhiTk7TQ9mHy6waUKScWinz5Gr87H0+ARcTEz36YCj98unk2x
+         OY8GzeX0bTuYC9W+juVZZ/IOfTYGGW0NDHfqBvVxaGlhnpXCglRlBM7WygBCQoSSY6QD
+         7E8kzyXA5Pk0NWiMfqeLL9r8ZzQRMV1nLFmPv/ToYUqb3fVesDzFdBKL75XLdE29yeuL
+         68vxtIfbz/VLkyUHcu6GMtKgW3FQne7sIkKRQz3KBvHaiAO5RKGYgLxW9PDMgoT3djWw
+         Bmp4dowQspiRPWwohurHszSUlTEUfWjju7A4K86geEXBCovOkv5kuZ57FWkKn3aREtsu
+         mt9w==
+X-Gm-Message-State: ALyK8tIKWEZS0f3/2YoqjAghkX3xN0T+p5OWTJ8hhfmIzl0RvC8OaM6tqtUFI1yu5QRnb+qS
+X-Received: by 10.66.179.168 with SMTP id dh8mr47240836pac.36.1467853964438;
+        Wed, 06 Jul 2016 18:12:44 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:7518:e836:5c9c:93dd])
-        by smtp.gmail.com with ESMTPSA id jh3sm307855pac.14.2016.07.06.18.12.41
+        by smtp.gmail.com with ESMTPSA id z127sm6841668pfz.20.2016.07.06.18.12.43
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 06 Jul 2016 18:12:41 -0700 (PDT)
+        Wed, 06 Jul 2016 18:12:43 -0700 (PDT)
 From:	Stefan Beller <sbeller@google.com>
 To:	gitster@pobox.com
 Cc:	git@vger.kernel.org, e@80x24.org, peff@peff.net, dwwang@google.com,
 	dennis@kaarsemaker.net, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/4] receive-pack: implement advertising and receiving push options
-Date:	Wed,  6 Jul 2016 18:12:16 -0700
-Message-Id: <20160707011218.3690-3-sbeller@google.com>
+Subject: [PATCH 3/4] push: accept push options
+Date:	Wed,  6 Jul 2016 18:12:17 -0700
+Message-Id: <20160707011218.3690-4-sbeller@google.com>
 X-Mailer: git-send-email 2.9.0.141.gd59d3e9.dirty
 In-Reply-To: <20160707011218.3690-1-sbeller@google.com>
 References: <20160707011218.3690-1-sbeller@google.com>
@@ -60,197 +60,254 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The pre/post receive hook may be interested in more information from the
-user. This information can be transmitted when both client and server
-support the "push-options" capability, which when used is a phase directly
-after update commands ended by a flush pkt.
-
-Similar to the atomic option, the server capability can be disabled via
-the `receive.advertisePushOptions` config variable. While documenting
-this, fix a nit in the `receive.advertiseAtomic` wording.
+This implements everything that is required on the client side to make use
+of push options from the porcelain push command.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/config.txt                          |  7 ++-
- Documentation/technical/pack-protocol.txt         | 10 ++--
- Documentation/technical/protocol-capabilities.txt |  8 +++
- builtin/receive-pack.c                            | 59 +++++++++++++++++++++++
- 4 files changed, 79 insertions(+), 5 deletions(-)
+ Documentation/git-push.txt |  8 +++++++-
+ builtin/push.c             | 16 +++++++++++++---
+ send-pack.c                | 30 ++++++++++++++++++++++++++++++
+ send-pack.h                |  3 +++
+ transport.c                |  1 +
+ transport.h                |  7 +++++++
+ 6 files changed, 61 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e208af1..df1b314 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2410,7 +2410,12 @@ rebase.instructionFormat
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 19f46b6..b0b1273 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git push' [--all | --mirror | --tags] [--follow-tags] [--atomic] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
+ 	   [--repo=<repository>] [-f | --force] [-d | --delete] [--prune] [-v | --verbose]
+-	   [-u | --set-upstream]
++	   [-u | --set-upstream] [--push-option=<string>]
+ 	   [--[no-]signed|--sign=(true|false|if-asked)]
+ 	   [--force-with-lease[=<refname>[:<expect>]]]
+ 	   [--no-verify] [<repository> [<refspec>...]]
+@@ -156,6 +156,12 @@ already exists on the remote side.
+ 	Either all refs are updated, or on error, no refs are updated.
+ 	If the server does not support atomic pushes the push will fail.
  
- receive.advertiseAtomic::
- 	By default, git-receive-pack will advertise the atomic push
--	capability to its clients. If you don't want to this capability
-+	capability to its clients. If you don't want this capability
-+	to be advertised, set this variable to false.
++-L::
++--push-option::
++	Transmit the given string to the server, which passes them to
++	the pre-receive as well as the post-receive hook. Only C strings
++	containing no new lines are allowed.
 +
-+receive.advertisePushOptions::
-+	By default, git-receive-pack will advertise the push options capability
-+	to its clients. If you don't want this capability
- 	to be advertised, set this variable to false.
+ --receive-pack=<git-receive-pack>::
+ --exec=<git-receive-pack>::
+ 	Path to the 'git-receive-pack' program on the remote
+diff --git a/builtin/push.c b/builtin/push.c
+index 4e9e4db..1b5d205 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -353,7 +353,8 @@ static int push_with_options(struct transport *transport, int flags)
+ 	return 1;
+ }
  
- receive.autogc::
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index 8b36343..7a2ed30 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -454,7 +454,8 @@ The reference discovery phase is done nearly the same way as it is in the
- fetching protocol. Each reference obj-id and name on the server is sent
- in packet-line format to the client, followed by a flush-pkt.  The only
- real difference is that the capability listing is different - the only
--possible values are 'report-status', 'delete-refs' and 'ofs-delta'.
-+possible values are 'report-status', 'delete-refs', 'ofs-delta' and
-+'push-options'.
+-static int do_push(const char *repo, int flags)
++static int do_push(const char *repo, int flags,
++		   const struct string_list *push_options)
+ {
+ 	int i, errs;
+ 	struct remote *remote = pushremote_get(repo);
+@@ -376,6 +377,9 @@ static int do_push(const char *repo, int flags)
+ 	if (remote->mirror)
+ 		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
  
- Reference Update Request and Packfile Transfer
- ----------------------------------------------
-@@ -465,9 +466,10 @@ that it wants to update, it sends a line listing the obj-id currently on
- the server, the obj-id the client would like to update it to and the name
- of the reference.
- 
--This list is followed by a flush-pkt and then the packfile that should
--contain all the objects that the server will need to complete the new
--references.
-+This list is followed by a flush-pkt. Then the push options are transmitted
-+one per packet followed by another flush-pkt. After that the packfile that
-+should contain all the objects that the server will need to complete the new
-+references will be sent.
- 
- ----
-   update-request    =  *shallow ( command-list | push-cert ) [packfile]
-diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
-index eaab6b4..b71eda9 100644
---- a/Documentation/technical/protocol-capabilities.txt
-+++ b/Documentation/technical/protocol-capabilities.txt
-@@ -253,6 +253,14 @@ atomic pushes. If the pushing client requests this capability, the server
- will update the refs in one atomic transaction. Either all refs are
- updated or none.
- 
-+push-options
-+------------
++	if (push_options->nr)
++		flags |= TRANSPORT_PUSH_OPTIONS;
 +
-+If the server sends the 'push-options' capability it is capable to accept
-+push options after the update commands have been sent. If the pushing client
-+requests this capability, the server will pass the options to the pre and post
-+receive hooks that process this push request.
+ 	if ((flags & TRANSPORT_PUSH_ALL) && refspec) {
+ 		if (!strcmp(*refspec, "refs/tags/*"))
+ 			return error(_("--all and --tags are incompatible"));
+@@ -406,13 +410,16 @@ static int do_push(const char *repo, int flags)
+ 		for (i = 0; i < url_nr; i++) {
+ 			struct transport *transport =
+ 				transport_get(remote, url[i]);
++			if (flags & TRANSPORT_PUSH_OPTIONS)
++				transport->push_options = push_options;
+ 			if (push_with_options(transport, flags))
+ 				errs++;
+ 		}
+ 	} else {
+ 		struct transport *transport =
+ 			transport_get(remote, NULL);
+-
++		if (flags & TRANSPORT_PUSH_OPTIONS)
++			transport->push_options = push_options;
+ 		if (push_with_options(transport, flags))
+ 			errs++;
+ 	}
+@@ -500,6 +507,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	int push_cert = -1;
+ 	int rc;
+ 	const char *repo = NULL;	/* default repository */
++	static struct string_list push_options = STRING_LIST_INIT_DUP;
 +
- allow-tip-sha1-in-want
- ----------------------
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index edbf81e..e71041a 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -44,10 +44,12 @@ static struct strbuf fsck_msg_types = STRBUF_INIT;
- static int receive_unpack_limit = -1;
- static int transfer_unpack_limit = -1;
- static int advertise_atomic_push = 1;
-+static int advertise_push_options = 1;
- static int unpack_limit = 100;
- static int report_status;
- static int use_sideband;
- static int use_atomic;
-+static int use_push_options;
- static int quiet;
- static int prefer_ofs_delta = 1;
- static int auto_update_server_info;
-@@ -193,6 +195,11 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
- 		return 0;
+ 	struct option options[] = {
+ 		OPT__VERBOSITY(&verbosity),
+ 		OPT_STRING( 0 , "repo", &repo, N_("repository"), N_("repository")),
+@@ -533,6 +542,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		  0, "signed", &push_cert, "yes|no|if-asked", N_("GPG sign the push"),
+ 		  PARSE_OPT_OPTARG, option_parse_push_signed },
+ 		OPT_BIT(0, "atomic", &flags, N_("request atomic transaction on remote side"), TRANSPORT_PUSH_ATOMIC),
++		OPT_STRING_LIST('o', "push-option", &push_options, N_("server-specific"), N_("option to transmit")),
+ 		OPT_SET_INT('4', "ipv4", &family, N_("use IPv4 addresses only"),
+ 				TRANSPORT_FAMILY_IPV4),
+ 		OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+@@ -563,7 +573,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		set_refspecs(argv + 1, argc - 1, repo);
  	}
  
-+	if (strcmp(var, "receive.advertisepushoptions") == 0) {
-+		advertise_push_options = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	return git_default_config(var, value, cb);
- }
- 
-@@ -207,6 +214,8 @@ static void show_ref(const char *path, const unsigned char *sha1)
- 			      "report-status delete-refs side-band-64k quiet");
- 		if (advertise_atomic_push)
- 			strbuf_addstr(&cap, " atomic");
-+		if (advertise_push_options)
-+			strbuf_addstr(&cap, " push-options");
- 		if (prefer_ofs_delta)
- 			strbuf_addstr(&cap, " ofs-delta");
- 		if (push_cert_nonce)
-@@ -1454,6 +1463,9 @@ static struct command *read_head_info(struct sha1_array *shallow)
- 			if (advertise_atomic_push
- 			    && parse_feature_request(feature_list, "atomic"))
- 				use_atomic = 1;
-+			if (advertise_push_options
-+			    && parse_feature_request(feature_list, "push-options"))
-+				use_push_options = 1;
- 		}
- 
- 		if (!strcmp(line, "push-cert")) {
-@@ -1486,6 +1498,50 @@ static struct command *read_head_info(struct sha1_array *shallow)
- 	return commands;
- }
- 
-+static struct string_list *read_push_options()
-+{
-+	int i;
-+	struct string_list *ret = xmalloc(sizeof(*ret));
-+	string_list_init(ret, 1);
-+
-+	/* NEEDSWORK: expose the limitations to be configurable. */
-+	int max_options = 32;
-+
-+	/*
-+	 * NEEDSWORK: expose the limitations to be configurable;
-+	 * Once the limit can be lifted, include a way for payloads
-+	 * larger than one pkt, e.g allow a payload of up to
-+	 * LARGE_PACKET_MAX - 1 only, and reserve the last byte
-+	 * to indicate whether the next pkt continues with this
-+	 * push option.
-+	 */
-+	int max_size = 1024;
-+
-+	for (i = 0; i < max_options; i++) {
-+		char *line;
-+		int len;
-+
-+		line = packet_read_line(0, &len);
-+
-+		if (!line)
-+			break;
-+
-+		if (len > max_size)
-+			die("protocol error: server configuration allows push "
-+			    "options of size up to %d bytes", max_size);
-+
-+		len = strcspn(line, "\n");
-+		line[len] = '\0';
-+
-+		string_list_append(ret, line);
-+	}
-+	if (i == max_options)
-+		die("protocol error: server configuration only allows up "
-+		    "to %d push options", max_options);
-+
-+	return ret;
-+}
-+
- static const char *parse_pack_header(struct pack_header *hdr)
+-	rc = do_push(repo, flags);
++	rc = do_push(repo, flags, &push_options);
+ 	if (rc == -1)
+ 		usage_with_options(push_usage, options);
+ 	else
+diff --git a/send-pack.c b/send-pack.c
+index 299d303..c943560 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -260,6 +260,7 @@ static int generate_push_cert(struct strbuf *req_buf,
+ 			      const char *push_cert_nonce)
  {
- 	switch (read_pack_header(0, hdr)) {
-@@ -1773,6 +1829,9 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		const char *unpack_status = NULL;
- 		struct string_list *push_options = NULL;
+ 	const struct ref *ref;
++	struct string_list_item *item;
+ 	char *signing_key = xstrdup(get_signing_key());
+ 	const char *cp, *np;
+ 	struct strbuf cert = STRBUF_INIT;
+@@ -278,6 +279,12 @@ static int generate_push_cert(struct strbuf *req_buf,
+ 		strbuf_addf(&cert, "nonce %s\n", push_cert_nonce);
+ 	strbuf_addstr(&cert, "\n");
  
-+		if (use_push_options)
-+			push_options = read_push_options();
++	if (args->push_options) {
++		for_each_string_list_item(item, args->push_options)
++			strbuf_addf(&cert, "push-option %s\n", item->string);
++		strbuf_addstr(&cert, "\n");
++	}
 +
- 		prepare_shallow_info(&si, &shallow);
- 		if (!si.nr_ours && !si.nr_theirs)
- 			shallow_update = 0;
+ 	for (ref = remote_refs; ref; ref = ref->next) {
+ 		if (check_to_send_update(ref, args) < 0)
+ 			continue;
+@@ -370,6 +377,8 @@ int send_pack(struct send_pack_args *args,
+ 	int agent_supported = 0;
+ 	int use_atomic = 0;
+ 	int atomic_supported = 0;
++	int use_push_options = 0;
++	int push_options_supported = 0;
+ 	unsigned cmds_sent = 0;
+ 	int ret;
+ 	struct async demux;
+@@ -392,6 +401,8 @@ int send_pack(struct send_pack_args *args,
+ 		args->use_thin_pack = 0;
+ 	if (server_supports("atomic"))
+ 		atomic_supported = 1;
++	if (server_supports("push-options"))
++		push_options_supported = 1;
+ 
+ 	if (args->push_cert != SEND_PACK_PUSH_CERT_NEVER) {
+ 		int len;
+@@ -418,6 +429,11 @@ int send_pack(struct send_pack_args *args,
+ 
+ 	use_atomic = atomic_supported && args->atomic;
+ 
++	if (args->push_options && !push_options_supported)
++		die(_("the receiving end does not support push options"));
++
++	use_push_options = push_options_supported && args->push_options;
++
+ 	if (status_report)
+ 		strbuf_addstr(&cap_buf, " report-status");
+ 	if (use_sideband)
+@@ -426,6 +442,8 @@ int send_pack(struct send_pack_args *args,
+ 		strbuf_addstr(&cap_buf, " quiet");
+ 	if (use_atomic)
+ 		strbuf_addstr(&cap_buf, " atomic");
++	if (use_push_options)
++		strbuf_addstr(&cap_buf, " push-options");
+ 	if (agent_supported)
+ 		strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
+ 
+@@ -512,6 +530,18 @@ int send_pack(struct send_pack_args *args,
+ 	strbuf_release(&req_buf);
+ 	strbuf_release(&cap_buf);
+ 
++	if (use_push_options) {
++		struct string_list_item *item;
++		struct strbuf sb = STRBUF_INIT;
++
++		for_each_string_list_item(item, args->push_options)
++			packet_buf_write(&sb, "%s", item->string);
++
++		write_or_die(out, sb.buf, sb.len);
++		packet_flush(out);
++		strbuf_release(&sb);
++	}
++
+ 	if (use_sideband && cmds_sent) {
+ 		memset(&demux, 0, sizeof(demux));
+ 		demux.proc = sideband_demux;
+diff --git a/send-pack.h b/send-pack.h
+index 57f222a..67fc40f 100644
+--- a/send-pack.h
++++ b/send-pack.h
+@@ -1,6 +1,8 @@
+ #ifndef SEND_PACK_H
+ #define SEND_PACK_H
+ 
++#include "string-list.h"
++
+ /* Possible values for push_cert field in send_pack_args. */
+ #define SEND_PACK_PUSH_CERT_NEVER 0
+ #define SEND_PACK_PUSH_CERT_IF_ASKED 1
+@@ -21,6 +23,7 @@ struct send_pack_args {
+ 		push_cert:2,
+ 		stateless_rpc:1,
+ 		atomic:1;
++	const struct string_list *push_options;
+ };
+ 
+ struct option;
+diff --git a/transport.c b/transport.c
+index 095e61f..0298be1 100644
+--- a/transport.c
++++ b/transport.c
+@@ -510,6 +510,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 	args.dry_run = !!(flags & TRANSPORT_PUSH_DRY_RUN);
+ 	args.porcelain = !!(flags & TRANSPORT_PUSH_PORCELAIN);
+ 	args.atomic = !!(flags & TRANSPORT_PUSH_ATOMIC);
++	args.push_options = transport->push_options;
+ 	args.url = transport->url;
+ 
+ 	if (flags & TRANSPORT_PUSH_CERT_ALWAYS)
+diff --git a/transport.h b/transport.h
+index c681408..6fe3485 100644
+--- a/transport.h
++++ b/transport.h
+@@ -48,6 +48,12 @@ struct transport {
+ 	 */
+ 	unsigned cloning : 1;
+ 
++	/*
++	 * These strings will be passed to the {pre, post}-receive hook,
++	 * on the remote side, if both sides support the push options capability.
++	 */
++	const struct string_list *push_options;
++
+ 	/**
+ 	 * Returns 0 if successful, positive if the option is not
+ 	 * recognized or is inapplicable, and negative if the option
+@@ -134,6 +140,7 @@ struct transport {
+ #define TRANSPORT_PUSH_CERT_ALWAYS 2048
+ #define TRANSPORT_PUSH_CERT_IF_ASKED 4096
+ #define TRANSPORT_PUSH_ATOMIC 8192
++#define TRANSPORT_PUSH_OPTIONS 16384
+ 
+ #define TRANSPORT_SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
+ #define TRANSPORT_SUMMARY(x) (int)(TRANSPORT_SUMMARY_WIDTH + strlen(x) - gettext_width(x)), (x)
 -- 
 2.9.0.141.gd59d3e9.dirty
 
