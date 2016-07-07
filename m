@@ -2,94 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB2061F744
-	for <e@80x24.org>; Thu,  7 Jul 2016 11:30:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC6591F744
+	for <e@80x24.org>; Thu,  7 Jul 2016 11:47:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751614AbcGGLay (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 07:30:54 -0400
-Received: from mout.gmx.net ([212.227.17.20]:51545 "EHLO mout.gmx.net"
+	id S1751614AbcGGLr2 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 07:47:28 -0400
+Received: from mout.gmx.net ([212.227.15.19]:60184 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751405AbcGGLax (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 07:30:53 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LxLcc-1bMv131GFW-016tY1; Thu, 07 Jul 2016 13:30:39
+	id S1751332AbcGGLr1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 07:47:27 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M0xbD-1bZEPf39up-00v9p0; Thu, 07 Jul 2016 13:47:20
  +0200
-Date:	Thu, 7 Jul 2016 13:30:36 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:	Thu, 7 Jul 2016 13:47:19 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 11/17] am: counteract gender bias
-In-Reply-To: <xmqq1t36sbqt.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607071323440.6426@virtualbox>
-References: <cover.1467199553.git.johannes.schindelin@gmx.de> <cover.1467717729.git.johannes.schindelin@gmx.de> <ea23faf258b6e62e770879362869f49eea4db869.1467717730.git.johannes.schindelin@gmx.de> <xmqq1t36sbqt.fsf@gitster.mtv.corp.google.com>
+To:	git@vger.kernel.org
+cc:	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] am: counteract gender bias
+Message-ID: <d54f8f8b32ecc024eb3a58dd42ef9f855f8e2cb9.1467892022.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:fljq6FZhcSy0TYqpFDmQNyo/NUsFnxuArvHjQn7036WGZ71mzsC
- Gkv1vjA81VBwQg5CiN9OJjOeGexFE0V1PyLBYNnAMDsztQ4efZWUnbi5o5xjSTehhRIHjQ8
- W+oT2J7gheOi15Zw0E6DFiNE3CRxfwajxIjtmsHsI9qRM3UddxpvHYtbJ2xqkhB6paLekdJ
- zsImnbPkWh154J0Pu1IDw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:R1KgkDUFjtw=:J9fIXdivJ2ROLNnQUet8fi
- rEYSehEdWKhnVLa5aNonKOyXL/8HaoCEU2hDKw06UY5dj/Kt2Gjl3bxsD1kT3JX/vEiyiHA4+
- rHKgo0s1d9XxPC6osPunzDkPPK9RHKfPPF1O08EBmaSXJFMuqsYTGbwSKxrobVzBAd0qcYzG/
- I8pgVK9lzt3Fi6ekiWWT4aj/gGVfykJFUwBC2bWobpCvSlnN54ZUACHrQBdfm2rtNEKpMGDrX
- b47YSOYYIYe39Fxgphg3ShIpiO04v2xV4gT6UO8FEjvMdJgJbyoRbvDpcL4x928yEegq23lsz
- gCK4gjEU0RMcJdJNyOMRvgxHzNsTCRSlbsQUAuLX45aPphyoa/ezJp5iwwe2lt1QFTl0P/xfl
- iH9UuixQPAYWSgBqXDajKP0AVL02OMMDUIDpO1zgFgQByOHxzqKE6D7nadkIa23ZUbtTVKJGW
- eqldFuK2s8UzSPVP92Wht5hGiV3p0kH2FanTds7SQC8JS+ZfsKxnXIyzbAOlQPrW+dA/VSKMS
- yR1ZzGqnXVDPiA32u1dVFCq/PpA+F2HGaPDfR7t00buXItyg9eyy/osEkRQWtJ7a4WYLyn4iu
- WSaNm8k8RdlwNMP8eU39+0VojlnTHv879QZsHYyn70p91npgMxeFfEWvA7NYaaWAr7VQ8/Qg+
- 2s7TKcVKFOvE1naYYLvYHp+XedfhIBpsX2va8/O0STe6PqeGOKosuvTkFhJ45XFAU7zE/qMQS
- kQKZr2JZciGU34nnJDjm7ufjeKi1KqidK02QbTWs1x3D9TZDHoKtffZ4E/2UhwNxnPprXGK2F
- O3/IP5x
+X-Provags-ID: V03:K0:hRefAu33r3KHDUYtb/Mm8RiLwSb+QxU3qY3HuqqCDef0AUU98i+
+ coUBxCpukT6+sWxqu2hGoRomzW3rvgTKn6wmn3UZOZUsECFkvNVTJ075JQ0+qzSbJbnoKq4
+ 0lGptnRmp4BgQVYVOtWzyWCFLiEXQQi0vkvnbvaQMCM1TTU954j6R6/j6rE2MLB0oczb1oz
+ PHT1z0AFKkN5AO0n2cU8Q==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:wUXGXOAXgLs=:MI+uK5/x7hVKAybnnWUgas
+ rYpFpOS78rjzh6GRH6LjWbDN71DWU7UWHPWbEr7eSxLpPiI1IP09fUHP/73WPFx3yOjv/zJ3Y
+ pUVB1NWGY6zg5KcY6bg9LrT1LzHkOpmb8EH3lq5ZiqMm9y/AHXfrnGJqLHMZvWlgRhMJtIhwt
+ wOqxNbPIcBvt0vAbCOxgF3Ugqc55hJGyYmKua3nG7jmaoW+6uGywZCD/IsHA/cidP4p5h/Opt
+ EdvLWsWxurMuVN6O9A52JUg550y6WivEaYqs5JefWUZ3ntrEL8ldZGiTkDxD+Piw+AYMwksFe
+ MOjJf5sf+Ih34KgG7AySD7mcme/vE8+YrA+hJy3s0t9Ym8atT5+aqmxq8VAhTMaPqzclVpqcI
+ A24HPx4OBmaT14uedmuScDWclaymqCcTH1hKa5HnPWSCvmdFcsfX/5siLAMISqWx2ZgYDD+bH
+ /igSqL0FhIlGTTFqvn18IimFDMBDwQWSvmZNUwb/PmfOOlOcH/IAuAYZH82p/hd49Rbg3eLNz
+ dNxn+uUSU4WWrS7UjPOJSa+3NIxXN4YgXHFLhE+eaZXv1X8dujg9ybEYivuMeS5J4cx+Tinzv
+ jC0TwkW+wrlTG+ioUznxAFsDrbjosskG6gzyF8+K0ZIESxkMARAdxZNyjSo03fJTCkh1SDNKY
+ D1hR5bMvRGeewFLvPI9PrQQVS9bsQPm2zl4QeCnthk8pXRyFQNaJ0zhrp1losk8KQ2ehDJHhY
+ yiSaxPUc49X768vxr2PmTOu8tYct3bBZesnYTz+EQ7jeZ+srdI44/q9a40QjU+Nx7EBGfh8k2
+ wM9hWB6
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07), i.e. for
+almost 11 years already, we demonstrated our disrespect to the pioneers
+of software development like Ada Lovelace, Grace Hopper and Margaret
+Hamilton, by pretending that each and every software developer is male
+("his_tree"). It appears almost as if we weren't fully aware that the
+first professional software developers were all female.
 
-On Wed, 6 Jul 2016, Junio C Hamano wrote:
+We know our field to have this unfortunate gender bias that has nothing
+to do with qualification or biological reasons, and we are very sad
+about the current gender imbalance of the Git developer community.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07), i.e. for
-> > almost 11 years already,...
-> > ...Let's start changing that by using the variable name "her_tree" for an
-> > equal number of years out of fairness, and change to the gender neutral
-> > "their_tree" after that.
-> 
-> I doubt this kind fo distraction is desirable in the middle of a
-> seriously heavy series like this one.  As a standalone clean-up to
-> turn these directly to "their" that everybody would agree on and can
-> be merged down quickly to 'master' that does not have to keep the
-> body of the main topic waiting for the dust to settle might be a
-> better approach.
-> 
-> Unless you are trying to discourage the reviewers, that is ;-).
+Let's start changing that by using the variable name "her_tree" for an
+equal number of years out of fairness, and change to the gender neutral
+"their_tree" after that.
 
-Funny. In other comments, I am asked to patch things that are truly
-unrelated to the patch series' intent, and here I am asked to refrain from
-cleaning up the code before I touch it.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Published-As: https://github.com/dscho/git/releases/tag/gender-bias-v1
+ builtin/am.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-I am really curious, though. Has it not been our practice to encourage
-preparatory patches like white-space or const fixes as part of patch
-series that touch a certain part of the code that needed fixing? I deem
-this here patch to be much, much more important than a mere white-space or
-const fix.
+diff --git a/builtin/am.c b/builtin/am.c
+index d5da5fe..2c7f3dd 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1584,14 +1584,14 @@ static int build_fake_ancestor(const struct am_state *state, const char *index_f
+ }
+ 
+ /**
+- * Do the three-way merge using fake ancestor, his tree constructed
++ * Do the three-way merge using fake ancestor, her tree constructed
+  * from the fake ancestor and the postimage of the patch, and our
+  * state.
+  */
+ static int run_fallback_merge_recursive(const struct am_state *state,
+ 					unsigned char *orig_tree,
+ 					unsigned char *our_tree,
+-					unsigned char *his_tree)
++					unsigned char *her_tree)
+ {
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	int status;
+@@ -1599,7 +1599,7 @@ static int run_fallback_merge_recursive(const struct am_state *state,
+ 	cp.git_cmd = 1;
+ 
+ 	argv_array_pushf(&cp.env_array, "GITHEAD_%s=%.*s",
+-			 sha1_to_hex(his_tree), linelen(state->msg), state->msg);
++			 sha1_to_hex(her_tree), linelen(state->msg), state->msg);
+ 	if (state->quiet)
+ 		argv_array_push(&cp.env_array, "GIT_MERGE_VERBOSITY=0");
+ 
+@@ -1607,7 +1607,7 @@ static int run_fallback_merge_recursive(const struct am_state *state,
+ 	argv_array_push(&cp.args, sha1_to_hex(orig_tree));
+ 	argv_array_push(&cp.args, "--");
+ 	argv_array_push(&cp.args, sha1_to_hex(our_tree));
+-	argv_array_push(&cp.args, sha1_to_hex(his_tree));
++	argv_array_push(&cp.args, sha1_to_hex(her_tree));
+ 
+ 	status = run_command(&cp) ? (-1) : 0;
+ 	discard_cache();
+@@ -1620,7 +1620,7 @@ static int run_fallback_merge_recursive(const struct am_state *state,
+  */
+ static int fall_back_threeway(const struct am_state *state, const char *index_path)
+ {
+-	unsigned char orig_tree[GIT_SHA1_RAWSZ], his_tree[GIT_SHA1_RAWSZ],
++	unsigned char orig_tree[GIT_SHA1_RAWSZ], her_tree[GIT_SHA1_RAWSZ],
+ 		      our_tree[GIT_SHA1_RAWSZ];
+ 
+ 	if (get_sha1("HEAD", our_tree) < 0)
+@@ -1657,7 +1657,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
+ 		return error(_("Did you hand edit your patch?\n"
+ 				"It does not apply to blobs recorded in its index."));
+ 
+-	if (write_index_as_tree(his_tree, &the_index, index_path, 0, NULL))
++	if (write_index_as_tree(her_tree, &the_index, index_path, 0, NULL))
+ 		return error("could not write tree");
+ 
+ 	say(state, stdout, _("Falling back to patching base and 3-way merge..."));
+@@ -1667,13 +1667,13 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
+ 
+ 	/*
+ 	 * This is not so wrong. Depending on which base we picked, orig_tree
+-	 * may be wildly different from ours, but his_tree has the same set of
++	 * may be wildly different from ours, but her_tree has the same set of
+ 	 * wildly different changes in parts the patch did not touch, so
+ 	 * recursive ends up canceling them, saying that we reverted all those
+ 	 * changes.
+ 	 */
+ 
+-	if (run_fallback_merge_recursive(state, orig_tree, our_tree, his_tree)) {
++	if (run_fallback_merge_recursive(state, orig_tree, our_tree, her_tree)) {
+ 		rerere(state->allow_rerere_autoupdate);
+ 		return error(_("Failed to merge in the changes."));
+ 	}
+-- 
+2.9.0.278.g1caae67
 
-Since you asked so nicely, I will break out this patch from the patch
-series, of course, but please note that it will now look as if I willfully
-snuck in an unrelated change in the next patch, just because I was not
-allowed to prepare the code properly.
-
-Ciao,
-Dscho
+base-commit: 5c589a73de4394ad125a4effac227b3aec856fa1
