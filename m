@@ -2,191 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E5D920705
-	for <e@80x24.org>; Thu,  7 Jul 2016 20:21:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90CF620705
+	for <e@80x24.org>; Thu,  7 Jul 2016 20:32:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752031AbcGGUVB (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 16:21:01 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55841 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751079AbcGGUVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 16:21:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 111B52A379;
-	Thu,  7 Jul 2016 16:20:59 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tQFv64eFTsxSAWEJtW5NNQFtSKI=; b=VYbGP6
-	XmKUgjiylt68yGTcPaA4bZgVX3NfAABoq9GCGn2FKkubfymv0ESdGAm82VYElhif
-	FE6jm3TgX19KFFj+thW/xK8dn2KLdlawCPShY0+4M60Zvu1UhrryWQDdfhDcU0GG
-	fLF37JU4g012ZOKxghY4Sz6FUNgJnt77vq7jc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ho2+4CAx5IeGRJF+77nXJvjWAbqh3eG/
-	F55463VreBsr6gkPd4yuxN0ekliKmX6YcqKUB5Sb7/6uinbmhDhjuYVDqsAST99Y
-	lCHmz4cLAI6VDavhPo62wqAibvJGkH63DcHjwDBV5MtRvBZV24QNG1ntAttPi3X1
-	ujS+9EYid8Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 096592A378;
-	Thu,  7 Jul 2016 16:20:59 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 864EF2A377;
-	Thu,  7 Jul 2016 16:20:58 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	git@vger.kernel.org, e@80x24.org, peff@peff.net, dwwang@google.com,
-	dennis@kaarsemaker.net
-Subject: Re: [PATCH 1/4] push options: {pre,post}-receive hook learns about push options
-References: <20160707011218.3690-1-sbeller@google.com>
-	<20160707011218.3690-2-sbeller@google.com>
-Date:	Thu, 07 Jul 2016 13:20:56 -0700
-In-Reply-To: <20160707011218.3690-2-sbeller@google.com> (Stefan Beller's
-	message of "Wed, 6 Jul 2016 18:12:15 -0700")
-Message-ID: <xmqqeg75p5cn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751351AbcGGUcH (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 16:32:07 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41631 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751153AbcGGUcE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 16:32:04 -0400
+Received: (qmail 5959 invoked by uid 102); 7 Jul 2016 20:32:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 07 Jul 2016 16:32:03 -0400
+Received: (qmail 7535 invoked by uid 107); 7 Jul 2016 20:32:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 07 Jul 2016 16:32:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Jul 2016 16:31:58 -0400
+Date:	Thu, 7 Jul 2016 16:31:58 -0400
+From:	Jeff King <peff@peff.net>
+To:	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] am: ignore return value of write_file()
+Message-ID: <20160707203157.GA11804@sigill.intra.peff.net>
+References: <577EB546.1090007@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 50ED5010-4480-11E6-BE56-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <577EB546.1090007@web.de>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Thu, Jul 07, 2016 at 10:02:14PM +0200, René Scharfe wrote:
 
-> As we first want to focus on getting simple strings to work
-> reliably, we go with the last option for now.
+> write_file() either returns 0 or dies, so there is no point in checking
+> its return value.  The callers of the wrappers write_state_text(),
+> write_state_count() and write_state_bool() consequently already ignore
+> their return values.  Stop pretenting we care and make them void.
 
-OK.
+Makes sense. Originally it took "fatal" as a parameter, but it was split
+into two functions in 12d6ce1 (write_file(): drop "fatal" parameter,
+2015-08-24). The return value on the non-gentle version could have been
+dropped at that point.
 
-> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-> index d82e912..c875cde 100644
-> --- a/Documentation/githooks.txt
-> +++ b/Documentation/githooks.txt
-> @@ -247,6 +247,9 @@ Both standard output and standard error output are forwarded to
->  'git send-pack' on the other end, so you can simply `echo` messages
->  for the user.
->  
-> +The number of push options are available in the variable GIT_PUSH_OPTION_COUNT
-> +and the options itself are in GIT_PUSH_OPTION_{0,1,...}.
-> +
->  [[update]]
->  update
->  ~~~~~~
-> @@ -322,6 +325,9 @@ a sample script `post-receive-email` provided in the `contrib/hooks`
->  directory in Git distribution, which implements sending commit
->  emails.
->  
-> +The number of push options are available in the variable GIT_PUSH_OPTION_COUNT
-> +and the options itself are in GIT_PUSH_OPTION_{0,1,...}.
-> +
+Arguably we could get rid of the gentle form entirely, as below. The
+diffstat is certainly pleasing, but maybe we would eventually want it
+for another caller. I dunno. I won't be offended if we drop this as
+churn.
 
-The mention of "push options" in these two entries sounded a bit too
-abrupt, at least to me.  Perhaps add a short phrase before the
-sentence, e.g.
+-- >8 --
+Subject: [PATCH] write_file: drop "gently" form
 
-    When 'git push --push-option=...' is used, the number of push
-    options are avaiable ...
+We have two forms of write_file(): one that dies, and one
+that returns an error. However, the latter has only a single
+caller, which immediately dies anyway (after producing a
+message that is not really any more informative than
+write_file's generic die(), and arguably worse because it
+does not give the actual filename).
 
-or
+Let's convert that site to use the non-gentle form. At that
+point the gentle form has no callers, and we can simplify
+the implementation of write_file.
 
-    The number of push options given on the command line of "git
-    push --push-option=..." can be read from the environment
-    variable GIT_PUSH_OPTION_COUNT, and the options themselves are
-    found in GIT_PUSH_OPTION_0, GIT_PUSH_OPTION_1,...
+Signed-off-by: Jeff King <peff@peff.net>
+---
+As a fun aside, this patch was generated using "--patience",
+which gives a much closer to result to what I actually
+changed than Myers diff (not meaningful to the patch, but
+I'm just always on the lookout for cases where the
+algorithms produce meaningfully different results).
 
-We can read any of the above variants in two ways to describe what
-should happen when "git push" is run without "--push-option=...".
-Is GIT_PUSH_OPTION_COUNT unset, or set to 0?  Either way, it may be
-better to be a bit more explicit.
+ builtin/branch.c |  5 +----
+ cache.h          |  3 +--
+ wrapper.c        | 56 ++++++++++++--------------------------------------------
+ 3 files changed, 14 insertions(+), 50 deletions(-)
 
-The hook driver code does not explicitly clear these environment
-variables; it is safe to assume that these won't seep in from the
-environment, I think, but I am not sure.
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 2ecde53..15232c4 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -618,10 +618,7 @@ static int edit_branch_description(const char *branch_name)
+ 		    "  %s\n"
+ 		    "Lines starting with '%c' will be stripped.\n",
+ 		    branch_name, comment_line_char);
+-	if (write_file_gently(git_path(edit_description), "%s", buf.buf)) {
+-		strbuf_release(&buf);
+-		return error_errno(_("could not write branch description template"));
+-	}
++	write_file(git_path(edit_description), "%s", buf.buf);
+ 	strbuf_reset(&buf);
+ 	if (launch_editor(git_path(edit_description), &buf, NULL)) {
+ 		strbuf_release(&buf);
+diff --git a/cache.h b/cache.h
+index f1dc289..3f6c53f 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1745,8 +1745,7 @@ static inline ssize_t write_str_in_full(int fd, const char *str)
+ 	return write_in_full(fd, str, strlen(str));
+ }
+ 
+-extern int write_file(const char *path, const char *fmt, ...);
+-extern int write_file_gently(const char *path, const char *fmt, ...);
++extern void write_file(const char *path, const char *fmt, ...);
+ 
+ /* pager.c */
+ extern void setup_pager(void);
+diff --git a/wrapper.c b/wrapper.c
+index 5dc4e15..0349441 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -640,56 +640,24 @@ int xsnprintf(char *dst, size_t max, const char *fmt, ...)
+ 	return len;
+ }
+ 
+-static int write_file_v(const char *path, int fatal,
+-			const char *fmt, va_list params)
++void write_file(const char *path, const char *fmt, ...)
+ {
++	va_list params;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0666);
+-	if (fd < 0) {
+-		if (fatal)
+-			die_errno(_("could not open %s for writing"), path);
+-		return -1;
+-	}
++	if (fd < 0)
++		die_errno(_("could not open %s for writing"), path);
++
++	va_start(params, fmt);
+ 	strbuf_vaddf(&sb, fmt, params);
++	va_end(params);
++
+ 	strbuf_complete_line(&sb);
+-	if (write_in_full(fd, sb.buf, sb.len) != sb.len) {
+-		int err = errno;
+-		close(fd);
+-		strbuf_release(&sb);
+-		errno = err;
+-		if (fatal)
+-			die_errno(_("could not write to %s"), path);
+-		return -1;
+-	}
++	if (write_in_full(fd, sb.buf, sb.len) != sb.len)
++		die_errno(_("could not write to %s"), path);
+ 	strbuf_release(&sb);
+-	if (close(fd)) {
+-		if (fatal)
+-			die_errno(_("could not close %s"), path);
+-		return -1;
+-	}
+-	return 0;
+-}
+-
+-int write_file(const char *path, const char *fmt, ...)
+-{
+-	int status;
+-	va_list params;
+-
+-	va_start(params, fmt);
+-	status = write_file_v(path, 1, fmt, params);
+-	va_end(params);
+-	return status;
+-}
+-
+-int write_file_gently(const char *path, const char *fmt, ...)
+-{
+-	int status;
+-	va_list params;
+-
+-	va_start(params, fmt);
+-	status = write_file_v(path, 0, fmt, params);
+-	va_end(params);
+-	return status;
++	if (close(fd))
++		die_errno(_("could not close %s"), path);
+ }
+ 
+ void sleep_millisec(int millisec)
+-- 
+2.9.0.393.g704e522
 
-> @@ -1756,6 +1771,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
->  
->  	if ((commands = read_head_info(&shallow)) != NULL) {
->  		const char *unpack_status = NULL;
-> +		struct string_list *push_options = NULL;
->  
->  		prepare_shallow_info(&si, &shallow);
->  		if (!si.nr_ours && !si.nr_theirs)
-> @@ -1764,13 +1780,19 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
->  			unpack_status = unpack_with_sideband(&si);
->  			update_shallow_info(commands, &si, &ref);
->  		}
-> -		execute_commands(commands, unpack_status, &si);
-> +		execute_commands(commands, unpack_status, &si,
-> +				 push_options);
->  		if (pack_lockfile)
->  			unlink_or_warn(pack_lockfile);
->  		if (report_status)
->  			report(commands, unpack_status);
-> -		run_receive_hook(commands, "post-receive", 1);
-> +		run_receive_hook(commands, "post-receive", 1,
-> +				 push_options);
->  		run_update_post_hook(commands);
-> +		if (push_options) {
-> +			string_list_clear(push_options, 0);
-> +			free(push_options);
-> +		}
->  		if (auto_gc) {
->  			const char *argv_gc_auto[] = {
->  				"gc", "--auto", "--quiet", NULL,
-> diff --git a/templates/hooks--pre-receive.sample b/templates/hooks--pre-receive.sample
-> new file mode 100644
-> index 0000000..e4d3edc
-> --- /dev/null
-> +++ b/templates/hooks--pre-receive.sample
-> @@ -0,0 +1,22 @@
-> +#!/bin/sh
-> +#
-> +# An example hook script to make use of push options.
-> +# The example simply echoes all push options that start with 'echoback='
-> +# and rejects all pushes when the "reject" push option is used.
-> +#
-> +# To enable this hook, rename this file to "pre-receive".
-> +
-> +if test -n "$GIT_PUSH_OPTION_COUNT"; then
-> +	i=0
-> +	while test "$i" -lt "$GIT_PUSH_OPTION_COUNT"; do
-
-
-Style:
-
-        if test -n "$GIT_PUSH_OPTION_COUNT"
-        then
-		...
-
-	while test ...
-        do
-		...
-
-> +		eval "value=\$GIT_PUSH_OPTION_$i"
-> +		case "$value" in
-> +		echoback=*)
-> +			echo "echo from the pre-receive-hook ${value#*=}" >&2
-> +			;;
-> +		reject)
-> +			exit 1
-> +		esac
-> +		i=$((i + 1))
-> +	done
-> +fi
-
-What is suboptimal about the structure of the series is that we
-won't bisect down to any of the potential bugs in the above code
-even if we ever see any bug in the future.  It also does not hint
-where push_options is expected to be read in the code in the
-subsequent patches in the series.  If I were doing this series, I
-would probably have done 2/4 first without plumbing it through
-(i.e. it is sent and accumulated in a string list at the receiver,
-and then cleared and freed without being used), and then added the
-processing (i.e. this step) as the second patch.
