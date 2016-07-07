@@ -2,164 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD23E2070D
-	for <e@80x24.org>; Thu,  7 Jul 2016 18:43:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 493EB2070D
+	for <e@80x24.org>; Thu,  7 Jul 2016 18:44:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751427AbcGGSnp (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 14:43:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64820 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752799AbcGGSng convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jul 2016 14:43:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 820052A63A;
-	Thu,  7 Jul 2016 14:43:34 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=ojVQCMrITnDn
-	TpTIbgQmT8qt504=; b=Xx4TQv6L+zOzf+VLrUN7YEaPa7sPH3+bTbZotae3XeEe
-	Jz5SvL04HxZt8eiK/7trgX4jvE3sH6flsYulZ3K8mVtZiz6bHNej5xVEgEcTc6Wg
-	1pMdzZ0Luh/UZpA9fdO5f3C+hUIu0zpb9Jz+ZNbR6sjlL11bqXSMM3CswgAQya0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PhZrK7
-	qIjuZolqBUcgDJYu7z1Yj/I+q1kcp7Ca1eJsQ0XSd7dhLKn7lYVLlBi5ERav2DKv
-	8LOoYuRpHq2kPLF7gyr3fd3MnXIH6OZZendoNoaaaMMpp4XrjXvWHeMG5BQSYPLq
-	11FdjNlLNVtZM6etRsSHMyXVA/zGULFfQteuU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A99D2A639;
-	Thu,  7 Jul 2016 14:43:34 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F16912A638;
-	Thu,  7 Jul 2016 14:43:33 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] correct ce_compare_data() in a middle of a merge
-References: <xmqq37nyb4kp.fsf@gitster.mtv.corp.google.com>
-	<1467100876-2803-1-git-send-email-tboegi@web.de>
-	<xmqqh9cc55wm.fsf@gitster.mtv.corp.google.com>
-	<62eb3d75-126e-427b-8701-d490e80e3501@web.de>
-	<xmqq8txlvwip.fsf@gitster.mtv.corp.google.com>
-	<574692d1-c8ae-9c2f-6b99-a01545b15051@telia.com>
-	<xmqqa8huvmpv.fsf@gitster.mtv.corp.google.com>
-	<c36fe487-b8dc-9767-7fae-bee513dac0b2@web.de>
-Date:	Thu, 07 Jul 2016 11:43:31 -0700
-In-Reply-To: <c36fe487-b8dc-9767-7fae-bee513dac0b2@web.de> ("Torsten
-	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Thu, 7 Jul 2016 19:16:09
- +0200")
-Message-ID: <xmqqr3b5p9v0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932246AbcGGSoh (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 14:44:37 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:33748 "EHLO
+	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932090AbcGGSoP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 14:44:15 -0400
+Received: by mail-io0-f173.google.com with SMTP id t74so29725841ioi.0
+        for <git@vger.kernel.org>; Thu, 07 Jul 2016 11:44:15 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=MLsejyCQjE77Oj7Wkep115VHpJy5t+opYaf3qUuPDTA=;
+        b=w7Ys13X9mEoUdzX15/oFn9W9T7Y5nAMqpXNlMmI2ng7Z8PlpBy0r1dlUdt75tnuuWj
+         vuE/G5ZkxcCF52gqM5+v2jchcKnlXsCQqjHw7ymJZ6I9Zm+mK4JpEQvouaVh8947J0Wu
+         7l221/3R/L8M4p3DD1CLKyzwnRORy/gqLFsgqtezSsW0Fo9QrryD9cgIcO/Mn9aUolZx
+         CYs+zer7cUt2LQIiBuBQk8XlNcS5btgqjuPZwJnl76Xdga1ot5mMG84cImxCrulzCm6q
+         VzC6ufx9x8T3o2UFNhufA5vJMaTw45b6n0mEefTb2OW+eMzMHRASWDh8T8uhTs6ausKF
+         RERA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=MLsejyCQjE77Oj7Wkep115VHpJy5t+opYaf3qUuPDTA=;
+        b=Bi5iUiEdCnu04daQOysXyNUQGhdUm8eYgvbdlEIRIri8xFwVGsJcK53qG7Cq1vmgOi
+         880/XVc6d7H0vVi3aTh0tuzOxOhAQkzw7v1IOBBYJDV9/vFZgBxwA4OPmW/I6T8cvEmn
+         fjqXFqPcJYpIvQmChLOUPJhS81LVUNgub/AIrLH+TsJr6EOGKFjNjrOr/bBzUiS1i+u0
+         dn02y0LOpCeZWkBbVo9xfSiE6M4Du18bEct5gColz1FZ93UTX227hBMHQJPnPmE4VQWD
+         MpYZFs0KfCX6PmUcRgMZHvlj8hrgTROhTPqZwngkNUbRnvgLuFCa0SrpyFyeOlTXQYad
+         qUAQ==
+X-Gm-Message-State: ALyK8tJUW1KcXqYTa5gpSJvHCNHpkMdhxQEiSVi/iUFPZeI3AZlGFdw8T+ac1T3o3syjzA==
+X-Received: by 10.107.148.79 with SMTP id w76mr4945707iod.47.1467917050584;
+        Thu, 07 Jul 2016 11:44:10 -0700 (PDT)
+Received: from gmail.com (c-73-51-186-156.hsd1.il.comcast.net. [73.51.186.156])
+        by smtp.gmail.com with ESMTPSA id l185sm1217194itd.20.2016.07.07.11.44.10
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 Jul 2016 11:44:10 -0700 (PDT)
+Date:	Thu, 7 Jul 2016 13:44:08 -0500
+From:	Erik Johnson <palehose@gmail.com>
+To:	git@vger.kernel.org
+Subject: git branch doesn't allow me to forcibly delete branch which was
+ checked out in a now-deleted worktree dir
+Message-ID: <20160707184408.GA1916@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B54BE976-4472-11E6-B8B8-EE617A1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: 8BIT
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="+QahgC5+KEYLbs62"
+Content-Disposition: inline
+User-Agent: Mutt/1.6.1 (2016-04-27)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Torsten Bögershausen <tboegi@web.de> writes:
 
-> This is the callstack:
->
-> merge-recursive.c/add_cacheinfo(unsigned int mode, const unsigned char *sha1,
-> 		const char *path, int stage, int refresh, int options)
-> {
-> 	struct cache_entry *ce;
-> 	ce = make_cache_entry
-> 	if (!ce)
-> 		return error(_("addinfo_cache failed for path '%s'"), path);
-> 	return add_cache_entry(ce, options);
-> }
-> #Calls
-> read-cache.c/make_cache_entry(path=file sha1=0x99b633 stage=0)
->
->
-> struct cache_entry *make_cache_entry(unsigned int mode,
-> 		const unsigned char *sha1, const char *path, int stage,
-> 		unsigned int refresh_options)
-> {
->         [snip]
-> 	ret = refresh_cache_entry(ce, refresh_options);
-> 	if (ret != ce)
-> 		free(ce);
-> 	return ret;
-> }
->
-> #Calls
-> refresh_cache_ent(&the_index, ce, options, NULL, NULL);
->
-> #Calls
-> ie_modified()
->
-> #Calls
-> read-cache.c/ie_match_stat()
->
-> #Calls
-> changed |= ce_modified_check_fs(ce, st);
->
-> #Calls
-> ce_compare_data(path=file sha1=0x99b633)
->
-> #Calls
-> index_fd(..., ..., ce->name, ...)
-> #Note the sha is lost here, the parameter sha is the output.
->
-> Deep down, has_cr_in_index(path) will look at ad55e2 instead,
-> which is wrong.
+--+QahgC5+KEYLbs62
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
 
-The call to add_cacheinfo() is made with 99b633 to record the 3-way
-merge result to the index in this callchain:
+% git branch -D archive-extracted-xz
+error: Cannot delete branch 'archive-extracted-xz' checked out at '/home/erik/git/salt/archive-extracted-xz'
+% test -d /home/erik/git/salt/archive-extracted-xz || echo "directory doesn't exist"
+directory doesn't exist
+% git --version
+git version 2.9.0
 
- merge_trees()
- -> git_merge_trees()
- -> process_renames() # does nothing for this case
- -> process_entry()
-    -> merge_content()
-       -> merge_file_special_markers()
-          -> merge_file_1()
-             -> merge_3way()
-                -> ll_merge() # correctly handles the renormalization
-             -> write_sha1_file() # this is what gives us 99b633
-    -> update_file() # this is fed the 99b633 write_sha1_file() computed
-       -> update_file_flags()
-          -> read_sha1_file() # reads 99b633
-          -> convert_to_working_tree()
-          -> write_in_full() # updates the working tree
-          -> add_cacheinfo() # to record 99b633 at "file" in the index
+I know that I can just get rid of this error by pruning the worktrees,
+but this still seems like incorrect behavior on the part of git branch.
+It shouldn't be telling me that the branch is checked out in a directory
+that does not exist, that is just factually incorrect.
 
-So refresh() may incorrectly find that 99b633 does not match what is
-in the filesystem if it looks at _any_ entry in the index.  We know
-we have written the file ourselves, so by definition it should match
-;-) Even though I am not sure why that should affect the overall
-correctness of the program (because we have written the correct
-result to both working tree and to the index), this needs to be
-fixed.
+--
 
-I am however not convinced passing the full SHA-1 is a good
-solution.  The make_cache_entry() function may be creating a cache
-entry to stuff in a non-default index (i.e. not "the_index"), but
-its caller does not have a way to tell it which index the resulting
-cache entry will go, and calls refresh_cache_entry(), which always
-assumes that the caller is interested in "the_index", so what
-add_cacheinfo() does by calling make_cache_entry() feels wrong in
-the first place.  Also, the call from update_file_flags() knows that
-the working tree is in sync with the resulting cache entry.
+-Erik
 
-Perhaps update_file_flags() should not even call add_cacheinfo()
-there in the first place?  I wonder if it should just call
-add_file_to_index()---after all, even though the current code
-already knows that 99b633 _is_ the result it wants in the index, it
-still goes to the filesystem and rehashes.
+"For me, it is far better to grasp the universe as it really is than to
+persist in delusion, however satisfying and reassuring."  --Carl Sagan
 
-I dunno.  I really do not like that extra sha1 argument added all
-over the callchain by this patch.
 
-Or did you mean other calls to add_cacheinfo()?
+--+QahgC5+KEYLbs62
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iEYEARECAAYFAld+ovgACgkQXlWDxDeAjz8+PwCeJevUZDeg1c0skaNywCiVRVjS
+CscAn24Qaa2GQKnZUgNZbZJML6KufnNU
+=kTfb
+-----END PGP SIGNATURE-----
+
+--+QahgC5+KEYLbs62--
