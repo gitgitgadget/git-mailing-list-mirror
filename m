@@ -7,149 +7,101 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 897752070D
-	for <e@80x24.org>; Thu,  7 Jul 2016 15:53:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 612EF2070D
+	for <e@80x24.org>; Thu,  7 Jul 2016 15:53:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752911AbcGGPxA (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 11:53:00 -0400
-Received: from mout.gmx.net ([212.227.15.15]:52443 "EHLO mout.gmx.net"
+	id S1753108AbcGGPxE (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 11:53:04 -0400
+Received: from mout.gmx.net ([212.227.17.22]:61461 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751163AbcGGPw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 11:52:58 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0M2ckv-1bc28I24qj-00sJHV; Thu, 07 Jul 2016 17:52:47
+	id S1752853AbcGGPxA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 11:53:00 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LjJCt-1bqwOG2iKN-00dWhX; Thu, 07 Jul 2016 17:52:55
  +0200
-Date:	Thu, 7 Jul 2016 17:52:46 +0200 (CEST)
+Date:	Thu, 7 Jul 2016 17:52:54 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/3] Additional rebase -i tests
-In-Reply-To: <cover.1467210629.git.johannes.schindelin@gmx.de>
-Message-ID: <cover.1467906747.git.johannes.schindelin@gmx.de>
-References: <cover.1467210629.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 2/3] rebase -i: demonstrate a bug with --autosquash
+In-Reply-To: <cover.1467906747.git.johannes.schindelin@gmx.de>
+Message-ID: <46a5e7960232dc89a1db7728983c8f2e6c939c69.1467906747.git.johannes.schindelin@gmx.de>
+References: <cover.1467210629.git.johannes.schindelin@gmx.de> <cover.1467906747.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:1FQ0gGRDIx1uidGI/5g9vurDt5cTJUg+NFrCetOAoBhrOocuPHf
- y3Pb4BfSWAXplSkwPdW7KBqjglDqAV5M1DOWZOCVWawjKqEEYKrbDc2lCeHm14qQiii/jzA
- KrgcTx2ZtvYG+/sEdgRqRzW2NSe/1CztMF6YRQK/GfM2/pSnUHtIN6O3hpZ83jcxpmYLxAg
- 4bKsjOtudJH2I2to7Nnaw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:qJbtUwLiZSI=:kAnoaEeMzxIol218frY1Cd
- SkMvkGzegT/7md2gxI8BCsWtJvoiZg44/a3M1JRPitWVqqOoieml5QimCvvI/+8h1viyHzBJU
- ItKgDGq1gta3Bop84gbQoWnX7E5UqFCVfxqkZQZAtEzTe3VobOHeN8dC+TR03H2P9SsSDyGyb
- 0DwJmOlsr2E5pA+rJEH4ugtYkkuoepWetuv+LMZ/hAxN/P7TNBbuiq8AQgBAeDjRWNO0dwqA5
- OlhL+EIMzRWz+GmeA9ToSIkc9fy0cDGjXui9IgGVrsC7dv5P9nAvSoIYZ875UgGiLQoXviRpc
- f/GT3XnVb+xO+FLaiknGq5rshX9YM4VT4uUDrcXL6i8zqzZjXMRG+PU3PIVSBmGGbQKee2IoU
- 9+8TKLP8Q0tSCeEhlEgeD+xoJaW4IyAzL/uZOXv+QJXaCnGZkGbmSjJYOXnV9G1qeYSArCXeQ
- 8ZkkKAjzAVmNe7j0dfV4xjpp8fdMEYR3dXFD/7hwtHUjI3M1HFKcQk9j7kTX0rdHE8fF//kgp
- LSgQnA9IxBkmhm38emlVfXzgvRUKV56dD1dva4AOjXucXC4tVv9iy69/a1DlVYOsnnHKdEJzV
- oR5nmkoCoUPyVBMZAiXoqEaVWTuJyoMVLBP48al1Tg+q33+Vy4EdipWGKNy6Eb/tkEclAGB8z
- EKE1GkqmpLaniKrefN0mlnMe0Eb7qRhzbnAJ4zMqMepu2krGSpZ00AA8NYl4s4BgkNBYryB0u
- xCYUOAg4bDS+SfeQ/BY5+CZrZmAkhSrBivetp9TJUfFvu0DKT7ppL9JYHmnMvX5yCkfPohn6Z
- wLq6Ce8
+X-Provags-ID: V03:K0:r+1vYuzn0i9WEFWFIQa3XwD+E7lDViv1OY9HwlyiVLUHlLeCVZZ
+ L2BLZh9CdzwDiw78vcb8y/+kq15a1eKMJz7okDZKkXEF4FV/m7zoN+5SCamD5PTpbJhSI+w
+ fPsUBvRnLzkExUd/nYzhYUIu54L4ZmGdMJBY70q+zcEsVU8yvBAjMWFUenSW5Y18+pju+ph
+ uXRRRfcLBKiDgc2gbinfQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:DuMW2TMoWpc=:WRhbTSnFOgkU2x9NQv7p/z
+ ooMPxgiNbWslBYSsEWREpRVkwHso+6GiXqq+xQioLWEeSehm8DCmYqVNOj22LsP0iXzPTghTV
+ 72naU7IDHEiw9/dFBeKo2Mr4UKyOmbywvVbG4Vx95H2NaSz+Q+J5EKttbeWSf/HQOhWXWOU0S
+ k/LhBCNF69d88ZxT67plfY7Nx0Yo382mhE+zpHz0fByd4y/yJlltGaglNuwGKetHof4sckJ/2
+ pRYj6Qi7tbK5v747tsFaBbCIetbvO3BK5m4aElgHV6RW2Niembe6issf4Gc9DkvW5eAzXFRwm
+ O2MvYPda71GxEade6fIrthZVgDDMQxXW3xJMOq4js/AiB46qjqy/vau5cd378IoWNOxkEYWsV
+ yF79GrKRyJma3iwrllgC7FDLh33s94EI12zRvLx8xt/TsPrxJW+ndYGOnQqBjYU0NB1muDCcd
+ vP645TJI3V+8kcNK+lXfuJx4eYMX405rVsa8OwpGrAvuDzxtTLqSP02YSXzhj//DxvAD6LEea
+ KTG7f3DELSH/c74np2UA7NdK1d6S9GLIZJlgES8BZiD5GFfg5kAgO9k2Sq8HIlqWCK0yle4dF
+ a4q4OpM0GrX0tZzMTUJ2xM6x+INJLhGLqMNeYGl8N9R19zLxxul539sx2y6vVIoIVKYPeS7+X
+ Jy9tuusegHhup0r8jF4kzE0hQvlRU/kyeYIm8ULOJ4GVoox0Amjr4BOpyy6aFkEc0kdTKRjGa
+ QmxNS0rAzVgkJuFeMm/URr0I4b2xaAH2VbBn369q7r8LDpOSbtzVAH0IZBBEID4VKRSJclVYC
+ P9LVpBu
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This is just another patch series in preparation for the rebase--helper.
+When rearranging the edit script, we happily mistake the comment
+character for a command, and the command for a SHA-1. As a consequence,
+when we move fixup! and squash! commits, our logic to skip lines with
+already handled SHA-1s mistakenly skips anything but the first
+commented-out pick line, too.
 
-Relative to v1 of this patch series,
+The upcoming rebase--helper patches will address this bug, therefore we
+do not need to make the current autosquash code even more complex than
+it already is, just to fix this bug.
 
-- the grammo fix was backed out because it was picked up separately,
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t3415-rebase-autosquash.sh | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-- two new tests were introduced, one demonstrating a bug, the other one
-  ensuring that the rebase--helper does not introduce a regression (this
-  test actually helped me debug and fix a regression in some previous
-  revision of the rebase--helper)
-
-
-Johannes Schindelin (3):
-  t3404: add a test for the --gpg-sign option
-  rebase -i: demonstrate a bug with --autosquash
-  rebase -i: we allow extra spaces after fixup!/squash!
-
- t/t3404-rebase-interactive.sh |  8 ++++++++
- t/t3415-rebase-autosquash.sh  | 33 +++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+)
-
-Published-As: https://github.com/dscho/git/releases/tag/rebase-i-tests-v2
-Interdiff vs v1:
-
- diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
- index 4c96075..aa393d2 100755
- --- a/t/t3404-rebase-interactive.sh
- +++ b/t/t3404-rebase-interactive.sh
- @@ -60,7 +60,7 @@ test_expect_success 'setup' '
-  	test_commit P fileP
-  '
-  
- -# "exec" commands are run with the user shell by default, but this may
- +# "exec" commands are ran with the user shell by default, but this may
-  # be non-POSIX. For example, if SHELL=zsh then ">file" doesn't work
-  # to create a file. Unsetting SHELL avoids such non-portable behavior
-  # in tests. It must be exported for it to take effect where needed.
- @@ -1281,11 +1281,12 @@ test_expect_success 'editor saves as CR/LF' '
-  	)
-  '
-  
- -EPIPHANY="'"
- +SQ="'"
-  test_expect_success 'rebase -i --gpg-sign=<key-id>' '
-  	set_fake_editor &&
- -	FAKE_LINES="edit 1" git rebase -i --gpg-sign=\" HEAD^ >out 2>err &&
- -	grep "$EPIPHANY-S\"$EPIPHANY" err
- +	FAKE_LINES="edit 1" git rebase -i --gpg-sign="\"S I Gner\"" HEAD^ \
- +		>out 2>err &&
- +	grep "$SQ-S\"S I Gner\"$SQ" err
-  '
-  
-  test_done
- diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
- index 8f53e54..48346f1 100755
- --- a/t/t3415-rebase-autosquash.sh
- +++ b/t/t3415-rebase-autosquash.sh
- @@ -271,4 +271,37 @@ test_expect_success 'autosquash with custom inst format' '
-  	test 2 = $(git cat-file commit HEAD^ | grep squash | wc -l)
-  '
-  
- +set_backup_editor () {
- +	write_script backup-editor.sh <<-\EOF
- +	cp "$1" .git/backup-"$(basename "$1")"
- +	EOF
- +	test_set_editor "$PWD/backup-editor.sh"
- +}
- +
- +test_expect_failure 'autosquash with multiple empty patches' '
- +	test_tick &&
- +	git commit --allow-empty -m "empty" &&
- +	test_tick &&
- +	git commit --allow-empty -m "empty2" &&
- +	test_tick &&
- +	>fixup &&
- +	git add fixup &&
- +	git commit --fixup HEAD^^ &&
- +	(
- +		set_backup_editor &&
- +		GIT_USE_REBASE_HELPER=false \
- +		git rebase -i --force-rebase --autosquash HEAD~4 &&
- +		grep empty2 .git/backup-git-rebase-todo
- +	)
- +'
- +
- +test_expect_success 'extra spaces after fixup!' '
- +	base=$(git rev-parse HEAD) &&
- +	test_commit to-fixup &&
- +	git commit --allow-empty -m "fixup!  to-fixup" &&
- +	git rebase -i --autosquash --keep-empty HEAD~2 &&
- +	parent=$(git rev-parse HEAD^) &&
- +	test $base = $parent
- +'
- +
-  test_done
-
+diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+index 8f53e54..9b71a49 100755
+--- a/t/t3415-rebase-autosquash.sh
++++ b/t/t3415-rebase-autosquash.sh
+@@ -271,4 +271,28 @@ test_expect_success 'autosquash with custom inst format' '
+ 	test 2 = $(git cat-file commit HEAD^ | grep squash | wc -l)
+ '
+ 
++set_backup_editor () {
++	write_script backup-editor.sh <<-\EOF
++	cp "$1" .git/backup-"$(basename "$1")"
++	EOF
++	test_set_editor "$PWD/backup-editor.sh"
++}
++
++test_expect_failure 'autosquash with multiple empty patches' '
++	test_tick &&
++	git commit --allow-empty -m "empty" &&
++	test_tick &&
++	git commit --allow-empty -m "empty2" &&
++	test_tick &&
++	>fixup &&
++	git add fixup &&
++	git commit --fixup HEAD^^ &&
++	(
++		set_backup_editor &&
++		GIT_USE_REBASE_HELPER=false \
++		git rebase -i --force-rebase --autosquash HEAD~4 &&
++		grep empty2 .git/backup-git-rebase-todo
++	)
++'
++
+ test_done
 -- 
 2.9.0.278.g1caae67
 
-base-commit: 5c589a73de4394ad125a4effac227b3aec856fa1
+
