@@ -2,171 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C07A2070D
-	for <e@80x24.org>; Thu,  7 Jul 2016 18:13:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD23E2070D
+	for <e@80x24.org>; Thu,  7 Jul 2016 18:43:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750946AbcGGSNI (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 14:13:08 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:33078 "EHLO
-	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750720AbcGGSNG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 14:13:06 -0400
-Received: by mail-lf0-f66.google.com with SMTP id l188so2064692lfe.0
-        for <git@vger.kernel.org>; Thu, 07 Jul 2016 11:13:05 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=74bcItZtV895dGCpZc7W1OHSTZB8N1OyLcsK1QZ4Y68=;
-        b=1F3TbmTm9EmFGMgN5x6/J0i3UU5h5uvOxJ+TkU5IY/4ZRiUxuYNJhVn/wRKHVm3TY9
-         e+Wjxk1lSJGh/Zx1d2lQVbDv7Eki2GG1nRq/7uDFNSdjNx1N7TibpEOtLeNdSfSltmpU
-         ofi0GCpVg74Tx0knC3hiBUMwREbMUhPgvRhPmT9XGAXbSYMzqdSMw1dm69JiTVg5CKYV
-         mRMYKcJAqCmIOKDm16I+9mLCQFDLdvSUoUZNgsruB9jG0y90rKlerjs1844K/24gVjPE
-         6uVcoFyi1y+1HHJ7VPLnDNzj2gqrz6oBbIR9sD/5mpKqNIvXqeCRThclJsnWSoLJlvwH
-         fV2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=74bcItZtV895dGCpZc7W1OHSTZB8N1OyLcsK1QZ4Y68=;
-        b=Hut753cGozX5pf/yHsC4RbBotCeRtPY3F4kMRwi5IPd3O6TAhbOlyy0gxcN+Vm/DTt
-         IPCESh3r9dNNqBa7boJImlcU2oNpsZMx4rXn57/KXH/r8wIu/xLetjuFJqGLWiELl7EG
-         xZkUAjA9HOpmHzpRVMV9NESUxjE3UqEwpTwfdsmQoU6VXK8i/XVGH8DJ8Sov4Wj9//wR
-         qATTK9sJPncW7yDnY1g85/7CzfrmXPl56nTCt7M/dDYWN4a2em2W6dF46sduFPX8X6JU
-         U3YOshCBAglwJi+oIdzSNwoAt9L1kZrzOXFNKCrzN0YKm+3Tt/4P6IcsWBamMPHsTp7C
-         PZ3w==
-X-Gm-Message-State: ALyK8tLb4IuqRtzKd1TLII9rYFtvc38QaS/nn/KMREUxN0GryRZiaOMl+IGm0uuC9ivo+Q==
-X-Received: by 10.25.158.79 with SMTP id h76mr433313lfe.152.1467911560916;
-        Thu, 07 Jul 2016 10:12:40 -0700 (PDT)
-Received: from duynguyen (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id g28sm990228ljg.24.2016.07.07.10.12.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Jul 2016 10:12:38 -0700 (PDT)
-Date:	Thu, 7 Jul 2016 19:12:37 +0200
-From:	Duy Nguyen <pclouds@gmail.com>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git@vger.kernel.org, yuri.kanivetsky@gmail.com
-Subject: Re: [PATCH v2 2/2] cache-tree: do not generate empty trees as a
- result of all i-t-a subentries
-Message-ID: <20160707171237.GA31445@duynguyen>
-References: <20160704174807.6578-1-pclouds@gmail.com>
- <20160706184829.31825-1-pclouds@gmail.com>
- <20160706184829.31825-3-pclouds@gmail.com>
- <xmqqeg76sh44.fsf@gitster.mtv.corp.google.com>
+	id S1751427AbcGGSnp (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 14:43:45 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64820 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752799AbcGGSng convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Jul 2016 14:43:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 820052A63A;
+	Thu,  7 Jul 2016 14:43:34 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ojVQCMrITnDn
+	TpTIbgQmT8qt504=; b=Xx4TQv6L+zOzf+VLrUN7YEaPa7sPH3+bTbZotae3XeEe
+	Jz5SvL04HxZt8eiK/7trgX4jvE3sH6flsYulZ3K8mVtZiz6bHNej5xVEgEcTc6Wg
+	1pMdzZ0Luh/UZpA9fdO5f3C+hUIu0zpb9Jz+ZNbR6sjlL11bqXSMM3CswgAQya0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PhZrK7
+	qIjuZolqBUcgDJYu7z1Yj/I+q1kcp7Ca1eJsQ0XSd7dhLKn7lYVLlBi5ERav2DKv
+	8LOoYuRpHq2kPLF7gyr3fd3MnXIH6OZZendoNoaaaMMpp4XrjXvWHeMG5BQSYPLq
+	11FdjNlLNVtZM6etRsSHMyXVA/zGULFfQteuU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A99D2A639;
+	Thu,  7 Jul 2016 14:43:34 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F16912A638;
+	Thu,  7 Jul 2016 14:43:33 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] correct ce_compare_data() in a middle of a merge
+References: <xmqq37nyb4kp.fsf@gitster.mtv.corp.google.com>
+	<1467100876-2803-1-git-send-email-tboegi@web.de>
+	<xmqqh9cc55wm.fsf@gitster.mtv.corp.google.com>
+	<62eb3d75-126e-427b-8701-d490e80e3501@web.de>
+	<xmqq8txlvwip.fsf@gitster.mtv.corp.google.com>
+	<574692d1-c8ae-9c2f-6b99-a01545b15051@telia.com>
+	<xmqqa8huvmpv.fsf@gitster.mtv.corp.google.com>
+	<c36fe487-b8dc-9767-7fae-bee513dac0b2@web.de>
+Date:	Thu, 07 Jul 2016 11:43:31 -0700
+In-Reply-To: <c36fe487-b8dc-9767-7fae-bee513dac0b2@web.de> ("Torsten
+	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Thu, 7 Jul 2016 19:16:09
+ +0200")
+Message-ID: <xmqqr3b5p9v0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqeg76sh44.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Pobox-Relay-ID: B54BE976-4472-11E6-B8B8-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jul 06, 2016 at 12:26:19PM -0700, Junio C Hamano wrote:
-> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
-> 
-> > @@ -426,6 +433,15 @@ int cache_tree_update(struct index_state *istate, int flags)
-> >  	i = update_one(it, cache, entries, "", 0, &skip, flags);
-> >  	if (i < 0)
-> >  		return i;
-> > +	/*
-> > +	 * Top dir can become empty if all entries are i-t-a (even
-> > +	 * from subdirs). Note that we do allow to create an empty
-> > +	 * tree from an empty index. Only error when an empty tree is
-> > +	 * a result of the i-t-a thing.
-> > +	 */
-> > +	if (it->entry_count < 0 &&
-> > +	    !hashcmp(it->sha1, EMPTY_TREE_SHA1_BIN))
-> > +		return error(_("cannot build a tree from just intent-to-add entries"));
-> 
-> The test would not let you tell between the two possible ways the
-> last step "git commit" fails.
-> 
-> Did it fail due to the protection this change adds (i.e. you should
-> be checking if "git write-tree" fails if that is the case we want to
-> cover), or did it fail because you recorded an empty tree as the
-> root commit without giving the --allow-empty option?
-> 
-> In any case, I am not sure about the logic in the comment, either.
-> "git commit --allow-empty" should be able to create a new commit
-> without any files in it, no?
+Torsten Bögershausen <tboegi@web.de> writes:
 
-You're right. If an empty index can produce an empty tree, then an
-index full of i-t-a entries should also be able to produce an empty
-tree.
+> This is the callstack:
+>
+> merge-recursive.c/add_cacheinfo(unsigned int mode, const unsigned char *sha1,
+> 		const char *path, int stage, int refresh, int options)
+> {
+> 	struct cache_entry *ce;
+> 	ce = make_cache_entry
+> 	if (!ce)
+> 		return error(_("addinfo_cache failed for path '%s'"), path);
+> 	return add_cache_entry(ce, options);
+> }
+> #Calls
+> read-cache.c/make_cache_entry(path=file sha1=0x99b633 stage=0)
+>
+>
+> struct cache_entry *make_cache_entry(unsigned int mode,
+> 		const unsigned char *sha1, const char *path, int stage,
+> 		unsigned int refresh_options)
+> {
+>         [snip]
+> 	ret = refresh_cache_entry(ce, refresh_options);
+> 	if (ret != ce)
+> 		free(ce);
+> 	return ret;
+> }
+>
+> #Calls
+> refresh_cache_ent(&the_index, ce, options, NULL, NULL);
+>
+> #Calls
+> ie_modified()
+>
+> #Calls
+> read-cache.c/ie_match_stat()
+>
+> #Calls
+> changed |= ce_modified_check_fs(ce, st);
+>
+> #Calls
+> ce_compare_data(path=file sha1=0x99b633)
+>
+> #Calls
+> index_fd(..., ..., ce->name, ...)
+> #Note the sha is lost here, the parameter sha is the output.
+>
+> Deep down, has_cr_in_index(path) will look at ad55e2 instead,
+> which is wrong.
 
-git-commit not failing when --allow-empty is not given is another
-(known) problem, where it miscounts the number of real index entries.
-It's not right to "fix" it in here.
+The call to add_cacheinfo() is made with 99b633 to record the 3-way
+merge result to the index in this callchain:
 
-I'll deal with that separately. Let's focus on cache-tree only this
-time. So how about this on top?
+ merge_trees()
+ -> git_merge_trees()
+ -> process_renames() # does nothing for this case
+ -> process_entry()
+    -> merge_content()
+       -> merge_file_special_markers()
+          -> merge_file_1()
+             -> merge_3way()
+                -> ll_merge() # correctly handles the renormalization
+             -> write_sha1_file() # this is what gives us 99b633
+    -> update_file() # this is fed the 99b633 write_sha1_file() computed
+       -> update_file_flags()
+          -> read_sha1_file() # reads 99b633
+          -> convert_to_working_tree()
+          -> write_in_full() # updates the working tree
+          -> add_cacheinfo() # to record 99b633 at "file" in the index
 
--- 8< --
-diff --git a/cache-tree.c b/cache-tree.c
-index 75e73d7..2d50640 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -433,15 +433,6 @@ int cache_tree_update(struct index_state *istate, int flags)
- 	i = update_one(it, cache, entries, "", 0, &skip, flags);
- 	if (i < 0)
- 		return i;
--	/*
--	 * Top dir can become empty if all entries are i-t-a (even
--	 * from subdirs). Note that we do allow to create an empty
--	 * tree from an empty index. Only error when an empty tree is
--	 * a result of the i-t-a thing.
--	 */
--	if (it->entry_count < 0 &&
--	    !hashcmp(it->sha1, EMPTY_TREE_SHA1_BIN))
--		return error(_("cannot build a tree from just intent-to-add entries"));
- 	istate->cache_changed |= CACHE_TREE_CHANGED;
- 	return 0;
- }
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index a19f06b..1a01279 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -104,10 +104,17 @@ test_expect_success 'cache-tree does skip dir that becomes empty' '
- 	git init ita-in-dir &&
- 	(
- 		cd ita-in-dir &&
-+		echo ground >ground &&
-+		git add ground &&
- 		mkdir -p 1/2/3 &&
- 		echo 4 >1/2/3/4 &&
- 		git add -N 1/2/3/4 &&
--		test_must_fail git commit -m committed
-+		git commit -m committed &&
-+		git ls-tree -r HEAD >actual &&
-+		cat >expected <<\EOF &&
-+100644 blob b649b43b0708f5604ac912f5a15f7da2bad51a1b	ground
-+EOF
-+		test_cmp expected actual
- 	)
- '
- 
--- 8< --
+So refresh() may incorrectly find that 99b633 does not match what is
+in the filesystem if it looks at _any_ entry in the index.  We know
+we have written the file ourselves, so by definition it should match
+;-) Even though I am not sure why that should affect the overall
+correctness of the program (because we have written the correct
+result to both working tree and to the index), this needs to be
+fixed.
 
-> > +test_expect_success 'cache-tree does skip dir that becomes empty' '
-> > +	rm -fr ita-in-dir &&
-> > +	git init ita-in-dir &&
-> > +	(
-> > +		cd ita-in-dir &&
-> > +		mkdir -p 1/2/3 &&
-> > +		echo 4 >1/2/3/4 &&
-> > +		git add -N 1/2/3/4 &&
-> > +		test_must_fail git commit -m committed
-> > +	)
-> > +'
-> > +
-> >  test_done
+I am however not convinced passing the full SHA-1 is a good
+solution.  The make_cache_entry() function may be creating a cache
+entry to stuff in a non-default index (i.e. not "the_index"), but
+its caller does not have a way to tell it which index the resulting
+cache entry will go, and calls refresh_cache_entry(), which always
+assumes that the caller is interested in "the_index", so what
+add_cacheinfo() does by calling make_cache_entry() feels wrong in
+the first place.  Also, the call from update_file_flags() knows that
+the working tree is in sync with the resulting cache entry.
+
+Perhaps update_file_flags() should not even call add_cacheinfo()
+there in the first place?  I wonder if it should just call
+add_file_to_index()---after all, even though the current code
+already knows that 99b633 _is_ the result it wants in the index, it
+still goes to the filesystem and rehashes.
+
+I dunno.  I really do not like that extra sha1 argument added all
+over the callchain by this patch.
+
+Or did you mean other calls to add_cacheinfo()?
