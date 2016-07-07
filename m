@@ -7,145 +7,91 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC6591F744
-	for <e@80x24.org>; Thu,  7 Jul 2016 11:47:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD03F2070D
+	for <e@80x24.org>; Thu,  7 Jul 2016 12:34:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751614AbcGGLr2 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 07:47:28 -0400
-Received: from mout.gmx.net ([212.227.15.19]:60184 "EHLO mout.gmx.net"
+	id S1750990AbcGGMeM (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 08:34:12 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59019 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751332AbcGGLr1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 07:47:27 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M0xbD-1bZEPf39up-00v9p0; Thu, 07 Jul 2016 13:47:20
+	id S1750899AbcGGMeJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 08:34:09 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MFLhE-1b6tJT1qUe-00EQlQ; Thu, 07 Jul 2016 14:27:19
  +0200
-Date:	Thu, 7 Jul 2016 13:47:19 +0200 (CEST)
-From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:	Thu, 7 Jul 2016 14:27:18 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] am: counteract gender bias
-Message-ID: <d54f8f8b32ecc024eb3a58dd42ef9f855f8e2cb9.1467892022.git.johannes.schindelin@gmx.de>
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	David Turner <novalis@novalis.org>, git@vger.kernel.org,
+	pclouds@gmail.com, kmaggg@gmail.com
+Subject: Re: [PATCH v14 21/21] mailmap: use main email address for dturner
+In-Reply-To: <xmqq4m82tzun.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1607071426090.6426@virtualbox>
+References: <1467612324-23556-1-git-send-email-novalis@novalis.org> <1467612324-23556-2-git-send-email-novalis@novalis.org> <xmqq4m82tzun.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:hRefAu33r3KHDUYtb/Mm8RiLwSb+QxU3qY3HuqqCDef0AUU98i+
- coUBxCpukT6+sWxqu2hGoRomzW3rvgTKn6wmn3UZOZUsECFkvNVTJ075JQ0+qzSbJbnoKq4
- 0lGptnRmp4BgQVYVOtWzyWCFLiEXQQi0vkvnbvaQMCM1TTU954j6R6/j6rE2MLB0oczb1oz
- PHT1z0AFKkN5AO0n2cU8Q==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:wUXGXOAXgLs=:MI+uK5/x7hVKAybnnWUgas
- rYpFpOS78rjzh6GRH6LjWbDN71DWU7UWHPWbEr7eSxLpPiI1IP09fUHP/73WPFx3yOjv/zJ3Y
- pUVB1NWGY6zg5KcY6bg9LrT1LzHkOpmb8EH3lq5ZiqMm9y/AHXfrnGJqLHMZvWlgRhMJtIhwt
- wOqxNbPIcBvt0vAbCOxgF3Ugqc55hJGyYmKua3nG7jmaoW+6uGywZCD/IsHA/cidP4p5h/Opt
- EdvLWsWxurMuVN6O9A52JUg550y6WivEaYqs5JefWUZ3ntrEL8ldZGiTkDxD+Piw+AYMwksFe
- MOjJf5sf+Ih34KgG7AySD7mcme/vE8+YrA+hJy3s0t9Ym8atT5+aqmxq8VAhTMaPqzclVpqcI
- A24HPx4OBmaT14uedmuScDWclaymqCcTH1hKa5HnPWSCvmdFcsfX/5siLAMISqWx2ZgYDD+bH
- /igSqL0FhIlGTTFqvn18IimFDMBDwQWSvmZNUwb/PmfOOlOcH/IAuAYZH82p/hd49Rbg3eLNz
- dNxn+uUSU4WWrS7UjPOJSa+3NIxXN4YgXHFLhE+eaZXv1X8dujg9ybEYivuMeS5J4cx+Tinzv
- jC0TwkW+wrlTG+ioUznxAFsDrbjosskG6gzyF8+K0ZIESxkMARAdxZNyjSo03fJTCkh1SDNKY
- D1hR5bMvRGeewFLvPI9PrQQVS9bsQPm2zl4QeCnthk8pXRyFQNaJ0zhrp1losk8KQ2ehDJHhY
- yiSaxPUc49X768vxr2PmTOu8tYct3bBZesnYTz+EQ7jeZ+srdI44/q9a40QjU+Nx7EBGfh8k2
- wM9hWB6
+Content-Type: multipart/mixed; BOUNDARY="8323329-1452314329-1467894439=:6426"
+X-Provags-ID: V03:K0:TdJGpdOpSO/cAQSsYyaFFZHyLHsdpaOQmR0jPFT1Ri/u5dZ1o7C
+ 7/tY23OJV0rgHhQlsxTRxQGJgz+60PShABAY9EiwkvB1YacogDIN8DaGabtQZCYJ47OF+gu
+ C9HdEjVuJpkFM0p+8+joknWHAMYgZ/tzk7SmdRRteNhaybuo9IngBs/ZuErrMMRvxiF4+dp
+ 8xD4/Z0S66RvgjWPiQq3g==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:xvQL51XbchA=:vFPlWGjWFyjQUCl5iQg0BL
+ lvmG6NqHwbSIY8CSOKVpfciRiUkHADJcCP7n3ynb4DEcN1sdUw/HfqF/VRSMziCggDY6d29Xd
+ TnsiInf4XvSAr7rfjjs1e6+x8xwuP/O3HDPuFjD+AJRn4Zh/iEDt6d/UDnhmZ5zE4lns8XqxM
+ 0AgWxrI2kAtCb2W1Nqt0HnQ+K1sx1LJYXJwD0PEFqXjRIqv5gau+SKVxy8g3Dyp46DcMxDrhD
+ Gy498DHVKIlYq/tvcMOl0dFbJOE/YSI2v8uS89GTPUDHG6vofqkpCsHyxFrrRQe9nguR6FXKU
+ qXYAy0JCLmQqYllehnZUkWJfRTZjqSwmonvLJciHazqYL5pBQM4iO9vI6oZi/NNwyORB/UBfR
+ pAx4egUyzu+lNFcR7grSmIjMv/bF6A4dZv27gJZf8QjuOu55B3F2l0JLsjPYl7G0i7pj9PKnr
+ w28ThYUvjFvbOXUzC2pW5J5i7l3PvS5E/iSAwrTcOEO629U5EwaLNgZXtGbYDecWgCa6U6pFo
+ YEX55N+rDzJE57bAGy9y5rEIBAP0D1Kyp5Tm3YpYc34GhwKhiU9Fuca9NC9v38OKcSCPiiXjc
+ BXm2BECVa5Um4bVgDiOif1+wlKeOlZkgo3w24YJG3Sb74T5rGoLg8wbGlMW8SFSw1qKFc8hwd
+ 19n9edhVK1RE/5AjH1uz1G9EiNhQVVIMWXvvBW2urM0qeq5P8LSESQrCEGJGZTAfdjzKS10N+
+ Anurz1+l9DlP76K/wmtnW/GFxtwjEl5Wve9g64Tze7+K/b2cmcIYp8LcnfY=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07), i.e. for
-almost 11 years already, we demonstrated our disrespect to the pioneers
-of software development like Ada Lovelace, Grace Hopper and Margaret
-Hamilton, by pretending that each and every software developer is male
-("his_tree"). It appears almost as if we weren't fully aware that the
-first professional software developers were all female.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-We know our field to have this unfortunate gender bias that has nothing
-to do with qualification or biological reasons, and we are very sad
-about the current gender imbalance of the Git developer community.
+--8323329-1452314329-1467894439=:6426
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Let's start changing that by using the variable name "her_tree" for an
-equal number of years out of fairness, and change to the gender neutral
-"their_tree" after that.
+Hi,
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/gender-bias-v1
- builtin/am.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+On Wed, 6 Jul 2016, Junio C Hamano wrote:
 
-diff --git a/builtin/am.c b/builtin/am.c
-index d5da5fe..2c7f3dd 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1584,14 +1584,14 @@ static int build_fake_ancestor(const struct am_state *state, const char *index_f
- }
- 
- /**
-- * Do the three-way merge using fake ancestor, his tree constructed
-+ * Do the three-way merge using fake ancestor, her tree constructed
-  * from the fake ancestor and the postimage of the patch, and our
-  * state.
-  */
- static int run_fallback_merge_recursive(const struct am_state *state,
- 					unsigned char *orig_tree,
- 					unsigned char *our_tree,
--					unsigned char *his_tree)
-+					unsigned char *her_tree)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	int status;
-@@ -1599,7 +1599,7 @@ static int run_fallback_merge_recursive(const struct am_state *state,
- 	cp.git_cmd = 1;
- 
- 	argv_array_pushf(&cp.env_array, "GITHEAD_%s=%.*s",
--			 sha1_to_hex(his_tree), linelen(state->msg), state->msg);
-+			 sha1_to_hex(her_tree), linelen(state->msg), state->msg);
- 	if (state->quiet)
- 		argv_array_push(&cp.env_array, "GIT_MERGE_VERBOSITY=0");
- 
-@@ -1607,7 +1607,7 @@ static int run_fallback_merge_recursive(const struct am_state *state,
- 	argv_array_push(&cp.args, sha1_to_hex(orig_tree));
- 	argv_array_push(&cp.args, "--");
- 	argv_array_push(&cp.args, sha1_to_hex(our_tree));
--	argv_array_push(&cp.args, sha1_to_hex(his_tree));
-+	argv_array_push(&cp.args, sha1_to_hex(her_tree));
- 
- 	status = run_command(&cp) ? (-1) : 0;
- 	discard_cache();
-@@ -1620,7 +1620,7 @@ static int run_fallback_merge_recursive(const struct am_state *state,
-  */
- static int fall_back_threeway(const struct am_state *state, const char *index_path)
- {
--	unsigned char orig_tree[GIT_SHA1_RAWSZ], his_tree[GIT_SHA1_RAWSZ],
-+	unsigned char orig_tree[GIT_SHA1_RAWSZ], her_tree[GIT_SHA1_RAWSZ],
- 		      our_tree[GIT_SHA1_RAWSZ];
- 
- 	if (get_sha1("HEAD", our_tree) < 0)
-@@ -1657,7 +1657,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 		return error(_("Did you hand edit your patch?\n"
- 				"It does not apply to blobs recorded in its index."));
- 
--	if (write_index_as_tree(his_tree, &the_index, index_path, 0, NULL))
-+	if (write_index_as_tree(her_tree, &the_index, index_path, 0, NULL))
- 		return error("could not write tree");
- 
- 	say(state, stdout, _("Falling back to patching base and 3-way merge..."));
-@@ -1667,13 +1667,13 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 
- 	/*
- 	 * This is not so wrong. Depending on which base we picked, orig_tree
--	 * may be wildly different from ours, but his_tree has the same set of
-+	 * may be wildly different from ours, but her_tree has the same set of
- 	 * wildly different changes in parts the patch did not touch, so
- 	 * recursive ends up canceling them, saying that we reverted all those
- 	 * changes.
- 	 */
- 
--	if (run_fallback_merge_recursive(state, orig_tree, our_tree, his_tree)) {
-+	if (run_fallback_merge_recursive(state, orig_tree, our_tree, her_tree)) {
- 		rerere(state->allow_rerere_autoupdate);
- 		return error(_("Failed to merge in the changes."));
- 	}
--- 
-2.9.0.278.g1caae67
+> David Turner <novalis@novalis.org> writes:
+>=20
+> > Signed-off-by: David Turner <novalis@novalis.org>
+> > ---
+> >  .mailmap | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/.mailmap b/.mailmap
+> > index e5b4126..edcae89 100644
+> > --- a/.mailmap
+> > +++ b/.mailmap
+> > @@ -46,6 +46,7 @@ David D. Kilzer <ddkilzer@kilzer.net>
+> >  David K=C3=A5gedal <davidk@lysator.liu.se>
+> >  David Reiss <dreiss@facebook.com> <dreiss@dreiss-vmware.(none)>
+> >  David S. Miller <davem@davemloft.net>
+> > +David Turner <novalis@novalis.org> <dturner@twopensource.com>
+> >  Deskin Miller <deskinm@umich.edu>
+> >  Dirk S=C3=BCsserott <newsletter@dirk.my1.cc>
+> >  Eric Blake <eblake@redhat.com> <ebb9@byu.net>
+>=20
+> Let me take this separately and directly to the 'master', not as
+> part of this series.
+>=20
+> Not that I am rejecting the remainder of the series, though.
 
-base-commit: 5c589a73de4394ad125a4effac227b3aec856fa1
+Speaking of which... Dave, I see that a lot of the patches in the series
+still use the old mail address. Maybe change that?
+
+Ciao,
+Dscho
+--8323329-1452314329-1467894439=:6426--
