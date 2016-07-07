@@ -2,107 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EE582070D
-	for <e@80x24.org>; Thu,  7 Jul 2016 13:24:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8E8B2070D
+	for <e@80x24.org>; Thu,  7 Jul 2016 14:12:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751533AbcGGNYk (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 09:24:40 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:36108 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751051AbcGGNYi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 09:24:38 -0400
-Received: by mail-wm0-f47.google.com with SMTP id f126so210646245wma.1
-        for <git@vger.kernel.org>; Thu, 07 Jul 2016 06:24:37 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=MyouuaVe10PZnDygtLXcApl341H9pya9aRN4pFv3gnY=;
-        b=uEZS7T1tD4Scm1Bqhnowo5Y5ESy8HNL4EfmnPI3Ad8X0rA1NVbsUcfxBIC2gM+H6Op
-         KnWFNa+c2L9LdPp3x1gffzwpNrZ/yVw86rvJH4Yo+KI4B8Kuckhcy+qIJ7tMBj2MKgQ+
-         Q4SjeOyfme1grMtSNItnMFdU4PDhrd9nAyAIjS93wiuWA0ZL6vu67HAaQb+GoK0rky4f
-         fJl/m1Krnj9LNXsav8l+s+MwrtAN1GWvSURNQwQ93pOmO71IKsIULi/+YK93ZV7NSo89
-         z7IcqYizDaa9mmaVvkIgbwJTOu7KMQXBa87uSWwH2yBgmHAexEj19LuioD76QhSFqxdp
-         NF8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=MyouuaVe10PZnDygtLXcApl341H9pya9aRN4pFv3gnY=;
-        b=IixJVMwjPB/iKS1gItba9qgN0G6jstTFmc0MTbKA/81Wxp2TJlyHqfPsg8AsRyXrnT
-         YsEjBPHazdF+Vd7nhbWfkMRt05Gt9YssGy4ESiQPL74cmVMxN59Zs7xmd+HEFWn0NOvy
-         /vTbD9Xo9/jzvYBCOmbg4sb8XweU41RTGHwRs7SopS3Erqp5s8cPtFgrQDVlXsb5laq0
-         SGp1VxHDv+bV/lBUgh3sJA4O/IR4udVL3UAkthrtV+UHqS/dl3LArrGm095btg0fBYZq
-         Qbvws/JzTlJtGH6ANyRs5LYsn2JYCvXusKrMjRUPTZKIztrglCYXd89PCFWbFYs3q0vd
-         3prg==
-X-Gm-Message-State: ALyK8tL5W2fDJdEFFgI+BFzNBRf1Ks/2dCJlwTyVJnl4ajPtX2ZWicI5OtO9c2m6vFg1HQ==
-X-Received: by 10.28.167.69 with SMTP id q66mr3023063wme.100.1467897876379;
-        Thu, 07 Jul 2016 06:24:36 -0700 (PDT)
-Received: from [192.168.1.34] (elp79.neoplus.adsl.tpnet.pl. [83.21.209.79])
-        by smtp.googlemail.com with ESMTPSA id bc9sm4993019wjc.45.2016.07.07.06.24.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Jul 2016 06:24:34 -0700 (PDT)
+	id S1751253AbcGGOM5 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 10:12:57 -0400
+Received: from mout.gmx.net ([212.227.17.21]:54219 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751007AbcGGOMz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 10:12:55 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Ldttv-1blNv81qvD-00j2aa; Thu, 07 Jul 2016 16:12:25
+ +0200
+Date:	Thu, 7 Jul 2016 16:12:23 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Mike Hommey <mh@glandium.org>
+cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] am: counteract gender bias
-To:	Mike Hommey <mh@glandium.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <d54f8f8b32ecc024eb3a58dd42ef9f855f8e2cb9.1467892022.git.johannes.schindelin@gmx.de>
- <20160707124943.GA22668@glandium.org>
-Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <577E580B.5090000@gmail.com>
-Date:	Thu, 7 Jul 2016 15:24:27 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-MIME-Version: 1.0
 In-Reply-To: <20160707124943.GA22668@glandium.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Message-ID: <alpine.DEB.2.20.1607071611100.6426@virtualbox>
+References: <d54f8f8b32ecc024eb3a58dd42ef9f855f8e2cb9.1467892022.git.johannes.schindelin@gmx.de> <20160707124943.GA22668@glandium.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:f2pq6oxR+qi4wMn3PJmwJb+x8qQYqYjKoWUxpGuQT2p+9QtUH93
+ NiWGuwIH71K8LSNwdk+o5PwLNsvnbEMnHhqT7NHmOlj3NiLk9rhQVlqbsEsh8Dt0W3pb+zh
+ mfRnywzZA6ASq4YINXxsgUIkxXDptYrS1prBjqqLHKLf0NaxKMMTUTMk1t07jW2T+wk0+bE
+ dYEk5sBUrFrs16aDJ7vlw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:TxfYyL+Lhs4=:lWnXiAKH934UBK4dpMwxkL
+ VfJU1vTWPnxyPPz1fj2YF4t3DPT8/ZvlzdJfwhjsmf+t55pnplLxNz9Fg8OpLeVLLtPzSN0qh
+ rv5NuAQIYqv2L6htaW/ua6ITM7aCG/v4VkRHU7Ov69mzFDckW1VGKCY77n5qilp3+LvbGSGoO
+ Mhuka4PIVp8stq+jkht4s9ZTdmvm6QRqO5mRw3ldb/IuI5joZ0jrBawGITiCNgnr9b18zkZ0W
+ VBSGdxZesZ3zqoROSsL/mCy3D8OO3TB8hWsZluQ0cMDEWYZnPnXOAqJE/xrOeVtDNJqXr7ERp
+ lSjhi73xvVF1kViBuuki2W5lVHZICKOAoKHjqrhMKopdxfD1JwBo0kdYNj+ruaUDP04JVIo7V
+ WEDt620NNGUMj6UxuIeUJ8MaiAACU1tb7e10CMKRobOXX0d8e1LbU1tR2s9eYCvP5AZHiau3A
+ I90l4wtgXF0oINBRjIM9Wwl/rQ6a6lQLtSxorU36tlFjkJoucW/fqaS6SS73IDHgH0NfdyciV
+ 9OphBlcHT6Tl1u4QPPfJ5ayhxp/cY20z/HfSFGHeGsLMQ26ZDQvk3txwv/ynMeg7j8jSLVBvC
+ tmnKawNEEDwaEIU9RkighU4QiFgsizojwBNo9I93I/VVkUZN5BAesYJOsdCJgeijkOcHrDwAx
+ tFrlqIhXoIPe7atBh2i42JB9Q2K4s1AG+F15EXS1nsrap7ScAIAtqdTsG9NK7zi4ovw27+rd6
+ ri0EnFHeF73/ELL/luo5833n74qkpaDJ6KgThmNAymtZVuwp7CQN/P6EE6fCI5o4JF2orCu7x
+ wifGNwn
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-07-07 o 14:49, Mike Hommey pisze:
+Hi Mike,
+
+On Thu, 7 Jul 2016, Mike Hommey wrote:
+
 > On Thu, Jul 07, 2016 at 01:47:19PM +0200, Johannes Schindelin wrote:
->> Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07), i.e. for
->> almost 11 years already, we demonstrated our disrespect to the pioneers
->> of software development like Ada Lovelace, Grace Hopper and Margaret
->> Hamilton, by pretending that each and every software developer is male
->> ("his_tree"). It appears almost as if we weren't fully aware that the
->> first professional software developers were all female.
->>
->> We know our field to have this unfortunate gender bias that has nothing
->> to do with qualification or biological reasons, and we are very sad
->> about the current gender imbalance of the Git developer community.
->>
->> Let's start changing that by using the variable name "her_tree" for an
->> equal number of years out of fairness, and change to the gender neutral
->> "their_tree" after that.
+> > Since d1c5f2a (Add git-am, applymbox replacement., 2005-10-07), i.e. for
+> > almost 11 years already, we demonstrated our disrespect to the pioneers
+> > of software development like Ada Lovelace, Grace Hopper and Margaret
+> > Hamilton, by pretending that each and every software developer is male
+> > ("his_tree"). It appears almost as if we weren't fully aware that the
+> > first professional software developers were all female.
+> > 
+> > We know our field to have this unfortunate gender bias that has nothing
+> > to do with qualification or biological reasons, and we are very sad
+> > about the current gender imbalance of the Git developer community.
+> > 
+> > Let's start changing that by using the variable name "her_tree" for an
+> > equal number of years out of fairness, and change to the gender neutral
+> > "their_tree" after that.
 > 
 > You make it sound like the decision to use "his" was conscious and on
 > purpose. I doubt that was the case, especially 11 years ago, when these
 > issues weren't as publicized. Let's not attribute to malice on part of
 > the people who wrote those lines what can be attributed to linguistics.
 
-Also, in all (?) other places we use "ours" and "theirs"; it looks like
-git-am was a strange exception with "ours" and "his" (also, it was/is
-inconsistent in using plural vs singular form).  Though perhaps it was
-created before the terminology solidified...
+It was not my intention to imply that the original decision was conscious.
 
-As to why it was not noticed and not fixed: probably no-one worked
-in this area, thus nobody noticed this (callee just don't care how the
-parameter is named).
+What with me being a non-native speaker, would you kindly suggest a commit
+message that conveys the intention better?
 
-Instead of nebulous "fairness" (i.e., be unfair in other direction),
-in my opinion it would be better to simply fix the issue, be consistent
-and use common terminology.
--- 
-Jakub Narębski
-
+Thanks,
+Dscho
