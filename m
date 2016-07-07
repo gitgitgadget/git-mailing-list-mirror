@@ -7,85 +7,81 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7221E2070F
-	for <e@80x24.org>; Thu,  7 Jul 2016 15:53:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A47022070D
+	for <e@80x24.org>; Thu,  7 Jul 2016 15:53:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753109AbcGGPxH (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 11:53:07 -0400
-Received: from mout.gmx.net ([212.227.17.20]:51461 "EHLO mout.gmx.net"
+	id S1753118AbcGGPxQ (ORCPT <rfc822;e@80x24.org>);
+	Thu, 7 Jul 2016 11:53:16 -0400
+Received: from mout.gmx.net ([212.227.15.15]:53019 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753099AbcGGPxE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 11:53:04 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MNf1y-1bE0bJ42Xq-0079V2; Thu, 07 Jul 2016 17:52:52
+	id S1752853AbcGGPxN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2016 11:53:13 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0Mdr7l-1aw4bm0giD-00Perr; Thu, 07 Jul 2016 17:52:59
  +0200
-Date:	Thu, 7 Jul 2016 17:52:50 +0200 (CEST)
+Date:	Thu, 7 Jul 2016 17:52:57 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/3] t3404: add a test for the --gpg-sign option
+Subject: [PATCH v2 3/3] rebase -i: we allow extra spaces after
+ fixup!/squash!
 In-Reply-To: <cover.1467906747.git.johannes.schindelin@gmx.de>
-Message-ID: <4fe1c1b7598f3c5ddc0cf8f9c0ef89ac193a22e2.1467906747.git.johannes.schindelin@gmx.de>
+Message-ID: <7a3f6dde53593160e8200a7bbec902d8fdfcf6bd.1467906747.git.johannes.schindelin@gmx.de>
 References: <cover.1467210629.git.johannes.schindelin@gmx.de> <cover.1467906747.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:RdKH8kLsI0WreFrj8ptdIUxxfUxU72XAyYx4XRRwfJlDqv9myhm
- a3oY3Zr+cJNZKF27JvD++Kn3XhROBy+IvxXq0XBrM20BZ0vWrHO7nPE9zW/gyEMQbvoRJf4
- 8ysZe2y92pGn9i9V8cMW1Jtno2Kl+OlivydRK/gJHXtDaHG3ogPte6Sl6Udkz98NhWP+1ER
- g7/MBzOReNFwKVmDhmv7A==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:l/nRu8OhTG8=:B8QV7x2GHtVccycekKSZev
- BJX8INeRZ4RkulkoA074dMHZbxkJcQSNh68//p9Cg6PO/z/I3LWHDBKVyX35EtKu41nKW0pYE
- ANAENKNaVYF6WrF1YBX9g4BfXH2qEYzEBkXpC3GMeadRRtMUvisG9CZ6slP+lgK3ZeB5HAoVJ
- M31BK4464+LGIEyTKgWb20s82MAUFYHqBeJbhZHeScszaiU1OgYNWuzUoR+Atp9m/3pjryA6D
- tdD/jXk1IMbkVsL1kcnQpK5GMr0eA0pUYxx5+UbTVvwK0mC5r+pHnQKVAos1WOQ+d//lJC2xT
- d4Aeja85fkeFjYGgjYZTZ9j25lvNC3xpIV/RIexyYfjiLh9lWhsCUrWTqmwqL/h42/TIzonu3
- OaXfo18Uqi1ubfCHXuZUiZqArM25nm50x2rlnC0mQ1eH2Io1eZWArAoXx11ZCxA5n0f/iXNjB
- iXNPhqW18VjVhg4oIc7GUg7rU/7JomcvqOINDBYD6dhooQBoP7QbYYem3i0HEJ2njCzxv/A/+
- s7Haru476959HTI/hG722Gzd8iP3KJR8I4YXCvr2S4pew6rjVJoJFrREdac3tgHGYiSNXBQYv
- 1ozRxPPru5y5lNN4iWhXUwhFopfBthndi0nN026CkAvw1OS3WtzxbFkCrPcmhwup/NETtjpRm
- nrJYlgdCBFtKh1rxCic53/PCSMDFqPWgX2CmdOuXsYZB3qJnJuzx+WkjDvOPzkga/LY1h0Zxy
- rwdzSUG8vZxzh1kA3Sj3bzOQr2Ytj44Jw9MhdklyypMMr9GGDKHgjzL4xcG0wIODvu+KbQFoM
- VZArY+5
+X-Provags-ID: V03:K0:1aQBJ9tZbosBn12XRAZ+hTsjYdlsZ4SEZOpIwWotVF3m7QKE1SJ
+ EPf7m6G4nLz8DLGUqvovzE/Z8PfVgA6e5fEsPtgmDyKppc5yhBZD4EhleOvDrsJOpcBj+Pq
+ CUy390LceDDzHhPh4+OudXpYgp+pB5P7X1IxC8F/aMtdOnwvDe8Vz71+zXGGaXgXhIfG31r
+ wLihheoj7xecuyB7f/qjA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:oea98GtIze0=:mrqMZN2W2C8iR9hk0ODfqJ
+ F810L3oPBkQMCr4BOHERITTXwhhVbCz4DRUmxSOFB8E5KuS3GCQDd9j0wQfgnsqZ3DI3whi1N
+ WgSOPJKh8hKf8G8MMrl0uqSjab4fPOIP8dUfaxqGqK5q8Ml1kxnNcws5WXQODDnHa24+Dmkbw
+ Cgx1NjyZ+Egw1zU/MVGfbbJVgMnEc1dNVzCJw4hU1Yg9/vR7XN/dACVJJfCiyzDtAgWqpnjQJ
+ f/OA7EqpoXx+XGaksxFHc7bWqJqEIuaScMfIIxZpSQIa5Cy9yWcNacivNREi5h4a26kUVy7YZ
+ RcKrhs7RwmOuscuCKZmSXn2ZWQaUwXeS40pSxrlkGW2T8kbQZ+LcDEuXXyOP5RvCWWcsrMg8A
+ km0qLOS+5HYWEWyriGaL+KmWLVrg8hrvTDPI6QwPPFt8cTB1k0TpUyQvks8RGOosUM5M76ywC
+ PAK2SlzTD6PpO3yAT+LIrBT/C+F+vDEXO530PRdy1XS0zMCwSx358zRRF/PIxt4wGReH33CD2
+ 5c3R+9nXtcuDj7BCGuiI8x/m/xINCWRu3d1qsWnc7CGyLHjl6XV7QCoBno5o+lTWW12zvq04x
+ SZ1vbeEvvFofKoTDvZJtfyDvnZCOoPq80qerINnUqO/NKIjCM6vAj9uJXX7yiT8cBwhKRkkN/
+ if44PV3L6DpMQtxzHB62gwt3MEOP9AF7mYGqJAvCj0lRIOqL0e+jzvDI1531d5L+cra8fTGlt
+ aB/w9wZoGDat6+KyTegHRpJsEQmlqOVCGm0O/Z9oylYeMHiVb60Q6MuApDp4Px9ucFae/z1Zv
+ NRSoN3w
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-For the upcoming rebase--helper work (which will accelerate the
-interactive rebase noticably), it is important to verify that the
---gpg-sign option is handled properly.
-
-Please note that this patch does this on the cheap, by verifying that
-the expected option is printed in the message of the 'edit' operation.
-
-We really should test that the interactive rebase signs the commits
-properly, iff GPG is available. This test is left for later.
+This new test case ensures that we handle commit messages that start
+with fixup! or squash! followed by more than one space. While we do
+not generate such messages when committing with --fixup/--squash, it
+is perfectly legal for users to hand-craft their own fixup messages,
+and we heed Postel's law by being lenient.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3404-rebase-interactive.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ t/t3415-rebase-autosquash.sh | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 66348f1..aa393d2 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1281,4 +1281,12 @@ test_expect_success 'editor saves as CR/LF' '
+diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+index 9b71a49..48346f1 100755
+--- a/t/t3415-rebase-autosquash.sh
++++ b/t/t3415-rebase-autosquash.sh
+@@ -295,4 +295,13 @@ test_expect_failure 'autosquash with multiple empty patches' '
  	)
  '
  
-+SQ="'"
-+test_expect_success 'rebase -i --gpg-sign=<key-id>' '
-+	set_fake_editor &&
-+	FAKE_LINES="edit 1" git rebase -i --gpg-sign="\"S I Gner\"" HEAD^ \
-+		>out 2>err &&
-+	grep "$SQ-S\"S I Gner\"$SQ" err
++test_expect_success 'extra spaces after fixup!' '
++	base=$(git rev-parse HEAD) &&
++	test_commit to-fixup &&
++	git commit --allow-empty -m "fixup!  to-fixup" &&
++	git rebase -i --autosquash --keep-empty HEAD~2 &&
++	parent=$(git rev-parse HEAD^) &&
++	test $base = $parent
 +'
 +
  test_done
 -- 
 2.9.0.278.g1caae67
-
-
