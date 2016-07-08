@@ -2,96 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2373D2070D
-	for <e@80x24.org>; Fri,  8 Jul 2016 17:26:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4CE02070D
+	for <e@80x24.org>; Fri,  8 Jul 2016 17:58:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932429AbcGHR0E (ORCPT <rfc822;e@80x24.org>);
-	Fri, 8 Jul 2016 13:26:04 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64463 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932185AbcGHR0B convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jul 2016 13:26:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F18F92A706;
-	Fri,  8 Jul 2016 13:25:54 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=x97Qxft6MLDE
-	3VVSzmnKDkjUc2o=; b=j2X4K/fwt/i+VqVK7tkluQx7eeASLfuml4mquGYySCAc
-	Yp386QhHIegxkbr+umbnU6l6WaYm6DqEVkwE7HADVBi2o26ZGCheKW1b28FIW9gr
-	vU9XRvY9fYO5M+SvOEan3aPxahwXO8xiFY2a2xktPACuWiE8l4hM5Sx+dTT4k6A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=afPCbN
-	JLnFn4p50sxJILKUUXYhiCn0MXmtr/dZ0OatbBp4DfLEmOo+Y9QXq5r9zp44xsYC
-	EdYk5TvIMxyrqSfDGP46iXv+4Q9+xTYggnwVXOFTpCxWa6r5t9FlaLWNTnR6XEJ/
-	U/8/90l3duAZP8J5WPD4rnbzPBxTGrEz/sGtE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E7E452A705;
-	Fri,  8 Jul 2016 13:25:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7074E2A704;
-	Fri,  8 Jul 2016 13:25:54 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] correct ce_compare_data() in a middle of a merge
-References: <xmqq37nyb4kp.fsf@gitster.mtv.corp.google.com>
-	<1467100876-2803-1-git-send-email-tboegi@web.de>
-	<xmqqh9cc55wm.fsf@gitster.mtv.corp.google.com>
-	<62eb3d75-126e-427b-8701-d490e80e3501@web.de>
-	<xmqq8txlvwip.fsf@gitster.mtv.corp.google.com>
-	<574692d1-c8ae-9c2f-6b99-a01545b15051@telia.com>
-	<xmqqa8huvmpv.fsf@gitster.mtv.corp.google.com>
-	<c36fe487-b8dc-9767-7fae-bee513dac0b2@web.de>
-	<xmqqr3b5p9v0.fsf@gitster.mtv.corp.google.com>
-	<2cbf12a6-2dca-8180-323b-f79638aa03bd@web.de>
-	<xmqqmvlsm6hu.fsf@gitster.mtv.corp.google.com>
-	<f78fa94d-abd2-05a2-c411-15e2ffdb7dae@web.de>
-Date:	Fri, 08 Jul 2016 10:25:52 -0700
-In-Reply-To: <f78fa94d-abd2-05a2-c411-15e2ffdb7dae@web.de> ("Torsten
-	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Fri, 8 Jul 2016 19:13:40
- +0200")
-Message-ID: <xmqq1t34m47z.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755457AbcGHR6z (ORCPT <rfc822;e@80x24.org>);
+	Fri, 8 Jul 2016 13:58:55 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:35866 "EHLO
+	mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755400AbcGHR6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2016 13:58:53 -0400
+Received: by mail-pf0-f169.google.com with SMTP id t190so14698361pfb.3
+        for <git@vger.kernel.org>; Fri, 08 Jul 2016 10:58:53 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=FQNPFFvxGa/5iIXsqaE13PpRgR0Tqy7z4dnCFKqf8Yw=;
+        b=h637ZiImTjBB/cIGl8aFW6FMCmOoAm9e6T5e55zZFEXs11tKuCWQ9Gb+kZgB+U0SCL
+         dsIRBjgbZnI4zMUbReT51VNfHCWBQx2gzpedjC/RmEyJJEllid7+bjGQaGvD6jggbmND
+         8Ok6fG6uFiP+bGUsfs2ufVVIQKv9c2FufpNpqMyA51f/ka7X+lyk6saeYwqYA0VAqwS+
+         usZv/s781pZq1rL7kAc4TY5Bbq5MFVHZy/VHWZuz/swbIyof/bzRbY+kT0wCx3uKqgdv
+         QCDnY4qYCP/XOoAEw6fcjbCAtSZvkNHRcAqDnYu2Wa1AUhMgRQOcWeX8GRDQJZCQCanD
+         payw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=FQNPFFvxGa/5iIXsqaE13PpRgR0Tqy7z4dnCFKqf8Yw=;
+        b=FVGy/im0xq1ZtWsEoUC2glvoPwOLcZENhDIW6k9BZeQLkihWVZdRJ/H6oxJ6wUTDq4
+         2fmVel3MaqtOJ7ThucPykAk9YWTqLuBhvQr/k1W1BeBztv5oLVn3x02+s2qXpjdYcGyj
+         YcLeHMDBGa0WXesb2KVm8iOSsXo3nrX3wAPS+hdSPPkseokkrLsejrTZObWkODHAjph9
+         4666DuObC7Z4GKAhPsHRCN1m5+vK7AzVhJ2kiWb+PzHQ9bVRqUz5VpFGeS/gfcVPGzQt
+         41hPDRV6ybGwK1UiUmajGQF+6i3DW56gT6FFWsIesDPQs5xD3SYSLpNq/fNmQOLO+wUW
+         Y4Qw==
+X-Gm-Message-State: ALyK8tKCjZx4pa3/nS8LQqEyMPoylFCrSyO7wF1goLB18/O5wcTvBQbGyP/OJfNNsGdRGQ==
+X-Received: by 10.98.22.198 with SMTP id 189mr12076969pfw.74.1468000732401;
+        Fri, 08 Jul 2016 10:58:52 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:e1a9:2fc1:e3b6:b0de])
+        by smtp.gmail.com with ESMTPSA id d65sm6023130pfa.45.2016.07.08.10.58.50
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 08 Jul 2016 10:58:51 -0700 (PDT)
+Date:	Fri, 8 Jul 2016 10:58:21 -0700
+From:	Jonathan Nieder <jrnieder@gmail.com>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>,
+	Dan Wang <dwwang@google.com>,
+	Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH 2/4] receive-pack: implement advertising and receiving
+ push options
+Message-ID: <20160708175821.GA29326@google.com>
+References: <20160707011218.3690-1-sbeller@google.com>
+ <20160707011218.3690-3-sbeller@google.com>
+ <xmqqa8htp4kc.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kbkv5P0wP2kKt9gzmZBe1DjLSB8JpZD66DT_Xd4NKqmKQ@mail.gmail.com>
+ <xmqqh9c1nlvm.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 066A6BE8-4531-11E6-B0BD-89D312518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh9c1nlvm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Torsten Bögershausen <tboegi@web.de> writes:
+Hi,
 
->> And then with this further on top:
->>
->> diff --git a/merge-recursive.c b/merge-recursive.c
->> index b880ae5..628c8ed 100644
->> --- a/merge-recursive.c
->> +++ b/merge-recursive.c
->> @@ -202,6 +202,9 @@ static int add_cacheinfo(unsigned int mode, const unsigned char *sha1,
->>  		const char *path, int stage, int refresh, int options)
->>  {
->>  	struct cache_entry *ce;
->> +
->> +	if (!stage)
->> +		remove_file_from_cache(path);
->>  	ce = make_cache_entry(mode, sha1 ? sha1 : null_sha1, path, stage,
->>  			      (refresh ? (CE_MATCH_REFRESH |
->>  					  CE_MATCH_IGNORE_MISSING) : 0 ));
->>
-> Thanks :-)
-> Did that experiment made it to a branch somewhere ?
+Junio C Hamano wrote:
+> Stefan Beller <sbeller@google.com> writes:
 
-Not yet.  As I called it "experiment", it was merely to demonstrate
-that there are less intrusive ways to kill the "safer crlf" we may
-want to consider first before passing an extra blob object name
-around.
+>>> More importantly, if we plan to make this configurable and not make
+>>> the limit a hardwired constant of the wire protocol, it may be
+>>> better to advertise push-options capability with the limit, e.g.
+>>> "push-options=32" (or even "push-options=1024/32"), so that the
+>>> client side can count and abort early?
+
+Sorry to butt into the conversation late, but: I am not yet convinced.
+
+Is the idea that if the push options were very large, this would save
+the client from the cost of sending them?  But this comes with a
+downside: the server doesn't get to send an error message about where
+the maximum number of push options can come from (e.g., with a link to
+a page where the limit can be adjusted, or with an explanation of when
+clients tend to run into this problem and what they should do
+instead).
+
+So I'd like to propose an alternative. What if the client tells the
+server the number of push options early on (and possibly also a cap on
+the length of those push options)?  That way, the client doesn't have
+to waste bit sending the push options but the server gets an
+opportunity to send a helpful error message on sideband 3.
+
+	server> HEAD\0push-options ...
+	client> ... commands ...
+	client> push-options 2
+	client> my-first-option
+	client> my-second-option
+
+Thanks,
+Jonathan
