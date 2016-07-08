@@ -2,68 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B65F020705
-	for <e@80x24.org>; Fri,  8 Jul 2016 04:34:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7071A2023C
+	for <e@80x24.org>; Fri,  8 Jul 2016 06:29:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751496AbcGHEeJ (ORCPT <rfc822;e@80x24.org>);
-	Fri, 8 Jul 2016 00:34:09 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65225 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750858AbcGHEeH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jul 2016 00:34:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DAE1A2BB67;
-	Fri,  8 Jul 2016 00:34:04 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=0TPxbEjo+OIkW3E7rbdXDPeGmuc=; b=KDp864JnkfZlf8h73BWE
-	cAtFM9olA5mlUXvVzGAfd3jqiOCvfrPm71zT+o+6tlvUnUWEb54bIpnPCFHIsq9A
-	DEPKazjrfX30fVBKqlOFII7UVbRF927JS8YEitlFWOuMe7foTXrwfiCuVu8N+6ae
-	Gwou+lyW/rUPfXwQovd0ivM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=B4YXoJOTo2EDm55BeS0nJ8Z5CRUdF6lkRW7v+4IcsuRDRq
-	AA62o02h5SefcTrQ5ez7RqIeCWZetqx1lLDt7M8DXAUeHJlQhZ+wh5QRz5fwr7zI
-	r1yZdYxWFuxB1QJoyFoRu6vUOAGkjkbyDws7Qi2FzpBe8MsYPwAwPksvxutXA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D46C82BB66;
-	Fri,  8 Jul 2016 00:34:04 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5541C2BB65;
-	Fri,  8 Jul 2016 00:34:04 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Josh Triplett <josh@joshtriplett.org>
-Cc:	git@vger.kernel.org
-Subject: Re: gc and repack ignore .git/*HEAD when checking reachability
-References: <20160708025948.GA3226@x>
-Date:	Thu, 07 Jul 2016 21:34:02 -0700
-Message-ID: <xmqq1t34oiit.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752966AbcGHG3h (ORCPT <rfc822;e@80x24.org>);
+	Fri, 8 Jul 2016 02:29:37 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49647 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751427AbcGHG3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2016 02:29:35 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MGSgq-1b8G9I3wci-00DElN; Fri, 08 Jul 2016 08:29:21
+ +0200
+Date:	Fri, 8 Jul 2016 08:29:18 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Jeff Hostetler <jeffhost@microsoft.com>
+cc:	git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
+	gitster@pobox.com
+Subject: Re: [PATCH] Add very verbose porcelain output to status
+In-Reply-To: <1467919588-11930-1-git-send-email-jeffhost@microsoft.com>
+Message-ID: <alpine.DEB.2.20.1607080827200.6426@virtualbox>
+References: <1467919588-11930-1-git-send-email-jeffhost@microsoft.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3370A808-44C5-11E6-81C3-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:j0QnnbPlzaYW5nSNIk78iZtAHzJcpQe9zIMMqP5mDUt8sxmiadD
+ 6M5PFYLDHrMODjPSoGe8O2OU/SLdgek5q6d5Jffu6FuBgtFKG2XC3KGHum1Tedvwwmo5RdE
+ yjpEdBZ0osU25IQ65VdmXqJ4XDhVZda2yhQ7BgoMkv+dPMW0URj/LjI/q54iKveyIXfZbjr
+ eXDCtuH8bErQXfMu4Mj2Q==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:g4iolUWK9aE=:BS1vCxAB8VUQzb7/B4a1pB
+ gZFyo1B08J7fNrb/4doeZ5GFUWsKgBQzxOiEfkwvnoxAVRExg6t94a+F56yUwCI5KfBn6pgU5
+ ++9acD6BtbRqkgJ6/S6UwjXOrPHPQlleST+SygidvyUYrLJYrbtly3in0sTizdbsbz7CsEDNW
+ z2a4bKZqUTc9JreWBVfolYkVBOfh91z2JPsAvPoc3uv/p01SKWfglEWozRsKidcwiWMO63m/p
+ ddE8IJlhc09+K8ujtZYExnUbrTg0FmCbrSQoXOjhzZLtg0wlA1h7pAXb/fwL4YyMwP2nGBmad
+ cbE6OM6NZszW1/KM/7zwkcnFUFjFrAaqqADRoSIohnhZTJXhP12KAucW5IJSmoeqxGeUK2dOb
+ jLp5dwdi2Mi8tL+CwQ8jf45aJt4KMTw6HY5dwssRRbxJUP6YOER4idLYXC7jxs1XZIrn68j0/
+ X/aso2xqxlqCcY/JgtktMLOZmBrv+eE756kY/Q+VfiGkZGLxhY3vRhoujMHQhhspnngxvUYWk
+ zjP0ufvM5Go51mqjtI1Xx8VU60h+niigfVV6t+hncDiyKIJUOymBOTywaSgX/Bp9ooLwJ35qm
+ ZWvt8WFDMzArNPn/+v6DGHNjrOk4fi82l3jUpFfiCX1fM2lUi5bE5qEIs4p9TWxAYJj0nwQv6
+ eyVInQsS++JUtuWxNjdXue1mnnNRgGbv2BisxvfCrU7Fj5hlsvNMDItRwtSQDO8+XyVJ7Ngxh
+ zeHu4CcDGGH1jrq+OMTjw19CoP/e5bqiZDHsEH8MtkVDdD1u/j6tBtOTg9XPkEHE0f9UzFOVL
+ 3hGMVvL
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Josh Triplett <josh@joshtriplett.org> writes:
+Hi,
 
-> This could result in data loss, if a user expected that having an object
-> referenced from those places would protect it from pruning.
+On Thu, 7 Jul 2016, Jeff Hostetler wrote:
 
-Yeah, luckily, nobody expects such.  I do not think any of our
-document says nothing other than HEAD like CHERRY_PICK_HEAD is
-reachability anchoring point; they are designed to be transient.
+> Tools interacting with Git repositories may need to know the complete
+> state of the working directory. For efficiency, it would be good to have
+> a single command to obtain this information.
+> 
+> We already have a `--porcelain` mode intended for tools' consumption,
+> and it only makes sense to enhance this mode to offer more information.
+> 
+> Just like we do elsewhere in Git's source code, we now interpret
+> multiple `--verbose` flags accumulatively, and show substantially more
+> information in porcelain mode at verbosity level 2.
+> 
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
 
-Because they are designed to be transient, I do not think there is
-any downside (other than the initial start-up cost) to including
-them in reachability computation.  Because they are meant to be
-transient, the objects anchored by them would be reachable from
-other anchoring points anyway.
+For the record: I reviewed this patch (and an earlier revision) at
+https://github.com/git-for-windows/git/pull/812
+
+I think it is in a good shape, and it is definitely an improvement for
+third-party tools that want to interact with a Git worktree.
+
+Ciao,
+Dscho
