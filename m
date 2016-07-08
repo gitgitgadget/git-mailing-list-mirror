@@ -2,145 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DB422070D
-	for <e@80x24.org>; Fri,  8 Jul 2016 17:09:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D356D2070D
+	for <e@80x24.org>; Fri,  8 Jul 2016 17:14:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756090AbcGHRJj (ORCPT <rfc822;e@80x24.org>);
-	Fri, 8 Jul 2016 13:09:39 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53440 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756082AbcGHRJd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jul 2016 13:09:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E2B62A51D;
-	Fri,  8 Jul 2016 13:09:31 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bEK0ZgiQjNo5Pf+HBUyZcmoYLAc=; b=w697Xo
-	E8QIPmBQsz4AWXjrb9qGBtMfqzOod3zbN+oZFObmz5OVUa319fU7OAdosjqDZOqz
-	rtxQBtbIi1QmW71xB/M79oDYNk+/hNvH5oF+8kBcPdjjIbvC7BrsjQlcDaPvxMX/
-	uFO+btk7t3nl8cNX/tlwvY6h6Y7owkCqQE+x4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TqqraLZ12SluAEUCmoY5JRS2VuHTAow6
-	xAYBem2W/rTK0SCuM1PGXxEFhIldcsChr19bTfKTg7zcigS2NPtm5ObR807pDhsI
-	bbJYbCeMLfMGyZY0CnPK4VrkauQJSL7PR/LwT4XF/w8AuPFtfMKjZ6vpkwxh/HIS
-	eBtt4NKwyTo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 658622A51C;
-	Fri,  8 Jul 2016 13:09:31 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E1E722A51B;
-	Fri,  8 Jul 2016 13:09:30 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] avoid using sha1_to_hex output as printf format
-References: <20160708092510.GB17072@sigill.intra.peff.net>
-	<20160708092526.GB18263@sigill.intra.peff.net>
-	<20160708103515.GA19705@sigill.intra.peff.net>
-	<xmqqinwgm5aa.fsf@gitster.mtv.corp.google.com>
-Date:	Fri, 08 Jul 2016 10:09:28 -0700
-In-Reply-To: <xmqqinwgm5aa.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 08 Jul 2016 10:02:53 -0700")
-Message-ID: <xmqqeg74m4zb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932185AbcGHROb (ORCPT <rfc822;e@80x24.org>);
+	Fri, 8 Jul 2016 13:14:31 -0400
+Received: from mout.web.de ([212.227.17.12]:57477 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755307AbcGHROa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2016 13:14:30 -0400
+Received: from [192.168.209.22] ([195.252.60.88]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0Lhvlm-1bgtbY3pfG-00nCFm; Fri, 08 Jul 2016 19:14:15
+ +0200
+Subject: Re: [PATCH v3 3/3] correct ce_compare_data() in a middle of a merge
+To:	Junio C Hamano <gitster@pobox.com>
+References: <xmqq37nyb4kp.fsf@gitster.mtv.corp.google.com>
+ <1467100876-2803-1-git-send-email-tboegi@web.de>
+ <xmqqh9cc55wm.fsf@gitster.mtv.corp.google.com>
+ <62eb3d75-126e-427b-8701-d490e80e3501@web.de>
+ <xmqq8txlvwip.fsf@gitster.mtv.corp.google.com>
+ <574692d1-c8ae-9c2f-6b99-a01545b15051@telia.com>
+ <xmqqa8huvmpv.fsf@gitster.mtv.corp.google.com>
+ <c36fe487-b8dc-9767-7fae-bee513dac0b2@web.de>
+ <xmqqr3b5p9v0.fsf@gitster.mtv.corp.google.com>
+ <2cbf12a6-2dca-8180-323b-f79638aa03bd@web.de>
+ <xmqqmvlsm6hu.fsf@gitster.mtv.corp.google.com>
+Cc:	git@vger.kernel.org, tboegi@web.de
+From:	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <f78fa94d-abd2-05a2-c411-15e2ffdb7dae@web.de>
+Date:	Fri, 8 Jul 2016 19:13:40 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:45.0) Gecko/20100101
+ Icedove/45.1.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BC2F0374-452E-11E6-AA2E-89D312518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqmvlsm6hu.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:BeAeul/V4r8TGBnPGqd/a+sR43qNJATLd+kIMscnzkpznOuYhvf
+ LvmEQaNqrZTvRcANkESOOMZtKPFc+cnnK8WmP7AbQ47itkPD7Pc3+rKmUcND0DGLPHNYav3
+ ehKC2LCHWrKNJxJ9gz4+Y/0a5D5JS+gM37uOkeblxWeuwCoKdWzGC18HKHtJqnqGqKPRgkV
+ Ii/XD/nKmJ4IDn1P98nGQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:V96yYjmk3fA=:0kb/oC16eZAFRsE+p+o/Yw
+ 3QaJ+dn32iG0SnJcx/LxDte1SbHR0U001nPfb7xnbA/m9N8JNnxT/S9XMkwjlinY+t/xTIKbg
+ HlVH784UCJWMDshJ7uP4f8ur3/HrIPAUyP/MtIez0QNrNKTXz49FaB+LXRquC6QQAVPREgtkw
+ K2ExEw8kVUJUCX1qMRz7qs84sQNyQUtKM3gV0+p0w77W4T7Ix0R2m03Ig9/LJTcql2rvaUM2C
+ 0HmVw9K6LhUqlIZG4poqrENU/aX5hCp5s3NGggOAgVGQqStu9sn07x+BTUga3UH3t3ur7ynjV
+ oNPP4AXIFE3+xSUghbo7Q2cyRKaud6ZWEG6T743tAb7oCxVIwCxjiLo6fbaUAVWMM02bdyRB6
+ Y470C/alD1VQMXtSD1A5g5CzxRqAkDd5fo3d2uoEyRkfm2DqZcIlx9ZliJEe2mN4pf7zg9YDY
+ v7+5IC0wkrDvJ3/X/zXD3JFuo2gjoEvFM2BLTpLa8DNj/WwodzyKn2+FoS/F6ePExMtnBP1T3
+ ESCmWuUplySNfZqu9rRL0Yr9Louo0EAx2H+Sxi81Nps8ySwxvZZhOoHCVyeAFCx65Bwn0lsri
+ Bz5SAnzl/E6prJ/6MAoARswVc0XC1I50UpI6U0TpkdCJ2zZi9AyGBb5hsUh7dZrVS7hBzC5vQ
+ 5E1Hjff4SRLg2n48ZgKjndVrQuNTmRL8ht3JyCbiRm6zSJH5LJ3zVFzWChLMitUVM4wQjeqW7
+ ICuJTEApIh+iIK2RjZO65pUqgXi/ysR2RKNEePsmNk+lCP9DSLzrHy1kQhKEV0wd/VfI1yZSy
+ SHsdGQB
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> As to the hunk to commit.c that was dropped in this round, the only
-> caller of print_commit_list() is bisect.c, and it passes "%s\n" to
-> format_cur and format_last, it seems, so that suggests a more
-> obvious direction for cleaning things up, I would say.
 
-And the result is a pleasing diffstat.
-
--- >8 --
-Subject: commit.c: remove print_commit_list()
-
-The helper function tries to offer a way to conveniently show the
-last one differently from others, presumably to allow you to say
-something like
-
-	A, B, and C.
-
-while iterating over a list that has these three elements.
-
-However, there is only one caller, and it passes the same format
-string "%s\n" for both the last one and the other ones.  Retire the
-helper function and update the caller with a simplified version.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- bisect.c |  5 ++++-
- commit.c | 10 ----------
- commit.h |  4 ----
- 3 files changed, 4 insertions(+), 15 deletions(-)
-
-diff --git a/bisect.c b/bisect.c
-index dc13319..02f76f0 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -646,7 +646,10 @@ static void exit_if_skipped_commits(struct commit_list *tried,
- 
- 	printf("There are only 'skip'ped commits left to test.\n"
- 	       "The first %s commit could be any of:\n", term_bad);
--	print_commit_list(tried, "%s\n", "%s\n");
-+
-+	for ( ; tried; tried = tried->next)
-+		printf("%s\n", oid_to_hex(&tried->item->object.oid));
-+
- 	if (bad)
- 		printf("%s\n", oid_to_hex(bad));
- 	printf("We cannot bisect more!\n");
-diff --git a/commit.c b/commit.c
-index 3f4f371..bf27972 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1617,16 +1617,6 @@ struct commit_list **commit_list_append(struct commit *commit,
- 	return &new->next;
- }
- 
--void print_commit_list(struct commit_list *list,
--		       const char *format_cur,
--		       const char *format_last)
--{
--	for ( ; list; list = list->next) {
--		const char *format = list->next ? format_cur : format_last;
--		printf(format, oid_to_hex(&list->item->object.oid));
--	}
--}
--
- const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
- {
- 	int key_len = strlen(key);
-diff --git a/commit.h b/commit.h
-index 78ed513..71693ce 100644
---- a/commit.h
-+++ b/commit.h
-@@ -376,10 +376,6 @@ extern int parse_signed_commit(const struct commit *commit,
- 			       struct strbuf *message, struct strbuf *signature);
- extern int remove_signature(struct strbuf *buf);
- 
--extern void print_commit_list(struct commit_list *list,
--			      const char *format_cur,
--			      const char *format_last);
--
- /*
-  * Check the signature of the given commit. The result of the check is stored
-  * in sig->check_result, 'G' for a good signature, 'U' for a good signature
+On 07/08/2016 06:36 PM, Junio C Hamano wrote:
+> Torsten Bögershausen <tboegi@web.de> writes:
+>
+>>> I dunno.  I really do not like that extra sha1 argument added all
+>>> over the callchain by this patch.
+>>>
+>>> Or did you mean other calls to add_cacheinfo()?
+>>
+>> I didn't mean too much - the whole call chain touches code where I
+>> am not able to comment on details.
+>> I'm happy to test other implementations, if someone suggests a
+>> path, so to say.
+>
+> I did a bit of experiment.
+>
+> When 1/3 alone is applied, and then only changes for t/t6038 from
+> 3/3 is picked, (i.e. we do not add the extra "don't look at index,
+> check this contents"), your "Merge addition of text=auto eol=CRLF"
+> test would fail.
+>
+> And then with this further on top:
+>
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index b880ae5..628c8ed 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -202,6 +202,9 @@ static int add_cacheinfo(unsigned int mode, const unsigned char *sha1,
+>  		const char *path, int stage, int refresh, int options)
+>  {
+>  	struct cache_entry *ce;
+> +
+> +	if (!stage)
+> +		remove_file_from_cache(path);
+>  	ce = make_cache_entry(mode, sha1 ? sha1 : null_sha1, path, stage,
+>  			      (refresh ? (CE_MATCH_REFRESH |
+>  					  CE_MATCH_IGNORE_MISSING) : 0 ));
+>
+Thanks :-)
+Did that experiment made it to a branch somewhere ?
