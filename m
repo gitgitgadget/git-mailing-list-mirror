@@ -2,69 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF4872070D
-	for <e@80x24.org>; Fri,  8 Jul 2016 16:40:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7ED42070D
+	for <e@80x24.org>; Fri,  8 Jul 2016 17:03:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755948AbcGHQkR (ORCPT <rfc822;e@80x24.org>);
-	Fri, 8 Jul 2016 12:40:17 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:35193 "EHLO
-	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755163AbcGHQkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jul 2016 12:40:14 -0400
-Received: by mail-io0-f175.google.com with SMTP id f30so48084206ioj.2
-        for <git@vger.kernel.org>; Fri, 08 Jul 2016 09:40:14 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=IqqmBKRitSZZxXYaQOsohTez2eaWtOyDNfWoLXSDXGw=;
-        b=OsaSA+W02dTPuXm9rXjWjHVQ6QU9TFrQFKABJw3uFQv7iw6bg8jKgMiq32Acvv7MSz
-         gVf0xpkiUmhyPRHbY5yqDT8LFubk/xyI4Z6qq+vbEg9TULQng9f+AdfiAXVqEpTvnF/p
-         y3sdTE/4Vyh2yXgx6IH5lADWYPdGYmL/pEz+HjwGaHzOYLLz8OmglwAA6CjwcjMKCDXH
-         xP/zpONc3qQRUFAI/h+ouOWU68pQPtJjw+mk72OxJzjgPthbtIlehYs8JNdMKVUPnXmy
-         yYHqc7VnWs+eLZDRbHpDNyfcDtdXLizDrczMR/RGYFXo4BIE4Pq3TOdeAP5WYEQBEBQ8
-         DjtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=IqqmBKRitSZZxXYaQOsohTez2eaWtOyDNfWoLXSDXGw=;
-        b=k9xGSMm1a7EOXCOKeT9F69dVN04n7rjT1pt5RPX1N+kdTMYA1+wgbKxSmEPX9Zt/9Z
-         on6EpJe6mg0JFadHpLi18Puyt0zi+Y7KTF6S94fJgOVu5dUfHtTM2XoATR3yk1cCAju4
-         s5j67LcvJBgsoPStMQZms3aVIgV1zpIuReVOTn8CUO1mJJAbdsMwhNH69gxRDjdR63Uo
-         Kkr1McDlqUryWTW3jISQwBIB7oNez59+XBAHYSpiH4OhAzw8XX5iQV9wdSkJ1a5+CUeC
-         9iSOmgAQiKrv5Al98afM71Od1X/ZLmgBX8z7rKrtdsCL3WAD8+GODXAXxX7Nxm6AYmKx
-         mZEg==
-X-Gm-Message-State: ALyK8tIXTG2PTzI4360MRu+5Ua2xDGaQ9DQt3N7tmkTESyba99heSn68JbZMwp0J2oEuA/4MaZi0QR56qxuVUQ==
-X-Received: by 10.107.22.6 with SMTP id 6mr9212298iow.128.1467996014107; Fri,
- 08 Jul 2016 09:40:14 -0700 (PDT)
+	id S1755666AbcGHRC7 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 8 Jul 2016 13:02:59 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57228 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755307AbcGHRC5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2016 13:02:57 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5005B27C2B;
+	Fri,  8 Jul 2016 13:02:56 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=q/W1STYmGv2Cj0FR5NkkeZCM46Q=; b=rejqXe
+	Ap6mshhA5eQsYL2sX6tBHCrFDejUYcsEWyD62XIdm+fLcb1HJG6T1gMiBP2JpHEW
+	np6EHVR80LASRl+A3dgC3K5bNENsuqzct8Py6GdvQ1hZ6aw0sG+s6uWAXY6QzUP9
+	PFFVBuh1I+3h3iUnE/UnnxQsiMeDBB3u9/nGw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=E6Uc1enLvfFinUD0TFedIVNQym6CpwgB
+	3uU04uSeHWjBRUOgSeizdKDVUnabT59K1o3d+Bl/M/GarApMJSVRNCRajSb6OO3k
+	gWGH17kZ8LRdE+tZF8QfFg5gsgQ6VPgrK/D6TlBYCKrOaDszrlptnsQH/H2BII+X
+	3Wpmvd6Ca/g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 485B327C26;
+	Fri,  8 Jul 2016 13:02:56 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C8ADB27C24;
+	Fri,  8 Jul 2016 13:02:55 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] avoid using sha1_to_hex output as printf format
+References: <20160708092510.GB17072@sigill.intra.peff.net>
+	<20160708092526.GB18263@sigill.intra.peff.net>
+	<20160708103515.GA19705@sigill.intra.peff.net>
+Date:	Fri, 08 Jul 2016 10:02:53 -0700
+In-Reply-To: <20160708103515.GA19705@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 8 Jul 2016 06:35:15 -0400")
+Message-ID: <xmqqinwgm5aa.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Fri, 8 Jul 2016 09:39:44 -0700 (PDT)
-In-Reply-To: <loom.20160706T170547-355@post.gmane.org>
-References: <1466914464-10358-1-git-send-email-novalis@novalis.org>
- <1466914464-10358-11-git-send-email-novalis@novalis.org> <loom.20160630T192750-125@post.gmane.org>
- <CACsJy8DjYLQCBRc9CzFSWNqkVnhbAfnxd1mnQh4oEfJwKjPd1A@mail.gmail.com>
- <loom.20160701T013515-311@post.gmane.org> <CACsJy8DvZgj0w8z8LdeuY8HdTTcEu7ABPyFi_wnmEZOGsoMkDQ@mail.gmail.com>
- <loom.20160706T170547-355@post.gmane.org>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Fri, 8 Jul 2016 18:39:44 +0200
-Message-ID: <CACsJy8Dz7LHPQp2drE9EeqFzvjm1RHo_mA0ytfhXMgrcZBMgPw@mail.gmail.com>
-Subject: Re: [PATCH v13 11/20] index-helper: use watchman to avoid refreshing
- index with lstat()
-To:	Ben Peart <peartben@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: D0AF02A0-452D-11E6-8D41-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-BTW just for me to have some perspective, roughly how many directories
-and files are there in the worktree of this repo?
--- 
-Duy
+Jeff King <peff@peff.net> writes:
+
+> On Fri, Jul 08, 2016 at 05:25:26AM -0400, Jeff King wrote:
+>
+>> diff --git a/commit.c b/commit.c
+>> index 3f4f371..9603379 100644
+>> --- a/commit.c
+>> +++ b/commit.c
+>> @@ -1623,7 +1623,7 @@ void print_commit_list(struct commit_list *list,
+>>  {
+>>  	for ( ; list; list = list->next) {
+>>  		const char *format = list->next ? format_cur : format_last;
+>> -		printf(format, oid_to_hex(&list->item->object.oid));
+>> +		printf(format, "%s", oid_to_hex(&list->item->object.oid));
+>
+> Urgh, this second hunk is clearly bogus. This is a -Wformat-nonliteral
+> problem, but not because of oid_to_hex(), but rather because of
+> "format". :-/
+>
+> Here's a corrected patch. But as this has demonstrated the dangers of
+> churn, and as it doesn't really get us meaningfully closer to being able
+> to use -Wformat-nonliteral, perhaps the best course of action is to just
+> drop it (I do think the "walker_say" patch has more inherent value as a
+> cleanup, though).
+
+Hmm.  While both do look correct, and it is a no-brainer to take
+this (corrected) patch, I am not sure how much we care about walkers
+these days.
+
+As to the hunk to commit.c that was dropped in this round, the only
+caller of print_commit_list() is bisect.c, and it passes "%s\n" to
+format_cur and format_last, it seems, so that suggests a more
+obvious direction for cleaning things up, I would say.
+
+> -- >8 --
+> Subject: [PATCH] avoid using sha1_to_hex output as printf format
+>
+> We know that it should not contain any percent-signs, but
+> it's a good habit not to feed non-literals to printf
+> formatters.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/worktree.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index e866844..cce555c 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -262,7 +262,7 @@ static int add_worktree(const char *path, const char *refname,
+>  	 */
+>  	strbuf_reset(&sb);
+>  	strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
+> -	write_file(sb.buf, sha1_to_hex(null_sha1));
+> +	write_file(sb.buf, "%s", sha1_to_hex(null_sha1));
+>  	strbuf_reset(&sb);
+>  	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
+>  	write_file(sb.buf, "../..");
