@@ -7,76 +7,77 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7071A2023C
-	for <e@80x24.org>; Fri,  8 Jul 2016 06:29:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BA3A2023C
+	for <e@80x24.org>; Fri,  8 Jul 2016 06:34:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752966AbcGHG3h (ORCPT <rfc822;e@80x24.org>);
-	Fri, 8 Jul 2016 02:29:37 -0400
-Received: from mout.gmx.net ([212.227.15.15]:49647 "EHLO mout.gmx.net"
+	id S1751550AbcGHGeL (ORCPT <rfc822;e@80x24.org>);
+	Fri, 8 Jul 2016 02:34:11 -0400
+Received: from mout.gmx.net ([212.227.17.20]:51136 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751427AbcGHG3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jul 2016 02:29:35 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MGSgq-1b8G9I3wci-00DElN; Fri, 08 Jul 2016 08:29:21
+	id S1751299AbcGHGeJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2016 02:34:09 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MFgxF-1b6tAP2jdV-00EeBF; Fri, 08 Jul 2016 08:33:56
  +0200
-Date:	Fri, 8 Jul 2016 08:29:18 +0200 (CEST)
+Date:	Fri, 8 Jul 2016 08:33:55 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Jeff Hostetler <jeffhost@microsoft.com>
-cc:	git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
-	gitster@pobox.com
-Subject: Re: [PATCH] Add very verbose porcelain output to status
-In-Reply-To: <1467919588-11930-1-git-send-email-jeffhost@microsoft.com>
-Message-ID: <alpine.DEB.2.20.1607080827200.6426@virtualbox>
-References: <1467919588-11930-1-git-send-email-jeffhost@microsoft.com>
+To:	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] am: ignore return value of write_file()
+In-Reply-To: <577EB546.1090007@web.de>
+Message-ID: <alpine.DEB.2.20.1607080830430.6426@virtualbox>
+References: <577EB546.1090007@web.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:j0QnnbPlzaYW5nSNIk78iZtAHzJcpQe9zIMMqP5mDUt8sxmiadD
- 6M5PFYLDHrMODjPSoGe8O2OU/SLdgek5q6d5Jffu6FuBgtFKG2XC3KGHum1Tedvwwmo5RdE
- yjpEdBZ0osU25IQ65VdmXqJ4XDhVZda2yhQ7BgoMkv+dPMW0URj/LjI/q54iKveyIXfZbjr
- eXDCtuH8bErQXfMu4Mj2Q==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:g4iolUWK9aE=:BS1vCxAB8VUQzb7/B4a1pB
- gZFyo1B08J7fNrb/4doeZ5GFUWsKgBQzxOiEfkwvnoxAVRExg6t94a+F56yUwCI5KfBn6pgU5
- ++9acD6BtbRqkgJ6/S6UwjXOrPHPQlleST+SygidvyUYrLJYrbtly3in0sTizdbsbz7CsEDNW
- z2a4bKZqUTc9JreWBVfolYkVBOfh91z2JPsAvPoc3uv/p01SKWfglEWozRsKidcwiWMO63m/p
- ddE8IJlhc09+K8ujtZYExnUbrTg0FmCbrSQoXOjhzZLtg0wlA1h7pAXb/fwL4YyMwP2nGBmad
- cbE6OM6NZszW1/KM/7zwkcnFUFjFrAaqqADRoSIohnhZTJXhP12KAucW5IJSmoeqxGeUK2dOb
- jLp5dwdi2Mi8tL+CwQ8jf45aJt4KMTw6HY5dwssRRbxJUP6YOER4idLYXC7jxs1XZIrn68j0/
- X/aso2xqxlqCcY/JgtktMLOZmBrv+eE756kY/Q+VfiGkZGLxhY3vRhoujMHQhhspnngxvUYWk
- zjP0ufvM5Go51mqjtI1Xx8VU60h+niigfVV6t+hncDiyKIJUOymBOTywaSgX/Bp9ooLwJ35qm
- ZWvt8WFDMzArNPn/+v6DGHNjrOk4fi82l3jUpFfiCX1fM2lUi5bE5qEIs4p9TWxAYJj0nwQv6
- eyVInQsS++JUtuWxNjdXue1mnnNRgGbv2BisxvfCrU7Fj5hlsvNMDItRwtSQDO8+XyVJ7Ngxh
- zeHu4CcDGGH1jrq+OMTjw19CoP/e5bqiZDHsEH8MtkVDdD1u/j6tBtOTg9XPkEHE0f9UzFOVL
- 3hGMVvL
+Content-Type: multipart/mixed; BOUNDARY="8323329-1483410134-1467959636=:6426"
+X-Provags-ID: V03:K0:HQJlidYB62Zxtiqe9wqzbSykgHiH+uwC1zgoMMx02y1UwLVvIbY
+ hoETpS/nJpu/f+vUwLlx8vL77avtziZZQHOuC0DMIqPRdnWX970PlmlePDMVo69C4E2H09W
+ xB5e6Cw7PZIUo4ZD6poItLRVdTG6W9kZYfuJtyii+p/SzeEuUKbYnkxmRY4qmBwH5xTzwmC
+ P2ve/+NaMktbI0b6+mIPQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:eLp4790I7io=:fcFwsbQv//COl+YjC6h+9+
+ RMJnPUqbvkJKt3+UU77vuqSwMlWjMG143BpwN1M9gMJfBbeystJVqucRstSBpkWvn09XTbIEr
+ 0dbpGN8Nw/PSW2tKN8V5IbxcRLSS239At6vIXS2tFYecVkaR+Cbx5wPQV3yEaNhGWofxL16OY
+ T4Lavm3mEbPlomKsjYLp+X7AcwhEvtD3fl5q1ll+o44XkGZe9aVvcVS1O40Tf30SgeOlglNa6
+ 4Jg/w+ZNvTaQF6NIXq7wESZyD8PsnB6Az5VYIoJhqtLRX7pAMhf4ufcBqN/Y2g/TXCCSH3ChZ
+ khI9WZknT9OkrFjodl3FqjL8z/ALRDmA+i9cq9ebIFRHHwGnM2ngzUXkrQzeN5ZB7g00gKoSf
+ MbVQx8na38GgV6FjGBfa6L1KUTttMWrEyh7hbzmcA32PGBfGWMadTHiJF/wC3CXERGH7OWDd5
+ A+pV+WVU6unGhWS3QolfD1XBlI3g9Ru1Af2p7B6s83cVimjzu7SB3sZa+E1DAv5jBoCth8nK3
+ Cp8LwWrXqxrIgqcbQrvD0eUJjOMs0MUxadwHb5BagMU6Ik9BFuOqUwGhPST/IF2l29eoeYQfc
+ Tm2flhrGROgXyzqKbeRkFJwJN0i5RUhdWGMTf4qV8d2PkjBn9oEPEqfcvXIcnfZE6VkCP4dQw
+ /5SNxZ9COwsnx+rJYF5KWRY/IW1+9vQVxmJvIE/FiYqOl1LxNCONkbjPQPwilp2dH5dexpUBO
+ 3BgUOGxz44/BSeWlLGNngqi806tT9nuktFWmwG8XzhLHkdQpXHN5cY16VD9mVHPHji9LqKvCE
+ tmIrZsj
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 7 Jul 2016, Jeff Hostetler wrote:
+--8323329-1483410134-1467959636=:6426
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> Tools interacting with Git repositories may need to know the complete
-> state of the working directory. For efficiency, it would be good to have
-> a single command to obtain this information.
-> 
-> We already have a `--porcelain` mode intended for tools' consumption,
-> and it only makes sense to enhance this mode to offer more information.
-> 
-> Just like we do elsewhere in Git's source code, we now interpret
-> multiple `--verbose` flags accumulatively, and show substantially more
-> information in porcelain mode at verbosity level 2.
-> 
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> ---
+Hi Ren=C3=A9,
 
-For the record: I reviewed this patch (and an earlier revision) at
-https://github.com/git-for-windows/git/pull/812
+On Thu, 7 Jul 2016, Ren=C3=A9 Scharfe wrote:
 
-I think it is in a good shape, and it is definitely an improvement for
-third-party tools that want to interact with a Git worktree.
+> write_file() either returns 0 or dies, so there is no point in checking
+> its return value.
+
+The question is whether it makes sense for write_file() to die(). It is a
+library function and not every caller can be happy with that function to
+exit the program when some file could not be written, without a chance to
+tell the user what to do about the situation.
+
+If write_file() was defined in builtin/am.c, as a static function, I would
+grudgingly acquiesce, but it is not.
+
+IMO it would be better to fix write_file() to *not* die() but return
+error() instead.
 
 Ciao,
 Dscho
+--8323329-1483410134-1467959636=:6426--
