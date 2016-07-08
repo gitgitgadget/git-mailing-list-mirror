@@ -2,78 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B94220705
-	for <e@80x24.org>; Fri,  8 Jul 2016 03:00:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B65F020705
+	for <e@80x24.org>; Fri,  8 Jul 2016 04:34:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932126AbcGHC76 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 7 Jul 2016 22:59:58 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:52897 "EHLO
-	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753487AbcGHC75 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2016 22:59:57 -0400
-Received: from mfilter34-d.gandi.net (mfilter34-d.gandi.net [217.70.178.165])
-	by relay3-d.mail.gandi.net (Postfix) with ESMTP id 26EAEA80CD
-	for <git@vger.kernel.org>; Fri,  8 Jul 2016 04:59:54 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter34-d.gandi.net
-Received: from relay3-d.mail.gandi.net ([IPv6:::ffff:217.70.183.195])
-	by mfilter34-d.gandi.net (mfilter34-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id qFDQHCeIZBHU for <git@vger.kernel.org>;
-	Fri,  8 Jul 2016 04:59:52 +0200 (CEST)
-X-Originating-IP: 50.39.163.18
-Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 2FAE2A80C4
-	for <git@vger.kernel.org>; Fri,  8 Jul 2016 04:59:51 +0200 (CEST)
-Date:	Thu, 7 Jul 2016 19:59:49 -0700
-From:	Josh Triplett <josh@joshtriplett.org>
-To:	git@vger.kernel.org
-Subject: gc and repack ignore .git/*HEAD when checking reachability
-Message-ID: <20160708025948.GA3226@x>
+	id S1751496AbcGHEeJ (ORCPT <rfc822;e@80x24.org>);
+	Fri, 8 Jul 2016 00:34:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65225 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750858AbcGHEeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2016 00:34:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DAE1A2BB67;
+	Fri,  8 Jul 2016 00:34:04 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=0TPxbEjo+OIkW3E7rbdXDPeGmuc=; b=KDp864JnkfZlf8h73BWE
+	cAtFM9olA5mlUXvVzGAfd3jqiOCvfrPm71zT+o+6tlvUnUWEb54bIpnPCFHIsq9A
+	DEPKazjrfX30fVBKqlOFII7UVbRF927JS8YEitlFWOuMe7foTXrwfiCuVu8N+6ae
+	Gwou+lyW/rUPfXwQovd0ivM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=B4YXoJOTo2EDm55BeS0nJ8Z5CRUdF6lkRW7v+4IcsuRDRq
+	AA62o02h5SefcTrQ5ez7RqIeCWZetqx1lLDt7M8DXAUeHJlQhZ+wh5QRz5fwr7zI
+	r1yZdYxWFuxB1QJoyFoRu6vUOAGkjkbyDws7Qi2FzpBe8MsYPwAwPksvxutXA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D46C82BB66;
+	Fri,  8 Jul 2016 00:34:04 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5541C2BB65;
+	Fri,  8 Jul 2016 00:34:04 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Josh Triplett <josh@joshtriplett.org>
+Cc:	git@vger.kernel.org
+Subject: Re: gc and repack ignore .git/*HEAD when checking reachability
+References: <20160708025948.GA3226@x>
+Date:	Thu, 07 Jul 2016 21:34:02 -0700
+Message-ID: <xmqq1t34oiit.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.6.0 (2016-04-01)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3370A808-44C5-11E6-81C3-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The manpage for git gc says:
-> git gc tries very hard to be safe about the garbage it collects. In
-> particular, it will keep not only objects referenced by your current
-> set of branches and tags, but also objects referenced by the index,
-> remote-tracking branches, refs saved by git filter-branch in
-> refs/original/, or reflogs (which may reference commits in branches
-> that were later amended or rewound).
+Josh Triplett <josh@joshtriplett.org> writes:
 
-gc, repack, and anything else that uses the machinery in reachable.c
-will also check HEAD, to include objects only reachable from a detached
-HEAD (which the manpage should document).
+> This could result in data loss, if a user expected that having an object
+> referenced from those places would protect it from pruning.
 
-However, unreachable.c does not check any other ref that sits directly
-in the .git directory, such as MERGE_HEAD, FETCH_HEAD, or
-CHERRY_PICK_HEAD.  To test this, try creating a new empty repository
-with "git init repo ; cd repo", then use "git fetch URL" to fetch a
-repository into FETCH_HEAD, then run "git repack -a -d -f", and then
-"git show FETCH_HEAD".  This similarly affects "git gc", which will
-unpack all the objects from the pack and leave them loose.
+Yeah, luckily, nobody expects such.  I do not think any of our
+document says nothing other than HEAD like CHERRY_PICK_HEAD is
+reachability anchoring point; they are designed to be transient.
 
-This could result in data loss, if a user expected that having an object
-referenced from those places would protect it from pruning.
-
-I think the right fix for this would involve having
-mark_reachable_objects in reachable.c add all refs that match
-.git/*HEAD, not just .git/HEAD itself.  (I'd suggest matching .git/*HEAD
-rather than hardcoding the list of "special" refs, to provide
-compatibility with any other tool or future version of git that
-introduces another such ref.)  This seems fairly easily done with a new
-variant of do_head_ref that includes all such refs, along with a
-one-line change to mark_reachable_objects to use it.
-
-Does this seem like a reasonable approach?
-
-- Josh Triplett
+Because they are designed to be transient, I do not think there is
+any downside (other than the initial start-up cost) to including
+them in reachability computation.  Because they are meant to be
+transient, the objects anchored by them would be reachable from
+other anchoring points anyway.
