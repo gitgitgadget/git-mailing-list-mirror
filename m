@@ -2,136 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4D16206FB
-	for <e@80x24.org>; Fri,  8 Jul 2016 22:54:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6088206FB
+	for <e@80x24.org>; Fri,  8 Jul 2016 22:59:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756279AbcGHWyK (ORCPT <rfc822;e@80x24.org>);
-	Fri, 8 Jul 2016 18:54:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63339 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756135AbcGHWyI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jul 2016 18:54:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A22A2CF4E;
-	Fri,  8 Jul 2016 18:54:06 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tpoWlUf4gWhcF0Thus0Q7JBt4i4=; b=BHWIOL
-	/QwdjMLdqgLECLET8wSgBXmw1sh5b+rBrW8CUdWU/8AL+7rBhKKQvUOq5zQYQzMv
-	beNV0cF5kh2MRmV0GE8Kw3AkHAUqodwGmuzkC4lBHcX4FPPsjbErpuoikfTghUKi
-	RlS2vgQO1fUyc2z7PaSYX+3trgEurKWumWwrc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cS9Jr30uTMQq8IQQotlhGcsNDOVss9Y4
-	pOWjCdaTGa+8+YJ3QoUZqb//Q09E+3rWRE1b7468UUksPjW+4EdGsap3ZZ7uGIBu
-	LQb1IEPrWsBA03OXaa11Hfr328N9Md62XubEXOHIHwhIOr9cwYtEHDYo/NYH/Uf+
-	qngqKJxdI70=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 732F42CF4D;
-	Fri,  8 Jul 2016 18:54:06 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F04B52CF4C;
-	Fri,  8 Jul 2016 18:54:05 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Nicolas Cornu <nicolac76@gmail.com>
-Cc:	git@vger.kernel.org, Nicolas Cornu <nicolac76@yahoo.fr>
-Subject: Re: [PATCH/RFC] archive: allow archiving of reachable sha1
-References: <20160708223250.18238-1-nicolac76@yahoo.fr>
-Date:	Fri, 08 Jul 2016 15:54:04 -0700
-In-Reply-To: <20160708223250.18238-1-nicolac76@yahoo.fr> (Nicolas Cornu's
-	message of "Sat, 9 Jul 2016 00:32:50 +0200")
-Message-ID: <xmqq7fcvlp0z.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1756307AbcGHW74 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 8 Jul 2016 18:59:56 -0400
+Received: from mail-it0-f50.google.com ([209.85.214.50]:38888 "EHLO
+	mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751658AbcGHW7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2016 18:59:55 -0400
+Received: by mail-it0-f50.google.com with SMTP id h190so21092567ith.1
+        for <git@vger.kernel.org>; Fri, 08 Jul 2016 15:59:55 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=9G8p/M6Xr3Ccgwbhzo2Sz+DG+QlNz4x1Jkqsci9qe04=;
+        b=BruVN1ZmPYdcYgLtkw9/qoWH6XxiWXCb14YMxutBu/w2M5ZLZ4FP8mzY2t4u8UoyY5
+         thYzlI1cFCkfFdZRrm3AWkyLIJHAJbhZam0zUIP5z2eKAtOLz8O5a+pcE8YfjvIzIMab
+         FSYat4Dy/Qu0SxuENOrTUJU8JtCsznOBQBEO8wa2KbwT/DdQX6aoqNSNk+z3GBn5ECze
+         ZRrfR+mnV5rUbyB9/ueW+Y1UwdajVavvqPOT83DLQxkO7fdEbM755TN3mJsZx0mjjAJ0
+         3Cx547SjLCriZL9RrhNHysCZq29q4MvPAFotZd8h7qTyUH6cgzKmminp22E38BL84I6P
+         88CA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=9G8p/M6Xr3Ccgwbhzo2Sz+DG+QlNz4x1Jkqsci9qe04=;
+        b=PxQ7/+4fcWdqnL2ntFz884YNARrLpe5lrSAdC23seFGRmhPKlQEjsH6TPlXIJgI9L2
+         apsXdMYjolrvOe2w52iw9htqOB+RGb2r/ht5JTrfn82GPseUf2ZCd0F01RFAczHnynKy
+         3D1nD0V7TkhFrM+RohkD9TAvrr+1eGxKVsKyuD3FVF4E6d7F9rXK9nIxlLlmOU5FwUC4
+         JnM1lGXZP0+qdztDQ0sYnJXwve/dl2wMkIkBInIe2HlPmhPP3yH/u7vCU2t5zVqcC+Kn
+         bM4QqzVE+yqXdL5VJFD6uXUgAVEVj1bJZcw2RE7hX6xWA8n69sPbamjZP8FvGJmeDcNe
+         SZng==
+X-Gm-Message-State: ALyK8tIWNnhx2hGxQeJI3rr7hQ1oLqZXU7qjfKzWKd+oQOXX7EygZ47nc1iWivUCmfLRnZOAsNbkqdU5yPmPwx+q
+X-Received: by 10.36.158.197 with SMTP id p188mr831053itd.97.1468018794409;
+ Fri, 08 Jul 2016 15:59:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DF7A388C-455E-11E6-AF17-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.136.16 with HTTP; Fri, 8 Jul 2016 15:59:53 -0700 (PDT)
+In-Reply-To: <xmqq60shp3w9.fsf@gitster.mtv.corp.google.com>
+References: <20160707011218.3690-1-sbeller@google.com> <20160707011218.3690-4-sbeller@google.com>
+ <xmqq60shp3w9.fsf@gitster.mtv.corp.google.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Fri, 8 Jul 2016 15:59:53 -0700
+Message-ID: <CAGZ79kbkbb=qYUYmKnuKwJCBtidymXua3eAZGANpXDHT56pqGQ@mail.gmail.com>
+Subject: Re: [PATCH 3/4] push: accept push options
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>,
+	Dan Wang <dwwang@google.com>,
+	Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Nicolas Cornu <nicolac76@gmail.com> writes:
-
-> Remotely specify a tree-ish by a sha1 is now valid even if
-> uploadarchive.allowunreachable is false only if this sha1 is reachable
-> from a branch or a tag reference. We consider those last one to be
-> public.
+On Thu, Jul 7, 2016 at 1:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Signed-off-by: Nicolas Cornu <nicolac76@yahoo.fr>
-> ---
-> Do you think this patch is too much "computationnally expensive"?
+>> +-L::
+>> +--push-option::
+>> +     Transmit the given string to the server, which passes them to
+>> +     the pre-receive as well as the post-receive hook. Only C strings
+>> +     containing no new lines are allowed.
+>
+> This is to affect what happens at the remote end, so I would have
+> understood "-R".  I also would have understood "-P" as a short-hand
+> for "--push-option".  What is the justification of "-L"?
 
-Yes.
+It was made up. The actual code took -o for option. Changed that.
 
-> Maybe we need an option to disable such a a feature.
-
-No, you need an option to enable it while keeping it disabled by
-default.
-
-> +static int is_reachable(const char *refname, const struct object_id *oid, int flags, void *cb_data)
-> +{
-> +	const unsigned char *sha1 = (unsigned char *)cb_data;
-> +	return in_merge_bases(lookup_commit(sha1), lookup_commit(oid->hash));
-> +}
-
-So this checks if the tip of a ref (i.e. lookup_commit(oid->hash))
-can reach the commit in cb_data, i.e. what the caller had in
-oid.hash below.
-
->  static void parse_treeish_arg(const char **argv,
->  		struct archiver_args *ar_args, const char *prefix,
->  		int remote)
-> @@ -364,8 +370,13 @@ static void parse_treeish_arg(const char **argv,
->  		const char *colon = strchrnul(name, ':');
->  		int refnamelen = colon - name;
->  
-> -		if (!dwim_ref(name, refnamelen, oid.hash, &ref))
-> -			die("no such ref: %.*s", refnamelen, name);
-> +		if (!dwim_ref(name, refnamelen, oid.hash, &ref)) {
-> +			if (get_sha1(name, oid.hash))
-> +				die("Not a valid object name");
-> +			if (!for_each_branch_ref(&is_reachable, oid.hash) &&
-> +			    !for_each_tag_ref(&is_reachable, oid.hash))
-> +				die("no such ref: %.*s", refnamelen, name);
-> +		}
->  		free(ref);
->  	}
+>
+> What does "C strings" mean?  Did you mean to say "A sequence of
+> bytes excluding NUL is passed verbatim"?
 
 
-> +		if (!dwim_ref(name, refnamelen, oid.hash, &ref)) {
-> +			if (get_sha1(name, oid.hash))
-> +				die("Not a valid object name");
-> +			if (!for_each_branch_ref(&is_reachable, oid.hash) &&
-> +			    !for_each_tag_ref(&is_reachable, oid.hash))
-> +				die("no such ref: %.*s", refnamelen, name);
 
-Isn't this making the check unnecessarily expensive by requiring the
-traversal to determine the ancestry down to the same oid.hash to
-happen repeatedly?  A repository may have quite a many tags, some
-very old ones, and traversing down to these old tags from the
-requested commit in order to prove that the commit cannot be reached
-by these tags (hence these tags cannot be an excuse for you to
-serve the commit) would be expensive.
+>
+> I do not think I saw anything in the code I reviewed so far that
+> requires "no LF" limitation.
 
-I suspect that it would be better to collect the objects at the tips
-in an array using for_each_*_ref(), and do the check by using a
-single call to in_merge_bases_many() instead, which would require
-only one traversal?  Granted, it would still dig down to the common
-ancestor between the asked commit and these old tags, i.e. one
-near-full walk of the history, but at least you won't be making a
-multiple such near-full walks of the history.
+It is enforced server side, but an additional
+client side enforcement may be better indeed.
 
-I also suspect that in_merge_bases_many() could be further optimized
-if it turns out to be necessary by teaching paint_down_to_common()
-an option to stop early, but that would be a second step of the
-optimization.
+The rationale for no enforcement on the client side is an easier way
+forward if we allow it on the server as the client would "just work"
+and it's up to the server to complain.
 
-> +		}
->  		free(ref);
->  	}
+That makes me wonder if we want to document that, i.e.:
+
+-o::
+--push-option::
+    Transmit the given argument to the server, which passes them to
+    the pre-receive as well as the post-receive hook. As it is up to the
+    server to react on these push options, it may reject push options
+    that contain new line or NUL characters. .
+
+
+>
+> ... Ahh, OK, you want to make sure that push-options are
+> one-per-line in the push certificate.  While I do not think it is
+> absolutely necessary, starting with a possibly tighter than
+> necessary limitation is much better than starting loose and having
+> to tighten it later.
+
+This is not what I had in mind, but rather the pain of dealing with multi line
+environment variables.
+
+>>                       transport_get(remote, NULL);
+>> -
+>> +             if (flags & TRANSPORT_PUSH_OPTIONS)
+>> +                     transport->push_options = push_options;
+>
+> The result would be easier to read without the removal of a blank
+> that separates decl/defn and stmt here.
+
+ok
+
+>> +             OPT_STRING_LIST('o', "push-option", &push_options, N_("server-specific"), N_("option to transmit")),
+>
+> Here it seems to expect "-o".  If we really want a short option,
+> "-o" would probably be OK, as I do not think "git push" wants to
+> have "send the output to this file" option.
+>
+
+Ok, will update the documentation.
+
+
+>
+> by adding this between the two lines in the pre-context of this
+> hunk, i.e.
+>
+>         if (push_cert_nonce[0])
+>                 strbuf_addf(&cert, "nonce %s\n", push_cert_nonce);
+>         if (args->push_options)
+>                 for_each_string_list_item(item, args->push_options)
+>                         strbuf_addf(&cert, "push-option %s\n", item->string);
+>         strbuf_addstr(&cert, "\n");
+>
+
+makes sense.
