@@ -2,89 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C806206FB
-	for <e@80x24.org>; Fri,  8 Jul 2016 22:19:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07C962070D
+	for <e@80x24.org>; Fri,  8 Jul 2016 22:21:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756456AbcGHWT5 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 8 Jul 2016 18:19:57 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57647 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756446AbcGHWTz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jul 2016 18:19:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E2DFB2A641;
-	Fri,  8 Jul 2016 18:19:53 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZOpJqd+gzV5UuHcmeZ5DrxK4pzU=; b=BSC42c
-	Cjtx1LwGD1ehwA/tqLH2qsumgUCr7EYGSrMho/oiyQLkeYg+2y22S62ny4IDc7J2
-	XDqBcp3mRoIZUC98tvBJxWWXFxsiNilBwaEbb1YZDx+65fiYR9chyLmPg2vsX4J0
-	MH9PR9+Jc2t94/inss9nRid4oH3tWY5VelMzw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kNi826IFwadXd3Zp5nKBGuijp5wZVmiv
-	DAL7QGpf40VSUXMS6RPZKv+tb/it2kCCjiDLkQGymh+mH4HElGq2rASRDSId0JyI
-	RsoctB5M73JlP2cNuQFHKiWmTYtiKJfcRBVEywHCUJYp94FtJ7WAZZv9Bp7/Weee
-	/uWPQSX0E0s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DC2D92A640;
-	Fri,  8 Jul 2016 18:19:53 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 671FF2A63F;
-	Fri,  8 Jul 2016 18:19:53 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	David Lightle <dlightle@gmail.com>
-Cc:	git@vger.kernel.org
-Subject: Re: Fast-forward able commit, otherwise fail
-References: <CAP4gbxqjHzqHhPuNK8UOwPMa46g2=vcNSk1AvGjxN8s+ou-0Dw@mail.gmail.com>
-	<xmqqh9cnrvp2.fsf@gitster.mtv.corp.google.com>
-	<xmqqr3bokeib.fsf@gitster.mtv.corp.google.com>
-	<CAP4gbxp6qKntysrkyTSWxkQNpqPzf2gHLiKpJzA-TmqO71sHyg@mail.gmail.com>
-Date:	Fri, 08 Jul 2016 15:19:51 -0700
-In-Reply-To: <CAP4gbxp6qKntysrkyTSWxkQNpqPzf2gHLiKpJzA-TmqO71sHyg@mail.gmail.com>
-	(David Lightle's message of "Fri, 8 Jul 2016 14:28:02 -0500")
-Message-ID: <xmqqbn27lqm0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932159AbcGHWVc (ORCPT <rfc822;e@80x24.org>);
+	Fri, 8 Jul 2016 18:21:32 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42168 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756032AbcGHWVb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2016 18:21:31 -0400
+Received: (qmail 6386 invoked by uid 102); 8 Jul 2016 22:21:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 08 Jul 2016 18:21:31 -0400
+Received: (qmail 16101 invoked by uid 107); 8 Jul 2016 22:21:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 08 Jul 2016 18:21:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Jul 2016 18:21:28 -0400
+Date:	Fri, 8 Jul 2016 18:21:28 -0400
+From:	Jeff King <peff@peff.net>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Eric Wong <e@80x24.org>, Dan Wang <dwwang@google.com>,
+	Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH 2/4] receive-pack: implement advertising and receiving
+ push options
+Message-ID: <20160708222127.GA10756@sigill.intra.peff.net>
+References: <20160707011218.3690-1-sbeller@google.com>
+ <20160707011218.3690-3-sbeller@google.com>
+ <xmqqa8htp4kc.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kbkv5P0wP2kKt9gzmZBe1DjLSB8JpZD66DT_Xd4NKqmKQ@mail.gmail.com>
+ <xmqqh9c1nlvm.fsf@gitster.mtv.corp.google.com>
+ <20160708175821.GA29326@google.com>
+ <xmqqshvkkm86.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79ka8eHOx28Ja+S6DOGEOrV_ijUvi_NnjprhuzQ+3O9BAoQ@mail.gmail.com>
+ <20160708214637.GB9820@sigill.intra.peff.net>
+ <CAGZ79kZOdcJwd0ePMquhfJTv=xZGP_+w4BRV=GyTy3ejb79yrQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 180E84DC-455A-11E6-819C-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZOdcJwd0ePMquhfJTv=xZGP_+w4BRV=GyTy3ejb79yrQ@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-David Lightle <dlightle@gmail.com> writes:
+On Fri, Jul 08, 2016 at 03:17:13PM -0700, Stefan Beller wrote:
 
-> In your above scenario with Alice & Bob, wouldn't that same issue come
-> up in _any_ rebase workflow (--ff-only)?  From what I've read this is
-> a typical consequence of requiring fast-forward merges; to be
-> effective, the rebase step must  be more likely to succeed in a time
-> window than for someone to have pushed additional changes (otherwise
-> you end up in a loop like above).  But I don't believe that's
-> inherently any worse with the change I'm asking about which  would
-> only take that existing flag (--ff-only) and additionally create an
-> actual merge commit when those conditions are present.
+> >If people are seeing these in
+> > routine use, then the limits are set too low, and this should happen
+> > roughly as often as a BUG assertion, and IMHO should be treated roughly
+> > the same: don't bother with translation, and don't worry about
+> > optimizing wasted bandwidth for this case. It won't happen enough to
+> > matter.
+> 
+> Well the wasted band width is part of the server protection, no?
 
-True, but that does not change the fact that you would be adding
-_more_ code to support a workflow that we know to be bad.
+Not if you stop receiving as soon as you hit the limits. Then of course
+they can send up to the limit each time, but that is not a DoS. That is
+things working as advertised.
 
-> In fact, I just noticed that GitLab has built in the functionality I'm
-> looking for even, which is what they call "Merge commit with
-> semi-linear history" but I'm asking whether direct support for this
-> approach would be reasonable.  These approaches can all produce the
-> "untested merged product", but they support the way the users want to
-> use the system as well.  I'm not saying any approach is right or wrong
-> as I'm not qualified enough to say.
+> This would favor the idea Jonathan came up with:
+> 
+>     server: I advertise push options
+>     client: ok I want to use push options
+>     client: I'll send you 1000 push options with upper bound of 1000M
+>     server: It's a bit too much, eh?
+>     * server quits
+> 
+> So this case only occurs for the (malicious?) corner case, where I
+> do not bother a translation.
 
-We, not being a for-profit entity, do not have a strong incentive to
-add features that encourages bad workflow to the users.  Of course,
-we also do not necessarily stop them if users really want to shoot
-themselves in the foot ;-), but such a change would inevitably be of
-lower priority to us.
+In the malicious case, the client says "I'll send you 10 push option
+with an upper bound of 1024K", and then sends gigabytes anyway. Either
+way the server has to react to what is sent, not what is promised.
 
+-Peff
