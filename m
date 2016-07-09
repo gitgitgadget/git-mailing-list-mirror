@@ -2,82 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76EB51F744
-	for <e@80x24.org>; Sat,  9 Jul 2016 05:33:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8ABCC1F744
+	for <e@80x24.org>; Sat,  9 Jul 2016 06:24:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751579AbcGIFd5 (ORCPT <rfc822;e@80x24.org>);
-	Sat, 9 Jul 2016 01:33:57 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:34097 "EHLO
-	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750707AbcGIFdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jul 2016 01:33:55 -0400
-Received: by mail-io0-f182.google.com with SMTP id i186so58992083iof.1
-        for <git@vger.kernel.org>; Fri, 08 Jul 2016 22:33:55 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LZjsZSrgDKVkuFlQ91SP31EHQaPM0sBl7i/MAxR3TS4=;
-        b=aT68cKF2vse2IdpiTgmACUWd+HmTt4dA/xyUvH90dg/H4I/jAbjwtAZ/ZdO48f8Eq/
-         aXvxZmuMHrK+CcMADeWGM1IlwFGjnK6+T0KicF+73kS+2kccHp1Duv32iHA0J7OF2aWV
-         X8OGdQw10vCQV8H+E0YQ3l7oHlV3gZZBAANCoW4iQPGwZPZkAO1il75Y0sZ5+Na8HYmg
-         9J4OXNbjb6au7AO2zM8cWSQ1SA++ZJPYKhWMyD4ivvdtlCX006hDrPOPre3VJ/R2gkpj
-         bzGnE7QQID5tRzeLERNECNBR/wFDmiXqZ0KnuTxrDpAwFVhiD7V4Z3VNjxISU4uf6CCX
-         x/og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LZjsZSrgDKVkuFlQ91SP31EHQaPM0sBl7i/MAxR3TS4=;
-        b=mSNaXSc28WkKspVjLSOJNhZ+5Zsiwn0dTNWq1+DxWs6gDHRDmOHQoMYJnVn76jWibC
-         K3RqklVk4ErW928467L8gbKuibcSetJ+yB4s//mG6CWf9T/0pB5TPO4h53nfBcuuFsJ6
-         PxQswz3RDROUp7tUEv/AJzcGnGqZMg5gXm9hwBvcT+6gi1YlOaBCiUgWZ+9dzOOD3on5
-         88IhCC5mblH/iLYfu1U8pwXA/uVz7Gawj3rnYH5Vol6bhJw4+a9YnevkOBYkSlX5HD+m
-         8BbriTmmEQiAP8sH+jKHoL7b2hoRUEjudFwoHQ4IZqSJ5e65JmD5MuUIj3C6uKadl/Qu
-         TelQ==
-X-Gm-Message-State: ALyK8tJlyvLyKLzN5g4OeA7OVRTNvB6bj8RiERwpFAtDLxeHSUQIj5A269mFoL+fPAwZT9JPFU2QQajcotR5pQ==
-X-Received: by 10.107.8.140 with SMTP id h12mr2450461ioi.95.1468042434826;
- Fri, 08 Jul 2016 22:33:54 -0700 (PDT)
+	id S1756540AbcGIGY4 (ORCPT <rfc822;e@80x24.org>);
+	Sat, 9 Jul 2016 02:24:56 -0400
+Received: from mout.gmx.net ([212.227.15.18]:54811 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750731AbcGIGYz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jul 2016 02:24:55 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MZTw5-1bh0Xf4Bsj-00LChs; Sat, 09 Jul 2016 08:24:51
+ +0200
+Date:	Sat, 9 Jul 2016 08:24:50 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Naja Melan <najamelan@autistici.org>
+cc:	git@vger.kernel.org
+Subject: Re: Git 2.8.1 - bug in patience diff algorithm when used with
+ --ignore-space-at-eol?
+In-Reply-To: <3153d359-2b82-d5e2-9e92-7a28bcd8bc48@autistici.org>
+Message-ID: <alpine.DEB.2.20.1607090823270.6426@virtualbox>
+References: <3153d359-2b82-d5e2-9e92-7a28bcd8bc48@autistici.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Fri, 8 Jul 2016 22:33:25 -0700 (PDT)
-In-Reply-To: <20160707184408.GA1916@gmail.com>
-References: <20160707184408.GA1916@gmail.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Sat, 9 Jul 2016 07:33:25 +0200
-Message-ID: <CACsJy8BWAirnni+-ZzShMrKO0Pjs8xiUw1gXSJAR2ZT9kJFtuQ@mail.gmail.com>
-Subject: Re: git branch doesn't allow me to forcibly delete branch which was
- checked out in a now-deleted worktree dir
-To:	Erik Johnson <palehose@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Kazuki Yamaguchi <k@rhe.jp>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:GFOzgG41zrrzPO+EU3oDOENdcq6rSic8cMIVdQhYfeBzG8htqD4
+ LG6YM7LO9UuP+SYLCw7kDy8Oq3CaHuJQpGEXopzJLN7fSw8pV0pLDpWXV/YI2OlZ+z5D29Y
+ jMFhM4w5kD2rJUu4AZczf8GLyidVB+Mx/B9S73GT5wPm9E2IgfvuzAl/bMHAkdA+rXvnBUC
+ T2/gzwzt1q4OIB/cPoX6g==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:lH+h/hLeo18=:asmyn477+nQfLjM9RCBYlm
+ o/nxYvTOoL/9z+qdbzl2wP+CiVywmPe0bqoRjlgndFMSacunodvRm6LoIHP9maqnrW9BXjNsy
+ qe1zMzbz7TiqhyVEaG3Bhk1iVEOFX7XtXMq2pOEiNClHI6/82xXuRZayR2NNbYG2Lkn/yuWNK
+ CCgafNevUpS4V+OTC1PYu6sDkNMcWUoNXmTNggtCw5cAqbERIROPGNU/KOriZl7GV3uBua6p2
+ wxdxh/i7+xPCafkvk8HZ6weFMj00abXCAfobMDbMsJXNRiQwOwSoAn2grb/EYSHQedyAWD5hN
+ c+BG3oIHN4maLBzDN2sPgZBmj3+xamHGZ6Kpds+jiqi2XpXNIrQ2A7dA6RsI6LsoCgLRcKvw+
+ odDDrwn9pRu/GfiVR/2hqvwY6zqI7zfcGl4YTtId0ShoPPGQsemEx3DeXDR8GsCPOBJLPakif
+ 47k0tvykTcE1QbCsqfAoforeU1QkvD2wUXagrgN44MXhHwso63bj/tDCrv3rJKuS/jpiix5cv
+ pZuOva7I8Bu5l+hC05xxaYbFRRxF7eYAYHce/1cqVuRiy64B0Rnz4+K96CAI2DfJCKtJBfwy8
+ Z0h9kpsligD83wraaOitHAvEcu+d/daiAZZPvEzWHZQOvD0Mqf/5+88xKTAEw1W0TFfYo7zeo
+ NnkxO2OxUizO4Ol+hGhy7nh/3UDZFQtVv7/EIiDTJjTFohNJe3r3SMWZVRs2iP/0Zbu9Tfc2W
+ stiiQXCHlcmic8LDQezgOJd7s6oerKg22Igp7INJuseUjnZNnCVgQ0dszyan2IIClLAef0Lkb
+ oIH+WN9
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 7, 2016 at 8:44 PM, Erik Johnson <palehose@gmail.com> wrote:
-> % git branch -D archive-extracted-xz
-> error: Cannot delete branch 'archive-extracted-xz' checked out at
-> '/home/erik/git/salt/archive-extracted-xz'
+Hi Naja,
 
-This is from commit f292244 (branch -d: refuse deleting a branch which
-is currently checked out - 2016-03-29) which is about -d not -D, so
-it's probably an oversight. I think -D, as a forced form, should allow
-deleting branches on other worktrees, we could simply detach the
-worktree first.
+On Fri, 8 Jul 2016, Naja Melan wrote:
 
-It's worth noting that before that commit, -D refuses to delete branch
-on current worktree as well and f292244 simply applies the same
-behavior on other worktrees. If we change the -D behavior about
-deleting branches on other worktrees, we may need to consider to keep
-the behavior on current branch, or treat it equally as any other
-worktrees.
--- 
-Duy
+> When diffing with --patience and --ignore-space-at-eol, a change that
+> adds or removes just one character a the end of a line isn't picked up.
+
+Confirmed with the current 'master'. I am on it, building on top of this
+diff:
+
+-- snipsnap --
+diff --git a/t/t4033-diff-patience.sh b/t/t4033-diff-patience.sh
+index 3c9932e..6da435b 100755
+--- a/t/t4033-diff-patience.sh
++++ b/t/t4033-diff-patience.sh
+@@ -5,6 +5,13 @@ test_description='patience diff algorithm'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff-alternative.sh
+ 
++test_expect_failure '--ignore-space-at-eol with a single appended character' '
++	printf "a\nb\nc\n" >pre &&
++	printf "a\nbX\nc\n" >post &&
++	git diff --no-index --patience --ignore-space-at-eol pre post >diff &&
++	grep "^+.*X" diff
++'
++
+ test_diff_frobnitz "patience"
+ 
+ test_diff_unique "patience"
