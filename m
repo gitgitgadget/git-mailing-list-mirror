@@ -7,84 +7,74 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C2EE20705
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D5882070F
 	for <e@80x24.org>; Sat,  9 Jul 2016 07:24:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751545AbcGIHYF (ORCPT <rfc822;e@80x24.org>);
-	Sat, 9 Jul 2016 03:24:05 -0400
-Received: from mout.gmx.net ([212.227.15.19]:52873 "EHLO mout.gmx.net"
+	id S1751689AbcGIHYL (ORCPT <rfc822;e@80x24.org>);
+	Sat, 9 Jul 2016 03:24:11 -0400
+Received: from mout.gmx.net ([212.227.15.19]:65365 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750768AbcGIHYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jul 2016 03:24:03 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LuPYt-1bEnex1hsl-011hFP; Sat, 09 Jul 2016 09:23:52
+	id S1751069AbcGIHYE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jul 2016 03:24:04 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MQ2Wx-1bR1Xv2oM7-005K43; Sat, 09 Jul 2016 09:23:44
  +0200
-Date:	Sat, 9 Jul 2016 09:23:50 +0200 (CEST)
+Date:	Sat, 9 Jul 2016 09:23:43 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>,
 	Naja Melan <najamelan@autistici.org>
-Subject: [PATCH 1/2] diff: demonstrate a bug with --patience and
- --ignore-space-at-eol
-In-Reply-To: <cover.1468048754.git.johannes.schindelin@gmx.de>
-Message-ID: <db5aa5d1f22a22901eb3dd57132e027f462852c5.1468048754.git.johannes.schindelin@gmx.de>
-References: <cover.1468048754.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 0/2] Fix xdiff's --ignore-space-at-eol handling
+Message-ID: <cover.1468048754.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:gQe8J/VH61NLZ7XpEcQsnZVV7RfVLzHXaOw2aSlN4rPZLoWleVV
- gWmFo6w65m8wpQ/vA1hjecqRHSz4RKQL2I2U0IgsXbE/85e+q3POrzjg26ekkJlbBaimTCd
- Hd5pGKstg9rFr5fRgJy6P0zNhoP7m1VnaNu5P08ZT3LzVE8LqXFNttOb5XC04k1uVgwpidK
- vxyAC39Zcr9iKCzBNTU8Q==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:gZezV8mMCic=:rq9AltGmu0cOX8jlHf4wCp
- sq/FsXCS7J7M+1RK0cGs8UyF9g0hMJP24OWL248xMaI/9Q2Sn/ttfF2wFmzcBJM/Tb7yS/z3P
- 6dE7BLR7t1nCKBI0A5R2CJPeHw7bzqMVql2Tmp5HY9mRISKorkNtCjFI6fWyX2Xbi4KR66myG
- 57YUB7UEoXD+zj8x1yuE1f+5niaHnYjBeAcvxjrhRyYVqgNGt5cEhAH1RQHrLWA54AlnvnBwY
- AGEI7MHMjeHy/SwVdaxtEFBtgFNEDZnp+eAntZmBaererCUs884237LWzXhjN7IhrX6jTJEIF
- p0cIfoQFWHmkczPuUex632U3QX3QvnsXbdfnP2Ut+10G9HFkmeDfygo3E998w2KBhLXLAyOXw
- FIYGvOhiIbI1FDT6dahRcB9mukH28uph+tjcAvz1qENoTecuxA4WzlqMBfWjqaOFJvSmdGS4P
- DrfUBQq1dCfK0EtYfwVUncXWnKWJCA6H0h7Fu0D4qYtPAYS557ReJJgdq7ud/QecAT/TH14Q2
- tAPStgQCQX7fq72tbYgJnlXBAxKi2j7Q763iOXJPuD/hLnqCmKl30coCN1SHjV3KY8V1wu+LO
- rXlGXVQDSBDfZX8xpwUunqwub5tPo9BemmnVulAzGSCSTslaSxNSO1N7bdRDfXfPMV5nY/F4s
- toCpvzl65kA7A8wrTy3Rf/+nB0QMIWOkLr0evHaCEWZUusWnPCIxtzDJ1YykI7dzT5YBgi7eC
- D2HtxusVrfKcGuhXvbkspKyTZuKSZyJp+YiNP/Kw+AgUaOS7nnBLtwndVEY79zxZr/SAY0Wmx
- dFKJFUV
+X-Provags-ID: V03:K0:JzNPvPSnRyLL3FBfRnZCFwt6ZP7A087KJhg9RQC1pAEX6thDGjN
+ /Q5Hcshhxjo9Z0JCjT7xXcDLIgLAVD58jd0bh6hlfiBkfj0xCmGHqS5vsM0hhX0yDjVNl4Q
+ SFLzFBYKNyLMbcfh38OUMKa44aDOVL6ZqmHFVXmt6hbAONjcHgO2SXk5ZviF9IAEf8jg9rX
+ YJfRUaNkRvoaxjJxfJLoQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:5siuWyOQ4lw=:cUoNHUlQtPwK3aepVBTW1a
+ TU5faUChXLfd8vomKNCVHUjjhV/uz+IZ8QkIr0TL6Qm1EtXgkbJ0de9ht8u8GrgNHMyreNR8v
+ ldCy/eI7UVkohueM1dhZ+u4mMyBCy8HSrriQJONNLMyeTyj/HabpvNjNZC9bHVAWEEd/Rcrdr
+ TYMHm6Pk51hJEcFHOdToMwjL7QrqiHQmEe5EXMxAIoHgh+w0YfAlk2lbcXJeHX9DWHUFGmIN0
+ 4a43ewNSpDtyNjbDbKzNpL58iBMxwb/GZleRWkogFy23vJK+HA0Bot1bJ1RA35v+FABJ4B4v0
+ 9TmZnZ59C34d7o5omXQEzMDO8rKJhkwt62Giq1G4VjIsJv5DglRo2g83floxdKKUD3kSaqVUD
+ 8ONd5G+6wihsWsbU0YopAYQrDaYfwvfnBDoftiJL+pRR69nn4CFWSzrPPLmguRtDrV4Asx1FZ
+ Cd8mmCeZpdi9KnryO7dKnGeAHzLzt4oyTzHgxXznDGYRF62cj6GYCATHJbPJpb4g2ME34zoW2
+ WrxHBhCFiPBoDM6M1JUaNdmWwcoHHkiHNj791LQ/sOKhk67E+o+iTEj1rQeSUCgUDfHKjHX21
+ 2O3eow5u+KwT49sOgDWwEpdq8NQN4ubhYIZPZ/S6XH4ktWlnk6bJ8VujMpkyDvbMs8XRVZvi/
+ NapaWRFXd6QuGLNzXDWFoaPUxxooUoyCW/RtX/3ebM3rtYudQvyUOUu4OtCaBM2GtaBWG7m+A
+ N2dXI3NG9NlKwkIqP1g6B4SrQMPPKSFYCnKeEAQ9D3luC+lzHVldfaJv7jCjKTSSc0uSH56WB
+ jnEdzaR
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When a single character is added to a line, the combination of these
-two options results in an empty diff.
+It turns out that I am not the only Git developer capable of producing
+an off-by-one bug ;-)
 
-This bug was noticed and reported by Naja Melan.
+This patch series fixes a bug where we ignored single-character changes
+at the end of the lines when trying to ignore white space at the end of
+the lines.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+I split the changes into two patches because the fix turned out to have
+a much broader scope than the test (which demonstrates just a symptom):
+the bug was not in the patience-specific part of the diff code, after all.
+
+
+Johannes Schindelin (2):
+  diff: demonstrate a bug with --patience and --ignore-space-at-eol
+  diff: fix a double off-by-one with --ignore-space-at-eol
+
  t/t4033-diff-patience.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ xdiff/xpatience.c        | 2 +-
+ xdiff/xutils.c           | 6 ++++--
+ 3 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/t/t4033-diff-patience.sh b/t/t4033-diff-patience.sh
-index 3c9932e..5f0d0b1 100755
---- a/t/t4033-diff-patience.sh
-+++ b/t/t4033-diff-patience.sh
-@@ -5,6 +5,14 @@ test_description='patience diff algorithm'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-diff-alternative.sh
- 
-+test_expect_failure '--ignore-space-at-eol with a single appended character' '
-+	printf "a\nb\nc\n" >pre &&
-+	printf "a\nbX\nc\n" >post &&
-+	test_must_fail git diff --no-index \
-+		--patience --ignore-space-at-eol pre post >diff &&
-+	grep "^+.*X" diff
-+'
-+
- test_diff_frobnitz "patience"
- 
- test_diff_unique "patience"
+Published-As: https://github.com/dscho/git/releases/tag/patience-v1
 -- 
 2.9.0.278.g1caae67
 
-
+base-commit: 5c589a73de4394ad125a4effac227b3aec856fa1
