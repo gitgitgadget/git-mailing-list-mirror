@@ -7,74 +7,112 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D5882070F
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4700E20705
 	for <e@80x24.org>; Sat,  9 Jul 2016 07:24:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751689AbcGIHYL (ORCPT <rfc822;e@80x24.org>);
-	Sat, 9 Jul 2016 03:24:11 -0400
-Received: from mout.gmx.net ([212.227.15.19]:65365 "EHLO mout.gmx.net"
+	id S1751145AbcGIHYN (ORCPT <rfc822;e@80x24.org>);
+	Sat, 9 Jul 2016 03:24:13 -0400
+Received: from mout.gmx.net ([212.227.17.22]:51912 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751069AbcGIHYE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jul 2016 03:24:04 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MQ2Wx-1bR1Xv2oM7-005K43; Sat, 09 Jul 2016 09:23:44
+	id S1751539AbcGIHYF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jul 2016 03:24:05 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LoVja-1atcXM0PoQ-00gWvd; Sat, 09 Jul 2016 09:23:58
  +0200
-Date:	Sat, 9 Jul 2016 09:23:43 +0200 (CEST)
+Date:	Sat, 9 Jul 2016 09:23:55 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>,
 	Naja Melan <najamelan@autistici.org>
-Subject: [PATCH 0/2] Fix xdiff's --ignore-space-at-eol handling
-Message-ID: <cover.1468048754.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 2/2] diff: fix a double off-by-one with
+ --ignore-space-at-eol
+In-Reply-To: <cover.1468048754.git.johannes.schindelin@gmx.de>
+Message-ID: <daf43539479acdebe1c5799c38f3be75c2399feb.1468048754.git.johannes.schindelin@gmx.de>
+References: <cover.1468048754.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:JzNPvPSnRyLL3FBfRnZCFwt6ZP7A087KJhg9RQC1pAEX6thDGjN
- /Q5Hcshhxjo9Z0JCjT7xXcDLIgLAVD58jd0bh6hlfiBkfj0xCmGHqS5vsM0hhX0yDjVNl4Q
- SFLzFBYKNyLMbcfh38OUMKa44aDOVL6ZqmHFVXmt6hbAONjcHgO2SXk5ZviF9IAEf8jg9rX
- YJfRUaNkRvoaxjJxfJLoQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:5siuWyOQ4lw=:cUoNHUlQtPwK3aepVBTW1a
- TU5faUChXLfd8vomKNCVHUjjhV/uz+IZ8QkIr0TL6Qm1EtXgkbJ0de9ht8u8GrgNHMyreNR8v
- ldCy/eI7UVkohueM1dhZ+u4mMyBCy8HSrriQJONNLMyeTyj/HabpvNjNZC9bHVAWEEd/Rcrdr
- TYMHm6Pk51hJEcFHOdToMwjL7QrqiHQmEe5EXMxAIoHgh+w0YfAlk2lbcXJeHX9DWHUFGmIN0
- 4a43ewNSpDtyNjbDbKzNpL58iBMxwb/GZleRWkogFy23vJK+HA0Bot1bJ1RA35v+FABJ4B4v0
- 9TmZnZ59C34d7o5omXQEzMDO8rKJhkwt62Giq1G4VjIsJv5DglRo2g83floxdKKUD3kSaqVUD
- 8ONd5G+6wihsWsbU0YopAYQrDaYfwvfnBDoftiJL+pRR69nn4CFWSzrPPLmguRtDrV4Asx1FZ
- Cd8mmCeZpdi9KnryO7dKnGeAHzLzt4oyTzHgxXznDGYRF62cj6GYCATHJbPJpb4g2ME34zoW2
- WrxHBhCFiPBoDM6M1JUaNdmWwcoHHkiHNj791LQ/sOKhk67E+o+iTEj1rQeSUCgUDfHKjHX21
- 2O3eow5u+KwT49sOgDWwEpdq8NQN4ubhYIZPZ/S6XH4ktWlnk6bJ8VujMpkyDvbMs8XRVZvi/
- NapaWRFXd6QuGLNzXDWFoaPUxxooUoyCW/RtX/3ebM3rtYudQvyUOUu4OtCaBM2GtaBWG7m+A
- N2dXI3NG9NlKwkIqP1g6B4SrQMPPKSFYCnKeEAQ9D3luC+lzHVldfaJv7jCjKTSSc0uSH56WB
- jnEdzaR
+X-Provags-ID: V03:K0:GPDo+VipHl+oP5Vud1ltCGkxKg4EfD3Fh73EeXjuQ1yOusWQlcw
+ CAzBc0AWALwB9n7L+XnNFePqnnjB8XSZ/a9UG8jwq/D/cXWzijJSraamcn1hwApPVNX94LT
+ MndDmEnPvCgmA9q5aTI6RkkW+vaeRpk3qMYeet8XNC9TUYOy0Wk/CfOkyhZqENnkeTGyuK7
+ huWstTpFOkRkekYxXkAAg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:4opKrl2ETGo=:dlMa3USjQpY2ts17qs07/i
+ dfEhbQJ67MsKjrdfeD3rKJ3kp/ya2Bwd7V44GkZnPRRxXlh3t1i+Taw/hXljcwWhtcUVMINg0
+ rcop6i8UHI7otnwiypqxgtAHSRhvPD5ENU/oHaX97w4f3+BsKTreLmi4nxvMzin7NkFaDRTYw
+ ltCUidHHHVCYbFEKuOKT7EDjxaU9reBzGX56XLgVZKxR0T24IZN5t0Y3xPPp+B6Pk7UUmlQFA
+ LQV24NRQCLFF1sp8gYYDX8iDJ5sx5HWltLAVEh3/Zm70oAR0CSLKg4SZGwkryGIXQCh6eZDQv
+ S61cWBfEHsdpMv3DdbESVykoHdCXmYgs1fG2MPfqKTP5PuIfswuRQskMd18Ibpe+Z4Ykbal9e
+ h7NhoCRUD5fcGsVe681xMqjjuo/Bvz6nmP//fm3fVD2A+dSf5Itqg2RJz6X4F996N8lcjBCdN
+ Z7TH3+1F32shYN8H+Cm7Jypw1gqVQKd570XlLew3RkRFux7Q1RYDmxqig8aAhKEVd8RfWBDHE
+ BRuOnLZtIyc9Bo9vwsG9DQtcMPFyGL4mP3LHR5kMc3DTMBsNnXT5HNljJMj3HkXgYkMq0UrGR
+ Z6jo/rj1Ncp5zDwpbpNs8OSW/0oeYO8rYuyBBBmb4C4jqL83YcauE5U80be8JP8EJS4/oHUxI
+ buxlB5GjBgfEjRL8B4oQL8dEdIMsa4fELrkiJfFu0wbJT7AZqDkyBENvT+1FTYXX0ak4z8Qwy
+ hUs3E1WlFsJ1xEv7P5pMVkNauFQgUkk80N6DbxD85crfCRF5RJvHbHu6hTFwqxwZ2ZyH5kgVU
+ BwmHWla
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-It turns out that I am not the only Git developer capable of producing
-an off-by-one bug ;-)
+When comparing two lines, ignoring any whitespace at the end, we first
+try to match as many bytes as possible and break out of the loop only
+upon mismatch, to let the remainder be handled by the code shared with
+the other whitespace-ignoring code paths.
 
-This patch series fixes a bug where we ignored single-character changes
-at the end of the lines when trying to ignore white space at the end of
-the lines.
+When comparing the bytes, however, we incremented the counters always,
+even if the bytes did not match. And because we fall through to  the
+space-at-eol handling at that point, it is as if that mismatch never
+happened.
 
-I split the changes into two patches because the fix turned out to have
-a much broader scope than the test (which demonstrates just a symptom):
-the bug was not in the patience-specific part of the diff code, after all.
-
-
-Johannes Schindelin (2):
-  diff: demonstrate a bug with --patience and --ignore-space-at-eol
-  diff: fix a double off-by-one with --ignore-space-at-eol
-
- t/t4033-diff-patience.sh | 8 ++++++++
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t4033-diff-patience.sh | 2 +-
  xdiff/xpatience.c        | 2 +-
  xdiff/xutils.c           | 6 ++++--
- 3 files changed, 13 insertions(+), 3 deletions(-)
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
-Published-As: https://github.com/dscho/git/releases/tag/patience-v1
+diff --git a/t/t4033-diff-patience.sh b/t/t4033-diff-patience.sh
+index 5f0d0b1..113304d 100755
+--- a/t/t4033-diff-patience.sh
++++ b/t/t4033-diff-patience.sh
+@@ -5,7 +5,7 @@ test_description='patience diff algorithm'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff-alternative.sh
+ 
+-test_expect_failure '--ignore-space-at-eol with a single appended character' '
++test_expect_success '--ignore-space-at-eol with a single appended character' '
+ 	printf "a\nb\nc\n" >pre &&
+ 	printf "a\nbX\nc\n" >post &&
+ 	test_must_fail git diff --no-index \
+diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+index 04e1a1a..a613efc 100644
+--- a/xdiff/xpatience.c
++++ b/xdiff/xpatience.c
+@@ -1,6 +1,6 @@
+ /*
+  *  LibXDiff by Davide Libenzi ( File Differential Library )
+- *  Copyright (C) 2003-2009 Davide Libenzi, Johannes E. Schindelin
++ *  Copyright (C) 2003-2016 Davide Libenzi, Johannes E. Schindelin
+  *
+  *  This library is free software; you can redistribute it and/or
+  *  modify it under the terms of the GNU Lesser General Public
+diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+index 62cb23d..027192a 100644
+--- a/xdiff/xutils.c
++++ b/xdiff/xutils.c
+@@ -200,8 +200,10 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
+ 				return 0;
+ 		}
+ 	} else if (flags & XDF_IGNORE_WHITESPACE_AT_EOL) {
+-		while (i1 < s1 && i2 < s2 && l1[i1++] == l2[i2++])
+-			; /* keep going */
++		while (i1 < s1 && i2 < s2 && l1[i1] == l2[i2]) {
++			i1++;
++			i2++;
++		}
+ 	}
+ 
+ 	/*
 -- 
 2.9.0.278.g1caae67
-
-base-commit: 5c589a73de4394ad125a4effac227b3aec856fa1
