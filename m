@@ -7,60 +7,79 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A737B1F744
-	for <e@80x24.org>; Sun, 10 Jul 2016 07:01:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4BB11F744
+	for <e@80x24.org>; Sun, 10 Jul 2016 07:12:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750816AbcGJHBc (ORCPT <rfc822;e@80x24.org>);
-	Sun, 10 Jul 2016 03:01:32 -0400
-Received: from mout.gmx.net ([212.227.17.22]:65374 "EHLO mout.gmx.net"
+	id S1750822AbcGJHMr (ORCPT <rfc822;e@80x24.org>);
+	Sun, 10 Jul 2016 03:12:47 -0400
+Received: from mout.gmx.net ([212.227.15.15]:62925 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750758AbcGJHBb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jul 2016 03:01:31 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MW8PN-1bskhQ2NsP-00XHbg; Sun, 10 Jul 2016 09:01:25
+	id S1750758AbcGJHMq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jul 2016 03:12:46 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M2c1V-1b59pT3QtZ-00sKVu; Sun, 10 Jul 2016 09:12:38
  +0200
-Date:	Sun, 10 Jul 2016 09:01:23 +0200 (CEST)
+Date:	Sun, 10 Jul 2016 09:12:36 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Theodore Ts'o <tytso@mit.edu>
-cc:	Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] guilt: fix portability problem with using find -perm
- +111
-In-Reply-To: <1468102715-465-1-git-send-email-tytso@mit.edu>
-Message-ID: <alpine.DEB.2.20.1607100900320.6426@virtualbox>
-References: <1468102715-465-1-git-send-email-tytso@mit.edu>
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	Lars Schneider <larsxschneider@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v1] travis-ci: enable web server tests t55xx on Linux
+In-Reply-To: <xmqqd1ndvxqf.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1607100911090.6426@virtualbox>
+References: <1463647511-54811-1-git-send-email-larsxschneider@gmail.com> <6C0F6649-C238-475E-BAA5-5F3A0EC5DA2D@gmail.com> <xmqqd1ndvxqf.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:i0IYVlsEJPnU6u+Rw7BGzjPHfsL39TgY0o+VCn2XAb6OlpFB/LG
- N9K+FGWBz6P/3rOZAyqO0x84gjizf6qNgZICo4eWAVfqJELK6YPQd39SwbfD+5aXZkZd5Gl
- /zhZBuPBMlLTqmsFqjyHDK3CB9wNnG0FHWS1ANTloiGpmTZDEttAy+vvYRqCHgHTl3H3vsW
- HebXWeSFiNMzPSRGAkyYg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:WXOZbQtNflU=:YxfIL8vEaK5RfWWcT1NeeT
- jiyeF24pd5ArAdNunmM4xI3S7kqikH+jInoVHv50mqf6p4Qqh5aFSsEl1h+8qpn8m67yWIuGV
- 30JT9zMt7glkEeQnIGtHXRPgyVT3vE3va745ANSdjw6W3lecsDH2FhbOTtm7DU8tGt8SBjBSs
- Vz8lscjDCPjkXMc9twQjUwCreKqoHE4s50I13CtE885pasg3hM1O27vqt750UiCpk64JGVI25
- P584mb5o96F9NvNXMIINbahkY5bitVoe8r99qUCJKx235RiYJ0OWcHiwnjssxqsed2m9VaQQb
- 6uIMeqYTWKM0XSdPU0XsC28yhczf6/WOH8ko31SP/Ffjo/PNnNL67qCz0IuIuNrtCUOwWIqjd
- Q0rfam1QAUfasa6RBU6XTup/F1fuEX2JcDmywnz9EXV8zZZ8wk/KKV6rESYM1ecMDS7AqPeFP
- THRU1fWm/8z/CnwTwiICTVfnhQaRf0+oKL+UgAwPRUeklYD4P2jrf4A9CIfkSG9jwwm+NmS1l
- HoUQ6BgnfGOMsGwUjT8j7/SWGzVKoutS+cWFsWRhMPBMO3rt/y3rEBIrqVMsMMmSgIsgiDKpo
- EncIqS7nKEF2O7NhO5rGj4+zxbCg/4XHfMj5UdOiR1DEkgqU/1qghddXSpo1f3r+EVqR7Zyv1
- FCcK3Y8xD4k9MIE2wMwOGOlACuiAB79SXvRAato5ZebNcAjg7vdkCCtOhP/WIi6GD/cCfxrSy
- 6ioqH6bDjYdDwR/Xaw2QVQRoUGNWPgSVMZEY54lkVa80t2G6goyDRiW+5vQZMPoSgG4baEGJf
- vIQcqKX
+X-Provags-ID: V03:K0:CKHBz/w6NUMfA6VTl0hSNKYHr0CPNct9T6xzvgnMGyVyeW656ZX
+ cHY15qFWu8q5+I8jDnpsUwqZg7YIq2aNre/Y/RwZDXSNtYx8uX9uWmZsnddfxt/ZIvI+BDW
+ ZpNk3/G1z8NpLnVl8pHEN+jgz2ZwJq+yBiYEU5FXkXVijh+dKnbJDo878mh9h/qqFqH9NOb
+ roD7y6Amgnz9002y1Zitw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:QbmdtIIH0RY=:UV/xw8/lZI0e+5j7PNyUey
+ 0B2LlmByEASnDrH14GotcL7LXpBJzWW2eZazA7OxgCe6jLC7J5lD43dDnU1KHD0fXhoW9xjHi
+ Rh1QdQxrCwpgcWFX+EB1uLOxPNrAOfBXhdKaebTjQK6vd7x3obbFIA4oL7hkCfCFgXvZ2SeBK
+ gZ/KKkGZ0IcFF4oCmAjakqYVHcj0UlCLnJcuGaDCg+MMDwXT50yYXENtXywogUaMRkisFUFlW
+ 4d2oCTVFiXQbFXRU18MXBdTE/agQUIKRtqqB4oaI5NN1Ii1BT4NISCdv9vMITnlknj+J6zdbg
+ npTgcVh7z84m8paDAuhi62KHspMU+4PPH5fgU2vgcFvwOFntY7+FKEwE4lzOGMbjPsJ4qCKzs
+ eBWGywyG9ZwBLrFBXCJLqOSGB4JlfHHKkrUubUco3AHpk5iHEiHkUHf7yLIakOcB58+Eu/vQr
+ CPvoWkeoXbK2VPdAVBf80ej+DNoabfUyfT00xmXuvHCkw8AA+sPK0QA0Z/Ld3PFKZVL8QLYQw
+ pBxhEr8/SxashpDOfzQyKslS8DuGYtKJoTS/4LaZxGSx/6FVDWIOHkpjQ5EBBRD8lra7oyp3B
+ IKxqHKP15pnZXNz06tz7e4xdrs/wMqamcWvUB3vetVSmaoPEoMhEXbxnJ3rPCgRdTvUOlv4PI
+ YTKkk2SA4FFIZY1BrcBdQSGwd45p6nOcMcxOBYd8UxKZribIdHWATe4KCg8yMZNBRT8NgMMrJ
+ kCK1zz0z4DToGTYcOESILCLDS9ZmMMeL+BV1HprhtR7UJCfzM9AIzjRd5J6izoXRAk0rvsLzl
+ 0GV1dLG
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Ted,
+Hi,
 
-On Sat, 9 Jul 2016, Theodore Ts'o wrote:
+On Sun, 19 Jun 2016, Junio C Hamano wrote:
 
-> +	# is arugably better, but it is a GNU extension.  Since this isn't
+> Lars Schneider <larsxschneider@gmail.com> writes:
+> 
+> > Hi Junio,
+> >
+> > is there any chance to pick this up? It would enable the web server
+> > tests on Travis CI.
+> 
+> There always are chances unless a patch was rejected with some
+> reason, like "no, I do not like it" ;-)
+> 
+> I do not see anybody commenting on it, and suspect that it simply
+> did not register in anybody's radar.
+> 
+> Folks who actually read the Travis report of their own commits, do
+> you have any comment (I just reproduced it from the original so that
+> we can easily apply it when we agree it is a good thing to do)?
 
-s/arugably/arguably/
+As long as we're not running the danger of timing out, I am all in favor
+of including the tests.
+
+I exercise Travis quite a bit these days, also because it catches more
+bugs than I can catch locally.
 
 Ciao,
 Dscho
