@@ -2,109 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 389C72018E
-	for <e@80x24.org>; Sun, 10 Jul 2016 15:10:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8779F2018E
+	for <e@80x24.org>; Sun, 10 Jul 2016 16:02:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757186AbcGJPK5 (ORCPT <rfc822;e@80x24.org>);
-	Sun, 10 Jul 2016 11:10:57 -0400
-Received: from kitenet.net ([66.228.36.95]:42228 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757176AbcGJPK4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jul 2016 11:10:56 -0400
-X-Question: 42
-Authentication-Results:	kitenet.net;
-	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=C6qJ3hOO;
-	dkim-atps=neutral
-DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-	t=1468163446; bh=ik/6d/mKGwpOir8XvSfwzPOhJeGbPOCq8l4ng3AkiA0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=C6qJ3hOOV5WDerbBfzAVCZ+18z5/KJCfXp2bMi6Fjk7G+tm073DA8+gMEzLzTLneQ
-	 Hhu+j++P1VgOSriQcelI71/NPsIgRF15MS8FZCeu5ES2abGgJP0RmkGKju0diFGkA8
-	 1ghxXM5317vue6oBB0PmLi4GToy4I0rP01lr2000=
-Date:	Sun, 10 Jul 2016 11:10:46 -0400
-From:	Joey Hess <id@joeyh.name>
-To:	larsxschneider@gmail.com
-Cc:	git@vger.kernel.org, joeyh@joeyh.name, pclouds@gmail.com,
-	Johannes.Schindelin@gmx.de, gitster@pobox.com
-Subject: Re: [RFC] Long running Git clean/smudge filter
-Message-ID: <20160710151046.GA7306@kitenet.net>
-References: <1468150507-40928-1-git-send-email-larsxschneider@gmail.com>
+	id S1757274AbcGJQCr (ORCPT <rfc822;e@80x24.org>);
+	Sun, 10 Jul 2016 12:02:47 -0400
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:34582 "EHLO
+	mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757180AbcGJQCq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jul 2016 12:02:46 -0400
+Received: by mail-oi0-f45.google.com with SMTP id s66so118857275oif.1
+        for <git@vger.kernel.org>; Sun, 10 Jul 2016 09:02:46 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:message-id:subject:to:cc;
+        bh=asknbPte4hsrRfoJ9DgsbhoEA9fSBTfySHBjdSXDI1w=;
+        b=pV5eRpnxQzUFsMuEjCt6PqteWFuwURGz/UmOADeogpwS84JBf2JpU9bTIIF54GnQNh
+         kXBD7d4Z/G3raXk+IThf9/yYAfp4ELWni8Pt9eVVijwuGk37PDPXXph0JeNbTIScWxO0
+         /SlA20gWjST/Hm2NmgIhapf7H4/mNt0tpwYi9o2v7fX5Eo49a0GumL7pgJOMyFzF4I4q
+         IbfAUyT2d/LsrdMbNuBBcA7zLTFiDL36j7FJTUh2kfM0qQk3INI3EVtSClzkdRsGninu
+         fchh+Cb86rXx0oDRSHddiO2vvw1686JfarRXBWm0daQY5MvPG8piY0tGTz23QSpKHq/q
+         7h9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to:cc;
+        bh=asknbPte4hsrRfoJ9DgsbhoEA9fSBTfySHBjdSXDI1w=;
+        b=S2EM3n23s5KlES8TmlMLr+wRqxT5Sq6y7/9K/xN6y1myyWxPea56WYgIgiBKUmeRK6
+         Up+zEL66mQXeS8f+ywQ2WBp6Fy9Vtk+7WE2g9zy+DFOrCh9EVLr7CrNnEfr9lOjQH/ch
+         2nZIMmW69OEGXoa4f8Yudw7lTy3AFfCcfh7C6gpMeD0uV07Ngz5b7r83BSLQnYuPVE7K
+         4gSGWBO5s2l/ytXmD9KhgFucCQ/ZiLzYOVkKSdXUODc/P9mTPdGBFBjRhSht/YWbrcox
+         YidLVjtasHvABDQnrXm9bZQwxziQZoZhLUDKI1lpyJwSVGApQLkpbtg6q7VMh6Lz3jBG
+         dJjA==
+X-Gm-Message-State: ALyK8tKO8vZp+PoMCewWU00pxdrPE/XxCdJTGgMiAY5A9i12BxlItEhsVNN+7NcPvQfiT7bMYThzHDW0pjrYhA==
+X-Received: by 10.202.223.132 with SMTP id w126mr8039568oig.20.1468166565464;
+ Sun, 10 Jul 2016 09:02:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="/04w6evG8XlLl3ft"
-Content-Disposition: inline
-In-Reply-To: <1468150507-40928-1-git-send-email-larsxschneider@gmail.com>
-User-Agent: Mutt/1.6.0 (2016-04-01)
+Received: by 10.182.221.68 with HTTP; Sun, 10 Jul 2016 09:02:44 -0700 (PDT)
+From:	Linus Torvalds <torvalds@linux-foundation.org>
+Date:	Sun, 10 Jul 2016 09:02:44 -0700
+X-Google-Sender-Auth: Hkn-AcjdKf-rE_ktLSKayKtbOIg
+Message-ID: <CA+55aFz=sZnABJr6F2yF_xvx6J6fZod6BbiL2OwszEnjjn-dEw@mail.gmail.com>
+Subject: Odd git overrflow bug?
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+We have an odd bug report in the kernel, where somebody had trouble
+bisecting all the way due to
 
---/04w6evG8XlLl3ft
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+  "git is failing with "you are trying to use to much memory"(?!)"
 
-larsxschneider@gmail.com wrote:
-> (2) Joey's topic, which is the base for my patch, looks stalled for more =
-than
-> 2 weeks:
-> http://thread.gmane.org/gmane.comp.version-control.git/297994/focus=3D298=
-006
-> I would be happy to address Junio's comments and post a reroll. However,
-> I don't want to interfere with Joey's plans.
+which can't be an exact  error message quote, but the closest I can
+find smells like the "unsigned_add_overflows()" check in the strbuf
+code. Very odd.
 
-I've been on vacation and plan to get back to that in the upcoming week.
+See
 
-> @Joey (in case you are reading this):
-> My patch changes your initial idea quite a bit. However, I believe it is =
-an
-> improvement that could be beneficial for git-annex, too. Would you prefer=
- to
-> work with me on the combination of our ideas (file clean/smudge + long ru=
-nning
-> clean/smudge processes) or would you prefer to keep your interface?
+    https://bugzilla.kernel.org/show_bug.cgi?id=121701
 
-Long running filters mean that you need a more complicated protocol to
-speak over the pipes. Seems that such a protocol could be designed to work
-with the original smudge/clean filters as well as with my
-smudgeToFile/cleanFromFile filters. Assuming that there's a way to
-tell whether the filters support being long-running or not.
+for the bug report.
 
-Note that the interface we arrived at for smudgeToFile/cleanFromFile is as
-similar as possible to smudge/clean, so the filter developer only has to
-change one thing. That's a big plus, and so I don't like diverging the
-two interfaces.
+I'm not seeing how that could *possibly* happen,  but if it indeed is
+that strbuf code, maybe it could print out the function name (there
+are two different cases) and values so give a hint about where/how
+this happens..
 
-So, I don't want to entangle these two ideas very much.
+Of course, since the bug report isn't an exact quote anyway, maybe
+that wouldn't have helped anyway. I asked for more information.
 
---=20
-see shy jo
-
---/04w6evG8XlLl3ft
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIVAwUBV4JlcMkQ2SIlEuPHAQKEWA//VfPpiVOGyxZemJhpsPWI1HJJW3dDcPiQ
-Bsa+v6XjkogCHvyeb3o39HiDnyoSdGCTPSZJcvWdpqADQ73yjlFV6JhtMr87C/p2
-IBy0AZchoTeNJ5smPnj+YlHlseEMZH18xZUOOCcoNyYL/15xaXe0L+jwKVinBKDb
-FeiLcOpVVU0+CfPjj1hTOxvt11tNBv+k7FCy9Q4C6G+yL6R/wM18KLZU8dvhQxrN
-a4R5x001NsFQXDrEyCbEe6HZ8ijMWV7QO5J5p/akeZLp/pZcS7remnXFxmd+7MvL
-doPQ+wgZHh+YaGwjbhUxn5vQblEb0Can764+ftc7CY+5kt6KdfKqkOLK+1kUQpXr
-1UWDoGSESQFLCh+KNRwzVcUTMo1VBeL7MyPJY8Pjo0QQpsr41sIxl9n3y13l59JA
-W4zsswQNbB1YR+hoGHGYGIxm2O+PDBepC1GFfgWDxws2/p4Vrz4vKagobL2U8IMw
-/dF5WPFiQemHFBVXdY1Tr4N4PrvGtfam77y6PM+wZz9Y/+h+0gACi8PeumoBMDce
-iliRvddu7iNS1MgLQAIhFV4G2DHF1fLgt68pv7cZhWnuDktiKYAm64iy2QOaAH9u
-N7yI/VAh+PzK5gJZYz11VEatMz9Q2D95Y65aG5/tXIJbm7SNvsRmLHKw35p+U+UC
-AzIC1MrWC+g=
-=uP2C
------END PGP SIGNATURE-----
-
---/04w6evG8XlLl3ft--
+           Linus
