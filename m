@@ -2,84 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4BB11F744
-	for <e@80x24.org>; Sun, 10 Jul 2016 07:12:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 779AF1F744
+	for <e@80x24.org>; Sun, 10 Jul 2016 08:21:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750822AbcGJHMr (ORCPT <rfc822;e@80x24.org>);
-	Sun, 10 Jul 2016 03:12:47 -0400
-Received: from mout.gmx.net ([212.227.15.15]:62925 "EHLO mout.gmx.net"
+	id S1750824AbcGJIUw (ORCPT <rfc822;e@80x24.org>);
+	Sun, 10 Jul 2016 04:20:52 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:33696 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750758AbcGJHMq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jul 2016 03:12:46 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0M2c1V-1b59pT3QtZ-00sKVu; Sun, 10 Jul 2016 09:12:38
- +0200
-Date:	Sun, 10 Jul 2016 09:12:36 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+	id S1750758AbcGJIUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jul 2016 04:20:48 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id E24C91F744;
+	Sun, 10 Jul 2016 08:20:46 +0000 (UTC)
+Date:	Sun, 10 Jul 2016 08:20:46 +0000
+From:	Eric Wong <e@80x24.org>
 To:	Junio C Hamano <gitster@pobox.com>
-cc:	Lars Schneider <larsxschneider@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v1] travis-ci: enable web server tests t55xx on Linux
-In-Reply-To: <xmqqd1ndvxqf.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607100911090.6426@virtualbox>
-References: <1463647511-54811-1-git-send-email-larsxschneider@gmail.com> <6C0F6649-C238-475E-BAA5-5F3A0EC5DA2D@gmail.com> <xmqqd1ndvxqf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Cc:	Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: [PATCH 3/2] hoist out handle_nonblock function for xread and xwrite
+Message-ID: <20160710082046.GB29312@whir>
+References: <xmqq37njlora.fsf@gitster.mtv.corp.google.com>
+ <20160709234518.GA3702@dcvr.yhbt.net>
+ <20160710025232.GA4666@sigill.intra.peff.net>
+ <20160710034736.GA19151@dcvr.yhbt.net>
+ <20160710044529.GA10777@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:CKHBz/w6NUMfA6VTl0hSNKYHr0CPNct9T6xzvgnMGyVyeW656ZX
- cHY15qFWu8q5+I8jDnpsUwqZg7YIq2aNre/Y/RwZDXSNtYx8uX9uWmZsnddfxt/ZIvI+BDW
- ZpNk3/G1z8NpLnVl8pHEN+jgz2ZwJq+yBiYEU5FXkXVijh+dKnbJDo878mh9h/qqFqH9NOb
- roD7y6Amgnz9002y1Zitw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:QbmdtIIH0RY=:UV/xw8/lZI0e+5j7PNyUey
- 0B2LlmByEASnDrH14GotcL7LXpBJzWW2eZazA7OxgCe6jLC7J5lD43dDnU1KHD0fXhoW9xjHi
- Rh1QdQxrCwpgcWFX+EB1uLOxPNrAOfBXhdKaebTjQK6vd7x3obbFIA4oL7hkCfCFgXvZ2SeBK
- gZ/KKkGZ0IcFF4oCmAjakqYVHcj0UlCLnJcuGaDCg+MMDwXT50yYXENtXywogUaMRkisFUFlW
- 4d2oCTVFiXQbFXRU18MXBdTE/agQUIKRtqqB4oaI5NN1Ii1BT4NISCdv9vMITnlknj+J6zdbg
- npTgcVh7z84m8paDAuhi62KHspMU+4PPH5fgU2vgcFvwOFntY7+FKEwE4lzOGMbjPsJ4qCKzs
- eBWGywyG9ZwBLrFBXCJLqOSGB4JlfHHKkrUubUco3AHpk5iHEiHkUHf7yLIakOcB58+Eu/vQr
- CPvoWkeoXbK2VPdAVBf80ej+DNoabfUyfT00xmXuvHCkw8AA+sPK0QA0Z/Ld3PFKZVL8QLYQw
- pBxhEr8/SxashpDOfzQyKslS8DuGYtKJoTS/4LaZxGSx/6FVDWIOHkpjQ5EBBRD8lra7oyp3B
- IKxqHKP15pnZXNz06tz7e4xdrs/wMqamcWvUB3vetVSmaoPEoMhEXbxnJ3rPCgRdTvUOlv4PI
- YTKkk2SA4FFIZY1BrcBdQSGwd45p6nOcMcxOBYd8UxKZribIdHWATe4KCg8yMZNBRT8NgMMrJ
- kCK1zz0z4DToGTYcOESILCLDS9ZmMMeL+BV1HprhtR7UJCfzM9AIzjRd5J6izoXRAk0rvsLzl
- 0GV1dLG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160710044529.GA10777@sigill.intra.peff.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+At least for me, this improves the readability of xread and
+xwrite; hopefully allowing missing "continue" statements to
+be spotted more easily.
 
-On Sun, 19 Jun 2016, Junio C Hamano wrote:
+Signed-off-by: Eric Wong <e@80x24.org>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+  Jeff King <peff@peff.net> wrote:
+  > On Sun, Jul 10, 2016 at 03:47:36AM +0000, Eric Wong wrote:
+  > > Yes, I'm fine with either, but I'm slightly thrown off by
+  > > a function relying on errno being set by the caller, even if it
+  > > is errno.  So maybe localizing it is better (see below)
+  > 
+  > Yeah, I had a similar reservation, but didn't want to clutter the
+  > interface. However, just passing errno isn't too bad (as you showed
+  > below), and is much less magical.
+  > 
+  > Do you want to squash that and re-send the whole patch to make Junio's
+  > life easier?
 
-> Lars Schneider <larsxschneider@gmail.com> writes:
-> 
-> > Hi Junio,
-> >
-> > is there any chance to pick this up? It would enable the web server
-> > tests on Travis CI.
-> 
-> There always are chances unless a patch was rejected with some
-> reason, like "no, I do not like it" ;-)
-> 
-> I do not see anybody commenting on it, and suspect that it simply
-> did not register in anybody's radar.
-> 
-> Folks who actually read the Travis report of their own commits, do
-> you have any comment (I just reproduced it from the original so that
-> we can easily apply it when we agree it is a good thing to do)?
+  Done, also updated the subject to match the new function name.
 
-As long as we're not running the danger of timing out, I am all in favor
-of including the tests.
+  I wasn't attached to the "io_wait" name, either, as it could
+  be confused with "I/O wait" commonly associated with disk I/O
+  and not often with socket/pipe I/O that poll gets used for.
 
-I exercise Travis quite a bit these days, also because it catches more
-bugs than I can catch locally.
+ wrapper.c | 48 ++++++++++++++++++++----------------------------
+ 1 file changed, 20 insertions(+), 28 deletions(-)
 
-Ciao,
-Dscho
+diff --git a/wrapper.c b/wrapper.c
+index 0b920f1..78f6431 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -227,6 +227,24 @@ int xopen(const char *path, int oflag, ...)
+ 	}
+ }
+ 
++static int handle_nonblock(int fd, short poll_events, int err)
++{
++	struct pollfd pfd;
++
++	if (err != EAGAIN && err != EWOULDBLOCK)
++		return 0;
++
++	pfd.fd = fd;
++	pfd.events = poll_events;
++
++	/*
++	 * no need to check for errors, here;
++	 * a subsequent read/write will detect unrecoverable errors
++	 */
++	poll(&pfd, 1, -1);
++	return 1;
++}
++
+ /*
+  * xread() is the same a read(), but it automatically restarts read()
+  * operations with a recoverable error (EAGAIN and EINTR). xread()
+@@ -242,21 +260,8 @@ ssize_t xread(int fd, void *buf, size_t len)
+ 		if (nr < 0) {
+ 			if (errno == EINTR)
+ 				continue;
+-			if (errno == EAGAIN || errno == EWOULDBLOCK) {
+-				struct pollfd pfd;
+-				pfd.events = POLLIN;
+-				pfd.fd = fd;
+-				/*
+-				 * it is OK if this poll() failed; we
+-				 * want to leave this infinite loop
+-				 * only when read() returns with
+-				 * success, or an expected failure,
+-				 * which would be checked by the next
+-				 * call to read(2).
+-				 */
+-				poll(&pfd, 1, -1);
++			if (handle_nonblock(fd, POLLIN, errno))
+ 				continue;
+-			}
+ 		}
+ 		return nr;
+ 	}
+@@ -277,21 +282,8 @@ ssize_t xwrite(int fd, const void *buf, size_t len)
+ 		if (nr < 0) {
+ 			if (errno == EINTR)
+ 				continue;
+-			if (errno == EAGAIN || errno == EWOULDBLOCK) {
+-				struct pollfd pfd;
+-				pfd.events = POLLOUT;
+-				pfd.fd = fd;
+-				/*
+-				 * it is OK if this poll() failed; we
+-				 * want to leave this infinite loop
+-				 * only when write() returns with
+-				 * success, or an expected failure,
+-				 * which would be checked by the next
+-				 * call to write(2).
+-				 */
+-				poll(&pfd, 1, -1);
++			if (handle_nonblock(fd, POLLOUT, errno))
+ 				continue;
+-			}
+ 		}
+ 
+ 		return nr;
+-- 
+EW
