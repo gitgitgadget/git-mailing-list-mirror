@@ -2,145 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 389132018E
-	for <e@80x24.org>; Mon, 11 Jul 2016 05:07:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B75552018E
+	for <e@80x24.org>; Mon, 11 Jul 2016 06:07:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757696AbcGKFHf (ORCPT <rfc822;e@80x24.org>);
-	Mon, 11 Jul 2016 01:07:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42711 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757706AbcGKFHe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2016 01:07:34 -0400
-Received: (qmail 13572 invoked by uid 102); 11 Jul 2016 05:07:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jul 2016 01:07:35 -0400
-Received: (qmail 29038 invoked by uid 107); 11 Jul 2016 05:07:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jul 2016 01:07:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jul 2016 01:07:30 -0400
-Date:	Mon, 11 Jul 2016 01:07:30 -0400
-From:	Jeff King <peff@peff.net>
-To:	Theodore Ts'o <tytso@mit.edu>
-Cc:	Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 5/5] date: add "unix" format
-Message-ID: <20160711050730.GE32514@sigill.intra.peff.net>
-References: <20160711050201.GA18031@sigill.intra.peff.net>
+	id S1030283AbcGKGHP (ORCPT <rfc822;e@80x24.org>);
+	Mon, 11 Jul 2016 02:07:15 -0400
+Received: from mout.gmx.net ([212.227.15.15]:58295 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030247AbcGKGHM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2016 02:07:12 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LZynd-1azDmU48mD-00lmCG; Mon, 11 Jul 2016 08:07:04
+ +0200
+Date:	Mon, 11 Jul 2016 08:07:03 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Duy Nguyen <pclouds@gmail.com>
+cc:	Josh Triplett <josh@joshtriplett.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: gc and repack ignore .git/*HEAD when checking reachability
+In-Reply-To: <CACsJy8AFYWsi1_f-Hw1odN3gmbfqayXuoBHo+K3Fh4XBwMA0Vw@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1607110804480.6426@virtualbox>
+References: <20160708025948.GA3226@x> <xmqq1t34oiit.fsf@gitster.mtv.corp.google.com> <20160708064448.GA18043@x> <xmqqa8hsm4qu.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607090928500.6426@virtualbox> <20160709140931.GA3185@x>
+ <CACsJy8A6fiPUtNZow_oOEQSi64GMxA2Jy84h4OznaSxBMePtbQ@mail.gmail.com> <alpine.DEB.2.20.1607101255300.6426@virtualbox> <CACsJy8BWKrXqXnbEgSKJ9gKcAyvdZhExfgh5zBRisX8R3BkBLw@mail.gmail.com> <alpine.DEB.2.20.1607101602320.6426@virtualbox>
+ <CACsJy8AFYWsi1_f-Hw1odN3gmbfqayXuoBHo+K3Fh4XBwMA0Vw@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160711050201.GA18031@sigill.intra.peff.net>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:FM7Qy/cQbv7yeKFdqZcsz0PBasS0iAkh+iuMX2L1X7GLersrDBn
+ dpt/kpNsTOwusaR8WLG/Qh18veqdKFsLlATZUiAy2gcXIcMTVL+0K2NemAovon8r6W3Lub+
+ PbN6gtzXHXFXFMKJwPxjOWmahhJ4LK3S9UrqU21E8SqWUdcBVdfPACv7ev8x00tmJzswmSE
+ Nsv8JIZw39Cxso+fC8aNg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:8+bSZ1Ddb7A=:O0fYgaZSzXRyAe4d6tyx+5
+ VgASh5dT2k5Sy6fo3ZNDJkEX5mwi25g1ynDXo3iHc1KHMSp/5018ekREKjCJ4IaIFqPsz9ocl
+ Zg+mrqzGUmDzBimw26mlCuRGabjDdabWYSFkkintF/T9GCqVVMaJZ5CnNQxiNeFfHPkkaa2pW
+ SdbQuVFBXui3Z+NajZfsdpQD5QiYn5uO5Re24gr2WExI6yt5I0R/egkkTaFSAgfcJ4tgiogoO
+ 0BU38+KRBjmmePu9QyAa05m/1K40tJbMn+zuEWPt3XLNClgZ8N3b7taw9bl6yOz137krOBKqu
+ x51A6ilmtfQXMwP5CQi4h0GHKNj4H7ysHJZVamIXUKvPs2nhLkpvAnHO2LMC/nm29jFSm32TK
+ wnU393q86mlHNIgTDn22N3JuTkvjZZ5vYZqYFoIQz6Fi6QlXfDCrGmgcF/1AIKC9bqfK67yID
+ niTa76ArGL/ENtq8w4WYjthm58sWAc23wX1za7b1zAKnC/Crs3LzTM5NbbqvdNK30JrpWFZo+
+ cCX84wjfzy12HRrxJbqlv1KOC/M6vibzPFANEV7VTfqyAA0E2javeIOrT/KrwdkMupDRXusMx
+ QyTm/iaY+Zrh9vEvMShakHkZVnC816wdf13olDi18SNyHRdyM396meQKSZ4XhcMVVzDITi1TN
+ DtDuiB9BQ94tjvSYdvZnsM1uZCVzgTs+j2weql70NHO6T1p9vE2nKNDJH3vWooJWKmga6BTw/
+ ce0RyZPLSD8GfIY8cRtFnmr0fEZzOIg+L80GX/Fvgq5KH9iQAaMaX1rNthWvRJLF5NSAMtKLl
+ tn9Z6DL
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-We already have "--date=raw", which is a Unix epoch
-timestamp plus a contextual timezone (either the author's or
-the local). But one may not care about the timezone and just
-want the epoch timestamp by itself. It's not hard to parse
-the two apart, but if you are using a pretty-print format,
-you may want git to show the "finished" form that the user
-will see.
+Hi Duy,
 
-We can accomodate this by adding a new date format, "unix",
-which is basically "raw" without the timezone.
+On Sun, 10 Jul 2016, Duy Nguyen wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/rev-list-options.txt | 4 ++++
- builtin/blame.c                    | 3 +++
- cache.h                            | 3 ++-
- date.c                             | 8 ++++++++
- t/t0006-date.sh                    | 2 ++
- 5 files changed, 19 insertions(+), 1 deletion(-)
+> We will be able to see refs from all worktrees if we choose to.
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index a6059d1..0fa4c8b 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -751,6 +751,10 @@ format. Note that the `-local` option does not affect the
- seconds-since-epoch value (which is always measured in UTC), but does
- switch the accompanying timezone value.
- +
-+`--date=unix` shows the date as a Unix epoch timestamp (seconds since
-+1970).  As with `--raw`, this is always in UTC and therefore `-local`
-+has no effect.
-++
- `--date=format:...` feeds the format `...` to your system `strftime`.
- Use `--date=format:%c` to show the date in your system locale's
- preferred format.  See the `strftime` manual for a complete list of
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 1e214bd..1486541 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2626,6 +2626,9 @@ parse_done:
- 	case DATE_RAW:
- 		blame_date_width = sizeof("1161298804 -0700");
- 		break;
-+	case DATE_UNIX:
-+		blame_date_width = sizeof("1161298804");
-+		break;
- 	case DATE_SHORT:
- 		blame_date_width = sizeof("2006-10-19");
- 		break;
-diff --git a/cache.h b/cache.h
-index f1dc289..ebbf6b7 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1223,7 +1223,8 @@ struct date_mode {
- 		DATE_ISO8601_STRICT,
- 		DATE_RFC2822,
- 		DATE_STRFTIME,
--		DATE_RAW
-+		DATE_RAW,
-+		DATE_UNIX
- 	} type;
- 	const char *strftime_fmt;
- 	int local;
-diff --git a/date.c b/date.c
-index 4c7aa9b..a996331 100644
---- a/date.c
-+++ b/date.c
-@@ -177,6 +177,12 @@ const char *show_date(unsigned long time, int tz, const struct date_mode *mode)
- 	struct tm *tm;
- 	static struct strbuf timebuf = STRBUF_INIT;
- 
-+	if (mode->type == DATE_UNIX) {
-+		strbuf_reset(&timebuf);
-+		strbuf_addf(&timebuf, "%lu", time);
-+		return timebuf.buf;
-+	}
-+
- 	if (mode->local)
- 		tz = local_tzoffset(time);
- 
-@@ -792,6 +798,8 @@ static enum date_mode_type parse_date_type(const char *format, const char **end)
- 		return DATE_NORMAL;
- 	if (skip_prefix(format, "raw", end))
- 		return DATE_RAW;
-+	if (skip_prefix(format, "unix", end))
-+		return DATE_UNIX;
- 	if (skip_prefix(format, "format", end))
- 		return DATE_STRFTIME;
- 
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 276366e..886821d 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -46,8 +46,10 @@ check_show rfc2822 "$TIME" 'Wed, 15 Jun 2016 16:13:20 +0200'
- check_show short "$TIME" '2016-06-15'
- check_show default "$TIME" 'Wed Jun 15 16:13:20 2016 +0200'
- check_show raw "$TIME" '1466000000 +0200'
-+check_show unix "$TIME" '1466000000'
- check_show iso-local "$TIME" '2016-06-15 14:13:20 +0000'
- check_show raw-local "$TIME" '1466000000 +0000'
-+check_show unix-local "$TIME" '1466000000'
- 
- # arbitrary time absurdly far in the future
- FUTURE="5758122296 -0400"
--- 
-2.9.0.406.g77f030d
+What I tried to say is: even if we make it technically feasible to have
+per-worktree refs or reflogs, the downsides are too prohibitive. We should
+simply not introduce support for that (and resolve the per-worktree HEAD
+issue accordingly).
+
+Ciao,
+Dscho
