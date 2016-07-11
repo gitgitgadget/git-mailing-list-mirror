@@ -2,42 +2,41 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A88FB1F744
-	for <e@80x24.org>; Mon, 11 Jul 2016 16:43:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D15D1F744
+	for <e@80x24.org>; Mon, 11 Jul 2016 16:48:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934117AbcGKQnV (ORCPT <rfc822;e@80x24.org>);
-	Mon, 11 Jul 2016 12:43:21 -0400
-Received: from imap.thunk.org ([74.207.234.97]:46104 "EHLO imap.thunk.org"
+	id S934211AbcGKQsi (ORCPT <rfc822;e@80x24.org>);
+	Mon, 11 Jul 2016 12:48:38 -0400
+Received: from imap.thunk.org ([74.207.234.97]:46242 "EHLO imap.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751669AbcGKQnU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2016 12:43:20 -0400
+	id S932265AbcGKQsg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2016 12:48:36 -0400
 DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=eEivHcC9aWK8cEFmQ5dcgyn/ZXjyyWwBJ7du7slBVCA=;
-	b=KQcAcz0lO7lJxEarwwulCy6mREJEBGxvp9adkdBoWhwO7Q6Lunwe/QfjFS0f/GCJwC/SxWWanu4tuUIQQ8lEzBjxA7JbhaG+RVGjg1SofOIUFkMbDcQsxeW9et8q6MFgzZCCofgdAKSmUlMoKvMBkf25Ct0CbVHL3DxWJLIK0ys=;
+	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=59zjz73SFplISOi6owZ6yIFCsY7PcE4Sm43rv7dgvrw=;
+	b=dKtouZHHxvr9QC0f0g/wNIjpfZrsNhsj7++UMoYw/6nXKPXdcG5Nu9T3gAUQHEDTSCZSvLooA/MBtMkSPCUwBYeL9UaRLZlz8h4CvtzQbOcxBfIDPCR9FgcUKJg8CVIFGtI7w9W/Goe6NCtcihM0ODQR4kHo5i/J5bx7uLLf4ys=;
 Received: from root (helo=closure.thunk.org)
 	by imap.thunk.org with local-esmtp (Exim 4.84_2)
 	(envelope-from <tytso@thunk.org>)
-	id 1bMeIg-0007Xn-4g; Mon, 11 Jul 2016 16:43:18 +0000
+	id 1bMeNn-0007Z3-2c; Mon, 11 Jul 2016 16:48:35 +0000
 Received: by closure.thunk.org (Postfix, from userid 15806)
-	id 6648E828F74; Mon, 11 Jul 2016 12:43:17 -0400 (EDT)
-Date:	Mon, 11 Jul 2016 12:43:17 -0400
+	id 540D5828F74; Mon, 11 Jul 2016 12:48:34 -0400 (EDT)
+Date:	Mon, 11 Jul 2016 12:48:34 -0400
 From:	Theodore Ts'o <tytso@mit.edu>
 To:	Jeff King <peff@peff.net>
 Cc:	Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] pretty: add format specifiers: %gr, %gt, %gI, gi
-Message-ID: <20160711164317.GB3890@thunk.org>
-References: <20160710055402.32684-1-tytso@mit.edu>
- <20160710061644.GA19640@sigill.intra.peff.net>
- <20160710142622.GE26097@thunk.org>
- <20160711050201.GA18031@sigill.intra.peff.net>
+Subject: Re: [PATCH 3/5] doc/pretty-formats: describe index/time formats for
+ %gd
+Message-ID: <20160711164834.GC3890@thunk.org>
+References: <20160711050201.GA18031@sigill.intra.peff.net>
+ <20160711050513.GC32514@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20160711050201.GA18031@sigill.intra.peff.net>
+In-Reply-To: <20160711050513.GC32514@sigill.intra.peff.net>
 User-Agent: Mutt/1.6.0 (2016-04-01)
 X-SA-Exim-Connect-IP: <locally generated>
 X-SA-Exim-Mail-From: tytso@thunk.org
@@ -47,90 +46,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jul 11, 2016 at 01:02:02AM -0400, Jeff King wrote:
-> Yeah, I'd have hoped for %gd, as well. One thing I think we should move
-> towards in the long run is giving more readable names to our
-> placeholders for git-log, the way for-each-ref and cat-file do (but
-> keeping the existing ones for compatibility and as a shorthand).
-> 
-> So ideally the answer in the long run is:
-> 
->   %(reflog-ref)@{%(reflog-index)}
-> 
-> or possibly:
-> 
->   %(reflog:index)
-> 
-> for the whole thing. Or something like that. I haven't thought that hard
-> about the exact syntax.
+On Mon, Jul 11, 2016 at 01:05:13AM -0400, Jeff King wrote:
+> The "reflog selector" format changes based on a series of
+> heuristics, and that applies equally to both stock "log -g"
+> output, as well as "--format=%gd". The documentation for
+> "%gd" doesn't cover this. Let's mention the multiple formats
+> and refer the user back to the "-g" section for the complete
+> rules.
 
-Yes, FWIW, I agree that long term, using % followed by one or two
-characters is just a mess, and using some kind of human-readable
-format is going to make a lot of sense.  I can imagine a few places
-where I might still want to type --format=%at in some kind of ad-hoc
-shell command, but in most places, if you're using a complex --format
-specifier, it's going either in a shell script or in a .gitconfig
-file, where being verbose is probably more of an advantage than a
-disadvantage.
+Is it worth mentioning that the shortening only happens if the user
+specifies a selector with '/' in it in the first place?  I was
+confused when I was first playing with these selectors because %gd and
+%gD are identical if you run
 
->   1. It's half-implemented. Why can we do format X, but not format Y
->      (for that matter, why can you do %ct, but there is no --date format
->      that matches it?). That sort of non-orthogonality ends up
->      frustrating for users and makes git look creaky and poorly thought
->      out.
+	git reflog --format=%gd -3 master
+	git reflog --format=%gD -3 master
 
-Git *is* creaky and not thought-out in advance; that's just the nature
-of how most successful open source projects grow; might as well be
-proud of it.  :-)   As Greg K-H has said: "We believe in evolution, and
-not intelligent design."  :-)
+and are only different if you run:
 
-> > ... although I doubt whether git would ever want to do the equivalent of:
-> > 
-> > gcloud compute images list  --format='table[box,title=Images](name:sort=1,family)'
-> > 
-> > which will print something like this:
-> 
-> That's neat, though I think I'd really prefer just making it easy to get
-> the data out of git in a structured way, and then applying some cool
-> json-formatting script to it. Surely "turn this json into a table" is a
-> thing that could be solved once for everybody (I don't work with it
-> enough to know, but maybe "jq" can do that already).
+	git reflog --format=%gd -3 refs/heads/master
+	git reflog --format=%gD -3 refs/heads/master
 
-Oh, agreed.  I used that as over-the-top example of something we
-probably wouldn't want to put in the git core.  jq can't, but I'm sure
-there must be some JSON tool out there which can.
-
-> But let's get back to reality for a moment. Here are some patches that
-> address the issues you brought up above.
-> 
->   [1/5]: doc/rev-list-options: clarify "commit@{Nth}" for "-g" option
->   [2/5]: doc/rev-list-options: explain "-g" output formats
->   [3/5]: doc/pretty-formats: describe index/time formats for %gd
->   [4/5]: date: document and test "raw-local" mode
->   [5/5]: date: add "unix" format
-> 
-> The next step is either:
-> 
->   - add specific reflog-time-formats, as your patch does
-> 
->   - add a generic reflog-date placeholder, so you can do:
-> 
->       git log --date=unix --format='%gT'
-> 
->     or whatever. That still doesn't give you multiple date types in a
->     single invocation, though. It's probably not much code to do so, but
->     designing the syntax and supporting existing placeholders would be
->     some work.
-> 
-> I'm on the fence, so I'll let you decide how you want to proceed. I can
-> live with "%gr" and "%gt", as they are at least symmetric with their
-> author/committer counterparts.
-
-I'm on the fence myself.  I can live with either, since either way the
-long message command line will be going in .gitconfig.  I have a
-slight preference for %gr and %gt, as %gT isn't orthogonal with
-%ad/%cd, but I could be easily pursuaded otherwise.
-
-Does anyone else have a strong opinion?
-
-						- Ted
+					- Ted
+					
