@@ -2,105 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEAEE1F744
-	for <e@80x24.org>; Mon, 11 Jul 2016 17:13:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26B9C1F744
+	for <e@80x24.org>; Mon, 11 Jul 2016 17:23:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753987AbcGKRNP (ORCPT <rfc822;e@80x24.org>);
-	Mon, 11 Jul 2016 13:13:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56669 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751757AbcGKRNO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2016 13:13:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2661A2C584;
-	Mon, 11 Jul 2016 13:13:13 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mqIlYUOLFgtBbkPtCk/S8C+CTPU=; b=nORoP6
-	GnUA4U2N5JCFijOyIcpjM+3Y75W19F5D1Htbow0iE4mYEkg2iQ+SlnexdFViwRwS
-	BzNxaRXJVJde5ZjgCPB8Z4bQeHVS0FIzJrtBBPAbfWt1hpS0vm3lZY9m1gBnjqAA
-	z/CGAMVtGex//9QMfwSXDMQfJRGURNxsjYvfc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vbMpZV2Mixpe9KyZI1tYYgD8wwwNfq/+
-	Vog7UwgIMgzO0CmvkQ7Em5D5xi8I4BDrKa1hNNQgQsKdgVxZvGqjAqwlcVnVtJv6
-	1EWsY8BEv29kbSZsisQOl1sxrA4ah21O1bqnFe9/fYoEEnryJPbiSmidI5E9LC4b
-	sshAs4uZb4c=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1D98C2C583;
-	Mon, 11 Jul 2016 13:13:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9A7D82C582;
-	Mon, 11 Jul 2016 13:13:12 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2016, #03; Fri, 8)
-References: <xmqq37njlora.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1607110821500.6426@virtualbox>
-Date:	Mon, 11 Jul 2016 10:13:10 -0700
-In-Reply-To: <alpine.DEB.2.20.1607110821500.6426@virtualbox> (Johannes
-	Schindelin's message of "Mon, 11 Jul 2016 08:24:49 +0200 (CEST)")
-Message-ID: <xmqqzipo9jyx.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BF91C7B4-478A-11E6-8220-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1755562AbcGKRXV (ORCPT <rfc822;e@80x24.org>);
+	Mon, 11 Jul 2016 13:23:21 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:36555 "EHLO
+	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751828AbcGKRXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2016 13:23:20 -0400
+Received: by mail-wm0-f42.google.com with SMTP id f126so99170633wma.1
+        for <git@vger.kernel.org>; Mon, 11 Jul 2016 10:23:19 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=fi+sHxG8zVVHCF8SIspSHO2aPtv/3g1AE0BTkN7aY1U=;
+        b=QlhCOQ9KCGIL3Koczw8eRGD5fCaVTMpiDHS2yKX80VeQNkGjmSD/96EuvoKTg5VVma
+         TkPX5hX2d5qYyzyflKo9qOrgcGxuZhjkTz3Mva+jQ0tdE3mc+JRYSn4uRFxkUiQSIxDt
+         PnLarhIjBbX/RXGVuaoiO8kTaB5WhEXXUJ7rz9xsYCKjvTVUNEgjNfsZhaFJkQSpMA74
+         OEH2YHkew2MJ157er3o7S9DPwyrJb64f68+ZxTbDonqnH44yQfO9w5HSP1WzvntI7/4O
+         WiX0B2gSsowolxuf7hz1R+rp61U5g97u6qjmW7qRLnYlI4yO5ReCfw4Ox6iQoQY22cWd
+         i73A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=fi+sHxG8zVVHCF8SIspSHO2aPtv/3g1AE0BTkN7aY1U=;
+        b=TREFpKYPyQMi4NFMkFEzvijMEw8haGgZ9j4qQLUTbh3VaLB8BZZunz7lPw5xRH2co2
+         dyNZcXGXgkLcmfHkQoitt5/B6O/8jvpwz74kWM2bMx2AHeDTL/1fXrsZN9qZqBlnaxPg
+         ZdRTXuOHhDKYFzaXsFbbMvkpLyeDF6f550jUhz1sS3KYAYHocyIyLvL7vU5mJsn8oF9e
+         CWraa6Bfvf0qMfY8oLPa/ypBBb/bQWwsOoQUmCc+39kqrpCqjlOQjGrWq2lrw6C+AjTf
+         VQNQWQYQ/o/kXweEr1/VMf1djkxZx8yNpRqN3rGuilPjh68Bp2BHZCfWPRFHTsEIg8Xw
+         kaCA==
+X-Gm-Message-State: ALyK8tKBH834aaDM63gp0Xml7Xcgk/xCdkXBeZbC0y+8xBnKoIjpND+6381E2tYq61S3Mg==
+X-Received: by 10.194.30.4 with SMTP id o4mr836542wjh.110.1468257798356;
+        Mon, 11 Jul 2016 10:23:18 -0700 (PDT)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id si2sm829442wjb.19.2016.07.11.10.23.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 11 Jul 2016 10:23:17 -0700 (PDT)
+From:	Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
+To:	git@vger.kernel.org
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 0/8] Add configuration options for split-index
+Date:	Mon, 11 Jul 2016 19:22:46 +0200
+Message-Id: <20160711172254.13439-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.9.0.250.g7087ccc.dirty
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Goal
+~~~~
 
-> What about the am-call-merge-recursive-directly patch series? As I
-> demonstrated by rebasing it to `pu`, it is actually not butchering the
-> smudge/clean pathway as you suggested.
+We want to make it possible to use the split-index feature
+automatically by just setting a new "core.splitIndex" configuration
+variable to true.
 
-What I said was it seemed to conflict with something else, which
-butchered that codepath that needed further work.  It seems I was
-reading the conflicts incorrectly and the conflicts were coming from
-other topics like i18n and oid changes.
+This can be valuable as split-index can help significantly speed up
+`git rebase` especially along with the current work to libify `git
+apply`.
 
-> I am a bit at a loss here: what can I do to get this picked up?
+Design
+~~~~~~
 
-You can do one of three things, and they apply not specifically to
-this case but in general when working with others.
+The design is similar as the previous work that introduced
+"core.untrackedCache". 
 
- - You can help other topics that collide with what you do to move
-   forward by helping their reviews.  Instead of leaving them
-   something the still need polishing and requires your topic to get
-   adjusted every time they change, help them be polished earlier
-   and become part of the solid foundation you build on top.
+The new "core.splitIndex" configuration option can be either true,
+false or undefined which is the default.
 
- - You can wait until that polishing happens to the other topics
-   that block you.
+When it is true, the split index is created, if it does not already
+exists, when the index is read. When it is false, the split index is
+removed if it exists, when the index is read. Otherwise it is left as
+is.
 
- - You can shoot down the other topics that block you, e.g. "these
-   are not good ideas", "it aims to do a good thing, but its
-   implementation is far from ready--it misses this and that cases
-   among others. I'd recommend ejecting the topic for now and have
-   it redesigned from scratch", etc., which would shift the issue of
-   conflicting change to their problem as a side effect.
+Highlevel view of the patches in the series
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Rebasing on 'pu' essentially is the second course; you are
-explicitly making your topic depend on the others (which creates a
-bit more work to me to identify exactly which topics in 'pu' you
-absolutely need to decide where to queue your patches, compared to
-the case in which you explicitly say "these patches apply to a merge
-of topic X and Y on top of v2.9", though).
+    - Patches 1/8 to 4/8 introduce the functions that are reading the
+      configuration variable and tweaking the split index depending on
+      its value.
 
-Also, without _any_ conflicts with other topics, the above three
-points apply well when working with others.  There are tons of
-topics that are marked as "Needs review", and they will not advance
-until that happens.  When the set of "needs review" topics balloon,
-I have to stop picking up non-trivial topics to make time to review
-them myself.
+    - Patches 5/8 and 6/8 add some documentation for the new feature.
 
-Thanks.
+    - Patch 7/8 adds a few simple tests.
+
+    - Patch 8/8 cleans up the old "sharedindex.XXXX" previously
+      created by split-index.
+
+Future work
+~~~~~~~~~~~
+
+One thing that is probably missing is a mechanism to avoid having too
+many changes accumulating in the (split) index while in split index
+mode. The git-update-index documentation says:
+
+	If split-index mode is already enabled and `--split-index` is
+	given again, all changes in $GIT_DIR/index are pushed back to
+	the shared index file.
+
+but it is probably better to not expect the user to think about it and
+to have a mechanism that pushes back all changes to the shared index
+file automatically when some threshold is reached. The threshold could
+be for example when $GIT_DIR/index size is larger than 25% of the
+shared index size. Opinions, test results or test ideas are welcome on
+this.
+
+Links
+~~~~~
+
+The last iteration of the git apply libification patch series is
+there:
+
+http://thread.gmane.org/gmane.comp.version-control.git/298344/
+
+This patch series is also available here:
+
+https://github.com/chriscool/git/commits/config-split-index
+
+
+Christian Couder (8):
+  config: add git_config_get_split_index()
+  split-index: add {add,remove}_split_index() functions
+  read-cache: add and then use tweak_split_index()
+  update-index: warn in case of split-index incoherency
+  Documentation/config: add information for core.splitIndex
+  Documentation/git-update-index: talk about core.splitIndex config var
+  t1700: add tests for core.splitIndex
+  read-cache: unlink old sharedindex files
+
+ Documentation/config.txt           |  4 ++++
+ Documentation/git-update-index.txt |  6 ++++++
+ builtin/update-index.c             | 20 ++++++++---------
+ cache.h                            |  1 +
+ config.c                           | 10 +++++++++
+ read-cache.c                       | 44 +++++++++++++++++++++++++++++++++++++-
+ split-index.c                      | 18 ++++++++++++++++
+ split-index.h                      |  2 ++
+ t/t1700-split-index.sh             | 44 ++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 138 insertions(+), 11 deletions(-)
+
+-- 
+2.9.0.250.g7087ccc.dirty
+
