@@ -2,94 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89E711F744
-	for <e@80x24.org>; Mon, 11 Jul 2016 16:54:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEAEE1F744
+	for <e@80x24.org>; Mon, 11 Jul 2016 17:13:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755667AbcGKQyx (ORCPT <rfc822;e@80x24.org>);
-	Mon, 11 Jul 2016 12:54:53 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:34882 "EHLO
-	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755645AbcGKQyu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2016 12:54:50 -0400
-Received: by mail-wm0-f43.google.com with SMTP id f65so71008411wmi.0
-        for <git@vger.kernel.org>; Mon, 11 Jul 2016 09:54:50 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=nmZCLxyMCoTwl38diC5tKAp41uefXiyZRvt+85qwrgw=;
-        b=KcZMVzbAHKHTuf3scklV76vgnYtReZTI1lDD80f2nGwoIJ+INXziezD8xVwUnpu+XU
-         OIYS6h3f6GV7Mvox6aI3AasnacbY918lBs2qgRZzzcfq1jzOWeBX6rIXHtiPQbGTMxXh
-         aLdQnxLge6vURoJGBX124WtBzxjLpxEhsKTe4atfZ+Hdrt2o38qm9I96P4snVw8+x6Sk
-         jsYuKaeUuP11xvOrVU871fCWUQcMORrx0yaYdtlXdU7vHG8V7Q6JGflrHkVTJMQkhIFy
-         hAyhCRjhJqqDHBCbFXPN1T2/W+y0NLWYFO6qSL7lQjbOVXO/G0PW5f1mmBFz92azYFxJ
-         Kn/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=nmZCLxyMCoTwl38diC5tKAp41uefXiyZRvt+85qwrgw=;
-        b=ZckkrGbdlDEJRnczjlgTJPz6ObEM199obcBwQ4gZc8Ho7hj17k1Nas6rDrmm682Y4w
-         UrW7ldqh3N08HoemN9R3YVu96ZbPwXN8nCpW6qG54c/kkYtqjNkTDnl2Bt9iBzM13mNj
-         DFepjQduUIiPxtxDbqSceBrt2qXxGyVpCHa1FdwQXAyFBVJ3z7Z8CyaZtF5t47zMFywG
-         a4UrvoIlcYxkjujdhj39b++SuH+nz/MRPUhC8fj7lLawZ0qivZODDboc8Pbl+3XZvWx0
-         8ueb8DWHZIlIaE8tgKjslkJfdKYxhau/2bYbCbZIn6eExY5HaSkobMyF4cxUd6VYUIu/
-         55ig==
-X-Gm-Message-State: ALyK8tKW2rBP8rxixFvhnQDAVIt7ig/nZt1WTd2t5o8k7MncESi/Ehi6K+JMtvyMsoAt5g==
-X-Received: by 10.28.199.4 with SMTP id x4mr5273516wmf.70.1468256088751;
-        Mon, 11 Jul 2016 09:54:48 -0700 (PDT)
-Received: from [138.38.103.116] (cspc-lin-03.bath.ac.uk. [138.38.103.116])
-        by smtp.googlemail.com with ESMTPSA id m5sm24007391wmm.10.2016.07.11.09.54.47
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Jul 2016 09:54:48 -0700 (PDT)
-To:	git@vger.kernel.org
-From:	Garoe <garoedp@gmail.com>
-Subject: git push doesn't update the status with multiple remotes
-Message-ID: <5783CF57.1010105@gmail.com>
-Date:	Mon, 11 Jul 2016 17:54:47 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
+	id S1753987AbcGKRNP (ORCPT <rfc822;e@80x24.org>);
+	Mon, 11 Jul 2016 13:13:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56669 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751757AbcGKRNO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2016 13:13:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2661A2C584;
+	Mon, 11 Jul 2016 13:13:13 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mqIlYUOLFgtBbkPtCk/S8C+CTPU=; b=nORoP6
+	GnUA4U2N5JCFijOyIcpjM+3Y75W19F5D1Htbow0iE4mYEkg2iQ+SlnexdFViwRwS
+	BzNxaRXJVJde5ZjgCPB8Z4bQeHVS0FIzJrtBBPAbfWt1hpS0vm3lZY9m1gBnjqAA
+	z/CGAMVtGex//9QMfwSXDMQfJRGURNxsjYvfc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vbMpZV2Mixpe9KyZI1tYYgD8wwwNfq/+
+	Vog7UwgIMgzO0CmvkQ7Em5D5xi8I4BDrKa1hNNQgQsKdgVxZvGqjAqwlcVnVtJv6
+	1EWsY8BEv29kbSZsisQOl1sxrA4ah21O1bqnFe9/fYoEEnryJPbiSmidI5E9LC4b
+	sshAs4uZb4c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1D98C2C583;
+	Mon, 11 Jul 2016 13:13:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9A7D82C582;
+	Mon, 11 Jul 2016 13:13:12 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2016, #03; Fri, 8)
+References: <xmqq37njlora.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1607110821500.6426@virtualbox>
+Date:	Mon, 11 Jul 2016 10:13:10 -0700
+In-Reply-To: <alpine.DEB.2.20.1607110821500.6426@virtualbox> (Johannes
+	Schindelin's message of "Mon, 11 Jul 2016 08:24:49 +0200 (CEST)")
+Message-ID: <xmqqzipo9jyx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: BF91C7B4-478A-11E6-8220-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hello,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I'm using git 1.9.1 in Ubuntu 14.04.
+> What about the am-call-merge-recursive-directly patch series? As I
+> demonstrated by rebasing it to `pu`, it is actually not butchering the
+> smudge/clean pathway as you suggested.
 
-I have a repository on github, a clone on my desktop and bare repo on a 
-private server, in my desktop the remotes looks like this
+What I said was it seemed to conflict with something else, which
+butchered that codepath that needed further work.  It seems I was
+reading the conflicts incorrectly and the conflicts were coming from
+other topics like i18n and oid changes.
 
-all	git@github.com:user/repo.git (fetch)
-all	git@github.com:user/repo.git (push)
-all	user@server.com:user/repo.git (push)
-server	user@server.com:user/repo.git (fetch)
-server	user@server.com:user/repo.git (push)
-origin	git@github.com:user/repo.git (fetch)
-origin	git@github.com:user/repo.git (push)
+> I am a bit at a loss here: what can I do to get this picked up?
 
-If I commit to master in my desktop and run 'git push all master', the 
-github and the server repos are correctly updated, but if I run 'git 
-status' the message says:
+You can do one of three things, and they apply not specifically to
+this case but in general when working with others.
 
-Your branch is ahead of 'origin/master' by 1 commit.
-   (use "git push" to publish your local commits)
+ - You can help other topics that collide with what you do to move
+   forward by helping their reviews.  Instead of leaving them
+   something the still need polishing and requires your topic to get
+   adjusted every time they change, help them be polished earlier
+   and become part of the solid foundation you build on top.
 
-The message won't update unless I run git fetch or git push origin master.
-I'd expect the git status to give me a updated status message after 
-calling 'git push all master'.
+ - You can wait until that polishing happens to the other topics
+   that block you.
 
-Best regards,
-Garoe
+ - You can shoot down the other topics that block you, e.g. "these
+   are not good ideas", "it aims to do a good thing, but its
+   implementation is far from ready--it misses this and that cases
+   among others. I'd recommend ejecting the topic for now and have
+   it redesigned from scratch", etc., which would shift the issue of
+   conflicting change to their problem as a side effect.
 
+Rebasing on 'pu' essentially is the second course; you are
+explicitly making your topic depend on the others (which creates a
+bit more work to me to identify exactly which topics in 'pu' you
+absolutely need to decide where to queue your patches, compared to
+the case in which you explicitly say "these patches apply to a merge
+of topic X and Y on top of v2.9", though).
 
+Also, without _any_ conflicts with other topics, the above three
+points apply well when working with others.  There are tons of
+topics that are marked as "Needs review", and they will not advance
+until that happens.  When the set of "needs review" topics balloon,
+I have to stop picking up non-trivial topics to make time to review
+them myself.
+
+Thanks.
