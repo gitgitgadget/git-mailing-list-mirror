@@ -2,62 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1615B2018F
-	for <e@80x24.org>; Mon, 11 Jul 2016 20:25:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AF7F1F744
+	for <e@80x24.org>; Mon, 11 Jul 2016 20:51:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753019AbcGKUZp (ORCPT <rfc822;e@80x24.org>);
-	Mon, 11 Jul 2016 16:25:45 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:16975 "EHLO
-	smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752931AbcGKUZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2016 16:25:29 -0400
-Received: from localhost.localdomain ([92.22.73.13])
-	by smtp.talktalk.net with SMTP
-	id MhlcbLEzMY8RwMhlebR8lt; Mon, 11 Jul 2016 21:25:27 +0100
-X-Originating-IP: [92.22.73.13]
-X-Spam:	0
-X-OAuthority: v=2.2 cv=b+Xw2ZOx c=1 sm=1 tr=0 a=R5CpdR+gL2+IAQkTIkP0Ow==:117
- a=R5CpdR+gL2+IAQkTIkP0Ow==:17 a=O560aJCABnCqEozDy2QA:9
-From:	Philip Oakley <philipoakley@iee.org>
-To:	GitList <git@vger.kernel.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 2/8] doc: revisions - name the Left and Right sides
-Date:	Mon, 11 Jul 2016 21:25:12 +0100
-Message-Id: <20160711202518.532-3-philipoakley@iee.org>
-X-Mailer: git-send-email 2.8.4.windows.1.3.ge328a54
-In-Reply-To: <20160711202518.532-1-philipoakley@iee.org>
-References: <20160630202509.4472-1-philipoakley@iee.org>
- <20160711202518.532-1-philipoakley@iee.org>
-X-CMAE-Envelope: MS4wfBSkiRusPY1ZuRcZcJIQf8w1arKIBdFfKgS8lW5Q+IhwEexanrc1Zyxl0UQARlfAfib6sm0tktcY4sWd0TRW/DSVR7ZtGzPk7jBx3RklM03cCfYOglVT
- hcVoaYN11NRkK+yrkKV7wDMOZLvJgD82mJARbMrp90P7UNQplpGOBYFxm/y3ltg9xIJxS7qe5JaJiQ+GT+xeBy0OtFngVTX8Fbgu2eolwPs7iL1D/EW588zy
+	id S932172AbcGKUvg (ORCPT <rfc822;e@80x24.org>);
+	Mon, 11 Jul 2016 16:51:36 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:33714 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751149AbcGKUvg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2016 16:51:36 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A6631F744
+	for <git@vger.kernel.org>; Mon, 11 Jul 2016 20:51:35 +0000 (UTC)
+From:	Eric Wong <e@80x24.org>
+To:	git@vger.kernel.org
+Subject: [RFC 0/3] dumb HTTP transport speedups
+Date:	Mon, 11 Jul 2016 20:51:28 +0000
+Message-Id: <20160711205131.1291-1-e@80x24.org>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The terms Left and Right side originate from the symmetric
-difference. Name them there.
----
- Documentation/revisions.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+TL;DR: dumb HTTP clone from a certain badly-packed repo goes from
+~2 hours to ~30 min memory usage drops from 2G to 360M
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 19314e3..79f6d03 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -256,7 +256,7 @@ A similar notation 'r1\...r2' is called symmetric difference
- of 'r1' and 'r2' and is defined as
- 'r1 r2 --not $(git merge-base --all r1 r2)'.
- It is the set of commits that are reachable from either one of
--'r1' or 'r2' but not from both.
-+'r1' (Left side) or 'r2' (Right side) but not from both.
- 
- In these two shorthands, you can omit one end and let it default to HEAD.
- For example, 'origin..' is a shorthand for 'origin..HEAD' and asks "What
--- 
-2.8.4.windows.1.3.ge328a54
 
+I hadn't packed the public repo at https://public-inbox.org/git
+for a few weeks.  As an admin of a small server limited memory
+and CPU resources but fairly good bandwidth, I prefer clients
+use dumb HTTP for initial clones.
+
+Unfortunately, I noticed my dinky netbook runs out-of-memory
+when using GIT_SMART_HTTP=0 to clone this giant repo; and a
+machine with more memory still takes over two hours depending
+on network conditions (and uses around 2GB RSS!).
+
+Anyways, https://public-inbox.org/git is better packed, now;
+but I've kept https://80x24.org/git-i-forgot-to-pack available
+with over 7K loose objects to illustrate the problem:
+
+	(this is dumb HTTP-only)
+	git clone --mirror https://80x24.org/git-i-forgot-to-pack
+
+The primary problem is fixed by PATCH 3/3 in this series, and I
+can now clone the above in around 30 minutes and "only" seems to
+use around 360M memory.
+
+I'll leave git-i-forgot-to-pack up for a few months/year
+so others can test and hammer away at it.
+
+The following changes since commit 5c589a73de4394ad125a4effac227b3aec856fa1:
+
+  Third batch of topics for 2.10 (2016-07-06 13:42:58 -0700)
+
+are available in the git repository at:
+
+  git://bogomips.org/git-svn.git dumb-speedups
+
+for you to fetch changes up to b9d5aca4b8e6c9f7fb5ee4e0ce33bb42c4ea2992:
+
+  http-walker: reduce O(n) ops with doubly-linked list (2016-07-11 20:25:51 +0000)
+
+----------------------------------------------------------------
+Eric Wong (3):
+      http-walker: remove unused parameter from fetch_object
+      http: avoid disconnecting on 404s for loose objects
+      http-walker: reduce O(n) ops with doubly-linked list
+
+ http-walker.c |  55 ++++++++++----------
+ http.c        |  16 +++++-
+ list.h        | 164 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 204 insertions(+), 31 deletions(-)
+ create mode 100644 list.h
