@@ -6,251 +6,318 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F2791F744
-	for <e@80x24.org>; Mon, 11 Jul 2016 20:07:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FEDF1F744
+	for <e@80x24.org>; Mon, 11 Jul 2016 20:14:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750936AbcGKUH5 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 11 Jul 2016 16:07:57 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57461 "EHLO
+	id S1752458AbcGKUNy (ORCPT <rfc822;e@80x24.org>);
+	Mon, 11 Jul 2016 16:13:54 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50457 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750775AbcGKUH4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2016 16:07:56 -0400
+	with ESMTP id S1750767AbcGKUNw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2016 16:13:52 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D5CCC2CA28;
-	Mon, 11 Jul 2016 16:07:54 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D026B2CC9F;
+	Mon, 11 Jul 2016 16:13:50 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=VWPS4u6GejSM
-	4vPoB6Ie9qZEMJ4=; b=vFJZ2rzwHGN1RqjpssttTdynWEsYKN07ERuZYv4q+Cjp
-	/GXBHAOHtLZSD7fEyThY0SWBAqs135cZayGRqFMGV2kmgKrsc7aaUAM0DN5NA1/B
-	Zkp2DXaTZjbxs5y1mZUg0VttfzMzg0GBViGZuKb/wYBKgkTf+NnLqMq53T9WI/w=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=ocJs/WAyX9lzxd5AEbzJ7Morm
+	4o=; b=iwGzp0XOiK8r4FtM0K+KJd3Vtq4DEoQl7n1L1b/cGG2U5g6WWjCIMWlvH
+	vt8nE8NXYLCD6ei4FIZ896a1P2S21ZFdF4bYc8SM5MWoGjkvtZUfyKdH2JsVsd56
+	RBFU1jjNos3V0aw8vJDSdcp0V4MJR+pis/BJdhhueNBaorx6xE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=fSMXMu
-	ErzVQrrne9Qf3+uiUWtoyFPXIO7f2aLRmWBAWPc1fBzh6zjxq0E5tfEEwazTrliz
-	uRhk/9wD/ZEXdZUWLVYZUzpNZcdBjuoqFclS5LLfxlvehZqQj+NH0Jj3L+gL77BT
-	1hg2XhIIYkQ/FCfaQce14sYVKqyuwi/e9IW2A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CCAF42CA27;
-	Mon, 11 Jul 2016 16:07:54 -0400 (EDT)
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=PPRVSEEmfVDMns3HEQb
+	jf22Mu4zM7EMzo+FK/qybNhWiEkkQ3XECc6sC0ycrVwlQ+i3j2muAbdPpTjdPHj3
+	GOvLufW/48EDUwH2Ut3UdP3HUL4GxJRQsfi/REuzAR3kEtH93VnyV+9FCCNcON1p
+	jJ4WtYQZa8V8sOqxWeaFw6R4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C8AB32CC9E;
+	Mon, 11 Jul 2016 16:13:50 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 41A862CA26;
-	Mon, 11 Jul 2016 16:07:54 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3B9C22CC9D;
+	Mon, 11 Jul 2016 16:13:50 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] correct ce_compare_data() in a middle of a merge
-References: <xmqq37nyb4kp.fsf@gitster.mtv.corp.google.com>
-	<1467100876-2803-1-git-send-email-tboegi@web.de>
-	<xmqqh9cc55wm.fsf@gitster.mtv.corp.google.com>
-	<62eb3d75-126e-427b-8701-d490e80e3501@web.de>
-	<xmqq8txlvwip.fsf@gitster.mtv.corp.google.com>
-	<574692d1-c8ae-9c2f-6b99-a01545b15051@telia.com>
-	<xmqqa8huvmpv.fsf@gitster.mtv.corp.google.com>
-	<c36fe487-b8dc-9767-7fae-bee513dac0b2@web.de>
-	<xmqqr3b5p9v0.fsf@gitster.mtv.corp.google.com>
-	<2cbf12a6-2dca-8180-323b-f79638aa03bd@web.de>
-	<xmqqmvlsm6hu.fsf@gitster.mtv.corp.google.com>
-	<f78fa94d-abd2-05a2-c411-15e2ffdb7dae@web.de>
-	<xmqqoa68kl7n.fsf@gitster.mtv.corp.google.com>
-	<xmqqk2gvlur5.fsf@gitster.mtv.corp.google.com>
-Date:	Mon, 11 Jul 2016 13:07:52 -0700
-In-Reply-To: <xmqqk2gvlur5.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 08 Jul 2016 13:50:22 -0700")
-Message-ID: <xmqqinwc7xbb.fsf@gitster.mtv.corp.google.com>
+To:	git@vger.kernel.org
+Cc:	Linux Kernel <linux-kernel@vger.kernel.org>
+Subject: [ANNOUNCE] Git v2.9.1
+Date:	Mon, 11 Jul 2016 13:13:48 -0700
+Message-ID: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 271CAD8C-47A3-11E6-93DF-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: FB4A06AE-47A3-11E6-AAED-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+The latest maintenance release Git v2.9.1 is now available at the
+usual places.  This release includes fixes to two bugs that have
+been reported on the list recently, among other changes:
 
-> Subject: [PATCH] merge: avoid "safer crlf" during recording of merge results
-> ...
-> We can work this around by not refreshing the new cache entry in
-> make_cache_entry() called by add_cacheinfo().  After add_cacheinfo()
-> adds the new entry, we can call refresh_cache_entry() on that,
-> knowing that addition of this new cache entry would have removed the
-> stale cache entries that had CRLF in stage #2 that were carried over
-> before the renormalizing merge started and will not interfere with
-> the correct recording of the result.
->
-> The test update was taken from a series by Torsten Bögershausen
-> that attempted to fix this with a different approach (which was a
-> lot more intrusive).
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
+ - v2.9.0 changed cloning of submodules in a top-level superproject
+   that was cloned shallowly to explicitly ask for the exact commit
+   bound at the superproject, which many instances of servers are
+   not yet prepared to handle (the feature appeared in a few
+   releases ago but the server operators may not have enabled it
+   yet).
 
-How do things look at this point?  This version is what I ended up
-queuing in 'pu', but I took your "Thanks" in $gmane/299120 to only
-mean "Thanks for feeding some ideas to help me move forward", not
-necessarily "Tnanks that looks like the right approach." yet, so
-right now both topics are stalled and waiting for an action from
-you.
+ - "git bisect" at the end tries to give something similar to an
+   output from "git show --raw" for the found culprit, but the step
+   was broken due to an internal API change.
 
-Thanks.
+The tarballs are found at:
 
->  cache.h                    |  1 +
->  merge-recursive.c          | 17 ++++++++++++----
->  read-cache.c               |  5 +----
->  t/t6038-merge-text-auto.sh | 51 +++++++++++++++++++++++++---------------------
->  4 files changed, 43 insertions(+), 31 deletions(-)
+    https://www.kernel.org/pub/software/scm/git/
 
-[no comment below this line; the contents kept as reference]
+The following public repositories all have a copy of the 'v2.9.1'
+tag and the 'maint' branch that the tag points at:
 
-> diff --git a/cache.h b/cache.h
-> index b829410..b33cb54 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -632,6 +632,7 @@ extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
->  #define REFRESH_IGNORE_SUBMODULES	0x0010	/* ignore submodules */
->  #define REFRESH_IN_PORCELAIN	0x0020	/* user friendly output, not "needs update" */
->  extern int refresh_index(struct index_state *, unsigned int flags, const struct pathspec *pathspec, char *seen, const char *header_msg);
-> +extern struct cache_entry *refresh_cache_entry(struct cache_entry *, unsigned int);
->  
->  extern void update_index_if_able(struct index_state *, struct lock_file *);
->  
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index b880ae5..de37e51 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -202,12 +202,21 @@ static int add_cacheinfo(unsigned int mode, const unsigned char *sha1,
->  		const char *path, int stage, int refresh, int options)
->  {
->  	struct cache_entry *ce;
-> -	ce = make_cache_entry(mode, sha1 ? sha1 : null_sha1, path, stage,
-> -			      (refresh ? (CE_MATCH_REFRESH |
-> -					  CE_MATCH_IGNORE_MISSING) : 0 ));
-> +	int ret;
-> +
-> +	ce = make_cache_entry(mode, sha1 ? sha1 : null_sha1, path, stage, 0);
->  	if (!ce)
->  		return error(_("addinfo_cache failed for path '%s'"), path);
-> -	return add_cache_entry(ce, options);
-> +
-> +	ret = add_cache_entry(ce, options);
-> +	if (refresh) {
-> +		struct cache_entry *nce;
-> +
-> +		nce = refresh_cache_entry(ce, CE_MATCH_REFRESH | CE_MATCH_IGNORE_MISSING);
-> +		if (nce != ce)
-> +			ret = add_cache_entry(nce, options);
-> +	}
-> +	return ret;
->  }
->  
->  static void init_tree_desc_from_tree(struct tree_desc *desc, struct tree *tree)
-> diff --git a/read-cache.c b/read-cache.c
-> index d9fb78b..6af409a 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -19,9 +19,6 @@
->  #include "split-index.h"
->  #include "utf8.h"
->  
-> -static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
-> -					       unsigned int options);
-> -
->  /* Mask for the name length in ce_flags in the on-disk index */
->  
->  #define CE_NAMEMASK  (0x0fff)
-> @@ -1254,7 +1251,7 @@ int refresh_index(struct index_state *istate, unsigned int flags,
->  	return has_errors;
->  }
->  
-> -static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
-> +struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
->  					       unsigned int options)
->  {
->  	return refresh_cache_ent(&the_index, ce, options, NULL, NULL);
-> diff --git a/t/t6038-merge-text-auto.sh b/t/t6038-merge-text-auto.sh
-> index 33b77ee..5e8d5fa 100755
-> --- a/t/t6038-merge-text-auto.sh
-> +++ b/t/t6038-merge-text-auto.sh
-> @@ -91,16 +91,13 @@ test_expect_success 'Merge after setting text=auto' '
->  	compare_files expected file
->  '
->  
-> -test_expect_success 'Merge addition of text=auto' '
-> +test_expect_success 'Merge addition of text=auto eol=LF' '
-> +	git config core.eol lf &&
->  	cat <<-\EOF >expected &&
->  	first line
->  	same line
->  	EOF
->  
-> -	if test_have_prereq NATIVE_CRLF; then
-> -		append_cr <expected >expected.temp &&
-> -		mv expected.temp expected
-> -	fi &&
->  	git config merge.renormalize true &&
->  	git rm -fr . &&
->  	rm -f .gitattributes &&
-> @@ -109,17 +106,31 @@ test_expect_success 'Merge addition of text=auto' '
->  	compare_files  expected file
->  '
->  
-> +test_expect_success 'Merge addition of text=auto eol=CRLF' '
-> +	git config core.eol crlf &&
-> +	cat <<-\EOF >expected &&
-> +	first line
-> +	same line
-> +	EOF
-> +
-> +	append_cr <expected >expected.temp &&
-> +	mv expected.temp expected &&
-> +	git config merge.renormalize true &&
-> +	git rm -fr . &&
-> +	rm -f .gitattributes &&
-> +	git reset --hard b &&
-> +	echo >&2 "After git reset --hard b" &&
-> +	git ls-files -s --eol >&2 &&
-> +	git merge a &&
-> +	compare_files  expected file
-> +'
-> +
->  test_expect_success 'Detect CRLF/LF conflict after setting text=auto' '
-> +	git config core.eol native &&
->  	echo "<<<<<<<" >expected &&
-> -	if test_have_prereq NATIVE_CRLF; then
-> -		echo first line | append_cr >>expected &&
-> -		echo same line | append_cr >>expected &&
-> -		echo ======= | append_cr >>expected
-> -	else
-> -		echo first line >>expected &&
-> -		echo same line >>expected &&
-> -		echo ======= >>expected
-> -	fi &&
-> +	echo first line >>expected &&
-> +	echo same line >>expected &&
-> +	echo ======= >>expected &&
->  	echo first line | append_cr >>expected &&
->  	echo same line | append_cr >>expected &&
->  	echo ">>>>>>>" >>expected &&
-> @@ -135,15 +146,9 @@ test_expect_success 'Detect LF/CRLF conflict from addition of text=auto' '
->  	echo "<<<<<<<" >expected &&
->  	echo first line | append_cr >>expected &&
->  	echo same line | append_cr >>expected &&
-> -	if test_have_prereq NATIVE_CRLF; then
-> -		echo ======= | append_cr >>expected &&
-> -		echo first line | append_cr >>expected &&
-> -		echo same line | append_cr >>expected
-> -	else
-> -		echo ======= >>expected &&
-> -		echo first line >>expected &&
-> -		echo same line >>expected
-> -	fi &&
-> +	echo ======= >>expected &&
-> +	echo first line >>expected &&
-> +	echo same line >>expected &&
->  	echo ">>>>>>>" >>expected &&
->  	git config merge.renormalize false &&
->  	rm -f .gitattributes &&
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
+
+----------------------------------------------------------------
+
+Git v2.9.1 Release Notes
+========================
+
+Fixes since v2.9
+----------------
+
+ * When "git daemon" is run without --[init-]timeout specified, a
+   connection from a client that silently goes offline can hang around
+   for a long time, wasting resources.  The socket-level KEEPALIVE has
+   been enabled to allow the OS to notice such failed connections.
+
+ * The commands in `git log` family take %C(auto) in a custom format
+   string.  This unconditionally turned the color on, ignoring
+   --no-color or with --color=auto when the output is not connected to
+   a tty; this was corrected to make the format truly behave as
+   "auto".
+
+ * "git rev-list --count" whose walk-length is limited with "-n"
+   option did not work well with the counting optimized to look at the
+   bitmap index.
+
+ * "git show -W" (extend hunks to cover the entire function, delimited
+   by lines that match the "funcname" pattern) used to show the entire
+   file when a change added an entire function at the end of the file,
+   which has been fixed.
+
+ * The documentation set has been updated so that literal commands,
+   configuration variables and environment variables are consistently
+   typeset in fixed-width font and bold in manpages.
+
+ * "git svn propset" subcommand that was added in 2.3 days is
+   documented now.
+
+ * The documentation tries to consistently spell "GPG"; when
+   referring to the specific program name, "gpg" is used.
+
+ * "git reflog" stopped upon seeing an entry that denotes a branch
+   creation event (aka "unborn"), which made it appear as if the
+   reflog was truncated.
+
+ * The git-prompt scriptlet (in contrib/) was not friendly with those
+   who uses "set -u", which has been fixed.
+
+ * A codepath that used alloca(3) to place an unbounded amount of data
+   on the stack has been updated to avoid doing so.
+
+ * "git update-index --add --chmod=+x file" may be usable as an escape
+   hatch, but not a friendly thing to force for people who do need to
+   use it regularly.  "git add --chmod=+x file" can be used instead.
+
+ * Build improvements for gnome-keyring (in contrib/)
+
+ * "git status" used to say "working directory" when it meant "working
+   tree".
+
+ * Comments about misbehaving FreeBSD shells have been clarified with
+   the version number (9.x and before are broken, newer ones are OK).
+
+ * "git cherry-pick A" worked on an unborn branch, but "git
+   cherry-pick A..B" didn't.
+
+ * "git add -i/-p" learned to honor diff.compactionHeuristic
+   experimental knob, so that the user can work on the same hunk split
+   as "git diff" output.
+
+ * "log --graph --format=" learned that "%>|(N)" specifies the width
+   relative to the terminal's left edge, not relative to the area to
+   draw text that is to the right of the ancestry-graph section.  It
+   also now accepts negative N that means the column limit is relative
+   to the right border.
+
+ * The ownership rule for the piece of memory that hold references to
+   be fetched in "git fetch" was screwy, which has been cleaned up.
+
+ * "git bisect" makes an internal call to "git diff-tree" when
+   bisection finds the culprit, but this call did not initialize the
+   data structure to pass to the diff-tree API correctly.
+
+ * Formats of the various data (and how to validate them) where we use
+   GPG signature have been documented.
+
+ * Fix an unintended regression in v2.9 that breaks "clone --depth"
+   that recurses down to submodules by forcing the submodules to also
+   be cloned shallowly, which many server instances that host upstream
+   of the submodules are not prepared for.
+
+ * Fix unnecessarily waste in the idiomatic use of ': ${VAR=default}'
+   to set the default value, without enclosing it in double quotes.
+
+ * Some platform-specific code had non-ANSI strict declarations of C
+   functions that do not take any parameters, which has been
+   corrected.
+
+ * The internal code used to show local timezone offset is not
+   prepared to handle timestamps beyond year 2100, and gave a
+   bogus offset value to the caller.  Use a more benign looking
+   +0000 instead and let "git log" going in such a case, instead
+   of aborting.
+
+ * One among four invocations of readlink(1) in our test suite has
+   been rewritten so that the test can run on systems without the
+   command (others are in valgrind test framework and t9802).
+
+ * t/perf needs /usr/bin/time with GNU extension; the invocation of it
+   is updated to "gtime" on Darwin.
+
+ * A bug, which caused "git p4" while running under verbose mode to
+   report paths that are omitted due to branch prefix incorrectly, has
+   been fixed; the command said "Ignoring file outside of prefix" for
+   paths that are _inside_.
+
+ * The top level documentation "git help git" still pointed at the
+   documentation set hosted at now-defunct google-code repository.
+   Update it to point to https://git.github.io/htmldocs/git.html
+   instead.
+
+Also contains minor documentation updates and code clean-ups.
+
+----------------------------------------------------------------
+
+Changes since v2.9.0 are as follows:
+
+Alfred Perlstein (1):
+      git-svn: document the 'git svn propset' command
+
+Andrew Oakley (1):
+      git-p4: correct hasBranchPrefix verbose output
+
+Armin Kunaschik (1):
+      t7800: readlink may not be available
+
+Charles Bailey (1):
+      t7810: fix duplicated test title
+
+Dave Nicolson (1):
+      Documentation: GPG capitalization
+
+David Turner (1):
+      mailmap: use main email address for dturner
+
+Ed Maste (1):
+      rebase: update comment about FreeBSD /bin/sh
+
+Edward Thomson (2):
+      format_commit_message: honor `color=auto` for `%C(auto)`
+      add: add --chmod=+x / --chmod=-x options
+
+Eric Wong (1):
+      daemon: enable SO_KEEPALIVE for all sockets
+
+Heiko Becker (1):
+      gnome-keyring: Don't hard-code pkg-config executable
+
+Jeff King (9):
+      rev-list: "adjust" results of "--count --use-bitmap-index -n"
+      rev-list: disable bitmaps when "-n" is used with listing objects
+      tree-diff: avoid alloca for large allocations
+      fetch: document that pruning happens before fetching
+      add--interactive: respect diff.compactionHeuristic
+      bisect: always call setup_revisions after init_revisions
+      t0006: rename test-date's "show" to "relative"
+      t0006: test various date formats
+      local_tzoffset: detect errors from tm_to_time_t
+
+Johannes Schindelin (3):
+      mingw: let the build succeed with DEVELOPER=1
+      perf: accommodate for MacOSX
+      t2300: "git --exec-path" is not usable in $PATH on Windows as-is
+
+Jonathan Nieder (1):
+      doc: git-htmldocs.googlecode.com is no more
+
+Josef Kufner (1):
+      pretty: pass graph width to pretty formatting for use in '%>|(N)'
+
+Junio C Hamano (5):
+      blame, line-log: do not loop around deref_tag()
+      clone: do not let --depth imply --shallow-submodules
+      Start preparing for 2.9.1
+      More fixes for 2.9.1
+      Git 2.9.1
+
+Keith McGuigan (1):
+      builtin/fetch.c: don't free remote->name after fetch
+
+LE Manh Cuong (1):
+      sh-setup: enclose setting of ${VAR=default} in double-quotes
+
+Lars Vogel (1):
+      Use "working tree" instead of "working directory" for git status
+
+Michael J Gruber (5):
+      cherry-pick: allow to pick to unborn branches
+      Documentation/technical: describe signature formats
+      Documentation/technical: signed tag format
+      Documentation/technical: signed commit format
+      Documentation/technical: signed merge tag format
+
+Nguyễn Thái Ngọc Duy (1):
+      pretty.c: support <direction>|(<negative number>) forms
+
+Peter Colberg (2):
+      refs.h: fix misspelt "occurred" in a comment
+      config.c: fix misspelt "occurred" in an error message
+
+Pranit Bauva (1):
+      strbuf: describe the return value of strbuf_read_file
+
+Ramsay Jones (1):
+      regex: fix a SIZE_MAX macro redefinition warning
+
+René Scharfe (9):
+      t4051: rewrite, add more tests
+      xdiff: factor out match_func_rec()
+      xdiff: handle appended chunks better with -W
+      xdiff: ignore empty lines before added functions with -W
+      xdiff: -W: don't include common trailing empty lines in context
+      xdiff: don't trim common tail with -W
+      t7810: add test for grep -W and trailing empty context lines
+      grep: -W: don't extend context to trailing empty lines
+      xdiff: fix merging of appended hunk with -W
+
+SZEDER Gábor (1):
+      reflog: continue walking the reflog past root commits
+
+Stefan Beller (1):
+      t5614: don't use subshells
+
+Tom Russello (4):
+      doc: clearer rule about formatting literals
+      doc: change environment variables format
+      doc: more consistency in environment variables format
+      doc: change configuration variables format
+
+Ville Skyttä (1):
+      git-prompt.sh: Don't error on null ${ZSH,BASH}_VERSION, $short_sha
+
