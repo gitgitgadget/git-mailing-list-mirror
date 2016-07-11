@@ -2,60 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0E6C1F744
-	for <e@80x24.org>; Mon, 11 Jul 2016 16:50:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B68DB1F744
+	for <e@80x24.org>; Mon, 11 Jul 2016 16:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754068AbcGKQuD (ORCPT <rfc822;e@80x24.org>);
-	Mon, 11 Jul 2016 12:50:03 -0400
-Received: from imap.thunk.org ([74.207.234.97]:46296 "EHLO imap.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753613AbcGKQuD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2016 12:50:03 -0400
-DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=8B8sXBfqx9q7LBEgp7jgXGTs+hE7bhM2rEG7bkaC+ug=;
-	b=lcK4hahwahcDGwDdwNGco1efbWlilcCSL9qft9cTXCy33gcYn8QAV2UlEpsOAcErmXtvB04sOuedA4SPacrFApXdir5zJT8khg6/GBcxMzIXBGF4S0a+oBkZh+6UqXGf3//HSEz/UchMbFbZo7MVdq9e3enak9zZ5fEEWWTrkHg=;
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.84_2)
-	(envelope-from <tytso@thunk.org>)
-	id 1bMePB-0007ZZ-PJ; Mon, 11 Jul 2016 16:50:01 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id 075A0828F74; Mon, 11 Jul 2016 12:50:01 -0400 (EDT)
-Date:	Mon, 11 Jul 2016 12:50:00 -0400
-From:	Theodore Ts'o <tytso@mit.edu>
-To:	Jeff King <peff@peff.net>
-Cc:	Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 4/5] date: document and test "raw-local" mode
-Message-ID: <20160711165000.GD3890@thunk.org>
-References: <20160711050201.GA18031@sigill.intra.peff.net>
- <20160711050617.GD32514@sigill.intra.peff.net>
+	id S1754480AbcGKQvS (ORCPT <rfc822;e@80x24.org>);
+	Mon, 11 Jul 2016 12:51:18 -0400
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:33445 "EHLO
+	mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752059AbcGKQvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2016 12:51:16 -0400
+Received: by mail-qt0-f174.google.com with SMTP id w38so17994276qtb.0
+        for <git@vger.kernel.org>; Mon, 11 Jul 2016 09:51:16 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ddSxLV++91+I3yxdiE5u40B5U0EXNIHPpi4zrQUUnFg=;
+        b=ZkEItybOn9toI5/FO+5me+XUD5jRk/dijYhCuAnm0Ym2dmX3xmyKk+uD4Sp+nZZzhl
+         C2mldeIkfOkDpBiIbDbgLrHAF10ZYbvR3yhNS4j9rvC1aRr5TmZSAHuc+LcO8JWaq80A
+         QgrjigNMYVs4uDRd/+aMJ64Fzo9eC5b9b5EVEIvZV7j3LZm+8OzmLXrUanGuSUrZ0O7K
+         QnidR2KoH3H3v1SXvShku/seQqHMY3KQ3xe6Ye8xPVc+54qyBuazvWyBhpOfZv2IWEkC
+         J1XUtShbxdMbbll3NSLsVNCVliaEn/50+a1bCtaz0AWh4U2kerAUG+FFFP4O31TMccF+
+         MmQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ddSxLV++91+I3yxdiE5u40B5U0EXNIHPpi4zrQUUnFg=;
+        b=JdHbpwhccYcS7a3FD1GuYs2UMDDoES9H9tu06/3stoWkBmNdFq8JGkFozhokVKz4vx
+         6u0Z9tqJKD4PXPoOZvnxAd0S0M9CuQyU14AS6N/y9D9hpI+D0VlNhu6Ef5qIEy0gHPTW
+         fkiypyqUUsQw2pFybghGSGtJQmwqUhLXdHHxtduTaTuJx6eFw/jqau3c8k2hRmceUV3C
+         0cTq1NgtYCp3nJTQbdqDnbGE1TEcDhAFIQy8sDN1RoOCZm4C4FSUdangoMLVudhqpVcf
+         BW1yOBkE96XrtoUYSimXqj/+x005o2/bwztpYxbi5hU379Wtand0jCXuj3XIwTM0XRBp
+         EEbg==
+X-Gm-Message-State: ALyK8tLROz3BlcQW9O1YvvhOCfDq8t+vnc1Z6Bu0Quibr7jJqyn3aCPrBGEudU/J3jJiqMlW
+X-Received: by 10.200.52.193 with SMTP id x1mr26136038qtb.65.1468255875990;
+        Mon, 11 Jul 2016 09:51:15 -0700 (PDT)
+Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-13.NATPOOL.NYU.EDU. [216.165.95.2])
+        by smtp.gmail.com with ESMTPSA id 29sm3089108qtx.4.2016.07.11.09.51.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Jul 2016 09:51:10 -0700 (PDT)
+Date:	Mon, 11 Jul 2016 12:51:09 -0400
+From:	Santiago Torres <santiago@nyu.edu>
+To:	Nils Fenner <nilsfenner@web.de>
+Cc:	git@vger.kernel.org
+Subject: Re: Commits are no longer gpg-signed in 2.9.0 when "commit.gpgsign"
+ is enabled
+Message-ID: <20160711165108.iv2wq2m2vfh5mate@LykOS.localdomain>
+References: <57838306.5090505@web.de>
+ <20160711144420.nsibnudjxvgdz7cl@LykOS.localdomain>
+ <5783C90D.1010909@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20160711050617.GD32514@sigill.intra.peff.net>
-User-Agent: Mutt/1.6.0 (2016-04-01)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <5783C90D.1010909@web.de>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jul 11, 2016 at 01:06:17AM -0400, Jeff King wrote:
+On Mon, Jul 11, 2016 at 06:27:57PM +0200, Nils Fenner wrote:
+> Hi Santiago,
 > 
-> The documentation claims that "raw-local" does not work. It
-> does, but the end result is rather subtle. Let's describe it
-> in better detail, and test to make sure it works (namely,
-> the epoch time doesn't change, but the zone does).
+> repeated your test here and actually found something interesting. When
+> committing via 'git gui', commits are not being gpg-signed, while firing
+> a 'git commit' shows the passphrase dialog and signs the commit correctly.
 
-Maybe add an editorial statement that in most cases this isn't
-particularly useful?  Documenting raw-local implies that someone might
-want to consider using it, and it's not clear to me folks should ever
-try --- they're more likely to confuse themselves more than anything
-else.
+I have the feeling that this is an issue with your gpg configuration not
+playing well with the gui. Do you know which pinentry program is being
+used (e.g., type /usr/bin/pinentry).
 
-					- Ted
+ 
+> What you mean by wme? Is it the gpg-agent's config or something?
+> 
+
+Sorry, I meant a Minimum Working Example, although that'll be hard to
+reproduce in this case. Your configuration seems to be proper.
+
+> Hope that points in the right direction.
+
+I think that we can take further troubleshooting off-list. This doesn't
+seem to be behavior with git (although we can come back with a bug
+report if something is naturally-broken/could be improved)
+
+Cheers!
+-Santiago.
