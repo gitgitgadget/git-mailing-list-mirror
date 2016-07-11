@@ -2,107 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 124921F744
-	for <e@80x24.org>; Mon, 11 Jul 2016 17:23:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C62711F744
+	for <e@80x24.org>; Mon, 11 Jul 2016 17:51:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932691AbcGKRXk (ORCPT <rfc822;e@80x24.org>);
-	Mon, 11 Jul 2016 13:23:40 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35742 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932580AbcGKRXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2016 13:23:39 -0400
-Received: by mail-wm0-f68.google.com with SMTP id i5so1954707wmg.2
-        for <git@vger.kernel.org>; Mon, 11 Jul 2016 10:23:39 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dmzYhqnZtp6SlaR5WFxndPv4kuUqWDVKzDmLfTH6LMc=;
-        b=rgCfl8d8CnmHhhe1FrU0VpoumZljAlYn1U7xtLzDBy8ZuDk9KM6n95glCw2U2sm0VU
-         wRE1Ghgfqawn4VA0us/Cr0Ml+2MvfIzmhQnXvwSzlgqnvesdY+vhRcnga0crfVPnrH/j
-         he1v/WbAiXy+5aH1o++NO7C7pCc6oqzGZDyrSdXALhtqaAcT0Y5GguxHrmKYycLyJVMo
-         mch+yiivc61uNi6hmsJgy/xArP77EY2YdMPusf3joE9B6yHwzA3joj1fs6YTROL4TWiS
-         V6Q0nCpSriT9gKMdqtjY8ASbiRobzBDewg1PUH0r9oOQzT/TqDHRgiLSTSexhP2HElbV
-         O9ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=dmzYhqnZtp6SlaR5WFxndPv4kuUqWDVKzDmLfTH6LMc=;
-        b=dQUhuxlrYgJy8p79zaEv5fbnugViFggCFNLlzlZ9w2R4Y0tPbjgADLYm85zcnbYnpj
-         lDhP4DxYdNhVwI93m591XXUppNFFHaiBFbynKvONwb8qqjr7XDqMUNIp5mTkRRWlSWQH
-         NLHAkhdrtLfNtk6Z+jWj6ES9SgkJN9K9xM9CnpUBxBsF5F4Dk8sFJI+/TTn2214GHPLQ
-         M28eHi3pEL2cbRSmV9McakyfEuIe7fSeY3jiWSpEC+EUjyYK7S7BPPvyTum7ZAEDfzQq
-         sDXbADwBSKdBWBzXZXj2mEps0SLY4U40dzM/rVCilmW4v7pR7ltLZhxgPaSsZgX7O7Me
-         9VPQ==
-X-Gm-Message-State: ALyK8tL3XgoxCBXuSYWE3Lr0DGStAi+JuYDRtRDXOQqiOiNj8vnwaPzL3f+0ZSuCEFwFfg==
-X-Received: by 10.28.9.200 with SMTP id 191mr19839609wmj.39.1468257799339;
-        Mon, 11 Jul 2016 10:23:19 -0700 (PDT)
-Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id si2sm829442wjb.19.2016.07.11.10.23.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 11 Jul 2016 10:23:18 -0700 (PDT)
-From:	Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
-To:	git@vger.kernel.org
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH 1/8] config: add git_config_get_split_index()
-Date:	Mon, 11 Jul 2016 19:22:47 +0200
-Message-Id: <20160711172254.13439-2-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.9.0.250.g7087ccc.dirty
-In-Reply-To: <20160711172254.13439-1-chriscool@tuxfamily.org>
-References: <20160711172254.13439-1-chriscool@tuxfamily.org>
+	id S1755438AbcGKRv3 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 11 Jul 2016 13:51:29 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63865 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754480AbcGKRv3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2016 13:51:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B89BF2B506;
+	Mon, 11 Jul 2016 13:51:27 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VL2+3R135gcXmW/scPgFK9Ul5bo=; b=EUN8fR
+	/jGAD/x8P04rfG0tv6kutZZ7pfiezIqqcWPZaxoKiIh5XcbAxGwDnFjAsuJ0+ifo
+	6rlEfDiFE171OkbChMiaRRbpz13IbqtdOTnkqooWSgjYOHuuQIsV1GOfzU9uquqd
+	NxOjTF2J76zvflq9qWRU3sfEEwRbQTaX/XuCU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cmClLN1/OYwqb4Z3a18Tjgxie+ZayYLt
+	77zUB3p+SaJr2AgRYWgk6LYeOhTpJB8nsJab/NnQeUUKdMj0ZSktxvWVBOdZ43a/
+	fZv+VJKZBET0EtfW6RBaJfZgTqwhzS1epxXB13QWezrIQ2NjDa9tiFS/pcbGD1cB
+	p4mQ3p9Q/DM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B11A52B505;
+	Mon, 11 Jul 2016 13:51:27 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 389AE2B502;
+	Mon, 11 Jul 2016 13:51:27 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Eric Wong <e@80x24.org>
+Cc:	git@vger.kernel.org, Jacob Godserv <jacobgodserv@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Christopher Layne <clayne@anodized.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: What's cooking in git.git (Jul 2016, #03; Fri, 8)
+References: <xmqq37njlora.fsf@gitster.mtv.corp.google.com>
+	<20160709232503.GA8505@dcvr.yhbt.net>
+Date:	Mon, 11 Jul 2016 10:51:25 -0700
+In-Reply-To: <20160709232503.GA8505@dcvr.yhbt.net> (Eric Wong's message of
+	"Sat, 9 Jul 2016 23:25:03 +0000")
+Message-ID: <xmqqvb0c9i76.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1741C324-4790-11E6-9532-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- cache.h  |  1 +
- config.c | 10 ++++++++++
- 2 files changed, 11 insertions(+)
+Eric Wong <e@80x24.org> writes:
 
-diff --git a/cache.h b/cache.h
-index f1dc289..5296a50 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1695,6 +1695,7 @@ extern int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest);
- extern int git_config_get_maybe_bool(const char *key, int *dest);
- extern int git_config_get_pathname(const char *key, const char **dest);
- extern int git_config_get_untracked_cache(void);
-+extern int git_config_get_split_index(void);
- 
- /*
-  * This is a hack for test programs like test-dump-untracked-cache to
-diff --git a/config.c b/config.c
-index bea937e..318194b 100644
---- a/config.c
-+++ b/config.c
-@@ -1656,6 +1656,16 @@ int git_config_get_untracked_cache(void)
- 	return -1; /* default value */
- }
- 
-+int git_config_get_split_index(void)
-+{
-+	int val = -1;
-+
-+	if (!git_config_get_maybe_bool("core.splitindex", &val))
-+		return val;
-+
-+	return -1; /* default value */
-+}
-+
- NORETURN
- void git_die_config_linenr(const char *key, const char *filename, int linenr)
- {
--- 
-2.9.0.250.g7087ccc.dirty
+> The following changes since commit cf4c2cfe52be5bd973a4838f73a35d3959ce2f43:
+>
+>   Second batch of topics for 2.10 (2016-06-27 10:07:08 -0700)
+>
+> are available in the git repository at:
+>
+>   git://bogomips.org/git-svn.git master
+>
+> for you to fetch changes up to 2af7da9f8fb68337030630d88c19db512189babc:
+>
+>   git-svn: warn instead of dying when commit data is missing (2016-07-09 22:53:54 +0000)
+>
+> ----------------------------------------------------------------
+> Christopher Layne (1):
+>       git-svn: clone: Fail on missing url argument
+>
+> Eric Wong (1):
+>       git-svn: warn instead of dying when commit data is missing
+>
+>  git-svn.perl    | 5 ++++-
+>  perl/Git/SVN.pm | 8 ++++++--
+>  2 files changed, 10 insertions(+), 3 deletions(-)
+
+Thanks, pulled.
 
