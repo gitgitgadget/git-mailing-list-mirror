@@ -2,74 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 790692018F
-	for <e@80x24.org>; Mon, 11 Jul 2016 21:35:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 992CD1F744
+	for <e@80x24.org>; Mon, 11 Jul 2016 22:46:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750879AbcGKVfL (ORCPT <rfc822;e@80x24.org>);
-	Mon, 11 Jul 2016 17:35:11 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:40880 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750829AbcGKVfK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2016 17:35:10 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3rpJKR2Cm2z3hjZF;
-	Mon, 11 Jul 2016 23:35:07 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3rpJKQ6wQ4zvkKZ;
-	Mon, 11 Jul 2016 23:35:06 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id 9mClDRtJTBSf; Mon, 11 Jul 2016 23:35:06 +0200 (CEST)
-X-Auth-Info: G5XcZaHXKlHBTR/d2cpBD7NOSiCEAB8sVdfTB79irgS3xC5W69nJvxOKKptkO9Wx
-Received: from igel.home (ppp-88-217-22-12.dynamic.mnet-online.de [88.217.22.12])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Mon, 11 Jul 2016 23:35:06 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id D66522C4A69; Mon, 11 Jul 2016 23:35:05 +0200 (CEST)
-From:	Andreas Schwab <schwab@linux-m68k.org>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [ANNOUNCE] Git v2.9.1
-References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com>
-X-Yow:	HOORAY, Ronald!!  Now YOU can marry LINDA RONSTADT too!!
-Date:	Mon, 11 Jul 2016 23:35:05 +0200
-In-Reply-To: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 11 Jul 2016 13:13:48 -0700")
-Message-ID: <87lh17kgdy.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.95 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+	id S1752420AbcGKWqv (ORCPT <rfc822;e@80x24.org>);
+	Mon, 11 Jul 2016 18:46:51 -0400
+Received: from kitenet.net ([66.228.36.95]:60934 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751854AbcGKWqu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2016 18:46:50 -0400
+X-Question: 42
+Authentication-Results:	kitenet.net;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=hbTM55ad;
+	dkim-atps=neutral
+DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+	t=1468277197; bh=Q37/p1l59xZISgA1LWyXTUqwJEg7T96CGx2mCEyU9UM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=hbTM55adTxAE7hwBgj9q7PkR66nfsMxhWSpQn/R9iSUOaJ11fW10rEUxkLzcXKK5x
+	 ktVQ6sdgyCC5CbgYfBn6sMJ+EH6sTTJlLS0czzSkl453Izvk85rBtBGYsVSCzgbPai
+	 1rM45vbD/pViJQ2IUyiT/WxLexQFFn0DnVLiWuWA=
+From:	Joey Hess <joeyh@joeyh.name>
+To:	git@vger.kernel.org
+Cc:	Joey Hess <joeyh@joeyh.name>
+Subject: [PATCH v5 1/8] clarify %f documentation
+Date:	Mon, 11 Jul 2016 18:45:05 -0400
+Message-Id: <1468277112-9909-2-git-send-email-joeyh@joeyh.name>
+X-Mailer: git-send-email 2.8.1
+In-Reply-To: <1468277112-9909-1-git-send-email-joeyh@joeyh.name>
+References: <1468277112-9909-1-git-send-email-joeyh@joeyh.name>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+It's natural to expect %f to be an actual file on disk; help avoid that
+mistake.
 
->       local_tzoffset: detect errors from tm_to_time_t
+Signed-off-by: Joey Hess <joeyh@joeyh.name>
+---
+ Documentation/gitattributes.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-not ok 19 - show date (iso:5758122296 -0400)
-#      
-#                      echo "$time -> $expect" >expect &&
-#                      test-date show:$format "$time" >actual &&
-#                      test_cmp expect actual
-#              
-not ok 20 - show date (iso-local:5758122296 -0400)
-#      
-#                      echo "$time -> $expect" >expect &&
-#                      test-date show:$format "$time" >actual &&
-#                      test_cmp expect actual
-
-This is outside the range of 32bit time_t.
-
-Andreas.
-
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index f2afdb6..197ece8 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -379,6 +379,11 @@ substitution.  For example:
+ 	smudge = git-p4-filter --smudge %f
+ ------------------------
+ 
++Note that "%f" is the name of the path that is being worked on. Depending
++on the version that is being filtered, the corresponding file on disk may
++not exist, or may have different contents. So, smudge and clean commands
++should not try to access the file on disk, but only act as filters on the
++content provided to them on standard input.
+ 
+ Interaction between checkin/checkout attributes
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+2.8.1
+
