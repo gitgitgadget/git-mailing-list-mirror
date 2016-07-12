@@ -2,72 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F9ED1FE4E
-	for <e@80x24.org>; Tue, 12 Jul 2016 13:00:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05E5C1FE4E
+	for <e@80x24.org>; Tue, 12 Jul 2016 13:16:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932139AbcGLNAU (ORCPT <rfc822;e@80x24.org>);
-	Tue, 12 Jul 2016 09:00:20 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:36547 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754109AbcGLNAR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2016 09:00:17 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3rphrq4dd0z3hjZd;
-	Tue, 12 Jul 2016 15:00:11 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3rphrq1cfkzvkS2;
-	Tue, 12 Jul 2016 15:00:11 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id fqw7VWFQgwSW; Tue, 12 Jul 2016 15:00:10 +0200 (CEST)
-X-Auth-Info: wyl9dK4jtUwYY5TAjlkdpMiEPol3eqt32AJCtYWJjJNcFkLF99xlxLOEop6bl2t4
-Received: from hawking.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.mnet-online.de (Postfix) with ESMTPSA;
-	Tue, 12 Jul 2016 15:00:10 +0200 (CEST)
-From:	Andreas Schwab <schwab@linux-m68k.org>
-To:	Johannes Schindelin <schindelin@wisc.edu>
-Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.9.1
-References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com>
-	<87lh17kgdy.fsf@linux-m68k.org>
-	<20160711235417.GA26163@sigill.intra.peff.net>
-	<xmqqy4577h0o.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1607120927410.6426@virtualbox>
-	<mvmtwfve22e.fsf@hawking.suse.de>
-	<alpine.DEB.2.20.1607121249390.6426@virtualbox>
-X-Yow:	I always have fun because I'm out of my mind!!!
-Date:	Tue, 12 Jul 2016 15:00:09 +0200
-In-Reply-To: <alpine.DEB.2.20.1607121249390.6426@virtualbox> (Johannes
-	Schindelin's message of "Tue, 12 Jul 2016 12:57:31 +0200 (CEST)")
-Message-ID: <mvmh9bvdnae.fsf@hawking.suse.de>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+	id S1753508AbcGLNQX (ORCPT <rfc822;e@80x24.org>);
+	Tue, 12 Jul 2016 09:16:23 -0400
+Received: from mout.gmx.net ([212.227.15.19]:58341 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751928AbcGLNQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2016 09:16:22 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0Mb7pT-1bhVVL35Lv-00Kiyx; Tue, 12 Jul 2016 15:16:16
+ +0200
+Date:	Tue, 12 Jul 2016 15:16:15 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2016, #04; Mon, 11)
+In-Reply-To: <xmqq37ng7x05.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1607121515300.6426@virtualbox>
+References: <xmqq37ng7x05.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:Hoab+7vY0K50tI22JqWGJLqgHzUq9k4K6MsRwbF9Lpx7c9RbGnr
+ urjLSy8YoK4U9pWtF1MRD++FdRIV1jATQWdmNPO59P21kv7IF9wI3z4pOnhfYd6FPMZuHvG
+ ozLcnjm+DYcXfBeKrEs1y0K9+4JVIhDWGTvv5QfJTUgeNtpHRatvIkS36F2oh3O0rXLMU2N
+ K8dXJdeOOfbqHEGA1aCdQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:YZBn+8+xnM4=:G41BhRMcifaRjkarseDEQy
+ tKbS+ypj+Se05gFGxdqlpXOvaVPIwO0q6Neq/Kj0wmJGft8inFu46NT5B1rsO+DF/BBr/6hNZ
+ c/cuRfvUsbM4CgEJl95o8m1NDwKBVARfcT8DT3IDSMEGK+BdqyUhn/rKIsr/TjyaPW6hcGNoh
+ li5wu4XCmmIee+JpOd0xspogm/7Wy9xUnJztzs4cZBeHOjeU18iqS7twBKYpZaOJEsdjZvKqd
+ vSNBml5cMLNLKGi1pvPJ7AaG+mBz/f2+g+uXIiKqm6C4/FnOhy6MNC6hH8EKgdKm76op6NmBD
+ PJLMs3SyVnypr8Ev0QgTsFS44WmYj9lx4guzCN77/kMqmnRSoR/gkrRq+gvyjs9fXdzScn9bb
+ zPGuuRWS9loJQrc2DAo794e6/PoOqZ8eUBL+NMdeSFMsGrthc+t8SpGixe7tqBDdRA/RSNtoT
+ Uc7Vq3R6WA7WtTgGZwC1qpvvQrBskWyb4Jt17wTa/oS0kGvWfVH8CPSaqPidM/3EKo7IuPyfT
+ 4VAoeOFWViF4aO+Aj6hw0bxyKJavGYnoK/zfLwZR1/Oh92ou2JNPVACMGml7PI5gInSeMoosd
+ I8Ql3VsRdi2r348WHAXVxHKsukzt8RuXtZtH1nga98XSqKBDmZXMtM6rbfctklwQ2mtwN0tX4
+ aQfs5QaQfAF4U6KdT+04PcQ2374TLajBMZh8yYUpWhuMUCLiWoz6WbpgnHCcCponkxYjKoM+2
+ 12F/lx7rQrEd0dwrVtM8CCC3r3FllL8sltrHjTlB52sALjCdnHRs5IkPxHZCskx/eKEmY8PON
+ vDv/qQ+
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <schindelin@wisc.edu> writes:
+Hi Junio,
 
->> PRIuMAX isn't compatible with time_t.
->
-> That statement is wrong.
+On Mon, 11 Jul 2016, Junio C Hamano wrote:
 
-No, it isn't.  PRIuMAX is for uintmax_t, and time_t is not uintmax_t
-(even if they happen to have the same representation).
+> [New Topics]
+> 
+> [...]
 
-Andreas.
+What about http://thread.gmane.org/gmane.comp.version-control.git/299050?
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Ciao,
+Dscho
