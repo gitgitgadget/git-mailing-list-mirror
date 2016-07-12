@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 092D220195
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2701E20196
 	for <e@80x24.org>; Tue, 12 Jul 2016 22:41:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348AbcGLWjm (ORCPT <rfc822;e@80x24.org>);
-	Tue, 12 Jul 2016 18:39:42 -0400
-Received: from mail-pa0-f65.google.com ([209.85.220.65]:32874 "EHLO
-	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752542AbcGLWjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2016 18:39:37 -0400
-Received: by mail-pa0-f65.google.com with SMTP id q2so1822896pap.0
-        for <git@vger.kernel.org>; Tue, 12 Jul 2016 15:39:31 -0700 (PDT)
+	id S1752553AbcGLWjq (ORCPT <rfc822;e@80x24.org>);
+	Tue, 12 Jul 2016 18:39:46 -0400
+Received: from mail-pa0-f68.google.com ([209.85.220.68]:36237 "EHLO
+	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752542AbcGLWjn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2016 18:39:43 -0400
+Received: by mail-pa0-f68.google.com with SMTP id ib6so1822248pad.3
+        for <git@vger.kernel.org>; Tue, 12 Jul 2016 15:39:43 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=sLmM6gAuVqneiGcbpXJisOz5KK0c8lAa4YPjoh6tr+4=;
-        b=EHqlv1njuUbvRNnvZMBg8eU6FlU5kRxV5iKJa1lNAYmPDQKh1kFqtCv1DGta8uEpo5
-         uZUmJuA8vxPNJW3OK6PNT8L2NB1Yf1VVXbFj+AI+i8FDbp5zPE8Qx+gGlP+f0QV1/z+U
-         ANm/wIllQWSK0YjSka8aTdmD6Dy7rMhgAj/znLmM6x/ZCW+fB5MwvZaEeFS3sJ5vvjTn
-         NaKyz1/m5+WFpa+GRXdTupup9KUDGzRKQp6ypZWNeVTU3lpvSgLaw1Xi2sUfkook4Yzg
-         lkwecJVblvnNk9nYAbXpfxAtOo2EBye3K6F9Ha/AVLIi93Zu6XsthDFSTiBTuERR+RaS
-         dyAA==
+        bh=dVtUnEW0aP/PSHjjgshejX2p76FmPS+Im8dr8BpSLvE=;
+        b=rUaKG4wct226HL3YqAdc9QEQwZAij/aFqcwdgY9/LuiuJK1jfWhd4UyRIeWWt7IVD5
+         ymxUlWXh8PIb1EdwmuFsKgaB9ajNEWzyn0RNqblj2BW03lhdKN0ofP0JF/WWT68+Bl8C
+         TJuUofMHxOkD0aeRa/ut2n4638NkL0dszrtj00QCgA6gPT00msYdnbhdHe4uvXnxB1h6
+         2dPMU501XVIdFWURNQVKGPC0/ZX0OVp1nJMEdyforS7G2AmrGiPNOAww48K61ixcA6oI
+         h1hSJA0DOFNyJ0HcciYFbRL0BY7I09OLMybPto7a7VOx4VH/lzPkAZ8ngNU5NMXKSsC5
+         ixMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=sLmM6gAuVqneiGcbpXJisOz5KK0c8lAa4YPjoh6tr+4=;
-        b=kqOhtmJNSU7kFA63cNUDFsmmuojngRkOSZecNGAJW40LxKvQ+7QUaM63ubVOrO77fG
-         m1P8IP7kVz5hM+KLy/f1N5fNr7EqnZkU1EyubL6mIlog6rd15inVFaZLG45RdQobC8Tk
-         49Idnda7VdOn7rYdwuL3ckszv6NMt8KQ1aBPW286N9yh682Px+ZDLDDFCh95iBQLGpkT
-         KRB1xSd4rXP3Cof9g2GIPR8dCTmZ0B6xPrjUg+jo4SKtpacjWit2Ctn22GQ3AmSUfBoT
-         kW/HH5wKCVhMHYicU0Mfeo9JDHPUTDQdG/Y2PY9uBm+5OBymwWcn3M8gBDW7P86B8G/8
-         f3fA==
-X-Gm-Message-State: ALyK8tLGjy42pHnsDZmRxrnpoePYqtCm1QlViIBYr7tWnvTPIi4Lzwyyo5PUZCVBZTgABw==
-X-Received: by 10.66.157.40 with SMTP id wj8mr7932603pab.53.1468363161206;
-        Tue, 12 Jul 2016 15:39:21 -0700 (PDT)
+        bh=dVtUnEW0aP/PSHjjgshejX2p76FmPS+Im8dr8BpSLvE=;
+        b=f/NIxiJ4+HlsBXBagcl6KwgQbXc2KCNT2NnOAgOUKKZiMdgfw0L2WDGqtCv0aYejtB
+         Npe7Q3Gr1WtxGhAuWyNoofkz328vXS1xYcPx+xigznTnNmdsDzoX2jrou9n0e7IWrWvj
+         sjtEQUvXfnNzs+T7q3W6tJQwvPMNpKnIn6lavFqxHbheRgZ97kkEvRNurXWcGgysC0HB
+         fHPUrV5qK0uwKd4TCCmNAH27X7meVL2BsuqctuKyXMjyLN67mNylwkV8rd7zFuQuv8/Z
+         pVPrkk04jdExkcj3HKXWaJN4AjhLPIufrK7rCC12VrvAYs0gHAbymWivBDPSKnFovPJ2
+         ABWA==
+X-Gm-Message-State: ALyK8tJY/21QI/rQcknPEO3w0YUg4pTH4mVl/P/O0FRnS5Av/dcy+k6gYBFObgGG0mAhAw==
+X-Received: by 10.66.80.2 with SMTP id n2mr8094979pax.134.1468363163912;
+        Tue, 12 Jul 2016 15:39:23 -0700 (PDT)
 Received: from localhost.localdomain ([103.57.70.227])
-        by smtp.gmail.com with ESMTPSA id g26sm6723796pfj.82.2016.07.12.15.39.18
+        by smtp.gmail.com with ESMTPSA id g26sm6723796pfj.82.2016.07.12.15.39.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 12 Jul 2016 15:39:20 -0700 (PDT)
+        Tue, 12 Jul 2016 15:39:23 -0700 (PDT)
 From:	Pranit Bauva <pranit.bauva@gmail.com>
 To:	gitster@pobox.com
 Cc:	Pranit Bauva <pranit.bauva@gmail.com>, larsxschneider@gmail.com,
 	christian.couder@gmail.com, chriscool@tuxfamily.org,
 	git@vger.kernel.org
-Subject: [PATCH 7/9] bisect--helper: `bisect_reset` shell function in C
-Date:	Wed, 13 Jul 2016 04:05:36 +0530
-Message-Id: <20160712223538.28508-8-pranit.bauva@gmail.com>
+Subject: [PATCH 8/9] bisect--helper: `is_expected_rev` & `check_expected_revs` shell function in C
+Date:	Wed, 13 Jul 2016 04:05:37 +0530
+Message-Id: <20160712223538.28508-9-pranit.bauva@gmail.com>
 X-Mailer: git-send-email 2.9.0
 In-Reply-To: <20160712223538.28508-1-pranit.bauva@gmail.com>
 References: <20160712223538.28508-1-pranit.bauva@gmail.com>
@@ -62,89 +62,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Reimplement `bisect_reset` shell function in C and add a `--bisect-reset`
-subcommand to `git bisect--helper` to call it from git-bisect.sh .
+Reimplement `is_expected_rev` & `check_expected_revs` shell function in
+C and add a `--check-expected-revs` subcommand to `git bisect--helper` to
+call it from git-bisect.sh .
 
-Using `bisect_reset` subcommand is a temporary measure to port shell
-functions to C so as to use the existing test suite. As more functions
-are ported, this subcommand would be retired and will be called by some
-other method.
+Using `--check-expected-revs` subcommand is a temporary measure to port
+shell functions to C so as to use the existing test suite. As more
+functions are ported, this subcommand would be retired and will be
+called by some other method.
 
-Note: --bisect-clean-state subcommand has not been retired as there are
-still a function namely `bisect_start()` which still uses this
-subcommand.
-
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 ---
- builtin/bisect--helper.c | 47 ++++++++++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 28 ++--------------------------
- 2 files changed, 48 insertions(+), 27 deletions(-)
+ builtin/bisect--helper.c | 33 ++++++++++++++++++++++++++++++++-
+ git-bisect.sh            | 20 ++------------------
+ 2 files changed, 34 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 3089433..636044a 100644
+index 636044a..88b5d0a 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -4,6 +4,8 @@
- #include "bisect.h"
- #include "refs.h"
- #include "dir.h"
-+#include "argv-array.h"
-+#include "run-command.h"
- 
- static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
- static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
-@@ -13,11 +15,13 @@ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
- static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
- static GIT_PATH_FUNC(git_path_head_name, "head-name")
- static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
-+static GIT_PATH_FUNC(git_path_bisect_head, "BISECT_HEAD")
- 
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --next-all [--no-checkout]"),
- 	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
- 	N_("git bisect--helper --bisect-clean-state"),
-+	N_("git bisect--helper --bisect-reset [<commit>]"),
- 	NULL
- };
- 
-@@ -124,12 +128,47 @@ static int bisect_clean_state(void)
- 	return result;
+@@ -162,13 +162,40 @@ static int bisect_reset(const char *commit)
+ 	return bisect_clean_state();
  }
  
-+static int bisect_reset(const char *commit)
++static int is_expected_rev(const char *expected_hex)
 +{
-+	struct strbuf branch = STRBUF_INIT;
++	struct strbuf actual_hex = STRBUF_INIT;
++	int res = 0;
++	if (strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0) >= 0) {
++		strbuf_trim(&actual_hex);
++		res = !strcmp(actual_hex.buf, expected_hex);
++	}
++	strbuf_release(&actual_hex);
++	return res;
++}
 +
-+	if (!commit) {
-+		if (strbuf_read_file(&branch, git_path_bisect_start(), 0) < 1) {
-+			printf("We are not bisecting.\n");
++static int check_expected_revs(const char **revs, int rev_nr)
++{
++	int i;
++
++	for (i = 0; i < rev_nr; i++) {
++		if (!is_expected_rev(revs[i])) {
++			remove_path(git_path_bisect_ancestors_ok());
++			remove_path(git_path_bisect_expected_rev());
 +			return 0;
 +		}
-+		strbuf_rtrim(&branch);
-+	} else {
-+		struct object_id oid;
-+		if (get_oid(commit, &oid))
-+			return error(_("'%s' is not a valid commit"), commit);
-+		strbuf_addstr(&branch, commit);
 +	}
-+
-+	if (!file_exists(git_path_bisect_head())) {
-+		struct argv_array argv = ARGV_ARRAY_INIT;
-+		argv_array_pushl(&argv, "checkout", branch.buf, "--", NULL);
-+		if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
-+			error(_("Could not check out original HEAD '%s'. Try"
-+				"'git bisect reset <commit>'."), branch.buf);
-+			strbuf_release(&branch);
-+			argv_array_clear(&argv);
-+			return -1;
-+		}
-+		argv_array_clear(&argv);
-+	}
-+
-+	strbuf_release(&branch);
-+	return bisect_clean_state();
++	return 0;
 +}
 +
  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
@@ -152,82 +119,76 @@ index 3089433..636044a 100644
  	enum {
  		NEXT_ALL = 1,
  		WRITE_TERMS,
--		BISECT_CLEAN_STATE
-+		BISECT_CLEAN_STATE,
-+		BISECT_RESET
+ 		BISECT_CLEAN_STATE,
+-		BISECT_RESET
++		BISECT_RESET,
++		CHECK_EXPECTED_REVS
  	} cmdmode = 0;
  	int no_checkout = 0;
  	struct option options[] = {
-@@ -139,6 +178,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
- 		OPT_CMDMODE(0, "bisect-clean-state", &cmdmode,
+@@ -180,6 +207,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
-+		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
-+			 N_("reset the bisection state"), BISECT_RESET),
+ 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
+ 			 N_("reset the bisection state"), BISECT_RESET),
++		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
++			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
  		OPT_BOOL(0, "no-checkout", &no_checkout,
  			 N_("update BISECT_HEAD instead of checking out the current commit")),
  		OPT_END()
-@@ -161,6 +202,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		if (argc != 0)
- 			die(_("--bisect-clean-state requires no arguments"));
- 		return bisect_clean_state();
-+	case BISECT_RESET:
-+		if (argc > 1)
-+			die(_("--bisect-reset requires either zero or one arguments"));
-+		return bisect_reset(argc ? argv[0] : NULL);
+@@ -206,6 +235,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		if (argc > 1)
+ 			die(_("--bisect-reset requires either zero or one arguments"));
+ 		return bisect_reset(argc ? argv[0] : NULL);
++	case CHECK_EXPECTED_REVS:
++		return check_expected_revs(argv, argc);
  	default:
  		die("BUG: unknown subcommand '%d'", cmdmode);
  	}
 diff --git a/git-bisect.sh b/git-bisect.sh
-index bbc57d2..18580b7 100755
+index 18580b7..4f6545e 100755
 --- a/git-bisect.sh
 +++ b/git-bisect.sh
-@@ -409,35 +409,11 @@ bisect_visualize() {
- 	eval '"$@"' --bisect -- $(cat "$GIT_DIR/BISECT_NAMES")
+@@ -238,22 +238,6 @@ bisect_write() {
+ 	test -n "$nolog" || echo "git bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
  }
  
--bisect_reset() {
--	test -s "$GIT_DIR/BISECT_START" || {
--		gettextln "We are not bisecting."
--		return
--	}
--	case "$#" in
--	0) branch=$(cat "$GIT_DIR/BISECT_START") ;;
--	1) git rev-parse --quiet --verify "$1^{commit}" >/dev/null || {
--			invalid="$1"
--			die "$(eval_gettext "'\$invalid' is not a valid commit")"
--		}
--		branch="$1" ;;
--	*)
--		usage ;;
--	esac
--
--	if ! test -f "$GIT_DIR/BISECT_HEAD" && ! git checkout "$branch" --
--	then
--		die "$(eval_gettext "Could not check out original HEAD '\$branch'.
--Try 'git bisect reset <commit>'.")"
--	fi
--	git bisect--helper --bisect-clean-state || exit
+-is_expected_rev() {
+-	test -f "$GIT_DIR/BISECT_EXPECTED_REV" &&
+-	test "$1" = $(cat "$GIT_DIR/BISECT_EXPECTED_REV")
 -}
 -
- bisect_replay () {
- 	file="$1"
- 	test "$#" -eq 1 || die "$(gettext "No logfile given")"
- 	test -r "$file" || die "$(eval_gettext "cannot read \$file for replaying")"
--	bisect_reset
-+	git bisect--helper --bisect-reset || exit
- 	while read git bisect command rev
- 	do
- 		test "$git $bisect" = "git bisect" || test "$git" = "git-bisect" || continue
-@@ -627,7 +603,7 @@ case "$#" in
- 	visualize|view)
- 		bisect_visualize "$@" ;;
- 	reset)
--		bisect_reset "$@" ;;
-+		git bisect--helper --bisect-reset "$@" ;;
- 	replay)
- 		bisect_replay "$@" ;;
- 	log)
+-check_expected_revs() {
+-	for _rev in "$@"; do
+-		if ! is_expected_rev "$_rev"
+-		then
+-			rm -f "$GIT_DIR/BISECT_ANCESTORS_OK"
+-			rm -f "$GIT_DIR/BISECT_EXPECTED_REV"
+-			return
+-		fi
+-	done
+-}
+-
+ bisect_skip() {
+ 	all=''
+ 	for arg in "$@"
+@@ -280,7 +264,7 @@ bisect_state() {
+ 		rev=$(git rev-parse --verify $(bisect_head)) ||
+ 			die "$(gettext "Bad rev input: $(bisect_head)")"
+ 		bisect_write "$state" "$rev"
+-		check_expected_revs "$rev" ;;
++		git bisect--helper --check-expected-revs "$rev" ;;
+ 	2,"$TERM_BAD"|*,"$TERM_GOOD"|*,skip)
+ 		shift
+ 		hash_list=''
+@@ -294,7 +278,7 @@ bisect_state() {
+ 		do
+ 			bisect_write "$state" "$rev"
+ 		done
+-		check_expected_revs $hash_list ;;
++		git bisect--helper --check-expected-revs $hash_list ;;
+ 	*,"$TERM_BAD")
+ 		die "$(eval_gettext "'git bisect \$TERM_BAD' can take only one argument.")" ;;
+ 	*)
 -- 
 2.9.0
 
