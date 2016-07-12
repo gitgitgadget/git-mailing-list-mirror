@@ -2,87 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3D1D2018E
-	for <e@80x24.org>; Tue, 12 Jul 2016 11:25:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 618CE2018E
+	for <e@80x24.org>; Tue, 12 Jul 2016 11:25:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753664AbcGLLZI (ORCPT <rfc822;e@80x24.org>);
-	Tue, 12 Jul 2016 07:25:08 -0400
-Received: from plane.gmane.org ([80.91.229.3]:41570 "EHLO plane.gmane.org"
+	id S932617AbcGLLZq (ORCPT <rfc822;e@80x24.org>);
+	Tue, 12 Jul 2016 07:25:46 -0400
+Received: from mout.gmx.net ([212.227.15.15]:50645 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753239AbcGLLZH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2016 07:25:07 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1bMvoG-0003Yw-H6
-	for git@vger.kernel.org; Tue, 12 Jul 2016 13:25:04 +0200
-Received: from host109-148-68-207.range109-148.btcentralplus.com ([109.148.68.207])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Jul 2016 13:25:04 +0200
-Received: from rsanchez.saez by host109-148-68-207.range109-148.btcentralplus.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Jul 2016 13:25:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To:	git@vger.kernel.org
-From:	Ricardo =?utf-8?b?U8OhbmNoZXotU8OhZXo=?= <rsanchez.saez@gmail.com>
-Subject: Re: Submodule's .git file contains absolute path when created using 'git clone --recursive'
-Date:	Tue, 12 Jul 2016 11:22:07 +0000 (UTC)
-Message-ID: <loom.20160712T131832-33@post.gmane.org>
-References: <loom.20160505T140253-275@post.gmane.org> <CAGZ79kYmh9wtzXdThzPTdEZ5SsKznYxze6EvmbaZdGog4yydNA@mail.gmail.com> <CAK1enhO-2Ne4XVqRNXz+6Jd7uEEHde8-_xzwWzXh=b01bZhj0g@mail.gmail.com> <CAGZ79kYjw6vzf7rf_-bOiMmm0VtAwO03vpk67QP4u2m_N_Mm4g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 109.148.68.207 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/602.1.39 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.5)
+	id S932188AbcGLLZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2016 07:25:44 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MhAVV-1bj7P13P05-00MLSP; Tue, 12 Jul 2016 13:25:22
+ +0200
+Date:	Tue, 12 Jul 2016 13:25:20 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Jeff King <peff@peff.net>
+cc:	Junio C Hamano <gitster@pobox.com>,
+	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.9.1
+In-Reply-To: <20160712073912.GA26431@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1607121257450.6426@virtualbox>
+References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com> <87lh17kgdy.fsf@linux-m68k.org> <20160711235417.GA26163@sigill.intra.peff.net> <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607120927410.6426@virtualbox>
+ <20160712073912.GA26431@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:xkWxAseLK0ydZbE8gynyRC7tonPRyxpC6cQt1u00Dr+Ob8ayQMF
+ nSvdbMt5XffSHnoRQjjqL2PB1/DFM+D6DqacYD+erdR6LdZSgcOmre43clX4ODcNwETlxD9
+ 7ikv11zZKm+LKgiGCzzQyu/h+ztpBxHgFiMEWvyd/vOO3b0le89SOosibyj7VuI/WkH61jK
+ CoT4H0catD7p9ZqGcr/Ug==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:tVAEMDLjgWA=:Rm6LQ+HbCJZ655ha/zwr4N
+ wbQ1v+KMVGncZVFg5VEzKvbw3H6zufB5m2V3jo6SVPYxi+B/sxd4NgpQxCthcgBtfbmDNEDXQ
+ lH0W+YwCm1nb2L2TV5PkOUG2dzpJ+945pO+yky8bvEeo53Sy2+VpcAgLt6aQqqCb8Z9fHzKk7
+ NVAEJUhlcrGvtOsBQhz18r5bErIdsfSj3eBFhpfp867XgowbKPl3/Yv9HxVOF5QTbOgTkSs5z
+ etG2nAEd5TxRVu2HOUKxAscodQbYbkjW8vtrRhBiDgE/Drs8hjUTDOh1icY0w2YrV1bzmOzju
+ vZ4JDpX9MoALLfKONtFpVA17OwenKDv1EWPMI91uqxpmUBL6OYQ3TxEhjCaLP2rPxbVJEsWD/
+ 8exr98iXvM6+RcowRZfWq83bOV7zBH3zhAtJq+r87i4g3yAszynz6/gIHVO83whsW6jUcucr/
+ vU+FcgiWE4qXFoXyUIuPYEQT7rolpyJKVrCIJvzV1wUBNPwDUofOazND9rnuZ1Ttn26OG4WZH
+ XF3a3J9pwsrzvm0pgobM/YJA84Mi47srWzRXCk5EIRI1uXalsi0aDVQZSz6oOn+45N/zl47of
+ sX1re0m7g0NPh9BGkiieSXGbVy06wnk+pc94Bep5yBu9p6kMCB4jVb69cLZ4Bz+0ut0TyNUSu
+ TQux5QtL9/1D2Cnp/sQLY+l8q7Xax3uXEcKB5OgR5wRt83kTjLMZsv5GCuu3vFcvMYxOc4t+3
+ /HJXhKKLOWQz+MD9sEYJkBNL4Y6nCFM1BSw9ol0Nsy7YrtHDKx6rmGpFBtogin4+nm2jL2ur2
+ duQb/kx
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller <at> google.com> writes:
+Hi Peff,
 
-> 
-> On Thu, May 5, 2016 at 12:20 PM, Loet Avramson <loet <at> forter.com> wrote:
-> > It happened on 2.8.1, also reproducible on 2.8.2.
-> > Haven't had the time to dive deeper into the code but my guess is that
-> > relative_path() returns different results in those 2 cases or maybe
-> > the way git-submodule.sh handles it.
-> >
-> 
-> Then you found a new bug, congratulations. ;)
-> Thanks for reporting.
-> 
-> The shell script uses relative_path() only for displaying paths,
-> not for writing them to the .git file.
-> 
-> it really boils down to different environments
-> "git submodule update --init --recursive" is called from
-> (either manually or from `git clone`).
-> 
-> Apart from that there are no immediate bells ringing,
-> are you doing any weird stuff with the file system (soft/hard
-> links) ?
-> 
-> Thanks,
-> Stefan
-> 
+On Tue, 12 Jul 2016, Jeff King wrote:
 
-Hi,
+> On Tue, Jul 12, 2016 at 09:30:28AM +0200, Johannes Schindelin wrote:
+> 
+> > FWIW I have this monster patch as a starting point (I plan to work more on
+> > this today):
+> 
+> Cool! Thanks for working on this.
 
-sorry to awake an old thread. Has this been fixed? In which git version?
-It's hitting me on git version  2.7.4 (Apple Git-66) (default git client on
- OS X 10.11.5 (15F34)).
+Well, I had to. Git for Windows v2.9.1 needs to get released, and I won't
+do that with a failing test suite.
 
-I think all submodule .git files should contain relative paths. Otherwise,
- duplicating or moving the cloned  repository folder breaks the submodules.
+> I suspect we should still do something about skipping those tests,
+> though, if only because the v2.9.x maint track is broken, and switching
+> to time_t is a sufficiently large change that we probably don't want it
+> for maint (it _seems_ like it shouldn't cause any problems, but I'm
+> wondering if we might inadvertently trigger funny issues around
+> signedness or something).
 
-Best,
-Ricardo
+I totally agree that this patch is very, very large. And yeah, this change
+is intrusive enough that it should not hit maint (but then, IMO neither
+should the change that triggered this test failure have hit maint).
+
+So I think I'll go with this for the moment (as we all know, my patch
+series often go through a couple of commenting rounds, and are not always
+picked up quickly, and I do not wait that long with Git for Windows
+v2.9.1):
+
+-- snipsnap --
+[PATCH] Work around test failures due to timestamps being unsigned long
+
+Git's source code refers to timestamps as unsigned longs. On 32-bit
+platforms, as well as on Windows, unsigned long is not large enough to
+capture dates that are "absurdly far in the future".
+
+While we will fix this issue properly by replacing unsigned long ->
+time_t, on the maint track we want to be a bit more conservative and
+just skip those tests.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t0006-date.sh | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index 04ce535..d185640 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -48,10 +48,17 @@ check_show default "$TIME" 'Wed Jun 15 16:13:20 2016 +0200'
+ check_show raw "$TIME" '1466000000 +0200'
+ check_show iso-local "$TIME" '2016-06-15 14:13:20 +0000'
+ 
+-# arbitrary time absurdly far in the future
+-FUTURE="5758122296 -0400"
+-check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400"
+-check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000"
++case "$(test-date show:iso 9999999999)" in
++*2038*)
++	# on this platform, unsigned long is 32-bit, i.e. not large enough
++	;;
++*)
++	# arbitrary time absurdly far in the future
++	FUTURE="5758122296 -0400"
++	check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400"
++	check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000"
++	;;
++esac
+ 
+ check_parse() {
+ 	echo "$1 -> $2" >expect
+-- 
+2.9.0.278.g1caae67
 
