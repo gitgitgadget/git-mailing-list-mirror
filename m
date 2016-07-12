@@ -2,123 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3032A2018E
-	for <e@80x24.org>; Tue, 12 Jul 2016 09:30:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06A942018E
+	for <e@80x24.org>; Tue, 12 Jul 2016 10:47:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751863AbcGLJaM (ORCPT <rfc822;e@80x24.org>);
-	Tue, 12 Jul 2016 05:30:12 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:38153 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751772AbcGLJaK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2016 05:30:10 -0400
-Received: by mail-wm0-f52.google.com with SMTP id o80so17438864wme.1
-        for <git@vger.kernel.org>; Tue, 12 Jul 2016 02:30:09 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=XrSEdLfINJJBQxMbPhkngMsWBXCYQEPFieTCcY83AZI=;
-        b=ADVZ2kuJWxFa4rP2fHFCKXJcfd0KV/A0Y2s3hrmrtEItwBLMMlXYpCoYop5E1Yb4Ts
-         P34NAo9SYILB0g7bwIPA61F0lICjgNBVdEa4De5aelAz/RM8GLoZ+CtxcixR0GQayy1r
-         ZdPvzRdCUHEycW8NsiYaR4opgmshaj66FDxOLRkQi+JGW7yBkJOdO0KEdCrzkW5hm+HA
-         6/6C+U7DYIG+q4fAxaWc2H+2oNwkjFpoTFLiRkkBhvEdJWXbCV8IffryXtplyCqQdKIy
-         ktm+5HxtHjKxmVFyS6MZSZfGJa5s8US9Ay6OfdpAjQTla5VR0xcuGWzGZq+kGWMM2Cg7
-         IZPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=XrSEdLfINJJBQxMbPhkngMsWBXCYQEPFieTCcY83AZI=;
-        b=jbWBJrdffYPYHjJ+WznXnh5ujAneS4oVNZBy5vRYcwDajAOtwjzYV67ZftUvQaazrg
-         lWxiw1oVmaWp9pMX2qI4u3sVpbos5jjUof3T+c7nkafGIrHJVoAtkaLPJQbA6+0VvXIA
-         sCVaw/QedEyjADU9uKLFaar0V4Q/3OBu5DgdF+GrHEuB//6DflQ5xK34hZ58r6fMwm1v
-         ZXp8nRTnl2eZOPQtjYkQFAPKJgYTWgrKXTv56X0UdX9mZjjrh7a1BGkQ8cFt24HnxDGZ
-         Bh7wBV5fybpecw90EeHL5f6MwKjAO3vfdOdF+YxB5IoLzSMKzAo7cYzXcuiExY1nX31S
-         j1Qw==
-X-Gm-Message-State: ALyK8tJFgsLxTnVICE67ON/4lqFqA2qbfTIebU5v+jgrB8oWu1QakiPyNLkpXsK2FGkqVA==
-X-Received: by 10.28.138.18 with SMTP id m18mr19580373wmd.63.1468315808758;
-        Tue, 12 Jul 2016 02:30:08 -0700 (PDT)
-Received: from [10.32.249.127] (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id x83sm27482404wmx.9.2016.07.12.02.30.07
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 12 Jul 2016 02:30:08 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [RFC] Long running Git clean/smudge filter
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20160710151046.GA7306@kitenet.net>
-Date:	Tue, 12 Jul 2016 11:30:06 +0200
-Cc:	git@vger.kernel.org, joeyh@joeyh.name, pclouds@gmail.com,
-	Johannes.Schindelin@gmx.de, gitster@pobox.com
-Content-Transfer-Encoding: 8BIT
-Message-Id: <4947BBA2-6260-4546-9641-E639A8C70174@gmail.com>
-References: <1468150507-40928-1-git-send-email-larsxschneider@gmail.com> <20160710151046.GA7306@kitenet.net>
-To:	Joey Hess <id@joeyh.name>
-X-Mailer: Apple Mail (2.3124)
+	id S1750990AbcGLKrQ (ORCPT <rfc822;e@80x24.org>);
+	Tue, 12 Jul 2016 06:47:16 -0400
+Received: from mout.gmx.net ([212.227.15.18]:58950 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750779AbcGLKrP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2016 06:47:15 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LlE86-1an2R332RC-00b0Wf; Tue, 12 Jul 2016 12:47:07
+ +0200
+Date:	Tue, 12 Jul 2016 12:47:06 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	Duy Nguyen <pclouds@gmail.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: gc and repack ignore .git/*HEAD when checking reachability
+In-Reply-To: <xmqqinwc9fe2.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1607121243470.6426@virtualbox>
+References: <20160708025948.GA3226@x> <xmqq1t34oiit.fsf@gitster.mtv.corp.google.com> <20160708064448.GA18043@x> <xmqqa8hsm4qu.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607090928500.6426@virtualbox> <20160709140931.GA3185@x>
+ <CACsJy8A6fiPUtNZow_oOEQSi64GMxA2Jy84h4OznaSxBMePtbQ@mail.gmail.com> <alpine.DEB.2.20.1607101255300.6426@virtualbox> <CACsJy8BWKrXqXnbEgSKJ9gKcAyvdZhExfgh5zBRisX8R3BkBLw@mail.gmail.com> <alpine.DEB.2.20.1607101602320.6426@virtualbox>
+ <xmqqinwc9fe2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:nVL51+nwFCqAb9cKTBuaqSmPGxu49WwO3F2wx2FekW1g5Ii7ikq
+ sm8tdA/H1mynAej/dpj2vCBDq99qUlWOqi1eGgNllmrnpFn+SoIvRl5EYy7m20oC93f/a7i
+ MucLPawh9ekYR7Ns68q1JBEbVm3nqHnzFmHNE1iCcXw2EOC5FdpxBBqrYpuu0iviNlH6BKp
+ PvlHxe7rFtvEME+bDEUjA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:ZfcUCG0Iq4s=:FBQyqt0uJBq2vAkjscSac1
+ lK1d9ESI8KflNpoGpoqMEDXx+Of5Su95Cm9aKh+v9k1zwkM7+qSrbqLHdcmx5yFHWWJmME4Ke
+ Pva1WnefhMtBy8AAjXZDL/ZbWlD/q28ImyCHcfzIAY9vyDC7SdXKKSQiVH2yc571TEPJTzT8l
+ wqjeNzGu8SgHbR+vPhXTy1C9iW4AR2n6JSC3C4C4Z9LbB4raSKVKALajvoLAplLY6rUKmXebx
+ 6lzQSFhVT2kQbUGhjMfrZInpiSTMf7tmqalwkLlyKSS5ExEbGKezUNtbaTB3QSWsppNP65w89
+ DmP79ihPQ6elHxMDaMoT/0r5/BHFu5YmtMRHDzoe9rwSmvm5oeoYKikahYgmb6zqMipjZRTO/
+ ahM9E7uE1An5lLESNjrCX6IlyTcUhQshtokBoEKW22Nc00ekMNE913nr4S0LJwL8uIfa2sdyb
+ YQ9yi0yB8FrCPZXknnjUUpz6o5tw15BS7dgEezcYGA+t9fY3ugsJo3sD+PORsklie9j+QdOUP
+ vyIujN/whl9x4ZxhbMZx61iwM7YUa15rfMc7C7wL4Kxo2U3YUS43idNLQp14o981OSFurZTCJ
+ 0Orn+cIEeeAVqi8UmTjoKeObNBeImnLX9rpmuwlGVb3ZiblUuthcf+9CVFwP60dTqMcg1WGfo
+ g/oegPGu44iE794+r/25jA6EcTLuwlR7segptMeZMyDMD1ZUl4+DvpmD7yXtkydCUv+cjE/Mk
+ 8hdO/OWLC3bcm/AHpkRnBhuIpHbuqrtreofRVizpAkSXDKqwUaudRGldAGq3OQaes1Qo9F/n2
+ JCJ+6Ur
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Hi Junio,
 
-> On 10 Jul 2016, at 17:10, Joey Hess <id@joeyh.name> wrote:
+On Mon, 11 Jul 2016, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> larsxschneider@gmail.com wrote:
->> (2) Joey's topic, which is the base for my patch, looks stalled for more than
->> 2 weeks:
->> http://thread.gmane.org/gmane.comp.version-control.git/297994/focus=298006
->> I would be happy to address Junio's comments and post a reroll. However,
->> I don't want to interfere with Joey's plans.
+> >> No, the point is, refs subsystem needs to know which refs is per-repo,
+> >> which is per-worktree. So far the rules are  "everything under refs,
+> >> except a few known exceptions, is per-repo" and "everything directly
+> >> under $GIT_DIR is per-worktree", which work fine. But if you allow to
+> >> move per-worktree to "refs" freely, then the "known exceptions" will
+> >> have to be updated every time a new per-worktree ref appears. It'll be
+> >> easier to modify the first rule as "everything under refs, except some
+> >> legacy exceptions and refs/worktree, is per-repo".
+> >
+> > Given the substantial pain and suffering I have due to per-worktree
+> > reflogs (and those are *just* HEAD's reflogs!), it appears to me that
+> > per-worktree refs would be a particularly poor feature.
+> >
+> > I agree that HEAD needs to be per-worktree, but already the fact that the
+> > HEADs of the worktrees, along with their reflogs, are *not* visible to
+> > all other worktrees causes substantial trouble.
 > 
-> I've been on vacation and plan to get back to that in the upcoming week.
-
-Good to hear :-) ! I hope you had a great vacation!
-
-
-
->> @Joey (in case you are reading this):
->> My patch changes your initial idea quite a bit. However, I believe it is an
->> improvement that could be beneficial for git-annex, too. Would you prefer to
->> work with me on the combination of our ideas (file clean/smudge + long running
->> clean/smudge processes) or would you prefer to keep your interface?
+> Not so fast; it cuts both ways.
 > 
-> Long running filters mean that you need a more complicated protocol to
-> speak over the pipes. Seems that such a protocol could be designed to work
-> with the original smudge/clean filters as well as with my
-> smudgeToFile/cleanFromFile filters. Assuming that there's a way to
-> tell whether the filters support being long-running or not.
-> 
-> Note that the interface we arrived at for smudgeToFile/cleanFromFile is as
-> similar as possible to smudge/clean, so the filter developer only has to
-> change one thing. That's a big plus, and so I don't like diverging the
-> two interfaces.
-I understand, thanks for the clarification. My plan is to implement long running 
-filters only for smudgeToFile/cleanFromFile (at least initially) as this should
-solve the major pain point already and is relatively straight forward.
+> People who want multiple worktrees with branches checked out to work
+> in would want to do per-worktree things like bisection, which needs
+> tons more state than we'd be comfortable having directly under
+> $GIT_DIR (e.g. they may also want "git merge" or "git pull", which
+> would use MERGE_HEAD and FETCH_HEAD that are per-worktree and not
+> under refs/; "git bisect" would want to mark number of commits to
+> denote the perimeter of the area of the history being bisected and
+> they live refs/bisect/).
 
-What do you think about this kind of config? Any idea for a better config name?
+Sure, `git bisect` would need to realize that it is running in a worktree
+separate from the original one and use a different ref.
 
-[filter "bar"]
-    clean = foo1 %f
-    smudge = foo2 %f
-    cleanFromFile foo3
-    smudgeToFile foo4
-    longRunning = true
+> And when you are bisecting in the worktree dedicated for a topic,
+> it is a feature that your other worktrees do not need to see how
+> much history you narrowed down in that topic.
 
-I think it would be easy to support both of our interfaces in parallel. Do
-you understand why the "async" API is necessary?
-https://github.com/larsxschneider/git/blob/74e22bd4e0b505785fa8ffc2ef15721909635d1c/convert.c#L585-L599
+If you intentionally hide bisections from other worktrees, you will
+invariably end up with the same problems I faced with auto-gc: in a
+worktree, it is *much, much easier* to forget a bisect in progress.
 
-Would you be OK if I implement smudgeToFile/cleanFromFile as separate
-"apply_filter" function as I have prototyped here:
-https://github.com/larsxschneider/git/blob/74e22bd4e0b505785fa8ffc2ef15721909635d1c/convert.c#L1143-L1146
-https://github.com/larsxschneider/git/blob/74e22bd4e0b505785fa8ffc2ef15721909635d1c/convert.c#L402-L488
+In other words, your comments make me even more certain that per-worktree
+refs are undesirable.
 
-
-Thanks,
-Lars
+Ciao,
+Dscho
