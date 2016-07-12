@@ -2,79 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F5501FE4E
-	for <e@80x24.org>; Tue, 12 Jul 2016 15:49:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 513661FE4E
+	for <e@80x24.org>; Tue, 12 Jul 2016 15:52:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754759AbcGLPtq (ORCPT <rfc822;e@80x24.org>);
-	Tue, 12 Jul 2016 11:49:46 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63769 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753197AbcGLPtp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2016 11:49:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0568429736;
-	Tue, 12 Jul 2016 11:49:44 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LsbXJVHA0HWHOg1k3n/Q9JcSaPc=; b=DhDy1L
-	z8SnF5wneoBEH1sOrt62cHY7atvCSvOvAs+EguL69b4EpCkVz5w6j0BQXvDyPsv5
-	1h4wMrr96T3PegNP7yHsoX7J+Zgh+vVXnOHtOcQn80BxBH787bLBrE3A/IShNWQg
-	lZAPfPcc2NqVXWa96Ho5ZswM6/hoRuwXIdZTE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CPdqihBg6Maq2brcZdS0r2InE0idO5L3
-	mtnPFd4K3K/aGXyWQ6wJH/P1IZdxG+pCO3m4ZOW+XP8893ZiRODR/qfZ1uffzDEK
-	dWEvsJBhIJa685ApCKU1xPgrbZh2J51xl6cVeyRBN+rLl8pmjAslUAqZNQxNjP59
-	JqdsYRNgfv4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id F22D329735;
-	Tue, 12 Jul 2016 11:49:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7E6C029734;
-	Tue, 12 Jul 2016 11:49:43 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	lists@haller-berlin.de (Stefan Haller)
-Cc:	dlightle@gmail.com (David Lightle), git@vger.kernel.org
-Subject: Re: Fast-forward able commit, otherwise fail
-References: <xmqqr3bokeib.fsf@gitster.mtv.corp.google.com>
-	<1mqa4a5.1ykwh5b8vc9q7M%lists@haller-berlin.de>
-Date:	Tue, 12 Jul 2016 08:49:41 -0700
-In-Reply-To: <1mqa4a5.1ykwh5b8vc9q7M%lists@haller-berlin.de> (Stefan Haller's
-	message of "Tue, 12 Jul 2016 15:24:48 +0200")
-Message-ID: <xmqqeg6y7t62.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754884AbcGLPvr (ORCPT <rfc822;e@80x24.org>);
+	Tue, 12 Jul 2016 11:51:47 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43548 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753623AbcGLPvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2016 11:51:45 -0400
+Received: (qmail 8921 invoked by uid 102); 12 Jul 2016 15:51:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jul 2016 11:51:45 -0400
+Received: (qmail 3986 invoked by uid 107); 12 Jul 2016 15:52:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jul 2016 11:52:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jul 2016 11:51:41 -0400
+Date:	Tue, 12 Jul 2016 11:51:41 -0400
+From:	Jeff King <peff@peff.net>
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: gc and repack ignore .git/*HEAD when checking reachability
+Message-ID: <20160712155141.GA5967@sigill.intra.peff.net>
+References: <alpine.DEB.2.20.1607090928500.6426@virtualbox>
+ <20160709140931.GA3185@x>
+ <CACsJy8A6fiPUtNZow_oOEQSi64GMxA2Jy84h4OznaSxBMePtbQ@mail.gmail.com>
+ <alpine.DEB.2.20.1607101255300.6426@virtualbox>
+ <CACsJy8BWKrXqXnbEgSKJ9gKcAyvdZhExfgh5zBRisX8R3BkBLw@mail.gmail.com>
+ <alpine.DEB.2.20.1607101602320.6426@virtualbox>
+ <xmqqinwc9fe2.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1607121243470.6426@virtualbox>
+ <20160712152646.GF613@sigill.intra.peff.net>
+ <CACsJy8C+NEP1HJq8w1frOy=UOv5-SA+b7MkbX8DE_vU-zjX0XQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 40513FF2-4848-11E6-8866-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACsJy8C+NEP1HJq8w1frOy=UOv5-SA+b7MkbX8DE_vU-zjX0XQ@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-lists@haller-berlin.de (Stefan Haller) writes:
+On Tue, Jul 12, 2016 at 05:46:12PM +0200, Duy Nguyen wrote:
 
-> I have read and re-read this thread a hundred times now, but I still
-> don't understand why it makes much of a difference whether or not Bob
-> rebases his branch onto master before pushing his merge. In both cases,
-> Alice and Bob have this race as to whose push succeeds, and in both
-> cases you end up with merge commits on master that are not well tested.
+> I'm not opposed to letting one worktree see everything, but this move
+> makes it harder to write new scripts (or new builtin commands, even)
+> that works with both single and multiple worktrees because you refer
+> to one ref (in current worktree perspective) differently. If we kill
+> of the main worktree (i.e. git init always creates a linked worktree)
+> then it's less of a problem, but still a nuisance to write
+> refs/worktree/$CURRENT/<something> everywhere.
 
-One crucial difference is that at least you _know_ that $tip^2 has
-been well tested, when you do not rebase, and you can check out
-$tip^2 to study and understand how it was supposed to work, when the
-merge of the topic into an updated mainline is found to be faulty.
-That knowledge helps you to go forward--you'd need to adjust some
-untold assumption $tip^2 made, which was broken somewhere between
-$tip^2..$tip^1 on the mainline, to an updated reality.
+True. I gave a suggestion for the reading side, but the writing side
+would still remain tedious.
 
-Once you rebase, you end up with "This series of changes once was
-working well, and during the rebase somewhere it stopped working",
-unless you say something like "these 7 changes were originally
-developed and tested on commit X" in the rebased commit.
+I wonder if, in a worktree, we could simply convert requests to read or
+write names that do not begin with "refs/" as "refs/worktree/$CURRENT/"?
+That makes it a read/write-time alias conversion, but the actual storage
+is just vanilla (so the ref storage doesn't need to care, and
+reachability just works).
 
+The trickiest thing, I think, is FETCH_HEAD, which is not really a
+ref (because it may have a bunch of values, and contain extra
+information).
+
+-Peff
