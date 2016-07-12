@@ -2,119 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C83A92018E
-	for <e@80x24.org>; Tue, 12 Jul 2016 08:45:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3032A2018E
+	for <e@80x24.org>; Tue, 12 Jul 2016 09:30:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750896AbcGLIpJ (ORCPT <rfc822;e@80x24.org>);
-	Tue, 12 Jul 2016 04:45:09 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:37977 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750778AbcGLIpC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2016 04:45:02 -0400
-Received: by mail-wm0-f46.google.com with SMTP id o80so15856782wme.1
-        for <git@vger.kernel.org>; Tue, 12 Jul 2016 01:45:02 -0700 (PDT)
+	id S1751863AbcGLJaM (ORCPT <rfc822;e@80x24.org>);
+	Tue, 12 Jul 2016 05:30:12 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:38153 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751772AbcGLJaK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2016 05:30:10 -0400
+Received: by mail-wm0-f52.google.com with SMTP id o80so17438864wme.1
+        for <git@vger.kernel.org>; Tue, 12 Jul 2016 02:30:09 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=wokBS2o1dnAbOt66QcGtaMobfDJ/1JqRDf9wyAhNjLk=;
-        b=EjyVMVw8ZSjnUHGulJXBvbRdC1Cf6mEyYoU7aYIXqDjVUR9uMroqVrlrElg8Kas8CP
-         aSOssO0ln4oYWne7GePW8NPG/DsCvO29S9owyD7B0x6KMFB1tFaacx5ZhcfhQLXZbTtz
-         R/8UY/HBqNbfEvOIuwCdHi6yVDORbKSsoRJVgOh140NjBqnR2mzJjrpxkd+7Wi4nBZ8N
-         gL/0xC30BjVP5mWRXlmA1TJJvb8XnD8LPDnsaERyKl3kz9X7Lb8CGQhxjWTi3cTXOFbj
-         wUIUkhapFqTzMzyZCS1ueJnNba/MrDhicadNhDgbWmXOW+ybxk861M+qlP6RJWJXJNyw
-         mzLw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=XrSEdLfINJJBQxMbPhkngMsWBXCYQEPFieTCcY83AZI=;
+        b=ADVZ2kuJWxFa4rP2fHFCKXJcfd0KV/A0Y2s3hrmrtEItwBLMMlXYpCoYop5E1Yb4Ts
+         P34NAo9SYILB0g7bwIPA61F0lICjgNBVdEa4De5aelAz/RM8GLoZ+CtxcixR0GQayy1r
+         ZdPvzRdCUHEycW8NsiYaR4opgmshaj66FDxOLRkQi+JGW7yBkJOdO0KEdCrzkW5hm+HA
+         6/6C+U7DYIG+q4fAxaWc2H+2oNwkjFpoTFLiRkkBhvEdJWXbCV8IffryXtplyCqQdKIy
+         ktm+5HxtHjKxmVFyS6MZSZfGJa5s8US9Ay6OfdpAjQTla5VR0xcuGWzGZq+kGWMM2Cg7
+         IZPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=wokBS2o1dnAbOt66QcGtaMobfDJ/1JqRDf9wyAhNjLk=;
-        b=GniiQxQk9PIOzzAzSpg6gGvtkJy+TV3k5VXGSrhRm87ocAYbYQiiC7y8F0t0qutOLi
-         nVD2TQuTKjjXfaW8dkwQt07edo863+6hDI6gLHOiFR7jrwvb+4QprVKHQz/M0t8jTN5I
-         KJY7AO7qWOmp6UofH4RtRPvnUP7inML9kqK6XHa3BL+Zld0Zpjov7COuIOBeX2WdjDSc
-         LyjBhggaIrDObTbt3LAir4Z0VV0ckm78mAKi1yjVeuQxJOdkIXrSpOojaobqtl1V30BU
-         oES7Z5VXxvR71glEL1empu0i1NbLOznOIpvfvBqCvkKXhXzCy3tongF5GP5+hgO1v3gm
-         pMEA==
-X-Gm-Message-State: ALyK8tKTUcJy/FQ66iHqeNZOdw3v+rNB7KffiNQuzg42bSeFaFs3LgOPcWWz+pGYrWzPZQ==
-X-Received: by 10.28.11.79 with SMTP id 76mr1616712wml.91.1468313101207;
-        Tue, 12 Jul 2016 01:45:01 -0700 (PDT)
-Received: from [138.38.103.116] (cspc-lin-03.bath.ac.uk. [138.38.103.116])
-        by smtp.googlemail.com with ESMTPSA id d8sm3916518wji.39.2016.07.12.01.45.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Jul 2016 01:45:00 -0700 (PDT)
-Subject: Re: git push doesn't update the status with multiple remotes
-To:	Johannes Sixt <j6t@kdbg.org>
-References: <5783CF57.1010105@gmail.com>
- <84c1ac72-cbe7-7490-2c61-9302703cb28b@kdbg.org>
-Cc:	git@vger.kernel.org
-From:	Garoe <garoedp@gmail.com>
-Message-ID: <5784AE0B.2040709@gmail.com>
-Date:	Tue, 12 Jul 2016 09:44:59 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-MIME-Version: 1.0
-In-Reply-To: <84c1ac72-cbe7-7490-2c61-9302703cb28b@kdbg.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=XrSEdLfINJJBQxMbPhkngMsWBXCYQEPFieTCcY83AZI=;
+        b=jbWBJrdffYPYHjJ+WznXnh5ujAneS4oVNZBy5vRYcwDajAOtwjzYV67ZftUvQaazrg
+         lWxiw1oVmaWp9pMX2qI4u3sVpbos5jjUof3T+c7nkafGIrHJVoAtkaLPJQbA6+0VvXIA
+         sCVaw/QedEyjADU9uKLFaar0V4Q/3OBu5DgdF+GrHEuB//6DflQ5xK34hZ58r6fMwm1v
+         ZXp8nRTnl2eZOPQtjYkQFAPKJgYTWgrKXTv56X0UdX9mZjjrh7a1BGkQ8cFt24HnxDGZ
+         Bh7wBV5fybpecw90EeHL5f6MwKjAO3vfdOdF+YxB5IoLzSMKzAo7cYzXcuiExY1nX31S
+         j1Qw==
+X-Gm-Message-State: ALyK8tJFgsLxTnVICE67ON/4lqFqA2qbfTIebU5v+jgrB8oWu1QakiPyNLkpXsK2FGkqVA==
+X-Received: by 10.28.138.18 with SMTP id m18mr19580373wmd.63.1468315808758;
+        Tue, 12 Jul 2016 02:30:08 -0700 (PDT)
+Received: from [10.32.249.127] (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id x83sm27482404wmx.9.2016.07.12.02.30.07
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 12 Jul 2016 02:30:08 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [RFC] Long running Git clean/smudge filter
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20160710151046.GA7306@kitenet.net>
+Date:	Tue, 12 Jul 2016 11:30:06 +0200
+Cc:	git@vger.kernel.org, joeyh@joeyh.name, pclouds@gmail.com,
+	Johannes.Schindelin@gmx.de, gitster@pobox.com
+Content-Transfer-Encoding: 8BIT
+Message-Id: <4947BBA2-6260-4546-9641-E639A8C70174@gmail.com>
+References: <1468150507-40928-1-git-send-email-larsxschneider@gmail.com> <20160710151046.GA7306@kitenet.net>
+To:	Joey Hess <id@joeyh.name>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Thanks for the quick reply.
 
-On 12/07/16 06:26, Johannes Sixt wrote:
-> Am 11.07.2016 um 18:54 schrieb Garoe:
->> I have a repository on github, a clone on my desktop and bare repo on a
->> private server, in my desktop the remotes looks like this
->>
->> all    git@github.com:user/repo.git (fetch)
->> all    git@github.com:user/repo.git (push)
->> all    user@server.com:user/repo.git (push)
->> server    user@server.com:user/repo.git (fetch)
->> server    user@server.com:user/repo.git (push)
->> origin    git@github.com:user/repo.git (fetch)
->> origin    git@github.com:user/repo.git (push)
->>
->> If I commit to master in my desktop and run 'git push all master', the
->> github and the server repos are correctly updated, but if I run 'git
->> status' the message says:
->>
->> Your branch is ahead of 'origin/master' by 1 commit.
->>   (use "git push" to publish your local commits)
->
-> But "all" and "origin" are different remotes. Just because you use the
-> same URL does not make them the same remote repository from the view of
-> your local repository.
+> On 10 Jul 2016, at 17:10, Joey Hess <id@joeyh.name> wrote:
+> 
+> larsxschneider@gmail.com wrote:
+>> (2) Joey's topic, which is the base for my patch, looks stalled for more than
+>> 2 weeks:
+>> http://thread.gmane.org/gmane.comp.version-control.git/297994/focus=298006
+>> I would be happy to address Junio's comments and post a reroll. However,
+>> I don't want to interfere with Joey's plans.
+> 
+> I've been on vacation and plan to get back to that in the upcoming week.
 
-I expected git to be "intelligent" enough to detect that if the url are 
-the same, it had already exchanged information with the server by the 
-push command, so it would update the message without explicitly pushing 
-to origin.
+Good to hear :-) ! I hope you had a great vacation!
 
->
-> (Additionally, "all" is not a special name, just in case you had
-> expected that.)
->
->> The message won't update unless I run git fetch or git push origin
->> master.
->
-> Yes, that's how it is supposed to work.
 
- From my point of view the current behaviour is counter-intuitive. 
-Anyhow, I understand by your answer that the current behaviour is 
-desired and it won't be changed.
 
-> I think there is some way to configure that a single push command pushes
-> to several remote repositories, but I can't find it right now...
->
-> -- Hannes
->
+>> @Joey (in case you are reading this):
+>> My patch changes your initial idea quite a bit. However, I believe it is an
+>> improvement that could be beneficial for git-annex, too. Would you prefer to
+>> work with me on the combination of our ideas (file clean/smudge + long running
+>> clean/smudge processes) or would you prefer to keep your interface?
+> 
+> Long running filters mean that you need a more complicated protocol to
+> speak over the pipes. Seems that such a protocol could be designed to work
+> with the original smudge/clean filters as well as with my
+> smudgeToFile/cleanFromFile filters. Assuming that there's a way to
+> tell whether the filters support being long-running or not.
+> 
+> Note that the interface we arrived at for smudgeToFile/cleanFromFile is as
+> similar as possible to smudge/clean, so the filter developer only has to
+> change one thing. That's a big plus, and so I don't like diverging the
+> two interfaces.
+I understand, thanks for the clarification. My plan is to implement long running 
+filters only for smudgeToFile/cleanFromFile (at least initially) as this should
+solve the major pain point already and is relatively straight forward.
 
-Thanks again,
-Garoe
+What do you think about this kind of config? Any idea for a better config name?
+
+[filter "bar"]
+    clean = foo1 %f
+    smudge = foo2 %f
+    cleanFromFile foo3
+    smudgeToFile foo4
+    longRunning = true
+
+I think it would be easy to support both of our interfaces in parallel. Do
+you understand why the "async" API is necessary?
+https://github.com/larsxschneider/git/blob/74e22bd4e0b505785fa8ffc2ef15721909635d1c/convert.c#L585-L599
+
+Would you be OK if I implement smudgeToFile/cleanFromFile as separate
+"apply_filter" function as I have prototyped here:
+https://github.com/larsxschneider/git/blob/74e22bd4e0b505785fa8ffc2ef15721909635d1c/convert.c#L1143-L1146
+https://github.com/larsxschneider/git/blob/74e22bd4e0b505785fa8ffc2ef15721909635d1c/convert.c#L402-L488
+
+
+Thanks,
+Lars
