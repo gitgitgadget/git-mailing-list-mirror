@@ -2,99 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BE5C1FE4E
-	for <e@80x24.org>; Tue, 12 Jul 2016 14:34:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32D591FE4E
+	for <e@80x24.org>; Tue, 12 Jul 2016 15:06:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754329AbcGLOe0 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 12 Jul 2016 10:34:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53269 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751711AbcGLOeX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2016 10:34:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DE54D28B5B;
-	Tue, 12 Jul 2016 10:34:16 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Czh6ml8YrR3KPgP4ywhQJw6Z+tw=; b=jbC+Th
-	ESozS9Ry1b4glLigFcpVrzEKmCfalTJ/KsFpITP0hWe5OzDhMZFA8zcgi4e+lNBo
-	TVGOJSub2c14w/3w2wag2MSJtMDMUwO04FqDMaWNrFzTmnXSykjdChW6iapWkMnc
-	ICBPlDV5sXs/1mxNb0TLPYq4KuDQ98jcnnFZc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Jd/R+Ls1d2jiSkjK8BMfCdrHyoV/6e4w
-	bK57U+tvAoxij9dIt5cFM8NZy2SYL6nFa4Fk8Mm3m8qSHKHp5KRu4hnitivqRBzH
-	gA0ppj/6CC0f3sP/uRLFkE0p//3E6rXRFZmwNdmxHdaGgesCiT5RZjAE5YIpUx0y
-	NyinY4ixpBQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D6A3328B5A;
-	Tue, 12 Jul 2016 10:34:16 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 63B6A28B58;
-	Tue, 12 Jul 2016 10:34:16 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Jeff King <peff@peff.net>, Andreas Schwab <schwab@linux-m68k.org>,
-	git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.9.1
-References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com>
-	<87lh17kgdy.fsf@linux-m68k.org>
-	<20160711235417.GA26163@sigill.intra.peff.net>
-	<xmqqy4577h0o.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1607120927410.6426@virtualbox>
-Date:	Tue, 12 Jul 2016 07:34:14 -0700
-In-Reply-To: <alpine.DEB.2.20.1607120927410.6426@virtualbox> (Johannes
-	Schindelin's message of "Tue, 12 Jul 2016 09:30:28 +0200 (CEST)")
-Message-ID: <xmqqpoqj6i3d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932826AbcGLPF7 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 12 Jul 2016 11:05:59 -0400
+Received: from mail-yw0-f170.google.com ([209.85.161.170]:36383 "EHLO
+	mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753982AbcGLPF6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2016 11:05:58 -0400
+Received: by mail-yw0-f170.google.com with SMTP id w127so16345553ywf.3
+        for <git@vger.kernel.org>; Tue, 12 Jul 2016 08:05:58 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=myl/LPEeCLhk2ffu1kaop2EXX2/sNH/eMpJWPJeV5S4=;
+        b=m8hvvfIAp8Buso9sna0rsLiJiLx8IUDQLv9johKRP+H9OeSvAZsSf09N80vaXqo51+
+         yTozO2De6ZT1ZtFmDdqmxwptrTvnv0KrarEmmBGDkgWVGFaOlvmW/TlszwyJ2lM3kraC
+         nQOlog/i93vIrWUqCwtLKUb55zfmhs0g8+mAWLfXr/A0KkT7La/UslJ/xlJuTnDPu019
+         CTeyrmQyYDpc+589o88pg628iDDxjYrAmaSAeJQmf65ArWkiWSFcUMXj8YB+grFTqdht
+         r9nSVeSfeTes9UuWc8ERR4gWz6CHHfqDvQIQxaUMwLsfvtIN5EivNsGxEbjfNHl2kKvc
+         iP6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=myl/LPEeCLhk2ffu1kaop2EXX2/sNH/eMpJWPJeV5S4=;
+        b=mAjCBGd2FX/hl7DAHr6UzKDJOMMK5onxJjUIYHRE8+Y1ww1Yf0idAJg1o4UTWknaAx
+         v1DgXVeh8No0MdkKKdFlgWMf605werr2aH3tLxrT0CS4YHaCYuKSCJ9bYhjFnHTN6zXm
+         GmS/E/0VgpXhNsbrUk2wYdXB2uo/syb8boYERKia/aB4ctXKCzs6JqpU0tEx0o9vIAgO
+         7rWhV63pzHrAPGh9IMZXtWkB1F/IpL7p8Ct3rgUFEDpMQacd5zyRHphANgKZAfW3BVJO
+         KNS4iLZKgaGlgJYkB6kWhuzdlcD1VBvVo5gQWOFrjGG3J6ff7X/Robh7z17hkJ4YfEFw
+         Sx5Q==
+X-Gm-Message-State: ALyK8tJctJh4vJBGRnRZm9BzKCREXdBsSm39zscrjOzs1VAjGONC/ETmK3COH1kF1LLqr90U17LwCqvMPqH0bA==
+X-Received: by 10.37.22.85 with SMTP id 82mr1944727ybw.123.1468335957456; Tue,
+ 12 Jul 2016 08:05:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B5F31B5A-483D-11E6-BC03-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.13.240.66 with HTTP; Tue, 12 Jul 2016 08:05:38 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1607121515300.6426@virtualbox>
+References: <xmqq37ng7x05.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607121515300.6426@virtualbox>
+From:	Junio C Hamano <gitster@pobox.com>
+Date:	Tue, 12 Jul 2016 08:05:38 -0700
+X-Google-Sender-Auth: RCnduelYqi4_3mv5CpRRfqpwSso
+Message-ID: <CAPc5daVVU0+Ext0tk83kOLwZxPGPUFZQ9_5y7yyX4JD0O3Napw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2016, #04; Mon, 11)
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, Jul 12, 2016 at 6:16 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> On Mon, 11 Jul 2016, Junio C Hamano wrote:
+>
+>> [New Topics]
+>>
+>> [...]
+>
+> What about http://thread.gmane.org/gmane.comp.version-control.git/299050?
 
-> Git's source code assumes that unsigned long is at least as precise as
-> time_t. Well, Git's source code is wrong.
-> ...
+Not forgotten.
 
-That is correct.  As people mentioned downthread already, "unsigned
-long" has two problems, it may not be wide enough, and it cannot
-represent time before the epoch.
-
-But moving the internal time representation used in various fields
-like commit->date to time_t is likely to be a wrong thing to do,
-because the first problem with "unsigned long", i.e. "may not be
-wide enough", is not limited to "not wide enough to hold time_t".
-It also includes "it may not be wide enough to hold time somebody
-else recorded in existing objects".
-
-Since some platforms have time_t that is not wide enough, but still
-have intmax_t that is wider, I think we would be better off to pick
-an integral type to use for the internal representation that is the
-widest throughout the API, and use time_t only at places that we
-interact with the system libraries (e.g. when we ask "what is the
-time now?" to time(2), when we ask "break down this timestamp" to
-gmtime(3)).
-
-Thanks for starting this, and from a brief read, the hotfix to skip
-the test downthread looked good.  The places this "starting point"
-patch covers look like a good set that interacts with time obtained
-locally (e.g. prune that compares with filesystem timestamp); just
-make sure you don't go too far and end up shoving timestamps from
-other people into time_t, which may not fit.
-
-Thanks.
-
-
-
-
+It just is not one of the "New Topics" yet, together with several
+other patches sent to
+the list recently, hence it is not listed there.
