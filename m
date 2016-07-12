@@ -6,126 +6,105 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF9262018F
-	for <e@80x24.org>; Mon, 11 Jul 2016 23:54:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 625FD1F744
+	for <e@80x24.org>; Tue, 12 Jul 2016 00:08:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752591AbcGKXyZ (ORCPT <rfc822;e@80x24.org>);
-	Mon, 11 Jul 2016 19:54:25 -0400
-Received: from cloud.peff.net ([50.56.180.127]:43166 "HELO cloud.peff.net"
+	id S1752671AbcGLAIr (ORCPT <rfc822;e@80x24.org>);
+	Mon, 11 Jul 2016 20:08:47 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43176 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751423AbcGKXyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2016 19:54:24 -0400
-Received: (qmail 30688 invoked by uid 102); 11 Jul 2016 23:54:24 -0000
+	id S1751365AbcGLAIq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2016 20:08:46 -0400
+Received: (qmail 31377 invoked by uid 102); 12 Jul 2016 00:08:46 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jul 2016 19:54:24 -0400
-Received: (qmail 3272 invoked by uid 107); 11 Jul 2016 23:54:43 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jul 2016 20:08:46 -0400
+Received: (qmail 3316 invoked by uid 107); 12 Jul 2016 00:09:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jul 2016 19:54:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jul 2016 19:54:18 -0400
-Date:	Mon, 11 Jul 2016 19:54:18 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jul 2016 20:09:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jul 2016 20:08:42 -0400
+Date:	Mon, 11 Jul 2016 20:08:42 -0400
 From:	Jeff King <peff@peff.net>
-To:	Andreas Schwab <schwab@linux-m68k.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.9.1
-Message-ID: <20160711235417.GA26163@sigill.intra.peff.net>
-References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com>
- <87lh17kgdy.fsf@linux-m68k.org>
+To:	Theodore Ts'o <tytso@mit.edu>
+Cc:	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/5] doc/pretty-formats: describe index/time formats for
+ %gd
+Message-ID: <20160712000841.GB26163@sigill.intra.peff.net>
+References: <20160711050201.GA18031@sigill.intra.peff.net>
+ <20160711050513.GC32514@sigill.intra.peff.net>
+ <20160711164834.GC3890@thunk.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87lh17kgdy.fsf@linux-m68k.org>
+In-Reply-To: <20160711164834.GC3890@thunk.org>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jul 11, 2016 at 11:35:05PM +0200, Andreas Schwab wrote:
+On Mon, Jul 11, 2016 at 12:48:34PM -0400, Theodore Ts'o wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> On Mon, Jul 11, 2016 at 01:05:13AM -0400, Jeff King wrote:
+> > The "reflog selector" format changes based on a series of
+> > heuristics, and that applies equally to both stock "log -g"
+> > output, as well as "--format=%gd". The documentation for
+> > "%gd" doesn't cover this. Let's mention the multiple formats
+> > and refer the user back to the "-g" section for the complete
+> > rules.
 > 
-> >       local_tzoffset: detect errors from tm_to_time_t
+> Is it worth mentioning that the shortening only happens if the user
+> specifies a selector with '/' in it in the first place?  I was
+> confused when I was first playing with these selectors because %gd and
+> %gD are identical if you run
 > 
-> not ok 19 - show date (iso:5758122296 -0400)
-> #      
-> #                      echo "$time -> $expect" >expect &&
-> #                      test-date show:$format "$time" >actual &&
-> #                      test_cmp expect actual
-> #              
-> not ok 20 - show date (iso-local:5758122296 -0400)
-> #      
-> #                      echo "$time -> $expect" >expect &&
-> #                      test-date show:$format "$time" >actual &&
-> #                      test_cmp expect actual
+> 	git reflog --format=%gd -3 master
+> 	git reflog --format=%gD -3 master
 > 
-> This is outside the range of 32bit time_t.
+> and are only different if you run:
+> 
+> 	git reflog --format=%gd -3 refs/heads/master
+> 	git reflog --format=%gD -3 refs/heads/master
 
-Yes, that's somewhat the point of the test.
+Yeah, I noticed that "shortened" is not really defined when I was
+writing this.
 
-How does it fail for you (what does it look like with "-v")? We may be
-able to check for an outcome that matches both cases.
+Maybe this on top of the other documentation patches?
 
-Otherwise, we'll have to skip the test, perhaps with something like the
-patch below. I suspect the problem is actually the size of "unsigned
-long", not time_t, as we use that internally for a bunch of time
-computation.
+-- >8 --
+Subject: [PATCH] doc/pretty-formats: explain shortening of %gd
 
+The actual shortening rules aren't that interesting and
+probably not worth getting into (I gloss over them here as
+"shortened for human readability"). But the fact that %gD
+shows whatever you gave on the command line is subtle and
+worth mentioning. Since most people will feed a shortened
+refname in the first place, it otherwise makes it hard to
+understand the difference between the two.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
-diff --git a/help.c b/help.c
-index 19328ea..0cea240 100644
---- a/help.c
-+++ b/help.c
-@@ -419,6 +419,13 @@ int cmd_version(int argc, const char **argv, const char *prefix)
- 	 * with external projects that rely on the output of "git version".
- 	 */
- 	printf("git version %s\n", git_version_string);
-+	while (*++argv) {
-+		if (!strcmp(*argv, "--build-options")) {
-+			printf("sizeof-unsigned-long: %d",
-+			       (int)sizeof(unsigned long));
-+			/* maybe also save and output GIT-BUILD_OPTIONS? */
-+		}
-+	}
- 	return 0;
- }
- 
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 04ce535..a0b8497 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -31,7 +31,7 @@ check_show () {
- 	format=$1
- 	time=$2
- 	expect=$3
--	test_expect_${4:-success} "show date ($format:$time)" '
-+	test_expect_success $4 "show date ($format:$time)" '
- 		echo "$time -> $expect" >expect &&
- 		test-date show:$format "$time" >actual &&
- 		test_cmp expect actual
-@@ -50,8 +50,8 @@ check_show iso-local "$TIME" '2016-06-15 14:13:20 +0000'
- 
- # arbitrary time absurdly far in the future
- FUTURE="5758122296 -0400"
--check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400"
--check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000"
-+check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400" 64BIT
-+check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000" 64BIT
- 
- check_parse() {
- 	echo "$1 -> $2" >expect
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0055ebb..d592bdc 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1111,3 +1111,12 @@ run_with_limited_cmdline () {
- }
- 
- test_lazy_prereq CMDLINE_LIMIT 'run_with_limited_cmdline true'
-+
-+build_option () {
-+	git version --build-options |
-+	sed -ne "s/^$1: //p"
-+}
-+
-+test_lazy_prereq 64BIT '
-+	test 8 -le "$(build_option sizeof-unsigned-long)"
-+'
+ Documentation/pretty-formats.txt | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 36a300a..b95d67e 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -149,9 +149,12 @@ endif::git-rev-list[]
+ - '%GK': show the key used to sign a signed commit
+ - '%gD': reflog selector, e.g., `refs/stash@{1}` or
+   `refs/stash@{2 minutes ago`}; the format follows the rules described
+-  for the `-g` option
+-- '%gd': shortened reflog selector, e.g., `stash@{1}` or
+-  `stash@{2 minutes ago}`
++  for the `-g` option. The portion before the `@` is the refname as
++  given on the command line (so `git log -g refs/heads/master` would
++  yield `refs/heads/master@{0}`).
++- '%gd': shortened reflog selector; same as `%gD`, but the refname
++  portion is shortened for human readability (so `refs/heads/master`
++  becomes just `master`).
+ - '%gn': reflog identity name
+ - '%gN': reflog identity name (respecting .mailmap, see
+   linkgit:git-shortlog[1] or linkgit:git-blame[1])
+-- 
+2.9.0.406.g77f030d
+
