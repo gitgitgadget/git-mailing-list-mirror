@@ -2,94 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9BC22018E
-	for <e@80x24.org>; Tue, 12 Jul 2016 16:01:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7A7A1FE4E
+	for <e@80x24.org>; Tue, 12 Jul 2016 16:09:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932658AbcGLQBq (ORCPT <rfc822;e@80x24.org>);
-	Tue, 12 Jul 2016 12:01:46 -0400
-Received: from mail-it0-f52.google.com ([209.85.214.52]:38239 "EHLO
-	mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751187AbcGLQBp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2016 12:01:45 -0400
-Received: by mail-it0-f52.google.com with SMTP id h190so19579017ith.1
-        for <git@vger.kernel.org>; Tue, 12 Jul 2016 09:01:45 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ngzFtsD8lK1tg48qROvn74O8DmmaJ8Hktr0MdsbshhQ=;
-        b=HgonL2r4IK5Pa8zU6878U5tU2OKUtWMed/0bT4b3rgMa0+e30aqYiim9moyDRSQVht
-         i7Qk+8om9pkYqivQbXKiT17n6W2UnPRrv3Gk59mWh0oOU8BJ4GmnI7tfppiK3tNs6sFm
-         9l0U92bd+vTyK8TMN4LPnep6vRztddzuOpQWghD7Yjn3rLPwF7aZzpVJ0FxVpl/yHtVq
-         l1ZV4vP/7tvCJ/C/qEDKGH40TI6/0v7ECbjG3N3WQ+r2B4eO7SGRcj7DY9PAyIgHNLyI
-         6vW6hwU67yihPkySH34nyaNQpVNwsyQ89G9aZRGb/wYIBCQ5vJIvpzDjZlNe/+mqzXKR
-         qRJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ngzFtsD8lK1tg48qROvn74O8DmmaJ8Hktr0MdsbshhQ=;
-        b=mIrfzaotsZ4KVKQatF1kPe0gDVJU290lKqOImD14QL9TY/syN0BYxkzt+tmJIFK/Y+
-         9KC2bbORJAd7A4HkykHl7yH4UkSR8ppSqgkppdMOMh0v9ADdVGqAs3gcnNJOSH7EUc0J
-         FOI51GnXVMQWlAD7UNf+zZcEjlNc9fOakfxFXTTcOtfqIyiiKJI10mOnjxLUJxGiEDNg
-         4YBcnIg1TwCbES20BIfSOfxYwnDaO2XxdgO/Lp/EsbLdmPCAnaeBTR9fJerhyt33Y5Ek
-         vw3jsSWh6rVXpybvbrtp7vTrDfdCG3Z2VTQmOiafbB4nipJQnGMxFTy56zuFaGVZga34
-         sqHQ==
-X-Gm-Message-State: ALyK8tKygTqSbZGjH1WgLyFt94A0RcwAyyrNxS777wmOQyC/bgUHNcKt1kGdMP6TZeo1EJPce0HwYlW7hiGjLQ==
-X-Received: by 10.36.43.5 with SMTP id h5mr17637494ita.57.1468339301603; Tue,
- 12 Jul 2016 09:01:41 -0700 (PDT)
+	id S1752036AbcGLQJZ (ORCPT <rfc822;e@80x24.org>);
+	Tue, 12 Jul 2016 12:09:25 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43563 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751254AbcGLQJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2016 12:09:25 -0400
+Received: (qmail 9849 invoked by uid 102); 12 Jul 2016 16:09:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jul 2016 12:09:25 -0400
+Received: (qmail 4144 invoked by uid 107); 12 Jul 2016 16:09:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jul 2016 12:09:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jul 2016 12:09:21 -0400
+Date:	Tue, 12 Jul 2016 12:09:21 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [ANNOUNCE] Git v2.9.1
+Message-ID: <20160712160921.GA2965@sigill.intra.peff.net>
+References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com>
+ <87lh17kgdy.fsf@linux-m68k.org>
+ <20160711235417.GA26163@sigill.intra.peff.net>
+ <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1607120927410.6426@virtualbox>
+ <xmqqpoqj6i3d.fsf@gitster.mtv.corp.google.com>
+ <20160712151630.GE613@sigill.intra.peff.net>
+ <CAPc5daWcb5bfgsxMP0vCrQ7gBdeYBgefzPNHztaaCKzqbCv2aQ@mail.gmail.com>
+ <20160712153520.GG613@sigill.intra.peff.net>
+ <xmqqlh167tjd.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Tue, 12 Jul 2016 09:01:12 -0700 (PDT)
-In-Reply-To: <20160711172254.13439-1-chriscool@tuxfamily.org>
-References: <20160711172254.13439-1-chriscool@tuxfamily.org>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Tue, 12 Jul 2016 18:01:12 +0200
-Message-ID: <CACsJy8ApNJ+EBOVNC0GoPUaO898QRqHUZ2yQ39Qg5uGq4sHHGg@mail.gmail.com>
-Subject: Re: [RFC/PATCH 0/8] Add configuration options for split-index
-To:	Christian Couder <christian.couder@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqlh167tjd.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jul 11, 2016 at 7:22 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> Future work
-> ~~~~~~~~~~~
->
-> One thing that is probably missing is a mechanism to avoid having too
-> many changes accumulating in the (split) index while in split index
-> mode. The git-update-index documentation says:
->
->         If split-index mode is already enabled and `--split-index` is
->         given again, all changes in $GIT_DIR/index are pushed back to
->         the shared index file.
->
-> but it is probably better to not expect the user to think about it and
-> to have a mechanism that pushes back all changes to the shared index
-> file automatically when some threshold is reached. The threshold could
-> be for example when $GIT_DIR/index size is larger than 25% of the
-> shared index size. Opinions, test results or test ideas are welcome on
-> this.
+On Tue, Jul 12, 2016 at 08:41:42AM -0700, Junio C Hamano wrote:
 
-Oh yes I would like something like this. I stuck to the basics because
-as you see you need to define some criteria to re-split again, but
-without experimenting on real repos, I could just have gone the wrong
-way. Index file size or the percentage of entries in linked/shared
-indexes are two good candidates. You can also just re-split on
-commands that likely lead to increasing linked index size a lot (maybe
-git-reset), or run long enough that some extra processing won't get
-noticed. For example git-gc should definitely re-split if this feature
-is on, but I can't say if it's often enough.
--- 
-Duy
+> Jeff King <peff@peff.net> writes:
+> 
+> > I am not certain that there is a modern system with 32-bit time_t. We
+> > know there are systems with 32-bit unsigned long, and I think that is
+> > what produced the results people saw. I'd expect even 32-bit systems to
+> > use "int64_t" or similar for their time_t these days.
+> 
+> OK.
+
+In case it wasn't clear, I was mostly guessing there. So I dug a bit
+further, and indeed, I am wrong. Linux never bumped to a 64-bit time_t
+on i386 because of the ABI headaches.
+
+That being said, I still think the "clamp to time_t" strategy is
+reasonable. Unless you are doing something really exotic like pretending
+to be from the future, nobody will care for 20 years. And at that point,
+systems with a 32-bit time_t are going to have to do _something_,
+because time() is going to start returning bogus values. So as long as
+we behave reasonably (e.g., clamping values and not generating wrapped
+nonsense), I think that's a fine solution.
+
+-Peff
