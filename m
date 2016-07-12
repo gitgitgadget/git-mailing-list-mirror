@@ -2,76 +2,261 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32D591FE4E
-	for <e@80x24.org>; Tue, 12 Jul 2016 15:06:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EF721FE4E
+	for <e@80x24.org>; Tue, 12 Jul 2016 15:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932826AbcGLPF7 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 12 Jul 2016 11:05:59 -0400
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:36383 "EHLO
-	mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753982AbcGLPF6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2016 11:05:58 -0400
-Received: by mail-yw0-f170.google.com with SMTP id w127so16345553ywf.3
-        for <git@vger.kernel.org>; Tue, 12 Jul 2016 08:05:58 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=myl/LPEeCLhk2ffu1kaop2EXX2/sNH/eMpJWPJeV5S4=;
-        b=m8hvvfIAp8Buso9sna0rsLiJiLx8IUDQLv9johKRP+H9OeSvAZsSf09N80vaXqo51+
-         yTozO2De6ZT1ZtFmDdqmxwptrTvnv0KrarEmmBGDkgWVGFaOlvmW/TlszwyJ2lM3kraC
-         nQOlog/i93vIrWUqCwtLKUb55zfmhs0g8+mAWLfXr/A0KkT7La/UslJ/xlJuTnDPu019
-         CTeyrmQyYDpc+589o88pg628iDDxjYrAmaSAeJQmf65ArWkiWSFcUMXj8YB+grFTqdht
-         r9nSVeSfeTes9UuWc8ERR4gWz6CHHfqDvQIQxaUMwLsfvtIN5EivNsGxEbjfNHl2kKvc
-         iP6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=myl/LPEeCLhk2ffu1kaop2EXX2/sNH/eMpJWPJeV5S4=;
-        b=mAjCBGd2FX/hl7DAHr6UzKDJOMMK5onxJjUIYHRE8+Y1ww1Yf0idAJg1o4UTWknaAx
-         v1DgXVeh8No0MdkKKdFlgWMf605werr2aH3tLxrT0CS4YHaCYuKSCJ9bYhjFnHTN6zXm
-         GmS/E/0VgpXhNsbrUk2wYdXB2uo/syb8boYERKia/aB4ctXKCzs6JqpU0tEx0o9vIAgO
-         7rWhV63pzHrAPGh9IMZXtWkB1F/IpL7p8Ct3rgUFEDpMQacd5zyRHphANgKZAfW3BVJO
-         KNS4iLZKgaGlgJYkB6kWhuzdlcD1VBvVo5gQWOFrjGG3J6ff7X/Robh7z17hkJ4YfEFw
-         Sx5Q==
-X-Gm-Message-State: ALyK8tJctJh4vJBGRnRZm9BzKCREXdBsSm39zscrjOzs1VAjGONC/ETmK3COH1kF1LLqr90U17LwCqvMPqH0bA==
-X-Received: by 10.37.22.85 with SMTP id 82mr1944727ybw.123.1468335957456; Tue,
- 12 Jul 2016 08:05:57 -0700 (PDT)
+	id S1755071AbcGLPHz (ORCPT <rfc822;e@80x24.org>);
+	Tue, 12 Jul 2016 11:07:55 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43486 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755058AbcGLPHx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2016 11:07:53 -0400
+Received: (qmail 7027 invoked by uid 102); 12 Jul 2016 15:07:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jul 2016 11:07:53 -0400
+Received: (qmail 3296 invoked by uid 107); 12 Jul 2016 15:08:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jul 2016 11:08:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jul 2016 11:07:49 -0400
+Date:	Tue, 12 Jul 2016 11:07:49 -0400
+From:	Jeff King <peff@peff.net>
+To:	Jeff Hostetler <jeffhost@microsoft.com>
+Cc:	git@vger.kernel.org, git@jeffhostetler.com, gitster@pobox.com
+Subject: Re: [PATCH] Add very verbose porcelain output to status
+Message-ID: <20160712150749.GD613@sigill.intra.peff.net>
+References: <1467919588-11930-1-git-send-email-jeffhost@microsoft.com>
 MIME-Version: 1.0
-Received: by 10.13.240.66 with HTTP; Tue, 12 Jul 2016 08:05:38 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1607121515300.6426@virtualbox>
-References: <xmqq37ng7x05.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607121515300.6426@virtualbox>
-From:	Junio C Hamano <gitster@pobox.com>
-Date:	Tue, 12 Jul 2016 08:05:38 -0700
-X-Google-Sender-Auth: RCnduelYqi4_3mv5CpRRfqpwSso
-Message-ID: <CAPc5daVVU0+Ext0tk83kOLwZxPGPUFZQ9_5y7yyX4JD0O3Napw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2016, #04; Mon, 11)
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1467919588-11930-1-git-send-email-jeffhost@microsoft.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 12, 2016 at 6:16 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> On Mon, 11 Jul 2016, Junio C Hamano wrote:
->
->> [New Topics]
->>
->> [...]
->
-> What about http://thread.gmane.org/gmane.comp.version-control.git/299050?
+On Thu, Jul 07, 2016 at 03:26:28PM -0400, Jeff Hostetler wrote:
 
-Not forgotten.
+> Tools interacting with Git repositories may need to know the complete
+> state of the working directory. For efficiency, it would be good to have
+> a single command to obtain this information.
+> 
+> We already have a `--porcelain` mode intended for tools' consumption,
+> and it only makes sense to enhance this mode to offer more information.
+> 
+> Just like we do elsewhere in Git's source code, we now interpret
+> multiple `--verbose` flags accumulatively, and show substantially more
+> information in porcelain mode at verbosity level 2.
 
-It just is not one of the "New Topics" yet, together with several
-other patches sent to
-the list recently, hence it is not listed there.
+Using "--verbose" to change the stable output feels a little funny to
+me. Usually --verbose is about increasing the human-readable output to
+stderr. Of course "--verbose" for git-status is already a little weird.
+A single "-v" seems to do nothing, but two will turn on a diff for the
+long-format output.
+
+But it seems to me this just confuses things more. Why does "git status
+--porcelain -v" do nothing, for example? What happens when we want to
+add more information to the porcelain output later? Do we have to
+require "-vvv" to trigger it, and if so, is there a way to get that
+information without the "-vv" information?
+
+I think the existing example for adding to the --porcelain format is
+the --branch option. Could we have "--state" or something to trigger
+the extra lines?
+
+> +If --branch is given, the first line shows a summary of the current
+> +operation in progress.  This line begins with "### state: ", the name
+> +of the operation in progress, and then operation-specific information.
+> +Fields are separated by a single space.
+
+This seems like a good bit of information to have, and AFAIK we don't
+expose the state information in a machine-readable way. A few nits:
+
+> +    Operation   Fields                     Explanation
+> +    ------------------------------------------------------------------
+> +    clean
+
+Using "clean" here seems weird, as that term is usually meant to mean
+the opposite of dirty (i.e., there is something in your working tree
+that can be committed). But there is no "dirty" here. Would "normal" or
+"none" be a good description?
+
+> +    ------------------------------------------------------------------
+> +    merge       <nr>                       Number unmerged
+
+This <nr> (and others below) is redundant with the rest of the output,
+right (i.e., you could count up the "U" entries yourself)? I don't mind
+it as a convenience, but I'm kind of curious of why it's useful.
+
+> +    ------------------------------------------------------------------
+> +    am          [E]                        Present if the current patch
+> +                                           is empty
+> +    ------------------------------------------------------------------
+> +    rebase      <nr>                       Number unmerged
+> +                [S]                        Present if split commit in
+> +                                           progress during rebase
+> +                [E]                        Present if editing a commit
+> +                                           during rebase
+
+Can a rebased commit be empty? If so, should that state get "E" to match
+"am"?
+
+Does editing differentiate between "stopped because of a conflict that
+needs addressing" versus "stopped because the interactive insn sheet
+told us to"?
+
+> +                [I(<done>/<total>)]        Present if in an interactive
+> +                                           rebase. Step counts are given.
+> +                [<current>:<onto>]         Rebase branches
+
+I wonder if we ought to just use "<current> <onto>" here, as separate
+arguments. A ":" between refs usually signifies a refspec, but that is
+not what this is.
+
+I note this is optional, though. Is there a case where we might have one
+but not the other? That would make things more difficult syntactically.
+
+> +If --branch is given, the second line shows branch tracking information.
+> +This line begins with "### track: ".  Fields are separated by a single
+> +space, unless otherwise indicated.
+> +
+> +    Field                    Meaning
+> +    --------------------------------------------------------
+> +    <sha> | "(initial)"      Current commit
+> +    <branch> | "(detached)"  Current branch
+> +    ":"<upstream>            Upstream branch, if set
+> +    "+"<ahead>               Ahead count, if upstream present
+> +    "-"<behind>              Behind count, if upstream present
+> +    --------------------------------------------------------
+
+This really _ought_ to have been how --branch worked in the first place
+with --porcelain. But unfortunately the existing format has been in the
+wild for a long time. To top it off, the existing format is translated!
+So you cannot even match "Initial commit on (.*)". Yech.
+
+So this looks like a big improvement. And I see now why you wanted
+something like "-vv" to implement this, instead of "--state". In
+addition to adding new lines, this is fixing mistakes made in the prior
+format.
+
+I'm still not convinced that it makes sense to trigger this more-sane
+format with a "verbose" option, though. It's not more verbose. It's just
+less crappy. It would make more sense to me if this was "porcelain v2",
+and triggered with "--porcelain=2" or similar.
+
+Ditto with the new per-file format you introduce (which at least _is_
+more verbose).
+
+> +A series of lines are then displayed for the tracked entries.
+> +Lines have one of the following formats:
+> +
+> +    XYS mH mI mW shaH shaI PATH
+> +    XYS mH mI mW shaH shaI score OLD_PATH\tPATH
+> +    XYS m1 m2 m3 mW sha1 sha2 sha3 PATH
+
+So this is sort of like a --raw diff, but covering the 3 states. That
+makes some sense to me.
+
+I notice in the middle one that there is room for only one rename
+(between the index and HEAD). I guess we cannot have a rename between
+the working tree and the index, because the dst file would have to be a
+new file, which by definition is untracked, and not eligible.
+
+One of the nasty points of the current format is that it is
+context-sensitive. You don't know if you have "PATH" with a space, or
+"score OLD_PATH" until you see whether "X" tells you if you have a
+rename or not. So simple parsing with things like "cut" doesn't work.
+
+Can we collapse these into a single line format where some entries just
+end up with some nil state (e.g., "0" for the score of something that
+isn't a rename)?
+
+While I'm thinking about it, have you looked at how this all works with
+"-z"?
+
+> +* X and Y were described in the short format section.
+> +* S is a one character summary of the submodule status with values '0'..'7'
+> +  representing the sum of: 4 when submodule has a new commit, 2 when the
+> +  submodule is modified, and 1 when the submodule contains untracked changes.
+
+Is there any reason not to give these non-numeric constants? I.e., to
+treat it as a sequence of flags, which can be present or not?
+
+> +  The value is ' ' if the entry is not a submodule.
+
+So would it be:
+
+  XY  100644 ...
+
+with two spaces in that case?
+
+I wonder if it would be less mysterious if the submodule data got its
+own bitfield, like:
+
+  N - not a submodule
+  S[C][M][U] - is a submodule, with one or more of:
+                - commits (C)
+		- modifications (M)
+		- untracked files (U)
+
+> @@ -1380,7 +1382,20 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+>  	fd = hold_locked_index(&index_lock, 0);
+>  
+>  	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
+> +	if (!s.is_initial)
+> +		hashcpy(s.sha_commit, sha1);
+> +
+>  	s.ignore_submodule_arg = ignore_submodule_arg;
+> +	if (verbose > 1 && status_format == STATUS_FORMAT_PORCELAIN) {
+> +		/* Capture extra data for very verbose porcelain output. */
+> +		s.verbose = verbose;
+
+The existing s.verbose setup happens in the big format-specific switch
+statement below. Should this go there, too? (Though if you have read the
+rest of my email, you know I'd prefer this actually end up as a new
+format).
+
+> +		/* Force safe_crlf off to prevent normal LF/CRLF warning
+> +		 * message from being printed on stderr for each new file.
+> +		 */
+> +		safe_crlf = SAFE_CRLF_FALSE;
+> +	}
+
+Hmm, this seems like something that would be useful for all formats. It
+comes from doing a diff at all, right?
+
+> [...]
+
+I gave only a brief skim over the rest of the code, as I think the
+design issues are more interesting at this stage.
+
+Please don't let the length of my comments discourage you; I think this
+is a good direction to be going. I did find I had to piece together the
+rationale a bit from looking at the patch itself. I think it would be
+easier to understand as a few patches:
+
+  - add infrastructure and rules for a new v2 porcelain format; the
+    format is still in flux for the next few patches, but will be
+    cemented at release time (in your world-view this is the "more
+    verbose format", but I'm taking the liberty of pretending you agree
+    with everything I wrote above ;) ).
+
+  - add v2 per-file format; the rationale is that the existing format
+    leaves out some details. And also that it's hard to parse (if you
+    agree that we should clean up those cases).
+
+  - convert "--branch" output in v2 to what you have here; the rationale
+    is that the existing format is horribly unstable
+
+  - add "--state"; the rationale is that there isn't a machine-readable
+    way to get this data right now. This can be independent of the v1/v2
+    flag, since we output it only when asked for, and v1-era git didn't
+    have it at all.
+
+  - the SAFE_CRLF_FALSE tweak above; this seems orthogonal to the rest
+    of it, but offhand seems like a reasonable idea to me.
+
+-Peff
