@@ -2,104 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D72C1F744
-	for <e@80x24.org>; Tue, 12 Jul 2016 02:01:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91B271F744
+	for <e@80x24.org>; Tue, 12 Jul 2016 02:10:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932088AbcGLCBz (ORCPT <rfc822;e@80x24.org>);
-	Mon, 11 Jul 2016 22:01:55 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56164 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752616AbcGLCBy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2016 22:01:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id EB56A2C8E6;
-	Mon, 11 Jul 2016 22:01:52 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ys7cVaOYwgv+XFIUpVUItB+hyMA=; b=kkohfM
-	LjbtnAx1s4i0Y/eioCLA0qv/Pf6LY5f7HqT3gEsfc0bCopyLvkrowU9uOPQbt+kQ
-	6/d+uHF39h5gu3Gdtc/z0gxjldUhuE2db5jlwR/csGoORgtJunXAduBSvO+IhC7D
-	jiuwKDbShT0GLbqMvu24R4spOOIVHBmEjhKm4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tVe1DQdxEOA6IOLYwqlRaVNQCVdThTs4
-	0JDgL5dvpsXuZQ6SIl+V3nueUTAet1AP08pWQUITi7uwbXidEn3AWv5kI4koaaoY
-	Uzs8OeB/vvcyGPjKGShcfl1it2K8OMcGPKeuDcdF/5C3Xfm7iPxW/ReXr8q7VvP3
-	EqQvjl7HUnA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E34B12C8E5;
-	Mon, 11 Jul 2016 22:01:52 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 692CF2C8E4;
-	Mon, 11 Jul 2016 22:01:52 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Theodore Ts'o <tytso@mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/5] doc/pretty-formats: describe index/time formats for %gd
-References: <20160711050201.GA18031@sigill.intra.peff.net>
-	<20160711050513.GC32514@sigill.intra.peff.net>
-	<20160711164834.GC3890@thunk.org>
-	<20160712000841.GB26163@sigill.intra.peff.net>
-Date:	Mon, 11 Jul 2016 19:01:50 -0700
-In-Reply-To: <20160712000841.GB26163@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 11 Jul 2016 20:08:42 -0400")
-Message-ID: <xmqqtwfv7gxd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932442AbcGLCKx (ORCPT <rfc822;e@80x24.org>);
+	Mon, 11 Jul 2016 22:10:53 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:36319 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932117AbcGLCKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2016 22:10:52 -0400
+Received: by mail-pa0-f66.google.com with SMTP id ib6so149706pad.3
+        for <git@vger.kernel.org>; Mon, 11 Jul 2016 19:10:52 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Q5eTEKyZ0GffhRpsuWW/+P7ip7yDJQYEy2F5MvhlQQU=;
+        b=b9kyyL2GuVhgILVK6l0QcipuyGzUD/pQ7BaTk4HEoUL5Bme7u7el4R0YY5pY54s9em
+         EOAqUu8ZYNHM2Jn6RlAwJ5btHXy5rO3SkixpJep3L0EteQY5VBW3by0R5CWuK3DlL+/e
+         mP7p6GwO2j1W59Wb9/gdI9H1LCaW4jezIAU9UX+Uj2Be0a+Jm+tAMvrbqDOkdF5U91kC
+         m1iX1YOwvuDC4EFaf8ssSTS/ZgjAvIBF2LU1y1hMY0Xmeyvl4AE/ZXTKLc5RstN+XkLy
+         6R7+4sXmAWX6ljm7xDtSa6QFUmLYS6zoBvslYhmPmjjULCs1ZAiQ94Yflu6E/LcSRJjq
+         o1Lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Q5eTEKyZ0GffhRpsuWW/+P7ip7yDJQYEy2F5MvhlQQU=;
+        b=CNhUi/J1ACmsFTJ+QzJKfavz6+DleNtm4tC3Gj5eFPNgCuTOU8PmmASCE8sIYgjf8B
+         5SCama4AryAHaUgesgegIlCeocEGLUhQ9bevT2VrkUQcUynFSiO0jt/GHgxrS/OF0LOt
+         hPlt9fSt6HcUH2uqfA+gSjFkYXcUBSOWhtaCZruhxeEipw1tMri1lc91NuHRMPzRMJLW
+         eAP0ucnbKXgmUefF2h0dkKXEX1f9Auv3Be2K2rxivCsFSdAXpVdQlrNAeQoOtzIke4gT
+         hUb9Ob2pysYDGXPJ18R/zcrVL9a6PS516CBmDWb+F0aJHDkZNwBlV0z9nWyup7IJrvVc
+         2X6g==
+X-Gm-Message-State: ALyK8tK8eCBvVsGb8+2IOH4eCh51+OxrEgUcg1UUASsvjSlQYb3TGTa5qkNVLgus451z2Q==
+X-Received: by 10.66.244.199 with SMTP id xi7mr7222615pac.127.1468289451718;
+        Mon, 11 Jul 2016 19:10:51 -0700 (PDT)
+Received: from gmail.com (remote-11.disneyanimation.com. [198.187.190.11])
+        by smtp.gmail.com with ESMTPSA id p75sm301378pfa.71.2016.07.11.19.10.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Jul 2016 19:10:50 -0700 (PDT)
+Date:	Mon, 11 Jul 2016 19:10:48 -0700
+From:	David Aguilar <davvid@gmail.com>
+To:	John Keeping <john@keeping.me.uk>
+Cc:	Bernhard Kirchen <bernhard.kirchen@rwth-aachen.de>,
+	git@vger.kernel.org, Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: [PATCH] difftool: fix argument handling in subdirs
+Message-ID: <20160712021048.GA20679@gmail.com>
+References: <OFEE90CED0.0832E3D4-ONC1257FE9.0053D856-C1257FE6.00660366@lancom.de>
+ <155b7339538.2774.8c011de0e6d4f677db1e190e9d3169b9@rwth-aachen.de>
+ <20160705195252.hzf5hvrcub3g32gg@john.keeping.me.uk>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9A0AC316-47D4-11E6-9EA3-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160705195252.hzf5hvrcub3g32gg@john.keeping.me.uk>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+[Cc'd Tim, who originally authored the dir-diff code]
 
-> Maybe this on top of the other documentation patches?
->
+On Tue, Jul 05, 2016 at 08:52:52PM +0100, John Keeping wrote:
+> On Mon, Jul 04, 2016 at 08:37:39PM +0200, Bernhard Kirchen wrote:
+> > Today I started using --dir-diff and noticed a problem when specifying a
+> > non-full path limiter. My diff tool is setup to be meld (*1).
+> > 
+> > OK while working directory is repo root; also OK while working directory is
+> > repo subfolder "actual":
+> > git difftool --dir-diff HEAD~1 HEAD -- actual/existing/path
+> > => meld opens with proper dir-diff.
+> > 
+> > NOT OK while working directory is repo subfolder "actual":
+> > git difftool --dir-diff HEAD~1 HEAD -- existing/path
+> > => nothing happens, as if using "non/such/path" as the path limiter.
+> > 
+> > Because "git diff HEAD~1 HEAD -- existing/path" while the working directory
+> > is the repo subfolder "actual" works, I epxected the difftool to work
+> > similarly. Is this a bug?
+> 
+> I think it is, yes.  The patch below fixes it for me and doesn't break
+> any existing tests, but I still don't understand why the separate
+> $diffrepo was needed originally, so I'm not certain this won't break
+> some other corner case.
+
+
+IIRC the original motivation for using a separate $diffrepo was
+to handle GIT_DIR being set in the environment.
+
+The lack of tests for that use case could be better, though.
+Is that use case affected by this change?
+
+Tim, do you remember why a new repo instance is used for that code path?
+
+
 > -- >8 --
-> Subject: [PATCH] doc/pretty-formats: explain shortening of %gd
->
-> The actual shortening rules aren't that interesting and
-> probably not worth getting into (I gloss over them here as
-> "shortened for human readability"). But the fact that %gD
-> shows whatever you gave on the command line is subtle and
-> worth mentioning. Since most people will feed a shortened
-> refname in the first place, it otherwise makes it hard to
-> understand the difference between the two.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+> When in a subdirectory of a repository, path arguments should be
+> interpreted relative to the current directory not the root of the
+> working tree.
+> 
+> The Git::repository object passed into setup_dir_diff() is configured to
+> handle this correctly but we create a new Git::repository here without
+> setting the WorkingSubdir argument.  By simply using the existing
+> repository, path arguments are handled relative to the current
+> directory.
+
+I do like the sound of this rationale, though.
+
+Tim, please let us know if you have a specific test case that is
+not covered by this change.
+
+BTW, `diff --raw` will still output paths that are relative to
+the root but this is okay since the rest of the code expects
+things to be root-relative, correct?
+
+
+> Signed-off-by: John Keeping <john@keeping.me.uk>
 > ---
->  Documentation/pretty-formats.txt | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-> index 36a300a..b95d67e 100644
-> --- a/Documentation/pretty-formats.txt
-> +++ b/Documentation/pretty-formats.txt
-> @@ -149,9 +149,12 @@ endif::git-rev-list[]
->  - '%GK': show the key used to sign a signed commit
->  - '%gD': reflog selector, e.g., `refs/stash@{1}` or
->    `refs/stash@{2 minutes ago`}; the format follows the rules described
-> -  for the `-g` option
-> -- '%gd': shortened reflog selector, e.g., `stash@{1}` or
-> -  `stash@{2 minutes ago}`
-> +  for the `-g` option. The portion before the `@` is the refname as
-> +  given on the command line (so `git log -g refs/heads/master` would
-> +  yield `refs/heads/master@{0}`).
-> +- '%gd': shortened reflog selector; same as `%gD`, but the refname
-> +  portion is shortened for human readability (so `refs/heads/master`
-> +  becomes just `master`).
+>  git-difftool.perl | 13 +++----------
+>  1 file changed, 3 insertions(+), 10 deletions(-)
+> 
+> diff --git a/git-difftool.perl b/git-difftool.perl
+> index ebd13ba..c9d3ef8 100755
+> --- a/git-difftool.perl
+> +++ b/git-difftool.perl
+> @@ -115,16 +115,9 @@ sub setup_dir_diff
+>  {
+>  	my ($repo, $workdir, $symlinks) = @_;
+>  
+> -	# Run the diff; exit immediately if no diff found
+> -	# 'Repository' and 'WorkingCopy' must be explicitly set to insure that
+> -	# if $GIT_DIR and $GIT_WORK_TREE are set in ENV, they are actually used
+> -	# by Git->repository->command*.
+>  	my $repo_path = $repo->repo_path();
+> -	my %repo_args = (Repository => $repo_path, WorkingCopy => $workdir);
+> -	my $diffrepo = Git->repository(%repo_args);
+> -
+>  	my @gitargs = ('diff', '--raw', '--no-abbrev', '-z', @ARGV);
+> -	my $diffrtn = $diffrepo->command_oneline(@gitargs);
+> +	my $diffrtn = $repo->command_oneline(@gitargs);
+>  	exit(0) unless defined($diffrtn);
+>  
+>  	# Build index info for left and right sides of the diff
+> @@ -176,12 +169,12 @@ EOF
+>  
+>  		if ($lmode eq $symlink_mode) {
+>  			$symlink{$src_path}{left} =
+> -				$diffrepo->command_oneline('show', "$lsha1");
+> +				$repo->command_oneline('show', "$lsha1");
+>  		}
+>  
+>  		if ($rmode eq $symlink_mode) {
+>  			$symlink{$dst_path}{right} =
+> -				$diffrepo->command_oneline('show', "$rsha1");
+> +				$repo->command_oneline('show', "$rsha1");
+>  		}
+>  
+>  		if ($lmode ne $null_mode and $status !~ /^C/) {
+> -- 
 
-Sounds about the right amount of detail to me.  Thanks.
+Can you please also add a testcase to t/t7800-difftool.sh
+demonstrating the problem fixed by this change?
 
->  - '%gn': reflog identity name
->  - '%gN': reflog identity name (respecting .mailmap, see
->    linkgit:git-shortlog[1] or linkgit:git-blame[1])
+Hopefully there's an existing test in there that can be adapted
+to run dir-diffs in a subdirectory.
+
+ciao,
+-- 
+David
