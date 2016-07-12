@@ -2,89 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC24E1FE4E
-	for <e@80x24.org>; Tue, 12 Jul 2016 15:46:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F5501FE4E
+	for <e@80x24.org>; Tue, 12 Jul 2016 15:49:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754486AbcGLPqt (ORCPT <rfc822;e@80x24.org>);
-	Tue, 12 Jul 2016 11:46:49 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:36508 "EHLO
-	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752855AbcGLPqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2016 11:46:48 -0400
-Received: by mail-io0-f182.google.com with SMTP id b62so20191435iod.3
-        for <git@vger.kernel.org>; Tue, 12 Jul 2016 08:46:43 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=N/bKOnC5Oa07MmO9SmG8z4ZrI58XNZu/z6QqpwtUXIU=;
-        b=Tkulp0PdzKDhuHvyMJil9OkcNK+YUuCgBTEU2y+32QVHKo5IfmARfpBnGAi5DSH/wu
-         ofD4EFsjXyUk/eCQJINJSmi0g8x0Cppn4EzaI928yfBMtKUFW0QobkEcyFFN9qT2aijg
-         iAB23cDQQEaI8OIOvk7YPsY7pbldWvqdAR7jKqn/vLR4KOa168bx1mEJdIDi8/fD7/Q4
-         TvytjhLX34FcG4utUwuGfFYtI/Kh5DQI55kpE1ZDqk+ANdB89EviHtb/Y3sPe/9+0nT+
-         XmUqmDotrWikSlbdoRKCKdS0A7IiCzGO4qj3jdIpxz9xzH9oFOu+G2ZYxqCJVl8Gs3eL
-         zr7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=N/bKOnC5Oa07MmO9SmG8z4ZrI58XNZu/z6QqpwtUXIU=;
-        b=Ik4HAFESHK8fMT3j/rvXDnBU9dBnEpgmKIazln3lV50uIJqqAy7sdwjg8odf4V9qx1
-         ogpftjgyq/+CmTI8dtmGlWZSCT5CJkmpwk7L/llMQPOX7N4A0IMGPMrS+9vMgBaEFChN
-         0WGQG3PQLivdCHhmTqtdCdYS8X+wHv7FjZdjdo1SPLzry4sh+wIVIXQXdrTZnjYSSvoD
-         +RQD9lErf2YvxD/BWvVNTWPgXb40WJ6AHb3ylge7+IxZQ0LLX5Tqb9gUg3dkkMCNkouM
-         MJ/46QiHfRb17bWIMYnRCzOTWCGGs+R64ods6gMjkVVQH0d2MNcGcZPK258v3Ma9DQiK
-         2NNA==
-X-Gm-Message-State: ALyK8tIHFJa8/+e4FrC0ME5moO91oMTDn9ak30gaduq3Mb4NH6fT19j6HtORbR+2u1fE1pkBdf19fWDcG+8R6A==
-X-Received: by 10.107.22.6 with SMTP id 6mr3603603iow.128.1468338402419; Tue,
- 12 Jul 2016 08:46:42 -0700 (PDT)
+	id S1754759AbcGLPtq (ORCPT <rfc822;e@80x24.org>);
+	Tue, 12 Jul 2016 11:49:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63769 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753197AbcGLPtp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2016 11:49:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0568429736;
+	Tue, 12 Jul 2016 11:49:44 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LsbXJVHA0HWHOg1k3n/Q9JcSaPc=; b=DhDy1L
+	z8SnF5wneoBEH1sOrt62cHY7atvCSvOvAs+EguL69b4EpCkVz5w6j0BQXvDyPsv5
+	1h4wMrr96T3PegNP7yHsoX7J+Zgh+vVXnOHtOcQn80BxBH787bLBrE3A/IShNWQg
+	lZAPfPcc2NqVXWa96Ho5ZswM6/hoRuwXIdZTE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CPdqihBg6Maq2brcZdS0r2InE0idO5L3
+	mtnPFd4K3K/aGXyWQ6wJH/P1IZdxG+pCO3m4ZOW+XP8893ZiRODR/qfZ1uffzDEK
+	dWEvsJBhIJa685ApCKU1xPgrbZh2J51xl6cVeyRBN+rLl8pmjAslUAqZNQxNjP59
+	JqdsYRNgfv4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id F22D329735;
+	Tue, 12 Jul 2016 11:49:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7E6C029734;
+	Tue, 12 Jul 2016 11:49:43 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	lists@haller-berlin.de (Stefan Haller)
+Cc:	dlightle@gmail.com (David Lightle), git@vger.kernel.org
+Subject: Re: Fast-forward able commit, otherwise fail
+References: <xmqqr3bokeib.fsf@gitster.mtv.corp.google.com>
+	<1mqa4a5.1ykwh5b8vc9q7M%lists@haller-berlin.de>
+Date:	Tue, 12 Jul 2016 08:49:41 -0700
+In-Reply-To: <1mqa4a5.1ykwh5b8vc9q7M%lists@haller-berlin.de> (Stefan Haller's
+	message of "Tue, 12 Jul 2016 15:24:48 +0200")
+Message-ID: <xmqqeg6y7t62.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Tue, 12 Jul 2016 08:46:12 -0700 (PDT)
-In-Reply-To: <20160712152646.GF613@sigill.intra.peff.net>
-References: <20160708064448.GA18043@x> <xmqqa8hsm4qu.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1607090928500.6426@virtualbox> <20160709140931.GA3185@x>
- <CACsJy8A6fiPUtNZow_oOEQSi64GMxA2Jy84h4OznaSxBMePtbQ@mail.gmail.com>
- <alpine.DEB.2.20.1607101255300.6426@virtualbox> <CACsJy8BWKrXqXnbEgSKJ9gKcAyvdZhExfgh5zBRisX8R3BkBLw@mail.gmail.com>
- <alpine.DEB.2.20.1607101602320.6426@virtualbox> <xmqqinwc9fe2.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1607121243470.6426@virtualbox> <20160712152646.GF613@sigill.intra.peff.net>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Tue, 12 Jul 2016 17:46:12 +0200
-Message-ID: <CACsJy8C+NEP1HJq8w1frOy=UOv5-SA+b7MkbX8DE_vU-zjX0XQ@mail.gmail.com>
-Subject: Re: gc and repack ignore .git/*HEAD when checking reachability
-To:	Jeff King <peff@peff.net>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 40513FF2-4848-11E6-8866-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 12, 2016 at 5:26 PM, Jeff King <peff@peff.net> wrote:
-> Likewise for other per-worktree items. If we used refs/MERGE_HEAD and
-> refs/worktree/foo/MERGE_HEAD, then you could access them independently
-> by using the fully qualified names.
+lists@haller-berlin.de (Stefan Haller) writes:
 
-I'm not opposed to letting one worktree see everything, but this move
-makes it harder to write new scripts (or new builtin commands, even)
-that works with both single and multiple worktrees because you refer
-to one ref (in current worktree perspective) differently. If we kill
-of the main worktree (i.e. git init always creates a linked worktree)
-then it's less of a problem, but still a nuisance to write
-refs/worktree/$CURRENT/<something> everywhere.
+> I have read and re-read this thread a hundred times now, but I still
+> don't understand why it makes much of a difference whether or not Bob
+> rebases his branch onto master before pushing his merge. In both cases,
+> Alice and Bob have this race as to whose push succeeds, and in both
+> cases you end up with merge commits on master that are not well tested.
 
-> The only downside I see is that the existing names are sometimes
-> well-known. I wonder if we could simply add:
->
->   refs/worktree/<your-worktree>/%s
->
-> to the dwim ref-lookup when a command is running in a worktree.
--- 
-Duy
+One crucial difference is that at least you _know_ that $tip^2 has
+been well tested, when you do not rebase, and you can check out
+$tip^2 to study and understand how it was supposed to work, when the
+merge of the topic into an updated mainline is found to be faulty.
+That knowledge helps you to go forward--you'd need to adjust some
+untold assumption $tip^2 made, which was broken somewhere between
+$tip^2..$tip^1 on the mainline, to an updated reality.
+
+Once you rebase, you end up with "This series of changes once was
+working well, and during the rebase somewhere it stopped working",
+unless you say something like "these 7 changes were originally
+developed and tested on commit X" in the rebased commit.
+
