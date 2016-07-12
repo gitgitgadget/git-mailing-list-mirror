@@ -2,203 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D189B1F744
-	for <e@80x24.org>; Tue, 12 Jul 2016 03:57:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9C461F744
+	for <e@80x24.org>; Tue, 12 Jul 2016 04:54:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932471AbcGLD5Y (ORCPT <rfc822;e@80x24.org>);
-	Mon, 11 Jul 2016 23:57:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:43270 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932161AbcGLD5X (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2016 23:57:23 -0400
-Received: (qmail 10576 invoked by uid 102); 12 Jul 2016 03:57:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jul 2016 23:57:24 -0400
-Received: (qmail 4883 invoked by uid 107); 12 Jul 2016 03:57:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jul 2016 23:57:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jul 2016 23:57:19 -0400
-Date:	Mon, 11 Jul 2016 23:57:19 -0400
-From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.9.1
-Message-ID: <20160712035719.GA30281@sigill.intra.peff.net>
-References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com>
- <87lh17kgdy.fsf@linux-m68k.org>
- <20160711235417.GA26163@sigill.intra.peff.net>
- <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com>
+	id S1750954AbcGLEyC (ORCPT <rfc822;e@80x24.org>);
+	Tue, 12 Jul 2016 00:54:02 -0400
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:34795 "EHLO
+	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750763AbcGLEyA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2016 00:54:00 -0400
+Received: by mail-vk0-f44.google.com with SMTP id o63so6400320vkg.1
+        for <git@vger.kernel.org>; Mon, 11 Jul 2016 21:54:00 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=U+PzA6eEOm31RB8XT/xIaeeksElswRERhe7utJ34Va0=;
+        b=fKwqOqBOeQBqlfGMTUtrcBwoIy2lY019GuaB4RXX7SvjsPTb9Zbfk9qeK3iXYoUWnh
+         WrgJafAlkkyOIhCkxN4gLc39m9gjIkzRC6E0hE5dyp4XaD4GYEKkMk5vkSMpxoQyUoVS
+         1oXWE67q/uXsw5DLZmlyEiInDFeUod+CTNOo8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=U+PzA6eEOm31RB8XT/xIaeeksElswRERhe7utJ34Va0=;
+        b=TnUB/DFatTQQX67AZhcr466qpEy7KlbPo256hR+seKufRTanktqZ33NV4xZtzwo7y9
+         tjiILmElSY0YvxM82unFsONIzNvoQqxnLl35Uay9ztRVUWvJgbp9pOvteZ7BxaPytnbs
+         TrwuH2bcGi3s4q4UaB8cELWmNNTLKzXGUJsZpIh+gFZ+IEvY0Pb7a9VKriJS43EruhYY
+         XgitJKcRC/NKlUvfbigdhkwQZTCkvMkrPSO/AQg3Di7O6KYBSvxBCOoUk/aozcPoRE9l
+         Dx/H6uNwu6ItTP+7aaTvAkEaHLjoFJD8sKdDpMqsHP7Djy4lgQShwGJ++8OjYhluZb51
+         N2qg==
+X-Gm-Message-State: ALyK8tJ7ZFp4OWv3nXWLEN5nUs+ql5KC8xdEAbDSjBrWznq9Xv7xpRmSs5QgPMEVv5gs56/5V++m4ieEWKymkA==
+X-Received: by 10.31.62.66 with SMTP id l63mr113861vka.87.1468299239730; Mon,
+ 11 Jul 2016 21:53:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com>
+Received: by 10.103.41.197 with HTTP; Mon, 11 Jul 2016 21:53:40 -0700 (PDT)
+In-Reply-To: <CAGZ79kaGJCL-HUNm1Rfgzr5E7curgQ9KLU07fonZF5YmiBW35w@mail.gmail.com>
+References: <20160709003113.26930-1-sbeller@google.com> <20160709003113.26930-3-sbeller@google.com>
+ <CAJo=hJtUyF=-iZeA1qBi42KBCP0pE6KsK4_MDP4JZEOf-K0waQ@mail.gmail.com> <CAGZ79kaGJCL-HUNm1Rfgzr5E7curgQ9KLU07fonZF5YmiBW35w@mail.gmail.com>
+From:	Shawn Pearce <spearce@spearce.org>
+Date:	Mon, 11 Jul 2016 21:53:40 -0700
+Message-ID: <CAJo=hJvFLonqiHtUfSdDOS53TFK_i847dMY1jPuKVinwEFh2Dw@mail.gmail.com>
+Subject: Re: [PATCH 2/4] receive-pack: implement advertising and receiving
+ push options
+To:	Stefan Beller <sbeller@google.com>
+Cc:	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>,
+	Dan Wang <dwwang@google.com>,
+	Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jul 11, 2016 at 06:59:51PM -0700, Junio C Hamano wrote:
+On Sun, Jul 10, 2016 at 11:05 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Sun, Jul 10, 2016 at 10:06 AM, Shawn Pearce <spearce@spearce.org> wrote:
+>> On Fri, Jul 8, 2016 at 5:31 PM, Stefan Beller <sbeller@google.com> wrote:
+>>> +
+>>> +       /* NEEDSWORK: expose the limitations to be configurable. */
+>>> +       int max_options = 32;
+>>> +
+>>> +       /*
+>>> +        * NEEDSWORK: expose the limitations to be configurable;
+>>> +        * Once the limit can be lifted, include a way for payloads
+>>> +        * larger than one pkt, e.g allow a payload of up to
+>>> +        * LARGE_PACKET_MAX - 1 only, and reserve the last byte
+>>> +        * to indicate whether the next pkt continues with this
+>>> +        * push option.
+>>> +        */
+>>> +       int max_size = 1024;
+>>
+>> Instead of this, what about a new config variable
+>> receive.maxCommandBytes[1] that places a limit on the number of bytes
+>> of pkt-line data the client can supply in both the command list ("old
+>> new ref"), push signature framing, and option list?
 
-> > diff --git a/help.c b/help.c
-> > index 19328ea..0cea240 100644
-> > --- a/help.c
-> > +++ b/help.c
-> > @@ -419,6 +419,13 @@ int cmd_version(int argc, const char **argv, const char *prefix)
-> >  	 * with external projects that rely on the output of "git version".
-> >  	 */
-> >  	printf("git version %s\n", git_version_string);
-> > +	while (*++argv) {
-> > +		if (!strcmp(*argv, "--build-options")) {
-> > +			printf("sizeof-unsigned-long: %d",
-> > +			       (int)sizeof(unsigned long));
-> > +			/* maybe also save and output GIT-BUILD_OPTIONS? */
-> > +		}
-> > +	}
-> >  	return 0;
-> >  }
-> 
-> I had the same thought, except that I would have expected this to go
-> to one of these test-* helpers, and then a lazy prereq for 64-bit
-> time_t would be written on top of it to skip these new tests.
+FYI https://git.eclipse.org/r/77108 is my proposal in JGit.
 
-Yeah, that would certainly work.
+> The design here with two bounds was used to not care about the oversized
+> push options for now. (I mean we can still just reject larger push
+> options even when
+> having a receive.maxCommandBytes setting.)
 
-However, I was thinking that it might be handy to have this and some
-other information available for helping with debugging. E.g., that we
-could ask bug reporters for "git version --build-options" when we
-suspect something related to their config.
+I don't really see a problem with a single option being nearly 64 KiB
+in size. The pack file is going to (probably) need a lot more memory
+than that to be unpacked and have SHA-1s generated. The
+maxCommandBytes setting at 3 MiB neatly allows a few options to be up
+to the pkt-line 64 KiB size, which is 1/10th of what anyone would ever
+need. :)
 
-Something along the lines of the patch below, which lets you do:
+> In an earlier discussion Jeff said roughly "either make it work well,
+> or don't make it work at all, i.e. why are git push options better
+> than a `git push .. && curl <server>/REST-API` thing?"
 
-  $ ./git version --build-options
-  git version 2.9.0.243.g5c589a7.dirty
-  sizeof-unsigned-long: 8
-  SHELL_PATH: /bin/sh
-  PERL_PATH: /usr/bin/perl
-  DIFF: diff
-  PYTHON_PATH: /usr/bin/python
-  TAR: tar
-  NO_CURL: 
-  NO_EXPAT: 
-  USE_LIBPCRE: YesPlease
-  NO_PERL: 
-  NO_PYTHON: 
-  NO_UNIX_SOCKETS: 
-  GIT_TEST_OPTS: --root=/var/ram/git-tests
-  NO_GETTEXT: Nope
-  GETTEXT_POISON: 
+One reason this is less optimal is you need to setup authentication
+twice. git push might be working over SSH, or over a custom
+git-remote-NNN transport. But curl might not speak the same
+authentication. Even if git and curl are both using .netrc or an HTTP
+cookie file you need to pass the right options to make sure both use
+the same auth.
 
-That's not all of the knobs, though; it's just what we stick in
-BUILD-OPTIONS to trigger script rebuilds and communicate with the test
-scripts. So I think there would potentially be further work to do. But
-it's at least a start. I dunno.
-
-> It is somewhat disturbing that nobody seems to be regularly building
-> on 32-bit platforms these days, which is the only reason I can think
-> of why this was never reported until it hit a maintenance track.
-> This should have been caught last week at f6a729f3 (Merge branch
-> 'jk/tzoffset-fix', 2016-07-06) when the topic hit 'master' at the
-> latest, and more preferrably it should have already been caught last
-> month at 08ec8c5e (Merge branch 'jk/tzoffset-fix' into next,
-> 2016-06-28).
-
-I dream of a world where there are no 32-bit platforms at all, but sadly
-we are stuck in the middle ground where they are rare enough that nobody
-bothers to test on them early, but not rare enough that somebody doesn't
-complain within 24 hours of making a release. :-/
-
--Peff
-
----
-diff --git a/Makefile b/Makefile
-index de5a030..78d96a0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -669,6 +669,7 @@ XDIFF_LIB = xdiff/lib.a
- VCSSVN_LIB = vcs-svn/lib.a
- 
- GENERATED_H += common-cmds.h
-+GENERATED_H += build-options.h
- 
- LIB_H = $(shell $(FIND) . \
- 	-name .git -prune -o \
-@@ -1711,7 +1712,7 @@ git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) git.o \
- 		$(BUILTIN_OBJS) $(LIBS)
- 
--help.sp help.s help.o: common-cmds.h
-+help.sp help.s help.o: common-cmds.h build-options.h
- 
- builtin/help.sp builtin/help.s builtin/help.o: common-cmds.h GIT-PREFIX
- builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
-@@ -1735,6 +1736,9 @@ common-cmds.h: generate-cmdlist.sh command-list.txt
- common-cmds.h: $(wildcard Documentation/git-*.txt)
- 	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh command-list.txt >$@+ && mv $@+ $@
- 
-+build-options.h: generate-build-options.sh GIT-BUILD-OPTIONS
-+	$(QUIET_GEN)$(SHELL_PATH) ./generate-build-options.sh GIT-BUILD-OPTIONS >$@+ && mv $@+ $@
-+
- SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
- 	$(localedir_SQ):$(NO_CURL):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
- 	$(gitwebdir_SQ):$(PERL_PATH_SQ):$(SANE_TEXT_GREP)
-diff --git a/generate-build-options.sh b/generate-build-options.sh
-new file mode 100644
-index 0000000..250728f
---- /dev/null
-+++ b/generate-build-options.sh
-@@ -0,0 +1,25 @@
-+#!/bin/sh
-+
-+c_quote () {
-+	printf '%s' "$1" |
-+	sed -e 's/\\/\\\\/g' -e 's/"/\\"/g'
-+}
-+
-+echo '#ifndef BUILD_OPTIONS_H'
-+echo '#define BUILD_OPTIONS_H'
-+echo "/* Automatically generated by $0 */"
-+echo
-+echo '#define BUILD_OPTIONS \'
-+
-+for source in "$@"; do
-+	# source/eval trickery is there to unquote the values
-+	. "./$source"
-+	for var in $(cut -d= -f1 "$source"); do
-+		printf '"%s: ' "$var"
-+		eval "c_quote \"\$$var\""
-+		printf '\\n" \\\n'
-+	done
-+done
-+
-+echo
-+echo '#endif /* BUILD_OPTIONS_H */'
-diff --git a/help.c b/help.c
-index 19328ea..1cbee86 100644
---- a/help.c
-+++ b/help.c
-@@ -8,6 +8,7 @@
- #include "column.h"
- #include "version.h"
- #include "refs.h"
-+#include "build-options.h"
- 
- void add_cmdname(struct cmdnames *cmds, const char *name, int len)
- {
-@@ -419,6 +420,13 @@ int cmd_version(int argc, const char **argv, const char *prefix)
- 	 * with external projects that rely on the output of "git version".
- 	 */
- 	printf("git version %s\n", git_version_string);
-+	while (*++argv) {
-+		if (!strcmp(*argv, "--build-options")) {
-+			printf("sizeof-unsigned-long: %d\n",
-+			       (int)sizeof(unsigned long));
-+			printf("%s", BUILD_OPTIONS);
-+		}
-+	}
- 	return 0;
- }
- 
+Another is we can do validation of the incoming Git data in context of
+what options you specified to us and refuse it while discarding the
+pack if we don't like what was asked. With `git push && curl` we have
+to save the data without necessarily knowing exactly what we should do
+with it, just in case the user comes back with a corresponding REST
+API call on another connection.
