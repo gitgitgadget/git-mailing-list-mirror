@@ -2,177 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91B271F744
-	for <e@80x24.org>; Tue, 12 Jul 2016 02:10:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56B421F744
+	for <e@80x24.org>; Tue, 12 Jul 2016 02:24:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932442AbcGLCKx (ORCPT <rfc822;e@80x24.org>);
-	Mon, 11 Jul 2016 22:10:53 -0400
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:36319 "EHLO
-	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932117AbcGLCKw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2016 22:10:52 -0400
-Received: by mail-pa0-f66.google.com with SMTP id ib6so149706pad.3
-        for <git@vger.kernel.org>; Mon, 11 Jul 2016 19:10:52 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Q5eTEKyZ0GffhRpsuWW/+P7ip7yDJQYEy2F5MvhlQQU=;
-        b=b9kyyL2GuVhgILVK6l0QcipuyGzUD/pQ7BaTk4HEoUL5Bme7u7el4R0YY5pY54s9em
-         EOAqUu8ZYNHM2Jn6RlAwJ5btHXy5rO3SkixpJep3L0EteQY5VBW3by0R5CWuK3DlL+/e
-         mP7p6GwO2j1W59Wb9/gdI9H1LCaW4jezIAU9UX+Uj2Be0a+Jm+tAMvrbqDOkdF5U91kC
-         m1iX1YOwvuDC4EFaf8ssSTS/ZgjAvIBF2LU1y1hMY0Xmeyvl4AE/ZXTKLc5RstN+XkLy
-         6R7+4sXmAWX6ljm7xDtSa6QFUmLYS6zoBvslYhmPmjjULCs1ZAiQ94Yflu6E/LcSRJjq
-         o1Lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Q5eTEKyZ0GffhRpsuWW/+P7ip7yDJQYEy2F5MvhlQQU=;
-        b=CNhUi/J1ACmsFTJ+QzJKfavz6+DleNtm4tC3Gj5eFPNgCuTOU8PmmASCE8sIYgjf8B
-         5SCama4AryAHaUgesgegIlCeocEGLUhQ9bevT2VrkUQcUynFSiO0jt/GHgxrS/OF0LOt
-         hPlt9fSt6HcUH2uqfA+gSjFkYXcUBSOWhtaCZruhxeEipw1tMri1lc91NuHRMPzRMJLW
-         eAP0ucnbKXgmUefF2h0dkKXEX1f9Auv3Be2K2rxivCsFSdAXpVdQlrNAeQoOtzIke4gT
-         hUb9Ob2pysYDGXPJ18R/zcrVL9a6PS516CBmDWb+F0aJHDkZNwBlV0z9nWyup7IJrvVc
-         2X6g==
-X-Gm-Message-State: ALyK8tK8eCBvVsGb8+2IOH4eCh51+OxrEgUcg1UUASsvjSlQYb3TGTa5qkNVLgus451z2Q==
-X-Received: by 10.66.244.199 with SMTP id xi7mr7222615pac.127.1468289451718;
-        Mon, 11 Jul 2016 19:10:51 -0700 (PDT)
-Received: from gmail.com (remote-11.disneyanimation.com. [198.187.190.11])
-        by smtp.gmail.com with ESMTPSA id p75sm301378pfa.71.2016.07.11.19.10.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Jul 2016 19:10:50 -0700 (PDT)
-Date:	Mon, 11 Jul 2016 19:10:48 -0700
-From:	David Aguilar <davvid@gmail.com>
-To:	John Keeping <john@keeping.me.uk>
-Cc:	Bernhard Kirchen <bernhard.kirchen@rwth-aachen.de>,
-	git@vger.kernel.org, Tim Henigan <tim.henigan@gmail.com>
-Subject: Re: [PATCH] difftool: fix argument handling in subdirs
-Message-ID: <20160712021048.GA20679@gmail.com>
-References: <OFEE90CED0.0832E3D4-ONC1257FE9.0053D856-C1257FE6.00660366@lancom.de>
- <155b7339538.2774.8c011de0e6d4f677db1e190e9d3169b9@rwth-aachen.de>
- <20160705195252.hzf5hvrcub3g32gg@john.keeping.me.uk>
+	id S932786AbcGLCYa (ORCPT <rfc822;e@80x24.org>);
+	Mon, 11 Jul 2016 22:24:30 -0400
+Received: from mout.web.de ([212.227.15.4]:65478 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932496AbcGLCY3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2016 22:24:29 -0400
+Received: from [172.20.5.167] ([209.5.235.18]) by smtp.web.de (mrweb003) with
+ ESMTPSA (Nemesis) id 0MVu2q-1btkYy0CLo-00X5vz; Tue, 12 Jul 2016 04:24:16
+ +0200
+Subject: Re: [PATCH v3 3/3] correct ce_compare_data() in a middle of a merge
+To:	Junio C Hamano <gitster@pobox.com>
+References: <xmqq37nyb4kp.fsf@gitster.mtv.corp.google.com>
+ <1467100876-2803-1-git-send-email-tboegi@web.de>
+ <xmqqh9cc55wm.fsf@gitster.mtv.corp.google.com>
+ <62eb3d75-126e-427b-8701-d490e80e3501@web.de>
+ <xmqq8txlvwip.fsf@gitster.mtv.corp.google.com>
+ <574692d1-c8ae-9c2f-6b99-a01545b15051@telia.com>
+ <xmqqa8huvmpv.fsf@gitster.mtv.corp.google.com>
+ <c36fe487-b8dc-9767-7fae-bee513dac0b2@web.de>
+ <xmqqr3b5p9v0.fsf@gitster.mtv.corp.google.com>
+ <2cbf12a6-2dca-8180-323b-f79638aa03bd@web.de>
+ <xmqqmvlsm6hu.fsf@gitster.mtv.corp.google.com>
+ <f78fa94d-abd2-05a2-c411-15e2ffdb7dae@web.de>
+ <xmqqoa68kl7n.fsf@gitster.mtv.corp.google.com>
+ <xmqqk2gvlur5.fsf@gitster.mtv.corp.google.com>
+ <xmqqinwc7xbb.fsf@gitster.mtv.corp.google.com>
+Cc:	git@vger.kernel.org
+From:	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <51079140-98c8-ee0c-72d2-af5c348c19fd@web.de>
+Date:	Tue, 12 Jul 2016 04:23:47 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:45.0) Gecko/20100101
+ Icedove/45.1.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160705195252.hzf5hvrcub3g32gg@john.keeping.me.uk>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <xmqqinwc7xbb.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:nuE+59R/QgGie/NJKHB4miH4+2VfiO/uDdrwtfr5fvfIEr6brtO
+ nWMkcgPdQVWXvP37vptyTTSUG+hIj/vuU9mJ+6hE45B5/Tle1cFP4zGzRpzhIALtIMGAef1
+ Df1wioRY+8k5GN4SDnZpU43sQhZqLwy5hoIwFy5XrsWZn8EdU6Xk7VOLSyv4n3ofKu31Rw4
+ wPYD2/ukPVi8UUIskva1w==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:1yRDI+MGwLY=:SNbBsmii6eD59yhGBz4UID
+ ljSzgMGUsBvpa5ggPafRtQHsWbSHLAxLrfEAjALBd+e8hjAYNPlgSc566u90O1H2rkKKsNdw9
+ CDKew/vt6UfA6BX4qYHXiDmveiJr3Hd/ZrQCU1buLS2nSyYe3/LCPojx0lOw5d02Tm2JCwLqa
+ Z2jiOStwODZXljUs2wRrYjiJJYuNvdj9pfrdsbDomH/LVcmfNMNx8Dv6ZOmPMo/xWKPQ+BO3u
+ 2ZerU3DDX3G+da5+3Eb3iKFfXywWC/y02wCCDWyX0nI0yzz5mbM/FM9jWwJTZjVRjZjw9Dv/Z
+ olv1AKEo27w2bQY20fvn6sxzjOTQw+4Eo8m+JC9RIywr+NS3mMTjGy8PWYLj8LymDF45tGJXG
+ VRVFV3bjJ/C6aC2E935GeDbb+l5qcysXjtrVwWznUKsG7HZglgg6MtorJVxB3zn7wwDiYqJRj
+ qR8SnE5ypLOnaRonE35zm7edfTp+yHsoySUDa/AjlzpxtJnOIUlTRY0R2YLWl4eZavHUpjvZ4
+ ilPBE3RT2LxwzoUXLzi74sRN7+4lEPIZixfmal2q4oI7EF/XsmIkiOtfGppLICjmNU1QlrYmx
+ KD1FFODyxMi3/g8SCeEU5AW882xXm+OP2+NwrZQvtAM7kBti1I8ZU1d4LPbDZ7kmeCtR+IA6B
+ IaZn8OmZLc2YWrEu1arNjBBiAEiI60e8zRtVj+qhhHVju+VsKBlbpohvh/5a/SkBPyA5orZUE
+ SWLDn+le0rNQ+WpNSMj4o6xjnkxdg5BajLWSpWhwM3ss7+Vk2yk8IE3/Z0faHvnaDuLxXs4/Q
+ k/sttQr
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-[Cc'd Tim, who originally authored the dir-diff code]
+>
+> How do things look at this point?  This version is what I ended up
+> queuing in 'pu', but I took your "Thanks" in $gmane/299120 to only
+> mean "Thanks for feeding some ideas to help me move forward", not
+> necessarily "Tnanks that looks like the right approach." yet, so
+> right now both topics are stalled and waiting for an action from
+> you.
+Yes, the code looks good to me.
+And the commit message does explain what is going on.
 
-On Tue, Jul 05, 2016 at 08:52:52PM +0100, John Keeping wrote:
-> On Mon, Jul 04, 2016 at 08:37:39PM +0200, Bernhard Kirchen wrote:
-> > Today I started using --dir-diff and noticed a problem when specifying a
-> > non-full path limiter. My diff tool is setup to be meld (*1).
-> > 
-> > OK while working directory is repo root; also OK while working directory is
-> > repo subfolder "actual":
-> > git difftool --dir-diff HEAD~1 HEAD -- actual/existing/path
-> > => meld opens with proper dir-diff.
-> > 
-> > NOT OK while working directory is repo subfolder "actual":
-> > git difftool --dir-diff HEAD~1 HEAD -- existing/path
-> > => nothing happens, as if using "non/such/path" as the path limiter.
-> > 
-> > Because "git diff HEAD~1 HEAD -- existing/path" while the working directory
-> > is the repo subfolder "actual" works, I epxected the difftool to work
-> > similarly. Is this a bug?
-> 
-> I think it is, yes.  The patch below fixes it for me and doesn't break
-> any existing tests, but I still don't understand why the separate
-> $diffrepo was needed originally, so I'm not certain this won't break
-> some other corner case.
-
-
-IIRC the original motivation for using a separate $diffrepo was
-to handle GIT_DIR being set in the environment.
-
-The lack of tests for that use case could be better, though.
-Is that use case affected by this change?
-
-Tim, do you remember why a new repo instance is used for that code path?
-
-
-> -- >8 --
-> When in a subdirectory of a repository, path arguments should be
-> interpreted relative to the current directory not the root of the
-> working tree.
-> 
-> The Git::repository object passed into setup_dir_diff() is configured to
-> handle this correctly but we create a new Git::repository here without
-> setting the WorkingSubdir argument.  By simply using the existing
-> repository, path arguments are handled relative to the current
-> directory.
-
-I do like the sound of this rationale, though.
-
-Tim, please let us know if you have a specific test case that is
-not covered by this change.
-
-BTW, `diff --raw` will still output paths that are relative to
-the root but this is okay since the rest of the code expects
-things to be root-relative, correct?
-
-
-> Signed-off-by: John Keeping <john@keeping.me.uk>
-> ---
->  git-difftool.perl | 13 +++----------
->  1 file changed, 3 insertions(+), 10 deletions(-)
-> 
-> diff --git a/git-difftool.perl b/git-difftool.perl
-> index ebd13ba..c9d3ef8 100755
-> --- a/git-difftool.perl
-> +++ b/git-difftool.perl
-> @@ -115,16 +115,9 @@ sub setup_dir_diff
->  {
->  	my ($repo, $workdir, $symlinks) = @_;
->  
-> -	# Run the diff; exit immediately if no diff found
-> -	# 'Repository' and 'WorkingCopy' must be explicitly set to insure that
-> -	# if $GIT_DIR and $GIT_WORK_TREE are set in ENV, they are actually used
-> -	# by Git->repository->command*.
->  	my $repo_path = $repo->repo_path();
-> -	my %repo_args = (Repository => $repo_path, WorkingCopy => $workdir);
-> -	my $diffrepo = Git->repository(%repo_args);
-> -
->  	my @gitargs = ('diff', '--raw', '--no-abbrev', '-z', @ARGV);
-> -	my $diffrtn = $diffrepo->command_oneline(@gitargs);
-> +	my $diffrtn = $repo->command_oneline(@gitargs);
->  	exit(0) unless defined($diffrtn);
->  
->  	# Build index info for left and right sides of the diff
-> @@ -176,12 +169,12 @@ EOF
->  
->  		if ($lmode eq $symlink_mode) {
->  			$symlink{$src_path}{left} =
-> -				$diffrepo->command_oneline('show', "$lsha1");
-> +				$repo->command_oneline('show', "$lsha1");
->  		}
->  
->  		if ($rmode eq $symlink_mode) {
->  			$symlink{$dst_path}{right} =
-> -				$diffrepo->command_oneline('show', "$rsha1");
-> +				$repo->command_oneline('show', "$rsha1");
->  		}
->  
->  		if ($lmode ne $null_mode and $status !~ /^C/) {
-> -- 
-
-Can you please also add a testcase to t/t7800-difftool.sh
-demonstrating the problem fixed by this change?
-
-Hopefully there's an existing test in there that can be adapted
-to run dir-diffs in a subdirectory.
-
-ciao,
--- 
-David
+For my taste, these 3 lines don't explain too much,may be remove them ?
+ > The test update was taken from a series by Torsten Bögershausen
+ > that attempted to fix this with a different approach (which was a
+ > lot more intrusive).
+So thanks for your efforts, ack from my side.
