@@ -6,82 +6,113 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAA091FE4E
-	for <e@80x24.org>; Tue, 12 Jul 2016 13:31:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44A681FE4E
+	for <e@80x24.org>; Tue, 12 Jul 2016 13:32:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932667AbcGLNbH (ORCPT <rfc822;e@80x24.org>);
-	Tue, 12 Jul 2016 09:31:07 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:40064 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932617AbcGLNbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2016 09:31:05 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3rpjXQ0vPrz3hjQZ;
-	Tue, 12 Jul 2016 15:31:02 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3rpjXQ0PWyzvkSH;
-	Tue, 12 Jul 2016 15:31:02 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id sq_kcfU8cMUB; Tue, 12 Jul 2016 15:31:00 +0200 (CEST)
-X-Auth-Info: rB/zd83vcLh9jNdQW+pRA02IMdjlfcVmn2FZUCAxOyjzwhx+dEwivk4tOdmSlCpA
-Received: from hawking.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.mnet-online.de (Postfix) with ESMTPSA;
-	Tue, 12 Jul 2016 15:31:00 +0200 (CEST)
-From:	Andreas Schwab <schwab@linux-m68k.org>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.9.1
-References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com>
-	<87lh17kgdy.fsf@linux-m68k.org>
-	<20160711235417.GA26163@sigill.intra.peff.net>
-	<xmqqy4577h0o.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1607120927410.6426@virtualbox>
-	<mvmtwfve22e.fsf@hawking.suse.de>
-	<alpine.DEB.2.20.1607121249390.6426@virtualbox>
-	<mvmh9bvdnae.fsf@hawking.suse.de>
-	<alpine.DEB.2.20.1607121520310.6426@virtualbox>
-X-Yow:	Hey, wait a minute!!  I want a divorce!!..  you're not Clint Eastwood!!
-Date:	Tue, 12 Jul 2016 15:31:00 +0200
-In-Reply-To: <alpine.DEB.2.20.1607121520310.6426@virtualbox> (Johannes
-	Schindelin's message of "Tue, 12 Jul 2016 15:22:08 +0200 (CEST)")
-Message-ID: <mvmd1mjdluz.fsf@hawking.suse.de>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+	id S1751711AbcGLNcn (ORCPT <rfc822;e@80x24.org>);
+	Tue, 12 Jul 2016 09:32:43 -0400
+Received: from dd28836.kasserver.com ([85.13.147.76]:57584 "EHLO
+	dd28836.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751109AbcGLNcm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2016 09:32:42 -0400
+X-Greylist: delayed 471 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Jul 2016 09:32:41 EDT
+Received: from [10.1.0.149] (nat1.ableton.net [217.110.199.117])
+	by dd28836.kasserver.com (Postfix) with ESMTPSA id EC978302343;
+	Tue, 12 Jul 2016 15:24:48 +0200 (CEST)
+To:	gitster@pobox.com (Junio C Hamano),
+	dlightle@gmail.com (David Lightle)
+Cc:	git@vger.kernel.org
+In-Reply-To: <xmqqr3bokeib.fsf@gitster.mtv.corp.google.com>
+Subject: Re: Fast-forward able commit, otherwise fail
+From:	lists@haller-berlin.de (Stefan Haller)
+Date:	Tue, 12 Jul 2016 15:24:48 +0200
+Message-ID: <1mqa4a5.1ykwh5b8vc9q7M%lists@haller-berlin.de>
+User-Agent: MacSOUP/2.8.4 (Mac OS X version 10.11.5 (x86))
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> Hi Andreas,
->
-> On Tue, 12 Jul 2016, Andreas Schwab wrote:
->
->> Johannes Schindelin <schindelin@wisc.edu> writes:
->> 
->> >> PRIuMAX isn't compatible with time_t.
->> >
->> > That statement is wrong.
->> 
->> No, it isn't.  PRIuMAX is for uintmax_t, and time_t is not uintmax_t
->> (even if they happen to have the same representation).
->
-> Sigh.
->
-> So if it is wrong, what is right?
+> Another thing to consider is that the proposed workflow would not
+> scale if your team becomes larger.  Requiring each and every commit
+> on the trunk to be a merge commit, whose second parent (i.e. the tip
+> of the feature branch) fast-forwards to the first parent of the
+> merge (i.e. you require the feature to be up-to-date), would mean
+> that Alice and Bob collaborating on this project would end up
+> working like this:
+> 
+>  A:    git pull --ff-only origin ;# starts working
+>  A:    git checkout -b topic-a
+>  A:    git commit; git commit; git commit
+>  B:    git pull --ff-only origin ;# starts working
+>  B:    git checkout -b topic-b
+>  B:    git commit; git commit
+> 
+>  A:    git checkout master && git merge --ff-only --no-ff topic-a
+>  A:    git push origin ;# happy
+> 
+>  B:    git checkout master && git merge --ff-only --no-ff topic-b
+>  B:    git push origin ;# fails!
+> 
+>  B:    git fetch origin ;# starts recovering
+>  B:    git reset --hard origin/master
+>  B:    git merge --ff-only --no-ff topic-b ;# fails!
+>  B:    git rebase origin/master topic-b
+>  B:    git checkout master && git merge --ff-only --no-ff topic-b
+>  B:    git push origin ;# hopefully nobody pushed in the meantime
+> 
+> The first push by Bob fails because his 'master', even though it is
+> a merge between the once-at-the-tip-of-public-master and topic-b
+> which was forked from that once-at-the-tip, it no longer fast-forwards
+> because Alice pushed her changes to the upstream.
+> 
+> And it is not sufficient to redo the previous merge after fetching
+> the updated upstream, because your additional "feature branch must
+> be up-to-date" requirement is now broken for topic-b.  Bob needs to
+> rebuild it on top of the latest, which includes what Alice pushed,
+> using rebase, do that merge again, and hope that nobody else pushed
+> to update the upstream in the meantime.  As you have more people
+> working simultanously on more features, Bob will have to spend more
+> time doing steps between "starts recovering" and "hopefully nobody
+> pushed in the meantime", because the probability is higher that
+> somebody other than Alice has pushed while Bob is trying to recover.
+> 
+> The time spend on recovery is not particularly productive, and this
+> workflow gives him a (wrong) incentive to do that recovery procedure
+> quickly to beat the other participants to become the first to push.
 
-The right thing is to add a cast, of course.
+I have read and re-read this thread a hundred times now, but I still
+don't understand why it makes much of a difference whether or not Bob
+rebases his branch onto master before pushing his merge. In both cases,
+Alice and Bob have this race as to whose push succeeds, and in both
+cases you end up with merge commits on master that are not well tested.
 
-Andreas.
+First of all, let me say that at my company we do use the workflow that
+David suggests; we rebase topic branches onto master before merging them
+(with --no-ff), and we like the resulting shape of the history. Even the
+more experienced git users like it for its simplicity; it simply saves
+us time and mental energy when digging through the history.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Second, we did indeed run into the scalability problems that you
+describe [*1*]. However, we ran into this way before starting to require
+the rebase-before-merge; in my experience, rebasing or not makes no
+difference here. After all, the resulting tree state of the merge commit
+is identical in both cases; it's just the individual commits on the
+merged topic branch that have not been tested in the rebased case. But
+if the merge commit is green, it is pretty unlikely in my experience
+that one of the individual commits is not. It's theoretically possible
+of course, just very, very unlikely.
+
+So what am I missing?
+
+
+[Footnote]
+*1* These problems were so annoying for us that we invented technical
+measures to solve them. We now have a web interface where developers can
+grab a lock on the repo, or put themselves into a queue for the lock
+when it's taken. There's a push hook that only allows pushing when you
+hold the lock. This solves it nicely, because once you have the lock,
+you can take all the time you need to make sure your merge compiles, and
+run the test suite locally.
