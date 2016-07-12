@@ -6,95 +6,68 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB8B22018E
-	for <e@80x24.org>; Tue, 12 Jul 2016 11:57:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F9ED1FE4E
+	for <e@80x24.org>; Tue, 12 Jul 2016 13:00:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751622AbcGLL5n (ORCPT <rfc822;e@80x24.org>);
-	Tue, 12 Jul 2016 07:57:43 -0400
-Received: from wmauth3.doit.wisc.edu ([144.92.197.226]:61155 "EHLO
-	smtpauth3.wiscmail.wisc.edu" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750897AbcGLL5m (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2016 07:57:42 -0400
-X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Jul 2016 07:57:42 EDT
-MIME-version: 1.0
-Content-transfer-encoding: 7BIT
-Content-type: text/plain; CHARSET=US-ASCII
-Received: from avs-daemon.smtpauth3.wiscmail.wisc.edu by
- smtpauth3.wiscmail.wisc.edu
- (Oracle Communications Messaging Server 7.0.5.37.0 64bit (built Jan 25 2016))
- id <0OA7007007J5VJ00@smtpauth3.wiscmail.wisc.edu> for git@vger.kernel.org;
- Tue, 12 Jul 2016 05:57:35 -0500 (CDT)
-Received: from virtualbox (aftr-37-24-141-253.unity-media.net [37.24.141.253])
- by smtpauth3.wiscmail.wisc.edu
- (Oracle Communications Messaging Server 7.0.5.37.0 64bit (built Jan 25 2016))
- with ESMTPSA id <0OA70082N7RW9W00@smtpauth3.wiscmail.wisc.edu>; Tue,
- 12 Jul 2016 05:57:34 -0500 (CDT)
-Date:	Tue, 12 Jul 2016 12:57:31 +0200 (CEST)
-From:	Johannes Schindelin <schindelin@wisc.edu>
-X-X-Sender: virtualbox@virtualbox
-To:	Andreas Schwab <schwab@linux-m68k.org>
+	id S932139AbcGLNAU (ORCPT <rfc822;e@80x24.org>);
+	Tue, 12 Jul 2016 09:00:20 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:36547 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754109AbcGLNAR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2016 09:00:17 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3rphrq4dd0z3hjZd;
+	Tue, 12 Jul 2016 15:00:11 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3rphrq1cfkzvkS2;
+	Tue, 12 Jul 2016 15:00:11 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id fqw7VWFQgwSW; Tue, 12 Jul 2016 15:00:10 +0200 (CEST)
+X-Auth-Info: wyl9dK4jtUwYY5TAjlkdpMiEPol3eqt32AJCtYWJjJNcFkLF99xlxLOEop6bl2t4
+Received: from hawking.suse.de (charybdis-ext.suse.de [195.135.221.2])
+	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.mnet-online.de (Postfix) with ESMTPSA;
+	Tue, 12 Jul 2016 15:00:10 +0200 (CEST)
+From:	Andreas Schwab <schwab@linux-m68k.org>
+To:	Johannes Schindelin <schindelin@wisc.edu>
 Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	git@vger.kernel.org
 Subject: Re: [ANNOUNCE] Git v2.9.1
-In-reply-to: <mvmtwfve22e.fsf@hawking.suse.de>
-Message-id: <alpine.DEB.2.20.1607121249390.6426@virtualbox>
 References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com>
- <87lh17kgdy.fsf@linux-m68k.org> <20160711235417.GA26163@sigill.intra.peff.net>
- <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1607120927410.6426@virtualbox>
- <mvmtwfve22e.fsf@hawking.suse.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	<87lh17kgdy.fsf@linux-m68k.org>
+	<20160711235417.GA26163@sigill.intra.peff.net>
+	<xmqqy4577h0o.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1607120927410.6426@virtualbox>
+	<mvmtwfve22e.fsf@hawking.suse.de>
+	<alpine.DEB.2.20.1607121249390.6426@virtualbox>
+X-Yow:	I always have fun because I'm out of my mind!!!
+Date:	Tue, 12 Jul 2016 15:00:09 +0200
+In-Reply-To: <alpine.DEB.2.20.1607121249390.6426@virtualbox> (Johannes
+	Schindelin's message of "Tue, 12 Jul 2016 12:57:31 +0200 (CEST)")
+Message-ID: <mvmh9bvdnae.fsf@hawking.suse.de>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Andreas,
+Johannes Schindelin <schindelin@wisc.edu> writes:
 
-On Tue, 12 Jul 2016, Andreas Schwab wrote:
+>> PRIuMAX isn't compatible with time_t.
+>
+> That statement is wrong.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > @@ -88,11 +88,11 @@ static int local_tzoffset(unsigned long time)
-> >  	return offset * eastwest;
-> >  }
-> >  
-> > -void show_date_relative(unsigned long time, int tz,
-> > +void show_date_relative(time_t time, int tz,
-> >  			       const struct timeval *now,
-> >  			       struct strbuf *timebuf)
-> >  {
-> > -	unsigned long diff;
-> > +	time_t diff;
-> >  	if (now->tv_sec < time) {
-> >  		strbuf_addstr(timebuf, _("in the future"));
-> >  		return;
-> > @@ -100,65 +100,65 @@ void show_date_relative(unsigned long time, int tz,
-> >  	diff = now->tv_sec - time;
-> >  	if (diff < 90) {
-> >  		strbuf_addf(timebuf,
-> > -			 Q_("%lu second ago", "%lu seconds ago", diff), diff);
-> > +			 Q_("%" PRIuMAX " second ago", "%" PRIuMAX " seconds ago", diff), diff);
-> 
-> PRIuMAX isn't compatible with time_t.
+No, it isn't.  PRIuMAX is for uintmax_t, and time_t is not uintmax_t
+(even if they happen to have the same representation).
 
-That statement is wrong. But you probably meant that PRIuMAX is *not
-necessarily* the correct thing to use.
+Andreas.
 
-And I would agree with that. I had to have a patch that 1) compiles and 2)
-fixes t0006 on Windows, and the patch I presented achieved both goals.
-
-I hoped that my brief "starting point" hint would make it obvious that I
-do not think that this patch is acceptable?
-
-My idea was to introduce a TIME_T_LARGER_THAN_ULONG and take it from
-there, but I had to switch contexts before I could finish that part of the
-patch, yet I still wanted to let y'all know that patches are in the
-working.
-
-For future record: I appreciate feedback especially when it is
-constructive, i.e. when "that's wrong" is not left on its own, but is
-instead followed by "why not do XYZ instead".
-
-Ciao,
-Johannes
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
