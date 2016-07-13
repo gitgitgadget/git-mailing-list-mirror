@@ -2,116 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBD6920196
-	for <e@80x24.org>; Wed, 13 Jul 2016 21:07:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 590EA2018F
+	for <e@80x24.org>; Wed, 13 Jul 2016 21:59:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751071AbcGMVHu (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 17:07:50 -0400
-Received: from mout.web.de ([217.72.192.78]:60519 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750949AbcGMVHt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2016 17:07:49 -0400
-X-Greylist: delayed 314 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Jul 2016 17:07:48 EDT
-Received: from [192.168.0.100] ([138.246.2.138]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MfYn9-1blRWh2BDP-00P1h9; Wed, 13 Jul 2016 23:02:12
- +0200
-Subject: Re: [feature request] Warn about or prevent --amend commits that
- don't change anything
-To:	Junio C Hamano <gitster@pobox.com>
-References: <d2c3365d-6da9-dd58-ae7d-4a2020c6b513@web.de>
- <xmqq4m7t1h8v.fsf@gitster.mtv.corp.google.com>
-Cc:	git@vger.kernel.org
-From:	Bergi <a.d.bergi@web.de>
-Message-ID: <ef62d73d-ec85-993d-7bdd-d8214a55699a@web.de>
-Date:	Wed, 13 Jul 2016 23:02:13 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.1
+	id S1751518AbcGMV7r (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 17:59:47 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:39737 "EHLO
+	homiemail-a101.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751316AbcGMV7p (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2016 17:59:45 -0400
+Received: from homiemail-a101.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a101.g.dreamhost.com (Postfix) with ESMTP id 2632C117E06A;
+	Wed, 13 Jul 2016 14:59:44 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=subject:to
+	:references:cc:from:message-id:date:mime-version:in-reply-to
+	:content-type:content-transfer-encoding; s=novalis.org; bh=zUEgV
+	XsaoLHFLPb31QNJJmtuF90=; b=s19JOqSUIeBszI/8xGXxpZgteRwX37LXfPeBl
+	qBmYMqo0I+k0FcprtCa/Nh1526FlA/mYxmaOwQU3OTdQzZQCajyMUenBWVttfqkV
+	qR7ZDNTDjTINYGegKk6LDnqPQ0iCGcIc3rV420cChg2C/H0++GJb9YVC/6UW7dul
+	SIgwaQ=
+Received: from [172.31.11.72] (gzac10-107-1.nje.twosigma.com [208.77.214.155])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: novalis@novalis.org)
+	by homiemail-a101.g.dreamhost.com (Postfix) with ESMTPSA id 9C145117E065;
+	Wed, 13 Jul 2016 14:59:43 -0700 (PDT)
+Subject: Re: [PATCH v14 00/21] index-helper/watchman
+To:	Duy Nguyen <pclouds@gmail.com>
+References: <1467532693-20017-1-git-send-email-novalis@novalis.org>
+ <CACsJy8Br-rSTKjpt2ykn8YyFruy8CZoXWm287BtTRcAYY2DjVw@mail.gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>, kmaggg@gmail.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From:	David Turner <novalis@novalis.org>
+Message-ID: <5786B9CE.6010703@novalis.org>
+Date:	Wed, 13 Jul 2016 17:59:42 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
 MIME-Version: 1.0
-In-Reply-To: <xmqq4m7t1h8v.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:qRvJLKz3AuOrhaxUbLSndOvfdHDJmZ8dOH4pNi6d0Zgq8wbDDGk
- PM0v9cJzGoUyahKpBE2a4/eBW5Vv1W3E2jp0Y8w1nu3u2mWG+3JPMiR+2caEOxvTr35hUmj
- sATYa1WWjBcsZTN14/zEosbeMr9NyUlkkrcWGXuN5J7yGLkMC/LnwUqT46+HXFeUoKv3QPG
- 9z4uHBcBBIqJrh+mW73QA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:7xdm9UaMj+M=:C6nJLeGXPb7JiN4mIpvAKZ
- JmCm0WEa/TBtDU1/s/eeWPO0Upfmym/ijalMrhRsz0LQ21gsU7Lm7ysqNPXTET3i/Q4+dnvFv
- ZTExc4K71IFcQYwUQJemcfUpXQhB9SMxkeSrGpppklnxADDNlp4JpDtoUTThvx58Ihu3PqFn/
- tXTQIkKVO1pO4pc5vg4wI8feFF1t5zIB7iVUtJ0IRzDNYsG4qyXwE3KdRIKXr0HtVs2h8ybBQ
- vObtDphAiIHD+EsNhMnxkAKqHLKOdoVScfQhScdeR2Ns7+0Drh+4n2b0x/pu6z4zJKRwcqATr
- o6nJ1dsCsu9N4N1FheZTtmSG0QhTljigO1fgF+9UvntKJ/YlWG+rNMp6KoE6DboWC0ATsHfMN
- 5cUVZ8ZdKRsNqNZgWASdSD5THjKFrBLuAiixBQ460ZR/FurdBbWtyl+s6HJyJWXGIrwxSBcmQ
- Um7/pLIFldPjpenZm5J2qltcyrj6wbb28QQjdXabEu2jj1BwfolzLo1kXJjpNg2o+arTXftCM
- 82Tz4AiE3uvPe2vXwC431bgyE1tPu4fOP5VQTpsJYtyqbx4s7qIKRvVaqnKr5UjzBQk7EHkeV
- LXwuCDqKPCjCkqj2sgrqtEWrHXI9e9ggZMzse8eXDKA8M55WcKqZQqidu7QThNL/hMgvhTtRJ
- rbuhZW5bdWJbCPsL6rup3ayd/ttLpY2XEvsdUFOlbSJADX++EPTlYQCITCddXzy5Rez7gBWCE
- Z6sFzGze4EPqxmwKhE6DOjIIvGi2JFCUbx36BOVjLEFhihkln/vKj5rERGUdNypFznKc756Iy
- AQZJkK4
+In-Reply-To: <CACsJy8Br-rSTKjpt2ykn8YyFruy8CZoXWm287BtTRcAYY2DjVw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano schrieb:
-> Bergi <a.d.bergi@web.de> writes:
+On 07/12/2016 02:24 PM, Duy Nguyen wrote:
+> Just thinking out loud. I've been thinking about this more about this.
+> After the move from signal-based to unix socket for communication, we
+> probably are better off with a simpler design than the shm-alike one
+> we have now.
 >
->> when nothing is staged in the index then `git commit` warns about this
->> fact with either "nothing to commit, working directory clean" or "no
->> changes added to commit".
->> However, `git commit --amend --no-edit` will happily record a new
->> commit that differs in nothing than its commit date from the original.
+> What if we send everything over a socket or a pipe? Sending 500MB over
+> a unix socket takes 253ms, that's insignificant when operations on an
+> index that size usually take seconds. If we send everything over
+> socket/pipe, we can trust data integrity and don't have to verify,
+> even the trailing SHA-1 in shm file.
+
+I think it would be good to make index operations not take seconds.
+
+In general, we should not need to verify the trailing SHA-1 for shm 
+data.  So the index-helper verifies it when it loads it, but the git 
+(e.g.) status should not need to verify.
+
+Also, if we have two git commands running at the same time, the 
+index-helper can only serve one at a time; with shm, both can run at 
+full speed.
+
+> So, what I have in mind is this, at read index time, instead of open a
+> socket, we run a separate program and communicate via pipes. We can
+> exchange capabilities if needed, then the program sends the entire
+> current index, the list of updated files back (and/or the list of dirs
+> to invalidate). The design looks very much like a smudge/clean filter.
+
+This seems very complicated.  Now git status talks to the separate 
+program, which talks to the index-helper, which talks to watchman.  That 
+is a lot of steps!
+
+I think we should wait until we heard from the Windows folks what the 
+problems with the current solution are, and see what design they come up 
+with.
+
+> For people who don't want extra daemon, they can write a short script
+> that saves indexes somewhere in tmpfs, and talk to watchman or
+> something else. I haven't written this script, but I don't think it
+> takes long to write one. Windows folks have total freedom to implement
+> a daemon, a service or whatever and use this program as front end. How
+> the service talks to this program is totally up to them. For people
+> who want to centralize everything, they can have just one daemon and
+> have the script to talk to this daemon.
 >
-> What kind of "mistake" are you afraid of?
+> I can see that getting rid of file-based stuff simplifies some
+> patches. We can still provide a daemon to do more advanced stuff (or
+> to make it work out of the box). But it's not a hard requirement and
+> we probably don't need to include one right now. And I think it makes
+> it easier to test as well because we can just go with some fake file
+> monitor service instead of real watchman.
 
-The particular mistake that happened to me was that I `git push -f 
-origin`'ed the newly created commit (which worked as expected, 
-overwriting the original commit) and then leaving my PC in the belief 
-that I had successfully pushed my changes.
-
-> I can sort of see that "git commit --amend" might want to see two
-> summary diffstat output at the end, unlike "git commit" that shows
-> what changes were recorded relative to the parent.  In addition to
-> that "final result is different in this way from the parent" output,
-> you might also want "this is the change you made by amending" and
-> knowing the fact that you can notice you didn't add anything by the
-> latter being empty _might_ give you an additional peace of mind.
-
-Yes, that would be incredibly helpful as well, but is not what I am 
-after here.
-
-However `git commit --amend` already shows me that I still have "changes 
-not staged for commit" when editing the commit message, so that would've 
-been enough for my use case.
-The problem is that I used `git commit --amend --no-edit`, which did 
-neither warn me about missing staged changes nor existing unstaged changes.
-If nothing is staged and the user does not intend to edit any metadata, 
-git should be able to deduce that the user (me) did forget something.
-
-> But is that the kind of mistake you are worried about?  IOW, you
-> thought you made and added changes X, Y and Z to the index before
-> running your "commit --amend", but you forgot the "add" step and did
-> not add anything?
-
-Yes, exactly.
-
-> If so, […] your "you need --allow-empty if you really do not want
-> any changes to the tree" would not [help much] either, if you added
-> X and Y but forgot to add Z.
-
-A good remark.
-Maybe in that case it could warn about unstaged edits in the case of 
---no-edit but still succeed.
-
-> So I am sensing a slight XY problem here.
-
-That might well be, I'm just here to tell my story, it's the designers 
-that need to decide at which step I went wrong and which parts could be 
-improved.
-
-Kind regards,
-  Bergi
+I think the daemon also has the advantage that it can reload the index 
+as soon as it changes.  This is not quite implemented, but it would be 
+pretty easy to do.  That would save a lot of time in the typical workflow.
