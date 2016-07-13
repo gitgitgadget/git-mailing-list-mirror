@@ -2,94 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A88A2018F
-	for <e@80x24.org>; Wed, 13 Jul 2016 14:04:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4570D2018F
+	for <e@80x24.org>; Wed, 13 Jul 2016 14:57:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752942AbcGMOBu (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 10:01:50 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53061 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751238AbcGMOBt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2016 10:01:49 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0M51eM-1bAle30bU6-00zGNq; Wed, 13 Jul 2016 16:00:49
- +0200
-Date:	Wed, 13 Jul 2016 16:00:46 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	Jeff King <peff@peff.net>, Andreas Schwab <schwab@linux-m68k.org>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: [ANNOUNCE] Git v2.9.1
-In-Reply-To: <xmqq60sa7rj2.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607131600110.6426@virtualbox>
-References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com> <87lh17kgdy.fsf@linux-m68k.org> <20160711235417.GA26163@sigill.intra.peff.net> <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607120927410.6426@virtualbox> <xmqqpoqj6i3d.fsf@gitster.mtv.corp.google.com>
- <20160712151630.GE613@sigill.intra.peff.net> <CAPc5daWcb5bfgsxMP0vCrQ7gBdeYBgefzPNHztaaCKzqbCv2aQ@mail.gmail.com> <20160712153520.GG613@sigill.intra.peff.net> <xmqqlh167tjd.fsf@gitster.mtv.corp.google.com> <20160712160921.GA2965@sigill.intra.peff.net>
- <xmqq60sa7rj2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1751579AbcGMOzb (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 10:55:31 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:34012 "EHLO
+	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751155AbcGMOz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2016 10:55:29 -0400
+Received: by mail-io0-f169.google.com with SMTP id q83so48702656iod.1
+        for <git@vger.kernel.org>; Wed, 13 Jul 2016 07:55:28 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=4v/dyNwDAIsGMYwlQlq486/RgIrFyvWiWDVOIMPibag=;
+        b=wZsC3UU2vM9EyB+kCl+1bG71ob5eIdDb4+6g2ZsdqBaPiuirN3h9VHfoLtWtW3CngY
+         Sm9Vl7OPuTWSUQwHxDHjE5vWc5u8DXvF1d5N4wyaGCUcHUaqOA+rL5QN5l2EtoqEjHjb
+         Bt9Rh0nJrGORUQ8CBpIkLdgmGg/rtLbjN+7/zpbLStE3UjDzaECZlxIuXRcFKSVGdMS/
+         c3B/LmL4AqqA0wCzRAhQTIJMaYwaubYK3ltJ/zBVA7sF2hFcJpmCeCt/vQuMqQHY0A1y
+         LyQ7EBlBWZDyhCQMnPAMd6Og8S3PlfRa2E9O5Y7qL8tJTXxseBR/cfUx+rR92ct2CRpl
+         b0TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=4v/dyNwDAIsGMYwlQlq486/RgIrFyvWiWDVOIMPibag=;
+        b=JGAZ8X/0YVZcIKi+Uwrb9nIch3GmrMFMqV6QlmNEJVvGN6elXwv9R9++Np8FKUwI2l
+         Pxc+js5Y/f9mBPCx3U0diROgP1zhXPJehZOBQVfgZpC9zUXJYIJ5simJxB9puck0L9Zs
+         SIcxvpgwzhy7Ce10bM8x4ZE6epJnj5BzmLYccNxZfHAjexuDWV5xhP3cIvwvwoOXj326
+         MpWEWjTPSzh/N2poC8/TcOml050fZzLlh6kVgyAkJFSfcYJC921R90uqIoxcmA3vnsih
+         PgOOqZM4GRPQxGOkasQQ2ris+zl9Fkjt59iwaDmrU3LZiVPsLEoofyduYBT1aeEOkmxK
+         XUJA==
+X-Gm-Message-State: ALyK8tKlHDTt1On4sYzHITPtoxOuVdpbFxCj3LSCYSRTGZwi1QXikAwNGlKA3wsMsJ952AHWETafoHQ7V1Ibig==
+X-Received: by 10.107.159.16 with SMTP id i16mr8963969ioe.29.1468421708500;
+ Wed, 13 Jul 2016 07:55:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:DIl9dLe5oxBcQ39L3bBvw9hhFIofrbWaeyOk6zQTBDf+nyUmW6q
- aeAxbhR+B2PzS9/BwE2/Vg+T+K4d5NyFGRi5emngxfGHXu9THo/7oCImfVS6PKmASafd/Wh
- itiDJkuZWXpNXs+Je8/FdWVbbUQhdifX6y8xxnDtK+A3y5T3Rpg4dSLPJNKEkUXp3DYlVf2
- EieHb54i5igBdNl3oKW+g==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:hzS6sCWNXf0=:CTiXSkNlynU7i4ID2cUsxX
- fdlLBVUsnoa9yRCitzhRxss+eumlkyj0FF3MvTJ1RhgnGZw40g5XpoDFya+201B15A3QEcKtu
- mi0psRJXqF3GgqsGfdVqej593SWAPktK7igmpGfIaRy817fakFLYf7Bj7MLuxAfQqGbSDmAxZ
- eazaVWDKQKFrzQX4W4RLRaP5agAZuiII9lH/jG1i6lzzxRqEmWqDraDSvBzQ95MfmlTccN5q9
- fo8Q4wUqrJ4yA06s/x+7ABLMSw9EKugBCI9nS6WDEj1Sic4CExwMWrVD2yFgmO4kkbwiiHV8W
- hEmWI8iN4m2QXw0rFM1F9TyxU2igZp2slH/qwhZHYq9xdpf4l9iiZljkKBiL9xGni35d4WBFf
- Y8REBulS6Tpo7/tQuO/oCDzdLMUVaaNKOgUUx+03d11/7Ozn+DECh0/73geUVjOIGDg/K03y8
- mcDvSfoY6rIrLsTJsqo+8oACRXdP/bX34SoVy01vLl8UB8TOTp6Ncnp6rWUiB1EW0n0sdAkNo
- UXFH0PlmIQwkiLa4ISLRtKaXYaAsOYKR9Z8hk30AXrHHHztN4k6pY8PVXGIY7jZgYOwxtIar2
- H4J4qzHRfYoW7K38wpH90LSlL6Ob7Bj2YDEE1nLWJIIdCYACvRx8RDZe6uzzlAlWV6gNwZsss
- pxGmrxwA6eMVMLp5ibR5/sh9I5kibikWH1/zmT0czcViUBgCqyJN/dg9pIJIEmZDcQBGSw+2p
- SLHiPvMbB/Xkvwc04Ywm0Ijp4AFv5UN2zaPsKfD3BENS02bkHJAUUYNhUEpSvHkV57M0rQqQN
- T84u/0G
+Received: by 10.64.225.235 with HTTP; Wed, 13 Jul 2016 07:54:38 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1607131004410.6426@virtualbox>
+References: <alpine.DEB.2.20.1607090928500.6426@virtualbox>
+ <20160709140931.GA3185@x> <CACsJy8A6fiPUtNZow_oOEQSi64GMxA2Jy84h4OznaSxBMePtbQ@mail.gmail.com>
+ <alpine.DEB.2.20.1607101255300.6426@virtualbox> <CACsJy8BWKrXqXnbEgSKJ9gKcAyvdZhExfgh5zBRisX8R3BkBLw@mail.gmail.com>
+ <alpine.DEB.2.20.1607101602320.6426@virtualbox> <xmqqinwc9fe2.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1607121243470.6426@virtualbox> <20160712152646.GF613@sigill.intra.peff.net>
+ <CACsJy8C+NEP1HJq8w1frOy=UOv5-SA+b7MkbX8DE_vU-zjX0XQ@mail.gmail.com>
+ <20160712155141.GA5967@sigill.intra.peff.net> <CACsJy8BfXSvKM3=rRCDYzR=rpLRi+FBYs4r1WGXFisq0Esk00w@mail.gmail.com>
+ <alpine.DEB.2.20.1607131004410.6426@virtualbox>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Wed, 13 Jul 2016 16:54:38 +0200
+Message-ID: <CACsJy8BXOrGobyLGAKf=5Dv_4h_Keon9ktZ3B8Vr85qHOY0+mA@mail.gmail.com>
+Subject: Re: gc and repack ignore .git/*HEAD when checking reachability
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+On Wed, Jul 13, 2016 at 10:20 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Duy,
+>
+> On Tue, 12 Jul 2016, Duy Nguyen wrote:
+>
+>> On Tue, Jul 12, 2016 at 5:51 PM, Jeff King <peff@peff.net> wrote:
+>> > On Tue, Jul 12, 2016 at 05:46:12PM +0200, Duy Nguyen wrote:
+>> >
+>> >> I'm not opposed to letting one worktree see everything, but this move
+>> >> makes it harder to write new scripts (or new builtin commands, even)
+>> >> that works with both single and multiple worktrees because you refer
+>> >> to one ref (in current worktree perspective) differently. If we kill
+>> >> of the main worktree (i.e. git init always creates a linked worktree)
+>> >> then it's less of a problem, but still a nuisance to write
+>> >> refs/worktree/$CURRENT/<something> everywhere.
+>> >
+>> > True. I gave a suggestion for the reading side, but the writing side
+>> > would still remain tedious.
+>> >
+>> > I wonder if, in a worktree, we could simply convert requests to read or
+>> > write names that do not begin with "refs/" as "refs/worktree/$CURRENT/"?
+>> > That makes it a read/write-time alias conversion, but the actual storage
+>> > is just vanilla (so the ref storage doesn't need to care, and
+>> > reachability just works).
+>>
+>> A conversion like that is already happening, but it works at
+>> git_path() level instead and maps anything outside refs/ to
+>> worktrees/$CURRENT.
+>
+> Wouldn't you agree that the entire discussion goes into a direction that
+> reveals that it might simply be a better idea to require commands that want
+> to have per-worktree refs to do that explicitly?
 
-On Tue, 12 Jul 2016, Junio C Hamano wrote:
+No. To me that's equivalent to let people deal explicitly with
+file-based and lmdb refs backends everywhere. Unless the main worktree
+concept will die (I doubt it) it may remain the common use case that
+people care about and extra worktrees become second citizen that's
+rarely tested. I prefer we have a single interface for dealing with
+_any_ worktree. If there are fallouts, we deal with them.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > In case it wasn't clear, I was mostly guessing there. So I dug a bit
-> > further, and indeed, I am wrong. Linux never bumped to a 64-bit time_t
-> > on i386 because of the ABI headaches.
-> 
-> X-< (yes, I knew).
-> 
-> > That being said, I still think the "clamp to time_t" strategy is
-> > reasonable. Unless you are doing something really exotic like pretending
-> > to be from the future, nobody will care for 20 years.
-> 
-> Yup.  It is a minor regression for them to go from ulong to time_t,
-> because they didn't have to care for 90 years or so but now they do
-> in 20 years, I'd guess, but hopefully after that many years,
-> everybody's time_t would be sufficiently large.
-> 
-> I suspect Cobol programmers in the 50s would have said a similar
-> thing about the y2k timebomb they created back then, though ;-)
-> 
-> > And at that point, systems with a 32-bit time_t are going to have
-> > to do _something_, because time() is going to start returning
-> > bogus values. So as long as we behave reasonably (e.g., clamping
-> > values and not generating wrapped nonsense), I think that's a fine
-> > solution.
-> 
-> OK.
+> The same holds true for the config, BTW. I really have no love for the
+> idea to make the config per-worktree. It just holds too many nasty
+> opportunities for violate the Law of Least Surprises.
+>
+> Just to name one: imagine you check out a different branch in worktree A,
+> then switch worktree B to the branch that A had, and all of a sudden you
+> may end up with a different upstream!
 
-I kept the unsigned long -> time_t conversion after reading the thread so
-far.
+Everything in moderation. You wouldn't want to enable sparse checkout
+on one worktree and it suddenly affects all worktrees because
+core.sparsecheckout is shared. And submodules are known not to work
+when core.worktree is still shared.
 
-Ciao,
-Dscho
+I will not enforce any rule (unless it's very obvious that the other
+way is wrong, like core.worktree). I will give you a rifle and you can
+either hunt for food or shoot your foot. In other words, you should be
+able to share everything if you like it that way while someone else
+can share just some config vars, or even nothing in config file.
+-- 
+Duy
