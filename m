@@ -2,93 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A614920196
-	for <e@80x24.org>; Wed, 13 Jul 2016 17:38:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36A6B2018F
+	for <e@80x24.org>; Wed, 13 Jul 2016 17:43:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752863AbcGMRht (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 13:37:49 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50502 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752772AbcGMRhr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2016 13:37:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C56912B751;
-	Wed, 13 Jul 2016 13:37:40 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=YBoGqqNlgbnh
-	f2nM0gyr5+AxGRE=; b=eLIYMTA/iOC0q87iRt2/LpJD6VTzDXIBq5xPou2WG/eI
-	Rm9TgGtcmGfkKl7pF0wLNndJGuiFnwNf9OYOlTk74A7KYoYIL3u5IUFYq4L/AV8q
-	Bh7a38RovOMBSQY1u0KpgFBh2kBnK887IB5MIetihYonmQ0YDARL1Qpkizg0dJY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OGyQ6i
-	SDDQVqTJBEcYhdIPa3I/uLdYl1ggi1tpViQfsAH0HEYN8MCes9hWrcV1cFDIwKmh
-	QGoQTXzkreg/0DN9OFL28q2XwwzxBCoWGK10/whHNfsnmtErzqR37vvtrvZlL5D9
-	UmqHfsPPU9+N5CzJ/pvZ3XDiqXYcpRXCFVWic=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BE5E02B750;
-	Wed, 13 Jul 2016 13:37:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 585A32B74E;
-	Wed, 13 Jul 2016 13:37:40 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jehan =?utf-8?Q?Pag=C3=A8s?= <jehan.marmottard@gmail.com>
-Cc:	git@vger.kernel.org
-Subject: Re: Bug report: --invert-grep and --author seems to be incompatible.
-References: <CAFgjPJ-E0k8KQjdcRki4Qr1tPjwfJVtuFWOKYV-+f6POgb-=wg@mail.gmail.com>
-	<xmqqtwft1nbi.fsf@gitster.mtv.corp.google.com>
-	<CAFgjPJ-E=eW_ZiAUf2jKu6z3WfW_p+BMbEJwf=OSGUXQB78kwQ@mail.gmail.com>
-Date:	Wed, 13 Jul 2016 10:37:38 -0700
-In-Reply-To: <CAFgjPJ-E=eW_ZiAUf2jKu6z3WfW_p+BMbEJwf=OSGUXQB78kwQ@mail.gmail.com>
-	("Jehan =?utf-8?Q?Pag=C3=A8s=22's?= message of "Wed, 13 Jul 2016 19:16:31
- +0200")
-Message-ID: <xmqqlh151lst.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752242AbcGMRlS (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 13:41:18 -0400
+Received: from mail-it0-f43.google.com ([209.85.214.43]:37790 "EHLO
+	mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750912AbcGMRlQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2016 13:41:16 -0400
+Received: by mail-it0-f43.google.com with SMTP id f6so49725451ith.0
+        for <git@vger.kernel.org>; Wed, 13 Jul 2016 10:41:15 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ustx4e4V47Jjit3u52ousSqb5jjL0+sKqR0hKz0Vcgw=;
+        b=hlJIcQg1svJ/HHzbPAkuHEBmEgjQpHc0kqGLcikugUKk3mLYaIbYtX+1wOIdvfDo2x
+         SKLC6qLx57xeD0a81Y+vjmiE5xZ2SEiABt73yB5RuzlpN/kzisC+BSNS+rI/+YK+Q7AY
+         3D0S9qJD2+BoC1qniX4tGPWLKFw4YQeMBUqn/i46EODZOwUhF5x6UUyJXSPPsc4Tvx/5
+         xYNgh06YUd4JGk8emsLRVSvY0ILcgSXNY9IwvdQMNJMa5DNOQgiUg8AlCnFx6iBqx2Ld
+         P/y71e7aOYyZWn7iPF1w0d4hyLnk5++bMmnbDa3XpoT1JHjo4W74KXTuppmk8ilZo1dy
+         NfEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ustx4e4V47Jjit3u52ousSqb5jjL0+sKqR0hKz0Vcgw=;
+        b=bKaz4uuWgArunCSf43aHF431D7QLT39RtLJb7M7mhrHpR3JDFR6liCi/4AMZWjTVDi
+         PX0dRiKPPUsUj72315QBJz9s1tVzIc4VVy9MPAKsY8PB+OeS1Pk+O0/3+dQKY43f5CBr
+         1S5JFZ7J+5i9AmHxc3/0VhHHFQSYjb4zvq0RkNsNDRP18lqoKiUdRDmb6GT4bsQsnyi3
+         /OwHOZaWBXrJdIu1bhgEejujj1CywD+FTzMB+BTwDndFIqDC4+3gOaT8mh2lQS51OpLt
+         jph4oPxZGtcrqUNwMDLX+IvM2biWoGedRB8on/edERzZmcyGt990jaHavpnWMCN+RpyD
+         f6hw==
+X-Gm-Message-State: ALyK8tIUyXXXt2O4NzTwsXc262qEZRtkbU5CYLRPCfF8NPiNulN1GQ+4DPdWUKRvU0VjSSyjcE6oyrdk4nBnRg==
+X-Received: by 10.36.33.197 with SMTP id e188mr6114397ita.42.1468431669924;
+ Wed, 13 Jul 2016 10:41:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7F3ABF26-4920-11E6-9583-89D312518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: 8BIT
+Received: by 10.64.225.235 with HTTP; Wed, 13 Jul 2016 10:40:40 -0700 (PDT)
+In-Reply-To: <xmqqy4551nph.fsf@gitster.mtv.corp.google.com>
+References: <xmqqy4551nph.fsf@gitster.mtv.corp.google.com>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Wed, 13 Jul 2016 19:40:40 +0200
+Message-ID: <CACsJy8CVJr6-9CnyrOU4UoPPGu6Ovn_=-2YKeqC8Lp_rVnh5fg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2016, #05; Wed, 13)
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jehan Pagès <jehan.marmottard@gmail.com> writes:
-
->> I think --author=someone greps the "author " field in the commit
->> object looking for the hit with "someone", and your request asks to
->> show commits that either do not have "something" or was not written
->> by "someone", I would guess.
+On Wed, Jul 13, 2016 at 6:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> * nd/pack-ofs-4gb-limit (2016-07-13) 7 commits
+>  - fsck: use streaming interface for large blobs in pack
+>  - pack-objects: do not truncate result in-pack object size on 32-bit systems
+>  - index-pack: correct "offset" type in unpack_entry_data()
+>  - index-pack: report correct bad object offsets even if they are large
+>  - index-pack: correct "len" type in unpack_data()
+>  - sha1_file.c: use type off_t* for object_info->disk_sizep
+>  - pack-objects: pass length to check_pack_crc() without truncation
 >
-> Note that I can still see commits with "something", and I can also see
-> commits by "someone" in my results. So my request actually ask for
-> commits which have neither "something" nor are done by "someone".
->
-> Anyway I don't think that's the expected result, hence is still a bug.
-> Am I wrong?
+>  "git pack-objects" and "git index-pack" mostly operate with off_t
+>  when talking about the offset of objects in a packfile, but there
+>  were a handful of places that used "unsigned long" to hold that
+>  value, leading to an unintended truncation.
 
-Unlike "git grep", "git log" works with boolean expression that does
-not explicitly have a way to say "--and" and "--or", so only one
-interpretation has been chosen long time ago.  All the terms are
-ORed together, and then the whole thing can be inverted with
-"--invert-grep".  i.e. you are telling an equivalent of
+On the subject of truncation, there is something else I should note.
+The field sd_size in struct stat_data is 32 bits, so large files will
+overflow it too, regardless of platforms. I did not do anything
+because I checked and double checked and was pretty sure we did not
+use it for anything meaningful (as a file size). To us, it's just
+another random number, like st_ino, that we check to detect if a file
+has changed.
 
-    $ git grep --not \( -e "author someone" --or -e "something" \)
-
-with the command line, and there is no way to combine the requested
-match criteria (there are two, "author must be somebody" and
-"something must be in the message") differently.
-
-Given that, that is the "right" expectation, and as long as you get
-the behaviour, there is no "bug".
-
-You can call it a lack of feature, though, and patches to implement
-a more flexible combination of match criteria like "git grep" allows
-is always welcome.
+It's probably just an oversight (it comes from the very first "the
+information manager from hell" commit). But it's not worth changing
+index format now to extend it to 64 bits, I think. So it's ok, no
+worry about it, but we should probably make clear that this is not
+true file size, and don't anybody ever use it as such. Maybe rename it
+to "size_hash" or something.
+-- 
+Duy
