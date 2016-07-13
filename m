@@ -2,111 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 566D52018F
-	for <e@80x24.org>; Wed, 13 Jul 2016 15:21:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12C272018F
+	for <e@80x24.org>; Wed, 13 Jul 2016 15:30:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751486AbcGMPRb (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 11:17:31 -0400
-Received: from mail-it0-f46.google.com ([209.85.214.46]:37246 "EHLO
-	mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751347AbcGMPR0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2016 11:17:26 -0400
-Received: by mail-it0-f46.google.com with SMTP id f6so45978164ith.0
-        for <git@vger.kernel.org>; Wed, 13 Jul 2016 08:17:06 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=HQqnuPdcFpU8kA93MtbIcHLUIL4uzQ1vSpE7PcupCBs=;
-        b=c7nr8cl9D79kuTYopJ/OkzEKa/EmZhOvc2OcXbrDnupp7/K7cL2m820K4u3NSXtsD0
-         U6HQGqJNKBr6RuUdC+Vs5dxCTYzjMWZAUgHAQPE8myGKiyeykujNxolmWgqSDBADnGnd
-         80hfPLy7BekwzxlJ05vnBf/1WN3YqwRARSFaLJVBA2U63bJVTTGgaiI+YvmwylGo9rZa
-         O6pixU3unk40TzN0S/vpHo4EkVxOdgNhgysyTJsflX7B3aa2d/CZlO0Qgl0Rbyem+Yoc
-         IoYvuhHvwAGdNRvD7UZ6IFwnHlLqM9C09NzYlQQtJ8rjllZX8H7tAR93/2J9yRjj7RKS
-         JGnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=HQqnuPdcFpU8kA93MtbIcHLUIL4uzQ1vSpE7PcupCBs=;
-        b=K7yYfdJdMFh0rT0nOypxta/LqVcTFbewhkeNkRBijq4kZ4rFArRgjb+DmfoR3+39BO
-         fyB0dno4lb+CPVd/4UcM6p0hM8hwO/ClqkfrZFapznPtXnpU2saPlFxJ51qAOfVAc+dF
-         iDYkJuEEhRsX2L36uXqUygKKWSHa8mXFwDWr1hCAvoWAcmOhO9vYQd5YYl6P2lqx+g1M
-         tJAWcCbX96v1d9lIOTyMw4G7C6TFjYP+zCP02XL7R+JqVRq4ZedV8rcwhBpSlpn7S9cS
-         L4jvPvH0SyPIeSxulGsWeWtufKf87yGzL4ptqetatf5MnzhRTE0ai7rN9UagStWqOlXr
-         9+7g==
-X-Gm-Message-State: ALyK8tJCXlEU2St/eQhrPtUCtVzQdsNnrRby3wokt7EkEfcBRTDz5xCTnGASrnGCiDgJNyFHoeG0NJ2BoPjO1A==
-X-Received: by 10.36.208.71 with SMTP id m68mr9835785itg.63.1468423015110;
- Wed, 13 Jul 2016 08:16:55 -0700 (PDT)
+	id S1751623AbcGMP1w (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 11:27:52 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:60884 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751580AbcGMP1r (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2016 11:27:47 -0400
+X-AuditID: 12074411-a53ff70000004911-f6-57865dbc2b86
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id E1.76.18705.CBD56875; Wed, 13 Jul 2016 11:26:53 -0400 (EDT)
+Received: from [192.168.43.172] ([89.204.154.160])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u6DFQbdM020511
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 13 Jul 2016 11:26:41 -0400
+Subject: Re: [PATCH 00/38] Virtualization of the refs API
+To:	Duy Nguyen <pclouds@gmail.com>
+References: <cover.1464983301.git.mhagger@alum.mit.edu>
+ <CACsJy8CNJfQxnn94b=+mjfPVvNzJu3sD3w_g8yCUHY0UQCbfLQ@mail.gmail.com>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	David Turner <dturner@twopensource.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>
+From:	Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <6c123315-ba5c-ac15-8314-b6a71c325d9f@alum.mit.edu>
+Date:	Wed, 13 Jul 2016 17:26:38 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.1.0
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Wed, 13 Jul 2016 08:16:25 -0700 (PDT)
-In-Reply-To: <CAP8UFD2pes3MD9FNBtvLYS5785aJoGPz00Fj+fHjy03j0aKjFg@mail.gmail.com>
-References: <20160711172254.13439-1-chriscool@tuxfamily.org>
- <20160711172254.13439-9-chriscool@tuxfamily.org> <CACsJy8BqMFASHf5kJgUh+bd7XG98CafNydE964VJyPXz-emEvA@mail.gmail.com>
- <CAP8UFD01MiMnz6qNGYa9WEjZ_EOy-hBqO4gGKGyxUc71aOyp4w@mail.gmail.com>
- <CACsJy8CEimmc=W=bNcLw+TP0tGRPCL5rr3uNeFMJ=Ms9HkyABw@mail.gmail.com> <CAP8UFD2pes3MD9FNBtvLYS5785aJoGPz00Fj+fHjy03j0aKjFg@mail.gmail.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Wed, 13 Jul 2016 17:16:25 +0200
-Message-ID: <CACsJy8DHd44MnFUkJwh9n0JK5J5P6kER0kgopX0UrS=ROo_URQ@mail.gmail.com>
-Subject: Re: [RFC/PATCH 8/8] read-cache: unlink old sharedindex files
-To:	Christian Couder <christian.couder@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CACsJy8CNJfQxnn94b=+mjfPVvNzJu3sD3w_g8yCUHY0UQCbfLQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrOKsWRmVeSWpSXmKPExsUixO6iqLs3ti3c4M1yAYv5m04wWnRd6Way
+	aOi9wmzRPeUto8WPlh5mi5lXrS3OvGlkdGD32DnrLrvHs949jB4XLyl77F+6jc1j8QMvjwXP
+	77N7fN4kF8AexW2TlFhSFpyZnqdvl8Cd8fBgH0vBHrGKKYdesjYwLhLqYuTkkBAwkdj6ZB1b
+	FyMXh5DAVkaJY7//QjmbmCTWtHxmBakSFrCU+HBoGzuILSKgJPGmYxtzFyMHUFGdxNNZ2iD1
+	zALdTBInT7SxgdSwCehKLOppZgKxeQXsJbY/nQoWZxFQlbi0oAVsjqhAiMS2mw1sEDWCEidn
+	PmEBsTkFAiWev/jJDGIzC6hL/Jl3CcqWl2jeOpt5AiP/LCQts5CUzUJStoCReRWjXGJOaa5u
+	bmJmTnFqsm5xcmJeXmqRrqlebmaJXmpK6SZGSMAL7mCccVLuEKMAB6MSDy+DSGu4EGtiWXFl
+	7iFGSQ4mJVHezrlAIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8M2LawoV4UxIrq1KL8mFS0hws
+	SuK8fEvU/YQE0hNLUrNTUwtSi2CyMhwcShK8niCNgkWp6akVaZk5JQhpJg5OkOFcUiLFqXkp
+	qUWJpSUZ8aCYjC8GRiVIigdo77tokL3FBYm5QFGI1lOMuhx/Nky+wiTEkpeflyolzhsJskMA
+	pCijNA9uBSy9vWIUB/pYmLcRpIoHmBrhJr0CWsIEtKTWoRlkSUkiQkqqgTH+gZ+UqpLYxI8m
+	ibu0TTdP1PMIMj595mR8u+rNWIdIR64vcz4/NTpx4215tNcj/eBj6ffbou+9SMmcElf86aQ5
+	/9arr54f4vu1MPno32kLlqra256qM3KZyeBQGzH1AMPqksBEFzaFj213ek8VS689/+fGt+iT
+	v5NyvFZwP+D5zrR1ZaDYtb1KLMUZiYZazEXFiQAnnCa7SgMAAA==
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 12, 2016 at 9:45 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Tue, Jul 12, 2016 at 5:12 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+On 07/10/2016 05:09 PM, Duy Nguyen wrote:
+> On Fri, Jun 3, 2016 at 11:03 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> Since the that ref-iterator [1] changes seem to have gotten a positive
+>> reception, let's try to keep up the momentum. I hope I'm not
+>> overloading the review pipeline...
 >>
->> No. People could create an index file anywhere in theory. So you don't
->> know how many index files there are.
->
-> Maybe when an index file is created, its path and its sharedindex file
-> could be appended into a log file.
-> We could check this log file to see if we can remove sharedindex files.
-> We would need to remove the entries in this log file for the indexes
-> that are no longer there.
->
-> Or instead of one log file we could have a file for each index file in
-> a special directory called for example "indexinfo".
-> So we could just delete the file if its related index is no longer there.
+>> I think all of the groundwork is in place now to virtualize the refs
+>> API. This will open the way to storing refs in ways other than the
+>> familiar loose refs / packed refs format, such as David Turner's
+>> proposed LMDB-based storage [2].
+>>
+>> This is a long patch series, but most of the patches are pretty simple
+>> and formulaic. The goal is to implement a `ref_store`. In the language
+>> of object-oriented programming, `ref_store` is an abstract base class
+>> representing a reference storage backend. It provides methods to read,
+>> write, and delete references and symrefs, and to iterate over
+>> references, reflogs, and reflog entries, plus a number of other
+>> things—19 methods in all.
+> 
+> I probably don't know what I'm talking about because I don't follow
+> your work closely enough. Please ignore if this is nonsense. But if we
+> extend/change API, we might need to update git-for-each-ref too, to
+> expose it to shell scripts and external commands. I guess for
+> iteration there's nothing else more needed, but we may need to
+> introduction new options for the storage thing, e.g. to select
+> storage...
 
-New files will require locking so people don't append at the same
-time. And maybe another new host of problems. I think we can just go
-with the garbage collection way that we have done for unreachable
-objects.
+This patch series doesn't change the external API in any significant
+way. It only wraps it up on a virtualization layer so that a different
+reference storage backends can be plugged in.
 
-Your indexinfo idea looks very close to multiple locking, an index
-would lock the shared index it's linked to, preventing it from being
-removed. For single locking, we can just create a file named $X.lock,
-but for multiple locks, maybe we can go with
-$X.lock-$index_trailing_sha1. Will it work? I don't know. Just
-thinking out loud.
+So as long as people are using plumbing commands to work with references
+(rather than reading/writing files under $GIT_DIR directly), they should
+notice no difference.
 
->> It really depends. If the shared part is too small for old indexes, we
->> might as well unsplit them. In practice though, the only long-term
->> index file is $GIT_DIR/index. If we don't delete old shared index
->> files too close to their creation time, temp index files will go away.
->
-> We could treat $GIT_DIR/index specially so that if there are no temp
-> index files, there should be nothing in "indexinfo".
+There are only two exceptions that I know of:
 
-No, temp index files are needed. And it will  be hard to treat
-$GIT_DIR/index specially because updating it involves a temp index:
-you first prepare a new index in $GIT_DIR/index.lock. If everything
-goes well, you atomically rename it to $GIT_DIR/index. You may be able
-to treat $GIT_DIR/index.lock special too, but that's starting to get
-out of hand.
--- 
-Duy
+1. Users will need to be able to request that a repository use a
+non-default reference backend, and (less importantly) inquire about
+which reference backend a particular repository is using. Those
+facilities will be added when the first non-files reference backend is
+added.
+
+2. At least one command (`git pack-refs`) is particular to the files
+backend, and won't be needed (at least not in its current form) for
+other backends. Conversely, it is conceivable that future reference
+backends will require their own "maintenance" commands. Such commands
+would be added as they are needed.
+
+If there were operations that other reference backends could do much
+more efficiently than the files backend (like, hypothetically, return
+all references matching a regular expression without having to iterate
+through all references), then it might make sense for performance
+reasons to provide commands to access that functionality. But at the
+moment I don't know of any such cases.
+
+Michael
+
