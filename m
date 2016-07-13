@@ -7,78 +7,97 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E7701F744
-	for <e@80x24.org>; Wed, 13 Jul 2016 11:26:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54C231F744
+	for <e@80x24.org>; Wed, 13 Jul 2016 11:31:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751042AbcGML0V (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 07:26:21 -0400
-Received: from mout.gmx.net ([212.227.15.15]:51076 "EHLO mout.gmx.net"
+	id S1751040AbcGMLah (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 07:30:37 -0400
+Received: from mout.gmx.net ([212.227.17.22]:58669 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750956AbcGML0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2016 07:26:19 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0M23zf-1b7pwK3kXj-00ty26; Wed, 13 Jul 2016 13:25:36
+	id S1750961AbcGMLaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2016 07:30:35 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LiWzQ-1apL751iBw-00cfER; Wed, 13 Jul 2016 13:29:35
  +0200
-Date:	Wed, 13 Jul 2016 13:25:33 +0200 (CEST)
+Date:	Wed, 13 Jul 2016 13:29:33 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Andreas Schwab <schwab@linux-m68k.org>
-cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
+To:	Duy Nguyen <pclouds@gmail.com>
+cc:	Jeff King <peff@peff.net>, Andreas Schwab <schwab@linux-m68k.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
 Subject: Re: [ANNOUNCE] Git v2.9.1
-In-Reply-To: <mvmd1mjdluz.fsf@hawking.suse.de>
-Message-ID: <alpine.DEB.2.20.1607131324121.6426@virtualbox>
+In-Reply-To: <CACsJy8CBGcKyMh9nbCAjZ=0T8TpoY9m98YJtgPFhQztVRPvXhg@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1607131326160.6426@virtualbox>
 References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com> <87lh17kgdy.fsf@linux-m68k.org> <20160711235417.GA26163@sigill.intra.peff.net> <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607120927410.6426@virtualbox> <mvmtwfve22e.fsf@hawking.suse.de>
- <alpine.DEB.2.20.1607121249390.6426@virtualbox> <mvmh9bvdnae.fsf@hawking.suse.de> <alpine.DEB.2.20.1607121520310.6426@virtualbox> <mvmd1mjdluz.fsf@hawking.suse.de>
+ <alpine.DEB.2.20.1607121249390.6426@virtualbox> <mvmh9bvdnae.fsf@hawking.suse.de> <alpine.DEB.2.20.1607121520310.6426@virtualbox> <mvmd1mjdluz.fsf@hawking.suse.de> <20160712134652.GA613@sigill.intra.peff.net>
+ <CACsJy8CBGcKyMh9nbCAjZ=0T8TpoY9m98YJtgPFhQztVRPvXhg@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:D783rpdYqtJY9TPN7xlvKmJ2EEfgBlpStkiKyEEc4OLYyeUtiFw
- K8P9JcQ8NWXwlp3OLOFd5HuU6zlSf2UOAXUIiBe5WZACmLxc+hNo90rhZExP5RFAKliyIjX
- UtdYvJUc3CVg2VLQaDYuHHJbpsn8hdJfiKGsfW91Be+RIIygaVY2t6uMRt73pAh168B0E0B
- LC4XaEwJ54zeyJc7BVJcA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:EtsPA/ie0UQ=:gRSK+HXlTOYAw7wnvlUhvZ
- 7oZeLc4lKHZ1+2hNBbEkH+cdbPTlc+kngip/qxTvo+ddp8qMb59PuFbFakWEzyaT7cwitlTmV
- cqVzHJ0YjFmw+QkbJjXtYoyn5wpDW734uXmHtaEfGdoTujHFancQGHIxu8KMlHRamaUl4a7y1
- ZZobJPqeqL5eW8aetBfevlFLsBk5MdKQwD92eyGytgfTd81aTe8o6pr5UC1XJ4B67JiWl+9UY
- YzIxGT1W0HLMynPEjAFLpoL2TjiRHxBWBpDi+uhxr4OMaL2b7k6oRiFMu+0u3KZPZwUemVQxe
- znNTjbZCwDey0cS8Ha2EOWAN/i3ak/yRNBIxuSs90kJLHKgl5MaoJxVnrmpXoXpd6qIWRFH25
- N/DRxysbpIPdKN6YS5t8p2zu1bqgjShJojN/dHaDVjSO7zskeDLLpfaNVeYJk0D+7DG3IHAYV
- mkK0j8gautf9JL3SaUxpi3/y7m74s6rTJk8SnGfUhAdygKLnbBvR+A50wAeuRlVUTZLU7+dr3
- YfYwECzzKNoofvFFJx8glHPHLum4yur+MKTUYGNllMjt9knLJFYL888pSH9+kND56pracWEXC
- ++FfMjB3PVt7WmjuBXGpES8SnOXEIJ6up4TzerfLfIT4+J9QZdvkMp3B8LtLQwPo/UfNNISKw
- yhHmTceuSD495r4NGg8n3AqiZgEzVQ0uHZvdI14y32xT7XwY88vdgs/ej+HncwZjhfr43kwgU
- /tb/yq414hs5dZ+CsGu3Z6OTvHTbPZTVE+AR7BiWApV1kz3EYtJ7msbYtjUrtqXtZUcqeEFSD
- M6+/Rsu
+X-Provags-ID: V03:K0:GgUpmBrq1Dote1y6VFeHFEefzNWcoxi4Z7xjpbV5oZTD8t74Qpz
+ q487mDXIUMpwAA0q7Q2nwP9WAfMgeu5NiXqWQbWcT45K/tGJB/ACAugLXoUqHyFpMi9f6CW
+ bHlEKNLd4ODPzBsoEUuhr6KzEq6GaurEeHXE2+8k0Gpjgv4UP3VW2UfQDa33U2FeudzlNDv
+ J5uwUUsHyVJfOuFslToxQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:xt5PeYAgY04=:Fgt5VCf881G7kkMCy0z8EZ
+ 85S7Xd+lSCV4Cw8UAaeHDrro+7yiVdgkpOGLDN7zAXrMb+7J4H0RY8Yi2T/TpMsPN7oFnSmeo
+ A9C+Ni5l6UWfbY3XOzurRzwew171ht91aydj01wRdXQpclETtizWhguVDl0jiHes1llurgVVj
+ VJfmyh9zFcVPfFjlITcRxBR7V4nQB60/IKfePJ6aVnU2ywtSGBgx1hgzcOQfTm4cXgdeRhklZ
+ ynExALDaa+3b0ThAit94WH6xALGu61dMvL8iL+Gf9UMH0IVuBd/KBO0Lyt/sf32K2E+w96pEf
+ 0f3bCcC2yPNnAef3qH16qYgSrjL+CVr1HrHvUCcp2iuIeIODYaBjO4NZATK401yOdbIAEBJz9
+ QvcVZ+L2dj0iN14UMtXvYw6oY+6xojFzYj24hVresnM4gPd/yM63j0w0hpUY4r0gtPVLtBilf
+ PbWoQV3pmAFwNIz+6U8AJWNkIK8rbgWRaRuIoRrIjAi6STF3zc+kQYfZNOhp+GW3y4XdyYC52
+ zFiN3hYwwEoGD5ie/IagMwCDDuPjSLZaTANVJ2NxAjVmC3sVbhqwYWPA9OEMv+lxW9tl78zRW
+ M0e+Tqrabx4EwWHFUOAKhgYZC2qYQEOdPcQVQ5wduff/J3V6sMRrTzODn8gNPchMKXo4J3RX/
+ D2c7knREnkzPxMej1hlDtkuweSKM38fw1TCt9YQDqZQfLWuYkjGXYXfvQEYO673BC0mN655a9
+ PFWQLFqHfOiGDbPUG+QdqVQVY+9dylJ0btX4XuopwGnosCax0dAT6QOy41v3dOVra7pNFjrPY
+ Nb6jPgb
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Andreas,
+Hi Duy,
 
-On Tue, 12 Jul 2016, Andreas Schwab wrote:
+On Tue, 12 Jul 2016, Duy Nguyen wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Tue, 12 Jul 2016, Andreas Schwab wrote:
+> On Tue, Jul 12, 2016 at 3:46 PM, Jeff King <peff@peff.net> wrote:
+> > On Tue, Jul 12, 2016 at 03:31:00PM +0200, Andreas Schwab wrote:
 > >
-> >> Johannes Schindelin <schindelin@wisc.edu> writes:
-> >> 
-> >> >> PRIuMAX isn't compatible with time_t.
+> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >>
+> >> > On Tue, 12 Jul 2016, Andreas Schwab wrote:
 > >> >
-> >> > That statement is wrong.
-> >> 
-> >> No, it isn't.  PRIuMAX is for uintmax_t, and time_t is not uintmax_t
-> >> (even if they happen to have the same representation).
+> >> >> Johannes Schindelin <schindelin@wisc.edu> writes:
+> >> >>
+> >> >> >> PRIuMAX isn't compatible with time_t.
+> >> >> >
+> >> >> > That statement is wrong.
+> >> >>
+> >> >> No, it isn't.  PRIuMAX is for uintmax_t, and time_t is not uintmax_t
+> >> >> (even if they happen to have the same representation).
+> >> >
+> >> > Sigh.
+> >> >
+> >> > So if it is wrong, what is right?
+> >>
+> >> The right thing is to add a cast, of course.
 > >
-> > Sigh.
-> >
-> > So if it is wrong, what is right?
+> > In general, I think the right cast for time_t should be to (intmax_t),
+> > and the formatting string should be PRIdMAX (which, as an aside, needs
+> > an entry in git-compat-util.h).
 > 
-> The right thing is to add a cast, of course.
+> Coincidentally, I have the same problem with unsigned long being
+> 32-bit and have to switch to off_t in some places. Does anybody know
+> what a fallback in git-compat-util for PRIdMAX would look like? I
+> guess it's "lld"...
 
-This was not helpful.
+Yes, judging from the existing fallback for PRIuMAX, "lld" would be the
+correct thing to do. And then it would be nice to introduce
+
+	#define PRIdMAX "I64d"
+
+next to the PRIuMAX definition in compat/mingw.h, too.
 
 Ciao,
-Johannes
+Dscho
