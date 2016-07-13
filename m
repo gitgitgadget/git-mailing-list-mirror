@@ -7,97 +7,139 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54C231F744
-	for <e@80x24.org>; Wed, 13 Jul 2016 11:31:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E23B31F744
+	for <e@80x24.org>; Wed, 13 Jul 2016 11:36:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751040AbcGMLah (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 07:30:37 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58669 "EHLO mout.gmx.net"
+	id S1750990AbcGMLf4 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 07:35:56 -0400
+Received: from mout.gmx.net ([212.227.17.20]:54691 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750961AbcGMLaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2016 07:30:35 -0400
+	id S1750883AbcGMLfy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2016 07:35:54 -0400
 Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LiWzQ-1apL751iBw-00cfER; Wed, 13 Jul 2016 13:29:35
+ ESMTPSA (Nemesis) id 0M0Kp7-1b7HXF27mX-00ubcB; Wed, 13 Jul 2016 13:35:32
  +0200
-Date:	Wed, 13 Jul 2016 13:29:33 +0200 (CEST)
+Date:	Wed, 13 Jul 2016 13:35:31 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Duy Nguyen <pclouds@gmail.com>
-cc:	Jeff King <peff@peff.net>, Andreas Schwab <schwab@linux-m68k.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
+To:	Jeff King <peff@peff.net>
+cc:	Junio C Hamano <gitster@pobox.com>,
+	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
 Subject: Re: [ANNOUNCE] Git v2.9.1
-In-Reply-To: <CACsJy8CBGcKyMh9nbCAjZ=0T8TpoY9m98YJtgPFhQztVRPvXhg@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1607131326160.6426@virtualbox>
-References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com> <87lh17kgdy.fsf@linux-m68k.org> <20160711235417.GA26163@sigill.intra.peff.net> <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607120927410.6426@virtualbox> <mvmtwfve22e.fsf@hawking.suse.de>
- <alpine.DEB.2.20.1607121249390.6426@virtualbox> <mvmh9bvdnae.fsf@hawking.suse.de> <alpine.DEB.2.20.1607121520310.6426@virtualbox> <mvmd1mjdluz.fsf@hawking.suse.de> <20160712134652.GA613@sigill.intra.peff.net>
- <CACsJy8CBGcKyMh9nbCAjZ=0T8TpoY9m98YJtgPFhQztVRPvXhg@mail.gmail.com>
+In-Reply-To: <20160712140427.GB613@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1607131329510.6426@virtualbox>
+References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com> <87lh17kgdy.fsf@linux-m68k.org> <20160711235417.GA26163@sigill.intra.peff.net> <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607120927410.6426@virtualbox> <20160712073912.GA26431@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1607121257450.6426@virtualbox> <20160712140427.GB613@sigill.intra.peff.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:GgUpmBrq1Dote1y6VFeHFEefzNWcoxi4Z7xjpbV5oZTD8t74Qpz
- q487mDXIUMpwAA0q7Q2nwP9WAfMgeu5NiXqWQbWcT45K/tGJB/ACAugLXoUqHyFpMi9f6CW
- bHlEKNLd4ODPzBsoEUuhr6KzEq6GaurEeHXE2+8k0Gpjgv4UP3VW2UfQDa33U2FeudzlNDv
- J5uwUUsHyVJfOuFslToxQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:xt5PeYAgY04=:Fgt5VCf881G7kkMCy0z8EZ
- 85S7Xd+lSCV4Cw8UAaeHDrro+7yiVdgkpOGLDN7zAXrMb+7J4H0RY8Yi2T/TpMsPN7oFnSmeo
- A9C+Ni5l6UWfbY3XOzurRzwew171ht91aydj01wRdXQpclETtizWhguVDl0jiHes1llurgVVj
- VJfmyh9zFcVPfFjlITcRxBR7V4nQB60/IKfePJ6aVnU2ywtSGBgx1hgzcOQfTm4cXgdeRhklZ
- ynExALDaa+3b0ThAit94WH6xALGu61dMvL8iL+Gf9UMH0IVuBd/KBO0Lyt/sf32K2E+w96pEf
- 0f3bCcC2yPNnAef3qH16qYgSrjL+CVr1HrHvUCcp2iuIeIODYaBjO4NZATK401yOdbIAEBJz9
- QvcVZ+L2dj0iN14UMtXvYw6oY+6xojFzYj24hVresnM4gPd/yM63j0w0hpUY4r0gtPVLtBilf
- PbWoQV3pmAFwNIz+6U8AJWNkIK8rbgWRaRuIoRrIjAi6STF3zc+kQYfZNOhp+GW3y4XdyYC52
- zFiN3hYwwEoGD5ie/IagMwCDDuPjSLZaTANVJ2NxAjVmC3sVbhqwYWPA9OEMv+lxW9tl78zRW
- M0e+Tqrabx4EwWHFUOAKhgYZC2qYQEOdPcQVQ5wduff/J3V6sMRrTzODn8gNPchMKXo4J3RX/
- D2c7knREnkzPxMej1hlDtkuweSKM38fw1TCt9YQDqZQfLWuYkjGXYXfvQEYO673BC0mN655a9
- PFWQLFqHfOiGDbPUG+QdqVQVY+9dylJ0btX4XuopwGnosCax0dAT6QOy41v3dOVra7pNFjrPY
- Nb6jPgb
+X-Provags-ID: V03:K0:rass37x/NpmrTEVZZ+7p+P96+htof2MAj/BHFNNRtK9p6IKBX84
+ ZiaxF8Y+3+MhAt8o6w5PuTDNcM0WZ1NsPwR/XRW3iGaD1dI5waCBGcRyhhTyUHaIeYrZ96o
+ japVVldOdEbkTUJdqg7+tnJ6Pb5JCS5492dezBbHnFx23ZD0aWPeVVaSDMxl93QbraW1FLI
+ woYn2hQeds4rn/kKnzl7g==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:iBm9ymo4S10=:7JnnpyASfclizTYM48zWv5
+ KrUPErt67hnMmo/YLfFkKYwwFT8liAow8CHrukFFy7J/wjKttludco5hzBvfeF+0nP7PPWNYg
+ TvrQpg6Tu91aQ+YOxVCY6DHyuI1RfyHrC6pdiPkYwvrx5XMfxokuQreQl05ljacDmMykINGRv
+ tDlf5c9F1X7JJzBr9TPl1Db/1moNVdkeTsU+hLI/AS8gpnJkDWyO3nYM+eRkXPhYVQ7CK+rSS
+ DWsmD6zwDmu5h0/s2VtYcET2GyUCnAXA7d3Xj8Aq5RRfKnEE9BFoiTxuF/Ckgf96YIV7Vb/3D
+ BMv/fsebfpYMTj+BLzTWqRcrLKG+qnNo2M0vlF5Ak8izPUdf/dbS6/aj7ka7J8Zba0UJd/0Kt
+ q5rL1v7rRHF3oCUIcIFIMWeyWMWDi6a3uaY1nH9J/5RS0Ich7vxpteUzeZ2b5f6dbOYVcdwuZ
+ j5kWcv429sTBb7Obp9cl90Cp/EwADB9Y2gCtvzuyI6Ei2TAjs1FTBB+Um5dPeHENQ1PqRfQR/
+ 9bLmCFnFHWzM60I4teeDJjy/Fj8NyXJPYwtG0Lzrvb/UBVSV5ji+BMnB6c0uxRM68in77pT5U
+ CTDVByu7YFmnZCh3nCECoPa1ABaZp+JAjlmK1StfJKuBnKgj6aLl4qmov3s1TMowRChyUVFBd
+ pHnrMuNkLA8Z6R7PeYi0iUInpxEsno1TyzFRGB6vRMLk9K1n/8g5xZ6Dfhi/FHVWyum/qbBpz
+ 9XeY3uTxFo1hEg0Tqi248S62nB2thE7rvrApUIsDe9jsZBCumUa/ossHjOPBV/3J31suEC8tX
+ C6wzuk3
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Duy,
+Hi Peff,
 
-On Tue, 12 Jul 2016, Duy Nguyen wrote:
+On Tue, 12 Jul 2016, Jeff King wrote:
 
-> On Tue, Jul 12, 2016 at 3:46 PM, Jeff King <peff@peff.net> wrote:
-> > On Tue, Jul 12, 2016 at 03:31:00PM +0200, Andreas Schwab wrote:
-> >
-> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >>
-> >> > On Tue, 12 Jul 2016, Andreas Schwab wrote:
-> >> >
-> >> >> Johannes Schindelin <schindelin@wisc.edu> writes:
-> >> >>
-> >> >> >> PRIuMAX isn't compatible with time_t.
-> >> >> >
-> >> >> > That statement is wrong.
-> >> >>
-> >> >> No, it isn't.  PRIuMAX is for uintmax_t, and time_t is not uintmax_t
-> >> >> (even if they happen to have the same representation).
-> >> >
-> >> > Sigh.
-> >> >
-> >> > So if it is wrong, what is right?
-> >>
-> >> The right thing is to add a cast, of course.
-> >
-> > In general, I think the right cast for time_t should be to (intmax_t),
-> > and the formatting string should be PRIdMAX (which, as an aside, needs
-> > an entry in git-compat-util.h).
+> On Tue, Jul 12, 2016 at 01:25:20PM +0200, Johannes Schindelin wrote:
 > 
-> Coincidentally, I have the same problem with unsigned long being
-> 32-bit and have to switch to off_t in some places. Does anybody know
-> what a fallback in git-compat-util for PRIdMAX would look like? I
-> guess it's "lld"...
+> > [PATCH] Work around test failures due to timestamps being unsigned long
+> > 
+> > Git's source code refers to timestamps as unsigned longs. On 32-bit
+> > platforms, as well as on Windows, unsigned long is not large enough to
+> > capture dates that are "absurdly far in the future".
+> > 
+> > While we will fix this issue properly by replacing unsigned long ->
+> > time_t, on the maint track we want to be a bit more conservative and
+> > just skip those tests.
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> 
+> This looks like a reasonable interim fix for both Windows and for the
+> general maint track. If we reliably produce "2038" for the 999... value
+> then that's simpler than adding in magic to ask about sizeof(ulong). I
+> also wondered if we should test forthe _correct_ value, but that would
+> defeat the point of the test (999... is also far in the future).
 
-Yes, judging from the existing fallback for PRIuMAX, "lld" would be the
-correct thing to do. And then it would be nice to introduce
+This was just a quick fix, intended to allow me to release Git for Windows
+v2.9.1 in a timely manner (which is now delayed for other reasons).
 
-	#define PRIdMAX "I64d"
+I think I can do even better than to inspect the source code whether it
+reliably clamps the dates to PI hours on January 19th, 2038: We already
+have a t/helper/test-date and we can easily teach it one new trick.
 
-next to the PRIuMAX definition in compat/mingw.h, too.
+> One minor comment:
+> 
+> > diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+> > index 04ce535..d185640 100755
+> > --- a/t/t0006-date.sh
+> > +++ b/t/t0006-date.sh
+> > @@ -48,10 +48,17 @@ check_show default "$TIME" 'Wed Jun 15 16:13:20 2016 +0200'
+> >  check_show raw "$TIME" '1466000000 +0200'
+> >  check_show iso-local "$TIME" '2016-06-15 14:13:20 +0000'
+> >  
+> > -# arbitrary time absurdly far in the future
+> > -FUTURE="5758122296 -0400"
+> > -check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400"
+> > -check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000"
+> > +case "$(test-date show:iso 9999999999)" in
+> > +*2038*)
+> > +	# on this platform, unsigned long is 32-bit, i.e. not large enough
+> > +	;;
+> > +*)
+> > +	# arbitrary time absurdly far in the future
+> > +	FUTURE="5758122296 -0400"
+> > +	check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400"
+> > +	check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000"
+> > +	;;
+> > +esac
+> 
+> It would be nice to wrap this in a prereq, like:
+> 
+>   test_lazy_prereq 64BIT_TIME '
+> 	case "$(test-date show:short 9999999999)" in
+> 	*2038*)
+> 		false
+> 		;;
+> 	*)
+> 		true
+> 		;;
+> 	esac
+>   '
+> 
+>   ...
+>   check_show 64BIT_TIME iso       "$FUTURE" "2152-06-19 18:24:56 -0400"
+>   check_show 64BIT_TIME iso-local "$FUTURE" "2152-06-19 22:24:56 +0000"
+> 
+> The main advantage is that it will number the tests consistently, and
+> give us a "skipped" message (which can remind us to drop the prereq
+> later when everything goes 64-bit).
+> 
+> But it also will do the right thing with test-date's output with respect
+> to "-v" (not that we expect it to produce any output).
+> 
+> You'll need to adjust check_show as I did in my earlier patch.
 
-Ciao,
+Makes sense!
+
+Thanks,
 Dscho
