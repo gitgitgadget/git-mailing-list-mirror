@@ -2,144 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E23B31F744
-	for <e@80x24.org>; Wed, 13 Jul 2016 11:36:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA5862018F
+	for <e@80x24.org>; Wed, 13 Jul 2016 12:52:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750990AbcGMLf4 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 07:35:56 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54691 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750883AbcGMLfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2016 07:35:54 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0M0Kp7-1b7HXF27mX-00ubcB; Wed, 13 Jul 2016 13:35:32
- +0200
-Date:	Wed, 13 Jul 2016 13:35:31 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+	id S1751688AbcGMMt5 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 08:49:57 -0400
+Received: from [129.88.30.17] ([129.88.30.17]:59616 "EHLO mx2.imag.fr"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751149AbcGMMtz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2016 08:49:55 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u6DCmiSO020124
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 13 Jul 2016 14:48:44 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u6DCmjFS021094;
+	Wed, 13 Jul 2016 14:48:45 +0200
+From:	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To:	Jeff King <peff@peff.net>
-cc:	Junio C Hamano <gitster@pobox.com>,
-	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.9.1
-In-Reply-To: <20160712140427.GB613@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1607131329510.6426@virtualbox>
-References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com> <87lh17kgdy.fsf@linux-m68k.org> <20160711235417.GA26163@sigill.intra.peff.net> <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607120927410.6426@virtualbox> <20160712073912.GA26431@sigill.intra.peff.net>
- <alpine.DEB.2.20.1607121257450.6426@virtualbox> <20160712140427.GB613@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Cc:	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	sschuberth@gmail.com
+Subject: Re: [PATCH v3] config: add conditional include
+References: <20160628172641.26381-3-pclouds@gmail.com>
+	<20160712164216.24072-1-pclouds@gmail.com>
+	<vpqa8hmroji.fsf@anie.imag.fr>
+	<20160713072607.GA15153@sigill.intra.peff.net>
+Date:	Wed, 13 Jul 2016 14:48:45 +0200
+In-Reply-To: <20160713072607.GA15153@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 13 Jul 2016 03:26:07 -0400")
+Message-ID: <vpqmvllhff6.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:rass37x/NpmrTEVZZ+7p+P96+htof2MAj/BHFNNRtK9p6IKBX84
- ZiaxF8Y+3+MhAt8o6w5PuTDNcM0WZ1NsPwR/XRW3iGaD1dI5waCBGcRyhhTyUHaIeYrZ96o
- japVVldOdEbkTUJdqg7+tnJ6Pb5JCS5492dezBbHnFx23ZD0aWPeVVaSDMxl93QbraW1FLI
- woYn2hQeds4rn/kKnzl7g==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:iBm9ymo4S10=:7JnnpyASfclizTYM48zWv5
- KrUPErt67hnMmo/YLfFkKYwwFT8liAow8CHrukFFy7J/wjKttludco5hzBvfeF+0nP7PPWNYg
- TvrQpg6Tu91aQ+YOxVCY6DHyuI1RfyHrC6pdiPkYwvrx5XMfxokuQreQl05ljacDmMykINGRv
- tDlf5c9F1X7JJzBr9TPl1Db/1moNVdkeTsU+hLI/AS8gpnJkDWyO3nYM+eRkXPhYVQ7CK+rSS
- DWsmD6zwDmu5h0/s2VtYcET2GyUCnAXA7d3Xj8Aq5RRfKnEE9BFoiTxuF/Ckgf96YIV7Vb/3D
- BMv/fsebfpYMTj+BLzTWqRcrLKG+qnNo2M0vlF5Ak8izPUdf/dbS6/aj7ka7J8Zba0UJd/0Kt
- q5rL1v7rRHF3oCUIcIFIMWeyWMWDi6a3uaY1nH9J/5RS0Ich7vxpteUzeZ2b5f6dbOYVcdwuZ
- j5kWcv429sTBb7Obp9cl90Cp/EwADB9Y2gCtvzuyI6Ei2TAjs1FTBB+Um5dPeHENQ1PqRfQR/
- 9bLmCFnFHWzM60I4teeDJjy/Fj8NyXJPYwtG0Lzrvb/UBVSV5ji+BMnB6c0uxRM68in77pT5U
- CTDVByu7YFmnZCh3nCECoPa1ABaZp+JAjlmK1StfJKuBnKgj6aLl4qmov3s1TMowRChyUVFBd
- pHnrMuNkLA8Z6R7PeYi0iUInpxEsno1TyzFRGB6vRMLk9K1n/8g5xZ6Dfhi/FHVWyum/qbBpz
- 9XeY3uTxFo1hEg0Tqi248S62nB2thE7rvrApUIsDe9jsZBCumUa/ossHjOPBV/3J31suEC8tX
- C6wzuk3
+Content-Type: text/plain
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Wed, 13 Jul 2016 14:48:44 +0200 (CEST)
+X-IMAG-MailScanner-Information:	Please contact MI2S MIM  for more information
+X-MailScanner-ID: u6DCmiSO020124
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check:	1469018929.06272@vssnjYUpLUxPUpBeRLVNIQ
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Peff,
+Jeff King <peff@peff.net> writes:
 
-On Tue, 12 Jul 2016, Jeff King wrote:
+> On Wed, Jul 13, 2016 at 09:21:37AM +0200, Matthieu Moy wrote:
+>
+>> > +static int prepare_include_condition_pattern(struct strbuf *pat)
+>> > +{
+>> > +	int prefix = 0;
+>> > +
+>> > +	/* TODO: maybe support ~user/ too */
+>> > +	if (pat->buf[0] == '~' && is_dir_sep(pat->buf[1])) {
+>> > +		struct strbuf path = STRBUF_INIT;
+>> > +		const char *home = getenv("HOME");
+>> > +
+>> > +		if (!home)
+>> > +			return error(_("$HOME is not defined"));
+>> 
+>> expand_user_path in path.c seems to do the same as you're doing (but
+>> does deal with ~user). Any reason not to use it?
+>
+> I had a similar question, which Duy answered in:
+>
+>   http://article.gmane.org/gmane.comp.version-control.git/298528
+>
+> It does feel pretty hacky, though (especially for a case that seems
+> unlikely to come up: people having wildcard patterns in the name of
+> their home directory).
 
-> On Tue, Jul 12, 2016 at 01:25:20PM +0200, Johannes Schindelin wrote:
-> 
-> > [PATCH] Work around test failures due to timestamps being unsigned long
-> > 
-> > Git's source code refers to timestamps as unsigned longs. On 32-bit
-> > platforms, as well as on Windows, unsigned long is not large enough to
-> > capture dates that are "absurdly far in the future".
-> > 
-> > While we will fix this issue properly by replacing unsigned long ->
-> > time_t, on the maint track we want to be a bit more conservative and
-> > just skip those tests.
-> > 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> 
-> This looks like a reasonable interim fix for both Windows and for the
-> general maint track. If we reliably produce "2038" for the 999... value
-> then that's simpler than adding in magic to ask about sizeof(ulong). I
-> also wondered if we should test forthe _correct_ value, but that would
-> defeat the point of the test (999... is also far in the future).
+Ah, OK. Then I'd suggest at least an improvement in the comment:
 
-This was just a quick fix, intended to allow me to release Git for Windows
-v2.9.1 in a timely manner (which is now delayed for other reasons).
+ 		/*
+-		 * perform literal matching on the prefix part so that
+- 		 * any wildcard character in it can't create side effects.
++		 * perform literal matching on the expanded prefix part
++		 * so that any wildcard character in it (e.g in the
++		 * expansion of ~) can't create side effects.
+ 		 */
 
-I think I can do even better than to inspect the source code whether it
-reliably clamps the dates to PI hours on January 19th, 2038: We already
-have a t/helper/test-date and we can easily teach it one new trick.
+I would also rename the variable prefix -> expanded_prefix. As-is, the
+code is really hard to understand IMHO.
 
-> One minor comment:
-> 
-> > diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-> > index 04ce535..d185640 100755
-> > --- a/t/t0006-date.sh
-> > +++ b/t/t0006-date.sh
-> > @@ -48,10 +48,17 @@ check_show default "$TIME" 'Wed Jun 15 16:13:20 2016 +0200'
-> >  check_show raw "$TIME" '1466000000 +0200'
-> >  check_show iso-local "$TIME" '2016-06-15 14:13:20 +0000'
-> >  
-> > -# arbitrary time absurdly far in the future
-> > -FUTURE="5758122296 -0400"
-> > -check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400"
-> > -check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000"
-> > +case "$(test-date show:iso 9999999999)" in
-> > +*2038*)
-> > +	# on this platform, unsigned long is 32-bit, i.e. not large enough
-> > +	;;
-> > +*)
-> > +	# arbitrary time absurdly far in the future
-> > +	FUTURE="5758122296 -0400"
-> > +	check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400"
-> > +	check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000"
-> > +	;;
-> > +esac
-> 
-> It would be nice to wrap this in a prereq, like:
-> 
->   test_lazy_prereq 64BIT_TIME '
-> 	case "$(test-date show:short 9999999999)" in
-> 	*2038*)
-> 		false
-> 		;;
-> 	*)
-> 		true
-> 		;;
-> 	esac
->   '
-> 
->   ...
->   check_show 64BIT_TIME iso       "$FUTURE" "2152-06-19 18:24:56 -0400"
->   check_show 64BIT_TIME iso-local "$FUTURE" "2152-06-19 22:24:56 +0000"
-> 
-> The main advantage is that it will number the tests consistently, and
-> give us a "skipped" message (which can remind us to drop the prereq
-> later when everything goes 64-bit).
-> 
-> But it also will do the right thing with test-date's output with respect
-> to "-v" (not that we expect it to produce any output).
-> 
-> You'll need to adjust check_show as I did in my earlier patch.
-
-Makes sense!
-
-Thanks,
-Dscho
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
