@@ -2,104 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D0BB2018F
-	for <e@80x24.org>; Wed, 13 Jul 2016 15:07:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 566D52018F
+	for <e@80x24.org>; Wed, 13 Jul 2016 15:21:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751400AbcGMPFr (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 11:05:47 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:34969 "EHLO
-	mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751092AbcGMPFp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2016 11:05:45 -0400
-Received: by mail-it0-f67.google.com with SMTP id f6so3062446ith.2
-        for <git@vger.kernel.org>; Wed, 13 Jul 2016 08:05:09 -0700 (PDT)
+	id S1751486AbcGMPRb (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 11:17:31 -0400
+Received: from mail-it0-f46.google.com ([209.85.214.46]:37246 "EHLO
+	mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751347AbcGMPR0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2016 11:17:26 -0400
+Received: by mail-it0-f46.google.com with SMTP id f6so45978164ith.0
+        for <git@vger.kernel.org>; Wed, 13 Jul 2016 08:17:06 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=rNuTuh815xFtUVihOOAP+TDB9hK2sE9UbtwffRcWyF0=;
-        b=yB++eQ4MbxqQ0NUbKm0n2N/jXl9XZihsm3L5W4+02p/Uk+UAjsJgK5XmaBgDe9EVjA
-         BUyOre3mmKZ8zESjWPfh7H4DSg/kk6YklqsZ7YXKf0aXisqh2EaVDSpEBAcCdnYG7aWa
-         AHqrJyohiavYt1IEvoUtJEmszDWsR4R7Lfk6P2/W//0WVoTf379a67dg0J1WiWEnX8sN
-         kwcyVZcbN0qJ2Mv2bIl+BaCVlKuC0xhAll/d2XCtfdPkkUUL3cKqfkexWtmAVOYWt84N
-         y5mni7F7Efo0DHidGAMP/mDzzXp8qHakG5cxYMVV8fxeqD/qWvdmKgNE/BU2dmfWsqVf
-         IVfw==
+         :cc;
+        bh=HQqnuPdcFpU8kA93MtbIcHLUIL4uzQ1vSpE7PcupCBs=;
+        b=c7nr8cl9D79kuTYopJ/OkzEKa/EmZhOvc2OcXbrDnupp7/K7cL2m820K4u3NSXtsD0
+         U6HQGqJNKBr6RuUdC+Vs5dxCTYzjMWZAUgHAQPE8myGKiyeykujNxolmWgqSDBADnGnd
+         80hfPLy7BekwzxlJ05vnBf/1WN3YqwRARSFaLJVBA2U63bJVTTGgaiI+YvmwylGo9rZa
+         O6pixU3unk40TzN0S/vpHo4EkVxOdgNhgysyTJsflX7B3aa2d/CZlO0Qgl0Rbyem+Yoc
+         IoYvuhHvwAGdNRvD7UZ6IFwnHlLqM9C09NzYlQQtJ8rjllZX8H7tAR93/2J9yRjj7RKS
+         JGnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rNuTuh815xFtUVihOOAP+TDB9hK2sE9UbtwffRcWyF0=;
-        b=hMwOvh3M2v12OQdR0g3bbJGgc3Iujuvyqq/cybGv7H5V/8Kj5sETYzOLyS7NKq0XGx
-         vVHyAHaKhx22WbOifCYpBf90fTnZDHEiQklbkQLrl3WJlDQjS4+JlnsWGAFsqfiKi2PM
-         x/nuf4C7CJZ1lsEHmLjaZb+KW/ik8BW7UBl9JeCJEYuGnu6TeJ4U3tuxSAsABkoo55ig
-         hwJ/Od206Mau+Eg0+8m5Xb0JvLwlAnTmHaoLJy6rCynSdLRJne4dj3AY5p+WtrPDt94H
-         hmxKoch1vv4Q5jG27O2T5iq7Na4n8CMivbxTXQUxc1IG2mnfokUbuXf47h2Yeb2MAqna
-         N5XQ==
-X-Gm-Message-State: ALyK8tIjFtXCOmEXiZy3S6ZRx+nTJOxW7EU73COW9BXOhdgaFIVSrdE3VWx0BSCYW4xWwAWEqk1Q2/8OFWntAA==
-X-Received: by 10.36.123.199 with SMTP id q190mr9733762itc.42.1468422292211;
- Wed, 13 Jul 2016 08:04:52 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=HQqnuPdcFpU8kA93MtbIcHLUIL4uzQ1vSpE7PcupCBs=;
+        b=K7yYfdJdMFh0rT0nOypxta/LqVcTFbewhkeNkRBijq4kZ4rFArRgjb+DmfoR3+39BO
+         fyB0dno4lb+CPVd/4UcM6p0hM8hwO/ClqkfrZFapznPtXnpU2saPlFxJ51qAOfVAc+dF
+         iDYkJuEEhRsX2L36uXqUygKKWSHa8mXFwDWr1hCAvoWAcmOhO9vYQd5YYl6P2lqx+g1M
+         tJAWcCbX96v1d9lIOTyMw4G7C6TFjYP+zCP02XL7R+JqVRq4ZedV8rcwhBpSlpn7S9cS
+         L4jvPvH0SyPIeSxulGsWeWtufKf87yGzL4ptqetatf5MnzhRTE0ai7rN9UagStWqOlXr
+         9+7g==
+X-Gm-Message-State: ALyK8tJCXlEU2St/eQhrPtUCtVzQdsNnrRby3wokt7EkEfcBRTDz5xCTnGASrnGCiDgJNyFHoeG0NJ2BoPjO1A==
+X-Received: by 10.36.208.71 with SMTP id m68mr9835785itg.63.1468423015110;
+ Wed, 13 Jul 2016 08:16:55 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Wed, 13 Jul 2016 08:04:22 -0700 (PDT)
-In-Reply-To: <xmqq1t2y4mjy.fsf@gitster.mtv.corp.google.com>
-References: <20160706184829.31825-1-pclouds@gmail.com> <20160709052356.30570-1-pclouds@gmail.com>
- <20160709052356.30570-2-pclouds@gmail.com> <xmqq1t2y4mjy.fsf@gitster.mtv.corp.google.com>
+Received: by 10.64.225.235 with HTTP; Wed, 13 Jul 2016 08:16:25 -0700 (PDT)
+In-Reply-To: <CAP8UFD2pes3MD9FNBtvLYS5785aJoGPz00Fj+fHjy03j0aKjFg@mail.gmail.com>
+References: <20160711172254.13439-1-chriscool@tuxfamily.org>
+ <20160711172254.13439-9-chriscool@tuxfamily.org> <CACsJy8BqMFASHf5kJgUh+bd7XG98CafNydE964VJyPXz-emEvA@mail.gmail.com>
+ <CAP8UFD01MiMnz6qNGYa9WEjZ_EOy-hBqO4gGKGyxUc71aOyp4w@mail.gmail.com>
+ <CACsJy8CEimmc=W=bNcLw+TP0tGRPCL5rr3uNeFMJ=Ms9HkyABw@mail.gmail.com> <CAP8UFD2pes3MD9FNBtvLYS5785aJoGPz00Fj+fHjy03j0aKjFg@mail.gmail.com>
 From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Wed, 13 Jul 2016 17:04:22 +0200
-Message-ID: <CACsJy8B6faU6kaqSpNRZRxkrvM=W29acXkqVBdGq4gaqaDJRRA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] test-lib.sh: introduce and use $_EMPTY_TREE
-To:	Junio C Hamano <gitster@pobox.com>
+Date:	Wed, 13 Jul 2016 17:16:25 +0200
+Message-ID: <CACsJy8DHd44MnFUkJwh9n0JK5J5P6kER0kgopX0UrS=ROo_URQ@mail.gmail.com>
+Subject: Re: [RFC/PATCH 8/8] read-cache: unlink old sharedindex files
+To:	Christian Couder <christian.couder@gmail.com>
 Cc:	Git Mailing List <git@vger.kernel.org>,
-	Yuri Kanivetsky <yuri.kanivetsky@gmail.com>
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 12, 2016 at 10:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+On Tue, Jul 12, 2016 at 9:45 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Tue, Jul 12, 2016 at 5:12 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>>
+>> No. People could create an index file anywhere in theory. So you don't
+>> know how many index files there are.
 >
->> This is a special SHA1. Let's keep it at one place, easier to replace
->> later when the hash change comes, easier to recognize. Start with an
->> underscore to reduce the chances somebody may override it without
->> realizing it's predefined.
->>
->> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
->> ---
->>  t/t0000-basic.sh                |  2 +-
->>  t/t1100-commit-tree-options.sh  |  2 +-
->>  t/t4010-diff-pathspec.sh        |  6 ++----
->>  t/t4054-diff-bogus-tree.sh      | 10 ++++------
->>  t/t5504-fetch-receive-strict.sh |  4 ++--
->>  t/test-lib.sh                   |  4 +++-
->>  6 files changed, 13 insertions(+), 15 deletions(-)
->>
->> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
->> index 60811a3..48214e9 100755
->> --- a/t/t0000-basic.sh
->> +++ b/t/t0000-basic.sh
->> @@ -834,7 +834,7 @@ test_expect_success 'git write-tree should be able to write an empty tree' '
->>  '
->>
->>  test_expect_success 'validate object ID of a known tree' '
->> -     test "$tree" = 4b825dc642cb6eb9a060e54bf8d69288fbee4904
->> +     test "$tree" = $_EMPTY_TREE
->>  '
+> Maybe when an index file is created, its path and its sharedindex file
+> could be appended into a log file.
+> We could check this log file to see if we can remove sharedindex files.
+> We would need to remove the entries in this log file for the indexes
+> that are no longer there.
 >
-> I doubt the point of, and I'd rather not to see, the leading
-> underscore.  Are there existing uses of the name that want it to
-> mean something different?
+> Or instead of one log file we could have a file for each index file in
+> a special directory called for example "indexinfo".
+> So we could just delete the file if its related index is no longer there.
 
-No. There is EMPTY_TREE in use, but it's exactly what we expect. It's
-probably still a good idea to separate "global" variables from
-per-file ones. But I don't feel strongly about this, so if a re-roll
-is required (or somebody votes for underscore removal, including you),
-I'll remove the underscore.
+New files will require locking so people don't append at the same
+time. And maybe another new host of problems. I think we can just go
+with the garbage collection way that we have done for unreachable
+objects.
+
+Your indexinfo idea looks very close to multiple locking, an index
+would lock the shared index it's linked to, preventing it from being
+removed. For single locking, we can just create a file named $X.lock,
+but for multiple locks, maybe we can go with
+$X.lock-$index_trailing_sha1. Will it work? I don't know. Just
+thinking out loud.
+
+>> It really depends. If the shared part is too small for old indexes, we
+>> might as well unsplit them. In practice though, the only long-term
+>> index file is $GIT_DIR/index. If we don't delete old shared index
+>> files too close to their creation time, temp index files will go away.
+>
+> We could treat $GIT_DIR/index specially so that if there are no temp
+> index files, there should be nothing in "indexinfo".
+
+No, temp index files are needed. And it will  be hard to treat
+$GIT_DIR/index specially because updating it involves a temp index:
+you first prepare a new index in $GIT_DIR/index.lock. If everything
+goes well, you atomically rename it to $GIT_DIR/index. You may be able
+to treat $GIT_DIR/index.lock special too, but that's starting to get
+out of hand.
 -- 
 Duy
