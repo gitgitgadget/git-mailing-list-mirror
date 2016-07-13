@@ -7,68 +7,103 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 544A11F744
-	for <e@80x24.org>; Wed, 13 Jul 2016 08:01:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E5AC1F744
+	for <e@80x24.org>; Wed, 13 Jul 2016 08:22:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751410AbcGMIBp (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 04:01:45 -0400
-Received: from mout.gmx.net ([212.227.17.21]:60699 "EHLO mout.gmx.net"
+	id S1752714AbcGMIVX (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 04:21:23 -0400
+Received: from mout.gmx.net ([212.227.15.19]:52574 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750883AbcGMIBn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2016 04:01:43 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0LnPnu-1atwkl2ZCw-00hdJY; Wed, 13 Jul 2016 10:01:01
+	id S1752713AbcGMIVM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2016 04:21:12 -0400
+Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MLfLH-1bNWWf1ngR-000qdJ; Wed, 13 Jul 2016 10:20:50
  +0200
-Date:	Wed, 13 Jul 2016 10:00:59 +0200 (CEST)
+Date:	Wed, 13 Jul 2016 10:20:43 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Jeff Hostetler <git@jeffhostetler.com>
-cc:	Jeff King <peff@peff.net>, Jeff Hostetler <jeffhost@microsoft.com>,
-	git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] Add very verbose porcelain output to status
-In-Reply-To: <5785170E.9070000@jeffhostetler.com>
-Message-ID: <alpine.DEB.2.20.1607130958130.6426@virtualbox>
-References: <1467919588-11930-1-git-send-email-jeffhost@microsoft.com> <20160712150749.GD613@sigill.intra.peff.net> <5785170E.9070000@jeffhostetler.com>
+To:	Duy Nguyen <pclouds@gmail.com>
+cc:	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: gc and repack ignore .git/*HEAD when checking reachability
+In-Reply-To: <CACsJy8BfXSvKM3=rRCDYzR=rpLRi+FBYs4r1WGXFisq0Esk00w@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1607131004410.6426@virtualbox>
+References: <alpine.DEB.2.20.1607090928500.6426@virtualbox> <20160709140931.GA3185@x> <CACsJy8A6fiPUtNZow_oOEQSi64GMxA2Jy84h4OznaSxBMePtbQ@mail.gmail.com> <alpine.DEB.2.20.1607101255300.6426@virtualbox> <CACsJy8BWKrXqXnbEgSKJ9gKcAyvdZhExfgh5zBRisX8R3BkBLw@mail.gmail.com>
+ <alpine.DEB.2.20.1607101602320.6426@virtualbox> <xmqqinwc9fe2.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607121243470.6426@virtualbox> <20160712152646.GF613@sigill.intra.peff.net> <CACsJy8C+NEP1HJq8w1frOy=UOv5-SA+b7MkbX8DE_vU-zjX0XQ@mail.gmail.com>
+ <20160712155141.GA5967@sigill.intra.peff.net> <CACsJy8BfXSvKM3=rRCDYzR=rpLRi+FBYs4r1WGXFisq0Esk00w@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:nUKO0sRaKV23zHgtXEFGHOwiGbOFDn6ow8rTw7SSvFjrlLCit29
- Vf5UkVwIrCFBtZbIFCMy5MOzKi0T80kxgWB2wNhFMQFTWZH+jo8+sQUHkqrKYTSGaS1PYjY
- NFvUyVvtxul6QnDdwGQUhpvnYVhIz7O5ZD1bJjq5t0UT2dCK00lk10sfiMiJbxnpLa0ChqP
- EmeQOmv6lE2MwBw1u+olA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:Wrq3FNkb0mk=:WsdX7woXzkYY2AtTUTv4zv
- Apu6U7Sm5wgVPLge0BCkj2ZX0hu0/gtwVw3rpnz9SZ8aFLC0JTKSUS4qPeT1n8Pn32CmdwQrC
- nBzC9bvl9HsdWgVl2nnFAWq/iEzpjUk58ZvN1rmHe4YE/T+eMgV1IYl4sqaxPNeSs4DBy/ipE
- XSheHwBsqtdXF9oxpZd6jBuvqGeFyGevw1O0Tp8s7nPUIu24r6LnmzoJFBdUHkdJswpzbq78o
- umS2Y2qpWqkv74vpP+RPczfsCZAW6voz03EDm88ZOdPl1IKFc7CN6crO0wceWiJmXNSWDAxtR
- ubF5hnT7njB+pI2FA8nMZtRXMe66/elgsl/e8Gjrr4WWUdg/Ftr6RAWA2vRhBUUc5PUGWyG4R
- i818RFJRmjcI37qMzDvbt+TlJ7dAUPmn0azzBK0wWpgXO9m0UavJqQPMeGjUiXNKlFCpVBnRA
- q/ieqdDSC0+RV2M/2gorMwGiUddR1fYaceKs2vLS/Yb5ODO4hEdRTjZ0r24nOEFhMtMgEHDNJ
- ESO7JjxVcaXMy1RDZ+lkf6kfsTH7Gh1barxfGByegLreXN+ZAvcYzmaA6lRIM2bwIFGvOxcLE
- LcJ7Mxt1aaWRpgmDXO4g0H8omxg5e5r0TeHCvxXUllcHsLSigGdtPNVJCU+Y9/NldhoXScWPy
- kWZw+Ng8YCebGOWSaKV+9e/9HWvXgBB5SLhbxUYpuu8omH7Wx4N9+1fZoNWtHT5wwUsh1O1ym
- LuNEFr9Uz+0LBRPTUav7FpYQ4GGFAGBHFbbQrRN0sc7Yfc1gITdHFjBT/4ML8kMqISz/pBsVz
- 10q2xL8
+X-Provags-ID: V03:K0:uqHcn5NqE+8FTojokn72OyFt5MrmREVQ/aSJhSHLWe+pSNATu3i
+ +z4iXijvxTzY/XBzU/YoJBwR2LYKJAxgmCcinqDj9J8CxK2k06TVEawrCwJMkG26TI68BV+
+ rQC/OEYKpBpPtC1eYUkKh6L6SB3xXWGBpJJtKc1CAAPNaeCJzWrfzQhJbSQcj3bfNFayFSK
+ XAqZXROx75srOUOPW3J2g==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:rd/UGh19nnE=:xbb4j/VBqOvOvjm4VreDUR
+ u8p2Q4pdnuDl2A/r/lJRyKu8J7OpDL1ugAWsH1Oq7jzcNOt/cKPLzXBpR5+XahBBTOvhYT2xW
+ GLRmvBevSexd4+7S+PG+I7t+/X/DU0o5rqNUP7DW7XyzO+h4JX9XavzNzvXtZUhSlibCcRm+v
+ IeoSUgjiLxC7bxSCphGScahOUtS3jwVUGerPbFTCgk0sp1ambvHgUYyne+LEycNZB8l7FZUjq
+ RArO3uXyRmm6Kkpz7mUs0kC7aG+T8mKsOOsX+IzvbmIsP/kjkCa+vIe6yLPzpO+r4m5omNwgC
+ qw9JTphQLopwNFBa8EhCumesXQZIOSgPmtO7uIsDTtKxTti2Tu8uiPkJdACtdtGP0jXgqIWzh
+ ic9bLSB78Nv4IEi6krAEuSRBHTEjs4dzqncCjmW9ztDRuxg2c6C0reKbG4TdTugO8p3jBjN8S
+ HilQNA8VdmbYXEty8fAOGOiNrqq1E9YRmgVG5EBpBooGcTT0DkwZVYaeDJzwpU7FfN9TYfmWD
+ ExEUAZ23LjYgxHLfg02OEFRtxXdDECEC6wuhPnwFJE4FbGUMR+D6LvmVbekk3W0a4wx1GkD2W
+ c0ypsSadQgI+CVfcfqykbpD2NtLysvrmzm6VQCLUdeXzglFLxmkILtYtCSv72uOJixPpfwoAv
+ WYr0fAVyoQtnzeoe/zHhJj62QBJRcoX2cWjmEavp2vQEJLzZqWrb+guPIvwjUrCKJ7i8FSfB0
+ lnJJ2w/jS9+Uqo4SeUIwaYTuskWYONjvgFKi4Ptew+Gdfv1zkB6JlncPyIfxyidWjl27k92zD
+ lkgo7R7
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Jeff,
+Hi Duy,
 
-[please note that top-posting is discouraged on this mailing list]
+On Tue, 12 Jul 2016, Duy Nguyen wrote:
 
-On Tue, 12 Jul 2016, Jeff Hostetler wrote:
+> On Tue, Jul 12, 2016 at 5:51 PM, Jeff King <peff@peff.net> wrote:
+> > On Tue, Jul 12, 2016 at 05:46:12PM +0200, Duy Nguyen wrote:
+> >
+> >> I'm not opposed to letting one worktree see everything, but this move
+> >> makes it harder to write new scripts (or new builtin commands, even)
+> >> that works with both single and multiple worktrees because you refer
+> >> to one ref (in current worktree perspective) differently. If we kill
+> >> of the main worktree (i.e. git init always creates a linked worktree)
+> >> then it's less of a problem, but still a nuisance to write
+> >> refs/worktree/$CURRENT/<something> everywhere.
+> >
+> > True. I gave a suggestion for the reading side, but the writing side
+> > would still remain tedious.
+> >
+> > I wonder if, in a worktree, we could simply convert requests to read or
+> > write names that do not begin with "refs/" as "refs/worktree/$CURRENT/"?
+> > That makes it a read/write-time alias conversion, but the actual storage
+> > is just vanilla (so the ref storage doesn't need to care, and
+> > reachability just works).
+> 
+> A conversion like that is already happening, but it works at
+> git_path() level instead and maps anything outside refs/ to
+> worktrees/$CURRENT.
 
-> Thanks for the feedback.  I like the overall direction of your
-> suggestions.  Going for a porcelain V2 feels better than piling
-> onto verbose.  I think that would also give us a little more license
-> to address some of the line format issues that you point out.
-> Let me retool what I have along these lines and see how it looks.
+Wouldn't you agree that the entire discussion goes into a direction that
+reveals that it might simply be a better idea to require commands that want
+to have per-worktree refs to do that explicitly?
 
-Thank you for working on this. I will hold off from releasing Git for
-Windows v2.9.1 until this is sorted out, as I already merged v1 into our
-`master` and do not want to end up with a bogus release.
+I mean, it looks to me that the harder we try to avoid that, the more
+problems crop up, some of that as serious as my reported data loss.
+
+I do not see any indication that trying even harder to "protect" commands
+from knowing that they are running in one of many worktrees is making
+things easier. To the contrary, I expect that direction to hold many more
+awful surprises for us.
+
+The same holds true for the config, BTW. I really have no love for the
+idea to make the config per-worktree. It just holds too many nasty
+opportunities for violate the Law of Least Surprises.
+
+Just to name one: imagine you check out a different branch in worktree A,
+then switch worktree B to the branch that A had, and all of a sudden you
+may end up with a different upstream!
 
 Ciao,
 Dscho
