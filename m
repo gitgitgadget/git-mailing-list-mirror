@@ -2,121 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12C272018F
-	for <e@80x24.org>; Wed, 13 Jul 2016 15:30:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05D332018F
+	for <e@80x24.org>; Wed, 13 Jul 2016 15:45:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751623AbcGMP1w (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 11:27:52 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:60884 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751580AbcGMP1r (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2016 11:27:47 -0400
-X-AuditID: 12074411-a53ff70000004911-f6-57865dbc2b86
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id E1.76.18705.CBD56875; Wed, 13 Jul 2016 11:26:53 -0400 (EDT)
-Received: from [192.168.43.172] ([89.204.154.160])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u6DFQbdM020511
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 13 Jul 2016 11:26:41 -0400
-Subject: Re: [PATCH 00/38] Virtualization of the refs API
-To:	Duy Nguyen <pclouds@gmail.com>
-References: <cover.1464983301.git.mhagger@alum.mit.edu>
- <CACsJy8CNJfQxnn94b=+mjfPVvNzJu3sD3w_g8yCUHY0UQCbfLQ@mail.gmail.com>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-From:	Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <6c123315-ba5c-ac15-8314-b6a71c325d9f@alum.mit.edu>
-Date:	Wed, 13 Jul 2016 17:26:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.1.0
+	id S1751275AbcGMPo0 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 11:44:26 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:33488 "EHLO
+	mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750852AbcGMPoY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2016 11:44:24 -0400
+Received: by mail-lf0-f67.google.com with SMTP id f93so3977848lfi.0
+        for <git@vger.kernel.org>; Wed, 13 Jul 2016 08:44:22 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=GgTbg+suWSUpNHUyQy8b0qaAVBYcMaZQ6KAd/yJuT9I=;
+        b=UomNc165/H5Cdju6+6SLF3Tr/nTcC6W/e2gJUW+/lhPHNRFS++02bKv/z/lbzXF2Jl
+         CFgWTE8COZx64RyREP8g+fp/qFMAcgEiOa1vW2yGUyH2RuqwO6vka3qeLz72qXZr+2aF
+         uyQUbF9J9Mxz7MqjLHgOI+em8ri/C218xZPTf/6Pz998a7e1s4ZK9tNVvQ5D7NiHUJlU
+         RwyLVqo7kIgVK3KofM48scscYo95H8ihsrumMdV3C0V4ChWionOnIm+1h8U+eXoSyM9M
+         OsMff7Ai2MXEajgdIcQk2bZrPJDmUqRr0vEEYZkE5FmRO2PgfNztV2oSx4O8WTGYDpDu
+         CBsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=GgTbg+suWSUpNHUyQy8b0qaAVBYcMaZQ6KAd/yJuT9I=;
+        b=RUljAEu5y+w16ZHDJsVwDCeQs3s13T+4ingt6TbLG3Gb1nAlU4hs/a74FlAouhJhY6
+         81SG7b14T4fTanaXA90wXSV9ZSsTygBpzCOR8e3KWl8ViEBsYICaQE8i3+jt/oLFJZyo
+         uIt5+76wBMLBOvov+0d14K/WqTqzPmNOgMb1zK45jl5UYH8QH+FrboFCkAHt7VjaujGr
+         M6AjzbPiMVMZgMmLsu70fmXlYp+TkWM/XgadRfS8dIPgxjquWrLUbolY2VXNiP5GbRow
+         DNs5HGJoGdo/79JRXHmys6e7iUkxpPXVTZVLRIv25A1NI/tsuOKmTAYG/073hidqbrWr
+         wZKA==
+X-Gm-Message-State: ALyK8tIjkp1ASaDhWJwy93nsMTMpalw+tC0sZWXK6nx6Mig+bzatSYdxAAcphATcnmPKDA==
+X-Received: by 10.25.148.136 with SMTP id w130mr4368718lfd.2.1468424656745;
+        Wed, 13 Jul 2016 08:44:16 -0700 (PDT)
+Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
+        by smtp.gmail.com with ESMTPSA id 90sm2575484lfw.30.2016.07.13.08.44.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 13 Jul 2016 08:44:15 -0700 (PDT)
+From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To:	git@vger.kernel.org
+Cc:	Junio C Hamano <gitster@pobox.com>, michelbach94@gmail.com,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 4/7] index-pack: report correct bad object offsets even if they are large
+Date:	Wed, 13 Jul 2016 17:44:01 +0200
+Message-Id: <20160713154404.22909-5-pclouds@gmail.com>
+X-Mailer: git-send-email 2.9.1.564.gb2f7278
+In-Reply-To: <20160713154404.22909-1-pclouds@gmail.com>
+References: <20160705170558.10906-1-pclouds@gmail.com>
+ <20160713154404.22909-1-pclouds@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8CNJfQxnn94b=+mjfPVvNzJu3sD3w_g8yCUHY0UQCbfLQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrOKsWRmVeSWpSXmKPExsUixO6iqLs3ti3c4M1yAYv5m04wWnRd6Way
-	aOi9wmzRPeUto8WPlh5mi5lXrS3OvGlkdGD32DnrLrvHs949jB4XLyl77F+6jc1j8QMvjwXP
-	77N7fN4kF8AexW2TlFhSFpyZnqdvl8Cd8fBgH0vBHrGKKYdesjYwLhLqYuTkkBAwkdj6ZB1b
-	FyMXh5DAVkaJY7//QjmbmCTWtHxmBakSFrCU+HBoGzuILSKgJPGmYxtzFyMHUFGdxNNZ2iD1
-	zALdTBInT7SxgdSwCehKLOppZgKxeQXsJbY/nQoWZxFQlbi0oAVsjqhAiMS2mw1sEDWCEidn
-	PmEBsTkFAiWev/jJDGIzC6hL/Jl3CcqWl2jeOpt5AiP/LCQts5CUzUJStoCReRWjXGJOaa5u
-	bmJmTnFqsm5xcmJeXmqRrqlebmaJXmpK6SZGSMAL7mCccVLuEKMAB6MSDy+DSGu4EGtiWXFl
-	7iFGSQ4mJVHezrlAIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8M2LawoV4UxIrq1KL8mFS0hws
-	SuK8fEvU/YQE0hNLUrNTUwtSi2CyMhwcShK8niCNgkWp6akVaZk5JQhpJg5OkOFcUiLFqXkp
-	qUWJpSUZ8aCYjC8GRiVIigdo77tokL3FBYm5QFGI1lOMuhx/Nky+wiTEkpeflyolzhsJskMA
-	pCijNA9uBSy9vWIUB/pYmLcRpIoHmBrhJr0CWsIEtKTWoRlkSUkiQkqqgTH+gZ+UqpLYxI8m
-	ibu0TTdP1PMIMj595mR8u+rNWIdIR64vcz4/NTpx4215tNcj/eBj6ffbou+9SMmcElf86aQ5
-	/9arr54f4vu1MPno32kLlqra256qM3KZyeBQGzH1AMPqksBEFzaFj213ek8VS689/+fGt+iT
-	v5NyvFZwP+D5zrR1ZaDYtb1KLMUZiYZazEXFiQAnnCa7SgMAAA==
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 07/10/2016 05:09 PM, Duy Nguyen wrote:
-> On Fri, Jun 3, 2016 at 11:03 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> Since the that ref-iterator [1] changes seem to have gotten a positive
->> reception, let's try to keep up the momentum. I hope I'm not
->> overloading the review pipeline...
->>
->> I think all of the groundwork is in place now to virtualize the refs
->> API. This will open the way to storing refs in ways other than the
->> familiar loose refs / packed refs format, such as David Turner's
->> proposed LMDB-based storage [2].
->>
->> This is a long patch series, but most of the patches are pretty simple
->> and formulaic. The goal is to implement a `ref_store`. In the language
->> of object-oriented programming, `ref_store` is an abstract base class
->> representing a reference storage backend. It provides methods to read,
->> write, and delete references and symrefs, and to iterate over
->> references, reflogs, and reflog entries, plus a number of other
->> things—19 methods in all.
-> 
-> I probably don't know what I'm talking about because I don't follow
-> your work closely enough. Please ignore if this is nonsense. But if we
-> extend/change API, we might need to update git-for-each-ref too, to
-> expose it to shell scripts and external commands. I guess for
-> iteration there's nothing else more needed, but we may need to
-> introduction new options for the storage thing, e.g. to select
-> storage...
+Use the right type for offsets in this case, off_t, which makes a
+difference on 32-bit systems with large file support, and change
+formatting code accordingly.
 
-This patch series doesn't change the external API in any significant
-way. It only wraps it up on a virtualization layer so that a different
-reference storage backends can be plugged in.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/index-pack.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-So as long as people are using plumbing commands to work with references
-(rather than reading/writing files under $GIT_DIR directly), they should
-notice no difference.
-
-There are only two exceptions that I know of:
-
-1. Users will need to be able to request that a repository use a
-non-default reference backend, and (less importantly) inquire about
-which reference backend a particular repository is using. Those
-facilities will be added when the first non-files reference backend is
-added.
-
-2. At least one command (`git pack-refs`) is particular to the files
-backend, and won't be needed (at least not in its current form) for
-other backends. Conversely, it is conceivable that future reference
-backends will require their own "maintenance" commands. Such commands
-would be added as they are needed.
-
-If there were operations that other reference backends could do much
-more efficiently than the files backend (like, hypothetically, return
-all references matching a regular expression without having to iterate
-through all references), then it might make sense for performance
-reasons to provide commands to access that functionality. But at the
-moment I don't know of any such cases.
-
-Michael
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index cafaab7..e2d8ae4 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -338,10 +338,10 @@ static void parse_pack_header(void)
+ 	use(sizeof(struct pack_header));
+ }
+ 
+-static NORETURN void bad_object(unsigned long offset, const char *format,
++static NORETURN void bad_object(off_t offset, const char *format,
+ 		       ...) __attribute__((format (printf, 2, 3)));
+ 
+-static NORETURN void bad_object(unsigned long offset, const char *format, ...)
++static NORETURN void bad_object(off_t offset, const char *format, ...)
+ {
+ 	va_list params;
+ 	char buf[1024];
+@@ -349,7 +349,8 @@ static NORETURN void bad_object(unsigned long offset, const char *format, ...)
+ 	va_start(params, format);
+ 	vsnprintf(buf, sizeof(buf), format, params);
+ 	va_end(params);
+-	die(_("pack has bad object at offset %lu: %s"), offset, buf);
++	die(_("pack has bad object at offset %"PRIuMAX": %s"),
++	    (uintmax_t)offset, buf);
+ }
+ 
+ static inline struct thread_local *get_thread_data(void)
+-- 
+2.9.1.564.gb2f7278
 
