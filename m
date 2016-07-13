@@ -2,110 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F99C2018F
-	for <e@80x24.org>; Wed, 13 Jul 2016 18:55:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F9522018F
+	for <e@80x24.org>; Wed, 13 Jul 2016 18:57:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751521AbcGMSy0 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 14:54:26 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56451 "EHLO mout.gmx.net"
+	id S1752529AbcGMS4o (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 14:56:44 -0400
+Received: from mout.web.de ([212.227.17.12]:63941 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751212AbcGMSyZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2016 14:54:25 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LraSn-1bFw9829aX-013L2h; Wed, 13 Jul 2016 20:53:47
- +0200
-Date:	Wed, 13 Jul 2016 20:53:46 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	Jeff King <peff@peff.net>, Andreas Schwab <schwab@linux-m68k.org>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: [ANNOUNCE] Git v2.9.1
-In-Reply-To: <xmqqd1mh34eh.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607132052520.6426@virtualbox>
-References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com> <87lh17kgdy.fsf@linux-m68k.org> <20160711235417.GA26163@sigill.intra.peff.net> <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607120927410.6426@virtualbox> <xmqqpoqj6i3d.fsf@gitster.mtv.corp.google.com>
- <20160712151630.GE613@sigill.intra.peff.net> <CAPc5daWcb5bfgsxMP0vCrQ7gBdeYBgefzPNHztaaCKzqbCv2aQ@mail.gmail.com> <20160712153520.GG613@sigill.intra.peff.net> <xmqqlh167tjd.fsf@gitster.mtv.corp.google.com> <20160712160921.GA2965@sigill.intra.peff.net>
- <xmqq60sa7rj2.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607131600110.6426@virtualbox> <xmqqd1mh34eh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1751302AbcGMS4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2016 14:56:43 -0400
+Received: from [192.168.0.100] ([138.246.2.138]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0LqUbl-1aslTJ3kSf-00e5dg for <git@vger.kernel.org>;
+ Wed, 13 Jul 2016 20:56:20 +0200
+To:	git@vger.kernel.org
+From:	Bergi <a.d.bergi@web.de>
+Subject: [feature request] Warn about or prevent --amend commits that don't
+ change anything
+Message-ID: <d2c3365d-6da9-dd58-ae7d-4a2020c6b513@web.de>
+Date:	Wed, 13 Jul 2016 20:56:22 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:dlk7exdt/Lmbtfjlcgkw3llkEmnQX49GXV6Mc6HDn2JYBnoAIlu
- JRDZbq17rgx0+UfrIiQKDtdY/QoYI7kSK8DXmI1QDFJq7ASu9vjN7vM8SQQucU0k61lfTUe
- /6GP6FrcULvQgtG70vo1RHCKic1dosjkXBR3g0Tz4qu6NEEQEXIN2nqgyY15bJIbxoYYHGC
- QCMpYTHzC1nt5UY3tcWbQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:MK0nYU5iwzM=:kme8EnAk8Z1RyRWNGhFETR
- 0RzHwklGqkFNQfvVjSkgB22aSpGxAGMH+ztvDAlNndc2s/I7XTSRsclVPF9j/noNrSmAWjUg1
- /jPeVd6adLyJ2mR/Agh2YMroOFPfOpC93HZyisOVnVjHkUWe/mWMaRo2U0t6vG/WSJkXC4SaO
- 6DxGYTOyGgeDCU2EbmRNnuhv5UuEW9Mo49fSTVt0eclun3vBu0rLOhsi/KOpfWe76/Ob/hrkU
- UriF57e3vtSUHY/Q44Wkltto6PHhvXajWIHaSPY2si+SoqHNy7I5m+CM8FfK5wGkAywA0DzNg
- wRnqGIgWz7TV5uo4GXZF3U0sy6mCfrkAKNC+Zlyvhqva/9MJiJlZzBVX3aHLyipKWTJWEE9Yo
- AuoDYFOKhpx9k2cKC1YMZSiesO9SB1uvQopoDVe468URcwUNoAAfIHINhSkKHgN0vKA8aVFnf
- LXJRQDbPSx3YuYlXWVE0w6+13FrFfyq7F7IytF0HlMZn4fhL6vhYNROSOxDjKjfN0ErObwJDY
- 67RjRSF5emkEzS7llfOnEccHH9xx7arPXYvkTrMuJ71X+9454f4IzbI3uX6V0g2fbldzhDe02
- 0ia6Ry0tYrH1Tmpx8+cFLCWJjNoc2r8hSOu1Ns3pelxR1guy98m+OuJKpXHUNUqmTlUzEfXcs
- K9VyeawXbpj5IHrYqNJRoqQFNk3WJuUqmCtGr6lHMiOsgX1wMWcTVHwt7ioUN+BGeGEkV4w9U
- IcHS0z5Y0I5NSfabct+S9pTSB+gfxuuJlaFdlJe4Sr53iaL3kEkT8fDLcDLygmqoGNmU4FmcK
- remoxgN
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:0anhikGfeKNpE0UuFXn6vrXKui2IlljrfsgHorZHTARhGAYZJGD
+ F3k2oG50frEOCcIERgTyoW6K1H4w10vem9wmwH4Hon96FJMewUYMMt77ryzMz37aRyiL7Lb
+ QeGD2FiC9mfdFyAgiEYn1bpQAcVn9VoPE+U3YkrwUnxWjZS9rtDk9pMzB2jT8tjLYTtyzwZ
+ mIb38VQSXs+Dc3nR8ydkg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:chxXqb2RLXs=:VQYGv57YlLzt03OCzd/M4q
+ RmG9OMO0agGQP2j5Td9a2uVEQ9KfEZno59dgzGQYaJi8v65V6gvRAJQPS/Oq+KJZWvvxK/p7g
+ X20+pVZyMgrg8hgRAyhkrO3iPco9Pu1On4yWzwi1X9++M3CsN4B65R4YjtEYvtzQXsbZUYPGF
+ z+uzW0T1ntWxATuxwEYh6PJbn+nSSGPjKy1Ger6CGqBvYYBPYvVoBG8m7vWNTgxZVjQWEwJFk
+ FteH3tvRDoSnCBtOjs/GiKbwuoa66m8nEBlJfTezGXbHh9uGyBd7h3myJsjf5my3wrH42GdOD
+ AsQ5Z6CRjjIx057TNO6ChGqk22DdX5mF5c0/Sac5z615krdzklTL+YSY/Z1qTGjm1epNDhL5J
+ wKAK5CWdpoE3aCHC/Qe85wKH9Vww60tloBPp+FnqONTwdqwT1Rgyde60TAcTJG+0HUyHj7zuO
+ XmpaXaAGCC2LBnpYVuGaXl6Bg8jDL5T8Vjn6AtyEP6q7s6vFFws1Tz8x1HS/moL+nr/7dQGSZ
+ ytXHV9mHI2gFrcuynXj++QAkrJUxR2orIWbzQW62GhL8HzWD0H0A6izF024ajsjM3TUMThXis
+ NwZiaqwuAYAZxu1WbY9Zbwq3847OZMBwc/Ebf26usMz0HhtZ2G60RsFG67TuDR1j/P8HHV8/X
+ tS6O0aq78oZqSXmrWpY/qLc3RRqYprPlr+qY356X2lYBSSZno8OdxgwQBpxdiTlYNHn+nTppO
+ NRrbFYpw0qFrbtsKJyYNCOsRYp/9+wqs/wLZvAsLRgqW3GlcbxV0zfq22yZe+3ukQurHZ4eu8
+ eZu0ZDA
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Hello,
 
-On Wed, 13 Jul 2016, Junio C Hamano wrote:
+when nothing is staged in the index then `git commit` warns about this 
+fact with either "nothing to commit, working directory clean" or "no 
+changes added to commit".
+However, `git commit --amend --no-edit` will happily record a new commit 
+that differs in nothing than its commit date from the original.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Tue, 12 Jul 2016, Junio C Hamano wrote:
-> >
-> >> Jeff King <peff@peff.net> writes:
-> >> 
-> >> > In case it wasn't clear, I was mostly guessing there. So I dug a bit
-> >> > further, and indeed, I am wrong. Linux never bumped to a 64-bit time_t
-> >> > on i386 because of the ABI headaches.
-> >> 
-> >> X-< (yes, I knew).
-> >> 
-> >> > That being said, I still think the "clamp to time_t" strategy is
-> >> > reasonable. Unless you are doing something really exotic like pretending
-> >> > to be from the future, nobody will care for 20 years.
-> >> 
-> >> Yup.  It is a minor regression for them to go from ulong to time_t,
-> >> because they didn't have to care for 90 years or so but now they do
-> >> in 20 years, I'd guess, but hopefully after that many years,
-> >> everybody's time_t would be sufficiently large.
-> >> 
-> >> I suspect Cobol programmers in the 50s would have said a similar
-> >> thing about the y2k timebomb they created back then, though ;-)
-> >> 
-> >> > And at that point, systems with a 32-bit time_t are going to have
-> >> > to do _something_, because time() is going to start returning
-> >> > bogus values. So as long as we behave reasonably (e.g., clamping
-> >> > values and not generating wrapped nonsense), I think that's a fine
-> >> > solution.
-> >> 
-> >> OK.
-> >
-> > I kept the unsigned long -> time_t conversion after reading the thread so
-> > far.
-> 
-> That's OK at this point; it is not v2.9.x material anyway.
+This is unexpected and can lead to mistakes. Without running `git 
+status`, the user will not notice that his unstaged changes were not 
+commited, as everything behaves as expected otherwise (the success 
+output from `commit`, the new commit id in the log, `push` requiring the 
+force option, etc).
 
-Got it. I will try to get the patches submitted soon, anyway.
+I understand that `--amend` is (can be) used for editing commit 
+messages, authors, authoring dates etc.
+I would however like to see any `--amend` command that results in no 
+changes to the tree, the commit message and the authoring metadata 
+reject the commit with an appropriate warning similar to the one that a 
+plain `git commit` would present. It should be overrideable by the 
+`--allow-emtpy` parameter as well.
 
-> The primary reason why I cared 32-bit time_t is not about 2038, by
-> the way.  I recall that people wanted to store historical document
-> with ancient timestamp; even if we update to support negative
-> timestamps, they cannot go back to 19th century with 32-bit time_t,
-> but they can with long long or whatever intmax_t is on their system.
+If this change detection is somehow unfeasible, I would at least like 
+the `git commit --amend --no-edit` command (with no other flags) to 
+check the tree in the same way as `git commit` does, as the intention of 
+`--no-edit` is even more clear and running the command is more obviously 
+a mistake/lapse.
 
-Fair enough.
-
-Ciao,
-Dscho
+Kind regards,
+  Bergi
