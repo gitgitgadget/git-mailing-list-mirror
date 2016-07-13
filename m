@@ -2,98 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E57EF2018F
-	for <e@80x24.org>; Wed, 13 Jul 2016 19:10:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B92462018F
+	for <e@80x24.org>; Wed, 13 Jul 2016 19:16:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751212AbcGMTKr (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 15:10:47 -0400
-Received: from mout.gmx.net ([212.227.17.22]:53514 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750957AbcGMTKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2016 15:10:46 -0400
-Received: from virtualbox ([37.24.141.253]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MNw0t-1bTj5A3LzP-007QSI; Wed, 13 Jul 2016 21:10:31
- +0200
-Date:	Wed, 13 Jul 2016 21:10:29 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	Jeff King <peff@peff.net>, Andreas Schwab <schwab@linux-m68k.org>,
-	git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.9.1
-In-Reply-To: <xmqqlh1534qk.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607132105091.6426@virtualbox>
-References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com> <87lh17kgdy.fsf@linux-m68k.org> <20160711235417.GA26163@sigill.intra.peff.net> <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607120927410.6426@virtualbox> <20160712073912.GA26431@sigill.intra.peff.net>
- <alpine.DEB.2.20.1607121257450.6426@virtualbox> <20160712140427.GB613@sigill.intra.peff.net> <alpine.DEB.2.20.1607131329510.6426@virtualbox> <xmqqlh1534qk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1751221AbcGMTQY (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 15:16:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54741 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751053AbcGMTQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2016 15:16:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id BA34F2951F;
+	Wed, 13 Jul 2016 15:16:02 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ltWVtkDNwXc3K3b6bJ40bHkEs4Q=; b=phO5at
+	lkrwa6D4njdm+jOZqcxXQpVvantC/iDg0mIBROvYd3bohVZx0pAuRBGIyU8xA17d
+	FIGhvdSsF1y8zi3CWJO0dPbfOUSmeT7g8Og71xJe8GbXs7g+lon5e1YTY6+uoXbt
+	ZmNxUll+9jIq+VKrqPX0Eb73S37JZ3yDxEDk0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gaoHEWvBeUWsftyk3krRl25lndPe5gin
+	gqHtMlG7+lHDCipqjQE/OeCuD4aWylYJisiwET65SKwFEh0fJyxYz7LrVvv1722i
+	z79IYQyThfq/PWWE7h4wBLPm+cieHvQxEPBlT3SYJghY6/WYMjFty0oIRi6hbKNY
+	NzK/DawqLyY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A97112951D;
+	Wed, 13 Jul 2016 15:16:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 324F229512;
+	Wed, 13 Jul 2016 15:16:02 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Bergi <a.d.bergi@web.de>
+Cc:	git@vger.kernel.org
+Subject: Re: [feature request] Warn about or prevent --amend commits that don't change anything
+References: <d2c3365d-6da9-dd58-ae7d-4a2020c6b513@web.de>
+Date:	Wed, 13 Jul 2016 12:16:00 -0700
+In-Reply-To: <d2c3365d-6da9-dd58-ae7d-4a2020c6b513@web.de> (Bergi's message of
+	"Wed, 13 Jul 2016 20:56:22 +0200")
+Message-ID: <xmqq4m7t1h8v.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:NUs6tmi6mr1yfXOj/fyPyV/gApD0w0q2VUZ4m98LhrS8Yp6hbSi
- GWHD5fYNOcOXzQcD0Dyq82W4l6cfMBtrQmLK6BsmMOytAM8I37sAfQtfoJrPd1zdAUFdqp0
- KB0en0v7LiTKMuZ3NPwiVLo4cOIF41Rt3A7higCnBqrGH0YbYbL6OmTsJ/ix2uiaphGbirs
- EyBdNl9xq0RoFagxcOA3A==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:WtfGSoMt05s=:BL87fAq0As2Bw7Aj+ZNSP7
- N1ap4Tx5VcQwzjahib+0tOZMM2/j07Cj7/tM4WTj1pCNs/SmEySIeYCf4I8xBMwJ+mvCf48Z6
- /YvCq8+iGmwyUYEfxKNJX8KpP51OBoc0eB8TsgKhkiwaE3fbKyoXJqrVURExXmDB/rOMDDwMP
- XuxvwLORYlam65VDEBiCfnyW3OHT8F5Xg0CRJXdYs8/u8DWz0p1kDkLhdZ2X+yfLJ0EYzzJ48
- xKRZMJQtRA9cD8JhnsoGW+cVh1R5KarHPPBi52MmxGJrpciXd93owZXNcuVWe9jTfBr+xJag/
- 2M5ZVNHRYqV2PoRXtjhzswdp+OqCXqjC+QfeFiwKEOTIV0pOYFv91moIzhwMFyGl7awWDhniv
- pwioMsRmQqIvD0cbiJGUAmyzmlACLNeZX18afJ7AF/2IABSaO6KRCTqb4z5W3rTanuP7iIbaW
- 4BSehWWvfLoHgsOxgrEA/bbpiwVR/ud7DzkbCdPWdnX8vJ5Twhm8tPxjhbBKJZoniWq9hCRC7
- +kuOrUuOkbnjxBLfNHuGyDJrsZYRjAvcB6yMOI51+MSsWXaBwuJdaAhAerdeXQt9BAoEz9HOE
- 2eMmb3J6GMKorckP/LZhLK/DGJyjx76XkEFsnkzXcVeGyj7C7bSziW7zfOc8QoV4vuRDBLQeO
- JPG1njwThSzwA/hiaGq23p3aNBsPGn/MlJG1fAU8NdOJbHguJ0tq4C1/7H6ldexTOD0dm+tDt
- DbABaD7O+Wb5pYXRW/Sw0KGzgU6LmN91WuS1V22KIiDKoGcR3SYOanO0M2P49c0pBWZ/zQyVR
- u8Xcbw3
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3D00FB30-492E-11E6-9696-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Bergi <a.d.bergi@web.de> writes:
 
-On Wed, 13 Jul 2016, Junio C Hamano wrote:
+> when nothing is staged in the index then `git commit` warns about this
+> fact with either "nothing to commit, working directory clean" or "no
+> changes added to commit".
+> However, `git commit --amend --no-edit` will happily record a new
+> commit that differs in nothing than its commit date from the original.
+>
+> This is unexpected and can lead to mistakes.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > This was just a quick fix, intended to allow me to release Git for Windows
-> > v2.9.1 in a timely manner (which is now delayed for other reasons).
-> > ...
-> >> You'll need to adjust check_show as I did in my earlier patch.
-> >
-> > Makes sense!
-> 
-> Hmph, so what is your preferred approach?  You'll do your own v2.9.1
-> that is different from others at t0006?
+What kind of "mistake" are you afraid of?
 
-I may do a Git for Windows v2.9.1 that is different from Git v2.9.1 in
-t0006, yes. Git for Windows still has tons of patches on top of Git
-because I seem to be unable to drain the patch queue as fast as I want, so
-I do not believe it is a big deal.
+I can sort of see that "git commit --amend" might want to see two
+summary diffstat output at the end, unlike "git commit" that shows
+what changes were recorded relative to the parent.  In addition to
+that "final result is different in this way from the parent" output,
+you might also want "this is the change you made by amending" and
+knowing the fact that you can notice you didn't add anything by the
+latter being empty _might_ give you an additional peace of mind.
 
-> I was hoping to hear from you sooner and do v2.9.2 with your t0006
-> workaround with lazy-prereq changes from Peff (i.e. "Makes sense!"
-> above), so that you do not have to do two releases in a row
-> (i.e. skipping v2.9.1 saying "Git for Windows skipped that one
-> because it was not quite right; this release fixes the issue" in
-> your v2.9.2 announcement).
+But is that the kind of mistake you are worried about?  IOW, you
+thought you made and added changes X, Y and Z to the index before
+running your "commit --amend", but you forgot the "add" step and did
+not add anything?  If so, even the second diff i.e. "this is what
+you changed by amending" would not help very much, and your "you
+need --allow-empty if you really do not want any changes to the
+tree" would not either, if you added X and Y but forgot to add Z.
 
-I am sorry that you expected me to be more available. It is a pretty crazy
-week already (and trying to get a Git for Windows v2.9.1 out of the door
-after dropping everything else on Tuesday morning added quite a bit to the
-load), so I am at times unable to even read the Git mailing list.
-
-As I am more concerned with Jeff Hostetler's patch now (the "very verbose
-porcelain status"; I merged the Pull Request after seeing no comments on
-his mail, but then Peff provided some good feedback, so now I am not quite
-certain how to go about it: revert, or wait if the 2nd iteration is
-acceptable and take that), so I am not immediately releasing any version,
-anyway.
-
-Ciao,
-Dscho
+So I am sensing a slight XY problem here.
