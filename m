@@ -7,52 +7,51 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 396622018F
-	for <e@80x24.org>; Wed, 13 Jul 2016 15:03:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D0BB2018F
+	for <e@80x24.org>; Wed, 13 Jul 2016 15:07:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752161AbcGMPAz (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 11:00:55 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:35222 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751053AbcGMPAx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2016 11:00:53 -0400
-Received: by mail-io0-f193.google.com with SMTP id q83so3101150iod.2
-        for <git@vger.kernel.org>; Wed, 13 Jul 2016 08:00:47 -0700 (PDT)
+	id S1751400AbcGMPFr (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 11:05:47 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:34969 "EHLO
+	mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751092AbcGMPFp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2016 11:05:45 -0400
+Received: by mail-it0-f67.google.com with SMTP id f6so3062446ith.2
+        for <git@vger.kernel.org>; Wed, 13 Jul 2016 08:05:09 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=+Pj5ZGvKusK++I9jo/YnREVYchZ35M4ExbWn7XmKHjQ=;
-        b=wjWBS5b0Xe6AZ6jZSDeDvAdexplGCp79jr4iVTTkyjL2wKtRjXK6sqzvvC1cDnfkfU
-         Jy4r6R3m9o5X4DkhWbcLxsuHUabueXo1kC0Uy8O9GbDxl4wMcbXfy6+lhtO5dLsaGYWZ
-         fizIk3S0uRDkMMxeJ91glByT+xzUPZagFCuHUmj0Ps7P8ez/LugBcraXWtw014UTIYbx
-         MvvJm19KvAG715u/zqa8LuKZP+F46jAqlhhRUoNs2cLvRP9wyZx/2VYEqMEwEFT7x1S9
-         fJQHGcLSXq1NG6zPZRvJeYyUvrtZcE/HFbqZY7EW7Xdw02rlwP/PPaT8ks46btXavRM9
-         kDew==
+        bh=rNuTuh815xFtUVihOOAP+TDB9hK2sE9UbtwffRcWyF0=;
+        b=yB++eQ4MbxqQ0NUbKm0n2N/jXl9XZihsm3L5W4+02p/Uk+UAjsJgK5XmaBgDe9EVjA
+         BUyOre3mmKZ8zESjWPfh7H4DSg/kk6YklqsZ7YXKf0aXisqh2EaVDSpEBAcCdnYG7aWa
+         AHqrJyohiavYt1IEvoUtJEmszDWsR4R7Lfk6P2/W//0WVoTf379a67dg0J1WiWEnX8sN
+         kwcyVZcbN0qJ2Mv2bIl+BaCVlKuC0xhAll/d2XCtfdPkkUUL3cKqfkexWtmAVOYWt84N
+         y5mni7F7Efo0DHidGAMP/mDzzXp8qHakG5cxYMVV8fxeqD/qWvdmKgNE/BU2dmfWsqVf
+         IVfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+Pj5ZGvKusK++I9jo/YnREVYchZ35M4ExbWn7XmKHjQ=;
-        b=lYjjiynq64IckHS5dH+KPZBzfyT6NctLwJ499FfLo9EC3OaRXzRoqrwbxQE4XviEuL
-         /7dVhb7LlGHKXrVGBNGLTbEe5biMUsQTmg+zD2AXggje7Bt19SHpgHN7zd6lIOHHVhaW
-         0IXVyw/MkK6vyJjAgc70uhxNFA9Vji2Emrg8FMLi0CPnOoeWfTinNA+m+HkJFjwFEgl9
-         4vx3vtZt2Qal2Yb3OC+YZ1csj2HY7G4IlWRSb4iG9R0jZ1hE8qXA5a4X57LYDDIdZFRM
-         AMY5/wGlgcuXLarAgYGnWlQt5stEpCnWfMJzAEp3dj424snv4XozQtRURIhGcyIvVgmE
-         z4zQ==
-X-Gm-Message-State: ALyK8tLDR0EcgdU3A1nkyzHoUpTr4EIE596OqtwVfMX2yZdJXNAY81c5FRmO1zlmVQyf4KDDCxTO2KpbnSFZgw==
-X-Received: by 10.107.22.6 with SMTP id 6mr9250818iow.128.1468422013720; Wed,
- 13 Jul 2016 08:00:13 -0700 (PDT)
+        bh=rNuTuh815xFtUVihOOAP+TDB9hK2sE9UbtwffRcWyF0=;
+        b=hMwOvh3M2v12OQdR0g3bbJGgc3Iujuvyqq/cybGv7H5V/8Kj5sETYzOLyS7NKq0XGx
+         vVHyAHaKhx22WbOifCYpBf90fTnZDHEiQklbkQLrl3WJlDQjS4+JlnsWGAFsqfiKi2PM
+         x/nuf4C7CJZ1lsEHmLjaZb+KW/ik8BW7UBl9JeCJEYuGnu6TeJ4U3tuxSAsABkoo55ig
+         hwJ/Od206Mau+Eg0+8m5Xb0JvLwlAnTmHaoLJy6rCynSdLRJne4dj3AY5p+WtrPDt94H
+         hmxKoch1vv4Q5jG27O2T5iq7Na4n8CMivbxTXQUxc1IG2mnfokUbuXf47h2Yeb2MAqna
+         N5XQ==
+X-Gm-Message-State: ALyK8tIjFtXCOmEXiZy3S6ZRx+nTJOxW7EU73COW9BXOhdgaFIVSrdE3VWx0BSCYW4xWwAWEqk1Q2/8OFWntAA==
+X-Received: by 10.36.123.199 with SMTP id q190mr9733762itc.42.1468422292211;
+ Wed, 13 Jul 2016 08:04:52 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Wed, 13 Jul 2016 07:59:43 -0700 (PDT)
-In-Reply-To: <xmqqtwfu37ld.fsf@gitster.mtv.corp.google.com>
+Received: by 10.64.225.235 with HTTP; Wed, 13 Jul 2016 08:04:22 -0700 (PDT)
+In-Reply-To: <xmqq1t2y4mjy.fsf@gitster.mtv.corp.google.com>
 References: <20160706184829.31825-1-pclouds@gmail.com> <20160709052356.30570-1-pclouds@gmail.com>
- <20160709052356.30570-5-pclouds@gmail.com> <xmqqtwfu37ld.fsf@gitster.mtv.corp.google.com>
+ <20160709052356.30570-2-pclouds@gmail.com> <xmqq1t2y4mjy.fsf@gitster.mtv.corp.google.com>
 From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Wed, 13 Jul 2016 16:59:43 +0200
-Message-ID: <CACsJy8AQLoe=61+iibfsYw-0ibVKF8zruymAFZqr8SwxX=JT2A@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] cache-tree: do not generate empty trees as a
- result of all i-t-a subentries
+Date:	Wed, 13 Jul 2016 17:04:22 +0200
+Message-ID: <CACsJy8B6faU6kaqSpNRZRxkrvM=W29acXkqVBdGq4gaqaDJRRA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] test-lib.sh: introduce and use $_EMPTY_TREE
 To:	Junio C Hamano <gitster@pobox.com>
 Cc:	Git Mailing List <git@vger.kernel.org>,
 	Yuri Kanivetsky <yuri.kanivetsky@gmail.com>
@@ -63,32 +62,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 12, 2016 at 10:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Jul 12, 2016 at 10:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 >
->> diff --git a/cache-tree.c b/cache-tree.c
->> index c2676e8..2d50640 100644
->> --- a/cache-tree.c
->> +++ b/cache-tree.c
->> @@ -380,6 +380,13 @@ static int update_one(struct cache_tree *it,
->>                       continue;
->>               }
+>> This is a special SHA1. Let's keep it at one place, easier to replace
+>> later when the hash change comes, easier to recognize. Start with an
+>> underscore to reduce the chances somebody may override it without
+>> realizing it's predefined.
 >>
->> +             /*
->> +              * "sub" can be an empty tree if subentries are i-t-a.
->> +              */
->> +             if (sub && sub->cache_tree->entry_count < 0 &&
->> +                 !hashcmp(sha1, EMPTY_TREE_SHA1_BIN))
->> +                     continue;
->> +
+>> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+>> ---
+>>  t/t0000-basic.sh                |  2 +-
+>>  t/t1100-commit-tree-options.sh  |  2 +-
+>>  t/t4010-diff-pathspec.sh        |  6 ++----
+>>  t/t4054-diff-bogus-tree.sh      | 10 ++++------
+>>  t/t5504-fetch-receive-strict.sh |  4 ++--
+>>  t/test-lib.sh                   |  4 +++-
+>>  6 files changed, 13 insertions(+), 15 deletions(-)
+>>
+>> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+>> index 60811a3..48214e9 100755
+>> --- a/t/t0000-basic.sh
+>> +++ b/t/t0000-basic.sh
+>> @@ -834,7 +834,7 @@ test_expect_success 'git write-tree should be able to write an empty tree' '
+>>  '
+>>
+>>  test_expect_success 'validate object ID of a known tree' '
+>> -     test "$tree" = 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+>> +     test "$tree" = $_EMPTY_TREE
+>>  '
 >
-> Looks sensible, except that it is unclear if it is correct to assume
-> that "subentries are ita" always equals to "entry_count < 0" here.
-> I _think_ it is OK, as the function itself does use the latter as
-> the sign that it hit to_invalidate=1 case when it returns.
+> I doubt the point of, and I'd rather not to see, the leading
+> underscore.  Are there existing uses of the name that want it to
+> mean something different?
 
-I had the same concern and double checked it. If one day we have a new
-entry_count < 0 case that's not i-t-a, we'll need to refactor this
-code a bit.
+No. There is EMPTY_TREE in use, but it's exactly what we expect. It's
+probably still a good idea to separate "global" variables from
+per-file ones. But I don't feel strongly about this, so if a re-roll
+is required (or somebody votes for underscore removal, including you),
+I'll remove the underscore.
 -- 
 Duy
