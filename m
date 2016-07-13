@@ -2,73 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5F8A2018F
-	for <e@80x24.org>; Wed, 13 Jul 2016 18:16:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98A142018F
+	for <e@80x24.org>; Wed, 13 Jul 2016 18:16:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751092AbcGMSQW (ORCPT <rfc822;e@80x24.org>);
-	Wed, 13 Jul 2016 14:16:22 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:38535 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750872AbcGMSQU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2016 14:16:20 -0400
-Received: by mail-wm0-f47.google.com with SMTP id o80so81607206wme.1
-        for <git@vger.kernel.org>; Wed, 13 Jul 2016 11:16:10 -0700 (PDT)
+	id S1751616AbcGMSQz (ORCPT <rfc822;e@80x24.org>);
+	Wed, 13 Jul 2016 14:16:55 -0400
+Received: from mail-yw0-f177.google.com ([209.85.161.177]:34188 "EHLO
+	mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751074AbcGMSQz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2016 14:16:55 -0400
+Received: by mail-yw0-f177.google.com with SMTP id i12so50522268ywa.1
+        for <git@vger.kernel.org>; Wed, 13 Jul 2016 11:16:49 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=ylH6C143sKWKfdPKdQJNr84xgGuRJMdCI8PkGmYE/fI=;
-        b=M7ebIUayW5Aj/7OiOeHpdCaLwsk2Aa2gm7+B9l8Mfn4bu3EPKteRdYz196qlS00Jut
-         7RVtp7UJavNnFE7YRUmdZMdRtw1PQwl0aSuEOyrBB4Ww/F3eFW3xHwj8sE/Old2USopS
-         MuNnrhzsoWT76fEHO1cJfESURsQt0Leyzbf4XLyNsr9bnQUVy7UoFe+bJMZWYS1nnc4b
-         BGlEqnM/z/OGkMC4qlAGjDhQtcts6A8e6ce/jGNkXcbh11+5x7Q0JyOOTRM1Ho3GfrXS
-         SMVbflnVzhL5DDhCE8IhtENZJhsMpx2ZxO1wVg4NdppMdFnW6GyizLmD2cDb+scjhc42
-         3pNg==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=Q2wXYxVCu2IWHWJ+Yq6lWwVICrRo3pIPKPKTbF96i6Y=;
+        b=bu21x+K//Xw9RTJ/YrPH830NvNbD/aqYR819cPRv3wZQnsEszReCNksccMCA5/fPo1
+         lSN+1VNGgZvtXuQeA4mpcO6tdgCXnYEKKD1MBycdFLjAaHww27XyXN1dYzJ8ryokQ/Sf
+         Vp5od92P+o39eZo7sbPjDr571jAL8NgDphlHLB/So8AlKVDiJTToQ7nUU10PDPTZI88Q
+         pYyJj4OLopNnW9HE6yBs2mwW8RPVFq3xr2XrULpgPFwX4xYNi82xBAfFHUvmBsiObUdc
+         pvmFojM1T0GRH1Q+bGtU8Tt1vEZDZX8aujkcCo9ylhlR3mo73B6UUNgGWhgfOL1Ay6Io
+         HB2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ylH6C143sKWKfdPKdQJNr84xgGuRJMdCI8PkGmYE/fI=;
-        b=eHLPn9Gozvh7AFWxi7AkZ6yjPp/gGE72CpuBE7WVt5w6ZTS3oEJ7vb/QWa5v3UqIWL
-         U8/AjdHz4kgo+oeuaMb94E+R/IQkiKt9yzAkSerBzIu24WIGM640yIk4Jp/tTzJbyuTL
-         OsnilW4X+O6ZzvFxsfNH3S96uCME95TeBKH5nOsEJCaGRapAGkFZRct4Mf3RPT9ZM1V5
-         Gvf4pbeyBK+HgVW5gmX8+rBdRT9g62jBMTVI9by2mAvq7eHPDHT/okXAyoS/4t3wH/P5
-         4nQUNtzlCtXDFYDBuAqj5ol+vTsGPIpcgRFy0uszyR6wmK5uMOTY+/JpbPOB8qNfzIiL
-         ESDg==
-X-Gm-Message-State: ALyK8tJ5DJ/v4rww1TSCag2GTITijXHatmXgnCHdhptnbntUUw8k2fb7AfrqzzFNsHs3GQ==
-X-Received: by 10.28.228.132 with SMTP id b126mr19098494wmh.93.1468433763943;
-        Wed, 13 Jul 2016 11:16:03 -0700 (PDT)
-Received: from [10.42.1.91] ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id sb15sm2073519wjb.3.2016.07.13.11.16.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 13 Jul 2016 11:16:03 -0700 (PDT)
-Message-ID: <1468433762.4649.6.camel@kaarsemaker.net>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=Q2wXYxVCu2IWHWJ+Yq6lWwVICrRo3pIPKPKTbF96i6Y=;
+        b=gJP/ANnviPal64gSSPCt24HKF1BT/3+E8sM3/IM+fIPbcjPzNqTnY8GfQBa44jDDdB
+         homhXLavsH6MOXH4LJFmhG98Wc0uR36A8q7uju81E98cZvYIGoxYXFxIxU3GOYZIVk4r
+         5pozmvU9exs4CaUMlZNmvStf9oV5AEXZ5S83zsBzD7nbJ2P1FxAWgfK8X4wJLFC/Cl0e
+         MUaJtDZqNVHs4VOMK3M0zoIhjTIgRlwz8h7e7MEDDSIRnZS/NkrgqC/vHy0t7fQfGWBz
+         22qJXfwXNJPHrs9jx6S7MGQ6YJv8i6hZAwKx4hL8Dl4l8s8dVgMzkqTg8dhalhxZj+KA
+         ggPw==
+X-Gm-Message-State: ALyK8tIlT91HOlfRW4yYTKwJifeHYnjwfNVFqhFkK5FrW0b8ZEgPmteYqav6kVmc2mG1KwhOPDFKc6OfreDopg==
+X-Received: by 10.129.105.136 with SMTP id e130mr6918981ywc.176.1468433807166;
+ Wed, 13 Jul 2016 11:16:47 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.13.240.66 with HTTP; Wed, 13 Jul 2016 11:16:27 -0700 (PDT)
+In-Reply-To: <xmqqd1mh1kbd.fsf@gitster.mtv.corp.google.com>
+References: <2908abd39c722c080ec37a987a79e32f@cryptolab.net> <xmqqd1mh1kbd.fsf@gitster.mtv.corp.google.com>
+From:	Junio C Hamano <gitster@pobox.com>
+Date:	Wed, 13 Jul 2016 11:16:27 -0700
+X-Google-Sender-Auth: sNs7Wdm60JAZ2ZHUPo0rYD9Iof8
+Message-ID: <CAPc5daXq-WBEYTyi2M7kMoZtQCYgucCRQ=GFVt8U_H_vRYyZPw@mail.gmail.com>
 Subject: Re: Https password present in git output
-From:	Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:	ervion <ervion@cryptolab.net>, git@vger.kernel.org
-Date:	Wed, 13 Jul 2016 20:16:02 +0200
-In-Reply-To: <2908abd39c722c080ec37a987a79e32f@cryptolab.net>
-References: <2908abd39c722c080ec37a987a79e32f@cryptolab.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.18.5.2-0ubuntu3 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To:	ervion <ervion@cryptolab.net>
+Cc:	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On wo, 2016-07-13 at 20:26 +0300, ervion wrote:
-> One possibility for this in git is to save remote in the 
-> https://username:password@domain.com/repo.git format.
+On Wed, Jul 13, 2016 at 11:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> ervion <ervion@cryptolab.net> writes:
+>
+>> Sometimes using ssh is not possible and saving https password in plain
+>> text to disk may be desireable
+>> (in case of encrypted disk it would be equivalent security with
+>> caching password in memory).
+>>
+>> One possibility for this in git is to save remote in the
+>> https://username:password@domain.com/repo.git format.
+>
+> Wasn't netrc support added exactly because users do not want to do
+> this?
 
-This is not recommended. Git has credential helpers to help you store
-passwords outside the git configuration.
+Interesting. Even with "auth in URL", I seem to get this:
 
-Which then makes your original problem go away :)
+$ git fetch -v -v https://gitster:pass@github.com/git/git  refs/tags/v2.9.1
+From https://github.com/git/git
+ * tag               v2.9.1     -> FETCH_HEAD
 
-D.
+Notice that "From $URL" has the userinfo (3.2.1 in RFC 3986) scrubbed.
+
+If you are seeing somewhere we forgot to scrub userinfo in a similar way in
+the output, we should. Where do you see "present in git OUTPUT" as you
+said in the subject? What command with what options exactly and in what
+part of the output?
+
+Thanks.
