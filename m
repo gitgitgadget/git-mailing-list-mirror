@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A57C20195
-	for <e@80x24.org>; Thu, 14 Jul 2016 07:45:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE91720195
+	for <e@80x24.org>; Thu, 14 Jul 2016 07:50:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751073AbcGNHp3 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 03:45:29 -0400
-Received: from mout.gmx.net ([212.227.17.22]:65330 "EHLO mout.gmx.net"
+	id S1750947AbcGNHus (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 03:50:48 -0400
+Received: from mout.gmx.net ([212.227.15.18]:52863 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751063AbcGNHp1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 03:45:27 -0400
-Received: from virtualbox ([89.204.154.227]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Meduu-1blkzS0sAK-00OGgi; Thu, 14 Jul 2016 09:45:14
+	id S1750852AbcGNHur (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 03:50:47 -0400
+Received: from virtualbox ([89.204.154.227]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0Lta9E-1bDno72KuK-010xGP; Thu, 14 Jul 2016 09:50:35
  +0200
-Date:	Thu, 14 Jul 2016 09:45:12 +0200 (CEST)
+Date:	Thu, 14 Jul 2016 09:50:33 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	Junio C Hamano <gitster@pobox.com>
 cc:	Jeff King <peff@peff.net>, Andreas Schwab <schwab@linux-m68k.org>,
 	git@vger.kernel.org
 Subject: Re: [ANNOUNCE] Git v2.9.1
-In-Reply-To: <xmqq8tx51hmx.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607140913470.6426@virtualbox>
+In-Reply-To: <xmqqvb09z5p7.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1607140945520.6426@virtualbox>
 References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com> <87lh17kgdy.fsf@linux-m68k.org> <20160711235417.GA26163@sigill.intra.peff.net> <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607120927410.6426@virtualbox> <20160712073912.GA26431@sigill.intra.peff.net>
- <alpine.DEB.2.20.1607121257450.6426@virtualbox> <xmqqbn2267zq.fsf@gitster.mtv.corp.google.com> <20160713020132.GA13918@sigill.intra.peff.net> <xmqqh9bt34n1.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607132048370.6426@virtualbox>
- <xmqq8tx51hmx.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1607121257450.6426@virtualbox> <20160712140427.GB613@sigill.intra.peff.net> <alpine.DEB.2.20.1607131329510.6426@virtualbox> <xmqqlh1534qk.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607132105091.6426@virtualbox>
+ <xmqqvb09z5p7.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:DN8hjNux3a9AEPnB/VmA7eRFqjEpErg8Tulibh55sH4dN9O+eUj
- JvxruiE8pS2AZcBn8Ocu/uRnIiA7M5b54nWYnOXKakGsAb7TJeEBMWfgUgA8Do0mQHoo4xk
- TBelqngbFuymLXOq93u/x9UsAu6fnekyAvLtMxcDkOnUSoLzPAnAEr4mhy6bnIjm8QscGCY
- nkHxX1G5fCB+66t9Q0tRg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:BH+zWnIXytk=:Ufq0zaLX57+meACLJGlfh5
- R3DWsEUPdun9Kcv08KwTDqMGaZ9sDE6yYuJx6g/noEbhrQ3r94MyhOa8NHnJ47IXGCCuKhSiO
- NzyhkHFl4QkTXM0gINnk/s3CiiiMsVVeZASfMB1FsOuFioS0A9bzk6HECGU6XeivRyC/aYf6V
- ey+fOGpIKzYGi2NkfOzmzLDrf+7dGCerQO+dFlYDrPcx5zbcTKmzqdxr8/P1cimJ5BfW8nQBr
- 7MoQC7KEbO9dKWmYEtM/HqaN1kHlK8zxRDgNaF2IywqkGk9QSIs83tCuv2RPZa+Jae3H4bQWg
- 7Se+smZRkIlTqGPS470tWSzBNF8moA+q791XtQ3LSWI91DsDkjIPIzdpzz1zOZZfDPBlYB/GT
- iyb1o4IH7Ya6t5OuOp7ZAu+vQhsOyTJwu3O90Y5vqMoxCYBuHs5Edw/vAXiX8/m3rPtcjjglA
- exYabxWtJq2DS+nXb1296qbwJj64zdL7LcG6oPRGSJNew0+x9dfgyZLJoU9nF6yT1EOHTL7cI
- QTxXtCIfLQccVIBnNPlFaiP7JRrt2I/r4DPBy8xJ4FhMSVwxL2SrnH3sjByLxvo8ex0XsbmoX
- F+//CSrLt9Ujg7UG446xwYXu084I9MWOdXwu5ORIdwdgwj3gvW5iQmsFbdLBiGxsMUZj0L5i5
- SXHcswDVVRxrRIQFyjl+gaUvK6uA/wofR3sxqDdHpjZ18AUBy5ChpjTgLcq9Ke2hvbmbAJ0sm
- vHMWZJjkFbbigq1PVZfEBd1nHlMvLvBpZ8jWni4i4AypKSlPbok/QSZphYHhhtUP70xT6JC0Y
- CaBkpu9
+X-Provags-ID: V03:K0:MMTOAgaGpldtJkDOBISry7MLriMEtt9Y0+3AwwiTeLrIVASPDa/
+ 4HmwmaqhnduVkcVo9Fku44FCjWIxyzVAFhKMQSnhnReQSZtaT5RULqJTDeAlSp6p0WML57s
+ ocMDb5wqIQ925YDwa2QHcCb4ZGIuKG1LRdoQn+QfR9iRevJY4iewKUmuiABFyFYBUB4hEnN
+ zIJq8l4Z/vzyzrXdaQNQA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:fETQiXVPX7Y=:Ggs3oWQiC/40WDmnr3oenN
+ AGUHcOerZDRFmey4+eloHCsMpriGbtRQjWpF2x+DDS4a6z6dZ+fs4pTnCn5oYEhZCe2SBi3t+
+ WxU17vhq/oaQik3ZV3UlpYiFxQp30Z7U6ykxSsbq/OWSfyAQIkpIREzWxWg0dYUbZyTR/bgLu
+ FduU9Rj8iDcqAI11gceIbFsrtCdXe9gmh7qGIvzInl1fVuUG/pvdp+eN75OBJ9QRMtooa0Yb5
+ Xj/mWr5C5u3DibhN1wd7Cw0JhAbJgvOVd3PB396/4yaeH3g83cBkQ44HcGQP++KlZZoD/0d7G
+ NiDgXnExKN6wH/x+CcaiHnCWIbbtsVozk4GYRWXn8bxeVYBu52Sx8kPtgTDIftG05a0N9mEJN
+ +ApWK47dEXXVOoVprL0maJPPMonfAcRjcxF8EA6S4Pin32UjOS+wPSG9ZlumyBI4qbc9DMV/g
+ fTkLqlZkAHKB0/6yI2s/6ZwCEPPw745ohq0zOtv2bnXeNLaI6NnM9RM8fR39qtk3C6C2T740e
+ 9Y3KF+0/cc/Va73jDZnyVSPgxuBlOyelYbcp9D1Q4K+I26+bgAQDAhHNSN2DhRBas4IaQi1Zs
+ 6AY3gCWhc/Is6cjDPBq5Quza0rGWZqVwm/kOaVF2XkE01O1NBNwLtReWEA4gnibWE4UycRN/V
+ 4Y50+L/yAlmJntvs2sfFM36qNw64mNUCoan0u3iWa+ORLWNbLPrZic4my7RMV2zKrGEd1DDQb
+ nSYV24jY1nKXH6OAtou8YnL7WQL5rlgiKhJMvacxB24XaJ0VhSbf0zbUqUTDQkaPzdYrvxv2o
+ 78kDu+b
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -62,84 +62,40 @@ On Wed, 13 Jul 2016, Junio C Hamano wrote:
 
 > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > How about this one instead (which is part of the time_t-may-be-int64
-> > branch on https://github.com/dscho/git which I still have to complete, as
-> > some unsigned longs still slipped out of my previous net)? It strikes me
-> > as much more robust:
+> >> I was hoping to hear from you sooner and do v2.9.2 with your t0006
+> >> workaround with lazy-prereq changes from Peff (i.e. "Makes sense!"
+> >> above), so that you do not have to do two releases in a row (i.e.
+> >> skipping v2.9.1 saying "Git for Windows skipped that one because it
+> >> was not quite right; this release fixes the issue" in your v2.9.2
+> >> announcement).
+> >
+> > I am sorry that you expected me to be more available. It is a pretty
+> > crazy week already (and trying to get a Git for Windows v2.9.1 out of
+> > the door after dropping everything else on Tuesday morning added quite
+> > a bit to the load), so I am at times unable to even read the Git
+> > mailing list.
 > 
-> Hmm, sorry, I do not see much upside here (iow, the 2038 test you
-> came up with is as robust).
+> Actually these back-and-forth was an attempt to help you reduce the load
+> by not having to worry about the t0006 workaround.  Checking your inbox
+> would have been quicker than writing another of your own version.
 
-Unless you, or Peff, performed a thorough analysis whether the dates are
-always cut off at 2038 holds true, I am highly doubtful that the previous
-tes is robust at all. I certainly only tested on Windows and never
-investigated how that 2038 came about. For what I know, it might be a
-platform-dependent behavior of strtoul().
+In this instance, you're correct. I made it a habit of not checking the
+inbox at all when in the zone, though. Certainly when the time zone
+difference virtually guarantee that your work hours and mine do not
+overlap (the announcement of Git v2.9.1 arrived around 4h after I logged
+off for the day, for example).
 
-> When the internal time representation is updated from "unsigned long" to
-> a signed and wider type [*1*], test-date has to stop reading the
-> second-from-epoch input with strtol(),
+> > As I am more concerned with Jeff Hostetler's patch now (the "very
+> > verbose porcelain status"; I merged the Pull Request after seeing no
+> > comments on his mail, but then Peff provided some good feedback, so
+> > now I am not quite certain how to go about it: revert, or wait if the
+> > 2nd iteration is acceptable and take that), so I am not immediately
+> > releasing any version, anyway.
+> 
+> As I said, I'd be waiting for a reroll of that to queue on 'pu', but as
+> a new feature, it won't appear in any of the v2.9.x releases.
 
-It's strtoul(), actually.
-
-> whose property that overflow will always result in LONG_MAX gives the
-> robustness of the 2038 test, and needs to be updated.
-
-So I got curious and looked at the man page. It says indeed that strtoul()
-returns ULONG_MAX, which happens to translate into a date in the year
-2038. It seems that this behavior is standardized:
-
-	http://pubs.opengroup.org/onlinepubs/007908775/xsh/strtoul.html
-
-although it does not say that ANSI C requires that behavior.
-
-I also could not fail to notice that negative values will be parsed and
-simply negated, and that return values 0 and ULONG_MAX *can* denote errors
-(in which case errno is set, otherwise it is *not* set). Two rather
-surprising facts, at least surprising to me, and facts that our code does
-not deal with.
-
-Please also note that ULONG_MAX is not required to be either 2^32-1 or
-2^64-1. Which means that the 2038 test is really not robust.
-
-> With this "is64bit" patch, you explicitly measure "unsigned long",
-> knowing that our internal time representation currently is that type,
-> and that would need to be updated when widening happens.  So both need
-> to be updated anyway in the future.
-
-Yes, I already update that in my topic branch.
-
-Please note, however, that it is much more natural to update yet another
-instance of "unsigned long" to "time_t" than having to explain how that
-2038 test is affected.
-
-Also note that the 640bit test is very explicit, and hence robust. As a
-consequence it would skip the absurd dates on systems switching to
-int128_t for time_t.
-
-> The prerequisite name 64BITTIME that lost an underscore is harder to
-> read, so there is a slight downside.
-
-It is not a downside. It is something easily fixed.
-
-> Moving of lazy_prereq to test-lib might be an upside if we were
-> planning to add a test that depends on the system having or not
-> having 64-bit timestamp elsewhere, but I do not think of a reason
-> why such a new test cannot go to t0006-date, which has the perfect
-> name for such a test and is not overly long right now (114 lines).
-
-Happenstance. And I was merely imitating the patch of Peff thar I found on
-gmane.
-
-> So, unless you have a more solid reason to reject the updated t0006
-> earlier in the thread, I am not sure what we'd gain by replacing it
-> with this version.
-
-My solid reason is that it is utterky unobvious why the magic number 2038
-should do the work. You would have to spend quite some time to convince
-the average programmer that it is correct.
-
-Contrast that to the 64-bit test.
+Yes, the feature will appear in some v2.9.x release: in Git for Windows.
 
 Ciao,
 Dscho
