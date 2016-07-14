@@ -7,84 +7,112 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF85E20195
-	for <e@80x24.org>; Thu, 14 Jul 2016 10:59:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCAA320196
+	for <e@80x24.org>; Thu, 14 Jul 2016 12:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750947AbcGNK7Q (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 06:59:16 -0400
-Received: from mout.gmx.net ([212.227.17.22]:56641 "EHLO mout.gmx.net"
+	id S1750960AbcGNMfx (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 08:35:53 -0400
+Received: from mout.gmx.net ([212.227.17.20]:52664 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750883AbcGNK7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 06:59:14 -0400
-Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LzHZ7-1bIzfM3A3d-014WAw; Thu, 14 Jul 2016 12:58:49
+	id S1750739AbcGNMfw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 08:35:52 -0400
+Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MEKZg-1bd8L00klU-00FTgh; Thu, 14 Jul 2016 14:35:34
  +0200
-Date:	Thu, 14 Jul 2016 12:58:47 +0200 (CEST)
+Date:	Thu, 14 Jul 2016 14:35:31 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Mike Hommey <mh@glandium.org>
-cc:	Junio C Hamano <gitster@pobox.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-Subject: Re: 32-bit Travis, was Re: [ANNOUNCE] Git v2.9.1
-In-Reply-To: <20160714091240.GB26046@glandium.org>
-Message-ID: <alpine.DEB.2.20.1607141256100.6426@virtualbox>
-References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com> <87lh17kgdy.fsf@linux-m68k.org> <20160711235417.GA26163@sigill.intra.peff.net> <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com> <xmqqmvllz2t7.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607140952160.6426@virtualbox>
- <20160714091240.GB26046@glandium.org>
+To:	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:	Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] t1308: do not get fooled by symbolic links to the source
+ tree
+In-Reply-To: <57514BA8.7020207@web.de>
+Message-ID: <alpine.DEB.2.20.1607141435030.6426@virtualbox>
+References: <xmqqzir53mdc.fsf@gitster.mtv.corp.google.com> <712e0755-6008-21f5-0ee6-25ed9d97fd45@web.de> <xmqq1t4ftheu.fsf@gitster.mtv.corp.google.com> <xmqqwpm7s2ex.fsf@gitster.mtv.corp.google.com> <20160602213920.GA13356@sigill.intra.peff.net>
+ <xmqqeg8fs0dw.fsf_-_@gitster.mtv.corp.google.com> <57511E44.1090708@kdbg.org> <20160603061023.GA7687@sigill.intra.peff.net> <57512980.1070200@kdbg.org> <57514BA8.7020207@web.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:XFUsDGO8SMvY29xKYdnFuF7j8lPN2YqZSgm6OYa0LIbxKqIAiZJ
- sa3EuCK4MhJ1H/vI7sYjGu2JhVQ0m+UTEhi9MVBhv/mmwtOjz5T5CdtTv5G2V00aTOZqM8M
- WvszwNY7dHj6QbYDkPFtDOSIxI/kvo62dYLVn0o/eBiuOUKs4H7+DF+xyHj6P/non5d6cIa
- HBI2RDhQG+ELwCHRt7Y6A==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:OJ2CDuGtnmM=:Mm7Xf/ZjXybBCQanzS7oia
- CIXVO2nAEgk+OgYVo7UgSLy3fZeLu7RgYXZ1TWKXh5tMC7YxOFjULbClg3HW1gTcNiN16Ep+N
- bq5fZwrs4uZ4Uk9GUyoWs37QEAY1dj33D9EUAix4nf4YSsnV3MDxSzf6ucfyhZG7CMMS4orBW
- 84kzshc/1xwzag+tydcQ/l8eo29XRqLWEabdwX4oz0BQsmZfL1fxQBUiztSjrbotlgSJW8l1n
- sbTtym21xVUFmIl2stb2stLQ6Ddi1YaJpz6vR1QrYGqW22tvpk8VbVWoaG3OQkzbx29hmU0XX
- xBfj76QeE8tT0r8mIBeT6nbe0/Ucqh6Kv2sUnXZ4vMGtcE906mCjn7s0l6Z2JuVjljdQhwZUh
- KZTb4JF8Wc/orANY2aEq9FCcsVUCqiSkaB9dFQvziDEWcqP6zd+xY7uEWDpf1HSym2vjbb0us
- 1SiQ7Dtg6YSrmOQ1S/oQI6WkMNmlODaG00Fh11VUB84XSQNDJARmwFDHC0n/qAYLpgZEK+5BS
- JCgZEiT6H3Dx1mfgNdP6b7zr7mrjIkshRN84UDpd1eipx006FuqJzScOBgOM4hu7l+rWHZ4ti
- alDRZi5hqphFjr7ZhaRYyLeNSmt4a884UULKoufYa9SSAOlcCd9eIYiD3Wo1NlBqtMl+0kENG
- VsYYRh2SMuwx6QIWLXyew2k29kujOsZLSkobtaM2Win9rLwMJCw1wimQlVYcCSfFuSGJvg48U
- E17k2tl3smizjiHn8M5oQLrCuoyu2vf1OyRuCx1mCPAlGfCO45yFHxOj+kdq1nPg0/QKns8H2
- yC92c5l
+Content-Type: multipart/mixed; BOUNDARY="8323329-1881508000-1468499734=:6426"
+X-Provags-ID: V03:K0:/ynOM8jyxBj8+aQlnmKDdahknpuoGATsrntgdRzTyMUCBWgGddA
+ EyROYGh2wqtRgTG0XlthR9R+LAq5mxat/66yA/USX/V/1WlLgMpazHtzKk22fVWobp9H33V
+ yWVuSZd4icnqYPR8Mqw7MD5+uyIzak2mj52RcTWQbTJZjTe3T6SZ+fzChG+szq0yg/5qaFP
+ yWBfeOdB0SI6AVtmPvmhg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:FwzRuK9CfMw=:K5N5tFIahC69a4S8vQipYp
+ QTOR6SPacdq8gfY8KALI6OfPuJN3d678Uif6TaTOb1jawAXAcMm+wZAOSBoT3xYyTXL8f9FdY
+ szDUHkvab5kvmN+W32Lnemn3guPMKv/VnixP6JRZixKilO5Otb3asg/5VRcxChjUva9yIZUEK
+ x6YmQ+xDDd0rX4bVQUzW7HHvtACZ/SyGHSVtNrhpuQyA85+rIZK6mB/9N0pyxv98P3Xq2nF66
+ NmILigTUe16QatXZtQ9rwwY/Lxcx+lNWqk/NRokTwg8gbR7iSnNEmLcvkQp7y89PptFtUxrHo
+ zOpGjOWuIqTrqKMs6IhNCwhxWM7StmSncp8DxJTet+NEFoisVSAgZfZctqBi8LPnMiCeRrwyx
+ qxehKWP3l8krvG5I7yyJ+CYB4WO4kfsrfwGnH4c3RbaJ0a2I5wOegReZWnm5AR5RsZT5yC1Ta
+ q9srLgDsvATWB590vUOwzVVfgvJb7IZvLEdqoX/B1YRokrrrEZAADUTVE7ASTBLNoZdpwt/hc
+ MVnwMcsy8vJdU1TtGH6DFZrZnW1cVDc3EARFZtbe65UJhJJ/oyRG84w/7cX4ZUndI3V0500K3
+ D16bbHB0ygrlWFjg5fBafLJe0Vx8THksW84aGQSqeCuOIY4P/o65nsJgb3wpoySwZMTGJ1JOR
+ PlJqOdT5mmAOlNYwde4zi0ERrwQn9ndK94Snpz/dcYq2+mygqWYzmjqnu9HliNFvEq0Oo8Rzf
+ IgXq0LMwUDY9lUDv0qGleNCpdHuRPXP7RwJhBm5O5GqK1Zbon5svKR9JXuAEeSjT9nJPT3Sny
+ wGzuP3A
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Mike,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 14 Jul 2016, Mike Hommey wrote:
+--8323329-1881508000-1468499734=:6426
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> On Thu, Jul 14, 2016 at 09:58:45AM +0200, Johannes Schindelin wrote:
-> > Hi Junio,
-> > 
-> > On Wed, 13 Jul 2016, Junio C Hamano wrote:
-> > 
-> > > Does Travis CI testing have an option to run our tests on some
-> > > 32-bit platforms?
-> > 
-> > AFAIR Docker does not support 32-bit, and IIRC that's what Travis uses.
-> > 
-> > However, it is possible to install a 32-bit toolchain and use that to
-> > compile Git.
-> 
-> You just need to install gcc-multilib on travis, and you can use -m32. I
-> did that for jemalloc recently.
-> See https://github.com/jemalloc/jemalloc/blob/dev/.travis.yml
+Hi,
 
-Would we not also need
+On Fri, 3 Jun 2016, Torsten B=C3=B6gershausen wrote:
 
-	apt:
-		packages:
-			lib32z1
+> On 06/03/2016 08:53 AM, Johannes Sixt wrote:
+> > Am 03.06.2016 um 08:10 schrieb Jeff King:
+> > > On Fri, Jun 03, 2016 at 08:05:56AM +0200, Johannes Sixt wrote:
+> > >
+> > > > > -    name=3D$(pwd)/.gitconfig
+> > > > > +    name=3D$HOME/.gitconfig
+> > > >
+> > > > I haven't tested this, yet, but my guess is that this breaks on Win=
+dows:
+> > > > test-config will produce C:/foo style path, but the updated test wo=
+uld
+> > > > expect /c/foo style path. Dscho, do you have an idea how to fix thi=
+s?
+> > >
+> > > Hmm. This should come directly from expand_user_path("~/.gitconfig")
+> > > which prepends the literal contents of the $HOME variable. It does go
+> > > through convert_slashes() afterwards, but I don't see any other
+> > > massaging (but I won't be surprised when you tell me there is some th=
+at
+> > > happens behind the scenes).
+> >
+> > Yes, it happens behind the scenes: /c/foo absolute paths are a conventi=
+on
+> > used by the POSIX emulation layer (MSYS). When bash (an MSYS program) r=
+uns a
+> > non-MSYS program such as git or test-config, it converts the /c/foo pat=
+hs in
+> > the environment (and argument list) to c:/foo style because the non-MSY=
+S
+> > programs do not understand the MSYS convention.
+> >
+> > -- Hannes
+> Compiling pu didn't succed:
+> unix_stream_connect is missing in read_cache.c
+>=20
+> (And many more in index-heloer.c)
+>=20
+> (I thought that the index-helper is only compiled on systems,
+>   which are known to have unix-sockets and other stuff ?)
+>=20
+> After patching that out,  t1308 fails:
+> -name=3D/c/
+> +name=3Dc:/
 
-(or ia32libs in case of an older Ubuntu)?
+This issue was not resolved, and now this commit is on `master`...
 
 Ciao,
 Dscho
+--8323329-1881508000-1468499734=:6426--
