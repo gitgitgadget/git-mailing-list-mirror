@@ -2,137 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 125BB20196
-	for <e@80x24.org>; Thu, 14 Jul 2016 20:50:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6672720196
+	for <e@80x24.org>; Thu, 14 Jul 2016 20:53:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751690AbcGNUuU (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 16:50:20 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50105 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751285AbcGNUuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 16:50:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DBE242AC52;
-	Thu, 14 Jul 2016 16:44:02 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=aAFH
-	0fzhiSU8hNsW9CjNofSCDuM=; b=fWGbN4A66ZW9Peq/c7LmN88fG/XvhP28nKbf
-	69xzTIu10KfvWl28/omUoICCN/XAKOlgAbLcVRUJrQdWxNMGPzCLgJ+sXFnklOYm
-	HMB1ce8yAy494CF1fTxjMiduQ9T4ocmI/w4JYnNFu+6mGf3/s4dU7xrtW6EzOmDK
-	STdemLc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	PsQEdQJSIQuglxPb1BTfPlHGnUnbFXrWVeKFO2OAPUDHx11U+G1snbOC2C6XJDJr
-	tn7UB7S/pbwRvxEnYEhy4QoNFkzstN0RQm6HsJ7BbXrQKMOyOqAIwdQH73HRakkz
-	7x2Bvz1FSV4AXbfw7B+AQBRkZpL1TOIshjybyc46ja0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D3CC92AC50;
-	Thu, 14 Jul 2016 16:44:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5B66D2AC4F;
-	Thu, 14 Jul 2016 16:44:02 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	git@vger.kernel.org
-Cc:	Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-	Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v2 1/2] t0006: skip "far in the future" test when unsigned long is not long enough
-Date:	Thu, 14 Jul 2016 13:43:56 -0700
-Message-Id: <20160714204357.2628-2-gitster@pobox.com>
-X-Mailer: git-send-email 2.9.1-545-g8c0a069
-In-Reply-To: <20160714204357.2628-1-gitster@pobox.com>
-References: <xmqq7fcoot6t.fsf@gitster.mtv.corp.google.com>
- <20160714204357.2628-1-gitster@pobox.com>
-X-Pobox-Relay-ID: B2AE9D62-4A03-11E6-96DF-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1752297AbcGNUxA (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 16:53:00 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:42679 "EHLO bsmtp3.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751737AbcGNUw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 16:52:58 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3rr7FM6zvBz5tlK;
+	Thu, 14 Jul 2016 22:52:55 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 118AD52C6;
+	Thu, 14 Jul 2016 22:52:55 +0200 (CEST)
+Subject: Re: [PATCH v4 2/5] t5000: test tar files that overflow ustar headers
+To:	Junio C Hamano <gitster@pobox.com>
+References: <20160630090614.GA16725@sigill.intra.peff.net>
+ <20160630090857.GB17463@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1607141745420.6426@virtualbox>
+ <19a2d02e-3918-3bc9-db34-66e12ab950e4@kdbg.org>
+ <xmqqa8hkrvu5.fsf@gitster.mtv.corp.google.com>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+From:	Johannes Sixt <j6t@kdbg.org>
+Message-ID: <3d71cf3a-44c7-0620-0375-fb7ecf2fac13@kdbg.org>
+Date:	Thu, 14 Jul 2016 22:52:55 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2
+MIME-Version: 1.0
+In-Reply-To: <xmqqa8hkrvu5.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+Am 14.07.2016 um 19:08 schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+>
+>> Am 14.07.2016 um 17:47 schrieb Johannes Schindelin:
+>>> On Thu, 30 Jun 2016, Jeff King wrote:
+>>>> The ustar format only has room for 11 (or 12, depending on
+>>>> some implementations) octal digits for the size and mtime of
+>>>> each file. For values larger than this, we have to add pax
+>>>> extended headers to specify the real data, and git does not
+>>>> yet know how to do so.
+>>>>
+>>>> [...]
+>>>>  t/t5000/19f9c8273ec45a8938e6999cb59b3ff66739902a | Bin 0 -> 2048 bytes
+>>>
+>>> It appears that this blob cannot be read when sizeof(unsigned long) == 4.
+>>> This happens to break the t5000 test on Windows, where that comparison
+>>> holds true.
+>>
+>> The problem occurs in parse_sha1_header_extended(), where the
+>> calculation of the size in the object header overflows our 32-bit
+>> unsigned long.
+>
+> OK, then we'd want something that measures how big "unsigned long"
+> is, and use it as a lazy prerequisite 64BIT_LONG, tweaking the other
+> patch to t0006 the other Johannes sent yesterday.
+>
+> Dscho?  I'll revert the merge of 'js/t0006-for-v2.9.2' out of
+> 'next' so that we can replace it with your newer version, but it
+> needs to be massaged to lose the strong linkage with "time", as
+> it is no longer "is our time big enough", I would think.
 
-Git's source code refers to timestamps as unsigned longs.  On 32-bit
-platforms, as well as on Windows, unsigned long is not large enough
-to capture dates that are "absurdly far in the future".
+My first thought was that this is not warranted because t0006 is about 
+commit time stamps, but the huge-tar breakage is file sizes, and the 
+cases should be treated differently.
 
-While we can fix this issue properly by replacing unsigned long with
-a larger type, we want to be a bit more conservative and just skip
-those tests on the maint track.
+But on second thought, under the hood, both boil down to the size of 
+unsigned long in our implementation. It may make sense to tie both cases 
+to the same prerequisite.
 
-Signed-off-by: Jeff King <peff@peff.net>
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- help.c          | 6 ++++++
- t/t0006-date.sh | 6 +++---
- t/test-lib.sh   | 9 +++++++++
- 3 files changed, 18 insertions(+), 3 deletions(-)
+On third thought, however, I think the two requirements could diverge in 
+the future. The file size case should depend on the size of size_t. The 
+timestamp case may become dependent on the size of time_t if we decide 
+to move timestamp handling away from unsigned long: in modern(!) 
+Microsoft SDKs, time_t is 64 bits, but unsigned long is 32 bits, in both 
+the 32-bit and 64-bit environments!
 
-diff --git a/help.c b/help.c
-index 19328ea..2ff3b5a 100644
---- a/help.c
-+++ b/help.c
-@@ -419,6 +419,12 @@ int cmd_version(int argc, const char **argv, const char *prefix)
- 	 * with external projects that rely on the output of "git version".
- 	 */
- 	printf("git version %s\n", git_version_string);
-+	while (*++argv) {
-+		if (!strcmp(*argv, "--build-options")) {
-+			printf("sizeof-long: %d\n", (int)sizeof(long));
-+			/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
-+		}
-+	}
- 	return 0;
- }
- 
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 04ce535..4c8cf58 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -31,7 +31,7 @@ check_show () {
- 	format=$1
- 	time=$2
- 	expect=$3
--	test_expect_${4:-success} "show date ($format:$time)" '
-+	test_expect_success $4 "show date ($format:$time)" '
- 		echo "$time -> $expect" >expect &&
- 		test-date show:$format "$time" >actual &&
- 		test_cmp expect actual
-@@ -50,8 +50,8 @@ check_show iso-local "$TIME" '2016-06-15 14:13:20 +0000'
- 
- # arbitrary time absurdly far in the future
- FUTURE="5758122296 -0400"
--check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400"
--check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000"
-+check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400" LONG_IS_64BIT
-+check_show iso-local "$FUTURE" "2152-06-19 22:24:56 +0000" LONG_IS_64BIT
- 
- check_parse() {
- 	echo "$1 -> $2" >expect
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0055ebb..11201e9 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1111,3 +1111,12 @@ run_with_limited_cmdline () {
- }
- 
- test_lazy_prereq CMDLINE_LIMIT 'run_with_limited_cmdline true'
-+
-+build_option () {
-+	git version --build-options |
-+	sed -ne "s/^$1: //p"
-+}
-+
-+test_lazy_prereq LONG_IS_64BIT '
-+	test 8 -le "$(build_option sizeof-long)"
-+'
--- 
-2.9.1-545-g8c0a069
+-- Hannes
 
