@@ -2,119 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5188820196
-	for <e@80x24.org>; Thu, 14 Jul 2016 18:38:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7507020196
+	for <e@80x24.org>; Thu, 14 Jul 2016 18:40:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751754AbcGNSiI (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 14:38:08 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51240 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751690AbcGNSiG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 14:38:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2E5962B9EF;
-	Thu, 14 Jul 2016 14:38:05 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1N9ZpUPIMz5XL1kpjgz2kUAtpVI=; b=rET+cy
-	YvIfwp7Z7AY7OSGU+CUgxDKBbKrpZmg9ZPMLStYE3jBnz1AC6TrUxhgfyeEbd7xC
-	fPFb8kIcJwU77mUpgI7pUyYlXdfrkJk7EG/lXOBSeaAHguF0vxNM71BicZWrZ8aY
-	uNEyJtDM/861VOU4Ym4mpk1gmSPT54afTCLm8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DmUmV9kt80w60c78obBiClx/ViO2OlGj
-	cMj0mQFQYFNJMug9/NpCNEFyJkAogfghKcvjSEjFeZ3exFHB0MH7laHEqoRHzcXa
-	2A4nYTPVIWT6PNs1h43whD7kp4geh5JFeoywE7NZxshE1UOd0f0Cfb+F57HFFIFJ
-	UQELdfTlr6Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 267022B9EE;
-	Thu, 14 Jul 2016 14:38:05 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9CD3B2B9ED;
-	Thu, 14 Jul 2016 14:38:04 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	git@vger.kernel.org, dwwang@google.com, e@80x24.org, peff@peff.net,
-	dennis@kaarsemaker.net, jrnieder@gmail.com
-Subject: Re: [PATCH 2/4] receive-pack: implement advertising and receiving push options
-References: <20160714173920.22001-1-sbeller@google.com>
-	<20160714173920.22001-3-sbeller@google.com>
-Date:	Thu, 14 Jul 2016 11:38:02 -0700
-In-Reply-To: <20160714173920.22001-3-sbeller@google.com> (Stefan Beller's
-	message of "Thu, 14 Jul 2016 10:39:18 -0700")
-Message-ID: <xmqqk2goqd4l.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751495AbcGNSk0 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 14:40:26 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44798 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751161AbcGNSkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 14:40:25 -0400
+Received: (qmail 9516 invoked by uid 102); 14 Jul 2016 18:40:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jul 2016 14:40:24 -0400
+Received: (qmail 7073 invoked by uid 107); 14 Jul 2016 18:40:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jul 2016 14:40:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2016 14:40:21 -0400
+Date:	Thu, 14 Jul 2016 14:40:21 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] mingw: fix regression in t1308-config-set
+Message-ID: <20160714184021.GD16497@sigill.intra.peff.net>
+References: <6f439a56703ca6fb5c269c75904796ae67e96960.1468504461.git.johannes.schindelin@gmx.de>
+ <xmqqr3awry5x.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 19EC427A-49F2-11E6-8C5E-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqr3awry5x.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Thu, Jul 14, 2016 at 09:18:18AM -0700, Junio C Hamano wrote:
 
-> +static struct string_list *read_push_options(void)
-> +{
-> +	struct string_list *ret = xmalloc(sizeof(*ret));
-> +	string_list_init(ret, 1);
-> +
-> +	while (1) {
-> +		char *line, *lf;
-> +		int len;
-> +
-> +		line = packet_read_line(0, &len);
-> +
-> +		if (!line)
-> +			break;
-> +
-> +		/*
-> +		* NEEDSWORK: expose the limitations to be configurable;
-> +		* Once the limit can be lifted, include a way for payloads
-> +		* larger than one pkt, e.g use last byte to indicate if
-> +		* the push option continues in the next packet or implement
-> +		* larger packets.
-> +		*/
-> +		if (len > LARGE_PACKET_MAX - 1) {
+> I added a few missing Cc: and quoted the whole patch here to those
+> who were involved; I think this update is correct, but just trying
+> to make sure people know.
+> 
+> Not limited to this particular topic, there probably are some things
+> we can and should add to the procedure to prevent further episodes
+> like this, but I am not seeing anything immediately obvious offhand.
+> There already is a way to prominently mark a topic to be not-ready
+> with an outstanding issue called "What's cooking" report, but it is
+> maintained manually and it can be leaky without extra set of eyes
+> constantly monitoring.
 
-packet_read_line() calls packet_read_line_generic() that calls
-packet_read() with the fixed packet_buffer[] that is sized to be
-LARGE_PACKET_MAX.
+Thanks, this fix looks good.
 
-Can this check even trigger?
+I'm open to to suggestions to make life easier for Windows folks.
+Usually when dealing with paths, the suggestion is to use $(pwd), which
+I did in the original, but as 58461bd noted, that broke other cases.
 
-> +			/*
-> +			 * NEEDSWORK: The error message in die(..) is not
-> +			 * transmitted in call cases, so ideally all die(..)
-> +			 * calls are prefixed with rp_error and then we can
-> +			 * combine rp_error && die into one helper function.
-> +			 */
-> +			rp_error("protocol error: server configuration allows push "
-> +				 "options of size up to %d bytes",
-> +				 LARGE_PACKET_MAX - 1);
-> +			die("protocol error: push options too large");
-> +		}
+So code-wise, maybe this technique could be more general. I.e., could
+$TRASH_DIRECTORY or $HOME already be in whatever format is likely to be
+produced by git on the platform? Or does that just screw things up more
+because Windows sometimes needs one form and sometimes the other?
 
-> +		lf = strchr(line, '\n');
-> +		if (lf)
-> +			*lf = '\0';
+Process-wise, I'm not sure. I seem to recall a few times when Windows
+issues have come up in the past that somebody (JSixt?) seemed content to
+let topics graduate with potential portability problems, and then have
+the Git for Windows project fix them up separately. These days GfW seems
+to track upstream more closely (which is wonderful!), but it means
+portability problems cause a more immediate headache and slow down that
+process.
 
-packet_read_line() -> packet_read_line_generic() calls packet_read()
-with PACKET_READ_CHOMP_NEWLINE flag bit; do we need this check?
+> > 	Side note: it was not at all clear to me how 58461bd fixed the
+> > 	problem by replacing $(pwd) with $HOME, given that HOME is set to
+> > 	$TRASH_DIRECTORY which is set to $TEST_OUTPUT_DIRECTORY/... after
+> > 	TEST_OUTPUT_DIRECTORY was set to TEST_DIRECTORY which in turn was
+> > 	set to $(pwd).
+> >
+> > 	I guess the reason is that -P in `cd -P "$TRASH DIRECTORY"`, but
+> > 	then I *really* do not understand how $(pwd) and $PWD could
+> > 	disagree.
 
-> +
-> +		string_list_append(ret, line);
-> +	}
-> +
-> +	return ret;
-> +}
+I don't think they did disagree. The issue is that "cd -P" caused _both_
+of them to print the physical directory. But git is not using either of
+them. It is blindly using "$HOME". So basically:
 
-Other than that, looks good to me.
+  HOME=/path/with/symlinks
+  cd -P "$HOME"
 
-Thanks.
+will cause "$PWD" and "$HOME" to disagree. Likewise with "$(pwd)" and
+"$HOME".
+
+-Peff
