@@ -2,79 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 744C120196
-	for <e@80x24.org>; Thu, 14 Jul 2016 19:20:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAF1720196
+	for <e@80x24.org>; Thu, 14 Jul 2016 19:27:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751715AbcGNTUx (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 15:20:53 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53306 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751153AbcGNTUw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 15:20:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CFECD2A1C0;
-	Thu, 14 Jul 2016 15:20:51 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=e
-	dqXNHxIJkKYotgBwMzYx/LLkKw=; b=D+REAoAgut6r1L71HtxGMxnQmTqKw+XPo
-	fck7pdvPtUW+u+vb5P5/QCV1zB4uuyuyi4Io3AzlQBJ+nAk8jZr+o4NkjV8sS4o2
-	MzCi1SDxaorh1AZtnU/U6tuAfvXGwAljtyzebjhn/KVg28RlNtyTib+nZZq7ZX5/
-	qoNI/7Hty4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=YnP
-	0d+zaGNSpp8J9XW6pcgyl/TElPE11/mE9mrZTmIxfAuEkbApmcUWKFzQKgam8aiS
-	j64zZmMMttmOrBtKZ7qENvnIIS+IewWaB9UzbMVqFsDGFsO5an3Dvof+3lBbb875
-	/TCO7KVsKkf6ge0A2ahiopCBuvoURavO0nhREgKI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C82C82A1BF;
-	Thu, 14 Jul 2016 15:20:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4BFA42A1B9;
-	Thu, 14 Jul 2016 15:20:51 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	git@vger.kernel.org
-Subject: [PATCH] diff: document diff-filter exclusion
-Date:	Thu, 14 Jul 2016 12:20:49 -0700
-Message-ID: <xmqq7fcoqb5a.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751246AbcGNT1N (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 15:27:13 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:35830 "EHLO
+	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751153AbcGNT1M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 15:27:12 -0400
+Received: by mail-io0-f175.google.com with SMTP id m101so84772865ioi.2
+        for <git@vger.kernel.org>; Thu, 14 Jul 2016 12:27:11 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=9S1CVtk5ri4Hcj6igqHzPMC1wvjZqJjZfwn+vrrgZT0=;
+        b=DMG+0kbxkURV8L3pRBOmsCyq0+wfDJAGeqt4u3YQ8QkgoNLOGpS9MVyEFwADS56iFz
+         vJHLIU0Bbr/Q56c+kbvwKNCt3Oh6trpMBXLKn+E423hdZh/Zo7+yHIHl/5wifgzJU7mh
+         6ttlazRdHFaslzMkNxV3RTJb6FzPWTSfSnW/tQ5v2l9j7gGndxsJE/+eS/TVCEbf16ma
+         adWQEo3IZj5/ogP8gmJOGneROqbi+OF6icSe8trNl+qCSvsJR61814aBvLrSnIkiD05L
+         7BTpVmoP2US/f4GCX6g6QxgYtTV5SzhftsP9nmVOSPkAnz3qK+uu9BKLYvgoukpeXGOz
+         42AA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=9S1CVtk5ri4Hcj6igqHzPMC1wvjZqJjZfwn+vrrgZT0=;
+        b=R7iz1v8pwIz3iMCiXYBXkJaULbvW37fsjZeQ/ZzbnF6mS1KtuTuBBzS579ACcUV0kP
+         Igf9GYgKe+h4dKhwyXnJm4KaStn0ei3MXexBdq0Wz3Z4i0FgqD5jZq1G7bET5eLvb1L0
+         T7doSOWaOJN9kHpr6UonAZUU36AWkGkn7sHBEvkrgwtTWJy+2TyRuQpaTGIUge65wwpI
+         tF4ZEsTj5slKukLM1l09/dKx10mTsIUPCeBsfJCjHhHKpTGjUtkxwkhrDsR+gP+SOJ5r
+         x+RNBpcZSCSY96bH+R+REH6gu3PwAz5DJ8PWpIF8zXmKsZL2ysZmFj1OQOQjRGbuTBfr
+         t7rw==
+X-Gm-Message-State: ALyK8tKBmjFFOwohsswUDbZRJRDIdBCTK2rNQhn7NZ6TknLNw1bJqMOhii0wHTvOyNke1inYaFHf12d2H+UnzjX1
+X-Received: by 10.107.144.10 with SMTP id s10mr15823491iod.165.1468524431035;
+ Thu, 14 Jul 2016 12:27:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 13BCC8D8-49F8-11E6-AD99-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.128.66 with HTTP; Thu, 14 Jul 2016 12:27:10 -0700 (PDT)
+In-Reply-To: <xmqq7fcoqb5a.fsf@gitster.mtv.corp.google.com>
+References: <xmqq7fcoqb5a.fsf@gitster.mtv.corp.google.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Thu, 14 Jul 2016 12:27:10 -0700
+Message-ID: <CAGZ79ka5ZB=vL3j0Zm3vAvdZi7jA1gPAs61NhkVABZepfcuLvw@mail.gmail.com>
+Subject: Re: [PATCH] diff: document diff-filter exclusion
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-In v1.8.5 days, 7f2ea5f0 (diff: allow lowercase letter to specify
-what change class to exclude, 2013-07-17) taught the "--diff-filter"
-mechanism to take lowercase letters as exclusion, but we forgot to
-document it.
+On Thu, Jul 14, 2016 at 12:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> In v1.8.5 days, 7f2ea5f0 (diff: allow lowercase letter to specify
+> what change class to exclude, 2013-07-17) taught the "--diff-filter"
+> mechanism to take lowercase letters as exclusion, but we forgot to
+> document it.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/diff-options.txt | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index 3ad6404..073c7e5 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -399,6 +399,9 @@ ifndef::git-format-patch[]
+>         paths are selected if there is any file that matches
+>         other criteria in the comparison; if there is no file
+>         that matches other criteria, nothing is selected.
+> ++
+> +Also, these upper-case letters can be downcased to exclude.  E.g.
+> +`--diff-filter=ad` excludes added and deleted paths.
+>
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/diff-options.txt | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 3ad6404..073c7e5 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -399,6 +399,9 @@ ifndef::git-format-patch[]
- 	paths are selected if there is any file that matches
- 	other criteria in the comparison; if there is no file
- 	that matches other criteria, nothing is selected.
-++
-+Also, these upper-case letters can be downcased to exclude.  E.g.
-+`--diff-filter=ad` excludes added and deleted paths.
- 
- -S<string>::
- 	Look for differences that change the number of occurrences of
--- 
-2.9.1-545-g8c0a069
-
+This looks good for the neighboring thread. :)
+http://thread.gmane.org/gmane.comp.version-control.git/299512
