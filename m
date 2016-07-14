@@ -2,75 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 793C120196
-	for <e@80x24.org>; Thu, 14 Jul 2016 18:24:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C704F20196
+	for <e@80x24.org>; Thu, 14 Jul 2016 18:27:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751229AbcGNSYb (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 14:24:31 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44781 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751155AbcGNSYa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 14:24:30 -0400
-Received: (qmail 8818 invoked by uid 102); 14 Jul 2016 18:24:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jul 2016 14:24:30 -0400
-Received: (qmail 6804 invoked by uid 107); 14 Jul 2016 18:24:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jul 2016 14:24:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2016 14:24:27 -0400
-Date:	Thu, 14 Jul 2016 14:24:27 -0400
-From:	Jeff King <peff@peff.net>
-To:	Johannes Sixt <j6t@kdbg.org>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/5] t5000: test tar files that overflow ustar headers
-Message-ID: <20160714182427.GC16497@sigill.intra.peff.net>
-References: <20160630090614.GA16725@sigill.intra.peff.net>
- <20160630090857.GB17463@sigill.intra.peff.net>
- <alpine.DEB.2.20.1607141745420.6426@virtualbox>
- <19a2d02e-3918-3bc9-db34-66e12ab950e4@kdbg.org>
+	id S1751451AbcGNS1w (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 14:27:52 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55359 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751150AbcGNS1u convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2016 14:27:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B101B2B86F;
+	Thu, 14 Jul 2016 14:27:39 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=6O+BDKDnerLM
+	x9xGQal55NCdSMI=; b=LCvgTZJmzz9i2f1MlnnR0W9XB97DgnLMTJDOVg3lS6h0
+	kfktQ24ZD6gb3e8g9O6jq3BVDZGGwnkHycIFi23JvacQTqiQVLdwx9wUNNL4KdTd
+	BjJF8/7rWqIDU0HoDGgmZVCmluTXlUUta03A++hfSbn7LDFTTno0MlD0e6xd+qE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Dczo7d
+	NgN1RH9wVQsFZ7WJR4kzJszWzHEcSAhmtULd99nZluF/gjIYIMJ4Rpd4yn/9Knxn
+	9Pz6seFqZ121Cchi0cOZMEeU/Af2Az4c2IWPPjvbuWDkw8x9c8guj1nmod3dkqqM
+	IAhsPz01hAuhaIRIXi6PwJT8bObPrhy9GbItc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A42D22B86E;
+	Thu, 14 Jul 2016 14:27:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 267F32B86D;
+	Thu, 14 Jul 2016 14:27:39 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Thorsten Glaser <t.glaser@tarent.de>
+Cc:	Stefan Beller <sbeller@google.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Server-side preventing some files from being overwritten
+References: <alpine.DEB.2.20.1607141725390.25238@tglase.lan.tarent.de>
+	<CAGZ79kb=2rpYucjhavNB_XHLk9rjKSoHzL9bwM5buDO0GyW3vw@mail.gmail.com>
+	<alpine.DEB.2.20.1607141948530.25238@tglase.lan.tarent.de>
+Date:	Thu, 14 Jul 2016 11:27:36 -0700
+In-Reply-To: <alpine.DEB.2.20.1607141948530.25238@tglase.lan.tarent.de>
+	(Thorsten Glaser's message of "Thu, 14 Jul 2016 19:51:09 +0200
+	(CEST)")
+Message-ID: <xmqqpoqgqdlz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <19a2d02e-3918-3bc9-db34-66e12ab950e4@kdbg.org>
+X-Pobox-Relay-ID: A510BFB8-49F0-11E6-AB8D-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 14, 2016 at 06:45:47PM +0200, Johannes Sixt wrote:
+Thorsten Glaser <t.glaser@tarent.de> writes:
 
-> Am 14.07.2016 um 17:47 schrieb Johannes Schindelin:
-> > On Thu, 30 Jun 2016, Jeff King wrote:
-> > > The ustar format only has room for 11 (or 12, depending on
-> > > some implementations) octal digits for the size and mtime of
-> > > each file. For values larger than this, we have to add pax
-> > > extended headers to specify the real data, and git does not
-> > > yet know how to do so.
-> > > 
-> > > [...]
-> > >  t/t5000/19f9c8273ec45a8938e6999cb59b3ff66739902a | Bin 0 -> 2048 bytes
-> > 
-> > It appears that this blob cannot be read when sizeof(unsigned long) == 4.
-> > This happens to break the t5000 test on Windows, where that comparison
-> > holds true.
-> 
-> The problem occurs in parse_sha1_header_extended(), where the calculation of
-> the size in the object header overflows our 32-bit unsigned long.
+> Although I’m ordinarily loath to write GNU bash scripts, this
+> helps avoiding temporary files. This works:
+>
+> -----cutting here may damage your screen surface-----
+> #!/bin/bash
+> export LC_ALL=C
+> subdir=x/y
+> while IFS=' ' read -r old new name; do
+> 	test x"$name" = x"refs/heads/master" || continue
+> 	if test x"0" != x"$(comm -23z \
+> 	    <(git ls-tree -r -z "$old" "$subdir" | sort -z) \
+> 	    <(git ls-tree -r -z "$new" "$subdir" | sort -z) | wc -c)"; then
+> 		echo >&2 'Untouchable files touched, commit rejected!'
+> 		exit 1
+> 	fi
 
-Yep, unsurprising.
+Can't this become simpler, e.g.
 
-I do think git is wrong to use "unsigned long" there. It really ought to
-be "size_t". My understanding is that 64-bit Windows is LLP64, which
-means that you cannot currently have blobs greater than 4GB there, even
-though it would work correctly with size_t.
+	if ! git diff-tree --quiet "$old" "$new" -- "$subdir"
+	then
+		echo >&2 "Ooh, $subdir is touched"
+		exit 1
+	fi
 
-Switching all of the things that look at blob sizes to size_t will be a
-big job, though.
-
--Peff
+> done
+> exit 0
+> -----cutting here may damage your screen surface-----
+>
+> Of course, set “subdir” in line 3 correctly, and GNU coreutils
+> are required for the NUL line termination, which is not an issue
+> here. (BSD has “-R ''” for sort(1), for example.)
+>
+> bye,
+> //mirabilos
