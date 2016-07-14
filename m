@@ -2,71 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F16D520196
-	for <e@80x24.org>; Thu, 14 Jul 2016 18:50:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D483020196
+	for <e@80x24.org>; Thu, 14 Jul 2016 18:50:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751327AbcGNSu3 (ORCPT <rfc822;e@80x24.org>);
+	id S1751413AbcGNSua (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 14:50:30 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:34871 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751161AbcGNSu3 (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 14 Jul 2016 14:50:29 -0400
-Received: from lixid.tarent.de ([193.107.123.118]:42072 "EHLO mail.lixid.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751262AbcGNSu2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2016 14:50:28 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.lixid.net (MTA) with ESMTP id 5CAA51402C8;
-	Thu, 14 Jul 2016 20:50:25 +0200 (CEST)
-Received: from mail.lixid.net ([127.0.0.1])
-	by localhost (mail.lixid.net [127.0.0.1]) (MFA, port 10024) with LMTP
-	id 1q5zI3x3pdJi; Thu, 14 Jul 2016 20:50:25 +0200 (CEST)
-Received: from tglase.lan.tarent.de (tglase.lan.tarent.de [172.26.3.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.lixid.net (MTA) with ESMTPS id 1F775140134;
-	Thu, 14 Jul 2016 20:50:25 +0200 (CEST)
-Received: by tglase.lan.tarent.de (Postfix, from userid 2339)
-	id CD268221C7A; Thu, 14 Jul 2016 20:50:24 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by tglase.lan.tarent.de (Postfix) with ESMTP id ACA7B220943;
-	Thu, 14 Jul 2016 20:50:24 +0200 (CEST)
-Date:	Thu, 14 Jul 2016 20:50:24 +0200 (CEST)
-From:	Thorsten Glaser <t.glaser@tarent.de>
-X-X-Sender: tglase@tglase.lan.tarent.de
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
-Subject: Re: Server-side preventing some files from being overwritten
-In-Reply-To: <xmqqpoqgqdlz.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607142049240.25238@tglase.lan.tarent.de>
-References: <alpine.DEB.2.20.1607141725390.25238@tglase.lan.tarent.de> <CAGZ79kb=2rpYucjhavNB_XHLk9rjKSoHzL9bwM5buDO0GyW3vw@mail.gmail.com> <alpine.DEB.2.20.1607141948530.25238@tglase.lan.tarent.de> <xmqqpoqgqdlz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-Content-Language: de-DE-1901
+Received: by mail-io0-f181.google.com with SMTP id m101so83862909ioi.2
+        for <git@vger.kernel.org>; Thu, 14 Jul 2016 11:50:28 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=79vwdYMS9QgUxHLUDcXxI0k3gtxY94bYht8Opk9Tt5E=;
+        b=N7BbDEw7HIZuQ/InI+hHtW861/qh5ybRl02wmUuTZ9h/PZq4+lbc6DeexzXeFesUmW
+         t+Jm7j0tSYaP6ao0sLTjwwnTPEpZQuOCCfEcMyrd0j7TOAvOzjKTfs7HTZBOochqK5MK
+         RC84ZFifWo2PBfae34Oikos9bLoKyduKha4ys0ibkNYFdnojgusVdFu59u0nxmr4RK1n
+         R+64q03+iGrMYLq2kQts4XO6H3STVm/jpHgzotj/39qkRX7CPzUa+p6DZ1rN0PsPQGT2
+         ZTvm+vR9J8ELE1eHnckb7K/doBw1zCrccXdbnZTGz9qhyWVi3+cQ3UbhF6ycqFTG/kWA
+         bJMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=79vwdYMS9QgUxHLUDcXxI0k3gtxY94bYht8Opk9Tt5E=;
+        b=E6xOnsuXKiYCtEONff4vwqLjZwd6YtGW6Yk0CzWGCsO8ArWwsbHetgrOrIfqyIN2Z+
+         yWeH6ZrjIqXt8isAv3Qkhw89kghm9XlPDaDc52PJng91It2Tzht8k/UhamN9gqcoeIYM
+         2PyBE4aPjNAeSgmJaYlwh/OPaCkevF+kHoSUeHJc5SOSeeSJCB8skTe8FQEwkocyJfAs
+         UUjTqviLFW+/YRV4Z7fWiudts7jjcnDhJBkTWMHlNaxeUMhSmwf+m2kFMrio/ZNTEEhy
+         TvR5V4g5uKqBVvqNYitVmlJXEvlFcS8nCpZj1olMyLWlm9IKcbWXZtHw5jdflT0T1LT9
+         jshw==
+X-Gm-Message-State: ALyK8tIrclHXxmTIOJ9jXk5MF0eAY+WYD7VLW5H6XFe3ySEjKOmSgRcMZjkSIXkrNrCVgeRRG7mdlsirpEssB+cm
+X-Received: by 10.107.131.38 with SMTP id f38mr16921047iod.173.1468522228134;
+ Thu, 14 Jul 2016 11:50:28 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.107.128.66 with HTTP; Thu, 14 Jul 2016 11:50:27 -0700 (PDT)
+In-Reply-To: <CAPc5daXxAqXtUvs1Xr_vgncXqcvR8-VG67oDAgOQ8xPcT7nCeQ@mail.gmail.com>
+References: <alpine.DEB.2.20.1607141725390.25238@tglase.lan.tarent.de>
+ <CAGZ79kb=2rpYucjhavNB_XHLk9rjKSoHzL9bwM5buDO0GyW3vw@mail.gmail.com>
+ <alpine.DEB.2.20.1607141948530.25238@tglase.lan.tarent.de>
+ <xmqqpoqgqdlz.fsf@gitster.mtv.corp.google.com> <CAPc5daXxAqXtUvs1Xr_vgncXqcvR8-VG67oDAgOQ8xPcT7nCeQ@mail.gmail.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Thu, 14 Jul 2016 11:50:27 -0700
+Message-ID: <CAGZ79kYFb5UJ=cnXZTbcO3L4+wc5G24_pV2BhHkOH-+wM9CFJQ@mail.gmail.com>
+Subject: Re: Server-side preventing some files from being overwritten
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Thorsten Glaser <t.glaser@tarent.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, 14 Jul 2016, Junio C Hamano wrote:
+On Thu, Jul 14, 2016 at 11:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> On Thu, Jul 14, 2016 at 11:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Thorsten Glaser <t.glaser@tarent.de> writes:
+>>
+>>>       if test x"0" != x"$(comm -23z \
+>>>           <(git ls-tree -r -z "$old" "$subdir" | sort -z) \
+>>>           <(git ls-tree -r -z "$new" "$subdir" | sort -z) | wc -c)"; then
+>>>               echo >&2 'Untouchable files touched, commit rejected!'
+>>>               exit 1
+>>>       fi
+>>
+>> Can't this become simpler, e.g.
+>>
+>>         if ! git diff-tree --quiet "$old" "$new" -- "$subdir"
+>>         then
+>>                 echo >&2 "Ooh, $subdir is touched"
 
-> Can't this become simpler, e.g.
-> 
-> 	if ! git diff-tree --quiet "$old" "$new" -- "$subdir"
+No need to go for >&2 here, as it makes no difference to
+the client.
 
-Thought about diff-tree, but additions are permitted,
-and diffing the actual file content has overhead too.
-
-Just counting the number of object hashes removed from
-the old tree (recursed) works out just fine.
-
-bye,
-//mirabilos
--- 
-tarent solutions GmbH
-Rochusstraße 2-4, D-53123 Bonn • http://www.tarent.de/
-Tel: +49 228 54881-393 • Fax: +49 228 54881-235
-HRB 5168 (AG Bonn) • USt-ID (VAT): DE122264941
-Geschäftsführer: Dr. Stefan Barth, Kai Ebenrett, Boris Esser, Alexander Steeg
+>>                 exit 1
+>>         fi
+>
+> Ehh, you need to tell diff-tree to recurse, i.e. "diff-tree -r".
