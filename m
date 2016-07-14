@@ -2,92 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20D5120196
-	for <e@80x24.org>; Thu, 14 Jul 2016 15:37:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05DAC20196
+	for <e@80x24.org>; Thu, 14 Jul 2016 15:45:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751665AbcGNPhH (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 11:37:07 -0400
-Received: from lixid.tarent.de ([193.107.123.118]:41330 "EHLO mail.lixid.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751119AbcGNPhE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2016 11:37:04 -0400
-X-Greylist: delayed 352 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Jul 2016 11:37:03 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mail.lixid.net (MTA) with ESMTP id 3152314029E
-	for <git@vger.kernel.org>; Thu, 14 Jul 2016 17:31:06 +0200 (CEST)
-Received: from mail.lixid.net ([127.0.0.1])
-	by localhost (mail.lixid.net [127.0.0.1]) (MFA, port 10024) with LMTP
-	id fhTFDssMrrQd for <git@vger.kernel.org>;
-	Thu, 14 Jul 2016 17:31:06 +0200 (CEST)
-Received: from tglase.lan.tarent.de (tglase.lan.tarent.de [172.26.3.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	id S1751538AbcGNPpT (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 11:45:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57399 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751149AbcGNPpR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 11:45:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F21C12A169;
+	Thu, 14 Jul 2016 11:45:15 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XnXzatuGGyNRN9BVAqkAzhCHPsk=; b=SYzYXg
+	nZMBTusXURc4m4w/uYK2C1+lJO47RpgldFZeLMRSrUfZKeYpuPiNxsxcfQgkCxvu
+	p3N0vqpAEBYQyPrblTW/i72SXsTAYDvpC+Wdi9o/ftSpthROnE5DX5qGODHDOxno
+	HNgMSeTCsSM47jc+5uQklbUn9Li7EoVcrnoI4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YqYJJaMwfSdGeRkmNI5ZRD84CIVl5KPF
+	/klR0MRO4BQfVFRul2Bblgka+WFC8egH9xQgXzxLLX6pfwkP0NQLESrfiJ5f6btm
+	aFXgdcEwRBpcmU1cQCEjq1xEUmdinh8qG2eBroz/X4WkmXk7HbBruRYqlVF+Jo39
+	uWNx++EyLM4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EABD22A168;
+	Thu, 14 Jul 2016 11:45:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mail.lixid.net (MTA) with ESMTPS id 1E61914024B
-	for <git@vger.kernel.org>; Thu, 14 Jul 2016 17:31:05 +0200 (CEST)
-Received: by tglase.lan.tarent.de (Postfix, from userid 2339)
-	id B6E07224B64; Thu, 14 Jul 2016 17:31:05 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by tglase.lan.tarent.de (Postfix) with ESMTP id 99BB7224B63
-	for <git@vger.kernel.org>; Thu, 14 Jul 2016 17:31:05 +0200 (CEST)
-Date:	Thu, 14 Jul 2016 17:31:05 +0200 (CEST)
-From:	Thorsten Glaser <t.glaser@tarent.de>
-X-X-Sender: tglase@tglase.lan.tarent.de
-To:	git@vger.kernel.org
-Subject: Server-side preventing some files from being overwritten
-Message-ID: <alpine.DEB.2.20.1607141725390.25238@tglase.lan.tarent.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-Content-Language: de-DE-1901
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 688342A165;
+	Thu, 14 Jul 2016 11:45:15 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2016, #05; Wed, 13)
+References: <xmqqy4551nph.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1607141505160.6426@virtualbox>
+Date:	Thu, 14 Jul 2016 08:45:13 -0700
+In-Reply-To: <alpine.DEB.2.20.1607141505160.6426@virtualbox> (Johannes
+	Schindelin's message of "Thu, 14 Jul 2016 15:15:13 +0200 (CEST)")
+Message-ID: <xmqqzipkrzp2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: F5595474-49D9-11E6-92C6-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi *,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-is there a way, for example with some sort of pre-receive hook,
-to prevent some files from being overwritten by a push?
+> +       ret = add_cache_entry(ce, options);
+> +       if (refresh) {
+>
+> Should we really refresh, even if ret < 0?
 
-Use case:
+As we stopped calling make_cache_entry() with REFRESH flag on, we
+can change this not to refresh if we want to, and I think we can
+skip refresh without compromising correctness.  But I'd prefer to
+see that change as a separate "optimization" step---after all, the
+original before this change unconditionally refreshed before even
+calling add_cache_entry() and knowing the result of it.
 
-In some project, we use Flyway to manage the database schema,
-and Jenkins to automatically build master’s HEAD after each
-push (and install it, thus activating the schema files almost
-immediately). Now, I wish to prevent coworkers from changing
-anything in the SQL subdirectory that has ever been pushed,
-forcing them to push new SQL files with ALTER statements instead.
-(Yes, I am aware this will likely make me even less liked. No,
-this is not an issue.)
+> +               struct cache_entry *nce;
+> +
+> +               nce = refresh_cache_entry(ce, CE_MATCH_REFRESH | CE_MATCH_IGNORE_MISSING);
+>
+> This line is overly long, but there is a *lot* of precedent for that in
+> merge-recursive.c, unfortunately. So this is just a remark, not an
+> objection.
 
-As for the comparison, only the changes between the previous
-HEAD of master and the new HEAD of master after the push would
-have been accepted need to be taken into account; any intermediate
-commits, merges, etc. are no problem (because Jenkins does not
-build them, and because, once a push fails, the developer will
-have to add a commit reverting their change and moving it to
-another file on top, I’m no friend of rewriting).
+Yes, I had the same objection to the original codebase while I was
+touching it.
 
-File matching would be “any files under a certain subdirectory”,
-nothing fancier than that.
-
-I’ve tried a web search (with two different search engines) for
-“git prevent pushed files from modification”, but this seems to
-only show people who want to ignore local changes or somesuch…
-
-I’ve asked in IRC, but with no answer for hours I thought that
-maybe this was the better place to ask for it.
-
-Thanks in advance,
-//mirabilos
--- 
-tarent solutions GmbH
-Rochusstraße 2-4, D-53123 Bonn • http://www.tarent.de/
-Tel: +49 228 54881-393 • Fax: +49 228 54881-235
-HRB 5168 (AG Bonn) • USt-ID (VAT): DE122264941
-Geschäftsführer: Dr. Stefan Barth, Kai Ebenrett, Boris Esser, Alexander Steeg
+Thanks.
