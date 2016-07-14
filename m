@@ -2,106 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7377720196
-	for <e@80x24.org>; Thu, 14 Jul 2016 13:46:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CBAB20196
+	for <e@80x24.org>; Thu, 14 Jul 2016 13:59:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751545AbcGNNqh (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 09:46:37 -0400
-Received: from mout.gmx.net ([212.227.17.22]:55055 "EHLO mout.gmx.net"
+	id S1751074AbcGNN7J (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 09:59:09 -0400
+Received: from mout.gmx.net ([212.227.17.21]:64543 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751538AbcGNNqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 09:46:35 -0400
+	id S1750897AbcGNN7H (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 09:59:07 -0400
 Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LsxuQ-1bGVwc1bQI-012Vni; Thu, 14 Jul 2016 15:46:28
+ ESMTPSA (Nemesis) id 0MPYqL-1bRnu82Ej3-004mJr; Thu, 14 Jul 2016 15:59:01
  +0200
-Date:	Thu, 14 Jul 2016 15:46:27 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:	Thu, 14 Jul 2016 15:58:59 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2016, #05; Wed, 13)
-In-Reply-To: <xmqqy4551nph.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607141542250.6426@virtualbox>
-References: <xmqqy4551nph.fsf@gitster.mtv.corp.google.com>
+To:	git@vger.kernel.org
+cc:	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] mingw: fix regression in t1308-config-set
+Message-ID: <6f439a56703ca6fb5c269c75904796ae67e96960.1468504461.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:S8ED03O4Cn9XmzBE6tUkkdBkAsCYxebpJjpEwXeA6TkkO709dHb
- VJPJh4y248qXBmf+H4i1dlztRrFU7m7RA2bmbDxyq8EnkSLu15Ubn4c4rTAS8BXZHU4Q4Cg
- xtF7PiEX0OteTPTqSF1bXsJD9FPzRbB50r7V9nccWq2Q1dwx3oaO3XOosOiItNA9G6pHm1i
- RlCeXXV5lvYvlBTwGJzuQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:wHZDlNIaFSw=:Hq0ci+of5XTEfbvCIm3FZh
- HkinMTlpcIk+bwG57LLc6BuJgJAGb7JbKi1S4mWVmwkQqZloQOnC2zQVjNAg0Xiaz+IjmQ+UT
- bohEe3+P5npJ+yPXahAciEN1Y2fwqB6hXigiT96fzsGRnuZVjTGyGW9BcV28+4PEryr9k3iUW
- 7Lf5twLzD23CRx0fQ34gV1wGiAECE7tU6FYYgwI6WlefZpwhKAg96Ats648VgqwQbva9KVdm0
- IMX+dSxhzui9Xn1GZSEO3QwPFgB9tns8gMDdTxcv1xcS6J9X8c2oICe4sm8YHMjjHNZpQXoJX
- rYEAS/bQxguhhxKn4XdtZKxgRWe4VEUKz3hxXPieXroSnK/nR+C9QNqi8vNeEdI0mHFCgqZNy
- KOdP1OtZXosgcqzCpWR5EupBPpsDIbOXP452p/UKTN/zEgq46BJv74jpcdOmzTpPmwbdsGhuE
- 6K8LXs8S8oAvBiWogCxOWls7IdhzXJY4meIn2Qv+GigBP/6kU9wrdLP7TMWKkx1oxhrb1d2pO
- UiBPHcexCXgs59yPN5wo4SEZ3F8CYFRAlI4X6jqCooFG2QRgvCeDQEmco5kKie6SrE9aQJzVz
- DD6rxHaMXaBSgBNwlgUDVydZ8LLjQDGo1g6L7G8rV5TL/njKMBsI2YmY9uZn9DrHvezjGSSKt
- 8rh+StAv06Ld2RtsguWCqfXPMZnM7VGDZ+SAeRaFNpsRGAg8xgt+fiCgxd4Y12VCaG31ELgNM
- jQ2zImzsDB/9L8D8eYo8f8ms9uWcyPDvNxhSRav3SLe2kc82rrg/ljYf9pK7yAm1GJHkiww1X
- jYjaKUV
+X-Provags-ID: V03:K0:NrgoLftFZ1nQGHh9f+/wjyG3+rKNb7MLz7dR0Y+g45x6er9Jc2+
+ ktCd9SNZp76ZAXuoVsViunhaR9DVdKSHfPzfGjHZ5EyykXuxi36mZniW8NJ/l4A17pqTtyP
+ nEVGo0F3a8LhNsaDeqILff5vWqoaMjc8zhzlynNX4wIfT04skhOJVpNPduqA2qDWGJNSI4f
+ M7Sf+dOesQXyKKgrXAakw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:K/LnD7lCIGY=:LYBlD/7D863iEq7oB+ClB5
+ CJdeHy7Os4ZNlugTsqhKOR9v6QcHtMPiYXLS0jGDhoP0wed6KN1mGAsOdzbTb36BVb1EeSxdD
+ OBwm+/lazXh+RJf9xVf6C4fryDsvtVLZy1mlfU+65Mm4jVVvmi1aaKkWvDri/VbV3WvFSQzzi
+ PzKeQynzht8Pjn/rwJC65XT9xhJxyCKfl84IMy1J3zz1h0XcIkzbclgBwd2egFVjWybS8CxYU
+ Wjd9h+EdLZtyDxsDF/xpqcI6m5srP/NBWTRPnRb24ex6zuQQkZGs5UgwJCvvgwuiwaesZugrC
+ WMcRTQmlgnVmSsyap4sFbKANTaLmzIdvLd3ndoN4VxNDNRAxKikONjbnIYBut0movgF8ipxam
+ WGDpCiRUNwcJImQGq35RZaDV0uv72nw5l17N04OmvF/hRsrO406CS9ZLPp+0fK0PO+DvO3oRa
+ Su4wMvK0DKSnKMDCh1K4CZBPvFrcCb3h4uCqXbUjv9CE/6pfquCWAQqbMekwUEeYiyuKWZ2dz
+ QcLeX76mOgXzppHN2nkJgAmePElk/oLKjiNFGF6SiqNi+/YNStOrMmpMxughXU0AFc/804IZ5
+ XDWEFvt9ejj3+VhHm8BXe4EgU3McoXtG8AsDtVYEeIVHpl2ITHMTA+DB2bgYQmW9wwzifk7br
+ ma+Q3cJkS0JAGHVJ78IfMujkfJBp1s5X4waVmRmQiTScYBXJn479S4dMYALK9BNVV9QpiZ1Cg
+ G0lLr+wezS0qxsk/Q0TNXUYgc/K9QGLSxPBH/O/cSdwzyCmt+Ug/n3sGHh6Sj3Ekmg4FEnYNY
+ ohBKGsp
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+When we tried to fix in 58461bd (t1308: do not get fooled by symbolic
+links to the source tree, 2016-06-02) an obscure case where the user
+cd's into Git's source code via a symbolic link, a regression was
+introduced that affects all test runs on Windows.
 
-On Wed, 13 Jul 2016, Junio C Hamano wrote:
+The original patch introducing the test case in question was careful to
+use `$(pwd)` instead of `$PWD`.
 
-> * dt/index-helper (2016-07-06) 21 commits
->  - index-helper: indexhelper.exitAfter config
->  - trace: measure where the time is spent in the index-heavy operations
->  - index-helper: optionally automatically run
->  - index-helper: autorun mode
->  - index-helper: don't run if already running
->  - index-helper: kill mode
->  - watchman: add a config option to enable the extension
->  - unpack-trees: preserve index extensions
->  - update-index: enable/disable watchman support
->  - index-helper: use watchman to avoid refreshing index with lstat()
->  - watchman: support watchman to reduce index refresh cost
->  - read-cache: add watchman 'WAMA' extension
->  - index-helper: log warnings
->  - index-helper: add --detach
->  - daemonize(): set a flag before exiting the main process
->  - index-helper: add --strict
->  - index-helper: new daemon for caching index and related stuff
->  - unix-socket.c: add stub implementation when unix sockets are not supported
->  - pkt-line: add gentle version of packet_write
->  - read-cache: allow to keep mmap'd memory after reading
->  - read-cache.c: fix constness of verify_hdr()
-> 
->  A new "index-helper" daemon has been introduced to give newly
->  spawned Git process a quicker access to the data in the index, and
->  optionally interface with the watchman daemon to further reduce the
->  refresh cost.
-> 
->  Will merge to 'next'.
-> 
->  Is everybody happy with this version?
->  At v14.
+This was done to account for the fact that Git's test suite uses shell
+scripting even on Windows, where the shell's Unix-y paths are
+incompatible with the main Git executable's idea of paths: it only
+accepts Windows paths.
 
-I am trying to get back to working on the Windows support for this. I had
-something that compiled but did not quite manage to do the IPC on Monday
-evening, and have been scrambling with too much other stuff preventing me
-from getting back to that.
+It is an awkward but necessary thing, then, to use `$(pwd)` (which gives
+us a Windows path) when interacting with the Git executable and `$PWD`
+(which gives the shell's idea of the current working directory in Unix-y
+form) for shell scripts, including the test suite itself.
 
-The reason I mention this is: I wanted to get it working first just to be
-able to determine whether there are possible improvements to the design
-that would make things much easier to port to non-Unix-sockets-capable
-systems.
+Obviously this broke the use case of the Git maintainer when changing
+the working directory into Git's source code directory via a symlink,
+i.e. when `$(pwd)` does not agree with `$PWD`.
 
-Oh, and v14 has a bug that I reported already:
-http://article.gmane.org/gmane.comp.version-control.git/298949
+However, we must not fix that use case at the expense of regressing
+another use case.
 
-Ciao,
-Dscho
+Let's special-case Windows here, even if it is ugly, for lack of a more
+elegant solution.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Published-As: https://github.com/dscho/git/releases/tag/t1308-on-windows-v1
+
+	Side note: it was not at all clear to me how 58461bd fixed the
+	problem by replacing $(pwd) with $HOME, given that HOME is set to
+	$TRASH_DIRECTORY which is set to $TEST_OUTPUT_DIRECTORY/... after
+	TEST_OUTPUT_DIRECTORY was set to TEST_DIRECTORY which in turn was
+	set to $(pwd).
+
+	I guess the reason is that -P in `cd -P "$TRASH DIRECTORY"`, but
+	then I *really* do not understand how $(pwd) and $PWD could
+	disagree.
+
+	Oh well. I have to move on to the next fire.
+
+ t/t1308-config-set.sh | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
+index a06e71c..7655c94 100755
+--- a/t/t1308-config-set.sh
++++ b/t/t1308-config-set.sh
+@@ -233,11 +233,19 @@ cmdline_config="'foo.bar=from-cmdline'"
+ test_expect_success 'iteration shows correct origins' '
+ 	echo "[foo]bar = from-repo" >.git/config &&
+ 	echo "[foo]bar = from-home" >.gitconfig &&
++	if test_have_prereq MINGW
++	then
++		# Use Windows path (i.e. *not* $HOME)
++		HOME_GITCONFIG=$(pwd)/.gitconfig
++	else
++		# Do not get fooled by symbolic links, i.e. $HOME != $(pwd)
++		HOME_GITCONFIG=$HOME/.gitconfig
++	fi &&
+ 	cat >expect <<-EOF &&
+ 	key=foo.bar
+ 	value=from-home
+ 	origin=file
+-	name=$HOME/.gitconfig
++	name=$HOME_GITCONFIG
+ 	scope=global
+ 
+ 	key=foo.bar
+-- 
+2.9.0.278.g1caae67
+
+base-commit: 79ed43c28f626a4e805f350a77c54968b59be6e9
