@@ -6,383 +6,149 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B9C7203C2
-	for <e@80x24.org>; Thu, 14 Jul 2016 21:49:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FF05203C1
+	for <e@80x24.org>; Thu, 14 Jul 2016 21:50:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751358AbcGNVtz (ORCPT <rfc822;e@80x24.org>);
+	id S1751380AbcGNVt4 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 17:49:56 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:34461 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751348AbcGNVtz (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 14 Jul 2016 17:49:55 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:32972 "EHLO
-	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750876AbcGNVtx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 17:49:53 -0400
-Received: by mail-pf0-f172.google.com with SMTP id y134so7869765pfg.0
-        for <git@vger.kernel.org>; Thu, 14 Jul 2016 14:49:52 -0700 (PDT)
+Received: by mail-pa0-f44.google.com with SMTP id fi15so32219583pac.1
+        for <git@vger.kernel.org>; Thu, 14 Jul 2016 14:49:54 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=vrxcKuXPyP3AbUmpIJ6v0396AwrS/8+Jtux4l+ITipA=;
-        b=LROqAPYg7fxISY8VHV3KEhQ/M1OLHW8Qticnt/4XxawNfbHRvT8MU3+r0cpRkdLYmY
-         A/X/2gm7y/6PjEZW62UiBe/027SQVxozY/HUCabo/iCelpfzvc/ZJGXzSwHxe6LaI9qz
-         gzpsN4i7SnPNj/vOSEgaOeouaf+EPFSecCQP1BFnH7FXFG8fc+V9uTJQngsyEVMKVXOj
-         sIY81X/Cj8wAlO1aOWwO8a0j1DEWKLdQflsnRvtW9tanHeQzveuljho7HnjiE9Tolwx2
-         a8893UGZa63MlxEuDd1IQTjrNPfZ+bK/OSAiHMI9f5I9T1/RDadxygmla+GimHs/AngC
-         pr6g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=OPlGDdB/EJw+HcGDSwRY8u6HstYeVUiUx3Fnl1sVIwY=;
+        b=FXhuZCInhpCqi5pxprEGeWzekULiUvFJPgFTBzIyjP2VT2lGKjYLzMc2nuGNudcC7a
+         HN8GcgilXN+1z7Vmer+fTjITWuaHXoO47u5DD9q6ZZCLEPzgr+zFgisy22efhaG58EnB
+         s/bi+H/yctouIPwcHroewG1lUWITcyGRpI2OOZ4gsh+lgM9t0aqFdDRxL/gR6ck1FUoq
+         No23r7KqmvD74OoRu2OeOsE4LzVxgFQj0WaUqK1wN/cJa3oiNmNLKRnBenochu2Lazsg
+         AhzxhBrUC7HlB5xs8a6O0ap5cde0RhEyrApr8PCSNr9Onu9/BSXD8ZnZdTbozqFH0Vwg
+         I+sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=vrxcKuXPyP3AbUmpIJ6v0396AwrS/8+Jtux4l+ITipA=;
-        b=mW3HagW5AiH9VLVpKKelc8Dc3kOVfQ6ELEmwjXFWNpJcs9Jxl3kzg8eEnsVV3nt6Lr
-         uZLmt8vRkGGxJXUWpPRYpR0pz+Ye0/zru/DeC0fI/iOPM0VkwWoV7kBz43XT7V1JgGJ0
-         epPKcL5iEPsxgo1Y2abXvPNgPuZ+bPSNnruWZnlu3WowdBzlsio9X92PrkC9pQLOnDHF
-         /c24HPD97rnPyITX9W+zSgz0XBA4jBRQ4S+8GHEAMS9bV+2OHU+WGIgccNEw8Fm9Mhhz
-         pDy7VYoaNc+aSn9NPDIYVuafp7l6i2GPiK9WsUfCbyTmwS70usRqPDehnTYkIX7Gn5vx
-         iiTA==
-X-Gm-Message-State: ALyK8tJya49q0ZTiBwB1exzcyBIqiA3b14CNy/6Wk+8xreGveKPILbVevZKQ6LdJiNzOrfcS
-X-Received: by 10.98.17.152 with SMTP id 24mr16069155pfr.13.1468532991839;
-        Thu, 14 Jul 2016 14:49:51 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=OPlGDdB/EJw+HcGDSwRY8u6HstYeVUiUx3Fnl1sVIwY=;
+        b=DTQW6GFyg/Z0TBX9aRkBKhAWJ25B8YBMW7N23H4YttnmOfG5ctKJmTn7qs0J4Sqi0U
+         0mP2ESedO1kjqpMlR8jpA01DuBXrk1VyiqxyuDifoSMGU2iJykhF+1964fu+6j7m3bNL
+         x8/lMGK7msRsH2pxp7BnjPEc422jiSYQ4OZwVatGCCiRQZgihxY+PSjixVEGm8Yh10+s
+         Q3teu2Z2k4XjxokqnvJaoc6lPcr4ncSDiMPUvjb3WTVDyAUKoIv9+pFVFi3bdeejd4BD
+         vJtKOKqBmGrWPX2eS7+dXUjNQaJaj+VKx0rsEL3Kk6LZKR8j+oEqF8IFmFgwyPEoO5Dk
+         WgUw==
+X-Gm-Message-State: ALyK8tIpzgghYnMIB+Jqwr3AUzr72EPG1mJfd6Of8xtU2F4RwI1Ux1eX7oe/xyNzo56TA3ib
+X-Received: by 10.66.11.234 with SMTP id t10mr26077875pab.66.1468532993809;
+        Thu, 14 Jul 2016 14:49:53 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:c041:4809:7eab:7652])
-        by smtp.gmail.com with ESMTPSA id 71sm7461740pfy.32.2016.07.14.14.49.50
+        by smtp.gmail.com with ESMTPSA id z1sm6963510pab.19.2016.07.14.14.49.53
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 14 Jul 2016 14:49:51 -0700 (PDT)
+        Thu, 14 Jul 2016 14:49:53 -0700 (PDT)
 From:	Stefan Beller <sbeller@google.com>
 To:	git@vger.kernel.org, gitster@pobox.com
 Cc:	dwwang@google.com, e@80x24.org, peff@peff.net,
 	dennis@kaarsemaker.net, jrnieder@gmail.com,
 	Stefan Beller <sbeller@google.com>
-Subject: [PATCHv7 0/4] Push options
-Date:	Thu, 14 Jul 2016 14:49:44 -0700
-Message-Id: <20160714214948.27432-1-sbeller@google.com>
+Subject: [PATCH 1/4] push options: {pre,post}-receive hook learns about push options
+Date:	Thu, 14 Jul 2016 14:49:45 -0700
+Message-Id: <20160714214948.27432-2-sbeller@google.com>
 X-Mailer: git-send-email 2.9.0.247.gf748855.dirty
+In-Reply-To: <20160714214948.27432-1-sbeller@google.com>
+References: <20160714214948.27432-1-sbeller@google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff,
+The environment variable GIT_PUSH_OPTION_COUNT is set to the number of
+push options sent, and GIT_PUSH_OPTION_{0,1,..} is set to the transmitted
+option.
 
-here is the more idiomatic way.
+The code is not executed as the push options are set to NULL, nor is the
+new capability advertised.
 
-Thanks,
-Stefan
+There was some discussion back and forth how to present these push options
+to the user as there are some ways to do it:
 
-diff to v6:
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 9bb9afc..3c9360a 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1499,11 +1499,8 @@ static struct command *read_head_info(struct sha1_array *shallow)
- 	return commands;
- }
- 
--static struct string_list *read_push_options(void)
-+static void read_push_options(struct string_list *options)
- {
--	struct string_list *ret = xmalloc(sizeof(*ret));
--	string_list_init(ret, 1);
--
- 	while (1) {
- 		char *line;
- 		int len;
-@@ -1513,10 +1510,8 @@ static struct string_list *read_push_options(void)
- 		if (!line)
- 			break;
- 
--		string_list_append(ret, line);
-+		string_list_append(options, line);
- 	}
--
--	return ret;
- }
- 
- static const char *parse_pack_header(struct pack_header *hdr)
-@@ -1804,10 +1799,10 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 
- 	if ((commands = read_head_info(&shallow)) != NULL) {
- 		const char *unpack_status = NULL;
--		struct string_list *push_options = NULL;
-+		struct string_list push_options = STRING_LIST_INIT_DUP;
- 
- 		if (use_push_options)
--			push_options = read_push_options();
-+			read_push_options(&push_options);
- 
- 		prepare_shallow_info(&si, &shallow);
- 		if (!si.nr_ours && !si.nr_theirs)
-@@ -1817,18 +1812,16 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 			update_shallow_info(commands, &si, &ref);
- 		}
- 		execute_commands(commands, unpack_status, &si,
--				 push_options);
-+				 &push_options);
- 		if (pack_lockfile)
- 			unlink_or_warn(pack_lockfile);
- 		if (report_status)
- 			report(commands, unpack_status);
- 		run_receive_hook(commands, "post-receive", 1,
--				 push_options);
-+				 &push_options);
- 		run_update_post_hook(commands);
--		if (push_options) {
--			string_list_clear(push_options, 0);
--			free(push_options);
--		}
-+		if (push_options.nr)
-+			string_list_clear(&push_options, 0);
- 		if (auto_gc) {
- 			const char *argv_gc_auto[] = {
- 				"gc", "--auto", "--quiet", NULL,
+Keep all options in one environment variable
+============================================
++ easiest way to implement in Git
+- This would make things hard to parse correctly in the hook.
 
-v6 consisted of 2/4 only:
+Put the options in files instead,
+filenames are in GIT_PUSH_OPTION_FILES
+======================================
++ After a discussion about environment variables and shells, we may not
+  want to put user data into an environment variable (see [1] for example).
++ We could transmit binaries, i.e. we're not bound to C strings as
+  we are when using environment variables to the user.
++ Maybe easier to parse than constructing environment variable names
+  GIT_PUSH_OPTION_{0,1,..} yourself
+- cleanup of the temporary files is hard to do reliably
+- we have race conditions with multiple clients pushing, hence we'd need
+  to use mkstemp. That's not too bad, but still.
 
- Junio,
- please replace v5 2/4 with this patch (I only resend this single patch
- as the other 3 remain as is).
+Use environment variables, but restrict to key/value pairs
+==========================================================
+(When the user pushes a push option `foo=bar`, we'd
+GIT_PUSH_OPTION_foo=bar)
++ very easy to parse for a simple model of push options
+- it's not sufficient for more elaborate models, e.g.
+  it doesn't allow doubles (e.g. cc=reviewer@email)
 
- This only changes read_push_options to not care at all about any
- limitations.
- 
- Thanks,
- Stefan
+Present the options in different environment variables
+======================================================
+(This is implemented)
+* harder to parse as a user, but we have a sample hook for that.
+- doesn't allow binary files
++ allows the same option twice, i.e. is not restrictive about
+  options, except for binary files.
++ doesn't clutter a remote directory with (possibly stale)
+  temporary files
 
-# interdiff to v5:
-# diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-# index 917ac18..9bb9afc 100644
-# --- a/builtin/receive-pack.c
-# +++ b/builtin/receive-pack.c
-# @@ -1505,7 +1505,7 @@ static struct string_list *read_push_options(void)
-#  	string_list_init(ret, 1);
-#  
-#  	while (1) {
-# -		char *line, *lf;
-# +		char *line;
-#  		int len;
-#  
-#  		line = packet_read_line(0, &len);
-# @@ -1513,30 +1513,6 @@ static struct string_list *read_push_options(void)
-#  		if (!line)
-#  			break;
-#  
-# -		/*
-# -		* NEEDSWORK: expose the limitations to be configurable;
-# -		* Once the limit can be lifted, include a way for payloads
-# -		* larger than one pkt, e.g use last byte to indicate if
-# -		* the push option continues in the next packet or implement
-# -		* larger packets.
-# -		*/
-# -		if (len > LARGE_PACKET_MAX - 1) {
-# -			/*
-# -			 * NEEDSWORK: The error message in die(..) is not
-# -			 * transmitted in call cases, so ideally all die(..)
-# -			 * calls are prefixed with rp_error and then we can
-# -			 * combine rp_error && die into one helper function.
-# -			 */
-# -			rp_error("protocol error: server configuration allows push "
-# -				 "options of size up to %d bytes",
-# -				 LARGE_PACKET_MAX - 1);
-# -			die("protocol error: push options too large");
-# -		}
-# -
-# -		lf = strchr(line, '\n');
-# -		if (lf)
-# -			*lf = '\0';
-# -
-#  		string_list_append(ret, line);
-#  	}
+As we first want to focus on getting simple strings to work
+reliably, we go with the last option for now. If we want to
+do transmission of binaries later, we can just attach a
+'side-channel', e.g. "any push option that contains a '\0' is
+put into a file instead of the environment variable and we'd
+have new GIT_PUSH_OPTION_FILES, GIT_PUSH_OPTION_FILENAME_{0,1,..}
+environment variables".
 
-v5:
+We limit the push options for now
+* to not exceed an arbitrary count, and
+* to not exceed an arbitrary size.
 
-Jeff wrote:
-> Junio wrote:
->> I think those extra knobs can come later.  If we are not going to
->> limit with max_options in the end, however, wouldn't it be more
->> natural for the initial iteration without any configuration not to
->> have hard-coded max_options at all?
->
-> Yeah, I am OK with adding restrictive knobs later as a separate topic.
-> As Stefan notes, upstream does not have the other knobs anyway, and IIRC
-> the push-options feature is not even enabled by default.
->
-> -Peff
+This serves two purposes:
+* DoS protection (i.e. one connection can add no more than 32kB
+  now)
+* We need to figure out how to handle large (>64kB). Jeff wrote:
+  > Yes, but people are also happy when they can use a flexible and
+  > standardized tool to do a thing. I'd be more frustrated when I found out
+  > that Git's data-pushing protocol has arbitrary limitations (like, say, I
+  > can't push a data item larger than a single 64K pkt-line), which would
+  > easily just work with something like HTTP POSTs.
+  So to keep a way open in the future to deal with large pay loads,
+  the size is restricted for now.
 
-* now it actually is not a default. ;)
-* removed knobs, but instead we only reject at > LARGE_PACKET_MAX - 1,
+[1] 'Shellshock' https://lwn.net/Articles/614218/
 
-Thanks,
-Stefan
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ Documentation/githooks.txt          | 18 ++++++++++++++
+ builtin/receive-pack.c              | 47 +++++++++++++++++++++++++++----------
+ templates/hooks--pre-receive.sample | 24 +++++++++++++++++++
+ 3 files changed, 76 insertions(+), 13 deletions(-)
+ create mode 100644 templates/hooks--pre-receive.sample
 
-v5:
-git diff origin/sb/push-options:
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 4d8041a..917ac18 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -44,7 +44,7 @@ static struct strbuf fsck_msg_types = STRBUF_INIT;
- static int receive_unpack_limit = -1;
- static int transfer_unpack_limit = -1;
- static int advertise_atomic_push = 1;
--static int advertise_push_options = 1;
-+static int advertise_push_options;
- static int unpack_limit = 100;
- static int report_status;
- static int use_sideband;
-@@ -1501,24 +1501,11 @@ static struct command *read_head_info(struct sha1_array *shallow)
- 
- static struct string_list *read_push_options(void)
- {
--	int i;
- 	struct string_list *ret = xmalloc(sizeof(*ret));
--	/* NEEDSWORK: expose the limitations to be configurable. */
--	int max_options = 32;
--
--	/*
--	 * NEEDSWORK: expose the limitations to be configurable;
--	 * Once the limit can be lifted, include a way for payloads
--	 * larger than one pkt, e.g allow a payload of up to
--	 * LARGE_PACKET_MAX - 1 only, and reserve the last byte
--	 * to indicate whether the next pkt continues with this
--	 * push option.
--	 */
--	int max_size = 1024;
--
- 	string_list_init(ret, 1);
--	for (i = 0; i < max_options; i++) {
--		char *line;
-+
-+	while (1) {
-+		char *line, *lf;
- 		int len;
- 
- 		line = packet_read_line(0, &len);
-@@ -1526,7 +1513,14 @@ static struct string_list *read_push_options(void)
- 		if (!line)
- 			break;
- 
--		if (len > max_size) {
-+		/*
-+		* NEEDSWORK: expose the limitations to be configurable;
-+		* Once the limit can be lifted, include a way for payloads
-+		* larger than one pkt, e.g use last byte to indicate if
-+		* the push option continues in the next packet or implement
-+		* larger packets.
-+		*/
-+		if (len > LARGE_PACKET_MAX - 1) {
- 			/*
- 			 * NEEDSWORK: The error message in die(..) is not
- 			 * transmitted in call cases, so ideally all die(..)
-@@ -1534,20 +1528,17 @@ static struct string_list *read_push_options(void)
- 			 * combine rp_error && die into one helper function.
- 			 */
- 			rp_error("protocol error: server configuration allows push "
--				 "options of size up to %d bytes", max_size);
-+				 "options of size up to %d bytes",
-+				 LARGE_PACKET_MAX - 1);
- 			die("protocol error: push options too large");
- 		}
- 
--		len = strcspn(line, "\n");
--		line[len] = '\0';
-+		lf = strchr(line, '\n');
-+		if (lf)
-+			*lf = '\0';
- 
- 		string_list_append(ret, line);
- 	}
--	if (i == max_options) {
--		rp_error("protocol error: server configuration only allows up "
--		    "to %d push options", max_options);
--		die("protocol error: push options too large");
--	}
- 
- 	return ret;
- }
-diff --git a/t/t5545-push-options.sh b/t/t5545-push-options.sh
-index 8dd3c8e..ea813b9 100755
---- a/t/t5545-push-options.sh
-+++ b/t/t5545-push-options.sh
-@@ -57,6 +57,7 @@ test_refs () {
- 
- test_expect_success 'one push option works for a single branch' '
- 	mk_repo_pair &&
-+	git -C upstream config receive.advertisePushOptions true &&
- 	(
- 		cd workbench &&
- 		test_commit one &&
-@@ -85,6 +86,7 @@ test_expect_success 'push option denied by remote' '
- 
- test_expect_success 'two push options work' '
- 	mk_repo_pair &&
-+	git -C upstream config receive.advertisePushOptions true &&
- 	(
- 		cd workbench &&
- 		test_commit one &&
-
-
-
-cover letter v4:
-
-Thanks Junio, Jeff, Jonathan for discussion and feedback!
-
-I went over the emails again and we seem to agree that the initial design (in v3)
-was sane and the error messages and reporting for corner cases were to be
-dismissed as "it happens as often as 'BUG:' messages appear, so let's not care
-too deeply now".
-
-Thanks,
-Stefan
-
-This is a diff against a modified v3 (it's actually origin/sb/push-options):
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index df1b314..25b5db1 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2410,13 +2410,13 @@ rebase.instructionFormat
- 
- receive.advertiseAtomic::
- 	By default, git-receive-pack will advertise the atomic push
--	capability to its clients. If you don't want this capability
--	to be advertised, set this variable to false.
-+	capability to its clients. If you don't want to advertise this
-+	capability, set this variable to false.
- 
- receive.advertisePushOptions::
--	By default, git-receive-pack will advertise the push options capability
--	to its clients. If you don't want this capability
--	to be advertised, set this variable to false.
-+	By default, git-receive-pack will advertise the push options
-+	capability to its clients. If you don't want to advertise this
-+	capability, set this variable to false.
- 
- receive.autogc::
- 	By default, git-receive-pack will run "git-gc --auto" after
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index b0b1273..e960258 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -156,11 +156,11 @@ already exists on the remote side.
- 	Either all refs are updated, or on error, no refs are updated.
- 	If the server does not support atomic pushes the push will fail.
- 
---L::
-+-o::
- --push-option::
- 	Transmit the given string to the server, which passes them to
--	the pre-receive as well as the post-receive hook. Only C strings
--	containing no new lines are allowed.
-+	the pre-receive as well as the post-receive hook. The given string
-+	must not contain a NUL or LF character.
- 
- --receive-pack=<git-receive-pack>::
- --exec=<git-receive-pack>::
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index c875cde..9565dc3 100644
+index d82e912..9565dc3 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -247,8 +247,14 @@ Both standard output and standard error output are forwarded to
+@@ -247,6 +247,15 @@ Both standard output and standard error output are forwarded to
  'git send-pack' on the other end, so you can simply `echo` messages
  for the user.
  
--The number of push options are available in the variable GIT_PUSH_OPTION_COUNT
--and the options itself are in GIT_PUSH_OPTION_{0,1,...}.
 +The number of push options given on the command line of
 +`git push --push-option=...` can be read from the environment
 +variable `GIT_PUSH_OPTION_COUNT`, and the options themselves are
@@ -391,15 +157,14 @@ index c875cde..9565dc3 100644
 +environment variables will not be set. If the client selects
 +to use push options, but doesn't transmit any, the count variable
 +will be set to zero, `GIT_PUSH_OPTION_COUNT=0`.
- 
++
  [[update]]
  update
-@@ -325,8 +331,14 @@ a sample script `post-receive-email` provided in the `contrib/hooks`
+ ~~~~~~
+@@ -322,6 +331,15 @@ a sample script `post-receive-email` provided in the `contrib/hooks`
  directory in Git distribution, which implements sending commit
  emails.
  
--The number of push options are available in the variable GIT_PUSH_OPTION_COUNT
--and the options itself are in GIT_PUSH_OPTION_{0,1,...}.
 +The number of push options given on the command line of
 +`git push --push-option=...` can be read from the environment
 +variable `GIT_PUSH_OPTION_COUNT`, and the options themselves are
@@ -408,307 +173,160 @@ index c875cde..9565dc3 100644
 +environment variables will not be set. If the client selects
 +to use push options, but doesn't transmit any, the count variable
 +will be set to zero, `GIT_PUSH_OPTION_COUNT=0`.
- 
++
  [[post-update]]
  post-update
-diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
-index b71eda9..4c28d3a 100644
---- a/Documentation/technical/protocol-capabilities.txt
-+++ b/Documentation/technical/protocol-capabilities.txt
-@@ -256,10 +256,11 @@ updated or none.
- push-options
- ------------
- 
--If the server sends the 'push-options' capability it is capable to accept
--push options after the update commands have been sent. If the pushing client
--requests this capability, the server will pass the options to the pre and post
--receive hooks that process this push request.
-+If the server sends the 'push-options' capability it is able to accept
-+push options after the update commands have been sent, but before the
-+packfile is streamed. If the pushing client requests this capability,
-+the server will pass the options to the pre- and post- receive hooks
-+that process this push request.
- 
- allow-tip-sha1-in-want
- ----------------------
-diff --git a/builtin/push.c b/builtin/push.c
-index 1b5d205..3bb9d6b 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -508,6 +508,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 	int rc;
- 	const char *repo = NULL;	/* default repository */
- 	static struct string_list push_options = STRING_LIST_INIT_DUP;
-+	static struct string_list_item *item;
- 
- 	struct option options[] = {
- 		OPT__VERBOSITY(&verbosity),
-@@ -573,6 +574,10 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		set_refspecs(argv + 1, argc - 1, repo);
- 	}
- 
-+	for_each_string_list_item(item, &push_options)
-+		if (strchr(item->string, '\n'))
-+			die(_("push options must not have new line characters"));
-+
- 	rc = do_push(repo, flags, &push_options);
- 	if (rc == -1)
- 		usage_with_options(push_usage, options);
+ ~~~~~~~~~~~
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index e71041a..754db6e 100644
+index 15c323a..6cdd2c6 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -214,12 +214,12 @@ static void show_ref(const char *path, const unsigned char *sha1)
- 			      "report-status delete-refs side-band-64k quiet");
- 		if (advertise_atomic_push)
- 			strbuf_addstr(&cap, " atomic");
--		if (advertise_push_options)
--			strbuf_addstr(&cap, " push-options");
- 		if (prefer_ofs_delta)
- 			strbuf_addstr(&cap, " ofs-delta");
- 		if (push_cert_nonce)
- 			strbuf_addf(&cap, " push-cert=%s", push_cert_nonce);
-+		if (advertise_push_options)
-+			strbuf_addstr(&cap, " push-options");
- 		strbuf_addf(&cap, " agent=%s", git_user_agent_sanitized());
- 		packet_write(1, "%s %s%c%s\n",
- 			     sha1_to_hex(sha1), path, 0, cap.buf);
-@@ -584,7 +584,7 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
+@@ -550,8 +550,16 @@ static void prepare_push_cert_sha1(struct child_process *proc)
+ 	}
+ }
+ 
++struct receive_hook_feed_state {
++	struct command *cmd;
++	int skip_broken;
++	struct strbuf buf;
++	const struct string_list *push_options;
++};
++
+ typedef int (*feed_fn)(void *, const char **, size_t *);
+-static int run_and_feed_hook(const char *hook_name, feed_fn feed, void *feed_state)
++static int run_and_feed_hook(const char *hook_name, feed_fn feed,
++			     struct receive_hook_feed_state *feed_state)
+ {
+ 	struct child_process proc = CHILD_PROCESS_INIT;
+ 	struct async muxer;
+@@ -567,6 +575,16 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed, void *feed_sta
  	proc.argv = argv;
  	proc.in = -1;
  	proc.stdout_to_stderr = 1;
--	if (feed_state && feed_state->push_options) {
 +	if (feed_state->push_options) {
- 		int i;
- 		for (i = 0; i < feed_state->push_options->nr; i++)
- 			argv_array_pushf(&proc.env_array,
-@@ -592,7 +592,8 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
- 				feed_state->push_options->items[i].string);
- 		argv_array_pushf(&proc.env_array, "GIT_PUSH_OPTION_COUNT=%d",
- 				 feed_state->push_options->nr);
--	}
++		int i;
++		for (i = 0; i < feed_state->push_options->nr; i++)
++			argv_array_pushf(&proc.env_array,
++				"GIT_PUSH_OPTION_%d=%s", i,
++				feed_state->push_options->items[i].string);
++		argv_array_pushf(&proc.env_array, "GIT_PUSH_OPTION_COUNT=%d",
++				 feed_state->push_options->nr);
 +	} else
 +		argv_array_pushf(&proc.env_array, "GIT_PUSH_OPTION_COUNT");
  
  	if (use_sideband) {
  		memset(&muxer, 0, sizeof(muxer));
-@@ -1498,7 +1499,7 @@ static struct command *read_head_info(struct sha1_array *shallow)
- 	return commands;
+@@ -606,12 +624,6 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed, void *feed_sta
+ 	return finish_command(&proc);
  }
  
--static struct string_list *read_push_options()
-+static struct string_list *read_push_options(void)
- {
- 	int i;
- 	struct string_list *ret = xmalloc(sizeof(*ret));
-@@ -1526,18 +1527,28 @@ static struct string_list *read_push_options()
- 		if (!line)
- 			break;
- 
--		if (len > max_size)
--			die("protocol error: server configuration allows push "
--			    "options of size up to %d bytes", max_size);
-+		if (len > max_size) {
-+			/*
-+			 * NEEDSWORK: The error message in die(..) is not
-+			 * transmitted in call cases, so ideally all die(..)
-+			 * calls are prefixed with rp_error and then we can
-+			 * combine rp_error && die into one helper function.
-+			 */
-+			rp_error("protocol error: server configuration allows push "
-+				 "options of size up to %d bytes", max_size);
-+			die("protocol error: push options too large");
-+		}
- 
- 		len = strcspn(line, "\n");
- 		line[len] = '\0';
- 
- 		string_list_append(ret, line);
- 	}
--	if (i == max_options)
--		die("protocol error: server configuration only allows up "
-+	if (i == max_options) {
-+		rp_error("protocol error: server configuration only allows up "
- 		    "to %d push options", max_options);
-+		die("protocol error: push options too large");
-+	}
- 
- 	return ret;
- }
-diff --git a/send-pack.c b/send-pack.c
-index c943560..3a842ac 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -277,13 +277,10 @@ static int generate_push_cert(struct strbuf *req_buf,
- 	}
- 	if (push_cert_nonce[0])
- 		strbuf_addf(&cert, "nonce %s\n", push_cert_nonce);
--	strbuf_addstr(&cert, "\n");
+-struct receive_hook_feed_state {
+-	struct command *cmd;
+-	int skip_broken;
+-	struct strbuf buf;
+-};
 -
--	if (args->push_options) {
-+	if (args->push_options)
- 		for_each_string_list_item(item, args->push_options)
- 			strbuf_addf(&cert, "push-option %s\n", item->string);
--		strbuf_addstr(&cert, "\n");
--	}
-+	strbuf_addstr(&cert, "\n");
+ static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
+ {
+ 	struct receive_hook_feed_state *state = state_;
+@@ -634,8 +646,10 @@ static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
+ 	return 0;
+ }
  
- 	for (ref = remote_refs; ref; ref = ref->next) {
- 		if (check_to_send_update(ref, args) < 0)
+-static int run_receive_hook(struct command *commands, const char *hook_name,
+-			    int skip_broken)
++static int run_receive_hook(struct command *commands,
++			    const char *hook_name,
++			    int skip_broken,
++			    const struct string_list *push_options)
+ {
+ 	struct receive_hook_feed_state state;
+ 	int status;
+@@ -646,6 +660,7 @@ static int run_receive_hook(struct command *commands, const char *hook_name,
+ 	if (feed_receive_hook(&state, NULL, NULL))
+ 		return 0;
+ 	state.cmd = commands;
++	state.push_options = push_options;
+ 	status = run_and_feed_hook(hook_name, feed_receive_hook, &state);
+ 	strbuf_release(&state.buf);
+ 	return status;
+@@ -1316,7 +1331,8 @@ cleanup:
+ 
+ static void execute_commands(struct command *commands,
+ 			     const char *unpacker_error,
+-			     struct shallow_info *si)
++			     struct shallow_info *si,
++			     const struct string_list *push_options)
+ {
+ 	struct command *cmd;
+ 	unsigned char sha1[20];
+@@ -1335,7 +1351,7 @@ static void execute_commands(struct command *commands,
+ 
+ 	reject_updates_to_hidden(commands);
+ 
+-	if (run_receive_hook(commands, "pre-receive", 0)) {
++	if (run_receive_hook(commands, "pre-receive", 0, push_options)) {
+ 		for (cmd = commands; cmd; cmd = cmd->next) {
+ 			if (!cmd->error_string)
+ 				cmd->error_string = "pre-receive hook declined";
+@@ -1756,6 +1772,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 
+ 	if ((commands = read_head_info(&shallow)) != NULL) {
+ 		const char *unpack_status = NULL;
++		struct string_list push_options = STRING_LIST_INIT_DUP;
+ 
+ 		prepare_shallow_info(&si, &shallow);
+ 		if (!si.nr_ours && !si.nr_theirs)
+@@ -1764,13 +1781,17 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 			unpack_status = unpack_with_sideband(&si);
+ 			update_shallow_info(commands, &si, &ref);
+ 		}
+-		execute_commands(commands, unpack_status, &si);
++		execute_commands(commands, unpack_status, &si,
++				 &push_options);
+ 		if (pack_lockfile)
+ 			unlink_or_warn(pack_lockfile);
+ 		if (report_status)
+ 			report(commands, unpack_status);
+-		run_receive_hook(commands, "post-receive", 1);
++		run_receive_hook(commands, "post-receive", 1,
++				 &push_options);
+ 		run_update_post_hook(commands);
++		if (push_options.nr)
++			string_list_clear(&push_options, 0);
+ 		if (auto_gc) {
+ 			const char *argv_gc_auto[] = {
+ 				"gc", "--auto", "--quiet", NULL,
 diff --git a/templates/hooks--pre-receive.sample b/templates/hooks--pre-receive.sample
-index e4d3edc..a1fd29e 100644
---- a/templates/hooks--pre-receive.sample
+new file mode 100644
+index 0000000..a1fd29e
+--- /dev/null
 +++ b/templates/hooks--pre-receive.sample
-@@ -6,13 +6,15 @@
- #
- # To enable this hook, rename this file to "pre-receive".
- 
--if test -n "$GIT_PUSH_OPTION_COUNT"; then
+@@ -0,0 +1,24 @@
++#!/bin/sh
++#
++# An example hook script to make use of push options.
++# The example simply echoes all push options that start with 'echoback='
++# and rejects all pushes when the "reject" push option is used.
++#
++# To enable this hook, rename this file to "pre-receive".
++
 +if test -n "$GIT_PUSH_OPTION_COUNT"
 +then
- 	i=0
--	while test "$i" -lt "$GIT_PUSH_OPTION_COUNT"; do
++	i=0
 +	while test "$i" -lt "$GIT_PUSH_OPTION_COUNT"
 +	do
- 		eval "value=\$GIT_PUSH_OPTION_$i"
- 		case "$value" in
- 		echoback=*)
--			echo "echo from the pre-receive-hook ${value#*=}" >&2
++		eval "value=\$GIT_PUSH_OPTION_$i"
++		case "$value" in
++		echoback=*)
 +			echo "echo from the pre-receive-hook: ${value#*=}" >&2
- 			;;
- 		reject)
- 			exit 1
-
-
-Cover letter v3:
-================
-
-This is not marked for RFC any more, as I do not recall any open points
-left for discussion. This addresses the only reply from Eric Wong on patch 3:
-
-diff to v2:
-diff --git a/send-pack.c b/send-pack.c
-index e328276..c943560 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -536,7 +536,8 @@ int send_pack(struct send_pack_args *args,
- 
-                for_each_string_list_item(item, args->push_options)
-                        packet_buf_write(&sb, "%s", item->string);
--                       write_or_die(out, sb.buf, sb.len);
-+
-+               write_or_die(out, sb.buf, sb.len);
-                packet_flush(out);
-                strbuf_release(&sb);
-        }
-diff --git a/transport.c b/transport.c
-index 598bd1f..0298be1 100644
---- a/transport.c
-+++ b/transport.c
-@@ -641,7 +641,6 @@ struct transport *transport_get(struct remote *remote, const char *url)
-        struct transport *ret = xcalloc(1, sizeof(*ret));
- 
-        ret->progress = isatty(2);
--       ret->push_options = NULL;
- 
-        if (!remote)
-                die("No remote provided to transport_get()");
-
-Cover letter v2:
-================
-
-Allow a user to pass information along a push to the pre/post-receive hook
-on the remote.
-
-Jeff writes on v1:
-> Whereas in Dennis's patches, it was about specific information directly
-> related to the act of pushing.
-
-This allows to transmit arbitrary information as the backends of $VENDOR
-may have different options available related to the direct act of pushing.
-
-Thanks,
-Stefan
-
-Cover letter v1:
-================
-
-Allow a user to pass information along a push to the pre/post-receive hook
-on the remote.
-
-When using a remote that is more than just a plain Git host (e.g. Gerrit,
-Git{hub/lab}, etc) this may become more obvious: The (server backend specific)
-push options can instruct the server to:
-* open a pull request
-* send out emails asking for review
-* (un)trigger continuous integration
-* set priority for continuous integration (i.e. bots pushing may ask to be
-  treated with lower priority compared to humans)
-* ... 
-
-Most of these actions can be done on the client side as well,
-but in these remote-centric workflows it is easier to do that on the remote,
-which is why we need to transport the information there.
-
-More concrete examples:
-* When you want a change in Gerrit to be submitted to refs/heads/master, you
-  push instead to a magic branch refs/for/master and Gerrit will create a change
-  for you (similar to a pull request). Instead we could imagine that you push
-  to a magical refs/heads/master with a push option "create-change".
-  
-* When pushing to Gerrit you can already attach some of this information by
-  adding a '%' followed by the parameter to the ref, i.e. when interacting with
-  Gerrit it is possible to do things like[1]:
-    
-    git push origin HEAD:refs/for/master%draft%topic=example%cc=jon.doe@example.org
-  
-  This is not appealing to our users as it looks like hacks upon hacks to make
-  it work. It would read better if it was spelled as:
-  
-  git push origin HEAD:refs/for/master \
-      --push-option draft \
-      --push-option topic=example \
-      --push-option cc=jon.doe@example.org
-      
-  (with a short form that is even easier to type,
-   but this is is more intuitive already)
-
-This is a patch series to Git core, which is developed at the same time
-as a change is proposed to JGit by Dan Wang, see [2].
-
-This code is also available at [3].
-
-Thanks,
-Stefan
-
-[1] Not all Gerrit '%' options are documented, so here is a link to source code instead :(
-https://gerrit.googlesource.com/gerrit/+/refs/heads/master/gerrit-server/src/main/java/com/google/gerrit/server/git/ReceiveCommits.java#1141
-
-[2] https://git.eclipse.org/r/#/c/74570/ 
- 
-[3] https://github.com/stefanbeller/git/tree/pushoptions
-
-Stefan Beller (4):
-  push options: {pre,post}-receive hook learns about push options
-  receive-pack: implement advertising and receiving push options
-  push: accept push options
-  add a test for push options
-
- Documentation/config.txt                          |  7 +-
- Documentation/git-push.txt                        |  8 ++-
- Documentation/githooks.txt                        |  4 ++
- Documentation/technical/pack-protocol.txt         | 10 +--
- Documentation/technical/protocol-capabilities.txt |  8 +++
- builtin/push.c                                    | 16 ++++-
- builtin/receive-pack.c                            | 85 +++++++++++++++++++----
- send-pack.c                                       | 29 ++++++++
- send-pack.h                                       |  3 +
- t/t5544-push-options.sh                           | 85 +++++++++++++++++++++++
- transport.c                                       |  2 +
- transport.h                                       |  7 ++
- 12 files changed, 242 insertions(+), 22 deletions(-)
- create mode 100755 t/t5544-push-options.sh
-
++			;;
++		reject)
++			exit 1
++		esac
++		i=$((i + 1))
++	done
++fi
 -- 
-2.9.0.141.gdd65b60
+2.9.0.247.gf748855.dirty
 
