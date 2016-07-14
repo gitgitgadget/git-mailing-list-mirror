@@ -2,72 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4084C20196
-	for <e@80x24.org>; Thu, 14 Jul 2016 16:33:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CD2520196
+	for <e@80x24.org>; Thu, 14 Jul 2016 16:45:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752023AbcGNQd2 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 12:33:28 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58993 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751293AbcGNQd1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 12:33:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D6C3E2A835;
-	Thu, 14 Jul 2016 12:33:25 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M6TbQ386FMIVKKeMxk8zM08r708=; b=UOMESy
-	L0wFVsnFaiJegvTCRI/YVbYGllk//gH4vytb8mhYwLJe8Cay752p2AZAPds5lfd6
-	m39NKd9sEpLbBYlWHtkSJ2yepJYsN0peCyQewTg/bCnbwK4VyWTQ9WeTZqMZ2uLA
-	9sfjXyaRRMP9vc6YBMY251ShRClGc8BQMgzOk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gAAZhMtBqznZOMYnJ2K9kiu+nmHQ/QHR
-	uyDJqoQUzibcABEeb/uaHztL1TBxfDT807ATkqk/rylNW38BeDS7y95gMJ9FH/Xi
-	+lgLoRBd1qQ2PEqcgeRW+vFA4mof22GFMRF94yTpOZ5ayPSdvGRHDCuWkBpMjC0V
-	/PwAAhKdlRo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CD3DB2A833;
-	Thu, 14 Jul 2016 12:33:25 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 54B542A832;
-	Thu, 14 Jul 2016 12:33:25 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH 1/3] fsck: refactor how to describe objects
-References: <cover.1468510191.git.johannes.schindelin@gmx.de>
-	<75cd5de6b5a027a32d6ed6b922aa601226d464e5.1468510191.git.johannes.schindelin@gmx.de>
-Date:	Thu, 14 Jul 2016 09:33:23 -0700
-In-Reply-To: <75cd5de6b5a027a32d6ed6b922aa601226d464e5.1468510191.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Thu, 14 Jul 2016 17:30:19 +0200
-	(CEST)")
-Message-ID: <xmqqinw8rxgs.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751662AbcGNQpw (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 12:45:52 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:33898 "EHLO bsmtp3.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751265AbcGNQpv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 12:45:51 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3rr1mD4XMcz5tlK;
+	Thu, 14 Jul 2016 18:45:48 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 8CF4452A1;
+	Thu, 14 Jul 2016 18:45:47 +0200 (CEST)
+Subject: Re: [PATCH v4 2/5] t5000: test tar files that overflow ustar headers
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>
+References: <20160630090614.GA16725@sigill.intra.peff.net>
+ <20160630090857.GB17463@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1607141745420.6426@virtualbox>
+Cc:	git@vger.kernel.org, =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+From:	Johannes Sixt <j6t@kdbg.org>
+Message-ID: <19a2d02e-3918-3bc9-db34-66e12ab950e4@kdbg.org>
+Date:	Thu, 14 Jul 2016 18:45:47 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AFDFD2F4-49E0-11E6-B8D2-89D312518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <alpine.DEB.2.20.1607141745420.6426@virtualbox>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
-> In many places, we refer to objects via their SHA-1s. Let's abstract
-> that into a function.
+Am 14.07.2016 um 17:47 schrieb Johannes Schindelin:
+> On Thu, 30 Jun 2016, Jeff King wrote:
+>> The ustar format only has room for 11 (or 12, depending on
+>> some implementations) octal digits for the size and mtime of
+>> each file. For values larger than this, we have to add pax
+>> extended headers to specify the real data, and git does not
+>> yet know how to do so.
+>>
+>> [...]
+>>  t/t5000/19f9c8273ec45a8938e6999cb59b3ff66739902a | Bin 0 -> 2048 bytes
 >
-> For the moment, it does nothing else than what we did previously: print
-> out the 40-digit hex string. But that will change over the course of the
-> next patches.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+> It appears that this blob cannot be read when sizeof(unsigned long) == 4.
+> This happens to break the t5000 test on Windows, where that comparison
+> holds true.
 
-Makes sense.
+The problem occurs in parse_sha1_header_extended(), where the 
+calculation of the size in the object header overflows our 32-bit 
+unsigned long.
+
+-- Hannes
+
