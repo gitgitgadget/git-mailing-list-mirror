@@ -2,68 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94478203BD
-	for <e@80x24.org>; Thu, 14 Jul 2016 22:38:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06FEA203BD
+	for <e@80x24.org>; Thu, 14 Jul 2016 22:38:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751426AbcGNWin (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 18:38:43 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50821 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751503AbcGNWim (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 18:38:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id F12592CAF8;
-	Thu, 14 Jul 2016 18:38:40 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Or2lKMG+KWeqNerojm6wWMBOa+8=; b=q6DQqL
-	cu6XBuNK6RFk2DwVXAF3iFnrqCa2cUI6VHBrMVhglYcSqGRC1OfyecvdbQDKVxSg
-	hDKB/vSE4aQNEORySwJeXFr7+yYb7dZUaRzcrBh+wVbZRXlBsGZKehl8fdg5JOLU
-	hFBzzMDx7hO1Q8EJhZAHNSMTUt1cA88hmaWLM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MnSxRanihye6cm2tm2mcR0qLiWx0kuhC
-	ups3xgH5ic8s44V0tXK+TETdoSmFKJb6MNlIkwPFwmAbLYncqkCTp+MhIu00gW2O
-	/oaI68w43gL8FlPyJvXUkNUIw72RqADhWdOPutQqyhqVtf3t90A53UQCCkS/0o34
-	zOkFdfc4qpo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E75252CAF7;
-	Thu, 14 Jul 2016 18:38:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 72CD02CAF6;
-	Thu, 14 Jul 2016 18:38:40 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	git@vger.kernel.org, dwwang@google.com, e@80x24.org, peff@peff.net,
-	dennis@kaarsemaker.net, jrnieder@gmail.com
-Subject: Re: [PATCHv7 0/4] Push options
-References: <20160714214948.27432-1-sbeller@google.com>
-Date:	Thu, 14 Jul 2016 15:38:38 -0700
-In-Reply-To: <20160714214948.27432-1-sbeller@google.com> (Stefan Beller's
-	message of "Thu, 14 Jul 2016 14:49:44 -0700")
-Message-ID: <xmqqh9bronf5.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752406AbcGNWir (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 18:38:47 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45086 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752092AbcGNWiq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 18:38:46 -0400
+Received: (qmail 19865 invoked by uid 102); 14 Jul 2016 22:38:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jul 2016 18:38:46 -0400
+Received: (qmail 10647 invoked by uid 107); 14 Jul 2016 22:39:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jul 2016 18:39:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2016 18:38:43 -0400
+Date:	Thu, 14 Jul 2016 18:38:43 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v4 2/5] t5000: test tar files that overflow ustar headers
+Message-ID: <20160714223843.GA22196@sigill.intra.peff.net>
+References: <20160630090614.GA16725@sigill.intra.peff.net>
+ <20160630090857.GB17463@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1607141745420.6426@virtualbox>
+ <19a2d02e-3918-3bc9-db34-66e12ab950e4@kdbg.org>
+ <xmqqa8hkrvu5.fsf@gitster.mtv.corp.google.com>
+ <3d71cf3a-44c7-0620-0375-fb7ecf2fac13@kdbg.org>
+ <20160714213222.GA20645@sigill.intra.peff.net>
+ <xmqqpoqfonrx.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B658AD76-4A13-11E6-BA6F-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqpoqfonrx.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Thu, Jul 14, 2016 at 03:30:58PM -0700, Junio C Hamano wrote:
 
-> Jeff,
->
-> here is the more idiomatic way.
->
-> Thanks,
-> Stefan
+> > If we move to time_t everywhere, I think we'll need an extra
+> > TIME_T_IS_64BIT, but we can cross that bridge when we come to it.
+> >
+> > Likewise I think we'll need SIZE_T_IS_64BIT eventually (for real 32-bit
+> > systems; LLP64 systems like Windows will then be able to run the test).
+> 
+> I guess I wrote essentially the same thing before refreshing my
+> Inbox.
+> 
+> I am a bit fuzzy between off_t and size_t; the former is for the
+> size of things you see on the filesystem, while the latter is for
+> you to give malloc(3).  I would have thought that off_t is the type
+> we would want at the end of the raw object header, denoting the size
+> of a blob object when deflated, which could be larger than the size
+> of a region of memory we can get from malloc(3), in which case we
+> would use the streaming interface.
 
-Looks good to me.  Thanks.
+Yeah, your understanding is right (s/deflated/inflated/). I agree that
+off_t is probably a better size for blobs. Traditionally git assumed any
+object could fit in memory. The streaming interface helps that somewhat,
+but I think there are cases where we still must load a blob (e.g., if it
+is stored as a delta). In theory that never happens because of
+core.bigfilethreshold, but you may get a packfile from somebody with a
+higher threshold than you.
+
+I wouldn't be surprised if there are other cases that aren't smart
+enough to use the streaming interface yet, but the solution there is to
+make them smarter. :)
+
+So off_t is probably better. We do need to be careful, though, when
+allocating objects. E.g., this:
+
+  off_t size;
+  struct git_istream *stream;
+  void *buf;
+
+  stream = open_istream(sha1, &type, &size, NULL);
+  buf = xmalloc(size);
+  while (1) {
+	/* read stream into buf */
+  }
+
+is a security hole when size_t is less than off_t (it gets truncated in
+the call to xmalloc, which allocates too few bytes). This is a toy
+example, obviously, but it's something to watch out for.
+
+-Peff
