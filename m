@@ -2,87 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F12B203BD
-	for <e@80x24.org>; Thu, 14 Jul 2016 22:20:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A95C4203BD
+	for <e@80x24.org>; Thu, 14 Jul 2016 22:27:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751471AbcGNWUw (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 18:20:52 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45062 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750699AbcGNWUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 18:20:50 -0400
-Received: (qmail 19077 invoked by uid 102); 14 Jul 2016 22:20:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jul 2016 18:20:51 -0400
-Received: (qmail 10413 invoked by uid 107); 14 Jul 2016 22:21:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jul 2016 18:21:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2016 18:20:47 -0400
-Date:	Thu, 14 Jul 2016 18:20:47 -0400
-From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 2/2] archive-tar: huge offset and future timestamps
- would not work on 32-bit
-Message-ID: <20160714222047.GA21868@sigill.intra.peff.net>
-References: <xmqq7fcoot6t.fsf@gitster.mtv.corp.google.com>
- <20160714204357.2628-1-gitster@pobox.com>
- <20160714204357.2628-3-gitster@pobox.com>
+	id S1751348AbcGNW1F (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 18:27:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60207 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750699AbcGNW1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 18:27:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F0BF2BBB3;
+	Thu, 14 Jul 2016 18:27:02 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hYjHvHN4fAzWWn0aJG8FQQPdf9o=; b=kgHVyG
+	GwxVRW2cHWULwk3x4I3fNxUA42pYCvrf3faO/7gYPlV9dPqsRlebmVsZTu3ACs6/
+	aapESug2RS5FTbuTGuyl1icPJlPtWiHOZseHi3RjocgV8fUw1jYPjPJYDFF+XZMH
+	9l/3yVNYN1D59ovzPz2gqUemoZUAGhCagtZEg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sZA2J4MdxpaZV+Ko0oZvA3UNaO98jExK
+	U7zLMoGuiQ9QGsnjLgLY0RSOChrPaPF017c6l2l/UKoUtTdoTI18jOEcvvbzg8sG
+	AmR7Uui3TVoMZ2yNP0aSL0OJYrG+tHAzFjJqkrhUuZdht9Xk44UKevJ+myzPSUgE
+	Vh8eYymDxUs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 774382BBB1;
+	Thu, 14 Jul 2016 18:27:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 018DE2BBAF;
+	Thu, 14 Jul 2016 18:27:02 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Sixt <j6t@kdbg.org>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v4 2/5] t5000: test tar files that overflow ustar headers
+References: <20160630090614.GA16725@sigill.intra.peff.net>
+	<20160630090857.GB17463@sigill.intra.peff.net>
+	<alpine.DEB.2.20.1607141745420.6426@virtualbox>
+	<19a2d02e-3918-3bc9-db34-66e12ab950e4@kdbg.org>
+	<xmqqa8hkrvu5.fsf@gitster.mtv.corp.google.com>
+	<3d71cf3a-44c7-0620-0375-fb7ecf2fac13@kdbg.org>
+Date:	Thu, 14 Jul 2016 15:26:59 -0700
+In-Reply-To: <3d71cf3a-44c7-0620-0375-fb7ecf2fac13@kdbg.org> (Johannes Sixt's
+	message of "Thu, 14 Jul 2016 22:52:55 +0200")
+Message-ID: <xmqqtwfronyk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160714204357.2628-3-gitster@pobox.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1606B472-4A12-11E6-BE68-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 14, 2016 at 01:43:57PM -0700, Junio C Hamano wrote:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> As we are not yet moving everything to size_t but still using ulong
-> internally when talking about the size of object, platforms with
-> 32-bit long will not be able to produce tar archive with 4GB+ file,
-> and cannot grok 077777777777UL as a constant.  Disable the extended
-> header feature and do not test it on them.
+> My first thought was that this is not warranted because t0006 is about
+> commit time stamps, but the huge-tar breakage is file sizes, and the
+> cases should be treated differently.
+>
+> But on second thought, under the hood, both boil down to the size of
+> unsigned long in our implementation. It may make sense to tie both
+> cases to the same prerequisite.
+>
+> On third thought, however, I think the two requirements could diverge
+> in the future. The file size case should depend on the size of
+> size_t. The timestamp case may become dependent on the size of time_t
+> if we decide to move timestamp handling away from unsigned long: in
+> modern(!) Microsoft SDKs, time_t is 64 bits, but unsigned long is 32
+> bits, in both the 32-bit and 64-bit environments!
 
-I tried testing this in a VM with 32-bit Debian. It fixes the build
-problems, but t5000 still fails.
+I had the same three toughts, but this being a 'maint' material
+stopped me going too deep into them.  Right now, "long being 32-bit"
+is the source of all of these issues, and we would solve them on the
+development track (not necessarily during this cycle) by deciding on
+more appropriate types.  Timestamps may become time_t, and object
+sizes may become off_t, such changes will come separately, and each
+of them would need to lift "unless long is 64-bit, skip this test"
+limitation and swap it with something else.
 
-I think you need to add the prereq to one more test:
-
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index 699355b..80b2387 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -347,7 +347,7 @@ test_lazy_prereq TAR_HUGE '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'set up repository with huge blob' '
-+test_expect_success LONG_IS_64BIT 'set up repository with huge blob' '
- 	obj_d=19 &&
- 	obj_f=f9c8273ec45a8938e6999cb59b3ff66739902a &&
- 	obj=${obj_d}${obj_f} &&
-
-We shouldn't be accessing the blob in update-index, but I think "git
-commit" does so for the diff (and then after seeing the size says
-"whoops, that's binary", but even the size check fails on 32-bit
-systems).
-
-So another solution would be to use "commit -q" at the end of that test.
-I don't think there's much point, though; it's just setting up a state
-for other tests that need LONG_IS_64BIT.
-
-As an aside, it is inadvertently testing that our diff code does not
-bother to read the whole blob in such a case. Which maybe argues for
-using "commit -q", just because that is not a thing we are intending to
-test here.
-
--Peff
