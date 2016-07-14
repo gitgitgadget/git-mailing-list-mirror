@@ -7,245 +7,261 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B07220196
-	for <e@80x24.org>; Thu, 14 Jul 2016 15:30:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95A6B20196
+	for <e@80x24.org>; Thu, 14 Jul 2016 15:31:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751552AbcGNPam (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 11:30:42 -0400
-Received: from mout.gmx.net ([212.227.15.19]:49416 "EHLO mout.gmx.net"
+	id S1751276AbcGNPbA (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 11:31:00 -0400
+Received: from mout.gmx.net ([212.227.15.15]:51483 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751367AbcGNPak (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 11:30:40 -0400
-Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M3AWN-1b48NS0T5T-00swl0; Thu, 14 Jul 2016 17:30:33
+	id S1751305AbcGNPa6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 11:30:58 -0400
+Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LlVZv-1amSyN2a8N-00bKj9; Thu, 14 Jul 2016 17:30:48
  +0200
-Date:	Thu, 14 Jul 2016 17:30:24 +0200 (CEST)
+Date:	Thu, 14 Jul 2016 17:30:47 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/3] fsck_walk(): optionally name objects on the go
+Subject: [PATCH 3/3] fsck: optionally show more helpful info for broken
+ links
 In-Reply-To: <cover.1468510191.git.johannes.schindelin@gmx.de>
-Message-ID: <f5ef009d2be6bf0137b33ac9ce85ff0ce03a48e8.1468510191.git.johannes.schindelin@gmx.de>
+Message-ID: <2cc123136b25cae12dce2a6f30fe0ba5ae8dc811.1468510191.git.johannes.schindelin@gmx.de>
 References: <cover.1468510191.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-508294682-1468510233=:6426"
-X-Provags-ID: V03:K0:Fs70ujW8jX/ePThOPLX6H6exg5t/PYeNG/GVKZ0kSstOcjMlgSd
- qrGjADsMc7ttkRIJqjGJqIpzQj1laStQuc8bQ0SCFMSQ1I7hqxGlwUfWBPC8R9YOjABg29E
- YXk6LnhO2pJQWGou4aBfiOQI/gk9YJ5loIVuGcmO/taXy48qCEpDKxOsU7RKx3bu4x+FKl6
- fgazPVMsWUoUe95MDSrgw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:i9uwkQyvSoo=:fV6adSVa8A+8g83sjZEfmE
- ewu6Qh7rGQ0+RXVvMczN/JfuiW14+Ers/QMwK5hwNvb1AWQ1mj40wC3/AtaJW0LBEtgajeXl2
- 3y8T6RDC/1j1YoOJud5mRVGfnWS6/ZhyWHXIhUg6GMPJ4RybpKOQahuBoZ9WX/ZDix2uv47zx
- haceaNIHzqenAc8RqN4eh/B0nPX8HGe8NIeRiCusCp4BAwCzfY2HVDirM83fgKCSjNZXlGqQW
- bulp+lccnpTIV9R8FWkdJHZ/CdLAI8Qa7uNV/c8RpX4D69Y4ksQWmyPoIL2YWe5CgpDA8uBdy
- A8o7XktmM3LOzBhUG7PiGoOuWRDUijoaR75LxLnrnbUAqq1vzE+W1TBlpRdJ9ooE30H46wo3H
- yjjlp5ResV1ZA3i1/q0JzrKFsLnl4CCMyUZ+PU1UETJCQZjtO7a/zb//oRbQrsR3M9qZvyT/W
- XHIi3j4uoQgRWKxMCDHeJVtiFvr+07XkkEDbJv0i+7tH+4oeLCtEdO1EvDZdKp1BuPbgGi7ZP
- QTT5QSZhloUe3IkXWGO1kXFWKtSgfFqAZlRsjnn85i3h7ly+hUbevB+myCxzWPlPwgWQ2A1HZ
- C6Kyb7bestGiVIyq+tgAgys1YDrig0q1dJjFgoA2zvJOrEekc/BjYNZmc/Z73sz8B94t/Z1SG
- 2Dn4jUzqsANz/LegF52mSv2A1KO7gyC/RSAe2KTWE9TtRAWMBdxeiG6XEtgMZ+wKV426C3li9
- CXgRu7+QIOsu22uEhsctePYMqY7V5mWeMxYKZ6sr2ZgiwGy4bSmgldO9XGfjyrml775+D3v4u
- a5IMPvK
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:QORa9S9+Z7rYSUgikKuiv4Zr5EmdPsr6TfuzdU6hs6x83N7f8uM
+ I50QDh6cdXrFqs194M6YtBtvwIiaNJPGnuQLmNec4r+KTc5JQlOaAYVwR6YISJhXXeYG+k6
+ et9HOmaCOW/0k/jxl4PnJj8ebJHJ00OpLvt4GXYW7QSJZS8D+8buq+BHz8q69DQTXesox7V
+ MZYTlacewvkcuP/a1RWfA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:Iyzy1+GSjuI=:nGCKHhljzxfZCi6GsPSxo9
+ iLNY0dku+L0yBK/nt3y+ZBkEFwn+6O4U2m3hJRKKesXGDt/usqGC7XWUs9ioRQ11Io13299H3
+ mpaPxDWi9U6FRWrw7oIZ7/e7vnnedNL85ZntFt1Txf/eVxU3HVqeTMRPT1EMcKytgBYz5XSCs
+ zhaVbZCegm6/KwcDvsiaAp8hvSEopiI3ZCAenEhL8h76xhIA/yW80mv5HvJQWooy0T1J8yAFZ
+ 8DW2+eGLKurp/Kqc/2mk9OhcuggeFOmqdGgIiaJpUb1JitMrawP1qHaeDWjJbaLuCS9DRw/Sq
+ kSNyWEz5ouHOqQP3YqwSKM5K/1J1uCALGykprDdnst4az2y/826CugRS+IWHh34zmM5lARptn
+ VFzc79ee+2pAVwVCumeF2zlHcRo7NcMEfc4X8ICm8du1VHXkmvFmoiy7m359YF+Yl7pGZtzui
+ iTXh9SFcveAHEbosKWR8IPcNvr2pl+CWm38AjoDB1nHHohfo4h0ihzwiGV/JsEYhs0y3mPvrK
+ +AZEtt8N0VMRuI4IgHLwLIjx7LvqnGPYAmVRzjJjZ/hipiT5dN5bw2joDVTFM3Ucsql32so73
+ fSJH9HqHKxqgoCauUg+phwB/Ns5gp+VunhVcz4J0Czmi/dH9+avCdM6LHLHljz0+vK/FimRZv
+ ZvBR7XqDhQJl+d6hcu2Gi+w+9rADbmxP4YbCHTpFLrZmzU9kE6lGgAgxaTphl6NAXctbO8/KK
+ bmlz6HAw5wlQU+lDJ0Hd2i7JIdVfwfW3CVusaIz0cazX1eSPXZ91bvwIpP143YOaEKr58F5uP
+ WUOYnc/
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+When reporting broken links between commits/trees/blobs, it would be
+quite helpful at times if the user would be told how the object is
+supposed to be reachable.
 
---8323329-508294682-1468510233=:6426
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+With the new --name-objects option, git-fsck will try to do exactly
+that: name the objects in a way that shows how they are reachable.
 
-If fsck_options->name_objects is initialized, and if it already has
-name(s) for the object(s) that are to be the starting point(s) for
-fsck_walk(), then that function will now add names for the objects
-that were walked.
+For example, when some reflog got corrupted and a blob is missing that
+should not be, the user might want to remove the corresponding reflog
+entry. This option helps them find that entry: `git fsck` will now
+report something like this:
 
-This will be highly useful for teaching git-fsck to identify root causes
-for broken links, which is the task for the next patch in this series.
-
-Note that this patch opts for decorating the objects with plain strings
-instead of full-blown structs (=C3=A0 la `struct rev_name` in the code of
-the `git name-rev` command), for several reasons:
-
-- the code is much simpler than if it had to work with structs that
-  describe arbitrarily long names such as "master~14^2~5:builtin/am.c",
-
-- the string processing is actually quite light-weight compared to the
-  rest of fsck's operation,
-
-- the caller of fsck_walk() is expected to provide names for the
-  starting points, and using plain and simple strings is just the
-  easiest way to do that.
+	broken link from    tree b5eb6ff...  (refs/stash@{<date>}~37:)
+	              to    blob ec5cf80...
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fsck.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++
- fsck.h |  1 +
- 2 files changed, 73 insertions(+)
+ Documentation/git-fsck.txt |  9 ++++++++-
+ builtin/fsck.c             | 42 ++++++++++++++++++++++++++++++++++++++----
+ t/t1450-fsck.sh            | 22 ++++++++++++++++++++++
+ 3 files changed, 68 insertions(+), 5 deletions(-)
 
-diff --git a/fsck.c b/fsck.c
-index 0531545..fe6a28a 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -9,6 +9,7 @@
- #include "refs.h"
- #include "utf8.h"
- #include "sha1-array.h"
+diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
+index 7fc68eb..b9f060e 100644
+--- a/Documentation/git-fsck.txt
++++ b/Documentation/git-fsck.txt
+@@ -11,7 +11,8 @@ SYNOPSIS
+ [verse]
+ 'git fsck' [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
+ 	 [--[no-]full] [--strict] [--verbose] [--lost-found]
+-	 [--[no-]dangling] [--[no-]progress] [--connectivity-only] [<object>*]
++	 [--[no-]dangling] [--[no-]progress] [--connectivity-only]
++	 [--[no-]name-objects] [<object>*]
+ 
+ DESCRIPTION
+ -----------
+@@ -82,6 +83,12 @@ index file, all SHA-1 references in `refs` namespace, and all reflogs
+ 	a blob, the contents are written into the file, rather than
+ 	its object name.
+ 
++--name-objects::
++	When displaying names of reachable objects, in addition to the
++	SHA-1 also display a name that describes *how* they are reachable,
++	compatible with linkgit:git-rev-parse[1], e.g.
++	`HEAD@{1234567890}~25^2:src/`.
++
+ --[no-]progress::
+ 	Progress status is reported on the standard error stream by
+ 	default when it is attached to a terminal, unless
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 87df191..e2173b6 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -13,6 +13,7 @@
+ #include "dir.h"
+ #include "progress.h"
+ #include "streaming.h"
 +#include "decorate.h"
-=20
- #define FSCK_FATAL -1
- #define FSCK_INFO -2
-@@ -297,19 +298,51 @@ static int report(struct fsck_options *options, struc=
-t object *object,
- =09return result;
+ 
+ #define REACHABLE 0x0001
+ #define SEEN      0x0002
+@@ -35,6 +36,7 @@ static int write_lost_and_found;
+ static int verbose;
+ static int show_progress = -1;
+ static int show_dangling = 1;
++static int name_objects = 0;
+ #define ERROR_OBJECT 01
+ #define ERROR_REACHABLE 02
+ #define ERROR_PACK 04
+@@ -42,7 +44,16 @@ static int show_dangling = 1;
+ 
+ static const char *describe_object(struct object *obj)
+ {
+-	return oid_to_hex(&obj->oid);
++	static struct strbuf buf = STRBUF_INIT;
++	char *name = name_objects ?
++		lookup_decoration(fsck_walk_options.object_names, obj) : NULL;
++
++	strbuf_reset(&buf);
++	strbuf_addstr(&buf, oid_to_hex(&obj->oid));
++	if (name)
++		strbuf_addf(&buf, " (%s)", name);
++
++	return buf.buf;
  }
-=20
-+static char *get_object_name(struct fsck_options *options, struct object *=
-obj)
-+{
-+=09return options->object_names ?
-+=09=09lookup_decoration(options->object_names, obj) : NULL;
-+}
-+
-+static void put_object_name(struct fsck_options *options, struct object *o=
-bj,
-+=09const char *fmt, ...)
-+{
-+=09va_list ap;
-+=09char *existing =3D lookup_decoration(options->object_names, obj);
-+=09struct strbuf buf =3D STRBUF_INIT;
-+
-+=09if (existing)
-+=09=09return;
-+=09va_start(ap, fmt);
-+=09strbuf_vaddf(&buf, fmt, ap);
-+=09add_decoration(options->object_names, obj, strbuf_detach(&buf, NULL));
-+=09va_end(ap);
-+}
-+
- static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_optio=
-ns *options)
+ 
+ static int fsck_config(const char *var, const char *value, void *cb)
+@@ -377,13 +388,18 @@ static int fsck_obj_buffer(const unsigned char *sha1, enum object_type type,
+ 
+ static int default_refs;
+ 
+-static void fsck_handle_reflog_sha1(const char *refname, unsigned char *sha1)
++static void fsck_handle_reflog_sha1(const char *refname, unsigned char *sha1,
++	unsigned long timestamp)
  {
- =09struct tree_desc desc;
- =09struct name_entry entry;
- =09int res =3D 0;
-+=09const char *name;
-=20
- =09if (parse_tree(tree))
- =09=09return -1;
-=20
-+=09name =3D get_object_name(options, &tree->object);
- =09init_tree_desc(&desc, tree->buffer, tree->size);
- =09while (tree_entry(&desc, &entry)) {
- =09=09int result;
-=20
-+=09=09if (name) {
-+=09=09=09struct object *obj =3D parse_object(entry.oid->hash);
-+
-+=09=09=09if (obj)
-+=09=09=09=09put_object_name(options, obj, "%s%s%s", name,
-+=09=09=09=09=09entry.path,
-+=09=09=09=09=09S_ISDIR(entry.mode) ? "/" : "");
-+=09=09}
-+
- =09=09if (S_ISGITLINK(entry.mode))
- =09=09=09continue;
- =09=09if (S_ISDIR(entry.mode))
-@@ -330,20 +363,55 @@ static int fsck_walk_tree(struct tree *tree, void *da=
-ta, struct fsck_options *op
-=20
- static int fsck_walk_commit(struct commit *commit, void *data, struct fsck=
-_options *options)
- {
-+=09int counter =3D 0, generation =3D 0, name_prefix_len =3D 0;
- =09struct commit_list *parents;
- =09int res;
- =09int result;
-+=09const char *name;
-=20
- =09if (parse_commit(commit))
- =09=09return -1;
-=20
-+=09name =3D get_object_name(options, &commit->object);
-+=09if (name)
-+=09=09put_object_name(options, &commit->tree->object, "%s:", name);
-+
- =09result =3D options->walk((struct object *)commit->tree, OBJ_TREE, data,=
- options);
- =09if (result < 0)
- =09=09return result;
- =09res =3D result;
-=20
- =09parents =3D commit->parents;
-+=09if (name && parents) {
-+=09=09int len =3D strlen(name), power;
-+
-+=09=09if (len && name[len - 1] =3D=3D '^') {
-+=09=09=09generation =3D 1;
-+=09=09=09name_prefix_len =3D len - 1;
-+=09=09}
-+=09=09else { /* parse ~<generation> suffix */
-+=09=09=09for (generation =3D 0, power =3D 1;
-+=09=09=09     len && isdigit(name[len - 1]);
-+=09=09=09     power *=3D 10)
-+=09=09=09=09generation +=3D power * (name[--len] - '0');
-+=09=09=09if (power > 1 && len && name[len - 1] =3D=3D '~')
-+=09=09=09=09name_prefix_len =3D len - 1;
-+=09=09}
-+=09}
-+
- =09while (parents) {
-+=09=09if (name) {
-+=09=09=09struct object *obj =3D &parents->item->object;
-+
-+=09=09=09if (++counter > 1)
-+=09=09=09=09put_object_name(options, obj, "%s^%d",
-+=09=09=09=09=09name, counter);
-+=09=09=09else if (generation > 0)
-+=09=09=09=09put_object_name(options, obj, "%.*s~%d",
-+=09=09=09=09=09name_prefix_len, name, generation + 1);
-+=09=09=09else
-+=09=09=09=09put_object_name(options, obj, "%s^", name);
-+=09=09}
- =09=09result =3D options->walk((struct object *)parents->item, OBJ_COMMIT,=
- data, options);
- =09=09if (result < 0)
- =09=09=09return result;
-@@ -356,8 +424,12 @@ static int fsck_walk_commit(struct commit *commit, voi=
-d *data, struct fsck_optio
-=20
- static int fsck_walk_tag(struct tag *tag, void *data, struct fsck_options =
-*options)
- {
-+=09char *name =3D get_object_name(options, &tag->object);
-+
- =09if (parse_tag(tag))
- =09=09return -1;
-+=09if (name)
-+=09=09put_object_name(options, tag->tagged, "%s", name);
- =09return options->walk(tag->tagged, OBJ_ANY, data, options);
+ 	struct object *obj;
+ 
+ 	if (!is_null_sha1(sha1)) {
+ 		obj = lookup_object(sha1);
+ 		if (obj) {
++			if (timestamp && name_objects)
++				add_decoration(fsck_walk_options.object_names,
++					obj,
++					xstrfmt("%s@{%ld}", refname, timestamp));
+ 			obj->used = 1;
+ 			mark_object_reachable(obj);
+ 		} else {
+@@ -403,8 +419,8 @@ static int fsck_handle_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+ 		fprintf(stderr, "Checking reflog %s->%s\n",
+ 			sha1_to_hex(osha1), sha1_to_hex(nsha1));
+ 
+-	fsck_handle_reflog_sha1(refname, osha1);
+-	fsck_handle_reflog_sha1(refname, nsha1);
++	fsck_handle_reflog_sha1(refname, osha1, 0);
++	fsck_handle_reflog_sha1(refname, nsha1, timestamp);
+ 	return 0;
  }
-=20
-diff --git a/fsck.h b/fsck.h
-index dded84b..26c0d41 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -33,6 +33,7 @@ struct fsck_options {
- =09unsigned strict:1;
- =09int *msg_type;
- =09struct sha1_array *skiplist;
-+=09struct decoration *object_names;
+ 
+@@ -433,6 +449,9 @@ static int fsck_handle_ref(const char *refname, const struct object_id *oid,
+ 	}
+ 	default_refs++;
+ 	obj->used = 1;
++	if (name_objects)
++		add_decoration(fsck_walk_options.object_names,
++			obj, xstrdup(refname));
+ 	mark_object_reachable(obj);
+ 
+ 	return 0;
+@@ -548,6 +567,9 @@ static int fsck_cache_tree(struct cache_tree *it)
+ 			return 1;
+ 		}
+ 		obj->used = 1;
++		if (name_objects)
++			add_decoration(fsck_walk_options.object_names,
++				obj, xstrdup(":"));
+ 		mark_object_reachable(obj);
+ 		if (obj->type != OBJ_TREE)
+ 			err |= objerror(obj, "non-tree in cache-tree");
+@@ -576,6 +598,7 @@ static struct option fsck_opts[] = {
+ 	OPT_BOOL(0, "lost-found", &write_lost_and_found,
+ 				N_("write dangling objects in .git/lost-found")),
+ 	OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
++	OPT_BOOL(0, "name-objects", &name_objects, N_("show verbose names for rechable objects")),
+ 	OPT_END(),
  };
-=20
- #define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL }
---=20
+ 
+@@ -605,6 +628,10 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 		include_reflogs = 0;
+ 	}
+ 
++	if (name_objects)
++		fsck_walk_options.object_names =
++			xcalloc(1, sizeof(struct decoration));
++
+ 	git_config(fsck_config, NULL);
+ 
+ 	fsck_head_link();
+@@ -660,6 +687,9 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 
+ 			obj->used = 1;
++			if (name_objects)
++				add_decoration(fsck_walk_options.object_names,
++					obj, xstrdup(arg));
+ 			mark_object_reachable(obj);
+ 			heads++;
+ 			continue;
+@@ -692,6 +722,10 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			obj = &blob->object;
+ 			obj->used = 1;
++			if (name_objects)
++				add_decoration(fsck_walk_options.object_names,
++					obj,
++					xstrfmt(":%s", active_cache[i]->name));
+ 			mark_object_reachable(obj);
+ 		}
+ 		if (active_cache_tree)
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 7ee8ea0..8f52da2 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -523,4 +523,26 @@ test_expect_success 'fsck --connectivity-only' '
+ 	)
+ '
+ 
++remove_loose_object () {
++	sha1="$(git rev-parse "$1")" &&
++	remainder=${sha1#??} &&
++	firsttwo=${sha1%$remainder} &&
++	rm .git/objects/$firsttwo/$remainder
++}
++
++test_expect_success 'fsck --name-objects' '
++	rm -rf name-objects &&
++	git init name-objects &&
++	(
++		cd name-objects &&
++		test_commit julius caesar.t &&
++		test_commit augustus &&
++		test_commit caesar &&
++		remove_loose_object $(git rev-parse julius:caesar.t) &&
++		test_must_fail git fsck --name-objects >out &&
++		tree=$(git rev-parse --verify julius:) &&
++		grep "$tree (\(refs/heads/master\|HEAD\)@{[0-9]*}:" out
++	)
++'
++
+ test_done
+-- 
 2.9.0.278.g1caae67
-
-
---8323329-508294682-1468510233=:6426--
