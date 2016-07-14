@@ -6,54 +6,51 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F37C20196
-	for <e@80x24.org>; Thu, 14 Jul 2016 16:18:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B94D920196
+	for <e@80x24.org>; Thu, 14 Jul 2016 16:33:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751733AbcGNQS0 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 12:18:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51841 "EHLO
+	id S1751572AbcGNQc7 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 12:32:59 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55971 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751452AbcGNQSX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 12:18:23 -0400
+	with ESMTP id S1751284AbcGNQc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 12:32:58 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 76BD72A3EC;
-	Thu, 14 Jul 2016 12:18:21 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 95C8F2A630;
+	Thu, 14 Jul 2016 12:32:56 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=i0/y1QChRV/3kh9GsFuk+MTVQAQ=; b=VomIf6
-	dvGsxqjMtM4uqwQHul+XvnPaI7r1IbL/ams53IVK+SKEAujOqdEHNd6hcRCiDO8p
-	Qa61OX10pzz5Jn6UxK0FOYvTDQeE6YSv3cVYHFGRHpRdgrrFfbBxMWXazr9JTAER
-	+u8oVcF1uQRQqKlskHeFA1VTnKi8rA4oEnlyY=
+	:content-type; s=sasl; bh=26Vqj4eO4LhTq45Jz8xw/QPQviM=; b=LzPEKm
+	28xa/0a6Hip4SHLUUQR048EEYYtd9Cih0XXz7HBmw0LyZMkajJkQ6IHzOihwPQ4I
+	sKxxzWok94qmKWDR/3w/a6DLQuXfGXoSfipr3Wa/5VODzSCoGMHmsLITKuPYuG7L
+	SwMx5c3TCv3MyXqq1KspSjxLshCF2UiG9B73c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dgTgFv6tlOzVqyQAR4srAsP8N9qBZ9op
-	oQfWEdz9RwparO+gDa8maKEmNaBevi9Grp8SwDWr0qPRpEaN835XHmUiw1R+lTry
-	3mNfPNlIvY9f/rc6loqKPv3QJdufiBQ1LGEsLsSzYjESDG7FQYfmj4+xvhHPp9us
-	FBdYAXDfi4M=
+	:content-type; q=dns; s=sasl; b=Q6Mz3LZh2vf4hKg1CxAszRUDNh5/1orN
+	Gd8OO0WqSyOeR5nagi98UOyO+VUbrNpdJKxobm22kSwRiy+zxXYuvLOXAs/0a8RB
+	iQJQcfwbylkvIwjcxtICK1VpQlU+wFJcnaWp+Nz2EEaW4IMQokoqe3H6WhXUS1JK
+	njxNoF/uRkg=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6E01B2A3EB;
-	Thu, 14 Jul 2016 12:18:21 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C1662A62F;
+	Thu, 14 Jul 2016 12:32:56 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E6D482A3EA;
-	Thu, 14 Jul 2016 12:18:20 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0FD282A62E;
+	Thu, 14 Jul 2016 12:32:55 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
 To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] mingw: fix regression in t1308-config-set
-References: <6f439a56703ca6fb5c269c75904796ae67e96960.1468504461.git.johannes.schindelin@gmx.de>
-Date:	Thu, 14 Jul 2016 09:18:18 -0700
-In-Reply-To: <6f439a56703ca6fb5c269c75904796ae67e96960.1468504461.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Thu, 14 Jul 2016 15:58:59 +0200
-	(CEST)")
-Message-ID: <xmqqr3awry5x.fsf@gitster.mtv.corp.google.com>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH 0/3] Teach `git fsck` a new option: `--name-objects`
+References: <cover.1468510191.git.johannes.schindelin@gmx.de>
+Date:	Thu, 14 Jul 2016 09:32:53 -0700
+In-Reply-To: <cover.1468510191.git.johannes.schindelin@gmx.de> (Johannes
+	Schindelin's message of "Thu, 14 Jul 2016 17:30:10 +0200 (CEST)")
+Message-ID: <xmqqmvlkrxhm.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 94CFA9FA-49DE-11E6-9EE1-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 9E6C23CE-49E0-11E6-AD22-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -61,98 +58,31 @@ X-Mailing-List:	git@vger.kernel.org
 
 Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> When we tried to fix in 58461bd (t1308: do not get fooled by symbolic
-> links to the source tree, 2016-06-02) an obscure case where the user
-> cd's into Git's source code via a symbolic link, a regression was
-> introduced that affects all test runs on Windows.
+> Example output:
+>
+> 	...
+> 	broken link from    tree b5eb6ff...  (refs/stash@{<date>}~37:)
+> 		      to    blob ec5cf80...
 
-Thanks for producing a fix quickly after the topic hit 'master'.
+The objective makes sense, and their progression is very nicely
+structured.  I can "smell" that these are going in the right
+direction only with a cursory scan of the three patches.
 
-The original came from
+> Originally, I intended to teach name-rev a new mode where it would also
+> name objects other than commits and tags,...
 
-  http://thread.gmane.org/gmane.comp.version-control.git/296021/focus=296199
+As to having it in name-rev, it is still a "good to have" for an
+object that does exist.  It would be "super nice" if it also worked
+for a missing object.  It makes tons of sense from the end-user UI
+point of view to have this feature there.
 
-which was merged at e5e5bb67 (Merge branch 'jk/upload-pack-hook'
-into next, 2016-06-28) to 'next'.  
+I however agree with you that it is sensible to do this in "fsck"
+first and leave the "good to have" to later, because (1) naming an
+arbitrary blob like this needs full object-store scan like "fsck"
+does anyway, and (2) the primary occasion users would want to use
+the "super nice" part of the feature is when they discover an object
+is "missing", and the first thing they would want to run in such a
+case anyway is "fsck".
 
-I see J6t raised C:/foo vs /c/foo issue in the thread later, but
-unfortunately I didn't notice it.
+So, in short, I very much like them.
 
-I added a few missing Cc: and quoted the whole patch here to those
-who were involved; I think this update is correct, but just trying
-to make sure people know.
-
-Not limited to this particular topic, there probably are some things
-we can and should add to the procedure to prevent further episodes
-like this, but I am not seeing anything immediately obvious offhand.
-There already is a way to prominently mark a topic to be not-ready
-with an outstanding issue called "What's cooking" report, but it is
-maintained manually and it can be leaky without extra set of eyes
-constantly monitoring.
-
-> The original patch introducing the test case in question was careful to
-> use `$(pwd)` instead of `$PWD`.
->
-> This was done to account for the fact that Git's test suite uses shell
-> scripting even on Windows, where the shell's Unix-y paths are
-> incompatible with the main Git executable's idea of paths: it only
-> accepts Windows paths.
->
-> It is an awkward but necessary thing, then, to use `$(pwd)` (which gives
-> us a Windows path) when interacting with the Git executable and `$PWD`
-> (which gives the shell's idea of the current working directory in Unix-y
-> form) for shell scripts, including the test suite itself.
->
-> Obviously this broke the use case of the Git maintainer when changing
-> the working directory into Git's source code directory via a symlink,
-> i.e. when `$(pwd)` does not agree with `$PWD`.
->
-> However, we must not fix that use case at the expense of regressing
-> another use case.
->
-> Let's special-case Windows here, even if it is ugly, for lack of a more
-> elegant solution.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> Published-As: https://github.com/dscho/git/releases/tag/t1308-on-windows-v1
->
-> 	Side note: it was not at all clear to me how 58461bd fixed the
-> 	problem by replacing $(pwd) with $HOME, given that HOME is set to
-> 	$TRASH_DIRECTORY which is set to $TEST_OUTPUT_DIRECTORY/... after
-> 	TEST_OUTPUT_DIRECTORY was set to TEST_DIRECTORY which in turn was
-> 	set to $(pwd).
->
-> 	I guess the reason is that -P in `cd -P "$TRASH DIRECTORY"`, but
-> 	then I *really* do not understand how $(pwd) and $PWD could
-> 	disagree.
-> 	Oh well. I have to move on to the next fire.
->
->  t/t1308-config-set.sh | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
->
-> diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-> index a06e71c..7655c94 100755
-> --- a/t/t1308-config-set.sh
-> +++ b/t/t1308-config-set.sh
-> @@ -233,11 +233,19 @@ cmdline_config="'foo.bar=from-cmdline'"
->  test_expect_success 'iteration shows correct origins' '
->  	echo "[foo]bar = from-repo" >.git/config &&
->  	echo "[foo]bar = from-home" >.gitconfig &&
-> +	if test_have_prereq MINGW
-> +	then
-> +		# Use Windows path (i.e. *not* $HOME)
-> +		HOME_GITCONFIG=$(pwd)/.gitconfig
-> +	else
-> +		# Do not get fooled by symbolic links, i.e. $HOME != $(pwd)
-> +		HOME_GITCONFIG=$HOME/.gitconfig
-> +	fi &&
->  	cat >expect <<-EOF &&
->  	key=foo.bar
->  	value=from-home
->  	origin=file
-> -	name=$HOME/.gitconfig
-> +	name=$HOME_GITCONFIG
->  	scope=global
->  
->  	key=foo.bar
