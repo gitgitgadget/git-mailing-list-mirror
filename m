@@ -7,112 +7,75 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCAA320196
-	for <e@80x24.org>; Thu, 14 Jul 2016 12:35:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 418EB20196
+	for <e@80x24.org>; Thu, 14 Jul 2016 12:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750960AbcGNMfx (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 08:35:53 -0400
-Received: from mout.gmx.net ([212.227.17.20]:52664 "EHLO mout.gmx.net"
+	id S1751113AbcGNM7k (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 08:59:40 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50824 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750739AbcGNMfw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 08:35:52 -0400
-Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MEKZg-1bd8L00klU-00FTgh; Thu, 14 Jul 2016 14:35:34
+	id S1751073AbcGNM7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 08:59:39 -0400
+Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MfBsk-1blPO31wZ0-00OphJ; Thu, 14 Jul 2016 14:59:34
  +0200
-Date:	Thu, 14 Jul 2016 14:35:31 +0200 (CEST)
+Date:	Thu, 14 Jul 2016 14:59:30 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-cc:	Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] t1308: do not get fooled by symbolic links to the source
- tree
-In-Reply-To: <57514BA8.7020207@web.de>
-Message-ID: <alpine.DEB.2.20.1607141435030.6426@virtualbox>
-References: <xmqqzir53mdc.fsf@gitster.mtv.corp.google.com> <712e0755-6008-21f5-0ee6-25ed9d97fd45@web.de> <xmqq1t4ftheu.fsf@gitster.mtv.corp.google.com> <xmqqwpm7s2ex.fsf@gitster.mtv.corp.google.com> <20160602213920.GA13356@sigill.intra.peff.net>
- <xmqqeg8fs0dw.fsf_-_@gitster.mtv.corp.google.com> <57511E44.1090708@kdbg.org> <20160603061023.GA7687@sigill.intra.peff.net> <57512980.1070200@kdbg.org> <57514BA8.7020207@web.de>
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2016, #05; Wed, 13)
+In-Reply-To: <xmqqy4551nph.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1607141454500.6426@virtualbox>
+References: <xmqqy4551nph.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1881508000-1468499734=:6426"
-X-Provags-ID: V03:K0:/ynOM8jyxBj8+aQlnmKDdahknpuoGATsrntgdRzTyMUCBWgGddA
- EyROYGh2wqtRgTG0XlthR9R+LAq5mxat/66yA/USX/V/1WlLgMpazHtzKk22fVWobp9H33V
- yWVuSZd4icnqYPR8Mqw7MD5+uyIzak2mj52RcTWQbTJZjTe3T6SZ+fzChG+szq0yg/5qaFP
- yWBfeOdB0SI6AVtmPvmhg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:FwzRuK9CfMw=:K5N5tFIahC69a4S8vQipYp
- QTOR6SPacdq8gfY8KALI6OfPuJN3d678Uif6TaTOb1jawAXAcMm+wZAOSBoT3xYyTXL8f9FdY
- szDUHkvab5kvmN+W32Lnemn3guPMKv/VnixP6JRZixKilO5Otb3asg/5VRcxChjUva9yIZUEK
- x6YmQ+xDDd0rX4bVQUzW7HHvtACZ/SyGHSVtNrhpuQyA85+rIZK6mB/9N0pyxv98P3Xq2nF66
- NmILigTUe16QatXZtQ9rwwY/Lxcx+lNWqk/NRokTwg8gbR7iSnNEmLcvkQp7y89PptFtUxrHo
- zOpGjOWuIqTrqKMs6IhNCwhxWM7StmSncp8DxJTet+NEFoisVSAgZfZctqBi8LPnMiCeRrwyx
- qxehKWP3l8krvG5I7yyJ+CYB4WO4kfsrfwGnH4c3RbaJ0a2I5wOegReZWnm5AR5RsZT5yC1Ta
- q9srLgDsvATWB590vUOwzVVfgvJb7IZvLEdqoX/B1YRokrrrEZAADUTVE7ASTBLNoZdpwt/hc
- MVnwMcsy8vJdU1TtGH6DFZrZnW1cVDc3EARFZtbe65UJhJJ/oyRG84w/7cX4ZUndI3V0500K3
- D16bbHB0ygrlWFjg5fBafLJe0Vx8THksW84aGQSqeCuOIY4P/o65nsJgb3wpoySwZMTGJ1JOR
- PlJqOdT5mmAOlNYwde4zi0ERrwQn9ndK94Snpz/dcYq2+mygqWYzmjqnu9HliNFvEq0Oo8Rzf
- IgXq0LMwUDY9lUDv0qGleNCpdHuRPXP7RwJhBm5O5GqK1Zbon5svKR9JXuAEeSjT9nJPT3Sny
- wGzuP3A
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:ns/0rSEK2ek9uxQHdjlK+9IrhyRhDObjPTommymmEpgXRGNH4ji
+ VnCMiSNELylpxAK790Z95BAVL3tJts39ap++sctW7o7Kd/AQVdeUZv7hmQ6bpRXO2TMUlah
+ n1VvP2rOz1x6oY0FGJRIWqlPTE9RC1UHpPPdTT+FRIsZpgsPU8zRduxE7yY/yj+9KvJpRI5
+ fQWxNVf1migDU5DpeEwFA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:LsiDC+FXqYg=:0F30GDsrHj+gJ4obKh1uTG
+ gXlzgw0jsL6MpaH+go0cn4L+GmkqZANnSwVvx1QKDl4YLzNJ7T3D9g65KYuXxio/PWCrl5Jhx
+ 9QK3+Pv4o/cYQkSh0kTBF3huJNUYT7WT7q3SL5SUqW2DErQGaEijXz8GFhWoGXVCl8iyoewRl
+ Iq5EwLbAHqfDGvjNkgHhft0hfbW4JuaCquwUc94a2Qw4dGResnrUEvjnnwrvERPZ335qmu1pQ
+ BtF9s8pI5qrnlKRgDElJytjwjvb6BNw0YOW00F/ABCKT2LEDf6Z02deA3Fq8bhCrqqbMQjpXl
+ EcNDmhJWPWjMyOKfSQTPXauXuziXsDFqLmgry5zgaTS8NsOj0HYdzJYdhD9tYjqK9S54LQ4Kv
+ WZwwE98lYPZ4jr0opa2An930O5LqeF6TzcgV8g57qdqHKiq1r8lzrqTTqp/1bn4EakFBC+OGu
+ /oO75S2vibbHEu+nRLTsrSlDFS+S+oo/OcqzeGBZjKuUVmAD11fgfrYrsy0DQfJ0K/oH3FZLt
+ 13U+bAD3zfax5qVS/B6IpK68wjsD8xhwUwJ4tvn+vX87HOlb1KsQd205HI2/zBkBsAnDGwmxZ
+ uuGoWsoCSiopo+D4obdOOprFetrGFA4EOizFjIiLzZpEd+vVRbJQvG9LTQqs6ll9JuTFHQ7Q8
+ eRUavrBtPVoog92e4prmG40WE0yTwA168Cj1mGdEyr2ZW/sSHZYT82GCeWwn9L4pLpdB7dF9R
+ ByyT80VV7VPyA9gRWxXVVVGZblBtWZNvNqyA0iRnUfQrGnJa68KIOXKz5+DjSp5EYnXcitmNi
+ 80MRYW9
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323329-1881508000-1468499734=:6426
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Wed, 13 Jul 2016, Junio C Hamano wrote:
 
-Hi,
+> * js/t0006-for-v2.9.2 (2016-07-12) 1 commit
+>  - t0006: skip "far in the future" test when unsigned long is not long enough
+> 
+>  A test merged to v2.9.1 forgot that the feature it was testing
+>  would not work on a platform with 32-bit time_t/unsigned long and
+>  reported breakage.  Skip the tests that cannot run correctly on
+>  such platforms.
+> 
+>  Waiting for an Ack; will fast-track down to 'maint' to cut v2.9.2.
 
-On Fri, 3 Jun 2016, Torsten B=C3=B6gershausen wrote:
+If you are waiting for my okay, then go ahead and wait no more.
 
-> On 06/03/2016 08:53 AM, Johannes Sixt wrote:
-> > Am 03.06.2016 um 08:10 schrieb Jeff King:
-> > > On Fri, Jun 03, 2016 at 08:05:56AM +0200, Johannes Sixt wrote:
-> > >
-> > > > > -    name=3D$(pwd)/.gitconfig
-> > > > > +    name=3D$HOME/.gitconfig
-> > > >
-> > > > I haven't tested this, yet, but my guess is that this breaks on Win=
-dows:
-> > > > test-config will produce C:/foo style path, but the updated test wo=
-uld
-> > > > expect /c/foo style path. Dscho, do you have an idea how to fix thi=
-s?
-> > >
-> > > Hmm. This should come directly from expand_user_path("~/.gitconfig")
-> > > which prepends the literal contents of the $HOME variable. It does go
-> > > through convert_slashes() afterwards, but I don't see any other
-> > > massaging (but I won't be surprised when you tell me there is some th=
-at
-> > > happens behind the scenes).
-> >
-> > Yes, it happens behind the scenes: /c/foo absolute paths are a conventi=
-on
-> > used by the POSIX emulation layer (MSYS). When bash (an MSYS program) r=
-uns a
-> > non-MSYS program such as git or test-config, it converts the /c/foo pat=
-hs in
-> > the environment (and argument list) to c:/foo style because the non-MSY=
-S
-> > programs do not understand the MSYS convention.
-> >
-> > -- Hannes
-> Compiling pu didn't succed:
-> unix_stream_connect is missing in read_cache.c
->=20
-> (And many more in index-heloer.c)
->=20
-> (I thought that the index-helper is only compiled on systems,
->   which are known to have unix-sockets and other stuff ?)
->=20
-> After patching that out,  t1308 fails:
-> -name=3D/c/
-> +name=3Dc:/
+I still do not like the current form of the patch, even if it was
+essentially my work, but I have bigger fish to fry: I am chasing down two
+other regressions on `master`, I have to move that `git status -vvp` topic
+along, and I have to get the index-helper to run on Windows. Before even
+coming back to the "unsigned long -> time_t" patch series.
 
-This issue was not resolved, and now this commit is on `master`...
+So in this case, "it works" has to be good enough for me, I guess.
 
 Ciao,
 Dscho
---8323329-1881508000-1468499734=:6426--
