@@ -2,110 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6179E20195
-	for <e@80x24.org>; Thu, 14 Jul 2016 07:38:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A57C20195
+	for <e@80x24.org>; Thu, 14 Jul 2016 07:45:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750852AbcGNHi1 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 03:38:27 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:34663 "EHLO
-	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750829AbcGNHiZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 03:38:25 -0400
-Received: by mail-wm0-f54.google.com with SMTP id p190so2916356wmp.1
-        for <git@vger.kernel.org>; Thu, 14 Jul 2016 00:38:24 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=S3sYswXPGK5T0qzUBdt9IITfjKE/5qVbtoj7i7QJBAs=;
-        b=0iueYLlajB64S7NczcDHP8rb7Cr+Nyr5BGmuamZRrMV/WzkBfFud97dNVgTVyEawLK
-         kDYLvId1c6uGkFNhuyDb0hfJqcKqbDPAyzo4/VaqkiKkPHY5MCzesYt+X040FW3aAiqY
-         GamJ/Dt6ldyiSSV/jepK/ZdMjs506u3kIcm1jv0kzYqsAORSOcW1vdeohLZft//crS9p
-         sF3nQP5CL+QPj2eqAsA2bUxrmPAqDuRCVUGitwPumi2KiIoSqix5lvkyR3MfkpNILTGa
-         4XpFChd9vtbWLtFBUhheG4UJJaZyfT851N0tdM+2HQJRUNNjgIHtfX3qcG8Lu89YawGt
-         GbKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=S3sYswXPGK5T0qzUBdt9IITfjKE/5qVbtoj7i7QJBAs=;
-        b=Tc8bbCWx5jQxFSpwUNecuWikpuVRoh1Vpci8DbVE25JTAayrS7rmXn1Mbf/2FPgMr3
-         LGsv22KExP22jGWQJG1pYWENPN/AgkrO6TeLf8jNqzW2JfOn6RFpr0/ifBsAoCvtK3sd
-         D0jip72JlsjxbJsigiQiYdwnJhKNUp03d9mbcZfLWZSGsoOLZAdmH7ZlPa4cgjn230Ap
-         oUiJWFzRFkYJDYtzmuNvwC0C0qoq58W8n1Hzvl0E7xbEVP1aoKO/bLC755lDlQ2/p7a+
-         xIlwSytuTM69ELga1k59VSejLQiB4VQbqiTfLYuGy2akhyTOdTDrkMoR2wiBUzDuhRcZ
-         wq6g==
-X-Gm-Message-State: ALyK8tJzDDVWl5q9kkKxT7uVlWARQyYAqYfQNFFbohiRRK/PJfsKonI9GwDS5kUOuaHy+g==
-X-Received: by 10.28.98.135 with SMTP id w129mr14013226wmb.38.1468481904111;
-        Thu, 14 Jul 2016 00:38:24 -0700 (PDT)
-Received: from slxbook3.fritz.box (p5DDB41F1.dip0.t-ipconnect.de. [93.219.65.241])
-        by smtp.gmail.com with ESMTPSA id yp1sm1022061wjc.6.2016.07.14.00.38.22
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 14 Jul 2016 00:38:23 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+	id S1751073AbcGNHp3 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 03:45:29 -0400
+Received: from mout.gmx.net ([212.227.17.22]:65330 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751063AbcGNHp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 03:45:27 -0400
+Received: from virtualbox ([89.204.154.227]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Meduu-1blkzS0sAK-00OGgi; Thu, 14 Jul 2016 09:45:14
+ +0200
+Date:	Thu, 14 Jul 2016 09:45:12 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	Jeff King <peff@peff.net>, Andreas Schwab <schwab@linux-m68k.org>,
+	git@vger.kernel.org
 Subject: Re: [ANNOUNCE] Git v2.9.1
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqmvllz2t7.fsf@gitster.mtv.corp.google.com>
-Date:	Thu, 14 Jul 2016 09:38:27 +0200
-Cc:	Jeff King <peff@peff.net>, Andreas Schwab <schwab@linux-m68k.org>,
-	Git Users <git@vger.kernel.org>
-Content-Transfer-Encoding: 7bit
-Message-Id: <F003C6A7-CF52-4149-9A05-8DDA549BABEE@gmail.com>
-References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com> <87lh17kgdy.fsf@linux-m68k.org> <20160711235417.GA26163@sigill.intra.peff.net> <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com> <xmqqmvllz2t7.fsf@gitster.mtv.corp.google.com>
-To:	Junio C Hamano <gitster@pobox.com>, sytse@gitlab.com,
-	Duy Nguyen <pclouds@gmail.com>
-X-Mailer: Apple Mail (2.1878.6)
+In-Reply-To: <xmqq8tx51hmx.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1607140913470.6426@virtualbox>
+References: <xmqqbn247x1f.fsf@gitster.mtv.corp.google.com> <87lh17kgdy.fsf@linux-m68k.org> <20160711235417.GA26163@sigill.intra.peff.net> <xmqqy4577h0o.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607120927410.6426@virtualbox> <20160712073912.GA26431@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1607121257450.6426@virtualbox> <xmqqbn2267zq.fsf@gitster.mtv.corp.google.com> <20160713020132.GA13918@sigill.intra.peff.net> <xmqqh9bt34n1.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607132048370.6426@virtualbox>
+ <xmqq8tx51hmx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:DN8hjNux3a9AEPnB/VmA7eRFqjEpErg8Tulibh55sH4dN9O+eUj
+ JvxruiE8pS2AZcBn8Ocu/uRnIiA7M5b54nWYnOXKakGsAb7TJeEBMWfgUgA8Do0mQHoo4xk
+ TBelqngbFuymLXOq93u/x9UsAu6fnekyAvLtMxcDkOnUSoLzPAnAEr4mhy6bnIjm8QscGCY
+ nkHxX1G5fCB+66t9Q0tRg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:BH+zWnIXytk=:Ufq0zaLX57+meACLJGlfh5
+ R3DWsEUPdun9Kcv08KwTDqMGaZ9sDE6yYuJx6g/noEbhrQ3r94MyhOa8NHnJ47IXGCCuKhSiO
+ NzyhkHFl4QkTXM0gINnk/s3CiiiMsVVeZASfMB1FsOuFioS0A9bzk6HECGU6XeivRyC/aYf6V
+ ey+fOGpIKzYGi2NkfOzmzLDrf+7dGCerQO+dFlYDrPcx5zbcTKmzqdxr8/P1cimJ5BfW8nQBr
+ 7MoQC7KEbO9dKWmYEtM/HqaN1kHlK8zxRDgNaF2IywqkGk9QSIs83tCuv2RPZa+Jae3H4bQWg
+ 7Se+smZRkIlTqGPS470tWSzBNF8moA+q791XtQ3LSWI91DsDkjIPIzdpzz1zOZZfDPBlYB/GT
+ iyb1o4IH7Ya6t5OuOp7ZAu+vQhsOyTJwu3O90Y5vqMoxCYBuHs5Edw/vAXiX8/m3rPtcjjglA
+ exYabxWtJq2DS+nXb1296qbwJj64zdL7LcG6oPRGSJNew0+x9dfgyZLJoU9nF6yT1EOHTL7cI
+ QTxXtCIfLQccVIBnNPlFaiP7JRrt2I/r4DPBy8xJ4FhMSVwxL2SrnH3sjByLxvo8ex0XsbmoX
+ F+//CSrLt9Ujg7UG446xwYXu084I9MWOdXwu5ORIdwdgwj3gvW5iQmsFbdLBiGxsMUZj0L5i5
+ SXHcswDVVRxrRIQFyjl+gaUvK6uA/wofR3sxqDdHpjZ18AUBy5ChpjTgLcq9Ke2hvbmbAJ0sm
+ vHMWZJjkFbbigq1PVZfEBd1nHlMvLvBpZ8jWni4i4AypKSlPbok/QSZphYHhhtUP70xT6JC0Y
+ CaBkpu9
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Hi Junio,
 
-On 13 Jul 2016, at 22:43, Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, 13 Jul 2016, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
->> It is somewhat disturbing that nobody seems to be regularly building
->> on 32-bit platforms these days, which is the only reason I can think
->> of why this was never reported until it hit a maintenance track.
->> This should have been caught last week at f6a729f3 (Merge branch
->> 'jk/tzoffset-fix', 2016-07-06) when the topic hit 'master' at the
->> latest, and more preferrably it should have already been caught last
->> month at 08ec8c5e (Merge branch 'jk/tzoffset-fix' into next,
->> 2016-06-28).
->> 
->> Those who care about 32-bit builds need to start building and
->> testing 'next' and 'master' regularly, or similar breakages are
->> bound to continue happening X-<.
->> 
->> Volunteers?
+> > How about this one instead (which is part of the time_t-may-be-int64
+> > branch on https://github.com/dscho/git which I still have to complete, as
+> > some unsigned longs still slipped out of my previous net)? It strikes me
+> > as much more robust:
 > 
-> We might eventually see a volunteer or two but that hasn't happened
-> yet, at least in the past few days.
-> 
-> Does Travis CI testing have an option to run our tests on some
-> 32-bit platforms?
+> Hmm, sorry, I do not see much upside here (iow, the 2038 test you
+> came up with is as robust).
 
-TravisCI does not support 32-bit platforms natively:
-https://github.com/travis-ci/travis-ci/issues/986#issuecomment-124141683
+Unless you, or Peff, performed a thorough analysis whether the dates are
+always cut off at 2038 holds true, I am highly doubtful that the previous
+tes is robust at all. I certainly only tested on Windows and never
+investigated how that 2038 came about. For what I know, it might be a
+platform-dependent behavior of strtoul().
 
-However, there seems to be a way to enter a 32 bit Trusty chroot on 
-64 bit Travis via Docker:
-https://github.com/travis-ci/travis-ci/issues/5770
+> When the internal time representation is updated from "unsigned long" to
+> a signed and wider type [*1*], test-date has to stop reading the
+> second-from-epoch input with strtol(),
 
-@Duy:
-You mentioned that you compiled Git on Docker before ($gmane/297963). 
-What do you think the chroot approach? Could that work? Would that
-be reliable?
+It's strtoul(), actually.
 
-@Sid:
-Does GitLab CI support 32-bit platforms?
+> whose property that overflow will always result in LONG_MAX gives the
+> robustness of the 2038 test, and needs to be updated.
 
-Thanks,
-Lars
+So I got curious and looked at the man page. It says indeed that strtoul()
+returns ULONG_MAX, which happens to translate into a date in the year
+2038. It seems that this behavior is standardized:
+
+	http://pubs.opengroup.org/onlinepubs/007908775/xsh/strtoul.html
+
+although it does not say that ANSI C requires that behavior.
+
+I also could not fail to notice that negative values will be parsed and
+simply negated, and that return values 0 and ULONG_MAX *can* denote errors
+(in which case errno is set, otherwise it is *not* set). Two rather
+surprising facts, at least surprising to me, and facts that our code does
+not deal with.
+
+Please also note that ULONG_MAX is not required to be either 2^32-1 or
+2^64-1. Which means that the 2038 test is really not robust.
+
+> With this "is64bit" patch, you explicitly measure "unsigned long",
+> knowing that our internal time representation currently is that type,
+> and that would need to be updated when widening happens.  So both need
+> to be updated anyway in the future.
+
+Yes, I already update that in my topic branch.
+
+Please note, however, that it is much more natural to update yet another
+instance of "unsigned long" to "time_t" than having to explain how that
+2038 test is affected.
+
+Also note that the 640bit test is very explicit, and hence robust. As a
+consequence it would skip the absurd dates on systems switching to
+int128_t for time_t.
+
+> The prerequisite name 64BITTIME that lost an underscore is harder to
+> read, so there is a slight downside.
+
+It is not a downside. It is something easily fixed.
+
+> Moving of lazy_prereq to test-lib might be an upside if we were
+> planning to add a test that depends on the system having or not
+> having 64-bit timestamp elsewhere, but I do not think of a reason
+> why such a new test cannot go to t0006-date, which has the perfect
+> name for such a test and is not overly long right now (114 lines).
+
+Happenstance. And I was merely imitating the patch of Peff thar I found on
+gmane.
+
+> So, unless you have a more solid reason to reject the updated t0006
+> earlier in the thread, I am not sure what we'd gain by replacing it
+> with this version.
+
+My solid reason is that it is utterky unobvious why the magic number 2038
+should do the work. You would have to spend quite some time to convince
+the average programmer that it is correct.
+
+Contrast that to the 64-bit test.
+
+Ciao,
+Dscho
