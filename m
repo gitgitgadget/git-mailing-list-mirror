@@ -2,85 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAF1720196
-	for <e@80x24.org>; Thu, 14 Jul 2016 19:27:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B58C820196
+	for <e@80x24.org>; Thu, 14 Jul 2016 19:39:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751246AbcGNT1N (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 15:27:13 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:35830 "EHLO
-	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751153AbcGNT1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 15:27:12 -0400
-Received: by mail-io0-f175.google.com with SMTP id m101so84772865ioi.2
-        for <git@vger.kernel.org>; Thu, 14 Jul 2016 12:27:11 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9S1CVtk5ri4Hcj6igqHzPMC1wvjZqJjZfwn+vrrgZT0=;
-        b=DMG+0kbxkURV8L3pRBOmsCyq0+wfDJAGeqt4u3YQ8QkgoNLOGpS9MVyEFwADS56iFz
-         vJHLIU0Bbr/Q56c+kbvwKNCt3Oh6trpMBXLKn+E423hdZh/Zo7+yHIHl/5wifgzJU7mh
-         6ttlazRdHFaslzMkNxV3RTJb6FzPWTSfSnW/tQ5v2l9j7gGndxsJE/+eS/TVCEbf16ma
-         adWQEo3IZj5/ogP8gmJOGneROqbi+OF6icSe8trNl+qCSvsJR61814aBvLrSnIkiD05L
-         7BTpVmoP2US/f4GCX6g6QxgYtTV5SzhftsP9nmVOSPkAnz3qK+uu9BKLYvgoukpeXGOz
-         42AA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9S1CVtk5ri4Hcj6igqHzPMC1wvjZqJjZfwn+vrrgZT0=;
-        b=R7iz1v8pwIz3iMCiXYBXkJaULbvW37fsjZeQ/ZzbnF6mS1KtuTuBBzS579ACcUV0kP
-         Igf9GYgKe+h4dKhwyXnJm4KaStn0ei3MXexBdq0Wz3Z4i0FgqD5jZq1G7bET5eLvb1L0
-         T7doSOWaOJN9kHpr6UonAZUU36AWkGkn7sHBEvkrgwtTWJy+2TyRuQpaTGIUge65wwpI
-         tF4ZEsTj5slKukLM1l09/dKx10mTsIUPCeBsfJCjHhHKpTGjUtkxwkhrDsR+gP+SOJ5r
-         x+RNBpcZSCSY96bH+R+REH6gu3PwAz5DJ8PWpIF8zXmKsZL2ysZmFj1OQOQjRGbuTBfr
-         t7rw==
-X-Gm-Message-State: ALyK8tKBmjFFOwohsswUDbZRJRDIdBCTK2rNQhn7NZ6TknLNw1bJqMOhii0wHTvOyNke1inYaFHf12d2H+UnzjX1
-X-Received: by 10.107.144.10 with SMTP id s10mr15823491iod.165.1468524431035;
- Thu, 14 Jul 2016 12:27:11 -0700 (PDT)
+	id S1751279AbcGNTjh (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 15:39:37 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61626 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751246AbcGNTjg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 15:39:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A0FF92A3CE;
+	Thu, 14 Jul 2016 15:39:34 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MssfycGvK/mBi79iANW56NGrq0Q=; b=l7nXyV
+	33sp00ouBfRoh4HMtT2Ma5gs2aVhLcbafFCtf7w6DnW5uvtaqt1VmokYW78U8v65
+	n7FeRLD68sk7BTy4H0gIe6x+8hE79JF2tFus2tBbrB6ZqgtLGHT1YL1pV2TSNmKJ
+	f4Iiu+YfHzTdA3fGqpzi64oJ5mThmN0QB1Q3A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QbWldFPB0ZAch2QcR4n128bT64PtFbJA
+	/Pu/d38Y/jZlFGRQjViVOyV5weMKeov/O0waayca301eiQjFjJMySRK7UBevDbPA
+	NfExy0gNYwdJ402I8IS2WtgrAXyGsE7/JMUzG0YjB5lSklF67ttud3TSsUEgz6RM
+	01zmpXDrUVw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 977232A3CD;
+	Thu, 14 Jul 2016 15:39:34 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0F3B22A3CC;
+	Thu, 14 Jul 2016 15:39:34 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+	Joey Hess <joey@kitenet.net>
+Subject: Re: [PATCH v3 00/16] Use merge_recursive() directly in the builtin am
+References: <cover.1467717729.git.johannes.schindelin@gmx.de>
+	<cover.1467902082.git.johannes.schindelin@gmx.de>
+	<xmqqpoqi35u3.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1607141414180.6426@virtualbox>
+Date:	Thu, 14 Jul 2016 12:39:32 -0700
+In-Reply-To: <alpine.DEB.2.20.1607141414180.6426@virtualbox> (Johannes
+	Schindelin's message of "Thu, 14 Jul 2016 16:03:33 +0200 (CEST)")
+Message-ID: <xmqq1t2wqaa3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Thu, 14 Jul 2016 12:27:10 -0700 (PDT)
-In-Reply-To: <xmqq7fcoqb5a.fsf@gitster.mtv.corp.google.com>
-References: <xmqq7fcoqb5a.fsf@gitster.mtv.corp.google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Thu, 14 Jul 2016 12:27:10 -0700
-Message-ID: <CAGZ79ka5ZB=vL3j0Zm3vAvdZi7jA1gPAs61NhkVABZepfcuLvw@mail.gmail.com>
-Subject: Re: [PATCH] diff: document diff-filter exclusion
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: B0FCD348-49FA-11E6-B744-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 14, 2016 at 12:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> In v1.8.5 days, 7f2ea5f0 (diff: allow lowercase letter to specify
-> what change class to exclude, 2013-07-17) taught the "--diff-filter"
-> mechanism to take lowercase letters as exclusion, but we forgot to
-> document it.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/diff-options.txt | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index 3ad6404..073c7e5 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -399,6 +399,9 @@ ifndef::git-format-patch[]
->         paths are selected if there is any file that matches
->         other criteria in the comparison; if there is no file
->         that matches other criteria, nothing is selected.
-> ++
-> +Also, these upper-case letters can be downcased to exclude.  E.g.
-> +`--diff-filter=ad` excludes added and deleted paths.
->
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This looks good for the neighboring thread. :)
-http://thread.gmane.org/gmane.comp.version-control.git/299512
+> The two topics that are in 'pu' and conflict with this series are
+> 'jh/clean-smudge-annex' and 'bc/cocci'.
+>
+> It also conflicted with 'va/i18n-even-more', but that one was merged to
+> 'master'.
+>
+> Now, I think it would be okay to wait for 'bc/cocci' to go to 'master'
+> before integrating the 'am-3-merge-recursive-direct' branch, but I would
+> want to avoid waiting for 'jh/clean-smudge-annex'.
+>
+> Do you concur? If so, I will rebase onto 'master' as soon as 'bc/cocci'
+> lands in there.
+
+I do not have a strong preference myself.  As you are not proposing
+to eject jh/clean-smudge-annex from my tree, I'd have to resolve the
+conflicts when the second topic is merged after one topic, whichever
+happens to be more ready.  IOW, such a rebase adds to my workload.
+
+Like it or not, it is normal for different topics to want to touch
+the overlapping area or one topic to invalidate an assumption the
+other topic is based on, and working well together does not have to
+mean leaving the conflict resolution to the sole responsibility of
+the integrator.  A clean way forward may be for everybody involved
+(and I see you forgot to add Joey to this thread) to agree that this
+topic is more ready than jh/clean-smudge-annex and you and Joey to
+work together to rebase jh/clean-smudge-annex on top of this topic
+(or possibly the other way around), making him wait for you.
+
