@@ -2,70 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40C9220196
-	for <e@80x24.org>; Thu, 14 Jul 2016 15:48:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B73D320196
+	for <e@80x24.org>; Thu, 14 Jul 2016 15:53:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751393AbcGNPs0 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 11:48:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57698 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751149AbcGNPsY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 11:48:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6A7BB29ECF;
-	Thu, 14 Jul 2016 11:48:23 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Txyi68HoGHJCZ9BUzLZWwBo1UVU=; b=VlKT51
-	25EdOb/K1NASp8kv8QaUHArEx0+GeDegh9i52XYTsb3BtR4JitM4+/RTEZESFdgq
-	BWIPlJ8eWJeqxXWE/xOrrTHZ28a8rfTrHMfJ6Vnk6brBhzvM2Ioc/pnpwwMtBD6y
-	qnoVFSZjvx246QomTNlSRWH8VmHK3hoioAk8A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pFhsEcL1bQU11Hvtri1F91BuS2y2VWBt
-	UKHiTlQsE3kQV6RCR+Js9qD/y4sqcNmuBhh3dZHxrnqhReYuYaKV/9PNrqZEpnvy
-	g7ZNGyunrGpqfDwYWjYbtpxwJ7Q7CBx2SzWc6SbEQ5XYZR/cmrBAHLaIwKbo+jCs
-	U8ivsFDRMYY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6410C29ECE;
-	Thu, 14 Jul 2016 11:48:23 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DEEDF29ECD;
-	Thu, 14 Jul 2016 11:48:22 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2016, #05; Wed, 13)
-References: <xmqqy4551nph.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1607141542250.6426@virtualbox>
-Date:	Thu, 14 Jul 2016 08:48:20 -0700
-In-Reply-To: <alpine.DEB.2.20.1607141542250.6426@virtualbox> (Johannes
-	Schindelin's message of "Thu, 14 Jul 2016 15:46:27 +0200 (CEST)")
-Message-ID: <xmqqvb08rzjv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751293AbcGNPxS (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 11:53:18 -0400
+Received: from mout.gmx.net ([212.227.15.15]:56220 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751149AbcGNPxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 11:53:16 -0400
+Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M5cMq-1bCeDb3mTg-00xYrn; Thu, 14 Jul 2016 17:53:08
+ +0200
+Date:	Thu, 14 Jul 2016 17:53:06 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>
+cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, sschuberth@gmail.com,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v4] config: add conditional include
+In-Reply-To: <20160714153311.2166-1-pclouds@gmail.com>
+Message-ID: <alpine.DEB.2.20.1607141750190.6426@virtualbox>
+References: <20160712164216.24072-1-pclouds@gmail.com> <20160714153311.2166-1-pclouds@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 65193914-49DA-11E6-B0DD-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/mixed; BOUNDARY="8323329-2099261904-1468511587=:6426"
+X-Provags-ID: V03:K0:2PB965R6EqqIb/sPJX4vSGkHbmSAWvf+4BRqD0qKzNUaWzjgwa5
+ Sp/BOiseksC3I4WortITwWMmgkTpO21SgXi8lOTCH5eZRp7eiU2Qrpz5Gh2DmIra4D4MHM3
+ eE3RIwnc6lhFCkHKJbWDa6nF7eTm2slmy5iND7bCIY1eQw4EMe6zf82z8/fWQB1aMjXdmBY
+ /31l688+CRo3MT/ysOxYA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:xuBlyKsGmKQ=:y0wSE8bhZwELzfNG1FnZvN
+ dUZt5EAFjxgmjDbcJC2faTpV8SBD97C35LcSA0/6vXaDkGxsahIXxzqmuZOk7em0qBmEPCcr2
+ vsRYwkrzWCpSvwwsgpaLCxexs352NWvalHnNkqwUxr5qSXqv3S8aOfcon7TUdTOEhAz6CkHDt
+ uHwq7tJKDzQX2QnGKbJS+MUDdy86hVr+mWFZ7oZ83QB+T/RsaL87U2i+HXuMe4r90I8aBGx7T
+ OrbtX34HxnNDX6YorWNal6Jp59M4j4/azaqdG6DgCAJrRzfzONKOUa+uo9kd24Vc9ZklCNAcL
+ hCoJgGzWAX6BedXXFuIarKnxuw5AYYMoIITt80JHtzhiioB1YCGUTuD0NKeBhTReQXhU6dB9B
+ T9f0BnZlV3LS7bBSvy58qo1aQA3kZ3LogQEpCHN2vETH+NyFkjUVCOaoKNIpbKplX6I3VJAa3
+ jCipXUYHDVz+jycG2jg1voDCyEKV8OpT7v1n3A5+0iFX7r6m+GQwnXkxwOYPvi0tFPNy0KYFq
+ EnhLOU8aIqvEEgmMQxqFCVnlAnLpiN6pwBsdn2/ZWYKOsl3rkpeWWIYuX4lE9z1HCw2LyLlFr
+ h68eCGatR886jnSmrjSdUI73BHl6ilGkUXvDBbyGyh1Ld4hFVO5cENEVPh64l67S1XHD+m4Qj
+ n/ns2i4J/w1m/DwXMdAHm9PwR/NwlS1qNV1sRoWHJbSavHjbZCdR8oxlEKwJmnl842FpqCbmn
+ 2zr0UF2+3+NBuSxB/raJ/P0HgVXmklTpqsUEQoEkMYM2ombgy7YVMRoQ0NsrBxp5ygptKt0uq
+ +dSEODn
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Oh, and v14 has a bug that I reported already:
-> http://article.gmane.org/gmane.comp.version-control.git/298949
+--8323329-2099261904-1468511587=:6426
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-These two lines are the most helpful kind of response to "What's
-cooking" report.  Highly appreciated.
+Hi Duy,
 
-The value of the report to me primarily is to make sure other people
-can _stop_ me from merging things prematurely.
+On Thu, 14 Jul 2016, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-Thanks.
+> Helped-by: Jeff King <peff@peff.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+
+This commit message is quite a bit short on details. I still fail to see
+what use case this would benefit, and I already start to suspect that the
+change would open a can of worms that might not be desired.
+
+> +=09; include if $GIT_DIR is /path/to/foo/.git
+> +=09[include "gitdir:/path/to/foo/.git"]
+> +=09=09path =3D /path/to/foo.inc
+
+I find this way to specify a conditional unintuitive. Reading
+"gitdir:/path/to/foo/.git" suggests to me that the Git dir is *re-set*,
+not that this is a condition.
+
+I would have expected something like
+
+=09[include "if-gitdir-is:/path/to/foo/.git"]
+
+instead.
+
+Ciao,
+Dscho
+--8323329-2099261904-1468511587=:6426--
