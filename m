@@ -2,92 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2B8220195
-	for <e@80x24.org>; Fri, 15 Jul 2016 15:28:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB17A20195
+	for <e@80x24.org>; Fri, 15 Jul 2016 15:30:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751196AbcGOP2w (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 11:28:52 -0400
-Received: from mout.gmx.net ([212.227.17.22]:65181 "EHLO mout.gmx.net"
+	id S1751582AbcGOPag (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 11:30:36 -0400
+Received: from lixid.tarent.de ([193.107.123.118]:51200 "EHLO mail.lixid.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751000AbcGOP2u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 11:28:50 -0400
-Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LvzF3-1bIZmG1BFt-017p4Q; Fri, 15 Jul 2016 17:28:33
- +0200
-Date:	Fri, 15 Jul 2016 17:28:30 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Mike Hommey <mh@glandium.org>
-cc:	git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v2] blame: Allow to blame paths freshly added to the
- index
-In-Reply-To: <20160715125550.24883-1-mh@glandium.org>
-Message-ID: <alpine.DEB.2.20.1607151726370.6426@virtualbox>
-References: <alpine.DEB.2.20.1607151242020.6426@virtualbox> <20160715125550.24883-1-mh@glandium.org>
+	id S1751191AbcGOPaf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Jul 2016 11:30:35 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.lixid.net (MTA) with ESMTP id AD3D5140224;
+	Fri, 15 Jul 2016 17:30:31 +0200 (CEST)
+Received: from mail.lixid.net ([127.0.0.1])
+	by localhost (mail.lixid.net [127.0.0.1]) (MFA, port 10024) with LMTP
+	id vb-OggEskXC0; Fri, 15 Jul 2016 17:30:31 +0200 (CEST)
+Received: from tglase.lan.tarent.de (tglase.lan.tarent.de [172.26.3.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.lixid.net (MTA) with ESMTPS id 52F7A14016D;
+	Fri, 15 Jul 2016 17:30:31 +0200 (CEST)
+Received: by tglase.lan.tarent.de (Postfix, from userid 2339)
+	id 08DA3220968; Fri, 15 Jul 2016 17:30:30 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by tglase.lan.tarent.de (Postfix) with ESMTP id D9463220900;
+	Fri, 15 Jul 2016 17:30:30 +0200 (CEST)
+Date:	Fri, 15 Jul 2016 17:30:30 +0200 (CEST)
+From:	Thorsten Glaser <t.glaser@tarent.de>
+X-X-Sender: tglase@tglase.lan.tarent.de
+To:	=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+cc:	Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Server-side preventing some files from being overwritten
+In-Reply-To: <CACBZZX7YFQ3o+5wbVz0ca6__3ViD0b-qbrX06CkxhAHE8uQ6oQ@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1607151729560.18668@tglase.lan.tarent.de>
+References: <alpine.DEB.2.20.1607141725390.25238@tglase.lan.tarent.de> <CAGZ79kb=2rpYucjhavNB_XHLk9rjKSoHzL9bwM5buDO0GyW3vw@mail.gmail.com> <alpine.DEB.2.20.1607141948530.25238@tglase.lan.tarent.de> <xmqqpoqgqdlz.fsf@gitster.mtv.corp.google.com>
+ <CAPc5daXxAqXtUvs1Xr_vgncXqcvR8-VG67oDAgOQ8xPcT7nCeQ@mail.gmail.com> <CACBZZX7YFQ3o+5wbVz0ca6__3ViD0b-qbrX06CkxhAHE8uQ6oQ@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Content-Language: de-DE-1901
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:3k09QjI5Q9l9VwUIO5bVpDg/9tVTOeREB2p+EVUgV+H2LmY+fTe
- 9sYQ74V8iKWLfGxxVglAeifXGG2adbcwHEiBHPOOlKwp2AF8lkHrTgsaporQny450aOqDOG
- zmu9OORQJrdSSZd/ro/KLbFBuXXT3WxnbXKGiP14NuaWTz4CdQMYU/pZhL5OGvh6jRJJGQ7
- vjga/zHMW4pz9WoB+HrVA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:RkPtVcabBDU=:3PMj+OFaNcq4CkPlMFHYTe
- uihtQOU00znbcqBstl33b0QD/Od/xj877+D/8fAXur57emf5LL5i+WkMr0FgQDm3vYjBPwc+P
- xBkk6Bm8AaixQHTm2TdXmweYkdQZn/BN2CRkHaMg/RNR4SZCNYAVLEDoiphx4XCp0wnjpVSyI
- pPoT21fKVkbk0hqsd24hjs5sdSyds7pzVHLpHXLr9JyRorDYUAEOxjEIlsK4uWtrjUadgdAYC
- XO0lhhL8DeB5eCUIevTEu22K8cv0mzr7wuJycBItUYhubfW8QPcSinLAumWCwBg8b6Yo6Ev2y
- OqJLvPSb9kCW9RCJFcpGVEGolAJsPudvD6WaIHoLsRWZL/IDz/G55pNMg1igXmRfsa+HZhjhq
- g73XKm4ydcp0sZBFdyDBY2lCebXkctBdIW8SbxwDM7C3X0QDEPzIFuwc60lO+BEvaFQ3WEOKA
- CIov3F0R2aKji9VEBPv+FPOYhtsrj2iagyVTBL+O4ZJcqddrfWB/WxwtyvfPC2eo9AFMo0j3/
- 8TonEqii1/AQBabRFy7wLxDU2Hix77G6yY1Ig8+viYdCSnXk+95fiCSvLvmcaM7aeeDZekVkU
- fZutjM4vpBH4sc9xWLs75utBsBXuhEiaxN79gCsoUjWOcWRVmero1JLplenLzClNAwZ2dlYss
- wPl5sDV4NfqUdWEvvX06cb6uQbkaC7QJmUFqmMCMe7nL1xKAmwgPiNrfqpT1FQ5IlxsqCCqyQ
- Sjhl6PAVPwMawPeTMKLDgwvIhiIEShjQ12zxj3HWBthQZZlkNNAVjVFMtR9XOQVJCZOTHHDLd
- ZZ7ZK5S
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Mike,
+On Fri, 15 Jul 2016, Ævar Arnfjörð Bjarmason wrote:
 
-On Fri, 15 Jul 2016, Mike Hommey wrote:
+> I.e. it allows pushing a series which is a series of two commits which:
+> 
+>   1. Change the forbidden file(s)
+>   2. Undo changes to the forbidden file(s)
 
-> diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
-> index a9b266f..2812d7c 100755
-> --- a/t/t8003-blame-corner-cases.sh
-> +++ b/t/t8003-blame-corner-cases.sh
-> @@ -41,12 +41,12 @@ test_expect_success setup '
->  	test_tick &&
->  	GIT_AUTHOR_NAME=Fourth git commit -m Fourth &&
->  
-> -	{
-> -		echo ABC
-> -		echo DEF
-> -		echo XXXX
-> -		echo GHIJK
-> -	} >cow &&
-> +	cat >cow <<-\EOF &&
-> +	ABC
-> +	DEF
-> +	XXXX
-> +	GHIJK
-> +	EOF
->  	git add cow &&
+That’s precisely allowed.
 
-Sorry, I did not realize that there was precedent for this awkward
-paradigm in the same test script.
-
-I like that you fix them, but I would prefer that to be done in a separate
-patch (does not even need to be the same patch series).
-
-Apart from that (i.e. apart from touching unrelated parts of the test
-script), the patch looks good to me.
-
-Thanks,
-Dscho
+bye,
+//mirabilos
+-- 
+tarent solutions GmbH
+Rochusstraße 2-4, D-53123 Bonn • http://www.tarent.de/
+Tel: +49 228 54881-393 • Fax: +49 228 54881-235
+HRB 5168 (AG Bonn) • USt-ID (VAT): DE122264941
+Geschäftsführer: Dr. Stefan Barth, Kai Ebenrett, Boris Esser, Alexander Steeg
