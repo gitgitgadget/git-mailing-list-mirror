@@ -6,61 +6,80 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DD0E203C1
-	for <e@80x24.org>; Fri, 15 Jul 2016 09:42:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A581C2018F
+	for <e@80x24.org>; Fri, 15 Jul 2016 10:25:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932289AbcGOJmI (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 05:42:08 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45274 "HELO cloud.peff.net"
+	id S932302AbcGOKZM (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 06:25:12 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45290 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932220AbcGOJmG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 05:42:06 -0400
-Received: (qmail 15871 invoked by uid 102); 15 Jul 2016 09:42:07 -0000
+	id S932082AbcGOKZK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2016 06:25:10 -0400
+Received: (qmail 17718 invoked by uid 102); 15 Jul 2016 10:25:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jul 2016 05:42:07 -0400
-Received: (qmail 13898 invoked by uid 107); 15 Jul 2016 09:42:25 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jul 2016 06:25:11 -0400
+Received: (qmail 14093 invoked by uid 107); 15 Jul 2016 10:25:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jul 2016 05:42:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jul 2016 05:42:01 -0400
-Date:	Fri, 15 Jul 2016 05:42:01 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jul 2016 06:25:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jul 2016 06:25:06 -0400
+Date:	Fri, 15 Jul 2016 06:25:06 -0400
 From:	Jeff King <peff@peff.net>
-To:	"Morten W. J." <morten@winkler.dk>
-Cc:	git@vger.kernel.org
-Subject: Re: Two consecutive clones of a remote produces different files
-Message-ID: <20160715094200.GA17917@sigill.intra.peff.net>
-References: <2183637.OVprKRVBmt@t430>
+To:	git@vger.kernel.org
+Subject: [PATCH 0/12] push progress reporting and keepalives
+Message-ID: <20160715102506.GA23164@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2183637.OVprKRVBmt@t430>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 15, 2016 at 10:45:47AM +0200, Morten W. J. wrote:
+If you push a large number of objects, the server side may have to chew
+CPU for a long time processing the input (delta resolution, connectivity
+check, and whatever any hooks choose to do). During this time, you get
+no feedback that anything is happening, unless the hooks feel like
+writing something to stderr.  For a repository the size of linux.git, a
+full push from scratch can take several minutes.
 
-> I have a repository hosted on a GitLab server on my LAN and when I clone that 
-> repository to a linux box and a windows box I get different files!
-> 
-> It is very hard to explain in words, so I have recorded my desktop while 
-> reproducing it, which I can do consistently:
-> 
-> https://dl.dropboxusercontent.com/u/5234017/git-clone-produces-different-results.ogv
-> 
-> I have no ideas what is wrong or why it behaves the way it does, but I am 
-> actually pretty scared now. The repository has been updated from as a subtree 
-> from another repository, but that should not create such behavior?
+This is annoying and confusing to the user, who wonders if the
+connection has hung. But it can also cause problems on systems that have
+other timeouts (e.g., firewalls dropping TCP sessions, or web proxies
+dropping requests that produce no response within a certain time).
 
-Just a blind guess, but might you have two files with names that differ
-only in case, and on Windows one is overwriting the other because you
-have a case-insensitive filesystem?
+This patch series adds two new features:
 
-Try:
+ 1. Progress reporting for the CPU-intensive parts of receive-pack.
 
-  git ls-files -s | grep -i src/LogEventSubscriber.h
+ 2. A keepalive mechanism similar to what we use in upload-pack
+    (basically sending zero-length packets on sideband 1 while the client
+    is waiting for us to speak).
 
-to see what is in the index (which is case-sensitive, and is the source
-from which git checks the files out into the working tree).
+Both are enabled for any client which speaks the sideband protocol.
+Existing versions of git handle the new behavior just fine (the progress
+reporting is easy, because they were expecting stderr messages anyway;
+the keepalive works because the demuxer just relays zero bytes back to
+send-pack).
+
+I also tested with both JGit and libgit2 clients, and both seem to
+handle the zero-length packets just fine.
+
+There are unfortunately no automated tests, as it's hard to simulate the
+effect. My manual testing involved inserting "sleep" statements into
+index-pack (and hooks with manual sleeps), and then using "strace" to
+confirm that the keepalives were sent.
+
+  [01/12]: check_everything_connected: always pass --quiet to rev-list
+  [02/12]: rev-list: add optional progress reporting
+  [03/12]: check_everything_connected: convert to argv_array
+  [04/12]: check_everything_connected: use a struct with named options
+  [05/12]: check_connected: relay errors to alternate descriptor
+  [06/12]: check_connected: add progress flag
+  [07/12]: clone: use a real progress meter for connectivity check
+  [08/12]: index-pack: add flag for showing delta-resolution progress
+  [09/12]: receive-pack: turn on index-pack resolving progress
+  [10/12]: receive-pack: relay connectivity errors to sideband
+  [11/12]: receive-pack: turn on connectivity progress
+  [12/12]: receive-pack: send keepalives during quiet periods
 
 -Peff
