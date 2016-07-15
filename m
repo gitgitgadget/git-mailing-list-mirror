@@ -2,89 +2,49 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BASE64_LENGTH_79_INF,
+	BAYES_00,DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_NUMERIC_HELO,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38A79203BD
-	for <e@80x24.org>; Thu, 14 Jul 2016 22:51:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7D71203BD
+	for <e@80x24.org>; Fri, 15 Jul 2016 01:21:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752023AbcGNWvR (ORCPT <rfc822;e@80x24.org>);
-	Thu, 14 Jul 2016 18:51:17 -0400
-Received: from mail-it0-f47.google.com ([209.85.214.47]:33438 "EHLO
-	mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751512AbcGNWvQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2016 18:51:16 -0400
-Received: by mail-it0-f47.google.com with SMTP id f6so5632211ith.0
-        for <git@vger.kernel.org>; Thu, 14 Jul 2016 15:51:15 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=YqFg7yXN1vaeTNKSUathSxS12kzWdU07anVj+YRXVXI=;
-        b=cMFwoEcU/ITeIM89TYU3KzHOJjxcegZwTMM6PpgdpcaWVwYkNcWD1zSlhdEl6wp6Bd
-         EeJUFPnrCfb0hkY4g9xyRbd7+PA30F85uYV8aEbnL1gXbNhp6tLh9rh6SRILa54OmUU+
-         d7l6o1luKvm0JHgtZPg47ST/ceAOx4FQ/z5vpm2wwzr9Ke6x9x4tNVs/zBa/fieJvnPC
-         bJXsql+CYsTjFiY3AC4XZ3RJaaQ3kOPMNKFiVcWT7MsKm22ILnZ6+uWXfZkpaQc4lPVb
-         eUQGFpa/n298sUKjXWD2KFPrfN+OxAxEs3S8OF0xlmhRE/xMN3mPOT/Uk1U9ljGUqSW+
-         5MIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=YqFg7yXN1vaeTNKSUathSxS12kzWdU07anVj+YRXVXI=;
-        b=cfr5ZqysKvWYHXjA33HzfvBTYtBWEuvyfxDhrrgnxfJqHLthcpQ7vuL56za6l7NBEI
-         /fYObUQXV+3DIXpZembYMTQM4hE2WZ8hlpL+Sq7Ic1/OQVtyHqNsItv40tQF3gVrSl3f
-         9Wm+Pa4M1ZQ5lCcAqFtWiKI8g9a4TRqYbUZrk1jYKmcCtayMtyBj/2OhhrqEAlW28Hac
-         lXoipQ/oVi0CdiacXb94mDBpqqLCCPGX+RDFeMsl/MpTnK2ODQywWiF5gGB16zeqdzpu
-         36vTbMpohinz+PR+02/bTGckvBHPUTRf2gLw43z9TEhPMtN+ePSAOSSey2A1/1Qxgfvj
-         sx6w==
-X-Gm-Message-State: ALyK8tKYf0a1oleTuEJam19M6zoyInRZ/twRZLki+bkU980TlWtG2enu14WnsAM6TDNU5ZcGDTHJ4B2JA0FmfWW5
-X-Received: by 10.36.228.138 with SMTP id o132mr26263723ith.49.1468536675243;
- Thu, 14 Jul 2016 15:51:15 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Thu, 14 Jul 2016 15:51:14 -0700 (PDT)
-In-Reply-To: <20160714224617.GA22386@sigill.intra.peff.net>
-References: <20160714214948.27432-1-sbeller@google.com> <20160714214948.27432-2-sbeller@google.com>
- <20160714224617.GA22386@sigill.intra.peff.net>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Thu, 14 Jul 2016 15:51:14 -0700
-Message-ID: <CAGZ79kZ=5Jt3p5zUvve2Vy8+esWq5S8X0heGv5Unmtt_KQb8_A@mail.gmail.com>
-Subject: Re: [PATCH 1/4] push options: {pre,post}-receive hook learns about
- push options
-To:	Jeff King <peff@peff.net>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Dan Wang <dwwang@google.com>, Eric Wong <e@80x24.org>,
-	Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+	id S1751838AbcGOBVM (ORCPT <rfc822;e@80x24.org>);
+	Thu, 14 Jul 2016 21:21:12 -0400
+Received: from plane.gmane.org ([80.91.229.3]:60525 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751279AbcGOBVK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2016 21:21:10 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1bNroK-0001sS-Od
+	for git@vger.kernel.org; Fri, 15 Jul 2016 03:21:03 +0200
+Received: from 65.222.173.206 ([65.222.173.206])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 15 Jul 2016 03:21:00 +0200
+Received: from peartben by 65.222.173.206 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 15 Jul 2016 03:21:00 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To:	git@vger.kernel.org
+From:	Ben Peart <peartben@gmail.com>
+Subject: Re: [PATCH v14 00/21] index-helper/watchman
+Date:	Fri, 15 Jul 2016 01:20:47 +0000 (UTC)
+Message-ID: <loom.20160715T031048-892@post.gmane.org>
+References: <1467532693-20017-1-git-send-email-novalis@novalis.org> <CACsJy8Br-rSTKjpt2ykn8YyFruy8CZoXWm287BtTRcAYY2DjVw@mail.gmail.com> <5786B9CE.6010703@novalis.org> <CACsJy8BRg6ej1ZWeAY0yaV3Zmk+UqW4YN+yt-FTOYihTC19PqQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 65.222.173.206 (Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 14, 2016 at 3:46 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Jul 14, 2016 at 02:49:45PM -0700, Stefan Beller wrote:
->
->> We limit the push options for now
->> * to not exceed an arbitrary count, and
->> * to not exceed an arbitrary size.
->>
->> This serves two purposes:
->> * DoS protection (i.e. one connection can add no more than 32kB
->>   now)
->> * We need to figure out how to handle large (>64kB). Jeff wrote:
->>   > Yes, but people are also happy when they can use a flexible and
->>   > standardized tool to do a thing. I'd be more frustrated when I found out
->>   > that Git's data-pushing protocol has arbitrary limitations (like, say, I
->>   > can't push a data item larger than a single 64K pkt-line), which would
->>   > easily just work with something like HTTP POSTs.
->>   So to keep a way open in the future to deal with large pay loads,
->>   the size is restricted for now.
->
-> Should this bit get dropped from the commit message?
->
-> -Peff
+RHV5IE5ndXllbiA8cGNsb3VkcyA8YXQ+IGdtYWlsLmNvbT4gd3JpdGVzOgoKPiAKPiBPbiBXZWQsIEp1bCAxMywgMjAxNiBhdCAxMTo1OSBQTSwgRGF2aWQgVHVybmVyIDxub3ZhbGlzIDxhdD4gbm92YWxpcy5vcmc+IAp3cm90ZToKPiA+IE9uIDA3LzEyLzIwMTYgMDI6MjQgUE0sIER1eSBOZ3V5ZW4gd3JvdGU6Cj4gPj4KPiA+PiBKdXN0IHRoaW5raW5nIG91dCBsb3VkLiBJJ3ZlIGJlZW4gdGhpbmtpbmcgYWJvdXQgdGhpcyBtb3JlIGFib3V0IHRoaXMuCj4gPj4gQWZ0ZXIgdGhlIG1vdmUgZnJvbSBzaWduYWwtYmFzZWQgdG8gdW5peCBzb2NrZXQgZm9yIGNvbW11bmljYXRpb24sIHdlCj4gPj4gcHJvYmFibHkgYXJlIGJldHRlciBvZmYgd2l0aCBhIHNpbXBsZXIgZGVzaWduIHRoYW4gdGhlIHNobS1hbGlrZSBvbmUKPiA+PiB3ZSBoYXZlIG5vdy4KPiA+Pgo+ID4+IFdoYXQgaWYgd2Ugc2VuZCBldmVyeXRoaW5nIG92ZXIgYSBzb2NrZXQgb3IgYSBwaXBlPyBTZW5kaW5nIDUwME1CIG92ZXIKPiA+PiBhIHVuaXggc29ja2V0IHRha2VzIDI1M21zLCB0aGF0J3MgaW5zaWduaWZpY2FudCB3aGVuIG9wZXJhdGlvbnMgb24gYW4KPiA+PiBpbmRleCB0aGF0IHNpemUgdXN1YWxseSB0YWtlIHNlY29uZHMuIElmIHdlIHNlbmQgZXZlcnl0aGluZyBvdmVyCj4gPj4gc29ja2V0L3BpcGUsIHdlIGNhbiB0cnVzdCBkYXRhIGludGVncml0eSBhbmQgZG9uJ3QgaGF2ZSB0byB2ZXJpZnksCj4gPj4gZXZlbiB0aGUgdHJhaWxpbmcgU0hBLTEgaW4gc2htIGZpbGUuCj4gPgo+ID4KPiA+IEkgdGhpbmsgaXQgd291bGQgYmUgZ29vZCB0byBtYWtlIGluZGV4IG9wZXJhdGlvbnMgbm90IHRha2Ugc2Vjb25kcy4KPiA+Cj4gPiBJbiBnZW5lcmFsLCB3ZSBzaG91bGQgbm90IG5lZWQgdG8gdmVyaWZ5IHRoZSB0cmFpbGluZyBTSEEtMSBmb3Igc2htIGRhdGEuCj4gPiBTbyB0aGUgaW5kZXgtaGVscGVyIHZlcmlmaWVzIGl0IHdoZW4gaXQgbG9hZHMgaXQsIGJ1dCB0aGUgZ2l0IChlLmcuKSBzdGF0dXMKPiA+IHNob3VsZCBub3QgbmVlZCB0byB2ZXJpZnkuCj4gPgo+ID4gQWxzbywgaWYgd2UgaGF2ZSB0d28gZ2l0IGNvbW1hbmRzIHJ1bm5pbmcgYXQgdGhlIHNhbWUgdGltZSwgdGhlIGluZGV4LWhlbHBlcgo+ID4gY2FuIG9ubHkgc2VydmUgb25lIGF0IGEgdGltZTsgd2l0aCBzaG0sIGJvdGggY2FuIHJ1biBhdCBmdWxsIHNwZWVkLgo+IAo+IFdlIHN0aWxsIGhhdmUgYW4gb3B0aW9uIHRvIHNlbmQgYSAoc2htLCBwb3NzaWJseSkgcGF0aCB0byBnaXQgdG8gcGljawo+IHVwIGFuZCBza2lwIHZlcmlmaWNhdGlvbi4gSWYgd2UgY2FuIGV4Y2hhbmdlIGNhcGFiaWxpdGllcyB0aGVuIHNlbmRpbmcKPiB0aGUgaW5kZXggc29tZSB3YXkgZWxzZSBpcyBhbHdheXMgcG9zc2libGUuCj4gCj4gPj4gU28sIHdoYXQgSSBoYXZlIGluIG1pbmQgaXMgdGhpcywgYXQgcmVhZCBpbmRleCB0aW1lLCBpbnN0ZWFkIG9mIG9wZW4gYQo+ID4+IHNvY2tldCwgd2UgcnVuIGEgc2VwYXJhdGUgcHJvZ3JhbSBhbmQgY29tbXVuaWNhdGUgdmlhIHBpcGVzLiBXZSBjYW4KPiA+PiBleGNoYW5nZSBjYXBhYmlsaXRpZXMgaWYgbmVlZGVkLCB0aGVuIHRoZSBwcm9ncmFtIHNlbmRzIHRoZSBlbnRpcmUKPiA+PiBjdXJyZW50IGluZGV4LCB0aGUgbGlzdCBvZiB1cGRhdGVkIGZpbGVzIGJhY2sgKGFuZC9vciB0aGUgbGlzdCBvZiBkaXJzCj4gPj4gdG8gaW52YWxpZGF0ZSkuIFRoZSBkZXNpZ24gbG9va3MgdmVyeSBtdWNoIGxpa2UgYSBzbXVkZ2UvY2xlYW4gZmlsdGVyLgo+ID4KPiA+Cj4gPiBUaGlzIHNlZW1zIHZlcnkgY29tcGxpY2F0ZWQuICBOb3cgZ2l0IHN0YXR1cyB0YWxrcyB0byB0aGUgc2VwYXJhdGUgcHJvZ3JhbSwKPiA+IHdoaWNoIHRhbGtzIHRvIHRoZSBpbmRleC1oZWxwZXIsIHdoaWNoIHRhbGtzIHRvIHdhdGNobWFuLiAgVGhhdCBpcyBhIGxvdCBvZgo+ID4gc3RlcHMhCj4gCj4gSSB3YXMgc3VnZ2VzdGluZyB0aGlzIGJlY2F1c2UgSSB0aGluayBpdCB3b3VsZCBzaW1wbGlmeSB0aGluZ3MsIG5vdAo+IGNvbXBsaWNhdGUgc3R1ZmYgZnVydGhlci4gWWVzIHRoZSBzZXBhcmF0ZSBwcm9ncmFtIHBsYXlzIHRoZSByb2xlIG9mCj4gb3VyIHVuaXggY2xpZW50LCBpZiB3ZSBrZWVwIHRoZSBpbmRleC1oZWxwZXIuIEJ1dCB3ZSBkb24ndCBoYXZlIHRvLgo+IAo+IERvIHlvdSByZW1lbWJlciBKdW5pbyBvbmNlIHN1Z2dlc3RlZCB0byBwdXQgdGhlIGluZGV4IG9uIHRtcGZzPyBUaGF0J3MKPiB3aGF0IEkgaW1hZ2luZSBpbiBjb21tb24sIG1lZGl1bSBzY2FsZSBzZXR1cHMuIFdlIGRvbid0IG5lZWQgYW4gZXh0cmEKPiBkYWVtb246Cj4gCj4gMSkgd2hlbiBnaXQgbmVlZHMgdGhlIGluZGV4LCB0aGUgc2NyaXB0IGxvb2tzIGF0IGl0cyB0bXBmcyBtb3VudCwgaWYKPiBmb3VuZCwgcGFzcyB0aGUgcGF0aCBiYWNrCj4gMikgd2hlbiBnaXQgYW5ub3VuY2VzIHRoZSBpbmRleCBoYXMgYmVlbiB1cGRhdGVkLCB0aGUgc2NyaXB0IHJlYWRzIHRoZQo+IGluZGV4IGFuZCBzYXZlcyBpdCBpbiB0bXBmcwo+IDMpIHdoZW4gZ2l0IHJlZnJlc2hlcyBhbmQgYXNrcyBmb3Igd2F0Y2htYW4gc3VwcG9ydCwgdGhlIHNjcmlwdCBzaW1wbHkKPiBydW5zICJ3YXRjaG1hbiIgY29tbWFuZCwgcG9zdCBwcm9jZXNzZXMgdGhlIG91dHB1dCBhIGJpdCBhbmQgc2VuZCB0aGUKPiBmaWxlIGxpc3QgdG8gZ2l0Cj4gCj4gQmVjYXVzZSB0aGVyZSBpcyBubyBzZXBhcmF0ZSBkYWVtb24gaW4gdGhpcyBjYXNlLCB3ZSBkb24ndCBuZWVkCj4gLS1raWxsLCB3ZSBkb24ndCBuZWVkIC0tYXV0b3J1bi4gV2Ugc3RpbGwgbmVlZCBXQU1BIGV4dGVuc2lvbiBidXQgaXQKPiBjYW4gY29udGFpbiBqdXN0IGFuIGFyYml0cmFyeSBjbG9jayBzdHJpbmcsIHRoaXMgaXMgY29tcGxldGVseSBvcGFxdWUKPiB0byBnaXQuIElmIHdlIGNhbiBnZXQgcmlkIG9mIHRoZSBpbmRleC1oZWxwZXIgKHdpdGggYW4gZXhhbXBsZSBzY3JpcHQKPiBwcm9iYWJseSBsYW5kZWQgaW4gY29udHJpYiBmb2xkZXIpLCB0aGF0J3MgYSBsb3Qgb2YgbGVzcyBoZWFkYWNoZSBkb3duCj4gdGhlIHJvYWQuCj4gCj4gRm9yIGdpYW50LXNjYWxlIHJlcG9zLCB5b3UgcHJvYmFibHkgd2FudCBzb21ldGhpbmcgbW9yZSBlZmZpY2llbnQgdGhhbgo+IGEgc2NyaXB0IGxpa2UgdGhpcy4gQW5kIHRoZSBnb29kIHRoaW5nIGlzIHlvdSBoYXZlIGZyZWVkb20gdG8gZG8KPiB3aGF0ZXZlciB5b3Ugd2FudC4gWW91IGNhbiBydW4gb25lIGRhZW1vbiBwZXIgcmVwbywgeW91IGNhbiBydW4gb25lCj4gZGFlbW9uIHBlciBzeXN0ZW0uLi4gSW4gc29tZSBwcmV2aW91cyBtYWlsIGV4Y2hhbmdlIHdpdGggRHNjaG8sIGl0IHdhcwo+IG1lbnRpb25lZCB0aGF0IHNvbWV0aGluZyBvdGhlciB0aGFuIHdhdGNobWFuIG1heSBiZSBkZXNpcmVkLiBUaGlzCj4gb3BlbnMgdXAgdGhhdCBkb29yIHdpdGhvdXQgbXVjaCBoZWFkYWNoZSBmcm9tIG91dHNpZGUuCj4gCj4gPiBJIHRoaW5rIHRoZSBkYWVtb24gYWxzbyBoYXMgdGhlIGFkdmFudGFnZSB0aGF0IGl0IGNhbiByZWxvYWQgdGhlIGluZGV4IGFzCj4gPiBzb29uIGFzIGl0IGNoYW5nZXMuICBUaGlzIGlzIG5vdCBxdWl0ZSBpbXBsZW1lbnRlZCwgYnV0IGl0IHdvdWxkIGJlIHByZXR0eQo+ID4gZWFzeSB0byBkby4gIFRoYXQgd291bGQgc2F2ZSBhIGxvdCBvZiB0aW1lIGluIHRoZSB0eXBpY2FsIHdvcmtmbG93Lgo+IAo+IEEgc2NyaXB0IGhhcyB0aGUgc2FtZSBhZHZhbnRhZ2UsIHRoYXQgaXMgaWYgZ2l0IG5vdGlmaWVzIGl0IChsaWtlIHdlCj4gZG8gbm93KS4gWW91IGNhbiBhbHNvIGRvIGl0IHVzaW5nIHdhdGNobWFuIHRyaWdnZXIsIHdoaWNoIGRvZXMgbm90Cj4gbmVlZCBhbnkgc3BlY2lhbCBzdXBwb3J0IGZyb20gZ2l0LgoKClRha2luZyBhIHN0ZXAgYmFjaywgZ2l0IG5lZWRzIChhdCBsZWFzdCkgMyB0aGluZ3MgdG8gdXBkYXRlIHRoZSBpbmRleCBxdWlja2x5LCAKdGhlIG9sZCBpbmRleCwgdGhlIGxpc3Qgb2YgcG90ZW50aWFsbHkgbW9kaWZpZWQgZmlsZXMgYW5kIHRoZSBsaXN0IG9mIApkaXJlY3RvcmllcyB3aXRoIGNoYW5nZXMuICBXaGVuIGxvb2tlZCBhdCB0aGlzIHdheSwgdGhlIHF1ZXN0aW9uIGJlY29tZXMgaG93IGRvIAp3ZSBwcm92aWRlIHRoaXMgZGF0YSB0byBnaXQgaW4gdGhlIGZhc3Rlc3QsIHNpbXBsZXN0LCBtb3N0IGNvbXBhdGlibGUgd2F5LgoKSXQgbWFrZXMgc2Vuc2UgdG8gc2VwYXJhdGUgdGhlIGNvZGUgdGhhdCBnaXQgY2FuIGNhbGwgdG8gYWJzdHJhY3QgYXdheSBzb21lIG9mIAp0aGUgcG90ZW50aWFsbHkgcGxhdGZvcm0gZGVwZW5kZW50IGFzcGVjdHMgb2YgaG93IHdlIHN0b3JlIGFuZCByZXRyaWV2ZSB0aGlzIApkYXRhIHF1aWNrbHkuICBGb3IgZXhhbXBsZSwgd2Ugd291bGQgbGlrZSB0byB1c2Ugc29tZXRoaW5nIG90aGVyIHRoYW4gV2F0Y2htYW4gCnRvIHRyYWNrIGNoYW5nZXMgYXMgaXQgaXNu4oCZdCB3ZWxsIHN1cHBvcnRlZCBvbiBXaW5kb3dzLgoKSXQgd291bGQgYmUgbmljZSB0byBzaW1wbGlmeSB0aGlzIGZvciBnaXQgYXMgbXVjaCBhcyBwb3NzaWJsZSBieSBlbGltaW5hdGluZyB0aGUgCm5lZWQgZm9yIGl0IHRvIG1hbmFnZSBhIGRhZW1vbi4gIE5vIG5lZWQgZm9yIC0tYXV0b3J1biwgLS1raWxsLCBwb2tpbmcgc29ja2V0cywgCmV0YyAtIGp1c3QgcnVuIHRoZSBwcm9ncmFtIGFuZCBnZXQgYmFjayB0aGUgZGF0YS4KCkl0IGFsc28gbWFrZXMgc2Vuc2UgdG8gYWxsb3cgZ2l0IHRvIG5lZ290aWF0ZSBmb3IgdGhlIGRhdGEgaXQgbmVlZHMuICBJdCBtYXkgCm9ubHkgbmVlZCB0aGUgaW5kZXgsIGl0IG1heSBuZWVkIHRoZSBsaXN0IG9mIHVwZGF0ZWQgZmlsZXMgYW5kIGlmIHVudHJhY2tlZGNhY2hlIAppcyB0dXJuZWQgb24sIGl0IHdvdWxkIG5lZWQgdGhlIGxpc3Qgb2YgZGlyZWN0b3JpZXMgdG8gaW52YWxpZGF0ZS4gIFRoZSBzZXBhcmF0ZSAKY29kZSBzaG91bGQgYWxzbyBiZSBhYmxlIHRvIHNheSB3aGljaCBwYXJ0cyBpdCBjYW4gcHJvdmlkZSBxdWlja2x5IGFuZCBoYXZlIGdpdCAKZmFsbGJhY2sgdG8gdGhlIG9sZCBjb2RlIHBhdGggaWYgc29tZXRoaW5nIGlzbuKAmXQgYXZhaWxhYmxlLgoKQW5vdGhlciB0aGluZyB0byBjb25zaWRlciBpcyBjb21wYXRpYmlsaXR5IG1vdmluZyBmb3J3YXJkIGFuZCB2ZXJzaW9uaW5nIHNvIHRoYXQgCmdpdCBhbmQgdGhlIHNlcGFyYXRlIGNvZGUgY2FuIGJlIHJldmlzZWQgaW5kZXBlbmRlbnRseS4gIAoKSSB0aGluayB0aGUgc211ZGdlL2NsZWFuIGZpbHRlciBtb2RlbCBjb3VsZCB3b3JrLiAgSXQgcHJvdmlkZXMgYSB3YXkgdG8gcmVnaXN0ZXIgCmRpZmZlcmVudCBjb21tYW5kcyBmb3IgZWFjaCBwYXJ0IG9mIHRoZSBkYXRhIGdpdCBuZWVkcy4gIFRoaXMgY291bGQgYmUgcGFydCBvZiAKdGhlICJuZWdvdGlhdGlvbuKAnSBwcm9jZXNzIOKAkyBpZiB0aGUgY29tbWFuZCBpcyByZWdpc3RlcmVkLCB0aGVuIGl04oCZcyBzdXBwb3J0ZWQuICAKSWYgbm8gY29tbWFuZCBpcyByZWdpc3RlcmVkLCB0aGVuIGZhbGxiYWNrIHRvIHRoZSBvbGQgY29kZSBwYXRoIGZvciB0aGF0IGRhdGEuICAKSXQgd291bGQgYmUgbmljZSBpZiB5b3UgY291bGQgZ2V0IGFsbCB0aGUgaW5mb3JtYXRpb24gaW4gYSBzaW5nbGUgc3RlcC4K
 
-Right. :/
