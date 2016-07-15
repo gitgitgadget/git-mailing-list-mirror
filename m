@@ -2,84 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0348D20195
-	for <e@80x24.org>; Fri, 15 Jul 2016 16:49:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 516D620195
+	for <e@80x24.org>; Fri, 15 Jul 2016 16:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751789AbcGOQt1 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 12:49:27 -0400
-Received: from hq194.ces.cvnt.net ([69.41.14.194]:28448 "EHLO
-	HQWS-EXMB-01.main.covenanteyes.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751764AbcGOQtX (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Jul 2016 12:49:23 -0400
-X-Greylist: delayed 903 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Jul 2016 12:49:23 EDT
-Received: from HQWS-EXMB-01.main.covenanteyes.com (10.0.52.14) by
- HQWS-EXMB-01.main.covenanteyes.com (10.0.52.14) with Microsoft SMTP Server
- (TLS) id 15.0.1156.6; Fri, 15 Jul 2016 12:34:19 -0400
-Received: from HQWS-EXMB-01.main.covenanteyes.com
- ([fe80::cc70:ee29:5605:e9c0]) by HQWS-EXMB-01.main.covenanteyes.com
- ([fe80::cc70:ee29:5605:e9c0%12]) with mapi id 15.00.1156.000; Fri, 15 Jul
- 2016 12:34:19 -0400
-From:	Andrew Keller <andrew.keller@covenanteyes.com>
-To:	Git List <git@vger.kernel.org>
-Subject: obsolete index in wt_status_print after pre-commit hook runs
-Thread-Topic: obsolete index in wt_status_print after pre-commit hook runs
-Thread-Index: AQHR3ra8hjNsCD4EaU6MsSMqTszZoA==
-Date:	Fri, 15 Jul 2016 16:34:19 +0000
-Message-ID: <5988D847-25A2-4997-9601-083772689879@covenanteyes.com>
-Accept-Language: de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [23.28.40.196]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <5BA04BC595CD7C439E961D8F547BDB00@covenanteyes.com>
-Content-Transfer-Encoding: base64
+	id S1751820AbcGOQtz (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 12:49:55 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61058 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751809AbcGOQty (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2016 12:49:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1863B2CB41;
+	Fri, 15 Jul 2016 12:49:53 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uMhXnCNS+jPXciOFZ4uaSjSaEIQ=; b=U+CMtm
+	cxHcYODueTHJEH3+2+Z/Pae31mQnjmIK+zPQxfsmfCkOh1XVydGvM/kRJMKTNKth
+	8E1res20mhXcheGYOrcPYKkqoWoizKUhtLF34R9bhVYUC2dakEc3tXg8wYrD+f1X
+	KrcBudBegoCpvKE5YX+C9G/bFjAcZe/m/0Yjg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MT5jh4EVS5s9fM8/JhM6fF446mB/4sPu
+	JNiy0lYdbYrlNwkUN4i4a9XinU8Hmn9tfpGDUR8q+pQViAlXd5FL9NBUu08beIl6
+	RidWSlvdS5d7rZf7ko4x+0PQDzRviURtZeOP52qUOHsSfNi330LGEJGRMrx71o7H
+	jy3Dqh7vU2c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0FA462CB3F;
+	Fri, 15 Jul 2016 12:49:53 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 895852CB3E;
+	Fri, 15 Jul 2016 12:49:52 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v4 2/5] t5000: test tar files that overflow ustar headers
+References: <20160630090614.GA16725@sigill.intra.peff.net>
+	<20160630090857.GB17463@sigill.intra.peff.net>
+	<alpine.DEB.2.20.1607141745420.6426@virtualbox>
+	<20160714182108.GB16497@sigill.intra.peff.net>
+	<xmqqshvcourb.fsf@gitster.mtv.corp.google.com>
+	<20160714201018.GA18372@sigill.intra.peff.net>
+	<xmqqbn20otqu.fsf@gitster.mtv.corp.google.com>
+	<20160714202727.GA19101@sigill.intra.peff.net>
+	<xmqq7fcoot6t.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1607151707180.6426@virtualbox>
+Date:	Fri, 15 Jul 2016 09:49:50 -0700
+In-Reply-To: <alpine.DEB.2.20.1607151707180.6426@virtualbox> (Johannes
+	Schindelin's message of "Fri, 15 Jul 2016 17:10:13 +0200 (CEST)")
+Message-ID: <xmqq60s6ongx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 26C0BEB2-4AAC-11E6-93D0-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-SGkgZXZlcnlvbmUsDQoNCkkgaGF2ZSBvYnNlcnZlZCBhbiBpbnRlcmVzdGluZyBzY2VuYXJpby4g
-IEhlcmUgYXJlIGV4YW1wbGUgcmVwcm9kdWN0aW9uIHN0ZXBzOg0KDQoxLiBuZXcgcmVwb3NpdG9y
-eQ0KMi4gY3JlYXRlIG5ldyBwcmUtY29tbWl0IGhvb2sgdGhhdCBpbnZva2VzIGBnaXQgbXYgb25l
-IHR3b2ANCjMuIHRvdWNoIG9uZQ0KNC4gZ2l0IGFkZCBvbmUNCjUuIGdpdCBjb21taXQNCg0KRXhw
-ZWN0ZWQgb3V0Y29tZTogSW4gdGhlIGNvbW1pdCBtZXNzYWdlIHRlbXBsYXRlLCBJIGV4cGVjdCB0
-byBzZWUg4oCcQ2hhbmdlcyB0byBiZSBjb21taXR0ZWQ6IG5ldyBmaWxlOiB0d28iDQoNCkZvdW5k
-IG91dGNvbWU6IEluIHRoZSBjb21taXQgbWVzc2FnZSB0ZW1wbGF0ZSwgSSBzZWUg4oCcQ2hhbmdl
-cyB0byBiZSBjb21taXR0ZWQ6IG5ldyBmaWxlOiBvbmUiDQoNClRoaXMgYmVoYXZpb3Igc2VlbXMg
-dG8gYmUgcmVwcm9kdWNpYmxlIGluIHZlcnNpb25zIDIuOS4xLCAyLjguMSwgMi4wLjAsIGFuZCAx
-LjYuMC4NCg0KU2tpcCB0aGUgbmV4dCAzIHBhcmFncmFwaHMgaWYgeW91IGFyZSBpbiBhIGh1cnJ5
-Lg0KDQpJIHB1bGxlZCBvdXQgdGhlIHNvdXJjZSBmb3IgdmVyc2lvbiAyLjkuMSBhbmQgYnJpZWZs
-eSBza2ltbWVkIGhvdyBydW5fY29tbWl0IGFuZA0KcHJlcGFyZV90b19jb21taXQgd29yay4gIEl0
-IHNlZW1zIHRoYXQgR2l0IGFscmVhZHkgdW5kZXJzdGFuZHMgdGhhdCBhIHByZS1jb21taXQNCmhv
-b2sgY2FuIGNoYW5nZSB0aGUgaW5kZXgsIGFuZCBpdCByZXJlYWRzIHRoZSBpbmRleCBiZWZvcmUg
-cnVubmluZyB0aGUNCnByZXBhcmUtY29tbWl0LW1zZyBob29rOiBodHRwczovL2dpdGh1Yi5jb20v
-Z2l0L2dpdC9ibG9iL3YyLjkuMS9idWlsdGluL2NvbW1pdC5jI0w5NDEtTDk1MQ0KDQpEdXJpbmcg
-dGhlIHByZXBhcmUtY29tbWl0LW1zZyBob29rLCBpdCBzZWVtcyB0aGF0IHRoZSBpbmRleCAoYWNj
-b3JkaW5nIHRvIEdpdA0KY29tbWFuZHMpIGlzIGNvcnJlY3QgYW5kIHVwLXRvLWRhdGUsIGJ1dCB0
-aGUgdGV4dHVhbCBtZXNzYWdlIGluc2lkZSB0aGUgY29tbWl0DQptZXNzYWdlIHRlbXBsYXRlIGlz
-IG91dC1vZi1kYXRlIChpdCByZWZlcmVuY2VzIHRoZSBmaWxlIGBvbmVgIGFzIGEgY2hhbmdlIHRv
-IGJlDQpjb21taXR0ZWQpLg0KDQpJbiBidWlsdGluL2NvbW1pdC5jLCBpdCBzZWVtcyB0aGF0IHRo
-ZSBjb21taXQgbWVzc2FnZSB0ZW1wbGF0ZSBpcyByZW5kZXJlZA0KaW1tZWRpYXRlbHkgYWZ0ZXIg
-dGhlIHByZS1jb21taXQgaG9vayBpcyByYW4sIGFuZCBpbW1lZGlhdGVseSBiZWZvcmUgdGhlIGlu
-ZGV4IGlzDQpyZXJlYWQuICBJZiBJIG1vdmUgdGhlIHNtYWxsIGJsb2NrIG9mIGNvZGUgdGhhdCBy
-ZXJlYWRzIHRoZSBpbmRleCB1cCwgdG8ganVzdCBhZnRlcg0KdGhlIHByZS1jb21taXQgaG9vayBp
-cyByYW4sIHRoZSBjb21taXQgbWVzc2FnZSB0ZW1wbGF0ZSBzZWVtcyB0byBiZSBhcyBJIHdvdWxk
-DQpleHBlY3QsIGJvdGggaW4gLmdpdC9DT01NSVRfRURJVE1TRyBkdXJpbmcgdGhlIHByZXBhcmUt
-Y29tbWl0LW1zZyBob29rIGFuZA0KaW4gdGhlIGVkaXRvciBmb3IgdGhlIGNvbW1pdCBtZXNzYWdl
-IGl0c2VsZi4NCg0KSSBhbSBwdXR0aW5nIHRvZ2V0aGVyIGEgMi1wYXRjaCBzZXJpZXMgdGhhdCBp
-bmNsdWRlcyBhIGZhaWxpbmcgdGVzdCwgYW5kIHRoZW4gdGhpcw0KY2hhbmdlICh3aGljaCBmaXhl
-cyB0aGUgdGVzdCksIGJ1dCB3aGlsZSBJIGRvIHRoYXQsIEkgZmlndXJlIEkgbWF5IGFzIHdlbGwg
-cGluZyB0aGUNCmNvbW11bml0eSB0byBtYWtlIHN1cmUgdGhhdCB0aGlzIGJlaGF2aW9yIGlzIG5v
-dCBpbnRlbnRpb25hbC4gIEnigJlkIHdhZ2VyIHRoYXQgdGhpcw0KY2hhbmdlIGlzIGZvciB0aGUg
-YmV0dGVyLCBidXQgc2luY2UgdGhpcyBiZWhhdmlvciBoYXMgYmVlbiBhcm91bmQgc28gbG9uZyAo
-SSBzdG9wcGVkDQpjaGVja2luZyBhdCAxLjYuMCksIGl0IGRvZXNu4oCZdCBodXJ0IHRvIG1ha2Ug
-c3VyZS4NCg0KQW55IGNvbW1lbnRzLCBjb25jZXJucywgb3IgYWR2aWNlPw0KDQpUaGFua3MsDQog
-LSBBbmRyZXcgS2VsbGVyDQoNCg==
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> So what are your plans with 2.9.2? I ask because I do not want to engineer
+> a 2.9.1 release just to see that 2.9.2 is out and having to spend the same
+> amount of time for another release ;-)
+
+Essentially unchanged from what I said in $gmane/299446 a few days
+ago.  Merge only the t0006 workaround with lazy-prereq changes to
+'maint', so that we can skip tests that are unrunnable on platforms
+without 64-bit long to avoid unnecessary test failures, then tag
+that to v2.9.2 soon enough so that you do not have to do two
+releases in a row (i.e. skipping v2.9.1 saying "Git for Windows
+skipped that one because it was not quite right; this release fixes
+the issue" in your v2.9.2 announcement).
+
+I couldn't do that while that t0006 fix was in flux.  Now I
+hopefully can.
+
+
+
+
+
+
+
