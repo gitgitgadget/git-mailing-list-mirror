@@ -2,110 +2,49 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BASE64_LENGTH_79_INF,
+	BAYES_00,DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_NUMERIC_HELO,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C393B20195
-	for <e@80x24.org>; Fri, 15 Jul 2016 15:51:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4390820195
+	for <e@80x24.org>; Fri, 15 Jul 2016 15:52:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751307AbcGOPv5 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 11:51:57 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61235 "EHLO mout.gmx.net"
+	id S1751350AbcGOPwz (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 11:52:55 -0400
+Received: from plane.gmane.org ([80.91.229.3]:42906 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751191AbcGOPv4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 11:51:56 -0400
-Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M2cYX-1b7VzZ1B6j-00sOYi; Fri, 15 Jul 2016 17:51:52
- +0200
-Date:	Fri, 15 Jul 2016 17:51:51 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Kevin Willford <kcwillford@gmail.com>
-cc:	git@vger.kernel.org
-Subject: [PATCH 2/1] Verify that --cherry-pick avoids looking at full diffs
-Message-ID: <alpine.DEB.2.20.1607151749540.6426@virtualbox>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:g2COGD4e7fBh+omxggJrtXu7iTsnNHlhdv9uEiOfzFHvQWY+hX7
- d3y3lX/uj2xRP6gAve//3AEH48N5w7wCjNXrOFGIji5fKhryINwAUZvw4uc6n9h0t4yiq3w
- xpqPGqIBw1i/3nCdb3mJpwkIG82rvvmhcbIT2R3ayErXNCo+Is0fTZc16D64jB423wyclt9
- UMaxk7g6g8KPJk+anZsAA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:oL8jgUzlZno=:koZftMQ/KWxnH58ttC2n6o
- f4EHHw+k1tveKXQVV1cRLSJvKl6linap6HyIetH1SN4BGLCTx4dVarwUwwVhV5CK6P4NfucKd
- C5SbHOacqP907JhqytDJyTCSpH/y7YOap862j/ScZ+LpfWjBia/QF45nBAVofGFZx0Va1fR0k
- NvwwraddpqdtOmsk2h8SUGfIBJTNA1r8A0ezje0aYb7vfM18/Pu3IgQDkSPocHsLjsMzRWUTm
- rgTGbijaDjgIKsEt981gWBr8kBsfNqB0IX7haxr8+GDFDykVi6hxXvXT18KxuRaHJaek23Kwt
- PWs8YL7oxYtFcJY/SvwvUzqI7qc1QJvwDAR6nvwPB6cBS+v2FvVpIOQylxt0yg7gYUhapTvNf
- kCNhk6vLLYN+L8lFgrnHOR2FUfjcf0dBCJo83/SdG5VfTwhAb7Iv5UinmbVDHSUaIof1t4uVs
- 6y+I8UA7zmVcbavvBvU90ziV+R7t0A4u9HvJAfEB87YXF4N23we+enFShRcbYg/oee6TFeZFi
- 41v8/4NFvdnmgJa/g9QlQ37mWpqfvShJ3zCPiMzS1iPjeMqCSM5hINcdSkMzh5kIFBl/WqyC7
- mOt6Ozr5c/QE9be1+5YgVTYm9+IgNSV/pQFGnlOAB+OeIZJuB3aJ9AtRhPX9J+2CqmTWI1T5R
- pIaZYIBA7GX4+EQvVBD7weYD7gKcVm7PvF/nqSLCeNorYfw9IG18+EzsUP04R7dvbYrEAjac1
- 54lTP+EZ58y+V7taKZUQjs8WyBu+JhsGMVp2WK+4VTozfuzjO2EC1dqUIawxXBzYc3sfJaU+R
- B3WH1ek
+	id S1751000AbcGOPwx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2016 11:52:53 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1bO5Px-00016J-VR
+	for git@vger.kernel.org; Fri, 15 Jul 2016 17:52:46 +0200
+Received: from 65.222.173.206 ([65.222.173.206])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 15 Jul 2016 17:52:45 +0200
+Received: from peartben by 65.222.173.206 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 15 Jul 2016 17:52:45 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To:	git@vger.kernel.org
+From:	Ben Peart <peartben@gmail.com>
+Subject: Re: Plugin mechanism(s) for Git?
+Date:	Fri, 15 Jul 2016 15:52:22 +0000 (UTC)
+Message-ID: <loom.20160715T175103-45@post.gmane.org>
+References: <CAP8UFD1BnnRqsv8zrcDDby=KqQ3UCDVdHWTycfDNTeyfLArn5g@mail.gmail.com> <20160715121838.GA21968@sigill.intra.peff.net> <CACBZZX4TA0Ljf2aNZtZ5Sj8fFj-vhoLKq5RP5YbKSS9o9Ljg+A@mail.gmail.com> <20160715133208.GA22711@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 65.222.173.206 (Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-
-The entire point of the previous patch was to make sure that we look at
-abbreviated patch IDs (using the diff *headers* only, but avoiding
-to load the blobs into memory and diff them) first, and only look at
-full patch IDs when the abbreviated patch IDs were not for the
---cherry-pick test.
-
-Let's make sure that we actually avoid looking at the full patch ID,
-simply by corrupting an object that is needed for the full patch ID, and
-then seeing that --cherry-pick still works.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-	On Fri, 15 Jul 2016, Johannes Schindelin wrote:
-
-	> I also think that this patch series could use a test that
-	> verifies that we no longer generate unneeded diffs. Maybe by
-	> rebasing a commit on top of an commit touching a different file,
-	> after corrupting the blob of the latter one? Let me give it a
-	> try.
-
-	And here it is. I verified that this test passes with your patch
-	and fails without it.
-
- t/t6007-rev-list-cherry-pick-file.sh | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
-
-diff --git a/t/t6007-rev-list-cherry-pick-file.sh b/t/t6007-rev-list-cherry-pick-file.sh
-index 28d4f6b..a5f7c2a 100755
---- a/t/t6007-rev-list-cherry-pick-file.sh
-+++ b/t/t6007-rev-list-cherry-pick-file.sh
-@@ -207,4 +207,23 @@ test_expect_success '--count --left-right' '
- 	test_cmp expect actual
- '
- 
-+remove_loose_object () {
-+	sha1="$(git rev-parse "$1")" &&
-+	remainder=${sha1#??} &&
-+	firsttwo=${sha1%$remainder} &&
-+	rm .git/objects/$firsttwo/$remainder
-+}
-+
-+test_expect_success '--cherry-pick avoids looking at full diffs' '
-+	git checkout -b shy-diff &&
-+	test_commit dont-look-at-me &&
-+	echo Hello >dont-look-at-me.t &&
-+	test_tick &&
-+	git commit -m tip dont-look-at-me.t &&
-+	git checkout -b mainline HEAD^ &&
-+	test_commit to-cherry-pick &&
-+	remove_loose_object shy-diff^:dont-look-at-me.t &&
-+	git rev-list --cherry-pick ...shy-diff
-+'
-+
- test_done
--- 
-2.9.0.281.g286a8d9
+SmVmZiBLaW5nIDxwZWZmIDxhdD4gcGVmZi5uZXQ+IHdyaXRlczoKCj4gCj4gT24gRnJpLCBKdWwgMTUsIDIwMTYgYXQgMDI6NDY6MjhQTSArMDIwMCwgw4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24gd3JvdGU6Cj4gCj4gPiBPbiBGcmksIEp1bCAxNSwgMjAxNiBhdCAyOjE4IFBNLCBKZWZmIEtpbmcgPHBlZmYgPGF0PiBwZWZmLm5ldD4gd3JvdGU6Cj4gPiA+IFNvbWUgZmVhdHVyZXMsIGxpa2UgdGhlIGluZGV4LWhlbHBlciwgYXJlbid0IHF1aXRlIHNvIGVhc3kuIE9uZSByZWFzb24KPiA+ID4gaXMgdGhhdCBpdHMgZGF0YSBuZWVkcyB0byBwZXJzaXN0IGFzIGEgY2FjaGUgYmV0d2VlbiBtdWx0aXBsZSBnaXQKPiA+ID4gaW52b2NhdGlvbnMuIEluIGdlbmVyYWwsIEkgdGhpbmsgaXQgd291bGQgYmUgbmljZSB0byBzb2x2ZSB0aGF0IGJ5Cj4gPiA+IGNvbW11bmljYXRpbmcgdmlhIG9uLWRpc2sgZmlsZXMsIHJhdGhlciB0aGFuIGEgcnVubmluZyBkYWVtb24gKGp1c3QKPiA+ID4gYmVjYXVzZSBpdCBoYXMgZmV3ZXIgbW92aW5nIHBhcnRzKS4gQnV0IHRoYXQncyBvbmx5IGhhbGYgb2YgaXQgZm9yCj4gPiA+IGluZGV4LWhlbHBlci4gSXQgbmVlZHMgdG8gbW9uaXRvciBpbm90aWZ5IHdoaWxlIGdpdCBpc24ndCBydW5uaW5nIGF0Cj4gPiA+IGFsbDsgc28gaXQgcmVhbGx5IF9kb2VzXyBuZWVkIHNvbWUga2luZCBvZiBsb25nLXJ1bm5pbmcgZGFlbW9uLgo+ID4gCj4gPiBUaGlzICptYXkqIGhhdmUgY2hhbmdlZCBpbiB0aGUgcmVjZW50IHZlcnNpb25zIG9mIHRoZSBzZXJpZXMsIGJ1dCBJJ20KPiA+IGZhaXJseSBzdXJlIGFuZCBmb3Igd2hhdCBpdCdzIHdvcnRoIHRvIHRoaXMgZGlzY3Vzc2lvbiwgdGhhdCdzIG5vdAo+ID4gd2hhdCB0aGUgaW5kZXgtaGVscGVyIGRvZXMuIEl0J3MgdGhlcmUgdG8ga2VlcCB0aGUgaW5kZXggZmlsZSBpbgo+ID4gbWVtb3J5IGluc3RlYWQgb2YgcmVhZGluZyBpdCBmcm9tIGRpc2suCj4gPiAKPiA+IEl0IGNhbiAqYWxzbyogaWYgeW91ICJnaXQgdXBkYXRlLWluZGV4IC0td2F0Y2htYW4iIHNwYXduIGEgd2F0Y2htYW4KPiA+IGRhZW1vbiBpbiB0aGUgYmFja2dyb3VuZCwgd2hpY2ggaXMgdGhlIHRoaW5nIHRoYXQnbGwgYmUgZG9pbmcgdGhlCj4gPiBpbm90aWZ5IGNhbGxzIGFuZCBuZWVkcyB0byBzdGF5IHBlcnNpc3RlbnQsIHRoZSBpbmRleC1oZWxwZXIgdGhlbgo+ID4gY29tbXVuaWNhdGVzIHdpdGggdGhlIHdhdGNobWFuIGRhZW1vbiAid2hhdCBjaGFuZ2VkIHNpbmNlIFg/IiB0bwo+ID4gY29tcHV0ZSBhIG5ldyBpbmRleCB3aGVuIHJlcXVlc3RlZC4KPiAKPiBBaCwgeWVhaCwgeW91J3JlIHJpZ2h0LiBTb3JyeSBmb3IgdGhlIGNvbmZ1c2lvbjsgSSBoYXZlbid0IGFjdHVhbGx5Cj4gZm9sbG93ZWQgdGhlIHRvcGljIGFsbCB0aGF0IGNsb3NlbHkuCj4gCj4gLVBlZmYKPiAKCgpUaGF0J3MgdmVyeSBjbG9zZS4gIAoKSW5kZXgtaGVscGVyIGN1cnJlbnRseSBrZWVwcyB0aGUgaW5kZXggYWxpdmUgaW4gbWVtb3J5IGFuZCBzaGFyZXMgaXQgd2l0aCAKZ2l0LmV4ZSB2aWEgc2htIHNvIGl0IGRvZXMgbmVlZCB0byBwZXJzaXN0IGFzIGEgZGFlbW9uLiAgT3RoZXJ3aXNlLCBpdCB3aWxsIGhhdmUgCnRvIGJlIHJ1biBhZ2FpbiBhbmQgbG9hZCB0aGUgaW5kZXggZnJvbSBkaXNrIHdoaWNoIHByZXR0eSBtdWNoIGRlZmVhdHMgdGhlIApwdXJwb3NlLiAgQ3VycmVudGx5LCBpdCB0aW1lcyBvdXQgYWZ0ZXIgYSBwcmVzY3JpYmVkIHRpbWUgb2Ygbm90IGJlaW5nIHVzZWQgYW5kIApzaHV0cyBkb3duIHRvIGp1c3QgdG8gZnJlZSB1cCB0aGUgcmVzb3VyY2VzLgoKVGhlIHdhdGNobWFuIGRhZW1vbiBuZWVkcyB0byBfYWx3YXlzXyBiZSBydW5uaW5nIHNvIHRoYXQgaXQgY2FuIG1vbml0b3IgdGhlIAp3b3JraW5nIGRpcmVjdG9yeSBmb3IgY2hhbmdlcyBhbmQgcXVpY2tseSBwcm92aWRlIHRoZSBsaXN0IG9mIGNoYW5nZWQgZmlsZXMgYW5kIApkaXJlY3RvcmllcyB0byBnaXQuICBUaGlzIGN1cnJlbnRseSBoYXBwZW5zIHZpYSBpbmRleC1oZWxwZXIgYnV0IGNvdWxkIGJlIApzZXBhcmF0ZWQgYXMgdGhlIGxvZ2ljIHRvIHVzZSB0aGUgZGF0YSBmcm9tIHdhdGNobWFuIGFscmVhZHkgZXhpc3RzIGluIGdpdC4gIEkgCmhhdmUgYW4gUkZDIG91dCB0aGF0IGRvZXMgZXhhY3RseSB0aGF0Lgo=
 
