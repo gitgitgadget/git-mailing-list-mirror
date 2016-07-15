@@ -6,80 +6,78 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A581C2018F
-	for <e@80x24.org>; Fri, 15 Jul 2016 10:25:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D8A92018F
+	for <e@80x24.org>; Fri, 15 Jul 2016 10:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932302AbcGOKZM (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 06:25:12 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45290 "HELO cloud.peff.net"
+	id S932398AbcGOK0d (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 06:26:33 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45296 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932082AbcGOKZK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 06:25:10 -0400
-Received: (qmail 17718 invoked by uid 102); 15 Jul 2016 10:25:11 -0000
+	id S932187AbcGOK0c (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2016 06:26:32 -0400
+Received: (qmail 17853 invoked by uid 102); 15 Jul 2016 10:26:31 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jul 2016 06:25:11 -0400
-Received: (qmail 14093 invoked by uid 107); 15 Jul 2016 10:25:30 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jul 2016 06:26:31 -0400
+Received: (qmail 14125 invoked by uid 107); 15 Jul 2016 10:26:53 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jul 2016 06:25:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jul 2016 06:25:06 -0400
-Date:	Fri, 15 Jul 2016 06:25:06 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jul 2016 06:26:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jul 2016 06:26:29 -0400
+Date:	Fri, 15 Jul 2016 06:26:29 -0400
 From:	Jeff King <peff@peff.net>
 To:	git@vger.kernel.org
-Subject: [PATCH 0/12] push progress reporting and keepalives
-Message-ID: <20160715102506.GA23164@sigill.intra.peff.net>
+Subject: [PATCH 01/12] check_everything_connected: always pass --quiet to
+ rev-list
+Message-ID: <20160715102628.GA19271@sigill.intra.peff.net>
+References: <20160715102506.GA23164@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20160715102506.GA23164@sigill.intra.peff.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-If you push a large number of objects, the server side may have to chew
-CPU for a long time processing the input (delta resolution, connectivity
-check, and whatever any hooks choose to do). During this time, you get
-no feedback that anything is happening, unless the hooks feel like
-writing something to stderr.  For a repository the size of linux.git, a
-full push from scratch can take several minutes.
+The check_everything_connected function takes a "quiet"
+parameter which does two things if non-zero:
 
-This is annoying and confusing to the user, who wonders if the
-connection has hung. But it can also cause problems on systems that have
-other timeouts (e.g., firewalls dropping TCP sessions, or web proxies
-dropping requests that produce no response within a certain time).
+  1. redirect rev-list's stderr to /dev/null to avoid
+     showing errors to the user
 
-This patch series adds two new features:
+  2. pass "--quiet" to rev-list
 
- 1. Progress reporting for the CPU-intensive parts of receive-pack.
+Item (1) is obviously useful. But item (2) is
+surprisingly not. For rev-list, "--quiet" does not have
+anything to do with chattiness on stderr; it tells rev-list
+not to bother writing the list of traversed objects to
+stdout, for efficiency.  And since we always redirect
+rev-list's stdout to /dev/null in this function, there is no
+point in asking it to ever write anything to stdout.
 
- 2. A keepalive mechanism similar to what we use in upload-pack
-    (basically sending zero-length packets on sideband 1 while the client
-    is waiting for us to speak).
+The efficiency gains are modest; a best-of-five run of "git
+rev-list --objects --all" on linux.git dropped from 32.013s
+to 30.502s when adding "--quiet". That's only about 5%, but
+given how easy it is, it's worth doing.
 
-Both are enabled for any client which speaks the sideband protocol.
-Existing versions of git handle the new behavior just fine (the progress
-reporting is easy, because they were expecting stderr messages anyway;
-the keepalive works because the demuxer just relays zero bytes back to
-send-pack).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ connected.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-I also tested with both JGit and libgit2 clients, and both seem to
-handle the zero-length packets just fine.
+diff --git a/connected.c b/connected.c
+index bf1b12e..7560a31 100644
+--- a/connected.c
++++ b/connected.c
+@@ -56,8 +56,7 @@ static int check_everything_connected_real(sha1_iterate_fn fn,
+ 	argv[ac++] = "--stdin";
+ 	argv[ac++] = "--not";
+ 	argv[ac++] = "--all";
+-	if (quiet)
+-		argv[ac++] = "--quiet";
++	argv[ac++] = "--quiet";
+ 	argv[ac] = NULL;
+ 
+ 	rev_list.argv = argv;
+-- 
+2.9.1.434.g748be50
 
-There are unfortunately no automated tests, as it's hard to simulate the
-effect. My manual testing involved inserting "sleep" statements into
-index-pack (and hooks with manual sleeps), and then using "strace" to
-confirm that the keepalives were sent.
-
-  [01/12]: check_everything_connected: always pass --quiet to rev-list
-  [02/12]: rev-list: add optional progress reporting
-  [03/12]: check_everything_connected: convert to argv_array
-  [04/12]: check_everything_connected: use a struct with named options
-  [05/12]: check_connected: relay errors to alternate descriptor
-  [06/12]: check_connected: add progress flag
-  [07/12]: clone: use a real progress meter for connectivity check
-  [08/12]: index-pack: add flag for showing delta-resolution progress
-  [09/12]: receive-pack: turn on index-pack resolving progress
-  [10/12]: receive-pack: relay connectivity errors to sideband
-  [11/12]: receive-pack: turn on connectivity progress
-  [12/12]: receive-pack: send keepalives during quiet periods
-
--Peff
