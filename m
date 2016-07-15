@@ -2,111 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 311ED20195
-	for <e@80x24.org>; Fri, 15 Jul 2016 14:03:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D72A320195
+	for <e@80x24.org>; Fri, 15 Jul 2016 15:10:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752595AbcGOODA (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 10:03:00 -0400
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:36499 "EHLO
-	mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752543AbcGOOC6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 10:02:58 -0400
-Received: by mail-qt0-f175.google.com with SMTP id 52so59758928qtq.3
-        for <git@vger.kernel.org>; Fri, 15 Jul 2016 07:02:58 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=g7DrWn6vKY8zBYZ7TsNfTDi2R30n5DacGDsgFTKzmoE=;
-        b=S4QScDdHKS80JZOS0QAOzwEdwlLDzB12hqoQpAs5uhjjmdpCqGh3ILzbKzWGTCGGM1
-         ICot0kFpmv4YrVdoZtapkY3TVB0xv/UpmnR4j5wIl0OkYziRK5hNE0W9PCq/qGJ1EVd/
-         QNHPu4adOUMpaxVJ6mCJHAx75Kl2XMjLCY/IUIgrI/m3yCZoOfjhc9ZVIBqp8DaXE3QE
-         nF3P9EJKWoyVjkgiAK1GXOY2qLR4QjXPe1mv6ccpopo4ni2x/nnNcQprTRmkEIHXd995
-         6q8XURlJEBaK3kl3NMEgtEIw7M+JAsqcsmvOrwz2lzaMZtYDs8qHSptZXvVQQWmkub51
-         Tidg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=g7DrWn6vKY8zBYZ7TsNfTDi2R30n5DacGDsgFTKzmoE=;
-        b=VTviiOzR9vEve3wfuzmt/PFMyP3dNWryvXt/UJJWuu+7UUyp+yVzGyLV9nF5UOAVD3
-         pBTSSc9fHDnOJNPUoRTvnhcJsUYk5HwF/tX3CDBoUSrtLPJMGaMfTq9OVSajdatAKqkF
-         T+p6rb5gcm1keIWkIuq3Fm79NE3Bm+qVIIHXh1Dob4IpGfm3Ai7VS2OVx7hxg85I5fza
-         JbSB9qdepOqsD479ugFA/siZ0oC0TfYwt+zG/bBeLPxPFI0rcfQaNmimmL9X459rN4Bm
-         LpJbxAtbFdi5cmjj/Hs5nK8tUVKE+CPEjVQCrDLaZtMV/rc3oC1cHqmY4etjrCJZqNLR
-         Vo0w==
-X-Gm-Message-State: ALyK8tIm6f/8JCYw+NM40qnnawDdA7w9Y0UOLrQpM0iqAGklIY+TV5I7S1RL2vSPksT8UAMk2MK9pi1isedMPA==
-X-Received: by 10.200.57.108 with SMTP id t41mr4880802qtb.33.1468590984043;
- Fri, 15 Jul 2016 06:56:24 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.55.36.77 with HTTP; Fri, 15 Jul 2016 06:56:04 -0700 (PDT)
-In-Reply-To: <CAPc5daXxAqXtUvs1Xr_vgncXqcvR8-VG67oDAgOQ8xPcT7nCeQ@mail.gmail.com>
-References: <alpine.DEB.2.20.1607141725390.25238@tglase.lan.tarent.de>
- <CAGZ79kb=2rpYucjhavNB_XHLk9rjKSoHzL9bwM5buDO0GyW3vw@mail.gmail.com>
- <alpine.DEB.2.20.1607141948530.25238@tglase.lan.tarent.de>
- <xmqqpoqgqdlz.fsf@gitster.mtv.corp.google.com> <CAPc5daXxAqXtUvs1Xr_vgncXqcvR8-VG67oDAgOQ8xPcT7nCeQ@mail.gmail.com>
-From:	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:	Fri, 15 Jul 2016 15:56:04 +0200
-Message-ID: <CACBZZX7YFQ3o+5wbVz0ca6__3ViD0b-qbrX06CkxhAHE8uQ6oQ@mail.gmail.com>
-Subject: Re: Server-side preventing some files from being overwritten
+	id S1751377AbcGOPKa (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 11:10:30 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59020 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751312AbcGOPK0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2016 11:10:26 -0400
+Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MLfLH-1bOu6G3WRH-000qh6; Fri, 15 Jul 2016 17:10:15
+ +0200
+Date:	Fri, 15 Jul 2016 17:10:13 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Thorsten Glaser <t.glaser@tarent.de>,
-	Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+cc:	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v4 2/5] t5000: test tar files that overflow ustar
+ headers
+In-Reply-To: <xmqq7fcoot6t.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1607151707180.6426@virtualbox>
+References: <20160630090614.GA16725@sigill.intra.peff.net> <20160630090857.GB17463@sigill.intra.peff.net> <alpine.DEB.2.20.1607141745420.6426@virtualbox> <20160714182108.GB16497@sigill.intra.peff.net> <xmqqshvcourb.fsf@gitster.mtv.corp.google.com>
+ <20160714201018.GA18372@sigill.intra.peff.net> <xmqqbn20otqu.fsf@gitster.mtv.corp.google.com> <20160714202727.GA19101@sigill.intra.peff.net> <xmqq7fcoot6t.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:izkapTCE6bDxasEvo4hZ+uZDef8iTJwfS5qmu5vZVu8vJamuW9i
+ N49DGvk/BkTLfBo7qdr4UJWIS4+aZvztJIk/fDB7khvWdg36Bn1BK2nG189zJCietnigfxc
+ 8GgWWAaVc0o1j0oGGb96lK+87O64z+w9kYt/GV/FhUsT2dkElrIXdnXCo5idzz2GYYMpnQg
+ YLeCzS4s0EraDqU4LF6sA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:TBNsKgoBKso=:X/gxH7DZr1jUlRTq1CPEp5
+ JEqaIS9pj4QxfjCt6awbbuAs6HavTm6vOaw82Eir857Sy23dEJ1vYXhtoEKLLckhWghUWbipU
+ rUMjp3lDeuKKSoPyfLZVx5iiSXVJdu8q83EXt/FC7dp+XfDq8Of7w0mVgp2HDsNePaeoC8nNK
+ HWb+tDyDZLlKTvx4rqWuLBjPkwNE7rSrkWR47DsOjY8MpHNxiNIYxzzTdDdYLD7XpwQ2WtoUU
+ hvyo9EXJ6uoxXoBwvRhk2gV0U5CIytLmJRBu8EKuq++iKC2Lr0YufBHFHGUqWLC5OnJZN8rPI
+ CsxtFPquMM2v8/g4GSfAITs2sYrHoE6ROibn725udv71/V+FJAZ89UuiB5+1RQYIcPVePWlH1
+ aIeglBwe4juTSxyCmDSmYzTuszRgYjwjQKvwjl/hBXb16Ql6HovkjrdZTXEUs7i4FuMrhuj51
+ OUZhQh7f58Un09aofi6msiCUG7WEkL4D7vusBmWfdhE0jN2u/84cmhC2zhxm/F5U+lb667aiy
+ 64NQQpjPR/Ix1J4ilfaHJR27JrTifHd9K3M6SxV3bLT5KzOYDEoxeaMjKVCRirJZWo6EgqP/m
+ xG/yhC4K+KrGqOqh9JKUu/Ne7OPAAxyxkUM+ZKRzLX/mU1z/Iz/eeLBjQx2M0vBzpeE5yXCTg
+ 2urPeG581U7GV7QkXDTjEMcLTg0/of5+xpNwy6aH9ZquT7Ndn0CoHMw7CEVn8bAhpx3S95V7X
+ BdhH1tYIUBqgF35ibGaxnIBTEd90hpOUTEuDf8kAuwVo/prukXC6LaRiRnb2v8k8aYOy0ppv/
+ nBruTIj
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 14, 2016 at 8:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Thu, Jul 14, 2016 at 11:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Thorsten Glaser <t.glaser@tarent.de> writes:
->>
->>>       if test x"0" != x"$(comm -23z \
->>>           <(git ls-tree -r -z "$old" "$subdir" | sort -z) \
->>>           <(git ls-tree -r -z "$new" "$subdir" | sort -z) | wc -c)"; then
->>>               echo >&2 'Untouchable files touched, commit rejected!'
->>>               exit 1
->>>       fi
->>
->> Can't this become simpler, e.g.
->>
->>         if ! git diff-tree --quiet "$old" "$new" -- "$subdir"
->>         then
->>                 echo >&2 "Ooh, $subdir is touched"
->>                 exit 1
->>         fi
->
-> Ehh, you need to tell diff-tree to recurse, i.e. "diff-tree -r".
+Hi Junio,
 
-Note that although this is literally what Thorsten is asking for, I
-think it's worth noting for the list explicitly that all these
-examples that do "diff $old..$new" will *not* prevent your repository
-from having *commits* that touch those files, but they will prevent
-you from having *pushes* where the end state is a net change in those
-files.
+On Thu, 14 Jul 2016, Junio C Hamano wrote:
 
-I.e. it allows pushing a series which is a series of two commits which:
+> Jeff King <peff@peff.net> writes:
+> 
+> > Yeah, that is what I was trying to get at, but you stated it much more
+> > clearly. LONG_IS_64BIT is good. I wonder if the "git version
+> > --build-options" should be "sizeof-long", too. It's shorter, and
+> > indicates our assumption that we are talking about all longs, not just
+> > unsigned ones.
+> 
+> OK, I'll do a final reroll and then wait for Europeans ;-)
 
-  1. Change the forbidden file(s)
-  2. Undo changes to the forbidden file(s)
+Don't let me stand in the way of progress.
 
-This *can* be critically important or not matter at all depending on
-your use case, i.e. does it matter that disallowed and potentially
-malicious changes come up in "git bisect", or will you ever be rolling
-out anything but the latest tip of the branch you're testing in
-production?
+I would have preferred two separate prereqs, of course, for the same
+reason we use time_t and off_t: I find it better to describe what the
+prereq is about, and I do not mean implementation details here.
 
-If the answer to either of those is "yes" you need something that does
-a "git log --stat $old..$new" and parses out if *any* of the commits
-make changes to those files.
+But that does not matter all that much. We will have to address the issues
+anyway, and at that point that wart will be removed and we will all go on
+with our lives.
 
-See e.g. my https://github.com/avar/pre-receive-reject-binaries for
-one example of that, although it rejects binaries you could easily
-modify it to check the filename(s) instead.
+So what are your plans with 2.9.2? I ask because I do not want to engineer
+a 2.9.1 release just to see that 2.9.2 is out and having to spend the same
+amount of time for another release ;-)
+
+Ciao,
+Dscho
