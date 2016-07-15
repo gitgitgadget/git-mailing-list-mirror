@@ -2,49 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BASE64_LENGTH_79_INF,
-	BAYES_00,DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_NUMERIC_HELO,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D83F20195
-	for <e@80x24.org>; Fri, 15 Jul 2016 16:19:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0348D20195
+	for <e@80x24.org>; Fri, 15 Jul 2016 16:49:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751572AbcGOQSn (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 12:18:43 -0400
-Received: from plane.gmane.org ([80.91.229.3]:44382 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751220AbcGOQSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 12:18:41 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1bO5oz-0003sg-Ap
-	for git@vger.kernel.org; Fri, 15 Jul 2016 18:18:38 +0200
-Received: from 65.222.173.206 ([65.222.173.206])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Jul 2016 18:18:37 +0200
-Received: from peartben by 65.222.173.206 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Jul 2016 18:18:37 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To:	git@vger.kernel.org
-From:	Ben Peart <peartben@gmail.com>
-Subject: Re: Plugin mechanism(s) for Git?
-Date:	Fri, 15 Jul 2016 16:18:28 +0000 (UTC)
-Message-ID: <loom.20160715T181543-821@post.gmane.org>
-References: <CAP8UFD1BnnRqsv8zrcDDby=KqQ3UCDVdHWTycfDNTeyfLArn5g@mail.gmail.com> <2C31984D-310C-4E8C-927B-6D98B7D7570B@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+	id S1751789AbcGOQt1 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 12:49:27 -0400
+Received: from hq194.ces.cvnt.net ([69.41.14.194]:28448 "EHLO
+	HQWS-EXMB-01.main.covenanteyes.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751764AbcGOQtX (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Jul 2016 12:49:23 -0400
+X-Greylist: delayed 903 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Jul 2016 12:49:23 EDT
+Received: from HQWS-EXMB-01.main.covenanteyes.com (10.0.52.14) by
+ HQWS-EXMB-01.main.covenanteyes.com (10.0.52.14) with Microsoft SMTP Server
+ (TLS) id 15.0.1156.6; Fri, 15 Jul 2016 12:34:19 -0400
+Received: from HQWS-EXMB-01.main.covenanteyes.com
+ ([fe80::cc70:ee29:5605:e9c0]) by HQWS-EXMB-01.main.covenanteyes.com
+ ([fe80::cc70:ee29:5605:e9c0%12]) with mapi id 15.00.1156.000; Fri, 15 Jul
+ 2016 12:34:19 -0400
+From:	Andrew Keller <andrew.keller@covenanteyes.com>
+To:	Git List <git@vger.kernel.org>
+Subject: obsolete index in wt_status_print after pre-commit hook runs
+Thread-Topic: obsolete index in wt_status_print after pre-commit hook runs
+Thread-Index: AQHR3ra8hjNsCD4EaU6MsSMqTszZoA==
+Date:	Fri, 15 Jul 2016 16:34:19 +0000
+Message-ID: <5988D847-25A2-4997-9601-083772689879@covenanteyes.com>
+Accept-Language: de-DE, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [23.28.40.196]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <5BA04BC595CD7C439E961D8F547BDB00@covenanteyes.com>
 Content-Transfer-Encoding: base64
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 65.222.173.206 (Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36)
+MIME-Version: 1.0
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-TGFycyBTY2huZWlkZXIgPGxhcnN4c2NobmVpZGVyIDxhdD4gZ21haWwuY29tPiB3cml0ZXM6Cgo+IAo+IFRoYW5rcyBmb3IgdGhpcyBncmVhdCBzdW1tYXJ5IG9mIHRoZSBwcm9ibGVtLCBDaHJpc3RpYW4hCj4gCj4gSSB0aGluayBhIGdlbmVyaWMgcGx1Z2luIG1lY2hhbmlzbSB3b3VsZCBiZSBncmVhdCBidXQgaG93IHdvdWxkIHdlIGRvIGl0PwoKSeKAmW0gYWxzbyB2ZXJ5IGdsYWQgdG8gc2VlIHRoZSBkaXNjdXNzaW9uIGFib3V0IGNvbWluZyB1cCB3aXRoIGEgZ29vZCBwYXR0ZXJuIGZvciAKaG93IGdpdCBjYW4gaW50ZXJhY3Qgd2l0aCBleHRlcm5hbCBjb2RlLiAgSSBoYWQgYWxzbyBub3RpY2VkIGFsbCB0aGUgaW4tZmxpZ2h0IAp0b3BpY3MgYXMgSSB3YXMgc2VhcmNoaW5nIGZvciBhIGdvb2QgcGF0dGVybiB0byBhZG9wdC4KCj4gCj4gV2UgY291bGQgZHluYW1pY2FsbHkgbG9hZCBsaWJyYXJpZXMgYnV0IHRoaXMgd291bGQgZm9yY2UgdXMgdG8gZnJlZXplIAo+IHRoZSBBQkkgYXMgbWVudGlvbmVkIGJ5IER1eToKPiBodHRwOi8vYXJ0aWNsZS5nbWFuZS5vcmcvZ21hbmUuY29tcC52ZXJzaW9uLWNvbnRyb2wuZ2l0LzI5ODQ2Mwo+IAoKSSB3b3VsZG7igJl0IGJlIHRvbyBxdWljayB0byBkaXNtaXNzIGR5bmFtaWNhbGx5IGxvYWRlZCBsaWJyYXJpZXMgYXMgdGhlcmUgYXJlIApzb21lIGRpc3RpbmN0IGFkdmFudGFnZXMgb3ZlciB0aGUgb3RoZXIgcGF0dGVybnMgZXNwZWNpYWxseSBwZXJmb3JtYW5jZSBhbmQgCnNpbXBsaWNpdHkuICBJIHJlYWxpemUgaXQgcmVxdWlyZXMgdXMgdG8gdmVyc2lvbiB0aGUgQUJJIGJ1dCB0aGVyZSBhcmUgCmVzdGFibGlzaGVkIHBhdHRlcm5zIHRvIG1hbmFnZSB0aGlzLiAgSXQgYWxzbyBpc27igJl0IHRoYXQgbXVjaCBkaWZmZXJlbnQgdGhhbiB1cyAKaGF2aW5nIHRvIGZyZWV6ZSBvciB2ZXJzaW9uIHRoZSBwcm90b2NvbCBmb3IgY29tbXVuaWNhdGluZyB3aXRoIGEgcmVtb3RlLWhlbHBlci4KCg==
-
+SGkgZXZlcnlvbmUsDQoNCkkgaGF2ZSBvYnNlcnZlZCBhbiBpbnRlcmVzdGluZyBzY2VuYXJpby4g
+IEhlcmUgYXJlIGV4YW1wbGUgcmVwcm9kdWN0aW9uIHN0ZXBzOg0KDQoxLiBuZXcgcmVwb3NpdG9y
+eQ0KMi4gY3JlYXRlIG5ldyBwcmUtY29tbWl0IGhvb2sgdGhhdCBpbnZva2VzIGBnaXQgbXYgb25l
+IHR3b2ANCjMuIHRvdWNoIG9uZQ0KNC4gZ2l0IGFkZCBvbmUNCjUuIGdpdCBjb21taXQNCg0KRXhw
+ZWN0ZWQgb3V0Y29tZTogSW4gdGhlIGNvbW1pdCBtZXNzYWdlIHRlbXBsYXRlLCBJIGV4cGVjdCB0
+byBzZWUg4oCcQ2hhbmdlcyB0byBiZSBjb21taXR0ZWQ6IG5ldyBmaWxlOiB0d28iDQoNCkZvdW5k
+IG91dGNvbWU6IEluIHRoZSBjb21taXQgbWVzc2FnZSB0ZW1wbGF0ZSwgSSBzZWUg4oCcQ2hhbmdl
+cyB0byBiZSBjb21taXR0ZWQ6IG5ldyBmaWxlOiBvbmUiDQoNClRoaXMgYmVoYXZpb3Igc2VlbXMg
+dG8gYmUgcmVwcm9kdWNpYmxlIGluIHZlcnNpb25zIDIuOS4xLCAyLjguMSwgMi4wLjAsIGFuZCAx
+LjYuMC4NCg0KU2tpcCB0aGUgbmV4dCAzIHBhcmFncmFwaHMgaWYgeW91IGFyZSBpbiBhIGh1cnJ5
+Lg0KDQpJIHB1bGxlZCBvdXQgdGhlIHNvdXJjZSBmb3IgdmVyc2lvbiAyLjkuMSBhbmQgYnJpZWZs
+eSBza2ltbWVkIGhvdyBydW5fY29tbWl0IGFuZA0KcHJlcGFyZV90b19jb21taXQgd29yay4gIEl0
+IHNlZW1zIHRoYXQgR2l0IGFscmVhZHkgdW5kZXJzdGFuZHMgdGhhdCBhIHByZS1jb21taXQNCmhv
+b2sgY2FuIGNoYW5nZSB0aGUgaW5kZXgsIGFuZCBpdCByZXJlYWRzIHRoZSBpbmRleCBiZWZvcmUg
+cnVubmluZyB0aGUNCnByZXBhcmUtY29tbWl0LW1zZyBob29rOiBodHRwczovL2dpdGh1Yi5jb20v
+Z2l0L2dpdC9ibG9iL3YyLjkuMS9idWlsdGluL2NvbW1pdC5jI0w5NDEtTDk1MQ0KDQpEdXJpbmcg
+dGhlIHByZXBhcmUtY29tbWl0LW1zZyBob29rLCBpdCBzZWVtcyB0aGF0IHRoZSBpbmRleCAoYWNj
+b3JkaW5nIHRvIEdpdA0KY29tbWFuZHMpIGlzIGNvcnJlY3QgYW5kIHVwLXRvLWRhdGUsIGJ1dCB0
+aGUgdGV4dHVhbCBtZXNzYWdlIGluc2lkZSB0aGUgY29tbWl0DQptZXNzYWdlIHRlbXBsYXRlIGlz
+IG91dC1vZi1kYXRlIChpdCByZWZlcmVuY2VzIHRoZSBmaWxlIGBvbmVgIGFzIGEgY2hhbmdlIHRv
+IGJlDQpjb21taXR0ZWQpLg0KDQpJbiBidWlsdGluL2NvbW1pdC5jLCBpdCBzZWVtcyB0aGF0IHRo
+ZSBjb21taXQgbWVzc2FnZSB0ZW1wbGF0ZSBpcyByZW5kZXJlZA0KaW1tZWRpYXRlbHkgYWZ0ZXIg
+dGhlIHByZS1jb21taXQgaG9vayBpcyByYW4sIGFuZCBpbW1lZGlhdGVseSBiZWZvcmUgdGhlIGlu
+ZGV4IGlzDQpyZXJlYWQuICBJZiBJIG1vdmUgdGhlIHNtYWxsIGJsb2NrIG9mIGNvZGUgdGhhdCBy
+ZXJlYWRzIHRoZSBpbmRleCB1cCwgdG8ganVzdCBhZnRlcg0KdGhlIHByZS1jb21taXQgaG9vayBp
+cyByYW4sIHRoZSBjb21taXQgbWVzc2FnZSB0ZW1wbGF0ZSBzZWVtcyB0byBiZSBhcyBJIHdvdWxk
+DQpleHBlY3QsIGJvdGggaW4gLmdpdC9DT01NSVRfRURJVE1TRyBkdXJpbmcgdGhlIHByZXBhcmUt
+Y29tbWl0LW1zZyBob29rIGFuZA0KaW4gdGhlIGVkaXRvciBmb3IgdGhlIGNvbW1pdCBtZXNzYWdl
+IGl0c2VsZi4NCg0KSSBhbSBwdXR0aW5nIHRvZ2V0aGVyIGEgMi1wYXRjaCBzZXJpZXMgdGhhdCBp
+bmNsdWRlcyBhIGZhaWxpbmcgdGVzdCwgYW5kIHRoZW4gdGhpcw0KY2hhbmdlICh3aGljaCBmaXhl
+cyB0aGUgdGVzdCksIGJ1dCB3aGlsZSBJIGRvIHRoYXQsIEkgZmlndXJlIEkgbWF5IGFzIHdlbGwg
+cGluZyB0aGUNCmNvbW11bml0eSB0byBtYWtlIHN1cmUgdGhhdCB0aGlzIGJlaGF2aW9yIGlzIG5v
+dCBpbnRlbnRpb25hbC4gIEnigJlkIHdhZ2VyIHRoYXQgdGhpcw0KY2hhbmdlIGlzIGZvciB0aGUg
+YmV0dGVyLCBidXQgc2luY2UgdGhpcyBiZWhhdmlvciBoYXMgYmVlbiBhcm91bmQgc28gbG9uZyAo
+SSBzdG9wcGVkDQpjaGVja2luZyBhdCAxLjYuMCksIGl0IGRvZXNu4oCZdCBodXJ0IHRvIG1ha2Ug
+c3VyZS4NCg0KQW55IGNvbW1lbnRzLCBjb25jZXJucywgb3IgYWR2aWNlPw0KDQpUaGFua3MsDQog
+LSBBbmRyZXcgS2VsbGVyDQoNCg==
