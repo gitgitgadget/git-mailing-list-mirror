@@ -2,62 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D195203C3
-	for <e@80x24.org>; Fri, 15 Jul 2016 20:33:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3169203C2
+	for <e@80x24.org>; Fri, 15 Jul 2016 20:44:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751532AbcGOUdq (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 16:33:46 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:34480 "EHLO bsmtp3.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751435AbcGOUdp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 16:33:45 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3rrkmk5DWbz5tlG;
-	Fri, 15 Jul 2016 22:33:42 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 0A30352D7;
-	Fri, 15 Jul 2016 22:33:42 +0200 (CEST)
-Subject: Re: [PATCH] git-clean: remove fifo, devices, socket files
-To:	Andrey Vagin <avagin@openvz.org>
-References: <1468550579-9298-1-git-send-email-avagin@openvz.org>
- <ab717fc4-fd07-53d1-1a88-ceba6155889c@kdbg.org>
- <CANaxB-y6XW7-ps1G2CB=N9CiD0VnSLhSer2nsf+2R4pm5TyswA@mail.gmail.com>
-Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-From:	Johannes Sixt <j6t@kdbg.org>
-Message-ID: <3a6cb604-daa0-6d34-3342-0671a0b23032@kdbg.org>
-Date:	Fri, 15 Jul 2016 22:33:42 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2
+	id S1751445AbcGOUoR (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 16:44:17 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:37588 "EHLO
+	mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751681AbcGOUoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2016 16:44:16 -0400
+Received: by mail-it0-f44.google.com with SMTP id f6so28846838ith.0
+        for <git@vger.kernel.org>; Fri, 15 Jul 2016 13:44:15 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=jVXKDXRxwH6FsQqA2IUo7tPh0xGWJDdwAXoYzAmlm1E=;
+        b=eKOvqMmpFOrwsB2QN1rAJhez+qRYuqmSEIOVQFl4wcQopeaMAruGx0QBUGIRv08Nx4
+         cFxlHvhkGKAG94RqIQkVJ4Kgp08Dfohzlzr0kSROIgFvj5h4C/FJJRqP6M9mNrA/oKy+
+         aN98dWLyWD0fz/rrDLVs2MfTmAqjEFw8H4KXVj4RzU2KAjMOrn6AULSE1iNi7WLgcInv
+         wULfIP1Dlw6AByExPmteI+JExcfY495Pr5RD9d4D9O7vuva6epiqPKYS6jKt7DUDnyvX
+         jtdBOViOv1X07Ng0oXxLC3TV6Hb2A4eJIvAdOnumQiKlW5xOmDmYA/XTEAUk17iARtFf
+         4/FQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=jVXKDXRxwH6FsQqA2IUo7tPh0xGWJDdwAXoYzAmlm1E=;
+        b=RmDt28h4aOA9Qv0f237KbOLGlbxoOxmvzMoYvu53T2Xu+mNh4XPgpHNY6phbTkFPF5
+         0IdVMNqb2eXQyM8mKligmyQ1F4A+KBt7jrq66aT5D8uO3hGke2fXwwMjwIQwIkY+LwS0
+         imMS8OhIPe+Rvu51ilkfnD3grh/lB2ziyKdD4Nb+TcpcIYL8KF06keGREZFT63QGtBCk
+         z8AeLKem+299imKjE47GyQk86S/rjXH0a2a0rDl08MDWVcfzaFWk780IvwnMLIhX5Dc3
+         rGQgacACARhof09njO1HsR2juULGml1s+qXArput22o0Mq7sHM+ezJ+J5Q50ZxFxXVFA
+         T6Cg==
+X-Gm-Message-State: ALyK8tKUE3jgHMZgrHUg328eOj1y7SXCuKPbcyNYQkHwYtKvJOGJ7S2xMkmys7VWJzED1wMEG6FYE+Bghb09tA==
+X-Received: by 10.36.206.129 with SMTP id v123mr37877264itg.11.1468615455350;
+ Fri, 15 Jul 2016 13:44:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CANaxB-y6XW7-ps1G2CB=N9CiD0VnSLhSer2nsf+2R4pm5TyswA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: by 10.107.10.97 with HTTP; Fri, 15 Jul 2016 13:44:14 -0700 (PDT)
+From:	Parker Moore <parkrmoore@gmail.com>
+Date:	Fri, 15 Jul 2016 13:44:14 -0700
+Message-ID: <CAOiOGAcqsdMD0j_ZUdvvGiA9Bd6bUmfvxziN06Rw81f_pO7cgg@mail.gmail.com>
+Subject: [PATCH] contrib/persistent-https: update ldflags syntax for Go 1.7+
+To:	git@vger.kernel.org
+Cc:	cranger@google.com
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Am 15.07.2016 um 09:46 schrieb Andrey Vagin:
-> On Thu, Jul 14, 2016 at 10:56 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->> IOW: These special files are invisible for Git unless it already knows the
->> names. The latter case is outside 'git clean's domain, and the former case
->> really means that special files in the working tree are left at the user's
->> discretion.
->
-> I understand your points, but I don't see any reasons to ignore these files.
->
-> What will be wrong if 'git status' will reports these files?
-> What will be wrong if 'git add' will returns an error instead of
-> skipping them silently?
+From: Parker Moore <parkrmoore@gmail.com>
 
-I can buy that 'git add' reports an error for special files. (And I 
-concur with Dscho that the behavior should otherwise remain unchanged.) 
-But this is not what the commit message sells even if the patch changes 
-the behavior of 'git add', too (I haven't tested the patch).
+This fixes contrib/persistent-https builds for Go v1.7+ and is
+compatible with Go v1.5+.
 
--- Hannes
+Running `make all` in `contrib/persistent-https` results in a failure
+on Go 1.7 and above.
 
+Specifically, the error is:
+
+    go build -o git-remote-persistent-https \
+   -ldflags "-X main._BUILD_EMBED_LABEL 1468613136"
+    # _/Users/parkr/github/git/contrib/persistent-https
+    /usr/local/Cellar/go/1.7rc1/libexec/pkg/tool/darwin_amd64/link: -X
+flag requires argument of the form importpath.name=value
+    make: *** [git-remote-persistent-https] Error 2
+
+This `name=value` syntax for the -X flag was introduced in Go v1.5
+(released Aug 19, 2015):
+
+- release notes: https://golang.org/doc/go1.5#link
+- commit: https://github.com/golang/go/commit/12795c02f3d6fc54ece09a86e70aaa40a94d5131
+
+In Go v1.7, support for the old syntax was removed:
+
+- release notes: https://tip.golang.org/doc/go1.7#compiler
+- commit: https://github.com/golang/go/commit/51b624e6a29b135ce0fadb22b678acf4998ff16f
+
+This patch includes the `=` to fix builds with Go v1.7+.
+---
+ contrib/persistent-https/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/persistent-https/Makefile
+b/contrib/persistent-https/Makefile
+index 92baa3be..033140b 100644
+--- a/contrib/persistent-https/Makefile
++++ b/contrib/persistent-https/Makefile
+@@ -26,7 +26,7 @@ git-remote-persistent-http: git-remote-persistent-https
+
+ git-remote-persistent-https:
+  go build -o git-remote-persistent-https \
+- -ldflags "-X main._BUILD_EMBED_LABEL $(BUILD_LABEL)"
++ -ldflags "-X main._BUILD_EMBED_LABEL=$(BUILD_LABEL)"
+
+ clean:
+  rm -f git-remote-persistent-http* *.tar.gz
