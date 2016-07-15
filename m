@@ -2,151 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DE0820195
-	for <e@80x24.org>; Fri, 15 Jul 2016 12:56:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0223520195
+	for <e@80x24.org>; Fri, 15 Jul 2016 13:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752147AbcGOM4A (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 08:56:00 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:58812 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750881AbcGOM4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 08:56:00 -0400
-Received: from glandium by zenigata with local (Exim 4.87)
-	(envelope-from <glandium@glandium.org>)
-	id 1bO2ek-0006Tz-Ep; Fri, 15 Jul 2016 21:55:50 +0900
-From:	Mike Hommey <mh@glandium.org>
-To:	git@vger.kernel.org
-Cc:	gitster@pobox.com, Johannes.Schindelin@gmx.de
-Subject: [PATCH v2] blame: Allow to blame paths freshly added to the index
-Date:	Fri, 15 Jul 2016 21:55:50 +0900
-Message-Id: <20160715125550.24883-1-mh@glandium.org>
-X-Mailer: git-send-email 2.9.1.276.geea30e8
-In-Reply-To: <alpine.DEB.2.20.1607151242020.6426@virtualbox>
-References: <alpine.DEB.2.20.1607151242020.6426@virtualbox>
+	id S1752173AbcGONcN (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 09:32:13 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45439 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751625AbcGONcM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2016 09:32:12 -0400
+Received: (qmail 26058 invoked by uid 102); 15 Jul 2016 13:32:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jul 2016 09:32:11 -0400
+Received: (qmail 15821 invoked by uid 107); 15 Jul 2016 13:32:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jul 2016 09:32:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jul 2016 09:32:08 -0400
+Date:	Fri, 15 Jul 2016 09:32:08 -0400
+From:	Jeff King <peff@peff.net>
+To:	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:	Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	David Turner <novalis@novalis.org>,
+	Ben Peart <peartben@gmail.com>, Joey Hess <joey@kitenet.net>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Ronnie Sahlberg <rsahlberg@google.com>,
+	David Turner <dturner@twopensource.com>
+Subject: Re: Plugin mechanism(s) for Git?
+Message-ID: <20160715133208.GA22711@sigill.intra.peff.net>
+References: <CAP8UFD1BnnRqsv8zrcDDby=KqQ3UCDVdHWTycfDNTeyfLArn5g@mail.gmail.com>
+ <20160715121838.GA21968@sigill.intra.peff.net>
+ <CACBZZX4TA0Ljf2aNZtZ5Sj8fFj-vhoLKq5RP5YbKSS9o9Ljg+A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX4TA0Ljf2aNZtZ5Sj8fFj-vhoLKq5RP5YbKSS9o9Ljg+A@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When blaming files, changes in the work tree are taken into account
-and displayed as being "Not Committed Yet".
+On Fri, Jul 15, 2016 at 02:46:28PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-However, when blaming a file that is not known to the current HEAD,
-git blame fails with `no such path 'foo' in HEAD`, even when the file
-was git add'ed.
+> On Fri, Jul 15, 2016 at 2:18 PM, Jeff King <peff@peff.net> wrote:
+> > Some features, like the index-helper, aren't quite so easy. One reason
+> > is that its data needs to persist as a cache between multiple git
+> > invocations. In general, I think it would be nice to solve that by
+> > communicating via on-disk files, rather than a running daemon (just
+> > because it has fewer moving parts). But that's only half of it for
+> > index-helper. It needs to monitor inotify while git isn't running at
+> > all; so it really _does_ need some kind of long-running daemon.
+> 
+> This *may* have changed in the recent versions of the series, but I'm
+> fairly sure and for what it's worth to this discussion, that's not
+> what the index-helper does. It's there to keep the index file in
+> memory instead of reading it from disk.
+> 
+> It can *also* if you "git update-index --watchman" spawn a watchman
+> daemon in the background, which is the thing that'll be doing the
+> inotify calls and needs to stay persistent, the index-helper then
+> communicates with the watchman daemon "what changed since X?" to
+> compute a new index when requested.
 
-This would seem uninteresting with the plain `git blame` case, which
-it is, but it becomes useful when using copy detection, and the new file
-was created from pieces already in HEAD, moved or copied from other
-files.
+Ah, yeah, you're right. Sorry for the confusion; I haven't actually
+followed the topic all that closely.
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
- builtin/blame.c               |  4 ++-
- t/t8003-blame-corner-cases.sh | 57 ++++++++++++++++++++++++++++++-------------
- 2 files changed, 43 insertions(+), 18 deletions(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 1e214bd..0858b18 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2240,7 +2240,9 @@ static void verify_working_tree_path(struct commit *work_tree, const char *path)
- 		    sha1_object_info(blob_sha1, NULL) == OBJ_BLOB)
- 			return;
- 	}
--	die("no such path '%s' in HEAD", path);
-+
-+	if (cache_name_pos(path, strlen(path)) < 0)
-+		die("no such path '%s' in HEAD", path);
- }
- 
- static struct commit_list **append_parent(struct commit_list **tail, const unsigned char *sha1)
-diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
-index a9b266f..2812d7c 100755
---- a/t/t8003-blame-corner-cases.sh
-+++ b/t/t8003-blame-corner-cases.sh
-@@ -41,12 +41,12 @@ test_expect_success setup '
- 	test_tick &&
- 	GIT_AUTHOR_NAME=Fourth git commit -m Fourth &&
- 
--	{
--		echo ABC
--		echo DEF
--		echo XXXX
--		echo GHIJK
--	} >cow &&
-+	cat >cow <<-\EOF &&
-+	ABC
-+	DEF
-+	XXXX
-+	GHIJK
-+	EOF
- 	git add cow &&
- 	test_tick &&
- 	GIT_AUTHOR_NAME=Fifth git commit -m Fifth
-@@ -115,11 +115,11 @@ test_expect_success 'append with -C -C -C' '
- test_expect_success 'blame wholesale copy' '
- 
- 	git blame -f -C -C1 HEAD^ -- cow | sed -e "$pick_fc" >current &&
--	{
--		echo mouse-Initial
--		echo mouse-Second
--		echo mouse-Third
--	} >expected &&
-+	cat >expected <<-\EOF &&
-+	mouse-Initial
-+	mouse-Second
-+	mouse-Third
-+	EOF
- 	test_cmp expected current
- 
- '
-@@ -127,12 +127,35 @@ test_expect_success 'blame wholesale copy' '
- test_expect_success 'blame wholesale copy and more' '
- 
- 	git blame -f -C -C1 HEAD -- cow | sed -e "$pick_fc" >current &&
--	{
--		echo mouse-Initial
--		echo mouse-Second
--		echo cow-Fifth
--		echo mouse-Third
--	} >expected &&
-+	cat >expected <<-\EOF &&
-+	mouse-Initial
-+	mouse-Second
-+	cow-Fifth
-+	mouse-Third
-+	EOF
-+	test_cmp expected current
-+
-+'
-+
-+test_expect_success 'blame wholesale copy and more in the index' '
-+
-+	cat >horse <<-\EOF &&
-+	ABC
-+	DEF
-+	XXXX
-+	YYYY
-+	GHIJK
-+	EOF
-+	git add horse &&
-+	test_when_finished "git rm -f horse" &&
-+	git blame -f -C -C1 -- horse | sed -e "$pick_fc" >current &&
-+	cat >expected <<-\EOF &&
-+	mouse-Initial
-+	mouse-Second
-+	cow-Fifth
-+	horse-Not
-+	mouse-Third
-+	EOF
- 	test_cmp expected current
- 
- '
--- 
-2.9.1.276.geea30e8
-
+-Peff
