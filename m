@@ -2,134 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B1B520195
-	for <e@80x24.org>; Fri, 15 Jul 2016 12:18:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF8D520195
+	for <e@80x24.org>; Fri, 15 Jul 2016 12:32:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932858AbcGOMSo (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 08:18:44 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45382 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932785AbcGOMSm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 08:18:42 -0400
-Received: (qmail 22709 invoked by uid 102); 15 Jul 2016 12:18:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jul 2016 08:18:41 -0400
-Received: (qmail 15199 invoked by uid 107); 15 Jul 2016 12:19:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jul 2016 08:19:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jul 2016 08:18:39 -0400
-Date:	Fri, 15 Jul 2016 08:18:39 -0400
-From:	Jeff King <peff@peff.net>
-To:	Christian Couder <christian.couder@gmail.com>
-Cc:	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	David Turner <novalis@novalis.org>,
-	Ben Peart <peartben@gmail.com>, Joey Hess <joey@kitenet.net>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Ronnie Sahlberg <rsahlberg@google.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: Plugin mechanism(s) for Git?
-Message-ID: <20160715121838.GA21968@sigill.intra.peff.net>
-References: <CAP8UFD1BnnRqsv8zrcDDby=KqQ3UCDVdHWTycfDNTeyfLArn5g@mail.gmail.com>
+	id S1751033AbcGOMcx (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 08:32:53 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:58350 "EHLO
+	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751035AbcGOMcw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2016 08:32:52 -0400
+Received: from glandium by zenigata with local (Exim 4.87)
+	(envelope-from <mh@glandium.org>)
+	id 1bO2IP-0006G4-2o; Fri, 15 Jul 2016 21:32:45 +0900
+Date:	Fri, 15 Jul 2016 21:32:45 +0900
+From:	Mike Hommey <mh@glandium.org>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] blame: Allow to blame paths freshly added to the index
+Message-ID: <20160715123245.rdpbl4tmqscyf2tx@glandium.org>
+References: <20160715024254.29186-1-mh@glandium.org>
+ <alpine.DEB.2.20.1607151242020.6426@virtualbox>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD1BnnRqsv8zrcDDby=KqQ3UCDVdHWTycfDNTeyfLArn5g@mail.gmail.com>
+In-Reply-To: <alpine.DEB.2.20.1607151242020.6426@virtualbox>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.6.1-neo (2016-06-11)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 15, 2016 at 08:46:03AM +0200, Christian Couder wrote:
-
-> One way to extend it for better performance is to require that the
-> configured command should be able to deal with a number or a stream of
-> files or objects (instead of just one objec/file) that are passed to
-> it. It looks like that is what Lars wants for smudge/clean filters.
+On Fri, Jul 15, 2016 at 12:45:15PM +0200, Johannes Schindelin wrote:
+> Hi Mike,
 > 
-> Another way is to have the external command run as a daemon, like what
-> Duy and David implemented for the index-helper.
+> On Fri, 15 Jul 2016, Mike Hommey wrote:
+> 
+> > When blaming files, changes in the work tree are taken into account
+> > and displayed as being "Not Committed Yet".
+> > 
+> > However, when blaming a file that is not known to the current HEAD,
+> > git blame fails with `no such path 'foo' in HEAD`, even when the file
+> > was git add'ed.
+> > 
+> > This would seem uninteresting with the plain `git blame` case, which
+> > it is, but it becomes useful when using copy detection, and the new file
+> > was created from pieces already in HEAD, moved or copied from other
+> > files.
+> > ---
+> 
+> Well explained.
+> 
+> Please add your sign-off.
 
-Where possible, I think we should avoid daemons. They introduce all
-sorts of timings complexities and robustness issues (what happens when
-the daemon isn't up? What happens when it hangs? Etc).
+Facepalm, forgot to sign-off again.
 
-Junio mentioned elsewhere the way remote-helpers work, which is to have
-a single program that is run once per git invocation, and that can serve
-multiple requests interactively by speaking a specific protocol. I think
-that's what you're getting at in the first paragraph I've quoted here,
-and it's something that has worked reasonably well for us. I _do_ think
-we've often not paid close attention to the protocol design, and it has
-ended up biting us (there are some serious warts in the remote-helper
-protocol, for instance).
+> >  static struct commit_list **append_parent(struct commit_list **tail, const unsigned char *sha1)
+> > diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
+> > index a9b266f..a0a09e2 100755
+> > --- a/t/t8003-blame-corner-cases.sh
+> > +++ b/t/t8003-blame-corner-cases.sh
+> > @@ -137,6 +137,29 @@ test_expect_success 'blame wholesale copy and more' '
+> >  
+> >  '
+> >  
+> > +test_expect_success 'blame wholesale copy and more in the index' '
+> > +
+> > +	{
+> > +		echo ABC
+> > +		echo DEF
+> > +		echo XXXX
+> > +		echo YYYY
+> > +		echo GHIJK
+> > +	} >horse &&
+> 
+> A more common way to do this in our test scripts is by using here
+> documents. However, in this case I would suggest
+> 
+> 	test_write_lines ABC DEF XXXX YYYY GHIJK >horse
 
-I don't know if we would want to go so far as standardizing on something
-like JSON for making RPC requests to any helpers. Probably the more
-"git" thing would be to use something based around pkt-lines, but it's
-a lot easier to find a JSON library for your helper program. :-/
+I merely copied the pattern used in other places in the same test file.
+Using test_write_lines or something else (what are "here documents"?)
+would break consistency. I can also change the other similar blocks at
+the same time, though, whichever you prefer.
 
-For clean/smudge filters, that kind of model seems like it would work
-well. Better still if it can actually accept requests asynchronously and
-return them possibly out of order (so it can parallelize as it likes
-under the hood).  I think that the external-odb stuff could run this way
-pretty easily, too.
+> instead. The equivalent applies to the 'expected' file below:
+> 
+> > +	git add horse &&
+> > +	git blame -f -C -C1 -- horse | sed -e "$pick_fc" >current &&
+> > +	{
+> > +		echo mouse-Initial
+> > +		echo mouse-Second
+> > +		echo cow-Fifth
+> > +		echo horse-Not
+> > +		echo mouse-Third
+> > +	} >expected &&
+> > +	test_cmp expected current &&
+> > +	git rm -f horse
+> 
+> Should this not be a
+> 
+> 	test_when_finished "git rm -f horse"
+> 
+> at the beginning?
 
-Though I'm not yet convinced that it wouldn't be sufficient to run each
-request in its own program, but teach git to parallelize the invocations
-and let multiple run at once. The problem often times is one of latency
-in hitting the helper serially, not overall CPU time (and you'd need to
-do this parallelizing anyway to make out-of-order requests of a single
-program, so it seems like a useful first step anyway).
+Indeed.
 
+Thanks
 
-Some features, like the index-helper, aren't quite so easy. One reason
-is that its data needs to persist as a cache between multiple git
-invocations. In general, I think it would be nice to solve that by
-communicating via on-disk files, rather than a running daemon (just
-because it has fewer moving parts). But that's only half of it for
-index-helper. It needs to monitor inotify while git isn't running at
-all; so it really _does_ need some kind of long-running daemon.
-
-> And a more integrated way is to require the external code to implement
-> an API and to be compiled along with Git which looks like the approach
-> taken by the ref backend work.
-
-The nice thing about an API like this is that it can be very high
-performance, and it's relatively easy to move data between the API and
-the rest of Git. But I still don't think we've quite figured out how
-backends are going to be compiled and linked into git. I'm not sure
-anybody is really shooting for something like run-time loading of
-modules. I think at this stage we're more likely to have a handful of
-modules that are baked in at compile time.
-
-That works OK for the refs code, which is mostly Git-related, and mostly
-works synchronously; you ask it for a ref, it looks it up and returns
-it. Something like Git-LFS seems much more complicated. Besides being
-written in Go and having a bunch of extra library dependencies, it's
-inherently network-oriented, and needs to handle being responsive on
-multiple descriptors (especially if we try to do things in parallel).
-That's a lot of complication to stuff into an API. It also has to make
-policy decisions that shouldn't necessarily be part of git (like
-managing the cache of objects).
-
-> If people think that evolution is better than intelligent design, and
-> want each current topic/work to just implement what is best for it,
-> then that's ok for me. If on the other hand standardizing on some ways
-> to interact with external processes could be helpful to avoid
-> duplicating mechanisms/code in slightly different and incompatible
-> ways, then I would be happy to discuss it in a thread that is not
-> specific to one of the current work.
-
-Those are all just my off-the-cuff thoughts. I reserve the right to
-change my opinions above at any time. :)
-
-I _do_ think each of the projects you've mentioned has their own needs,
-so I don't think we'll find a one-size-fits-all solution.
-
--Peff
+Mike
