@@ -2,54 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86D3420195
-	for <e@80x24.org>; Fri, 15 Jul 2016 17:42:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEEEB20195
+	for <e@80x24.org>; Fri, 15 Jul 2016 18:00:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228AbcGORmN (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 13:42:13 -0400
-Received: from atl4mhob18.myregisteredsite.com ([209.17.115.111]:50762 "EHLO
-	atl4mhob18.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751600AbcGORmL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 13:42:11 -0400
-Received: from mailpod.hostingplatform.com ([10.30.71.204])
-	by atl4mhob18.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id u6FHg9pP016951
-	for <git@vger.kernel.org>; Fri, 15 Jul 2016 13:42:09 -0400
-Received: (qmail 2633 invoked by uid 0); 15 Jul 2016 17:42:09 -0000
-X-TCPREMOTEIP: 23.28.40.196
-X-Authenticated-UID: andrew@kellerfarm.com
-Received: from unknown (HELO ?192.168.0.195?) (andrew@kellerfarm.com@23.28.40.196)
-  by 0 with ESMTPA; 15 Jul 2016 17:42:09 -0000
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
-Subject: Re: obsolete index in wt_status_print after pre-commit hook runs
-From:	Andrew Keller <andrew@kellerfarm.com>
-In-Reply-To: <xmqqshvan73f.fsf@gitster.mtv.corp.google.com>
-Date:	Fri, 15 Jul 2016 13:42:08 -0400
-Cc:	Git List <git@vger.kernel.org>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <96E73F11-B24B-4305-8297-3308986E542F@kellerfarm.com>
-References: <5988D847-25A2-4997-9601-083772689879@covenanteyes.com> <xmqq1t2uomw3.fsf@gitster.mtv.corp.google.com> <B3E20AFF-7661-43A0-A715-F0B9F3CD58DC@kellerfarm.com> <xmqqshvan73f.fsf@gitster.mtv.corp.google.com>
-To:	Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.2104)
+	id S1751630AbcGOSA6 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 14:00:58 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51708 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751415AbcGOSA5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2016 14:00:57 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 209C62CE3C;
+	Fri, 15 Jul 2016 14:00:55 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dXlrjktnsCDQrMVfh8BPsllbpTg=; b=P4MF0g
+	Dsp+HK6S2TqlJ97Ahl+p79jRkbaa3XQMHGblSf0ZnWZGy2SBITTucckzWxOIkvVY
+	eOAX8nYlhG5MgwNMswhyzBmT1pHo90oSP2rpWIzH2H7PvzK1gPfHhzo/p8Sx4yAJ
+	aRxJyR4J3XkUDOjGhYoK2uPB2KGxp2oRGQqdM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hmRJZ1wSjX+jvvg0WDVuge/Yp0zae5Eb
+	08vVxnAJbtgeUulrprFJQm5gJha+p6txyvygH7olVmE4BKbJoR2XDyNwnanxCFCG
+	SEBnPXQhWb7MI1tCskuEEhRMTWVRM5rIQ9MGXVHFwLuUwtrVpLPCQkrpCvgZRijt
+	/a6Rw1QRLsY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1940A2CE3B;
+	Fri, 15 Jul 2016 14:00:55 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9887C2CE39;
+	Fri, 15 Jul 2016 14:00:54 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH 02/12] rev-list: add optional progress reporting
+References: <20160715102506.GA23164@sigill.intra.peff.net>
+	<20160715102806.GB19271@sigill.intra.peff.net>
+Date:	Fri, 15 Jul 2016 11:00:52 -0700
+In-Reply-To: <20160715102806.GB19271@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 15 Jul 2016 06:28:07 -0400")
+Message-ID: <xmqqk2gmn5m3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1319FA72-4AB6-11E6-B087-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 15.07.2016, at 1:28 nachm., Junio C Hamano <gitster@pobox.com> wrote:
+Jeff King <peff@peff.net> writes:
 
-> Earlier you said you are working on a patch series.  Since you have
-> already looked at the codepath already, perhaps you may want to try
-> a patch series to add the missing error-return instead, if you are
-> interested?
+> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+> index b82bcc3..88d95a7 100644
+> --- a/builtin/rev-list.c
+> +++ b/builtin/rev-list.c
+> @@ -9,6 +9,7 @@
+>  #include "log-tree.h"
+>  #include "graph.h"
+>  #include "bisect.h"
+> +#include "progress.h"
+>  
+>  static const char rev_list_usage[] =
+>  "git rev-list [OPTION] <commit-id>... [ -- paths... ]\n"
+> @@ -49,12 +50,17 @@ static const char rev_list_usage[] =
+>  "    --bisect-all"
+>  ;
+>  
+> +struct progress *progress;
+> +unsigned progress_counter;
 
-Definitely interested — Sounds like a great learning experience.
-
-Thanks,
- - Andrew Keller
+Are these supposed to be file-scope static?
 
