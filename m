@@ -3,170 +3,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4D0320195
-	for <e@80x24.org>; Fri, 15 Jul 2016 17:24:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3598F20195
+	for <e@80x24.org>; Fri, 15 Jul 2016 17:28:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751473AbcGORYT (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 13:24:19 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:33489 "EHLO
-	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751353AbcGORYS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 13:24:18 -0400
-Received: by mail-io0-f182.google.com with SMTP id 38so110236801iol.0
-        for <git@vger.kernel.org>; Fri, 15 Jul 2016 10:24:17 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=T5gM0hn+W62LH8rF7sjxliw+G5mQ05BdZ/ExZgcgxYE=;
-        b=lOyi/ovtcNKK3313K269A8U3yC5IarwAxzFPkGMyanqDVWY+PzGYvZDQt9L/01KwwV
-         9z1rEO09noITTnHNXQydi74TZwNAxo1nL1a8dJ00m7n0krLtoStc1jlLwmT8hG3NJQHA
-         1PjaMGvwOxfJFNspGa5Fp76jLQ9h64DTVdzIz4Sj/aVsIAY/4IkpORxJ5C3qbvbzXjZm
-         aPb0jgnXk0Q/9aTy0wkiFkO1AV1D7Du2LPjRbIXJPqUHiM6F6aS8SbsHLOjsxfzst0vy
-         xM6X3XiQAPYLad3Df5ZHFle6SU0truj+uRGn2BY93XzUEHHK63kdqjoqhkKJiHHQ4/Mo
-         FgiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=T5gM0hn+W62LH8rF7sjxliw+G5mQ05BdZ/ExZgcgxYE=;
-        b=YZ05DwzsFoN5AInzK1OmuqN51HAeJEWquEtq0hIIgSNtDz0AlQ7jMZT/Cs1wTU3rUd
-         i3g8l7wz0orlFb4T5cAGLB1tKNeILGr2zMvxB552KiCI4cTniRLZr2MInTw1vgHYXuJM
-         1n+L5s+c6164FeDPaues3oQECJ7BF/tPugdZv5/V7vuaAGF38Qp2xwvUm6pkC5eFX1iv
-         01muReXkL1xj108QXbUYd7n9vyFjzodOHjVnHv1p5nSKpdf2L7lbcA/ITn/ldoAEVNi6
-         BPJpuhSjnu5wW3YJXtL8pZenpCKKC4hrlEC+lSg0XdAfbjyl3ouHFe2YSwacoC5ZNOSe
-         YtOQ==
-X-Gm-Message-State: ALyK8tJfaAdglAiGCL4pIKHbh5UINuTJMFL1i0w1havT22QX7sBolquzSB/zQFRbO0TEazjX24hhITsHRbPZyzbW
-X-Received: by 10.107.178.129 with SMTP id b123mr22424011iof.83.1468603456938;
- Fri, 15 Jul 2016 10:24:16 -0700 (PDT)
+	id S1751279AbcGOR26 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 13:28:58 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53816 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750810AbcGOR24 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Jul 2016 13:28:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 730082C745;
+	Fri, 15 Jul 2016 13:28:55 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=dkkiYvDey+D9
+	vLopXQt68STN+i4=; b=C7sMZDLaLEjT8snJW9dH//+5/Xl54k+n0crq8t0pEF0u
+	xM1i0ljCLc2EHDwS2l/nrtU5iiLHXkdJteo7LVsrVKtL+9UKS2saEgdjnv1WydPY
+	68fvgfbn/Aj9BFiog9Ajz1fVkup7H/r+Sxy1CywGxQIAGLpQvJBnMiw0d1mvMHo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Oi3wu8
+	5EoXseLze6ZR/MhNOg29qFJTosqhvowtTOlN19R9Ms6A5P+qLJsHxh1uswr5JThY
+	JNxaH8Svmp59TdgoIWEX0NTaSKovRHbXyaEAbwdmKL65YtioE2tUpEb+JujjCpb/
+	tzahyfaFiMTidboycsIy7F1CcvfVoc0oBrEBo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6A29A2C744;
+	Fri, 15 Jul 2016 13:28:55 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E4A252C743;
+	Fri, 15 Jul 2016 13:28:54 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Andrew Keller <andrew@kellerfarm.com>
+Cc:	Git List <git@vger.kernel.org>
+Subject: Re: obsolete index in wt_status_print after pre-commit hook runs
+References: <5988D847-25A2-4997-9601-083772689879@covenanteyes.com>
+	<xmqq1t2uomw3.fsf@gitster.mtv.corp.google.com>
+	<B3E20AFF-7661-43A0-A715-F0B9F3CD58DC@kellerfarm.com>
+Date:	Fri, 15 Jul 2016 10:28:52 -0700
+In-Reply-To: <B3E20AFF-7661-43A0-A715-F0B9F3CD58DC@kellerfarm.com> (Andrew
+	Keller's message of "Fri, 15 Jul 2016 13:20:28 -0400")
+Message-ID: <xmqqshvan73f.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Fri, 15 Jul 2016 10:24:16 -0700 (PDT)
-In-Reply-To: <20160715104347.GL19271@sigill.intra.peff.net>
-References: <20160715102506.GA23164@sigill.intra.peff.net> <20160715104347.GL19271@sigill.intra.peff.net>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Fri, 15 Jul 2016 10:24:16 -0700
-Message-ID: <CAGZ79kbernZHx9SUG-_vbxy-g77_3ki1uc-21LCviwrH=aXp6w@mail.gmail.com>
-Subject: Re: [PATCH 12/12] receive-pack: send keepalives during quiet periods
-To:	Jeff King <peff@peff.net>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 9AE14AC8-4AB1-11E6-9149-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 15, 2016 at 3:43 AM, Jeff King <peff@peff.net> wrote:
+Andrew Keller <andrew@kellerfarm.com> writes:
 
+> On 15.07.2016, at 1:02 nachm., Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Signed-off-by: Jeff King <peff@peff.net>
+>> Expected outcome is an error saying "do not modify the index inside
+>> pre-commit hook", and a rejection.  It was meant as a verification
+>> mechansim (hence it can be bypassed with --no-verify), not as a way
+>> to make changes that the user didn't tell "git commit" to make.
+>
+> Ah!  Good to know, then.  I’ll rewrite my hook to behave more correctly.
 
-Read-entirely-by Stefan ;)
-Thanks!
+No problem.
 
-> @@ -319,10 +331,60 @@ static void rp_error(const char *err, ...)
->  static int copy_to_sideband(int in, int out, void *arg)
->  {
->         char data[128];
+>> It is just the implementation that dates back to the old days were
+>> too trusting that all users would behave (with its own definition of
+>> "behaving well", which may or may not match your expectation), did
+>> not anticipate that people would try to muck with the contents being
+>> commited in the hook, and did not implement such verification.
 
-While looking at this code, do you think it is feasible to increase the
-size of data[] to 1024 ? (The largest that is possible when
-side-band, but no side-band-64k is given).
+Earlier you said you are working on a patch series.  Since you have
+already looked at the codepath already, perhaps you may want to try
+a patch series to add the missing error-return instead, if you are
+interested?
 
-> +       int keepalive_active = 0;
-> +
-> +       if (keepalive_in_sec <= 0)
-> +               use_keepalive = KEEPALIVE_NEVER;
-> +       if (use_keepalive == KEEPALIVE_ALWAYS)
-> +               keepalive_active = 1;
-> +
->         while (1) {
-> -               ssize_t sz = xread(in, data, sizeof(data));
-> +               ssize_t sz;
-> +
-> +               if (keepalive_active) {
-> +                       struct pollfd pfd;
-> +                       int ret;
-> +
-> +                       pfd.fd = in;
-> +                       pfd.events = POLLIN;
-> +                       ret = poll(&pfd, 1, 1000 * keepalive_in_sec);
-> +
-> +                       if (ret < 0) {
-> +                               if (errno == EINTR)
-> +                                       continue;
-> +                               else
-> +                                       break;
-
-The method was short and concise, this adds a lot of lines.
-Remembering d751dd11 (2016-07-10, hoist out handle_nonblock
-function for xread and xwrite), do you think it would be reasonable to
-put the whole poll handling into a dedicated function, maybe even reuse the
-that function?
-
-    if (keepalive_active) {
-        if (wrapper_around_poll(&data_in) < 0) // handles EINTR internally
-            break;
-        if (!data_in)
-            send_keep_alive();
-    }
-
-I am not sure if that makes this function more legible, just food for thought.
-
-
-> +                       } else if (ret == 0) {
-> +                               /* no data; send a keepalive packet */
-> +                               static const char buf[] = "0005\1";
-
-and the \1 is the first sideband. Why do we choose that sideband?
-
-> +                               write_or_die(1, buf, sizeof(buf) - 1);
-> +                               continue;
-> +                       } /* else there is actual data to read */
-
-"If there is data to read, we need to break the while(1), to actually
-read the data?"
-I got confused and needed to go back and read the actual code again,
-would it make sense to rather have a loop here?
-
-    while (1) {
-       while(keepalive_active) {
-        if (wrapper_around_poll(&data_in) < 0) // handles EINTR internally
-            break;
-        if (!data_in)
-            send_keep_alive();
-        else
-            break;
-        }
-
-               sz = xread(in, data, sizeof(data));
-                 if (sz <= 0)
-                         break;
-
-        turn_on_keepalive_on_NUL(&data);
-     }
-
-> +               }
-> +
-> +               sz = xread(in, data, sizeof(data));
->                 if (sz <= 0)
->                         break;
-> +
-> +               if (use_keepalive == KEEPALIVE_AFTER_NUL && !keepalive_active) {
-> +                       const char *p = memchr(data, '\0', sz);
-> +                       if (p) {
-> +                               /*
-> +                                * The NUL tells us to start sending keepalives. Make
-> +                                * sure we send any other data we read along
-> +                                * with it.
-> +                                */
-> +                               keepalive_active = 1;
-> +                               send_sideband(1, 2, data, p - data, use_sideband);
-> +                               send_sideband(1, 2, p + 1, sz - (p - data + 1), use_sideband);
-> +                               continue;
-
-Oh, I see why the turn_on_keepalive_on_NUL doesn't work as well as I thought.
-I wonder if we can use a better read function, that would stop reading at a NUL,
-and return early instead?
+Thanks.
