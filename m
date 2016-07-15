@@ -2,72 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D98B0203C2
-	for <e@80x24.org>; Fri, 15 Jul 2016 21:19:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED967203C2
+	for <e@80x24.org>; Fri, 15 Jul 2016 21:22:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751827AbcGOVT0 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 17:19:26 -0400
-Received: from mail-yw0-f179.google.com ([209.85.161.179]:35846 "EHLO
-	mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751288AbcGOVTZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 17:19:25 -0400
-Received: by mail-yw0-f179.google.com with SMTP id w127so114084763ywf.3
-        for <git@vger.kernel.org>; Fri, 15 Jul 2016 14:19:25 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=WhD3+fgE09MAO16W/RZfluA13nhJJA1z2Ym0awqUwk8=;
-        b=Udf28f2rvhJLBbyMOvDeVuYGaaOtf2F4q6QBLqEYyxCwvhGWNEqgOexVzSev1miTF7
-         TKn0As28iwj81LGDOqbTx1QTvRt7Dr8T/4A1TfgipiN8CV5tGPfPg/ZKm8561T0u9zrf
-         1ZV7M/j8a3Q5+hbvpnhSrBt8Z5A1j5gsdwdzIBQ6MDjVZO3ZzoJA0Hw92PVDIwzlApzp
-         6YBwBQDPhT8XyR6dQGfKzhTs9SgSdsaJkK5TIYJ7/XTrS+4zS1mSAPc6C+TwOKBcEE5Q
-         vrFapYGTZ5QyvRI+OA7PCpS0TYHjpO/czVgW0W5pqAY22UwVUnCIVRUWzPVY1dI8jnuB
-         gkKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=WhD3+fgE09MAO16W/RZfluA13nhJJA1z2Ym0awqUwk8=;
-        b=lSat3JegvtH8ieIJI7S5zfZmmhTnQgKXBTS/er69w8vypXmU6GVMibYZJAWUnnoD/S
-         lUn5RjxnsCkkaBJx5auQh6FF+EuzsZCrs6Bxwvyt9GwfBEx9Mz6h4HNO0bnyxUwNZeGg
-         un96+/+QUgkUNPp5TfBYddN8so2qHH7VHZX3b/ckj4ZZ6WkhNMLLo9KynBA0wlswIL0/
-         FO6+7NIdKGwB5nm+v4BeX6v14fOiZslF956pnWm4kWZgJq9LZqt0BuvTzgEQw47HAysp
-         zVxGWIWBZLCN/h53GTBAPS+P5tR7qL500ldP7/WNAs4Mq1mSjqlLnO3DW6oIqI0T3L/o
-         mh5w==
-X-Gm-Message-State: ALyK8tIT7fQ+k6ud2ZClsTQJu3lQU7c3F9+Oc7N77HxNGj7GLLgEU1D3IsAF08VibBimFqVsH6oJMd6zhgfx+w==
-X-Received: by 10.37.0.137 with SMTP id 131mr14612142yba.28.1468617563956;
- Fri, 15 Jul 2016 14:19:23 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.13.240.66 with HTTP; Fri, 15 Jul 2016 14:19:04 -0700 (PDT)
-In-Reply-To: <2ED67396-2530-4D1C-8F21-1C30983DB9DC@kellerfarm.com>
-References: <5988D847-25A2-4997-9601-083772689879@covenanteyes.com> <2ED67396-2530-4D1C-8F21-1C30983DB9DC@kellerfarm.com>
+	id S1752030AbcGOVWV (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 17:22:21 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51731 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751957AbcGOVWT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2016 17:22:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E6DC2C803;
+	Fri, 15 Jul 2016 17:22:17 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=f
+	fRbEs4QDkqis76qWsqwL+8OCfE=; b=sfjX6AiIEvJciEUSFGiBgEDRzCaavQYEZ
+	6xF3+1YiaU0H528UhqeXhwOoDWD7JTGvEjCVisoias0vwcFZ+6YWenu9TeAGmO2u
+	kvTm9JMZsdc8zPVWAqWFLP9/QqZse79jA7c6HZFUnIFFRi4MHZtn1ZtJf5Z20cEI
+	q8ZDmyJJo0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=Gb0cnmXqd6mTWz7F0kB4D1/KtIKInZxfxcijwI91CUqmfJX0GizYNzuD
+	ILVsdjA8VbIwbLeYZYrqvsZk0sB+Rj6b+vCKZu0hivRNEys9fScFo/Tc9lkxKHEh
+	pfjM81010jhKgmoVnWG/2r9f1yq2Qmx+HZ7Qac6qifBpNJKeH1g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 51B592C802;
+	Fri, 15 Jul 2016 17:22:17 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C502D2C801;
+	Fri, 15 Jul 2016 17:22:16 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-Date:	Fri, 15 Jul 2016 14:19:04 -0700
-X-Google-Sender-Auth: gIAGH40PnfBj_4dpbJ-vqfhoyL0
-Message-ID: <CAPc5daWZofdZnE0VQyFX2sBQyEDvAPmU+4rmHe5rvh7eH001ZA@mail.gmail.com>
-Subject: Re: obsolete index in wt_status_print after pre-commit hook runs
-To:	Andrew Keller <andrew@kellerfarm.com>
-Cc:	Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+To:	git@vger.kernel.org
+Cc:	Linux Kernel <linux-kernel@vger.kernel.org>
+Subject: [ANNOUNCE] Git v2.9.2
+Date:	Fri, 15 Jul 2016 14:22:14 -0700
+Message-ID: <xmqqlh12lhq1.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 34A512C8-4AD2-11E6-8A50-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 15, 2016 at 1:30 PM, Andrew Keller <andrew@kellerfarm.com> wrote:
-> Am 15.07.2016 um 12:34 nachm. schrieb Andrew Keller <andrew@kellerfarm.com>:
->
->> I pulled out the source for version 2.9.1 and briefly skimmed how run_commit and
->> prepare_to_commit work.  It seems that Git already understands that a pre-commit
->> hook can change the index, and it rereads the index before running the
->> prepare-commit-msg hook: https://github.com/git/git/blob/v2.9.1/builtin/commit.c#L941-L951
->
-> Quick question: Why does Git reread the index after the pre-commit hook runs?
+The latest maintenance release Git v2.9.2 is now available at
+the usual places.  This is only a fix to the test suite; there is
+no change in the actual code produced for your daily use of Git.
 
-Offhand I do not think of a good reason to do so; does something break
-if you took it out?
+The tarballs are found at:
+
+    https://www.kernel.org/pub/software/scm/git/
+
+The following public repositories all have a copy of the 'v2.9.2'
+tag and the 'maint' branch that the tag points at:
+
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
+
+----------------------------------------------------------------
+
+Git v2.9.2 Release Notes
+========================
+
+Fixes since v2.9.1
+------------------
+
+ * A fix merged to v2.9.1 had a few tests that are not meant to be
+   run on platforms without 64-bit long, which caused unnecessary
+   test failures on them because we didn't detect the platform and
+   skip them.  These tests are now skipped on platforms that they
+   are not applicable to.
+
+No other change is included in this update.
+
+----------------------------------------------------------------
+
+Changes since v2.9.1 are as follows:
+
+Jeff King (1):
+      t0006: skip "far in the future" test when unsigned long is not long enough
+
+Junio C Hamano (1):
+      Git 2.9.2
+
