@@ -2,27 +2,45 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E3EB2018F
-	for <e@80x24.org>; Fri, 15 Jul 2016 08:04:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9E232018F
+	for <e@80x24.org>; Fri, 15 Jul 2016 08:28:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750996AbcGOIEe (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 04:04:34 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:50458 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750963AbcGOIEa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 04:04:30 -0400
-Received: from glandium by zenigata with local (Exim 4.87)
-	(envelope-from <mh@glandium.org>)
-	id 1bNy6b-0003QE-Ni; Fri, 15 Jul 2016 17:04:17 +0900
-Date:	Fri, 15 Jul 2016 17:04:17 +0900
-From:	Mike Hommey <mh@glandium.org>
+	id S1752850AbcGOI2k (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 04:28:40 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65463 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752798AbcGOI2f (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2016 04:28:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B18A0207BB;
+	Fri, 15 Jul 2016 04:28:33 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hZNXEfzcwQxGDwDXkeYqausVNG4=; b=tdxQcb
+	YsdV0mrI3AjdvJ1Xjl9mXme9OAzwmKNtxnXQ9KEZHFKsMm+unqEgXPHwoMXvsKAI
+	VHkijedT98N2yptN3FQlORQ/boyAqghCh2Kk90UtjsFljDXtybOp01ezZlW6olxy
+	CQt+fvbF8uQcZU4Io+R7jo1oQzEgTXTE5SwSA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sxqwOpIJnSHweVzA4niEE/P8+Vxr+eIy
+	oE7o6Bh+LhyiPNQZamzDYQ3PzwU2eTWdeZOsOBJRfkg077rTIBYGlQ+GB5kK1dlm
+	6lYn4DdY70kn9Dw1O5GPwj8bNE763/21DlVhNywGytVZT2ad/b4rn4lWfeS6T9i+
+	+4W4KYsWs44=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A8FA3207BA;
+	Fri, 15 Jul 2016 04:28:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 33E94207B7;
+	Fri, 15 Jul 2016 04:28:33 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
 To:	Christian Couder <christian.couder@gmail.com>
-Cc:	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
+Cc:	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -30,70 +48,44 @@ Cc:	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Ben Peart <peartben@gmail.com>, Joey Hess <joey@kitenet.net>,
 	Lars Schneider <larsxschneider@gmail.com>,
 	Ronnie Sahlberg <rsahlberg@google.com>,
-	=?iso-8859-15?Q?=C6var_Arnfj=F6r=F0?= Bjarmason 
-	<avarab@gmail.com>
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Subject: Re: Plugin mechanism(s) for Git?
-Message-ID: <20160715080417.GA12802@glandium.org>
 References: <CAP8UFD1BnnRqsv8zrcDDby=KqQ3UCDVdHWTycfDNTeyfLArn5g@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Date:	Fri, 15 Jul 2016 01:28:31 -0700
 In-Reply-To: <CAP8UFD1BnnRqsv8zrcDDby=KqQ3UCDVdHWTycfDNTeyfLArn5g@mail.gmail.com>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.6.0 (2016-04-01)
+	(Christian Couder's message of "Fri, 15 Jul 2016 08:46:03 +0200")
+Message-ID: <xmqqd1mfnw40.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1E0FF3FA-4A66-11E6-AC47-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 15, 2016 at 08:46:03AM +0200, Christian Couder wrote:
-> Hi,
-> 
-> It seems to me that there are many current topics/patch series in
-> flight that are about making Git interact with external code/processes
-> and that it could be interesting to step back a bit and see if we
-> could find a common approach/mechanism for at least some of these
-> current topics.
-> 
-> (This is also inspired by private discussions with AEvar, thanks to
-> him, and by the fact that I am now also working for GitLab on the long
-> run on external ODB for large file support.)
-> 
-> The current topics/work I can think of are:
-> 
-> - the ref backend work by Michael based on Ronnie Sahlberg's and others' work,
-> - the smudge/clean filters work by Joey and Lars,
-> - the watchman/index helper work by David, Duy and Ben,
-> - the external ODB work by Peff and myself.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Relatedly, some future topics I'd like to have at some point and that
-would require the same kind of hooking:
+> If people think that evolution is better than intelligent design, and
+> want each current topic/work to just implement what is best for it,
+> then that's ok for me. If on the other hand standardizing on some ways
+> to interact with external processes could be helpful to avoid
+> duplicating mechanisms/code in slightly different and incompatible
+> ways, then I would be happy to discuss it in a thread that is not
+> specific to one of the current work.
 
-- committish mapping resolution.
+You seem to have listed only in-flight topics, which may not be a
+good starting point to think about the issues.  A common trait their
+implementation share may not necessarily be a good thing (for one
+thing, one trait they share is that none of them is battle tested
+yet), so you cannot distill their commonality into something we
+would want to have in the first place.
 
-It's not really clear what I mean with this, but here's the idea: You're
-using a remote helper to talk to a non-git repository. Common examples
-are svn, p4 and mercurial. I'm not sure how this would work for svn, or
-what p4 revisions look like, but speaking as someone who clones
-mercurial repositories with git (and working on one of the tools to do
-so), there are many cases where I wish I could just do something like:
-
-   git show hg::d4a5c8fbfc20cebcae60d1e073874d19fa47d831
-
-where d4a5c8fbfc20cebcae60d1e073874d19fa47d831 is a mercurial changeset
-id. And this is a simple example, but the idea is that it would work
-anywhere we can use committishs and revranges. Ideally, it would also
-work with abbreviated mercurial changesets e.g. hg::d4a5c8fbfc20
+You would need to have existing practices that have worked well for
+us in the mix.  A few examples that may help the discussion go
+forward are the remote-helper framework and credential-helper.  They
+both call out of Git so that external/third-party enhancement
+implementations can do things that core-git alone cannot do
+natively.
 
 
-- providing information for --decorate
-
-Here the idea would be the converse of the above, and would make e.g.
-`git log --decorate` show hg::d4a5c8fbfc20cebcae60d1e073874d19fa47d831
-or the abbreviated form hg::d4a5c8fbfc20 for the corresponding git
-commit.
-
-
-Cheers,
-
-Mike
