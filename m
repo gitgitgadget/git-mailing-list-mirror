@@ -2,69 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4350B20195
-	for <e@80x24.org>; Fri, 15 Jul 2016 18:32:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07FD120195
+	for <e@80x24.org>; Fri, 15 Jul 2016 18:58:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbcGOScS (ORCPT <rfc822;e@80x24.org>);
-	Fri, 15 Jul 2016 14:32:18 -0400
-Received: from mailrelay4.public.one.com ([195.47.247.71]:58989 "EHLO
-	mailrelay4.public.one.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751311AbcGOScQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2016 14:32:16 -0400
-X-Greylist: delayed 964 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Jul 2016 14:32:16 EDT
-DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple;
-	d=winkler.dk; s=20140924;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=wAkehiBphLBOicDhfT0u/7xijq12IPSd+CNbJqGT0so=;
-	b=isxTDePCqvkrYqYMJtVx9vuHr45gq9AqvZ1hwS5urLSw/PxHVj0xR7Z+2HoPHKv+jXgfD8diPIc/2
-	 TFCcqBVu36x83L90d0aDOlEYGxYn17A2xG7sbd5nSoeQ5Mv6T/F95FZDsHoVJv3Kb8V8PJ95X0lckW
-	 0lIenpqaxdU7etgk=
-X-HalOne-Cookie: 6861014b1720d5d5106f375bd597bd958b46b07a
-X-HalOne-ID: 3401efe9-4ab8-11e6-bffc-b8ca3afa9d73
-Received: from t430.localnet (unknown [5.186.121.171])
-	by smtpfilter1.public.one.com (Halon Mail Gateway) with ESMTPSA;
-	Fri, 15 Jul 2016 18:16:08 +0000 (UTC)
-From:	"Morten W. J." <morten@winkler.dk>
-To:	Jeff King <peff@peff.net>
-Cc:	git@vger.kernel.org
-Subject: [SOLVED] Re: Two consecutive clones of a remote produces different files
-Date:	Fri, 15 Jul 2016 20:16:00 +0200
-Message-ID: <3779136.PWlxYSPs5e@t430>
-User-Agent: KMail/5.0.2 (Linux/4.2.0-38-generic; KDE/5.15.0; x86_64; ; )
-In-Reply-To: <20160715094200.GA17917@sigill.intra.peff.net>
-References: <2183637.OVprKRVBmt@t430> <20160715094200.GA17917@sigill.intra.peff.net>
+	id S1751609AbcGOS6e (ORCPT <rfc822;e@80x24.org>);
+	Fri, 15 Jul 2016 14:58:34 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:39858 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751312AbcGOS6d (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2016 14:58:33 -0400
+Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mx1.redhat.com (Postfix) with ESMTPS id 8ACA98553D;
+	Fri, 15 Jul 2016 18:58:32 +0000 (UTC)
+Received: from [192.168.3.156] (vpn-55-41.rdu2.redhat.com [10.10.55.41])
+	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id u6FIwVss026028;
+	Fri, 15 Jul 2016 14:58:32 -0400
+Subject: [StGit PATCH] contrib/vim: Fix filetype detection in VIM >=7.4
+From:	Zane Bitter <zbitter@redhat.com>
+To:	git@vger.kernel.org
+Cc:	catalin.marinas@gmail.com
+Date:	Fri, 15 Jul 2016 14:58:31 -0400
+Message-ID: <146860882262.30566.9308142555262174975.stgit@zbitter>
+User-Agent: StGit/0.17.1-dirty
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Fri, 15 Jul 2016 18:58:32 +0000 (UTC)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Jeff.
+The command "setfiletype" will not override an existing filetype. This was
+never a problem for me previously, but since upgrading from VIM 7.3 to 7.4
+the filetype for StGit's files is explicitly set to "text", preventing the
+stgit ftdetect plugin overriding it. Use "setlocal filetype=" instead to
+ensure that we override any previously detected filetype.
 
-Hmmm. You are the master of blind guessing - spot on.
-Also, that is kind of embaressing to me. However, should your way cross mine, 
-you hereby have a voucer for a drink after your choice as long as it is beer.
+Signed-off-by: Zane Bitter <zbitter@redhat.com>
+---
+ contrib/vim/ftdetect/stg.vim |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-Thanks,
-   Morten.
-
-> Just a blind guess, but might you have two files with names that differ
-> only in case, and on Windows one is overwriting the other because you
-> have a case-insensitive filesystem?
-> 
-> Try:
-> 
->   git ls-files -s | grep -i src/LogEventSubscriber.h
-> 
-> to see what is in the index (which is case-sensitive, and is the source
-> from which git checks the files out into the working tree).
-> 
-> -Peff
+diff --git a/contrib/vim/ftdetect/stg.vim b/contrib/vim/ftdetect/stg.vim
+index abd4d9f..adf46dd 100644
+--- a/contrib/vim/ftdetect/stg.vim
++++ b/contrib/vim/ftdetect/stg.vim
+@@ -6,23 +6,22 @@
+ if has("autocmd")
+ 
+   " Detect 'stg new' files
+-  autocmd BufNewFile,BufRead .stgit-new.txt       setf     stgnew
+-  autocmd BufNewFile,BufRead .stgitmsg.txt        setf     stgnew
++  autocmd BufNewFile,BufRead .stgit-new.txt       setlocal filetype=stgnew
++  autocmd BufNewFile,BufRead .stgitmsg.txt        setlocal filetype=stgnew
+   " Ignore the modeline so we get type 'stgnew' instead of 'diff'
+   autocmd BufNewFile,BufRead .stgitmsg.txt        setlocal nomodeline
+ 
+   " Detect 'stg edit' files
+-  autocmd BufNewFile,BufRead .stgit-edit.txt      setf     stgedit
+-  " Use set filetype instead of setfiletype to override detection as patch
++  autocmd BufNewFile,BufRead .stgit-edit.txt      setlocal filetype=stgedit
+   autocmd BufNewFile,BufRead .stgit-edit.patch    setlocal filetype=stgedit
+   autocmd BufNewFile,BufRead .stgit-edit.diff     setlocal filetype=stgedit
+   autocmd BufNewFile,BufRead .stgit-failed.patch  setlocal filetype=stgedit
+ 
+   " Detect 'stg squash' files
+-  autocmd BufNewFile,BufRead .stgit-squash.txt    setf     stgsquash
++  autocmd BufNewFile,BufRead .stgit-squash.txt    setlocal filetype=stgsquash
+ 
+   " Detect 'stg mail' files
+-  autocmd BufNewFile,BufRead .stgitmail.txt       setf     stgmail
++  autocmd BufNewFile,BufRead .stgitmail.txt       setlocal filetype=stgmail
+ 
+ 
+   " A modeline in a diff belongs to the diffed file, so ignore it
 
