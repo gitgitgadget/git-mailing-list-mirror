@@ -2,86 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 472CC20195
-	for <e@80x24.org>; Sat, 16 Jul 2016 05:18:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9900D20195
+	for <e@80x24.org>; Sat, 16 Jul 2016 05:31:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751312AbcGPFSG (ORCPT <rfc822;e@80x24.org>);
-	Sat, 16 Jul 2016 01:18:06 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45842 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750871AbcGPFSF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jul 2016 01:18:05 -0400
-Received: (qmail 1605 invoked by uid 102); 16 Jul 2016 05:18:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 16 Jul 2016 01:18:05 -0400
-Received: (qmail 22095 invoked by uid 107); 16 Jul 2016 05:18:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 16 Jul 2016 01:18:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 16 Jul 2016 01:18:01 -0400
-Date:	Sat, 16 Jul 2016 01:18:01 -0400
-From:	Jeff King <peff@peff.net>
-To:	Parker Moore <parkrmoore@gmail.com>
-Cc:	git@vger.kernel.org, cranger@google.com,
-	Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] contrib/persistent-https: update ldflags syntax for Go
- 1.7+
-Message-ID: <20160716051800.GA2845@sigill.intra.peff.net>
-References: <CAOiOGAcqsdMD0j_ZUdvvGiA9Bd6bUmfvxziN06Rw81f_pO7cgg@mail.gmail.com>
+	id S1751337AbcGPFb5 (ORCPT <rfc822;e@80x24.org>);
+	Sat, 16 Jul 2016 01:31:57 -0400
+Received: from mail-it0-f49.google.com ([209.85.214.49]:35080 "EHLO
+	mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750871AbcGPFbz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Jul 2016 01:31:55 -0400
+Received: by mail-it0-f49.google.com with SMTP id u186so34762478ita.0
+        for <git@vger.kernel.org>; Fri, 15 Jul 2016 22:31:55 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=NA2LNGDIuD4UPvcRLxB7H3r7o0uwKATAlPvLHJmzGDo=;
+        b=CnYgn9yKosIUZ7rKMgsq/5J6hHPnqcoOzW6Lfa7aUccSZ/it6xKa4aX63kO5gY5nHa
+         Cu3hUh4CBKEeHIlC5rZHeYPrCreHGr2ifJHzDPN76OczRA9OrW6Mb8qF8FiYk9eTCkkE
+         vEYTkWFEz6jkAaiqOJNxQNCQIWt0R/RIg/9Rv7NnXFlJQ/DzNTvX2TxtQqqAQYPDh1g2
+         VZCICi/Sz7sJXTEei3gM4EeAGz9sJuqTs4yQz3a5fnus4iTiB+0sKmGM9CcWbLItkFC1
+         5xlBDnTzU0IHd9qhFmYa/c8eR3MgA2Mu9kEAqFWaIT3pmsQCnx+NOzaOimrCNpzw6YeD
+         8oBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=NA2LNGDIuD4UPvcRLxB7H3r7o0uwKATAlPvLHJmzGDo=;
+        b=A4+eFSVTd+vIuKZ5feNvwSv36of65+hwOXGdZv6Peunit5t8Kh1hluSIBrB4nY/4br
+         /b/Xs1DgJK5RKJyW1gs3zXBii00XWxsBxo94HLwvheeyvixH4OFYwGWU11g7yGKTg966
+         3jrXDdDxQJfUo2W9IDylmZM91jYrUp64H/kWHsQvbgj76bLhyo/mloIukqipPC81CSTi
+         fxqHtrXrneASuVBLlYXIcFql91PmguIjVnp65Zd1c2bV6CRp4cOu+nSzary3vn1OlT4l
+         xcHPkjIZkRUdKxNts/+r4/I33bz3x/FuuLvGfTSPjK8nzRalmMhwRo6ix0q/nafcz3Hm
+         zosw==
+X-Gm-Message-State: ALyK8tK5Thxxr/8VlJnke3viBA03nLoDYkMj/Q5vGLJgjF8CpFl0fZ0v735OZEdCX3sw9MEG6SpOI6nOp8ryRw==
+X-Received: by 10.36.81.15 with SMTP id s15mr26378264ita.57.1468647114972;
+ Fri, 15 Jul 2016 22:31:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAOiOGAcqsdMD0j_ZUdvvGiA9Bd6bUmfvxziN06Rw81f_pO7cgg@mail.gmail.com>
+Received: by 10.64.225.235 with HTTP; Fri, 15 Jul 2016 22:31:25 -0700 (PDT)
+In-Reply-To: <20160715212843.GA5131@dcvr.yhbt.net>
+References: <CAP8UFD1BnnRqsv8zrcDDby=KqQ3UCDVdHWTycfDNTeyfLArn5g@mail.gmail.com>
+ <2C31984D-310C-4E8C-927B-6D98B7D7570B@gmail.com> <loom.20160715T181543-821@post.gmane.org>
+ <20160715194752.f10351ae84346bd533495496@domain007.com> <20160715212843.GA5131@dcvr.yhbt.net>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Sat, 16 Jul 2016 07:31:25 +0200
+Message-ID: <CACsJy8AZak5LyLhLz-6YX0vB8uevKt--Fe9EAMAe1_=14JaaVQ@mail.gmail.com>
+Subject: Re: Plugin mechanism(s) for Git?
+To:	Eric Wong <e@80x24.org>
+Cc:	Konstantin Khomoutov <kostix+git@007spb.ru>,
+	Ben Peart <peartben@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	David Turner <novalis@novalis.org>,
+	Joey Hess <joey@kitenet.net>,
+	Ronnie Sahlberg <rsahlberg@google.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-[+cc Shawn, who participated in the original discussion, as I don't
-  think Colby really works on git any more]
+On Fri, Jul 15, 2016 at 11:28 PM, Eric Wong <e@80x24.org> wrote:
+> Konstantin Khomoutov <kostix+git@007spb.ru> wrote:
+>> Ben Peart <peartben@gmail.com> wrote:
+>> > > Lars Schneider wrote:
+>> > >
+>> > > We could dynamically load libraries but this would force us to
+>> > > freeze the ABI as mentioned by Duy:
+>> > > http://article.gmane.org/gmane.comp.version-control.git/298463
+>> > >
+>> >
+>> > I wouldn’t be too quick to dismiss dynamically loaded libraries as
+>> > there are some distinct advantages over the other patterns especially
+>> > performance and simplicity.  I realize it requires us to version the
+>> > ABI but there are established patterns to manage this.  It also isn’t
+>> > that much different than us having to freeze or version the protocol
+>> > for communicating with a remote-helper.
+>
+> (re-adding dropped CCs)
+>
+> The critical difference is protocols can be tested and debugged
+> in a language/tool-independent way.
 
-On Fri, Jul 15, 2016 at 01:44:14PM -0700, Parker Moore wrote:
-
-> From: Parker Moore <parkrmoore@gmail.com>
-> 
-> This fixes contrib/persistent-https builds for Go v1.7+ and is
-> compatible with Go v1.5+.
-> 
-> Running `make all` in `contrib/persistent-https` results in a failure
-> on Go 1.7 and above.
-> 
-> Specifically, the error is:
-> 
->     go build -o git-remote-persistent-https \
->    -ldflags "-X main._BUILD_EMBED_LABEL 1468613136"
->     # _/Users/parkr/github/git/contrib/persistent-https
->     /usr/local/Cellar/go/1.7rc1/libexec/pkg/tool/darwin_amd64/link: -X
-> flag requires argument of the form importpath.name=value
->     make: *** [git-remote-persistent-https] Error 2
-> 
-> This `name=value` syntax for the -X flag was introduced in Go v1.5
-> (released Aug 19, 2015):
-> 
-> - release notes: https://golang.org/doc/go1.5#link
-> - commit: https://github.com/golang/go/commit/12795c02f3d6fc54ece09a86e70aaa40a94d5131
-> 
-> In Go v1.7, support for the old syntax was removed:
-> 
-> - release notes: https://tip.golang.org/doc/go1.7#compiler
-> - commit: https://github.com/golang/go/commit/51b624e6a29b135ce0fadb22b678acf4998ff16f
-> 
-> This patch includes the `=` to fix builds with Go v1.7+.
-
-With the disclaimer that I have very little experience with Go, this
-seems like a good, well-explained change. My only question would be
-whether people still use pre-v1.5 versions of Go, since it sounds like
-this would adversely affect them if they do. (If it does, it seems the
-Go people did not give a very good deprecation period for the syntax
-change, if people are using both the pre-new-syntax and post-old-syntax
-versions simultaneously). I'm not sure what the alternative is, beyond
-perhaps checking the version of Go dynamically in the Makefile.
-
--Peff
+Not using dynamic libraries also makes it possible for other git
+reimplementations to reuse the same plugins.
+-- 
+Duy
