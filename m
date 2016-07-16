@@ -2,142 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C4202018F
-	for <e@80x24.org>; Sat, 16 Jul 2016 13:31:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB8C12018F
+	for <e@80x24.org>; Sat, 16 Jul 2016 13:48:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751573AbcGPNbJ (ORCPT <rfc822;e@80x24.org>);
-	Sat, 16 Jul 2016 09:31:09 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61607 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751540AbcGPNbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jul 2016 09:31:07 -0400
-Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MMShK-1bR9Ev0Lmg-008GFi; Sat, 16 Jul 2016 15:30:47
- +0200
-Date:	Sat, 16 Jul 2016 15:30:45 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Duy Nguyen <pclouds@gmail.com>
-cc:	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v4] config: add conditional include
-In-Reply-To: <CACsJy8AjVX1Say0srEq+ezGg=CzmbjBAt4PnuikXiqdnVC4G6g@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1607161507250.28832@virtualbox>
-References: <20160712164216.24072-1-pclouds@gmail.com> <20160714153311.2166-1-pclouds@gmail.com> <alpine.DEB.2.20.1607141750190.6426@virtualbox> <CACsJy8AjVX1Say0srEq+ezGg=CzmbjBAt4PnuikXiqdnVC4G6g@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1751608AbcGPNsw (ORCPT <rfc822;e@80x24.org>);
+	Sat, 16 Jul 2016 09:48:52 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:33230 "EHLO
+	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751405AbcGPNsu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jul 2016 09:48:50 -0400
+Received: by mail-io0-f173.google.com with SMTP id 38so126869516iol.0
+        for <git@vger.kernel.org>; Sat, 16 Jul 2016 06:48:50 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=j/q3pL2DGjyo5MOcZAJ6RMrdFNR5IfXz6F9FiJKpPqg=;
+        b=vaJxNe/C/FgvSQZj/afzsOwkW8sUV5X0h4LGTd3NDrVq5nS2mY5wgt7ZxRnCbKKFu0
+         RgGX0whKTOgZPyM5IdMwnskqPaX1FA51gYnd9gmF+HjDneKBL6kpV17UppkA/zVslbZ4
+         tOaiPOeN6k1hgs0q5dNsfMb1FAV7fB6Ov94DnfXAr9En4HxuQ8bM+Bc2XRcPwr62awMk
+         gwG7RB7RWn7K0mxxCkBYvJLA8caaA8mTR/lJVG5W6bkhIlgmdvoFwnupeEzZgxIgDSAI
+         t6isDH4ElrMnkMNMD95HjK6BKcVn7P/n8Uplb3mSpu/mvgcADHV52Yg1oatP4mdR2DSI
+         GWZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=j/q3pL2DGjyo5MOcZAJ6RMrdFNR5IfXz6F9FiJKpPqg=;
+        b=HqbGXp41SJqqERdgnGnsEUc6qJmxfRLh4iJ/ywrTZfHmsf3AKoTW/NSHHbJEtvjpN0
+         tnxQjIUz4FRoFes93igJAee1lsKYThgkErlFEWpfWN+HpP2R7PGwlnylPjUg/47rvurZ
+         ivUT49RvgHTj2sRjP4fCW51JfBVNUJVKJGXziiIBJl0TsHbz9KR8I6s6Tm2v3qooyDDV
+         DPRmU4DMMGXynkPypMnLZTnpVGNTq4HRSUzBQzSOhvdPZFv8Xkg9Ujdvw2KhJfu4IjMj
+         HIdafbeFVmDkzPhAVLpaBbWAS0qoYOvN3o3JPmMUPsfdFnSVzF5XC+/SfAV7tAEUBmxj
+         vFmw==
+X-Gm-Message-State: ALyK8tLNCsGKj/+IXKcbkZZhhfcX4cmRbI0/A5qG9VrBFkejPhVmgGtxh5jxcm7aOabPjQjqKn+O1laYZB0dGA==
+X-Received: by 10.107.130.39 with SMTP id e39mr10818090iod.66.1468676929584;
+ Sat, 16 Jul 2016 06:48:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1585032505-1468675847=:28832"
-X-Provags-ID: V03:K0:uuuXwW28hzsFH8mU3Il8LBJpoQH37MO9mXTjFuIlqYCeNnFIfl+
- KL/tqmvlycCUJLAHPXYaXw5TtJbZGnhPv5hgOrAp/yG3Mn1ts5s7DX/+hvWDZqTvBgKGHXp
- JYMm3SiProtrTn5nkzS9i1XWB3+SxM8YCfF0SUfSo49NPs6CqEYEwnB1fvmd9kJuUuv2XFt
- Md0SxguunTF2GXg0xk4cg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:rizbqYXsvAw=:tZNW5jAiGGK8sOYbtpJhZv
- /zp9d85wrdaBbTlVcoj5+AXTrEh/exK/avDfHcqbzQA8okHYK6Fsz7zP9bqvG4mW7f/B/TFMY
- ErgyxkPJCAnsKsxui51wFOMFmHcAy09+sum4QH0MuJqco9SIYTQEjDEc6VzEEBxeZbboWcilX
- aiBLfCyv5/JsL256Hw3qVV8xRxkHVTuURc1/x3Iqth7vS9xKksni3KB2kB+iF6IgCx2KYhPUM
- pjfmN3V4P6NSlS/z2xJt4sYRDWGRgGEsedVDYcSjtjjXwq7DRECeMs8oQSFd9I1QKsgbCz7ON
- il1s0Kf+tSrJNqgIYKfQfdPNcHXiQaxifAyO8z4YoMoXIM2l7zTxs0+Quv2U9r2pnfBfPdel8
- NIgPRvaZeWmCS496uksoFmE0iZw/6wKgEiwpGK/+hVAmBLsUkJgItGX5gVzlpiOpcyRz9VZXj
- OOc18V9L//KpPJqWzIJgl4SHA4O8Cw1mRN9rQid412BIBlYEBVQAs8kBcuIhnwYNioMzGwNmp
- M/zFOlr9Oj/rUGAcgRdfTVk6yaxg87bSUT3k7GlY6mi7hnVQo66S2VQh+aOf71J74vzG3e69K
- LG2DKVPeZJkg7b+cgqdRs6nYsRwNJKx3J5xlEQMEFQWzr6dAgpvaOFSfU/kXtXsZx+kLRDBos
- 67kpjjIxvPqTYHSCA8VeWV2YeeQhVI0+PYwvdjz5iWhNR9vYmDR/SJcTMqFck8Pp0tVHbalqx
- twgD/z0sl8+15rKOK738c7pAHYI6xNlxK9sjQYkqJG0gRA97WAdIxHXDxyH0UzCbegt3hokYq
- 7Lg+4co
+Received: by 10.79.83.4 with HTTP; Sat, 16 Jul 2016 06:48:49 -0700 (PDT)
+From:	Herczeg Zsolt <zsolt94@gmail.com>
+Date:	Sat, 16 Jul 2016 15:48:49 +0200
+Message-ID: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com>
+Subject: Git and SHA-1 security (again)
+To:	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Dear List Members, Git Developers,
 
---8323329-1585032505-1468675847=:28832
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+I would like to discuss an old topic from 2006. I understand it was
+already discussed. The only reason i'm sending this e-mail is to talk
+about a possible solution which didn't show up on this list before.
 
-Hi Duy,
+I think we all understand that SHA-1 is broken. It still works perfect
+as a storage key, but it's not cryptographically secure anymore. Git
+is not moving away from SHA-1 because it would break too many
+projects, and cryptographic security is not needed but git if you have
+your own repository.
 
-On Thu, 14 Jul 2016, Duy Nguyen wrote:
+However I would like to show some big problems caused by SHA-1:
+ - Git signed tags and signed commits are cryptographically insecure,
+they're useless at the moment.
+ - Git Torrent (https://github.com/cjb/GitTorrent) is also
+cryptographically broken, however it would be an awesome experiment.
+ - Linus said: "You only need to know the SHA-1 of the top of your
+tree, and if you know that, you can trust your tree." That's not true
+anymore. You have to trust your computer, you servers, your git
+provider in a way that no-one can maliciously modify your data.
 
-> On Thu, Jul 14, 2016 at 5:53 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > Hi Duy,
-> >
-> > On Thu, 14 Jul 2016, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> >
-> >> Helped-by: Jeff King <peff@peff.com>
-> >> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmai=
-l.com>
-> >
-> > This commit message is quite a bit short on details.
->=20
-> Because it's fully documented in config.txt.
+I understand that git is perfect for a work flow, where you have your
+very own repository and you double-check any commits or diffs you
+accepting to it. But that's not everybody's work flow. For example: if
+I want to blindly trust my college, I could just include all commits
+he signed without review. Currently I can't do that. There are
+workarounds of course: signing the e-mail he sends me, or signing the
+entire git repository's tarball, etc... But that's not the right way
+to do things.
 
-Surely there is more information left for the commit message, such as:
-what motivated the patch, what alternative solutions were considered, was
-any thought given to how this might break down, etc
+As a final thought on this, I would like to say: Git is a great tool,
+but it can be so much better with a safe hash.
 
-> > I still fail to see what use case this would benefit,
->=20
-> It allows you to group repos together. The first mail that started all
-> this [1] is one of the use cases: you may want to use one identity in
-> a group of repos, and another identity in some other. I want some
-> more, to use a private key one some repos and another private key on
-> some other. Some more settings may be shareable this way, like coding
-> style-related (trailing spaces or not...)
->=20
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/273811
->=20
-> > and I already start to suspect that the change would open a can of worm=
-s that might not be desired.
->=20
-> You can choose not to use it, I guess.
 
-Sadly, as the maintainer I am unable to share in that luxury of yours.
+I would like to propose a solution for changing git's hash algorithm:
+It would be a breaking change, bit I think it can be done pretty
+painless. (If you read the discussion back in 2006 the problems of
+moving are clear.)
 
-> From what I see it's nothing super tricky. The config hierarchy we have
-> now is: system -> per-user -> repo. This could change this to: system ->
-> per-user -> per-directory -> repo. You could create a different
-> hierarchy, but with git-config now showing where a config var comes
-> from, it's not hard to troubleshoot.
+In git, every data has to have one and only one key - so a hybrid hash
+is a no-go. That means changing hash algo involves re-hashing every
+data in a git repository, but it's not that bad. On a git clone, we
+actually re-hash everything to check integrity. Changing all the keys
+shouldn't be worth than that.
 
-The more indirection you allow, the harder it gets. And that problem is
-exacerbated when allowing conditional includes.
+But - and that's the main idea i'm writing here - changing the storage
+keys does not mean you should drop your old hashes out. If you change
+the git data structure in a way, that it can keep multiple hashes for
+the same "link" in each objects (trees, commits, etc) you can keep the
+old ones right next to the new one. If you want to look up the
+referenced object, you must use the newest hash - which is the key.
+But if you want to verify some old hash, it's still possible! Just
+look up the objects by the new key, remove all the newer generation
+keys, and verify the old hash on that.
 
-> >> +     ; include if $GIT_DIR is /path/to/foo/.git
-> >> +     [include "gitdir:/path/to/foo/.git"]
-> >> +             path =3D /path/to/foo.inc
-> >
-> > I find this way to specify a conditional unintuitive. Reading
-> > "gitdir:/path/to/foo/.git" suggests to me that the Git dir is *re-set*,
-> > not that this is a condition.
->=20
-> Well.. to me it's no different than [remote "foo"] to apply stuff to "foo=
-".
+A storage structure like this would allow a very great flexibility:
+ - You can change your hash algorithm in the future. If SHA-256
+becomes broken, it's not a problem. Just re-hash the storage, and
+append the new hashes the git objects.
+ - You can still verify your old hashes after a hash change - removing
+the new hashes from the objects before hashing should give you back
+the old objects, thus giving you the same hash as before.
+ - That makes possible for signed tags, and commits to keep their
+validity after hash change! With a clever-enough new format, you can
+even keep the validity of current hashes and signs. (To be able to do
+that, you should be able to calculate back the current format from the
+new format.)
 
-Except that "include" is an imperative and "remote" is not.
+Moving git forward to a format like this would solve the weak-key
+problem in git forever. You would be able to configure your key algo
+on a per repository basis, you - and git - can do the daily work on
+the newest hashes, while still carrying the old hashes and signatures,
+in case you ever want to verify them. That would allow repositories to
+gracefully change hashes in case they need to, and to only
+compatibility limitation is that you must use a new enough git to
+understand the new storage format.
 
-Quite frankly, this conditional business scares me. If you introduce it
-for [include], users will want it for every config setting. And the
-current syntax is just not up to, say, making user.name conditional on
-anything.
+What are your thoughts on this approach? Will git ever reach a release
+with exchangeable hash algorithm? Or should someone look for
+alternatives if there's a need for cryptographic security?
 
-As an alternative solution to your problem, you could of course avoid all
-conditional includes. Simply by adding the include.path settings
-explicitly to the configs that require them. Now, that would make reasoning
-and trouble-shooting simple, wouldn't it?
+Thank you for your time reading this.
 
-And the most beautiful aspect of it: no patch needed.
+References:
+SHA-256 discussion in 2006:
+http://www.gelato.unsw.edu.au/archives/git/0608/26446.html
+Discussion about git signatures in 2014
+https://www.mail-archive.com/git%40vger.kernel.org/msg61087.html
+Linus's talk on git
+https://www.youtube.com/watch?v=4XpnKHJAok8&t=56m20s
 
-Ciao,
-Dscho
---8323329-1585032505-1468675847=:28832--
+Kind regards,
+Zsolt Herczeg
