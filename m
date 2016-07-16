@@ -2,100 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9273D2018F
-	for <e@80x24.org>; Sat, 16 Jul 2016 14:49:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6228C2018F
+	for <e@80x24.org>; Sat, 16 Jul 2016 15:08:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524AbcGPOta (ORCPT <rfc822;e@80x24.org>);
-	Sat, 16 Jul 2016 10:49:30 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:35077 "EHLO
-	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751463AbcGPOt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jul 2016 10:49:28 -0400
-Received: by mail-io0-f171.google.com with SMTP id m101so127312955ioi.2
-        for <git@vger.kernel.org>; Sat, 16 Jul 2016 07:49:28 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6OtMbm9SUod+rdX88JO/HEr+CDHAXLTb9sRTtqk8kfE=;
-        b=EZB+KWFVLTKgYBFIcCsM6kjdcoftohgUi+vI6M8V9sPYYCj81kn0tMKme2DYfiRPxU
-         SdTh1WiDk+1qtk5/pchoW0+tZPrISKjA7zKbWJOlJGAyGMevkrrmX9SEGvu+YShEwESK
-         bS3fbnj4yTGhaDvjyybAzq/MHKKRKjC0SHjbWuDqbLtPK5JvcSegJNlk9Fj3O7ILshPG
-         x9W66zcsfazeeZw9BjYkL3OjBOXbc4CS85gyk34tIJQJ99Sfg/OG5RAqasZoDBB6adq5
-         L8Hp/ALJu6uv/zRLhrJ7INO/5rFJrVqTJILOGyvz9A8xiTyJCJw+1CO8YH9kl7XiPAjE
-         lwVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6OtMbm9SUod+rdX88JO/HEr+CDHAXLTb9sRTtqk8kfE=;
-        b=lWZnUtYC1kt+NBdpChhcnB8Ynh+CQ2Tsn8P4aJXFctf1A5AJbfy/0b+fTbZl/hGeTy
-         r6qQHC0PXePhID8VV4e/Z3m1UezR0wVB7XRM37QbKg2k/4F7H0hPSTF5HDhpw2MBj+dR
-         XGSFMbqdkF1sXtGwT0k6al1/7h4xlUhGFa3aTEcTAjoaKBFDrp3h0xumbUe4G5hVwOqR
-         L9OBl7Mu595DhZYps9z2T8r85rNWo6Kvs836Jm7fnmN7rAOUwLcfVIIJ6VSrCZxQX+9r
-         25Hl0G/WWpEzXULnakPg8LCrmS0HxHGVnqOSSwPW1vuU9i/WD+dOmiHROAgd9IAXy8TD
-         lgWA==
-X-Gm-Message-State: ALyK8tJLTIa9yX87Ez6wH8RV6OXCYYGT/OVcihY5v2FzbDxA56WtOKqgvYvOu7Qqz2CHZJ4TWTV/9oFnzW4IsQ==
-X-Received: by 10.107.8.140 with SMTP id h12mr27395710ioi.95.1468680567948;
- Sat, 16 Jul 2016 07:49:27 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Sat, 16 Jul 2016 07:48:58 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1607161507250.28832@virtualbox>
-References: <20160712164216.24072-1-pclouds@gmail.com> <20160714153311.2166-1-pclouds@gmail.com>
- <alpine.DEB.2.20.1607141750190.6426@virtualbox> <CACsJy8AjVX1Say0srEq+ezGg=CzmbjBAt4PnuikXiqdnVC4G6g@mail.gmail.com>
- <alpine.DEB.2.20.1607161507250.28832@virtualbox>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Sat, 16 Jul 2016 16:48:58 +0200
-Message-ID: <CACsJy8AvxC-p9=no+tYBc80-MWfApQ_QBagk0x7NXJDG9D=ZRw@mail.gmail.com>
-Subject: Re: [PATCH v4] config: add conditional include
+	id S1751884AbcGPPIn (ORCPT <rfc822;e@80x24.org>);
+	Sat, 16 Jul 2016 11:08:43 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45972 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751606AbcGPPIm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jul 2016 11:08:42 -0400
+Received: (qmail 26323 invoked by uid 102); 16 Jul 2016 15:08:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 16 Jul 2016 11:08:42 -0400
+Received: (qmail 26234 invoked by uid 107); 16 Jul 2016 15:09:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 16 Jul 2016 11:09:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 16 Jul 2016 11:08:36 -0400
+Date:	Sat, 16 Jul 2016 11:08:36 -0400
+From:	Jeff King <peff@peff.net>
 To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Git Mailing List <git@vger.kernel.org>,
+Cc:	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
 	Sebastian Schuberth <sschuberth@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v4] config: add conditional include
+Message-ID: <20160716150835.GA24374@sigill.intra.peff.net>
+References: <20160712164216.24072-1-pclouds@gmail.com>
+ <20160714153311.2166-1-pclouds@gmail.com>
+ <alpine.DEB.2.20.1607141750190.6426@virtualbox>
+ <CACsJy8AjVX1Say0srEq+ezGg=CzmbjBAt4PnuikXiqdnVC4G6g@mail.gmail.com>
+ <alpine.DEB.2.20.1607161507250.28832@virtualbox>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1607161507250.28832@virtualbox>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sat, Jul 16, 2016 at 3:30 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+On Sat, Jul 16, 2016 at 03:30:45PM +0200, Johannes Schindelin wrote:
+
+> > >> +     ; include if $GIT_DIR is /path/to/foo/.git
+> > >> +     [include "gitdir:/path/to/foo/.git"]
+> > >> +             path = /path/to/foo.inc
+> > >
+> > > I find this way to specify a conditional unintuitive. Reading
+> > > "gitdir:/path/to/foo/.git" suggests to me that the Git dir is *re-set*,
+> > > not that this is a condition.
+> > 
+> > Well.. to me it's no different than [remote "foo"] to apply stuff to "foo".
+> 
+> Except that "include" is an imperative and "remote" is not.
+
+In the very original version of config includes, I had planned out:
+
+  [include-if "...some condition..."]
+  path = ...
+
+Later, since "[include ...]" had no other meaning, I think it got
+shortened in discussion. But it would be easy to accept include-if (or
+even accept either, for maximum confusion :) ).
+
+> Quite frankly, this conditional business scares me. If you introduce it
+> for [include], users will want it for every config setting. And the
+> current syntax is just not up to, say, making user.name conditional on
+> anything.
+
+They already have it for every config setting with this. The reason to
+add it to [include] and not as a general syntax is that you can put
+user.name into your included file, and then conditionally include it.
+
+That is not as nice as "if this then that" in a single file, but it is
+backwards compatible with the existing syntax, and is probably fine in
+practice. Each included file becomes a "profile" of multiple settings
+that you apply.
+
 > As an alternative solution to your problem, you could of course avoid all
 > conditional includes. Simply by adding the include.path settings
 > explicitly to the configs that require them. Now, that would make reasoning
 > and trouble-shooting simple, wouldn't it?
+> 
+> And the most beautiful aspect of it: no patch needed.
 
-I can't. Repos can be created and destroyed often (it's in the
-process), and there are many of them. Using a wrong identity (among
-other incorrect config settings) is a serious problem and I cannot
-guarantee myself that I will never make a mistake, forgetting to
-include stuff on new clones.
+And you can just "cat" the included files directly into your
+.git/config. We don't even need include.path. Or ~/.gitconfig, for that
+matter. But sometimes dynamic things are convenient.
 
->> > I still fail to see what use case this would benefit,
->>
->> It allows you to group repos together. The first mail that started all
->> this [1] is one of the use cases: you may want to use one identity in
->> a group of repos, and another identity in some other. I want some
->> more, to use a private key one some repos and another private key on
->> some other. Some more settings may be shareable this way, like coding
->> style-related (trailing spaces or not...)
->>
->> [1] http://thread.gmane.org/gmane.comp.version-control.git/273811
->>
->> > and I already start to suspect that the change would open a can of worms that might not be desired.
->>
->> You can choose not to use it, I guess.
->
-> Sadly, as the maintainer I am unable to share in that luxury of yours.
-
-I need this. And I post it because people may need it too. But if it's
-a bad thing, I guess I'll keep this patch on my tree then.
--- 
-Duy
+-Peff
