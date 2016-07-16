@@ -2,380 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 965E6203C2
-	for <e@80x24.org>; Sat, 16 Jul 2016 05:07:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 472CC20195
+	for <e@80x24.org>; Sat, 16 Jul 2016 05:18:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751374AbcGPFG4 (ORCPT <rfc822;e@80x24.org>);
-	Sat, 16 Jul 2016 01:06:56 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:36334 "EHLO
-	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750871AbcGPFGr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jul 2016 01:06:47 -0400
-Received: by mail-lf0-f66.google.com with SMTP id 33so8089333lfw.3
-        for <git@vger.kernel.org>; Fri, 15 Jul 2016 22:06:46 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kAB0M0FFD7AqgLeBi+3hTUFiQhpIq7PVxLcU0cMBvno=;
-        b=yMHtAhFUweLor8Binwwa9cKGb9iQPkODtce74Z6xChtMigwTur3TZcC8WA0iBJPkZx
-         Iyjy4cU0xIRtKVBDUdz8ji1JDgHmJYzxkX8iTy192XXaIJpNn6OF1jWep8uglpChM7Sk
-         T86jK3TeUDUBSqVMntQrHWj2oE60jAjCnSe+ex+iPrpST87SmKPx6eV3F0WKkY4clGl+
-         25vxgVF6qW7dqTey5BVPrHXH+4Ufh0Fx7cfXqsb17ujijMrqmxe1gRtLn9JFGyolwfu4
-         JNZHXTBreiLzASnCuGWYtYWlUDZoHu/PFBosq16ZrqPg5bRJ3FigRetpbp4SxrTXeVg3
-         q0Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kAB0M0FFD7AqgLeBi+3hTUFiQhpIq7PVxLcU0cMBvno=;
-        b=AJqGrqOpRWv+EbyAVuUrt/ljQEBbOnwGJBySXj2/w+ecLEnv/FsDge/73wMRPrnxWT
-         DCD1dHsb3JcReDKszZRUuY74CdV85YimFhbcnGI9n8cldmqWxNeZubyuygmQMhNiNEuf
-         Yoc+6p2tmUdBwDAn6bQPlxoKtNiqiTA1V+om3fE6zqwqcFe3R5QbVOO2hjU8gNjo55iz
-         kb8P2GKc4mKcyFGbnmxWv/8ili5XE5LrcFenf1YcNKJOEAKUNhb6CRq0RAf+M/JWv3fu
-         o/+L8Qa9vhQc6DXsoM4CmuqN7G+ip/HUXVEU5SzlMP1YUZi2I+eoysv8upx3jPi8dmz4
-         B3mw==
-X-Gm-Message-State: ALyK8tLoA94rQQYVP1G3kqABBZ7/bjpPMB3APSpt3sf7U9UCz4rG/Mn7JqLID0Xx3nxWWw==
-X-Received: by 10.46.5.9 with SMTP id 9mr7829199ljf.17.1468645605264;
-        Fri, 15 Jul 2016 22:06:45 -0700 (PDT)
-Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id g40sm634654ljg.22.2016.07.15.22.06.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 15 Jul 2016 22:06:44 -0700 (PDT)
-From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To:	git@vger.kernel.org
-Cc:	Junio C Hamano <gitster@pobox.com>, yuri.kanivetsky@gmail.com,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v4 2/4] test-lib.sh: introduce and use $EMPTY_BLOB
-Date:	Sat, 16 Jul 2016 07:06:25 +0200
-Message-Id: <20160716050627.9416-3-pclouds@gmail.com>
-X-Mailer: git-send-email 2.9.1.566.gbd532d4
-In-Reply-To: <20160716050627.9416-1-pclouds@gmail.com>
-References: <20160709052356.30570-1-pclouds@gmail.com>
- <20160716050627.9416-1-pclouds@gmail.com>
+	id S1751312AbcGPFSG (ORCPT <rfc822;e@80x24.org>);
+	Sat, 16 Jul 2016 01:18:06 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45842 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750871AbcGPFSF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jul 2016 01:18:05 -0400
+Received: (qmail 1605 invoked by uid 102); 16 Jul 2016 05:18:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 16 Jul 2016 01:18:05 -0400
+Received: (qmail 22095 invoked by uid 107); 16 Jul 2016 05:18:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 16 Jul 2016 01:18:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 16 Jul 2016 01:18:01 -0400
+Date:	Sat, 16 Jul 2016 01:18:01 -0400
+From:	Jeff King <peff@peff.net>
+To:	Parker Moore <parkrmoore@gmail.com>
+Cc:	git@vger.kernel.org, cranger@google.com,
+	Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] contrib/persistent-https: update ldflags syntax for Go
+ 1.7+
+Message-ID: <20160716051800.GA2845@sigill.intra.peff.net>
+References: <CAOiOGAcqsdMD0j_ZUdvvGiA9Bd6bUmfvxziN06Rw81f_pO7cgg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAOiOGAcqsdMD0j_ZUdvvGiA9Bd6bUmfvxziN06Rw81f_pO7cgg@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Similar to $EMPTY_TREE this makes it easier to recognize this special
-SHA-1 and change hash later.
+[+cc Shawn, who participated in the original discussion, as I don't
+  think Colby really works on git any more]
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- t/t1011-read-tree-sparse-checkout.sh |  8 ++++----
- t/t1700-split-index.sh               | 24 ++++++++++++------------
- t/t3102-ls-tree-wildcards.sh         |  8 ++++----
- t/t7011-skip-worktree-reading.sh     | 12 +++++-------
- t/t7012-skip-worktree-writing.sh     | 10 ++++------
- t/t7063-status-untracked-cache.sh    |  6 +++---
- t/t7508-status.sh                    |  2 +-
- t/test-lib.sh                        |  3 ++-
- 8 files changed, 35 insertions(+), 38 deletions(-)
+On Fri, Jul 15, 2016 at 01:44:14PM -0700, Parker Moore wrote:
 
-diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-sparse-checkout.sh
-index 0c74bee..2563d18 100755
---- a/t/t1011-read-tree-sparse-checkout.sh
-+++ b/t/t1011-read-tree-sparse-checkout.sh
-@@ -15,11 +15,11 @@ test_description='sparse checkout tests
- . "$TEST_DIRECTORY"/lib-read-tree.sh
- 
- test_expect_success 'setup' '
--	cat >expected <<-\EOF &&
-+	cat >expected <<-EOF &&
- 	100644 77f0ba1734ed79d12881f81b36ee134de6a3327b 0	init.t
--	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	sub/added
--	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	sub/addedtoo
--	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	subsub/added
-+	100644 $EMPTY_BLOB 0	sub/added
-+	100644 $EMPTY_BLOB 0	sub/addedtoo
-+	100644 $EMPTY_BLOB 0	subsub/added
- 	EOF
- 	cat >expected.swt <<-\EOF &&
- 	H init.t
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index 8aef49f..292a072 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -33,14 +33,14 @@ test_expect_success 'add one file' '
- 	git update-index --add one &&
- 	git ls-files --stage >ls-files.actual &&
- 	cat >ls-files.expect <<EOF &&
--100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
-+100644 $EMPTY_BLOB 0	one
- EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
- 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<EOF &&
- base $base
--100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
-+100644 $EMPTY_BLOB 0	one
- replacements:
- deletions:
- EOF
-@@ -51,7 +51,7 @@ test_expect_success 'disable split index' '
- 	git update-index --no-split-index &&
- 	git ls-files --stage >ls-files.actual &&
- 	cat >ls-files.expect <<EOF &&
--100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
-+100644 $EMPTY_BLOB 0	one
- EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
-@@ -67,7 +67,7 @@ test_expect_success 'enable split index again, "one" now belongs to base index"'
- 	git update-index --split-index &&
- 	git ls-files --stage >ls-files.actual &&
- 	cat >ls-files.expect <<EOF &&
--100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
-+100644 $EMPTY_BLOB 0	one
- EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
-@@ -105,7 +105,7 @@ test_expect_success 'add another file, which stays index' '
- 	git ls-files --stage >ls-files.actual &&
- 	cat >ls-files.expect <<EOF &&
- 100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0	one
--100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	two
-+100644 $EMPTY_BLOB 0	two
- EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
-@@ -113,7 +113,7 @@ EOF
- 	q_to_tab >expect <<EOF &&
- $BASE
- 100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0Q
--100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	two
-+100644 $EMPTY_BLOB 0	two
- replacements: 0
- deletions:
- EOF
-@@ -159,14 +159,14 @@ test_expect_success 'add original file back' '
- 	git update-index --add one &&
- 	git ls-files --stage >ls-files.actual &&
- 	cat >ls-files.expect <<EOF &&
--100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
-+100644 $EMPTY_BLOB 0	one
- EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
- 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<EOF &&
- $BASE
--100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
-+100644 $EMPTY_BLOB 0	one
- replacements:
- deletions: 0
- EOF
-@@ -178,8 +178,8 @@ test_expect_success 'add new file' '
- 	git update-index --add two &&
- 	git ls-files --stage >actual &&
- 	cat >expect <<EOF &&
--100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
--100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	two
-+100644 $EMPTY_BLOB 0	one
-+100644 $EMPTY_BLOB 0	two
- EOF
- 	test_cmp expect actual
- '
-@@ -188,8 +188,8 @@ test_expect_success 'unify index, two files remain' '
- 	git update-index --no-split-index &&
- 	git ls-files --stage >ls-files.actual &&
- 	cat >ls-files.expect <<EOF &&
--100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
--100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	two
-+100644 $EMPTY_BLOB 0	one
-+100644 $EMPTY_BLOB 0	two
- EOF
- 	test_cmp ls-files.expect ls-files.actual &&
- 
-diff --git a/t/t3102-ls-tree-wildcards.sh b/t/t3102-ls-tree-wildcards.sh
-index 4d4b02e..e804377 100755
---- a/t/t3102-ls-tree-wildcards.sh
-+++ b/t/t3102-ls-tree-wildcards.sh
-@@ -12,16 +12,16 @@ test_expect_success 'setup' '
- '
- 
- test_expect_success 'ls-tree a[a] matches literally' '
--	cat >expect <<-\EOF &&
--	100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	a[a]/three
-+	cat >expect <<-EOF &&
-+	100644 blob $EMPTY_BLOB	a[a]/three
- 	EOF
- 	git ls-tree -r HEAD "a[a]" >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'ls-tree outside prefix' '
--	cat >expect <<-\EOF &&
--	100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	../a[a]/three
-+	cat >expect <<-EOF &&
-+	100644 blob $EMPTY_BLOB	../a[a]/three
- 	EOF
- 	( cd aa && git ls-tree -r HEAD "../a[a]"; ) >actual &&
- 	test_cmp expect actual
-diff --git a/t/t7011-skip-worktree-reading.sh b/t/t7011-skip-worktree-reading.sh
-index 88d60c1..84f4145 100755
---- a/t/t7011-skip-worktree-reading.sh
-+++ b/t/t7011-skip-worktree-reading.sh
-@@ -23,17 +23,15 @@ S sub/1
- H sub/2
- EOF
- 
--NULL_SHA1=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
--
- setup_absent() {
- 	test -f 1 && rm 1
- 	git update-index --remove 1 &&
--	git update-index --add --cacheinfo 100644 $NULL_SHA1 1 &&
-+	git update-index --add --cacheinfo 100644 $EMPTY_BLOB 1 &&
- 	git update-index --skip-worktree 1
- }
- 
- test_absent() {
--	echo "100644 $NULL_SHA1 0	1" > expected &&
-+	echo "100644 $EMPTY_BLOB 0	1" > expected &&
- 	git ls-files --stage 1 > result &&
- 	test_cmp expected result &&
- 	test ! -f 1
-@@ -42,12 +40,12 @@ test_absent() {
- setup_dirty() {
- 	git update-index --force-remove 1 &&
- 	echo dirty > 1 &&
--	git update-index --add --cacheinfo 100644 $NULL_SHA1 1 &&
-+	git update-index --add --cacheinfo 100644 $EMPTY_BLOB 1 &&
- 	git update-index --skip-worktree 1
- }
- 
- test_dirty() {
--	echo "100644 $NULL_SHA1 0	1" > expected &&
-+	echo "100644 $EMPTY_BLOB 0	1" > expected &&
- 	git ls-files --stage 1 > result &&
- 	test_cmp expected result &&
- 	echo dirty > expected
-@@ -120,7 +118,7 @@ test_expect_success 'grep with skip-worktree file' '
- 	test "$(git grep --no-ext-grep test)" = "1:test"
- '
- 
--echo ":000000 100644 $_z40 $NULL_SHA1 A	1" > expected
-+echo ":000000 100644 $_z40 $EMPTY_BLOB A	1" > expected
- test_expect_success 'diff-index does not examine skip-worktree absent entries' '
- 	setup_absent &&
- 	git diff-index HEAD -- 1 > result &&
-diff --git a/t/t7012-skip-worktree-writing.sh b/t/t7012-skip-worktree-writing.sh
-index 9ceaa40..9d1abe5 100755
---- a/t/t7012-skip-worktree-writing.sh
-+++ b/t/t7012-skip-worktree-writing.sh
-@@ -53,17 +53,15 @@ test_expect_success 'read-tree removes worktree, dirty case' '
- 	git update-index --no-skip-worktree added
- '
- 
--NULL_SHA1=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
--
- setup_absent() {
- 	test -f 1 && rm 1
- 	git update-index --remove 1 &&
--	git update-index --add --cacheinfo 100644 $NULL_SHA1 1 &&
-+	git update-index --add --cacheinfo 100644 $EMPTY_BLOB 1 &&
- 	git update-index --skip-worktree 1
- }
- 
- test_absent() {
--	echo "100644 $NULL_SHA1 0	1" > expected &&
-+	echo "100644 $EMPTY_BLOB 0	1" > expected &&
- 	git ls-files --stage 1 > result &&
- 	test_cmp expected result &&
- 	test ! -f 1
-@@ -72,12 +70,12 @@ test_absent() {
- setup_dirty() {
- 	git update-index --force-remove 1 &&
- 	echo dirty > 1 &&
--	git update-index --add --cacheinfo 100644 $NULL_SHA1 1 &&
-+	git update-index --add --cacheinfo 100644 $EMPTY_BLOB 1 &&
- 	git update-index --skip-worktree 1
- }
- 
- test_dirty() {
--	echo "100644 $NULL_SHA1 0	1" > expected &&
-+	echo "100644 $EMPTY_BLOB 0	1" > expected &&
- 	git ls-files --stage 1 > result &&
- 	test_cmp expected result &&
- 	echo dirty > expected
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index a971884..a828a5f 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -53,7 +53,7 @@ A  two
- EOF
- 
- cat >../dump.expect <<EOF &&
--info/exclude e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-+info/exclude $EMPTY_BLOB
- core.excludesfile 0000000000000000000000000000000000000000
- exclude_per_dir .gitignore
- flags 00000006
-@@ -137,7 +137,7 @@ EOF
- test_expect_success 'verify untracked cache dump' '
- 	test-dump-untracked-cache >../actual &&
- 	cat >../expect <<EOF &&
--info/exclude e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-+info/exclude $EMPTY_BLOB
- core.excludesfile 0000000000000000000000000000000000000000
- exclude_per_dir .gitignore
- flags 00000006
-@@ -184,7 +184,7 @@ EOF
- test_expect_success 'verify untracked cache dump' '
- 	test-dump-untracked-cache >../actual &&
- 	cat >../expect <<EOF &&
--info/exclude e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-+info/exclude $EMPTY_BLOB
- core.excludesfile 0000000000000000000000000000000000000000
- exclude_per_dir .gitignore
- flags 00000006
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index c3ed7cb..a42aef8 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -803,7 +803,7 @@ EOF
- '
- 
- cat >expect <<EOF
--:100644 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0000000000000000000000000000000000000000 M	dir1/modified
-+:100644 100644 $EMPTY_BLOB 0000000000000000000000000000000000000000 M	dir1/modified
- EOF
- test_expect_success 'status refreshes the index' '
- 	touch dir2/added &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 85f4c6d..9f36091 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -163,6 +163,7 @@ _x40="$_x05$_x05$_x05$_x05$_x05$_x05$_x05$_x05"
- _z40=0000000000000000000000000000000000000000
- 
- EMPTY_TREE=4b825dc642cb6eb9a060e54bf8d69288fbee4904
-+EMPTY_BLOB=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
- 
- # Line feed
- LF='
-@@ -172,7 +173,7 @@ LF='
- # when case-folding filenames
- u200c=$(printf '\342\200\214')
- 
--export _x05 _x40 _z40 LF u200c EMPTY_TREE
-+export _x05 _x40 _z40 LF u200c EMPTY_TREE EMPTY_BLOB
- 
- # Each test should start with something like this, after copyright notices:
- #
--- 
-2.9.1.566.gbd532d4
+> From: Parker Moore <parkrmoore@gmail.com>
+> 
+> This fixes contrib/persistent-https builds for Go v1.7+ and is
+> compatible with Go v1.5+.
+> 
+> Running `make all` in `contrib/persistent-https` results in a failure
+> on Go 1.7 and above.
+> 
+> Specifically, the error is:
+> 
+>     go build -o git-remote-persistent-https \
+>    -ldflags "-X main._BUILD_EMBED_LABEL 1468613136"
+>     # _/Users/parkr/github/git/contrib/persistent-https
+>     /usr/local/Cellar/go/1.7rc1/libexec/pkg/tool/darwin_amd64/link: -X
+> flag requires argument of the form importpath.name=value
+>     make: *** [git-remote-persistent-https] Error 2
+> 
+> This `name=value` syntax for the -X flag was introduced in Go v1.5
+> (released Aug 19, 2015):
+> 
+> - release notes: https://golang.org/doc/go1.5#link
+> - commit: https://github.com/golang/go/commit/12795c02f3d6fc54ece09a86e70aaa40a94d5131
+> 
+> In Go v1.7, support for the old syntax was removed:
+> 
+> - release notes: https://tip.golang.org/doc/go1.7#compiler
+> - commit: https://github.com/golang/go/commit/51b624e6a29b135ce0fadb22b678acf4998ff16f
+> 
+> This patch includes the `=` to fix builds with Go v1.7+.
 
+With the disclaimer that I have very little experience with Go, this
+seems like a good, well-explained change. My only question would be
+whether people still use pre-v1.5 versions of Go, since it sounds like
+this would adversely affect them if they do. (If it does, it seems the
+Go people did not give a very good deprecation period for the syntax
+change, if people are using both the pre-new-syntax and post-old-syntax
+versions simultaneously). I'm not sure what the alternative is, beyond
+perhaps checking the version of Go dynamically in the Makefile.
+
+-Peff
