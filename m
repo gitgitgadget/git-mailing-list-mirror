@@ -4,58 +4,58 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8611E20195
+	by dcvr.yhbt.net (Postfix) with ESMTP id 965E6203C2
 	for <e@80x24.org>; Sat, 16 Jul 2016 05:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751380AbcGPFG4 (ORCPT <rfc822;e@80x24.org>);
+	id S1751374AbcGPFG4 (ORCPT <rfc822;e@80x24.org>);
 	Sat, 16 Jul 2016 01:06:56 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:33006 "EHLO
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:36334 "EHLO
 	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751317AbcGPFGt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jul 2016 01:06:49 -0400
-Received: by mail-lf0-f66.google.com with SMTP id f93so8092099lfi.0
-        for <git@vger.kernel.org>; Fri, 15 Jul 2016 22:06:48 -0700 (PDT)
+	with ESMTP id S1750871AbcGPFGr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jul 2016 01:06:47 -0400
+Received: by mail-lf0-f66.google.com with SMTP id 33so8089333lfw.3
+        for <git@vger.kernel.org>; Fri, 15 Jul 2016 22:06:46 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=u63moPqcimB7rGvh33v+PhJ0TF8a3/RV+Rfl1Cl1lIY=;
-        b=Vn8tjCXB7n4TRrLqp8U/SQZg7Vv1JYIOiKFlYgJIyF5WUZXvy8ABZdSkMUYyS0ZIXM
-         C6cCxkPuggac4tgWw3h7goKD5s7RWz0I9Hg2+6i6BT7jTRBbPZnHiGOOpTRGz64R7qUo
-         LV5fa8WUmUB0HeinP5qZpLVBtUc/HZq/8dMcGhbzIuUmcnawE04tDnGinUcGfnll8wCC
-         SoL1elJTkIJlUxwsaWek5Y3aMHfB23U3w+dM9sApU6ntvz/D2wwTEaakP4aeD4WKeSXY
-         htflhQalO+xFYQ+bw1aM9yPSGr/++9sVDP5lDs6CJUwhv+qhVLqju7JRCQnHJsLxnWxZ
-         JYTg==
+        bh=kAB0M0FFD7AqgLeBi+3hTUFiQhpIq7PVxLcU0cMBvno=;
+        b=yMHtAhFUweLor8Binwwa9cKGb9iQPkODtce74Z6xChtMigwTur3TZcC8WA0iBJPkZx
+         Iyjy4cU0xIRtKVBDUdz8ji1JDgHmJYzxkX8iTy192XXaIJpNn6OF1jWep8uglpChM7Sk
+         T86jK3TeUDUBSqVMntQrHWj2oE60jAjCnSe+ex+iPrpST87SmKPx6eV3F0WKkY4clGl+
+         25vxgVF6qW7dqTey5BVPrHXH+4Ufh0Fx7cfXqsb17ujijMrqmxe1gRtLn9JFGyolwfu4
+         JNZHXTBreiLzASnCuGWYtYWlUDZoHu/PFBosq16ZrqPg5bRJ3FigRetpbp4SxrTXeVg3
+         q0Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=u63moPqcimB7rGvh33v+PhJ0TF8a3/RV+Rfl1Cl1lIY=;
-        b=B7l+CG+v++Ncy99bczExOMpQIzplzGhbRx1FHVDs8GvgYH5RRmb3LJCpi6QuPT1vTD
-         pnLCO+S3qESAGkHLaOm37sRCrUnQf7KpL4DubCUy0CTCR4/nkuMlUrpW6x6WLw9AOLot
-         ThtoxyqVEByjzGdBXJZohDUEOVEneeSt0+XuuBRVDA0lfe7xzV1vTniR4L7nwZJIUc7Z
-         tTT1SHxo3ei4OGVttl6aHe2vQT4DDa5oZFJpWotxkSjWOpI7jpjYQagRLDxXIbT9OuSt
-         awRBBHl8B9zRc7gCvU0lQVkl/t2NJEcxS3Qv9eAfhSV601FeP7kNVRKHqTXF5+Js+4Oy
-         d+TQ==
-X-Gm-Message-State: ALyK8tJvuSpfSYwNdSvpt1JqfVJ6sfzYfR/5DMq9iiRueaQxJdepYOOrt3r2bKjDfBjnmA==
-X-Received: by 10.46.32.131 with SMTP id g3mr11118561lji.46.1468645607504;
-        Fri, 15 Jul 2016 22:06:47 -0700 (PDT)
+        bh=kAB0M0FFD7AqgLeBi+3hTUFiQhpIq7PVxLcU0cMBvno=;
+        b=AJqGrqOpRWv+EbyAVuUrt/ljQEBbOnwGJBySXj2/w+ecLEnv/FsDge/73wMRPrnxWT
+         DCD1dHsb3JcReDKszZRUuY74CdV85YimFhbcnGI9n8cldmqWxNeZubyuygmQMhNiNEuf
+         Yoc+6p2tmUdBwDAn6bQPlxoKtNiqiTA1V+om3fE6zqwqcFe3R5QbVOO2hjU8gNjo55iz
+         kb8P2GKc4mKcyFGbnmxWv/8ili5XE5LrcFenf1YcNKJOEAKUNhb6CRq0RAf+M/JWv3fu
+         o/+L8Qa9vhQc6DXsoM4CmuqN7G+ip/HUXVEU5SzlMP1YUZi2I+eoysv8upx3jPi8dmz4
+         B3mw==
+X-Gm-Message-State: ALyK8tLoA94rQQYVP1G3kqABBZ7/bjpPMB3APSpt3sf7U9UCz4rG/Mn7JqLID0Xx3nxWWw==
+X-Received: by 10.46.5.9 with SMTP id 9mr7829199ljf.17.1468645605264;
+        Fri, 15 Jul 2016 22:06:45 -0700 (PDT)
 Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id g40sm634654ljg.22.2016.07.15.22.06.46
+        by smtp.gmail.com with ESMTPSA id g40sm634654ljg.22.2016.07.15.22.06.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 15 Jul 2016 22:06:46 -0700 (PDT)
+        Fri, 15 Jul 2016 22:06:44 -0700 (PDT)
 From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To:	git@vger.kernel.org
 Cc:	Junio C Hamano <gitster@pobox.com>, yuri.kanivetsky@gmail.com,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v4 4/4] cache-tree: do not generate empty trees as a result of all i-t-a subentries
-Date:	Sat, 16 Jul 2016 07:06:27 +0200
-Message-Id: <20160716050627.9416-5-pclouds@gmail.com>
+Subject: [PATCH v4 2/4] test-lib.sh: introduce and use $EMPTY_BLOB
+Date:	Sat, 16 Jul 2016 07:06:25 +0200
+Message-Id: <20160716050627.9416-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.9.1.566.gbd532d4
 In-Reply-To: <20160716050627.9416-1-pclouds@gmail.com>
 References: <20160709052356.30570-1-pclouds@gmail.com>
@@ -68,81 +68,314 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-If a subdirectory contains nothing but i-t-a entries, we generate an
-empty tree object and add it to its parent tree. Which is wrong. Such
-a subdirectory should not be added.
+Similar to $EMPTY_TREE this makes it easier to recognize this special
+SHA-1 and change hash later.
 
-Note that this has a cascading effect. If subdir 'a/b/c' contains
-nothing but i-t-a entries, we ignore it. But then if 'a/b' contains
-only (the non-existing) 'a/b/c', then we should ignore 'a/b' while
-building 'a' too. And it goes all the way up to top directory.
-
-Noticed-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- cache-tree.c          | 10 +++++++++-
- t/t2203-add-intent.sh | 14 ++++++++++++++
- 2 files changed, 23 insertions(+), 1 deletion(-)
+ t/t1011-read-tree-sparse-checkout.sh |  8 ++++----
+ t/t1700-split-index.sh               | 24 ++++++++++++------------
+ t/t3102-ls-tree-wildcards.sh         |  8 ++++----
+ t/t7011-skip-worktree-reading.sh     | 12 +++++-------
+ t/t7012-skip-worktree-writing.sh     | 10 ++++------
+ t/t7063-status-untracked-cache.sh    |  6 +++---
+ t/t7508-status.sh                    |  2 +-
+ t/test-lib.sh                        |  3 ++-
+ 8 files changed, 35 insertions(+), 38 deletions(-)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index c2676e8..f28b1f4 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -325,6 +325,7 @@ static int update_one(struct cache_tree *it,
- 		const unsigned char *sha1;
- 		unsigned mode;
- 		int expected_missing = 0;
-+		int contains_ita = 0;
+diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-sparse-checkout.sh
+index 0c74bee..2563d18 100755
+--- a/t/t1011-read-tree-sparse-checkout.sh
++++ b/t/t1011-read-tree-sparse-checkout.sh
+@@ -15,11 +15,11 @@ test_description='sparse checkout tests
+ . "$TEST_DIRECTORY"/lib-read-tree.sh
  
- 		path = ce->name;
- 		pathlen = ce_namelen(ce);
-@@ -341,7 +342,8 @@ static int update_one(struct cache_tree *it,
- 			i += sub->count;
- 			sha1 = sub->cache_tree->sha1;
- 			mode = S_IFDIR;
--			if (sub->cache_tree->entry_count < 0) {
-+			contains_ita = sub->cache_tree->entry_count < 0;
-+			if (contains_ita) {
- 				to_invalidate = 1;
- 				expected_missing = 1;
- 			}
-@@ -380,6 +382,12 @@ static int update_one(struct cache_tree *it,
- 			continue;
- 		}
+ test_expect_success 'setup' '
+-	cat >expected <<-\EOF &&
++	cat >expected <<-EOF &&
+ 	100644 77f0ba1734ed79d12881f81b36ee134de6a3327b 0	init.t
+-	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	sub/added
+-	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	sub/addedtoo
+-	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	subsub/added
++	100644 $EMPTY_BLOB 0	sub/added
++	100644 $EMPTY_BLOB 0	sub/addedtoo
++	100644 $EMPTY_BLOB 0	subsub/added
+ 	EOF
+ 	cat >expected.swt <<-\EOF &&
+ 	H init.t
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index 8aef49f..292a072 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -33,14 +33,14 @@ test_expect_success 'add one file' '
+ 	git update-index --add one &&
+ 	git ls-files --stage >ls-files.actual &&
+ 	cat >ls-files.expect <<EOF &&
+-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
++100644 $EMPTY_BLOB 0	one
+ EOF
+ 	test_cmp ls-files.expect ls-files.actual &&
  
-+		/*
-+		 * "sub" can be an empty tree if all subentries are i-t-a.
-+		 */
-+		if (contains_ita && !hashcmp(sha1, EMPTY_TREE_SHA1_BIN))
-+			continue;
-+
- 		strbuf_grow(&buffer, entlen + 100);
- 		strbuf_addf(&buffer, "%o %.*s%c", mode, entlen, path + baselen, '\0');
- 		strbuf_add(&buffer, sha1, 20);
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index 24aed2e..8f22c43 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -99,5 +99,19 @@ test_expect_success 'cache-tree does not ignore dir that has i-t-a entries' '
- 	)
+ 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
+ 	cat >expect <<EOF &&
+ base $base
+-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
++100644 $EMPTY_BLOB 0	one
+ replacements:
+ deletions:
+ EOF
+@@ -51,7 +51,7 @@ test_expect_success 'disable split index' '
+ 	git update-index --no-split-index &&
+ 	git ls-files --stage >ls-files.actual &&
+ 	cat >ls-files.expect <<EOF &&
+-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
++100644 $EMPTY_BLOB 0	one
+ EOF
+ 	test_cmp ls-files.expect ls-files.actual &&
+ 
+@@ -67,7 +67,7 @@ test_expect_success 'enable split index again, "one" now belongs to base index"'
+ 	git update-index --split-index &&
+ 	git ls-files --stage >ls-files.actual &&
+ 	cat >ls-files.expect <<EOF &&
+-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
++100644 $EMPTY_BLOB 0	one
+ EOF
+ 	test_cmp ls-files.expect ls-files.actual &&
+ 
+@@ -105,7 +105,7 @@ test_expect_success 'add another file, which stays index' '
+ 	git ls-files --stage >ls-files.actual &&
+ 	cat >ls-files.expect <<EOF &&
+ 100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0	one
+-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	two
++100644 $EMPTY_BLOB 0	two
+ EOF
+ 	test_cmp ls-files.expect ls-files.actual &&
+ 
+@@ -113,7 +113,7 @@ EOF
+ 	q_to_tab >expect <<EOF &&
+ $BASE
+ 100644 2e0996000b7e9019eabcad29391bf0f5c7702f0b 0Q
+-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	two
++100644 $EMPTY_BLOB 0	two
+ replacements: 0
+ deletions:
+ EOF
+@@ -159,14 +159,14 @@ test_expect_success 'add original file back' '
+ 	git update-index --add one &&
+ 	git ls-files --stage >ls-files.actual &&
+ 	cat >ls-files.expect <<EOF &&
+-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
++100644 $EMPTY_BLOB 0	one
+ EOF
+ 	test_cmp ls-files.expect ls-files.actual &&
+ 
+ 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
+ 	cat >expect <<EOF &&
+ $BASE
+-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
++100644 $EMPTY_BLOB 0	one
+ replacements:
+ deletions: 0
+ EOF
+@@ -178,8 +178,8 @@ test_expect_success 'add new file' '
+ 	git update-index --add two &&
+ 	git ls-files --stage >actual &&
+ 	cat >expect <<EOF &&
+-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
+-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	two
++100644 $EMPTY_BLOB 0	one
++100644 $EMPTY_BLOB 0	two
+ EOF
+ 	test_cmp expect actual
+ '
+@@ -188,8 +188,8 @@ test_expect_success 'unify index, two files remain' '
+ 	git update-index --no-split-index &&
+ 	git ls-files --stage >ls-files.actual &&
+ 	cat >ls-files.expect <<EOF &&
+-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
+-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	two
++100644 $EMPTY_BLOB 0	one
++100644 $EMPTY_BLOB 0	two
+ EOF
+ 	test_cmp ls-files.expect ls-files.actual &&
+ 
+diff --git a/t/t3102-ls-tree-wildcards.sh b/t/t3102-ls-tree-wildcards.sh
+index 4d4b02e..e804377 100755
+--- a/t/t3102-ls-tree-wildcards.sh
++++ b/t/t3102-ls-tree-wildcards.sh
+@@ -12,16 +12,16 @@ test_expect_success 'setup' '
  '
  
-+test_expect_success 'cache-tree does skip dir that becomes empty' '
-+	rm -fr ita-in-dir &&
-+	git init ita-in-dir &&
-+	(
-+		cd ita-in-dir &&
-+		mkdir -p 1/2/3 &&
-+		echo 4 >1/2/3/4 &&
-+		git add -N 1/2/3/4 &&
-+		git write-tree >actual &&
-+		echo $EMPTY_TREE >expected &&
-+		test_cmp expected actual
-+	)
-+'
-+
- test_done
+ test_expect_success 'ls-tree a[a] matches literally' '
+-	cat >expect <<-\EOF &&
+-	100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	a[a]/three
++	cat >expect <<-EOF &&
++	100644 blob $EMPTY_BLOB	a[a]/three
+ 	EOF
+ 	git ls-tree -r HEAD "a[a]" >actual &&
+ 	test_cmp expect actual
+ '
  
+ test_expect_success 'ls-tree outside prefix' '
+-	cat >expect <<-\EOF &&
+-	100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	../a[a]/three
++	cat >expect <<-EOF &&
++	100644 blob $EMPTY_BLOB	../a[a]/three
+ 	EOF
+ 	( cd aa && git ls-tree -r HEAD "../a[a]"; ) >actual &&
+ 	test_cmp expect actual
+diff --git a/t/t7011-skip-worktree-reading.sh b/t/t7011-skip-worktree-reading.sh
+index 88d60c1..84f4145 100755
+--- a/t/t7011-skip-worktree-reading.sh
++++ b/t/t7011-skip-worktree-reading.sh
+@@ -23,17 +23,15 @@ S sub/1
+ H sub/2
+ EOF
+ 
+-NULL_SHA1=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+-
+ setup_absent() {
+ 	test -f 1 && rm 1
+ 	git update-index --remove 1 &&
+-	git update-index --add --cacheinfo 100644 $NULL_SHA1 1 &&
++	git update-index --add --cacheinfo 100644 $EMPTY_BLOB 1 &&
+ 	git update-index --skip-worktree 1
+ }
+ 
+ test_absent() {
+-	echo "100644 $NULL_SHA1 0	1" > expected &&
++	echo "100644 $EMPTY_BLOB 0	1" > expected &&
+ 	git ls-files --stage 1 > result &&
+ 	test_cmp expected result &&
+ 	test ! -f 1
+@@ -42,12 +40,12 @@ test_absent() {
+ setup_dirty() {
+ 	git update-index --force-remove 1 &&
+ 	echo dirty > 1 &&
+-	git update-index --add --cacheinfo 100644 $NULL_SHA1 1 &&
++	git update-index --add --cacheinfo 100644 $EMPTY_BLOB 1 &&
+ 	git update-index --skip-worktree 1
+ }
+ 
+ test_dirty() {
+-	echo "100644 $NULL_SHA1 0	1" > expected &&
++	echo "100644 $EMPTY_BLOB 0	1" > expected &&
+ 	git ls-files --stage 1 > result &&
+ 	test_cmp expected result &&
+ 	echo dirty > expected
+@@ -120,7 +118,7 @@ test_expect_success 'grep with skip-worktree file' '
+ 	test "$(git grep --no-ext-grep test)" = "1:test"
+ '
+ 
+-echo ":000000 100644 $_z40 $NULL_SHA1 A	1" > expected
++echo ":000000 100644 $_z40 $EMPTY_BLOB A	1" > expected
+ test_expect_success 'diff-index does not examine skip-worktree absent entries' '
+ 	setup_absent &&
+ 	git diff-index HEAD -- 1 > result &&
+diff --git a/t/t7012-skip-worktree-writing.sh b/t/t7012-skip-worktree-writing.sh
+index 9ceaa40..9d1abe5 100755
+--- a/t/t7012-skip-worktree-writing.sh
++++ b/t/t7012-skip-worktree-writing.sh
+@@ -53,17 +53,15 @@ test_expect_success 'read-tree removes worktree, dirty case' '
+ 	git update-index --no-skip-worktree added
+ '
+ 
+-NULL_SHA1=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+-
+ setup_absent() {
+ 	test -f 1 && rm 1
+ 	git update-index --remove 1 &&
+-	git update-index --add --cacheinfo 100644 $NULL_SHA1 1 &&
++	git update-index --add --cacheinfo 100644 $EMPTY_BLOB 1 &&
+ 	git update-index --skip-worktree 1
+ }
+ 
+ test_absent() {
+-	echo "100644 $NULL_SHA1 0	1" > expected &&
++	echo "100644 $EMPTY_BLOB 0	1" > expected &&
+ 	git ls-files --stage 1 > result &&
+ 	test_cmp expected result &&
+ 	test ! -f 1
+@@ -72,12 +70,12 @@ test_absent() {
+ setup_dirty() {
+ 	git update-index --force-remove 1 &&
+ 	echo dirty > 1 &&
+-	git update-index --add --cacheinfo 100644 $NULL_SHA1 1 &&
++	git update-index --add --cacheinfo 100644 $EMPTY_BLOB 1 &&
+ 	git update-index --skip-worktree 1
+ }
+ 
+ test_dirty() {
+-	echo "100644 $NULL_SHA1 0	1" > expected &&
++	echo "100644 $EMPTY_BLOB 0	1" > expected &&
+ 	git ls-files --stage 1 > result &&
+ 	test_cmp expected result &&
+ 	echo dirty > expected
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index a971884..a828a5f 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -53,7 +53,7 @@ A  two
+ EOF
+ 
+ cat >../dump.expect <<EOF &&
+-info/exclude e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
++info/exclude $EMPTY_BLOB
+ core.excludesfile 0000000000000000000000000000000000000000
+ exclude_per_dir .gitignore
+ flags 00000006
+@@ -137,7 +137,7 @@ EOF
+ test_expect_success 'verify untracked cache dump' '
+ 	test-dump-untracked-cache >../actual &&
+ 	cat >../expect <<EOF &&
+-info/exclude e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
++info/exclude $EMPTY_BLOB
+ core.excludesfile 0000000000000000000000000000000000000000
+ exclude_per_dir .gitignore
+ flags 00000006
+@@ -184,7 +184,7 @@ EOF
+ test_expect_success 'verify untracked cache dump' '
+ 	test-dump-untracked-cache >../actual &&
+ 	cat >../expect <<EOF &&
+-info/exclude e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
++info/exclude $EMPTY_BLOB
+ core.excludesfile 0000000000000000000000000000000000000000
+ exclude_per_dir .gitignore
+ flags 00000006
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index c3ed7cb..a42aef8 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -803,7 +803,7 @@ EOF
+ '
+ 
+ cat >expect <<EOF
+-:100644 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0000000000000000000000000000000000000000 M	dir1/modified
++:100644 100644 $EMPTY_BLOB 0000000000000000000000000000000000000000 M	dir1/modified
+ EOF
+ test_expect_success 'status refreshes the index' '
+ 	touch dir2/added &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 85f4c6d..9f36091 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -163,6 +163,7 @@ _x40="$_x05$_x05$_x05$_x05$_x05$_x05$_x05$_x05"
+ _z40=0000000000000000000000000000000000000000
+ 
+ EMPTY_TREE=4b825dc642cb6eb9a060e54bf8d69288fbee4904
++EMPTY_BLOB=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+ 
+ # Line feed
+ LF='
+@@ -172,7 +173,7 @@ LF='
+ # when case-folding filenames
+ u200c=$(printf '\342\200\214')
+ 
+-export _x05 _x40 _z40 LF u200c EMPTY_TREE
++export _x05 _x40 _z40 LF u200c EMPTY_TREE EMPTY_BLOB
+ 
+ # Each test should start with something like this, after copyright notices:
+ #
 -- 
 2.9.1.566.gbd532d4
 
