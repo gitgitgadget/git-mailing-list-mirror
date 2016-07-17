@@ -2,84 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID,
-	URI_HEX shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B51F81FEAA
-	for <e@80x24.org>; Sun, 17 Jul 2016 05:58:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFE3520195
+	for <e@80x24.org>; Sun, 17 Jul 2016 06:45:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751184AbcGQF6v (ORCPT <rfc822;e@80x24.org>);
-	Sun, 17 Jul 2016 01:58:51 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:36588 "EHLO
-	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750921AbcGQF6u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2016 01:58:50 -0400
-Received: by mail-it0-f66.google.com with SMTP id j124so729468ith.3
-        for <git@vger.kernel.org>; Sat, 16 Jul 2016 22:58:50 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=pQH/Ed3IotnecqT16SN8VUdVXyRrn9WKng6NCG7guXY=;
-        b=NNLNnQ9PEZftA43acsnOsILvm3N0R9PAtUeQpg6aMLOvBXwWddL6aaORuMn3/2g0TG
-         QzA9Ad3cu9U0qH0k35Ek5hgZF2WDvpmU/p5HVb65XF2QGycPqoQEWtIjU25tF/h1swrb
-         hLTuPjt9ZBOudYQxCRQ7HhYQYTvLetkwRO70MacNh1g5+1LS2SHy5uz/hAzhsF56tHKf
-         zWw0Do6wOsiPP7zuigsnfOWsOnXSOZwZDXTzHgs9s0oCTWXXULIuFmrJIEdJrelelHJq
-         6Xebhrr5HDkJ8wP9o31lyHXIqnvkPZ//jsktLrqkd4VcUTLhvk8tMQXa1TMr5pXTenlQ
-         HkSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=pQH/Ed3IotnecqT16SN8VUdVXyRrn9WKng6NCG7guXY=;
-        b=IAM7hLHFBk+yjmvzo6PX3q5M4cB+r47G/UJCuZGTEhS+7+x33/QFdIs6am+N7rGsBB
-         ggnq8maiuq0pjojGNGpyTXKBwl5H8WGtzTR5+0XiSkpRUe7bvx9glYr5e/8Pca/tE+Y6
-         Q/9+EWSTJ63CmhWDQed2bQ4/5L0/LQk4hxDMN468a0mWcTYNCshpdEnjUbIWiLYaEBkg
-         1swKmeEYnoTQSjfxAS30qbhmPbYVkH0SEuTP2Odb7kIIN0gj9iZFO32Nd+WwWEqA+sJq
-         C5qQI94majCBqWKv8f+vrEZI9uomuIN97g9UmbhvOxqDz5n1XUVbu+bSYJGiU0EczBlC
-         qv1g==
-X-Gm-Message-State: ALyK8tLI5w/Rs1I85n0dvYNLg41ScFXQolNBjuJCEszG6+AhE+gDduLKAtBzlPCqeM443cQGhDH2kgX4Qsuw/g==
-X-Received: by 10.36.29.66 with SMTP id 63mr28834969itj.84.1468735129756; Sat,
- 16 Jul 2016 22:58:49 -0700 (PDT)
+	id S1751195AbcGQGpT (ORCPT <rfc822;e@80x24.org>);
+	Sun, 17 Jul 2016 02:45:19 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46100 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750892AbcGQGpR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2016 02:45:17 -0400
+Received: (qmail 32357 invoked by uid 102); 17 Jul 2016 06:45:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 17 Jul 2016 02:45:18 -0400
+Received: (qmail 29639 invoked by uid 107); 17 Jul 2016 06:45:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 17 Jul 2016 02:45:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Jul 2016 02:45:13 -0400
+Date:	Sun, 17 Jul 2016 02:45:13 -0400
+From:	Jeff King <peff@peff.net>
+To:	mappu <mappu04@gmail.com>
+Cc:	git@vger.kernel.org
+Subject: Re: proposal: allow git clone for http-hosted bundles
+Message-ID: <20160717064513.GA2049@sigill.intra.peff.net>
+References: <2841ce89-9c46-c3f2-53d8-afef6e1e5b01@gmail.com>
 MIME-Version: 1.0
-Received: by 10.79.130.7 with HTTP; Sat, 16 Jul 2016 22:58:49 -0700 (PDT)
-In-Reply-To: <20160717002533.GA14200@whir>
-References: <xmqqy4551nph.fsf@gitster.mtv.corp.google.com> <FB76544F-16F7-45CA-9649-FD62EE44B0DE@gmail.com>
- <20160716210454.GA7849@starla> <20160717002533.GA14200@whir>
-From:	Eric Sunshine <sunshine@sunshineco.com>
-Date:	Sun, 17 Jul 2016 01:58:49 -0400
-X-Google-Sender-Auth: fyIz6XUpOg8k1UVnfEbadHVJ2U0
-Message-ID: <CAPig+cRvhbKwr=QJAyp=sYLLGDx-B2EHovHpn8Z1701stQMi1g@mail.gmail.com>
-Subject: Re: [PATCH] list: avoid incompatibility with *BSD sys/queue.h
-To:	Eric Wong <e@80x24.org>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2841ce89-9c46-c3f2-53d8-afef6e1e5b01@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sat, Jul 16, 2016 at 8:25 PM, Eric Wong <e@80x24.org> wrote:
-> Eric Wong <e@80x24.org> wrote:
->> I also wonder where we use sys/queue.h, since I use
->> LIST_HEAD from ccan/list/list.h in a different project
->> without conflicts...
->
-> Still wondering... Checking sys/mman.h in an old FreeBSD source
-> tree I had lying around reveals "#include <sys/queue.h>" is
-> guarded by "#if defined(_KERNEL)", so it mman.h wouldn't pull
-> it in for userspace builds...
+On Sun, Jul 17, 2016 at 04:41:54PM +1200, mappu wrote:
 
-It's pulled in like this:
+> Right now it's possible to git clone a repository over http, and git clone a
+> bundle from the local filesystem, but it's not possible to git clone a
+> bundle hosted on http.
+> 
+> Would it be possible to allow this in the future? Hopefully it's only a
+> minor refactor in `builtin/clone.c`.
 
-    git-compat-util.h ->
-    sys/sysctl.h ->
-    sys/ucred.h ->
-    sys/queue.h
+It's a bit more than a minor refactor. Long ago, I submitted
 
-Very reminiscent of [1].
+  http://thread.gmane.org/gmane.comp.version-control.git/185196
 
-[1]: http://git.661346.n2.nabble.com/PATCH-ewah-bitmap-silence-warning-about-MASK-macro-redefinition-td7632287.html
+The tricky thing is having the http code handle the case that we get a
+bundle when accessing the repository.
+
+I think I got stalled in a "perfect is the enemy of the good" situation.
+I wanted to clean up the patches to avoid spooling the bundle to disk
+(because it means we temporarily required 2x disk space). But in
+retrospect, it would be fine to start there, and if somebody wants to
+take on resumable index-pack, that can be a separate topic.
+
+So I never ended up getting back to it. And somehow almost 5 years have
+passed yikes.
+
+If anybody is interested in working on it, they can start from those
+patches, or from the jk/bundle-fetch-wip branch at
+https://github.com/peff/git. The latter has been continually rebased on
+master for the past 5 years, _but_ in a fairly blind manner. I resolve
+conflicts, but anything with "-wip" in the title is not part of my
+regular build. So it has not been compiled nor had its tests run in all
+that time. Caveat emptor.
+
+> (Back story: I'm stuck with a git frontend that only ever calls `git clone
+> ${target}` - that's Golang's `go get` - but bundles are a bit better fit for
+> my request patterns than raw repositories).
+
+You might do better to stick a shim script in your $PATH to just
+intercept the calls to git. Hacky, but it would probably solve your
+problem with a minimal amount of code.
+
+-Peff
