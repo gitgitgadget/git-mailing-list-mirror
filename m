@@ -7,317 +7,194 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1616C20195
-	for <e@80x24.org>; Sun, 17 Jul 2016 11:00:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B598920195
+	for <e@80x24.org>; Sun, 17 Jul 2016 11:00:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751138AbcGQLAP (ORCPT <rfc822;e@80x24.org>);
-	Sun, 17 Jul 2016 07:00:15 -0400
-Received: from mout.gmx.net ([212.227.15.15]:54278 "EHLO mout.gmx.net"
+	id S1751166AbcGQLAU (ORCPT <rfc822;e@80x24.org>);
+	Sun, 17 Jul 2016 07:00:20 -0400
+Received: from mout.gmx.net ([212.227.17.21]:58424 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751117AbcGQLAN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2016 07:00:13 -0400
-Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LikQP-1aoJ3e3AZ3-00czLD; Sun, 17 Jul 2016 13:00:03
+	id S1751144AbcGQLAR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2016 07:00:17 -0400
+Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LsfrR-1bDVQu3JVp-012KSS; Sun, 17 Jul 2016 12:59:45
  +0200
-Date:	Sun, 17 Jul 2016 13:00:02 +0200 (CEST)
+Date:	Sun, 17 Jul 2016 12:59:44 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 4/4] fsck: optionally show more helpful info for broken
- links
+Subject: [PATCH v2 1/4] fsck: refactor how to describe objects
 In-Reply-To: <cover.1468752290.git.johannes.schindelin@gmx.de>
-Message-ID: <83754a3f19a172af1e0ff014060a0c698f3d6678.1468752291.git.johannes.schindelin@gmx.de>
+Message-ID: <7056b23d0105b10efb0ea6d7fe168c72995baf15.1468752290.git.johannes.schindelin@gmx.de>
 References: <cover.1468510191.git.johannes.schindelin@gmx.de> <cover.1468752290.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ceGWY5cDRZKv80KTU5iaEdtjO+pEkxnLE+gC4b/AjLyigyzX7Jl
- r2ZJea6lym8EAInLCitkWioTjX3LhKQijrsbH1RHcB7K4McK42+sZ+4avJ/x3rjcxM89Aka
- 4rbb0FhSxx8AiKTI2MXncGUZKqV0WuGhHKt6EYM5/Ge4UynDlinj2SuRcvy5a5TSE8QZBCD
- gDa06Pe0hBcidJRCeQKWw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:KtEkCh3/2iU=:DFqQgBAEXog/vWnmg4u9PI
- b/VX9QR87tyeDOZ+8Rg6LVLwUNK7TaZGl5GqPimB/eY1NSK5P7yEjVrseYHgKLqioK+rrH+bX
- pEDVgeJ2+IwxQdc8YOqTcYEJJmx2VNd04d5PdMobyxuXx8T7cYgw1qLFDPvyDP4Dggnn8Nd+D
- X49mP08txvRlaCk4GLle6XiMPTUecuDTSyLU/8Vw+CAQGmMCnzNuv+06+g4I9QLApRkIeqmxv
- 5Ld2UwsjENAgXWDGE9ZtbIKZK3NHnb/hCXi6POnSGemTvZ9ik6WPnJHeptgebioR46TarJ+2f
- r9/HGY47VvRjtofWZUXwDRxTKtu+ymCP+tB7/F7LVJHfZ0YPwBgvVc/OM0NFkAjFSpK5Np3+/
- TIXJpFRKFYniOCBe87YEvIpPcuenlvUL3soFynMzLjbHlCHlTWCLaBuB0odOHpK6no/4wxwvx
- wlz4vku6De+n88F9IQ1iI/zJ4caAF2xeilG+v1PQh9TsUN8Q1MrZ/3bV0ty4NYfaI73OBW0HM
- j4qnGCPoSrq3cKr5EWifz2NMoVTugwLro7iV7sPCF3XEYTGDfDAAnqFLdZf1dV79iLQ0AXqyF
- rj1DtOPX8H3Y7rD/noadxqpBL50MC07nOSeacGN9Oy+ac4vlPxdtFh+imUZU6pBHsEWdGmaNB
- XdNdAf+MQWuZt7g7NFZB843hzwOAK77LT8I3pRKu2vu3i/CujSNInozDyEwLAS+xdAVqsXBkR
- 7SYKraon3lb5zwmqCcO21yDQYBhBCvLaoccmm+A+AkzigE2V0knvQew8v9Cp5Wx5anodxhkdb
- q2jQxs7
+X-Provags-ID: V03:K0:Pm8L83ux6HrnSWqRNDrLzaB+uDlIEWKThg0F//VjfRLv3+Lk/3i
+ OCZtetg4RQwzyUF++yubbk2K419dUP2zuUUjAn3DT7yfKVIt1HFAy2rjSOQ2f+K81QkDNxl
+ gdiriN9nOSssFvtAUcyaJEDPQZCHuMgKWEK+RJRgBgew6KiL5Du4jjUddWOUpmPH6u5SFot
+ 6M3z5PDBw98aLewSAcp6w==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:owJTl9FxRiA=:y/rrEVdwi60HgsXLgcp4pm
+ IT7Ffa9EQ90Wpz0QNtfTTdVwZ06tMqZ32chlLYqVqjV7NlKGiaA5nuyFmmPWMu2bUajaaf3NN
+ 7H6WH5KuLuB0DV3mp757skmRdGNj0gHyVn9AnXu62jG9C7gsbL0Zo+CG+03vR/yhOpoVa+EdF
+ iOkiX01/BKmruPvY7vB2GPFDjbWPzitRR2UjuJSOSiHluV7pPaQbCgeZSoT2855D5Qj9VBeDC
+ eySDvV35jC3YY20joo8nFB+2fYn16mSUgbKhAptb72kYYd7TnBbJHiOw5FCTbdJTEGe+TfYQY
+ SBhSlf5WPKGHuCkTc5Y00gfq0XRf+1rX3C5A6Qr7lFHLq6XC3bA7GybU+lVLO83RyD5/5zH0A
+ 3QOMJ3RgT1amNd58syZ7HCaFOgLNKzaSCBuiTi06GRcf031y4jvU/6sJcjtHBEt5O8Hu9pduZ
+ UBcKMWwG9bOEqxJDUczH+lk2UATor7q2lFxpKN7dYmtyggNbprbyn1CratEaJKkjK81zwSTcm
+ YKAEvjMoe5xUuOzXUcs3hdCpJSd7r8CMrWDGcRAPq34ek/eRZznwcXRVqvHRbfGJdavmHylqu
+ S3J0U2go0gtD7OxCu2sUhVte/TzWhNkLPVVotImcTh2k1tLpbVigRbKL161EuksfTfJB62InW
+ Th9xczXcWacui6uAtc+OLAWh3GcD/tMvLyZYE4mzynhwjzqJqS/r1dVzsuD/xi9vSVD7AH61+
+ kXwdddDF4t5YdQBebY5WbghFd4wlW2N9jGwm1STCbH9GOgTnGuMx3DDa34U1EW5sz+2mgAQS7
+ 8cl7286
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When reporting broken links between commits/trees/blobs, it would be
-quite helpful at times if the user would be told how the object is
-supposed to be reachable.
+In many places, we refer to objects via their SHA-1s. Let's abstract
+that into a function.
 
-With the new --name-objects option, git-fsck will try to do exactly
-that: name the objects in a way that shows how they are reachable.
-
-For example, when some reflog got corrupted and a blob is missing that
-should not be, the user might want to remove the corresponding reflog
-entry. This option helps them find that entry: `git fsck` will now
-report something like this:
-
-	broken link from    tree b5eb6ff...  (refs/stash@{<date>}~37:)
-	              to    blob ec5cf80...
+For the moment, it does nothing else than what we did previously: print
+out the 40-digit hex string. But that will change over the course of the
+next patches.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-fsck.txt |  9 ++++++++-
- builtin/fsck.c             | 42 ++++++++++++++++++++++++++++++++++++++----
- fsck.c                     | 21 +++++++++++++++++----
- t/t1450-fsck.sh            | 22 ++++++++++++++++++++++
- 4 files changed, 85 insertions(+), 9 deletions(-)
+ builtin/fsck.c | 37 +++++++++++++++++++++++--------------
+ 1 file changed, 23 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
-index 7fc68eb..b9f060e 100644
---- a/Documentation/git-fsck.txt
-+++ b/Documentation/git-fsck.txt
-@@ -11,7 +11,8 @@ SYNOPSIS
- [verse]
- 'git fsck' [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
- 	 [--[no-]full] [--strict] [--verbose] [--lost-found]
--	 [--[no-]dangling] [--[no-]progress] [--connectivity-only] [<object>*]
-+	 [--[no-]dangling] [--[no-]progress] [--connectivity-only]
-+	 [--[no-]name-objects] [<object>*]
- 
- DESCRIPTION
- -----------
-@@ -82,6 +83,12 @@ index file, all SHA-1 references in `refs` namespace, and all reflogs
- 	a blob, the contents are written into the file, rather than
- 	its object name.
- 
-+--name-objects::
-+	When displaying names of reachable objects, in addition to the
-+	SHA-1 also display a name that describes *how* they are reachable,
-+	compatible with linkgit:git-rev-parse[1], e.g.
-+	`HEAD@{1234567890}~25^2:src/`.
-+
- --[no-]progress::
- 	Progress status is reported on the standard error stream by
- 	default when it is attached to a terminal, unless
 diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 6c9d598..49680e9 100644
+index 3f27456..87df191 100644
 --- a/builtin/fsck.c
 +++ b/builtin/fsck.c
-@@ -13,6 +13,7 @@
- #include "dir.h"
- #include "progress.h"
- #include "streaming.h"
-+#include "decorate.h"
- 
- #define REACHABLE 0x0001
- #define SEEN      0x0002
-@@ -35,6 +36,7 @@ static int write_lost_and_found;
- static int verbose;
- static int show_progress = -1;
- static int show_dangling = 1;
-+static int name_objects = 0;
- #define ERROR_OBJECT 01
- #define ERROR_REACHABLE 02
+@@ -40,6 +40,11 @@ static int show_dangling = 1;
  #define ERROR_PACK 04
-@@ -42,7 +44,16 @@ static int show_dangling = 1;
+ #define ERROR_REFS 010
  
- static const char *describe_object(struct object *obj)
- {
--	return oid_to_hex(&obj->oid);
-+	static struct strbuf buf = STRBUF_INIT;
-+	char *name = name_objects ?
-+		lookup_decoration(fsck_walk_options.object_names, obj) : NULL;
-+
-+	strbuf_reset(&buf);
-+	strbuf_addstr(&buf, oid_to_hex(&obj->oid));
-+	if (name)
-+		strbuf_addf(&buf, " (%s)", name);
-+
-+	return buf.buf;
- }
- 
- static int fsck_config(const char *var, const char *value, void *cb)
-@@ -378,13 +389,18 @@ static int fsck_obj_buffer(const unsigned char *sha1, enum object_type type,
- 
- static int default_refs;
- 
--static void fsck_handle_reflog_sha1(const char *refname, unsigned char *sha1)
-+static void fsck_handle_reflog_sha1(const char *refname, unsigned char *sha1,
-+	unsigned long timestamp)
- {
- 	struct object *obj;
- 
- 	if (!is_null_sha1(sha1)) {
- 		obj = lookup_object(sha1);
- 		if (obj) {
-+			if (timestamp && name_objects)
-+				add_decoration(fsck_walk_options.object_names,
-+					obj,
-+					xstrfmt("%s@{%ld}", refname, timestamp));
- 			obj->used = 1;
- 			mark_object_reachable(obj);
- 		} else {
-@@ -404,8 +420,8 @@ static int fsck_handle_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 		fprintf(stderr, "Checking reflog %s->%s\n",
- 			sha1_to_hex(osha1), sha1_to_hex(nsha1));
- 
--	fsck_handle_reflog_sha1(refname, osha1);
--	fsck_handle_reflog_sha1(refname, nsha1);
-+	fsck_handle_reflog_sha1(refname, osha1, 0);
-+	fsck_handle_reflog_sha1(refname, nsha1, timestamp);
- 	return 0;
- }
- 
-@@ -434,6 +450,9 @@ static int fsck_handle_ref(const char *refname, const struct object_id *oid,
- 	}
- 	default_refs++;
- 	obj->used = 1;
-+	if (name_objects)
-+		add_decoration(fsck_walk_options.object_names,
-+			obj, xstrdup(refname));
- 	mark_object_reachable(obj);
- 
- 	return 0;
-@@ -549,6 +568,9 @@ static int fsck_cache_tree(struct cache_tree *it)
- 			return 1;
- 		}
- 		obj->used = 1;
-+		if (name_objects)
-+			add_decoration(fsck_walk_options.object_names,
-+				obj, xstrdup(":"));
- 		mark_object_reachable(obj);
- 		if (obj->type != OBJ_TREE)
- 			err |= objerror(obj, "non-tree in cache-tree");
-@@ -577,6 +599,7 @@ static struct option fsck_opts[] = {
- 	OPT_BOOL(0, "lost-found", &write_lost_and_found,
- 				N_("write dangling objects in .git/lost-found")),
- 	OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
-+	OPT_BOOL(0, "name-objects", &name_objects, N_("show verbose names for reachable objects")),
- 	OPT_END(),
- };
- 
-@@ -606,6 +629,10 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 		include_reflogs = 0;
- 	}
- 
-+	if (name_objects)
-+		fsck_walk_options.object_names =
-+			xcalloc(1, sizeof(struct decoration));
-+
- 	git_config(fsck_config, NULL);
- 
- 	fsck_head_link();
-@@ -661,6 +688,9 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 				continue;
- 
- 			obj->used = 1;
-+			if (name_objects)
-+				add_decoration(fsck_walk_options.object_names,
-+					obj, xstrdup(arg));
- 			mark_object_reachable(obj);
- 			heads++;
- 			continue;
-@@ -693,6 +723,10 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 				continue;
- 			obj = &blob->object;
- 			obj->used = 1;
-+			if (name_objects)
-+				add_decoration(fsck_walk_options.object_names,
-+					obj,
-+					xstrfmt(":%s", active_cache[i]->name));
- 			mark_object_reachable(obj);
- 		}
- 		if (active_cache_tree)
-diff --git a/fsck.c b/fsck.c
-index 828c5c6..c9cf3de 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -323,6 +323,19 @@ static void put_object_name(struct fsck_options *options, struct object *obj,
- 	va_end(ap);
- }
- 
-+static const char *describe_object(struct fsck_options *o, struct object *obj)
++static const char *describe_object(struct object *obj)
 +{
-+	static struct strbuf buf = STRBUF_INIT;
-+	char *name;
-+
-+	strbuf_reset(&buf);
-+	strbuf_addstr(&buf, oid_to_hex(&obj->oid));
-+	if (o->object_names && (name = lookup_decoration(o->object_names, obj)))
-+		strbuf_addf(&buf, " (%s)", name);
-+
-+	return buf.buf;
++	return oid_to_hex(&obj->oid);
 +}
 +
- static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_options *options)
+ static int fsck_config(const char *var, const char *value, void *cb)
  {
- 	struct tree_desc desc;
-@@ -358,7 +371,7 @@ static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_options *op
- 		}
- 		else {
- 			result = error("in tree %s: entry %s has bad mode %.6o",
--					oid_to_hex(&tree->object.oid), entry.path, entry.mode);
-+					describe_object(options, &tree->object), entry.path, entry.mode);
- 		}
- 		if (result < 0)
- 			return result;
-@@ -454,7 +467,7 @@ int fsck_walk(struct object *obj, void *data, struct fsck_options *options)
- 	case OBJ_TAG:
- 		return fsck_walk_tag((struct tag *)obj, data, options);
- 	default:
--		error("Unknown object type for %s", oid_to_hex(&obj->oid));
-+		error("Unknown object type for %s", describe_object(options, obj));
- 		return -1;
- 	}
- }
-@@ -901,9 +914,9 @@ int fsck_error_function(struct fsck_options *o,
- 	struct object *obj, int msg_type, const char *message)
+ 	if (strcmp(var, "fsck.skiplist") == 0) {
+@@ -67,7 +72,7 @@ static void objreport(struct object *obj, const char *msg_type,
+ 			const char *err)
  {
- 	if (msg_type == FSCK_WARN) {
--		warning("object %s: %s", oid_to_hex(&obj->oid), message);
-+		warning("object %s: %s", describe_object(o, obj), message);
- 		return 0;
- 	}
--	error("object %s: %s", oid_to_hex(&obj->oid), message);
-+	error("object %s: %s", describe_object(o, obj), message);
- 	return 1;
+ 	fprintf(stderr, "%s in %s %s: %s\n",
+-		msg_type, typename(obj->type), oid_to_hex(&obj->oid), err);
++		msg_type, typename(obj->type), describe_object(obj), err);
  }
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 7ee8ea0..8f52da2 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -523,4 +523,26 @@ test_expect_success 'fsck --connectivity-only' '
- 	)
- '
  
-+remove_loose_object () {
-+	sha1="$(git rev-parse "$1")" &&
-+	remainder=${sha1#??} &&
-+	firsttwo=${sha1%$remainder} &&
-+	rm .git/objects/$firsttwo/$remainder
-+}
-+
-+test_expect_success 'fsck --name-objects' '
-+	rm -rf name-objects &&
-+	git init name-objects &&
-+	(
-+		cd name-objects &&
-+		test_commit julius caesar.t &&
-+		test_commit augustus &&
-+		test_commit caesar &&
-+		remove_loose_object $(git rev-parse julius:caesar.t) &&
-+		test_must_fail git fsck --name-objects >out &&
-+		tree=$(git rev-parse --verify julius:) &&
-+		grep "$tree (\(refs/heads/master\|HEAD\)@{[0-9]*}:" out
-+	)
-+'
-+
- test_done
+ static int objerror(struct object *obj, const char *err)
+@@ -97,7 +102,7 @@ static int mark_object(struct object *obj, int type, void *data, struct fsck_opt
+ 	if (!obj) {
+ 		/* ... these references to parent->fld are safe here */
+ 		printf("broken link from %7s %s\n",
+-			   typename(parent->type), oid_to_hex(&parent->oid));
++			   typename(parent->type), describe_object(parent));
+ 		printf("broken link from %7s %s\n",
+ 			   (type == OBJ_ANY ? "unknown" : typename(type)), "unknown");
+ 		errors_found |= ERROR_REACHABLE;
+@@ -114,9 +119,9 @@ static int mark_object(struct object *obj, int type, void *data, struct fsck_opt
+ 	if (!(obj->flags & HAS_OBJ)) {
+ 		if (parent && !has_object_file(&obj->oid)) {
+ 			printf("broken link from %7s %s\n",
+-				 typename(parent->type), oid_to_hex(&parent->oid));
++				 typename(parent->type), describe_object(parent));
+ 			printf("              to %7s %s\n",
+-				 typename(obj->type), oid_to_hex(&obj->oid));
++				 typename(obj->type), describe_object(obj));
+ 			errors_found |= ERROR_REACHABLE;
+ 		}
+ 		return 1;
+@@ -190,7 +195,8 @@ static void check_reachable_object(struct object *obj)
+ 			return; /* it is in pack - forget about it */
+ 		if (connectivity_only && has_object_file(&obj->oid))
+ 			return;
+-		printf("missing %s %s\n", typename(obj->type), oid_to_hex(&obj->oid));
++		printf("missing %s %s\n", typename(obj->type),
++			describe_object(obj));
+ 		errors_found |= ERROR_REACHABLE;
+ 		return;
+ 	}
+@@ -215,7 +221,8 @@ static void check_unreachable_object(struct object *obj)
+ 	 * since this is something that is prunable.
+ 	 */
+ 	if (show_unreachable) {
+-		printf("unreachable %s %s\n", typename(obj->type), oid_to_hex(&obj->oid));
++		printf("unreachable %s %s\n", typename(obj->type),
++			describe_object(obj));
+ 		return;
+ 	}
+ 
+@@ -234,11 +241,11 @@ static void check_unreachable_object(struct object *obj)
+ 	if (!obj->used) {
+ 		if (show_dangling)
+ 			printf("dangling %s %s\n", typename(obj->type),
+-			       oid_to_hex(&obj->oid));
++			       describe_object(obj));
+ 		if (write_lost_and_found) {
+ 			char *filename = git_pathdup("lost-found/%s/%s",
+ 				obj->type == OBJ_COMMIT ? "commit" : "other",
+-				oid_to_hex(&obj->oid));
++				describe_object(obj));
+ 			FILE *f;
+ 
+ 			if (safe_create_leading_directories_const(filename)) {
+@@ -252,7 +259,7 @@ static void check_unreachable_object(struct object *obj)
+ 				if (stream_blob_to_fd(fileno(f), obj->oid.hash, NULL, 1))
+ 					die_errno("Could not write '%s'", filename);
+ 			} else
+-				fprintf(f, "%s\n", oid_to_hex(&obj->oid));
++				fprintf(f, "%s\n", describe_object(obj));
+ 			if (fclose(f))
+ 				die_errno("Could not finish '%s'",
+ 					  filename);
+@@ -271,7 +278,7 @@ static void check_unreachable_object(struct object *obj)
+ static void check_object(struct object *obj)
+ {
+ 	if (verbose)
+-		fprintf(stderr, "Checking %s\n", oid_to_hex(&obj->oid));
++		fprintf(stderr, "Checking %s\n", describe_object(obj));
+ 
+ 	if (obj->flags & REACHABLE)
+ 		check_reachable_object(obj);
+@@ -307,7 +314,7 @@ static int fsck_obj(struct object *obj)
+ 
+ 	if (verbose)
+ 		fprintf(stderr, "Checking %s %s\n",
+-			typename(obj->type), oid_to_hex(&obj->oid));
++			typename(obj->type), describe_object(obj));
+ 
+ 	if (fsck_walk(obj, NULL, &fsck_obj_options))
+ 		objerror(obj, "broken links");
+@@ -326,15 +333,17 @@ static int fsck_obj(struct object *obj)
+ 		free_commit_buffer(commit);
+ 
+ 		if (!commit->parents && show_root)
+-			printf("root %s\n", oid_to_hex(&commit->object.oid));
++			printf("root %s\n", describe_object(&commit->object));
+ 	}
+ 
+ 	if (obj->type == OBJ_TAG) {
+ 		struct tag *tag = (struct tag *) obj;
+ 
+ 		if (show_tags && tag->tagged) {
+-			printf("tagged %s %s", typename(tag->tagged->type), oid_to_hex(&tag->tagged->oid));
+-			printf(" (%s) in %s\n", tag->tag, oid_to_hex(&tag->object.oid));
++			printf("tagged %s %s", typename(tag->tagged->type),
++				describe_object(tag->tagged));
++			printf(" (%s) in %s\n", tag->tag,
++				describe_object(&tag->object));
+ 		}
+ 	}
+ 
 -- 
 2.9.0.281.g286a8d9
+
+
