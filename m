@@ -2,80 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25B9D2018F
-	for <e@80x24.org>; Sun, 17 Jul 2016 19:25:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9723B2018F
+	for <e@80x24.org>; Sun, 17 Jul 2016 20:28:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751181AbcGQTZh (ORCPT <rfc822;e@80x24.org>);
-	Sun, 17 Jul 2016 15:25:37 -0400
-Received: from slow1-d.mail.gandi.net ([217.70.178.86]:44257 "EHLO
-	slow1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751142AbcGQTZg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2016 15:25:36 -0400
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
-	by slow1-d.mail.gandi.net (Postfix) with ESMTP id B444F486496
-	for <git@vger.kernel.org>; Sun, 17 Jul 2016 21:20:26 +0200 (CEST)
-Received: from mfilter27-d.gandi.net (mfilter27-d.gandi.net [217.70.178.155])
-	by relay2-d.mail.gandi.net (Postfix) with ESMTP id CA663C5A5C;
-	Sun, 17 Jul 2016 21:20:24 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter27-d.gandi.net
-Received: from relay2-d.mail.gandi.net ([IPv6:::ffff:217.70.183.194])
-	by mfilter27-d.gandi.net (mfilter27-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id hvNe4HExtpfc; Sun, 17 Jul 2016 21:20:23 +0200 (CEST)
-X-Originating-IP: 50.39.163.18
-Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 86EA2C5A4F;
-	Sun, 17 Jul 2016 21:20:21 +0200 (CEST)
-Date:	Sun, 17 Jul 2016 12:20:19 -0700
-From:	Josh Triplett <josh@joshtriplett.org>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	git@vger.kernel.org
-Subject: Re: format-patch with pager.format-patch=true gets very confused
-Message-ID: <20160717192019.GA29262@x>
-References: <20160717025642.GA30640@x>
- <alpine.DEB.2.20.1607171438030.28832@virtualbox>
+	id S1751216AbcGQU25 (ORCPT <rfc822;e@80x24.org>);
+	Sun, 17 Jul 2016 16:28:57 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:37605 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751189AbcGQU2z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2016 16:28:55 -0400
+Received: by mail-wm0-f52.google.com with SMTP id i5so91697033wmg.0
+        for <git@vger.kernel.org>; Sun, 17 Jul 2016 13:28:55 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=N44midx4iqmtDJZDYcfKSIijF84wC+n2pUU7IRQUWX8=;
+        b=Lmb9Tdd+u12w0ToTkTZQ9y6t6YPs1hdeh61wfpkcVs74vLZaB6TQczy8sp6VJQJ+Zk
+         OBvon+pmxeY0FOSuqXjlUIRXe59YwFNyV2EY+4DHXtNH2a727cP5waHMs3dkuPC07nr8
+         wMdjzzAjpttOBQqWonTQ0K4HPjSwzkcDphqBF7y4n3UB+/bN22o5oYNaheO5090lyA7V
+         bs/Bs5eMRq+WXD7W0nHsWF92qHoVJu02WRpQiSJryVfMNb60FrMPn/W0vWxl6EUjdCcX
+         GdwC7jFBnabrj4Q4yklzgqFlxD2MiR7Mq+EVKXlvclBBAhLE8iLogdfgNcrt72NUDSrG
+         bdBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=N44midx4iqmtDJZDYcfKSIijF84wC+n2pUU7IRQUWX8=;
+        b=mMHTUagh1ZFBC2njDROiqA1zkysDktGSEWSepWK7xYXcy+uQ98gQ3hdokI/8vsRzRU
+         IbZ+9UCTuBILfJv/2X/cg/yvivd9lp3h8nJO1UFIhj4z0kK/UJtxavV75ErynYoGTMeQ
+         78pB/qtHeO0BKpRLFylPbrf4d2zCg9IhnH5551QFl9xInPqSj4saChxueNMa+3dJZ76i
+         dmpwpTMobzfsqp+/d0ATQnm0YuCahiyCb6GJYbPtHLZOp1qAd4IiooGNSle7aYVJ/wqC
+         euB4oMu9ZusW6z5y8O/Ez6SR5ZnDn0oYPASS4jFLWGvdod6HF3jmb6Hz/Be02ezHl+j9
+         sQUg==
+X-Gm-Message-State: ALyK8tKcjxjAlIYioAYjZokEhSQbrlr3YjSWTbqlaWRnm3rdEr9ZITCHUm/vKOg0ZfrLU7RxTYcCMcVjzreJ2Q==
+X-Received: by 10.28.167.80 with SMTP id q77mr32568514wme.62.1468787334257;
+ Sun, 17 Jul 2016 13:28:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1607171438030.28832@virtualbox>
-User-Agent: Mutt/1.6.0 (2016-04-01)
+Received: by 10.194.70.167 with HTTP; Sun, 17 Jul 2016 13:28:53 -0700 (PDT)
+From:	Christian Couder <christian.couder@gmail.com>
+Date:	Sun, 17 Jul 2016 22:28:53 +0200
+Message-ID: <CAP8UFD2zJEZn-hhzEEM15bNfgzT=4U1UwfUgYNbWCRcioHhSDQ@mail.gmail.com>
+Subject: Draft of Git Rev News edition 17
+To:	git <git@vger.kernel.org>
+Cc:	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Nicola Paolucci <durden@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Greene <greened@obbligato.org>,
+	Ovatta Bianca <ovattabianca@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sun, Jul 17, 2016 at 02:41:48PM +0200, Johannes Schindelin wrote:
-> Hi Josh,
-> 
-> On Sat, 16 Jul 2016, Josh Triplett wrote:
-> 
-> > git-config(1) documents the ability to enable or disable the pager (or
-> > set a command-specific pager) for any command by setting
-> > pager.<cmd>=true.  For most commands, this seems to work as expected.
-> > However, setting pager.format-patch=true (or setting it to any specific
-> > pager) breaks badly: the pager spawns, with no output in it, and the
-> > pager doesn't respond to keystrokes (which makes it difficult to quit).
-> > 
-> > I think this may occur because format-patch's "reopen_stdout" interacts
-> > badly with the pager.
-> > 
-> > I think it makes sense for "format-patch --stdout" to respect
-> > pager.format-patch, but for format-patch *without* stdout to ignore
-> > pager.* and *never* spawn a pager, given that its only output (the list
-> > of patch files) goes to "realstdout".
-> 
-> As per http://article.gmane.org/gmane.comp.version-control.git/299451,
-> the `js/log-to-diffopt-file` patch series will be merged to `master` soon.
-> This patch series avoids the reopen() altogether and should fix the
-> problem you experience.
-> 
-> Since it is already in `next`, it should be relatively easy for you to
-> build and confirm. Would you kindly do that?
+Hi,
 
-I can confirm that that fixes the problem.  Thanks!
+A draft of a new Git Rev News edition is available here:
 
-- Josh Triplett
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-17.md
+
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
+
+  https://github.com/git/git.github.io/issues/162
+
+You can also reply to this email.
+
+I tried to cc everyone who appears in this edition but maybe I missed
+some people, sorry about that.
+
+Thomas, Nicola and myself plan to publish this edition on Wednesday
+July 20. Sorry for the late draft.
+
+Thanks,
+Christian.
