@@ -2,66 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78F742018F
-	for <e@80x24.org>; Sun, 17 Jul 2016 19:06:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25B9D2018F
+	for <e@80x24.org>; Sun, 17 Jul 2016 19:25:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751173AbcGQTGz (ORCPT <rfc822;e@80x24.org>);
-	Sun, 17 Jul 2016 15:06:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63427 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751142AbcGQTGy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2016 15:06:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2FA522C2A1;
-	Sun, 17 Jul 2016 15:06:53 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=axyUuuMsvk+IjK5LexLY4rZcfio=; b=thSkpW
-	dzTEizuUVTo4pYxiNuJsu5ViOmmvmKxP/BcmVC5u5LVIAO9NAXqFo6xll2vb1qC8
-	9B3t0KCgrxtxpYNx6swhiY5qqYVyP6AWHNIBZOIStiFdeshf577s69kZcwCaIDpC
-	09jIfvFu+rmz8CdLW+ap666deogV9sqmf46OI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IYY/EFjGcKMMZEP0o1uppPGNIAjKfQNE
-	2sgx/p+h99oOriXdAa5loQ3MyJU+qFxP7smgvhIUo271qCwf/iRFqeQ1xz75A9ls
-	Qr1+1eEJC4M+RElwbiSCCHBThTJuDtflC5d73yg5hruhZ1MfDSNYUw7mssuauvPW
-	oWHZMd6fjDI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 27BC42C2A0;
-	Sun, 17 Jul 2016 15:06:53 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A6C8A2C29F;
-	Sun, 17 Jul 2016 15:06:52 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	mappu <mappu04@gmail.com>, git@vger.kernel.org
-Subject: Re: proposal: allow git clone for http-hosted bundles
-References: <2841ce89-9c46-c3f2-53d8-afef6e1e5b01@gmail.com>
-	<20160717064513.GA2049@sigill.intra.peff.net>
-Date:	Sun, 17 Jul 2016 12:06:50 -0700
-In-Reply-To: <20160717064513.GA2049@sigill.intra.peff.net> (Jeff King's
-	message of "Sun, 17 Jul 2016 02:45:13 -0400")
-Message-ID: <xmqqd1mckrsl.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751181AbcGQTZh (ORCPT <rfc822;e@80x24.org>);
+	Sun, 17 Jul 2016 15:25:37 -0400
+Received: from slow1-d.mail.gandi.net ([217.70.178.86]:44257 "EHLO
+	slow1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751142AbcGQTZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2016 15:25:36 -0400
+Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
+	by slow1-d.mail.gandi.net (Postfix) with ESMTP id B444F486496
+	for <git@vger.kernel.org>; Sun, 17 Jul 2016 21:20:26 +0200 (CEST)
+Received: from mfilter27-d.gandi.net (mfilter27-d.gandi.net [217.70.178.155])
+	by relay2-d.mail.gandi.net (Postfix) with ESMTP id CA663C5A5C;
+	Sun, 17 Jul 2016 21:20:24 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter27-d.gandi.net
+Received: from relay2-d.mail.gandi.net ([IPv6:::ffff:217.70.183.194])
+	by mfilter27-d.gandi.net (mfilter27-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id hvNe4HExtpfc; Sun, 17 Jul 2016 21:20:23 +0200 (CEST)
+X-Originating-IP: 50.39.163.18
+Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 86EA2C5A4F;
+	Sun, 17 Jul 2016 21:20:21 +0200 (CEST)
+Date:	Sun, 17 Jul 2016 12:20:19 -0700
+From:	Josh Triplett <josh@joshtriplett.org>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	git@vger.kernel.org
+Subject: Re: format-patch with pager.format-patch=true gets very confused
+Message-ID: <20160717192019.GA29262@x>
+References: <20160717025642.GA30640@x>
+ <alpine.DEB.2.20.1607171438030.28832@virtualbox>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9F1D28D6-4C51-11E6-8128-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1607171438030.28832@virtualbox>
+User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Sun, Jul 17, 2016 at 02:41:48PM +0200, Johannes Schindelin wrote:
+> Hi Josh,
+> 
+> On Sat, 16 Jul 2016, Josh Triplett wrote:
+> 
+> > git-config(1) documents the ability to enable or disable the pager (or
+> > set a command-specific pager) for any command by setting
+> > pager.<cmd>=true.  For most commands, this seems to work as expected.
+> > However, setting pager.format-patch=true (or setting it to any specific
+> > pager) breaks badly: the pager spawns, with no output in it, and the
+> > pager doesn't respond to keystrokes (which makes it difficult to quit).
+> > 
+> > I think this may occur because format-patch's "reopen_stdout" interacts
+> > badly with the pager.
+> > 
+> > I think it makes sense for "format-patch --stdout" to respect
+> > pager.format-patch, but for format-patch *without* stdout to ignore
+> > pager.* and *never* spawn a pager, given that its only output (the list
+> > of patch files) goes to "realstdout".
+> 
+> As per http://article.gmane.org/gmane.comp.version-control.git/299451,
+> the `js/log-to-diffopt-file` patch series will be merged to `master` soon.
+> This patch series avoids the reopen() altogether and should fix the
+> problem you experience.
+> 
+> Since it is already in `next`, it should be relatively easy for you to
+> build and confirm. Would you kindly do that?
 
-> You might do better to stick a shim script in your $PATH to just
-> intercept the calls to git. Hacky, but it would probably solve your
-> problem with a minimal amount of code.
+I can confirm that that fixes the problem.  Thanks!
 
-I recently learned about http://repo.or.cz/git.git/bundles which
-is a very nicely done set of instructions ;-)
+- Josh Triplett
