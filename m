@@ -2,59 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD0111FEAA
-	for <e@80x24.org>; Sun, 17 Jul 2016 02:56:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47BC61FEAA
+	for <e@80x24.org>; Sun, 17 Jul 2016 04:42:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751935AbcGQC4u (ORCPT <rfc822;e@80x24.org>);
-	Sat, 16 Jul 2016 22:56:50 -0400
-Received: from relay5-d.mail.gandi.net ([217.70.183.197]:60388 "EHLO
-	relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751871AbcGQC4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jul 2016 22:56:50 -0400
-Received: from mfilter23-d.gandi.net (mfilter23-d.gandi.net [217.70.178.151])
-	by relay5-d.mail.gandi.net (Postfix) with ESMTP id 3F05F41C080
-	for <git@vger.kernel.org>; Sun, 17 Jul 2016 04:56:48 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter23-d.gandi.net
-Received: from relay5-d.mail.gandi.net ([IPv6:::ffff:217.70.183.197])
-	by mfilter23-d.gandi.net (mfilter23-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id 2LOaB3djTOl9 for <git@vger.kernel.org>;
-	Sun, 17 Jul 2016 04:56:46 +0200 (CEST)
-X-Originating-IP: 50.39.163.18
-Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id 4242C41C07D
-	for <git@vger.kernel.org>; Sun, 17 Jul 2016 04:56:45 +0200 (CEST)
-Date:	Sat, 16 Jul 2016 19:56:44 -0700
-From:	Josh Triplett <josh@joshtriplett.org>
+	id S1750892AbcGQEmL (ORCPT <rfc822;e@80x24.org>);
+	Sun, 17 Jul 2016 00:42:11 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:35262 "EHLO
+	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750819AbcGQEmJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2016 00:42:09 -0400
+Received: by mail-pf0-f180.google.com with SMTP id c2so53491380pfa.2
+        for <git@vger.kernel.org>; Sat, 16 Jul 2016 21:42:09 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=ugg66r/nOpRl7TYSBgQMnVVDe5JXJd25w7pjxqxI1HE=;
+        b=G3ZqLyfuujt29PcT9zl0x28MUqAL5CbrRA/RODOJjiqSq/WgPZOc+5OWxQxTPyx13k
+         tewstR5Kyai7C/ynIEtwv5ELP9gmonALxHMlRReZzySEqab72j4wQJy9UIgQo7NcoZuQ
+         pCtMuaCmkVa98jxJHVfy/1T0gkEsju3tQFNYAKm3612vWWVU+sDshITFvsnkQGcZkT5a
+         MoNQ1tt7iJJCklDAzp5yLMaH9GmQXuiSAxbcIcqlOiGDF49QY7e/KR2hJTz6elxCiCIF
+         LGUqdBcpTFMTw43Zw/mhQzQp7ijW0/Tx+WGWTJkvlndg9opkKu4MWr23dgLGMKL8iCcx
+         Tk3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=ugg66r/nOpRl7TYSBgQMnVVDe5JXJd25w7pjxqxI1HE=;
+        b=btbGx1ZmCp2a3Mjy9Xlc3Io2aejVoGmqkn8phuNzuTQ9uqIyPc7S3n5akZJIvjA5AB
+         EUmI2UFMoGJUfFkPWRQwJu5frRessZRDGmzVq+ew4xzsrzg3Nq/ziFKLp2JCT36o0QOM
+         lXefwtN0Nu7f2vwK2mUmebUOcxA9LmiPuAl6QDmuWPc2vUsy0ptia9GtBBt1gMSEaKcC
+         f0KL6W4NjF4L2pOa299fUaiYdDZxZ4xcDC9xBG49RRPBiz6CVk7pXaJ26IjCwYk3+oq+
+         w0zz3cRtIZQF4pZ0a+eRCQr+4P5M4/n8BWsGhFJ+hd4RxE4LkASYpw2Prmwvljvzx3NL
+         8zUw==
+X-Gm-Message-State: ALyK8tJ1tYbTzf2jCcfP84EyQRcNXWHzLvqQhtypr2OvBDGp3ydFue5DwgOvd6ksezuzXg==
+X-Received: by 10.98.200.29 with SMTP id z29mr35024731pff.143.1468730528681;
+        Sat, 16 Jul 2016 21:42:08 -0700 (PDT)
+Received: from [192.168.1.139] ([114.23.225.154])
+        by smtp.googlemail.com with ESMTPSA id d3sm2272222pfk.37.2016.07.16.21.42.06
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 16 Jul 2016 21:42:08 -0700 (PDT)
 To:	git@vger.kernel.org
-Subject: format-patch with pager.format-patch=true gets very confused
-Message-ID: <20160717025642.GA30640@x>
+From:	mappu <mappu04@gmail.com>
+Subject: proposal: allow git clone for http-hosted bundles
+Message-ID: <2841ce89-9c46-c3f2-53d8-afef6e1e5b01@gmail.com>
+Date:	Sun, 17 Jul 2016 16:41:54 +1200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.6.0 (2016-04-01)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-git-config(1) documents the ability to enable or disable the pager (or
-set a command-specific pager) for any command by setting
-pager.<cmd>=true.  For most commands, this seems to work as expected.
-However, setting pager.format-patch=true (or setting it to any specific
-pager) breaks badly: the pager spawns, with no output in it, and the
-pager doesn't respond to keystrokes (which makes it difficult to quit).
+Hi list,
 
-I think this may occur because format-patch's "reopen_stdout" interacts
-badly with the pager.
+Right now it's possible to git clone a repository over http, and git 
+clone a bundle from the local filesystem, but it's not possible to git 
+clone a bundle hosted on http.
 
-I think it makes sense for "format-patch --stdout" to respect
-pager.format-patch, but for format-patch *without* stdout to ignore
-pager.* and *never* spawn a pager, given that its only output (the list
-of patch files) goes to "realstdout".
+Would it be possible to allow this in the future? Hopefully it's only a 
+minor refactor in `builtin/clone.c`.
 
-- Josh Triplett
+Regards
+
+mappu
+
+
+(Back story: I'm stuck with a git frontend that only ever calls `git 
+clone ${target}` - that's Golang's `go get` - but bundles are a bit 
+better fit for my request patterns than raw repositories).
+
