@@ -7,82 +7,138 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56FE720195
-	for <e@80x24.org>; Sun, 17 Jul 2016 08:23:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B58B620195
+	for <e@80x24.org>; Sun, 17 Jul 2016 08:44:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750808AbcGQIW4 (ORCPT <rfc822;e@80x24.org>);
-	Sun, 17 Jul 2016 04:22:56 -0400
-Received: from mout.gmx.net ([212.227.15.15]:58400 "EHLO mout.gmx.net"
+	id S1751071AbcGQIoj (ORCPT <rfc822;e@80x24.org>);
+	Sun, 17 Jul 2016 04:44:39 -0400
+Received: from mout.gmx.net ([212.227.15.19]:50802 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750725AbcGQIWy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2016 04:22:54 -0400
+	id S1751030AbcGQIof (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2016 04:44:35 -0400
 Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MY7dI-1btTkg2Yb2-00UqrU; Sun, 17 Jul 2016 10:22:34
+ ESMTPSA (Nemesis) id 0Me8RK-1bj0Uc46Yg-00PsSo; Sun, 17 Jul 2016 10:44:29
  +0200
-Date:	Sun, 17 Jul 2016 10:22:33 +0200 (CEST)
+Date:	Sun, 17 Jul 2016 10:44:27 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Eric Sunshine <sunshine@sunshineco.com>
-cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] fsck: optionally show more helpful info for broken
- links
-In-Reply-To: <CAPig+cS=LVBhy1pqo2KXz-NoPZdPzkzTgV+S1Ro5+zOjDpKGPw@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1607171021520.28832@virtualbox>
-References: <cover.1468510191.git.johannes.schindelin@gmx.de> <2cc123136b25cae12dce2a6f30fe0ba5ae8dc811.1468510191.git.johannes.schindelin@gmx.de> <CAPig+cS=LVBhy1pqo2KXz-NoPZdPzkzTgV+S1Ro5+zOjDpKGPw@mail.gmail.com>
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	git@vger.kernel.org
+Subject: Re: [PATCH 2/3] fsck_walk(): optionally name objects on the go
+In-Reply-To: <xmqqeg6wrw2m.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1607171026420.28832@virtualbox>
+References: <cover.1468510191.git.johannes.schindelin@gmx.de> <f5ef009d2be6bf0137b33ac9ce85ff0ce03a48e8.1468510191.git.johannes.schindelin@gmx.de> <xmqqeg6wrw2m.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:M6nNGwP1bIgTuZCq5bd2wVC0NR646yXFq4I0ht+eXSW5BZXmVFU
- ZkKZti8mR9jbOUyUBAG+7odRGjiviPMIBactNerpOWoO90A0qB3nZxiWEXoMLywEbwCMozL
- H9ZBkk5Mnp3dEKRlQHkWKLMtns8+jhDsYErRg6brcemFGdUq2H9Z/QUdwt+UFwpjE1AHM+e
- K6C0cQUJf3vRuw65UDACA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:wwvya9QS8FA=:FmB8gcE9vMjUkQmVcVAyiR
- QmfgfTQtUNJ4RyE8WPMFjBdnFNKZdctz7Pzt7IbfcqR6y1QqX6DLmZ0lSKA5EWNC/OLGH7Lqa
- d7KPTwlh2z9JRa/0ktaWAOxyp/2dNeNoBwKxwLFlFBV/lLpKsLfhdFJb1tQ3cJ7FFLddYbFM2
- jBq9Qwo+R914o7D3Cm5E1PG1A6DOzHYUa8D9Oh+DDhAjT3itOIF/WdVJEswCceRWDBHSBWDh6
- uMc5MM1V6ts5O3blmQmwqoUszlRraOpo5BKUwywgtlxBg9BYXZr5ZMy+8O1SHdZrNAp+/TtHi
- FhRHoFf5CYVaB8VhD1F0BLoIXqYJ6jZz/qmMsrgLy+WqYf4HXW9fzaL0kwesqh08Sp63pr94V
- o1uTU9ccTK131/hTs4/t+7XB+tOtRIvPI0CAH98Ktl0l7rnr8IagHv2h4AoDlF/BfhSBkjSFg
- XGyfltmSsL9nbdsBUrP8zPjosEskoB+iVyXuX8RPFhVpAB6WVxqUNvBTO51yeA18Z3LbdrM+3
- d01G5SVk1tttp2fq8/ANeYB8RgZ3RAy/qHgkKW9xELy3gcG1SfSaayZF3DaWvvlDgRT0zdaTm
- vc7gom4RYXt7CdL8tDVW6190XeRZaKu89p8yRGSlmtJScMSE43tjJviXDDfDiNwNtGr3O0lhD
- uTmDaa1La2v2zDJbXUmklA+dDdrTOxpN8MymmWNpUHcd3v/rI/66EOd+Z2VYnf5EYeTbi4ih2
- GGOr3RhNmRHJrubjU1KUa+IXoUyW3JDBQqSoN0suuVEZb/6Z6U3MY8yxGZDKn0IR48DuzoHSd
- j4AbrXs
+Content-Type: multipart/mixed; BOUNDARY="8323329-732134256-1468745069=:28832"
+X-Provags-ID: V03:K0:4BUsvALHEy3zZKVcDLJ/1zJESe1oNaD18CrCPY0YVdI9V2G6LbG
+ m076ByY5ptRiAF+JH+jrI0H5+Z2RtEB7J0p5tUY7mX4NBAL341HIc8oAZExGSUfDWeSWHFC
+ ok8C5IIyDaQIZalj1D0bGa+D/5s0Xem6K/U6mvmaIRaaEdnJLRVm9sEgjqd08HysG4q7aHK
+ Jk9QpT5j4/AxfIyORr1qA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:SnevD0joLUg=:GtlMSL8UqNo9pD5IgTwnOX
+ LT/wSRJVwVcdZYD2/t6dIh3FxCrszjt/HpWkX6gkDMMusY0coQKvl4WHVsnwrYXZ2VnfubpeK
+ cQBl606pIZzsQs6dCEz57NyTscwvtfdBPCl0e/SKuBhIrHT/Q/bugKGfAqzO0vNlPMwh/Pzpg
+ H7bj38ywV0d9hTi2ap/Gb8jWeborKgRjej0tUx/Tv6vwUXcR3o+uqOgSzY8pbMhsLO+68QY2v
+ UEgG4nZNpzqHOVMFZAnqAU9SB97I9FCo/Y1p+oY6AqFdjo8Kg/jIn47277h0NHUBEZcde1DBq
+ +5SMXwqVtM3B5dzWBuX0rUiCYenM+zSrVkTOZyr5Z4HB5XDIdzac7XC/Acij5TMYhg5V+5ijJ
+ EccFpmgmASzuvBA2rrMoq249Nhcx7/fn2dO/DTju6v7ZIJiMdgZ0Hk9+SGokjqkUWakTf4q35
+ fdMipDt2iHMmfnM2fJfurkyj+LCqf6XxAy1VsiKVsOyZpPQJwHfpomDCqsYNce0YRIxXQjm4r
+ ZFbQDu/PXP7WVbp2m81dV/mmLTbvQzKdV/P6/TgrOJ+OvKeAtZw0/GXrZw7Nb1uGlq17/LSEb
+ VbkY795OWHpDuUbirqhaFsaI3Qw2IiX6MnQhHNh/HC1h+k4iWblrEDSpHnZCFB8K6BxskNKdN
+ Qbl47u7zBrqc32l7p+OKPmPV6KjngXihkjGjHeOQ2NLS9gVB/jW5KLgo4s1wvrGhx+swBhekc
+ 9ZxboSSqbxS53TSzDotH2Zj5/x5k0TEVRlWhnC5auu6guO28tNlTqLSZaO+EXa2tacHLUnS4w
+ jQph7K2
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Eric,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 15 Jul 2016, Eric Sunshine wrote:
+--8323329-732134256-1468745069=:28832
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> On Thu, Jul 14, 2016 at 11:30 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > When reporting broken links between commits/trees/blobs, it would be
-> > quite helpful at times if the user would be told how the object is
-> > supposed to be reachable.
+Hi Junio,
+
+On Thu, 14 Jul 2016, Junio C Hamano wrote:
+
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>=20
+> > Note that this patch opts for decorating the objects with plain strings
+> > instead of full-blown structs (=C3=A0 la `struct rev_name` in the code =
+of
+> > the `git name-rev` command), for several reasons:
 > >
-> > With the new --name-objects option, git-fsck will try to do exactly
-> > that: name the objects in a way that shows how they are reachable.
-> > [...]
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/builtin/fsck.c b/builtin/fsck.c
-> > @@ -576,6 +598,7 @@ static struct option fsck_opts[] = {
-> >         OPT_BOOL(0, "lost-found", &write_lost_and_found,
-> >                                 N_("write dangling objects in .git/lost-found")),
-> >         OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
-> > +       OPT_BOOL(0, "name-objects", &name_objects, N_("show verbose names for rechable objects")),
-> 
-> s/rechable/reachable/
-> 
-> >         OPT_END(),
-> >  };
+> > - the code is much simpler than if it had to work with structs that
+> >   describe arbitrarily long names such as "master~14^2~5:builtin/am.c",
+> >
+> > - the string processing is actually quite light-weight compared to the
+> >   rest of fsck's operation,
+> >
+> > - the caller of fsck_walk() is expected to provide names for the
+> >   starting points, and using plain and simple strings is just the
+> >   easiest way to do that.
+>=20
+> Simpler is good; we can always optimize something well-isolated like
+> this later if it proves necessary.
 
-Thanks, as always, for a set of extra sharp eyes. Will be fixed in the
-next iteration.
+I am glad we agree!
 
-Ciao,
+> > +static char *get_object_name(struct fsck_options *options, struct obje=
+ct *obj)
+> > +{
+> > +=09return options->object_names ?
+> > +=09=09lookup_decoration(options->object_names, obj) : NULL;
+> > +}
+> > +
+> > +static void put_object_name(struct fsck_options *options, struct objec=
+t *obj,
+> > +=09const char *fmt, ...)
+> > +{
+> > +=09va_list ap;
+> > +=09char *existing =3D lookup_decoration(options->object_names, obj);
+> > +=09struct strbuf buf =3D STRBUF_INIT;
+>=20
+> When reading a few early calling sites, it wasn't quite obvious how
+> the code avoids the "naming" when .object_names decoration is not
+> initialized (which is tied to the --name-objects option to decide if
+> the feature needs to be triggered).  The current "if get_object_name
+> for the containing object gives us NULL, then we refrain from
+> calling put_object_name()" may be good enough, but having an early
+> return similar to get_object_name() would make it easier to grok,
+
+My knee-jerk reaction was: in order to name objects in this part of the
+code, we need the name of the parent/tree/whatever, so yeah, we have
+object_names.
+
+But you're right, it is much easier to read with the early returns.
+
+And who knows, maybe the fsck.c code will learn to name the starting
+points itself in the future?
+
+> >  =09while (tree_entry(&desc, &entry)) {
+> >  =09=09int result;
+> > =20
+> > +=09=09if (name) {
+> > +=09=09=09struct object *obj =3D parse_object(entry.oid->hash);
+>=20
+> This worries me somewhat.  IIRC, "git fsck" uses object->parsed to
+> tell between objects that are unreachable or not and act differently
+> so I would fear that parsing the object here would screw up that
+> logic, when the call comes from fsck_dir() -> fsck_sha1_list() ->
+> fsck_sha1() -> fsck_obj() -> fsck_walk() -> fsck_walk_tree()
+> codepath.  Is it no longer the case, I wonder?
+>=20
+> I see in the same loop there is a call to lookup_tree()->object, which
+> probably is how the existing code avoids that issue?
+
+Most likely. I factored that out so that the object is looked up first,
+and reused via object_as_type() for the tree/blob cases.
+
+Both concerns will be addressed in the next iteration.
+
+Thanks,
 Dscho
+--8323329-732134256-1468745069=:28832--
