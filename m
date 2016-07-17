@@ -7,269 +7,265 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69F1D20195
-	for <e@80x24.org>; Sun, 17 Jul 2016 11:00:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90C5020195
+	for <e@80x24.org>; Sun, 17 Jul 2016 11:00:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751061AbcGQLAA (ORCPT <rfc822;e@80x24.org>);
-	Sun, 17 Jul 2016 07:00:00 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53954 "EHLO mout.gmx.net"
+	id S1751104AbcGQLAE (ORCPT <rfc822;e@80x24.org>);
+	Sun, 17 Jul 2016 07:00:04 -0400
+Received: from mout.gmx.net ([212.227.17.20]:61966 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750796AbcGQK76 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2016 06:59:58 -0400
-Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0M1WHV-1b4k0A3ccL-00tXOi; Sun, 17 Jul 2016 12:59:39
+	id S1750884AbcGQK77 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2016 06:59:59 -0400
+Received: from virtualbox ([37.24.141.198]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Lyi0B-1bKf6e0kDP-0163vI; Sun, 17 Jul 2016 12:59:51
  +0200
-Date:	Sun, 17 Jul 2016 12:59:38 +0200 (CEST)
+Date:	Sun, 17 Jul 2016 12:59:49 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
 cc:	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 0/4] Teach `git fsck` a new option: `--name-objects`
-In-Reply-To: <cover.1468510191.git.johannes.schindelin@gmx.de>
-Message-ID: <cover.1468752290.git.johannes.schindelin@gmx.de>
-References: <cover.1468510191.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 2/4] fsck_walk(): optionally name objects on the go
+In-Reply-To: <cover.1468752290.git.johannes.schindelin@gmx.de>
+Message-ID: <cd7d97f566484e146eccebe0a0a2335c852bb532.1468752290.git.johannes.schindelin@gmx.de>
+References: <cover.1468510191.git.johannes.schindelin@gmx.de> <cover.1468752290.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:9OkRMdAjTex4JJvc2fojsodTkfViGFl7s84rsnpDML8LHjokcRv
- y3hUZJter8oeNBK7AF4pLLJB48ubWFirwBbizFe45REQ+TevRzrdAainemEIRu/lF/kLNVw
- FFiTxu/pWthX7UMDFWqJsWVzXMrimdVAfkfRgPNmRysHdekMBX01yvm4PIgozysza5BFoAf
- +7AsBTvejGAgkPpremU0w==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:eyDL0MJmL8g=:J9TIsWCu+v+ubdbM6f7Rt8
- xFsK8ym6aJIP8tZh1/wb7tLTeU+hJtaODrb3Ex11aC7UA0N2gdMON2OG24Fq/NH14VMOa0tko
- ZJRC3AVRW/zIo6AN7+ltH0XIDc2r9t0ifCg2yUaQrhJ7B0c/zSsvck/YvvkiD9zapU5O/c8C+
- W8ZnVePycnQ81d2hTbN0/Tgzv9CK+AW+fl/UF0ZEkoo0jOFbvaPDXuHQB9p7f91N5tbjtYIUA
- nwjJ/gP+h9HA5xg8Q0kQrWGgb3G8megmS/T+cJ6GWJXyQtYpXv6ZdB5k0KnQhXmX+W/lUk3QG
- 4VkFHYpdpXbFu3k7Q0UjcON7MOHV1jZ2BXSDioedBGhdZAJwFqGLXZMfTNwWf1zem57NKcH1P
- 3lMSsA4X+zyLxXWm59fYQOg0a88uo/oxIxQrtoWCtYLCMA/dV8i0h/QDcguaswIhkfuVo4dST
- QpC0wwX7ji0suD0oAI9Xft8klUJ3g1a8BJRDWr1owmCokFz79greVMea/14Dn0gu+RF+AaPxq
- bAsXe1mZnHadurqbUPrONH/MtZTMVShauM/NH/MPRiubg5HiL942tHtFDQvoOwNtcT9dzByZ0
- UyFWPooNmUcD9oANnE34zzmTpsK+hSNVThRI2QM6RdqmUHbE3jkzF8F5xEZpcuCAQh1BdW2YE
- jOcX/Jn4leZd1xXf4H6Q2eAMOD9iT73iR79yIL0o+yaEADrcmoLre1fWjCeHMYx9WNl6B/ynT
- 9Na67BHkSUs+4kG2XlCtofWOHbmz7dlv4fiHQpUPY3jpdBIPTUxOZKCQec5sKJKqBD0cY9+qd
- 9quG/wc
+Content-Type: multipart/mixed; BOUNDARY="8323329-940045425-1468753191=:28832"
+X-Provags-ID: V03:K0:lKw7/tmG6i5zNyCS6w4+Jk9KOTceo/85CVtvEkLD+xZmcjQJqe6
+ tzrBoBrlgQ8GkElo2Ox89uN5yQulKN8J1Hhyz5R18ynSQae0qLxTy8Ddl9ItoUiqOPQ8keQ
+ Rawo6F9iG2wxaRhma2CFI2NJJBX6WBroe3ZaNUlP/Ju3Fj8/n3cgD7qAJFVRMO4iLS43zGA
+ evZ9RJvMg5DYislU+xKsw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:5VRqP30wUcE=:vbdvZZFy23qrgZJGr7sS+3
+ kxF7GyjVMlT4ZnTYCnxiO/2xej0HNYkY1kuIJIeO/ylOQ1iJditV7mFOdvXDYIMfClFwRDKYq
+ ogni65ecvw+oIgcPan27ADk/L2V0rFpPHQ2w7kEvx0D9tXl8OmcoySUmqRLAPfAUUj9hh1Nk4
+ Sgu829vvT9hbjl6QsJQMGUnQHGiAvq649PKbEyOcZU7OBEYg7MXRaOiQF6sc9Jkdxxbw6hcEN
+ 0kyOgs2+tpbd+Q/qXgmtU9f4u9KCPj/4F0eFUbjgwhIea4lLS4Kc1TfMnHoKJ/ZuaZD5NSCfj
+ QWfRTsVVKXpTladOoW6P+itTHzWjCZNaxqpo2TZobE7t/yO9EldFvCgCxowkPf3hpC3AzlxDV
+ 6UCQJZwXKbrahIwwULkjXIH6E5mhhKi8XIcEupYeRXmR3NT1tuUfHCvfUoa3GRsAA+hG/AKRx
+ 13BnjrNOdZ9tz1RmPIC3+6CG0dJCz74pq7ztIRvSO3t9AWaS8Rd+0ye1XgCp0UoGwaRyMhrzo
+ YV/FsuJE+HprCFapmpuN5c1K4e3KJKPGf3C3e2x5J4aJXoaLr2/e2nEgzhIypdv8/Y/+x5cKA
+ FLFydwfWLLwwNCE1F4lS8LDpN4ETRtyDUsaxERXAkp2os5MVKQ8A94s2KPxpQnD2595gZQN9J
+ MbQ4KCSF7XgQVEAy1rXSIs6DXcn9d1QAx5MVRW9uu1NPT8fTyYsToVVCG73iGi0dXjxSJ9Q0u
+ OCO7OWCenex856003duiWdMvGFGhvn/CaiVgxdZOG1NV14vC5HzT5jHJfSH4kuRKzokiXVL9z
+ JCMe2QT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When using experimental features (such as worktrees), it is quite
-possible to end up with a repository that is a little bit corrupted. In
-this developer's case, the auto gc run during interactive rebases in
-worktrees completely messed up the reflogs.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The symptoms are broken links between commits/trees/blobs.
+--8323329-940045425-1468753191=:28832
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Trying to work around such problems can be a real challenge: while
-several tools will report when objects are missing, all of them simply
-state the SHA-1. This is not useful when the user has to kiss the
-offending reflog good-bye, but does not even know which one.
+If fsck_options->name_objects is initialized, and if it already has
+name(s) for the object(s) that are to be the starting point(s) for
+fsck_walk(), then that function will now add names for the objects
+that were walked.
 
-This patch series introduces a new option to `git fsck`: --name-objects.
-With this option, the fsck command will report not only the SHA-1 of
-missing objects, but also a name by which this object is supposed to be
-reachable.
+This will be highly useful for teaching git-fsck to identify root causes
+for broken links, which is the task for the next patch in this series.
 
-Example output:
+Note that this patch opts for decorating the objects with plain strings
+instead of full-blown structs (=C3=A0 la `struct rev_name` in the code of
+the `git name-rev` command), for several reasons:
 
-	...
-	broken link from    tree b5eb6ff...  (refs/stash@{<date>}~37:)
-		      to    blob ec5cf80...
+- the code is much simpler than if it had to work with structs that
+  describe arbitrarily long names such as "master~14^2~5:builtin/am.c",
 
-Relative to v1, a tyop was fixed, Junio's suggestions about an early
-return from {get,put}_object_name() and about avoiding parsing of
-objects were addressed, and I found a couple more places in fsck.c that
-could benefit from object names.
+- the string processing is actually quite light-weight compared to the
+  rest of fsck's operation,
 
+- the caller of fsck_walk() is expected to provide names for the
+  starting points, and using plain and simple strings is just the
+  easiest way to do that.
 
-Johannes Schindelin (4):
-  fsck: refactor how to describe objects
-  fsck_walk(): optionally name objects on the go
-  fsck: give the error function a chance to see the fsck_options
-  fsck: optionally show more helpful info for broken links
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ fsck.c | 87 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++---
+ fsck.h |  1 +
+ 2 files changed, 84 insertions(+), 4 deletions(-)
 
- Documentation/git-fsck.txt |   9 +++-
- builtin/fsck.c             |  80 ++++++++++++++++++++++++--------
- fsck.c                     | 113 +++++++++++++++++++++++++++++++++++++++++----
- fsck.h                     |   7 ++-
- t/t1450-fsck.sh            |  22 +++++++++
- 5 files changed, 200 insertions(+), 31 deletions(-)
-
-Published-As: https://github.com/dscho/git/releases/tag/fsck-name-objects-v2
-Interdiff vs v1:
-
- diff --git a/builtin/fsck.c b/builtin/fsck.c
- index e2173b6..49680e9 100644
- --- a/builtin/fsck.c
- +++ b/builtin/fsck.c
- @@ -93,7 +93,8 @@ static int objerror(struct object *obj, const char *err)
-  	return -1;
-  }
-  
- -static int fsck_error_func(struct object *obj, int type, const char *message)
- +static int fsck_error_func(struct fsck_options *o,
- +	struct object *obj, int type, const char *message)
-  {
-  	objreport(obj, (type == FSCK_WARN) ? "warning" : "error", message);
-  	return (type == FSCK_WARN) ? 0 : 1;
- @@ -598,7 +599,7 @@ static struct option fsck_opts[] = {
-  	OPT_BOOL(0, "lost-found", &write_lost_and_found,
-  				N_("write dangling objects in .git/lost-found")),
-  	OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
- -	OPT_BOOL(0, "name-objects", &name_objects, N_("show verbose names for rechable objects")),
- +	OPT_BOOL(0, "name-objects", &name_objects, N_("show verbose names for reachable objects")),
-  	OPT_END(),
-  };
-  
- diff --git a/fsck.c b/fsck.c
- index fe6a28a..c9cf3de 100644
- --- a/fsck.c
- +++ b/fsck.c
- @@ -291,7 +291,7 @@ static int report(struct fsck_options *options, struct object *object,
-  
-  	va_start(ap, fmt);
-  	strbuf_vaddf(&sb, fmt, ap);
- -	result = options->error_func(object, msg_type, sb.buf);
- +	result = options->error_func(options, object, msg_type, sb.buf);
-  	strbuf_release(&sb);
-  	va_end(ap);
-  
- @@ -300,17 +300,21 @@ static int report(struct fsck_options *options, struct object *object,
-  
-  static char *get_object_name(struct fsck_options *options, struct object *obj)
-  {
- -	return options->object_names ?
- -		lookup_decoration(options->object_names, obj) : NULL;
- +	if (!options->object_names)
- +		return NULL;
- +	return lookup_decoration(options->object_names, obj);
-  }
-  
-  static void put_object_name(struct fsck_options *options, struct object *obj,
-  	const char *fmt, ...)
-  {
-  	va_list ap;
- -	char *existing = lookup_decoration(options->object_names, obj);
-  	struct strbuf buf = STRBUF_INIT;
- +	char *existing;
-  
- +	if (!options->object_names)
- +		return;
- +	existing = lookup_decoration(options->object_names, obj);
-  	if (existing)
-  		return;
-  	va_start(ap, fmt);
- @@ -319,6 +323,19 @@ static void put_object_name(struct fsck_options *options, struct object *obj,
-  	va_end(ap);
-  }
-  
- +static const char *describe_object(struct fsck_options *o, struct object *obj)
- +{
- +	static struct strbuf buf = STRBUF_INIT;
- +	char *name;
- +
- +	strbuf_reset(&buf);
- +	strbuf_addstr(&buf, oid_to_hex(&obj->oid));
- +	if (o->object_names && (name = lookup_decoration(o->object_names, obj)))
- +		strbuf_addf(&buf, " (%s)", name);
- +
- +	return buf.buf;
- +}
- +
-  static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_options *options)
-  {
-  	struct tree_desc desc;
- @@ -332,26 +349,29 @@ static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_options *op
-  	name = get_object_name(options, &tree->object);
-  	init_tree_desc(&desc, tree->buffer, tree->size);
-  	while (tree_entry(&desc, &entry)) {
- +		struct object *obj;
-  		int result;
-  
- -		if (name) {
- -			struct object *obj = parse_object(entry.oid->hash);
- -
- -			if (obj)
- -				put_object_name(options, obj, "%s%s%s", name,
- -					entry.path,
- -					S_ISDIR(entry.mode) ? "/" : "");
- -		}
- -
-  		if (S_ISGITLINK(entry.mode))
-  			continue;
- -		if (S_ISDIR(entry.mode))
- -			result = options->walk(&lookup_tree(entry.oid->hash)->object, OBJ_TREE, data, options);
- -		else if (S_ISREG(entry.mode) || S_ISLNK(entry.mode))
- -			result = options->walk(&lookup_blob(entry.oid->hash)->object, OBJ_BLOB, data, options);
- +
- +		if (S_ISDIR(entry.mode)) {
- +			obj = &lookup_tree(entry.oid->hash)->object;
- +			if (name)
- +				put_object_name(options, obj, "%s%s/", name,
- +					entry.path);
- +			result = options->walk(obj, OBJ_TREE, data, options);
- +		}
- +		else if (S_ISREG(entry.mode) || S_ISLNK(entry.mode)) {
- +			obj = &lookup_blob(entry.oid->hash)->object;
- +			if (name)
- +				put_object_name(options, obj, "%s%s", name,
- +					entry.path);
- +			result = options->walk(obj, OBJ_BLOB, data, options);
- +		}
-  		else {
-  			result = error("in tree %s: entry %s has bad mode %.6o",
- -					oid_to_hex(&tree->object.oid), entry.path, entry.mode);
- +					describe_object(options, &tree->object), entry.path, entry.mode);
-  		}
-  		if (result < 0)
-  			return result;
- @@ -447,7 +467,7 @@ int fsck_walk(struct object *obj, void *data, struct fsck_options *options)
-  	case OBJ_TAG:
-  		return fsck_walk_tag((struct tag *)obj, data, options);
-  	default:
- -		error("Unknown object type for %s", oid_to_hex(&obj->oid));
- +		error("Unknown object type for %s", describe_object(options, obj));
-  		return -1;
-  	}
-  }
- @@ -890,12 +910,13 @@ int fsck_object(struct object *obj, void *data, unsigned long size,
-  			  obj->type);
-  }
-  
- -int fsck_error_function(struct object *obj, int msg_type, const char *message)
- +int fsck_error_function(struct fsck_options *o,
- +	struct object *obj, int msg_type, const char *message)
-  {
-  	if (msg_type == FSCK_WARN) {
- -		warning("object %s: %s", oid_to_hex(&obj->oid), message);
- +		warning("object %s: %s", describe_object(o, obj), message);
-  		return 0;
-  	}
- -	error("object %s: %s", oid_to_hex(&obj->oid), message);
- +	error("object %s: %s", describe_object(o, obj), message);
-  	return 1;
-  }
- diff --git a/fsck.h b/fsck.h
- index 26c0d41..1891c18 100644
- --- a/fsck.h
- +++ b/fsck.h
- @@ -23,9 +23,11 @@ int is_valid_msg_type(const char *msg_id, const char *msg_type);
-  typedef int (*fsck_walk_func)(struct object *obj, int type, void *data, struct fsck_options *options);
-  
-  /* callback for fsck_object, type is FSCK_ERROR or FSCK_WARN */
- -typedef int (*fsck_error)(struct object *obj, int type, const char *message);
- +typedef int (*fsck_error)(struct fsck_options *o,
- +	struct object *obj, int type, const char *message);
-  
- -int fsck_error_function(struct object *obj, int type, const char *message);
- +int fsck_error_function(struct fsck_options *o,
- +	struct object *obj, int type, const char *message);
-  
-  struct fsck_options {
-  	fsck_walk_func walk;
-
--- 
+diff --git a/fsck.c b/fsck.c
+index 0531545..6ed90ec 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -9,6 +9,7 @@
+ #include "refs.h"
+ #include "utf8.h"
+ #include "sha1-array.h"
++#include "decorate.h"
+=20
+ #define FSCK_FATAL -1
+ #define FSCK_INFO -2
+@@ -297,25 +298,64 @@ static int report(struct fsck_options *options, struc=
+t object *object,
+ =09return result;
+ }
+=20
++static char *get_object_name(struct fsck_options *options, struct object *=
+obj)
++{
++=09if (!options->object_names)
++=09=09return NULL;
++=09return lookup_decoration(options->object_names, obj);
++}
++
++static void put_object_name(struct fsck_options *options, struct object *o=
+bj,
++=09const char *fmt, ...)
++{
++=09va_list ap;
++=09struct strbuf buf =3D STRBUF_INIT;
++=09char *existing;
++
++=09if (!options->object_names)
++=09=09return;
++=09existing =3D lookup_decoration(options->object_names, obj);
++=09if (existing)
++=09=09return;
++=09va_start(ap, fmt);
++=09strbuf_vaddf(&buf, fmt, ap);
++=09add_decoration(options->object_names, obj, strbuf_detach(&buf, NULL));
++=09va_end(ap);
++}
++
+ static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_optio=
+ns *options)
+ {
+ =09struct tree_desc desc;
+ =09struct name_entry entry;
+ =09int res =3D 0;
++=09const char *name;
+=20
+ =09if (parse_tree(tree))
+ =09=09return -1;
+=20
++=09name =3D get_object_name(options, &tree->object);
+ =09init_tree_desc(&desc, tree->buffer, tree->size);
+ =09while (tree_entry(&desc, &entry)) {
++=09=09struct object *obj;
+ =09=09int result;
+=20
+ =09=09if (S_ISGITLINK(entry.mode))
+ =09=09=09continue;
+-=09=09if (S_ISDIR(entry.mode))
+-=09=09=09result =3D options->walk(&lookup_tree(entry.oid->hash)->object, O=
+BJ_TREE, data, options);
+-=09=09else if (S_ISREG(entry.mode) || S_ISLNK(entry.mode))
+-=09=09=09result =3D options->walk(&lookup_blob(entry.oid->hash)->object, O=
+BJ_BLOB, data, options);
++
++=09=09if (S_ISDIR(entry.mode)) {
++=09=09=09obj =3D &lookup_tree(entry.oid->hash)->object;
++=09=09=09if (name)
++=09=09=09=09put_object_name(options, obj, "%s%s/", name,
++=09=09=09=09=09entry.path);
++=09=09=09result =3D options->walk(obj, OBJ_TREE, data, options);
++=09=09}
++=09=09else if (S_ISREG(entry.mode) || S_ISLNK(entry.mode)) {
++=09=09=09obj =3D &lookup_blob(entry.oid->hash)->object;
++=09=09=09if (name)
++=09=09=09=09put_object_name(options, obj, "%s%s", name,
++=09=09=09=09=09entry.path);
++=09=09=09result =3D options->walk(obj, OBJ_BLOB, data, options);
++=09=09}
+ =09=09else {
+ =09=09=09result =3D error("in tree %s: entry %s has bad mode %.6o",
+ =09=09=09=09=09oid_to_hex(&tree->object.oid), entry.path, entry.mode);
+@@ -330,20 +370,55 @@ static int fsck_walk_tree(struct tree *tree, void *da=
+ta, struct fsck_options *op
+=20
+ static int fsck_walk_commit(struct commit *commit, void *data, struct fsck=
+_options *options)
+ {
++=09int counter =3D 0, generation =3D 0, name_prefix_len =3D 0;
+ =09struct commit_list *parents;
+ =09int res;
+ =09int result;
++=09const char *name;
+=20
+ =09if (parse_commit(commit))
+ =09=09return -1;
+=20
++=09name =3D get_object_name(options, &commit->object);
++=09if (name)
++=09=09put_object_name(options, &commit->tree->object, "%s:", name);
++
+ =09result =3D options->walk((struct object *)commit->tree, OBJ_TREE, data,=
+ options);
+ =09if (result < 0)
+ =09=09return result;
+ =09res =3D result;
+=20
+ =09parents =3D commit->parents;
++=09if (name && parents) {
++=09=09int len =3D strlen(name), power;
++
++=09=09if (len && name[len - 1] =3D=3D '^') {
++=09=09=09generation =3D 1;
++=09=09=09name_prefix_len =3D len - 1;
++=09=09}
++=09=09else { /* parse ~<generation> suffix */
++=09=09=09for (generation =3D 0, power =3D 1;
++=09=09=09     len && isdigit(name[len - 1]);
++=09=09=09     power *=3D 10)
++=09=09=09=09generation +=3D power * (name[--len] - '0');
++=09=09=09if (power > 1 && len && name[len - 1] =3D=3D '~')
++=09=09=09=09name_prefix_len =3D len - 1;
++=09=09}
++=09}
++
+ =09while (parents) {
++=09=09if (name) {
++=09=09=09struct object *obj =3D &parents->item->object;
++
++=09=09=09if (++counter > 1)
++=09=09=09=09put_object_name(options, obj, "%s^%d",
++=09=09=09=09=09name, counter);
++=09=09=09else if (generation > 0)
++=09=09=09=09put_object_name(options, obj, "%.*s~%d",
++=09=09=09=09=09name_prefix_len, name, generation + 1);
++=09=09=09else
++=09=09=09=09put_object_name(options, obj, "%s^", name);
++=09=09}
+ =09=09result =3D options->walk((struct object *)parents->item, OBJ_COMMIT,=
+ data, options);
+ =09=09if (result < 0)
+ =09=09=09return result;
+@@ -356,8 +431,12 @@ static int fsck_walk_commit(struct commit *commit, voi=
+d *data, struct fsck_optio
+=20
+ static int fsck_walk_tag(struct tag *tag, void *data, struct fsck_options =
+*options)
+ {
++=09char *name =3D get_object_name(options, &tag->object);
++
+ =09if (parse_tag(tag))
+ =09=09return -1;
++=09if (name)
++=09=09put_object_name(options, tag->tagged, "%s", name);
+ =09return options->walk(tag->tagged, OBJ_ANY, data, options);
+ }
+=20
+diff --git a/fsck.h b/fsck.h
+index dded84b..26c0d41 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -33,6 +33,7 @@ struct fsck_options {
+ =09unsigned strict:1;
+ =09int *msg_type;
+ =09struct sha1_array *skiplist;
++=09struct decoration *object_names;
+ };
+=20
+ #define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL }
+--=20
 2.9.0.281.g286a8d9
 
-base-commit: 29493589e97a2de0c4c1c314f61ccafaee3b5caf
+
+--8323329-940045425-1468753191=:28832--
