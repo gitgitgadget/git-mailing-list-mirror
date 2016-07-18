@@ -2,137 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF73F2018B
-	for <e@80x24.org>; Mon, 18 Jul 2016 21:05:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 955152018B
+	for <e@80x24.org>; Mon, 18 Jul 2016 21:20:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751662AbcGRVF0 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 18 Jul 2016 17:05:26 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:37529 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751537AbcGRVFZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2016 17:05:25 -0400
-Received: by mail-wm0-f42.google.com with SMTP id i5so2719227wmg.0
-        for <git@vger.kernel.org>; Mon, 18 Jul 2016 14:05:24 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=s1KcPPJEYft19kEXCoRf4GQkPThN8tg22QVNMmeqfQI=;
-        b=nEOvTlQ761CAHpmvjCkGmYalYRLS6Nxvr8Egeg4BxfRyBzXki62hjjh2hxNsdegcqi
-         qVu62JQUIzu9wnOc7zoNUbGM1GvahIHNP1wYc+KfP+oxezhwH9CvKfZAqARyfLLH1Oke
-         5+CAtAr5/d1b1V1DGhRqhQBTGBK+IOMozlMyHKldzu621HxORyvlcdtfLzkbvwYJyciX
-         DAFPKCIWDLO/HJ37y40dXGq3t6OTlSksphdpJ2kepyM3cN61750OSmNwA16xJZcApeJy
-         EjH2fx5zz8zDbC5e35KOylYuuO0t96uSqyR7lmExQwg04cIaODkgllhkiEGAv3+S4qB/
-         SK4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=s1KcPPJEYft19kEXCoRf4GQkPThN8tg22QVNMmeqfQI=;
-        b=ZS+bH9s/k1qYuK68eniyJ8wPO5tltdku33FYVdmn+Whi9tgVoTTzKnEYGySL88Aw3U
-         OuMLgb+QTVyp1i/HVwJo7WCesMnrn6vveP1M+Zd1BG5F41Gi3e/fpVcDkRQXVOfGoyOv
-         65yZyKD+cpRy4ApOOBtGOPBpmiUxM4ywsKFA/M883OV5sCwXCIB4kavM4YO/HFcEvHrk
-         oarTUv3UAql9vPOIuLPEhY7pztxWUWN7BqYhZdArbDpPssjLGkUAxw4fJpScIUxdwuXR
-         xE5xgwAPvqQdKoMtxIFgDIoJD5r4BzLfs4GLUWz6uv6Fc/mOmznGk40fEYOaJCIlQ9I3
-         8fUQ==
-X-Gm-Message-State: ALyK8tKVFOfcetO/B1WS7Flnf+YjhX1g/q1eGbK1S1EJlYcxEycLIE76c05nRh8F9Leu6zq6xNaTAZoAiul/V01h
-X-Received: by 10.28.4.77 with SMTP id 74mr320014wme.84.1468875923530; Mon, 18
- Jul 2016 14:05:23 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.28.167.87 with HTTP; Mon, 18 Jul 2016 14:05:22 -0700 (PDT)
-In-Reply-To: <xmqqoa5uiumu.fsf@gitster.mtv.corp.google.com>
-References: <1468867019-13086-1-git-send-email-jonathantanmy@google.com>
- <20160718185527.GB29326@google.com> <xmqq37n6kbib.fsf@gitster.mtv.corp.google.com>
- <CAGf8dgJVkkVwJ5aJCQBcYKw7F9g7u3pMsuJHedSGLG6PQk2Keg@mail.gmail.com>
- <20160718193147.GC29326@google.com> <xmqqoa5uiumu.fsf@gitster.mtv.corp.google.com>
-From:	Jonathan Tan <jonathantanmy@google.com>
-Date:	Mon, 18 Jul 2016 14:05:22 -0700
-Message-ID: <CAGf8dgJWMBbU1rbU1hTOjX9d-b-ocmYs-td9kpQ=skQFM7XcSA@mail.gmail.com>
-Subject: Re: [PATCH] fetch-pack: grow stateless RPC windows exponentially
+	id S1752374AbcGRVTz (ORCPT <rfc822;e@80x24.org>);
+	Mon, 18 Jul 2016 17:19:55 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:50324 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752366AbcGRVTw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2016 17:19:52 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07E352018B;
+	Mon, 18 Jul 2016 21:19:52 +0000 (UTC)
+Date:	Mon, 18 Jul 2016 21:19:51 +0000
+From:	Eric Wong <e@80x24.org>
 To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset=UTF-8
+Cc:	Jeff King <peff@peff.net>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] test-lib: stricter unzip(1) check
+Message-ID: <20160718211951.GA62657@plume>
+References: <20160718064431.GA10819@starla>
+ <20160718130405.GA19751@sigill.intra.peff.net>
+ <xmqqshv6ivfk.fsf@gitster.mtv.corp.google.com>
+ <20160718200351.GA61232@plume>
+ <xmqqk2giitrn.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqk2giitrn.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jul 18, 2016 at 1:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->> You have full control of the growth function.  So how about aggressive
->> growth until 1024*10?
->>
->> That is:
->>
->> Current git:
->>   n < 1024: aggressive exponential
->>       16, 32, 64, 128, 256, 512, 1024
->>   1024 <= n: linear
->>       2048, 3072, 4096, 5120, ...
->>
->> Initial proposal:
->>   n < 1024: aggressive exponential
->>       16, 32, 64, 128, 256, 512, 1024
->>   1024 <= n < 10240: linear
->>       2048, 307, 4096, 5120, ...
->>   10240 <= n: conservative exponential
->>       11264, 12390, ...
->>
->> New proposal:
->>   n < 10240: aggressive exponential
->>       16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384
->>   10240 <= n: conservative exponential
->>       18022, 19824, ...
->>
->> That way, on one hand it would still never use a smaller window than
->> today and on the other hand the heuristic would be easier to
->> understand (only decelarating, instead of decelarating and then
->> accelerating again).
->
-> That sounds more explainable (I do not know if that is a growth
-> curve that gives us better results, though).
->
-> So, the result would look something like this, perhaps?
->
->  fetch-pack.c | 17 +++++++++++------
->  1 file changed, 11 insertions(+), 6 deletions(-)
->
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index 3c5dfc4..97fe5f7 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -264,12 +264,17 @@ static void insert_one_alternate_ref(const struct ref *ref, void *unused)
->
->  static int next_flush(struct fetch_pack_args *args, int count)
->  {
-> -       int flush_limit = args->stateless_rpc ? LARGE_FLUSH : PIPESAFE_FLUSH;
-> -
-> -       if (count < flush_limit)
-> -               count <<= 1;
-> -       else
-> -               count += flush_limit;
-> +       if (args->stateless_rpc) {
-> +               if (count < LARGE_FLUSH * 10)
-> +                       count <<= 1;
-> +               else
-> +                       count = count * 11 / 10;
-> +       } else {
-> +               if (count < PIPESAFE_FLUSH)
-> +                       count <<= 1;
-> +               else
-> +                       count += PIPESAFE_FLUSH;
-> +       }
->         return count;
->  }
->
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <e@80x24.org> writes:
+> > Junio C Hamano <gitster@pobox.com> wrote:
+> >> +test_lazy_prereq UNZIP_AUTOTEXT '
+> >> +	(
+> >> +		mkdir unzip-autotext &&
+> >> +		cd unzip-autotext
+> >> +		"$GIT_UNZIP" -a "$TEST_DIRECTORY"/t5003/infozip-text.zip &&
+> >> +		test -f text
+> >> +	)
+> >
+> > /usr/bin/unzip actually takes -a on FreeBSD, just not in the
+> > same way the Info-ZIP version does, so I suspect "test -f"
+> > here is not enough.
+> 
+> Hmph.  So it only and always does "CRLF -> LF", while Info-ZIP
+> version does something like autocrlf?
 
-Using aggressive growth until 1024*10 seems like a good idea to me,
-and it would look like that patch. (I would probably redefine
-LARGE_FLUSH to be 10 times its current value instead of multiplying it
-by 10, since it is not used anywhere else.)
+No, it does CRLF -> LF based on the absence of non-ASCII
+characters and ignoring metadata set in the zipfile.
+The unzip manpage states:
+
+     Normally, the -a option should only affect files which are
+     marked as text files in the zipfile's central directory.  Since
+     the archive(3) library reads zipfiles sequentially, and does
+     not use the central directory, that information is not available
+     to the unzip utility.  Instead, the unzip utility will assume
+     that a file is a text file if no non-ASCII characters are
+     present within the first block of data decompressed for that
+     file.  If non-ASCII characters appear in subsequent blocks of
+     data, a warning will be issued.
+
+https://www.freebsd.org/cgi/man.cgi?query=unzip&sektion=1&manpath=FreeBSD+10.3-RELEASE
+
+> Heh.  It was created like so:
+> 
+> 	$ printf 'text\r\n' >text && zip -ll infozip-text.zip text
+> 	$ zipinfo infozip-text.zip text
+>         -rw-r-----  3.0 unx        5 tx stor 16-Jul-18 13:12 text
+> 
+
+Thanks, but I think the test file is too small.  I tried
+setting up a test to store the text file as binary in the
+zip to check for inadvertant CRLF conversions:
+
+  printf 'text\r\n' >binary && zip -B infozip-binary.zip binary
+
+But zip -B/--binary only works on VM/CMS and MVS...
+
+So I'm inclined to go with Dscho's patch.
+
+
+(apologies for messing up René's name in my previous email;
+ on my new FreeBSD setup: mutt displays it fine, as does vim when
+ taking it from .mailmap, but something gets lost when mutt
+ populates the file for vim.  Perhaps some Debian patch didn't
+ make it upstream...)
