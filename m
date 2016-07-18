@@ -2,101 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3DB62018B
-	for <e@80x24.org>; Mon, 18 Jul 2016 16:05:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D50632018B
+	for <e@80x24.org>; Mon, 18 Jul 2016 16:08:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751550AbcGRQF6 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 18 Jul 2016 12:05:58 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:33627 "EHLO
-	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751425AbcGRQF4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2016 12:05:56 -0400
-Received: by mail-io0-f169.google.com with SMTP id 38so163788619iol.0
-        for <git@vger.kernel.org>; Mon, 18 Jul 2016 09:05:55 -0700 (PDT)
+	id S1751537AbcGRQIT (ORCPT <rfc822;e@80x24.org>);
+	Mon, 18 Jul 2016 12:08:19 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33981 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751487AbcGRQIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2016 12:08:17 -0400
+Received: by mail-wm0-f68.google.com with SMTP id q128so13400285wma.1
+        for <git@vger.kernel.org>; Mon, 18 Jul 2016 09:08:16 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=BEZRIGTnpLWj9T0uM+RazXeP45rSPAG9hrxiiTnjaQk=;
-        b=ioYn8WahmGEdv38BZc/qL3NXweu3KG6KD+X1qV/5ffMwzFLpaZRwwvLBJJAwF3Mdc0
-         8TuluLfC/PMHqlhS68L/KG61sis2twc4wKO2B87YyVsxOLKfoo16h4MgvZpxu0PCDmU3
-         tfqWIXMFLpggp3RtVL/pTZRbLnWdHE7Hxlw0HKNWAOVgbWP8B0qA19GiQD9nJpbfSXtO
-         3B81Lb1C1GWYeYGWFGVV8mEv/D0fUoPhfVqYtjIiahpQJVUmKLzGtAl8rlWaILRpCI8E
-         athIqfaSSoFaWROrlNGuuj6HrNg4xiKgbMdbPVaRuVDVee1T4gqwL9uxEWg1EFzCyjXF
-         0LBQ==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=PsZyxiXUTZ5EdJpDIFCx5LJkK1651POm9YL4pTGecrk=;
+        b=ZJvNSPA/2MB5aN80oLNpyVOFWS4guQjDXUInK0UUuN/Tf+OSPasK91uSaEie3/mDDl
+         lHq8Q4WNBYtu9pP77hMT06vUp5u99Q9RGwqrC/lZ+nR7Cx+JnqdvPdIBB9flMj/vlC1N
+         IwvfoV/J3mGOUIv0VyJYouXzttAC1772b6qR3247qlFB0NkDSRjcBQbKgiA7xQ8vKvCz
+         502VlUScNG2FS03YBpZW9Y7XnY+eMfxavONNifQyVg1obMfhA6qVBaAjGwb+cOzqulG6
+         +tkbG3KbdXiIiQhhpyABC+evrsvWoBnxtUJQpZF/yM4r7IS4t1PoKJrOYuKma5d0Zb6n
+         OcLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=BEZRIGTnpLWj9T0uM+RazXeP45rSPAG9hrxiiTnjaQk=;
-        b=DFaLWCpr4Z2hWBsOUELCYqcmEcJ3aO1bZUEeX9gvCwJWYpRlh8UkKUYq0aORmZ+Nb1
-         aMNW6AHccvDKcS9TcK7JSzOvw6fos4Zri9fFJW0XSouQ9q7PXlFahGbuZAwYZvh4nR+Z
-         ZU7te/DnspDez4AcsAmXoqjAWDGWEz6XiqQAk/wgLthgm7sDg0ER2UPpqo3t2YCzBwi1
-         FOW0u/4lUVULrHUb7tSUqrfd+1eORevXtclmIo1V03VQqhCSZ0rZelQOBbC9li1+dVj2
-         400+D+TrPdCyv8p7Sqe1JRmH+JHiTOxx+wwdpzJrFtKAC+eEAjBBNFgtlLcRbNDSVGi0
-         F+/w==
-X-Gm-Message-State: ALyK8tJ/4NHTxCqjPE8oYQeQn+TdedeRQevbUaQa+4lWIOIOBpX8+2b1HcJfGySfp0IxKFFEbXbmLksc8rKbag==
-X-Received: by 10.107.8.140 with SMTP id h12mr35785868ioi.95.1468857952802;
- Mon, 18 Jul 2016 09:05:52 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Mon, 18 Jul 2016 09:05:23 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1607181750470.3472@virtualbox>
-References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com>
- <20160716201313.GA298717@vauxhall.crustytoothpaste.net> <alpine.DEB.2.20.1607170949360.28832@virtualbox>
- <20160717142157.GA6644@vauxhall.crustytoothpaste.net> <CACsJy8C+2=qv5Vu=tGeDTK_Q+XSAv3qEJw0nrHbEWU7psDf=Cg@mail.gmail.com>
- <20160717154234.GC6644@vauxhall.crustytoothpaste.net> <20160717162349.GB11276@thunk.org>
- <20160717220417.GE6644@vauxhall.crustytoothpaste.net> <1468804249.2037.0@smtp.gmail.com>
- <alpine.DEB.2.20.1607180905320.28832@virtualbox> <CAPp-Vran2GZFTyJHb2qxgh3uRpM0ar7K2+VbbLcBK74_7aaxVw@mail.gmail.com>
- <alpine.DEB.2.20.1607181750470.3472@virtualbox>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Mon, 18 Jul 2016 18:05:23 +0200
-Message-ID: <CACsJy8Ba=c+-WV2TsY768_fTDO2KesS1b6BK7kdykNY6gkh=UQ@mail.gmail.com>
-Subject: Re: Git and SHA-1 security (again)
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Herczeg Zsolt <zsolt94@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	"Theodore Ts'o" <tytso@mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=PsZyxiXUTZ5EdJpDIFCx5LJkK1651POm9YL4pTGecrk=;
+        b=HkmD+ZURHzc6UpGiR8mGNtFvYRAvhe7HLYvMZtTYWt5k5/cFXbsrANgot79GYf5fVc
+         6ByqNHfALRSOSgWfhOCGIHsT7p2tT6oR5D3KHZSqx/iLDULzcxwRVKszUQvSzPJ5z1fb
+         VSaIAdbMWsMtliL5GXOjwe01vSTPj4NGVzMTlpYsbWoBYexTmnkJuko6QPVfF+EP9QsX
+         l1ENUIJJZyM0lQK/ytn3w4uEoa2YOdRYk4DtXxCspFSolVqEjQk8ENAPV3pXWnAgI84R
+         Q3d9pPPKm8AL/36dKtrSus2QZx9Jfz0Pn7oonUqwr/js65qc5sSrGPDlNa+yLOLMuqxH
+         44XQ==
+X-Gm-Message-State: ALyK8tJUbLbO4G/fSAnpyAOPf5Xff1krHIxRlriUXbe2B2jgZx+dqpzYGsYSMgZmce4rGg==
+X-Received: by 10.195.3.67 with SMTP id bu3mr1990186wjd.148.1468858094175;
+        Mon, 18 Jul 2016 09:08:14 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id j3sm1996634wjv.34.2016.07.18.09.08.13
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 18 Jul 2016 09:08:13 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH] list: avoid incompatibility with *BSD sys/queue.h
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20160717002533.GA14200@whir>
+Date:	Mon, 18 Jul 2016 18:08:12 +0200
+Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <FA45931D-E1F2-4132-8D0D-C35339DA230D@gmail.com>
+References: <xmqqy4551nph.fsf@gitster.mtv.corp.google.com> <FB76544F-16F7-45CA-9649-FD62EE44B0DE@gmail.com> <20160716210454.GA7849@starla> <20160717002533.GA14200@whir>
+To:	Eric Wong <e@80x24.org>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jul 18, 2016 at 5:57 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Zsolt,
->
-> On Mon, 18 Jul 2016, Herczeg Zsolt wrote:
->
->> >> I think converting is a much better option. Use a single-hash
->> >> storage, and convert everything to that on import/clone/pull.
->> >
->> > That ignores two very important issues that I already had mentioned:
->>
->> That's not true. If you double-check the next part of my message, you I
->> just showed that an automatic two-way mapping could solve these
->> problems! (I even give briefs explanation how to handle referencing and
->> signature verification in those cases.)
->>
->> My point is not to throw out old hashes and break signatures. My point
->> is to convert the data storage, and use mapping to resolve problems
->> with those old hashes and signatures.
->
-> If you convert the data storage, then the SHA-1s listed in the commit
-> objects will have to be rewritten, and then the GPG signature will not
-> match anymore.
 
-But we can recreate SHA-1 from the same content and verify GPG, right?
-I know it's super expensive, but it feels safer to not carry SHA-1
-around when it's not secure anymore (I recall something about
-exploiting the weakest link when you have both sha1 and sha256 in the
-object content). Rehashing would be done locally and is better
-controlled.
--- 
-Duy
+> On 17 Jul 2016, at 02:25, Eric Wong <e@80x24.org> wrote:
+> 
+> Eric Wong <e@80x24.org> wrote:
+>> Lars Schneider <larsxschneider@gmail.com> wrote:
+>>> It looks like as if this topic breaks the OS X build because 
+>>> it defines LIST_HEAD. LIST_HEAD is already defined in 
+>>> /usr/include/sys/queue.h. 
+>> 
+>> Oops, I suppose GIT_LIST_HEAD is an acceptable name?
+>> (looks a bit like a refname, though...).
+>> 
+>> Or maybe CDS_LIST_HEAD (since I originally took it from the cds
+>> namespace under urcu)
+> 
+> Naming things is hard; I think it's better to just undef an
+> existing LIST_HEAD, instead, since it's unlikely we'd ever use
+> sys/queue.h from *BSD.  (sys/queue.h is branchier, and IMHO
+> sys/queue.h macros are uglier than list_entry (container_of))
+That sounds like the best solution to me, too.
+
+
+> I also wonder where we use sys/queue.h, since I use
+>> LIST_HEAD from ccan/list/list.h in a different project
+>> without conflicts...
+> 
+> Still wondering... Checking sys/mman.h in an old FreeBSD source
+> tree I had lying around reveals "#include <sys/queue.h>" is
+> guarded by "#if defined(_KERNEL)", so it mman.h wouldn't pull
+> it in for userspace builds...
+> 
+> -----8<------
+> Subject: [PATCH] list: avoid incompatibility with *BSD sys/queue.h
+> 
+> Somehow, the OS X build pulls in sys/queue.h and causes
+> conflicts with the LIST_HEAD macro, here.
+> 
+> ref: http://mid.gmane.org/FB76544F-16F7-45CA-9649-FD62EE44B0DE@gmail.com
+> 
+> Reported-by: Lars Schneider <larsxschneider@gmail.com>
+> Signed-off-by: Eric Wong <e@80x24.org>
+> ---
+> list.h | 2 ++
+> 1 file changed, 2 insertions(+)
+> 
+> diff --git a/list.h b/list.h
+> index f65edce..a226a87 100644
+> --- a/list.h
+> +++ b/list.h
+> @@ -36,6 +36,8 @@ struct list_head {
+> 	struct list_head *next, *prev;
+> };
+> 
+> +/* avoid conflicts with BSD-only sys/queue.h */
+> +#undef LIST_HEAD
+> /* Define a variable with the head and tail of the list. */
+> #define LIST_HEAD(name) \
+> 	struct list_head name = { &(name), &(name) }
+> -- 
+> EW
+
+This patch compiles without trouble on my local OS X.
+
+Thanks,
+Lars
+
