@@ -7,75 +7,86 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 230A91FEAA
-	for <e@80x24.org>; Mon, 18 Jul 2016 07:12:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 821471FEAA
+	for <e@80x24.org>; Mon, 18 Jul 2016 07:23:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751759AbcGRHMw (ORCPT <rfc822;e@80x24.org>);
-	Mon, 18 Jul 2016 03:12:52 -0400
-Received: from mout.gmx.net ([212.227.15.19]:59099 "EHLO mout.gmx.net"
+	id S1751568AbcGRHXN (ORCPT <rfc822;e@80x24.org>);
+	Mon, 18 Jul 2016 03:23:13 -0400
+Received: from mout.gmx.net ([212.227.15.19]:55255 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751487AbcGRHMu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2016 03:12:50 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LiDnn-1b3mjl0GIN-00nUCM; Mon, 18 Jul 2016 09:12:30
+	id S1751016AbcGRHXL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2016 03:23:11 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LbuCq-1axRqn2bsC-00jMOr; Mon, 18 Jul 2016 09:23:05
  +0200
-Date:	Mon, 18 Jul 2016 09:12:29 +0200 (CEST)
+Date:	Mon, 18 Jul 2016 09:23:04 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Herczeg Zsolt <zsolt94@gmail.com>
-cc:	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Theodore Ts'o <tytso@mit.edu>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: Git and SHA-1 security (again)
-In-Reply-To: <1468804249.2037.0@smtp.gmail.com>
-Message-ID: <alpine.DEB.2.20.1607180905320.28832@virtualbox>
-References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com> <20160716201313.GA298717@vauxhall.crustytoothpaste.net> <alpine.DEB.2.20.1607170949360.28832@virtualbox> <20160717142157.GA6644@vauxhall.crustytoothpaste.net>
- <CACsJy8C+2=qv5Vu=tGeDTK_Q+XSAv3qEJw0nrHbEWU7psDf=Cg@mail.gmail.com> <20160717154234.GC6644@vauxhall.crustytoothpaste.net> <20160717162349.GB11276@thunk.org> <20160717220417.GE6644@vauxhall.crustytoothpaste.net> <1468804249.2037.0@smtp.gmail.com>
+To:	norm@dad.org
+cc:	l.s.r@web.de, git@vger.kernel.org
+Subject: Re: Question: Getting 'git diff' to generate /usr/bin/diff output
+In-Reply-To: <201607171726.u6HHQShO005227@shell1.rawbw.com>
+Message-ID: <alpine.DEB.2.20.1607180922580.28832@virtualbox>
+References: <201607171726.u6HHQShO005227@shell1.rawbw.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:JUrCKYaqYSmQVbqTLF8vhjGsaxeLjN8T9QvPtLqaAhw8ObNbKba
- PoRQtlEGwbC2VEZNyHBP6GQjRzyCwGSY0F6nI3WXt++aWnsYEXZtyW7w5w/oWeLMo0YW5kc
- iaGGx/HZnrar54jnAEILgOYvJKoZ8Lvai/6vacuBWDHZGHjqIAPGxmt0/LEIYrsN1OD6ptz
- ruBzWzMRXeh/GTgsegVTg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:A09A4NVdqCU=:nInWhmqLBKCuejOsDTooLp
- dp2EALDvziywvJ+fdPXG2OYmtUCCWOB1gq/6WRkiEN+Rg1D746BH77jCuuuVX6PcreJfzA2uD
- H5fj+rFNv6dHNucvnnQfjvk5nCripIxGuRnVS4Q7BO2Sf9I2T9pmnsyKoP2pNznq+ZnbOtLO/
- cxRO1qH3V+BL1Yu90QU6RDveU2J3HCehQu0ZcM8e4IPCNPUfHY2NN7UFReLdwS+Jfs1YinbYq
- VKaFVaLt42Q+J8GuRgK1F7qtvG200CXNPX/AypWTUwjOyV4zYiC6NsGRdH1+ARqceUlW9QreK
- XfrYCW/Y/P29TJd8iSMgF8E3Nzq8E74XmE7z+8oML53ISDIEZNA8Rk+3bwEK/AqZGTRm7TtBk
- YWs1D6lAVrF0ML+3hteVuqvhv9JWos2eCmH3LmwH7+obg/irB8IpeS0EI/m1xlGcodBMTUT4B
- mrPEveDnvEUPUQQENnlG6GWfzVB+9Gt58hiPXWSVCkEzOHtraGMJbaepGm8NkV2RE1OXNCf8L
- Wb39IXukPTJNUHSvagqoN8DIYMClwa8NqXg69n/6BTn1kLJdyaf88IaRXETjmRuM015nCQRcj
- 8O+R2CAD3VDOrgyo9dgrplXuKQQ3nrRzaIhKLBrc99ah03D+ank6kwNVvAQfWnXJ3J9wFRcwW
- 80tLVYyOeeGu0gitg2L81rN0J1tc6wYfTUMLeF8yN+Ja8eiwyJlklun5zhB0fvXAUoS7id9B1
- ZMABewg9szUgP/GY7/MLBZmRinSSK6rxIXOm8kZFppmKdzyvNClpZ5uEli2OdwtokOyfiQTA8
- TWOHRYJ
+X-Provags-ID: V03:K0:JOkW8YUsq/2yYmez9etN5lN/8q2HZt49wAJaE3b5ZeirFwxf54G
+ brdNm9wOUyRHel0vDNRQSVRPIAvm3rzminDyPxF9X1rFe9MXc/rsxpryi0nhudTziPonruK
+ L2YcKNy8pvKy6LimZPrW9hPI4XMPrpTTV3W0S1TJ3GoIq8ItCDKJB1kzLUtP/2Lx7b6nh6I
+ waQLexEkvijWXHhaM8UCg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:xDj/7/JBGFw=:9eKEwoLjBnVEcf+fmmRmyg
+ fTpXhZjeI/f9EtFWsnvq05g/2HW1DsjQZazqEiy1WKYgsJQRcS41JXFoBJCD9JMEAlYb4xNDI
+ y63NdnFG7KZ96YXA8FbMJL0uAgT/GR8a2rDzte5SvLgfxKtizhNlzYHzPfJ85Cxu3OPeRk2i9
+ LuF+t/kbaeHcGXMQQeaHiSccZqc+OibSrT5SwAMPJeLgUkzf4H8dHiOwTfbCT7SJiq4YLWUv7
+ 3j8mN+mgX94n/nwX5pzf6TjIyyVPh1UpiIRvkI7GlT3gtRTZBM5c+I1Uef3ctaqCgHXsu2CtU
+ pcbFU+xyL0JcrSzMhbM1H4Dn1PQwH/BznGaX0SdEaspt9VwARq8n5aI99wGhZ1dneLzZyKtAI
+ jzdQuiMuJrNXJle1w1s2bTjC0+6IFqhOgJf9b7By14HHICcBEQr2j1xKe5ozKVKNkxNY3+6pF
+ UY+IB3FCxFuHbgdoa5sTjUFDRqBrJl4O+bBh2IiAjc9N6wke3kvUFwQ+1NG3Fwt0bHeKVVq1I
+ NIZANLzFHm4K5rRK+4vW0SHNoBt2woJOVaUBnwxiI12XAFO+iy3vdmT6HcKMq6hSWIWDNmzKt
+ ZVsexFxpDTRGg8kM3xZwdmaW+LXUY8ofnwWptzG93iOgCXsE8xlo8PKBmJHwNwm8BY72UyQKu
+ /d8XPrKxrfA/P1R/aWBVgw3PozkmH7Js5icgzgsVoc5Snr4Of7DAjzkLedQ9u86aDrK/ZYhsR
+ Mj9TxJ0pUE7W2iMdaTD0MbV7M9PZ5EHnDk0shgFaJfmoAs9euxbrSdynFt+Pa4eS/zWY1RC7p
+ r1sKSxC
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Zsolt,
+Hi Norm,
 
-On Mon, 18 Jul 2016, Herczeg Zsolt wrote:
+On Sun, 17 Jul 2016, norm@dad.org wrote:
 
-> I think converting is a much better option. Use a single-hash storage, and
-> convert everything to that on import/clone/pull.
+> <l.s.r@web.de> writes:
+> >
+> >The other replies covered how to use the system's own diff instead.
+> >Just curious: What makes using git diff difficult and its output hard to
+> >deal with for you?
+> 
+> In decreasing importance order:
+> 
+> I am 84 years old.
 
-That ignores two very important issues that I already had mentioned:
+Wow. Chapeau! I am impressed.
 
-- existing references, both in-repository, e.g. in commit messages
-  referring to earlier commits, as well as out-of-repository, e.g.
-  referring to commits in mails, blog posts, etc
+> I have been using /usr/bin/diff for more than four decades.  And having
+> to learn how to read the output of 'git diff' makes learning how to use
+> git a more difficult trick for this old dog to learn. True, the diff of
+> today is very different from the diff of 1972, but the changes happened
+> gradually.
 
-- GPG-signed commits
+Curious: do you use context diff (GNU diff's default) or unified diffs?
 
-Those issues cannot just be hand-waved away.
+> I have scripts which process the output of /usr/bin/diff.
 
-The "convert everything" strategy also ignores the problem of interacting
-with servers and collaborators. Think of hosting repositories,
-rediscovering forgotten work trees, and of the "D" in DSCM.
+Even more curious: what do those scripts do? Maybe they do things that we
+either can already do with Git's diff, or that we can teach Git.
+
+> 'git diff' outputs escape characters which clutter my terminal. Yes, I
+> can sed them out, but then why are they there?
+
+Those are most likely the ANSI sequences to add color. Can you call Git
+with the --no-color option and see whether the escape characters go away?
 
 Ciao,
 Johannes
