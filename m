@@ -2,67 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E2A22018B
-	for <e@80x24.org>; Mon, 18 Jul 2016 22:30:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EF282018B
+	for <e@80x24.org>; Mon, 18 Jul 2016 22:40:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751898AbcGRWak (ORCPT <rfc822;e@80x24.org>);
-	Mon, 18 Jul 2016 18:30:40 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:53132 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751654AbcGRWaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2016 18:30:39 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D38B2018B;
-	Mon, 18 Jul 2016 22:30:39 +0000 (UTC)
-Date:	Mon, 18 Jul 2016 22:30:38 +0000
-From:	Eric Wong <e@80x24.org>
-To:	git@vger.kernel.org
-Subject: t7063 failure on FreeBSD 10.3 i386/amd64
-Message-ID: <20160718223038.GA66056@plume>
+	id S1751675AbcGRWkJ (ORCPT <rfc822;e@80x24.org>);
+	Mon, 18 Jul 2016 18:40:09 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33560 "EHLO
+	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751290AbcGRWkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2016 18:40:08 -0400
+Received: by mail-pf0-f195.google.com with SMTP id i6so63288pfe.0
+        for <git@vger.kernel.org>; Mon, 18 Jul 2016 15:40:07 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=YYEW9BeGSPf9GxLt3ihF1hOP7aoNGncSxUYpV2CMc1U=;
+        b=ZbBxvSE9HjRDgWRlR6mP1JcNFqlxtNozpMNeebAwTIC2ZpzDwulHhP5waeWr6AoQtb
+         bIwi80VFloWGpTThiSyw/qY3Eb06FwtB2dgEs1g/81YYz89Z9I8Y7B7m19fB4ljITd27
+         xLfG5GImC79Fh3cJtv1PzA8WfXjrJPqjnHF9vnZV/vawnSaojVs7DpiNR3BdarHmBz0Y
+         AswDur8dMle449xK3Uq0LifUW3WvH+GVNjXmEwdhzAjKE8jw0T+2QAFlBNyqYmnALru8
+         Jh3VMFM3kk7neOXd+dD2Ji9QnO8kNIp/tnvvMp5sH6pVSeS2ea7ZUHOV6XR6dsHdaiTE
+         3yWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=YYEW9BeGSPf9GxLt3ihF1hOP7aoNGncSxUYpV2CMc1U=;
+        b=dwdMrv3gtmmi7yMaeMZjqnTIS/lBg4sW/tRZO2rDmtyPhgTBf6Tj6Jt9nkkxfL/kqu
+         CjPrWUg1TprT/TNLTF0TJ+yZiWtUdNZ4ez6TPCfskx1ZPlsQAL96L6tIMQeo3A3I50sz
+         qTSC4fc+ZdFnIKcjU2AVEVdIhTT5kwuXqXqyYSIfSZpKdXs0k5MKZii2yMs1zjWVDNJj
+         mLzymeCy5DLtzzb38y4mj2oFo+ez9cLYEkbiAihdO17G2+Tq9jXqqcitDqJyonCVcc3P
+         zpuZClRMIp6yUakoBIH/2WkRT4NZgfH26Jiug6REVxZ6MnNWUA8ZZXGz/z+iph9NHxJD
+         t98w==
+X-Gm-Message-State: ALyK8tL76LNP0WOb6F3ZJNV1mAR+RqoVODL9JqjsEk3nfvPQDSEWcxa54u+FjkR4OVW5Wg==
+X-Received: by 10.98.135.13 with SMTP id i13mr50107613pfe.44.1468881607363;
+        Mon, 18 Jul 2016 15:40:07 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:9154:f831:1491:8d12])
+        by smtp.gmail.com with ESMTPSA id d5sm7310006pfa.44.2016.07.18.15.40.06
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 18 Jul 2016 15:40:06 -0700 (PDT)
+Date:	Mon, 18 Jul 2016 15:40:04 -0700
+From:	Jonathan Nieder <jrnieder@gmail.com>
+To:	Jonathan Tan <jonathantanmy@google.com>
+Cc:	git@vger.kernel.org, gitster@pobox.com, sbeller@google.com
+Subject: Re: [PATCH v2] fetch-pack: grow stateless RPC windows exponentially
+Message-ID: <20160718224004.GE29326@google.com>
+References: <xmqq37n6iq7d.fsf@gitster.mtv.corp.google.com>
+ <1468880498-30235-1-git-send-email-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <1468880498-30235-1-git-send-email-jonathantanmy@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Not sure what's going on, below is the relevant output when
-run with -i -v --tee (the rest succeeds without -i):
+Jonathan Tan wrote:
 
-ok 26 - untracked cache correct after status
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  fetch-pack.c | 19 ++++++++++++-------
+>  1 file changed, 12 insertions(+), 7 deletions(-)
 
-expecting success: 
-	avoid_racy &&
-	: >../trace &&
-	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
-	git status --porcelain >../status.actual &&
-	cat >../status.expect <<EOF &&
- M done/two
-?? .gitignore
-?? done/five
-?? dtwo/
-EOF
-	test_cmp ../status.expect ../status.actual &&
-	cat >../trace.expect <<EOF &&
-node creation: 0
-gitignore invalidation: 0
-directory invalidation: 0
-opendir: 0
-EOF
-	test_cmp ../trace.expect ../trace
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
---- ../trace.expect	2016-07-18 22:23:28.679886000 +0000
-+++ ../trace	2016-07-18 22:23:28.677135000 +0000
-@@ -1,4 +1,4 @@
- node creation: 0
- gitignore invalidation: 0
--directory invalidation: 0
--opendir: 0
-+directory invalidation: 1
-+opendir: 1
-not ok 27 - test sparse status again with untracked cache
+Thanks again.
