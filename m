@@ -2,85 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC4AE2018B
-	for <e@80x24.org>; Mon, 18 Jul 2016 15:58:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3DB62018B
+	for <e@80x24.org>; Mon, 18 Jul 2016 16:05:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751689AbcGRP6F (ORCPT <rfc822;e@80x24.org>);
-	Mon, 18 Jul 2016 11:58:05 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49889 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751396AbcGRP6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2016 11:58:03 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LdYdG-1az9pQ2pj0-00inl2; Mon, 18 Jul 2016 17:57:38
- +0200
-Date:	Mon, 18 Jul 2016 17:57:37 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Herczeg Zsolt <zsolt94@gmail.com>
-cc:	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Theodore Ts'o <tytso@mit.edu>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: Git and SHA-1 security (again)
-In-Reply-To: <CAPp-Vran2GZFTyJHb2qxgh3uRpM0ar7K2+VbbLcBK74_7aaxVw@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1607181750470.3472@virtualbox>
-References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com> <20160716201313.GA298717@vauxhall.crustytoothpaste.net> <alpine.DEB.2.20.1607170949360.28832@virtualbox> <20160717142157.GA6644@vauxhall.crustytoothpaste.net>
- <CACsJy8C+2=qv5Vu=tGeDTK_Q+XSAv3qEJw0nrHbEWU7psDf=Cg@mail.gmail.com> <20160717154234.GC6644@vauxhall.crustytoothpaste.net> <20160717162349.GB11276@thunk.org> <20160717220417.GE6644@vauxhall.crustytoothpaste.net> <1468804249.2037.0@smtp.gmail.com>
- <alpine.DEB.2.20.1607180905320.28832@virtualbox> <CAPp-Vran2GZFTyJHb2qxgh3uRpM0ar7K2+VbbLcBK74_7aaxVw@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1751550AbcGRQF6 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 18 Jul 2016 12:05:58 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:33627 "EHLO
+	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751425AbcGRQF4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2016 12:05:56 -0400
+Received: by mail-io0-f169.google.com with SMTP id 38so163788619iol.0
+        for <git@vger.kernel.org>; Mon, 18 Jul 2016 09:05:55 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BEZRIGTnpLWj9T0uM+RazXeP45rSPAG9hrxiiTnjaQk=;
+        b=ioYn8WahmGEdv38BZc/qL3NXweu3KG6KD+X1qV/5ffMwzFLpaZRwwvLBJJAwF3Mdc0
+         8TuluLfC/PMHqlhS68L/KG61sis2twc4wKO2B87YyVsxOLKfoo16h4MgvZpxu0PCDmU3
+         tfqWIXMFLpggp3RtVL/pTZRbLnWdHE7Hxlw0HKNWAOVgbWP8B0qA19GiQD9nJpbfSXtO
+         3B81Lb1C1GWYeYGWFGVV8mEv/D0fUoPhfVqYtjIiahpQJVUmKLzGtAl8rlWaILRpCI8E
+         athIqfaSSoFaWROrlNGuuj6HrNg4xiKgbMdbPVaRuVDVee1T4gqwL9uxEWg1EFzCyjXF
+         0LBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BEZRIGTnpLWj9T0uM+RazXeP45rSPAG9hrxiiTnjaQk=;
+        b=DFaLWCpr4Z2hWBsOUELCYqcmEcJ3aO1bZUEeX9gvCwJWYpRlh8UkKUYq0aORmZ+Nb1
+         aMNW6AHccvDKcS9TcK7JSzOvw6fos4Zri9fFJW0XSouQ9q7PXlFahGbuZAwYZvh4nR+Z
+         ZU7te/DnspDez4AcsAmXoqjAWDGWEz6XiqQAk/wgLthgm7sDg0ER2UPpqo3t2YCzBwi1
+         FOW0u/4lUVULrHUb7tSUqrfd+1eORevXtclmIo1V03VQqhCSZ0rZelQOBbC9li1+dVj2
+         400+D+TrPdCyv8p7Sqe1JRmH+JHiTOxx+wwdpzJrFtKAC+eEAjBBNFgtlLcRbNDSVGi0
+         F+/w==
+X-Gm-Message-State: ALyK8tJ/4NHTxCqjPE8oYQeQn+TdedeRQevbUaQa+4lWIOIOBpX8+2b1HcJfGySfp0IxKFFEbXbmLksc8rKbag==
+X-Received: by 10.107.8.140 with SMTP id h12mr35785868ioi.95.1468857952802;
+ Mon, 18 Jul 2016 09:05:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:iDB6bpl3Kl322dJ/ka06AQa+7kqn7XlkM+sivvCCeDWLzyoQbj2
- Mcr1eT3NnIQB1/MVq+Zbk/nzQy1jMRVhS7H/MCZW/6u3duyIq9TUj46bN/oQ3skb1SAu4/v
- ogQeRgROr451SkiE7QMUDIvfCwGzfn0I04fp9D2r6MQ7ysOyrM8fzxFVrYc77SR1a/3o1wO
- P5+/P+VMYkOCfaEA6iO+g==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:Shzhswt4WDg=:NbzQR/DnIrPmJiXEjvV6cl
- ENh/e/zByVQ7lyyNDdq89+YTOZmC4/dkJQnMhGse0lQ2htLPyavgVKW6Em6Aq5F8CNV9BQZNm
- /IWSaZSfeuBBf51CqzMvqHbgB6cmFea6V3hKT3yAl2Lz/EY4sCVSL5G3uxIEgjA8W2+scNlOr
- Sr3MsCh+DKFbst2ErEMA4bR3t//oSUsF2LDWHgwFF/o6WX+Zc+TxjOGw1wRY1OdjAmDpCPiQs
- 6JWib2NhKutnrIO5OhG/lQkqKDrvgr0wUaKwCaRO1Ygf4mUEwKiXgnsXA4dlPD1Lb3xdstf6Q
- N1XTocczVhCZgKt9Tn4p8FhNkYe+o6Ys6Ism+dhodA8a1CxrfHwSGfRRrppdEBlV/hqAoW/5Z
- WKeFWgl/yIIZTKczzYdQQdY/nNB/r6WdWWkiPiH+/GdYsnTwid0wJo5xNH6AePM0RSjtkhEU4
- 3TxttBYiIL4CJM7uL6VcbdhrPZFRrYe+JAX5x92iHyxm5esdRff1CKWY7KkCv3IaL5AJlOCZp
- 2Cpx3jmh4p1R9JjwB2MIhAzQqLOjetVpj7FFwGm7OC/bWOLq0GPcunimUmiBAKxq0IGKXv24C
- 15SnYwu4JG530rsh4zhOkWMYfHGWpPOL9qNqjicFmDiCDvDUyZbGKp9m0Pzz1u1ZEO1uLqMoh
- b1VPjJDRlx5kpnBAwXhdXPvryVsUtarnJx4zV7zUVeyTjZ8JkMMGt4OEhKkPPjMsCnTdCB7Yw
- 5FK/eZ00PXBAnV8tTFgQWzp/VvZ5WGUc8X32oS6iI9+0WFS0hQLbeBCgQpSxgKA+UgXpkR0sQ
- pPXfle/
+Received: by 10.64.225.235 with HTTP; Mon, 18 Jul 2016 09:05:23 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1607181750470.3472@virtualbox>
+References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com>
+ <20160716201313.GA298717@vauxhall.crustytoothpaste.net> <alpine.DEB.2.20.1607170949360.28832@virtualbox>
+ <20160717142157.GA6644@vauxhall.crustytoothpaste.net> <CACsJy8C+2=qv5Vu=tGeDTK_Q+XSAv3qEJw0nrHbEWU7psDf=Cg@mail.gmail.com>
+ <20160717154234.GC6644@vauxhall.crustytoothpaste.net> <20160717162349.GB11276@thunk.org>
+ <20160717220417.GE6644@vauxhall.crustytoothpaste.net> <1468804249.2037.0@smtp.gmail.com>
+ <alpine.DEB.2.20.1607180905320.28832@virtualbox> <CAPp-Vran2GZFTyJHb2qxgh3uRpM0ar7K2+VbbLcBK74_7aaxVw@mail.gmail.com>
+ <alpine.DEB.2.20.1607181750470.3472@virtualbox>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Mon, 18 Jul 2016 18:05:23 +0200
+Message-ID: <CACsJy8Ba=c+-WV2TsY768_fTDO2KesS1b6BK7kdykNY6gkh=UQ@mail.gmail.com>
+Subject: Re: Git and SHA-1 security (again)
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Herczeg Zsolt <zsolt94@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	"Theodore Ts'o" <tytso@mit.edu>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Zsolt,
+On Mon, Jul 18, 2016 at 5:57 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Zsolt,
+>
+> On Mon, 18 Jul 2016, Herczeg Zsolt wrote:
+>
+>> >> I think converting is a much better option. Use a single-hash
+>> >> storage, and convert everything to that on import/clone/pull.
+>> >
+>> > That ignores two very important issues that I already had mentioned:
+>>
+>> That's not true. If you double-check the next part of my message, you I
+>> just showed that an automatic two-way mapping could solve these
+>> problems! (I even give briefs explanation how to handle referencing and
+>> signature verification in those cases.)
+>>
+>> My point is not to throw out old hashes and break signatures. My point
+>> is to convert the data storage, and use mapping to resolve problems
+>> with those old hashes and signatures.
+>
+> If you convert the data storage, then the SHA-1s listed in the commit
+> objects will have to be rewritten, and then the GPG signature will not
+> match anymore.
 
-On Mon, 18 Jul 2016, Herczeg Zsolt wrote:
-
-> >> I think converting is a much better option. Use a single-hash
-> >> storage, and convert everything to that on import/clone/pull.
-> >
-> > That ignores two very important issues that I already had mentioned:
-> 
-> That's not true. If you double-check the next part of my message, you I
-> just showed that an automatic two-way mapping could solve these
-> problems! (I even give briefs explanation how to handle referencing and
-> signature verification in those cases.)
-> 
-> My point is not to throw out old hashes and break signatures. My point
-> is to convert the data storage, and use mapping to resolve problems
-> with those old hashes and signatures.
-
-If you convert the data storage, then the SHA-1s listed in the commit
-objects will have to be rewritten, and then the GPG signature will not
-match anymore.
-
-Call e.g. `git cat-file commit 44cc742a8ca17b9c279be4cc195a93a6ef7a320e`
-to see the anatomy of a gpg-signed commit object.
-
-Ciao,
-Johannes
+But we can recreate SHA-1 from the same content and verify GPG, right?
+I know it's super expensive, but it feels safer to not carry SHA-1
+around when it's not secure anymore (I recall something about
+exploiting the weakest link when you have both sha1 and sha256 in the
+object content). Rehashing would be done locally and is better
+controlled.
+-- 
+Duy
