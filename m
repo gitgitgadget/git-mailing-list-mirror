@@ -2,74 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C55352018B
-	for <e@80x24.org>; Mon, 18 Jul 2016 21:36:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E74742018B
+	for <e@80x24.org>; Mon, 18 Jul 2016 22:23:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752002AbcGRVg1 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 18 Jul 2016 17:36:27 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51956 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751892AbcGRVg0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2016 17:36:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C7BB02C1B4;
-	Mon, 18 Jul 2016 17:36:24 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZrccIgyOy8kTNgDoWK2Ha5/STbI=; b=RDY66P
-	wKDEshQb0TBD5lsLfgObX1C8I7eDjX7/tNsVC3yNH4XZHS95d4GAjI/EZmWNTyqa
-	MaPGxZDEgSc3kqyBKuA1vyqS26HNAJ/uySGRnHXk+XEg+UZ4nVS+lzOUsV1PSjMo
-	2fwD1klG8f3BHBhH+OQdb1vDY0UClqhHvoz/8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OlMIXfMGdL2MYwQZ8jqQBfFCSXpwnJ1X
-	7ML6bIaXNjCteecg3iqb2ehLqM5uDGjBwsXUpODoCz1nmVJwB398L6CheRdI9RJ+
-	klrhlS9ZzwYNGsc0gMqLhi9BtPXCQxD4MUmNk1UG/qB2L3bItXbrUjQC1XEKlFX2
-	0Yq3ljRVwKc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id BE7F12C1B3;
-	Mon, 18 Jul 2016 17:36:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 59E9C2C1B2;
-	Mon, 18 Jul 2016 17:36:24 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jonathan Tan <jonathantanmy@google.com>
-Cc:	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] fetch-pack: grow stateless RPC windows exponentially
-References: <1468867019-13086-1-git-send-email-jonathantanmy@google.com>
-	<20160718185527.GB29326@google.com>
-	<xmqq37n6kbib.fsf@gitster.mtv.corp.google.com>
-	<CAGf8dgJVkkVwJ5aJCQBcYKw7F9g7u3pMsuJHedSGLG6PQk2Keg@mail.gmail.com>
-	<20160718193147.GC29326@google.com>
-	<xmqqoa5uiumu.fsf@gitster.mtv.corp.google.com>
-	<CAGf8dgJWMBbU1rbU1hTOjX9d-b-ocmYs-td9kpQ=skQFM7XcSA@mail.gmail.com>
-Date:	Mon, 18 Jul 2016 14:36:22 -0700
-In-Reply-To: <CAGf8dgJWMBbU1rbU1hTOjX9d-b-ocmYs-td9kpQ=skQFM7XcSA@mail.gmail.com>
-	(Jonathan Tan's message of "Mon, 18 Jul 2016 14:05:22 -0700")
-Message-ID: <xmqq37n6iq7d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AD11CDDC-4D2F-11E6-BB43-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1752193AbcGRWWn (ORCPT <rfc822;e@80x24.org>);
+	Mon, 18 Jul 2016 18:22:43 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:36819 "EHLO
+	mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752158AbcGRWWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2016 18:22:41 -0400
+Received: by mail-pf0-f174.google.com with SMTP id h186so183816pfg.3
+        for <git@vger.kernel.org>; Mon, 18 Jul 2016 15:22:41 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/oEXmNhYvvgrjlcBFQ0vZAsrYjsiHgU4PmG4Du/ijIc=;
+        b=XyxjnCZltqBwEaLzhOIpOtkFRkvNnpXUUutbBCoOQIRpxtw+1AkVFC1bDuGf3y0kjA
+         0z/Id3AY7Ra5mhJO1nzPGCNF76hNUbjQpaopdNtAHVgJkF/Sdj+WjjX4RZxwqJ9FMXZu
+         tP7HXKWJrJfZQg9LGdmBryGK+taVycOZDJR6lOZkS2fl6fMT1RzK8kC3sCDY3Z4/RcT5
+         MJP+hhFERCzVABqY+0s7Xy9haB/0ws6b0CoDqCs3hA+NcXXCcTFiUkTSzBCzs86S3R8k
+         hh1l++MU13x1cARPOsmH0IhRgihNvBnGKHLsDVYroDiIjJVBjj2vJu5Ng8R6J4AUdfsf
+         Cc4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=/oEXmNhYvvgrjlcBFQ0vZAsrYjsiHgU4PmG4Du/ijIc=;
+        b=eGaHpX77NmbZwOImEmscNq6NbkOmQePsuMlhtDVqyJB3u6E+GMTiV/5RrSGhLAwD8h
+         eP2+48nd9w5d5Qh1EhsNhUnDBTLIfCYeCb9opWREJ6zcJ+/q5hqw5DsyRMCLi1+F3ZkU
+         X6sA5apN4e8sGGzmc3/PT6L45prnQHDYYkTpSPUeVy/nEgnDH0Dhd5JW2YueKDlkFtTG
+         ONeCs0ax83dFmveMPBg90m3deoqrudfA88JsCamulJhKAgt4Rl8rGWXlQQcyyUXL8SAA
+         8EwSaeC1XmIcftX95rF4TjKEEhSRDi827r9mmIuiBYjlAGDPVlEkKcptqJ0iZb3DEUyP
+         yleA==
+X-Gm-Message-State: ALyK8tL9wJ3cvdj2N9weIISmN7xRqQgCOeESoPvTeWdz/KEKP8KkPIuKD36suzXEKNbGhK9f
+X-Received: by 10.98.23.134 with SMTP id 128mr49555004pfx.96.1468880560866;
+        Mon, 18 Jul 2016 15:22:40 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([172.17.54.68])
+        by smtp.gmail.com with ESMTPSA id tt1sm6783928pac.35.2016.07.18.15.22.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 18 Jul 2016 15:22:39 -0700 (PDT)
+From:	Jonathan Tan <jonathantanmy@google.com>
+To:	git@vger.kernel.org
+Cc:	Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com,
+	gitster@pobox.com, sbeller@google.com
+Subject: [PATCH v2] fetch-pack: grow stateless RPC windows exponentially
+Date:	Mon, 18 Jul 2016 15:21:38 -0700
+Message-Id: <1468880498-30235-1-git-send-email-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <xmqq37n6iq7d.fsf@gitster.mtv.corp.google.com>
+References: <xmqq37n6iq7d.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+When updating large repositories, the LARGE_FLUSH limit (that is, the
+limit at which the window growth strategy switches from exponential to
+linear) is reached quite quickly. Use a conservative exponential growth
+strategy when that limit is reached instead (and increase LARGE_FLUSH so
+that there is no regression in window size).
 
-> and it would look like that patch. (I would probably redefine
-> LARGE_FLUSH to be 10 times its current value instead of multiplying it
-> by 10, since it is not used anywhere else.)
+This optimization is only applied during stateless RPCs to avoid the
+issue raised and fixed in commit
+44d8dc54e73e8010c4bdf57a422fc8d5ce709029.
 
-Sounds good.  Care to do the final version of the patch to be
-applied?
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ fetch-pack.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-Thanks.
+diff --git a/fetch-pack.c b/fetch-pack.c
+index b501d5c..85e77af 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -243,16 +243,21 @@ static void insert_one_alternate_ref(const struct ref *ref, void *unused)
+ 
+ #define INITIAL_FLUSH 16
+ #define PIPESAFE_FLUSH 32
+-#define LARGE_FLUSH 1024
++#define LARGE_FLUSH 16384
+ 
+ static int next_flush(struct fetch_pack_args *args, int count)
+ {
+-	int flush_limit = args->stateless_rpc ? LARGE_FLUSH : PIPESAFE_FLUSH;
+-
+-	if (count < flush_limit)
+-		count <<= 1;
+-	else
+-		count += flush_limit;
++	if (args->stateless_rpc) {
++		if (count < LARGE_FLUSH)
++			count <<= 1;
++		else
++			count = count * 11 / 10;
++	} else {
++		if (count < PIPESAFE_FLUSH)
++			count <<= 1;
++		else
++			count += PIPESAFE_FLUSH;
++	}
+ 	return count;
+ }
+ 
+-- 
+2.8.0.rc3.226.g39d4020
+
