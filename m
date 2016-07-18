@@ -2,91 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 821471FEAA
-	for <e@80x24.org>; Mon, 18 Jul 2016 07:23:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 457FA1FEAA
+	for <e@80x24.org>; Mon, 18 Jul 2016 09:19:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751568AbcGRHXN (ORCPT <rfc822;e@80x24.org>);
-	Mon, 18 Jul 2016 03:23:13 -0400
-Received: from mout.gmx.net ([212.227.15.19]:55255 "EHLO mout.gmx.net"
+	id S1751883AbcGRJTK (ORCPT <rfc822;e@80x24.org>);
+	Mon, 18 Jul 2016 05:19:10 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:50962 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751016AbcGRHXL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2016 03:23:11 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LbuCq-1axRqn2bsC-00jMOr; Mon, 18 Jul 2016 09:23:05
- +0200
-Date:	Mon, 18 Jul 2016 09:23:04 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+	id S1751549AbcGRJTJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2016 05:19:09 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97E751FEAA;
+	Mon, 18 Jul 2016 09:19:07 +0000 (UTC)
+Date:	Mon, 18 Jul 2016 09:19:07 +0000
+From:	Eric Wong <e@80x24.org>
 To:	norm@dad.org
-cc:	l.s.r@web.de, git@vger.kernel.org
-Subject: Re: Question: Getting 'git diff' to generate /usr/bin/diff output
-In-Reply-To: <201607171726.u6HHQShO005227@shell1.rawbw.com>
-Message-ID: <alpine.DEB.2.20.1607180922580.28832@virtualbox>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>, l.s.r@web.de,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] pager: disable color when pager is "more"
+Message-ID: <20160718091907.GA13588@starla>
 References: <201607171726.u6HHQShO005227@shell1.rawbw.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+ <alpine.DEB.2.20.1607180922580.28832@virtualbox>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:JOkW8YUsq/2yYmez9etN5lN/8q2HZt49wAJaE3b5ZeirFwxf54G
- brdNm9wOUyRHel0vDNRQSVRPIAvm3rzminDyPxF9X1rFe9MXc/rsxpryi0nhudTziPonruK
- L2YcKNy8pvKy6LimZPrW9hPI4XMPrpTTV3W0S1TJ3GoIq8ItCDKJB1kzLUtP/2Lx7b6nh6I
- waQLexEkvijWXHhaM8UCg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:xDj/7/JBGFw=:9eKEwoLjBnVEcf+fmmRmyg
- fTpXhZjeI/f9EtFWsnvq05g/2HW1DsjQZazqEiy1WKYgsJQRcS41JXFoBJCD9JMEAlYb4xNDI
- y63NdnFG7KZ96YXA8FbMJL0uAgT/GR8a2rDzte5SvLgfxKtizhNlzYHzPfJ85Cxu3OPeRk2i9
- LuF+t/kbaeHcGXMQQeaHiSccZqc+OibSrT5SwAMPJeLgUkzf4H8dHiOwTfbCT7SJiq4YLWUv7
- 3j8mN+mgX94n/nwX5pzf6TjIyyVPh1UpiIRvkI7GlT3gtRTZBM5c+I1Uef3ctaqCgHXsu2CtU
- pcbFU+xyL0JcrSzMhbM1H4Dn1PQwH/BznGaX0SdEaspt9VwARq8n5aI99wGhZ1dneLzZyKtAI
- jzdQuiMuJrNXJle1w1s2bTjC0+6IFqhOgJf9b7By14HHICcBEQr2j1xKe5ozKVKNkxNY3+6pF
- UY+IB3FCxFuHbgdoa5sTjUFDRqBrJl4O+bBh2IiAjc9N6wke3kvUFwQ+1NG3Fwt0bHeKVVq1I
- NIZANLzFHm4K5rRK+4vW0SHNoBt2woJOVaUBnwxiI12XAFO+iy3vdmT6HcKMq6hSWIWDNmzKt
- ZVsexFxpDTRGg8kM3xZwdmaW+LXUY8ofnwWptzG93iOgCXsE8xlo8PKBmJHwNwm8BY72UyQKu
- /d8XPrKxrfA/P1R/aWBVgw3PozkmH7Js5icgzgsVoc5Snr4Of7DAjzkLedQ9u86aDrK/ZYhsR
- Mj9TxJ0pUE7W2iMdaTD0MbV7M9PZ5EHnDk0shgFaJfmoAs9euxbrSdynFt+Pa4eS/zWY1RC7p
- r1sKSxC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1607180922580.28832@virtualbox>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Norm,
-
-On Sun, 17 Jul 2016, norm@dad.org wrote:
-
-> <l.s.r@web.de> writes:
-> >
-> >The other replies covered how to use the system's own diff instead.
-> >Just curious: What makes using git diff difficult and its output hard to
-> >deal with for you?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Sun, 17 Jul 2016, norm@dad.org wrote:
+> > 'git diff' outputs escape characters which clutter my terminal. Yes, I
+> > can sed them out, but then why are they there?
 > 
-> In decreasing importance order:
-> 
-> I am 84 years old.
+> Those are most likely the ANSI sequences to add color. Can you call Git
+> with the --no-color option and see whether the escape characters go away?
 
-Wow. Chapeau! I am impressed.
+Norm: do you have PAGER=more set by any chance?
+Perhaps changing it to "less" will allow you to preserve colors.
 
-> I have been using /usr/bin/diff for more than four decades.  And having
-> to learn how to read the output of 'git diff' makes learning how to use
-> git a more difficult trick for this old dog to learn. True, the diff of
-> today is very different from the diff of 1972, but the changes happened
-> gradually.
+I saw a similar or identical problem during my vacation in
+FreeBSD-land.  Perhaps the out-of-the-box experience can be
+improved:
 
-Curious: do you use context diff (GNU diff's default) or unified diffs?
+-----8<-----
+Subject: [PATCH] pager: disable color when pager is "more"
 
-> I have scripts which process the output of /usr/bin/diff.
+more(1) traditionally cannot handle colors.
 
-Even more curious: what do those scripts do? Maybe they do things that we
-either can already do with Git's diff, or that we can teach Git.
+On FreeBSD 10.3, a new user ~/.profile explicitly sets
+PAGER=more, but does not configure it to display colors, leading
+to a bad out-of-the-box experience with escape sequences being
+seen by the user.
 
-> 'git diff' outputs escape characters which clutter my terminal. Yes, I
-> can sed them out, but then why are they there?
+In the FreeBSD 10.3 case, /usr/bin/more is actually a hardlink
+to /usr/bin/less and capable of handling colors.  While we could
+set MORE=FRX, this breaks other more(1) implementations,
+including the one provided by util-linux on common GNU/Linux
+systems.
 
-Those are most likely the ANSI sequences to add color. Can you call Git
-with the --no-color option and see whether the escape characters go away?
+So take the safe route and assume anybody still using more(1)
+today can live with monochrome output, but acknowledge 'R'
+in the MORE environment variable if it was set by the user.
 
-Ciao,
-Johannes
+Signed-off-by: Eric Wong <e@80x24.org>
+---
+ environment.c |  2 +-
+ pager.c       | 11 +++++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/environment.c b/environment.c
+index ca72464..cfb56fd 100644
+--- a/environment.c
++++ b/environment.c
+@@ -41,7 +41,7 @@ size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
+ size_t delta_base_cache_limit = 96 * 1024 * 1024;
+ unsigned long big_file_threshold = 512 * 1024 * 1024;
+ const char *pager_program;
+-int pager_use_color = 1;
++int pager_use_color = -1;
+ const char *editor_program;
+ const char *askpass_program;
+ const char *excludes_file;
+diff --git a/pager.c b/pager.c
+index 4bc0481..3110df4 100644
+--- a/pager.c
++++ b/pager.c
+@@ -80,6 +80,17 @@ void setup_pager(void)
+ 	if (!pager)
+ 		return;
+ 
++	if (pager_use_color < 0 && !strcmp(pager, "more")) {
++		const char *more = getenv("MORE");
++
++		/*
++		 * MORE=R does not work everywhere, so we cannot set it,
++		 * but we can respect it if set.
++		 */
++		if (!more || !strchr(more, 'R'))
++			pager_use_color = 0;
++	}
++
+ 	/*
+ 	 * force computing the width of the terminal before we redirect
+ 	 * the standard output to the pager.
+-- 
+EW
