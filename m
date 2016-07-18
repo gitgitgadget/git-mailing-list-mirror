@@ -2,106 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3C7A2018B
-	for <e@80x24.org>; Mon, 18 Jul 2016 17:48:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D1482018B
+	for <e@80x24.org>; Mon, 18 Jul 2016 18:01:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751592AbcGRRsa (ORCPT <rfc822;e@80x24.org>);
-	Mon, 18 Jul 2016 13:48:30 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:34053 "EHLO
-	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751455AbcGRRs2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2016 13:48:28 -0400
-Received: by mail-io0-f173.google.com with SMTP id q83so166864962iod.1
-        for <git@vger.kernel.org>; Mon, 18 Jul 2016 10:48:15 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=4ubVzqu23wtQWPPVNcDG9blFAf8WcNwSzKlqLQ1UdkM=;
-        b=r4JupyLZ9+MdGYN6CyJm21eAFFwRrqcvxEfRd2jQthwJI1bOa4dggifRJ3GPupruac
-         O3xa+Z16KOv8D6PDgK5p9oJbRRN0DHaDaNpeDkRQH2bDcd1slC4Pn6nMNcUODLXaLXY5
-         /MpMFJ3fWVRuylnw4mqREs3VeWsFM4Cte4XX5PrAzySM1FcUVMzHBL1E0bgikXZeRo8d
-         z6KL0zMOccrIG2sXhkjY0JWequQTiPbjdZsQujuuq7W8O61eDwvz2pju/sPghdEdL7Wx
-         +9GJNJEmT0ojL3fhcP47czfilodQ21WC4E/N38KdgalQdNLHFM834ehKykZEZTt7otOP
-         K7EA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=4ubVzqu23wtQWPPVNcDG9blFAf8WcNwSzKlqLQ1UdkM=;
-        b=MmD0rDZtll+BPF2uxdjNztjcyeWYSekoCl+7gyG8FROwaPHoqQk+vEUbqiDChMRFyS
-         4Nt7IVNhMMioTzr2I7fCkTLQY6sxJACw+OAGTWvSg8kfLvYt83MGKnjpaGHZTMlyIBLu
-         EK4nQjmlpqMt/lNwknxmfKUqMWV4THqB1Ldy9fMYepwTC1NReYGWXhPq4iLBDimLTcVj
-         76QSrjm0+Vd/yxiNUkjMlOEAzNk3MTjvhi/Sw9EjITYEzx+8wEtr81uZOykf7bzKP89b
-         iGsyCNrv0QXojLVRO/ymeAL7kcHZCjWl47uGz2bs4A16x7vqfrEfeGV/ZgLrRW5uOocK
-         g6Rw==
-X-Gm-Message-State: ALyK8tL/Gc3Hy0jXh95Iwz7gTUOHCs9FzY4T8TQ8sblgFgzfSMzPCn9u+N3p/7szrQTknwasiU6ifz2AfxD/jw==
-X-Received: by 10.107.182.8 with SMTP id g8mr24978150iof.53.1468864093427;
- Mon, 18 Jul 2016 10:48:13 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.79.83.4 with HTTP; Mon, 18 Jul 2016 10:48:12 -0700 (PDT)
-In-Reply-To: <CACBZZX5wjhYosupW=-n7UbbXAQug+sgSNS+jm_uUn6QwC8p6Aw@mail.gmail.com>
-References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com>
- <CACBZZX5wjhYosupW=-n7UbbXAQug+sgSNS+jm_uUn6QwC8p6Aw@mail.gmail.com>
-From:	Herczeg Zsolt <zsolt94@gmail.com>
-Date:	Mon, 18 Jul 2016 19:48:12 +0200
-Message-ID: <CAPp-Vra5ri7V03SSkU6=UnWrsq-jk0XcNpQuzGH8kQxE-TkPjA@mail.gmail.com>
+	id S1751632AbcGRSBL (ORCPT <rfc822;e@80x24.org>);
+	Mon, 18 Jul 2016 14:01:11 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56856 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751591AbcGRSBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2016 14:01:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EC37A2C149;
+	Mon, 18 Jul 2016 14:01:07 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2eGdecwYjfd6Ndk0+wVayV4DZkw=; b=VaNWTI
+	c76YmPlbWcN35ZAu22ajlqRi/1Ail4PZTnR/VcAxQ5rbfJFJx4Txg2TmwHYqdWBp
+	BCEEOtI4kyUVCC7U6fdS86+gTjoekhZ7mwOsnVfbd6L6pLnqWc9/qsHABXwbliGs
+	LuIBJc9rLgDf8ehL7K5cIbimq+R5Z0V6j3f6s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=o4xpArd2PyQe4JO2pvO1Lt1k94bYGsV8
+	K25e1d8Mw2McoeQwfV3JCEQuJPuTR6RN21gNiQVUY6oGtiDJAtnhGuexRMuwpxhN
+	jK6+ALjKOouI2lBZ1R5pk/hn5nO2cjOGQSMVy5GKM9JPXvQZnmAhtVILuSnB7gAF
+	cmNxEZhCIhQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E2E7A2C148;
+	Mon, 18 Jul 2016 14:01:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 620BC2C145;
+	Mon, 18 Jul 2016 14:01:07 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	"brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:	Theodore Ts'o <tytso@mit.edu>, Duy Nguyen <pclouds@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Herczeg Zsolt <zsolt94@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 Subject: Re: Git and SHA-1 security (again)
-To:	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:	Git <git@vger.kernel.org>, "Theodore Ts'o" <tytso@mit.edu>
-Content-Type: text/plain; charset=UTF-8
+References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com>
+	<20160716201313.GA298717@vauxhall.crustytoothpaste.net>
+	<alpine.DEB.2.20.1607170949360.28832@virtualbox>
+	<20160717142157.GA6644@vauxhall.crustytoothpaste.net>
+	<CACsJy8C+2=qv5Vu=tGeDTK_Q+XSAv3qEJw0nrHbEWU7psDf=Cg@mail.gmail.com>
+	<20160717154234.GC6644@vauxhall.crustytoothpaste.net>
+	<20160717162349.GB11276@thunk.org>
+	<20160717220417.GE6644@vauxhall.crustytoothpaste.net>
+Date:	Mon, 18 Jul 2016 11:00:35 -0700
+In-Reply-To: <20160717220417.GE6644@vauxhall.crustytoothpaste.net> (brian
+	m. carlson's message of "Sun, 17 Jul 2016 22:04:17 +0000")
+Message-ID: <xmqq4m7mltbw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 99F51312-4D11-11E6-8A33-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-> In particular, as far as I know and as Theodore Ts'o's post describes
-> better than I could[1], you seem to be confusing preimage attacks with
-> collision attacks, and then concluding that because SHA1 is vulnerable
-> to collision attacks that use-cases that would need a preimage attack
-> to be compromised (which as far is I can tell, includes all your
-> examples) are also "broken".
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-I understand the differences between the collision and preimage
-attacks. A collision attack is not that bad for git in a typical
-use-case. But I think that it's important to note that there are many
-use-cases which do need a hash safe from collision attack. Some
-examples:
+> I will say that the pack format will likely require some changes,
+> because it assumes ...
+> The reason is that we can't have an unambiguous parse of the current
+> objects if two hash algorithms are in use....
+> So when we look at a new hash, we need to provide an unambiguous way to
+> know what hash is in use.  The two choices are to either require all
+> object use the new hash, or to extend the objects to include the hash.
+> Until a couple days ago, I had planned to do the former.  I had not even
+> considered using a multihash approach due to the complexity.
 
-You maintain a repository with gittorrent with signed commits Others
-can use these signatures to verify it's original. Let's say you
-include some safe file (potentially binary) from a third-party
-contributor. That would be fine if the hash algo is safe. Currently
-there is the possibility that you received a (safe) file which was
-made to collide with another malicious one. Once you committed (and
-signed) that file, the attacker joins the gittorrent network and
-starts to distribute the malicious file. Suddenly most of your clients
-pulling are infected however your signature is correct.
+Objects in Git identify themselves, but once you introduce the
+second hash function (as opposed to replacing the hash function to a
+new one), you would allow people to call the same object by two
+names.  That has interesting implications.
 
-Or, you would like to make a continuous delivery system, where you use
-signed tags. The delivery happens only when signature is right, and
-the signer is responsible for it. Your colleague makes a collision,
-pushes the good-file. You make all the tests, everything is fine, sign
-and push and wait for the delivery to happen. Your colleague changes
-the file on the server. The delivery makes a huge mass, and you're
-fired.
+Let's say you have a blob at path F in a top-level tree object and
+create a commit.  You have three objects in total, the tree knows
+the blob as one name based on SHA-1 and the commit knows the tree as
+one name based on SHA-1.  The same contents of the blob and the tree
+could have different names based on SHA-256 in the future Git.
 
-Or, let's say you use a service like github, which is nice enough to
-make a repository for you, with .gitignore, licenses and everything.
-Likely, you'll never change dose files. Let's say that service made
-one of those initial files to collide something bad. That means, they
-can "infect" anyone, who is pulling your repo.
+Let's further say you have a future Git and clone from the above
+repository with three objects.  You get a pack stream, containing
+the data for one commit, tree and blob each.  These objects do not
+carry their own name as extra pieces of information.  You only get
+their contents, and it is up to you to name them by hashing.  .idx
+files are created by running index-pack while receiving the pack
+data stream.  You _somehow_ need to know that these three objects
+need to be hashed with SHA-1, even though you are SHA-256 capable,
+because otherwise the object name recorded in the tree object for
+the blob would not match what your .idx file would call the blob
+data.  Also the object name recorded in the ref to point at the
+commit would not match the commit object's object name, unless you
+hash with SHA-1.  It is a possibility to always hash these objects
+twice and record _both_ hashes in the updated .idx file; after all,
+.idx files are strictly local matter.
 
-Do you need more hypothetical stories? There are a lot. Of course they
-need a lot of work, and they're unlikely to happen. But it's possible.
-If you need trust, and gpg signatures that means you need ultimate
-trust. What's the point in making GPG signatures anyway if you cannot
-ultimately trust them? You could just as well say: well that's
-repository is only reachable by trustworthy persons, everything here
-is just fine and really made by the person named in the "author
-field".
+Now let's further say that you update the file F in the working
+tree, and do "git commit -a" with updated version of Git.  What
+should happen?  Assuming that we are trying to migrate to a
+different hashing algorithm over time, we would want to create a new
+blob under object name based on SHA-256, add that to the index and
+write a new tree out, named by hashing with SHA-256.  We then record
+that longer-named tree in a commit whose parent commit is still
+named with SHA-1 based hash, and the new commit in turn is named by
+hashing with SHA-256.
+
+Then you push the result back.  Let's assume by now the place you
+cloned from is also SHA-256 capable.  You look at the tips of refs
+at your clone-source and discover that you would need to only send
+the new commit, its tree and the updated blob.  You send data in
+these three objects.  The receiving end would now need to do the
+same "magically choose hash to make sure the new blob gets the name
+that is recorded in the new tree (and the new tree the new commit)"
+thing.  The same discussion applies if somebody else clones from you
+at this point.  The objects introduced by the second commit all need
+to be hashed with the new hash to be named, while the other objects
+need to be hashed with the old hash.
+
+Continuing this thought process, I do not see a good way to allow us
+to wean ourselves off of the old hash, unless we _break_ the pack
+stream format so that each object in the pack carries not just the
+data but also the hash algorithm to be used to _name_ it, so that
+new objects will never be referred to using the old hash.
+
+It matters performance-wise that the weaning process go as quickly
+as possible, once the system becomes capable of new hash algorighm,
+because during the transition period, we'd have to suffer the full
+tree-diff becoming inefficient (Note: don't limit your thinking to
+just "git diff" and "git log"; the same inefficiency hits "git
+checkout" to switch branches and "git merge" to walk three trees in
+parallel), because we cannot skip descending into subdirectories
+based on the tree object name being equal, which guarantees that
+everything under the hierarchy is equal.
+
+
