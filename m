@@ -6,175 +6,126 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03E492018B
-	for <e@80x24.org>; Mon, 18 Jul 2016 19:43:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 078512018B
+	for <e@80x24.org>; Mon, 18 Jul 2016 20:00:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752377AbcGRTnc (ORCPT <rfc822;e@80x24.org>);
-	Mon, 18 Jul 2016 15:43:32 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58457 "EHLO
+	id S1752193AbcGRUAr (ORCPT <rfc822;e@80x24.org>);
+	Mon, 18 Jul 2016 16:00:47 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56953 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752009AbcGRTnc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2016 15:43:32 -0400
+	with ESMTP id S1751538AbcGRUAq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2016 16:00:46 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8E3502D17D;
-	Mon, 18 Jul 2016 15:43:30 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 96DDC2D3A8;
+	Mon, 18 Jul 2016 16:00:44 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0RdBBgsZPki49auKQzPLeJbCE4o=; b=viAYM4
-	LfOSGQnkKjriCTPnIhV6mPRR1SYF7WIlf0v3IZm5iwMAcy+f0PORPrDG8MZxsIoJ
-	n8hZkGYDAG2XTqBp4uFxLyX83I5bBVSZQtsRK4cLEqRYzPrjYmbNyq8kED0SCa9Z
-	IH75jsKt8XdTzfGfqIg5teOWHfQkexNIOu47w=
+	:content-type; s=sasl; bh=d7OVKfNZPPnzhxXaD5zzdnUfMbU=; b=tzH6bS
+	VQ/JTwO38RDD7H7mPCPOpIWa0t7vWi/RRTR5lIlgKENzumLnV63QigEHpvRoto6c
+	T0FcOyqqRpfiE7v0jtG0/iqHu28FbRNiml91IjHUlWNsiC7BthHsGvaOB2MqZ5kv
+	O8t0JsUhiCEHVy5Gs2N0WvPgwdBymnWKor6O8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NRJYROQOhw0qXN9xNXYzMGr798DWOOOj
-	G/JvuBJPVWCh3zZXLPJhCelP/oAcohonCKx8Wh5SCCR9TAijZKpHKxTyBLdi238R
-	JDc1JV30naclO+h0RmsWvtaWw5tfcXtzyAleUe3ooxRvZAtcZFyweGCYJ2aUvxXN
-	34r0EiUqisI=
+	:content-type; q=dns; s=sasl; b=pczXs/IFvm/aAe/G4p5XuMTMqsuCD2Qx
+	cIPnZJSd2i8oR/kqutDiAisNY8OZ2pvuuiMT96yekQGbcyJlLNanlcieqnY/sp8G
+	rRaNdgXHE5Bi1ak94mBl5zNZhUYJNe9sIz8EGkEhdkL0ziwVm7XLPk+gNMAsNeni
+	YH1Odv1ZRxI=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7DE882D17C;
-	Mon, 18 Jul 2016 15:43:30 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8D8E32D3A7;
+	Mon, 18 Jul 2016 16:00:44 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 06EEA2D17B;
-	Mon, 18 Jul 2016 15:43:29 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 136B22D3A6;
+	Mon, 18 Jul 2016 16:00:44 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Eric Wong <e@80x24.org>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] test-lib: stricter unzip(1) check
-References: <20160718064431.GA10819@starla>
-	<20160718130405.GA19751@sigill.intra.peff.net>
-Date:	Mon, 18 Jul 2016 12:43:27 -0700
-In-Reply-To: <20160718130405.GA19751@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 18 Jul 2016 07:04:05 -0600")
-Message-ID: <xmqqshv6ivfk.fsf@gitster.mtv.corp.google.com>
+To:	Jonathan Nieder <jrnieder@gmail.com>
+Cc:	Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+	Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] fetch-pack: grow stateless RPC windows exponentially
+References: <1468867019-13086-1-git-send-email-jonathantanmy@google.com>
+	<20160718185527.GB29326@google.com>
+	<xmqq37n6kbib.fsf@gitster.mtv.corp.google.com>
+	<CAGf8dgJVkkVwJ5aJCQBcYKw7F9g7u3pMsuJHedSGLG6PQk2Keg@mail.gmail.com>
+	<20160718193147.GC29326@google.com>
+Date:	Mon, 18 Jul 2016 13:00:41 -0700
+In-Reply-To: <20160718193147.GC29326@google.com> (Jonathan Nieder's message of
+	"Mon, 18 Jul 2016 12:31:47 -0700")
+Message-ID: <xmqqoa5uiumu.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E73FB89E-4D1F-11E6-9C9A-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 4F97E248-4D22-11E6-8644-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> My Debian version of unzip (which is derived from Info-zip) seems to
-> give return code 0 for just "unzip". So for the first check, we could
-> possibly drop "-v"; we don't care about "-v", but just wanted some way
-> to say "does unzip exist on the path?". Another option would just be
-> checking whether "unzip" returns something besides 127 (so what we have
-> now, minus "-v").
+> You have full control of the growth function.  So how about aggressive
+> growth until 1024*10?
 >
-> To test for "-a", I think we'd have to actually feed it a sample zip
-> file, though. My unzip returns "10", which its manpage explains as
-> "invalid command line options" (presumably because of the missing
-> zipfile argument). But that seems like it probably isn't portable.  And
-> it's also what I might expect another unzip to return if it doesn't
-> support "-a".
+> That is:
 >
-> So while this patch does solve the immediate problem, I think it does so
-> by overly skipping tests that we _could_ run.
+> Current git:
+>   n < 1024: aggressive exponential
+> 	16, 32, 64, 128, 256, 512, 1024
+>   1024 <= n: linear
+> 	2048, 3072, 4096, 5120, ...
+>
+> Initial proposal:
+>   n < 1024: aggressive exponential
+> 	16, 32, 64, 128, 256, 512, 1024
+>   1024 <= n < 10240: linear
+> 	2048, 307, 4096, 5120, ...
+>   10240 <= n: conservative exponential
+> 	11264, 12390, ...
+>
+> New proposal:
+>   n < 10240: aggressive exponential
+> 	16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384
+>   10240 <= n: conservative exponential
+> 	18022, 19824, ...
+>
+> That way, on one hand it would still never use a smaller window than
+> today and on the other hand the heuristic would be easier to
+> understand (only decelarating, instead of decelarating and then
+> accelerating again).
 
-Hmm, how about taking Dscho's "default GIT_UNZIP to /usr/local/bin/unzip
-on FreeBSD" thing, together with something like this, then?
+That sounds more explainable (I do not know if that is a growth
+curve that gives us better results, though).
 
-I suspect that 4 checks that look at $extracted/* after running
-unzip -a should probably be inside a single test that runs unzip -a,
-simply because they do not make any sense if the extraction failed,
-but I did not fix that with this.
+So, the result would look something like this, perhaps?
 
--- >8 --
-test: check "unzip" and "unzip -a"
+ fetch-pack.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-Different platforms have implementations "unzip" that behave
-differently.  Most of the tests we use GIT_UNZIP we only care about
-the command to be able to extract from *.zip archive, but one test
-in t5003 wants it to also be able to grok the "-a" option.
-
-Prepare a sample zip file that has a single text file in it, and try
-extracting its contents to see GIT_UNZIP is usable. when setting
-UNZIP prerequisite.  Similarly, set UNZIP_AUTOTEXT prerequisite by
-running GIT_UNZIP with the "-a" option.
-
----
- t/t5003-archive-zip.sh   |  19 ++++++++++++++-----
- t/t5003/infozip-text.zip | Bin 0 -> 163 bytes
- t/test-lib.sh            |   4 ++--
- 3 files changed, 16 insertions(+), 7 deletions(-)
-
-diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
-index 14744b2..43c0cfd 100755
---- a/t/t5003-archive-zip.sh
-+++ b/t/t5003-archive-zip.sh
-@@ -15,6 +15,15 @@ test_lazy_prereq UNZIP_SYMLINKS '
- 	)
- '
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 3c5dfc4..97fe5f7 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -264,12 +264,17 @@ static void insert_one_alternate_ref(const struct ref *ref, void *unused)
  
-+test_lazy_prereq UNZIP_AUTOTEXT '
-+	(
-+		mkdir unzip-autotext &&
-+		cd unzip-autotext
-+		"$GIT_UNZIP" -a "$TEST_DIRECTORY"/t5003/infozip-text.zip &&
-+		test -f text
-+	)
-+'
-+
- check_zip() {
- 	zipfile=$1.zip
- 	listfile=$1.lst
-@@ -39,27 +48,27 @@ check_zip() {
- 	extracted=${dir_with_prefix}a
- 	original=a
+ static int next_flush(struct fetch_pack_args *args, int count)
+ {
+-	int flush_limit = args->stateless_rpc ? LARGE_FLUSH : PIPESAFE_FLUSH;
+-
+-	if (count < flush_limit)
+-		count <<= 1;
+-	else
+-		count += flush_limit;
++	if (args->stateless_rpc) {
++		if (count < LARGE_FLUSH * 10)
++			count <<= 1;
++		else
++			count = count * 11 / 10;
++	} else {
++		if (count < PIPESAFE_FLUSH)
++			count <<= 1;
++		else
++			count += PIPESAFE_FLUSH;
++	}
+ 	return count;
+ }
  
--	test_expect_success UNZIP " extract ZIP archive with EOL conversion" '
-+	test_expect_success UNZIP_AUTOTEXT " extract ZIP archive with EOL conversion" '
- 		(mkdir $dir && cd $dir && "$GIT_UNZIP" -a ../$zipfile)
- 	'
- 
--	test_expect_success UNZIP " validate that text files are converted" "
-+	test_expect_success UNZIP_AUTOTEXT " validate that text files are converted" "
- 		test_cmp_bin $extracted/text.cr $extracted/text.crlf &&
- 		test_cmp_bin $extracted/text.cr $extracted/text.lf
- 	"
- 
--	test_expect_success UNZIP " validate that binary files are unchanged" "
-+	test_expect_success UNZIP_AUTOTEXT " validate that binary files are unchanged" "
- 		test_cmp_bin $original/binary.cr   $extracted/binary.cr &&
- 		test_cmp_bin $original/binary.crlf $extracted/binary.crlf &&
- 		test_cmp_bin $original/binary.lf   $extracted/binary.lf
- 	"
- 
--	test_expect_success UNZIP " validate that diff files are converted" "
-+	test_expect_success UNZIP_AUTOTEXT " validate that diff files are converted" "
- 		test_cmp_bin $extracted/diff.cr $extracted/diff.crlf &&
- 		test_cmp_bin $extracted/diff.cr $extracted/diff.lf
- 	"
- 
--	test_expect_success UNZIP " validate that -diff files are unchanged" "
-+	test_expect_success UNZIP_AUTOTEXT " validate that -diff files are unchanged" "
- 		test_cmp_bin $original/nodiff.cr   $extracted/nodiff.cr &&
- 		test_cmp_bin $original/nodiff.crlf $extracted/nodiff.crlf &&
- 		test_cmp_bin $original/nodiff.lf   $extracted/nodiff.lf
-diff --git a/t/t5003/infozip-text.zip b/t/t5003/infozip-text.zip
-new file mode 100644
-index 0000000..a019acb
-Binary files /dev/null and b/t/t5003/infozip-text.zip differ
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 11201e9..9907b3f 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1102,8 +1102,8 @@ test_lazy_prereq SANITY '
- 
- GIT_UNZIP=${GIT_UNZIP:-unzip}
- test_lazy_prereq UNZIP '
--	"$GIT_UNZIP" -v
--	test $? -ne 127
-+	"$GIT_UNZIP" "$TEST_DIRECTORY/t5003/infozip-text.zip" &&
-+	test -f text
- '
- 
- run_with_limited_cmdline () {
