@@ -2,72 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D436F2018B
-	for <e@80x24.org>; Mon, 18 Jul 2016 18:33:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D4182018B
+	for <e@80x24.org>; Mon, 18 Jul 2016 18:37:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751587AbcGRSd2 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 18 Jul 2016 14:33:28 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50765 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751463AbcGRSd1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2016 14:33:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 17CFD2C55E;
-	Mon, 18 Jul 2016 14:33:26 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zoUbWP0EjBv3GZ9/7RM7dSlPvDo=; b=clOlIb
-	6HKHhbpeRFxE4RtTN+vqToNwB1ib0Zu3kbTAFzG23M0qho1StTL0nSSxWWLTstNI
-	4NlfCjWhNBCq7XgPkLGsyV/JBkLprGLNBeVaLnh6uXwCE0rzDJoqEfmcDD+aOsZ7
-	3wn8J5Q88ljxnEKdmpyf4r6eYstjkE+M9aqRg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=W+UKKgG6dHaepsdrvrl7YXHr8ySiux1E
-	hsR/dn1ZDAT9OjKfkDxQ3FSoVWUcu+r0hfCDAWUzZeIjqqQi+oj1/jEsV+ortqBz
-	uvBm4SJ/SsD6kvI3YJ5WnTEIyaEFnUBTTPpRptWsdoqxu6cGQptEFlZt6KAk6bc4
-	nSZg4w63CZM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F3BF2C55D;
-	Mon, 18 Jul 2016 14:33:26 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 879612C55C;
-	Mon, 18 Jul 2016 14:33:25 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Ehsan Azarnasab <azarnasab@gmail.com>
-Cc:	git@vger.kernel.org
-Subject: Re: Feature request for automatic worktree checkout
-References: <CADWjqk40KK=AuKqqdpKjkBuUvhQb4k4fMR4bPfdo8JkGRs-Y9w@mail.gmail.com>
-Date:	Mon, 18 Jul 2016 11:33:23 -0700
-In-Reply-To: <CADWjqk40KK=AuKqqdpKjkBuUvhQb4k4fMR4bPfdo8JkGRs-Y9w@mail.gmail.com>
-	(Ehsan Azarnasab's message of "Mon, 18 Jul 2016 10:42:57 -0700")
-Message-ID: <xmqqpoqakd8s.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1D2F7A02-4D16-11E6-8072-89D312518317-77302942!pb-smtp1.pobox.com
+	id S1751560AbcGRShU (ORCPT <rfc822;e@80x24.org>);
+	Mon, 18 Jul 2016 14:37:20 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:35697 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751499AbcGRShS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2016 14:37:18 -0400
+Received: by mail-pa0-f53.google.com with SMTP id iw10so897951pac.2
+        for <git@vger.kernel.org>; Mon, 18 Jul 2016 11:37:18 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=eUVUdop6rWcEwsT5fM2m25SkXRsEJ+Y9NbjhXIZXlt4=;
+        b=QmouHbEDPQrZVZHzzcCCot7P3Vv3IkJX7bInukqHbFkB+aVPg8DPSd+jta7X4eM15Y
+         aPJHTuGC5dIiQmwmPL6ikWoto4qzNZQOY+fhjQr97qOgXRBfk7OK9keJeItSyrCm8AnT
+         I2+YTkiD35yVrfvdj/n//tiiJx8Az4DEI+ndf8WXUXQY0pvG30xTp8WO+VfrHaGJGoZ/
+         HaDZl3IDX7EVSk9Hb1Ja9H9KDwtiy9/7ZeHLEzvkJAUTSyrCDJxauu50btHr5FEjwll/
+         GYDgNCLEJLUtoCBCup8Vtf8k0/aywdpmFSpcgWNBY1Mbo0iFIxadC3eLJBY7T2j3mAB+
+         OfdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=eUVUdop6rWcEwsT5fM2m25SkXRsEJ+Y9NbjhXIZXlt4=;
+        b=kfkM9YmkLH8xtqd+E3FWMgCQFMGJN3UmTz9HD6xmueHgQxFJxooKnC4EMNbHNBWV0h
+         q1vo2ATzSw/IIFvLta7AvEE1+kLNi2OyuAfsZYEbuSFlquu76lV3WIBZQj7qXXgKD+Nn
+         6YdcvX+BYyZUSAe4rnSWIL32VP6rQ9u4IVm6LHMDVGdIkSsRxdJ5gf66Pr5uO/AWhxLf
+         S7SiTuUcS5vO4fQ4WhDPTqz+xToLtzhVTF4CuTZKKx+WJx6opSsPqaIkUMzD18KCh7Rc
+         dxmJ1eVPq40oGTx0NwaDf5Id+/ro51hPTBMQU0+U3sRZCPE15yr0HazRD6HTE8HNTN8O
+         IROQ==
+X-Gm-Message-State: ALyK8tLwW1+DS14V0etiB22l1cZ3loEe6Yc/MFXnp+JonIHZYxEktjJP9/C5/tGDFx206JjO
+X-Received: by 10.67.8.69 with SMTP id di5mr57939620pad.123.1468867037159;
+        Mon, 18 Jul 2016 11:37:17 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([172.17.54.68])
+        by smtp.gmail.com with ESMTPSA id h66sm6671700pfe.58.2016.07.18.11.37.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 18 Jul 2016 11:37:15 -0700 (PDT)
+From:	Jonathan Tan <jonathantanmy@google.com>
+To:	git@vger.kernel.org
+Cc:	Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com,
+	sbeller@google.com
+Subject: [PATCH] fetch-pack: grow stateless RPC windows exponentially
+Date:	Mon, 18 Jul 2016 11:36:59 -0700
+Message-Id: <1468867019-13086-1-git-send-email-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Ehsan Azarnasab <azarnasab@gmail.com> writes:
+When updating large repositories, the LARGE_FLUSH limit (that is, the
+limit at which the window growth strategy switches from exponential to
+linear) is reached quite quickly. Use a conservative exponential growth
+strategy when that limit is reached instead.
 
-> Currently if I have a branch checked out in a work-tree, git-checkout
-> will show this error message when checking out that branch:
->
-> $ git checkout master
-> fatal: 'master' is already checked out at '/home/dashesy/development/feature'
->
-> It would be very useful to instead of this error just change the
-> current working directory, so git checkout would become a `cd` command
+This optimization is only applied during stateless RPCs to avoid the
+issue raised and fixed in commit
+44d8dc54e73e8010c4bdf57a422fc8d5ce709029.
 
-That is an understandable thing to want from 10,000ft view, but it
-would not be something Git, or any external command that is spawned
-by the shell for that matter, can address.  You'd need to teach the
-shell to cooperate.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ fetch-pack.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/fetch-pack.c b/fetch-pack.c
+index b501d5c..3fcbda2 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -251,6 +251,8 @@ static int next_flush(struct fetch_pack_args *args, int count)
+ 
+ 	if (count < flush_limit)
+ 		count <<= 1;
++	else if (args->stateless_rpc && count >= flush_limit * 10)
++		count = count * 11 / 10;
+ 	else
+ 		count += flush_limit;
+ 	return count;
+-- 
+2.8.0.rc3.226.g39d4020
+
