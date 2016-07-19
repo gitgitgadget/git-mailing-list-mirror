@@ -2,83 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 877C21FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 17:27:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B9751FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 17:27:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753593AbcGSR1F (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 13:27:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50684 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753324AbcGSR1D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 13:27:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E001E2B383;
-	Tue, 19 Jul 2016 13:27:01 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=maeONyhkoy3X309AUj7aSYwashk=; b=WyIxOC
-	Kv5tXnZ2x/pObTCy/9hLlTx7o2/kHMRhS+1bnLKxdqrhFfoZUmMBQF3vYhB2oesh
-	lcKSkUVPIstbvu0DJ13PJUrhEoin5jRO0UroEFLuJ9tV2PvVeGKPQZoOQID525PM
-	lgbFOzmsosnQNG7NifKqDdQuwdRdkV8jzqp1c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RVxzAEGfz7yvgoPzHyfaxOCLjzoIStJr
-	oQHdGtMrFT/+RvTRFbUSZi6PwW6Zk4vhGpL0G4bVHb0KiJfwaPSKjW8cEKKSqlj9
-	R1PzRgX3nxB6blechR3j8gE3jU6apntMtKfs/qV5LBX/Uli6/1/brUs4psGnWQgB
-	r6jVgMVslrc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D6D1F2B381;
-	Tue, 19 Jul 2016 13:27:01 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 55F082B37B;
-	Tue, 19 Jul 2016 13:27:01 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>,
-	=?utf-8?Q?Ren?= =?utf-8?Q?=C3=A9?= Scharfe <l.s.r@web.de>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] test-lib: stricter unzip(1) check
-References: <20160718064431.GA10819@starla>
-	<20160718130405.GA19751@sigill.intra.peff.net>
-	<alpine.DEB.2.20.1607181536540.3472@virtualbox>
-	<xmqqtwfmkduk.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1607191327260.3472@virtualbox>
-Date:	Tue, 19 Jul 2016 10:26:59 -0700
-In-Reply-To: <alpine.DEB.2.20.1607191327260.3472@virtualbox> (Johannes
-	Schindelin's message of "Tue, 19 Jul 2016 13:27:30 +0200 (CEST)")
-Message-ID: <xmqqfur5h730.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753647AbcGSR1q (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 13:27:46 -0400
+Received: from mail-io0-f178.google.com ([209.85.223.178]:33978 "EHLO
+	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752961AbcGSR1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 13:27:45 -0400
+Received: by mail-io0-f178.google.com with SMTP id q83so25351024iod.1
+        for <git@vger.kernel.org>; Tue, 19 Jul 2016 10:27:32 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=iyfU/+DjbcInHJgEsKvxgmp0CT/sDnEGSD6YVockSUk=;
+        b=vAfREDOu9KdeXQ0sgd4kthCjo+Nmosg3U4dZwN+xbmk7kLmgxPEIek4jPrOWFVVgOM
+         JmvO+Huc4pSP4xbPBS7FJlTsjXCWhJ2Z8cMTGB/9BVyFflkH0zTOkqJZB/3XhRmm8oeb
+         Ckxs/IPeoZTw88IBGJq1ncBEfgdH7xaoUvy+uEPw23BNxP95MiTT3qSLmpHoLB8dFtDF
+         cUUv+hszVHW1k8CAmvqpjWgIPj6Vipaz6kXVlH5fKZoHmcQaNrQWZtlzH+DWYmlOVT/x
+         fzba+VB35kvhgoChBQCLdcUbd3hCcdASm/5h7Kazb01ahrWglGXnLVaI8PDlPJ4nxpgU
+         yQqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=iyfU/+DjbcInHJgEsKvxgmp0CT/sDnEGSD6YVockSUk=;
+        b=LtbnOs/YdCLDpAuXvF6P7GjUN6oBheD1W20ir+mmBpDZton0deob4WIasHd2QD32is
+         0VeP6lUpdxPGnbsSoiULyUMek/ISQ9EbaUJcDEZICMA0rMVRjIvlOh9w+V9FYSWFC46x
+         I8f8yLwE/O6frvYlEFnbcMbF3IR24RNaD7gdZklfZp/aExlNJL2DZwogJTrRQsGIUjeP
+         C+BSkMHgubdqG6Xy5OKcx43UoXc7JxFtwfXxadWyoAxXiY7XqnmCK0QgsHS8IKd3tYFz
+         m73qe3XhwgzOy/98GX8RO/W4Jd5wILkfnh0d7o43Q08pD0MmMH8PtgHA8soQ9HXPL6ec
+         ekAg==
+X-Gm-Message-State: ALyK8tKFC04HjfsSMxDzrL60XrwgI+CkM1hGe5l2Ul5xQ4yRuUKhXW58XR+unHyrK6Ppy2o0+/s8hC5MAEptYw==
+X-Received: by 10.107.159.147 with SMTP id i141mr11738797ioe.29.1468949251771;
+ Tue, 19 Jul 2016 10:27:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 00D4CC16-4DD6-11E6-82B9-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.64.225.235 with HTTP; Tue, 19 Jul 2016 10:27:02 -0700 (PDT)
+In-Reply-To: <xmqqk2ghh80x.fsf@gitster.mtv.corp.google.com>
+References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com>
+ <20160716201313.GA298717@vauxhall.crustytoothpaste.net> <alpine.DEB.2.20.1607170949360.28832@virtualbox>
+ <20160717142157.GA6644@vauxhall.crustytoothpaste.net> <CACsJy8AH9Q6rOgvcWGsLGPaP96koGA=k0PYgXP6F3RZ=XAwaSw@mail.gmail.com>
+ <CACsJy8CR_fkYL5UYbV1MqiTSe3gTqWfOrA1NOHTw09vZn7Y-Aw@mail.gmail.com> <xmqqk2ghh80x.fsf@gitster.mtv.corp.google.com>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Tue, 19 Jul 2016 19:27:02 +0200
+Message-ID: <CACsJy8DyybW5kTWZ2nJ4GN=S46M9rU0EapOrR6PjSV=b1ZFrBw@mail.gmail.com>
+Subject: Re: Git and SHA-1 security (again)
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Herczeg Zsolt <zsolt94@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> On Mon, 18 Jul 2016, Junio C Hamano wrote:
+On Tue, Jul 19, 2016 at 7:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
->> > Hrm. That sounds a little magical, and fragile, to me. What if the next
->> > person's unzip returns 0 and *still* cannot handle -a?
->> 
->> That is a very sensible line of thought.
->> 
->> > I'd rather do something like
->> 
->> ... but the patch presented as an alternative does not seem to
->> follow that line of thought.
+>> Post-shower thoughts. In a tree object, a submodule entry consists of
+>> perm (S_IFGITLINK), hash (which is the external hash) and path. We
+>> could fill the "hash" part with all zero (invalid, signature of new
+>> submodule hash format), then append "/<hashtype>:<external hash>" to
+>> the "path" part. This way we don't have to update tree object or index
+>> format. And I suspect the "path" part is available everywhere we need
+>> to handle submodules already, so extracting the external hash should
+>> be possible...
 >
-> Right. I tried to see whether I could come up with a test, but did not
-> immediately succeed. The patch I presented was the best I could do...
+> Even though that single operation might be possible, do not go
+> there.  A "pathname" identifies a "path", not its contents, and
+> "appending crap after path" breaks the data model badly.  Also other
+> things like merge, checkout and diff would break by butchering
+> ordering the entries in tree objects.
 
-Ah, OK, it makes sense.
+I thought about that but I thought all those operations required
+special treatment for submodules anyway. But I forgot about d/f
+conflicts so yeah it's a bad idea. We still have some invalid "mode"
+combination that can be used as S_IFGITLINK2, then we can have
+variable length hash field in the entry.
+-- 
+Duy
