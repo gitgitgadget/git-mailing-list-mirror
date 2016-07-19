@@ -2,84 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64E4B2018F
-	for <e@80x24.org>; Tue, 19 Jul 2016 19:34:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06A5D2018F
+	for <e@80x24.org>; Tue, 19 Jul 2016 19:35:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751699AbcGSTeB (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 15:34:01 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57355 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751597AbcGSTd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 15:33:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 76F2D2F3F5;
-	Tue, 19 Jul 2016 15:33:58 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=V+GwSKEpc3y/R4Yk5CmktDWESTg=; b=YSmrzg
-	oczGH4QebVX3HI+EGa/Toll/D52IdLGFezyeVwzXKRFSn9uJsFpk14C1L/0BcNVP
-	qehZtHOyBRqgCWWzmJpKApLM5iWCm9vflqJhJ57C8j30HCdwWXN3lWSTI3Im8n6Y
-	hABJi8AzYBPL/g0IFKNCMhyYqTJ47XcVaQYn8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f6ro9HnUYjzZsPDIn1+MfvCnMMprD0fc
-	3GKypj/XTWoTwt7JfJoiiuZkXg/EXz7O8N9+zZtyB+FhsNoBkxQxL4WGOSJ14lVI
-	j9ivMJ34JECg27IIIBS6hJLXdbRXOEL+re0hX36RdIJLJzMAeQED3OWbP8r10OvV
-	sb20q7gNc6o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6D9F62F3F4;
-	Tue, 19 Jul 2016 15:33:58 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D6A7C2F3F3;
-	Tue, 19 Jul 2016 15:33:57 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-	Joey Hess <joey@kitenet.net>
-Subject: Re: [PATCH v3 00/16] Use merge_recursive() directly in the builtin am
-References: <cover.1467717729.git.johannes.schindelin@gmx.de>
-	<cover.1467902082.git.johannes.schindelin@gmx.de>
-	<xmqqpoqi35u3.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1607141414180.6426@virtualbox>
-	<xmqq1t2wqaa3.fsf@gitster.mtv.corp.google.com>
-	<xmqqshv6h460.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1607191427400.3472@virtualbox>
-	<alpine.DEB.2.20.1607191602520.3472@virtualbox>
-Date:	Tue, 19 Jul 2016 12:33:55 -0700
-In-Reply-To: <alpine.DEB.2.20.1607191602520.3472@virtualbox> (Johannes
-	Schindelin's message of "Tue, 19 Jul 2016 16:28:30 +0200 (CEST)")
-Message-ID: <xmqq4m7lfmn0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751564AbcGSTfe (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 15:35:34 -0400
+Received: from vpn.foo.tf ([195.154.43.236]:50574 "EHLO mail.foo.tf"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751036AbcGSTfd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 15:35:33 -0400
+Received: from localhost (unknown [10.10.68.1])
+	by mail.foo.tf (Postfix) with ESMTPSA id 9328638A5CE;
+	Tue, 19 Jul 2016 19:35:23 +0000 (UTC)
+Date:	Tue, 19 Jul 2016 21:35:23 +0200
+From:	Antoine Tenart <antoine.tenart@ack.tf>
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	Antoine Tenart <antoine.tenart@ack.tf>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] worktree: add: introduce the --name option
+Message-ID: <20160719193523.GD28551@kwain>
+References: <20160719144701.571-1-antoine.tenart@ack.tf>
+ <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8BDRPK2UKxoMat3i2HL38+KFqw2Qfet2Bev26HXRM-BWA@mail.gmail.com>
+ <20160719185452.GB28551@kwain>
+ <CACsJy8AkpBmNS0nOoKX7PUYhp9kKgvH=K2gpCnq+sR++ZmDAgQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BCABCB86-4DE7-11E6-B454-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="BRE3mIcgqKzpedwo"
+Content-Disposition: inline
+In-Reply-To: <CACsJy8AkpBmNS0nOoKX7PUYhp9kKgvH=K2gpCnq+sR++ZmDAgQ@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I do not need cc/apply-am at all, it turns out, but my patch series has a
-> minor conflict with 'jc/renormalize-merge-kill-safer-crlf'.
->
-> Since you indicated that you want to cook that branch a bit in 'next'
-> first, I will rebase to master+bc/cocci+js/am-call-theirs-theirs and
-> re-submit.
+--BRE3mIcgqKzpedwo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks.  I suspect the renomalization would graduate earlier than
-the topic in question, but leaving dependency to the minimum and
-have rerere take care of minor conflicts has proved to be a better
-approach in general over time; the base you chose above sounds
-appropriate.
+On Tue, Jul 19, 2016 at 09:04:11PM +0200, Duy Nguyen wrote:
+> On Tue, Jul 19, 2016 at 8:54 PM, Antoine Tenart <antoine.tenart@ack.tf> w=
+rote:
+> > On Tue, Jul 19, 2016 at 08:23:58PM +0200, Duy Nguyen wrote:
+> >> On Tue, Jul 19, 2016 at 8:04 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> >>
+> >> 080739b (worktree.c: find_worktree() search by path suffix -
+> >> 2016-06-13) from 'next' should help identify worktrees in this case by
+> >> specifying 'project0/foo', 'project1/foo'... Granted it's not fun to
+> >> type all that when 'project0/foo' is something long, and bash
+> >> completion probably does not help much either.
+> >
+> > So with this I'll be able to create new worktrees, using paths having
+> > the same basename, but in different let's say "project directories"?
+>=20
+> Well, internal name is still out of your control, but if you want to
+> do something to a worktree you can say "do project0/foo". With 'next'
+> those verbs can be lock and unlock. We probably can make 'worktree
+> list' take filter and show just one worktree (and just add "git
+> worktree show" for that).
 
-Thanks.
+Hmm, so if I understand correctly my use case still won't be supported,
+as adding a new worktree with the same basename will fail. Or did I miss
+something?
+
+--=20
+Antoine
+
+--BRE3mIcgqKzpedwo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJXjoD6AAoJEFxNi8it27zY+w4P/224G/4synnXa2GKqfZoCcBo
+ru2Dkji930d7nOdwY50FxH3kWZbA+n8l/Vv0Shlca9GiB+8ZLgsao98p+L93HAfi
+qCOFf2rMWg4sGewXfzYURbOyaVEM8/lKed/xWYNXkTECP2O11QkAa+0+vX3n3AuP
+rv7l1lQ/o4ZTRX6DPRt6WMIcbtnhlRfIYmrd0OBQ6bU5/WNwf2t7fM7xroKCCDw9
+5V6zhoi3Hlqa5u6Xb3Xc/MI2sfzOyUwMfPYuihnBv4TELEZvMoDjtw9ufpwhOEt9
+oF2/tR+OYBRvpH5b6gxrdaASWo0bvia0SruQLiOX/kk6IGB0Ur3Cxp87y1rfLnie
+a9oaVoPvGZaab09INM6ShmFG2LXzsBIq5HZHuqXLPRlgqnPRLVe9A4ekt/nlo8xj
+X9K4Rb4xiJ4a2ANtRZHMpR19BXk83oENagiid+gOYgeXGqrRY7QtFlgbg8nytfJe
+ABT/95LbY/LhQH8YgFXMHDEfmRKP7wSaT3aWy0E0K3HrC/m0Ty0PD4KfNFMq6iWs
+otyeymPgF062jX2g+QlSNng/lkg5IZ4gEtlJcuWb0MKtipThEusH1aPj3u/fXvWh
+NEQ+geLbFVmyETFNfwsj9EndMvp3z2Bxs5UBXiZ7xlTBGfgg0px+e+mGIyR83txQ
+DOrIi5NLrrW2+MJ56BaW
+=K9Zu
+-----END PGP SIGNATURE-----
+
+--BRE3mIcgqKzpedwo--
