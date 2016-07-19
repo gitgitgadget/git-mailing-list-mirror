@@ -2,105 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 057E81FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 18:24:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 519D91FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 18:29:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753698AbcGSSY3 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 14:24:29 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:36407 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751251AbcGSSY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 14:24:28 -0400
-Received: by mail-io0-f174.google.com with SMTP id b62so26580337iod.3
-        for <git@vger.kernel.org>; Tue, 19 Jul 2016 11:24:28 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=h8fiPo+d1GpYgMoGGp3EJrgVoDHtb+xME/GT98+5Wd0=;
-        b=XGbx502iE9SED/s6VBPRaBWgQeAU2sDODiFq/9NDIcRufKEv5ppQUobTzO0HYrhq6a
-         YfGKQVop8aTsPEAXDIh/bqX8ws2Wq1+MDZJfBbRnKkIChDI/F3+jE6qVEMCyvGu9RFP6
-         xBoAesmd2G1m8joocuaU69sm8Zch+PYFwRHHhjb3yN9YULj1H5Mcb9gdiNgFm61q1Rmn
-         CakRSe/934kVREvPpGyFuNZQAPnShDX4421ReU28vAoVWmiTNmEO9iI8FOW2f3uYqnLp
-         S9FLPA7vGr1dtppl8Go7w7rhfUfCGgIolQ1YdgOhcWy3XA8JBT7aVLHPXsiNVic9KI+/
-         zBkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=h8fiPo+d1GpYgMoGGp3EJrgVoDHtb+xME/GT98+5Wd0=;
-        b=QTvcFd29uzLC88TQoyMapb7oTm+lkA2D/gfIG8Wzxi/OK9viUCTE5Kzihz6K6mo+M0
-         wer9hoQotEM3Bg3nI+B8p61DMK7y7QsInrhmwSBt2eemoy3hJOGyDETd6+CUXhlaajRM
-         giZuXgjQdOPih3eBlKA1wtF2Sav5C+QrxVArPQoyl9atXTR9xwkpx6Ch7QxPvt0GXc+Y
-         JhOIIvuRgLI9oD2+r8vVkmlv22eeh7FpoLtT4io50HOH6C97cIipqwHJMBw5922DsIOo
-         +Q6p2OI8InpER3oTJyZlOf+by88r2lS9kR++BhsipGeCPeQ9PtRrvGwzG3tqrWX15bgY
-         nyEA==
-X-Gm-Message-State: ALyK8tIKyBaiimIZMHVchKV37XnsYiZ2dqd1mNOUcORYG2XLnIITyVfbSEgPdjDM+Tk3ZegGGQ4DCoGxw0wS3g==
-X-Received: by 10.107.2.78 with SMTP id 75mr3748670ioc.128.1468952667452; Tue,
- 19 Jul 2016 11:24:27 -0700 (PDT)
+	id S1753847AbcGSS3H (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 14:29:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52973 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753386AbcGSS3F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 14:29:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D98362BC01;
+	Tue, 19 Jul 2016 14:29:03 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QMQw6n9SA/Ig/hOfeM/Nqy8djJ4=; b=everdA
+	CLuqPE2dRXP3RTTiJF90tvloPqa1ukxmv+9UrZ71CapDOA7IGIpjQRWKOsNbgouh
+	rR77LK1huJSEWUiRW1Y8Z5oF8EoiTPTIuCpe4+rqf7meQpr+s+VOPAYXpj/AMokg
+	rEiu+qNrBQgEBUBocEoQdqJcG4ZdtNqJ9/OKc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Y1Be3arxYZjvyyEXcCQvtO9bswfJWH1w
+	Ebgp8tYpyxifuIew5fhihm1UFh7WZadO7dNXFO/qblUpFXT+W9Vsvyqp8ai/Hm2n
+	yg3Ko+dan44XkXvNHxos5dbNnDEQN+WghIxGY67n/vI7Z0PFgjXkK/W4TRDSFS9I
+	JUUg+yL6MSg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D258A2BC00;
+	Tue, 19 Jul 2016 14:29:03 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 54B422BBFF;
+	Tue, 19 Jul 2016 14:29:03 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	David Aguilar <davvid@gmail.com>
+Cc:	John Keeping <john@keeping.me.uk>,
+	Bernhard Kirchen <bernhard.kirchen@rwth-aachen.de>,
+	Tim Henigan <tim.henigan@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] difftool: use Git::* functions instead of passing around state
+References: <20160719035756.24961-1-davvid@gmail.com>
+	<20160719035756.24961-3-davvid@gmail.com>
+Date:	Tue, 19 Jul 2016 11:29:01 -0700
+In-Reply-To: <20160719035756.24961-3-davvid@gmail.com> (David Aguilar's
+	message of "Mon, 18 Jul 2016 20:57:56 -0700")
+Message-ID: <xmqqtwflfpn6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Tue, 19 Jul 2016 11:23:58 -0700 (PDT)
-In-Reply-To: <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
-References: <20160719144701.571-1-antoine.tenart@ack.tf> <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Tue, 19 Jul 2016 20:23:58 +0200
-Message-ID: <CACsJy8BDRPK2UKxoMat3i2HL38+KFqw2Qfet2Bev26HXRM-BWA@mail.gmail.com>
-Subject: Re: [PATCH] worktree: add: introduce the --name option
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Antoine Tenart <antoine.tenart@ack.tf>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: AB5920B2-4DDE-11E6-93A3-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 19, 2016 at 8:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Antoine Tenart <antoine.tenart@ack.tf> writes:
->
->> Adds a --name option allowing to specify the name of a worktree when
->> creating it. This allows to have multiple worktrees in directories
->> having the same name (e.g. project0/foo, project1/foo etc...). This
->> commit keeps the previous behaviour by making it the default value, i.e.
->> by using $(basename <path>) as the worktree name when the --name option
->> isn't used.
->>
->> Two new test cases are added to ensure the --name option does not break
->> other functionalities and is working properly.
->>
->> Finally, the documentation is updated to reflect this --name option
->> addition.
->>
->> Signed-off-by: Antoine Tenart <antoine.tenart@ack.tf>
->> ---
->
-> Hmm, is this related to an earlier discussion
->
->     https://public-inbox.org/git/20160625051548.95564-1-barret%40brennie.ca/
->
-> in any way, or is it an independent invention?
->
-> The conclusion of that discussion thread was roughly "users
-> shouldn't even _care_ about the name, and if they have to use name
-> to identify the worktrees to do certain things right now, reducing
-> the need for such 'certain things', not making it easy to give a
-> user-defined name to a worktree, is the way to go", IIRC.
+David Aguilar <davvid@gmail.com> writes:
 
-080739b (worktree.c: find_worktree() search by path suffix -
-2016-06-13) from 'next' should help identify worktrees in this case by
-specifying 'project0/foo', 'project1/foo'... Granted it's not fun to
-type all that when 'project0/foo' is something long, and bash
-completion probably does not help much either.
+> Call Git::command() and friends directly wherever possible.
+> This makes it clear that these operations can be invoked directly
+> without needing to manage the current directory and related GIT_*
+> environment variables.
 
-Note that we may need a unique name elsewhere too, e.g.
-refs/worktrees/xyz (even though we haven't settled on this yet). Then
-xyz would be more exposed to the user and an easily recognizable name
-would be a good thing.
--- 
-Duy
+Good.
+
+> @@ -88,11 +80,11 @@ sub changed_files
+>  	my @refreshargs = (
+>  		@gitargs, 'update-index',
+>  		'--really-refresh', '-q', '--unmerged');
+> -	my @diffargs = (@gitargs, 'diff-files', '--name-only', '-z');
+>  	try {
+>  		Git::command_oneline(@refreshargs);
+>  	} catch Git::Error::Command with {};
+>  
+> +	my @diffargs = (@gitargs, 'diff-files', '--name-only', '-z');
+>  	my $line = Git::command_oneline(@diffargs);
+>  	my @files;
+>  	if (defined $line) {
+
+This hunk looks like "oops, the @diffargs variable logically belongs
+here, not there", correcting an mistake in an earlier step.
