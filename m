@@ -2,116 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31FDC1FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 18:45:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DB1B1FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 18:46:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751421AbcGSSpP (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 14:45:15 -0400
-Received: from vpn.foo.tf ([195.154.43.236]:50044 "EHLO mail.foo.tf"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1750998AbcGSSpO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 14:45:14 -0400
-Received: from localhost (unknown [10.10.68.1])
-	by mail.foo.tf (Postfix) with ESMTPSA id F220E388E75;
-	Tue, 19 Jul 2016 18:45:11 +0000 (UTC)
-Date:	Tue, 19 Jul 2016 20:45:10 +0200
-From:	Antoine Tenart <antoine.tenart@ack.tf>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Antoine Tenart <antoine.tenart@ack.tf>, git@vger.kernel.org,
-	pclouds@gmail.com, sunshine@sunshineco.com
-Subject: Re: [PATCH] worktree: add: introduce the --name option
-Message-ID: <20160719184510.GA28551@kwain>
-References: <20160719144701.571-1-antoine.tenart@ack.tf>
- <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
+	id S1750998AbcGSSq4 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 14:46:56 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52318 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750722AbcGSSqz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 14:46:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0BB3B2BEC6;
+	Tue, 19 Jul 2016 14:46:54 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JD3dp6mzJ1zmcSp2EO0rn3BEdT8=; b=Udrej4
+	0pYPPOznhd6UuO/5oak1Xa2NluHXGXfAYHeh7/FIdCsbn2eZepVwjXMzQyPO9WPF
+	m0GXP/OhskCEuBsjlHT1epv2d7gBYXa1mdhRy8iDdolCkwln+Onko1I2TPLJbFFH
+	7Z5fVzqXN7gpaDJpq1hoOp04bleVTVe506/uk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XDLsXp7O9eqMdO3H10/aeq9WYuwMB+ze
+	h7UlGXyHpYU9Sh8WWqNmmv9HDTdz0SCbuDE23vdmoBzusAbPLucWefCf/67b/jFj
+	wU2sCE7Dig6DEl0O9LQQN3mvEyZlKljLNUu4RhdKQjDjLCAbkLWChVpUXKJ78RLh
+	/7Fi41QqaQY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0305A2BEC2;
+	Tue, 19 Jul 2016 14:46:54 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7BB242BEC1;
+	Tue, 19 Jul 2016 14:46:53 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Herczeg Zsolt <zsolt94@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: Git and SHA-1 security (again)
+References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com>
+	<20160716201313.GA298717@vauxhall.crustytoothpaste.net>
+	<alpine.DEB.2.20.1607170949360.28832@virtualbox>
+	<20160717142157.GA6644@vauxhall.crustytoothpaste.net>
+	<CACsJy8AH9Q6rOgvcWGsLGPaP96koGA=k0PYgXP6F3RZ=XAwaSw@mail.gmail.com>
+	<CACsJy8CR_fkYL5UYbV1MqiTSe3gTqWfOrA1NOHTw09vZn7Y-Aw@mail.gmail.com>
+	<xmqqk2ghh80x.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8DyybW5kTWZ2nJ4GN=S46M9rU0EapOrR6PjSV=b1ZFrBw@mail.gmail.com>
+Date:	Tue, 19 Jul 2016 11:46:51 -0700
+In-Reply-To: <CACsJy8DyybW5kTWZ2nJ4GN=S46M9rU0EapOrR6PjSV=b1ZFrBw@mail.gmail.com>
+	(Duy Nguyen's message of "Tue, 19 Jul 2016 19:27:02 +0200")
+Message-ID: <xmqqpoq9fotg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="UugvWAfsgieZRqgk"
-Content-Disposition: inline
-In-Reply-To: <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 292CF804-4DE1-11E6-B1D6-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Duy Nguyen <pclouds@gmail.com> writes:
 
---UugvWAfsgieZRqgk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> Even though that single operation might be possible, do not go
+>> there.  A "pathname" identifies a "path", not its contents, and
+>> "appending crap after path" breaks the data model badly.
+>
+> I thought about that but I thought all those operations required
+> special treatment for submodules anyway.
 
-Hi,
-
-On Tue, Jul 19, 2016 at 11:04:59AM -0700, Junio C Hamano wrote:
->=20
-> > Adds a --name option allowing to specify the name of a worktree when
-> > creating it. This allows to have multiple worktrees in directories
-> > having the same name (e.g. project0/foo, project1/foo etc...). This
-> > commit keeps the previous behaviour by making it the default value, i.e.
-> > by using $(basename <path>) as the worktree name when the --name option
-> > isn't used.
-
-[...]
-
-> Hmm, is this related to an earlier discussion
->=20
->     https://public-inbox.org/git/20160625051548.95564-1-barret%40brennie.=
-ca/
->=20
-> in any way, or is it an independent invention?
-
-Completely independent. I made a quick search before doing this... too
-quick :-)
-
-> The conclusion of that discussion thread was roughly "users
-> shouldn't even _care_ about the name, and if they have to use name
-> to identify the worktrees to do certain things right now, reducing
-> the need for such 'certain things', not making it easy to give a
-> user-defined name to a worktree, is the way to go", IIRC.
-
-I agree that users shouldn't have to deal with this in most cases, and
-that's still the default behaviour with this patch. But some use cases
-require to change this default name: I use the same repository for each
-of my projects using the Linux kernel while working on them in parallel.
-So I end up with something like: project1/linux, project2/linux etc...
-where other names than 'linux' in each project directory wouldn't really
-make sense.
-
-Being able to manually define the name can also be useful in some (rare)
-cases, where you reorganize your project directory tree. But that's not
-a strong argument for adding this option :-)
-
-There might be other solutions, so I'm open for discussion. I just find
-this not-that-magic solution useful.
-
-Thanks!
-
---=20
-Antoine
-
---UugvWAfsgieZRqgk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJXjnUzAAoJEFxNi8it27zYzykP/jjMy3nldwAZaIu63xnvujyK
-xPKrFToKzyKDDGv8OuqJJ3lHCeH0tb1KO8uSHl3wtUKgbdh9nRcgWWOraR239ysJ
-Dxpnlynqd5LXpoEEWXYZk+KJXrtMyyGfiqFSHJDbSbnMSgEHchpxXISd80KVgOOO
-xKb/GshsKB3tuJHuG6qK42EUS5yX9IZvC8nXVkaBYamgDnxR0nSwiPetg+WyRoII
-L9vb8KPI4UWtC7horkkm4DiD0lj8kTVZpZc5dFsNQW1o6r6tgSXVjL0goag1oGVS
-SiikhbjaKFEqsBm9l+tLat4rFlF2mu5y6MIRyB20gGE6Jir4cw6cuE/MswQ5zDe5
-2nQ9E6SvfMDLeXZAMAnC5FWC/1EtLJKf/IHzF9gEAljfcyktv58VWf+vRfIo4Sip
-BV+ki43dj+CmQ9iLY+KNo/7rOLHmd1uk5SVLCbZc0Br8cx088mdyJMXOZLwtppKl
-5JaPeB0G0ntSNQf28pkOeDROZDEdHqJUoj56LJSFmDExyZ8SNSK5J5zwlayBUOeW
-XIVRlwO+Vq8gvOHd86p2U9pOH5/ayTEGYB3Jeh4dG+fvYvuBRQJrwXDATgn1Ywww
-+y8fkry31V5wxMhwyq5Ey4Wh2I4yI5yJQ9OPriukfFD5wmbhLOWPE5U1CJ/QSHYb
-GIkZRfKuXVNbjhNF5XJU
-=zR4C
------END PGP SIGNATURE-----
-
---UugvWAfsgieZRqgk--
+Operatins requiring special treatment does not make it right to
+break the data model anyway, so...
