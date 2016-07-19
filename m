@@ -2,88 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B71C31FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 19:24:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 663592018F
+	for <e@80x24.org>; Tue, 19 Jul 2016 19:33:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751801AbcGSTYj (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 15:24:39 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:36477 "EHLO
-	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751654AbcGSTYi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Jul 2016 15:24:38 -0400
-Received: by mail-io0-f172.google.com with SMTP id b62so28033697iod.3
-        for <git@vger.kernel.org>; Tue, 19 Jul 2016 12:24:37 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=B/+DEQZJuUefwaqJ33nOLsrj0Tpofnev2pUoN+JJqDQ=;
-        b=pyzXvUereK46AoQwodW3OeEbQ9TKWhxCsiRWtCw6T1IS5fJn+0zl7/fCRT9uiIuofW
-         YANEeGev4QLFInOYd6Ax3WjQqFUkEh30YuZxoeqaFKDsMEATfHz7ePmyLA/+DGIMPRkL
-         HrjzSSA1PJwLi9Kw5ZTA2N4Yf1XSuI3+OYPeFKuYDBsLLepS+cyanpBY8dVFO+fAzGSJ
-         6tVVwxUvEZtc0rxZvIyN9NGaIFRoYGMSKUORG+349Z8t+sXzdmEplT7JlkcnzKfPy2fk
-         YIrK7GUSC5qziZpzMxXJ4Yft457leerOrZC/9rL77RD0Anqyb81u4o26IXiWQbgdHxDp
-         H+dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=B/+DEQZJuUefwaqJ33nOLsrj0Tpofnev2pUoN+JJqDQ=;
-        b=SuXNxMovEuaaV8LqhnGmSR6ONAxtW+EyHiDcbM3v+ap9IeXzqyxQPaqPpqiwy1i8q5
-         tlJOv+d5Ww16Mg3WnuNN9Fy4rU4K2MZZFSEVjUmumOOt0wN5xHpqcOTvIdEBG5sAlj8k
-         o9lSFNAH0JFKcf42SWoD/Nb/oKyQzG4wQ4cLQ7Y/XXkSFA416JNNrKw1hPMWIAvPjolT
-         604CxgwetBpYaXP9eDxtriajCXj1ILQc6H8ajnIhLwOTrKOeiQMI58kEir+6ZBZ/XvyT
-         4+s4yL87BoVBMbmTUWYam2wCXU5G6xsLZSMgH78rQzxBtUKAZUfiOHOZ0fjJOf3JdLXx
-         kCxg==
-X-Gm-Message-State: ALyK8tI6hXsbSlPqHNZI2ZnGC+G/pxM1NsT8HRRW1BmFQRaEzRoiLAItMh20kEjtbzgKDqy40Sey9326UzxyFZxs
-X-Received: by 10.107.144.10 with SMTP id s10mr39357371iod.165.1468956277166;
- Tue, 19 Jul 2016 12:24:37 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Tue, 19 Jul 2016 12:24:36 -0700 (PDT)
-In-Reply-To: <xmqqd1m9fnhj.fsf@gitster.mtv.corp.google.com>
-References: <578E7A07.8080006@web.de> <xmqqd1m9fnhj.fsf@gitster.mtv.corp.google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Tue, 19 Jul 2016 12:24:36 -0700
-Message-ID: <CAGZ79kYAH2GtpmXfUrFd5s-g=-=n0CPSa7EKFvABtVz5GXX-aw@mail.gmail.com>
-Subject: Re: [PATCH] submodule-config: use explicit empty string instead of
- strbuf in config_from()
+	id S1751565AbcGSTdz (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 15:33:55 -0400
+Received: from vpn.foo.tf ([195.154.43.236]:49584 "EHLO mail.foo.tf"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751036AbcGSTdy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 15:33:54 -0400
+Received: from localhost (unknown [10.10.68.1])
+	by mail.foo.tf (Postfix) with ESMTPSA id 547FF3880F1;
+	Tue, 19 Jul 2016 19:33:53 +0000 (UTC)
+Date:	Tue, 19 Jul 2016 21:33:51 +0200
+From:	Antoine Tenart <antoine.tenart@ack.tf>
 To:	Junio C Hamano <gitster@pobox.com>
-Cc:	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Cc:	Antoine Tenart <antoine.tenart@ack.tf>, git@vger.kernel.org,
+	pclouds@gmail.com, sunshine@sunshineco.com
+Subject: Re: [PATCH] worktree: add: introduce the --name option
+Message-ID: <20160719193351.GC28551@kwain>
+References: <20160719144701.571-1-antoine.tenart@ack.tf>
+ <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
+ <20160719184510.GA28551@kwain>
+ <xmqqh9blfntw.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="hOcCNbCCxyk/YU74"
+Content-Disposition: inline
+In-Reply-To: <xmqqh9blfntw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 19, 2016 at 12:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> René Scharfe <l.s.r@web.de> writes:
->
->> Use a string constant instead of an empty strbuf to shorten the code
->> and make it easier to read.
->>
->> Signed-off-by: Rene Scharfe <l.s.r@web.de>
->> ---
->> ... unless someone can come up with a suitable non-empty string to feed
->> to git_config_from_mem() as its name parameter.
 
-Thanks!
+--hOcCNbCCxyk/YU74
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I wondered if we used to do something useful with rev and later that
-> useful thing was removed leaving an always-empty strbuf, but it
-> appears that this strbuf was introduced to always hold an empty
-> string and nothing else, which shows the (lack of) quality of
-> reviews in this area X-<.
+On Tue, Jul 19, 2016 at 12:08:11PM -0700, Junio C Hamano wrote:
+> Antoine Tenart <antoine.tenart@ack.tf> writes:
+>=20
+> > Being able to manually define the name can also be useful in some (rare)
+> > cases, where you reorganize your project directory tree. But that's not
+> > a strong argument for adding this option :-)
+>=20
+> Continuing the rationale that rejected the topic from the earlier
+> discussion thread, the above is like saying that we should expose
+> inode number more to the users and and allow users to tell a
+> specific inode number to use when creating an entry in a directory,
+> which would allow users to edit the directory with binary editor and
+> replace the entry with the same inode number to move or rename the
+> path.  The discussion considers that the "name" is an implementation
+> detail of the worktree subsystem, like inode number is for a
+> filesystem implementation.  A proper solution would be to invent
+> "mv" command ;-).
 
-I am to blame for this. :(
+Hehe :-)
 
->
-> Will apply.  Thanks.
+--=20
+Antoine
+
+--hOcCNbCCxyk/YU74
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJXjoCeAAoJEFxNi8it27zYbDUP/2o0kDSLaf5Firt+Sf0LiXFq
+MEFIKSOlZI6AKJRu/dl/uR/eOdabcXxYlihvptko3hwH9s7WakScHGL5P2xNHVem
+bf6+9mviCRv9r/AzwHdBydOxSMaHPFL1aeqWO9UZihwxNV5uvl3W0dO3wXs+wLxI
+tPf482RNelVSvOixJrEnhFr0wW5Ldyxi5TFeBMlk6Edfp4yl/eAXwEeMDD1njyn6
+PjHb2tkZdQMBkN1f6sks/4rBroGDxhkp1Vmm3zL2fku/vqHQ73cM6A/rx6zl6kjJ
+PaIFC0BEAZOx2+OlJLwLMd9bInU7tHWNmZiF/67LyCVgqKno1nzgYA6L8zFGugjM
+1Y1Jc4miIwVuNGEtdFIlMGcyFbMGjq4rfTWyeZSb9jtjc2CK1MsxerR/AkeRi3y9
+S2oKhlsZ8v0G84vTiljA5b/KiFGl0Uv+WOFKFCdSEP0H/Zm5PFTGDQtiM9Hv1kz4
+Tc0J4rdD0MRo5NDyyK7QtVkvyCdxc0OqX1OqEeJ2Y8UfiqViXG5GN8JgWy1zMBDz
+KA9oU1QNTv2iZBdhzFahX7wOnlWlzq9jcHCv7bvsirLV/Z1MTW4H3xfQVFE0Kmve
+uj3ys0IO75KfQ/JUPAWCiVTD4Re4z+NzWfz3BCrOEDrKu5aak4Mn/11+VKZG0fQi
+afTfSVtpNxjxcCAXhO82
+=4xGG
+-----END PGP SIGNATURE-----
+
+--hOcCNbCCxyk/YU74--
