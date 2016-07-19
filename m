@@ -2,83 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F316D1FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 19:23:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B71C31FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 19:24:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751806AbcGSTX3 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 15:23:29 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59877 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751631AbcGSTX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 15:23:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 419E92A3A1;
-	Tue, 19 Jul 2016 15:23:27 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mTfACRLB6Zv4EBsvFLalQ3BQdIg=; b=VQ7onL
-	3Rb/66H1OeoJT+7faABjFzt8Cq2qRPKuzfwfS+XTkFSxzQ1Rnhmuhjiptfc+7yQI
-	/ldNYL/5odcV47qi+9+9TDW7RtQ9jPFRUeKUyRBXsmPNv9+C6MiBZVS8mGGB2jmk
-	3Vl2iqjhw3yiKnXsfT0QOn/2mPATXmDtdBlC4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AX19DxZulyvl+7SWj0ihtjroAxSlc6pR
-	dFk7t7Y7CfGKXs7OU5dbIehrcRExgEtBCwiAjkPesKlwarNBVK5BkcB/THSAxbPj
-	Rf9odIdnzJQZExs1Df/gX4Igxtb9QLwAZCuf1KDdfx7xuuunNooOqtwPYFInSAs0
-	8QVrj9tevtU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 37D7B2A3A0;
-	Tue, 19 Jul 2016 15:23:27 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B20F12A39F;
-	Tue, 19 Jul 2016 15:23:26 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jonathan Tan <jonathantanmy@google.com>
-Cc:	Stefan Beller <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] fetch-pack: grow stateless RPC windows exponentially
-References: <xmqq37n6iq7d.fsf@gitster.mtv.corp.google.com>
-	<1468880498-30235-1-git-send-email-jonathantanmy@google.com>
-	<CAGZ79kY+2PYx9oz9tvi0zG-oE6qS-Za7D3ocY1XtqcSsDchz0Q@mail.gmail.com>
-	<CAGf8dgL3t7uX7yAux0xc2QMJJdmnM0262Quj4o6gDehwA+4JqQ@mail.gmail.com>
-Date:	Tue, 19 Jul 2016 12:23:24 -0700
-In-Reply-To: <CAGf8dgL3t7uX7yAux0xc2QMJJdmnM0262Quj4o6gDehwA+4JqQ@mail.gmail.com>
-	(Jonathan Tan's message of "Tue, 19 Jul 2016 12:03:24 -0700")
-Message-ID: <xmqq8twxfn4j.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751801AbcGSTYj (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 15:24:39 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:36477 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751654AbcGSTYi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Jul 2016 15:24:38 -0400
+Received: by mail-io0-f172.google.com with SMTP id b62so28033697iod.3
+        for <git@vger.kernel.org>; Tue, 19 Jul 2016 12:24:37 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=B/+DEQZJuUefwaqJ33nOLsrj0Tpofnev2pUoN+JJqDQ=;
+        b=pyzXvUereK46AoQwodW3OeEbQ9TKWhxCsiRWtCw6T1IS5fJn+0zl7/fCRT9uiIuofW
+         YANEeGev4QLFInOYd6Ax3WjQqFUkEh30YuZxoeqaFKDsMEATfHz7ePmyLA/+DGIMPRkL
+         HrjzSSA1PJwLi9Kw5ZTA2N4Yf1XSuI3+OYPeFKuYDBsLLepS+cyanpBY8dVFO+fAzGSJ
+         6tVVwxUvEZtc0rxZvIyN9NGaIFRoYGMSKUORG+349Z8t+sXzdmEplT7JlkcnzKfPy2fk
+         YIrK7GUSC5qziZpzMxXJ4Yft457leerOrZC/9rL77RD0Anqyb81u4o26IXiWQbgdHxDp
+         H+dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=B/+DEQZJuUefwaqJ33nOLsrj0Tpofnev2pUoN+JJqDQ=;
+        b=SuXNxMovEuaaV8LqhnGmSR6ONAxtW+EyHiDcbM3v+ap9IeXzqyxQPaqPpqiwy1i8q5
+         tlJOv+d5Ww16Mg3WnuNN9Fy4rU4K2MZZFSEVjUmumOOt0wN5xHpqcOTvIdEBG5sAlj8k
+         o9lSFNAH0JFKcf42SWoD/Nb/oKyQzG4wQ4cLQ7Y/XXkSFA416JNNrKw1hPMWIAvPjolT
+         604CxgwetBpYaXP9eDxtriajCXj1ILQc6H8ajnIhLwOTrKOeiQMI58kEir+6ZBZ/XvyT
+         4+s4yL87BoVBMbmTUWYam2wCXU5G6xsLZSMgH78rQzxBtUKAZUfiOHOZ0fjJOf3JdLXx
+         kCxg==
+X-Gm-Message-State: ALyK8tI6hXsbSlPqHNZI2ZnGC+G/pxM1NsT8HRRW1BmFQRaEzRoiLAItMh20kEjtbzgKDqy40Sey9326UzxyFZxs
+X-Received: by 10.107.144.10 with SMTP id s10mr39357371iod.165.1468956277166;
+ Tue, 19 Jul 2016 12:24:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4470ABCE-4DE6-11E6-B5FC-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.107.128.66 with HTTP; Tue, 19 Jul 2016 12:24:36 -0700 (PDT)
+In-Reply-To: <xmqqd1m9fnhj.fsf@gitster.mtv.corp.google.com>
+References: <578E7A07.8080006@web.de> <xmqqd1m9fnhj.fsf@gitster.mtv.corp.google.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Tue, 19 Jul 2016 12:24:36 -0700
+Message-ID: <CAGZ79kYAH2GtpmXfUrFd5s-g=-=n0CPSa7EKFvABtVz5GXX-aw@mail.gmail.com>
+Subject: Re: [PATCH] submodule-config: use explicit empty string instead of
+ strbuf in config_from()
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Git List <git@vger.kernel.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
->> So I guess what I do not understand is why we need to slow down the
->> exponential growth at all?
+On Tue, Jul 19, 2016 at 12:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> René Scharfe <l.s.r@web.de> writes:
 >
-> The current code has an exponential (a' = a * 2) then a linear (a' = a
-> + 1024) growth. I'm not slowing down the exponential growth - that
-> part is retained. I'm replacing the linear growth with another
-> conservative exponential growth (a' = a * 11 / 10).
+>> Use a string constant instead of an empty strbuf to shorten the code
+>> and make it easier to read.
+>>
+>> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+>> ---
+>> ... unless someone can come up with a suitable non-empty string to feed
+>> to git_config_from_mem() as its name parameter.
 
-As stateless-rpc mode is to drive a half-duplex channel, the
-function essentially determines how many messages to buffer before
-passing the control to the other side.  The increment between number
-the function is called with and the function returns is how much the
-other side is made to wait, i.e. how long the ping-pong latency is.
+Thanks!
 
-Even if it is conservative, I wonder if it is truly a good idea to
-make it exponentially grow forever from that point of view.  Would
-it give essentially the same result to you if we discard the patch
-in question and just raise LARGE_FLUSH to 10k instead?
+> I wondered if we used to do something useful with rev and later that
+> useful thing was removed leaving an always-empty strbuf, but it
+> appears that this strbuf was introduced to always hold an empty
+> string and nothing else, which shows the (lack of) quality of
+> reviews in this area X-<.
 
+I am to blame for this. :(
+
+>
+> Will apply.  Thanks.
