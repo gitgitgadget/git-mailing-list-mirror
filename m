@@ -2,91 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39F6F2018F
-	for <e@80x24.org>; Tue, 19 Jul 2016 19:06:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA4A32018F
+	for <e@80x24.org>; Tue, 19 Jul 2016 19:08:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751864AbcGSTF4 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 15:05:56 -0400
-Received: from mout.web.de ([212.227.17.12]:53641 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751842AbcGSTFz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 15:05:55 -0400
-Received: from [192.168.178.36] ([79.237.58.95]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0M4I6Z-1b7mP82oXD-00rmsB; Tue, 19 Jul 2016 21:05:49
- +0200
-To:	Git List <git@vger.kernel.org>
-Cc:	Stefan Beller <sbeller@google.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] submodule-config: use explicit empty string instead of strbuf
- in config_from()
-Message-ID: <578E7A07.8080006@web.de>
-Date:	Tue, 19 Jul 2016 21:05:43 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
+	id S1751918AbcGSTIQ (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 15:08:16 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58280 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751699AbcGSTIP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 15:08:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E86562F1AB;
+	Tue, 19 Jul 2016 15:08:13 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xyxq7wSU9dbitObSitMeOQ6ZKOE=; b=B/lTTe
+	bZIRpOUo7iHUdQ4uq26lbOdgc6jLG64Z3172KZBu+9aD1TsaHCi7zVh1QJimJQD8
+	Jy4bKjwW/OFnaRpJAwXCYFwfAHAWFu9C/avZZmdL6tTgwXXF5DrXQmvXP14spO0L
+	PsYJyNNsKmzphI30hDFuGhlkRFxlSmk/8dL4c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Pui4JgGnaY/5OL11e/BZ9TwH2V45IIwC
+	v0NZRupCrC9b42hAuQZdl9IMDpSM0a7fAvOSAvVcYtDbKL5VdvynokbV5SulAxfO
+	VVG2lg1BYzYVh25acsG/57b9nt2TCZoq1X1qTdNzb12AdhTROYxvm4HDksGd4JKP
+	Az43exJguyk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E14FF2F1AA;
+	Tue, 19 Jul 2016 15:08:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 673532F1A9;
+	Tue, 19 Jul 2016 15:08:13 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Antoine Tenart <antoine.tenart@ack.tf>
+Cc:	git@vger.kernel.org, pclouds@gmail.com, sunshine@sunshineco.com
+Subject: Re: [PATCH] worktree: add: introduce the --name option
+References: <20160719144701.571-1-antoine.tenart@ack.tf>
+	<xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
+	<20160719184510.GA28551@kwain>
+Date:	Tue, 19 Jul 2016 12:08:11 -0700
+In-Reply-To: <20160719184510.GA28551@kwain> (Antoine Tenart's message of "Tue,
+	19 Jul 2016 20:45:10 +0200")
+Message-ID: <xmqqh9blfntw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:IKUvGKdfOBxHnXrQ8AyuDw0JhjotWU1UiD7CbkxVfwdsxacMV0b
- 5ASq6UhY5RgFUZbXugfIl5VgnOy52wOl7w9T94hx16byF4wa3U2WA0qdGPLeg93Q2ALl4sB
- wejgfOGZNEbeC9abUT6R6J2i234hlmUoV8aNTP8TCE3sGBlLcT3YvTKT5dw2LGdoCa/b0kM
- Yzx3t7azLIM0DGb+OtG7g==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:jPD49voLGSQ=:HNgJncTOdGUlpkzpMiNii2
- xqPdLJr6OcXSDcxbUBbGn+8CnQFmxdCVyzoJ7e/lvg+JpdhorL+Co4iRcAjOtdCTl+Zt+N2KP
- nkJ3RCKukkRN+EB90X1NfsZ58rjn6cemoyWLJ/0ZeE714ALHG4C32vTV5z6Z16frMnCvcFLl1
- LAE81xhBlAd7otFpaxhoP4hfUFDYVx7XKGxx63U1b6M2OtjN9G1zAAoYYMh4xqfhAKkMC9ZvC
- 7PC4ByoC5xFCN4vZ7Z1ubtySSOYND2KVg+qGIQ24Dl3LSx5T7qKGvorbeU1mYACqWc0T7CaSp
- Pvv03Iql29MglWTKDTTW5bNAwpJF5lVWy8qEWBo21MhDPMuOuXwc/fHYuleRnXGXQsl7xy2NB
- IgwtaX4ePg5ng9Pemc9wHmqhyIrR/76wgXxlyRPsQ974Qm8L+wKtWe5i1u4hBDaG5hUQSOHiO
- ELs3cn9YVBD9syB+459PzKljVn4w6HpT1n+9xNR6IsFilO0DjJ0SRUsAMdFEvQv8ehxKfO42c
- 3dbGVZPVWNs0pstF2/jXF03lTwKJqOf09lBCl+TJAGdqC6S9cxf7G/mFfZRfN8/4RIYk8R8kU
- Fihzr6yQVWIzqIPE97f+efs++mOgl+Ww3+Ug6AxVbiQSg2RlYZwOWdiUSpR6NorpmM7q2T54n
- 6Y36dZ/M/wcvh5laT8aukXGwHF0VCyUZ32vzYZGdCcYDWMxOwmsTT6Xv/Yph4+H1g6AO6pcAA
- ZhGSDKpzrxFD6jFMKTsSiBUlnXKcUd6t+LibgvulxOWv1Q8u/eDMoksevD8ZzTQQr2SG8owIY
- Bm1vxXQ
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2410E940-4DE4-11E6-870A-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Use a string constant instead of an empty strbuf to shorten the code
-and make it easier to read.
+Antoine Tenart <antoine.tenart@ack.tf> writes:
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-... unless someone can come up with a suitable non-empty string to feed
-to git_config_from_mem() as its name parameter.
+> Being able to manually define the name can also be useful in some (rare)
+> cases, where you reorganize your project directory tree. But that's not
+> a strong argument for adding this option :-)
 
- submodule-config.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/submodule-config.c b/submodule-config.c
-index db1847f..44eb162 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -397,7 +397,6 @@ static const struct submodule *config_from(struct submodule_cache *cache,
- 		const unsigned char *commit_sha1, const char *key,
- 		enum lookup_type lookup_type)
- {
--	struct strbuf rev = STRBUF_INIT;
- 	unsigned long config_size;
- 	char *config;
- 	unsigned char sha1[20];
-@@ -448,7 +447,7 @@ static const struct submodule *config_from(struct submodule_cache *cache,
- 	parameter.commit_sha1 = commit_sha1;
- 	parameter.gitmodules_sha1 = sha1;
- 	parameter.overwrite = 0;
--	git_config_from_mem(parse_config, "submodule-blob", rev.buf,
-+	git_config_from_mem(parse_config, "submodule-blob", "",
- 			config, config_size, &parameter);
- 	free(config);
- 
--- 
-2.9.2
+Continuing the rationale that rejected the topic from the earlier
+discussion thread, the above is like saying that we should expose
+inode number more to the users and and allow users to tell a
+specific inode number to use when creating an entry in a directory,
+which would allow users to edit the directory with binary editor and
+replace the entry with the same inode number to move or rename the
+path.  The discussion considers that the "name" is an implementation
+detail of the worktree subsystem, like inode number is for a
+filesystem implementation.  A proper solution would be to invent
+"mv" command ;-).
 
