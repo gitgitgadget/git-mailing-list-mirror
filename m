@@ -2,101 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06A5D2018F
-	for <e@80x24.org>; Tue, 19 Jul 2016 19:35:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BC9D2018F
+	for <e@80x24.org>; Tue, 19 Jul 2016 19:53:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564AbcGSTfe (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 15:35:34 -0400
-Received: from vpn.foo.tf ([195.154.43.236]:50574 "EHLO mail.foo.tf"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751036AbcGSTfd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 15:35:33 -0400
-Received: from localhost (unknown [10.10.68.1])
-	by mail.foo.tf (Postfix) with ESMTPSA id 9328638A5CE;
-	Tue, 19 Jul 2016 19:35:23 +0000 (UTC)
-Date:	Tue, 19 Jul 2016 21:35:23 +0200
-From:	Antoine Tenart <antoine.tenart@ack.tf>
-To:	Duy Nguyen <pclouds@gmail.com>
-Cc:	Antoine Tenart <antoine.tenart@ack.tf>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] worktree: add: introduce the --name option
-Message-ID: <20160719193523.GD28551@kwain>
-References: <20160719144701.571-1-antoine.tenart@ack.tf>
- <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
- <CACsJy8BDRPK2UKxoMat3i2HL38+KFqw2Qfet2Bev26HXRM-BWA@mail.gmail.com>
- <20160719185452.GB28551@kwain>
- <CACsJy8AkpBmNS0nOoKX7PUYhp9kKgvH=K2gpCnq+sR++ZmDAgQ@mail.gmail.com>
+	id S1751708AbcGSTxw (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 15:53:52 -0400
+Received: from mail-pa0-f65.google.com ([209.85.220.65]:36123 "EHLO
+	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750998AbcGSTxv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 15:53:51 -0400
+Received: by mail-pa0-f65.google.com with SMTP id ez1so1847150pab.3
+        for <git@vger.kernel.org>; Tue, 19 Jul 2016 12:53:51 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8AHHj17uXvV6TDWGgN8vSD5ft84GRXKk2KwRj//tfg8=;
+        b=hpzap+Hx+0iQwVtM55NpGOqo1FI+TUPCx+tKJCL27bV2Ok+z8NgpyXN+/uGvZ06BYM
+         1dKQY8LAiU0l4fwyb7LRrrIXBAxKfPq1YNX4XXZZwE1wDnovBT6Hf3jyPrxYwi1btnsH
+         ZKrK87HpYcJHj1jwFG10lHktIIqBdLU/4dMMqrGJArMe7h4ODKUMbwOU3jGbXacUSt12
+         9G0nO8UmsPJZL6Cyvp64C1prnQqClug86wk0TBxzdJm+/oANZETNBijdUKcJ5BMh4scc
+         +o4gslWXtDZ1iKlNR4G1JIDz2QjzImD/m86knG/nkEDIJJxWT4dO4STemNe7eAvrD6C2
+         Fu6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8AHHj17uXvV6TDWGgN8vSD5ft84GRXKk2KwRj//tfg8=;
+        b=XKYz0jGlA7vQZo2TxQ/FyV23sBcZ6hSeLCpUPbglA2Q3TShTEIBzWAqOXZsYVzN3Fk
+         gdyKB07D2c0MAW/txMS3GFQUM8z4pEFShCcATgrOAvJVQ4YaK5fcqfg6x54ZhfvCVKmh
+         ukJ0OL3x2OHLgDwjOSmNns3mDZa8ZTQOq0JCYFPVo7tc/zzhgjywP9ssw6VBZ7pIDqZy
+         O+1opR2BiOhA56affNui1FAgHons39Czvv/AhMw8IL/zXDmExsdm1A0bZN+nWOXMtN+3
+         3fZ1WHcFqyDEWWrcDdJqk4XkW0VX2DqLOIFPQFukg6UxH66L6lyBh+W74E6GOG7kummR
+         gi0A==
+X-Gm-Message-State: ALyK8tKBgUny5d0lYs/8JQ5mFzSoyen4BhXrnhBtSgFufchziaN3vOcOrEz/F7bhYhHGLw==
+X-Received: by 10.66.254.102 with SMTP id ah6mr69311595pad.59.1468958030569;
+        Tue, 19 Jul 2016 12:53:50 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:1490:ebec:2572:a3af])
+        by smtp.gmail.com with ESMTPSA id u72sm464383pfa.31.2016.07.19.12.53.49
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 19 Jul 2016 12:53:49 -0700 (PDT)
+Date:	Tue, 19 Jul 2016 12:53:47 -0700
+From:	Jonathan Nieder <jrnieder@gmail.com>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Jonathan Tan <jonathantanmy@google.com>,
+	Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v2] fetch-pack: grow stateless RPC windows exponentially
+Message-ID: <20160719195347.GF29326@google.com>
+References: <xmqq37n6iq7d.fsf@gitster.mtv.corp.google.com>
+ <1468880498-30235-1-git-send-email-jonathantanmy@google.com>
+ <CAGZ79kY+2PYx9oz9tvi0zG-oE6qS-Za7D3ocY1XtqcSsDchz0Q@mail.gmail.com>
+ <CAGf8dgL3t7uX7yAux0xc2QMJJdmnM0262Quj4o6gDehwA+4JqQ@mail.gmail.com>
+ <xmqq8twxfn4j.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BRE3mIcgqKzpedwo"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CACsJy8AkpBmNS0nOoKX7PUYhp9kKgvH=K2gpCnq+sR++ZmDAgQ@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <xmqq8twxfn4j.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Junio C Hamano wrote:
 
---BRE3mIcgqKzpedwo
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Even if it is conservative, I wonder if it is truly a good idea to
+> make it exponentially grow forever from that point of view.  Would
+> it give essentially the same result to you if we discard the patch
+> in question and just raise LARGE_FLUSH to 10k instead?
 
-On Tue, Jul 19, 2016 at 09:04:11PM +0200, Duy Nguyen wrote:
-> On Tue, Jul 19, 2016 at 8:54 PM, Antoine Tenart <antoine.tenart@ack.tf> w=
-rote:
-> > On Tue, Jul 19, 2016 at 08:23:58PM +0200, Duy Nguyen wrote:
-> >> On Tue, Jul 19, 2016 at 8:04 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> >>
-> >> 080739b (worktree.c: find_worktree() search by path suffix -
-> >> 2016-06-13) from 'next' should help identify worktrees in this case by
-> >> specifying 'project0/foo', 'project1/foo'... Granted it's not fun to
-> >> type all that when 'project0/foo' is something long, and bash
-> >> completion probably does not help much either.
-> >
-> > So with this I'll be able to create new worktrees, using paths having
-> > the same basename, but in different let's say "project directories"?
->=20
-> Well, internal name is still out of your control, but if you want to
-> do something to a worktree you can say "do project0/foo". With 'next'
-> those verbs can be lock and unlock. We probably can make 'worktree
-> list' take filter and show just one worktree (and just add "git
-> worktree show" for that).
+I don't think it would be essentially the same result.  As discussed
+before, unlike the bidi (ssh:// and git:// protocols) case, linear
+growth is expensive in the stateless-rpc (https://) case --- each
+round of negotiation requires re-sending the existing 'have's and
+requires the peer repeatedly processing this increasingly large list
+of 'have's.
 
-Hmm, so if I understand correctly my use case still won't be supported,
-as adding a new worktree with the same basename will fail. Or did I miss
-something?
+For comparison, in the bidi case, linear growth of next_flush means
+sending a bounded number of 'have's per round and is quite sensible.
 
---=20
-Antoine
+In the stateless-rpc case, linear growth means getting a bounded
+number of 'have's worth of benefit (new 'have's) in each round, in
+exchange for a linearly increasing cost (existing 'have's).  That is a
+high cost for limited benefit.  Exponential growth is a better deal.
 
---BRE3mIcgqKzpedwo
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJXjoD6AAoJEFxNi8it27zY+w4P/224G/4synnXa2GKqfZoCcBo
-ru2Dkji930d7nOdwY50FxH3kWZbA+n8l/Vv0Shlca9GiB+8ZLgsao98p+L93HAfi
-qCOFf2rMWg4sGewXfzYURbOyaVEM8/lKed/xWYNXkTECP2O11QkAa+0+vX3n3AuP
-rv7l1lQ/o4ZTRX6DPRt6WMIcbtnhlRfIYmrd0OBQ6bU5/WNwf2t7fM7xroKCCDw9
-5V6zhoi3Hlqa5u6Xb3Xc/MI2sfzOyUwMfPYuihnBv4TELEZvMoDjtw9ufpwhOEt9
-oF2/tR+OYBRvpH5b6gxrdaASWo0bvia0SruQLiOX/kk6IGB0Ur3Cxp87y1rfLnie
-a9oaVoPvGZaab09INM6ShmFG2LXzsBIq5HZHuqXLPRlgqnPRLVe9A4ekt/nlo8xj
-X9K4Rb4xiJ4a2ANtRZHMpR19BXk83oENagiid+gOYgeXGqrRY7QtFlgbg8nytfJe
-ABT/95LbY/LhQH8YgFXMHDEfmRKP7wSaT3aWy0E0K3HrC/m0Ty0PD4KfNFMq6iWs
-otyeymPgF062jX2g+QlSNng/lkg5IZ4gEtlJcuWb0MKtipThEusH1aPj3u/fXvWh
-NEQ+geLbFVmyETFNfwsj9EndMvp3z2Bxs5UBXiZ7xlTBGfgg0px+e+mGIyR83txQ
-DOrIi5NLrrW2+MJ56BaW
-=K9Zu
------END PGP SIGNATURE-----
-
---BRE3mIcgqKzpedwo--
+Jonathan
