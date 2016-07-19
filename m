@@ -7,80 +7,77 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5C101F744
-	for <e@80x24.org>; Tue, 19 Jul 2016 07:22:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E3C71F744
+	for <e@80x24.org>; Tue, 19 Jul 2016 07:36:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753218AbcGSHWS (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 03:22:18 -0400
-Received: from mout.gmx.net ([212.227.17.21]:65166 "EHLO mout.gmx.net"
+	id S1752974AbcGSHf6 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 03:35:58 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59714 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752883AbcGSHWR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 03:22:17 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MRXVc-1bna4p1cO8-00ShB5; Tue, 19 Jul 2016 09:21:47
+	id S1752548AbcGSHbw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 03:31:52 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MVJze-1brPPm0a3q-00YlKF; Tue, 19 Jul 2016 09:31:32
  +0200
-Date:	Tue, 19 Jul 2016 09:21:46 +0200 (CEST)
+Date:	Tue, 19 Jul 2016 09:31:31 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Herczeg Zsolt <zsolt94@gmail.com>
+To:	Duy Nguyen <pclouds@gmail.com>
 cc:	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Theodore Ts'o <tytso@mit.edu>, Duy Nguyen <pclouds@gmail.com>,
+	Herczeg Zsolt <zsolt94@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
 Subject: Re: Git and SHA-1 security (again)
-In-Reply-To: <CAPp-Vra8c7eFegysKrM-hZKNmD6B21XqVkE8HB0QcG_m8hu+Ow@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1607190920020.3472@virtualbox>
+In-Reply-To: <CACsJy8AH9Q6rOgvcWGsLGPaP96koGA=k0PYgXP6F3RZ=XAwaSw@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1607190926420.3472@virtualbox>
 References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com> <20160716201313.GA298717@vauxhall.crustytoothpaste.net> <alpine.DEB.2.20.1607170949360.28832@virtualbox> <20160717142157.GA6644@vauxhall.crustytoothpaste.net>
- <CACsJy8C+2=qv5Vu=tGeDTK_Q+XSAv3qEJw0nrHbEWU7psDf=Cg@mail.gmail.com> <20160717154234.GC6644@vauxhall.crustytoothpaste.net> <20160717162349.GB11276@thunk.org> <20160717220417.GE6644@vauxhall.crustytoothpaste.net> <1468804249.2037.0@smtp.gmail.com>
- <alpine.DEB.2.20.1607180905320.28832@virtualbox> <CAPp-Vran2GZFTyJHb2qxgh3uRpM0ar7K2+VbbLcBK74_7aaxVw@mail.gmail.com> <alpine.DEB.2.20.1607181750470.3472@virtualbox> <CAPp-Vra8c7eFegysKrM-hZKNmD6B21XqVkE8HB0QcG_m8hu+Ow@mail.gmail.com>
+ <CACsJy8AH9Q6rOgvcWGsLGPaP96koGA=k0PYgXP6F3RZ=XAwaSw@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ox4Ianwbf6MbJpM/QLt6QVKTyE+bF+o5qZkpFvioGHuI3oBrXv8
- gCSwuihZqCSw+ZfZJXiKw7kHkY1+NEmFJFpTeObDDcK9wQxSN/rjtGzHOFCul8o+724fSEp
- WZ14nV8IC278ZSfUnIHRDZYErvsjPLpitbSapjac4A7NMMhUBIonBPS38tjz0yJDn7PYEwO
- rTGa7xOYfQKsu5IkGHpPw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:7xwaM+RJjk8=:bskonoVVoiYQcFZ9KqfbUB
- t5YVeq9oAXGMicLn0PwvOd5cuEh3H0ELXX0F0f1+DiBF2ptdBWj4ZSN5r+GteLMw1nEWZGuta
- BX/FI9W9JILSUU0Vxrr7NrREEo5jsyWa3Mf4vH2NaHTx8/vjYZxxp9Ztbk3S9YoxchVbC2fc5
- 9c3agawzXtXAxUx9Nw4qMNIZva+HbtB5kZNe60zUcmDJUT2553QLoHlAE+g6bmt690wOMznvx
- XMj6JtiLkQyXWPtLoHM0b3aDJXRsw0xgvmxNOT8mX4UaQe4ncdeXupXQ1wFyzBrrEbv5o6Nh1
- uUd/M0XvLtvKdFv47F7o5XyjJAeJUR1Gu2xAq3GUhjduoAvAoS3itTTbVBi+e1UTeuAqGo0aB
- RnHbD2ziyYK10tZQt+q/ZlBDthNHhlaiG7og7GWVKSXpNKd0XrETXWW5N/Pf/WlyBK3TP3GmK
- SKjPj6cviTie72K9H8PoEZgHUZulIpjviioqP7GXP7lpSz48q3FE/DwQpELwk/1D9fD5mv7Km
- FyUY5uaC9M5aKCmBtKUWpnK1oPe94b52p0Zz/Oinh5UxMKWU5TGGjp3sIvG1pry7+zHjpYD5j
- /FaYRpddmz+OITzagWUbEpQUZVvjQw71yQ2jHMD1sKhaPL72BoX/GlJPtpRBqS6dsYkdY27ya
- /NoVvSOHZKPPOBdD+QWvOKwBmIJRqB8zKdWMAtUXUxnWNjm3fBgVKPlxBR5UeQnbkngr0skZ/
- BCo4REWpmecc8S93xnPsHfblpBCgvD38YJDl8GDuM+LNc9JK7Lod60SsGY+DLdIXqT/idqX1Z
- QOa+0u5
+X-Provags-ID: V03:K0:sL8pMqYkW4yAFunMziveUzS5VEPblIZLkLkzhLp2A1ZhfuF8q4b
+ oq1WlL7MBWO5Q1QSirMV0+F0q3qcvdD4k0uvMEZ3lXI9Dw9vbR866CFp7s1d0zFsvy083zF
+ cA1j0kF7crnyJ/ItsfQDt65N0nBJLSQqyAvj4jL0hZ9LJBKZbwK3NqY+EGMzXaS5aYJ/8LE
+ 9zTAgEdsEcVFcmNtgH+bw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:LFgyGauCd8Y=:G/HTN6ww++5ymN28DnQE8P
+ 54drNSiJoot1aH0sN2lqUOTA16KWgzsAUTPWurZ+CabefZwoikd1lSKhcZ1xBsOnUIVqA2Cp4
+ O4u6LFSf2B3YPb0cliO0SzJsgLrBj/1EPlhcV7IX5osdMynJavLode9xa7aBX8JFBxan431QB
+ rKci9Uiegn13vhbWMnodZVbUYTIWYpyUoqvtkgYqeIePr4z6biC5MLzDaVaQP/laSZnFORspA
+ hFkqowk5TE0UIoLJ17UhLVZLdePwDYXjNPjRHpCW8jzCD15kBFwBVKlLBONPM609sodZbAFMq
+ nch2GiQhFpMxOWcFvkWYkxm+jof0hGp8G7vOc/ckmuoYc8zddyVzWvvhxOXfR7LbD2Kjo217b
+ 6PJGkkVZLbs1QMaNAMVWwrDJk5/VOP+uNJSLHA4csm5+7Us1NQAjw3/HF6nBV4CzRIAFYaK20
+ JSkQstMNppoWg7+1G5OLcJdo/intM4ArfVIpG65A9ZEL53ytV/yBzr22QK9Wo2LBjCqtxVotU
+ xE+F0d47Br06N52aMipCbelsMzw0XtIxivYsd5NM/j65QGAFl66sfoxao2MrPtInBK6+44Es0
+ PeCvmJZOPjOXHcXtdT9vJJ6TN4pYj5tX/OYhJWth2B1/v06mhb+RapLLqi08GgWl4NWy9hckv
+ rAt/ai0n0jw/qMw+Pdan7sT6KqvmpXFgRTelgNXjRaz4q049iCt6m9AgSydceLHRYKdvI0H7j
+ AnuhjH0WA5VnWBvEUVAt01anZNQUFNac7HdKuH5bPYteuEcd7wjfOBoz0Gv2BHqd6AaDDwtC+
+ wmjX6im
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Zsolt,
+Hi Duy,
 
-On Mon, 18 Jul 2016, Herczeg Zsolt wrote:
+On Mon, 18 Jul 2016, Duy Nguyen wrote:
 
-> >> My point is not to throw out old hashes and break signatures. My point
-> >> is to convert the data storage, and use mapping to resolve problems
-> >> with those old hashes and signatures.
-> >
-> > If you convert the data storage, then the SHA-1s listed in the commit
-> > objects will have to be rewritten, and then the GPG signature will not
-> > match anymore.
-> >
-> > Call e.g. `git cat-file commit 44cc742a8ca17b9c279be4cc195a93a6ef7a320e`
-> > to see the anatomy of a gpg-signed commit object.
-> >
+> On Sun, Jul 17, 2016 at 4:21 PM, brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > I'm going to end up having to do something similar because of the issue
+> > of submodules.  Submodules may still be SHA-1, while the main repo may
+> > be a newer hash.
 > 
-> Yes and no. That's the reason you need the two-way lookup table. If
-> you need to verify a commit which was signed as SHA-1, you must use
-> the lookup table in reverse.
+> Or even the other way around, main repo is one with sha1 while
+> submodule is on sha256. I wonder if we should address this separately
+> (and even in parallel with sha256 support), making submodules work
+> with an any external VCS system (that supports some basic operations
+> we define).
 
-That pretends that it is both easy and trustworthy to know when (and how)
-to recreate the SHA-1-ified version of the commit object.
+It is safe to assume that any project using a submodule with a more secure
+hash would require Git tooling capable of said hash. It would hence make
+no sense to use SHA-1 for the super project.
 
-Neither is the case, though.
+So I do not believe that we have to support the use case of a SHA-1-based
+project using SHA-256-based submodules.
 
 Ciao,
-Johannes
+Dscho
