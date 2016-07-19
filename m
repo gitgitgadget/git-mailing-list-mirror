@@ -3,103 +3,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD3EB1FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 18:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31FDC1FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 18:45:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754032AbcGSSgw (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 14:36:52 -0400
-Received: from mout.web.de ([212.227.15.4]:55576 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753847AbcGSSgu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 14:36:50 -0400
-Received: from [192.168.178.36] ([79.237.58.95]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0MEZPl-1bao942jIv-00Fj2d; Tue, 19 Jul 2016 20:36:35
- +0200
-To:	Git List <git@vger.kernel.org>
-Cc:	Junio C Hamano <gitster@pobox.com>
-From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] use strbuf_addbuf() for appending a strbuf to another
-Message-ID: <578E732D.2090803@web.de>
-Date:	Tue, 19 Jul 2016 20:36:29 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
+	id S1751421AbcGSSpP (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 14:45:15 -0400
+Received: from vpn.foo.tf ([195.154.43.236]:50044 "EHLO mail.foo.tf"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1750998AbcGSSpO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 14:45:14 -0400
+Received: from localhost (unknown [10.10.68.1])
+	by mail.foo.tf (Postfix) with ESMTPSA id F220E388E75;
+	Tue, 19 Jul 2016 18:45:11 +0000 (UTC)
+Date:	Tue, 19 Jul 2016 20:45:10 +0200
+From:	Antoine Tenart <antoine.tenart@ack.tf>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Antoine Tenart <antoine.tenart@ack.tf>, git@vger.kernel.org,
+	pclouds@gmail.com, sunshine@sunshineco.com
+Subject: Re: [PATCH] worktree: add: introduce the --name option
+Message-ID: <20160719184510.GA28551@kwain>
+References: <20160719144701.571-1-antoine.tenart@ack.tf>
+ <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:UpGi5rncrZLSRgfJeCVaK3+UNSmtUtGQ3YhX75IGoEkwf3L6wMI
- EoAwRuIamJ+idNutJf4CEBEHPKbergxe8RMvqpJ9O+8BuyxgJwAVTwwW+qqorchZiWvCJ00
- oylqFmp3sdCBtFsgAQU6JWl7XRbfIH40icVzBjm9U7Yx7IgrJRo5aGV2KHSykJ+1Q+Qt1AB
- dxDmKDggnqWf0xNDSotbA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:HMGrxQ7Uo1A=:dmS7rYWC4LnotX/j+ShezC
- QCAq4aP31YLushAooolTMA1uDh5M5Z0SOhR3T07dGML3bStszZf+DFnMX1XUmHAD/4NMq8zyV
- VpqC+4jNR77q6+JBYFbCKA5ZrxXjeqJMrzSr+XQ0Ql1HIi1L6NPyFvrgEn5igiYlXasAx31cO
- kNFVFHhQAJH8ija2YFzS1iVte3sckwALB+FKPII0QzmlGnWF/06YJzY3/8OLVWZ8KKeX5pBaj
- hFWRr5R2o5p692zTVL8QeiIBp5NsNmqai8Je55aYB/NRD+Lqqsf84AHgrg63JyMKgUOrxdQYQ
- tllfPXtj0LTFyO5Ck8l+KEjVa3ctX4g8Pkv9q2zXgqNKIJMPB4Yxh0kOi7XotX3LGxS23rXVe
- Eltc2S4G/HNCgtheNnQ06vLxojSPfG2dNAYwaAL7Txb9dq77Pq1Qjw7sHowG+ShVt44MPrw/m
- o26nIWTKmbvxkkqCYv95IqZkK9kRoFKoszxFsN2cFG+zpBz8KNe3PcLPOSdcjt6LMkS7y6IcG
- xmZq4zuDQ8RIAM4w52j0V2BU9Dj1RPCC4xy9xaYkmMFn5GlqWST2ddWp4bFLWMwU9NnP7Irpm
- I5tDqsVER4OGkIfNEV1zWTBfOptRtTPHSHGSudSGW4VUlo8/fz9bMcmPSiqu+QoZQXKDq3jyW
- zdHoOoS+tBWDNDmlJFPiqgjpyIIEBKd9aTz1N0w5BiLFTpROVlPwRtlI6FQmoQAguZyn66Lz5
- NfOOGXyKacPZ90i9fAY7PreRFc3cbUsH2k7gkxtiVOuqEx5vqrvEjKKJld+2vMQ1TkfE3cPNT
- mV7Uag8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="UugvWAfsgieZRqgk"
+Content-Disposition: inline
+In-Reply-To: <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Use strbuf_addbuf() where possible; it's shorter and more efficient.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- dir.c       | 2 +-
- path.c      | 2 +-
- wt-status.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+--UugvWAfsgieZRqgk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/dir.c b/dir.c
-index 6172b34..0ea235f 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2364,7 +2364,7 @@ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untra
- 
- 	varint_len = encode_varint(untracked->ident.len, varbuf);
- 	strbuf_add(out, varbuf, varint_len);
--	strbuf_add(out, untracked->ident.buf, untracked->ident.len);
-+	strbuf_addbuf(out, &untracked->ident);
- 
- 	strbuf_add(out, ouc, ouc_size(len));
- 	free(ouc);
-diff --git a/path.c b/path.c
-index 259aeed..17551c4 100644
---- a/path.c
-+++ b/path.c
-@@ -483,7 +483,7 @@ static void do_submodule_path(struct strbuf *buf, const char *path,
- 		strbuf_addstr(buf, git_dir);
- 	}
- 	strbuf_addch(buf, '/');
--	strbuf_addstr(&git_submodule_dir, buf->buf);
-+	strbuf_addbuf(&git_submodule_dir, buf);
- 
- 	strbuf_vaddf(buf, fmt, args);
- 
-diff --git a/wt-status.c b/wt-status.c
-index c19b52c..dbdb543 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1062,7 +1062,7 @@ static void abbrev_sha1_in_line(struct strbuf *line)
- 			strbuf_addf(split[1], "%s ", abbrev);
- 			strbuf_reset(line);
- 			for (i = 0; split[i]; i++)
--				strbuf_addf(line, "%s", split[i]->buf);
-+				strbuf_addbuf(line, split[i]);
- 		}
- 	}
- 	strbuf_list_free(split);
--- 
-2.9.2
+Hi,
 
+On Tue, Jul 19, 2016 at 11:04:59AM -0700, Junio C Hamano wrote:
+>=20
+> > Adds a --name option allowing to specify the name of a worktree when
+> > creating it. This allows to have multiple worktrees in directories
+> > having the same name (e.g. project0/foo, project1/foo etc...). This
+> > commit keeps the previous behaviour by making it the default value, i.e.
+> > by using $(basename <path>) as the worktree name when the --name option
+> > isn't used.
+
+[...]
+
+> Hmm, is this related to an earlier discussion
+>=20
+>     https://public-inbox.org/git/20160625051548.95564-1-barret%40brennie.=
+ca/
+>=20
+> in any way, or is it an independent invention?
+
+Completely independent. I made a quick search before doing this... too
+quick :-)
+
+> The conclusion of that discussion thread was roughly "users
+> shouldn't even _care_ about the name, and if they have to use name
+> to identify the worktrees to do certain things right now, reducing
+> the need for such 'certain things', not making it easy to give a
+> user-defined name to a worktree, is the way to go", IIRC.
+
+I agree that users shouldn't have to deal with this in most cases, and
+that's still the default behaviour with this patch. But some use cases
+require to change this default name: I use the same repository for each
+of my projects using the Linux kernel while working on them in parallel.
+So I end up with something like: project1/linux, project2/linux etc...
+where other names than 'linux' in each project directory wouldn't really
+make sense.
+
+Being able to manually define the name can also be useful in some (rare)
+cases, where you reorganize your project directory tree. But that's not
+a strong argument for adding this option :-)
+
+There might be other solutions, so I'm open for discussion. I just find
+this not-that-magic solution useful.
+
+Thanks!
+
+--=20
+Antoine
+
+--UugvWAfsgieZRqgk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJXjnUzAAoJEFxNi8it27zYzykP/jjMy3nldwAZaIu63xnvujyK
+xPKrFToKzyKDDGv8OuqJJ3lHCeH0tb1KO8uSHl3wtUKgbdh9nRcgWWOraR239ysJ
+Dxpnlynqd5LXpoEEWXYZk+KJXrtMyyGfiqFSHJDbSbnMSgEHchpxXISd80KVgOOO
+xKb/GshsKB3tuJHuG6qK42EUS5yX9IZvC8nXVkaBYamgDnxR0nSwiPetg+WyRoII
+L9vb8KPI4UWtC7horkkm4DiD0lj8kTVZpZc5dFsNQW1o6r6tgSXVjL0goag1oGVS
+SiikhbjaKFEqsBm9l+tLat4rFlF2mu5y6MIRyB20gGE6Jir4cw6cuE/MswQ5zDe5
+2nQ9E6SvfMDLeXZAMAnC5FWC/1EtLJKf/IHzF9gEAljfcyktv58VWf+vRfIo4Sip
+BV+ki43dj+CmQ9iLY+KNo/7rOLHmd1uk5SVLCbZc0Br8cx088mdyJMXOZLwtppKl
+5JaPeB0G0ntSNQf28pkOeDROZDEdHqJUoj56LJSFmDExyZ8SNSK5J5zwlayBUOeW
+XIVRlwO+Vq8gvOHd86p2U9pOH5/ayTEGYB3Jeh4dG+fvYvuBRQJrwXDATgn1Ywww
++y8fkry31V5wxMhwyq5Ey4Wh2I4yI5yJQ9OPriukfFD5wmbhLOWPE5U1CJ/QSHYb
+GIkZRfKuXVNbjhNF5XJU
+=zR4C
+-----END PGP SIGNATURE-----
+
+--UugvWAfsgieZRqgk--
