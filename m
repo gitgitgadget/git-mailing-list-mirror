@@ -2,111 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 717A11FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 15:32:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98E1C1FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 16:03:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753667AbcGSPcb (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 11:32:31 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:34359 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753415AbcGSPc3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 11:32:29 -0400
-Received: by mail-io0-f174.google.com with SMTP id q83so22306181iod.1
-        for <git@vger.kernel.org>; Tue, 19 Jul 2016 08:32:29 -0700 (PDT)
+	id S1754039AbcGSQDb (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 12:03:31 -0400
+Received: from mail-lf0-f49.google.com ([209.85.215.49]:36759 "EHLO
+	mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753993AbcGSQD3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 12:03:29 -0400
+Received: by mail-lf0-f49.google.com with SMTP id g62so18424392lfe.3
+        for <git@vger.kernel.org>; Tue, 19 Jul 2016 09:03:29 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9INArptBXkyfGWpBPqA0Lxk7sPPEfnhFDnulX0I4FHU=;
-        b=Ed3tl3S9R1CE+7OwSgRAGwafyeMHd5hsuXCBdqUzGbWHGaNb2GraTiKca6dwMQZkgZ
-         jkreAYb72MYJZyS8sgKvLkl/bk1WTPgmux4i5HzmSseJ41+5jWWQLNANfxZgwR9bl51W
-         X8olcvePNonvmI4A6L5nt6yT2a04f8NmRCluQItp7NM4DODQFP1SZy0FQxSd9swkN7SU
-         U7VnOYVFrjIUnudXEiGdtrtnZZVwQyUCDYGKMG+aqhLbhn2vadcCYaqiE1yiNQrNy46j
-         tkAVW/9VreV6vuciRtiMl+POSFPMwDuMgpPP5dllWrk5lNUIxjLeaPQj9HMFvdkGpoXq
-         A8DQ==
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=Sa6C7nOTeyZRBRjlpB45VR1fjwJpp6sSoiR83ix3Lqo=;
+        b=tKDciyFeJTrOly19H/vtkHBehpnwor1rtWygt9SqZht1wZgshnX9x3iDapna5ipsFH
+         D0E4tIgal0poZvBK2rObI1LSmSx5DZ6cfg7ggBKseo9Xcy3WeHYMYWLfEc/jGN1nGACQ
+         LizowufOuM5q1Yie4+6O2X/5dAxb7bIL/XsXUAsmIlhkMhknN/eDiqX+xJGNFYasOBLj
+         IA1cAOnm7HdffzT2xqubGQbGq1dLXcGKf9onA+Dgpyk67V4XDFQMNppW3UFnC/bdd8vN
+         Q7nnUkJmxEM9U3ySbO7f04Ah7V8IFvMrMNOzolQWH53Q0qJAneoPtkv0vvEwrvqcmtzX
+         ZcDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9INArptBXkyfGWpBPqA0Lxk7sPPEfnhFDnulX0I4FHU=;
-        b=muRqsumB/Agr6TmrQkjpYr2tOCR9MDifaJSH4Qx99p6Uy84nZ1EFSm8rbMEbEOSUPu
-         QCh5x73Vt2xAb6nRlyuxt0+vllyna6ZFE/1msTcOyQeK6bGuQvaHaZohk4CFleNkg/CY
-         TqO6mVUK+lrS7ITd0kYud+2eG6/CZ5vCaP0wfYw3abg2HcjCiaJvmZHNB8ibpXZJeoFu
-         Q8UVRlFew3m+UcaLs6TgRpV1WE2xLgU5jQcSq5BrSzYFHJ10Y5qHLpo9vP92JO3op+Pi
-         fdbOh1MGm43c3iO5nFZ5h96h9XtgIxJT3s8siv8hf6Ejv7jVTEyBed6IcJpWLIPtPtHd
-         /QqQ==
-X-Gm-Message-State: ALyK8tLhjEudGGa1LcimTslF0b8x0m6YIwLTrPWBZUxCJKyFDndzC4gPFEEjOeH5BAGwMEdeWFT5lc0+ZAnGig==
-X-Received: by 10.107.159.147 with SMTP id i141mr11109143ioe.29.1468942348755;
- Tue, 19 Jul 2016 08:32:28 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=Sa6C7nOTeyZRBRjlpB45VR1fjwJpp6sSoiR83ix3Lqo=;
+        b=b2f5j+hTWHcAXJKYHgYrxODH/2C83HNOWV+LuW3Lr9kzoqAd7dGZQKs8uAdjOHK1bA
+         RZlAeWKHkM/8CV70bVkFPE+cRvxAg5TFnGXdRz3bofR/jlJBEpYT/98tMr5/5bUrSJAI
+         DxU8Tuqby4G6wccOsuZdE96DkX/JNl5xa97z3GtUPXMt+xGiYQfpjbrjQZ1wYzpgUSge
+         N8e9mfDGfhO6QrFK/OJqQRvZEEsCNwcH7M2WnWIt2Z/AS7DDyyZoxM+wZ/1dcINrt2a+
+         1jgVxrXyzNE9RUw+bKx3mzorh53gV2v1Uc4Lie8XsqbL+yekBuq9m9Ok9+azWuLS9oTg
+         uVvw==
+X-Gm-Message-State: ALyK8tIWOGixBMaBRicrjp/5exbyRFMmPg1UhSNlpfAwey9DQIY629oKSNlryV7FgAZJqw==
+X-Received: by 10.46.33.76 with SMTP id h73mr6173407ljh.41.1468944207865;
+        Tue, 19 Jul 2016 09:03:27 -0700 (PDT)
+Received: from [192.168.1.26] (adan30.neoplus.adsl.tpnet.pl. [83.11.249.30])
+        by smtp.googlemail.com with ESMTPSA id 83sm5986105ljj.14.2016.07.19.09.03.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 19 Jul 2016 09:03:27 -0700 (PDT)
+Subject: Re: [PATCH v3 4/8] doc: give headings for the two and three dot
+ notations
+To:	Philip Oakley <philipoakley@iee.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marc Branchaud <marcnarc@xiplink.com>
+References: <20160630202509.4472-1-philipoakley@iee.org>
+ <20160711202518.532-1-philipoakley@iee.org>
+ <20160711202518.532-5-philipoakley@iee.org> <5784F43E.3080400@xiplink.com>
+ <xmqqwpkq6b4d.fsf@gitster.mtv.corp.google.com>
+ <D94C739D5C334AFE9E5E8410147899EA@PhilipOakley>
+Cc:	GitList <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <578E4F4A.2020708@gmail.com>
+Date:	Tue, 19 Jul 2016 18:03:22 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Tue, 19 Jul 2016 08:31:59 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1607190910370.3472@virtualbox>
-References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com>
- <20160716201313.GA298717@vauxhall.crustytoothpaste.net> <alpine.DEB.2.20.1607170949360.28832@virtualbox>
- <20160717142157.GA6644@vauxhall.crustytoothpaste.net> <CACsJy8C+2=qv5Vu=tGeDTK_Q+XSAv3qEJw0nrHbEWU7psDf=Cg@mail.gmail.com>
- <20160717154234.GC6644@vauxhall.crustytoothpaste.net> <20160717162349.GB11276@thunk.org>
- <20160717220417.GE6644@vauxhall.crustytoothpaste.net> <1468804249.2037.0@smtp.gmail.com>
- <alpine.DEB.2.20.1607180905320.28832@virtualbox> <CAPp-Vran2GZFTyJHb2qxgh3uRpM0ar7K2+VbbLcBK74_7aaxVw@mail.gmail.com>
- <alpine.DEB.2.20.1607181750470.3472@virtualbox> <CACsJy8Ba=c+-WV2TsY768_fTDO2KesS1b6BK7kdykNY6gkh=UQ@mail.gmail.com>
- <alpine.DEB.2.20.1607190910370.3472@virtualbox>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Tue, 19 Jul 2016 17:31:59 +0200
-Message-ID: <CACsJy8CSUu=AemQ-7uxth_2M=ko_KDGsdObwYdiE=L4OMKcVZw@mail.gmail.com>
-Subject: Re: Git and SHA-1 security (again)
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Herczeg Zsolt <zsolt94@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	"Theodore Ts'o" <tytso@mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <D94C739D5C334AFE9E5E8410147899EA@PhilipOakley>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 19, 2016 at 9:18 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->> But we can recreate SHA-1 from the same content and verify GPG, right?
->> I know it's super expensive, but it feels safer to not carry SHA-1
->> around when it's not secure anymore (I recall something about
->> exploiting the weakest link when you have both sha1 and sha256 in the
->> object content). Rehashing would be done locally and is better
->> controlled.
->
-> You could. But how would you determine whether to recreate the commit
-> object from a SHA-1-ified version of the commit buffer? Fall back if the
-> original did not match the signature?
+W dniu 2016-07-13 o 00:11, Philip Oakley pisze:
+> From: "Junio C Hamano" <gitster@pobox.com>
+[...]
+>> I actually think this is a good place to have them described.
+>> <rev>^<number> is about specifying a single commit.  These two are
+>> not that (you can say HEAD^2^@ but you cannot say HEAD^@^2, for
+>> example).
+> 
+> These two are special cases I'm not too familiar with, particularly
+> the r1^! which I didn't understand from the description...
 
-Any repo would have a cut point when they move to sha256 (or whatever
-new hash), if we can record this somewhere (e.g. as a tag or a bunch
-of tags, or some dummy commits to mark the heads of the repo) then we
-only verify gpg signatures _in_ the repository before this point.
+<rev>^@ is all parents of <rev>, that is
 
-> That would pose at least these two problems:
->
-> 1. The point of a signature is trust. If all of a sudden the signature
-> does not match what is supposedly signed, that trust is broken.
->
-> 2. The point of going to a stronger hash is to increase the trust. If
-> any developer could decide to sign the SHA-1-ified version of any future
-> commit, and Git validating it, it would be even worse than not switching
-> to a new hash: it would leave us open to collision attacks *and* pretend
-> that we prevented such attacks.
+  <rev>^@  ==  <rev>^1 <rev>^2 ... <rev>^<n>
 
-GPG signatures are still valid on the old repo (we will keep old repos
-around forever, I suppose). And because they sign on the "weak" hash,
-sha1, at some point they will be broken (but until then we can still
-regenerate sha1 and verify locally). When sha1 is broken, GPG
-signatures of the past can't be trusted anymore.
+where <n> is number of parents commit <rev> has.
 
-If people care enough about the past, they should re-sign (at least
-for tags). Commits can be re-signed by the person who does the
-conversion. Yes you have to trust that person. Sort of a painful fresh
-start, with hopefully better security.
+
+<rev>^! is (if standalone) a single commit range, only <rev> revision.
+It is actually
+
+  <rev>^!  ==  ( <rev> --not <rev>^@ )
+
+that is, reachable from <rev> but not from any of its parents.
+Parentheses here denote that `--not` does not affect the rest of
+rev-like parameters.
+
+
+Hope that helps
 -- 
-Duy
+Jakub Narębski
