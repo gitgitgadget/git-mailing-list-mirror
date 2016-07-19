@@ -2,89 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 783281FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 18:52:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC3641FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 18:54:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211AbcGSSwp (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 14:52:45 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:35326 "EHLO
-	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750715AbcGSSwn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 14:52:43 -0400
-Received: by mail-io0-f194.google.com with SMTP id q83so2002788iod.2
-        for <git@vger.kernel.org>; Tue, 19 Jul 2016 11:52:43 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=c97GikTvyfTh1lekRdleU1XqcJ27DjkkDCJBAnfW5Kw=;
-        b=0lEaptRvdVjYpkO+Wdc/r0Gl5NkO1ofrLteQMpAYfOWF7Zz+hPyS/r/hTUU4kVrVVO
-         2o+l61XthqPhGk58nQIuJdvSHkl4vIjx4UHW33HlcuWnC4CH6a4hjBLRbujbyBj2c/e7
-         rCqnBqlvt2gRtKWxbvNTzdjIvD0PDRogIFaL5M7y3n0VtJBdGMzekI5/wWs4xFst/ZfD
-         +UNuTN6hB12dj27KNhXf5ei1bisrjCi10NoTzosUg9XThSR6nOLKNbvEDJ5gjSdJ9940
-         IcFgYXtn4Z26c9ibKxyn3tXteK7xB69IhVbjOJ39d3i7Gk5p3A8puRf+fwcmX1hxltog
-         zKBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=c97GikTvyfTh1lekRdleU1XqcJ27DjkkDCJBAnfW5Kw=;
-        b=mLa7gtdsYkNu8pswqpuWpd4RWTBZCeWcQZAvFS5/eY++ZIxhnl5Ohcmm7hjcaiXBw5
-         yHVdYHp8UrY02oXt0pZW7XzhbXQy3qoXwkEw7K8/jswJSiIjOMvFkhvhFamAH4AUDqvW
-         bdHIm0YSdqORXQno4VjJl/dZgSht9fYIj8Qp5UCdLIFHcV/oFKX0vl/j8ZZs8JBw2b6b
-         4UMx598o8t4ehP/d+BtvPwItevXX5zwefuK6LdqATlIN68Y+LwGdt/XI3UqPpsrA/xLc
-         qDK7zqsreXX3tmWJeyJaMyFTu12aJG0sFCh13NT4c43gLEuzpc7Jv848tF5lKnam5/O0
-         67sg==
-X-Gm-Message-State: ALyK8tJvo31eRZGgqB4v60nrZmTK9ciyZNIFeIWK1f1G8fpf8CfNiiCdXo5BM39cOp1dY6Skm69dy1u6+LSV5g==
-X-Received: by 10.107.25.14 with SMTP id 14mr39715421ioz.168.1468954362945;
- Tue, 19 Jul 2016 11:52:42 -0700 (PDT)
+	id S1751694AbcGSSyA (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 14:54:00 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50819 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751218AbcGSSx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 14:53:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B21062DFD2;
+	Tue, 19 Jul 2016 14:53:57 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UNke6SNbnyAOGb3AXn/xySa3bz8=; b=gPvN3M
+	gsW2aOOhz6GtYWLivjHRKSUmPismu+LNaRnaV17siPMgng/xFfr9XqQQsH3X51Nb
+	WBQfgfevsL34wg1Fqw0k6pkZV7OYE38aJQYANtaSktKSDshC3UEGb3gB7wq3cHQe
+	sk6CGo2W8S2ZUfXY0eyJXizz+MUw2bBV6Qrt0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=A+4rbyRW9MOzLMSGA9JwTykgvJnwAZVn
+	dnIoPUckCGyFPeBy8SD0Bt12xVRz2mofteQQNYL2QXTgjq7DDrL4+SQaX9X8hjYG
+	4JqyXn371rTkVpw0SSbgEWrZ9AX9NxFlcFoBTRx23C6RxMf3l5zM8WtWY5zZGCuw
+	ppS1l7Bk2uk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A9D452DFD0;
+	Tue, 19 Jul 2016 14:53:57 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D16C2DFCD;
+	Tue, 19 Jul 2016 14:53:57 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Lars Schneider <larsxschneider@gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Looking for help to understand external filter driver code
+References: <67D9AC88-550E-4549-9AFD-2401B70B363B@gmail.com>
+	<xmqqbn1th5qn.fsf@gitster.mtv.corp.google.com>
+Date:	Tue, 19 Jul 2016 11:53:55 -0700
+In-Reply-To: <xmqqbn1th5qn.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 19 Jul 2016 10:56:00 -0700")
+Message-ID: <xmqqlh0xfoho.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.130.7 with HTTP; Tue, 19 Jul 2016 11:52:42 -0700 (PDT)
-In-Reply-To: <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
-References: <20160719144701.571-1-antoine.tenart@ack.tf> <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
-From:	Eric Sunshine <sunshine@sunshineco.com>
-Date:	Tue, 19 Jul 2016 14:52:42 -0400
-X-Google-Sender-Auth: 7XJIuvt_-ejwsQ8aqpilGWeKTls
-Message-ID: <CAPig+cQ5eGoNFa90__ay+Y7AMP5Zd1VUDXWFCfU1-XX3oEYAkg@mail.gmail.com>
-Subject: Re: [PATCH] worktree: add: introduce the --name option
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Antoine Tenart <antoine.tenart@ack.tf>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 25B53780-4DE2-11E6-986D-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 19, 2016 at 2:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Antoine Tenart <antoine.tenart@ack.tf> writes:
->> Adds a --name option allowing to specify the name of a worktree when
->> creating it. This allows to have multiple worktrees in directories
->> having the same name (e.g. project0/foo, project1/foo etc...). This
->> commit keeps the previous behaviour by making it the default value, i.e.
->> by using $(basename <path>) as the worktree name when the --name option
->> isn't used.
->
-> Hmm, is this related to an earlier discussion
->
->     https://public-inbox.org/git/20160625051548.95564-1-barret%40brennie.ca/
->
-> in any way, or is it an independent invention?
->
-> The conclusion of that discussion thread was roughly "users
-> shouldn't even _care_ about the name, and if they have to use name
-> to identify the worktrees to do certain things right now, reducing
-> the need for such 'certain things', not making it easy to give a
-> user-defined name to a worktree, is the way to go", IIRC.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yes, that's correct. The discussion wandered a bit before starting to
-converge at [1] and concluding at [2].
+> The key benefit of this arrangement is the above can be done without
+> having to do poll() to flip between reading and writing that is
+> needed to avoid deadlocking, which kept the code simpler.  A later
+> conversion of the write side into async does not fundamentally
+> change anything from the original arrangement.
 
-[1]: https://public-inbox.org/git/CAPig%2BcRNUZZBw%3DF-Q2f3Ehc-8T2iBp4kvDusNRGv4ea5nihQVQ%40mail.gmail.com/
-[2]: https://public-inbox.org/git/CAPig%2BcSEwib1iFyWE5h8-qTbsAC%2BzsaSDSYQnv6otWoOOjWAeA%40mail.gmail.com/
+Translation: I was too lazy to worry about doing poll()/select()
+when I did it originally.  As long as you can do so correctly, be my
+guest to reduce one process by having the main process do both
+reading and writing.
+
+;-)
