@@ -2,73 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC3641FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 18:54:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EE571FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 18:54:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751694AbcGSSyA (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 14:54:00 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50819 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751218AbcGSSx7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 14:53:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B21062DFD2;
-	Tue, 19 Jul 2016 14:53:57 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UNke6SNbnyAOGb3AXn/xySa3bz8=; b=gPvN3M
-	gsW2aOOhz6GtYWLivjHRKSUmPismu+LNaRnaV17siPMgng/xFfr9XqQQsH3X51Nb
-	WBQfgfevsL34wg1Fqw0k6pkZV7OYE38aJQYANtaSktKSDshC3UEGb3gB7wq3cHQe
-	sk6CGo2W8S2ZUfXY0eyJXizz+MUw2bBV6Qrt0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=A+4rbyRW9MOzLMSGA9JwTykgvJnwAZVn
-	dnIoPUckCGyFPeBy8SD0Bt12xVRz2mofteQQNYL2QXTgjq7DDrL4+SQaX9X8hjYG
-	4JqyXn371rTkVpw0SSbgEWrZ9AX9NxFlcFoBTRx23C6RxMf3l5zM8WtWY5zZGCuw
-	ppS1l7Bk2uk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A9D452DFD0;
-	Tue, 19 Jul 2016 14:53:57 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D16C2DFCD;
-	Tue, 19 Jul 2016 14:53:57 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Lars Schneider <larsxschneider@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Looking for help to understand external filter driver code
-References: <67D9AC88-550E-4549-9AFD-2401B70B363B@gmail.com>
-	<xmqqbn1th5qn.fsf@gitster.mtv.corp.google.com>
-Date:	Tue, 19 Jul 2016 11:53:55 -0700
-In-Reply-To: <xmqqbn1th5qn.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 19 Jul 2016 10:56:00 -0700")
-Message-ID: <xmqqlh0xfoho.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751421AbcGSSy4 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 14:54:56 -0400
+Received: from vpn.foo.tf ([195.154.43.236]:57854 "EHLO mail.foo.tf"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751364AbcGSSyz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 14:54:55 -0400
+Received: from localhost (unknown [10.10.68.1])
+	by mail.foo.tf (Postfix) with ESMTPSA id 956E038953D;
+	Tue, 19 Jul 2016 18:54:53 +0000 (UTC)
+Date:	Tue, 19 Jul 2016 20:54:52 +0200
+From:	Antoine Tenart <antoine.tenart@ack.tf>
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Antoine Tenart <antoine.tenart@ack.tf>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] worktree: add: introduce the --name option
+Message-ID: <20160719185452.GB28551@kwain>
+References: <20160719144701.571-1-antoine.tenart@ack.tf>
+ <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8BDRPK2UKxoMat3i2HL38+KFqw2Qfet2Bev26HXRM-BWA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 25B53780-4DE2-11E6-986D-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="pvezYHf7grwyp3Bc"
+Content-Disposition: inline
+In-Reply-To: <CACsJy8BDRPK2UKxoMat3i2HL38+KFqw2Qfet2Bev26HXRM-BWA@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> The key benefit of this arrangement is the above can be done without
-> having to do poll() to flip between reading and writing that is
-> needed to avoid deadlocking, which kept the code simpler.  A later
-> conversion of the write side into async does not fundamentally
-> change anything from the original arrangement.
+--pvezYHf7grwyp3Bc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Translation: I was too lazy to worry about doing poll()/select()
-when I did it originally.  As long as you can do so correctly, be my
-guest to reduce one process by having the main process do both
-reading and writing.
+On Tue, Jul 19, 2016 at 08:23:58PM +0200, Duy Nguyen wrote:
+> On Tue, Jul 19, 2016 at 8:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> 080739b (worktree.c: find_worktree() search by path suffix -
+> 2016-06-13) from 'next' should help identify worktrees in this case by
+> specifying 'project0/foo', 'project1/foo'... Granted it's not fun to
+> type all that when 'project0/foo' is something long, and bash
+> completion probably does not help much either.
 
-;-)
+So with this I'll be able to create new worktrees, using paths having
+the same basename, but in different let's say "project directories"?
+
+> Note that we may need a unique name elsewhere too, e.g.
+> refs/worktrees/xyz (even though we haven't settled on this yet). Then
+> xyz would be more exposed to the user and an easily recognizable name
+> would be a good thing.
+
+Having a recognisable name surely is a good thing, when performing some
+(rare) manual operations. Like moving a worktree (or is there a command
+for this?)
+
+Thanks,
+
+--=20
+Antoine
+
+--pvezYHf7grwyp3Bc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJXjnd8AAoJEFxNi8it27zYXDgP/AyIK5jTFDFtY2QfXoF5hUtJ
+JIMeGLremCihH2pj2pjDyMYJrYBoF8WiBTXoaWaOaEeRGE2bzQa0DwKJ3Vm+LQ3L
+Ha9Fh5h8lDl/wUJ738A7aR+UDCqQWQXwKFYV7aQ65MmHrztKExUf/szkLLt+s4dH
+seyV4zUcSwfHFtp3GVQapIGYY7bS5O3WVr6snpTJMedANBxL+TCfIO0pcPmq34Sv
+rFwTVG7Pi9Z1ks4hpyARjsqnR59a4SwUwhcI4++8sL/xeP9ApcD3jKt2jH/CGwPe
+D/nO5gdUYqD2t0F5KVrDQ7Zb6eYV5Wt3YuxQvEkEqF8VYLNlm05dHDdcWgkN6ngO
+Yphm0PXy4TyLyD0zourGEQndZGPs/t+lYRQp9GhRVfDvy/cq3xAOTbYtdHo+CLf8
+2+vgXwPtOt08T46Duu43z+ml0y4sFFL98+wdmi2pRFU6VgnGREhoHqASgrKWZwLT
+BPG55Lr5Q5LmddK2Ebf4U7sL4vNsCCglVwLqGWfN3E0NU64OMwzzH6bPEgTzuifu
+7UK8RwMJFA7U7Qxia5ZVjwuuV1ob55yELkoCMzwxl2kfMFdXk+OWgleegQbNJ6Mz
+9HDAmReX8bYtdU+zqQlblTYjjPIFoWDLo1iLu/3zZBvfY131BV5LkNP9RGjEUuPa
+LiEEw+MhCtltodZ0dxBp
+=lQzM
+-----END PGP SIGNATURE-----
+
+--pvezYHf7grwyp3Bc--
