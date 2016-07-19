@@ -2,71 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00D231FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 16:40:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BB0A1FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 16:46:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753341AbcGSQkw (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 12:40:52 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:34859 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753053AbcGSQkv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Jul 2016 12:40:51 -0400
-Received: by mail-wm0-f47.google.com with SMTP id f65so145089946wmi.0
-        for <git@vger.kernel.org>; Tue, 19 Jul 2016 09:40:50 -0700 (PDT)
+	id S1753078AbcGSQqZ (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 12:46:25 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:37158 "EHLO
+	mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752916AbcGSQqY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 12:46:24 -0400
+Received: by mail-it0-f51.google.com with SMTP id f6so25252044ith.0
+        for <git@vger.kernel.org>; Tue, 19 Jul 2016 09:46:11 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-transfer-encoding:subject:date:message-id:cc:to
-         :mime-version;
-        bh=45ansQwHoaBA5VTVghMDVR6aBKg9d/35lopiHSdxS9c=;
-        b=Bx3/2LDzf+SL5ubYT1H3524MomsBv6YHQIFPAror/Sz4OqK41wEHdlbQ77JH1d8/W2
-         8pDmepenhuTNWoAYcR1TRoJCmc/mWB54Qc0vcx30YM+0RnHd2oZI92yxePaANBBEhZnS
-         4vl6IbbfnZayu7JiZGv6es60eutExWLFP+Z+fQjs/YBxLl/iPXDRng2cP0Mr9kxNtt6F
-         7pVuBFnuGwg/JXR/4D4V017Bl0oWrB3wr/YAzdEmW9b0kWub0JX2EIPjGtFuyxUyOnPq
-         J5XAJjvBV0Lv6hFPWEeFG+hZCGbc9Us6NfAcI9QmttEo1AXLORsIuT9juaD0mfrqkjuG
-         1Hgw==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=jOpWkmbu4Z2jGCQymyE0crG0HU6I36WD8/zluTykChQ=;
+        b=Ij/UlsxdIl/4e2p29UTOR24kYGGtt+KR1RQASVea7PZdsCwwJbr9t0tF7D9cI9LvLB
+         Z2CsY7/tzOsXzrLwGc4jzeLs4oBo1FkfPKb5U+IuFZiz956dJjiGO1kTA1cVGVVYD9h+
+         C06b+LucNrdXErUmE0VNCBTn+QiYhLuk1Chgawzi+XCJpbn7/7/UR4G1go1O5XNfvmRx
+         1X++r+forrJHOw8RNWPb9n0a7pyqG6rLXl+/kg3FP2brc1Lv+LIOuwEWM0bRlWTGpXqF
+         7glmFryf22+jgobbrHihNd2y04F9kMgOAKSBXj/vuliffpuVSstq31LnnNjxQIGDu9HJ
+         7f1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-transfer-encoding:subject:date
-         :message-id:cc:to:mime-version;
-        bh=45ansQwHoaBA5VTVghMDVR6aBKg9d/35lopiHSdxS9c=;
-        b=jlZDZN9jZ3/tTTAQMjSuEOJZyG/CKIfghWVcdc5N0n1+xQS4fpc8ijaH95+oxRQch0
-         OlKrTLwnlunJZkx8HsUxti2AdTQ+U2G4lrKveSJTOdNpG26T9FzK7TtqPerwMHBvHBL2
-         X1yhOzPBKn4x427exosPqX6cPuc07n5QQTujpvSD8ripRgjdkze4SBskBCHP8v9M4418
-         EN+HdNfFBeqODC5uszsN45UK+dXTTnr6fxmX6I0PJh5fuvtflz0lVJFRVIzWvlZwXyc3
-         CICKlU6tUIQlPiIJ5Vvhysh6oysKQ0MYNy8cRex2bMn/y1q3k5V9OysTsJKSq2vHzxMP
-         QdHg==
-X-Gm-Message-State: ALyK8tK7+iKJs5+RIsO25vR73rEnIVyg4nWqDGI1TabUAsKROmE15xf2W6GysKp6biAOcw==
-X-Received: by 10.28.109.197 with SMTP id b66mr5344550wmi.68.1468946449722;
-        Tue, 19 Jul 2016 09:40:49 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id r67sm24209390wmb.14.2016.07.19.09.40.48
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 19 Jul 2016 09:40:49 -0700 (PDT)
-From:	Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Subject: Looking for help to understand external filter driver code
-Date:	Tue, 19 Jul 2016 18:40:48 +0200
-Message-Id: <67D9AC88-550E-4549-9AFD-2401B70B363B@gmail.com>
-Cc:	Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
-To:	Git Mailing List <git@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=jOpWkmbu4Z2jGCQymyE0crG0HU6I36WD8/zluTykChQ=;
+        b=CMjjXJ2/7nBOQwEuUGXekqv7TdYvAnedhyCwhsJnUEhvwi973AE7tyIRy9NXwSIPKc
+         /rjMfc28veIRSHYPKZldR5YZUZa8WNxn6upn/dV4DxEC/bHJ7VySWlHkScM/qs1JCsQ8
+         Ge04umsuDqv03sjZwHo3cojv7m6VG7l6ZycFd1zR0BLoWU+HZnw8TGGjVGL7Q6eJaQq1
+         QzyrcpAisygSVOqxNs3u3loRy/L1wxpCyavcE7KCnom/7z59edTa1UUL81j9uLedyc7t
+         G5iY4A+yykHSvN5eUSok7TEqFAWtP27p7uVZP25/xpV48qInSnG3Py5kzhZGeUnAuwLa
+         mCGQ==
+X-Gm-Message-State: ALyK8tL4iDJYGYkcER9Esih3J+Ce29E0e1Hl2mhfekMe0JbpkNeg6p8YTYrlEFQwc10n7XbgmmmS7UM4Jmdq7Lsm
+X-Received: by 10.36.29.5 with SMTP id 5mr4802406itj.97.1468946770671; Tue, 19
+ Jul 2016 09:46:10 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.128.66 with HTTP; Tue, 19 Jul 2016 09:46:10 -0700 (PDT)
+In-Reply-To: <1468880498-30235-1-git-send-email-jonathantanmy@google.com>
+References: <xmqq37n6iq7d.fsf@gitster.mtv.corp.google.com> <1468880498-30235-1-git-send-email-jonathantanmy@google.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Tue, 19 Jul 2016 09:46:10 -0700
+Message-ID: <CAGZ79kY+2PYx9oz9tvi0zG-oE6qS-Za7D3ocY1XtqcSsDchz0Q@mail.gmail.com>
+Subject: Re: [PATCH v2] fetch-pack: grow stateless RPC windows exponentially
+To:	Jonathan Tan <jonathantanmy@google.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+On Mon, Jul 18, 2016 at 3:21 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+> When updating large repositories, the LARGE_FLUSH limit (that is, the
+> limit at which the window growth strategy switches from exponential to
+> linear) is reached quite quickly. Use a conservative exponential growth
+> strategy when that limit is reached instead (and increase LARGE_FLUSH so
+> that there is no regression in window size).
 
-a long time ago in aa4ed4 Junio introduced the external filter driver definition. Since that time we fork the Git process and then we fork again to run the external filter. This is probably a super stupid question with an obvious answer... but can anyone help me to understand the code and explain why we fork twice? Wouldn't it be sufficient to just fork once for the external filter since we cannot process anything in parallel anyways?
+Care to elaborate on why you choose 11/10 as growth factor?
 
-In 546bb5 Hannes refactored Junio's code to use the async infrastructure that is used today.
+(As someone who has a tick in micro optimizing:
+9/8 is roughly the same exponent, but the division
+by 8 is easier as it is just a shift by 3. Similar 17/16)
 
-Thank you,
-Lars
+I guess one design criterion was 10 being a round number?
+Does it make sense to experiment with the factor at all?
+Digging into that, LARGE_FLUSH originates from 6afca450c3f,
+(2011-03-20, fetch-pack: progressively use larger handshake windows),
+and before we only had a linear growth.
+
+So I guess what I do not understand is why we need to slow down the
+exponential growth at all?
+
+Thanks,
+Stefan
+
+
+
+>
+> This optimization is only applied during stateless RPCs to avoid the
+> issue raised and fixed in commit
+> 44d8dc54e73e8010c4bdf57a422fc8d5ce709029.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  fetch-pack.c | 19 ++++++++++++-------
+>  1 file changed, 12 insertions(+), 7 deletions(-)
+>
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index b501d5c..85e77af 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -243,16 +243,21 @@ static void insert_one_alternate_ref(const struct ref *ref, void *unused)
+>
+>  #define INITIAL_FLUSH 16
+>  #define PIPESAFE_FLUSH 32
+> -#define LARGE_FLUSH 1024
+> +#define LARGE_FLUSH 16384
+>
+>  static int next_flush(struct fetch_pack_args *args, int count)
+>  {
+> -       int flush_limit = args->stateless_rpc ? LARGE_FLUSH : PIPESAFE_FLUSH;
+> -
+> -       if (count < flush_limit)
+> -               count <<= 1;
+> -       else
+> -               count += flush_limit;
+> +       if (args->stateless_rpc) {
+> +               if (count < LARGE_FLUSH)
+> +                       count <<= 1;
+> +               else
+> +                       count = count * 11 / 10;
+> +       } else {
+> +               if (count < PIPESAFE_FLUSH)
+> +                       count <<= 1;
+> +               else
+> +                       count += PIPESAFE_FLUSH;
+> +       }
+>         return count;
+>  }
+>
+> --
+> 2.8.0.rc3.226.g39d4020
+>
