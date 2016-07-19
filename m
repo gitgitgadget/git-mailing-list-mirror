@@ -2,91 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B9751FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 17:27:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C40DF1FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 17:34:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753647AbcGSR1q (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 13:27:46 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:33978 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752961AbcGSR1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 13:27:45 -0400
-Received: by mail-io0-f178.google.com with SMTP id q83so25351024iod.1
-        for <git@vger.kernel.org>; Tue, 19 Jul 2016 10:27:32 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=iyfU/+DjbcInHJgEsKvxgmp0CT/sDnEGSD6YVockSUk=;
-        b=vAfREDOu9KdeXQ0sgd4kthCjo+Nmosg3U4dZwN+xbmk7kLmgxPEIek4jPrOWFVVgOM
-         JmvO+Huc4pSP4xbPBS7FJlTsjXCWhJ2Z8cMTGB/9BVyFflkH0zTOkqJZB/3XhRmm8oeb
-         Ckxs/IPeoZTw88IBGJq1ncBEfgdH7xaoUvy+uEPw23BNxP95MiTT3qSLmpHoLB8dFtDF
-         cUUv+hszVHW1k8CAmvqpjWgIPj6Vipaz6kXVlH5fKZoHmcQaNrQWZtlzH+DWYmlOVT/x
-         fzba+VB35kvhgoChBQCLdcUbd3hCcdASm/5h7Kazb01ahrWglGXnLVaI8PDlPJ4nxpgU
-         yQqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=iyfU/+DjbcInHJgEsKvxgmp0CT/sDnEGSD6YVockSUk=;
-        b=LtbnOs/YdCLDpAuXvF6P7GjUN6oBheD1W20ir+mmBpDZton0deob4WIasHd2QD32is
-         0VeP6lUpdxPGnbsSoiULyUMek/ISQ9EbaUJcDEZICMA0rMVRjIvlOh9w+V9FYSWFC46x
-         I8f8yLwE/O6frvYlEFnbcMbF3IR24RNaD7gdZklfZp/aExlNJL2DZwogJTrRQsGIUjeP
-         C+BSkMHgubdqG6Xy5OKcx43UoXc7JxFtwfXxadWyoAxXiY7XqnmCK0QgsHS8IKd3tYFz
-         m73qe3XhwgzOy/98GX8RO/W4Jd5wILkfnh0d7o43Q08pD0MmMH8PtgHA8soQ9HXPL6ec
-         ekAg==
-X-Gm-Message-State: ALyK8tKFC04HjfsSMxDzrL60XrwgI+CkM1hGe5l2Ul5xQ4yRuUKhXW58XR+unHyrK6Ppy2o0+/s8hC5MAEptYw==
-X-Received: by 10.107.159.147 with SMTP id i141mr11738797ioe.29.1468949251771;
- Tue, 19 Jul 2016 10:27:31 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Tue, 19 Jul 2016 10:27:02 -0700 (PDT)
-In-Reply-To: <xmqqk2ghh80x.fsf@gitster.mtv.corp.google.com>
-References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com>
- <20160716201313.GA298717@vauxhall.crustytoothpaste.net> <alpine.DEB.2.20.1607170949360.28832@virtualbox>
- <20160717142157.GA6644@vauxhall.crustytoothpaste.net> <CACsJy8AH9Q6rOgvcWGsLGPaP96koGA=k0PYgXP6F3RZ=XAwaSw@mail.gmail.com>
- <CACsJy8CR_fkYL5UYbV1MqiTSe3gTqWfOrA1NOHTw09vZn7Y-Aw@mail.gmail.com> <xmqqk2ghh80x.fsf@gitster.mtv.corp.google.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Tue, 19 Jul 2016 19:27:02 +0200
-Message-ID: <CACsJy8DyybW5kTWZ2nJ4GN=S46M9rU0EapOrR6PjSV=b1ZFrBw@mail.gmail.com>
-Subject: Re: Git and SHA-1 security (again)
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	id S1753386AbcGSRet (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 13:34:49 -0400
+Received: from lang.hm ([66.167.227.134]:39138 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752951AbcGSRes (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 13:34:48 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id u6JHYY8L011651;
+	Tue, 19 Jul 2016 10:34:34 -0700
+Date:	Tue, 19 Jul 2016 10:34:34 -0700 (PDT)
+From:	David Lang <david@lang.hm>
+X-X-Sender: dlang@asgard.lang.hm
+To:	Duy Nguyen <pclouds@gmail.com>
+cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Herczeg Zsolt <zsolt94@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	"Theodore Ts'o" <tytso@mit.edu>,
 	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: Git and SHA-1 security (again)
+In-Reply-To: <CACsJy8CSUu=AemQ-7uxth_2M=ko_KDGsdObwYdiE=L4OMKcVZw@mail.gmail.com>
+Message-ID: <alpine.DEB.2.02.1607191032270.25425@nftneq.ynat.uz>
+References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com> <20160716201313.GA298717@vauxhall.crustytoothpaste.net> <alpine.DEB.2.20.1607170949360.28832@virtualbox> <20160717142157.GA6644@vauxhall.crustytoothpaste.net>
+ <CACsJy8C+2=qv5Vu=tGeDTK_Q+XSAv3qEJw0nrHbEWU7psDf=Cg@mail.gmail.com> <20160717154234.GC6644@vauxhall.crustytoothpaste.net> <20160717162349.GB11276@thunk.org> <20160717220417.GE6644@vauxhall.crustytoothpaste.net> <1468804249.2037.0@smtp.gmail.com>
+ <alpine.DEB.2.20.1607180905320.28832@virtualbox> <CAPp-Vran2GZFTyJHb2qxgh3uRpM0ar7K2+VbbLcBK74_7aaxVw@mail.gmail.com> <alpine.DEB.2.20.1607181750470.3472@virtualbox> <CACsJy8Ba=c+-WV2TsY768_fTDO2KesS1b6BK7kdykNY6gkh=UQ@mail.gmail.com>
+ <alpine.DEB.2.20.1607190910370.3472@virtualbox> <CACsJy8CSUu=AemQ-7uxth_2M=ko_KDGsdObwYdiE=L4OMKcVZw@mail.gmail.com>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 19, 2016 at 7:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> Post-shower thoughts. In a tree object, a submodule entry consists of
->> perm (S_IFGITLINK), hash (which is the external hash) and path. We
->> could fill the "hash" part with all zero (invalid, signature of new
->> submodule hash format), then append "/<hashtype>:<external hash>" to
->> the "path" part. This way we don't have to update tree object or index
->> format. And I suspect the "path" part is available everywhere we need
->> to handle submodules already, so extracting the external hash should
->> be possible...
->
-> Even though that single operation might be possible, do not go
-> there.  A "pathname" identifies a "path", not its contents, and
-> "appending crap after path" breaks the data model badly.  Also other
-> things like merge, checkout and diff would break by butchering
-> ordering the entries in tree objects.
+On Tue, 19 Jul 2016, Duy Nguyen wrote:
 
-I thought about that but I thought all those operations required
-special treatment for submodules anyway. But I forgot about d/f
-conflicts so yeah it's a bad idea. We still have some invalid "mode"
-combination that can be used as S_IFGITLINK2, then we can have
-variable length hash field in the entry.
--- 
-Duy
+> On Tue, Jul 19, 2016 at 9:18 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>>> But we can recreate SHA-1 from the same content and verify GPG, right?
+>>> I know it's super expensive, but it feels safer to not carry SHA-1
+>>> around when it's not secure anymore (I recall something about
+>>> exploiting the weakest link when you have both sha1 and sha256 in the
+>>> object content). Rehashing would be done locally and is better
+>>> controlled.
+>>
+>> You could. But how would you determine whether to recreate the commit
+>> object from a SHA-1-ified version of the commit buffer? Fall back if the
+>> original did not match the signature?
+>
+> Any repo would have a cut point when they move to sha256 (or whatever
+> new hash), if we can record this somewhere (e.g. as a tag or a bunch
+> of tags, or some dummy commits to mark the heads of the repo) then we
+> only verify gpg signatures _in_ the repository before this point.
+
+remember that a repo doesn't have a single 'now', each branch has it's own head, 
+and you can easily go back to prior points and branch off from there.
+
+Since timestamps in repos can't be trusted (different people's clocks may not be 
+in sync), how would you define this cutoff point?
+
+David Lang
