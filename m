@@ -2,74 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 271952018F
-	for <e@80x24.org>; Tue, 19 Jul 2016 20:20:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E0352018F
+	for <e@80x24.org>; Tue, 19 Jul 2016 20:44:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751830AbcGSUUV (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 16:20:21 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63229 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751284AbcGSUUU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 16:20:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DF79D2AC48;
-	Tue, 19 Jul 2016 16:20:18 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PRuBcAyqPVP06Jvv23pY+wd5924=; b=gGMpqb
-	ARK6WGbD5Upc2FWIJz5eHK4Aowtb1nINe15OVSdaBCZvxLE/sO32MA06vS0rZy58
-	bu60Oi36v2DC2YtLaeHqPp1FOSPwfBKPbAgexQNaPlJPvj/G0EqHXEjpYra6Sd7x
-	LxUB25kbJ6Mxfb6mEtEy3oIl0ZEVCtwu/oZdU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ra3aDX3Gr+FQNT9QOYZuoi03wT3SqjFJ
-	C56lxoIGx84oAz+cm8cta5N9zvNtzwOFtDSbit/10CCNlUzuAfe4y2qlh6yygRXz
-	iXM2qBW+rJ3LVgnlOX5diMadLlmcrs89jN9BN2DU4+6xUar88g7m0QD6rCOe1TZx
-	j1K86BV54L8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D70EA2AC47;
-	Tue, 19 Jul 2016 16:20:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 58D752AC46;
-	Tue, 19 Jul 2016 16:20:18 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jonathan Nieder <jrnieder@gmail.com>
-Cc:	Jonathan Tan <jonathantanmy@google.com>,
-	Stefan Beller <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH v2] fetch-pack: grow stateless RPC windows exponentially
-References: <xmqq37n6iq7d.fsf@gitster.mtv.corp.google.com>
-	<1468880498-30235-1-git-send-email-jonathantanmy@google.com>
-	<CAGZ79kY+2PYx9oz9tvi0zG-oE6qS-Za7D3ocY1XtqcSsDchz0Q@mail.gmail.com>
-	<CAGf8dgL3t7uX7yAux0xc2QMJJdmnM0262Quj4o6gDehwA+4JqQ@mail.gmail.com>
-	<xmqq8twxfn4j.fsf@gitster.mtv.corp.google.com>
-	<20160719195347.GF29326@google.com>
-Date:	Tue, 19 Jul 2016 13:20:16 -0700
-In-Reply-To: <20160719195347.GF29326@google.com> (Jonathan Nieder's message of
-	"Tue, 19 Jul 2016 12:53:47 -0700")
-Message-ID: <xmqqzipde5xb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 35F80A44-4DEE-11E6-BE80-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1752077AbcGSUop (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 16:44:45 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:35613 "EHLO
+	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752023AbcGSUon (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 16:44:43 -0400
+Received: by mail-wm0-f42.google.com with SMTP id f65so151624932wmi.0
+        for <git@vger.kernel.org>; Tue, 19 Jul 2016 13:44:43 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=sryxuLe3dkg17DBxunLolLYW0t8SfxIahA3oU5de7sw=;
+        b=SCo6xiBr3xZVnjxX29FaYJo+73Lprq2Dj4rjY/15Nh+jY4QFZRk6vKqtIYP91ro5aK
+         olHjtkQVGvqhcclt0fhDFYIuF5buCmPwhA0uUZZlrylpVr8oZ8zgGtidJccRwiUnfCrD
+         tFF2zWgZ6/dm6gWN2Pqx1PayhTTCj7+127pJKqizsY/g0Ss1EKf68ufCaypqCVMowedQ
+         oTtb1hRc957vC/yjNeRv8UInHkE+RLdSyhpVmZHcbV0/mUs9tpLxQGWn8puws7Lwtk+g
+         M4A+z/kYkyUgAX1icRuVfvMOnKeQxqj1sLjMfJxblodB8xU1PLqUTwXzHNU9VbutS0m9
+         2roQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=sryxuLe3dkg17DBxunLolLYW0t8SfxIahA3oU5de7sw=;
+        b=bS2eAiBlUISQKKiiYFnvHcIBelnnakH9UQqtkDTuIjcZcDruMpgnUiARK/ipu1+YYr
+         W+iHTg0/KXfqT14NFQvbeUhmtcN+Edko2GwmgDn3HPtBdIOfyQoDljMqVaTw+3v5QPQb
+         W18thBOC5DPCIMhFgun2fo6voUYO9paTtVDXzgTpI5rtv+YJ/hLv5+kxbv6RciGHp5hh
+         5EQaq74mqzmLzaCE8CS7RdrnnINvuPgCNr2yap/lW9MKVSzOTwlZtbg8xuMbACHj7X8F
+         arXPVdRjR2YwpJTkwDNt9+6Pg2gG9mb0qaYrPDAWPr0yB5YIIv23RvGvOiJJIfjXqI0e
+         umNA==
+X-Gm-Message-State: ALyK8tIbPfS74upUsHOXBOz7LRQuAooxpLWTElovjPJzRFjJpIR3+NT/dCBouHaEipwSKg==
+X-Received: by 10.28.193.140 with SMTP id r134mr6533710wmf.81.1468961082193;
+        Tue, 19 Jul 2016 13:44:42 -0700 (PDT)
+Received: from slxbook3.fritz.box (p508BA0C8.dip0.t-ipconnect.de. [80.139.160.200])
+        by smtp.gmail.com with ESMTPSA id m201sm25914080wma.11.2016.07.19.13.44.40
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 19 Jul 2016 13:44:41 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Subject: Re: Looking for help to understand external filter driver code
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqlh0xfoho.fsf@gitster.mtv.corp.google.com>
+Date:	Tue, 19 Jul 2016 22:44:53 +0200
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <j6t@kdbg.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <7B44C694-7CB2-411D-9CC6-7334CCBAD20B@gmail.com>
+References: <67D9AC88-550E-4549-9AFD-2401B70B363B@gmail.com> <xmqqbn1th5qn.fsf@gitster.mtv.corp.google.com> <xmqqlh0xfoho.fsf@gitster.mtv.corp.google.com>
+To:	Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> In the stateless-rpc case, linear growth means getting a bounded
-> number of 'have's worth of benefit (new 'have's) in each round, in
-> exchange for a linearly increasing cost (existing 'have's).  That is a
-> high cost for limited benefit.  Exponential growth is a better deal.
+On 19 Jul 2016, at 20:53, Junio C Hamano <gitster@pobox.com> wrote:
 
-Ahh, of course (silly me).  I somehow forgot the cost of having to
-repeat what we have already sent to the other side.
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> The key benefit of this arrangement is the above can be done without
+>> having to do poll() to flip between reading and writing that is
+>> needed to avoid deadlocking, which kept the code simpler.  A later
+>> conversion of the write side into async does not fundamentally
+>> change anything from the original arrangement.
+> 
+> Translation: I was too lazy to worry about doing poll()/select()
+> when I did it originally.  As long as you can do so correctly, be my
+> guest to reduce one process by having the main process do both
+> reading and writing.
+> 
+> ;-)
+
+Thanks a lot for this explanation. My goal is to add an option to
+the clean/smudge filter config that instructs Git to keep the
+external filter process running. Whenever Git encounters a file
+to be filtered then it would continue to talk to the filter process
+over a simple pipe protocol:
+
+Git writes --> 4 byte filename length
+Git writes --> filename string
+Git writes --> 4 byte content length
+Git writes --> content string
+Git reads <-- 4 byte filtered content length
+Git reads <-- filtered content
+
+I still need to read more about poll()/select() but it looks to me
+as if these functions are only required if Git doesn't know what to
+expect. With the sketched protocol above that wouldn't be the case.
+Therefore, I wonder if I would need to use poll()/select()?
+
+Thanks,
+Lars
 
