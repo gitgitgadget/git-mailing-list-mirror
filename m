@@ -6,54 +6,55 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E51AD1FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 18:15:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0D651FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 18:19:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753492AbcGSSP3 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 14:15:29 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57680 "EHLO
+	id S1753685AbcGSSTQ (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 14:19:16 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53954 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752868AbcGSSP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 14:15:28 -0400
+	with ESMTP id S1752868AbcGSSTM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 14:19:12 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AFA9B2DB4A;
-	Tue, 19 Jul 2016 14:15:26 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 084D12BAB6;
+	Tue, 19 Jul 2016 14:19:11 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Bw3wxfJgXvpAl6MjgcRD8scStTc=; b=RnArR4
-	edCMBw5GIuIIEAE+Zwke7VVqWPXLajuQAPDV70ocV6dyWLaD4bdba1xGOiYlO0js
-	mOePexkXbcoPCCTl9hYLjbkJXx424VvzH6bC+hiJwP6K0zHGZnK/ZaWoD+XpcQRw
-	yce5jMuJMhELV0kd3rQ7KDy++kKRv8vrK5olg=
+	:content-type; s=sasl; bh=LM07EOTaUqelu/4ngDBt4KLErA0=; b=LAQnTX
+	sXsCS5ZzrqnYiey8BWbPb5H4G2Pob1cwz3X9y8facTXJ0CuZkX/zp6rG3lwhzhKX
+	I9hUQ3lEsRv/5I8Jm7XDRE/CVL34UY8mwOBb50dOLwmLSdwwpYb82m6yQZjV+F9c
+	BupvRkvx+9q6glT5CqJwEqu6MNEcodA60qqig=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QwMpsJ1IoApmkuaOK8ap9/7So42d1ZSv
-	NmCvlV0DZ4/XEN1svByov8d2sqm/pqd4hJRBpezxoctSXc87l+dItV3b4lUhqlN1
-	oMMCfY2Vjj8a5bAAO/xPmodIWQB05UasmiRXp7V1gLSbhRTa3RXesc1CoBXm95pO
-	Nx5wVmHTdK4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A76122DB49;
-	Tue, 19 Jul 2016 14:15:26 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=H3TOyBnkZSlXYIAWPe2H7REmscAtSdlj
+	/kAoFp0yldwnU1UQzDdpmXVzRUjRtNgKdADoCU+YaAMhS9qNzD5ejZBA+TmxXiU3
+	3F0lT0MvylcHGbc1uVxUMxU2BdNhKEHAiADEFd9OSzM95l6q57qxHIlxLUAf1JmA
+	vX2SqWap63s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 00E912BAB3;
+	Tue, 19 Jul 2016 14:19:11 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 35B012DB46;
-	Tue, 19 Jul 2016 14:15:26 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7A6612BAB2;
+	Tue, 19 Jul 2016 14:19:10 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
 To:	David Aguilar <davvid@gmail.com>
 Cc:	John Keeping <john@keeping.me.uk>,
 	Bernhard Kirchen <bernhard.kirchen@rwth-aachen.de>,
 	Tim Henigan <tim.henigan@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] difftool: fix argument handling in subdirs
+Subject: Re: [PATCH 2/3] difftool: avoid $GIT_DIR and $GIT_WORK_TREE
 References: <20160719035756.24961-1-davvid@gmail.com>
-Date:	Tue, 19 Jul 2016 11:15:24 -0700
-In-Reply-To: <20160719035756.24961-1-davvid@gmail.com> (David Aguilar's
-	message of "Mon, 18 Jul 2016 20:57:54 -0700")
-Message-ID: <xmqq37n5h4ub.fsf@gitster.mtv.corp.google.com>
+	<20160719035756.24961-2-davvid@gmail.com>
+Date:	Tue, 19 Jul 2016 11:19:08 -0700
+In-Reply-To: <20160719035756.24961-2-davvid@gmail.com> (David Aguilar's
+	message of "Mon, 18 Jul 2016 20:57:55 -0700")
+Message-ID: <xmqqy44xfq3n.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C4440382-4DDC-11E6-8298-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 49F2BB86-4DDD-11E6-95B3-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -61,17 +62,44 @@ X-Mailing-List:	git@vger.kernel.org
 
 David Aguilar <davvid@gmail.com> writes:
 
-> From: John Keeping <john@keeping.me.uk>
+> Environment variables are global and hard to reason about.
+> Use the `--git-dir` and `--work-tree` arguments when invoking `git`
+> instead of relying on the environment.
 >
-> When in a subdirectory of a repository, path arguments should be
-> ...
-> directory.
->
-> Reported-by: Bernhard Kirchen <bernhard.kirchen@rwth-aachen.de>
-> Signed-off-by: John Keeping <john@keeping.me.uk>
-> Acked-by: David Aguilar <davvid@gmail.com>
-> ---
-> This patch is unchanged from John's version but also includes
-> Reported-by and Acked-by lines.
+> Add a test to ensure that difftool's dir-diff feature works when these
+> variables are present in the environment.
 
-Thanks; will replace.
+Yes, that is a very good idea.  I was wondering what would happen
+with that "must-not-unset-nor-smudge if it already is set" thing.
+
+> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+> index 42a2929..fa43c24 100755
+> --- a/t/t7800-difftool.sh
+> +++ b/t/t7800-difftool.sh
+> @@ -412,6 +412,22 @@ run_dir_diff_test 'difftool --dir-diff from subdirectory' '
+>  	)
+>  '
+>  
+> +run_dir_diff_test 'difftool --dir-diff from subdirectory with GIT_DIR set' '
+> +	(
+> +		GIT_DIR=$(pwd)/.git &&
+> +		export GIT_DIR &&
+> +		GIT_WORK_TREE=$(pwd) &&
+> +		export GIT_WORK_TREE &&
+> +		cd sub &&
+> +		git difftool --dir-diff $symlinks --extcmd ls \
+> +			branch -- sub >output &&
+> +		sane_unset GIT_WORK_TREE &&
+> +		sane_unset GIT_DIR &&
+
+It is not wrong per-se, but as you are in a subshell, you do not
+have to unset these, I would think.  Not worth a reroll, but unless
+I am overlooking something (in which case please holler) I'm
+inclined to remove these two lines myself while queuing the series.
+
+Thanks.
+
+> +		grep sub output &&
+> +		! grep file output
+> +	)
+> +'
