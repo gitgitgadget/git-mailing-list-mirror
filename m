@@ -2,86 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 519D91FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 18:29:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD3EB1FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 18:36:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753847AbcGSS3H (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 14:29:07 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52973 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753386AbcGSS3F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 14:29:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D98362BC01;
-	Tue, 19 Jul 2016 14:29:03 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QMQw6n9SA/Ig/hOfeM/Nqy8djJ4=; b=everdA
-	CLuqPE2dRXP3RTTiJF90tvloPqa1ukxmv+9UrZ71CapDOA7IGIpjQRWKOsNbgouh
-	rR77LK1huJSEWUiRW1Y8Z5oF8EoiTPTIuCpe4+rqf7meQpr+s+VOPAYXpj/AMokg
-	rEiu+qNrBQgEBUBocEoQdqJcG4ZdtNqJ9/OKc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y1Be3arxYZjvyyEXcCQvtO9bswfJWH1w
-	Ebgp8tYpyxifuIew5fhihm1UFh7WZadO7dNXFO/qblUpFXT+W9Vsvyqp8ai/Hm2n
-	yg3Ko+dan44XkXvNHxos5dbNnDEQN+WghIxGY67n/vI7Z0PFgjXkK/W4TRDSFS9I
-	JUUg+yL6MSg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D258A2BC00;
-	Tue, 19 Jul 2016 14:29:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 54B422BBFF;
-	Tue, 19 Jul 2016 14:29:03 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	David Aguilar <davvid@gmail.com>
-Cc:	John Keeping <john@keeping.me.uk>,
-	Bernhard Kirchen <bernhard.kirchen@rwth-aachen.de>,
-	Tim Henigan <tim.henigan@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] difftool: use Git::* functions instead of passing around state
-References: <20160719035756.24961-1-davvid@gmail.com>
-	<20160719035756.24961-3-davvid@gmail.com>
-Date:	Tue, 19 Jul 2016 11:29:01 -0700
-In-Reply-To: <20160719035756.24961-3-davvid@gmail.com> (David Aguilar's
-	message of "Mon, 18 Jul 2016 20:57:56 -0700")
-Message-ID: <xmqqtwflfpn6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754032AbcGSSgw (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 14:36:52 -0400
+Received: from mout.web.de ([212.227.15.4]:55576 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753847AbcGSSgu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 14:36:50 -0400
+Received: from [192.168.178.36] ([79.237.58.95]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0MEZPl-1bao942jIv-00Fj2d; Tue, 19 Jul 2016 20:36:35
+ +0200
+To:	Git List <git@vger.kernel.org>
+Cc:	Junio C Hamano <gitster@pobox.com>
+From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] use strbuf_addbuf() for appending a strbuf to another
+Message-ID: <578E732D.2090803@web.de>
+Date:	Tue, 19 Jul 2016 20:36:29 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AB5920B2-4DDE-11E6-93A3-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:UpGi5rncrZLSRgfJeCVaK3+UNSmtUtGQ3YhX75IGoEkwf3L6wMI
+ EoAwRuIamJ+idNutJf4CEBEHPKbergxe8RMvqpJ9O+8BuyxgJwAVTwwW+qqorchZiWvCJ00
+ oylqFmp3sdCBtFsgAQU6JWl7XRbfIH40icVzBjm9U7Yx7IgrJRo5aGV2KHSykJ+1Q+Qt1AB
+ dxDmKDggnqWf0xNDSotbA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:HMGrxQ7Uo1A=:dmS7rYWC4LnotX/j+ShezC
+ QCAq4aP31YLushAooolTMA1uDh5M5Z0SOhR3T07dGML3bStszZf+DFnMX1XUmHAD/4NMq8zyV
+ VpqC+4jNR77q6+JBYFbCKA5ZrxXjeqJMrzSr+XQ0Ql1HIi1L6NPyFvrgEn5igiYlXasAx31cO
+ kNFVFHhQAJH8ija2YFzS1iVte3sckwALB+FKPII0QzmlGnWF/06YJzY3/8OLVWZ8KKeX5pBaj
+ hFWRr5R2o5p692zTVL8QeiIBp5NsNmqai8Je55aYB/NRD+Lqqsf84AHgrg63JyMKgUOrxdQYQ
+ tllfPXtj0LTFyO5Ck8l+KEjVa3ctX4g8Pkv9q2zXgqNKIJMPB4Yxh0kOi7XotX3LGxS23rXVe
+ Eltc2S4G/HNCgtheNnQ06vLxojSPfG2dNAYwaAL7Txb9dq77Pq1Qjw7sHowG+ShVt44MPrw/m
+ o26nIWTKmbvxkkqCYv95IqZkK9kRoFKoszxFsN2cFG+zpBz8KNe3PcLPOSdcjt6LMkS7y6IcG
+ xmZq4zuDQ8RIAM4w52j0V2BU9Dj1RPCC4xy9xaYkmMFn5GlqWST2ddWp4bFLWMwU9NnP7Irpm
+ I5tDqsVER4OGkIfNEV1zWTBfOptRtTPHSHGSudSGW4VUlo8/fz9bMcmPSiqu+QoZQXKDq3jyW
+ zdHoOoS+tBWDNDmlJFPiqgjpyIIEBKd9aTz1N0w5BiLFTpROVlPwRtlI6FQmoQAguZyn66Lz5
+ NfOOGXyKacPZ90i9fAY7PreRFc3cbUsH2k7gkxtiVOuqEx5vqrvEjKKJld+2vMQ1TkfE3cPNT
+ mV7Uag8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-David Aguilar <davvid@gmail.com> writes:
+Use strbuf_addbuf() where possible; it's shorter and more efficient.
 
-> Call Git::command() and friends directly wherever possible.
-> This makes it clear that these operations can be invoked directly
-> without needing to manage the current directory and related GIT_*
-> environment variables.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ dir.c       | 2 +-
+ path.c      | 2 +-
+ wt-status.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-Good.
+diff --git a/dir.c b/dir.c
+index 6172b34..0ea235f 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2364,7 +2364,7 @@ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untra
+ 
+ 	varint_len = encode_varint(untracked->ident.len, varbuf);
+ 	strbuf_add(out, varbuf, varint_len);
+-	strbuf_add(out, untracked->ident.buf, untracked->ident.len);
++	strbuf_addbuf(out, &untracked->ident);
+ 
+ 	strbuf_add(out, ouc, ouc_size(len));
+ 	free(ouc);
+diff --git a/path.c b/path.c
+index 259aeed..17551c4 100644
+--- a/path.c
++++ b/path.c
+@@ -483,7 +483,7 @@ static void do_submodule_path(struct strbuf *buf, const char *path,
+ 		strbuf_addstr(buf, git_dir);
+ 	}
+ 	strbuf_addch(buf, '/');
+-	strbuf_addstr(&git_submodule_dir, buf->buf);
++	strbuf_addbuf(&git_submodule_dir, buf);
+ 
+ 	strbuf_vaddf(buf, fmt, args);
+ 
+diff --git a/wt-status.c b/wt-status.c
+index c19b52c..dbdb543 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1062,7 +1062,7 @@ static void abbrev_sha1_in_line(struct strbuf *line)
+ 			strbuf_addf(split[1], "%s ", abbrev);
+ 			strbuf_reset(line);
+ 			for (i = 0; split[i]; i++)
+-				strbuf_addf(line, "%s", split[i]->buf);
++				strbuf_addbuf(line, split[i]);
+ 		}
+ 	}
+ 	strbuf_list_free(split);
+-- 
+2.9.2
 
-> @@ -88,11 +80,11 @@ sub changed_files
->  	my @refreshargs = (
->  		@gitargs, 'update-index',
->  		'--really-refresh', '-q', '--unmerged');
-> -	my @diffargs = (@gitargs, 'diff-files', '--name-only', '-z');
->  	try {
->  		Git::command_oneline(@refreshargs);
->  	} catch Git::Error::Command with {};
->  
-> +	my @diffargs = (@gitargs, 'diff-files', '--name-only', '-z');
->  	my $line = Git::command_oneline(@diffargs);
->  	my @files;
->  	if (defined $line) {
-
-This hunk looks like "oops, the @diffargs variable logically belongs
-here, not there", correcting an mistake in an earlier step.
