@@ -2,105 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CA7A1FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 19:15:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4281A1FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 19:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751568AbcGSTPa (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 15:15:30 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:13400 "EHLO
-	smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750715AbcGSTP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 15:15:28 -0400
-Received: from PhilipOakley ([92.22.38.182])
-	by smtp.talktalk.net with SMTP
-	id PaUGbV8OAHGLwPaUGbDzWm; Tue, 19 Jul 2016 20:15:26 +0100
-X-Originating-IP: [92.22.38.182]
-X-Spam:	0
-X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=LaaBIPhnSQCmsaQFFm7g3w==:117
- a=LaaBIPhnSQCmsaQFFm7g3w==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=ybZZDoGAAAAA:8 a=V1XGMniltzrKZIOxx9EA:9 a=cKTwJymBmNURp5Cx:21
- a=2J1pbIElbZiCM1p4:21 a=6kGIvZw6iX1k4Y-7sg4_:22 a=0RhZnL1DYvcuLYC8JZ5M:22
-Message-ID: <1D7B90EDE07E4B1BA1175C18946D5D2D@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:	"Philip Oakley" <philipoakley@iee.org>
-To:	<git@vger.kernel.org>,
-	=?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:	"Jeff King" <peff@peff.net>,
-	"\"Junio C Hamano\"" <gitster@pobox.com>,
-	"Marc Branchaud" <marcnarc@xiplink.com>
-References: <20160630202509.4472-1-philipoakley@iee.org> <20160711202518.532-1-philipoakley@iee.org> <20160711202518.532-5-philipoakley@iee.org> <5784F43E.3080400@xiplink.com> <xmqqwpkq6b4d.fsf@gitster.mtv.corp.google.com> <D94C739D5C334AFE9E5E8410147899EA@PhilipOakley> <578E4F4A.2020708@gmail.com>
-Subject: Re: [PATCH v3 4/8] doc: give headings for the two and three dot notations
-Date:	Tue, 19 Jul 2016 20:15:25 +0100
-Organization: OPDS
+	id S1751713AbcGSTPm (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 15:15:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60832 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751536AbcGSTPk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Jul 2016 15:15:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 389992A2CC;
+	Tue, 19 Jul 2016 15:15:39 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=L+/cL1whxNKn
+	GMar4dvwzU3kSfQ=; b=qV+lGGN0VRA7vbEl97HJxw8cczz8kJ1/sYxsz0inl/eM
+	YSc7j6E+elRFQsuy1CernMSHCCO1zHu/WkyRbyKoEQtoaDZ+xxn5122CAMU2Ya7X
+	+BS/6rdMS8EmgWdzFrIs40VLFY0WvZa4Fq4tcifBUJxWVnz4jJY2zP6bViCRc0Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qDYNSO
+	PtRigU4NRfHk+w8ZGnD+VPcgyGQw97lwNBjI8IchncMmBMcKXGEdISZ34Xkj6aRb
+	Fu0GyDcfGGKU+Y0+yZJ/pWzppkZcVx3g5kmRdDZt4Irw2zcbfeLstTjNE1U2F4kY
+	oSJWGaZQMy0dYZyqZSUkD5zOB/JEmxOCLqUm0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2CB382A2CB;
+	Tue, 19 Jul 2016 15:15:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 972562A2C9;
+	Tue, 19 Jul 2016 15:15:38 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:	Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH] submodule-config: use explicit empty string instead of strbuf in config_from()
+References: <578E7A07.8080006@web.de>
+Date:	Tue, 19 Jul 2016 12:15:36 -0700
+In-Reply-To: <578E7A07.8080006@web.de> (=?utf-8?Q?=22Ren=C3=A9?= Scharfe"'s
+ message of "Tue, 19
+	Jul 2016 21:05:43 +0200")
+Message-ID: <xmqqd1m9fnhj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=original
-Content-Transfer-Encoding: 8bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfGRSMlsfAn5D6JHGsP70WNQr/5ugPmYMUg/lrb5JB7Olbn+t8gzyhDZ/rssYSXyNXrHsTTLOmrUoKBx5RWndmBKWyQlYcfZRLWTmTSZhL/YWhE/veWyZ
- lDZ32+krIDMHR+Llo3w+sjCvoW3MbPsLSF26y8TX7rk5M0imQv4i8FMAJQqlIoDIbIyhhy2o70hKV8AdkjaRLCHHPdvVrrP62DKzqJxhkaZda2jczJQJ3ZlG
- +2iVN6Ov4lro4ZE5nF3WayXR0VKcl2Eem1CPuOXH6kw=
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2D6C5028-4DE5-11E6-84ED-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: "Jakub Narębski" <jnareb@gmail.com>
->W dniu 2016-07-13 o 00:11, Philip Oakley pisze:
->> From: "Junio C Hamano" <gitster@pobox.com>
-> [...]
->>> I actually think this is a good place to have them described.
->>> <rev>^<number> is about specifying a single commit.  These two are
->>> not that (you can say HEAD^2^@ but you cannot say HEAD^@^2, for
->>> example).
->>
->> These two are special cases I'm not too familiar with, particularly
->> the r1^! which I didn't understand from the description...
->
-> <rev>^@ is all parents of <rev>, that is
->
->  <rev>^@  ==  <rev>^1 <rev>^2 ... <rev>^<n>
->
-> where <n> is number of parents commit <rev> has.
->
->
-> <rev>^! is (if standalone) a single commit range, only <rev> revision.
-> It is actually
->
->  <rev>^!  ==  ( <rev> --not <rev>^@ )
->
-> that is, reachable from <rev> but not from any of its parents.
-> Parentheses here denote that `--not` does not affect the rest of
-> rev-like parameters.
->
->
-> Hope that helps
-> -- 
+René Scharfe <l.s.r@web.de> writes:
 
-The tricky part is seeing that, rather than being a depth wise range, it's 
-actually a width wise range that is designed to cover the scenarios around 
-merges
+> Use a string constant instead of an empty strbuf to shorten the code
+> and make it easier to read.
+>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+> ... unless someone can come up with a suitable non-empty string to feed
+> to git_config_from_mem() as its name parameter.
+>
+>  submodule-config.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/submodule-config.c b/submodule-config.c
+> index db1847f..44eb162 100644
+> --- a/submodule-config.c
+> +++ b/submodule-config.c
+> @@ -397,7 +397,6 @@ static const struct submodule *config_from(struct submodule_cache *cache,
+>  		const unsigned char *commit_sha1, const char *key,
+>  		enum lookup_type lookup_type)
+>  {
+> -	struct strbuf rev = STRBUF_INIT;
+>  	unsigned long config_size;
+>  	char *config;
+>  	unsigned char sha1[20];
+> @@ -448,7 +447,7 @@ static const struct submodule *config_from(struct submodule_cache *cache,
+>  	parameter.commit_sha1 = commit_sha1;
+>  	parameter.gitmodules_sha1 = sha1;
+>  	parameter.overwrite = 0;
+> -	git_config_from_mem(parse_config, "submodule-blob", rev.buf,
+> +	git_config_from_mem(parse_config, "submodule-blob", "",
+>  			config, config_size, &parameter);
+>  	free(config);
 
-e.g. $ git rev-parse 6c71a849^!
-or $ git rev-parse 6c71a849^@
+Oh.
 
-In the doc that I'm updating I'll add a comment that it's particulalry 
-useful around merges.
+I wondered if we used to do something useful with rev and later that
+useful thing was removed leaving an always-empty strbuf, but it
+appears that this strbuf was introduced to always hold an empty
+string and nothing else, which shows the (lack of) quality of
+reviews in this area X-<.
 
-Mind you I did see dscho quote it in $gmane/299738
-" You can also inspect the diff of a commit, using the ^! suffix, e.g.
-
-  git difftool -x diff origin/master~3^!
-
---
-Philip 
-
+Will apply.  Thanks.
