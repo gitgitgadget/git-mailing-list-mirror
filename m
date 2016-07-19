@@ -2,68 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C334C1FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 14:35:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C906F1FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 14:53:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752534AbcGSOfb (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 10:35:31 -0400
-Received: from mout.gmx.net ([212.227.15.15]:53258 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752348AbcGSOf3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 10:35:29 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MNZ9u-1bR8gG2fdK-007AEh; Tue, 19 Jul 2016 16:35:26
- +0200
-Date:	Tue, 19 Jul 2016 16:35:26 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Richard Soderberg <rsoderberg@gmail.com>
-cc:	git@vger.kernel.org
-Subject: Re: git-prompt.sh incompatible with non-basic global
- grep.patternType
-In-Reply-To: <CAEvc1UT_gmkmOjhs8PMH+vBRE1gku5yYRPhPfOL_B_vyeh23_g@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1607191634350.3472@virtualbox>
-References: <CAEvc1UQvXKtQCXvCmt-774A84--bkK-sb94BtFeqDDr0Gsf7qw@mail.gmail.com> <alpine.DEB.2.20.1607191323010.3472@virtualbox> <CAEvc1UT_gmkmOjhs8PMH+vBRE1gku5yYRPhPfOL_B_vyeh23_g@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:e0SHFvMVcqrd3PO5qJHRL+73YnClblenptqcV5ree5d0TVbYaTV
- FGhxiQXD45XXE+8VTFu707eZzRcEtc0t+XxgAYGWI7AyOpr4Ohup88hW3lx9thb0I67X10+
- Nrtz0Nn7IIVFCBSMToH5qNH7bs8eSoYvE+sZTbDNvZF50gh0xhn4+lVqJIPX92mBmcx+0Xk
- NP4wxFn4uS2oTJb5GxpEA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:IiXCOKwKdMg=:d/EXcCUTpXf98+drTAg7He
- ctfoFO4qTbP8YI1QlZtNvtSuwZLie5q81t0bNKqQk0cLgTHa4Or8J786wbZsfj0iCoodmZMNU
- ApbHHG8PtJYWSlg28fO4NgBKuWUv1tTptYv3iLV5kkkLG9EviFbdFO+PMS5T+i6IwlpAgLqZ/
- DPfVccI9m5uyQOsXvyB0t9R2mS6HoToathHqn4ZnlED3ylVh5kty0CMIjMjk7HskMNvLU/L1E
- JhypmSQpZsGQITEGK5qAm9fBHva/J9e+maYCz8qgWlVXf5ntXPzvbsjjdGMEJCH9SJP6ZMTYp
- WcifAKdvcr8hdBAYOP9V2G5Wu8ku0vmaJqLm5R4iT6yIMSt8KH79Kzs1Ir7wlH+3jsTOiWxEK
- SnoJmq+lRMTyFwl9783Gfi+xv2Wz3lRZ3X04NCjFZWwGyms/SSfMOXdkwt6DGqFpn1j8+dNQJ
- ORP+g3YLrMjaRv167foPnd94FP5lKjHk1ksvo7xR40tqUc7om5MxBlq+VHHkZ4jqW1DzbiPo7
- WSWrNKPtgpdYElImR7WikjBMRa9XeNHYrk+hGNKF7x6cjQbu7SNwTT5KaSF8ekQJteNF83jpU
- aYXRsMbt00Xp5XkiEN9M3fsx341n9AUcZRziGTU0AHz4e8Ow/S4GP/rFQC1EY199d31z0Idl8
- SV53yeZ1y15Wq7/4kWucwNLf2qwV8phg6yK/THQ/jN3xyyY07axHKqZpSkqEf31fgglcQ49KE
- qhFSU5z8Ri5H3tr/2hcq06qgen9HRVIHN53qnvLPJ3yaYYjrOKHBJcbBf4SPzKe1Qz+MztPN9
- pDHm1TE
+	id S1753415AbcGSOxX (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 10:53:23 -0400
+Received: from vpn.foo.tf ([195.154.43.236]:41032 "EHLO mail.foo.tf"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752868AbcGSOxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 10:53:21 -0400
+X-Greylist: delayed 315 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Jul 2016 10:53:20 EDT
+Received: from localhost (unknown [192.168.97.19])
+	by mail.foo.tf (Postfix) with ESMTPSA id CE8D73817A0;
+	Tue, 19 Jul 2016 14:48:01 +0000 (UTC)
+From:	Antoine Tenart <antoine.tenart@ack.tf>
+To:	git@vger.kernel.org
+Cc:	Antoine Tenart <antoine.tenart@ack.tf>, gitster@pobox.com,
+	pclouds@gmail.com, sunshine@sunshineco.com
+Subject: [PATCH] worktree: add: introduce the --name option
+Date:	Tue, 19 Jul 2016 16:47:01 +0200
+Message-Id: <20160719144701.571-1-antoine.tenart@ack.tf>
+X-Mailer: git-send-email 2.9.2
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Richard,
+Adds a --name option allowing to specify the name of a worktree when
+creating it. This allows to have multiple worktrees in directories
+having the same name (e.g. project0/foo, project1/foo etc...). This
+commit keeps the previous behaviour by making it the default value, i.e.
+by using $(basename <path>) as the worktree name when the --name option
+isn't used.
 
-On Tue, 19 Jul 2016, Richard Soderberg wrote:
+Two new test cases are added to ensure the --name option does not break
+other functionalities and is working properly.
 
-> Aha! Yes, this works precisely as intended: the prompt works
-> correctly, and quickly, with this change in place.
+Finally, the documentation is updated to reflect this --name option
+addition.
 
-Okay, next step for you: read
-http://github.com/git-for-windows/git/blob/master/Documentation/SubmittingPatches
-and submit this patch with an informative commit message.
+Signed-off-by: Antoine Tenart <antoine.tenart@ack.tf>
+---
+ Documentation/git-worktree.txt |  6 +++++-
+ builtin/worktree.c             | 14 +++++++++++---
+ t/t2025-worktree-add.sh        | 14 ++++++++++++++
+ 3 files changed, 30 insertions(+), 4 deletions(-)
 
-Ciao,
-Johannes
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index 7c4cfb0885f4..d05a7a77a89f 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -9,7 +9,7 @@ git-worktree - Manage multiple working trees
+ SYNOPSIS
+ --------
+ [verse]
+-'git worktree add' [-f] [--detach] [--checkout] [-b <new-branch>] <path> [<branch>]
++'git worktree add' [-f] [--detach] [--checkout] [-b <new-branch>] [--name <name>] <path> [<branch>]
+ 'git worktree list' [--porcelain]
+ 'git worktree prune' [-n] [-v] [--expire <expire>]
+ 
+@@ -84,6 +84,10 @@ OPTIONS
+ 	exists. `-B` overrides this safeguard, resetting `<new-branch>` to
+ 	`<branch>`.
+ 
++--name <name>::
++	With `add`, create a new worktree named `<name>`. Defaults to
++	`$(basename <path>)`.
++
+ --detach::
+ 	With `add`, detach HEAD in the new working tree. See "DETACHED HEAD"
+ 	in linkgit:git-checkout[1].
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index e866844685d5..d435ea7e6d06 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -24,6 +24,7 @@ struct add_opts {
+ 	int checkout;
+ 	const char *new_branch;
+ 	int force_new_branch;
++	const char *name;
+ };
+ 
+ static int show_only;
+@@ -212,9 +213,14 @@ static int add_worktree(const char *path, const char *refname,
+ 			die(_("invalid reference: %s"), refname);
+ 	}
+ 
+-	name = worktree_basename(path, &len);
+-	strbuf_addstr(&sb_repo,
+-		      git_path("worktrees/%.*s", (int)(path + len - name), name));
++	if (!opts->name) {
++		name = worktree_basename(path, &len);
++		strbuf_addstr(&sb_repo,
++			      git_path("worktrees/%.*s", (int)(path + len - name), name));
++	} else {
++		strbuf_addstr(&sb_repo, git_path("worktrees/%s", opts->name));
++	}
++
+ 	len = sb_repo.len;
+ 	if (safe_create_leading_directories_const(sb_repo.buf))
+ 		die_errno(_("could not create leading directories of '%s'"),
+@@ -324,6 +330,8 @@ static int add(int ac, const char **av, const char *prefix)
+ 			   N_("create a new branch")),
+ 		OPT_STRING('B', NULL, &new_branch_force, N_("branch"),
+ 			   N_("create or reset a branch")),
++		OPT_STRING(0, "name", &opts.name, N_("name"),
++			   N_("use a custom worktree name")),
+ 		OPT_BOOL(0, "detach", &opts.detach, N_("detach HEAD at named commit")),
+ 		OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
+ 		OPT_END()
+diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+index 4bcc335a19f9..5a40f5921e4d 100755
+--- a/t/t2025-worktree-add.sh
++++ b/t/t2025-worktree-add.sh
+@@ -243,6 +243,20 @@ test_expect_success '"add" worktree with --checkout' '
+ 	test_cmp init.t swamp2/init.t
+ '
+ 
++test_expect_success '"add" worktree with --name' '
++	git worktree add --name kikoo -b foo foo &&
++	test_cmp init.t foo/init.t &&
++	test -d .git/worktrees/kikoo &&
++	test -d foo
++'
++
++test_expect_success '"add" worktree without --name' '
++	git worktree add -b foobar foobar &&
++	test_cmp init.t foobar/init.t &&
++	test -d .git/worktrees/foobar &&
++	test -d foobar
++'
++
+ test_expect_success 'put a worktree under rebase' '
+ 	git worktree add under-rebase &&
+ 	(
+-- 
+2.9.2
+
