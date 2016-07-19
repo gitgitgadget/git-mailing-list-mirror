@@ -2,122 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F268F1FEAA
-	for <e@80x24.org>; Tue, 19 Jul 2016 14:14:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FD0D1FEAA
+	for <e@80x24.org>; Tue, 19 Jul 2016 14:28:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753792AbcGSOOx (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 10:14:53 -0400
-Received: from mail-qk0-f181.google.com ([209.85.220.181]:35117 "EHLO
-	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753708AbcGSOOw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 10:14:52 -0400
-Received: by mail-qk0-f181.google.com with SMTP id s63so16741763qkb.2
-        for <git@vger.kernel.org>; Tue, 19 Jul 2016 07:14:51 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=GBQc7g8cP+cnBzCRD3AaPpzhHRrSEiVr4+ugygrWJOg=;
-        b=DDA6/GTdEF72EO6uDZRkWPXqIUDTaZNi6GYK/vfZHCvxXHrRx5zaW3wE4scuuQBY5S
-         o3uN1kZi9icH27UN87F62tHM+vjXQLaoEv89a8KKN5pzR+6emKyKIzTxW8tWYS+SLG9a
-         Y3gSIiNWsYELDvvcb7FjtfM9FzcwOnawCx4+gK7kdXNxLuEo6DwsjhVrNtu19mpoF0SP
-         fm2Zq3IRZdL5lpK+hcipTi/zQs6d3G05ld8lH9ehM+GIE2OTII5LUsuua1qPyLObkqNm
-         3rEV797/VVeoNvu5Nmx/2s+kjUFFZKId1o95xuj9iDf6DnvFLMrh54wwTlKmCt7SSend
-         01Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GBQc7g8cP+cnBzCRD3AaPpzhHRrSEiVr4+ugygrWJOg=;
-        b=RqszEH/jDpgZmupCl+fRaVTAOniMzWEMewhUvHSV9cy4Wqga8eJcsyNveJW4QTXZUC
-         OLn/J+a8lQOjSGrpeAuZWYBaCAm+GiN0SLWbO3ATqPyjUEwTtsPOL0EpUL9cxyOyyLiJ
-         WgcEjmH6aOykfLgTKitOXsPzo3dBbjIZMKBEDe2mG6RUUQMjosp9e2cQiMQCGjSjmcB2
-         vEzY2UYmI+hVLwKX79bZnhoslnLjvbZYVjad51w8SBI4BUAlkVwaxVrqir4kbqTKWbmL
-         hK+MwMg5acMPn6LD+N4nYA8H6YTHJmvO2Ehg6bYJjXiNC+nuezdqiYLe07NY6702mGz5
-         3R5Q==
-X-Gm-Message-State: ALyK8tLQYhYzmFZBXlsRu9YFdEA2nknQ9zBsOZA1pt1KzqYSaUJEpYci5sRAkkWgad4Bl1X40tSAH8mSlGJABw==
-X-Received: by 10.55.154.11 with SMTP id c11mr55727541qke.117.1468937691024;
- Tue, 19 Jul 2016 07:14:51 -0700 (PDT)
+	id S1753733AbcGSO2z (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 10:28:55 -0400
+Received: from mout.gmx.net ([212.227.17.20]:58003 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753514AbcGSO2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 10:28:54 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LezI3-1b01d71X5D-00qk3M; Tue, 19 Jul 2016 16:28:34
+ +0200
+Date:	Tue, 19 Jul 2016 16:28:30 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	Joey Hess <joey@kitenet.net>
+Subject: Re: [PATCH v3 00/16] Use merge_recursive() directly in the builtin
+ am
+In-Reply-To: <alpine.DEB.2.20.1607191427400.3472@virtualbox>
+Message-ID: <alpine.DEB.2.20.1607191602520.3472@virtualbox>
+References: <cover.1467717729.git.johannes.schindelin@gmx.de> <cover.1467902082.git.johannes.schindelin@gmx.de> <xmqqpoqi35u3.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607141414180.6426@virtualbox> <xmqq1t2wqaa3.fsf@gitster.mtv.corp.google.com>
+ <xmqqshv6h460.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607191427400.3472@virtualbox>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.200.45.249 with HTTP; Tue, 19 Jul 2016 07:14:50 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1607191323010.3472@virtualbox>
-References: <CAEvc1UQvXKtQCXvCmt-774A84--bkK-sb94BtFeqDDr0Gsf7qw@mail.gmail.com>
- <alpine.DEB.2.20.1607191323010.3472@virtualbox>
-From:	Richard Soderberg <rsoderberg@gmail.com>
-Date:	Tue, 19 Jul 2016 07:14:50 -0700
-Message-ID: <CAEvc1UT_gmkmOjhs8PMH+vBRE1gku5yYRPhPfOL_B_vyeh23_g@mail.gmail.com>
-Subject: Re: git-prompt.sh incompatible with non-basic global grep.patternType
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:wtndqYzNccQ5kusVFlmSOCDJnqvTsSDE2VTRCtG4xCJRaGtuKwS
+ 9/RolopW+qA4vd6Y7bc6sbqv6H5j7+3HepR3DvLjc2hh2gxRbuT7hZoOwOZF1KKB2BHNIvW
+ uEsg2eUmcCkpzFmr5GHK6DsFaoR7dLazE8c5UEt7EI7Frpa62yCcLqpxJrulfL20yPgOV0j
+ CqVI55EXyH4d6qL6zmUhA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:N8KRdc9JzIk=:6R7XmhJPlLqpB1YZDTnvZN
+ zYYqvCPkEd806eoWEFKPNn47nQLqdBWFas9r74wzb65T8odjDyuZ9znDjaVU8qTK6n4DbHnet
+ xBq12d/g7TtJ/mXmzmfSrcC458PiR7Mq6h0Nq1UMbL8yAXcnhNKoqNDKHAy5YIq9SJyQhOdqx
+ /yhLI9I+nMDZ1tq6IY58OvPPhK0TJxpeA6+jS7OJnlE7piQp8oh5sTApqK6Ahg2eeNLL1MPQd
+ KXkxm4DvXDkBg0jzsQBm2IQycqDjqlLDdSq0PQvgVlmQajQAaj8coqEHufqpr1KdzqujlKGvt
+ CQdDqA759SvrGUOSmcLAAOqTZF/rPDCQX6V0A9GsHtxuTbOxoUSzDi5MQFhl5qfNJSZz1qmlG
+ 1YmhgdPJrPKl8uMlLTjuOWgvJTDEEK51qh4dkXb+FZVvJMpMqvVTIVRXkLd7pa/faRYAG5xih
+ 5J8B1pVxtaXzflOwNoAWur/bfHMat/6IJl0BhLUqPDql+LRGVDzR4KGPRJyKESg2J3FwtFNgZ
+ z+ky665lZhqqFjqC829A1M3o+5dqWXVgsHjMMgK64/H3sFFNG06Uj4UOyHKGb4AiCorrOPw7U
+ FbYxXH9fCreVnauz+7Xh/Q6EVWS8h4AbqGRkrBXBxCYDoq0bE+NiuH8luJT8buS3HnUtR0wlq
+ spZDj8B6RnW+/AcXpoBObANjoNT3zf3g3YmnsC1+c8CUPektvTFMCnv3hWOWZkh8OMZC6ya1y
+ cxdLDfiJ/G8xY9oefYSvkKEbQ331lfAkMoyANj4i7LKc/MbfctpG9L60ErC8xV4WzueXX84cR
+ iBnnF8k
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Aha! Yes, this works precisely as intended: the prompt works
-correctly, and quickly, with this change in place.
+Hi Junio,
 
- - R.
+On Tue, 19 Jul 2016, Johannes Schindelin wrote:
 
-On Tue, Jul 19, 2016 at 4:24 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Richard,
->
-> On Mon, 18 Jul 2016, Richard Soderberg wrote:
->
->> Hi, I wanted to report something interesting that I found while tracing
->> a severe slowdown in git-prompt.sh.
->>
->> https://github.com/git/git/commit/6d158cba282f22fa1548af1188f78042fed30aed#diff-f37c4f4a898819f0ca4b5ff69e81d4d9R141
->>
->> Way back in this commit, someone added a useful chunk of code that works
->> perfectly with svn+ssh:// URLs under basic regexes:
->>
->> + local svn_upstream=($(git log --first-parent -1 \ +
->> --grep="^git-svn-id: \(${svn_url_pattern:2}\)" 2>/dev/null))
->>
->> However, if I switch over to Perl regexes (or Extended):
->>
->> git config --global grep.patternType perl
->>
->> Then the command runs for one wall clock second and shows incorrect
->> results on my repository. I eventually traced this to an issue with the
->> regular expression provided, assuming the svn repository url is
->> "svn+ssh://...":
->>
->> git log ... --grep="^git-svn-id: \(svn+ssh://...\)" 2>/dev/null
->>
->> The + sign isn't escaped in git-prompt.sh, which under non-basic regexes
->> causes the match to fail entirely.
->>
->>  - R.
->>
->> ps. git log --basic-regexp does not fix the issue, as for unknown
->> reasons (I'll start another thread) the command-line option doesn't
->> override grep.patternType.
->
-> Maybe this helps?
->
-> -- snipsnap --
-> diff --git a/contrib/completion/git-prompt.sh
-> b/contrib/completion/git-prompt.sh
-> index 97eacd7..74be907 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -143,7 +143,7 @@ __git_ps1_show_upstream ()
->                 # get the upstream from the "git-svn-id: ..." in a commit
->                 # message
->                 # (git-svn uses essentially the same procedure internally)
->                 local -a svn_upstream
-> -               svn_upstream=($(git log --first-parent -1 \
-> +               svn_upstream=($(git -c grep.patternType=default log --first-parent -1 \
->                                         --grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null))
->                 if [[ 0 -ne ${#svn_upstream[@]} ]]; then
->                         svn_upstream=${svn_upstream[${#svn_upstream[@]} - 2]}
->
+> On Mon, 18 Jul 2016, Junio C Hamano wrote:
+> 
+> > Junio C Hamano <gitster@pobox.com> writes:
+> > 
+> > You can assume that I'll merge bc/cocci and
+> > js/am-call-theirs-theirs-in-fallback-3way to 'master' during that time,
+> > so an appropriate base to use would be the result of
+> > 
+> >     git checkout master^0
+> >     git merge bc/cocci
+> >     git merge js/am-call-theirs-theirs-in-fallback-3way
+> >     git merge cc/apply-am
+> > 
+> > if you want a semi-solid base to rebuild am-3-merge-recursive-direct
+> > on.
+
+I do not need cc/apply-am at all, it turns out, but my patch series has a
+minor conflict with 'jc/renormalize-merge-kill-safer-crlf'.
+
+Since you indicated that you want to cook that branch a bit in 'next'
+first, I will rebase to master+bc/cocci+js/am-call-theirs-theirs and
+re-submit.
+
+Ciao,
+Dscho
