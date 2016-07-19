@@ -2,103 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C14282018B
-	for <e@80x24.org>; Tue, 19 Jul 2016 00:17:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8BF32018F
+	for <e@80x24.org>; Tue, 19 Jul 2016 02:37:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752108AbcGSARs (ORCPT <rfc822;e@80x24.org>);
-	Mon, 18 Jul 2016 20:17:48 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54341 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751457AbcGSARr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2016 20:17:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 986A02E532;
-	Mon, 18 Jul 2016 20:17:45 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+zXwvJuxU1y//A+kOr4K2QsQ6wQ=; b=EH3z8s
-	nD3YNdO00d/b9cWAkE4TpNXN5JLhXHK/4ino2nJ7RZXV/mAZGIhuqmjiqHYVWTpx
-	/KuAx4Z7oHKDFl6pTel/O2dexzwk8pOTDzbVGAF7OJKa6JLB2hYb/l4amPIDxhWf
-	VbcX4PtmJo0rjpR4PY3x1hu/eGzFVCqHOA758=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VETMR0ktpFMGcBEmG0wZiIxOXiNXOpxe
-	sFXjE303L0MmfhImdNYls0Z0kPAALlY2ttRARME5mx9wnWaFC0Ga508FviGrmfUF
-	V85BEmVSSGJnvqqta4H1KqXesE+4dRNKOKpVjNokvtmPxrbuK6vD+PVKLoZmdWp9
-	PnsMTawcbV4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8FCA22E531;
-	Mon, 18 Jul 2016 20:17:45 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C4412E530;
-	Mon, 18 Jul 2016 20:17:45 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-	Joey Hess <joey@kitenet.net>
-Subject: Re: [PATCH v3 00/16] Use merge_recursive() directly in the builtin am
-References: <cover.1467717729.git.johannes.schindelin@gmx.de>
-	<cover.1467902082.git.johannes.schindelin@gmx.de>
-	<xmqqpoqi35u3.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1607141414180.6426@virtualbox>
-	<xmqq1t2wqaa3.fsf@gitster.mtv.corp.google.com>
-Date:	Mon, 18 Jul 2016 17:17:43 -0700
-In-Reply-To: <xmqq1t2wqaa3.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 14 Jul 2016 12:39:32 -0700")
-Message-ID: <xmqqshv6h460.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752430AbcGSChs (ORCPT <rfc822;e@80x24.org>);
+	Mon, 18 Jul 2016 22:37:48 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:35230 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752152AbcGSChr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2016 22:37:47 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45DA82018B;
+	Tue, 19 Jul 2016 02:37:46 +0000 (UTC)
+Date:	Tue, 19 Jul 2016 02:37:46 +0000
+From:	Eric Wong <e@80x24.org>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Jeff King <peff@peff.net>, norm@dad.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, l.s.r@web.de,
+	git@vger.kernel.org
+Subject: Re: [PATCH] pager: disable color when pager is "more"
+Message-ID: <20160719023746.GA3420@plume>
+References: <201607171726.u6HHQShO005227@shell1.rawbw.com>
+ <alpine.DEB.2.20.1607180922580.28832@virtualbox>
+ <20160718091907.GA13588@starla>
+ <20160718131653.GC19751@sigill.intra.peff.net>
+ <xmqq8twylv8y.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 373ECF58-4D46-11E6-A394-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq8twylv8y.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+> > On Mon, Jul 18, 2016 at 09:19:07AM +0000, Eric Wong wrote:
+> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> >> > On Sun, 17 Jul 2016, norm@dad.org wrote:
+> >> > > 'git diff' outputs escape characters which clutter my terminal. Yes, I
+> >> > > can sed them out, but then why are they there?
+> >> > 
+> >> > Those are most likely the ANSI sequences to add color. Can you call Git
+> >> > with the --no-color option and see whether the escape characters go away?
+> >> 
+> >> Norm: do you have PAGER=more set by any chance?
+> >> Perhaps changing it to "less" will allow you to preserve colors.
+> >> 
+> >> I saw a similar or identical problem during my vacation in
+> >> FreeBSD-land.  Perhaps the out-of-the-box experience can be
+> >> improved:
+> >> 
+> >> -----8<-----
+> >> Subject: [PATCH] pager: disable color when pager is "more"
+> >
+> > This is the tip of a smaller iceberg. See
+> >
+> >   http://public-inbox.org/git/52D87A79.6060600%40rawbw.com/t/#u
+> >
+> > for more discussion, and some patches that fix more cases (like "LESS"
+> > without "R", or "more" that _does_ understand "R"). I think it was
+> > discarded as being a little too intimate with the details of pagers, but
+> > it does suck that the out-of-the-box experience on FreeBSD is not good.
+> > Maybe we should revisit it.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> The two topics that are in 'pu' and conflict with this series are
->> 'jh/clean-smudge-annex' and 'bc/cocci'.
->>
->> It also conflicted with 'va/i18n-even-more', but that one was merged to
->> 'master'.
->>
->> Now, I think it would be okay to wait for 'bc/cocci' to go to 'master'
->> before integrating the 'am-3-merge-recursive-direct' branch, but I would
->> want to avoid waiting for 'jh/clean-smudge-annex'.
+Yes; I'd prefer not to get too intimate with the details of
+pagers, either, and I think we should err on the side of
+monochrome for systems we do not know much about.
 
-Nothing seems to be happening on jh/clean-smudge-annex front, so
-unless we hear otherwise from Joey in the coming couple of days,
-let's get js/am-3-merge-recursive-direct untangled from its
-dependencies and get it into a shape to hit 'next'.  You can assume
-that I'll merge bc/cocci and js/am-call-theirs-theirs-in-fallback-3way
-to 'master' during that time, so an appropriate base to use would be
-the result of
+> Yup, the three-patch series at
+> 
+>     http://public-inbox.org/git/20140117041430.GB19551%40sigill.intra.peff.net/
 
-    git checkout master^0
-    git merge bc/cocci
-    git merge js/am-call-theirs-theirs-in-fallback-3way
-    git merge cc/apply-am
+I am not a fan of adding #ifdefs for platform-specific things;
+so I prefer starting with my original patch to disable colors
+for "more".  (or, even disable colors for everything which
+is not "less" or "lv")
+ 
+> would be a safe starting point that is low-impact.  I think what
+> ended up being discarded was a more elaborate side topic that
+> started from exploring the possibility of checking if LESS has 'R'
+> in it to see if it is possible to help people with LESS that does
+> not allow coloring explicitly exported.
 
-if you want a semi-solid base to rebuild am-3-merge-recursive-direct
-on.  I am not 100% sure about the doneness of cc/apply-am yet,
-though but it could be that am-3-merge-recursive-direct does not
-have to depend on it at all.  You'd know better than I do ;-)
+Heh... (see below)
 
-After that, I'll see if the conflict resolution is manageable when
-remerging jh/clean-smudge-annex to 'pu', and if it is not, I'll
-worry about it at that point.
+> I do not think the approach in the same thread suggested by Kyle
+> 
+>   http://public-inbox.org/git/62DB6DEF-8B39-4481-BA06-245BF45233E5%40gmail.com/
+> 
+> is too bad, either.
 
-Thanks.
+I like Kyle's suggestion, and I think that can be a good
+transition from your original patch to move pager
+configuration into the build:
 
+https://public-inbox.org/git/xmqq61piw4yf.fsf@gitster.dls.corp.google.com/
+
+I've updated just that and pushed just that to the "pager-build"
+topic of git://bogomips.org/git-svn
+
+So I'd prefer we drop the later automatic header generation
+changes that got squashed into later iterations.
+
+
+Unfortunately, it looks like that all got lost in Jeff's
+13-patch "makefile refactoring" topic starting at:
+
+https://public-inbox.org/git/20140205174823.GA15070@sigill.intra.peff.net/
+
+Yeah, we tend to get sidetracked :x
