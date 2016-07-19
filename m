@@ -2,100 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28BA21FEAA
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39F6F2018F
 	for <e@80x24.org>; Tue, 19 Jul 2016 19:06:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751691AbcGSTFi (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 15:05:38 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:34868 "EHLO
-	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751320AbcGSTFf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 15:05:35 -0400
-Received: by mail-io0-f195.google.com with SMTP id q83so2024537iod.2
-        for <git@vger.kernel.org>; Tue, 19 Jul 2016 12:04:41 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ZZxAnAH7vuBmE9aYSgL4t0R02QFouWl8vAnvEoeGE48=;
-        b=fpsHinbNN+fNegw5a+e3OR96kbhg7w3Ym45ypckDtJDei38rym5YWBHNaPFnxP3EkT
-         gBnbztV45bcya0m6giiC0ppvK0u2XXdArqoPAmNthjGuuy2N2YV8d+nJoh+OblMVxMr2
-         fJbRiT081olPcmXzb6z6+FIpGNwOBRmo90dqiNrpXowwfyxPc0fK8LjHQ5/yYWjZbjVr
-         Eax2OwssVum/NApMGxcCSsqgSnj1gG+AAjSsuwD2jyeCmMP3fJNlyn+MUX3P83k5ROAR
-         1pvjnMGU9UFBTu0TECO6yl4aqA9Jqea//TSnH+p1ev5M+pr+Y8Y+LrEEwHzIcsgJxMlX
-         epGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ZZxAnAH7vuBmE9aYSgL4t0R02QFouWl8vAnvEoeGE48=;
-        b=Ign5fM8oxsLEkKgk2PbA6TsHyxfN/+zRonGfGA7WpWJdbBuVA+F4RP9Q2KaXMjVrXt
-         OtOtCneUTkBsJvgmydiJHYIE+aPB5pQsjfsY4agbyYpPKMD2gH3utUTLpbTT1fBPoOcG
-         V/+9EOhLINIOOIHbAlIgSilRz7j//MS9Rjqh8LAawBrxix3D9ksSwEajM2zQfhG92aAj
-         a+atMpWbN6zAI6ETpO7iLS8ItFXbwOGx52yofDhz+ePe0ovwfDDrUPDk5qudbtyX40S7
-         RMyDFYKsTj04tTVCVesf+Kj7XHF6NKO+ZX1ENvF9iXWRyL9pQNUDCcOEijJ1HSeONwi6
-         h0ww==
-X-Gm-Message-State: ALyK8tKrit1pDjdCyNShk/8rFchY21GpPHHHofadIqAHoPywjLEVW/5Q45gIUCC8PaS/wRYVkE0qgknyUU/WiQ==
-X-Received: by 10.107.2.78 with SMTP id 75mr3945045ioc.128.1468955080732; Tue,
- 19 Jul 2016 12:04:40 -0700 (PDT)
+	id S1751864AbcGSTF4 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 15:05:56 -0400
+Received: from mout.web.de ([212.227.17.12]:53641 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751842AbcGSTFz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 15:05:55 -0400
+Received: from [192.168.178.36] ([79.237.58.95]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0M4I6Z-1b7mP82oXD-00rmsB; Tue, 19 Jul 2016 21:05:49
+ +0200
+To:	Git List <git@vger.kernel.org>
+Cc:	Stefan Beller <sbeller@google.com>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] submodule-config: use explicit empty string instead of strbuf
+ in config_from()
+Message-ID: <578E7A07.8080006@web.de>
+Date:	Tue, 19 Jul 2016 21:05:43 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Tue, 19 Jul 2016 12:04:11 -0700 (PDT)
-In-Reply-To: <20160719185452.GB28551@kwain>
-References: <20160719144701.571-1-antoine.tenart@ack.tf> <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
- <CACsJy8BDRPK2UKxoMat3i2HL38+KFqw2Qfet2Bev26HXRM-BWA@mail.gmail.com> <20160719185452.GB28551@kwain>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Tue, 19 Jul 2016 21:04:11 +0200
-Message-ID: <CACsJy8AkpBmNS0nOoKX7PUYhp9kKgvH=K2gpCnq+sR++ZmDAgQ@mail.gmail.com>
-Subject: Re: [PATCH] worktree: add: introduce the --name option
-To:	Antoine Tenart <antoine.tenart@ack.tf>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:IKUvGKdfOBxHnXrQ8AyuDw0JhjotWU1UiD7CbkxVfwdsxacMV0b
+ 5ASq6UhY5RgFUZbXugfIl5VgnOy52wOl7w9T94hx16byF4wa3U2WA0qdGPLeg93Q2ALl4sB
+ wejgfOGZNEbeC9abUT6R6J2i234hlmUoV8aNTP8TCE3sGBlLcT3YvTKT5dw2LGdoCa/b0kM
+ Yzx3t7azLIM0DGb+OtG7g==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:jPD49voLGSQ=:HNgJncTOdGUlpkzpMiNii2
+ xqPdLJr6OcXSDcxbUBbGn+8CnQFmxdCVyzoJ7e/lvg+JpdhorL+Co4iRcAjOtdCTl+Zt+N2KP
+ nkJ3RCKukkRN+EB90X1NfsZ58rjn6cemoyWLJ/0ZeE714ALHG4C32vTV5z6Z16frMnCvcFLl1
+ LAE81xhBlAd7otFpaxhoP4hfUFDYVx7XKGxx63U1b6M2OtjN9G1zAAoYYMh4xqfhAKkMC9ZvC
+ 7PC4ByoC5xFCN4vZ7Z1ubtySSOYND2KVg+qGIQ24Dl3LSx5T7qKGvorbeU1mYACqWc0T7CaSp
+ Pvv03Iql29MglWTKDTTW5bNAwpJF5lVWy8qEWBo21MhDPMuOuXwc/fHYuleRnXGXQsl7xy2NB
+ IgwtaX4ePg5ng9Pemc9wHmqhyIrR/76wgXxlyRPsQ974Qm8L+wKtWe5i1u4hBDaG5hUQSOHiO
+ ELs3cn9YVBD9syB+459PzKljVn4w6HpT1n+9xNR6IsFilO0DjJ0SRUsAMdFEvQv8ehxKfO42c
+ 3dbGVZPVWNs0pstF2/jXF03lTwKJqOf09lBCl+TJAGdqC6S9cxf7G/mFfZRfN8/4RIYk8R8kU
+ Fihzr6yQVWIzqIPE97f+efs++mOgl+Ww3+Ug6AxVbiQSg2RlYZwOWdiUSpR6NorpmM7q2T54n
+ 6Y36dZ/M/wcvh5laT8aukXGwHF0VCyUZ32vzYZGdCcYDWMxOwmsTT6Xv/Yph4+H1g6AO6pcAA
+ ZhGSDKpzrxFD6jFMKTsSiBUlnXKcUd6t+LibgvulxOWv1Q8u/eDMoksevD8ZzTQQr2SG8owIY
+ Bm1vxXQ
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 19, 2016 at 8:54 PM, Antoine Tenart <antoine.tenart@ack.tf> wrote:
-> On Tue, Jul 19, 2016 at 08:23:58PM +0200, Duy Nguyen wrote:
->> On Tue, Jul 19, 2016 at 8:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> 080739b (worktree.c: find_worktree() search by path suffix -
->> 2016-06-13) from 'next' should help identify worktrees in this case by
->> specifying 'project0/foo', 'project1/foo'... Granted it's not fun to
->> type all that when 'project0/foo' is something long, and bash
->> completion probably does not help much either.
->
-> So with this I'll be able to create new worktrees, using paths having
-> the same basename, but in different let's say "project directories"?
+Use a string constant instead of an empty strbuf to shorten the code
+and make it easier to read.
 
-Well, internal name is still out of your control, but if you want to
-do something to a worktree you can say "do project0/foo". With 'next'
-those verbs can be lock and unlock. We probably can make 'worktree
-list' take filter and show just one worktree (and just add "git
-worktree show" for that).
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+... unless someone can come up with a suitable non-empty string to feed
+to git_config_from_mem() as its name parameter.
 
->> Note that we may need a unique name elsewhere too, e.g.
->> refs/worktrees/xyz (even though we haven't settled on this yet). Then
->> xyz would be more exposed to the user and an easily recognizable name
->> would be a good thing.
->
-> Having a recognisable name surely is a good thing, when performing some
-> (rare) manual operations.
+ submodule-config.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-What I had in mind was "git log --decorate=more-than-full", foo/HEAD
-and foo1/HEAD
-do not look as good as project0/HEAD and project1/HEAD (*)
-
-> Like moving a worktree (or is there a command for this?)
-
-Don't touch it. I've been waiting patiently for that patch series to
-be reviewed :)
+diff --git a/submodule-config.c b/submodule-config.c
+index db1847f..44eb162 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -397,7 +397,6 @@ static const struct submodule *config_from(struct submodule_cache *cache,
+ 		const unsigned char *commit_sha1, const char *key,
+ 		enum lookup_type lookup_type)
+ {
+-	struct strbuf rev = STRBUF_INIT;
+ 	unsigned long config_size;
+ 	char *config;
+ 	unsigned char sha1[20];
+@@ -448,7 +447,7 @@ static const struct submodule *config_from(struct submodule_cache *cache,
+ 	parameter.commit_sha1 = commit_sha1;
+ 	parameter.gitmodules_sha1 = sha1;
+ 	parameter.overwrite = 0;
+-	git_config_from_mem(parse_config, "submodule-blob", rev.buf,
++	git_config_from_mem(parse_config, "submodule-blob", "",
+ 			config, config_size, &parameter);
+ 	free(config);
+ 
 -- 
-Duy
+2.9.2
+
