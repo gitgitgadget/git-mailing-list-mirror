@@ -2,78 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEC792034E
-	for <e@80x24.org>; Wed, 20 Jul 2016 22:22:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B76C12034E
+	for <e@80x24.org>; Wed, 20 Jul 2016 22:25:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754258AbcGTWWI (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 18:22:08 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52235 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751656AbcGTWWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 18:22:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 60C372E364;
-	Wed, 20 Jul 2016 18:22:05 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U0m2jthwPS5nUovZJylXk/Dh56M=; b=W36FWe
-	8F7UWKsFxoGeuGSjnPJt6JdbVJCbGJZ8C0mOqGj+rJdq4wPD6Ab/hk4ZQH9glVVG
-	xTChkwWuL4c+gubCq/9G5KubV9Z9Ah7WGiKF+b6I5fuANz49hR5WSSc/uLwzcs7j
-	KZD6Jz4Gv88ulBisz7w6fiFDskRK99PxdtR3w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MHfrdZLK9IOXMxylkswtVNW+0zZHtH9L
-	nzJ4Wi/YYosm2C50z/rVTo2Q1ieYS/MCNBe8/UwG4tPYsxMUa0TuOLjid/qL9sSo
-	9MpZrUdo/H7VXLCllePX4OYR/Pyg+5rscQij37olfZEX81FN81IgpOFnq2eLG5y+
-	zmffw600uC0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 58C132E360;
-	Wed, 20 Jul 2016 18:22:05 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D95112E35F;
-	Wed, 20 Jul 2016 18:22:04 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Philip Oakley <philipoakley@iee.org>
-Cc:	GitList <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v4 0/8] Name for A..B ranges?
-References: <20160711202518.532-1-philipoakley@iee.org>
-	<20160720211007.5520-1-philipoakley@iee.org>
-Date:	Wed, 20 Jul 2016 15:22:02 -0700
-In-Reply-To: <20160720211007.5520-1-philipoakley@iee.org> (Philip Oakley's
-	message of "Wed, 20 Jul 2016 22:09:59 +0100")
-Message-ID: <xmqq4m7kc5md.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932105AbcGTWZ2 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 18:25:28 -0400
+Received: from mail-pa0-f67.google.com ([209.85.220.67]:35747 "EHLO
+	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932091AbcGTWZZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 18:25:25 -0400
+Received: by mail-pa0-f67.google.com with SMTP id cf3so3997365pad.2
+        for <git@vger.kernel.org>; Wed, 20 Jul 2016 15:25:24 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=aq6fN694ZsTbi/i5RCI5vSpKJVWiZqb3K57WE1d1++4=;
+        b=qqkyAvhMXW40v3fOTqtpk4WCE8yxxDO8wAoHsHZfe51ozeXL84D6ZIdXUnZDC24zTQ
+         noYJcsiklqw5CHcDDgHE/17oxFweVTXbLr2IfyzeyTbCMtMgYV9IRie7s9jTtp6BxHoD
+         C+fx186Q4B+eTko6zGFYGr04t/IHJcPKdYlRQpD92hYR3QisLiURnTpVzHzAFZ+uXN7n
+         XShlHYfEkVNn8qnmu2Q6ZjxoXb108A551GbeMyFfuRZPPpS5/a4kQQ3G4hg7moZZVQcu
+         sp24FHCpaay5dOnmxjK46HhVYRHVcjmpof/EWrffjJoVMXxkvpLacheTDuzziIjY112L
+         ZSxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=aq6fN694ZsTbi/i5RCI5vSpKJVWiZqb3K57WE1d1++4=;
+        b=P33ZGa/HDDq9WNCKypZSD7GxKDVY8ENQpDU1Hr+rzPWBsqB9FXsQEIgFqVchE2h0c5
+         8mXPCHMrPKwA29YV3rr8kHFoVRlauw6hxr1e/LnOMNtzsu5iWrQDIh5n3vVMnkhiFLa3
+         SJt9zB8Lz4vzU7var6oGYksFH7m911OqAOCeo8TjBzhxfTgw/dciKPZlrLJxr5VjnjE7
+         6aGhAqbOHZ4c/yDqr45AxYgSJ2beHKDRS6B5ClbKUoDE08J/jKeFlLdi4lWRCyFd5OC/
+         Fl8CQwYfp/DqWcl65S0guT2iHxbYhgUfiOkNHOn1wqxe+qSHHr4VpQuffiDJxeAaYeru
+         5Kag==
+X-Gm-Message-State: ALyK8tLjmITUSni+SCTm1rMb2D1fxtrmMRSlqiCGM6Ll3XRVKCm4h2ZaUvb0NFBId0mayQ==
+X-Received: by 10.66.94.71 with SMTP id da7mr77907528pab.31.1469053524435;
+        Wed, 20 Jul 2016 15:25:24 -0700 (PDT)
+Received: from gmail.com (wdas-1.disneyanimation.com. [198.187.190.1])
+        by smtp.gmail.com with ESMTPSA id a20sm6881338pfa.27.2016.07.20.15.25.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Jul 2016 15:25:23 -0700 (PDT)
+Date:	Wed, 20 Jul 2016 15:25:20 -0700
+From:	David Aguilar <davvid@gmail.com>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	John Keeping <john@keeping.me.uk>,
+	Bernhard Kirchen <bernhard.kirchen@rwth-aachen.de>,
+	Tim Henigan <tim.henigan@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/3] difftool: avoid $GIT_DIR and $GIT_WORK_TREE
+Message-ID: <20160720222520.GA22966@gmail.com>
+References: <20160719035756.24961-1-davvid@gmail.com>
+ <20160719035756.24961-2-davvid@gmail.com>
+ <xmqqy44xfq3n.fsf@gitster.mtv.corp.google.com>
+ <xmqqvb01e3s4.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 635FE2D8-4EC8-11E6-AB69-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqvb01e3s4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.org> writes:
+On Tue, Jul 19, 2016 at 02:06:35PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > It is not wrong per-se, but as you are in a subshell, you do not
+> > have to unset these, I would think.  Not worth a reroll, but unless
+> > I am overlooking something (in which case please holler) I'm
+> > inclined to remove these two lines myself while queuing the series.
+> 
+> I propose to squashing the following to 2/3 (and adjusting 3/3 as
+> needed).  No need to resend if you agree it is a good idea, as it is
+> part of what I've queued on 'pu'.
+> 
+> Thanks.
 
-> No change in the number of patches. Interdiff below.
->
-> The patches carefully tease out the clarification of
-> reachability. Reachability is defined relative the ancestry chain thus
-> (hopefully) avoiding misunderstandings.
->
-> The final patch updates the summary examples, and the tricky (for the
-> untutored reader) two dots case of a linear development where r1..r2
-> excludes r1 itself.
 
-All looked sensible and each focused on a single issue and fixing it
-well.  Done very nicely.
+I had originally meant to squash that in but it slipped through.
+It looks great.
 
-Thanks.  Will (re)queue, wait for a few days for further comments
-and let's merge it to 'next'.
+Thank you!
 
+
+>  git-difftool.perl   | 2 +-
+>  t/t7800-difftool.sh | 2 --
+>  2 files changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/git-difftool.perl b/git-difftool.perl
+> index bc2267f..c81cbe4 100755
+> --- a/git-difftool.perl
+> +++ b/git-difftool.perl
+> @@ -88,11 +88,11 @@ sub changed_files
+>  	my @refreshargs = (
+>  		@gitargs, 'update-index',
+>  		'--really-refresh', '-q', '--unmerged');
+> -	my @diffargs = (@gitargs, 'diff-files', '--name-only', '-z');
+>  	try {
+>  		Git::command_oneline(@refreshargs);
+>  	} catch Git::Error::Command with {};
+>  
+> +	my @diffargs = (@gitargs, 'diff-files', '--name-only', '-z');
+>  	my $line = Git::command_oneline(@diffargs);
+>  	my @files;
+>  	if (defined $line) {
+> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+> index afdf370..cb25480 100755
+> --- a/t/t7800-difftool.sh
+> +++ b/t/t7800-difftool.sh
+> @@ -421,8 +421,6 @@ run_dir_diff_test 'difftool --dir-diff from subdirectory with GIT_DIR set' '
+>  		cd sub &&
+>  		git difftool --dir-diff $symlinks --extcmd ls \
+>  			branch -- sub >output &&
+> -		sane_unset GIT_WORK_TREE &&
+> -		sane_unset GIT_DIR &&
+>  		grep sub output &&
+>  		! grep file output
+>  	)
+> -- 
+> 2.9.2-581-g77f0ffb
+> 
+
+-- 
+David
