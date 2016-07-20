@@ -2,90 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 112B22034E
-	for <e@80x24.org>; Wed, 20 Jul 2016 15:58:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 241612034E
+	for <e@80x24.org>; Wed, 20 Jul 2016 15:58:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751785AbcGTP6H (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 11:58:07 -0400
-Received: from mail-yw0-f173.google.com ([209.85.161.173]:35175 "EHLO
-	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751576AbcGTP6F (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 11:58:05 -0400
-Received: by mail-yw0-f173.google.com with SMTP id j12so42168802ywb.2
-        for <git@vger.kernel.org>; Wed, 20 Jul 2016 08:58:04 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=BoR0HIXNoisdLWGZCTeckCaS0ZgJ79xlSCsYS+g/Nxs=;
-        b=xLREJAIA0IkYRILt1s8Ei8/rDSjFbLGr3gL1/K5h5PVStGPlORLij02ilslV0/U7sB
-         gLO1N9exhzZ5T3RNx8RX05k45RllKHhl2RwUxStfPKb/2n+WHcqmJpGzomZwgpg8ALx4
-         kCJnAZfdyBtuD7zuAEIoFm0+ums8rdF52o+Oy+EcibcttJED9lOgn8s6y9V9N9GreYlD
-         2l57kv03750k5L/+4ryMema8V1t0fcXdlhPgq3Dw3oXHjiUxFmrXUCf8M/OcxyNJTjQN
-         9TwNe3GGQjcjUdVolOUZk/TsDNj7RHz8fiqUmKnCJ8ozOSAwPKdhq/3xTehaNNbAEabp
-         oeJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=BoR0HIXNoisdLWGZCTeckCaS0ZgJ79xlSCsYS+g/Nxs=;
-        b=VDonAc5TLkwr2Ek6CAgeK6+DkgLXjh+9iwVjOYqC1dEaSwv/KVaUsjxVjDPtGVD7gz
-         D+eI4+nfc3/XotWLvsBmpp6862xAEyNX4+LUDO1wRCQtT00gUfUIkLUxMx7QW5vZxUGH
-         /+JjcCQBAn2om71+pqMXwl9fPc2s/MIAHuK5NxgRw20WJkG06oKCQKl/MEh9uuqWjxAu
-         hg2ot5g43cC0wdgOgxu0IP6jor1JZOPxoNkOfaHG4K1i2yGAhuv/tXkWDQUcH/ij0Z7i
-         9EnD7ecroVjLs+44thHfH8aAvgjAeiJ27Tvqce3wv5Y4w2QpzoMqD0Fij81NOo+AEC4e
-         r0GQ==
-X-Gm-Message-State: ALyK8tIHC6x1M9x/Fl45fC8CrGwQDtmwRkVvZapjguYJU58m3dtVnL0clTrapj8i07TRwDSS0eqdjhnWN+JtPA==
-X-Received: by 10.37.94.137 with SMTP id s131mr20248767ybb.53.1469030283779;
- Wed, 20 Jul 2016 08:58:03 -0700 (PDT)
+	id S1751550AbcGTP6r (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 11:58:47 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47570 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751036AbcGTP6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 11:58:46 -0400
+Received: (qmail 16172 invoked by uid 102); 20 Jul 2016 15:58:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Jul 2016 11:58:46 -0400
+Received: (qmail 22144 invoked by uid 107); 20 Jul 2016 15:59:09 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Jul 2016 11:59:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Jul 2016 09:58:37 -0600
+Date:	Wed, 20 Jul 2016 09:58:37 -0600
+From:	Jeff King <peff@peff.net>
+To:	Jeff Hostetler <jeffhost@microsoft.com>
+Cc:	git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v1 1/6] Allow --porcelain[=<n>] in status and commit
+ commands
+Message-ID: <20160720155837.GA24902@sigill.intra.peff.net>
+References: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com>
+ <1468966258-11191-2-git-send-email-jeffhost@microsoft.com>
 MIME-Version: 1.0
-Received: by 10.129.89.132 with HTTP; Wed, 20 Jul 2016 08:58:03 -0700 (PDT)
-In-Reply-To: <xmqqk2ghdysg.fsf@gitster.mtv.corp.google.com>
-References: <xmqqk2ghdysg.fsf@gitster.mtv.corp.google.com>
-From:	Pranit Bauva <pranit.bauva@gmail.com>
-Date:	Wed, 20 Jul 2016 21:28:03 +0530
-Message-ID: <CAFZEwPM7bBV5PxOqA9Zvrq-4M1F83NVXORRKje_fqG74ofUWLQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2016, #06; Tue, 19)
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1468966258-11191-2-git-send-email-jeffhost@microsoft.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hey Junio,
+On Tue, Jul 19, 2016 at 06:10:53PM -0400, Jeff Hostetler wrote:
 
-On Wed, Jul 20, 2016 at 4:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> +static int opt_parse_porcelain(const struct option *opt, const char *arg, int unset)
+> +{
+> +	enum wt_status_format *value = (enum wt_status_format *)opt->value;
+> +	if (unset) {
+> +		*value = STATUS_FORMAT_UNSPECIFIED;
 
-> * pb/bisect (2016-07-12) 9 commits
->  - bisect--helper: `bisect_write` shell function in C
->  - bisect--helper: `is_expected_rev` & `check_expected_revs` shell function in C
->  - bisect--helper: `bisect_reset` shell function in C
->  - wrapper: move is_empty_file() and rename it as is_empty_or_missing_file()
->  - t6030: explicitly test for bisection cleanup
->  - bisect--helper: `bisect_clean_state` shell function in C
->  - bisect--helper: `write_terms` shell function in C
->  - bisect: rewrite `check_term_format` shell function in C
->  - bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
->
->  GSoC "bisect" topic.
->
->  Are people happy with this version?  How much of the planned
->  "porting" is finished by this part of the work?  How much more to
->  go?
+Nice attention to detail here and below in handling "unset" and "!arg"
+cases.  I think should be STATUS_FORMAT_NONE, though, which is what the
+old code used to do (since "0" is the usual special value for --no-*
+options). It only matters if you do:
 
-The current branch contains 30-40 % of the work. I am going to send 3
-more functions check_and_set_terms(), bisect_next_check() and
-bisect_terms() positively by today. After that the work will be around
-50-60% complete. After that bisect_start() (I have ported this but it
-has a bug right now) then bisect_next(), bisect_replay(),
-bisect_state(), and a few small more.
+  git status --no-porcelain
 
-Regards,
-Pranit Bauva
+Right now that will switch to the long format, regardless of your
+config. With your path it defaults to any configured value. It's
+probably a case that nobody hits ever, but in the absence of a good
+reason to do otherwise, I'd stick with the current behavior.
+
+> +	} else if (arg) {
+> +		int n = strtol(arg, NULL, 10);
+> +		if (n == 1)
+> +			*value = STATUS_FORMAT_PORCELAIN;
+> +		else
+> +			die("unsupported porcelain version");
+
+This silently allows:
+
+  git status --porcelain="1 for the money"
+
+and later:
+
+  git status --porcelain="2 for the show"
+
+Probably not a big deal in practice, but since the list of formats is
+constrained, we don't really care about parsing arbitrary numbers.
+So:
+
+  if (!strcmp(arg, "1"))
+	*value = STATUS_FORMAT_PORCELAIN;
+
+is actually simpler, and more robust.
+
+I also wondered if:
+
+  git status --porcelain=v1
+
+is more self-documenting about the meaning of "1". It's purely
+aesthetics, but it somehow looks better to me. Matching that is also
+much easier with pure strcmps.
+
+> @@ -1381,6 +1392,8 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+>  
+>  	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
+>  	s.ignore_submodule_arg = ignore_submodule_arg;
+> +	s.status_format = status_format;
+> +
+
+I wonder what happens if you pass a "wt_status" with a format of "SHORT"
+to the long-formatting code.
+
+I think it is ignored completely, as you are just now introducing the
+s.status_format field. But I wonder if there is room for further cleanup
+in pushing the big switch statements from run_status() and cmd_status()
+into wt-status.c.
+
+-Peff
