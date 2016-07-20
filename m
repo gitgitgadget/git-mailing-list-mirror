@@ -2,133 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6607F2034E
-	for <e@80x24.org>; Wed, 20 Jul 2016 16:00:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08E2A2034E
+	for <e@80x24.org>; Wed, 20 Jul 2016 16:02:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752008AbcGTQAR (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 12:00:17 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:36294 "EHLO
-	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751783AbcGTQAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 12:00:14 -0400
-Received: by mail-yw0-f193.google.com with SMTP id u134so3594087ywg.3
-        for <git@vger.kernel.org>; Wed, 20 Jul 2016 09:00:14 -0700 (PDT)
+	id S1752254AbcGTQC1 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 12:02:27 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34065 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751813AbcGTQC0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jul 2016 12:02:26 -0400
+Received: by mail-wm0-f66.google.com with SMTP id q128so7691976wma.1
+        for <git@vger.kernel.org>; Wed, 20 Jul 2016 09:02:25 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ZtPjDbyB6Xs6EcxEOahCM2NWyKhKuFfnDeB6tDzMZwo=;
-        b=hYUK/MAPjoY/x51/bLSUfldfJDcVPsOTUiszWvQ2Tuo7v6f27ZJF5dLBOEmQm4dRUX
-         9HqozSBn8YQH9zLb9rEAd+XC3dQD5SXR7Qqmjh6Yn31S8jluD4rhHxEYzgZ4hzR6LUYd
-         EVnjsHpYYHI54yC3TlEQYhJaNFvySfzF3pDum+qgVz/8LiPEiYU41/tQxoSrpF5NoOsv
-         9cZskPlV/jzTFDEQLUpzpibYVymTS+tjDC4ocyme8WkbwQNhL5b4t4cITfPq7Sv8Mmxa
-         432L2JcTLVEkQZo0UvSFnCnCrn+mGyhU9eFmar1WLFFBLWGMeRWNIpq0qkGub2TtI5KQ
-         W5EQ==
+         :cc:content-transfer-encoding;
+        bh=68wu1cNGbVZ82c7NXgLPp1jFJoNGGt/dJiOvn5KdNgs=;
+        b=EhXit9HYWFFsdbD+Dubh885RGf5IBUEgvqp3MDf74GTTghQMDlrr+cpBFIPbDziESy
+         CSaU/+owoD/001opKkKqw2oVDxzCtUkM060eeWES+8Yz5OqyeCdZdioXdDtb524zF0IB
+         RJFHjcedVHWG6E487/yVD3yUFpQf2AmBilZa5Pz2J4Ea3nDhuqP+Lcd1DrlVPGu8ORiL
+         aejr3bLHXeyDKnYdb3JmINg+84pEoYC6RHqHwfXHEDkWyNN3BqjzQVkrBixhiaSJPCZk
+         ISXAgQ+W9yfLZAYX/wwU4DiZauycthPMT3Mgtl8WgG9vhTdYlaPPqE2jqtXvRKRoqy29
+         9wng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ZtPjDbyB6Xs6EcxEOahCM2NWyKhKuFfnDeB6tDzMZwo=;
-        b=bdOfUJeiRJ15hPlLKpi60+o/JpsEeVQFlBQcqf/BluF3O7mUOSsHwS08AbcdF3pciz
-         zms2Nuz/xu6O6WW5KHtugnar/7wyIT740m2dfjZ9TCpJew+y/0VkdJ0uw1e72cWiJf33
-         nKFVRUXcn/GShVX2MvyP+zsqk0VFSNFcvzYQmlNM9bL7kHQIjdyyAYK7MFyDzV0Auaux
-         G/jtntePDhNdJlFUqr5itVhhXthFwt4nyjEDs+3vifQmk0gzqu4H3uVDbrIlK25qtsmP
-         cUb5o24TI0fvlBICw7cRsRUTX7c5PzPdAdqBsKqau3cnZ0M1L+Bae/Wd+okCmNid3Qtu
-         z5ng==
-X-Gm-Message-State: ALyK8tKl13wPutmO3EM1l2NMg56fcY016CFb30WXvIkHD0MkQMLgCWjpAqymheVuoEFjbOtnKpMYtv1esimD+g==
-X-Received: by 10.37.44.204 with SMTP id s195mr21756903ybs.21.1469030413907;
- Wed, 20 Jul 2016 09:00:13 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=68wu1cNGbVZ82c7NXgLPp1jFJoNGGt/dJiOvn5KdNgs=;
+        b=RuLdKY94+9UeI+HIlAgdSTL3wzA0JGfPYoCpGXNhlEvrwl8sBLvm7zRxe3aAt3iOSV
+         VnkOf7mcuM3ejJ42mBvHSGWJIN4GX5Fz/94c8YEW0uvpifO2lFrIYDNEUtL4YrNwymOW
+         8XIU8FnhQ/t9g3OgCDrQovmc9iLtOM71J6FNLYjg0yx8atNE+gyv5A6ffp/CkB2qPiE4
+         bpxLA24I77szoTzrrZ4aMwxya55N16DYKqs8I29sA1BtReQEOIMuGkRv5X2NezwHj3ey
+         Rs00HG2o0jgeuj7vlmxKk/EP/qBZQGBRWG4xCfJ6pU/3J1HTbsACBMYr67YUDayd/V7v
+         uB+g==
+X-Gm-Message-State: ALyK8tJ3hNEiyL/1NQM4S6TZe3sGLI2LSo0jyCBn/88s+9xJ9+a+OW+Thjo1xGv0TuG6jFeXnFlzMifaT4d2Ow==
+X-Received: by 10.28.56.132 with SMTP id f126mr510914wma.13.1469030544212;
+ Wed, 20 Jul 2016 09:02:24 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.129.89.132 with HTTP; Wed, 20 Jul 2016 09:00:13 -0700 (PDT)
-In-Reply-To: <20160712223538.28508-1-pranit.bauva@gmail.com>
-References: <20160712223538.28508-1-pranit.bauva@gmail.com>
-From:	Pranit Bauva <pranit.bauva@gmail.com>
-Date:	Wed, 20 Jul 2016 21:30:13 +0530
-Message-ID: <CAFZEwPMLSW59qUjDXCe6BEz=_e7F79GbPNp0v7nDM2e3q_Kkug@mail.gmail.com>
-Subject: Re: [PATCH 0/9] Resend of gitster/pb/bisect
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Pranit Bauva <pranit.bauva@gmail.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Git List <git@vger.kernel.org>
+Received: by 10.194.102.70 with HTTP; Wed, 20 Jul 2016 09:01:44 -0700 (PDT)
+In-Reply-To: <578F9D2A.2030204@jeffhostetler.com>
+References: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com>
+ <1468966258-11191-7-git-send-email-jeffhost@microsoft.com>
+ <578F9923.3000403@gmail.com> <578F9D2A.2030204@jeffhostetler.com>
+From:	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Date:	Wed, 20 Jul 2016 18:01:44 +0200
+Message-ID: <CANQwDwfWW4Fn7KBHrNv2nfvGHMrPQ4jGpz6wGAEGg3edn-ztfg@mail.gmail.com>
+Subject: Re: [PATCH v1 6/6] Unit tests for V2 porcelain status
+To:	Jeff Hostetler <git@jeffhostetler.com>
+Cc:	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jul 13, 2016 at 4:05 AM, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> Hey Junio,
+On 20 July 2016 at 17:47, Jeff Hostetler <git@jeffhostetler.com> wrote:
+> On 07/20/2016 11:30 AM, Jakub Narębski wrote:
+>> W dniu 2016-07-20 o 00:10, Jeff Hostetler pisze:
+>>>
+>>> +test_expect_success pre_initial_commit_0 '
+>>> +       printf "## branch: (initial) master\n" >expected &&
+>>> +       printf "?? actual\n" >>expected &&
+>>> +       printf "?? dir1/\n" >>expected &&
+>>> +       printf "?? expected\n" >>expected &&
+>>> +       printf "?? file_x\n" >>expected &&
+>>> +       printf "?? file_y\n" >>expected &&
+>>> +       printf "?? file_z\n" >>expected &&
+>>
+>> Why not use heredoc syntax (cat <<\EOF), or prepare a file
+>> with expected output in the testsuite?
 >
-> A small mistake got unnoticed by me which Lars recently pointed out.
-> The naming convention is "git_path_<name_of_file>" and underscore
-> instead of spaces.
->
-> Thanks!
->
-> The interdiff is:
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index c2f3cee..88a1df8 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -7,7 +7,7 @@
->  #include "argv-array.h"
->  #include "run-command.h"
->
-> -static GIT_PATH_FUNC(git_path_bisect_write_terms, "BISECT_TERMS")
-> +static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
->  static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
->  static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
->  static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
-> @@ -100,7 +100,7 @@ static int write_terms(const char *bad, const char *good)
->         if (check_term_format(bad, "bad") || check_term_format(good, "good"))
->                 return -1;
->
-> -       fp = fopen(git_path_bisect_write_terms(), "w");
-> +       fp = fopen(git_path_bisect_terms(), "w");
->         if (!fp)
->                 return error_errno(_("could not open the file BISECT_TERMS"));
->
-> @@ -134,7 +134,7 @@ static int bisect_clean_state(void)
->         remove_path(git_path_bisect_log());
->         remove_path(git_path_bisect_names());
->         remove_path(git_path_bisect_run());
-> -       remove_path(git_path_bisect_write_terms());
-> +       remove_path(git_path_bisect_terms());
->         /* Cleanup head-name if it got left by an old version of git-bisect */
->         remove_path(git_path_head_name());
->         /*
->
->
-> Pranit Bauva (9):
->   bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
->   bisect: rewrite `check_term_format` shell function in C
->   bisect--helper: `write_terms` shell function in C
->   bisect--helper: `bisect_clean_state` shell function in C
->   t6030: explicitly test for bisection cleanup
->   wrapper: move is_empty_file() and rename it as
->     is_empty_or_missing_file()
->   bisect--helper: `bisect_reset` shell function in C
->   bisect--helper: `is_expected_rev` & `check_expected_revs` shell
->     function in C
->   bisect--helper: `bisect_write` shell function in C
->
->  builtin/am.c                |  20 +--
->  builtin/bisect--helper.c    | 310 +++++++++++++++++++++++++++++++++++++++++++-
->  cache.h                     |   3 +
->  git-bisect.sh               | 146 +++------------------
->  t/t6030-bisect-porcelain.sh |  17 +++
->  wrapper.c                   |  13 ++
->  6 files changed, 355 insertions(+), 154 deletions(-)
+> The tests involving renames needed to embed a tab character
+> in the output and hiding a tab character in a heredoc seemed
+> error prone.  So to be consistent I made them all printf-style.
 
-Could someone please look into this series and review so that Junio
-can merge this into next which is a vital part of my GSoC project?
+Ah, so that's the case for series of printf. I think in some other
+cases the Git testsuite simply uses HT variable for the TAB
+character. I guess that "\t" for TAB is available in POSIX and
+all shells that Git is run on?
 
-Regards,
-Pranit Bauva
+See t3300-funny-names.sh, t3902-quoted.sh, t4213-log-tabexpand.sh
+
+> Also, some of the tests include SHAs for the commit and for
+> file content, so having pre-computed expected output is awkward.
+> Granted we could hard code the file SHAs, but not the commits.
+
+Right... but heredoc can include variable expansion (or rather
+it includes variable expansion by default, and you can prevent
+it by quoting end-of-heredoc marker).
+
+-- 
+Jakub Narębski
