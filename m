@@ -2,94 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1868D1F744
-	for <e@80x24.org>; Wed, 20 Jul 2016 16:12:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CB7C1F744
+	for <e@80x24.org>; Wed, 20 Jul 2016 16:15:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755108AbcGTQM3 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 12:12:29 -0400
-Received: from vpn.foo.tf ([195.154.43.236]:43898 "EHLO mail.foo.tf"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1755140AbcGTQM1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 12:12:27 -0400
-Received: from localhost (unknown [192.168.99.5])
-	by mail.foo.tf (Postfix) with ESMTPSA id 98B66874494;
-	Wed, 20 Jul 2016 16:12:25 +0000 (UTC)
-Date:	Wed, 20 Jul 2016 18:12:25 +0200
-From:	Antoine Tenart <antoine.tenart@ack.tf>
-To:	Duy Nguyen <pclouds@gmail.com>
-Cc:	Antoine Tenart <antoine.tenart@ack.tf>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] worktree: add: introduce the --name option
-Message-ID: <20160720161225.GA23406@kwain>
-References: <20160719144701.571-1-antoine.tenart@ack.tf>
- <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
- <CACsJy8BDRPK2UKxoMat3i2HL38+KFqw2Qfet2Bev26HXRM-BWA@mail.gmail.com>
- <20160719185452.GB28551@kwain>
- <CACsJy8AkpBmNS0nOoKX7PUYhp9kKgvH=K2gpCnq+sR++ZmDAgQ@mail.gmail.com>
- <20160719193523.GD28551@kwain>
- <CACsJy8AatsjV7L6u6oA5xx+=K9hc9pjYTm_-XxxHHQ8aG9HyeQ@mail.gmail.com>
+	id S1753129AbcGTQPx (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 12:15:53 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47610 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753022AbcGTQPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 12:15:52 -0400
+Received: (qmail 16945 invoked by uid 102); 20 Jul 2016 16:15:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Jul 2016 12:15:51 -0400
+Received: (qmail 22510 invoked by uid 107); 20 Jul 2016 16:16:14 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Jul 2016 12:16:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Jul 2016 10:15:43 -0600
+Date:	Wed, 20 Jul 2016 10:15:43 -0600
+From:	Jeff King <peff@peff.net>
+To:	Jeff Hostetler <jeffhost@microsoft.com>
+Cc:	git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v1 0/6] Porcelain Status V2
+Message-ID: <20160720161543.GD24902@sigill.intra.peff.net>
+References: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="a8Wt8u1KmwUX3Y2C"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CACsJy8AatsjV7L6u6oA5xx+=K9hc9pjYTm_-XxxHHQ8aG9HyeQ@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+On Tue, Jul 19, 2016 at 06:10:52PM -0400, Jeff Hostetler wrote:
 
---a8Wt8u1KmwUX3Y2C
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> This patch series adds porcelain V2 format to status.
+> This provides detailed information about file changes
+> and about the current branch.
+> 
+> The new output is accessed via:
+>     git status --porcelain=2 [--branch]
+> 
+> An earlier draft of this work was submitted under the
+> "Add very verbose porcelain output to status" title.
+> This new version addresses the concerns about using
+> (abusing) "-vv" and simplifies the some of the formatting.
 
-On Wed, Jul 20, 2016 at 04:54:40PM +0200, Duy Nguyen wrote:
-> On Tue, Jul 19, 2016 at 9:35 PM, Antoine Tenart <antoine.tenart@ack.tf> w=
-rote:
-> >
-> > Hmm, so if I understand correctly my use case still won't be supported,
-> > as adding a new worktree with the same basename will fail. Or did I miss
-> > something?
->=20
-> Hm... _what_ fails? If you create two worktrees project0/foo and
-> project1/foo, you'll get .git/worktrees/foo and .git/worktrees/foo1
-> but worktree creation should succeed both times. As long as you don't
-> have to look into .git/worktrees/ everything should be fine, you won't
-> see foo vs foo1.
+I reviewed the first two, which look good except for a few minor
+comments. I don't have time at the moment to dig carefully into the v2
+format itself from the later patches (but from a cursory view they look
+OK). I'm flying all day today, so probably won't get to a more thorough
+review for a day or two (but if there are other reviewers, please don't
+feel you have to wait for my input).
 
-You're right, I don't know why I was sure this wasn't working... Sorry
-for the noise :-)
+One final bit of food for thought.
 
---=20
-Antoine
+Just yesterday somebody asked me about renewing the old idea of using a
+more standardized format for machine-readable output, like --json.
+That's obviously something that would exist alongside the existing
+formats for compatibility, and it doesn't fundamentally change anything
+about adding a new format as your patches do (it just becomes yet
+another format).
 
---a8Wt8u1KmwUX3Y2C
-Content-Type: application/pgp-signature; name="signature.asc"
+However I wanted to mention it in case you are intrigued by the idea,
+and would be interested in skipping porcelain-v2 entirely in favor of
+moving to something like json.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+A totally reasonable response is "haha no. Please stop moving the
+goalposts". I just wanted to throw it out there as an option (and in
+case you are interested, to let you think about it before any more work
+goes into this direction).
 
-iQIcBAEBCgAGBQJXj6LoAAoJEFxNi8it27zY1x4QAIGyUS1wJ0aChMl0g22FxWlH
-hx9uW01n/qsBZdlIQfMCWExz+eZ2WIsPiNMTYSjcE/iwu1tMcvxvTw45Tt54Szbt
-qsjAEmhA+o5+fz1IlpCGbomE1MlR6k3f/EmT/hsiYTQbtTWAYfGc/YXt6PbxLMaz
-UFq8qyofQ5ncgdarrrUSdYcRP06T6K+9CNGhRs4PUpqHNa5t+jKwxgplyjMrpGvL
-jNsgE82Zl8G130J5nErU58iqXEk35BQR08mtxU6e/92ARCGV60/IG1k1Aj6YddnQ
-qidKcj/ZG8PGPgwrZG+UL3dLYkSdjB5/LryRueQ+3zqXWOL30Rq7dtABnhT67rgV
-PunD3e9PRPxxea9/KhnJmfO0OdrrN9sFrGICm5pdQ3xZs5ZpqO09qfWOyujlpxKL
-BWD9wpj+hvgKXg7UKZouyOKKIWqbzkUmg90nk7uMgAAV7VX8OEZA0DiT0Rn869D2
-1l8SNAjXZWiJkoKljX4zj9sax1XdjeY6krNbEm0nZBnMekimFUBeoBcl4By8XQrH
-UfxSSiWFaVrDcH3ZdpXiA+xS7qdmbvdryn38Ym+FF1mUz46nXuFXfrwOQm5jaQtU
-HHLDAslefZClqKo7RvAnrcioeuoDiQsI3JCrzukMEur3ada5uLua7Qof8bSSiaZf
-maeEF4Z4W90ltzXPTtR5
-=gNuu
------END PGP SIGNATURE-----
-
---a8Wt8u1KmwUX3Y2C--
+-Peff
