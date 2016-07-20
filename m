@@ -2,162 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC8222018B
-	for <e@80x24.org>; Wed, 20 Jul 2016 08:31:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E9452018B
+	for <e@80x24.org>; Wed, 20 Jul 2016 08:49:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751877AbcGTIbw (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 04:31:52 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.27]:56745 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751576AbcGTIbt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 04:31:49 -0400
-X-Greylist: delayed 389 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jul 2016 04:31:49 EDT
-Received: from [84.46.92.130] (helo=book.hvoigt.net)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-	(Exim 4.84)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1bPmoe-0002bU-Sp; Wed, 20 Jul 2016 10:25:16 +0200
-Date:	Wed, 20 Jul 2016 10:25:15 +0200
-From:	Heiko Voigt <hvoigt@hvoigt.net>
-To:	=?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc:	Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule-config: use explicit empty string instead of
- strbuf in config_from()
-Message-ID: <20160720082515.GA823@book.hvoigt.net>
-References: <578E7A07.8080006@web.de>
+	id S1752360AbcGTItH (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 04:49:07 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:34938 "EHLO
+	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751662AbcGTItE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 04:49:04 -0400
+Received: by mail-wm0-f47.google.com with SMTP id f65so166329769wmi.0
+        for <git@vger.kernel.org>; Wed, 20 Jul 2016 01:49:02 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=MX/puwzla4XaabesJw4oC1lDEdt5TSoEHJCzTq6oVVI=;
+        b=YJJSSHkPPaZV0F2CkELT0/YokWDqxJFV06jwUg0UntBsm3J2q9wvcjgPw5kUxPYw76
+         AgSHxeECyUCXwyAccFoSmir7F4AmwjFTzGo4g4qFxjEx6isAmtvV0YgBoUulKZ279yiz
+         WUp/xTQRLLpFzkPYFkDXXwyWVqnu+lCMvLlVQsBSowZI/EHlFINlz/aLNdQRqUH91Wi2
+         cTg49VnodE3GBssH3SpFuQccBqWjYWddL8QJuQoWnv2NCUdMKIj0WCqyzLqkaJe7iZVS
+         6sUDPmGz9gtx3g0RSLy57kzlleftQ+qmKHQw31F6iTrh8agISN5r80NqMMXGuMBQJ5N8
+         Ke4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:newsgroups:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=MX/puwzla4XaabesJw4oC1lDEdt5TSoEHJCzTq6oVVI=;
+        b=Xy0Y9KJu/Ax03FBFi4+/283dYTNC78hw538Fd3ykSXV1gEIPVuCGqP4ctRE9kQX5Ts
+         qniTlBGVF+9fZnEliLDPMzl+dGSl0X46a7lA4KGV39kBzHVqmfQ7ATXgU0PEkypmPOJH
+         1seH8gQbgVpeG+XBBBWZEM87Dh+3kEWdGQDtSC+wuPmFh0judn+vzxxas4BJCgidLKzj
+         FnL1ce3uiMNYDFhn3114Q4DveBmkketOKhWNxB/r81i+iiM7px+fzdI5Dd3NenyDAiTL
+         Z4lq7JBzs4ePqKPYv7WAWPEG9wfcVZ9o7vgGKSgBNGVBtxqkX0lDPEzGMuXlTdOItWPJ
+         a9sA==
+X-Gm-Message-State: ALyK8tJHpo96Dc15ouNL1CskHJstnmYQfgADG9MAf9s+iWpUTn7T9wj3dtgH800CgZcT0w==
+X-Received: by 10.194.124.228 with SMTP id ml4mr95509wjb.153.1469004541580;
+        Wed, 20 Jul 2016 01:49:01 -0700 (PDT)
+Received: from [192.168.1.26] (adan30.neoplus.adsl.tpnet.pl. [83.11.249.30])
+        by smtp.googlemail.com with ESMTPSA id d5sm91350wjf.39.2016.07.20.01.49.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Jul 2016 01:49:00 -0700 (PDT)
+Subject: Re: 500 Internal Server Error
+To:	Shreyas Mulay <shreyasmulay23@gmail.com>, git@vger.kernel.org
+References: <loom.20160720T061853-541@post.gmane.org>
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <578F3AF7.4030702@gmail.com>
+Date:	Wed, 20 Jul 2016 10:48:55 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+In-Reply-To: <loom.20160720T061853-541@post.gmane.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <578E7A07.8080006@web.de>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+W dniu 2016-07-20 o 06:22, Shreyas Mulay pisze:
+> Hi team, 
+> 
+> Great work on the documentation provided for GIT on https://git-scm.com 
+> 
+> But found an error on the same, to just for testing, I switched to Hindi 
+> Language (Clicked on Hindi link on left panel) as for reading the 
+> pages/book in hindi language, I got 500 Internal server Error. 
+> 
+> I hope you rectify this issue.
 
-On Tue, Jul 19, 2016 at 09:05:43PM +0200, René Scharfe wrote:
-> Use a string constant instead of an empty strbuf to shorten the code
-> and make it easier to read.
+The git@vger.kernel.org mailing list is for a development of Git itself;
+the bugs on Git Homepage (https://git-scm.com) should be sent to
+https://github.com/git/git-scm.com/issues -- as you can find on the
+bottom of the page... though it is not obvious.
 
-This must have been some oversight from my original code. I also can not
-see any purpose.
-
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
-> ... unless someone can come up with a suitable non-empty string to feed
-> to git_config_from_mem() as its name parameter.
-
-If we would want to be absolutely correct we could use something like
-"SHA1:.gitmodules". E.g. like we use to lookup the blob in
-gitmodule_sha1_from_commit():
-
-	strbuf_addf(&rev, "%s:.gitmodules", sha1_to_hex(commit_sha1));
-
-And now I see where this was leftover from... before extracting this
-function this code was filling the strbuf.
-
-How about this instead?
-
----8<------
-Subject: [PATCH] fix passing a name for config from submodules
-
-In commit 959b5455 we implemented the initial version of the submodule
-config cache. During development of that initial version we extracted
-the function gitmodule_sha1_from_commit(). During that process we missed
-that the strbuf rev was still used in config_from() and now is left
-empty. Lets fix this by also returning this string.
-
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
-
-Its not exactly pretty with all the releases before the returns but
-this is what I could quickly come up with...
-
- submodule-config.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
-
-diff --git a/submodule-config.c b/submodule-config.c
-index 077db40..dccea59 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -371,9 +371,9 @@ static int parse_config(const char *var, const char *value, void *data)
- }
- 
- static int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
--				      unsigned char *gitmodules_sha1)
-+				      unsigned char *gitmodules_sha1,
-+				      struct strbuf *rev)
- {
--	struct strbuf rev = STRBUF_INIT;
- 	int ret = 0;
- 
- 	if (is_null_sha1(commit_sha1)) {
-@@ -381,11 +381,10 @@ static int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
- 		return 1;
- 	}
- 
--	strbuf_addf(&rev, "%s:.gitmodules", sha1_to_hex(commit_sha1));
--	if (get_sha1(rev.buf, gitmodules_sha1) >= 0)
-+	strbuf_addf(rev, "%s:.gitmodules", sha1_to_hex(commit_sha1));
-+	if (get_sha1(rev->buf, gitmodules_sha1) >= 0)
- 		ret = 1;
- 
--	strbuf_release(&rev);
- 	return ret;
- }
- 
-@@ -420,8 +419,10 @@ static const struct submodule *config_from(struct submodule_cache *cache,
- 		return entry->config;
- 	}
- 
--	if (!gitmodule_sha1_from_commit(commit_sha1, sha1))
-+	if (!gitmodule_sha1_from_commit(commit_sha1, sha1, &rev)) {
-+		strbuf_release(&rev);
- 		return NULL;
-+	}
- 
- 	switch (lookup_type) {
- 	case lookup_name:
-@@ -431,14 +432,19 @@ static const struct submodule *config_from(struct submodule_cache *cache,
- 		submodule = cache_lookup_path(cache, sha1, key);
- 		break;
- 	}
--	if (submodule)
-+	if (submodule) {
-+		strbuf_release(&rev);
- 		return submodule;
-+	}
- 
- 	config = read_sha1_file(sha1, &type, &config_size);
--	if (!config)
-+	if (!config) {
-+		strbuf_release(&rev);
- 		return NULL;
-+	}
- 
- 	if (type != OBJ_BLOB) {
-+		strbuf_release(&rev);
- 		free(config);
- 		return NULL;
- 	}
-@@ -450,6 +456,7 @@ static const struct submodule *config_from(struct submodule_cache *cache,
- 	parameter.overwrite = 0;
- 	git_config_from_mem(parse_config, "submodule-blob", rev.buf,
- 			config, config_size, &parameter);
-+	strbuf_release(&rev);
- 	free(config);
- 
- 	switch (lookup_type) {
 -- 
-2.4.2.387.gf86f31a
+Jakub NarÄ™bski
+ 
 
