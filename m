@@ -2,121 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 366432018B
-	for <e@80x24.org>; Wed, 20 Jul 2016 06:41:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE6262018B
+	for <e@80x24.org>; Wed, 20 Jul 2016 08:05:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752090AbcGTGl0 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 02:41:26 -0400
-Received: from vpn.foo.tf ([195.154.43.236]:47598 "EHLO mail.foo.tf"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751130AbcGTGlZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 02:41:25 -0400
-Received: from localhost (unknown [192.168.97.19])
-	by mail.foo.tf (Postfix) with ESMTPSA id 88AFF39B64B;
-	Wed, 20 Jul 2016 06:41:21 +0000 (UTC)
-Date:	Wed, 20 Jul 2016 08:41:20 +0200
-From:	Antoine Tenart <antoine.tenart@ack.tf>
-To:	Eric Sunshine <sunshine@sunshineco.com>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	Antoine Tenart <antoine.tenart@ack.tf>,
-	Git List <git@vger.kernel.org>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] worktree: add: introduce the --name option
-Message-ID: <20160720064120.GE28551@kwain>
-References: <20160719144701.571-1-antoine.tenart@ack.tf>
- <xmqq7fchh5bo.fsf@gitster.mtv.corp.google.com>
- <CAPig+cQ5eGoNFa90__ay+Y7AMP5Zd1VUDXWFCfU1-XX3oEYAkg@mail.gmail.com>
+	id S1752938AbcGTIFr (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 04:05:47 -0400
+Received: from mail-lf0-f45.google.com ([209.85.215.45]:33716 "EHLO
+	mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753222AbcGTIFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 04:05:12 -0400
+Received: by mail-lf0-f45.google.com with SMTP id b199so32508989lfe.0
+        for <git@vger.kernel.org>; Wed, 20 Jul 2016 01:05:11 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=b5z8Ih+7a+PRRt8dowXXw46ecurK+dzwx5K8fM/IYaw=;
+        b=kG6jZng/AQ8R7ZW6LMv2LPUgYIgvTAGc0tOs7ZQHqkN0v73mV7dH/NKa2mTR/ZRenk
+         10rYNAjMpOoFBFfWHA5KfLQ7MvhNBvfIlezFkRl/ba6K7qZFOQEoU8YMSOdpd8J0sxrU
+         CvHBGI+k9Elw5DyT97OLAfjbu1P94yiCY8p2KNliyH7gqpfifJZ+6gkGM7f0CgaiZ79m
+         pUOPKTKEWSuJhFUBP4AYj3P0Fzt+0fsE+LgU+Ii73PxjJBI4tXeKe3GI3B2H+HGF+nXf
+         KNSf1XDH5rpk3h7sIZgIxS0No2vssJsYQsGMI3u9ZrZ2OPW6+o5UA6f5I00iNQezv/qI
+         rGvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=b5z8Ih+7a+PRRt8dowXXw46ecurK+dzwx5K8fM/IYaw=;
+        b=b+GV/nwlPOpMf6z/VcQVzbvj77R3y7YBAxU5Hv1iRvnqcNTz8Aq6ATlqWwcTfjHe3P
+         gadKkQ4s67CfeOB89DK3ftg0OEPUqM4OjSi0g6UpYSAMM58go3E0rihmETlTnmeWgq2M
+         DpuNqG5LnxBSQ30OKH/hvxd7ggPLUmjCS9L3sMZS3TbdXKcf3hH9h1d9/jNwQm5S1txD
+         7pJRWUFT74ozBj4SZkUkYXCjHPaIedwv+JM9xGjakB161YM7e0k7PlUjbzF4ueCUocdb
+         6lCHlyCZo0aDQl/Do1eNUlUZ7lwA4sC3VOcLpMFdKysnehx4vbCWs2SRccOys0+UBfyW
+         hQiQ==
+X-Gm-Message-State: ALyK8tKis0Zt2i5BTZN2nFQ4yQsDG0thyFaq2FCKYkg9UHld2vhEYiYjxPs3D2+xTvbh4gq0XILwZB6whEWAcQ==
+X-Received: by 10.25.168.212 with SMTP id r203mr22729074lfe.85.1469001910269;
+ Wed, 20 Jul 2016 01:05:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wchHw8dVAp53YPj8"
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQ5eGoNFa90__ay+Y7AMP5Zd1VUDXWFCfU1-XX3oEYAkg@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.25.162.85 with HTTP; Wed, 20 Jul 2016 01:05:09 -0700 (PDT)
+From:	Ernesto Maserati <ernesto.2.maserati@gmail.com>
+Date:	Wed, 20 Jul 2016 10:05:09 +0200
+Message-ID: <CAOHAwykGkfY7M30jT8t0k6Gsdy5QSBHmAPiWYoKibjUgS-G6hg@mail.gmail.com>
+Subject: How to generate feature branch statistics?
+To:	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+I assume that feature branches are not frequently enough merged into
+master. Because of that we discover bugs later than we could with a more
+continuous code integration. I don't want to discuss here whether feature
+branches are good or bad.
 
---wchHw8dVAp53YPj8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I want just to ask is there a way how to generate a statistic for the
+average duration of feature branches until they are merged to the master? I
+would like to know if it is 1 day, 2 days or lets say 8 or 17 days. Also it
+would be interesting to see the statistical outliers.
 
-Hello Eric,
+I hope my motivation became clear and what kind of git repository data I
+would like to produce.
 
-On Tue, Jul 19, 2016 at 02:52:42PM -0400, Eric Sunshine wrote:
-> On Tue, Jul 19, 2016 at 2:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Antoine Tenart <antoine.tenart@ack.tf> writes:
-> >> Adds a --name option allowing to specify the name of a worktree when
-> >> creating it. This allows to have multiple worktrees in directories
-> >> having the same name (e.g. project0/foo, project1/foo etc...). This
-> >> commit keeps the previous behaviour by making it the default value, i.=
-e.
-> >> by using $(basename <path>) as the worktree name when the --name option
-> >> isn't used.
-> >
-> > Hmm, is this related to an earlier discussion
-> >
-> >     https://public-inbox.org/git/20160625051548.95564-1-barret%40brenni=
-e.ca/
-> >
-> > in any way, or is it an independent invention?
-> >
-> > The conclusion of that discussion thread was roughly "users
-> > shouldn't even _care_ about the name, and if they have to use name
-> > to identify the worktrees to do certain things right now, reducing
-> > the need for such 'certain things', not making it easy to give a
-> > user-defined name to a worktree, is the way to go", IIRC.
->=20
-> Yes, that's correct. The discussion wandered a bit before starting to
-> converge at [1] and concluding at [2].
->=20
-> [1]: https://public-inbox.org/git/CAPig%2BcRNUZZBw%3DF-Q2f3Ehc-8T2iBp4kvD=
-usNRGv4ea5nihQVQ%40mail.gmail.com/
-> [2]: https://public-inbox.org/git/CAPig%2BcSEwib1iFyWE5h8-qTbsAC%2BzsaSDS=
-YQnv6otWoOOjWAeA%40mail.gmail.com/
-
-Thanks for the links, I've had a look at the discussion. The problem
-that raised it was a bit different: it was about reorganizing projects
-and directory trees, no about creating a new worktree with the same
-basename as an existing one. I've also had a look at 080739b,
-introducing find_worktree(), but I don't think that would solve the
-issue either.
-
-So we've left with two solutions: being able to specify the worktree
-name or having an arbitrary ID (plus some modifications to `git worktree
-list`) as you proposed. I guess you prefer the later solution. Is there
-any plan to do this, or anything in progress?
-
-Thanks,
-
---=20
-Antoine
-
---wchHw8dVAp53YPj8
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJXjx0NAAoJEFxNi8it27zYJIsQAIgFyllm7tCTm0BltTRDhT78
-K4Xkw3IJ5L8StzwxhcnzhDP9VfYhgWKFQRlUOvJHL12zVyqQ8DnRXfowgYr/lYGc
-eEUpGA+U0bUt83Br0joq7coScdoNPEzcIHLCCss2lf1/y0MKgntvSjh3AjEmh25e
-SMPMGoWJ8xjnTlhKL4YSKBn6iueGdJEYb2mPTgGkLZDGwKApDH2KGagXu/l7xTJY
-x4Drh44gVXw+2vpc4Dotzos3hUAwGvkA+apdCW6Yu+mkYq7FUAsPTMvHRHJgD6Bq
-6258S7J4l6cKDFLWPbFcLFf1AwCunFiyvakDLxYCjhCguYK+n4fViHAz++UlEWNO
-hx9t07l4/J0jvRr4sY7Hc1Xlx6MO+qsjj2lwnCS5n0nuSkbxBP/wNJaf3kuolehJ
-1chnt9f/TA+L6krjpJDb2/ufAevDn4w57YbcT3NZtzHNPGNCwfSXO1t85KcA7tMl
-9Bq4NJdMY80BIsckXVxG5yaoYK9l3n/l1wBBQw+B3qOI4268TDm4aqoWyGSwaw4f
-BHnqExwZVf1mOwlAUYVjt0Fwpyr52sNJN02dhzDAht/V6NGGO4gCsXLxuKOV1jEF
-d1DI22YW6+DahCW5d6ofh2eN8BmHCFCmLf1nwicmDrQned8gg4QrxWQKKZRhYEVP
-hZovK/+fo6BwdngIvP0g
-=5vdz
------END PGP SIGNATURE-----
-
---wchHw8dVAp53YPj8--
+Any ideas?
