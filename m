@@ -2,132 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F1EF202F3
-	for <e@80x24.org>; Wed, 20 Jul 2016 21:10:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B747F2034E
+	for <e@80x24.org>; Wed, 20 Jul 2016 21:20:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755275AbcGTVKm (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 17:10:42 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:23335 "EHLO
-	smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754915AbcGTVKT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 17:10:19 -0400
-Received: from localhost.localdomain ([92.22.79.77])
-	by smtp.talktalk.net with SMTP
-	id PykwbXvjRHGLwPyl0bEmcu; Wed, 20 Jul 2016 22:10:18 +0100
-X-Originating-IP: [92.22.79.77]
-X-Spam:	0
-X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=YfJyJ16zsu2qLTmLoX9DvA==:117
- a=YfJyJ16zsu2qLTmLoX9DvA==:17 a=xtxXYLxNAAAA:8 a=TOVKkDOYyZsXre-1sqsA:9
- a=xts0dhWdiJbonKbuqhAr:22
-From:	Philip Oakley <philipoakley@iee.org>
-To:	GitList <git@vger.kernel.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	=?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v4 4/8] doc: give headings for the two and three dot notations
-Date:	Wed, 20 Jul 2016 22:10:03 +0100
-Message-Id: <20160720211007.5520-5-philipoakley@iee.org>
-X-Mailer: git-send-email 2.9.0.windows.1
-In-Reply-To: <20160720211007.5520-1-philipoakley@iee.org>
-References: <20160711202518.532-1-philipoakley@iee.org>
- <20160720211007.5520-1-philipoakley@iee.org>
-X-CMAE-Envelope: MS4wfASWNeGta+Su5kA5zjODLSNmYwjXLIvPTeeSouMg52L/Bs0+Rlr6X1BxeP9nIL/O9bsbhQhzTG3IdohaQX/56WUh6rCYhJkmqVZBA2RTEPlARKj/Uxf9
- 96huvuaOF67UYpZfw0Ww0+Bqb+2TbilFiy3UOD2ExpxIlVguvf5R5/kxruM6XyMmDeIUsfjceETecx2JrLjCS6YYEmOYDmjTdWb/SkrDmz1roSK/LfvvfprY
- CkO12aWzkMapYrI2QftLqJ1JPbGsgEbcrhlbv3i3mP9gqfMm6S5bX028u9S1Aaht
+	id S1755116AbcGTVUk (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 17:20:40 -0400
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:37862 "EHLO
+	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752043AbcGTVUi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 17:20:38 -0400
+Received: by mail-wm0-f47.google.com with SMTP id i5so83236wmg.0
+        for <git@vger.kernel.org>; Wed, 20 Jul 2016 14:20:37 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=dXG4aocKeksSid9Hv9qQHD3K2EWJ2pduTyYU0WdB3eo=;
+        b=M3hZG0gYMfnmWh/QUn+spIVqol98UEv2f8IpUUHSMjHAH5P2UVJirIMNmO1QAKYoGs
+         0D/Vz6A0Uzlhrdu0ow/8byS40l7ldR5YX1I/W/bKDQKmDgWyehxNBzNm4G/D+obTO43/
+         sPP6Xoy2PHfTw6sHEdzlTqxKY+a6VJDq/oWs8WzO0bQNNPznN5Wr+Fba+MOUXfxRtDHY
+         mNdPeYOjZN74JqfkFS0z+G8ppv3E/JIikkqZNCvKLQ3xiwSTHYo7a3bvXz3cgBE1KulY
+         y6t0t7nl/n+yprEzYXC2TU72kiP3WpiwIR2bs/Aa7Ej5Y+FslplMJNVELQrw9MpA7Edd
+         Wwzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:newsgroups:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=dXG4aocKeksSid9Hv9qQHD3K2EWJ2pduTyYU0WdB3eo=;
+        b=D86ghInCrgGK7vhF6rz2+E6TpA0braFG5psZzTqjRcGQdLfcyIEdx0mA8JmHFMnyXK
+         bOqLGdpib1Vd9P5Ra9OHlkV4QhBYeEgbG+FM7h78QflcXcmGiGl5m18JvgdVoAcxHs0T
+         RtD1pQAGru7jFdeLx+2ekXLVo9b54b4pdTezHDTb/2Po+/de8RuMcOfAfhhqtqb4hW3g
+         fDDMlMJGgBVJrq/ya1XunDmU6a0hICnVWTJNhVj3YYPHf/OGKMsuhB8mxM+n9AjZvCWf
+         OXl57C466XeaKu+FqmXASc3L604Dq3A49aj8eCKVQuUC5b9IOMr4ZEBKCUn59LKpM1mV
+         7KFA==
+X-Gm-Message-State: ALyK8tK/F/ylEuogivHdLAj0zMTjYJnHCUSUwl6sqQuRcepdr2ppd18XPMXRinhVFxXzHw==
+X-Received: by 10.194.100.196 with SMTP id fa4mr3954321wjb.149.1469049636416;
+        Wed, 20 Jul 2016 14:20:36 -0700 (PDT)
+Received: from [192.168.1.26] (daf247.neoplus.adsl.tpnet.pl. [83.23.5.247])
+        by smtp.googlemail.com with ESMTPSA id qq6sm3043796wjc.34.2016.07.20.14.20.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Jul 2016 14:20:35 -0700 (PDT)
+Subject: Re: Complex gitweb URL
+To:	CLOSE Dave <Dave.Close@us.thalesgroup.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <225e6ff4-178c-cd2a-6a05-b621f0ad4a84@us.thalesgroup.com>
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <578FEB1E.5060302@gmail.com>
+Date:	Wed, 20 Jul 2016 23:20:30 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+MIME-Version: 1.0
+In-Reply-To: <225e6ff4-178c-cd2a-6a05-b621f0ad4a84@us.thalesgroup.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-While there, also break out the other shorthand notations and
-add a title for the revision range summary (which also appears
-in git-rev-parse, so keep it mixed case).
+W dniu 2016-07-20 o 21:24, CLOSE Dave pisze:
+> I'm trying to create a URL that will always refer to the latest version 
+> of a file stored under Gerrit. gitweb access is available. The man page 
+> specification doesn't seem to work for me. Instead, I seem to need to 
+> put most of the information into arguments (after the '?').
+> 
+> For example, the repo name includes several directories, so it doesn't 
+> work to put it into the 
+> ".../gitweb.cgi/<repo>/<action>/<revision>:/<path>?<arguments>" format. 
+> Or, at least, I don't see how.
 
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
----
- Documentation/revisions.txt | 58 ++++++++++++++++++++++++++++-----------------
- 1 file changed, 36 insertions(+), 22 deletions(-)
+The fact that gitweb path_info-based URL uses <repo>/<action>... instead
+of <action>/<repo> is in my opinion a bit of an unfortunate design error,
+kept because of backward compatibility.
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 6e9cd41..5b37283 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -242,35 +242,49 @@ specifying a single revision with the notation described in the
- previous section means the set of commits reachable from that
- commit, following the commit ancestry chain.
+That said, gitweb can detect where the <repo> part ends and <action>
+part begins, even for hierarchical multi-part repository name. See e.g.
+http://repo.or.cz/git/zerocommit.git/tree/HEAD:/Documentation with
+repository part being 'git/zerocommit.git' (a "fork" of git.git). So it
+should work.
+
+There are some cases however where the URL cannot be represented in
+path_info form, and some parameters must be put as query arguments,
+i.e. after '?'.
+
+> 
+> Instead I'm trying to use a URL in the format, 
+> "http://site/gitweb/?args". If I use gitweb itself to navigate to my 
+> target file, I see a URL in this format that contains several arguments, 
+> "p=repo;a=blob;f=file;h=SHA;hb=SHA". If I use that URL directly, I get 
+> my file. But those SHA values are not something I know how to determine 
+> in advance. And I suspect they are unique to the specific version of the 
+> file accessed, not always the latest as I want.
+> 
+> If I replace the hb=SHA argument with hb=HEAD, the URL still works. But 
+> I have no idea what I can use to replace the h=SHA argument.
+
+You can remove it.  'hb' (hash_base) and 'f' (filename) identify target
+file in a repository unambiguously.
+
+> 
+> A complication is that the target file is not in the master branch. 
+> Somehow I need to be able to specify the branch. I've tried putting it 
+> as the h= argument but that results in "Reading blob failed". If I leave 
+> out the h= argument entirely, gitweb responds, "404 cannot find file".
+
+Did you forgot to set 'hb' parameter?  Is said file present in revision
+given by the 'hb' parameter?
+
+See e.g. http://repo.or.cz/?p=git/zerocommit.git;a=tree;hb=master;f=t
  
--To exclude commits reachable from a commit, a prefix '{caret}'
--notation is used.  E.g. '{caret}r1 r2' means commits reachable
--from 'r2' but exclude the ones reachable from 'r1'.
--
--This set operation appears so often that there is a shorthand
--for it.  When you have two commits 'r1' and 'r2' (named according
--to the syntax explained in SPECIFYING REVISIONS above), you can ask
--for commits that are reachable from r2 excluding those that are reachable
--from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
--
--A similar notation 'r1\...r2' is called symmetric difference
--of 'r1' and 'r2' and is defined as
--'r1 r2 --not $(git merge-base --all r1 r2)'.
--It is the set of commits that are reachable from either one of
--'r1' (left side) or 'r2' (right side) but not from both.
--
--In these two shorthands, you can omit one end and let it default to HEAD.
-+Commit Exclusions
-+~~~~~~~~~~~~~~~~~
-+
-+'{caret}<rev>' (caret) Notation::
-+ To exclude commits reachable from a commit, a prefix '{caret}'
-+ notation is used.  E.g. '{caret}r1 r2' means commits reachable
-+ from 'r2' but exclude the ones reachable from 'r1'.
-+
-+Dotted Range Notations
-+~~~~~~~~~~~~~~~~~~~~~~
-+
-+The '..' (two-dot) Range Notation::
-+ The '{caret}r1 r2' set operation appears so often that there is a shorthand
-+ for it.  When you have two commits 'r1' and 'r2' (named according
-+ to the syntax explained in SPECIFYING REVISIONS above), you can ask
-+ for commits that are reachable from r2 excluding those that are reachable
-+ from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
-+
-+The '...' (three dot) Symmetric Difference Notation::
-+ A similar notation 'r1\...r2' is called symmetric difference
-+ of 'r1' and 'r2' and is defined as
-+ 'r1 r2 --not $(git merge-base --all r1 r2)'.
-+ It is the set of commits that are reachable from either one of
-+ 'r1' (left side) or 'r2' (right side) but not from both.
-+
-+In these two shorthand notations, you can omit one end and let it default to HEAD.
- For example, 'origin..' is a shorthand for 'origin..HEAD' and asks "What
- did I do since I forked from the origin branch?"  Similarly, '..origin'
- is a shorthand for 'HEAD..origin' and asks "What did the origin do since
- I forked from them?"  Note that '..' would mean 'HEAD..HEAD' which is an
- empty range that is both reachable and unreachable from HEAD.
- 
--Two other shorthands for naming a set that is formed by a commit
--and its parent commits exist.  The 'r1{caret}@' notation means all
--parents of 'r1'.  'r1{caret}!' includes commit 'r1' but excludes
--all of its parents.
-+Special '<rev>{caret}' Shorthand Notations
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+Two other shorthands exist, particularly useful for merge commits, is
-+for naming a set that is formed by a commit and its parent commits.
- 
--To summarize:
-+The 'r1{caret}@' notation means all parents of 'r1'.
-+
-+'r1{caret}!' includes commit 'r1' but excludes all of its parents.
-+
-+Revision Range Summary
-+----------------------
- 
- '<rev>'::
- 	Include commits that are reachable from (i.e. ancestors of)
+> Are these arguments documented somewhere? What is the recommended way to 
+> construct a URL like I need?
+
+Well, they are not described in the documentation, but you can check
+the code and its comments.
+
+Best,
 -- 
-2.9.0.windows.1
+Jakub Narębski
 
