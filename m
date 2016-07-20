@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20C62202F3
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3779A2034E
 	for <e@80x24.org>; Wed, 20 Jul 2016 17:25:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754595AbcGTRZI (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 13:25:08 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:33572 "EHLO
-	mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754606AbcGTRZA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 13:25:00 -0400
-Received: by mail-lf0-f65.google.com with SMTP id f93so4003630lfi.0
-        for <git@vger.kernel.org>; Wed, 20 Jul 2016 10:24:59 -0700 (PDT)
+	id S1754656AbcGTRZM (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 13:25:12 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:35857 "EHLO
+	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754599AbcGTRY7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 13:24:59 -0400
+Received: by mail-lf0-f66.google.com with SMTP id 33so4000620lfw.3
+        for <git@vger.kernel.org>; Wed, 20 Jul 2016 10:24:58 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aeRo4RZPyqfuY/vObNGAg/1VeQoHtfvA+JrTz9oNSFw=;
-        b=ymp7gtYjoVbFm+pXPGrCPPiJBWOJTqzWFB66h0Pn2fDr6YwP7kiPaEmmgUP1HuOwEk
-         5QsvvS5nisF9FpAROJX6wXKr8wS503mor3qOFKzlycX26IZKLby5hVLWmOtus4z0OfNF
-         mCkivaUoRd+4+5YCH99ED3JwW3sX9fmgQT97h7KxP06DtN+4mrtEnoaogsiBV1AvM9lO
-         XcCEIwGxzCB/bHDEPGyh4y+7diUYvMYOjP5vYM4MpUGiTeZjmR2TKS+K1g2mmgwyLqV9
-         +U7o5chsLZHnHb6we9F2rqIa4Jn9QEAdq3WNdIvf0TchEwzCFjB3dMx3dsDPqdEJKa+X
-         378w==
+        bh=+ZZw54s8Q5vP6p9INO6PbqSsUhVs1WeMHLwylbOL3n8=;
+        b=mD0NkgRsjW5IrdeduThpGwPG5KfNBVrtXf+iUOtC8yi2j6J3dhp7igZVYBRjf0PvV+
+         Q2OTKcPfxkapmYmjkb/K4tSSvHlRFGNjbvHpfSJ1bWuaI01Ui5naBbB8sL2Gz6ZQhJXC
+         ztEs8Mm4MCSmBYeiu4wE1qjd5xB5CFePaPP79So4Un6RSDW7LXgjcQelQ/U3BKEPpeGX
+         U48WNaA2y+bImBXLYJJS6EupAeswt3R2YKCud7SOiMWJdBvgvgaVff/4s+A5TMB7gTFW
+         /zjCf2DuU6IdGW/VLz+mb3GDHAm9+LY6OQgW/EUxVmONG3NdFmwP0WKRpxgfqEcsLRKu
+         GvXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aeRo4RZPyqfuY/vObNGAg/1VeQoHtfvA+JrTz9oNSFw=;
-        b=Z8DD3crK/nR2RxVWnfUO+ni1dzd+xeBmXGkjrY+08Ps8Vg+V/xXBS5XSg7NxtcaXxd
-         5BWTGP/ZpWb2iAoZLj+9X78B3VfVXF3Hxtl/q1hvfGCx3KCsRBZgwyKJgfsISx2kihxE
-         SXPSvOJqUdOQOzyeXhcJP7S8a6CrHnJcv6OcxZA/GIiytwJYMB6HpO+reBw5dJGuDS7R
-         WddanAZfZaRBzG/23OJa/IlRSdv/Ep1dvZhir5Cumna5oTWK1nekVxm8y0FCm1SFUQVu
-         wZnfDfSpoaQJbCGzf2tGMTw0pnS3P7sVl6tjMBYPePzbZyl7e6Uz9jXztuq/dPAG6rjK
-         CsEw==
-X-Gm-Message-State: ALyK8tKTSwzH/+mKAivLBP6ILyrLczoPDIVPKZd6HqQFCY82+NY3RkI88rkyFXZ27IZ3Zw==
-X-Received: by 10.25.210.80 with SMTP id j77mr11735389lfg.139.1469035498122;
-        Wed, 20 Jul 2016 10:24:58 -0700 (PDT)
-Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id g74sm777884ljg.24.2016.07.20.10.24.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=+ZZw54s8Q5vP6p9INO6PbqSsUhVs1WeMHLwylbOL3n8=;
+        b=NF5eyUQKsjj64iNsHP2UcxcSfYX4Bi/w7lWFJ/S63i6aV6NY9VIhDTCSlPZsMWWTda
+         nn6rLcT2xvONYLVci0cr/6Wx+pOHbELdlMKPEFvOK81m6tLwy/wr0CoHEMp0dTDZCigF
+         vO0RSfECag32nqJ1yrNIJhG2iSkEX6qUmfYnAppSMPvpijb88s3QvPMPdGnrqE/g90pw
+         f2VbLRuHly7luJkE/25/8X1WtoARvB8/xRVk3NIk/w/KU31LYmixliGaAHghWGG7m6pf
+         jd6W4opEgR8sOEkKxG5O0YUzj0zE8ZaOxt32YLwB01Yr1/1UvJsdBH3P3wguQwuIVLBd
+         UIlw==
+X-Gm-Message-State: ALyK8tIe+wKdifkS4zYahWgqCuHEC+1haJglFAqRAT+vC8SFPhUn+nIpyKQbds6NqBEIWg==
+X-Received: by 10.25.201.203 with SMTP id z194mr19831690lff.192.1469035497130;
         Wed, 20 Jul 2016 10:24:57 -0700 (PDT)
+Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
+        by smtp.gmail.com with ESMTPSA id g74sm777884ljg.24.2016.07.20.10.24.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 20 Jul 2016 10:24:56 -0700 (PDT)
 From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To:	git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:	max@max630.net, Junio C Hamano <gitster@pobox.com>,
 	larsxschneider@gmail.com, sbeller@google.com, mhagger@alum.mit.edu,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v4 4/4] t2029: some really basic tests for submodules in multi worktree
-Date:	Wed, 20 Jul 2016 19:24:19 +0200
-Message-Id: <20160720172419.25473-5-pclouds@gmail.com>
+Subject: [PATCH v4 3/4] submodule: support running in multiple worktree setup
+Date:	Wed, 20 Jul 2016 19:24:18 +0200
+Message-Id: <20160720172419.25473-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.9.1.566.gbd532d4
 In-Reply-To: <20160720172419.25473-1-pclouds@gmail.com>
 References: <CACsJy8ADRWNL3FR2TtWShviT4Lc4m1xaY8VOPP26Foyq+_A-3g@mail.gmail.com>
@@ -72,182 +72,69 @@ X-Mailing-List:	git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- t/t2029-worktree-submodule.sh (new +x) | 166 +++++++++++++++++++++++++++++++++
- 1 file changed, 166 insertions(+)
- create mode 100755 t/t2029-worktree-submodule.sh
+ Documentation/git-worktree.txt | 8 ++++++++
+ git-submodule.sh               | 8 ++++----
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/t/t2029-worktree-submodule.sh b/t/t2029-worktree-submodule.sh
-new file mode 100755
-index 0000000..f96fa50
---- /dev/null
-+++ b/t/t2029-worktree-submodule.sh
-@@ -0,0 +1,166 @@
-+#!/bin/sh
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index 41350db..2a5661d 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -142,6 +142,14 @@ to share to all working directories:
+    you are sure you always use sparse checkout for all working
+    directories.
+ 
++ - `submodule.*` in current state should not be shared because the
++   information is tied to a particular version of .gitmodules in a
++   working directory.
 +
-+test_description='submodule with multiple worktrees'
++ - `remote.*` added by submodules may be per working directory as
++   well, unless you are sure remotes from all possible submodules in
++   history are consistent.
 +
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	git config extensions.worktreeConfig true &&
-+	>t &&
-+	git add t &&
-+	git commit -m initial &&
-+	git branch initial
-+'
-+
-+test_expect_success 'setup - repository in init subdirectory' '
-+	mkdir init &&
-+	(
-+		cd init &&
-+		git init &&
-+		git config extensions.worktreeConfig true &&
-+		echo a >a &&
-+		git add a &&
-+		git commit -m "submodule commit 1" &&
-+		git tag -a -m "rev-1" rev-1
-+	)
-+'
-+
-+test_expect_success 'setup - commit with gitlink' '
-+	echo a >a &&
-+	echo z >z &&
-+	git add a init z &&
-+	git commit -m "super commit 1"
-+'
-+
-+test_expect_success 'setup - hide init subdirectory' '
-+	mv init .subrepo
-+'
-+
-+test_expect_success 'setup - repository to add submodules to' '
-+	git init addtest &&
-+	git -C addtest config extensions.worktreeConfig true &&
-+	git init addtest-ignore &&
-+	git -C addtest-ignore config extensions.worktreeConfig true
-+'
-+
-+# The 'submodule add' tests need some repository to add as a submodule.
-+# The trash directory is a good one as any. We need to canonicalize
-+# the name, though, as some tests compare it to the absolute path git
-+# generates, which will expand symbolic links.
-+submodurl=$(pwd -P)
-+
-+listbranches() {
-+	git for-each-ref --format='%(refname)' 'refs/heads/*'
-+}
-+
-+inspect() {
-+	dir=$1 &&
-+	dotdot="${2:-..}" &&
-+
-+	(
-+		cd "$dir" &&
-+		listbranches >"$dotdot/heads" &&
-+		{ git symbolic-ref HEAD || :; } >"$dotdot/head" &&
-+		git rev-parse HEAD >"$dotdot/head-sha1" &&
-+		git update-index --refresh &&
-+		git diff-files --exit-code &&
-+		git clean -n -d -x >"$dotdot/untracked"
-+	)
-+}
-+
-+test_expect_success 'submodule add' '
-+	echo "refs/heads/master" >expect &&
-+	>empty &&
-+
-+	(
-+		cd addtest &&
-+		git submodule add -q "$submodurl" submod >actual &&
-+		test_must_be_empty actual &&
-+		echo "gitdir: ../.git/modules/submod" >expect &&
-+		test_cmp expect submod/.git &&
-+		(
-+			cd submod &&
-+			git config core.worktree >actual &&
-+			echo "../../../submod" >expect &&
-+			test_cmp expect actual &&
-+			rm -f actual expect
-+		) &&
-+		git submodule init
-+	) &&
-+
-+	rm -f heads head untracked &&
-+	inspect addtest/submod ../.. &&
-+	test_cmp expect heads &&
-+	test_cmp expect head &&
-+	test_cmp empty untracked
-+'
-+
-+test_expect_success 'submodule.* in supermodule is per-worktree' '
-+	(
-+		cd addtest &&
-+		git config -f .git/config.worktree submodule.submod.url >actual &&
-+		echo "$submodurl" >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'turn submodule to multiworktree' '
-+	(
-+		cd addtest/.git/modules/submod &&
-+		CORE_WT="$(git config core.worktree)" &&
-+		git config -f config.worktree core.worktree "$CORE_WT" &&
-+		git config --unset core.worktree &&
-+		git config extensions.worktreeConfig true &&
-+		git config core.worktree >actual &&
-+		echo "$CORE_WT" >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'new worktree in submodule' '
-+	(
-+		cd addtest/submod &&
-+		git worktree add submod-elsewhere &&
-+		cd submod-elsewhere &&
-+		test_must_fail git config core.worktree
-+	)
-+'
-+
-+test_expect_success 'new worktree in supermodule' '
-+	(
-+		cd addtest &&
-+		git commit -m initial &&
-+		git worktree add super-elsewhere &&
-+		cd super-elsewhere &&
-+		test_must_fail git config submodule.submode
-+	)
-+'
-+
-+test_expect_success 'submodule add in the second worktree' '
-+	(
-+		cd addtest/super-elsewhere &&
-+		git submodule add -q "$submodurl" submod2 >actual &&
-+		test_must_be_empty actual &&
-+		echo "gitdir: ../../.git/worktrees/super-elsewhere/modules/submod2" >expect &&
-+		test_cmp expect submod2/.git &&
-+		(
-+			cd submod2 &&
-+			git config core.worktree >actual &&
-+			echo "../../../../../super-elsewhere/submod2" >expect &&
-+			test_cmp expect actual &&
-+			rm -f actual expect
-+		) &&
-+		git submodule init
-+	)
-+'
-+
-+test_expect_success 'submodule.* in supermodule is per-worktree' '
-+	(
-+		cd addtest/super-elsewhere &&
-+		git config -f ../.git/worktrees/super-elsewhere/config.worktree submodule.submod2.url >actual &&
-+		echo "$submodurl" >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_done
+ DETAILS
+ -------
+ Each linked working tree has a private sub-directory in the repository's
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 4ec7546..7b576f5 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -261,7 +261,7 @@ or you are unsure what this means choose another name with the '--name' option."
+ 			esac
+ 		) || die "$(eval_gettext "Unable to checkout submodule '\$sm_path'")"
+ 	fi
+-	git config submodule."$sm_name".url "$realrepo"
++	git config --worktree submodule."$sm_name".url "$realrepo"
+ 
+ 	git add $force "$sm_path" ||
+ 	die "$(eval_gettext "Failed to add submodule '\$sm_path'")"
+@@ -461,7 +461,7 @@ Submodule work tree '\$displaypath' contains a .git directory
+ 			# Remove the whole section so we have a clean state when
+ 			# the user later decides to init this submodule again
+ 			url=$(git config submodule."$name".url)
+-			git config --remove-section submodule."$name" 2>/dev/null &&
++			git config --worktree --remove-section submodule."$name" 2>/dev/null &&
+ 			say "$(eval_gettext "Submodule '\$name' (\$url) unregistered for path '\$displaypath'")"
+ 		fi
+ 	done
+@@ -1106,7 +1106,7 @@ cmd_sync()
+ 		then
+ 			displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+ 			say "$(eval_gettext "Synchronizing submodule url for '\$displaypath'")"
+-			git config submodule."$name".url "$super_config_url"
++			git config --worktree submodule."$name".url "$super_config_url"
+ 
+ 			if test -e "$sm_path"/.git
+ 			then
+@@ -1114,7 +1114,7 @@ cmd_sync()
+ 				sanitize_submodule_env
+ 				cd "$sm_path"
+ 				remote=$(get_default_remote)
+-				git config remote."$remote".url "$sub_origin_url"
++				git config --worktree remote."$remote".url "$sub_origin_url"
+ 
+ 				if test -n "$recursive"
+ 				then
 -- 
 2.9.1.566.gbd532d4
 
