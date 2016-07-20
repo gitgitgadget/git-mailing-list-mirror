@@ -2,65 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6064D1F744
-	for <e@80x24.org>; Wed, 20 Jul 2016 20:52:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC6581F744
+	for <e@80x24.org>; Wed, 20 Jul 2016 20:54:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755030AbcGTUwN (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 16:52:13 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47773 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754964AbcGTUwM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 16:52:12 -0400
-Received: (qmail 28826 invoked by uid 102); 20 Jul 2016 20:52:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Jul 2016 16:52:12 -0400
-Received: (qmail 24689 invoked by uid 107); 20 Jul 2016 20:52:33 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Jul 2016 16:52:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Jul 2016 14:52:07 -0600
-Date:	Wed, 20 Jul 2016 14:52:07 -0600
-From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Richard Soderberg <rsoderberg@gmail.com>, git@vger.kernel.org
-Subject: Re: git-prompt.sh incompatible with non-basic global grep.patternType
-Message-ID: <20160720205207.GA578@sigill.intra.peff.net>
-References: <CAEvc1UQvXKtQCXvCmt-774A84--bkK-sb94BtFeqDDr0Gsf7qw@mail.gmail.com>
- <20160720134211.GA19359@sigill.intra.peff.net>
- <xmqqwpkgcbp9.fsf@gitster.mtv.corp.google.com>
+	id S1754896AbcGTUyK (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 16:54:10 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:38193 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751093AbcGTUyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 16:54:09 -0400
+Received: by mail-wm0-f41.google.com with SMTP id o80so85644616wme.1
+        for <git@vger.kernel.org>; Wed, 20 Jul 2016 13:54:09 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=lI7LekS4wrzJg5d4yYqMaRjj4MxQqZC80jNKtCUs86Y=;
+        b=E7O3JwbsUsNuBd5dkbKhtc4WA7Mc1i5L5H5amzXi6HqP7uv4ks/FwGPyxZEvlcq/yA
+         KAsTZqE/V0ZNsCSKgwEUufq/kvEMhXqyrPbM8CA4oqk4Bg0TTyVve9qxNJx/EA6BPC08
+         hMdmuDS2IS1FFz+6e2VwZppj5MfqW8ePjdzyV8sJmlZJ7348Kk65QUz7y4aMzs2smLRH
+         K93gKm7Ei+ZuZFs/dOl0UBUe1cW5QCy6Nsn5ptccS7mfW7TCPB4P+lSs3exqzOcao/Hk
+         PZ35m5zawSK8Yj0EwJDuhWOFauayAp7rMgfowjx+yO+AUk1fAe0mrJJegkdnKubp30tg
+         Sc7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=lI7LekS4wrzJg5d4yYqMaRjj4MxQqZC80jNKtCUs86Y=;
+        b=aJ0Oany7xxFKzvUEANvS7wG1feCsnuEXjHvPuIip/qr8YGN7bPw7w8bArcPvGJk96s
+         ONIl/YneTF2O4ZKVOBs3xTIClBflC7SgenaP1/WCuj79j+fhp+Ky9IWYV0eIKkIKOOBD
+         /aEKXTTGrkVJIGL5gyE01hLMCER/fdQga+ztOMU5RgHBPsLjujwqGsa+dkW3QO6WTDzw
+         xnnFxbkoWLUoUCNAzHnRWDRpyNu/UZjgjM6nUCyvI/Y2UDg+dcVeNvOeIomJcu4Ly1kp
+         VI0mq8UbrXNCQ8LzKrfP5I4WIlQFX3aLgwBiUE1b8q8vqdrKI8sGVy9P7gVgncjvfis5
+         p9xg==
+X-Gm-Message-State: ALyK8tIDs+yuiAI5eASYZxTHI+cuuztdAPLbPv7c5sDtkbFMxrRP75e6/Z8bNIUwYuAbd3DzY903L2xiNrFOkA==
+X-Received: by 10.194.51.167 with SMTP id l7mr3232385wjo.78.1469048048083;
+ Wed, 20 Jul 2016 13:54:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqwpkgcbp9.fsf@gitster.mtv.corp.google.com>
+Received: by 10.194.70.167 with HTTP; Wed, 20 Jul 2016 13:54:07 -0700 (PDT)
+In-Reply-To: <CAPc5daVyjuTquUbYixTNj3hkwNeGd0fsTBe7OmxnEfoa_S1dnA@mail.gmail.com>
+References: <CAP8UFD2PjKHkcs-EWzDU6eWF9ar7BzOxRB838iFr6iDAaGnkeA@mail.gmail.com>
+ <CAPc5daXoL+v-YWy-EQ=d-8m9o8twv6Cs5U_NL14KGzPMVNQUPg@mail.gmail.com>
+ <CAP8UFD1TWYct7OJDcP+w8AYNTroquZ++T_1ovt-Z7SrBtn_S+Q@mail.gmail.com> <CAPc5daVyjuTquUbYixTNj3hkwNeGd0fsTBe7OmxnEfoa_S1dnA@mail.gmail.com>
+From:	Christian Couder <christian.couder@gmail.com>
+Date:	Wed, 20 Jul 2016 22:54:07 +0200
+Message-ID: <CAP8UFD2p448LpQ1m+6LprurHZ-MJfWFo9NKFtQuK6pvMdiC4nA@mail.gmail.com>
+Subject: Re: [ANNOUNCE] GitRev News edition 17
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jul 20, 2016 at 01:10:42PM -0700, Junio C Hamano wrote:
+On Wed, Jul 20, 2016 at 10:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> On Wed, Jul 20, 2016 at 1:38 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>>> Micronit. 2.9.1 (or 2.9.2) would not be a "major release". 2.9.0 was,
+>>> and x.y.z (z > 0) are "maintenance releases".
+>>
+>> Yeah, I wondered about that when I saw :
+>>
+>> https://github.com/git/git.github.io/commit/d2eb8fbbb30594d19fcda731c309ad03229dc5d5
+>>
+>> but forgot to ask or do something about it...
+>
+> As long as it gets fixed quickly, no harm is done.
 
-> This may fix it.  I think the root cause is that logic to smear
-> "pattern type" into various broken-down fields in grep_opt for the
-> short-hands like --basic-regexp option needs to leave "I am setting
-> this short-hand" mark to allow the grep_commit_pattern_type() that
-> is done as the final step of the set-up sequence before we call
-> compile_grep_patterns() can take notice.  The calls currently made
-> to grep_set_pattern_type_option() when we parse "--basic-regexp" and
-> friends forgets to override the "source of truth" field and only
-> updates the broken-down fields.
-> 
-> An alternative may be to update places that parse "--basic-regexp"
-> and friends to just write to .pattern_type_option without calling
-> grep_set_pattern_type_option(); that might be a cleaner, but I am
-> not feeling well today so I won't be able to do a deeper analysis
-> right now.
+Fixed with:
 
-I gave a very cursory look when I wrote the other email, and your
-alternative solution is what looked like the most elegant fix to me.
+https://github.com/git/git.github.io/commit/5d50fd0d807d0f8046b712aac1492c30aea7a652
 
-I suspect this bug has been there quite a while, so no rush. :)
+While at it, a maintainance/maintenance mistake is also fixed in:
 
--Peff
+https://github.com/git/git.github.io/commit/ae08ca7689b4bc0c55b87edd27641fbe721e3220
+
+Thanks,
+Christian.
