@@ -6,66 +6,61 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F40BD202F3
-	for <e@80x24.org>; Wed, 20 Jul 2016 13:01:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 726E61F744
+	for <e@80x24.org>; Wed, 20 Jul 2016 13:02:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753229AbcGTNB3 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 09:01:29 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47418 "HELO cloud.peff.net"
+	id S1753960AbcGTNCh (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 09:02:37 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47425 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751566AbcGTNB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 09:01:28 -0400
-Received: (qmail 7344 invoked by uid 102); 20 Jul 2016 13:01:27 -0000
+	id S1753391AbcGTNCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 09:02:35 -0400
+Received: (qmail 7390 invoked by uid 102); 20 Jul 2016 13:02:35 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Jul 2016 09:01:27 -0400
-Received: (qmail 20239 invoked by uid 107); 20 Jul 2016 13:01:50 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Jul 2016 09:02:35 -0400
+Received: (qmail 20261 invoked by uid 107); 20 Jul 2016 13:02:58 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Jul 2016 09:01:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Jul 2016 07:01:24 -0600
-Date:	Wed, 20 Jul 2016 07:01:24 -0600
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Jul 2016 09:02:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Jul 2016 07:02:32 -0600
+Date:	Wed, 20 Jul 2016 07:02:32 -0600
 From:	Jeff King <peff@peff.net>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	Shreyas Mulay <shreyasmulay23@gmail.com>, git@vger.kernel.org
-Subject: Re: 500 Internal Server Error
-Message-ID: <20160720130123.GA17469@sigill.intra.peff.net>
-References: <loom.20160720T061853-541@post.gmane.org>
- <578F3AF7.4030702@gmail.com>
- <alpine.DEB.2.20.1607201312450.14111@virtualbox>
+To:	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>
+Subject: Re: topological index field for commit objects
+Message-ID: <20160720130231.GB17469@sigill.intra.peff.net>
+References: <f15a14a5-f39d-9c41-16b9-fe0a48d7450b@syntevo.com>
+ <CAPc5daVC-+0Vr30L_pbcL0GN2OmnGm-+V4tE2WTos_vPRb_S1g@mail.gmail.com>
+ <CAGZ79kY6Ry+DfO90wza_RrVbCRAgNB4N=0W6svuJgvGNxeFh5Q@mail.gmail.com>
+ <xmqqk2h73f2i.fsf@gitster.mtv.corp.google.com>
+ <20160629205647.GA25987@sigill.intra.peff.net>
+ <5774426F.3090000@gmail.com>
+ <20160629220049.GA4416@sigill.intra.peff.net>
+ <578EC0CA.8060501@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1607201312450.14111@virtualbox>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <578EC0CA.8060501@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jul 20, 2016 at 01:13:21PM +0200, Johannes Schindelin wrote:
+On Wed, Jul 20, 2016 at 02:07:38AM +0200, Jakub Narębski wrote:
 
-> > The git@vger.kernel.org mailing list is for a development of Git itself;
-> > the bugs on Git Homepage (https://git-scm.com) should be sent to
-> > https://github.com/git/git-scm.com/issues -- as you can find on the
-> > bottom of the page... though it is not obvious.
+> W dniu 2016-06-30 o 00:00, Jeff King pisze:
+> > On Wed, Jun 29, 2016 at 11:49:35PM +0200, Jakub Narębski wrote:
 > 
-> In addition, I believe this to be an invalid bug report. It seems at least
-> that
+> >> Do Git use EWAH / EWOK bitmaps for reachability analysis, or is it still
+> >> limited to object counting?
+> >
+> > At GitHub we are using them for --contains analysis, along with mass
+> > ahead/behind (e.g., as in https://github.com/gitster/git/branches). My
+> > plan is to send patches upstream, but they need some cleanup first.
 > 
-> 	curl -i --header 'Accept-Language: hi' https://git-scm.com/
-> 
-> does not reproduce the purported issue.
+> Ping. have you got time to clean up those patches?
 
-I suspect the OP means:
-
-  https://git-scm.com/book/hi/v1/%E0%A4%B6%E0%A5%81%E0%A4%B0%E0%A5%81%E0%A4%86%E0%A4%A4
-
-which is linked as the first chapter of the incomplete Hindi translation
-of Pro Git.
-
-From a cursory look, I think the problem is simply that the translation
-does not have enough chapters to meet some of the assumptions in the
-formatting code. It might be nice to fix the formatting code to handle
-this case, but ultimately, I think a translator needs to step up and
-finish the rest of the book.
+No, I haven't. Don't hold your breath; it's something I hope to work on
+in the next 6 months, not the next 6 weeks.
 
 -Peff
