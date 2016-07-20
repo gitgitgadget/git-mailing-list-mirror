@@ -2,95 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DEBC2018B
-	for <e@80x24.org>; Wed, 20 Jul 2016 08:59:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AFE22018B
+	for <e@80x24.org>; Wed, 20 Jul 2016 09:43:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753480AbcGTI7U (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 04:59:20 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:36907 "EHLO
-	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753417AbcGTI7S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 04:59:18 -0400
-Received: by mail-wm0-f43.google.com with SMTP id i5so58127276wmg.0
-        for <git@vger.kernel.org>; Wed, 20 Jul 2016 01:59:18 -0700 (PDT)
+	id S1753454AbcGTJny (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 05:43:54 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:38661 "EHLO
+	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752284AbcGTJnx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jul 2016 05:43:53 -0400
+Received: by mail-wm0-f50.google.com with SMTP id o80so60140229wme.1
+        for <git@vger.kernel.org>; Wed, 20 Jul 2016 02:43:52 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=UQj2Bzv062n6q90Gu5wlLvP6D8+rFMCLijX/xMw8Y4I=;
-        b=YHnL0yhnJpSEJsEbRNHg3XYrZbmgvKaclwUuTC/RcvBcu8ZT9BVwNo7jNNEwmBP5fQ
-         /W9WvU/+T9mIn0MX0P8wx/aJnSE5wqEbzMtZvM94Ie4iV8nqXxn7rcPU6vItJDda/WG3
-         8pGG+4W6EulLQvp/KmlY2qJbLQydx7zq6eeXINJmC4enwKP+DShC6tVz2CCFhKFmDfax
-         FHu56542Qoa0ki6IDIfZo3tNBuqmeLtkQBaqAA2Zypgm2faMBvMzR8KiZa6iohrylDs8
-         XwDlNUTmCASAawRg2I+fXrmHPyYR3dWcoqw3hQkQLO0LcHjk0Ijt2tIjRRKmcruinjgR
-         YcGQ==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=kpkk+gtwHu2VV+rAVW/dvdrWNu2PaqnVpxjsoPYahho=;
+        b=IP3mQlpE7FbdNrozEMtKEpOhdjVjvB/NAbAMI3ogVUHhUSk+TdQzNg/CzUxUiMkOIx
+         /1MDfMDDz2oF8Jf4PwEcydyGyUdZ8RblkRe3jRa3ur4zbYgQYlBDsFuHVCWbVEAUSKNI
+         w4mYfEg3PWPYKV11KioN6T06JQDeWPqo+XO+6QNXRJJfmczfkgJc5UHuvmPuW1mZQPED
+         GLnihGFKlJ5VXG2QJLH7Zi4zBiIgUjYLPhI3Uh0BRqR8He7RZRvl+v3s+LZIDKKqUjkL
+         yRvuXr6a/MH6gOb3CTioc1qrczucpaviGigiR92y3ct+DJHkptzq5N/YNq/faf2OIcxq
+         o3Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=UQj2Bzv062n6q90Gu5wlLvP6D8+rFMCLijX/xMw8Y4I=;
-        b=gkl6YcA2FY+/EJbra0PFCuYIEsLNC2JdgC0UHmoDHgfjwBjVgdghqvptLewtXLVDhN
-         r/ONyS1C7Fp9pFLKMjs3gzy9NKYKeSpWZaqq3Rn72mkmHmQheavaJmT95yXrRu2bRzc5
-         xt+lmHkfRxgZUytCVctIs80hTnDBBh9gYp8HaDrD4lU4am61kWjlML5K1f85UwOV3EDO
-         jPcygdI0pBcQZ/4LodHNvr7WVeySjwHKD4HxNJxOQx/ZGxL9qDlwKyj/3huPx4K6BzQf
-         k+iieM5pOZHYHI2KZeUrXoboq0NdK6BAehyLcBFeFm7Vj3n307CegJxWq20u7ppyKKcR
-         hnOQ==
-X-Gm-Message-State: ALyK8tJcMrbeDh5KJqp2cba6rV9nCsD+PbQT9HlPcjwMOvTY/wh1+i5AndAoxGL0FAd3mA==
-X-Received: by 10.194.88.130 with SMTP id bg2mr138660wjb.60.1469005157075;
-        Wed, 20 Jul 2016 01:59:17 -0700 (PDT)
-Received: from [192.168.1.26] (adan30.neoplus.adsl.tpnet.pl. [83.11.249.30])
-        by smtp.googlemail.com with ESMTPSA id v203sm4034220wmv.2.2016.07.20.01.59.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Jul 2016 01:59:15 -0700 (PDT)
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=kpkk+gtwHu2VV+rAVW/dvdrWNu2PaqnVpxjsoPYahho=;
+        b=hqc9CXL5I8ChII792Ce52RqGbw7WwXu81gJb8koh/x8bFBGeGiESpH3YD5xOX1kHvv
+         r1qnGP9Qcb12ceGrV3tEpE7lnNF7b94wPsAQ+pgWCLCPtGsu6+7lRyvUgRCdX1xREE76
+         ZsEX6S5BGUE1VH51hVsw9UbHjl58v6mXoj7zn81+/6CKIKe4xmfL1S5Mcw6ORobM1Jv5
+         logW2jymJ6fHYcxf1FFmCLC+aHgm6S54xaxGAn5QhNxQZYFNkD85wtU5JeGayij0wGWv
+         lPFoz2h4IriwAE7Lw/b6uX9KqefmbdFYGbsdSlcP9D2AW9H3LXRjiFuG9MXPLz9RKd94
+         zhYg==
+X-Gm-Message-State: ALyK8tKDvzCljDkl16G/Awnd6+tdbLtCh6/1G2s2/2KfDbeSvoHLSs68AvgNOKeOTP8apQ==
+X-Received: by 10.194.25.105 with SMTP id b9mr363985wjg.20.1469007831146;
+        Wed, 20 Jul 2016 02:43:51 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id b186sm4148925wmg.23.2016.07.20.02.43.50
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 20 Jul 2016 02:43:50 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
 Subject: Re: Looking for help to understand external filter driver code
-To:	Junio C Hamano <gitster@pobox.com>,
-	Lars Schneider <larsxschneider@gmail.com>
-References: <67D9AC88-550E-4549-9AFD-2401B70B363B@gmail.com>
- <xmqqbn1th5qn.fsf@gitster.mtv.corp.google.com>
- <xmqqlh0xfoho.fsf@gitster.mtv.corp.google.com>
- <7B44C694-7CB2-411D-9CC6-7334CCBAD20B@gmail.com>
- <xmqqr3ape2ju.fsf@gitster.mtv.corp.google.com>
-Cc:	Git Mailing List <git@vger.kernel.org>,
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <578F3D5E.2070201@gmail.com>
+Date:	Wed, 20 Jul 2016 11:43:51 +0200
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
 	Johannes Sixt <j6t@kdbg.org>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <578F3D5E.2070201@gmail.com>
-Date:	Wed, 20 Jul 2016 10:59:10 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqr3ape2ju.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 8BIT
+Message-Id: <6CD48865-8D77-4582-AB41-FCD27D41017C@gmail.com>
+References: <67D9AC88-550E-4549-9AFD-2401B70B363B@gmail.com> <xmqqbn1th5qn.fsf@gitster.mtv.corp.google.com> <xmqqlh0xfoho.fsf@gitster.mtv.corp.google.com> <7B44C694-7CB2-411D-9CC6-7334CCBAD20B@gmail.com> <xmqqr3ape2ju.fsf@gitster.mtv.corp.google.com> <578F3D5E.2070201@gmail.com>
+To:	=?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-07-19 o 23:33, Junio C Hamano pisze:
-> Lars Schneider <larsxschneider@gmail.com> writes:
+
+> On 20 Jul 2016, at 10:59, Jakub NarÄ™bski <jnareb@gmail.com> wrote:
 > 
->> > Git writes --> 4 byte filename length
->> > Git writes --> filename string
->
-> Why limit to 32GB?  Perhaps NUL termination is more appropriate
-> here?
+> W dniu 2016-07-19 o 23:33, Junio C Hamano pisze:
+>> Lars Schneider <larsxschneider@gmail.com> writes:
+>> 
+>>>> Git writes --> 4 byte filename length
+>>>> Git writes --> filename string
+>> 
+>> Why limit to 32GB?  Perhaps NUL termination is more appropriate
+>> here?
+> 
+> Errr, I think limiting _filename_ to 32GB is a reasonable
+> assumption, for forever...
 
-Errr, I think limiting _filename_ to 32GB is a reasonable
-assumption, for forever...
- 
->> > Git writes --> 4 byte content length
->> > Git writes --> content string
+Well, Java packages can get reaaaally long :D
 
-...while limiting file _content_ to 32GB might not be
-future-proof enough.
+> 
+>>>> Git writes --> 4 byte content length
+>>>> Git writes --> content string
+> 
+> ...while limiting file _content_ to 32GB might not be
+> future-proof enough.
+> 
+> ;-)
 
-;-)
--- 
-Jakub Narêbski
+I think this is what Junio meant to say. At least I 
+interpreted it that way.
+
+
+- Lars
