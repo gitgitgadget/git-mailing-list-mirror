@@ -2,75 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_03_06,DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D9FD203C1
-	for <e@80x24.org>; Thu, 21 Jul 2016 01:40:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8ECBF203C1
+	for <e@80x24.org>; Thu, 21 Jul 2016 02:18:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753517AbcGUBk4 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 21:40:56 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:37142 "EHLO
-	mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753219AbcGUBky (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 21:40:54 -0400
-Received: by mail-it0-f41.google.com with SMTP id f6so4500924ith.0
-        for <git@vger.kernel.org>; Wed, 20 Jul 2016 18:40:54 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=3iQ59vj9vZ/qa7TsPRJztwhv4cKK5476d8cnCioRkuo=;
-        b=QMeilM8HzWB4G8OhZH4i5Sk3Ei00bWniXymZY5WUFb3mzaqXsrxYH37lpq1JtnKE2u
-         mrhTRpBOa78dlZbYJxPZ8f7US2ZH6jnVFeivsv403h32J0sWx7H51Cvqt9AZzSzlLZVl
-         7UFIyCCNFpM3QNy3Nrz6Xgnprez+xxBuM0r22x/yQE7Q/L8RjktPd5L999hVbhML0hdn
-         0P65kVQOCPssqKB2HFYg5wfyrmkMcVF3+FeUbpVHNSdGsHOl+95FZhdjxt9jTPe3vSha
-         MnrSayW0rLfXf/dOAvmfpaF58XM/kPv4KmMa7n4F2OX3liMe8AspcS9W2CzVLGUwOsfC
-         jokQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=3iQ59vj9vZ/qa7TsPRJztwhv4cKK5476d8cnCioRkuo=;
-        b=abdC4fNUx9KQqDEmxKGYcH5q9zT+VNyaUBhIn+2Hb4mVRw3cPcilNT/c+6gLXGj4Ci
-         z7p3lqJcFU7053YV0g2hrb+zMAQ+O6yLVCEvsjhK5wG2qWAB6M/sbh4G45T0IKSBD5lp
-         RFBBksFYj9CLhN7duIZqXf0jlGpdSd4wZvEyyrBDqGMo1fPgq+PWyElGmBTXyF9E4TLb
-         SUrYVW+jNUVU5yvPnxyDBA+BWBAAylKLBtjAGi+6EHXvfJqw9LFNf2mEIxyxHS5t9pri
-         lUX+rd1XG/MONNBA03w9KAH8ZtOREAMvM2LMRqVtqg9XYsU3JYaRjf3VcWx/ZOCpFYPv
-         39xw==
-X-Gm-Message-State: ALyK8tKRltu/WQop1V9ASW9mF9w/xizPeJahNGQrO1RXMpfOMINaZj1plAYZ1wdpKRMgygALK7fS/cN65/mfrX1k
-X-Received: by 10.36.217.12 with SMTP id p12mr13329876itg.46.1469065253571;
- Wed, 20 Jul 2016 18:40:53 -0700 (PDT)
+	id S1752320AbcGUCSu (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 22:18:50 -0400
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:44127
+	"EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751226AbcGUCSs (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jul 2016 22:18:48 -0400
+X-Greylist: delayed 15414 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jul 2016 22:18:48 EDT
+DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1469051273;
+	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=u1qD+jiLbOScGjd2lrPy+dX3HqjFZCy86YJ3CiRKo+w=;
+	b=Tac8Spc2gap3pR8bYs5I6qC6pcdzZOrvVGAZ+1FsMSVxk2SExnyLObtEQerFhJWK
+	DeiU9e/wvLk0lucwVth67+KT/JpsOuezJDftB5vMngmvz3shOkxCCgBzM03SlNZ60td
+	4UuoW5wHu6wThMn1txL845FkC+dZGADinBOUtTOY=
+From:	Pranit Bauva <pranit.bauva@gmail.com>
+To:	git@vger.kernel.org
+Message-ID: <010201560a47828f-ff30359f-fd6c-4a21-b054-209f5f8946f7-000000@eu-west-1.amazonses.com>
+In-Reply-To: <010201560a4781be-e8418d6a-5996-45cd-b11b-ca25894ad7f2-000000@eu-west-1.amazonses.com>
+References: <010201560a4781be-e8418d6a-5996-45cd-b11b-ca25894ad7f2-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v10 08/12] bisect--helper: `is_expected_rev` &
+ `check_expected_revs` shell function in C
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Wed, 20 Jul 2016 18:40:53 -0700 (PDT)
-In-Reply-To: <20160721010029.GG29326@google.com>
-References: <20160721005122.15966-1-sbeller@google.com> <20160721010029.GG29326@google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Wed, 20 Jul 2016 18:40:53 -0700
-Message-ID: <CAGZ79kYZphh7f6tf0a7=6gKf+=Vg1zO5MdCNypZ0vC8d3Fh7=A@mail.gmail.com>
-Subject: Re: [PATCH] submodule: do no re-read name in shell script
-To:	Jonathan Nieder <jrnieder@gmail.com>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:	Wed, 20 Jul 2016 21:47:53 +0000
+X-SES-Outgoing:	2016.07.21-54.240.7.17
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jul 20, 2016 at 6:00 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+Reimplement `is_expected_rev` & `check_expected_revs` shell function in
+C and add a `--check-expected-revs` subcommand to `git bisect--helper` to
+call it from git-bisect.sh .
 
->> -                     needs_cloning, ce->name);
->> +                     needs_cloning, sub->name, sub->path);
->
-> Are there any restrictions on what characters a submodule name can
-> contain?  Does this need e.g. to be quoted with sq_quote?
+Using `--check-expected-revs` subcommand is a temporary measure to port
+shell functions to C so as to use the existing test suite. As more
+functions are ported, this subcommand would be retired and will be
+called by some other method.
 
-Oh good point, this ought to fail with weird names. So instead of quoting it,
-let's just drop this patch.
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+ builtin/bisect--helper.c | 33 ++++++++++++++++++++++++++++++++-
+ git-bisect.sh            | 20 ++------------------
+ 2 files changed, 34 insertions(+), 19 deletions(-)
 
->
-> Thanks,
-> Jonathan
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index d125fd3..86bb334 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -162,13 +162,40 @@ static int bisect_reset(const char *commit)
+ 	return bisect_clean_state();
+ }
+ 
++static int is_expected_rev(const char *expected_hex)
++{
++	struct strbuf actual_hex = STRBUF_INIT;
++	int res = 0;
++	if (strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0) >= 0) {
++		strbuf_trim(&actual_hex);
++		res = !strcmp(actual_hex.buf, expected_hex);
++	}
++	strbuf_release(&actual_hex);
++	return res;
++}
++
++static int check_expected_revs(const char **revs, int rev_nr)
++{
++	int i;
++
++	for (i = 0; i < rev_nr; i++) {
++		if (!is_expected_rev(revs[i])) {
++			remove_path(git_path_bisect_ancestors_ok());
++			remove_path(git_path_bisect_expected_rev());
++			return 0;
++		}
++	}
++	return 0;
++}
++
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+ 		NEXT_ALL = 1,
+ 		WRITE_TERMS,
+ 		BISECT_CLEAN_STATE,
+-		BISECT_RESET
++		BISECT_RESET,
++		CHECK_EXPECTED_REVS
+ 	} cmdmode = 0;
+ 	int no_checkout = 0;
+ 	struct option options[] = {
+@@ -180,6 +207,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
+ 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
+ 			 N_("reset the bisection state"), BISECT_RESET),
++		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
++			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
+ 		OPT_BOOL(0, "no-checkout", &no_checkout,
+ 			 N_("update BISECT_HEAD instead of checking out the current commit")),
+ 		OPT_END()
+@@ -206,6 +235,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		if (argc > 1)
+ 			die(_("--bisect-reset requires either zero or one arguments"));
+ 		return bisect_reset(argc ? argv[0] : NULL);
++	case CHECK_EXPECTED_REVS:
++		return check_expected_revs(argv, argc);
+ 	default:
+ 		die("BUG: unknown subcommand '%d'", cmdmode);
+ 	}
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 18580b7..4f6545e 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -238,22 +238,6 @@ bisect_write() {
+ 	test -n "$nolog" || echo "git bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
+ }
+ 
+-is_expected_rev() {
+-	test -f "$GIT_DIR/BISECT_EXPECTED_REV" &&
+-	test "$1" = $(cat "$GIT_DIR/BISECT_EXPECTED_REV")
+-}
+-
+-check_expected_revs() {
+-	for _rev in "$@"; do
+-		if ! is_expected_rev "$_rev"
+-		then
+-			rm -f "$GIT_DIR/BISECT_ANCESTORS_OK"
+-			rm -f "$GIT_DIR/BISECT_EXPECTED_REV"
+-			return
+-		fi
+-	done
+-}
+-
+ bisect_skip() {
+ 	all=''
+ 	for arg in "$@"
+@@ -280,7 +264,7 @@ bisect_state() {
+ 		rev=$(git rev-parse --verify $(bisect_head)) ||
+ 			die "$(gettext "Bad rev input: $(bisect_head)")"
+ 		bisect_write "$state" "$rev"
+-		check_expected_revs "$rev" ;;
++		git bisect--helper --check-expected-revs "$rev" ;;
+ 	2,"$TERM_BAD"|*,"$TERM_GOOD"|*,skip)
+ 		shift
+ 		hash_list=''
+@@ -294,7 +278,7 @@ bisect_state() {
+ 		do
+ 			bisect_write "$state" "$rev"
+ 		done
+-		check_expected_revs $hash_list ;;
++		git bisect--helper --check-expected-revs $hash_list ;;
+ 	*,"$TERM_BAD")
+ 		die "$(eval_gettext "'git bisect \$TERM_BAD' can take only one argument.")" ;;
+ 	*)
+
+--
+https://github.com/git/git/pull/273
