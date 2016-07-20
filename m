@@ -2,73 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2CAD1F744
-	for <e@80x24.org>; Wed, 20 Jul 2016 20:40:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 489BE1F744
+	for <e@80x24.org>; Wed, 20 Jul 2016 20:46:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755006AbcGTUkf (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 16:40:35 -0400
-Received: from mail-yw0-f172.google.com ([209.85.161.172]:35041 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752313AbcGTUkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 16:40:33 -0400
-Received: by mail-yw0-f172.google.com with SMTP id j12so49252486ywb.2
-        for <git@vger.kernel.org>; Wed, 20 Jul 2016 13:40:33 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=gqo40VB+LEYvE3m0yOpedI/fI69dJtRHxEBfhjJqgqA=;
-        b=KqJE6amdy3zXGLP1+hyBgaMUmpUOFgCj62wbSLl7dDBY0xJXOFFlMTwtR6IXvCnDzV
-         gDR6NzW69x2ymUyU1QEeGvAPw63DpuG26GtFDCOSZ1w6TXTvfHN6JxYgIhYbvAXjKbGG
-         uGVx4/Hh3x67fD8x3JSRNg6BNeJXjb5WqOvcYRPXV6vFU8unOp48wgJ9JGWMMlEQ+6Ye
-         dfakhBVPlmUiMNCjvuomi5tPGpeFYbk72tgDdZULxyaSVKOTSvqzT9ks4ltgnr3qP07m
-         VrRybUkA3tFKOBvRiZkwQT/LVe6tD/DZ3xKAInSeHxZH7cji7cMtBl+eSwlfbyo7UHD+
-         S0mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=gqo40VB+LEYvE3m0yOpedI/fI69dJtRHxEBfhjJqgqA=;
-        b=ZMr/2602f7LxLUwu+yZ2fOAQ5V55sLiuaPCtWFro9crV4P71eEV6hQBzKRZmGdBqvi
-         lIiQS9bm3Kma8Z+wH7tYr1/CFzWjreadoAR6/0t6OSPUcStVtxOkETE5yTuxwolDWcq8
-         /dZBEchViNlvoPR6pHlzH/cotsmAEr9dGJaUkeqxg28gC/774ZHRLpgjmbRMv3r+n0sW
-         6F48zxha99H+KU02D1T3ClAu24q1DK3TuihZv+SDniMWb5rUk93Nt1KalKFvViJSuC+e
-         pt7QbYLMhb1KrbrVa2291D63ADLrUae7c26oqi0iSVHMUF9BeSIoqpuq/i/Msgym2XZL
-         TI4w==
-X-Gm-Message-State: ALyK8tLcThw0v+4H9iVjQyCZJIJgCVFkfCAPlacjA/K42ZQ+875NM/I0cG3wwNnr7sa+xgxXPi8iNJ95fHExBg==
-X-Received: by 10.37.22.85 with SMTP id 82mr31026877ybw.123.1469047232753;
- Wed, 20 Jul 2016 13:40:32 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.13.250.4 with HTTP; Wed, 20 Jul 2016 13:40:13 -0700 (PDT)
-In-Reply-To: <CAP8UFD1TWYct7OJDcP+w8AYNTroquZ++T_1ovt-Z7SrBtn_S+Q@mail.gmail.com>
-References: <CAP8UFD2PjKHkcs-EWzDU6eWF9ar7BzOxRB838iFr6iDAaGnkeA@mail.gmail.com>
- <CAPc5daXoL+v-YWy-EQ=d-8m9o8twv6Cs5U_NL14KGzPMVNQUPg@mail.gmail.com> <CAP8UFD1TWYct7OJDcP+w8AYNTroquZ++T_1ovt-Z7SrBtn_S+Q@mail.gmail.com>
+	id S1754843AbcGTUqV (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 16:46:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63523 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753259AbcGTUqU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 16:46:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A9342D4D7;
+	Wed, 20 Jul 2016 16:46:19 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JjMrTjh/8nDoX/bgYR70WVL3A4A=; b=JX3Ugs
+	k2+N3XPLpLN8dN27H1KjHEywKN3EHY9n7lowRNYEnRCFZE5CHXGbMbqu7jLAlbI2
+	1Iiy2GU0sSKfbSnm6vDRsSXggO8DzBx4Tu7Qrr0z8KWO1+WVHwj5ciJRQuQjqc3c
+	RR6doQQcw8SdtVJjGnxLuEWB/j8l1QykNHUBU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kfnJdyedO7PO+6XT80wcKyGdctJegI1o
+	LSwDQk7d5ZlTbbirMSQJv9eyAiypbBmMeyjw21kdGvqyPaw0eWRkBbp3RI33gkBO
+	beSdee9m5PBW8BY8GkZbs0nEXMq/j/p9put3+0jQ6dqPCkQLFOXhUwC8GgNBjzEL
+	/LPZIq8hTCM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 82E8F2D4D6;
+	Wed, 20 Jul 2016 16:46:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F0DD92D4D4;
+	Wed, 20 Jul 2016 16:46:18 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-Date:	Wed, 20 Jul 2016 13:40:13 -0700
-X-Google-Sender-Auth: k8-B3GKQMKg1CQKVc81lETVRt0U
-Message-ID: <CAPc5daVyjuTquUbYixTNj3hkwNeGd0fsTBe7OmxnEfoa_S1dnA@mail.gmail.com>
-Subject: Re: [ANNOUNCE] GitRev News edition 17
-To:	Christian Couder <christian.couder@gmail.com>
-Cc:	git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+To:	Jeff Hostetler <jeffhost@microsoft.com>
+Cc:	git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v1 1/6] Allow --porcelain[=<n>] in status and commit commands
+References: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com>
+	<1468966258-11191-2-git-send-email-jeffhost@microsoft.com>
+Date:	Wed, 20 Jul 2016 13:46:16 -0700
+In-Reply-To: <1468966258-11191-2-git-send-email-jeffhost@microsoft.com> (Jeff
+	Hostetler's message of "Tue, 19 Jul 2016 18:10:53 -0400")
+Message-ID: <xmqqshv4ca1z.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 028CB5E2-4EBB-11E6-97B7-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jul 20, 2016 at 1:38 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
->> Micronit. 2.9.1 (or 2.9.2) would not be a "major release". 2.9.0 was,
->> and x.y.z (z > 0) are "maintenance releases".
->
-> Yeah, I wondered about that when I saw :
->
-> https://github.com/git/git.github.io/commit/d2eb8fbbb30594d19fcda731c309ad03229dc5d5
->
-> but forgot to ask or do something about it...
+Jeff Hostetler <jeffhost@microsoft.com> writes:
 
-As long as it gets fixed quickly, no harm is done.
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+> index b0a294d..0791573 100644
+> --- a/Documentation/git-commit.txt
+> +++ b/Documentation/git-commit.txt
+> @@ -104,7 +104,7 @@ OPTIONS
+>  --branch::
+>  	Show the branch and tracking info even in short-format.
+>  
+> ---porcelain::
+> +--porcelain[=<version>]::
+>  	When doing a dry-run, give the output in a porcelain-ready
+>  	format. See linkgit:git-status[1] for details. Implies
+>  	`--dry-run`.
+
+I suspect that it would be easier to implement to allow "commit --porcelain",
+but I am not sure if it truly makes sense.  Not a new problem, though.
+
+> diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+> index e1e8f57..de97729 100644
+> --- a/Documentation/git-status.txt
+> +++ b/Documentation/git-status.txt
+> @@ -32,11 +32,14 @@ OPTIONS
+>  --branch::
+>  	Show the branch and tracking info even in short-format.
+>  
+> ---porcelain::
+> +--porcelain[=<version>]::
+>  	Give the output in an easy-to-parse format for scripts.
+>  	This is similar to the short output, but will remain stable
+>  	across Git versions and regardless of user configuration. See
+>  	below for details.
+> ++
+> +The version parameter is used to specify the format version.
+> +This is optional and defaults to the original version '1' format.
+
+I agree with Peff that "v1" would be easier to read, and also his
+comment on parsing using strcmp() to require exact matches and
+resetting to NONE, not UNSPECIFIED.
