@@ -6,61 +6,82 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0859720195
-	for <e@80x24.org>; Wed, 20 Jul 2016 02:56:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCB3F20195
+	for <e@80x24.org>; Wed, 20 Jul 2016 03:02:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752644AbcGTC4b (ORCPT <rfc822;e@80x24.org>);
-	Tue, 19 Jul 2016 22:56:31 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:42868 "EHLO dcvr.yhbt.net"
+	id S1753227AbcGTDCa (ORCPT <rfc822;e@80x24.org>);
+	Tue, 19 Jul 2016 23:02:30 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:43284 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752430AbcGTC4b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2016 22:56:31 -0400
+	id S1753202AbcGTDC1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2016 23:02:27 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54A2F20195;
-	Wed, 20 Jul 2016 02:56:30 +0000 (UTC)
-Date:	Wed, 20 Jul 2016 02:56:30 +0000
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5646B20195;
+	Wed, 20 Jul 2016 03:02:26 +0000 (UTC)
+Date:	Wed, 20 Jul 2016 03:02:26 +0000
 From:	Eric Wong <e@80x24.org>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git@vger.kernel.org
-Subject: [PATCH] config.mak.uname: set PERL_PATH for FreeBSD 5.0+
-Message-ID: <20160720025630.GA71874@plume>
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Stefan Beller <sbeller@google.com>,
+	David Turner <novalis@novalis.org>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: t7063 failure on FreeBSD 10.3 i386/amd64
+Message-ID: <20160720030226.GA7112@whir>
+References: <20160718223038.GA66056@plume>
+ <20160718225424.GA813@plume>
+ <CACsJy8CRHsyT8YLPYoHZnxCuMvF1W=S5iayy2eoHZhbSe_qmDg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <CACsJy8CRHsyT8YLPYoHZnxCuMvF1W=S5iayy2eoHZhbSe_qmDg@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Perl has not been part of the base system since FreeBSD 5.0:
+Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, Jul 19, 2016 at 12:54 AM, Eric Wong <e@80x24.org> wrote:
+> > Oops, forgot to Cc some folks who worked on this :x
+> >
+> > Filesystem is ufs and it fails regardless of whether
+> > soft-updates is enabled or not.
+> 
+> Nothing stands out to my eyes, so I'm going to install freebsd this
+> weekend. I hope ufs does not have any nasty surprise for me. Stay
+> tuned.
 
-	https://www.freebsd.org/releases/5.0R/relnotes-i386.html
+Thanks, this problem might be ufs-specific, tmpfs is fine.
+Tested tmpfs with:
 
-Signed-off-by: Eric Wong <e@80x24.org>
----
-  Does anybody still run git on FreeBSD 4.x or earlier?
-  4.11 was released a few months before git in 2005:
+	kldload tmpfs
+	mkdir /tmp/tmpfs
+	mount -t tmpfs tmpfs /tmp/tmpfs
 
-	https://www.freebsd.org/releases/
+(Documenting all this since much of this is new to me)
 
- config.mak.uname | 5 +++++
- 1 file changed, 5 insertions(+)
+I noticed FreeBSD now provides ready-to-run VM images along with
+normal installation stuff, including qcow2 ones for QEMU users,
+so that saves some time.
 
-diff --git a/config.mak.uname b/config.mak.uname
-index a88f139..6c29545 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -202,6 +202,11 @@ ifeq ($(uname_S),FreeBSD)
- 		NO_UINTMAX_T = YesPlease
- 		NO_STRTOUMAX = YesPlease
- 	endif
-+	R_MAJOR := $(shell expr "$(uname_R)" : '\([0-9]*\)\.')
-+
-+	ifeq ($(shell test "$(R_MAJOR)" -ge 5 && echo 1),1)
-+		PERL_PATH = /usr/local/bin/perl
-+	endif
- 	PYTHON_PATH = /usr/local/bin/python
- 	HAVE_PATHS_H = YesPlease
- 	GMTIME_UNRELIABLE_ERRORS = UnfortunatelyYes
--- 
-EW
+http://ftp.freebsd.org/pub/FreeBSD/releases/VM-IMAGES/10.3-RELEASE/amd64/Latest/FreeBSD-10.3-RELEASE-amd64.qcow2.xz
+
+Notes:
+
+* "-net user" because I'm lazy (ICMP ping won't work out-of-the-box)
+
+* kvm can be substituted for qemu-system-$ARCH for the KVM-less
+  or users lacking write access to /dev/kvm
+
+* hostfwd=... allows me to ssh into port 22215 from my Linux host
+  to hit port 22 in the guest
+
+* "dhclient vtnet0 && pkg install git gettext gmake python libiconv"
+  should be enough to get started
+
+kvm -smp 8 -m 2048 \
+	-drive if=virtio,file=FreeBSD-10.3-RELEASE-amd64.qcow2 \
+	-net nic,model=virtio \
+	-net user,hostfwd=tcp:127.0.0.1:22215-:22 \
+	-display curses
