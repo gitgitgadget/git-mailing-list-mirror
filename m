@@ -2,293 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A99EF2034E
-	for <e@80x24.org>; Wed, 20 Jul 2016 22:44:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45C9D203C1
+	for <e@80x24.org>; Wed, 20 Jul 2016 23:10:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932140AbcGTWoM (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 18:44:12 -0400
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:42895
-	"EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932133AbcGTWoK (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jul 2016 18:44:10 -0400
-X-Greylist: delayed 2335 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jul 2016 18:44:10 EDT
-DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1469051273;
-	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=bzEy8Fm4AXy7jstCrSSPNiMgLtetmOzarZbexOXZF8I=;
-	b=Ec28I5oZBwGYZRa7JQTfKDidvFodFpco2errK0fA/gt3X1kAv24f3FEKx3ZBKJb6
-	4t9SGxB+8shwkXCXb4OXf7e6WVALcx1zUNfRk7nqL4N7WjAVPHDff/IIflryU3LVuF/
-	uY9wAwGm/vUe9iuwg76Jkg1ozeyKmmDRClU/rS+o=
-From:	Pranit Bauva <pranit.bauva@gmail.com>
-To:	git@vger.kernel.org
-Message-ID: <010201560a4782ac-5add737e-3648-4ed6-a8a2-e451378a1782-000000@eu-west-1.amazonses.com>
-In-Reply-To: <010201560a4781be-e8418d6a-5996-45cd-b11b-ca25894ad7f2-000000@eu-west-1.amazonses.com>
-References: <010201560a4781be-e8418d6a-5996-45cd-b11b-ca25894ad7f2-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v10 09/12] bisect--helper: `bisect_write` shell function in
- C
+	id S1755450AbcGTXKO (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 19:10:14 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:38410 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755259AbcGTXKN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 19:10:13 -0400
+Received: by mail-wm0-f48.google.com with SMTP id o80so2622099wme.1
+        for <git@vger.kernel.org>; Wed, 20 Jul 2016 16:10:12 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=+6Hn4EhPUwQtk2evCmw5fjSAbJy3u761bE4MxnX4p18=;
+        b=Q8NCr0YQHto0EyA0IM019hkGrbnbu/WYaecgg8cJnEZ4P5Aef4uJfVyV+243rATkEp
+         SitB0qEXepdeJdco8hMJ+1BnXn9h5l0MNc7nhUB1v9v6lnRu927KWPjbmJtn1SW5d+gw
+         s/wuPpKhGpP2PWSstukG0HA5APm76s0lrLKyUF97wq/refcOnemEF6SH2hgJz3thmq/a
+         8a8/dWLiwidrnAs/zZuVdbJsGzOn1AC7DRc4aHZ2bpd4OKFZjUdnGjkUTrUQtDP1KqYO
+         +PLUrAgSYHNnJPVDGbsN5t1yUOqZ8SeLmpntGldroo5My1IL5mkxhbRcfx2vnhpfCC5g
+         LsEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=+6Hn4EhPUwQtk2evCmw5fjSAbJy3u761bE4MxnX4p18=;
+        b=Ot4V+BTFKSbtZ8W0UHsq3gqMiWrjKt1LZVP6gUwyvwQgTYOlqAusLC7j/2yfYOHKN6
+         TzrwWWI4jhkhGc4nWlM7xC4/YB1HbzdAcPKY8EyWxPykiFnUPovU0utyXAZW/O8Eoxrm
+         b2xolgIU72OTb5bQYsiGI0d3kA0jmXq5DtHG6++qs+mXh0VGamcc0FQGPXz6fUsqP4qd
+         WY8Wi2qTywFyGcZsNiLxyUXa4+cQLYj0DD7y8y5nh1VdBA+MSPTMUbffuDejV99//svO
+         us2pqWlrE3VmEplhopuXhZIL81fTt5lNpMdshda/4ERhwEExKXoBNj2TWbZ/pFTbfikl
+         nBLQ==
+X-Gm-Message-State: ALyK8tKLWIf7zBES0EEDyX74GFg0bGC2BboJZP/hSfX9T0+QhifxkSmbpwsJBW9HH0b7zg==
+X-Received: by 10.28.51.210 with SMTP id z201mr14163543wmz.98.1469056211990;
+        Wed, 20 Jul 2016 16:10:11 -0700 (PDT)
+Received: from [192.168.1.26] (daf247.neoplus.adsl.tpnet.pl. [83.23.5.247])
+        by smtp.googlemail.com with ESMTPSA id i80sm326921wmf.11.2016.07.20.16.10.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Jul 2016 16:10:11 -0700 (PDT)
+Subject: Re: How to generate feature branch statistics?
+To:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <CAOHAwykGkfY7M30jT8t0k6Gsdy5QSBHmAPiWYoKibjUgS-G6hg@mail.gmail.com>
+ <20160720131424.GC17469@sigill.intra.peff.net>
+ <xmqqd1m8du1b.fsf@gitster.mtv.corp.google.com>
+Cc:	Ernesto Maserati <ernesto.2.maserati@gmail.com>,
+	git@vger.kernel.org
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <579004CC.8090503@gmail.com>
+Date:	Thu, 21 Jul 2016 01:10:04 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:	Wed, 20 Jul 2016 21:47:53 +0000
-X-SES-Outgoing:	2016.07.20-54.240.7.19
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+In-Reply-To: <xmqqd1m8du1b.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Reimplement the `bisect_write` shell function in C and add a
-`bisect-write` subcommand to `git bisect--helper` to call it from
-git-bisect.sh
+W dniu 2016-07-20 o 20:49, Junio C Hamano pisze:
 
-Using `--bisect-write` subcommand is a temporary measure to port shell
-function in C so as to use the existing test suite. As more functions
-are ported, this subcommand will be retired and will be called by some
-other methods.
+> For our own history and workflow, the duration between the inception
+> of a topic branch and the time it gets merged to 'master' is not all
+> that interesting.
 
-Note: bisect_write() uses two variables namely TERM_GOOD and TERM_BAD
-from the global shell script thus we need to pass it to the subcommand
-using the arguments. We then store them in a struct bisect_terms and
-pass the memory address around functions.
+Nb. if I haven't messed something up (the git history is not simple
+merging of topic branches into mainline), the shortest time from
+creating a branch to merging it in git.git is 7 seconds (probably
+it was a bugfix-type of a topic branch), the longest if I did it
+correctly is slightly less than 4 years (???): 641830c.
 
-This patch also introduces new methods namely bisect_state_init() and
-bisect_terms_release() for easy memory management for the struct
-bisect_terms.
+-- 
+Jakub Narêbski
 
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- builtin/bisect--helper.c | 97 ++++++++++++++++++++++++++++++++++++++++++++----
- git-bisect.sh            | 25 ++-----------
- 2 files changed, 94 insertions(+), 28 deletions(-)
-
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 86bb334..d1d12f2 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -22,9 +22,27 @@ static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
- 	N_("git bisect--helper --bisect-clean-state"),
- 	N_("git bisect--helper --bisect-reset [<commit>]"),
-+	N_("git bisect--helper --bisect-write <state> <revision> <TERM_GOOD> <TERM_BAD> [<nolog>]"),
- 	NULL
- };
- 
-+struct bisect_terms {
-+	struct strbuf term_good;
-+	struct strbuf term_bad;
-+};
-+
-+static void bisect_terms_init(struct bisect_terms *terms)
-+{
-+	strbuf_init(&terms->term_good, 0);
-+	strbuf_init(&terms->term_bad, 0);
-+}
-+
-+static void bisect_terms_release(struct bisect_terms *terms)
-+{
-+	strbuf_release(&terms->term_good);
-+	strbuf_release(&terms->term_bad);
-+}
-+
- /*
-  * Check whether the string `term` belongs to the set of strings
-  * included in the variable arguments.
-@@ -188,6 +206,52 @@ static int check_expected_revs(const char **revs, int rev_nr)
- 	return 0;
- }
- 
-+static int bisect_write(const char *state, const char *rev,
-+			const struct bisect_terms *terms, int nolog)
-+{
-+	struct strbuf tag = STRBUF_INIT;
-+	struct strbuf commit_name = STRBUF_INIT;
-+	struct object_id oid;
-+	struct commit *commit;
-+	struct pretty_print_context pp = {0};
-+	FILE *fp;
-+
-+	if (!strcmp(state, terms->term_bad.buf))
-+		strbuf_addf(&tag, "refs/bisect/%s", state);
-+	else if (one_of(state, terms->term_good.buf, "skip", NULL))
-+		strbuf_addf(&tag, "refs/bisect/%s-%s", state, rev);
-+	else
-+		return error(_("Bad bisect_write argument: %s"), state);
-+
-+	if (get_oid(rev, &oid)) {
-+		strbuf_release(&tag);
-+		return error(_("couldn't get the oid of the rev '%s'"), rev);
-+	}
-+
-+	if (update_ref(NULL, tag.buf, oid.hash, NULL, 0,
-+		       UPDATE_REFS_MSG_ON_ERR)) {
-+		strbuf_release(&tag);
-+		return -1;
-+	}
-+	strbuf_release(&tag);
-+
-+	fp = fopen(git_path_bisect_log(), "a");
-+	if (!fp)
-+		return error_errno(_("couldn't open the file '%s'"), git_path_bisect_log());
-+
-+	commit = lookup_commit_reference(oid.hash);
-+	format_commit_message(commit, "%s", &commit_name, &pp);
-+	fprintf(fp, "# %s: [%s] %s\n", state, sha1_to_hex(oid.hash),
-+		commit_name.buf);
-+	strbuf_release(&commit_name);
-+
-+	if (!nolog)
-+		fprintf(fp, "git bisect %s %s\n", state, rev);
-+
-+	fclose(fp);
-+	return 0;
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
-@@ -195,9 +259,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		WRITE_TERMS,
- 		BISECT_CLEAN_STATE,
- 		BISECT_RESET,
--		CHECK_EXPECTED_REVS
-+		CHECK_EXPECTED_REVS,
-+		BISECT_WRITE
- 	} cmdmode = 0;
--	int no_checkout = 0;
-+	int no_checkout = 0, res = 0;
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "next-all", &cmdmode,
- 			 N_("perform 'git bisect next'"), NEXT_ALL),
-@@ -209,10 +274,14 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("reset the bisection state"), BISECT_RESET),
- 		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
- 			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
-+		OPT_CMDMODE(0, "bisect-write", &cmdmode,
-+			 N_("write out the bisection state in BISECT_LOG"), BISECT_WRITE),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_END()
- 	};
-+	struct bisect_terms terms;
-+	bisect_terms_init(&terms);
- 
- 	argc = parse_options(argc, argv, prefix, options,
- 			     git_bisect_helper_usage, 0);
-@@ -221,24 +290,38 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_bisect_helper_usage, options);
- 
- 	switch (cmdmode) {
-+	int nolog;
- 	case NEXT_ALL:
- 		return bisect_next_all(prefix, no_checkout);
- 	case WRITE_TERMS:
- 		if (argc != 2)
- 			die(_("--write-terms requires two arguments"));
--		return write_terms(argv[0], argv[1]);
-+		res = write_terms(argv[0], argv[1]);
-+		break;
- 	case BISECT_CLEAN_STATE:
- 		if (argc != 0)
- 			die(_("--bisect-clean-state requires no arguments"));
--		return bisect_clean_state();
-+		res = bisect_clean_state();
-+		break;
- 	case BISECT_RESET:
- 		if (argc > 1)
- 			die(_("--bisect-reset requires either zero or one arguments"));
--		return bisect_reset(argc ? argv[0] : NULL);
-+		res = bisect_reset(argc ? argv[0] : NULL);
-+		break;
- 	case CHECK_EXPECTED_REVS:
--		return check_expected_revs(argv, argc);
-+		res = check_expected_revs(argv, argc);
-+		break;
-+	case BISECT_WRITE:
-+		if (argc != 4 && argc != 5)
-+			die(_("--bisect-write requires either 4 or 5 arguments"));
-+		nolog = (argc == 5) && !strcmp(argv[4], "nolog");
-+		strbuf_addstr(&terms.term_good, argv[2]);
-+		strbuf_addstr(&terms.term_bad, argv[3]);
-+		res = bisect_write(argv[0], argv[1], &terms, nolog);
-+		break;
- 	default:
- 		die("BUG: unknown subcommand '%d'", cmdmode);
- 	}
--	return 0;
-+	bisect_terms_release(&terms);
-+	return res;
- }
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 4f6545e..b9896a4 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -145,7 +145,7 @@ bisect_start() {
- 		0) state=$TERM_BAD ; bad_seen=1 ;;
- 		*) state=$TERM_GOOD ;;
- 		esac
--		eval="$eval bisect_write '$state' '$rev' 'nolog' &&"
-+		eval="$eval git bisect--helper --bisect-write '$state' '$rev' '$TERM_GOOD' '$TERM_BAD' 'nolog' &&"
- 	done
- 	#
- 	# Verify HEAD.
-@@ -221,23 +221,6 @@ bisect_start() {
- 	trap '-' 0
- }
- 
--bisect_write() {
--	state="$1"
--	rev="$2"
--	nolog="$3"
--	case "$state" in
--		"$TERM_BAD")
--			tag="$state" ;;
--		"$TERM_GOOD"|skip)
--			tag="$state"-"$rev" ;;
--		*)
--			die "$(eval_gettext "Bad bisect_write argument: \$state")" ;;
--	esac
--	git update-ref "refs/bisect/$tag" "$rev" || exit
--	echo "# $state: $(git show-branch $rev)" >>"$GIT_DIR/BISECT_LOG"
--	test -n "$nolog" || echo "git bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
--}
--
- bisect_skip() {
- 	all=''
- 	for arg in "$@"
-@@ -263,7 +246,7 @@ bisect_state() {
- 	1,"$TERM_BAD"|1,"$TERM_GOOD"|1,skip)
- 		rev=$(git rev-parse --verify $(bisect_head)) ||
- 			die "$(gettext "Bad rev input: $(bisect_head)")"
--		bisect_write "$state" "$rev"
-+		git bisect--helper --bisect-write "$state" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit
- 		git bisect--helper --check-expected-revs "$rev" ;;
- 	2,"$TERM_BAD"|*,"$TERM_GOOD"|*,skip)
- 		shift
-@@ -276,7 +259,7 @@ bisect_state() {
- 		done
- 		for rev in $hash_list
- 		do
--			bisect_write "$state" "$rev"
-+			git bisect--helper --bisect-write "$state" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit
- 		done
- 		git bisect--helper --check-expected-revs $hash_list ;;
- 	*,"$TERM_BAD")
-@@ -413,7 +396,7 @@ bisect_replay () {
- 			cmd="bisect_start $rev"
- 			eval "$cmd" ;;
- 		"$TERM_GOOD"|"$TERM_BAD"|skip)
--			bisect_write "$command" "$rev" ;;
-+			git bisect--helper --bisect-write "$command" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit;;
- 		terms)
- 			bisect_terms $rev ;;
- 		*)
-
---
-https://github.com/git/git/pull/273
