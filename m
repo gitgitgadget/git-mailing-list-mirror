@@ -6,36 +6,37 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A701202F3
-	for <e@80x24.org>; Wed, 20 Jul 2016 15:50:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDA242034E
+	for <e@80x24.org>; Wed, 20 Jul 2016 15:53:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755068AbcGTPuQ (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 11:50:16 -0400
-Received: from siwi.pair.com ([209.68.5.199]:44248 "EHLO siwi.pair.com"
+	id S1754961AbcGTPx1 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 11:53:27 -0400
+Received: from siwi.pair.com ([209.68.5.199]:35871 "EHLO siwi.pair.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754924AbcGTPuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 11:50:12 -0400
+	id S1754930AbcGTPx0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 11:53:26 -0400
 Received: from [10.160.15.137] (unknown [167.220.148.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 1506984626;
-	Wed, 20 Jul 2016 11:50:11 -0400 (EDT)
-Subject: Re: [PATCH v1 6/6] Unit tests for V2 porcelain status
-To:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
-	git@vger.kernel.org
+	by siwi.pair.com (Postfix) with ESMTPSA id A8D498461A;
+	Wed, 20 Jul 2016 11:53:25 -0400 (EDT)
+Subject: Re: [PATCH v1 2/6] Status and checkout unit tests for
+ --porcelain[=<n>]
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff Hostetler <jeffhost@microsoft.com>
 References: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com>
- <1468966258-11191-7-git-send-email-jeffhost@microsoft.com>
- <578F9923.3000403@gmail.com>
-Cc:	peff@peff.net, gitster@pobox.com
+ <1468966258-11191-3-git-send-email-jeffhost@microsoft.com>
+ <alpine.DEB.2.20.1607201710240.14111@virtualbox>
+Cc:	git@vger.kernel.org, peff@peff.net, gitster@pobox.com
 From:	Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <578F9D2A.2030204@jeffhostetler.com>
-Date:	Wed, 20 Jul 2016 11:47:54 -0400
+Message-ID: <578F9DED.6010309@jeffhostetler.com>
+Date:	Wed, 20 Jul 2016 11:51:09 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
  Thunderbird/38.6.0
 MIME-Version: 1.0
-In-Reply-To: <578F9923.3000403@gmail.com>
-Content-Type: text/plain; charset=iso-8859-2; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <alpine.DEB.2.20.1607201710240.14111@virtualbox>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -43,27 +44,32 @@ X-Mailing-List:	git@vger.kernel.org
 
 
 
-On 07/20/2016 11:30 AM, Jakub Narêbski wrote:
-> W dniu 2016-07-20 o 00:10, Jeff Hostetler pisze:
->> +test_expect_success pre_initial_commit_0 '
->> +	printf "## branch: (initial) master\n" >expected &&
->> +	printf "?? actual\n" >>expected &&
->> +	printf "?? dir1/\n" >>expected &&
->> +	printf "?? expected\n" >>expected &&
->> +	printf "?? file_x\n" >>expected &&
->> +	printf "?? file_y\n" >>expected &&
->> +	printf "?? file_z\n" >>expected &&
+On 07/20/2016 11:19 AM, Johannes Schindelin wrote:
+> Hi Jeff,
 >
-> Why not use heredoc syntax (cat <<\EOF), or prepare a file
-> with expected output in the testsuite?
+> On Tue, 19 Jul 2016, Jeff Hostetler wrote:
 >
+>> Simple unit tests to validate the argument parsing.
+>>
+>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+>
+> They are simple alright, but do we really need so many of them? I would
+> like to keep the ones in t7060, but I do not think that we necessarily
+> have to add the t7501 ones.
+>
+> I know I am a bit at odds here with Junio, who frequently prefers more
+> tests. It's just that I have to run the complete test suite so often and
+> it does take 30-45 minutes to run here (due to the fact that the test
+> suite exercises quite a lot of the POSIX emulation layer via shell
+> scripting).
+>
+> So do not take my suggestions as the sole basis for deciding how to go
+> from here.
 
-The tests involving renames needed to embed a tab character
-in the output and hiding a tab character in a heredoc seemed
-error prone.  So to be consistent I made them all printf-style.
-
-Also, some of the tests include SHAs for the commit and for
-file content, so having pre-computed expected output is awkward.
-Granted we could hard code the file SHAs, but not the commits.
+I'm open to suggestion here.  I mainly wanted to be able to
+prove that adding "=1" didn't affect the output and that an invalid
+parameter throws.  We could eliminate several of the "more trivial"
+ones if that would help.
 
 Jeff
+
