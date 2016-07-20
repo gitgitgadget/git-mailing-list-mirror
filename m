@@ -2,132 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46C3E1F744
-	for <e@80x24.org>; Wed, 20 Jul 2016 13:56:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0ED93202F3
+	for <e@80x24.org>; Wed, 20 Jul 2016 14:44:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753578AbcGTN4b (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 09:56:31 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:38174 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752947AbcGTN43 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 09:56:29 -0400
-Received: by mail-wm0-f49.google.com with SMTP id o80so70392288wme.1
-        for <git@vger.kernel.org>; Wed, 20 Jul 2016 06:56:28 -0700 (PDT)
+	id S1754468AbcGTOor (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 10:44:47 -0400
+Received: from mail-it0-f43.google.com ([209.85.214.43]:35991 "EHLO
+	mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754398AbcGTOoi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 10:44:38 -0400
+Received: by mail-it0-f43.google.com with SMTP id f6so116862130ith.1
+        for <git@vger.kernel.org>; Wed, 20 Jul 2016 07:44:37 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=2GqOm7iAObaGrzFYrb+0N9MxgEMltUL4iOee2MiNQr4=;
-        b=I+raihQI5q08I4Ef2vmEDM//3+rOgLmslNf7pZmUhll9kcfdKkgPCzS8Ua5GbE9x5P
-         I2HLwve9k2YoINcZdL8jblZspaIVtUEutIpRSYnOvNuiRscyzCjBsBzTvI7mbtkeFWBp
-         yscRDLBqZdZ1r59Th64AphziJv/YirBwLmaIINC6yRFEChZdh3mRtlVWylBDEkw/u9Is
-         zh4v1KHUrf+UYDkONhbMJ/476n99XLsHJ7xsmkJ1btgYcNrN+TZR9o89/XTIO1ceX/Ty
-         HdPcaF14JCoEDiXJM+2oPJBm1HNKlv87nZG2pmh39HYRzu41keiJyYx37hltRyTkX1XH
-         KEJA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=CUBLtQi8DZiSlKjRETuwwJ4C0+EFpbhKudjE4pLEOMw=;
+        b=khcgZOFT+IBbXVbdJEMYod1XIrhgJYiWNNX141StTNceMCFoqI0PUHoRCMvtMbkhFC
+         1ByJhQdgCvv6k0wJd+CPqPvvQPkAqHV0EPBlgcNR6wHX9qLS2nI2+u0a6Ui4CX/szVx1
+         74LKnHbBvbpMmO3JoDqx9iUSttvXQjESrCB59DffPQMEUbRh1I7zY0qJwNgRdEtfiC0P
+         YYQUpsEHSDOWJ1gaQMpSziaZiwyZ+oblGOuc6z1KXZ3flklC3gfnXEOLYmV34ss0kPRY
+         UdsuuQlaVHLvLmFoca0t0f1mHCFnSLpjoJxgaawq1f0eeJWm23kytjbQlL+xprKTFZzJ
+         37OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:newsgroups:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=2GqOm7iAObaGrzFYrb+0N9MxgEMltUL4iOee2MiNQr4=;
-        b=itHnFXzdsIm3Rl65g0/sGp0J5Obm2VWZyjfN/yKML019Bg7fYRD/S8f/Nmw0T9hn5d
-         BA3fzNkishO1tNcctNK9o0x56FeamngsTmPQTvD9OiMTdstE1STLS21J/tfSYylpd0Za
-         kFHEwicr4/sgp0z2zNSHbRoefZI7AbJiXi+UMNzM9JVpfc6gkE0HKUysK4aqd0VX1l/M
-         7TgJI3o5+K7yC/u8//H7BN0bBXsz+W8VOYlwCgy+I1/BeIvGh35ev+76XLz9dWpETEb1
-         RYqTaHahCSQvbggJObaQISuCZWM9Eu3MEU5Vqqp9Cv+mBCBJjN5pb5Navd8AhVE8b95M
-         HAQQ==
-X-Gm-Message-State: ALyK8tIpldMcY4aTKGdafP+PrhShHdRieU69ZaoY7y2v2i3VTJXLEzzPzwaW4D4hFwnj2g==
-X-Received: by 10.194.78.80 with SMTP id z16mr1498561wjw.17.1469022987922;
-        Wed, 20 Jul 2016 06:56:27 -0700 (PDT)
-Received: from [192.168.1.26] (daf247.neoplus.adsl.tpnet.pl. [83.23.5.247])
-        by smtp.googlemail.com with ESMTPSA id v203sm5320659wmv.2.2016.07.20.06.56.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Jul 2016 06:56:27 -0700 (PDT)
-Subject: Re: How to generate feature branch statistics?
-To:	Ernesto Maserati <ernesto.2.maserati@gmail.com>,
-	git@vger.kernel.org
-References: <CAOHAwykGkfY7M30jT8t0k6Gsdy5QSBHmAPiWYoKibjUgS-G6hg@mail.gmail.com>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <578F8306.3070306@gmail.com>
-Date:	Wed, 20 Jul 2016 15:56:22 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=CUBLtQi8DZiSlKjRETuwwJ4C0+EFpbhKudjE4pLEOMw=;
+        b=IeLsLyaY3/+EboUNx6/SA9rKGpMXEmRkMSfsFOKYAnLJD4EAnRyai6slNNrD1cFNbh
+         shnq+/tCmHmFl8eA29BUgAtp3agJYUJIEmDu9RLEhWZuMOc5QdiDdEVThinJUDPObd4N
+         DXlPH1Y+pXKbgYyQL2M4eFwYZ5CJ/QsWDjpRhKm9KX4WuX66Ang+3jtRXz9NBej3oPs2
+         YLcKjgmtbe7ZFUwaAQxttZToT/B1MEBJMZUxmA8nPItT+dBeqchPybQeRWRbVj9lOgNk
+         mrvPtGKpMTY3K0ucrwKPSAkdQpd4EOCpiOr/HLKgTwW1PKXTJkwa5bo22DcDA+rfcFUF
+         OEug==
+X-Gm-Message-State: ALyK8tLL2FUPelhOYmUPy0AEEC50rNxX9/wvezV5K8OJhS8/ECPlgFXYB6XWM+7stJ+HQ1rOPMbYr6OceKd0rg==
+X-Received: by 10.36.91.134 with SMTP id g128mr10281453itb.42.1469025877303;
+ Wed, 20 Jul 2016 07:44:37 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAOHAwykGkfY7M30jT8t0k6Gsdy5QSBHmAPiWYoKibjUgS-G6hg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.64.225.235 with HTTP; Wed, 20 Jul 2016 07:44:07 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1607201428030.14111@virtualbox>
+References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com>
+ <20160717142157.GA6644@vauxhall.crustytoothpaste.net> <CACsJy8C+2=qv5Vu=tGeDTK_Q+XSAv3qEJw0nrHbEWU7psDf=Cg@mail.gmail.com>
+ <20160717154234.GC6644@vauxhall.crustytoothpaste.net> <20160717162349.GB11276@thunk.org>
+ <20160717220417.GE6644@vauxhall.crustytoothpaste.net> <1468804249.2037.0@smtp.gmail.com>
+ <alpine.DEB.2.20.1607180905320.28832@virtualbox> <CAPp-Vran2GZFTyJHb2qxgh3uRpM0ar7K2+VbbLcBK74_7aaxVw@mail.gmail.com>
+ <alpine.DEB.2.20.1607181750470.3472@virtualbox> <CACsJy8Ba=c+-WV2TsY768_fTDO2KesS1b6BK7kdykNY6gkh=UQ@mail.gmail.com>
+ <alpine.DEB.2.20.1607190910370.3472@virtualbox> <CACsJy8CSUu=AemQ-7uxth_2M=ko_KDGsdObwYdiE=L4OMKcVZw@mail.gmail.com>
+ <alpine.DEB.2.02.1607191032270.25425@nftneq.ynat.uz> <CACsJy8Bvqt9r2dRtRfx1C-3Fp16z3SJ=hp0i7-itwFwfEfZwTw@mail.gmail.com>
+ <alpine.DEB.2.02.1607191057170.25425@nftneq.ynat.uz> <CACsJy8D1RtwVF4ZtRHV2Z=huTqRBp8Du5GMZq9qxwXDZezBF2g@mail.gmail.com>
+ <alpine.DEB.2.20.1607201428030.14111@virtualbox>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Wed, 20 Jul 2016 16:44:07 +0200
+Message-ID: <CACsJy8A3ZTfRRNuYXYD-nzXm6KXHu8cHU6fzfysJxfW0EggKNA@mail.gmail.com>
+Subject: Re: Git and SHA-1 security (again)
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	David Lang <david@lang.hm>, Herczeg Zsolt <zsolt94@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	"Theodore Ts'o" <tytso@mit.edu>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-07-20 o 10:05, Ernesto Maserati pisze:
+On Wed, Jul 20, 2016 at 2:28 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> But that strategy *still* ignores the distributed nature of Git. Just
+> because *you* make that merge at a certain point does not necessarily mean
+> that I make it at that point, too.
+>
+> Any approach that tries to have one single point of conversion will most
+> likely fall short of a solution.
 
-> I assume that feature branches are not frequently enough merged into
-> master. Because of that we discover bugs later than we could with a more
-> continuous code integration. I don't want to discuss here whether feature
-> branches are good or bad.
-> 
-> I want just to ask is there a way how to generate a statistic for the
-> average duration of feature branches until they are merged to the master? I
-> would like to know if it is 1 day, 2 days or lets say 8 or 17 days. Also it
-> would be interesting to see the statistical outliers.
-> 
-> I hope my motivation became clear and what kind of git repository data I
-> would like to produce.
-> 
-> Any ideas?
+OK I see the difference in our views now. To me an sha256 repo would
+see an sha1 repo as a _foreign_ DVCS, pretty much like git sees
+mercurial now. So a transition from sha1 to sha256 is not that
+different from cvs -> svn -> a dvcs bubble -> git.
 
-There are at least two tools to generate statistics about git repository,
-namely Gitstat (https://sourceforge.net/projects/gitstat) and GitStats
-(https://github.com/hoxu/gitstats), both generating repo statistics as
-a web page. You can probably find more... but I don't know if any includes
-the statistics you need.
+> To be honest, I am less concerned about the GPG-signed commits (after all,
+> after switching to a more secure hash algorithm, a maintainer could
+> cross-sign all signed commits, or only the branch tips or tags, as new
+> tags, to reinstitute trust).
+>
+> I am much more concerned about references to commits, both inside and
+> outside the repository. That is, if I read anywhere on the internet about
+> Git having added support for `git add --chmod=+x <file>` in 4e55ed3 (add:
+> add --chmod=+x / --chmod=-x options, 2016-05-31), I want to find that
+> commit by that reference.
+>
+> And I am of course concerned what should happen if a user wants to fetch
+> from, or push to, a SHA-1-hashed remote repository into, or from, a
+> SHA-256-hashed local one.
 
-I assume that you have some way of determining if the merge in 'master'
-branch is a merge of a topic branch, or of long-lived graduation branch
-(e.g. 'maint' or equivalent). To simplify the situation, I assume that
-the only merges in master are merges of topic branches:
-
-  git rev-list --min-parents=2 master | 
-  while read merge_rev; do 
-
-You might want to add "--grep=maint --invert-grep" or something like
-that to exclude merges of 'maint' branch.
-	
-We can get date of merge (authordate with %ad/%at, or committerdate
-with %cd/%ct), as an epoch (seconds since 1970 -- which is good for
-comparing datetimes and getting the interval between two events)
-
-     MERGE_DATE=$(git show -s --date=format:%s --pretty=%ad $merge_rev)
-
-Assuming that topic branches are always merged using two-head merge
-as a second parent (--first-parent ancestry for master in master branch
-only), then we can get the first revision on a merged topic branch with
-
-     FIRST_REV=$(git rev-list $merge_rev^2 ^$merge_rev^1 | tail -1)
-
-We can extract the date from this revision in the same way
-
-     FIRST_DATE=$(git show -s --pretty=%at $FIRST_REV)
-
-Print the difference (here to standard output, you might want to write
-to a file)
-
-     echo $(expr $MERGE_DATE - $FIRST_DATE)
-
-And finish the loop.
-
-  done
-
-Then pass the output to some histogramming or statistics tool... or use
-a spreadsheet. Note the results are in seconds.
-
-HTH (not checked much)
+to follow the above, in my view, interaction with sha1 repos go
+through some conversion bridges like what we have with hg and svn. I
+don't know if we are going this route. It's certainly simpler and
+people already have experiences (from previous migration) to prepare
+for it.
 -- 
-Jakub Narębski
+Duy
