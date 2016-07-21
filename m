@@ -2,80 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E242203C2
-	for <e@80x24.org>; Thu, 21 Jul 2016 14:32:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65146203C2
+	for <e@80x24.org>; Thu, 21 Jul 2016 14:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752806AbcGUOc0 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 10:32:26 -0400
-Received: from mout.gmx.net ([212.227.17.22]:61047 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752435AbcGUOcY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 10:32:24 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MYwQh-1bn13R1IXr-00Vh9T; Thu, 21 Jul 2016 16:32:18
- +0200
-Date:	Thu, 21 Jul 2016 16:31:34 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Christian Couder <christian.couder@gmail.com>
-cc:	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Subject: Re: [ANNOUNCE] GitRev News edition 17
-In-Reply-To: <CAP8UFD1TWYct7OJDcP+w8AYNTroquZ++T_1ovt-Z7SrBtn_S+Q@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1607211631100.14111@virtualbox>
-References: <CAP8UFD2PjKHkcs-EWzDU6eWF9ar7BzOxRB838iFr6iDAaGnkeA@mail.gmail.com> <CAPc5daXoL+v-YWy-EQ=d-8m9o8twv6Cs5U_NL14KGzPMVNQUPg@mail.gmail.com> <CAP8UFD1TWYct7OJDcP+w8AYNTroquZ++T_1ovt-Z7SrBtn_S+Q@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1752924AbcGUOsy (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 10:48:54 -0400
+Received: from smtp146.dfw.emailsrvr.com ([67.192.241.146]:33491 "EHLO
+	smtp146.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752658AbcGUOsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 10:48:52 -0400
+X-Greylist: delayed 366 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jul 2016 10:48:52 EDT
+Received: from smtp19.relay.dfw1a.emailsrvr.com (localhost [127.0.0.1])
+	by smtp19.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id C21F940105;
+	Thu, 21 Jul 2016 10:42:45 -0400 (EDT)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp19.relay.dfw1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 59552400E3;
+	Thu, 21 Jul 2016 10:42:45 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.5.4);
+	Thu, 21 Jul 2016 10:42:45 -0400
+Subject: Re: [PATCH v4 4/8] doc: give headings for the two and three dot
+ notations
+To:	Philip Oakley <philipoakley@iee.org>, GitList <git@vger.kernel.org>
+References: <20160711202518.532-1-philipoakley@iee.org>
+ <20160720211007.5520-1-philipoakley@iee.org>
+ <20160720211007.5520-5-philipoakley@iee.org>
+Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+From:	Marc Branchaud <marcnarc@xiplink.com>
+Message-ID: <5790DF64.8030603@xiplink.com>
+Date:	Thu, 21 Jul 2016 10:42:44 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Vqr2ig1kRJhbP9Yh7OSctPaYgI9kiQTVi0IC4svnmJhMZ2J04YS
- p5nemwca6BzRM7X8R4VDWtHWFroSoGITy9TnBaGjbh2OMcbFzEi9TMgj2l3w1B76FSAllnR
- WuePLg2+Cl0YG4jqHtndhuEA9MXg3zGaL+AQvHvVD3oUUbLP2UHog9gd54YG3sAX5W0+Omp
- ivqj5d97kTye6nAwg6A4A==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:/f2cHSb+ca0=:SefBfVdA93aI9bP7GSXIPM
- cblZvFBLRaABMPWOvLd+D8L2cyNC4hSY2PvG/wbXsEGzWdxsa00IsJr+ceL6W8YoUJewWBUW0
- QON5WlWQYTm4lsBHc3NpLI/NcH3Iu8sGros6bIM5h7FZIqW7jY7sKgtbbx7i6k2oMOufovknB
- 9iHxoIdB8FzvgqtzW9XMtDIrhBZtXDgnl7IUx+JH+oMvgdQqP9wG+geLOsIjebPixjk7eG4Ie
- qh2pFAsgQB/rN4LGDijmpkQ44uKqoOBqrcgPQ62iPvk22OJiz3IisG0tQrrZDYRNIVfwevgXJ
- mDpT7SZ3WxYUQ5Km4SOKDcSD8G2GqdQO+HU/EczqwZqAdNAVc13I9xbryJuBIBey5fML8RmFb
- 4LyHn5c7lNabR94iaUd7PYbddXFX5cVzY6uH0oqWyOdEaouR1hPAAojQiq5Z2Ib2mofL9bzOq
- W7yX0H+UY2pcdU+sM4CvA93qe0BxXV3sEgXEymbP6gTpHWdEKy1NPVyUXJhrv7rQ/CQItRd0o
- Ub+pu1WXYWP64mwNHtBO1w8R9De82CH3VlrNA8KLielX25braD0Qe8oTxWezu2Uqd6pW4uVc/
- VX9Xo1Ut0FfR9/hVHzLQM4pVHZ/PyrGGpVCfQ8bNabn93KWoxN+csqu4rK8ZSHry+GcOEuv0S
- ehNZVXT/mV6YkPm4mDXh4JVsc6ZgBlclrxxs2A3/3KAyOkROwOrWvjR3k3CKIxNwP4s45IGL7
- 7VsqeJn4ZKIOQa2z9XY58kxrtObiOaNfpXwIh9gHdqk9QrRkuIXjo2EevRdx3b4G2mE8aBbmY
- VA7a6JR
+In-Reply-To: <20160720211007.5520-5-philipoakley@iee.org>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+On 2016-07-20 05:10 PM, Philip Oakley wrote:
+> While there, also break out the other shorthand notations and
+> add a title for the revision range summary (which also appears
+> in git-rev-parse, so keep it mixed case).
+>
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+> ---
+>   Documentation/revisions.txt | 58 ++++++++++++++++++++++++++++-----------------
+>   1 file changed, 36 insertions(+), 22 deletions(-)
+>
+> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+> index 6e9cd41..5b37283 100644
+> --- a/Documentation/revisions.txt
+> +++ b/Documentation/revisions.txt
+> @@ -242,35 +242,49 @@ specifying a single revision with the notation described in the
+>   previous section means the set of commits reachable from that
+>   commit, following the commit ancestry chain.
+>
+> -To exclude commits reachable from a commit, a prefix '{caret}'
+> -notation is used.  E.g. '{caret}r1 r2' means commits reachable
+> -from 'r2' but exclude the ones reachable from 'r1'.
+> -
+> -This set operation appears so often that there is a shorthand
+> -for it.  When you have two commits 'r1' and 'r2' (named according
+> -to the syntax explained in SPECIFYING REVISIONS above), you can ask
+> -for commits that are reachable from r2 excluding those that are reachable
+> -from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
+> -
+> -A similar notation 'r1\...r2' is called symmetric difference
+> -of 'r1' and 'r2' and is defined as
+> -'r1 r2 --not $(git merge-base --all r1 r2)'.
+> -It is the set of commits that are reachable from either one of
+> -'r1' (left side) or 'r2' (right side) but not from both.
+> -
+> -In these two shorthands, you can omit one end and let it default to HEAD.
+> +Commit Exclusions
+> +~~~~~~~~~~~~~~~~~
+> +
+> +'{caret}<rev>' (caret) Notation::
+> + To exclude commits reachable from a commit, a prefix '{caret}'
+> + notation is used.  E.g. '{caret}r1 r2' means commits reachable
+> + from 'r2' but exclude the ones reachable from 'r1'.
+> +
+> +Dotted Range Notations
+> +~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +The '..' (two-dot) Range Notation::
+> + The '{caret}r1 r2' set operation appears so often that there is a shorthand
+> + for it.  When you have two commits 'r1' and 'r2' (named according
+> + to the syntax explained in SPECIFYING REVISIONS above), you can ask
+> + for commits that are reachable from r2 excluding those that are reachable
+> + from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
+> +
+> +The '...' (three dot) Symmetric Difference Notation::
+> + A similar notation 'r1\...r2' is called symmetric difference
 
-On Wed, 20 Jul 2016, Christian Couder wrote:
+s/called/called the/
 
-> On Wed, Jul 20, 2016 at 8:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > On Wed, Jul 20, 2016 at 5:58 AM, Christian Couder
-> > <christian.couder@gmail.com> wrote:
-> >> Hi everyone,
-> >>
-> >> I'm happy announce that the 17th edition of Git Rev News is now published:
-> >>
-> >> https://git.github.io/rev_news/2016/07/20/edition-17/
-> >
-> > Micronit. 2.9.1 (or 2.9.2) would not be a "major release". 2.9.0 was,
-> > and x.y.z (z > 0) are "maintenance releases".
-> 
-> Yeah, I wondered about that when I saw :
-> 
-> https://github.com/git/git.github.io/commit/d2eb8fbbb30594d19fcda731c309ad03229dc5d5
-> 
-> but forgot to ask or do something about it...
+> + of 'r1' and 'r2' and is defined as
+> + 'r1 r2 --not $(git merge-base --all r1 r2)'.
+> + It is the set of commits that are reachable from either one of
+> + 'r1' (left side) or 'r2' (right side) but not from both.
+> +
+> +In these two shorthand notations, you can omit one end and let it default to HEAD.
+>   For example, 'origin..' is a shorthand for 'origin..HEAD' and asks "What
+>   did I do since I forked from the origin branch?"  Similarly, '..origin'
+>   is a shorthand for 'HEAD..origin' and asks "What did the origin do since
+>   I forked from them?"  Note that '..' would mean 'HEAD..HEAD' which is an
+>   empty range that is both reachable and unreachable from HEAD.
+>
+> -Two other shorthands for naming a set that is formed by a commit
+> -and its parent commits exist.  The 'r1{caret}@' notation means all
+> -parents of 'r1'.  'r1{caret}!' includes commit 'r1' but excludes
+> -all of its parents.
+> +Special '<rev>{caret}' Shorthand Notations
+> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sorry, pure copy-paste error.
+Sorry, but this header also does not render properly in the man page. 
+Maybe just "Special {caret} Shorthand Notations"?  (But read on!)
 
-Ciao,
-Dscho
+> +Two other shorthands exist, particularly useful for merge commits, is
+> +for naming a set that is formed by a commit and its parent commits.
+>
+> -To summarize:
+> +The 'r1{caret}@' notation means all parents of 'r1'.
+> +
+> +'r1{caret}!' includes commit 'r1' but excludes all of its parents.
+
+My immediate thought upon reading this is "Why not just use 'r1'?"  I 
+think the answer is "This truncates the range."  So, for example, "git 
+log r1" shows you r1 and its ancestors, while "git log r1^!" only shows 
+you r1.  I think you should add this example, or something similar.
+
+But, really, this means that the notation is another "Commit Exclusion" 
+and properly belongs in that section.
+
+That makes this "Special Notations" section rather thin.  I suggest 
+moving a slightly expanded <rev>^@ description to a small subsection 
+just before Commit Exclusions, and deleting the Special Notations 
+section altogether.  So add something like this:
+
+	Commit Parents
+	~~~~~~~~~~~~~~
+
+	'<rev>{caret}@' Notation::
+	 The 'r1{caret}@' notation means all parents of 'r1',
+	 excluding 'r1' itself.
+
+This smoothly re-introduces the notion of parents for readers who 
+skipped to this section, and helps them make sense of the <rev>^! notation.
+
+Plus there's no longer anything "special" about any of the syntax.
+
+> +
+> +Revision Range Summary
+> +----------------------
+
+Sorry, but the man page renders this in all caps.  I really think you 
+should use ~~~~~~~~~ here.
+
+		M.
+
