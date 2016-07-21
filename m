@@ -2,172 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65146203C2
-	for <e@80x24.org>; Thu, 21 Jul 2016 14:48:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 514DB203C2
+	for <e@80x24.org>; Thu, 21 Jul 2016 14:54:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752924AbcGUOsy (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 10:48:54 -0400
-Received: from smtp146.dfw.emailsrvr.com ([67.192.241.146]:33491 "EHLO
-	smtp146.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752658AbcGUOsw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 10:48:52 -0400
-X-Greylist: delayed 366 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jul 2016 10:48:52 EDT
-Received: from smtp19.relay.dfw1a.emailsrvr.com (localhost [127.0.0.1])
-	by smtp19.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id C21F940105;
-	Thu, 21 Jul 2016 10:42:45 -0400 (EDT)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp19.relay.dfw1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 59552400E3;
-	Thu, 21 Jul 2016 10:42:45 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.5.4);
-	Thu, 21 Jul 2016 10:42:45 -0400
-Subject: Re: [PATCH v4 4/8] doc: give headings for the two and three dot
- notations
-To:	Philip Oakley <philipoakley@iee.org>, GitList <git@vger.kernel.org>
-References: <20160711202518.532-1-philipoakley@iee.org>
- <20160720211007.5520-1-philipoakley@iee.org>
- <20160720211007.5520-5-philipoakley@iee.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-From:	Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <5790DF64.8030603@xiplink.com>
-Date:	Thu, 21 Jul 2016 10:42:44 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
+	id S1752981AbcGUOyo (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 10:54:44 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:37226 "EHLO
+	mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752531AbcGUOyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 10:54:40 -0400
+Received: by mail-it0-f51.google.com with SMTP id f6so19965749ith.0
+        for <git@vger.kernel.org>; Thu, 21 Jul 2016 07:54:40 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=+wsEd79nddcUffdDf06q9F2uZb8pHREEqNj5Qlbo6JI=;
+        b=hfzC+d0Q2MY3c9weSM3ugwT/1wPAt4XkJ19WzGxEBQ9UQgTy6ILUfHgUWoDWlcVneZ
+         jyr18hZGTB5vUPNQTWewdlPaHBCwPQuexGFX3v3HoYOCnUkFEmyOdSc4SS3sLu9408e0
+         z/nbsAolOep+nakuGJz4HfREyIpDRGtJ3/vZeeavOF+wXhCsjkUtdnMBU2MIMsq7xu61
+         i3Rs46Sh28cMKJuCLVIL0nJw+GUf9P3vA0LN6swagliv9jW1rbKjluvQbEeaNZ8wns5f
+         GHdGHmikL3GY39aalB0Wn25r9NkphtmDA8JF3jojKKKVPAwQxmXozXm9qHP8pYuSEgQq
+         sKmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=+wsEd79nddcUffdDf06q9F2uZb8pHREEqNj5Qlbo6JI=;
+        b=BJFdGQk6eail7HQ+iSv2KZWtIRIKzbc2RC30b29BBsVZMJ2lE3qpMakqyhlKHyqyvk
+         5LuqekzhryBIQO9FCMFC3mG3q+JyO4TlA3oNphYJmrdqZMGkt4mEeeeZBv05G0KWPM8T
+         XcRXkYB/bia1b6wXLqFFu5IuksP0MYtUzF4YgHer6LfNPMoXbBIHpRsKGIqgqztrcERP
+         R8eSjh2hx5368/B1ErgRTjQKYesR29C1JrK3UkoDF7zKE5+OP+bR1wrJ8zfvfhcMT1t2
+         BqZAp0glLUjyUP4epH18xHmUHQypvrd0Emfmqu0GE4wkEx9VtokxL/UVJ5N8v+EXX9C6
+         Reuw==
+X-Gm-Message-State: ALyK8tK4sHC3JRVHMFz/VXhF2ivpf3G+YXi6hROHkDN46kkFWyeXMbcngUvAao5kE+Kcsju2MKG2vkiZbUEorA==
+X-Received: by 10.36.98.8 with SMTP id d8mr15295298itc.39.1469112879915; Thu,
+ 21 Jul 2016 07:54:39 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20160720211007.5520-5-philipoakley@iee.org>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: by 10.107.133.41 with HTTP; Thu, 21 Jul 2016 07:54:39 -0700 (PDT)
+From:	Marcin Szarek <marcinshk@gmail.com>
+Date:	Thu, 21 Jul 2016 16:54:39 +0200
+Message-ID: <CAFLWV1WC5Kq5TW1WnwPpuJitHC05drHtzg989UWJ6-hMZ85q0Q@mail.gmail.com>
+Subject: Git clone gets stuck - how to see the files being cloned at given moment?
+To:	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 2016-07-20 05:10 PM, Philip Oakley wrote:
-> While there, also break out the other shorthand notations and
-> add a title for the revision range summary (which also appears
-> in git-rev-parse, so keep it mixed case).
->
-> Signed-off-by: Philip Oakley <philipoakley@iee.org>
-> ---
->   Documentation/revisions.txt | 58 ++++++++++++++++++++++++++++-----------------
->   1 file changed, 36 insertions(+), 22 deletions(-)
->
-> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-> index 6e9cd41..5b37283 100644
-> --- a/Documentation/revisions.txt
-> +++ b/Documentation/revisions.txt
-> @@ -242,35 +242,49 @@ specifying a single revision with the notation described in the
->   previous section means the set of commits reachable from that
->   commit, following the commit ancestry chain.
->
-> -To exclude commits reachable from a commit, a prefix '{caret}'
-> -notation is used.  E.g. '{caret}r1 r2' means commits reachable
-> -from 'r2' but exclude the ones reachable from 'r1'.
-> -
-> -This set operation appears so often that there is a shorthand
-> -for it.  When you have two commits 'r1' and 'r2' (named according
-> -to the syntax explained in SPECIFYING REVISIONS above), you can ask
-> -for commits that are reachable from r2 excluding those that are reachable
-> -from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
-> -
-> -A similar notation 'r1\...r2' is called symmetric difference
-> -of 'r1' and 'r2' and is defined as
-> -'r1 r2 --not $(git merge-base --all r1 r2)'.
-> -It is the set of commits that are reachable from either one of
-> -'r1' (left side) or 'r2' (right side) but not from both.
-> -
-> -In these two shorthands, you can omit one end and let it default to HEAD.
-> +Commit Exclusions
-> +~~~~~~~~~~~~~~~~~
-> +
-> +'{caret}<rev>' (caret) Notation::
-> + To exclude commits reachable from a commit, a prefix '{caret}'
-> + notation is used.  E.g. '{caret}r1 r2' means commits reachable
-> + from 'r2' but exclude the ones reachable from 'r1'.
-> +
-> +Dotted Range Notations
-> +~~~~~~~~~~~~~~~~~~~~~~
-> +
-> +The '..' (two-dot) Range Notation::
-> + The '{caret}r1 r2' set operation appears so often that there is a shorthand
-> + for it.  When you have two commits 'r1' and 'r2' (named according
-> + to the syntax explained in SPECIFYING REVISIONS above), you can ask
-> + for commits that are reachable from r2 excluding those that are reachable
-> + from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
-> +
-> +The '...' (three dot) Symmetric Difference Notation::
-> + A similar notation 'r1\...r2' is called symmetric difference
+Hi Everyone,
 
-s/called/called the/
+In one of the environments where I work, we experience a very strange
+and so far unresolved problem: "git clone" operation gets stuck almost
+always near 42% - 45%. For many days we have been unable to pinpoint
+the root cause of the issue. Now we would like to see if the "clone"
+gets stuck always on the same file.
 
-> + of 'r1' and 'r2' and is defined as
-> + 'r1 r2 --not $(git merge-base --all r1 r2)'.
-> + It is the set of commits that are reachable from either one of
-> + 'r1' (left side) or 'r2' (right side) but not from both.
-> +
-> +In these two shorthand notations, you can omit one end and let it default to HEAD.
->   For example, 'origin..' is a shorthand for 'origin..HEAD' and asks "What
->   did I do since I forked from the origin branch?"  Similarly, '..origin'
->   is a shorthand for 'HEAD..origin' and asks "What did the origin do since
->   I forked from them?"  Note that '..' would mean 'HEAD..HEAD' which is an
->   empty range that is both reachable and unreachable from HEAD.
->
-> -Two other shorthands for naming a set that is formed by a commit
-> -and its parent commits exist.  The 'r1{caret}@' notation means all
-> -parents of 'r1'.  'r1{caret}!' includes commit 'r1' but excludes
-> -all of its parents.
-> +Special '<rev>{caret}' Shorthand Notations
-> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The question is: is it possible to somehow enable Git verbosity
+resulting in showing the names of files being cloned at the given
+moment?
 
-Sorry, but this header also does not render properly in the man page. 
-Maybe just "Special {caret} Shorthand Notations"?  (But read on!)
+So far we have been trying "git clone --verbose" + the following
+environmental variables:
+GIT_TRACE=2 GIT_CURL_VERBOSE=2 GIT_TRACE_PERFORMANCE=2
+GIT_TRACE_PACK_ACCESS=2 GIT_TRACE_PACKET=2 GIT_TRACE_PACKFILE=2
+GIT_TRACE_SETUP=2 GIT_TRACE_SHALLOW=2
 
-> +Two other shorthands exist, particularly useful for merge commits, is
-> +for naming a set that is formed by a commit and its parent commits.
->
-> -To summarize:
-> +The 'r1{caret}@' notation means all parents of 'r1'.
-> +
-> +'r1{caret}!' includes commit 'r1' but excludes all of its parents.
+Unfortunately we don't see the files being cloned/downloaded. Is there
+any way to see this information?
 
-My immediate thought upon reading this is "Why not just use 'r1'?"  I 
-think the answer is "This truncates the range."  So, for example, "git 
-log r1" shows you r1 and its ancestors, while "git log r1^!" only shows 
-you r1.  I think you should add this example, or something similar.
+Thank you in advance for any hints, I really appreciate your help.
 
-But, really, this means that the notation is another "Commit Exclusion" 
-and properly belongs in that section.
+P.S.
+The version of Git client on our hosts is 1.8.3.1, however we tried
+other versions as well and the problem still occurs.
 
-That makes this "Special Notations" section rather thin.  I suggest 
-moving a slightly expanded <rev>^@ description to a small subsection 
-just before Commit Exclusions, and deleting the Special Notations 
-section altogether.  So add something like this:
+Best regards,
 
-	Commit Parents
-	~~~~~~~~~~~~~~
-
-	'<rev>{caret}@' Notation::
-	 The 'r1{caret}@' notation means all parents of 'r1',
-	 excluding 'r1' itself.
-
-This smoothly re-introduces the notion of parents for readers who 
-skipped to this section, and helps them make sense of the <rev>^! notation.
-
-Plus there's no longer anything "special" about any of the syntax.
-
-> +
-> +Revision Range Summary
-> +----------------------
-
-Sorry, but the man page renders this in all caps.  I really think you 
-should use ~~~~~~~~~ here.
-
-		M.
-
+--
+marcinshk
