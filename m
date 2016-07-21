@@ -2,92 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F242203C2
-	for <e@80x24.org>; Thu, 21 Jul 2016 12:54:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E8D3203C2
+	for <e@80x24.org>; Thu, 21 Jul 2016 12:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752548AbcGUMyq (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 08:54:46 -0400
-Received: from mout.gmx.net ([212.227.17.21]:58820 "EHLO mout.gmx.net"
+	id S1752441AbcGUM7k (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 08:59:40 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:33068 "EHLO mx2.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752536AbcGUMyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 08:54:45 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LuJDv-1bJAMA3N2d-011mM4; Thu, 21 Jul 2016 14:54:17
- +0200
-Date:	Thu, 21 Jul 2016 14:53:33 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Theodore Ts'o <tytso@mit.edu>, Duy Nguyen <pclouds@gmail.com>,
-	Herczeg Zsolt <zsolt94@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: Git and SHA-1 security (again)
-In-Reply-To: <xmqq4m7mltbw.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607211451060.14111@virtualbox>
-References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com> <20160716201313.GA298717@vauxhall.crustytoothpaste.net> <alpine.DEB.2.20.1607170949360.28832@virtualbox> <20160717142157.GA6644@vauxhall.crustytoothpaste.net>
- <CACsJy8C+2=qv5Vu=tGeDTK_Q+XSAv3qEJw0nrHbEWU7psDf=Cg@mail.gmail.com> <20160717154234.GC6644@vauxhall.crustytoothpaste.net> <20160717162349.GB11276@thunk.org> <20160717220417.GE6644@vauxhall.crustytoothpaste.net>
- <xmqq4m7mltbw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Fe8K8ZBrA2uojiv3uGtu1HVsPVNPHD0xO1z1ohX+5ZoO7rvyz9z
- X5gwJQhGD9F7+GZDhWcU3KplV0zAAN+6YJOyuqXwIrAfXCRgNHdt5OdEJwoTVJM2sKyoDZk
- HGzey32bRrr56JP5GruQtYYKdwKYk9J4p1sSK4fjwfP/Zavipcjke64T6/HAW+LwjkhPbIq
- H5SASXGiaD8c4q0guvd1w==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:vZrfxayDvsE=:wBglSK7RErHPpcAFxODIc5
- fTdSUnjqAY3+uFCQBPAvPyr3bqm2/fX4oVnsPY2cb2/353XaUr9XZd6tpLooO3Yki7/gl66O+
- ga7qdiPoG1r97q09yWSWPVa3RTmPiAE/Lsxq3iUP8K/y9DEZKd5mxHCnvNLaqFms5b544xTK0
- A8y9//zF+667+x3POnUEcizSmehUw/oLk9mgljotejscBZNpdmx5NF7hLJg6yHCnDikVeh49U
- sK4Vxm2WnzQCq4z9QK8dFmYS2uNh8F6nN9f545y1kWsZx6cDez+Z0dmcX1HsLTTVVzUCHfRGw
- 1c25SiCwSQVv/mlMCyoDEsRQvPl5r7NYO4NgtOhLRxFqpdCiB4YJqKRZaG+7wxMPLp21i2VTS
- Ly3H2vLz0f/YS+vyn/aA0m84pD0PJEa2Gp6EqlzSpbu0y1SAoO8lENPhN0TFwaOkXeI5roXLb
- URCyk1/FhDvbvCkLe8cZpxG8h1GpiVOvtrdnrq9c4RItqHjJxSPQrYua+BbC9TX+WBICW9Lc1
- xh/65wNcN6hjpHMkBxQzXqdfezU22fy+8Y9ws/xa0AX0azM4Z99/YUffvUq2fXGEZaj+dKzJU
- V47NLWL8jzkEpgRdmnibOeRT7V3cp8m2BsnBY5JIxoGE0AiAYmRv17zjTGW+pjKwE+Q/3j4mC
- lMVJtINxcv6ukDmsBekqqh/eXeWaNZGEtodrfBYphZLN2bXLDyeXKgwpPdHZJtY2WzsZMR698
- BQQe+JJIxhrG3fsfBezNPwJXAL9X3qzK+EpfsZI/bKS19Hd9W27dxmOFa7lzj9US1CiNrGwQH
- k0epvND
+	id S1752381AbcGUM7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 08:59:39 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u6LCxVMj027194
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 21 Jul 2016 14:59:31 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.42.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u6LCxWOT003668;
+	Thu, 21 Jul 2016 14:59:33 +0200
+From:	Matthieu Moy <Matthieu.Moy@imag.fr>
+To:	git@vger.kernel.org
+Cc:	Thibault Durand <thibault.durand.28@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [RFC/PATCH] status: suggest 'git merge --abort' when appropriate
+Date:	Thu, 21 Jul 2016 14:58:37 +0200
+Message-Id: <20160721125837.3127-1-Matthieu.Moy@imag.fr>
+X-Mailer: git-send-email 2.8.2.397.gbe91ebf.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Thu, 21 Jul 2016 14:59:31 +0200 (CEST)
+X-IMAG-MailScanner-Information:	Please contact MI2S MIM  for more information
+X-MailScanner-ID: u6LCxVMj027194
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check:	1469710774.64005@W55dZPeSteYgN6fg6928gQ
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+We already suggest 'git rebase --abort' during a conflicted rebase.
+Similarly, suggest 'git merge --abort' during conflict resolution on
+'git merge'.
 
-On Mon, 18 Jul 2016, Junio C Hamano wrote:
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ t/t7060-wtstatus.sh    | 4 ++++
+ t/t7512-status-help.sh | 1 +
+ wt-status.c            | 7 +++++--
+ 3 files changed, 10 insertions(+), 2 deletions(-)
 
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> 
-> > I will say that the pack format will likely require some changes,
-> > because it assumes ...  The reason is that we can't have an
-> > unambiguous parse of the current objects if two hash algorithms are in
-> > use....  So when we look at a new hash, we need to provide an
-> > unambiguous way to know what hash is in use.  The two choices are to
-> > either require all object use the new hash, or to extend the objects
-> > to include the hash.  Until a couple days ago, I had planned to do the
-> > former.  I had not even considered using a multihash approach due to
-> > the complexity.
-> 
-> Objects in Git identify themselves, but once you introduce the second
-> hash function (as opposed to replacing the hash function to a new one),
-> you would allow people to call the same object by two names.  That has
-> interesting implications.
-> 
-> [...]
+diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
+index 44bf1d8..4d17363 100755
+--- a/t/t7060-wtstatus.sh
++++ b/t/t7060-wtstatus.sh
+@@ -34,6 +34,7 @@ test_expect_success 'M/D conflict does not segfault' '
+ On branch side
+ You have unmerged paths.
+   (fix conflicts and run "git commit")
++  (use "git merge --abort" to abort the merge)
+ 
+ Unmerged paths:
+   (use "git add/rm <file>..." as appropriate to mark resolution)
+@@ -138,6 +139,7 @@ test_expect_success 'status when conflicts with add and rm advice (deleted by th
+ On branch master
+ You have unmerged paths.
+   (fix conflicts and run "git commit")
++  (use "git merge --abort" to abort the merge)
+ 
+ Unmerged paths:
+   (use "git add/rm <file>..." as appropriate to mark resolution)
+@@ -171,6 +173,7 @@ test_expect_success 'status when conflicts with add and rm advice (both deleted)
+ On branch conflict_second
+ You have unmerged paths.
+   (fix conflicts and run "git commit")
++  (use "git merge --abort" to abort the merge)
+ 
+ Unmerged paths:
+   (use "git add/rm <file>..." as appropriate to mark resolution)
+@@ -195,6 +198,7 @@ test_expect_success 'status when conflicts with only rm advice (both deleted)' '
+ On branch conflict_second
+ You have unmerged paths.
+   (fix conflicts and run "git commit")
++  (use "git merge --abort" to abort the merge)
+ 
+ Changes to be committed:
+ 
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index 49d19a3..5c3db65 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -29,6 +29,7 @@ test_expect_success 'status when conflicts unresolved' '
+ On branch conflicts
+ You have unmerged paths.
+   (fix conflicts and run "git commit")
++  (use "git merge --abort" to abort the merge)
+ 
+ Unmerged paths:
+   (use "git add <file>..." to mark resolution)
+diff --git a/wt-status.c b/wt-status.c
+index de62ab2..1f21b6a 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -948,9 +948,12 @@ static void show_merge_in_progress(struct wt_status *s,
+ {
+ 	if (has_unmerged(s)) {
+ 		status_printf_ln(s, color, _("You have unmerged paths."));
+-		if (s->hints)
++		if (s->hints) {
+ 			status_printf_ln(s, color,
+-				_("  (fix conflicts and run \"git commit\")"));
++					 _("  (fix conflicts and run \"git commit\")"));
++			status_printf_ln(s, color,
++					 _("  (use \"git merge --abort\" to abort the merge)"));
++		}
+ 	} else {
+ 		s-> commitable = 1;
+ 		status_printf_ln(s, color,
+-- 
+2.8.2.397.gbe91ebf.dirty
 
-So essentially you are saying that the multi-hash approach has too many
-negative implications, right? At least that is what I understand.
-
-Looks more and more like we do need to convert repositories wholesale, and
-keep a two-way mapping for talking to remote repositories.
-
-Would you concur?
-
-Ciao,
-Dscho
