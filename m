@@ -7,92 +7,108 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 344CC203C2
-	for <e@80x24.org>; Thu, 21 Jul 2016 15:47:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33B50203C2
+	for <e@80x24.org>; Thu, 21 Jul 2016 15:55:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753216AbcGUPrt (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 11:47:49 -0400
-Received: from mout.gmx.net ([212.227.15.15]:62870 "EHLO mout.gmx.net"
+	id S1753271AbcGUPzG (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 11:55:06 -0400
+Received: from mout.gmx.net ([212.227.15.18]:63519 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753121AbcGUPrs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 11:47:48 -0400
+	id S1753147AbcGUPzE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 11:55:04 -0400
 Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MZTbR-1blLzB351J-00LBLq; Thu, 21 Jul 2016 17:47:28
+ ESMTPSA (Nemesis) id 0LmbVT-1arkuF3smZ-00aEhM; Thu, 21 Jul 2016 17:54:53
  +0200
-Date:	Thu, 21 Jul 2016 17:46:43 +0200 (CEST)
+Date:	Thu, 21 Jul 2016 17:54:10 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Jeff King <peff@peff.net>
-cc:	Jeff Hostetler <git@jeffhostetler.com>,
-	Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org,
-	gitster@pobox.com
-Subject: Re: [PATCH v1 4/6] Expanded branch header for Porcelain Status V2
-In-Reply-To: <20160720205411.GB578@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1607211745050.14111@virtualbox>
-References: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com> <1468966258-11191-5-git-send-email-jeffhost@microsoft.com> <20160720160635.GC24902@sigill.intra.peff.net> <578FC0E8.4010102@jeffhostetler.com>
- <20160720205411.GB578@sigill.intra.peff.net>
+To:	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+cc:	Jeff Hostetler <git@jeffhostetler.com>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1 6/6] Unit tests for V2 porcelain status
+In-Reply-To: <CANQwDwfWW4Fn7KBHrNv2nfvGHMrPQ4jGpz6wGAEGg3edn-ztfg@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1607211749590.14111@virtualbox>
+References: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com> <1468966258-11191-7-git-send-email-jeffhost@microsoft.com> <578F9923.3000403@gmail.com> <578F9D2A.2030204@jeffhostetler.com>
+ <CANQwDwfWW4Fn7KBHrNv2nfvGHMrPQ4jGpz6wGAEGg3edn-ztfg@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:6YE6t84o1eNwJ0m6KRuRSxaG016svautNrwYH5neOIo8KqltD4D
- f/5WhcO7u4uF7ZvwYOTKokIs0y6fxj+2E9kaQ5VLE7t2MqdGt+KU/o1hAcLvkfIGiIRlQ2Y
- /tYvVydnHybKeNAG5TQRDllUznGibv5q7Fpa9RGuuk5enpmkUj4hLmAUx+KZWaAhSkp5tV/
- IsvHf5d+8EHlWnkvMZlEw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:fE78o3pSAAE=:s1an6NNAz8oeO5RzoeRV6d
- hZD3zMHOwTVl5c4ff4RFkdu0V6ag0qhm+qQmqZD6F2xZJruaeQU6AGGatvMGni1Zy/kYBxVT9
- EtPCHmRqm7Q8qJCydDkMSoNh8y4hApCQJw90s7x/MSKgt1siNZZUjkPCH52VsHe3pgmoc//DP
- RatKMpp2vHkG8i2V6wWawYZrHD7V3zTLuCuHRwsw6YFwt/V4HF/To/HGBDUeTIpvHhM7j8h5R
- 5084RTHcbluzX2On8rcAht2DitXNyvag5YGzSm0ZtzM8n4fPblEhXtyxprC0q7vTC2y6M/iTO
- DY+YdSyX9nKjBeoYMYUYUsLrdNtnm2lA7YFSsgiSGHkUPkis1wUEX189npUUmCPCaZMVNu+5d
- QMJwju4fCtfpmk6EN61Vbk+GrFy0Wi1PpCY5vQZn9FTyQ0ea1UEVfovFvVuvtRRQgAZehs1HS
- 9iKFjt8LfgPTKQnQMUYLVwKAOWgEEZZA99HU5+/UBT+D3a5YVdbNedbtYcoXJIaI2uaLHJZqw
- uyKgRDzBgtOtFru2WwBoync1uSdW75MU686WVAja69jEfLto23ugUh14I8tTDSmFgbfyNZN9N
- 0J9KMEOn0wbTiV/yDy/NKV1E/4VK/cfggdSgbW1kW6uZ5poM/kHuYCNnqhNBaIczhveNGc2e8
- MdB2nudJqC5OOeI0nfitvY7dsOvzVHgEXRsLz6r0HrEsskTwKpqfN0rxh6ogU8r7j+MOmsXyN
- 1Oi/P0YIRkRaKZUAK3s/coXt0bxLdB7qjJ1cLBeDHDMzbH+yIiZIfhOlADeJxceB+bXFpcdM8
- ipCQLZ2
+Content-Type: multipart/mixed; BOUNDARY="8323329-1409685566-1469116451=:14111"
+X-Provags-ID: V03:K0:O897tVR7BoWM7ZOqDt60blSF4Yn8CbFp/79q0Cc22zqgAfYr7nE
+ TR1locDY3W4QktPoddPiSCateLEXcKu9nott2urqoXSDylZS3QIctx9hW/+W1IQWd1Lc69e
+ 4zoEtsO+TFmgkIrDh0b5yg37kyrLmrlZGPiUv6IStQXLO3IUutakqZmRlS05jwLeMDAYK1k
+ sBUZw2GXAIbjH93csdARg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:qslY2GGisgs=:+St/vIHnYwfgmd9VwzxMXB
+ 1hUBGkVKgrkjM2mZvXWDy5CVYeNFKowkCf39ORDIC2ZDiRkYulEvW7ok4YNkXZCJrZR8ruEzW
+ Ald1gBkBix3PzGvwZiY8sa98dBvvalyklkz1bcJG91Xl7qrP/S62affjNOi56Mf0g+Y4vQKqZ
+ e4mbVVgfuLY5hUdoIXwVImKMnVYfJfQeWgkf97ykiY8fCTvtIeImfCk10kagNvvNklFMAPVcb
+ 4MVjf3TvDBjp3GHk+SO/d1jIHWkOO1BJV7MAUiPHBLjbjtP28KZ6cxshRukiE1CNeh1TNB8wq
+ 11mIugaZ14XxYgd0YjmvfCfleSfLoPp+diLPqOADAENI05DCPUbQEIAwsMX1EMUXkiVvHoaNY
+ jwg5PWqxr+IMcjqNwusGC+D2W8gGpgyu01JaoHAKewJ+cL5LFxC18+eKogqxOhfPeOsyJ2yi5
+ wWE2uJEwuB+iVhkuydxE6BRF+BYmH1PTK0wWSIZRz+xdpnJ3bcUaOCAEdgoPW/dAC1pv5I/ry
+ Y70vYpJAnesXNxGBizeUfzSCLckqbKfIQHRy6v1oNqbqoy4e0VZtxdwPrnJhKSuD1hSYpG/U9
+ iSpSqcEFoLGJupJdf8dwWGrF+0Vy4GwUUNYa/eH1CwrOMFG6Eip+Rg7UfNXFKwnexUUFmzFef
+ SoRqIa2AFH9yxWU4IPlBVca43Av20KRbruIdhxykwb0GYK/E7vx407qcbziL6r1M/ZN7Ac7H7
+ SpnE3L+xO7a8XxRk2w5x98TADttZqBCceJu8kyyGH43k05rYOIETg9k3+Vuit7JnV4OXd0IOM
+ 566BtoG
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Peff & Jeff ;-)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, 20 Jul 2016, Jeff King wrote:
+--8323329-1409685566-1469116451=:14111
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> On Wed, Jul 20, 2016 at 02:20:24PM -0400, Jeff Hostetler wrote:
-> 
-> > > IIRC, it happens when HEAD points to a broken ref. So something like:
-> > > 
-> > >    git init
-> > >    echo broken >.git/refs/heads/master
-> > > 
-> > > would cause resolving HEAD to return NULL.
-> > 
-> > That worked and I see "(unknown)".
-> > 
-> > This is a bit of a nit, but is there a value we'd like
-> > to see there, such as "(unknown)" or "(broken)" or "(missing)"
-> > in that case?  (And make it clear that this is a different
-> > case from "(detached)".)
-> > 
-> > I'm thinking it would be nicer to always have a field
-> > there for parsing.
-> 
-> My gut feeling is to err on the side of being vague, like "unknown".
-> This is something that _shouldn't_ ever happen, and if it does, it could
-> be a broken on-disk ref, a transient syscall error, or some other
-> weirdness. I don't think we need to get too specific in this context
-> (we'll likely have said something else useful on stderr already, I
-> think).
+Hi,
 
-FWIW I think "unknown" is a nice conservative way to shrug Git's
-shoulders.
+On Wed, 20 Jul 2016, Jakub Nar=C4=99bski wrote:
 
-When we call `git status --porcelain=v2` and read "unknown", we could
-always try to find out more using additional low-level tools and/or disk
-access: this is such a rare case that it does not *really* matter all that
-much.
+> On 20 July 2016 at 17:47, Jeff Hostetler <git@jeffhostetler.com> wrote:
+> > On 07/20/2016 11:30 AM, Jakub Nar=C4=99bski wrote:
+> >> W dniu 2016-07-20 o 00:10, Jeff Hostetler pisze:
+> >>>
+> >>> +test_expect_success pre_initial_commit_0 '
+> >>> +       printf "## branch: (initial) master\n" >expected &&
+> >>> +       printf "?? actual\n" >>expected &&
+> >>> +       printf "?? dir1/\n" >>expected &&
+> >>> +       printf "?? expected\n" >>expected &&
+> >>> +       printf "?? file_x\n" >>expected &&
+> >>> +       printf "?? file_y\n" >>expected &&
+> >>> +       printf "?? file_z\n" >>expected &&
+> >>
+> >> Why not use heredoc syntax (cat <<\EOF), or prepare a file
+> >> with expected output in the testsuite?
+> >
+> > The tests involving renames needed to embed a tab character
+> > in the output and hiding a tab character in a heredoc seemed
+> > error prone.  So to be consistent I made them all printf-style.
+>=20
+> Ah, so that's the case for series of printf. I think in some other
+> cases the Git testsuite simply uses HT variable for the TAB
+> character.
+
+Yeah, it would be more pleasant to read
+
+=09echo >expected <<-EOF
+=09## branch: (initial) master
+=09?? actual
+=09?? dir1/
+=09?? expected
+=09?? file_x
+=09?? file_y
+=09?? file_z
+=09EOF
+
+And it is also easy to use $HT in there (unless you want to use <<-\EOF).
+
+Actually, even if you want to use \EOF, you can easily use `sed` to
+expand, say, "Q" to tabs, such as was done here:
+
+=09https://github.com/git/git/blob/v2.9.2/t/t4213-log-tabexpand.sh#L88-L92
 
 Ciao,
 Dscho
+--8323329-1409685566-1469116451=:14111--
