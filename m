@@ -7,91 +7,98 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D425D203C2
-	for <e@80x24.org>; Thu, 21 Jul 2016 14:20:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDAF4203C2
+	for <e@80x24.org>; Thu, 21 Jul 2016 14:29:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555AbcGUOUO (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 10:20:14 -0400
-Received: from mout.gmx.net ([212.227.17.21]:51009 "EHLO mout.gmx.net"
+	id S1751869AbcGUO3g (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 10:29:36 -0400
+Received: from mout.gmx.net ([212.227.15.19]:53971 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750856AbcGUOUM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 10:20:12 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MdoR7-1bgvIo0FTR-00PeCA; Thu, 21 Jul 2016 16:19:59
+	id S1751553AbcGUO3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 10:29:34 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Lz3nU-1bCqwS01C4-014AVR; Thu, 21 Jul 2016 16:29:12
  +0200
-Date:	Thu, 21 Jul 2016 16:19:13 +0200 (CEST)
+Date:	Thu, 21 Jul 2016 16:28:26 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff Hostetler <git@jeffhostetler.com>
 cc:	Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org,
-	peff@peff.net
-Subject: Re: [PATCH v1 3/6] Per-file output for Porcelain Status V2
-In-Reply-To: <xmqqoa5sc9ud.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607211616320.14111@virtualbox>
-References: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com> <1468966258-11191-4-git-send-email-jeffhost@microsoft.com> <xmqqoa5sc9ud.fsf@gitster.mtv.corp.google.com>
+	peff@peff.net, gitster@pobox.com
+Subject: Re: [PATCH v1 1/6] Allow --porcelain[=<n>] in status and commit
+ commands
+In-Reply-To: <578F9AE8.4000407@jeffhostetler.com>
+Message-ID: <alpine.DEB.2.20.1607211624190.14111@virtualbox>
+References: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com> <1468966258-11191-2-git-send-email-jeffhost@microsoft.com> <alpine.DEB.2.20.1607201600050.14111@virtualbox> <578F9AE8.4000407@jeffhostetler.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:u8zg7tbYA7Q4Bwwr80Cb5w12QL1UtF2X8B/Hn6+vFHuqCChMM5I
- MMH2hyQKJktkLng+djn5lW1LrCwm7EbUC08eyKT9m0JTQj440EdaMCfN5U3mcoFru/1XejI
- ayYmd0ASqgWO2YmBdZkdL5bS+Cd3vIMDVJBsRQCW13GrzjWL3NxLGQ4Fjjw2w41uJvLAeoH
- Hg2TMT0cl/9PjZOlX9i5w==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:m+bWDmVFJVc=:WQVr/TGG1rd/6lqNxZAcgQ
- 2jVFFRdNe+agPbifwz1bvQfzw4sZ0DscceY6JTMFt7FJBN4uwlvMZob0lSK5C/bJqbNqNBJQN
- 6qcTdTdvyZQqwMugk1jLd3ia1l7Z+xVgCl9kR8PhHLtZCYoaSJKTBRFxlga8fnELBXPEyc+C+
- riMvM+a/wil4fMnIExJj90q6U/fKJGUnPv+nUUIB1AlkiyWnQj2VJcidXC5/tKndi8vV2eDll
- u0TrzD6x5t4tFT/YSy83fzzo0d1+ryMBwbJjGJ7PmZPg4lkhhNrB4FeeqGm6TbLa7HHkNUuPn
- ZZ+RFvFnaGUrvHGhuXkHCZId97l0d8qipIXFpmU6YZVv7ivqmNXC3AyooASgJ1UHZ/yvb1Jc/
- ZA6sXyCSU4y3BJ+melsU8PioSPZXZOJeefg6W1TGUNjNxpTijr/i3M2EmxCdUdpjGPJ3ownZg
- 4Y141FB0xbnPys0qUZix/Xc7SUq/isnBDhhbBFXQiKKULRthh8WmanbpOrWDymEYug7Y46kLK
- ry551BN58P5zO8Ntf7fShz3txN4JBx/Njg86atVpwx7Sil690Ko9d/DrqHv3EWs6x6cHKkksQ
- AH2Sl79vxRSUV9cqoo8IS3Ms7lVLKYmxRW2zKyGjciFr+NVOPaz2nWbgiqEw70fgudc2HtZ/b
- mLsGxrQAJfgC9L9OKkEy1Ngngv07pV39ctjqJ94qItyGadMCbtJ6gpiUxKKb7YmT3DvRihcYg
- nsrj6QXaOD4HNH9reWDVK6hiTEOEohRzan8O0BzOBav2iH+P+9KtC7RbQJObkiskNM0PpR7nD
- xv33PLq
+X-Provags-ID: V03:K0:2jqa1stHHYYTbSPSumceZ6HDEwuSxXCDmmkGZscoOk4gYkcFfiF
+ LyNiq1fbs0rSVoNgHjdvJvcscg83PtfMRQP/0FKzHu0dNSRd1hppbeDNcAXroHalUHoVvPF
+ +iik0OkaeBmU/D4nD5vVuAnNnYMSSCfeCWYlVJjnRpPstAmlQe7eoXpLgtZKDzkjVMdvLIw
+ WnMhhScFCRPKTzonyWbXg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:9eZMeZV3+C8=:AQLFBACj8tK9/39GoKGWTY
+ cFyY6fCqZhi+T7A6oNm8Ehzez2MWL8ZYJe0ifyQXsH0ZdIxycb7K1b8iQoNEAqxZcHDZRg2ZB
+ 2jhFHw/Jm6zJjsd7mtjlgTY/Vq+CSVRhPORQxu1AmjxQEV+AkoU1vDhdPp02QNUvOQWpXFgTb
+ e4t3Bo4PzO/hBx/Xd24i52hNWO5I1Rt0fA8rkI+SWn8erGvxRae1CiY+g6ATeiRXlL1q7+L6E
+ i2VB1zqvcI9CEZIMGjvH5wLCCflR0SCBGkhCjHTW+46+BLjxVJbM8hzte8v42ETzi7+RcnHI1
+ Rg+QMKA5EVvdzHh4tFLKeKJ8j693b2LMiInjoOj5VCgd4niFu2MsW7OWMCVfVYxJ9IJH0NYFq
+ DoXyqoJTiju0M+K0Y7eg2pZllERzyF2zXZ3ZUEtva0nRFpPeWl6ZfZjPvifrFQx4i32TSpZq4
+ aT1q5ia9zKg+HT3gi6mSoijlgsf4l/QnjHrSyXlNDPVaQbVL65QdolCrF3KTNJmjeDnBEfwdI
+ gKWn07F8GeeFnJyT0rYPgRlkwgn6HI6mFVZ4uyyHFbtD8ABP/qy7FFY4DV3Mtcrj9k5E6hdEh
+ GZFOE1cdryEl7pHmsIseNdlw45R9s7j911TDefUYOdYBWLS1VbJ+0L3+NJJdepBH9pybPii/9
+ gDU8WpBTAKFyDUq7YZIWkK9zpn3OCX0RcVP6spHcKMynBj6L98+Bd+9GY3UrO58cvTlPsrMLT
+ S3YiPHqsgdpb0icsy+KWPt1FleZVYzeuGTjLO8tPHJm/TqglfYBBWksztuyUQcPFzeyOuGR1i
+ Fq2X3Mn
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+Hi Jeff,
 
-On Wed, 20 Jul 2016, Junio C Hamano wrote:
+On Wed, 20 Jul 2016, Jeff Hostetler wrote:
 
-> Jeff Hostetler <jeffhost@microsoft.com> writes:
+> On 07/20/2016 11:08 AM, Johannes Schindelin wrote:
+> > On Tue, 19 Jul 2016, Jeff Hostetler wrote:
+> > > @@ -1336,9 +1347,9 @@ int cmd_status(int argc, const char **argv, const
+> > > char *prefix)
+> > >     	    N_("show status concisely"), STATUS_FORMAT_SHORT),
+> > >     OPT_BOOL('b', "branch", &s.show_branch,
+> > >   			 N_("show branch information")),
+> > > -		OPT_SET_INT(0, "porcelain", &status_format,
+> > > -			    N_("machine-readable output"),
+> > > -			    STATUS_FORMAT_PORCELAIN),
+> > > +		{ OPTION_CALLBACK, 0, "porcelain", &status_format,
+> > > +		  N_("version"), N_("machine-readable output"),
+> > > +		  PARSE_OPT_OPTARG, opt_parse_porcelain },
+> >
+> > How about using a COUNTUP here instead? We could then set the status
+> > format afterwards, like this:
+> >
+> >  if (porcelain == 0)
+> >  	status_format = STATUS_FORMAT_UNSPECIFIED;
+> >  else {
+> >   status_format = STATUS_FORMAT_PORCELAIN;
+> >   if (porcelain > 1)
+> >    warning("No porcelain v%d; falling back to v1",
+> >  			porcelain);
+> >  }
+> >
 > 
-> Just to avoid later headaches...  please look at your commit titles
-> and imagine how they will look when listed among 400+ other changes
-> when they are included in a future release in "git shortlog" output.
-> 
-> > Subject: Re: [PATCH v1 3/6] Per-file output for Porcelain Status V2
-> 
-> Subject: status: per-file output for --porcelain=v2
-> 
-> or something like that, perhaps?
-> 
-> > This commit sets up version 2 porcelain status and
-> > defines the format of detail lines.  This includes
-> > the usual XY and pathname fields.  It adds the various
-> > file modes and SHAs and the rename score.  For regular
-> > entries these values reflect the head, index and
-> > worktree. For unmerged entries these values reflect
-> > the stage 1, 2, and 3 values.
-> 
-> Also, we usually do not say "This commit does this and that".
-> 
-> See Documentation/SubmittingPatches for more details regarding the
-> above two points (and more).
+> Maybe I misread the COUNTUP docs, but it looked like it would
+> allow "--porcelain --porcelain", but not "--porcelain=2".
 
-Maybe something like this:
+Whoops, you're right. It is *I* who misread the code (I did not bother
+looking for the docs ;-))
 
--- snipsnap --
-status: per-file output for --porcelain=2
+Still, I would prefer to avoid that callback. IOW something like
 
-The output of `git status --porcelain` leaves out many details that,
-say, an IDE would need to know about the current status.
+	{ OPTION_INTEGER, 0, "porcelain", &status_format,
+	  N_("version"), N_("machine-readable output"),
+	  PARSE_OPT_OPTARG, NULL, 1 },
 
-Let's introduce version porcelain status v2 that adds the various file
-modes and SHAs and the rename score. For regular entries these values
-reflect the head, index and worktree. For unmerged entries these values
-reflect the stage 1, 2, and 3 values.
+followed by the if () outlined above.
+
+Ciao,
+Johannes
