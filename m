@@ -2,124 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E8D3203C2
-	for <e@80x24.org>; Thu, 21 Jul 2016 12:59:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32DFE203C2
+	for <e@80x24.org>; Thu, 21 Jul 2016 13:21:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752441AbcGUM7k (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 08:59:40 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:33068 "EHLO mx2.imag.fr"
+	id S1752506AbcGUNU6 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 09:20:58 -0400
+Received: from mout.gmx.net ([212.227.17.22]:58576 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752381AbcGUM7j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 08:59:39 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u6LCxVMj027194
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 21 Jul 2016 14:59:31 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.42.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u6LCxWOT003668;
-	Thu, 21 Jul 2016 14:59:33 +0200
-From:	Matthieu Moy <Matthieu.Moy@imag.fr>
-To:	git@vger.kernel.org
-Cc:	Thibault Durand <thibault.durand.28@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [RFC/PATCH] status: suggest 'git merge --abort' when appropriate
-Date:	Thu, 21 Jul 2016 14:58:37 +0200
-Message-Id: <20160721125837.3127-1-Matthieu.Moy@imag.fr>
-X-Mailer: git-send-email 2.8.2.397.gbe91ebf.dirty
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Thu, 21 Jul 2016 14:59:31 +0200 (CEST)
-X-IMAG-MailScanner-Information:	Please contact MI2S MIM  for more information
-X-MailScanner-ID: u6LCxVMj027194
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@imag.fr
-MailScanner-NULL-Check:	1469710774.64005@W55dZPeSteYgN6fg6928gQ
+	id S1752324AbcGUNU5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 09:20:57 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MYwQh-1bn27S03cp-00Vh79; Thu, 21 Jul 2016 15:20:13
+ +0200
+Date:	Thu, 21 Jul 2016 15:19:29 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	"brian m. carlson" <sandals@crustytoothpaste.net>
+cc:	Junio C Hamano <gitster@pobox.com>, Theodore Ts'o <tytso@mit.edu>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Herczeg Zsolt <zsolt94@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: Git and SHA-1 security (again)
+In-Reply-To: <20160718230324.GG6644@vauxhall.crustytoothpaste.net>
+Message-ID: <alpine.DEB.2.20.1607211454061.14111@virtualbox>
+References: <CAPp-Vrb_n6z39RLHZ4AeUaBFiJfL3_xX8Utfq7+bTgzZrza58Q@mail.gmail.com> <20160716201313.GA298717@vauxhall.crustytoothpaste.net> <alpine.DEB.2.20.1607170949360.28832@virtualbox> <20160717142157.GA6644@vauxhall.crustytoothpaste.net>
+ <CACsJy8C+2=qv5Vu=tGeDTK_Q+XSAv3qEJw0nrHbEWU7psDf=Cg@mail.gmail.com> <20160717154234.GC6644@vauxhall.crustytoothpaste.net> <20160717162349.GB11276@thunk.org> <20160717220417.GE6644@vauxhall.crustytoothpaste.net> <xmqq4m7mltbw.fsf@gitster.mtv.corp.google.com>
+ <20160718230324.GG6644@vauxhall.crustytoothpaste.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:hCEDFUMCQby/9H3SFkUMMrmmaLe8hZXR4betEg+fIM9nKwPXqUV
+ vIqQ5aIt3TZv1aIDt+kYsQIKfoAuzbFALeAzdarfDzCmz1a/imPVI/EpB75UxBfoNIavGLF
+ fMJahNPNqnt6oL0HSTO4UJd9Rowl4S8M08yjE1qjw4QNWKKjdAXVfT7QMF9DFQVYNAL0Z9T
+ JIrgrJ0Wus5ckbOETHMbg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:r7grqr4Aym8=:Hot696Uxd9LkFUPHj9qAyh
+ t6ofk5wg3aInuLRNyB9gWP4pzr5xwcJjoFPbvb8255ARyHRWCP4UD0wb8iidReAvzH/9EIZ8m
+ NHUgBcLg9SsvZtF5uercD/GgY+8pDnYfKm1DJol6RyKgMhNXVxPjD3+lzHiGQPfID9Jw2vn/t
+ 4Sh5QgAqgk+seHOEhXO0k2bBgpgv0Ccia499U/kdK7tItWp18KXmNlRuwnMWdK21agpn14GxI
+ gPgSeEg92DD0Mn1HyEnT+r/wYBIqlorlpHzMIATtRwS2sA5l5BOTHYbfxUmi4jWy9s3ggp1UW
+ fSQ51sjrNr3rRxG98xvP7yCthxJRzGQr4ooYQgPqphxpRsN0n1YH7n25ijuWBsE8ANiFlcV0y
+ /2iA5OyjzBR5EFdIiNQOtdrjq2uSLw3BxrrlTi3IEJk5zMOah+qwBaePFpquKhCA4uk4cm24E
+ qQlqsIJ+2hkhMIgqhj7inHTOPyNZ7Edlwvw+eIWdsjpQQY+sK8qWp278gWB/nHSqOO6GoNCA8
+ aNnbHnjuhA1M2F9rUnTwxjBDfFN+qrZ4EeNlaLc8w3qv+t9uefYDUpuZ5A6nFi9AWmCzjgdDp
+ 5pFBX9doYOgVsKjIRwxE+RxGv4Pr72FzjXxbjN6WIDxnmB11DUL+L6sY9aNxs55WleWUaiF/c
+ y/b/7RqOQPibniKOvLNgDe3SM8l98XU45n4Cp7tiW8aPGmI1vjW06iE2UxV+f10qMgVsuvcOL
+ 1fbNNMaNtyf2QdHQ4PxThwkbzib1r0cs2Ni8xAENr2siDOUY7S8QfouKpe/lFdAGNdxJsdIMI
+ ezqpg6p
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-We already suggest 'git rebase --abort' during a conflicted rebase.
-Similarly, suggest 'git merge --abort' during conflict resolution on
-'git merge'.
+Hi Brian,
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- t/t7060-wtstatus.sh    | 4 ++++
- t/t7512-status-help.sh | 1 +
- wt-status.c            | 7 +++++--
- 3 files changed, 10 insertions(+), 2 deletions(-)
+On Mon, 18 Jul 2016, brian m. carlson wrote:
 
-diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
-index 44bf1d8..4d17363 100755
---- a/t/t7060-wtstatus.sh
-+++ b/t/t7060-wtstatus.sh
-@@ -34,6 +34,7 @@ test_expect_success 'M/D conflict does not segfault' '
- On branch side
- You have unmerged paths.
-   (fix conflicts and run "git commit")
-+  (use "git merge --abort" to abort the merge)
- 
- Unmerged paths:
-   (use "git add/rm <file>..." as appropriate to mark resolution)
-@@ -138,6 +139,7 @@ test_expect_success 'status when conflicts with add and rm advice (deleted by th
- On branch master
- You have unmerged paths.
-   (fix conflicts and run "git commit")
-+  (use "git merge --abort" to abort the merge)
- 
- Unmerged paths:
-   (use "git add/rm <file>..." as appropriate to mark resolution)
-@@ -171,6 +173,7 @@ test_expect_success 'status when conflicts with add and rm advice (both deleted)
- On branch conflict_second
- You have unmerged paths.
-   (fix conflicts and run "git commit")
-+  (use "git merge --abort" to abort the merge)
- 
- Unmerged paths:
-   (use "git add/rm <file>..." as appropriate to mark resolution)
-@@ -195,6 +198,7 @@ test_expect_success 'status when conflicts with only rm advice (both deleted)' '
- On branch conflict_second
- You have unmerged paths.
-   (fix conflicts and run "git commit")
-+  (use "git merge --abort" to abort the merge)
- 
- Changes to be committed:
- 
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index 49d19a3..5c3db65 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -29,6 +29,7 @@ test_expect_success 'status when conflicts unresolved' '
- On branch conflicts
- You have unmerged paths.
-   (fix conflicts and run "git commit")
-+  (use "git merge --abort" to abort the merge)
- 
- Unmerged paths:
-   (use "git add <file>..." to mark resolution)
-diff --git a/wt-status.c b/wt-status.c
-index de62ab2..1f21b6a 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -948,9 +948,12 @@ static void show_merge_in_progress(struct wt_status *s,
- {
- 	if (has_unmerged(s)) {
- 		status_printf_ln(s, color, _("You have unmerged paths."));
--		if (s->hints)
-+		if (s->hints) {
- 			status_printf_ln(s, color,
--				_("  (fix conflicts and run \"git commit\")"));
-+					 _("  (fix conflicts and run \"git commit\")"));
-+			status_printf_ln(s, color,
-+					 _("  (use \"git merge --abort\" to abort the merge)"));
-+		}
- 	} else {
- 		s-> commitable = 1;
- 		status_printf_ln(s, color,
--- 
-2.8.2.397.gbe91ebf.dirty
+> On Mon, Jul 18, 2016 at 11:00:35AM -0700, Junio C Hamano wrote:
+> > Continuing this thought process, I do not see a good way to allow us
+> > to wean ourselves off of the old hash, unless we _break_ the pack
+> > stream format so that each object in the pack carries not just the
+> > data but also the hash algorithm to be used to _name_ it, so that
+> > new objects will never be referred to using the old hash.
+> 
+> I think for this reason, I'm going to propose the following approach
+> when we get there:
+> 
+> * We serialize the hash in the object formats, using multihash or
+>   something similar.  This means that it is minimally painful if we ever
+>   need to change in the future[0].
 
+This adds a lot of redundancy, though, and has an adverse performance
+impact, no?
+
+Could we not simply require packs to identify the used hash *once*, and
+use a single hash algorithm per repository?
+
+That would mean that we would have to re-hash packs on-the-fly if, say,
+talking to a SHA-1 remote from a SHA-256 local repository.
+
+> * Each repository carries exactly one hash algorithm, except for
+>   submodule data.  If we don't do this, then some people will never
+>   switch because the submodules they depend on haven't.
+
+If we re-hash transparently, we could get away with SHA-256 even for
+submodules.
+
+> * If people on the new format need to refer to submodule commits using
+>   SHA-1, then they have to use a prefix on the hash form; otherwise,
+>   they can use the raw hash value (without any multihash prefix).
+> * git fsck verifies one consistent algorithm (excepting submodule
+>   references).
+> 
+> This preserves the security benefits, avoids future-proofing problems,
+> and minimizes performance impacts due to naming like you mentioned.
+> 
+> [0] We are practically limited to 256-bit hashes because anything longer
+> will wrap on an 80-column terminal when in hex form.
+
+We are not really bound by the 80-column limit when choosing a hash
+algorithm. We typically refer to a commit by a shorter name, and the
+80-column limit applies only to Git's own source code.
+
+Ciao,
+Dscho
