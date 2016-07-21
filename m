@@ -2,174 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_03_06,DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ECBF203C1
-	for <e@80x24.org>; Thu, 21 Jul 2016 02:18:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA164203C1
+	for <e@80x24.org>; Thu, 21 Jul 2016 05:26:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752320AbcGUCSu (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 22:18:50 -0400
-Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:44127
-	"EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751226AbcGUCSs (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jul 2016 22:18:48 -0400
-X-Greylist: delayed 15414 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jul 2016 22:18:48 EDT
-DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1469051273;
-	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=u1qD+jiLbOScGjd2lrPy+dX3HqjFZCy86YJ3CiRKo+w=;
-	b=Tac8Spc2gap3pR8bYs5I6qC6pcdzZOrvVGAZ+1FsMSVxk2SExnyLObtEQerFhJWK
-	DeiU9e/wvLk0lucwVth67+KT/JpsOuezJDftB5vMngmvz3shOkxCCgBzM03SlNZ60td
-	4UuoW5wHu6wThMn1txL845FkC+dZGADinBOUtTOY=
-From:	Pranit Bauva <pranit.bauva@gmail.com>
-To:	git@vger.kernel.org
-Message-ID: <010201560a47828f-ff30359f-fd6c-4a21-b054-209f5f8946f7-000000@eu-west-1.amazonses.com>
-In-Reply-To: <010201560a4781be-e8418d6a-5996-45cd-b11b-ca25894ad7f2-000000@eu-west-1.amazonses.com>
-References: <010201560a4781be-e8418d6a-5996-45cd-b11b-ca25894ad7f2-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v10 08/12] bisect--helper: `is_expected_rev` &
- `check_expected_revs` shell function in C
+	id S1751425AbcGUF0b (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 01:26:31 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33810 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751314AbcGUF0a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 01:26:30 -0400
+Received: by mail-pf0-f196.google.com with SMTP id g202so4788603pfb.1
+        for <git@vger.kernel.org>; Wed, 20 Jul 2016 22:26:29 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Z7BmF02TwZmjQngAjc3DbyFjDzy0kBzG/nQ3V4c6EdA=;
+        b=VTpix02eVX7crsXuEYx+s8XWFuJPLE5D//7dBPC86vVTbole7yK+rJehdtdfhDPGz1
+         5CEoToMXXRTX54hNJkZEpUKuoL0G8xejdxRGtjAWMl14Mpw0bCzA6XbENI0BQ/yu8lni
+         kyw166KQSyC4SiVI3TeZFTi+JNoLEvwGqWn+EtH3YKKJcHaiK2oypZSvxUqMFywhhYUs
+         t/kjKecgM+YCEc+guapvGaoYFcaT0YTxentdMbRghzHSJz+QOOMD3QPlA1Sc6mAzY3qG
+         c7cK9//K1DdnKEWh4+Sn/ziI/MoiNW1gsAHESuTyYqYUuz4b/H3MvAAUptH1aJPCY12b
+         LUgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Z7BmF02TwZmjQngAjc3DbyFjDzy0kBzG/nQ3V4c6EdA=;
+        b=k72H0RHWVG/t00StPYL9JsM5dGugMt0gNlH8GCvAfd7y3pE7hvyyQzHrr2S6eIvUni
+         y6/nX5xftUcHusvPVX8jw7M9qKEbHUwgUIv6/iXQSaK3x/c8B/1dMPBYiXtaSA0+3gEG
+         nY7aH2cZ90PrivWaoGVJUYbJ9/wVmHLUzHNoFPzUIPq6f7/dI+HpQPQ7G+akiGMdIyyB
+         GN0CSbQQVkIztnf7uny5XcBeHmZsit8mwLnCVduTzEhxmzrJRuiejqDGeVN603m5F9k7
+         Tw8ONRECu2i428RAfF7sAumD3hHYCs0gJYwq0FkwEne4D30CK0l1iWme9AKKIDxTcTS1
+         blkQ==
+X-Gm-Message-State: ALyK8tJ7pOu74wFGiY24J2Ls/YpM/XJIsgR9DskBcRqd4gSfau0PtLVh73K2q2W5Y199MA==
+X-Received: by 10.98.222.132 with SMTP id h126mr37722651pfg.61.1469078789298;
+        Wed, 20 Jul 2016 22:26:29 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by smtp.gmail.com with ESMTPSA id d5sm8432203pfc.4.2016.07.20.22.26.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Jul 2016 22:26:27 -0700 (PDT)
+Date:	Wed, 20 Jul 2016 22:26:25 -0700
+From:	David Aguilar <davvid@gmail.com>
+To:	Brett Cundal <brett.cundal@iugome.com>
+Cc:	git@vger.kernel.org, Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: [PATCH] git-subtree.sh: Use --allow-unrelated-histories when
+ splitting with --rejoin
+Message-ID: <20160721052625.GA31423@gmail.com>
+References: <010201560af48050-012ea887-a1e1-4d1b-82d3-4799ac7788bc-000000@eu-west-1.amazonses.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:	Wed, 20 Jul 2016 21:47:53 +0000
-X-SES-Outgoing:	2016.07.21-54.240.7.17
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <010201560af48050-012ea887-a1e1-4d1b-82d3-4799ac7788bc-000000@eu-west-1.amazonses.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Reimplement `is_expected_rev` & `check_expected_revs` shell function in
-C and add a `--check-expected-revs` subcommand to `git bisect--helper` to
-call it from git-bisect.sh .
+[cc'd Roberto for submitGit q's]
 
-Using `--check-expected-revs` subcommand is a temporary measure to port
-shell functions to C so as to use the existing test suite. As more
-functions are ported, this subcommand would be retired and will be
-called by some other method.
+On Thu, Jul 21, 2016 at 12:56:51AM +0000, Brett Cundal wrote:
+> ---
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- builtin/bisect--helper.c | 33 ++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 20 ++------------------
- 2 files changed, 34 insertions(+), 19 deletions(-)
+<emtpy commit message>
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index d125fd3..86bb334 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -162,13 +162,40 @@ static int bisect_reset(const char *commit)
- 	return bisect_clean_state();
- }
- 
-+static int is_expected_rev(const char *expected_hex)
-+{
-+	struct strbuf actual_hex = STRBUF_INIT;
-+	int res = 0;
-+	if (strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0) >= 0) {
-+		strbuf_trim(&actual_hex);
-+		res = !strcmp(actual_hex.buf, expected_hex);
-+	}
-+	strbuf_release(&actual_hex);
-+	return res;
-+}
-+
-+static int check_expected_revs(const char **revs, int rev_nr)
-+{
-+	int i;
-+
-+	for (i = 0; i < rev_nr; i++) {
-+		if (!is_expected_rev(revs[i])) {
-+			remove_path(git_path_bisect_ancestors_ok());
-+			remove_path(git_path_bisect_expected_rev());
-+			return 0;
-+		}
-+	}
-+	return 0;
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
- 		NEXT_ALL = 1,
- 		WRITE_TERMS,
- 		BISECT_CLEAN_STATE,
--		BISECT_RESET
-+		BISECT_RESET,
-+		CHECK_EXPECTED_REVS
- 	} cmdmode = 0;
- 	int no_checkout = 0;
- 	struct option options[] = {
-@@ -180,6 +207,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
- 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
- 			 N_("reset the bisection state"), BISECT_RESET),
-+		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
-+			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_END()
-@@ -206,6 +235,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		if (argc > 1)
- 			die(_("--bisect-reset requires either zero or one arguments"));
- 		return bisect_reset(argc ? argv[0] : NULL);
-+	case CHECK_EXPECTED_REVS:
-+		return check_expected_revs(argv, argc);
- 	default:
- 		die("BUG: unknown subcommand '%d'", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 18580b7..4f6545e 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -238,22 +238,6 @@ bisect_write() {
- 	test -n "$nolog" || echo "git bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
- }
- 
--is_expected_rev() {
--	test -f "$GIT_DIR/BISECT_EXPECTED_REV" &&
--	test "$1" = $(cat "$GIT_DIR/BISECT_EXPECTED_REV")
--}
--
--check_expected_revs() {
--	for _rev in "$@"; do
--		if ! is_expected_rev "$_rev"
--		then
--			rm -f "$GIT_DIR/BISECT_ANCESTORS_OK"
--			rm -f "$GIT_DIR/BISECT_EXPECTED_REV"
--			return
--		fi
--	done
--}
--
- bisect_skip() {
- 	all=''
- 	for arg in "$@"
-@@ -280,7 +264,7 @@ bisect_state() {
- 		rev=$(git rev-parse --verify $(bisect_head)) ||
- 			die "$(gettext "Bad rev input: $(bisect_head)")"
- 		bisect_write "$state" "$rev"
--		check_expected_revs "$rev" ;;
-+		git bisect--helper --check-expected-revs "$rev" ;;
- 	2,"$TERM_BAD"|*,"$TERM_GOOD"|*,skip)
- 		shift
- 		hash_list=''
-@@ -294,7 +278,7 @@ bisect_state() {
- 		do
- 			bisect_write "$state" "$rev"
- 		done
--		check_expected_revs $hash_list ;;
-+		git bisect--helper --check-expected-revs $hash_list ;;
- 	*,"$TERM_BAD")
- 		die "$(eval_gettext "'git bisect \$TERM_BAD' can take only one argument.")" ;;
- 	*)
+The message on the pull request[1] has a better justification
+for this change, which would have been nice in the commit
+message itself:
 
---
-https://github.com/git/git/pull/273
+
+	Git 2.9 added a check against merging unrelated histories, which
+	is exactly what git subtree with --rejoin does. Adding the
+	--allow-unrelated-histories flag to merge will override this
+	check.
+
+
+Is it possible that maybe submitGit can detect an empty commit
+message for single-commit PRs and transplant that message onto it?
+
+As-is, the commit itself should probably be amended to contain
+that information.
+
+>  contrib/subtree/git-subtree.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+> index 7a39b30..556cd92 100755
+> --- a/contrib/subtree/git-subtree.sh
+> +++ b/contrib/subtree/git-subtree.sh
+> @@ -661,7 +661,7 @@ cmd_split()
+>  	if [ -n "$rejoin" ]; then
+>  		debug "Merging split branch into HEAD..."
+>  		latest_old=$(cache_get latest_old)
+> -		git merge -s ours \
+> +		git merge -s ours --allow-unrelated-histories \
+>  			-m "$(rejoin_msg "$dir" $latest_old $latest_new)" \
+>  			$latest_new >&2 || exit $?
+>  	fi
+> 
+> --
+
+With the above description this change makes more sense,
+but it seems that the existing tests do not detect the breakage
+fixed by this patch.
+
+Can you please add a test case in t/t7900-subtree.sh
+demonstrating the breakage?
+
+Looks good otherwise.
+
+[1] https://github.com/git/git/pull/274
+-- 
+David
