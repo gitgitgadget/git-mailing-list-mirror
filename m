@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9785203C3
-	for <e@80x24.org>; Thu, 21 Jul 2016 00:59:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1513203C1
+	for <e@80x24.org>; Thu, 21 Jul 2016 01:00:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752584AbcGUA7A (ORCPT <rfc822;e@80x24.org>);
-	Wed, 20 Jul 2016 20:59:00 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:35747 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751393AbcGUA67 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2016 20:58:59 -0400
-Received: by mail-io0-f193.google.com with SMTP id q83so4535438iod.2
-        for <git@vger.kernel.org>; Wed, 20 Jul 2016 17:58:58 -0700 (PDT)
+	id S1755357AbcGUBAH (ORCPT <rfc822;e@80x24.org>);
+	Wed, 20 Jul 2016 21:00:07 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:33282 "EHLO
+	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755154AbcGUBAC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2016 21:00:02 -0400
+Received: by mail-io0-f194.google.com with SMTP id y195so4522231iod.0
+        for <git@vger.kernel.org>; Wed, 20 Jul 2016 18:00:01 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:from:date:message-id:subject:to:cc;
-        bh=FC3nvp9WcTo07w+s4T/W5H9jPiWQLsKuSGDnMDZNP00=;
-        b=qx7U+JVhCxxXoIQbbtYfmIdh6XQVmp1zNyptbww8pGBG8pllrGrui9fkw4jDwZbMcx
-         1WBVEj1yYLu0YPTUJoRs1ENxrbNBYvLQxKx3oX/wt/nRyD+bai0szDFEeoeaNhbnWUwh
-         EQQANICf5lL/1ucbvnOybyBLFylOXYiC5JGISDJh6YA6oMT3ODdX59zipeoK5R+mrxI6
-         si3CvxPugfN/pchrJxssk0i2CwiqoQCxABd8XbqdtWwM8axaovBXRm1MKrSXIFqxU4dc
-         rvJw8HWclqmmG0TS4ZprTYl6VZsrWmBAOIRyF1Dl3dSzv+lFSEI9TS+fB58ZWd5Escu+
-         +YUg==
+        bh=0648hDEkdHNJywNFB4+MUNJHTHNozi6j0swyMuZ//Zg=;
+        b=Z76wuyGI25oYh7/ZCz2Ur9CXXXfOy5ES/hSYKJ6ltxX8YM/7Jyb/oAk/djVTRLnixZ
+         tFubLzIDKO+NDphhKkQMn8HdQ/avHqk8cTb9rz61bwvsY1RHhKlNgRxU5DRupN4982od
+         3SAexK3zL6WMPeGB7CR5vEW0gFPzkGpV1ZfeIyaLglcQHAya0iueLB8y3hcY/7fftxST
+         g6JO59UGDrecm+Jn0y4n3+5Ccs+5e3MFceiDf+K3Gxaz8xxVyFwfmJ5q7ShcCqIcUZS7
+         vYFJGXJ3+tNPfS4LJvFcFREShuNaiWRurvOWec6cxUj5YEsAPZFQnxkpe7zkmeyOFC/q
+         39Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=FC3nvp9WcTo07w+s4T/W5H9jPiWQLsKuSGDnMDZNP00=;
-        b=gdk47pwFv58E5HIr5T8Z9h4N0O1naYNe3aVH5kTFbJ8DKoywEgmaFl3T3dMuy3KjK2
-         xiqwJPtwSa5rBjzyA86j+ZePQbp6jXwydCxRrW26nfgQN6VaQQ2W5CbhrJ/j/luKaoUK
-         MrepwvYQuZi0xUQdKkT0OpMItas46rvm9SNKht1Z/R5IWGxQ8kxJLg/8Oixx06lEUR4U
-         AqtnbVI5+VHtk8YCqgnGGn8hnuD1wI+bLSiINIJtV3JuY6zn/rmeI2I0eVEf80N3GaqG
-         XQfxMCalezXZCSl6X4Xqu+UeJ/dDFOJbWTQkwpLRFxrAL1n2imfwddWVlr5/oYrJ5Loe
-         dcTg==
-X-Gm-Message-State: ALyK8tK2Sx7Ud+3DecVH+D1Y00zKiOis5DcmumgMMgDmTnJ0DwBqmOmgfGMpZD99i63ESvOTHWewAXm9ce/bTQ==
-X-Received: by 10.107.50.19 with SMTP id y19mr45812321ioy.174.1469062738284;
- Wed, 20 Jul 2016 17:58:58 -0700 (PDT)
+        bh=0648hDEkdHNJywNFB4+MUNJHTHNozi6j0swyMuZ//Zg=;
+        b=PZE3w/U0gSn0zqLGETho4BVJrL6/cvx3yCugORd3XmqBF15LEcctZEB6sAMrhnJK5Z
+         AzzSDSpRr5VzKbPC1zEypg+tpwxyas41MGA8lrsHm4ANoLn7c3gU1xTPxKLT3FEMavOm
+         Vttl3AUb0GgyQ80ASbxnvRqlFky4VFRJ+lhBOs1LnvIFFvqA/L2JG1buS4cRKHYFjUKY
+         P9Jwao6p3u2kUaGTy7bsFRwBI8TRhLxDtcUuBqog7GtHsGWFd2FbPk5q7y8Do3UGCvLF
+         Bp2T0hVC2wV+G6+pHkNmLEI/A8cTJ4Q67HHHHhiDz59PMBecYEcIEzNAN4E3+QzGp4Sk
+         GRBw==
+X-Gm-Message-State: ALyK8tK/KdxYDUXb7QomcztCOUfjQaryKCjvnlE82PJtAOg0UNLHT6wrsv6iApupohbNy6oqPXljcI30nq71iA==
+X-Received: by 10.107.132.104 with SMTP id g101mr54510395iod.147.1469062801204;
+ Wed, 20 Jul 2016 18:00:01 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.10.97 with HTTP; Wed, 20 Jul 2016 17:58:57 -0700 (PDT)
+Received: by 10.107.10.97 with HTTP; Wed, 20 Jul 2016 18:00:00 -0700 (PDT)
 From:	Parker Moore <parkrmoore@gmail.com>
-Date:	Wed, 20 Jul 2016 18:58:57 -0600
-Message-ID: <CAOiOGAePh6syq8XMWdzE_H8UQxzpgnsCsiYx-TG+mg46FRgXKQ@mail.gmail.com>
-Subject: [PATCH] contrib/persistent-https: update ldflags syntax for Go 1.7+
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git <git@vger.kernel.org>, Shawn Pearce <spearce@spearce.org>
+Date:	Wed, 20 Jul 2016 19:00:00 -0600
+Message-ID: <CAOiOGAfWfEy60qg3AbbPNqkvJDMsXBHY8ZSXBCKJYha_gDB8mw@mail.gmail.com>
+Subject: [PATCH] contrib/persistent-https: use Git version for build label
+To:	git <git@vger.kernel.org>
+Cc:	Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
@@ -57,54 +57,41 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Parker Moore <parkrmoore@gmail.com>
 
-This fixes contrib/persistent-https builds for Go v1.7+ and is
-compatible with Go v1.0+.
+The previous method simply used the UNIX timestamp of when the binary was
+built as its build label.
 
-Running `make all` in `contrib/persistent-https` results in a failure
-on Go 1.7 and above.
+    $ make && ./git-remote-persistent-http -print_label
+    1469061546
 
-Specifically, the error is:
+This patch aims to align the label for this binary with the Git version
+contained in the GIT-VERSION-FILE. This gives a better sense of the version
+of the binary as it can be mapped to a particular revision or release of
+Git itself. For example:
 
-    go build -o git-remote-persistent-https \
-   -ldflags "-X main._BUILD_EMBED_LABEL 1468613136"
-    # _/Users/parkr/github/git/contrib/persistent-https
-    /usr/local/Cellar/go/1.7rc1/libexec/pkg/tool/darwin_amd64/link: -X
-flag requires argument of the form importpath.name=value
-    make: *** [git-remote-persistent-https] Error 2
+    $ make && ./git-remote-persistent-http -print_label
+    2.9.1.275.g75676c8
 
-This `name=value` syntax for the -X flag was introduced in Go v1.5
-(released Aug 19, 2015):
+Discussion of this patch is available on a related thread in the mailing
+list surrounding this package called "contrib/persistent-https: update
+ldflags syntax for Go 1.7+". The gmane.org link is:
+http://article.gmane.org/gmane.comp.version-control.git/299653/
 
-- release notes: https://golang.org/doc/go1.5#link
-- commit: https://github.com/golang/go/commit/12795c02f3d6fc54ece09a86e70aaa40a94d5131
-
-In Go v1.7, support for the old syntax was removed:
-
-- release notes: https://tip.golang.org/doc/go1.7#compiler
-- commit: https://github.com/golang/go/commit/51b624e6a29b135ce0fadb22b678acf4998ff16f
-
-This patch includes the `=` to fix builds with Go v1.7+.
-
-Thanks-to: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Parker Moore <parkrmoore@gmail.com>
 ---
- contrib/persistent-https/Makefile | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ contrib/persistent-https/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/persistent-https/Makefile
 b/contrib/persistent-https/Makefile
-index 92baa3be..2b4173d 100644
+index 92baa3be..8248269 100644
 --- a/contrib/persistent-https/Makefile
 +++ b/contrib/persistent-https/Makefile
-@@ -25,8 +25,10 @@ git-remote-persistent-http: git-remote-persistent-https
-        ln -f -s git-remote-persistent-https git-remote-persistent-http
+@@ -12,7 +12,7 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
 
- git-remote-persistent-https:
-+       case $$(go version) in \
-+               "go version go"1.[0-5].*) EQ=" " ;; *) EQ="=" ;; esac && \
-        go build -o git-remote-persistent-https \
--               -ldflags "-X main._BUILD_EMBED_LABEL $(BUILD_LABEL)"
-+               -ldflags "-X main._BUILD_EMBED_LABEL$${EQ}$(BUILD_LABEL)"
+-BUILD_LABEL=$(shell date +"%s")
++BUILD_LABEL=$(shell cat ../../GIT-VERSION-FILE | cut -d" " -f3)
+ TAR_OUT=$(shell go env GOOS)_$(shell go env GOARCH).tar.gz
 
- clean:
-        rm -f git-remote-persistent-http* *.tar.gz
+ all: git-remote-persistent-https git-remote-persistent-https--proxy \
