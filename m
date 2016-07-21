@@ -2,96 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F048F203C2
-	for <e@80x24.org>; Thu, 21 Jul 2016 16:03:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02595203C2
+	for <e@80x24.org>; Thu, 21 Jul 2016 16:47:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753275AbcGUQDp (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 12:03:45 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50848 "EHLO mout.gmx.net"
+	id S1753437AbcGUQrK (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 12:47:10 -0400
+Received: from mout.web.de ([212.227.15.4]:58351 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753047AbcGUQDo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 12:03:44 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Lg0sd-1ayJHt18At-00ph5M; Thu, 21 Jul 2016 18:03:38
+	id S1753286AbcGUQrJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 12:47:09 -0400
+Received: from [192.168.178.36] ([79.213.113.124]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0MgOQQ-1bf2HQ1s6I-00NghD; Thu, 21 Jul 2016 18:46:54
  +0200
-Date:	Thu, 21 Jul 2016 18:02:54 +0200 (CEST)
-From:	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	git@vger.kernel.org
-cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>
-Subject: [PATCH] test-lib: on FreeBSD, look for unzip(1) in /usr/local/bin/
-Message-ID: <31dce0b28ae094c976890c1604c4ebbcaef0e7ef.1469116960.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Subject: Re: [PATCH] use strbuf_addbuf() for appending a strbuf to another
+To:	Jeff King <peff@peff.net>
+References: <578E732D.2090803@web.de>
+ <20160720132025.GD17469@sigill.intra.peff.net>
+Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <5790FC74.6000602@web.de>
+Date:	Thu, 21 Jul 2016 18:46:44 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:7VWWBATWETSCPqmzS82muQilBeLNjGvBhdtx7vFNQB6jCoWSoNv
- e6aD6Lz9SP7wvTddLbS5NMTONxGby6SFab1J96am0Hom4iZlDuTQM7mc58nz4GtxHxnad4g
- tccR1xGYpf+M4CAK6zX1arNTG2hpzpFV9G4rD4qYnWp3KVtJpKz49tTOS4HpMbVhNp1UdUv
- s1AfSUnwvEupsEkiTmusA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:/fLTMdsZmDE=:6cfSm5Fshg+QQc2xwgk+bc
- 3HGWr3ea6HJiSRj1DVNQpwhDgbrrlvmKBx1ZS9Z7oT15taai4IEGvH2iZuK+L7vn9Uq0FfrgJ
- 51OSB9Dc/yiCdyIFCdgOQ6X7vFrItBlQUEgbxEDbcqRseKhqdhJNN4T03fuS8QMBly4151A7q
- VAfSfrn0wUpW79GDCZQASO3IUYXdi2E/Npi9et/RUN50snUAWcZGkpVjkrQ94qXHPSOpnmR13
- HC+GvA/lAJXSyj8BiFOpayg8SfGZymCdg3XFiomF2S4SjyHdvjbMCeBdtQBz6nuelcyYADhMG
- NIBwnumgaWFi8nxNbyodhMKdJSB5YFQlyXnJJoAY8/r7Xg2TQcD768Zzuuaq5v85cug9XO6f1
- Igr2KxjWAKw+RYeguZO/0le5z35507QTtXLSqMJaUKM9lTW6Z8rQXY7beiBTZ5ITi+97sTKSP
- +ulRrQy3EN8OvClLHJGC4hsEFOjUol/fdPfflBCmETzUhrHjDHJAURJ6Gng9xSxete3xE2FEs
- L/7ba3xZNxrdqAXyzURDrhhb6st/2lA17Kcu6MIZ9sTmrQI9rJ1QtmbbnpTUAocrRFCLoZhuV
- 1IEuVERJYrFVdbr6O97J5CN8xyj7uZKaTBUR7nxdzZvsPaPBQ/nidAkFDHjO0fgrigu8Q+a0L
- UOwFNFHiDgJlHlKdYVc5+CW82vCvR+i91drpQ8wueO7vYZRSznfMkwMEFex6Jejo49N942oYU
- J8vB5lfY5F0zgMCnLOmMCvY3DkTbvecadmNhxT60EL4Kki3HP5F72nwoJjt1XZl3lveQDkdx5
- 6IEmnJQ
+In-Reply-To: <20160720132025.GD17469@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:uH8xClSUNhNryHtmFGvMNT6HD6W7NLcjEAPV4BiRz4sre49KNJO
+ 130bu3HOan4zbJtnpRzQ5QPQeDeMaKr5oVTyULXkQz7LGhWIWNyGT5hJDasdI/sPOyKiR92
+ m6U6GR5NO9dCyBAV4Lrpz+Xy/jFkoxc/grYNfOuIDDutspXowQK3jZBRJcm6UU6agCAe6we
+ 7omdQI9p28ODeU+L4EDbw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:/UhpbOsmOCU=:6DWm3UUGdn3ykygiQxhPff
+ NV/lZH7w3CvA7AbGj/DXHWlGEaULMC6BQEIPPY21lyyQGesgrW4b/skjPQ2n7q3ShO1+BayNM
+ PKTmyKlFolTPzrpltmBHtWB6y3Iv3woU6qicZ0RM9gpbxksGKx62uU0wB1MSnshCfTYzqt8Co
+ QGdWsjHQiw1KRkTKZXOOt2Zg2CG+G6edhSOnLsCsqeR4uT6Xa4fFTW7RPfIh6NAB9eqMWwvzo
+ GJSlVJODHuA86FJJHlWt9sMSIkgOmBy72Rnx3t3Xco4odykJqY+hJcjpi1v+ZFiZ1UZ1UVdQc
+ G2khdFMWlkZGaIcAKXXE7a0OBXKkWtWxdOQa+vAA5ApXJZL5riL/mP96kHanHicxwEQ/XWKo/
+ V4Ppj3Z4qQhkVkboYpxHCCdENy7Nn9vV8j0VOViPJc6BCFmhAi+nLFP9wC7+Po3OkYtiriH8P
+ e3SMp7ZyxKo7HqLbAR84biJi70y7q8aZDJLkXHMkexl1CuL16agAu/1n5YV7JrdOHZ53c0rLE
+ UUyXSAwKr8eO/CZXj52u5Zidyl64FJZhGP99b4m7W1/uO8MjGZprBjApMsUgmtK4MM3gnpUVk
+ BgRsW0WHziU5eC1mj4K2CEHXW1PQPootgym0nygC7AgM016YBazQlHFf12dN5dGApuVtQfD7b
+ bdmPMVFtTZhP2C7WcAxw363/rkgZNbxjbOZJcJH2935W9KOLC8R7ufkGzFQKEK92BD09SqH0S
+ kA1TYE2Q9Zm9t+htaqSlQ9o29Xd/jFeYN7DmeIZPJrMxNc6o/JNGt+/KeXowNVHgO0b7tURm4
+ FThT/yT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Am 20.07.2016 um 15:20 schrieb Jeff King:
+> On Tue, Jul 19, 2016 at 08:36:29PM +0200, René Scharfe wrote:
+> 
+>> Use strbuf_addbuf() where possible; it's shorter and more efficient.
+> 
+> After seeing "efficient", I was momentarily surprised by the first hunk:
+> 
+>> diff --git a/dir.c b/dir.c
+>> index 6172b34..0ea235f 100644
+>> --- a/dir.c
+>> +++ b/dir.c
+>> @@ -2364,7 +2364,7 @@ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untra
+>>   
+>>   	varint_len = encode_varint(untracked->ident.len, varbuf);
+>>   	strbuf_add(out, varbuf, varint_len);
+>> -	strbuf_add(out, untracked->ident.buf, untracked->ident.len);
+>> +	strbuf_addbuf(out, &untracked->ident);
+> 
+> This is actually slightly _less_ efficient, because we already are using
+> the precomputed len, and the new code will call an extra strbuf_grow()
+> to cover the case where the two arguments are the same.  See 81d2cae
+> (strbuf_addbuf(): allow passing the same buf to dst and src,
+> 2010-01-12).
 
-Eric Wong reported that while FreeBSD has a /usr/bin/unzip, it uses
-different semantics from those that are needed by Git's tests: When
-passing the -a option to Info-Zip, it heeds the text attribute of the
-.zip file's central directory, while FreeBSD's unzip ignores that
-attribute.
+Ah, I wasn't aware of that.  Calling strbuf_grow() twice shouldn't be
+thaaat bad.  However, I wonder where we duplicate strbufs, or why we
+would ever want to do so.  Anyway, here's a patch for that:
 
-The common work-around is to install Info-Zip on FreeBSD, into
-/usr/local/bin/.
+-- >8 --
+Subject: strbuf: avoid calling strbuf_grow() twice in strbuf_addbuf()
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Implement strbuf_addbuf() as a normal function in order to avoid calling
+strbuf_grow() twice, with the second callinside strbud_add() being a
+no-op.  This is slightly faster and also reduces the text size a bit.
+
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
-Published-As: https://github.com/dscho/git/releases/tag/freebsd-unzip-v1
- t/test-lib.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ strbuf.c | 7 +++++++
+ strbuf.h | 6 +-----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 11201e9..dd2f70c 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -929,7 +929,8 @@ yes () {
+diff --git a/strbuf.c b/strbuf.c
+index 1ba600b..f3bd571 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -197,6 +197,13 @@ void strbuf_add(struct strbuf *sb, const void *data, size_t len)
+ 	strbuf_setlen(sb, sb->len + len);
  }
  
- # Fix some commands on Windows
--case $(uname -s) in
-+uname_s=$(uname -s)
-+case $uname_s in
- *MINGW*)
- 	# Windows has its own (incompatible) sort and find
- 	sort () {
-@@ -1100,6 +1101,7 @@ test_lazy_prereq SANITY '
- 	return $status
- '
++void strbuf_addbuf(struct strbuf *sb, const struct strbuf *sb2)
++{
++	strbuf_grow(sb, sb2->len);
++	memcpy(sb->buf + sb->len, sb2->buf, sb2->len);
++	strbuf_setlen(sb, sb->len + sb2->len);
++}
++
+ void strbuf_adddup(struct strbuf *sb, size_t pos, size_t len)
+ {
+ 	strbuf_grow(sb, len);
+diff --git a/strbuf.h b/strbuf.h
+index 83c5c98..ba8d5f1 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -263,11 +263,7 @@ static inline void strbuf_addstr(struct strbuf *sb, const char *s)
+ /**
+  * Copy the contents of another buffer at the end of the current one.
+  */
+-static inline void strbuf_addbuf(struct strbuf *sb, const struct strbuf *sb2)
+-{
+-	strbuf_grow(sb, sb2->len);
+-	strbuf_add(sb, sb2->buf, sb2->len);
+-}
++extern void strbuf_addbuf(struct strbuf *sb, const struct strbuf *sb2);
  
-+test FreeBSD != $uname_s || GIT_UNZIP=${GIT_UNZIP:-/usr/local/bin/unzip}
- GIT_UNZIP=${GIT_UNZIP:-unzip}
- test_lazy_prereq UNZIP '
- 	"$GIT_UNZIP" -v
+ /**
+  * Copy part of the buffer from a given position till a given length to the
 -- 
-2.9.0.281.g286a8d9
+2.9.2
 
-base-commit: 29493589e97a2de0c4c1c314f61ccafaee3b5caf
