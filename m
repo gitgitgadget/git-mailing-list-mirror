@@ -7,94 +7,83 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AB4020195
-	for <e@80x24.org>; Thu, 21 Jul 2016 10:45:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6249820195
+	for <e@80x24.org>; Thu, 21 Jul 2016 11:22:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751962AbcGUKpn (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 06:45:43 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:33837 "EHLO
-	mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751462AbcGUKpm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 06:45:42 -0400
-Received: by mail-qt0-f196.google.com with SMTP id c52so3594486qte.1
-        for <git@vger.kernel.org>; Thu, 21 Jul 2016 03:45:42 -0700 (PDT)
+	id S1751529AbcGULWJ (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 07:22:09 -0400
+Received: from mail-lf0-f45.google.com ([209.85.215.45]:33728 "EHLO
+	mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751346AbcGULWH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 07:22:07 -0400
+Received: by mail-lf0-f45.google.com with SMTP id b199so59062236lfe.0
+        for <git@vger.kernel.org>; Thu, 21 Jul 2016 04:22:06 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2ZsGoVP6pk8y3PGmNG9ctHj2dz+F0vhtE35yDHlASDU=;
-        b=dr6hkjs8p7rOnl6VWBhqJEimb6Blye5Wp8gTxfYl6ggxc+LOroS1ZYWz15uplfOWIo
-         lzAfbf73ejtXZC3Dh1PKHGRLZ2AQAZygGQmHgRvdfgaEWPfJ/5QB7z6ZzTE370Kei1hA
-         TqVA4hWMgvihvKeyWRon5hD9CR8eR6uWKSdx2BS+slCbxw45wYP1zJp0rKk8Vlgyh9lI
-         RrwtUAccZhO9bx9EVrcPsY1bvgu9AeBRqLrw3iueV5xVkj0COtQAOnyyP+f9vQFa3AbW
-         SDw2hdFajzyapElIlMEN6DW9RDkVjjOMURYXcrs89MXtDze+jjha2EBmtk7HsfHhcpI5
-         A/5A==
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=ECQHUKp/nSAL8dLoCvdb1TuhFV2njokpCzEZV3t9gNI=;
+        b=ItBxZ9qxwD8cu4xGroALZhEEMDfFpwnJmgcZm6wr4OWb0QirvS1fex8qdkOeaxmDe7
+         WW7kUnutDejUjfhfrrzXpgVBxIyogngU7/LXFoxkmcNHcWucz4tQg9c09pjr0l46HXLH
+         YlDNysmYZiLszhDLpWBsfoc9ORYq3ZxBwj4bTSn1LewJxRP/EBp4zkC66JVHZlHpRpa/
+         NEeunONqh5sLe1T8tlICdwBpQmoHcJRh3g2TiSUpNCFbW2Dc2W5s3Nkgn3JBbwAJztIc
+         XWylfMj5R36mCpCEyd9aNILt+drWsCn75WMx5p023Xuno29jqTjz3V+rsDTbh07TRIdH
+         1YCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2ZsGoVP6pk8y3PGmNG9ctHj2dz+F0vhtE35yDHlASDU=;
-        b=NJ7qxtHfHwVwYe3+Cgv1hXY9F8QWWVq93cSvkZ/9vGio7F66wYb+gMn09za61YgjpN
-         dN+/OKx445gwWactTP+yOxMsBV81uFeVacjS3NGMT2bLfSnaXCHrI8wAeUUwORpZ6X42
-         uLuHJ88EbSW6GcSUxBp+8lxxkOJBvDnLHPfIQCZbiYb6egrYXVw40WyzzqTYzJQNYxn6
-         6q2R7HRgBqYwWykQ4IdbRjtAYrb9lH2NSxReD+MFCb0r9XWSzzWJkMSUcyBtSAl0a4O9
-         UVRIALu2bvIr5gwxUG4brOyRwxXcZa7mbTPsaF/V5bM+S2PYaQPPzt9oF+tIx47VYHu3
-         H2fA==
-X-Gm-Message-State: ALyK8tLA0PAeESkMSMx6xrTCOOzLRzwQ1hP5kY2AW8BQkQWBn5AT4CX86j8S3jOQLRaLBdwGmlYtfz6P1BWeaA==
-X-Received: by 10.237.36.38 with SMTP id r35mr81963574qtc.3.1469097941816;
- Thu, 21 Jul 2016 03:45:41 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=ECQHUKp/nSAL8dLoCvdb1TuhFV2njokpCzEZV3t9gNI=;
+        b=fq8ayvvQqdRlyDM5ABz7Fvn5FrOQhTUNhWj8x9jq8P6b2p5EE4h8EDduxn/klL1dtS
+         xiZ6qKa87+it/dZKal1Y+mvw6bO889IXCHcRQJE/5jl3u9Bptoj5OEW56DvDId23JNnR
+         S1RitRQIjJKL8Mo+MzzQ0bS3s9YMvh11164UK+bNTWn3b608CvevVv+nB71YHhfekr46
+         qtJ5Rwx3bu6NWNCsslfp/Tzj2Y2FDFaujIHMWiA9cFkkTC7OhETTzgFLOyGtNZyNcxUE
+         KbH9ukX2HgsngeviDPa6lZ5NWJctam5EBV0ciM8MOrAXI3IN0Y3ZXg6xBtqdHvAss41E
+         l/cw==
+X-Gm-Message-State: ALyK8tIAS3yL73ZxxIAyTaggVvDKT9b9OCi3D+kSK/oXB3vzVBUSLlACRPgnEdkfwhswHQ==
+X-Received: by 10.25.90.203 with SMTP id o194mr4449850lfb.67.1469100125365;
+        Thu, 21 Jul 2016 04:22:05 -0700 (PDT)
+Received: from [192.168.1.26] (elu20.neoplus.adsl.tpnet.pl. [83.21.214.20])
+        by smtp.googlemail.com with ESMTPSA id u14sm1581208lja.11.2016.07.21.04.22.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Jul 2016 04:22:04 -0700 (PDT)
+Subject: Re: Server-side preventing some files from being overwritten
+To:	Stefan Beller <sbeller@google.com>,
+	Thorsten Glaser <t.glaser@tarent.de>
+References: <alpine.DEB.2.20.1607141725390.25238@tglase.lan.tarent.de>
+ <CAGZ79kb=2rpYucjhavNB_XHLk9rjKSoHzL9bwM5buDO0GyW3vw@mail.gmail.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <5790B055.4060603@gmail.com>
+Date:	Thu, 21 Jul 2016 13:21:57 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
-Received: by 10.55.36.77 with HTTP; Thu, 21 Jul 2016 03:45:22 -0700 (PDT)
-In-Reply-To: <1469095670-3834-1-git-send-email-vascomalmeida@sapo.pt>
-References: <1469095670-3834-1-git-send-email-vascomalmeida@sapo.pt>
-From:	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:	Thu, 21 Jul 2016 12:45:22 +0200
-Message-ID: <CACBZZX51K=D2gYbzKvJW3B5=bzxEGGFhOc6TkAfJkkpdYuEt0w@mail.gmail.com>
-Subject: Re: [PATCH] i18n: notes: mark comment for translation
-To:	Vasco Almeida <vascomalmeida@sapo.pt>
-Cc:	Git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CAGZ79kb=2rpYucjhavNB_XHLk9rjKSoHzL9bwM5buDO0GyW3vw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 21, 2016 at 12:07 PM, Vasco Almeida <vascomalmeida@sapo.pt> wrote:
-> Mark comment displayed when editing a note for translation.
+W dniu 2016-07-14 o 18:57, Stefan Beller pisze:
+> On Thu, Jul 14, 2016 at 8:31 AM, Thorsten Glaser <t.glaser@tarent.de> wrote:
+>> Hi *,
+>>
+>> is there a way, for example with some sort of pre-receive hook,
+>> to prevent some files from being overwritten by a push?
+> 
+> pre-receive hooks are a thing!
 
-I'm not sure, but wouldn't this make more sense:
+Or you can use third-party tools with support for such cases, such
+as Gitolite.  VREFs allow to restrict pushes by the filename, see
+http://gitolite.com/gitolite/vref.html#NAME (though I am not sure
+if it checks only the end state, or if it checks every commit
+that was pushed).
 
-> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
-> ---
->  builtin/notes.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index 0572051..37933bd 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -91,7 +91,7 @@ static const char * const git_notes_get_ref_usage[] = {
->  };
->
->  static const char note_template[] =
-> -       "\nWrite/edit the notes for the following object:\n";
-> +       N_("\nWrite/edit the notes for the following object:\n");
-+       N_("Write/edit the notes for the following object:");
->
->  struct note_data {
->         int given;
-> @@ -179,7 +179,7 @@ static void prepare_note_data(const unsigned char *object, struct note_data *d,
->                         copy_obj_to_fd(fd, old_note);
->
->                 strbuf_addch(&buf, '\n');
-+                 strbuf_addch(&buf, '\n');
-> -               strbuf_add_commented_lines(&buf, note_template, strlen(note_template));
-> +               strbuf_add_commented_lines(&buf, _(note_template), strlen(_(note_template)));
-+                 strbuf_addch(&buf, '\n');
->                 strbuf_addch(&buf, '\n');
->                 write_or_die(fd, buf.buf, buf.len);
-
-I.e. moving the starting and ending \n out of the message itself, the
-surrounding whitespace doesn't seem like something the translators
-need to modify, and if they were to trim it it looks like it would
-break the output a bit.
+Best,
+-- 
+Jakub Narębski
