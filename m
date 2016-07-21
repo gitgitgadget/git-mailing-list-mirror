@@ -2,127 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2492203E0
-	for <e@80x24.org>; Thu, 21 Jul 2016 20:59:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6A9F203C5
+	for <e@80x24.org>; Thu, 21 Jul 2016 21:03:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754171AbcGUU7N (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 16:59:13 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33975 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754097AbcGUU7L (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 16:59:11 -0400
-Received: by mail-wm0-f67.google.com with SMTP id q128so3732631wma.1
-        for <git@vger.kernel.org>; Thu, 21 Jul 2016 13:59:10 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=6heSC/Lw+0uPsL/tjZecMv1FOQ1OqxisnRB35cew4Xc=;
-        b=qCcdH8wUDIYu9jSNVTpcjfHWJ350aseEmz7WfJjizgJ0P7WAdaVvmfMOv9r0xCI7no
-         25Zlb9V+fKnk8G7TTjKDDG07FBO5hF8DQa1r4J7g0PQCZnK0ByteD32A0pBNBC2R5kEm
-         efgZ5Z6zSsGUSKOGb9GhUr9wc6ue4H0k3dLcJPMuAIbuD0QAjmSdrrZJXVLathWPrSYa
-         s7BdfBo6E3idtIbgMY1aQgkXbhvWEp+c1YEg2gnsnjx6VylyhO5cvMN21z+mv+jglCmU
-         0HXAMZ8toxiiqqqdO52DuJ9kdJTZDAkb4uC3aqgYwNBWb8PyV6EbyvfonH6UvG2PJMUE
-         uJSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=6heSC/Lw+0uPsL/tjZecMv1FOQ1OqxisnRB35cew4Xc=;
-        b=EeQE2ewNUO+E3CasnDrI3Cix+/mZdLeSbp3l5fEgeLKJM/IngKDPqAV9mvEzi9tmOE
-         fqzRJrvCoEHn6VXyNbXBvPVrktrETn38Z0B6Qe5EHv81zjO9sbC8n5AOWTv5g2LVpnuS
-         tWkIllssmKGSNgVQBqg2fqLB2isj5bXwkT0W3R3PqzvV+HtFC/02/wZiGX4qYn0nLx1Q
-         fR9C9IceuSpLqyvq9MavuwOnJShxI+eoujs5HTXZGTji84AbCl6lkFocWPxSrjgIA5X+
-         OfOmJKfgRQKuvCO87OICQiZHdv+eB5T6+jLZdAe9CuNF8N7jY2yc/v3NzkwTk/QC72ik
-         8AtA==
-X-Gm-Message-State: AEkoouumWBtsckstZX+KVLw4Gwi2hBB6fwEY4f0pUf9Qfh5oOneY0GLce2FFGEH5mMrzzQ==
-X-Received: by 10.28.208.140 with SMTP id h134mr395896wmg.101.1469134749398;
-        Thu, 21 Jul 2016 13:59:09 -0700 (PDT)
-Received: from slxBook3.fritz.box (p5DDB7915.dip0.t-ipconnect.de. [93.219.121.21])
-        by smtp.gmail.com with ESMTPSA id n131sm4118733wmd.3.2016.07.21.13.59.08
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 21 Jul 2016 13:59:08 -0700 (PDT)
-From:	larsxschneider@gmail.com
-To:	git@vger.kernel.org
-Cc:	peff@peff.net, Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v1] convert: add test to demonstrate clean invocations
-Date:	Thu, 21 Jul 2016 22:59:07 +0200
-Message-Id: <1469134747-26785-1-git-send-email-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.5.1
+	id S1754155AbcGUVDJ (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 17:03:09 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48281 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753954AbcGUVDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 17:03:08 -0400
+Received: (qmail 28027 invoked by uid 102); 21 Jul 2016 21:03:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 21 Jul 2016 17:03:00 -0400
+Received: (qmail 335 invoked by uid 107); 21 Jul 2016 21:03:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 21 Jul 2016 17:03:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Jul 2016 17:02:54 -0400
+Date:	Thu, 21 Jul 2016 17:02:54 -0400
+From:	Jeff King <peff@peff.net>
+To:	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] use strbuf_addbuf() for appending a strbuf to another
+Message-ID: <20160721210253.GA4604@sigill.intra.peff.net>
+References: <578E732D.2090803@web.de>
+ <20160720132025.GD17469@sigill.intra.peff.net>
+ <5790FC74.6000602@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5790FC74.6000602@web.de>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Lars Schneider <larsxschneider@gmail.com>
+On Thu, Jul 21, 2016 at 06:46:44PM +0200, René Scharfe wrote:
 
-If three files processed by a filter are added and committed to a
-repository then I expect three clean invocations per Git operation.
-Apparently Git invokes the clean process 12 times.
+> >> -	strbuf_add(out, untracked->ident.buf, untracked->ident.len);
+> >> +	strbuf_addbuf(out, &untracked->ident);
+> > 
+> > This is actually slightly _less_ efficient, because we already are using
+> > the precomputed len, and the new code will call an extra strbuf_grow()
+> > to cover the case where the two arguments are the same.  See 81d2cae
+> > (strbuf_addbuf(): allow passing the same buf to dst and src,
+> > 2010-01-12).
+> 
+> Ah, I wasn't aware of that.  Calling strbuf_grow() twice shouldn't be
+> thaaat bad.  However, I wonder where we duplicate strbufs, or why we
+> would ever want to do so.  Anyway, here's a patch for that:
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
+I don't think we do. Going back to the original discussion:
 
-It's pretty late here and I hope do not miss something obvious... but
-can anyone explain to me why the clean operation is executed 12 times
-for 3 files?
+  http://thread.gmane.org/gmane.comp.version-control.git/136141/focus=136774
 
-Thanks,
-Lars
+it was mostly just "hey, this would fail really confusingly if we ever
+did, so let's make it safe".
 
+The second strbuf_grow() is by definition a noop (which is why 81d2cae
+works at all), but we do pay the size-computation cost.
 
- t/t0021-conversion.sh | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+> -- >8 --
+> Subject: strbuf: avoid calling strbuf_grow() twice in strbuf_addbuf()
+> 
+> Implement strbuf_addbuf() as a normal function in order to avoid calling
+> strbuf_grow() twice, with the second callinside strbud_add() being a
+> no-op.  This is slightly faster and also reduces the text size a bit.
 
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 7bac2bc..ab3d299 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -12,6 +12,12 @@ tr \
- EOF
- chmod +x rot13.sh
+Seems reasonable.  IMHO the main advantage is that one does not have to
+reason about the double strbuf_grow() (i.e., that the strbuf_add() is
+safe because we know its grow is a noop).
 
-+cat <<EOF >run.sh
-+#!$SHELL_PATH
-+	echo "." >> run.count
-+EOF
-+chmod +x run.sh
-+
- test_expect_success setup '
- 	git config filter.rot13.smudge ./rot13.sh &&
- 	git config filter.rot13.clean ./rot13.sh &&
-@@ -268,4 +274,28 @@ test_expect_success 'disable filter with empty override' '
- 	test_must_be_empty err
- '
-
-+test_expect_failure 'required clean filter count' '
-+	test_config_global filter.run_count.clean ./../run.sh &&
-+	test_config_global filter.run_count.required true &&
-+	rm -rf repo &&
-+	mkdir repo &&
-+	(
-+		cd repo &&
-+		git init &&
-+
-+		echo "*.r filter=run_count" >.gitattributes &&
-+
-+		cat ../test.o >test.r &&
-+		echo "test22" >test2.r &&
-+		echo "test333" >test3.r &&
-+
-+		rm -f run.count &&
-+		git add . &&
-+		test_line_count = 3 run.count
-+
-+		rm -f run.count &&
-+		git commit . -m "test commit" &&
-+		test_line_count = 3 run.count
-+	)
-+'
- test_done
---
-2.5.1
-
+-Peff
