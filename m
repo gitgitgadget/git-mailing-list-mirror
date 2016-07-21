@@ -2,79 +2,243 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6A9F203C5
-	for <e@80x24.org>; Thu, 21 Jul 2016 21:03:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49534203E0
+	for <e@80x24.org>; Thu, 21 Jul 2016 21:20:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754155AbcGUVDJ (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 17:03:09 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48281 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753954AbcGUVDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 17:03:08 -0400
-Received: (qmail 28027 invoked by uid 102); 21 Jul 2016 21:03:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 21 Jul 2016 17:03:00 -0400
-Received: (qmail 335 invoked by uid 107); 21 Jul 2016 21:03:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 21 Jul 2016 17:03:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Jul 2016 17:02:54 -0400
-Date:	Thu, 21 Jul 2016 17:02:54 -0400
-From:	Jeff King <peff@peff.net>
-To:	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] use strbuf_addbuf() for appending a strbuf to another
-Message-ID: <20160721210253.GA4604@sigill.intra.peff.net>
-References: <578E732D.2090803@web.de>
- <20160720132025.GD17469@sigill.intra.peff.net>
- <5790FC74.6000602@web.de>
+	id S1754220AbcGUVU1 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 17:20:27 -0400
+Received: from smtp122.iad3a.emailsrvr.com ([173.203.187.122]:36954 "EHLO
+	smtp122.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754057AbcGUVUZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Jul 2016 17:20:25 -0400
+Received: from smtp24.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
+	by smtp24.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id 636ABC0657;
+	Thu, 21 Jul 2016 17:20:24 -0400 (EDT)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp24.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 5B012C0621;
+	Thu, 21 Jul 2016 17:20:23 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.5.4);
+	Thu, 21 Jul 2016 17:20:24 -0400
+Subject: Re: [PATCH v4 4/8] doc: give headings for the two and three dot
+ notations
+To:	Philip Oakley <philipoakley@iee.org>, GitList <git@vger.kernel.org>
+References: <20160711202518.532-1-philipoakley@iee.org>
+ <20160720211007.5520-1-philipoakley@iee.org>
+ <20160720211007.5520-5-philipoakley@iee.org> <5790DF64.8030603@xiplink.com>
+ <9B0B8E2D61D34BFEB8FC3F30EB23437C@PhilipOakley>
+Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>
+From:	Marc Branchaud <marcnarc@xiplink.com>
+Message-ID: <57913C97.1030001@xiplink.com>
+Date:	Thu, 21 Jul 2016 17:20:23 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5790FC74.6000602@web.de>
+In-Reply-To: <9B0B8E2D61D34BFEB8FC3F30EB23437C@PhilipOakley>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 21, 2016 at 06:46:44PM +0200, René Scharfe wrote:
+On 2016-07-21 03:54 PM, Philip Oakley wrote:
+> From: "Marc Branchaud" <marcnarc@xiplink.com>
+>> On 2016-07-20 05:10 PM, Philip Oakley wrote:
+>>> While there, also break out the other shorthand notations and
+>>> add a title for the revision range summary (which also appears
+>>> in git-rev-parse, so keep it mixed case).
+>>>
+>>> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+>>> ---
+>>>   Documentation/revisions.txt | 58
+>>> ++++++++++++++++++++++++++++-----------------
+>>>   1 file changed, 36 insertions(+), 22 deletions(-)
+>>>
+>>> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+>>> index 6e9cd41..5b37283 100644
+>>> --- a/Documentation/revisions.txt
+>>> +++ b/Documentation/revisions.txt
+>>> @@ -242,35 +242,49 @@ specifying a single revision with the notation
+>>> described in the
+>>>   previous section means the set of commits reachable from that
+>>>   commit, following the commit ancestry chain.
+>>>
+>>> -To exclude commits reachable from a commit, a prefix '{caret}'
+>>> -notation is used.  E.g. '{caret}r1 r2' means commits reachable
+>>> -from 'r2' but exclude the ones reachable from 'r1'.
+>>> -
+>>> -This set operation appears so often that there is a shorthand
+>>> -for it.  When you have two commits 'r1' and 'r2' (named according
+>>> -to the syntax explained in SPECIFYING REVISIONS above), you can ask
+>>> -for commits that are reachable from r2 excluding those that are
+>>> reachable
+>>> -from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
+>>> -
+>>> -A similar notation 'r1\...r2' is called symmetric difference
+>>> -of 'r1' and 'r2' and is defined as
+>>> -'r1 r2 --not $(git merge-base --all r1 r2)'.
+>>> -It is the set of commits that are reachable from either one of
+>>> -'r1' (left side) or 'r2' (right side) but not from both.
+>>> -
+>>> -In these two shorthands, you can omit one end and let it default to
+>>> HEAD.
+>>> +Commit Exclusions
+>>> +~~~~~~~~~~~~~~~~~
+>>> +
+>>> +'{caret}<rev>' (caret) Notation::
+>>> + To exclude commits reachable from a commit, a prefix '{caret}'
+>>> + notation is used.  E.g. '{caret}r1 r2' means commits reachable
+>>> + from 'r2' but exclude the ones reachable from 'r1'.
+>>> +
+>>> +Dotted Range Notations
+>>> +~~~~~~~~~~~~~~~~~~~~~~
+>>> +
+>>> +The '..' (two-dot) Range Notation::
+>>> + The '{caret}r1 r2' set operation appears so often that there is a
+>>> shorthand
+>>> + for it.  When you have two commits 'r1' and 'r2' (named according
+>>> + to the syntax explained in SPECIFYING REVISIONS above), you can ask
+>>> + for commits that are reachable from r2 excluding those that are
+>>> reachable
+>>> + from r1 by '{caret}r1 r2' and it can be written as 'r1..r2'.
+>>> +
+>>> +The '...' (three dot) Symmetric Difference Notation::
+>>> + A similar notation 'r1\...r2' is called symmetric difference
+>>
+>> s/called/called the/
+>
+> The wording is the original ;-) Can change.
+>
+>>
+>>> + of 'r1' and 'r2' and is defined as
+>>> + 'r1 r2 --not $(git merge-base --all r1 r2)'.
+>>> + It is the set of commits that are reachable from either one of
+>>> + 'r1' (left side) or 'r2' (right side) but not from both.
+>>> +
+>>> +In these two shorthand notations, you can omit one end and let it
+>>> default to HEAD.
+>>>   For example, 'origin..' is a shorthand for 'origin..HEAD' and asks
+>>> "What
+>>>   did I do since I forked from the origin branch?"  Similarly,
+>>> '..origin'
+>>>   is a shorthand for 'HEAD..origin' and asks "What did the origin do
+>>> since
+>>>   I forked from them?"  Note that '..' would mean 'HEAD..HEAD' which
+>>> is an
+>>>   empty range that is both reachable and unreachable from HEAD.
+>>>
+>>> -Two other shorthands for naming a set that is formed by a commit
+>>> -and its parent commits exist.  The 'r1{caret}@' notation means all
+>>> -parents of 'r1'.  'r1{caret}!' includes commit 'r1' but excludes
+>>> -all of its parents.
+>>> +Special '<rev>{caret}' Shorthand Notations
+>>> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>>
+>> Sorry, but this header also does not render properly in the man page.
+>> Maybe just "Special {caret} Shorthand Notations"?  (But read on!)
+>
+> rendered fine on the MYS2 man invocation - I had had to add the <rev>
+> prefix to the quoted title to make it work.
+>
+> What went wrong for you? (I'll read on)
 
-> >> -	strbuf_add(out, untracked->ident.buf, untracked->ident.len);
-> >> +	strbuf_addbuf(out, &untracked->ident);
-> > 
-> > This is actually slightly _less_ efficient, because we already are using
-> > the precomputed len, and the new code will call an extra strbuf_grow()
-> > to cover the case where the two arguments are the same.  See 81d2cae
-> > (strbuf_addbuf(): allow passing the same buf to dst and src,
-> > 2010-01-12).
-> 
-> Ah, I wasn't aware of that.  Calling strbuf_grow() twice shouldn't be
-> thaaat bad.  However, I wonder where we duplicate strbufs, or why we
-> would ever want to do so.  Anyway, here's a patch for that:
+Only the word "Special" is emphasized (in bold).  The rest of the header 
+is plain.
 
-I don't think we do. Going back to the original discussion:
+I'm using asciidoc 8.6.9, so I'm likely suffering from the bug Peff 
+identified.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/136141/focus=136774
+>>
+>>> +Two other shorthands exist, particularly useful for merge commits, is
+>>> +for naming a set that is formed by a commit and its parent commits.
+>>>
+>>> -To summarize:
+>>> +The 'r1{caret}@' notation means all parents of 'r1'.
+>>> +
+>>> +'r1{caret}!' includes commit 'r1' but excludes all of its parents.
+>>
+>> My immediate thought upon reading this is "Why not just use 'r1'?"  I
+>> think the answer is "This truncates the range."  So, for example, "git
+>> log r1" shows you r1 and its ancestors, while "git log r1^!" only
+>> shows you r1.  I think you should add this example, or something similar.
+>>
+>
+> I'd also asked that question in one of my replies earlier $gmane/299849.
+> I was then able to determine that it was a width wide 'range' covering
+> multi-parent situations.
 
-it was mostly just "hey, this would fail really confusingly if we ever
-did, so let's make it safe".
+Obviously, I see it more an anti-range.  You're never going to get more 
+than a single commit with this notation.
 
-The second strbuf_grow() is by definition a noop (which is why 81d2cae
-works at all), but we do pay the size-computation cost.
+> Identifying an example could be good if it was succinct and explanatory.
 
-> -- >8 --
-> Subject: strbuf: avoid calling strbuf_grow() twice in strbuf_addbuf()
-> 
-> Implement strbuf_addbuf() as a normal function in order to avoid calling
-> strbuf_grow() twice, with the second callinside strbud_add() being a
-> no-op.  This is slightly faster and also reduces the text size a bit.
+What do you think of my example?
 
-Seems reasonable.  IMHO the main advantage is that one does not have to
-reason about the double strbuf_grow() (i.e., that the strbuf_add() is
-safe because we know its grow is a noop).
+> $ git rev-parse 6c71a849^!
+>> But, really, this means that the notation is another "Commit
+>> Exclusion" and properly belongs in that section.
+>
+> I think it's bigger than that.
+>>
+>> That makes this "Special Notations" section rather thin.  I suggest
+>> moving a slightly expanded <rev>^@ description to a small subsection
+>> just before Commit Exclusions, and deleting the Special Notations
+>> section altogether. So add something like this:
+>>
+>> Commit Parents
+>> ~~~~~~~~~~~~~~
+>
+> It's a bit better, but I'm still not sure it really tells the story,
+> maybe "Handling Commit Parent(s)", with that subtle extra emphasis!
 
--Peff
+"Specifying Commit Parents"?  Any of these work for me, really.
+
+>>
+>> '<rev>{caret}@' Notation::
+>> The 'r1{caret}@' notation means all parents of 'r1',
+>> excluding 'r1' itself.
+>>
+>> This smoothly re-introduces the notion of parents for readers who
+>> skipped to this section, and helps them make sense of the <rev>^!
+>> notation.
+>>
+>> Plus there's no longer anything "special" about any of the syntax.
+>>
+>>> +
+>>> +Revision Range Summary
+>>> +----------------------
+>>
+>> Sorry, but the man page renders this in all caps.  I really think you
+>> should use ~~~~~~~~~ here.
+>
+> Yes, the man page formating is annoying relative to the web page
+> formatting which it has to be compared against.
+>
+> I felt that it was at a higher level than the other sub-headings, and
+> that using mixed case did work well on the html (the Git for Windows
+> standard).
+
+IMHO it has to look like it's part of the SPECIFYING RANGES section.  It 
+need not be higher than the other subsections though.
+
+> At the moment I'm minded to keep it as is unless others chime in.
+
+I'll bow to the will of the majority.
+
+>>
+>> M.
+>>
+> I'll be away till mid next week.
+
+As will I!
+
+		M.
+
