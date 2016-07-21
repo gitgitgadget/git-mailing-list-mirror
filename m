@@ -2,86 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 514DB203C2
-	for <e@80x24.org>; Thu, 21 Jul 2016 14:54:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B122203C2
+	for <e@80x24.org>; Thu, 21 Jul 2016 15:18:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752981AbcGUOyo (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 10:54:44 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:37226 "EHLO
-	mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752531AbcGUOyk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 10:54:40 -0400
-Received: by mail-it0-f51.google.com with SMTP id f6so19965749ith.0
-        for <git@vger.kernel.org>; Thu, 21 Jul 2016 07:54:40 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=+wsEd79nddcUffdDf06q9F2uZb8pHREEqNj5Qlbo6JI=;
-        b=hfzC+d0Q2MY3c9weSM3ugwT/1wPAt4XkJ19WzGxEBQ9UQgTy6ILUfHgUWoDWlcVneZ
-         jyr18hZGTB5vUPNQTWewdlPaHBCwPQuexGFX3v3HoYOCnUkFEmyOdSc4SS3sLu9408e0
-         z/nbsAolOep+nakuGJz4HfREyIpDRGtJ3/vZeeavOF+wXhCsjkUtdnMBU2MIMsq7xu61
-         i3Rs46Sh28cMKJuCLVIL0nJw+GUf9P3vA0LN6swagliv9jW1rbKjluvQbEeaNZ8wns5f
-         GHdGHmikL3GY39aalB0Wn25r9NkphtmDA8JF3jojKKKVPAwQxmXozXm9qHP8pYuSEgQq
-         sKmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=+wsEd79nddcUffdDf06q9F2uZb8pHREEqNj5Qlbo6JI=;
-        b=BJFdGQk6eail7HQ+iSv2KZWtIRIKzbc2RC30b29BBsVZMJ2lE3qpMakqyhlKHyqyvk
-         5LuqekzhryBIQO9FCMFC3mG3q+JyO4TlA3oNphYJmrdqZMGkt4mEeeeZBv05G0KWPM8T
-         XcRXkYB/bia1b6wXLqFFu5IuksP0MYtUzF4YgHer6LfNPMoXbBIHpRsKGIqgqztrcERP
-         R8eSjh2hx5368/B1ErgRTjQKYesR29C1JrK3UkoDF7zKE5+OP+bR1wrJ8zfvfhcMT1t2
-         BqZAp0glLUjyUP4epH18xHmUHQypvrd0Emfmqu0GE4wkEx9VtokxL/UVJ5N8v+EXX9C6
-         Reuw==
-X-Gm-Message-State: ALyK8tK4sHC3JRVHMFz/VXhF2ivpf3G+YXi6hROHkDN46kkFWyeXMbcngUvAao5kE+Kcsju2MKG2vkiZbUEorA==
-X-Received: by 10.36.98.8 with SMTP id d8mr15295298itc.39.1469112879915; Thu,
- 21 Jul 2016 07:54:39 -0700 (PDT)
+	id S1752982AbcGUPSN (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 11:18:13 -0400
+Received: from mout.gmx.net ([212.227.17.20]:58184 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752998AbcGUPSL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 11:18:11 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MexlN-1bfsoM0mN7-00OaMd; Thu, 21 Jul 2016 17:18:03
+ +0200
+Date:	Thu, 21 Jul 2016 17:17:18 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Eric Wong <e@80x24.org>
+cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] config.mak.uname: set PERL_PATH for FreeBSD 5.0+
+In-Reply-To: <20160720180702.GA13404@starla>
+Message-ID: <alpine.DEB.2.20.1607211716100.14111@virtualbox>
+References: <20160720025630.GA71874@plume> <alpine.DEB.2.20.1607201322350.14111@virtualbox> <20160720180702.GA13404@starla>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.107.133.41 with HTTP; Thu, 21 Jul 2016 07:54:39 -0700 (PDT)
-From:	Marcin Szarek <marcinshk@gmail.com>
-Date:	Thu, 21 Jul 2016 16:54:39 +0200
-Message-ID: <CAFLWV1WC5Kq5TW1WnwPpuJitHC05drHtzg989UWJ6-hMZ85q0Q@mail.gmail.com>
-Subject: Git clone gets stuck - how to see the files being cloned at given moment?
-To:	git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:no0dyi1R2hjv7ApcGp9FL2lj0pO1AZdMYDqMvRSKZwconfCIwKI
+ CqihIQbK7ErEqKmhD30RJxWsM/q9gla18Xpe/IEg0tKTVRVIFXStxscQCfzJ4fLPHZlxyV9
+ FQX0g+/JRGCgq2WtSG18ARcCRu/Wyk8zYjAJh5NL4Fz0QISI69K7P9K2d6IWObi1iu24tpx
+ nITW5rUj3SABQvwRnLiaw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:ZDY3zCiP88c=:CsvE/K9MkSpP1+oXUc1Mos
+ EgoXNeg4LgTZWQJ2eh1IBv0ba6tvVgj3ypsHgZhdZ7SNfOJVauDxcrX2wWuVmSSWNT/nduFQS
+ nAQMVPxKQKKC9bqjfUsoSEKhohNcZZllm0pahvpmtSDxDLWYVLko6wJPtQdmMa28NbfkaSjy4
+ c6EonCTk2EGY/rbNPcfPzO6QVTHCbnJUHdV+9EQjSVjEEB5bZBIJItQjw5TGr/7deRONDMQ6P
+ Xayp5YCoXpInucsLKFDR/DNJQcEA4dya77fCfhO0f1zJRor8UbS6TcEVCHL8Ne3XPJ0jPzE0A
+ D0mRE78DLjfCPZSSXJWJMcYhy+rE0rezYWwgj5oVIn4d59yKrgRm3StLC2a/XWw87iLwEfhP8
+ E+TrlCg0MT17vl9v6Dd8a08EmDtUBweuL4i8544e5dHh0Yv0oKDa2YWagyCM+9h4BVpZJm4FT
+ OU0hMhq20MspKygNJZVG9GAgF5OlntY4X2UKtt21vfpHgnJ2jNJ8bIsF9wNRLpud1oz3n329L
+ dUNmAyqibnAI8G974Iuz4vOpJyX4PCnhUshsHWfpYTcQOj6wba1GLkRfvig1gyu5ClUQn5OtX
+ phHc0X6S8v+4gpOkC/Jhsvk/osYaTfRCek71GfM4ctBoNUrgcOscZAsZ11OHgBG0zFf9S2gPG
+ TLC6J8AA/YAMlikcJ8Zxo83vryX2sVp8L+IsvSZ8qEkK8tqdnZJjFNMi0xEyxks5qTq7ueuH9
+ PdfDgwppwnjXZ1ecpdOfQbpUWeD32I6Q9ExWNccxinCz6EWUXPakUQ1Y/t2vZlGiCZTuqY3Mk
+ pKeUoUP
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Everyone,
+Hi Eric,
 
-In one of the environments where I work, we experience a very strange
-and so far unresolved problem: "git clone" operation gets stuck almost
-always near 42% - 45%. For many days we have been unable to pinpoint
-the root cause of the issue. Now we would like to see if the "clone"
-gets stuck always on the same file.
+On Wed, 20 Jul 2016, Eric Wong wrote:
 
-The question is: is it possible to somehow enable Git verbosity
-resulting in showing the names of files being cloned at the given
-moment?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 
+> > On Wed, 20 Jul 2016, Eric Wong wrote:
+> > 
+> > > diff --git a/config.mak.uname b/config.mak.uname
+> > > index a88f139..6c29545 100644
+> > > --- a/config.mak.uname
+> > > +++ b/config.mak.uname
+> > > @@ -202,6 +202,11 @@ ifeq ($(uname_S),FreeBSD)
+> > >  		NO_UINTMAX_T = YesPlease
+> > >  		NO_STRTOUMAX = YesPlease
+> > >  	endif
+> > > +	R_MAJOR := $(shell expr "$(uname_R)" : '\([0-9]*\)\.')
+> > > +
+> > > +	ifeq ($(shell test "$(R_MAJOR)" -ge 5 && echo 1),1)
+> > > +		PERL_PATH = /usr/local/bin/perl
+> > > +	endif
+> > 
+> > In keeping with other uname_R usage, should this not read
+> > 
+> > 	# Since FreeBSD 5.0, Perl is part of the core
+> > 	ifneq ($(shell expr "$(uname_R)" : '[1-4]\.'),2)
+> > 		PERL_PATH = /usr/local/bin/perl
+> > 	endif
+> > 
+> > instead?
+> 
+> That's fine; however I don't use `expr` often, so it required
+> a little more time to realize the '2' means 2 characters were
+> matched.
 
-So far we have been trying "git clone --verbose" + the following
-environmental variables:
-GIT_TRACE=2 GIT_CURL_VERBOSE=2 GIT_TRACE_PERFORMANCE=2
-GIT_TRACE_PACK_ACCESS=2 GIT_TRACE_PACKET=2 GIT_TRACE_PACKFILE=2
-GIT_TRACE_SETUP=2 GIT_TRACE_SHALLOW=2
+I never use `expr`, so I had to go and see the surrounding code to
+determine what the code style is.
 
-Unfortunately we don't see the files being cloned/downloaded. Is there
-any way to see this information?
+> Also, my use of a numeric comparison may be more future-proof
+> in case FreeBSD decides to have /usr/bin/perl again.
 
-Thank you in advance for any hints, I really appreciate your help.
+That is a very theoretical concern ;-)
 
-P.S.
-The version of Git client on our hosts is 1.8.3.1, however we tried
-other versions as well and the problem still occurs.
-
-Best regards,
-
---
-marcinshk
+Ciao,
+Dscho
