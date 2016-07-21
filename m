@@ -3,183 +3,279 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C7FB203C2
-	for <e@80x24.org>; Thu, 21 Jul 2016 18:57:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8101E203C2
+	for <e@80x24.org>; Thu, 21 Jul 2016 19:00:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752089AbcGUS51 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 14:57:27 -0400
-Received: from mout.web.de ([212.227.15.14]:57701 "EHLO mout.web.de"
+	id S1753269AbcGUTAy (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 15:00:54 -0400
+Received: from siwi.pair.com ([209.68.5.199]:46962 "EHLO siwi.pair.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751858AbcGUS50 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 14:57:26 -0400
-Received: from [192.168.178.36] ([79.213.113.124]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0MX0VQ-1bnUtA26h2-00VzT6; Thu, 21 Jul 2016 20:57:12
- +0200
-Subject: Re: [PATCH] submodule-config: use explicit empty string instead of
- strbuf in config_from()
-To:	Heiko Voigt <hvoigt@hvoigt.net>
-References: <578E7A07.8080006@web.de> <20160720082515.GA823@book.hvoigt.net>
-Cc:	Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <57911AFF.7030107@web.de>
-Date:	Thu, 21 Jul 2016 20:57:03 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
+	id S1752171AbcGUTAw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 15:00:52 -0400
+Received: from [10.160.15.137] (unknown [167.220.148.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by siwi.pair.com (Postfix) with ESMTPSA id CC9E8845CE;
+	Thu, 21 Jul 2016 15:00:50 -0400 (EDT)
+Subject: Re: [PATCH v1 3/6] Per-file output for Porcelain Status V2
+To:	Junio C Hamano <gitster@pobox.com>,
+	Jeff Hostetler <jeffhost@microsoft.com>
+References: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com>
+ <1468966258-11191-4-git-send-email-jeffhost@microsoft.com>
+ <xmqqh9bkc7xx.fsf@gitster.mtv.corp.google.com>
+Cc:	git@vger.kernel.org, peff@peff.net
+From:	Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <57911B5B.9090604@jeffhostetler.com>
+Date:	Thu, 21 Jul 2016 14:58:35 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
 MIME-Version: 1.0
-In-Reply-To: <20160720082515.GA823@book.hvoigt.net>
+In-Reply-To: <xmqqh9bkc7xx.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:eZMv7IERtGzRfDK+eLLASYBzItYc3mwR6AjpbWaO/IXNs+pyhVJ
- IA5TUml+Pe4082D94M2wKfc0yjDMjxieNMt9NLgoP763QcOfVnlIpnzNYh5T1KUjxbl7XBb
- CamHVUarj0IKh9Vk0/8Znvs03JblQGuTMYY0T7KiULyQzhfRQatxWGT7JT/SdDITeWzONkc
- uTbtxcGkN3fa77A3i2MbA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:UXBdf1VW8Cg=:6CYmJ49sDO1ul+m5LJwV4Y
- qhtJsueXSas8KkKFCCXWsqTibW568ZAh9tS0gHROXNNIFj/zj9xdu5FF9xol+NzOeQhbXYE2h
- vFwiZhr+QdYZHTXAFvkJFSDyUcjUVFseajmdlWYELU2t8N4PGyBJyiVDqEYOFD62V3ypsWDej
- yztLUNf6BCahypybZp6lJUBy9ZttctlFh5TXCnlsrvQSEk2ffFynHfwUO3Hmpe/otxEf4HFpp
- Mtn+ij2BP/05uXzsQhXHu44abNd5NgNCftbjHLOE1ptFICaMN1iMV0968vpzcGX0jTyFTAk2R
- QK8XG4RriPimTttv8r878fmOr6ZRTjj9vBFCraHwtL/a502f54SbSFw8Cxos/RqO8RmEso/V4
- dLpgHrvkW30HMDFQ+BFN2PoC2YTFSTPr+eC8/dsFUQ71IlPUyDcb1h103dw0Id0V02UTd9+S1
- IAbv2HDFQxshkiFRjBlqm1ucYq/kejL9yaQU4GvjJvO0Au4sQPNcq4OwOcM9RGx407nVtn9Yc
- zvM4UdyR/htoru0n/TP8vGufDTudTUSRmenW02kNENSth2mPQ1eEpsV5XW4+yJUPsJiCJt1wb
- EqWUwH1maYEjysgUUI8Q/fBf5O0pOmCC0ICCG2S7xy+UE1Nca7/NnuWQhm6jjaZt+ZLLOnmcl
- pXfKAJt73i2fguKBmkFkka2PX+VdAm1fyleMET9geyqTSuJrDBDw2Zv/kp6NkpPDHEpTzM4fl
- nFF22UMi3cA4VoJDYmDvngYlvJRw83kp1uxs1/oRDe9bcKKN2WbGwvoVYifBbN6hByX2SO4Er
- HoiauSS
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Am 20.07.2016 um 10:25 schrieb Heiko Voigt:
-> Hi,
->
-> On Tue, Jul 19, 2016 at 09:05:43PM +0200, René Scharfe wrote:
->> Use a string constant instead of an empty strbuf to shorten the code
->> and make it easier to read.
->
-> This must have been some oversight from my original code. I also can not
-> see any purpose.
->
->> Signed-off-by: Rene Scharfe <l.s.r@web.de>
->> ---
->> ... unless someone can come up with a suitable non-empty string to feed
->> to git_config_from_mem() as its name parameter.
->
-> If we would want to be absolutely correct we could use something like
-> "SHA1:.gitmodules". E.g. like we use to lookup the blob in
-> gitmodule_sha1_from_commit():
->
-> 	strbuf_addf(&rev, "%s:.gitmodules", sha1_to_hex(commit_sha1));
->
-> And now I see where this was leftover from... before extracting this
-> function this code was filling the strbuf.
->
-> How about this instead?
 
-I like it.
 
-> ---8<------
-> Subject: [PATCH] fix passing a name for config from submodules
->
-> In commit 959b5455 we implemented the initial version of the submodule
-> config cache. During development of that initial version we extracted
-> the function gitmodule_sha1_from_commit(). During that process we missed
-> that the strbuf rev was still used in config_from() and now is left
-> empty. Lets fix this by also returning this string.
->
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> ---
->
-> Its not exactly pretty with all the releases before the returns but
-> this is what I could quickly come up with...
+On 07/20/2016 05:31 PM, Junio C Hamano wrote:
 
-Indeed.
+> The code seems to assume that d->porcelain_v2.* fields are
+> initialized earlier in the callchain to reasonable values
+> (e.g. STATUS_ADDED case does not clear .mode_head to "missing"); I
+> am not sure if that is easier to read or fill in all the values
+> explicitly in this function.
 
->   submodule-config.c | 23 +++++++++++++++--------
->   1 file changed, 15 insertions(+), 8 deletions(-)
->
-> diff --git a/submodule-config.c b/submodule-config.c
-> index 077db40..dccea59 100644
-> --- a/submodule-config.c
-> +++ b/submodule-config.c
-> @@ -371,9 +371,9 @@ static int parse_config(const char *var, const char *value, void *data)
->   }
->
->   static int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
-> -				      unsigned char *gitmodules_sha1)
-> +				      unsigned char *gitmodules_sha1,
-> +				      struct strbuf *rev)
->   {
-> -	struct strbuf rev = STRBUF_INIT;
->   	int ret = 0;
->
->   	if (is_null_sha1(commit_sha1)) {
-> @@ -381,11 +381,10 @@ static int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
->   		return 1;
->   	}
->
-> -	strbuf_addf(&rev, "%s:.gitmodules", sha1_to_hex(commit_sha1));
-> -	if (get_sha1(rev.buf, gitmodules_sha1) >= 0)
-> +	strbuf_addf(rev, "%s:.gitmodules", sha1_to_hex(commit_sha1));
-> +	if (get_sha1(rev->buf, gitmodules_sha1) >= 0)
->   		ret = 1;
->
-> -	strbuf_release(&rev);
->   	return ret;
->   }
->
-> @@ -420,8 +419,10 @@ static const struct submodule *config_from(struct submodule_cache *cache,
->   		return entry->config;
->   	}
->
-> -	if (!gitmodule_sha1_from_commit(commit_sha1, sha1))
-> +	if (!gitmodule_sha1_from_commit(commit_sha1, sha1, &rev)) {
-> +		strbuf_release(&rev);
->   		return NULL;
-> +	}
->
->   	switch (lookup_type) {
->   	case lookup_name:
-> @@ -431,14 +432,19 @@ static const struct submodule *config_from(struct submodule_cache *cache,
->   		submodule = cache_lookup_path(cache, sha1, key);
->   		break;
->   	}
-> -	if (submodule)
-> +	if (submodule) {
-> +		strbuf_release(&rev);
->   		return submodule;
-> +	}
->
->   	config = read_sha1_file(sha1, &type, &config_size);
-> -	if (!config)
-> +	if (!config) {
-> +		strbuf_release(&rev);
->   		return NULL;
-> +	}
->
->   	if (type != OBJ_BLOB) {
-> +		strbuf_release(&rev);
->   		free(config);
->   		return NULL;
->   	}
+The structure is initially zeroed when it allocated.
+I'm only setting values for the side the we know are
+actually defined (such as in an ADD we know there is
+no head values). I'll look at making this more clear.
 
-A separate patch could combine the previous two conditionals; free(NULL) 
-is allowed.
+>> +}
+>> +
+>> +/* Copy info for both sides of an index-vs-worktree change
+>> + * into the very verbose porcelain data.
+>> + */
+>> +static void porcelain_v2_changed_entry(
+>> +	struct wt_status_change_data *d,
+>> +	const struct diff_filepair *p)
+>> +{
+>> +	switch (p->status) {
+>> +	case DIFF_STATUS_ADDED:
+>> +		d->porcelain_v2.mode_worktree = p->two->mode;
+>> +		/* don't bother with worktree sha, since it is almost always zero. */
+>> +		break;
+>> +
+>> +	case DIFF_STATUS_DELETED:
+>> +		d->porcelain_v2.mode_index = p->one->mode;
+>> +		hashcpy(d->porcelain_v2.sha1_index, p->one->sha1);
+>> +		break;
+>> +
+>> +	case DIFF_STATUS_COPIED:
+>> +	case DIFF_STATUS_MODIFIED:
+>> +	case DIFF_STATUS_RENAMED:
+>
+> Can RENAMED or COPIED happen here?
 
-> @@ -450,6 +456,7 @@ static const struct submodule *config_from(struct submodule_cache *cache,
->   	parameter.overwrite = 0;
->   	git_config_from_mem(parse_config, "submodule-blob", rev.buf,
->   			config, config_size, &parameter);
-> +	strbuf_release(&rev);
->   	free(config);
+If we don't report renamed or copied for unstaged changes, then no.
+
+
+> The code would be simpler and we'll catch bugs more uniformly if
+> "collect" phase is made oblivious to s->status_format, I would
+> suspect, by making unconditional call to porcelain_v2_*_entry()
+> functions from all of these "collect" functions.
+
+ok. will do.
+
 >
->   	switch (lookup_type) {
+>> +/* Convert various submodule status values into a
+>> + * string of characters in the buffer provided.
+>> + */
+>> +static void wt_porcelain_v2_submodule_state(
+>> +	struct wt_status_change_data *d,
+>> +	char sub[5])
+>> +{
+>> +	int k = 0;
+>> +
+>> +	if (S_ISGITLINK(d->porcelain_v2.mode_head) ||
+>> +		S_ISGITLINK(d->porcelain_v2.mode_index) ||
+>> +		S_ISGITLINK(d->porcelain_v2.mode_worktree)) {
+>> +		/* We have a submodule */
+>> +		sub[k++] = 'S';
+>> +
+>> +		/* Sub-flags for each type of dirt */
+>> +		if (d->new_submodule_commits)
+>> +			sub[k++] = 'C';
+>> +		if (d->dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
+>> +			sub[k++] = 'M';
+>> +		if (d->dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
+>> +			sub[k++] = 'U';
+>> +	} else {
+>> +		/* Not a submodule */
+>> +		sub[k++] = 'N';
+>> +	}
+>> +
+>> +	sub[k] = 0;
+>> +}
 >
+> The above seems to do "up to 5"; if these come early in the output,
+> it may instead be easier to read if "fixed 5 columns, many of them
+> may be SP, and some may be C or M or U", which would align on fixed
+> column terminal people use for coding.
+
+I debated fixed 4 columns vs a variable width token.
+The latter seemed easier to parse, but does look more ugly
+on the terminal.  I'll revisit this.  Perhaps make it fixed
+4 columns with a '.' instead of SPACE, so both parsing
+techniques work.
+
+>
+>> +/* Various fix-up steps before we start printing an item.
+>> + */
+>> +static void wt_porcelain_v2_fix_up_status(
+>> +	struct string_list_item *it,
+>> +	struct wt_status *s)
+>> +{
+>> +	struct wt_status_change_data *d = it->util;
+>> +
+>> +	if (!d->index_status) {
+>> +		if (d->worktree_status == DIFF_STATUS_MODIFIED ||
+>> +			d->worktree_status == DIFF_STATUS_DELETED) {
+>> +			/* X=' ' Y=[MD]
+>> +			 * The item did not change in head-vs-index scan so the head
+>> +			 * column was never set. (The index column was set during the
+>> +			 * index-vs-worktree scan.)
+>> +			 * Force set the head column to make the output complete.
+>> +			 */
+>> +			d->porcelain_v2.mode_head = d->porcelain_v2.mode_index;
+>> +			hashcpy(d->porcelain_v2.sha1_head, d->porcelain_v2.sha1_index);
+>> +		}
+>
+> Can there be "else" clause for this inner "if"?  When
+> d->index_status is not set, but worktree_status is not one of these
+> two, what does it indicate?  The same for the next one.
+
+For a normal entry (not unmerged) when X is ' ', Y can only
+be 'M' or 'D'.  The only other value for Y is ' ', but then if
+both were ' ' the entry would not be in the list.  So I think
+we're OK, but I'll document that here.  And below.
+
+
+>> +/*
+>> + * Define a single format for tracked entries. This includes:
+>> + * normal changes, rename changes, and unmerged changes.
+>> + *
+>> + * The meanings of modes_[abcd] and sha_[abc] depends on the
+>> + * change type, but are always present.
+>> + *
+>> + * Path(s) are C-Quoted if necessary. Current path is ALWAYS
+>> + * first. The rename source path is only present when necessary.
+>> + * A single TAB separates them (because paths can contain spaces
+>> + * and C-Quoting converts actual tabs in pathnames to a C escape
+>> + * sequence).
+>> + */
+>> +static void wt_porcelain_v2_print_tracked_entry(
+>> +	FILE *fp,
+>> +	char x_staged,
+>> +	char y_unstaged,
+>> +	const char *submodule,
+>> +	int mode_a,
+>> +	int mode_b,
+>> +	int mode_c,
+>> +	int mode_d,
+>> +	const unsigned char sha_a[GIT_SHA1_RAWSZ],
+>> +	const unsigned char sha_b[GIT_SHA1_RAWSZ],
+>> +	const unsigned char sha_c[GIT_SHA1_RAWSZ],
+>
+> x, y, a, b, c, d are all mystery.  When we see a/b/c, they typically
+> mean stage#1, stage#2 and stage#3, but that does not seem to be it.
+> When we see a/b, they typically mean old and new, but that does not
+> seem to be the case here, either.
+
+I took X and Y from the man-page as the names of first 2 columns
+of the existing format.
+>
+> If you are saying in the above comment, which curiously is formatted
+> correctly unlike many other multi-line comments we see in this patch
+> ;-),
+
+I read Linus' recent post on the subject mid-way thru this effort. :-)
+
+ >      that the meaning of these are not fixed but the function is to
+> always show 2 things, then four things in the fixed order without
+> knowing what they mean, it would be easier to understand if you made
+> them into an array, i.e.e.g. instead of having x_staged and
+> y_unstaged, have "char prefix[2]" or something that tells the reader
+> that whatever meaning these have, these come early in the output.
+
+I'll revisit this.  For normal entries (modified and/or renamed) I
+show the head, index, worktree modes and the head and index SHAs
+and the last mode and SHA fields are zero.  For unmerged entries,
+I show the stage 1, 2, 3 and worktree modes and the stage 1,2,3
+SHAs.  This gives us the same number of fields for parsing.  An
+earlier version had 2 different line formats. Would it be better to
+have a different initial character/token (like the ":" vs "::" prefix
+in diff-index) ?
+
+
+>> +	x_staged = d->index_status ? d->index_status : '.';
+>> +	y_unstaged = d->worktree_status ? d->worktree_status : '.';
+>
+> I see a curious and misleading use of the word "staged" around
+> here.  If these two are index-status and worktree-status (with
+> stand-in letter '.' when they are not available), why not call them
+> index-status and worktree-status instead?
+> ...
+>> +	char x_us = 'U', y_them = 'U';
+>
+> I really do not want to see these X_ and Y_ prefixes; they do not
+> convey any meaning; if X always corresponds to ours while Y always
+> corresponds to theirs, then they are even redundant.
+
+I was trying to preserve the X and Y link back to the man-page, but
+also give meaning to the fields.  I'll revisit.
+
+>> +	memset(stages, 0, sizeof(stages));
+>> +	pos = cache_name_pos(it->string, strlen(it->string));
+>> +	assert(pos < 0);
+>> +	pos = -pos-1;
+>> +	while (pos < active_nr) {
+>> +		ce = active_cache[pos++];
+>> +		stage = ce_stage(ce);
+>> +		if (strcmp(ce->name, it->string) || !stage)
+>> +			break;
+>> +		stages[stage - 1].mode = ce->ce_mode;
+>> +		hashcpy(stages[stage - 1].sha1, ce->sha1);
+>> +	}
+>
+> You did assert(pos < 0) to make sure that the path the caller told
+> you is unmerged indeed is unmerged, which is a very good check.  In
+> the same spirit, you would want to make sure that you got at least
+> one result from the above loop, to diagnose a bug where the path did
+> not even exist at all in the index.
+
+Would that be possible for a conflict/unmerged entry?
+I can add an assert for that just to be safe.
+
+> Also, it is possible to have more than one stage#1 entries in the
+> index (stage#2 can only be one; I think stage#3 can theoretically
+> have more than one, but in practice, even merge-octopus does not do
+> that).  The above loop gives us the "last one wins" semantics to
+> make sure what you grab from the index always fit in stages[] array,
+> which is not wrong per-se, but that design decision may want to be
+> documented in a comment nearby for people to work on enhancing it in
+> the future.
+
+Interesting, more than 1 entry in a single stage. I hadn't considered
+that.  I think I pretty much stole the essence of this loop from
+elsewhere in the file, so yes I should be consistent with elsewhere
+in the code. I'll update the comments.  Good catch!
+
+Thanks for all your time on this!
+Jeff
 
