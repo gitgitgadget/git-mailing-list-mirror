@@ -7,108 +7,98 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33B50203C2
-	for <e@80x24.org>; Thu, 21 Jul 2016 15:55:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ADD6203C2
+	for <e@80x24.org>; Thu, 21 Jul 2016 16:03:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753271AbcGUPzG (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 11:55:06 -0400
-Received: from mout.gmx.net ([212.227.15.18]:63519 "EHLO mout.gmx.net"
+	id S1753179AbcGUQDP (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 12:03:15 -0400
+Received: from mout.gmx.net ([212.227.15.15]:55202 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753147AbcGUPzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 11:55:04 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LmbVT-1arkuF3smZ-00aEhM; Thu, 21 Jul 2016 17:54:53
+	id S1753047AbcGUQDN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 12:03:13 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MKYsh-1bSByo0jx9-001wbE; Thu, 21 Jul 2016 18:02:57
  +0200
-Date:	Thu, 21 Jul 2016 17:54:10 +0200 (CEST)
+Date:	Thu, 21 Jul 2016 18:02:13 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-cc:	Jeff Hostetler <git@jeffhostetler.com>, git <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 6/6] Unit tests for V2 porcelain status
-In-Reply-To: <CANQwDwfWW4Fn7KBHrNv2nfvGHMrPQ4jGpz6wGAEGg3edn-ztfg@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1607211749590.14111@virtualbox>
-References: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com> <1468966258-11191-7-git-send-email-jeffhost@microsoft.com> <578F9923.3000403@gmail.com> <578F9D2A.2030204@jeffhostetler.com>
- <CANQwDwfWW4Fn7KBHrNv2nfvGHMrPQ4jGpz6wGAEGg3edn-ztfg@mail.gmail.com>
+To:	Jeff King <peff@peff.net>
+cc:	Jeff Hostetler <git@jeffhostetler.com>,
+	Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org,
+	gitster@pobox.com
+Subject: Re: [PATCH v1 0/6] Porcelain Status V2
+In-Reply-To: <20160720205753.GC578@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1607211800080.14111@virtualbox>
+References: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com> <20160720161543.GD24902@sigill.intra.peff.net> <578FD0B1.9030709@jeffhostetler.com> <20160720205753.GC578@sigill.intra.peff.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1409685566-1469116451=:14111"
-X-Provags-ID: V03:K0:O897tVR7BoWM7ZOqDt60blSF4Yn8CbFp/79q0Cc22zqgAfYr7nE
- TR1locDY3W4QktPoddPiSCateLEXcKu9nott2urqoXSDylZS3QIctx9hW/+W1IQWd1Lc69e
- 4zoEtsO+TFmgkIrDh0b5yg37kyrLmrlZGPiUv6IStQXLO3IUutakqZmRlS05jwLeMDAYK1k
- sBUZw2GXAIbjH93csdARg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:qslY2GGisgs=:+St/vIHnYwfgmd9VwzxMXB
- 1hUBGkVKgrkjM2mZvXWDy5CVYeNFKowkCf39ORDIC2ZDiRkYulEvW7ok4YNkXZCJrZR8ruEzW
- Ald1gBkBix3PzGvwZiY8sa98dBvvalyklkz1bcJG91Xl7qrP/S62affjNOi56Mf0g+Y4vQKqZ
- e4mbVVgfuLY5hUdoIXwVImKMnVYfJfQeWgkf97ykiY8fCTvtIeImfCk10kagNvvNklFMAPVcb
- 4MVjf3TvDBjp3GHk+SO/d1jIHWkOO1BJV7MAUiPHBLjbjtP28KZ6cxshRukiE1CNeh1TNB8wq
- 11mIugaZ14XxYgd0YjmvfCfleSfLoPp+diLPqOADAENI05DCPUbQEIAwsMX1EMUXkiVvHoaNY
- jwg5PWqxr+IMcjqNwusGC+D2W8gGpgyu01JaoHAKewJ+cL5LFxC18+eKogqxOhfPeOsyJ2yi5
- wWE2uJEwuB+iVhkuydxE6BRF+BYmH1PTK0wWSIZRz+xdpnJ3bcUaOCAEdgoPW/dAC1pv5I/ry
- Y70vYpJAnesXNxGBizeUfzSCLckqbKfIQHRy6v1oNqbqoy4e0VZtxdwPrnJhKSuD1hSYpG/U9
- iSpSqcEFoLGJupJdf8dwWGrF+0Vy4GwUUNYa/eH1CwrOMFG6Eip+Rg7UfNXFKwnexUUFmzFef
- SoRqIa2AFH9yxWU4IPlBVca43Av20KRbruIdhxykwb0GYK/E7vx407qcbziL6r1M/ZN7Ac7H7
- SpnE3L+xO7a8XxRk2w5x98TADttZqBCceJu8kyyGH43k05rYOIETg9k3+Vuit7JnV4OXd0IOM
- 566BtoG
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:CN1rnG7td5mxzLbL+4MoWIHSi+Z6yjn0pWpzmsCnoqJeQGeRX2m
+ bndBZrIp3zU5rF96k/9jaDMx13pgh+XrVoIis8dnuQTXrAvprUT8X2AD557lrFed/GCYfqb
+ AGEsoLttkndlXT83UA359CEjT+fy817bvgGuJhx/ulu7UugdIRfwPZ7FcktsjK7VOP9SMFP
+ 3rb+CoN4WCPST4spZ35JA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:6WolXTU+hwA=:3tvYlK/aX8j+7xBvHZOfjl
+ 88PiX3eYZHqwqD77/p9dzkCmhlkq25yYZV9ulxBlQpVB1gm6rFbw3EJt2Ee7d09Qqtiwm6WAC
+ 000caavthqegGyhWn1QfG39ESZemaGmMkdEuNn+Fag9RMkH/SvlGnL+xjYUHHDFRKd8juV0op
+ md0yVGu3VROSM1IO/pupUZEusucJPJI5oX5Y10Fw6igsYZEOtIMrQlMHItlR7S5H6wV1uf0RQ
+ tL9x6ke6ZXKUgLdfx7/rPlwx20aGj7GUoQam2mBwn1NHJohevArNrAEMdO36iceZoOjvRscLb
+ cs+4cakzcFGFmniBAsL53QiRcrK1GvLveCYW0323jmcOaVmno7Pyz4viVbJ5gfXYq5e71Vcp2
+ XGMnvlbbIF8DqqpxEGKzpN5fCBHlHr9Jtt2100GJgq7lT06kzwXkjY9vWyrvYU6/2JTH7IHMu
+ qMwBupGhSC20ZeHDfI4G/04MnDblI+uf9WLZiHEjtaTEspntbMwPMT/QUQOjBaEUZd3qeMWdA
+ y5n6CEG+SLzMi+T5jdopU4OfAm6tyU1cSBgn6utnvFV4M2fc1RCNNLFU/4SP7W4R3fV6rkPzh
+ EKoyAjzJy2n3M7R7cnvVjM3QP60PO95KeQaASTKyvVeaneB6WnMPf5C9RgTuvVPGHblStTKrC
+ gFh6al0SCS/0Bh+T/Hecox3tyuFB/0jMCgb0+xeEiVrhVi7YnJMwl6LJrtwwdp7vc6Sj+4i8I
+ 0AVfjMsej8C9L7j/Cq4V4C4dS+jXEDM2nx74e68ufjBxanL6MZ6nwRJbqdAZJK0dW1xRtFXqp
+ 5DxGt98
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Peff & Jeff ;-)
 
---8323329-1409685566-1469116451=:14111
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Wed, 20 Jul 2016, Jeff King wrote:
 
-Hi,
+> On Wed, Jul 20, 2016 at 03:27:45PM -0400, Jeff Hostetler wrote:
+> 
+> > > A totally reasonable response is "haha no. Please stop moving the
+> > > goalposts". I just wanted to throw it out there as an option (and in
+> > > case you are interested, to let you think about it before any more work
+> > > goes into this direction).
+> > 
+> > haha no.... :-)
+> > 
+> > Short term, I'd rather nail down what I have now (both content-wise
+> > and format-wise) and see how we like it.  And have a follow-up task
+> > to look at the --state header we spoke of earlier.  And save the JSON
+> > version as an independent task for later.
+> > 
+> > I understand the motivation for a JSON option (and have thought
+> > about it before) but I think it ought to be kept separate.
+> > At a higher-level, it seems like a JSON option would be an
+> > opportunity to start a project-wide conversation about formats,
+> > consistency, plumbing, and etc.  A top-down conversation if you
+> > will about which commands will/won't get enhanced, legacy cruft
+> > that would not need to be converted, JSON style and naming and
+> > consistency issues, current best practices in the node/whatever
+> > community, and etc.  I could be wrong, but this feels like a
+> > top-down feature conversation in a wider audience.
+> 
+> I agree with everything you've said here.
+> 
+> If we add JSON, we'd want to do it everywhere: lists of commits, lists
+> of refs, status output, etc. I mentioned that somebody had asked me
+> about it recently; they are working on a git client and finding that
+> libgit2 is not serving their needs well, so they'd like to shell out to
+> git more, and wanted to have a standard way to get the data back in.
 
-On Wed, 20 Jul 2016, Jakub Nar=C4=99bski wrote:
+Yeah, if we add JSON, we would want to add it everywhere. But we would
+want to add that incrementally; otherwise it would be too humongous a
+task.
 
-> On 20 July 2016 at 17:47, Jeff Hostetler <git@jeffhostetler.com> wrote:
-> > On 07/20/2016 11:30 AM, Jakub Nar=C4=99bski wrote:
-> >> W dniu 2016-07-20 o 00:10, Jeff Hostetler pisze:
-> >>>
-> >>> +test_expect_success pre_initial_commit_0 '
-> >>> +       printf "## branch: (initial) master\n" >expected &&
-> >>> +       printf "?? actual\n" >>expected &&
-> >>> +       printf "?? dir1/\n" >>expected &&
-> >>> +       printf "?? expected\n" >>expected &&
-> >>> +       printf "?? file_x\n" >>expected &&
-> >>> +       printf "?? file_y\n" >>expected &&
-> >>> +       printf "?? file_z\n" >>expected &&
-> >>
-> >> Why not use heredoc syntax (cat <<\EOF), or prepare a file
-> >> with expected output in the testsuite?
-> >
-> > The tests involving renames needed to embed a tab character
-> > in the output and hiding a tab character in a heredoc seemed
-> > error prone.  So to be consistent I made them all printf-style.
->=20
-> Ah, so that's the case for series of printf. I think in some other
-> cases the Git testsuite simply uses HT variable for the TAB
-> character.
-
-Yeah, it would be more pleasant to read
-
-=09echo >expected <<-EOF
-=09## branch: (initial) master
-=09?? actual
-=09?? dir1/
-=09?? expected
-=09?? file_x
-=09?? file_y
-=09?? file_z
-=09EOF
-
-And it is also easy to use $HT in there (unless you want to use <<-\EOF).
-
-Actually, even if you want to use \EOF, you can easily use `sed` to
-expand, say, "Q" to tabs, such as was done here:
-
-=09https://github.com/git/git/blob/v2.9.2/t/t4213-log-tabexpand.sh#L88-L92
+And I think a good way forward was already suggested elsewhere in this
+thread by Jeff: --porcelain=1j, or --porcelain=json (and maybe later
+json-v2, json-v3, etc).
 
 Ciao,
 Dscho
---8323329-1409685566-1469116451=:14111--
