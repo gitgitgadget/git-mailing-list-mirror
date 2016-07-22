@@ -2,124 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3967F203E3
-	for <e@80x24.org>; Fri, 22 Jul 2016 17:09:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFFA6203E2
+	for <e@80x24.org>; Fri, 22 Jul 2016 17:13:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752748AbcGVRJd (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 13:09:33 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:33019 "EHLO
-	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752186AbcGVRJc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Jul 2016 13:09:32 -0400
-Received: by mail-it0-f66.google.com with SMTP id d65so3453760ith.0
-        for <git@vger.kernel.org>; Fri, 22 Jul 2016 10:09:32 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=1zsDuTuhrvhWSQ5n9tYjRkeHBAJhCzvBB6Qv8R4OowY=;
-        b=iVregYL4p7jiYoXpy5YhNm/V6nbOLgeCWH9EE/3HblsI2VWEIbkcJLhATtsBgeYmGo
-         pxWvfTzDscA3XEpB71wst2hvHrFDxIzNlghdBVB08FD4iSDWFzvY8KQ7fQzXxswp/++1
-         ZRKZG2rB0FTdr4aSYYDGL8CSWtg/A70l6DwZq8XZZQ1gxdRdXnsd9KOGjlxGcFNPALdX
-         fJd9alnJ8QS6Sw3xG+3m7aXZvNvrfiagV41WCCgheXQ4D1P86fc/SHE4QfUOsZpcPo/G
-         v7Tsv3Yh7ofqtxme0ygOxi0ihneoWEAIUDDakQlEQdcADBrySt2SA214NDC2wIBiCWcP
-         P2cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=1zsDuTuhrvhWSQ5n9tYjRkeHBAJhCzvBB6Qv8R4OowY=;
-        b=lC4Dx+oSly9h6c7eBDx2OhJFZAmT6xuaxCLlZRr3hPXo94nBxFD2etd1YOBQLEIGG9
-         SBIHLVHILl7dwxuNAr3818CRuqb8R6qAIMlCCTcHytDAKV8eeaPW5qhTW571Ky5hG5us
-         Yc9LXoyi5h7nsw2n14Ac9XAa2FsVQlhMIUngfEsibb51rpJfEV1k6QpEZInLaajCtDvX
-         Iv3ponWn3gIqzCBz6R7icSGUH4klUCmKpTK7i4w9PtlXbmpivSCCWjh0EZx1VLt3xgSj
-         HuX2EFgCiReCYnvdYu76w4gehYpXSIujzbpCH724QRiQgkZepPirkL0cJLewfqLjVAqS
-         xUng==
-X-Gm-Message-State: ALyK8tLQzT5uNrTuCZ57Bz7lAm2Ccm6KKurDIZg3VSOIApsShYujAyG9sVQhj0d9a6gvZVOIbkohyMUPLlzm6w==
-X-Received: by 10.36.33.197 with SMTP id e188mr56626094ita.42.1469207371354;
- Fri, 22 Jul 2016 10:09:31 -0700 (PDT)
+	id S1752188AbcGVRN4 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 13:13:56 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63530 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750957AbcGVRNz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 13:13:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EA2602D6BC;
+	Fri, 22 Jul 2016 13:13:53 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PehSyk2Xr/JHk9O49VU5EkD6nlE=; b=geEDGD
+	LGiG+QUyQhazB9s0wj9KQQHVDdpMjG8BZ9Db5E6YmaabM8W7e1Ll5J8J4tb3vLye
+	K4NXhpz+kBTKuPpyFJ/cnb5nOgtXFCNK8y801HY6GntOEDCmjJEutuVcwZtlJYen
+	vBEkJzF/SmwxwHJkB/uUYPOuSPjQoL05k7v0U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=a6C1Dere0r4aiB5++a9kldTYhuxebNbI
+	fsKjAYFjpKdUQ0qIGYccX4FFRffzSARXbr90uWRVeWJ3MR23gW4gbWmCMVrCI6qf
+	zcMSMqYnv36lNM0gW4o0GC6ip8kpj2nRW+ixVLOMMcS7WltYJiUJAJyNfGZJ+80o
+	8phuR1kTBcU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E2A992D6BB;
+	Fri, 22 Jul 2016 13:13:53 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6C5932D6B9;
+	Fri, 22 Jul 2016 13:13:53 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Eric Wong <e@80x24.org>
+Cc:	git@vger.kernel.org
+Subject: Re: [RFC] git-svn: allow --version to work anywhere
+References: <20160720004734.GA19635@whir>
+Date:	Fri, 22 Jul 2016 10:13:51 -0700
+In-Reply-To: <20160720004734.GA19635@whir> (Eric Wong's message of "Wed, 20
+	Jul 2016 00:47:34 +0000")
+Message-ID: <xmqqeg6lbnow.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Fri, 22 Jul 2016 10:09:01 -0700 (PDT)
-In-Reply-To: <CAGZ79kZB8U+ERNeYpZ-i7Ldip7xbz0ND53g4bzMkzFC3pnyv+w@mail.gmail.com>
-References: <CACsJy8ADRWNL3FR2TtWShviT4Lc4m1xaY8VOPP26Foyq+_A-3g@mail.gmail.com>
- <20160720172419.25473-1-pclouds@gmail.com> <20160720172419.25473-4-pclouds@gmail.com>
- <CAGZ79kZB8U+ERNeYpZ-i7Ldip7xbz0ND53g4bzMkzFC3pnyv+w@mail.gmail.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Fri, 22 Jul 2016 19:09:01 +0200
-Message-ID: <CACsJy8CSnmnzDMGpMvvkhWRfJvp1L+pfOZ=eYp5JF0GWNH6D0Q@mail.gmail.com>
-Subject: Re: [PATCH v4 3/4] submodule: support running in multiple worktree setup
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Max Kirillov <max@max630.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: AA701E0A-502F-11E6-87A8-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 21, 2016 at 1:22 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, Jul 20, 2016 at 10:24 AM, Nguyễn Thái Ngọc Duy
-> <pclouds@gmail.com> wrote:
->> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
->> ---
->>  Documentation/git-worktree.txt | 8 ++++++++
->>  git-submodule.sh               | 8 ++++----
->>  2 files changed, 12 insertions(+), 4 deletions(-)
->>
->> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
->> index 41350db..2a5661d 100644
->> --- a/Documentation/git-worktree.txt
->> +++ b/Documentation/git-worktree.txt
->> @@ -142,6 +142,14 @@ to share to all working directories:
->>     you are sure you always use sparse checkout for all working
->>     directories.
->>
->> + - `submodule.*` in current state should not be shared because the
->> +   information is tied to a particular version of .gitmodules in a
->> +   working directory.
->
-> While the submodule.* settings are copied from the .gitmodules file initially,
-> they can be changed in the config later. (That was actually the whole
-> point of it,
-> so you can change the submodule remotes URL without having to change history.)
->
-> And I would think that most submodule related settings (such as remote URL,
-> name, path, even depth recommendation) should be the same for all worktrees,
-> and a different value for one worktree is a carefully crafted
-> exception by the user.
->
-> So while the .gitmodules file can diverge in the work trees I do not
-> think that the
-> actual remotes for the submodules in the different worktrees differ
-> though. The change
-> of the .gitmodule files may be because you checked out an old commit, that
-> has outdated information on where to get the submodule from.
+Eric Wong <e@80x24.org> writes:
 
-I just quickly glanced through the rest of this mail because, as a
-submodule ignorant, it's just mumbo jumbo to me. But what I see here
-is, there may be problems if we choose to share some submodule info,
-but I haven't seen any good thing from sharing any submodule info at
-all.
+> Checking the version of the installed SVN libraries should not
+> require a git repository at all.  This matches the behavior of
+> "git --version".
+>
+> Add a test for "git svn help" for the same behavior while we're
+> at it, too.
+>
+> Signed-off-by: Eric Wong <e@80x24.org>
+> ---
+>   I'm hoping "cd /" in the test will always succeed;
+>   but I suppose non-*nix systems might fail, here.
 
-I can imagine long term you may want to just clone a submodule repo
-once and share it across worktrees that use it, so maybe it's just me
-not seeing things and this may be a step towards that.
+How about digging a few levels of directory hierarchy, exporting
+GIT_CEILING_DIRECTORIES so that we won't find any repository and
+going there to run these tests?
 
-Anyway, I assume some people will be working on the submodule side.
-And because I have not heard any bad thing about the new config
-design, I'm going to drop submodule patches from this series and focus
-on polishing config stuff.
--- 
-Duy
+>   And maybe a BOFH did "chmod 700 /"	:(
+>
+>   Anyways this is sitting in master of git://bogomips.org/git-svn.git
+>
+>  git-svn.perl             | 4 ++--
+>  t/t9100-git-svn-basic.sh | 8 ++++++++
+>  2 files changed, 10 insertions(+), 2 deletions(-)
+>
+> diff --git a/git-svn.perl b/git-svn.perl
+> index f609e54..4d41d22 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -339,7 +339,7 @@ if ($cmd && $cmd =~ /(?:clone|init|multi-init)$/) {
+>  			die "failed to open $ENV{GIT_DIR}: $!\n";
+>  		$ENV{GIT_DIR} = $1 if <$fh> =~ /^gitdir: (.+)$/;
+>  	}
+> -} else {
+> +} elsif ($cmd) {
+>  	my ($git_dir, $cdup);
+>  	git_cmd_try {
+>  		$git_dir = command_oneline([qw/rev-parse --git-dir/]);
+> @@ -356,7 +356,7 @@ if ($cmd && $cmd =~ /(?:clone|init|multi-init)$/) {
+>  
+>  my %opts = %{$cmd{$cmd}->[2]} if (defined $cmd);
+>  
+> -read_git_config(\%opts);
+> +read_git_config(\%opts) if $ENV{GIT_DIR};
+>  if ($cmd && ($cmd eq 'log' || $cmd eq 'blame')) {
+>  	Getopt::Long::Configure('pass_through');
+>  }
+> diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
+> index 28082b1..10408d0 100755
+> --- a/t/t9100-git-svn-basic.sh
+> +++ b/t/t9100-git-svn-basic.sh
+> @@ -19,6 +19,14 @@ case "$GIT_SVN_LC_ALL" in
+>  	;;
+>  esac
+>  
+> +test_expect_success 'git svn --version works anywhere' '
+> +	( cd / || exit 0; git svn --version )
+> +'
+> +
+> +test_expect_success 'git svn help works anywhere' '
+> +	( cd / || exit 0; git svn help )
+> +'
+> +
+>  test_expect_success \
+>      'initialize git svn' '
+>  	mkdir import &&
