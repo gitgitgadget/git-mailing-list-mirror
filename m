@@ -2,236 +2,243 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03226203E2
-	for <e@80x24.org>; Fri, 22 Jul 2016 19:21:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 798D7203E2
+	for <e@80x24.org>; Fri, 22 Jul 2016 19:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752475AbcGVTVg (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 15:21:36 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51715 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750989AbcGVTVf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 15:21:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B663D2DDCD;
-	Fri, 22 Jul 2016 15:21:33 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JnhZ1ZUfXABp0+s8Irgg5Adi/yc=; b=Uw6r5w
-	cyX9LvPagF3oOX4rbTULDpRe4ArLh8HrMkSKpgf6tRBYO44f10IWPUwqcIaigITM
-	6AzThzo5LqLiBxNpy1LQqZkhBGPpndO/l31uUlO1v//UDaldF0LxUD/odruPnjmU
-	jBtVWBXYbhvR2NnSpPBmNVRkTaoSZGjGmE/HQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aYIfo0aIVK91No7K0QH/2y2zPpkjqCd9
-	/1zSLqyO9WQMlbvfRdX5dstRY0Nu1AYjJiZZmW2Uek3DWJlK5PU4w6AeW4FwILnF
-	IcIs2qaYiOtf3IYL2jObvRMF4cZd8Qz60a/QWalstzIoqEdUmTfbRxHEQkkk3jA/
-	yudwsEEzmnQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AF40C2DDCB;
-	Fri, 22 Jul 2016 15:21:33 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 30B762DDCA;
-	Fri, 22 Jul 2016 15:21:33 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Richard Soderberg <rsoderberg@gmail.com>, git@vger.kernel.org
-Subject: Re: git-prompt.sh incompatible with non-basic global grep.patternType
-References: <CAEvc1UQvXKtQCXvCmt-774A84--bkK-sb94BtFeqDDr0Gsf7qw@mail.gmail.com>
-	<20160720134211.GA19359@sigill.intra.peff.net>
-	<xmqqwpkgcbp9.fsf@gitster.mtv.corp.google.com>
-	<20160720205207.GA578@sigill.intra.peff.net>
-Date:	Fri, 22 Jul 2016 12:21:31 -0700
-In-Reply-To: <20160720205207.GA578@sigill.intra.peff.net> (Jeff King's message
-	of "Wed, 20 Jul 2016 14:52:07 -0600")
-Message-ID: <xmqqr3ala37o.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752601AbcGVT1I (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 15:27:08 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:37093 "EHLO
+	mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751928AbcGVT1H convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Jul 2016 15:27:07 -0400
+Received: by mail-it0-f51.google.com with SMTP id f6so55589210ith.0
+        for <git@vger.kernel.org>; Fri, 22 Jul 2016 12:27:05 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=J1GyrJAGTEn3FC6QpjjTliqBSTgffM91Ce5Tn4ERxyg=;
+        b=og/we8BGVdZ4f8jkpgmnBg1WvoF+feSluxJqa922ZQEI25ea7gTi5j4E6nFxbK2WP3
+         VrhoSC2uPhwOC4laTjJhyMMlM57WxnSoA1tn2F/Mu5DIa0uOnEzGuUDIVowRHMigmqbf
+         VoRkMRurrS78zYEI/17kaLAsk0yOEYsS9qKU4PewCtOHuiYcqYQRZLHcEJVDOkGN4pLr
+         c5rd68S1hJfU6iB19HlHH6uZ6cp7DsiZtNyJXUZQDGzazzDJVZJQKxuzZ5ar889OrhEu
+         pGZUgogv1Yr5zZXIQ7OSXYTkeoqJ2zlKDEAuWM8qsz1p0/ke3THCjTAooO730MB6/9yW
+         8/kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=J1GyrJAGTEn3FC6QpjjTliqBSTgffM91Ce5Tn4ERxyg=;
+        b=YtiGwtNrkCuBVoAiAzeJhyf8Zl7GdZxQDXCVOUGnysHRRXzOwxkHDATiKKQXfGfNvf
+         aTV7OPkHDSq9rCAqtQwZrRTvdqrQVjaO9ekpaXO0ybyKiMsDdjGZbuPeFnclpFAjvxeo
+         kAeVXFq9cleSQ6SLOW5eTn7ca5yndkXOzo0tXXd1AKvBhrFSw14SEq44Ng+tjND355ZL
+         hOXNRCfERA35BojcKGQNp5VBnqlyW46Y3DG3oZ4+T4U0Xn0Uz5xMfTaNg205+RsCWhiY
+         cMdNrxe5gE0x1jnxNc7oTq7MgiPglZXrTM4GA0IMM+B0wlIcbLRGDAs0HvJ5Q1hqZIIg
+         LvlQ==
+X-Gm-Message-State: AEkooutbDma9dy16ZfrTp/13fggRr1neV/xVpU4n8ZoaqNr/AlQEfHxVeuOkJRUQmlgDt2CzYPeEBSHkIw2Qqanv
+X-Received: by 10.36.127.7 with SMTP id r7mr6167793itc.49.1469215624900; Fri,
+ 22 Jul 2016 12:27:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 800221EC-5041-11E6-A5A2-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.128.66 with HTTP; Fri, 22 Jul 2016 12:27:04 -0700 (PDT)
+In-Reply-To: <8c0e116b-b604-ee83-197a-538eedf6e0ea@kdbg.org>
+References: <8c0e116b-b604-ee83-197a-538eedf6e0ea@kdbg.org>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Fri, 22 Jul 2016 12:27:04 -0700
+Message-ID: <CAGZ79ka0K6bFPt8gYNeKvA_B-ggHHETD=EtwRYj7F_5XTJ+n8g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] git-submodule: forward exit code of
+ git-submodule--helper more faithfully
+To:	Johannes Sixt <j6t@kdbg.org>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> I gave a very cursory look when I wrote the other email, and your
-> alternative solution is what looked like the most elegant fix to me.
+On Fri, Jul 22, 2016 at 12:14 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> git-submodule--helper is invoked as the upstream of a pipe in several
+> places. Usually, the failure of a program in this position is not
+> detected by the shell. For this reason, the code inserts a token in the
+> output stream when git-submodule--helper fails that is detected
+> downstream, where the shell script is quit with exit code 1.
 >
-> I suspect this bug has been there quite a while, so no rush. :)
+> There happens to be a bug in git-submodule--helper that leads to a
+> segmentation fault. The test suite triggers the crash in several places,
+> all of which are protected by 'test_must_fail'. But due to the inspecific
+> exit code 1, the crash remains undiagnosed.
+>
+> Extend the failure protocol such that git-submodule--helper's exit code
+> is passed downstream (only in the case of failure). This enables the
+> downstream to use it as its own exit code, and 'test_must_fail' to
+> identify the segmentation fault as an unexpected failure.
+>
+> The bug itself is fixed in the next commit.
+>
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+> When you run ./t7400-submodule-basic.sh -v, you will notice this output:
+>
+> fatal: destination path '/home/jsixt/Src/git/git/t/trash directory.t7400-submodule-basic/init' already exists and is not an empty directory.
+> fatal: clone of './.subrepo' into submodule path '/home/jsixt/Src/git/git/t/trash directory.t7400-submodule-basic/init' failed
+> Failed to clone 'init'. Retry scheduled
+> fatal: destination path '/home/jsixt/Src/git/git/t/trash directory.t7400-submodule-basic/init' already exists and is not an empty directory.
+> fatal: clone of './.subrepo' into submodule path '/home/jsixt/Src/git/git/t/trash directory.t7400-submodule-basic/init' failed
+> /home/jsixt/Src/git/git/git-submodule: line 494: 21757 Segmentation fault      git submodule--helper update-clone ${GIT_QUIET:+--quiet} ${wt_prefix:+--prefix "$wt_prefix"} ${prefix:+--recursive-prefix "$prefix"} ${update:+--update "$update"} ${reference:+--reference "$reference"} ${depth:+--depth "$depth"} ${recommend_shallow:+"$recommend_shallow"} ${jobs:+$jobs} "$@"
+> ok 32 - update should fail when path is used by a file
+>
+> Note the segmentation fault. This mini-series addresses the issue.
 
-Here is what I am going to queue.
+The segfault has been addressed in
+http://thread.gmane.org/gmane.comp.version-control.git/299995
+but received no attention yet.
+The propagation of the exit code makes sense nevertheless.
 
-One thing that I noticed is that there is this strange field
-in grep_opt called .extended_regexp_option; it only is set from the
-boolean configuration grep.extendedregexp and worse yet it takes
-precedence over the command line option or grep.patternType, e.g.
-t7810-grep expects crazy things like these:
+Thanks!
 
- * "git -c grep.extendedregexp=true -c grep.patterntype=basic grep"
-   wants to be like "git grep -E"
 
- * "git -c grep.extendedregexp=false -c grep.patterntype=extended grep"
-   wants to be like "git grep -G"
-
-This comes from b22520a3 (grep: allow -E and -n to be turned on by
-default via configuration, 2011-03-30) back when we didn't have a
-more generic grep.patternType configuration mechanism in v1.7.5
-days, and it probably need to be deprecated to maintain our sanity.
-I.e. when we see the configuration used, first we warn the user and
-set grep.patternType to extended instead, and then eventually error
-out in a backward-compatibility breaking release of Git we will make
-in some future date, together with things like other compatibility
-breaking topics like ex/deprecate-empty-pathspec-as-match-all.
-
-But that is a separate topic after this fix goes in anyway.
-
--- >8 --
-From: Junio C Hamano <gitster@pobox.com>
-Date: Fri, 22 Jul 2016 11:43:14 -0700
-Subject: [PATCH] grep: further simplify setting the pattern type
-
-When c5c31d33 (grep: move pattern-type bits support to top-level
-grep.[ch], 2012-10-03) introduced grep_commit_pattern_type() helper
-function, the intention was to allow the users of grep API to having
-to fiddle only with .pattern_type_option (which can be set to "fixed",
-"basic", "extended", and "pcre"), and then immediately before compiling
-the pattern strings for use, call grep_commit_pattern_type() to have
-it prepare various bits in the grep_opt structure (like .fixed,
-.regflags, etc.).
-
-However, grep_set_pattern_type_option() helper function the grep API
-internally uses were left as an external function by mistake.  This
-function shouldn't have been made callable by the users of the API.
-
-Later when the grep API was used in revision graversal machinery,
-the caller then mistakenly started calling the function around
-34a4ae55 (log --grep: use the same helper to set -E/-F options as
-"git grep", 2012-10-03), instead of setting the .pattern_type_option
-field and letting the grep_commit_pattern_type() to take care of the
-details.
-
-This caused an unnecessary bug that made a configured
-grep.patternType take precedence over the command line options
-(e.g. --basic-regexp, --fixed-strings) in "git log" family of
-commands.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- grep.c         | 22 +++++++++++-----------
- grep.h         |  1 -
- revision.c     |  8 ++++----
- t/t4202-log.sh | 14 ++++++++++++++
- 4 files changed, 29 insertions(+), 16 deletions(-)
-
-diff --git a/grep.c b/grep.c
-index b58c7c6..0bc5cc1 100644
---- a/grep.c
-+++ b/grep.c
-@@ -161,17 +161,7 @@ void grep_init(struct grep_opt *opt, const char *prefix)
- 	strcpy(opt->color_sep, def->color_sep);
- }
- 
--void grep_commit_pattern_type(enum grep_pattern_type pattern_type, struct grep_opt *opt)
--{
--	if (pattern_type != GREP_PATTERN_TYPE_UNSPECIFIED)
--		grep_set_pattern_type_option(pattern_type, opt);
--	else if (opt->pattern_type_option != GREP_PATTERN_TYPE_UNSPECIFIED)
--		grep_set_pattern_type_option(opt->pattern_type_option, opt);
--	else if (opt->extended_regexp_option)
--		grep_set_pattern_type_option(GREP_PATTERN_TYPE_ERE, opt);
--}
--
--void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, struct grep_opt *opt)
-+static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, struct grep_opt *opt)
- {
- 	switch (pattern_type) {
- 	case GREP_PATTERN_TYPE_UNSPECIFIED:
-@@ -203,6 +193,16 @@ void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, struct gr
- 	}
- }
- 
-+void grep_commit_pattern_type(enum grep_pattern_type pattern_type, struct grep_opt *opt)
-+{
-+	if (pattern_type != GREP_PATTERN_TYPE_UNSPECIFIED)
-+		grep_set_pattern_type_option(pattern_type, opt);
-+	else if (opt->pattern_type_option != GREP_PATTERN_TYPE_UNSPECIFIED)
-+		grep_set_pattern_type_option(opt->pattern_type_option, opt);
-+	else if (opt->extended_regexp_option)
-+		grep_set_pattern_type_option(GREP_PATTERN_TYPE_ERE, opt);
-+}
-+
- static struct grep_pat *create_grep_pat(const char *pat, size_t patlen,
- 					const char *origin, int no,
- 					enum grep_pat_token t,
-diff --git a/grep.h b/grep.h
-index 95f197a..9e9ec5f 100644
---- a/grep.h
-+++ b/grep.h
-@@ -144,7 +144,6 @@ struct grep_opt {
- extern void init_grep_defaults(void);
- extern int grep_config(const char *var, const char *value, void *);
- extern void grep_init(struct grep_opt *, const char *prefix);
--void grep_set_pattern_type_option(enum grep_pattern_type, struct grep_opt *opt);
- void grep_commit_pattern_type(enum grep_pattern_type, struct grep_opt *opt);
- 
- extern void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patlen, const char *origin, int no, enum grep_pat_token t);
-diff --git a/revision.c b/revision.c
-index 871812d..c46dca4 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1964,16 +1964,16 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if (!strcmp(arg, "--grep-debug")) {
- 		revs->grep_filter.debug = 1;
- 	} else if (!strcmp(arg, "--basic-regexp")) {
--		grep_set_pattern_type_option(GREP_PATTERN_TYPE_BRE, &revs->grep_filter);
-+		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_BRE;
- 	} else if (!strcmp(arg, "--extended-regexp") || !strcmp(arg, "-E")) {
--		grep_set_pattern_type_option(GREP_PATTERN_TYPE_ERE, &revs->grep_filter);
-+		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_ERE;
- 	} else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i")) {
- 		revs->grep_filter.regflags |= REG_ICASE;
- 		DIFF_OPT_SET(&revs->diffopt, PICKAXE_IGNORE_CASE);
- 	} else if (!strcmp(arg, "--fixed-strings") || !strcmp(arg, "-F")) {
--		grep_set_pattern_type_option(GREP_PATTERN_TYPE_FIXED, &revs->grep_filter);
-+		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_FIXED;
- 	} else if (!strcmp(arg, "--perl-regexp")) {
--		grep_set_pattern_type_option(GREP_PATTERN_TYPE_PCRE, &revs->grep_filter);
-+		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_PCRE;
- 	} else if (!strcmp(arg, "--all-match")) {
- 		revs->grep_filter.all_match = 1;
- 	} else if (!strcmp(arg, "--invert-grep")) {
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 1b2e981..f136a0f 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -232,6 +232,20 @@ test_expect_success 'log -F -E --grep=<ere> uses ere' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'log with grep.patternType configuration' '
-+	>expect &&
-+	git -c grep.patterntype=fixed \
-+	log -1 --pretty=tformat:%s --grep=s.c.nd >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log with grep.patternType configuration and command line' '
-+	echo second >expect &&
-+	git -c grep.patterntype=fixed \
-+	log -1 --pretty=tformat:%s --basic-regexp --grep=s.c.nd >actual &&
-+	test_cmp expect actual
-+'
-+
- cat > expect <<EOF
- * Second
- * sixth
--- 
-2.9.2-587-gac3bda4
-
+>
+> Noticed on Windows because it "visualizes" segfaults even for
+> command line programs.
+>
+>  git-submodule.sh            | 22 +++++++++++-----------
+>  t/t5815-submodule-protos.sh |  4 ++--
+>  t/t7400-submodule-basic.sh  |  4 ++--
+>  3 files changed, 15 insertions(+), 15 deletions(-)
+>
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 4ec7546..0a0e12d 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -49,7 +49,7 @@ die_if_unmatched ()
+>  {
+>         if test "$1" = "#unmatched"
+>         then
+> -               exit 1
+> +               exit ${2:-1}
+>         fi
+>  }
+>
+> @@ -312,11 +312,11 @@ cmd_foreach()
+>
+>         {
+>                 git submodule--helper list --prefix "$wt_prefix" ||
+> -               echo "#unmatched"
+> +               echo "#unmatched" $?
+>         } |
+>         while read mode sha1 stage sm_path
+>         do
+> -               die_if_unmatched "$mode"
+> +               die_if_unmatched "$mode" "$sha1"
+>                 if test -e "$sm_path"/.git
+>                 then
+>                         displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+> @@ -423,11 +423,11 @@ cmd_deinit()
+>
+>         {
+>                 git submodule--helper list --prefix "$wt_prefix" "$@" ||
+> -               echo "#unmatched"
+> +               echo "#unmatched" $?
+>         } |
+>         while read mode sha1 stage sm_path
+>         do
+> -               die_if_unmatched "$mode"
+> +               die_if_unmatched "$mode" "$sha1"
+>                 name=$(git submodule--helper name "$sm_path") || exit
+>
+>                 displaypath=$(git submodule--helper relative-path "$sm_path" "$wt_prefix")
+> @@ -581,12 +581,12 @@ cmd_update()
+>                 ${depth:+--depth "$depth"} \
+>                 ${recommend_shallow:+"$recommend_shallow"} \
+>                 ${jobs:+$jobs} \
+> -               "$@" || echo "#unmatched"
+> +               "$@" || echo "#unmatched" $?
+>         } | {
+>         err=
+>         while read mode sha1 stage just_cloned sm_path
+>         do
+> -               die_if_unmatched "$mode"
+> +               die_if_unmatched "$mode" "$sha1"
+>
+>                 name=$(git submodule--helper name "$sm_path") || exit
+>                 url=$(git config submodule."$name".url)
+> @@ -994,11 +994,11 @@ cmd_status()
+>
+>         {
+>                 git submodule--helper list --prefix "$wt_prefix" "$@" ||
+> -               echo "#unmatched"
+> +               echo "#unmatched" $?
+>         } |
+>         while read mode sha1 stage sm_path
+>         do
+> -               die_if_unmatched "$mode"
+> +               die_if_unmatched "$mode" "$sha1"
+>                 name=$(git submodule--helper name "$sm_path") || exit
+>                 url=$(git config submodule."$name".url)
+>                 displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+> @@ -1075,11 +1075,11 @@ cmd_sync()
+>         cd_to_toplevel
+>         {
+>                 git submodule--helper list --prefix "$wt_prefix" "$@" ||
+> -               echo "#unmatched"
+> +               echo "#unmatched" $?
+>         } |
+>         while read mode sha1 stage sm_path
+>         do
+> -               die_if_unmatched "$mode"
+> +               die_if_unmatched "$mode" "$sha1"
+>                 name=$(git submodule--helper name "$sm_path")
+>                 url=$(git config -f .gitmodules --get submodule."$name".url)
+>
+> diff --git a/t/t5815-submodule-protos.sh b/t/t5815-submodule-protos.sh
+> index 06f55a1..112cf40 100755
+> --- a/t/t5815-submodule-protos.sh
+> +++ b/t/t5815-submodule-protos.sh
+> @@ -18,7 +18,7 @@ test_expect_success 'setup repository with submodules' '
+>         git commit -m "add submodules"
+>  '
+>
+> -test_expect_success 'clone with recurse-submodules fails' '
+> +test_expect_failure 'clone with recurse-submodules fails' '
+>         test_must_fail git clone --recurse-submodules . dst
+>  '
+>
+> @@ -32,7 +32,7 @@ test_expect_success 'update of ssh allowed' '
+>         git -C dst submodule update ssh-module
+>  '
+>
+> -test_expect_success 'update of ext not allowed' '
+> +test_expect_failure 'update of ext not allowed' '
+>         test_must_fail git -C dst submodule update ext-module
+>  '
+>
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index b77cce8..7c8b90b 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -352,7 +352,7 @@ test_expect_success 'sync should fail with unknown submodule' '
+>         test_failure_with_unknown_submodule sync
+>  '
+>
+> -test_expect_success 'update should fail when path is used by a file' '
+> +test_expect_failure 'update should fail when path is used by a file' '
+>         echo hello >expect &&
+>
+>         echo "hello" >init &&
+> @@ -361,7 +361,7 @@ test_expect_success 'update should fail when path is used by a file' '
+>         test_cmp expect init
+>  '
+>
+> -test_expect_success 'update should fail when path is used by a nonempty directory' '
+> +test_expect_failure 'update should fail when path is used by a nonempty directory' '
+>         echo hello >expect &&
+>
+>         rm -fr init &&
+> --
+> 2.9.0.443.ga8520ad
