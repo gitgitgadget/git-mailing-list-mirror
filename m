@@ -2,145 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFBEF203E2
-	for <e@80x24.org>; Fri, 22 Jul 2016 19:52:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B01D0203E2
+	for <e@80x24.org>; Fri, 22 Jul 2016 19:52:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753119AbcGVTvy (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 15:51:54 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48828 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753016AbcGVTvw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 15:51:52 -0400
-Received: (qmail 22252 invoked by uid 102); 22 Jul 2016 19:51:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 15:51:52 -0400
-Received: (qmail 9330 invoked by uid 107); 22 Jul 2016 19:52:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 15:52:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Jul 2016 15:51:49 -0400
-Date:	Fri, 22 Jul 2016 15:51:49 -0400
-From:	Jeff King <peff@peff.net>
-To:	git@vger.kernel.org
-Cc:	Theodore Ts'o <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 6/6] date: add "unix" format
-Message-ID: <20160722195149.GF19648@sigill.intra.peff.net>
-References: <20160722195105.GA19542@sigill.intra.peff.net>
+	id S1752790AbcGVTwO (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 15:52:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62075 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752070AbcGVTwO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 15:52:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E3C52CBD1;
+	Fri, 22 Jul 2016 15:52:13 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M9LPrxpzP2BOmZIEshmLMI3CQSA=; b=An4YB1
+	2eCCqPO7JfDi4zPYaQncUjUzbPvm+btbuhWlwi5G/70w2coimPU1PbQE6t7XiuDL
+	+WgFkrTtidEzg7JhbltmHPMC7mrAswCqDb3j3luXas43vD/Op93kFoKtnZ1k2puu
+	g1h8pWWhE/ktgSXuMfCcG7KButoFSkIVx680Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VgDX+GglXlNuCnUjhn6xFdp8msFzEL5M
+	d7uz5ZordzUwFzZ6M77z579KR14oUchYBpohqneYypBUFAGEgn5VBrIka4tu38AM
+	WX8PI7o20BzgaiC9IjnOynwci9gCa0DHMuWvymABvpZHcgDuXV74hzweOml4SnJe
+	mde/lrayBqE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 05E782CBCF;
+	Fri, 22 Jul 2016 15:52:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7A67C2CBCE;
+	Fri, 22 Jul 2016 15:52:12 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	Johannes Sixt <j6t@kdbg.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 2/2] submodule-helper: fix indexing in clone retry error reporting path
+References: <8c0e116b-b604-ee83-197a-538eedf6e0ea@kdbg.org>
+	<4d40da99-2f66-a380-840f-1828dc5b9324@kdbg.org>
+	<CAGZ79kbiVwyyTZLxQP+ioLBoC6r8dcJV4SdDUL_bn58bFUbsWg@mail.gmail.com>
+Date:	Fri, 22 Jul 2016 12:52:10 -0700
+In-Reply-To: <CAGZ79kbiVwyyTZLxQP+ioLBoC6r8dcJV4SdDUL_bn58bFUbsWg@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 22 Jul 2016 12:30:17 -0700")
+Message-ID: <xmqq60rxa1sl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160722195105.GA19542@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: C8516A44-5045-11E6-8681-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-We already have "--date=raw", which is a Unix epoch
-timestamp plus a contextual timezone (either the author's or
-the local). But one may not care about the timezone and just
-want the epoch timestamp by itself. It's not hard to parse
-the two apart, but if you are using a pretty-print format,
-you may want git to show the "finished" form that the user
-will see.
+Stefan Beller <sbeller@google.com> writes:
 
-We can accomodate this by adding a new date format, "unix",
-which is basically "raw" without the timezone.
+> The approach to tests is different though. I like yours better than mine,
+> as it doesn't add more tests, but strengthens existing tests.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/rev-list-options.txt | 4 ++++
- builtin/blame.c                    | 3 +++
- cache.h                            | 3 ++-
- date.c                             | 8 ++++++++
- t/t0006-date.sh                    | 2 ++
- 5 files changed, 19 insertions(+), 1 deletion(-)
+So... are you retracting
+http://thread.gmane.org/gmane.comp.version-control.git/299995 and
+instead giving an Ack to these two?
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 3ec75d4..8b1c946 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -751,6 +751,10 @@ format. Note that the `-local` option does not affect the
- seconds-since-epoch value (which is always measured in UTC), but does
- switch the accompanying timezone value.
- +
-+`--date=unix` shows the date as a Unix epoch timestamp (seconds since
-+1970).  As with `--raw`, this is always in UTC and therefore `-local`
-+has no effect.
-++
- `--date=format:...` feeds the format `...` to your system `strftime`.
- Use `--date=format:%c` to show the date in your system locale's
- preferred format.  See the `strftime` manual for a complete list of
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 8fec0e1..cb08127 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2625,6 +2625,9 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	case DATE_RAW:
- 		blame_date_width = sizeof("1161298804 -0700");
- 		break;
-+	case DATE_UNIX:
-+		blame_date_width = sizeof("1161298804");
-+		break;
- 	case DATE_SHORT:
- 		blame_date_width = sizeof("2006-10-19");
- 		break;
-diff --git a/cache.h b/cache.h
-index 2bf97cc..dd587b2 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1224,7 +1224,8 @@ struct date_mode {
- 		DATE_ISO8601_STRICT,
- 		DATE_RFC2822,
- 		DATE_STRFTIME,
--		DATE_RAW
-+		DATE_RAW,
-+		DATE_UNIX
- 	} type;
- 	const char *strftime_fmt;
- 	int local;
-diff --git a/date.c b/date.c
-index 4c7aa9b..a996331 100644
---- a/date.c
-+++ b/date.c
-@@ -177,6 +177,12 @@ const char *show_date(unsigned long time, int tz, const struct date_mode *mode)
- 	struct tm *tm;
- 	static struct strbuf timebuf = STRBUF_INIT;
- 
-+	if (mode->type == DATE_UNIX) {
-+		strbuf_reset(&timebuf);
-+		strbuf_addf(&timebuf, "%lu", time);
-+		return timebuf.buf;
-+	}
-+
- 	if (mode->local)
- 		tz = local_tzoffset(time);
- 
-@@ -792,6 +798,8 @@ static enum date_mode_type parse_date_type(const char *format, const char **end)
- 		return DATE_NORMAL;
- 	if (skip_prefix(format, "raw", end))
- 		return DATE_RAW;
-+	if (skip_prefix(format, "unix", end))
-+		return DATE_UNIX;
- 	if (skip_prefix(format, "format", end))
- 		return DATE_STRFTIME;
- 
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 482fec0..c0c9108 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -46,8 +46,10 @@ check_show rfc2822 "$TIME" 'Wed, 15 Jun 2016 16:13:20 +0200'
- check_show short "$TIME" '2016-06-15'
- check_show default "$TIME" 'Wed Jun 15 16:13:20 2016 +0200'
- check_show raw "$TIME" '1466000000 +0200'
-+check_show unix "$TIME" '1466000000'
- check_show iso-local "$TIME" '2016-06-15 14:13:20 +0000'
- check_show raw-local "$TIME" '1466000000 +0000'
-+check_show unix-local "$TIME" '1466000000'
- 
- # arbitrary time absurdly far in the future
- FUTURE="5758122296 -0400"
--- 
-2.9.2.512.gc1ef750
