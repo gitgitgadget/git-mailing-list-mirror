@@ -2,112 +2,210 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3D02203E2
-	for <e@80x24.org>; Fri, 22 Jul 2016 18:10:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71855203E2
+	for <e@80x24.org>; Fri, 22 Jul 2016 19:14:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753367AbcGVSK2 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 14:10:28 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48751 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751795AbcGVSK2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 14:10:28 -0400
-Received: (qmail 17446 invoked by uid 102); 22 Jul 2016 18:10:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 14:10:27 -0400
-Received: (qmail 8156 invoked by uid 107); 22 Jul 2016 18:10:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 14:10:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Jul 2016 14:10:24 -0400
-Date:	Fri, 22 Jul 2016 14:10:24 -0400
-From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	larsxschneider@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH] diff: do not reuse worktree files that need "clean"
- conversion
-Message-ID: <20160722181024.GA16595@sigill.intra.peff.net>
-References: <1469134747-26785-1-git-send-email-larsxschneider@gmail.com>
- <20160721213740.GB4604@sigill.intra.peff.net>
- <20160722152753.GA6859@sigill.intra.peff.net>
- <xmqq60rxbmaf.fsf@gitster.mtv.corp.google.com>
+	id S1751562AbcGVTOn (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 15:14:43 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:63739 "EHLO bsmtp3.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750989AbcGVTOm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 15:14:42 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3rx0hH2J1Cz5tlG;
+	Fri, 22 Jul 2016 21:14:39 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id BE64B52DC;
+	Fri, 22 Jul 2016 21:14:38 +0200 (CEST)
+To:	Stefan Beller <sbeller@google.com>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+From:	Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 1/2] git-submodule: forward exit code of git-submodule--helper
+ more faithfully
+Message-ID: <8c0e116b-b604-ee83-197a-538eedf6e0ea@kdbg.org>
+Date:	Fri, 22 Jul 2016 21:14:38 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq60rxbmaf.fsf@gitster.mtv.corp.google.com>
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 22, 2016 at 10:44:08AM -0700, Junio C Hamano wrote:
+git-submodule--helper is invoked as the upstream of a pipe in several
+places. Usually, the failure of a program in this position is not
+detected by the shell. For this reason, the code inserts a token in the
+output stream when git-submodule--helper fails that is detected
+downstream, where the shell script is quit with exit code 1.
 
-> > diff --git a/diff.c b/diff.c
-> > index 7d03419..b43d3dd 100644
-> > --- a/diff.c
-> > +++ b/diff.c
-> > @@ -2683,6 +2683,13 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
-> >  	if (!FAST_WORKING_DIRECTORY && !want_file && has_sha1_pack(sha1))
-> >  		return 0;
-> >  
-> > +	/*
-> > +	 * Similarly, if we'd have to convert the file contents anyway, that
-> > +	 * makes the optimization not worthwhile.
-> > +	 */
-> > +	if (!want_file && would_convert_to_git(name))
-> > +		return 0;
-> 
-> The would_convert_to_git() function is not a free operation.  It
-> needs to prime the attribute stack, so it needs to open/read/parse a
-> few files ($GIT_DIR/info/attributes and .gitattributes at least, and
-> more if your directory hierarchy is deep) on the filesystem.  The
-> cost is amortized across paths, but we do not even enable the
-> optimization if we have to pay the cost of reading the index
-> ourselves.
+There happens to be a bug in git-submodule--helper that leads to a
+segmentation fault. The test suite triggers the crash in several places,
+all of which are protected by 'test_must_fail'. But due to the inspecific
+exit code 1, the crash remains undiagnosed.
 
-Yeah, I almost commented on that, and its position in the function, but
-forgot to.
+Extend the failure protocol such that git-submodule--helper's exit code
+is passed downstream (only in the case of failure). This enables the
+downstream to use it as its own exit code, and 'test_must_fail' to
+identify the segmentation fault as an unexpected failure.
 
-The only code path which will trigger this is diff_populate_filespec.
-After reuse_worktree_file() says "yes, we can reuse", we drop into a
-conditional that will end in us calling convert_to_git() anyway, which
-will do the same lookup. We don't need to cache, because the expensive
-parts of the attribute-lookup are already cached for us by the attribute
-code.
+The bug itself is fixed in the next commit.
 
-So my initial thought was to put it at the end of reuse_worktree_file(),
-where it would have the least impact. If we find we cannot reuse the
-file, then we would skip both this new attr lookup and the one in
-diff_populate_filespec().
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+When you run ./t7400-submodule-basic.sh -v, you will notice this output:
 
-But in practice, I think we'll already have cached those attrs before we
-even hit this function, because we'll hit the userdiff_find_by_path()
-code earlier in the diff process (e.g., to see if it's binary, if we
-need to textconv, etc). Those look for different attributes, but I think
-the expensive bits (finding, opening, reading attribute files) are
-cached across all lookups.
+fatal: destination path '/home/jsixt/Src/git/git/t/trash directory.t7400-submodule-basic/init' already exists and is not an empty directory.
+fatal: clone of './.subrepo' into submodule path '/home/jsixt/Src/git/git/t/trash directory.t7400-submodule-basic/init' failed
+Failed to clone 'init'. Retry scheduled
+fatal: destination path '/home/jsixt/Src/git/git/t/trash directory.t7400-submodule-basic/init' already exists and is not an empty directory.
+fatal: clone of './.subrepo' into submodule path '/home/jsixt/Src/git/git/t/trash directory.t7400-submodule-basic/init' failed
+/home/jsixt/Src/git/git/git-submodule: line 494: 21757 Segmentation fault      git submodule--helper update-clone ${GIT_QUIET:+--quiet} ${wt_prefix:+--prefix "$wt_prefix"} ${prefix:+--recursive-prefix "$prefix"} ${update:+--update "$update"} ${reference:+--reference "$reference"} ${depth:+--depth "$depth"} ${recommend_shallow:+"$recommend_shallow"} ${jobs:+$jobs} "$@"
+ok 32 - update should fail when path is used by a file
 
-So I think we actually _can_ think of would_convert_to_git() as
-basically free. Or as free as other efficient-lookup functions we call
-like cache_name_pos(). And so I moved it further up in the function,
-where it lets us avoid doing more out-of-process work (like calling
-lstat() so we can ce_match_stat() on the result).
+Note the segmentation fault. This mini-series addresses the issue.
 
-Possibly it should go after the cache_name_pos() call, though. That's
-likely to be less expensive than the actual walk of the attr tree.
+Noticed on Windows because it "visualizes" segfaults even for
+command line programs.
 
-> I suspect that we may be better off disabling this optimization if
-> we need to always call the helper.
+ git-submodule.sh            | 22 +++++++++++-----------
+ t/t5815-submodule-protos.sh |  4 ++--
+ t/t7400-submodule-basic.sh  |  4 ++--
+ 3 files changed, 15 insertions(+), 15 deletions(-)
 
-The thought "does this tree reuse even speed things up enough to justify
-its complexity" definitely crossed my mind. It's basically swapping
-open/mmap for zlib inflating the content.
-
-But I do think it helps in the "want_file" case (i.e., when we are
-writing out a tempfile for an external command via prepare_temp_file()).
-There it helps us omit writing a tempfile to disk entirely, including
-any possible conversion.
-
--Peff
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 4ec7546..0a0e12d 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -49,7 +49,7 @@ die_if_unmatched ()
+ {
+ 	if test "$1" = "#unmatched"
+ 	then
+-		exit 1
++		exit ${2:-1}
+ 	fi
+ }
+ 
+@@ -312,11 +312,11 @@ cmd_foreach()
+ 
+ 	{
+ 		git submodule--helper list --prefix "$wt_prefix" ||
+-		echo "#unmatched"
++		echo "#unmatched" $?
+ 	} |
+ 	while read mode sha1 stage sm_path
+ 	do
+-		die_if_unmatched "$mode"
++		die_if_unmatched "$mode" "$sha1"
+ 		if test -e "$sm_path"/.git
+ 		then
+ 			displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+@@ -423,11 +423,11 @@ cmd_deinit()
+ 
+ 	{
+ 		git submodule--helper list --prefix "$wt_prefix" "$@" ||
+-		echo "#unmatched"
++		echo "#unmatched" $?
+ 	} |
+ 	while read mode sha1 stage sm_path
+ 	do
+-		die_if_unmatched "$mode"
++		die_if_unmatched "$mode" "$sha1"
+ 		name=$(git submodule--helper name "$sm_path") || exit
+ 
+ 		displaypath=$(git submodule--helper relative-path "$sm_path" "$wt_prefix")
+@@ -581,12 +581,12 @@ cmd_update()
+ 		${depth:+--depth "$depth"} \
+ 		${recommend_shallow:+"$recommend_shallow"} \
+ 		${jobs:+$jobs} \
+-		"$@" || echo "#unmatched"
++		"$@" || echo "#unmatched" $?
+ 	} | {
+ 	err=
+ 	while read mode sha1 stage just_cloned sm_path
+ 	do
+-		die_if_unmatched "$mode"
++		die_if_unmatched "$mode" "$sha1"
+ 
+ 		name=$(git submodule--helper name "$sm_path") || exit
+ 		url=$(git config submodule."$name".url)
+@@ -994,11 +994,11 @@ cmd_status()
+ 
+ 	{
+ 		git submodule--helper list --prefix "$wt_prefix" "$@" ||
+-		echo "#unmatched"
++		echo "#unmatched" $?
+ 	} |
+ 	while read mode sha1 stage sm_path
+ 	do
+-		die_if_unmatched "$mode"
++		die_if_unmatched "$mode" "$sha1"
+ 		name=$(git submodule--helper name "$sm_path") || exit
+ 		url=$(git config submodule."$name".url)
+ 		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+@@ -1075,11 +1075,11 @@ cmd_sync()
+ 	cd_to_toplevel
+ 	{
+ 		git submodule--helper list --prefix "$wt_prefix" "$@" ||
+-		echo "#unmatched"
++		echo "#unmatched" $?
+ 	} |
+ 	while read mode sha1 stage sm_path
+ 	do
+-		die_if_unmatched "$mode"
++		die_if_unmatched "$mode" "$sha1"
+ 		name=$(git submodule--helper name "$sm_path")
+ 		url=$(git config -f .gitmodules --get submodule."$name".url)
+ 
+diff --git a/t/t5815-submodule-protos.sh b/t/t5815-submodule-protos.sh
+index 06f55a1..112cf40 100755
+--- a/t/t5815-submodule-protos.sh
++++ b/t/t5815-submodule-protos.sh
+@@ -18,7 +18,7 @@ test_expect_success 'setup repository with submodules' '
+ 	git commit -m "add submodules"
+ '
+ 
+-test_expect_success 'clone with recurse-submodules fails' '
++test_expect_failure 'clone with recurse-submodules fails' '
+ 	test_must_fail git clone --recurse-submodules . dst
+ '
+ 
+@@ -32,7 +32,7 @@ test_expect_success 'update of ssh allowed' '
+ 	git -C dst submodule update ssh-module
+ '
+ 
+-test_expect_success 'update of ext not allowed' '
++test_expect_failure 'update of ext not allowed' '
+ 	test_must_fail git -C dst submodule update ext-module
+ '
+ 
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index b77cce8..7c8b90b 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -352,7 +352,7 @@ test_expect_success 'sync should fail with unknown submodule' '
+ 	test_failure_with_unknown_submodule sync
+ '
+ 
+-test_expect_success 'update should fail when path is used by a file' '
++test_expect_failure 'update should fail when path is used by a file' '
+ 	echo hello >expect &&
+ 
+ 	echo "hello" >init &&
+@@ -361,7 +361,7 @@ test_expect_success 'update should fail when path is used by a file' '
+ 	test_cmp expect init
+ '
+ 
+-test_expect_success 'update should fail when path is used by a nonempty directory' '
++test_expect_failure 'update should fail when path is used by a nonempty directory' '
+ 	echo hello >expect &&
+ 
+ 	rm -fr init &&
+-- 
+2.9.0.443.ga8520ad
