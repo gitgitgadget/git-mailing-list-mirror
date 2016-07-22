@@ -2,134 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B73AA203E2
-	for <e@80x24.org>; Fri, 22 Jul 2016 17:01:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3967F203E3
+	for <e@80x24.org>; Fri, 22 Jul 2016 17:09:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752831AbcGVRBP (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 13:01:15 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50502 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752161AbcGVRBO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 13:01:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EC27B2CAC6;
-	Fri, 22 Jul 2016 13:01:12 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Y4EFuNdnAgKL/+TADG7gkAl2dSE=; b=FrUh2K
-	pQqavQfUpQw0u75QkXZlnDJpJ0IxkpmC/6fDWUEoGC0N+UAKFB4NjHwDPV97F527
-	sSE6E+UpcOsPqPYy93CtarkfgiqeFHBzae7oNkCnjF+J5vsfY0s8ciiy6ellznOE
-	6Lwdbf+QPcufOCDUTPfAgWoLMM1+kbt2q4Fdc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=W8pyOJ2EZCg9tWPpUyagrWfBE2tw3Irr
-	7jE9Ycbz0Sgb9PJKwRgQBajyAlOFTPrM30KoO/SD7f03/FR0u6Rh+/Pp3ZMXbR6w
-	dGmuJbiugsT/zX09tEY1SLxEKgg63N1wRWlOF64HM1SbsCKd3pCVnXIN7f5WswOx
-	xu8ryHk8qr4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E2C372CAC5;
-	Fri, 22 Jul 2016 13:01:12 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5F1672CAC4;
-	Fri, 22 Jul 2016 13:01:12 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff Hostetler <git@jeffhostetler.com>
-Cc:	Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org,
-	peff@peff.net
-Subject: Re: [PATCH v1 3/6] Per-file output for Porcelain Status V2
-References: <1468966258-11191-1-git-send-email-jeffhost@microsoft.com>
-	<1468966258-11191-4-git-send-email-jeffhost@microsoft.com>
-	<xmqqh9bkc7xx.fsf@gitster.mtv.corp.google.com>
-	<57911B5B.9090604@jeffhostetler.com>
-Date:	Fri, 22 Jul 2016 10:01:10 -0700
-In-Reply-To: <57911B5B.9090604@jeffhostetler.com> (Jeff Hostetler's message of
-	"Thu, 21 Jul 2016 14:58:35 -0400")
-Message-ID: <xmqqinvxboa1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752748AbcGVRJd (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 13:09:33 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:33019 "EHLO
+	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752186AbcGVRJc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Jul 2016 13:09:32 -0400
+Received: by mail-it0-f66.google.com with SMTP id d65so3453760ith.0
+        for <git@vger.kernel.org>; Fri, 22 Jul 2016 10:09:32 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=1zsDuTuhrvhWSQ5n9tYjRkeHBAJhCzvBB6Qv8R4OowY=;
+        b=iVregYL4p7jiYoXpy5YhNm/V6nbOLgeCWH9EE/3HblsI2VWEIbkcJLhATtsBgeYmGo
+         pxWvfTzDscA3XEpB71wst2hvHrFDxIzNlghdBVB08FD4iSDWFzvY8KQ7fQzXxswp/++1
+         ZRKZG2rB0FTdr4aSYYDGL8CSWtg/A70l6DwZq8XZZQ1gxdRdXnsd9KOGjlxGcFNPALdX
+         fJd9alnJ8QS6Sw3xG+3m7aXZvNvrfiagV41WCCgheXQ4D1P86fc/SHE4QfUOsZpcPo/G
+         v7Tsv3Yh7ofqtxme0ygOxi0ihneoWEAIUDDakQlEQdcADBrySt2SA214NDC2wIBiCWcP
+         P2cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=1zsDuTuhrvhWSQ5n9tYjRkeHBAJhCzvBB6Qv8R4OowY=;
+        b=lC4Dx+oSly9h6c7eBDx2OhJFZAmT6xuaxCLlZRr3hPXo94nBxFD2etd1YOBQLEIGG9
+         SBIHLVHILl7dwxuNAr3818CRuqb8R6qAIMlCCTcHytDAKV8eeaPW5qhTW571Ky5hG5us
+         Yc9LXoyi5h7nsw2n14Ac9XAa2FsVQlhMIUngfEsibb51rpJfEV1k6QpEZInLaajCtDvX
+         Iv3ponWn3gIqzCBz6R7icSGUH4klUCmKpTK7i4w9PtlXbmpivSCCWjh0EZx1VLt3xgSj
+         HuX2EFgCiReCYnvdYu76w4gehYpXSIujzbpCH724QRiQgkZepPirkL0cJLewfqLjVAqS
+         xUng==
+X-Gm-Message-State: ALyK8tLQzT5uNrTuCZ57Bz7lAm2Ccm6KKurDIZg3VSOIApsShYujAyG9sVQhj0d9a6gvZVOIbkohyMUPLlzm6w==
+X-Received: by 10.36.33.197 with SMTP id e188mr56626094ita.42.1469207371354;
+ Fri, 22 Jul 2016 10:09:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E4D0B2FA-502D-11E6-ACA4-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.64.225.235 with HTTP; Fri, 22 Jul 2016 10:09:01 -0700 (PDT)
+In-Reply-To: <CAGZ79kZB8U+ERNeYpZ-i7Ldip7xbz0ND53g4bzMkzFC3pnyv+w@mail.gmail.com>
+References: <CACsJy8ADRWNL3FR2TtWShviT4Lc4m1xaY8VOPP26Foyq+_A-3g@mail.gmail.com>
+ <20160720172419.25473-1-pclouds@gmail.com> <20160720172419.25473-4-pclouds@gmail.com>
+ <CAGZ79kZB8U+ERNeYpZ-i7Ldip7xbz0ND53g4bzMkzFC3pnyv+w@mail.gmail.com>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Fri, 22 Jul 2016 19:09:01 +0200
+Message-ID: <CACsJy8CSnmnzDMGpMvvkhWRfJvp1L+pfOZ=eYp5JF0GWNH6D0Q@mail.gmail.com>
+Subject: Re: [PATCH v4 3/4] submodule: support running in multiple worktree setup
+To:	Stefan Beller <sbeller@google.com>
+Cc:	Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Max Kirillov <max@max630.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
-
->>> +	case DIFF_STATUS_DELETED:
->>> +		d->porcelain_v2.mode_index = p->one->mode;
->>> +		hashcpy(d->porcelain_v2.sha1_index, p->one->sha1);
->>> +		break;
->>> +
->>> +	case DIFF_STATUS_COPIED:
->>> +	case DIFF_STATUS_MODIFIED:
->>> +	case DIFF_STATUS_RENAMED:
+On Thu, Jul 21, 2016 at 1:22 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Wed, Jul 20, 2016 at 10:24 AM, Nguyễn Thái Ngọc Duy
+> <pclouds@gmail.com> wrote:
+>> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+>> ---
+>>  Documentation/git-worktree.txt | 8 ++++++++
+>>  git-submodule.sh               | 8 ++++----
+>>  2 files changed, 12 insertions(+), 4 deletions(-)
 >>
->> Can RENAMED or COPIED happen here?
->
-> If we don't report renamed or copied for unstaged changes, then no.
-
-The question was "do we report such cases"?
-
->>> +	if (!d->index_status) {
->>> +		if (d->worktree_status == DIFF_STATUS_MODIFIED ||
->>> +			d->worktree_status == DIFF_STATUS_DELETED) {
->>> +			/* X=' ' Y=[MD]
->>> +			 * The item did not change in head-vs-index scan so the head
->>> +			 * column was never set. (The index column was set during the
->>> +			 * index-vs-worktree scan.)
->>> +			 * Force set the head column to make the output complete.
->>> +			 */
->>> +			d->porcelain_v2.mode_head = d->porcelain_v2.mode_index;
->>> +			hashcpy(d->porcelain_v2.sha1_head, d->porcelain_v2.sha1_index);
->>> +		}
+>> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+>> index 41350db..2a5661d 100644
+>> --- a/Documentation/git-worktree.txt
+>> +++ b/Documentation/git-worktree.txt
+>> @@ -142,6 +142,14 @@ to share to all working directories:
+>>     you are sure you always use sparse checkout for all working
+>>     directories.
 >>
->> Can there be "else" clause for this inner "if"?  When
->> d->index_status is not set, but worktree_status is not one of these
->> two, what does it indicate?  The same for the next one.
+>> + - `submodule.*` in current state should not be shared because the
+>> +   information is tied to a particular version of .gitmodules in a
+>> +   working directory.
 >
-> For a normal entry (not unmerged) when X is ' ', Y can only
-> be 'M' or 'D'.  The only other value for Y is ' ', but then if
-> both were ' ' the entry would not be in the list.  So I think
-> we're OK, but I'll document that here.  And below.
-
-Good.
-
->>> +	memset(stages, 0, sizeof(stages));
->>> +	pos = cache_name_pos(it->string, strlen(it->string));
->>> +	assert(pos < 0);
->>> +	pos = -pos-1;
->>> +	while (pos < active_nr) {
->>> +		ce = active_cache[pos++];
->>> +		stage = ce_stage(ce);
->>> +		if (strcmp(ce->name, it->string) || !stage)
->>> +			break;
->>> +		stages[stage - 1].mode = ce->ce_mode;
->>> +		hashcpy(stages[stage - 1].sha1, ce->sha1);
->>> +	}
->>
->> You did assert(pos < 0) to make sure that the path the caller told
->> you is unmerged indeed is unmerged, which is a very good check.  In
->> the same spirit, you would want to make sure that you got at least
->> one result from the above loop, to diagnose a bug where the path did
->> not even exist at all in the index.
+> While the submodule.* settings are copied from the .gitmodules file initially,
+> they can be changed in the config later. (That was actually the whole
+> point of it,
+> so you can change the submodule remotes URL without having to change history.)
 >
-> Would that be possible for a conflict/unmerged entry?
+> And I would think that most submodule related settings (such as remote URL,
+> name, path, even depth recommendation) should be the same for all worktrees,
+> and a different value for one worktree is a carefully crafted
+> exception by the user.
+>
+> So while the .gitmodules file can diverge in the work trees I do not
+> think that the
+> actual remotes for the submodules in the different worktrees differ
+> though. The change
+> of the .gitmodule files may be because you checked out an old commit, that
+> has outdated information on where to get the submodule from.
 
-It is possible to exactly the same degree as it is possible you
-would get !(pos < 0) answer from cache_name_pos() here, I would
-think.  The assert() you have up above is protecting us from either
-a broken caller to this function that gives an it that points at a
-merged path (in which case the assert is violated) or a breakage in
-cache_name_pos().  Making sure the loop finds at least one unmerged
-entry protects us from similar kind of breakage that violates the
-expectation this code has from the other parts of the code.
+I just quickly glanced through the rest of this mail because, as a
+submodule ignorant, it's just mumbo jumbo to me. But what I see here
+is, there may be problems if we choose to share some submodule info,
+but I haven't seen any good thing from sharing any submodule info at
+all.
 
+I can imagine long term you may want to just clone a submodule repo
+once and share it across worktrees that use it, so maybe it's just me
+not seeing things and this may be a step towards that.
 
-Thanks.
+Anyway, I assume some people will be working on the submodule side.
+And because I have not heard any bad thing about the new config
+design, I'm going to drop submodule patches from this series and focus
+on polishing config stuff.
+-- 
+Duy
