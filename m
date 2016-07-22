@@ -2,99 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD44C203E2
-	for <e@80x24.org>; Fri, 22 Jul 2016 20:05:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56F53203E2
+	for <e@80x24.org>; Fri, 22 Jul 2016 20:21:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752250AbcGVUFs (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 16:05:48 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48853 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751576AbcGVUFs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 16:05:48 -0400
-Received: (qmail 22933 invoked by uid 102); 22 Jul 2016 20:05:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 16:05:48 -0400
-Received: (qmail 9504 invoked by uid 107); 22 Jul 2016 20:06:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 16:06:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Jul 2016 16:05:45 -0400
-Date:	Fri, 22 Jul 2016 16:05:45 -0400
-From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Richard Soderberg <rsoderberg@gmail.com>, git@vger.kernel.org
-Subject: Re: git-prompt.sh incompatible with non-basic global grep.patternType
-Message-ID: <20160722200545.GA18286@sigill.intra.peff.net>
-References: <CAEvc1UQvXKtQCXvCmt-774A84--bkK-sb94BtFeqDDr0Gsf7qw@mail.gmail.com>
- <20160720134211.GA19359@sigill.intra.peff.net>
- <xmqqwpkgcbp9.fsf@gitster.mtv.corp.google.com>
- <20160720205207.GA578@sigill.intra.peff.net>
- <xmqqr3ala37o.fsf@gitster.mtv.corp.google.com>
- <20160722192811.GA18079@sigill.intra.peff.net>
- <xmqqa8h9a1uj.fsf@gitster.mtv.corp.google.com>
+	id S1752682AbcGVUVj (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 16:21:39 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:33508 "EHLO
+	mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751563AbcGVUVi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 16:21:38 -0400
+Received: by mail-it0-f67.google.com with SMTP id d65so3754416ith.0
+        for <git@vger.kernel.org>; Fri, 22 Jul 2016 13:21:38 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=28yskVGDnAopYP5kSmjXkBFfQyVdcmQwCiA6wY1GRwQ=;
+        b=tVY7dTMepI3b3JJda6HO7Z3z0uZe0qzfHOEIOVhMiisWLoEYMwlYCDn82/VrREFyfI
+         VGQ07bv732tbEDLfAdZCoeFF0BD+2amJADrrRtsyXRxx6w3gwg1gW4EoEioDyPs5GB1l
+         C7t5s0nFLy4mZhod3kHorCSiCm0uzJpklWyQWwQIZbfdNDXMbCDTn2moejl2zlZDDhLY
+         eQg9eqoIE7E9XSEvMN2spZgdYtsu/E0O28XZPxcTvvlVxi/MOOC8IwDZa3G1pjyfpEfi
+         t1/R5ZTfxsu+cPUWJw1ocPXWVLP5w38U4t8QWgxWnxs5WQdcBa4xQ4FoWbVDKWBc3S1W
+         yVKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=28yskVGDnAopYP5kSmjXkBFfQyVdcmQwCiA6wY1GRwQ=;
+        b=LW9Psxn49GRlZ5XfIx/40wm6xblPRxpVqtvYPOKFLTd0HjcW3sgjzYaCMszz2+sY+7
+         XAZ8pZUnjvsSuV3L4L1JpCJBz1kz/UJouNClmUxm1o4ojTRS0JZNKsXcKJm9limWzo4H
+         4h7CBPzYbdQLVY2YoMfefqcBXZuDklNuLUE0/ipmCsEZEUeFM+5Fw9868JvLBQHTdDKz
+         I6tnw1m9pX4g5ezZBmg3atdBpE87nMIoqjBTQ6epi9ogehcxeBfcaqPI/D3g4WiQ3tba
+         JUTRgzhcUWDp/hxLC+b2zNxY5uQvt35E/uUVBAjWCCeEI9jqBYY8w3mmL6CGSJsJTCHs
+         045w==
+X-Gm-Message-State: ALyK8tKNDDAVDm2O58YJuduBj4sbLBg+NW4RT6qYM/sdIKh0hJBuuN80lSI3/ZpP7uIN1M1brVIzb76Wv4SN0Q==
+X-Received: by 10.36.73.70 with SMTP id z67mr76748499ita.33.1469218896799;
+ Fri, 22 Jul 2016 13:21:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqa8h9a1uj.fsf@gitster.mtv.corp.google.com>
+Received: by 10.107.10.97 with HTTP; Fri, 22 Jul 2016 13:21:36 -0700 (PDT)
+In-Reply-To: <xmqqwpkda71x.fsf@gitster.mtv.corp.google.com>
+References: <CAOiOGAfWfEy60qg3AbbPNqkvJDMsXBHY8ZSXBCKJYha_gDB8mw@mail.gmail.com>
+ <xmqqwpkda71x.fsf@gitster.mtv.corp.google.com>
+From:	Parker Moore <parkrmoore@gmail.com>
+Date:	Fri, 22 Jul 2016 13:21:36 -0700
+Message-ID: <CAOiOGAdV0+bg+=RAFgJyWFmdzZpB6KabGMN8Z57KTqqos3aTfg@mail.gmail.com>
+Subject: Re: [PATCH] contrib/persistent-https: use Git version for build label
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 22, 2016 at 12:51:00PM -0700, Junio C Hamano wrote:
+> We tend to avoid catting a single file only to pipe the result into a different command
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> This comes from b22520a3 (grep: allow -E and -n to be turned on by
-> >> default via configuration, 2011-03-30) back when we didn't have a
-> >> more generic grep.patternType configuration mechanism in v1.7.5
-> >> days, and it probably need to be deprecated to maintain our sanity.
-> >> ...
-> > I am not even sure we need to deprecate it. Once it becomes merely a
-> > historical synonym for "grep.patternType=extended" we can live with it
-> > indefinitely (and I do not think we need a deprecation period to go
-> > there; the existing behavior is simply buggy).
-> 
-> I grossed over an important detail.
-> 
-> Pretending as if grep.patternType=extended were given when we see
-> grep.extendedregexp=true and grep.patternType=basic is given when
-> grep.extendedregexp=false changes the behaviour in a way that can be
-> seen as the violation of (crazy) expectations t7810 makes.
-> 
-> Any user who depends on that crazy expectation will be broken by
-> such a change, even if we do not deprecate and remove the
-> configuration variable.
+You got it. Here's a new patch:
 
-Ah. Reading 84befcd (grep: add a grep.patternType configuration setting,
-2012-08-03) explains the rules, although I agree they are crazy (mostly
-because "basic" is different "fixed").
+From 432c0054a28a6c91b9fc1d9b53714061cb3d903c Mon Sep 17 00:00:00 2001
+From: Parker Moore <parkrmoore@gmail.com>
+Date: Wed, 20 Jul 2016 18:33:28 -0600
+Subject: [PATCH] contrib/persistent-https: use Git version for build label
 
-So I think there are two crazy things going on:
+The previous method simply used the UNIX timestamp of when the binary was
+built as its build label.
 
-  1. grep.extendedregexp takes precedence over the command-line (or at
-     least "--basic" on the command line).
+    $ make && ./git-remote-persistent-http -print_label
+    1469061546
 
-  2. The weird rules in 84befcd, where patternType=fixed has higher
-     precedence than extendedRegexp, but patternType=basic does not.
+This patch aims to align the label for this binary with the Git version
+contained in the GIT-VERSION-FILE. This gives a better sense of the version
+of the binary as it can be mapped to a particular revision or release of
+Git itself. For example:
 
-It seems like (1) is a bug, and one we should not have to worry about
-compatibility while fixing. It stems from not telling the difference
-between "the user asked for nothing, so we defaulted to basic" and "the
-user explicitly asked for basic".
+    $ make && ./git-remote-persistent-http -print_label
+    2.9.1.275.g75676c8
 
-I think (2) _is_ kind of crazy, and stems from similar confusion. I
-dunno. Part of me wants to say "I find it highly unlikely that anybody
-ever actually relied on this, and therefore it is OK to bring it closer
-to sanity without a deprecation period". But I admit that is just a gut
-feeling.
+Discussion of this patch is available on a related thread in the mailing
+list surrounding this package called "contrib/persistent-https: update
+ldflags syntax for Go 1.7+". The gmane.org link is:
+http://article.gmane.org/gmane.comp.version-control.git/299653/
 
-But even that is a lesser breakage than taking away grep.extendedRegexp
-entirely. Taking it away breaks anybody who uses it; tweaking (2) only
-breaks people who set both config variables. But why would anyone do
-that?
+Signed-off-by: Parker Moore <parkrmoore@gmail.com>
+---
+ contrib/persistent-https/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
--Peff
+diff --git a/contrib/persistent-https/Makefile
+b/contrib/persistent-https/Makefile
+index 92baa3b..9da1779 100644
+--- a/contrib/persistent-https/Makefile
++++ b/contrib/persistent-https/Makefile
+@@ -12,7 +12,7 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+
+-BUILD_LABEL=$(shell date +"%s")
++BUILD_LABEL=$(shell cut -d" " -f3 ../../GIT-VERSION-FILE)
+ TAR_OUT=$(shell go env GOOS)_$(shell go env GOARCH).tar.gz
+
+ all: git-remote-persistent-https git-remote-persistent-https--proxy \
+-- 
+2.9.2
