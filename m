@@ -2,114 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34AE1203C5
-	for <e@80x24.org>; Thu, 21 Jul 2016 21:37:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF1F9203E3
+	for <e@80x24.org>; Fri, 22 Jul 2016 00:37:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754557AbcGUVhp (ORCPT <rfc822;e@80x24.org>);
-	Thu, 21 Jul 2016 17:37:45 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48300 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754525AbcGUVhn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2016 17:37:43 -0400
-Received: (qmail 29458 invoked by uid 102); 21 Jul 2016 21:37:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 21 Jul 2016 17:37:43 -0400
-Received: (qmail 579 invoked by uid 107); 21 Jul 2016 21:38:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 21 Jul 2016 17:38:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Jul 2016 17:37:40 -0400
-Date:	Thu, 21 Jul 2016 17:37:40 -0400
-From:	Jeff King <peff@peff.net>
-To:	larsxschneider@gmail.com
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH v1] convert: add test to demonstrate clean invocations
-Message-ID: <20160721213740.GB4604@sigill.intra.peff.net>
-References: <1469134747-26785-1-git-send-email-larsxschneider@gmail.com>
+	id S1752788AbcGVAhj (ORCPT <rfc822;e@80x24.org>);
+	Thu, 21 Jul 2016 20:37:39 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:34348 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752475AbcGVAhj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2016 20:37:39 -0400
+Received: by mail-io0-f181.google.com with SMTP id q83so92025028iod.1
+        for <git@vger.kernel.org>; Thu, 21 Jul 2016 17:37:38 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=lHZbYPye0IjBhtoHEayWXbeVCFRXFNhLo86nAlreVkI=;
+        b=pBgYSG2odAKbGqHnnyxkVz1ZtypyefbN1eB7M/PyyP6+gaGRVYVjALhvwZrEcT4OTp
+         i0Y0Fy31kieXhJLKQQhwgt9EDjha62fgFXBpjYBAWQL6ai8lYjL7Vi3ToUbCpxFfq4XX
+         dkQhSuXQLSPg8X1OQGAv/VaxK2ExLj2lXj/I3vK5GD2RGr0fBEmGDEgq+e3Xs76BzwEA
+         fprnh6doY+WYlMEJ138si2UrFctIbM/hn4raEFcSIakorKx3lRrXDKfD2h6a0gqKybSU
+         Ga3v3g25TMNz3fCvVZhKk/N1k9vx/3BSJ4vYkyJ/4ZxSX/kAjl6Vy/GvsIaWgwLhorZw
+         Lxfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=lHZbYPye0IjBhtoHEayWXbeVCFRXFNhLo86nAlreVkI=;
+        b=HLjqk+QM3SH/x3dybB+Pjjml3SKLU3pl1Imf89vIceo6pR7gp3FiwQ0VrqwY7EoA6n
+         oO811p8Lx5QrDlGia1yXXw9O2clDzj4DVRb5YdvWF52vm4dZpxA2NYPaLKn4Tqo2A/mx
+         OBz0F6V9bVX+UknbYJS9mANxk4vlOFl0qMR3tRRXQk6jCm0QvjUFQconzzs2l6lwZN7r
+         ndfKfave9+L9gW0bc9+Jnm/Pk9LcJazudwmJnvNAIih5S06vLu0MEAy2RGUkSO1Pjrhv
+         dHKP1rM//e9Ejf6OZseIlKMLp+fpEfGonJF3/Ju/P1tPFUTLaSFMrK8qtapbqD/5YLqy
+         sNMg==
+X-Gm-Message-State: AEkoouu/+8ZqW8rhf2Ec4MiAU8kAY10x5AY3kWJQXI8zxIU9UcFZoyGXHkUP6AQbvhBMmiscdp8paUNFB6o4guk2
+X-Received: by 10.107.174.99 with SMTP id x96mr1505806ioe.76.1469147858044;
+ Thu, 21 Jul 2016 17:37:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1469134747-26785-1-git-send-email-larsxschneider@gmail.com>
+Received: by 10.107.128.66 with HTTP; Thu, 21 Jul 2016 17:37:37 -0700 (PDT)
+In-Reply-To: <CAGZ79kZB8U+ERNeYpZ-i7Ldip7xbz0ND53g4bzMkzFC3pnyv+w@mail.gmail.com>
+References: <CACsJy8ADRWNL3FR2TtWShviT4Lc4m1xaY8VOPP26Foyq+_A-3g@mail.gmail.com>
+ <20160720172419.25473-1-pclouds@gmail.com> <20160720172419.25473-4-pclouds@gmail.com>
+ <CAGZ79kZB8U+ERNeYpZ-i7Ldip7xbz0ND53g4bzMkzFC3pnyv+w@mail.gmail.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Thu, 21 Jul 2016 17:37:37 -0700
+Message-ID: <CAGZ79kZqHpnCKbcjqPUUtc2jS_HM4FAkyprd3L+y8-z_eVa7cg@mail.gmail.com>
+Subject: Re: [PATCH v4 3/4] submodule: support running in multiple worktree setup
+To:	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Max Kirillov <max@max630.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 21, 2016 at 10:59:07PM +0200, larsxschneider@gmail.com wrote:
+FYI: I started working on a series that decouples existence of a
+submodule from the URL
+as a preparatory series to this one. Then we can have the same URL in
+all working trees, but
+the existence is configured differently for each working tree.
 
-> From: Lars Schneider <larsxschneider@gmail.com>
-> 
-> If three files processed by a filter are added and committed to a
-> repository then I expect three clean invocations per Git operation.
-> Apparently Git invokes the clean process 12 times.
-> 
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
-> 
-> It's pretty late here and I hope do not miss something obvious... but
-> can anyone explain to me why the clean operation is executed 12 times
-> for 3 files?
+I'll try to send it out tomorrow.
 
-Hmm. If I run this under gdb and backtrace when we hit apply_filter(), I
-see:
-
-> +		rm -f run.count &&
-> +		git add . &&
-> +		test_line_count = 3 run.count
-
-This "git add" does invoke apply_filter() 3 times, which I'd expect.
-
-> +		rm -f run.count &&
-> +		git commit . -m "test commit" &&
-> +		test_line_count = 3 run.count
-
-This invokes apply_filter() six times. So something funny is going on
-already (I do get 12 dots, so checking apply_filter() seems to only
-cover half the invocations).
-
-Three of them are for re-adding the three files to the index again,
-since "git commit ." is asking us to do so. I'm surprised, though; I
-would have thought we could avoid doing so just based on the stat
-information. Maybe it's a racy-index thing because the files' mtimes are
-likely to be the same as the index?
-
-Indeed, if I stick a "sleep 1" between modifying the files and calling
-"git add", then the "git commit" invocation drops to only 6 invocations
-of the filter. So that explains half of it (though I'm still confused
-why index refreshing requires 6 and not 3; I guess it may be because
-"git commit ." works in a separate index, and we first refresh that
-index, and then refresh the "real" index again afterwards, when we could
-theoretically just copy the entries).
-
-The next three are to show the final diffstat after the commit
-completes. It looks like the "should we reuse the worktree file?"
-optimization in diff_populate_filespec() does not take into account
-whether we will have to convert the contents, and it probably should.
-The point is that sometimes mmap-ing the file contents is more efficient
-than zlib inflating the object from disk. But if we have to exec an
-extra process and read the whole object contents into a strbuf, that is
-probably not a win.
-
-Adding a "return 0" at the top of reuse_worktree_file() drops our 6 to
-3 (but obviously it should actually check the attributes).
-
-So of the 12 invocations:
-
-  - 3 must be for refreshing the index again, because the way the test
-    is written causes us to err on the side of caution when the mtimes
-    are the same (and also means that even if your test is fixed to
-    pass, it would racily fail when the system is under load)
-
-  - 3 are for the double-refresh when "git commit ---only" is used (and
-    "git commit ." implies "--only". Seems like there is room for
-    optimization there.
-
-  - 3 are for the tree-diff reusing the worktree files. This should be
-    dropped.
-
-  - The other 3, I'm not sure.
-
--Peff
+Thanks,
+Stefan
