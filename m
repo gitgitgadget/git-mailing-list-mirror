@@ -2,87 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0454203E2
-	for <e@80x24.org>; Fri, 22 Jul 2016 19:28:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67F5D203E2
+	for <e@80x24.org>; Fri, 22 Jul 2016 19:28:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752934AbcGVT2Q (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 15:28:16 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48780 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751688AbcGVT2P (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 15:28:15 -0400
-Received: (qmail 21059 invoked by uid 102); 22 Jul 2016 19:28:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 15:28:15 -0400
-Received: (qmail 8982 invoked by uid 107); 22 Jul 2016 19:28:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 15:28:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Jul 2016 15:28:11 -0400
-Date:	Fri, 22 Jul 2016 15:28:11 -0400
-From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Richard Soderberg <rsoderberg@gmail.com>, git@vger.kernel.org
-Subject: Re: git-prompt.sh incompatible with non-basic global grep.patternType
-Message-ID: <20160722192811.GA18079@sigill.intra.peff.net>
-References: <CAEvc1UQvXKtQCXvCmt-774A84--bkK-sb94BtFeqDDr0Gsf7qw@mail.gmail.com>
- <20160720134211.GA19359@sigill.intra.peff.net>
- <xmqqwpkgcbp9.fsf@gitster.mtv.corp.google.com>
- <20160720205207.GA578@sigill.intra.peff.net>
- <xmqqr3ala37o.fsf@gitster.mtv.corp.google.com>
+	id S1754563AbcGVT2Y (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 15:28:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62292 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754168AbcGVT2X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 15:28:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 29FCD2C885;
+	Fri, 22 Jul 2016 15:28:22 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JhngGq9lEtIyI0RvX1DGSn9q+f4=; b=afVItu
+	j5JD6Grb+qAZyLXRtE5z583c6vhuqn9g8MLUc4sfVR+Jyx9eEq22ujg53VFmAUYA
+	EgupWCuk+Nu9Rv7DgkiRQKxvVZ3UylIzYcJdTRdIPVXzqU/Tv4ftW1NcBQlFq4Yu
+	KbM/imNwmScDsI7a1fpOxX8N09MZ0HJScfb8Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nRYUI0jWqu1xsY+WID4Kt602FqEe+lwk
+	NTP1+jIKBtJ6nuO9wtbZ+q2lQki2+zlmvBL92aqOeyaqqO3ZkiAzJiUVhDed4KEa
+	mEIMg1eQ3NE7KaMEu227EwF8dHEJkg7KsIfpIRKNw19otDtQyTlage2yZIn1Az25
+	3quvcv4Ld8E=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 219092C884;
+	Fri, 22 Jul 2016 15:28:22 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A16D02C883;
+	Fri, 22 Jul 2016 15:28:21 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Johannes Sixt <j6t@kdbg.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	git-for-windows <git-for-windows@googlegroups.com>
+Subject: Re: [PATCH ew/daemon-socket-keepalive] Windows: add missing definition of ENOTSOCK
+References: <28dbe3b0-7a16-1b87-3d59-b8c981fead7c@kdbg.org>
+	<alpine.DEB.2.20.1607221020520.14111@virtualbox>
+Date:	Fri, 22 Jul 2016 12:28:19 -0700
+In-Reply-To: <alpine.DEB.2.20.1607221020520.14111@virtualbox> (Johannes
+	Schindelin's message of "Fri, 22 Jul 2016 10:21:19 +0200 (CEST)")
+Message-ID: <xmqqmvl9a2wc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqr3ala37o.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7378D26C-5042-11E6-9386-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 22, 2016 at 12:21:31PM -0700, Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> One thing that I noticed is that there is this strange field
-> in grep_opt called .extended_regexp_option; it only is set from the
-> boolean configuration grep.extendedregexp and worse yet it takes
-> precedence over the command line option or grep.patternType, e.g.
-> t7810-grep expects crazy things like these:
-> 
->  * "git -c grep.extendedregexp=true -c grep.patterntype=basic grep"
->    wants to be like "git grep -E"
-> 
->  * "git -c grep.extendedregexp=false -c grep.patterntype=extended grep"
->    wants to be like "git grep -G"
-> 
-> This comes from b22520a3 (grep: allow -E and -n to be turned on by
-> default via configuration, 2011-03-30) back when we didn't have a
-> more generic grep.patternType configuration mechanism in v1.7.5
-> days, and it probably need to be deprecated to maintain our sanity.
-> I.e. when we see the configuration used, first we warn the user and
-> set grep.patternType to extended instead, and then eventually error
-> out in a backward-compatibility breaking release of Git we will make
-> in some future date, together with things like other compatibility
-> breaking topics like ex/deprecate-empty-pathspec-as-match-all.
-> 
-> But that is a separate topic after this fix goes in anyway.
+> Hi Hannes,
+>
+> On Thu, 21 Jul 2016, Johannes Sixt wrote:
+>
+>> The previous commit introduced the first use of ENOTSOCK. This macro is
+>> not available on Windows. Define it as WSAENOTSOCK because that is the
+>> corresponding error value reported by the Windows versions of socket
+>> functions.
+>
+> Thanks for catching this early.
 
-I am not even sure we need to deprecate it. Once it becomes merely a
-historical synonym for "grep.patternType=extended" we can live with it
-indefinitely (and I do not think we need a deprecation period to go
-there; the existing behavior is simply buggy).
+(is that an acked/reviewed-by?  it is OK if it is not).
 
-Not that I mind eventually removing it, if you want to go through the
-steps.
-
-> -- >8 --
-> From: Junio C Hamano <gitster@pobox.com>
-> Date: Fri, 22 Jul 2016 11:43:14 -0700
-> Subject: [PATCH] grep: further simplify setting the pattern type
-> [...]
-
-Thanks. This matches the cursory analysis I had done earlier, and the
-patch looks exactly as I had expected.
-
--Peff
+Yeah, thanks, both.
