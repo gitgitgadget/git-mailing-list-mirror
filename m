@@ -2,79 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C17D7203E2
-	for <e@80x24.org>; Fri, 22 Jul 2016 17:58:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3D02203E2
+	for <e@80x24.org>; Fri, 22 Jul 2016 18:10:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752391AbcGVR6j (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 13:58:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59516 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751621AbcGVR6i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 13:58:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D11E32DC83;
-	Fri, 22 Jul 2016 13:58:36 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ePXDerJQZFbmk6Z3Zn7i0PsBhCE=; b=TOl5pU
-	m6QV9A/M4NMp0eZ6czZ/uZh3b20kggygTHpx5efo906O3rzcO6/poQ/T+ei2sShq
-	icovfYUum/snhHQR7kGv20V3ZyAqjdCRyAQALs4vmYyVMaxtKSCBOfWpdpRxmHur
-	2OkMJHy8dunl2jciTR/TZoKjKPDXimzQAVFDw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UcoYlhQ6VaX/HAUnRuZLAtT6qWJ9TptD
-	sVPooTDRFdqcRHUXfPH39e+UIEHQcC71BXfCyLKzJHUZj2e9uyMH94CAqbKoLK4K
-	NkbXlxaQx0OXDGVnUzkClKaXQ6N4brMPL1parp2CxtDnPJcJyScTR6pN2zmVS+bF
-	48Kkba0TeVU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C9B7F2DC82;
-	Fri, 22 Jul 2016 13:58:36 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4EFBB2DC81;
-	Fri, 22 Jul 2016 13:58:36 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Parker Moore <parkrmoore@gmail.com>
-Cc:	git <git@vger.kernel.org>
-Subject: Re: [PATCH] contrib/persistent-https: use Git version for build label
-References: <CAOiOGAfWfEy60qg3AbbPNqkvJDMsXBHY8ZSXBCKJYha_gDB8mw@mail.gmail.com>
-Date:	Fri, 22 Jul 2016 10:58:34 -0700
-In-Reply-To: <CAOiOGAfWfEy60qg3AbbPNqkvJDMsXBHY8ZSXBCKJYha_gDB8mw@mail.gmail.com>
-	(Parker Moore's message of "Wed, 20 Jul 2016 19:00:00 -0600")
-Message-ID: <xmqqwpkda71x.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753367AbcGVSK2 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 14:10:28 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48751 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751795AbcGVSK2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 14:10:28 -0400
+Received: (qmail 17446 invoked by uid 102); 22 Jul 2016 18:10:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 14:10:27 -0400
+Received: (qmail 8156 invoked by uid 107); 22 Jul 2016 18:10:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 14:10:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Jul 2016 14:10:24 -0400
+Date:	Fri, 22 Jul 2016 14:10:24 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	larsxschneider@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH] diff: do not reuse worktree files that need "clean"
+ conversion
+Message-ID: <20160722181024.GA16595@sigill.intra.peff.net>
+References: <1469134747-26785-1-git-send-email-larsxschneider@gmail.com>
+ <20160721213740.GB4604@sigill.intra.peff.net>
+ <20160722152753.GA6859@sigill.intra.peff.net>
+ <xmqq60rxbmaf.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E98F5488-5035-11E6-8043-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq60rxbmaf.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Parker Moore <parkrmoore@gmail.com> writes:
+On Fri, Jul 22, 2016 at 10:44:08AM -0700, Junio C Hamano wrote:
 
-> diff --git a/contrib/persistent-https/Makefile
-> b/contrib/persistent-https/Makefile
-> index 92baa3be..8248269 100644
-> --- a/contrib/persistent-https/Makefile
-> +++ b/contrib/persistent-https/Makefile
-> @@ -12,7 +12,7 @@
->  # See the License for the specific language governing permissions and
->  # limitations under the License.
->
-> -BUILD_LABEL=$(shell date +"%s")
-> +BUILD_LABEL=$(shell cat ../../GIT-VERSION-FILE | cut -d" " -f3)
+> > diff --git a/diff.c b/diff.c
+> > index 7d03419..b43d3dd 100644
+> > --- a/diff.c
+> > +++ b/diff.c
+> > @@ -2683,6 +2683,13 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
+> >  	if (!FAST_WORKING_DIRECTORY && !want_file && has_sha1_pack(sha1))
+> >  		return 0;
+> >  
+> > +	/*
+> > +	 * Similarly, if we'd have to convert the file contents anyway, that
+> > +	 * makes the optimization not worthwhile.
+> > +	 */
+> > +	if (!want_file && would_convert_to_git(name))
+> > +		return 0;
+> 
+> The would_convert_to_git() function is not a free operation.  It
+> needs to prime the attribute stack, so it needs to open/read/parse a
+> few files ($GIT_DIR/info/attributes and .gitattributes at least, and
+> more if your directory hierarchy is deep) on the filesystem.  The
+> cost is amortized across paths, but we do not even enable the
+> optimization if we have to pay the cost of reading the index
+> ourselves.
 
-We tend to avoid catting a single file only to pipe the result into
-a different command, so I'd rewrite this like so:
+Yeah, I almost commented on that, and its position in the function, but
+forgot to.
 
-    BUILD_LABEL=$(shell cut -d" " -f3 ../../GIT-VERSION-FILE)
+The only code path which will trigger this is diff_populate_filespec.
+After reuse_worktree_file() says "yes, we can reuse", we drop into a
+conditional that will end in us calling convert_to_git() anyway, which
+will do the same lookup. We don't need to cache, because the expensive
+parts of the attribute-lookup are already cached for us by the attribute
+code.
 
-while queuing.
+So my initial thought was to put it at the end of reuse_worktree_file(),
+where it would have the least impact. If we find we cannot reuse the
+file, then we would skip both this new attr lookup and the one in
+diff_populate_filespec().
 
-Thanks.
+But in practice, I think we'll already have cached those attrs before we
+even hit this function, because we'll hit the userdiff_find_by_path()
+code earlier in the diff process (e.g., to see if it's binary, if we
+need to textconv, etc). Those look for different attributes, but I think
+the expensive bits (finding, opening, reading attribute files) are
+cached across all lookups.
+
+So I think we actually _can_ think of would_convert_to_git() as
+basically free. Or as free as other efficient-lookup functions we call
+like cache_name_pos(). And so I moved it further up in the function,
+where it lets us avoid doing more out-of-process work (like calling
+lstat() so we can ce_match_stat() on the result).
+
+Possibly it should go after the cache_name_pos() call, though. That's
+likely to be less expensive than the actual walk of the attr tree.
+
+> I suspect that we may be better off disabling this optimization if
+> we need to always call the helper.
+
+The thought "does this tree reuse even speed things up enough to justify
+its complexity" definitely crossed my mind. It's basically swapping
+open/mmap for zlib inflating the content.
+
+But I do think it helps in the "want_file" case (i.e., when we are
+writing out a tempfile for an external command via prepare_temp_file()).
+There it helps us omit writing a tempfile to disk entirely, including
+any possible conversion.
+
+-Peff
