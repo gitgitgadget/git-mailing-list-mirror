@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14F2020195
-	for <e@80x24.org>; Fri, 22 Jul 2016 12:25:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 648BC20195
+	for <e@80x24.org>; Fri, 22 Jul 2016 12:25:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754026AbcGVMZb (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 08:25:31 -0400
-Received: from mout.gmx.net ([212.227.15.18]:54940 "EHLO mout.gmx.net"
+	id S1754039AbcGVMZf (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 08:25:35 -0400
+Received: from mout.gmx.net ([212.227.15.18]:54635 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753981AbcGVMZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 08:25:29 -0400
+	id S1753981AbcGVMZd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 08:25:33 -0400
 Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LiDnn-1avek03qWx-00nTky; Fri, 22 Jul 2016 14:25:20
+ ESMTPSA (Nemesis) id 0MUZG7-1bqnlX38YV-00RG1p; Fri, 22 Jul 2016 14:25:24
  +0200
-Date:	Fri, 22 Jul 2016 14:25:16 +0200 (CEST)
+Date:	Fri, 22 Jul 2016 14:25:22 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
@@ -28,78 +28,281 @@ cc:	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
 	Duy Nguyen <pclouds@gmail.com>,
 	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v4 06/16] merge_recursive: abort properly upon errors
+Subject: [PATCH v4 07/16] merge-recursive: avoid returning a wholesale
+ struct
 In-Reply-To: <cover.1469187652.git.johannes.schindelin@gmx.de>
-Message-ID: <26f12ac5a5b8e722d81c782b32585531521c98d4.1469187653.git.johannes.schindelin@gmx.de>
+Message-ID: <6a6b5421c8c95177b96b451abc972745e16585c9.1469187653.git.johannes.schindelin@gmx.de>
 References: <cover.1467902082.git.johannes.schindelin@gmx.de> <cover.1469187652.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:mpy6mySIqZj8wXrAkpVG+cOPaKfqGZEQU3/A/F11A2FISbH1RZe
- 6bHun0XSmnbRngE/ktmCRK09JfTfJMr/9uK0Qrk+pAJ13LFQWm92mMNiOEmHbdWbivq3RCY
- FbDLMEbfz6rxrKxtwrBrsEcfzcMnhilBqP5/5RfA2uxJAPVWfsIL8ybCuOwhz+PkcZPz5Ih
- W2fO8h55c8JhU6h+GdXgw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:gauwNRacNk8=:HPoLX+vA2xf7fbuZxFWrWy
- RpFO0BwI2n46hcee6hW6Vq8Wa7U4T0kZoUYHu2is67Qe7HOhhCQbi35GQY4qgqUTo4/zsKXot
- L6JEmboy6rjGMpWJwGavpQCCUSo6WjzpTWrBjFIeoxiT+us9J2z9RNucRuN+rUOCiarN/f7On
- +Y7/yel1H2FIaslEnqa7tl4tLJbvvWPkyLF/04dNC6KY1MJTb4MmyTOjQ1odN3s64gZO5Hml+
- Wz3PmcaTZJPepKvSdd1lJq6Ze+6YMy9TzDjYSXcLpts5pj+tC0HcnZmD/cNes5DkmpVM/pBU1
- iEero3vcJV09Mzcq/VgJoEzzq6Z/GW39wkBynQy2BIAvMTZKMBxYiPaNcJt/Nqr6q4enACOHf
- f4uQQlIRqmPdaK4ONnwFbo2V58X9Em9hf2LuRNnURuECk9LDZOnulIMKKZDRw1F/j0WbkqgHK
- BOK1pqWICgfjIdv2bzUnA8W6Z8YaAETsIz5Kz/SlHXFGH1bR1ob2q4S9uiAXlJ+F62qE6Z0mW
- spVuLXLvwCXfhBSXWWdlJQAUNzw1K1aNh0vFcdyD54U3MkS7bUJNUkACg8qsRBPWlC1MacgN4
- QHy2E09Aq6z2VOMvcK3H7nX1Bz/bHRvK7dhYv+fbAcRzPWqq6/w9mJRih794+JOOU8sjgVw1s
- 4gD/46l4YF6Vu0aAkcE9pN/gCBzU6/ZH5uRU72NLLDLwlUkAqkAYpolbOxG5/wORtZDXzZuMq
- 39iom4afa4u79+YO0LGzn/P6KcmD79b0l23XfVLBH7DMn/DbLxA4fpmC6LvrCFpJvbDd28JAG
- MPZM5W+
+X-Provags-ID: V03:K0:uVJeyJvjQNJyXZrJUkqiqWMu+PWwKTzR1d9t+JaBoohBVH+GrMK
+ LNrr3G33dUnrYeXCcIlXvbTcBpTncFMkJQx7atec3+WdrytIsNjXCXGLQProl6h3SPpmdVY
+ cIExzYFUacaEf6gzXQqzj3xF1eFcHbEYfC7GmxVhJ7bbOegiU4H4k041oQUcjO2LXMJ8kV4
+ mV6cNK+xs9vbNwpD2hIgg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:F6zuXEaXQo8=:KXWM9ye9bBJ8ppQ/bRIMxQ
+ 8Pg1HXI86enbDBX20HwlafysKL9ITu2F4KoX727OZFfRgcHBFPBCbJrUduI/y5S9tQJU9GfDf
+ ofbFnbDZN6hJlgp/76mEVzCiIbW0wGV4PxQgFdmUyU2NMFt9590Vtccgv4FNNqfkzOdRRCf0W
+ HjIpXWw42+Guj7D8tWPC9SpAy2ZpayNzSsAdBX3X2G/qp+inxibE5prKIE1IUUZ0hX4wlLyy8
+ UNPipHsRXdmq95Wl4C1h3xcvP53nvSh1sQl57apkLSD47Yp+fz0R2ZVoBlUmyxZW+vCa4upA1
+ Fs8Y+ilpX7dk2rRvk0UUA3uAqHoDogzRo8FXJvk5+revVni8Cx11DzcQlBzk4+sGnGlHZnVj6
+ XeymVSmAV56Lg7z75+lO5t6PJ0dR9WE0Z/dEJP09vYgLN2DVi35YyCt+Mm3FeAqgwaQzww21O
+ LpP5/+xD7eCVoJ52UyRkjRKWmBMJhx2/Jpw+owbUUBjiYobZCyziCiqJRF4x/BQ10hOS8mJje
+ 1NjLBoup3O+Xi1CcHAwFRcxxOQVREjxn9rsvT/NJgDfLKdk8oDtw3DcSnA4WMcEJYqp/XPUGa
+ UAAP/ybKNRQi0xnQBEJGuPaYOb6fFJTzCgGVzml7DXKoLxvE8cmcu+0iwsM0VkLTiig1si7mH
+ 1TU//7dVCfXKxMhvzzeHe+aX636HuDSUSMyBH5C9oqeT2Xye3gyTAICz/AqstTQSOzj6xfsTl
+ 9YUquCZD1il3YtpnpWefUimYTbB4TmTIDmA3Qo1gxmkY2KEavX9GPKoxUCl2qgZNMKKbFQmpj
+ /zds4SB
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-There are a couple of places where return values indicating errors
-are ignored. Let's teach them manners.
+It is technically allowed, as per C89, for functions' return type to
+be complete structs (i.e. *not* just pointers to structs).
+
+However, it was just an oversight of this developer when converting
+Python code to C code in 6d297f8 (Status update on merge-recursive in
+C, 2006-07-08) which introduced such a return type.
+
+Besides, by converting this construct to pass in the struct, we can now
+start returning a value that can indicate errors in future patches. This
+will help the current effort to libify merge-recursive.c.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- merge-recursive.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ merge-recursive.c | 106 ++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 56 insertions(+), 50 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index dc3182b..2d4cb80 100644
+index 2d4cb80..e1cea96 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1949,8 +1949,9 @@ int merge_recursive(struct merge_options *o,
- 		saved_b2 = o->branch2;
- 		o->branch1 = "Temporary merge branch 1";
- 		o->branch2 = "Temporary merge branch 2";
--		merge_recursive(o, merged_common_ancestors, iter->item,
--				NULL, &merged_common_ancestors);
-+		if (merge_recursive(o, merged_common_ancestors, iter->item,
-+				    NULL, &merged_common_ancestors) < 0)
-+			return -1;
- 		o->branch1 = saved_b1;
- 		o->branch2 = saved_b2;
- 		o->call_depth--;
-@@ -1966,6 +1967,8 @@ int merge_recursive(struct merge_options *o,
- 	o->ancestor = "merged common ancestors";
- 	clean = merge_trees(o, h1->tree, h2->tree, merged_common_ancestors->tree,
- 			    &mrtree);
-+	if (clean < 0)
-+		return clean;
+@@ -885,47 +885,47 @@ static int merge_3way(struct merge_options *o,
+ 	return merge_status;
+ }
+ 
+-static struct merge_file_info merge_file_1(struct merge_options *o,
++static int merge_file_1(struct merge_options *o,
+ 					   const struct diff_filespec *one,
+ 					   const struct diff_filespec *a,
+ 					   const struct diff_filespec *b,
+ 					   const char *branch1,
+-					   const char *branch2)
++					   const char *branch2,
++					   struct merge_file_info *result)
+ {
+-	struct merge_file_info result;
+-	result.merge = 0;
+-	result.clean = 1;
++	result->merge = 0;
++	result->clean = 1;
+ 
+ 	if ((S_IFMT & a->mode) != (S_IFMT & b->mode)) {
+-		result.clean = 0;
++		result->clean = 0;
+ 		if (S_ISREG(a->mode)) {
+-			result.mode = a->mode;
+-			oidcpy(&result.oid, &a->oid);
++			result->mode = a->mode;
++			oidcpy(&result->oid, &a->oid);
+ 		} else {
+-			result.mode = b->mode;
+-			oidcpy(&result.oid, &b->oid);
++			result->mode = b->mode;
++			oidcpy(&result->oid, &b->oid);
+ 		}
+ 	} else {
+ 		if (!oid_eq(&a->oid, &one->oid) && !oid_eq(&b->oid, &one->oid))
+-			result.merge = 1;
++			result->merge = 1;
+ 
+ 		/*
+ 		 * Merge modes
+ 		 */
+ 		if (a->mode == b->mode || a->mode == one->mode)
+-			result.mode = b->mode;
++			result->mode = b->mode;
+ 		else {
+-			result.mode = a->mode;
++			result->mode = a->mode;
+ 			if (b->mode != one->mode) {
+-				result.clean = 0;
+-				result.merge = 1;
++				result->clean = 0;
++				result->merge = 1;
+ 			}
+ 		}
+ 
+ 		if (oid_eq(&a->oid, &b->oid) || oid_eq(&a->oid, &one->oid))
+-			oidcpy(&result.oid, &b->oid);
++			oidcpy(&result->oid, &b->oid);
+ 		else if (oid_eq(&b->oid, &one->oid))
+-			oidcpy(&result.oid, &a->oid);
++			oidcpy(&result->oid, &a->oid);
+ 		else if (S_ISREG(a->mode)) {
+ 			mmbuffer_t result_buf;
+ 			int merge_status;
+@@ -937,64 +937,66 @@ static struct merge_file_info merge_file_1(struct merge_options *o,
+ 				die(_("Failed to execute internal merge"));
+ 
+ 			if (write_sha1_file(result_buf.ptr, result_buf.size,
+-					    blob_type, result.oid.hash))
++					    blob_type, result->oid.hash))
+ 				die(_("Unable to add %s to database"),
+ 				    a->path);
+ 
+ 			free(result_buf.ptr);
+-			result.clean = (merge_status == 0);
++			result->clean = (merge_status == 0);
+ 		} else if (S_ISGITLINK(a->mode)) {
+-			result.clean = merge_submodule(result.oid.hash,
++			result->clean = merge_submodule(result->oid.hash,
+ 						       one->path,
+ 						       one->oid.hash,
+ 						       a->oid.hash,
+ 						       b->oid.hash,
+ 						       !o->call_depth);
+ 		} else if (S_ISLNK(a->mode)) {
+-			oidcpy(&result.oid, &a->oid);
++			oidcpy(&result->oid, &a->oid);
+ 
+ 			if (!oid_eq(&a->oid, &b->oid))
+-				result.clean = 0;
++				result->clean = 0;
+ 		} else
+ 			die("BUG: unsupported object type in the tree");
+ 	}
+ 
+-	return result;
++	return 0;
+ }
+ 
+-static struct merge_file_info
+-merge_file_special_markers(struct merge_options *o,
++static int merge_file_special_markers(struct merge_options *o,
+ 			   const struct diff_filespec *one,
+ 			   const struct diff_filespec *a,
+ 			   const struct diff_filespec *b,
+ 			   const char *branch1,
+ 			   const char *filename1,
+ 			   const char *branch2,
+-			   const char *filename2)
++			   const char *filename2,
++			   struct merge_file_info *mfi)
+ {
+ 	char *side1 = NULL;
+ 	char *side2 = NULL;
+-	struct merge_file_info mfi;
++	int ret;
+ 
+ 	if (filename1)
+ 		side1 = xstrfmt("%s:%s", branch1, filename1);
+ 	if (filename2)
+ 		side2 = xstrfmt("%s:%s", branch2, filename2);
+ 
+-	mfi = merge_file_1(o, one, a, b,
+-			   side1 ? side1 : branch1, side2 ? side2 : branch2);
++	ret = merge_file_1(o, one, a, b,
++			   side1 ? side1 : branch1,
++			   side2 ? side2 : branch2, mfi);
+ 	free(side1);
+ 	free(side2);
+-	return mfi;
++	return ret;
+ }
+ 
+-static struct merge_file_info merge_file_one(struct merge_options *o,
++static int merge_file_one(struct merge_options *o,
+ 					 const char *path,
+ 					 const struct object_id *o_oid, int o_mode,
+ 					 const struct object_id *a_oid, int a_mode,
+ 					 const struct object_id *b_oid, int b_mode,
+ 					 const char *branch1,
+-					 const char *branch2)
++					 const char *branch2,
++					 struct merge_file_info *mfi)
+ {
+ 	struct diff_filespec one, a, b;
+ 
+@@ -1005,7 +1007,7 @@ static struct merge_file_info merge_file_one(struct merge_options *o,
+ 	a.mode = a_mode;
+ 	oidcpy(&b.oid, b_oid);
+ 	b.mode = b_mode;
+-	return merge_file_1(o, &one, &a, &b, branch1, branch2);
++	return merge_file_1(o, &one, &a, &b, branch1, branch2, mfi);
+ }
+ 
+ static void handle_change_delete(struct merge_options *o,
+@@ -1178,11 +1180,12 @@ static void conflict_rename_rename_1to2(struct merge_options *o,
+ 		struct merge_file_info mfi;
+ 		struct diff_filespec other;
+ 		struct diff_filespec *add;
+-		mfi = merge_file_one(o, one->path,
++		if (merge_file_one(o, one->path,
+ 				 &one->oid, one->mode,
+ 				 &a->oid, a->mode,
+ 				 &b->oid, b->mode,
+-				 ci->branch1, ci->branch2);
++				 ci->branch1, ci->branch2, &mfi))
++			return;
+ 		/*
+ 		 * FIXME: For rename/add-source conflicts (if we could detect
+ 		 * such), this is wrong.  We should instead find a unique
+@@ -1236,12 +1239,13 @@ static void conflict_rename_rename_2to1(struct merge_options *o,
+ 	remove_file(o, 1, a->path, o->call_depth || would_lose_untracked(a->path));
+ 	remove_file(o, 1, b->path, o->call_depth || would_lose_untracked(b->path));
+ 
+-	mfi_c1 = merge_file_special_markers(o, a, c1, &ci->ren1_other,
+-					    o->branch1, c1->path,
+-					    o->branch2, ci->ren1_other.path);
+-	mfi_c2 = merge_file_special_markers(o, b, &ci->ren2_other, c2,
+-					    o->branch1, ci->ren2_other.path,
+-					    o->branch2, c2->path);
++	if (merge_file_special_markers(o, a, c1, &ci->ren1_other,
++				       o->branch1, c1->path,
++				       o->branch2, ci->ren1_other.path, &mfi_c1) ||
++	    merge_file_special_markers(o, b, &ci->ren2_other, c2,
++				       o->branch1, ci->ren2_other.path,
++				       o->branch2, c2->path, &mfi_c2))
++		return;
  
  	if (o->call_depth) {
- 		*result = make_virtual_commit(mrtree, "merged tree");
-@@ -2022,6 +2025,9 @@ int merge_recursive_generic(struct merge_options *o,
- 	hold_locked_index(lock, 1);
- 	clean = merge_recursive(o, head_commit, next_commit, ca,
- 			result);
-+	if (clean < 0)
-+		return clean;
-+
- 	if (active_cache_changed &&
- 	    write_locked_index(&the_index, lock, COMMIT_LOCK))
- 		return error(_("Unable to write index."));
+ 		/*
+@@ -1464,12 +1468,13 @@ static int process_renames(struct merge_options *o,
+ 				       ren1_dst, branch2);
+ 				if (o->call_depth) {
+ 					struct merge_file_info mfi;
+-					mfi = merge_file_one(o, ren1_dst, &null_oid, 0,
+-							 &ren1->pair->two->oid,
+-							 ren1->pair->two->mode,
+-							 &dst_other.oid,
+-							 dst_other.mode,
+-							 branch1, branch2);
++					if (merge_file_one(o, ren1_dst, &null_oid, 0,
++							   &ren1->pair->two->oid,
++							   ren1->pair->two->mode,
++							   &dst_other.oid,
++							   dst_other.mode,
++							   branch1, branch2, &mfi))
++						return -1;
+ 					output(o, 1, _("Adding merged %s"), ren1_dst);
+ 					update_file(o, 0, &mfi.oid,
+ 						    mfi.mode, ren1_dst);
+@@ -1627,9 +1632,10 @@ static int merge_content(struct merge_options *o,
+ 		if (dir_in_way(path, !o->call_depth))
+ 			df_conflict_remains = 1;
+ 	}
+-	mfi = merge_file_special_markers(o, &one, &a, &b,
+-					 o->branch1, path1,
+-					 o->branch2, path2);
++	if (merge_file_special_markers(o, &one, &a, &b,
++				       o->branch1, path1,
++				       o->branch2, path2, &mfi))
++		return -1;
+ 
+ 	if (mfi.clean && !df_conflict_remains &&
+ 	    oid_eq(&mfi.oid, a_oid) && mfi.mode == a_mode) {
 -- 
 2.9.0.281.g286a8d9
 
