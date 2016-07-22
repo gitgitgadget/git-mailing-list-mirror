@@ -2,104 +2,261 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADE6A203E2
-	for <e@80x24.org>; Fri, 22 Jul 2016 21:40:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0E05203E3
+	for <e@80x24.org>; Fri, 22 Jul 2016 22:19:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752174AbcGVVkC (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 17:40:02 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55152 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751230AbcGVVkA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 17:40:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A649D2D9EF;
-	Fri, 22 Jul 2016 17:39:59 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iQ5+pL3VleEZqqJzHRZVTUA7PsQ=; b=YFIm6m
-	ZT5Wzi4sqKGtSWYDpCHgURq1WNmeL41CO7db+WTrGLc22CtlLDCw318XuxxrSfDA
-	ROd6NqYng2aRcl9Vm536xkWU6G7oH1wNEGwXPuEVX7CpFp2CI8hZf3Prs1V6BkLD
-	3CO3nJZ/MTAsM+H2Q8+xY7N20maJI0rRGBf8Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QHuRxK5lzbgNc7OLHBdW34gNC8i9BO0K
-	HdAkQv57l662moB/jLbkcGj2NL6kAegTguS9l6GQSDUNdSrYAOW/+fqFvlkUs6Xg
-	E/pEaZhy53HcezL/fv5DuEZpoouIEc5seggYAZMXg3+NWKSbvi4TevR23+iheSnH
-	eIGjpI8Vb9s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9D5322D9EE;
-	Fri, 22 Jul 2016 17:39:59 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 24FD62D9ED;
-	Fri, 22 Jul 2016 17:39:59 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	larsxschneider@gmail.com
-Cc:	git@vger.kernel.org, peff@peff.net, jnareb@gmail.com, tboegi@web.de
-Subject: Re: [PATCH v1 0/3] Git filter protocol
-References: <20160722154900.19477-1-larsxschneider@gmail.com>
-Date:	Fri, 22 Jul 2016 14:39:57 -0700
-In-Reply-To: <20160722154900.19477-1-larsxschneider@gmail.com>
-	(larsxschneider@gmail.com's message of "Fri, 22 Jul 2016 17:48:57
-	+0200")
-Message-ID: <xmqqshv18i8i.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752153AbcGVWTi (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 18:19:38 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:50122 "EHLO
+	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751373AbcGVWTi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 18:19:38 -0400
+Received: from glandium by zenigata with local (Exim 4.87)
+	(envelope-from <mh@glandium.org>)
+	id 1bQin3-0003tQ-5H; Sat, 23 Jul 2016 07:19:29 +0900
+Date:	Sat, 23 Jul 2016 07:19:29 +0900
+From:	Mike Hommey <mh@glandium.org>
+To:	git@vger.kernel.org
+Cc:	gitster@pobox.com, spearce@spearce.org, jrnieder@gmail.com
+Subject: Re: [PATCH/RFC] fast-import: Keep a fake pack window on the recently
+ written data
+Message-ID: <20160722221929.uusi4lowxow3ddmh@glandium.org>
+References: <20160703234439.8889-1-mh@glandium.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D6BDEBAC-5054-11E6-997D-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160703234439.8889-1-mh@glandium.org>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.6.1-neo (2016-06-11)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-larsxschneider@gmail.com writes:
+Hi,
 
-> The first two patches are cleanup patches which are not really necessary
-> for the feature.
+Any thoughts on the following?
 
-These two looked trivially good.
+Mike
 
-I think I can agree with what 3/3 wants to do in principle, but
-
- * "protocol" is not quite the right word.  The current way to
-   interact with clean and smudge filters can be considered using a
-   different "protocol", that conveys the data and the options via
-   the command line and pipe.  The most distinguishing feature that
-   differentiates the old way and the new style this change allows
-   is that it allows you to have a single instance of the process
-   running that can be reused?
-
- * I am not sure what's the pros-and-cons in forcing people writing
-   a single program that can do both cleaning and smudging.  You
-   cannot have only "smudge" side that uses the long-running process
-   while "clean" side that runs single-shot invocation with this
-   design, which I'd imagine would be a downside.  If you are going
-   to use a long-running process interface for both sides, this
-   design allows you to do it with fewer number of processes, which
-   may be an upside.
-
- * The way the serialized access to these long-running processes
-   work in 3/3 would make it harder or impossible to later
-   parallelize conversion?  I am imagining a far future where we
-   would run "git checkout ." using (say) two threads, one
-   responsible for active_cache[0..active_nr/2] and the other
-   responsible for the remainder.
-
-> You will notice that I do not check the exact number of "clean" filter
-> invocations in the tests.
-
-That is a good thing to do.  You shouldn't really care for the
-proper operation of the feature, reducing the number of them would
-be an independent topic (see the work of Peff earlier today), and we
-may even find a need to make _more_ calls for correctness (again,
-see the work of Peff earlier today -- to a person who wants to keep
-the number of requests to the attribute system low, the change may
-look like a regression, but it is necessary for the overall system;
-you may find a similar need to running "clean" more for some need of
-the overall system that you do not anticipate right now).
-
+On Mon, Jul 04, 2016 at 08:44:39AM +0900, Mike Hommey wrote:
+> The are many ways in which fast-import ends up calling gfi_unpack_entry,
+> and fery few work-arounds. I've patched fast-import for it to be smarter
+> in corner cases, allowing some additional work-arounds, but it's just
+> too easy to fall on gfi_unpack_entry again, so I abandonned that path.
+> 
+> The problem with gfi_unpack_entry is that if something has been written
+> to the pack after last time it was used, it closes all pack windows. On
+> OSX, this triggers munmap, which shows up in performance profiles.
+> 
+> To give an idea how bad this is, here is how long it takes to clone
+> https://hg.mozilla.org/mozilla-unified/ with the master branch of
+> git-cinnabar (which uses fast-import) on a mac mini: more than 5 hours.
+> I can't actually give the exact number, because it was killed, after
+> spending 2 hours importing 1.77M files and 3 hours importing 120k
+> manifests.
+> 
+> The same clone, with a variant of this patch, *finished* in 2 hours and
+> 10 minutes, spending 24 minutes importing the same 1.77M files and only
+> 13 minutes to cover the same 120k manifests. It took an hour and 20
+> minutes to cover the remaining 210k manifests. You can imagine how long
+> it would have taken without the patch if it hadn't been killed...
+> 
+> Now, this is proof of concept level. There are many things that are not
+> right with this patch, starting from the fact it doesn't handle
+> checkpoints, and isn't safe for every kind of integer overflows. Or
+> malloc'ating exactly packed_git_window_size bytes (which on 64-bits
+> systems, is 1GB), etc.
+> 
+> But it feels to me this kind of fake pack window is a cheap way to
+> counter the slowness of munmap on OSX, although the fact that it's a
+> hack around the pack code in sha1_file.c is not very nice. Maybe a
+> better start to fix the issue would be to add better interfaces to
+> the pack code to handle pack writers that can read at the same time.
+> 
+> Thoughts?
+> 
+> Past related discussions:
+>   $gmane/291717
+>   $gmane/273465
+> ---
+>  fast-import.c | 90 +++++++++++++++++++++++++++++++++++++++++------------------
+>  1 file changed, 63 insertions(+), 27 deletions(-)
+> 
+> diff --git a/fast-import.c b/fast-import.c
+> index c504ef7..4e26883 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -316,6 +316,7 @@ static struct atom_str **atom_table;
+>  static struct pack_idx_option pack_idx_opts;
+>  static unsigned int pack_id;
+>  static struct sha1file *pack_file;
+> +static struct pack_window *pack_win;
+>  static struct packed_git *pack_data;
+>  static struct packed_git **all_packs;
+>  static off_t pack_size;
+> @@ -862,6 +863,39 @@ static struct tree_content *dup_tree_content(struct tree_content *s)
+>  	return d;
+>  }
+>  
+> +static void _sha1write(struct sha1file *f, const void *buf, unsigned int count)
+> +{
+> +	sha1write(f, buf, count);
+> +	/* Always last used */
+> +	pack_win->last_used = -1;
+> +	pack_win->inuse_cnt = -1;
+> +
+> +	pack_data->pack_size += count;
+> +
+> +	if (packed_git_window_size - pack_win->len >= count) {
+> +		memcpy(pack_win->base + pack_win->len - 20, buf, count);
+> +		pack_win->len += count;
+> +	} else {
+> +		struct pack_window *cursor = NULL;
+> +		/* We're sliding the window, so we don't need to memcpy
+> +		 * everything. */
+> +		pack_win->offset += ((pack_win->len - 20 + count)
+> +			 / packed_git_window_size) * packed_git_window_size;
+> +		pack_win->len = count % packed_git_window_size -
+> +			(packed_git_window_size - pack_win->len);
+> +		memcpy(pack_win->base, buf + count - pack_win->len + 20,
+> +		       pack_win->len - 20);
+> +
+> +		/* Ensure a pack window on the data before that, otherwise,
+> +		 * use_pack() may try to create a window that overlaps with
+> +		 * this one, and that won't work because it won't be complete. */
+> +		sha1flush(f);
+> +		use_pack(pack_data, &cursor,
+> +			 pack_win->offset - packed_git_window_size, NULL);
+> +		unuse_pack(&cursor);
+> +	}
+> +}
+> +
+>  static void start_packfile(void)
+>  {
+>  	static char tmp_file[PATH_MAX];
+> @@ -873,15 +907,22 @@ static void start_packfile(void)
+>  			      "pack/tmp_pack_XXXXXX");
+>  	FLEX_ALLOC_STR(p, pack_name, tmp_file);
+>  	p->pack_fd = pack_fd;
+> +	p->pack_size = 20;
+>  	p->do_not_close = 1;
+>  	pack_file = sha1fd(pack_fd, p->pack_name);
+>  
+> +	p->windows = pack_win = xcalloc(1, sizeof(*p->windows));
+> +	pack_win->offset = 0;
+> +	pack_win->len = 20;
+> +	pack_win->base = xmalloc(packed_git_window_size);
+> +	pack_win->next = NULL;
+> +
+>  	hdr.hdr_signature = htonl(PACK_SIGNATURE);
+>  	hdr.hdr_version = htonl(2);
+>  	hdr.hdr_entries = 0;
+> -	sha1write(pack_file, &hdr, sizeof(hdr));
+> -
+>  	pack_data = p;
+> +	_sha1write(pack_file, &hdr, sizeof(hdr));
+> +
+>  	pack_size = sizeof(hdr);
+>  	object_count = 0;
+>  
+> @@ -954,10 +995,25 @@ static void unkeep_all_packs(void)
+>  static void end_packfile(void)
+>  {
+>  	static int running;
+> +	struct pack_window *win, *prev;
+>  
+>  	if (running || !pack_data)
+>  		return;
+>  
+> +	/* Remove the fake pack window first */
+> +	for (prev = NULL, win = pack_data->windows; win;
+> +	     prev = win, win = win->next) {
+> +		if (win != pack_win)
+> +			continue;
+> +		if (prev)
+> +			prev->next = win->next;
+> +		else
+> +			pack_data->windows = win->next;
+> +		break;
+> +	}
+> +	free(pack_win->base);
+> +	free(pack_win);
+> +
+>  	running = 1;
+>  	clear_delta_base_cache();
+>  	if (object_count) {
+> @@ -1122,22 +1178,22 @@ static int store_object(
+>  		e->depth = last->depth + 1;
+>  
+>  		hdrlen = encode_in_pack_object_header(OBJ_OFS_DELTA, deltalen, hdr);
+> -		sha1write(pack_file, hdr, hdrlen);
+> +		_sha1write(pack_file, hdr, hdrlen);
+>  		pack_size += hdrlen;
+>  
+>  		hdr[pos] = ofs & 127;
+>  		while (ofs >>= 7)
+>  			hdr[--pos] = 128 | (--ofs & 127);
+> -		sha1write(pack_file, hdr + pos, sizeof(hdr) - pos);
+> +		_sha1write(pack_file, hdr + pos, sizeof(hdr) - pos);
+>  		pack_size += sizeof(hdr) - pos;
+>  	} else {
+>  		e->depth = 0;
+>  		hdrlen = encode_in_pack_object_header(type, dat->len, hdr);
+> -		sha1write(pack_file, hdr, hdrlen);
+> +		_sha1write(pack_file, hdr, hdrlen);
+>  		pack_size += hdrlen;
+>  	}
+>  
+> -	sha1write(pack_file, out, s.total_out);
+> +	_sha1write(pack_file, out, s.total_out);
+>  	pack_size += s.total_out;
+>  
+>  	e->idx.crc32 = crc32_end(pack_file);
+> @@ -1220,7 +1276,7 @@ static void stream_blob(uintmax_t len, unsigned char *sha1out, uintmax_t mark)
+>  
+>  		if (!s.avail_out || status == Z_STREAM_END) {
+>  			size_t n = s.next_out - out_buf;
+> -			sha1write(pack_file, out_buf, n);
+> +			_sha1write(pack_file, out_buf, n);
+>  			pack_size += n;
+>  			s.next_out = out_buf;
+>  			s.avail_out = out_sz;
+> @@ -1295,26 +1351,6 @@ static void *gfi_unpack_entry(
+>  {
+>  	enum object_type type;
+>  	struct packed_git *p = all_packs[oe->pack_id];
+> -	if (p == pack_data && p->pack_size < (pack_size + 20)) {
+> -		/* The object is stored in the packfile we are writing to
+> -		 * and we have modified it since the last time we scanned
+> -		 * back to read a previously written object.  If an old
+> -		 * window covered [p->pack_size, p->pack_size + 20) its
+> -		 * data is stale and is not valid.  Closing all windows
+> -		 * and updating the packfile length ensures we can read
+> -		 * the newly written data.
+> -		 */
+> -		close_pack_windows(p);
+> -		sha1flush(pack_file);
+> -
+> -		/* We have to offer 20 bytes additional on the end of
+> -		 * the packfile as the core unpacker code assumes the
+> -		 * footer is present at the file end and must promise
+> -		 * at least 20 bytes within any window it maps.  But
+> -		 * we don't actually create the footer here.
+> -		 */
+> -		p->pack_size = pack_size + 20;
+> -	}
+>  	return unpack_entry(p, oe->idx.offset, &type, sizep);
+>  }
+>  
+> -- 
+> 2.9.0.dirty
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
