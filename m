@@ -2,98 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,URIBL_RED shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CF96203E2
-	for <e@80x24.org>; Fri, 22 Jul 2016 19:50:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBC68203E2
+	for <e@80x24.org>; Fri, 22 Jul 2016 19:51:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105AbcGVTuQ (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 15:50:16 -0400
-Received: from mail-io0-f179.google.com ([209.85.223.179]:33342 "EHLO
-	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751751AbcGVTuO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 15:50:14 -0400
-Received: by mail-io0-f179.google.com with SMTP id 38so114398838iol.0
-        for <git@vger.kernel.org>; Fri, 22 Jul 2016 12:50:14 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=FdxUZB1yu4OgcItUKgsV5sxFZo0ZkPle0PjLB5YO3Gg=;
-        b=Wfnjis7ssYR0AMCtIXwCMmWp/Hhjw8fiAQ2t9Ob0RXCYmtynHKsvTGM1bbmyHkPC45
-         Crw/eK3goh9KWHJQ1nnz9fLprwmR80548oE9TfS/J7i9Rfv80uwUL18SeGSLcs+4cbNK
-         oc3q1O319/usY0zlJbK96nYf1akHVmjPMZYxTj7kVpcnqNyteTNBRzfuk+kHrdWxqkB6
-         EDGJJj05f/xt2BSrAzHKWnx4BpuulaYlDzwio3/II4UAGAp1yZNZZAJKSxzaYzVvw2mU
-         T77lQrhzIJeeD0Fx/pnzshHTVOD1xaGPmfYEi7a0/OKd+IRG79SQhywKLdb7M06YBB4z
-         Pp+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=FdxUZB1yu4OgcItUKgsV5sxFZo0ZkPle0PjLB5YO3Gg=;
-        b=BSQKW4LUKK96MgkIui0OmIbD6OtcgEUKrKyknCkIv+Yz8lnqppkBam4NJB6Ll32HLn
-         xstLuQ8+FhRlG5QejJDQSok3DzhfcenabqMmXzu9954MRXpobvBfTPsjIDL0pv1PCiJf
-         EVyrS8sYzpZRpEjvVraYSXNysYtsxpZQ/lmqy7lfgKqMC2zedZvMx500JjCWsvS+dVXa
-         R7t9s4fMB5NbW1Z1uu+EdIFhhouKvV2HvnyD8y/sE9ISQjvc7frHlnyTespI8ozTK1/k
-         yV18O2jnGSD6xmxh6KF7jDgehKq3ZohB35WsfEdSLcE58Nx8v1vSVZvOlSEnuqkeMQx7
-         Xk7g==
-X-Gm-Message-State: AEkooutxqiXf+PZfxzz8gQkBpvaOy1gXb707vUeondD3Wmw5986l3TLjhbCgaXVUp/g6HjHt6cLnxu4AoE+F76JO
-X-Received: by 10.107.144.10 with SMTP id s10mr6341750iod.165.1469217013440;
- Fri, 22 Jul 2016 12:50:13 -0700 (PDT)
+	id S1752182AbcGVTvG (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 15:51:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56714 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751619AbcGVTvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 15:51:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 065332E168;
+	Fri, 22 Jul 2016 15:51:03 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lgUoMLyxoHG3S85apcWNxo8G7kQ=; b=U56ipQ
+	Jaw/RFoYsEznB0fuNscBNuMRjdnj1JO2R3cjPn+r5C3NfH4DJoVV17Hw8PygaTkU
+	GCU8A57UCbgltUbJKf/S7SQusNGchnetk5AQvx1U2cGXGjGKY4DRrGN0VHnOs/NR
+	6akOFVdjrVfSTFsZD6XyM4kh8IfdJgcbxLcvQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YEHg5r6BW7xo0ChiJ4usQCU42GcnYImw
+	oisfBnCWChH4+AQMasWIP44QoBCFhd+KkQos+AuJc/DofXS8yLeSe8qBnhIJ+dgM
+	AtDeWPBHxPt3EUga1ZfTe6J5+JNVjMiIURFCCPzXUfkddRUx60C0P588aoLXsMXe
+	D28i4u0wQzM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F0D5C2E167;
+	Fri, 22 Jul 2016 15:51:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5E09B2E166;
+	Fri, 22 Jul 2016 15:51:02 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	Richard Soderberg <rsoderberg@gmail.com>, git@vger.kernel.org
+Subject: Re: git-prompt.sh incompatible with non-basic global grep.patternType
+References: <CAEvc1UQvXKtQCXvCmt-774A84--bkK-sb94BtFeqDDr0Gsf7qw@mail.gmail.com>
+	<20160720134211.GA19359@sigill.intra.peff.net>
+	<xmqqwpkgcbp9.fsf@gitster.mtv.corp.google.com>
+	<20160720205207.GA578@sigill.intra.peff.net>
+	<xmqqr3ala37o.fsf@gitster.mtv.corp.google.com>
+	<20160722192811.GA18079@sigill.intra.peff.net>
+Date:	Fri, 22 Jul 2016 12:51:00 -0700
+In-Reply-To: <20160722192811.GA18079@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 22 Jul 2016 15:28:11 -0400")
+Message-ID: <xmqqa8h9a1uj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Fri, 22 Jul 2016 12:50:13 -0700 (PDT)
-In-Reply-To: <xmqqeg6la2da.fsf@gitster.mtv.corp.google.com>
-References: <8c0e116b-b604-ee83-197a-538eedf6e0ea@kdbg.org>
- <4d40da99-2f66-a380-840f-1828dc5b9324@kdbg.org> <xmqqeg6la2da.fsf@gitster.mtv.corp.google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Fri, 22 Jul 2016 12:50:13 -0700
-Message-ID: <CAGZ79kZCt2iZNc7VkkcW1bTnwF9YrDi9zPi0p7=-7aDVe=0dzg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] submodule-helper: fix indexing in clone retry error
- reporting path
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9E866994-5045-11E6-B5DF-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 22, 2016 at 12:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
->
->> 'git submodule--helper update-clone' has logic to retry failed clones
->> a second time. For this purpose, there is a list of submodules to clone,
->> and a second list that is filled with the submodules to retry. Within
->> these lists, the submodules are identified by an index as if both lists
->> were just appended.
->>
->> This works nicely except when the second clone attempt fails as well. To
->> report an error, the identifying index must be adjusted by an offset so
->> that it can be used as an index into the second list. However, the
->> calculation uses the logical total length of the lists so that the result
->> always points one past the end of the second list.
->>
->> Pick the correct index.
->>
->> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
->> ---
->
-> Looks very similar to
->
->   http://public-inbox.org/git/20160721013923.17435-1-sbeller%40google.com/
->
-> but these two patch series looks more thorough.
->
-> I expect I'd queue these two instead, after seeing Acks from Stefan.
->
-> Thanks.
+Jeff King <peff@peff.net> writes:
 
-Sure. Please take these 2 patches instead of mine.
+>> This comes from b22520a3 (grep: allow -E and -n to be turned on by
+>> default via configuration, 2011-03-30) back when we didn't have a
+>> more generic grep.patternType configuration mechanism in v1.7.5
+>> days, and it probably need to be deprecated to maintain our sanity.
+>> ...
+> I am not even sure we need to deprecate it. Once it becomes merely a
+> historical synonym for "grep.patternType=extended" we can live with it
+> indefinitely (and I do not think we need a deprecation period to go
+> there; the existing behavior is simply buggy).
 
-Thanks,
-Stefan
+I grossed over an important detail.
+
+Pretending as if grep.patternType=extended were given when we see
+grep.extendedregexp=true and grep.patternType=basic is given when
+grep.extendedregexp=false changes the behaviour in a way that can be
+seen as the violation of (crazy) expectations t7810 makes.
+
+Any user who depends on that crazy expectation will be broken by
+such a change, even if we do not deprecate and remove the
+configuration variable.
+
+ grep.c | 4 ++--
+ grep.h | 1 -
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/grep.c b/grep.c
+index 394c856..7b1d423 100644
+--- a/grep.c
++++ b/grep.c
+@@ -73,9 +73,9 @@ int grep_config(const char *var, const char *value, void *cb)
+ 
+ 	if (!strcmp(var, "grep.extendedregexp")) {
+ 		if (git_config_bool(var, value))
+-			opt->extended_regexp_option = 1;
++			opt->pattern_type_option = GREP_PATTERN_ERE;
+ 		else
+-			opt->extended_regexp_option = 0;
++			opt->pattern_type_option = GREP_PATTERN_BRE;
+ 		return 0;
+ 	}
+ 
+diff --git a/grep.h b/grep.h
+index cee4357..fc36c2a 100644
+--- a/grep.h
++++ b/grep.h
+@@ -119,7 +119,6 @@ struct grep_opt {
+ 	int max_depth;
+ 	int funcname;
+ 	int funcbody;
+-	int extended_regexp_option;
+ 	int pattern_type_option;
+ 	char color_context[COLOR_MAXLEN];
+ 	char color_filename[COLOR_MAXLEN];
