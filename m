@@ -2,124 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFFA6203E2
-	for <e@80x24.org>; Fri, 22 Jul 2016 17:13:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6E59203E2
+	for <e@80x24.org>; Fri, 22 Jul 2016 17:15:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752188AbcGVRN4 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 13:13:56 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63530 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750957AbcGVRNz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 13:13:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id EA2602D6BC;
-	Fri, 22 Jul 2016 13:13:53 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PehSyk2Xr/JHk9O49VU5EkD6nlE=; b=geEDGD
-	LGiG+QUyQhazB9s0wj9KQQHVDdpMjG8BZ9Db5E6YmaabM8W7e1Ll5J8J4tb3vLye
-	K4NXhpz+kBTKuPpyFJ/cnb5nOgtXFCNK8y801HY6GntOEDCmjJEutuVcwZtlJYen
-	vBEkJzF/SmwxwHJkB/uUYPOuSPjQoL05k7v0U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=a6C1Dere0r4aiB5++a9kldTYhuxebNbI
-	fsKjAYFjpKdUQ0qIGYccX4FFRffzSARXbr90uWRVeWJ3MR23gW4gbWmCMVrCI6qf
-	zcMSMqYnv36lNM0gW4o0GC6ip8kpj2nRW+ixVLOMMcS7WltYJiUJAJyNfGZJ+80o
-	8phuR1kTBcU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E2A992D6BB;
-	Fri, 22 Jul 2016 13:13:53 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6C5932D6B9;
-	Fri, 22 Jul 2016 13:13:53 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Eric Wong <e@80x24.org>
-Cc:	git@vger.kernel.org
-Subject: Re: [RFC] git-svn: allow --version to work anywhere
-References: <20160720004734.GA19635@whir>
-Date:	Fri, 22 Jul 2016 10:13:51 -0700
-In-Reply-To: <20160720004734.GA19635@whir> (Eric Wong's message of "Wed, 20
-	Jul 2016 00:47:34 +0000")
-Message-ID: <xmqqeg6lbnow.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752228AbcGVRPq (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 13:15:46 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:34989 "EHLO
+	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751759AbcGVRPp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 13:15:45 -0400
+Received: by mail-io0-f177.google.com with SMTP id m101so110770945ioi.2
+        for <git@vger.kernel.org>; Fri, 22 Jul 2016 10:15:44 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=iugome-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KzY4pAV656V1hkqOWdVwP/A3nfAIRZLCzggWPoDa/Zo=;
+        b=Da/jTQGu/ZNNYm/433QyjyEwjLxIaYrQCE6xlTq05eBDC9IxAw7yCANnc6b1RQvz1n
+         on8KB7ryvQXuo+P37M0au9rR4RIdOLLv0TPQm8XDjd8Uhfw3bGO5S93P+ih5I3H/t6Yx
+         AzE9eeSRCNM9i85kdTT8s4KaumSDXyVfmD5cxDb6FjMap6Ss33D0d88NZ2gp7XXnqjce
+         LzIm49ip/9DjmszErmxeQcss9lXayKkqH+Ek0r4if3dvtcw79GAeI5V2ra71IwJx+Gaj
+         lMw5/OQYlBI5uAlnCnGOe1PCKfqPMVCo3rpvTpPvB3N+yOLkhX3JowqSqBlbKQfHkzUk
+         aH8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KzY4pAV656V1hkqOWdVwP/A3nfAIRZLCzggWPoDa/Zo=;
+        b=Yv1cA09GXVflhGtunMUm21Et0/f4XJnp4BPKdhrx8U2+U7u/IQTo3CorK9F0NprU6C
+         jDHhf64FELYpxiFSW3HpsrZ9QWzqUUjjtFwGV61StVioq+Ajvn7PE3AxRRitPCukM9qS
+         4ZjBKgfBaLm4pZsfUUeZ0H/O8RC3gm8SOnIJ4PkRDeO1wyaOkoLw58X0unH5PIEkdhOW
+         gF8zKsO6fVTYE101EAhydG0ubil3svUWRApl2dCUMnEr87ntXcsykcEpjSRmh9iyhbny
+         BJlH4qvCd5VjV96buCpjBvPjOH0IxRQqnNooJJHpqkpd2/8bGG3XqJt8ISlwQReG7EgW
+         FUMA==
+X-Gm-Message-State: AEkoousrMItp6qSK6KTAQxRuaZuXL18dgGEEL/fJjT6f3RiGHpUjZQPJzf90w3pyBMnSO7EzbqEFi7xRaBMa/A==
+X-Received: by 10.107.197.1 with SMTP id v1mr3716400iof.178.1469207744398;
+ Fri, 22 Jul 2016 10:15:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AA701E0A-502F-11E6-87A8-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.107.152.141 with HTTP; Fri, 22 Jul 2016 10:15:43 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1607220954470.14111@virtualbox>
+References: <010201560af48050-012ea887-a1e1-4d1b-82d3-4799ac7788bc-000000@eu-west-1.amazonses.com>
+ <20160721052625.GA31423@gmail.com> <alpine.DEB.2.20.1607211724430.14111@virtualbox>
+ <CAMaPC4JTerX7TSg5_M=DOztyaGUVd5_kK8cmTJuWrCekGgSodw@mail.gmail.com> <alpine.DEB.2.20.1607220954470.14111@virtualbox>
+From:	Brett Cundal <brett.cundal@iugome.com>
+Date:	Fri, 22 Jul 2016 10:15:43 -0700
+Message-ID: <CAMaPC4+rjr3bSkKcUFipDwW6es4y9Rgq7Z-3SPz0A7qLMw77Pw@mail.gmail.com>
+Subject: Re: [PATCH] git-subtree.sh: Use --allow-unrelated-histories when
+ splitting with --rejoin
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
+	Roberto Tyley <roberto.tyley@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+On 22 July 2016 at 01:11, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 
-> Checking the version of the installed SVN libraries should not
-> require a git repository at all.  This matches the behavior of
-> "git --version".
->
-> Add a test for "git svn help" for the same behavior while we're
-> at it, too.
->
-> Signed-off-by: Eric Wong <e@80x24.org>
-> ---
->   I'm hoping "cd /" in the test will always succeed;
->   but I suppose non-*nix systems might fail, here.
+> I know it feels good to get frustration off of your chest by ranting. I am
+> very sympathetic to that. Please note, however, that it puts the people
+> who are ready to help you immediately into a defensive corner. Probably
+> unintentional?
 
-How about digging a few levels of directory hierarchy, exporting
-GIT_CEILING_DIRECTORIES so that we won't find any repository and
-going there to run these tests?
+Shortest rant ever. :) Sorry if I caused any offense. It just seemed very odd to
+block multi-part MIME that happened to contain a text/html part in addition to
+text/plain, given that (AFAIK) the vast majority of email clients in
+recent years
+produce such a thing. Anyhow, off-topic... your list policy is your business.
 
->   And maybe a BOFH did "chmod 700 /"	:(
+> Back to the patch you wanted to submit: since this is an important bug
+> fix, I spent the time to clean it up. The only missing bit that requires
+> further effort from your side is that we need your Sign-off. See
+> https://github.com/git/git/blob/v2.9.2/Documentation/SubmittingPatches#L239-L291
+> for an explanation. Essentially, you are stating explicitly that you are
+> not legally prohibited from contributing this patch. If you can say that,
+> simply reply with a
 >
->   Anyways this is sitting in master of git://bogomips.org/git-svn.git
+>         Signed-off-by: Brett Cundal <brett.cundal@iugome.com>
 >
->  git-svn.perl             | 4 ++--
->  t/t9100-git-svn-basic.sh | 8 ++++++++
->  2 files changed, 10 insertions(+), 2 deletions(-)
->
-> diff --git a/git-svn.perl b/git-svn.perl
-> index f609e54..4d41d22 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -339,7 +339,7 @@ if ($cmd && $cmd =~ /(?:clone|init|multi-init)$/) {
->  			die "failed to open $ENV{GIT_DIR}: $!\n";
->  		$ENV{GIT_DIR} = $1 if <$fh> =~ /^gitdir: (.+)$/;
->  	}
-> -} else {
-> +} elsif ($cmd) {
->  	my ($git_dir, $cdup);
->  	git_cmd_try {
->  		$git_dir = command_oneline([qw/rev-parse --git-dir/]);
-> @@ -356,7 +356,7 @@ if ($cmd && $cmd =~ /(?:clone|init|multi-init)$/) {
->  
->  my %opts = %{$cmd{$cmd}->[2]} if (defined $cmd);
->  
-> -read_git_config(\%opts);
-> +read_git_config(\%opts) if $ENV{GIT_DIR};
->  if ($cmd && ($cmd eq 'log' || $cmd eq 'blame')) {
->  	Getopt::Long::Configure('pass_through');
->  }
-> diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
-> index 28082b1..10408d0 100755
-> --- a/t/t9100-git-svn-basic.sh
-> +++ b/t/t9100-git-svn-basic.sh
-> @@ -19,6 +19,14 @@ case "$GIT_SVN_LC_ALL" in
->  	;;
->  esac
->  
-> +test_expect_success 'git svn --version works anywhere' '
-> +	( cd / || exit 0; git svn --version )
-> +'
-> +
-> +test_expect_success 'git svn help works anywhere' '
-> +	( cd / || exit 0; git svn help )
-> +'
-> +
->  test_expect_success \
->      'initialize git svn' '
->  	mkdir import &&
+> We can take it from there by inserting it into the following patch:
+
+So, again I'll have to apologise... I should have submitted this as a bug
+report rather than a patch, since the ownership is not legally clear. Didn't
+even occur to me for such a trivial fix. If you can just treat this as
+a bug report
+at this point and 'reimplement' it, that would probably be the
+simplest thing for
+everyone... I guess this may be tricky since there are limited ways to possibly
+implement this, but for the same reason it would be impossible IMO for me or
+anyone else to legally claim authorship of it (but IANAL). If this is
+going to cause
+this fix to be jammed in limbo for all eternity, then let me know and
+I'll see what
+I can do to get the proper authorization.
+
+-- Brett
