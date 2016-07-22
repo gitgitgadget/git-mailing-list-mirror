@@ -6,142 +6,134 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C56A2203E2
-	for <e@80x24.org>; Fri, 22 Jul 2016 17:20:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C1D6203E2
+	for <e@80x24.org>; Fri, 22 Jul 2016 17:25:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752264AbcGVRUH (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 13:20:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51164 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751605AbcGVRUF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 13:20:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C19AE2CD28;
-	Fri, 22 Jul 2016 13:20:03 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=X3qOSM9jvFYIns67GJzaqxUkqX4=; b=VBA+kY
-	gyc8uhtO++l/UYes4UekKulx/z090CgQCVcr3u2cAuVLZEDmFtgmsN0OTYBmeTV8
-	maqa+w3gMjnhujsJgxYmZZlLIGDaAlr1fZmcKfB1HCXYOdv4SoIkOiLKnOaLXtTl
-	whgVaJIWz1L4Ki4USHPadXW8muAffAXZFZByI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Bvr+Na42sAuk19/dvnpxmldTY8oWsr7y
-	ANutHuHSC4M2AxIZidaLzqj+oxkY0YTYqqhG91zRj0y5tpKeyOi2x/RjYqP8I0ac
-	N8pCZz6SsyyjgXuxesiWbomK4UJVntOoI7Nf/n+Y0CfAE93bif5U2OK7gUC/+k46
-	qOZ3U6w6occ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B4E842CD27;
-	Fri, 22 Jul 2016 13:20:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D115B2CD25;
-	Fri, 22 Jul 2016 13:20:02 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Matthieu Moy <Matthieu.Moy@imag.fr>
-Cc:	git@vger.kernel.org, Thibault Durand <thibault.durand.28@gmail.com>
-Subject: Re: [RFC/PATCH] status: suggest 'git merge --abort' when appropriate
-References: <20160721125837.3127-1-Matthieu.Moy@imag.fr>
-Date:	Fri, 22 Jul 2016 10:19:59 -0700
-In-Reply-To: <20160721125837.3127-1-Matthieu.Moy@imag.fr> (Matthieu Moy's
-	message of "Thu, 21 Jul 2016 14:58:37 +0200")
-Message-ID: <xmqqa8h9bneo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752194AbcGVRZu (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 13:25:50 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:36819 "EHLO
+	mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752104AbcGVRZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 13:25:44 -0400
+Received: by mail-it0-f51.google.com with SMTP id f6so41827184ith.1
+        for <git@vger.kernel.org>; Fri, 22 Jul 2016 10:25:44 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=1+vPpm1bl0wjfyd/oEI5gypAl+zT3U6bW+VbG2MLxYE=;
+        b=JZnDJqsJUtb2AHV5bKsCEul41p0BwMTG2JixcEKtgYL/Zd82Yq/1bQn2K3NkRw+BYi
+         PNeQvN0TToIc5g3RruEihYyR6EF3QVc92kNPouIA1mgrZxbF8pQbpSgb7qLsBZE4yvDv
+         nnSuEO9uWjLgct3FYZVrMeuM+6mKAFsV5ITNCsU+zFIIqnRhPVu8P4j/Y8rwd2TKppZq
+         HlboPro9nHtoOJa6K387ctGZ3juuD5zMx25gTAXmSspclGgU+rg3N3b8eZWRYbMe2M8l
+         3YUslCVSCzs0csBvC0pTLGtd18sdtn5f/OFkb0g8bIZPVhPXRwDv7x5KrxA5r1lAjoOn
+         0Upw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=1+vPpm1bl0wjfyd/oEI5gypAl+zT3U6bW+VbG2MLxYE=;
+        b=k7D+/eQyHKk/Zxji9pBeZSsOF4tX+pjt6lpggz0VJ/v8fr0FIAL/p3lntDidIDb8ja
+         2+RLB7F631hToUYU2nevYjbSyEzoDa246PEFlQXxZ7Iqj7SPqOAxlEjxeAOh098r6ZOV
+         JxHsxdfCXgKy5sZiJ8CqRmJNHdPsK/2EOxLiJdil8MXUVkEG5adTutRIxGbMvVnU4jyv
+         D/em6Z16o6czWvSkjwzbe/OGZGpTg4xPtDHxUv9vVCW4FTapEJryzs4GlKjmpDavTOGj
+         fUzrGmq1fCCHcZgwwuGD9fJ9AvmEVvsItBnst/DiDjLx7zzcJz9HcPqdd881gQgs0I2n
+         NmqA==
+X-Gm-Message-State: ALyK8tK6I9Gq2k1NBvIfPNMCAM8qLWUsM4Ni4D99S5zfs7VKEhiKXOEbPSDlZqgmTRl+nLQ22x6Ywydi8yGy2JhD
+X-Received: by 10.36.228.138 with SMTP id o132mr67568671ith.49.1469208343376;
+ Fri, 22 Jul 2016 10:25:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 86A06EA2-5030-11E6-9BD9-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.128.66 with HTTP; Fri, 22 Jul 2016 10:25:42 -0700 (PDT)
+In-Reply-To: <CACsJy8CSnmnzDMGpMvvkhWRfJvp1L+pfOZ=eYp5JF0GWNH6D0Q@mail.gmail.com>
+References: <CACsJy8ADRWNL3FR2TtWShviT4Lc4m1xaY8VOPP26Foyq+_A-3g@mail.gmail.com>
+ <20160720172419.25473-1-pclouds@gmail.com> <20160720172419.25473-4-pclouds@gmail.com>
+ <CAGZ79kZB8U+ERNeYpZ-i7Ldip7xbz0ND53g4bzMkzFC3pnyv+w@mail.gmail.com> <CACsJy8CSnmnzDMGpMvvkhWRfJvp1L+pfOZ=eYp5JF0GWNH6D0Q@mail.gmail.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Fri, 22 Jul 2016 10:25:42 -0700
+Message-ID: <CAGZ79ka-isR4DL7ZqOp8cXE1bmUOnd33yu=pZZHaqNmPWH3PYQ@mail.gmail.com>
+Subject: Re: [PATCH v4 3/4] submodule: support running in multiple worktree setup
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Max Kirillov <max@max630.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
-
-> We already suggest 'git rebase --abort' during a conflicted rebase.
-> Similarly, suggest 'git merge --abort' during conflict resolution on
-> 'git merge'.
+On Fri, Jul 22, 2016 at 10:09 AM, Duy Nguyen <pclouds@gmail.com> wrote:
 >
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
+> I just quickly glanced through the rest of this mail because, as a
+> submodule ignorant, it's just mumbo jumbo to me. But what I see here
+> is, there may be problems if we choose to share some submodule info,
+> but I haven't seen any good thing from sharing any submodule info at
+> all.
 
-It wasn't immediately obvious without the context that the changed
-code will trigger only during a merge, and not just any other case
-where we have unmerged index entries.  show_merge_in_progress() is
-only called when s.merge_in_progress is set, which in turn is set
-only when MERGE_HEAD is there, so we are good here.
+Okay. :(
 
-Will apply; thanks.
+I assume the sharing is beneficial. (As a work-tree ignorant) I thought
+we had this main work tree, which also holds the repository, whereas
+the other working trees have a light weight implementation (e.g. just
+a .git file pointing back to the main working tree/git dir).
 
->  t/t7060-wtstatus.sh    | 4 ++++
->  t/t7512-status-help.sh | 1 +
->  wt-status.c            | 7 +++++--
->  3 files changed, 10 insertions(+), 2 deletions(-)
+So in a way my mental model is more like the config sharing here:
+You can configure things in ~/.gitconfig for example that have effects
+on more than one repo. Similarly you would want to configure things
+in one repo, that has effect on more than one working tree?
+
+And my assumption was to have the repository specific parts be shared,
+whereas the working tree specific things should not be shared.
+
+By working tree specific I strongly mean:
+
+* existence in the working tree
+* the checked out sha1
+* submodule.$name.path
+
+By repository specific I strongly mean:
+
+* the submodule URL
+
+I am not sure about:
+
+* submodule.$name.update, submodule.$name.ignore,
+   submodule.$name.branch,
+  These have to be able to be different across working trees, but do we
+  require them to be set for each working tree individually?  I thought a
+  repo wide setup with defaults may be ok?
+
 >
-> diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
-> index 44bf1d8..4d17363 100755
-> --- a/t/t7060-wtstatus.sh
-> +++ b/t/t7060-wtstatus.sh
-> @@ -34,6 +34,7 @@ test_expect_success 'M/D conflict does not segfault' '
->  On branch side
->  You have unmerged paths.
->    (fix conflicts and run "git commit")
-> +  (use "git merge --abort" to abort the merge)
->  
->  Unmerged paths:
->    (use "git add/rm <file>..." as appropriate to mark resolution)
-> @@ -138,6 +139,7 @@ test_expect_success 'status when conflicts with add and rm advice (deleted by th
->  On branch master
->  You have unmerged paths.
->    (fix conflicts and run "git commit")
-> +  (use "git merge --abort" to abort the merge)
->  
->  Unmerged paths:
->    (use "git add/rm <file>..." as appropriate to mark resolution)
-> @@ -171,6 +173,7 @@ test_expect_success 'status when conflicts with add and rm advice (both deleted)
->  On branch conflict_second
->  You have unmerged paths.
->    (fix conflicts and run "git commit")
-> +  (use "git merge --abort" to abort the merge)
->  
->  Unmerged paths:
->    (use "git add/rm <file>..." as appropriate to mark resolution)
-> @@ -195,6 +198,7 @@ test_expect_success 'status when conflicts with only rm advice (both deleted)' '
->  On branch conflict_second
->  You have unmerged paths.
->    (fix conflicts and run "git commit")
-> +  (use "git merge --abort" to abort the merge)
->  
->  Changes to be committed:
->  
-> diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-> index 49d19a3..5c3db65 100755
-> --- a/t/t7512-status-help.sh
-> +++ b/t/t7512-status-help.sh
-> @@ -29,6 +29,7 @@ test_expect_success 'status when conflicts unresolved' '
->  On branch conflicts
->  You have unmerged paths.
->    (fix conflicts and run "git commit")
-> +  (use "git merge --abort" to abort the merge)
->  
->  Unmerged paths:
->    (use "git add <file>..." to mark resolution)
-> diff --git a/wt-status.c b/wt-status.c
-> index de62ab2..1f21b6a 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -948,9 +948,12 @@ static void show_merge_in_progress(struct wt_status *s,
->  {
->  	if (has_unmerged(s)) {
->  		status_printf_ln(s, color, _("You have unmerged paths."));
-> -		if (s->hints)
-> +		if (s->hints) {
->  			status_printf_ln(s, color,
-> -				_("  (fix conflicts and run \"git commit\")"));
-> +					 _("  (fix conflicts and run \"git commit\")"));
-> +			status_printf_ln(s, color,
-> +					 _("  (use \"git merge --abort\" to abort the merge)"));
-> +		}
->  	} else {
->  		s-> commitable = 1;
->  		status_printf_ln(s, color,
+> I can imagine long term you may want to just clone a submodule repo
+> once and share it across worktrees that use it, so maybe it's just me
+> not seeing things and this may be a step towards that.
+
+Just as Junio put it:
+> I agree that when a top-level superproject has multiple worktrees
+> these multiple worktrees may want to have the same submodule in
+> different states, but I'd imagine that they want to share the same
+> physical repository (i.e. $GIT_DIR/modules/$name of the primary
+> worktree of the superproject)---is everybody involved in the
+> discussion share this assumption?
+
+I agree with that as well.
+
+>
+> Anyway, I assume some people will be working on the submodule side.
+
+Once the discussion comes to a rough agreement, I'll give it a shot.
+
+> And because I have not heard any bad thing about the new config
+> design, I'm going to drop submodule patches from this series and focus
+> on polishing config stuff.
+
+Oh, sorry for not focusing on that part. The design of git config --worktree
+is sound IMO.
+
+> --
+> Duy
