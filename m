@@ -2,117 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBC68203E2
-	for <e@80x24.org>; Fri, 22 Jul 2016 19:51:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3630203E2
+	for <e@80x24.org>; Fri, 22 Jul 2016 19:51:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752182AbcGVTvG (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 15:51:06 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56714 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751619AbcGVTvE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 15:51:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 065332E168;
-	Fri, 22 Jul 2016 15:51:03 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lgUoMLyxoHG3S85apcWNxo8G7kQ=; b=U56ipQ
-	Jaw/RFoYsEznB0fuNscBNuMRjdnj1JO2R3cjPn+r5C3NfH4DJoVV17Hw8PygaTkU
-	GCU8A57UCbgltUbJKf/S7SQusNGchnetk5AQvx1U2cGXGjGKY4DRrGN0VHnOs/NR
-	6akOFVdjrVfSTFsZD6XyM4kh8IfdJgcbxLcvQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YEHg5r6BW7xo0ChiJ4usQCU42GcnYImw
-	oisfBnCWChH4+AQMasWIP44QoBCFhd+KkQos+AuJc/DofXS8yLeSe8qBnhIJ+dgM
-	AtDeWPBHxPt3EUga1ZfTe6J5+JNVjMiIURFCCPzXUfkddRUx60C0P588aoLXsMXe
-	D28i4u0wQzM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F0D5C2E167;
-	Fri, 22 Jul 2016 15:51:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5E09B2E166;
-	Fri, 22 Jul 2016 15:51:02 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Richard Soderberg <rsoderberg@gmail.com>, git@vger.kernel.org
-Subject: Re: git-prompt.sh incompatible with non-basic global grep.patternType
-References: <CAEvc1UQvXKtQCXvCmt-774A84--bkK-sb94BtFeqDDr0Gsf7qw@mail.gmail.com>
-	<20160720134211.GA19359@sigill.intra.peff.net>
-	<xmqqwpkgcbp9.fsf@gitster.mtv.corp.google.com>
-	<20160720205207.GA578@sigill.intra.peff.net>
-	<xmqqr3ala37o.fsf@gitster.mtv.corp.google.com>
-	<20160722192811.GA18079@sigill.intra.peff.net>
-Date:	Fri, 22 Jul 2016 12:51:00 -0700
-In-Reply-To: <20160722192811.GA18079@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 22 Jul 2016 15:28:11 -0400")
-Message-ID: <xmqqa8h9a1uj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752197AbcGVTvJ (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 15:51:09 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48805 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751619AbcGVTvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 15:51:09 -0400
+Received: (qmail 22186 invoked by uid 102); 22 Jul 2016 19:51:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 15:51:09 -0400
+Received: (qmail 9248 invoked by uid 107); 22 Jul 2016 19:51:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 15:51:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Jul 2016 15:51:05 -0400
+Date:	Fri, 22 Jul 2016 15:51:05 -0400
+From:	Jeff King <peff@peff.net>
+To:	git@vger.kernel.org
+Cc:	Theodore Ts'o <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/6] reflog docs and date-formatting
+Message-ID: <20160722195105.GA19542@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9E866994-5045-11E6-B5DF-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+This is a repost of the patches in:
 
->> This comes from b22520a3 (grep: allow -E and -n to be turned on by
->> default via configuration, 2011-03-30) back when we didn't have a
->> more generic grep.patternType configuration mechanism in v1.7.5
->> days, and it probably need to be deprecated to maintain our sanity.
->> ...
-> I am not even sure we need to deprecate it. Once it becomes merely a
-> historical synonym for "grep.patternType=extended" we can live with it
-> indefinitely (and I do not think we need a deprecation period to go
-> there; the existing behavior is simply buggy).
+  http://thread.gmane.org/gmane.comp.version-control.git/299201/focus=299236
 
-I grossed over an important detail.
+since I don't think they got picked up at all.
 
-Pretending as if grep.patternType=extended were given when we see
-grep.extendedregexp=true and grep.patternType=basic is given when
-grep.extendedregexp=false changes the behaviour in a way that can be
-seen as the violation of (crazy) expectations t7810 makes.
+The contents are the same, but with one extra patch (the 4th) that was
+posted mid-discussion.
 
-Any user who depends on that crazy expectation will be broken by
-such a change, even if we do not deprecate and remove the
-configuration variable.
+The only other review comment is that patch 5 might want to editorialize
+the weirdness of "raw-local" more. I think I'm comfortable leaving it
+as-is based on my response in:
 
- grep.c | 4 ++--
- grep.h | 1 -
- 2 files changed, 2 insertions(+), 3 deletions(-)
+  http://article.gmane.org/gmane.comp.version-control.git/299312
 
-diff --git a/grep.c b/grep.c
-index 394c856..7b1d423 100644
---- a/grep.c
-+++ b/grep.c
-@@ -73,9 +73,9 @@ int grep_config(const char *var, const char *value, void *cb)
- 
- 	if (!strcmp(var, "grep.extendedregexp")) {
- 		if (git_config_bool(var, value))
--			opt->extended_regexp_option = 1;
-+			opt->pattern_type_option = GREP_PATTERN_ERE;
- 		else
--			opt->extended_regexp_option = 0;
-+			opt->pattern_type_option = GREP_PATTERN_BRE;
- 		return 0;
- 	}
- 
-diff --git a/grep.h b/grep.h
-index cee4357..fc36c2a 100644
---- a/grep.h
-+++ b/grep.h
-@@ -119,7 +119,6 @@ struct grep_opt {
- 	int max_depth;
- 	int funcname;
- 	int funcbody;
--	int extended_regexp_option;
- 	int pattern_type_option;
- 	char color_context[COLOR_MAXLEN];
- 	char color_filename[COLOR_MAXLEN];
+but I could be persuaded otherwise.
+
+The final patch, "--date=unix" doesn't _really_ solve Ted's problem,
+because there's still no way to give multiple date formats in the same
+line, nor use "%gd" as both the reflog index and as the date. So I'm
+assuming he'll still build "%gt" or similar on top of this, and only in
+the long run will we get to "%(reflog-date:unix)" or whatever.
+
+So I think it's still valuable as a minor feature for other formatting
+needs, and as a potential building block for later. The earlier patches
+are all immediately useful as clarifications.
+
+  [1/6]: doc/rev-list-options: clarify "commit@{Nth}" for "-g" option
+  [2/6]: doc/rev-list-options: explain "-g" output formats
+  [3/6]: doc/pretty-formats: describe index/time formats for %gd
+  [4/6]: doc/pretty-formats: explain shortening of %gd
+  [5/6]: date: document and test "raw-local" mode
+  [6/6]: date: add "unix" format
+
+-Peff
