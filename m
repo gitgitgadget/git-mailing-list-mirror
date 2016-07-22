@@ -2,79 +2,45 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4331F203E2
-	for <e@80x24.org>; Fri, 22 Jul 2016 19:30:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 266D8203E2
+	for <e@80x24.org>; Fri, 22 Jul 2016 19:32:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752647AbcGVTak (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 15:30:40 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56975 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751963AbcGVTaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 15:30:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C48A12DF01;
-	Fri, 22 Jul 2016 15:30:38 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3GRgndgP2SML3krw8KNrLlKMeAw=; b=LFrAes
-	9+RXKYyVEaxMFo4gySqiAJuchzuPL7jK8ZOJscpWfuRKED5y4UoveqhrNbAMORbX
-	1HUf5F3287ujkSLWpq5kK5IUjCWt+ztnYIppraWGIEnZPJMUjUcSH+4FkxUA4F44
-	+Pbr3d03FTnJK4eKKzVCDkW9LOaFVlK+SGfaw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TFemLpG3LRL7TWbuUcpOTKt/8KVxkIHh
-	ApiFJSSEE/1sjiuaJkv7noODM7vyB3zec5HtYZOulMxkO8jEl769YNTezWoLvfkm
-	oFLO3Fj6WUo4Mu3pIR3w2KcZASFNzo3GCUkaOeRTXwvFxn+yWNmbpqOYCCInrRny
-	tSK4RDcaV/o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BE6452DEFD;
-	Fri, 22 Jul 2016 15:30:38 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3F6F32DEFB;
-	Fri, 22 Jul 2016 15:30:38 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	larsxschneider@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH] diff: do not reuse worktree files that need "clean" conversion
-References: <1469134747-26785-1-git-send-email-larsxschneider@gmail.com>
-	<20160721213740.GB4604@sigill.intra.peff.net>
-	<20160722152753.GA6859@sigill.intra.peff.net>
-	<xmqq60rxbmaf.fsf@gitster.mtv.corp.google.com>
-	<20160722181024.GA16595@sigill.intra.peff.net>
-Date:	Fri, 22 Jul 2016 12:30:35 -0700
-In-Reply-To: <20160722181024.GA16595@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 22 Jul 2016 14:10:24 -0400")
-Message-ID: <xmqqinvxa2sk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752850AbcGVTb5 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 15:31:57 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:45692 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751928AbcGVTb5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 15:31:57 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE516203E2;
+	Fri, 22 Jul 2016 19:31:56 +0000 (UTC)
+Date:	Fri, 22 Jul 2016 19:31:56 +0000
+From:	Eric Wong <e@80x24.org>
+To:	Johannes Sixt <j6t@kdbg.org>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	git-for-windows <git-for-windows@googlegroups.com>
+Subject: Re: [PATCH ew/daemon-socket-keepalive] Windows: add missing
+ definition of ENOTSOCK
+Message-ID: <20160722193156.GA30158@dcvr>
+References: <28dbe3b0-7a16-1b87-3d59-b8c981fead7c@kdbg.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C4E3EBDC-5042-11E6-A67C-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <28dbe3b0-7a16-1b87-3d59-b8c981fead7c@kdbg.org>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Johannes Sixt <j6t@kdbg.org> wrote:
+> The previous commit introduced the first use of ENOTSOCK. This macro is
+> not available on Windows. Define it as WSAENOTSOCK because that is the
+> corresponding error value reported by the Windows versions of socket
+> functions.
 
-> So I think we actually _can_ think of would_convert_to_git() as
-> basically free. Or as free as other efficient-lookup functions we call
-> like cache_name_pos().
-
-OK.
-
-> The thought "does this tree reuse even speed things up enough to justify
-> its complexity" definitely crossed my mind. It's basically swapping
-> open/mmap for zlib inflating the content.
->
-> But I do think it helps in the "want_file" case (i.e., when we are
-> writing out a tempfile for an external command via prepare_temp_file()).
-> There it helps us omit writing a tempfile to disk entirely, including
-> any possible conversion.
-
-OK.
+Thanks.   I thought compat/poll/poll.c already used ENOTSOCK
+but I was mislead by the #ifdefs :x
