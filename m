@@ -2,136 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42E4020195
-	for <e@80x24.org>; Fri, 22 Jul 2016 15:28:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95DDB203E2
+	for <e@80x24.org>; Fri, 22 Jul 2016 15:49:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752053AbcGVP16 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 22 Jul 2016 11:27:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48620 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751779AbcGVP15 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2016 11:27:57 -0400
-Received: (qmail 10410 invoked by uid 102); 22 Jul 2016 15:27:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 11:27:56 -0400
-Received: (qmail 6345 invoked by uid 107); 22 Jul 2016 15:28:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jul 2016 11:28:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Jul 2016 11:27:53 -0400
-Date:	Fri, 22 Jul 2016 11:27:53 -0400
-From:	Jeff King <peff@peff.net>
-To:	larsxschneider@gmail.com
-Cc:	git@vger.kernel.org
-Subject: [PATCH] diff: do not reuse worktree files that need "clean"
- conversion
-Message-ID: <20160722152753.GA6859@sigill.intra.peff.net>
-References: <1469134747-26785-1-git-send-email-larsxschneider@gmail.com>
- <20160721213740.GB4604@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160721213740.GB4604@sigill.intra.peff.net>
+	id S1752365AbcGVPtM (ORCPT <rfc822;e@80x24.org>);
+	Fri, 22 Jul 2016 11:49:12 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35971 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751779AbcGVPtL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2016 11:49:11 -0400
+Received: by mail-wm0-f65.google.com with SMTP id x83so6675904wma.3
+        for <git@vger.kernel.org>; Fri, 22 Jul 2016 08:49:10 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=LijrAQyd3wOM4s5t+xPDWP9io5hSyyi4ySFqb88qx9U=;
+        b=qqjhHYvNVLmyKkYTyz80Uy9udcYgrzmbE+78xVEjgEWKHDBVJ0HZqPmL7hPll2shih
+         mjYH1ax0MKmzitiXjICEPKHgH20rXbygOZY64hlDv8lqX98rcxi9lJi7xQOpV+nk4vRf
+         dHF4/tl8YQyBLtlqqRv8V4+Du8soSGph8ggvnNBGZVXV6urRFErdOuYhfV3UxM6F+weF
+         JKK+t7qw6SZFSX3kYPym2eLvPvPDVL1sB6ke5fW4uzRTWoHshRJG7EsBO4NLADHAgzX4
+         5h/CUpvpGEtbJjoy0MMuYQmrf0bJHcQVOGwzyY+UqFOhkqxHlQ2OLzLMdOIedxeq1P/i
+         lqCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=LijrAQyd3wOM4s5t+xPDWP9io5hSyyi4ySFqb88qx9U=;
+        b=NlHTDxwEkbiRPlVJ5Rc3FlZxk4e5haVYuie+NVf/Lpr+xFtOpLpRqMts8a5wOeHXOT
+         oYZXDRsJjw+s1WdyeLF55KxW7zGbogYx0Az8SI9+3Wzq70UAY9VV5yYW1GzgB5RJeDN6
+         zKMqUZxs3x+sSWFpD7FNAedfpghEut9UOm+/Ph62/2qnVPpjgyd2f+1HnS5uryaoYGMX
+         ULsuTpAlQWwZmQ3b2wu6AP3kjFtGDmTF3CegjeM51DlJk9mhrF+zfjVz8HqxuC3X9/iU
+         j3erwTxAlOc0cRiYiVh7r9ZGGLlTHHMuZZL9X6ZDdsX2BFl38giZafLcIchVjvfuFF9z
+         E3VQ==
+X-Gm-Message-State: AEkoouvue2yCY4G/65cO6QRLxIPCWR0M0fh3tPgo4uBCp+m/cepCIjtFFFZm/IP6L6og2w==
+X-Received: by 10.195.18.170 with SMTP id gn10mr1595030wjd.46.1469202549410;
+        Fri, 22 Jul 2016 08:49:09 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id e10sm1507963wjc.21.2016.07.22.08.49.07
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Fri, 22 Jul 2016 08:49:08 -0700 (PDT)
+From:	larsxschneider@gmail.com
+To:	git@vger.kernel.org
+Cc:	peff@peff.net, jnareb@gmail.com, tboegi@web.de,
+	Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH v1 0/3] Git filter protocol
+Date:	Fri, 22 Jul 2016 17:48:57 +0200
+Message-Id: <20160722154900.19477-1-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.9.0
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 21, 2016 at 05:37:40PM -0400, Jeff King wrote:
+From: Lars Schneider <larsxschneider@gmail.com>
 
-> The next three are to show the final diffstat after the commit
-> completes. It looks like the "should we reuse the worktree file?"
-> optimization in diff_populate_filespec() does not take into account
-> whether we will have to convert the contents, and it probably should.
-> The point is that sometimes mmap-ing the file contents is more efficient
-> than zlib inflating the object from disk. But if we have to exec an
-> extra process and read the whole object contents into a strbuf, that is
-> probably not a win.
-> 
-> Adding a "return 0" at the top of reuse_worktree_file() drops our 6 to
-> 3 (but obviously it should actually check the attributes).
+Hi,
 
-Here's a patch for that. I put it in t0021, as well, since I couldn't
-find a more appropriate place. This means it conflicts with your earlier
-patch, but I think it does a better job of addressing the specific area
-it fixes.
+Git's clean/smudge mechanism invokes an external filter process for every
+single blob that is affected by a filter. If Git filters a lot of blobs
+then the startup time of the external filter processes can become a
+significant part of the overall Git execution time. This patch series
+addresses this problem.
 
-We may want further tests on top as we fix more areas (though as I said
-earlier, I think by avoiding the racy timestamps, your "commit" call
-drops to just a single invocation per file. That still seems like one
-more than we should need, but it at least matches your original
-expectation :) ).
+The first two patches are cleanup patches which are not really necessary
+for the feature. The third patch is the relevant one :-)
 
--- >8 --
-Subject: diff: do not reuse worktree files that need "clean" conversion
+You will notice that I do not check the exact number of "clean" filter
+invocations in the tests. The reason is that Git calls "clean" multiple
+times (up to 4 times for the same blob!). I posted a patch to demonstrate
+the problem and I would prefer to tackle the problem in a seperate patch
+series: http://thread.gmane.org/gmane.comp.version-control.git/300028/
 
-When accessing a blob for a diff, we may try to reuse file
-contents in the working tree, under the theory that it is
-faster to mmap those file contents than it would be to
-extract the content from the object database.
+The main reason for this Git core patch is to speed up Git large file
+extensions such as git-annex or Git LFS. I proposed an according Git LFS
+patch here: https://github.com/github/git-lfs/pull/1382
 
-When we have to filter those contents, though, that
-assumption does not hold. Even for our internal conversions
-like CRLF, we have to allocate and fill a new buffer anyway.
-But much worse, for external clean filters we have to exec
-an arbitrary script, and we have no idea how expensive it
-may be to run.
+In addition to the Git core tests, all Git LFS integration tests run clean
+on my machine.
 
-So let's skip this optimization when conversion into git's
-"clean" form is required. This applies whenever the
-"want_file" flag is false. When it's true, the caller
-actually wants the smudged worktree contents, which the
-reused file by definition already has (in fact, this is a
-key optimization going the other direction, since reusing
-the worktree file there lets us skip smudge filters).
+Thanks,
+Lars
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- diff.c                |  7 +++++++
- t/t0021-conversion.sh | 11 +++++++++++
- 2 files changed, 18 insertions(+)
 
-diff --git a/diff.c b/diff.c
-index 7d03419..b43d3dd 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2683,6 +2683,13 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
- 	if (!FAST_WORKING_DIRECTORY && !want_file && has_sha1_pack(sha1))
- 		return 0;
- 
-+	/*
-+	 * Similarly, if we'd have to convert the file contents anyway, that
-+	 * makes the optimization not worthwhile.
-+	 */
-+	if (!want_file && would_convert_to_git(name))
-+		return 0;
-+
- 	len = strlen(name);
- 	pos = cache_name_pos(name, len);
- 	if (pos < 0)
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 7bac2bc..e799e59 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -268,4 +268,15 @@ test_expect_success 'disable filter with empty override' '
- 	test_must_be_empty err
- '
- 
-+test_expect_success 'diff does not reuse worktree files that need cleaning' '
-+	test_config filter.counter.clean "echo . >>count; sed s/^/clean:/" &&
-+	echo "file filter=counter" >.gitattributes &&
-+	test_commit one file &&
-+	test_commit two file &&
-+
-+	>count &&
-+	git diff-tree -p HEAD &&
-+	test_line_count = 0 count
-+'
-+
- test_done
--- 
-2.9.2.506.g8452fe7
+Lars Schneider (3):
+  convert: quote filter names in error messages
+  convert: modernize tests
+  convert: add filter.<driver>.useProtocol option
+
+ Documentation/gitattributes.txt |  41 ++++++-
+ convert.c                       | 222 +++++++++++++++++++++++++++++++++++---
+ t/t0021-conversion.sh           | 232 ++++++++++++++++++++++++++++++++++------
+ t/t0021/rot13.pl                |  80 ++++++++++++++
+ 4 files changed, 531 insertions(+), 44 deletions(-)
+ create mode 100755 t/t0021/rot13.pl
+
+--
+2.9.0
 
