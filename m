@@ -2,82 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A805B203E1
-	for <e@80x24.org>; Sat, 23 Jul 2016 08:39:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B661B203E1
+	for <e@80x24.org>; Sat, 23 Jul 2016 08:53:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750975AbcGWIjv (ORCPT <rfc822;e@80x24.org>);
-	Sat, 23 Jul 2016 04:39:51 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:55224 "EHLO bsmtp3.bon.at"
+	id S1751008AbcGWIxH (ORCPT <rfc822;e@80x24.org>);
+	Sat, 23 Jul 2016 04:53:07 -0400
+Received: from mout.gmx.net ([212.227.15.18]:62510 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750818AbcGWIjr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jul 2016 04:39:47 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3rxLYD3szSz5tlC;
-	Sat, 23 Jul 2016 10:39:44 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 0785952D7;
-	Sat, 23 Jul 2016 10:39:43 +0200 (CEST)
-Subject: [PATCH v2 ew/daemon-socket-keepalive] Windows: add missing definition
- of ENOTSOCK
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-References: <28dbe3b0-7a16-1b87-3d59-b8c981fead7c@kdbg.org>
- <alpine.DEB.2.20.1607221020520.14111@virtualbox>
- <xmqqmvl9a2wc.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1607230957320.14111@virtualbox>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	git-for-windows <git-for-windows@googlegroups.com>
-From:	Johannes Sixt <j6t@kdbg.org>
-Message-ID: <4ca7ee51-351b-d222-d05a-63c5bdc5c383@kdbg.org>
-Date:	Sat, 23 Jul 2016 10:39:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2
+	id S1750828AbcGWIxD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jul 2016 04:53:03 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MbxJ8-1bj6YA335S-00JL0K; Sat, 23 Jul 2016 10:52:48
+ +0200
+Date:	Sat, 23 Jul 2016 10:52:09 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Jeff King <peff@peff.net>
+cc:	git@vger.kernel.org
+Subject: Re: [PATCH 0/3] minor git-jump improvements
+In-Reply-To: <20160722162707.GA13905@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1607231050360.14111@virtualbox>
+References: <20160722162707.GA13905@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1607230957320.14111@virtualbox>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:4wIOUgpv+rEQ4HEQJVEl1is1LdQ2ONGEXYQmdbC1iV1/zkxttrV
+ DjcOWbD5vavlKsnOC6o1XERFUENb212X0EjhofuFPCOdR9AdgFBmGIhCwfL+JbdaxJHOzUH
+ OicFNOqN42hCAanGyYDhNEcW38mfZpFVDMJWYPEP7Vr8bzS4G0jvuBN7GpubNnbpiC8c2Ey
+ 1ihMmM2srfzn85cEnRykg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:kOG81wEj4xg=:nK2Xh33yQTH5tbvdjae6It
+ +OlWzFi0gDXe4137dp3oB32sd+Dv/a++IcYBgkWoJ64BH3x4mQ3onv2hHsgfCsj+4CBy00bZD
+ wikQGAUcgE0/JBLWw9LQN23daEwBrAeYt7mbATwgu/XlAfA3t/+iy4numAUVgdM/7vvwN+XT1
+ 2VgZYtDZq3vX733CA8k/spdSoIJ5C/5V2HelZOcoHD3hENIeWkwO/6dzTBVOFOqwLVHsqgYWg
+ LZNj0p8PJZyDoC36VJkReegj3DYJSLVn2mR/JB8ZUABcojaf+eDDBk+urpVEzi5jz+nlSjlwt
+ IxgGFQ50B9KlFKlihzAobkWWao3wkuhw5PeEAQC4fcgah21geqLoNaUibUOa3mDqiCAYqBsGG
+ rzBBB6o/B/csfsIWoEE4xKUXeOZuRY/sriUgpW2usZDFCvpPwaq3DpI3XrK4cN0FjtHlX4Sqh
+ 7NbaTsUWXKb1Q/2Lhk1bA05bA7O7IIRRF7LxUwalcFrZUDJc7NzOCMcC8HRtSOOKoMYygJOV4
+ njahD3Gt0m4UAjm0V/aMAcxlX1+6EBk8Af08DgZAca5e//J81l9qYar1duGtm8VR2W4c2eehj
+ NOCdFdmMnw8mO9xlpFmZR4zyS+4dv0Ki206/Mb0Du8LOKlhybjn/fnKcmwWnuMKt2VdW5xwD1
+ 42/7lr9WTFlVO+8AjN/2SuF7BDCustARARuIYV4XefOIfT8Nx6uNM4cYvrOFBvRYw5HgB3V5H
+ YhP45Q+9S1hKtlh3jtJGX+hcXROeKc2iti6e58iQT0vOLde/bjFXGsekJUf2Y4M7t+CYIKLe7
+ gRa5I5x
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The previous commit introduced the first use of ENOTSOCK. This macro is
-not available on Windows. Define it as WSAENOTSOCK because that is the
-corresponding error value reported by the Windows versions of socket
-functions.
+Hi Peff,
 
-For details, see
-https://msdn.microsoft.com/en-us/library/windows/desktop/ms740476.aspx
+On Fri, 22 Jul 2016, Jeff King wrote:
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
- Same patch text, but the commit message is amended, just in case it's
- easier for you to apply a new patch than to amend a queued one.
+> Here are a few quick fixes and features for git-jump. The first is a bug
+> I noticed and fixed recently. And that reminded me of the second one,
+> which I'd been carrying in my local copy for a long time.
+> 
+>   [1/3]: contrib/git-jump: fix greedy regex when matching hunks
+>   [2/3]: contrib/git-jump: add whitespace-checking mode
+>   [3/3]: contrib/git-jump: fix typo in README
 
- Thanks everybody.
+These 3 patches look good to me.
 
- compat/mingw.h | 3 +++
- 1 file changed, 3 insertions(+)
+They also made me aware of git-jump's existence and purpose. I think I
+shall use this script a lot myself from now on.
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 233933e..95e128f 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -73,6 +73,9 @@ typedef int pid_t;
- #ifndef ECONNABORTED
- #define ECONNABORTED WSAECONNABORTED
- #endif
-+#ifndef ENOTSOCK
-+#define ENOTSOCK WSAENOTSOCK
-+#endif
-
- struct passwd {
-     char *pw_name;
--- 
-2.9.0.443.ga8520ad
-
+Thanks,
+Dscho
